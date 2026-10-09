@@ -5,7 +5,7 @@ import re
 import pytest
 from playwright.sync_api import expect
 
-from .conftest import enter_public_site
+from .conftest import enter_public_site, open_navigation
 from .test_partner_globe import LINCOLN, MEIJI, open_partners
 from .test_discovery_workspace import setup_catalog
 
@@ -31,11 +31,13 @@ def test_all_routes_share_motion_and_back_retains_working_history(page, live_ser
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     for route in ["forum", "partners", "favorites", "overview", "eligibility", "advisor", "application-center", "document-check", "writing-assistant", "documents", "calendar", "deadlines", "scholarships", "budget", "university-posts"]:
-        if route in ["forum", "partners", "overview"]:
+        if route in ["forum", "partners"]:
             link = page.locator(f'.uniway-public-nav a[href="#{route}"]')
         else:
             page.locator("#application-tools .application-nav-chevron").click()
             link = page.locator(f'.application-tools-panel a[href="#{route}"]')
+            if page.locator(".application-extra-tools").get_attribute("open") is None and link.locator("xpath=ancestor::details[contains(@class, 'application-extra-tools')]").count():
+                page.locator(".application-extra-tools > summary").click()
         before = len(motions(page, "route"))
         link.click()
         expect(page).to_have_url(re.compile(rf"#{route}$"))
@@ -60,12 +62,15 @@ def test_dialog_menu_details_tabs_and_mobile_layout(page, live_server, width):
     page.add_init_script(INSTRUMENT)
     setup_catalog(page)
     enter_public_site(page, live_server)
+    open_navigation(page)
     page.locator("#school-switcher").click()
     expect(page.locator("#school-onboarding")).to_be_visible()
     page.wait_for_function("() => __motionLog.some(x => x.animation.id === 'uniway:dialog')")
     page.locator("#confirm-school").click()
     expect(page.locator("#school-onboarding")).to_be_hidden()
+    open_navigation(page)
     page.locator('.uniway-public-nav a[href="#forum"]').click()
+    open_navigation(page)
     page.locator('.uniway-public-nav a[href="#home"]').click()
     expect(page.locator("#guide").get_by_role("heading", level=1)).to_be_focused()
     summary = page.locator(".guide-faq summary")
@@ -78,6 +83,7 @@ def test_dialog_menu_details_tabs_and_mobile_layout(page, live_server, width):
     page.wait_for_function("() => !document.querySelector('.guide-faq').getAnimations({subtree:true}).some(a => a.playState === 'running')")
     expect(summary).to_be_focused()
     # Closing the tools menu must immediately release the page, including Escape.
+    open_navigation(page)
     page.locator("#application-tools .application-nav-chevron").click()
     page.keyboard.press("Escape")
     expect(page.locator(".application-tools-panel")).to_be_hidden()
@@ -104,7 +110,10 @@ def test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion(page
     for route in ("forum", "home", "partners", "forum"):
         page.locator(f'.uniway-public-nav a[href="#{route}"]').first.click()
     expect(page.locator("#community-hub")).to_be_visible()
-    page.wait_for_function("() => !document.getAnimations().some(a => a.id.startsWith('uniway:'))")
+    # Routing queues its animation in requestAnimationFrame. An empty current
+    # animation list can precede that queued frame, so drain actual frames first.
+    page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
+    page.wait_for_function("() => !document.getAnimations().some(a => a.id.startsWith('uniway:')) && getComputedStyle(document.querySelector('#community-hub')).opacity === '1'")
     assert page.locator("#community-hub").evaluate("el => getComputedStyle(el).opacity") == "1"
 
 
@@ -116,10 +125,12 @@ def test_reduced_motion_live_change_and_missing_runtime_are_usable(page, live_se
     assert motions(page) == []
     assert page.locator(".guide-faq").evaluate("el => getComputedStyle(el, '::details-content').transitionDuration") == "0s"
     page.emulate_media(reduced_motion="no-preference")
+    open_navigation(page)
     page.locator('.uniway-public-nav a[href="#forum"]').click()
     page.wait_for_function("() => __motionLog.some(x => x.animation.id === 'uniway:route')")
     page.emulate_media(reduced_motion="reduce")
     page.wait_for_function("() => !document.getAnimations().some(a => a.id.startsWith('uniway:'))")
+    open_navigation(page)
     page.locator("#school-switcher").click()
     # Visitors pick their school without signing in.
     expect(page.locator("#school-onboarding")).to_be_visible()
@@ -129,6 +140,7 @@ def test_reduced_motion_live_change_and_missing_runtime_are_usable(page, live_se
     # Progressive enhancement must not become a dependency for using the app.
     page.route("**/motion.js?*", lambda route: route.abort())
     page.reload()
+    open_navigation(page)
     page.locator('.uniway-public-nav a[href="#home"]').click()
     expect(page.locator("#guide")).to_be_visible()
     page.locator("#page-back").click()

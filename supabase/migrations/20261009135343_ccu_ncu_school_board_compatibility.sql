@@ -4,6 +4,8 @@ do $migration$
 declare
   v_function regprocedure := to_regprocedure('public.exchange_commit_public_community_content(text,text,text,text,text,text,jsonb)');
   v_def text;
+  v_normalized_def text;
+  v_tku text := $p$           or (p_payload ->> 'board_id' = 'tku' and v_required_school_key = '淡江大學')$p$;
   v_metadata jsonb;
   v_after_metadata jsonb;
   v_anchor text := $p$           or (p_payload ->> 'board_id' = 'ntu' and v_required_school_key = '國立臺灣大學')$p$;
@@ -12,8 +14,11 @@ declare
 begin
   if v_function is null then raise exception 'school-board function missing'; end if;
   v_def := pg_get_functiondef(v_function);
-  if md5(v_def) = 'b032beac1990513b576f388328720999' then return; end if;
-  if md5(v_def) <> 'b81840819d91b81f3557964da088ea3f' then
+  -- Fresh installs apply TKU's earlier timestamp first; deployed rollout applied this first.
+  -- Ignore only that exact reviewed TKU mapping when comparing the guarded definitions.
+  v_normalized_def := replace(v_def, E'\n' || v_tku, '');
+  if md5(v_normalized_def) = 'b032beac1990513b576f388328720999' then return; end if;
+  if md5(v_normalized_def) <> 'b81840819d91b81f3557964da088ea3f' then
     raise exception 'unexpected forum function definition; re-review required';
   end if;
   select jsonb_build_array(proowner, proacl, prosecdef, proconfig)
@@ -23,7 +28,7 @@ begin
   end if;
   if position(v_ccu in v_def) = 0 then v_def := replace(v_def, v_anchor, v_anchor || E'\n' || v_ccu); end if;
   if position(v_ncu in v_def) = 0 then v_def := replace(v_def, v_anchor, v_anchor || E'\n' || v_ncu); end if;
-  if md5(v_def) <> 'b032beac1990513b576f388328720999' then
+  if md5(replace(v_def, E'\n' || v_tku, '')) <> 'b032beac1990513b576f388328720999' then
     raise exception 'unexpected rewritten forum function definition';
   end if;
   execute v_def;

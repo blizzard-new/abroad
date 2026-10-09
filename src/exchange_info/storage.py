@@ -5,6 +5,8 @@ import os
 import tempfile
 import threading
 from concurrent.futures import Future
+from functools import wraps
+from inspect import signature
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Generator, Iterable, TextIO, TypeVar
@@ -49,7 +51,7 @@ from .models import (
 )
 from .settings import DEFAULT_DATA_DIR
 from .school_identity import school_identity_key
-from .university_registry import CCU, CGU, NTPU, NTU, NCU
+from .university_registry import CCU, CGU, NTPU, NTU, NCU, TKU
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
 
@@ -57,6 +59,7 @@ T = TypeVar("T", bound=BaseModel)
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 BUNDLED_NTPU_DIR = PACKAGE_DIR / "official_data" / "ntpu"
+BUNDLED_TKU_DIR = PACKAGE_DIR / "official_data" / "tku"
 BUNDLED_CGU_DIR = PACKAGE_DIR / "official_data" / "cgu"
 BUNDLED_CCU_DIR = PACKAGE_DIR / "official_data" / "ccu"
 BUNDLED_NTU_DIR = PACKAGE_DIR / "official_data" / "ntu"
@@ -578,13 +581,25 @@ def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWork
 
 
 def _bundled_workflow_paths() -> tuple[Path, ...]:
-    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR))
+    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR))
 
 
 def _bundled_workflow_signature() -> tuple:
     return tuple((str(path), _file_signature(path)) for path in _bundled_workflow_paths())
 
 
+def _locked_governance_io(function):
+    parameters = signature(function)
+    @wraps(function)
+    def locked(*args, **kwargs):
+        from .governance_commands import local_governance_lock
+        data_dir = parameters.bind_partial(*args, **kwargs).arguments.get("data_dir", DEFAULT_DATA_DIR)
+        with local_governance_lock(data_dir):
+            return function(*args, **kwargs)
+    return locked
+
+
+@_locked_governance_io
 def load_application_workflows(
     data_dir: Path = DEFAULT_DATA_DIR,
 ) -> list[UniversityApplicationWorkflow]:
@@ -621,6 +636,7 @@ def load_bundled_application_workflows() -> list[UniversityApplicationWorkflow]:
     return _cached_workflows(("bundled", _bundled_workflow_signature()), build)
 
 
+@_locked_governance_io
 def save_application_workflows(
     rows: Iterable[UniversityApplicationWorkflow],
     data_dir: Path = DEFAULT_DATA_DIR,
@@ -628,6 +644,7 @@ def save_application_workflows(
     return write_jsonl(data_paths(data_dir)["application_workflows"], rows)
 
 
+@_locked_governance_io
 def replace_application_workflow(
     workflow: UniversityApplicationWorkflow,
     data_dir: Path = DEFAULT_DATA_DIR,
@@ -658,6 +675,7 @@ def replace_application_workflow(
     return ordered
 
 
+@_locked_governance_io
 def load_application_workflow_revisions(
     data_dir: Path = DEFAULT_DATA_DIR,
 ) -> list[ApplicationWorkflowRevision]:
@@ -667,6 +685,7 @@ def load_application_workflow_revisions(
     )
 
 
+@_locked_governance_io
 def save_application_workflow_revisions(
     rows: Iterable[ApplicationWorkflowRevision],
     data_dir: Path = DEFAULT_DATA_DIR,
@@ -714,6 +733,7 @@ def upsert_collection_audit(
     return ordered
 
 
+@_locked_governance_io
 def load_destination_profiles(
     data_dir: Path = DEFAULT_DATA_DIR,
     *,
@@ -737,6 +757,7 @@ def load_destination_profiles(
         row.model_copy(update={"home_university": home_university})
         for directory, home_university in (
             (BUNDLED_NTPU_DIR, NTPU.school_name),
+            (BUNDLED_TKU_DIR, TKU.school_name),
             (BUNDLED_CGU_DIR, CGU.school_name),
             (BUNDLED_NTU_DIR, NTU.school_name),
             (BUNDLED_CCU_DIR, CCU.school_name),
@@ -815,6 +836,7 @@ def upsert_partner_research(
     return ordered
 
 
+@_locked_governance_io
 def save_destination_profiles(
     rows: Iterable[DestinationProfile], data_dir: Path = DEFAULT_DATA_DIR
 ) -> int:

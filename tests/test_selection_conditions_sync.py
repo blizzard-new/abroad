@@ -12,7 +12,7 @@ from test_account_workspace_api import _two_session_clients, _workspace, _client
 def profile():
     return {"college":"工學院", "department":"資訊工程學系", "current_year":"大三",
             "degree_level":"大學部", "academic_score":88.5, "academic_gpa":None,
-            "class_rank_percent":None, "language_test":"ielts",
+            "class_rank_percent":None, "language_test":"ielts", "jlpt_level":None,
             "language_score":7, "monthly_budget":42000, "preferred_country":"日本",
             "target_term":"2027 春季", "needs_scholarship":True,
             "academic_year":"116", "application_round":"第一梯次",
@@ -78,8 +78,9 @@ def test_workspace_extension_migration_keeps_atomic_commit_and_progress_ownershi
 
 def test_older_client_without_teaching_language_or_course_fields_still_round_trips(tmp_path):
     client, auth = _client(tmp_path)
-    legacy = {key: value for key, value in profile().items() if key not in {"preferred_teaching_language", "course_interests"}}
+    legacy = {key: value for key, value in profile().items() if key not in {"preferred_teaching_language", "course_interests", "jlpt_level"}}
     saved = client.put('/account/workspace',headers=auth,json={**_workspace(),'selection_conditions':{'profile':legacy}})
     assert saved.status_code == 200
     stored = saved.json()['workspace']['selection_conditions']['profile']
     assert stored['preferred_teaching_language'] is None and stored['course_interests'] == ''
+    assert stored['jlpt_level'] is None

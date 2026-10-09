@@ -16,8 +16,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    env:
-      EXCHANGE_INFO_DATA_DIR: ${{ runner.temp }}/exchange-info-tests
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
     steps:
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
@@ -32,12 +34,27 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Set isolated test data directory
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          with Path(os.environ["GITHUB_ENV"]).open("a") as handle:
+              handle.write(f"EXCHANGE_INFO_DATA_DIR={os.environ['RUNNER_TEMP']}/exchange-info-tests\n")
+          PY
+
       - name: Install project and browser
         run: |
           python -m pip install --disable-pip-version-check uv==0.11.26
           uv lock --check
           uv sync --frozen --extra dev
           uv run --frozen python -m playwright install --with-deps chromium
+
+      - name: Install PDF rendering tools from Ubuntu packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends poppler-utils
+          pdftoppm -v
 
       - name: Check Python and JavaScript syntax
         run: |
@@ -57,10 +74,32 @@ jobs:
 
       - name: Validate isolated Supabase runtime
         timeout-minutes: 20
-        run: uv run --frozen python scripts/validate_supabase_runtime.py
+        run: uv run --frozen python scripts/validate_tku_community_runtime.py
 
       - name: Run Web test suite
-        run: uv run --frozen python -m pytest -q
+        env:
+          WEB_TEST_SHARD: ${{ matrix.shard }}
+          TKU_ACCEPTANCE_OUTPUT: ${{ runner.temp }}/web-evidence/browser
+        run: |
+          mkdir -p "$RUNNER_TEMP/web-evidence"
+          set -o pipefail
+          uv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-evidence/suite.xml" --evidence-dir "$RUNNER_TEMP/web-evidence" 2>&1 | tee "$RUNNER_TEMP/web-evidence/pytest.log"
+
+      - name: Run immutable main control for prior shared failures
+        if: ${{ always() }}
+        env:
+          WEB_TEST_SHARD: ${{ matrix.shard }}
+        run: uv run --frozen python scripts/run_main_browser_control.py --shard "$WEB_TEST_SHARD" --evidence-dir "$RUNNER_TEMP/web-evidence/main-control"
+
+      - name: Retain original test evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: web-evidence-${{ github.run_id }}-${{ matrix.shard }}
+          path: ${{ runner.temp }}/web-evidence/
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Confirm bundled official data was not mutated
+        if: ${{ always() }}
         run: git diff --exit-code -- src/exchange_info/official_data

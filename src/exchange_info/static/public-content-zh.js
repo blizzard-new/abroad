@@ -100,7 +100,17 @@
   }
   async function localize(url, data) {
     if (!routes.has(String(url).split("?")[0]) || !data) return data;
-    const localized = structuredClone(data), targets = collect(localized);
+    const localized = structuredClone(data);
+    if (String(url).split("?")[0].startsWith("/destination-profile")) {
+      for (const profile of Array.isArray(localized) ? localized : [localized]) {
+        // Retain the source-bound display facts before machine localization.
+        // IDs, URLs, server review state and canonical city names are untouched.
+        profile.original_display_facts = Object.fromEntries(
+          ["city", "cost_summary", "housing_summary", "transport_summary", "campus_life_summary"]
+            .filter(key => typeof profile[key] === "string").map(key => [key, profile[key]]));
+      }
+    }
+    const targets = collect(localized);
     const entries = [...new Map(targets.map(row => [keyOf(row), { text: row.text, source_url: row.source_url }])).values()]
       .filter(row => !cache.has(keyOf(row)) && !settled.has(keyOf(row)));
     try {

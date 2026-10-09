@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Literal
 from uuid import uuid4
 
-from fastapi import FastAPI, HTTPException, Query, Request, Response
+from fastapi import FastAPI, Header, HTTPException, Query, Request, Response
 
 from .community_repositories import (
     CommunityIdentityMutationRequest, CommunityIdentityMutationStatus,
@@ -26,7 +26,8 @@ from .models import (AnonymousIdentity, ModerationStatus, utc_now, CommunityReac
                      CommunityModerationRequest, CommunitySuspensionRequest, CommunityReportReviewRequest, CommunityBookmarkUpdate)
 from .repositories import (CommunitySuspensionMutationRequest, CommunitySuspensionMutationStatus,
                            AccountRepositoryError)
-from .access_control import catalog_home_university, is_platform_admin
+from .access_control import (catalog_home_university, is_platform_admin, can_read_university_community,
+                             community_author_display_name, is_university_community_post, university_community_board)
 
 # Posting these is tied to the poster's school: Q&A for a school, experience reports, and the school chat.
 SCHOOL_BOUND_RESOURCES = frozenset({
@@ -61,6 +62,10 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
         if request.headers.get("Authorization") or request.cookies.get("exchange_guide_session"):
             return authenticated_account(request)[0]
         return None
+
+    def require_school_board_reader(account):
+        if not can_read_university_community(account):
+            raise HTTPException(403 if account else 401, "校級看板限已驗證 Email 的會員查看，不限同校。")
 
     def enriched(row, account, identities, reactions, resource_type):
         return {**public(row), "viewer_can_delete": bool(account and not getattr(row, "deleted", False)
@@ -111,9 +116,10 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
 
     def private_response(response):
         response.headers["Cache-Control"] = "private, no-store"
+        response.headers["Vary"] = "Cookie, Authorization"
 
     @app.get("/community/feed")
-    def feed(response: Response, boards: str = Query(default="", max_length=2500),
+    def feed(request: Request, response: Response, boards: str = Query(default="", max_length=2500),
              ids: str = Query(default="", max_length=4000),
              topic: str = Query(default="", max_length=40),
              q: str = Query(default="", max_length=80),
@@ -122,11 +128,16 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
              cursor: str | None = Query(default=None, max_length=8000)):
         private_response(response)
         targets = {value.strip().casefold() for value in boards.split(",") if value.strip()}
+        account = viewer(request)
+        if any(university_community_board(value) for value in targets):
+            require_school_board_reader(account)
         selected_ids = {value for value in ids.split(",") if value}
         query = " ".join(q.casefold().split())
         counts = Counter(row.post_id for row in approved_comments())
         rows = [row for row in approved_posts()
-                if (not targets or (row.board_id or "").casefold() in targets
+                if (not is_university_community_post(row) or can_read_university_community(account))
+                and (not targets or (row.board_id or "").casefold() in targets
+                    or any((university := university_community_board(value)) and university.id == row.board_id for value in targets)
                     or row.school_name.casefold() in targets)
                 and (not selected_ids or row.id in selected_ids)
                 and (not topic or row.topic.value == topic)
@@ -150,7 +161,10 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
     def detail(post_id: str, request: Request, response: Response):
         private_response(response)
         account = viewer(request)
-        result = enriched(post_for(post_id), account, read(repository.list_identities) if account else [],
+        post = post_for(post_id)
+        if is_university_community_post(post):
+            require_school_board_reader(account)
+        result = enriched(post, account, read(repository.list_identities) if account else [],
                           read(repository.list_reactions), "post")
         result["comment_count"] = sum(row.post_id == post_id for row in approved_comments())
         return result
@@ -162,7 +176,10 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
                  limit: int = Query(default=20, ge=1, le=50),
                  cursor: str | None = Query(default=None, max_length=8000)):
         private_response(response)
-        post_for(post_id)
+        post = post_for(post_id)
+        account = viewer(request)
+        if is_university_community_post(post):
+            require_school_board_reader(account)
         all_rows = [row for row in read(repository.list_comments) if row.post_id == post_id]
         visible = [row for row in approved_comments() if row.post_id == post_id]
         counts = Counter(row.parent_id for row in visible if row.parent_id)
@@ -275,22 +292,24 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
                 key=lambda row: row.created_at, reverse=True)[:100]]
 
     @app.get("/admin/community/reports")
-    def reports(request: Request, response: Response):
+    def reports(request: Request, response: Response,
+                status: Literal["pending", "resolved", "dismissed"] = "pending"):
         private_response(response)
         authenticated_admin(request)
         resources = {(kind, row.id): row for kind, method in [("post", repository.list_posts), ("comment", repository.list_comments)] for row in read(method)}
         return [{**row.model_dump(mode="json", exclude={"reporter_id"}),
                  "content": public(resources[(row.resource_type, row.resource_id)]) if (row.resource_type, row.resource_id) in resources else None}
                 for row in sorted(read(repository.list_reports), key=lambda row: row.created_at, reverse=True)
-                if row.status.value == "pending"][:100]
+                if row.status.value == status][:100]
 
     @app.patch("/admin/community/reports/{report_id}")
-    def review_report(report_id: str, payload: CommunityReportReviewRequest, request: Request):
+    def review_report(report_id: str, payload: CommunityReportReviewRequest, request: Request,
+                      mutation_id: str | None = Header(default=None, alias="X-Community-Mutation-ID", min_length=16, max_length=128)):
         moderator, _ = authenticated_admin(request)
         if len(payload.note.strip()) < 2:
             raise HTTPException(422, "請填寫處理原因。")
         result = read(lambda: repository.commit_report_review(CommunityReportReviewMutationRequest(
-            mutation_id=mutation(request), moderator_id=moderator.id, report_id=report_id,
+            mutation_id=mutation_id or mutation(request), moderator_id=moderator.id, report_id=report_id,
             status=payload.status, note=payload.note)))
         if result.status != PrivateCommunityMutationStatus.COMMITTED:
             raise HTTPException(409, "檢舉已由其他管理者處理，請重新載入。")
@@ -365,15 +384,16 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
     def identity_options(request: Request, response: Response):
         private_response(response)
         account, _ = authenticated_account(request)
-        school_name = catalog_home_university(account)
+        school_name = community_author_display_name(account, "verified_school")
+        department_name = community_author_display_name(account, "verified_department")
         school = bool(school_name)
-        department = bool(school and account.verified_department)
+        department = bool(department_name)
         return {"default_mode": "anonymous", "options": [
             {"mode": "anonymous", "label": "匿名學生", "enabled": True},
             {"mode": "real_name", "label": account.display_name, "enabled": True},
-            {"mode": "verified_school", "label": f"{school_name}學生" if school else "學校身分",
-             "enabled": school, "unavailable_reason": None if school else "選擇學校後可使用"},
-            {"mode": "verified_department", "label": f"{school_name} {account.verified_department}學生" if department else "學校與系所",
+            {"mode": "verified_school", "label": school_name if school else "學校身分",
+             "enabled": school, "unavailable_reason": None if school else "尚無已驗證學籍；自填母校不代表認證"},
+            {"mode": "verified_department", "label": department_name if department else "學校與系所",
              "enabled": department, "unavailable_reason": None if department else "尚無已驗證系所"},
         ]}
 
@@ -410,15 +430,19 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
             raise HTTPException(404, "文章已移除或尚未公開。")
         raise HTTPException(403, "目前無法在此看板發言，請確認登入與驗證狀態。")
 
-    def submit_report(request, identity, report):
+    def submit_report(request, identity, report, *, mutation_id=None):
         account, _ = authenticated_account(request)
         result = read(lambda: repository.commit_report(CommunityReportMutationRequest(
-            mutation_id=mutation(request), account_id=account.id, identity_id=identity.id,
+            mutation_id=mutation_id or mutation(request), account_id=account.id, identity_id=identity.id,
             access_token_hash=identity.access_token_hash, report=report)))
         if result.status == PrivateCommunityMutationStatus.COMMITTED:
             return result.report
         if result.status == PrivateCommunityMutationStatus.RESOURCE_MISSING:
             raise HTTPException(404, "內容已移除。")
+        if result.status == PrivateCommunityMutationStatus.SELF_REPORT:
+            raise HTTPException(422, "不能檢舉自己的內容。")
+        if result.status == PrivateCommunityMutationStatus.IDEMPOTENCY_CONFLICT:
+            raise HTTPException(409, "操作識別碼已用於不同檢舉內容。")
         raise HTTPException(403, "目前無法送出檢舉，請確認登入及帳號狀態。")
 
     return publish, create_identity, submit_report

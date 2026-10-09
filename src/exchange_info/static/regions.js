@@ -27,12 +27,12 @@
       ["蒙特內哥羅", "Montenegro", "巴爾幹"], ["摩爾多瓦", "Moldova"], ["科索沃", "Kosovo", "巴爾幹"],
     ],
     "western-europe": [
-      ["法國", "France"], ["德國", "Germany", "中歐"], ["荷蘭", "Netherlands", "Holland"], ["比利時", "Belgium"], ["盧森堡", "Luxembourg"],
+      ["法國", "France"], ["德國", "Germany", "中歐"], ["荷蘭", "Netherlands", "Holland"], ["比利時", "Belgium"], ["盧森堡", "Luxembourg"], ["摩納哥", "Monaco"],
       ["奧地利", "Austria", "中歐"], ["瑞士", "Switzerland", "中歐"], ["英國", "United Kingdom", "UK", "England", "Britain"], ["愛爾蘭", "Ireland"],
     ],
     "northern-europe": [["瑞典", "Sweden", "Scandinavia"], ["挪威", "Norway", "Scandinavia"], ["丹麥", "Denmark", "Scandinavia"], ["芬蘭", "Finland"], ["冰島", "Iceland"]],
     "southern-europe": [["西班牙", "Spain"], ["義大利", "Italy"], ["葡萄牙", "Portugal"], ["希臘", "Greece"], ["馬爾他", "Malta"], ["賽普勒斯", "Cyprus"]],
-    "north-america": [["美國", "United States", "USA", "America"], ["加拿大", "Canada"], ["墨西哥", "Mexico"]],
+    "north-america": [["美國", "United States", "USA", "America"], ["加拿大", "Canada"], ["墨西哥", "Mexico"], ["巴哈馬", "Bahamas", "加勒比海", "Caribbean"]],
     "latin-america": [
       ["巴西", "Brazil"], ["阿根廷", "Argentina"], ["智利", "Chile"], ["哥倫比亞", "Colombia"], ["秘魯", "Peru"], ["烏拉圭", "Uruguay"],
       ["厄瓜多", "Ecuador"], ["古巴", "Cuba"], ["巴拿馬", "Panama"], ["哥斯大黎加", "Costa Rica"], ["瓜地馬拉", "Guatemala"],

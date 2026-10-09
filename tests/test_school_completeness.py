@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+from collections import Counter
 from datetime import timedelta
 
 from fastapi.testclient import TestClient
@@ -80,7 +81,9 @@ def test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_
         else:
             assert by_key(result)["workflow"].status == "missing"
         scores.append(result.score)
-    assert len(scores) == 840 and max(scores) < 1
+    # New schools add profiles; explicitly preserve all existing home scopes.
+    assert Counter(p.home_university for p in profiles)=={'長庚大學':77,'國立臺北大學':206,'國立臺灣大學':288,'國立中央大學':214,'國立中正大學':55,'淡江大學':4}
+    assert len(scores) == 844 and max(scores) < 1
 
 
 def test_endpoint_returns_completeness_for_a_supported_partner(tmp_path):

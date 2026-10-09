@@ -626,7 +626,7 @@ class PartnerExchangeDetailField(BaseModel):
 class PartnerUniversity(BaseModel):
     program_type: str
     availability_status: Literal[
-        "open", "agreement_only", "departmental_reference", "not_open", "needs_confirmation", "zero_quota", "fee_paying"
+        "open", "agreement_only", "departmental_reference", "not_open", "needs_confirmation", "zero_quota", "fee_paying", "closed", "reference_only", "quota_unconfirmed"
     ] = "open"
     availability_note: str | None = None
     agreement_type: str | None = None
@@ -1323,6 +1323,19 @@ class ApplicationDocumentRequirement(BaseModel):
     applicability_year: str | None = None
     applicability_note: str | None = None
 
+    @model_serializer(mode="wrap")
+    def serialize_applicability(self, handler):
+        payload = handler(self)
+        fields = ("stage", "conditional", "condition", "official_form_verified",
+            "applicability_status", "applicability_year", "applicability_note")
+        # An additive school adapter must not invalidate old published snapshots.
+        # Omitted legacy metadata stays omitted; explicitly supplied null/false
+        # metadata remains part of the newer school's API and stored payload.
+        if not any(getattr(self, name) for name in fields) and not self.model_fields_set.intersection(fields):
+            for name in fields:
+                payload.pop(name, None)
+        return payload
+
 
 class ApplicationWorkflowSource(BaseModel):
     title: str
@@ -1521,6 +1534,7 @@ class PersonalApplicationPlanRequest(BaseModel):
     class_rank_percent: float | None = Field(default=None, gt=0, le=100)
     language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
+    jlpt_level: Literal['N1', 'N2', 'N3', 'N4', 'N5'] | None = None
     academic_year: str | None = Field(default=None, max_length=20)
     application_round: str | None = Field(default=None, max_length=80)
     preferences: list[ApplicationPlanPreference] = Field(min_length=1, max_length=5)
@@ -1649,6 +1663,7 @@ class ApplicationWorkflowRevisionEdit(BaseModel):
     note: str = Field(min_length=1, max_length=1000)
     previous_content_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
     content_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    invalidated_review_approvals: list[ApplicationWorkflowReviewApproval] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def validate_edit(self) -> "ApplicationWorkflowRevisionEdit":
@@ -2695,6 +2710,9 @@ class AdvisorProfile(BaseModel):
     class_rank_percent: float | None = Field(default=None, gt=0, le=100)
     language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
+    jlpt_level: Literal['N1', 'N2', 'N3', 'N4', 'N5'] | None = None
+    academic_year: str | None = Field(default=None, max_length=20)
+    application_round: str | None = Field(default=None, max_length=80)
     target_term: str | None = Field(default=None, max_length=40)
     preferred_country: str | None = Field(default=None, max_length=80)
     monthly_budget: float | None = Field(default=None, ge=0, le=10_000_000)
@@ -2839,7 +2857,7 @@ class CommunityBoardAccess(BaseModel):
     kind: CommunityBoardKind
     school_name: str | None = None
     posting_requirement: CommunityBoardPostingRequirement
-    can_read: Literal[True] = True
+    can_read: bool = True
     can_post: bool = False
     can_comment: bool = False
     unavailable_reason: str | None = None
@@ -3824,6 +3842,7 @@ class AccountSelectionProfile(BaseModel):
     class_rank_percent: float | None = Field(default=None, gt=0, le=100)
     language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
+    jlpt_level: Literal['N1', 'N2', 'N3', 'N4', 'N5'] | None = None
     target_term: str = Field(default="", max_length=40)
     preferred_country: str = Field(default="", max_length=80)
     monthly_budget: float | None = Field(default=None, ge=0, le=10_000_000)

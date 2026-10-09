@@ -128,7 +128,8 @@ def test_metadata_is_hash_bound_and_existing_school_data_remains_default():
     changed = ccu.model_copy(deep=True)
     changed.steps[4].document_requirements[0].applicability_note += " changed"
     assert workflow_content_hash(changed) != workflow_content_hash(ccu)
-    assert all(r.applicability_status is None for w in workflows if w.home_university != HOME
+    assert all(r.applicability_status is None for w in workflows
+               if w.home_university in {"長庚大學", "國立臺北大學", "國立臺灣大學"}
                for step in w.steps for r in step.document_requirements)
 
 

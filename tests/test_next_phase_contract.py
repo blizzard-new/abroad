@@ -24,7 +24,9 @@ def test_frozen_openapi_contract_matches_live_schema(tmp_path) -> None:
         "personal_document_storage_requires_separate_consent": True,
         "platform_submits_applications": False,
         "public_read_without_login": True,
-        "university_board_writes_require_matching_verified_school": True,
+        "university_board_reads_require_verified_email": True,
+        "university_board_writes_require_verified_email": True,
+        "university_board_access_requires_matching_school": False,
         "workflow_issue_report_review_cannot_publish": True,
         "workflow_issue_reports_require_verified_student": True,
     }

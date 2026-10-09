@@ -938,6 +938,9 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]
         return ccu_application_templates()
     if university.id == NCU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncu_template(template)) is not None]
+    if university.id == "tku":
+        from .tku_documents import tku_application_templates
+        return tku_application_templates()
     if university.id == NTU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntu_template(template)) is not None]
     if university.id != NTPU.id:
@@ -956,6 +959,11 @@ def all_application_templates(
 
 
 def templates_for_context(context: ApplicationCenterContext) -> list[ApplicationDocumentTemplate]:
+    if require_university(context.school_name).id == "tku" and (
+        str(context.academic_year or "").strip() not in ("", "2027-2028")
+        or str(context.application_round or "").strip() not in ("", "日語組第二次甄選")
+    ):
+        return []
     flags = set(context.flags)
     return [
         template.model_copy(deep=True)
@@ -1040,7 +1048,8 @@ def build_application_document_catalog(
                     id=hashlib.sha256(identity.encode("utf-8")).hexdigest()[:20],
                     sequence=sequence,
                     phase=(
-                        step.phase if requirement.stage in {"after_application", "second_submission"}
+                        step.phase if workflow.home_university == "淡江大學"
+                        or requirement.stage in {"after_application", "second_submission"}
                         else stages.get(requirement.stage, step.phase)
                     ),
                     step_title=step.title,
@@ -1068,7 +1077,7 @@ def build_application_document_catalog(
                     download_available=bool(
                         official_form_url and (
                             not needs_confirmation or (
-                                workflow.home_university == "國立中正大學"
+                                workflow.home_university in {"國立中正大學", "淡江大學"}
                                 and requirement.official_form_verified
                             )
                         )
@@ -1438,6 +1447,8 @@ def build_packet_manifest(
             if require_university(request.context.school_name).id == "ccu"
             else NCU_CHECKED_AT
             if require_university(request.context.school_name).id == NCU.id
+            else datetime(2026, 10, 8, tzinfo=timezone.utc)
+            if require_university(request.context.school_name).id == "tku"
             else NTU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == NTU.id
             else NTPU_SOURCE_CHECKED_AT
@@ -1447,7 +1458,16 @@ def build_packet_manifest(
     )
 
 
-def _register_pdf_font() -> tuple[str, str]:
+def _register_pdf_font(home_school: str | None = None) -> tuple[str, str]:
+    if home_school and require_university(home_school).id == "tku":
+        # Embed the school adapter's CJK font so Chinese/Japanese preparation
+        # answers remain visible without a viewer's optional external CMaps.
+        regular = "TKUPreparationCJK"
+        if regular not in pdfmetrics.getRegisteredFontNames():
+            from reportlab.pdfbase.ttfonts import TTFont
+            font_path = Path(__file__).parent / "official_data/tku/fonts/NotoSansCJKtc-Regular.ttf"
+            pdfmetrics.registerFont(TTFont(regular, str(font_path)))
+        return regular, regular
     regular = "ApplicationCJK"
     bold = "ApplicationCJKBold"
     candidates = [
@@ -1472,8 +1492,8 @@ def _register_pdf_font() -> tuple[str, str]:
     return "MSung-Light", "MSung-Light"
 
 
-def _styles() -> dict[str, ParagraphStyle]:
-    regular, bold = _register_pdf_font()
+def _styles(home_school: str | None = None) -> dict[str, ParagraphStyle]:
+    regular, bold = _register_pdf_font(home_school)
     base = getSampleStyleSheet()
     return {
         "title": ParagraphStyle(
@@ -1581,7 +1601,7 @@ def _pdf_document(
 
 
 def _manifest_cover(request: ApplicationPacketRequest, manifest: ApplicationPacketManifest) -> bytes:
-    styles = _styles()
+    styles = _styles(request.context.school_name)
     program_labels = {
         "exchange": "學期／學年交換",
         "dual_degree": "雙聯學位",
@@ -1713,7 +1733,7 @@ def _generic_template_pdf(
     request: ApplicationPacketRequest,
     copy_number: int,
 ) -> bytes:
-    styles = _styles()
+    styles = _styles(request.context.school_name)
     answers = request.answers.get(template.id, {})
     story: list[Any] = [
         Paragraph(html.escape(template.title), styles["title"]),

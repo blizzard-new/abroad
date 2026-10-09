@@ -13,6 +13,7 @@ const state = {
   partnerLimit: window.matchMedia("(max-width: 820px)").matches ? 20 : 30,
   documentType: "全部",
   statusTimer: null,
+  statusRevision: 0,
   hasLoaded: false,
   activeSchool: null,
   experienceRequestId: 0,
@@ -112,6 +113,8 @@ const state = {
   applicationTemplates: [],
   applicationDocumentCatalog: null,
   applicationDocumentCatalogError: "",
+  applicationDocumentCatalogContextKey: "",
+  applicationTemplateRequestId: 0,
   applicationContext: {
     school_name: "長庚大學",
     target_school: "",
@@ -144,6 +147,7 @@ const state = {
   applicationFiles: {},
   activeApplicationTemplateId: "",
   applicationLoading: false,
+  homeSchoolLoading: false,
   advisorPlan: null,
   planningPreview: null,
   planningRequestId: 0,
@@ -606,14 +610,22 @@ function accountNeedsSchool() {
 }
 
 function alignAccountSchool() {
-  const school = !state.account?.is_platform_admin && state.account?.catalog_home_university;
-  if (school) {
+  const accountSchool = !state.account?.is_platform_admin && state.account?.catalog_home_university;
+  if (accountSchool) {
+    const url = new URL(window.location.href);
+    const sharedHome = url.searchParams.get("home");
+    const school = state.supportedUniversities.some((item) => item.school_name === sharedHome)
+      ? sharedHome : accountSchool;
     state.homeSchool = school;
     state.selectedHomeSchool = school;
     state.applicationContext.school_name = school;
-    const url = new URL(window.location.href);
-    url.searchParams.set("home", school);
-    window.UniWayNavigation.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+    // A valid shared choice selects a public catalogue, not an account identity.
+    // During boot the registry may still be loading; leave the incoming query
+    // intact so boot can validate it after both account and registry resolve.
+    if (!sharedHome) {
+      url.searchParams.set("home", school);
+      window.UniWayNavigation.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+    }
   }
   updateSchoolContext();
   renderSchoolOptions();
@@ -1389,6 +1401,13 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
     partnerUrlSearch = window.location.search;
   }
   if (needsRefresh) {
+    // Invalidate even an A → B → A response before the next school load starts.
+    state.applicationTemplateRequestId += 1;
+    state.applicationTemplates = [];
+    state.applicationDocumentCatalog = null;
+    state.applicationDocumentCatalogError = "";
+    state.applicationDocumentCatalogContextKey = "";
+    state.applicationLoading = false;
     state.applicationContext.target_school = "";
     state.applicationContext.target_country = "";
     state.coverage = null;
@@ -1474,19 +1493,25 @@ async function refreshHomeUniversityData() {
   if (!canAccessPartnerCatalog()) { renderCatalogAccessGate(); return; }
   const requestedSchool = activeHomeSchool();
   const requestId = ++state.homeSchoolRequestId;
-  await Promise.all([
-    loadDashboard({ homeSchool: requestedSchool }),
-    loadApplicationTemplates({ homeSchool: requestedSchool }),
-    loadCoverage({ homeSchool: requestedSchool }),
-    loadDestinationProfiles({ homeSchool: requestedSchool }),
-  ]);
-  if (requestId !== state.homeSchoolRequestId || !isCurrentHomeSchool(requestedSchool)) return;
-  if (state.account) {
-    await loadAccountWorkspace({ homeSchool: requestedSchool });
+  state.homeSchoolLoading = true;
+  try {
+    await Promise.all([
+      loadDashboard({ homeSchool: requestedSchool }),
+      loadApplicationTemplates({ homeSchool: requestedSchool }),
+      loadCoverage({ homeSchool: requestedSchool }),
+      loadDestinationProfiles({ homeSchool: requestedSchool }),
+    ]);
+    if (requestId !== state.homeSchoolRequestId || !isCurrentHomeSchool(requestedSchool)) return;
+    if (state.account) {
+      await loadAccountWorkspace({ homeSchool: requestedSchool });
+    }
+    if (requestId !== state.homeSchoolRequestId || !isCurrentHomeSchool(requestedSchool)) return;
+    applyAppRoute({ loadFeed: false, resetScroll: false });
+    if (document.body.classList.contains("cgu-community-mode")) await loadGlobalCommunity();
+    announce(`${activeHomeSchool()}資料已切換`, "success");
+  } finally {
+    if (requestId === state.homeSchoolRequestId) state.homeSchoolLoading = false;
   }
-  applyAppRoute({ loadFeed: false, resetScroll: false });
-  if (document.body.classList.contains("cgu-community-mode")) await loadGlobalCommunity();
-  announce(`${activeHomeSchool()}資料已切換`, "success");
 }
 
 function initializeSchoolOnboarding() {
@@ -2441,6 +2466,7 @@ function sanitizeSelectionConditions(value) {
     academic_gpa:number(profile.academic_gpa,4.3), class_rank_percent:number(profile.class_rank_percent,100),
     language_test:["toeic","ielts","toefl","toefl_new","duolingo","other"].includes(profile.language_test) ? profile.language_test : null,
     language_score:number(profile.language_score,1000),
+    jlpt_level:['N1','N2','N3','N4','N5'].includes(profile.jlpt_level) ? profile.jlpt_level : null,
     target_term:text(profile.target_term,40), preferred_country:text(profile.preferred_country,80),
     monthly_budget:number(profile.monthly_budget,10000000), needs_scholarship:profile.needs_scholarship === true,
     academic_year:text(profile.academic_year,20), application_round:text(profile.application_round,80),
@@ -2455,6 +2481,7 @@ function selectionConditionsPayload(profile = state.eligibilityProfile) {
     degree_level:profile.degree, academic_score:profile.academicScore,
     academic_gpa:profile.academicGpa, class_rank_percent:profile.classRankPercent,
     language_test:profile.languageTest, language_score:profile.languageScore,
+    jlpt_level:profile.jlptLevel || null,
     target_term:profile.targetTerm, preferred_country:profile.preferredCountry,
     monthly_budget:profile.monthlyBudget, needs_scholarship:profile.scholarshipNeeded,
     academic_year:profile.academicYear, application_round:profile.applicationRound,
@@ -2470,6 +2497,7 @@ function selectionProfileFromWorkspace(conditions) {
     degree:profile.degree_level, academicScore:profile.academic_score,
     academicGpa:profile.academic_gpa, classRankPercent:profile.class_rank_percent,
     languageTest:profile.language_test || "", languageScore:profile.language_score,
+    jlptLevel:profile.jlpt_level || '',
     languageLabel:selectionLanguageLabel(profile.language_test, profile.language_score),
     targetTerm:profile.target_term, preferredCountry:profile.preferred_country,
     monthlyBudget:profile.monthly_budget, scholarshipNeeded:profile.needs_scholarship,
@@ -3246,6 +3274,13 @@ function renderAccountState() {
 }
 
 async function acceptAccountSession(session) {
+  const advisorForm = $("#advisor-form");
+  const draftHome = activeHomeSchool();
+  const guestDraft = !state.account && state.authRestoreState === "anonymous"
+    && advisorForm?.dataset.draftOwner === JSON.stringify(["", draftHome])
+    ? [...advisorForm.querySelectorAll("input[id], select[id], textarea[id]")].map(field => ({
+      id: field.id, value: field.value, checked: field.type === "checkbox" ? field.checked : null,
+    })) : null;
   state.authRestoreRequestId += 1;
   state.authSessionEpoch += 1;
   state.account = session.profile;
@@ -3256,6 +3291,22 @@ async function acceptAccountSession(session) {
   readStoredAuthenticatedState(state.account.id);
   alignAccountSchool();
   prepareAccountWorkspaceSyncForAccount(state.account);
+  // Only an unsaved draft typed in this anonymous session can follow the
+  // explicit sign-in. Old-account/quarantined state stays isolated, and a
+  // different mother school never inherits the draft.
+  if (guestDraft && activeHomeSchool() === draftHome) {
+    advisorForm.dataset.draftOwner = JSON.stringify([state.account.id, draftHome]);
+    guestDraft.forEach(({ id, value, checked }) => {
+      const field = document.getElementById(id);
+      if (!field || !advisorForm.contains(field)) return;
+      if (checked !== null) field.checked = checked;
+      else field.value = value;
+    });
+    $("#advisor-profile-status").textContent = "剛才填寫的條件仍未保存，送出後才會同步。";
+  } else if (guestDraft) {
+    // The question is also private draft text, outside the academic profile.
+    $("#advisor-question").value = "";
+  }
   if (state.account.content_updates_seen_at) {
     state.updateSeenAt = state.account.content_updates_seen_at;
   }
@@ -3285,6 +3336,7 @@ async function acceptAccountSession(session) {
 
 function clearAuthenticatedClientState() {
   if (state.account?.id) clearDiscoveryAccountData(state.account.id);
+  window.UniWayCommunity?.clearAuthenticatedState(state.account?.id || "");
   state.workflowIssueReportAbortController?.abort();
   state.workflowIssueReportAbortController = null;
   state.workflowIssueReportRequestId += 1;
@@ -3611,6 +3663,7 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
   state.partnerDataError = false;
   syncPartnerView();
   setLoadingState();
+  const loadingAnnouncementRevision = state.statusRevision;
   try {
     const school = encodeURIComponent(requestedSchool);
     const dashboard = await fetchJson(`/student-dashboard?school=${school}`);
@@ -3620,15 +3673,17 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
     renderDashboard();
     state.periodOptionsReady = loadApplicationPeriodOptions(); // never rejects; the first load waits for it
     state.hasLoaded = true;
-    if (refreshed) announce("資料已重新整理", "success");
-    else clearAnnouncement();
+    if (state.statusRevision === loadingAnnouncementRevision) {
+      if (refreshed) announce("資料已重新整理", "success");
+      else clearAnnouncement();
+    }
     return true;
   } catch (error) {
     if (!schoolDataRequestIsCurrent(request)) return false;
     state.partnerDataLoading = false;
     state.partnerDataError = true;
     syncPartnerView();
-    showLoadError(error);
+    showLoadError(error, { announceError: state.statusRevision === loadingAnnouncementRevision });
     return false;
   } finally {
     if (schoolDataRequestIsCurrent(request)) setRefreshState(false);
@@ -3941,6 +3996,16 @@ function partnerAvailabilityMeta(item) {
     const label = {not_open:"本季未開放（官方灰字）",needs_confirmation:"名額尚未核實",zero_quota:"零名額",fee_paying:"自費計畫"}[status];
     return {status,shortLabel:label,cardLabel:label,matchLabel:label,reason:item.availability_note || label,blocked:true};
   }
+  const additional = {
+    closed: { label: "表列交換校／校內申請已截止", reason: "本梯次校內甄選已截止" },
+    reference_only: { label: "舊期參考／不能作當期申請", reason: "尚未核實新版名額及規定" },
+    quota_unconfirmed: { label: "當期名額或期間待確認", reason: "名額或申請期間尚未確認可申請" },
+  };
+  if (additional[status]) {
+    const meta = additional[status];
+    return { status, shortLabel: meta.label, cardLabel: meta.label, matchLabel: meta.label,
+      reason: meta.reason, blocked: true };
+  }
   if (status === "departmental_reference") {
     return {
       status,
@@ -3987,6 +4052,12 @@ function renderPartnerAvailabilityNotice(item) {
     ? "中央當期名單未列，請先向所屬學院或國際處確認是否開放。"
     : ["not_open", "needs_confirmation", "zero_quota", "fee_paying"].includes(availability.status)
     ? availability.reason
+    : availability.status === "closed"
+    ? "此校列於官方名額表，但校內申請已截止；已獲推薦者請依外校通知續辦。"
+    : availability.status === "reference_only"
+    ? "這是已標示年度的舊期資料；新版尚未核實。"
+    : availability.status === "quota_unconfirmed"
+    ? "須確認當期正名額及申請期間後才能申請。"
     : "你的學校和這所學校簽有交換合約，只是這一期的交換名額表沒有列它，所以現在不能申請。之後若開放，會出現在學校國際處的名額表；開放前請先看國際處公告。";
   return `
     <div class="partner-availability-notice ${escapeHtml(availability.status)}" role="note">
@@ -4119,7 +4190,7 @@ async function refreshPlanningRecommendations() {
   try {
     const plan = await fetchJson("/advisor/plan", {
       method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({school_name:activeHomeSchool(),target_school:targetSchool || null,college:profile.college,department:profile.department || null,current_year:profile.currentYear || null,degree_level:profile.degree,academic_score:profile.academicScore ?? null,academic_gpa:profile.academicGpa ?? null,class_rank_percent:profile.classRankPercent ?? null,language_test:profile.languageTest,language_score:profile.languageScore ?? null,target_term:profile.targetTerm || null,preferred_country:profile.preferredCountry || null,monthly_budget:profile.monthlyBudget || null,needs_scholarship:Boolean(profile.scholarshipNeeded),preferred_teaching_language:profile.teachingLanguage || null,course_interests:profile.courseInterests || null}),
+      body:JSON.stringify({school_name:activeHomeSchool(),target_school:targetSchool || null,college:profile.college,department:profile.department || null,current_year:profile.currentYear || null,degree_level:profile.degree,academic_score:profile.academicScore ?? null,academic_gpa:profile.academicGpa ?? null,class_rank_percent:profile.classRankPercent ?? null,language_test:profile.languageTest,language_score:profile.languageScore ?? null,jlpt_level:profile.jlptLevel || null,academic_year:profile.academicYear || null,application_round:profile.applicationRound || null,target_term:profile.targetTerm || null,preferred_country:profile.preferredCountry || null,monthly_budget:profile.monthlyBudget || null,needs_scholarship:Boolean(profile.scholarshipNeeded),preferred_teaching_language:profile.teachingLanguage || null,course_interests:profile.courseInterests || null}),
     });
     if (planningProfileKey() !== profileKey || state.applicationContext.target_school !== targetSchool || state.advisorLoading) return;
     state.advisorPlan = plan;
@@ -4411,7 +4482,7 @@ function eligibilitySummary() {
   return {
     likely,
     review,
-    qualificationLabel: homeSelectionRules().language_certificate_required ? "校內正式語檢及外校條件仍須核對" : academicPass && languagePass ? (activeHomeSchool() === "國立臺灣大學" ? "所填成績與英語分數達基本門檻" : `符合${activeUniversityProfile().short_name}基本門檻`) : "仍有基本條件要確認",
+    qualificationLabel: activeUniversityProfile().id === "tku" ? "淡江須依語組、學制、梯次及官方矛盾項確認資格" : homeSelectionRules().language_certificate_required ? "校內正式語檢及外校條件仍須核對" : academicPass && languagePass ? (activeHomeSchool() === "國立臺灣大學" ? "所填成績與英語分數達基本門檻" : `符合${activeUniversityProfile().short_name}基本門檻`) : "仍有基本條件要確認",
   };
 }
 
@@ -6001,10 +6072,9 @@ async function handleNcuDocumentStateChange() {
   window.UniWayMultiPlan?.render();
 }
 
-function readApplicationContextForm() {
+function readApplicationContextForm({ targetSchool = $("#application-target-school")?.value || "" } = {}) {
   const form = $("#application-context-form");
   if (!form) return state.applicationContext;
-  const targetSchool = form.elements.target_school.value;
   const partner = state.dashboard?.partner_universities?.find((item) => item.school_name === targetSchool);
   state.applicationContext = {
     ...state.applicationContext,
@@ -6080,24 +6150,41 @@ function initializeApplicationSelections() {
   persistApplicationContext({ sync: false });
 }
 
+function applicationCatalogContextKey(homeSchool = activeHomeSchool(), context = state.applicationContext) {
+  return JSON.stringify([homeSchool, ...["target_school", "program_type", "college", "department", "degree_level", "academic_year", "application_round", "semester"].map(key => context[key] || ""), [...(context.flags || [])].sort(), context.partner_document_states || {}]);
+}
+
 async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}) {
   if (!canAccessPartnerCatalog()) return false;
   const requestedSchool = homeSchool;
   const request = beginSchoolDataRequest("templates", requestedSchool);
   const context = { ...state.applicationContext, flags: [...(state.applicationContext.flags || [])] };
-  const contextKey = JSON.stringify(context);
-  const requestIsCurrent = () => schoolDataRequestIsCurrent(request)
-    && contextKey === JSON.stringify(state.applicationContext);
+  const contextKey = applicationCatalogContextKey(requestedSchool, context);
+  const requestId = ++state.applicationTemplateRequestId;
+  const requestOwner = captureAuthenticatedRequestContext();
+  const isCurrent = () => schoolDataRequestIsCurrent(request) && requestId === state.applicationTemplateRequestId
+    && authenticatedRequestContextIsCurrent(requestOwner)
+    && isCurrentHomeSchool(requestedSchool) && contextKey === applicationCatalogContextKey();
   const container = $("#application-template-list");
-  if (container) container.innerHTML = '<div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>';
+  state.applicationTemplates = [];
+  state.applicationDocumentCatalog = null;
+  state.applicationDocumentCatalogError = "";
+  state.applicationDocumentCatalogContextKey = "";
   state.applicationLoading = true;
+  renderApplicationDocumentCatalog();
+  renderApplicationPacket();
+  if (container) container.innerHTML = '<div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>';
   try {
     const params = new URLSearchParams({
       school: requestedSchool,
       program_type: context.program_type || "exchange",
     });
     if (context.flags?.length) params.set("flags", context.flags.join(","));
+    ["academic_year", "application_round"].forEach(key => {
+      if (context[key]) params.set(key, context[key]);
+    });
     const templates = await fetchJson(`/application-center/templates?${params}`);
+    if (!isCurrent()) return false;
     let catalog = null;
     let catalogError = "";
     if (context.program_type === "exchange" && context.target_school) {
@@ -6119,14 +6206,15 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
         catalogError = error.message;
       }
     }
-    if (!requestIsCurrent()) return false;
-    state.applicationTemplates = templates;
-    state.applicationDocumentCatalog = catalog;
-    state.applicationDocumentCatalogError = catalogError;
+    if (!isCurrent()) return false;
     if (state.account && state.applicationFormDraftLoadedSchool !== requestedSchool) {
       await loadApplicationFormDrafts({ homeSchool: requestedSchool });
     }
-    if (!requestIsCurrent()) return false;
+    if (!isCurrent()) return false;
+    state.applicationTemplates = templates;
+    state.applicationDocumentCatalog = catalog;
+    state.applicationDocumentCatalogError = catalogError;
+    state.applicationDocumentCatalogContextKey = contextKey;
     initializeApplicationSelections();
     renderApplicationCenter();
     refreshSelectedApplicationPreviews();
@@ -6139,11 +6227,16 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
     }
     return true;
   } catch (error) {
-    if (!requestIsCurrent()) return false;
+    if (!isCurrent()) return false;
+    state.applicationDocumentCatalogError = error.message;
     if (container) renderEmpty("#application-template-list", "暫時無法取得申請文件", error.message, "error");
     return false;
   } finally {
-    if (schoolDataRequestIsCurrent(request)) state.applicationLoading = false;
+    if (isCurrent()) {
+      state.applicationLoading = false;
+      renderApplicationDocumentCatalog();
+      renderApplicationPacket();
+    }
   }
 }
 
@@ -6250,6 +6343,7 @@ function applicationRequirementMeta(item) {
   ];
   if (item.signatures?.length) parts.push(`簽名：${item.signatures.join("、")}`);
   if (item.stamps?.length) parts.push(`核章：${item.stamps.join("、")}`);
+  if (item.stage) parts.push(`階段：${({nomination:"提名",student_application:"學生申請",after_application:"外校申請後",second_submission:"第二次送件",post_offer:"錄取後",after_dorm_assignment:"住宿分配後",conditional_program:"特定計畫條件"})[item.stage]}`);
   if (item.conditional) parts.push(`適用條件：${item.condition || item.name}`);
   if (item.applicability_status) parts.push(`適用性：${({verified_current:"當期依據已核",needs_confirmation:"當期適用待確認",reference_only:"歷史參考"})[item.applicability_status]}`);
   if (item.applicability_year) parts.push(item.applicability_year);
@@ -6264,13 +6358,20 @@ function renderApplicationDocumentCatalog() {
   const count = $("#application-requirement-count");
   const summary = $("#application-requirement-summary");
   if (!container) return;
+  if (state.applicationLoading && state.applicationContext.target_school) {
+    if (count) count.textContent = "載入中";
+    if (summary) summary.textContent = `${state.applicationContext.target_school} · 正在核對本次年度與官方文件來源…`;
+    container.innerHTML = '<p class="workspace-empty" role="status">正在載入這所學校的文件清單。</p>';
+    return;
+  }
   if (state.applicationDocumentCatalogError) {
     if (count) count.textContent = "讀取失敗";
     if (summary) summary.textContent = "準備工具仍可使用，但當期文件需求暫時無法讀取。";
     container.innerHTML = `<div class="document-source-gap" role="alert"><p>${escapeHtml(state.applicationDocumentCatalogError)}</p><button type="button" class="secondary-button" data-retry-application-catalog>重新載入官方清單</button></div>`;
     return;
   }
-  const catalog = state.applicationDocumentCatalog;
+  const catalog = state.applicationDocumentCatalogContextKey === applicationCatalogContextKey()
+    ? state.applicationDocumentCatalog : null;
   if (!state.applicationContext.target_school) {
     if (count) count.textContent = "請選擇學校";
     if (summary) summary.textContent = "選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。";
@@ -6305,7 +6406,7 @@ function renderApplicationDocumentCatalog() {
       <div>${group.items.map((item) => {
         const sourceUrl = item.source_urls?.[0] || "";
         const pendingForm = item.applicability_status && safeSourceUrl(item.official_form_url);
-        const sourceLabel = item.official_form_verified ? "開啟已核實官方表格／文件" : item.download_available ? "下載校方正式表格" : pendingForm ? "查看官方表格來源（待核實）" : "查看官方規定";
+        const sourceLabel = activeHomeSchool() === "淡江大學" && item.download_available ? (item.applicability_status === "reference_only" ? "開啟官方一般參考表格" : "開啟校方原表／表單入口") : item.official_form_verified ? "開啟已核實官方表格／文件" : item.download_available ? "下載校方正式表格" : pendingForm ? "查看官方表格來源（待核實）" : "查看官方規定";
         const sourceHref = item.download_available || pendingForm ? item.official_form_url : sourceUrl;
         const referenceSources = activeHomeSchool() === "國立中央大學" && item.needs_confirmation
           ? [...new Set(item.source_urls || [])].filter((url) => url !== sourceHref && safeSourceUrl(url))
@@ -6314,7 +6415,7 @@ function renderApplicationDocumentCatalog() {
         return `
           <article class="application-requirement-item ${item.needs_confirmation ? "needs-confirmation" : "is-confirmed"}">
             <span class="application-requirement-order">${item.sequence}</span>
-            <div><span class="application-requirement-badges"><em>${item.needs_confirmation ? "待確認" : "已確認"}</em>${item.download_available ? "<b>官方表格</b>" : ""}</span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.step_title)}</small><p>${escapeHtml(applicationRequirementMeta(item))}</p>${documentApplicabilityMarkup(item.applicability ? [item.applicability] : [])}${item.needs_confirmation ? `<p class="application-requirement-contact">請聯絡 ${escapeHtml(item.contact_unit || catalog.contact_unit)}</p>` : ""}</div>
+            <div><span class="application-requirement-badges"><em>${item.needs_confirmation ? "待確認" : "已確認"}</em>${item.conditional ? "<b>符合條件才需要</b>" : ""}${item.download_available ? "<b>官方表格</b>" : ""}</span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.step_title)}</small><p>${escapeHtml(applicationRequirementMeta(item))}</p>${documentApplicabilityMarkup(item.applicability ? [item.applicability] : [])}${item.needs_confirmation ? `<p class="application-requirement-contact">請聯絡 ${escapeHtml(item.contact_unit || catalog.contact_unit)}</p>` : ""}</div>
             <div class="application-requirement-source">${sourceHref ? `<a href="${escapeHtml(sourceHref)}" target="_blank" rel="noreferrer"><i data-lucide="external-link" aria-hidden="true"></i><span>${sourceLabel}</span></a>` : "<span>來源待校方提供</span>"}${referenceSources.length ? `<details><summary>其他參考來源（當期待確認）</summary>${referenceSources.map((url, index) => `<a href="${escapeHtml(safeSourceUrl(url))}" target="_blank" rel="noreferrer">參考來源 ${index + 1}</a>`).join("")}</details>` : ""}<small>${escapeHtml(checkedAt)}</small></div>
           </article>`;
       }).join("")}</div>
@@ -6426,17 +6527,25 @@ function saveApplicationProfile(event) {
 
 async function handleApplicationContextChange(event) {
   const targetInput = $("#application-target-school");
+  // A background workspace render may restore the select while confirmation is open.
+  const proposed = targetInput.value;
   if (event?.target === targetInput && targetInput.value !== state.applicationContext.target_school) {
-    const proposed = targetInput.value;
     const owner = state.account?.id;
     const home = activeHomeSchool();
-    if (!await confirmPlanningTargetChange(proposed || "尚未決定") || owner !== state.account?.id || home !== activeHomeSchool()) { restoreApplicationContextForm(); return; }
+    targetInput.disabled = true;
+    let confirmed;
+    try {
+      confirmed = await confirmPlanningTargetChange(proposed || "尚未決定");
+    } finally {
+      targetInput.disabled = false;
+    }
+    if (!confirmed || owner !== state.account?.id || home !== activeHomeSchool()) { restoreApplicationContextForm(); return; }
   }
   state.planningPreview = null;
   state.planningLoading = false;
   state.planningRequestId += 1;
   invalidateAllApplicationReviews();
-  readApplicationContextForm();
+  readApplicationContextForm({ targetSchool: proposed });
   await loadApplicationTemplates();
   renderPersonalPlanSnapshot();
 }
@@ -7743,6 +7852,11 @@ function partnerDeadlineReference(item) {
   }
   const rawValue = partnerStudentSummary(item).application_deadline || item?.application_deadline;
   const value = String(rawValue || "").trim();
+  if (activeUniversityProfile().id === "tku") {
+    const hostDeadline = value || "外校當期期限尚未核實";
+    return { label: "外校申請期限（獲母校推薦後）", value: hostDeadline,
+      compact: `外校期限：${hostDeadline}` };
+  }
   const fallback = "當期公告待確認";
   if (!value) {
     return {
@@ -7908,7 +8022,7 @@ function renderComparison(items) {
     ["我的備註", (item) => discoveryData().school_preferences[item.school_name]?.note || "—"],
     ["名額", (item) => item.quota || "依公告"],
     ["研修期間", (item) => item.study_period || "依公告"],
-    ["合作校參考時程", (item) => partnerDeadlineReference(item).value],
+    [activeUniversityProfile().id === "tku" ? "外校申請期限（獲母校推薦後）" : "合作校參考時程", (item) => partnerDeadlineReference(item).value],
     ["適用身分", (item) => [item.colleges, item.degree_levels].filter(Boolean).join("／") || "依公告"],
   ];
   return `
@@ -8402,7 +8516,7 @@ function renderSchoolCompleteness(report) {
   if (!body) return;
   body.setAttribute("aria-busy", "false");
   body.innerHTML = `
-    <p class="school-completeness-summary"><strong>${report.available_count} / ${report.total_count} ${report.home_university === "國立中央大學" ? "項本期已核實" : "項已提供資料"}</strong>${report.priority_gaps.length ? `<span>，優先向學校確認：${report.priority_gaps.map(escapeHtml).join("、")}</span>` : ""}</p>
+    <p class="school-completeness-summary"><strong>${report.available_count} / ${report.total_count} ${report.home_university === "淡江大學" ? "欄已有當期依據；請逐欄看適用範圍" : report.home_university === "國立中央大學" ? "項本期已核實" : "項已提供資料"}</strong>${report.priority_gaps.length ? `<span>，優先向學校確認：${report.priority_gaps.map(escapeHtml).join("、")}</span>` : ""}</p>
     <ul class="school-completeness-list">${report.items.map((row) => {
       const [statusLabel, icon] = COMPLETENESS_STATUS[row.status] || ["待確認", "circle-alert"];
       const label = report.home_university === "國立中央大學" && row.status === "available" ? "本期已核實" : statusLabel;
@@ -8478,6 +8592,12 @@ function renderDestinationProfile(item, profile) {
     ["交通", profile.transport_summary],
     ["校園生活", profile.campus_life_summary],
   ].filter(([, value]) => value);
+  const originalProfile = profile.original_display_facts || profile;
+  const originalFacts = [
+    ["所在地", originalProfile.city], ["費用參考", originalProfile.cost_summary],
+    ["住宿", originalProfile.housing_summary], ["交通", originalProfile.transport_summary],
+    ["校園生活", originalProfile.campus_life_summary],
+  ].filter(([, value]) => value);
   const isPartial = profile.coverage_status === "official_partial";
   const statusClass = isPartial ? "partial" : "verified";
   const statusIcon = isPartial ? "badge-alert" : "badge-check";
@@ -8492,7 +8612,11 @@ function renderDestinationProfile(item, profile) {
     </div>
     ${renderStudentSurvivalGuide(item, profile)}
     <details class="destination-source-library">
-      <summary><span>來源（${(profile.sources || []).length}）</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+      <summary><span>查看本頁全部查核來源（${(profile.sources || []).length}）</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+      <section class="destination-original-summary" aria-label="核對摘要原文">
+        <h4>核對摘要原文</h4>
+        <dl>${originalFacts.map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>`).join("")}</dl>
+      </section>
       <div class="destination-sources">
         ${(profile.sources || []).map((source) => `
           <article class="destination-source-card">
@@ -8602,7 +8726,7 @@ function renderStudentSurvivalGuide(item, profile) {
         </div>` : ""}
       ${firstHours.length ? `
         <section class="student-guide-arrival" aria-labelledby="student-guide-arrival-title">
-          <div class="student-guide-subheading"><div><i data-lucide="route" aria-hidden="true"></i><h4 id="student-guide-arrival-title">抵達後 72 小時</h4></div><small>照順序完成，先讓自己能通訊、付款、進校與選課</small></div>
+          <div class="student-guide-subheading"><div><i data-lucide="route" aria-hidden="true"></i><h4 id="student-guide-arrival-title">${profile.home_university === "淡江大學" ? "抵達後辦理事項" : "抵達後 72 小時"}</h4></div><small>${profile.home_university === "淡江大學" ? "各項依官方時限及外校通知辦理" : "照順序完成，先讓自己能通訊、付款、進校與選課"}</small></div>
           <ol>${renderGuideChecklist(firstHours, profile)}</ol>
         </section>` : ""}
       ${(bring.length || buyThere.length) ? `
@@ -8671,7 +8795,8 @@ function renderLifeEvidenceSupplement(category, { limit = 2 } = {}) {
   const labels = { official: "官方", geographic: "周邊地點", mixed: "官方與學生" };
   const evidenceRows = (category.evidence || []).map(row => {
     const pending = row.translation_status === "pending";
-    return `<div class="life-evidence-item"><span class="life-kind ${escapeHtml(row.kind)}">${labels[row.kind] || "公開資料"}${row.translation_status === "machine" ? " · 機器翻譯" : pending ? " · 原文" : ""}</span><p class="life-evidence-text">${escapeHtml(row.text)}</p>${row.original_excerpt ? `<small class="life-applicability-note">官網參考；適用校區與年度請核對來源。${row.checked_at ? ` 查閱 ${escapeHtml(formatDate(row.checked_at))}` : ""}</small>` : ""}<details class="life-evidence-source"><summary>資料來源</summary>${row.original_text && row.original_text !== row.text ? `<p>${escapeHtml(row.original_text)}</p>` : ""}<small>${escapeHtml(row.scope)}${row.checked_at ? ` · 查閱 ${escapeHtml(formatDate(row.checked_at))}` : ""}</small><div class="life-source-links">${row.sources.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)} ↗</a>`).join("")}</div></details></div>`;
+    const original = row.original_text || row.text;
+    return `<div class="life-evidence-item"><span class="life-kind ${escapeHtml(row.kind)}">${labels[row.kind] || "公開資料"}${row.translation_status === "machine" ? " · 機器翻譯" : pending ? " · 原文" : ""}</span><p class="life-evidence-text">${escapeHtml(pending ? "中文翻譯尚未完成，可查看原文。" : row.text)}</p>${row.original_excerpt ? `<small class="life-applicability-note">官網參考；適用校區與年度請核對來源。${row.checked_at ? ` 查閱 ${escapeHtml(formatDate(row.checked_at))}` : ""}</small>` : ""}<details class="life-evidence-source"><summary>原文與來源</summary>${pending || original !== row.text ? `<p>${escapeHtml(original)}</p>` : ""}<small>${escapeHtml(row.scope)}${row.checked_at ? ` · ${escapeHtml(formatDate(row.checked_at))}` : ""}</small><div class="life-source-links">${row.sources.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)} ↗</a>`).join("")}</div></details></div>`;
   });
   const evidence = evidenceRows.slice(0, limit).join("") + (evidenceRows.length > limit ? `<details class="life-more-evidence"><summary>再看 ${evidenceRows.length - limit} 則資料</summary>${evidenceRows.slice(limit).join("")}</details>` : "");
   const inference = category.inference;
@@ -10114,7 +10239,7 @@ function renderCommunityPageContext(isUniversityBoard = false) {
   }
   if (description) {
     description.textContent = isUniversityBoard
-      ? `只顯示發布到${school}板的交換申請與校內討論。`
+      ? `校級看板限已驗證 Email 的會員查看、發文與留言，不限同校。這裡顯示${school}板的交換申請與校內討論。`
       : languageBoard
         ? "交流課程選擇、簽證、住宿與城市生活；目前不提供完整語言學校申請流程。"
         : publicBoard
@@ -10210,8 +10335,8 @@ function initDiscussionReader() {
         : route === "cgu" ? [CGU_COMMUNITY_BOARD]
         : route === "university" ? [activeHomeSchool()]
         : route === "following" ? [...followedBoardSet()] : [];
-      return { key: `${state.account?.id || "guest"}:${route}:${boards.join(",")}`,
-        permissionKey: `${state.account?.id || "guest"}:${state.communityBoards.map((board) => `${board.id}:${board.can_comment}`).join(",")}`,
+      return { key: `${state.account?.id || "guest"}:${Boolean(state.account?.email_verified)}:${route}:${boards.join(",")}`,
+        permissionKey: `${state.account?.id || "guest"}:${state.communityBoards.map((board) => `${board.id}:${board.can_read}:${board.can_comment}`).join(",")}`,
         accountId: state.account?.id || "", boards,
         active: Boolean(globalFeedForHash() || ["#cgu-posts", "#university-posts"].includes(location.hash)),
         emptyFollowing: route === "following" && (!state.account || !boards.length),
@@ -11211,13 +11336,19 @@ function renderApplicationPeriodOptions() {
   const periods = data?.periods || [];
   // Retain future years and legacy drafts, but never present them as published periods.
   const currentYear = new Date().getFullYear() - 1911;
-  const years = [...new Set([String(currentYear),String(currentYear+1),String(currentYear+2),...periods.map(row=>row.academic_year),selectedYear].filter(Boolean))];
+  const defaultYears = activeHomeSchool() === "淡江大學"
+    ? window.UniWayTKU.applicationYears(periods)
+    : [String(currentYear), String(currentYear+1), String(currentYear+2)];
+  const years = [...new Set([...defaultYears,...periods.map(row=>row.academic_year),selectedYear].filter(Boolean))];
   yearField.innerHTML = '<option value="">請選擇</option>' + years.sort().reverse().map(year=>
     `<option value="${escapeHtml(year)}">${escapeHtml(year)} 學年度${periods.some(row=>row.academic_year === year) ? "" : "（流程資料待確認）"}</option>`).join("");
   yearField.value = selectedYear;
   const relevant = periods.filter(row=>row.academic_year === selectedYear);
+  const defaultRounds = activeHomeSchool() === "淡江大學"
+    ? ["其他／尚未核實"]
+    : ["第一梯次","第二梯次","其他／尚未公告"];
   const rounds = [...new Set([...relevant.map(row=>row.application_round),...periods.map(row=>row.application_round),
-    "第一梯次","第二梯次","其他／尚未公告",selectedRound].filter(Boolean))];
+    ...defaultRounds,selectedRound].filter(Boolean))];
   roundField.innerHTML = '<option value="">請選擇</option>' + rounds.map(round=>{
     const row = relevant.find(item=>item.application_round === round);
     const note = row ? row.needs_confirmation ? "（適用性待確認）" : "" : "（此年度流程待確認）";
@@ -11341,6 +11472,7 @@ async function checkEligibility(event) {
   const classRankPercent = ntu ? optionalNumber($("#advisor-class-rank").value) : null;
   const languageTest = $("#advisor-language-test").value;
   const languageScore = Number($("#advisor-language-score").value);
+  const jlptLevel = activeHomeSchool() === '淡江大學' ? $('#advisor-jlpt-level').value : '';
   const targetTerm = $("#advisor-target-term").value;
   const preferredCountry = $("#advisor-country").value;
   const monthlyBudget = Number($("#advisor-monthly-budget").value) || 0;
@@ -11353,7 +11485,7 @@ async function checkEligibility(event) {
     .filter((item) => item.school_name)
     .map((item, index) => ({ ...item, rank: index + 1, ...(activeHomeSchool() === "國立中央大學" ? {document_preparation_state:ncuDocumentState(item.school_name, academicYear, applicationRound)} : {}) }));
 
-  if (!college || !department || !degree || !academicYear || !applicationRound || (!ntu && (academicScore === null || !Number.isFinite(academicScore))) || !languageTest || !preferences.length) {
+  if (!college || !department || !degree || !academicYear || !applicationRound || (!ntu && (academicScore === null || !Number.isFinite(academicScore))) || (!languageTest && !jlptLevel) || !preferences.length) {
     announce("請完成所有必填欄位", "error");
     return;
   }
@@ -11386,6 +11518,7 @@ async function checkEligibility(event) {
     classRankPercent,
     languageTest,
     languageScore,
+    jlptLevel,
     languageLabel: languageScore > 0 ? `${languageTest.toUpperCase()} ${languageScore}` : "語言能力待確認",
     academicYear,
     applicationRound,
@@ -11402,13 +11535,13 @@ async function checkEligibility(event) {
     college,
     department,
     degree_level: degree,
-    current_year: profile.currentYear || null,
+    current_year: profile.currentYear,
     academic_score: ntu ? null : academicScore,
     academic_gpa: academicGpa,
     class_rank_percent: classRankPercent,
-    current_year: $("#advisor-current-year").value,
-    language_test: languageTest,
+    language_test: languageTest || null,
     language_score: Number.isFinite(languageScore) && languageScore > 0 ? languageScore : null,
+    jlpt_level: jlptLevel || null,
     academic_year: academicYear,
     application_round: applicationRound,
     preferences,
@@ -11554,7 +11687,7 @@ function renderAdvisorForm() {
   if (!state.dashboard) return;
   const form = $("#advisor-form");
   const owner = JSON.stringify([state.account?.id || "",activeHomeSchool()]);
-  if (form.dataset.draftOwner === owner) { renderAdvisorAccessState(); return; }
+  if (form.dataset.draftOwner === owner) { renderAdvisorAccessState(); window.UniWayTKU?.renderEligibility?.(activeHomeSchool(), null); return; }
   delete form.dataset.draftOwner;
   const profile = state.eligibilityProfile || {};
   const partners = state.dashboard.partner_universities || [];
@@ -11577,6 +11710,7 @@ function renderAdvisorForm() {
   $("#advisor-course-interests").value = profile.courseInterests || "";
   $("#advisor-scholarship").checked = Boolean(profile.scholarshipNeeded);
   renderAdvisorAccessState();
+  window.UniWayTKU?.renderEligibility?.(activeHomeSchool(), profile);
 }
 
 function renderAdvisorAccessState() {
@@ -11800,6 +11934,9 @@ async function submitAdvisorPlan(event) {
     class_rank_percent: optionalNumber(formData.get("class_rank_percent")),
     language_test: formData.get("language_test") || null,
     language_score: optionalNumber(formData.get("language_score")),
+    jlpt_level: formData.get('jlpt_level') || null,
+    academic_year: $('#eligibility-academic-year').value || null,
+    application_round: $('#eligibility-application-round').value || null,
     target_term: formData.get("target_term") || null,
     preferred_country: formData.get("preferred_country") || null,
     monthly_budget: optionalNumber(formData.get("monthly_budget")),
@@ -11835,7 +11972,8 @@ async function submitAdvisorPlan(event) {
     }
     state.advisorPlan = plan;
     delete form.dataset.draftOwner;
-    if (payload.college || payload.degree_level || payload.academic_score !== null || payload.language_test) {
+    if (payload.college || payload.degree_level || payload.academic_score !== null || payload.language_test || payload.jlpt_level) {
+      const threshold = languageThreshold(payload.language_test);
       state.eligibilityProfile = {
         academicYear,
         applicationRound,
@@ -11848,6 +11986,7 @@ async function submitAdvisorPlan(event) {
         classRankPercent: payload.class_rank_percent,
         languageTest: payload.language_test,
         languageScore: payload.language_score,
+        jlptLevel: payload.jlpt_level || '',
         languageLabel: selectionLanguageLabel(payload.language_test, payload.language_score),
         targetTerm: payload.target_term || "",
         preferredCountry: payload.preferred_country || "",
@@ -12316,6 +12455,7 @@ function renderEmpty(selector, title, message, kind = "empty") {
 }
 
 function announce(message, type = "loading", persist = false) {
+  state.statusRevision += 1;
   window.clearTimeout(state.statusTimer);
   const icon = type === "error" ? "circle-alert" : type === "success" ? "circle-check" : "loader-circle";
   $("#page-status").innerHTML = `<div class="status-message ${escapeHtml(type)}"><i data-lucide="${icon}" aria-hidden="true"></i><span>${escapeHtml(message)}</span>${type === "error" ? '<button id="retry-load" type="button" class="secondary-button">重試</button>' : ""}</div>`;
@@ -12326,12 +12466,13 @@ function announce(message, type = "loading", persist = false) {
 }
 
 function clearAnnouncement() {
+  state.statusRevision += 1;
   window.clearTimeout(state.statusTimer);
   $("#page-status").replaceChildren();
 }
 
-function showLoadError(error) {
-  announce(`資料載入失敗：${error.message}`, "error", true);
+function showLoadError(error, { announceError = true } = {}) {
+  if (announceError) announce(`資料載入失敗：${error.message}`, "error", true);
   renderEmpty("#partner-table", "暫時無法取得學校資料", "請確認網路或服務狀態後重新嘗試。", "error");
   renderEmpty("#period-list", "暫時無法取得截止日期", "重新整理後再試一次。", "error");
   renderEmpty("#scholarship-list", "暫時無法取得補助資料", "重新整理後再試一次。", "error");
@@ -12362,7 +12503,13 @@ function resetRouteScroll() {
 }
 
 function focusRouteHeading(selector) {
+  const route = window.location.hash;
+  const origin = document.activeElement;
   window.requestAnimationFrame(() => {
+    if (window.location.hash !== route) return;
+    // A queued route callback must not steal focus from a control the user
+    // has already reached with the keyboard during the next frame.
+    if (document.activeElement !== origin && document.activeElement?.closest("button, a, input, textarea, select, summary, [role='tab']")) return;
     if (document.querySelector('[aria-modal="true"]:not([hidden])')) return;
     const heading = typeof selector === "string" ? document.querySelector(selector) : selector;
     if (!(heading instanceof HTMLElement) || heading.getClientRects().length === 0) return;
@@ -12690,8 +12837,9 @@ function bindEvents() {
   });
   $("#global-community-search").addEventListener("input", (event) => {
     window.clearTimeout(state.globalCommunityTimer);
+    const query = event.target.value.trim();
     state.globalCommunityTimer = window.setTimeout(() => {
-      state.globalCommunityQuery = event.target.value.trim();
+      state.globalCommunityQuery = query;
       window.UniWayCommunity.updateFilters({ q: state.globalCommunityQuery });
     }, 280);
   });

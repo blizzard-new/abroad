@@ -18,7 +18,7 @@ LOCATIONS = ROOT / "src" / "exchange_info" / "official_data" / "university_locat
 
 def destination_countries() -> set[str]:
     rows = [json.loads(line) for line in LOCATIONS.read_text(encoding="utf-8").splitlines() if line.strip()]
-    return {row["country"] for row in rows} - {"臺灣"}
+    return {destination_tips.canonical_country(row["country"]) for row in rows} - {"臺灣"}
 
 
 def good_payload() -> dict:
@@ -42,8 +42,18 @@ def test_the_bundled_guides_pass_the_validator():
     assert validate_guides(payload) == []
 
 
-def test_every_destination_country_has_a_guide_and_nothing_else_does():
-    assert set(load_guides()) == destination_countries()
+def test_destination_guide_coverage_accounts_for_every_known_gap(client):
+    # The expanded six-school coordinate catalog includes countries with no
+    # researched guide. Keep those missing instead of fabricating tips or dates.
+    gaps = {"丹麥", "以色列", "冰島", "南非", "哥倫比亞", "墨西哥", "希臘",
+            "斯洛維尼亞", "智利", "澳門", "盧森堡", "科索沃", "芬蘭", "葡萄牙"}
+    assert set(load_guides()) | gaps == destination_countries()
+    assert not set(load_guides()) & gaps
+    for country in sorted(gaps):
+        assert destination_tips.guide_for_country(country) is None
+        response = client.get("/destination-tips", params={"country": country})
+        assert response.status_code == 404
+        assert response.json()["detail"] == "這個國家的出發前提醒還在整理中。"
 
 
 def test_nothing_is_marked_reviewed_without_two_reviewers():

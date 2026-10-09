@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import shutil
+import hashlib
+import json
 import socket
 import threading
 import time
@@ -13,9 +15,9 @@ import uvicorn
 from playwright.sync_api import Browser, Page, Playwright, sync_playwright
 
 from exchange_info.api import create_app
-from exchange_info.models import AccountNotification, PartnerUniversity
+from exchange_info.models import AccountNotification, PartnerUniversity, ProcessedPage, PageCategory
 from exchange_info.repositories import JsonlAccountRepository
-from exchange_info.storage import ensure_data_dirs
+from exchange_info.storage import ensure_data_dirs, load_processed_pages, save_processed_pages
 
 
 PUBLIC_DATA_FILES = (
@@ -118,6 +120,16 @@ def live_server(tmp_path_factory) -> LiveServer:
     data_dir = tmp_path_factory.mktemp("web-e2e-data")
     ensure_data_dirs(data_dir)
     _copy_public_fixture_data(data_dir)
+    # Real official document source, confined to synthetic E2E data. The normal
+    # checkout has no processed CGU pages; synchronization needs a document ID.
+    document_fixture = json.loads((Path(__file__).resolve().parents[1] / "fixtures" /
+                                  "cgu-document-readiness-2026-10-09.json").read_text())
+    save_processed_pages([*load_processed_pages(data_dir), ProcessedPage(
+        title=document_fixture["title"], source_url=document_fixture["source_url"],
+        text=document_fixture["text"], summary=document_fixture["scope"],
+        category=PageCategory.EXCHANGE_APPLICATION,
+        content_hash=hashlib.sha256(document_fixture["text"].encode()).hexdigest(),
+    )], data_dir)
     partners = [
         PartnerUniversity(
             program_type="交換學生",
@@ -513,3 +525,5 @@ def login_through_web(page: Page, live_server: LiveServer, email: str) -> None:
         f"{login_response.text()}"
     )
     page.locator("#auth-dialog").wait_for(state="hidden", timeout=10_000)
+    page.wait_for_function("() => !state.homeSchoolLoading && state.accountWorkspaceLoadingCount === 0", timeout=60_000)
+    page.evaluate("() => state.periodOptionsReady")

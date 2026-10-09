@@ -9,10 +9,10 @@ from scripts.validate_supabase_migrations import (
 
 def test_all_supabase_migrations_parse_including_nested_function_bodies() -> None:
     summary = validate_migrations(DEFAULT_MIGRATION_DIR.glob("*.sql"))
-    assert len(summary.results) == 32
-    assert summary.statement_count == 557
+    assert len(summary.results) == 35
+    assert summary.statement_count == 564
     assert summary.sql_body_count == 11
-    assert summary.plpgsql_unit_count == 69
+    assert summary.plpgsql_unit_count == 74
 
     school_boards = next(result for result in summary.results
                          if result.path.name == "20261009135343_ccu_ncu_school_board_compatibility.sql")
@@ -36,6 +36,14 @@ def test_all_supabase_migrations_parse_including_nested_function_bodies() -> Non
     assert issue_reports.statement_count == 29
     assert issue_reports.sql_body_count == 0
     assert issue_reports.plpgsql_unit_count == 4
+
+    governance_results = [result for result in summary.results
+                          if result.path.name.endswith("_atomic_governance_commands.sql")]
+    assert len(governance_results) == 1
+    governance = governance_results[0]
+    assert governance.statement_count == 4
+    assert governance.sql_body_count == 0
+    assert governance.plpgsql_unit_count == 2
 
 def test_nested_plpgsql_syntax_error_is_rejected(tmp_path: Path) -> None:
     migration = tmp_path / "20260829000000_invalid.sql"

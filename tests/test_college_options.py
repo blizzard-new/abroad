@@ -40,13 +40,17 @@ def test_college_selects_ignore_partner_notes_and_follow_home_university():
     };
     const calls = new Map(), elements = new Map();
     const $ = selector => {
-      if (!elements.has(selector)) elements.set(selector, {value: '', id: selector.slice(1), dataset: {}});
+      if (!elements.has(selector)) elements.set(selector, {value: '', id: selector.slice(1), dataset: {}, options: []});
       return elements.get(selector);
     };
     const fillSelect = (selector, values, placeholder, selected = '') => calls.set(selector, {values, selected});
+    const fillRegionSelect = () => {};
+    const fillCountrySelect = () => {};
+    const renderAcademicFields = () => {};
+    const renderApplicationPeriodOptions = () => {};
     const renderAdvisorAccessState = () => {};
     for (const name of ['normalize', 'activeHomeSchool', 'activeUniversityProfile',
-      'homeCollegeOptions', 'homeCollegeValue', 'renderDepartmentOptions', 'unique', 'splitOptions',
+      'homeCollegeOptions', 'homeCollegeValue', 'renderDepartmentOptions', 'unique', 'splitOptions', 'partnerAvailabilityMeta',
       'renderPartnerFilters', 'renderEligibilityOptions', 'restoreEligibilityForm', 'renderAdvisorForm']) {
       const match = source.match(new RegExp('^function ' + name + '\\([^]*?^}', 'm'));
       assert.ok(match, 'Missing production function: ' + name);

@@ -43,6 +43,7 @@ from .models import (
 )
 from .workflow_structuring import structure_application_workflow
 from .source_url_policy import canonical_source_url_identity
+from .governance_commands import atomic_workflow_command
 
 
 _CONFIRMATION_STATUSES = {
@@ -784,6 +785,7 @@ def build_application_workflow_review_batch_rows(
     return rows
 
 
+@atomic_workflow_command
 def stage_application_workflow_review_batch(
     store: ContentGovernanceStore,
     batch_id: str,

@@ -90,7 +90,7 @@ def test_every_tool_has_shared_navigation_and_return(page, live_server):
     routes = ["favorites", "advisor", "application-center", "calendar", "eligibility", "document-check", "documents", "deadlines", "scholarships", "budget"]
     for route in routes:
         page.locator("#application-tools .application-nav-chevron").click()
-        if route in ["eligibility", "document-check", "documents", "deadlines", "scholarships", "budget"] and not page.locator(".application-extra-tools").get_attribute("open") == "":
+        if route in ["favorites", "calendar", "eligibility", "document-check", "documents", "deadlines", "scholarships", "budget"] and not page.locator(".application-extra-tools").get_attribute("open") == "":
             page.locator(".application-extra-tools > summary").click()
         page.locator(f'.application-tools-panel a[href="#{route}"]').click()
         expect(page).to_have_url(re.compile(rf"#{route}$"))
@@ -107,6 +107,9 @@ def test_every_tool_has_shared_navigation_and_return(page, live_server):
 def test_school_return_retains_filters_scroll_and_forward(page, live_server):
     page.set_viewport_size({"width": 1280, "height": 600})
     open_partners(page, live_server, {"view": "list", "country": "紐西蘭", "q": "Lincoln"})
+    expect(page.locator("#boot-splash")).to_be_hidden()
+    page.wait_for_function("() => !state.homeSchoolLoading && !state.partnerDataLoading")
+    page.evaluate("() => state.periodOptionsReady")
     trigger = page.locator('.desktop-partner-table .school-detail-trigger').first
     # Start from a real scroll position even when the compact search header fits above the fold.
     page.evaluate("scrollTo({top: 250, behavior: 'instant'})")
@@ -121,7 +124,11 @@ def test_school_return_retains_filters_scroll_and_forward(page, live_server):
     page.wait_for_function("scrollY > 500")
     tabs = page.locator(".detail-tabs").bounding_box()
     toolbar = page.locator(".route-toolbar").bounding_box()
-    assert tabs["y"] >= toolbar["y"] + toolbar["height"]
+    # The toolbar now lives in the left rail. It must not occlude sticky tabs.
+    if tabs["x"] < toolbar["x"] + toolbar["width"] and toolbar["x"] < tabs["x"] + tabs["width"]:
+        assert tabs["y"] >= toolbar["y"] + toolbar["height"]
+    else:
+        assert toolbar["x"] + toolbar["width"] <= tabs["x"]
     page.locator("#back-to-schools").click()
     expect(page).to_have_url(before_url)
     expect(page.locator("#partner-search")).to_have_value("Lincoln")

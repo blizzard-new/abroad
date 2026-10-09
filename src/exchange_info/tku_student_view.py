@@ -1,0 +1,194 @@
+"""Conservative TKU adapter: current round and reference catalogue stay separate."""
+from __future__ import annotations
+
+import json
+from datetime import datetime, timezone
+
+from .models import (ApplicationPeriodItem, ExchangeInfo, PartnerStudentSummary, PartnerUniversity,
+                     ProcessedPage, SourceReference, StudentDashboard, StudentInfoItem)
+from .tku_data import BUNDLE, CHECKED_AT, HOME, load_tku_records, load_tku_rounds, load_tku_sources
+
+
+def _source(source_id: str, summary: str | None = None) -> SourceReference:
+    row = next(s for s in load_tku_sources() if s["id"] == source_id)
+    return SourceReference(title=row.get("title",source_id), source_url=row["source_url"],
+                           summary=summary or f"適用：{row['applicable_year']}；查核2026-10-08；{row['role']}")
+
+
+def _notice_audit():
+    return json.loads((BUNDLE / "current_notice_audit.json").read_text(encoding="utf-8"))
+
+
+def _notice_audit_sources():
+    audit = _notice_audit()
+    return [SourceReference(title=f"淡江官方公告REST查核第{row['page']}/{audit['rest_pages']}頁",
+        source_url=row['url'], summary=f"查核2026-10-08；公開公告2025/9/1至2026/10/8，完整{audit['rest_total']}筆／{audit['rest_pages']}頁。{audit['finding']}")
+        for row in audit['evidence'] if 'entries' in row]
+
+
+def tku_partner_summary(record) -> PartnerStudentSummary:
+    """Render reviewed evidence in the fields actually read by school detail UI."""
+    fields=record.fields
+    home_language=("母校語言：大學部日語課程JLPT N2以上，研究所N1；立命館另須N1。"
+                   "電氣通信英語課的大學部例外與研究所N1豁免須分開確認。"
+                   "（2027–2028日語二甄簡章PDF p.2；名額表p.1）")
+    eligibility=[f"母校資格：{fields['home_eligibility'].value}（簡章p.2、p.18）",home_language]
+    for key,label in [('host_eligibility','外校入學條件'),('host_language','外校語言條件'),
+                      ('department_scope','淡江科系範圍'),('campus','校區'),('host_programme_mapping','計畫範圍')]:
+        if fields[key].value:
+            basis=fields[key].evidence[0]
+            eligibility.append(f"{label}：{fields[key].value}（{basis.applicable_year}；{basis.locator}）")
+    costs=list(dict.fromkeys(str(fields[key].value) for key in ['home_costs','costs'] if fields[key].value))
+    return PartnerStudentSummary(study_period=str(fields['study_period'].value),
+        application_deadline=fields['host_deadline'].value,
+        eligibility_points=eligibility,
+        application_steps=[
+            '校內申請：2026/9/30 12:00臺北時間已截止；經系所、學院推薦，再由國際處甄選（更正公告、簡章p.3–6）。',
+            '校內文件：申請表、中文歷年成績單、語言證明、推薦函、中日文自傳與研習計畫、切結書及有則附其他證明；A4單面總計不超過16頁（簡章p.3–4）。',
+            '校內甄選：書審與面試；甄試70分不能當作學業平均75分門檻（簡章p.5）。',
+            f"外校申請：僅已獲母校推薦者續辦；{fields['host_deadline'].value or '外校當期期限未核實'}；母校推薦不等於外校錄取。",
+            f"外校文件：依申請流程的外校申請／行前階段清單及條件準備；{fields['latest_forms'].value}",
+        ],tuition_points=costs,translated_from_english=False)
+
+
+def fetch_tku_partner_universities(*, reference_time: datetime | None = None) -> list[PartnerUniversity]:
+    now = reference_time or datetime.now(timezone.utc)
+    if now.utcoffset() is None: raise ValueError("reference_time needs timezone")
+    current = load_tku_rounds()[0]
+    opens = datetime.fromisoformat(current["opens_at"])
+    deadline = datetime.fromisoformat(current["deadline_at"])
+    # "open" means a current application window AND a verified positive quota.
+    # Previous Japanese-round schools and the 124 old programme rows are not injected.
+    rows=[]
+    for record in load_tku_records():
+        fields = record.fields
+        value = lambda key: fields[key].value
+        evidence = fields["quota"].evidence[0]
+        status = "closed" if now > deadline else "quota_unconfirmed" if now < opens else "open"
+        if status == "open" and (record.quota_status != "numeric" or not record.quota_number):
+            status = "quota_unconfirmed"
+        rows.append(PartnerUniversity(
+            program_type=f"交換學生（{record.application_round}／{record.academic_year}）",
+            availability_status=status,
+            availability_note=f"{record.academic_year} {record.application_round}表列；2026/9/30 12:00校內申請截止，系所較早截止日需另查。" + ("已截止，僅已獲推薦者依外校期限辦理後續。" if status == "closed" else "申請期間與是否取得推薦須依官方規定。"),
+            agreement_type="校級互惠交換", agreement_level="校級", country=value("country"),
+            school_name=value("school_name"), website=value("website"), colleges=None,
+            degree_levels=value("degree_levels"), study_period=value("study_period"),
+            quota=value("quota"),
+            eligibility="\n".join(str(value(k)) for k in ["home_eligibility","host_eligibility","department_scope"] if value(k)),
+            # The shared partner table uses this column for the host application.
+            # Exact home dates remain in the dashboard and availability_note.
+            application_deadline=str(value("host_deadline") or "外校當期期限尚未核實；不能沿用其他學校日期"),
+            application_info=f"{value('documents')} 外校期限：{value('host_deadline') or '未核實'}。矛盾項：{', '.join(record.conflicts)}；詳細來源見TKU evidence catalogue。",
+            tuition_info=str(value("costs")), source_url=evidence.source_url,
+            student_summary_zh=tku_partner_summary(record),
+        ))
+    return rows
+
+
+def build_tku_student_dashboard(*, partner_universities=None, reference_time: datetime | None = None) -> StudentDashboard:
+    now = reference_time or datetime.now(timezone.utc)
+    periods=[]
+    for index, row in enumerate(load_tku_rounds()):
+        source = _source(row["source_id"])
+        verified = index == 0
+        deadline = datetime.fromisoformat(row["deadline_at"]) if verified else None
+        opens = datetime.fromisoformat(row["opens_at"]) if verified else None
+        status = ("closed" if now > deadline else "upcoming" if now < opens else "open") if verified else "reference_only"
+        periods.append(ApplicationPeriodItem(title=row["title"], details=row["details"], source=source,
+            scope="home_application" if verified else "recurring_reference", program_types=["exchange"],
+            academic_year=row["academic_year"], application_round=row["application_round"],
+            opens_at=opens, deadline_at=deadline, date_status="verified_exact" if verified else "reference_only",
+            status=status, status_note=row["status_note"], reminder_eligible=False, checked_at=CHECKED_AT))
+    guide = _source("jp-revision-attachment-1", "2027–2028日語第二次甄選簡章；p.2資格、p.3–4文件、p.8–10費用住宿、p.14–15表格；2026-10-08核對全文。")
+    return StudentDashboard(school_name=HOME, last_checked=CHECKED_AT,
+        academic_score_minimum=75,
+        academic_score_rule="僅2027–2028日語二甄：正文總平均75分；附錄Q&A另載系前40%替代條件，適用性待確認。甄試總成績70分為錄取標準，不能作學業平均門檻。",
+        language_score_minimums={}, application_periods=periods,
+        program_overview=[StudentInfoItem(title="目前資料範圍", details=[
+            "最新校級日語二甄4校合計7名，已截止；只有已獲推薦者可依外校期限續辦。",
+            "英歐及中文組2027–2028新版尚未核實，不能稱官方明示尚未公告。124筆115舊期計畫另存參考資料。",
+            "大三出國由外語學院六系、國企、資工、觀光、政經等系辦理，與國際處互惠交換的學費及流程不同；不納入校級交換名單。",
+        ], source=_source("jp-revision-attachment-1", "PDF p.17 Q&A3區分大三出國與國際處交換；並核對首頁、公告索引及赴外頁。"))],
+        eligibility=[StudentInfoItem(title="日語第二次甄選資格與矛盾", details=[
+            "正文限在學大三及研究所一、二年級；須系所院初選推薦。研究所一新生附大學四年成績單。",
+            "正文要求在校學業總平均75；附錄Q&A另有系前40%替代條件，先標待確認，不能自行採較寬條件。",
+            "電氣通信JUSST另要求平均80、GPA3.0；電機與資工系所優先；學制及專業須核對外校。",
+        ],source=guide)],
+        language_requirements=[StudentInfoItem(title="依學制、外校及課程判斷語言", details=[
+            "大學部日語課程JLPT N2以上；研究所N1；立命館表列N1。不能將JLPT級別當可直接遞增的數字成績。",
+            "電氣通信是英語JUSST；淡江表寫iBT67及IELTS6.0，外校一般頁可選等值證明，連接條件及2027適用性待確認。研究所英語授課是否豁免N1須確認。",
+            "成蹊外校較低日語入門條件不能取代淡江校內N2/N1甄選條件。",
+        ],source=guide)],
+        required_documents=[StudentInfoItem(title="2027–2028日語二甄文件", details=[
+            "線上申請表列印後申請人及系主任簽名；中文歷年成績單正本；語文證明；授課老師推薦函一封；中文及日文自傳、研習計畫；切結書；有則附其他證明。",
+            "A4單面最多16頁，不裝訂，以L型套依序送系所；面試攜語文原本驗核；至多5個志願。",
+            "切結書在官方PDF第14頁；修正申請表第15頁仍載9/17舊期日期，截止時間須向承辦人確認。",
+        ],source=guide), StudentInfoItem(title="立命館2027春季外校期限",details=[
+            "僅已獲推薦者：外校申請2026/10/2 10:00開始、11/2 09:00 JST截止；COE另辦。",
+        ],source=_source("ritsumeikan-2027-guide","PDF p.2時程，p.20–22 COE與健康；2027 Spring；2026-10-08核對。")),
+        StudentInfoItem(title="成蹊2027春季外校期限",details=[
+            "提名10/1、申請10/15（未載時刻）；文件須由母校承辦人寄送。不能作校內新申請期限。",
+        ],source=_source("seikei-2027-sheet","2027 Spring fact sheet PDF p.1–2，2026-10-08核對。")),
+        StudentInfoItem(title="長崎2027春NICS外校申請：計畫對應仍待確認",details=[
+            "官方NICS公告載2026/10/31消印有效，未載時刻；未另列提名截止。Form A線上申請及誓約書內文已核對2027春。",
+            "母校本輪未明示NICS；淡江→NICS及研究生適用尚待確認。照片份數、志望動機書日英語言／字數、交換期間仍有來源矛盾。",
+        ],source=_source("nagasaki-nics-2027","2027春NICS：出願期限、応募資格、応募書類段；已核實外校公告，不等於核實母校計畫對應。"))],
+        scholarship_info=[StudentInfoItem(title="費用、住宿與獎助",details=[
+            "須繳淡江全額學雜費及註冊，外校主要學費互惠免繳，其他費用自付；不保證宿舍與獎學金。",
+            "長崎2027春NICS公告、期限及住宿價目已核對；淡江本輪NICS／研究生對應仍待確認。電氣通信只有一般JUSST頁資料，2027專屬表單費率待確認。",
+        ],source=guide), StudentInfoItem(title="立命館2027春季新增費用與獎助",details=[
+            "所有SKP學生含交換生新增JPY50,000 Student Support Fee；RUSSES於2026秋季結束，JASSO不保證。",
+        ],source=_source("ritsumeikan-2027-guide","2027 Spring PDF p.4 Changes，2026-10-08核對。")),
+        StudentInfoItem(title="成蹊2027住宿分期費用",details=[
+            "2027/8前Dormy及會館月租JPY93,000但費用包含不同；2027/9起校內住宿學生搬至MICHI，JPY120,000/月含餐寢具水電網路、無押金。",
+        ],source=_source("seikei-2027-sheet","2027 Spring PDF p.3–4 Accommodation and cost of living，2026-10-08核對。")),
+        StudentInfoItem(title="長崎2027春NICS住宿及費用：限該計畫",details=[
+            "互惠交換學費0；活动費半年JPY50,000／一年53,100含指定A/B保險；行政費15,000／20,000含福岡接送，國民健康保險約2,000/月另付。",
+            "Ampelos雙人21,000／單人42,000每月，入寮費20,000／30,000；餐費30,000/月且至6月底早餐晚餐必訂。房型偏好不保證，住房申請確切截止仍未載。",
+            "上述費率不能套到其他長崎計畫；是否適用淡江本輪及研究生仍待確認。",
+        ],source=_source("nagasaki-nics-2027","2027春NICS：費用、住宿、保險及餐費段；2026-10-08核對。"))],
+        partner_universities=partner_universities if partner_universities is not None else fetch_tku_partner_universities(reference_time=now),
+        sources=[_source(s) for s in ["jp-revision","jp-revision-attachment-1","jp-revision-attachment-2","ritsumeikan-2027-guide","seikei-2027-sheet","nagasaki-nics-2027","nagasaki-partners","nagasaki-form-a-online","nagasaki-pledge","uec-application-recheck","uec-costs","tku-news-recheck","tku-outbound-recheck"]] + _notice_audit_sources())
+
+
+def tku_exchange_info(partners=None) -> ExchangeInfo:
+    dashboard = build_tku_student_dashboard(partner_universities=partners)
+    return ExchangeInfo(school_name=HOME, program_type=["校級互惠交換（日語第二次甄選）"], academic_year=["2027-2028"],
+        application_period=["2026/9/23 09:00–9/30 12:00（台北時間；已截止）"],
+        eligibility=[s for item in dashboard.eligibility for s in item.details],
+        language_requirement=[s for item in dashboard.language_requirements for s in item.details],
+        required_documents=[s for item in dashboard.required_documents for s in item.details],
+        partner_universities=[p.school_name for p in dashboard.partner_universities],
+        source_urls=[s.source_url for s in dashboard.sources], last_checked=CHECKED_AT)
+
+
+def tku_processed_pages() -> list[ProcessedPage]:
+    ids = {"jp-revision", "jp-revision-attachment-1", "jp-revision-attachment-2", "nagasaki-partners",
+           "taiwan-coe-visa", "taiwan-visa-form-index", "japan-student-visa"}
+    result=[]
+    for row in load_tku_sources():
+        if row["id"] not in ids and row.get("role") != "host_incoming": continue
+        if row.get("http_status") != 200 or not row.get("sha256"): continue
+        text = row.get("text") or "\n".join(f"[PDF p.{p['page']}] {p['text']}" for p in row.get("pages",[]))
+        if not text: continue
+        caution = "長崎NICS與淡江本輪／研究生的對應尚未核實；照片、作文及期間矛盾須另確認。" if row["id"].startswith("nagasaki-") else ""
+        result.append(ProcessedPage(title=f"淡江 {row.get('title',row['id'])}",source_url=row["source_url"],text=text,
+            summary=f"{row['applicable_year']}，{row['role']}，查核2026-10-08；日語二甄校內已截止，不能拿外校期限取代。一般／舊版僅依各來源適用期參考，不升為2027專屬。{caution}",
+            category="exchange_application",crawled_at=CHECKED_AT,content_hash=row["sha256"]))
+    audit = _notice_audit()
+    for row in audit['evidence']:
+        if 'entries' not in row: continue
+        titles = '\n'.join(f"{entry['published']}：{entry['title']}；{entry['url']}" for entry in row['entries']
+                           if any(word in entry['title'] for word in ['交換生','Exchange Student','exchange student']))
+        result.append(ProcessedPage(title=f"淡江英歐／中文新版公告查核第{row['page']}頁",source_url=row['url'],
+            text=f"{audit['scope']}\n{audit['finding']}\n以下僅公告發現資料，舊期及結果公告不是本期申請文件：\n{titles}",
+            summary=f"公開REST完整{audit['rest_total']}筆／{audit['rest_pages']}頁；查核2026-10-08；狀態{audit['finding_status']}，不能推定官方尚未公告。",
+            category='exchange_application',crawled_at=CHECKED_AT,content_hash=row['sha256']))
+    return result
+
+
+def load_tku_workflows():
+    from .models import UniversityApplicationWorkflow
+    return [UniversityApplicationWorkflow.model_validate_json(line) for line in
+            (BUNDLE/"application_workflows.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]

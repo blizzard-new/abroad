@@ -330,6 +330,9 @@ def _structure_step(
             step=step,
             submission=submission,
             infer_from_text=infer_from_text,
+            # TKU's frozen bundle uses the original structuring pass after its
+            # staged inputs. Keep its confirmation/copy inference reproducible.
+            preserve_reviewed_metadata=workflow.home_university != "淡江大學",
         )
         for requirement in step.document_requirements
     ]
@@ -511,10 +514,11 @@ def _structure_document_requirement(
     step: ApplicationStep,
     submission: ApplicationSubmissionDetails,
     infer_from_text: bool = True,
+    preserve_reviewed_metadata: bool = True,
 ) -> ApplicationDocumentRequirement:
     # Individually reviewed receiving documents already supply their metadata.
     # A name such as "non-OECD: original" must not impose originals on everyone.
-    if requirement.stage is not None:
+    if requirement.stage is not None and preserve_reviewed_metadata:
         return requirement.model_copy(
             update={
                 "source_urls": requirement.source_urls or list(step.source_urls),

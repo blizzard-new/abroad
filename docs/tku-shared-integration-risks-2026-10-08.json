@@ -1,0 +1,281 @@
+{
+  "checked_at": "2026-10-08",
+  "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "read_only_other_branches": true,
+  "other_branches_merged": false,
+  "branches": [
+    {
+      "branch": "origin/data/ncu-exchange-20261008",
+      "commit": "ded2ed1a79a5f3cb009655790eb560816a7af61a",
+      "changed_files": 427,
+      "shared_overlap": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/openapi_contract.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_fit_signals.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_school_completeness.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "uv.lock"
+      ]
+    },
+    {
+      "branch": "origin/data/ccu-exchange-20261008",
+      "commit": "5d55498245e86009b682ab4fb6e1e6ac816679bf",
+      "changed_files": 1774,
+      "shared_overlap": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_school_photo_and_match.py",
+        "uv.lock"
+      ]
+    }
+  ],
+  "own_shared_files": [
+    ".github/workflows/quality.yml",
+    "docs/api/openapi.json",
+    "pyproject.toml",
+    "scripts/run_main_browser_control.py",
+    "scripts/run_tku_acceptance_suite.py",
+    "scripts/run_web_quality_tests.py",
+    "scripts/tku_ci_prior_failures.json",
+    "src/exchange_info/access_control.py",
+    "src/exchange_info/account_community_cleanup.py",
+    "src/exchange_info/advisor.py",
+    "src/exchange_info/api.py",
+    "src/exchange_info/application_documents.py",
+    "src/exchange_info/community_browsing.py",
+    "src/exchange_info/community_repositories.py",
+    "src/exchange_info/models.py",
+    "src/exchange_info/openapi_contract.py",
+    "src/exchange_info/static/app.js",
+    "src/exchange_info/static/discovery-ui.js",
+    "src/exchange_info/static/glass-theme.css",
+    "src/exchange_info/static/index.html",
+    "src/exchange_info/static/motion.js",
+    "src/exchange_info/static/public-content-zh.js",
+    "src/exchange_info/storage.py",
+    "src/exchange_info/university_registry.py",
+    "tests/e2e/conftest.py",
+    "tests/e2e/test_application_periods.py",
+    "tests/e2e/test_discovery_workspace.py",
+    "tests/e2e/test_glass_theme.py",
+    "tests/e2e/test_icon_motion.py",
+    "tests/e2e/test_navigation_guide.py",
+    "tests/e2e/test_ntu_school.py",
+    "tests/e2e/test_partner_globe.py",
+    "tests/e2e/test_school_chinese_content.py",
+    "tests/e2e/test_system_motion.py",
+    "tests/e2e/test_travel_theme.py",
+    "tests/e2e/test_web_next_phase.py",
+    "tests/test_college_options.py",
+    "tests/test_community_permissions.py",
+    "tests/test_content_governance_wrapper.py",
+    "tests/test_dependency_security_baseline.py",
+    "tests/test_fit_signals.py",
+    "tests/test_http_client.py",
+    "tests/test_next_phase_contract.py",
+    "tests/test_ntu_integration.py",
+    "tests/test_rag.py",
+    "tests/test_requirements_traceability.py",
+    "tests/test_school_completeness.py",
+    "tests/test_school_photo_and_match.py",
+    "tests/test_selection_conditions_sync.py",
+    "tests/test_supabase_migration_syntax.py",
+    "tests/test_task_documents_and_reference_plan.py",
+    "uv.lock"
+  ],
+  "protected_files_changed": [],
+  "rules": [
+    "registry/API/storage/templates的各校dispatch必須合併保留，不能取單一分支覆蓋。",
+    "TKU stage/conditional/condition/official_form_verified/applicability_*欄位逐名對齊CCU；NCU新增applicability可加並存。",
+    "保留TKU requirement 空預設 metadata 的序列化省略；否則會改變三校851筆既有workflow內容雜湊。",
+    "官方原檔可開啟與流程發布／資格核實分離；合併CCU＋TKU的公開原表例外，預設其他母校仍受既有審查條件。",
+    "保留TKU目標確認／請求ID／未知年度清空修正；與NCU/CCU語言、科系、工作區handler需人工對照。",
+    "TKU與最新CCU都補 explicit choice 的home query同步；保留此行為，勿在hash導航時還原舊分享網址。NCU selectionLanguageLabel與CCU degreeFilterOptions亦需並存。",
+    "TKU原生2027-2028年度／日語第二次甄選不能被ROC115/116或generic梯次覆蓋。",
+    "NTU新增journey/workbench不修改；選校卡片總數、workflows與destination總数要按合併後實際catalog更新。",
+    "OpenAPI待所有欄位合併完成後重產；pyproject學校附件包裝項合併保留。uv.lock只刪除pyproject早已移除的pytesseract遺留項，其他套件未升級。",
+    "workflow修正jobs.env無效runner.temp context，由step寫入GITHUB_ENV；permissions、secrets與action pins未變。",
+    "合成資料隱私修復包括刪帳去識別化與證件號碼發文防護；Supabase沿用既有原子RPC，未改DB或權限。",
+    "profile增加可空jlpt_level；JLPT序位與英語數值分開；app保存、還原及TKU查核hook合併時逐段保留。",
+    "10/9 CI逾時續查：固定45分鐘下按已收集browser檔案分四組、fail-fast=false、逐案例結果與耗時即時輸出；其餘unit/integration放第0組，收集union逐項核對，沒有新增skip或排除測試。兩項browser fixture同步修正保留403/401/private purge行為，另心得原文契約仍未解。"
+  ],
+  "protected_bundle_workflows": {
+    "國立臺北大學": 409,
+    "長庚大學": 154,
+    "國立臺灣大學": 288,
+    "淡江大學": 4
+  },
+  "protected_bundle_destinations": {
+    "國立臺北大學": 206,
+    "淡江大學": 4,
+    "長庚大學": 77,
+    "國立臺灣大學": 288
+  },
+  "ci_followup_checked_at": "2026-10-09",
+  "ci_shared_browser_followup": {
+    "source_commit": "4e6cabd073e4792f94959545efeb4e323fefc3f5",
+    "source_run": 37866158645,
+    "source_complete_counts": {
+      "passed": 1675,
+      "failed": 66,
+      "skipped": 16
+    },
+    "prior_artifact_commit": "b0cb3b7124c10865ebfd58c0f8da6764e3942ef3",
+    "files": [
+      ".github/workflows/quality.yml",
+      "scripts/run_web_quality_tests.py",
+      "scripts/run_main_browser_control.py",
+      "scripts/tku_ci_prior_failures.json",
+      "src/exchange_info/static/index.html",
+      "src/exchange_info/static/glass-theme.css",
+      "src/exchange_info/static/app.js",
+      "src/exchange_info/static/discovery-ui.js",
+      "tests/e2e/conftest.py",
+      "tests/e2e/test_application_periods.py",
+      "tests/e2e/test_partner_globe.py",
+      "tests/e2e/test_system_motion.py",
+      "tests/e2e/test_navigation_guide.py",
+      "tests/e2e/test_travel_theme.py",
+      "tests/e2e/test_icon_motion.py",
+      "src/exchange_info/static/motion.js",
+      "tests/test_dependency_security_baseline.py"
+    ],
+    "changes": [
+      "Ubuntu官方apt安裝poppler-utils，不skip PDF render。",
+      "原三個actions pins不改，新增upload-artifact v4.6.2固定SHA保存原JUnit/log/node清單30日。",
+      "同job以固定main f6ad runtime與未改4e6歷史失敗測試作對照，不豁免候選失敗。",
+      "恢復已實作工具的導航入口與論壇返回控制，不新增路由。",
+      "原文僅在使用者展開details後顯示；pending翻譯明示未完成，不把英文呈現為中文譯文。",
+      "mobile先打開真實drawer、城市fixture同時控制官方profile、sticky tabs斷言按實際rail幾何防遮擋，morph採實際d mutation。",
+      "等待真實boot遮罩與登入catalogue/workspace初始化，保留期限503及私人狀態清除要求。",
+      "motion原直接子section選擇器漏掉新工作台巢狀路由；改為查可見巢狀section，完整15路由真WAAPI有界探測通過。",
+      "社群debounce保存input事件當下的query，避免feed同步先清空input；route focus callback不搶走使用者已移動到互動控制的焦點，也不在路由已改變時執行。"
+    ],
+    "unresolved_prior_failures": "其餘24 API/UI及27 browser失敗須看完整新SHA結果和main-control；不因baseline同失敗宣稱安全。",
+    "no_data_bundle_changes": true,
+    "no_permissions_or_secret_changes": true
+  },
+  "ci_logging_and_source_followup": {
+    "previous_code": "3ccbf7c3de75b47f2f93f7aa56e96143e2e48a38",
+    "previous_runs": [
+      37870196346,
+      37870191848
+    ],
+    "original_junit_count": 8,
+    "original_main_control_junit_count": 8,
+    "previous_runs_complete": false,
+    "unrun_nodes_each": 725,
+    "main_control_each": {
+      "passed": 3,
+      "failed": 59
+    },
+    "files": [
+      "scripts/run_tku_acceptance_suite.py",
+      "scripts/run_web_quality_tests.py",
+      "src/exchange_info/static/app.js",
+      "src/exchange_info/static/public-content-zh.js",
+      "src/exchange_info/static/index.html",
+      "tests/e2e/test_glass_theme.py",
+      "tests/e2e/test_navigation_guide.py",
+      "tests/e2e/test_school_chinese_content.py",
+      "tests/e2e/test_web_next_phase.py",
+      "scripts/run_main_browser_control.py"
+    ],
+    "changes": [
+      "CI啟動設定blocking不足：ce83原遠端第0片仍因TextIO EAGAIN中斷。Progress改用原始stdout FD、os.write實際bytes與select重試，完整保留longrepr。滿管線回歸在啟動後重新改nonblocking，確認原print失敗、修正保留262144bytes；完整固定SHA結果另保存。",
+      "只允許本次anonymous session、同母校、相同draftOwner未保存草稿在明示登入後保留；不採用舊帳號/隔離owner狀態、不自動保存。不同母校亦清除私人question文字。3個實際登入/雲端/登出檢查。",
+      "destination profile在client翻譯前保存original_display_facts；closed來源區保留原始核對摘要。16舊成本/校區/計畫案例開啟真實官方指南後原斷言保留。ICD city名稱按既有API中文化，但兩校區及衝突/成本/期限斷言完整。",
+      "13已實作工具入口逐一核對；遮擋、可鍵盤操作、Escape/焦點geometry斷言完整。原文來源測試按actual summary操作，不以文案選不到當作功能缺失。",
+      "導航scroll測試等真實boot、partner/home/period初始化完成；保留原生history、filters、before/after scroll精確還原要求。",
+      "新增browser檔會重新平衡分片；main-control按此次partition分派原62案例，確保每個對照與candidate案例仍在同一job/runner，沒有沿用失準的歷史分片號。"
+    ],
+    "data_bundles_changed": false,
+    "api_schema_or_permissions_changed": false,
+    "acceptance_waiver": false
+  },
+  "community_and_session_followup_2026_10_09": {
+    "previous_candidate": "4133667cfede9f3be70216795c74051adb6f3a33",
+    "policy": "All verified-email members can read/post/comment on school boards, across mother schools; public-board policy preserved.",
+    "policy_source": "User explicit decision relayed 2026-10-09T03:54:11.815051+00:00, Sentinel_8723c66dd9c881918c62d0f4810a7488",
+    "changes": [
+      "Announcement revision prevents earlier dashboard completion clearing a later expiry notice; keep purge and relogin/logout assertions.",
+      "Conversation/create+accept+message+block use existing atomic commit_*; typed retry headers also document existing report/review operations.",
+      "School-board list/feed/detail/comments enforce verified-email reader gate; global feeds hide inaccessible school-board content. Writers continue verified-email membership, without matching-school restriction.",
+      "Preview/API/JSONL bylines share server-derived verified student naming; self-declared catalogue school grants no verified byline.",
+      "Append migration only changes verified byline helper and TKU mapping in deployed content function; later threads, school-choice logic and transactions preserved.",
+      "E2E fixture uses checked official CGU document source only in synthetic data; visible partner-table controls and explicit home selection retain synchronization/conflict/privacy checks."
+    ],
+    "schema_version": "2026-10-09.1",
+    "data_bundles_changed": false,
+    "migration": "supabase/migrations/20261009040000_verified_email_school_community.sql",
+    "migration_applied_to_production": false,
+    "permissions_grants_rls_or_credentials_changed": false,
+    "missing_governance_integration_plan": "docs/tku-followup-governance-integration-plan-2026-10-09.md",
+    "runtime_probe": "scripts/validate_tku_community_runtime.py reuses the existing disposable runtime and mandatory cleanup; adds actual RPC cross-school/Email/byline/replay assertions."
+  },
+  "reader_legacy_board_and_alias_boundaries_2026_10_09": {
+    "previous_candidate": "5e010b80b59d274d8a30332aabcab2c46929a313",
+    "case4_selector_commit": "5aeb8bb22649f610eba831b039a9bb61cd140453",
+    "files": [
+      "src/exchange_info/access_control.py",
+      "src/exchange_info/static/app.js",
+      "src/exchange_info/static/community-reader.js",
+      "src/exchange_info/static/index.html",
+      "scripts/validate_tku_community_runtime.py",
+      "supabase/migrations/20261009060000_community_byline_aliases.sql",
+      "tests/test_supabase_migration_syntax.py",
+      "tests/test_tku_community_boundaries.py",
+      "tests/e2e/test_tku_session_boundaries.py",
+      "tests/e2e/test_web_next_phase.py"
+    ],
+    "changes": [
+      "Original case4 uses five visible partner-table controls; all original 409, remote-add, local-remove and reload assertions retained.",
+      "Reproduced synthetic expired school reader with revoked cookie: account cleared but native reader, body and reply draft retained. Existing authenticated cleanup now invalidates reader/feed/bookmark versions, closes native reader, removes account-owned session drafts and clears bodies/forms/cache.",
+      "Three real-browser variants cover sort/reaction 401 and delayed actual detail/comments 200 responses; login input remains usable and delayed private content cannot return. Existing public reader policy and assertions retained.",
+      "Reproduced university: and whitespace-only legacy suffix creating CGU posts. Reject empty suffixes instead of invoking registry default; university:cgu remains supported.",
+      "Blank verified school no longer invokes the registry default. Append-only SQL formatter canonicalizes the existing registry aliases, including full-width punctuation, only for genuinely verified student bylines. Unknown schools remain null.",
+      "Isolated runtime retains all previous checks and cleanup; adds two actual alias RPC publications, all registry alias vectors, and blank/unknown null checks."
+    ],
+    "data_bundles_changed": false,
+    "production_migration_applied": false,
+    "permissions_grants_rls_credentials_or_ownership_changed": false,
+    "validation_note": "Pre-commit synthetic tests passed; exact-commit acceptance and fresh isolated SQL runtime results belong to the separate candidate evidence, never to immutable 5e010b8."
+  },
+  "terminal_writer_followup_2026_10_09": {
+    "previous_candidate": "12b30cd78a812f829d1ba32d33d72d8df2595e6e",
+    "observed_failure": "Original PR JUnit pytest::internal: terminalwriter.flush() BlockingIOError interrupted case execution; collection completeness does not prove all cases ran.",
+    "files": [
+      "scripts/run_web_quality_tests.py",
+      "tests/test_tku_web_evidence.py",
+      "tests/e2e/test_multi_plan_workspace.py"
+    ],
+    "changes": [
+      "Run actual pytest in a worker with regular-file stdout/stderr and forward every byte through the existing retry-safe pipe writer; keep live case progress, exact original logs/JUnit and actual exit codes.",
+      "Real nested-pytest regression changes stdout flags after startup with a full nonblocking outer pipe, checks all three original cases, full 262144-byte failure payload, two failures/one pass and exit1, no internal error.",
+      "Multi-plan reorder fixture waits for the actual matching reordered workspace PUT200 before its unchanged server order/progress/reload assertions. Original 12b failure and isolated old-case two-pass repro are retained separately."
+    ],
+    "tests_removed_or_skips_added": false,
+    "workflow_permissions_actions_secrets_or_production_changed": false
+  }
+}

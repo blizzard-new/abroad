@@ -20,7 +20,7 @@ from exchange_info.content_governance import (
 )
 from exchange_info.storage import save_application_workflow_revisions
 
-from .conftest import LiveServer, enter_public_site, login_through_web
+from .conftest import LiveServer, enter_public_site, login_through_web, open_navigation
 
 
 LINCOLN = "林肯大學 Lincoln University"
@@ -263,6 +263,14 @@ def test_guest_can_save_device_selections_and_plan_actions_require_login(
     expect(page.locator("#partner-search")).to_be_visible()
     expect(page.locator("#partner-table")).to_have_attribute("aria-busy", "false", timeout=15_000)
 
+    # This flow needs a selected mother school; browse-first alone is global.
+    open_navigation(page)
+    page.locator('#glass-navigation a[data-public-route="overview"]').click()
+    expect(page.locator("#school-onboarding")).to_be_visible()
+    page.locator('#school-options [data-home-school="長庚大學"]').click()
+    page.locator("#confirm-school").click()
+    expect(page.locator("#school-onboarding")).to_be_hidden()
+    page.wait_for_function("() => !state.homeSchoolLoading && !state.partnerDataLoading")
     page.evaluate("window.location.hash = '#overview'")
     page.locator('.planning-documents a').click()
     page.locator('#application-workspace-tools a[href="#documents"]').click()
@@ -272,14 +280,14 @@ def test_guest_can_save_device_selections_and_plan_actions_require_login(
     ).first
     expect(document_progress).to_be_visible()
     expect(document_progress).to_be_disabled()
-    expect(page.locator("#document-readiness-list")).to_contain_text(
-        "登入後才能記錄並同步文件準備狀態"
+    expect(page.locator("#document-workspace-list")).to_contain_text(
+        "登入後才能更新並同步送件資料狀態"
     )
     page.evaluate("window.location.hash = '#partners'")
 
     page.locator("#partner-search").fill("林肯")
     favorite = page.locator(
-        f'.favorite-toggle[data-school-name="{LINCOLN}"]'
+        f'#partner-table .favorite-toggle[data-school-name="{LINCOLN}"]'
     ).first
     expect(favorite).to_be_visible(timeout=15_000)
     expect(favorite).to_have_attribute("aria-label", f"加入比較{LINCOLN}")
@@ -478,7 +486,9 @@ def test_partial_destination_profile_is_not_rendered_as_fully_verified(
     expect(page.locator("#school-detail-title")).to_have_text(UNIVERSITI_MALAYA)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("2026 秋季")
@@ -497,7 +507,9 @@ def test_second_destination_batch_preserves_housing_availability_warning(
     expect(page.locator("#school-detail-title")).to_have_text(UWM)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("2026-05-01")
@@ -517,7 +529,9 @@ def test_third_destination_batch_does_not_present_stale_costs_as_current(
     expect(page.locator("#school-detail-title")).to_have_text(PARIS_SACLAY)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("2021／2021-22")
@@ -538,7 +552,9 @@ def test_fourth_destination_batch_keeps_multicampus_cost_limits_visible(
     expect(page.locator("#school-detail-title")).to_have_text(THOMAS_MORE)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("EUR 850–1,150")
@@ -559,7 +575,9 @@ def test_fifth_destination_batch_does_not_reuse_expired_welcome_dates(
     expect(page.locator("#school-detail-title")).to_have_text(TH_LUEBECK)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("EUR 900–1,000")
@@ -581,7 +599,9 @@ def test_sixth_destination_batch_keeps_stale_dorm_prices_out_of_current_budget(
     expect(page.locator("#school-detail-title")).to_have_text(KANGWON)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("交換生宿舍有保障")
@@ -603,7 +623,9 @@ def test_seventh_destination_batch_does_not_apply_paris_budget_to_every_campus(
     expect(page.locator("#school-detail-title")).to_have_text(SKEMA)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("法國校區待確認")
@@ -625,7 +647,9 @@ def test_eighth_destination_batch_does_not_present_2021_free_housing_as_current(
     expect(page.locator("#school-detail-title")).to_have_text(CHANDIGARH)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("Mohali")
@@ -647,7 +671,9 @@ def test_ninth_destination_batch_does_not_make_optional_housing_package_mandator
     expect(page.locator("#school-detail-title")).to_have_text(UNYP)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("USD 6,000")
@@ -671,7 +697,9 @@ def test_tenth_destination_batch_keeps_campus_and_summer_program_limits_visible(
     expect(page.locator("#school-detail-title")).to_have_text(EPF)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("只適用 2026 暑期法語工程師課程")
@@ -694,7 +722,9 @@ def test_eleventh_destination_batch_keeps_campus_conflict_and_housing_limits_vis
     expect(page.locator("#school-detail-title")).to_have_text(RENNES)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("EUR 450–700")
@@ -718,7 +748,9 @@ def test_twelfth_destination_batch_keeps_old_prices_and_local_housing_separate(
     expect(page.locator("#school-detail-title")).to_have_text(MSU)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("March 2023")
@@ -743,7 +775,9 @@ def test_thirteenth_destination_batch_keeps_department_scope_and_housing_limits_
     expect(page.locator("#school-detail-title")).to_have_text(IAE_AIX)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("只作長庚管理學院的院級交換參考")
@@ -770,7 +804,9 @@ def test_fourteenth_destination_batch_keeps_old_department_rules_out_of_current_
     expect(page.locator("#school-detail-title")).to_have_text(TU_EINDHOVEN)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("EUR 1,200／月")
@@ -796,7 +832,9 @@ def test_fifteenth_destination_batch_keeps_old_wuhan_costs_and_transport_out_of_
     expect(page.locator("#school-detail-title")).to_have_text(WUHAN)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
     expect(official).to_contain_text("June 2016")
@@ -823,11 +861,13 @@ def test_sixteenth_destination_batch_keeps_icd_campuses_costs_and_deadlines_sepa
     expect(page.locator("#school-detail-title")).to_have_text(ICD)
     page.locator("#detail-tab-life").click()
 
+    page.locator(".life-official-guide > summary").click()
     official = page.locator("#destination-official-content")
+    expect(official).to_be_visible()
     expect(official).to_contain_text("官方生活資訊已查核", timeout=15_000)
     expect(official).not_to_contain_text("官方生活資訊部分查核")
-    expect(official).to_contain_text("Paris 或 Toulouse")
-    expect(official).to_contain_text("只公開 Paris 與 Toulouse")
+    expect(official).to_contain_text("巴黎 或 圖盧茲")
+    expect(official).to_contain_text("只公開 巴黎 與 圖盧茲")
     expect(official).to_contain_text("EUR 5,495／學期")
     expect(official).to_contain_text("不適用交換生")
     expect(official).to_contain_text("不代表生活成本免費")
@@ -1259,7 +1299,7 @@ def test_authenticated_plan_notifications_and_progress_sync_across_devices(
     page.evaluate("window.location.hash = '#partners'")
     page.locator("#partner-search").fill("林肯")
     favorite = page.locator(
-        f'.favorite-toggle[data-school-name="{LINCOLN}"]'
+        f'#partner-table .favorite-toggle[data-school-name="{LINCOLN}"]'
     ).first
     expect(favorite).to_have_attribute("aria-label", f"收藏{LINCOLN}")
     favorite.click()
@@ -2046,7 +2086,7 @@ def test_workspace_conflict_preserves_remote_addition_and_local_removal(
     page.evaluate("window.location.hash = '#partners'")
     page.locator("#partner-search").fill("林肯")
     lincoln = page.locator(
-        f'.favorite-toggle[data-school-name="{LINCOLN}"]'
+        f'#partner-table .favorite-toggle[data-school-name="{LINCOLN}"]:visible'
     ).first
     expect(lincoln).to_have_attribute("aria-pressed", "false")
     lincoln.click()
@@ -2070,7 +2110,7 @@ def test_workspace_conflict_preserves_remote_addition_and_local_removal(
         second_page.evaluate("window.location.hash = '#partners'")
         second_page.locator("#partner-search").fill("明治")
         meiji_on_second = second_page.locator(
-            f'.favorite-toggle[data-school-name="{MEIJI}"]'
+            f'#partner-table .favorite-toggle[data-school-name="{MEIJI}"]:visible'
         ).first
         expect(meiji_on_second).to_have_attribute("aria-pressed", "false")
         meiji_on_second.click()
@@ -2111,12 +2151,12 @@ def test_workspace_conflict_preserves_remote_addition_and_local_removal(
 
         page.locator("#partner-search").fill("明治")
         meiji_on_first = page.locator(
-            f'.favorite-toggle[data-school-name="{MEIJI}"]'
+            f'#partner-table .favorite-toggle[data-school-name="{MEIJI}"]:visible'
         ).first
         expect(meiji_on_first).to_have_attribute("aria-pressed", "true")
         page.locator("#partner-search").fill("威斯康辛")
         uwm = page.locator(
-            f'.favorite-toggle[data-school-name="{UWM}"]'
+            f'#partner-table .favorite-toggle[data-school-name="{UWM}"]:visible'
         ).first
         expect(uwm).to_have_attribute("aria-pressed", "false")
         uwm.click()
@@ -2146,7 +2186,7 @@ def test_workspace_conflict_preserves_remote_addition_and_local_removal(
             second_page.locator("#partner-search").fill(query)
             expect(
                 second_page.locator(
-                    f'.favorite-toggle[data-school-name="{school}"]'
+                    f'#partner-table .favorite-toggle[data-school-name="{school}"]:visible'
                 ).first
             ).to_have_attribute("aria-pressed", expected)
         assert set(_workspace(live_server, session)["workspace"]["favorite_schools"]) == {
@@ -2179,7 +2219,7 @@ def test_workspace_conflict_retry_keeps_remote_fields_during_new_ui_change(
         second_page.evaluate("window.location.hash = '#partners'")
         second_page.locator("#partner-search").fill("明治")
         remote_favorite = second_page.locator(
-            f'.favorite-toggle[data-school-name="{MEIJI}"]'
+            f'#partner-table .favorite-toggle[data-school-name="{MEIJI}"]'
         ).first
         remote_favorite.click()
         _wait_for_workspace(
@@ -2226,7 +2266,7 @@ def test_workspace_conflict_retry_keeps_remote_fields_during_new_ui_change(
         )
         page.locator("#partner-search").fill("林肯")
         local_favorite = page.locator(
-            f'.favorite-toggle[data-school-name="{LINCOLN}"]'
+            f'#partner-table .favorite-toggle[data-school-name="{LINCOLN}"]'
         ).first
         local_favorite.click()
         page.wait_for_function(
@@ -2236,11 +2276,11 @@ def test_workspace_conflict_retry_keeps_remote_fields_during_new_ui_change(
 
         page.locator("#partner-search").fill("明治")
         expect(
-            page.locator(f'.favorite-toggle[data-school-name="{MEIJI}"]').first
+            page.locator(f'#partner-table .favorite-toggle[data-school-name="{MEIJI}"]').first
         ).to_have_attribute("aria-pressed", "true")
         page.locator("#partner-search").fill("威斯康辛")
         newer_favorite = page.locator(
-            f'.favorite-toggle[data-school-name="{UWM}"]'
+            f'#partner-table .favorite-toggle[data-school-name="{UWM}"]'
         ).first
         expect(newer_favorite).to_have_attribute("aria-pressed", "false")
         newer_favorite.click()
@@ -2615,7 +2655,7 @@ def test_workspace_load_advances_base_before_put_conflict(
     )
     page.evaluate("window.location.hash = '#partners'")
     page.locator("#partner-search").fill("林肯")
-    page.locator(f'.favorite-toggle[data-school-name="{LINCOLN}"]').first.click()
+    page.locator(f'#partner-table .favorite-toggle[data-school-name="{LINCOLN}"]').first.click()
     _wait_for_workspace(
         live_server,
         session,
@@ -2633,7 +2673,7 @@ def test_workspace_load_advances_base_before_put_conflict(
         second_page.evaluate("window.location.hash = '#partners'")
         second_page.locator("#partner-search").fill("明治")
         meiji_on_second = second_page.locator(
-            f'.favorite-toggle[data-school-name="{MEIJI}"]'
+            f'#partner-table .favorite-toggle[data-school-name="{MEIJI}"]'
         ).first
         meiji_on_second.click()
         _wait_for_workspace(
@@ -2719,7 +2759,7 @@ def test_workspace_load_advances_base_before_put_conflict(
             page.locator("#partner-search").fill(query)
             expect(
                 page.locator(
-                    f'.favorite-toggle[data-school-name="{school}"]'
+                    f'#partner-table .favorite-toggle[data-school-name="{school}"]'
                 ).first
             ).to_have_attribute("aria-pressed", "false")
     finally:
@@ -2883,6 +2923,23 @@ def test_expired_session_and_logout_clear_private_browser_state(
     )
     assert revoked.status_code == 204
 
+    # Hold the actual public reload until the expiry notice and private purge
+    # are visible, then finish it to detect a late dashboard erasing the notice.
+    page.evaluate("""() => {
+      const originalFetch = window.fetch.bind(window);
+      let release;
+      const gate = new Promise(resolve => { release = resolve; });
+      window.__expiredCatalog = { captured: false, settled: false, release };
+      window.fetch = async (...args) => {
+        const response = await originalFetch(...args);
+        if (String(args[0]).includes('/student-dashboard?')) {
+          window.__expiredCatalog.captured = true;
+          await gate;
+          window.__expiredCatalog.settled = true;
+        }
+        return response;
+      };
+    }""")
     page.locator("#notification-button").click()
     expect(page.locator("#auth-dialog")).to_be_visible(timeout=10_000)
     expect(page.locator('[data-auth-mode="login"]')).to_have_attribute(
@@ -2917,6 +2974,11 @@ def test_expired_session_and_logout_clear_private_browser_state(
             "key => window.sessionStorage.getItem(key)", key
         ) is None, key
 
+    page.wait_for_function("() => window.__expiredCatalog.captured")
+    page.evaluate("window.__expiredCatalog.release()")
+    page.wait_for_function("() => window.__expiredCatalog.settled && !state.partnerDataLoading")
+    expect(page.locator("#page-status")).to_contain_text("登入已過期")
+
     page.locator("#login-form input[name=email]").fill(email)
     page.locator("#login-form input[name=password]").fill("CodexE2E!2026")
     with page.expect_response(
@@ -2930,6 +2992,7 @@ def test_expired_session_and_logout_clear_private_browser_state(
     page.wait_for_function(
         "() => window.localStorage.getItem('exchange-guide-workspace-sync-v1') !== null"
     )
+    expect(page.locator("#page-status")).not_to_contain_text("登入已過期")
     page.evaluate(
         "window.localStorage.setItem('exchange-guide-eligibility-profile', "
         "JSON.stringify({ department: 'logout-private-value' }))"
@@ -3054,7 +3117,7 @@ def test_permissions_sensitive_consent_and_account_deletion_are_fail_closed(
 
     guest_boards = requests.get(f"{live_server.base_url}/community/boards", timeout=10)
     assert guest_boards.status_code == 200
-    assert all(item["can_read"] for item in guest_boards.json())
+    assert all(item["can_read"] == (item["kind"] != "university_exchange") for item in guest_boards.json())
     assert all(not item["can_post"] for item in guest_boards.json())
 
     public_post = requests.post(
@@ -3074,17 +3137,34 @@ def test_permissions_sensitive_consent_and_account_deletion_are_fail_closed(
         "board_id": "university:cgu",
         "post_type": "discussion",
         "title": "E2E 長庚交換板測試",
-        "body": "這是一篇用來確認只有完成長庚學生驗證才能發文的隔離測試文章。",
+        "body": "這是一篇用來確認已驗證 Email 會員可跨校發文的隔離測試文章。",
     }
+    from exchange_info.repositories import JsonlAccountRepository
+    from exchange_info.models import UserAccount, AccountSessionRecord, utc_now
+    import hashlib
+    repository = JsonlAccountRepository(live_server.data_dir)
+    account = repository.find_account_by_id(session["profile"]["id"])
+    assert account is not None and account.email_verified and not account.student_status_verified
+    # Seed an actually unverified synthetic account. Normal profile writes must
+    # preserve a committed email verification, so changing the owner would not
+    # create the intended permission precondition.
+    pending = UserAccount(display_name="E2E 未驗證 Email 會員", email_verified=False)
+    pending_token = uuid4().hex
+    repository.save_account(pending)
+    repository.save_session(AccountSessionRecord(account_id=pending.id,
+        token_hash=hashlib.sha256(pending_token.encode()).hexdigest(),
+        expires_at=utc_now()+timedelta(days=1)))
+    pending_headers = _community_headers(live_server, {"access_token":pending_token})
     denied_unverified = requests.post(
         f"{live_server.base_url}/community/posts",
-        headers=headers,
+        headers=pending_headers,
         json=university_payload,
         timeout=10,
     )
     assert denied_unverified.status_code == 403
+    assert requests.get(f"{live_server.base_url}/community/posts", params={"board_id":"cgu"},
+                        headers=pending_headers, timeout=10).status_code == 403
 
-    live_server.verify_student(session["profile"]["id"])
     allowed_verified = requests.post(
         f"{live_server.base_url}/community/posts",
         headers=headers,
@@ -3099,11 +3179,12 @@ def test_permissions_sensitive_consent_and_account_deletion_are_fail_closed(
         json={
             **university_payload,
             "board_id": "university:ntpu",
-            "title": "E2E 跨校發文應被阻擋",
+            "title": "E2E 已驗證 Email 跨校發文",
         },
         timeout=10,
     )
-    assert denied_other_school.status_code == 403
+    assert denied_other_school.status_code == 201
+    live_server.verify_student(session["profile"]["id"])
 
     vault_data = {
         "label": "E2E 校內交換申請表",
@@ -3128,6 +3209,11 @@ def test_permissions_sensitive_consent_and_account_deletion_are_fail_closed(
     )
     assert accepted_vault.status_code == 201
 
+    viewer_email = _email("privacy-reader")
+    viewer_session = live_server.register(viewer_email, "E2E 已驗證 Email 讀者")
+    viewer_headers = _auth_headers(viewer_session)
+    assert requests.patch(f"{live_server.base_url}/auth/me", headers=viewer_headers,
+                          json={"home_university":"長庚大學"}, timeout=10).status_code == 200
     deleted = requests.delete(
         f"{live_server.base_url}/auth/me",
         headers=_auth_headers(session),
@@ -3143,6 +3229,7 @@ def test_permissions_sensitive_consent_and_account_deletion_are_fail_closed(
     public_threads = requests.get(
         f"{live_server.base_url}/community/posts",
         params={"school": "長庚大學"},
+        headers=viewer_headers,
         timeout=10,
     )
     public_threads.raise_for_status()
@@ -3154,14 +3241,15 @@ def test_permissions_sensitive_consent_and_account_deletion_are_fail_closed(
     assert retained["display_name"] == "已刪除帳號"
     assert not retained["author_id"]
 
-    enter_public_site(page, live_server, "board=長庚大學")
+    assert requests.get(f"{live_server.base_url}/community/posts", params={"school":"長庚大學"}, timeout=10).status_code == 401
+    login_through_web(page, live_server, viewer_email)
+    page.evaluate("window.location.hash = '#university-posts'")
     expect(page.locator("#global-community-feed")).to_contain_text(
         "E2E 長庚交換板測試"
     )
     expect(page.locator("#global-community-feed")).to_contain_text("已刪除帳號")
 
 
-@pytest.mark.skip(reason="Phase C")
 def test_content_admin_explicitly_stages_one_review_batch_without_publication(
     page: Page,
     live_server: LiveServer,
@@ -5137,7 +5225,6 @@ def test_content_admin_downloads_snapshot_bound_destination_profile_review_queue
     assert restored_icd["coverage_status"] == "official_partial"
 
 
-@pytest.mark.skip(reason="Phase C")
 def test_content_admin_replaces_insecure_source_only_in_pending_revision(
     page: Page,
     live_server: LiveServer,

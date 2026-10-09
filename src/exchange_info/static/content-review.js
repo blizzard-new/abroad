@@ -1,7 +1,7 @@
 "use strict";
 
 const initialQueryParams = new URLSearchParams(window.location.search);
-const destinationReviewHomeUniversities = ["長庚大學", "國立臺北大學"];
+const destinationReviewHomeUniversities = ["長庚大學", "國立臺北大學", "淡江大學"];
 const requestedDestinationReviewHome = initialQueryParams.get("destination_home") || "";
 const destinationReviewDraftStoragePrefix = "exchange.destination-review-draft.v1";
 const workflowReviewDraftStoragePrefix = "exchange.workflow-review-draft.v1";
@@ -3606,6 +3606,24 @@ function renderBacklogHomeUniversities() {
   }
 }
 
+async function loadQueueReleaseReadiness(requestSequence) {
+  try {
+    const report = await requestJson("/admin/web-release-readiness");
+    if (requestSequence !== state.queueRequestSequence) return;
+    state.releaseReadiness = report;
+    renderReleaseReadiness();
+  } catch (error) {
+    if (requestSequence !== state.queueRequestSequence) return;
+    state.releaseReadiness = null;
+    renderReleaseReadiness();
+    const section = $("#release-readiness");
+    section.dataset.status = "blocked";
+    section.setAttribute("aria-busy", "false");
+    $("#release-readiness-status").textContent = "檢查失敗";
+    $("#release-readiness-description").textContent = error.message;
+  }
+}
+
 async function loadQueue() {
   const requestSequence = ++state.queueRequestSequence;
   state.loading = true;
@@ -3619,12 +3637,10 @@ async function loadQueue() {
   try {
     if (status === "backlog") {
       let backlog;
-      let releaseReadiness;
       const hasReviewDeepLink = Boolean(
         state.workflowDeepLinkKey || state.reviewBatchId
       );
       if (hasReviewDeepLink && state.workflowDeepLinkSnapshot) {
-        releaseReadiness = await requestJson("/admin/web-release-readiness");
         try {
           if (state.reviewBatchId) {
             const batchPath = `/admin/application-workflow-review-batches/${encodeURIComponent(state.reviewBatchId)}?batch_size=${encodeURIComponent(state.reviewBatchSize)}&expected_snapshot=${encodeURIComponent(state.workflowDeepLinkSnapshot)}`;
@@ -3642,16 +3658,12 @@ async function loadQueue() {
           backlog = await requestJson("/admin/application-workflow-review-backlog");
         }
       } else {
-        [backlog, releaseReadiness] = await Promise.all([
-          requestJson("/admin/application-workflow-review-backlog"),
-          requestJson("/admin/web-release-readiness"),
-        ]);
+        backlog = await requestJson("/admin/application-workflow-review-backlog");
         state.workflowDeepLinkStale = Boolean(state.reviewBatchId);
         state.reviewBatchWorkflowKeys = [];
       }
       if (requestSequence !== state.queueRequestSequence) return;
       state.backlog = backlog;
-      state.releaseReadiness = releaseReadiness;
       state.backlogVisibleLimit = 25;
       if (
         state.workflowDeepLinkKey
@@ -3692,15 +3704,13 @@ async function loadQueue() {
           `/admin/application-workflow-review-batches/${encodeURIComponent(state.reviewBatchId)}?batch_size=${encodeURIComponent(state.reviewBatchSize)}&expected_snapshot=${encodeURIComponent(state.workflowDeepLinkSnapshot)}`
         ).then((rows) => ({ rows })).catch((error) => ({ error }))
         : Promise.resolve(null);
-      const [revisions, releaseReadiness, sourceReplacementCandidates, batchResult] = await Promise.all([
+      const [revisions, sourceReplacementCandidates, batchResult] = await Promise.all([
         requestJson(`/admin/application-workflow-revisions${status ? `?status=${encodeURIComponent(status)}` : ""}`),
-        requestJson("/admin/web-release-readiness"),
         requestJson("/admin/application-workflow-source-replacement-candidates"),
         batchResultPromise,
       ]);
       if (requestSequence !== state.queueRequestSequence) return;
       state.revisions = revisions;
-      state.releaseReadiness = releaseReadiness;
       state.sourceReplacementCandidates = sourceReplacementCandidates;
       if (hasPendingBatchContext) {
         if (!canValidatePendingBatch) {
@@ -3761,6 +3771,10 @@ async function loadQueue() {
     if (requestSequence !== state.queueRequestSequence) return;
     state.loading = false;
     renderQueue();
+    // Readiness is an independent, read-only report. Commands continue to
+    // validate their exact snapshot, source hashes and human approvals on the
+    // server; a slow report must not hide an already validated review queue.
+    if (!state.error) void loadQueueReleaseReadiness(requestSequence);
     if (state.workflowDeepLinkKey && !state.workflowDeepLinkStale && isBacklogMode()) {
       requestAnimationFrame(() => {
         const target = [...document.querySelectorAll("[data-workflow-key]")].find(
@@ -4139,8 +4153,11 @@ async function initialize() {
   }
   $("#destination-review-home-university").value = state.destinationReviewHomeUniversity;
   await loadDestinationReviewBatch();
+  // Render the selected review queue before the independent history panels.
+  // Their read requests share the governance snapshot lock; starting all of
+  // them together can leave a batch deep link hidden behind unrelated work.
+  await loadQueue();
   await Promise.all([
-    loadQueue(),
     loadWorkflowPublicationHistory(),
     loadWorkflowIssueReports(),
     loadDestinationProfileReviewQueue(),
