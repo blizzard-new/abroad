@@ -144,6 +144,7 @@ def source_content_status(source: dict) -> dict:
         # Text extraction itself is never evidence that a person read a page.
         "all_pages_read": bool(
             pages and all_parts_read and not source.get("error")
+            and reading.get("full_document_read") is not False
         ),
         "visual_reviewed_page_count": len(page_ids & visual_pages)
         + len(converted_pages),
