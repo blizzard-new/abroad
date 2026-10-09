@@ -21,3 +21,9 @@
 共用測試 helper：`tests/static_asset_contract.py`，只解析既有 HTML，不改產品資產。三個既有測試檔合計 126 個 test functions，AST 比對名稱與順序均相同。正式驗證在提交後以固定 SHA、乾淨起迄工作樹執行，結果另保存，不把 precommit inspection 當成驗收。
 
 五組治理產品能力維持 pending：管理工作台、來源替換、snapshot staging、目的地審核／發布／回滾、流程歷史／readiness／回滾。尚未收到本批範圍選擇，不擴張接線；亦不刪除這五個失敗測試。
+
+## 全量 CI 發現的額外 router fixture 時序
+
+`c6e6155` PR run 37895974293 第1分片的原 XML 記錄 `test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion` 最終 opacity 為 `0.65`；同源 push 分片75案例全通過，本地固定 c6e6155 原單案亦通過（實際18.2秒含起迄檢查）。這些結果分開保存，不宣稱本地重現、不豁免原 PR 失敗。
+
+現行 `motion.js` 的 route 在 requestAnimationFrame 排程動畫；原 fixture 只問目前是否無動畫，可能在排隊動畫開始前越過等待。只補真實兩個排程影格 barrier，並同時等原 UniWay 動畫皆結束且 computed opacity=1；原最後 opacity=1、快速導航四步及 delay<=90 斷言保留。沒有固定 sleep、關閉動畫、mock response 或 production source 修改。此原 test ID 保留，提交後另以固定 SHA 驗證。

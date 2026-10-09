@@ -110,7 +110,10 @@ def test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion(page
     for route in ("forum", "home", "partners", "forum"):
         page.locator(f'.uniway-public-nav a[href="#{route}"]').first.click()
     expect(page.locator("#community-hub")).to_be_visible()
-    page.wait_for_function("() => !document.getAnimations().some(a => a.id.startsWith('uniway:'))")
+    # Routing queues its animation in requestAnimationFrame. An empty current
+    # animation list can precede that queued frame, so drain actual frames first.
+    page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
+    page.wait_for_function("() => !document.getAnimations().some(a => a.id.startsWith('uniway:')) && getComputedStyle(document.querySelector('#community-hub')).opacity === '1'")
     assert page.locator("#community-hub").evaluate("el => getComputedStyle(el).opacity") == "1"
 
 
