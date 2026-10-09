@@ -1,0 +1,85 @@
+{
+  "status": "passed_with_bounded_observation",
+  "finalized_at": "2026-10-09T17:41:04.226253+00:00",
+  "accepted_head": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+  "main_merge": "8139be4d3604a60265029dbbe41af21c094e609d",
+  "deploy_id": "dep-db4i4obrjlhs738ng200",
+  "live_at": "2026-10-09T17:25:30.577437Z",
+  "instance": "srv-db26bgjbc2fs73fdsmhg-qvscr",
+  "observed_until": "2026-10-09T17:40:36Z",
+  "minutes_since_live": 15.09037605,
+  "last_catalogue_browser_test_finished": "2026-10-09T17:32:50.774859+00:00",
+  "quiet_observation_minutes": 7.65375235,
+  "sampled_memory_peak_bytes": 485654530,
+  "sampled_memory_peak_mib": 463.15625190734863,
+  "memory_limit_bytes": 536870900,
+  "minimum_observed_headroom_bytes": 51216370,
+  "minimum_observed_headroom_mib": 48.84373664855957,
+  "latest_memory_bytes": 480174080,
+  "latest_memory_mib": 457.9296875,
+  "quiet_sample_range_bytes": [
+    480174080,
+    481103870
+  ],
+  "previous_oom_sampled_peak_bytes": 533020670,
+  "previous_oom_sampled_peak_mib": 508.32812309265137,
+  "previous_oom_event": "evt-db4gsjp7lnhs73db9320",
+  "new_failure_restart_events": 0,
+  "app_error_log_entries": 0,
+  "production_checks": {
+    "static_exact_bytes": 2,
+    "school_http": 6,
+    "guest_forum_denials": 6,
+    "school_browser_switches": 12,
+    "ntu_globe_photo_life_widths": [
+      390,
+      1440
+    ],
+    "health_openapi": "passed"
+  },
+  "full_suite": {
+    "at": "2026-10-09T17:18:46.876322+00:00",
+    "status": "passed",
+    "final_head": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+    "full_product_suite_sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+    "raw_full_suite_counts": {
+      "passed": 2629,
+      "failed": 4,
+      "skipped": 14
+    },
+    "raw_failures_retained": [
+      "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393]",
+      "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834]",
+      "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440]",
+      "tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together"
+    ],
+    "executed_unique_cases": 2647,
+    "effective_unique_outcomes": {
+      "passed": 2633,
+      "skipped": 14
+    },
+    "unexpected_or_unexecuted_cases": 0,
+    "original_skips_identical": true,
+    "reruns": [
+      {
+        "name": "memory-final-enospc-rerun",
+        "cases": 3,
+        "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+        "clean_source_guards": true
+      },
+      {
+        "name": "memory-final-assets-contract",
+        "cases": 6,
+        "sha": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+        "clean_source_guards": true
+      }
+    ],
+    "final_browser_followup_passed": 9,
+    "qualification": "Full suite executed on f3. Final head changes only deterministic subprocess test I/O and one paired reader cache query token. All Python/JavaScript, data, sources, migrations, dependencies and runner are byte-identical. Final asset/session/browser checks and rebuilt wheel cover the final delta. Raw failed attempts are not rewritten."
+  },
+  "final_head_post_browser_burst_peak_mib": 442.1015625,
+  "database": "35 migrations already applied and read back; PR6 adds none; full isolated runtime35 passed",
+  "quality": "disabled_manually",
+  "settings_credentials_permissions_paid_changes": false,
+  "qualification": "Observed low-load public flows and quiet interval passed; 30-second Render samples are not instantaneous peaks or a guarantee for arbitrary future traffic. Production concurrency stress was not performed. Existing data gaps and14original skips remain explicit."
+}

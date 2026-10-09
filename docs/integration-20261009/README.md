@@ -1,56 +1,54 @@
-# PR #6 正式流程通過，穩定觀察中：2026-10-09 17:35 UTC
+# 六校整合與記憶體修正發布驗收完成
 
-最終候選`49882dfce64449abeb682d01ae01a8da5c10ba8d`。完整2647案於`f3e0b666`執行，原始2629passed／4failed／14原skip；4失敗為3筆ENOSPC截图與1筆配對asset URL版本，原始紀錄不改寫。相同f3的3截圖補驗、最終49882dfc的6contract/pipe及9browser全部passed，四片原全套和最終補驗source guards均clean。有效唯一結果2633passed／0未解決failed／14原skip，沒有遺漏案例：[完整對帳](memory-final-acceptance-summary.json)。
+依父對話後續明確授權完成四支原PR、必要DB先行發布與OOM修正PR6。本次低負載驗收通過，不等同任意流量容量保證。
 
-最終相對f3只變測試pipe I/O與一處community-reader快取query token；所有Python/JavaScript、資料、SQL、依賴、runner相同：[精確delta](memory-final-release-delta-proof.json)。最終重新建wheel，2527entries／2522來源檔byte相同／15張未授權新圖排除，SHA`d2283478e7650bc9ad7f945071a6af2bad7c97a9eed1eed2dc047a54e046ab18`。
+正式main：`8139be4d3604a60265029dbbe41af21c094e609d`；Render `dep-db4i4obrjlhs738ng200`於`2026-10-09T17:25:30.577437Z` live，merge tree與最終候選`49882dfce64449abeb682d01ae01a8da5c10ba8d`完全相同。[最終機器驗收](final-release-acceptance.json) · [merge proof](memory-pr6-merge-proof.json) · [Render live](memory-pr6-render-live.json)
 
-暖快取384GET／36選校／6NTU／3批八併發全部passed，峰值445.76MiB：[summary](memory-final-warm-soak-summary.json)。這是本機程序RSS/HWM，不是Render cgroup。35migration／實際Storage／17治理組74RPC／舊102Python模組相容性全passed。PR6沒有DB migration。PR6已依父授權合併為`8139be4d3604a60265029dbbe41af21c094e609d`，merge tree與固定候選完全相同：[merge proof](memory-pr6-merge-proof.json)。Render `dep-db4i4obrjlhs738ng200`於17:25:30UTC正式live。首頁/app.js exact bytes、6學校HTTP/6guest401/12browser切換與NTU390/1440照片地球生活全passed。實際Render峰值485654530bytes（463.16MiB），最近約458.66MiB，512MiB上限；事件尚無OOM/重啟。現正保留安靜觀察窗並於隔離環境補驗所有生活頁暖快取後再8併發的順序，尚未把有限觀察宣稱任意負載保證。
+|PR|驗收head|實際main merge|
+|---|---|---|
+|#5|`b33ad27ff13912780dfb94f91504dd11b1ef6a21`|`58a6b7cf09a36d1892a1ac14a71332f1e8747a33`|
+|#3|`dc4d054c2746388c40bd256f4203ef066b60be03`|`b22220f811f91cd4b86e16da25da8e0684123d87`|
+|#4|`4a28daaa682b7aa55e6bb0497a8a6cde315a967f`|`e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86`|
+|#2|`31234305f6ecd477ff8eb3915dd2d3d6f4141477`|`1c715d21d1fd23a87087b74bbb068f4efbe74aa1`|
+|#6|`49882dfce64449abeb682d01ae01a8da5c10ba8d`|`8139be4d3604a60265029dbbe41af21c094e609d`|
 
-[PR6發布/回復計畫](memory-release-plan.md) · [最新狀態](execution-status.json) · [全套原始結果](memory-final-full-summary.json)
+## 原始測試與補驗
 
----
+|完整run|唯一案例|passed|failed|原有skip|
+|---|---:|---:|---:|---:|
+|原整合d182|2641|2599|28|14|
+|四PR修正0fdc|2641|2627|0|14|
+|記憶體初版bedc|2645|2628|3|14|
+|最終產品f3e0b666|2647|2629|4|14|
 
-# 發布穩定性阻擋：2026-10-09 15:59 UTC
+最後4失敗為3筆本機ENOSPC截圖寫入及1筆app/community-reader配對快取版本。相同f3的3原截圖案例補驗全過；最終49882dfc的6contract/pipe與9forum/session/icon browser全過且起訖clean。有效唯一結果2633passed、0未解決failed、14既有skip，collection/JUnit/log完全對應，沒有遺漏或移除測試。[逐案對帳](memory-final-acceptance-summary.json)、[完整原始結果](memory-final-full-summary.json)。
 
-四支PR與DB已合併／套用，Render merge SHA `1c715d21` 曾於15:46:11 live；六校6 HTTP、6 guest forum拒絕、12手機桌面切換passed。但其後台大照片/地球/生活回歸在15:54:55遭多個502，Render事件明確確認512Mi OOM kill，15:55:31自動恢復。**尚未完成穩定上線驗收。**
+最終head比完整run只改測試pipe I/O與HTML一個community-reader query版本；所有Python、JavaScript、資料、來源、SQL、依賴、runner byte相同。[精確差異](memory-final-release-delta-proof.json)。前一bedc的SVG pointer競態、UTC/Taipei日期、stderr readline/communicate緩衝問題均獨立定位並保留原失敗。一次browser補驗遇到同時wheel build生成untracked build/，該原guard紀錄保留，之後9案clean重跑通過。
 
-[OOM事件](pr2-render-oom-events.json)、[記憶體指標](pr2-render-memory-502-metrics.json)、[原失敗run](pr2-production-ntu-regression/metadata.json)。記憶體從約207MB持續上升到533MB，再隨重啟下降；不是單純放寬timeout可以解決。新隔離分支 `integration/six-school-memory-20261009` 正定位原因，未改付費/Render設定/Quality/憑證。下面保留較早發布紀錄。
+14skip：9PhaseC、4Ollama未啟動、1pytest opt-inDocker；[原清單](original-full-skips.json)。實際完整Docker/PostgREST/Storage另已執行，35migration、17治理組、74RPC、102個舊Python模組和模型相容性全passed，cleanup完成。[runtime](memory-final-runtime-result.json)。
 
-# 六校整合發布驗收：2026-10-09 15:41 UTC
+最終wheel、uv lock、OpenAPI、Python compile、JS、SQL parser、whitespace通過；2527entries、2522來源檔byte相同，15張未授權新照片排除。wheelSHA256：`d2283478e7650bc9ad7f945071a6af2bad7c97a9eed1eed2dc047a54e046ab18`。[wheel證據](memory-final-498-release-checks-wheel-proof.json)。
 
-**四支授權PR皆已合併；最後Render建置及六校實站驗收仍在進行，尚未宣稱上線完成。**
+## OOM根因、修正與實站結果
 
-|PR|驗收HEAD|main merge SHA|Render|
-|---|---|---|---|
-|#5|b33ad27ff13912780dfb94f91504dd11b1ef6a21|58a6b7cf09a36d1892a1ac14a71332f1e8747a33|dep-db4ethpbgiqc738r2iag；當時live及NTU/三校實站passed|
-|#3|dc4d054c2746388c40bd256f4203ef066b60be03|b22220f811f91cd4b86e16da25da8e0684123d87|dep-db4f56rbc2fs73bo5ok0；當時live及四校實站passed|
-|#4|4a28daaa682b7aa55e6bb0497a8a6cde315a967f|e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86|dep-db4feg0ae00c73a276s0；當時live及5 HTTP/10 browser passed|
-|#2|31234305f6ecd477ff8eb3915dd2d3d6f4141477|1c715d21d1fd23a87087b74bbb068f4efbe74aa1|dep-db4gm549v7es73an3su0；build_in_progress|
+舊main1c715d21在15:54:55UTC遭512Mi OOM並造成NTU502，健康恢復不算穩定發布。原因是原始/結構化流程圖同時駐留、每次deep-copy來源證據、單校讀取解析全六校目的資料及併發回應疊加。PR6改逐筆結構化、只讀共用巢狀證據、按母校載入、最多兩個大型回應建置；沒有刪資料。SVG重繪也保留既有節點，避免pointerdown/up間失去click。
 
-## 完整驗證
+本機同樣三批8併發：586.57→338.56MiB（42.28%降低）。完整暖快取384GET/36選校/6NTU流程passed445.76MiB；最終head再測先完成全部生活頁暖快取、最後三批8併發，384GET/36選校/6NTU全passed442.10MiB。[burst比較](memory-eight-concurrent-comparison.json)、[暖快取](memory-final-warm-soak-summary.json)、[改變順序補驗](memory-final-post-browser-burst-summary.json)。這些是本機程序RSS/HWM，與Render cgroup不可混稱。
 
-固定`0fdc6cfa6a4902fb83374a77025f45dffb071562`：**2641唯一案例，2627 passed／0 failed／14既有skipped**。468 browser為466P/2S，2173 nonbrowser為2161P/12S；collection、原log及JUnit完全對應，四片起訖SHA/tree與clean status一致。詳見[six-final-full-summary.json](six-final-full-summary.json)及各shard原檔。
+正式站首頁/app.js exactbytes、6學校HTTP、6guest論壇401、12次390/1440選校、2個390/1440NTU照片/地球/生活完整流程全部passed。正式站僅公開讀取，沒有建立測試帳號或寫合成內容。[六校](memory-production-six-school-result.json)、[NTU](memory-production-ntu-result.json)、[檔案身份](memory-production-identity-result.json)。
 
-最終HEAD`31234305`只比上述增加一份發布說明、三份SQL依實際version重命名；app src、tests、SQL bytes及migration執行順序完全相同，merge tree也與最終HEAD相同。[機器比對](six-release-identity-proof.json)。最終HEAD再次通過35 migration/2 PostgREST/真Storage完整runtime及cleanup，[原始结果](six-final-applied-version-runtime-result.json)。原pinned DB rootfs與runtime config保留，只有本機VFS單層封裝調整。
+觀察截至`2026-10-09T17:40:36Z`，live後15.09分鐘、流程完成後安靜觀察7.65分鐘。正式採樣峰值463.16MiB、最後457.93MiB、最小採樣餘裕48.84MiB；0新failure/restart事件、0app error log，最後health200。原OOM前採樣峰值508.33MiB。30秒採樣不是瞬時最大值，保留有限流量與時間窗口。[原始Render指標/事件/錯誤查詢](memory-production-final-observation.json)。
 
-17組治理安全案例、74 RPC、31 audit；六校12跨校發文留言、12未驗證拒絕、40 alias vectors通過。原正式e5c6d5c的102個Python模組與原模型在獨立程序完成stage/雙審/publish/readback，12 HTTP200，新舊payload一致。原helper仍未授權service_role。uv lock、OpenAPI、JS/SQL、strict dependency audit、wheel通過；wheel2527檔排除15張無授權新照片並保留TKU字型OFL。
+## DB與發布控制
 
-## 正式DB已完成
+正式DB35份已按序套用並逐份readback：CCU/NCU compatibility `20261009135343`先於PR3；TKU `20261009153249_verified_email_school_community`、`20261009153347_community_byline_aliases`、`20261009153438_atomic_governance_commands`先於PR2。SQLbytes、signature/owner/ACL/security/search_path皆已核對；helper未新增service_role授權。[mapping](production-tku-migration-mapping.json)、[01](production-tku-01-readback.json)、[02](production-tku-02-readback.json)、[03](production-tku-03-readback.json)。PR6沒有migration。
 
-按序成功套用並逐份readback：`20261009153249_verified_email_school_community`、`20261009153347_community_byline_aliases`、`20261009153438_atomic_governance_commands`。函式source hash符合已驗證SQL，signature、owner、ACL、security、search_path及五函式角色存取均不變。内部capability marker恰1筆、公開payload0、receipt1。
+Quality374368612維持disabled_manually；Render main/autoDeploy/commit/單worker/free512Mi與其餘核對設定不變。未新增憑證、付費或改branch protection/安全權限。[GitHub最後讀回](final-five-pr-github-state.json)、[Render設定對比](memory-final-render-configuration.json)。Actions帳務阻擋與5個原有migration timestamp差異仍保留，未repair/bulkpush，不以workflow狀態冒充DB成功。
 
-[SQL實際版本mapping](production-tku-migration-mapping.json)、[第1份讀回](production-tku-01-readback.json)、[第2份讀回](production-tku-02-readback.json)、[第3份讀回](production-tku-03-readback.json)。原五個migration版本差異保持原狀，未repair或bulk db push。CCU/NCU compatibility早已先於PR3套用`20261009135343`。
+回復：程式可正常Git revert而保留相容DB35份與append-only audit；前版1c715d21已知OOM，回退不是穩定修復，五校e5也曾接近512Mi，應隔離定位後forward修正。不可盲降governanceRPC/capabilitymarker或還原整庫。[原發布依賴與DB計畫](release-plan.md)、[PR6發布/回復計畫](memory-release-plan.md)。
 
-Quality374368612持續disabled_manually，沒有為綠燈啟用Actions。原TKU quality.yml改動保留、整合者未修改該檔；Supabase deploy workflow、Render autoDeploy/main、branch protection、憑證及費用不變。main合併觸發的Supabase workflow failure另留原紀錄，不冒充DB部署成功；DB成功以工具回執及實際定義核對為準。
+## 尚未完成的資料範圍
 
-## 保留的失敗、未跑與資料界線
+CGU154/NTPU409/NTU288原workflow完整payload與f6ad逐校canonicalhash相同。CCU55legacy、NCU214pending、TKU4當期有限partial加124舊年參考仍不是全校當期完整，資料完整度不能宣稱已到長庚標準；missing/pending/zero及來源年度保留。NTU266licensed/20needs_review/2missing、269代表位置、1622生活節錄/124校保留年份，14地區出發提醒仍明確404。
 
-原完整d182為2599P/28F/14S，離線builder造成35個metadata差異的source-guard失敗保留；原28失敗修正後逐項passed，再完整跑固定0fdc。原b67 runtime403、ENOSPC、正式站初次timeout、audit唯讀快取及新增舊程式輔助驗證的模型名稱錯誤均保留，沒有覆寫成成功。大型原stdout/XML以無損gzip交付，[原始及壓縮SHA256](lossless-compression-manifest.json)。
-
-14原skip：[清單](original-full-skips.json)，9 Phase C、4 Ollama未啟動、1 pytest opt-in Docker（完整runtime另已執行）。正式站只作guest讀取，不建立正式測試帳號或寫合成內容。
-
-CGU154/NTPU409/NTU288完整model payload與原main f6ad canonical hash逐校相同。CCU55 legacy、NCU214 pending、TKU4 partial+124舊年參考不代表全校完整；missing/pending/zero分開。NTU266 licensed/20 needs_review/2 missing、269代表位置、1622生活節錄/124校保留來源年度；14地區出發提醒仍缺研究、API明確404。
-
-回退：正常revert PR2 merge還原五校程式，保留相容DB與append-only audit；等待revert SHA live並重驗。不要在capability marker/新版client存在時盲目還原舊RPC，DB問題按備份作精確forward migration。詳見[release-plan.md](release-plan.md)。
-
-最新機器狀態：[execution-status.json](execution-status.json)。歷史階段：[checkpoint-before-pr2-merge.md](checkpoint-before-pr2-merge.md)。全檔SHA256：[file-manifest.json](file-manifest.json)。
+所有原始failed/skip/notrun、修正、補驗與前後SHA都保留；大型原log/XML使用可驗證無損gzip，未刪原始證據。[無損壓縮SHA](lossless-compression-manifest.json) · [全檔SHA](file-manifest.json) · [最後狀態](execution-status.json)。

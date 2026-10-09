@@ -1,24 +1,29 @@
 {
-  "timestamp": "2026-10-09T17:35:35.132062+00:00",
-  "environment": "exec recovered; latest commands succeed",
+  "timestamp": "2026-10-09T17:42:56.782017+00:00",
+  "environment": "Recovered execution environment; all required checks completed and final source clean",
   "production": {
     "main": "8139be4d3604a60265029dbbe41af21c094e609d",
-    "render_deploy": "dep-db4gm549v7es73an3su0",
+    "render_deploy": "dep-db4i4obrjlhs738ng200",
     "render_status": "live",
     "render_verified_live": true,
     "previous_five_school_live": "e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86",
-    "render_finished_at": "2026-10-09T15:46:11.867025Z",
+    "render_finished_at": "2026-10-09T17:25:30.577437Z",
     "six_school_http_passed": 6,
     "guest_forum_denials_passed": 6,
     "mobile_switches_passed": 6,
-    "smoke_status": "Six-school HTTP/guest boundaries/12 browser switches passed; subsequent NTU regression failed with 502 during OOM restart",
+    "smoke_status": "Exact asset bytes,6schoolHTTP/6guest401/12browser switches and NTU390/1440 passed",
     "runtime_oom": {
       "event": "evt-db4gsjp7lnhs73db9320",
       "timestamp": "2026-10-09T15:54:55.500234Z",
       "memory_limit": "512Mi",
       "recovered_at": "2026-10-09T15:55:31.40353Z",
-      "stability_accepted": false
-    }
+      "stability_accepted": false,
+      "resolved_by_merge": "8139be4d3604a60265029dbbe41af21c094e609d",
+      "note": "Historical pre-fix incident; subsequent bounded final release accepted separately"
+    },
+    "stability_accepted": true,
+    "stability_observed_until": "2026-10-09T17:40:36Z",
+    "stability_qualification": "Observed low-load public flows and quiet interval passed; 30-second Render samples are not instantaneous peaks or a guarantee for arbitrary future traffic. Production concurrency stress was not performed. Existing data gaps and14original skips remain explicit."
   },
   "original_browser": {
     "sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
@@ -52,7 +57,7 @@
     "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200",
     "final_31234305_applied_filename_order": "passed full35, Storage and original five-school code/models; clean start/end"
   },
-  "remaining_gate": "Finish quiet Render memory/events window and isolated final-head post-browser burst order check, then publish final release evidence",
+  "remaining_gate": "None for the scoped integration and bounded production-release acceptance",
   "tku_production_migrations_applied": true,
   "pr2_merged": true,
   "original_full": {
@@ -105,7 +110,7 @@
   "memory_fix": {
     "sha": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
     "branch": "integration/six-school-memory-20261009",
-    "status": "All production flows passed; quiet observation and isolated post-browser cache-warm concurrency check ongoing",
+    "status": "Released and accepted for tested low-load scope; complete final evidence available",
     "scope": "3 Python source files, stable SVG rendering and asset URL, 4 test files, incident documentation; source datasets, migrations, dependencies, workflows unchanged",
     "tests": "fixed SHA 4 new regression tests and OpenAPI check passed; earlier focused 84 passed; full 2645 cases now running",
     "preliminary_peak_mib": {
@@ -225,6 +230,96 @@
       "memory_limit_bytes": 536870900,
       "new_instance": "srv-db26bgjbc2fs73fdsmhg-qvscr",
       "server_failure_or_restart_events": 0
+    },
+    "production_stability": {
+      "status": "passed_with_bounded_observation",
+      "finalized_at": "2026-10-09T17:41:04.226253+00:00",
+      "accepted_head": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+      "main_merge": "8139be4d3604a60265029dbbe41af21c094e609d",
+      "deploy_id": "dep-db4i4obrjlhs738ng200",
+      "live_at": "2026-10-09T17:25:30.577437Z",
+      "instance": "srv-db26bgjbc2fs73fdsmhg-qvscr",
+      "observed_until": "2026-10-09T17:40:36Z",
+      "minutes_since_live": 15.09037605,
+      "last_catalogue_browser_test_finished": "2026-10-09T17:32:50.774859+00:00",
+      "quiet_observation_minutes": 7.65375235,
+      "sampled_memory_peak_bytes": 485654530,
+      "sampled_memory_peak_mib": 463.15625190734863,
+      "memory_limit_bytes": 536870900,
+      "minimum_observed_headroom_bytes": 51216370,
+      "minimum_observed_headroom_mib": 48.84373664855957,
+      "latest_memory_bytes": 480174080,
+      "latest_memory_mib": 457.9296875,
+      "quiet_sample_range_bytes": [
+        480174080,
+        481103870
+      ],
+      "previous_oom_sampled_peak_bytes": 533020670,
+      "previous_oom_sampled_peak_mib": 508.32812309265137,
+      "previous_oom_event": "evt-db4gsjp7lnhs73db9320",
+      "new_failure_restart_events": 0,
+      "app_error_log_entries": 0,
+      "production_checks": {
+        "static_exact_bytes": 2,
+        "school_http": 6,
+        "guest_forum_denials": 6,
+        "school_browser_switches": 12,
+        "ntu_globe_photo_life_widths": [
+          390,
+          1440
+        ],
+        "health_openapi": "passed"
+      },
+      "full_suite": {
+        "at": "2026-10-09T17:18:46.876322+00:00",
+        "status": "passed",
+        "final_head": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+        "full_product_suite_sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+        "raw_full_suite_counts": {
+          "passed": 2629,
+          "failed": 4,
+          "skipped": 14
+        },
+        "raw_failures_retained": [
+          "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393]",
+          "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834]",
+          "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440]",
+          "tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together"
+        ],
+        "executed_unique_cases": 2647,
+        "effective_unique_outcomes": {
+          "passed": 2633,
+          "skipped": 14
+        },
+        "unexpected_or_unexecuted_cases": 0,
+        "original_skips_identical": true,
+        "reruns": [
+          {
+            "name": "memory-final-enospc-rerun",
+            "cases": 3,
+            "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+            "clean_source_guards": true
+          },
+          {
+            "name": "memory-final-assets-contract",
+            "cases": 6,
+            "sha": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+            "clean_source_guards": true
+          }
+        ],
+        "final_browser_followup_passed": 9,
+        "qualification": "Full suite executed on f3. Final head changes only deterministic subprocess test I/O and one paired reader cache query token. All Python/JavaScript, data, sources, migrations, dependencies and runner are byte-identical. Final asset/session/browser checks and rebuilt wheel cover the final delta. Raw failed attempts are not rewritten."
+      },
+      "final_head_post_browser_burst_peak_mib": 442.1015625,
+      "database": "35 migrations already applied and read back; PR6 adds none; full isolated runtime35 passed",
+      "quality": "disabled_manually",
+      "settings_credentials_permissions_paid_changes": false,
+      "qualification": "Observed low-load public flows and quiet interval passed; 30-second Render samples are not instantaneous peaks or a guarantee for arbitrary future traffic. Production concurrency stress was not performed. Existing data gaps and14original skips remain explicit."
     }
-  }
+  },
+  "remaining_work": [
+    "CCU/NCU/TKU remain limited or pending/legacy candidates, not full current-university completeness",
+    "14 originalpytest skips remain (9PhaseC,4Ollama,1opt-inDocker; actualDocker runtime separately passed)",
+    "Actionsbilling blocker and5preexisting migration timestamp mismatches remain unchanged; future DBchanges must be coordinated and verified explicitly"
+  ]
 }

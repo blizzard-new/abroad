@@ -1,0 +1,46 @@
+{
+  "sha": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+  "status": "passed",
+  "source_guards_clean": true,
+  "warm_caches_enabled": true,
+  "order": "360GETs,36school switches,6fullNTUglobe/photo/life flows, then3batches of8concurrentCCUdashboardGETs",
+  "explicit_http_gets": 384,
+  "school_switches": 36,
+  "ntu_flows": 6,
+  "burst_requests": 24,
+  "all_assertions_passed": true,
+  "peak_before_bursts_bytes": 456990720,
+  "peak_overall_bytes": 463577088,
+  "peak_overall_mib": 442.1015625,
+  "final_rss_bytes": 463577088,
+  "headroom_to512MiB_bytes": 73293824,
+  "bursts": [
+    {
+      "label": "after-browser-eight-concurrent-ccu-dashboard-0",
+      "time": "2026-10-09T17:37:21.772075+00:00",
+      "pid": 295960,
+      "rss_bytes": 463577088,
+      "peak_rss_bytes": 463089664,
+      "gc_collected": null
+    },
+    {
+      "label": "after-browser-eight-concurrent-ccu-dashboard-1",
+      "time": "2026-10-09T17:37:22.096195+00:00",
+      "pid": 295960,
+      "rss_bytes": 463577088,
+      "peak_rss_bytes": 463089664,
+      "gc_collected": null
+    },
+    {
+      "label": "after-browser-eight-concurrent-ccu-dashboard-2",
+      "time": "2026-10-09T17:37:22.706988+00:00",
+      "pid": 295960,
+      "rss_bytes": 463577088,
+      "peak_rss_bytes": 463089664,
+      "gc_collected": null
+    }
+  ],
+  "started_at": "2026-10-09T17:34:33.607649+00:00",
+  "finished_at": "2026-10-09T17:37:23.465220+00:00",
+  "measurement": "Owned local Uvicorn process RSS/HWM. No production concurrency load."
+}

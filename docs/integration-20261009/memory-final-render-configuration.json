@@ -1,0 +1,85 @@
+{
+  "service": {
+    "autoDeploy": "yes",
+    "autoDeployTrigger": "commit",
+    "branch": "main",
+    "createdAt": "2026-10-06T03:06:42.756777Z",
+    "dashboardUrl": "https://dashboard.render.com/web/srv-db26bgjbc2fs73fdsmhg",
+    "id": "srv-db26bgjbc2fs73fdsmhg",
+    "name": "uniway",
+    "notifyOnFail": "default",
+    "ownerId": "tea-db269mss728c73b8qaig",
+    "repo": "https://github.com/blizzard-new/abroad",
+    "rootDir": "",
+    "serviceDetails": {
+      "buildPlan": "starter",
+      "cache": {
+        "profile": "no-cache"
+      },
+      "env": "python",
+      "envSpecificDetails": {
+        "buildCommand": "pip install .",
+        "startCommand": "uvicorn exchange_info.api:app --host 0.0.0.0 --port $PORT --workers 1"
+      },
+      "healthCheckPath": "/health",
+      "ipAllowList": [
+        {
+          "cidrBlock": "0.0.0.0/0",
+          "description": "everywhere"
+        }
+      ],
+      "maintenanceMode": {
+        "enabled": false,
+        "uri": ""
+      },
+      "numInstances": 1,
+      "openPorts": [],
+      "plan": "free",
+      "previews": {
+        "generation": "off"
+      },
+      "pullRequestPreviewsEnabled": "no",
+      "region": "singapore",
+      "renderSubdomainPolicy": "enabled",
+      "runtime": "python",
+      "sshAddress": "srv-db26bgjbc2fs73fdsmhg@ssh.singapore.render.com",
+      "url": "https://uniway-1167.onrender.com"
+    },
+    "slug": "uniway-1167",
+    "suspended": "not_suspended",
+    "suspenders": [],
+    "type": "web_service",
+    "updatedAt": "2026-10-09T17:25:30.738602Z"
+  },
+  "deploy": {
+    "commit": {
+      "createdAt": "2026-10-09T17:20:30Z",
+      "id": "8139be4d3604a60265029dbbe41af21c094e609d",
+      "message": "Merge pull request #6 from blizzard-new/integration/six-school-memory-20261009\n\nFix catalogue memory spikes and preserve navigation clicks"
+    },
+    "createdAt": "2026-10-09T17:20:33.552355Z",
+    "finishedAt": "2026-10-09T17:25:30.577437Z",
+    "id": "dep-db4i4obrjlhs738ng200",
+    "startedAt": "2026-10-09T17:20:33.530665Z",
+    "status": "live",
+    "trigger": "new_commit",
+    "updatedAt": "2026-10-09T17:26:06.326051Z"
+  },
+  "at": "2026-10-09T17:39:16.903277+00:00",
+  "unchanged_configuration_checks": {
+    "autoDeploy": true,
+    "autoDeployTrigger": true,
+    "branch": true,
+    "repo": true,
+    "rootDir": true,
+    "ownerId": true,
+    "serviceDetails.plan": true,
+    "serviceDetails.numInstances": true,
+    "serviceDetails.env": true,
+    "serviceDetails.envSpecificDetails": true,
+    "serviceDetails.healthCheckPath": true,
+    "serviceDetails.ipAllowList": true,
+    "serviceDetails.maintenanceMode": true,
+    "serviceDetails.region": true
+  }
+}
