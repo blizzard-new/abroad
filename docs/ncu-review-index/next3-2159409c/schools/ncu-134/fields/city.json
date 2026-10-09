@@ -1,0 +1,68 @@
+{
+  "key": "city",
+  "label": "城市與校區位置",
+  "status": "needs_confirmation",
+  "note": "熊本市黑髮南／北為主要校區；本莊醫學、大江藥學另校區，不把所有交換課都當黑髮。國際會館在黑髮5丁目。",
+  "source_urls": [
+    "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+    "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/getting/",
+    "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2022/02/ShortTermExchangeProgramBrochure.pdf"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+      "source_id": "host-kumamoto-next3-ug-exchange",
+      "page": null,
+      "source_title": "Short-Term Exchange Program |\n\nPrograms for Undergraduate Students |\n\nProspective Students |\n\nKumamoto University",
+      "applicability": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 133,
+        "field": "city",
+        "evidence_array_index": 0,
+        "text_sha256": "416f527633b3ea87f03c7586a3717ef87e9540b678d8cd08fb236fcaf7adda7e",
+        "char_count": 6471
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/getting/",
+      "source_id": "host-kumamoto-next3-housing-access",
+      "page": null,
+      "source_title": "Getting to the International House |\n\nKumamoto University International House |\n\nAccommodation |\n\nProspective Students |\n\nKumamoto University",
+      "applicability": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 133,
+        "field": "city",
+        "evidence_array_index": 1,
+        "text_sha256": "64da1bc6d2b9707828ba286e90cee1fb3327628705f8f3ce7f7d4a35c64ee744",
+        "char_count": 5954
+      }
+    },
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2022/02/ShortTermExchangeProgramBrochure.pdf",
+      "source_id": "host-kumamoto-next3-ug-brochure",
+      "page": 11,
+      "source_title": "ug-brochure",
+      "applicability": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 133,
+        "field": "city",
+        "evidence_array_index": 2,
+        "text_sha256": "99077be6e87b96e57420c46fd4d4987554dc9c1517b633b5bf507fb07b680f05",
+        "char_count": 90
+      }
+    }
+  ],
+  "unresolved": "116實際所屬校區／課程與房源待核。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。"
+}

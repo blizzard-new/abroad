@@ -1,0 +1,75 @@
+{
+  "candidate_sha": "2159409cacb6d8ac36bbafcc3ca6f2925f860fc9",
+  "scope": "No new source attempts or new schools. Same 75 source packet; five source-confirmed corrections.",
+  "attempts": 75,
+  "full_document_read": 73,
+  "native_parts": 207,
+  "unique_attachment_renders_actually_viewed": 104,
+  "preserved_response_bodies_byte_verified": 74,
+  "missing_response_body": "ISA 403 metadata only; original collector did not preserve body",
+  "js_only_not_actual_courses": "Ryukoku syllabus HTTP200 JS entry",
+  "existing_coverage_evidence": {
+    "candidate_sha": "bb806740e702892e78d358973cb2c54b739d3dbd",
+    "schools": {
+      "ncu-130": {
+        "attempted": 29,
+        "http_200": 29,
+        "downloaded": 29,
+        "any_text": 29,
+        "all_pages_have_text": 29,
+        "all_pages_read": 29,
+        "visual_sources": 7,
+        "unretrieved": [],
+        "native_parts": 111,
+        "current_116_verified": 0
+      },
+      "ncu-134": {
+        "attempted": 29,
+        "http_200": 28,
+        "downloaded": 28,
+        "any_text": 27,
+        "all_pages_have_text": 27,
+        "all_pages_read": 28,
+        "visual_sources": 2,
+        "unretrieved": [
+          {
+            "id": "host-kumamoto-next3-isa-address",
+            "url": "https://www.moj.go.jp/isa/applications/procedures/nyuukokukanri10_00023.html",
+            "reason": "403 Client Error: Forbidden for url: https://www.moj.go.jp/isa/applications/procedures/nyuukokukanri10_00023.html"
+          }
+        ],
+        "native_parts": 41,
+        "current_116_verified": 0
+      },
+      "ncu-135": {
+        "attempted": 17,
+        "http_200": 17,
+        "downloaded": 16,
+        "any_text": 16,
+        "all_pages_have_text": 15,
+        "all_pages_read": 16,
+        "visual_sources": 9,
+        "unretrieved": [
+          {
+            "id": "host-ryukoku-next3-syllabus-index",
+            "url": "https://syllabus.ws.ryukoku.ac.jp/acrsw/CSylNoSSO/CNoSSO.do",
+            "reason": "HTTP200僅acslb-client入口，未取得動態課程結果；入口下載不等於課綱已讀。"
+          }
+        ],
+        "native_parts": 55,
+        "current_116_verified": 0
+      }
+    },
+    "all_attempted": 75,
+    "unique_reported_response_sha256": 75,
+    "tls_verification_all_enabled": true,
+    "all_116_unverified": true
+  },
+  "changed_source_id": "host-kumamoto-next3-ug-brochure",
+  "change": "Same original PDF and native text; selected visual transcription includes optional insurance and one-time payment on p8.",
+  "current_116_host_full_verification": 0,
+  "reviewed_partial_records": 74,
+  "catalog_entries": 214,
+  "unreviewed_records": 140,
+  "official_unknown_vs_not_obtained_not_collapsed": true
+}

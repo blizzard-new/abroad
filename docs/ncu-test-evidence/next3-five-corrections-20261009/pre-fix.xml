@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="5" time="13.962" timestamp="2026-10-09T08:37:47.169746+00:00" hostname="e412858c778f"><testcase classname="tests.test_ncu_next3_review_corrections" name="test_ryukoku_initial_four_items_are_separate_and_jlpt_is_optional" time="8.136"><failure message="AssertionError: assert 6 == 10&#10; +  where 6 = len([{'name': '龍谷讀書計畫詳填（過短重寫、可另紙）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}, {'name': '母校日語能力評估... [], ...}, {'name': '全部交换生SPOT結果PDF（測驗三項、非語檢證書替代）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}])">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-15/test_ryukoku_initial_four_item0')
+
+    def test_ryukoku_initial_four_items_are_separate_and_jlpt_is_optional(tmp_path):
+        steps = {s['rule_id']: s for s in workflow(tmp_path)['steps']}
+        docs = steps['ncu-135-host-initial-reference']['document_requirements']
+&gt;       assert len(docs) == 10
+E       AssertionError: assert 6 == 10
+E        +  where 6 = len([{'name': '龍谷讀書計畫詳填（過短重寫、可另紙）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}, {'name': '母校日語能力評估... [], ...}, {'name': '全部交换生SPOT結果PDF（測驗三項、非語檢證書替代）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}])
+
+tests/test_ncu_next3_review_corrections.py:30: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_ryukoku_later_conditional_items_keep_stage_and_missing_forms" time="0.900"><failure message="AssertionError: assert [] == ['NASIC入寮日期回覆...；本人簽名，原件未取得）']&#10;  &#10;  Right contains 2 more items, first extra item: 'NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）'&#10;  Use -v to get more diff">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-15/test_ryukoku_later_conditional0')
+
+    def test_ryukoku_later_conditional_items_keep_stage_and_missing_forms(tmp_path):
+        steps = {s['rule_id']: s for s in workflow(tmp_path)['steps']}
+        for stage, names in [('housing', RYU_HOUSING), ('arrival', RYU_ARRIVAL)]:
+            docs = steps['ncu-135-host-' + stage]['document_requirements']
+&gt;           assert [d['name'] for d in docs] == names
+E           AssertionError: assert [] == ['NASIC入寮日期回覆...；本人簽名，原件未取得）']
+E             
+E             Right contains 2 more items, first extra item: 'NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）'
+E             Use -v to get more diff
+
+tests/test_ncu_next3_review_corrections.py:45: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_kumamoto_nationality_and_language_submission_conditions_are_distinct" time="1.121"><failure message="KeyError: 'points'">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-15/test_kumamoto_nationality_and_0')
+
+    def test_kumamoto_nationality_and_language_submission_conditions_are_distinct(tmp_path):
+        p = partner('熊本'); a = ncu_field_audit(p.school_name)
+&gt;       assert '非日本國籍學生' in ' '.join(a['fields']['eligibility']['points'])
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'points'
+
+tests/test_ncu_next3_review_corrections.py:55: KeyError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_kumamoto_private_insurance_is_historical_one_time_not_annual" time="0.103"><failure message="KeyError: 'points'">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-15/test_kumamoto_private_insuranc0')
+
+    def test_kumamoto_private_insurance_is_historical_one_time_not_annual(tmp_path):
+        p = partner('熊本'); a = ncu_field_audit(p.school_name)['fields']['insurance']
+&gt;       text = ' '.join(a['points'])
+                        ^^^^^^^^^^^
+E       KeyError: 'points'
+
+tests/test_ncu_next3_review_corrections.py:70: KeyError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_nufs_study_abroad_cannot_take_gjp_and_no_program_change_is_separate" time="0.064"><failure message="KeyError: 'points'">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-15/test_nufs_study_abroad_cannot_0')
+
+    def test_nufs_study_abroad_cannot_take_gjp_and_no_program_change_is_separate(tmp_path):
+        p = partner('名古屋外國語'); a = ncu_field_audit(p.school_name)
+&gt;       assert '不能修GJP課程' in ' '.join(a['fields']['courses']['points'])
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'points'
+
+tests/test_ncu_next3_review_corrections.py:82: KeyError</failure></testcase></testsuite></testsuites>

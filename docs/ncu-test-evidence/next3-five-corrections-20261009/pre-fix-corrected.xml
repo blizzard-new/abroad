@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="5" time="13.543" timestamp="2026-10-09T08:42:01.366920+00:00" hostname="e412858c778f"><testcase classname="tests.test_ncu_next3_review_corrections" name="test_ryukoku_initial_four_items_are_separate_and_jlpt_is_optional" time="4.514"><failure message="AssertionError: assert 6 == 10&#10; +  where 6 = len([{'name': '龍谷讀書計畫詳填（過短重寫、可另紙）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}, {'name': '母校日語能力評估... [], ...}, {'name': '全部交换生SPOT結果PDF（測驗三項、非語檢證書替代）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}])">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-16/test_ryukoku_initial_four_item0')
+
+    def test_ryukoku_initial_four_items_are_separate_and_jlpt_is_optional(tmp_path):
+        steps = {s['rule_id']: s for s in workflow(tmp_path)['steps']}
+        docs = steps['ncu-135-host-initial-reference']['document_requirements']
+&gt;       assert len(docs) == 10
+E       AssertionError: assert 6 == 10
+E        +  where 6 = len([{'name': '龍谷讀書計畫詳填（過短重寫、可另紙）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}, {'name': '母校日語能力評估... [], ...}, {'name': '全部交换生SPOT結果PDF（測驗三項、非語檢證書替代）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}])
+
+tests/test_ncu_next3_review_corrections.py:30: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_ryukoku_later_conditional_items_keep_stage_and_missing_forms" time="1.940"><failure message="AssertionError: assert [] == ['NASIC入寮日期回覆...；本人簽名，原件未取得）']&#10;  &#10;  Right contains 2 more items, first extra item: 'NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）'&#10;  Use -v to get more diff">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-16/test_ryukoku_later_conditional0')
+
+    def test_ryukoku_later_conditional_items_keep_stage_and_missing_forms(tmp_path):
+        steps = {s['rule_id']: s for s in workflow(tmp_path)['steps']}
+        for stage, names in [('housing', RYU_HOUSING), ('arrival', RYU_ARRIVAL)]:
+            docs = steps['ncu-135-host-' + stage]['document_requirements']
+&gt;           assert [d['name'] for d in docs] == names
+E           AssertionError: assert [] == ['NASIC入寮日期回覆...；本人簽名，原件未取得）']
+E             
+E             Right contains 2 more items, first extra item: 'NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）'
+E             Use -v to get more diff
+
+tests/test_ncu_next3_review_corrections.py:45: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_kumamoto_nationality_and_language_submission_conditions_are_distinct" time="3.045"><failure message="AssertionError: assert '非日本國籍學生' in '現英／日交換頁：合作校正規在學、交換開始原則學部二年級以上、留在母校學籍、最長一年、可取得Student居留。舊2022路徑brochure第4頁卻寫三年級，保留版本矛盾。 E英文與J日文STEP學部方案；研究所degree admissions不能當研究所交換開放證明。健康文字由兩校／醫師審個案，不用regex自動拒收。'">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-16/test_kumamoto_nationality_and_0')
+
+    def test_kumamoto_nationality_and_language_submission_conditions_are_distinct(tmp_path):
+        p = partner('熊本'); a = ncu_field_audit(p.school_name)
+&gt;       assert '非日本國籍學生' in a['fields']['eligibility']['note']
+E       AssertionError: assert '非日本國籍學生' in '現英／日交換頁：合作校正規在學、交換開始原則學部二年級以上、留在母校學籍、最長一年、可取得Student居留。舊2022路徑brochure第4頁卻寫三年級，保留版本矛盾。 E英文與J日文STEP學部方案；研究所degree admissions不能當研究所交換開放證明。健康文字由兩校／醫師審個案，不用regex自動拒收。'
+
+tests/test_ncu_next3_review_corrections.py:55: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_kumamoto_private_insurance_is_historical_one_time_not_annual" time="0.246"><failure message="AssertionError: assert ('一次性付款' in '一般行前頁建議旅行保險；抵達後住超三月辦NHI，校方說明通常給付70%。2022brochure私人保險年額只作歷史，不作116必繳保費。')">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-16/test_kumamoto_private_insuranc0')
+
+    def test_kumamoto_private_insurance_is_historical_one_time_not_annual(tmp_path):
+        p = partner('熊本'); a = ncu_field_audit(p.school_name)['fields']['insurance']
+        text = a['note']
+&gt;       assert '一次性付款' in text and '15,000' in text and '2022' in text
+E       AssertionError: assert ('一次性付款' in '一般行前頁建議旅行保險；抵達後住超三月辦NHI，校方說明通常給付70%。2022brochure私人保險年額只作歷史，不作116必繳保費。')
+
+tests/test_ncu_next3_review_corrections.py:71: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_nufs_study_abroad_cannot_take_gjp_and_no_program_change_is_separate" time="0.109"><failure message="AssertionError: assert '不能修GJP課程' in 'GJP每週至少7個90分鐘課堂，建議不超過11；修日語者選一種core，intensive8堂16學分／semi4堂8學分，少於4人可取消。初級先熟悉平假名片假名。特別聽講建議10–12堂，不能套GJP上限。 GJSC英授容量可能抽籤...條件，JS904容量5、首堂缺席取消，2026資料不得當2027保證開課。 每90分鐘每週課一學期2NUFS學分，NUFS參考1學分=1.5ECTS；中央採認先由系所核定。placement頁到達後與FAQ提前六月／十二月測試說法不同。'">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-16/test_nufs_study_abroad_cannot_0')
+
+    def test_nufs_study_abroad_cannot_take_gjp_and_no_program_change_is_separate(tmp_path):
+        p = partner('名古屋外國語'); a = ncu_field_audit(p.school_name)
+&gt;       assert '不能修GJP課程' in a['fields']['courses']['note']
+E       AssertionError: assert '不能修GJP課程' in 'GJP每週至少7個90分鐘課堂，建議不超過11；修日語者選一種core，intensive8堂16學分／semi4堂8學分，少於4人可取消。初級先熟悉平假名片假名。特別聽講建議10–12堂，不能套GJP上限。 GJSC英授容量可能抽籤...條件，JS904容量5、首堂缺席取消，2026資料不得當2027保證開課。 每90分鐘每週課一學期2NUFS學分，NUFS參考1學分=1.5ECTS；中央採認先由系所核定。placement頁到達後與FAQ提前六月／十二月測試說法不同。'
+
+tests/test_ncu_next3_review_corrections.py:82: AssertionError</failure></testcase></testsuite></testsuites>

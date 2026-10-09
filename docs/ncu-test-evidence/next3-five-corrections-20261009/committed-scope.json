@@ -1,0 +1,178 @@
+{
+  "candidate_sha": "2159409cacb6d8ac36bbafcc3ca6f2925f860fc9",
+  "baseline_sha": "bb4cecd8030946e59bed494509d206c356e5c210",
+  "changed_manual_rows": [
+    "ncu-130",
+    "ncu-134",
+    "ncu-135"
+  ],
+  "manual_rows_unchanged": 71,
+  "changed_fields": {
+    "ncu-135": [
+      "host_documents",
+      "housing",
+      "arrival"
+    ],
+    "ncu-134": [
+      "eligibility",
+      "language",
+      "insurance"
+    ],
+    "ncu-130": [
+      "courses"
+    ]
+  },
+  "changed_ryukoku_stages": [
+    "initial-reference",
+    "housing",
+    "arrival"
+  ],
+  "existing_policy_note_changes": [
+    "龍谷讀書計畫詳填（過短重寫、可另紙）",
+    "母校日語能力評估（零學習也交；校章位置待核）",
+    "龍谷推薦表（另有推薦信仍要；密封與online保密方式待核）",
+    "龍谷健康表（醫師簽；不能Xray可其他結核檢查附正式結果）",
+    "全部交換生日語自評（下載表仍JEP舊標題）",
+    "全部交换生SPOT結果PDF（測驗三項、非語檢證書替代）"
+  ],
+  "added_document_policies": 8,
+  "changed_files": [
+    "sources/ncu/2026-10-08/document-conditions.json",
+    "sources/ncu/2026-10-08/host-kumamoto-next3-ug-brochure-visual-review.json",
+    "sources/ncu/2026-10-08/host-web-evidence.json.gz",
+    "sources/ncu/2026-10-08/reviewed-host-records.json",
+    "sources/ncu/next3-review-20261009/five-corrections-source-ledger.json",
+    "src/exchange_info/official_data/ncu/application_workflows.jsonl",
+    "src/exchange_info/official_data/ncu/destination_profiles.jsonl",
+    "src/exchange_info/official_data/ncu/document-conditions.json",
+    "src/exchange_info/official_data/ncu/field-audit.json",
+    "src/exchange_info/official_data/ncu/field-coverage.csv",
+    "src/exchange_info/official_data/ncu/import-provenance.json",
+    "src/exchange_info/official_data/ncu/pages.jsonl",
+    "src/exchange_info/official_data/ncu/partners.jsonl",
+    "src/exchange_info/official_data/ncu/source-evidence.json.gz",
+    "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py",
+    "tests/test_ncu_next3_review_corrections.py",
+    "tests/test_ncu_nufs_kumamoto_ryukoku.py"
+  ],
+  "input_sha256": {
+    "sources/ncu/2026-10-08/reviewed-host-records.json": "7250661072f8737f6a43d0142540c6db0ec48587ad51dc7c27b72f673d2c48df",
+    "sources/ncu/2026-10-08/document-conditions.json": "9cc06a43ff78064c6db1ae0cbf9fbbc16e3ece4ffbc2240ed58a15a6eeeb60a1",
+    "sources/ncu/2026-10-08/host-web-evidence.json.gz": "f2b6f5675fb7fcfd49307a138f77c3bf3336e40ff5fcd47196781e9a9edbf569",
+    "sources/ncu/2026-10-08/host-kumamoto-next3-ug-brochure-visual-review.json": "9bd1c6126981fba26aee5e9245c68f004ebfed922ec01cea65e924c0dec33ba1"
+  },
+  "preserved_paths": [
+    "sources/ncu/candidates/",
+    "docs/ncu-review-index/71-2637de2/",
+    "docs/ncu-review-index/next3-bb806740/",
+    "docs/ncu-test-evidence/"
+  ],
+  "peers": {
+    "CCU": {
+      "sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "this_correction_shared_paths": [],
+      "whole_ncu_branch_shared_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/application_rules.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "src/exchange_info/workflow_structuring.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_ntu_integration.py",
+        "uv.lock"
+      ]
+    },
+    "TKU": {
+      "sha": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c",
+      "this_correction_shared_paths": [],
+      "whole_ncu_branch_shared_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/openapi_contract.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/discovery-ui.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "tests/e2e/conftest.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_fit_signals.py",
+        "tests/test_frontend_contract.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_rag.py",
+        "tests/test_school_completeness.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "uv.lock"
+      ]
+    }
+  },
+  "current_116_verified": false,
+  "unreviewed_new_schools": 0,
+  "runtime_schema_ui_shared_files_changed": false,
+  "generated_scope": {
+    "baseline_sha": "bb4cecd8030946e59bed494509d206c356e5c210",
+    "allowed_schools": [
+      "名古屋外國語大學 Nagoya University of Foreign Studies",
+      "熊本大學 Kumamoto University",
+      "龍谷大學 Ryukoku University"
+    ],
+    "files": {
+      "field-audit.json": {
+        "changed_schools": [
+          "名古屋外國語大學 Nagoya University of Foreign Studies",
+          "熊本大學 Kumamoto University",
+          "龍谷大學 Ryukoku University"
+        ],
+        "unchanged_schools": 211
+      },
+      "partners.jsonl": {
+        "changed_schools": [
+          "名古屋外國語大學 Nagoya University of Foreign Studies",
+          "熊本大學 Kumamoto University",
+          "龍谷大學 Ryukoku University"
+        ],
+        "unchanged_schools": 211
+      },
+      "application_workflows.jsonl": {
+        "changed_schools": [
+          "名古屋外國語大學 Nagoya University of Foreign Studies",
+          "熊本大學 Kumamoto University",
+          "龍谷大學 Ryukoku University"
+        ],
+        "unchanged_schools": 211
+      },
+      "destination_profiles.jsonl": {
+        "changed_schools": [
+          "名古屋外國語大學 Nagoya University of Foreign Studies",
+          "熊本大學 Kumamoto University",
+          "龍谷大學 Ryukoku University"
+        ],
+        "unchanged_schools": 211
+      }
+    },
+    "source_changes": [
+      {
+        "id": "host-kumamoto-next3-ug-brochure",
+        "changed_keys": [
+          "visual_review",
+          "page_transcriptions"
+        ],
+        "native_text_and_original_sha_unchanged": true
+      }
+    ],
+    "unchanged_sources": 1454,
+    "field_coverage_csv_changed_rows": 2,
+    "coverage_unchanged": true
+  }
+}

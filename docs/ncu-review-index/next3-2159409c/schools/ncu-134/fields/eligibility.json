@@ -1,0 +1,86 @@
+{
+  "key": "eligibility",
+  "label": "學制／校區／track範圍",
+  "status": "needs_confirmation",
+  "note": "現英／日交換頁：合作校正規在學、交換開始原則學部二年級以上、留在母校學籍、最長一年、可取得Student居留。舊2022路徑brochure第4頁卻寫三年級，保留版本矛盾。 E英文與J日文STEP學部方案；研究所degree admissions不能當研究所交換開放證明。健康文字由兩校／醫師審個案，不用regex自動拒收。 J英頁明列non-Japanese students，日頁E／J均寫外国籍の学生；保留非日本國籍學生條件，國籍與母語不可混用，也不依姓名或語言自動判國籍。",
+  "source_urls": [
+    "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+    "https://www.kumamoto-u.ac.jp/kokusaikouryuu/gaikokujinryuugakusei/kyouikuprogram",
+    "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2022/02/ShortTermExchangeProgramBrochure.pdf",
+    "https://ewww.kumamoto-u.ac.jp/en/prospective/graduate/"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+      "source_id": "host-kumamoto-next3-ug-exchange",
+      "page": null,
+      "source_title": "Short-Term Exchange Program |\n\nPrograms for Undergraduate Students |\n\nProspective Students |\n\nKumamoto University",
+      "applicability": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 133,
+        "field": "eligibility",
+        "evidence_array_index": 0,
+        "text_sha256": "416f527633b3ea87f03c7586a3717ef87e9540b678d8cd08fb236fcaf7adda7e",
+        "char_count": 6471
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.kumamoto-u.ac.jp/kokusaikouryuu/gaikokujinryuugakusei/kyouikuprogram",
+      "source_id": "host-kumamoto-next3-ug-exchange-jp",
+      "page": null,
+      "source_title": "留学生特別教育プログラム | 熊本大学",
+      "applicability": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 133,
+        "field": "eligibility",
+        "evidence_array_index": 1,
+        "text_sha256": "c96a3775e1f9c464843538cf312c8b5fd0d89f1c8614905189bb4800495a7d58",
+        "char_count": 3767
+      }
+    },
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2022/02/ShortTermExchangeProgramBrochure.pdf",
+      "source_id": "host-kumamoto-next3-ug-brochure",
+      "page": 4,
+      "source_title": "ug-brochure",
+      "applicability": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 133,
+        "field": "eligibility",
+        "evidence_array_index": 2,
+        "text_sha256": "ff62d7356d02fde3bf6fe89b94d9fd084d6e74cd1ba552c47c4f10d9378f6649",
+        "char_count": 218
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://ewww.kumamoto-u.ac.jp/en/prospective/graduate/",
+      "source_id": "host-kumamoto-next3-graduate",
+      "page": null,
+      "source_title": "Programs for Graduate Students |\n\nProspective Students |\n\nKumamoto University",
+      "applicability": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 133,
+        "field": "eligibility",
+        "evidence_array_index": 3,
+        "text_sha256": "022d2845e611133298a9ed3df386b3869aaa131c821603fa5cbc7cb0e512a51e",
+        "char_count": 5580
+      }
+    }
+  ],
+  "unresolved": "中央116學制／接收學院、是否採二／三年級及研究所交換可用性須承辦確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。"
+}
