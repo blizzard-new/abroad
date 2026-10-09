@@ -80,7 +80,7 @@ def test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_
         else:
             assert by_key(result)["workflow"].status == "missing"
         scores.append(result.score)
-    assert len(scores) == 785 and max(scores) < 1
+    assert len(scores) == 840 and max(scores) < 1
 
 
 def test_endpoint_returns_completeness_for_a_supported_partner(tmp_path):

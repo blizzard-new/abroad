@@ -51,14 +51,16 @@ def test_stage_only_match_is_last_resort_and_labelled():
 def test_every_bundled_step_is_either_linked_listed_or_documentless():
     workflows = storage.load_bundled_application_workflows()
     # CGU 77 (115) + 77 (116); NTPU 203 (115) + 206 (116); NTU 288 (116-1).
-    assert len(workflows) == 1065
+    assert len(workflows) == 1120
     ncu = [w for w in workflows if w.home_university == "國立中央大學"]
     assert len(ncu) == 214 and all(w.review_status == "pending_review" for w in ncu)
+    ccu = [w for w in workflows if w.home_university == "國立中正大學"]
+    assert len(ccu) == 55 and all(w.review_status == "pending_review" for w in ccu)
     overall = audit_task_document_links(workflows)
     assert overall["steps"] == sum(len(row.steps) for row in workflows)
     # Keep the established schools' reviewed linkage contract separate from the
-    # new NCU pending host reference steps (including later health/arrival files).
-    workflows = [w for w in workflows if w.home_university != "國立中央大學"]
+    # new CCU/NCU pending host reference steps (including later health/arrival files).
+    workflows = [w for w in workflows if w.home_university not in {"國立中央大學", "國立中正大學"}]
     assert len(workflows) == 851
     audit = audit_task_document_links(workflows)
     assert audit["steps"] == sum(len(row.steps) for row in workflows)
@@ -193,7 +195,7 @@ def test_every_bundled_workflow_yields_a_schedulable_estimated_plan_for_an_unpub
     from exchange_info.models import PartnerUniversity
 
     workflows = storage.load_bundled_application_workflows()
-    assert len(workflows) == 1065
+    assert len(workflows) == 1120
     empty, unplannable = [], []
     for workflow in workflows:
         if len(workflow.school_name) > 200:
