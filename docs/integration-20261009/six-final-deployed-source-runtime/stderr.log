@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/workspace/integration-tools/run_pinned_flat_runtime_with_legacy_tree.py", line 55, in <module>
+    raise SystemExit(tku.main())
+                     ^^^^^^^^^^
+  File "/workspace/abroad-six-final/scripts/validate_tku_community_runtime.py", line 110, in main
+    return runtime.main([])
+           ^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-six-final/scripts/validate_supabase_runtime.py", line 2946, in main
+    result = validate_runtime(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-six-final/scripts/validate_tku_community_runtime.py", line 104, in validate
+    result = original(context)
+             ^^^^^^^^^^^^^^^^^
+  File "/workspace/integration-tools/run_pinned_flat_runtime_with_legacy_tree.py", line 20, in validate_with_legacy
+    result['deployed_full_python_source_compatibility'] = validate_legacy_tree(context)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/integration-tools/legacy_tree_client_compatibility.py", line 70, in validate
+    require(child.returncode == 0, 'Exact deployed-source child failed: ' + child.stderr)
+  File "/workspace/abroad-six-final/scripts/validate_governance_runtime.py", line 38, in require
+    raise RuntimeError("Atomic governance runtime: " + message)
+RuntimeError: Atomic governance runtime: Exact deployed-source child failed: Traceback (most recent call last):
+  File "<string>", line 8, in <module>
+ImportError: cannot import name 'ApplicationWorkflow' from 'exchange_info.models' (/tmp/abroad-legacy-source-i_zjc2w_/src/exchange_info/models.py). Did you mean: 'ApplicationWorkflowSource'?
+

@@ -1,0 +1,25 @@
+{
+  "command": [
+    "env",
+    "XDG_CACHE_HOME=/workspace/integration-tools/audit-cache",
+    ".venv/bin/python",
+    "scripts/audit_python_dependencies.py"
+  ],
+  "cwd": "/workspace/abroad-six-final",
+  "started_at": "2026-10-09T15:19:32.543248+00:00",
+  "start_guard": {
+    "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+    "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+    "status": ""
+  },
+  "timeout_seconds": 900,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T15:20:02.177948+00:00",
+  "end_guard": {
+    "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+    "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+    "status": ""
+  }
+}

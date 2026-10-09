@@ -1,0 +1,37 @@
+[
+  {
+    "name": "exchange_commit_application_workflow_publication",
+    "signature": "exchange_commit_application_workflow_publication(text,text,text,text,text,text,integer,jsonb,timestamp with time zone,text,timestamp with time zone)",
+    "anon_execute": false,
+    "authenticated_execute": false,
+    "service_execute": true
+  },
+  {
+    "name": "exchange_commit_application_workflow_revision",
+    "signature": "exchange_commit_application_workflow_revision(text,text,integer,integer,text,text,jsonb,jsonb,text,timestamp with time zone,smallint,jsonb,jsonb,text,timestamp with time zone,text,text,text,text,text,text,text,text,text,timestamp with time zone)",
+    "anon_execute": false,
+    "authenticated_execute": false,
+    "service_execute": true
+  },
+  {
+    "name": "exchange_commit_public_community_content",
+    "signature": "exchange_commit_public_community_content(text,text,text,text,text,text,jsonb)",
+    "anon_execute": false,
+    "authenticated_execute": false,
+    "service_execute": false
+  },
+  {
+    "name": "exchange_community_display_name",
+    "signature": "exchange_community_display_name(jsonb,text,text)",
+    "anon_execute": false,
+    "authenticated_execute": false,
+    "service_execute": false
+  },
+  {
+    "name": "exchange_community_request_fingerprint",
+    "signature": "exchange_community_request_fingerprint(jsonb)",
+    "anon_execute": false,
+    "authenticated_execute": false,
+    "service_execute": false
+  }
+]

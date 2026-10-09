@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-09T15:12:00+00:00",
+  "timestamp": "2026-10-09T15:31:38.502807+00:00",
   "environment": "exec recovered; latest commands succeed",
   "production": {
     "main": "e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86",
@@ -30,15 +30,17 @@
     "contracts_sql_and_structuring": "65 passed, clean start/end",
     "original_10_browser_failures": "10 passed, clean start/end",
     "extra_ccu_ncu_full_api_policy": "2 passed, clean start/end",
-    "full2641_on_0fdc": "running in four shards, no source mutations"
+    "full2641_on_0fdc": "2627 passed, 0 failed, 14 original skipped; all four clean source guards"
   },
   "runtime": {
     "full35_fresh_order": "passed",
     "full35_deployed_order": "passed",
     "full35_and_deployed_client_compatibility": "passed",
-    "production_readonly_317_hash_vectors": "zero mismatches; no mutation; helper service permission false"
+    "production_readonly_317_hash_vectors": "zero mismatches; no mutation; helper service permission false",
+    "full35_on_final_fixed_sha": "passed, 0fdc6cfa, clean source guards",
+    "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200"
   },
-  "remaining_gate": "Final full2641 on fixed 0fdc, then exact TKU DB migrations, PR2 merge and Render six-school acceptance",
+  "remaining_gate": "TKU exact three DB migrations/readback, filename version mapping, PR2 merge and Render six-school acceptance",
   "tku_production_migrations_applied": false,
   "pr2_merged": false,
   "original_full": {
@@ -49,5 +51,15 @@
     "skipped": 14,
     "all_source_guards_passed": false
   },
-  "pre_release_readback": "15:11 UTC all four production functions unchanged; main e5c6d5c, PR2 b67d79a, Quality disabled_manually, Render settings unchanged"
+  "pre_release_readback": "15:11 UTC all four production functions unchanged; main e5c6d5c, PR2 b67d79a, Quality disabled_manually, Render settings unchanged",
+  "final_full": {
+    "candidate_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+    "collected_unique_cases": 2641,
+    "executed_unique_cases": 2641,
+    "counts": {
+      "passed": 2627,
+      "skipped": 14
+    },
+    "all_source_guards_passed": true
+  }
 }

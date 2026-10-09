@@ -1,0 +1,31 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "scripts/run_web_quality_tests.py",
+    "--shard",
+    "0",
+    "--shards",
+    "4",
+    "--junitxml",
+    "/workspace/integration-evidence/six-final-full-shard-0/results.xml",
+    "--evidence-dir",
+    "/workspace/integration-evidence/six-final-full-shard-0"
+  ],
+  "cwd": "/workspace/abroad-six-final",
+  "started_at": "2026-10-09T14:54:21.084997+00:00",
+  "start_guard": {
+    "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+    "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+    "status": ""
+  },
+  "timeout_seconds": 5400,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T15:30:35.191854+00:00",
+  "end_guard": {
+    "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+    "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+    "status": ""
+  }
+}

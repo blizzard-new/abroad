@@ -1,4 +1,5 @@
 """Guest-only public-site school switching. No registration or content writes."""
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -19,6 +20,22 @@ if '--tku' in sys.argv: schools.append(('淡江大學', 128))
 base = 'https://uniway-1167.onrender.com'
 output = Path('/workspace/integration-evidence') / (output_name + '-result.json')
 proof = {'commit': commit, 'checked_at': datetime.now(timezone.utc).isoformat(), 'http': [], 'browser': [], 'browser_proxy_ca_workaround': True}
+if '--tku' in sys.argv:
+    response = requests.get(base + '/health', timeout=90)
+    response.raise_for_status()
+    health = response.json()
+    assert health['status'] == 'ok'
+    assert set(health['supported_schools']) == {school for school, _ in schools}
+    proof['health'] = health
+    response = requests.get(base + '/openapi.json', timeout=90)
+    response.raise_for_status()
+    actual_contract = response.json()
+    expected_contract = json.loads(Path('docs/api/openapi.json').read_text())
+    assert actual_contract == expected_contract, 'Deployed OpenAPI differs from the accepted candidate'
+    canonical = json.dumps(actual_contract, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode()
+    proof['openapi'] = {'status': response.status_code, 'candidate_equal': True,
+                        'canonical_sha256': hashlib.sha256(canonical).hexdigest()}
+    print('HEALTH + OPENAPI PASS accepted six-school candidate', flush=True)
 for school, count in schools:
     r = requests.get(base + '/student-dashboard', params={'school':school}, timeout=90)
     r.raise_for_status(); payload=r.json()

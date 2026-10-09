@@ -1,0 +1,187 @@
+{
+  "candidate_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+  "complete_full_suite": true,
+  "collected_unique_cases": 2641,
+  "executed_unique_cases": 2641,
+  "counts": {
+    "passed": 2627,
+    "skipped": 14
+  },
+  "all_source_guards_passed": true,
+  "shards": [
+    {
+      "shard": 0,
+      "metadata": {
+        "command": [
+          ".venv/bin/python",
+          "scripts/run_web_quality_tests.py",
+          "--shard",
+          "0",
+          "--shards",
+          "4",
+          "--junitxml",
+          "/workspace/integration-evidence/six-final-full-shard-0/results.xml",
+          "--evidence-dir",
+          "/workspace/integration-evidence/six-final-full-shard-0"
+        ],
+        "cwd": "/workspace/abroad-six-final",
+        "started_at": "2026-10-09T14:54:21.084997+00:00",
+        "start_guard": {
+          "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+          "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+          "status": ""
+        },
+        "timeout_seconds": 5400,
+        "test_result": "passed",
+        "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+        "exit_code": 0,
+        "finished_at": "2026-10-09T15:30:35.191854+00:00",
+        "end_guard": {
+          "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+          "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+          "status": ""
+        }
+      },
+      "case_count": 2290,
+      "counts": {
+        "passed": 2276,
+        "skipped": 14
+      },
+      "source_guard_passed": true
+    },
+    {
+      "shard": 1,
+      "metadata": {
+        "command": [
+          ".venv/bin/python",
+          "scripts/run_web_quality_tests.py",
+          "--shard",
+          "1",
+          "--shards",
+          "4",
+          "--junitxml",
+          "/workspace/integration-evidence/six-final-full-shard-1/results.xml",
+          "--evidence-dir",
+          "/workspace/integration-evidence/six-final-full-shard-1"
+        ],
+        "cwd": "/workspace/abroad-six-final",
+        "started_at": "2026-10-09T14:54:21.110560+00:00",
+        "start_guard": {
+          "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+          "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+          "status": ""
+        },
+        "timeout_seconds": 5400,
+        "test_result": "passed",
+        "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+        "exit_code": 0,
+        "finished_at": "2026-10-09T15:19:41.636872+00:00",
+        "end_guard": {
+          "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+          "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+          "status": ""
+        }
+      },
+      "case_count": 117,
+      "counts": {
+        "passed": 117
+      },
+      "source_guard_passed": true
+    },
+    {
+      "shard": 2,
+      "metadata": {
+        "command": [
+          ".venv/bin/python",
+          "scripts/run_web_quality_tests.py",
+          "--shard",
+          "2",
+          "--shards",
+          "4",
+          "--junitxml",
+          "/workspace/integration-evidence/six-final-full-shard-2/results.xml",
+          "--evidence-dir",
+          "/workspace/integration-evidence/six-final-full-shard-2"
+        ],
+        "cwd": "/workspace/abroad-six-final",
+        "started_at": "2026-10-09T14:54:21.088907+00:00",
+        "start_guard": {
+          "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+          "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+          "status": ""
+        },
+        "timeout_seconds": 5400,
+        "test_result": "passed",
+        "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+        "exit_code": 0,
+        "finished_at": "2026-10-09T15:16:05.748108+00:00",
+        "end_guard": {
+          "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+          "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+          "status": ""
+        }
+      },
+      "case_count": 117,
+      "counts": {
+        "passed": 117
+      },
+      "source_guard_passed": true
+    },
+    {
+      "shard": 3,
+      "metadata": {
+        "command": [
+          ".venv/bin/python",
+          "scripts/run_web_quality_tests.py",
+          "--shard",
+          "3",
+          "--shards",
+          "4",
+          "--junitxml",
+          "/workspace/integration-evidence/six-final-full-shard-3/results.xml",
+          "--evidence-dir",
+          "/workspace/integration-evidence/six-final-full-shard-3"
+        ],
+        "cwd": "/workspace/abroad-six-final",
+        "started_at": "2026-10-09T14:54:21.115883+00:00",
+        "start_guard": {
+          "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+          "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+          "status": ""
+        },
+        "timeout_seconds": 5400,
+        "test_result": "passed",
+        "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+        "exit_code": 0,
+        "finished_at": "2026-10-09T15:22:35.319624+00:00",
+        "end_guard": {
+          "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+          "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+          "status": ""
+        }
+      },
+      "case_count": 117,
+      "counts": {
+        "passed": 117
+      },
+      "source_guard_passed": true
+    }
+  ],
+  "failed_nodeids": [],
+  "skipped_nodeids": [
+    "tests/e2e/test_web_next_phase.py::test_content_admins_independently_attest_every_source_before_publish",
+    "tests/e2e/test_web_next_phase.py::test_content_admin_downloads_snapshot_bound_destination_profile_review_queue",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_fixed_10_questions_no_oom",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_cold_start_under_90s",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_overlong_prompt_handled",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_service_recovers_after_timeout",
+    "tests/test_application_plan_api.py::test_application_plan_api_uses_bundled_workflow_with_isolated_runtime_data",
+    "tests/test_application_workflow.py::test_workflow_api_reads_cache_and_rejects_public_refresh",
+    "tests/test_application_workflow.py::test_workflow_api_applies_department_override",
+    "tests/test_cgu_bundled_data.py::test_bundled_cgu_workflows_are_available_without_local_cache",
+    "tests/test_cgu_bundled_data.py::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+    "tests/test_cgu_bundled_data.py::test_bundled_cgu_completeness_report_matches_export",
+    "tests/test_cgu_bundled_data.py::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+    "tests/test_ntu_school_board_migration.py::test_ntu_forum_rpc_migration_preserves_authorization_and_replays"
+  ]
+}

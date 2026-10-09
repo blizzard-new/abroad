@@ -1,44 +1,46 @@
 {
-  "timestamp": "2026-10-09T15:13:31.101807+00:00",
+  "timestamp": "2026-10-09T15:30:35.713214+00:00",
   "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
   "source_status": "",
-  "completed_so_far": 372,
+  "completed_so_far": 2641,
   "counts": {
-    "passed": 372
+    "passed": 2627,
+    "skipped": 14
   },
-  "status": "running",
+  "status": "finished",
   "shards": [
     {
       "shard": 0,
-      "status": "running",
+      "status": "passed",
       "counts": {
-        "passed": 100
+        "passed": 2276,
+        "skipped": 14
       },
-      "last_line": "tests/e2e/test_web_next_phase.py::test_revoked_session_clears_quarantine_without_uploading_pending_workspace "
+      "last_line": "WEB_SHARD 0 exit=0 elapsed=2166.566s"
     },
     {
       "shard": 1,
-      "status": "running",
+      "status": "passed",
       "counts": {
-        "passed": 82
+        "passed": 117
       },
-      "last_line": "PASSED [ 70%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_chiba_initial_health_language_choices_closed_dorm_and_insurance_reach_mobile_ui call passed 16.173s"
+      "last_line": "WEB_SHARD 1 exit=0 elapsed=1515.931s"
     },
     {
       "shard": 2,
-      "status": "running",
+      "status": "passed",
       "counts": {
-        "passed": 111
+        "passed": 117
       },
-      "last_line": "tests/e2e/test_task_documents_ui.py::test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[390] "
+      "last_line": "WEB_SHARD 2 exit=0 elapsed=1299.848s"
     },
     {
       "shard": 3,
-      "status": "running",
+      "status": "passed",
       "counts": {
-        "passed": 79
+        "passed": 117
       },
-      "last_line": "u_toyama_fukui.py::test_ncu_next3_real_year_scope_packet_and_life[fukui-\\u798f\\u4e95\\u5927\\u5b78-\\u4e5d\\u985e\\u521d\\u6b21\\u5b78\\u751f\\u53c3\\u8003\\u4ef6-9-1440] "
+      "last_line": "WEB_SHARD 3 exit=0 elapsed=1689.521s"
     }
   ],
   "failed_nodeids": []

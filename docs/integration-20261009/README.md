@@ -1,3 +1,11 @@
+# 15:31 UTC：六校正式發布前驗證完成
+
+固定 `0fdc6cfa6a4902fb83374a77025f45dffb071562` 的完整2641案例已結束：**2627 passed／0 failed／14既有skipped**；collection、逐案例log及JUnit三方一致、四片起訖來源均clean。见 [six-final-full-summary.json](six-final-full-summary.json)。
+
+同SHA全35 migration、Storage、治理交易、六校跨校政策、原五校client相容全部passed。另把正式 `e5c6d5c` **完整Python原始碼與原模型**放入獨立程序，執行stage／雙審／publish／新舊client一致讀回，全部12 HTTP200；不再只依賴舊client配新模型的較窄證據。见 [six-final-deployed-source-runtime-fixed-result.json](six-final-deployed-source-runtime-fixed-result.json)。輔助程式原模型名稱拼寫錯誤run仍保留。
+
+正式四個函式15:31前重讀與備份相同。現在準備三份精確TKU migration；此checkpoint尚未套用、PR2尚未合併。下面是15:12歷史狀態。
+
 # 六校整合／發布驗收：2026-10-09 15:12 UTC
 
 PR #5、#3、#4 已依序合併，且各自 Render 對應 commit live 後通過實站驗收。現在正式 main 為 `e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86`，Render `dep-db4feg0ae00c73a276s0`，五校 5 HTTP＋390/1440 共 10 browser passed。PR #2 尚未合併、TKU 三份正式 DB migration 尚未套用。
