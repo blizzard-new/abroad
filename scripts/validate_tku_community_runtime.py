@@ -45,7 +45,9 @@ values('runtime-tku-policy-identity-{actor}','runtime-tku-policy-{actor}','合�
         committed = publish("member", PublicCommunityResourceType.POST, post, f"post-{board}")
         runtime._require(committed["status"] == "committed", f"Cross-school post denied: {committed}")
         runtime._require(committed["content"]["display_name"] == "匿名學生", "Client byline was trusted")
-        runtime._require(publish("member", PublicCommunityResourceType.POST, post, f"post-{board}") == committed, "Policy retry differs")
+        runtime._require(committed["idempotent"] is False, "Initial policy mutation was a replay")
+        replay = publish("member", PublicCommunityResourceType.POST, post, f"post-{board}")
+        runtime._require(replay == {**committed, "idempotent": True}, f"Policy retry changed its original resource: {replay}")
         pending = publish("pending", PublicCommunityResourceType.POST, post, f"pending-{board}")
         runtime._require(pending["status"] == "email_unverified", f"Unverified writer allowed: {pending}")
         comment = CommunityPostComment(id=f"runtime-tku-policy-comment-{board}", post_id=post.id,
