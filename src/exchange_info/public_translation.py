@@ -132,6 +132,18 @@ def _bundled_machine_translations() -> dict:
         return _load_bundled_machine_translations()
 
 
+def _clear_bundled_machine_translations() -> None:
+    with _bundled_translation_load_lock:
+        _load_bundled_machine_translations.cache_clear()
+
+
+# Preserve the original cached reader's interface for callers that replace a
+# source bundle and invalidate it. Clearing uses the same lock as loading.
+_bundled_machine_translations.cache_clear = _clear_bundled_machine_translations
+_bundled_machine_translations.cache_info = _load_bundled_machine_translations.cache_info
+_bundled_machine_translations.cache_parameters = _load_bundled_machine_translations.cache_parameters
+
+
 def cached_translation(text: str, url: str, data_dir: Path) -> tuple[str, str] | None:
     key = _key(text, url)
     if translated := _reference_translations().get(key):

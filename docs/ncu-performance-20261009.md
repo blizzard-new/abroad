@@ -26,3 +26,5 @@ cache改动只针对離線共享翻譯與中央來源讀取；没有改流程實
 基底診斷原始manifest／JUnit／事件JSON／cProfile與一次API測量位於/tmp/ncu-bounded-performance-9bf90c8，後續證據專用提交保存可公開的原始檔。Playwright trace只留本地/tmp，可能包含隔離測試session headers，不公開原trace。四項沒有重現的根因保持未解，不做無限重跑或純增加timeout。
 
 資料不變：這個效能候選仍62 partial／214、152待整理、0全116核准。下一個可完成的資料批次是已在另一工作樹整理的關西國際／駒澤／東北三校，預驗33 passed，尚待六個實際手機桌面案例及候選SHA驗證；其後東京市／富山／福井已開始官方原件續查。沒有merge、部署、正式DB、credentials／security設定更改或聯絡學校。
+
+固定b29e28f首輪：中央279 passed；共享191 passed／1 failed／2 skipped，失敗是原`test_school_content`要求既有`_bundled_machine_translations.cache_clear()`，加鎖包裝漏保留此介面。這是本輪新回歸，不是既有CI問題。原65 gate、OpenAPI、851流程同schema差異0、JS三檔、lock、214稽核與3292翻譯雜湊已通過；後續browser開始後停止，未完成部分不標通過，manifest與原始log保留。補回cache_clear／cache_info／cache_parameters，清除與載入用同一lock；新增實際替換bundle並由既有介面失效的回歸，連同原school_content／翻譯及NCU snapshot預驗22 passed（4.90秒）。新提交另以乾淨工作樹重跑必要驗證，不把b29失敗改為通過。

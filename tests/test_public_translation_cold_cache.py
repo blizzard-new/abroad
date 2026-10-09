@@ -20,10 +20,10 @@ def bundle(monkeypatch, tmp_path):
             {'status': 'reviewed', 'original': 'No dormitory guarantee.',
              'url': 'https://example.edu/housing', 'zh': '不保證宿位。'}]
     path.write_text(json.dumps(rows))
-    tr._load_bundled_machine_translations.cache_clear()
+    tr._bundled_machine_translations.cache_clear()
     monkeypatch.setattr(tr, 'BUNDLED_MACHINE_TRANSLATIONS', path)
     yield path, rows
-    tr._load_bundled_machine_translations.cache_clear()
+    tr._bundled_machine_translations.cache_clear()
 
 
 def test_concurrent_translation_batches_load_and_validate_once(bundle, monkeypatch):
@@ -61,3 +61,15 @@ def test_failed_cold_translation_load_releases_lock_for_retry(bundle):
     with pytest.raises(json.JSONDecodeError): tr._bundled_machine_translations()
     path.write_text(json.dumps(rows))
     assert tr._bundled_machine_translations() == {tr._key(rows[0]['original'], rows[0]['url']): rows[0]['zh']}
+
+
+def test_existing_cached_reader_interface_invalidates_replaced_bundle(bundle):
+    path, rows = bundle
+    first = tr._bundled_machine_translations()
+    assert tr._bundled_machine_translations.cache_info().misses == 1
+    assert tr._bundled_machine_translations.cache_parameters() == {'maxsize': 1, 'typed': False}
+    changed = {**rows[0], 'original': 'Monthly rent is 13000 yen.', 'zh': '每月租金為13000日圓。'}
+    path.write_text(json.dumps([changed]))
+    tr._bundled_machine_translations.cache_clear()
+    assert tr._bundled_machine_translations() == {tr._key(changed['original'], changed['url']): changed['zh']}
+    assert tr._key(rows[0]['original'], rows[0]['url']) in first
