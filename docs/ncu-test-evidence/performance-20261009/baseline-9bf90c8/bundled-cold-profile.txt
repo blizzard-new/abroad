@@ -1,0 +1,53 @@
+         1225507 function calls (1225499 primitive calls) in 5.367 seconds
+
+   Ordered by: cumulative time
+   List reduced from 129 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    5.367    5.367 storage.py:605(load_bundled_application_workflows)
+        1    0.042    0.042    5.366    5.366 storage.py:531(_cached_workflows)
+        1    0.003    0.003    5.324    5.324 storage.py:608(build)
+     1065    0.042    0.000    3.190    0.003 workflow_structuring.py:34(structure_application_workflow)
+     8589    0.209    0.000    2.880    0.000 workflow_structuring.py:271(_structure_step)
+        4    0.264    0.066    2.131    0.533 storage.py:370(read_jsonl)
+    49453    0.669    0.000    1.864    0.000 main.py:393(model_copy)
+     1065    0.009    0.000    1.598    0.002 main.py:742(model_validate_json)
+     1065    1.003    0.001    1.589    0.001 {method 'validate_json' of 'pydantic_core._pydantic_core.SchemaValidator' objects}
+    16540    0.103    0.000    1.131    0.000 workflow_structuring.py:502(_structure_document_requirement)
+    49453    0.277    0.000    0.977    0.000 main.py:971(__copy__)
+   148359    0.272    0.000    0.651    0.000 copy.py:61(copy)
+     5211    0.108    0.000    0.611    0.000 workflow_structuring.py:537(_infer_submission_method)
+    26704    0.051    0.000    0.421    0.000 {built-in method builtins.any}
+     7928    0.320    0.000    0.376    0.000 main.py:253(__init__)
+    25476    0.333    0.000    0.333    0.000 workflow_structuring.py:542(<genexpr>)
+     2344    0.206    0.000    0.240    0.000 <frozen codecs>:319(decode)
+     8589    0.211    0.000    0.211    0.000 models.py:1287(populate_structured_legacy_fields)
+    49453    0.202    0.000    0.202    0.000 {method 'copy' of 'set' objects}
+     6081    0.017    0.000    0.171    0.000 workflow_structuring.py:248(_structure_source)
+    49453    0.145    0.000    0.145    0.000 {method 'update' of 'set' objects}
+    49453    0.117    0.000    0.117    0.000 {method 'copy' of 'dict' objects}
+     8589    0.057    0.000    0.091    0.000 workflow_structuring.py:392(_deadline_metadata)
+     8771    0.083    0.000    0.083    0.000 {method 'casefold' of 'str' objects}
+   197818    0.060    0.000    0.060    0.000 {method 'get' of 'dict' objects}
+     7928    0.056    0.000    0.056    0.000 {method 'validate_python' of 'pydantic_core._pydantic_core.SchemaValidator' objects}
+     3168    0.021    0.000    0.045    0.000 workflow_structuring.py:648(_rule_id)
+    27634    0.038    0.000    0.038    0.000 {method 'strip' of 'str' objects}
+    49453    0.038    0.000    0.038    0.000 {method 'update' of 'dict' objects}
+     2344    0.034    0.000    0.034    0.000 {built-in method _codecs.utf_8_decode}
+     1065    0.014    0.000    0.033    0.000 workflow_structuring.py:451(_effective_application_rounds)
+     9232    0.030    0.000    0.030    0.000 workflow_structuring.py:558(_infer_copy_type)
+     5147    0.022    0.000    0.030    0.000 workflow_structuring.py:594(_infer_application_rounds)
+     8268    0.006    0.000    0.028    0.000 {built-in method builtins.next}
+    11786    0.028    0.000    0.028    0.000 {method 'search' of 're.Pattern' objects}
+    49465    0.027    0.000    0.027    0.000 {built-in method __new__ of type object at 0x144d380}
+     6092    0.018    0.000    0.026    0.000 workflow_structuring.py:400(<genexpr>)
+    14817    0.026    0.000    0.026    0.000 {method 'join' of 'str' objects}
+    49453    0.022    0.000    0.022    0.000 {method 'keys' of 'dict' objects}
+    49456    0.022    0.000    0.022    0.000 {built-in method builtins.hasattr}
+    13539    0.013    0.000    0.013    0.000 workflow_structuring.py:578(_explicit_signatures)
+     1065    0.003    0.000    0.013    0.000 {built-in method fromkeys}
+    49453    0.013    0.000    0.013    0.000 copy.py:102(_copy_immutable)
+      517    0.003    0.000    0.012    0.000 workflow_structuring.py:643(_is_home_academic_unit_source)
+     1065    0.007    0.000    0.012    0.000 workflow_structuring.py:467(_applicability_metadata)
+
+
