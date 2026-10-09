@@ -1,0 +1,5 @@
+# 保留失敗候選53e88e7原始結果
+
+這些結果只屬於`53e88e7c77480cec810e412e989054b0aec9bcbc`，全程HEAD相同且working tree乾淨。451回歸443passed／7skipped／1failed；唯一失敗為`test_ntu_catalog_api_works_offline_and_keeps_pending_visible`：显式母校隔离没有先canonicalize NTU别名，回传NTU空guide而非正式校名及已有guide。NTPU原失败已消失。102浏览器全部通过，两组61+41，无skip/error/failure。gate exit1，不能宣称此SHA已通過。
+
+后续修正与新SHA完整重跑另列，原始XML/log/summary不覆盖。7builders1162檔與46main官方檔/77CGU hash保持byte/hash相同；这不抵销回归失败。远端CI仍failure/0jobs。

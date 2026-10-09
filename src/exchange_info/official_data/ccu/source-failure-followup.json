@@ -1,0 +1,1209 @@
+{
+  "original_failed_source_count": 20,
+  "sources": [
+    {
+      "original": {
+        "source_id": "p100-hostz0",
+        "source_url": "https://drive.google.com/file/d/1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus/view",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus/view"
+      },
+      "retry": {
+        "source_id": "p100-hostz0-r2retry",
+        "source_url": "https://drive.google.com/file/d/1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus/view",
+        "checked_at": "2026-10-08T04:34:49.537994+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus/view"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p100-r2-calendarpdf",
+          "source_url": "https://www.ostfalia.de/fileadmin/user_upload/Einrichtungen/QM/Semesterzeitplaene/Semesterzeitplaene_SoSe_2027_bis_WS_2028-29.pdf",
+          "checked_at": "2026-10-08T04:38:54.466075+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p100-r2-exchange",
+          "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+          "checked_at": "2026-10-08T04:31:33.228010+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p100-r2-calendar",
+          "source_url": "https://www.ostfalia.de/en/studying/at-university/study-organisation/semester-dates",
+          "checked_at": "2026-10-08T04:37:50.921010+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p100-mirror",
+        "source_url": "https://drive.google.com/file/d/1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus/view?usp=drive_link",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 未取得；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus&export=download"
+      },
+      "retry": {
+        "source_id": "p100-mirror-r2retry",
+        "source_url": "https://drive.google.com/file/d/1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus/view?usp=drive_link",
+        "checked_at": "2026-10-08T04:34:48.194238+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus&export=download"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p100-r2-calendarpdf",
+          "source_url": "https://www.ostfalia.de/fileadmin/user_upload/Einrichtungen/QM/Semesterzeitplaene/Semesterzeitplaene_SoSe_2027_bis_WS_2028-29.pdf",
+          "checked_at": "2026-10-08T04:38:54.466075+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p100-r2-exchange",
+          "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+          "checked_at": "2026-10-08T04:31:33.228010+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p100-r2-calendar",
+          "source_url": "https://www.ostfalia.de/en/studying/at-university/study-organisation/semester-dates",
+          "checked_at": "2026-10-08T04:37:50.921010+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p104-profile-root",
+        "source_url": "https://www.fhnw.ch/en/degree-programmes/business",
+        "checked_at": "2026-10-08T09:10:33.385156+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://www.fhnw.ch/en/business/degree-programmes/offerings/business"
+      },
+      "retry": null,
+      "safe_alternatives": [
+        {
+          "source_id": "p104-r5-incoming",
+          "source_url": "https://www.fhnw.ch/en/business/degree-programmes/international/exchange-semester",
+          "checked_at": "2026-10-08T06:18:01.072204+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-incoming-expanded",
+          "source_url": "https://www.fhnw.ch/en/business/degree-programmes/international/exchange-semester",
+          "checked_at": "2026-10-08T06:30:07.562398+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-spring27-german",
+          "source_url": "https://www.fhnw.ch/plattformen/iobusiness/exchange-at-fhnw-school-of-business/study-information/spring-27/fs27-de/",
+          "checked_at": "2026-10-08T06:26:13.185121+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-offer-6",
+          "source_url": "https://www.fhnw.ch/plattformen/iobusiness/wp-content/uploads/sites/205/2026/09/fhnw_ol_academic-calendar-of-the-year-2026_27_.pdf",
+          "checked_at": "2026-10-08T06:31:25.688899+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-offer-1",
+          "source_url": "https://www.fhnw.ch/plattformen/iobusiness/wp-content/uploads/sites/205/2026/10/basel_ibm_course-offer-fs26__2025_11_28.pdf",
+          "checked_at": "2026-10-08T06:31:24.262822+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-offer-3",
+          "source_url": "https://www.fhnw.ch/plattformen/iobusiness/wp-content/uploads/sites/205/2026/09/bruggim_course-offer-fs27.pdf",
+          "checked_at": "2026-10-08T06:31:25.443531+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-embedded-content",
+          "source_url": "https://www.fhnw.ch/en/business/degree-programmes/international/exchange-semester",
+          "checked_at": "2026-10-08T06:28:27.588283+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-study-info",
+          "source_url": "https://www.fhnw.ch/plattformen/iobusiness/exchange-at-fhnw-school-of-business/study-information/",
+          "checked_at": "2026-10-08T06:18:01.285070+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-offer-5",
+          "source_url": "https://www.fhnw.ch/plattformen/iobusiness/wp-content/uploads/sites/205/2026/05/provisional_olten_im_course-offer-fs27.pdf",
+          "checked_at": "2026-10-08T06:31:25.546285+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-offer-4",
+          "source_url": "https://www.fhnw.ch/plattformen/iobusiness/wp-content/uploads/sites/205/2026/09/bruggbit_course-offer-fs27.pdf",
+          "checked_at": "2026-10-08T06:31:25.452286+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-offer-2",
+          "source_url": "https://www.fhnw.ch/plattformen/iobusiness/wp-content/uploads/sites/205/2026/10/basel_bit_course-offer-fs26_2025_12_08_generische_links.pdf",
+          "checked_at": "2026-10-08T06:31:25.071267+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p104-r5-spring27-english",
+          "source_url": "https://www.fhnw.ch/plattformen/iobusiness/exchange-at-fhnw-school-of-business/study-information/spring-27/ss27-en/",
+          "checked_at": "2026-10-08T06:26:12.781951+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口本輪首次讀取失敗；尚無同入口重試紀錄，已查替代入口另列。"
+    },
+    {
+      "original": {
+        "source_id": "p114-hosty1",
+        "source_url": "https://www.hiof.no/english/studies/international-students/before-arrival/academic-calendar/",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://www.hiof.no/english/studies/international-students/before-arrival/academic-calendar/"
+      },
+      "retry": {
+        "source_id": "p114-hosty1-r2retry",
+        "source_url": "https://www.hiof.no/english/studies/international-students/before-arrival/academic-calendar/",
+        "checked_at": "2026-10-08T04:34:48.501198+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://www.hiof.no/english/studies/international-students/before-arrival/academic-calendar/"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p114-r2-form",
+          "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/required-documentation/applicationformfelles_rev2018.doc",
+          "checked_at": "2026-10-08T04:31:33.227620+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得doc；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p119-profile-root",
+        "source_url": "https://www.uninter.edu.mx/",
+        "checked_at": "2026-10-08T09:10:35.823958+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 503；HTTPError: 503 Server Error: Service Unavailable for url: https://www.uninter.edu.mx/"
+      },
+      "retry": null,
+      "safe_alternatives": [
+        {
+          "source_id": "p119-r4-inbound",
+          "source_url": "https://uninter.edu.mx/Internacionalizacion",
+          "checked_at": "2026-10-08T05:59:08.774225+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 503；HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/Internacionalizacion"
+        },
+        {
+          "source_id": "p119-r4-spanish-semester",
+          "source_url": "https://spanishschool.uninter.edu.mx/Semester-Program",
+          "checked_at": "2026-10-08T06:01:12.110095+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 503；HTTPError: 503 Server Error: Service Unavailable for url: https://spanishschool.uninter.edu.mx/Semester-Program"
+        },
+        {
+          "source_id": "p119-r4-lodging",
+          "source_url": "https://spanishschool.uninter.edu.mx/Lodging",
+          "checked_at": "2026-10-08T06:02:31.331588+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 503；HTTPError: 503 Server Error: Service Unavailable for url: https://spanishschool.uninter.edu.mx/Lodging"
+        },
+        {
+          "source_id": "p119-r4-homepage",
+          "source_url": "https://uninter.edu.mx/",
+          "checked_at": "2026-10-08T06:01:12.108690+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 503；HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/"
+        }
+      ],
+      "conclusion": "原入口本輪首次讀取失敗；尚無同入口重試紀錄，已查替代入口另列。"
+    },
+    {
+      "original": {
+        "source_id": "p16-host1",
+        "source_url": "https://jwc.cqu.edu.cn/",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: https://jwc.cqu.edu.cn/"
+      },
+      "retry": {
+        "source_id": "p16-host1-r2retry",
+        "source_url": "https://jwc.cqu.edu.cn/",
+        "checked_at": "2026-10-08T04:34:47.914724+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: https://jwc.cqu.edu.cn/"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p16-r2-international",
+          "source_url": "https://study.cqu.edu.cn/",
+          "checked_at": "2026-10-08T04:31:35.184399+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: https://study.cqu.edu.cn/"
+        },
+        {
+          "source_id": "p16-r8-intex-http",
+          "source_url": "http://intex.cqu.edu.cn/",
+          "checked_at": "2026-10-08T08:26:35.862721+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: http://intex.cqu.edu.cn/"
+        },
+        {
+          "source_id": "p16-r2-deep",
+          "source_url": "https://international.cqu.edu.cn/",
+          "checked_at": "2026-10-08T04:37:52.960724+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 503；HTTPError: 503 Server Error: Service Unavailable for url: https://international.cqu.edu.cn/"
+        },
+        {
+          "source_id": "p16-r8-mirror-reread",
+          "source_url": "https://drive.google.com/file/d/1636c6Cscwbtc7585TvNXe7Um9ah8nisk/view?usp=drive_link",
+          "checked_at": "2026-10-08T09:02:08.576691+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p16-r8-graduate",
+          "source_url": "https://yz.cqu.edu.cn/",
+          "checked_at": "2026-10-08T08:50:53.942677+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p16-r8-cooperation",
+          "source_url": "https://www.cqu.edu.cn/hzjl.htm",
+          "checked_at": "2026-10-08T08:50:53.941679+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p16-r8-ccu-list",
+          "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+          "checked_at": "2026-10-08T09:02:08.576691+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p16-r8-study-http",
+          "source_url": "http://study.cqu.edu.cn/",
+          "checked_at": "2026-10-08T08:26:35.862248+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: http://study.cqu.edu.cn/"
+        },
+        {
+          "source_id": "p16-r8-calendar-index",
+          "source_url": "https://jwc.cqu.edu.cn/xl.htm",
+          "checked_at": "2026-10-08T08:50:53.942147+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: https://jwc.cqu.edu.cn/xl.htm"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p16-hostf0",
+        "source_url": "https://intex.cqu.edu.cn/",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: https://intex.cqu.edu.cn/"
+      },
+      "retry": {
+        "source_id": "p16-hostf0-r2retry",
+        "source_url": "https://intex.cqu.edu.cn/",
+        "checked_at": "2026-10-08T04:34:49.893045+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: https://intex.cqu.edu.cn/"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p16-r2-international",
+          "source_url": "https://study.cqu.edu.cn/",
+          "checked_at": "2026-10-08T04:31:35.184399+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: https://study.cqu.edu.cn/"
+        },
+        {
+          "source_id": "p16-r8-intex-http",
+          "source_url": "http://intex.cqu.edu.cn/",
+          "checked_at": "2026-10-08T08:26:35.862721+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: http://intex.cqu.edu.cn/"
+        },
+        {
+          "source_id": "p16-r2-deep",
+          "source_url": "https://international.cqu.edu.cn/",
+          "checked_at": "2026-10-08T04:37:52.960724+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 503；HTTPError: 503 Server Error: Service Unavailable for url: https://international.cqu.edu.cn/"
+        },
+        {
+          "source_id": "p16-r8-mirror-reread",
+          "source_url": "https://drive.google.com/file/d/1636c6Cscwbtc7585TvNXe7Um9ah8nisk/view?usp=drive_link",
+          "checked_at": "2026-10-08T09:02:08.576691+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p16-r8-graduate",
+          "source_url": "https://yz.cqu.edu.cn/",
+          "checked_at": "2026-10-08T08:50:53.942677+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p16-r8-cooperation",
+          "source_url": "https://www.cqu.edu.cn/hzjl.htm",
+          "checked_at": "2026-10-08T08:50:53.941679+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p16-r8-ccu-list",
+          "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+          "checked_at": "2026-10-08T09:02:08.576691+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p16-r8-study-http",
+          "source_url": "http://study.cqu.edu.cn/",
+          "checked_at": "2026-10-08T08:26:35.862248+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: http://study.cqu.edu.cn/"
+        },
+        {
+          "source_id": "p16-r8-calendar-index",
+          "source_url": "https://jwc.cqu.edu.cn/xl.htm",
+          "checked_at": "2026-10-08T08:50:53.942147+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 412；HTTPError: 412 Client Error: Precondition Failed for url: https://jwc.cqu.edu.cn/xl.htm"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p26-host0",
+        "source_url": "https://www.nenu.edu.cn/",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 未取得；ProxyError: HTTPSConnectionPool(host='www.nenu.edu.cn', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 502 Bad Gateway')))"
+      },
+      "retry": {
+        "source_id": "p26-host0-r2retry",
+        "source_url": "https://www.nenu.edu.cn/",
+        "checked_at": "2026-10-08T04:34:49.217830+00:00",
+        "timestamp_precision": "datetime",
+        "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p26-r9-map",
+          "source_url": "https://iso.nenu.edu.cn/Campus_Life/Campus_Map.htm",
+          "checked_at": "2026-10-08T09:30:28.418031+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p26-r2-notice",
+          "source_url": "https://iso.nenu.edu.cn/Notice/2.htm",
+          "checked_at": "2026-10-08T04:38:54.467656+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p26-r2-english",
+          "source_url": "https://en.nenu.edu.cn/",
+          "checked_at": "2026-10-08T04:34:50.675257+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p26-r9-exchange-actual",
+          "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+          "checked_at": "2026-10-08T09:28:36.524287+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p26-r2-housing",
+          "source_url": "https://iso.nenu.edu.cn/Campus_Life/Accommodation.htm",
+          "checked_at": "2026-10-08T04:40:21.337094+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p26-r9-exchange",
+          "source_url": "https://iso.nenu.edu.cn/en/Scholarships/Exchange_Programs.htm",
+          "checked_at": "2026-10-08T09:10:10.517748+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://iso.nenu.edu.cn/en/Scholarships/Exchange_Programs.htm"
+        },
+        {
+          "source_id": "p26-r9-life",
+          "source_url": "https://iso.nenu.edu.cn/Campus_Life/Regulations.htm",
+          "checked_at": "2026-10-08T09:30:28.296299+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p26-r2-iso",
+          "source_url": "https://iso.nenu.edu.cn/",
+          "checked_at": "2026-10-08T04:31:33.230941+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 未取得；ProxyError: HTTPSConnectionPool(host='iso.nenu.edu.cn', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+        },
+        {
+          "source_id": "p26-r2-oice",
+          "source_url": "https://oice.nenu.edu.cn/",
+          "checked_at": "2026-10-08T04:37:50.922821+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p26-r2-insurance",
+          "source_url": "https://iso.nenu.edu.cn/Campus_Life/Insurance.htm",
+          "checked_at": "2026-10-08T04:40:21.338555+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p26-r2-exchange",
+          "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+          "checked_at": "2026-10-08T04:40:21.336655+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口重試可讀；內容適用性仍另核對。"
+    },
+    {
+      "original": {
+        "source_id": "p29-profile-root",
+        "source_url": "https://hmt.ccnu.edu.cn/",
+        "checked_at": "2026-10-08T09:10:11.755010+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 403；HTTPError: 403 Client Error: Forbidden for url: https://hmt.ccnu.edu.cn/"
+      },
+      "retry": null,
+      "safe_alternatives": [
+        {
+          "source_id": "p29-r4-hmt",
+          "source_url": "https://hmt.ccnu.edu.cn/",
+          "checked_at": "2026-10-08T05:59:06.567789+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 403；HTTPError: 403 Client Error: Forbidden for url: https://hmt.ccnu.edu.cn/"
+        },
+        {
+          "source_id": "p29-r4-hmt-index",
+          "source_url": "https://hmt.ccnu.edu.cn/index.htm",
+          "checked_at": "2026-10-08T06:01:14.047175+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 403；HTTPError: 403 Client Error: Forbidden for url: https://hmt.ccnu.edu.cn/index.htm"
+        },
+        {
+          "source_id": "p29-r4-forms-index-web",
+          "source_url": "https://hmt.ccnu.edu.cn/jhjls1/lxjhs/xgxz.htm",
+          "checked_at": "2026-10-08T06:04:43.394Z",
+          "timestamp_precision": "datetime",
+          "result": "已取得web_extracted_html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p29-r4-hmt-http",
+          "source_url": "http://hmt.ccnu.edu.cn/",
+          "checked_at": "2026-10-08T06:01:12.637386+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 403；HTTPError: 403 Client Error: Forbidden for url: http://hmt.ccnu.edu.cn/"
+        },
+        {
+          "source_id": "p29-r4-legacy-factsheet-web",
+          "source_url": "https://hmt.ccnu.edu.cn/info/1082/1076.htm",
+          "checked_at": "2026-10-08T06:10:35.602Z",
+          "timestamp_precision": "datetime",
+          "result": "已取得web_extracted_html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p29-r4-legacy-attachment-blocked-web",
+          "source_url": "https://hmt.ccnu.edu.cn/system/_content/download.jsp?owner=1280106966&urltype=news.DownloadAttachUrl&wbfileid=58CBEEC99D420317BF70B70EBBD61ADF",
+          "checked_at": "2026-10-08T06:10:36.299Z",
+          "timestamp_precision": "datetime",
+          "result": "未取得政策正文；captcha_required；HTTP web提取，無原始HTTP碼；限制頁或空白回應不能當政策讀取成功，沒有解驗證碼或存取挑戰。"
+        },
+        {
+          "source_id": "p29-r4-courses",
+          "source_url": "https://jwc.ccnu.edu.cn/",
+          "checked_at": "2026-10-08T05:59:07.101755+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 403；HTTPError: 403 Client Error: Forbidden for url: https://jwc.ccnu.edu.cn/"
+        },
+        {
+          "source_id": "p29-r4-procedure-web",
+          "source_url": "https://hmt.ccnu.edu.cn/jhjls1/lxjhs/bllc.htm",
+          "checked_at": "2026-10-08T06:04:44.494Z",
+          "timestamp_precision": "datetime",
+          "result": "已取得web_extracted_html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p29-r4-faq-web",
+          "source_url": "https://hmt.ccnu.edu.cn/jhjls1/lxjhs/cjwt.htm",
+          "checked_at": "2026-10-08T06:04:45.203Z",
+          "timestamp_precision": "datetime",
+          "result": "已取得web_extracted_html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p29-r4-rules-index-web",
+          "source_url": "https://hmt.ccnu.edu.cn/jhjls1/lxjhs/gzzd.htm",
+          "checked_at": "2026-10-08T06:04:43.937Z",
+          "timestamp_precision": "datetime",
+          "result": "已取得web_extracted_html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口本輪首次讀取失敗；尚無同入口重試紀錄，已查替代入口另列。"
+    },
+    {
+      "original": {
+        "source_id": "p39-hostf0",
+        "source_url": "https://www.tokiwa.ac.jp/english/",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://www.tokiwa.ac.jp/english/"
+      },
+      "retry": {
+        "source_id": "p39-hostf0-r2retry",
+        "source_url": "https://www.tokiwa.ac.jp/english/",
+        "checked_at": "2026-10-08T04:34:48.779846+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://www.tokiwa.ac.jp/english/"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p39-r7-parttime-enpdf",
+          "source_url": "https://www.tokiwa.ac.jp/en/media/English_version.pdf",
+          "checked_at": "2026-10-08T07:51:33.555204+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p39-r2-guidelines",
+          "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+          "checked_at": "2026-10-08T04:40:21.339992+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p39-r7-parttime",
+          "source_url": "https://www.tokiwa.ac.jp/en/admission/290126/",
+          "checked_at": "2026-10-08T07:45:40.063070+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p39-r7-ccu-list",
+          "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+          "checked_at": "2026-10-08T08:16:21.827202+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p39-r7-exchange",
+          "source_url": "https://www.tokiwa.ac.jp/en/about/exchange/",
+          "checked_at": "2026-10-08T07:45:39.852263+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p39-r2-english",
+          "source_url": "https://www.tokiwa.ac.jp/en/",
+          "checked_at": "2026-10-08T04:31:34.162970+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p39-r7-guidelines",
+          "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+          "checked_at": "2026-10-08T07:51:34.189463+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p39-r2-exchange",
+          "source_url": "https://www.tokiwa.ac.jp/en/about/exchange/",
+          "checked_at": "2026-10-08T04:38:54.468962+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p43-hostz1",
+        "source_url": "https://drive.google.com/file/d/162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ/view",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ/view"
+      },
+      "retry": {
+        "source_id": "p43-hostz1-r2retry",
+        "source_url": "https://drive.google.com/file/d/162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ/view",
+        "checked_at": "2026-10-08T04:34:49.898243+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ/view"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p43-r2-factsheet",
+          "source_url": "https://international.pusan.ac.kr/sites/international/download/Exchange_Student_Program_Fact%20Sheet_2026Fall.pdf",
+          "checked_at": "2026-10-08T04:31:35.534487+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p43-mirror",
+        "source_url": "https://drive.google.com/file/d/162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ/view?usp=sharing",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 未取得；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ&export=download"
+      },
+      "retry": {
+        "source_id": "p43-mirror-r2retry",
+        "source_url": "https://drive.google.com/file/d/162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ/view?usp=sharing",
+        "checked_at": "2026-10-08T04:34:47.913846+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ&export=download"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p43-r2-factsheet",
+          "source_url": "https://international.pusan.ac.kr/sites/international/download/Exchange_Student_Program_Fact%20Sheet_2026Fall.pdf",
+          "checked_at": "2026-10-08T04:31:35.534487+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p53-hostv0",
+        "source_url": "https://forms.gle/tnxvZPTKKqJjamTP7",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLScPZGWnnLQKrmsK99IRvcaQyQ-ivKWig34w4ekiiiyyEAYIFQ/viewform?usp=send_form"
+      },
+      "retry": {
+        "source_id": "p53-hostv0-r2retry",
+        "source_url": "https://forms.gle/tnxvZPTKKqJjamTP7",
+        "checked_at": "2026-10-08T04:34:48.672031+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLScPZGWnnLQKrmsK99IRvcaQyQ-ivKWig34w4ekiiiyyEAYIFQ/viewform?usp=send_form"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p53-r9-exchange-actual",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/study/exchange.do",
+          "checked_at": "2026-10-08T09:28:36.527998+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p53-r9-directions",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/about/location.do",
+          "checked_at": "2026-10-08T09:28:38.731991+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p53-r9-insurance",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/study/insurance.do",
+          "checked_at": "2026-10-08T09:28:38.983317+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p53-r9-life",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/study/life.do",
+          "checked_at": "2026-10-08T09:28:36.529510+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p53-r9-forms-index",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/notice/form.do",
+          "checked_at": "2026-10-08T09:30:27.865037+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p53-r9-incoming",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/exchange/inbound.do",
+          "checked_at": "2026-10-08T09:10:10.518642+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://cnuint.cnu.ac.kr/cnuint/exchange/inbound.do"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p53-hostv1",
+        "source_url": "https://forms.gle/oV4XP9rRp7aTF2Cw7",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSfTPObyibS_s40UUQySHq6QwMdz810JE7d5SelPx1qbCP1hgg/viewform?usp=send_form"
+      },
+      "retry": {
+        "source_id": "p53-hostv1-r2retry",
+        "source_url": "https://forms.gle/oV4XP9rRp7aTF2Cw7",
+        "checked_at": "2026-10-08T04:34:47.911582+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSfTPObyibS_s40UUQySHq6QwMdz810JE7d5SelPx1qbCP1hgg/viewform?usp=send_form"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p53-r9-exchange-actual",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/study/exchange.do",
+          "checked_at": "2026-10-08T09:28:36.527998+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p53-r9-directions",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/about/location.do",
+          "checked_at": "2026-10-08T09:28:38.731991+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p53-r9-insurance",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/study/insurance.do",
+          "checked_at": "2026-10-08T09:28:38.983317+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p53-r9-life",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/study/life.do",
+          "checked_at": "2026-10-08T09:28:36.529510+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p53-r9-forms-index",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/notice/form.do",
+          "checked_at": "2026-10-08T09:30:27.865037+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p53-r9-incoming",
+          "source_url": "https://cnuint.cnu.ac.kr/cnuint/exchange/inbound.do",
+          "checked_at": "2026-10-08T09:10:10.518642+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://cnuint.cnu.ac.kr/cnuint/exchange/inbound.do"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p58-profile-root",
+        "source_url": "https://oia.tu.ac.th/",
+        "checked_at": "2026-10-08T09:10:20.460101+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 未取得；ProxyError: HTTPSConnectionPool(host='oia.tu.ac.th', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))"
+      },
+      "retry": null,
+      "safe_alternatives": [],
+      "conclusion": "原入口本輪首次讀取失敗；尚無同入口重試紀錄，已查替代入口另列。"
+    },
+    {
+      "original": {
+        "source_id": "p87-hostz1",
+        "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view"
+      },
+      "retry": {
+        "source_id": "p87-hostz1-r2retry",
+        "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view",
+        "checked_at": "2026-10-08T04:34:48.208630+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p87-r8-apl-government",
+          "source_url": "https://www.service-public.gouv.fr/particuliers/actualites/A18981",
+          "checked_at": "2026-10-08T08:47:42.256473+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-health",
+          "source_url": "https://international-welcome.unistra.fr/healthcare-coverage-for-students-and-researchers/healthcare-for-students/",
+          "checked_at": "2026-10-08T08:47:42.253897+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-seafile",
+          "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/",
+          "checked_at": "2026-10-08T08:26:39.764504+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-ccu-list",
+          "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+          "checked_at": "2026-10-08T09:02:08.576691+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-benefits",
+          "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/financial-support-for-housing/",
+          "checked_at": "2026-10-08T08:34:54.050196+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-housing-search",
+          "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/housing-search/",
+          "checked_at": "2026-10-08T08:34:53.015963+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-visa",
+          "source_url": "https://international-welcome.unistra.fr/student-and-researcher-visa/student-visa-application/",
+          "checked_at": "2026-10-08T08:34:54.489382+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-learning-contract-view",
+          "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
+          "checked_at": "2026-10-08T08:47:42.252914+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-learning-contract-index",
+          "source_url": "https://seafile.unistra.fr/api/v2.1/share-links/49cb6651b50a4a349e7b/dirents/?path=%2F&thumbnail_size=48",
+          "checked_at": "2026-10-08T08:39:23.296994+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-coordinators",
+          "source_url": "https://seafile.unistra.fr/f/d64562f55160442fb57e/?dl=1",
+          "checked_at": "2026-10-08T08:53:20.050871+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得xlsx；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-mobility",
+          "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/mobility-in-exchange-programs/",
+          "checked_at": "2026-10-08T08:26:40.167720+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-learning-contract-pdf",
+          "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
+          "checked_at": "2026-10-08T08:49:40.005737+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-housing",
+          "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/",
+          "checked_at": "2026-10-08T08:34:53.015052+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-housing-guide",
+          "source_url": "https://seafile.unistra.fr/f/754056dcea7243839f3b/?dl=1",
+          "checked_at": "2026-10-08T08:47:42.253399+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-interuniversity",
+          "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+          "checked_at": "2026-10-08T08:51:14.702772+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p87-mirror",
+        "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view?usp=drive_link",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 未取得；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B&export=download"
+      },
+      "retry": {
+        "source_id": "p87-mirror-r2retry",
+        "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view?usp=drive_link",
+        "checked_at": "2026-10-08T04:34:47.911047+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B&export=download"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p87-r8-apl-government",
+          "source_url": "https://www.service-public.gouv.fr/particuliers/actualites/A18981",
+          "checked_at": "2026-10-08T08:47:42.256473+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-health",
+          "source_url": "https://international-welcome.unistra.fr/healthcare-coverage-for-students-and-researchers/healthcare-for-students/",
+          "checked_at": "2026-10-08T08:47:42.253897+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-seafile",
+          "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/",
+          "checked_at": "2026-10-08T08:26:39.764504+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-ccu-list",
+          "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+          "checked_at": "2026-10-08T09:02:08.576691+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-benefits",
+          "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/financial-support-for-housing/",
+          "checked_at": "2026-10-08T08:34:54.050196+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-housing-search",
+          "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/housing-search/",
+          "checked_at": "2026-10-08T08:34:53.015963+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-visa",
+          "source_url": "https://international-welcome.unistra.fr/student-and-researcher-visa/student-visa-application/",
+          "checked_at": "2026-10-08T08:34:54.489382+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-learning-contract-view",
+          "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
+          "checked_at": "2026-10-08T08:47:42.252914+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-learning-contract-index",
+          "source_url": "https://seafile.unistra.fr/api/v2.1/share-links/49cb6651b50a4a349e7b/dirents/?path=%2F&thumbnail_size=48",
+          "checked_at": "2026-10-08T08:39:23.296994+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-coordinators",
+          "source_url": "https://seafile.unistra.fr/f/d64562f55160442fb57e/?dl=1",
+          "checked_at": "2026-10-08T08:53:20.050871+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得xlsx；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-mobility",
+          "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/mobility-in-exchange-programs/",
+          "checked_at": "2026-10-08T08:26:40.167720+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-learning-contract-pdf",
+          "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
+          "checked_at": "2026-10-08T08:49:40.005737+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-housing",
+          "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/",
+          "checked_at": "2026-10-08T08:34:53.015052+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-housing-guide",
+          "source_url": "https://seafile.unistra.fr/f/754056dcea7243839f3b/?dl=1",
+          "checked_at": "2026-10-08T08:47:42.253399+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p87-r8-interuniversity",
+          "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+          "checked_at": "2026-10-08T08:51:14.702772+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p88-profile-root",
+        "source_url": "https://www.fges.fr/international/incoming-mobility/",
+        "checked_at": "2026-10-08T09:10:28.848688+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
+      },
+      "retry": null,
+      "safe_alternatives": [
+        {
+          "source_id": "p88-r3-incoming",
+          "source_url": "https://www.fges.fr/international/incoming-mobility/",
+          "checked_at": "2026-10-08T05:22:20.432329+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
+        }
+      ],
+      "conclusion": "原入口本輪首次讀取失敗；尚無同入口重試紀錄，已查替代入口另列。"
+    },
+    {
+      "original": {
+        "source_id": "p89-hostf1",
+        "source_url": "https://www.sdu.dk/en/uddannelse/exchange/apply/entry-requirements",
+        "checked_at": "2026-10-08T00:00:00Z",
+        "timestamp_precision": "date",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://www.sdu.dk/en/uddannelse/exchange/apply/entry-requirements"
+      },
+      "retry": {
+        "source_id": "p89-hostf1-r2retry",
+        "source_url": "https://www.sdu.dk/en/uddannelse/exchange/apply/entry-requirements",
+        "checked_at": "2026-10-08T04:34:47.910630+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://www.sdu.dk/en/uddannelse/exchange/apply/entry-requirements"
+      },
+      "safe_alternatives": [
+        {
+          "source_id": "p89-r2-languageform",
+          "source_url": "https://www.sdu.dk/-/media/files/information_til/internationalstudents/exchange/sdulanguagerequirementform.pdf",
+          "checked_at": "2026-10-08T04:34:50.684904+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p89-r2-apply",
+          "source_url": "https://www.sdu.dk/en/uddannelse/exchange/apply",
+          "checked_at": "2026-10-08T04:31:34.620319+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+    },
+    {
+      "original": {
+        "source_id": "p98-profile-root",
+        "source_url": "https://www.hwg-lu.de/",
+        "checked_at": "2026-10-08T09:10:30.197179+00:00",
+        "timestamp_precision": "datetime",
+        "result": "讀取失敗；HTTP 418；HTTPError: 418 Client Error: Unknown for url: https://www.hwg-lu.de/"
+      },
+      "retry": null,
+      "safe_alternatives": [
+        {
+          "source_id": "p98-r3-learning-agreement",
+          "source_url": "https://www.hwg-lu.de/fileadmin/Archiv/international/Learning_Agreement_studies-Before_the_mobility.docx",
+          "checked_at": "2026-10-08T05:14:03.017858+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得docx；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p98-r3-application",
+          "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application",
+          "checked_at": "2026-10-08T05:12:24.152379+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 418；HTTPError: 418 Client Error: Unknown for url: https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application"
+        },
+        {
+          "source_id": "p98-r3-calendar",
+          "source_url": "https://www.hwg-lu.de/studium/semestertermine",
+          "checked_at": "2026-10-08T05:14:03.020167+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 418；HTTPError: 418 Client Error: Unknown for url: https://www.hwg-lu.de/studium/semestertermine"
+        },
+        {
+          "source_id": "p98-r3-application-web",
+          "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application",
+          "checked_at": "2026-10-08T05:22:01.394979+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得web_extracted_html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        },
+        {
+          "source_id": "p98-r2-before",
+          "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1",
+          "checked_at": "2026-10-08T04:40:23.858380+00:00",
+          "timestamp_precision": "datetime",
+          "result": "讀取失敗；HTTP 418；HTTPError: 418 Client Error: Unknown for url: https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1"
+        },
+        {
+          "source_id": "p98-r3-accommodation-form",
+          "source_url": "https://www.hwg-lu.de/fileadmin/Archiv/international/incomings/Bewerbungsformulare/Accommodation_Request_2026.pdf",
+          "checked_at": "2026-10-08T05:14:03.018291+00:00",
+          "timestamp_precision": "datetime",
+          "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+        }
+      ],
+      "conclusion": "原入口本輪首次讀取失敗；尚無同入口重試紀錄，已查替代入口另列。"
+    }
+  ]
+}

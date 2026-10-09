@@ -1,0 +1,127 @@
+{
+  "repository": "blizzard-new/abroad",
+  "branch": "data/ccu-exchange-20261008",
+  "baseline_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "previous_commit": "0e70dbf29d0830ed3733c46090d5b7126689b958",
+  "catalogue_rows": 104,
+  "quota_states": {
+    "published": 52,
+    "reference_only": 49,
+    "not_published": 3,
+    "explicit_zero": 0
+  },
+  "workflow_count": 55,
+  "source_count": 919,
+  "new_source_count": 43,
+  "acquisition_count": 84,
+  "host_attachments": 115,
+  "host_document_schools": 31,
+  "host_requirements": 222,
+  "conditional_host_requirements": 42,
+  "document_center_verified_links": 25,
+  "workflow_requirements_including_home": 1157,
+  "host_fields": {
+    "verified_current": 309,
+    "missing": 212,
+    "needs_confirmation": 326,
+    "reference_only": 20,
+    "conflict": 67,
+    "explicit_not_announced": 1
+  },
+  "profile_fields": {
+    "city": {
+      "verified_current": 38,
+      "needs_confirmation": 14,
+      "reference_only": 3
+    },
+    "location": {
+      "verified_current": 38,
+      "needs_confirmation": 14,
+      "reference_only": 3
+    },
+    "website": {
+      "verified_current": 55
+    },
+    "degree_levels": {
+      "missing": 27,
+      "needs_confirmation": 19,
+      "verified_current": 9
+    },
+    "colleges": {
+      "missing": 32,
+      "needs_confirmation": 20,
+      "verified_current": 3
+    },
+    "transport": {
+      "reference_only": 6,
+      "needs_confirmation": 30,
+      "verified_current": 17,
+      "missing": 2
+    },
+    "campus_life": {
+      "reference_only": 8,
+      "needs_confirmation": 29,
+      "verified_current": 18
+    }
+  },
+  "functional_parity_complete": false,
+  "pending_public_candidates": 217,
+  "preserved_previous_876_source_json": true,
+  "preserved_all_46_main_official_data_files": true,
+  "initial_targeted": {
+    "tests": 19,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "time": 6.987
+  },
+  "initial_four_school": {
+    "tests": 412,
+    "failures": 7,
+    "errors": 0,
+    "skipped": 7,
+    "time": 298.103
+  },
+  "corrected_affected_tests": {
+    "tests": 15,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": 19.521
+  },
+  "unique_four_school_final_result": {
+    "tests": 412,
+    "passed": 404,
+    "skipped": 7,
+    "failed": 1,
+    "method": "完整412項初跑後，6項CCU失敗修正并重查9新＋6受影響共15項全部通過；不是宣稱另一次整套綠燈。",
+    "known_failure": "NTPU destination_profile_count0vs1; independently reproduced on same main in eighteenth-main-ntpu.xml"
+  },
+  "browser_initial": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": 51.767
+  },
+  "browser_final": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": 49.232
+  },
+  "api_paths": 110,
+  "openapi_full_snapshot_identical_to_main": false,
+  "openapi_identical_to_previous_pushed_branch": true,
+  "shared_code_changes_this_round": [],
+  "school_adapter_changes_this_round": [],
+  "main_merged_or_deployed": false,
+  "ongoing_next_batch": "23精確來源已取得隔離tmp，繼續正文及資格／模板年度；另查生活email通知誤推送件方法。",
+  "unresolved_delivery_inference": {
+    "phase": "合作校行前與生活",
+    "school": 32,
+    "evidence": "twentyfirst-browser/ryukoku-conflict-pledge-390.png",
+    "status": "下一輪修正，母校或通知email不能證宿舍表送件方式。"
+  }
+}

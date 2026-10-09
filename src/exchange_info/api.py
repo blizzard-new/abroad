@@ -383,6 +383,12 @@ from .storage import (
     upsert_partner_research,
 )
 from .student_view import build_student_dashboard, fetch_partner_universities
+from .ccu_student_view import (
+    build_ccu_student_dashboard,
+    fetch_ccu_partner_universities,
+    ccu_exchange_info,
+    ccu_processed_pages,
+)
 from .rag import rag_index_status, search_document_chunks, supabase_configured
 from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
@@ -1085,7 +1091,9 @@ def create_app(
             with partner_cache_lock:
                 if university.id not in partner_cache:
                     partner_cache[university.id] = (
-                        fetch_ntu_partner_universities()
+                        fetch_ccu_partner_universities()
+                        if university.id == "ccu"
+                        else fetch_ntu_partner_universities()
                         if university.id == NTU.id
                         else fetch_ntpu_partner_universities()
                         if university.id == NTPU.id
@@ -1129,6 +1137,8 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == "ccu":
+            return ccu_processed_pages()
         if university.id == NTU.id:
             return ntu_processed_pages()
         return (
@@ -1141,6 +1151,8 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == "ccu":
+            return ccu_exchange_info(partners_for_university(university))
         if university.id == NTPU.id:
             return ntpu_exchange_info(partners_for_university(university))
         if university.id == NTU.id:
@@ -1188,6 +1200,8 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == "ccu":
+            return build_ccu_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == NTPU.id:
             return build_ntpu_student_dashboard(
                 partner_universities=partners_for_university(university)
@@ -2905,8 +2919,10 @@ def create_app(
             base_url=public_base_url(request),
         )
         locations = load_university_locations(resolved_data_dir)
+        from .ccu_profile import school_location
+        is_ccu = university_for(school).id == "ccu"
         return dashboard.model_copy(update={"partner_universities": [
-            partner.model_copy(update={"location": public_location(locations, partner.school_name, partner.country)})
+            partner.model_copy(update={"location": school_location(partner, public_location(locations, partner.school_name, partner.country)) if is_ccu else public_location(locations, partner.school_name, partner.country)})
             for partner in dashboard.partner_universities
         ]})
 
@@ -3174,9 +3190,9 @@ def create_app(
         academic_year: str | None = Query(default=None, max_length=40),
         application_round: str | None = Query(default=None, max_length=80),
     ) -> ApplicationDocumentCatalog:
-        partner = partner_for_school(target_school, school)
+        university, partner = partner_context_for_school(target_school, school)
         context = ApplicationCenterContext(
-            school_name=school,
+            school_name=university.school_name,
             target_school=partner.school_name,
             college=college,
             department=department,
@@ -3185,7 +3201,7 @@ def create_app(
             academic_year=academic_year,
             application_round=application_round,
         )
-        workflows = load_application_workflows(resolved_data_dir)
+        workflows = workflows_for_university(university) if university.id == "ccu" else load_application_workflows(resolved_data_dir)
         return build_application_document_catalog(context, workflows)
 
     @app.post(
@@ -3564,7 +3580,8 @@ def create_app(
     ) -> DestinationProfile:
         partner = partner_for_school(school, home_school)
         normalized = normalize_school(partner.school_name)
-        target_home = normalize_school(home_school) if home_school else None
+        canonical_home = university_for(home_school).school_name if home_school else None
+        target_home = normalize_school(canonical_home) if canonical_home else None
         profiles = load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
         if target_home:
             for profile in profiles:
@@ -3575,11 +3592,13 @@ def create_app(
                     return complete_destination_profile(profile, resolved_data_dir)
         for profile in profiles:
             if normalize_school(profile.school_name) == normalized:
-                if target_home and not profile.home_university:
-                    return complete_destination_profile(profile.model_copy(update={"home_university": home_school}), resolved_data_dir)
+                if target_home:
+                    if profile.home_university:
+                        continue
+                    return complete_destination_profile(profile.model_copy(update={"home_university": canonical_home}), resolved_data_dir)
                 return complete_destination_profile(profile, resolved_data_dir)
         return DestinationProfile(
-            home_university=home_school,
+            home_university=canonical_home,
             school_name=partner.school_name,
             country=partner.country,
         )
@@ -3600,27 +3619,42 @@ def create_app(
                 home_university=university.school_name, partner_university=partner.school_name,
             ),
         )
-        return build_school_completeness(
+        result = build_school_completeness(
             partner, destination_profile(school, home_school), workflow,
             home_university=university.school_name,
         )
+        if university.id == "ccu":
+            from .ccu_profile import align_completeness
+            return align_completeness(result, partner)
+        return result
 
     @app.get("/school-life-context", response_model=SchoolLifeContext)
     def school_life_context(
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> SchoolLifeContext:
-        partner = partner_for_school(school, home_school)
+        university, partner = partner_context_for_school(school, home_school)
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
-        return build_life_context(partner, destination_profile(school, home_school), location, resolved_data_dir)
+        if university.id == "ccu":
+            from .ccu_profile import school_location
+            location = school_location(partner, location)
+        profile = destination_profile(school, home_school)
+        context = build_life_context(partner, profile, location, resolved_data_dir)
+        if university.id == "ccu":
+            from .ccu_profile import align_life_context
+            return align_life_context(context, partner, profile, location)
+        return context
 
     @app.post("/school-life-context/refresh", response_model=SchoolLifeContext)
     def refresh_school_life_context(
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> SchoolLifeContext:
-        partner = partner_for_school(school, home_school)
+        university, partner = partner_context_for_school(school, home_school)
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
+        if university.id == "ccu":
+            from .ccu_profile import school_location
+            location = school_location(partner, location)
         result = refresh_life_research(partner, location, resolved_data_dir)
         context = school_life_context(school, home_school)
         return context.model_copy(update={"research_notes": result.notes})

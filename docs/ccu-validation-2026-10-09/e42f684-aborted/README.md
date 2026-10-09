@@ -1,0 +1,3 @@
+# e42f684 因新增来源顯示要求中止
+
+原regression及browser logs為partial，完整gate未完成，没有完整JUnit或成功结果。使用者指出evidence[0]將UNINTER48筆API／Mapúa精確影像日期尾註誤綁舊PDF，停止僅此候選及descendants，另修正逐來源摘要後重跑完整gate。停止收據與當時保留證明未覆寫。

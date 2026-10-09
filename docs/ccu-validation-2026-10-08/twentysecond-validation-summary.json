@@ -1,0 +1,120 @@
+{
+  "repository": "blizzard-new/abroad",
+  "branch": "data/ccu-exchange-20261008",
+  "baseline_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "previous_commit": "4e3123547595f9f560920d087a8c9c2dae9c13ce",
+  "catalogue_rows": 104,
+  "quota_states": {
+    "published": 52,
+    "reference_only": 49,
+    "not_published": 3,
+    "explicit_zero": 0
+  },
+  "workflow_count": 55,
+  "source_count": 943,
+  "new_source_count": 24,
+  "acquisition_count": 48,
+  "host_attachments": 124,
+  "host_document_schools": 32,
+  "host_requirements": 230,
+  "conditional_host_requirements": 50,
+  "document_center_verified_links": 28,
+  "workflow_requirements_including_home": 1165,
+  "host_fields": {
+    "verified_current": 305,
+    "missing": 211,
+    "needs_confirmation": 327,
+    "reference_only": 20,
+    "conflict": 71,
+    "explicit_not_announced": 1
+  },
+  "profile_fields": {
+    "city": {
+      "verified_current": 38,
+      "needs_confirmation": 14,
+      "reference_only": 3
+    },
+    "location": {
+      "verified_current": 38,
+      "needs_confirmation": 14,
+      "reference_only": 3
+    },
+    "website": {
+      "verified_current": 55
+    },
+    "degree_levels": {
+      "missing": 27,
+      "needs_confirmation": 19,
+      "verified_current": 9
+    },
+    "colleges": {
+      "missing": 32,
+      "needs_confirmation": 20,
+      "verified_current": 3
+    },
+    "transport": {
+      "reference_only": 6,
+      "needs_confirmation": 30,
+      "verified_current": 17,
+      "missing": 2
+    },
+    "campus_life": {
+      "reference_only": 8,
+      "needs_confirmation": 29,
+      "verified_current": 18
+    }
+  },
+  "functional_parity_complete": false,
+  "pending_public_candidates": 19,
+  "link_scope_only_reviews": 171,
+  "optional_exchange_projects_not_excluded_as_unrelated": 30,
+  "preserved_previous_919_source_json": true,
+  "preserved_all_46_main_official_data_files": true,
+  "targeted": {
+    "tests": 18,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": 8.413
+  },
+  "four_school_regression": {
+    "tests": 424,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 7,
+    "time": 313.63
+  },
+  "four_school_result": {
+    "tests": 424,
+    "passed": 416,
+    "skipped": 7,
+    "failed": 1,
+    "known_failure": "NTPU destination_profile_count0vs1; independently reproduced on same main in eighteenth-main-ntpu.xml"
+  },
+  "browser_initial": {
+    "tests": 12,
+    "failures": 0,
+    "errors": 12,
+    "skipped": 0,
+    "time": 1.863
+  },
+  "browser_final": {
+    "tests": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": 95.565
+  },
+  "api_paths": 110,
+  "openapi_full_snapshot_identical_to_main": false,
+  "openapi_identical_to_previous_branch": true,
+  "preserved_original_77_published_workflow_hashes": true,
+  "shared_code_changes_this_round": [
+    "workflow_structuring.py"
+  ],
+  "school_adapter_changes_this_round": [
+    "ccu_documents.py"
+  ],
+  "main_merged_or_deployed": false,
+  "ongoing_next_batch": "13精確必要正文及官方規則附件已於隔離tmp取得，繼續整合；慶熙宿舍指南正文2021-2舊期，HiKorea統合表正文2022修訂。"
+}

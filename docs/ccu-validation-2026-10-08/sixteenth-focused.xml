@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="11" time="9.495" timestamp="2026-10-08T13:15:31.051865+00:00" hostname="e5e438874453"><testcase classname="tests.test_ccu_sixteenth_pass" name="test_updated_hcmut_dates_replace_march_and_old_year_is_reference" time="3.054" /><testcase classname="tests.test_ccu_sixteenth_pass" name="test_visible_visa_policy_excludes_hidden_pdf_extraction_residue" time="0.001" /><testcase classname="tests.test_ccu_sixteenth_pass" name="test_current_hcmut_templates_stages_and_unread_online_form" time="0.837" /><testcase classname="tests.test_ccu_sixteenth_pass" name="test_public_json_parser_reads_real_response_and_rejects_internal_article" time="0.029" /><testcase classname="tests.test_ccu_sixteenth_pass" name="test_transport_and_life_references_do_not_promote_year_or_anomalous_page" time="1.466" /><testcase classname="tests.test_ccu_sixteenth_pass" name="test_seoultech_bank_authentication_does_not_inherit_other_document_rules" time="0.090"><failure message="assert {3, 7} &lt;= {3}&#10;  &#10;  Extra items in the left set:&#10;  7">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-84/test_seoultech_bank_authentica0')
+
+    def test_seoultech_bank_authentication_does_not_inherit_other_document_rules(tmp_path):
+        partner = at(48)
+        fields = reviewed_rows()[48]["fields"]
+        assert "未列銀行認證" in fields["documents"]["value"]
+        assert "銀行只列USD6000一期／12000一年資金證明，未列認證" in fields["visa"]["value"]
+&gt;       assert {3, 7} &lt;= {
+            page for ev in fields["documents"]["evidence"] for page in ev["source_pages"]
+        }
+E       assert {3, 7} &lt;= {3}
+E         
+E         Extra items in the left set:
+E         7
+
+tests/test_ccu_sixteenth_pass.py:144: AssertionError</failure></testcase><testcase classname="tests.test_ccu_fourteenth_pass" name="test_seoultech_new_body_supersedes_old_housing_and_dates_without_guessing" time="0.447" /><testcase classname="tests.test_ccu_fourteenth_pass" name="test_actual_catalogue_keeps_first_second_dorm_and_home_recommendation_separate" time="1.005" /><testcase classname="tests.test_ccu_fourteenth_pass" name="test_public_routes_fill_missing_but_preserve_year_campus_and_nationality_scope" time="0.001" /><testcase classname="tests.test_ccu_fifteenth_pass" name="test_library_activation_is_life_information_and_new_student_guide_is_reference" time="1.281" /><testcase classname="tests.test_ccu_fifteenth_pass" name="test_javascript_shell_is_recorded_without_using_search_snippets_as_policy" time="0.000" /></testsuite></testsuites>

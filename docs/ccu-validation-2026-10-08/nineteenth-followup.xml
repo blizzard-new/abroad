@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="3.682" timestamp="2026-10-08T16:43:25.369430+00:00" hostname="e5e438874453"><testcase classname="tests.test_ccu_eighteenth_pass" name="test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate" time="0.137"><failure message="AssertionError: assert ({'url': 'https://iso.nenu.edu.cn/info/1045/1397.htm', 'ccu_page': 26, 'disposition': 'excluded_other_recipient', 'source_content_read': True, ...} and 'role_and_relevant_sections' == 'necessary_policy_sections'&#10;  &#10;  - necessary_policy_sections&#10;  + role_and_relevant_sections)">def test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate():
+        report = json.loads((BUNDLE / "public-link-queue.json").read_text())
+        gaps = json.loads((BUNDLE / "remaining-gaps.json").read_text())
+        assert hashlib.sha256((BUNDLE / "remaining-gaps.json").read_bytes()).hexdigest() == report["input_sha256"]
+        original = Counter((s["ccu_page"], l["url"], l["discovered_in_source"])
+                           for s in gaps["schools"] for l in s["unrequested_discovered_links"])
+        grouped = Counter((o["ccu_page"], o["url"], o["discovered_in_source"])
+                          for c in report["candidates"] for o in c["occurrences"])
+        assert original == grouped
+        assert report["raw_href_count"] == sum(grouped.values())
+        assert report["raw_href_count"] == report["unique_url_count"] + report["collapsed_href_count"]
+        assert len({c["url"] for c in report["candidates"]}) == report["unique_url_count"]
+        assert len(report["schools"]) == 55 and all(not r["public_sources_exhausted"] for r in report["schools"])
+        for c in report["candidates"]:
+            if c["source_content_read"]:
+                review = c["content_review"]
+&gt;               assert review and review["review_extent"] == "necessary_policy_sections"
+E               AssertionError: assert ({'url': 'https://iso.nenu.edu.cn/info/1045/1397.htm', 'ccu_page': 26, 'disposition': 'excluded_other_recipient', 'source_content_read': True, ...} and 'role_and_relevant_sections' == 'necessary_policy_sections'
+E                 
+E                 - necessary_policy_sections
+E                 + role_and_relevant_sections)
+
+tests/test_ccu_eighteenth_pass.py:140: AssertionError</failure></testcase><testcase classname="tests.test_ccu_overseas" name="test_hokkaido_program_evidence_and_old_documents_stay_separate" time="2.448" /></testsuite></testsuites>

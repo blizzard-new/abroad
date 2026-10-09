@@ -1,0 +1,46 @@
+{
+  "checked_at": "2026-10-08T10:52:34.983123+00:00",
+  "source_count_unchanged": 637,
+  "review_scope": "逐校缺值續查：將當期中正表p39常磐本科資格原文，納入profile證據與結構化學制篩選",
+  "changes": [
+    {
+      "ccu_page": 39,
+      "field": "degree_levels",
+      "before": {
+        "value": null,
+        "status": "missing",
+        "evidence": [],
+        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+      },
+      "after": {
+        "value": "大學部",
+        "status": "verified_current",
+        "evidence": [
+          {
+            "source_id": "p0-profile-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              39
+            ],
+            "academic_year": "中正2027春季2026.09.17當期學校資訊；只核母校公告的常磐接收學制",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T09:27:00.887129+00:00",
+            "status": "verified_current",
+            "excerpt": "限大學部(大四下畢業者亦不可申請) Have completed at least two Japanese language courses (or courses equivalent to JLPT N3~2) and one Japanese culture or related course. Maintain a cumulative GPA of 2.5 or higher (on a 4-point scale) for all undergraduate courses at the time of the application deadline.",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4c5c624798e4f3ab52633a60d2c53582b33fcfb0edf6a553344a6e6ca66c043e",
+            "note": "中正當期黑字明示限大學部。Host未標年頁另列，不推定研究所或其他計畫可申請。"
+          }
+        ],
+        "reason": "中正當期121頁名額表p39明示限大學部、大四下畢業者不可申請；原文含undergraduate GPA。不是由學校開設學位推定接收學制。"
+      }
+    }
+  ],
+  "remaining_scope": "其餘不以課程學位或年級字眼推定交換接收學制；外校17項獨立查核狀態不變。",
+  "actual_api_before_after": {
+    "prior_degree_nonempty": 22,
+    "current_degree_nonempty": 23,
+    "prior_degree_scope_known": 8,
+    "current_degree_scope_known": 9
+  }
+}

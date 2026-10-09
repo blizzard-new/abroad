@@ -1,0 +1,137 @@
+CONFTEST LOADED!
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_real_school_search_matching_comparison_plan_reload_and_home_isolation[390] _
+
+page = <Page url='http://127.0.0.1:36413/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list&q=Nagoya+University+%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E5%AD%B8#partners'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:36413', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-124/ccu-acceptance-real-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_real_school_search_matching_comparison_plan_reload_and_home_isolation(page, acceptance_server, width):
+        server = acceptance_server
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        session = login(page, server, width)
+        names = [school(34), school(45)]
+        for name in names:
+            page.locator("#partner-search").fill(name)
+            button = page.locator(f'#partner-table .favorite-toggle[data-school-name="{name}"]')
+>           expect(button).to_be_visible(timeout=30_000)
+E           AssertionError: Locator expected to be visible
+E           Actual value: None
+E           Error: strict mode violation: locator("#partner-table .favorite-toggle[data-school-name=\"Nagoya University 名古屋大學\"]") resolved to 2 elements:
+E               1) <button type="button" data-tooltip="收藏" aria-pressed="false" class="icon-button favorite-toggle" aria-label="收藏Nagoya University 名古屋大學" data-school-name="Nagoya University 名古屋大學">…</button> aka locator("tbody").get_by_label("收藏Nagoya University 名古屋大學")
+E               2) <button type="button" aria-pressed="false" aria-label="收藏Nagoya University 名古屋大學" class="secondary-button favorite-toggle" data-school-name="Nagoya University 名古屋大學">…</button> aka get_by_role("group").filter(has_text="日本 日本 Nagoya University").get_by_label("收藏Nagoya University 名古屋大學")
+E            
+E           Call log:
+E             - Expect "to_be_visible" with timeout 30000ms
+E             - waiting for locator("#partner-table .favorite-toggle[data-school-name=\"Nagoya University 名古屋大學\"]")
+
+tests/e2e/test_ccu_candidate_acceptance.py:101: AssertionError
+_ test_real_school_search_matching_comparison_plan_reload_and_home_isolation[1440] _
+
+page = <Page url='http://127.0.0.1:36413/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list&q=Nagoya+University+%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E5%AD%B8#partners'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:36413', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-124/ccu-acceptance-real-data0'))
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_real_school_search_matching_comparison_plan_reload_and_home_isolation(page, acceptance_server, width):
+        server = acceptance_server
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        session = login(page, server, width)
+        names = [school(34), school(45)]
+        for name in names:
+            page.locator("#partner-search").fill(name)
+            button = page.locator(f'#partner-table .favorite-toggle[data-school-name="{name}"]')
+>           expect(button).to_be_visible(timeout=30_000)
+E           AssertionError: Locator expected to be visible
+E           Actual value: None
+E           Error: strict mode violation: locator("#partner-table .favorite-toggle[data-school-name=\"Nagoya University 名古屋大學\"]") resolved to 2 elements:
+E               1) <button type="button" data-tooltip="收藏" aria-pressed="false" class="icon-button favorite-toggle" aria-label="收藏Nagoya University 名古屋大學" data-school-name="Nagoya University 名古屋大學">…</button> aka get_by_role("button", name="收藏Nagoya University 名古屋大學")
+E               2) <button type="button" aria-pressed="false" aria-label="收藏Nagoya University 名古屋大學" class="secondary-button favorite-toggle" data-school-name="Nagoya University 名古屋大學">…</button> aka locator("details").filter(has_text="日本 日本 Nagoya University").get_by_label("收藏Nagoya University 名古屋大學")
+E            
+E           Call log:
+E             - Expect "to_be_visible" with timeout 30000ms
+E             - waiting for locator("#partner-table .favorite-toggle[data-school-name=\"Nagoya University 名古屋大學\"]")
+
+tests/e2e/test_ccu_candidate_acceptance.py:101: AssertionError
+__ test_real_document_center_stages_conditions_templates_and_saved_draft[390] __
+
+page = <Page url='http://127.0.0.1:36413/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list#application-center'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:36413', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-124/ccu-acceptance-real-data0'))
+width = 390
+
+    
+    
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_real_document_center_stages_conditions_templates_and_saved_draft(page, acceptance_server, width):
+        server = acceptance_server
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        login(page, server, width)
+>       navigate(page, "application-center")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/test_ccu_candidate_acceptance.py:191: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:85: in __exit__
+    self._event.value
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._sync_base.EventInfo object at 0x7f3829e4b0e0>
+
+    @property
+    def value(self) -> T:
+        while not self._future.done():
+            self._sync_base._dispatcher_fiber.switch()
+        asyncio._set_running_loop(self._sync_base._loop)
+        exception = self._future.exception()
+        if exception:
+>           raise exception
+E           playwright._impl._errors.TimeoutError: Timeout 30000ms exceeded while waiting for event "response"
+
+.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:59: TimeoutError
+_ test_real_document_center_stages_conditions_templates_and_saved_draft[1440] __
+
+page = <Page url='http://127.0.0.1:36413/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list#application-center'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:36413', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-124/ccu-acceptance-real-data0'))
+width = 1440
+
+    
+    
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_real_document_center_stages_conditions_templates_and_saved_draft(page, acceptance_server, width):
+        server = acceptance_server
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        login(page, server, width)
+>       navigate(page, "application-center")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/test_ccu_candidate_acceptance.py:191: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:85: in __exit__
+    self._event.value
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._sync_base.EventInfo object at 0x7f383821daf0>
+
+    @property
+    def value(self) -> T:
+        while not self._future.done():
+            self._sync_base._dispatcher_fiber.switch()
+        asyncio._set_running_loop(self._sync_base._loop)
+        exception = self._future.exception()
+        if exception:
+>           raise exception
+E           playwright._impl._errors.TimeoutError: Timeout 30000ms exceeded while waiting for event "response"
+
+.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:59: TimeoutError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_candidate_acceptance.py::test_real_school_search_matching_comparison_plan_reload_and_home_isolation[390]
+FAILED tests/e2e/test_ccu_candidate_acceptance.py::test_real_school_search_matching_comparison_plan_reload_and_home_isolation[1440]
+FAILED tests/e2e/test_ccu_candidate_acceptance.py::test_real_document_center_stages_conditions_templates_and_saved_draft[390]
+FAILED tests/e2e/test_ccu_candidate_acceptance.py::test_real_document_center_stages_conditions_templates_and_saved_draft[1440]
+4 failed in 85.60s (0:01:25)

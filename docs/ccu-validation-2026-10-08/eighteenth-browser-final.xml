@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="4" time="69.929" timestamp="2026-10-08T15:24:15.436857+00:00" hostname="e5e438874453"><testcase classname="tests.e2e.test_ccu_eighteenth_pass" name="test_actual_degree_select_and_current_year_in_both_modes[390]" time="27.766" /><testcase classname="tests.e2e.test_ccu_eighteenth_pass" name="test_actual_degree_select_and_current_year_in_both_modes[1440]" time="20.898"><failure message="KeyError: 'current_year'">page = &lt;Page url='http://127.0.0.1:58827/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#eligibility'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:58827', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-97/web-e2e-data0'))
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_actual_degree_select_and_current_year_in_both_modes(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        session = sign_in_cookie(live_server, school=HOME)
+        live_server.verify_student(session["profile"]["id"], university=HOME)
+        attach_session(page, live_server, session)
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        enter_public_site(page, live_server, "application-center")
+        partner = at(34)
+        wait_until(page, "homeCollegeOptions().includes('教育學院') &amp;&amp; homeCollegeOptions().includes('法學院')")
+        page.locator("#application-target-school").select_option(partner.school_name)
+        wait_until(page, "state.applicationContext.target_school === " + repr(partner.school_name))
+        for college, degree, year, status in [
+            ("法學院", "研究所", "博士班", "fail"),
+            ("法學院", "研究所", "", "needs_confirmation"),
+            ("法學院", "研究所", "碩士班", "pass"),
+            ("法學院", "碩士班", "碩士班", "pass"),
+            ("法學院", "博士班", "博士班", "fail"),
+            ("教育學院", "大學部", "大三", "pass"),
+            ("教育學院", "研究所", "", "pass"),
+        ]:
+            page.evaluate("location.hash='#advisor'")
+            expect(page.locator("#advisor-form")).to_be_visible()
+            page.locator("#advisor-college").select_option(college)
+            department = page.locator("#advisor-department")
+            if department.evaluate("node=&gt;node.tagName") == "SELECT":
+                wait_until(page, "document.querySelector('#advisor-department').options.length &gt; 1")
+                value = department.locator("option").evaluate_all("rows=&gt;rows.find(row=&gt;row.value).value")
+                department.select_option(value)
+            else:
+                department.fill("法律學系" if college == "法學院" else "教育學系")
+            page.locator("#advisor-degree").select_option(degree)
+            extra = page.locator("#advisor-current-year").locator("xpath=ancestor::details")
+            if not extra.evaluate("node=&gt;node.open"):
+                extra.locator("&gt; summary").click()
+            page.locator("#advisor-current-year").select_option(year)
+            page.locator("#advisor-academic-score").fill("85")
+            page.locator("#advisor-academic-gpa").fill("3.5")
+            page.locator("#advisor-language-test").select_option("ielts")
+            page.locator("#advisor-language-score").fill("7")
+            with page.expect_response(lambda r: r.url.endswith("/advisor/plan") and r.request.method == "POST") as updated:
+                page.locator("#advisor-submit").click()
+            assert updated.value.ok
+            assert updated.value.request.post_data_json["degree_level"] == degree
+            assert updated.value.request.post_data_json["current_year"] == (year or None)
+            target = updated.value.json()["target_match"]
+            assert ("符合目前學制" in target["reasons"]) is (status == "pass")
+            expect(page.locator("#advisor-profile-status")).to_have_text("已保存條件")
+            frontend = page.evaluate("name=&gt;partnerMatch(state.dashboard.partner_universities.find(p=&gt;p.school_name===name))", partner.school_name)
+            assert ("符合目前學制" in frontend["reasons"]) is (status == "pass")
+            if status == "fail":
+                assert any("配對不符" in s for s in frontend["risks"])
+            elif status == "needs_confirmation":
+                assert any("尚未區分碩博士" in s for s in frontend["risks"])
+                assert not any("配對不符" in s for s in frontend["risks"])
+            page.evaluate("location.hash='#eligibility'")
+            page.locator("#eligibility-academic-year").select_option("115")
+            page.locator("#eligibility-application-round").select_option("第二梯次")
+            page.locator("#eligibility-preference-1").select_option(partner.school_name)
+            with page.expect_response(lambda r: r.url.endswith("/application-plan/evaluate") and r.request.method == "POST") as checked:
+                page.locator("#advisor-submit").click()
+            assert checked.value.ok
+            payload = checked.value.request.post_data_json
+&gt;           assert payload["degree_level"] == degree and payload["current_year"] == year
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'current_year'
+
+tests/e2e/test_ccu_eighteenth_pass.py:87: KeyError</failure></testcase><testcase classname="tests.e2e.test_ccu_eighteenth_pass" name="test_hcmute_email_sender_and_pilsen_transfers_render[390]" time="9.518" /><testcase classname="tests.e2e.test_ccu_eighteenth_pass" name="test_hcmute_email_sender_and_pilsen_transfers_render[1440]" time="11.346" /></testsuite></testsuites>

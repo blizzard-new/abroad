@@ -1,0 +1,36 @@
+CONFTEST LOADED!
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_old_home_responses_cannot_finish_newer_a_b_a_load[390] __________
+
+page = <Page url='http://127.0.0.1:35729/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list#partners'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:35729', data_dir=PosixPath('/workspace/ccu-artifacts-20261008/race-before-temp/ccu-acceptance-real-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_old_home_responses_cannot_finish_newer_a_b_a_load(page, acceptance_server, width):
+        server = acceptance_server
+        errors = record_errors(page)
+        login(page, server, width)
+        choose_home(page, "國立臺北大學")
+        wait_until(page, "!state.applicationLoading && state.destinationProfiles.length === 206")
+        paths = {"/student-dashboard", "/coverage", "/destination-profiles", "/application-center/templates"}
+        gate = DelayedReads(page, server, lambda path, query: path in paths and (query.get("school") or query.get("home_school")) == [HOME], per_path_limit=2)
+        try:
+            click_home(page, HOME)
+            gate.wait(4)
+            click_home(page, "國立臺北大學")
+            wait_until(page, "state.dashboard?.school_name === '國立臺北大學' && !state.applicationLoading")
+            click_home(page, HOME)
+            gate.wait(8)
+            gate.release(sequence=1)
+            page.wait_for_timeout(250)
+>           assert page.evaluate("state.partnerDataLoading && state.applicationLoading")
+E           AssertionError: assert False
+E            +  where False = evaluate('state.partnerDataLoading && state.applicationLoading')
+E            +    where evaluate = <Page url='http://127.0.0.1:35729/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list#partners'>.evaluate
+
+tests/e2e/test_ccu_delayed_switching.py:105: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_delayed_switching.py::test_old_home_responses_cannot_finish_newer_a_b_a_load[390]
+1 failed in 52.15s

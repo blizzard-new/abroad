@@ -9,7 +9,6 @@ from .models import (
     ApplicationCopyType,
     ApplicationDeadlineStatus,
     ApplicationDocumentRequirement,
-    ApplicationRuleScope,
     ApplicationSourceAuthority,
     ApplicationSourceRole,
     ApplicationStep,
@@ -20,7 +19,6 @@ from .models import (
     ApplicationWorkflowSource,
     UniversityApplicationWorkflow,
 )
-
 
 ACADEMIC_YEAR_PATTERN = re.compile(r"(?<!\d)(\d{3})\s*學年度")
 COPY_COUNT_PATTERN = re.compile(r"(?<!\d)(\d{1,2})\s*份")
@@ -276,7 +274,15 @@ def _structure_step(
     publication_eligible: bool,
 ) -> ApplicationStep:
     method = step.submission.method
-    if method == ApplicationSubmissionMethod.UNKNOWN:
+    # This CCU step combines housing, visa and arrival notices from several
+    # host offices. A notice sent by email does not establish how a later form
+    # must be submitted. Keep the collector's unknown method until explicit
+    # delivery instructions are available; preserve any verified method.
+    ccu_host_life = (
+        workflow.home_university == "國立中正大學"
+        and step.phase == "合作校行前與生活"
+    )
+    if method == ApplicationSubmissionMethod.UNKNOWN and not ccu_host_life:
         method = _infer_submission_method(step)
     submission = step.submission.model_copy(
         update={
@@ -499,6 +505,17 @@ def _structure_document_requirement(
     step: ApplicationStep,
     submission: ApplicationSubmissionDetails,
 ) -> ApplicationDocumentRequirement:
+    # Individually reviewed receiving documents already supply their metadata.
+    # A name such as "non-OECD: original" must not impose originals on everyone.
+    if requirement.stage is not None:
+        return requirement.model_copy(
+            update={
+                "source_urls": requirement.source_urls or list(step.source_urls),
+                "needs_confirmation": (
+                    requirement.needs_confirmation or step.needs_confirmation
+                ),
+            }
+        )
     copies = requirement.copies
     if copies is None and (match := COPY_COUNT_PATTERN.search(requirement.name)):
         copies = int(match.group(1))

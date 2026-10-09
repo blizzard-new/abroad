@@ -1,0 +1,27 @@
+{
+  "candidate_sha": "9b18b409a370fd8a4fecc7cff1d18d399f4f9ab3",
+  "checked_at": "2026-10-09T01:10:17.952952+00:00",
+  "baseline_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "shared_paths_from_main": [
+    "docs/api/openapi.json",
+    "pyproject.toml",
+    "src/exchange_info/advisor.py",
+    "src/exchange_info/api.py",
+    "src/exchange_info/application_documents.py",
+    "src/exchange_info/application_rules.py",
+    "src/exchange_info/application_workflow_collector.py",
+    "src/exchange_info/cli.py",
+    "src/exchange_info/content_governance.py",
+    "src/exchange_info/models.py",
+    "src/exchange_info/qualification_scopes.py",
+    "src/exchange_info/static/app.js",
+    "src/exchange_info/static/index.html",
+    "src/exchange_info/storage.py",
+    "src/exchange_info/university_registry.py",
+    "src/exchange_info/workflow_structuring.py",
+    "uv.lock"
+  ],
+  "shared_paths_changed_after_prior_tested_92e66f3": [],
+  "cross_branch_merge_or_runtime_validation_performed": false,
+  "notes": "17 shared paths remain those already listed in the handoff. TLS and bounded followups modify only CCU-specific code/data/tests/docs. Other sessions were not checked out or changed."
+}

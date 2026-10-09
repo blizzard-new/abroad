@@ -1,0 +1,82 @@
+CONFTEST LOADED!
+........................................................................ [ 86%]
+.FF........                                                              [100%]
+=================================== FAILURES ===================================
+_______ test_runtime_preserves_city_and_separates_reference_life_status ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-89/test_runtime_preserves_city_an0')
+
+    def test_runtime_preserves_city_and_separates_reference_life_status(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        dashboard = client.get("/student-dashboard", params={"school": HOME}).json()
+        partners = dashboard["partner_universities"]
+        for page, city in [
+            (33, "市川"),
+            (85, "Pessac"),
+            (103, "Winterthur"),
+            (111, "Karviná"),
+        ]:
+            data = next(p for p in partners if p["school_name"] == at(page).school_name)
+            assert data["location"]["city"] == city
+            assert data["location"]["latitude"] is None
+        p = at(83)
+        guide = client.get(
+            "/destination-profile", params={"home_school": HOME, "school": p.school_name}
+        ).json()
+        assert guide["city"] == p.location.city
+        assert guide["transport_summary"] != guide["campus_life_summary"]
+        assert {"transport", "campus_life"} <= {
+            s["key"] for s in guide["student_guide_sections"]
+        }
+        p = at(42)
+        result = client.get(
+            "/school-data-completeness",
+            params={"home_school": HOME, "school": p.school_name},
+        ).json()
+        items = {r["key"]: r for r in result["items"]}
+        assert items["transport"]["status"] == "needs_confirmation"
+        assert items["documents"]["status"] == "partial"
+        unresolved = client.get(
+            "/school-data-completeness",
+            params={"home_school": HOME, "school": at(103).school_name},
+        ).json()
+        unresolved_items = {r["key"]: r for r in unresolved["items"]}
+        assert unresolved_items["housing"]["status"] == "needs_confirmation"
+        assert unresolved_items["cost"]["status"] == "needs_confirmation"
+        missing = client.get(
+            "/destination-profile",
+            params={"home_school": HOME, "school": at(71).school_name},
+        ).json()
+>       assert (
+            missing["city"] is None
+            and missing["transport_summary"] is None
+            and missing["campus_life_summary"] is None
+        )
+E       AssertionError: assert ('Đồng Nai（官方圖書館所在地；2027交換校區未另核）' is None)
+
+tests/test_ccu_ninth_pass.py:145: AssertionError
+__ test_api_host_documents_have_individual_forms_conditions_and_later_stages ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-89/test_api_host_documents_have_i0')
+
+    def test_api_host_documents_have_individual_forms_conditions_and_later_stages(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        for page in [32, 37, 43, 47, 48, 53, 68, 108, 114]:
+            flow = client.get(
+                "/application-workflow",
+                params={"home_school": HOME, "school": at(page).school_name},
+            ).json()
+            assert flow["review_status"] != "published"
+            host = flow["steps"][4]
+            registry = reviewed_documents()[page]
+            requirements = [r for s in flow["steps"] for r in s["document_requirements"] if r["stage"]]
+            assert len(requirements) == len(registry["requirements"])
+>           assert len(host["document_requirements"]) > 1
+E           assert 0 > 1
+E            +  where 0 = len([])
+
+tests/test_ccu_ninth_pass.py:164: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_ninth_pass.py::test_runtime_preserves_city_and_separates_reference_life_status
+FAILED tests/test_ccu_ninth_pass.py::test_api_host_documents_have_individual_forms_conditions_and_later_stages
+2 failed, 81 passed in 143.78s (0:02:23)

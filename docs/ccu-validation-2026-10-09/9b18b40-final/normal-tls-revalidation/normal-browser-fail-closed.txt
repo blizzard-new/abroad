@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/workspace/abroad-ccu-20261008/scripts/fetch_ccu_public_renders.py", line 106, in <module>
+    main()
+  File "/workspace/abroad-ccu-20261008/scripts/fetch_ccu_public_renders.py", line 102, in main
+    asyncio.run(acquire(output))
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/workspace/abroad-ccu-20261008/scripts/fetch_ccu_public_renders.py", line 56, in acquire
+    await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+  File "/workspace/abroad-ccu-20261008/.venv/lib/python3.12/site-packages/playwright/async_api/_generated.py", line 9869, in goto
+    await self._impl_obj.goto(
+  File "/workspace/abroad-ccu-20261008/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py", line 560, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-ccu-20261008/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 156, in goto
+    await self._channel.send(
+  File "/workspace/abroad-ccu-20261008/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-ccu-20261008/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.goto: net::ERR_CERT_AUTHORITY_INVALID at https://www.mapua.edu.ph/
+Call log:
+  - navigating to "https://www.mapua.edu.ph/", waiting until "domcontentloaded"
+

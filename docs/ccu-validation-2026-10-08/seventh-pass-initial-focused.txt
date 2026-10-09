@@ -1,0 +1,16 @@
+CONFTEST LOADED!
+.....F.....                                                              [100%]
+=================================== FAILURES ===================================
+____ test_hokkaido_program_deadlines_degrees_and_scores_do_not_cross_scopes ____
+
+    def test_hokkaido_program_deadlines_degrees_and_scores_do_not_cross_scopes():
+        p = at(37)
+        f = p.partner_exchange_details
+>       assert p.quota == 5
+E       AssertionError: assert '共 5名' == 5
+E        +  where '共 5名' = PartnerUniversity(program_type='校級薦外交換', availability_status='open', availability_note='2027春季名額已列；校內收件已截止，限既有申請人依提名通知...ssions/exchange-student-admissions/61960-2/ (各計畫所需的資料，請見姊妹校簡章說明。)'], tuition_points=[], translated_from_english=False)).quota
+
+tests/test_ccu_seventh_pass.py:99: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_seventh_pass.py::test_hokkaido_program_deadlines_degrees_and_scores_do_not_cross_scopes
+1 failed, 10 passed in 1.93s

@@ -600,9 +600,9 @@
                 <div class="advisor-fields">
                   <label><span>學院</span><select id="advisor-college" name="college"></select></label>
                   <label><span>所屬系所</span><select id="advisor-department" name="department" aria-describedby="advisor-department-note" disabled><option value="">請先選擇學院</option></select><input id="advisor-department-text" name="department" type="text" maxlength="120" placeholder="請填學籍上的系所或學位學程" aria-describedby="advisor-department-note" hidden disabled /></label>
-                  <label><span>學制</span><select id="advisor-degree" name="degree_level"><option value="">尚未設定</option><option value="大學部">大學部</option><option value="研究所">研究所</option></select></label>
+                  <label><span>學制</span><select id="advisor-degree" name="degree_level"><option value="">尚未設定</option><option value="大學部">大學部</option><option value="碩士班">碩士班</option><option value="博士班">博士班</option><option value="研究所">研究所（尚未區分碩博士）</option></select></label>
                   <label id="advisor-percent-field"><span>學業平均</span><input id="advisor-academic-score" name="academic_score" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="例如 82" /></label>
-                  <label data-ntu-academic-field hidden><span>適用學年GPA（4.3制）</span><input id="advisor-academic-gpa" name="academic_gpa" type="number" min="0" max="4.3" step="0.01" inputmode="decimal" placeholder="例如 2.44；與排名擇一" disabled /></label>
+                  <label id="advisor-gpa-field" data-ntu-academic-field hidden><span id="advisor-gpa-label">適用學年GPA（4.3制）</span><input id="advisor-academic-gpa" name="academic_gpa" type="number" min="0" max="4.3" step="0.01" inputmode="decimal" placeholder="例如 2.44；與排名擇一" disabled /></label>
                   <label data-ntu-academic-field hidden><span>適用學年班排名（前幾%）</span><input id="advisor-class-rank" name="class_rank_percent" type="number" min="0.01" max="100" step="0.01" inputmode="decimal" placeholder="例如前30%填30" disabled /></label>
                   <label><span>語言測驗</span><select id="advisor-language-test" name="language_test"><option value="">尚未考／尚未決定</option><option value="toeic">TOEIC</option><option value="ielts">IELTS Academic</option><option value="toefl">TOEFL iBT（舊制120分）</option><option value="toefl_new">TOEFL iBT（新制6分）</option><option value="duolingo">Duolingo</option><option value="other">其他</option></select></label>
                   <label><span>語言分數</span><input placeholder="尚未考可留空" id="advisor-language-score" name="language_score" type="number" min="0" step="0.5" inputmode="decimal" /></label>
@@ -730,7 +730,7 @@
             <details class="journey-filter-drawer" open>
               <summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i>篩選<i data-lucide="chevron-down" aria-hidden="true"></i></summary>
             <div class="filter-panel" aria-label="合作學校篩選條件">
-              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">本期開放</option><option value="agreement_only">合作備查／本期未公告</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
+              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">當期名額已列</option><option value="not_open">本季未開放（官方灰字）</option><option value="needs_confirmation">名額尚未核實</option><option value="zero_quota">零名額</option><option value="fee_paying">自費計畫</option><option value="agreement_only">合作備查／本期未公告</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
               <label for="region-filter"><span>地區</span><select id="region-filter"></select></label>
               <label for="country-filter"><span>國家</span><select id="country-filter"></select></label>
               <label for="college-filter"><span>學院</span><select id="college-filter"></select></label>
@@ -1192,6 +1192,9 @@
     <script src="/static/community-reader.js?v=20260930-forum-1" defer></script>
     <script src="/static/community-moderation.js?v=20260930-discussion-2b" defer></script>
     <script src="/static/academic-units.js?v=20261001-departments-1" defer></script>
+    <script src="/static/ccu-academic-units.js?v=20261008-ccu-filter-23" defer></script>
+    <script src="/static/ccu-language-conditions.js?v=20261008" defer></script>
+    <script src="/static/ccu-partner-details.js?v=20261008-life-1" defer></script>
     <dialog id="planning-target-change-dialog" class="planning-change-dialog" aria-labelledby="planning-target-change-title">
       <form method="dialog"><span class="section-kicker">更換目標前，先確認影響</span><h2 id="planning-target-change-title">改用這所學校規劃？</h2><p id="planning-target-change-summary"></p><ul id="planning-target-change-impact"></ul><footer><button id="planning-target-change-cancel" class="secondary-button" value="cancel">保留原目標</button><button class="primary-button" value="confirm">確認更換目標</button></footer></form>
     </dialog>
@@ -1202,6 +1205,6 @@
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
     <script src="/static/feedback.js?v=20261008-2" defer></script>
-    <script src="/static/app.js?v=20261008-ntu-audit-3" defer></script>
+    <script src="/static/app.js?v=20261008-ntu-audit-3-ccu-switching-24" defer></script>
   </body>
 </html>

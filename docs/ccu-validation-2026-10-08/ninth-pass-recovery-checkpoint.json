@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-10-08T09:50:32.588967+00:00",
+  "environment": "/workspace/abroad-ccu-20261008",
+  "branch": "data/ccu-exchange-20261008",
+  "last_committed_checkpoint": "b4693609c9d5269b5adb1d9f7fd63bf45d72ebfc",
+  "last_push_confirmed": "b4693609c9d5269b5adb1d9f7fd63bf45d72ebfc",
+  "shell_health": "exec_command git status and local Python succeeded; focused pytest process still running with new progress in log",
+  "worktree": "eighth+ninth data/code changes saved, uncommitted",
+  "counts": {
+    "profile_rows": 55,
+    "cities": 54,
+    "websites": 55,
+    "structured_degree_values": 21,
+    "structured_college_values": 11,
+    "distinct_transport": 28,
+    "distinct_campus_life": 30,
+    "current_document_schools": 23,
+    "current_document_items": 175
+  },
+  "sha256": {
+    "profile-reviewed-fields.json": "8e91cccb3b18c07cb710ed73ed51b5dfeb57183962e3bd61a3f3023e2d5a161d",
+    "partner-document-requirements.json": "3eada77d81f6bccedb86326c971598108857e775a61086c59319c40f0fa0f1e1",
+    "overseas-reviewed-fields.json": "cb40549f9661838378e4f9df9b8e85265bed99f075749c69b5a39eaaf77263cc",
+    "partners.jsonl": "8f57920848071478fe69aae6ddd2640f563095b97910dedadfa15541bd9d7546",
+    "application_workflows.jsonl": "30e995e7fe48fffb34836f567a13b8f2ca7de5bc3e59c3c6d2a7efd9649454f6",
+    "destination_profiles.jsonl": "fd556a8959891b2b1257d773d16bbb0b58a935139958c467def288431f0e1329"
+  },
+  "last_completed_regression": {
+    "log": "/tmp/ccu-eighth-four-school-final.txt",
+    "passed": 275,
+    "skipped": 5,
+    "failed": 1,
+    "known_main_failure": "NTPU destination_profile_count0 vs1"
+  },
+  "current_validation": {
+    "log": "/tmp/ccu-ninth-focused.txt",
+    "junit": "/tmp/ccu-ninth-focused.xml",
+    "status": "running; result not assumed"
+  },
+  "recovery": [
+    "Keep existing environment and branch; do not duplicate task",
+    "Read current git status and test logs/session output",
+    "Do not rerun mutation helpers ccu_batch8_integrate.py / ccu_integrate_profiles.py / ccu_update_ninth_policy.py",
+    "Rebuild using sequential build_ccu_research_audit.py, build_ccu_catalog.py, build_ccu_source_audit.py, build_ccu_overseas.py",
+    "Finish tests/parity/browser/integrity checks before explicit staging, commit and push"
+  ],
+  "complete": false
+}

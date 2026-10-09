@@ -1,0 +1,41 @@
+CONFTEST LOADED!
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_queued_form_save_keeps_original_home_when_switching_before_debounce[390] _
+
+page = <Page url='http://127.0.0.1:52931/?home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E5%8C%97%E5%A4%A7%E5%AD%B8&view=list#application-form=exchange-application-data'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:52931', data_dir=PosixPath('/workspace/ccu-artifacts-20261008/queued-before-temp/ccu-acceptance-real-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_queued_form_save_keeps_original_home_when_switching_before_debounce(page, acceptance_server, width):
+        server = acceptance_server
+        errors = record_errors(page)
+        login(page, server, width)
+        navigate(page, "application-center")
+        select_target(page, school(99))
+        page.locator(".application-template-open").first.click()
+        _fill_required_application_fields(page)
+        # Control browser time, rather than replacing application state or API
+        # bytes, so the 650ms save cannot fire before the school switch.
+        page.clock.install()
+        page.clock.pause_at(page.evaluate("Date.now() + 1000"))
+        field = page.locator("#application-document-fields input[type=text]").first
+        field_name = field.get_attribute("name")
+        template_id = page.evaluate("state.activeApplicationTemplateId")
+        value = "切校前排入中正的草稿"
+        field.fill(value)
+        click_home(page, "國立臺北大學")
+        page.clock.run_for(1000)
+        page.clock.resume()
+        wait_until(page, "state.dashboard?.school_name === '國立臺北大學' && !state.applicationLoading")
+        source = page.request.get(server.base_url + "/account/application-drafts", params={"home_school": HOME}).json()["items"]
+        draft = next((item for item in source if item["template_id"] == template_id), None)
+>       assert draft is not None, "Queued CCU save must survive a home change"
+E       AssertionError: Queued CCU save must survive a home change
+E       assert None is not None
+
+tests/e2e/test_ccu_delayed_switching.py:214: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_delayed_switching.py::test_queued_form_save_keeps_original_home_when_switching_before_debounce[390]
+1 failed in 36.09s

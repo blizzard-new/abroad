@@ -1,0 +1,174 @@
+CONFTEST LOADED!
+.....................................................ss..............F.F [ 17%]
+................................F................................F...... [ 34%]
+........................................................F............... [ 52%]
+..............................................sss................s.F.... [ 69%]
+......................................................................s. [ 87%]
+................................F...................                     [100%]
+=================================== FAILURES ===================================
+_______ test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate _______
+
+    def test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate():
+        report = json.loads((BUNDLE / "public-link-queue.json").read_text())
+        gaps = json.loads((BUNDLE / "remaining-gaps.json").read_text())
+        assert hashlib.sha256((BUNDLE / "remaining-gaps.json").read_bytes()).hexdigest() == report["input_sha256"]
+        original = Counter((s["ccu_page"], l["url"], l["discovered_in_source"])
+                           for s in gaps["schools"] for l in s["unrequested_discovered_links"])
+        grouped = Counter((o["ccu_page"], o["url"], o["discovered_in_source"])
+                          for c in report["candidates"] for o in c["occurrences"])
+        assert original == grouped
+        assert report["raw_href_count"] == sum(grouped.values())
+        assert report["raw_href_count"] == report["unique_url_count"] + report["collapsed_href_count"]
+        assert len({c["url"] for c in report["candidates"]}) == report["unique_url_count"]
+        assert len(report["schools"]) == 55 and all(not r["public_sources_exhausted"] for r in report["schools"])
+        for c in report["candidates"]:
+            if c["source_content_read"]:
+                review = c["content_review"]
+                assert review and review["review_extent"] in {
+                    "necessary_policy_sections", "role_and_relevant_sections",
+                }
+>               assert review["sha256"] and review["text_sha256"] and review["checked_at"]
+                       ^^^^^^^^^^^^^^^^
+E               KeyError: 'sha256'
+
+tests/test_ccu_eighteenth_pass.py:143: KeyError
+__ test_ryukoku_historical_grey_list_does_not_create_current_jlpt_requirement __
+
+    def test_ryukoku_historical_grey_list_does_not_create_current_jlpt_requirement():
+        p = at(32)
+        home = p.field_evidence["partner_documents"]
+        assert home.status == "reference_only"
+        assert home.academic_year is None and home.application_round is None
+        assert home.excerpt is None and home.reference_excerpt
+        assert p.application_info is None
+        assert p.partner_exchange_details["documents"].status == "verified_current"
+        assert "ifavailable" in p.partner_exchange_details["documents"].value
+>       assert "不是本輪必有" in p.partner_exchange_details["documents"].value
+E       AssertionError: assert '不是本輪必有' in '2027Spring六指定表Plan／LanguageEvaluation／Recommendation／Health／SelfAssessment／SPOT，加照片、護照、正式成績；JLPT ifavailable。全體交換生交日語自評及SPOT結果PDF，EnglishTrack不豁免；推薦另函仍須指定表、健康依醫師簽與胸檢。宿舍NASIC資訊表／誓約另階段，母校灰字舊10項不得造當期必繳。'
+E        +  where '2027Spring六指定表Plan／LanguageEvaluation／Recommendation／Health／SelfAssessment／SPOT，加照片、護照、正式成績；JLPT ifavailable。全體交換生交日語自評及SPOT結果PDF，EnglishTrack不豁免；推薦另函仍須指定表、健康依醫師簽與胸檢。宿舍NASIC資訊表／誓約另階段，母校灰字舊10項不得造當期必繳。' = PartnerExchangeDetailField(value='2027Spring六指定表Plan／LanguageEvaluation／Recommendation／Health／SelfAssessment／SPOT，加照片、... 8, 17, 21, 13, 244189, tzinfo=TzInfo(0)), result='已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。', timestamp_precision='datetime')]).value
+
+tests/test_ccu_eighth_pass.py:71: AssertionError
+_____ test_profile_review_covers_source_backed_geography_and_distinct_life _____
+
+    def test_profile_review_covers_source_backed_geography_and_distinct_life():
+        rows = reviewed_profiles()
+        assert len(rows) == 55
+>       assert len(reviewed_documents()) == 29
+E       AssertionError: assert 31 == 29
+E        +  where 31 = len({10: {'ccu_page': 10, 'school_name': 'Beijing Normal University 北京師範大學', 'status': 'verified_current', 'list_completen...nd Technology of China 電子科技大學', 'status': 'verified_current', 'list_completeness': 'partial_not_exhaustive', ...}, ...})
+E        +    where {10: {'ccu_page': 10, 'school_name': 'Beijing Normal University 北京師範大學', 'status': 'verified_current', 'list_completen...nd Technology of China 電子科技大學', 'status': 'verified_current', 'list_completeness': 'partial_not_exhaustive', ...}, ...} = reviewed_documents()
+
+tests/test_ccu_ninth_pass.py:31: AssertionError
+__ test_hufs_general_essay_has_no_page_minimum_and_program_condition_survives __
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-115/test_hufs_general_essay_has_no0')
+
+    def test_hufs_general_essay_has_no_page_minimum_and_program_condition_survives(
+        tmp_path,
+    ):
+        client = TestClient(create_app(tmp_path))
+        catalog = client.get(
+            "/application-center/catalog",
+            params={"school": HOME, "target_school": at(47).school_name},
+        ).json()
+        general = next(r for r in catalog["items"] if "brief essay" in r["name"])
+        intensive = next(r for r in catalog["items"] if "Intensive Korean" in r["name"])
+        assert "未載最少頁數" in general["name"] and not general["conditional"]
+        assert "至少1頁" in intensive["name"] and intensive["conditional"]
+        assert "Intensive Korean" in intensive["condition"]
+        assert (
+            next(r for r in catalog["items"] if "財力表" in r["name"])["stage"]
+            == "after_application"
+        )
+        health = next(r for r in catalog["items"] if "健康／TB" in r["name"])
+        assert health["conditional"] and health["stage"] == "after_dorm_assignment"
+        assert "宿舍成功申請者" in health["condition"]
+>       assert (
+            "brief essay（未載最少頁數）"
+            in at(47).partner_exchange_details["documents"].value
+        )
+E       AssertionError: assert 'brief essay（未載最少頁數）' in '2027線上PDF審閱後GoogleForm：一般briefessay未載頁數、成績、在學、語言／母校確認、護照、照片；IntensiveKorean essay至少1頁。宿舍另表、分配後健康／TB；財力於申請期後另發，非OECD另銀行證明／在學認證。封存未年頁的自述1頁、舊財力金額與銀行認證只作差異參考，不混當期。'
+E        +  where '2027線上PDF審閱後GoogleForm：一般briefessay未載頁數、成績、在學、語言／母校確認、護照、照片；IntensiveKorean essay至少1頁。宿舍另表、分配後健康／TB；財力於申請期後另發，非OECD另銀行證明／在學認證。封存未年頁的自述1頁、舊財力金額與銀行認證只作差異參考，不混當期。' = PartnerExchangeDetailField(value='2027線上PDF審閱後GoogleForm：一般briefessay未載頁數、成績、在學、語言／母校確認、護照、照片；IntensiveKorean essay至少1...8, 17, 21, 20, 885520, tzinfo=TzInfo(0)), result='已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。', timestamp_precision='datetime')]).value
+
+tests/test_ccu_parent_fixes.py:109: AssertionError
+_________ test_pending_documents_render_without_promoting_completeness _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-115/test_pending_documents_render_0')
+
+    def test_pending_documents_render_without_promoting_completeness(tmp_path):
+        docs = reviewed_documents()
+>       assert len(docs) == 29 and sum(len(r["requirements"]) for r in docs.values()) >= 216
+E       AssertionError: assert (31 == 29)
+E        +  where 31 = len({10: {'ccu_page': 10, 'school_name': 'Beijing Normal University 北京師範大學', 'status': 'verified_current', 'list_completen...nd Technology of China 電子科技大學', 'status': 'verified_current', 'list_completeness': 'partial_not_exhaustive', ...}, ...})
+
+tests/test_ccu_seventeenth_pass.py:61: AssertionError
+_ test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f0f39916750>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-115/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -> None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+    
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+    
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+>       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError
+_______ test_reviewed_same_content_aliases_have_actual_acquisition_proof _______
+
+    def test_reviewed_same_content_aliases_have_actual_acquisition_proof():
+        report = read("public-link-queue.json")
+        assert report["review_input_sha256"] == hashlib.sha256((BUNDLE / "public-link-reviews.json").read_bytes()).hexdigest()
+        reviews = read("nineteenth-source-review.json")
+        assert reviews["acquisition_count"] == len(reviews["source_reviews"]) == 99
+        assert reviews["new_source_count"] == 77
+        for candidate in report["candidates"]:
+            if candidate["disposition"] == "same_content_reviewed":
+                review = candidate["content_review"]
+                source = read("overseas_sources/" + review["source_id"] + ".json")
+>               assert review["sha256"] == source["sha256"]
+                       ^^^^^^^^^^^^^^^^
+E               KeyError: 'sha256'
+
+tests/test_ccu_nineteenth_pass.py:161: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_eighteenth_pass.py::test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate
+FAILED tests/test_ccu_eighth_pass.py::test_ryukoku_historical_grey_list_does_not_create_current_jlpt_requirement
+FAILED tests/test_ccu_ninth_pass.py::test_profile_review_covers_source_backed_geography_and_distinct_life
+FAILED tests/test_ccu_parent_fixes.py::test_hufs_general_essay_has_no_page_minimum_and_program_condition_survives
+FAILED tests/test_ccu_seventeenth_pass.py::test_pending_documents_render_without_promoting_completeness
+FAILED tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data
+FAILED tests/test_ccu_nineteenth_pass.py::test_reviewed_same_content_aliases_have_actual_acquisition_proof
+7 failed, 398 passed, 7 skipped in 298.11s (0:04:58)

@@ -5,6 +5,64 @@ import re
 import unicodedata
 
 
+def partner_scope_needs_confirmation(partner: object, field: str) -> bool:
+    evidence = getattr(partner, "field_evidence", {}).get(field)
+    if evidence is not None and evidence.status != "verified_current":
+        return True
+    scope = getattr(partner, field, None)
+    check = college_scope_needs_confirmation if field == "colleges" else degree_scope_needs_confirmation
+    return check(scope)
+
+
+def _coupled_scope_options(partner: object) -> list | None:
+    """Return only complete, current and consistently sourced pairs."""
+    options = getattr(partner, "program_options", [])
+    evidence = getattr(partner, "field_evidence", {})
+    if not options:
+        return None
+    if any(evidence.get(k) is None or evidence[k].status != "verified_current" for k in ["colleges", "degree_levels"]):
+        return None
+    urls = {evidence[k].source_url for k in ["colleges", "degree_levels"]}
+    if any(
+        option.source_url not in urls
+        or college_scope_needs_confirmation(option.colleges)
+        or degree_scope_needs_confirmation(option.degree_levels)
+        for option in options
+    ):
+        return None
+    return options
+
+
+def coupled_academic_scope_matches(partner: object, college: str | None, degree: str | None) -> bool | None:
+    """Apply sourced pairs; an unspecified graduate degree can remain unknown."""
+    options = _coupled_scope_options(partner)
+    if not college or not degree or options is None:
+        return None
+    matches = [degree_scope_matches(option.degree_levels, degree) for option in options
+               if college_scope_matches(option.colleges, college)]
+    return True if True in matches else None if None in matches else False
+
+
+def resolved_degree_level(degree: str | None, current_year: str | None = None) -> str | None:
+    """Refine the legacy graduate choice only when the year identifies its degree."""
+    if degree != "研究所":
+        return degree
+    year = _normal(current_year)
+    master = "碩士" in year or bool(re.search(r"\bmaster(?:'s)?\b", year))
+    doctoral = "博士" in year or bool(re.search(r"\b(?:ph\.?d\.?|doctoral)\b", year))
+    if master != doctoral:
+        return "碩士班" if master else "博士班"
+    return degree
+
+
+def partner_degree_scope_matches(partner: object, college: str | None, degree: str) -> bool | None:
+    # None can mean a valid pair whose graduate subtype is unknown. Do not then
+    # fall back to the union of all colleges, which would allow Law doctorates.
+    if college and _coupled_scope_options(partner) is not None:
+        return coupled_academic_scope_matches(partner, college, degree)
+    return degree_scope_matches(getattr(partner, "degree_levels", None), degree)
+
+
 def _normal(value: object) -> str:
     return " ".join(unicodedata.normalize("NFKC", str(value or "")).strip().casefold().split())
 
@@ -52,10 +110,16 @@ def college_scope_matches(scope: str | None, target: str) -> bool:
     return any(candidate and _normal(candidate) in normalized for candidate in candidates)
 
 
-def degree_scope_matches(scope: str | None, target: str) -> bool:
+def degree_scope_matches(scope: str | None, target: str) -> bool | None:
     if not scope:
         return True
     normalized = _normal(scope)
+    if target == "研究所":
+        if degree_scope_matches(scope, "碩士班") and degree_scope_matches(scope, "博士班"):
+            return True
+        if degree_scope_matches(scope, "碩士班") or degree_scope_matches(scope, "博士班"):
+            return None
+        return False
     aliases = {
         "大學部": ["大學部", "學士", "undergraduate", "bachelor"],
         "碩士班": ["碩士", "研究所", "master", "graduate"],

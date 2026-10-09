@@ -1,0 +1,1076 @@
+{
+  "checked_at": "2026-10-08",
+  "base_commit": "f741d540f546d6ddbbf3174c9a34b5ef103c8816",
+  "rebuild_identical": true,
+  "rebuild_sha256": {
+    "partners.jsonl": "40c66d26f441207ca7f7f024cc42cfa5918b00fa0972b2eef2b76e3528120a37",
+    "application_workflows.jsonl": "27ad218161efbda53b456d0319e6aff7b207fe2534c7f468f0c524df070297b9",
+    "destination_profiles.jsonl": "3eb88d8a217e1eccf877f9c21ba0b4a157376479894b4e2f21d6bf08254b6c3b",
+    "field-audit.json": "d8d76ff57d1b65291da5e7047f3ad77fe3460b6b72b18d3562139457c6ea76e4",
+    "completeness.json": "bcc39b617847581745b917d273303ac836dccce8fd11cc0f4b9672efdc7d4210",
+    "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+    "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+    "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+    "field-completeness-matrix.json": "00b1ebd79ef2a2966079f401281c5f93d1412b54986827356f3f448b67ccde5c",
+    "confirmation-questions.json": "3e3759fdab98260649319800ccada12090458144eac1365e3252cc4b390864f2",
+    "overseas-completeness.json": "5d9e4492209c3170c584fbb3ec9c31d2e3933e85bea7b6bea12594fbca6489ec",
+    "overseas-conflicts.json": "d65ad30d188ba8c5420c4e8dac226bf45c0b13800900e1cba49a6395127f748d"
+  },
+  "ccu_tests": {
+    "passed": 16,
+    "failed": 0
+  },
+  "regression": {
+    "passed": 107,
+    "skipped": 5,
+    "failed": 2,
+    "duration_seconds": 57.39,
+    "existing_main_failures": [
+      "test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "test_college_selects_ignore_partner_notes_and_follow_home_university"
+    ]
+  },
+  "preservation": {
+    "existing_cgu_ntpu_files_compared": 15,
+    "changed_files": 0,
+    "cgu_destination_profiles": 77,
+    "ntpu_partners": 206,
+    "ntpu_current": 169,
+    "ntpu_agreement_reference": 37
+  },
+  "python_compile": true,
+  "javascript_syntax": true,
+  "git_diff_check": true,
+  "wheel_build": {
+    "success": true,
+    "ccu_required_resources_verified": 8,
+    "source_snapshots_verified": 131,
+    "partner_docx_forms_verified": 1,
+    "life_guide_bundle_verified": true,
+    "ccu_render_module_verified": true
+  },
+  "remote_main_at_delivery": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "final_focused_tests": {
+    "passed": 24,
+    "failed": 0,
+    "duration_seconds": 3.88,
+    "files": [
+      "tests/test_ccu_support.py",
+      "tests/test_selection_conditions_sync.py"
+    ]
+  },
+  "semantic_correction_tests": {
+    "passed": 91,
+    "failed": 0,
+    "duration_seconds": 12.24
+  },
+  "openapi_correction": {
+    "drift_check": true,
+    "before_contract_tests": {
+      "passed": 7,
+      "failed": 13
+    },
+    "after_contract_tests": {
+      "passed": 8,
+      "failed": 12
+    },
+    "existing_failures_unchanged": true,
+    "route_changes": 0,
+    "new_schemas": [
+      "ExchangeFieldEvidence",
+      "PartnerLanguageCondition"
+    ],
+    "updated_schema_count": 6
+  },
+  "document_coverage": {
+    "listed_current_requirements": 37,
+    "needs_confirmation": 8,
+    "missing": 6,
+    "reference_only": 4,
+    "denominator": 55,
+    "complete_overseas_lists_claimed": false
+  },
+  "delivery_stage": "final_handoff_with_explicit_source_gaps",
+  "overseas_checkpoint": {
+    "reviewed_schools": 55,
+    "source_records": 127,
+    "distinct_source_urls": 124,
+    "field_status_counts": {
+      "verified_current": 213,
+      "missing": 515,
+      "needs_confirmation": 151,
+      "reference_only": 31,
+      "conflict": 24,
+      "explicit_not_announced": 1
+    },
+    "current_overseas_schools": 27,
+    "all_fields_current_schools": 0,
+    "receiving_document_requirements_current": 18,
+    "life_guides": 55,
+    "workflow_steps": 7,
+    "tests": {
+      "passed": 115,
+      "failed": 0,
+      "duration_seconds": 16.23
+    },
+    "existing_data_tests": {
+      "passed": 62,
+      "skipped": 4,
+      "failed": 1,
+      "existing_failure": "test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    },
+    "contract_tests": {
+      "passed": 8,
+      "failed": 12,
+      "same_failure_set_as_previous_stage": true
+    },
+    "ui_detail_checks": {
+      "desktop_and_mobile_receiving_fields": 17,
+      "page_errors": 0,
+      "horizontal_overflow": false
+    },
+    "remaining": "Lifestyle-tab browser verification and final handoff document update in progress; per-school unverified fields and conflicts remain in confirmation-questions.json."
+  },
+  "overseas_final": {
+    "source_records": 131,
+    "distinct_source_urls": 128,
+    "acquisition_statuses": {
+      "html": 68,
+      "downloaded_extracted_pdf": 41,
+      "fetch_failed": 14,
+      "pdf": 6,
+      "docx": 2
+    },
+    "reviewed_schools": 55,
+    "field_status_counts": {
+      "verified_current": 213,
+      "missing": 515,
+      "needs_confirmation": 151,
+      "reference_only": 31,
+      "conflict": 24,
+      "explicit_not_announced": 1
+    },
+    "current_overseas_schools": 27,
+    "all_fields_current_schools": 0,
+    "receiving_document_requirements_current": 18,
+    "life_guides": 55,
+    "workflow_steps": 7,
+    "full_overseas_document_lists_claimed": false,
+    "tests": {
+      "passed": 116,
+      "failed": 0,
+      "duration_seconds": 16.79,
+      "files": [
+        "tests/test_ccu_overseas.py",
+        "tests/test_ccu_semantics.py",
+        "tests/test_ccu_support.py",
+        "tests/test_advisor.py",
+        "tests/test_application_rules.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_selection_conditions_sync.py"
+      ]
+    },
+    "post_wording_field_tests": {
+      "passed": 22,
+      "failed": 0
+    },
+    "browser_checks": [
+      {
+        "ccu_page": 83,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "receiving_fields": 17,
+        "page_errors": [],
+        "page_horizontal_overflow": false,
+        "screenshot": "ccu-overseas-desktop.png",
+        "workflow_steps": 7,
+        "life_fields": 8
+      },
+      {
+        "ccu_page": 43,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "receiving_fields": 17,
+        "page_errors": [],
+        "page_horizontal_overflow": false,
+        "screenshot": "ccu-overseas-mobile.png",
+        "workflow_steps": 7,
+        "life_fields": 8
+      },
+      {
+        "ccu_page": 16,
+        "viewport": {
+          "width": 1024,
+          "height": 900
+        },
+        "receiving_fields": 17,
+        "page_errors": [],
+        "page_horizontal_overflow": false,
+        "screenshot": "ccu-overseas-reference.png",
+        "workflow_steps": 7,
+        "life_fields": 8
+      }
+    ],
+    "shared_changes_since_semantic_checkpoint": {
+      "schema_added": "PartnerExchangeDetailField",
+      "schemas_updated": [
+        "PartnerUniversity"
+      ],
+      "route_changes": 0,
+      "required_input_changes": 0,
+      "destination_profile_baseline_added": "CCU",
+      "frontend": "CCU receiving facts and life fields remain visible with separate statuses"
+    },
+    "source_blockers": [
+      "14HTTP/connection failures",
+      "2CNU forms require authorized access (HTTP401)",
+      "Uninter HTML loading shell; browser ERR_CERT_AUTHORITY_INVALID; no certificate settings changed",
+      "Unversioned/old documents, blank quotas, unresolved scope and date/cost conflicts"
+    ],
+    "remaining_questions": "confirmation-questions.json",
+    "checkpoint_pushed_commit": "abce2c7ec1d6184031ba36cc45910f3b7f2d6e69"
+  },
+  "second_pass": {
+    "checked_at": "2026-10-08",
+    "integrated_main_commit": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "previous_pushed_checkpoint": "bd740bc29ce76e4704a8bca4f6809f3c3769f71c",
+    "complete_research_claimed": false,
+    "overseas_completeness": {
+      "home_university": "國立中正大學",
+      "application_round": "2027春季",
+      "checked_at": "2026-10-08",
+      "catalogue_count": 104,
+      "reviewed_current_or_unknown_quota_schools": 55,
+      "overseas_field_count_per_school": 17,
+      "overseas_field_status_counts": {
+        "verified_current": 215,
+        "missing": 467,
+        "needs_confirmation": 182,
+        "reference_only": 41,
+        "conflict": 29,
+        "explicit_not_announced": 1
+      },
+      "schools_with_at_least_one_current_overseas_fact": 28,
+      "schools_with_all_overseas_fields_current": 0,
+      "field_counts": {
+        "program_scope": {
+          "verified_current": 17,
+          "missing": 24,
+          "reference_only": 3,
+          "needs_confirmation": 11
+        },
+        "eligibility": {
+          "verified_current": 10,
+          "reference_only": 3,
+          "missing": 32,
+          "needs_confirmation": 10
+        },
+        "language": {
+          "verified_current": 13,
+          "missing": 20,
+          "needs_confirmation": 17,
+          "reference_only": 2,
+          "conflict": 3
+        },
+        "nomination_deadline": {
+          "missing": 22,
+          "reference_only": 2,
+          "conflict": 2,
+          "needs_confirmation": 14,
+          "verified_current": 15
+        },
+        "application_deadline": {
+          "verified_current": 15,
+          "missing": 11,
+          "reference_only": 4,
+          "conflict": 8,
+          "needs_confirmation": 17
+        },
+        "documents": {
+          "verified_current": 18,
+          "reference_only": 6,
+          "needs_confirmation": 16,
+          "missing": 15
+        },
+        "application_forms": {
+          "needs_confirmation": 17,
+          "reference_only": 1,
+          "missing": 34,
+          "verified_current": 3
+        },
+        "academic_calendar": {
+          "verified_current": 20,
+          "missing": 26,
+          "needs_confirmation": 4,
+          "conflict": 4,
+          "reference_only": 1
+        },
+        "course_restrictions": {
+          "verified_current": 17,
+          "missing": 27,
+          "needs_confirmation": 9,
+          "reference_only": 2
+        },
+        "housing": {
+          "verified_current": 20,
+          "reference_only": 8,
+          "needs_confirmation": 14,
+          "missing": 11,
+          "conflict": 2
+        },
+        "housing_deadline": {
+          "verified_current": 2,
+          "missing": 44,
+          "needs_confirmation": 8,
+          "conflict": 1
+        },
+        "costs": {
+          "verified_current": 16,
+          "missing": 27,
+          "reference_only": 1,
+          "needs_confirmation": 6,
+          "conflict": 5
+        },
+        "insurance": {
+          "verified_current": 16,
+          "missing": 21,
+          "reference_only": 4,
+          "needs_confirmation": 14
+        },
+        "visa": {
+          "missing": 35,
+          "needs_confirmation": 10,
+          "reference_only": 2,
+          "verified_current": 6,
+          "conflict": 2
+        },
+        "arrival": {
+          "verified_current": 18,
+          "missing": 29,
+          "needs_confirmation": 5,
+          "explicit_not_announced": 1,
+          "conflict": 2
+        },
+        "host_tuition": {
+          "missing": 45,
+          "needs_confirmation": 5,
+          "reference_only": 1,
+          "verified_current": 4
+        },
+        "exchange_duration": {
+          "missing": 44,
+          "verified_current": 5,
+          "needs_confirmation": 5,
+          "reference_only": 1
+        }
+      },
+      "source_count": 172,
+      "source_acquisition_statuses": {
+        "html": 80,
+        "fetch_failed": 34,
+        "downloaded_extracted_pdf": 41,
+        "pdf": 14,
+        "doc": 1,
+        "docx": 2
+      },
+      "research_gap_audit": "research-gap-audit.json",
+      "acquired_content_review_queue": "acquired-content-review.json",
+      "source_failure_followup": "source-failure-followup.json",
+      "definition": "只計內容、年度及計畫已核實之欄位；下載成功、一般現行未標年網頁、灰字、舊年度及只載提名前提不算當期完整。",
+      "remaining_work": "缺值及已取得未映射段落繼續查官方替代來源；逐欄進度見research-gap-audit.json。矛盾／個別通知另見confirmation-questions.json，不把整體缺值當作承辦阻塞。未聯絡學校或登入校方帳號。新版未核實不等同官方尚未公告。"
+    },
+    "research_category_counts": {
+      "verified_supported": 215,
+      "official_not_announced": 1,
+      "login_or_school_confirmation": 38,
+      "source_technical_failure": 2,
+      "alternative_official_sources_not_fully_checked": 679
+    },
+    "rebuild": {
+      "identical": true,
+      "files_compared": 16,
+      "sha256": {
+        "partners.jsonl": "832c051a516cc70a01980ee78d5ac8a7e5241fdde0500972accf073094c622b0",
+        "application_workflows.jsonl": "b0f563deed44e1da6d303949f204c82107af4d15ea8304bd195b1a89da6e342e",
+        "destination_profiles.jsonl": "4a6edb1ceceee3a309d9ff2f444450d24fa4b76d8e3cb137c391a0d2e08fc664",
+        "field-audit.json": "81b9d404c24a82684d88424d9a63324fa4c40899166979bdaa66baeb78920259",
+        "completeness.json": "c28422ecd0faf761260907da59176000f7afa9b1b013072e059499c2b01cdba9",
+        "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+        "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+        "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+        "field-completeness-matrix.json": "1668f730635c7323a0760d06280462dcd96ddc6f97863b4cf5c248b38bf73fe1",
+        "confirmation-questions.json": "54c277cb7b5fc113b870b233acb22968237622fea17023fa8559bef4410330e5",
+        "overseas-completeness.json": "83a9eb07aee6c28cfd0f0e02f322bf18fb064c3b6bf116d3102e24ecc381f2a2",
+        "overseas-conflicts.json": "e086d0b5c6118b0fcafb7de17ef72f4270d97218fb5ccc8ca4ab49bba364faf1",
+        "research-gap-audit.json": "f2fb4c90954dbb53247c314a5f6a849bd76938b10a79c2a64cf8b9f15144da53",
+        "acquired-content-review.json": "58f0604d57f6db9c7e8a6deeb612a5a5026d334acdb1db54715f5a9c1c5f876c",
+        "source-failure-followup.json": "ef42a306ded21adb03e5699f875d4ae95948b89b506f34ee54600034abc01938",
+        "overseas-reviewed-fields.json": "83e389d3e264aebeeb1ce8f45d1d834f39faf7e8a4da48a7f089679741c70f3c"
+      }
+    },
+    "preservation_manifest": "docs/ccu-validation-2026-10-08/preservation-latest-main.json",
+    "existing_main_files_compared": 49,
+    "existing_main_files_changed": 0,
+    "tests": {
+      "ccu-second-pass-final-regression": {
+        "summary": "1 failed, 208 passed, 5 skipped in 34.87s",
+        "failed_tests": [
+          "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+        ]
+      },
+      "ccu-four-school-regression": {
+        "summary": "8 failed, 123 passed, 5 skipped in 7.15s",
+        "failed_tests": [
+          "tests/test_frontend_contract.py::test_web_routes_states_and_touch_targets_are_consistent",
+          "tests/test_frontend_contract.py::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+          "tests/test_frontend_contract.py::test_web_notification_center_and_explicit_email_opt_in_are_present",
+          "tests/test_frontend_contract.py::test_application_center_separates_official_requirements_from_preparation_tools",
+          "tests/test_frontend_contract.py::test_successful_login_closes_before_noncritical_account_hydration",
+          "tests/test_frontend_contract.py::test_personal_application_plan_uses_structured_api_and_progressive_login",
+          "tests/test_frontend_contract.py::test_global_home_board_routing_and_following_are_present",
+          "tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans"
+        ]
+      },
+      "ccu-latest-main-baseline-tests": {
+        "summary": "9 failed, 65 passed, 4 skipped in 5.09s",
+        "failed_tests": [
+          "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+          "tests/test_frontend_contract.py::test_web_routes_states_and_touch_targets_are_consistent",
+          "tests/test_frontend_contract.py::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+          "tests/test_frontend_contract.py::test_web_notification_center_and_explicit_email_opt_in_are_present",
+          "tests/test_frontend_contract.py::test_application_center_separates_official_requirements_from_preparation_tools",
+          "tests/test_frontend_contract.py::test_successful_login_closes_before_noncritical_account_hydration",
+          "tests/test_frontend_contract.py::test_personal_application_plan_uses_structured_api_and_progressive_login",
+          "tests/test_frontend_contract.py::test_global_home_board_routing_and_following_are_present",
+          "tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans"
+        ]
+      },
+      "ccu-second-pass-api-contract": {
+        "summary": "12 failed, 8 passed in 19.30s",
+        "failed_tests": [
+          "tests/test_next_phase_contract.py::test_private_community_writes_expose_retry_mutation_header",
+          "tests/test_next_phase_contract.py::test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths",
+          "tests/test_next_phase_contract.py::test_account_deletion_exposes_dedicated_retry_mutation_header",
+          "tests/test_next_phase_contract.py::test_api_contract_page_does_not_depend_on_csp_blocked_assets",
+          "tests/test_next_phase_contract.py::test_external_calendar_contract_documents_subscription_boundary",
+          "tests/test_next_phase_contract.py::test_application_document_contract_keeps_official_forms_public_and_gates_generation",
+          "tests/test_next_phase_contract.py::test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused",
+          "tests/test_next_phase_contract.py::test_ai_compatibility_contract_is_explicitly_paused",
+          "tests/test_next_phase_contract.py::test_content_review_contract_exposes_nonpublishing_source_candidates",
+          "tests/test_next_phase_contract.py::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+          "tests/test_next_phase_contract.py::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+          "tests/test_next_phase_contract.py::test_application_workflow_publication_contract_exposes_safe_rollback"
+        ]
+      },
+      "ccu-latest-main-api-contract": {
+        "summary": "12 failed, 8 passed in 18.70s",
+        "failed_tests": [
+          "tests/test_next_phase_contract.py::test_private_community_writes_expose_retry_mutation_header",
+          "tests/test_next_phase_contract.py::test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths",
+          "tests/test_next_phase_contract.py::test_account_deletion_exposes_dedicated_retry_mutation_header",
+          "tests/test_next_phase_contract.py::test_api_contract_page_does_not_depend_on_csp_blocked_assets",
+          "tests/test_next_phase_contract.py::test_external_calendar_contract_documents_subscription_boundary",
+          "tests/test_next_phase_contract.py::test_application_document_contract_keeps_official_forms_public_and_gates_generation",
+          "tests/test_next_phase_contract.py::test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused",
+          "tests/test_next_phase_contract.py::test_ai_compatibility_contract_is_explicitly_paused",
+          "tests/test_next_phase_contract.py::test_content_review_contract_exposes_nonpublishing_source_candidates",
+          "tests/test_next_phase_contract.py::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+          "tests/test_next_phase_contract.py::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+          "tests/test_next_phase_contract.py::test_application_workflow_publication_contract_exposes_safe_rollback"
+        ]
+      },
+      "ccu-second-pass-browser": {
+        "summary": "1 failed, 9 passed in 97.17s (0:01:37)",
+        "failed_tests": [
+          "tests/e2e/test_ccu_school.py::test_all_four_school_grade_fields_remain_isolated"
+        ]
+      },
+      "ccu-four-school-browser": {
+        "summary": "1 passed in 22.23s",
+        "failed_tests": []
+      },
+      "ccu-final-current-labels": {
+        "summary": "87 passed in 22.18s",
+        "failed_tests": []
+      }
+    },
+    "browser_distinct_cases_passed": 10,
+    "api_routes": 110,
+    "changed_required_schema_fields": [],
+    "wheel_sha256": "1ef511417d80dbcd8107d9a2d5708c8637e0ce65a3b983babb3ea68bbb9cdb8d",
+    "wheel_representative_resources_verified": [
+      "official_data/ccu/partner_forms/p114-bilateral-application-common-template.doc",
+      "official_data/ccu/partner_forms/p43-factsheet-with-forms-2026-2027.pdf",
+      "official_data/ccu/partner_forms/p67-student-academic-form.docx",
+      "official_data/ccu/research-gap-audit.json",
+      "official_data/ccu/overseas_sources/p114-r2-form.json",
+      "static/ccu-partner-details.js"
+    ],
+    "test_output_format": "Text captures retain actual results and failure names; trailing whitespace normalized."
+  },
+  "third_pass": {
+    "checked_at": "2026-10-08T05:49:33.563689+00:00",
+    "previous_pushed_checkpoint": "51a254cc96a76b5785b8e54b2f4e8fd6f30c6b70",
+    "integrated_main_commit": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "complete_research_claimed": false,
+    "field_changes": 45,
+    "filled_missing_fields": 34,
+    "new_sources": 30,
+    "overseas_completeness": {
+      "home_university": "國立中正大學",
+      "application_round": "2027春季",
+      "checked_at": "2026-10-08",
+      "catalogue_count": 104,
+      "reviewed_current_or_unknown_quota_schools": 55,
+      "overseas_field_count_per_school": 17,
+      "overseas_field_status_counts": {
+        "verified_current": 237,
+        "missing": 433,
+        "needs_confirmation": 192,
+        "reference_only": 41,
+        "conflict": 31,
+        "explicit_not_announced": 1
+      },
+      "schools_with_at_least_one_current_overseas_fact": 29,
+      "schools_with_all_overseas_fields_current": 0,
+      "field_counts": {
+        "program_scope": {
+          "verified_current": 20,
+          "missing": 20,
+          "reference_only": 3,
+          "needs_confirmation": 12
+        },
+        "eligibility": {
+          "verified_current": 12,
+          "reference_only": 3,
+          "missing": 29,
+          "needs_confirmation": 11
+        },
+        "language": {
+          "verified_current": 14,
+          "missing": 19,
+          "needs_confirmation": 17,
+          "reference_only": 2,
+          "conflict": 3
+        },
+        "nomination_deadline": {
+          "missing": 22,
+          "reference_only": 2,
+          "conflict": 3,
+          "needs_confirmation": 13,
+          "verified_current": 15
+        },
+        "application_deadline": {
+          "verified_current": 16,
+          "missing": 11,
+          "reference_only": 4,
+          "conflict": 8,
+          "needs_confirmation": 16
+        },
+        "documents": {
+          "verified_current": 20,
+          "reference_only": 6,
+          "needs_confirmation": 20,
+          "missing": 9
+        },
+        "application_forms": {
+          "needs_confirmation": 16,
+          "reference_only": 1,
+          "missing": 33,
+          "verified_current": 5
+        },
+        "academic_calendar": {
+          "verified_current": 21,
+          "missing": 23,
+          "needs_confirmation": 5,
+          "conflict": 5,
+          "reference_only": 1
+        },
+        "course_restrictions": {
+          "verified_current": 18,
+          "missing": 24,
+          "needs_confirmation": 11,
+          "reference_only": 2
+        },
+        "housing": {
+          "verified_current": 21,
+          "reference_only": 8,
+          "needs_confirmation": 15,
+          "missing": 9,
+          "conflict": 2
+        },
+        "housing_deadline": {
+          "verified_current": 3,
+          "missing": 43,
+          "needs_confirmation": 8,
+          "conflict": 1
+        },
+        "costs": {
+          "verified_current": 16,
+          "missing": 27,
+          "reference_only": 1,
+          "needs_confirmation": 6,
+          "conflict": 5
+        },
+        "insurance": {
+          "verified_current": 16,
+          "missing": 20,
+          "reference_only": 4,
+          "needs_confirmation": 15
+        },
+        "visa": {
+          "missing": 34,
+          "needs_confirmation": 10,
+          "reference_only": 2,
+          "verified_current": 7,
+          "conflict": 2
+        },
+        "arrival": {
+          "verified_current": 20,
+          "missing": 27,
+          "needs_confirmation": 5,
+          "explicit_not_announced": 1,
+          "conflict": 2
+        },
+        "host_tuition": {
+          "missing": 45,
+          "needs_confirmation": 5,
+          "reference_only": 1,
+          "verified_current": 4
+        },
+        "exchange_duration": {
+          "missing": 38,
+          "verified_current": 9,
+          "needs_confirmation": 7,
+          "reference_only": 1
+        }
+      },
+      "source_count": 202,
+      "source_acquisition_statuses": {
+        "html": 98,
+        "fetch_failed": 39,
+        "downloaded_extracted_pdf": 41,
+        "docx": 4,
+        "pdf": 17,
+        "web_extracted_pdf": 1,
+        "doc": 1,
+        "web_extracted_html": 1
+      },
+      "research_gap_audit": "research-gap-audit.json",
+      "acquired_content_review_queue": "acquired-content-review.json",
+      "source_failure_followup": "source-failure-followup.json",
+      "definition": "只計內容、年度及計畫已核實之欄位；下載成功、一般現行未標年網頁、灰字、舊年度及只載提名前提不算當期完整。",
+      "remaining_work": "缺值及已取得未映射段落繼續查官方替代來源；逐欄進度見research-gap-audit.json。矛盾／個別通知另見confirmation-questions.json，不把整體缺值當作承辦阻塞。未聯絡學校或登入校方帳號。新版未核實不等同官方尚未公告。"
+    },
+    "research_category_counts": {
+      "verified_supported": 237,
+      "official_not_announced": 1,
+      "unresolved_source_conflict": 31,
+      "login_or_school_confirmation": 10,
+      "source_technical_failure": 0,
+      "alternative_official_sources_not_fully_checked": 656
+    },
+    "tests": {
+      "ccu-third-pass-tests": "2 failed, 93 passed in 24.37s",
+      "ccu-third-pass-corrections": "8 passed in 1.17s",
+      "ccu-third-pass-final-tests": "96 passed in 26.97s",
+      "ccu-third-pass-final-new-tests": "9 passed in 1.17s",
+      "ccu-third-pass-four-school": "1 failed, 130 passed, 4 skipped in 17.83s",
+      "ccu-third-pass-browser": "9 passed in 61.81s (0:01:01)",
+      "ccu-third-pass-final-ludwigshafen-browser": "2 passed, 7 deselected in 13.56s"
+    },
+    "browser_distinct_cases_passed": 9,
+    "final_ludwigshafen_browser_cases_passed": 2,
+    "known_baseline_failure": "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+    "checks": {
+      "openapi_current": true,
+      "python_compile": true,
+      "javascript_syntax": true,
+      "ruff_format": true,
+      "diff_check": true
+    },
+    "wheel": {
+      "wheel": "/tmp/ccu-third-pass-final-dist/taiwan_exchange_info-0.1.0-py3-none-any.whl",
+      "sha256": "6e8c4ed0127d1b0ff2e94ee7a1dd39cbabc925358d4f8b2d79f256f54fdc5e3e",
+      "resources": [
+        "exchange_info/official_data/ccu/partner_forms/p98-r3-accommodation-form.pdf",
+        "exchange_info/official_data/ccu/partner_forms/p98-r3-learning-agreement.docx",
+        "exchange_info/official_data/ccu/partner_forms/p107-r3-learning-agreement.docx",
+        "exchange_info/official_data/ccu/overseas_sources/p102-r3-learning-agreement-web.json",
+        "exchange_info/official_data/ccu/third-pass-changes.json",
+        "exchange_info/static/ccu-partner-details.js"
+      ]
+    },
+    "rebuild": {
+      "identical": true,
+      "files_compared": 16,
+      "sha256": {
+        "partners.jsonl": "0414e77135239a6a9dbae96157f67d0387b6bf31a4e2c711cd2a5224af944040",
+        "application_workflows.jsonl": "6046d70b317f6231fe1bb87076f6d11c9d1f7c83492196832d092f62320e1bfe",
+        "destination_profiles.jsonl": "a9c9577ee5b4d2fe8be2bf3c26dc4823bb3b38b495e57898687397ef48ceec9c",
+        "field-audit.json": "4c732605dfa70e21dc6793ba0607dbd4ffef93e0ec1491cae4108e8526c7e32d",
+        "completeness.json": "c28422ecd0faf761260907da59176000f7afa9b1b013072e059499c2b01cdba9",
+        "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+        "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+        "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+        "field-completeness-matrix.json": "9eb85cbca443b3417ccd8c2cc5325cd8e3f8afc4a97231c538c9a7e9a7d5c4e8",
+        "confirmation-questions.json": "9fcef00ff9d976de4d5326950222be4f70453126c1d882b7cd59c05e47e521bf",
+        "overseas-completeness.json": "df33d41438a3eaf5d3e830fec710dad70b15212a352e131d3ab139a5d15ad00b",
+        "overseas-conflicts.json": "62b0840710b2513521a7d41d09da6856435e1e7aeca43a1520d58160bd3224bd",
+        "research-gap-audit.json": "7219c178f881815d8c4c8d526fc86083573acfb2bd7eba9c2c0f511aa122a0d6",
+        "acquired-content-review.json": "71e2b7448e1cee8d7c45348efba6e4e747aaeededa6070eeec2af74f685113bd",
+        "source-failure-followup.json": "ef42a306ded21adb03e5699f875d4ae95948b89b506f34ee54600034abc01938",
+        "overseas-reviewed-fields.json": "c92edbdf110291d65ae078409ae693395b1b9b2be451ee0b9bfcc778676bfd9a"
+      }
+    },
+    "existing_main_files_compared": 49,
+    "existing_main_files_changed": 0,
+    "api_paths": 110,
+    "api_routes_changed": false,
+    "api_required_fields_changed": false
+  },
+  "fourth_pass": {
+    "checked_at": "2026-10-08T06:21:24.946769+00:00",
+    "ccu_tests": {
+      "passed": 103,
+      "failed": 0,
+      "seconds": 29.02,
+      "log": "docs/ccu-validation-2026-10-08/fourth-pass-tests.txt"
+    },
+    "four_school_tests": {
+      "passed": 194,
+      "skipped": 5,
+      "failed": 1,
+      "seconds": 40.7,
+      "known_failure": "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "log": "docs/ccu-validation-2026-10-08/fourth-pass-four-school.txt"
+    },
+    "browser_tests": {
+      "passed": 9,
+      "failed": 0,
+      "seconds": 60.76,
+      "log": "docs/ccu-validation-2026-10-08/fourth-pass-browser.txt"
+    },
+    "integrity": {
+      "rebuild": {
+        "identical": true,
+        "files_compared": 16,
+        "sha256": {
+          "partners.jsonl": "55a954a4c90723dcd99704f2d2c774e899b3afece1e2ed5ea5519d665302b49b",
+          "application_workflows.jsonl": "90c2f4a6597731065448662eca625e7b465374e4116560abba3450ee5262da4e",
+          "destination_profiles.jsonl": "33836bb4e42a16376421863433be6a61cac02120e7546c7601ec7f269c44de83",
+          "field-audit.json": "4c732605dfa70e21dc6793ba0607dbd4ffef93e0ec1491cae4108e8526c7e32d",
+          "completeness.json": "c28422ecd0faf761260907da59176000f7afa9b1b013072e059499c2b01cdba9",
+          "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+          "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+          "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+          "field-completeness-matrix.json": "c527803158cac268b30da91d15f93844c3641bca29a502857f6fcc69d07630c6",
+          "confirmation-questions.json": "872279d5c058c4b949a5facc4515ed8a8c50221bc1aa51742e1cacc290ab3b89",
+          "overseas-completeness.json": "f9609138f4175ef250c3d3b40356e46e6c749d050ec2837fbd4ed8138739e584",
+          "overseas-conflicts.json": "fe4a3c851e99e789877c75beaabccc660b14e81a0895874d7727ffc0e497e793",
+          "research-gap-audit.json": "9229e7645217e839047a30b8a7a10c0e08f8b0809bc88c3fcbed8fe72cbb84e9",
+          "acquired-content-review.json": "9b5116ce783b01215e15381480cc8c0d5395eeeb9e9b78a9930b55b39d915901",
+          "source-failure-followup.json": "ef42a306ded21adb03e5699f875d4ae95948b89b506f34ee54600034abc01938",
+          "overseas-reviewed-fields.json": "fb6d8fdb98b1d8e1014253c1d8cc674e24912c36cc478307a84ee50a5965b607"
+        }
+      },
+      "existing_main_files_compared": 49,
+      "existing_main_files_changed": 0,
+      "api_paths": 110,
+      "api_routes_changed": false,
+      "api_required_fields_changed": false
+    },
+    "source_count": 241,
+    "new_source_count": 39,
+    "field_changes": 22,
+    "previously_missing_filled": 14,
+    "overseas_field_status_counts": {
+      "verified_current": 245,
+      "needs_confirmation": 197,
+      "reference_only": 41,
+      "conflict": 32,
+      "missing": 419,
+      "explicit_not_announced": 1
+    },
+    "complete_research_claimed": false,
+    "final_ccu_tests": {
+      "passed": 103,
+      "failed": 0,
+      "seconds": 28.14,
+      "log": "docs/ccu-validation-2026-10-08/fourth-pass-final-tests.txt"
+    },
+    "static_checks": {
+      "ruff": "pass after 18 initial style/import findings corrected",
+      "log": "docs/ccu-validation-2026-10-08/fourth-pass-final-static.txt"
+    }
+  },
+  "fifth_pass": {
+    "base_commit": "05a72ffdc2d68dec018d2970db16e026968933a1",
+    "latest_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "ccu_tests": {
+      "passed": 112,
+      "failed": 0,
+      "seconds": 29.84,
+      "log": "docs/ccu-validation-2026-10-08/fifth-pass-ccu-tests.txt"
+    },
+    "four_school_tests": {
+      "passed": 211,
+      "skipped": 5,
+      "failed": 1,
+      "seconds": 44.85,
+      "known_failure": "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "log": "docs/ccu-validation-2026-10-08/fifth-pass-four-school.txt"
+    },
+    "browser_tests": {
+      "passed": 16,
+      "failed": 0,
+      "seconds": 111.15,
+      "log": "docs/ccu-validation-2026-10-08/fifth-pass-browser.txt"
+    },
+    "integrity": {
+      "rebuild": {
+        "identical": true,
+        "files_compared": 16,
+        "sha256": {
+          "partners.jsonl": "3b83a63f0c9794b08b813aa3c41d5b834bc7db545af7ac2a060398cea43fb1ea",
+          "application_workflows.jsonl": "6d39d8cfcb03518ee81ed4eb115c136dfad62d1aa7099ef68350b2dcc4c3dfd7",
+          "destination_profiles.jsonl": "7b9d9159927b77701a73b57c8042ea3da83b762922b90da1ce167f9de4a52976",
+          "field-audit.json": "4c732605dfa70e21dc6793ba0607dbd4ffef93e0ec1491cae4108e8526c7e32d",
+          "completeness.json": "c28422ecd0faf761260907da59176000f7afa9b1b013072e059499c2b01cdba9",
+          "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+          "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+          "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+          "field-completeness-matrix.json": "cba0cba6d61e93c0543ffe2cf48093baf7286056728ddefb9a55650dbcf87a0e",
+          "confirmation-questions.json": "640314a76bbce5e3848bed478c3c75edc61aa315b02caffc9e206451a9b12ea8",
+          "overseas-completeness.json": "704703f5e37fc1347fb1157fc788e53c3d235203e8c9305e4040d3b996e6c7a4",
+          "overseas-conflicts.json": "ce187eec256f1e5cc35883de0b89e58f7d106ec5ffa9201ffaccad481734ac2f",
+          "research-gap-audit.json": "ea55def76059b4e536d37d1af69c438a6bd95b9987398d1336571ab38c8854ca",
+          "acquired-content-review.json": "0c4385023ffacb1edbf58747eecb42e2f290c2acad00693190b56043c6b73fde",
+          "source-failure-followup.json": "ef42a306ded21adb03e5699f875d4ae95948b89b506f34ee54600034abc01938",
+          "overseas-reviewed-fields.json": "e8d89b48ddf8f593dde4c0359811fd29b61bdbf42dc29b798e8ef26ed5d85f78"
+        }
+      },
+      "existing_main_files_compared": 49,
+      "existing_main_files_changed": 0,
+      "api_paths": 110,
+      "api_routes_changed": false,
+      "api_required_fields_changed": false
+    },
+    "source_count": 320,
+    "new_source_count": 79,
+    "field_changes": 65,
+    "previously_missing_filled": 48,
+    "overseas_field_status_counts": {
+      "verified_current": 272,
+      "missing": 371,
+      "needs_confirmation": 214,
+      "reference_only": 40,
+      "conflict": 37,
+      "explicit_not_announced": 1
+    },
+    "complete_research_claimed": false,
+    "static_checks": {
+      "changed_files": "ruff passed; Python compilation and git diff check passed",
+      "broader_existing_ccu_tests": "19 existing style findings outside changed files; full log retained",
+      "log": "docs/ccu-validation-2026-10-08/fifth-pass-changed-static.txt"
+    },
+    "initial_validation_errors": [
+      "Focused tests initially had two text assertions inconsistent with valid field phrasing; corrected, included in final passing four-school run.",
+      "Initial four-school command referenced nonexistent test file; no tests ran, final corrected command evidence retained.",
+      "Initial integrity check overlapped another rebuild and failed three hashes; sequential rerun compared all 16 files identically."
+    ]
+  },
+  "sixth_pass": {
+    "base_commit": "f53e43edfc672b8fc5ffb9ce22ab538e13faed44",
+    "latest_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "ccu_tests": {
+      "passed": 130,
+      "failed": 0,
+      "log": "docs/ccu-validation-2026-10-08/sixth-pass-four-school.txt",
+      "count_method": "CCU testcases from final four-school JUnit XML"
+    },
+    "four_school_tests": {
+      "passed": 251,
+      "skipped": 5,
+      "failed": 1,
+      "seconds": 58.0,
+      "known_failure": "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "log": "docs/ccu-validation-2026-10-08/sixth-pass-four-school.txt"
+    },
+    "browser_tests": {
+      "passed": 22,
+      "failed": 0,
+      "seconds": 150.5,
+      "log": "docs/ccu-validation-2026-10-08/sixth-pass-browser.txt"
+    },
+    "integrity": {
+      "rebuild": {
+        "identical": true,
+        "files_compared": 16,
+        "sha256": {
+          "partners.jsonl": "8b8e3e1010eba84929af2838cba5c0aed6ab90c51a8e9516fb03431d183fe8e9",
+          "application_workflows.jsonl": "4bb99f907a6669cf92db79861ff4c5348ca79b6b2f1d77df212f474a1408775d",
+          "destination_profiles.jsonl": "672ab4ee82fbad1c833b1359f1afd20376c235175523c33ce94472cd9b72b2de",
+          "field-audit.json": "9021c731661270ac42a626467a6996819c64c848d2662a03c8b8a62fbeb39f99",
+          "completeness.json": "8263d4b9503645fe9a7f4a1491c2bcb74cd2d9576d7d5fe8d08710a7c758b225",
+          "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+          "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+          "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+          "field-completeness-matrix.json": "ad136b2d0ccce8d25085fde07fa44948e216f09c17d4bf002b4596381bb362e9",
+          "confirmation-questions.json": "268790746ba05228eee1fa3862f4afa97bea3fe7a276c416ed22cda6f8b223f0",
+          "overseas-completeness.json": "8b8d29be80aad26782ef5e15556901601e0eb608cb5b9f50d4fdee1efdb8643d",
+          "overseas-conflicts.json": "61da46246b24bea6db8f30d32e38f135033542e27f259dc91572f1690612dc2b",
+          "research-gap-audit.json": "19693ee2c45232565fa3c806fb12c5fa090666d46107b7c8d25496c6437afac8",
+          "acquired-content-review.json": "3804eb1d8040a36122acb47b74fc1f8797876d4dfdc0e66e9d96ea4846848c74",
+          "source-failure-followup.json": "ef42a306ded21adb03e5699f875d4ae95948b89b506f34ee54600034abc01938",
+          "overseas-reviewed-fields.json": "bf4f396a94446eb90d47b5e47b88d6126cd9db26f78bc73dcc6dbe325c354508"
+        }
+      },
+      "existing_main_files_compared": 49,
+      "existing_main_files_changed": 0,
+      "api_paths": 110,
+      "api_routes_changed": false,
+      "api_required_fields_changed": false
+    },
+    "source_count": 389,
+    "new_source_count": 69,
+    "new_network_acquisition_records": 65,
+    "reread_existing_bundled_sources": 4,
+    "field_changes": 65,
+    "previously_missing_filled": 57,
+    "parent_corrections": [
+      "Bordeaux APL activity/apprenticeship/professionalisation scope",
+      "Nagoya home-vs-host tentative class dates propagated through calendar/period/evidence/summary/guide",
+      "AMU host B2 confirmation-letter alternative vs home independent-test requirement: structured conditions, low IELTS API/JS needs_confirmation"
+    ],
+    "overseas_field_status_counts": {
+      "verified_current": 292,
+      "missing": 314,
+      "needs_confirmation": 242,
+      "reference_only": 40,
+      "conflict": 46,
+      "explicit_not_announced": 1
+    },
+    "complete_research_claimed": false,
+    "initial_validation_errors": [
+      "openpyxl unavailable; replaced by ZIP/XML XLSX reader with no formula execution, real downloaded XLSX preserved",
+      "First field integration preflight found three excerpt needles absent from actual text; corrected before integration",
+      "Three new regression assertions did not account for generic other-test wording, frontend missing-score path and provenance IDs omitted from API; corrected final four-school run passed all 130 CCU tests",
+      "Prior NTPU destination profile count test remains failed; 49 main data hashes unchanged"
+    ],
+    "common_file_changes_this_pass": [
+      "pyproject.toml: one CCU-specific XLSX package-data glob"
+    ],
+    "next_research_pages": [
+      32,
+      35,
+      37,
+      39,
+      42,
+      54
+    ]
+  },
+  "seventh_pass": {
+    "base_commit": "b0655e0d4350b48d8535fb54ef5060d707a35536",
+    "latest_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "ccu_tests": {
+      "passed": 141,
+      "failed": 0,
+      "log": "docs/ccu-validation-2026-10-08/seventh-pass-four-school.txt",
+      "count_method": "CCU testcases from final four-school JUnit XML"
+    },
+    "four_school_tests": {
+      "passed": 262,
+      "skipped": 5,
+      "failed": 1,
+      "seconds": 65.99,
+      "known_failure": "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "log": "docs/ccu-validation-2026-10-08/seventh-pass-four-school.txt"
+    },
+    "browser_tests": {
+      "existing_cases": {
+        "passed": 22,
+        "log": "docs/ccu-validation-2026-10-08/seventh-pass-initial-browser.txt",
+        "note": "Same run had four new assertions fail because two valid source links were rendered; existing cases all passed"
+      },
+      "new_cases": {
+        "passed": 4,
+        "failed": 0,
+        "seconds": 25.08,
+        "log": "docs/ccu-validation-2026-10-08/seventh-pass-new-browser.txt"
+      }
+    },
+    "integrity": {
+      "rebuild": {
+        "identical": true,
+        "files_compared": 16,
+        "sha256": {
+          "partners.jsonl": "ced1ece7164a50679cb92e11273798c5b78bc38e5037dbb0e0232e25fd70f5b6",
+          "application_workflows.jsonl": "5006fbd41547ef69c8ffc85f18afca7b6f995b484a4210275b663c4d9047c418",
+          "destination_profiles.jsonl": "735c0bb57af53b15eccb10519ca56129f422e00c994edd7551ab24192b706745",
+          "field-audit.json": "e2eaf37d5df8c7f577c9bfbf6c328b93b38f640ed32b35810dd1be8ce2e4d32c",
+          "completeness.json": "faf8497420ab280ba458d0982a10a8cd82aaf8ccf63c5945e9c43af077a4836d",
+          "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+          "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+          "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+          "field-completeness-matrix.json": "1d84abe401ef193a78b23be08103d2fcdf3785004f72e5aba456c95efe10d6cf",
+          "confirmation-questions.json": "e2b7bd3638ce9daa3f0652615ec6bdca5f26769fee3aa590b896156a82e69ca4",
+          "overseas-completeness.json": "d4b9e8c1c5326039628e7bd78ef4fef1ce71000a85c483a14f6a35c5957cc50c",
+          "overseas-conflicts.json": "04e463e95302ac81165dcc9af6822c577e30e9cb7a0b6bdd9f54a8e65a3271bc",
+          "research-gap-audit.json": "c245e65a74a178f2a79b17f4f526f7fcf4b88f3a4f63fd2c7e76b7b20aaa7855",
+          "acquired-content-review.json": "427bc9b321f18509a8399aad4606430ec3e528a92b2d0eebbfc5d74c8024c54c",
+          "source-failure-followup.json": "d86430e3be10503eb79818449266f5db2526417958bb1cf57b601abfd279804e",
+          "overseas-reviewed-fields.json": "90f5b1bec1010ea73a3c9dddc3cbc7375bd62bf09e610c0dcfcb25b26286252e"
+        }
+      },
+      "existing_main_files_compared": 49,
+      "existing_main_files_changed": 0,
+      "api_paths": 110,
+      "api_routes_changed": false,
+      "api_required_fields_changed": false
+    },
+    "source_count": 461,
+    "new_source_count": 72,
+    "new_network_acquisition_records": 65,
+    "reread_existing_bundled_sources": 7,
+    "field_changes": 60,
+    "previously_missing_filled": 29,
+    "overseas_field_status_counts": {
+      "verified_current": 306,
+      "missing": 285,
+      "needs_confirmation": 257,
+      "reference_only": 31,
+      "conflict": 55,
+      "explicit_not_announced": 1
+    },
+    "complete_research_claimed": false,
+    "initial_validation_errors": [
+      "HUSTEP document summary exceeded existing 240-character workflow-name limit; shortened school-specific wording without changing the shared model limit; rebuilt successfully",
+      "First integration preflight found metadata ccupage missing in reread alias and exact excerpt needles absent; corrected from actual source contents before field data was written",
+      "Focused quota assertion expected an integer, while quota correctly retains official text 共 5名; corrected",
+      "Existing Hokkaido test tied evidence to five-page old mirror; updated to actual official three-page SA/SRS and one-page HUSTEP factsheets",
+      "Four new browser assertions expected exactly one identical URL; renderer has two valid evidence links. Corrected to presence and reran four passing cases",
+      "Syntax command mistyped ccu-language.js, causing MODULE_NOT_FOUND before wheel build; reran actual ccu-language-conditions.js and ccu-academic-units.js successfully"
+    ],
+    "common_file_changes_this_pass": [
+      "pyproject.toml: one CCU-specific legacy-XLS package-data glob"
+    ],
+    "school_only_code_changes": [
+      "scripts/fetch_ccu_overseas_sources.py: optional read-only xlrd legacy-XLS extraction",
+      "scripts/requirements-ccu-research.txt: optional xlrd dependency for research extraction only",
+      "src/exchange_info/ccu_overseas.py: preserve new language program/alternative notes and Ryukoku document disagreement"
+    ],
+    "next_research_pages": [
+      16,
+      23,
+      61,
+      77,
+      87,
+      105
+    ]
+  }
+}

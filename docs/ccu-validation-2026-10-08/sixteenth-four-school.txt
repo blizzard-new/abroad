@@ -1,0 +1,69 @@
+CONFTEST LOADED!
+........................................................................ [ 22%]
+........................................................................ [ 45%]
+....................F.............sss................s........F......... [ 67%]
+..........................................................s............. [ 90%]
+..............................                                           [100%]
+=================================== FAILURES ===================================
+________ test_ccu_workflows_are_complete_structurally_but_not_published ________
+
+    def test_ccu_workflows_are_complete_structurally_but_not_published():
+        flows = workflows()
+        assert len(flows) == 55
+        for workflow in flows:
+            assert workflow.home_university == HOME and workflow.application_round == ROUND
+            extra = any(r.stage == "after_application" for s in workflow.steps for r in s.document_requirements)
+>           assert len(workflow.steps) == (8 if extra else 7) and not workflow_structure_issues(workflow)
+E           AssertionError: assert (8 == 7)
+E            +  where 8 = len([ApplicationStep(rule_id='rule-6360f1f6e7bfac1b4e3d', depends_on_rule_ids=[], overrides_rule_id=None, order=1, phase='...s.NEEDS_CONFIRMATION: 'needs_confirmation'>, confirmation_contact='outbound@ccu.edu.tw', needs_confirmation=True), ...])
+E            +    where [ApplicationStep(rule_id='rule-6360f1f6e7bfac1b4e3d', depends_on_rule_ids=[], overrides_rule_id=None, order=1, phase='...s.NEEDS_CONFIRMATION: 'needs_confirmation'>, confirmation_contact='outbound@ccu.edu.tw', needs_confirmation=True), ...] = UniversityApplicationWorkflow(workflow_id='workflow-09b441d77975da948f21131d', governance_key=None, issue_report_snaps...料按17欄保存查核狀態，已讀原文範圍另见審閱紀錄。仍有公開資料續查、缺值、舊年度、計畫差異與來源矛盾；流程未完成雙人審核發布。', disclaimer='截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。').steps
+
+tests/test_ccu_support.py:220: AssertionError
+_ test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb5e73a0860>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-86/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -> None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+    
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+    
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+>       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_support.py::test_ccu_workflows_are_complete_structurally_but_not_published
+FAILED tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data
+2 failed, 311 passed, 5 skipped in 191.20s (0:03:11)

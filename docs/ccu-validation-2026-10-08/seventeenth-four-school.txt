@@ -1,0 +1,128 @@
+CONFTEST LOADED!
+.......................................F...............F................ [ 21%]
+........................................................................ [ 42%]
+...............................................sss................s..... [ 63%]
+...F...................................................................s [ 84%]
+.....................................................                    [100%]
+=================================== FAILURES ===================================
+__ test_api_host_documents_have_individual_forms_conditions_and_later_stages ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-91/test_api_host_documents_have_i0')
+
+    def test_api_host_documents_have_individual_forms_conditions_and_later_stages(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        for page in [32, 37, 43, 47, 48, 53, 68, 108, 114]:
+            flow = client.get(
+                "/application-workflow",
+                params={"home_school": HOME, "school": at(page).school_name},
+            ).json()
+            assert flow["review_status"] != "published"
+            host = flow["steps"][4]
+            registry = reviewed_documents()[page]
+            requirements = [r for s in flow["steps"] for r in s["document_requirements"] if r["stage"]]
+            assert len(requirements) == len(registry["requirements"])
+            if page == 68:
+                assert not host["document_requirements"]
+                assert len([r for r in requirements if r["stage"] == "nomination"]) == 7
+                assert "母校彙整" in host["title"]
+            else:
+                assert len(host["document_requirements"]) > 1
+            assert all(len(r["name"]) < 240 for r in host["document_requirements"])
+            if page == 32:
+                assert any(
+                    "if available" in r["name"] and "JLPT" in r["name"]
+                    for r in requirements
+                )
+                assert len(host["official_form_urls"]) >= 5
+                assert any(
+                    "歷史灰字參考" in detail and "不作必備文件" in detail
+                    for detail in flow["steps"][3]["details"]
+                )
+            if page == 53:
+                assert any(
+                    "12/20" in r["name"]
+                    and "1/15" in r["name"]
+                    and r["copy_type"] == "original"
+                    for r in requirements
+                )
+                assert any(
+                    "中正逐校第二階文件：當期已核實" in detail
+                    and "Certificate of Enrollment" in detail
+                    for detail in flow["steps"][3]["details"]
+                )
+            if page == 68:
+>               assert any("optional" in r["name"] for r in host["document_requirements"])
+E               assert False
+E                +  where False = any(<generator object test_api_host_documents_have_individual_forms_conditions_and_later_stages.<locals>.<genexpr> at 0x7fb13643cfb0>)
+
+tests/test_ccu_ninth_pass.py:193: AssertionError
+________ test_hokkaido_program_evidence_and_old_documents_stay_separate ________
+
+    def test_hokkaido_program_evidence_and_old_documents_stay_separate():
+        fields = at(37).partner_exchange_details
+        assert {p for e in fields["documents"].evidence for p in e.source_pages} == {
+            1,
+            2,
+            3,
+        }
+        assert "SRS純研究不修課無credits" in fields["course_restrictions"].value
+        flows = read_jsonl(
+            BUNDLE / "application_workflows.jsonl", UniversityApplicationWorkflow
+        )
+        for page in (16, 23, 42, 80, 95, 99, 105):
+            partner = at(page)
+            flow = next(f for f in flows if f.school_name == partner.school_name)
+>           assert not flow.steps[4].required_documents
+E           AssertionError: assert not ['臺灣／港澳對應來往通行證（效期覆盖交換）', '在學階段成績單（母校公章）', '學習計畫（800字以上，中文或英文）', '健康狀況聲明（本人簽字；空白PDF連結未取得）']
+E            +  where ['臺灣／港澳對應來往通行證（效期覆盖交換）', '在學階段成績單（母校公章）', '學習計畫（800字以上，中文或英文）', '健康狀況聲明（本人簽字；空白PDF連結未取得）'] = ApplicationStep(rule_id='rule-0d82188d664c499196f2', depends_on_rule_ids=[], overrides_rule_id=None, order=5, phase='合...tStatus.NEEDS_CONFIRMATION: 'needs_confirmation'>, confirmation_contact='outbound@ccu.edu.tw', needs_confirmation=True).required_documents
+
+tests/test_ccu_overseas.py:142: AssertionError
+_ test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb136f6eea0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-91/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -> None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+    
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+    
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+>       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_ninth_pass.py::test_api_host_documents_have_individual_forms_conditions_and_later_stages
+FAILED tests/test_ccu_overseas.py::test_hokkaido_program_evidence_and_old_documents_stay_separate
+FAILED tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data
+3 failed, 333 passed, 5 skipped in 228.09s (0:03:48)

@@ -1,0 +1,461 @@
+CONFTEST LOADED!
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_composite_claims_display_independent_source_dates_and_links[119-application_forms-p119-r27-form-metadata-normal-tls-\u6e05\u55ae\u521748\u9805-5-\u516c\u958b\u984c\u76eeAPI\u539f\u6587-390] _
+
+page = <Page url='http://127.0.0.1:41409/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Universidad%20Internacional%20%E5%A2%A8%E8%A5%BF%E5%93%A5%E5%9C%8B%E9%9A%9B%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:41409', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-147/web-e2e-data0'))
+width = 390, source_page = 119, key = 'application_forms'
+sid = 'p119-r27-form-metadata-normal-tls', claim = '清單列48項', pdf_page = 5
+medium = '公開題目API原文'
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page,key,sid,claim,pdf_page,medium", [
+        (119, "application_forms", "p119-r27-form-metadata-normal-tls", "清單列48項", 5, "公開題目API原文"),
+        (83, "academic_calendar", "p83-r27-calendar-image-normal-tls", "2027-02-01至04-24", 2, "官方校曆影像原文"),
+    ])
+    def test_composite_claims_display_independent_source_dates_and_links(page, live_server, width, source_page, key, sid, claim, pdf_page, medium):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = record_errors(page)
+        partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+        fresh = json.loads((BUNDLE / "overseas_sources" / (sid + ".json")).read_text())
+        old = next(e for e in partner.partner_exchange_details[key].evidence if e.source_url != fresh["source_url"])
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+        field = page.locator(f'#detail-overview [data-ccu-field="{key}"]')
+>       expect(field).to_be_visible(timeout=30_000)
+E       AssertionError: Locator expected to be visible
+E       Actual value: None
+E       Error: element(s) not found 
+E       Call log:
+E         - Expect "to_be_visible" with timeout 30000ms
+E         - waiting for locator("#detail-overview [data-ccu-field=\"application_forms\"]")
+E       
+E       Aria snapshot:
+E       - link "跳到主要內容":
+E         - /url: "#main-content"
+E       - main:
+E         - button "開啟功能選單"
+E         - link "UniWay 首頁":
+E           - /url: "#home"
+E           - strong: UniWay
+E         - status
+E         - region "我的申請工作區":
+E           - text: 我的申請
+E           - strong: 從選校到送件，接著完成下一步
+E           - paragraph: 長庚大學
+E           - navigation "申請工作區階段":
+E             - link "選校與確認":
+E               - /url: "#advisor"
+E             - link "準備與時程":
+E               - /url: "#overview"
+E             - link "文件與送件":
+E               - /url: "#application-center"
+E           - navigation "本階段操作":
+E             - link "我的準備":
+E               - /url: "#overview"
+E             - link "日曆":
+E               - /url: "#calendar"
+E             - link "官方期限":
+E               - /url: "#deadlines"
+E             - link "預算":
+E               - /url: "#budget"
+E             - link "補助":
+E               - /url: "#scholarships"
+E           - region "我的交換計畫":
+E             - region "我的交換計畫":
+E               - heading "我的交換計畫" [level=2]
+E               - link "調整我的條件":
+E                 - /url: "#advisor"
+E               - text: 現在，先做這一件事
+E               - strong: 從你的條件開始
+E               - paragraph: 填寫你已知的資訊；尚未考語言測驗也能先探索學校。
+E               - link "填寫條件":
+E                 - /url: "#advisor"
+E               - article:
+E                 - text: 我的條件
+E                 - strong: 先填學院、學制、成績與語言能力，系統會整理合適的候選學校。
+E                 - link "開始選校規劃":
+E                   - /url: "#advisor"
+E               - article:
+E                 - text: 我的目標
+E                 - strong: 尚未選定目標學校
+E                 - text: 查看推薦後，由你確認要申請的學校。
+E             - region "選出你的下一站":
+E               - text: 條件配對
+E               - heading "選出你的下一站" [level=2]
+E               - link "查看推薦與調整條件":
+E                 - /url: "#advisor"
+E               - strong: 從你的條件，找到合適的下一站
+E               - text: 依你的學院、語言能力與偏好整理候選，正式資格仍需核對。
+E               - link "填寫條件並配對":
+E                 - /url: "#advisor"
+E             - group: 依官方期限預留準備天數
+E             - heading "接著，準備申請文件" [level=2]
+E             - paragraph: 尚無可追蹤的明確文件；先確認目標學校與當期官方規定。
+E             - link "開啟申請文件":
+E               - /url: "#application-center"
+E       - paragraph:
+E         - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E         - button "停用匿名使用統計"
+E         - text: 。
+E         - link "隱私權政策":
+E           - /url: /privacy
+E         - link "使用條款":
+E           - /url: /terms
+
+tests/e2e/test_ccu_composite_provenance.py:29: AssertionError
+_ test_composite_claims_display_independent_source_dates_and_links[119-application_forms-p119-r27-form-metadata-normal-tls-\u6e05\u55ae\u521748\u9805-5-\u516c\u958b\u984c\u76eeAPI\u539f\u6587-1440] _
+
+page = <Page url='http://127.0.0.1:41409/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Universidad%20Internacional%20%E5%A2%A8%E8%A5%BF%E5%93%A5%E5%9C%8B%E9%9A%9B%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:41409', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-147/web-e2e-data0'))
+width = 1440, source_page = 119, key = 'application_forms'
+sid = 'p119-r27-form-metadata-normal-tls', claim = '清單列48項', pdf_page = 5
+medium = '公開題目API原文'
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page,key,sid,claim,pdf_page,medium", [
+        (119, "application_forms", "p119-r27-form-metadata-normal-tls", "清單列48項", 5, "公開題目API原文"),
+        (83, "academic_calendar", "p83-r27-calendar-image-normal-tls", "2027-02-01至04-24", 2, "官方校曆影像原文"),
+    ])
+    def test_composite_claims_display_independent_source_dates_and_links(page, live_server, width, source_page, key, sid, claim, pdf_page, medium):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = record_errors(page)
+        partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+        fresh = json.loads((BUNDLE / "overseas_sources" / (sid + ".json")).read_text())
+        old = next(e for e in partner.partner_exchange_details[key].evidence if e.source_url != fresh["source_url"])
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+        field = page.locator(f'#detail-overview [data-ccu-field="{key}"]')
+>       expect(field).to_be_visible(timeout=30_000)
+E       AssertionError: Locator expected to be visible
+E       Actual value: None
+E       Error: element(s) not found 
+E       Call log:
+E         - Expect "to_be_visible" with timeout 30000ms
+E         - waiting for locator("#detail-overview [data-ccu-field=\"application_forms\"]")
+E       
+E       Aria snapshot:
+E       - link "跳到主要內容":
+E         - /url: "#main-content"
+E       - complementary "系統功能":
+E         - link "UniWay 首頁":
+E           - /url: "#home"
+E           - strong: UniWay
+E         - navigation "公開探索導覽":
+E           - link "首頁":
+E             - /url: "#home"
+E           - link "學校搜尋":
+E             - /url: "#partners"
+E           - link "論壇":
+E             - /url: "#forum"
+E           - link "用戶評價":
+E             - /url: "#feedback"
+E           - group:
+E             - link "我的申請":
+E               - /url: "#advisor"
+E         - button "返回首頁": 返回
+E         - button "選擇就讀學校":
+E           - strong: 選擇就讀學校
+E         - button "切換為深色模式"
+E         - button "重新整理最新資料"
+E         - button "登入或建立帳號": 登入
+E       - main:
+E         - status
+E         - region "我的申請工作區":
+E           - text: 我的申請
+E           - strong: 從選校到送件，接著完成下一步
+E           - paragraph: 長庚大學
+E           - navigation "申請工作區階段":
+E             - link "選校與確認":
+E               - /url: "#advisor"
+E             - link "準備與時程":
+E               - /url: "#overview"
+E             - link "文件與送件":
+E               - /url: "#application-center"
+E           - navigation "本階段操作":
+E             - link "我的準備":
+E               - /url: "#overview"
+E             - link "日曆":
+E               - /url: "#calendar"
+E             - link "官方期限":
+E               - /url: "#deadlines"
+E             - link "預算":
+E               - /url: "#budget"
+E             - link "補助":
+E               - /url: "#scholarships"
+E           - region "我的交換計畫":
+E             - region "我的交換計畫":
+E               - heading "我的交換計畫" [level=2]
+E               - link "調整我的條件":
+E                 - /url: "#advisor"
+E               - text: 現在，先做這一件事
+E               - strong: 從你的條件開始
+E               - paragraph: 填寫你已知的資訊；尚未考語言測驗也能先探索學校。
+E               - link "填寫條件":
+E                 - /url: "#advisor"
+E               - article:
+E                 - text: 我的條件
+E                 - strong: 先填學院、學制、成績與語言能力，系統會整理合適的候選學校。
+E                 - link "開始選校規劃":
+E                   - /url: "#advisor"
+E               - article:
+E                 - text: 我的目標
+E                 - strong: 尚未選定目標學校
+E                 - text: 查看推薦後，由你確認要申請的學校。
+E             - region "選出你的下一站":
+E               - text: 條件配對
+E               - heading "選出你的下一站" [level=2]
+E               - link "查看推薦與調整條件":
+E                 - /url: "#advisor"
+E               - strong: 從你的條件，找到合適的下一站
+E               - text: 依你的學院、語言能力與偏好整理候選，正式資格仍需核對。
+E               - link "填寫條件並配對":
+E                 - /url: "#advisor"
+E             - group: 依官方期限預留準備天數
+E             - heading "接著，準備申請文件" [level=2]
+E             - paragraph: 尚無可追蹤的明確文件；先確認目標學校與當期官方規定。
+E             - link "開啟申請文件":
+E               - /url: "#application-center"
+E       - paragraph:
+E         - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E         - button "停用匿名使用統計"
+E         - text: 。
+E         - link "隱私權政策":
+E           - /url: /privacy
+E         - link "使用條款":
+E           - /url: /terms
+
+tests/e2e/test_ccu_composite_provenance.py:29: AssertionError
+_ test_composite_claims_display_independent_source_dates_and_links[83-academic_calendar-p83-r27-calendar-image-normal-tls-2027-02-01\u81f304-24-2-\u5b98\u65b9\u6821\u66c6\u5f71\u50cf\u539f\u6587-390] _
+
+page = <Page url='http://127.0.0.1:41409/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Mapua%20University%20%E7%91%AA%E6%99%AE%E7%88%BE%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:41409', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-147/web-e2e-data0'))
+width = 390, source_page = 83, key = 'academic_calendar'
+sid = 'p83-r27-calendar-image-normal-tls', claim = '2027-02-01至04-24'
+pdf_page = 2, medium = '官方校曆影像原文'
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page,key,sid,claim,pdf_page,medium", [
+        (119, "application_forms", "p119-r27-form-metadata-normal-tls", "清單列48項", 5, "公開題目API原文"),
+        (83, "academic_calendar", "p83-r27-calendar-image-normal-tls", "2027-02-01至04-24", 2, "官方校曆影像原文"),
+    ])
+    def test_composite_claims_display_independent_source_dates_and_links(page, live_server, width, source_page, key, sid, claim, pdf_page, medium):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = record_errors(page)
+        partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+        fresh = json.loads((BUNDLE / "overseas_sources" / (sid + ".json")).read_text())
+        old = next(e for e in partner.partner_exchange_details[key].evidence if e.source_url != fresh["source_url"])
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+        field = page.locator(f'#detail-overview [data-ccu-field="{key}"]')
+>       expect(field).to_be_visible(timeout=30_000)
+E       AssertionError: Locator expected to be visible
+E       Actual value: None
+E       Error: element(s) not found 
+E       Call log:
+E         - Expect "to_be_visible" with timeout 30000ms
+E         - waiting for locator("#detail-overview [data-ccu-field=\"academic_calendar\"]")
+E       
+E       Aria snapshot:
+E       - link "跳到主要內容":
+E         - /url: "#main-content"
+E       - main:
+E         - button "開啟功能選單"
+E         - link "UniWay 首頁":
+E           - /url: "#home"
+E           - strong: UniWay
+E         - status
+E         - region "我的申請工作區":
+E           - text: 我的申請
+E           - strong: 從選校到送件，接著完成下一步
+E           - paragraph: 長庚大學
+E           - navigation "申請工作區階段":
+E             - link "選校與確認":
+E               - /url: "#advisor"
+E             - link "準備與時程":
+E               - /url: "#overview"
+E             - link "文件與送件":
+E               - /url: "#application-center"
+E           - navigation "本階段操作":
+E             - link "我的準備":
+E               - /url: "#overview"
+E             - link "日曆":
+E               - /url: "#calendar"
+E             - link "官方期限":
+E               - /url: "#deadlines"
+E             - link "預算":
+E               - /url: "#budget"
+E             - link "補助":
+E               - /url: "#scholarships"
+E           - region "我的交換計畫":
+E             - region "我的交換計畫":
+E               - heading "我的交換計畫" [level=2]
+E               - link "調整我的條件":
+E                 - /url: "#advisor"
+E               - text: 現在，先做這一件事
+E               - strong: 從你的條件開始
+E               - paragraph: 填寫你已知的資訊；尚未考語言測驗也能先探索學校。
+E               - link "填寫條件":
+E                 - /url: "#advisor"
+E               - article:
+E                 - text: 我的條件
+E                 - strong: 先填學院、學制、成績與語言能力，系統會整理合適的候選學校。
+E                 - link "開始選校規劃":
+E                   - /url: "#advisor"
+E               - article:
+E                 - text: 我的目標
+E                 - strong: 尚未選定目標學校
+E                 - text: 查看推薦後，由你確認要申請的學校。
+E             - region "選出你的下一站":
+E               - text: 條件配對
+E               - heading "選出你的下一站" [level=2]
+E               - link "查看推薦與調整條件":
+E                 - /url: "#advisor"
+E               - strong: 從你的條件，找到合適的下一站
+E               - text: 依你的學院、語言能力與偏好整理候選，正式資格仍需核對。
+E               - link "填寫條件並配對":
+E                 - /url: "#advisor"
+E             - group: 依官方期限預留準備天數
+E             - heading "接著，準備申請文件" [level=2]
+E             - paragraph: 尚無可追蹤的明確文件；先確認目標學校與當期官方規定。
+E             - link "開啟申請文件":
+E               - /url: "#application-center"
+E       - paragraph:
+E         - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E         - button "停用匿名使用統計"
+E         - text: 。
+E         - link "隱私權政策":
+E           - /url: /privacy
+E         - link "使用條款":
+E           - /url: /terms
+
+tests/e2e/test_ccu_composite_provenance.py:29: AssertionError
+_ test_composite_claims_display_independent_source_dates_and_links[83-academic_calendar-p83-r27-calendar-image-normal-tls-2027-02-01\u81f304-24-2-\u5b98\u65b9\u6821\u66c6\u5f71\u50cf\u539f\u6587-1440] _
+
+page = <Page url='http://127.0.0.1:41409/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Mapua%20University%20%E7%91%AA%E6%99%AE%E7%88%BE%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:41409', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-147/web-e2e-data0'))
+width = 1440, source_page = 83, key = 'academic_calendar'
+sid = 'p83-r27-calendar-image-normal-tls', claim = '2027-02-01至04-24'
+pdf_page = 2, medium = '官方校曆影像原文'
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page,key,sid,claim,pdf_page,medium", [
+        (119, "application_forms", "p119-r27-form-metadata-normal-tls", "清單列48項", 5, "公開題目API原文"),
+        (83, "academic_calendar", "p83-r27-calendar-image-normal-tls", "2027-02-01至04-24", 2, "官方校曆影像原文"),
+    ])
+    def test_composite_claims_display_independent_source_dates_and_links(page, live_server, width, source_page, key, sid, claim, pdf_page, medium):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = record_errors(page)
+        partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+        fresh = json.loads((BUNDLE / "overseas_sources" / (sid + ".json")).read_text())
+        old = next(e for e in partner.partner_exchange_details[key].evidence if e.source_url != fresh["source_url"])
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+        field = page.locator(f'#detail-overview [data-ccu-field="{key}"]')
+>       expect(field).to_be_visible(timeout=30_000)
+E       AssertionError: Locator expected to be visible
+E       Actual value: None
+E       Error: element(s) not found 
+E       Call log:
+E         - Expect "to_be_visible" with timeout 30000ms
+E         - waiting for locator("#detail-overview [data-ccu-field=\"academic_calendar\"]")
+E       
+E       Aria snapshot:
+E       - link "跳到主要內容":
+E         - /url: "#main-content"
+E       - complementary "系統功能":
+E         - link "UniWay 首頁":
+E           - /url: "#home"
+E           - strong: UniWay
+E         - navigation "公開探索導覽":
+E           - link "首頁":
+E             - /url: "#home"
+E           - link "學校搜尋":
+E             - /url: "#partners"
+E           - link "論壇":
+E             - /url: "#forum"
+E           - link "用戶評價":
+E             - /url: "#feedback"
+E           - group:
+E             - link "我的申請":
+E               - /url: "#advisor"
+E         - button "返回首頁": 返回
+E         - button "選擇就讀學校":
+E           - strong: 選擇就讀學校
+E         - button "切換為深色模式"
+E         - button "重新整理最新資料"
+E         - button "登入或建立帳號": 登入
+E       - main:
+E         - status
+E         - region "我的申請工作區":
+E           - text: 我的申請
+E           - strong: 從選校到送件，接著完成下一步
+E           - paragraph: 長庚大學
+E           - navigation "申請工作區階段":
+E             - link "選校與確認":
+E               - /url: "#advisor"
+E             - link "準備與時程":
+E               - /url: "#overview"
+E             - link "文件與送件":
+E               - /url: "#application-center"
+E           - navigation "本階段操作":
+E             - link "我的準備":
+E               - /url: "#overview"
+E             - link "日曆":
+E               - /url: "#calendar"
+E             - link "官方期限":
+E               - /url: "#deadlines"
+E             - link "預算":
+E               - /url: "#budget"
+E             - link "補助":
+E               - /url: "#scholarships"
+E           - region "我的交換計畫":
+E             - region "我的交換計畫":
+E               - heading "我的交換計畫" [level=2]
+E               - link "調整我的條件":
+E                 - /url: "#advisor"
+E               - text: 現在，先做這一件事
+E               - strong: 從你的條件開始
+E               - paragraph: 填寫你已知的資訊；尚未考語言測驗也能先探索學校。
+E               - link "填寫條件":
+E                 - /url: "#advisor"
+E               - article:
+E                 - text: 我的條件
+E                 - strong: 先填學院、學制、成績與語言能力，系統會整理合適的候選學校。
+E                 - link "開始選校規劃":
+E                   - /url: "#advisor"
+E               - article:
+E                 - text: 我的目標
+E                 - strong: 尚未選定目標學校
+E                 - text: 查看推薦後，由你確認要申請的學校。
+E             - region "選出你的下一站":
+E               - text: 條件配對
+E               - heading "選出你的下一站" [level=2]
+E               - link "查看推薦與調整條件":
+E                 - /url: "#advisor"
+E               - strong: 從你的條件，找到合適的下一站
+E               - text: 依你的學院、語言能力與偏好整理候選，正式資格仍需核對。
+E               - link "填寫條件並配對":
+E                 - /url: "#advisor"
+E             - group: 依官方期限預留準備天數
+E             - heading "接著，準備申請文件" [level=2]
+E             - paragraph: 尚無可追蹤的明確文件；先確認目標學校與當期官方規定。
+E             - link "開啟申請文件":
+E               - /url: "#application-center"
+E       - paragraph:
+E         - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E         - button "停用匿名使用統計"
+E         - text: 。
+E         - link "隱私權政策":
+E           - /url: /privacy
+E         - link "使用條款":
+E           - /url: /terms
+
+tests/e2e/test_ccu_composite_provenance.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_composite_provenance.py::test_composite_claims_display_independent_source_dates_and_links[119-application_forms-p119-r27-form-metadata-normal-tls-\u6e05\u55ae\u521748\u9805-5-\u516c\u958b\u984c\u76eeAPI\u539f\u6587-390]
+FAILED tests/e2e/test_ccu_composite_provenance.py::test_composite_claims_display_independent_source_dates_and_links[119-application_forms-p119-r27-form-metadata-normal-tls-\u6e05\u55ae\u521748\u9805-5-\u516c\u958b\u984c\u76eeAPI\u539f\u6587-1440]
+FAILED tests/e2e/test_ccu_composite_provenance.py::test_composite_claims_display_independent_source_dates_and_links[83-academic_calendar-p83-r27-calendar-image-normal-tls-2027-02-01\u81f304-24-2-\u5b98\u65b9\u6821\u66c6\u5f71\u50cf\u539f\u6587-390]
+FAILED tests/e2e/test_ccu_composite_provenance.py::test_composite_claims_display_independent_source_dates_and_links[83-academic_calendar-p83-r27-calendar-image-normal-tls-2027-02-01\u81f304-24-2-\u5b98\u65b9\u6821\u66c6\u5f71\u50cf\u539f\u6587-1440]
+4 failed in 125.56s (0:02:05)

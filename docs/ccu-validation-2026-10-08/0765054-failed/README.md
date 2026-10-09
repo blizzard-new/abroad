@@ -1,0 +1,3 @@
+# 0765054 完整回歸失敗與未完成瀏覽器gate
+
+469回歸實際461passed／7skip／1fail，JUnit與log保持原始內容。一般HCMUTE多計畫支援頁不能補當期arrival/orientation。瀏覽器中止，没有全通過結果；92e66f3恢復arrival缺值並限定映射program_scope研究註記，另重跑完整gate。

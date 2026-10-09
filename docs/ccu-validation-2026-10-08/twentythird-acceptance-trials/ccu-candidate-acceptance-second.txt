@@ -1,0 +1,251 @@
+CONFTEST LOADED!
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_real_school_search_matching_comparison_plan_reload_and_home_isolation[390] _
+
+page = <Page url='http://127.0.0.1:56879/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list&q=Nagoya+University+%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E5%AD%B8#partners'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:56879', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-125/ccu-acceptance-real-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_real_school_search_matching_comparison_plan_reload_and_home_isolation(page, acceptance_server, width):
+        server = acceptance_server
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        session = login(page, server, width)
+        names = [school(34), school(45)]
+        for name in names:
+            page.locator("#partner-search").fill(name)
+            button = page.locator(f'#partner-table .favorite-toggle[data-school-name="{name}"]:visible').first
+>           expect(button).to_be_visible(timeout=30_000)
+E           AssertionError: Locator expected to be visible
+E           Actual value: None
+E           Error: element(s) not found 
+E           Call log:
+E             - Expect "to_be_visible" with timeout 30000ms
+E             - waiting for locator("#partner-table .favorite-toggle[data-school-name=\"Nagoya University 名古屋大學\"]:visible").first
+E           
+E           Aria snapshot:
+E           - link "跳到主要內容":
+E             - /url: "#main-content"
+E           - main:
+E             - button "開啟功能選單"
+E             - link "UniWay 首頁":
+E               - /url: "#home"
+E               - strong: UniWay
+E             - status
+E             - region "學校搜尋":
+E               - heading "學校搜尋" [level=2]
+E               - text: 搜尋學校
+E               - textbox "搜尋學校":
+E                 - /placeholder: 學校、國家或申請條件
+E                 - text: Nagoya University 名古屋大學
+E               - group "合作學校檢視方式":
+E                 - button "列表" [pressed]
+E                 - button "3D 地圖"
+E               - group: 我的條件
+E               - link "我的選校":
+E                 - /url: "#favorites"
+E               - paragraph: 共 1 所
+E               - group:
+E                 - text: 日本
+E                 - strong: Nagoya University 名古屋大學
+E                 - text: 2027春季名額已列／校內截止 · 校級薦外交換 · 教育學院、法學院（學制依各學院配對） · 大學部、研究所（教育）；僅碩士班（法學）
+E               - group:
+E                 - text: 篩選 名額狀態
+E                 - combobox "名額狀態":
+E                   - option "全部合作狀態" [selected]
+E                   - option "當期名額已列"
+E                   - option "本季未開放（官方灰字）"
+E                   - option "名額尚未核實"
+E                   - option "零名額"
+E                   - option "自費計畫"
+E                   - option "合作備查／本期未公告"
+E                   - option "院級參考／當期需確認"
+E                 - text: 地區
+E                 - combobox "地區":
+E                   - option "全部地區" [selected]
+E                   - option "大洋洲"
+E                 - text: 國家
+E                 - combobox "國家":
+E                   - option "全部國家" [selected]
+E                 - text: 學院
+E                 - combobox "學院":
+E                   - option "全部學院" [selected]
+E                   - option "文學院"
+E                   - option "理學院"
+E                   - option "社會科學院"
+E                   - option "工學院"
+E                   - option "管理學院"
+E                   - option "法學院"
+E                   - option "教育學院"
+E                 - text: 學制
+E                 - combobox "學制":
+E                   - option "全部學制" [selected]
+E                   - option "1–7"
+E                   - option "2026-03-03台港澳交換一般辦法明載本科"
+E                   - option "2027可任選。 一般French交換課有本科及MAforeignlanguageeducation課程"
+E                   - option "2027協議可提名學制"
+E                   - option "2027協議提名學制仍未核"
+E                   - option "5–10為任教school years非申請年級。2027協議可提名學制仍待核。 一般EnglishLanguage exchange本科"
+E                   - option "一般電資incoming課表列BA"
+E                   - option "一般exchange bundle有本科"
+E                   - option "大學部"
+E                   - option "不代表博士可申請"
+E                   - option "不是德文入學證明豁免或全部當期學制。 一般Spanish交換課本科及MA教育課分開"
+E                   - option "不能把Outbound表的Doctoral套incoming。"
+E                   - option "不推三學制當期全開。 Econ一般BA"
+E                   - option "不推CCU學制清單。 一般German交換課本科及MA教育課分開"
+E                   - option "中文版較窄寫碩士在讀"
+E                   - option "中正母校年級規定另適用。"
+E                   - option "手冊exchange明列Bachelor"
+E                   - option "未年"
+E                   - option "未明示2027春季適用"
+E                   - option "未明Spring2027。"
+E                   - option "但不代表所有碩"
+E                   - option "依具體課先修"
+E                   - option "協議可提名仍未核"
+E                   - option "待確認：一般FAQ有研究生線下選課程序"
+E                   - option "待確認：大學部"
+E                   - option "待確認：incoming"
+E                   - option "研究所"
+E                   - option "研究所 2027研究所申請須Bachelor已取得且母校研究所在籍"
+E                   - option "研究所（不得跨學制）"
+E                   - option "研究所（教育）"
+E                   - option "研究所（逐計畫及指定partner）"
+E                   - option "研究所（僅特定協議）"
+E                   - option "研究所（HUSTEP"
+E                   - option "研究所（SIT等另範圍）"
+E                   - option "授課課程層級分開"
+E                   - option "排除本科一年級"
+E                   - option "這是選課範圍"
+E                   - option "博士"
+E                   - option "博士未核。"
+E                   - option "博士具交換申請資格。"
+E                   - option "博士班"
+E                   - option "博士班（研究所限領域）"
+E                   - option "博士適用待核。"
+E                   - option "僅碩士班（法學）"
+E                   - option "碩士"
+E                   - option "碩士班"
+E                   - option "碩士班 待確認：未年Inbound表Level of Study只有Bachelor"
+E                   - option "碩士班（只能修本科）"
+E                   - option "碩士班（指南年級矛盾）"
+E                   - option "碩士班（需事先協商）"
+E                   - option "碩士teachereducation課"
+E                   - option "與JSP班級"
+E                   - option "學制與CCU此列空白名額"
+E                   - option "B2 level不當交換入學語言下限。"
+E                   - option "doctoral可選表內課或提mentor核個別plan"
+E                   - option "Englishcourse B1+"
+E                   - option "guest提供本科與碩士英文課程入口"
+E                   - option "MA"
+E                   - option "MA Summer"
+E                   - option "MA課"
+E                   - option "Master"
+E                   - option "Master課程類型"
+E                   - option "masterthesis Spring只是課表"
+E                   - option "regulardegree其他博士頁不當incoming。"
+E                   - option "SA"
+E                   - option "SRS須分流）"
+E                   - option "Winter課表"
+E                 - button "清除"
+E           - paragraph:
+E             - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E             - button "停用匿名使用統計"
+E             - text: 。
+E             - link "隱私權政策":
+E               - /url: /privacy
+E             - link "使用條款":
+E               - /url: /terms
+
+tests/e2e/test_ccu_candidate_acceptance.py:101: AssertionError
+_ test_real_school_search_matching_comparison_plan_reload_and_home_isolation[1440] _
+
+page = <Page url='http://127.0.0.1:56879/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list&q=Kyung+Hee+University+%E6%85%B6%E7%86%99%E5%A4%A7%E5%AD%B8#advisor'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:56879', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-125/ccu-acceptance-real-data0'))
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_real_school_search_matching_comparison_plan_reload_and_home_isolation(page, acceptance_server, width):
+        server = acceptance_server
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        session = login(page, server, width)
+        names = [school(34), school(45)]
+        for name in names:
+            page.locator("#partner-search").fill(name)
+            button = page.locator(f'#partner-table .favorite-toggle[data-school-name="{name}"]:visible').first
+            expect(button).to_be_visible(timeout=30_000)
+            button.click()
+            expect(button).to_have_attribute("aria-pressed", "true")
+        navigate(page, "favorites")
+        expect(page.locator(".discovery-candidate")).to_have_count(2)
+        for name in names:
+            page.locator(f'[data-compare-school="{name}"]').check()
+        comparison = page.locator("#discovery-comparison")
+        for name in names:
+            expect(comparison).to_contain_text(name)
+        capture(page, "real-favorites-comparison", width)
+        navigate(page, "application-center")
+        page.locator("#application-target-school").select_option(names[0])
+        navigate(page, "advisor")
+        wait_until(page, "homeCollegeOptions().includes('法學院')")
+        page.locator("#advisor-college").select_option("法學院")
+        department = page.locator("#advisor-department")
+        if department.evaluate("node => node.tagName") == "SELECT":
+            wait_until(page, "document.querySelector('#advisor-department').options.length > 1")
+            department.select_option(department.locator("option").evaluate_all("rows => rows.find(row => row.value).value"))
+        else:
+            department.fill("法律學系")
+        page.locator("#advisor-degree").select_option("碩士班")
+        page.locator("#advisor-academic-score").fill("85")
+        page.locator("#advisor-academic-gpa").fill("3.5")
+        page.locator("#advisor-language-test").select_option("ielts")
+        page.locator("#advisor-language-score").fill("7")
+        with page.expect_response(lambda r: r.url.endswith("/advisor/plan") and r.request.method == "POST") as result:
+            page.locator("#advisor-submit").click()
+        assert result.value.ok
+>       assert result.value.request.post_data_json["home_school"] == HOME
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'home_school'
+
+tests/e2e/test_ccu_candidate_acceptance.py:131: KeyError
+__ test_real_document_center_stages_conditions_templates_and_saved_draft[390] __
+
+page = <Page url='http://127.0.0.1:56879/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list#application-center'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:56879', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-125/ccu-acceptance-real-data0'))
+width = 390
+
+>   ???
+E   AssertionError: Locator expected to have count '1'
+E   Actual value: 0 
+E   Call log:
+E     - Expect "to_have_count" with timeout 5000ms
+E     - waiting for locator("#application-requirement-list").locator("details.application-requirement-group").filter(has_text="Jena交换延期申请")
+E       14 × locator resolved to 0 elements
+E          - unexpected value "0"
+
+tests/e2e/test_ccu_candidate_acceptance.py:220: AssertionError
+_ test_real_document_center_stages_conditions_templates_and_saved_draft[1440] __
+
+page = <Page url='http://127.0.0.1:56879/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list#application-center'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:56879', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-125/ccu-acceptance-real-data0'))
+width = 1440
+
+>   ???
+E   AssertionError: Locator expected to have count '1'
+E   Actual value: 0 
+E   Call log:
+E     - Expect "to_have_count" with timeout 5000ms
+E     - waiting for locator("#application-requirement-list").locator("details.application-requirement-group").filter(has_text="Jena交换延期申请")
+E       14 × locator resolved to 0 elements
+E          - unexpected value "0"
+
+tests/e2e/test_ccu_candidate_acceptance.py:220: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_candidate_acceptance.py::test_real_school_search_matching_comparison_plan_reload_and_home_isolation[390]
+FAILED tests/e2e/test_ccu_candidate_acceptance.py::test_real_school_search_matching_comparison_plan_reload_and_home_isolation[1440]
+FAILED tests/e2e/test_ccu_candidate_acceptance.py::test_real_document_center_stages_conditions_templates_and_saved_draft[390]
+FAILED tests/e2e/test_ccu_candidate_acceptance.py::test_real_document_center_stages_conditions_templates_and_saved_draft[1440]
+4 failed in 69.48s (0:01:09)

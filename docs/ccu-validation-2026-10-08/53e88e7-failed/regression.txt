@@ -1,0 +1,42 @@
+CONFTEST LOADED!
+.............................................................ss......... [ 15%]
+........................................................................ [ 31%]
+........................................................................ [ 47%]
+........................................................................ [ 63%]
+..........................................sss................s.......... [ 79%]
+.....................................................F............s..... [ 95%]
+...................                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_ntu_catalog_api_works_offline_and_keeps_pending_visible _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f2ad3e6d850>
+tmp_path = PosixPath('/workspace/ccu-artifacts-20261008/final-53e88e7/temp/regression/test_ntu_catalog_api_works_off0')
+
+    def test_ntu_catalog_api_works_offline_and_keeps_pending_visible(monkeypatch, tmp_path):
+        def network_not_allowed():
+            raise AssertionError("NTU must not fetch CGU or NTPU at runtime")
+        monkeypatch.setattr("exchange_info.api.fetch_partner_universities", network_not_allowed)
+        monkeypatch.setattr("exchange_info.api.fetch_ntpu_partner_universities", network_not_allowed)
+        client = TestClient(create_app(tmp_path))
+        assert [row["id"] for row in client.get("/universities").json()] == ["cgu", "ntpu", "ntu", "ccu"]
+        dashboard = client.get("/student-dashboard", params={"school": "台大"})
+        assert dashboard.status_code == 200
+        assert dashboard.json()["school_name"] == NTU.school_name
+        assert len(dashboard.json()["partner_universities"]) == 288
+        coverage = client.get("/coverage", params={"school": "NTU"}).json()
+        assert coverage["total_partner_schools"] == 288
+        assert coverage["workflow_school_count"] == coverage["destination_profile_count"] == 288
+        assert all(row["workflow_status"] == "official_partial" for row in coverage["partners"])
+        partner = dashboard.json()["partner_universities"][0]
+        detail = client.get("/destination-profile", params={"school": partner["school_name"], "home_school": "NTU"})
+>       assert detail.status_code == 200 and detail.json()["home_university"] == NTU.school_name
+E       AssertionError: assert (200 == 200 and 'NTU' == '國立臺灣大學'
+E        +  where 200 = <Response [200 OK]>.status_code
+E         
+E         - 國立臺灣大學
+E         + NTU)
+
+tests/test_ntu_integration.py:108: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_integration.py::test_ntu_catalog_api_works_offline_and_keeps_pending_visible
+1 failed, 443 passed, 7 skipped in 383.09s (0:06:23)

@@ -1,0 +1,106 @@
+CONFTEST LOADED!
+.....................................................ss..............F.. [ 18%]
+.....................................................F.................. [ 36%]
+........................................................................ [ 54%]
+..............................................sss................s.F.... [ 73%]
+......................................................................s. [ 91%]
+.................................                                        [100%]
+=================================== FAILURES ===================================
+_______ test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate _______
+
+    def test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate():
+        report = json.loads((BUNDLE / "public-link-queue.json").read_text())
+        gaps = json.loads((BUNDLE / "remaining-gaps.json").read_text())
+        assert hashlib.sha256((BUNDLE / "remaining-gaps.json").read_bytes()).hexdigest() == report["input_sha256"]
+        original = Counter((s["ccu_page"], l["url"], l["discovered_in_source"])
+                           for s in gaps["schools"] for l in s["unrequested_discovered_links"])
+        grouped = Counter((o["ccu_page"], o["url"], o["discovered_in_source"])
+                          for c in report["candidates"] for o in c["occurrences"])
+        assert original == grouped
+        assert report["raw_href_count"] == sum(grouped.values())
+        assert report["raw_href_count"] == report["unique_url_count"] + report["collapsed_href_count"]
+        assert len({c["url"] for c in report["candidates"]}) == report["unique_url_count"]
+        assert len(report["schools"]) == 55 and all(not r["public_sources_exhausted"] for r in report["schools"])
+        for c in report["candidates"]:
+            if c["source_content_read"]:
+                review = c["content_review"]
+>               assert review and review["review_extent"] == "necessary_policy_sections"
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'review_extent'
+
+tests/test_ccu_eighteenth_pass.py:140: KeyError
+________ test_hokkaido_program_evidence_and_old_documents_stay_separate ________
+
+    def test_hokkaido_program_evidence_and_old_documents_stay_separate():
+        fields = at(37).partner_exchange_details
+        assert {p for e in fields["documents"].evidence for p in e.source_pages} == {
+            1,
+            2,
+            3,
+        }
+        assert "SRS純研究不修課無credits" in fields["course_restrictions"].value
+        flows = read_jsonl(
+            BUNDLE / "application_workflows.jsonl", UniversityApplicationWorkflow
+        )
+        for page in (16, 23, 42, 80, 95, 99, 105):
+            partner = at(page)
+            flow = next(f for f in flows if f.school_name == partner.school_name)
+            if page == 23:
+                assert len(flow.steps[4].document_requirements) == 4
+                assert all(r.conditional and r.applicability_status == "needs_confirmation"
+                           for r in flow.steps[4].document_requirements)
+            else:
+>               assert not flow.steps[4].required_documents
+E               AssertionError: assert not ['Inbound Exchange申請表（母校系所與國際處簽／日期）', 'Certified正式成績copy（母校認證三方式擇一）', 'Certified英語能力證明（母校認證三方式擇一）', '護照copy（效期至少離印度後6個月）', 'CV', '近期照片']
+E                +  where ['Inbound Exchange申請表（母校系所與國際處簽／日期）', 'Certified正式成績copy（母校認證三方式擇一）', 'Certified英語能力證明（母校認證三方式擇一）', '護照copy（效期至少離印度後6個月）', 'CV', '近期照片'] = ApplicationStep(rule_id='rule-ec0368930558891806f3', depends_on_rule_ids=[], overrides_rule_id=None, order=5, phase='合...tStatus.NEEDS_CONFIRMATION: 'needs_confirmation'>, confirmation_contact='outbound@ccu.edu.tw', needs_confirmation=True).required_documents
+
+tests/test_ccu_overseas.py:147: AssertionError
+_ test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd887722540>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-105/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -> None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+    
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+    
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+>       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_eighteenth_pass.py::test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate
+FAILED tests/test_ccu_overseas.py::test_hokkaido_program_evidence_and_old_documents_stay_separate
+FAILED tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data
+3 failed, 383 passed, 7 skipped in 285.81s (0:04:45)

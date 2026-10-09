@@ -1,0 +1,371 @@
+{
+  "repository": "blizzard-new/abroad",
+  "branch": "data/ccu-exchange-20261008",
+  "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167",
+  "main_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "same_sha_before_and_after": true,
+  "working_tree_clean_before_and_after": true,
+  "results": [
+    {
+      "label": "build_ccu_research_audit",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "scripts/build_ccu_research_audit.py"
+      ],
+      "returncode": 0,
+      "seconds": 1.439,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "build_ccu_catalog",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "scripts/build_ccu_catalog.py"
+      ],
+      "returncode": 0,
+      "seconds": 14.701,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "build_ccu_source_audit",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "scripts/build_ccu_source_audit.py"
+      ],
+      "returncode": 0,
+      "seconds": 3.345,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "build_ccu_overseas",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "scripts/build_ccu_overseas.py"
+      ],
+      "returncode": 0,
+      "seconds": 2.118,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "build_ccu_remaining_gaps",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "scripts/build_ccu_remaining_gaps.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.917,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "build_ccu_public_link_queue",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "scripts/build_ccu_public_link_queue.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.129,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "lock",
+      "command": [
+        "uvx",
+        "--from",
+        "uv==0.11.26",
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "returncode": 0,
+      "seconds": 0.172,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "openapi",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "returncode": 0,
+      "seconds": 1.969,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "python-syntax",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "-m",
+        "compileall",
+        "-q",
+        "src",
+        "scripts/validate_ccu_candidate.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.05,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "ruff",
+      "command": [
+        "uvx",
+        "ruff",
+        "check",
+        "scripts/fetch_ccu_overseas_sources.py",
+        "scripts/validate_ccu_candidate.py",
+        "src/exchange_info/ccu_overseas.py",
+        "src/exchange_info/ccu_profile.py",
+        "tests/test_ccu_twentythird_pass.py",
+        "tests/e2e/test_ccu_candidate_acceptance.py",
+        "tests/e2e/test_ccu_school.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.025,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "js-app.js",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "returncode": 0,
+      "seconds": 0.039,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "js-ccu-academic-units.js",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/ccu-academic-units.js"
+      ],
+      "returncode": 0,
+      "seconds": 0.027,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "js-ccu-language-conditions.js",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/ccu-language-conditions.js"
+      ],
+      "returncode": 0,
+      "seconds": 0.026,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "js-ccu-partner-details.js",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/ccu-partner-details.js"
+      ],
+      "returncode": 0,
+      "seconds": 0.024,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "regression",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_account_workspace_api.py",
+        "tests/test_advisor.py",
+        "tests/test_application_document_catalog.py",
+        "tests/test_application_documents_api.py",
+        "tests/test_application_rules.py",
+        "tests/test_application_workflow.py",
+        "tests/test_ccu_eighteenth_pass.py",
+        "tests/test_ccu_eighth_pass.py",
+        "tests/test_ccu_fifteenth_pass.py",
+        "tests/test_ccu_fifth_pass.py",
+        "tests/test_ccu_fourteenth_pass.py",
+        "tests/test_ccu_fourth_pass.py",
+        "tests/test_ccu_nineteenth_pass.py",
+        "tests/test_ccu_ninth_pass.py",
+        "tests/test_ccu_overseas.py",
+        "tests/test_ccu_parent_fixes.py",
+        "tests/test_ccu_second_pass.py",
+        "tests/test_ccu_semantics.py",
+        "tests/test_ccu_seventeenth_pass.py",
+        "tests/test_ccu_seventh_pass.py",
+        "tests/test_ccu_sixteenth_pass.py",
+        "tests/test_ccu_sixth_pass.py",
+        "tests/test_ccu_support.py",
+        "tests/test_ccu_third_pass.py",
+        "tests/test_ccu_twentieth_pass.py",
+        "tests/test_ccu_twentyfirst_pass.py",
+        "tests/test_ccu_twentysecond_pass.py",
+        "tests/test_ccu_twentythird_pass.py",
+        "tests/test_cgu_bundled_data.py",
+        "tests/test_ntpu_bundled_data.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_ntu_audit.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_ntu_school_board_migration.py",
+        "tests/test_qualification_scope_consistency.py",
+        "tests/test_school_photo_and_match.py",
+        "tests/test_selection_conditions_sync.py",
+        "tests/test_workflow_structuring.py",
+        "--basetemp=/workspace/ccu-artifacts-20261008/final-e838307/temp/regression",
+        "--junitxml=/workspace/ccu-artifacts-20261008/final-e838307/regression.xml"
+      ],
+      "returncode": 1,
+      "seconds": 406.032,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167",
+      "junit": {
+        "tests": 445,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 7,
+        "time": 394.969
+      }
+    },
+    {
+      "label": "browser-group-1",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ccu_candidate_acceptance.py",
+        "tests/e2e/test_ccu_nineteenth_pass.py",
+        "tests/e2e/test_ccu_scope_documents.py",
+        "tests/e2e/test_ccu_twentieth_pass.py",
+        "tests/e2e/test_ccu_twentysecond_pass.py",
+        "tests/e2e/test_open_catalog.py",
+        "--basetemp=/workspace/ccu-artifacts-20261008/final-e838307/temp/browser-group-1",
+        "--junitxml=/workspace/ccu-artifacts-20261008/final-e838307/browser-group-1.xml"
+      ],
+      "returncode": 0,
+      "seconds": 478.697,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167",
+      "junit": {
+        "tests": 37,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time": 471.965
+      }
+    },
+    {
+      "label": "browser-group-2",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ccu_eighteenth_pass.py",
+        "tests/e2e/test_ccu_school.py",
+        "tests/e2e/test_ccu_seventeenth_pass.py",
+        "tests/e2e/test_ccu_twentyfirst_pass.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/e2e/test_school_lists.py",
+        "--basetemp=/workspace/ccu-artifacts-20261008/final-e838307/temp/browser-group-2",
+        "--junitxml=/workspace/ccu-artifacts-20261008/final-e838307/browser-group-2.xml"
+      ],
+      "returncode": 0,
+      "seconds": 577.888,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167",
+      "junit": {
+        "tests": 57,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time": 571.982
+      }
+    },
+    {
+      "label": "functional-parity",
+      "command": [
+        "/workspace/abroad-ccu-20261008/.venv/bin/python",
+        "scripts/build_ccu_functional_parity.py",
+        "--output",
+        "/workspace/ccu-artifacts-20261008/final-e838307/functional-parity.json"
+      ],
+      "returncode": 0,
+      "seconds": 174.836,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "wheel",
+      "command": [
+        "uvx",
+        "--from",
+        "uv==0.11.26",
+        "uv",
+        "build",
+        "--wheel",
+        "--out-dir",
+        "/workspace/ccu-artifacts-20261008/final-e838307/wheel"
+      ],
+      "returncode": 0,
+      "seconds": 11.492,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167"
+    },
+    {
+      "label": "browser",
+      "command": "All disjoint browser groups; exact file union asserted in test-selection.json",
+      "returncode": 0,
+      "seconds": 577.888,
+      "candidate_sha": "e8383073552a89afb5ef548493da5be5cd2f8167",
+      "wall_time_note": "Groups start together on independent servers; combined JUnit time is summed group duration.",
+      "junit": {
+        "tests": 94,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "time": 1043.947
+      }
+    }
+  ],
+  "all_executed_commands_passed": false,
+  "not_run": [
+    "other-school combined branch integration",
+    "delayed-response race across unmerged TKU/NCU/NTU heads",
+    "Supabase isolated runtime",
+    "dependency vulnerability audit",
+    "deployment"
+  ],
+  "functional_parity_complete": false,
+  "external_browser_template_checks": [
+    {
+      "label": "jena-extension",
+      "official_url": "https://www.uni-jena.de/unijenamedia/66670/gaststud-verlaengerung.doc",
+      "width": 390,
+      "failures": [
+        {
+          "url": "https://www.uni-jena.de/unijenamedia/66670/gaststud-verlaengerung.doc",
+          "error": "net::ERR_CERT_AUTHORITY_INVALID"
+        }
+      ],
+      "downloads": [],
+      "popups": [
+        "chrome-error://chromewebdata/"
+      ],
+      "live_external_browser_passed": false
+    },
+    {
+      "label": "jena-extension",
+      "official_url": "https://www.uni-jena.de/unijenamedia/66670/gaststud-verlaengerung.doc",
+      "width": 1440,
+      "failures": [
+        {
+          "url": "https://www.uni-jena.de/unijenamedia/66670/gaststud-verlaengerung.doc",
+          "error": "net::ERR_CERT_AUTHORITY_INVALID"
+        }
+      ],
+      "downloads": [],
+      "popups": [
+        "chrome-error://chromewebdata/"
+      ],
+      "live_external_browser_passed": false
+    }
+  ],
+  "ready_for_release": false
+}

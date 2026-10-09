@@ -450,8 +450,12 @@ def _build_ai_indexes(
 
 def _partners_for_home_school(home_school: str, data_dir: Path):
     home = require_university(home_school)
+    from .ccu_student_view import fetch_ccu_partner_universities
+
     partners = (
-        fetch_ntpu_partner_universities()
+        fetch_ccu_partner_universities()
+        if home.id == "ccu"
+        else fetch_ntpu_partner_universities()
         if home.id == NTPU.id
         else fetch_partner_universities()
     )

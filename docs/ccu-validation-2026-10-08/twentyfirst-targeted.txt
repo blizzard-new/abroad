@@ -1,0 +1,23 @@
+CONFTEST LOADED!
+.......F...........                                                      [100%]
+=================================== FAILURES ===================================
+_________ test_proven_same_body_rechecks_preserve_all_prior_snapshots __________
+
+    def test_proven_same_body_rechecks_preserve_all_prior_snapshots():
+        report = read("twentyfirst-source-review.json")
+        assert report["acquisition_count"] == len(report["source_reviews"]) == 84
+        assert report["new_source_count"] == 44
+        assert len(report["same_body_rechecks"]) == 10
+        assert len(report["prior_snapshot_hashes"]) == 876
+        for sid, expected in report["prior_snapshot_hashes"].items():
+            assert hashlib.sha256((BUNDLE / "overseas_sources" / (sid + ".json")).read_bytes()).hexdigest() == expected
+        for item in report["same_body_rechecks"]:
+            assert item["same_extracted_text"] and item["text_sha256"] and item["final_url"]
+>       sdu = next(x for x in report["same_body_rechecks"] if x["candidate_source_id"] == "p89-r21-04ca22ff09")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/test_ccu_twentyfirst_pass.py:119: StopIteration
+=========================== short test summary info ============================
+FAILED tests/test_ccu_twentyfirst_pass.py::test_proven_same_body_rechecks_preserve_all_prior_snapshots
+1 failed, 18 passed in 7.00s

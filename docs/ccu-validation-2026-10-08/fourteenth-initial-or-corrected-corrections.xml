@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="17" time="16.259" timestamp="2026-10-08T12:23:35.516270+00:00" hostname="e5e438874453"><testcase classname="tests.test_ccu_fourteenth_pass" name="test_seoultech_new_body_supersedes_old_housing_and_dates_without_guessing" time="0.080" /><testcase classname="tests.test_ccu_fourteenth_pass" name="test_actual_catalogue_keeps_first_second_dorm_and_home_recommendation_separate" time="2.283" /><testcase classname="tests.test_ccu_fourteenth_pass" name="test_public_routes_fill_missing_but_preserve_year_campus_and_nationality_scope" time="0.626" /><testcase classname="tests.test_ccu_parent_fixes" name="test_real_pending_scopes_neither_pass_nor_block_in_both_apis[\u7ba1\u7406\u5b78\u9662-\u5927\u5b78\u90e8-104]" time="1.404" /><testcase classname="tests.test_ccu_parent_fixes" name="test_real_pending_scopes_neither_pass_nor_block_in_both_apis[\u7ba1\u7406\u5b78\u9662-\u5927\u5b78\u90e8-37]" time="1.142" /><testcase classname="tests.test_ccu_parent_fixes" name="test_real_pending_scopes_neither_pass_nor_block_in_both_apis[\u5de5\u5b78\u9662-\u535a\u58eb\u73ed-104]" time="1.085" /><testcase classname="tests.test_ccu_parent_fixes" name="test_real_pending_scopes_neither_pass_nor_block_in_both_apis[\u5de5\u5b78\u9662-\u535a\u58eb\u73ed-37]" time="3.221" /><testcase classname="tests.test_ccu_parent_fixes" name="test_cnu_after_application_deadlines_and_post_offer_project_separately" time="1.306" /><testcase classname="tests.test_ccu_parent_fixes" name="test_hufs_general_essay_has_no_page_minimum_and_program_condition_survives" time="0.502" /><testcase classname="tests.test_ccu_parent_fixes" name="test_ryukoku_template_links_and_institutional_stamp_do_not_publish_workflow" time="1.104" /><testcase classname="tests.test_ccu_parent_fixes" name="test_new_document_metadata_preserves_existing_hashes_and_binds_stage_changes" time="1.073" /><testcase classname="tests.test_ccu_third_pass" name="test_receiving_reciprocity_cap_preserves_ccu_home_quota" time="0.069"><failure message="AttributeError: 'ExchangeFieldEvidence' object has no attribute 'source_id'. Did you mean: 'source_url'?">def test_receiving_reciprocity_cap_preserves_ccu_home_quota():
+        p = at(48)
+        assert p.quota == "一學期(one semester) 2名 或 一學年(one year) 1名"
+        assert p.quota_status == "published" and p.availability_status == "open"
+        field = p.partner_exchange_details["program_scope"]
+        assert field.status == "verified_current"
+        assert "最多2人" in field.value and "1個open seat" in field.value
+        assert "不是自動保證2席" in field.value
+        assert any(e.source_pages == [4] for e in field.evidence)
+        eligibility = p.partner_exchange_details["eligibility"]
+        assert eligibility.status == "verified_current"
+        assert "大學部至少完成2學期、研究所至少1學期" in eligibility.value
+&gt;       assert any(e.source_id == "p48-r14-inbound" for e in eligibility.evidence)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_ccu_third_pass.py:126: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_ccu_third_pass.py:126: in &lt;genexpr&gt;
+    assert any(e.source_id == "p48-r14-inbound" for e in eligibility.evidence)
+               ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = ExchangeFieldEvidence(source_url='https://global.seoultech.ac.kr/bound/inbound', source_pages=[], academic_year='PDF正文...2028 - 2027 Spring : March 2, 2027 ~ June 21, 2027 ', reference_excerpt=None, note='指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。')
+item = 'source_id'
+
+    def __getattr__(self, item: str) -&gt; Any:
+        private_attributes = object.__getattribute__(self, '__private_attributes__')
+        if item in private_attributes:
+            attribute = private_attributes[item]
+            if hasattr(attribute, '__get__'):
+                return attribute.__get__(self, type(self))  # type: ignore
+    
+            try:
+                # Note: self.__pydantic_private__ cannot be None if self.__private_attributes__ has items
+                return self.__pydantic_private__[item]  # type: ignore
+            except KeyError as exc:
+                raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}') from exc
+        else:
+            # `__pydantic_extra__` can fail to be set if the model is not yet fully initialized.
+            # See `BaseModel.__repr_args__` for more details
+            try:
+                pydantic_extra = object.__getattribute__(self, '__pydantic_extra__')
+            except AttributeError:
+                pydantic_extra = None
+    
+            if pydantic_extra and item in pydantic_extra:
+                return pydantic_extra[item]
+            else:
+                if hasattr(self.__class__, item):
+                    return super().__getattribute__(item)  # Raises AttributeError if appropriate
+                else:
+                    # this is the current error
+&gt;                   raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E                   AttributeError: 'ExchangeFieldEvidence' object has no attribute 'source_id'. Did you mean: 'source_url'?
+
+.venv/lib/python3.12/site-packages/pydantic/main.py:1042: AttributeError</failure></testcase><testcase classname="tests.test_ccu_eighth_pass" name="test_eighth_counts_and_ledger_distinguish_acquisition_and_full_research" time="0.969" /><testcase classname="tests.test_ccu_fourth_pass" name="test_full_read_ledger_does_not_turn_missing_values_into_nonpublication" time="0.213" /><testcase classname="tests.test_ccu_fifth_pass" name="test_ledger_records_actual_read_scope_and_the_latest_change_inventory" time="0.005" /><testcase classname="tests.test_ccu_seventh_pass" name="test_seventh_acquisition_and_review_do_not_claim_all_public_research_complete" time="0.004" /><testcase classname="tests.test_ccu_sixth_pass" name="test_sixth_ledger_and_counts_preserve_partial_review_and_actual_acquisition_mode" time="0.006" /></testsuite></testsuites>
