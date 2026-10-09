@@ -1,12 +1,14 @@
 {
-  "timestamp": "2026-10-09T16:35:02.888824+00:00",
+  "timestamp": "2026-10-09T16:58:27.513536+00:00",
   "sha": "bedc9a03c0968a57728d1d08f6654404a3474269",
   "source_status": "",
   "counts": {
-    "passed": 288,
-    "failed": 1
+    "passed": 2265,
+    "failed": 2,
+    "skipped": 14
   },
   "failed": [
+    "tests/e2e/test_web_next_phase.py::test_calendar_task_schedule_uses_student_days_and_completion_stops_start_marker",
     "tests/e2e/test_ccu_delayed_switching.py::test_queued_form_save_keeps_original_home_when_switching_before_debounce[390]"
   ],
   "shards": [
@@ -14,34 +16,36 @@
       "shard": 0,
       "state": "running",
       "counts": {
-        "passed": 69
+        "passed": 1915,
+        "failed": 1,
+        "skipped": 14
       },
-      "last": "tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it "
+      "last": "tests/test_review_source_candidates.py::test_data_010_candidate_identity_and_evidence_match_official_workflows "
     },
     {
       "shard": 1,
-      "state": "running",
+      "state": "passed",
       "counts": {
-        "passed": 63
+        "passed": 117
       },
-      "last": "u7121\\u9808\\u63a5\\u6a5f\\u670d\\u52d9\\u8005-\\u5148\\u7531\\u5169\\u6821\\u78ba\\u8a8d\\u9ad4\\u6aa2\\u5c0d\\u7b49\\u4e92\\u514d-ncu-seu-reciprocal-health-390.png] "
+      "last": "WEB_SHARD 1 exit=0 elapsed=1503.180s"
     },
     {
       "shard": 2,
-      "state": "running",
+      "state": "passed",
       "counts": {
-        "passed": 97
+        "passed": 117
       },
-      "last": "tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[1440] "
+      "last": "WEB_SHARD 2 exit=0 elapsed=1200.755s"
     },
     {
       "shard": 3,
-      "state": "running",
+      "state": "failed",
       "counts": {
-        "passed": 59,
+        "passed": 116,
         "failed": 1
       },
-      "last": "tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[390] "
+      "last": "WEB_SHARD 3 exit=1 elapsed=1799.891s"
     }
   ]
 }

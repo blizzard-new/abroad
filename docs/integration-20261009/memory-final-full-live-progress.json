@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-10-09T16:58:26.900724+00:00",
+  "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+  "source_status": "",
+  "counts": {
+    "passed": 270,
+    "failed": 3
+  },
+  "failed": [
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393]",
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834]",
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440]"
+  ],
+  "shards": [
+    {
+      "shard": 0,
+      "state": "running",
+      "counts": {
+        "passed": 41,
+        "failed": 3
+      },
+      "last": "rence_scope_and_student_content[kansai-\\u95dc\\u897f\\u5927\\u5b78-\\u521d\\u6b21\\u516d\\u985e\\u5171\\u901a\\uff0c\\u4e26\\u975e\\u6bcd\\u6821\\u4e03\\u4ef6-6-390] "
+    },
+    {
+      "shard": 1,
+      "state": "running",
+      "counts": {
+        "passed": 82
+      },
+      "last": "tests/e2e/test_ntu_destination_enrichment.py::test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh[1440] "
+    },
+    {
+      "shard": 2,
+      "state": "passed",
+      "counts": {
+        "passed": 117
+      },
+      "last": "WEB_SHARD 2 exit=0 elapsed=756.469s"
+    },
+    {
+      "shard": 3,
+      "state": "running",
+      "counts": {
+        "passed": 30
+      },
+      "last": "tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history "
+    }
+  ]
+}

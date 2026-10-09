@@ -1,3 +1,11 @@
+# PR #6 穩定性修正驗證中：2026-10-09 16:59 UTC
+
+固定候選 `f3e0b666f28d82deaf17ceec701d8f0131ea2b5c`；[PR #6](https://github.com/blizzard-new/abroad/pull/6) 仍為draft，尚未合併。主程式仍是四支已授權PR的merge `1c715d21`。完整2647案正在跑；35migration／實際Storage／治理／舊Python相容性與wheel、lock、OpenAPI、JS、SQL已通過。三筆本機ENOSPC導覽截图失敗已在磁碟恢復後以相同SHA、原assertions重跑全部通過。原失敗保留。
+
+本機8併發峰值由586.57降到338.56MiB；前一記憶體候選暖快取長跑360GET/36選校/6NTU流程峰值424.57MiB。最新f3長跑進行中；這些不是Render cgroup實測值，正式穩定驗收仍待合併後確認。讀[memory-progress.md](memory-progress.md)與[execution-status.json](execution-status.json)看當前門檻。
+
+---
+
 # 發布穩定性阻擋：2026-10-09 15:59 UTC
 
 四支PR與DB已合併／套用，Render merge SHA `1c715d21` 曾於15:46:11 live；六校6 HTTP、6 guest forum拒絕、12手機桌面切換passed。但其後台大照片/地球/生活回歸在15:54:55遭多個502，Render事件明確確認512Mi OOM kill，15:55:31自動恢復。**尚未完成穩定上線驗收。**

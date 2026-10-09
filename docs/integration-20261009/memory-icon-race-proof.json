@@ -1,0 +1,40 @@
+{
+  "baseline": [
+    {
+      "redraw_during_pointer": false,
+      "menu_open": "true",
+      "original_icon_connected": true
+    },
+    {
+      "redraw_during_pointer": true,
+      "menu_open": "false",
+      "original_icon_connected": false
+    },
+    {
+      "redraw_during_pointer": false,
+      "menu_open": "true",
+      "original_icon_connected": true
+    }
+  ],
+  "fixed": [
+    {
+      "redraw_during_pointer": false,
+      "menu_open": "true",
+      "original_icon_connected": true
+    },
+    {
+      "redraw_during_pointer": true,
+      "menu_open": "true",
+      "original_icon_connected": true
+    },
+    {
+      "redraw_during_pointer": false,
+      "menu_open": "true",
+      "original_icon_connected": true
+    }
+  ],
+  "scenario": "Real pointerdown, production initIcons renderer, pointerup; no response or application-state substitution",
+  "baseline_app_js_unchanged_from_main": true,
+  "fixed_head": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+  "focused_tests": "4 passed including both original full-run failures and two new icon regressions"
+}

@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "--tb=short",
+    "tests/e2e/test_icon_rendering.py",
+    "tests/e2e/test_ccu_delayed_switching.py::test_queued_form_save_keeps_original_home_when_switching_before_debounce[390]",
+    "tests/e2e/test_web_next_phase.py::test_calendar_task_schedule_uses_student_days_and_completion_stops_start_marker",
+    "--junitxml=/workspace/integration-evidence/memory-ui-focused/junit.xml"
+  ],
+  "cwd": "/workspace/abroad-memory-followup",
+  "started_at": "2026-10-09T16:42:02.036643+00:00",
+  "start_guard": {
+    "sha": "bedc9a03c0968a57728d1d08f6654404a3474269",
+    "tree": "5a705d568d52ab249baeb5b808ed9a29ca6fd1a8",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/static/app.js\n M tests/e2e/test_web_next_phase.py\n?? tests/e2e/test_icon_rendering.py"
+  },
+  "timeout_seconds": 1200,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T16:43:14.103747+00:00",
+  "end_guard": {
+    "sha": "bedc9a03c0968a57728d1d08f6654404a3474269",
+    "tree": "5a705d568d52ab249baeb5b808ed9a29ca6fd1a8",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M tests/e2e/test_web_next_phase.py\n?? tests/e2e/test_icon_rendering.py"
+  }
+}

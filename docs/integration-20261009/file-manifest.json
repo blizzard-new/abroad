@@ -1,8 +1,8 @@
 [
   {
     "path": "README.md",
-    "bytes": 5499,
-    "sha256": "e4438a5982ad3b14e64a375eb773c703c70201dc26ae932e3be8d8c67d637ef5"
+    "bytes": 6356,
+    "sha256": "3bee70c8541b1c46b114f8d2b3080993ae413973e567b38a85389aa9e2e44f6c"
   },
   {
     "path": "acceptance-runs-index.json",
@@ -61,8 +61,8 @@
   },
   {
     "path": "execution-status.json",
-    "bytes": 5900,
-    "sha256": "d92e4a4a918581fe04b70a0db0904ae4bb7ddd4d47aee772c634b11d56fede99"
+    "bytes": 6643,
+    "sha256": "91c363738b37d8a9671035ecffb01b8a3a8ab255461d2a033bbe2d4355e04465"
   },
   {
     "path": "final-full-progress.json",
@@ -200,6 +200,11 @@
     "sha256": "6dbaa52ce86b9539914a1b960415c9bb2e950a84e3cf3abcd0d711fa35f1f0f4"
   },
   {
+    "path": "harness/check_memory_release.py",
+    "bytes": 2300,
+    "sha256": "46d5424950ebe5dd362b0acf058888b6f01242e94815c9474c496839b6c38b22"
+  },
+  {
     "path": "harness/final_full_progress.py",
     "bytes": 1625,
     "sha256": "380cccda2677a94e1f476e4af888611354ad6cc4bf47c7a60f53550b4eb4277a"
@@ -233,6 +238,11 @@
     "path": "harness/local_memory_server.py",
     "bytes": 2653,
     "sha256": "c62de658bca95210392d8c72d9eca0302e07c64652c920199827a15dfaa452eb"
+  },
+  {
+    "path": "harness/memory_final_full_progress.py",
+    "bytes": 1251,
+    "sha256": "8cd4de7a7d5b338f107c0ca20f13db81957c21880e8d9b5e544328799123bbc5"
   },
   {
     "path": "harness/memory_full_progress.py",
@@ -286,8 +296,8 @@
   },
   {
     "path": "harness/profile_six_school_memory.py",
-    "bytes": 7247,
-    "sha256": "c4d2a8e5c19da9b01c9abd1f2ce6d8880c4be5f2e9337d9e65849ee1074f230d"
+    "bytes": 9068,
+    "sha256": "1a9194f589fdfaca784f19369c5c6bfc78a18efe92b49e48c4fb60d89c054d98"
   },
   {
     "path": "harness/rerun_browser_failures.py",
@@ -615,6 +625,11 @@
     "sha256": "c96660a5dac1d5ec4ee6a37bb3911762758b97c9d42f614de27b9a08a182b374"
   },
   {
+    "path": "memory-build-space-management.json",
+    "bytes": 378,
+    "sha256": "f8719c3d4151dbb333e09fc003adb2331b294cba182aaeb807ad6e6df1cf23b0"
+  },
+  {
     "path": "memory-clock-failure-probe/junit.xml",
     "bytes": 2272,
     "sha256": "5b1ed3275d1879ab3b8c4f33fb98bb36a4665b1de2f166deb47be1000ee02410"
@@ -640,9 +655,79 @@
     "sha256": "298d0c412f6e8c4c030b9edba8b05ca3324dadc5f8ad00d2721e54d33173d946"
   },
   {
+    "path": "memory-clock-module-repeat/junit.xml",
+    "bytes": 1493,
+    "sha256": "56c2f0a24130ceb5300a417cbe7f53ed1bdb4e6acd67a9f1dcb7734260ef8ac2"
+  },
+  {
+    "path": "memory-clock-module-repeat/metadata.json",
+    "bytes": 891,
+    "sha256": "3426aaf675adb2c8f5c3c6facb93921448a9491361d0f7c43507844f3ddfae6c"
+  },
+  {
+    "path": "memory-clock-module-repeat/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-clock-module-repeat/stdout.log",
+    "bytes": 127,
+    "sha256": "d1bf1b57dafe6c61f048eb11dda90c01db1e263e136bd5ed00b3616c60e174ca"
+  },
+  {
+    "path": "memory-clock-pointer-probe/junit.xml",
+    "bytes": 409,
+    "sha256": "fcb1fb3da28c58e8184291ca3e7f356b3b3774bf1d072633765aff1fdf62b8b6"
+  },
+  {
+    "path": "memory-clock-pointer-probe/metadata.json",
+    "bytes": 924,
+    "sha256": "b8aa85a1eb114b14add701346b478524aeb6e10bbc11668abcb54f983e711c15"
+  },
+  {
+    "path": "memory-clock-pointer-probe/navigation-events.json",
+    "bytes": 601,
+    "sha256": "ae9376ad71df6def728fa093b623cd0cd32ef30b85b3200307f8f296d974c205"
+  },
+  {
+    "path": "memory-clock-pointer-probe/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-clock-pointer-probe/stdout.log",
+    "bytes": 126,
+    "sha256": "ab78e8181a97b153ecaad35e3c8e4f3ddc0291f73f5868dd42f0ceabbe8dc4a4"
+  },
+  {
     "path": "memory-eight-concurrent-comparison.json",
     "bytes": 2423,
     "sha256": "d1ec12ae9d57640f30a4fae45249a1dfc984fa73055bd3a9a5c34ea2ef8c6711"
+  },
+  {
+    "path": "memory-final-build-space-management.json",
+    "bytes": 270,
+    "sha256": "921426616005285b8fe51f8d34465e584a730b8ac2d8a514339dd395fdbf4935"
+  },
+  {
+    "path": "memory-final-enospc-rerun/metadata.json",
+    "bytes": 924,
+    "sha256": "26fc185057f0fd01a3eb5e0fe257f1a02b806712bacbdbc8a1c131140946e138"
+  },
+  {
+    "path": "memory-final-enospc-rerun/results.xml",
+    "bytes": 632,
+    "sha256": "2d3415fc10e90e72a033470e02ca49511479aeb3aff0f64b14eb17d089636221"
+  },
+  {
+    "path": "memory-final-enospc-rerun/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-final-enospc-rerun/stdout.log",
+    "bytes": 116,
+    "sha256": "10f4faf0330cb5715270d89dd2330829990ae01053ff88d7d059ee69963920f2"
   },
   {
     "path": "memory-final-focused-regression/junit.xml",
@@ -663,6 +748,126 @@
     "path": "memory-final-focused-regression/stdout.log",
     "bytes": 197,
     "sha256": "ac5f4783c641bbd396cd1d2ea210972b2adfc02bccf4218ff69558c276b4fc12"
+  },
+  {
+    "path": "memory-final-full-live-progress.json",
+    "bytes": 1436,
+    "sha256": "f65f2c49219d008f9593d3075e197b0e104e0fc6c3d0ef251af7237901ea5452"
+  },
+  {
+    "path": "memory-final-full-shard-2/collect-nodeids.txt",
+    "bytes": 12861,
+    "sha256": "81cb755f84a2bbfce195061f5f601e673bfa14c000d1033765f2856b1de6f234"
+  },
+  {
+    "path": "memory-final-full-shard-2/metadata.json",
+    "bytes": 985,
+    "sha256": "2d97a1c95545c3fab1f2a23595dc6d6ceb28880cac4cfb9e4c1256bec59c0314"
+  },
+  {
+    "path": "memory-final-full-shard-2/partition.json",
+    "bytes": 11208,
+    "sha256": "7620ba803e01db0527bf94c9c0f10aa239dbe42132e8852e7113ed78611da156"
+  },
+  {
+    "path": "memory-final-full-shard-2/result.json",
+    "bytes": 138,
+    "sha256": "bc594b5edfa38dd0f03bffd6944daaeddf75438432db6c015b47f9d146126826"
+  },
+  {
+    "path": "memory-final-full-shard-2/results.xml",
+    "bytes": 17813,
+    "sha256": "f8828fe69f7aadacf8b14b98643e9efef0e9f43465ab190ada263320e5e7b23e"
+  },
+  {
+    "path": "memory-final-full-shard-2/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-final-full-shard-2/stdout.log",
+    "bytes": 44987,
+    "sha256": "a6bfda90588ca799181375d4310f8da03a1f812dac81b9e42d7e3342d4e6341b"
+  },
+  {
+    "path": "memory-final-release-checks/checks.json",
+    "bytes": 1257,
+    "sha256": "e0e14a16175b49049be2cd1d3983f0e7f42dee07c2227866562c1b744564afb7"
+  },
+  {
+    "path": "memory-final-release-checks/javascript.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-final-release-checks/lock.log",
+    "bytes": 143,
+    "sha256": "f0fb9eac560ce680c0c9c75ee0f5fb830eb58a5a43fa84eb52f1c448d31eafa5"
+  },
+  {
+    "path": "memory-final-release-checks/metadata.json",
+    "bytes": 774,
+    "sha256": "d619a88bb31e78ecc53729e035d79358635dbb665d68de208583865c1b768bec"
+  },
+  {
+    "path": "memory-final-release-checks/openapi.log",
+    "bytes": 85,
+    "sha256": "add9dc811328f2220ac20acafbbd44101eb419a79cb738b79c87c26a44b3d701"
+  },
+  {
+    "path": "memory-final-release-checks/python.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-final-release-checks/sql-parser.log",
+    "bytes": 3343,
+    "sha256": "aafd92b1bfe45e0471127631bfae44ae2094bbd5db2d02f4eb51fd794e5e6398"
+  },
+  {
+    "path": "memory-final-release-checks/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-final-release-checks/stdout.log",
+    "bytes": 394,
+    "sha256": "a6adfafbcca20a26b730438157c6557f63774dfcf5c864e5193dd3848a939346"
+  },
+  {
+    "path": "memory-final-release-checks/wheel.log",
+    "bytes": 1003548,
+    "sha256": "6b5ea548b503a3714a6f1a38a17552f2fa05854888de827632be6d37ca0c9458"
+  },
+  {
+    "path": "memory-final-release-checks/whitespace.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-final-release-scope-proof.json",
+    "bytes": 2106,
+    "sha256": "69f9c29e386c1744931e4efb7cb63f5c1eae82424a307afd9348dc32c6ed8815"
+  },
+  {
+    "path": "memory-final-runtime/metadata.json",
+    "bytes": 817,
+    "sha256": "44566b70fb37a3c03c0ccd74adc074915891b9cd755cf1a024171715264e30e0"
+  },
+  {
+    "path": "memory-final-runtime/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-final-runtime/stdout.log",
+    "bytes": 3979355,
+    "sha256": "a498e8dd58ceb3a272e06c8b26f8e47c620b5a24f1a3b6e965e5aec0573e1ddd"
+  },
+  {
+    "path": "memory-final-runtime-result.json",
+    "bytes": 7382357,
+    "sha256": "da2adece3a5d71bcf3917fe857cf2752c416c5a5ccaf737fca5317ea7d6ade42"
   },
   {
     "path": "memory-final-soak/memory-samples.json",
@@ -713,6 +918,11 @@
     "path": "memory-final-warm-soak/stdout.log",
     "bytes": 3397,
     "sha256": "57616823384d4a795f91d6cc03712bbdd19c015652650f72f3214cdd4908202f"
+  },
+  {
+    "path": "memory-final-wheel-proof.json",
+    "bytes": 337,
+    "sha256": "ccec7fafc54cdbcc943fd8c5fa6766fd6701e027f8b2e67699fa85917c8d425c"
   },
   {
     "path": "memory-fixed-contract/junit.xml",
@@ -826,13 +1036,158 @@
   },
   {
     "path": "memory-full-live-progress.json",
-    "bytes": 1291,
-    "sha256": "b0166da08a9a6420f0a1979f6ba19bab4c8908a07a49d4246100a4dcc2d59db9"
+    "bytes": 1261,
+    "sha256": "2c8997473206fcdde9c2e2dfa686f42ba1c8664166db1b880b3369f714b38f8b"
   },
   {
     "path": "memory-full-progress.json",
     "bytes": 1454,
     "sha256": "d5c862b3439ed0503cf55c94d4dc617d4cfb444331626146eb3c66fa78398223"
+  },
+  {
+    "path": "memory-full-shard-1/collect-nodeids.txt",
+    "bytes": 17488,
+    "sha256": "24a0a225b509ee480a72b2cee29449dd5535c0c25fdd721dd61187d69935b69e"
+  },
+  {
+    "path": "memory-full-shard-1/metadata.json",
+    "bytes": 964,
+    "sha256": "30895677d89b40ab55b4ba977c839f145179ece2534c1db71670d9678d302926"
+  },
+  {
+    "path": "memory-full-shard-1/partition.json",
+    "bytes": 11166,
+    "sha256": "e3a66c9d0608502ef00c65b302392dd2d8a1ea70d72dbe0be022a30e127b004a"
+  },
+  {
+    "path": "memory-full-shard-1/result.json",
+    "bytes": 139,
+    "sha256": "de35a4598272b2c74cd2df2cdbc0846db9f0a2f29305ab26e73f30170529c4f3"
+  },
+  {
+    "path": "memory-full-shard-1/results.xml",
+    "bytes": 22504,
+    "sha256": "7ba810e54e1151a61f5b2b394b907494e1eb8d5a548b5322b5c68cc12c32ea85"
+  },
+  {
+    "path": "memory-full-shard-1/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-full-shard-1/stdout.log",
+    "bytes": 53663,
+    "sha256": "f6315f9c64726c8907455eea7433772edf5db6a0653133383e25212fe4bef4c7"
+  },
+  {
+    "path": "memory-full-shard-2/collect-nodeids.txt",
+    "bytes": 12923,
+    "sha256": "6dee43387b9348d84594e167885d7c9ffe909e02902b9d732fcdeaee483ecbe2"
+  },
+  {
+    "path": "memory-full-shard-2/metadata.json",
+    "bytes": 964,
+    "sha256": "9bcef9ff2d2ef865c3c3b771a46b8c4ecd9a6205f5bbe57505cdf2c006e2ee19"
+  },
+  {
+    "path": "memory-full-shard-2/partition.json",
+    "bytes": 11166,
+    "sha256": "1203c9716e08c915c9d20f537120b927cb4c985b9643a5c2de70cb3c74edd4bc"
+  },
+  {
+    "path": "memory-full-shard-2/result.json",
+    "bytes": 135,
+    "sha256": "b3bf4ce61236d296fc8a4431009b2590813dcc964d5c793f185048c45a13dee7"
+  },
+  {
+    "path": "memory-full-shard-2/results.xml",
+    "bytes": 17897,
+    "sha256": "169692d81d38d88cb19d93994ed7942bb36fe494e1adb3c5c406e98995806111"
+  },
+  {
+    "path": "memory-full-shard-2/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-full-shard-2/stdout.log",
+    "bytes": 45067,
+    "sha256": "95d45475e66045dff716566a68f5344114f5735300b3b90d13deac74f35f550b"
+  },
+  {
+    "path": "memory-full-shard-3/collect-nodeids.txt",
+    "bytes": 12495,
+    "sha256": "309611b23b2330326e2e386f7ccc96d47ffc55ec64c1ad9b56ae4881df9831db"
+  },
+  {
+    "path": "memory-full-shard-3/metadata.json",
+    "bytes": 964,
+    "sha256": "7031ba51f7f1463771380f90a23844c0aeaa0e14ad392b4a67ed56b0fe99988c"
+  },
+  {
+    "path": "memory-full-shard-3/partition.json",
+    "bytes": 11166,
+    "sha256": "d3a247f5fb5b6bac21b8375346d1ba00c5b60f6be8ab490c16c7269459b705c2"
+  },
+  {
+    "path": "memory-full-shard-3/result.json",
+    "bytes": 139,
+    "sha256": "23618a880e05e7fd227973957d36757a0b90d4d9a77f4fedf735549038fa6e4e"
+  },
+  {
+    "path": "memory-full-shard-3/results.xml",
+    "bytes": 19410,
+    "sha256": "d4bb542c397e061e29836401f0f860211cf846a7ebd8b66311bc059e50d953ad"
+  },
+  {
+    "path": "memory-full-shard-3/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-full-shard-3/stdout.log",
+    "bytes": 46714,
+    "sha256": "90e5a70f259c3b019c3c97256ba55409a092dbea2895880cafa845b42b4056b1"
+  },
+  {
+    "path": "memory-icon-race-proof.json",
+    "bytes": 1068,
+    "sha256": "96ada053c000cfa9030e98fa9751fdeda0818e456e2feacb872953208872aa28"
+  },
+  {
+    "path": "memory-inactive-worktree-space-management.json",
+    "bytes": 600,
+    "sha256": "02cc84873b97ba86bee743807593688753f249cf00754d078059ccc3d7ddb579"
+  },
+  {
+    "path": "memory-menu-icon-race/memory-samples.json",
+    "bytes": 1526,
+    "sha256": "08bd71c619f15aecb6a669bb22a6cc2d31450282a58a6b60b31df55b1cac74a5"
+  },
+  {
+    "path": "memory-menu-icon-race/menu-icon-race.json",
+    "bytes": 322,
+    "sha256": "a31e47d6403bbd7e8012ae6b052d24a63c901d3d345377b294de76c5274f5217"
+  },
+  {
+    "path": "memory-menu-icon-race/metadata.json",
+    "bytes": 854,
+    "sha256": "756424bf68276fbf65b8485f62ffa363c4602f2b646ddc22f307d1f36aab8ad9"
+  },
+  {
+    "path": "memory-menu-icon-race/server.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-menu-icon-race/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-menu-icon-race/stdout.log",
+    "bytes": 530,
+    "sha256": "079e194ccfd5a04f4d6de427546a85009231d9213508207450db189d04e6c8fe"
   },
   {
     "path": "memory-openapi-export/metadata.json",
@@ -861,8 +1216,8 @@
   },
   {
     "path": "memory-progress.md",
-    "bytes": 3375,
-    "sha256": "ec5c4587fa79a73e534b2a0488a439a8fa0b916fae496550080292ea2971b05f"
+    "bytes": 1796,
+    "sha256": "68359c2cfbc0f17734f0e182a4cd54b050115b9e0ae24874cf30200fde272ca9"
   },
   {
     "path": "memory-release-precheck.json",
@@ -945,6 +1300,11 @@
     "sha256": "278a8f54f803f28a12971aa212184ae6c5f3f4b9167aff648a1d849f0d873a32"
   },
   {
+    "path": "memory-space-management.json",
+    "bytes": 550,
+    "sha256": "a385406bc860221cc968123d49aa1bec2b650b754438e491b25b38a1781ace59"
+  },
+  {
     "path": "memory-streamed-workflows-browser/memory-samples.json",
     "bytes": 6908,
     "sha256": "3c473f854a2f42c13ccedb0d8d786005b759f289630b7d13ee05eff64dea169e"
@@ -1018,6 +1378,56 @@
     "path": "memory-trace-six-catalogs/stdout.log",
     "bytes": 518,
     "sha256": "295a11450892f390f51bc45c2807a08865a646c32811d921eeb6c287c3815e35"
+  },
+  {
+    "path": "memory-ui-controlled-replay/memory-samples.json",
+    "bytes": 1525,
+    "sha256": "8c831301a51daa5ba3c387e7108e7fc917aaddbd6ba6fff7003d131d3ac4484b"
+  },
+  {
+    "path": "memory-ui-controlled-replay/menu-icon-race.json",
+    "bytes": 320,
+    "sha256": "28e623fdf6bade025c68eaf713d987a79bc50c1bd6473bb569c942ee65e9a43c"
+  },
+  {
+    "path": "memory-ui-controlled-replay/metadata.json",
+    "bytes": 1221,
+    "sha256": "b8ad9b19eea2114221074edea35b85cc17f33565f541eb480931ed0a04425413"
+  },
+  {
+    "path": "memory-ui-controlled-replay/server.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-ui-controlled-replay/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-ui-controlled-replay/stdout.log",
+    "bytes": 528,
+    "sha256": "a92a45b2ec2806f832a4e0f4c52d67ef5b20ce98b9a3da24b61913c29b9e939d"
+  },
+  {
+    "path": "memory-ui-focused/junit.xml",
+    "bytes": 850,
+    "sha256": "55cfee709728386db99514c4b1e6cccd7c6c61a94fb656a8e64c980ff238cf8d"
+  },
+  {
+    "path": "memory-ui-focused/metadata.json",
+    "bytes": 1443,
+    "sha256": "21e365fb07e2f88df96b7d64da07d10cf60d523fde028e586783ea1fcdd36b6c"
+  },
+  {
+    "path": "memory-ui-focused/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-ui-focused/stdout.log",
+    "bytes": 126,
+    "sha256": "1969de5af3b21204a54959eb9bae0525aea1e497d6d7c7f445ae6c96deb0fbf3"
   },
   {
     "path": "memory-warm-soak-summary.json",

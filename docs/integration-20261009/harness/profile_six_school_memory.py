@@ -74,6 +74,31 @@ with tempfile.TemporaryDirectory(prefix='abroad-memory-profile-') as data:
                         for item in endpoints:
                             get(item)
                     sample(f'round-{iteration}-{school}')
+            if '--menu-race' in sys.argv:
+                from types import SimpleNamespace
+                from playwright.sync_api import sync_playwright
+                sys.path.insert(0,str(Path.cwd()))
+                from tests.e2e.conftest import enter_public_site
+                with sync_playwright() as playwright:
+                    browser=playwright.chromium.launch(headless=True,args=['--no-sandbox'])
+                    page=browser.new_page(viewport={'width':390,'height':956})
+                    page.emulate_media(reduced_motion='reduce')
+                    enter_public_site(page,SimpleNamespace(base_url=base),'partners')
+                    scenarios=[]
+                    for redraw in (False,True,False):
+                        if page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+                            page.locator('#glass-menu-close').click()
+                        box=page.locator('#glass-menu-toggle').bounding_box()
+                        page.evaluate('window.__oldMenuIcon=document.querySelector("#glass-menu-toggle svg")')
+                        page.mouse.move(box['x']+box['width']/2,box['y']+box['height']/2)
+                        page.mouse.down()
+                        if redraw:page.evaluate('initIcons()')
+                        page.mouse.up()
+                        page.wait_for_timeout(100)
+                        scenarios.append({'redraw_during_pointer':redraw,'menu_open':page.locator('#glass-menu-toggle').get_attribute('aria-expanded'),'original_icon_connected':page.evaluate('window.__oldMenuIcon?.isConnected')})
+                    (root/'menu-icon-race.json').write_text(json.dumps(scenarios,indent=2)+'\n')
+                    print('MENU_ICON_RACE',json.dumps(scenarios),flush=True)
+                    browser.close()
             if '--burst' in sys.argv:
                 for batch in range(3):
                     endpoints = [('/student-dashboard', {'school':'CCU'})] * 8

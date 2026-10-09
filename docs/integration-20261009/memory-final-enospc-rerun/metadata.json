@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme",
+    "--junitxml=/workspace/integration-evidence/memory-final-enospc-rerun/results.xml"
+  ],
+  "cwd": "/workspace/abroad-memory-followup",
+  "started_at": "2026-10-09T16:57:16.916377+00:00",
+  "start_guard": {
+    "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+    "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+    "status": ""
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T16:57:47.955835+00:00",
+  "end_guard": {
+    "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+    "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+    "status": ""
+  }
+}

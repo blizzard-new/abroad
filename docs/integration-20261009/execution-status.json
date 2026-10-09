@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-09T16:35:35.932842+00:00",
+  "timestamp": "2026-10-09T16:58:11.195164+00:00",
   "environment": "exec recovered; latest commands succeed",
   "production": {
     "main": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
@@ -52,7 +52,7 @@
     "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200",
     "final_31234305_applied_filename_order": "passed full35, Storage and original five-school code/models; clean start/end"
   },
-  "remaining_gate": "Finish full 2645-case run and resolve the mobile clock/navigation case before PR6 merge; deploy exact SHA and low-load production stability verification remain pending.",
+  "remaining_gate": "Complete exact f3 full2647/runtime checks and 3 ENOSPC-case reruns, exact-SHA memory/browser run, then authorized PR6 merge and low-load production stability verification.",
   "tku_production_migrations_applied": true,
   "pr2_merged": true,
   "original_full": {
@@ -103,10 +103,10 @@
   ],
   "pr2_merge_sha": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
   "memory_fix": {
-    "sha": "bedc9a03c0968a57728d1d08f6654404a3474269",
+    "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
     "branch": "integration/six-school-memory-20261009",
-    "status": "fixed SHA full suite and comparative soak running; not merged",
-    "scope": "3 source files + 2 test files; all data, migrations, static assets, workflows, lock and OpenAPI unchanged",
+    "status": "Draft PR6; fixed SHA full 2647-case regression in progress; not merged",
+    "scope": "3 Python source files, stable SVG rendering and asset URL, 4 test files, incident documentation; source datasets, migrations, dependencies, workflows unchanged",
     "tests": "fixed SHA 4 new regression tests and OpenAPI check passed; earlier focused 84 passed; full 2645 cases now running",
     "preliminary_peak_mib": {
       "baseline": 489.8,
@@ -126,7 +126,10 @@
       "ntu_globe_photo_life": 6,
       "peak_mib": 424.57
     },
-    "runtime": "passed full35, 17 governance groups / 74 RPCs, six-school forum policy, actual Storage and previous deployed Python tree",
-    "full_suite_status": "running; one mobile clock/navigation failure under investigation; baseline isolated case passed"
+    "runtime": "Exactf3 passed35migrations, PostgREST, Storage, governance and previous-deployedPython compatibility; clean source guards",
+    "full_suite_status": "Three navigation screenshot failures explicitly report Errno28 ENOSPC. No application assertion failed in those three. Disk relocation preserves all files; exact failed cases will rerun after full test execution.",
+    "ui_root_cause": "Real initIcons SVG replacement between pointerdown/up loses click; controlled reproduction fails on baseline and passes with stable existing SVGs. New/changed icon rendering also verified.",
+    "calendar_root_cause": "Test Python UTC date differs from real Taipei notification day after16UTC; test now uses explicit Taipei browser timezone and actual browser local date. Original assertions preserved.",
+    "enospc_rerun": "All3 original navigation cases passed on unchangedf3; clean start/end; raw full-run3ENOSPC failures retained"
   }
 }
