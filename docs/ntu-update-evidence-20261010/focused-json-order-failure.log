@@ -1,0 +1,25 @@
+CONFTEST LOADED!
+..................................F..................................... [ 83%]
+..............                                                           [100%]
+=================================== FAILURES ===================================
+____________ test_ntu_catalog_rebuilds_from_tracked_source_snapshot ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_ntu_catalog_rebuilds_from0')
+
+    def test_ntu_catalog_rebuilds_from_tracked_source_snapshot(tmp_path):
+        root = Path(__file__).parents[1]
+        subprocess.run([sys.executable, "scripts/build_ntu_catalog.py", "--output-dir", str(tmp_path)], cwd=root, check=True, capture_output=True, timeout=30)
+        bundled = root / "src/exchange_info/official_data/ntu"
+        for source in bundled.iterdir():
+            if source.is_file():
+>               assert (tmp_path / source.name).read_bytes() == source.read_bytes(), source.name
+E               AssertionError: verification_status.json
+E               assert b'[\n  {\n   ...ull\n  }\n]\n' == b'[\n  {\n   ...ull\n  }\n]\n'
+E                 
+E                 At index 655339 diff: b'p' != b'o'
+E                 Use -v to get more diff
+
+tests/test_ntu_integration.py:191: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_integration.py::test_ntu_catalog_rebuilds_from_tracked_source_snapshot
+1 failed, 85 passed in 18.90s
