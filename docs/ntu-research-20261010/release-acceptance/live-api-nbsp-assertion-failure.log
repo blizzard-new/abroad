@@ -1,0 +1,11 @@
+/health  200 0.994
+/universities  200 1.117
+/student-dashboard {'school': 'NTU'} 200 4.493
+/application-workflow {'school': '明斯特大學', 'home_school': '國立臺灣大學', 'academic_year': '116'} 200 8.152
+/deadlines {'school': 'NTU'} 200 0.593
+/destination-profile {'school': '德勒斯登工業大學', 'home_school': '國立臺灣大學'} 200 2.693
+Traceback (most recent call last):
+  File "/workspace/ntu-research-2026-10-10/live_api_acceptance.py", line 67, in <module>
+    assert '900 EUR' in destination['cost_summary'] and '350 EUR' in destination['cost_summary']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
