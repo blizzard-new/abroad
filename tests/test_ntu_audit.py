@@ -39,6 +39,12 @@ def test_all_288_summaries_reach_dashboard_and_keep_source_text(tmp_path):
     # Existing accurate portal extraction must survive the supplemental review.
     snapshot=json.loads(gzip.decompress((ROOT/'sources/ntu/2026-10-08-import.json.gz').read_bytes()))
     old=[json.loads(line)['partner'] for line in snapshot['files']['verification/partners-116-1-updated-candidates.jsonl'].splitlines()]
+    # A later dated portal batch changes only its verified reference text.
+    changes=json.loads((ROOT/'sources/ntu/2026-10-10-official-changes.json').read_text())
+    by_url={row['official_url']:row for row in changes['schools']}
+    for row in old:
+        if row['source_url'] in by_url:
+            row['eligibility']=by_url[row['source_url']]['sections_by_heading']['申請資格']['text']
     assert [(p.school_name,p.country,p.eligibility,p.tuition_info) for p in partners] == [
         (p['school_name'],p['country'],p['eligibility'],p['tuition_info']) for p in old]
     assert sum(p.quota is None for p in partners) == 282
