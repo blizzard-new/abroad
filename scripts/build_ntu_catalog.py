@@ -301,6 +301,9 @@ def main():
     if enrichment.exists():
         researched = json.loads(gzip.decompress(enrichment.read_bytes()))
         write_rows("student_life.jsonl", [reviewed_life_snapshot(LifeResearchSnapshot.model_validate(row)).model_dump(mode="json") for row in researched["life"]], LifeResearchSnapshot)
+    from exchange_info.ntu_official_changes import apply_official_changes, SNAPSHOT as OFFICIAL_CHANGES
+    if OFFICIAL_CHANGES.exists():
+        apply_official_changes(OUTPUT)
     print(f"NTU: {len(partner_rows)} partners, {len(workflows)} workflows, {len(destinations)} destinations; 282 pending / 6 zero quotas")
 
 
