@@ -1,0 +1,466 @@
+{
+  "started_at": "2026-10-10T02:53:40.464756+00:00",
+  "expected_merge_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "confirmed_render_deploy": "dep-db4qe3p5efls73a1jg7g",
+  "requests": [
+    {
+      "path": "/health",
+      "params": null,
+      "status": 200,
+      "elapsed_seconds": 1.897,
+      "body_bytes": 213,
+      "sha256": "b8cb71dd1e5cf54f7d76a7fc401df8f9e8b1101b00e008f28d57f7a95368b130",
+      "checked_at": "2026-10-10T02:53:42.362034+00:00"
+    },
+    {
+      "path": "/universities",
+      "params": null,
+      "status": 200,
+      "elapsed_seconds": 0.768,
+      "body_bytes": 6211,
+      "sha256": "2da82a83a429f543e0daf8b931e44566f2cf65f1ea8fbeed32a656391b6c81ca",
+      "checked_at": "2026-10-10T02:53:44.130072+00:00"
+    },
+    {
+      "path": "/student-dashboard",
+      "params": {
+        "school": "NTU"
+      },
+      "status": 200,
+      "elapsed_seconds": 1.578,
+      "body_bytes": 2187980,
+      "sha256": "6010d8f6f13c43509548c457baa7598c5481807b402b95046f8297f33dada4c0",
+      "checked_at": "2026-10-10T02:53:46.709545+00:00"
+    },
+    {
+      "path": "/application-workflow",
+      "params": {
+        "school": "明斯特大學",
+        "home_school": "國立臺灣大學",
+        "academic_year": "116"
+      },
+      "status": 200,
+      "elapsed_seconds": 2.055,
+      "body_bytes": 25033,
+      "sha256": "5fd80e4f74d3dcf7b4f7891358da3e70124d76c06aa940447d50c1a067cf2c31",
+      "checked_at": "2026-10-10T02:53:49.787159+00:00"
+    },
+    {
+      "path": "/deadlines",
+      "params": {
+        "school": "NTU"
+      },
+      "status": 200,
+      "elapsed_seconds": 0.354,
+      "body_bytes": 3551,
+      "sha256": "1782be5857e2d8a16932a543779f4a9d9ef4b95f5d5baa993d430cce3e0422f1",
+      "checked_at": "2026-10-10T02:53:51.142310+00:00"
+    },
+    {
+      "path": "/destination-profile",
+      "params": {
+        "school": "德勒斯登工業大學",
+        "home_school": "國立臺灣大學"
+      },
+      "status": 200,
+      "elapsed_seconds": 0.842,
+      "body_bytes": 3697,
+      "sha256": "7ef1fff16112becf8da1939bf38741a1d4eb3308976b54f9f9c0a5bf8b6b4eab",
+      "checked_at": "2026-10-10T02:53:52.985325+00:00"
+    },
+    {
+      "path": "/coverage",
+      "params": {
+        "school": "長庚大學"
+      },
+      "status": 200,
+      "elapsed_seconds": 1.494,
+      "body_bytes": 43891,
+      "sha256": "84031e9852a7e2faa8ce134ac48bff78d390424cd0fc45ddd981b1b2441469f4",
+      "checked_at": "2026-10-10T02:53:55.480577+00:00"
+    },
+    {
+      "path": "/coverage",
+      "params": {
+        "school": "國立臺北大學"
+      },
+      "status": 200,
+      "elapsed_seconds": 2.512,
+      "body_bytes": 117724,
+      "sha256": "581c8572e179a08b09b9adb7116ce7b941c668ab4d619e2ebd302185d21e4eb6",
+      "checked_at": "2026-10-10T02:53:58.994078+00:00"
+    },
+    {
+      "path": "/coverage",
+      "params": {
+        "school": "國立臺灣大學"
+      },
+      "status": 200,
+      "elapsed_seconds": 1.885,
+      "body_bytes": 170089,
+      "sha256": "c1c2a6ac8d7984fb928d7188414ad47dbeb9dab9eb170e7268c1cf586bdef787",
+      "checked_at": "2026-10-10T02:54:01.881054+00:00"
+    },
+    {
+      "path": "/coverage",
+      "params": {
+        "school": "國立中正大學"
+      },
+      "status": 200,
+      "elapsed_seconds": 1.199,
+      "body_bytes": 52326,
+      "sha256": "5ddbdc1930b1d3f1a0d77877aa7aa38904a343770e16136aeb4c2770fd713fbb",
+      "checked_at": "2026-10-10T02:54:04.082015+00:00"
+    },
+    {
+      "path": "/coverage",
+      "params": {
+        "school": "國立中央大學"
+      },
+      "status": 200,
+      "elapsed_seconds": 2.309,
+      "body_bytes": 117963,
+      "sha256": "b45ce6ccbcc611b633da5fb4d29a0a730adca7de927406e96f22e5bc50f5d0f5",
+      "checked_at": "2026-10-10T02:54:07.392349+00:00"
+    },
+    {
+      "path": "/coverage",
+      "params": {
+        "school": "淡江大學"
+      },
+      "status": 200,
+      "elapsed_seconds": 0.907,
+      "body_bytes": 2440,
+      "sha256": "2de977c85228982069c91367fb0a242408cb08b8e96113cad7d7b80142bd2b9f",
+      "checked_at": "2026-10-10T02:54:09.300389+00:00"
+    }
+  ],
+  "checks": {
+    "six_universities": [
+      {
+        "id": "cgu",
+        "school_name": "長庚大學",
+        "short_name": "長庚",
+        "english_name": "Chang Gung University",
+        "aliases": [
+          "長庚大學",
+          "長庚",
+          "CGU",
+          "Chang Gung University"
+        ],
+        "hero_image": "/static/assets/cgu-campus.jpg",
+        "official_url": "https://www.cgu.edu.tw/oia-ch",
+        "supported": true,
+        "support_level": "full",
+        "partner_count": 75,
+        "coverage_note": "完整支援試點：已整理長庚大學交換、補助、文件與合作校申請流程。",
+        "location": {
+          "school_name": "長庚大學",
+          "country": "臺灣",
+          "city": "桃園市龜山區",
+          "latitude": 25.033482,
+          "longitude": 121.387478,
+          "geocode_status": "verified",
+          "geocoded_at": "2026-09-23T13:14:45.078726Z",
+          "source_url": "https://www.wikidata.org/wiki/Q2748799",
+          "identity_source_url": "https://ror.org/00d80zx46",
+          "precision": "representative",
+          "note": "校級代表位置：官方網域及國家已與 ROR 比對，座標來源為 Wikidata P625；實際交換校區以錄取通知為準。 校址來源：https://www.cgu.edu.tw/engineering/Contents?nodeId=469。"
+        },
+        "colleges": [
+          "醫學院",
+          "工學院",
+          "管理學院",
+          "智慧運算學院"
+        ]
+      },
+      {
+        "id": "ntpu",
+        "school_name": "國立臺北大學",
+        "short_name": "臺北大學",
+        "english_name": "National Taipei University",
+        "aliases": [
+          "國立臺北大學",
+          "臺北大學",
+          "台北大學",
+          "北大",
+          "NTPU",
+          "National Taipei University"
+        ],
+        "hero_image": "/static/assets/ntpu-campus.jpg",
+        "official_url": "https://new.ntpu.edu.tw/oia",
+        "supported": true,
+        "support_level": "full",
+        "partner_count": 169,
+        "coverage_note": "完整支援試點：已套用交換申請流程與 116 學年度三語組官方名額表。",
+        "location": {
+          "school_name": "國立臺北大學",
+          "country": "臺灣",
+          "city": "新北市三峽區",
+          "latitude": 24.9463,
+          "longitude": 121.373,
+          "geocode_status": "verified",
+          "geocoded_at": "2026-09-23T13:14:47.068058Z",
+          "source_url": "https://www.wikidata.org/wiki/Q707456",
+          "identity_source_url": "https://ror.org/03e29r284",
+          "precision": "representative",
+          "note": "校級代表位置：官方網域及國家已與 ROR 比對，座標來源為 Wikidata P625；實際交換校區以錄取通知為準。 三峽校區地址來源：https://new.ntpu.edu.tw/about/map-directions。"
+        },
+        "colleges": [
+          "法律學院",
+          "商學院",
+          "公共事務學院",
+          "社會科學學院",
+          "人文學院",
+          "電機資訊學院",
+          "永續創新國際學院"
+        ]
+      },
+      {
+        "id": "ntu",
+        "school_name": "國立臺灣大學",
+        "short_name": "臺大",
+        "english_name": "National Taiwan University",
+        "aliases": [
+          "國立臺灣大學",
+          "國立台灣大學",
+          "臺灣大學",
+          "台灣大學",
+          "臺大",
+          "台大",
+          "NTU",
+          "National Taiwan University"
+        ],
+        "hero_image": "/static/assets/ntu-campus.svg",
+        "official_url": "https://studyabroad.ntu.edu.tw/",
+        "supported": true,
+        "support_level": "basic",
+        "partner_count": 288,
+        "coverage_note": "已整理116-1校級甄選、文件、補助與288個合作項目；合作校本期名額與未核實條件標示待確認。",
+        "location": {
+          "school_name": "國立臺灣大學",
+          "country": "臺灣",
+          "city": null,
+          "latitude": null,
+          "longitude": null,
+          "geocode_status": "pending",
+          "geocoded_at": null,
+          "source_url": null,
+          "identity_source_url": null,
+          "precision": "representative",
+          "note": "座標待確認；不以國家或城市中心代替學校。"
+        },
+        "colleges": [
+          "文學院",
+          "理學院",
+          "社會科學院",
+          "醫學院",
+          "工學院",
+          "生物資源暨農學院",
+          "管理學院",
+          "公共衛生學院",
+          "電機資訊學院",
+          "法律學院",
+          "生命科學院",
+          "國際政經學院"
+        ]
+      },
+      {
+        "id": "ccu",
+        "school_name": "國立中正大學",
+        "short_name": "中正大學",
+        "english_name": "National Chung Cheng University",
+        "aliases": [
+          "國立中正大學",
+          "中正大學",
+          "中正",
+          "CCU",
+          "National Chung Cheng University"
+        ],
+        "hero_image": "",
+        "official_url": "https://oia.ccu.edu.tw/",
+        "supported": true,
+        "support_level": "basic",
+        "partner_count": 52,
+        "coverage_note": "已核對2027春季校級薦外交換；灰字參考與空白名額分開，三梯次校內收件已截止。",
+        "location": {
+          "school_name": "國立中正大學",
+          "country": "臺灣",
+          "city": null,
+          "latitude": null,
+          "longitude": null,
+          "geocode_status": "pending",
+          "geocoded_at": null,
+          "source_url": null,
+          "identity_source_url": null,
+          "precision": "representative",
+          "note": "座標待確認；不以國家或城市中心代替學校。"
+        },
+        "colleges": [
+          "文學院",
+          "理學院",
+          "社會科學院",
+          "工學院",
+          "管理學院",
+          "法學院",
+          "教育學院"
+        ]
+      },
+      {
+        "id": "ncu",
+        "school_name": "國立中央大學",
+        "short_name": "中央",
+        "english_name": "National Central University",
+        "aliases": [
+          "國立中央大學",
+          "中央大學",
+          "中央",
+          "中大",
+          "NCU",
+          "National Central University"
+        ],
+        "hero_image": "/static/assets/ncu-campus.svg",
+        "official_url": "https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",
+        "supported": true,
+        "support_level": "basic",
+        "partner_count": 214,
+        "coverage_note": "116學年度第一梯次簡章已公告；名額預定2026/10/12公告。115年度合作項目僅供規劃，外校當期條件逐項待核對。",
+        "location": {
+          "school_name": "國立中央大學",
+          "country": "臺灣",
+          "city": null,
+          "latitude": null,
+          "longitude": null,
+          "geocode_status": "pending",
+          "geocoded_at": null,
+          "source_url": null,
+          "identity_source_url": null,
+          "precision": "representative",
+          "note": "座標待確認；不以國家或城市中心代替學校。"
+        },
+        "colleges": [
+          "文學院",
+          "理學院",
+          "工學院",
+          "管理學院",
+          "資訊電機學院",
+          "地球科學學院",
+          "客家學院",
+          "生醫理工學院",
+          "永續與綠能科技研究學院",
+          "松濤全人學院"
+        ]
+      },
+      {
+        "id": "tku",
+        "school_name": "淡江大學",
+        "short_name": "淡江",
+        "english_name": "Tamkang University",
+        "aliases": [
+          "淡江大學",
+          "淡江",
+          "淡大",
+          "TKU",
+          "Tamkang University"
+        ],
+        "hero_image": "/static/assets/tku-campus-placeholder.svg",
+        "official_url": "https://oieie.tku.edu.tw/",
+        "supported": true,
+        "support_level": "basic",
+        "partner_count": 4,
+        "coverage_note": "部分支援：2027–2028日語第二次甄選4校7名，已截止；英歐及中文組新版尚未核實，124筆舊期資料獨立保存。",
+        "location": {
+          "school_name": "淡江大學",
+          "country": "臺灣",
+          "city": null,
+          "latitude": null,
+          "longitude": null,
+          "geocode_status": "pending",
+          "geocoded_at": null,
+          "source_url": null,
+          "identity_source_url": null,
+          "precision": "representative",
+          "note": "座標待確認；不以國家或城市中心代替學校。"
+        },
+        "colleges": [
+          "文學院",
+          "理學院",
+          "工學院",
+          "商管學院",
+          "外國語文學院",
+          "國際事務學院",
+          "教育學院",
+          "AI創智學院",
+          "精準健康學院"
+        ]
+      }
+    ],
+    "all_288_partner_reference_fields_match_tested_bundle": true,
+    "changed_20_live_content_verified": [
+      "1040",
+      "1103",
+      "1194",
+      "1200",
+      "1286",
+      "1302",
+      "247",
+      "371",
+      "375",
+      "380",
+      "391",
+      "606",
+      "69",
+      "71",
+      "72",
+      "74",
+      "85",
+      "89",
+      "98",
+      "998"
+    ],
+    "quota_counts": {
+      "blank": 282,
+      "zero": 6,
+      "confirmed_open": 0
+    },
+    "home_registration_timeline_preserved": true,
+    "reference_workflow_remains_unpublished_and_reminders_disabled": true,
+    "tsukuba_conflict_not_promoted_to_deadlines": true,
+    "updated_cost_is_dated_reference": true,
+    "coverage_by_school": {
+      "cgu": {
+        "total_partner_schools": 77,
+        "workflow_school_count": 77,
+        "destination_profile_count": 77
+      },
+      "ntpu": {
+        "total_partner_schools": 206,
+        "workflow_school_count": 166,
+        "destination_profile_count": 165
+      },
+      "ntu": {
+        "total_partner_schools": 288,
+        "workflow_school_count": 288,
+        "destination_profile_count": 288
+      },
+      "ccu": {
+        "total_partner_schools": 104,
+        "workflow_school_count": 55,
+        "destination_profile_count": 55
+      },
+      "ncu": {
+        "total_partner_schools": 214,
+        "workflow_school_count": 214,
+        "destination_profile_count": 214
+      },
+      "tku": {
+        "total_partner_schools": 4,
+        "workflow_school_count": 4,
+        "destination_profile_count": 4
+      }
+    }
+  },
+  "mode": "sequential_public_read_only_no_stress",
+  "status": "passed",
+  "finished_at": "2026-10-10T02:54:10.301184+00:00"
+}
