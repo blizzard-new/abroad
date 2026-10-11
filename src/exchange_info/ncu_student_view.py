@@ -48,13 +48,10 @@ def _payload(filename):
 
 
 def fetch_ncu_partner_universities() -> list[PartnerUniversity]:
-    return [
-        PartnerUniversity.model_validate_json(line)
-        for line in (NCU_OFFICIAL_DATA_DIR / "partners.jsonl")
-        .read_text(encoding="utf-8")
-        .splitlines()
-        if line.strip()
-    ]
+    # Stream the reviewed JSONL; read_text().splitlines() retains two copies of
+    # the whole Unicode source while the validated models are being built.
+    with (NCU_OFFICIAL_DATA_DIR / "partners.jsonl").open(encoding="utf-8") as handle:
+        return [PartnerUniversity.model_validate_json(line) for line in handle if line.strip()]
 
 
 def build_ncu_student_dashboard(
@@ -105,13 +102,8 @@ def ncu_exchange_info(partners=None) -> ExchangeInfo:
 
 
 def ncu_processed_pages() -> list[ProcessedPage]:
-    return [
-        ProcessedPage.model_validate_json(line)
-        for line in (NCU_OFFICIAL_DATA_DIR / "pages.jsonl")
-        .read_text(encoding="utf-8")
-        .splitlines()
-        if line.strip()
-    ]
+    with (NCU_OFFICIAL_DATA_DIR / "pages.jsonl").open(encoding="utf-8") as handle:
+        return [ProcessedPage.model_validate_json(line) for line in handle if line.strip()]
 
 
 def ncu_field_audit(school_name: str) -> dict | None:
