@@ -1,0 +1,30 @@
+{
+  "command": [
+    "env",
+    "TMPDIR=/workspace/integration-final4-pip-temp",
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "/workspace/recovery-tools-20261011/install_final4_wheel.py"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T18:50:49.701136+00:00",
+  "start_guard": {
+    "sha": "7a7c7e3560527ce08ca225c0930397772a8b79aa",
+    "tree": "61d4824d59c3477960ace89fbcf5f02d4ca030ce",
+    "status": ""
+  },
+  "timeout_seconds": 1200,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "/workspace/recovery-tools-20261011/install_final4_wheel.py": {
+      "sha256": "60f6d90fbbfc7e0f6d520e600d73584e94910328cf1da63dda2065e00750ebe5"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T18:51:38.385959+00:00",
+  "end_guard": {
+    "sha": "7a7c7e3560527ce08ca225c0930397772a8b79aa",
+    "tree": "61d4824d59c3477960ace89fbcf5f02d4ca030ce",
+    "status": ""
+  }
+}

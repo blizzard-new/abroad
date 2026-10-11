@@ -1,0 +1,333 @@
+{
+  "command": [
+    "env",
+    "EXCHANGE_TEST_POSTGRES=1",
+    "TMPDIR=/tmp/integration-final3-full-shard-1-tmp",
+    "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/workspace/integration-tools/browsers/chromium-1234/chrome-linux64/chrome",
+    "VISUAL_EVIDENCE_DIR=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-images",
+    "TKU_CENSUS_ASSET_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-tku-images",
+    "TKU_ACCEPTANCE_OUTPUT=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-tku-acceptance-images",
+    "CCU_ACCEPTANCE_OUTPUT=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-ccu-images",
+    "NCU_NEXT3_BROWSER_OUT=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-ncu-images",
+    "NCU_RESUME_BROWSER_OUTPUT=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-ncu-resume-images",
+    "CCU_PRIORITY_SCREENSHOTS=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-ccu-priority-images",
+    "NTU_REFERENCE_SCREENSHOTS=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-ntu-reference-images",
+    "CCU_ROUND8_SCREENSHOTS=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-ccu-round8-images",
+    "TKU_FIXED_PHOTO_UI_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-tku-fixed-photo-images",
+    "TKU_MILESTONE6_UI_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final3-full-shard-1-tku-milestone6-images",
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "scripts/run_web_quality_tests.py",
+    "--shard",
+    "1",
+    "--shards",
+    "4",
+    "--junitxml",
+    "/workspace/recovery-evidence-20261011/integration-final3-full-shard-1/result.xml",
+    "--evidence-dir",
+    "/workspace/recovery-evidence-20261011/integration-final3-full-shard-1/shard-coverage"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T18:37:33.098380+00:00",
+  "start_guard": {
+    "sha": "ca1947351467fcc726ce58ef849437c6af11358e",
+    "tree": "25e0ffa961845865dcf10b8cd2540a8a7438fe27",
+    "status": ""
+  },
+  "timeout_seconds": 3600,
+  "test_result": "cancelled",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "scripts/run_web_quality_tests.py": {
+      "sha256": "1d63519c8d90b7b6337c78d04862b2cbb7c1ebc5fafbbe2da6761f1b6af26c07"
+    }
+  },
+  "exit_code": null,
+  "finished_at": "2026-10-11T18:43:55.517567+00:00",
+  "reason": "Four new NCU browser modules write screenshots under tracked docs paths. Test/application assertions unchanged; stop to redirect output and bind complete rerun to a clean new SHA.",
+  "end_guard": {
+    "sha": "ca1947351467fcc726ce58ef849437c6af11358e",
+    "status": " M docs/data/ncu-completion-20261011/resume/eleventh/browser/ncu-053-390-location.png\n M docs/data/ncu-completion-20261011/resume/eleventh/browser/ncu-181-390-location.png\n"
+  },
+  "observed_call_results": [
+    {
+      "case": "tests/e2e/test_ccu_candidate_acceptance.py::test_real_school_search_matching_comparison_plan_reload_and_home_isolation[390]",
+      "result": "passed",
+      "seconds": 26.18
+    },
+    {
+      "case": "tests/e2e/test_ccu_candidate_acceptance.py::test_real_school_search_matching_comparison_plan_reload_and_home_isolation[1440]",
+      "result": "passed",
+      "seconds": 16.539
+    },
+    {
+      "case": "tests/e2e/test_ccu_candidate_acceptance.py::test_real_document_center_stages_conditions_templates_and_saved_draft[390]",
+      "result": "passed",
+      "seconds": 14.66
+    },
+    {
+      "case": "tests/e2e/test_ccu_candidate_acceptance.py::test_real_document_center_stages_conditions_templates_and_saved_draft[1440]",
+      "result": "passed",
+      "seconds": 15.419
+    },
+    {
+      "case": "tests/e2e/test_ccu_delayed_switching.py::test_old_home_responses_cannot_finish_newer_a_b_a_load[390]",
+      "result": "passed",
+      "seconds": 9.961
+    },
+    {
+      "case": "tests/e2e/test_ccu_delayed_switching.py::test_old_home_responses_cannot_finish_newer_a_b_a_load[1440]",
+      "result": "passed",
+      "seconds": 12.424
+    },
+    {
+      "case": "tests/e2e/test_ccu_delayed_switching.py::test_late_target_catalog_cannot_replace_current_conditions_and_saved_draft[390]",
+      "result": "passed",
+      "seconds": 8.929
+    },
+    {
+      "case": "tests/e2e/test_ccu_delayed_switching.py::test_late_target_catalog_cannot_replace_current_conditions_and_saved_draft[1440]",
+      "result": "passed",
+      "seconds": 9.23
+    },
+    {
+      "case": "tests/e2e/test_ccu_delayed_switching.py::test_late_detail_evidence_cannot_replace_new_target_workflow_or_life[390]",
+      "result": "passed",
+      "seconds": 6.254
+    },
+    {
+      "case": "tests/e2e/test_ccu_delayed_switching.py::test_late_detail_evidence_cannot_replace_new_target_workflow_or_life[1440]",
+      "result": "passed",
+      "seconds": 6.698
+    },
+    {
+      "case": "tests/e2e/test_ccu_delayed_switching.py::test_queued_form_save_keeps_original_home_when_switching_before_debounce[390]",
+      "result": "passed",
+      "seconds": 8.386
+    },
+    {
+      "case": "tests/e2e/test_ccu_delayed_switching.py::test_queued_form_save_keeps_original_home_when_switching_before_debounce[1440]",
+      "result": "passed",
+      "seconds": 9.447
+    },
+    {
+      "case": "tests/e2e/test_ccu_public_priority_batch.py::test_public_priority_fields_keep_closed_home_and_scoped_years[63-390]",
+      "result": "passed",
+      "seconds": 2.432
+    },
+    {
+      "case": "tests/e2e/test_ccu_public_priority_batch.py::test_public_priority_fields_keep_closed_home_and_scoped_years[63-1440]",
+      "result": "passed",
+      "seconds": 2.56
+    },
+    {
+      "case": "tests/e2e/test_ccu_public_priority_batch.py::test_public_priority_fields_keep_closed_home_and_scoped_years[84-390]",
+      "result": "passed",
+      "seconds": 2.334
+    },
+    {
+      "case": "tests/e2e/test_ccu_public_priority_batch.py::test_public_priority_fields_keep_closed_home_and_scoped_years[84-1440]",
+      "result": "passed",
+      "seconds": 3.342
+    },
+    {
+      "case": "tests/e2e/test_ccu_public_priority_batch.py::test_public_priority_fields_keep_closed_home_and_scoped_years[115-390]",
+      "result": "passed",
+      "seconds": 2.341
+    },
+    {
+      "case": "tests/e2e/test_ccu_public_priority_batch.py::test_public_priority_fields_keep_closed_home_and_scoped_years[115-1440]",
+      "result": "passed",
+      "seconds": 2.67
+    },
+    {
+      "case": "tests/e2e/test_ccu_scope_documents.py::test_real_browser_and_both_apis_keep_pending_scope_neutral[104-390]",
+      "result": "passed",
+      "seconds": 4.789
+    },
+    {
+      "case": "tests/e2e/test_ccu_scope_documents.py::test_real_browser_and_both_apis_keep_pending_scope_neutral[104-1440]",
+      "result": "passed",
+      "seconds": 3.811
+    },
+    {
+      "case": "tests/e2e/test_ccu_scope_documents.py::test_real_browser_and_both_apis_keep_pending_scope_neutral[37-390]",
+      "result": "passed",
+      "seconds": 3.984
+    },
+    {
+      "case": "tests/e2e/test_ccu_scope_documents.py::test_real_browser_and_both_apis_keep_pending_scope_neutral[37-1440]",
+      "result": "passed",
+      "seconds": 5.011
+    },
+    {
+      "case": "tests/e2e/test_ccu_scope_documents.py::test_actual_template_clicks_and_document_center_stages[390]",
+      "result": "passed",
+      "seconds": 7.293
+    },
+    {
+      "case": "tests/e2e/test_ccu_scope_documents.py::test_actual_template_clicks_and_document_center_stages[1440]",
+      "result": "passed",
+      "seconds": 6.499
+    },
+    {
+      "case": "tests/e2e/test_ccu_scope_documents.py::test_seoultech_new_housing_costs_and_second_submission_are_visible[390]",
+      "result": "passed",
+      "seconds": 11.377
+    },
+    {
+      "case": "tests/e2e/test_ccu_scope_documents.py::test_seoultech_new_housing_costs_and_second_submission_are_visible[1440]",
+      "result": "passed",
+      "seconds": 9.95
+    },
+    {
+      "case": "tests/e2e/test_ccu_scope_documents.py::test_hcmut_current_deadlines_and_nomination_template_click[390]",
+      "result": "passed",
+      "seconds": 8.543
+    },
+    {
+      "case": "tests/e2e/test_ccu_scope_documents.py::test_hcmut_current_deadlines_and_nomination_template_click[1440]",
+      "result": "passed",
+      "seconds": 6.17
+    },
+    {
+      "case": "tests/e2e/test_cgu_source_recovery.py::test_saved_outage_rows_and_detail_show_actual_source_time_then_recover[390]",
+      "result": "passed",
+      "seconds": 5.295
+    },
+    {
+      "case": "tests/e2e/test_cgu_source_recovery.py::test_saved_outage_rows_and_detail_show_actual_source_time_then_recover[1440]",
+      "result": "passed",
+      "seconds": 5.88
+    },
+    {
+      "case": "tests/e2e/test_cgu_source_recovery.py::test_empty_start_says_unavailable_in_list_map_and_count_then_recovers[390]",
+      "result": "passed",
+      "seconds": 3.388
+    },
+    {
+      "case": "tests/e2e/test_cgu_source_recovery.py::test_empty_start_says_unavailable_in_list_map_and_count_then_recovers[1440]",
+      "result": "passed",
+      "seconds": 4.259
+    },
+    {
+      "case": "tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete",
+      "result": "passed",
+      "seconds": 11.21
+    },
+    {
+      "case": "tests/e2e/test_discussion_round2.py::test_moderator_approve_hide_report_review_and_suspend",
+      "result": "passed",
+      "seconds": 5.141
+    },
+    {
+      "case": "tests/e2e/test_discussion_round2.py::test_account_bookmarks_sync_between_two_browser_contexts_and_import_legacy",
+      "result": "passed",
+      "seconds": 6.842
+    },
+    {
+      "case": "tests/e2e/test_discussion_round2.py::test_login_from_reader_preserves_valid_fields_while_requests_settle",
+      "result": "passed",
+      "seconds": 20.487
+    },
+    {
+      "case": "tests/e2e/test_discussion_round2.py::test_opening_login_does_not_steal_focus_from_user_selected_field",
+      "result": "passed",
+      "seconds": 1.98
+    },
+    {
+      "case": "tests/e2e/test_discussion_round2.py::test_slow_bookmark_response_does_not_erase_new_search_text",
+      "result": "passed",
+      "seconds": 2.321
+    },
+    {
+      "case": "tests/e2e/test_document_flow.py::test_document_flow_guides_each_step_and_never_claims_submission[390]",
+      "result": "passed",
+      "seconds": 4.581
+    },
+    {
+      "case": "tests/e2e/test_document_flow.py::test_document_flow_guides_each_step_and_never_claims_submission[1754]",
+      "result": "passed",
+      "seconds": 5.114
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_the_menu_has_a_user_reviews_entry_that_opens_the_page",
+      "result": "passed",
+      "seconds": 2.132
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_a_message_that_is_too_short_is_not_sent",
+      "result": "passed",
+      "seconds": 1.947
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_the_counter_the_stars_and_the_clear_button_work",
+      "result": "passed",
+      "seconds": 1.736
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_sending_a_message_thanks_the_visitor_and_sends_what_was_typed",
+      "result": "passed",
+      "seconds": 2.902
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[429-{}-\\u9001\\u51fa\\u5f97\\u592a\\u983b\\u7e41\\u4e86]",
+      "result": "passed",
+      "seconds": 2.09
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[503-{}-\\u66ab\\u6642\\u7121\\u6cd5\\u9001\\u51fa]",
+      "result": "passed",
+      "seconds": 1.923
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[422-{\"detail\": \"\\u8acb\\u4e0d\\u8981\\u5728\\u5167\\u5bb9\\u88e1\\u653e\\u592a\\u591a\\u9023\\u7d50\\u3002\"}-\\u8acb\\u4e0d\\u8981\\u5728\\u5167\\u5bb9\\u88e1\\u653e\\u592a\\u591a\\u9023\\u7d50\\u3002]",
+      "result": "passed",
+      "seconds": 1.59
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[422-{\"detail\": [{\"msg\": \"too short\"}]}-\\u5167\\u5bb9\\u7684\\u683c\\u5f0f\\u4e0d\\u7b26]",
+      "result": "passed",
+      "seconds": 1.792
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_the_network_going_away_does_not_lose_the_text",
+      "result": "passed",
+      "seconds": 1.78
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_the_hidden_field_for_bots_cannot_be_reached_by_a_person",
+      "result": "passed",
+      "seconds": 1.964
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[320]",
+      "result": "passed",
+      "seconds": 1.549
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[390]",
+      "result": "passed",
+      "seconds": 1.651
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[1280]",
+      "result": "passed",
+      "seconds": 1.802
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_the_administrator_reads_the_message_in_the_inbox_and_marks_it_done",
+      "result": "passed",
+      "seconds": 3.78
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_an_ordinary_student_cannot_open_the_inbox",
+      "result": "passed",
+      "seconds": 3.466
+    },
+    {
+      "case": "tests/e2e/test_feedback_page.py::test_a_message_written_in_markup_is_shown_as_plain_text_in_the_inbox",
+      "result": "passed",
+      "seconds": 3.108
+    }
+  ]
+}

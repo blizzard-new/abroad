@@ -1,0 +1,11 @@
+{
+  "original_harness_sha256": "f71bf3bf6e3bc2ed38610a3beef0c2d9978bd756f11846aac8aee36845c3eefe",
+  "final4_harness_sha256": "850c281ddb88552be1eee6df287630893520e8990a32a1ad9164b842fe2e47d3",
+  "exact_replacements": {
+    "{'photos':264,'points':260,'representative':255}": "{'photos':262,'points':264,'representative':255}",
+    "all-264-tku-photos-and-260-points-": "all-262-tku-photos-and-264-points-"
+  },
+  "all_other_bytes_identical": true,
+  "reason": "Fixed authorized TKU input withdrew two photos and added four independently reviewed campus points; update exact inventory expectation, retaining every image.decode, credit, map and school-scope assertion. Workload, waits and 460 MiB gate unchanged.",
+  "samples_expected": 175
+}

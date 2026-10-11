@@ -4,11 +4,11 @@
 
 ## 固定輸入與依賴
 
-本輪起點 main `59a20f27fcee00fb597abc79e75ec11778317422`。PR8共用地球識別與CGU來源恢復／記憶體修復為基底；最新已推送候選 `ca1947351467fcc726ce58ef849437c6af11358e` 包含 NTU PR9 `c7357f974faaec8e60ef19698d4d21633c322dc8`、CCU PR10 `52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8`、NCU PR11 `a2df55b16f72455f7154d7afff44934fc8dbf99d`、TKU PR13 `93cbd9dfee3af95f9ecc89cceb1ccd0e100778af`。逐hunk順序 CCU e16381c → NCU d0c84c5 → NTU 7e0c29e → TKU ca194735。
+本輪起點 main `59a20f27fcee00fb597abc79e75ec11778317422`。PR8共用地球識別與CGU來源恢復／記憶體修復為基底；最新已推送候選 `7a7c7e3560527ce08ca225c0930397772a8b79aa` 包含 NTU PR9 `c7357f974faaec8e60ef19698d4d21633c322dc8`、CCU PR10 `52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8`、NCU PR11 `a2df55b16f72455f7154d7afff44934fc8dbf99d`、TKU PR13 `93cbd9dfee3af95f9ecc89cceb1ccd0e100778af`。逐hunk順序 CCU e16381c → NCU d0c84c5 → NTU 7e0c29e → TKU ca194735。
 
 共用面包括 api.py 照片scope／coverage／座標、school_content.py、university_locations.py、共享照片／位置、app.js選校／來源／名額、index.html載入次序、discovery-core.js、multi-plan.js、package-data、OpenAPI、分母與來源交付。NCU保留候選優先與explicit operator override、圖爾庫舊文件及簽章、明治五個月；CCU保留三項原文修正；TKU保留lazy identifier及operator override，同時接入NICS資料。Git無衝突不代表語意正確。
 
-TKU兩拒用照片已移至 `sources/tku/withdrawn-campus-assets/`，不在public static或Python package source。保留研究原件不等允許公開部署；發布前必須驗 direct URL404、六校cache/fallback無復活、最終wheel無路徑／內容hash。完整候選現在驗收中，任何較早SHA綠燈不能代替 ca194735。
+TKU兩拒用照片已移至 `sources/tku/withdrawn-campus-assets/`，不在public static或Python package source。保留研究原件不等允許公開部署；發布前必須驗 direct URL404、六校cache/fallback無復活、最終wheel無路徑／內容hash。完整候選現在驗收中，任何較早SHA綠燈不能代替 7a7c7e35。
 
 歷史160aeacd是上一資料批次完整驗收點（2919 unique，2906pass13skip，完整runtime、wheel、175冷暖<460MiB）；4a011fab批次2970unique為2956pass13skip1setup error，另一次單案重跑pass不替代全套；dbc4afd6批次2985unique為2803pass43fail126setup error13skip且Storage ENOSPC。完整原始結果均保留。
 
@@ -48,4 +48,4 @@ TKU兩拒用照片已移至 `sources/tku/withdrawn-campus-assets/`，不在publi
 
 ## 本次續作保存點
 
-ca194735已推送Draft PR12；contracts與完整來源封存核驗通過，3085個唯一原測試正在四shard中執行（最多兩個同時）。最終wheel／fresh install、完整35SQL真Storage runtime、175冷暖仍待完成。正式發布邊界不變，最新原始passed/failed/error/skipped/notrun以README及逐run檔為準。
+7a7c7e35已推送Draft PR12，四校最終固定輸入全數為祖先。完整35SQL／真Storage本地runtime、contracts、來源交付、wheel逐檔hash與隔離fresh install已通過；撤回兩圖在wheel及六校靜態URL驗證不公開。ca194舊套件因tracked截圖輸出中止（118觀察passed、2967未完成），全部原始結果保留；7a7只修4個NCU測試模組的輸出位置，test function／wait／assert不變。175步冷暖与此SHA完整3085套件尚待完成，以README及逐run記錄更新。正式發布邊界不變。

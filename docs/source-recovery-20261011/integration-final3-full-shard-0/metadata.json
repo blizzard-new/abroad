@@ -1,0 +1,363 @@
+{
+  "command": [
+    "env",
+    "EXCHANGE_TEST_POSTGRES=1",
+    "TMPDIR=/tmp/integration-final3-full-shard-0-tmp",
+    "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/workspace/integration-tools/browsers/chromium-1234/chrome-linux64/chrome",
+    "VISUAL_EVIDENCE_DIR=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-images",
+    "TKU_CENSUS_ASSET_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-tku-images",
+    "TKU_ACCEPTANCE_OUTPUT=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-tku-acceptance-images",
+    "CCU_ACCEPTANCE_OUTPUT=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-ccu-images",
+    "NCU_NEXT3_BROWSER_OUT=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-ncu-images",
+    "NCU_RESUME_BROWSER_OUTPUT=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-ncu-resume-images",
+    "CCU_PRIORITY_SCREENSHOTS=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-ccu-priority-images",
+    "NTU_REFERENCE_SCREENSHOTS=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-ntu-reference-images",
+    "CCU_ROUND8_SCREENSHOTS=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-ccu-round8-images",
+    "TKU_FIXED_PHOTO_UI_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-tku-fixed-photo-images",
+    "TKU_MILESTONE6_UI_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final3-full-shard-0-tku-milestone6-images",
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "scripts/run_web_quality_tests.py",
+    "--shard",
+    "0",
+    "--shards",
+    "4",
+    "--junitxml",
+    "/workspace/recovery-evidence-20261011/integration-final3-full-shard-0/result.xml",
+    "--evidence-dir",
+    "/workspace/recovery-evidence-20261011/integration-final3-full-shard-0/shard-coverage"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T18:37:33.097732+00:00",
+  "start_guard": {
+    "sha": "ca1947351467fcc726ce58ef849437c6af11358e",
+    "tree": "25e0ffa961845865dcf10b8cd2540a8a7438fe27",
+    "status": ""
+  },
+  "timeout_seconds": 3600,
+  "test_result": "cancelled",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "scripts/run_web_quality_tests.py": {
+      "sha256": "1d63519c8d90b7b6337c78d04862b2cbb7c1ebc5fafbbe2da6761f1b6af26c07"
+    }
+  },
+  "exit_code": null,
+  "finished_at": "2026-10-11T18:43:55.467707+00:00",
+  "reason": "Four new NCU browser modules write screenshots under tracked docs paths. Test/application assertions unchanged; stop to redirect output and bind complete rerun to a clean new SHA.",
+  "end_guard": {
+    "sha": "ca1947351467fcc726ce58ef849437c6af11358e",
+    "status": " M docs/data/ncu-completion-20261011/resume/eleventh/browser/ncu-053-390-location.png\n M docs/data/ncu-completion-20261011/resume/eleventh/browser/ncu-181-390-location.png\n"
+  },
+  "observed_call_results": [
+    {
+      "case": "tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390]",
+      "result": "passed",
+      "seconds": 5.94
+    },
+    {
+      "case": "tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]",
+      "result": "passed",
+      "seconds": 5.437
+    },
+    {
+      "case": "tests/e2e/test_ccu_nineteenth_pass.py::test_pending_host_forms_render_correct_role_and_stage[80-Inbound Exchange-6818985ddb4fe1746442333.pdf-390]",
+      "result": "passed",
+      "seconds": 4.959
+    },
+    {
+      "case": "tests/e2e/test_ccu_nineteenth_pass.py::test_pending_host_forms_render_correct_role_and_stage[80-Inbound Exchange-6818985ddb4fe1746442333.pdf-1440]",
+      "result": "passed",
+      "seconds": 3.356
+    },
+    {
+      "case": "tests/e2e/test_ccu_nineteenth_pass.py::test_pending_host_forms_render_correct_role_and_stage[107-Accommodation Letter of Intent-proof_of_accommodation_140338.pdf-390]",
+      "result": "passed",
+      "seconds": 2.712
+    },
+    {
+      "case": "tests/e2e/test_ccu_nineteenth_pass.py::test_pending_host_forms_render_correct_role_and_stage[107-Accommodation Letter of Intent-proof_of_accommodation_140338.pdf-1440]",
+      "result": "passed",
+      "seconds": 4.458
+    },
+    {
+      "case": "tests/e2e/test_ccu_nineteenth_pass.py::test_tbu_current_course_restrictions_are_visible[390]",
+      "result": "passed",
+      "seconds": 2.377
+    },
+    {
+      "case": "tests/e2e/test_ccu_nineteenth_pass.py::test_tbu_current_course_restrictions_are_visible[1440]",
+      "result": "passed",
+      "seconds": 3.64
+    },
+    {
+      "case": "tests/e2e/test_ccu_public_round8.py::test_round8_years_and_price_basis_survive_reference_rendering[92-390]",
+      "result": "passed",
+      "seconds": 2.836
+    },
+    {
+      "case": "tests/e2e/test_ccu_public_round8.py::test_round8_years_and_price_basis_survive_reference_rendering[92-1440]",
+      "result": "passed",
+      "seconds": 2.411
+    },
+    {
+      "case": "tests/e2e/test_ccu_public_round8.py::test_round8_years_and_price_basis_survive_reference_rendering[117-390]",
+      "result": "passed",
+      "seconds": 2.837
+    },
+    {
+      "case": "tests/e2e/test_ccu_public_round8.py::test_round8_years_and_price_basis_survive_reference_rendering[117-1440]",
+      "result": "passed",
+      "seconds": 2.928
+    },
+    {
+      "case": "tests/e2e/test_ccu_seventeenth_pass.py::test_nagoya_pair_filters_use_one_option[390]",
+      "result": "passed",
+      "seconds": 7.279
+    },
+    {
+      "case": "tests/e2e/test_ccu_seventeenth_pass.py::test_nagoya_pair_filters_use_one_option[1440]",
+      "result": "passed",
+      "seconds": 6.105
+    },
+    {
+      "case": "tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[98-390]",
+      "result": "passed",
+      "seconds": 3.91
+    },
+    {
+      "case": "tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[98-1440]",
+      "result": "passed",
+      "seconds": 5.198
+    },
+    {
+      "case": "tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[102-390]",
+      "result": "passed",
+      "seconds": 3.862
+    },
+    {
+      "case": "tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[102-1440]",
+      "result": "passed",
+      "seconds": 3.72
+    },
+    {
+      "case": "tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\\u5bbf\\u820d\\u7533\\u8acb\\u8868-1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf-390]",
+      "result": "passed",
+      "seconds": 3.62
+    },
+    {
+      "case": "tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\\u5bbf\\u820d\\u7533\\u8acb\\u8868-1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf-1440]",
+      "result": "passed",
+      "seconds": 4.289
+    },
+    {
+      "case": "tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\\u5065\\u5eb7\\uff0fTB-1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy-390]",
+      "result": "passed",
+      "seconds": 4.152
+    },
+    {
+      "case": "tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\\u5065\\u5eb7\\uff0fTB-1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy-1440]",
+      "result": "passed",
+      "seconds": 4.397
+    },
+    {
+      "case": "tests/e2e/test_ccu_twentieth_pass.py::test_dit_extra_grade_sheet_stays_pending_and_conditional[390]",
+      "result": "passed",
+      "seconds": 3.368
+    },
+    {
+      "case": "tests/e2e/test_ccu_twentieth_pass.py::test_dit_extra_grade_sheet_stays_pending_and_conditional[1440]",
+      "result": "passed",
+      "seconds": 3.355
+    },
+    {
+      "case": "tests/e2e/test_ccu_twentieth_pass.py::test_hiof_course_conditions_keep_campus_and_semester_scope[390]",
+      "result": "passed",
+      "seconds": 2.221
+    },
+    {
+      "case": "tests/e2e/test_ccu_twentieth_pass.py::test_hiof_course_conditions_keep_campus_and_semester_scope[1440]",
+      "result": "passed",
+      "seconds": 3.535
+    },
+    {
+      "case": "tests/e2e/test_conditions_account_sync.py::test_complete_conditions_reach_new_device_and_clear_stays_cleared",
+      "result": "passed",
+      "seconds": 11.387
+    },
+    {
+      "case": "tests/e2e/test_conditions_account_sync.py::test_conflicting_submissions_keep_one_snapshot_and_tell_student",
+      "result": "passed",
+      "seconds": 9.823
+    },
+    {
+      "case": "tests/e2e/test_document_workbench.py::test_document_panes_keep_draft_and_legacy_tools_have_one_form[390]",
+      "result": "passed",
+      "seconds": 4.248
+    },
+    {
+      "case": "tests/e2e/test_document_workbench.py::test_document_panes_keep_draft_and_legacy_tools_have_one_form[1754]",
+      "result": "passed",
+      "seconds": 5.003
+    },
+    {
+      "case": "tests/e2e/test_document_workbench.py::test_generated_pdf_is_checked_and_saved_only_with_separate_consent",
+      "result": "passed",
+      "seconds": 8.387
+    },
+    {
+      "case": "tests/e2e/test_document_workbench.py::test_switching_template_discards_previous_file_consent_and_late_check",
+      "result": "passed",
+      "seconds": 5.856
+    },
+    {
+      "case": "tests/e2e/test_document_workbench.py::test_editing_after_generation_does_not_offer_old_pdf_as_current_document",
+      "result": "passed",
+      "seconds": 6.511
+    },
+    {
+      "case": "tests/e2e/test_document_workbench.py::test_logout_clears_live_fields_and_selected_check_file",
+      "result": "passed",
+      "seconds": 6.089
+    },
+    {
+      "case": "tests/e2e/test_integrated_reviewed_photos.py::test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit[390]",
+      "result": "passed",
+      "seconds": 12.671
+    },
+    {
+      "case": "tests/e2e/test_integrated_reviewed_photos.py::test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit[1440]",
+      "result": "passed",
+      "seconds": 7.052
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_the_mascot_stands_where_the_traveller_drawing_was_on_the_home_page",
+      "result": "passed",
+      "seconds": 1.998
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[320]",
+      "result": "passed",
+      "seconds": 1.604
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[390]",
+      "result": "passed",
+      "seconds": 1.712
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[768]",
+      "result": "passed",
+      "seconds": 1.905
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[1280]",
+      "result": "passed",
+      "seconds": 1.952
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_it_has_sides_a_front_and_eyes_standing_in_front_of_it",
+      "result": "passed",
+      "seconds": 2.712
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_the_eyes_stay_in_front_while_they_look_around",
+      "result": "passed",
+      "seconds": 2.085
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_it_turns_towards_the_pointer_and_back_when_the_pointer_is_gone",
+      "result": "passed",
+      "seconds": 2.074
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_a_light_slides_over_it_as_it_turns",
+      "result": "passed",
+      "seconds": 2.048
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_with_no_motion_it_still_stands_turned_so_it_reads_as_a_solid",
+      "result": "passed",
+      "seconds": 2.145
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_tapping_the_header_mascot_still_hops_turns_and_winks",
+      "result": "passed",
+      "seconds": 5.132
+    },
+    {
+      "case": "tests/e2e/test_mascot_solid.py::test_the_loading_screen_mascot_is_the_same_solid",
+      "result": "passed",
+      "seconds": 0.82
+    },
+    {
+      "case": "tests/e2e/test_my_application_entry.py::test_new_student_picks_a_school_and_lands_on_selection_and_confirmation",
+      "result": "passed",
+      "seconds": 2.915
+    },
+    {
+      "case": "tests/e2e/test_my_application_entry.py::test_returning_student_with_a_school_goes_straight_there_from_any_page",
+      "result": "passed",
+      "seconds": 4.807
+    },
+    {
+      "case": "tests/e2e/test_my_application_entry.py::test_the_rail_entry_is_highlighted_on_the_selection_page_and_the_dropdown_still_offers_every_stage",
+      "result": "passed",
+      "seconds": 2.656
+    },
+    {
+      "case": "tests/e2e/test_ncu_eleventh_locations.py::test_eleventh_named_campuses_and_licensed_photos[390]",
+      "result": "passed",
+      "seconds": 24.689
+    },
+    {
+      "case": "tests/e2e/test_ncu_eleventh_locations.py::test_eleventh_named_campuses_and_licensed_photos[1280]",
+      "result": "passed",
+      "seconds": 28.038
+    },
+    {
+      "case": "tests/e2e/test_ncu_hokkaido.py::test_ncu_hokkaido_two_agreements_documents_scope_and_life[\\u9662\\u7d1a-390]",
+      "result": "passed",
+      "seconds": 8.622
+    },
+    {
+      "case": "tests/e2e/test_ncu_hokkaido.py::test_ncu_hokkaido_two_agreements_documents_scope_and_life[\\u9662\\u7d1a-1440]",
+      "result": "passed",
+      "seconds": 10.221
+    },
+    {
+      "case": "tests/e2e/test_ncu_hokkaido.py::test_ncu_hokkaido_two_agreements_documents_scope_and_life[\\u6821\\u7d1a-390]",
+      "result": "passed",
+      "seconds": 7.498
+    },
+    {
+      "case": "tests/e2e/test_ncu_hokkaido.py::test_ncu_hokkaido_two_agreements_documents_scope_and_life[\\u6821\\u7d1a-1440]",
+      "result": "passed",
+      "seconds": 10.143
+    },
+    {
+      "case": "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py::test_next3_reference_packets_and_living_content[nufs-\\u540d\\u53e4\\u5c4b\\u5916\\u570b\\u8a9e\\u5927\\u5b78-\\u540d\\u53e4\\u5c4b\\u5916\\u570b\\u8a9e\\u5927\\u5b78 Nagoya University of Foreign Studies-NUFS\\u521d\\u6b21\\u7533\\u8acb\\u8207\\u689d\\u4ef6\\u9644\\u4ef6-13-390]",
+      "result": "passed",
+      "seconds": 7.92
+    },
+    {
+      "case": "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py::test_next3_reference_packets_and_living_content[nufs-\\u540d\\u53e4\\u5c4b\\u5916\\u570b\\u8a9e\\u5927\\u5b78-\\u540d\\u53e4\\u5c4b\\u5916\\u570b\\u8a9e\\u5927\\u5b78 Nagoya University of Foreign Studies-NUFS\\u521d\\u6b21\\u7533\\u8acb\\u8207\\u689d\\u4ef6\\u9644\\u4ef6-13-1440]",
+      "result": "passed",
+      "seconds": 9.87
+    },
+    {
+      "case": "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py::test_next3_reference_packets_and_living_content[kumamoto-\\u718a\\u672c\\u5927\\u5b78-\\u718a\\u672c\\u5927\\u5b78 Kumamoto University-\\u718a\\u672c\\u7531\\u4e2d\\u592e\\u53d6\\u5f97STEP\\u7533\\u8acbpacket-0-390]",
+      "result": "passed",
+      "seconds": 6.954
+    },
+    {
+      "case": "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py::test_next3_reference_packets_and_living_content[kumamoto-\\u718a\\u672c\\u5927\\u5b78-\\u718a\\u672c\\u5927\\u5b78 Kumamoto University-\\u718a\\u672c\\u7531\\u4e2d\\u592e\\u53d6\\u5f97STEP\\u7533\\u8acbpacket-0-1440]",
+      "result": "passed",
+      "seconds": 12.083
+    },
+    {
+      "case": "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py::test_next3_reference_packets_and_living_content[ryukoku-\\u9f8d\\u8c37\\u5927\\u5b78-\\u9f8d\\u8c37\\u5927\\u5b78 Ryukoku University-\\u9f8d\\u8c37\\u521d\\u6b21\\u7533\\u8acb\\u8207\\u5341\\u9805\\u53c3\\u8003\\u6587\\u4ef6\\uff08JLPT\\u6709\\u5247\\u9644\\uff09-10-390]",
+      "result": "passed",
+      "seconds": 7.511
+    }
+  ]
+}
