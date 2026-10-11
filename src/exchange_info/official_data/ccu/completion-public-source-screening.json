@@ -1,11 +1,11 @@
 {
   "checked_at": "2026-10-11",
-  "source_count": 1067,
+  "source_count": 1110,
   "decisions": {
-    "acquired_not_policy_verified": 627,
-    "excluded_specific_review": 6,
-    "used_with_explicit_field_status": 398,
-    "technical_failure": 32,
+    "acquired_not_policy_verified": 648,
+    "excluded_specific_review": 7,
+    "used_with_explicit_field_status": 416,
+    "technical_failure": 35,
     "challenge_or_error_page": 4
   },
   "photo_exclusions": {
@@ -13,7 +13,8 @@
     "30": "原P18為地板校徽，不能充校園照片。",
     "98": "原P18為標誌，不能充校園照片。",
     "p46-original-concert": "以音樂會人物為主，改用圖書館照片",
-    "p77-graduation": "以人物活動為主，校園辨識不足，不刊登"
+    "p77-graduation": "以人物活動為主，校園辨識不足，不刊登",
+    "p77-followup-campus-vtu": "Campus-vtu.jpg標題雖稱校園，實際是多人擺拍且建築辨識不足；下載與原頁保留，未刊登。改核實E-waste-lab.jpg的實際校園建築外觀。"
   },
   "sources": [
     {
@@ -155,6 +156,38 @@
       "tls_verify": true,
       "original_sha256": "d4966f8e760ac649aa5bab8652b5265765c5a55efa198790388fac2fe6bfc2c7",
       "bundled_file": "completion_sources/home-index.html",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p0-followup-gamma-public",
+      "ccu_page": 0,
+      "source_url": "https://gamma.app/docs/hdozbiaaek5nkn0",
+      "resolved_url": "https://gamma.app/docs/hdozbiaaek5nkn0",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:09:44.579682+00:00",
+      "tls_verify": true,
+      "original_sha256": "8743774a8411581da66bb669e53bf878b3c09d5f37832c350306b7f990060f52",
+      "bundled_file": "completion_sources/p0-followup-gamma-public.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p0-followup-global-page",
+      "ccu_page": 0,
+      "source_url": "https://oia.ccu.edu.tw/p/412-1008-1509.php?Lang=zh-tw",
+      "resolved_url": "https://oia.ccu.edu.tw/p/412-1008-1509.php?Lang=zh-tw",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:09:44.275914+00:00",
+      "tls_verify": true,
+      "original_sha256": "483aa8a6189b326c7df730fefe260b9069c78ad9091ff33005791e88574f5aba",
+      "bundled_file": "completion_sources/p0-followup-global-page.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -1169,6 +1202,90 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p104-followup-brugg-business-campus",
+      "ccu_page": 104,
+      "source_url": "https://www.fhnw.ch/en/about-fhnw/locations/brugg-windisch",
+      "resolved_url": "https://www.fhnw.ch/en/about-fhnw/locations/brugg-windisch",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:17:01.600478+00:00",
+      "tls_verify": true,
+      "original_sha256": "3117f189e29138a08d32cc4c8c8f9ab275860d8e9120e71976cd21b5121fd53d",
+      "bundled_file": "completion_sources/p104-followup-brugg-business-campus.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p104-followup-commons-business",
+      "ccu_page": 104,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Hochschule%22+%22Wirtschaft%22+%22Olten%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Hochschule%22+%22Wirtschaft%22+%22Olten%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:50.582489+00:00",
+      "tls_verify": true,
+      "original_sha256": "164dfe0da772ec637f176dc52ea09a559aa207bdaf955e7796ae3566193e14fc",
+      "bundled_file": "completion_sources/p104-followup-commons-business.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p104-followup-commons-category",
+      "ccu_page": 104,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&generator=search&gsrsearch=Fachhochschule+Nordwestschweiz&gsrnamespace=6&gsrlimit=30",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&generator=search&gsrsearch=Fachhochschule+Nordwestschweiz&gsrnamespace=6&gsrlimit=30",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:15:53.702547+00:00",
+      "tls_verify": true,
+      "original_sha256": "a049ec60ce21182c63545bb394d3a564bc3e0bef7a6e07d13efeaf07a1348817",
+      "bundled_file": "completion_sources/p104-followup-commons-category.json",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p104-followup-commons-olten-title",
+      "ccu_page": 104,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&generator=search&gsrsearch=intitle%3AOlten+filetype%3Abitmap&gsrnamespace=6&gsrlimit=30",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&generator=search&gsrsearch=intitle%3AOlten+filetype%3Abitmap&gsrnamespace=6&gsrlimit=30",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:15:54.673651+00:00",
+      "tls_verify": true,
+      "original_sha256": "fd3acfbb8bc26cc69e0561797ab51f1f68494a0eb1f01fb145c9308c770acebf",
+      "bundled_file": "completion_sources/p104-followup-commons-olten-title.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p104-followup-commons-olten",
+      "ccu_page": 104,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22FHNW%22+%22Olten%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22FHNW%22+%22Olten%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:50.430613+00:00",
+      "tls_verify": true,
+      "original_sha256": "ada2a601f24c7f102c6432340d6adca256996c391606174b387338725fe7cf7d",
+      "bundled_file": "completion_sources/p104-followup-commons-olten.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p104-host_entry-1",
       "ccu_page": 104,
       "source_url": "https://www.fhnw.ch/en/business/degree-programmes/international/exchange-semester#view",
@@ -1375,6 +1492,42 @@
       "tls_verify": true,
       "original_sha256": "aa5aca51ee9b17f0a7113f1cc259b43a86c628e904e6ea77c828f48651194859",
       "bundled_file": "completion_sources/p105-commons.json",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p105-followup-contact-tr",
+      "ccu_page": 105,
+      "source_url": "https://www.asbu.edu.tr/tr/iletisim",
+      "resolved_url": "https://www.asbu.edu.tr/tr/iletisim",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:09:40.659798+00:00",
+      "tls_verify": true,
+      "original_sha256": "2272680f0b1a38c4ab3b67d8827a0aa658669b3ecaa14d6a177aa824563b48b6",
+      "bundled_file": "completion_sources/p105-followup-contact-tr.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p105-followup-official-map",
+      "ccu_page": 105,
+      "source_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.9101023314993!2d32.85319811498272!3d39.94340047942294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d345aee5549aa1%3A0x6e8d93e2bbc3606c!2sAnkara+Sosyal+Bilimler+%C3%9Cniversitesi!5e0!3m2!1str!2str!4v1509309846464",
+      "resolved_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.9101023314993!2d32.85319811498272!3d39.94340047942294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d345aee5549aa1%3A0x6e8d93e2bbc3606c!2sAnkara+Sosyal+Bilimler+%C3%9Cniversitesi!5e0!3m2!1str!2str!4v1509309846464",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:12:22.760822+00:00",
+      "tls_verify": true,
+      "original_sha256": "6585b4f9eeccb9db00ed3ab497492f2bc62dda21a4139da3a35cb4c882947a96",
+      "bundled_file": "completion_sources/p105-followup-official-map.html.gz",
       "response_bytes_verified": true,
       "decision": "used_with_explicit_field_status",
       "field_statuses": [
@@ -1676,9 +1829,11 @@
       "original_sha256": "f2d205775a82d46c81a2c62491838002715cdc21960ec28d4e5ead7d57d869f5",
       "bundled_file": "completion_sources/p107-campus_contact-1.html.gz",
       "response_bytes_verified": true,
-      "decision": "acquired_not_policy_verified",
-      "field_statuses": [],
-      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p107-campus_contact-2",
@@ -1707,6 +1862,24 @@
       "tls_verify": true,
       "original_sha256": "dfe2593345e1b43d54812c92a806ae623f82679c56c1e1f657aca2cd62ae1c36",
       "bundled_file": "completion_sources/p107-commons.json",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p107-followup-google-map",
+      "ccu_page": 107,
+      "source_url": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2562.0689742122604!2d15.7677468!3d50.0475392!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470dccc33b38a13d%3A0x1a11560fb4c7d5e8!2sUniverzita%20Pardubice!5e0!3m2!1scs!2scz!4v1764070522018!5m2!1scs!2scz",
+      "resolved_url": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2562.0689742122604!2d15.7677468!3d50.0475392!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470dccc33b38a13d%3A0x1a11560fb4c7d5e8!2sUniverzita%20Pardubice!5e0!3m2!1scs!2scz!4v1764070522018!5m2!1scs!2scz",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:09:41.806272+00:00",
+      "tls_verify": true,
+      "original_sha256": "aedbbe3c9b942cd19181a5d8d3992eea39843665ce21e87241f305950286b065",
+      "bundled_file": "completion_sources/p107-followup-google-map.html.gz",
       "response_bytes_verified": true,
       "decision": "used_with_explicit_field_status",
       "field_statuses": [
@@ -3647,6 +3820,54 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p119-followup-commons-cuernavaca",
+      "ccu_page": 119,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Universidad+Internacional%22+%22Cuernavaca%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Universidad+Internacional%22+%22Cuernavaca%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:50.921939+00:00",
+      "tls_verify": true,
+      "original_sha256": "ada2a601f24c7f102c6432340d6adca256996c391606174b387338725fe7cf7d",
+      "bundled_file": "completion_sources/p119-followup-commons-cuernavaca.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p119-followup-commons-uninter",
+      "ccu_page": 119,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Uninter%22+%22Mexico%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Uninter%22+%22Mexico%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:51.072174+00:00",
+      "tls_verify": true,
+      "original_sha256": "15585a960deb87f6cff2d090e58cb15c9a19582768f3e979b10c3dcf10021251",
+      "bundled_file": "completion_sources/p119-followup-commons-uninter.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p119-followup-events",
+      "ccu_page": 119,
+      "source_url": "https://uninter.edu.mx/eventos/",
+      "resolved_url": "https://uninter.edu.mx/eventos/",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/eventos/",
+      "checked_at": "2026-10-11T11:09:44.065263+00:00",
+      "tls_verify": true,
+      "original_sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+      "bundled_file": "completion_sources/p119-followup-events.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/eventos/"
     },
     {
       "source_id": "p119-root",
@@ -9151,6 +9372,22 @@
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
+      "source_id": "p44-followup-int-lounge",
+      "ccu_page": 44,
+      "source_url": "https://newcms.kmu.ac.kr/kmuil/43346/subview.do",
+      "resolved_url": "https://newcms.kmu.ac.kr/kmuil/43346/subview.do",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://newcms.kmu.ac.kr/kmuil/43346/subview.do",
+      "checked_at": "2026-10-11T11:09:42.067464+00:00",
+      "tls_verify": true,
+      "original_sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+      "bundled_file": "completion_sources/p44-followup-int-lounge.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://newcms.kmu.ac.kr/kmuil/43346/subview.do"
+    },
+    {
       "source_id": "p44-root-alternative",
       "ccu_page": 44,
       "source_url": "https://www.kmu.ac.kr/uni/eng/main.jsp",
@@ -12730,6 +12967,38 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p66-followup-commons-uel",
+      "ccu_page": 66,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22UEL%22+%22Ho+Chi+Minh%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22UEL%22+%22Ho+Chi+Minh%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:48.725212+00:00",
+      "tls_verify": true,
+      "original_sha256": "a6c1bb47447e5c53e30e7392efb7c5e10151875b96508926ab315299cc1fa892",
+      "bundled_file": "completion_sources/p66-followup-commons-uel.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p66-followup-commons-viet",
+      "ccu_page": 66,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Kinh+t%E1%BA%BF%22+%22Lu%E1%BA%ADt%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Kinh+t%E1%BA%BF%22+%22Lu%E1%BA%ADt%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:48.724371+00:00",
+      "tls_verify": true,
+      "original_sha256": "c1c14b6fa232b30439248ca18ee376cf0fb4e9e07dd3181de518982aae890f36",
+      "bundled_file": "completion_sources/p66-followup-commons-viet.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p66-host_entry-1",
       "ccu_page": 66,
       "source_url": "https://international.uel.edu.vn",
@@ -12948,6 +13217,90 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p68-followup-commons-hcmute",
+      "ccu_page": 68,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22HCMUTE%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22HCMUTE%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:48.729119+00:00",
+      "tls_verify": true,
+      "original_sha256": "23a2f96535fd0ecd7e6e48c4cfd61579bec4030967bec9c503c7a174de375471",
+      "bundled_file": "completion_sources/p68-followup-commons-hcmute.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p68-followup-commons-viet",
+      "ccu_page": 68,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22S%C6%B0+ph%E1%BA%A1m+K%E1%BB%B9+thu%E1%BA%ADt%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22S%C6%B0+ph%E1%BA%A1m+K%E1%BB%B9+thu%E1%BA%ADt%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:48.725480+00:00",
+      "tls_verify": true,
+      "original_sha256": "a9248ae757894c25cfa06f8dc98ca5a49cdcece69a5aba2654849ed71f2273c5",
+      "bundled_file": "completion_sources/p68-followup-commons-viet.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p68-followup-contact-map",
+      "ccu_page": 68,
+      "source_url": "https://hcmute.edu.vn/?ModuleId=3b96bb7b-5b23-4b4b-b5f3-fcc6041ee427",
+      "resolved_url": "https://hcmute.edu.vn/?ModuleId=3b96bb7b-5b23-4b4b-b5f3-fcc6041ee427",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:12:22.759864+00:00",
+      "tls_verify": true,
+      "original_sha256": "91c5d309db78e2a413cda71c899291bb023e7c5708bbb0ebec08f885b26cff8a",
+      "bundled_file": "completion_sources/p68-followup-contact-map.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p68-followup-main",
+      "ccu_page": 68,
+      "source_url": "https://hcmute.edu.vn/",
+      "resolved_url": "https://hcmute.edu.vn/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:09:39.875782+00:00",
+      "tls_verify": true,
+      "original_sha256": "dce8e5258271aa0a27f41cd8123559597657b383b76a8550a9ce165980de54c5",
+      "bundled_file": "completion_sources/p68-followup-main.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p68-followup-photo-exact",
+      "ccu_page": 68,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AToaNhaTrungTam.jpg%7CFile%3ASPKTHCM.jpg",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AToaNhaTrungTam.jpg%7CFile%3ASPKTHCM.jpg",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:12:56.194727+00:00",
+      "tls_verify": true,
+      "original_sha256": "8fce235b81f472903b100cdda1c3709a78895113080c1f0d21e2fcccb4bdf8dc",
+      "bundled_file": "completion_sources/p68-followup-photo-exact.json",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p68-host_entry-1",
@@ -13652,6 +14005,54 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p71-followup-commons-dntu",
+      "ccu_page": 71,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Dong+Nai%22+university&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Dong+Nai%22+university&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:49.351499+00:00",
+      "tls_verify": true,
+      "original_sha256": "59b051def7481c3f6a02cce3f2c38d752e9b3940b51280420c125dd40aa879d7",
+      "bundled_file": "completion_sources/p71-followup-commons-dntu.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p71-followup-commons-viet",
+      "ccu_page": 71,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22C%C3%B4ng+ngh%E1%BB%87+%C4%90%E1%BB%93ng+Nai%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22C%C3%B4ng+ngh%E1%BB%87+%C4%90%E1%BB%93ng+Nai%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:49.319194+00:00",
+      "tls_verify": true,
+      "original_sha256": "ada2a601f24c7f102c6432340d6adca256996c391606174b387338725fe7cf7d",
+      "bundled_file": "completion_sources/p71-followup-commons-viet.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p71-followup-library",
+      "ccu_page": 71,
+      "source_url": "https://lib.dntu.edu.vn/",
+      "resolved_url": "https://lib.dntu.edu.vn/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:09:39.876323+00:00",
+      "tls_verify": true,
+      "original_sha256": "13a3c6116024df3213e3635ecda4c9c78a526fef482a9736ff98721d66663fbc",
+      "bundled_file": "completion_sources/p71-followup-library.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p71-root",
       "ccu_page": 71,
       "source_url": "https://dntu.edu.vn/",
@@ -13728,6 +14129,147 @@
       "tls_verify": true,
       "original_sha256": "2bd7120ff2117ce1707efba4791c074b4fb94ac9b105cbf25b062608755361fc",
       "bundled_file": "completion_sources/p72-commons.json",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p72-followup-contact",
+      "ccu_page": 72,
+      "source_url": "https://www.ir.iitb.ac.in/contact",
+      "resolved_url": "https://www.ir.iitb.ac.in/contact",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:10:49.800781+00:00",
+      "tls_verify": true,
+      "original_sha256": "b1a9ebde19f8513c41a98bb7e0a5e4a54e7062f8123c532e1aab2d74091633f8",
+      "bundled_file": "completion_sources/p72-followup-contact.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p72-followup-downloads",
+      "ccu_page": 72,
+      "source_url": "https://www.ir.iitb.ac.in/downloads",
+      "resolved_url": "https://www.ir.iitb.ac.in/downloads",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:10:49.798093+00:00",
+      "tls_verify": true,
+      "original_sha256": "90f902f963b1f67e2226a84a1d7c0faacba49a34ab7f907361d332b05101b291",
+      "bundled_file": "completion_sources/p72-followup-downloads.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p72-followup-factsheet-2026-2027",
+      "ccu_page": 72,
+      "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+      "resolved_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:10:49.801273+00:00",
+      "tls_verify": true,
+      "original_sha256": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+      "bundled_file": "completion_sources/p72-followup-factsheet-2026-2027.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation",
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p72-followup-form-1",
+      "ccu_page": 72,
+      "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2025-10/Visitingstudentsapplicationform.pdf",
+      "resolved_url": "https://www.ir.iitb.ac.in/sites/default/files/2025-10/Visitingstudentsapplicationform.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:17:30.684784+00:00",
+      "tls_verify": true,
+      "original_sha256": "462ce91207a65c618c78b6337b9600460febe37415230890f62edd2631552ef5",
+      "bundled_file": "completion_sources/p72-followup-form-1.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p72-followup-form-2",
+      "ccu_page": 72,
+      "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2025-10/Personal-Particulars.doc",
+      "resolved_url": "https://www.ir.iitb.ac.in/sites/default/files/2025-10/Personal-Particulars.doc",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:17:33.592029+00:00",
+      "tls_verify": true,
+      "original_sha256": "b17eb40daa3db3bb45f5208a6aa399731cbddb9acbfad4258294f6575ce95870",
+      "bundled_file": "completion_sources/p72-followup-form-2.doc",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p72-followup-form-3",
+      "ccu_page": 72,
+      "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2025-10/App-for-bonafide-cert.pdf",
+      "resolved_url": "https://www.ir.iitb.ac.in/sites/default/files/2025-10/App-for-bonafide-cert.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:17:34.486719+00:00",
+      "tls_verify": true,
+      "original_sha256": "ebd775dc33249c98750a4eca6bd6137fff2a707251be20afbddf455719611c29",
+      "bundled_file": "completion_sources/p72-followup-form-3.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p72-followup-inbound",
+      "ccu_page": 72,
+      "source_url": "https://www.ir.iitb.ac.in/inbound-students",
+      "resolved_url": "https://www.ir.iitb.ac.in/inbound-students",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:10:49.797549+00:00",
+      "tls_verify": true,
+      "original_sha256": "b1027744c95543bb7b9ee625ba0cc09794b65e0ddf82906e5dfc75f1b2e97c27",
+      "bundled_file": "completion_sources/p72-followup-inbound.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p72-followup-ir-home",
+      "ccu_page": 72,
+      "source_url": "https://www.ir.iitb.ac.in/",
+      "resolved_url": "https://www.ir.iitb.ac.in/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:09:41.860880+00:00",
+      "tls_verify": true,
+      "original_sha256": "8da4114dd6301648b0c982b4899dc5f62a3890addd2f6e18acc0a30b2b568509",
+      "bundled_file": "completion_sources/p72-followup-ir-home.html.gz",
       "response_bytes_verified": true,
       "decision": "used_with_explicit_field_status",
       "field_statuses": [
@@ -14100,6 +14642,22 @@
         "verified_current"
       ],
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p74-followup-engineering",
+      "ccu_page": 74,
+      "source_url": "https://saintgits.org/saintgits-college-of-engineering/",
+      "resolved_url": "https://saintgits.org/saintgits-college-of-engineering/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:09:39.878653+00:00",
+      "tls_verify": true,
+      "original_sha256": "1393066cf30e8ee59e5cf1e5a43d747931e240394269780e3aee14768ffc24ea",
+      "bundled_file": "completion_sources/p74-followup-engineering.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
       "source_id": "p74-life-1",
@@ -14664,6 +15222,90 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p77-followup-commons-veltech-campus",
+      "ccu_page": 77,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Vel+Tech%22+-intitle%3Agraduation+-intitle%3Alogo&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Vel+Tech%22+-intitle%3Agraduation+-intitle%3Alogo&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:49.707453+00:00",
+      "tls_verify": true,
+      "original_sha256": "cf3db4fda095dc2d7b0e8e3d591562abdde935461ad1dd64d91f181adb2ec5dd",
+      "bundled_file": "completion_sources/p77-followup-commons-veltech-campus.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p77-followup-commons-veltech",
+      "ccu_page": 77,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Veltech%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Veltech%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:49.556339+00:00",
+      "tls_verify": true,
+      "original_sha256": "b8cd5fdbfbf496046cda4315253644a368a4bea3491c90588ddd372ddea4147c",
+      "bundled_file": "completion_sources/p77-followup-commons-veltech.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p77-followup-lab-exact",
+      "ccu_page": 77,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AE-waste-lab.jpg%7CFile%3AVtmt1.jpg",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AE-waste-lab.jpg%7CFile%3AVtmt1.jpg",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:15:55.143522+00:00",
+      "tls_verify": true,
+      "original_sha256": "b7ddaeb675104620cb5446f8a58c354e16933d210b0c5db5232bd399b2d6225e",
+      "bundled_file": "completion_sources/p77-followup-lab-exact.json",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p77-followup-photo-exact",
+      "ccu_page": 77,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3ACampus-vtu.jpg",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3ACampus-vtu.jpg",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:12:56.432762+00:00",
+      "tls_verify": true,
+      "original_sha256": "7f9b685b18646378e9b28bf64f032171b72eac1979c12bc1c03007e5796f136f",
+      "bundled_file": "completion_sources/p77-followup-photo-exact.json",
+      "response_bytes_verified": true,
+      "decision": "excluded_specific_review",
+      "field_statuses": [],
+      "reason": "Campus-vtu.jpg was downloaded and visually reviewed: people-led posed photograph, not a readable campus exterior. Excluded; E-waste-lab.jpg separately verified."
+    },
+    {
+      "source_id": "p77-followup-tbi-official",
+      "ccu_page": 77,
+      "source_url": "https://veltechtbi.com/",
+      "resolved_url": "https://veltechtbi.com/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:18:36.102884+00:00",
+      "tls_verify": true,
+      "original_sha256": "d8c615c0bb5e1dd260e45cf55edc7bb67a8e509efc97951df69c8c10bffb3058",
+      "bundled_file": "completion_sources/p77-followup-tbi-official.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
       "source_id": "p77-host_entry-1",
       "ccu_page": 77,
       "source_url": "https://www.veltech.edu.in/academic-research/",
@@ -14840,6 +15482,42 @@
       "tls_verify": true,
       "original_sha256": "1a3d127cd0f55a0ca9b53d98463d13ef7a0064bd54f3940052648837778882c5",
       "bundled_file": "completion_sources/p79-commons-alternatives.json",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p79-followup-contact",
+      "ccu_page": 79,
+      "source_url": "https://kiit.ac.in/contact/",
+      "resolved_url": "https://kiit.ac.in/contact/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:09:39.879975+00:00",
+      "tls_verify": true,
+      "original_sha256": "9467ed2e549572dea995b09a8172ee5f7a00a1050b792cd3013c457fea5c0b1c",
+      "bundled_file": "completion_sources/p79-followup-contact.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p79-followup-official-map",
+      "ccu_page": 79,
+      "source_url": "https://maps.app.goo.gl/aVsBrYACMTfHZiqDA",
+      "resolved_url": "https://www.google.com/maps/place/KIIT+-+Kalinga+Institute+of+Industrial+Technology/@20.3555462,85.8161006,15z/data=!4m6!3m5!1s0x3a19091813dab8d5:0xa033051ccddbbcbc!8m2!3d20.3555462!4d85.8161006!16zL20vMGdmaDVt?entry=tts",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:12:22.760317+00:00",
+      "tls_verify": true,
+      "original_sha256": "ee69aad5366c6a82d9085f4a7c97a62ae3b38c020f5546009818177f7dd11202",
+      "bundled_file": "completion_sources/p79-followup-official-map.html.gz",
       "response_bytes_verified": true,
       "decision": "used_with_explicit_field_status",
       "field_statuses": [
@@ -15036,6 +15714,38 @@
       "tls_verify": true,
       "original_sha256": "3cd6a462d5891dbcd462b7d39b607c9d00939db9b4c0f0d6564ec7228ee8b455",
       "bundled_file": "completion_sources/p80-commons-exact-search.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p80-followup-commons-bangalore",
+      "ccu_page": 80,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Presidency%22+%22Bangalore%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Presidency%22+%22Bangalore%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:49.987706+00:00",
+      "tls_verify": true,
+      "original_sha256": "a722e8f34299ad201d36f9cb404d57a1219aafb1b229498692802c4d9069c09f",
+      "bundled_file": "completion_sources/p80-followup-commons-bangalore.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p80-followup-commons-bengaluru",
+      "ccu_page": 80,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Presidency%22+%22Bengaluru%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Presidency%22+%22Bengaluru%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T11:11:50.055180+00:00",
+      "tls_verify": true,
+      "original_sha256": "ee5948c6a29d937140e783422149db80ee45a0ad76422c4b423f9bc376b3afa2",
+      "bundled_file": "completion_sources/p80-followup-commons-bengaluru.json",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -17216,6 +17926,22 @@
         "verified_current"
       ],
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p96-followup-accreditation",
+      "ccu_page": 96,
+      "source_url": "https://etu.ru/en/study/professional-and-public-accreditation",
+      "resolved_url": "https://etu.ru/en/study/professional-and-public-accreditation",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://etu.ru/en/study/professional-and-public-accreditation",
+      "checked_at": "2026-10-11T11:09:42.153496+00:00",
+      "tls_verify": true,
+      "original_sha256": "2f85832e31ca57711e6107af6b142363351ae516adb71c69afc643fac26be7f6",
+      "bundled_file": "completion_sources/p96-followup-accreditation.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://etu.ru/en/study/professional-and-public-accreditation"
     },
     {
       "source_id": "p96-reference-folder-1",

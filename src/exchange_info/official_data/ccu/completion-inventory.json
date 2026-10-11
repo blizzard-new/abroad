@@ -14,143 +14,141 @@
   },
   "field_counts": {
     "host.program_scope": {
-      "reference_only": 39,
+      "reference_only": 38,
       "missing": 13,
-      "verified_current": 27,
+      "verified_current": 28,
       "needs_confirmation": 25
     },
     "host.eligibility": {
-      "reference_only": 36,
+      "reference_only": 35,
       "missing": 27,
-      "verified_current": 20,
+      "verified_current": 21,
       "needs_confirmation": 19,
       "conflict": 2
     },
     "host.language": {
       "reference_only": 46,
-      "verified_current": 18,
-      "missing": 14,
+      "verified_current": 19,
+      "missing": 13,
       "needs_confirmation": 22,
       "conflict": 4
     },
     "host.nomination_deadline": {
-      "missing": 56,
+      "missing": 55,
       "reference_only": 7,
-      "needs_confirmation": 18,
+      "needs_confirmation": 19,
       "conflict": 5,
       "verified_current": 18
     },
     "host.application_deadline": {
-      "missing": 45,
-      "verified_current": 20,
+      "missing": 44,
+      "verified_current": 21,
       "reference_only": 11,
       "needs_confirmation": 15,
       "conflict": 13
     },
     "host.documents": {
-      "reference_only": 40,
-      "verified_current": 22,
+      "reference_only": 39,
+      "verified_current": 23,
       "needs_confirmation": 26,
       "missing": 12,
       "conflict": 4
     },
     "host.application_forms": {
-      "reference_only": 35,
-      "needs_confirmation": 43,
+      "reference_only": 34,
+      "needs_confirmation": 44,
       "missing": 21,
       "verified_current": 5
     },
     "host.academic_calendar": {
-      "missing": 52,
-      "verified_current": 28,
+      "missing": 51,
+      "verified_current": 29,
       "needs_confirmation": 8,
       "conflict": 10,
       "reference_only": 6
     },
     "host.course_restrictions": {
-      "missing": 53,
-      "verified_current": 23,
+      "missing": 52,
+      "verified_current": 24,
       "needs_confirmation": 21,
       "conflict": 4,
       "reference_only": 3
     },
     "host.housing": {
-      "missing": 36,
-      "verified_current": 23,
+      "missing": 35,
+      "verified_current": 24,
       "conflict": 5,
       "needs_confirmation": 24,
       "reference_only": 16
     },
     "host.housing_deadline": {
-      "missing": 81,
+      "missing": 80,
       "verified_current": 5,
       "conflict": 2,
-      "needs_confirmation": 15,
+      "needs_confirmation": 16,
       "reference_only": 1
     },
     "host.costs": {
-      "missing": 49,
-      "verified_current": 16,
+      "missing": 48,
+      "verified_current": 17,
       "reference_only": 13,
       "needs_confirmation": 14,
       "conflict": 12
     },
     "host.insurance": {
-      "missing": 47,
-      "verified_current": 20,
+      "missing": 46,
+      "verified_current": 21,
       "reference_only": 10,
       "needs_confirmation": 24,
       "conflict": 3
     },
     "host.visa": {
-      "missing": 60,
+      "missing": 59,
       "needs_confirmation": 24,
-      "verified_current": 11,
+      "verified_current": 12,
       "reference_only": 8,
       "conflict": 1
     },
     "host.arrival": {
-      "missing": 51,
-      "verified_current": 26,
+      "missing": 50,
+      "verified_current": 27,
       "needs_confirmation": 10,
       "reference_only": 10,
       "conflict": 6,
       "explicit_not_announced": 1
     },
     "host.host_tuition": {
-      "missing": 72,
+      "missing": 71,
       "reference_only": 7,
       "needs_confirmation": 16,
-      "verified_current": 9
+      "verified_current": 10
     },
     "host.exchange_duration": {
-      "reference_only": 48,
+      "reference_only": 47,
       "missing": 13,
       "needs_confirmation": 15,
-      "verified_current": 25,
+      "verified_current": 26,
       "conflict": 3
     },
     "profile.city": {
-      "verified_current": 100,
-      "needs_confirmation": 2,
-      "missing": 1,
-      "reference_only": 1
+      "verified_current": 103,
+      "needs_confirmation": 1
     },
     "profile.location": {
-      "missing": 39,
-      "verified_current": 48,
+      "missing": 38,
+      "verified_current": 49,
       "needs_confirmation": 14,
       "reference_only": 3
     },
     "profile.website": {
-      "verified_current": 101,
-      "missing": 3
+      "verified_current": 102,
+      "missing": 2
     },
     "profile.degree_levels": {
-      "reference_only": 36,
+      "reference_only": 35,
       "missing": 40,
       "needs_confirmation": 19,
-      "verified_current": 9
+      "verified_current": 10
     },
     "profile.colleges": {
       "reference_only": 48,
@@ -267,12 +265,12 @@
       "partial_not_exhaustive": 33
     },
     "campus.coordinates": {
-      "verified_current": 95,
-      "missing": 9
+      "verified_current": 98,
+      "missing": 6
     },
     "campus.photo": {
-      "verified_current": 97,
-      "missing": 7
+      "verified_current": 100,
+      "missing": 4
     }
   },
   "per_school": [
@@ -113916,10 +113914,46 @@
           "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
         },
         "campus.photo": {
-          "status": "missing",
-          "value": null,
-          "reason": "未取得對應校園且有明確重用授權的照片。",
-          "evidence": []
+          "status": "verified_current",
+          "value": {
+            "artist": "Adoreplus",
+            "license_name": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "source_page_url": "https://commons.wikimedia.org/wiki/File:ToaNhaTrungTam.jpg",
+            "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/0/0b/ToaNhaTrungTam.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+            "campus_caption": "Center Building at HCMUTE",
+            "checked_at": "2026-10-11T11:15:05.003083+00:00",
+            "local_path": "/static/assets/ccu/campuses/p68-b8a7c828f77c.jpg",
+            "sha256": "b8a7c828f77cff56bc615e6563ddf2c26ee173454e10e5046a0189fa19200b47",
+            "width": 960,
+            "height": 720,
+            "modifications": "原樣保存Commons所提供影像；Commons縮圖尺寸依來源URL，不另裁切或用AI修改。",
+            "applicability": "真實校園照片；攝影時間依原頁，查核日不是拍攝日，不保證2027校園外觀或個人分配校區。"
+          },
+          "reason": "HCMUTE中央大樓校景，Commons作者Adoreplus、CC BY-SA4.0、2016-04-09。官方2025-12-26改名HCM-UTE與母校HCMUTE身份相同；舊照片不宣稱2027外觀。",
+          "evidence": [
+            {
+              "source_id": "p68-followup-photo-exact",
+              "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AToaNhaTrungTam.jpg%7CFile%3ASPKTHCM.jpg",
+              "source_pages": [],
+              "academic_year": "一般校園照片及授權；攝影日期另依來源",
+              "checked_at": "2026-10-11T11:12:56.194727+00:00",
+              "content_hash": "8fce235b81f472903b100cdda1c3709a78895113080c1f0d21e2fcccb4bdf8dc",
+              "excerpt": "{\"DateTime\": {\"value\": \"2016-04-09 11:14:57\", \"source\": \"mediawiki-metadata\", \"hidden\": \"\"}, \"ObjectName\": {\"value\": \"ToaNhaTrungTam\", \"source\": \"mediawiki-metadata\"}, \"CommonsMetadataExtension\": {\"value\": 1.2, \"source\": \"extension\", \"hidden\": \"\"}, \"Categories\": {\"value\": \"Ho Chi Minh City University of Technology and Education|Self-published work\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"Assessments\": {\"value\": \"\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"ImageDescription\": {\"value\": \"Center Building at HCMUTE\", \"source\": \"commons-desc-page\"}, \"DateTimeOriginal\": {\"value\": \"2016-04-09\", \"source\": \"commons-desc-page\"}, \"Credit\": {\"value\": \"<span class=\\\"int-own-work\\\" lang=\\\"en\\\">Own work</span>\", \"source\": \"commons-desc-page\"}, \"Artist\": {\"value\": \"<a href=\\\"//commons.wikimedia.org/w/index.php?title=User:Adoreplus&amp;action=edit&amp;redlink=1\\\" class=\\\"new\\\" title=\\\"User:Adoreplus (page does not exist)\\\">Adoreplus</a>\", \"source\": \"commons-desc-page\"}, \"LicenseShortName\": {\"value\": \"CC BY-SA 4.0\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"UsageTerms\": {\"value\": \"Creative Commons Attribution-Share Alike 4.0\", \"source\": \"commons-desc-page\"}, \"AttributionRequired\": {\"value\": \"true\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"LicenseUrl\": {\"value\": \"https://creativecommons.org/licenses/by-sa/4.0\", \"source\": \"commons-desc-page\"}, \"Copyrighted\": {\"value\": \"True\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"Restrictions\": {\"value\": \"\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"License\": {\"value\": \"cc-by-sa-4.0\", \"source\": \"commons-templates\", \"hidden\": \"\"}}",
+              "location_in_source": "query.pages.48088400.imageinfo[0].extmetadata"
+            },
+            {
+              "source_id": "p68-followup-main",
+              "source_url": "https://hcmute.edu.vn/",
+              "source_pages": [],
+              "excerpt": "Ngày 26/12/2025, Thủ tướng Chính phủ đã có Quyết định số 2809/QĐ-TTg",
+              "academic_year": "校名變更決定2025-12-26；不是2027外觀證明",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:09:39.875782+00:00",
+              "content_hash": "dce8e5258271aa0a27f41cd8123559597657b383b76a8550a9ce165980de54c5",
+              "status": "verified_current"
+            }
+          ]
         }
       },
       "gaps": [
@@ -113936,8 +113970,7 @@
         "home.home_degree_year",
         "home.scholarship_old_window",
         "host.document_set_completeness",
-        "campus.coordinates",
-        "campus.photo"
+        "campus.coordinates"
       ]
     },
     {
@@ -117987,174 +118020,490 @@
       ],
       "fields": {
         "host.program_scope": {
-          "status": "reference_only",
-          "value": "Undergraduate students are allowed to take UG courses and Postgraduate students are allowed to take PG courses.",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
+          "status": "verified_current",
+          "value": "接待本科／雙聯、碩士及研究領域，訪問學生分MoU與Non-MoU；MoU接待依雙方有效協議。此接待校清單不表示中正本期可選。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
               "source_pages": [
-                72
+                2
               ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "Undergraduate students are allowed to take UG courses and Postgraduate students are allowed to take PG courses.",
-              "reference_excerpt": "Undergraduate students are allowed to take UG courses and Postgraduate students are allowed to take PG courses.",
-              "note": null
+              "excerpt": "Faculties offering exchange opportunities",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "Under Memorandum of Understanding (MoU) / Not under Memorandum of Understanding (Non MoU)",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
             }
           ]
         },
         "host.eligibility": {
-          "status": "reference_only",
-          "value": "Undergraduate students are allowed to take UG courses and Postgraduate students are allowed to take PG courses.",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
+          "status": "verified_current",
+          "value": "須符合接待學程最低資格，滿足最低資格不保證錄取；MoU學生依雙方協議條款。未自行補GPA或年級門檻。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
               "source_pages": [
-                72
+                3
               ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "Undergraduate students are allowed to take UG courses and Postgraduate students are allowed to take PG courses.",
-              "reference_excerpt": "Undergraduate students are allowed to take UG courses and Postgraduate students are allowed to take PG courses.",
-              "note": null
+              "excerpt": "merely fulfilling the minimum eligibility criteria does not guarantee the selection",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
             }
           ]
         },
         "host.language": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.nomination_deadline": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.application_deadline": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.documents": {
-          "status": "reference_only",
-          "value": "https://www.ir.iitb.ac.in/en/students/how-to-apply_inbound",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
+          "status": "verified_current",
+          "value": "可提供英文授課證明或母校／英語教師／國家機構的高等教育英語能力證明；測驗選項iBT95且寫作20、IELTS總6.5且每項6、Duolingo115，成績通常2年內。官方另列legacy PBT／CBT數值，未換算新版考試。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
               "source_pages": [
-                72
+                3
               ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "https://www.ir.iitb.ac.in/en/students/how-to-apply_inbound",
-              "reference_excerpt": "https://www.ir.iitb.ac.in/en/students/how-to-apply_inbound",
-              "note": null
+              "excerpt": "For detailed information, kindly refer to: https://www.ir.iitb.ac.in/inbound-students",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-inbound",
+              "source_url": "https://www.ir.iitb.ac.in/inbound-students",
+              "source_pages": [],
+              "excerpt": "The internet based test requires scores of at least 95 overall with a minimum score of 20 in writing.",
+              "academic_year": "2026–2027當期Fact Sheet p3直接指定的Inbound文件／規定頁；頁面自身無年度標記",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.797549+00:00",
+              "content_hash": "b1027744c95543bb7b9ee625ba0cc09794b65e0ddf82906e5dfc75f1b2e97c27",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "host.nomination_deadline": {
+          "status": "needs_confirmation",
+          "value": "2026–2027簡章指提名及申請文件寄Inbound Coordinator；未另列獨立提名日期，不能自行等同申請期限。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "Nomination and application documents should be sent to Piyush Kumar",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "needs_confirmation"
+            }
+          ]
+        },
+        "host.application_deadline": {
+          "status": "verified_current",
+          "value": "Spring2027課程交換：2026-09-30（簡章載每年9月30日）；Autumn課程：每年3月31日。Project申請全年受理但至少提前2個月，課程與研究計畫分開。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "Spring Semester (Jan-Apr): 30 Sept (every year)",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "at least 2 months prior to the expected date",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "host.documents": {
+          "status": "verified_current",
+          "value": "11項初申要求：申請表、Foreign Scholars個人資料、CV、成績單及必要英文認證翻譯、SOP、Study／Project Plan、母校在學及同意證明（MoU提名須明載）、2封教師推薦信、英文能力證明、護照個人頁、自負費用承諾。Host Bonafide/FRRO表為到校後用途，與母校初申證明不同。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "For detailed information, kindly refer to: https://www.ir.iitb.ac.in/inbound-students",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-inbound",
+              "source_url": "https://www.ir.iitb.ac.in/inbound-students",
+              "source_pages": [],
+              "excerpt": "Two recommendation letters from the faculty members.",
+              "academic_year": "2026–2027當期Fact Sheet p3直接指定的Inbound文件／規定頁；頁面自身無年度標記",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.797549+00:00",
+              "content_hash": "b1027744c95543bb7b9ee625ba0cc09794b65e0ddf82906e5dfc75f1b2e97c27",
+              "status": "verified_current"
             }
           ]
         },
         "host.application_forms": {
-          "status": "reference_only",
-          "value": "https://drive.google.com/open?id=1uIzadQkV9F0Tmo1BfLmO3-5wtLETtQbL",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
+          "status": "needs_confirmation",
+          "value": "已取得當期簡章所連Inbound頁的Visiting Students Application（3頁）、Personal Particulars（DOC）及Host Bonafide／FRRO（1頁，到校後）。表內學年留白、未標版本日期；active官網鏈結已核，最新表格版本日期仍無法独立核實。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
               "source_pages": [
-                72
+                3
               ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "https://drive.google.com/open?id=1uIzadQkV9F0Tmo1BfLmO3-5wtLETtQbL",
-              "reference_excerpt": "https://drive.google.com/open?id=1uIzadQkV9F0Tmo1BfLmO3-5wtLETtQbL",
-              "note": null
+              "excerpt": "For detailed information, kindly refer to: https://www.ir.iitb.ac.in/inbound-students",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p72-followup-form-1",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2025-10/Visitingstudentsapplicationform.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "Academic year",
+              "academic_year": "表內學年留白；2026–2027簡章所連現行官網附件",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:17:30.684784+00:00",
+              "content_hash": "462ce91207a65c618c78b6337b9600460febe37415230890f62edd2631552ef5",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p72-followup-form-2",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2025-10/Personal-Particulars.doc",
+              "source_pages": [],
+              "excerpt": "PERSONAL PARTICULARS OF FOREIGN SCHOLARS COMING TO INDIA",
+              "academic_year": "DOC無年度標記；antiword正文解析",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:17:33.592029+00:00",
+              "content_hash": "b17eb40daa3db3bb45f5208a6aa399731cbddb9acbfad4258294f6575ce95870",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p72-followup-form-3",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2025-10/App-for-bonafide-cert.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "I require a Bonafide Certificate from IIT Bombay for my residence registration at the F.R.R.O.",
+              "academic_year": "到校後FRRO證明表；學年留白",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:17:34.486719+00:00",
+              "content_hash": "ebd775dc33249c98750a4eca6bd6137fff2a707251be20afbddf455719611c29",
+              "status": "needs_confirmation"
             }
           ]
         },
         "host.academic_calendar": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.course_restrictions": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.housing": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.housing_deadline": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.costs": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.insurance": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.visa": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.arrival": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.host_tuition": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.exchange_duration": {
-          "status": "reference_only",
-          "value": "一學期(one semester)/一學年(one year)",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
+          "status": "verified_current",
+          "value": "Spring2027：term為1月第1週至4月最後1週，orientation為1月第1週、課程至4月中、考試4月中末；精確日曆另依官方Academic Calendar，不自行產生日期。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
               "source_pages": [
-                72
+                2
               ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "一學期(one semester)/一學年(one year)",
-              "reference_excerpt": "一學期(one semester)/一學年(one year)",
-              "note": null
+              "excerpt": "1st week of January to last week of April",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "host.course_restrictions": {
+          "status": "verified_current",
+          "value": "每學期最少15、最多40 credits；建議交換15–30（通常3–5門）。申請時列偏好課程，抵達後人工註冊；不是所有院系、課程或容量已保證開放。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "Minimum no. of credits to be taken in a semester – 15 credits",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "Maximum no. of credits to be taken in a semester – 40 credits",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "host.housing": {
+          "status": "verified_current",
+          "value": "到校後依床位可用性提供校內住宿；不是事前保證床位或特定宿舍。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                4
+              ],
+              "excerpt": "Exchange students will be provided on-campus accommodation upon their arrival as per availability",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "host.housing_deadline": {
+          "status": "needs_confirmation",
+          "value": "2026–2027簡章明示住宿依到校時可用性，但未列住宿申請獨立期限；尚未核實，不宣稱官方已明示尚未公告。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                4
+              ],
+              "excerpt": "as per availability",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "needs_confirmation"
+            }
+          ]
+        },
+        "host.costs": {
+          "status": "verified_current",
+          "value": "MoU與Non-MoU均需INR15,000／學期行政費、INR7,000／月住宿費；其他費用另見Inbound頁。此為2026–2027公布費率，未估整體生活費或保证未来费率。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                4
+              ],
+              "excerpt": "INR 15,000 (Administration charge/semester)",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                4
+              ],
+              "excerpt": "INR 7,000 (Hostel charge/month)",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "host.insurance": {
+          "status": "verified_current",
+          "value": "交換生在校院醫院僅享Outpatient Department，抵達前須自備涵蓋疾病及意外的個人保險。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                4
+              ],
+              "excerpt": "should obtain a personal insurance policy, covering sickness and accidents prior to arrival",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "host.visa": {
+          "status": "verified_current",
+          "value": "交換／訪問學生須辦Student Visa。當期Spring2026–2027首頁另明示Study in India註冊及提交為mandatory，SII-ID用於e-Student流程；未代學生提交或斷言個別簽證可獲核准。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                4
+              ],
+              "excerpt": "students must apply for a “Student Visa”",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-ir-home",
+              "source_url": "https://www.ir.iitb.ac.in/",
+              "source_pages": [],
+              "excerpt": "Registration and Submission on 'Study in India' portal is mandatory.",
+              "academic_year": "首頁正文2026–27 Spring semester Ph.D. & Exchange Applicants",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:09:41.860880+00:00",
+              "content_hash": "8da4114dd6301648b0c982b4899dc5f62a3890addd2f6e18acc0a30b2b568509",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "host.arrival": {
+          "status": "verified_current",
+          "value": "欲使用IRO到校支援，提前2週通知抵達日期時間；支援包括機場接送、宿舍、FRRO、buddy等，未宣稱所有服務免費。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                5
+              ],
+              "excerpt": "inform the Office of International Relations of your arrival date/time two weeks in advance",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "host.host_tuition": {
+          "status": "verified_current",
+          "value": "有效MoU類別的course/project fees免收；Non-MoU課程INR5,000／credit、project INR10,000／月。行政與住宿費仍需另付；中正本期未開放不能因此取得免學費資格。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                4
+              ],
+              "excerpt": "Course work / Project work fees under MoU category",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                4
+              ],
+              "excerpt": "No Fees",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                4
+              ],
+              "excerpt": "Course work fees under non MoU category INR 5,000 per credit",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "host.exchange_duration": {
+          "status": "verified_current",
+          "value": "課程交換1學期，最多2學期；project work未設同樣期間上限，仍須依接待與有效MoU規定。",
+          "reason": "正文及適用年度已核對；接待規則不改變中正本期未開放身份。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "one semester or spend up to a maximum of two semesters",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
             }
           ]
         },
@@ -118184,34 +118533,86 @@
           ]
         },
         "profile.location": {
-          "status": "missing",
-          "value": null,
-          "reason": "尚未從已讀公開正文取得此欄；不是官方明示尚未公告。",
-          "evidence": []
-        },
-        "profile.website": {
-          "status": "missing",
-          "value": null,
-          "reason": "尚未從已讀公開正文取得此欄；不是官方明示尚未公告。",
-          "evidence": []
-        },
-        "profile.degree_levels": {
-          "status": "reference_only",
-          "value": "Undergraduate students are allowed to take UG courses and Postgraduate students are allowed to take PG courses.",
-          "reason": "保存原文限制；未解析為当期可選學制／學院。",
+          "status": "verified_current",
+          "value": "Room416，4th Floor，Rahul Bajaj Technology Innovation Center，Powai，Mumbai400076，India",
+          "reason": "當期官方接待聯絡地址；不是宿舍或個人授課樓分配。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
               "source_pages": [
-                72
+                1
               ],
-              "academic_year": "歷史灰字；學制／院系限制參考",
-              "application_round": null,
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "Undergraduate students are allowed to take UG courses and Postgraduate students are allowed to take PG courses.",
-              "reference_excerpt": "Undergraduate students are allowed to take UG courses and Postgraduate students are allowed to take PG courses.",
-              "note": null
+              "excerpt": "Room 416, 4th Floor, Rahul Bajaj Technology Innovation Center, Powai",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "profile.website": {
+          "status": "verified_current",
+          "value": "https://www.ir.iitb.ac.in/",
+          "reason": "IIT Bombay官方國際處正文及2026–2027 Fact Sheet同時核實網站身份；主站503與國際處可讀分開保存。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "Student Exchange Contact www.ir.iitb.ac.in",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-ir-home",
+              "source_url": "https://www.ir.iitb.ac.in/",
+              "source_pages": [],
+              "excerpt": "Home | IIT International Relations - IIT Bombay",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:09:41.860880+00:00",
+              "content_hash": "8da4114dd6301648b0c982b4899dc5f62a3890addd2f6e18acc0a30b2b568509",
+              "status": "verified_current"
+            }
+          ]
+        },
+        "profile.degree_levels": {
+          "status": "verified_current",
+          "value": "undergraduate／postgraduate；exchange列bachelor／double degree、master、research，個別學程須核資格。",
+          "reason": "接待校公開學制範圍，未擴大成全部博士／專業學程。",
+          "evidence": [
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "IIT B provides undergraduate and postgraduate programs",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p72-followup-factsheet-2026-2027",
+              "source_url": "https://www.ir.iitb.ac.in/sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf",
+              "source_pages": [
+                2
+              ],
+              "excerpt": "master and research",
+              "academic_year": "接待校2026–2027學年Fact Sheet，Spring為2027；中正本期未開放參考",
+              "application_round": "2027春季接待參考；中正本期未開放",
+              "checked_at": "2026-10-11T11:10:49.801273+00:00",
+              "content_hash": "ef5a6606fd031ea84f0a21283d2cb29d54fd557c95236bf36ae3e14aa6f3560a",
+              "status": "verified_current"
             }
           ]
         },
@@ -118727,26 +119128,9 @@
         }
       },
       "gaps": [
-        "host.program_scope",
-        "host.eligibility",
-        "host.language",
         "host.nomination_deadline",
-        "host.application_deadline",
-        "host.documents",
         "host.application_forms",
-        "host.academic_calendar",
-        "host.course_restrictions",
-        "host.housing",
         "host.housing_deadline",
-        "host.costs",
-        "host.insurance",
-        "host.visa",
-        "host.arrival",
-        "host.host_tuition",
-        "host.exchange_duration",
-        "profile.location",
-        "profile.website",
-        "profile.degree_levels",
         "profile.colleges",
         "profile.transport",
         "profile.campus_life",
@@ -126260,10 +126644,46 @@
           ]
         },
         "campus.photo": {
-          "status": "missing",
-          "value": null,
-          "reason": "實際影像以畢業人物為主，校園辨識不足；不作校園照片。",
-          "evidence": []
+          "status": "verified_current",
+          "value": {
+            "artist": "Ghantajayaram",
+            "license_name": "CC0",
+            "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+            "source_page_url": "https://commons.wikimedia.org/wiki/File:E-waste-lab.jpg",
+            "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/E-waste-lab.jpg/1280px-E-waste-lab.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+            "campus_caption": "Vel Tech University電子／塑膠廢棄物技術育成中心外觀（Commons來源2015）；非主校門。",
+            "checked_at": "2026-10-11T11:17:03.957083+00:00",
+            "local_path": "/static/assets/ccu/campuses/p77-0c546fd829c6.jpg",
+            "sha256": "0c546fd829c6cffcfd03cc9a3e05c890025d31fed19aec1596b52650c3aa21ba",
+            "width": 1280,
+            "height": 797,
+            "modifications": "原樣保存Commons所提供影像；Commons縮圖尺寸依來源URL，不另裁切或用AI修改。",
+            "applicability": "真實校園照片；攝影時間依原頁，查核日不是拍攝日，不保證2027校園外觀或個人分配校區。"
+          },
+          "reason": "Vel Tech University電子及塑膠廢棄物育成中心外觀，Commons作者Ghantajayaram、CC0、2015。官方大學首頁連至VelTechTBI，該頁列E-Waste & Plastic Waste設施；不是Vel Tech Multi Tech姊妹學院或人物活動照。",
+          "evidence": [
+            {
+              "source_id": "p77-followup-lab-exact",
+              "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AE-waste-lab.jpg%7CFile%3AVtmt1.jpg",
+              "source_pages": [],
+              "academic_year": "一般校園照片及授權；攝影日期另依來源",
+              "checked_at": "2026-10-11T11:15:55.143522+00:00",
+              "content_hash": "b7ddaeb675104620cb5446f8a58c354e16933d210b0c5db5232bd399b2d6225e",
+              "excerpt": "{\"DateTime\": {\"value\": \"2016-01-09 16:27:33\", \"source\": \"mediawiki-metadata\", \"hidden\": \"\"}, \"ObjectName\": {\"value\": \"E-waste-lab\", \"source\": \"mediawiki-metadata\"}, \"CommonsMetadataExtension\": {\"value\": 1.2, \"source\": \"extension\", \"hidden\": \"\"}, \"Categories\": {\"value\": \"CC-Zero|Electronic waste in India|Uploaded with en.wp upload wizard|Avadi|Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"Assessments\": {\"value\": \"\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"ImageDescription\": {\"value\": \"VEL TECH University E-waste lab image\", \"source\": \"commons-desc-page\"}, \"DateTimeOriginal\": {\"value\": \"2015-06-10\", \"source\": \"commons-desc-page\"}, \"Credit\": {\"value\": \"<span class=\\\"int-own-work\\\" lang=\\\"en\\\">Own work</span>\", \"source\": \"commons-desc-page\"}, \"Artist\": {\"value\": \"<a href=\\\"//commons.wikimedia.org/w/index.php?title=User:Ghantajayaram&amp;action=edit&amp;redlink=1\\\" class=\\\"new\\\" title=\\\"User:Ghantajayaram (page does not exist)\\\">Ghantajayaram</a>\", \"source\": \"commons-desc-page\"}, \"LicenseShortName\": {\"value\": \"CC0\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"UsageTerms\": {\"value\": \"Creative Commons Zero, Public Domain Dedication\", \"source\": \"commons-desc-page\"}, \"AttributionRequired\": {\"value\": \"false\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"LicenseUrl\": {\"value\": \"http://creativecommons.org/publicdomain/zero/1.0/deed.en\", \"source\": \"commons-desc-page\"}, \"Copyrighted\": {\"value\": \"True\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"Restrictions\": {\"value\": \"\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"License\": {\"value\": \"cc0\", \"source\": \"commons-templates\", \"hidden\": \"\"}}",
+              "location_in_source": "query.pages.46251541.imageinfo[0].extmetadata"
+            },
+            {
+              "source_id": "p77-followup-tbi-official",
+              "source_url": "https://veltechtbi.com/",
+              "source_pages": [],
+              "excerpt": "E-Waste & Plastic Waste Recycling Facility",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:18:36.102884+00:00",
+              "content_hash": "d8c615c0bb5e1dd260e45cf55edc7bb67a8e509efc97951df69c8c10bffb3058",
+              "status": "verified_current"
+            }
+          ]
         }
       },
       "gaps": [
@@ -126289,8 +126709,7 @@
         "profile.transport",
         "home.home_degree_year",
         "home.scholarship_old_window",
-        "host.document_set_completeness",
-        "campus.photo"
+        "host.document_set_completeness"
       ]
     },
     {
@@ -126480,10 +126899,33 @@
           ]
         },
         "profile.city": {
-          "status": "missing",
-          "value": null,
-          "reason": "尚未從已讀公開正文取得此欄；不是官方明示尚未公告。",
-          "evidence": []
+          "status": "verified_current",
+          "value": "Bhubaneswar",
+          "reason": "官方Contact頁Patia地址連至此KIIT機構marker；不是@視窗值或KISS校區。",
+          "evidence": [
+            {
+              "source_id": "p79-followup-contact",
+              "source_url": "https://kiit.ac.in/contact/",
+              "source_pages": [],
+              "excerpt": "KIIT | Contact Us",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:09:39.879975+00:00",
+              "content_hash": "9467ed2e549572dea995b09a8172ee5f7a00a1050b792cd3013c457fea5c0b1c",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p79-followup-official-map",
+              "source_url": "https://maps.app.goo.gl/aVsBrYACMTfHZiqDA",
+              "source_pages": [],
+              "excerpt": "KIIT - Kalinga Institute of Industrial Technology !3d20.3555462!4d85.8161006",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:12:22.760317+00:00",
+              "content_hash": "ee69aad5366c6a82d9085f4a7c97a62ae3b38c020f5546009818177f7dd11202",
+              "status": "verified_current"
+            }
+          ]
         },
         "profile.location": {
           "status": "missing",
@@ -127058,10 +127500,45 @@
           "evidence": []
         },
         "campus.coordinates": {
-          "status": "missing",
-          "value": null,
-          "evidence": [],
-          "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
+          "status": "verified_current",
+          "value": {
+            "school_name": "Kalinga Institute of Industrial Technology 卡林噶工業技術學院",
+            "country": "印度",
+            "city": "Bhubaneswar",
+            "latitude": 20.3555462,
+            "longitude": 85.8161006,
+            "geocode_status": "verified",
+            "geocoded_at": "2026-10-11T11:12:22.760317+00:00",
+            "source_url": "https://maps.app.goo.gl/aVsBrYACMTfHZiqDA",
+            "identity_source_url": "https://kiit.ac.in/contact/",
+            "precision": "representative",
+            "note": "官方Contact頁Patia地址連至此KIIT機構marker；不是@視窗值或KISS校區。"
+          },
+          "reason": "官方Contact頁Patia地址連至此KIIT機構marker；不是@視窗值或KISS校區。",
+          "evidence": [
+            {
+              "source_id": "p79-followup-contact",
+              "source_url": "https://kiit.ac.in/contact/",
+              "source_pages": [],
+              "excerpt": "KIIT | Contact Us",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:09:39.879975+00:00",
+              "content_hash": "9467ed2e549572dea995b09a8172ee5f7a00a1050b792cd3013c457fea5c0b1c",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p79-followup-official-map",
+              "source_url": "https://maps.app.goo.gl/aVsBrYACMTfHZiqDA",
+              "source_pages": [],
+              "excerpt": "KIIT - Kalinga Institute of Industrial Technology !3d20.3555462!4d85.8161006",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:12:22.760317+00:00",
+              "content_hash": "ee69aad5366c6a82d9085f4a7c97a62ae3b38c020f5546009818177f7dd11202",
+              "status": "verified_current"
+            }
+          ]
         },
         "campus.photo": {
           "status": "verified_current",
@@ -127113,7 +127590,6 @@
         "host.arrival",
         "host.host_tuition",
         "host.exchange_duration",
-        "profile.city",
         "profile.location",
         "profile.degree_levels",
         "profile.colleges",
@@ -127138,8 +127614,7 @@
         "mother_list.language_requirement",
         "mother_list.eligibility",
         "mother_list.study_period",
-        "host.document_set_completeness",
-        "campus.coordinates"
+        "host.document_set_completeness"
       ]
     },
     {
@@ -184076,10 +184551,46 @@
           ]
         },
         "campus.photo": {
-          "status": "missing",
-          "value": null,
-          "reason": "未取得對應校園且有明確重用授權的照片。",
-          "evidence": []
+          "status": "verified_current",
+          "value": {
+            "artist": "FHNWStabKom",
+            "license_name": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "source_page_url": "https://commons.wikimedia.org/wiki/File:FHNW_Campus_Brugg_Windisch.jpg",
+            "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/FHNW_Campus_Brugg_Windisch.jpg/1280px-FHNW_Campus_Brugg_Windisch.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+            "campus_caption": "FHNW Campus Brugg-Windisch共同校園主入口；官方列School of Business在此校區。地圖為Olten代表點，照片不代表個人接收校區。",
+            "checked_at": "2026-10-11T11:17:03.608625+00:00",
+            "local_path": "/static/assets/ccu/campuses/p104-867622f89ea8.jpg",
+            "sha256": "867622f89ea8dbd56e256b680c9169c42158e6cad01b772ebf4df5f34a895257",
+            "width": 1280,
+            "height": 853,
+            "modifications": "原樣保存Commons所提供影像；Commons縮圖尺寸依來源URL，不另裁切或用AI修改。",
+            "applicability": "真實校園照片；攝影時間依原頁，查核日不是拍攝日，不保證2027校園外觀或個人分配校區。"
+          },
+          "reason": "FHNW Campus Brugg-Windisch共同校園主入口。官方校區頁正文Our schools明載School of Business；屬商學院所在的共同校區，非商學院專用建築。地圖代表點仍為Olten；照片不是Olten／Basel／Muttenz或個人分配證明。",
+          "evidence": [
+            {
+              "source_id": "p104-followup-commons-category",
+              "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&generator=search&gsrsearch=Fachhochschule+Nordwestschweiz&gsrnamespace=6&gsrlimit=30",
+              "source_pages": [],
+              "academic_year": "一般校園照片及授權；攝影日期另依來源",
+              "checked_at": "2026-10-11T11:15:53.702547+00:00",
+              "content_hash": "a049ec60ce21182c63545bb394d3a564bc3e0bef7a6e07d13efeaf07a1348817",
+              "excerpt": "{\"DateTime\": {\"value\": \"2026-08-11 10:01:44\", \"source\": \"mediawiki-metadata\", \"hidden\": \"\"}, \"ObjectName\": {\"value\": \"FHNW Campus Brugg Windisch\", \"source\": \"mediawiki-metadata\"}, \"CommonsMetadataExtension\": {\"value\": 1.2, \"source\": \"extension\", \"hidden\": \"\"}, \"Categories\": {\"value\": \"Fachhochschule Nordwestschweiz|Universities of Applied Sciences|Self-published work|Files with coordinates missing SDC location of creation|Buildings in Windisch\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"Assessments\": {\"value\": \"\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"GPSLatitude\": {\"value\": \"47.481710\", \"source\": \"commons-desc-page\"}, \"GPSLongitude\": {\"value\": \"8.211007\", \"source\": \"commons-desc-page\"}, \"GPSMapDatum\": {\"value\": \"WGS-84\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"ImageDescription\": {\"value\": \"The main entrance of the main campus of the FHNW University of Applied Sciences and Arts in Brugg-Windisch\", \"source\": \"commons-desc-page\"}, \"DateTimeOriginal\": {\"value\": \"2026-08-11 12:06:16\", \"source\": \"commons-desc-page\"}, \"Credit\": {\"value\": \"<span class=\\\"int-own-work\\\" lang=\\\"en\\\">Own work</span>\", \"source\": \"commons-desc-page\"}, \"Artist\": {\"value\": \"<a href=\\\"//commons.wikimedia.org/wiki/User:FHNWStabKom\\\" title=\\\"User:FHNWStabKom\\\">FHNWStabKom</a>\", \"source\": \"commons-desc-page\"}, \"LicenseShortName\": {\"value\": \"CC BY-SA 4.0\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"UsageTerms\": {\"value\": \"Creative Commons Attribution-Share Alike 4.0\", \"source\": \"commons-desc-page\"}, \"AttributionRequired\": {\"value\": \"true\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"LicenseUrl\": {\"value\": \"https://creativecommons.org/licenses/by-sa/4.0\", \"source\": \"commons-desc-page\"}, \"Copyrighted\": {\"value\": \"True\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"Restrictions\": {\"value\": \"\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"License\": {\"value\": \"cc-by-sa-4.0\", \"source\": \"commons-templates\", \"hidden\": \"\"}}",
+              "location_in_source": "query.pages.197225656.imageinfo[0].extmetadata"
+            },
+            {
+              "source_id": "p104-followup-brugg-business-campus",
+              "source_url": "https://www.fhnw.ch/en/about-fhnw/locations/brugg-windisch",
+              "source_pages": [],
+              "excerpt": "The School of Business, Computer Science and Information Technology, Education and Engineering and Environment",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:17:01.600478+00:00",
+              "content_hash": "3117f189e29138a08d32cc4c8c8f9ab275860d8e9120e71976cd21b5121fd53d",
+              "status": "verified_current"
+            }
+          ]
         }
       },
       "gaps": [
@@ -184104,8 +184615,7 @@
         "profile.campus_life",
         "home.home_degree_year",
         "home.scholarship_old_window",
-        "host.document_set_completeness",
-        "campus.photo"
+        "host.document_set_completeness"
       ]
     },
     {
@@ -186280,26 +186790,33 @@
           ]
         },
         "profile.city": {
-          "value": "Ankara（Ankara 主校）",
-          "status": "reference_only",
+          "status": "verified_current",
+          "value": "Ankara",
+          "reason": "官方土耳其文İletişim頁所嵌地圖解析為Hükümet Meydani No:2校址marker；不採39.94340047942294／32.85319811498272視窗值，不套Northern Cyprus校區。",
           "evidence": [
             {
-              "source_id": "p105-r8-flyer",
-              "source_url": "https://erasmus.asbu.edu.tr/sites/koordinatorlukler/erasmus.asbu.edu.tr/files/inline-files/Incoming%20Student%20Flyer_2.pdf",
-              "source_pages": [
-                1
-              ],
-              "academic_year": "正文校曆2025–2026，Fall結束印Jan2,2025；不是2026/27新交換指南",
-              "application_round": "校址／一般服務或參考資料（非申請梯次）",
-              "checked_at": "2026-10-08T08:34:55.565823+00:00",
-              "status": "reference_only",
-              "excerpt": ": Hükümet Meydanı No: 2 06050 Ulus, Altındağ/ANKARA Social Media Accounts Get in Touch INTERNATIONAL OFFICE international@asbu.edu.tr https://uo.asbu.edu.tr/en ERASMUS+ MOBILITY erasmus@asbu.edu.tr https://erasmus.asbu.edu.tr/en /asbuedu /asbue",
-              "content_hash": "8e4e0362c4c55381e3f35be203414f49dd14a92a44852b86f7db58f375938990",
-              "text_sha256": "abede78099ddb580c99f586104083d3fd68c67f77d44bfab86d75716aad0c873",
-              "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+              "source_id": "p105-followup-contact-tr",
+              "source_url": "https://www.asbu.edu.tr/tr/iletisim",
+              "source_pages": [],
+              "excerpt": "İletişim | ANKARA SOSYAL BİLİMLER      ÜNİVERSİTESİ",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:09:40.659798+00:00",
+              "content_hash": "2272680f0b1a38c4ab3b67d8827a0aa658669b3ecaa14d6a177aa824563b48b6",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p105-followup-official-map",
+              "source_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.9101023314993!2d32.85319811498272!3d39.94340047942294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d345aee5549aa1%3A0x6e8d93e2bbc3606c!2sAnkara+Sosyal+Bilimler+%C3%9Cniversitesi!5e0!3m2!1str!2str!4v1509309846464",
+              "source_pages": [],
+              "excerpt": "Social Sciences University of Ankara, Hacı Bayram, Ulus, Hükümet Meydani No:2 [39.94273159999999,32.8564133]",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:12:22.760822+00:00",
+              "content_hash": "6585b4f9eeccb9db00ed3ab497492f2bc62dda21a4139da3a35cb4c882947a96",
+              "status": "verified_current"
             }
-          ],
-          "reason": "學校官方聯絡／校區資訊；代表聯絡或郵寄地址不等交換課程全在此地。"
+          ]
         },
         "profile.location": {
           "value": ": Hükümet Meydanı No: 2 06050 Ulus, Altındağ/ANKARA Social Media Accounts Get in Touch INTERNATIONAL OFFICE international@asbu.edu.tr https://uo.asbu.edu.tr/en ERASMUS+ MOBILITY erasmus@asbu.edu.tr https://erasmus.asbu.edu.tr/en /asbuedu /asbue",
@@ -186825,10 +187342,45 @@
           "evidence": []
         },
         "campus.coordinates": {
-          "status": "missing",
-          "value": null,
-          "evidence": [],
-          "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
+          "status": "verified_current",
+          "value": {
+            "school_name": "Ankara Social Science University 土耳其安卡拉社會科技大學",
+            "country": "土耳其",
+            "city": "Ankara",
+            "latitude": 39.94273159999999,
+            "longitude": 32.8564133,
+            "geocode_status": "verified",
+            "geocoded_at": "2026-10-11T11:12:22.760822+00:00",
+            "source_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.9101023314993!2d32.85319811498272!3d39.94340047942294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d345aee5549aa1%3A0x6e8d93e2bbc3606c!2sAnkara+Sosyal+Bilimler+%C3%9Cniversitesi!5e0!3m2!1str!2str!4v1509309846464",
+            "identity_source_url": "https://www.asbu.edu.tr/tr/iletisim",
+            "precision": "representative",
+            "note": "官方土耳其文İletişim頁所嵌地圖解析為Hükümet Meydani No:2校址marker；不採39.94340047942294／32.85319811498272視窗值，不套Northern Cyprus校區。"
+          },
+          "reason": "官方土耳其文İletişim頁所嵌地圖解析為Hükümet Meydani No:2校址marker；不採39.94340047942294／32.85319811498272視窗值，不套Northern Cyprus校區。",
+          "evidence": [
+            {
+              "source_id": "p105-followup-contact-tr",
+              "source_url": "https://www.asbu.edu.tr/tr/iletisim",
+              "source_pages": [],
+              "excerpt": "İletişim | ANKARA SOSYAL BİLİMLER      ÜNİVERSİTESİ",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:09:40.659798+00:00",
+              "content_hash": "2272680f0b1a38c4ab3b67d8827a0aa658669b3ecaa14d6a177aa824563b48b6",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p105-followup-official-map",
+              "source_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.9101023314993!2d32.85319811498272!3d39.94340047942294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d345aee5549aa1%3A0x6e8d93e2bbc3606c!2sAnkara+Sosyal+Bilimler+%C3%9Cniversitesi!5e0!3m2!1str!2str!4v1509309846464",
+              "source_pages": [],
+              "excerpt": "Social Sciences University of Ankara, Hacı Bayram, Ulus, Hükümet Meydani No:2 [39.94273159999999,32.8564133]",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:12:22.760822+00:00",
+              "content_hash": "6585b4f9eeccb9db00ed3ab497492f2bc62dda21a4139da3a35cb4c882947a96",
+              "status": "verified_current"
+            }
+          ]
         },
         "campus.photo": {
           "status": "verified_current",
@@ -186879,14 +187431,12 @@
         "host.arrival",
         "host.host_tuition",
         "host.exchange_duration",
-        "profile.city",
         "profile.location",
         "profile.degree_levels",
         "profile.transport",
         "home.home_degree_year",
         "home.scholarship_old_window",
-        "host.document_set_completeness",
-        "campus.coordinates"
+        "host.document_set_completeness"
       ]
     },
     {
@@ -192612,26 +193162,33 @@
           ]
         },
         "profile.city": {
+          "status": "verified_current",
           "value": "Pardubice",
-          "status": "needs_confirmation",
+          "reason": "官方Contacts頁嵌入的同一place ID地圖，正文marker為Studentská95；不採Mapy視窗或Google embed初始視窗座標。",
           "evidence": [
             {
-              "source_id": "p107-mirror",
-              "source_url": "https://drive.google.com/file/d/1cpFP300_JyWo5wUdNHV_vKP9BRXIlfiE/view?usp=drive_link",
-              "source_pages": [
-                1
-              ],
-              "academic_year": "未標示",
-              "application_round": "校址／一般服務或參考資料（非申請梯次）",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "needs_confirmation",
-              "excerpt": " (CZ PARDUB01) Postal address Studentská 95, 532 10 Pardubice, Czech Republic University website https://www.upce.cz/en/ Exchange students webpage https://www.upce.cz/en/study/exchange-programmes.html Contact for incoming students Martina Votoupalová / ",
-              "content_hash": "5a8e8f2169a1712aa829cadd70d0719daa56a859cd25ab5245b74acf2f7223b8",
-              "text_sha256": "60ad2cba6f7327b9bf97c52a2eb79c59451143acdd82080266a4a138eb0514a3",
-              "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+              "source_id": "p107-campus_contact-1",
+              "source_url": "https://www.upce.cz/en/contacts-0",
+              "source_pages": [],
+              "excerpt": "Contacts | Univerzita Pardubice",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T08:43:58.922912+00:00",
+              "content_hash": "f2d205775a82d46c81a2c62491838002715cdc21960ec28d4e5ead7d57d869f5",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p107-followup-google-map",
+              "source_url": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2562.0689742122604!2d15.7677468!3d50.0475392!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470dccc33b38a13d%3A0x1a11560fb4c7d5e8!2sUniverzita%20Pardubice!5e0!3m2!1scs!2scz!4v1764070522018!5m2!1scs!2scz",
+              "source_pages": [],
+              "excerpt": "Univerzita Pardubice, Studentská 95, 532 10 Pardubice II [50.04816,15.7693999]",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:09:41.806272+00:00",
+              "content_hash": "aedbbe3c9b942cd19181a5d8d3992eea39843665ce21e87241f305950286b065",
+              "status": "verified_current"
             }
-          ],
-          "reason": "學校官方聯絡／校區資訊；代表聯絡或郵寄地址不等交換課程全在此地。"
+          ]
         },
         "profile.location": {
           "value": " (CZ PARDUB01) Postal address Studentská 95, 532 10 Pardubice, Czech Republic University website https://www.upce.cz/en/ Exchange students webpage https://www.upce.cz/en/study/exchange-programmes.html Contact for incoming students Martina Votoupalová / ",
@@ -193243,10 +193800,45 @@
           "evidence": []
         },
         "campus.coordinates": {
-          "status": "missing",
-          "value": null,
-          "evidence": [],
-          "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
+          "status": "verified_current",
+          "value": {
+            "school_name": "University of Pardubice 捷克巴爾杜比彩大學",
+            "country": "捷克",
+            "city": "Pardubice",
+            "latitude": 50.04816,
+            "longitude": 15.7693999,
+            "geocode_status": "verified",
+            "geocoded_at": "2026-10-11T11:09:41.806272+00:00",
+            "source_url": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2562.0689742122604!2d15.7677468!3d50.0475392!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470dccc33b38a13d%3A0x1a11560fb4c7d5e8!2sUniverzita%20Pardubice!5e0!3m2!1scs!2scz!4v1764070522018!5m2!1scs!2scz",
+            "identity_source_url": "https://www.upce.cz/en/contacts-0",
+            "precision": "representative",
+            "note": "官方Contacts頁嵌入的同一place ID地圖，正文marker為Studentská95；不採Mapy視窗或Google embed初始視窗座標。"
+          },
+          "reason": "官方Contacts頁嵌入的同一place ID地圖，正文marker為Studentská95；不採Mapy視窗或Google embed初始視窗座標。",
+          "evidence": [
+            {
+              "source_id": "p107-campus_contact-1",
+              "source_url": "https://www.upce.cz/en/contacts-0",
+              "source_pages": [],
+              "excerpt": "Contacts | Univerzita Pardubice",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T08:43:58.922912+00:00",
+              "content_hash": "f2d205775a82d46c81a2c62491838002715cdc21960ec28d4e5ead7d57d869f5",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p107-followup-google-map",
+              "source_url": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2562.0689742122604!2d15.7677468!3d50.0475392!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470dccc33b38a13d%3A0x1a11560fb4c7d5e8!2sUniverzita%20Pardubice!5e0!3m2!1scs!2scz!4v1764070522018!5m2!1scs!2scz",
+              "source_pages": [],
+              "excerpt": "Univerzita Pardubice, Studentská 95, 532 10 Pardubice II [50.04816,15.7693999]",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:09:41.806272+00:00",
+              "content_hash": "aedbbe3c9b942cd19181a5d8d3992eea39843665ce21e87241f305950286b065",
+              "status": "verified_current"
+            }
+          ]
         },
         "campus.photo": {
           "status": "verified_current",
@@ -193285,7 +193877,6 @@
         "host.costs",
         "host.insurance",
         "host.host_tuition",
-        "profile.city",
         "profile.location",
         "profile.degree_levels",
         "profile.colleges",
@@ -193293,8 +193884,7 @@
         "home.home_degree_year",
         "home.scholarship_old_window",
         "mother_list.quota",
-        "host.document_set_completeness",
-        "campus.coordinates"
+        "host.document_set_completeness"
       ]
     },
     {

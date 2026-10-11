@@ -20,6 +20,7 @@ EXCLUSIONS = {
     "global-gamma": "Public Gamma HTML is an application shell without the full agreement list; denominator remains unknown.",
     "global-gamma-public-snapshot": "Anonymous public read rejected the query; no agreement content obtained.",
     "global-gamma-public-snapshot-preflight": "HTTP 200 body explicitly returns FORBIDDEN and data.doc=null; no agreement content obtained.",
+    "p77-followup-photo-exact": "Campus-vtu.jpg was downloaded and visually reviewed: people-led posed photograph, not a readable campus exterior. Excluded; E-waste-lab.jpg separately verified.",
 }
 
 

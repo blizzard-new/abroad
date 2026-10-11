@@ -67,14 +67,19 @@ def test_conflicting_years_and_invalid_dates_stay_unresolved():
 def test_reviewed_campuses_are_precise_and_unknowns_are_not_city_centres():
     assets = read("campus-assets.json")["schools"]
     points = {r["ccu_page"]: r["coordinates"] for r in assets}
-    assert sum(f["status"] == "verified_current" for f in points.values()) == 95
+    assert sum(f["status"] == "verified_current" for f in points.values()) == 98
     assert points[41]["value"]["city"] == "Seoul"  # ROR had Suwon; point is Seoul.
     assert points[83]["value"]["latitude"] == 14.5904883
     assert points[83]["value"]["longitude"] == 120.9779484
     assert points[112]["value"]["latitude"] == 50.129976  # Official GPS text, not @ viewport.
     assert points[103]["value"]["latitude"] == 47.4972243  # School of Engineering marker.
     assert points[104]["value"]["longitude"] == 7.911147  # Olten Riggenbachstrasse, not Muttenz.
-    for page in [68, 71, 74, 79, 88, 105, 107, 111, 119]:
+    assert points[79]["value"]["latitude"] == 20.3555462
+    assert points[105]["value"]["longitude"] == 32.8564133
+    assert points[105]["value"]["longitude"] != 32.85319811498272  # Embed viewport.
+    assert points[107]["value"]["latitude"] == 50.04816
+    assert points[107]["value"]["longitude"] != 15.7677468  # Embed viewport.
+    for page in [68, 71, 74, 88, 111, 119]:
         assert points[page]["value"] is None
     assert "Q1321805" not in points[34]["value"]["source_url"]
     assert "Q1191132" in points[34]["value"]["source_url"]
@@ -82,7 +87,7 @@ def test_reviewed_campuses_are_precise_and_unknowns_are_not_city_centres():
 
 def test_photos_have_identity_licence_author_and_original_bytes():
     photos = {r["ccu_page"]: r["photo"] for r in read("campus-assets.json")["schools"]}
-    assert sum(f["status"] == "verified_current" for f in photos.values()) == 97
+    assert sum(f["status"] == "verified_current" for f in photos.values()) == 100
     for page, field in photos.items():
         if field["status"] != "verified_current":
             assert field["value"] is None
@@ -95,7 +100,9 @@ def test_photos_have_identity_licence_author_and_original_bytes():
     assert "Grade" not in photos[81]["value"]["source_page_url"]
     assert "School_of_Engineering" in photos[103]["value"]["source_page_url"]
     assert "Karvina" in photos[111]["value"]["source_page_url"]
-    assert photos[77]["value"] is None  # People-led graduation image was rejected.
+    assert "E-waste-lab" in photos[77]["value"]["source_page_url"]
+    assert "Brugg-Windisch" in photos[104]["value"]["campus_caption"]
+    assert "人物" in read("campus-photo-review.json")["initial_exclusions"]["p77-followup-campus-vtu"]
 
 
 def test_all_fresh_evidence_has_receipts_and_unchanged_response_bytes():
@@ -136,8 +143,8 @@ def test_real_api_serves_all_profiles_and_local_photographs_without_other_school
     assert response.status_code == 200
     partners = response.json()["partner_universities"]
     assert len(partners) == 104
-    assert sum(p["image_status"] == "verified" for p in partners) == 97
-    assert sum(p["location"]["geocode_status"] == "verified" for p in partners) == 95
+    assert sum(p["image_status"] == "verified" for p in partners) == 100
+    assert sum(p["location"]["geocode_status"] == "verified" for p in partners) == 98
     for source_page in [34, 81, 103, 111]:
         partner = next(p for p in partners if p["source_pages"][0] == source_page)
         image = client.get(partner["image_url"])
@@ -145,7 +152,7 @@ def test_real_api_serves_all_profiles_and_local_photographs_without_other_school
         metadata = json.loads(partner["reference_data"]["ccu_campus_assets"])
         assert metadata["photo"]["license_url"].startswith("https://")
     coverage = client.get("/coverage", params={"school": HOME}).json()
-    assert coverage["image_count"] == 97
+    assert coverage["image_count"] == 100
     assert coverage["destination_profile_count"] == 104
     profiles = load_destination_profiles(tmp_path, include_bundled_baseline=True)
     assert sum(p.home_university == HOME for p in profiles) == 104
@@ -170,7 +177,7 @@ def test_shared_alias_photos_and_points_cannot_replace_reviewed_ccu_campus(monke
     partners = client.get("/student-dashboard", params={"school": HOME}).json()["partner_universities"]
     actual = next(p for p in partners if p["source_pages"][0] == 103)
     assert "/static/assets/ccu/campuses/" in actual["image_url"]
-    assert client.get("/coverage", params={"school": HOME}).json()["image_count"] == 97
+    assert client.get("/coverage", params={"school": HOME}).json()["image_count"] == 100
     shared_parent = UniversityLocation(school_name=partner.school_name, country=partner.country,
         latitude=47.5, longitude=8.7, geocode_status="verified", source_url="https://example.edu/parent",
         geocoded_at="2025-01-01T00:00:00Z")
@@ -202,3 +209,35 @@ def test_explicit_local_operator_campus_decision_is_preserved(status, tmp_path):
 def test_pr8_restoration_and_new_asset_denominators_are_separate():
     comparison = read("completion-pr8-coverage-comparison.json")
     assert comparison["integration_head"] == "9927ec1d8765a9772671bbaa68e7f920995f1258"
+
+
+def test_new_iitb_year_and_forms_remain_separate_from_home_eligibility():
+    partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 72)
+    assert partner.availability_status == "not_open"
+    assert partner.quota is None and partner.eligibility is None and partner.language_requirement is None
+    fields = json.loads(partner.reference_data["ccu_completion"])["reference_host_fields"]
+    assert fields["application_deadline"]["status"] == "verified_current"
+    assert "2026-09-30" in fields["application_deadline"]["value"]
+    assert any(ev["source_pages"] == [3] and "2026–2027" in ev["academic_year"] for ev in fields["application_deadline"]["evidence"])
+    assert fields["nomination_deadline"]["status"] == "needs_confirmation"
+    assert fields["housing_deadline"]["status"] == "needs_confirmation"
+    assert fields["application_forms"]["status"] == "needs_confirmation"
+    assert "到校後" in fields["application_forms"]["value"]
+    assert "版本" in fields["application_forms"]["value"]
+    assert "MoU" in fields["host_tuition"]["value"] and "行政" in fields["host_tuition"]["value"]
+
+
+def test_followup_gap_baseline_and_source_failures_are_not_nonpublication_claims():
+    baseline = read("completion-followup-gap-baseline.json")
+    current = read("completion-followup-gap-research.json")
+    assert baseline["initial_counts"]["host_missing_fields"] == 702
+    assert current["initial_counts"]["host_missing_fields"] == 690
+    assert current["global_agreements"]["denominator"] is None
+    assert "未證明" in current["global_agreements"]["reason"]
+    for school in current["schools"]:
+        for field in school["unresolved_host_fields"]:
+            assert field["classification"] == "research_incomplete"
+            assert field["official_not_announced"] is False
+            assert field["personal_access_required"] is None
+    keimyung = next(s for s in current["schools"] if s["ccu_page"] == 44)
+    assert any(s["http_status"] == 503 and s["classification"] == "source_failure" for s in keimyung["attempted_sources"])
