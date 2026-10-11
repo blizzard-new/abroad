@@ -1,0 +1,210 @@
+{
+  "branch": "data/tku-completeness-20261011",
+  "main_baseline": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "m5_input": "4f142ea36e69338d2956b4ea5d3d37a9f4116e52",
+  "photo_fix_commit": "35e28149c926705ea620692baefcddce89bab3d4",
+  "data_checkpoint": "8be84f32dc456f287309947699aeb4a0cf5531d0",
+  "checked_date": "2026-10-11",
+  "pr": "https://github.com/blizzard-new/abroad/pull/13",
+  "original98": {
+    "needs_source": 35,
+    "external_limit": 36,
+    "connected_reference": 27
+  },
+  "remaining42_initial": {
+    "targeted_entry_attempt_failed": 12,
+    "read_but_no_applicable_content": 21,
+    "relevant_official_leaf_not_attempted": 9
+  },
+  "remaining42_final": {
+    "targeted_entry_attempt_failed": 12,
+    "read_but_no_applicable_content": 23,
+    "connected_reference": 7
+  },
+  "never_attempted_official_roots": 0,
+  "same_body_alias_attempts": [
+    {
+      "institution_id": "tku-sister-252",
+      "source_id": "9a59c24710a4b7fd79336d4f",
+      "source_url": "http://www.scut.edu.cn/sie/",
+      "prior_same_body_urls": [
+        "https://www.scut.edu.cn/sie/"
+      ],
+      "content_sha256": "daa7616c6b33870eb29117f0be44e28f9bb3aed7b07d001ebbf1d111e183c269",
+      "decision": "Retained actual alias request, not an unattempted distinct official body or new applicable incoming rule"
+    },
+    {
+      "institution_id": "tku-sister-191",
+      "source_id": "9db7c5d6485a33e8cfec98a7",
+      "source_url": "http://oice.fjnu.edu.cn/main.htm",
+      "prior_same_body_urls": [
+        "https://oice.fjnu.edu.cn/main.htm"
+      ],
+      "content_sha256": "c39d1dbda7aefa9797810562d673d84517da665ebd93e1b7588ed7f495e22702",
+      "decision": "Retained actual alias request, not an unattempted distinct official body or new applicable incoming rule"
+    },
+    {
+      "institution_id": "tku-sister-79",
+      "source_id": "cae1da4f02eb854529d57de7",
+      "source_url": "https://cge.fresnostate.edu/international/index.html",
+      "prior_same_body_urls": [
+        "https://cge.fresnostate.edu/international/"
+      ],
+      "content_sha256": "fc998f15e1642e0db8669011c8bd3b3bfd4135b1809fc6a70a5e2ef821c971f8",
+      "decision": "Retained actual alias request, not an unattempted distinct official body or new applicable incoming rule"
+    }
+  ],
+  "new_manual_institutions": 7,
+  "new_manual_fields": 61,
+  "manual_institutions": 47,
+  "manual_fields": 346,
+  "official_reference_institutions": 216,
+  "official_reference_percent": 75.26,
+  "literal_excerpt_index": 2350,
+  "semantic_host_year_review": {
+    "institutions": 18,
+    "fields": 160,
+    "note": "有明確接待期與僅正文審核之未載年度一般生活參考分開；全為接待校參考，未推定TKU當期名額與校區。"
+  },
+  "directory_rows": 286,
+  "institutions": 287,
+  "programme_rows": 153,
+  "profiles": 287,
+  "latest_home_schools": 4,
+  "latest_home_quota": 7,
+  "new_home_applications": 0,
+  "other_quota_statuses": {
+    "not_verified_new": 149,
+    "reference_only": 134
+  },
+  "photos": 262,
+  "photo_percent": 91.29,
+  "coordinates": 264,
+  "coordinate_percent": 91.99,
+  "photo_gaps": 25,
+  "coordinate_gaps": 23,
+  "asset_gap_union": 41,
+  "original_asset_gap_scope": 39,
+  "new_asset_lead_institutions": 8,
+  "new_display_assets": 0,
+  "host_attempt_records": 56,
+  "host_unique_urls": 54,
+  "fixed_photo_source_attempts": 4,
+  "public_captures": 2700,
+  "opened_sources": 2303,
+  "failed_sources": 397,
+  "source_failure_statuses": {
+    "202": 8,
+    "503": 282,
+    "403": 25,
+    "connection_error": 28,
+    "412": 2,
+    "404": 46,
+    "200": 4,
+    "500": 1,
+    "302": 1
+  },
+  "new_attachment_statuses": {
+    "binary_opened_visual_reviewed": 2,
+    "binary_opened_text_content_reviewed": 8,
+    "single_read_timeout_no_attachment": 1,
+    "binary_opened_sheet_content_reviewed": 2,
+    "encrypted_office_container_not_decrypted": 2
+  },
+  "source_conflicts": 10,
+  "new_source_conflicts": 5,
+  "tests": {
+    "scoped": {
+      "tests": 224,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4,
+      "passed": 220,
+      "seconds": 90.953
+    },
+    "browser": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 4,
+      "seconds": 70.3
+    },
+    "openapi": "exit0 current contract",
+    "javascript": "node --check actual app.js / tku-campus-assets.js exit0"
+  },
+  "pack_only": {
+    "status": "passed",
+    "checked_at": "2026-10-11T18:03:08.643153+00:00",
+    "mode": "Only copied manifest and transport parts; no logical ZIP or loose capture files available",
+    "files": 4529,
+    "archives": 21,
+    "parts": 45,
+    "restored_bytes": 332697911,
+    "baseline": "4f142ea36e69338d2956b4ea5d3d37a9f4116e52",
+    "prior_files": 4455,
+    "prior_archives": 15,
+    "prior_files_and_archives_immutable": true,
+    "new_files": 74
+  },
+  "preservation": {
+    "base": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "m5": "4f142ea36e69338d2956b4ea5d3d37a9f4116e52",
+    "snapshot_files": 45,
+    "snapshots_byte_identical": true,
+    "prior_curated_institutions": 40,
+    "prior_curated_fields": 285,
+    "prior_curated_rows_exact": true,
+    "remaining262_photo_rows_exact": true,
+    "photo_withdrawals": [
+      "tku-sister-65",
+      "tku-sister-52"
+    ],
+    "coordinates_sha256": "4fbb1dedf828e281bf40702244112e75a3b39cfc32f104be41bb5d83a4649783",
+    "coordinates_byte_identical": true,
+    "original_programmes": 128,
+    "current_profiles_prefix": 4,
+    "original_profile_prefix_status": "byte_identical_to_base",
+    "other_home_bundles": [
+      {
+        "home": "cgu",
+        "files": 3,
+        "status": "byte_identical_to_base"
+      },
+      {
+        "home": "ntpu",
+        "files": 12,
+        "status": "byte_identical_to_base"
+      },
+      {
+        "home": "ntu",
+        "files": 17,
+        "status": "byte_identical_to_base"
+      },
+      {
+        "home": "ccu",
+        "files": 1215,
+        "status": "byte_identical_to_base"
+      },
+      {
+        "home": "ncu",
+        "files": 13,
+        "status": "byte_identical_to_base"
+      }
+    ],
+    "external36_rows_exact": true,
+    "shared_core_changes_this_milestone": []
+  },
+  "initial_failures": {
+    "focused": "4passed/3failed: test expected different PDF year wording, wrong nested excerpt shape, and a host eligibility field absent forNQU; tests corrected against real body/schema",
+    "full": "217passed/3failed/4skipped same assertions; original log/XML retained",
+    "before_final_documents": "220passed/4skipped86.85s, before last3 explicit document checks",
+    "before_audit_rebuild": "6passed/1failed: added CoE manual fact ran against stale generated audit; rebuilt in dependency order; final suite includes exact API-value checks",
+    "fixed_photo_browser": "initial2failed because guide detail was collapsed; explicit expand fixes retained originals",
+    "final_document_cli": "initialexit2: --output unsupported; corrected --inputs/--checks; original argparse output retained",
+    "map_renderer": "fitz ModuleNotFoundError and absent PNG view: corrected using installed pdftoppm; four actual rendered pages viewed; no dependency installed"
+  },
+  "remaining_requests_file": "milestone6_remaining_source_outcomes.json",
+  "remaining_asset_reasons_file": "milestone6_asset_outcomes.json",
+  "global_source_exhaustion_proven": false
+}

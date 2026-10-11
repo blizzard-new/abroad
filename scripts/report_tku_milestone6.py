@@ -36,7 +36,8 @@ def main():
   entry=dict(file=target.name,bytes=target.stat().st_size,sha256=hashlib.sha256(target.read_bytes()).hexdigest())
   if gz:entry.update(original_bytes=len(raw),original_sha256=hashlib.sha256(raw).hexdigest())
   evidence.append(entry)
- for p in sorted(Path('/tmp').glob('tku-milestone6-*.log')):save(p,gz=True)
+ for p in sorted(Path('/tmp').glob('tku-milestone6-*.log')):
+  if p.name!='tku-milestone6-report-build.log':save(p,gz=True)
  for p in sorted(Path('/tmp').glob('tku-milestone6-*.xml')):save(p,gz=True)
  for p in sorted(Path('/tmp').glob('tku-milestone6-pack-only*.json')):save(p)
  for p in sorted(Path('/tmp').glob('tku-milestone6-map-*.png')):save(p,name=p.name.replace('tku-','',1))
