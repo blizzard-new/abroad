@@ -4719,6 +4719,52 @@
           }
         ]
       }
+    },
+    "88": {
+      "decision": "accepted",
+      "field": {
+        "value": {
+          "school_name": "Faculty of Management, Economics & Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)",
+          "country": "法國",
+          "city": "Lille",
+          "latitude": 50.63312,
+          "longitude": 3.0439062,
+          "geocode_status": "verified",
+          "geocoded_at": "2026-10-11T11:33:18.117808+00:00",
+          "source_url": "https://all-lacatho.fr/en/establishments/fges-faculty-of-management-economics-sciences",
+          "identity_source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+          "precision": "representative",
+          "note": "母大學當期簡章p10指定All為宿舍官方服務，該FGES公開地圖markers與building地址分別核實Vauban／WeNov。代表點選FGES Campus Vauban（business/economics/finance/life sciences），不能代替WeNov（其他領域）或個人接收校區；不是map viewport。"
+        },
+        "status": "verified_current",
+        "reason": "FGES自己的公開地圖marker及building名稱地址一同核對，沒有借用母大學其他院系點。",
+        "evidence": [
+          {
+            "source_id": "p88-followup-parent-2026-2027",
+            "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+            "source_pages": [
+              10
+            ],
+            "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+            "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+            "checked_at": "2026-10-11T11:33:18.118610+00:00",
+            "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+            "status": "verified_current",
+            "excerpt": "www.all-lacatho.fr/en/list-accommodation"
+          },
+          {
+            "source_id": "p88-followup-campus-provider",
+            "source_url": "https://all-lacatho.fr/en/establishments/fges-faculty-of-management-economics-sciences",
+            "source_pages": [],
+            "academic_year": "一般FGES校區身份，查核2026-10-11；不是個人校區分配",
+            "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+            "checked_at": "2026-10-11T11:33:18.117808+00:00",
+            "content_hash": "642d0ff9d4b9e7b4be592495af2efc8691371b4da948f0242ac3c49a35fb8ead",
+            "status": "verified_current",
+            "excerpt": "公開SSR mapId=establishment-details-map，building31／establishment5：FGES Campus Vauban，60 bd Vauban, 59800 Lille，lat50.63312,lng3.0439062；另一marker32為FGES Campus WeNov，lat50.63395,lng3.0199757。"
+          }
+        ]
+      }
     }
   },
   "excluded_sources": {

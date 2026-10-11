@@ -15,62 +15,62 @@
   "field_counts": {
     "host.program_scope": {
       "reference_only": 38,
-      "missing": 13,
-      "verified_current": 28,
+      "missing": 12,
+      "verified_current": 29,
       "needs_confirmation": 25
     },
     "host.eligibility": {
       "reference_only": 35,
-      "missing": 27,
-      "verified_current": 21,
+      "missing": 25,
+      "verified_current": 23,
       "needs_confirmation": 19,
       "conflict": 2
     },
     "host.language": {
       "reference_only": 46,
-      "verified_current": 19,
-      "missing": 13,
-      "needs_confirmation": 22,
-      "conflict": 4
+      "verified_current": 18,
+      "missing": 12,
+      "needs_confirmation": 23,
+      "conflict": 5
     },
     "host.nomination_deadline": {
       "missing": 55,
       "reference_only": 7,
       "needs_confirmation": 19,
-      "conflict": 5,
-      "verified_current": 18
+      "conflict": 6,
+      "verified_current": 17
     },
     "host.application_deadline": {
-      "missing": 44,
-      "verified_current": 21,
+      "missing": 43,
+      "verified_current": 20,
       "reference_only": 11,
-      "needs_confirmation": 15,
-      "conflict": 13
+      "needs_confirmation": 16,
+      "conflict": 14
     },
     "host.documents": {
-      "reference_only": 39,
+      "reference_only": 38,
       "verified_current": 23,
-      "needs_confirmation": 26,
+      "needs_confirmation": 27,
       "missing": 12,
       "conflict": 4
     },
     "host.application_forms": {
       "reference_only": 34,
-      "needs_confirmation": 44,
-      "missing": 21,
+      "needs_confirmation": 45,
+      "missing": 20,
       "verified_current": 5
     },
     "host.academic_calendar": {
-      "missing": 51,
+      "missing": 50,
       "verified_current": 29,
       "needs_confirmation": 8,
-      "conflict": 10,
+      "conflict": 11,
       "reference_only": 6
     },
     "host.course_restrictions": {
-      "missing": 52,
-      "verified_current": 24,
-      "needs_confirmation": 21,
+      "missing": 51,
+      "verified_current": 23,
+      "needs_confirmation": 23,
       "conflict": 4,
       "reference_only": 3
     },
@@ -82,46 +82,46 @@
       "reference_only": 16
     },
     "host.housing_deadline": {
-      "missing": 80,
-      "verified_current": 5,
+      "missing": 79,
+      "verified_current": 6,
       "conflict": 2,
       "needs_confirmation": 16,
       "reference_only": 1
     },
     "host.costs": {
-      "missing": 48,
-      "verified_current": 17,
+      "missing": 46,
+      "verified_current": 18,
       "reference_only": 13,
       "needs_confirmation": 14,
-      "conflict": 12
+      "conflict": 13
     },
     "host.insurance": {
-      "missing": 46,
-      "verified_current": 21,
+      "missing": 44,
+      "verified_current": 23,
       "reference_only": 10,
       "needs_confirmation": 24,
       "conflict": 3
     },
     "host.visa": {
-      "missing": 59,
+      "missing": 57,
       "needs_confirmation": 24,
-      "verified_current": 12,
+      "verified_current": 14,
       "reference_only": 8,
       "conflict": 1
     },
     "host.arrival": {
-      "missing": 50,
-      "verified_current": 27,
+      "missing": 49,
+      "verified_current": 28,
       "needs_confirmation": 10,
       "reference_only": 10,
       "conflict": 6,
       "explicit_not_announced": 1
     },
     "host.host_tuition": {
-      "missing": 71,
+      "missing": 70,
       "reference_only": 7,
       "needs_confirmation": 16,
-      "verified_current": 10
+      "verified_current": 11
     },
     "host.exchange_duration": {
       "reference_only": 47,
@@ -265,8 +265,8 @@
       "partial_not_exhaustive": 33
     },
     "campus.coordinates": {
-      "verified_current": 98,
-      "missing": 6
+      "verified_current": 99,
+      "missing": 5
     },
     "campus.photo": {
       "verified_current": 100,
@@ -146623,47 +146623,29 @@
           ]
         },
         "host.eligibility": {
-          "value": null,
-          "status": "missing",
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-          "evidence": [],
-          "research_category": "alternative_official_sources_not_fully_checked",
-          "research_note": "尚未取得支持此欄當期適用性的原文；官方替代入口及深層附件仍須續查。不是官方明示尚未公告，也不是必須聯絡學校的結論。",
-          "source_checks": [
+          "value": "母大學2026–2027交換簡章一般資格：本科／研究所、GPA至少2.75/4、至少18歲；p5明列FGES為接待院系。學院與有效協議的個別門檻仍須符合，沒有把此門檻改成中正outbound資格。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
             {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                5
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "Undergraduate and/or Graduate – GPA 2.75/4 minimum – 18 years old minimum."
             }
           ]
         },
         "host.language": {
-          "value": "須語言證明但不限證照種類，法/英B2是advised而非統一強制考試分數。",
-          "status": "verified_current",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "FGES學院2026–2027簡章：須語言證明、未限定證照，法／英B2為advised。母大學2026–2027 p5：法語授課須B2 minimum及教師推薦函；p7：partner英文授課無官方測驗要求、Erasmus+ ICM須B2證明。不能把FLSH心理學B2/C1或ISTC英語B2套給FGES；兩份對語言要求強度不同，待確認。",
+          "status": "conflict",
+          "reason": "FGES學院專屬2026–2027簡章與母大學同年度簡章的原文不一致；保留兩者，未自行修正年份或選擇期限。",
           "evidence": [
             {
               "source_id": "p88-mirror",
@@ -146679,45 +146661,40 @@
               "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
               "content_hash": "c87dd8421eb814a5cc8282a3d98b6b01fe4db285c37b8c086947a754132f3247",
               "text_sha256": "29a37bdb67af69c4a570cc488a49bde6bf9caacdbdf3a2b432dd7de86c8b7171"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                5
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "Students who wish to take courses in French will need a B2 level minimum"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                7
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "No official test is required for partner universities’ students"
             }
           ],
-          "research_category": "verified_supported",
-          "research_note": "以本欄原文、年度及計畫為準；不代表全校17欄已完整。",
-          "source_checks": [
-            {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
-            },
-            {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            }
-          ]
+          "research_classification": "research_incomplete"
         },
         "host.nomination_deadline": {
-          "value": "Spring2027：2026-10-15。",
-          "status": "verified_current",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "FGES學院Spring2027：2026-10-15；母大學2026–2027 p9卻寫Spring October10,2025（Fall April10,2025）。年度及日期矛盾，尚未核實正確提名截止，不能自行將2025改2026。",
+          "status": "conflict",
+          "reason": "FGES學院專屬2026–2027簡章與母大學同年度簡章的原文不一致；保留兩者，未自行修正年份或選擇期限。",
           "evidence": [
             {
               "source_id": "p88-mirror",
@@ -146733,45 +146710,27 @@
               "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
               "content_hash": "c87dd8421eb814a5cc8282a3d98b6b01fe4db285c37b8c086947a754132f3247",
               "text_sha256": "29a37bdb67af69c4a570cc488a49bde6bf9caacdbdf3a2b432dd7de86c8b7171"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                9
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "conflict",
+              "excerpt": "October 10, 2025"
             }
           ],
-          "research_category": "verified_supported",
-          "research_note": "以本欄原文、年度及計畫為準；不代表全校17欄已完整。",
-          "source_checks": [
-            {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
-            },
-            {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            }
-          ]
+          "research_classification": "research_incomplete"
         },
         "host.application_deadline": {
-          "value": "Spring2027：2026-11-15；提名後收到申請連結。",
-          "status": "verified_current",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "FGES學院Spring2027：2026-11-15；母大學2026–2027 p9卻寫Spring October15,2025（Fall April15,2025）。年度及日期矛盾，尚未核實正確學生申請截止，不能自行選較晚日期。",
+          "status": "conflict",
+          "reason": "FGES學院專屬2026–2027簡章與母大學同年度簡章的原文不一致；保留兩者，未自行修正年份或選擇期限。",
           "evidence": [
             {
               "source_id": "p88-mirror",
@@ -146787,45 +146746,27 @@
               "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
               "content_hash": "c87dd8421eb814a5cc8282a3d98b6b01fe4db285c37b8c086947a754132f3247",
               "text_sha256": "29a37bdb67af69c4a570cc488a49bde6bf9caacdbdf3a2b432dd7de86c8b7171"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                9
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "conflict",
+              "excerpt": "October 15, 2025"
             }
           ],
-          "research_category": "verified_supported",
-          "research_note": "以本欄原文、年度及計畫為準；不代表全校17欄已完整。",
-          "source_checks": [
-            {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
-            },
-            {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            }
-          ]
+          "research_classification": "research_incomplete"
         },
         "host.documents": {
-          "value": "當期已知必繳項目：語言能力證明，未限定證照種類；法語/英語B2僅advised，不是统一強制考試分數。本欄不是完整附件清單，其他檔案/簽名及學生表依提名後實際表另核。",
-          "status": "verified_current",
-          "reason": "第三輪逐欄核對公開正文；只列已讀要求及範圍，缺值和未核實新版另標。",
+          "value": "不是完整附件清單：FGES學院須語言證明、未限定證照、法／英B2為advised；母大學p9另列有效護照、目前成績單（必要時法／英／西翻譯，官方或非官方接受），法語授課需教師推薦函或等級證書。ICM另加CV、cover letter、語言證明，不能當所有中正交換生必備。錄取後醫師填的Medical Form是註冊／到校階段，與初申分開。語言強度與完整個人表仍待確認。",
+          "status": "needs_confirmation",
+          "reason": "並列FGES與母大學各自清單，不把有條件ICM文件與後續醫療表混入初申；語言要求差異見language欄。",
           "evidence": [
             {
               "source_id": "p88-mirror",
@@ -146841,45 +146782,40 @@
               "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
               "content_hash": "c87dd8421eb814a5cc8282a3d98b6b01fe4db285c37b8c086947a754132f3247",
               "text_sha256": "29a37bdb67af69c4a570cc488a49bde6bf9caacdbdf3a2b432dd7de86c8b7171"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                9
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "Copy of a valid passport"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                13
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "After your acceptance and to finalize your registration"
             }
           ],
-          "research_category": "verified_supported",
-          "research_note": "以本欄原文、年度及計畫為準；不代表全校17欄已完整。",
-          "source_checks": [
-            {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
-            },
-            {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            }
-          ]
+          "research_classification": "personal_access_required"
         },
         "host.application_forms": {
-          "value": "Spring母校提名表已公開開啟並讀取字段（學生/母校承辦/交換領域），表本身未標年；不是學生申請表。學生applicationlink由提名後寄送，該完整表仍未核實。 實際FGES Spring母校提名表一次一學生，含母校、學生資料、主修與母校負責人。可讀字段不等學生申請表或2027獨立版本，無代填/提交。",
+          "value": "公開母校Spring提名表不是學生申請表，原表未標年。母大學2026–2027 p9明示：提名核可後學生收到email以建立自己的帳號、在平台完成申請，院系可再要求個人附件。完整學生表及個人截止須用提名後個人入口取得；沒有登入或提交，未核最新個人表版本。",
           "status": "needs_confirmation",
-          "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+          "reason": "官方正文明确提名後個人帳號，與HTTP468來源失敗分開。",
           "evidence": [
             {
               "source_id": "p88-mirror",
@@ -146910,45 +146846,27 @@
               "note": "實際FGES Spring母校提名表一次一學生，含母校、學生資料、主修與母校負責人。可讀字段不等學生申請表或2027獨立版本，無代填/提交。",
               "content_hash": "5731796f2d1a6c646cd9459f11cbe41b107f6ab8617b85e769d6462f23f63cc8",
               "text_sha256": "6368e37a4b1198b88374967880d6c9703d3b8133cfcbca287de0cc95e39608c5"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                9
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "the student will receive an email to create his/her account"
             }
           ],
-          "research_category": "login_or_school_confirmation",
-          "research_note": "公開原文指向個別通知或提名後表單；尚未登入或聯絡。其他公開替代來源仍可續查。",
-          "source_checks": [
-            {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
-            },
-            {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            }
-          ]
+          "research_classification": "personal_access_required"
         },
         "host.academic_calendar": {
-          "value": "2027年1月第一/二周開始；本科及M1至4月中，M2至5–6月；重考本科6月、碩士7月，需計畫完整留法時間。",
-          "status": "verified_current",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "FGES學院Spring2027：1月第一／二週開課、本科及M1至4月中、M2至5–6月，重考本科6月／碩士7月。母大學p8 FGES專屬列Spring早1月至4月底、部分Master考試至6月中，年度Bachelor9月初至4月底／Master9月中至6月中。p8表格已目視核行；不是FD的1月初至5月中。時間粒度與分年級安排不同，精確個人課表待確認。",
+          "status": "conflict",
+          "reason": "FGES學院專屬2026–2027簡章與母大學同年度簡章的原文不一致；保留兩者，未自行修正年份或選擇期限。",
           "evidence": [
             {
               "source_id": "p88-mirror",
@@ -146964,45 +146882,27 @@
               "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
               "content_hash": "c87dd8421eb814a5cc8282a3d98b6b01fe4db285c37b8c086947a754132f3247",
               "text_sha256": "29a37bdb67af69c4a570cc488a49bde6bf9caacdbdf3a2b432dd7de86c8b7171"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                8
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "Spring semester: from early January to the end of April (for Master’s degree courses, some exams are happening until mid-June)"
             }
           ],
-          "research_category": "verified_supported",
-          "research_note": "以本欄原文、年度及計畫為準；不代表全校17欄已完整。",
-          "source_checks": [
-            {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
-            },
-            {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            }
-          ]
+          "research_classification": "research_incomplete"
         },
         "host.course_restrictions": {
-          "value": "可修FGES各field/level，ECTS按母校要求；不能擴大為其他學院自由選課。",
-          "status": "verified_current",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "僅FGES及中正有效協議所涵蓋領域，不能因母大學有其他院系就擴大選課。母大學p7容許必要時跨最多2院系，但須接待及母校核可；課程到校可能異動，須填provisional list，正常30ECTS／學期、建議至少20（尤其ICM），實際由母校決定。Apprenticeship／work-study不開放。p7指向25–26英文catalogue，未核2026–2027實際課程清單與容量。",
+          "status": "needs_confirmation",
+          "reason": "一般跨院規則、協議FGES範圍及尚未取得新版課單分開，沒有保證跨院錄取。",
           "evidence": [
             {
               "source_id": "p88-mirror",
@@ -147018,244 +146918,211 @@
               "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
               "content_hash": "c87dd8421eb814a5cc8282a3d98b6b01fe4db285c37b8c086947a754132f3247",
               "text_sha256": "29a37bdb67af69c4a570cc488a49bde6bf9caacdbdf3a2b432dd7de86c8b7171"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                7
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "If necessary, exchange students are allowed to take classes in up to 2 faculties/schools"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                7
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "Catalogue_cours_anglais_A4_light_25_26.pdf"
             }
           ],
-          "research_category": "verified_supported",
-          "research_note": "以本欄原文、年度及計畫為準；不代表全校17欄已完整。",
-          "source_checks": [
-            {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
-            },
-            {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            }
-          ]
+          "research_classification": "research_incomplete"
         },
         "host.housing": {
-          "value": "大学residencies與其他合作住宿連結；未載保证床位、费率或2027春季住宿截止。",
+          "value": "可選All大學宿舍或自行找房，須抵法前安排；All網上申請付270EUR行政費仍不保證住宿，依可用性分配，中正／UCLille國際處不負責分床。入住前至少15日取消academic exchange可退行政費；離宿至少提前1個月於個人帳號通知。未把附近住宿列表available解作Spring2027有保留床位。",
           "status": "verified_current",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
           "evidence": [
             {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
               "source_pages": [
-                3
+                10
               ],
-              "academic_year": "2026–2027",
-              "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
               "status": "verified_current",
-              "excerpt": "age proficiency requirements Courses catalogue French as a foreign language Number of ECTS to be taken Summer and Winter programs Housing options Please use the following links to nominate your students: Online Form for Fall Semester / Full Academic Year Online Form for Spring Semester The link to the online incoming Exchange Applica",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "c87dd8421eb814a5cc8282a3d98b6b01fe4db285c37b8c086947a754132f3247",
-              "text_sha256": "29a37bdb67af69c4a570cc488a49bde6bf9caacdbdf3a2b432dd7de86c8b7171"
-            }
-          ],
-          "research_category": "verified_supported",
-          "research_note": "以本欄原文、年度及計畫為準；不代表全校17欄已完整。",
-          "source_checks": [
-            {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
+              "excerpt": "these fees do not guarantee you to have an accommodation"
             },
             {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                10
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "at least 1 month before leaving the dorm via their personal web account"
             }
           ]
         },
         "host.housing_deadline": {
-          "value": null,
-          "status": "missing",
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-          "evidence": [],
-          "research_category": "alternative_official_sources_not_fully_checked",
-          "research_note": "已取得內容含候選段落，但尚未逐欄完成語意／年度／計畫核對。不是官方明示尚未公告，也不是必須聯絡學校的結論。",
-          "source_checks": [
+          "value": "2026–2027簡章p10標recommended：Spring1月開始交換建議11月15日前申請、10月12日開放；推導為2026-11-15／2026-10-12。仍可逾建議日申請且不保證床位。全年租約Spring從1月1日至12月31日、通知期結束後停止收租；不是要求交換生整年付費。",
+          "status": "verified_current",
+          "reason": "來源為2026–2027宿舍建議日期，沒有自行生成硬性截止或房間配額。",
+          "evidence": [
             {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                10
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "November 15 (application open on October 12)"
             },
             {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                10
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "Rent payments stop as soon as your notice period ends."
             }
           ]
         },
         "host.costs": {
-          "value": null,
-          "status": "missing",
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-          "evidence": [],
-          "research_category": "alternative_official_sources_not_fully_checked",
-          "research_note": "已取得內容含候選段落，但尚未逐欄完成語意／年度／計畫核對。不是官方明示尚未公告，也不是必須聯絡學校的結論。",
-          "source_checks": [
+          "value": "Lille2026–2027估算約EUR1,100/月；宿舍約550–650/月另charges/services。宿舍申請費270、contribution96、服務費105/月、住宿保險約30、deposit一個月租；費目逐項列，不誤算105為年費、不保證整體費用。交通31.50/月、餐廳3.30/餐為簡章估算，未替學生保證2027票價。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
             {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                11
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "Total Around 1,100€/month"
             },
             {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                11
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "Services fees: 105 Euros per month"
             }
           ]
         },
         "host.insurance": {
-          "value": null,
-          "status": "missing",
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-          "evidence": [],
-          "research_category": "alternative_official_sources_not_fully_checked",
-          "research_note": "尚未取得支持此欄當期適用性的原文；官方替代入口及深層附件仍須續查。不是官方明示尚未公告，也不是必須聯絡學校的結論。",
-          "source_checks": [
+          "value": "2026–2027接待簡章p13：錄取後醫師填Medical Form交CPSU；非EU學生在法超3月須免費註冊Sécurité Sociale；住房與民事責任保險mandatory，補充健康／旅遊保險recommended。法國健保不含境外旅行、遣返或民責，辦理可能數週。此為接待校要求，個人適用性與現行政府規定另核，不提供核保保證。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
             {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                13
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "HOUSING AND CIVIL LIABILITY INSURANCE MANDATORY"
             },
             {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                13
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "spending more than 3 months in France to register"
             }
           ]
         },
         "host.visa": {
-          "value": null,
-          "status": "missing",
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-          "evidence": [],
-          "research_category": "alternative_official_sources_not_fully_checked",
-          "research_note": "尚未取得支持此欄當期適用性的原文；官方替代入口及深層附件仍須續查。不是官方明示尚未公告，也不是必須聯絡學校的結論。",
-          "source_checks": [
+          "value": "接待簡章2026–2027 p12把Taiwan列於Études en France程序清單；須依Campus France／France-Visas辦學生簽證，未持學生簽證不接待。VLS-TS到法最遲3月內線上validate。這是學校公布流程，依國籍、停留與主管機關最新個人要求另核，不把台灣學生當免簽學期交換或保證簽證核准。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
             {
-              "source_id": "p88-mirror",
-              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                12
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "South Korea, Taiwan, Thailand"
             },
             {
-              "source_id": "p88-hostv0",
-              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                12
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "Students coming without a student visa will not be accepted."
             },
             {
-              "source_id": "p88-r3-incoming",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T05:22:20.432329+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
-            },
-            {
-              "source_id": "p88-profile-root",
-              "source_url": "https://www.fges.fr/international/incoming-mobility/",
-              "checked_at": "2026-10-08T09:10:28.848688+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 468；HTTPError: 468 Client Error: Unknown for url: https://www.fges.fr/international/incoming-mobility/"
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                12
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "validate your visa within 3 months"
             }
           ]
         },
@@ -147970,10 +147837,47 @@
           "evidence": []
         },
         "campus.coordinates": {
-          "status": "missing",
-          "value": null,
-          "evidence": [],
-          "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
+          "value": {
+            "school_name": "Faculty of Management, Economics & Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)",
+            "country": "法國",
+            "city": "Lille",
+            "latitude": 50.63312,
+            "longitude": 3.0439062,
+            "geocode_status": "verified",
+            "geocoded_at": "2026-10-11T11:33:18.117808+00:00",
+            "source_url": "https://all-lacatho.fr/en/establishments/fges-faculty-of-management-economics-sciences",
+            "identity_source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+            "precision": "representative",
+            "note": "母大學當期簡章p10指定All為宿舍官方服務，該FGES公開地圖markers與building地址分別核實Vauban／WeNov。代表點選FGES Campus Vauban（business/economics/finance/life sciences），不能代替WeNov（其他領域）或個人接收校區；不是map viewport。"
+          },
+          "status": "verified_current",
+          "reason": "FGES自己的公開地圖marker及building名稱地址一同核對，沒有借用母大學其他院系點。",
+          "evidence": [
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                10
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "www.all-lacatho.fr/en/list-accommodation"
+            },
+            {
+              "source_id": "p88-followup-campus-provider",
+              "source_url": "https://all-lacatho.fr/en/establishments/fges-faculty-of-management-economics-sciences",
+              "source_pages": [],
+              "academic_year": "一般FGES校區身份，查核2026-10-11；不是個人校區分配",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.117808+00:00",
+              "content_hash": "642d0ff9d4b9e7b4be592495af2efc8691371b4da948f0242ac3c49a35fb8ead",
+              "status": "verified_current",
+              "excerpt": "公開SSR mapId=establishment-details-map，building31／establishment5：FGES Campus Vauban，60 bd Vauban, 59800 Lille，lat50.63312,lng3.0439062；另一marker32為FGES Campus WeNov，lat50.63395,lng3.0199757。"
+            }
+          ]
         },
         "campus.photo": {
           "status": "verified_current",
@@ -148008,19 +147912,19 @@
         }
       },
       "gaps": [
-        "host.eligibility",
+        "host.language",
+        "host.nomination_deadline",
+        "host.application_deadline",
+        "host.documents",
         "host.application_forms",
-        "host.housing_deadline",
-        "host.costs",
-        "host.insurance",
-        "host.visa",
+        "host.academic_calendar",
+        "host.course_restrictions",
         "host.host_tuition",
         "profile.colleges",
         "home.home_degree_year",
         "home.scholarship_old_window",
         "mother_list.eligibility",
-        "host.document_set_completeness",
-        "campus.coordinates"
+        "host.document_set_completeness"
       ]
     },
     {
@@ -186791,7 +186695,7 @@
         },
         "profile.city": {
           "status": "verified_current",
-          "value": "Ankara",
+          "value": "Ankara（Ankara 主校）",
           "reason": "官方土耳其文İletişim頁所嵌地圖解析為Hükümet Meydani No:2校址marker；不採39.94340047942294／32.85319811498272視窗值，不套Northern Cyprus校區。",
           "evidence": [
             {
@@ -218618,22 +218522,81 @@
       ],
       "fields": {
         "host.program_scope": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "QUT現行Study Abroad與Exchange共用申請入口；交換須母校為partner且先提名，使用accepted nomination所附link。付費Study Abroad與MoU交換費用、獎助條件不同；中正名冊本期灰字未開放維持不變。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "If you are enrolled at one of our exchange partner institutions and applying for an exchange place, you'll need to be nominated by your home institution first."
+            }
+          ]
         },
         "host.eligibility": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "現行共用頁資格：至少18歲、非澳洲公民／永久居民；在認可機構至少一年全時學習、GPA2.5/4或等值，交換先由母校提名。這是接待條件，不能改為中正當期outbound資格或保證錄取。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "You must be 18 years or older and not hold Australian citizenship or permanent residency."
+            },
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "Hold a GPA of 2.5 on a 4-point scale (or equivalent)"
+            }
+          ]
         },
         "host.language": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "現行2026-05-05更新頁：IELTS Academic／One Skill Retake總6.5各6；TOEFL iBT舊0–120刻度79（寫21／讀16／聽16／說18）；PTE58各50、CAE176各169、CPE C1。成績2年內；partner可能接受母校英文證明。官網未解釋2026新版TOEFL刻度及2027各考試日期適用，未自行換算；英文證明是否被接受仍須個案核。",
+          "status": "needs_confirmation",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "IELTS (Academic)/One Skill Retake: 6.5 overall, no sub-score below 6.0"
+            },
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "TOEFL iBT: 79 overall (minimum writing 21; reading 16; listening 16; speaking 18)"
+            }
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.nomination_deadline": {
           "status": "missing",
@@ -218642,48 +218605,141 @@
           "evidence": []
         },
         "host.application_deadline": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.documents": {
-          "status": "reference_only",
-          "value": "必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行 第二階段(姊妹校)申請。 詳見姊妹校簡章 或 QUT - Apply for study abroad",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
+          "value": "共用頁接受全年申請至semester start；exchange須先接受提名並用個人link。未另列2027 Exchange特定提名／學生截止，不把付費Study Abroad全年收件自動視為中正交換截止，未產生精確exchange日期。",
+          "status": "needs_confirmation",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                120
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行 第二階段(姊妹校)申請。 詳見姊妹校簡章 或 QUT - Apply for study abroad",
-              "reference_excerpt": "必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行 第二階段(姊妹校)申請。 詳見姊妹校簡章 或 QUT - Apply for study abroad",
-              "note": null
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "We accept applications year-round up to the semester start date."
+            }
+          ],
+          "research_classification": "research_incomplete"
+        },
+        "host.documents": {
+          "value": "共用初申清單：最新英文官方成績、必要英文證明、有效至program結束後至少6個月的護照；申請列至少6門候選，母校須認可，先修評估可再要求既修課程詳細outline。未混入後續acceptance form、付款與CoE／簽證階段，沒有宣稱完整個人表已取得。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "A copy of your most recent official academic record (grades) in English."
+            },
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "Photocopy of your passport (valid for 6+ months after your program ends)"
             }
           ]
         },
         "host.application_forms": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "QUT portal在線申請；exchange學生由accepted nomination所附link申請，acceptance of offer form是錄取後。已讀公開流程，未取得提名後學生個人表／欄位與版本；未登入、代填或付款。",
+          "status": "needs_confirmation",
+          "reason": "接待官網明示交換提名後個人link；不是下載失敗或官方明示尚未公告。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "Applying via the link provided in your accepted nomination for an exchange place."
+            },
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "Complete the acceptance of offer form and details."
+            }
+          ],
+          "research_classification": "personal_access_required"
         },
         "host.academic_calendar": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "QUT 2027 Semester1：Welcome Week2027-02-15至02-19；semester02-22至06-19，teaching02-22至03-25及04-05至05-28，exams06-05至06-19。這對應中正2027春季赴南半球Semester1；不是北半球1月semester。Semester2及summer分開，不採summer欄混載的1月假期年份。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-calendar-2027",
+              "source_url": "https://www.qut.edu.au/about/key-dates-and-academic-calendar/academic-calendar/2027-academic-calendar",
+              "source_pages": [],
+              "academic_year": "QUT明載2027 academic calendar／Semester1",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:57.331088+00:00",
+              "content_hash": "8b92c134a2461256e4d0dbccd3072804ab0965b90f47086f1a7bcfcb12cabb06",
+              "status": "verified_current",
+              "excerpt": "Semester 1 Semester dates 22 February - 19 June"
+            },
+            {
+              "source_id": "p120-followup-calendar-2027",
+              "source_url": "https://www.qut.edu.au/about/key-dates-and-academic-calendar/academic-calendar/2027-academic-calendar",
+              "source_pages": [],
+              "academic_year": "QUT2027／Semester1",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:57.331088+00:00",
+              "content_hash": "8b92c134a2461256e4d0dbccd3072804ab0965b90f47086f1a7bcfcb12cabb06",
+              "status": "verified_current",
+              "excerpt": "Welcome Week 15 February - 19 February"
+            }
+          ]
         },
         "host.course_restrictions": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "現行unit頁須核先修及所選年度可開課，PG不能選某些首年本科core／honours／capstone；Law本科不能讀PG，Law capstone與honours不開放，MBA另須GMAT／工作經驗。Arts可能作品集／audition，placement可另需費用或檢查。此頁仍含2022COVID條文，未把它當2027現行法律或已核准課單；個別unit2027供應／容量未核。",
+          "status": "needs_confirmation",
+          "reason": "公開學制限制已讀，2027實際units與混載舊條文待核，不推定法律／課程當期適用。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-units",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/what-can-i-study",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928702+00:00",
+              "content_hash": "1d84b15e3cb198689de088acb92cd2a53a389d1c8bddee4b3353aa315f0dbb80",
+              "status": "verified_current",
+              "excerpt": "Undergraduate students cannot enrol in postgraduate units."
+            },
+            {
+              "source_id": "p120-followup-units",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/what-can-i-study",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928702+00:00",
+              "content_hash": "1d84b15e3cb198689de088acb92cd2a53a389d1c8bddee4b3353aa315f0dbb80",
+              "status": "verified_current",
+              "excerpt": "From 23 January 2022"
+            }
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.housing": {
           "status": "missing",
@@ -218698,34 +218754,161 @@
           "evidence": []
         },
         "host.costs": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "2027官網按月列rent：student apartment AUD1600–2200／catered2400–2650／share house800–1600，另列utilities、food、phone和transport。原表Total2460–2795／2700–3095／1660–3545與逐項區間不一致（apartment列舉上界可達4095），保存原值待確認，未自創單一月費。Exchange不適用Study Abroad2027的AUD1000簽證獎助。",
+          "status": "conflict",
+          "reason": "已逐項核對原表數字；保存合計矛盾，不把學校估算變成個人預算保證。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-costs",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/costs",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928362+00:00",
+              "content_hash": "467d92046f9d9fe5755b7fecdb6f6bfa82da644ed7d52e0a3b19f6f1c861cadc",
+              "status": "verified_current",
+              "excerpt": "In 2027:"
+            },
+            {
+              "source_id": "p120-followup-costs",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/costs",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928362+00:00",
+              "content_hash": "467d92046f9d9fe5755b7fecdb6f6bfa82da644ed7d52e0a3b19f6f1c861cadc",
+              "status": "verified_current",
+              "excerpt": "Total $2460-$2795 $2700-$3095 $1660-$3545"
+            },
+            {
+              "source_id": "p120-followup-costs",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/costs",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928362+00:00",
+              "content_hash": "467d92046f9d9fe5755b7fecdb6f6bfa82da644ed7d52e0a3b19f6f1c861cadc",
+              "status": "verified_current",
+              "excerpt": "does not apply to students enrolling as part of the student exchange program"
+            }
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.insurance": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "現行QUT 2027 costs頁：多數國際學生需有效OSHC，接受offer後經Medibank安排，部分國籍可豁免；境外旅行另須travel insurance。沒有推定中正學生豁免或個人保額，初申與錄取後購買分開。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-costs",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/costs",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928362+00:00",
+              "content_hash": "467d92046f9d9fe5755b7fecdb6f6bfa82da644ed7d52e0a3b19f6f1c861cadc",
+              "status": "verified_current",
+              "excerpt": "Most international students need valid OSHC"
+            },
+            {
+              "source_id": "p120-followup-costs",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/costs",
+              "source_pages": [],
+              "academic_year": "QUT costs明示2027；OSHC現行服務說明",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928362+00:00",
+              "content_hash": "467d92046f9d9fe5755b7fecdb6f6bfa82da644ed7d52e0a3b19f6f1c861cadc",
+              "status": "verified_current",
+              "excerpt": "Extra travel insurance is required for trips outside Australia."
+            }
+          ]
         },
         "host.visa": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "QUT公開流程：接受錄取後若適用會收到CoE，取得CoE後才能申請Australian Student Visa；先核CoE資料、留簽證處理時間，由Home Affairs個案審。Study Abroad的簽證獎助明示排除exchange，不能用獎助推定交換簽證費免費。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "You will not be able to apply for your Australian student visa until you have received your CoE."
+            },
+            {
+              "source_id": "p120-followup-costs",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/costs",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928362+00:00",
+              "content_hash": "467d92046f9d9fe5755b7fecdb6f6bfa82da644ed7d52e0a3b19f6f1c861cadc",
+              "status": "verified_current",
+              "excerpt": "does not apply to students enrolling as part of the student exchange program"
+            }
+          ]
         },
         "host.arrival": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "2027 Semester1 Welcome Week02-15至02-19，classes02-22開始；Study Abroad and Exchange Team有dedicated orientation。未載2027個人必到日、機場接送或服務免費，不把一般Welcome Week當所有exchange強制同日報到。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-calendar-2027",
+              "source_url": "https://www.qut.edu.au/about/key-dates-and-academic-calendar/academic-calendar/2027-academic-calendar",
+              "source_pages": [],
+              "academic_year": "QUT2027／Semester1",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:57.331088+00:00",
+              "content_hash": "8b92c134a2461256e4d0dbccd3072804ab0965b90f47086f1a7bcfcb12cabb06",
+              "status": "verified_current",
+              "excerpt": "Welcome Week 15 February - 19 February"
+            },
+            {
+              "source_id": "p120-followup-life",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/student-life",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:55.573492+00:00",
+              "content_hash": "45c18d1188fe39e41dbe5c7340570c57e05e7eb435c074ae139cfd44be4f8636",
+              "status": "verified_current",
+              "excerpt": "Study Abroad and Exchange Team will welcome you with a dedicated orientation session"
+            }
+          ]
         },
         "host.host_tuition": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "QUT costs明載2027付費Study Abroad：3units/36cp/22.5ECTS AUD9900；4units/48cp/30ECTS AUD13200。若母校為exchange partner且提名，免QUT tuition；食宿、travel、books、OSHC及unit額外項目另付。中正本期未開放不能由這段取得exchange免學費資格；AUD1000 visa support scholarship明示排除exchange。",
+          "status": "verified_current",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "evidence": [
+            {
+              "source_id": "p120-followup-costs",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/costs",
+              "source_pages": [],
+              "academic_year": "QUT2027公開費率／付費StudyAbroad",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928362+00:00",
+              "content_hash": "467d92046f9d9fe5755b7fecdb6f6bfa82da644ed7d52e0a3b19f6f1c861cadc",
+              "status": "verified_current",
+              "excerpt": "3 units (36 credit points or 22.5 ECTS) is AU$9,900"
+            },
+            {
+              "source_id": "p120-followup-costs",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/costs",
+              "source_pages": [],
+              "academic_year": "QUT2027費用頁／partner提名Exchange免tuition條件",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928362+00:00",
+              "content_hash": "467d92046f9d9fe5755b7fecdb6f6bfa82da644ed7d52e0a3b19f6f1c861cadc",
+              "status": "verified_current",
+              "excerpt": "you won't need to pay any tuition fees."
+            }
+          ]
         },
         "host.exchange_duration": {
           "status": "reference_only",
@@ -219381,22 +219564,14 @@
         }
       },
       "gaps": [
-        "host.program_scope",
-        "host.eligibility",
         "host.language",
         "host.nomination_deadline",
         "host.application_deadline",
-        "host.documents",
         "host.application_forms",
-        "host.academic_calendar",
         "host.course_restrictions",
         "host.housing",
         "host.housing_deadline",
         "host.costs",
-        "host.insurance",
-        "host.visa",
-        "host.arrival",
-        "host.host_tuition",
         "host.exchange_duration",
         "profile.location",
         "profile.degree_levels",

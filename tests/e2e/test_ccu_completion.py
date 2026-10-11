@@ -12,6 +12,60 @@ HOME = "國立中正大學"
 
 
 @pytest.mark.parametrize("width", [390, 1440])
+def test_fges_faculty_and_parent_conflicts_are_visible_with_both_sources(page, live_server, width):
+    partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 88)
+    page.set_viewport_size({"width": width, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+    page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+    receiving = page.locator("#detail-overview .ccu-receiving-school-details")
+    expect(receiving.locator("[data-ccu-field]")).to_have_count(17, timeout=30_000)
+    deadline = receiving.locator('[data-ccu-field="application_deadline"]')
+    expect(deadline.locator("> summary")).to_contain_text("來源矛盾")
+    deadline.locator("> summary").click()
+    expect(deadline).to_contain_text("2026-11-15")
+    expect(deadline).to_contain_text("October15,2025")
+    assert len({a.get_attribute("href") for a in deadline.locator("a").all()}) >= 2
+    language = receiving.locator('[data-ccu-field="language"]')
+    language.locator("> summary").click()
+    expect(language).to_contain_text("advised")
+    expect(language).to_contain_text("minimum")
+    expect(language).to_contain_text("不能把FLSH心理學")
+    forms = receiving.locator('[data-ccu-field="application_forms"]')
+    forms.locator("> summary").click()
+    expect(forms).to_contain_text("提名後個人入口")
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+
+
+@pytest.mark.parametrize("width", [390, 1440])
+def test_qut_2027_fees_and_reference_status_do_not_create_an_exchange_offer(page, live_server, width):
+    partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 120)
+    page.set_viewport_size({"width": width, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+    page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+    reference = page.locator("#detail-overview .ccu-reference-host")
+    expect(reference).to_contain_text("中正本期未開放", timeout=30_000)
+    tuition = reference.locator('[data-ccu-reference-field="host_tuition"]')
+    tuition.locator("> summary").click()
+    expect(tuition).to_contain_text("AUD9900")
+    expect(tuition).to_contain_text("AUD13200")
+    expect(tuition).to_contain_text("免QUT tuition")
+    expect(tuition).to_contain_text("排除exchange")
+    costs = reference.locator('[data-ccu-reference-field="costs"]')
+    costs.locator("> summary").click()
+    expect(costs).to_contain_text("來源矛盾")
+    expect(costs).to_contain_text("4095")
+    calendar = reference.locator('[data-ccu-reference-field="academic_calendar"]')
+    calendar.locator("> summary").click()
+    expect(calendar).to_contain_text("2027-02-15")
+    language = reference.locator('[data-ccu-reference-field="language"]')
+    language.locator("> summary").click()
+    expect(language).to_contain_text("未自行換算")
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+
+
+@pytest.mark.parametrize("width", [390, 1440])
 def test_iit_bombay_current_receiving_policy_preserves_closed_home_status(page, live_server, width):
     partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 72)
     assert partner.availability_status == "not_open" and partner.quota is None

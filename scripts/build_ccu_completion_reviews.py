@@ -6,14 +6,16 @@ current incoming eligibility. Existing 55-school reviews are preserved verbatim.
 from __future__ import annotations
 
 import json
-from pathlib import Path
 import re
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+from fetch_ccu_completion_sources import BUNDLE as B
+from fetch_ccu_completion_sources import OUT
+
 from exchange_info.models import DestinationProfile
-from fetch_ccu_completion_sources import BUNDLE as B, OUT
 
 PROFILE_KEYS = ["city", "location", "website", "degree_levels", "colleges", "transport", "campus_life"]
 HOST_KEYS = ["program_scope", "eligibility", "language", "nomination_deadline", "application_deadline", "documents", "application_forms", "academic_calendar", "course_restrictions", "housing", "housing_deadline", "costs", "insurance", "visa", "arrival", "host_tuition", "exchange_duration"]
@@ -73,12 +75,10 @@ def main():
                 label, url = link["label"], link["url"]
                 if not label or not url.startswith(("https://", "http://")) or label not in text:
                     continue
-                if re.search(r'(?i)^(?:library|libraries|student life|student support|campus living|campus housing|clubs(?: & activities)?|accommodation|sports(?: and fitness)?|health & wellness|campus life|圖書館|图书馆|心理咨询|校医院|校园安全|學生社團|学生会|宿舍|住宿|thư viện|ký túc xá|biblioteca|bibliotecas|studentský život|sport na vut)$', label.strip()):
-                    if link not in service_links:
-                        service_links.append(link)
-                if re.search(r'(?i)^(?:directions|transportation and parking|transportation|交通指南|交通|交通アクセス|오시는길|getting here|getting there|sơ đồ đến trường|transporte)$', label.strip()):
-                    if link not in transport_links:
-                        transport_links.append(link)
+                if re.search(r'(?i)^(?:library|libraries|student life|student support|campus living|campus housing|clubs(?: & activities)?|accommodation|sports(?: and fitness)?|health & wellness|campus life|圖書館|图书馆|心理咨询|校医院|校园安全|學生社團|学生会|宿舍|住宿|thư viện|ký túc xá|biblioteca|bibliotecas|studentský život|sport na vut)$', label.strip()) and link not in service_links:
+                    service_links.append(link)
+                if re.search(r'(?i)^(?:directions|transportation and parking|transportation|交通指南|交通|交通アクセス|오시는길|getting here|getting there|sơ đồ đến trường|transporte)$', label.strip()) and link not in transport_links:
+                    transport_links.append(link)
             for key, links in [("campus_life", service_links), ("transport", transport_links)]:
                 if links:
                     general[key] = fact("官方公開入口：" + "；".join(l["label"] for l in links[:6]),
@@ -115,6 +115,8 @@ def main():
             row = next(r for r in all_rows if r["ccu_page"] == item["ccu_page"])
             for scope in ["host_fields", "profile_fields", "general_campus_fields"]:
                 row[scope].update(item.get(scope, {}))
+            if item.get("expose_host_overrides"):
+                row["host_override_keys"] = sorted(item.get("host_fields", {}))
     (B / "completion-reviewed-fields.json").write_text(json.dumps({"checked_at": "2026-10-11", "schools": all_rows}, ensure_ascii=False, indent=2) + "\n")
     # Preserve every existing 55 profile line byte for byte; append 49 new profiles.
     original_names = {row["school_name"] for row in profiles.values()}

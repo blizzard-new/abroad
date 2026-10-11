@@ -1,12 +1,12 @@
 """CCU general campus references for all 104 identities, including closed rows."""
 from __future__ import annotations
 
-from functools import lru_cache
 import json
+from functools import lru_cache
 
-from .ccu_sources import BUNDLE
 from .ccu_completion_sources import validate_completion_source
-from .models import ExchangeFieldEvidence, PartnerUniversity
+from .ccu_sources import BUNDLE
+from .models import ExchangeFieldEvidence, PartnerExchangeDetailField, PartnerUniversity
 
 
 @lru_cache(maxsize=1)
@@ -19,6 +19,8 @@ def reviewed_completion():
         raise ValueError("CCU completion requires 104 unique exchange identities")
     checked = {}
     for row in rows:
+        if set(row.get("host_override_keys", [])) - set(row["host_fields"]):
+            raise ValueError("Unknown CCU receiving supplement key")
         for field in [*row["general_campus_fields"].values(), *row["host_fields"].values()]:
             if field["status"] == "missing" and field["value"] is not None:
                 raise ValueError("Missing CCU completion facts must stay null")
@@ -44,5 +46,52 @@ def apply_completion(partner: PartnerUniversity) -> PartnerUniversity:
               "availability_status": row["availability_status"], "review_note": row["review_note"]}
     if row["availability_status"] == "not_open":
         public["reference_host_fields"] = row["host_fields"]
+    elif row.get("host_override_keys"):
+        # Apply only explicitly reviewed CCU receiving supplements. Mother's
+        # quotas, qualifications, documents and closed home window stay separate.
+        overrides = {
+            key: PartnerExchangeDetailField.model_validate(row["host_fields"][key])
+            for key in row["host_override_keys"]
+        }
+        partner.partner_exchange_details = {**partner.partner_exchange_details, **overrides}
+        public["host_override_keys"] = row["host_override_keys"]
+        language = overrides.get("language")
+        if language and language.status in {"conflict", "needs_confirmation"}:
+            partner.language_review_note = language.value or language.reason
+            for condition in partner.language_conditions:
+                condition.requirement_level = language.status
+                condition.scope_choice_required = True
+                if partner.language_review_note not in condition.additional_conditions:
+                    condition.additional_conditions.append(partner.language_review_note)
+                condition.evidence.status = language.status
+                condition.evidence.note = partner.language_review_note
+            if partner.language_review_note not in partner.student_summary_zh.eligibility_points:
+                partner.student_summary_zh.eligibility_points.append(partner.language_review_note)
+        calendar = overrides.get("academic_calendar")
+        if calendar and calendar.status == "conflict":
+            if partner.semester_dates:
+                partner.reference_data.setdefault("semester_dates", partner.semester_dates)
+            partner.semester_dates = calendar.value
+            partner.student_summary_zh.study_period = (
+                (partner.study_period or "") + "；" + (calendar.value or "")
+            )
+        deadline = overrides.get("application_deadline")
+        if deadline and deadline.status == "conflict":
+            if partner.partner_application_deadline:
+                partner.reference_data = {
+                    **partner.reference_data,
+                    "partner_application_deadline": partner.reference_data.get(
+                        "partner_application_deadline", partner.partner_application_deadline
+                    ),
+                }
+            partner.partner_application_deadline = deadline.value
+            partner.student_summary_zh.application_deadline = deadline.value
+            if old := partner.field_evidence.get("partner_application_deadline"):
+                partner.field_evidence = {
+                    **partner.field_evidence,
+                    "partner_application_deadline": old.model_copy(update={
+                        "status": "conflict", "note": deadline.reason + "；" + (deadline.value or "")
+                    }),
+                }
     partner.reference_data = {**partner.reference_data, "ccu_completion": json.dumps(public, ensure_ascii=False)}
     return partner

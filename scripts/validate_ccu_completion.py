@@ -60,7 +60,7 @@ def main():
     assert profile_counts[HOME] == 104 and profile_counts["長庚大學"] == 77 and profile_counts["國立臺北大學"] == 206
     image_count = sum(p.image_status == "verified" for p in partners)
     point_count = sum(p.location is not None and p.location.geocode_status == "verified" for p in partners)
-    assert image_count == 100 and point_count == 98
+    assert image_count == 100 and point_count == 99
     package = None
     if args.wheel:
         with ZipFile(args.wheel) as archive:

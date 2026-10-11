@@ -66,7 +66,7 @@ def test_conflicting_years_and_invalid_dates_stay_unresolved():
 def test_reviewed_campuses_are_precise_and_unknowns_are_not_city_centres():
     assets = read("campus-assets.json")["schools"]
     points = {r["ccu_page"]: r["coordinates"] for r in assets}
-    assert sum(f["status"] == "verified_current" for f in points.values()) == 98
+    assert sum(f["status"] == "verified_current" for f in points.values()) == 99
     assert points[41]["value"]["city"] == "Seoul"  # ROR had Suwon; point is Seoul.
     assert points[83]["value"]["latitude"] == 14.5904883
     assert points[83]["value"]["longitude"] == 120.9779484
@@ -78,7 +78,9 @@ def test_reviewed_campuses_are_precise_and_unknowns_are_not_city_centres():
     assert points[105]["value"]["longitude"] != 32.85319811498272  # Embed viewport.
     assert points[107]["value"]["latitude"] == 50.04816
     assert points[107]["value"]["longitude"] != 15.7677468  # Embed viewport.
-    for page in [68, 71, 74, 88, 111, 119]:
+    assert points[88]["value"]["latitude"] == 50.63312
+    assert points[88]["value"]["longitude"] == 3.0439062
+    for page in [68, 71, 74, 111, 119]:
         assert points[page]["value"] is None
     assert "Q1321805" not in points[34]["value"]["source_url"]
     assert "Q1191132" in points[34]["value"]["source_url"]
@@ -143,7 +145,7 @@ def test_real_api_serves_all_profiles_and_local_photographs_without_other_school
     partners = response.json()["partner_universities"]
     assert len(partners) == 104
     assert sum(p["image_status"] == "verified" for p in partners) == 100
-    assert sum(p["location"]["geocode_status"] == "verified" for p in partners) == 98
+    assert sum(p["location"]["geocode_status"] == "verified" for p in partners) == 99
     for source_page in [34, 81, 103, 111]:
         partner = next(p for p in partners if p["source_pages"][0] == source_page)
         image = client.get(partner["image_url"])
@@ -230,7 +232,7 @@ def test_followup_gap_baseline_and_source_failures_are_not_nonpublication_claims
     baseline = read("completion-followup-gap-baseline.json")
     current = read("completion-followup-gap-research.json")
     assert baseline["initial_counts"]["host_missing_fields"] == 702
-    assert current["initial_counts"]["host_missing_fields"] == 690
+    assert current["initial_counts"]["host_missing_fields"] == 673
     assert current["global_agreements"]["denominator"] is None
     assert "未證明" in current["global_agreements"]["reason"]
     for school in current["schools"]:

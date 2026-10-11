@@ -17,16 +17,16 @@
 | --- | --- | --- |
 | 交換名冊身份 | 104／104 | 原始 partners 保持不變 |
 | 目的地介紹 | 104／104 | 原有 55 行逐 byte 保留，另補 49 本期未開放參考校 |
-| 可定位校園代表點 | 98／104 | 獨立身份、國家與校區複核；6 筆未猜值 |
+| 可定位校園代表點 | 99／104 | 獨立身份、國家與校區複核；5 筆未猜值 |
 | 校園照片 | 100／104 | 真實影像、作者、授權 URL、來源頁、校區說明及 SHA256；保留下載原始 bytes |
 | 官方網站身份 | 102／104 | 101 網站正文／官方國際處＋Ateneo 當期簡章直接列示 URL；網址身份與網站連線成功分開 |
-| 接待欄位矩陣 | 17 × 104 = 1,768 | current 330、reference 331、missing 690、needs_confirmation 342、conflict 74、explicit_not_announced 1 |
+| 接待欄位矩陣 | 17 × 104 = 1,768 | current 337、reference 330、missing 673、needs_confirmation 348、conflict 79、explicit_not_announced 1 |
 | 校園／院系欄位矩陣 | 7 × 104 = 728 | current 368、reference 95、missing 176、needs_confirmation 89 |
-| 另列一般校園欄位 | 7 × 104 = 728 | current 287、missing 441；不得與接待政策欄重複算完整度 |
+| 另列一般校園欄位 | 7 × 104 = 728 | current 288、missing 440；不得與接待政策欄重複算完整度 |
 | 讀過內容的參考附件 | 25 | 其中 Ateneo 本科／研究所各一份明載 Spring 2027；其他舊年或未標年分開 |
-| 新抓取紀錄 | 1,110 | 成功、失敗、HTTP 200 阻擋頁、錯誤候選均留存；不是 1,067 項已核實政策 |
+| 新抓取紀錄 | 1,134 | 成功、失敗、HTTP 200 阻擋頁、錯誤候選均留存；不是 1,134 項已核實政策 |
 
-PR #8 固定 head `9927ec1d8765a9772671bbaa68e7f920995f1258` 已恢復既有 30 點、31 照片，均與本次核對重疊。因此 **真正新增 68 點、69 照片**，不將顯示恢復重算為新增資料。[逐校重疊比對](../src/exchange_info/official_data/ccu/completion-pr8-coverage-comparison.json)。
+PR #8 固定 head `9927ec1d8765a9772671bbaa68e7f920995f1258` 已恢復既有 30 點、31 照片，均與本次核對重疊。因此 **真正新增 69 點、69 照片**，不將顯示恢復重算為新增資料。[逐校重疊比對](../src/exchange_info/official_data/ccu/completion-pr8-coverage-comparison.json)。
 
 重要資料檔：
 
@@ -34,12 +34,14 @@ PR #8 固定 head `9927ec1d8765a9772671bbaa68e7f920995f1258` 已恢復既有 30 
 - [完整欄位與原文依據](../src/exchange_info/official_data/ccu/completion-reviewed-fields.json)：每欄明示狀態、原因、官方 URL、實體 PDF 頁碼或文字／JSON 位置、原文、適用年度與查核時間。
 - [校園素材](../src/exchange_info/official_data/ccu/campus-assets.json)、[座標複核](../src/exchange_info/official_data/ccu/campus-coordinate-review.json)、[照片選擇／排除](../src/exchange_info/official_data/ccu/campus-photo-review.json)。ROR 城市不是校園座標；多校區照片與地圖點不必相同，逐校明示。
 - [附件內容年度複核](../src/exchange_info/official_data/ccu/completion-reference-document-reviews.json)、[官方 PDF 精確附件連結](../src/exchange_info/official_data/ccu/completion-reference-document-links.json)、[公開資料夾檔案連結](../src/exchange_info/official_data/ccu/completion-public-folder-file-links.json)。資料夾子檔案鍵含父連結序號，不猜 Google ID。
-- [全部來源篩選與排除](../src/exchange_info/official_data/ccu/completion-public-source-screening.json)。416 來源被特定欄位引用、35 技術失敗、4 阻擋／錯誤頁、7 特定候選排除、648 僅抓取未核实政策。原 bytes 位於 `completion_sources/`；HTML gzip 無損保存，原 response SHA 與儲存 SHA 分開。
+- [全部來源篩選與排除](../src/exchange_info/official_data/ccu/completion-public-source-screening.json)。423 來源被特定欄位引用、44 技術失敗、4 阻擋／錯誤頁、7 特定候選排除、656 僅抓取未核实政策。原 bytes 位於 `completion_sources/`；HTML gzip 無損保存，原 response SHA 與儲存 SHA 分開。
 
 ## 已確認的重要差異
 
 - **Ateneo，本期未開放（p81–82）**：AY2026–2027 本科 Spring 2027 期限 2026-09-30、TOEFL iBT79／IELTS6.0；研究所期限 2026-09-01、iBT80／IELTS6.5，另須本科學位及成績證明由母校 Registrar 直接提供。初申文件、後續健康／錄取步驟分開。已取得文件要求不表示所有個人表已公開取得；不提升可申請狀態。
 - **IIT Bombay，本期未開放（p72）**：主站503與國際處正常200分開。已讀官方2026–2027 Fact Sheet全部5頁；Spring課程申請截止2026-09-30、project全年但提前2個月；17欄中14當期核實、提名獨立日／住宿截止／無版本日期的表格3項待確認。Host Bonafide/FRRO表是到校後，不能混入母校初申證明；MoU免課程費仍另付行政和住宿費，住宿按到校時床位。接待規定不改母校未開放狀態。
+- **FGES（p88）**：學院2026–2027與母大學同年度簡章正文的期限、法語要求強度及校曆有差異。母大學p9內文日期仍2025，不能自行修成年份或選較晚日期；公開帳號流程證明學生表須提名後個人入口取得。p8已目視核對FGES列，不借用FD或FLSH條件。新增All官方指定服務公開SSR的FGES Vauban marker，WeNov另列且不保證個人校區。
+- **QUT，本期未開放（p120）**：官方2027費率、Semester1校曆已讀。MoU提名Exchange免學費與StudyAbroad AUD9900／13200分開，AUD1000簽證獎助排除Exchange。生活費原表合計與各項上界矛盾；2026更新頁仍列舊TOEFL刻度及2022COVID條文，未假定2027適用。Exchange個人申請link須accepted nomination，不由全年StudyAbroad收件推定交換截止。
 - **全北，本期未開放（p51）**：國際處正文 Calendar2026、主站 Calendar2021；期限、照片張數、疫苗項不一致，且國際處表格載不存在的 November31。保存原文衝突；2027 新版尚未核實。
 - **同濟，本期未開放（p13）**：邀請與申請表正文 2026 秋季；住宿表混載 2025–2027 日期及 2026 春季費率。不可作 2027 春季申請表或當期費率。
 - ZHAW 使用 School of Engineering 的官方地圖 marker 與工程學院照片；FHNW 使用商學院 Olten 校區公開地點；Karviná 商學院與 Opava 母校分開。FGES、Saintgits、Uninter Mexico 不任意套用同集團或同名他國校區。
@@ -50,16 +52,16 @@ PR #8 固定 head `9927ec1d8765a9772671bbaa68e7f920995f1258` 已恢復既有 30 
 完整逐校原因見 inventory，不代表已窮盡所有公開網頁。
 
 - 全球協議清單全量與分母：Gamma 可讀內容未取得。
-- 6 點未刊登：p68 HCMUTE（兩個 P625，缺一手定位選擇）、p71 DNTU、p74 Saintgits、p88 FGES、p111 Karviná 商學院、p119 Uninter Mexico。相機視窗或未確認子校区不能當 marker。
+- 5 點未刊登：p68 HCMUTE（兩個 P625，缺一手定位選擇）、p71 DNTU、p74 Saintgits、p111 Karviná 商學院、p119 Uninter Mexico。相機視窗或未確認子校区不能當 marker。
 - 4 校尚無可刊登的已複核授權照片：p66 UEL、p71 DNTU、p80 Presidency、p119 Uninter Mexico。
 - 2 校官方網站正文／身份補查仍受阻或新版尚未核實：p44 Keimyung、p96 LETI。Ateneo 網域已由當期官方簡章正文核實，但首頁抓取仍受阻。
-- 690 接待欄缺值，其餘非 current 欄各有年份、衝突或範圍理由；尤其當期完整文件集、提名後個人表、住宿床位、費用、課程／学制限制不能由一般服務入口推定。
+- 673 接待欄缺值，其餘非 current 欄各有年份、衝突或範圍理由；尤其當期完整文件集、提名後個人表、住宿床位、費用、課程／学制限制不能由一般服務入口推定。
 
 ## 程式與合併邊界
 
 新資料與照片不寫入共用 `university_locations.jsonl` 或 `school-images.json`。不重寫 PR #8 的共用姓名／國家匹配器。
 
-學校專屬程式：`ccu_completion.py`、`ccu_completion_sources.py`、`ccu_campus_assets.py`、`ccu_profile.py`、`ccu_student_view.py`、`static/ccu-partner-details.js`，以及 `scripts/*ccu*completion*`、`*ccu*campus*`、`*ccu*reference*`、`prepare_ccu_reviewed_photos.py`。一般校園與49參考校 host 矩陣分開顯示；原有55接待矩陣、資格及文件規則保留。
+學校專屬程式：`ccu_completion.py`、`ccu_completion_sources.py`、`ccu_campus_assets.py`、`ccu_profile.py`、`ccu_student_view.py`、`static/ccu-partner-details.js`，以及 `scripts/*ccu*completion*`、`*ccu*campus*`、`*ccu*reference*`、`prepare_ccu_reviewed_photos.py`。一般校園與49參考校 host 矩陣分開顯示；原有55接待矩陣以明示override欄位補充；原始資格及文件規則保留。
 
 必要共用檔案變更，供中央整合者與 PR #8 對照：
 
@@ -95,3 +97,5 @@ PLAYWRIGHT_BROWSERS_PATH=/tmp/ccu-playwright python -m pytest -q tests/test_ccu_
 第二批從不可覆寫的[9點／7照片／3網站／702欄基準](../src/exchange_info/official_data/ccu/completion-followup-gap-baseline.json)續查，新增3點、3照片、1網站身份並實際填補12個接待缺欄。逐校嘗試URL及來源失敗／研究未完成分開列在[續查清單](ccu-followup-gap-list-2026-10-11.md)；取得公開網頁不等於已核實當期政策。第二批測試及包裝證據另存，首批完整測試報告保留其原commit與原始結果。
 
 [第二批資料與實測證據](ccu-completion-validation-2026-10-11/followup-02/report.json)：選定回歸452項為445通過／4略過／3失敗；兩項已修正且相关四檔41項通過，Jena390原樣重跑通過但保留一次hidden-link不穩定紀錄。CCU completion手机／桌面6項通過；3186個CCU打包檔案逐byte核對。沒有重跑全套2668項或把本批結果宣稱全綠。
+
+第三批續查FGES與QUT，新增1個身份明確的校園marker、填補17個原缺值；期限／語言／校曆矛盾保留，非current項的研究分類與已嘗試URL可在current gap JSON／CSV檢索。母校原partners、49灰字狀態、55原介紹prefix及其他五校資料未改。第三批測試與固定commit證據另列，不覆寫首兩批實測報告。

@@ -41,12 +41,26 @@ def build():
         page = school["ccu_page"]
         requested_assets = (["coordinates"] if page in COORDINATES and assets[page]["coordinates"]["status"] != "verified_current" else []) + (["photo"] if page in PHOTOS and assets[page]["photo"]["status"] != "verified_current" else []) + (["website"] if page in WEBSITES and school["general_campus_fields"]["website"]["status"] != "verified_current" else [])
         missing = [key for key, field in school["host_fields"].items() if field["status"] == "missing"]
-        if requested_assets or missing:
+        pending = []
+        for key, field in school["host_fields"].items():
+            if field["status"] == "verified_current":
+                continue
+            classification = field.get("research_classification") or (
+                "official_not_announced" if field["status"] == "explicit_not_announced" else "research_incomplete"
+            )
+            if classification not in {"official_not_announced", "personal_access_required", "source_failure", "research_incomplete"}:
+                raise ValueError("Unknown CCU gap classification")
+            pending.append({"field": key, "field_status": field["status"], "classification": classification,
+                            "reason": field["reason"], "value": field["value"], "evidence": field["evidence"],
+                            "official_not_announced": classification == "official_not_announced",
+                            "personal_access_required": True if classification == "personal_access_required" else None})
+        if requested_assets or missing or pending:
             rows.append({
                 "ccu_page": page, "school_name": school["school_name"], "country": school["country"],
                 "availability_status": school["availability_status"], "requested_assets": requested_assets,
                 "unresolved_host_fields": [{"field": key, "classification": "research_incomplete", "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。", "official_not_announced": False, "personal_access_required": None} for key in missing],
                 "attempted_sources": attempts.get(page, []),
+                "pending_host_policy_reviews": pending,
             })
     return {"baseline_commit": BASELINE, "checked_at": "2026-10-11", "scope": "First delivery follow-up baseline; not an exhaustive source search", "classification_definitions": {
         "official_not_announced": "官方正文直接明示適用梯次資料尚未公告，保存原文及頁碼。",
@@ -67,6 +81,9 @@ def main():
         raise SystemExit("Preserve the immutable first-delivery follow-up baseline")
     if args.baseline:
         assert result["initial_counts"]["host_missing_fields"] == 702
+    if not args.baseline:
+        result["scope"] = "Current follow-up gaps and non-current policy reviews; not an exhaustive source search"
+        result["current_counts"] = result["initial_counts"].copy()
     target.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     with target.with_suffix(".csv").open("w", encoding="utf-8-sig", newline="") as stream:
         writer = csv.writer(stream)
@@ -77,6 +94,10 @@ def main():
                 writer.writerow([school["ccu_page"], school["school_name"], school["country"], school["availability_status"], gap, "research_incomplete", ids])
             for gap in school["unresolved_host_fields"]:
                 writer.writerow([school["ccu_page"], school["school_name"], school["country"], school["availability_status"], gap["field"], gap["classification"], ids])
+            if not args.baseline:
+                for gap in school["pending_host_policy_reviews"]:
+                    if gap["field_status"] != "missing":
+                        writer.writerow([school["ccu_page"], school["school_name"], school["country"], school["availability_status"], gap["field"] + ":" + gap["field_status"], gap["classification"], ids])
     print(json.dumps(result["initial_counts"], ensure_ascii=False))
 
 
