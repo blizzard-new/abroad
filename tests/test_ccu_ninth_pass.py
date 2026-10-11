@@ -34,10 +34,12 @@ def test_profile_review_covers_source_backed_geography_and_distinct_life():
         partner = at(page)
         if row["fields"]["city"]["value"]:
             assert partner.location.city == row["fields"]["city"]["value"]
-            assert (
-                partner.location.latitude is None and partner.location.longitude is None
-            )
-            assert partner.location.geocode_status == "pending"
+            if partner.location.geocode_status == "verified":
+                assert partner.location.latitude is not None and partner.location.longitude is not None
+                assert partner.location.source_url and partner.location.geocoded_at
+            else:
+                assert partner.location.latitude is None and partner.location.longitude is None
+                assert partner.location.geocode_status == "pending"
         life = row["fields"]["campus_life"]
         transport = row["fields"]["transport"]
         if life["value"] and transport["value"]:
@@ -114,7 +116,11 @@ def test_runtime_preserves_city_and_separates_reference_life_status(tmp_path):
     ]:
         data = next(p for p in partners if p["school_name"] == at(page).school_name)
         assert data["location"]["city"] == city
-        assert data["location"]["latitude"] is None
+        if page == 111:
+            assert data["location"]["latitude"] is None
+        else:
+            assert data["location"]["latitude"] is not None
+            assert data["location"]["geocode_status"] == "verified"
     p = at(83)
     guide = client.get(
         "/destination-profile", params={"home_school": HOME, "school": p.school_name}
@@ -232,7 +238,7 @@ def test_direct_life_link_uses_resolved_ccu_home_without_query(tmp_path, monkeyp
     response = client.get("/school-life-context", params={"school": at(33).school_name})
     assert response.status_code == 200
     assert "市川" in response.json()["location_note"]
-    assert "尚無已核對的校區座標" in response.json()["location_note"]
+    assert "未必是你的交換校區" in response.json()["location_note"]
     transport = next(
         c for c in response.json()["categories"] if c["theme"] == "transport"
     )

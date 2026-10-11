@@ -269,6 +269,7 @@ def test_real_document_center_stages_conditions_templates_and_saved_draft(page, 
     # Jena's public form link belongs to a later conditional extension, not the
     # first exchange application. API and visible control must agree.
     select_target(page, school(99))
+    wait_until(page, "!state.applicationLoading && state.applicationDocumentCatalogContextKey === applicationCatalogContextKey()")
     extension = catalog.locator("details.application-requirement-group").filter(has_text="Jena交换延期申请")
     expect(extension).to_have_count(1)
     if not extension.evaluate("node => node.open"):

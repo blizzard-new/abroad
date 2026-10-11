@@ -198,11 +198,11 @@ def test_changed_source_requires_semantic_recheck(tmp_path, monkeypatch):
 
 def test_api_and_storage_deliver_life_guides_without_changing_cgu(tmp_path):
     profiles = load_destination_profiles(tmp_path, include_bundled_baseline=True)
-    assert sum(p.home_university == HOME for p in profiles) == 55
+    assert sum(p.home_university == HOME for p in profiles) == 104
     assert sum(p.home_university == "長庚大學" for p in profiles) == 77
     client = TestClient(create_app(tmp_path))
     response = client.get("/destination-profiles", params={"home_school": HOME})
-    assert response.status_code == 200 and len(response.json()) == 55
+    assert response.status_code == 200 and len(response.json()) == 104
     partner = at(43)
     response = client.get(
         "/destination-profile",

@@ -22,9 +22,28 @@
     alternative_official_sources_not_fully_checked: "官方替代來源尚待補查",
   };
   function render(partner, escapeHtml, keys) {
+    let assets = {};
+    try { assets = JSON.parse(partner.reference_data?.ccu_campus_assets || "{}"); } catch (_) { /* Missing metadata stays absent. */ }
+    const photo = assets.photo;
+    const campus = photo ? `<section class="ccu-campus-attribution" aria-label="校園照片與授權"><h3>校園照片來源</h3>
+      <p>${escapeHtml(photo.campus_caption)}</p><p>${escapeHtml(photo.artist)} · <a href="${escapeHtml(photo.license_url)}" target="_blank" rel="noreferrer">${escapeHtml(photo.license_name)}</a> · <a href="${escapeHtml(photo.source_page_url)}" target="_blank" rel="noreferrer">照片原頁 ↗</a></p>
+      <p>${escapeHtml(photo.modifications)} ${escapeHtml(photo.applicability)} 查核${escapeHtml(photo.checked_at.slice(0, 10))}。</p>
+      ${assets.coordinates ? `<p>${escapeHtml(assets.coordinates.note)}</p>` : ""}</section>` : "";
+    let completion = {};
+    try { completion = JSON.parse(partner.reference_data?.ccu_completion || "{}"); } catch (_) { /* Absent data stays absent. */ }
+    const profileLabels = { city: "校園所在城市", location: "官方聯絡地址", website: "官方網站", degree_levels: "學制參考", colleges: "院系參考", transport: "交通公開入口", campus_life: "校園服務公開入口" };
+    const referenceFields = completion.reference_host_fields || {};
+    const showEvidence = field => (field.evidence || []).map(ev => {
+      const source = ev.source_pages?.length ? `${ev.source_url.split("#")[0]}#page=${ev.source_pages[0]}` : ev.source_url;
+      return `<p><a href="${escapeHtml(source)}" target="_blank" rel="noreferrer">${escapeHtml(ev.source_pages?.length ? `PDF第${ev.source_pages.join("、")}頁` : "來源原頁")} ↗</a>${ev.service_url ? ` · <a href="${escapeHtml(ev.service_url)}" target="_blank" rel="noreferrer">服務入口 ↗</a>` : ""}</p><p>適用：${escapeHtml(ev.academic_year || "年度未核實")}；查核${escapeHtml((ev.checked_at || "").slice(0, 10))}</p><details><summary>查核原文</summary><p>${escapeHtml(ev.excerpt || ev.reference_excerpt || "")}</p></details>`;
+    }).join("");
+    const generalFields = completion.general_campus_fields || {};
+    const general = Object.keys(generalFields).length ? `<section class="ccu-general-campus" aria-label="一般校園公開資料"><h3>一般校園公開資料</h3><p>校園位置與服務入口不代表2027春季可申請、住宿保證或個人接收校區。</p>${Object.entries(generalFields).filter(([, f]) => f.value).map(([key, field]) => `<details data-ccu-general="${escapeHtml(key)}"><summary>${escapeHtml(profileLabels[key] || key)} · 查核日已核實</summary><p>${escapeHtml(field.value)}</p><p>${escapeHtml(field.reason)}</p>${showEvidence(field)}</details>`).join("")}</section>` : "";
+    const reference = Object.keys(referenceFields).length ? `<section class="ccu-reference-host" aria-label="未開放參考校接待資料"><h3>參考校接待資料 · 中正本期未開放</h3><p>以下保留接待校各年度依據。接待校規定即使載明2027，也不變更中正名冊的本期未開放狀態。</p>${Object.entries(referenceFields).map(([key, field]) => `<details data-ccu-reference-field="${escapeHtml(key)}"><summary>${escapeHtml(labels[key] || key)} · ${escapeHtml(statuses[field.status] || field.status)}</summary><p>${escapeHtml(field.value || field.reason)}</p>${field.value ? `<p>${escapeHtml(field.reason)}</p>` : ""}${showEvidence(field)}</details>`).join("")}</section>` : "";
+    const supplement = campus + general + reference;
     const fields = partner.partner_exchange_details;
-    if (!fields || !Object.keys(fields).length) return "";
-    return `<section class="partner-student-summary ccu-receiving-school-details" aria-label="合作校接收資料">
+    if (!fields || !Object.keys(fields).length) return supplement;
+    return `${supplement}<section class="partner-student-summary ccu-receiving-school-details" aria-label="合作校接收資料">
       <h3>合作校接收資料 · ${escapeHtml(partner.application_round || "")}</h3>
       <p>以下是合作校接收交換生的規定。中正的校內資格、名額及截止須分別符合；每欄的適用年度、未核實新版及矛盾另標示。</p>
       ${(keys || Object.keys(labels)).map(key => {

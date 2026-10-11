@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 from functools import lru_cache
+from pathlib import Path
 
 from .ccu_sources import BUNDLE, require_usable_source
 from .models import (
@@ -139,9 +140,23 @@ def apply_profile(partner: PartnerUniversity) -> PartnerUniversity:
 
 
 def school_location(
-    partner: PartnerUniversity, location: UniversityLocation
+    partner: PartnerUniversity, location: UniversityLocation, data_dir: Path | None = None
 ) -> UniversityLocation:
-    """Fallback only for an absent public record; retain explicit operator reviews."""
+    """Use CCU campus reviews before shared aliases; retain local operator reviews."""
+    if data_dir is not None and partner.location and partner.location.geocode_status == "verified":
+        from .school_identity import school_identity_key
+        path = Path(data_dir) / "processed/university_locations.jsonl"
+        operator_records = _operator_locations(path, path.stat().st_mtime_ns, path.stat().st_size) if path.exists() else {}
+        names = {school_identity_key(partner.school_name)}
+        target = _completion_target_names().get(partner.source_pages[0]) if partner.source_pages else None
+        if target:
+            names.add(school_identity_key(target))
+        country = _operator_country(partner.country)
+        for name in sorted(names):
+            if (name, country) in operator_records:
+                operator = operator_records[(name, country)]
+                return operator.model_copy(update={"school_name": partner.school_name, "country": partner.country})
+        return partner.location
     if (
         partner.location
         and partner.location.city
@@ -152,6 +167,38 @@ def school_location(
     ):
         return partner.location
     return location
+
+
+def _operator_country(country):
+    if not isinstance(country, str):
+        return None
+    return {"南韓": "韓國", "中國": "中國大陸", "大陸地區": "中國大陸", "台灣": "臺灣"}.get(country, country)
+
+
+@lru_cache(maxsize=8)
+def _operator_locations(path, mtime_ns, size):
+    from .school_identity import school_identity_key
+    records = {}
+    for line in path.read_text().splitlines():
+        try:
+            row = json.loads(line)
+        except ValueError:
+            continue
+        if isinstance(row, dict) and isinstance(row.get("school_name"), str):
+            try:
+                record = UniversityLocation.model_validate(row)
+            except ValueError:
+                record = UniversityLocation(school_name=row["school_name"], country=row.get("country") if isinstance(row.get("country"), str) else None, geocode_status="needs_review")
+            if record.geocode_status != "verified":
+                record = record.model_copy(update={"latitude": None, "longitude": None})
+            records[(school_identity_key(row["school_name"]), _operator_country(row.get("country")))] = record
+    return records
+
+
+@lru_cache(maxsize=1)
+def _completion_target_names():
+    path = BUNDLE / "completion-targets.json"
+    return {row["ccu_page"]: row["canonical_name"] for row in json.loads(path.read_text())} if path.exists() else {}
 
 
 def profile_life(
