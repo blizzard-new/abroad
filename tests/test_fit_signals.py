@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections import Counter
+
 from exchange_info import storage
 from exchange_info.advisor import build_advisor_plan
 from exchange_info.cost_estimates import budget_fit, extract_monthly_estimates, primary_estimate, twd_per_unit
@@ -116,13 +118,18 @@ def test_options_on_the_partner_count_for_course_and_language():
 
 def test_bundled_destination_profiles_yield_honest_budget_results():
     profiles = storage.load_destination_profiles()
-    assert len(profiles) == 844
+    assert Counter(p.home_university for p in profiles) == {
+        "長庚大學": 77, "國立臺北大學": 206, "國立臺灣大學": 288,
+        "國立中央大學": 214, "國立中正大學": 104, "淡江大學": 4,
+    }
     statuses = {}
     for row in profiles:
         fit = school_budget_fit(row, 40000)
         statuses[fit.status] = statuses.get(fit.status, 0) + 1
         if fit.status != "unknown":
             assert fit.estimate and fit.estimate.evidence and fit.estimate.source_urls
+        if row.home_university == "國立中正大學" and "本期未開放" in (row.coverage_note or ""):
+            assert fit.status == "unknown", "general campus references are not current cost estimates"
     assert statuses.get("unknown", 0) > 200, "most schools publish no comparable monthly total"
     assert sum(count for status, count in statuses.items() if status != "unknown") >= 15
 
