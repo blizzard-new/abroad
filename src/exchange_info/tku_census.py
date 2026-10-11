@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import threading
 from collections.abc import Mapping
 from pathlib import Path
 from functools import lru_cache
@@ -9,6 +10,10 @@ from functools import lru_cache
 from .models import (ExchangeFieldEvidence, PartnerExchangeDetailField, PartnerProgramOption,
                      PartnerStudentSummary, PartnerUniversity, SchoolCompletenessItem, SchoolDataCompleteness)
 from .tku_data import BUNDLE
+from .json_stream import read_json_object_array
+
+
+_snapshot_lock = threading.RLock()
 
 
 class _SchoolAuditIndex(Mapping):
@@ -29,11 +34,10 @@ class _SchoolAuditIndex(Mapping):
 
 @lru_cache(maxsize=1)
 def _snapshot_at(path, mtime_ns, size):
-    with Path(path).open(encoding="utf-8") as handle:
-        original = json.load(handle)
     rows = {}
     aliases = {}
-    for row in original["schools"]:
+
+    def receive(row):
         identifier = row["id"]
         if identifier in rows:
             raise ValueError("Duplicate TKU census institution ID")
@@ -43,15 +47,24 @@ def _snapshot_at(path, mtime_ns, size):
                      for pid in row.get("programme_ids", []))
         # Preserve the existing ordered alias overwrite semantics exactly.
         aliases.update({name: identifier for name in names})
-    summary = json.dumps({k:v for k,v in original.items() if k != "schools"},
-                         ensure_ascii=False, separators=(",", ":")).encode()
+
+    with Path(path).open(encoding="utf-8") as handle:
+        metadata = read_json_object_array(handle, "schools", receive)
+    summary = json.dumps(metadata, ensure_ascii=False, separators=(",", ":")).encode()
     return summary, rows, _SchoolAuditIndex(aliases, rows)
 
 
 def _snapshot():
-    path = BUNDLE / "full_census_audit.json"
-    stat = path.stat()
-    return _snapshot_at(str(path), stat.st_mtime_ns, stat.st_size)
+    # lru_cache alone permits duplicate first loads from concurrent requests.
+    with _snapshot_lock:
+        path = BUNDLE / "full_census_audit.json"
+        stat = path.stat()
+        return _snapshot_at(str(path), stat.st_mtime_ns, stat.st_size)
+
+
+def _clear_snapshot():
+    with _snapshot_lock:
+        _snapshot_at.cache_clear()
 
 
 def census_summary():
@@ -68,7 +81,7 @@ def census_audit():
     return {**census_summary(), "schools": list(census_rows())}
 
 
-census_audit.cache_clear = _snapshot_at.cache_clear
+census_audit.cache_clear = _clear_snapshot
 
 
 def school_audit_by_id(identifier):
@@ -98,7 +111,7 @@ def school_index():
     return _snapshot()[2]
 
 
-school_index.cache_clear = _snapshot_at.cache_clear
+school_index.cache_clear = _clear_snapshot
 
 
 def reference_partners(current_partners):
