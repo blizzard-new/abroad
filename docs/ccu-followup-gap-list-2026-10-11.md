@@ -26,3 +26,9 @@
 全球協議分母仍未知。官方全球頁可讀，但Gamma embed／公開docs取得應用殼；匿名snapshot FORBIDDEN僅表示該請求不可讀，不宣稱全部公開文件須登入。
 
 NTU既有截圖測試重現條件、原main對照、未套用的tmp_path提案與完整原始log，保持在 [第一批測試證據](ccu-completion-validation-2026-10-11/report.json)。
+
+## 第三批（固定production 102164aca2bb55b967dea77dc0820db80d71ede7）
+
+FGES新增Vauban代表marker，WeNov另列未當個人分配。已讀母大學2026–2027簡章16頁，其中期限內文2025、FGES學院Spring2027期限2026、語言強度與校曆差異均保存待確認。學生表個人帳號是公開正文要求，與fges.eu來源失敗分開。QUT已讀2027費率及Semester1校曆，免學費Exchange／付費StudyAbroad／排除Exchange的獎助分開；TOEFL舊刻度與2022條文未自行更新。實際減少17個原缺欄，current缺值673。
+
+24個新增來源已入completion_sources，含正常讀取、失敗與未核年度。Keimyung新cms及LETI更多網域入口503；UNINTER development／university入口503；Saintgits mandatory disclosure正常200但未找到可引用GPS；HCMUTE官方虛擬導覽正常200但只讀到panorama平面像素座標，不能轉成經緯度。這些都不是官方明示尚未公告或個人權限證明。逐校確切URL、時間、狀態與原bytes在current gap JSON／CSV。

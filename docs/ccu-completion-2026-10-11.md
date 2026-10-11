@@ -99,3 +99,5 @@ PLAYWRIGHT_BROWSERS_PATH=/tmp/ccu-playwright python -m pytest -q tests/test_ccu_
 [第二批資料與實測證據](ccu-completion-validation-2026-10-11/followup-02/report.json)：選定回歸452項為445通過／4略過／3失敗；兩項已修正且相关四檔41項通過，Jena390原樣重跑通過但保留一次hidden-link不穩定紀錄。CCU completion手机／桌面6項通過；3186個CCU打包檔案逐byte核對。沒有重跑全套2668項或把本批結果宣稱全綠。
 
 第三批續查FGES與QUT，新增1個身份明確的校園marker、填補17個原缺值；期限／語言／校曆矛盾保留，非current項的研究分類與已嘗試URL可在current gap JSON／CSV檢索。母校原partners、49灰字狀態、55原介紹prefix及其他五校資料未改。第三批測試與固定commit證據另列，不覆寫首兩批實測報告。
+
+[第三批固定版本與證據](ccu-completion-validation-2026-10-11/followup-03/report.json)：production `102164aca2bb55b967dea77dc0820db80d71ede7`。全部CCU單元、CGU/NTPU及共用數量回歸365項為361通過／4既有略過；completion手機／桌面10項通過，無新增排除。3249個CCU打包檔案逐byte核對，wheel SHA256 `5ba8dc58e8ad11d90bce90d738505d8a22796e6af52caba370226f81c416d26e`。未重跑全套2668項；首批NTU路徑失敗及第二批Jena390不穩定仍保留。
