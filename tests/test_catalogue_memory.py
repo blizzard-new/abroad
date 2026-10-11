@@ -107,4 +107,7 @@ def test_worker_capacity_is_bounded_only_for_the_app_lifespan(tmp_path):
         async with app.router.lifespan_context(app):
             assert limiter.total_tokens==min(before,2)
         assert limiter.total_tokens==before
-    asyncio.run(check())
+    # Playwright may keep its sync-driver loop active in the pytest main thread.
+    # A dedicated loop checks the same startup bound and shutdown restoration.
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        pool.submit(asyncio.run, check()).result(timeout=10)

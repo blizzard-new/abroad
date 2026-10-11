@@ -17,12 +17,18 @@ LOCATIONS = ASSETS.with_name("campus-locations.json")
 def _locations_snapshot(signature):
     data = json.loads(LOCATIONS.read_text())
     rows = {}
+    holds = set()
     for row in data["locations"]:
         location = UniversityLocation.model_validate(row)
         if location.geocode_status != "verified":
             location = location.model_copy(update={"latitude": None, "longitude": None})
-        rows[(school_identity_key(row["school_name"]), row["country"])] = location
-    return rows
+        key = (school_identity_key(row["school_name"]), row["country"])
+        rows[key] = location
+        if row.get("allow_shared_fallback") is False:
+            if location.geocode_status == "verified":
+                raise ValueError("An explicit location hold cannot publish coordinates")
+            holds.add(key)
+    return rows, frozenset(holds)
 
 
 def campus_location(partner, fallback, data_dir=None):
@@ -34,8 +40,11 @@ def campus_location(partner, fallback, data_dir=None):
     if not LOCATIONS.exists():
         return fallback
     stat = LOCATIONS.stat()
-    candidate = _locations_snapshot((stat.st_mtime_ns, stat.st_size)).get(
-        (school_identity_key(partner.school_name), partner.country))
+    locations, holds = _locations_snapshot((stat.st_mtime_ns, stat.st_size))
+    key = (school_identity_key(partner.school_name), partner.country)
+    candidate = locations.get(key)
+    if key in holds:
+        return candidate
     if candidate is None or (
         candidate.geocode_status != "verified"
         and fallback is not None and fallback.geocode_status == "verified"

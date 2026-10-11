@@ -2138,48 +2138,91 @@
   },
   "ncu-081": {
     "source_ids": [
-      "ncu-081-follow-4929af9e27"
+      "ncu-081-follow-4929af9e27",
+      "13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF",
+      "host-turku-apply",
+      "host-turku-courses",
+      "host-turku-orient",
+      "host-turku-languageform",
+      "host-turku-la",
+      "host-fi-studies",
+      "host-fi-insurance",
+      "host-fi-exchange",
+      "host-fi-permit",
+      "host-fi-income",
+      "host-turku-tys",
+      "host-turku-tys-apply",
+      "host-turku-tys-payment",
+      "host-turku-tys-arrival"
     ],
     "applicability": "Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。",
     "checked_at": "2026-10-11T10:13:35+00:00",
     "fields": {
       "eligibility": {
         "points": [
-          "抵達前至少兩年／四學期學習；修碩士須碩士生或學士最後一年。母校SoleMOVE提名及對應協議，學科須有基礎。"
+          "抵達前至少兩年／四學期學習；修碩士須碩士生或學士最後一年。母校SoleMOVE提名及對應協議，學科須有基礎。",
+          "2026/10/08 原件補充（116適用仍待確認）：須partner／network提名及到校前至少兩年／四學期相關背景；master課可研究生或學士最後一年。PDF稱三或四年級，官網最後一年較具体，需按本人學制確認。Turku、Pori、Rauma不同校區不由校名硬指派。"
         ],
         "sources": [
           {
             "id": "ncu-081-follow-4929af9e27",
             "page": null
+          },
+          {
+            "id": "13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF",
+            "page": 2
+          },
+          {
+            "id": "host-turku-apply",
+            "page": null
           }
         ],
-        "unresolved": null
+        "unresolved": "中央116協議／學制與各課程背景、campus待確認。"
       },
       "language": {
         "points": [
           "授課語言至少B2，可母校簽章證明、Language Assessment Sheet或接受正式考試；證明附申請時兩年內。TOEIC、Duolingo、OLS不接受，英語授課學士以上及母語英語有不同附件替代方式。",
-          "网页在2026/1/26前後TOEFL段落標題寫ITP，內容又列iBT舊制72及分項範圍、新制4分各項4，命名矛盾保留；不作regex自動資格。IELTS總6.0，one skill retake限原試60日內；PTE Academic62。"
+          "网页在2026/1/26前後TOEFL段落標題寫ITP，內容又列iBT舊制72及分項範圍、新制4分各項4，命名矛盾保留；不作regex自動資格。IELTS總6.0，one skill retake限原試60日內；PTE Academic62。",
+          "2026/10/08 原件補充（116適用仍待確認）：官網TOEFL段落標ITP但值為iBT，分界寫2026/1/26，舊總72／新4各科4；另IELTS6、PTE62、不收MyBest、IELTS單科60天內重考。保留ITP／iBT及日期差異，不由regex自行改為ETS分界。"
         ],
         "sources": [
           {
             "id": "ncu-081-follow-4929af9e27",
             "page": null
+          },
+          {
+            "id": "host-turku-apply",
+            "page": null
           }
         ],
-        "unresolved": "TOEFL標題／測驗制度矛盾、116當期有效門檻及豁免文件待外校確認。"
+        "unresolved": "TOEFL標題／測驗制度矛盾、116當期有效門檻及豁免文件待外校確認。；當期TOEFL名稱／分界及學制豁免需確認；home與host證明不能混用。"
       },
       "host_documents": {
         "points": [
           "英文正式歷年成績單（手簽章或電子正式認證）、語言證明、護照有照頁／正式ID；居留證或駕照不能代替ID。線上SoleMOVE申請。",
-          "非EU雙邊學生的LA僅母校要求時附簽章PDF，否則在SoleMOVE列proposed study plan；Erasmus+ ICM另有必繳LA，不能套全部中央交換。"
+          "非EU雙邊學生的LA僅母校要求時附簽章PDF，否則在SoleMOVE列proposed study plan；Erasmus+ ICM另有必繳LA，不能套全部中央交換。",
+          "2026/10/08 原件補充（116適用仍待確認）：Language Assessment Sheet由學生及具第一手認識的專業語言老師共同評估／簽名，老師加official stamp。non-EU LA現連Word有學生簽名、母校departmental與institutional coordinator、外校departmental與institutional coordinator欄；依交換方案確認核章次序。",
+          "2026/10/08 原件補充（116適用仍待確認）：現連Language Assessment Sheet已將DOC轉為兩頁並逐頁視覺核對：A1–C2六級，Listening、Reading、Spoken Interaction、Spoken Production、Writing五项，學生及教師各逐項選一級；兩方簽名／日期及教師official stamp。轉檔頁碼不是原件固定PDF頁碼。"
         ],
         "sources": [
           {
             "id": "ncu-081-follow-4929af9e27",
             "page": null
+          },
+          {
+            "id": "host-turku-apply",
+            "page": null
+          },
+          {
+            "id": "host-turku-languageform",
+            "page": null
+          },
+          {
+            "id": "host-turku-la",
+            "page": null
           }
         ],
-        "unresolved": null
+        "unresolved": "已讀官網現連表並完成語言評量矩陣視覺核對；116bilateral／ICM方案及簽章適用仍待確認。"
       },
       "host_deadline": {
         "points": [
@@ -2205,27 +2248,48 @@
       "courses": {
         "points": [
           "30 ECTS／學期是建議，不是硬性門檻；Medicine／Economics限該領域主修，Law／Education其他主修視容量。語言中心課最多計畫的一半，若選Åbo Akademi課至少半數課須Turku。",
-          "秋季課通常5/15、春季11/15確認，申請時可能尚不更新；舊課僅參考，不保證再開。LA同意亦不保證註冊名額。"
+          "秋季課通常5/15、春季11/15確認，申請時可能尚不更新；舊課僅參考，不保證再開。LA同意亦不保證註冊名額。",
+          "2026/10/08 原件補充（116適用仍待確認）：建議30ECTS／semester不是host強制最低，遵守home要求；LA不保證席位，另Peppi／課程方式註冊。可跨領域但需先修；非PhD研究／thesis至少半數課業是coursework且自行找supervisor，PhD例外。",
+          "2026/10/08 原件補充（116適用仍待確認）：Medicine／Dentistry本主修限定，biomed／mental health／nursing依背景、neuroscience minor另有開放；TSE限business且Turku／Pori分開，advanced課须相關25ECTS。Law／Education非本主修依剩餘位，不能一律判關閉。",
+          "2026/10/08 原件補充（116適用仍待確認）：可修鄰校Åbo Akademi但至少50%在UTU；语言課建議2–3，申請FAQ另最多半數。Spring2027課表官網明載2026/11/15發布，仍非Spring2028。"
         ],
         "sources": [
           {
             "id": "ncu-081-follow-4929af9e27",
             "page": null
+          },
+          {
+            "id": "host-turku-courses",
+            "page": null
+          },
+          {
+            "id": "host-turku-apply",
+            "page": null
           }
         ],
-        "unresolved": null
+        "unresolved": "116當期課表、席位、先修與非典型學制待逐課核對。"
       },
       "arrival": {
         "points": [
-          "提名後SoleMOVE寄啟用信，申請通常3–4週審理；提交後及早依供應商期限找住宿，保險／居留與旅行再依錄取安排。"
+          "提名後SoleMOVE寄啟用信，申請通常3–4週審理；提交後及早依供應商期限找住宿，保險／居留與旅行再依錄取安排。",
+          "2026/10/08 原件補充（116適用仍待確認）：已公告Spring2027orientation1/7–8，不當作116Spring2028日期。DVV身分登記須official ID、非EU居留卡、Peppi註冊證明，online form至少到辦公室前一天，護照本人到場；2026pop-in舊日期不用作2027提醒。",
+          "2026/10/08 原件補充（116適用仍待確認）：TYS租約起月第一工作日中午後才可領鑰匙；非營業時間可安排tutor或key locker，locker需前一工作日中午前通知，入住需Tenant Pages檢查。領鑰匙時間不減租期，週末抵達需先安排；不替學生寄出通知。"
         ],
         "sources": [
           {
             "id": "ncu-081-follow-4929af9e27",
             "page": null
+          },
+          {
+            "id": "host-turku-orient",
+            "page": null
+          },
+          {
+            "id": "host-turku-tys-arrival",
+            "page": null
           }
         ],
-        "unresolved": null
+        "unresolved": "116orientation／DVV場次、入住與到校交通仍待查。"
       }
     },
     "host_documents": [
@@ -2265,18 +2329,46 @@
       {
         "name": "Learning Agreement（非EU雙邊，母校要求時）",
         "source_urls": [
-          "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+          "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies",
+          "https://www.utu.fi/sites/default/files/media/Learning_Agreement_non-EU_0.docx"
         ],
         "needs_confirmation": true,
         "stage": "student_application",
         "applicability_status": "reference_only",
-        "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。",
+        "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 2026/10/08 所讀non-EU Word表列學生與兩校各departmental／institutional coordinator欄；使用此表與當期簽章次序仍須兩校確認。",
         "conditional": true,
         "condition": "母校要求LA；Erasmus+ ICM依其方案必繳",
         "signatures": [
           "學生",
-          "母校簽章"
+          "母校departmental coordinator",
+          "母校institutional coordinator",
+          "外校departmental coordinator",
+          "外校institutional coordinator"
+        ],
+        "official_form_url": "https://www.utu.fi/sites/default/files/media/Learning_Agreement_non-EU_0.docx",
+        "stamps": [
+          "母校"
         ]
+      },
+      {
+        "name": "Language Assessment Sheet（選用此語言證明時）",
+        "source_urls": [
+          "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies",
+          "https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc"
+        ],
+        "needs_confirmation": true,
+        "signatures": [
+          "學生與language assessor（Assessment Sheet）"
+        ],
+        "stamps": [
+          "母校章戳"
+        ],
+        "official_form_url": "https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc",
+        "conditional": true,
+        "condition": "僅選用此表作語言能力證明者；認可測驗或適用豁免附件不因此另加此表。",
+        "stage": "student_application",
+        "applicability_status": "reference_only",
+        "applicability_note": "2026/10/08 已查核公開表格的欄位；116適用版本、語言證明選項與本人資格仍須確認。"
       }
     ]
   },
@@ -12694,5 +12786,238 @@
         ]
       }
     ]
+  },
+  "ncu-007": {
+    "source_ids": [
+      "ncu-007-site-20261011",
+      "ncu-007-resume-study",
+      "ncu-007-resume-language",
+      "ncu-007-resume-life",
+      "ncu-007-resume-urban",
+      "ncu-007-resume-syllabus-2026",
+      "ncu-007-resume-brochure-2025"
+    ],
+    "applicability": "EIVP未標年交換程序、2026秋Urban Planning、June2025 brochure與March2026 syllabus；不是中央116／AY2027–2028校別名額核准。",
+    "checked_at": "2026-10-11T14:33:32.467033+00:00",
+    "host_documents": [],
+    "fields": {
+      "city": {
+        "points": [
+          "巴黎第19區78–80 rue Rébeval，工程學校EIVP，非其他Paris工程學院。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-life",
+            "page": null
+          }
+        ],
+        "unresolved": null
+      },
+      "transport": {
+        "points": [
+          "Belleville地鐵站由2／11號線服務；生活頁提到11號線延伸Rosny-Bois-Perrier，可依路線自行評估住宿通勤。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-life",
+            "page": null
+          }
+        ],
+        "unresolved": null
+      },
+      "eligibility": {
+        "points": [
+          "交換先由合作母校選拔及正式提名，再收email線上申請指示，外校審核後才核LOA。",
+          "Urban Planning英語方案要求BSc／BEng或法國licence等同學士，偏好Architecture、Civil Engineering、Landscape Architecture、Urban Planning／design；2025 brochure另列Social Sciences與related fields，不擴成所有科系保證可申請。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-study",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-urban",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-brochure-2025",
+            "page": 2
+          }
+        ],
+        "unresolved": "中央116是否可選此英語方案及學制、科系仍須提名確認。"
+      },
+      "language": {
+        "points": [
+          "一般學期／全年交換須授課語言至少B1，可由測驗或母校信證明；法語工程與英語Urban Planning分開。英語方案頁明列B1 teacher’s certificate。",
+          "Languages頁TOEIC785、TOEFL72、IELTS5等是工程學位畢業語言證明，不作交換入學門檻；中央home正式外語檢定仍另必繳，不能以host母校信豁免。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-study",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-urban",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-language",
+            "page": null
+          }
+        ],
+        "unresolved": "116選定program的語言證明與有效性按當期通知。"
+      },
+      "host_documents": {
+        "points": [
+          "公開程序只說正式提名後email寄完整線上指示和required documents；四個已讀頁及兩份公開PDF仍未列完整初次附件。語言B1證明已知，不等於完整包已取得。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-study",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-urban",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-brochure-2025",
+            "page": 2
+          }
+        ],
+        "unresolved": "提名email／portal附件清單和最新表格待取得；此欄保持missing。",
+        "gap_only": true
+      },
+      "host_deadline": {
+        "points": [
+          "Urban Planning頁是2026秋：第一輪2026/3/31、第二輪5/31；第二日期未重寫年，但與2026課程段同列。2025 URL brochure僅說end of May，沒有兩輪。不要把它們當116截止。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-urban",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-brochure-2025",
+            "page": 2
+          }
+        ],
+        "unresolved": "AY2027–2028實際年月日時、時區與母校提名日未知，外校提醒不開啟。"
+      },
+      "study_period": {
+        "points": [
+          "一般交換可一學期30ECTS或一學年60ECTS；S5/6對應學士末年、S7/8碩一、S9/10碩二，但S10是六個月實習，不可只交換S10。",
+          "英語Urban Planning2026秋課程9/7–12/18；brochure只說Sept–Dec。Study頁連結仍是2024–2025校曆，不改標2027–2028。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-study",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-urban",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-brochure-2025",
+            "page": 1
+          }
+        ],
+        "unresolved": "116接收期與最新校曆尚未核實。"
+      },
+      "courses": {
+        "points": [
+          "Urban Planning2026課程272小時、30ECTS：Urban planning knowledge/practice13、Socio-ecological transitions6、Representing city6、Languages/culture5。",
+          "March2026 syllabus pp2–5完整原生文字已讀：studio140h/9ECTS、法語外語課18h/2ECTS目標A1、跨文化18h/3ECTS；A1是修課成果不是入學語言門檻。",
+          "brochure封面Diploma awarded與交換網頁除雙聯外不獲EIVP diploma措辭不同，究竟結業證書或學位須確認，未宣稱交換可取得學位。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-urban",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-syllabus-2026",
+            "page": 2
+          },
+          {
+            "id": "ncu-007-resume-syllabus-2026",
+            "page": 3
+          },
+          {
+            "id": "ncu-007-resume-syllabus-2026",
+            "page": 4
+          },
+          {
+            "id": "ncu-007-resume-syllabus-2026",
+            "page": 5
+          },
+          {
+            "id": "ncu-007-resume-brochure-2025",
+            "page": 1
+          },
+          {
+            "id": "ncu-007-resume-study",
+            "page": null
+          }
+        ],
+        "unresolved": "116實際課單、選課限制、是否全套固定及證書性質仍待確認。"
+      },
+      "tuition": {
+        "points": [
+          "Urban Planning2026公開頁：exchange students free of charge，free-movers €5,055；費用範圍只屬該方案，不當生活總費或全部EIVP制度。中央註冊學雜費另計。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-urban",
+            "page": null
+          }
+        ],
+        "unresolved": "116外校免學費及其他雜費、free-mover方案是否適用尚未核實。"
+      },
+      "housing": {
+        "points": [
+          "CROUS、RIVP、Hénéo房源要經校內housing referent／service-scolarite轉介，校方與後兩者有協議，可安置部分學生，不是保證。",
+          "CROUS段稱約30床且提到scholarship students，不當中央交換保留床數。校方列私人住宿網站及學生互助渠道；未存取公開互助試算表個資。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-life",
+            "page": null
+          }
+        ],
+        "unresolved": "116交換生申請資格、房價、押金、租期、截止與配床仍未知。"
+      },
+      "insurance": {
+        "points": [
+          "生活頁僅說非EU簽證可能要求短期或長期健康保險證明，並連外部說明；未列所有交換生統一保險額或文件。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-life",
+            "page": null
+          }
+        ],
+        "unresolved": "完整交換保險、民責及費用待校方與當期主管機關資料；此處不作簽證法律判定。",
+        "gap_only": true
+      },
+      "cost": {
+        "points": [
+          "已讀生活頁與英語課程資料未給可核算住宿、伙食、交通生活預算；€5,055是free-mover課程費，不能填生活費。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-007-resume-life",
+            "page": null
+          },
+          {
+            "id": "ncu-007-resume-urban",
+            "page": null
+          }
+        ],
+        "unresolved": "生活費分項與適用年度仍待官方預算資料。",
+        "gap_only": true
+      }
+    }
   }
 }

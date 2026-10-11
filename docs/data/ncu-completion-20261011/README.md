@@ -1,12 +1,14 @@
 # 中央逐校補完查核，2026-10-11
 
+**中斷後續作最新檢查點：193／214具授權照片（190不同SHA）、181／214合作項目位置，中央母校另計。** 原第五輪未提交檔案仍未轉移。本批400項NCU／來源／API／位置／記憶體測試與11項Chromium驗收通過，剩21圖、33點、317成功公開候選待讀。人工參考紀錄116，652新來源／245段落／47原生PDF全文。詳見[第三續作證據](resume/third/README.md)及[第二續作歷史](resume/second/README.md)。以下原第四輪計數為歷史紀錄；最新CSV／JSON已更新，116名額與流程仍未核准。
+
 基底 `59a20f27fcee00fb597abc79e75ec11778317422`，分支 `data/ncu-completion-20261011`。基底已含 PR6 六校記憶體修正與 PR7 臺大更新。本輪僅中央資料、照片及必要顯示適配；未部署、套正式 DB、合併 main、更動安全設定或執行 Quality CI。
 
 **本批是可審閱的部分補完，中央全部資料尚未完成。** [116-1 簡章](https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf) 第2、6頁預定 2026/10/12 公告名額校表。10/11 [官方交換頁](https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw) 仍連115歷史表；不得將歷史校別或外校2026/27資料當116當期。214項 quota 均為 null、agreement_only；214流程 pending_review，外校截止提醒與當期文件下載閘門維持封鎖。
 
 ## 分母與可追溯檔
 
-- 115名額表216列整理成214交換目錄項目，含院級／自費等 track，32國別標籤，並非214當期開放學校。[逐校19欄 JSON](exchange-field-inventory.json.gz)、[CSV](exchange-field-inventory.csv)、[原 main 基線](baseline-field-inventory.json.gz)、[各欄計數](field-counts.json)、[3503個當期未解欄位及已查 URL](unresolved-fields.json.gz)。
+- 115名額表216列整理成214交換目錄項目，含院級／自費等 track，32國別標籤，並非214當期開放學校。[逐校19欄 JSON](exchange-field-inventory.json.gz)、[CSV](exchange-field-inventory.csv)、[原 main 基線](baseline-field-inventory.json.gz)、[各欄計數](field-counts.json)、[3264個當期未解欄位及已查 URL](unresolved-fields.json.gz)。
 - [合作校頁](https://oia.ncu.edu.tw/p/412-1026-1850.php?Lang=zh-tw) 摘要329，更新2025/11/13；同頁[官方 XLS](https://oia.ncu.edu.tw/static/file/26/1026/img/274/2025Partner.xls) 有578協議列、331個原始國別＋英文名群組、42國別標籤。XLS SHA256 `23bbf7f17a404a81ca3088b1f1a0d280d7d6185c4ab6b05042df16ff8dd419d2`。
 - 逐字校名去重音／空白／標點且同國別安全對應119群組／119目錄項；212群組未硬併。329／331差異待官方釐清，MOU、雙聯及研究協議不自動當交換資格。見[完整協議原列／分類](../../../sources/ncu/2026-10-11/agreement-denominator-audit.json)。
 

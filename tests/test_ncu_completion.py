@@ -72,22 +72,23 @@ def test_registry_domain_cannot_substitute_for_school_country_and_campus_identit
 def test_every_usable_photo_has_reviewed_original_bytes_attribution_and_licence():
     photos = json.loads((BUNDLE / "campus-assets.json").read_text())["photos"]
     reviews = json.loads((SOURCE / "campus-photo-reviews.json").read_text())["rows"]
-    accepted = {r["sha256"]: r for r in reviews if r["review_status"] == "accepted_campus_reference"}
-    assert len(photos) == len(accepted) == 125
+    accepted = {(r["school_name"], r["country"]): r for r in reviews if r["review_status"] == "accepted_campus_reference"}
+    assert len(photos) == len(accepted) == 193
     for photo in photos:
         content = ROOT / "src/exchange_info" / photo["image_url"].removeprefix("/")
         assert hashlib.sha256(content.read_bytes()).hexdigest() == photo["content_sha256"]
-        reviewed = accepted[photo["content_sha256"]]
+        reviewed = accepted[(photo["school_name"], photo["country"])]
+        assert reviewed["sha256"] == photo["content_sha256"]
         assert (photo["school_name"], photo["country"]) == (reviewed["school_name"], reviewed["country"])
         assert photo["author"] and photo["license_url"] and photo["identity_source_url"]
         assert photo["image_page_url"].startswith("https://commons.wikimedia.org/wiki/File:")
         assert "116錄取校區仍待確認" in photo["caption_zh"]
-    assert campus_photo(school("Niigata").school_name, "日本") is None
+    assert "五十嵐" in campus_photo(school("Niigata").school_name, "日本")["review_note"]
     assert campus_photo(school("Alicante").school_name, "臺灣") is None
 
 
 def test_candidate_gps_is_private_until_campus_verification_and_country_stays_scoped():
-    pending = school("Donghua")
+    pending = school("Mons")
     loc = campus_location(pending, None)
     assert loc.geocode_status == "needs_review" and loc.latitude is None and loc.longitude is None
     isit = school("ISIT,")
@@ -141,11 +142,11 @@ def test_original_year_conflicts_and_reading_limits_are_visible_in_source_audit(
 def test_api_dashboard_coverage_detail_and_life_agree_on_photos(tmp_path):
     client = TestClient(create_app(tmp_path))
     dashboard = client.get("/student-dashboard", params={"school": "NCU"}).json()
-    assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 125
-    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 44  # PR8 restores40; NCU adds3; NTU second batch verifies the shared Malaya campus
+    assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 193
+    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 181
     assert all(p["location"]["latitude"] is None for p in dashboard["partner_universities"] if p["location"]["geocode_status"] != "verified")
     coverage = client.get("/coverage", params={"school": "NCU"}).json()
-    assert sum(p["image_status"] == "verified" for p in coverage["partners"]) == 125
+    assert sum(p["image_status"] == "verified" for p in coverage["partners"]) == 193
     partner = next(p for p in dashboard["partner_universities"] if "Alicante" in p["school_name"])
     photo = client.get(partner["image_url"])
     assert photo.status_code == 200 and photo.headers["content-type"] == "image/jpeg"

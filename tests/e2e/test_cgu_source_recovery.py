@@ -47,12 +47,16 @@ def test_saved_outage_rows_and_detail_show_actual_source_time_then_recover(page,
     banner=page.locator('#catalogue-source-status')
     expect(banner).to_be_visible();expect(banner).to_contain_text('來源更新暫不可用，保留歷次資料')
     expect(banner).to_contain_text('2026');expect(banner).to_contain_text('取得時間不代表當期已核實')
+    bounds = banner.bounding_box()
+    assert bounds['x'] >= (100 if width > 900 else 0)
+    assert bounds['x'] + bounds['width'] <= width
     assert page.evaluate('state.dashboard.partner_universities.length')==77
     page.screenshot(path=str(ARTIFACTS/f'outage-saved-{width}.png'),full_page=True)
     if width < 820: page.locator('.mobile-partner-list .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()
     expect(page.locator('#school-detail-view')).to_be_visible()
     expect(banner).to_be_visible()
+    assert banner.bounding_box()['x'] >= (100 if width > 900 else 0)
     page.screenshot(path=str(ARTIFACTS/f'outage-detail-{width}.png'),full_page=True)
     store.fetcher=lambda:json.loads(cgu.BUNDLED_SNAPSHOT.read_text());tick[0]=61;store.refresh()
     page.locator('[data-reload-catalogue]').click()
