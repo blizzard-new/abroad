@@ -12,12 +12,12 @@
   },
   "counts": {
     "schools": 104,
-    "sources": 2261,
+    "sources": 2294,
     "source_review_states": {
-      "mapped_passages_read_remaining_body_unclaimed": 787,
+      "mapped_passages_read_remaining_body_unclaimed": 801,
       "reviewed_scoped_exclusion": 124,
       "source_failure_or_body_not_obtained": 209,
-      "scoped_body_read_recorded": 584,
+      "scoped_body_read_recorded": 603,
       "readable_body_without_recorded_review": 10,
       "metadata_or_asset_candidate_not_policy_body": 517,
       "same_bytes_as_recorded_read_source": 30
@@ -25,7 +25,7 @@
     "coordinate_gaps": 3,
     "photo_gaps": 4,
     "website_gaps": 1,
-    "host_missing_fields": 604,
+    "host_missing_fields": 585,
     "public_reading_record_missing_sources": 0,
     "priority_policy_candidates": 0
   },
@@ -384,7 +384,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "海外教育学院本科硕博中文進修與2026/27推免公告，並非CCU校際交換規則；住宿保险实际子頁可续查。",
+              "review_note": "海外教育学院本科硕博中文進修與2026/27推免公告，並非CCU校際交換規則；住宿保险实际子頁可续查。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -413,12 +413,70 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "完整學生交流首頁以南大2027出國项目为主；来华入校指向另章，不用outbound最新公告替incoming。",
+              "review_note": "完整學生交流首頁以南大2027出國项目为主；来华入校指向另章，不用outbound最新公告替incoming。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
           "review_state": "scoped_body_read_recorded",
           "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p7-ninth-housing",
+          "ccu_page": 7,
+          "source_url": "https://hwxy.nju.edu.cn/lxnd/xyfw/zsbx/zs/index.html",
+          "resolved_url": "https://hwxy.nju.edu.cn/lxnd/xyfw/zsbx/zs/index.html",
+          "checked_at": "2026-10-11T17:36:41.065034+00:00",
+          "http_status": 200,
+          "sha256": "5d6901514c687509da4b2c21eb546ce37e30a94bf3602d92af726a4a9debb46a",
+          "text_sha256": "e5c3e27895d25a0b9cf5b9d7f220b07fb6b8d3239e814e7b55b126445e1a2d7c",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "住宿",
+          "content_type": "text/html; charset=utf-8",
+          "bundled_file": "completion_sources/p7-ninth-housing.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "只讀2022-06-30發布日期、兩校區房价/預訂/地址/不保房源及仙林入住前4條；後半詳細宿舍生活管理條文未全讀。2022外國留學生/院系交換不核CCU2027；不跟登入預訂/支付。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p7-ninth-insurance",
+          "ccu_page": 7,
+          "source_url": "https://hwxy.nju.edu.cn/lxnd/xyfw/zsbx/bx/index.html",
+          "resolved_url": "https://hwxy.nju.edu.cn/lxnd/xyfw/zsbx/bx/index.html",
+          "checked_at": "2026-10-11T17:36:43.781052+00:00",
+          "http_status": 200,
+          "sha256": "e78417a0be59fd7ec3f0e6fdfdfc4a2345c77dde7c3494b848cd075ebada6697",
+          "text_sha256": "563d781608e19b53c6569406ae7732757607027c9f0abfda0053044d664cbac8",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "保险",
+          "content_type": "text/html; charset=utf-8",
+          "bundled_file": "completion_sources/p7-ninth-insurance.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整2022-06-30正文：外国留学生團體保險400半年/800年/CSC例外與付款理賠；未核台籍CCU及2027制度，未登入/買保險/上傳。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
         },
         {
           "source_id": "p7-reference-link-1",
@@ -3830,7 +3888,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "同济degree/exchange入口及2026秋交换奖结果，不保CCU交换奖。",
+              "review_note": "同济degree/exchange入口及2026秋交换奖结果，不保CCU交换奖。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -3894,6 +3952,35 @@
           ],
           "review_state": "scoped_body_read_recorded",
           "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p13-ninth-exchange",
+          "ccu_page": 13,
+          "source_url": "https://study.tongji.edu.cn/lxsq/xjjlxm.htm",
+          "resolved_url": "https://study.tongji.edu.cn/lxsq/xjjlxm.htm",
+          "checked_at": "2026-10-11T17:19:42.083502+00:00",
+          "http_status": 200,
+          "sha256": "5f220f8b6eafb06e4838743f1a2c3ac906a4f99eb1f19b6f3b23b5257b3c6e5c",
+          "text_sha256": "7e10bac087531fb246b4cb74cb924b5398c9ef9c366d8b998ffe8cb6a7781c84",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "校际交流项目-同济大学留学生办公室",
+          "content_type": "text/html",
+          "bundled_file": "completion_sources/p13-ninth-exchange.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "索引仅2019-10-24article摘要，不是完整申請正文；舊外國留學生系統不套台港澳Spring2027。沒有由索引日期補當期calendar/visa/arrival。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
         },
         {
           "source_id": "p13-reference-link-1",
@@ -7684,7 +7771,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "完整2022Fall港澳台incoming提名4/10–5/20、报名至5/31、六文件及原件報到階段。只歷史參考，新版2027未核。",
+              "review_note": "完整2022Fall港澳台incoming提名4/10–5/20、报名至5/31、六文件及原件報到階段。只歷史參考，新版2027未核。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -8005,11 +8092,24 @@
         },
         {
           "field": "housing",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "reference_only",
+          "value": "一般外國留學生公寓：八里台谊园2/3/4號、津南B/C/D；依當年政策與專業分校區、須線上預訂，失敗提供校外資訊。頁無年度，CCU台籍Spring2027接待住房資格、費率及期限未核實，不能套外國學位生床位或保證。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p18-ninth-housing",
+              "source_url": "https://sie.nankai.edu.cn/xyfw/zs.htm",
+              "source_pages": [],
+              "excerpt": "外国留学生的校区分配由学校根据当年政策及留学生专业所在校区统一安排",
+              "academic_year": "未標年外國留學生公寓一般參考；CCU台籍交換適用未核",
+              "application_round": "未標年外國留學生公寓一般參考；CCU台籍交換適用未核",
+              "checked_at": "2026-10-11T17:36:37.468941+00:00",
+              "content_hash": "2fab1fb4bff70f90ff1da38cdafa59c712df76244f35b7dccd1466fd4caabbda",
+              "status": "reference_only",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -8032,11 +8132,24 @@
         },
         {
           "field": "insurance",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "needs_confirmation",
+          "value": "一般校方頁明示校際交換按交流協議處理；外國留學生一般平安標準500元/學期、1000/年不能直接套CCU台籍交換。2027當期協議保障／保費／購買義務未核實。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p18-ninth-insurance",
+              "source_url": "https://sie.nankai.edu.cn/xyfw/bx.htm",
+              "source_pages": [],
+              "excerpt": "按校际交流协议处理保险事宜",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:36:37.469207+00:00",
+              "content_hash": "c1fa7c6e4e245a974f4316173304bfdbaf073fc7b1f9b92fb404206a0cd99136",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -8090,7 +8203,7 @@
           "access_requirement_evidence": []
         }
       ],
-      "host_missing_count": 13,
+      "host_missing_count": 11,
       "public_reading_record_missing_source_ids": [],
       "priority_policy_candidate_source_ids": [],
       "external_access_limited_steps": [],
@@ -8169,7 +8282,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "首頁学历／进修、住宿保險入口與2024–26新聞；無校際Spring2027規則，實際住宿子頁可續查。",
+              "review_note": "首頁学历／进修、住宿保險入口與2024–26新聞；無校際Spring2027規則，實際住宿子頁可續查。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -8233,6 +8346,78 @@
           ],
           "review_state": "scoped_body_read_recorded",
           "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p18-ninth-housing",
+          "ccu_page": 18,
+          "source_url": "https://sie.nankai.edu.cn/xyfw/zs.htm",
+          "resolved_url": "https://sie.nankai.edu.cn/xyfw/zs.htm",
+          "checked_at": "2026-10-11T17:36:37.468941+00:00",
+          "http_status": 200,
+          "sha256": "2fab1fb4bff70f90ff1da38cdafa59c712df76244f35b7dccd1466fd4caabbda",
+          "text_sha256": "c6089122c34d831fe08a5432ae7180f1432ccc6681e08d47977dd9d9443e0259",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "住宿-南开大学国际教育学院",
+          "content_type": "text/html",
+          "bundled_file": "completion_sources/p18-ninth-housing.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 18,
+              "field": "host_fields.housing",
+              "status": "reference_only",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整可見housing正文：八里台/津南6公寓，外國留學生按政策專業安排/須預訂/無保證；價格圖未取得未讀，外國留學生適用不能等同CCU台籍，期限/2027費率未知。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p18-ninth-insurance",
+          "ccu_page": 18,
+          "source_url": "https://sie.nankai.edu.cn/xyfw/bx.htm",
+          "resolved_url": "https://sie.nankai.edu.cn/xyfw/bx.htm",
+          "checked_at": "2026-10-11T17:36:37.469207+00:00",
+          "http_status": 200,
+          "sha256": "c1fa7c6e4e245a974f4316173304bfdbaf073fc7b1f9b92fb404206a0cd99136",
+          "text_sha256": "e9aa22602c5f30be9d651a9f5888c7f026c6a3b11483793b817669a16c5745bf",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "保险-南开大学国际教育学院",
+          "content_type": "text/html",
+          "bundled_file": "completion_sources/p18-ninth-insurance.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 18,
+              "field": "host_fields.insurance",
+              "status": "needs_confirmation",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整可見insurance正文按不同scholarship/selfpaid/exchange分別；校際交換明示依協議，500semester/1000year不直接套台灣。下載guideline未讀，其泛用外國保險不可當CCU協議正文。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
         },
         {
           "source_id": "p18-root",
@@ -10852,7 +11037,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "SHU海外项目/degree/港澳台索引，未读本期交换要求。",
+              "review_note": "SHU海外项目/degree/港澳台索引，未读本期交换要求。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -18140,7 +18325,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "北航degree/非degree含exchange及国际发展概况，65本科专业不证交换都准选。",
+              "review_note": "北航degree/非degree含exchange及国际发展概况，65本科专业不证交换都准选。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -28812,7 +28997,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "JYPE/IPLA/DEEP/COLABS incoming contact与degree/MEXT/移民分科，不推最低条件或期限。",
+              "review_note": "JYPE/IPLA/DEEP/COLABS incoming contact与degree/MEXT/移民分科，不推最低条件或期限。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -35782,7 +35967,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "2026年3月海外學修ナビ及incoming/outgoing導航；沒有從新活動年月推出2027交換規則，incoming實際子頁待讀。",
+              "review_note": "2026年3月海外學修ナビ及incoming/outgoing導航；沒有從新活動年月推出2027交換規則，incoming實際子頁待讀。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -35811,7 +35996,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "避難民2人、4年支持/月4萬日圓及2027春募集準備中均限定此計畫，不把準備中誤當普通交換尚未公告。",
+              "review_note": "避難民2人、4年支持/月4萬日圓及2027春募集準備中均限定此計畫，不把準備中誤當普通交換尚未公告。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -35878,7 +36063,9 @@
           "content_type": "text/html",
           "existing_review_note": "官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
           "scope_disposition": "mapped_sections_remaining_body_unclaimed",
-          "same_bytes_as_recorded_read_sources": [],
+          "same_bytes_as_recorded_read_sources": [
+            "p39-ninth-incoming"
+          ],
           "mapped_field_sections": [
             {
               "ccu_page": 39,
@@ -36017,6 +36204,37 @@
           ],
           "review_state": "scoped_body_read_recorded",
           "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p39-ninth-incoming",
+          "ccu_page": 39,
+          "source_url": "https://www.tokiwa.ac.jp/international/exchange-a/index.html",
+          "resolved_url": "https://www.tokiwa.ac.jp/international/exchange-a/",
+          "checked_at": "2026-10-11T17:36:45.903024+00:00",
+          "http_status": 200,
+          "sha256": "afe617b4c70b6428a594d61c9b57ce3867ce0ba4a833a5860869fabe450e4b35",
+          "text_sha256": "facf978d4e4b91097e6c035d7d22279e1f466f3bef0d9816985d6d83a594c86e",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "交換留学（受入） | 国際交流 | 常磐大学・常磐短期大学",
+          "content_type": "text/html",
+          "bundled_file": "completion_sources/p39-ninth-incoming.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [
+            "p39-hosty0"
+          ],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整incoming頁是春秋伙伴交換一般介紹及2024/25活動報告，不含nomination/housingdeadline、visa或arrival規定。沒有把2026活動日期當2027申請。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
         },
         {
           "source_id": "p39-profile-root",
@@ -59029,18 +59247,42 @@
         },
         {
           "field": "eligibility",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "needs_confirmation",
+          "value": "接待校一般學生交換：GPA至少2.5/4或等同成績，只受理夥伴母校挑選推薦，接待校有最終決定權。繁體中文頁是台港澳指定版本；未核2027春季完整資格，英文頁另載一年級通常不合資格。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p56-ninth-application-traditional",
+              "source_url": "https://www.eduhk.hk/gao/zh-hk/articles/inbound_application-and-eligibility",
+              "source_pages": [],
+              "excerpt": "學校推薦 學生需透過就讀學校申請本校的學生交換計劃，由夥伴學校挑選並向本校提交推薦名單，本校持有最終決定權。所有非透過原校遞交之申請，一概不受理。 成績要求 申請本校學生交換項目的同學的平均積點須達2.5（4為最高積點）或以上或持有等同成績。 英文能力要求 申請學生需達到以下英語能力要求（其中一項），並在遞交交換計劃申請時提供相關證明： 托福(TOEFL) 網絡化測驗 80 分或以上(適用於2026年1月21日前應試); 網絡化測驗 4 分或以上 (適用於2026年1月21日或之後應試) 雅思(IELTS) 學術組別 6 分或以上 學校推薦 獲學校老師證明英文能力，並提供推薦信",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:28:46.847572+00:00",
+              "content_hash": "122f7042b2927e426fa6898da3ec492416a9ba30a63d182fc1ae8d6f0ad38a91",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            },
+            {
+              "source_id": "p56-ninth-application-eligibility",
+              "source_url": "https://www.eduhk.hk/gao/articles/inbound_application-and-eligibility",
+              "source_pages": [],
+              "excerpt": "for a place in the programme. First-year students are normally NOT eligible. Grade Point Average Applicants are expected to attain a minimum",
+              "academic_year": "未標年英文regular inbound規定；繁體中文台港澳版本另讀，年級適用仍待接待校確認",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:22:45.786283+00:00",
+              "content_hash": "250d46379d5f002932f45cde0abba749078498032e93d2d8cb9cb447a23e0c06",
+              "status": "needs_confirmation"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
           "field": "language",
-          "status": "reference_only",
-          "value": "參考附件原文：平均積點須達2.5（4為最高積點） 或以上或持有等同成績。優先考慮高年級學生。 英文能力要求 託福(TOEFL)網絡化測驗80 分或以上成績；或 雅思(IELTS)學術組別6分或以上成績；或 獲學校老師證明英文能力 學校推薦日期 9 月 學校推薦程式 學生需透過就讀學校申請本校的學生交換計劃，由夥伴學校挑選並 以電郵發送至 inbound@eduhk.hk 向本校提交推薦名單，本校持有 最終決定權。所有非透過原校遞交之申請，一概不受理。 申請日期 學生提名期限: 2025年9月29 日 學生申請期限: 2025 年 10 月 10 日 (包括完成網上報名及學生簽證申請) 申請交換計劃所需文 件 交換生須於規定的截止日期前，於網上申請系統(GEMS)填妥申請， 並將下列文件上傳到GEMS。 上傳到 GEMS： - 正式成績單掃描件 - 英語能力申明或託福/雅思成績單（如適用） 學生簽證所需文件 1. 來港就讀申請表 (ID995A) （可參考香港入境處網頁的來港就讀入境指南） 2. 內地學生：身分證 / 港澳通行證 （如有）影印本 臺灣學生：身分證，護照資料頁及戶政事務所認證的戶籍謄本 影印本 澳門學生：澳門居民往來香港特別行政區旅遊證影印本 3. 經濟證明 香港入境處需要6-8星期處理學生的來港就讀申請。由於香港入境 事務處已實施「電子簽證」安排，待審批完成後，本處會將入境簽 證 / 進入許可通知書電子版以電郵發給同學。 保險 所有交換生必須出發前購買在港逗留期間的旅行及醫療保險。保險 範圍應包括（但不限於）旅遊、新冠狀病毒疾病治療及住院費用、 新冠狀病毒疫苗的副作用治療及住院費用、人身",
-          "reason": "只保存已讀附件的此欄原文與原年度。來源可能有不同計畫／學制，未解析成2027申請條件、期限、費用或完整文件集；本期未開放。",
+          "status": "needs_confirmation",
+          "value": "一般接待英語門檻：iBT80（2026-01-21前應試）／新版iBT4（當日或之後應試）；IELTS Academic6；或學校老師英文能力推薦信。考試變更日不是交換申請年度，未自行換算分數或改中正母校門檻。舊2025/26附件80分另保留歷史證據。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
           "evidence": [
             {
@@ -59056,6 +59298,18 @@
               "content_hash": "fbd7d7f3591b713468e0d6a562457466c777bea24b9818dcbe0242a31f10f19c",
               "status": "reference_only",
               "bundled_attachment": "completion_sources/p56-reference-link-1.pdf"
+            },
+            {
+              "source_id": "p56-ninth-application-traditional",
+              "source_url": "https://www.eduhk.hk/gao/zh-hk/articles/inbound_application-and-eligibility",
+              "source_pages": [],
+              "excerpt": "學校推薦 學生需透過就讀學校申請本校的學生交換計劃，由夥伴學校挑選並向本校提交推薦名單，本校持有最終決定權。所有非透過原校遞交之申請，一概不受理。 成績要求 申請本校學生交換項目的同學的平均積點須達2.5（4為最高積點）或以上或持有等同成績。 英文能力要求 申請學生需達到以下英語能力要求（其中一項），並在遞交交換計劃申請時提供相關證明： 托福(TOEFL) 網絡化測驗 80 分或以上(適用於2026年1月21日前應試); 網絡化測驗 4 分或以上 (適用於2026年1月21日或之後應試) 雅思(IELTS) 學術組別 6 分或以上 學校推薦 獲學校老師證明英文能力，並提供推薦信",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:28:46.847572+00:00",
+              "content_hash": "122f7042b2927e426fa6898da3ec492416a9ba30a63d182fc1ae8d6f0ad38a91",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
             }
           ],
           "access_requirement_evidence": []
@@ -59140,21 +59394,25 @@
           "access_requirement_evidence": []
         },
         {
-          "field": "academic_calendar",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "classification": "research_incomplete",
-          "evidence": [],
-          "access_requirement_evidence": []
-        },
-        {
           "field": "course_restrictions",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "needs_confirmation",
+          "value": "一般接待交換每學期最少12、最多15 credits（4–5門）；並非所有課英文授課，須核MOI；到校前選課，通常2週加退選，須母校批准。2027課單與席位未核實，2025/26下載課表僅歷史參考。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p56-ninth-course-registration",
+              "source_url": "https://www.eduhk.hk/gao/articles/inbound_course",
+              "source_pages": [],
+              "excerpt": "Medium of Instruction Most but not all classes at EdUHK are taught in English. Exchange students are strongly advised to pay attention to the medium of instruction of particular courses. Study Load Exchange students are required to take minimum 12 credits (4 courses) and maximum 15 credits (5 courses) during your exchange period at EdUHK. When you perform course registration, please take particular care to ensure that the whole registration process is completed. Students should make sure they have completed the entire course registration procedures, as they will not be accepted in any class activities and assessments of the unregistered courses, and hence no information about these courses will be displayed on the",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:22:47.034320+00:00",
+              "content_hash": "438348149be8b1efc36e42e817c617603eb1048a9fc78158c2857d3601fffa4a",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -59319,7 +59577,7 @@
           "access_requirement_evidence": []
         }
       ],
-      "host_missing_count": 6,
+      "host_missing_count": 3,
       "public_reading_record_missing_source_ids": [],
       "priority_policy_candidate_source_ids": [],
       "external_access_limited_steps": [],
@@ -59375,7 +59633,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "學生服務/海外學習索引，住宿下層未由索引核價。",
+              "review_note": "學生服務/海外學習索引，住宿下層未由索引核價。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -59496,7 +59754,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "EdUHK degree/奖项与Incoming Exchange入口分开；下层程序独立核。",
+              "review_note": "EdUHK degree/奖项与Incoming Exchange入口分开；下层程序独立核。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -59562,6 +59820,303 @@
           "policy_candidate_hint": false
         },
         {
+          "source_id": "p56-ninth-academic-calendar",
+          "ccu_page": 56,
+          "source_url": "https://www.eduhk.hk/re/modules/content/item.php?categoryid=6&itemid=11",
+          "resolved_url": "https://www.eduhk.hk/re/Current-Students/Publications/Academic-Calendar.html",
+          "checked_at": "2026-10-11T17:27:40.121165+00:00",
+          "http_status": 200,
+          "sha256": "6ae1622c028dab86b867c1669f0181492faf5f7ad1635b2ea04f82696be863f8",
+          "text_sha256": "6083a4745c6d0ad110f7f008be10fd9b605a9c1270d370832ab996240524cac0",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "Academic Calendar | EdUHK Registry",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p56-ninth-academic-calendar.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整registry可見索引明示2026/27與semesterdates，已下載實讀actual2頁PDF；不是根據網址數字猜學年。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p56-ninth-accommodation",
+          "ccu_page": 56,
+          "source_url": "https://www.eduhk.hk/gao/articles/inbound_accommodation",
+          "resolved_url": "https://www.eduhk.hk/gao/articles/inbound_accommodation",
+          "checked_at": "2026-10-11T17:22:47.594684+00:00",
+          "http_status": 200,
+          "sha256": "0ac0115c07620efee28074db43b2f20e7fbe8af323454b24c0b725445362ae87",
+          "text_sha256": "d93acf3fea48a6058c76b0c7ff2407af9cd8d80bcc71b5f9e932d98c522de6d0",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "The Education University of Hong Kong (EdUHK)",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p56-ninth-accommodation.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整未年費率可能每年檢討：雙人5800–8290/triple4060–5790每semester、halllife220、visa530/食3000–4000mo/交通500–800mo。HK500是信用卡預授權未付費才收，不當立即必缴。宿舍詳細透過email，不证明資料整站私有。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p56-ninth-application-eligibility",
+          "ccu_page": 56,
+          "source_url": "https://www.eduhk.hk/gao/articles/inbound_application-and-eligibility",
+          "resolved_url": "https://www.eduhk.hk/gao/articles/inbound_application-and-eligibility",
+          "checked_at": "2026-10-11T17:22:45.786283+00:00",
+          "http_status": 200,
+          "sha256": "250d46379d5f002932f45cde0abba749078498032e93d2d8cb9cb447a23e0c06",
+          "text_sha256": "dc48e33323302a14f765eec78e9ea19389bc09de3a2af58b160ef46c0daa939a",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "The Education University of Hong Kong (EdUHK)",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p56-ninth-application-eligibility.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 56,
+              "field": "host_fields.eligibility",
+              "status": "needs_confirmation",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整regularinbound英文資格，first-year通常不eligible/GPA2.5；明示台港澳另參Chinese版本，繁體版本另讀；TOEFL改制日不是交換年度。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p56-ninth-application-traditional",
+          "ccu_page": 56,
+          "source_url": "https://www.eduhk.hk/gao/zh-hk/articles/inbound_application-and-eligibility",
+          "resolved_url": "https://www.eduhk.hk/gao/zh-hk/articles/inbound_application-and-eligibility",
+          "checked_at": "2026-10-11T17:28:46.847572+00:00",
+          "http_status": 200,
+          "sha256": "122f7042b2927e426fa6898da3ec492416a9ba30a63d182fc1ae8d6f0ad38a91",
+          "text_sha256": "ccc3e37f77f5821e93068a27f31931511689b7e400e42ba20b71bd8d3c7fc228",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "香港教育大學環球事務處",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p56-ninth-application-traditional.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 56,
+              "field": "host_fields.eligibility",
+              "status": "needs_confirmation",
+              "source_pages": []
+            },
+            {
+              "ccu_page": 56,
+              "field": "host_fields.language",
+              "status": "needs_confirmation",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整台港澳指定繁體版本：原校推薦、GPA2.5、TOEFL80beforeJan21/4after/IELTS6或老師推薦；GEMS成绩/英證，簽證文件快遞，未標2027deadline。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p56-ninth-calendar-pdf",
+          "ccu_page": 56,
+          "source_url": "https://www.eduhk.hk/re/uploads/docs/000000000017784742948701Lcf4",
+          "resolved_url": "https://www.eduhk.hk/re/uploads/docs/000000000017784742948701Lcf4",
+          "checked_at": "2026-10-11T17:29:58.596985+00:00",
+          "http_status": 200,
+          "sha256": "505fd6c2109ec89e544983c035821db3435c977eaef58508695c2df624929069",
+          "text_sha256": null,
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": null,
+          "content_type": "application/pdf",
+          "bundled_file": "completion_sources/p56-ninth-calendar-pdf.pdf",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 56,
+              "field": "host_fields.academic_calendar",
+              "status": "verified_current",
+              "source_pages": [
+                2
+              ]
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整2頁正文AcademicCalendar2026/2027、28August2026更新；spring分graduating/non-grad，所有programme generally適用但可例外；不推交換離境或housingterm。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p56-ninth-course-registration",
+          "ccu_page": 56,
+          "source_url": "https://www.eduhk.hk/gao/articles/inbound_course",
+          "resolved_url": "https://www.eduhk.hk/gao/articles/inbound_course",
+          "checked_at": "2026-10-11T17:22:47.034320+00:00",
+          "http_status": 200,
+          "sha256": "438348149be8b1efc36e42e817c617603eb1048a9fc78158c2857d3601fffa4a",
+          "text_sha256": "339e40deeb54e473614304e577daa078271833ab168143dbc165612cc8cede0c",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "The Education University of Hong Kong (EdUHK)",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p56-ninth-course-registration.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 56,
+              "field": "host_fields.course_restrictions",
+              "status": "needs_confirmation",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整未標年regularinbound：12–15credits/4–5courses、MOI逐課、到校前選課/通常2週加退/母校批准；非當期課表席位保證。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p56-ninth-downloads",
+          "ccu_page": 56,
+          "source_url": "https://www.eduhk.hk/gao/articles/about#download",
+          "resolved_url": "https://www.eduhk.hk/gao/articles/about#download",
+          "checked_at": "2026-10-11T17:22:45.174615+00:00",
+          "http_status": 200,
+          "sha256": "e735eb4ec0a89f5b8512a60d9ff043ef9afefe05ed57e1e80d2762f6b56a3260",
+          "text_sha256": "70a0e714f5daa8089a94f9f4a1bc00bf465f2264ceab2ba4f033ee31b5f9813d",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "The Education University of Hong Kong (EdUHK)",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p56-ninth-downloads.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整DownloadArea可見清單：2026/27冊是degree，regularinbound課表仍semester1 2025/26，沒有當期Spring2027交換課表正文；未下載manual/degreeleaflet、未宣稱已讀附件。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p56-ninth-incoming",
+          "ccu_page": 56,
+          "source_url": "https://www.eduhk.hk/gao/en/page_content.php?level=3&id=77",
+          "resolved_url": "https://www.eduhk.hk/gao/en/page_content.php?level=3&id=77",
+          "checked_at": "2026-10-11T17:17:50.085504+00:00",
+          "http_status": 200,
+          "sha256": "2d2f293c87a3abf80b12adb262a9064990cfba7610230d0fdec6b66a0eea48a9",
+          "text_sha256": "dd71ea53ae08b477fefddbb5b3d14f8767312d43553716ec0b5b514fbc8c22e7",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "The Education University of Hong Kong (EdUHK)",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p56-ninth-incoming.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "Regular exchange一學期/一年與TeacherTraining及2027summer不同計畫；下列eligibility/course/accommodation子頁另讀。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p56-ninth-semester-dates",
+          "ccu_page": 56,
+          "source_url": "https://www.eduhk.hk/re/Current-Students/Publications/Academic-Calendar/Dates-Of-Semesters.html",
+          "resolved_url": "https://www.eduhk.hk/re/Current-Students/Publications/Academic-Calendar/Dates-Of-Semesters.html",
+          "checked_at": "2026-10-11T17:30:00.829698+00:00",
+          "http_status": 200,
+          "sha256": "726c9a2c09341b195c6ee48632319a988c87da7c7c4026a82283b135f8361321",
+          "text_sha256": "e2c8eea5a6604a1d23160f24149a2cc45f9deed2920a4d7835ed347f85a0535f",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "Dates of Semesters 2026-2027 | EdUHK Registry",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p56-ninth-semester-dates.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "讀題、一般semester summary與programme例外分流；2026/27generalSpring01-04至graduating04-24/non-grad05-17，programme-specific後半表未逐項讀，不推全課交換適用。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
+        },
+        {
           "source_id": "p56-reference-link-1",
           "ccu_page": 56,
           "source_url": "https://drive.usercontent.google.com/download?id=18yN56KcOZUtwwRTV-rgdpSL7DwcSV7xF&export=download",
@@ -59591,7 +60146,7 @@
             {
               "ccu_page": 56,
               "field": "host_fields.language",
-              "status": "reference_only",
+              "status": "needs_confirmation",
               "source_pages": [
                 4
               ]
@@ -61606,12 +62161,37 @@
         },
         {
           "field": "application_forms",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "classification": "research_incomplete",
-          "evidence": [],
-          "access_requirement_evidence": []
+          "status": "needs_confirmation",
+          "value": "官方Application forms頁明示需註冊／登入且可能須特殊權限。只取得公開登入說明，未取得表格正文、清單或當期版本，未註冊/登入/填送。此限制僅該表格步驟，不代表全校政策私有。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p59-ninth-application-forms",
+              "source_url": "https://oia.kmitl.ac.th/application-form/",
+              "source_pages": [],
+              "excerpt": "Please Login or Register",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:17:50.391193+00:00",
+              "content_hash": "b49119f8c9e7ae7da6943e1c2267132d3cefad383379e4ad98da23baaec794d2",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
+          "access_requirement_evidence": [
+            {
+              "source_id": "p59-ninth-application-forms",
+              "source_url": "https://oia.kmitl.ac.th/application-form/",
+              "source_pages": [],
+              "excerpt": "requires special permission",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:17:50.391193+00:00",
+              "content_hash": "b49119f8c9e7ae7da6943e1c2267132d3cefad383379e4ad98da23baaec794d2",
+              "status": "verified_current"
+            }
+          ]
         },
         {
           "field": "academic_calendar",
@@ -61731,10 +62311,45 @@
           "access_requirement_evidence": []
         }
       ],
-      "host_missing_count": 14,
+      "host_missing_count": 13,
       "public_reading_record_missing_source_ids": [],
       "priority_policy_candidate_source_ids": [],
-      "external_access_limited_steps": [],
+      "external_access_limited_steps": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "官方Application forms頁明示需註冊／登入且可能須特殊權限。只取得公開登入說明，未取得表格正文、清單或當期版本，未註冊/登入/填送。此限制僅該表格步驟，不代表全校政策私有。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p59-ninth-application-forms",
+              "source_url": "https://oia.kmitl.ac.th/application-form/",
+              "source_pages": [],
+              "excerpt": "Please Login or Register",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:17:50.391193+00:00",
+              "content_hash": "b49119f8c9e7ae7da6943e1c2267132d3cefad383379e4ad98da23baaec794d2",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
+          "access_requirement_evidence": [
+            {
+              "source_id": "p59-ninth-application-forms",
+              "source_url": "https://oia.kmitl.ac.th/application-form/",
+              "source_pages": [],
+              "excerpt": "requires special permission",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:17:50.391193+00:00",
+              "content_hash": "b49119f8c9e7ae7da6943e1c2267132d3cefad383379e4ad98da23baaec794d2",
+              "status": "verified_current"
+            }
+          ]
+        }
+      ],
       "sources": [
         {
           "source_id": "p59-campus_contact-1",
@@ -61891,7 +62506,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "KMITL OIA inbound/outbound forms索引，未由首頁宣称當期申请form已核。",
+              "review_note": "KMITL OIA inbound/outbound forms索引，未由首頁宣称當期申请form已核。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -61962,6 +62577,42 @@
           ],
           "review_state": "mapped_passages_read_remaining_body_unclaimed",
           "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p59-ninth-application-forms",
+          "ccu_page": 59,
+          "source_url": "https://oia.kmitl.ac.th/application-form/",
+          "resolved_url": "https://oia.kmitl.ac.th/registered-users-only/?wppb_referer_url=https%3A%2F%2Foia.kmitl.ac.th%2Fapplication-form%2F&redirect_to=https://oia.kmitl.ac.th/application-form/",
+          "checked_at": "2026-10-11T17:17:50.391193+00:00",
+          "http_status": 200,
+          "sha256": "b49119f8c9e7ae7da6943e1c2267132d3cefad383379e4ad98da23baaec794d2",
+          "text_sha256": "514054c3d43a414ced3d6d1143162d868632e8bc37212665d7b39175f1a5210c",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "Registered users only | OIA",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p59-ninth-application-forms.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 59,
+              "field": "host_fields.application_forms",
+              "status": "needs_confirmation",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整公開訊息為registered users only/login/register/special permission；未取得表單正文，僅表格步驟受限，不建立帳號。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
         },
         {
           "source_id": "p59-root",
@@ -63216,7 +63867,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "完整生活頁已讀：宿舍優先全日制本科，Bangmod1300/Bangkhunthien500、Heliconia15000–18000THB每房/月至多2人、校內交通/醫療；年度不明不報2027宿費或住房截止。",
+              "review_note": "完整生活頁已讀：宿舍優先全日制本科，Bangmod1300/Bangkhunthien500、Heliconia15000–18000THB每房/月至多2人、校內交通/醫療；年度不明不報2027宿費或住房截止。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -64654,7 +65305,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "UM健康、counselling、住宿部門與transport服務；FirstYear Accommodation Results不同对象，無交換床位／費率。",
+              "review_note": "UM健康、counselling、住宿部門與transport服務；FirstYear Accommodation Results不同对象，無交換床位／費率。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -69968,7 +70619,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "HCMUTE国际处导航及会议入口，非当期交换文件清单。",
+              "review_note": "HCMUTE国际处导航及会议入口，非当期交换文件清单。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -70003,6 +70654,35 @@
           ],
           "review_state": "scoped_body_read_recorded",
           "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p68-ninth-student-exchange",
+          "ccu_page": 68,
+          "source_url": "https://oia.hcmute.edu.vn/Default.aspx?TopicId=eab90393-060c-41a2-b4fc-96e1c1e0607e",
+          "resolved_url": "https://oia.hcmute.edu.vn/Default.aspx?TopicId=eab90393-060c-41a2-b4fc-96e1c1e0607e",
+          "checked_at": "2026-10-11T17:28:49.846632+00:00",
+          "http_status": 200,
+          "sha256": "bb6f17383f61bf081b5106d16880a1ffbede7f98b66ab6603399af08d3a1c4af",
+          "text_sha256": "9379daa6c11dd20405e70baf59d8225bb1661e16d63916f89a791582f5bcdb7d",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "Phòng Quan hệ Quốc tế",
+          "content_type": "text/html; charset=utf-8",
+          "bundled_file": "completion_sources/p68-ninth-student-exchange.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整StudentMobility頁是2024–26 outgoing故事及與MSU/BUC等特定短訪，各學程不同，沒有CCU一般Spring2027提名、calendar/housingdeadline/arrival規定。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
         },
         {
           "source_id": "p68-official-conference-index",
@@ -77236,11 +77916,24 @@
       "pending_host_fields": [
         {
           "field": "program_scope",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "needs_confirmation",
+          "value": "Inbound Semester Exchange／Visiting Student一般接待本科、碩士及research scholar；Spring Jan–June、Fall July–Dec。另有當前Fall2026/27 SEP partner scholarship公告，不能視為Spring2027已開放或所有學程可選。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p75-ninth-inbound",
+              "source_url": "https://www.cuchd.in/international/inbound-exchange.php",
+              "source_pages": [],
+              "excerpt": "Study Level: Undergraduate/masters/Research Scholar",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:17:47.918940+00:00",
+              "content_hash": "cf002b4a45da9bc816f5180e2604c2f23e24ad23778a33e9d3ce8f302b6fe28d",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -77277,20 +77970,48 @@
         },
         {
           "field": "nomination_deadline",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "reference_only",
+          "value": "僅歷史2021 factsheet：spring提名11/15、fall4/15，當時online。未核2027；不可與未標年網頁申請10/30、3/30合併為同一年度時間軸。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p75-ninth-factsheet",
+              "source_url": "https://www.cuchd.in/international/brochure/factsheet.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "For spring semester- November 15th",
+              "academic_year": "正文Semester Dates 2021、Current mode of study Online；歷史參考",
+              "application_round": "正文Semester Dates 2021、Current mode of study Online；歷史參考",
+              "checked_at": "2026-10-11T17:22:39.921161+00:00",
+              "content_hash": "6700bd8a9932e48cd0b96e5abc014c58cbdb3b1cc8955bc0a23bd6f02e2a59de",
+              "status": "reference_only",
+              "location_in_source": "PDF page(s): [1]"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
           "field": "application_deadline",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "needs_confirmation",
+          "value": "一般未標年網頁：spring申請10/30、fall3/30，未核Spring2027確切日；2021 PDF提名11/15、4/15另列歷史，不能猜選较晚日期。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p75-ninth-inbound",
+              "source_url": "https://www.cuchd.in/international/inbound-exchange.php",
+              "source_pages": [],
+              "excerpt": "Spring semester – October 30th Fall semester – March 30th",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:17:47.918940+00:00",
+              "content_hash": "cf002b4a45da9bc816f5180e2604c2f23e24ad23778a33e9d3ce8f302b6fe28d",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -77341,11 +78062,26 @@
         },
         {
           "field": "academic_calendar",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "reference_only",
+          "value": "僅2021：Spring起始01-03 tentative至mid-May；Fall07-15 tentative至mid-Dec，當时online；不是2027授課、迎新或抵達日期。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p75-ninth-factsheet",
+              "source_url": "https://www.cuchd.in/international/brochure/factsheet.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "Semester Dates 2021",
+              "academic_year": "正文Semester Dates 2021；歷史參考",
+              "application_round": "正文Semester Dates 2021；歷史參考",
+              "checked_at": "2026-10-11T17:22:39.921161+00:00",
+              "content_hash": "6700bd8a9932e48cd0b96e5abc014c58cbdb3b1cc8955bc0a23bd6f02e2a59de",
+              "status": "reference_only",
+              "location_in_source": "PDF page(s): [1]"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -77359,11 +78095,24 @@
         },
         {
           "field": "housing",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "reference_only",
+          "value": "網頁Fall Intake July/Aug 2026–27公告SEP partner scholarship free accommodation；不同於Spring2027，不推為台灣交換生未來房源或費用保證。一般境外partner宿舍描述與2021 PDF須另核對。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p75-ninth-inbound",
+              "source_url": "https://www.cuchd.in/international/inbound-exchange.php",
+              "source_pages": [],
+              "excerpt": "We are open for the Fall Intake (July/ Aug ) 2026 – 27. Tuition fee is waived off at Chandigarh University & Free Accommodation under SEP partner scholarship.",
+              "academic_year": "正文Fall Intake July/Aug 2026–27；不同學期參考",
+              "application_round": "正文Fall Intake July/Aug 2026–27；不同學期參考",
+              "checked_at": "2026-10-11T17:17:47.918940+00:00",
+              "content_hash": "cf002b4a45da9bc816f5180e2604c2f23e24ad23778a33e9d3ce8f302b6fe28d",
+              "status": "reference_only",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -77413,11 +78162,24 @@
         },
         {
           "field": "host_tuition",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "reference_only",
+          "value": "Fall Intake July/Aug 2026–27 SEP partner scholarship公告免學費；未核Spring2027及CCU協議適用，不推其他費用全免。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p75-ninth-inbound",
+              "source_url": "https://www.cuchd.in/international/inbound-exchange.php",
+              "source_pages": [],
+              "excerpt": "We are open for the Fall Intake (July/ Aug ) 2026 – 27. Tuition fee is waived off at Chandigarh University & Free Accommodation under SEP partner scholarship.",
+              "academic_year": "正文Fall Intake July/Aug 2026–27；不同學期參考",
+              "application_round": "正文Fall Intake July/Aug 2026–27；不同學期參考",
+              "checked_at": "2026-10-11T17:17:47.918940+00:00",
+              "content_hash": "cf002b4a45da9bc816f5180e2604c2f23e24ad23778a33e9d3ce8f302b6fe28d",
+              "status": "reference_only",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -77444,7 +78206,7 @@
           "access_requirement_evidence": []
         }
       ],
-      "host_missing_count": 13,
+      "host_missing_count": 7,
       "public_reading_record_missing_source_ids": [],
       "priority_policy_candidate_source_ids": [],
       "external_access_limited_steps": [],
@@ -77548,7 +78310,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "Chandigarh partner Exchange與nonpartner abroad/degree入口分开，CUCET不套CCU。",
+              "review_note": "Chandigarh partner Exchange與nonpartner abroad/degree入口分开，CUCET不套CCU。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -77637,6 +78399,164 @@
               "ledger": "completion-public-body-reviews.json",
               "review_note": "Chandigarh AlliedHealth degree2026-09-30/ITP visa宣傳，非CCU incoming日或核签保证。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p75-ninth-application-form",
+          "ccu_page": 75,
+          "source_url": "https://www.cuchd.in/international/brochure/Admission_Form_International.pdf",
+          "resolved_url": "https://www.cuchd.in/international/brochure/admission_form_international.pdf",
+          "checked_at": "2026-10-11T17:22:39.920907+00:00",
+          "http_status": 200,
+          "sha256": "ef604289d21d161c823504409b6781590f24886beb32230bf9d6255650fe7270",
+          "text_sha256": null,
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": null,
+          "content_type": "application/pdf",
+          "bundled_file": "completion_sources/p75-ninth-application-form.pdf",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整2頁國際學生泛用AdmissionForm，未標年，第二頁75%attendance是考試出席要求不是入學GPA；Inbound頁有鏈結，但當期交換版本未核。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p75-ninth-factsheet",
+          "ccu_page": 75,
+          "source_url": "https://www.cuchd.in/international/brochure/factsheet.pdf",
+          "resolved_url": "https://www.cuchd.in/international/brochure/factsheet.pdf",
+          "checked_at": "2026-10-11T17:22:39.921161+00:00",
+          "http_status": 200,
+          "sha256": "6700bd8a9932e48cd0b96e5abc014c58cbdb3b1cc8955bc0a23bd6f02e2a59de",
+          "text_sha256": null,
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": null,
+          "content_type": "application/pdf",
+          "bundled_file": "completion_sources/p75-ninth-factsheet.pdf",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 75,
+              "field": "host_fields.nomination_deadline",
+              "status": "reference_only",
+              "source_pages": [
+                1
+              ]
+            },
+            {
+              "ccu_page": 75,
+              "field": "host_fields.academic_calendar",
+              "status": "reference_only",
+              "source_pages": [
+                1
+              ]
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整1頁正文SemesterDates2021/currentmodeOnline，僅2021歷史；nomination11/15、4/15不與未標年網頁app10/30、3/30合併。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p75-ninth-inbound",
+          "ccu_page": 75,
+          "source_url": "https://www.cuchd.in/international/inbound-exchange.php",
+          "resolved_url": "https://www.cuchd.in/international/inbound-exchange.php",
+          "checked_at": "2026-10-11T17:17:47.918940+00:00",
+          "http_status": 200,
+          "sha256": "cf002b4a45da9bc816f5180e2604c2f23e24ad23778a33e9d3ce8f302b6fe28d",
+          "text_sha256": "a25bacf499b6fabf40d3d25e573d55600c0293ca5083a3a926ebf5e13f60f743",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "Inbound Exchange program in India - Chandigarh University",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p75-ninth-inbound.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 75,
+              "field": "host_fields.program_scope",
+              "status": "needs_confirmation",
+              "source_pages": []
+            },
+            {
+              "ccu_page": 75,
+              "field": "host_fields.application_deadline",
+              "status": "needs_confirmation",
+              "source_pages": []
+            },
+            {
+              "ccu_page": 75,
+              "field": "host_fields.housing",
+              "status": "reference_only",
+              "source_pages": []
+            },
+            {
+              "ccu_page": 75,
+              "field": "host_fields.host_tuition",
+              "status": "reference_only",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "Fall Intake2026/27 SEP partner tuition/accommodation公告另列參考，Spring未標年；2027未核。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p75-ninth-partner-programmes",
+          "ccu_page": 75,
+          "source_url": "https://www.cuchd.in/international/program-search-criteria.php",
+          "resolved_url": "https://www.cuchd.in/international/program-search-criteria.php",
+          "checked_at": "2026-10-11T17:17:47.919509+00:00",
+          "http_status": 200,
+          "sha256": "6c61bcfb76157beacd4944c1f8de39a598d488fc7ef484c6d77c09df91223dbc",
+          "text_sha256": "e1188d4740f0ca5f41417468012511b7ffc7acb94773a3308e4a51bdc747b2ec",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "Chandigarh University Program Search Criteria in India",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p75-ninth-partner-programmes.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "實際內容是CU outbound International Transfer Programs及外國完成degree，非CU incoming semester課單；anchor/content mismatch排除。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
             }
           ],
           "review_state": "scoped_body_read_recorded",
@@ -80803,7 +81723,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "KIIT IRO admission/visa/local registration服务概况，不证明個人签證或保险标准。",
+              "review_note": "KIIT IRO admission/visa/local registration服务概况，不证明個人签證或保险标准。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -80834,6 +81754,35 @@
               "ledger": "completion-public-body-reviews.json",
               "review_note": "KIIT图书馆2027 Jan conference日，非交換迎新/考试。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p79-ninth-credit-study",
+          "ccu_page": 79,
+          "source_url": "https://kiit.ac.in/credit-based-study-abroad-programme/",
+          "resolved_url": "https://kiit.ac.in/credit-based-study-abroad-programme/",
+          "checked_at": "2026-10-11T17:19:41.002494+00:00",
+          "http_status": 200,
+          "sha256": "c01abce169ef9d517d23fa77b97fa59f443df533053f3ad184b0186495f55679",
+          "text_sha256": "761eb5db7bf3e5433e326c5559b3031f860007f686809b129fee92f5d5343312",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "Credit-based Study Abroad Programme - KIIT Deemed to be University",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p79-ninth-credit-study.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "實際為10天WashingtonBothell KSOM及VirginiaTech/KISS service-learning，其他對象計畫，不能填CCU年度semester交換。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
             }
           ],
           "review_state": "scoped_body_read_recorded",
@@ -87179,7 +88128,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "Welcome Desk支持含exchange，ACC209 Mon–Thu14–17/Fri9–12一般時間；住房保险等childlinks不等已核政策。",
+              "review_note": "Welcome Desk支持含exchange，ACC209 Mon–Thu14–17/Fri9–12一般時間；住房保险等childlinks不等已核政策。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -87391,6 +88340,35 @@
           ],
           "review_state": "mapped_passages_read_remaining_body_unclaimed",
           "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p85-ninth-exchange",
+          "ccu_page": 85,
+          "source_url": "https://www.u-bordeaux-montaigne.fr/en/study/application/exchange-program.html",
+          "resolved_url": "https://www.u-bordeaux-montaigne.fr/en/study/application/exchange-program.html",
+          "checked_at": "2026-10-11T17:36:44.487603+00:00",
+          "http_status": 200,
+          "sha256": "ab4ac809d5d74e78ba8f56813e644a6a68a6c06c97df1b80c7500a2ee930439e",
+          "text_sha256": "43c902d033e56a93d4cfc456fc20bd7dcd750663025f66332acef0700ff34a18",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "Exchange program: Admission and Enrolment - Bordeaux Montaigne University v1.2",
+          "content_type": "text/html; charset=UTF-8",
+          "bundled_file": "completion_sources/p85-ninth-exchange.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整exchange admission頁僅伙伴交換身份、mobilityoffice聯絡與辦公時段；不含nominationdeadline、tuition或費用，不寄信/提交contact。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
         },
         {
           "source_id": "p85-profile-root",
@@ -90289,11 +91267,24 @@
         },
         {
           "field": "eligibility",
-          "status": "missing",
-          "value": null,
-          "reason": "第八輪所列公開政策仍未取得此欄本輪相符依據；未核實新版不等官方明示尚未公告。空表/戶別、提名後portal及台籍最新政府規則按欄另查。",
+          "status": "needs_confirmation",
+          "value": "非歐洲伙伴大學雙邊交換須先核有效agreement，母校甄選推薦；滿足母校選拔不等於Strasbourg自動錄取。頁面一般資格／語言段無本期年度且出函段仍2025/26，Spring2027完整接待資格尚未核實。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p87-ninth-bilateral",
+              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+              "source_pages": [],
+              "excerpt": "partner institutions outside Europe",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -90375,9 +91366,9 @@
         {
           "field": "application_forms",
           "status": "needs_confirmation",
-          "value": "已實取公開3頁LearningAgreement：表內202_-202_空白、檔mtime2022，學生與母校/接收校各兩協調人簽名日期、課表ECTS及變更/續頁。至少50%課同department；本輪是否指定同模板及完整個人applicationportal未核，舊空白模板不作已填2027申請。",
-          "reason": "只核實所述來源/計畫及年度；未年條件與母校當期繳件分开，未取得新版/個人實表及席位，不猜缺值。",
-          "classification": "research_incomplete",
+          "value": "選上後母校提供個人application link及說明，母校簽章整包後透過dedicated portal上傳；只讀公開流程與已取得舊空白LA，不宣稱已取得個人申請表／版本，未登入或填送。公開文件清單不因個人表單連結受限而隱藏。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "classification": "personal_access_required",
           "evidence": [
             {
               "source_id": "p87-r8-learning-contract-pdf",
@@ -90408,9 +91399,33 @@
               "note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。三頁全文已讀：50%同department、學生+雙方兩協調人簽/日期、變更及續頁。publicfileview提供同站下載rawPath，短期下載URL重新讀viewer可重取。",
               "content_hash": "054fbd5c6e55c700576a418d5dab631048dbd6a1f83af4b626532d25124d171b",
               "text_sha256": "e6cc6347503d346468af213ffeb1e4f6fb126b1ba451e3a199b46af455ae5756"
+            },
+            {
+              "source_id": "p87-ninth-bilateral",
+              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+              "source_pages": [],
+              "excerpt": "your university will send you instructions and a link to the application form",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
             }
           ],
-          "access_requirement_evidence": []
+          "access_requirement_evidence": [
+            {
+              "source_id": "p87-ninth-bilateral",
+              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+              "source_pages": [],
+              "excerpt": "your university will send you instructions and a link to the application form",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "verified_current"
+            }
+          ]
         },
         {
           "field": "academic_calendar",
@@ -90754,21 +91769,77 @@
           "classification": "research_incomplete",
           "evidence": [],
           "access_requirement_evidence": []
-        },
-        {
-          "field": "exchange_duration",
-          "status": "missing",
-          "value": null,
-          "reason": "第八輪所列公開政策仍未取得此欄本輪相符依據；未核實新版不等官方明示尚未公告。空表/戶別、提名後portal及台籍最新政府規則按欄另查。",
-          "classification": "research_incomplete",
-          "evidence": [],
-          "access_requirement_evidence": []
         }
       ],
-      "host_missing_count": 4,
+      "host_missing_count": 2,
       "public_reading_record_missing_source_ids": [],
       "priority_policy_candidate_source_ids": [],
-      "external_access_limited_steps": [],
+      "external_access_limited_steps": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "選上後母校提供個人application link及說明，母校簽章整包後透過dedicated portal上傳；只讀公開流程與已取得舊空白LA，不宣稱已取得個人申請表／版本，未登入或填送。公開文件清單不因個人表單連結受限而隱藏。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p87-r8-learning-contract-pdf",
+              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "表內AcademicYear202_-202_空白；公開檔名/mtime2022非2027指定證據",
+              "application_round": "表內AcademicYear202_-202_空白；公開檔名/mtime2022非2027指定證據",
+              "checked_at": "2026-10-08T08:49:40.005737+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "sitaire 202_-202_ / Academic year 202_-202_ ● Identité/Identity Nom de l’étudiant /Name of the student : …………………………………………… Prénom / First name : ………………………………………………… Sexe / Sex : F M ● Établissement d’envoi / sending institution Établissement d’envoi / Name of the sending institution : ……………………………………………………………………………………………………………… Composante et/ou département / Faculty and/or depar",
+              "note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。三頁全文已讀：50%同department、學生+雙方兩協調人簽/日期、變更及續頁。publicfileview提供同站下載rawPath，短期下載URL重新讀viewer可重取。",
+              "content_hash": "054fbd5c6e55c700576a418d5dab631048dbd6a1f83af4b626532d25124d171b",
+              "text_sha256": "e6cc6347503d346468af213ffeb1e4f6fb126b1ba451e3a199b46af455ae5756"
+            },
+            {
+              "source_id": "p87-r8-learning-contract-pdf",
+              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "表內AcademicYear202_-202_空白；公開檔名/mtime2022非2027指定證據",
+              "application_round": "表內AcademicYear202_-202_空白；公開檔名/mtime2022非2027指定證據",
+              "checked_at": "2026-10-08T08:49:40.005737+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "ust select at least 50% of courses in one department Code du module Course unit code Intitulé du cours à l’Université de Strasbourg + Nom de l’enseignant (comme indiqué dans le guide pédagogique) Course Unit title at the University of Strasbourg + Name of the teacher (as indicated in the course catalogue) Nombre de crédits ECTS Number of ECTS credits TOTAL CRÉDITS ECTS/ total E",
+              "note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。三頁全文已讀：50%同department、學生+雙方兩協調人簽/日期、變更及續頁。publicfileview提供同站下載rawPath，短期下載URL重新讀viewer可重取。",
+              "content_hash": "054fbd5c6e55c700576a418d5dab631048dbd6a1f83af4b626532d25124d171b",
+              "text_sha256": "e6cc6347503d346468af213ffeb1e4f6fb126b1ba451e3a199b46af455ae5756"
+            },
+            {
+              "source_id": "p87-ninth-bilateral",
+              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+              "source_pages": [],
+              "excerpt": "your university will send you instructions and a link to the application form",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
+          "access_requirement_evidence": [
+            {
+              "source_id": "p87-ninth-bilateral",
+              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+              "source_pages": [],
+              "excerpt": "your university will send you instructions and a link to the application form",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "verified_current"
+            }
+          ]
+        }
+      ],
       "sources": [
         {
           "source_id": "p87-campus_contact-1",
@@ -90821,7 +91892,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "已讀完整FAQ与contact表；exchange可online apply CROUS住房，與jointPhD及researcher别住房分開；一般arrival支援與個人visalaws未独立核。未輸入聯絡表或送出。",
+              "review_note": "已讀完整FAQ与contact表；exchange可online apply CROUS住房，與jointPhD及researcher别住房分開；一般arrival支援與個人visalaws未独立核。未輸入聯絡表或送出。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -90952,7 +92023,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "Strasbourg student/researcher/degree/visa分入口，index不是個人签證批准。",
+              "review_note": "Strasbourg student/researcher/degree/visa分入口，index不是個人签證批准。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -91015,6 +92086,7 @@
           "existing_review_note": "提名與申請區明列2026/2027第二學期，通知結果仍2025年；逐欄辨別，不把全頁當本期一致。",
           "scope_disposition": "mapped_sections_remaining_body_unclaimed",
           "same_bytes_as_recorded_read_sources": [
+            "p87-ninth-bilateral",
             "p87-r8-interuniversity"
           ],
           "mapped_field_sections": [
@@ -91175,6 +92247,57 @@
           "mapped_field_sections": [],
           "explicit_reading_records": [],
           "review_state": "source_failure_or_body_not_obtained",
+          "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p87-ninth-bilateral",
+          "ccu_page": 87,
+          "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+          "resolved_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+          "checked_at": "2026-10-11T17:19:41.002223+00:00",
+          "http_status": 200,
+          "sha256": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+          "text_sha256": "a92745f8d143d295cbd493f9986211f45ead5dcbf6752dd8684028974ffebbd9",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "Inter-university agreements - International Welcome e-desk - University of Strasbourg",
+          "content_type": "text/html; charset=utf-8",
+          "bundled_file": "completion_sources/p87-ninth-bilateral.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [
+            "p87-hostz0",
+            "p87-r8-interuniversity"
+          ],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 87,
+              "field": "host_fields.eligibility",
+              "status": "needs_confirmation",
+              "source_pages": []
+            },
+            {
+              "ccu_page": 87,
+              "field": "host_fields.application_forms",
+              "status": "needs_confirmation",
+              "source_pages": []
+            },
+            {
+              "ccu_page": 87,
+              "field": "host_fields.exchange_duration",
+              "status": "verified_current",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "非EUbilateral 2026/27兩campaign精確日可核；通知信段仍2025/26矛盾保留，資格一般未年；個人link由母校轉、母校portal簽章上傳。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
           "policy_candidate_hint": false
         },
         {
@@ -92512,7 +93635,8 @@
           "existing_review_note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。",
           "scope_disposition": "mapped_sections_remaining_body_unclaimed",
           "same_bytes_as_recorded_read_sources": [
-            "p87-hostz0"
+            "p87-hostz0",
+            "p87-ninth-bilateral"
           ],
           "mapped_field_sections": [
             {
@@ -100431,7 +101555,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "宿舍五棟房型与申請不保床位；2026calendar明确FULL-CYCLE STUDENTS ONLY，并混旧2024/2025撤回年，不能套交換住房期限。",
+              "review_note": "宿舍五棟房型与申請不保床位；2026calendar明确FULL-CYCLE STUDENTS ONLY，并混旧2024/2025撤回年，不能套交換住房期限。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -109754,7 +110878,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "DIT约150每学期欢迎exchange是概況，不是中正申请quota。",
+              "review_note": "DIT约150每学期欢迎exchange是概況，不是中正申请quota。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -111259,7 +112383,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "THA buddy支持incoming一至两学期，未标2027/无准入或提名日。",
+              "review_note": "THA buddy支持incoming一至两学期，未标2027/无准入或提名日。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -112573,12 +113697,39 @@
         },
         {
           "field": "application_forms",
-          "status": "missing",
-          "value": null,
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
-          "classification": "research_incomplete",
-          "evidence": [],
-          "access_requirement_evidence": []
+          "status": "needs_confirmation",
+          "value": "School of Engineering母校提名後才收到Mobility-Online及完整文件／指引。僅讀公開factsheet與timeline，未取得個人表格與當期完整清單，未登入或填送。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p103-ninth-factsheet",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "Nominated students will then receive access to our online application platform (Mobility-Online), including all necessary documents and instructions.",
+              "academic_year": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "application_round": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "checked_at": "2026-10-11T17:22:43.278704+00:00",
+              "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+              "status": "needs_confirmation",
+              "location_in_source": "PDF page(s): [3]"
+            }
+          ],
+          "access_requirement_evidence": [
+            {
+              "source_id": "p103-ninth-factsheet",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+              "source_pages": [],
+              "excerpt": "Nominated students will then receive access to our online application platform (Mobility-Online), including all necessary documents and instructions.",
+              "academic_year": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:22:43.278704+00:00",
+              "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+              "status": "verified_current"
+            }
+          ]
         },
         {
           "field": "academic_calendar",
@@ -112742,11 +113893,26 @@
         },
         {
           "field": "visa",
-          "status": "missing",
-          "value": null,
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
+          "status": "needs_confirmation",
+          "value": "SoE dated2026-04-22未標學年PDF：列非EU學生簽證及所有交換生抵達後L permit；財力例CHF1750/月，國籍例外須聯絡SoE。僅學校一般指引，未核台籍Spring2027最新政府條件或個人居留資格；未代申請。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p103-ninth-factsheet",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+              "source_pages": [
+                4
+              ],
+              "excerpt": "Non-EU citizens must apply for a student visa as early as possible after receiving their letter of acceptance. Students from Australia, Japan, New Zealand, Malaysia, Singapore, and the United Kingdom do not require a visa but must apply for a residence permit (“Aufenthaltsbewilligung”) through the SoE International Office. All exchange students must apply for a residence permit (L-Permit) upon arrival. Proof of financial means (CHF 1’750 per month) is required for both visa and resi- dence permit applications. Detailled information will be provided by the International Office after the applica- tion process.",
+              "academic_year": "PDF正文22.04.2026，未標2027適用；校方一般指引",
+              "application_round": "PDF正文22.04.2026，未標2027適用；校方一般指引",
+              "checked_at": "2026-10-11T17:22:43.278704+00:00",
+              "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+              "status": "needs_confirmation",
+              "location_in_source": "PDF page(s): [4]"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -112807,10 +113973,47 @@
           "access_requirement_evidence": []
         }
       ],
-      "host_missing_count": 4,
+      "host_missing_count": 2,
       "public_reading_record_missing_source_ids": [],
       "priority_policy_candidate_source_ids": [],
-      "external_access_limited_steps": [],
+      "external_access_limited_steps": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "School of Engineering母校提名後才收到Mobility-Online及完整文件／指引。僅讀公開factsheet與timeline，未取得個人表格與當期完整清單，未登入或填送。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p103-ninth-factsheet",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "Nominated students will then receive access to our online application platform (Mobility-Online), including all necessary documents and instructions.",
+              "academic_year": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "application_round": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "checked_at": "2026-10-11T17:22:43.278704+00:00",
+              "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+              "status": "needs_confirmation",
+              "location_in_source": "PDF page(s): [3]"
+            }
+          ],
+          "access_requirement_evidence": [
+            {
+              "source_id": "p103-ninth-factsheet",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+              "source_pages": [],
+              "excerpt": "Nominated students will then receive access to our online application platform (Mobility-Online), including all necessary documents and instructions.",
+              "academic_year": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:22:43.278704+00:00",
+              "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+              "status": "verified_current"
+            }
+          ]
+        }
+      ],
       "sources": [
         {
           "source_id": "p103-campus-specific",
@@ -112857,7 +114060,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "工程學院campus生活明載exchange免費ASVZ運動會員；無當期總費率或住房日。",
+              "review_note": "工程學院campus生活明載exchange免費ASVZ運動會員；無當期總費率或住房日。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -112932,7 +114135,9 @@
           "content_type": "application/pdf",
           "existing_review_note": "直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
           "scope_disposition": "mapped_sections_remaining_body_unclaimed",
-          "same_bytes_as_recorded_read_sources": [],
+          "same_bytes_as_recorded_read_sources": [
+            "p103-ninth-factsheet"
+          ],
           "mapped_field_sections": [
             {
               "ccu_page": 103,
@@ -113162,7 +114367,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "ZHAW工程IO incoming/outgoing分开，无完整期限。",
+              "review_note": "ZHAW工程IO incoming/outgoing分开，无完整期限。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -113226,6 +114431,114 @@
           ],
           "review_state": "scoped_body_read_recorded",
           "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p103-ninth-factsheet",
+          "ccu_page": 103,
+          "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+          "resolved_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+          "checked_at": "2026-10-11T17:22:43.278704+00:00",
+          "http_status": 200,
+          "sha256": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+          "text_sha256": null,
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": null,
+          "content_type": "application/pdf",
+          "bundled_file": "completion_sources/p103-ninth-factsheet.pdf",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [
+            "p103-host0"
+          ],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 103,
+              "field": "host_fields.application_forms",
+              "status": "needs_confirmation",
+              "source_pages": [
+                3
+              ]
+            },
+            {
+              "ccu_page": 103,
+              "field": "host_fields.visa",
+              "status": "needs_confirmation",
+              "source_pages": [
+                4
+              ]
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整5頁正文22.04.2026未標學年，BA4完成sem/MA1sem與網頁as4th/as1st範圍差異；MSEspringintro week37vs網站/timelineweek7既有conflict不改；文件MobilityOnline提名後取得。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p103-ninth-incoming",
+          "ccu_page": 103,
+          "source_url": "https://www.zhaw.ch/en/engineering/study/international-office/incoming-exchange-students",
+          "resolved_url": "https://www.zhaw.ch/en/engineering/study/international-office/incoming-exchange-students",
+          "checked_at": "2026-10-11T17:17:51.904847+00:00",
+          "http_status": 200,
+          "sha256": "1706bcb7bfe3ba94efd0d060f5ca5cc78f90167c37eb36b64fe08e6ff7768a63",
+          "text_sha256": "85b20d7c9c30aef9eb864ee9fad3837447d24736261a29eac0c6042b8c992140",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "Studying in Switzerland | ZHAW School of Engineering",
+          "content_type": "text/html; charset=utf-8",
+          "bundled_file": "completion_sources/p103-ninth-incoming.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "SoE本科Winterthur與MSEZurich分開；未標年門檻及常年deadline不是2027，自費freemover2026/27不接受與bilateral免費待核分開。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p103-ninth-timeline",
+          "ccu_page": 103,
+          "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
+          "resolved_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
+          "checked_at": "2026-10-11T17:22:43.478109+00:00",
+          "http_status": 200,
+          "sha256": "4246bedde52d97c56308caf1ba33b7245d0a99d1d99bf4d52d041927232bc3f4",
+          "text_sha256": null,
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": null,
+          "content_type": "application/pdf",
+          "bundled_file": "completion_sources/p103-ninth-timeline.pdf",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [
+            "p103-r18-timeline"
+          ],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整2頁未標年，springorientationweek7與factsheetMSEweek37衝突；mid-Nov開始找房是timeline不是housingdeadline。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
         },
         {
           "source_id": "p103-profile-root",
@@ -113354,7 +114667,9 @@
           "content_type": "application/pdf",
           "existing_review_note": "已讀2頁；spring提名10/15、申請11/1、orientation week7及buddy前2週。SoE/SEMP資助表分EU/非EU及豁免，不推每位學生必繳；2027適用未核。",
           "scope_disposition": "mapped_sections_remaining_body_unclaimed",
-          "same_bytes_as_recorded_read_sources": [],
+          "same_bytes_as_recorded_read_sources": [
+            "p103-ninth-timeline"
+          ],
           "mapped_field_sections": [
             {
               "ccu_page": 103,
@@ -122480,7 +123795,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "UTB IO负责incoming/academic职掌，不是申请规则。",
+              "review_note": "UTB IO负责incoming/academic职掌，不是申请规则。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -122538,7 +123853,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "2020–26內部International Cooperation競賽表与finalreport，非incoming學生申請。",
+              "review_note": "2020–26內部International Cooperation競賽表与finalreport，非incoming學生申請。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -124499,7 +125814,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "完整Ukraine支援FAQ已讀；2022後烏克蘭及難民獎學金、住宿及保險，不擴及CCU普通交換。",
+              "review_note": "完整Ukraine支援FAQ已讀；2022後烏克蘭及難民獎學金、住宿及保險，不擴及CCU普通交換。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -130230,11 +131545,24 @@
         },
         {
           "field": "housing",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "needs_confirmation",
+          "value": "一般BUT國際學生住宿指Pod Palackého vrchem，雙／三人房，滿房須自找；約6100總床位不是交換配額或保證。學位生住宿獎助不推為CCU必得，2027床位／申請日期未核實。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p113-ninth-housing",
+              "source_url": "https://www.vut.cz/en/life/guide/accommodation",
+              "source_pages": [],
+              "excerpt": "International students are accommodated on campus \"Pod Palackého vrchem\".",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:37:27.635587+00:00",
+              "content_hash": "2bdaa5672f98be1f802861b6fc829ce76aae477ac264ace55bb37b889835fd6b",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -130248,20 +131576,46 @@
         },
         {
           "field": "costs",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "reference_only",
+          "value": "僅2025約價：Student halls4710CZK/月、private10000起/月、學生交通275/月、canteen115起/餐；來源換匯值為歷史，不用作2027匯率／整體預算或個人宿舍報價。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p113-ninth-costs",
+              "source_url": "https://www.vut.cz/en/life/guide/cost",
+              "source_pages": [],
+              "excerpt": "Approximate prices (valid for 2025)",
+              "academic_year": "正文Approximate prices valid for 2025；歷史參考",
+              "application_round": "正文Approximate prices valid for 2025；歷史參考",
+              "checked_at": "2026-10-11T17:37:28.897722+00:00",
+              "content_hash": "2e196ffd219f0747c320f3e6339c9522babb4e6600ba65c78a10c34843a550cf",
+              "status": "reference_only",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
           "field": "insurance",
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
+          "status": "needs_confirmation",
+          "value": "BUT一般頁分EU/EHIC與非EU及工作人員，載2023-09後非EU可向捷克授權保險商購comprehensive保險，另稱visa申請需符合捷克規定。無本期版本或台籍個案最新政府核實；保額、費用及國籍協議例外仍待確認，不套employees要求。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "classification": "research_incomplete",
-          "evidence": [],
+          "evidence": [
+            {
+              "source_id": "p113-ninth-insurance",
+              "source_url": "https://www.vut.cz/en/life/guide/insurance",
+              "source_pages": [],
+              "excerpt": "From September, 2023",
+              "academic_year": "一般校方指引載September2023變更；未標2027學年，非法律完整指引",
+              "application_round": "一般校方指引載September2023變更；未標2027學年，非法律完整指引",
+              "checked_at": "2026-10-11T17:37:27.635821+00:00",
+              "content_hash": "8e5eec81f426abf294c118e6f7a3d107816ca54ca43ccf3ff136cf1eed0bc290",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
           "access_requirement_evidence": []
         },
         {
@@ -130315,7 +131669,7 @@
           "access_requirement_evidence": []
         }
       ],
-      "host_missing_count": 12,
+      "host_missing_count": 9,
       "public_reading_record_missing_source_ids": [],
       "priority_policy_candidate_source_ids": [],
       "external_access_limited_steps": [],
@@ -130388,6 +131742,172 @@
           "explicit_reading_records": [],
           "review_state": "metadata_or_asset_candidate_not_policy_body",
           "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p113-ninth-costs",
+          "ccu_page": 113,
+          "source_url": "https://www.vut.cz/en/life/guide/cost",
+          "resolved_url": "https://www.vut.cz/en/life/guide/cost",
+          "checked_at": "2026-10-11T17:37:28.897722+00:00",
+          "http_status": 200,
+          "sha256": "2e196ffd219f0747c320f3e6339c9522babb4e6600ba65c78a10c34843a550cf",
+          "text_sha256": "54aa08b5dd9eac7920d1eded92f7f2bdbef3d2fba7d8626227e77632244cdd98",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "Cost of living – BUT",
+          "content_type": "text/html; charset=utf-8",
+          "bundled_file": "completion_sources/p113-ninth-costs.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 113,
+              "field": "host_fields.costs",
+              "status": "reference_only",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整costs正文明示validfor2025，費用/來源換算均歷史，不作2027價格/匯率；各項價格不是已計個人總預算。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p113-ninth-housing",
+          "ccu_page": 113,
+          "source_url": "https://www.vut.cz/en/life/guide/accommodation",
+          "resolved_url": "https://www.vut.cz/en/life/guide/accommodation",
+          "checked_at": "2026-10-11T17:37:27.635587+00:00",
+          "http_status": 200,
+          "sha256": "2bdaa5672f98be1f802861b6fc829ce76aae477ac264ace55bb37b889835fd6b",
+          "text_sha256": "58d59c4206f4b77006161c6cabb54223eba910d63cdb7910c6e6fd457faec1f6",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "Accommodation – BUT",
+          "content_type": "text/html; charset=utf-8",
+          "bundled_file": "completion_sources/p113-ninth-housing.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 113,
+              "field": "host_fields.housing",
+              "status": "needs_confirmation",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整housing正文校內PodPalackého、雙/三人約6100總床位不保房；留捷>3月垃圾費670/year未標年份非2027法律核實，住宿獎助degree對象不推CCU；需個人合約。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p113-ninth-insurance",
+          "ccu_page": 113,
+          "source_url": "https://www.vut.cz/en/life/guide/insurance",
+          "resolved_url": "https://www.vut.cz/en/life/guide/insurance",
+          "checked_at": "2026-10-11T17:37:27.635821+00:00",
+          "http_status": 200,
+          "sha256": "8e5eec81f426abf294c118e6f7a3d107816ca54ca43ccf3ff136cf1eed0bc290",
+          "text_sha256": "b60b9112ce256bec11dc617e208b8b765d0ff652341b3ed10438a831c643f202",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "used_with_explicit_field_status",
+          "academic_year": null,
+          "title": "Insurance – BUT",
+          "content_type": "text/html; charset=utf-8",
+          "bundled_file": "completion_sources/p113-ninth-insurance.html.gz",
+          "scope_disposition": "used_with_explicit_field_status",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [
+            {
+              "ccu_page": 113,
+              "field": "host_fields.insurance",
+              "status": "needs_confirmation",
+              "source_pages": []
+            }
+          ],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整insurance頁EU/EHIC/非EU及employees不同，2023-09改制段落；最新台籍2027法規／保額未核，僅保校方未年指引。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "mapped_passages_read_remaining_body_unclaimed",
+          "policy_candidate_hint": true
+        },
+        {
+          "source_id": "p113-ninth-practical",
+          "ccu_page": 113,
+          "source_url": "https://www.vut.cz/en/life/guide",
+          "resolved_url": "https://www.vut.cz/en/life/guide",
+          "checked_at": "2026-10-11T17:36:45.783181+00:00",
+          "http_status": 200,
+          "sha256": "2908f2356546895427390b6d9581f9dfbbf0f6021a1c8e656cc3158a0ccf5230",
+          "text_sha256": "226dcd5954801df3408d4786ebb91a9b7336d5c6441726f513b0d9b8571e10ea",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "Practical guide – BUT",
+          "content_type": "text/html; charset=utf-8",
+          "bundled_file": "completion_sources/p113-ninth-practical.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整practical guide短索引；housing/insurance/visa/costs四實際相關章節另讀，其他無關service不追。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p113-ninth-visa",
+          "ccu_page": 113,
+          "source_url": "https://www.vut.cz/en/life/guide/visa",
+          "resolved_url": "https://www.vut.cz/en/life/guide/visa",
+          "checked_at": "2026-10-11T17:37:28.846812+00:00",
+          "http_status": 200,
+          "sha256": "d63def4c9a3db2039dfe40cd1c2a1a308ced656b9765a640a7f0ac703b601ac7",
+          "text_sha256": "d889ae423b231ccffdff676d19f5f304c7f713f9f1861409cbf9ee294092a3de",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "Visa – BUT",
+          "content_type": "text/html; charset=utf-8",
+          "bundled_file": "completion_sources/p113-ninth-visa.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整可見互動問答選項含國籍/degree-vs-exchange/停留90天分流；靜態提取不判斷哪答案實際被選中，沒有輸入或提交；不據此推台籍法律結論。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
         },
         {
           "source_id": "p113-public-english-home",
@@ -130469,7 +131989,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "BUT short-term studies 交換索引含 welcome week 與住宿／保險／visa 子頁提示，未讀到具年度的期限或費用，後續須以子頁正文核實。",
+              "review_note": "BUT short-term studies 交換索引含 welcome week 與住宿／保險／visa 子頁提示，未讀到具年度的期限或費用，後續須以子頁正文核實。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -131567,7 +133087,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "Ostfold degree与exchange可申请住房，非保证床位或当期截止。",
+              "review_note": "Ostfold degree与exchange可申请住房，非保证床位或当期截止。 第九輪：實讀完整可見主体，具体相關子頁另列，不宣稱所有外鏈閱讀。",
               "applicability": "未標年一般資料／索引；以註記的明示年份與對象為準，不由查核日推出當期"
             }
           ],
@@ -131602,6 +133122,35 @@
           ],
           "review_state": "scoped_body_read_recorded",
           "policy_candidate_hint": false
+        },
+        {
+          "source_id": "p114-ninth-housing",
+          "ccu_page": 114,
+          "source_url": "https://www.hiof.no/english/student-life/housing/",
+          "resolved_url": "https://www.hiof.no/english/student-life/housing/",
+          "checked_at": "2026-10-11T17:17:53.942664+00:00",
+          "http_status": 200,
+          "sha256": "32dfcb2fde46c62a8d613dbe6991da0a502720364bcf853e740a8d99287f0f5d",
+          "text_sha256": "0f362181dd58e23e84134d282b2f278910ba60f43759faddb0e957332b119cef",
+          "source_collection": "completion_sources",
+          "readable_body_obtained": true,
+          "acquisition_state": "acquired_not_policy_verified",
+          "academic_year": null,
+          "title": "Student Housing – Østfold University of Applied Sciences",
+          "content_type": "text/html;charset=utf-8",
+          "bundled_file": "completion_sources/p114-ninth-housing.html.gz",
+          "scope_disposition": "acquired_not_policy_verified",
+          "same_bytes_as_recorded_read_sources": [],
+          "mapped_field_sections": [],
+          "explicit_reading_records": [
+            {
+              "ledger": "completion-public-body-reviews.json",
+              "review_note": "完整舊一般住房頁2018發布/2022更新：依申請/回簽/押金deadline条件保证，沒日期/價格，8/1–12/31或1/1–6/30是住宿合約不是授課。",
+              "applicability": "正文明示年度按review_note及逐欄證據保存；未標年不視2027"
+            }
+          ],
+          "review_state": "scoped_body_read_recorded",
+          "policy_candidate_hint": true
         },
         {
           "source_id": "p114-profile-root",
@@ -133198,7 +134747,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "ATI索引把F1/J1、CSUN本校出國及Semester at CSUN等分開，未由degree checklist或本校出國入口填CCU incoming。",
+              "review_note": "ATI索引把F1/J1、CSUN本校出國及Semester at CSUN等分開，未由degree checklist或本校出國入口填CCU incoming。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -134738,7 +136287,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "讀完整Campus Living；first-year四sem住校、transfer兩sem是degree對象，不能套exchange；一般房型／设施可待確認参考。",
+              "review_note": "讀完整Campus Living；first-year四sem住校、transfer兩sem是degree對象，不能套exchange；一般房型／设施可待確認参考。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],
@@ -137038,7 +138587,7 @@
           "explicit_reading_records": [
             {
               "ledger": "completion-public-body-reviews.json",
-              "review_note": "QUT Study Abroad總索引，付費訪問與Exchange需分路；此頁未含學費、期限或住房規則正文。",
+              "review_note": "QUT Study Abroad總索引，付費訪問與Exchange需分路；此頁未含學費、期限或住房規則正文。 第九輪：依第八輪明示完整範圍補正缺少boolean，不是新閱讀。",
               "applicability": null
             }
           ],

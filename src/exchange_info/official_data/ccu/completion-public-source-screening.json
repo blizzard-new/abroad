@@ -1,10 +1,10 @@
 {
   "checked_at": "2026-10-11",
-  "source_count": 1281,
+  "source_count": 1314,
   "decisions": {
-    "acquired_not_policy_verified": 710,
+    "acquired_not_policy_verified": 729,
     "excluded_specific_review": 8,
-    "used_with_explicit_field_status": 493,
+    "used_with_explicit_field_status": 507,
     "technical_failure": 61,
     "challenge_or_error_page": 8,
     "used_access_requirement_evidence": 1
@@ -1371,6 +1371,56 @@
       "tls_verify": true,
       "original_sha256": "7da9e771ad2ab07320a37f13149b6482255a001033c4f15b9d3cb17fcbf9cf61",
       "bundled_file": "completion_sources/p103-life-2.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p103-ninth-factsheet",
+      "ccu_page": 103,
+      "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+      "resolved_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:22:43.278704+00:00",
+      "tls_verify": true,
+      "original_sha256": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+      "bundled_file": "completion_sources/p103-ninth-factsheet.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p103-ninth-incoming",
+      "ccu_page": 103,
+      "source_url": "https://www.zhaw.ch/en/engineering/study/international-office/incoming-exchange-students",
+      "resolved_url": "https://www.zhaw.ch/en/engineering/study/international-office/incoming-exchange-students",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:17:51.904847+00:00",
+      "tls_verify": true,
+      "original_sha256": "1706bcb7bfe3ba94efd0d060f5ca5cc78f90167c37eb36b64fe08e6ff7768a63",
+      "bundled_file": "completion_sources/p103-ninth-incoming.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p103-ninth-timeline",
+      "ccu_page": 103,
+      "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
+      "resolved_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:22:43.478109+00:00",
+      "tls_verify": true,
+      "original_sha256": "4246bedde52d97c56308caf1ba33b7245d0a99d1d99bf4d52d041927232bc3f4",
+      "bundled_file": "completion_sources/p103-ninth-timeline.pdf",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -3680,6 +3730,92 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p113-ninth-costs",
+      "ccu_page": 113,
+      "source_url": "https://www.vut.cz/en/life/guide/cost",
+      "resolved_url": "https://www.vut.cz/en/life/guide/cost",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:37:28.897722+00:00",
+      "tls_verify": true,
+      "original_sha256": "2e196ffd219f0747c320f3e6339c9522babb4e6600ba65c78a10c34843a550cf",
+      "bundled_file": "completion_sources/p113-ninth-costs.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "reference_only"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p113-ninth-housing",
+      "ccu_page": 113,
+      "source_url": "https://www.vut.cz/en/life/guide/accommodation",
+      "resolved_url": "https://www.vut.cz/en/life/guide/accommodation",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:37:27.635587+00:00",
+      "tls_verify": true,
+      "original_sha256": "2bdaa5672f98be1f802861b6fc829ce76aae477ac264ace55bb37b889835fd6b",
+      "bundled_file": "completion_sources/p113-ninth-housing.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p113-ninth-insurance",
+      "ccu_page": 113,
+      "source_url": "https://www.vut.cz/en/life/guide/insurance",
+      "resolved_url": "https://www.vut.cz/en/life/guide/insurance",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:37:27.635821+00:00",
+      "tls_verify": true,
+      "original_sha256": "8e5eec81f426abf294c118e6f7a3d107816ca54ca43ccf3ff136cf1eed0bc290",
+      "bundled_file": "completion_sources/p113-ninth-insurance.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p113-ninth-practical",
+      "ccu_page": 113,
+      "source_url": "https://www.vut.cz/en/life/guide",
+      "resolved_url": "https://www.vut.cz/en/life/guide",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:36:45.783181+00:00",
+      "tls_verify": true,
+      "original_sha256": "2908f2356546895427390b6d9581f9dfbbf0f6021a1c8e656cc3158a0ccf5230",
+      "bundled_file": "completion_sources/p113-ninth-practical.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p113-ninth-visa",
+      "ccu_page": 113,
+      "source_url": "https://www.vut.cz/en/life/guide/visa",
+      "resolved_url": "https://www.vut.cz/en/life/guide/visa",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:37:28.846812+00:00",
+      "tls_verify": true,
+      "original_sha256": "d63def4c9a3db2039dfe40cd1c2a1a308ced656b9765a640a7f0ac703b601ac7",
+      "bundled_file": "completion_sources/p113-ninth-visa.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p113-public-english-home",
       "ccu_page": 113,
       "source_url": "https://www.vut.cz/en/",
@@ -3940,6 +4076,22 @@
       "tls_verify": true,
       "original_sha256": "d4003015e9e6147a2fb184224fed8951fa5493bf7c0ac40893975815fe6af343",
       "bundled_file": "completion_sources/p114-life-2.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p114-ninth-housing",
+      "ccu_page": 114,
+      "source_url": "https://www.hiof.no/english/student-life/housing/",
+      "resolved_url": "https://www.hiof.no/english/student-life/housing/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:17:53.942664+00:00",
+      "tls_verify": true,
+      "original_sha256": "32dfcb2fde46c62a8d613dbe6991da0a502720364bcf853e740a8d99287f0f5d",
+      "bundled_file": "completion_sources/p114-ninth-housing.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -5594,6 +5746,22 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p13-ninth-exchange",
+      "ccu_page": 13,
+      "source_url": "https://study.tongji.edu.cn/lxsq/xjjlxm.htm",
+      "resolved_url": "https://study.tongji.edu.cn/lxsq/xjjlxm.htm",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:19:42.083502+00:00",
+      "tls_verify": true,
+      "original_sha256": "5f220f8b6eafb06e4838743f1a2c3ac906a4f99eb1f19b6f3b23b5257b3c6e5c",
+      "bundled_file": "completion_sources/p13-ninth-exchange.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p13-reference-link-1",
       "ccu_page": 13,
       "source_url": "https://drive.usercontent.google.com/download?id=1eQEpDThfMqYA-sfxXgzcIGAR42rZGion&export=download",
@@ -6454,6 +6622,42 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p18-ninth-housing",
+      "ccu_page": 18,
+      "source_url": "https://sie.nankai.edu.cn/xyfw/zs.htm",
+      "resolved_url": "https://sie.nankai.edu.cn/xyfw/zs.htm",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:36:37.468941+00:00",
+      "tls_verify": true,
+      "original_sha256": "2fab1fb4bff70f90ff1da38cdafa59c712df76244f35b7dccd1466fd4caabbda",
+      "bundled_file": "completion_sources/p18-ninth-housing.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "reference_only"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p18-ninth-insurance",
+      "ccu_page": 18,
+      "source_url": "https://sie.nankai.edu.cn/xyfw/bx.htm",
+      "resolved_url": "https://sie.nankai.edu.cn/xyfw/bx.htm",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:36:37.469207+00:00",
+      "tls_verify": true,
+      "original_sha256": "c1fa7c6e4e245a974f4316173304bfdbaf073fc7b1f9b92fb404206a0cd99136",
+      "bundled_file": "completion_sources/p18-ninth-insurance.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p18-root",
@@ -9726,6 +9930,22 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p39-ninth-incoming",
+      "ccu_page": 39,
+      "source_url": "https://www.tokiwa.ac.jp/international/exchange-a/index.html",
+      "resolved_url": "https://www.tokiwa.ac.jp/international/exchange-a/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:36:45.903024+00:00",
+      "tls_verify": true,
+      "original_sha256": "afe617b4c70b6428a594d61c9b57ce3867ce0ba4a833a5860869fabe450e4b35",
+      "bundled_file": "completion_sources/p39-ninth-incoming.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p39-root",
       "ccu_page": 39,
       "source_url": "https://www.tokiwa.ac.jp/",
@@ -12974,6 +13194,158 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p56-ninth-academic-calendar",
+      "ccu_page": 56,
+      "source_url": "https://www.eduhk.hk/re/modules/content/item.php?categoryid=6&itemid=11",
+      "resolved_url": "https://www.eduhk.hk/re/Current-Students/Publications/Academic-Calendar.html",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:27:40.121165+00:00",
+      "tls_verify": true,
+      "original_sha256": "6ae1622c028dab86b867c1669f0181492faf5f7ad1635b2ea04f82696be863f8",
+      "bundled_file": "completion_sources/p56-ninth-academic-calendar.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p56-ninth-accommodation",
+      "ccu_page": 56,
+      "source_url": "https://www.eduhk.hk/gao/articles/inbound_accommodation",
+      "resolved_url": "https://www.eduhk.hk/gao/articles/inbound_accommodation",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:22:47.594684+00:00",
+      "tls_verify": true,
+      "original_sha256": "0ac0115c07620efee28074db43b2f20e7fbe8af323454b24c0b725445362ae87",
+      "bundled_file": "completion_sources/p56-ninth-accommodation.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p56-ninth-application-eligibility",
+      "ccu_page": 56,
+      "source_url": "https://www.eduhk.hk/gao/articles/inbound_application-and-eligibility",
+      "resolved_url": "https://www.eduhk.hk/gao/articles/inbound_application-and-eligibility",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:22:45.786283+00:00",
+      "tls_verify": true,
+      "original_sha256": "250d46379d5f002932f45cde0abba749078498032e93d2d8cb9cb447a23e0c06",
+      "bundled_file": "completion_sources/p56-ninth-application-eligibility.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p56-ninth-application-traditional",
+      "ccu_page": 56,
+      "source_url": "https://www.eduhk.hk/gao/zh-hk/articles/inbound_application-and-eligibility",
+      "resolved_url": "https://www.eduhk.hk/gao/zh-hk/articles/inbound_application-and-eligibility",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:28:46.847572+00:00",
+      "tls_verify": true,
+      "original_sha256": "122f7042b2927e426fa6898da3ec492416a9ba30a63d182fc1ae8d6f0ad38a91",
+      "bundled_file": "completion_sources/p56-ninth-application-traditional.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p56-ninth-calendar-pdf",
+      "ccu_page": 56,
+      "source_url": "https://www.eduhk.hk/re/uploads/docs/000000000017784742948701Lcf4",
+      "resolved_url": "https://www.eduhk.hk/re/uploads/docs/000000000017784742948701Lcf4",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:29:58.596985+00:00",
+      "tls_verify": true,
+      "original_sha256": "505fd6c2109ec89e544983c035821db3435c977eaef58508695c2df624929069",
+      "bundled_file": "completion_sources/p56-ninth-calendar-pdf.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p56-ninth-course-registration",
+      "ccu_page": 56,
+      "source_url": "https://www.eduhk.hk/gao/articles/inbound_course",
+      "resolved_url": "https://www.eduhk.hk/gao/articles/inbound_course",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:22:47.034320+00:00",
+      "tls_verify": true,
+      "original_sha256": "438348149be8b1efc36e42e817c617603eb1048a9fc78158c2857d3601fffa4a",
+      "bundled_file": "completion_sources/p56-ninth-course-registration.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p56-ninth-downloads",
+      "ccu_page": 56,
+      "source_url": "https://www.eduhk.hk/gao/articles/about#download",
+      "resolved_url": "https://www.eduhk.hk/gao/articles/about#download",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:22:45.174615+00:00",
+      "tls_verify": true,
+      "original_sha256": "e735eb4ec0a89f5b8512a60d9ff043ef9afefe05ed57e1e80d2762f6b56a3260",
+      "bundled_file": "completion_sources/p56-ninth-downloads.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p56-ninth-incoming",
+      "ccu_page": 56,
+      "source_url": "https://www.eduhk.hk/gao/en/page_content.php?level=3&id=77",
+      "resolved_url": "https://www.eduhk.hk/gao/en/page_content.php?level=3&id=77",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:17:50.085504+00:00",
+      "tls_verify": true,
+      "original_sha256": "2d2f293c87a3abf80b12adb262a9064990cfba7610230d0fdec6b66a0eea48a9",
+      "bundled_file": "completion_sources/p56-ninth-incoming.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p56-ninth-semester-dates",
+      "ccu_page": 56,
+      "source_url": "https://www.eduhk.hk/re/Current-Students/Publications/Academic-Calendar/Dates-Of-Semesters.html",
+      "resolved_url": "https://www.eduhk.hk/re/Current-Students/Publications/Academic-Calendar/Dates-Of-Semesters.html",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:30:00.829698+00:00",
+      "tls_verify": true,
+      "original_sha256": "726c9a2c09341b195c6ee48632319a988c87da7c7c4026a82283b135f8361321",
+      "bundled_file": "completion_sources/p56-ninth-semester-dates.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p56-reference-link-1",
       "ccu_page": 56,
       "source_url": "https://drive.usercontent.google.com/download?id=18yN56KcOZUtwwRTV-rgdpSL7DwcSV7xF&export=download",
@@ -12987,6 +13359,7 @@
       "response_bytes_verified": true,
       "decision": "used_with_explicit_field_status",
       "field_statuses": [
+        "needs_confirmation",
         "reference_only"
       ],
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
@@ -13494,6 +13867,24 @@
       "decision": "used_with_explicit_field_status",
       "field_statuses": [
         "reference_only"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p59-ninth-application-forms",
+      "ccu_page": 59,
+      "source_url": "https://oia.kmitl.ac.th/application-form/",
+      "resolved_url": "https://oia.kmitl.ac.th/registered-users-only/?wppb_referer_url=https%3A%2F%2Foia.kmitl.ac.th%2Fapplication-form%2F&redirect_to=https://oia.kmitl.ac.th/application-form/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:17:50.391193+00:00",
+      "tls_verify": true,
+      "original_sha256": "b49119f8c9e7ae7da6943e1c2267132d3cefad383379e4ad98da23baaec794d2",
+      "bundled_file": "completion_sources/p59-ninth-application-forms.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
       ],
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
@@ -15183,6 +15574,22 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p68-ninth-student-exchange",
+      "ccu_page": 68,
+      "source_url": "https://oia.hcmute.edu.vn/Default.aspx?TopicId=eab90393-060c-41a2-b4fc-96e1c1e0607e",
+      "resolved_url": "https://oia.hcmute.edu.vn/Default.aspx?TopicId=eab90393-060c-41a2-b4fc-96e1c1e0607e",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:28:49.846632+00:00",
+      "tls_verify": true,
+      "original_sha256": "bb6f17383f61bf081b5106d16880a1ffbede7f98b66ab6603399af08d3a1c4af",
+      "bundled_file": "completion_sources/p68-ninth-student-exchange.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p68-official-conference-index",
       "ccu_page": 68,
       "source_url": "https://conferences.hcmute.edu.vn/",
@@ -15679,6 +16086,38 @@
       "tls_verify": true,
       "original_sha256": "cae5da53e62634a7902bceec4e8a09c5c679e7e47775f0ae99133c8d79748244",
       "bundled_file": "completion_sources/p7-host_entry-2.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p7-ninth-housing",
+      "ccu_page": 7,
+      "source_url": "https://hwxy.nju.edu.cn/lxnd/xyfw/zsbx/zs/index.html",
+      "resolved_url": "https://hwxy.nju.edu.cn/lxnd/xyfw/zsbx/zs/index.html",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:36:41.065034+00:00",
+      "tls_verify": true,
+      "original_sha256": "5d6901514c687509da4b2c21eb546ce37e30a94bf3602d92af726a4a9debb46a",
+      "bundled_file": "completion_sources/p7-ninth-housing.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p7-ninth-insurance",
+      "ccu_page": 7,
+      "source_url": "https://hwxy.nju.edu.cn/lxnd/xyfw/zsbx/bx/index.html",
+      "resolved_url": "https://hwxy.nju.edu.cn/lxnd/xyfw/zsbx/bx/index.html",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:36:43.781052+00:00",
+      "tls_verify": true,
+      "original_sha256": "e78417a0be59fd7ec3f0e6fdfdfc4a2345c77dde7c3494b848cd075ebada6697",
+      "bundled_file": "completion_sources/p7-ninth-insurance.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -17006,6 +17445,75 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p75-ninth-application-form",
+      "ccu_page": 75,
+      "source_url": "https://www.cuchd.in/international/brochure/Admission_Form_International.pdf",
+      "resolved_url": "https://www.cuchd.in/international/brochure/admission_form_international.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:22:39.920907+00:00",
+      "tls_verify": true,
+      "original_sha256": "ef604289d21d161c823504409b6781590f24886beb32230bf9d6255650fe7270",
+      "bundled_file": "completion_sources/p75-ninth-application-form.pdf",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p75-ninth-factsheet",
+      "ccu_page": 75,
+      "source_url": "https://www.cuchd.in/international/brochure/factsheet.pdf",
+      "resolved_url": "https://www.cuchd.in/international/brochure/factsheet.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:22:39.921161+00:00",
+      "tls_verify": true,
+      "original_sha256": "6700bd8a9932e48cd0b96e5abc014c58cbdb3b1cc8955bc0a23bd6f02e2a59de",
+      "bundled_file": "completion_sources/p75-ninth-factsheet.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "reference_only"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p75-ninth-inbound",
+      "ccu_page": 75,
+      "source_url": "https://www.cuchd.in/international/inbound-exchange.php",
+      "resolved_url": "https://www.cuchd.in/international/inbound-exchange.php",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:17:47.918940+00:00",
+      "tls_verify": true,
+      "original_sha256": "cf002b4a45da9bc816f5180e2604c2f23e24ad23778a33e9d3ce8f302b6fe28d",
+      "bundled_file": "completion_sources/p75-ninth-inbound.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation",
+        "reference_only"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p75-ninth-partner-programmes",
+      "ccu_page": 75,
+      "source_url": "https://www.cuchd.in/international/program-search-criteria.php",
+      "resolved_url": "https://www.cuchd.in/international/program-search-criteria.php",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:17:47.919509+00:00",
+      "tls_verify": true,
+      "original_sha256": "6c61bcfb76157beacd4944c1f8de39a598d488fc7ef484c6d77c09df91223dbc",
+      "bundled_file": "completion_sources/p75-ninth-partner-programmes.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p75-root",
       "ccu_page": 75,
       "source_url": "https://www.cuchd.in/",
@@ -17750,6 +18258,22 @@
       "tls_verify": true,
       "original_sha256": "f5f420ae6355aa52ab7e8bee6b3e1d4ab7f58fbf87cba357b8ba5cc5cf94baf3",
       "bundled_file": "completion_sources/p79-life-2.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p79-ninth-credit-study",
+      "ccu_page": 79,
+      "source_url": "https://kiit.ac.in/credit-based-study-abroad-programme/",
+      "resolved_url": "https://kiit.ac.in/credit-based-study-abroad-programme/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:19:41.002494+00:00",
+      "tls_verify": true,
+      "original_sha256": "c01abce169ef9d517d23fa77b97fa59f443df533053f3ad184b0186495f55679",
+      "bundled_file": "completion_sources/p79-ninth-credit-study.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -18853,6 +19377,22 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p85-ninth-exchange",
+      "ccu_page": 85,
+      "source_url": "https://www.u-bordeaux-montaigne.fr/en/study/application/exchange-program.html",
+      "resolved_url": "https://www.u-bordeaux-montaigne.fr/en/study/application/exchange-program.html",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:36:44.487603+00:00",
+      "tls_verify": true,
+      "original_sha256": "ab4ac809d5d74e78ba8f56813e644a6a68a6c06c97df1b80c7500a2ee930439e",
+      "bundled_file": "completion_sources/p85-ninth-exchange.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p85-root",
       "ccu_page": 85,
       "source_url": "https://www.u-bordeaux-montaigne.fr/en/",
@@ -19203,6 +19743,25 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p87-ninth-bilateral",
+      "ccu_page": 87,
+      "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+      "resolved_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T17:19:41.002223+00:00",
+      "tls_verify": true,
+      "original_sha256": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+      "bundled_file": "completion_sources/p87-ninth-bilateral.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation",
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p87-root",
