@@ -89,7 +89,7 @@ def test_personal_form_access_has_an_explicit_official_instruction():
         assert any("account" in e["excerpt"] or "accepted nomination" in e["excerpt"] for e in forms["evidence"])
     baseline = read("completion-followup-gap-baseline.json")
     assert baseline["initial_counts"]["host_missing_fields"] == 702
-    assert read("completion-followup-gap-research.json")["current_counts"]["host_missing_fields"] == 643
+    assert read("completion-followup-gap-research.json")["current_counts"]["host_missing_fields"] == 638
 
 
 def test_fges_campus_is_the_faculty_marker_and_other_school_data_is_preserved(tmp_path):

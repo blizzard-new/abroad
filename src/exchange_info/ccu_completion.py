@@ -113,4 +113,5 @@ def apply_completion(partner: PartnerUniversity) -> PartnerUniversity:
                     }),
                 }
     partner.reference_data = {**partner.reference_data, "ccu_completion": json.dumps(public, ensure_ascii=False)}
-    return partner
+    from .ccu_sungshin_current import apply_sungshin_summary
+    return apply_sungshin_summary(partner)

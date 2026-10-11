@@ -9,17 +9,17 @@ import pytest
 from fastapi.testclient import TestClient
 from pypdf import PdfReader
 
-from exchange_info.api import create_app
 from exchange_info.advisor import build_advisor_plan
+from exchange_info.api import create_app
 from exchange_info.application_documents import all_application_templates
 from exchange_info.application_rules import (
-    build_personal_application_plan,
     _partner_language_threshold,
+    build_personal_application_plan,
 )
 from exchange_info.ccu_sources import BUNDLE, CHECKED_AT, HOME, ROUND, YEAR, home_round
 from exchange_info.ccu_student_view import (
-    fetch_ccu_partner_universities,
     build_ccu_student_dashboard,
+    fetch_ccu_partner_universities,
 )
 from exchange_info.models import (
     AdvisorProfile,
@@ -87,6 +87,18 @@ def test_ccu_counts_unique_and_quota_states():
 def test_ccu_provenance_and_explicit_old_attachments():
     for row in rows():
         for key, evidence in row.field_evidence.items():
+            if row.source_pages == [49] and key in {"semester_dates", "partner_application_deadline"}:
+                urls = {
+                    "semester_dates": "https://www.sungshin.ac.kr/bbs/int/3828/113855/download.do",
+                    "partner_application_deadline": "https://www.sungshin.ac.kr/bbs/int/3828/159720/artclView.do",
+                }
+                assert evidence.source_url == urls[key]
+                assert evidence.checked_at.date().isoformat() == "2026-10-11"
+                assert evidence.status == "verified_current" and evidence.excerpt
+                assert "Spring2027" in evidence.academic_year
+                assert evidence.application_round.startswith("Spring2027接待Exchange")
+                assert "ccu_sungshin_superseded_summary" in row.reference_data
+                continue
             if key in {"website", "city", "location", "colleges", "degree_levels"}:
                 assert evidence.source_url.startswith("https://")
                 expected_date = "2026-10-11" if row.availability_status == "not_open" and key == "website" else CHECKED_AT.date().isoformat()
@@ -177,7 +189,7 @@ def test_ccu_gpa_and_average_are_both_required(gpa, average, expected):
         academic_score=average,
         college="工學院",
         degree_level="大學部",
-        preferences=[dict(rank=1, school_name=partner.school_name)],
+        preferences=[{"rank": 1, "school_name": partner.school_name}],
     )
     result = build_personal_application_plan(
         request, [partner], workflows(), academic_score_minimum=70
@@ -196,7 +208,7 @@ def test_ccu_preference_limit_and_unknown_quota():
     request = PersonalApplicationPlanRequest(
         home_school=HOME,
         preferences=[
-            dict(rank=i + 1, school_name=p.school_name) for i, p in enumerate(partners)
+            {"rank": i + 1, "school_name": p.school_name} for i, p in enumerate(partners)
         ],
     )
     with pytest.raises(ValueError, match="最多3"):
@@ -205,7 +217,7 @@ def test_ccu_preference_limit_and_unknown_quota():
         )
     unknown = at(71)
     request = PersonalApplicationPlanRequest(
-        home_school=HOME, preferences=[dict(rank=1, school_name=unknown.school_name)]
+        home_school=HOME, preferences=[{"rank": 1, "school_name": unknown.school_name}]
     )
     result = build_personal_application_plan(
         request, [unknown], [], academic_score_minimum=70
@@ -332,6 +344,7 @@ def test_ccu_frontend_preferences_gpa_and_legacy_restoration():
     """
     result = subprocess.run(
         ["node", "-e", script, str(Path("src/exchange_info/static/app.js").resolve())],
+        check=False,
         capture_output=True,
         text=True,
     )

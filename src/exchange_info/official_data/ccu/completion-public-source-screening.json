@@ -1,11 +1,11 @@
 {
   "checked_at": "2026-10-11",
-  "source_count": 1217,
+  "source_count": 1240,
   "decisions": {
-    "acquired_not_policy_verified": 702,
+    "acquired_not_policy_verified": 710,
     "excluded_specific_review": 7,
-    "used_with_explicit_field_status": 449,
-    "technical_failure": 51,
+    "used_with_explicit_field_status": 463,
+    "technical_failure": 52,
     "challenge_or_error_page": 7,
     "used_access_requirement_evidence": 1
   },
@@ -1517,6 +1517,22 @@
       "tls_verify": true,
       "original_sha256": "ada2a601f24c7f102c6432340d6adca256996c391606174b387338725fe7cf7d",
       "bundled_file": "completion_sources/p104-commons-exact-search.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p104-current-factsheet-from-official-index",
+      "ccu_page": 104,
+      "source_url": "https://www.fhnw.ch/en/business/degree-programmes/international/exchange-semester/fact-sheet_-fhnw_school-of-business-undergraduates_2026.pdf/@@display-file/file",
+      "resolved_url": "https://www.fhnw.ch/en/business/degree-programmes/international/exchange-semester/fact-sheet_-fhnw_school-of-business-undergraduates_2026.pdf/@@display-file/file",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:18:58.404638+00:00",
+      "tls_verify": true,
+      "original_sha256": "1eec0e08d5256f540303f5c33bdf1d63d153f9058fefb722ab9999d7592b87a0",
+      "bundled_file": "completion_sources/p104-current-factsheet-from-official-index.pdf",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -4680,6 +4696,22 @@
       "decision": "technical_failure",
       "field_statuses": [],
       "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/HALLOWEENFEST/"
+    },
+    {
+      "source_id": "p119-official-spanishschool-public",
+      "ccu_page": 119,
+      "source_url": "https://spanishschool.uninter.edu.mx/",
+      "resolved_url": "https://spanishschool.uninter.edu.mx/",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://spanishschool.uninter.edu.mx/",
+      "checked_at": "2026-10-11T14:02:33.806665+00:00",
+      "tls_verify": true,
+      "original_sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+      "bundled_file": "completion_sources/p119-official-spanishschool-public.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://spanishschool.uninter.edu.mx/"
     },
     {
       "source_id": "p119-root",
@@ -11046,6 +11078,22 @@
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
+      "source_id": "p48-current-factsheet-from-official-index",
+      "ccu_page": 48,
+      "source_url": "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
+      "resolved_url": "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:18:58.404054+00:00",
+      "tls_verify": true,
+      "original_sha256": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
+      "bundled_file": "completion_sources/p48-current-factsheet-from-official-index.pdf",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p48-host_entry-1",
       "ccu_page": 48,
       "source_url": "https://irt.seoultech.ac.kr/inbound/exchange_tab",
@@ -11260,6 +11308,151 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p49-official-spring2027-attachment-113854",
+      "ccu_page": 49,
+      "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113854/download.do",
+      "resolved_url": "https://www.sungshin.ac.kr/bbs/int/3828/113854/download.do",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:29:36.481154+00:00",
+      "tls_verify": true,
+      "original_sha256": "661ea329ef759e36eadfa5e8440f15419537740a9a49e6de2643b3c12cecdbf8",
+      "bundled_file": "completion_sources/p49-official-spring2027-attachment-113854.pdf",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p49-official-spring2027-attachment-113855",
+      "ccu_page": 49,
+      "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113855/download.do",
+      "resolved_url": "https://www.sungshin.ac.kr/bbs/int/3828/113855/download.do",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:29:36.481420+00:00",
+      "tls_verify": true,
+      "original_sha256": "e38620d1311f139a37290c435c228efdb0b982916413049aba506498560469dd",
+      "bundled_file": "completion_sources/p49-official-spring2027-attachment-113855.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict",
+        "needs_confirmation",
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p49-official-spring2027-attachment-113856",
+      "ccu_page": 49,
+      "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113856/download.do",
+      "resolved_url": "https://www.sungshin.ac.kr/bbs/int/3828/113856/download.do",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:29:36.481701+00:00",
+      "tls_verify": true,
+      "original_sha256": "89d37a7b514a769b1a8814908757ea83ff05031d427e4111c656e52a38a00960",
+      "bundled_file": "completion_sources/p49-official-spring2027-attachment-113856.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p49-official-spring2027-attachment-113857",
+      "ccu_page": 49,
+      "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113857/download.do",
+      "resolved_url": "https://www.sungshin.ac.kr/bbs/int/3828/113857/download.do",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:29:36.482297+00:00",
+      "tls_verify": true,
+      "original_sha256": "2c1dcdc66a41cd703df3c93ca7f41df324d0d7ce23ca394a5ff1decf393a36cd",
+      "bundled_file": "completion_sources/p49-official-spring2027-attachment-113857.xlsx",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p49-official-spring2027-attachment-113949",
+      "ccu_page": 49,
+      "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113949/download.do",
+      "resolved_url": "https://www.sungshin.ac.kr/bbs/int/3828/113949/download.do",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:29:37.689861+00:00",
+      "tls_verify": true,
+      "original_sha256": "78758180ee65a4266f89c1aecf40128fd405d7b6c5f72804d00f98de1405cad9",
+      "bundled_file": "completion_sources/p49-official-spring2027-attachment-113949.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p49-official-spring2027-attachment-113950",
+      "ccu_page": 49,
+      "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113950/download.do",
+      "resolved_url": "https://www.sungshin.ac.kr/bbs/int/3828/113950/download.do",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:29:38.568717+00:00",
+      "tls_verify": true,
+      "original_sha256": "58af774b11a416752cf3be8f5d357b15df6e8c4c817344ec709e219b0977ab16",
+      "bundled_file": "completion_sources/p49-official-spring2027-attachment-113950.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p49-official-spring2027-attachment-113951",
+      "ccu_page": 49,
+      "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113951/download.do",
+      "resolved_url": "https://www.sungshin.ac.kr/bbs/int/3828/113951/download.do",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:29:40.189676+00:00",
+      "tls_verify": true,
+      "original_sha256": "3676271aa83ee8be85bdf4e1dbaae8b07cbafd28d4b6321fffc78bfee7c18bed",
+      "bundled_file": "completion_sources/p49-official-spring2027-attachment-113951.xlsx",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p49-official-spring2027-call",
+      "ccu_page": 49,
+      "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/159720/artclView.do",
+      "resolved_url": "https://www.sungshin.ac.kr/bbs/int/3828/159720/artclView.do",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:29:06.378565+00:00",
+      "tls_verify": true,
+      "original_sha256": "df68738465abfe950cf2a5653ca96fbe499b553caddebc9f1ec9783286c09a52",
+      "bundled_file": "completion_sources/p49-official-spring2027-call.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict",
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p49-root",
@@ -14570,6 +14763,92 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p68-official-conference-index",
+      "ccu_page": 68,
+      "source_url": "https://conferences.hcmute.edu.vn/",
+      "resolved_url": "https://conferences.hcmute.edu.vn/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:02:33.805702+00:00",
+      "tls_verify": true,
+      "original_sha256": "3a8d290b85c3f3b0a7640daf35578efef393ea449b41aedf9f89dca674bf40fa",
+      "bundled_file": "completion_sources/p68-official-conference-index.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p68-official-gtsd2026-campus-marker",
+      "ccu_page": 68,
+      "source_url": "https://maps.app.goo.gl/StEAfixJb3seGqCA7",
+      "resolved_url": "https://www.google.com/maps/place/Tr%C6%B0%E1%BB%9Dng+%C4%90%E1%BA%A1i+h%E1%BB%8Dc+C%C3%B4ng+ngh%E1%BB%87+K%E1%BB%B9+thu%E1%BA%ADt+Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh/@10.8506324,106.7693382,855m/data=!3m2!1e3!4b1!4m6!3m5!1s0x31752763f23816ab:0x282f711441b6916f!8m2!3d10.8506324!4d106.7719131!16s%2Fm%2F02pz17z?entry=tts&g_ep=EgoyMDI2MDcwNi4wIPu8ASoASAFQAw%3D%3D&skid=75968385-cbd8-4b36-84c7-b2d4a357fb1b",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:16:35.430653+00:00",
+      "tls_verify": true,
+      "original_sha256": "fe1b18d5944e1d7a2c7dc231eb418039efe3ef3034c38a4d4e7e6c1f9870cdeb",
+      "bundled_file": "completion_sources/p68-official-gtsd2026-campus-marker.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p68-official-gtsd2026-public",
+      "ccu_page": 68,
+      "source_url": "https://gtsd2026.hcmute.edu.vn/",
+      "resolved_url": "https://gtsd2026.hcmute.edu.vn/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:10:44.635918+00:00",
+      "tls_verify": true,
+      "original_sha256": "2ef814da828d63c20481107e3fba855ebe3bfad60a392ff00a2c16c560588486",
+      "bundled_file": "completion_sources/p68-official-gtsd2026-public.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p68-official-icecm2026-public",
+      "ccu_page": 68,
+      "source_url": "https://icecm-idic2026.hcmute.edu.vn/",
+      "resolved_url": "https://icecm-idic2026.hcmute.edu.vn/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:10:44.637667+00:00",
+      "tls_verify": true,
+      "original_sha256": "0f6ff0e701d4920b243da5098c9c72ca90f43cb95b11c38cf4ba856051fc9c82",
+      "bundled_file": "completion_sources/p68-official-icecm2026-public.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p68-official-iceeis2026-public",
+      "ccu_page": 68,
+      "source_url": "https://iceeis2026.hcmute.edu.vn/",
+      "resolved_url": "https://iceeis2026.hcmute.edu.vn/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:10:44.635648+00:00",
+      "tls_verify": true,
+      "original_sha256": "506443bd28be5792c68274d7fb176ed2363f4118f5dd27c452391a943d9c886d",
+      "bundled_file": "completion_sources/p68-official-iceeis2026-public.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p68-official-public-map-contact",
       "ccu_page": 68,
       "source_url": "https://hcmute.edu.vn/ArticleId/3f7027d3-ae97-4fb3-a05c-b1612f12260f/lien-he",
@@ -15330,6 +15609,22 @@
       "tls_verify": true,
       "original_sha256": "e8e643ae19bd75f63df935da490e97cc967db8d1d3ad722b79e0b1dd22db8d87",
       "bundled_file": "completion_sources/p71-main-public-script.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p71-official-postgraduate-public",
+      "ccu_page": 71,
+      "source_url": "https://phongsaudaihoc.dntu.edu.vn/",
+      "resolved_url": "https://phongsaudaihoc.dntu.edu.vn/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:02:33.811047+00:00",
+      "tls_verify": true,
+      "original_sha256": "07676c4ce773487a74912167f30cb3801fbc670f6ddba0c97a45f68aadb2ec2e",
+      "bundled_file": "completion_sources/p71-official-postgraduate-public.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -18563,6 +18858,58 @@
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
+      "source_id": "p89-current-apply-from-official-index",
+      "ccu_page": 89,
+      "source_url": "https://www.sdu.dk/en/uddannelse/exchange/apply",
+      "resolved_url": "https://www.sdu.dk/en/uddannelse/exchange/apply",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:18:58.405157+00:00",
+      "tls_verify": true,
+      "original_sha256": "b96b1ea44dbd81085f12bbee39f564ecce708f0f66017db6d6b2f20bd9d7121a",
+      "bundled_file": "completion_sources/p89-current-apply-from-official-index.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p89-current-factsheet-from-official-partners",
+      "ccu_page": 89,
+      "source_url": "https://www.sdu.dk/-/media/files/samarbejde/internationalt_samarbejde/fact_sheet_university_of_southern_denmark.pdf",
+      "resolved_url": "https://www.sdu.dk/-/media/files/samarbejde/internationalt_samarbejde/fact_sheet_university_of_southern_denmark.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:20:09.093345+00:00",
+      "tls_verify": true,
+      "original_sha256": "af02439182a554a5c78119c86c98423e2b03c69fde7507130faa2ca80714d24e",
+      "bundled_file": "completion_sources/p89-current-factsheet-from-official-partners.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p89-current-partners-from-official-index",
+      "ccu_page": 89,
+      "source_url": "https://www.sdu.dk/en/om-sdu/internationale-samarbejder",
+      "resolved_url": "https://www.sdu.dk/en/om-sdu/internationale-samarbejder",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:18:58.406998+00:00",
+      "tls_verify": true,
+      "original_sha256": "64958cbe3f66985564dc5383d60c838655673069dedfd5122783196209486858",
+      "bundled_file": "completion_sources/p89-current-partners-from-official-index.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p89-host_entry-1",
       "ccu_page": 89,
       "source_url": "https://www.sdu.dk/en/uddannelse/exchange",
@@ -18625,6 +18972,58 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p89-public-exchange-form-from-official-apply",
+      "ccu_page": 89,
+      "source_url": "https://www.sdu.dk/resources/net/ansskema.aspx?s=en&l=178",
+      "resolved_url": "https://www.sdu.dk/resources/net/ansskema.aspx?s=en&l=178",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:20:09.097495+00:00",
+      "tls_verify": true,
+      "original_sha256": "69cf3470e01a743c714ee924995962b730b8e650f48d58c027a67022c6266c75",
+      "bundled_file": "completion_sources/p89-public-exchange-form-from-official-apply.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p89-public-language-form-from-official-apply",
+      "ccu_page": 89,
+      "source_url": "https://www.sdu.dk/-/media/files/information_til/internationalstudents/exchange/sdulanguagerequirementform.pdf",
+      "resolved_url": "https://www.sdu.dk/-/media/files/information_til/internationalstudents/exchange/sdulanguagerequirementform.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:20:09.093882+00:00",
+      "tls_verify": true,
+      "original_sha256": "fdf3e501549dfeb4b7760ca7b1e3f49b35fa5567b503573fdcd9a0d6af253b2a",
+      "bundled_file": "completion_sources/p89-public-language-form-from-official-apply.pdf",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p89-public-prepare-from-official-exchange",
+      "ccu_page": 89,
+      "source_url": "https://www.sdu.dk/en/uddannelse/living-in-denmark/guides/prepare-your-stay",
+      "resolved_url": "https://www.sdu.dk/en/uddannelse/living-in-denmark/prepare-your-stay",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T14:21:23.195206+00:00",
+      "tls_verify": true,
+      "original_sha256": "20ff58ad3f7c77867f90581c10bdaed7410c6e4abd051496a97121f43a677d36",
+      "bundled_file": "completion_sources/p89-public-prepare-from-official-exchange.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p89-root",
