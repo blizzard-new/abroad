@@ -15,6 +15,8 @@ def main():
     gap_reviews={r['id']:r for r in json.loads((B/'milestone3_asset_gap_reviews.json').read_text())} if (B/'milestone3_asset_gap_reviews.json').exists() else {}
     if (B/'milestone4_asset_source_limits.json').exists():
         gap_reviews={r['id']:r for r in json.loads((B/'milestone4_asset_source_limits.json').read_text())['schools']}
+    if (B/'milestone5_asset_outcomes.json').exists():
+        gap_reviews={r['id']:r for r in json.loads((B/'milestone5_asset_outcomes.json').read_text())['schools']}
     for d in audit['schools']:
         latest={}
         for s in d['public_source_checks']:
@@ -41,6 +43,9 @@ def main():
         milestone4_handoff=dict(candidate_review='milestone4_candidate_content_reviews.json',fixed_candidates=69,
             complete_available_bodies=64,partial_bodies=4,http404=1,remaining_reference_sources='milestone4_remaining_source_limits.json',
             asset_source_limits='milestone4_asset_source_limits.json',note='固定69候選均已交代；來源年份確認不代表淡江本期核實，未耗盡的命名地圖另列。'),
+        milestone5_handoff=dict(readable_outcomes='milestone5_readable_outcomes.json',fixed_readable_institutions=47,
+            asset_outcomes='milestone5_asset_outcomes.json',source_conflicts='milestone5_source_conflicts.json',
+            note='12校接入參考（10學期規則、2範圍／服務）；5外部限制、30需適用來源。命名Adelaide圖層已讀，承繼／校區未核實，不代配。'),
         milestone1=dict(photos=66,coordinates=68),current=dict(photos=len(photos),coordinates=len(locations),photo_percent=round(len(photos)/287*100,2),coordinate_percent=round(len(locations)/287*100,2),photo_gaps=287-len(photos),coordinate_gaps=287-len(locations)),
         delta_from_milestone1=dict(photos=len(photos)-66,coordinates=len(locations)-68),
         host_retry_checks=len(checks),host_retry_statuses=dict(Counter(str(r.get('http_status') or 'connection_error') for r in checks)),

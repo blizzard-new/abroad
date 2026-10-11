@@ -63,9 +63,15 @@ def build():
     # Mixed brochures/directories/events must not create rules from sidebar hits.
     # M4 references enter only through the human-reviewed field overlay below.
     for filename in ['milestone4_candidate_content_reviews.json',
-                     'milestone4_followup_scope_reviews.json']:
+                     'milestone4_followup_scope_reviews.json',
+                     'milestone5_source_scope_reviews.json']:
         if (BUNDLE/filename).exists():
-            scopes.update({r['source_id']:r for r in json.loads((BUNDLE/filename).read_text())})
+            incoming={r['source_id']:r for r in json.loads((BUNDLE/filename).read_text())}
+            if filename=='milestone5_source_scope_reviews.json':
+                # A reused canonical capture retains its earlier precise
+                # outgoing/degree decision; M5 adds new route restrictions.
+                for sid,review in incoming.items():scopes.setdefault(sid,review)
+            else:scopes.update(incoming)
     for institution in index:
         references=[]; blockers=[]
         for meta in institution["sources"]:

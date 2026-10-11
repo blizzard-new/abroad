@@ -64,6 +64,15 @@ def capture(url, *, key_suffix=None):
                       sha256=hashlib.sha256(response.content).hexdigest(), bytes=len(response.content),retry_after=response.headers.get('Retry-After'))
         response.raise_for_status()
         extension=urlsplit(url).path.lower()
+        # Official download.jsp endpoints may deliver Office files without a
+        # filename extension. Inspect ZIP members rather than parsing binaries
+        # as HTML or trusting the link label.
+        office_kind = None
+        if response.content.startswith(b"PK"):
+            import io, zipfile
+            with zipfile.ZipFile(io.BytesIO(response.content)) as office:
+                if 'xl/workbook.xml' in office.namelist():office_kind = 'xlsx'
+                elif 'word/document.xml' in office.namelist():office_kind = 'docx'
         if extension.endswith('.pdf') and not response.content.startswith(b'%PDF'):
             raise ValueError('Expected PDF endpoint returned no PDF magic; no document content verified')
         if extension.endswith('.docx') and not response.content.startswith(b'PK'):
@@ -80,7 +89,7 @@ def capture(url, *, key_suffix=None):
             asset = STORE / (key + ".pdf")
             asset.write_bytes(response.content)
             record["local_file"] = asset.name
-        elif extension.endswith('.xlsx'):
+        elif extension.endswith('.xlsx') or office_kind == 'xlsx':
             import io,zipfile
             from xml.etree import ElementTree
             ns={'s':'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
@@ -106,7 +115,7 @@ def capture(url, *, key_suffix=None):
         elif extension.endswith('.doc'):
             asset=STORE/(key+'.doc');asset.write_bytes(response.content);record['local_file']=asset.name
             record.update(text='',content_extraction_status='legacy_DOC_parser_not_available',content_scope='Downloaded OLE Word binary; actual year and application content not verified')
-        elif response.content.startswith(b"PK") and urlsplit(response.url).path.lower().endswith(".docx"):
+        elif office_kind == 'docx':
             import io
             import zipfile
             from xml.etree import ElementTree
@@ -117,6 +126,15 @@ def capture(url, *, key_suffix=None):
             asset=STORE/(key+".docx");asset.write_bytes(response.content)
             record["local_file"]=asset.name
             record["content_type"]="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        elif response.content.startswith(bytes.fromhex('ffd8ff')):
+            import io
+            from PIL import Image
+            with Image.open(io.BytesIO(response.content)) as picture:
+                record['image_dimensions'] = list(picture.size)
+                picture.verify()
+            asset=STORE/(key+'.jpg');asset.write_bytes(response.content)
+            record.update(local_file=asset.name,text='',content_type='image/jpeg',
+                          content_review_status='image_opened_byte_validation_only; visual content review separately')
         else:
             soup = BeautifulSoup(response.content, "html.parser")
             record["title"] = soup.title.get_text(" ", strip=True) if soup.title else ""

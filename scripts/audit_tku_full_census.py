@@ -31,7 +31,7 @@ def main():
             rendered_documents.append(dict(source_id=source['id'],original_capture_id=source['original_capture_id'],source_url=source['source_url'],file=source['rendered_file'],bytes=len(blob),sha256=source['rendered_sha256'],pages=len(source['pages']),status='offline_render_not_downloaded_original',checked_at=source['checked_at']))
         if not source.get('local_file'):continue
         path=B/'host_census_sources'/source['local_file'];blob=read_bytes(path)
-        valid_magic=blob.startswith((b'%PDF',b'PK',bytes.fromhex('d0cf11e0a1b11ae1')))
+        valid_magic=blob.startswith((b'%PDF',b'PK',bytes.fromhex('d0cf11e0a1b11ae1'),bytes.fromhex('ffd8ff')))
         assert valid_magic and hashlib.sha256(blob).hexdigest()==source['sha256']
         attachments.append(dict(source_url=source['source_url'],file=source['local_file'],bytes=len(blob),sha256=source['sha256'],magic_valid=valid_magic,checked_at=source['checked_at']))
     unchanged=[]

@@ -105,6 +105,10 @@ def main():
         additions=json.loads((B/'milestone4_reviewed_host_facts.json').read_text())
         assert not {r['id'] for r in curated}.intersection(r['id'] for r in additions)
         curated.extend(additions)
+    if (B/'milestone5_reviewed_host_facts.json').exists():
+        additions=json.loads((B/'milestone5_reviewed_host_facts.json').read_text())
+        assert not {r['id'] for r in curated}.intersection(r['id'] for r in additions)
+        curated.extend(additions)
     (B/"curated_partner_facts.json").write_text(json.dumps(curated,ensure_ascii=False,indent=2)+"\n")
     locations=[]
     source=next(captured(p.stem.split('.')[0]) for p in captures(B/'host_census_sources')
