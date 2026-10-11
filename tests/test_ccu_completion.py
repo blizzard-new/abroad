@@ -102,7 +102,7 @@ def test_photos_have_identity_licence_author_and_original_bytes():
     assert "Karvina" in photos[111]["value"]["source_page_url"]
     assert "E-waste-lab" in photos[77]["value"]["source_page_url"]
     assert "Brugg-Windisch" in photos[104]["value"]["campus_caption"]
-    assert "人物" in read("campus-photo-review.json")["initial_exclusions"]["p77-followup-campus-vtu"]
+    assert photos[77]["value"]["sha256"] != read("completion_sources/p77-followup-reviewed-campus.json")["sha256"]
 
 
 def test_all_fresh_evidence_has_receipts_and_unchanged_response_bytes():

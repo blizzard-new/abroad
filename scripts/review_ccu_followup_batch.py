@@ -54,7 +54,7 @@ def main():
     points = read("campus-coordinate-review.json")
     point_values = [
         (79, "Bhubaneswar", 20.3555462, 85.8161006, "followup-contact", "followup-official-map", "KIIT - Kalinga Institute of Industrial Technology", "!3d20.3555462!4d85.8161006", "官方Contact頁Patia地址連至此KIIT機構marker；不是@視窗值或KISS校區。"),
-        (105, "Ankara", 39.94273159999999, 32.8564133, "followup-contact-tr", "followup-official-map", "Social Sciences University of Ankara, Hacı Bayram, Ulus, Hükümet Meydani No:2", "[39.94273159999999,32.8564133]", "官方土耳其文İletişim頁所嵌地圖解析為Hükümet Meydani No:2校址marker；不採39.94340047942294／32.85319811498272視窗值，不套Northern Cyprus校區。"),
+        (105, "Ankara（Ankara 主校）", 39.94273159999999, 32.8564133, "followup-contact-tr", "followup-official-map", "Social Sciences University of Ankara, Hacı Bayram, Ulus, Hükümet Meydani No:2", "[39.94273159999999,32.8564133]", "官方土耳其文İletişim頁所嵌地圖解析為Hükümet Meydani No:2校址marker；不採39.94340047942294／32.85319811498272視窗值，不套Northern Cyprus校區。"),
         (107, "Pardubice", 50.04816, 15.7693999, "campus_contact-1", "followup-google-map", "Univerzita Pardubice, Studentská 95, 532 10 Pardubice II", "[50.04816,15.7693999]", "官方Contacts頁嵌入的同一place ID地圖，正文marker為Studentská95；不採Mapy視窗或Google embed初始視窗座標。"),
     ]
     for page, city, latitude, longitude, primary_label, map_label, identity, marker, note in point_values:

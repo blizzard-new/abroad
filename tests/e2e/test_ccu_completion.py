@@ -12,6 +12,32 @@ HOME = "國立中正大學"
 
 
 @pytest.mark.parametrize("width", [390, 1440])
+def test_iit_bombay_current_receiving_policy_preserves_closed_home_status(page, live_server, width):
+    partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 72)
+    assert partner.availability_status == "not_open" and partner.quota is None
+    page.set_viewport_size({"width": width, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+    page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+    reference = page.locator("#detail-overview .ccu-reference-host")
+    expect(reference).to_contain_text("中正本期未開放", timeout=30_000)
+    expect(reference.locator("[data-ccu-reference-field]")).to_have_count(17)
+    deadline = reference.locator('[data-ccu-reference-field="application_deadline"]')
+    deadline.locator("> summary").click()
+    expect(deadline).to_contain_text("2026-09-30")
+    expect(deadline).to_contain_text("Project申請全年受理")
+    expect(deadline.locator("a").first).to_have_attribute("href", partner.website + "sites/default/files/2026-08/IITB%20IR%20Fact%20Sheet%202026-2027.pdf#page=3")
+    forms = reference.locator('[data-ccu-reference-field="application_forms"]')
+    forms.locator("> summary").click()
+    expect(forms).to_contain_text("待確認")
+    expect(forms).to_contain_text("到校後")
+    housing = reference.locator('[data-ccu-reference-field="housing"]')
+    housing.locator("> summary").click()
+    expect(housing).to_contain_text("不是事前保證床位")
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+
+
+@pytest.mark.parametrize("width", [390, 1440])
 def test_closed_reference_school_shows_separate_current_host_tracks_and_credited_campus(page, live_server, width):
     partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 81)
     page.set_viewport_size({"width": width, "height": 956})
