@@ -21,7 +21,7 @@
 | 校園照片 | 97／104 | 真實影像、作者、授權 URL、來源頁、校區說明及 SHA256；保留下載原始 bytes |
 | 官方網站身份 | 101／104 | 100 網站正文＋Ateneo 當期簡章直接列示 URL；網址身份與網站連線成功分開 |
 | 接待欄位矩陣 | 17 × 104 = 1,768 | current 316、reference 336、missing 702、needs_confirmation 339、conflict 74、explicit_not_announced 1 |
-| 校園／院系欄位矩陣 | 7 × 104 = 728 | current 363、reference 97、missing 178、needs_confirmation 90 |
+| 校園／院系欄位矩陣 | 7 × 104 = 728 | current 362、reference 97、missing 179、needs_confirmation 90 |
 | 另列一般校園欄位 | 7 × 104 = 728 | current 281、missing 447；不得與接待政策欄重複算完整度 |
 | 讀過內容的參考附件 | 25 | 其中 Ateneo 本科／研究所各一份明載 Spring 2027；其他舊年或未標年分開 |
 | 新抓取紀錄 | 1,067 | 成功、失敗、HTTP 200 阻擋頁、錯誤候選均留存；不是 1,067 項已核實政策 |
@@ -66,6 +66,7 @@ PR #8 固定 head `9927ec1d8765a9772671bbaa68e7f920995f1258` 已恢復既有 30 
 2. `static/index.html`：CCU 模組的 cache 版本 query。
 3. `pyproject.toml`：打包 `official_data/ccu/completion_sources/*`，含 gzip 回應與附件。
 4. `scripts/build_ccu_catalog.py`：生成原55流程後再補49參考介紹；新 serializer 略去 null/default 時，若 Pydantic 正規化後意義相同，保留已刊流程 bytes。
+5. `tests/test_fit_signals.py`、`tests/test_school_completeness.py`：介紹總數844→893，中正55→104；其他五校數量不變，原費用與完整度斷言保留，另驗證49參考介紹不推定當期預算。
 
 原55介紹 prefix SHA256 `1375f32052bcdeaedfe696073e7ada6d40f40bdebeba0dc1e7f82353e38b78e6`。重新生成後，既有官方資料只允許追加 CCU 的49介紹；CGU/NTPU/TKU/NTU/NCU 資料與原 CCU partners、55流程、資格、文件及附件保持不變。
 
@@ -87,3 +88,5 @@ PLAYWRIGHT_BROWSERS_PATH=/tmp/ccu-playwright python -m pytest -q tests/test_ccu_
 ```
 
 完整測試採專案 `run_web_quality_tests.py` 四 shard，無新增排除，保留全部 node ID、JUnit、原始 log 與實測 commit。實際結果列於本次 Draft PR 及交付回報；本環境證據目錄 `/workspace/ccu-completion-artifacts-20261011`。Python/JS、OpenAPI、lock、依賴稽核與打包另驗。SQL migration parser 通過35 migrations／564 statements／11 SQL bodies／74 PL/pgSQL units；隔離 Supabase runtime 的 Docker 映像拉取遇 `no space left on device`，不列成功。沒有啟用 Quality workflow、merge main 或部署。
+
+[實測結果與原始證據](ccu-completion-validation-2026-10-11/report.json)：production commit `c18aebfceeedf8fceba5e4b24bbdf9dbebf0af18` 全套2,668項實際為2,650通過／14略過／4失敗。兩項舊數量常數已修正，相关兩個共用測試檔與中正completion單元測試共31項重跑通過；剩兩項臺大截圖路徑失敗在未改main也同樣重現。仅使用暫存目錄的修補提案於独立對照副本另2項通過，未改臺大測試或工作目錄。後續commit僅更新兩項共用數量測試與證據文件，所有production Git objects保持一致；不把整套結果改寫成全綠。

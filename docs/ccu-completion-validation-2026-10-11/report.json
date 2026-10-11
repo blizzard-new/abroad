@@ -1,0 +1,381 @@
+{
+  "production_commit": "c18aebfceeedf8fceba5e4b24bbdf9dbebf0af18",
+  "baseline_main": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "full_suite": {
+    "tests": 2668,
+    "passed": 2650,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 14
+  },
+  "shards": [
+    {
+      "shard": 0,
+      "exit_code": 1,
+      "elapsed_seconds": 2131.2648010380217,
+      "tested_commit": "c18aebfceeedf8fceba5e4b24bbdf9dbebf0af18",
+      "tests": 2312,
+      "failures": 4,
+      "errors": 0,
+      "skipped": 14,
+      "passed": 2294
+    },
+    {
+      "shard": 1,
+      "exit_code": 0,
+      "elapsed_seconds": 1302.4163541850285,
+      "tested_commit": "c18aebfceeedf8fceba5e4b24bbdf9dbebf0af18",
+      "tests": 119,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 119
+    },
+    {
+      "shard": 2,
+      "exit_code": 0,
+      "elapsed_seconds": 1061.5870630689897,
+      "tested_commit": "c18aebfceeedf8fceba5e4b24bbdf9dbebf0af18",
+      "tests": 119,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 119
+    },
+    {
+      "shard": 3,
+      "exit_code": 0,
+      "elapsed_seconds": 1472.1423262339667,
+      "tested_commit": "c18aebfceeedf8fceba5e4b24bbdf9dbebf0af18",
+      "tests": 118,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 118
+    }
+  ],
+  "failures": [
+    "tests.e2e.test_ntu_official_changes::test_current_portal_reference_is_visible_without_opening_quota[390]",
+    "tests.e2e.test_ntu_official_changes::test_current_portal_reference_is_visible_without_opening_quota[1440]",
+    "tests.test_fit_signals::test_bundled_destination_profiles_yield_honest_budget_results",
+    "tests.test_school_completeness::test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has"
+  ],
+  "skipped_cases": [
+    {
+      "case": "tests.e2e.test_web_next_phase::test_content_admins_independently_attest_every_source_before_publish",
+      "reason": "Phase C"
+    },
+    {
+      "case": "tests.e2e.test_web_next_phase::test_content_admin_downloads_snapshot_bound_destination_profile_review_queue",
+      "reason": "Phase C"
+    },
+    {
+      "case": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime::test_fixed_10_questions_no_oom",
+      "reason": "Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "case": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime::test_cold_start_under_90s",
+      "reason": "Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "case": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime::test_overlong_prompt_handled",
+      "reason": "Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "case": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime::test_service_recovers_after_timeout",
+      "reason": "Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "case": "tests.test_application_plan_api::test_application_plan_api_uses_bundled_workflow_with_isolated_runtime_data",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_application_workflow::test_workflow_api_reads_cache_and_rejects_public_refresh",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_application_workflow::test_workflow_api_applies_department_override",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_cgu_bundled_data::test_bundled_cgu_workflows_are_available_without_local_cache",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_cgu_bundled_data::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_cgu_bundled_data::test_bundled_cgu_completeness_report_matches_export",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_cgu_bundled_data::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_ntu_school_board_migration::test_ntu_forum_rpc_migration_preserves_authorization_and_replays",
+      "reason": "opt in to isolated Docker PostgreSQL"
+    }
+  ],
+  "new_exclusions": 0,
+  "source_and_runtime_changed_after_full_suite": false,
+  "production_git_objects": {
+    "src": "85f7255e3abf5c9e954d8a51bdd58cd9c775a45d",
+    "scripts": "6d7ae134e041390f0c38d48691b1cf95ac6bd9d4",
+    "data": "d96a635c71b07e955d323dedd566462fba412b49",
+    "pyproject.toml": "9fc12547a48486285c6f000421a4b5cdee3c3869",
+    "uv.lock": "72a4b1691f8718ea632cd95d68c1a251a4b53496",
+    "supabase": "c23e95f1f3bbce8cfd696566e1ad2db6ebf101d6"
+  },
+  "resolved_count_failures": [
+    "tests.test_fit_signals::test_bundled_destination_profiles_yield_honest_budget_results",
+    "tests.test_school_completeness::test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has"
+  ],
+  "count_correction_rerun": {
+    "tests": 31,
+    "passed": 31,
+    "failures": 0,
+    "scope": "two shared count/completeness files plus all CCU completion unit tests"
+  },
+  "remaining_baseline_failures": {
+    "tests": 2,
+    "reason": "unchanged NTU screenshot output path missing parent directory; same two failures reproduced on immutable main",
+    "patch_applied_to_candidate": false,
+    "portable_patch_proposal_separate_copy_passed": 2
+  },
+  "supabase_runtime": "failed: Docker image pull no space left on device; generated Compose project cleaned, no remote database",
+  "workflow": "disabled_manually",
+  "source_archive_count": 1067,
+  "package_ccu_files_verified": 3067,
+  "evidence_manifest": [
+    {
+      "file": "completion-source-screening.log.gz",
+      "stored_sha256": "7d40601edcc1d2b2cd3817ce99fc5186d68dd2ba7c722201bcabfc31e6eac863",
+      "original_sha256": "8b485eb158fc4134caed838f9905ad69fd14ac64f34a3e935fa0ec0f1e8faaf0",
+      "original_bytes": 231
+    },
+    {
+      "file": "corrected-count-tests.log.gz",
+      "stored_sha256": "e80700c66523f0703bac8a86a872b18d94265603532f2cefbf73c8481b30f6ce",
+      "original_sha256": "e77691f66d12f48eab3425109975c02ef7f2c0bff921c3fc7a26b9f097488be2",
+      "original_bytes": 117
+    },
+    {
+      "file": "corrected-count-tests.xml",
+      "stored_sha256": "d88b2fa4f7e51d15d72a130d38e575348298e31192d26cfb5e67c59b05a3d99a",
+      "original_sha256": "d88b2fa4f7e51d15d72a130d38e575348298e31192d26cfb5e67c59b05a3d99a",
+      "original_bytes": 4397
+    },
+    {
+      "file": "dependency-audit-repaired.log.gz",
+      "stored_sha256": "0ddae9ddb0062646eeea01dcf8d68069a09b482dafdd22fbe075df1893c64fff",
+      "original_sha256": "15950a68a7ed99c59779717acefdceb3f69cfd31bde67d2c954f2a3cea4d7955",
+      "original_bytes": 31
+    },
+    {
+      "file": "dependency-lock-repaired.log.gz",
+      "stored_sha256": "88caa87abe609bf2892cf2a93e31fba666ddb529f08f8d2f62e6c50fc03ec736",
+      "original_sha256": "ecd62ee594b75f483bfbfaf378fc83e5921519ec1dd88004c9be1c9bcb7b8623",
+      "original_bytes": 28
+    },
+    {
+      "file": "draft-pr-state.json",
+      "stored_sha256": "e5817abd9bd6acda00582710d741577758ec39e7165eb2057da3f2562d07af27",
+      "original_sha256": "e5817abd9bd6acda00582710d741577758ec39e7165eb2057da3f2562d07af27",
+      "original_bytes": 221
+    },
+    {
+      "file": "final-candidate-gate.json",
+      "stored_sha256": "e59ba4659ab9988d3d7a037752596cafc0c839103fdcfde37716c92b1d9d91ea",
+      "original_sha256": "e59ba4659ab9988d3d7a037752596cafc0c839103fdcfde37716c92b1d9d91ea",
+      "original_bytes": 1459
+    },
+    {
+      "file": "main-control-provenance.json",
+      "stored_sha256": "30b9e5770e7edd87c6f09fae4bca9258f7ca54857fda7b1f9ee4511a94b315f1",
+      "original_sha256": "30b9e5770e7edd87c6f09fae4bca9258f7ca54857fda7b1f9ee4511a94b315f1",
+      "original_bytes": 846
+    },
+    {
+      "file": "main-control-suite.xml",
+      "stored_sha256": "793a638a1e4fdf87eced2031f87a7f7e9b298b11e68143e2fce05cfb6441ebbb",
+      "original_sha256": "793a638a1e4fdf87eced2031f87a7f7e9b298b11e68143e2fce05cfb6441ebbb",
+      "original_bytes": 7399
+    },
+    {
+      "file": "main-control-test.log.gz",
+      "stored_sha256": "b8aec6c3498d201ed76f90f65cbe0bd9ea126a4d981f1bb7d90ed01d30c5effc",
+      "original_sha256": "772a57735604888f4f09c6a17e142da1d4ed9ccf83142701e8a1357ae5a2db4d",
+      "original_bytes": 7166
+    },
+    {
+      "file": "ntu-test-artifact-portability.patch",
+      "stored_sha256": "8c71699d66bc080c80b0097d9bfa4b45faa6b4d07eff01ae61622989b97f0ef0",
+      "original_sha256": "8c71699d66bc080c80b0097d9bfa4b45faa6b4d07eff01ae61622989b97f0ef0",
+      "original_bytes": 1214
+    },
+    {
+      "file": "openapi-contract.log.gz",
+      "stored_sha256": "4ff49c813895228e59f03541bd5bb8affe8009c598a1c7fc73b204f8889ed54d",
+      "original_sha256": "9c8c26a9e581d9dd417d324ca6ba9b805f1c4c3a1f25ac7aabe0d67fd472499b",
+      "original_bytes": 91
+    },
+    {
+      "file": "proposal-portability-suite.xml",
+      "stored_sha256": "1dabe46cbaddd7d3f8abfea01ec5ac25065e871e16478e4e873d7a3a4aab22ee",
+      "original_sha256": "1dabe46cbaddd7d3f8abfea01ec5ac25065e871e16478e4e873d7a3a4aab22ee",
+      "original_bytes": 574
+    },
+    {
+      "file": "proposal-portability.log.gz",
+      "stored_sha256": "347e6f299374912f3e3e70f601d64d3eb490c41dbdc20a8730bba25fa70342b8",
+      "original_sha256": "68835327f6bdfac59d40ae61683a3404b5531600ae36dc8d284e21208d47e14d",
+      "original_bytes": 116
+    },
+    {
+      "file": "push.log.gz",
+      "stored_sha256": "3cb75cdae52f605b3367f63d1a6313a76088b0737f989bfb02a8065856004f2b",
+      "original_sha256": "8fa73b2d1d6df8e5af7ef40c0f582361164ef49fd8f12c0cb18e2bb0cf277557",
+      "original_bytes": 435
+    },
+    {
+      "file": "remote-sha-proof.txt",
+      "stored_sha256": "49229db81d3a18d322010947cfaa249d3e8aaabbde265d75af7667b56b274a13",
+      "original_sha256": "49229db81d3a18d322010947cfaa249d3e8aaabbde265d75af7667b56b274a13",
+      "original_bytes": 138
+    },
+    {
+      "file": "shard0-collect-nodeids.txt.gz",
+      "stored_sha256": "3890a0f7911fd0bb03a11161c801b8e4376156f294f1949479cb881ba429f105",
+      "original_sha256": "e61889eee47c698251b8ee0e67ad16e210928de81cae01d168a55f98aa581d29",
+      "original_bytes": 248751
+    },
+    {
+      "file": "shard0-partition.json.gz",
+      "stored_sha256": "a33dfb0a6540a7fc35dd488089806d660cf0389ac7550af6f605a252d5a1d1b2",
+      "original_sha256": "32fc9644f25de77e1c64afe2b8ded25880907719a3175863112bfe08d7a48189",
+      "original_bytes": 11380
+    },
+    {
+      "file": "shard0-pytest.log.gz",
+      "stored_sha256": "c36d18d98a9625a9ad7a3dc6d7eb73e2eaf1c6ee33d12b4107b2be0cabc259bd",
+      "original_sha256": "76773631c539a42e73d684b0b9bcc51cadcf08ab0d030b68c53c00834dbdc793",
+      "original_bytes": 28921747
+    },
+    {
+      "file": "shard0-result.json.gz",
+      "stored_sha256": "4dc436b6381385d805106073c37c5693162e19ce83bf1a3194c00b52df9f2666",
+      "original_sha256": "833fe2e135c06e7c1247b8d5597c0fac23c13a073a672e3f2102464679ce0d89",
+      "original_bytes": 139
+    },
+    {
+      "file": "shard0-suite.xml.gz",
+      "stored_sha256": "266af8bf49c723c08d839db498b126bcac5aac21d78d76d8270e207f02755ff2",
+      "original_sha256": "37a8b0eaf793f5f1f4dd7ee88bcbfccb1e35cc38e89a82ac7ec2c476d902f22a",
+      "original_bytes": 19244303
+    },
+    {
+      "file": "shard1-collect-nodeids.txt.gz",
+      "stored_sha256": "5ce58a601500d8aca0f7078868acd06ccc928bb3d38a96e6de5ed91d48b37589",
+      "original_sha256": "a916e4738af3eaf39b83bb90c5dc579250842bf31a80a987eeab296f8d059ffe",
+      "original_bytes": 17014
+    },
+    {
+      "file": "shard1-partition.json.gz",
+      "stored_sha256": "80930f70931d036e2ee3bec2664317000c212b821bd425663b6014fa90b4e048",
+      "original_sha256": "0f64bcc207c00aaac4ef1c38a6e3f992badbc5a4fa4678bfdb000c2d05d6fcb9",
+      "original_bytes": 11380
+    },
+    {
+      "file": "shard1-pytest.log.gz",
+      "stored_sha256": "62013c9608f590b960222d8dedd7730dd4cac7d0b6925ba85828c4f9c6ce890f",
+      "original_sha256": "59f964dc6b654d8c00004a8e46209ffc89db5286dd5ff35cdeb9804ed5917da7",
+      "original_bytes": 52956
+    },
+    {
+      "file": "shard1-result.json.gz",
+      "stored_sha256": "0cfb36959731cbe937695424b5896f136cd032291778ab57fb82996f96df6bca",
+      "original_sha256": "5f1ff9944afb6f66220c52aa2bb75c5af95dbb50b8e22edeeb631bd5a6d82fbe",
+      "original_bytes": 139
+    },
+    {
+      "file": "shard1-suite.xml.gz",
+      "stored_sha256": "decefac41cf9cb1f30a52035152373d54ce3a67ee78a0b0eb227bad26df8991d",
+      "original_sha256": "5d4a936ca2747cbdf4f5c8b847148676af157fa00e2c64fdbd0ffcb450ace303",
+      "original_bytes": 22087
+    },
+    {
+      "file": "shard2-collect-nodeids.txt.gz",
+      "stored_sha256": "0d8eed24f9b7fbd38bc0c8896d070e54b6e47dfcb11ae56e5cc6c08ca1259337",
+      "original_sha256": "11f564f788e1f58342f1b63cf3a487887c66317c1578fdc3cbda9897ea358892",
+      "original_bytes": 13711
+    },
+    {
+      "file": "shard2-partition.json.gz",
+      "stored_sha256": "24dd5bd5c8b7230b1ed4fff24973e9fc377ad7887b904a9bfb4f53b168db664f",
+      "original_sha256": "305153eff284d08e5af9eda518dd8cdef1099c3f037ff4bfcb61432c5ec113d4",
+      "original_bytes": 11380
+    },
+    {
+      "file": "shard2-pytest.log.gz",
+      "stored_sha256": "23324f32257a501dcce20b6d074bb078d5c623b6692208dacc00ed5b6117954c",
+      "original_sha256": "2b3fe6897c3c5fa3335652cc2519d896c96feba798f911162062b4b85ebc8397",
+      "original_bytes": 46901
+    },
+    {
+      "file": "shard2-result.json.gz",
+      "stored_sha256": "9c52fd2ceb1778cc1cd40953f2d5db3b276861e39030b1fa64e0f11b2c949360",
+      "original_sha256": "e01a98a71126cae0a1bb524bc4338b899a0ca73f59dc1f5200c44a1bc3bb5a6a",
+      "original_bytes": 139
+    },
+    {
+      "file": "shard2-suite.xml.gz",
+      "stored_sha256": "07c8a5e86c931020c8d3fa44e6fa7557040d31b573daefc7899e4b01d1435784",
+      "original_sha256": "5fa8b3f908001fac561d6a2c7e9f2f19128cac9c5d94f4d4ed34e761b94089e0",
+      "original_bytes": 18755
+    },
+    {
+      "file": "shard3-collect-nodeids.txt.gz",
+      "stored_sha256": "59809967b01eef8f37ce583c3495ed72c022c74cfef87eef6bb797fdc88827d2",
+      "original_sha256": "e7c41c02e6717f77c76956b79a4e3b33ac0b895fe8a833cddf5eeeabee16e7a8",
+      "original_bytes": 12538
+    },
+    {
+      "file": "shard3-partition.json.gz",
+      "stored_sha256": "ad58b700b0654ed569646a325bfce0dcec6c22ec9d79b6059cc0aca637c2f402",
+      "original_sha256": "fabd78f2d0eeab120ceb2e22ce3f4efd11800301e01cf422a7648978a09f2bf7",
+      "original_bytes": 11380
+    },
+    {
+      "file": "shard3-pytest.log.gz",
+      "stored_sha256": "c97727936ca4d987af0bff5e7b9383a0ff96721aead5566e69b843fc5f5916d3",
+      "original_sha256": "0ba3affc6d4da07eabae1250d95e4f0da4abafdb76c32f1671656ce9b3ddf90d",
+      "original_bytes": 43771
+    },
+    {
+      "file": "shard3-result.json.gz",
+      "stored_sha256": "42ec803d391aa418fd580a3f13d294ac89edff2ce905f4a370b278ffd55eb27b",
+      "original_sha256": "bc5ec2b7d44f4a8bec902f52676163e0e52e1a1141341909a35bed84b5611a4d",
+      "original_bytes": 139
+    },
+    {
+      "file": "shard3-suite.xml.gz",
+      "stored_sha256": "a61d563a6544c0815000e723edaa20e8c982e6fcbd3c1299bcb0d05048b2a7f9",
+      "original_sha256": "b807f0e1fcea842b42d8a7ed7b59c496a1b1818dade04a1542dd01470b21b75d",
+      "original_bytes": 17612
+    },
+    {
+      "file": "supabase-isolated-runtime.log.gz",
+      "stored_sha256": "3f067afb4246ed0feff9bba206858cca2c86beedf08583d38dd9cfff836587d5",
+      "original_sha256": "9a3a0bb865bf524359fbdca23957253236c440a711f46111f89fc8d9b0583f74",
+      "original_bytes": 23528
+    },
+    {
+      "file": "supabase-migrations.log.gz",
+      "stored_sha256": "f3cfc251597e6bc8791fe070343e2b4b085ed6b788112932eaa40da279003bbd",
+      "original_sha256": "aafd92b1bfe45e0471127631bfae44ae2094bbd5db2d02f4eb51fd794e5e6398",
+      "original_bytes": 3343
+    }
+  ]
+}
