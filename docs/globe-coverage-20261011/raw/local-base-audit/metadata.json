@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "scripts/audit_visual_coverage.py",
+    "--snapshot-dir",
+    "/workspace/globe-evidence-20261011/local-base-export/snapshots",
+    "--output",
+    "/workspace/globe-evidence-20261011/local-base-audit/report"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T09:23:27.092948+00:00",
+  "start_guard": {
+    "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+    "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+    "status": ""
+  },
+  "timeout_seconds": 180,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-11T09:23:27.553528+00:00",
+  "end_guard": {
+    "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+    "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+    "status": ""
+  }
+}

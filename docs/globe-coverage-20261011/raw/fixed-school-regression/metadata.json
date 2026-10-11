@@ -1,0 +1,34 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/e2e/test_ntu_official_changes.py",
+    "tests/e2e/test_ntu_school.py",
+    "tests/e2e/test_ccu_school.py::test_all_six_school_grade_fields_remain_isolated",
+    "tests/e2e/test_ccu_school.py::test_ccu_profile_life_and_individual_document_stages_render",
+    "tests/e2e/test_ncu_school.py::test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scoped",
+    "tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence",
+    "tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload",
+    "tests/e2e/test_conditions_account_sync.py",
+    "tests/e2e/test_navigation_guide.py"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T09:10:12.672739+00:00",
+  "start_guard": {
+    "sha": "aa741df24e820ae4ddc649bc9d414047623be6cf",
+    "tree": "02d21e60263d203fb5608be26291a55fd04339a1",
+    "status": ""
+  },
+  "timeout_seconds": 2400,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-11T09:13:32.987396+00:00",
+  "end_guard": {
+    "sha": "aa741df24e820ae4ddc649bc9d414047623be6cf",
+    "tree": "02d21e60263d203fb5608be26291a55fd04339a1",
+    "status": ""
+  }
+}

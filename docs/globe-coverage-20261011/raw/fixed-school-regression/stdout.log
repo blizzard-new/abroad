@@ -1,0 +1,109 @@
+CONFTEST LOADED!
+FF..............................                                         [100%]
+=================================== FAILURES ===================================
+_____ test_current_portal_reference_is_visible_without_opening_quota[390] ______
+
+page = <Page url='http://127.0.0.1:60761/?view=list&home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8&q=%E6%98%8E%E6%96%AF%E7%89%B9%E5%A4%A7%E5%AD%B8#school=%E6%98%8E%E6%96%AF%E7%89%B9%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:60761', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-7/web-e2e-data0'))
+width = 390
+
+    @pytest.mark.parametrize('width',[390,1440])
+    def test_current_portal_reference_is_visible_without_opening_quota(page,live_server,width):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        enter_public_site(page,live_server,'partners')
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        page.locator('#confirm-school').click()
+        if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+            page.locator('#glass-menu-toggle').click()
+        wait_until(page,"state.dashboard?.school_name === '國立臺灣大學'")
+        page.evaluate("location.hash='#partners'")
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill('明斯特大學')
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        if width<700:
+            page.locator('#partner-table .partner-card > summary').first.click()
+        page.locator('#partner-table .school-detail-trigger:visible').first.click()
+        expect(page.locator('#school-detail-view')).to_be_visible()
+        expect(page.locator('#school-detail-view .partner-student-summary')).to_contain_text('TOEFL iBT 4.0')
+        expect(page.locator('#school-detail-view .partner-student-summary')).to_contain_text('TOEFL iBT 80')
+        expect(page.locator('#school-detail-view .partner-student-summary')).to_contain_text('2026-10-10查核')
+        expect(page.locator('#school-detail-view .partner-student-summary')).to_contain_text('最終條件與甄選名額仍待確認')
+        assert page.evaluate("state.dashboard.partner_universities.find(p=>p.school_name==='明斯特大學').quota") is None
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        from pathlib import Path
+>       target=Path('/workspace/ntu-research-2026-10-10/test-evidence');target.mkdir(exist_ok=True)
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/test_ntu_official_changes.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/workspace/ntu-research-2026-10-10/test-evidence'), mode = 511
+parents = False, exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/workspace/ntu-research-2026-10-10/test-evidence'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1311: FileNotFoundError
+_____ test_current_portal_reference_is_visible_without_opening_quota[1440] _____
+
+page = <Page url='http://127.0.0.1:60761/?view=list&home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8&q=%E6%98%8E%E6%96%AF%E7%89%B9%E5%A4%A7%E5%AD%B8#school=%E6%98%8E%E6%96%AF%E7%89%B9%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:60761', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-7/web-e2e-data0'))
+width = 1440
+
+    @pytest.mark.parametrize('width',[390,1440])
+    def test_current_portal_reference_is_visible_without_opening_quota(page,live_server,width):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        enter_public_site(page,live_server,'partners')
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        page.locator('#confirm-school').click()
+        if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+            page.locator('#glass-menu-toggle').click()
+        wait_until(page,"state.dashboard?.school_name === '國立臺灣大學'")
+        page.evaluate("location.hash='#partners'")
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill('明斯特大學')
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        if width<700:
+            page.locator('#partner-table .partner-card > summary').first.click()
+        page.locator('#partner-table .school-detail-trigger:visible').first.click()
+        expect(page.locator('#school-detail-view')).to_be_visible()
+        expect(page.locator('#school-detail-view .partner-student-summary')).to_contain_text('TOEFL iBT 4.0')
+        expect(page.locator('#school-detail-view .partner-student-summary')).to_contain_text('TOEFL iBT 80')
+        expect(page.locator('#school-detail-view .partner-student-summary')).to_contain_text('2026-10-10查核')
+        expect(page.locator('#school-detail-view .partner-student-summary')).to_contain_text('最終條件與甄選名額仍待確認')
+        assert page.evaluate("state.dashboard.partner_universities.find(p=>p.school_name==='明斯特大學').quota") is None
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        from pathlib import Path
+>       target=Path('/workspace/ntu-research-2026-10-10/test-evidence');target.mkdir(exist_ok=True)
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/test_ntu_official_changes.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/workspace/ntu-research-2026-10-10/test-evidence'), mode = 511
+parents = False, exist_ok = True
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/workspace/ntu-research-2026-10-10/test-evidence'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1311: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ntu_official_changes.py::test_current_portal_reference_is_visible_without_opening_quota[390]
+FAILED tests/e2e/test_ntu_official_changes.py::test_current_portal_reference_is_visible_without_opening_quota[1440]
+2 failed, 30 passed in 194.17s (0:03:14)

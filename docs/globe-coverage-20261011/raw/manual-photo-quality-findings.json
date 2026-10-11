@@ -1,0 +1,24 @@
+[
+  {
+    "status": "requires_school_data_review",
+    "scope": "Legacy asset shown by the NCU photo rendering test; unchanged by this candidate",
+    "finding": "The loaded EDHEC asset is a graphic with diagrams, not an identifiable campus photograph. Browser load success does not establish campus-photo quality or license clearance.",
+    "evidence_screenshot": "fixed-browser/artifacts/ncu-photo-verified-390.png",
+    "matching_manifest_rows": [
+      {
+        "school_name": "北方高等商學院 EDHEC Business school",
+        "country": "法國",
+        "official_page_url": "https://www.edhec.edu/en/international-students",
+        "image_source_url": "https://www.edhec.edu/sites/default/files/2022-02/ILLU.png",
+        "local_path": "/static/assets/schools/b8e0d0eb84aa66.jpg",
+        "width": 1600,
+        "height": 900,
+        "content_hash": "efb2eca2d592d339d3a9b4300e4b6d2b982900a9589fce51929aacff04abd92c",
+        "checked_at": "2026-07-21T04:39:11.872589+00:00",
+        "status": "verified",
+        "note": "擷取自學校官方校園／主視覺頁（404 ['img-fluid']  ['figure', 'relative']）"
+      }
+    ],
+    "owner": "NCU original data task; reconcile on fixed SHA before calling photos complete"
+  }
+]

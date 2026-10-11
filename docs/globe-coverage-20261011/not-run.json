@@ -1,0 +1,27 @@
+[
+  {
+    "check": "Four-school fixed-SHA integration and full catalogue completeness",
+    "status": "not_run",
+    "reason": "Four original data tasks have not provided final fixed SHAs; no open data PR was visible at 09:19 UTC."
+  },
+  {
+    "check": "Full repository test suite / all SQL runtime suites",
+    "status": "not_run",
+    "reason": "This round ran targeted shared-visual and cross-school regressions; full combined integration remains for final data heads. No SQL changed; 35 migration files were parsed, not applied."
+  },
+  {
+    "check": "Candidate production deployment / production acceptance",
+    "status": "not_run",
+    "reason": "Not authorized in this round. Production observations concern existing main59 only."
+  },
+  {
+    "check": "Production DB migration / credentials / permission / billing modifications",
+    "status": "not_run",
+    "reason": "Out of scope and explicitly prohibited; candidate changes no migration/dependencies/workflows."
+  },
+  {
+    "check": "Independent identity and licensing review of every legacy photo",
+    "status": "not_run",
+    "reason": "Machine audit verifies local bytes and metadata; school workers must supply missing photo evidence. A legacy NCU EDHEC graphic was flagged."
+  }
+]

@@ -1,0 +1,7 @@
+Using CPython 3.12.14 interpreter at: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12
+Resolved 87 packages in 5ms
+Traceback (most recent call last):
+  File "/workspace/globe-tools-20261011/verify_contracts.py", line 24, in <module>
+    assert len(matched)==expected,(label,len(matched))
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('長庚大學', 0)
