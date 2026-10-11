@@ -67,6 +67,14 @@ html[data-theme="dark"] .partner-map-stage { background:radial-gradient(ellipse 
 .partner-map-access label span { display:block; font-size:10px; color:var(--uw-muted); margin-top:3px; }
 .partner-map-access select { width:100%; min-width:0; min-height:44px; border:1px solid var(--uw-line); border-radius:9px; background:var(--uw-surface); color:var(--uw-text); padding:8px; }
 #partner-map-missing { grid-column:1/-1; margin:0; color:var(--uw-muted); font-size:12px; }
+#partner-map-home-status, #partner-map-gaps { grid-column:1/-1; margin:0; font-size:12px; line-height:1.6; color:var(--uw-muted); }
+#partner-map-gaps { min-width:0; }
+#partner-map-gaps summary { cursor:pointer; color:var(--uw-blue-strong); }
+#partner-map-gaps ul { max-height:320px; overflow:auto; margin:12px 0 0; padding-left:20px; }
+#partner-map-gaps li { margin-bottom:14px; overflow-wrap:anywhere; }
+#partner-map-gaps li p { margin:4px 0; }
+#partner-map-gaps li button { text-align:left; white-space:normal; }
+#partner-map-gaps a { color:var(--uw-blue-strong); }
 .partner-map-panel button:focus-visible, .partner-view-switch button:focus-visible, .partner-map-panel select:focus-visible, .partner-map-panel input:focus-visible { outline:3px solid var(--uw-blue); outline-offset:3px; }
 .partner-map-panel button:disabled { opacity:.5; cursor:not-allowed; }
 @keyframes map-orbit { to { transform:rotate(360deg); } }
@@ -90,7 +98,7 @@ html[data-theme="dark"] .partner-map-stage { background:radial-gradient(ellipse 
   .partner-map-preview { top:auto; bottom:0; right:0; left:0; width:auto; max-height:57%; border-radius:18px 18px 0 0; box-shadow:0 -8px 35px #18334b20; }
   .partner-map-preview::before { content:""; display:block; width:32px; height:4px; border-radius:4px; background:var(--uw-line-strong); margin:9px auto 0; }
   .map-preview-top { padding:10px 46px 12px 18px; }
-  .map-preview-top .school-photo { display:none; }
+  .map-preview-top .school-photo { display:block; float:left; width:64px; height:48px; margin:0 10px 8px 0; }
   .map-preview-top h4 { font-size:17px; margin:5px 0; }
   .map-preview-body { padding:14px 18px; }
   .partner-map-stage:has(.partner-map-preview:not([hidden])) .partner-map-legend { visibility:hidden; }

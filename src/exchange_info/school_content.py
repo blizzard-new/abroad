@@ -8,7 +8,7 @@ from pathlib import Path
 
 from .models import DestinationProfile, PageCategory, SourceReference
 from .school_identity import school_identity_key
-from .university_locations import load_university_locations, location_key
+from .university_locations import load_university_locations, public_location
 
 SUPPLEMENTS = Path(__file__).parent / "official_data" / "school_content_supplements.json"
 FIELDS = {"cost_summary", "housing_summary", "transport_summary", "campus_life_summary"}
@@ -60,7 +60,7 @@ def complete_destination_profile(profile: DestinationProfile, data_dir: Path, *,
             additions.append(SourceReference(title=source["title_zh"],
                 source_url=source["url"], category=PageCategory.PARTNER_SCHOOL,
                 summary=source["excerpt_zh"]))
-    location = (locations if locations is not None else load_university_locations(data_dir)).get(location_key(profile.school_name, profile.country))
+    location = public_location(locations if locations is not None else load_university_locations(data_dir), profile.school_name, profile.country)
     if not profile.city and location and location.geocode_status == "verified" and location.city:
         updates["city"] = location.city
     if city := updates.get("city") or profile.city:

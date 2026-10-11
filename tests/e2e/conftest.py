@@ -3,6 +3,7 @@ from __future__ import annotations
 import shutil
 import hashlib
 import json
+import os
 import socket
 import threading
 import time
@@ -463,7 +464,8 @@ def playwright_runtime() -> Playwright:
 
 @pytest.fixture(scope="session")
 def browser(playwright_runtime: Playwright) -> Browser:
-    instance = playwright_runtime.chromium.launch(headless=True)
+    executable = os.environ.get("PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH")
+    instance = playwright_runtime.chromium.launch(headless=True, **({"executable_path": executable} if executable else {}))
     try:
         yield instance
     finally:

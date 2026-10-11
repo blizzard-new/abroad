@@ -9,7 +9,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, ValidationError, model_validator
 
-from .school_identity import school_identity_key
+from .school_identity import VisualRecordIndex, school_identity_key
 
 LOCATION_CATALOG = Path(__file__).parent / "official_data" / "university_locations.jsonl"
 logger = logging.getLogger(__name__)
@@ -69,11 +69,12 @@ def load_university_locations(data_dir: Path) -> dict[tuple[str, str], Universit
                 else:
                     continue
             records[location_key(record.school_name, record.country)] = record
-    return records
+    return VisualRecordIndex(records)
 
 
 def public_location(records, school_name: str, country: str | None = None) -> UniversityLocation:
-    record = records.get(location_key(school_name, country))
+    key = (school_name, (country or "").strip()) if isinstance(records, VisualRecordIndex) else location_key(school_name, country)
+    record = records.get(key)
     if record is None:
         return UniversityLocation(school_name=school_name, country=country)
     if record.geocode_status != "verified":
