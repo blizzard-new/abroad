@@ -236,7 +236,7 @@ def test_followup_gap_baseline_and_source_failures_are_not_nonpublication_claims
     baseline = read("completion-followup-gap-baseline.json")
     current = read("completion-followup-gap-research.json")
     assert baseline["initial_counts"]["host_missing_fields"] == 702
-    assert current["initial_counts"]["host_missing_fields"] == 638
+    assert current["initial_counts"]["host_missing_fields"] == 618
     assert current["global_agreements"]["denominator"] is None
     assert "未證明" in current["global_agreements"]["reason"]
     for school in current["schools"]:
