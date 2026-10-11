@@ -122,12 +122,52 @@
       "committed_log": "browser-pass3-expanded-final.txt",
       "log_sha256": "c728280882dce06b5256073ef01cf991e158d0bc7212426ee9df115fcd80db25",
       "note": "390／1280，初次文件4／10／4項、自費正確rule_id、健康確認／provider拆分與兩份VISP電子簽署實際展開可見；官方生活／年份矛盾實見，無JS錯誤或横向溢出。其他14案例不在此command重跑。"
+    },
+    {
+      "suite": "fourth_pass_ncu_shared_final",
+      "passed": 393,
+      "skipped": 0,
+      "deselected": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-pass4-ncu-shared-final.log",
+      "committed_log": "tests-pass4-ncu-shared-final.txt",
+      "log_sha256": "f530da9e044b73fb9b0eab42b870469391f69055cdd020ac58d498b0ffb50afa",
+      "note": "包含42項completion／fourth-pass資料/API與214項精確track；來源／year／舊年度封鎖／條件／原件／重建及既有NCU全部測試。本輪command與第三輪不同，計數不相加；實際command另存fourth-pass-check-commands.json。 隔離runtime、unset Supabase；沒有CI。"
+    },
+    {
+      "suite": "fourth_pass_cgu_ntpu_ntu_workflow_regression",
+      "passed": 130,
+      "skipped": 7,
+      "deselected": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-pass4-regression.log",
+      "committed_log": "tests-pass4-regression.txt",
+      "log_sha256": "3c6d0bce6929a4f773c5766053949c28928a3f4f76e938858aeb065e828276fb",
+      "note": "CGU／NTPU／NTU及共享workflow本機回歸；7根conftest既有Phase C skips，未新增跳過。其後只更動NCU錄取後stage／Manitoba說明與NCU測試；其他五校bytes無變。 隔離runtime、unset Supabase；沒有CI。"
+    },
+    {
+      "suite": "fourth_pass_six_school_memory_final",
+      "passed": 4,
+      "skipped": 0,
+      "deselected": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-pass4-memory-final.log",
+      "committed_log": "tests-pass4-memory-final.txt",
+      "log_sha256": "ccfa7ece9acdbd3b8c7719f834b3e89ff4a7c4430f133e34870e92dec48ee48f",
+      "note": "最終646來源紀錄、錄取後stage與Manitoba說明重建後六校記憶體回歸。 隔離runtime、unset Supabase；沒有CI。"
+    },
+    {
+      "suite": "fourth_pass_six_schools_browser_final",
+      "passed": 6,
+      "skipped": 0,
+      "deselected": 19,
+      "local_log": "/workspace/ncu-completion-20261011/browser-pass4-stage-final.log",
+      "committed_log": "browser-pass4-stage-final.txt",
+      "log_sha256": "da63e0a130fc56801042fa10099af854058f80dc4423a6e119aba0e16fed4796",
+      "note": "390／1280實際卡片、student summary、source audit、初次文件4／4／7／10／9／6、錄取後及入境後文件、生活頁；無JS錯誤／橫向溢出。12張截圖已逐張查看。另19個歷次案例未在本command重跑。 隔離runtime、unset Supabase；沒有CI。"
     }
   ],
   "openapi_snapshot": "scripts/export_openapi.py --check: current",
   "javascript": "node --check: passed",
   "diff_whitespace": "git diff --check: passed",
-  "browser_unique_case_count": 19,
+  "browser_unique_case_count": 25,
   "browser_viewport_widths": [
     390,
     1280
@@ -146,24 +186,27 @@
   "source_coverage": {
     "original_drive_attempts": 459,
     "original_drive_full_read": 29,
-    "new_attempts": 535,
-    "distinct_urls": 516,
-    "successful_attempts": 469,
-    "failed_attempts": 66,
-    "manual_passage_records": 176,
-    "full_native_pdf_records": 36,
-    "successful_unread_candidates": 277,
-    "manually_reviewed_school_references": 111,
+    "new_attempts": 646,
+    "distinct_urls": 626,
+    "distinct_urls_without_fragment": 624,
+    "successful_attempts": 572,
+    "failed_attempts": 74,
+    "manual_passage_records": 237,
+    "full_native_pdf_records": 45,
+    "full_visual_and_native_pdf_records": 2,
+    "full_visual_pages": 12,
+    "successful_unread_candidates": 319,
+    "manually_reviewed_school_references": 115,
     "exchange_item_denominator": 214,
     "licensed_campus_photos": 125,
     "base_visible_verified_coordinates": 10,
     "current_host_full_116_approval": 0,
-    "distinct_urls_without_fragment": 515,
-    "full_visual_and_native_pdf_records": 2,
-    "full_visual_pages": 12
+    "http_attempts": 645,
+    "public_browser_capture_records": 1,
+    "successful_http_attempts": 571
   },
   "last_main_recheck_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
-  "note": "首輪、第二輪、第三輪分列；19是歷次唯一browser案例，第三輪command只重跑五項，另外14 deselected。不把首輪或失敗log當第三輪最終驗證。",
+  "note": "四輪分列；25是歷次唯一browser案例，本輪command只跑六項，另外19 deselected。最終通過與失敗／修正前紀錄分開，沒有把舊log冒充新驗證。",
   "superseded_checks": [
     {
       "suite": "third_pass_before_exact_track_fix",
@@ -172,6 +215,40 @@
       "committed_log": "tests-pass3-before-track-fix.txt",
       "log_sha256": "3b886427792decb1235bbde2d0e82f81f4b1f91a1c493a9a97b238091fca020c",
       "reason": "一般與自費被same_school附註寬鬆匹配，新增API測試實際失敗；僅NCU改為完整track後，最終420通過。此log不是通過驗證。"
+    },
+    {
+      "suite": "fourth_pass_first_new_assertions",
+      "passed": 12,
+      "failed": 1,
+      "committed_log": "tests-pass4-new.txt",
+      "log_sha256": "01e57216cc7f32f352f86b2f1f31091d00a8b430536466cde13fc50d90a27285",
+      "reason": "測試把原件URL的2026-27寫成2026-2027；改為實際舊filename，正文2027/28不變。"
+    },
+    {
+      "suite": "fourth_pass_second_new_assertions",
+      "passed": 12,
+      "failed": 1,
+      "committed_log": "tests-pass4-new-r2.txt",
+      "log_sha256": "828850f8f077c20490c793dc4bf7dccc70cc6e55ebb047bc0c5554fac7d5e3b5",
+      "reason": "測試要求不是deadline字串，原文顯示開放日而不是截止；改為實際語意。"
+    },
+    {
+      "suite": "fourth_pass_first_browser_assertions",
+      "passed": 4,
+      "failed": 2,
+      "committed_log": "browser-pass4-first.txt.gz",
+      "log_sha256": "407bf2ef857b25aa85eabed494ae34f0454f1aa871ba8f99af88b4c087b9ddb1",
+      "reason": "負斷言涵蓋整步說明而誤計不需初次提交的出生／健康文件；縮至實際document list。",
+      "log_compression": "gzip",
+      "compressed_sha256": "24c7be940cefefc61d83555b757e4dd4611875121b26215beef417631277ae0e"
+    },
+    {
+      "suite": "fourth_pass_before_final_source_stage_update",
+      "passed": 391,
+      "failed": 2,
+      "committed_log": "tests-pass4-ncu-shared.txt",
+      "log_sha256": "def41ed5dd46ec12a2ad52baf1b373378ec50f773d419779cc546adba07a372f",
+      "reason": "Manitoba新官方來源／名稱大小寫取代Drive限制；保留PG coordinator／supervisor限定說明。Manual browser另外抓到after_application顯示不等錄取，入境後改為post_offer並保留timing。"
     }
   ],
   "third_pass_browser_unique_case_count": 5,
@@ -185,5 +262,28 @@
     "ncu-pass3-紐約州立大學奧斯威格分校-390.png",
     "ncu-pass3-紐約州立大學奧斯威格分校（自費）-1280.png"
   ],
-  "third_pass_screenshot_review_note": "生活5張及展開後續文件3張已人工查看；官方部分查核標示、自費track、費用參考與stage文件可見。"
+  "third_pass_screenshot_review_note": "生活5張及展開後續文件3張已人工查看；官方部分查核標示、自費track、費用參考與stage文件可見。",
+  "fourth_pass_browser_unique_case_count": 6,
+  "fourth_pass_generation_checked_at": "2026-10-11T12:41:25+00:00",
+  "fourth_pass_screenshots": [
+    "ncu-pass4-life-佛羅里達-390.png",
+    "ncu-pass4-life-北亞利桑那-1280.png",
+    "ncu-pass4-life-曼尼托巴-390.png",
+    "ncu-pass4-life-蒙特婁-1280.png",
+    "ncu-pass4-life-西雪梨-390.png",
+    "ncu-pass4-life-道格拉斯-1280.png",
+    "ncu-pass4-workflow-佛羅里達-390.png",
+    "ncu-pass4-workflow-北亞利桑那-1280.png",
+    "ncu-pass4-workflow-曼尼托巴-390.png",
+    "ncu-pass4-workflow-蒙特婁-1280.png",
+    "ncu-pass4-workflow-西雪梨-390.png",
+    "ncu-pass4-workflow-道格拉斯-1280.png"
+  ],
+  "fourth_pass_screenshot_review_note": "六校workflow及life共12張最終截圖均人工查看，post_offer與入境後timing相符；SHA／bytes另存fourth-pass-browser-reviewed-images.json。",
+  "last_home_recheck": "2026-10-11T12:50:08.606340+00:00",
+  "last_home_recheck_file": "home-fourth-last-recheck.json",
+  "verified_main_ancestors": [
+    "f6ad1b8",
+    "daad399"
+  ]
 }

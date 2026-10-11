@@ -1,0 +1,21 @@
+CONFTEST LOADED!
+........F....                                                            [100%]
+=================================== FAILURES ===================================
+_ test_manitoba_document_body_year_beats_old_filename_and_opening_is_not_deadline _
+
+client = <starlette.testclient.TestClient object at 0x7f58a3842030>
+
+    def test_manitoba_document_body_year_beats_old_filename_and_opening_is_not_deadline(client):
+        audit = get(client, "/partner-source-audit", "Manitoba")
+        fact = next(s for s in audit["source_evidence"] if s["id"] == "ncu-101-p4a-38fdd699f9")
+        assert "2026-27" in fact["url"] and "2027" in fact["pages"][0]["text"]
+        assert len(fact["pages"]) == 5 and fact["content_status"]["all_pages_read"]
+        assert "官方明确exactdates尚未定" in audit["fields"]["study_period"]["unresolved"]
+        assert "opening" in audit["fields"]["housing"]["note"]
+>       assert "不是deadline" in audit["fields"]["housing"]["note"]
+E       AssertionError: assert '不是deadline' in 'on-campus stronglyrecommended不是mandatory／guarantee；主輪建議portalopening就申請，Fall4/1／Winter5/1是開放日而不是截止。secondround提名後盡快。 ...7，有不同private/meals／suitewithoutmeals，2027/28房源／价格／movein尚未核實。ResidenceBursary9/1–10/15不是住宿申請deadline，也未驗證所有exchange符合。'
+
+tests/test_ncu_fourth_pass.py:103: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_fourth_pass.py::test_manitoba_document_body_year_beats_old_filename_and_opening_is_not_deadline
+1 failed, 12 passed in 17.94s

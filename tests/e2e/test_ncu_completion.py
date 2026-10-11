@@ -106,6 +106,77 @@ def test_ncu_new_rules_photos_and_source_limits_reach_visible_ui(page, live_serv
     assert not errors
 
 
+@pytest.mark.parametrize("query,width,count,overview,life,rid,later_title,later_count", [
+    ("西雪梨", 390, 4, "PG Business quarter", "29710", "ncu-001", "WSU錄取後接受錄取與OSHC", 3),
+    ("道格拉斯", 1280, 4, "Fee-based Visiting", "guard.me", "ncu-100", "Douglas錄取後保險與MSP", 2),
+    ("曼尼托巴", 390, 7, "PG", "opening", "ncu-101", "Manitoba錄取後studypermit準備", 5),
+    ("蒙特婁", 1280, 10, "教育UG", "冬季交換沒有校內名額", "ncu-102", "Québec CAQ個案文件", 5),
+    ("佛羅里達", 390, 9, "USD2300", "1301", "ncu-104", "UF到校J1 Check-In", 2),
+    ("北亞利桑那", 1280, 6, "Europe", "39940", "ncu-105", "NAU到校完成Check-In", 3),
+])
+def test_ncu_fourth_public_pass_initial_later_forms_year_and_life_reach_visible_ui(page, live_server, query, width, count, overview, life, rid, later_title, later_count):
+    page.set_viewport_size({"width": width, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    expect(page.locator("#boot-splash")).to_be_hidden(timeout=60_000)
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill(query)
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    summary = page.locator("#partner-table .partner-card > summary").first
+    if summary.is_visible():
+        summary.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    expect(page.locator("#detail-overview .partner-student-summary")).to_be_visible()
+    expect(page.locator("#detail-overview")).to_contain_text(overview)
+    page.locator("#ncu-source-audit > summary").click()
+    expect(page.locator("#ncu-source-audit-body")).to_contain_text("116", timeout=60_000)
+    if query == "道格拉斯":
+        expect(page.locator("#ncu-source-audit-body")).to_contain_text("no active application cycles")
+        expect(page.locator("#ncu-source-audit-body")).to_contain_text("NOT covered")
+    if query == "西雪梨":
+        expect(page.locator("#ncu-source-audit-body")).to_contain_text("不是官方尚未公告")
+    if query == "曼尼托巴":
+        expect(page.locator("#ncu-source-audit-body")).to_contain_text("官方明确exactdates尚未定")
+    page.locator("#detail-tab-application").click()
+    first = page.locator("#detail-application .workflow-step").filter(has_text="核對外校當期文件並依通知申請").first
+    first.locator(":scope > summary").click()
+    expect(first.locator(".workflow-documents > li")).to_have_count(count)
+    expect(first.locator("[data-step-rule-id]")).to_have_attribute("data-step-rule-id", rid + "-host-apply")
+    later = page.locator("#detail-application .workflow-step").filter(has_text=later_title).first
+    later.locator(":scope > summary").click()
+    expect(later.locator(".workflow-documents > li")).to_have_count(later_count)
+    expect(later.locator(".workflow-documents")).to_contain_text("錄取後")
+    expect(later.locator(".workflow-documents")).not_to_contain_text("不等錄取")
+    if query == "蒙特婁":
+        expect(first.locator(".workflow-documents")).not_to_contain_text("出生證明")
+        expect(later).to_contain_text("optional")
+    if query == "佛羅里達":
+        expect(first.locator(".workflow-documents")).not_to_contain_text("Immunization")
+        expect(later).to_contain_text("I94")
+    if query == "北亞利桑那":
+        expect(later).to_contain_text("Statement of Understanding")
+    out = Path("/workspace/ncu-completion-20261011/browser-pass4")
+    out.mkdir(parents=True, exist_ok=True)
+    later.locator(".workflow-documents").scroll_into_view_if_needed()
+    page.screenshot(path=str(out / f"ncu-pass4-workflow-{query}-{width}.png"))
+    page.locator("#detail-tab-life").click()
+    page.locator("#detail-life .life-official-guide > summary").click()
+    expect(page.locator("#destination-official-content")).to_contain_text(life)
+    page.locator("#detail-life").scroll_into_view_if_needed()
+    page.screenshot(path=str(out / f"ncu-pass4-life-{query}-{width}.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
+
+
 @pytest.mark.parametrize("query,width,initial_count,overview,life", [
     ("馬賽中央", 390, 5, "良好", "CampusFrance"),
     ("諾曼第高等", 1280, 4, "母校B2certificate", "1200€"),

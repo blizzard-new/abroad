@@ -155,12 +155,12 @@ def test_different_year_workflow_is_not_current_and_home_host_documents_are_sepa
     host = current.steps[4]
     assert len(home.document_requirements) == 7
     assert any("名次" in d.name for d in home.document_requirements)
-    assert any("personal statement" in d.name for d in host.document_requirements)
+    assert any("personal statement" in d.name.casefold() for d in host.document_requirements)
     assert not any(
         "家長同意" in d.name or "名次" in d.name for d in host.document_requirements
     )
     assert all(
-        "drive.google.com" in u
+        "https://umanitoba.ca/" in u
         for d in host.document_requirements
         for u in d.source_urls
     )

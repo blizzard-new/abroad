@@ -6,15 +6,15 @@
 
 ## 分母與可追溯檔
 
-- 115名額表216列整理成214交換目錄項目，含院級／自費等 track，32國別標籤，並非214當期開放學校。[逐校19欄 JSON](exchange-field-inventory.json.gz)、[CSV](exchange-field-inventory.csv)、[原 main 基線](baseline-field-inventory.json.gz)、[各欄計數](field-counts.json)、[3503個未解欄位及已查 URL](unresolved-fields.json.gz)。
+- 115名額表216列整理成214交換目錄項目，含院級／自費等 track，32國別標籤，並非214當期開放學校。[逐校19欄 JSON](exchange-field-inventory.json.gz)、[CSV](exchange-field-inventory.csv)、[原 main 基線](baseline-field-inventory.json.gz)、[各欄計數](field-counts.json)、[3503個當期未解欄位及已查 URL](unresolved-fields.json.gz)。
 - [合作校頁](https://oia.ncu.edu.tw/p/412-1026-1850.php?Lang=zh-tw) 摘要329，更新2025/11/13；同頁[官方 XLS](https://oia.ncu.edu.tw/static/file/26/1026/img/274/2025Partner.xls) 有578協議列、331個原始國別＋英文名群組、42國別標籤。XLS SHA256 `23bbf7f17a404a81ca3088b1f1a0d280d7d6185c4ab6b05042df16ff8dd419d2`。
 - 逐字校名去重音／空白／標點且同國別安全對應119群組／119目錄項；212群組未硬併。329／331差異待官方釐清，MOU、雙聯及研究協議不自動當交換資格。見[完整協議原列／分類](../../../sources/ncu/2026-10-11/agreement-denominator-audit.json)。
 
 ## 本批已讀內容
 
-三輪共38項新／補充紀錄，新增37交換目錄項、補充既有Turku（合計36所機構；Oswego與Mānoa各有兩個track）。人工參考目錄紀錄74→98→106→111。第三輪增加Oswego、Mānoa各一般／自費及Wisconsin-Madison VISP，共3所美國機構、5目錄項。第二輪增加 Centrale Méditerranée、EM Normandie、ISIT、Rouen、Hohenheim、Liège、Ca’ Foscari、Nord。第一輪包括 EIGSI、De Vinci、Rennes SB、Lyon3、UTBM、Aschaffenburg、HKA、DHBW Lörrach、Würzburg、Namur、UHasselt、Thomas More、ZHAW、SSE、Alicante、UEF、LAB、Turku、Upper Austria、VSB Ostrava、Pardubice、Mendel、Minho、Özyeğin、Sungshin。
+四輪共44項新／補充紀錄，新增41交換目錄項、補充既有Turku／WSU／Manitoba（合計42所機構；Oswego與Mānoa各有兩個track）。人工參考目錄紀錄74→98→106→111→115。第四輪新增／補充WSU、Douglas、Manitoba、UdeM、UF、NAU六所機構／六目錄項，其中WSU與Manitoba已在基線有人工紀錄，因此總量增加四項。第三輪增加Oswego、Mānoa各一般／自費及Wisconsin-Madison VISP，共3所美國機構、5目錄項。第二輪增加 Centrale Méditerranée、EM Normandie、ISIT、Rouen、Hohenheim、Liège、Ca’ Foscari、Nord。第一輪包括 EIGSI、De Vinci、Rennes SB、Lyon3、UTBM、Aschaffenburg、HKA、DHBW Lörrach、Würzburg、Namur、UHasselt、Thomas More、ZHAW、SSE、Alicante、UEF、LAB、Turku、Upper Austria、VSB Ostrava、Pardubice、Mendel、Minho、Özyeğin、Sungshin。
 
-見[人工欄位、版年、引用頁及未解問題](../../../sources/ncu/2026-10-11/reviewed-host-records.json)、[新來源原文與讀取紀錄](../../../sources/ncu/2026-10-11/host-web-evidence.json.gz)、[條件文件與來源 SHA 綁定](../../../sources/ncu/2026-10-11/document-conditions.json)。535次來源嘗試（516個完整 URL／515去fragment URL），469次成功回應、66次失敗；176份有人工段落閱讀紀錄，其中36份PDF全原生文字逐頁讀完，另2份共12頁圖片＋原生字全讀。成功HTTP回應包括Oswego的HTTP200擁有者拒絕下載頁，不表示已取得該資料表PDF。下載、抽取、段落閱讀、全文閱讀、當期批准是不同狀態。原459份Drive來源全文已讀29的舊計數保持分開。
+見[人工欄位、版年、引用頁及未解問題](../../../sources/ncu/2026-10-11/reviewed-host-records.json)、[新來源原文與讀取紀錄](../../../sources/ncu/2026-10-11/host-web-evidence.json.gz)、[條件文件與來源 SHA 綁定](../../../sources/ncu/2026-10-11/document-conditions.json)。646筆新來源紀錄：645次HTTP嘗試＋1份公開browser渲染capture（626個完整 URL／624去fragment URL），572筆成功紀錄含571次HTTP成功＋1渲染capture、74次HTTP失敗；237份有人工段落閱讀紀錄，其中45份PDF全原生文字逐頁讀完，另2份共12頁圖片＋原生字全讀。第四輪增加110次HTTP與1份渲染capture、61份段落閱讀、9份共27頁完整原生PDF；WSU28頁指南仍未全視讀，不列全文已讀。成功HTTP回應包括Oswego的HTTP200擁有者拒絕下載頁，不表示已取得該資料表PDF。下載、抽取、段落閱讀、全文閱讀、當期批准是不同狀態。原459份Drive來源全文已讀29的舊計數保持分開。
 
 具體防錯與補充：
 
@@ -51,18 +51,18 @@
 
 | 欄位 | main 缺內容 | 本批缺內容 |
 | --- | ---: | ---: |
-| 城市／校區 | 160 | 131 |
-| 交通 | 161 | 141 |
-| host初次文件 | 140 | 111 |
-| host截止 | 145 | 115 |
+| 城市／校區 | 160 | 125 |
+| 交通 | 161 | 137 |
+| host初次文件 | 140 | 107 |
+| host截止 | 145 | 110 |
 | 交換期間 | 10 | 10 |
-| 課程 | 143 | 107 |
-| 學費／其他校費 | 153 | 132 |
-| 生活費 | 118 | 100 |
-| 住宿 | 120 | 99 |
-| 保險 | 109 | 91 |
-| 簽證居留 | 113 | 92 |
-| 到校準備 | 146 | 115 |
+| 課程 | 143 | 102 |
+| 學費／其他校費 | 153 | 127 |
+| 生活費 | 118 | 95 |
+| 住宿 | 120 | 95 |
+| 保險 | 109 | 87 |
+| 簽證居留 | 113 | 87 |
+| 到校準備 | 146 | 110 |
 | 可顯示座標 | 207 | 204 |
 | 已核對且具可用授權照片 | 214 | 89 |
 
@@ -80,8 +80,8 @@ EDHEC共享舊圖實際是404插畫，已看原件並留[拒用證據](../../../
 
 - 真正官方預定尚未公告：116校別／名額10/12；Sungshin2027秋英文課明列學期前一月才提供。
 - 真正提名後通知：Özyeğin、ZHAW、Thomas More、Rouen公開頁明說申請入口／文件寄給獲提名學生；個別接收通知／房源契約尚無。這不代表所有缺欄都登入限定。
-- 66失敗嘗試：35×404、10無response、11×503、6×403、2×412、1×520、1×502。UTAR incoming503未當登入限制；Thomas More舊ImportantDeadlines連結404但另正常頁期限已查。具體URL、結果與已排除來源逐校列於inventory及sourcepack。
-- 359次嘗試未作段落閱讀紀錄：包括66失敗及未讀成功候選；扣除錯配來源，目前277次成功候選仍須人工續查，部分只是generic導覽／首頁，不能說都是incoming資料。這是尚未完成的公開補查工作，不是官方未公告。
+- 74失敗HTTP嘗試：43×404、10無response、11×503、6×403、2×412、1×520、1×502。UTAR incoming503未當登入限制；Thomas More舊ImportantDeadlines連結404但另正常頁期限已查。具體URL、結果與已排除來源逐校列於inventory及sourcepack。
+- 409筆來源未作段落閱讀紀錄：包括74失敗及未讀成功候選；扣除錯配來源，目前319筆成功候選仍須人工續查，部分只是generic導覽／首頁，不能說都是incoming資料。這是尚未完成的公開補查工作，不是官方未公告。
 - Nord UDI公開頁本次HTTP403已保存，非官方未公告；Studentinord公開JS頁在HTTP200及browser渲染後仍僅campus入口標題，詳細房型／deadline未取得，不擅稱登入限制。
 - 照片缺89項；座標缺204項。錯校區／歷史照片、自訂授權未讀或HTTP失败拒用，不代用城市中心、研究中心或juniorcollege。
 
@@ -89,8 +89,30 @@ EDHEC共享舊圖實際是404插畫，已看原件並留[拒用證據](../../../
 
 檢查使用隔離runtime目錄、unset Supabase環境，只跑本機，無CI／部署。第二輪NCU／共用套件412通過（含21項completion資料／API）、六校memory4通過；新增八校browser8通過；第二輪CGU／NTPU／NTU資料／API回歸103通過、4既有skip。首輪六browser及248通過／4既有skip另記。第三輪最後NCU／共享420通過（含29項completion與214精確track）、CGU／NTPU／NTU及共享流程140通過／7既有Phase C skips、六校memory4通過；第三輪5個track的browser獨立重跑，另14歷次案例在該command未重跑。第三輪最終驗證與前兩輪分列於本目錄的validation.json，TXT實際log及失敗後修正前的log一併保存；OpenAPI以`export_openapi.py --check`核對，models/API schema未改。browser以390／1280檢查實際文件、矛盾、生活費、照片載入／授權及無JS錯誤，不只校數。
 
+第四輪最終本機NCU／共享393通過（含42項completion／fourth-pass來源／API），六校memory4通過；CGU／NTPU／NTU及workflow130通過／7既有Phase C skips。六校browser6通過／19歷次案例deselected；390／1280實測初次4／4／7／10／9／6文件、後續與入境後文件及生活內容，12張最終截圖已逐張看畫面。OpenAPI、node語法、diff通過。四個失敗／修正前log與最終通過log分開保留；Manitoba改用新官方原件與case-insensitive名稱核對，PG限定說明保留；入境後文件使用post_offer，timing仍是入境後，避免after_application的「不等錄取」錯誤語意。[實際command](fourth-pass-check-commands.json)、[最終驗證紀錄](validation.json)、[12張圖片SHA與review](fourth-pass-browser-reviewed-images.json)。第四輪command與第三輪不同，不能將393與420作同套件前後比較或相加。
+
 共享合併位置：`api.py` 的中央照片／coverage／校區適配；`application_rules.py`僅NCU完整track的current／reference流程選擇；`school_content.py`中央guide photo；`static/app.js`中央sidecar、署名／排除來源及防重複照片；`index.html`的app與community-reader成對cache version。**保留PR8的VisualRecordIndex和有限雙語／國別匹配**，將中央sidecar適配接在其上；本輪未改`school_identity.py`、`university_locations.py`或地球renderer，勿用本分支旧base覆盖共同修正。其他五校資料無變動。整合後座標測試須按實際43及新增來源核對，不能把本base10當整合期待。
 
 離線重建：`PYTHONPATH=src:. python scripts/build_ncu_catalog.py`；19欄盤點：`python scripts/audit_ncu_completion.py --output /tmp/ncu-inventory.json`。輸入皆在repo，照片複製前重驗原件SHA及明示授權，未知值不升格當期。
 
-最後複驗 [中央官方頁](home-final-recheck.json) 2026/10/11 11:42 UTC仍只連115校表；main遠端仍59a20f27。第三輪另增加44次公開嘗試、3所美國機構／5目錄項及12頁視覺附件閱讀，公開補查仍須接續。
+第四輪最後複驗 [中央官方頁](home-fourth-last-recheck.json) 2026/10/11 12:50 UTC仍只連115校表；main遠端仍59a20f27，PR8仍固定9927ec1。第四輪的六校、原件／公開渲染及細項缺口如下；公開補查仍須接續，319筆成功未讀候選不是官方未公告。
+
+
+## 第四輪六校：實際新內容及仍未核實
+
+- WSU：初次四項文件與錄取後兩頁acceptance／付款／自行OSHC證明分開；PG Business quarter、cross-school與cross-campus分開。2025指南28頁原生字已讀，p3圖像未視讀，不宣稱全文已讀。2027校曆入口已公告但Smartsheet browser僅loading；這是公開擷取未完成，不是未公告。
+- Douglas：PDF三頁完整原生文字讀完，metadata建立2025/12/15但正文未標適用年。公開incoming10005四個tab實際渲染，四项初次文件、目前no active cycle、9–15fulltime／typically12–15、免host tuition／studentfees／U-Pass、不含guard.me、無自有宿舍已接入。Unlimited只在paid Visiting段落；115中央限UG／一學期與host兩學期能力分開。原HTTP×與render capture SHA各自保存，沒有覆寫原件；個人portal额外問卷／116年份與迎新仍未知。
+- Manitoba：URL沿用2026-27，五頁原件正文是2027–2028。UG／PG英文要求、PG額外文件、4/1／5/1宿舍開放日、IC排除院系與不同track分開。精確2027/28日期與課表正文明說未定／未提供；summer4／8週、網頁與PDF申請日矛盾保留。May2026學校studypermit說明與IRCC最新PAL豁免另外核對；最新IMM1294未取得。
+- UdeM：2027/28資料表及七科別頁已讀；一般B2與major C1／C2、3/25／9/15一般學生截止與工業設計／經濟／教育例外分開。初次十項文件、錄取後出生證明、個案CAQ五項分開；空白LA、MIFI D10F／D09F原件與簽名範圍已讀。冬季校內住宿明列none，保費仍為2026/27概算，2027/28價格未確認。音樂影音email／portal、PG9學分recommended／maximum矛盾保留。
+- UF：2026/27三頁表、ISSS九項初次文件、錄取後健康四項、入境後J1 check-in兩項分開。一般免疫表原件兩頁已讀，CFR／Course Request模板仍未取得。Fall2026保費1301、waiver期與舊年度錯置原文保留，不能移年成116；不將一般F1說明改判J1。
+- NAU：六項初次文件、入美前三項、入美後三項分開。2026 Financial Verification Form兩頁完整讀，學生簽與bank證明要求、loan／定存與网页范围矛盾保留。B2只限Europe、新TOEFL生效2016原文錯字、普通exchange與reduced tuition費用兩表、单學期housing為全年60%分開。Statement of Understanding仍是個人portal文件，未取得blank。
+
+現行[IRCC PAL/TAL原文](https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/study-permit/get-documents/provincial-attestation-letter.html)明列無hosttuition交換安排可條件豁免，須proof並由IRCC審查；Québec多數仍需CAQ。Douglas舊表說PAL會提供，版本差異保留。BC2026/7/7政府MSP頁的等待期是當月餘日＋兩月，與學校一般GuardMe90日描述分開，MSP個人資格及116費用尚未核准。來源與逐欄原文均可由實際source audit查看。
+
+公開readonly browser探查：見[fourth-pass-public-browser-probes.json](fourth-pass-public-browser-probes.json)。Sandbox certificate錯誤後只在隔離readonly browser做診斷，沒有改平台security、登入或送件。Douglas真的incoming已讀，partner舊link仍導向outgoing首頁；不得把後台完整規則當已讀。
+
+Douglas的[公開四tab原始渲染capture](douglas-public-incoming-browser-capture.json.gz)保存HTML與可見本文；解壓後SHA `775184b864c426f8e4974da9657718eb8c5330a0710dca4c26982782e297a1f9` 對應 `ncu-100-p4b-incoming10005`，原HTTP外框仍保留。這是browser capture archive，不宣稱是原HTTP response bytes。
+
+[319筆成功但未讀的公開候選](successful-public-unread-candidates.json.gz)列實際URL與SHA，供接續查核。候選含一般首頁、outgoing／導覽、已被新入口取代的外框與真正incoming內容，不將每筆都叫未查交換規則。優先未解仍有WSU已公告2027 Smartsheet／Subject Selection KB動態內容、UdeM精確faculty校曆與示例LA（不當空白表）、UF最新CFR／Course Request／minor consent、NAU個人Statement of Understanding／最新housing及orientation、Manitoba最新IMM1294與未定的2027/28精確日期。提名後私人文件與可繼續查的公開内容分開。
+
+本輪沒有改models／OpenAPI、共享identity／map、其他五校資料或CI。上述内容仍屬未核准116参考；19欄總4066格中3503格當期缺口沒有因歷史參考增加而消失。照片125與座標10保持原審核狀態。
