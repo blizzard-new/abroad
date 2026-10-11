@@ -54,7 +54,10 @@ def test_initial_documents_preserve_versions_and_conditions():
     monaco = steps['ncu-060-host-apply'].document_requirements
     buem = steps['ncu-061-host-apply'].document_requirements
     assert len(monaco) == 8 and len(buem) == 6
-    assert sum(d.conditional for d in monaco) == 1
+    original = json.loads((DOCS / 'added-host-records.json').read_text())
+    assert sum(bool(d.get('conditional')) for d in original['ncu-060']['host_documents']) == 1
+    # Batch 26's 2026-27 original requires B2 evidence for all, with alternative formats.
+    assert not any(d.conditional for d in monaco)
     assert sum(d.conditional for d in buem) == 2
     assert all('2022/23' in d.condition for d in buem if d.conditional)
     assert all(d.stage == 'student_application' for d in monaco + buem)

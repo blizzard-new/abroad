@@ -43,7 +43,10 @@ def test_home_restrictions_are_not_erased_by_general_or_old_documents():
     assert '分兩組限制' in txt('ncu-065', 'eligibility')
     assert '工業自動化春' in txt('ncu-065', 'courses')
     assert '物聯網秋' in txt('ncu-065', 'courses')
-    assert all(rows['ncu-065']['fields'][k]['gap_only'] for k in ['host_deadline', 'host_documents', 'housing', 'cost'])
+    original = json.loads((DOCS / 'added-host-records.json').read_text())
+    assert all(original['ncu-065']['fields'][k]['gap_only'] for k in ['host_deadline', 'host_documents', 'housing', 'cost'])
+    # Batch 26 adds the original host factsheet; complete documents and cost remain unknown.
+    assert all(rows['ncu-065']['fields'][k]['gap_only'] for k in ['host_documents', 'cost'])
 
 
 def test_partial_attachment_evidence_does_not_create_invented_documents():
@@ -54,7 +57,9 @@ def test_partial_attachment_evidence_does_not_create_invented_documents():
     assert len(docs) == 1
     assert '其餘附件待核' in docs[0].name
     rows = json.loads((ROOT / 'sources/ncu/2026-10-11/reviewed-host-records.json').read_text())
-    assert all(not rows[rid]['host_documents'] for rid in ['ncu-024', 'ncu-026', 'ncu-040', 'ncu-065'])
+    original = json.loads((DOCS / 'added-host-records.json').read_text())
+    assert not original['ncu-065']['host_documents']
+    assert all(not rows[rid]['host_documents'] for rid in ['ncu-024', 'ncu-026', 'ncu-040'])
     assert all(w.review_status == 'pending_review' for w in workflows)
     assert not any(s.deadline_reminder_eligible for w in workflows for s in w.steps)
     from exchange_info.ncu_student_view import fetch_ncu_partner_universities
