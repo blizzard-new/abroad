@@ -1947,10 +1947,11 @@
   },
   "ncu-085": {
     "source_ids": [
-      "ncu-085-follow-2d4ff73af8"
+      "ncu-085-follow-2d4ff73af8",
+      "ncu-085-site-20261011"
     ],
     "applicability": "Upper Austria現行未標學年交換總頁；2026/10/11查核，中央116校別／名額／track仍未核實。",
-    "checked_at": "2026-10-11T10:13:35+00:00",
+    "checked_at": "2026-10-11T20:02:13.611170+00:00",
     "fields": {
       "eligibility": {
         "points": [
@@ -1987,16 +1988,29 @@
           }
         ],
         "unresolved": "中央116協議對應faculty／校區未確認。"
+      },
+      "housing": {
+        "points": [
+          "學生自行安排住宿，四個校區城市附近有宿舍／合租；官網未標年宿舍平均租金「€300／月起」，不含餐食，不是2027/28保證價格。交換通常限母校協議對應的一個校區，不能因住宿供應自行換至另一校區。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-085-site-20261011",
+            "page": null
+          }
+        ],
+        "unresolved": "116住宿校区、床位、押金、最後期限、當期價目尚未核實。"
       }
     },
     "host_documents": []
   },
   "ncu-086": {
     "source_ids": [
-      "ncu-086-follow-9c546b895c"
+      "ncu-086-follow-9c546b895c",
+      "ncu-086-site-20261011"
     ],
     "applicability": "VSB-TU Ostrava未標學年的公開資料表；2026/10/11查核，中央116校別／名額／track仍未核實。",
-    "checked_at": "2026-10-11T10:13:35+00:00",
+    "checked_at": "2026-10-11T20:02:13.611170+00:00",
     "fields": {
       "city": {
         "points": [
@@ -2049,6 +2063,30 @@
           }
         ],
         "unresolved": null
+      },
+      "arrival": {
+        "points": [
+          "【2026舊日程】官方交換入口迎新2026/9/7–13，歡迎典禮9/8 14:00於UA1；不是中央116／2027日程，不建立提醒。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-086-site-20261011",
+            "page": null
+          }
+        ],
+        "unresolved": "116迎新／報到日期及必到要求未核實。"
+      },
+      "visa": {
+        "points": [
+          "校方明列Student Mode不適用交換、自由申請訪問學生（Freemover）、入境Erasmus+或International Credit Mobility；不能把該學位生入境通道當中央交換快速程序。此頁不提供本人適用簽證或居留完整清單。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-086-site-20261011",
+            "page": null
+          }
+        ],
+        "unresolved": "本人國籍、停留長度與当期交換簽證／居留文件仍須官方確認。"
       }
     },
     "host_documents": []
@@ -2105,10 +2143,11 @@
       "ncu-080-follow-40ea71ec55",
       "ncu-080-follow-dd12d2ed61",
       "ncu-080-follow-e8ede16176",
-      "ncu-080-follow-847925b8e3"
+      "ncu-080-follow-847925b8e3",
+      "ncu-080-follow-04892a9bb6"
     ],
     "applicability": "LAB住房文章發布2025/12/11；不是116宿舍通知；2026/10/11查核，中央116校別／名額／track仍未核實。",
-    "checked_at": "2026-10-11T10:13:35+00:00",
+    "checked_at": "2026-10-11T20:02:13.611170+00:00",
     "fields": {
       "city": {
         "points": [
@@ -2201,27 +2240,38 @@
       },
       "study_period": {
         "points": [
-          "2026/27參考：秋季8–12月，春季1–5月；迎新秋季第34–36週、春季第1或2週，所有交換學生強制參加。"
+          "2026/27參考：秋季8–12月，春季1–5月；迎新秋季第34–36週、春季第1或2週，所有交換學生強制參加。",
+          "網頁2026/27更細約日期：秋2026/8/24–12/19、春2027/1/4–5/31；明說以錄取信確認，迎新可能在學期前。與原資料表一起保留，不推算116。"
         ],
         "sources": [
           {
             "id": "ncu-080-follow-dd12d2ed61",
             "page": 2
+          },
+          {
+            "id": "ncu-080-follow-04892a9bb6",
+            "page": null
           }
         ],
         "unresolved": null
       },
       "courses": {
         "points": [
-          "交換預期每學期完成30 ECTS；課程從自己study field列表選，先備、名額與當期課表待核對；無固定期末考週，全年各課自行考試，部分pass/fail。"
+          "交換預期每學期完成30 ECTS；課程從自己專業領域列表選，先備、名額與當期課表待核對；無固定期末考週，全年各課自行考試，部分採通過／不通過評分。",
+          "【2026/27網頁補充】多數课須本申請領域的實體課；跨領域須先備，設計與美術課僅相關學生。美術自2026秋轉Lahti；社會服務春在Lappeenranta、秋在Lahti；物理治療常芬蘭文／英文混授，不可把入口全英概述套全部課。",
+          "非Erasmus學生在LAB Mobility-Online製作學習協議，校方錄取後才簽；課程查詢系統部分功能官方明示技術問題，不能把2025/26連結當2027確認供課。"
         ],
         "sources": [
           {
             "id": "ncu-080-follow-dd12d2ed61",
             "page": 4
+          },
+          {
+            "id": "ncu-080-follow-04892a9bb6",
+            "page": null
           }
         ],
-        "unresolved": null
+        "unresolved": "116個別課程、先備、校區與課表仍待當期確認；官方study guide部分課資訊暫無法顯示。"
       },
       "insurance": {
         "points": [
@@ -3025,10 +3075,13 @@
     "source_ids": [
       "ncu-084-follow-f58309b070",
       "ncu-084-follow-57a4399a72",
-      "ncu-084-follow-b7f4afa069"
+      "ncu-084-follow-b7f4afa069",
+      "ncu-084-follow-925445e608",
+      "ncu-084-resume15-minho-monthly-2026-27",
+      "ncu-084-follow-f8e4802165"
     ],
     "applicability": "Minho現行公開incoming學習流程；校曆AY2026–2027；2026/10/11查核，中央116校別／名額／track仍未核實。",
-    "checked_at": "2026-10-11T10:13:35+00:00",
+    "checked_at": "2026-10-11T20:02:13.611170+00:00",
     "fields": {
       "host_documents": {
         "points": [
@@ -3092,15 +3145,54 @@
       },
       "arrival": {
         "points": [
-          "等待國際處與學術coordinator審查及email錄取；到校聯繫SAI及local coordinator確認最終study programme，完成SAIregistration後才可用圖書館、wifi與elearning。"
+          "等待國際處與學術協調人審查及電子郵件錄取；到校聯繫國際化支援服務處（SAI）及當地協調人確認最終修課計畫，完成該服務處的註冊後才可用圖書館、無線網路與線上學習系統。",
+          "迎新頁對交換生用「強烈建議」參加，不能改成全體強制，也沒有在本頁核實中央116迎新日期。"
         ],
         "sources": [
           {
             "id": "ncu-084-follow-f58309b070",
             "page": null
+          },
+          {
+            "id": "ncu-084-follow-f8e4802165",
+            "page": null
           }
         ],
         "unresolved": null
+      },
+      "housing": {
+        "points": [
+          "交換生住宿有限、先到先分配；線上申請可選填住宿，不是保證床位。Braga／Guimarães交換頁明列目前僅雙人房。接受房間後須簽整段交換期間租約，提前離宿仍收約定全期；到校先付首月與末月租金。",
+          "交換頁寫無論實住天數均收整月；SASUM 2026/27價表另寫不足15天可半月或日計，兩頁適用／合約條件差異未解，不能保證短住折價。電費超出房型／學期額度另付；私人找房支援到校後才提供，校方建議提前至少一週找房。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-084-follow-925445e608",
+            "page": null
+          },
+          {
+            "id": "ncu-084-resume15-minho-monthly-2026-27",
+            "page": null
+          }
+        ],
+        "unresolved": "116房源、校區、房型、合約計費差異與最終申請期限待個人住宿通知。"
+      },
+      "cost": {
+        "points": [
+          "【2026/27參考，2026/10/1生效】SASUM非獎學金學生（本國及外國）雙人房每床每月：Santa Tecla／Azurém共用衛浴€165、獨立衛浴€170；Lloyd Braga€170、Combatentes€165。Confiança列€180，但新宿舍開放與交換生能否分配仍須確認。不是2027/28價或總生活預算。",
+          "表列合理水電瓦斯、網路及事先申請的床單毛巾；交換住宿頁另有電量額度。獎學金住宿補贴€161.14不可當所有外國交換生租金；9月2026沿用2025/26價。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-084-resume15-minho-monthly-2026-27",
+            "page": null
+          },
+          {
+            "id": "ncu-084-follow-925445e608",
+            "page": null
+          }
+        ],
+        "unresolved": "中央116實際獎學金身分、房型分配、2027/28房價及其他生活支出未知。"
       }
     },
     "host_documents": [
@@ -4356,10 +4448,11 @@
       "ncu-048-extra-4b0ced3744",
       "ncu-048-extra-d0e41a7965",
       "ncu-048-extra-5726602555",
-      "ncu-german-taipei-student-20261011"
+      "ncu-german-taipei-student-20261011",
+      "ncu-048-follow-a8bfd93554"
     ],
     "applicability": "Würzburg未標學年incoming程序，註冊／迎新最新2026/27、Checklist網址2023；未當中央116當期；2026/10/11查核，中央116校別／名額／track仍未核實。",
-    "checked_at": "2026-10-11T10:13:35+00:00",
+    "checked_at": "2026-10-11T20:02:13.611170+00:00",
     "fields": {
       "eligibility": {
         "points": [
@@ -4428,11 +4521,16 @@
       },
       "courses": {
         "points": [
-          "WueStudy務必選對Semester，英文課用Advanced Search語言篩選；可參考過去年課表但不保證當期再開。按申請major錄取，可跨科但需先備及任課老師確認；語言班分級測驗後等級可變，LA變更先與coordinator約定，由departmental coordinator簽署。"
+          "WueStudy務必選對學期，英文課用進階搜尋的語言篩選；可參考過去年課表但不保證當期再開。按申請主修錄取，可跨科但需先備及任課老師確認；語言班分級測驗後等級可變，學習協議變更先與協調人約定，由學系協調人簽署。",
+          "2026/7/9 ToR程序：正式交換成績單須向國際處申請；自行下載WueStudy清單不是正式ToR。依學系可能須課程證書／線上表單，醫學系另向該院ERASMUS辦公室申請，跨系可能有兩份可請求合併；短期混合密集課程（BIP）不適用。"
         ],
         "sources": [
           {
             "id": "ncu-048-extra-9d88a60025",
+            "page": null
+          },
+          {
+            "id": "ncu-048-follow-a8bfd93554",
             "page": null
           }
         ],
@@ -11605,10 +11703,11 @@
       "ncu-104-p4z-8091d84b02",
       "ncu-104-p4d-ae742bd64a",
       "ncu-104-p4d-5878bede85",
-      "ncu-104-p4z-8c0a0c6c6b"
+      "ncu-104-p4z-8c0a0c6c6b",
+      "ncu-104-p4d-de04aeb26d"
     ],
     "applicability": "UF2026–2027三頁資料表及现行incoming／health頁；非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。",
-    "checked_at": "2026-10-11T17:10:51.196064+00:00",
+    "checked_at": "2026-10-11T20:02:13.611170+00:00",
     "fields": {
       "city": {
         "points": [
@@ -11763,15 +11862,20 @@
       },
       "housing": {
         "points": [
-          "2026/27表：校內limited、not guaranteed，申請表示interest後完整申請按firstcome至額滿；WeaverHall交換宿舍但可能其他hall。UFHousing直接通知申請，校外自行負責。"
+          "2026/27表：校內房間有限、沒有保證；先表示住宿意願，完成申請後按先到先分配至額滿。Weaver Hall是交換宿舍，但也可能分配其他宿舍。校方住宿處直接通知申請，校外自行負責。",
+          "【2026/27房價參考】Weaver單人USD4,161、雙人USD3,929／學期；2025/26另列USD3,766／3,556，年度分開。讀到價目不代表分配床位或適用2027/28；其他房型未逐項核定。"
         ],
         "sources": [
           {
             "id": "ncu-104-p4m-2d397604a1",
             "page": 2
+          },
+          {
+            "id": "ncu-104-p4d-de04aeb26d",
+            "page": null
           }
         ],
-        "unresolved": "116住宿deadline／最新rent／roomavailability需個人housing通知；既有housingrates頁未逐房型全部讀。"
+        "unresolved": "116住宿deadline／最新rent／roomavailability需個人housing通知；僅補核Weaver兩房型，其他房型未逐项全讀。"
       },
       "insurance": {
         "points": [
@@ -12104,10 +12208,11 @@
       "ncu-105-p4x-aede09203d",
       "ncu-105-p4x-5fca3a95db",
       "ncu-105-p4x-06710a6322",
-      "ncu-105-p4x-194e6457a3"
+      "ncu-105-p4x-194e6457a3",
+      "ncu-105-p4z-b33895785f"
     ],
     "applicability": "NAU現行J1 incoming、2026財力表與2026/27exchange費用；非116正式开放；2026/10/11查核，中央116校別／名額／track仍未核實。",
-    "checked_at": "2026-10-11T12:41:25+00:00",
+    "checked_at": "2026-10-11T20:02:13.611170+00:00",
     "fields": {
       "city": {
         "points": [
@@ -12287,6 +12392,19 @@
           }
         ],
         "unresolved": "116orientation／入住、最新transfer／initialtiming及個人checkin任務需當期通知。"
+      },
+      "transport": {
+        "points": [
+          "Flagstaff Pulliam機場離校約15分鐘車程；CIE只在指定日期替新國際生提供免費接駁，須以電子郵件提供姓名、航班及校園下車地點確認，非全年自動接送。",
+          "Phoenix機場距Flagstaff約兩小時，Groome須查時刻並提前預訂；校方未標年度頁以FlixBus單程約USD20／約3小時作選項，但只在部分日期一班。時間及價格是原頁參考，不保證116仍有該班次或價。"
+        ],
+        "sources": [
+          {
+            "id": "ncu-105-p4z-b33895785f",
+            "page": null
+          }
+        ],
+        "unresolved": "當期接機服務日、確認信、班次與價格仍待最新行前通知。"
       }
     },
     "host_documents": [
