@@ -23,7 +23,7 @@ def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,aut
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server)
     page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
     wait_until(page,"document.querySelector('#partner-table .school-photo img')?.naturalWidth > 0",timeout=30)
     s=page.locator('#partner-table .partner-card > summary').first
     if s.is_visible():s.click()
