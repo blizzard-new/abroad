@@ -49,6 +49,9 @@ def test_reapplying_updates_is_idempotent_and_preserves_unrelated_data(tmp_path)
     bundle=tmp_path/'bundle'
     before={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in bundle.iterdir() if p.is_file()}
     apply_official_changes(bundle)
+    # The dated completion overlay follows the historical portal replay.
+    from exchange_info.ntu_completion import apply_completion
+    apply_completion(bundle)
     after={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in bundle.iterdir() if p.is_file()}
     assert before==after
     ledger={r['portal_id']:r for r in json.loads((bundle/'verification_status.json').read_text())}

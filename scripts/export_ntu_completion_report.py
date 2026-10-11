@@ -1,0 +1,145 @@
+"""Export the complete review grain without promoting discovered paragraphs.
+
+Run with a Python installation providing openpyxl for the optional Excel export.
+"""
+from __future__ import annotations
+
+from collections import Counter
+import csv
+import gzip
+import json
+from pathlib import Path
+from urllib.parse import urlsplit
+
+from scripts.audit_ntu_completion import audit
+
+ROOT = Path(__file__).resolve().parents[1]
+OUTPUT = ROOT / "docs/ntu-completion-20261011"
+
+
+def export():
+    records, summary = audit(ROOT)
+    snapshot = json.loads((ROOT / "sources/ntu/completion-2026-10-11.json").read_text())
+    access = json.loads(gzip.decompress((ROOT / "sources/ntu/host-access-2026-10-11.json.gz").read_bytes()))
+    schools = {r["portal_id"]: r for r in snapshot["schools"]}
+    attempts = {r["portal_id"]: r for r in access["schools"]}
+    robots = {urlsplit(r["url"]).netloc: r for r in access["robots_receipts"]}
+    issues = []
+    for row in records:
+        school = schools[row["portal_id"]]
+        observations = [r for r in school["observations"] if r["field"] == row["field"]]
+        query = attempts[row["portal_id"]]
+        if row["field"] == "photos" and not row["reference_present"]:
+            rejected = [r for r in snapshot.get("photo_rejections", []) if r["school_name"] == row["school_name"]]
+            if rejected:
+                row["note"] = "本輪候選已拒絕：" + "；".join(r["reason"] for r in rejected) + "。仍須取得符合校區與授權的校園照片。"
+            if school.get("photo_candidate_pending_download"):
+                row["note"] = "已有具名校區與授權候選；下載受代理503影響，未完成影像視覺核對，不作已核可照片展示。"
+        sources = [r for r in query["sources"] if "mac.gov.tw" not in r["source"]["url"]]
+        reasons = set()
+        for source in sources:
+            detail = source["source"]
+            status = detail["access_status"]
+            robot = robots.get(urlsplit(detail["url"]).netloc, {})
+            if status == "robots_disallowed_or_unavailable":
+                code = robot.get("http_status")
+                reasons.add("transport_proxy_503" if code == 503 else
+                            "robots_unavailable_403" if code == 403 else
+                            "rate_limited_429" if code == 429 else "robots_policy_or_receipt_unresolved")
+            elif status != "content_available":
+                reasons.add("http_503" if detail.get("http_status") == 503 else status)
+        if query.get("unfetched_seeds") or query.get("queued_discovery_leads"):
+            reasons.add("additional_public_leads_not_yet_read")
+        periods = {r["applicability_status"] for r in observations}
+        issue = "target_scope_unconfirmed"
+        if row["target_requirement_confirmed"]:
+            issue = "asset_or_home_fact_checked_exchange_assignment_still_separate"
+        elif row["field"] == "quota":
+            issue = "official_list_blank_as_of_check"
+        elif "version_conflict" in periods or row["status"] == "conflict":
+            issue = "version_conflict_requires_confirmation"
+        elif "explicitly_pending_announcement" in periods:
+            issue = "officially_stated_future_update_pending"
+        elif observations:
+            issue = "reviewed_fact_in_original_scope"
+        elif row["reference_present"]:
+            issue = "prior_reference_target_year_or_subfields_unconfirmed"
+        elif row["field"] in {"coordinates", "photos"}:
+            issue = "campus_identity_or_licensed_asset_unresolved"
+        elif any(r["source"]["access_status"] == "content_available" and
+                 r.get("field_candidate_counts", {}).get(row["field"], 0) for r in sources):
+            issue = "discovery_lead_requires_semantic_review"
+        elif "transport_proxy_503" in reasons:
+            issue = "technical_transport_failure_prevents_check"
+        elif reasons:
+            issue = "access_limited_no_verified_field_text"
+        else:
+            issue = "not_found_in_bounded_search_not_proof_unannounced"
+        fact = "\n".join(r["text_zh"] for r in observations)
+        issue_row = {**row, "issue_code": issue, "access_reasons": sorted(reasons),
+            "reviewed_fact_zh": fact, "applicability": " | ".join(dict.fromkeys(r["scope"] for r in observations)),
+            "pdf_pages": " | ".join(str(r["pdf_page"]) for r in observations if r.get("pdf_page")),
+            "source_quote_ids": sorted({r["quote_source_id"] for r in observations}),
+            "source_attempt_count": len(query["sources"]),
+            "unfetched_lead_count": len(query.get("unfetched_seeds", [])) + len(query.get("queued_discovery_leads", [])),
+            "reviewer_reply": "", "verified_source_url": "", "verified_scope": "", "verified_quote_or_page": ""}
+        issues.append(issue_row)
+    summary.update(access_attempts=access["counts"], new_observations=sum(len(r["observations"]) for r in schools.values()),
+        reviewed_host_schools=sum(bool(r["observations"]) for r in schools.values()),
+        new_life_evidence=sum(len(r.get("life_evidence", [])) for r in schools.values()),
+        issue_codes=dict(Counter(r["issue_code"] for r in issues)),
+        original_handoff_comparison={"original_workbook_retrieved": False, "reported_previous_denominator": 282,
+            "rebuilt_denominator": 288, "pending_selection_denominator": 282, "zero_selection_denominator": 6,
+            "comparison_method": "Rebuilt using the current official portal IDs. The old workbook was not obtained; neither cell equality nor exact school membership overlap is claimed.",
+            "coverage": "All 282 currently pending schools × original ten fields are retained; 6 zero-quota schools and four extra field groups are also included."})
+    OUTPUT.mkdir(exist_ok=True, parents=True)
+    (OUTPUT / "review-summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")
+    (OUTPUT / "all-school-review.json").write_text(json.dumps(issues, ensure_ascii=False, indent=2) + "\n")
+    with (OUTPUT / "all-school-review.csv").open("w", newline="", encoding="utf-8-sig") as file:
+        writer = csv.DictWriter(file, fieldnames=list(issues[0]))
+        writer.writeheader()
+        writer.writerows({k: " | ".join(map(str, v)) if isinstance(v, list) else v for k, v in r.items()} for r in issues)
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill, Alignment
+    from openpyxl.worksheet.datavalidation import DataValidation
+    book = Workbook()
+    book.remove(book.active)
+    sheets = [("288校逐欄回填", issues), ("來源原文索引", list(snapshot["public_source_reviews"].values())),
+              ("當日臺大來源", [snapshot["list_receipt"] | {"rows": "288筆；完整收據見候選JSON"}, *snapshot["home_source_checks"]])]
+    for title, items in sheets:
+        ws = book.create_sheet(title)
+        keys = list(dict.fromkeys(k for item in items for k in item))
+        ws.append(keys)
+        for item in items:
+            values = []
+            for key in keys:
+                value = item.get(key)
+                if isinstance(value, (dict, list)):
+                    value = json.dumps(value, ensure_ascii=False)
+                if isinstance(value, str) and value[:1] in {"=", "+", "-", "@"}:
+                    value = "'" + value
+                values.append(value)
+            ws.append(values)
+        ws.freeze_panes = "D2" if title == "288校逐欄回填" else "A2"
+        ws.auto_filter.ref = ws.dimensions
+        for cell in ws[1]:
+            cell.font = Font(color="FFFFFF", bold=True)
+            cell.fill = PatternFill("solid", fgColor="163D53")
+        for col in ws.columns:
+            ws.column_dimensions[col[0].column_letter].width = 24
+            for cell in col[1:]:
+                cell.alignment = Alignment(vertical="top", wrap_text=True)
+        if title == "288校逐欄回填":
+            for key in ("reviewed_fact_zh", "source_urls", "note", "applicability"):
+                ws.column_dimensions[ws.cell(1, keys.index(key) + 1).column_letter].width = 60
+            validation = DataValidation(type="list", formula1='"已核實,待確認,版本矛盾,未找到,官方表示待公告,提名後取得,訪問受限"')
+            ws.add_data_validation(validation)
+            letter = ws.cell(1, keys.index("reviewer_reply") + 1).column_letter
+            validation.add(f"{letter}2:{letter}{len(items)+1}")
+    book.save(OUTPUT / "288校逐欄查核_可回填.xlsx")
+    print(json.dumps({"rows": len(issues), "sources": len(snapshot["public_source_reviews"]),
+        "observations": summary["new_observations"], "issue_codes": summary["issue_codes"]}, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    export()

@@ -87,8 +87,18 @@ def test_bundled_locations_are_valid_unique_and_sourced():
     assert len(keys) == len(set(keys))
     for row in rows:
         if row.geocode_status == "verified":
-            assert row.source_url.startswith("https://www.wikidata.org/wiki/Q")
-            assert row.identity_source_url.startswith("https://ror.org/")
+            if row.school_name == "巴黎高等師範學院" and row.country == "法國":
+                import json
+                completion = json.loads(Path("sources/ntu/completion-2026-10-11.json").read_text())
+                reviewed = next(r for r in completion["schools"] if r["portal_id"] == "1301")
+                assert row.source_url == reviewed["location"]["source_url"]
+                assert row.identity_source_url == "https://psl.eu/en/ecole-normale-superieure-psl"
+                assert reviewed["location_review"]["official_campus_source_url"].endswith("/housing/ulm")
+                assert reviewed["location_review"]["assigned_exchange_campus_confirmed"] is False
+                assert (row.latitude, row.longitude) == (48.842, 2.344389)
+            else:
+                assert row.source_url.startswith("https://www.wikidata.org/wiki/Q")
+                assert row.identity_source_url.startswith("https://ror.org/")
             assert row.city and row.geocoded_at
             assert -90 <= row.latitude <= 90 and -180 <= row.longitude <= 180
 
