@@ -1,5 +1,7 @@
 # 中央逐校補完查核，2026-10-11
 
+**最新第二十七批：五份原件10頁全讀，三校新增人工核讀，總152校；待讀多頁312→307。** 497回歸與10瀏覽器情境通過，10圖全實看，214生活API待翻譯0。兩張嵌圖另存人工原文，未改原生抽取；母校限制、付費方案與計價週期分開。詳見[第二十七批](resume/twentyseventh/README.md)、[未完成清單](resume/twentyseventh/unfinished-source-list.csv)、[驗證](resume/twentyseventh/validation.json)。以下保留歷史紀錄。
+
 **最新第二十六批：五份待讀原件10頁全讀，五校41欄更新，待讀多頁317→312。** 494回歸、更新翻譯後12測試與10瀏覽器情境通過，10圖全實看，214生活API待翻譯0。補正來源引用盤點、保留方案及年度衝突。詳見[第二十六批](resume/twentysixth/README.md)、[未完成清單](resume/twentysixth/unfinished-source-list.csv)、[驗證](resume/twentysixth/validation.json)。以下保留歷史紀錄。
 
 **最新第二十五批：兩校8份來源、5文件30頁與3網頁主文核讀，15欄更新。** 491回歸與8瀏覽器情境通過，8圖全實看，214生活API待翻譯0。手冊版次、錯向表單、文件阶段與舊住宿預算分開保留。詳見[第二十五批](resume/twentyfifth/README.md)、[未完成清單](resume/twentyfifth/unfinished-source-list.csv)、[驗證](resume/twentyfifth/validation.json)。以下保留歷史紀錄。
