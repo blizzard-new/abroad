@@ -1,11 +1,11 @@
 {
   "checked_at": "2026-10-11",
-  "source_count": 1276,
+  "source_count": 1281,
   "decisions": {
-    "acquired_not_policy_verified": 712,
+    "acquired_not_policy_verified": 710,
     "excluded_specific_review": 8,
-    "used_with_explicit_field_status": 488,
-    "technical_failure": 59,
+    "used_with_explicit_field_status": 493,
+    "technical_failure": 61,
     "challenge_or_error_page": 8,
     "used_access_requirement_evidence": 1
   },
@@ -2637,6 +2637,38 @@
         "verified_current"
       ],
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p109-eighth-application",
+      "ccu_page": 109,
+      "source_url": "https://www.zcu.cz/en/Exchange_Student/application_process.html",
+      "resolved_url": "https://www.zcu.cz/en/Exchange_Student/application_process.html",
+      "http_status": 404,
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.zcu.cz/en/Exchange_Student/application_process.html",
+      "checked_at": "2026-10-11T16:46:08.935395+00:00",
+      "tls_verify": true,
+      "original_sha256": "06bb39f84a1540cf912be921c07a7ab86c1014c054c36cf0a0a973d097f616d8",
+      "bundled_file": "completion_sources/p109-eighth-application.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.zcu.cz/en/Exchange_Student/application_process.html"
+    },
+    {
+      "source_id": "p109-eighth-exchange",
+      "ccu_page": 109,
+      "source_url": "https://www.zcu.cz/en/Exchange_Student/",
+      "resolved_url": "https://www.zcu.cz/en/Exchange_Student/index.html",
+      "http_status": 404,
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://www.zcu.cz/en/Exchange_Student/index.html",
+      "checked_at": "2026-10-11T16:46:07.427801+00:00",
+      "tls_verify": true,
+      "original_sha256": "a2b9aa166bc77f25a0feaeadcc5ae47273a8e1bcc6f41651d793babc60def572",
+      "bundled_file": "completion_sources/p109-eighth-exchange.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://www.zcu.cz/en/Exchange_Student/index.html"
     },
     {
       "source_id": "p109-host_entry-1",
@@ -13459,9 +13491,11 @@
       "original_sha256": "0e66976e9f4a0a1acfc3c29b33c7ccdc172d1cc9e734e889e1453938ff7994ef",
       "bundled_file": "completion_sources/p59-life-2.html.gz",
       "response_bytes_verified": true,
-      "decision": "acquired_not_policy_verified",
-      "field_statuses": [],
-      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "reference_only"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p59-root",
@@ -16433,9 +16467,11 @@
       "original_sha256": "39ea2fb769ada13fbdb007dea2587f060daa98bbb4628f47d0231a6811816ca4",
       "bundled_file": "completion_sources/p73-campus_contact-1.html.gz",
       "response_bytes_verified": true,
-      "decision": "acquired_not_policy_verified",
-      "field_statuses": [],
-      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "reference_only"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p73-campus_contact-2",
@@ -17330,6 +17366,22 @@
       "tls_verify": true,
       "original_sha256": "ada2a601f24c7f102c6432340d6adca256996c391606174b387338725fe7cf7d",
       "bundled_file": "completion_sources/p77-commons-campus-followup.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p77-eighth-incoming-faq",
+      "ccu_page": 77,
+      "source_url": "https://veltech.edu.in/faq-incoming-exchange-students/",
+      "resolved_url": "https://www.veltech.edu.in/faq-incoming-exchange-students/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T16:45:43.931692+00:00",
+      "tls_verify": true,
+      "original_sha256": "e8bbf72b7eebc132cb7659b63610bc82884d1a416eec2d91a3045b9dce97762f",
+      "bundled_file": "completion_sources/p77-eighth-incoming-faq.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -20085,6 +20137,24 @@
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
+      "source_id": "p92-eighth-bus-tariffs",
+      "ccu_page": 92,
+      "source_url": "https://www.usj.es/sites/default/files/archivos/260824_TARIFAS_AUTOBUSES_USJ_26_27.pdf",
+      "resolved_url": "https://www.usj.es/sites/default/files/archivos/260824_TARIFAS_AUTOBUSES_USJ_26_27.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T16:45:42.194224+00:00",
+      "tls_verify": true,
+      "original_sha256": "a67438b405732391a963b3ecad2793d6330c2842e2e0c3d3b17de48e1eedfe55",
+      "bundled_file": "completion_sources/p92-eighth-bus-tariffs.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
       "source_id": "p92-life-1",
       "ccu_page": 92,
       "source_url": "https://www.usj.es/vive-campus/transporte",
@@ -20096,9 +20166,11 @@
       "original_sha256": "e8cb09f3fe97867ddbf7f501c1a091fdbcd4a253c42523dcb15b3c1952490487",
       "bundled_file": "completion_sources/p92-life-1.html.gz",
       "response_bytes_verified": true,
-      "decision": "acquired_not_policy_verified",
-      "field_statuses": [],
-      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p92-public-academic-calendar",
@@ -21141,6 +21213,24 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p98-eighth-exchange",
+      "ccu_page": 98,
+      "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions",
+      "resolved_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T16:45:42.461634+00:00",
+      "tls_verify": true,
+      "original_sha256": "15bda8fadbb151f5bc627eafee17509c6a92c74a4215f5971e7ce3e9b0771d71",
+      "bundled_file": "completion_sources/p98-eighth-exchange.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p98-host_entry-1",

@@ -5395,9 +5395,9 @@
           ]
         },
         "costs": {
-          "value": "2026–2027 PDFp3 university bus約EUR300/semester，這是交通單項不是房租或總月費；學期免費Spanish language courses由語言學院按程度分班。公開住宿頁無2027統一住宿／生活總費，與獨立provider合約分開，未從bus推定整體預算。",
-          "status": "needs_confirmation",
-          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "status": "conflict",
+          "value": "保留2026–27交換factsheet p3：university bus約EUR300/semester，學期Spanish課程免費且按程度分班。另同年官方交通頁連結的公車表p1載年費/單程/10次票：Zaragoza/Santa Isabel EUR1050/4.65/41.50；Huesca3150/12.45/116；Almudévar2245/10.35/93；Zuera763/10.35/93；María de Huerva/Cadrete/Cuarte1930/10.35/93。PDF自身未印年度，由官方2026–27段落的tarifas連結核關聯。與交換約300/semester方案未對齊，不把年費除2/除月或選一價。首年50%優惠要求新生入學試及2026-04-23前預錄付款，不能套交換；Jun/Jul2027免費限全學年連續訂閱。住房/餐食/總預算另未核。",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
           "evidence": [
             {
               "source_id": "p92-public-factsheet-pdf-2026-2027",
@@ -5424,6 +5424,32 @@
               "content_hash": "a40eadc0208bb7d48e3a9a5c32903eb845a2050cab8c43efcba5f149ba465c56",
               "status": "verified_current",
               "excerpt": "Free courses are offered throughout the semester"
+            },
+            {
+              "source_id": "p92-eighth-bus-tariffs",
+              "source_url": "https://www.usj.es/sites/default/files/archivos/260824_TARIFAS_AUTOBUSES_USJ_26_27.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "ZARAGOZA O SANTA ISABEL 1.050€ 4,65€ 41,50€",
+              "academic_year": "官方交通頁2026–2027段落連結的費率表；PDF本身未印年，與同年交換factsheet計價差異待核",
+              "application_round": "官方交通頁2026–2027段落連結的費率表；PDF本身未印年，與同年交換factsheet計價差異待核",
+              "checked_at": "2026-10-11T16:45:42.194224+00:00",
+              "content_hash": "a67438b405732391a963b3ecad2793d6330c2842e2e0c3d3b17de48e1eedfe55",
+              "status": "conflict",
+              "location_in_source": "PDF page(s) [1]"
+            },
+            {
+              "source_id": "p92-life-1",
+              "source_url": "https://www.usj.es/vive-campus/transporte",
+              "source_pages": [],
+              "excerpt": "2026-2027 la suscripción es mensual",
+              "academic_year": "官方交通頁正文明示2026–2027；一般bus訂閱條件",
+              "application_round": "官方交通頁正文明示2026–2027；一般bus訂閱條件",
+              "checked_at": "2026-10-11T08:43:43.260328+00:00",
+              "content_hash": "e8cb09f3fe97867ddbf7f501c1a091fdbcd4a253c42523dcb15b3c1952490487",
+              "status": "conflict",
+              "location_in_source": "HTML visible passage identified by exact excerpt"
             }
           ]
         },
@@ -8965,6 +8991,97 @@
               "checked_at": "2026-10-11T16:30:01.352317+00:00",
               "content_hash": "c6a5112b03657f66ec1da192d8f6eb80374d42374573faa931f25f6a32a00093",
               "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccu_page": 98,
+      "host_fields": {
+        "program_scope": {
+          "status": "needs_confirmation",
+          "value": "官方 Exchange Students from Partner Institutions 接待端入口；未年正文要求母校提名並完成一年母校學習。不是母校中正甄選、degree/part-time 或全系所無限制證明。Spring2027校曆另確認，不由相鄰校曆替一般資格補年度。",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "evidence": [
+            {
+              "source_id": "p98-eighth-exchange",
+              "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions",
+              "source_pages": [],
+              "excerpt": "one successful year of studying at your home university",
+              "academic_year": "未標年的 partner incoming 一般門檻；2027個別資格仍待核",
+              "application_round": "未標年的 partner incoming 一般門檻；2027個別資格仍待核",
+              "checked_at": "2026-10-11T16:45:42.461634+00:00",
+              "content_hash": "15bda8fadbb151f5bc627eafee17509c6a92c74a4215f5971e7ce3e9b0771d71",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ]
+        },
+        "language": {
+          "status": "needs_confirmation",
+          "value": "官方 partner incoming 一般門檻為授課語言 B2；未指定接受的考試、最低分數或免試證明，不能自行换成 IELTS/TOEFL 或只限英語。此段未標適用年度，2027個人證明仍待核。",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "evidence": [
+            {
+              "source_id": "p98-eighth-exchange",
+              "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions",
+              "source_pages": [],
+              "excerpt": "B2-level in the language of instruction",
+              "academic_year": "一般 partner incoming 門檻未標年；同頁 Spring2027 校曆不能代替語言證明年度",
+              "application_round": "一般 partner incoming 門檻未標年；同頁 Spring2027 校曆不能代替語言證明年度",
+              "checked_at": "2026-10-11T16:45:42.461634+00:00",
+              "content_hash": "15bda8fadbb151f5bc627eafee17509c6a92c74a4215f5971e7ce3e9b0771d71",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccu_page": 73,
+      "host_fields": {
+        "insurance": {
+          "status": "reference_only",
+          "value": "Chitkara Punjab 一般校園設施頁稱有 comprehensive medical insurance 與合作醫院；只保存一般校園參考。未明示 CCU incoming 交換涵蓋、保額、保費、豁免及2027有效期，不能推定免費或免自購。",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "evidence": [
+            {
+              "source_id": "p73-campus_contact-1",
+              "source_url": "https://www.chitkara.edu.in/overview/campus-infrastructure/",
+              "source_pages": [],
+              "excerpt": "you will be covered by a comprehensive medical insurance",
+              "academic_year": "未標年一般 Chitkara Punjab 校園；非已核2027交換保險",
+              "application_round": "未標年一般 Chitkara Punjab 校園；非已核2027交換保險",
+              "checked_at": "2026-10-11T08:43:19.040659+00:00",
+              "content_hash": "39ea2fb769ada13fbdb007dea2587f060daa98bbb4628f47d0231a6811816ca4",
+              "status": "reference_only",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccu_page": 59,
+      "host_fields": {
+        "housing": {
+          "status": "reference_only",
+          "value": "KMITL 一般 Health & Living 頁載學生與職員住宿560間，男188/女372；只核實一般容量，不能當交換配額、床位保證或女性/男性申請限制。未載2027費率、申請期限與交換適用性。",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "evidence": [
+            {
+              "source_id": "p59-life-2",
+              "source_url": "https://www.kmitl.ac.th/health-living",
+              "source_pages": [],
+              "excerpt": "560 ห้อง แบ่งเป็นชาย 188 ห้อง และหญิง 372 ห้อง",
+              "academic_year": "未標年 KMITL 一般學生與職員住宿；2027交换配置尚未核實",
+              "application_round": "未標年 KMITL 一般學生與職員住宿；2027交换配置尚未核實",
+              "checked_at": "2026-10-11T08:43:02.557193+00:00",
+              "content_hash": "0e66976e9f4a0a1acfc3c29b33c7ccdc172d1cc9e734e889e1453938ff7994ef",
+              "status": "reference_only",
               "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
             }
           ]

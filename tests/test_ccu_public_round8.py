@@ -78,3 +78,46 @@ def test_refugee_and_degree_screening_does_not_promote_ordinary_exchange():
     assert readings["p73-host_entry-2"]["disposition"] == "degree_programme_exclusion"
     assert "rest unclaimed" in readings["p73-host_entry-2"]["review_extent"]
     assert not readings["p73-host_entry-2"]["full_visible_read"]
+
+
+def test_all_original_urls_have_honest_reading_extents_and_years():
+    progress = load("completion-eighth-public-progress.json")
+    assert progress["original_urls_with_recorded_reading_extent"] == 370
+    assert progress["original_distinct_raw_bodies"] == 369
+    assert progress["original_all_visible_read_records"] + progress["original_partially_screened_records"] == 370
+    assert progress["remaining_school_urls_without_recorded_reading"] == 0
+    assert progress["remaining_global_urls_without_recorded_reading"] == 10
+    assert progress["reading_record_is_not_policy_verification"]
+    assert not progress["all_public_policy_research_exhausted"]
+
+
+def test_bus_annual_prices_do_not_replace_exchange_semester_approximation():
+    costs = school(92)["host_fields"]["costs"]
+    assert costs["status"] == "conflict"
+    assert "EUR300/semester" in costs["value"] and "EUR1050/4.65/41.50" in costs["value"]
+    assert "不把年費除2/除月" in costs["value"]
+    by_id = {e["source_id"]: e for e in costs["evidence"]}
+    assert by_id["p92-eighth-bus-tariffs"]["source_pages"] == [1]
+    assert "p92-public-factsheet-pdf-2026-2027" in by_id
+    assert "p92-life-1" in by_id
+
+
+def test_general_dorm_and_insurance_are_references_without_exchange_guarantees():
+    housing = school(59)["host_fields"]["housing"]
+    insurance = school(73)["host_fields"]["insurance"]
+    assert housing["status"] == insurance["status"] == "reference_only"
+    assert "不" in housing["value"] and "560" in housing["value"]
+    assert "不能推定免費或免自購" in insurance["value"]
+    assert school(98)["host_fields"]["insurance"]["status"] == "missing"
+    language = school(98)["host_fields"]["language"]
+    assert language["status"] == "needs_confirmation"
+    assert "B2" in language["value"] and "未指定接受的考試" in language["value"]
+
+
+def test_broken_exchange_children_keep_their_actual_http_failures():
+    progress = load("completion-eighth-public-progress.json")
+    assert progress["new_acquisition_count"] == 10 and progress["new_http_200_count"] == 8
+    failures = progress["new_technical_failures"]
+    assert len(failures) == 2 and all(r["http_status"] == 404 for r in failures)
+    assert all(r["source_id"].startswith("p109-") for r in failures)
+    assert all(r["error"] and r["checked_at"] and r["sha256"] for r in failures)
