@@ -1,0 +1,25 @@
+Ignoring wrong pointing object 12 0 (offset 0)
+Ignoring wrong pointing object 14 0 (offset 0)
+Ignoring wrong pointing object 16 0 (offset 0)
+Ignoring wrong pointing object 18 0 (offset 0)
+Ignoring wrong pointing object 20 0 (offset 0)
+Ignoring wrong pointing object 23 0 (offset 0)
+Ignoring wrong pointing object 25 0 (offset 0)
+Ignoring wrong pointing object 29 0 (offset 0)
+Ignoring wrong pointing object 41 0 (offset 0)
+Ignoring wrong pointing object 43 0 (offset 0)
+Ignoring wrong pointing object 45 0 (offset 0)
+Ignoring wrong pointing object 51 0 (offset 0)
+Ignoring wrong pointing object 53 0 (offset 0)
+Ignoring wrong pointing object 55 0 (offset 0)
+Ignoring wrong pointing object 57 0 (offset 0)
+Ignoring wrong pointing object 59 0 (offset 0)
+Ignoring wrong pointing object 86 0 (offset 0)
+Ignoring wrong pointing object 88 0 (offset 0)
+Ignoring wrong pointing object 90 0 (offset 0)
+Ignoring wrong pointing object 92 0 (offset 0)
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_ncu_eleventh_fixed.py", line 62, in <module>
+    changedloc=[r['school_name'] for r in loc if r!=oldname[r['school_name']]];assert len(changedloc)==len(decisions)==26
+                                                    ~~~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: '道格拉斯學院 Douglas College'

@@ -1,0 +1,593 @@
+$(window).resize(function () {
+    var h = $(window).height(),
+        offsetTop = 125; // Calculate the top offset
+
+    $('#map').css('height', (h - offsetTop));
+}).resize();
+
+
+$(function () {
+
+    var map = L.map('map').setView([37.82867934472972, 30.530861571061358], 16);
+
+    const fontAwesomeMarkerAkademikIcon = L.divIcon({
+        html: '
+',
+        iconSize: [15, 15],
+        className: 'text-danger'
+    });
+
+    const fontAwesomeMarkerIdariIcon = L.divIcon({
+        html: '
+',
+        iconSize: [15, 15],
+        className: 'text-success'
+    });
+
+    const fontAwesomeMarkerSporIcon = L.divIcon({
+        html: '
+',
+        iconSize: [15, 15],
+        className: 'text-warning'
+    });
+
+    const fontAwesomeMarkerSosyalIcon = L.divIcon({
+        html: '
+',
+        iconSize: [15, 15],
+        className: 'text-info'
+    });
+
+    const fontAwesomeMarkerHastaneIcon = L.divIcon({
+        html: '
+',
+        iconSize: [15, 15],
+        className: 'text-primary'
+    });
+
+    var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 20,
+        attribution: '©
+OpenStreetMap
+'
+    }).addTo(map);
+
+
+    konumlar.forEach(konum => {
+
+
+        if (konum.kategori == "Akademik") {
+            var marker = L.marker([konum.lat, konum.long], {
+                icon: fontAwesomeMarkerAkademikIcon
+            }).addTo(map);
+
+
+            var birimAdi = konum.birim;
+
+            if (konum["birim-en"] != "") {
+                birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+            }
+
+            marker.bindPopup('
+' + birimAdi + '
+' +
+                '
+' + konum.telefon + '
+' +
+                '
+' + konum.website + '
+' +
+                '
+Konuma Git
+' +
+                '
+').openPopup();
+
+        } else if (konum.kategori == "Spor") {
+            var marker = L.marker([konum.lat, konum.long], {
+                icon: fontAwesomeMarkerSporIcon
+            }).addTo(map);
+
+
+            var birimAdi = konum.birim;
+
+            if (konum["birim-en"] != "") {
+                birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+            }
+
+            marker.bindPopup('
+' + birimAdi + '
+' +
+                '
+' + konum.telefon + '
+' +
+                '
+' + konum.website + '
+' +
+                '
+Konuma Git
+' +
+                '
+').openPopup();
+
+        } else if (konum.kategori == "Sosyal") {
+            var marker = L.marker([konum.lat, konum.long], {
+                icon: fontAwesomeMarkerSosyalIcon
+            }).addTo(map);
+
+
+            var birimAdi = konum.birim;
+
+            if (konum["birim-en"] != "") {
+                birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+            }
+
+            marker.bindPopup('
+' + birimAdi + '
+' +
+                '
+' + konum.telefon + '
+' +
+                '
+' + konum.website + '
+' +
+                '
+Konuma Git
+' +
+                '
+').openPopup();
+
+        } else if (konum.kategori == "Hastane") {
+            var marker = L.marker([konum.lat, konum.long], {
+                icon: fontAwesomeMarkerHastaneIcon
+            }).addTo(map);
+
+
+            var birimAdi = konum.birim;
+
+            if (konum["birim-en"] != "") {
+                birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+            }
+
+            marker.bindPopup('
+' + birimAdi + '
+' +
+                '
+' + konum.telefon + '
+' +
+                '
+' + konum.website + '
+' +
+                '
+Konuma Git
+' +
+                '
+').openPopup();
+
+        } else {
+            var marker = L.marker([konum.lat, konum.long], {
+                icon: fontAwesomeMarkerIdariIcon
+            }).addTo(map);
+
+            var birimAdi = konum.birim;
+
+            if (konum["birim-en"] != "") {
+                birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+            }
+
+            marker.bindPopup('
+' + birimAdi + '
+' +
+                '
+' + konum.telefon + '
+' +
+                '
+' + konum.website + '
+' +
+                '
+Konuma Git
+' +
+                '
+').openPopup();
+        }
+
+
+
+    });
+
+    konumlariTabloyaEkle(konumlar);
+
+
+    $('#btnSearch').click(function () {
+        var data = $("#search-address").val().toLocaleLowerCase('tr-TR');
+
+        map.eachLayer((layer) => {
+            layer.remove();
+        });
+
+        var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 20,
+            attribution: '©
+OpenStreetMap
+'
+        }).addTo(map);
+
+        if (data != null) {
+            var a = konumlar.filter(i => i.birim.toLocaleLowerCase('tr-TR').search(new RegExp(data, 'i')) != -1 || i["birim-en"].toLocaleLowerCase('tr-TR').search(new RegExp(data, 'i')) != -1);
+
+            a.forEach(konum => {
+                if (konum.kategori == "Akademik") {
+                    var marker = L.marker([konum.lat, konum.long], {
+                        icon: fontAwesomeMarkerAkademikIcon
+                    }).addTo(map);
+
+
+                    var birimAdi = konum.birim;
+
+                    if (konum["birim-en"] != "") {
+                        birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+                    }
+
+                    marker.bindPopup('
+' + birimAdi + '
+' +
+                        '
+' + konum.telefon + '
+' +
+                        '
+' + konum.website + '
+' +
+                        '
+Konuma Git
+' +
+                        '
+').openPopup();
+
+                } else if (konum.kategori == "Spor") {
+                    var marker = L.marker([konum.lat, konum.long], {
+                        icon: fontAwesomeMarkerSporIcon
+                    }).addTo(map);
+
+
+                    var birimAdi = konum.birim;
+
+                    if (konum["birim-en"] != "") {
+                        birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+                    }
+
+                    marker.bindPopup('
+' + birimAdi + '
+' +
+                        '
+' + konum.telefon + '
+' +
+                        '
+' + konum.website + '
+' +
+                        '
+Konuma Git
+' +
+                        '
+').openPopup();
+
+                } else if (konum.kategori == "Sosyal") {
+                    var marker = L.marker([konum.lat, konum.long], {
+                        icon: fontAwesomeMarkerSosyalIcon
+                    }).addTo(map);
+
+
+                    var birimAdi = konum.birim;
+
+                    if (konum["birim-en"] != "") {
+                        birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+                    }
+
+                    marker.bindPopup('
+' + birimAdi + '
+' +
+                        '
+' + konum.telefon + '
+' +
+                        '
+' + konum.website + '
+' +
+                        '
+Konuma Git
+' +
+                        '
+').openPopup();
+
+                } else if (konum.kategori == "Hastane") {
+                    var marker = L.marker([konum.lat, konum.long], {
+                        icon: fontAwesomeMarkerHastaneIcon
+                    }).addTo(map);
+
+
+                    var birimAdi = konum.birim;
+
+                    if (konum["birim-en"] != "") {
+                        birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+                    }
+
+                    marker.bindPopup('
+' + birimAdi + '
+' +
+                        '
+' + konum.telefon + '
+' +
+                        '
+' + konum.website + '
+' +
+                        '
+Konuma Git
+' +
+                        '
+').openPopup();
+
+                } else {
+                    var marker = L.marker([konum.lat, konum.long], {
+                        icon: fontAwesomeMarkerIdariIcon
+                    }).addTo(map);
+
+                    var birimAdi = konum.birim;
+
+                    if (konum["birim-en"] != "") {
+                        birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+                    }
+
+                    marker.bindPopup('
+' + birimAdi + '
+' +
+                        '
+' + konum.telefon + '
+' +
+                        '
+' + konum.website + '
+' +
+                        '
+Konuma Git
+' +
+                        '
+').openPopup();
+                }
+
+            });
+
+            konumlariTabloyaEkle(a);
+
+        } else {
+
+            konumlar.forEach(konum => {
+                if (konum.kategori == "Akademik") {
+                    var marker = L.marker([konum.lat, konum.long], {
+                        icon: fontAwesomeMarkerAkademikIcon
+                    }).addTo(map);
+
+
+                    var birimAdi = konum.birim;
+
+                    if (konum["birim-en"] != "") {
+                        birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+                    }
+
+                    marker.bindPopup('
+' + birimAdi + '
+' +
+                        '
+' + konum.telefon + '
+' +
+                        '
+' + konum.website + '
+' +
+                        '
+Konuma Git
+' +
+                        '
+').openPopup();
+
+                } else if (konum.kategori == "Spor") {
+                    var marker = L.marker([konum.lat, konum.long], {
+                        icon: fontAwesomeMarkerSporIcon
+                    }).addTo(map);
+
+
+                    var birimAdi = konum.birim;
+
+                    if (konum["birim-en"] != "") {
+                        birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+                    }
+
+                    marker.bindPopup('
+' + birimAdi + '
+' +
+                        '
+' + konum.telefon + '
+' +
+                        '
+' + konum.website + '
+' +
+                        '
+Konuma Git
+' +
+                        '
+').openPopup();
+
+                } else if (konum.kategori == "Sosyal") {
+                    var marker = L.marker([konum.lat, konum.long], {
+                        icon: fontAwesomeMarkerSosyalIcon
+                    }).addTo(map);
+
+
+                    var birimAdi = konum.birim;
+
+                    if (konum["birim-en"] != "") {
+                        birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+                    }
+
+                    marker.bindPopup('
+' + birimAdi + '
+' +
+                        '
+' + konum.telefon + '
+' +
+                        '
+' + konum.website + '
+' +
+                        '
+Konuma Git
+' +
+                        '
+').openPopup();
+
+                } else if (konum.kategori == "Hastane") {
+                    var marker = L.marker([konum.lat, konum.long], {
+                        icon: fontAwesomeMarkerHastaneIcon
+                    }).addTo(map);
+
+
+                    var birimAdi = konum.birim;
+
+                    if (konum["birim-en"] != "") {
+                        birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+                    }
+
+                    marker.bindPopup('
+' + birimAdi + '
+' +
+                        '
+' + konum.telefon + '
+' +
+                        '
+' + konum.website + '
+' +
+                        '
+Konuma Git
+' +
+                        '
+').openPopup();
+
+                } else {
+                    var marker = L.marker([konum.lat, konum.long], {
+                        icon: fontAwesomeMarkerIdariIcon
+                    }).addTo(map);
+
+                    var birimAdi = konum.birim;
+
+                    if (konum["birim-en"] != "") {
+                        birimAdi = '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+                    }
+
+                    marker.bindPopup('
+' + birimAdi + '
+' +
+                        '
+' + konum.telefon + '
+' +
+                        '
+' + konum.website + '
+' +
+                        '
+Konuma Git
+' +
+                        '
+').openPopup();
+                }
+
+
+
+            });
+
+            konumlariTabloyaEkle(konumlar);
+        }
+
+
+    });
+
+    $("#search-address").keydown(function (e) {
+        var key = e.keyCode ? e.keyCode : e.which;
+        if (key == 13) {
+            $('#btnSearch').click();
+            return false;
+        }
+    });
+
+});
+
+function konumlariTabloyaEkle(konumListesi) {
+    var html = '';
+
+    konumListesi.forEach(konum => {
+        html += '
+';
+        
+
+        if (konum["birim-en"] != "") {
+            html += '
+' + konum.birim + '
+' + konum["birim-en"] + '
+';
+        } else {
+            html += '
+' + konum.birim + '
+';
+        }
+
+        html += '
+' + konum.telefon + '
+';
+        html += '
+';
+        html += '
+Konuma Git
+';
+        html += '
+';
+    });
+
+    document.getElementById("results-list").innerHTML = html;
+}

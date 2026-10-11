@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/tmp/abroad-recovery-capacity-20261011/workspace-abroad-globe-20261011/scripts/build_ncu_catalog.py", line 165, in validate_document_conditions
+    document = next(d for d in step["document_requirements"] if d["name"] == policy["requirement_name"])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/abroad-recovery-capacity-20261011/workspace-abroad-globe-20261011/scripts/build_ncu_catalog.py", line 1648, in <module>
+    build(p.parse_args().output_dir)
+  File "/tmp/abroad-recovery-capacity-20261011/workspace-abroad-globe-20261011/scripts/build_ncu_catalog.py", line 1463, in build
+    validate_document_conditions(conditions, workflows, docs)
+  File "/tmp/abroad-recovery-capacity-20261011/workspace-abroad-globe-20261011/scripts/build_ncu_catalog.py", line 167, in validate_document_conditions
+    raise ValueError(f"NCU條件文件未對應實際學校／步驟／文件：{policy['school_name']} / {policy['rule_id']} / {policy['requirement_name']}") from exc
+ValueError: NCU條件文件未對應實際學校／步驟／文件：圖爾庫大學 University of Turku / ncu-081-host-apply / Language Assessment Sheet（選用此語言證明時）

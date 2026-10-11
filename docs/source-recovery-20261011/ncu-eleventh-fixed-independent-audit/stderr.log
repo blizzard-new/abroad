@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_ncu_eleventh_fixed.py", line 24, in <module>
+    receipts.append({'pack':p,'key':r.get('local_evidence_key',r.get('source_id')),'url':rec['url'],'status':rec['status'],'sha256':rec['sha256'],'full_body':raw is not None,'bytes':len(raw) if raw else None})
+                                                                                                                                    ~~~^^^^^^^^^^
+KeyError: 'sha256'

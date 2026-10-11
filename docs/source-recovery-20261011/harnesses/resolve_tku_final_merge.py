@@ -1,0 +1,18 @@
+from pathlib import Path
+import re,json,hashlib,subprocess,os
+pattern=re.compile(r'<<<<<<< HEAD\n(.*?)=======\n(.*?)>>>>>>>[^\n]+\n',re.S)
+p=Path('src/exchange_info/static/index.html');s=p.read_text();assert len(pattern.findall(s))==1;s=pattern.sub(lambda m:m.group(2).replace('20261011-tku-host-references-1','20261011-six-school-final-1'),s);p.write_text(s)
+p=Path('src/exchange_info/tku_assets.py');s=p.read_text();assert len(pattern.findall(s))==1
+replacement=pattern.findall(s)[0][1].replace("    row=school_audit(profile.school_name)\n    if row and row['id']=='tku-sister-34':", "    identifier=school_identifier(profile.school_name)\n    if identifier=='tku-sister-34':\n        from .tku_census import school_audit_by_id\n        row=school_audit_by_id(identifier)").replace('    photo=campus_photos().get(row["id"]) if row else None','    photo=campus_photos().get(identifier) if identifier else None')
+s=pattern.sub(lambda m:replacement,s);p.write_text(s)
+# Retain original research bytes outside src/package/static; source records retain historical URL.
+holds=json.loads(Path('src/exchange_info/official_data/tku/fixed_photo_blocker_holds.json').read_text());moves=[]
+for h in holds['schools']:
+ old=Path('src/exchange_info')/h['withdrawn_local_path'].lstrip('/');new=Path('sources/tku/withdrawn-campus-assets')/old.name
+ assert hashlib.sha256(old.read_bytes()).hexdigest()==h['withdrawn_photo_sha256'];new.parent.mkdir(parents=True,exist_ok=True);old.rename(new)
+ moves.append({'id':h['id'],'old_public_url':h['withdrawn_local_path'],'research_path':str(new),'sha256':h['withdrawn_photo_sha256'],'packaged':False})
+Path('sources/tku/withdrawn-campus-assets/README.md').write_text('These two original research images are rejected for publication. They are outside the application package and public static directory. Do not copy them into src, wheels or deployment assets. Historical evidence records retain the withdrawn URLs.\n')
+p=Path('scripts/build_tku_fixed_photo_holds.py');s=p.read_text();s=s.replace("path=ROOT/'src/exchange_info'/photo['local_path'].removeprefix('/')", "path=ROOT/'sources/tku/withdrawn-campus-assets'/Path(photo['local_path']).name");p.write_text(s)
+p=Path('tests/test_tku_fixed_photo_blockers.py');s=p.read_text().replace("(ROOT/'src/exchange_info'/hold['withdrawn_local_path'].removeprefix('/')).read_bytes()", "(ROOT/'sources/tku/withdrawn-campus-assets'/Path(hold['withdrawn_local_path']).name).read_bytes()");s+='''\n\ndef test_withdrawn_originals_are_not_public_before_or_after_six_school_cache_warmup(tmp_path):\n client=TestClient(create_app(tmp_path))\n holds=json.loads((BUNDLE/'fixed_photo_blocker_holds.json').read_text())['schools']\n for h in holds:\n  assert client.get(h['withdrawn_local_path']).status_code==404\n  assert not (ROOT/'src/exchange_info'/h['withdrawn_local_path'].removeprefix('/')).exists()\n for home in ['CGU','NTPU','NTU','TKU','CCU','NCU','TKU']:\n  response=client.get('/student-dashboard',params={'school':home})\n  assert response.status_code==200\n  for h in holds:\n   assert h['withdrawn_local_path'] not in response.text\n   assert h['prior_photo']['image_source_url'] not in response.text\n   assert client.get(h['withdrawn_local_path']).status_code==404\n''';p.write_text(s)
+Path('/workspace/recovery-evidence-20261011/tku-final-merge-resolution.json').write_text(json.dumps({'input':'93cbd9dfee3af95f9ecc89cceb1ccd0e100778af','lazy_identifier_and_local_override_preserved':True,'nics_original14_guide_prefix_preserved':True,'shared_app_hunks':'TKU-only reference rendering/availability; other school branches unchanged','withdrawn_assets_moved':moves},ensure_ascii=False,indent=2)+'\n')
+print(json.dumps(moves,ensure_ascii=False,indent=2))

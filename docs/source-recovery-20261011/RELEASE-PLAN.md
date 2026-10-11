@@ -4,15 +4,13 @@
 
 ## 固定輸入與依賴
 
-本轮起點 main `59a20f27fcee00fb597abc79e75ec11778317422`。依賴為：main → PR8 `9927ec1d8765a9772671bbaa68e7f920995f1258` 共用地球識別 → CGU 雙來源完整快照恢復／共用記憶體修復 → PR9 `ed7479073df36deb8fc0393e86fedb102e1cf2b7`、PR10 `ebe059fc317bf1cb55a0604b3ce354fe6fa12939`、PR11 `358a72e7302476ba8dd19c47c35fc398fc205a47`、PR13 `88bd00531d9a77fb98ba54dbfd8786cbde18db96` → 逐 hunk 協調及完整驗收。
+本輪起點 main `59a20f27fcee00fb597abc79e75ec11778317422`。PR8共用地球識別與CGU來源恢復／記憶體修復為基底；最新已推送候選 `ca1947351467fcc726ce58ef849437c6af11358e` 包含 NTU PR9 `c7357f974faaec8e60ef19698d4d21633c322dc8`、CCU PR10 `52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8`、NCU PR11 `a2df55b16f72455f7154d7afff44934fc8dbf99d`、TKU PR13 `93cbd9dfee3af95f9ecc89cceb1ccd0e100778af`。逐hunk順序 CCU e16381c → NCU d0c84c5 → NTU 7e0c29e → TKU ca194735。
 
-先前完整驗收候選 `160aeacd15521d63df6a5624bd12821cc5d26cea` 已正常推送Draft PR12供復原。完整2,919 unique cases對帳：2,906 passed、13 skipped、0 failed、0 notrun；同SHA全量35-migration runtime、6,579檔wheel與隔離安裝、來源交付、原三校workflow parity均通過。同SHA175步冷／暖負載完整通過原460 MiB門檻，兩次較早截圖／切校等待逾時失敗原樣保留，沒有宣稱已證明根因。此固定資料批次已完成本地驗收，下一批資料須重新驗收。舊3129的四個全套失敗已在160修正並全套回歸，不沿用舊記憶體結果。
+共用面包括 api.py 照片scope／coverage／座標、school_content.py、university_locations.py、共享照片／位置、app.js選校／來源／名額、index.html載入次序、discovery-core.js、multi-plan.js、package-data、OpenAPI、分母與來源交付。NCU保留候選優先與explicit operator override、圖爾庫舊文件及簽章、明治五個月；CCU保留三項原文修正；TKU保留lazy identifier及operator override，同時接入NICS資料。Git無衝突不代表語意正確。
 
-下一固定輸入為NCU `baf98c0df400ef96aa83fb587107eb22513c0b97`、CCU `258ce9bbb38081792658f9720bdb457a5344b2bb`、NTU `dc9bbcddcf2cd2cf47ef7768e530c6aab6fa4401`。TKU `1619ba890e3dc282bb26f92ebeeeece375e9ffe8`仍含Sunderland错校圖與UAEMEX作者待核阻擋。新資料在當前固定驗收結束後再逐hunk整合，重新綁定固定SHA驗收；不能以作者測試或前批通過代替。NCU僅保留一套資料層候選優先規則及explicit operator override，僅解除有具名新證據的7位置；Meiji租金「約五月」原件為約五個月，須同步source和derived更正。
+TKU兩拒用照片已移至 `sources/tku/withdrawn-campus-assets/`，不在public static或Python package source。保留研究原件不等允許公開部署；發布前必須驗 direct URL404、六校cache/fallback無復活、最終wheel無路徑／內容hash。完整候選現在驗收中，任何較早SHA綠燈不能代替 ca194735。
 
-共用面包括 api.py 照片 scope／coverage／三處座標呼叫、school_content.py、university_locations.py、共享位置／照片、index.html 資產版本與載入次序、app.js 選校／來源狀態／名額語意、discovery-core.js、multi-plan.js、套件 package-data、OpenAPI、測試分母與完整來源交付。另逐欄檢查 NCU supplement 覆寫舊查核明細、CCU completion 與有界快取、TKU 完整索引與逐校原件。Git 沒有衝突不足以證明內容正確。
-
-目前保存候選為 `4a011fab8ecdb98e4bca2ca2368ec28eaf194b78`，已正常推PR12，但完整2970案例仍在跑、Storage runtime因ENOSPC失敗；不得沿用160通過。NCU baf／CCU258／NTUdc9已整合，下一版CCU第八批 `1b9563c58e2fa83c3c2510a40b7ccdd126db9dd1`依父指示待本輪測試結束後接入。TKU第五批 `4f142ea36e69338d2956b4ea5d3d37a9f4116e52`兩項照片問題仍原樣；精確檔案／ID／缺證／驗收條件見 `TKU-PHOTO-BLOCKERS.md`。新候選的全部正式發布門檻仍待綁新SHA完成。
+歷史160aeacd是上一資料批次完整驗收點（2919 unique，2906pass13skip，完整runtime、wheel、175冷暖<460MiB）；4a011fab批次2970unique為2956pass13skip1setup error，另一次單案重跑pass不替代全套；dbc4afd6批次2985unique為2803pass43fail126setup error13skip且Storage ENOSPC。完整原始結果均保留。
 
 ## 原 PR2–5 migrations
 
@@ -50,4 +48,4 @@
 
 ## 本次續作保存點
 
-已推送dbc4afd64b4116e199c218d0d22e4223c9ff2db1，CCU第八批已整合且完整測試仍在進行／有browser崩潰與Storage ENOSPC失敗。下一固定組合改為NCUa2df55b1、CCU52ed6370（資料a4e425d4）、NTUc7357f97；須完成固定輸入獨立審查後再建立新SHA及完整驗收。以上不改正式發布邊界，最新原始passed/failed/error/skipped/notrun以README及逐run檔為準。
+ca194735已推送Draft PR12；contracts與完整來源封存核驗通過，3085個唯一原測試正在四shard中執行（最多兩個同時）。最終wheel／fresh install、完整35SQL真Storage runtime、175冷暖仍待完成。正式發布邊界不變，最新原始passed/failed/error/skipped/notrun以README及逐run檔為準。

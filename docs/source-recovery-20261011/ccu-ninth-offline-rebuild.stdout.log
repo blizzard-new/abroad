@@ -1,0 +1,611 @@
+review_ccu_public_convergence.py Ninth finite pass: 21 host fields; 67 precise reading records
+ 
+build_ccu_completion_reviews.py reviewed identities 104 destination profiles 104
+ 
+build_ccu_completion_inventory.py {
+  "denominators": {
+    "exchange_list": 104,
+    "published_nonzero_quota": 52,
+    "unknown_quota": 3,
+    "published_numeric_positive_quota": 49,
+    "published_unlimited_quota": 3,
+    "not_open_reference": 49,
+    "previous_host_field_review": 55,
+    "broader_global_agreements": null,
+    "global_agreement_note": "官方全球姊妹校頁連至Gamma；公開HTML只回傳應用殼，正常TLS Chromium失敗ERR_CERT_AUTHORITY_INVALID；匿名公開snapshot亦回FORBIDDEN，未嘗試登入或繞過。尚未取得全量內容，不能將104交換校宣稱為全部協議校。"
+  },
+  "field_counts": {
+    "host.program_scope": {
+      "reference_only": 35,
+      "missing": 7,
+      "verified_current": 31,
+      "needs_confirmation": 31
+    },
+    "host.eligibility": {
+      "reference_only": 32,
+      "missing": 21,
+      "verified_current": 23,
+      "needs_confirmation": 26,
+      "conflict": 2
+    },
+    "host.language": {
+      "reference_only": 40,
+      "verified_current": 20,
+      "missing": 11,
+      "needs_confirmation": 27,
+      "conflict": 6
+    },
+    "host.nomination_deadline": {
+      "missing": 48,
+      "reference_only": 10,
+      "needs_confirmation": 20,
+      "conflict": 6,
+      "verified_current": 20
+    },
+    "host.application_deadline": {
+      "missing": 36,
+      "verified_current": 21,
+      "reference_only": 12,
+      "needs_confirmation": 21,
+      "conflict": 14
+    },
+    "host.documents": {
+      "reference_only": 35,
+      "verified_current": 24,
+      "needs_confirmation": 30,
+      "missing": 10,
+      "conflict": 5
+    },
+    "host.application_forms": {
+      "reference_only": 30,
+      "needs_confirmation": 52,
+      "missing": 16,
+      "verified_current": 5,
+      "conflict": 1
+    },
+    "host.academic_calendar": {
+      "missing": 42,
+      "verified_current": 33,
+      "needs_confirmation": 10,
+      "conflict": 12,
+      "reference_only": 7
+    },
+    "host.course_restrictions": {
+      "missing": 44,
+      "verified_current": 23,
+      "needs_confirmation": 28,
+      "conflict": 5,
+      "reference_only": 4
+    },
+    "host.housing": {
+      "missing": 24,
+      "verified_current": 27,
+      "conflict": 6,
+      "needs_confirmation": 29,
+      "reference_only": 18
+    },
+    "host.housing_deadline": {
+      "missing": 76,
+      "verified_current": 7,
+      "conflict": 1,
+      "needs_confirmation": 19,
+      "reference_only": 1
+    },
+    "host.costs": {
+      "missing": 39,
+      "verified_current": 19,
+      "reference_only": 14,
+      "needs_confirmation": 17,
+      "conflict": 15
+    },
+    "host.insurance": {
+      "missing": 37,
+      "verified_current": 24,
+      "reference_only": 11,
+      "needs_confirmation": 29,
+      "conflict": 3
+    },
+    "host.visa": {
+      "missing": 51,
+      "needs_confirmation": 30,
+      "verified_current": 14,
+      "reference_only": 8,
+      "conflict": 1
+    },
+    "host.arrival": {
+      "missing": 42,
+      "verified_current": 30,
+      "reference_only": 11,
+      "needs_confirmation": 13,
+      "conflict": 7,
+      "explicit_not_announced": 1
+    },
+    "host.host_tuition": {
+      "missing": 69,
+      "reference_only": 7,
+      "needs_confirmation": 17,
+      "verified_current": 11
+    },
+    "host.exchange_duration": {
+      "reference_only": 43,
+      "missing": 12,
+      "needs_confirmation": 17,
+      "verified_current": 29,
+      "conflict": 3
+    },
+    "profile.city": {
+      "verified_current": 103,
+      "needs_confirmation": 1
+    },
+    "profile.location": {
+      "missing": 38,
+      "verified_current": 49,
+      "needs_confirmation": 14,
+      "reference_only": 3
+    },
+    "profile.website": {
+      "verified_current": 103,
+      "missing": 1
+    },
+    "profile.degree_levels": {
+      "reference_only": 35,
+      "missing": 40,
+      "needs_confirmation": 19,
+      "verified_current": 10
+    },
+    "profile.colleges": {
+      "reference_only": 48,
+      "missing": 33,
+      "needs_confirmation": 20,
+      "verified_current": 3
+    },
+    "profile.transport": {
+      "missing": 44,
+      "reference_only": 5,
+      "needs_confirmation": 24,
+      "verified_current": 31
+    },
+    "profile.campus_life": {
+      "verified_current": 70,
+      "reference_only": 4,
+      "missing": 19,
+      "needs_confirmation": 11
+    },
+    "home.academic_gpa_minimum": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.academic_average_minimum": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.home_enrollment": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.home_degree_year": {
+      "reference_identity_not_current_choice": 49,
+      "conflict": 55
+    },
+    "home.maximum_preferences": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.home_program_exclusivity": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.exchange_frequency": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.language_validity": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.documents": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.home_online_and_paper": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.fees": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.home_minimum_courses": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.credit_recognition": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.return_report": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.arrival_safety": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.academic_arrival_return_notice": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.scholarship_old_window": {
+      "reference_identity_not_current_choice": 49,
+      "reference_only": 55
+    },
+    "mother_list.quota": {
+      "reference_only": 48,
+      "verified_current": 52,
+      "missing": 4
+    },
+    "mother_list.language_requirement": {
+      "reference_only": 46,
+      "verified_current": 50,
+      "missing": 4,
+      "conflict": 3,
+      "needs_confirmation": 1
+    },
+    "mother_list.eligibility": {
+      "reference_only": 37,
+      "missing": 20,
+      "verified_current": 47
+    },
+    "mother_list.application_deadline": {
+      "verified_current": 104
+    },
+    "mother_list.study_period": {
+      "reference_only": 49,
+      "verified_current": 55
+    },
+    "host.document_set_completeness": {
+      "unverified": 71,
+      "partial_not_exhaustive": 33
+    },
+    "campus.coordinates": {
+      "verified_current": 101,
+      "missing": 3
+    },
+    "campus.photo": {
+      "verified_current": 100,
+      "missing": 4
+    }
+  },
+  "sha256": "cd8c758ee4154e9060abe7314e81d90d4ae243c7f208cebb74eb508c57bf4587"
+}
+ 
+build_ccu_gap_research_queue.py {"coordinate_gaps": 3, "licensed_photo_gaps": 4, "website_identity_gaps": 1, "host_missing_fields": 585}
+ 
+build_ccu_remaining_public_worklist.py {
+  "schools": 104,
+  "sources": 2294,
+  "source_review_states": {
+    "mapped_passages_read_remaining_body_unclaimed": 801,
+    "reviewed_scoped_exclusion": 124,
+    "source_failure_or_body_not_obtained": 209,
+    "scoped_body_read_recorded": 603,
+    "readable_body_without_recorded_review": 10,
+    "metadata_or_asset_candidate_not_policy_body": 517,
+    "same_bytes_as_recorded_read_source": 30
+  },
+  "coordinate_gaps": 3,
+  "photo_gaps": 4,
+  "website_gaps": 1,
+  "host_missing_fields": 585,
+  "public_reading_record_missing_sources": 0,
+  "priority_policy_candidates": 0
+}
+ 
+build_ccu_convergence_acceptance.py {"host_status_counts": {"reference_only": 318, "missing": 585, "verified_current": 361, "needs_confirmation": 416, "conflict": 87, "explicit_not_announced": 1}, "changed_host_fields": 21, "previously_missing_host_fields_filled": 19, "private_school_count": 10, "private_field_count": 11, "closure_states": {"already_complete_extent_flag_normalized": 17, "retained_scoped_read_and_closed_for_bounded_acceptance": 229, "related_body_and_children_reviewed": 17}, "external_input_rows": 1407}
+ 
+review_ccu_public_convergence.py Ninth finite pass: 21 host fields; 67 precise reading records
+ 
+build_ccu_completion_reviews.py reviewed identities 104 destination profiles 104
+ 
+build_ccu_completion_inventory.py {
+  "denominators": {
+    "exchange_list": 104,
+    "published_nonzero_quota": 52,
+    "unknown_quota": 3,
+    "published_numeric_positive_quota": 49,
+    "published_unlimited_quota": 3,
+    "not_open_reference": 49,
+    "previous_host_field_review": 55,
+    "broader_global_agreements": null,
+    "global_agreement_note": "官方全球姊妹校頁連至Gamma；公開HTML只回傳應用殼，正常TLS Chromium失敗ERR_CERT_AUTHORITY_INVALID；匿名公開snapshot亦回FORBIDDEN，未嘗試登入或繞過。尚未取得全量內容，不能將104交換校宣稱為全部協議校。"
+  },
+  "field_counts": {
+    "host.program_scope": {
+      "reference_only": 35,
+      "missing": 7,
+      "verified_current": 31,
+      "needs_confirmation": 31
+    },
+    "host.eligibility": {
+      "reference_only": 32,
+      "missing": 21,
+      "verified_current": 23,
+      "needs_confirmation": 26,
+      "conflict": 2
+    },
+    "host.language": {
+      "reference_only": 40,
+      "verified_current": 20,
+      "missing": 11,
+      "needs_confirmation": 27,
+      "conflict": 6
+    },
+    "host.nomination_deadline": {
+      "missing": 48,
+      "reference_only": 10,
+      "needs_confirmation": 20,
+      "conflict": 6,
+      "verified_current": 20
+    },
+    "host.application_deadline": {
+      "missing": 36,
+      "verified_current": 21,
+      "reference_only": 12,
+      "needs_confirmation": 21,
+      "conflict": 14
+    },
+    "host.documents": {
+      "reference_only": 35,
+      "verified_current": 24,
+      "needs_confirmation": 30,
+      "missing": 10,
+      "conflict": 5
+    },
+    "host.application_forms": {
+      "reference_only": 30,
+      "needs_confirmation": 52,
+      "missing": 16,
+      "verified_current": 5,
+      "conflict": 1
+    },
+    "host.academic_calendar": {
+      "missing": 42,
+      "verified_current": 33,
+      "needs_confirmation": 10,
+      "conflict": 12,
+      "reference_only": 7
+    },
+    "host.course_restrictions": {
+      "missing": 44,
+      "verified_current": 23,
+      "needs_confirmation": 28,
+      "conflict": 5,
+      "reference_only": 4
+    },
+    "host.housing": {
+      "missing": 24,
+      "verified_current": 27,
+      "conflict": 6,
+      "needs_confirmation": 29,
+      "reference_only": 18
+    },
+    "host.housing_deadline": {
+      "missing": 76,
+      "verified_current": 7,
+      "conflict": 1,
+      "needs_confirmation": 19,
+      "reference_only": 1
+    },
+    "host.costs": {
+      "missing": 39,
+      "verified_current": 19,
+      "reference_only": 14,
+      "needs_confirmation": 17,
+      "conflict": 15
+    },
+    "host.insurance": {
+      "missing": 37,
+      "verified_current": 24,
+      "reference_only": 11,
+      "needs_confirmation": 29,
+      "conflict": 3
+    },
+    "host.visa": {
+      "missing": 51,
+      "needs_confirmation": 30,
+      "verified_current": 14,
+      "reference_only": 8,
+      "conflict": 1
+    },
+    "host.arrival": {
+      "missing": 42,
+      "verified_current": 30,
+      "reference_only": 11,
+      "needs_confirmation": 13,
+      "conflict": 7,
+      "explicit_not_announced": 1
+    },
+    "host.host_tuition": {
+      "missing": 69,
+      "reference_only": 7,
+      "needs_confirmation": 17,
+      "verified_current": 11
+    },
+    "host.exchange_duration": {
+      "reference_only": 43,
+      "missing": 12,
+      "needs_confirmation": 17,
+      "verified_current": 29,
+      "conflict": 3
+    },
+    "profile.city": {
+      "verified_current": 103,
+      "needs_confirmation": 1
+    },
+    "profile.location": {
+      "missing": 38,
+      "verified_current": 49,
+      "needs_confirmation": 14,
+      "reference_only": 3
+    },
+    "profile.website": {
+      "verified_current": 103,
+      "missing": 1
+    },
+    "profile.degree_levels": {
+      "reference_only": 35,
+      "missing": 40,
+      "needs_confirmation": 19,
+      "verified_current": 10
+    },
+    "profile.colleges": {
+      "reference_only": 48,
+      "missing": 33,
+      "needs_confirmation": 20,
+      "verified_current": 3
+    },
+    "profile.transport": {
+      "missing": 44,
+      "reference_only": 5,
+      "needs_confirmation": 24,
+      "verified_current": 31
+    },
+    "profile.campus_life": {
+      "verified_current": 70,
+      "reference_only": 4,
+      "missing": 19,
+      "needs_confirmation": 11
+    },
+    "home.academic_gpa_minimum": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.academic_average_minimum": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.home_enrollment": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.home_degree_year": {
+      "reference_identity_not_current_choice": 49,
+      "conflict": 55
+    },
+    "home.maximum_preferences": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.home_program_exclusivity": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.exchange_frequency": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.language_validity": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.documents": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.home_online_and_paper": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.fees": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.home_minimum_courses": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.credit_recognition": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.return_report": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.arrival_safety": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.academic_arrival_return_notice": {
+      "reference_identity_not_current_choice": 49,
+      "verified_current": 55
+    },
+    "home.scholarship_old_window": {
+      "reference_identity_not_current_choice": 49,
+      "reference_only": 55
+    },
+    "mother_list.quota": {
+      "reference_only": 48,
+      "verified_current": 52,
+      "missing": 4
+    },
+    "mother_list.language_requirement": {
+      "reference_only": 46,
+      "verified_current": 50,
+      "missing": 4,
+      "conflict": 3,
+      "needs_confirmation": 1
+    },
+    "mother_list.eligibility": {
+      "reference_only": 37,
+      "missing": 20,
+      "verified_current": 47
+    },
+    "mother_list.application_deadline": {
+      "verified_current": 104
+    },
+    "mother_list.study_period": {
+      "reference_only": 49,
+      "verified_current": 55
+    },
+    "host.document_set_completeness": {
+      "unverified": 71,
+      "partial_not_exhaustive": 33
+    },
+    "campus.coordinates": {
+      "verified_current": 101,
+      "missing": 3
+    },
+    "campus.photo": {
+      "verified_current": 100,
+      "missing": 4
+    }
+  },
+  "sha256": "cd8c758ee4154e9060abe7314e81d90d4ae243c7f208cebb74eb508c57bf4587"
+}
+ 
+build_ccu_gap_research_queue.py {"coordinate_gaps": 3, "licensed_photo_gaps": 4, "website_identity_gaps": 1, "host_missing_fields": 585}
+ 
+build_ccu_remaining_public_worklist.py {
+  "schools": 104,
+  "sources": 2294,
+  "source_review_states": {
+    "mapped_passages_read_remaining_body_unclaimed": 801,
+    "reviewed_scoped_exclusion": 124,
+    "source_failure_or_body_not_obtained": 209,
+    "scoped_body_read_recorded": 603,
+    "readable_body_without_recorded_review": 10,
+    "metadata_or_asset_candidate_not_policy_body": 517,
+    "same_bytes_as_recorded_read_source": 30
+  },
+  "coordinate_gaps": 3,
+  "photo_gaps": 4,
+  "website_gaps": 1,
+  "host_missing_fields": 585,
+  "public_reading_record_missing_sources": 0,
+  "priority_policy_candidates": 0
+}
+ 
+build_ccu_convergence_acceptance.py {"host_status_counts": {"reference_only": 318, "missing": 585, "verified_current": 361, "needs_confirmation": 416, "conflict": 87, "explicit_not_announced": 1}, "changed_host_fields": 21, "previously_missing_host_fields_filled": 19, "private_school_count": 10, "private_field_count": 11, "closure_states": {"already_complete_extent_flag_normalized": 17, "retained_scoped_read_and_closed_for_bounded_acceptance": 229, "related_body_and_children_reviewed": 17}, "external_input_rows": 1407}
+ 
+{"hashes": 145, "changed": 168, "scope_check_unknown_paths": []}

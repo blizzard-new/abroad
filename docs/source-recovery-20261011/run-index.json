@@ -122,6 +122,38 @@
     "pytest_summary": []
   },
   {
+    "name": "ccu-ninth-fixed-independent-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ccu-ninth-source-extraction",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
     "name": "ccu-second-fixed-input-audit",
     "result": "passed",
     "exit_code": 0,
@@ -1352,6 +1384,38 @@
     ]
   },
   {
+    "name": "integration-final3-contracts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "ca1947351467fcc726ce58ef849437c6af11358e",
+      "tree": "25e0ffa961845865dcf10b8cd2540a8a7438fe27",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "ca1947351467fcc726ce58ef849437c6af11358e",
+      "tree": "25e0ffa961845865dcf10b8cd2540a8a7438fe27",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integration-final3-delivery-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "ca1947351467fcc726ce58ef849437c6af11358e",
+      "tree": "25e0ffa961845865dcf10b8cd2540a8a7438fe27",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "ca1947351467fcc726ce58ef849437c6af11358e",
+      "tree": "25e0ffa961845865dcf10b8cd2540a8a7438fe27",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
     "name": "integration-next1-contracts",
     "result": "passed",
     "exit_code": 0,
@@ -1570,6 +1634,42 @@
     "pytest_summary": []
   },
   {
+    "name": "integration-next2-full-shard-0",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": [
+      "=========== 20 failed, 2521 passed, 13 skipped in 1910.92s (0:31:50) ==========="
+    ]
+  },
+  {
+    "name": "integration-next2-full-shard-1",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": [
+      "================== 7 failed, 137 passed in 1609.40s (0:26:49) =================="
+    ]
+  },
+  {
     "name": "integration-next2-full-shard-2",
     "result": "failed",
     "exit_code": 1,
@@ -1585,6 +1685,24 @@
     },
     "pytest_summary": [
       "============= 8 failed, 10 passed, 126 errors in 127.24s (0:02:07) ============="
+    ]
+  },
+  {
+    "name": "integration-next2-full-shard-3",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": [
+      "================== 8 failed, 135 passed in 1377.61s (0:22:57) =================="
     ]
   },
   {
@@ -2287,6 +2405,70 @@
     "end_guard": {
       "sha": "3129ce1bfcf6987a872574587cc53b60043d64ba",
       "tree": "6f78825d430fbe395cc62cee0a790a9b300dbbc9",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ncu-eleventh-fixed-independent-audit",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ncu-eleventh-fixed-independent-audit-r2",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ncu-eleventh-fixed-independent-audit-r3",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ncu-eleventh-fixed-independent-audit-r4",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
       "status": ""
     },
     "pytest_summary": []
@@ -3368,6 +3550,22 @@
     "pytest_summary": []
   },
   {
+    "name": "tku-final-independent-semantics",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "ca1947351467fcc726ce58ef849437c6af11358e",
+      "tree": "25e0ffa961845865dcf10b8cd2540a8a7438fe27",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "ca1947351467fcc726ce58ef849437c6af11358e",
+      "tree": "25e0ffa961845865dcf10b8cd2540a8a7438fe27",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
     "name": "tku-second-fixed-input-audit",
     "result": "passed",
     "exit_code": 0,
@@ -3395,6 +3593,54 @@
     "end_guard": {
       "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
       "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "tku-sixth-fixed-independent-assets",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "d0c84c566c65b900175ca4409a01191ddeeaaf9f",
+      "tree": "71196f94e7d5293e7e72f78b14b8f19b6344d9d2",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "d0c84c566c65b900175ca4409a01191ddeeaaf9f",
+      "tree": "71196f94e7d5293e7e72f78b14b8f19b6344d9d2",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "tku-sixth-fixed-independent-dates",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "d0c84c566c65b900175ca4409a01191ddeeaaf9f",
+      "tree": "71196f94e7d5293e7e72f78b14b8f19b6344d9d2",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "d0c84c566c65b900175ca4409a01191ddeeaaf9f",
+      "tree": "71196f94e7d5293e7e72f78b14b8f19b6344d9d2",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "tku-sixth-fixed-independent-licenses",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "d0c84c566c65b900175ca4409a01191ddeeaaf9f",
+      "tree": "71196f94e7d5293e7e72f78b14b8f19b6344d9d2",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "d0c84c566c65b900175ca4409a01191ddeeaaf9f",
+      "tree": "71196f94e7d5293e7e72f78b14b8f19b6344d9d2",
       "status": ""
     },
     "pytest_summary": []

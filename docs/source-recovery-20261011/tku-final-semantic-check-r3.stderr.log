@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_tku_final_semantics.py", line 21, in <module>
+    (raw/'tku-final-independent-semantic-review.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in report.items()if k!='original_sources_index'},ensure_ascii=False,indent=2));assert not errors
+                                                                                                                                                                                                                                           ^^^^^^^^^^
+AssertionError
