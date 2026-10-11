@@ -17,6 +17,11 @@ def main():
         gap_reviews={r['id']:r for r in json.loads((B/'milestone4_asset_source_limits.json').read_text())['schools']}
     if (B/'milestone5_asset_outcomes.json').exists():
         gap_reviews={r['id']:r for r in json.loads((B/'milestone5_asset_outcomes.json').read_text())['schools']}
+    if (B/'milestone6_asset_outcomes.json').exists():
+        gap_reviews={r['id']:r for r in json.loads((B/'milestone6_asset_outcomes.json').read_text())['schools']}
+    if (B/'fixed_photo_blocker_holds.json').exists():
+        for hold in json.loads((B/'fixed_photo_blocker_holds.json').read_text())['schools']:
+            gap_reviews[hold['id']]=dict(hold,photo_reason=hold['reason'],coordinate_reason=None,prior_evidence_file='fixed_photo_blocker_holds.json')
     for d in audit['schools']:
         latest={}
         for s in d['public_source_checks']:
@@ -46,6 +51,9 @@ def main():
         milestone5_handoff=dict(readable_outcomes='milestone5_readable_outcomes.json',fixed_readable_institutions=47,
             asset_outcomes='milestone5_asset_outcomes.json',source_conflicts='milestone5_source_conflicts.json',
             note='12校接入參考（10學期規則、2範圍／服務）；5外部限制、30需適用來源。命名Adelaide圖層已讀，承繼／校區未核實，不代配。'),
+        milestone6_handoff=dict(outcomes='milestone6_remaining_source_outcomes.json',full_original_scope='milestone6_full_gap_outcomes.json',
+            frozen_remaining_institutions=42,asset_outcomes='milestone6_asset_outcomes.json',source_conflicts='milestone6_source_conflicts.json',
+            note='原42校官方根入口均已嘗試；新增7校61欄參考、餘35校逐校留存最低校方資料需求。原98校27參考／36外部限制／35需來源；原39資產缺口未代配，另撤下2張被整合者指出的錯配／署名鏈未驗圖，照片262、座標264，缺口聯集41。未重試原36限制。'),
         milestone1=dict(photos=66,coordinates=68),current=dict(photos=len(photos),coordinates=len(locations),photo_percent=round(len(photos)/287*100,2),coordinate_percent=round(len(locations)/287*100,2),photo_gaps=287-len(photos),coordinate_gaps=287-len(locations)),
         delta_from_milestone1=dict(photos=len(photos)-66,coordinates=len(locations)-68),
         host_retry_checks=len(checks),host_retry_statuses=dict(Counter(str(r.get('http_status') or 'connection_error') for r in checks)),

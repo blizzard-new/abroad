@@ -33,7 +33,10 @@ def main():
         path=B/'host_census_sources'/source['local_file'];blob=read_bytes(path)
         valid_magic=blob.startswith((b'%PDF',b'PK',bytes.fromhex('d0cf11e0a1b11ae1'),bytes.fromhex('ffd8ff')))
         assert valid_magic and hashlib.sha256(blob).hexdigest()==source['sha256']
-        attachments.append(dict(source_url=source['source_url'],file=source['local_file'],bytes=len(blob),sha256=source['sha256'],magic_valid=valid_magic,checked_at=source['checked_at']))
+        attachments.append(dict(source_url=source['source_url'],file=source['local_file'],bytes=len(blob),sha256=source['sha256'],magic_valid=valid_magic,checked_at=source['checked_at'],
+            content_opened=not bool(source.get('error')),
+            encrypted_office_package=bool(source.get('encrypted_office_package')),
+            content_limitation=source.get('error')))
     unchanged=[]
     for home in ['cgu','ntpu','ntu','ccu','ncu']:
         prefix=f'src/exchange_info/official_data/{home}/'
