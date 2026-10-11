@@ -136,7 +136,7 @@ def test_new_host_refs_leave_home_quotas_and_application_catalog_unexpanded(tmp_
     client=TestClient(create_app(tmp_path))
     dashboard=client.get('/student-dashboard',params={'school':'TKU'}).json()
     assert len(dashboard['partner_universities'])==287
-    assert sum(p['image_status']=='verified' for p in dashboard['partner_universities'])==264
+    assert sum(p['image_status']=='verified' for p in dashboard['partner_universities'])==262
     assert all(p['reference_data']['campus_photo_capture_year_status']=='verified_capture_period' for p in dashboard['partner_universities'] if p['image_status']=='verified')
     audit=client.get('/tku/partner-census').json()
     assert audit['field_counts']['quota']['verified_current']==4 and audit['currently_open_home_applications']==0

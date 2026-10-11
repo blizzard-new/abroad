@@ -50,7 +50,7 @@ def test_all_22_fields_preserve_reference_missing_and_current_counts():
                 assert f['evidence']
     assert audit['field_counts']['quota']['verified_current']==4
     assert audit['field_counts']['coordinates']['verified_asset']>=260
-    assert audit['field_counts']['campus_photo']['verified_asset']==264
+    assert audit['field_counts']['campus_photo']['verified_asset']==262
 
 
 def test_home_application_windows_never_promote_directory_or_old_quota():
@@ -95,7 +95,8 @@ def test_reviewed_host_year_is_not_home_nomination_and_form_retries_keep_history
 
 def test_licensed_images_require_author_license_hash_and_actual_visual_review():
     photos=json.loads((BUNDLE/'campus_asset_manifest.json').read_text())
-    assert len(photos)==264
+    assert len(photos)==262
+    assert not {'tku-sister-65','tku-sister-52'} & {p['id'] for p in photos}
     assert sum(p.get('acquisition_status')=='reused_baseline_asset' for p in photos)==53
     for photo in photos:
         assert photo['review_status']=='verified_asset' and photo['author'] and photo['license']
@@ -117,7 +118,7 @@ def test_offline_full_api_and_non_current_profile(tmp_path,monkeypatch):
     client=TestClient(create_app(tmp_path))
     dashboard=client.get('/student-dashboard',params={'school':'TKU'}).json()
     assert len(dashboard['partner_universities'])==287
-    assert sum(p['image_status']=='verified' for p in dashboard['partner_universities'])==264
+    assert sum(p['image_status']=='verified' for p in dashboard['partner_universities'])==262
     assert sum(p['location']['geocode_status']=='verified' for p in dashboard['partner_universities'])>=260
     ritsu=dashboard['partner_universities'][0]
     assert ritsu['image_url'] and ritsu['location']['latitude']==35.032579

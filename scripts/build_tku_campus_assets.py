@@ -102,6 +102,8 @@ def main():
             records.append(photo)
     from tku_photo_date_policy import apply_capture_year_policy
     records=apply_capture_year_policy(records)
+    from tku_photo_identity_policy import apply_photo_identity_policy
+    records=apply_photo_identity_policy(records)
     (BUNDLE/"campus_asset_manifest.json").write_text(json.dumps(records,ensure_ascii=False,indent=2)+"\n")
     print(json.dumps(dict(photos=len(records),downloaded=sum('local_path' in r for r in records),bytes=sum(r.get("bytes",0) for r in records),visual_review_required=True)))
 

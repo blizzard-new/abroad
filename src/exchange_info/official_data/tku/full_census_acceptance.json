@@ -1297,8 +1297,8 @@
       "checked_at": "2026-10-11T14:51:06.742973+00:00"
     }
   ],
-  "licensed_visual_reviewed_photos": 264,
-  "new_licensed_photos": 211,
+  "licensed_visual_reviewed_photos": 262,
+  "new_licensed_photos": 209,
   "reused_baseline_photos": 53,
   "verified_physical_campus_coordinates": 9,
   "reused_baseline_representative_coordinates": 66,
@@ -1325,7 +1325,7 @@
     "living_costs": 285,
     "transport": 285,
     "coordinates": 23,
-    "campus_photo": 23
+    "campus_photo": 25
   },
   "field_counts": {
     "home_eligibility": {
@@ -1438,8 +1438,8 @@
       "not_verified_new": 23
     },
     "campus_photo": {
-      "verified_asset": 264,
-      "not_verified_new": 23
+      "verified_asset": 262,
+      "not_verified_new": 25
     }
   },
   "other_home_bundles": [
@@ -42766,8 +42766,8 @@
       ],
       "fields": {
         "reference_only": 8,
-        "not_verified_new": 12,
-        "verified_asset": 2
+        "not_verified_new": 13,
+        "verified_asset": 1
       },
       "remaining_fields": [
         {
@@ -42889,6 +42889,12 @@
           "label": "生活及交通來源",
           "status": "not_verified_new",
           "reason": "公開來源已查，尚未取得可核實本期／本計畫的此欄原文；開啟錯誤及接待校／母校適用範圍分別列出。不代表官方明示尚未公告。"
+        },
+        {
+          "key": "campus_photo",
+          "label": "可授權校園照片",
+          "status": "not_verified_new",
+          "reason": "UAEMEX FCPyS A棟身分可辨，但Commons作者Unknown author重複、2024上傳歷史稱unknown作者且來源Facebook實回登入頁；未取得支持作者／授權人credit的獨立原件聲明，停止展示，不判侵權、不把uploader當作者。需公開原件／授權與署名說明或可核替代圖。"
         }
       ],
       "public_sources_checked": 2,
@@ -43747,8 +43753,8 @@
       ],
       "fields": {
         "reference_only": 9,
-        "not_verified_new": 11,
-        "verified_asset": 2
+        "not_verified_new": 12,
+        "verified_asset": 1
       },
       "remaining_fields": [
         {
@@ -43870,6 +43876,12 @@
           "label": "生活及交通來源",
           "status": "not_verified_new",
           "reason": "公開來源已查，尚未取得可核實本期／本計畫的此欄原文；開啟錯誤及接待校／母校適用範圍分別列出。不代表官方明示尚未公告。"
+        },
+        {
+          "key": "campus_photo",
+          "label": "可授權校園照片",
+          "status": "not_verified_new",
+          "reason": "原圖正文與來源category明示University of the West of England／Frenchay；淡江條目為University of Sunderland，屬不同機構，已停止展示錯圖，非同校多校區差異。需原件可核的Sunderland具名校景及授權、作者、拍攝期。"
         }
       ],
       "public_sources_checked": 8,
@@ -48132,5 +48144,6 @@
     "Wikidata及Commons首輪HTTP429失敗歷史保留；冷卻後查核批次、候選及未解校區身份另列，未接受素材不自動補值。",
     "明治五模板的首次503與有限重試結果分開保存；成功開啟模板仍是接待校文件，不能推定淡江提名對應。",
     "原四校63項缺口與18項矛盾保留，不以新全量資料層掩蓋。"
-  ]
+  ],
+  "photo_withdrawal_evidence": "fixed_photo_blocker_holds.json"
 }

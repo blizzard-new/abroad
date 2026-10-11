@@ -83,6 +83,8 @@ def build():
     census, programmes, unmatched = reconcile()
     enrichment = {r["id"]: r for r in read_rows("partner_enrichment.jsonl")} if (BUNDLE / "partner_enrichment.jsonl").exists() else {}
     photos={r['id']:r for r in json.loads((BUNDLE/'campus_asset_manifest.json').read_text()) if r.get('review_status')=='verified_asset'}
+    hold_path=BUNDLE/'fixed_photo_blocker_holds.json'
+    photo_identity_holds={r['id']:r for r in json.loads(hold_path.read_text())['schools']} if hold_path.exists() else {}
     locations={r['id']:r for r in json.loads((BUNDLE/'campus_location_manifest.json').read_text())}
     commons={r['id']:r for r in json.loads((BUNDLE/'commons_campus_index.json').read_text())}
     coordinates={r['id']:r for r in json.loads((BUNDLE/'campus_candidates.json').read_text())}
@@ -141,6 +143,9 @@ def build():
                     cells[key].update(status='verified_asset',reason='實際校景、作者與自由授權已核對；歷史拍攝期及校區標明，不代表当期交換校區。',
                         public_reference=dict(value=photo['caption'],status='verified_asset',evidence=[dict(source_url=photo['source_url'],checked_at=photo['checked_at'],applicable_year=photo['applicable_year'],role='licensed_campus_photo',locator='Commons Summary/Licensing and downloaded visual review',quote=photo['identity_quote'],license=photo['license'],license_url=photo['license_url'],sha256=photo['sha256'])]))
                     cells[key]['public_reference']['evidence']+=photo.get('photo_date_evidence',[])
+                elif row['id'] in photo_identity_holds:
+                    hold=photo_identity_holds[row['id']]
+                    cells[key].update(status='not_verified_new',reason=hold['reason'],identity_or_attribution_hold=hold)
             if key=='coordinates':
                 cells[key]['asset_search_check']=coordinates.get(row['id'],{})
                 checks=search_checks(coordinate_batches,row['id'])

@@ -1,5 +1,6 @@
 """Losslessly package only new TKU captures; original bundles stay untouched."""
 import hashlib
+import argparse
 import json
 from pathlib import Path
 from zipfile import ZipFile,ZipInfo,ZIP_DEFLATED
@@ -10,12 +11,15 @@ FOLDERS=['census_sources','host_census_sources','campus_source_candidates','comm
 
 
 def main():
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--folders',nargs='+',choices=FOLDERS,default=FOLDERS)
+    folders=parser.parse_args().folders
     target=B/'capture_packs';target.mkdir(exist_ok=True)
     manifest=B/'capture_pack_manifest.json'
     previous=json.loads(manifest.read_text()) if manifest.exists() else {'files':{},'archives':[]}
     entries=dict(previous['files']);packs=list(previous['archives'])
     groups=[];group=[];size=0
-    for path in sorted(p for folder in FOLDERS if (B/folder).exists() for p in (B/folder).iterdir() if p.is_file() and p.name!='.gitignore'):
+    for path in sorted(p for folder in folders if (B/folder).exists() for p in (B/folder).iterdir() if p.is_file() and p.name!='.gitignore'):
         key=path.relative_to(B).as_posix()
         if key in entries:
             assert hashlib.sha256(path.read_bytes()).hexdigest()==entries[key]['sha256'],f'Historic capture changed: {key}'
