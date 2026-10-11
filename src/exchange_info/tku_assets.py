@@ -49,7 +49,7 @@ def school_location(partner):
     record=campus_locations().get(row["id"]) if row else None
     if not record:
         return UniversityLocation(school_name=partner.school_name,country=partner.country,
-            geocode_status="pending",note="尚未核實實際交換校區座標；不以國家、城市中心或其他母校資料替代。Wikidata批次查詢遇HTTP429已停止，候選與原始錯誤保留於TKU資料。")
+            geocode_status="pending",note="尚未核實實體校園座標；不以國家、城市中心或近名外校替代。已查來源、候選、限流歷史與身份／校區待確認原因保留於TKU逐校查核資料。")
     return UniversityLocation(school_name=partner.school_name,country=partner.country,**record["location"])
 
 

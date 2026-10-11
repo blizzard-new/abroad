@@ -29,11 +29,11 @@ def test_tku_census_licensed_photos_load_and_points_keep_scope(page,live_server,
             located:rows.filter(module.hasCoordinates).map(r=>({name:r.school_name,precision:r.location.precision})),
             unavailable:rows.filter(r=>!module.hasCoordinates(r)).length};
     }''')
-    assert len(results['photos'])>=66
+    assert len(results['photos'])>=264
     assert all(p['width']>0 and p['height']>0 and p['author'] and p['license_url'] for p in results['photos'])
-    assert len(results['points'])==len(results['located'])>=68
+    assert len(results['points'])==len(results['located'])>=260
     assert results['unavailable']==287-len(results['points'])
-    assert sum(p['precision']=='representative' for p in results['located'])>=66
+    assert sum(p['precision']=='representative' for p in results['located'])>=255
     assert {p['properties']['name'] for p in results['points']}=={p['name'] for p in results['located']}
     page.locator('#partner-search').fill('成蹊')
     expect(page.locator('#partner-table')).to_have_attribute('data-result-count','1')

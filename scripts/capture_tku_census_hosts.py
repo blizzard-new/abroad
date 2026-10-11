@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import concurrent.futures
 import gzip
-from tku_capture_io import read_bytes, exists, captures
+from tku_capture_io import read_bytes, exists, captures as stored_captures
 import hashlib
 import json
 import re
@@ -52,8 +52,8 @@ EXTRA_SEEDS = {
 }
 
 
-def capture(url):
-    key = hashlib.sha256(url.encode()).hexdigest()[:24]
+def capture(url, *, key_suffix=None):
+    key = hashlib.sha256((url+(key_suffix or '')).encode()).hexdigest()[:24]
     path = STORE / (key + ".json.gz")
     if exists(path):
         return json.loads(gzip.decompress(read_bytes(path)))
@@ -61,8 +61,17 @@ def capture(url):
     try:
         response = requests.get(url, timeout=(8, 22), headers={"User-Agent": "UniWayTKUReference/1.0"})
         record.update(http_status=response.status_code, final_url=response.url,
-                      sha256=hashlib.sha256(response.content).hexdigest(), bytes=len(response.content))
+                      sha256=hashlib.sha256(response.content).hexdigest(), bytes=len(response.content),retry_after=response.headers.get('Retry-After'))
         response.raise_for_status()
+        extension=urlsplit(url).path.lower()
+        if extension.endswith('.pdf') and not response.content.startswith(b'%PDF'):
+            raise ValueError('Expected PDF endpoint returned no PDF magic; no document content verified')
+        if extension.endswith('.docx') and not response.content.startswith(b'PK'):
+            raise ValueError('Expected Word endpoint returned no DOCX ZIP magic; no template content verified')
+        if extension.endswith('.xlsx') and not response.content.startswith(b'PK'):
+            raise ValueError('Expected workbook endpoint returned no XLSX ZIP magic')
+        if extension.endswith('.doc') and not response.content.startswith(bytes.fromhex('d0cf11e0a1b11ae1')):
+            raise ValueError('Expected legacy Word endpoint returned no OLE compound-file magic')
         if response.content.startswith(b"%PDF"):
             import io
             from pypdf import PdfReader
@@ -71,6 +80,32 @@ def capture(url):
             asset = STORE / (key + ".pdf")
             asset.write_bytes(response.content)
             record["local_file"] = asset.name
+        elif extension.endswith('.xlsx'):
+            import io,zipfile
+            from xml.etree import ElementTree
+            ns={'s':'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+            with zipfile.ZipFile(io.BytesIO(response.content)) as workbook:
+                shared=[]
+                if 'xl/sharedStrings.xml' in workbook.namelist():
+                    shared=[''.join(x.itertext()) for x in ElementTree.fromstring(workbook.read('xl/sharedStrings.xml')).findall('s:si',ns)]
+                record['sheets']=[]
+                for name in sorted(n for n in workbook.namelist() if re.fullmatch(r'xl/worksheets/sheet\d+\.xml',n)):
+                    rows=[]
+                    for row in ElementTree.fromstring(workbook.read(name)).findall('.//s:row',ns):
+                        cells=[]
+                        for cell in row.findall('s:c',ns):
+                            v=cell.find('s:v',ns);value=v.text if v is not None else ''
+                            if cell.get('t')=='s' and value:value=shared[int(value)]
+                            elif cell.get('t')=='inlineStr':value=''.join(cell.find('s:is',ns).itertext())
+                            cells.append((cell.get('r'),value))
+                        rows.append(cells)
+                    record['sheets'].append(dict(xml_part=name,rows=rows))
+                record['paragraphs']=['\t'.join(f'{cell}={value}' for cell,value in row) for sheet in record['sheets'] for row in sheet['rows']]
+                record['text']='\n'.join(record['paragraphs'])
+            asset=STORE/(key+'.xlsx');asset.write_bytes(response.content);record['local_file']=asset.name
+        elif extension.endswith('.doc'):
+            asset=STORE/(key+'.doc');asset.write_bytes(response.content);record['local_file']=asset.name
+            record.update(text='',content_extraction_status='legacy_DOC_parser_not_available',content_scope='Downloaded OLE Word binary; actual year and application content not verified')
         elif response.content.startswith(b"PK") and urlsplit(response.url).path.lower().endswith(".docx"):
             import io
             import zipfile
@@ -111,6 +146,8 @@ DISCOVER = re.compile(r"incoming|exchange student|international (?:office|relati
 
 def main():
     STORE.mkdir(parents=True, exist_ok=True)
+    index_path=BUNDLE/'host_census_capture_index.json'
+    prior_index={r['id']:r for r in json.loads(index_path.read_text())} if index_path.exists() else {}
     census = json.loads((BUNDLE / "full_census_audit.json").read_text())["schools"]
     profiles = []
     for home in ["cgu", "ntpu"]:
@@ -178,7 +215,7 @@ def main():
         print(json.dumps(dict(depth=depth+2,added_urls=len(new_urls))),flush=True)
     # Keep prior successful captures when discovery order changes, including
     # separately reviewed attachment sources on the same official host.
-    for path in captures(STORE):
+    for path in stored_captures(STORE):
         old=json.loads(gzip.decompress(read_bytes(path)))
         captures.setdefault(old['source_url'],old)
     for task in tasks:
@@ -187,6 +224,10 @@ def main():
                                    and url not in task['seeds']+task['discovered_urls']]
         task["sources"] = [{k: captures[url].get(k) for k in ["id", "source_url", "final_url", "http_status", "checked_at", "sha256", "title", "error"]}
                            for url in dict.fromkeys(task["seeds"] + task["discovered_urls"])]
+        # A refresh of bounded seed discovery must not discard later retries,
+        # manually verified replacement domains or their failed-attempt history.
+        present={s['id'] for s in task['sources']}
+        task['sources'] += [s for s in prior_index.get(task['id'],{}).get('sources',[]) if s['id'] not in present]
     (BUNDLE / "host_census_capture_index.json").write_text(json.dumps(tasks, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(dict(institutions=len(tasks), source_urls=len(captures), opened=sum("error" not in c for c in captures.values()),
                          errors=sum("error" in c for c in captures.values()), with_sources=sum(bool(t["sources"]) for t in tasks))))
