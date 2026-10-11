@@ -71,6 +71,21 @@ def test_real_attachments_and_encrypted_ole_are_separate_from_readable_templates
     assert {'EncryptionInfo','EncryptedPackage'} <= set(r['directory_names'])
     c=capture(r['source_id']);assert c['text']=='' and c['error'].startswith('EncryptedOfficeContainer')
  timeout=next(r for r in rows if r['status']=='single_read_timeout_no_attachment');assert 'ReadTimeout' in timeout['error']
+ # HTTP200 alone cannot establish content readability. Original unparsed
+ # captures and the later, linked offline parser results remain distinct.
+ legacy=[r for r in data('full_census_acceptance')['downloaded_attachments'] if r['file'].endswith('.doc')]
+ assert len(legacy)==12 and len({r['file'] for r in legacy})==6 and len({r['source_id'] for r in legacy})==12
+ originals=[r for r in legacy if not r['original_capture_id']]
+ parsed=[r for r in legacy if r['original_capture_id']]
+ assert len(originals)==len(parsed)==6 and len({r['file'] for r in parsed})==5
+ assert all(not r['content_opened'] and r['content_limitation']=='legacy_DOC_parser_not_available' for r in originals)
+ original_by_id={r['source_id']:r for r in originals}
+ for row in parsed:
+  source=capture(row['source_id']);original=original_by_id[row['original_capture_id']]
+  assert row['content_opened'] and row['content_extraction_status']=='parsed_legacy_DOC_text_offline' and row['content_limitation'] is None
+  assert source['text'].strip() and source['parser']['conversion_exit_code']==0
+  assert source['parser']['macro_security_level']==3 and source['parser']['external_link_update']==0
+  assert row['sha256']==original['sha256'] and row['file']==original['file']
 
 def test_new_directories_degree_pages_maps_and_formats_cannot_auto_generate_rules():
  scopes=data('milestone6_source_scope_reviews');assert len(scopes)==56 and all(s['exclude_from_semester_reference_index'] for s in scopes)

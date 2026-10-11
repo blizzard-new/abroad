@@ -33,10 +33,12 @@ def main():
         path=B/'host_census_sources'/source['local_file'];blob=read_bytes(path)
         valid_magic=blob.startswith((b'%PDF',b'PK',bytes.fromhex('d0cf11e0a1b11ae1'),bytes.fromhex('ffd8ff')))
         assert valid_magic and hashlib.sha256(blob).hexdigest()==source['sha256']
-        attachments.append(dict(source_url=source['source_url'],file=source['local_file'],bytes=len(blob),sha256=source['sha256'],magic_valid=valid_magic,checked_at=source['checked_at'],
-            content_opened=not bool(source.get('error')),
+        content_opened=bool(source.get('pages') or source.get('sheets') or (source.get('text') or '').strip()) and not bool(source.get('error'))
+        attachments.append(dict(source_id=source['id'],original_capture_id=source.get('original_capture_id'),source_url=source['source_url'],file=source['local_file'],bytes=len(blob),sha256=source['sha256'],magic_valid=valid_magic,checked_at=source['checked_at'],
+            content_opened=content_opened,
             encrypted_office_package=bool(source.get('encrypted_office_package')),
-            content_limitation=source.get('error')))
+            content_extraction_status=source.get('content_extraction_status'),
+            content_limitation=source.get('error') or (source.get('content_extraction_status') if not content_opened else None)))
     unchanged=[]
     for home in ['cgu','ntpu','ntu','ccu','ncu']:
         prefix=f'src/exchange_info/official_data/{home}/'
