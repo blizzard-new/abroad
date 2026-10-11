@@ -1,0 +1,239 @@
+{
+  "created_at": "2026-10-11T17:04:41.147854+00:00",
+  "production_frozen_commit": "da1c6ead286dad57ce22ec12a0ea847c1513152d",
+  "browser_test_repair_commit": "f3ef6820237d5519d6bbf5ea19343b060892dfee",
+  "prior_handoff_commit": "258ce9bbb38081792658f9720bdb457a5344b2bb",
+  "latest_origin_main_rechecked": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "production_git_objects": {
+    "src": "c24d72e7f295a070e64e49ea0191109861ec6ecc",
+    "scripts": "b29600f85231b81b2fcbb15f4e648c4f70be96f8",
+    "tests": "fa6c93dedb8f973bbc5c7bd319718331f9a31e58",
+    "data": "d96a635c71b07e955d323dedd566462fba412b49",
+    "pyproject.toml": "9fc12547a48486285c6f000421a4b5cdee3c3869",
+    "uv.lock": "72a4b1691f8718ea632cd95d68c1a251a4b53496",
+    "supabase": "c23e95f1f3bbce8cfd696566e1ad2db6ebf101d6"
+  },
+  "browser_repair_changes_only_test_selector": [
+    "tests/e2e/test_ccu_public_round8.py"
+  ],
+  "production_git_objects_and_selected_unit_test_blobs_unchanged_after_browser_repair": true,
+  "all_ccu_unit_cgu_ntpu_shared_regressions": {
+    "head": "da1c6ead286dad57ce22ec12a0ea847c1513152d",
+    "tests": 409,
+    "passed": 405,
+    "failed_or_errors": 0,
+    "skipped": 4,
+    "elapsed_seconds": 339.605,
+    "failures": [],
+    "skip_reasons": [
+      {
+        "classname": "tests.test_cgu_bundled_data",
+        "name": "test_bundled_cgu_workflows_are_available_without_local_cache",
+        "reason": "Phase C data reviewed"
+      },
+      {
+        "classname": "tests.test_cgu_bundled_data",
+        "name": "test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+        "reason": "Phase C data reviewed"
+      },
+      {
+        "classname": "tests.test_cgu_bundled_data",
+        "name": "test_bundled_cgu_completeness_report_matches_export",
+        "reason": "Phase C data reviewed"
+      },
+      {
+        "classname": "tests.test_cgu_bundled_data",
+        "name": "test_backfilled_cgu_workflows_keep_current_details_reference_only",
+        "reason": "Phase C data reviewed"
+      }
+    ]
+  },
+  "completion_mobile_desktop": {
+    "head": "f3ef6820237d5519d6bbf5ea19343b060892dfee",
+    "tests": 28,
+    "passed": 28,
+    "failed_or_errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 80.438,
+    "failures": [],
+    "skip_reasons": []
+  },
+  "initial_browser_failure_retained": {
+    "head": "da1c6ead286dad57ce22ec12a0ea847c1513152d",
+    "tests": 28,
+    "passed": 26,
+    "failed_or_errors": 2,
+    "skipped": 0,
+    "elapsed_seconds": 77.514,
+    "failures": [
+      {
+        "classname": "tests.e2e.test_ccu_public_round8",
+        "name": "test_round8_years_and_price_basis_survive_reference_rendering[117-390]",
+        "message": "StopIteration"
+      },
+      {
+        "classname": "tests.e2e.test_ccu_public_round8",
+        "name": "test_round8_years_and_price_basis_survive_reference_rendering[117-1440]",
+        "message": "StopIteration"
+      }
+    ],
+    "skip_reasons": []
+  },
+  "selected_370_public_source_scope": {
+    "original_urls_with_recorded_reading_extent": 370,
+    "original_distinct_raw_bodies": 369,
+    "original_all_visible_read_records": 107,
+    "original_partially_screened_records": 263,
+    "all_reading_records": 378,
+    "all_visible_read_records": 115,
+    "new_acquisition_count": 10,
+    "new_http_200_count": 8,
+    "new_technical_failures": [
+      {
+        "source_id": "p109-eighth-application",
+        "source_url": "https://www.zcu.cz/en/Exchange_Student/application_process.html",
+        "resolved_url": "https://www.zcu.cz/en/Exchange_Student/application_process.html",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://www.zcu.cz/en/Exchange_Student/application_process.html",
+        "checked_at": "2026-10-11T16:46:08.935395+00:00",
+        "sha256": "06bb39f84a1540cf912be921c07a7ab86c1014c054c36cf0a0a973d097f616d8"
+      },
+      {
+        "source_id": "p109-eighth-exchange",
+        "source_url": "https://www.zcu.cz/en/Exchange_Student/",
+        "resolved_url": "https://www.zcu.cz/en/Exchange_Student/index.html",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://www.zcu.cz/en/Exchange_Student/index.html",
+        "checked_at": "2026-10-11T16:46:07.427801+00:00",
+        "sha256": "a2b9aa166bc77f25a0feaeadcc5ae47273a8e1bcc6f41651d793babc60def572"
+      }
+    ],
+    "changed_host_fields": 24,
+    "previously_missing_host_fields_filled": 14,
+    "remaining_school_urls_without_recorded_reading": 0,
+    "remaining_global_urls_without_recorded_reading": 10,
+    "all_public_policy_research_exhausted": false,
+    "reading_record_is_not_policy_verification": true
+  },
+  "matrix_counts": {
+    "host_fields": {
+      "reference_only": 313,
+      "missing": 604,
+      "verified_current": 359,
+      "needs_confirmation": 404,
+      "conflict": 87,
+      "explicit_not_announced": 1
+    },
+    "profile_fields": {
+      "verified_current": 369,
+      "missing": 175,
+      "reference_only": 95,
+      "needs_confirmation": 89
+    },
+    "general_campus_fields": {
+      "verified_current": 291,
+      "missing": 437
+    }
+  },
+  "quotas": {
+    "available": 52,
+    "numeric_positive": 49,
+    "unlimited": 3,
+    "blank": 3,
+    "not_open": 49,
+    "explicit_zero": 0
+  },
+  "profile_counts_all_six_schools": {
+    "國立臺北大學": 206,
+    "淡江大學": 4,
+    "長庚大學": 77,
+    "國立臺灣大學": 288,
+    "國立中正大學": 104,
+    "國立中央大學": 214
+  },
+  "all_home_windows_closed": true,
+  "coordinates": 101,
+  "licensed_photos": 100,
+  "official_website_identity_count": 103,
+  "original_ccu_profiles_sha256": "1375f32052bcdeaedfe696073e7ada6d40f40bdebeba0dc1e7f82353e38b78e6",
+  "package": {
+    "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+    "sha256": "3bcc30e01c04376059c99049a19a8bcc4e7d9757e6461473e6824f425e24b5d3",
+    "ccu_files_verified": 3700
+  },
+  "reproduction": {
+    "runs": 2,
+    "files_checked": 60,
+    "changed_files": []
+  },
+  "external_private_steps": [
+    {
+      "ccu_page": 49,
+      "fields": [
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 66,
+      "fields": [
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 88,
+      "fields": [
+        "documents",
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 89,
+      "fields": [
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 112,
+      "fields": [
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 117,
+      "fields": [
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 120,
+      "fields": [
+        "application_forms"
+      ]
+    }
+  ],
+  "all_platform_2668_not_rerun": true,
+  "database_runtime_not_validated": true,
+  "quality_workflow_disabled_not_enabled": true,
+  "branch_action_runs_readback": 0,
+  "source_ledger_counts": {
+    "source_count": 1281,
+    "decisions": {
+      "acquired_not_policy_verified": 710,
+      "excluded_specific_review": 8,
+      "used_with_explicit_field_status": 493,
+      "technical_failure": 61,
+      "challenge_or_error_page": 8,
+      "used_access_requirement_evidence": 1
+    }
+  },
+  "shared_integration_files": {
+    "main": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "shared_files_changed_in_entire_pr": [
+      "pyproject.toml",
+      "src/exchange_info/api.py",
+      "src/exchange_info/static/index.html"
+    ],
+    "round8_added_shared_runtime_changes": []
+  },
+  "no_merge_or_deploy": true
+}
