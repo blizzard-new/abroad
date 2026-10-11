@@ -89,6 +89,12 @@ def audit_school(dashboard, home, visuals, static_root=STATIC):
     location = (home or {}).get("location") or {}
     return {
         "school_name": dashboard["school_name"], "catalog_count": len(records),
+        "denominators": {
+            "displayed_api_rows": {"count": len(records), "unit": "partner_universities API rows"},
+            "cooperation_agreement_institutions": {"count": None, "status": "not_established", "unit": "distinct institutions with cooperation agreements"},
+            "application_programs_or_tracks": {"count": None, "status": "not_established", "unit": "application programs/tracks, not institutions"},
+            "current_cycle_selectable_institutions": {"count": None, "status": "not_established", "unit": "distinct institutions on the sourced current-cycle selection list"},
+        },
         "official_roster_completeness": "not_established_by_visual_audit",
         "home": {"expected_marker_count": 1, "available_marker_count": int(marker_available(location)), "location": location},
         "marker_available": sum(r["expected_marker"] for r in records),
