@@ -4114,6 +4114,10 @@ function languageThresholdFromPartner(item, languageTest, degreeLevel = null) {
 }
 
 function partnerAvailabilityMeta(item) {
+  if (activeHomeSchool() === "淡江大學") {
+    const tku = window.UniWayTkuDetails?.agreementMeta(item || {});
+    if (tku) return tku;
+  }
   const status = item?.availability_status || "open";
   if (["not_open", "needs_confirmation", "zero_quota", "fee_paying"].includes(status)) {
     const label = {not_open:"本季未開放（官方灰字）",needs_confirmation:"名額尚未核實",zero_quota:"零名額",fee_paying:"自費計畫"}[status];
@@ -4169,7 +4173,9 @@ function partnerAvailabilityMeta(item) {
 function renderPartnerAvailabilityNotice(item) {
   const availability = partnerAvailabilityMeta(item);
   if (!availability.blocked && !availability.pending) return "";
-  const fallback = availability.pending ? availability.hint
+  const fallback = activeHomeSchool() === "淡江大學" && availability.status === "agreement_only"
+    ? "姊妹校名錄列有合作關係；本期名額、院系計畫與開放狀態尚未核實，不表示官方明示尚未公告。"
+    : availability.pending ? availability.hint
     : homeSelectionRules().pending_quota_planning && /^0\s*名?$/.test(item.quota || "") ? "官方本期名單已更新為零名額，本期未開放申請。"
     : availability.status === "departmental_reference"
     ? "中央當期名單未列，請先向所屬學院或國際處確認是否開放。"
@@ -8399,7 +8405,7 @@ function renderPrimaryFacts(item, destinationProfile = state.destinationCache.ge
     [deadline.label, deadline.value, "calendar-clock", "deadline"],
     ["語言門檻", partnerLanguageRequirement(item), "languages", "language"],
     ["生活費參考", truncate(destinationProfile?.cost_summary || "官方費用待查核", 130), "wallet-cards", "cost"],
-    ["交換名額", item.quota || (item.quota_status === "reference_only" ? "本季未開放" : item.quota_status === "not_published" ? "名額空白，待確認" : "依公告"), "users", "quota"],
+    ["交換名額", item.quota || (item.quota_status === "reference_only" ? (activeHomeSchool() === "淡江大學" ? "本期名額未核實" : "本季未開放") : item.quota_status === "not_published" ? "名額空白，待確認" : "依公告"), "users", "quota"],
     ["研修期間", localizedPartnerValue(item, "study_period", "study_period"), "calendar-range", "period"],
   ]
     .map(([label, value, icon, tone]) => `<div class="${tone || ""}"><i data-lucide="${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span><strong>${highlightHtml(value)}</strong></div>`)
@@ -8496,6 +8502,7 @@ function renderPartnerStudentSummary(item) {
 }
 
 function renderPartnerFieldEvidence(item) {
+  if (activeHomeSchool() === "淡江大學") return window.UniWayTkuDetails?.render(item, escapeHtml) || "";
   if (!item.field_evidence || !Object.keys(item.field_evidence).length) return "";
   const labels = {study_period:"交換期間", quota:"名額", eligibility:"合作校接收資格", language_requirement:"合作校語言", partner_application_prerequisite:"母校甄選／提名前提（非文件清單）", partner_documents:"合作校申請文件要求（未聲稱完整）", partner_application_deadline:"合作校申請截止", application_deadline:"中正校內截止", semester_dates:"學期日期", housing_info:"住宿資訊", tuition_info:"費用原文", course_restrictions:"課程限制", fact_sheet:"合作校簡章連結"};
   const statuses = {verified_current:"當期已核實",reference_only:"歷史參考",missing:"未載／未核實",needs_confirmation:"待確認",conflict:"來源矛盾，待確認",explicit_not_announced:"官方明示尚未公告"};
@@ -8521,7 +8528,7 @@ function renderUniversityOverview(item) {
   const facts = [
     ["計畫類型", item.program_type || "依校方公告"],
     ["適用學院／學制", [item.colleges, item.degree_levels].filter(Boolean).join("／") || "依校方公告"],
-    ["名額", item.quota || (item.quota_status === "reference_only" ? "本季未開放" : item.quota_status === "not_published" ? "名額空白，待確認" : "依校方公告")],
+    ["名額", item.quota || (item.quota_status === "reference_only" ? (activeHomeSchool() === "淡江大學" ? "本期名額未核實" : "本季未開放") : item.quota_status === "not_published" ? "名額空白，待確認" : "依校方公告")],
     ["研修期間", localizedPartnerValue(item, "study_period", "study_period", "依校方公告")],
     [deadline.label, deadline.value],
     ["學費", tuitionPoints.slice(0, 2).join("；") || "依校方公告"],
@@ -8539,7 +8546,7 @@ function renderUniversityOverview(item) {
         </div>
         ${renderPartnerAvailabilityNotice(item)}
         ${renderPartnerFieldEvidence(item)}
-        ${window.UniWayCcuDetails?.render(item, escapeHtml) || ""}
+        ${activeHomeSchool() === "淡江大學" ? "" : window.UniWayCcuDetails?.render(item, escapeHtml) || ""}
         <details class="overview-more school-data-completeness"><summary>這所學校的資料完整度</summary><div id="school-data-completeness-body" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div></details>
         ${activeHomeSchool() === "國立中央大學" ? '<details id="ncu-source-audit" class="overview-more"><summary>已查來源、適用年度與未解問題</summary><div id="ncu-source-audit-body">展開讀取逐欄查核與原文頁碼。</div></details>' : ""}
         <details class="overview-more"><summary>選校參考</summary><div id="quick-decision-fit">${renderQuickDecisionFit(item)}</div></details>
@@ -8702,7 +8709,7 @@ function renderDestinationProfile(item, profile) {
   const cityStamp = $("#school-detail-view .travel-stamp-city");
   if (cityStamp && profile.city) cityStamp.textContent = profile.city;
   $("#school-detail-primary-facts").innerHTML = renderPrimaryFacts(item, profile);
-  if (item.partner_exchange_details && Object.keys(item.partner_exchange_details).length && window.UniWayCcuDetails) {
+  if (profile.home_university !== "淡江大學" && item.partner_exchange_details && Object.keys(item.partner_exchange_details).length && window.UniWayCcuDetails) {
     const status = profile.coverage_status === "official_partial" ? "合作校生活資料部分核實" : "合作校生活資料仍待確認";
     container.innerHTML = `<div class="destination-profile-status partial"><div><strong>${escapeHtml(status)}</strong><p>${escapeHtml(profile.coverage_note || "")}</p><small>最後查核：${escapeHtml(formatDate(profile.last_checked))}</small></div></div>`
       + window.UniWayCcuDetails.render(item, escapeHtml, ["housing", "housing_deadline", "costs", "insurance", "visa", "arrival", "course_restrictions", "academic_calendar"]);

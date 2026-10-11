@@ -12,7 +12,8 @@ from .university_locations import UniversityLocation
 @lru_cache(maxsize=1)
 def campus_photos():
     return {r["id"]:r for r in json.loads((BUNDLE/"campus_asset_manifest.json").read_text())
-            if r.get("review_status")=="verified_asset" and r.get("local_path")}
+            if r.get("review_status")=="verified_asset" and r.get("local_path")
+            and r.get('capture_year_status')=='verified_capture_period'}
 
 
 @lru_cache(maxsize=1)
@@ -36,6 +37,7 @@ def attach_images(dashboard,base_url):
                 campus_photo_license_url=photo['license_url'],campus_photo_caption=photo['caption'],
                 campus_photo_transformations=photo['transformations'],
                 campus_photo_modification_note=photo_modification_note(photo),
+                campus_photo_date=photo['photo_date'],campus_photo_capture_year_status=photo['capture_year_status'],
                 campus_photo_campus_pair_scope=photo.get('campus_pair_scope') or '',
                 campus_photo_campus_pair_mismatch='different_campuses' if photo.get('campus_pair_mismatch') else 'not_established')
             updates.update(image_url=base_url.rstrip("/")+photo["local_path"],
@@ -60,6 +62,22 @@ def school_location(partner, data_dir=None):
 
 def complete_profile(profile):
     identifier=school_identifier(profile.school_name)
+    if identifier=='tku-sister-34':
+        from .tku_census import school_audit_by_id
+        row=school_audit_by_id(identifier)
+        # Supplement the preserved original NICS profile without rewriting it.
+        from .models import StudentGuideSection,SourceReference
+        reviewed=next(r for r in json.loads((BUNDLE/'milestone3_reviewed_host_facts.json').read_text()) if r['id']==row['id'])
+        sections=list(profile.student_guide_sections);sources={s.source_url:s for s in profile.sources}
+        for key,fact in reviewed['fields'].items():
+            section_key='reviewed_host_reference_'+key
+            sections=[s for s in sections if s.key!=section_key]
+            sections.append(StudentGuideSection(key=section_key,title='2027春NICS接待校參考：'+row['fields'].get(key,{}).get('label',key),
+                summary=fact['value'],points=[f"{e['applicable_year']}；{e['locator']}；查核{e['checked_at']}" for e in fact['evidence']],
+                source_urls=list(dict.fromkeys(e['source_url'] for e in fact['evidence'])),evidence_type='official',caution=fact['reason']))
+            for e in fact['evidence']:
+                sources.setdefault(e['source_url'],SourceReference(title='2027春NICS接待校文件參考',source_url=e['source_url'],category='partner_school',summary=e['applicable_year']+'；'+e['locator']))
+        profile=profile.model_copy(update=dict(student_guide_sections=sections,sources=list(sources.values())))
     photo=campus_photos().get(identifier) if identifier else None
     if not photo:
         return profile

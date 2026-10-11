@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/workspace/abroad-tku-completeness-20261011/scripts/capture_tku_milestone4_candidates.py", line 76, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/abroad-tku-completeness-20261011/scripts/capture_tku_milestone4_candidates.py", line 61, in main
+    results=future.result()
+            ^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku-completeness-20261011/scripts/capture_tku_milestone4_candidates.py", line 55, in read_host
+    result.append(dict(**c,capture_mode=mode,source_id=s['id'],source_url=s['source_url'],final_url=s.get('final_url'),http_status=s.get('http_status'),error=s.get('error'),checked_at=s['checked_at'],content_sha256=s.get('sha256'),title=s.get('title'),text_characters=len(s.get('text','')),pages=len(s.get('pages',[])),local_file=s.get('local_file')))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: dict() got multiple values for keyword argument 'source_id'

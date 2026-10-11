@@ -1,0 +1,127 @@
+{
+  "status": "passed",
+  "before": {
+    "curated_partner_facts.json": "f0a07bf03538bd78f0a00cdf6fd378b4693ccc47d2dc445e019fe1252b15aabe",
+    "partner_enrichment.jsonl": "18db72bfca45ae54720b4eaefec637cea00580bd6e3b775f6a100a27bf391b3b",
+    "full_census_audit.json": "1d51d7ec009d4f1a859d9966d86bbe12c5463146a89a208543b343b61da4378d",
+    "full_census_acceptance.json": "70b22bf3675e22b15f621fc9eb90cd62c3d77450dfab463f15abeeff2f0d77de",
+    "destination_profiles.jsonl": "8a1039908369c3bba46bec1b50a6758b249a74bb5420be8b5d3996db370b6d37",
+    "milestone4_candidate_content_reviews.json": "6b4573848b4358aad17e4ff66ef5f9bae180cdac8579b4e893b960a89e7979ce",
+    "milestone4_followup_scope_reviews.json": "ccb537e7230635116afd815bdda4553b391773d8c0a4880b3e841ac4a7332fb4",
+    "milestone4_reviewed_host_facts.json": "aa6781fa226a8bbe2b308c39b26e23f169549410348d1b397d20ba32c4a9d8cd",
+    "milestone4_remaining_source_limits.json": "b3561a0b4ed2eadf556d2d9dec7e7a6f825133eff47a3420877d1db8d702072a",
+    "milestone4_asset_source_limits.json": "7e7ada41a0ab0e434bb82863d55c31b3e24b8ae8674e2307ce38845f7ad8688f",
+    "continuation_gap_closure.json": "59dd1317b56050d2456546f51aedb8361b4261b0e787f9ad6519ec326e265ab0",
+    "capture_pack_manifest.json": "58901c3e1de25a86ec5d4d059d288534b8aa259e34eaebfb3a8ea93dfac02b32"
+  },
+  "after": {
+    "curated_partner_facts.json": "f0a07bf03538bd78f0a00cdf6fd378b4693ccc47d2dc445e019fe1252b15aabe",
+    "partner_enrichment.jsonl": "18db72bfca45ae54720b4eaefec637cea00580bd6e3b775f6a100a27bf391b3b",
+    "full_census_audit.json": "1d51d7ec009d4f1a859d9966d86bbe12c5463146a89a208543b343b61da4378d",
+    "full_census_acceptance.json": "70b22bf3675e22b15f621fc9eb90cd62c3d77450dfab463f15abeeff2f0d77de",
+    "destination_profiles.jsonl": "8a1039908369c3bba46bec1b50a6758b249a74bb5420be8b5d3996db370b6d37",
+    "milestone4_candidate_content_reviews.json": "6b4573848b4358aad17e4ff66ef5f9bae180cdac8579b4e893b960a89e7979ce",
+    "milestone4_followup_scope_reviews.json": "ccb537e7230635116afd815bdda4553b391773d8c0a4880b3e841ac4a7332fb4",
+    "milestone4_reviewed_host_facts.json": "aa6781fa226a8bbe2b308c39b26e23f169549410348d1b397d20ba32c4a9d8cd",
+    "milestone4_remaining_source_limits.json": "b3561a0b4ed2eadf556d2d9dec7e7a6f825133eff47a3420877d1db8d702072a",
+    "milestone4_asset_source_limits.json": "7e7ada41a0ab0e434bb82863d55c31b3e24b8ae8674e2307ce38845f7ad8688f",
+    "continuation_gap_closure.json": "59dd1317b56050d2456546f51aedb8361b4261b0e787f9ad6519ec326e265ab0",
+    "capture_pack_manifest.json": "58901c3e1de25a86ec5d4d059d288534b8aa259e34eaebfb3a8ea93dfac02b32"
+  },
+  "changed_outputs": [],
+  "runs": [
+    {
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/build_tku_milestone4_reviews.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.259,
+      "stdout": "{\"candidates\": 69, \"body_review\": {\"all_available_extracted_body_reviewed\": 64, \"all_available_shell_or_title_text_reviewed_substantive_content_missing\": 4, \"not_obtained\": 1}, \"additional_reference_institutions\": 8, \"additional_fields\": 45}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/build_tku_curated_references.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.33,
+      "stdout": "{\"curated_host_institutions\": 28, \"host_fields\": 196, \"new_physical_campus_locations\": 2, \"reused_baseline_representative_locations\": 1, \"total_displayable_locations\": 264}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/build_tku_public_references.py"
+      ],
+      "exit_code": 0,
+      "seconds": 11.806,
+      "stdout": "{\"institutions\": 287, \"with_public_references\": 197, \"excerpt_count\": 2350, \"fields\": {\"host_language\": 44, \"housing\": 133, \"host_eligibility\": 34, \"host_deadline\": 25, \"latest_forms\": 41, \"course_restrictions\": 25, \"housing_costs\": 99, \"costs\": 80, \"insurance\": 68, \"living_costs\": 50, \"transport\": 113, \"study_period\": 14, \"host_nomination_deadline\": 10, \"department_scope\": 17, \"campus\": 6, \"course_schedule\": 6, \"housing_deadline\": 1, \"student_support\": 4}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/build_tku_census_audit.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.459,
+      "stdout": "{\"base_commit\": \"59a20f27fcee00fb597abc79e75ec11778317422\", \"checked_date\": \"2026-10-11\", \"directory_count\": 286, \"institution_denominator\": 287, \"programme_count\": 153, \"programme_only_institutions\": [\"tku-programme-mainland-macau-kinmen-115-88b1b8ee97f6\"], \"latest_round_schools\": 4, \"latest_round_quota\": 7, \"currently_open_home_applications\": 0, \"field_counts\": {\"home_eligibility\": {\"not_verified_new\": 149, \"reference_only\": 134, \"conflict\": 4}, \"home_language\": {\"not_verified_new\": 262, \"verified_current\": 3, \"reference_only\": 21, \"conflict\": 1}, \"host_eligibility\": {\"not_verified_new\": 188, \"reference_only\": 96, \"verified_current\": 3}, \"host_language\": {\"reference_only\": 41, \"not_verified_new\": 242, \"verified_current\": 3, \"conflict\": 1}, \"quota\": {\"not_verified_new\": 149, \"reference_only\": 134, \"verified_current\": 4}, \"home_deadline\": {\"not_verified_new\": 149, \"reference_only\": 134, \"verified_current\": 4}, \"host_deadline\": {\"not_verified_new\": 260, \"reference_only\": 24, \"verified_current\": 3}, \"host_nomination_deadline\": {\"not_verified_new\": 275, \"reference_only\": 9, \"verified_current\": 2, \"missing_in_source\": 1}, \"documents\": {\"not_verified_new\": 149, \"reference_only\": 134, \"verified_current\": 4}, \"latest_forms\": {\"not_verified_new\": 244, \"reference_only\": 40, \"conflict\": 3}, \"study_period\": {\"not_verified_new\": 144, \"reference_only\": 139, \"verified_current\": 4}, \"department_scope\": {\"not_verified_new\": 254, \"reference_only\": 29, \"missing_in_source\": 3, \"verified_current\": 1}, \"campus\": {\"not_verified_new\": 278, \"reference_only\": 6, \"verified_current\": 3}, \"course_restrictions\": {\"not_verified_new\": 195, \"reference_only\": 89, \"verified_current\": 3}, \"housing\": {\"not_verified_new\": 92, \"reference_only\": 192, \"verified_current\": 3}, \"housing_costs\": {\"not_verified_new\": 186, \"reference_only\": 99, \"verified_current\": 2}, \"costs\": {\"not_verified_new\": 127, \"reference_only\": 157, \"verified_current\": 3}, \"insurance\": {\"not_verified_new\": 201, \"reference_only\": 83, \"verified_current\": 3}, \"living_costs\": {\"not_verified_new\": 235, \"reference_only\": 49, \"verified_current\": 2, \"conflict\": 1}, \"transport\": {\"not_verified_new\": 173, \"reference_only\": 112, \"verified_current\": 2}, \"coordinates\": {\"verified_asset\": 264, \"not_verified_new\": 23}, \"campus_photo\": {\"verified_asset\": 264, \"not_verified_new\": 23}}, \"interpretation\": \"分母為286筆官方姊妹校總覽與既有交換計畫名單的機構聯集。reference_only與一般接待校原文不算本期完成；所有協議列不產生名額或母校資格。\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/build_tku_census_profiles.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.725,
+      "stdout": "{\"profiles\": 287, \"reviewed_current_rows_preserved\": 4, \"reference_profiles\": 283, \"with_host_references\": 193}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/build_tku_milestone4_limits.py"
+      ],
+      "exit_code": 0,
+      "seconds": 2.076,
+      "stdout": "{\"source_gaps\": {\"readable_public_body_needs_incoming_programme_identification_and_review\": 47, \"external_access_or_non_substantive_body_limitation\": 31, \"all_fixed_candidates_accounted_no_applicable_reference_or_content_unavailable\": 12, \"reference_added_current_TKU_applicability_unverified\": 8}, \"asset_coordinate_limits\": {\"identity_or_campus_conflict_requires_confirmation\": 14, \"retained_sources_missing_verified_numeric_point\": 9}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/audit_tku_full_census.py"
+      ],
+      "exit_code": 0,
+      "seconds": 12.241,
+      "stdout": "{\"base_commit\": \"59a20f27fcee00fb597abc79e75ec11778317422\", \"checked_date\": \"2026-10-11\", \"directory_rows\": 286, \"institutions\": 287, \"programme_rows\": 153, \"original_programmes_preserved\": 128, \"first_round_history_rows\": 25, \"first_round_history_quota\": 50, \"latest_round_schools\": 4, \"latest_round_quota\": 7, \"newly_open_applications\": 0, \"destination_profiles\": 287, \"institutions_with_official_reference_excerpts\": 197, \"public_source_captures\": 2525, \"opened_sources\": 2169, \"failed_sources\": 356, \"source_failure_statuses\": {\"202\": 7, \"503\": 281, \"403\": 23, \"404\": 25, \"connection_error\": 17, \"412\": 1, \"500\": 1, \"302\": 1}, \"offline_rendered_documents\": [{\"source_id\": \"43a84c277b5e46de792b9343\", \"original_capture_id\": \"aead47b1c4d40ae622717de7\", \"source_url\": \"https://is.buaa.edu.cn/__local/5/E1/36/F895E5E3025C2FCAEA69F8E89D9_8301C98C_1E200.doc?e=.doc\", \"file\": \"43a84c277b5e46de792b9343-offline-render.pdf\", \"bytes\": 227550, \"sha256\": \"bcfb03fb567d7fd5bc9ed2b1055f571271797815774d6363f1063bbab654f41f\", \"pages\": 2, \"status\": \"offline_render_not_downloaded_original\", \"checked_at\": \"2026-10-11T14:51:05.508573+00:00\"}, {\"source_id\": \"9d90ee5fd05be71cd0090e91\", \"original_capture_id\": \"cb95eb166b037c0faa83b54a\", \"source_url\": \"https://is.buaa.edu.cn/__local/7/47/31/58226077741CB070DB05BEFDD4B_97AE96E9_1E200.doc?e=.doc\", \"file\": \"9d90ee5fd05be71cd0090e91-offline-render.pdf\", \"bytes\": 227847, \"sha256\": \"950be48312cf8128d9236737dedb767585252a7f5292d37d5cd907d67ea92fd0\", \"pages\": 2, \"status\": \"offline_render_not_downloaded_original\", \"checked_at\": \"2026-10-11T14:51:03.783104+00:00\"}, {\"source_id\": \"b0e98d5a81aafaaea61b56c0\", \"original_capture_id\": \"ece224cc69debe307237cc3c\", \"source_url\": \"https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc\", \"file\": \"b0e98d5a81aafaaea61b56c0-offline-render.pdf\", \"bytes\": 149019, \"sha256\": \"7f86e8b481629b8d145c885ec8b0037f52a7edfa0b9d4732673959dd30b69919\", \"pages\": 2, \"status\": \"offline_render_not_downloaded_original\", \"checked_at\": \"2026-10-11T14:23:17.985673+00:00\"}, {\"source_id\": \"cc036c4ec7b374d1419c2673\", \"original_capture_id\": \"573259b9c7caf9a18ccc9dbb\", \"source_url\": \"https://is.buaa.edu.cn/__local/A/53/D8/FF0DB34803CA82278BB1FC5B255_FE54FBDE_19000.doc?e=.doc\", \"file\": \"cc036c4ec7b374d1419c2673-offline-render.pdf\", \"bytes\": 157189, \"sha256\": \"184afe1a5521a1c452f903e641df44644ab0332adeb44aa390fea04e0f02630e\", \"pages\": 1, \"status\": \"offline_render_not_downloaded_original\", \"checked_at\": \"2026-10-11T14:51:06.742973+00:00\"}], \"licensed_visual_reviewed_photos\": 264, \"new_licensed_photos\": 211, \"reused_baseline_photos\": 53, \"verified_physical_campus_coordinates\": 9, \"reused_baseline_representative_coordinates\": 66, \"total_displayable_coordinates\": 264, \"current_or_asset_gap_counts\": {\"home_eligibility\": 287, \"home_language\": 284, \"host_eligibility\": 284, \"host_language\": 284, \"quota\": 283, \"home_deadline\": 283, \"host_deadline\": 284, \"host_nomination_deadline\": 285, \"documents\": 283, \"latest_forms\": 287, \"study_period\": 283, \"department_scope\": 286, \"campus\": 284, \"course_restrictions\": 284, \"housing\": 284, \"housing_costs\": 285, \"costs\": 284, \"insurance\": 284, \"living_costs\": 285, \"transport\": 285, \"coordinates\": 23, \"campus_photo\": 23}, \"other_home_bundles\": [{\"home\": \"cgu\", \"files\": 3, \"status\": \"byte_identical_to_base\"}, {\"home\": \"ntpu\", \"files\": 12, \"status\": \"byte_identical_to_base\"}, {\"home\": \"ntu\", \"files\": 17, \"status\": \"byte_identical_to_base\"}, {\"home\": \"ccu\", \"files\": 1215, \"status\": \"byte_identical_to_base\"}, {\"home\": \"ncu\", \"files\": 13, \"status\": \"byte_identical_to_base\"}], \"original_tku_destination_prefix\": \"byte_identical_to_base\", \"scope_note\": \"來源開啟與原文索引不等於所有欄位已核实；287校每校22欄缺口全列。名額只有4校最新已截止梯次，照片／實體校園座標核對另列，不代表提名校區。\", \"blockers\": [\"除最新四校外，當期母校名額與資格尚未核實；總覽不能作本期可選。\", \"接待校一般原文需核對當期、學制、院系、校區與淡江提名；舊文件不混入當期文件。\", \"Wikidata及Commons首輪HTTP429失敗歷史保留；冷卻後查核批次、候選及未解校區身份另列，未接受素材不自動補值。\", \"明治五模板的首次503與有限重試結果分開保存；成功開啟模板仍是接待校文件，不能推定淡江提名對應。\", \"原四校63項缺口與18項矛盾保留，不以新全量資料層掩蓋。\"]}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/build_tku_continuation_milestone.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.586,
+      "stdout": "{\"base_commit\": \"59a20f27fcee00fb597abc79e75ec11778317422\", \"checked_date\": \"2026-10-11\", \"denominator\": 287, \"milestone4_handoff\": {\"candidate_review\": \"milestone4_candidate_content_reviews.json\", \"fixed_candidates\": 69, \"complete_available_bodies\": 64, \"partial_bodies\": 4, \"http404\": 1, \"remaining_reference_sources\": \"milestone4_remaining_source_limits.json\", \"asset_source_limits\": \"milestone4_asset_source_limits.json\", \"note\": \"固定69候選均已交代；來源年份確認不代表淡江本期核實，未耗盡的命名地圖另列。\"}, \"milestone1\": {\"photos\": 66, \"coordinates\": 68}, \"current\": {\"photos\": 264, \"coordinates\": 264, \"photo_percent\": 91.99, \"coordinate_percent\": 91.99, \"photo_gaps\": 23, \"coordinate_gaps\": 23}, \"delta_from_milestone1\": {\"photos\": 198, \"coordinates\": 196}, \"host_retry_checks\": 265, \"host_retry_statuses\": {\"200\": 241, \"202\": 3, \"503\": 15, \"403\": 3, \"404\": 2, \"500\": 1}, \"official_alternative_checks\": 48, \"official_alternative_statuses\": {\"200\": 42, \"connection_error\": 3, \"503\": 2, \"404\": 1}, \"commons_searches\": 390, \"wikidata_and_named_page_searches\": 290, \"official_geography_checks\": 83, \"scope\": \"已查核本輪具體target及逐校留存候選；remaining triage保留尚未實讀及不適用候選。不宣稱全部公開路徑、所有來源內容／年度或6314欄完整核實。不得越過403、429或重複503。\", \"stop_rules\": [\"429按Retry-After停止服務／主機並保存恢復時間。\", \"每個503端點至多一次後續重試；五個明治模板早期重疊抓取的實際額外次數另列歷史，不抹除。\", \"403及挑戰回應不嘗試cookie、代理、憑證或保護繞過。\", \"來源只提供多校區／母體不明／不同城市或沒有數值時保留缺口。\", \"名額283校未核實本期；來源未核實新版不等於官方明示尚未公告。\"], \"content_reviewed_host_references\": {\"institutions\": 28, \"fields\": 196}, \"semantic_host_year_review\": {\"institutions\": 11, \"fields\": 111, \"note\": \"有明確接待期與僅正文審核之未載年度一般生活參考分開；全為接待校參考，未推定TKU當期名額與校區。\"}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/pack_tku_census_evidence.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.816,
+      "stdout": "{\"files\": 4326, \"archives\": 12, \"new_archives\": 0, \"archive_bytes\": 209116877}\n",
+      "stderr": ""
+    }
+  ],
+  "environment": {
+    "PYTHONPATH": "src"
+  }
+}

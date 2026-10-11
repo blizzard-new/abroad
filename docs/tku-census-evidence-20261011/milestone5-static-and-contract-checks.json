@@ -1,0 +1,34 @@
+{
+  "final_checks": [
+    {
+      "command": "node --check src/exchange_info/static/tku-partner-details.js",
+      "exit_code": 0
+    },
+    {
+      "command": "node --check src/exchange_info/static/app.js",
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONPATH=src python scripts/export_openapi.py --check",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "initial_path_errors": {
+    "commands": [
+      "node --check static/tku-partner-details.js",
+      "node --check static/app.js"
+    ],
+    "error": "MODULE_NOT_FOUND; actual paths src/exchange_info/static; corrected checks passed",
+    "raw_stdout_not_retained_as_file": true
+  },
+  "lookup_error": {
+    "error": "KeyError: host_census_sources/7b4c1396702a3ed2a0bc17e8.json.gz",
+    "cause": "Incorrect manually typed source ID; corrected to actual ordinal3 index7be3b95d2b85f0f6c98b252a",
+    "raw_stdout_not_retained_as_file": true
+  },
+  "no_security_or_certificate_settings_changed": true
+}

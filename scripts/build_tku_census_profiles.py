@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 BUNDLE=ROOT/'src/exchange_info/official_data/tku'
+EXTRA_REFERENCE_LABELS={'student_support':'接待校學生支援參考'}
 
 
 def build():
@@ -30,11 +31,12 @@ def build():
         for key,fact in fields.items():
             ev=fact['evidence']
             urls=list(dict.fromkeys(e['source_url'] for e in ev))
-            sections.append(StudentGuideSection(key=key,title=row['fields'].get(key,{}).get('label',key),summary=fact['value'],
+            label=row['fields'].get(key,{}).get('label',EXTRA_REFERENCE_LABELS.get(key,key))
+            sections.append(StudentGuideSection(key=key,title=label,summary=fact['value'],
                 points=[f"適用：{e['applicable_year']}；{e.get('locator','')}；查核{e['checked_at']}" for e in ev],source_urls=urls,evidence_type='official',
                 caution=fact['reason']))
             for evidence in ev:
-                sources[evidence['source_url']]=SourceReference(title=row['fields'].get(key,{}).get('label',key)+'（接待校參考）',
+                sources[evidence['source_url']]=SourceReference(title=label+'（接待校參考）',
                     source_url=evidence['source_url'],category='partner_school',summary=f"{evidence['applicable_year']}；{evidence['locator']}；{evidence['quote'][:350]}")
         def summary(*keys):
             selected=[fields[k]['value'] for k in keys if k in fields]
@@ -47,7 +49,12 @@ def build():
             coverage_note='全量機構逐校缺口已列；'+('保留接待校公開原文參考，來源年度、學制、院系／校區與淡江提名對應仍須另查。' if fields else '公開入口已查，但此校生活欄尚未取得可核實原文，來源失敗另列逐校audit。')+'歷史名額不可沿用，本期母校資格／表格未核實不等於官方明示尚未公告。')
         profiles.append(complete_profile(profile))
     assert len(profiles)==283 and len({p.school_name for p in profiles})==283
-    target.write_text(''.join(preserved)+''.join(p.model_dump_json()+'\n' for p in profiles))
+    def json_line(profile):
+        text=profile.model_dump_json()
+        for char in ('\u0085','\u2028','\u2029'):
+            text=text.replace(char,f'\\u{ord(char):04x}')
+        return text+'\n'
+    target.write_text(''.join(preserved)+''.join(json_line(p) for p in profiles))
     print(json.dumps(dict(profiles=4+len(profiles),reviewed_current_rows_preserved=4,reference_profiles=len(profiles),with_host_references=sum(bool(p.student_guide_sections) for p in profiles))))
 
 

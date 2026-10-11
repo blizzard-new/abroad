@@ -22,18 +22,21 @@ def test_tku_census_licensed_photos_load_and_points_keep_scope(page,live_server,
             const visual=schoolImageFor(row.school_name,row.country);
             photos.push({name:row.school_name,width:image.naturalWidth,height:image.naturalHeight,
                 source:visual.official_page_url,author:row.reference_data.campus_photo_author,
-                license:visual.license_name,license_url:visual.license_url});
+                license:visual.license_name,license_url:visual.license_url,
+                capture_period:row.reference_data.campus_photo_date,
+                capture_period_status:row.reference_data.campus_photo_capture_year_status});
         }
         const module=await import('/static/partner-map.js');
         return {photos,points:module.pointsFor(rows).features,
             located:rows.filter(module.hasCoordinates).map(r=>({name:r.school_name,precision:r.location.precision})),
             unavailable:rows.filter(r=>!module.hasCoordinates(r)).length};
     }''')
-    assert len(results['photos'])>=264
+    assert len(results['photos'])==264
     assert all(p['width']>0 and p['height']>0 and p['author'] and p['license_url'] for p in results['photos'])
-    assert len(results['points'])==len(results['located'])>=260
+    assert all(p['capture_period'] and p['capture_period_status']=='verified_capture_period' for p in results['photos'])
+    assert len(results['points'])==len(results['located'])==264
     assert results['unavailable']==287-len(results['points'])
-    assert sum(p['precision']=='representative' for p in results['located'])>=255
+    assert sum(p['precision']=='representative' for p in results['located'])==255
     assert {p['properties']['name'] for p in results['points']}=={p['name'] for p in results['located']}
     page.locator('#partner-search').fill('成蹊')
     expect(page.locator('#partner-table')).to_have_attribute('data-result-count','1')

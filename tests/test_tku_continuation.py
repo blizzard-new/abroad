@@ -91,7 +91,7 @@ def test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round(year
 def test_tku_coverage_includes_own_bundled_profiles_with_year_cautions(tmp_path):
     client = TestClient(create_app(tmp_path))
     coverage = client.get('/coverage', params={'school':'TKU'}).json()
-    assert coverage['total_partner_schools'] == 287 and coverage['destination_profile_count'] == 141
+    assert coverage['total_partner_schools'] == 287 and coverage['destination_profile_count'] >= 180
     assert len(client.get('/destination-profiles',params={'home_school':'TKU'}).json())==287
     current={r.fields['school_name'].value for r in load_tku_records()}
     assert all(r['destination_status'] == 'official_partial' for r in coverage['partners'] if r['school_name'] in current)

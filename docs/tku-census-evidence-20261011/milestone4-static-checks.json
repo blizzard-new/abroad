@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/tku-partner-details.js"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "OpenAPI contract is current: /workspace/abroad-tku-completeness-20261011/docs/api/openapi.json\n",
+      "stderr": ""
+    }
+  ]
+}

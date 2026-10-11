@@ -30,8 +30,24 @@ PATTERNS = {
     "living_costs": r"living (?:cost|expense)|cost of living|生活費|生活费",
     "transport": r"(?:campus|student).{0,40}(?:bus|transport|shuttle)|(?:bus|transport|shuttle).{0,40}(?:campus|student)|通学|通勤|交通",
 }
+MULTILINGUAL = {
+    'host_eligibility':r'universidad de origen.{0,80}(?:nomin|recomend)|Heimatuniversit.{0,70}(?:nomin|empfehl)|universit.{0,25}d.origin.{0,70}nomin',
+    'host_language':r'Sprachniveau|Sprachkenntnisse|requisitos ling.{0,20}sticos|nivel.{0,30}(?:idioma|espa.ol)|niveau.{0,30}(?:langue|fran.ais)',
+    'host_deadline':r'Bewerbungsfrist|Zulassungsantrag.{0,50}Frist|plazo de solicitud|date limite.{0,40}candidature',
+    'host_nomination_deadline':r'Nominierungsfrist|plazo de nominaci.n',
+    'latest_forms':r'Bewerbungsunterlagen|Zulassungsantrag|documents.{0,30}candidature|documentaci.n.{0,30}solicitud',
+    'housing':r'(?:alojamiento|r.sidence|logement|Wohnheim|Unterkunft|accomodation).{0,80}(?:estudiant|student|zimmer|chambre|apply|kosten|habitaci.n)',
+    'housing_costs':r'(?:Wohnheim|Unterkunft|Miete|logement|alojamiento).{0,70}(?:EUR|€|kosten|precio|cost|loyer|tarif)',
+    'insurance':r'Krankenversicherung|assurance maladie|seguro m.dico',
+    'living_costs':r'Lebenshaltungskosten|co.t de la vie|gastos de manutenci.n',
+    'transport':r'campus.{0,50}(?:autob.s|tren|ferrocarril|bahnhof|verkehr)|(?:autob.s|bus|train).{0,40}(?:universit|campus)',
+}
+for key,extra in MULTILINGUAL.items():PATTERNS[key]+='|'+extra
 BAD_BODY = re.compile(r"verify you are human|just a moment|enable javascript and cookies|access denied|attention required|captcha", re.I)
 OUTBOUND_TITLE = re.compile(r"outbound|outgoing|交換留学制度の利用|国际交流.*出国", re.I)
+DEGREE_TITLE = re.compile(r'Undergraduate Admission (?:Requirements|Application|Deadlines)|Graduate (?:Application|Admission)|外国人留学生の方へ.*受験生|障がいがある場合.*出願|International Undergraduate Application',re.I)
+INCOMING_CONTEXT = re.compile(r'incoming|inbound|exchange|visiting student|austausch|weltweit|intercambio|mobilit.{0,15}entrante|受入|受け入|交換|JASIN|NICS',re.I)
+ACADEMIC_FIELDS = {'host_eligibility','host_language','host_deadline','host_nomination_deadline','latest_forms','course_restrictions'}
 
 
 def same_host(seed, final):
@@ -43,17 +59,36 @@ def same_host(seed, final):
 def build():
     index=json.loads((BUNDLE/"host_census_capture_index.json").read_text())
     rows=[]
+    scopes={r['source_id']:r for r in json.loads((BUNDLE/'milestone3_source_scope_reviews.json').read_text())} if (BUNDLE/'milestone3_source_scope_reviews.json').exists() else {}
+    # Mixed brochures/directories/events must not create rules from sidebar hits.
+    # M4 references enter only through the human-reviewed field overlay below.
+    for filename in ['milestone4_candidate_content_reviews.json',
+                     'milestone4_followup_scope_reviews.json',
+                     'milestone5_source_scope_reviews.json',
+                     'milestone6_source_scope_reviews.json']:
+        if (BUNDLE/filename).exists():
+            incoming={r['source_id']:r for r in json.loads((BUNDLE/filename).read_text())}
+            if filename in {'milestone5_source_scope_reviews.json','milestone6_source_scope_reviews.json'}:
+                # A reused canonical capture retains its earlier precise
+                # outgoing/degree decision; M5 adds new route restrictions.
+                for sid,review in incoming.items():scopes.setdefault(sid,review)
+            else:scopes.update(incoming)
     for institution in index:
         references=[]; blockers=[]
         for meta in institution["sources"]:
             path=BUNDLE/"host_census_sources"/(meta["id"]+".json.gz")
             source=json.loads(gzip.decompress(read_bytes(path)))
+            scope=scopes.get(source['id'])
+            if scope and scope.get('exclude_from_semester_reference_index'):
+                blockers.append({**meta,'reason':scope['status'],'content_review':scope});continue
             if source.get("error"):
                 blockers.append({**meta,"reason":"official_endpoint_open_failed"});continue
             if source.get('http_status') != 200:
                 blockers.append({**meta,"reason":"non_200_response_not_verified_source_content"});continue
             if source.get('content_extraction_status')=='legacy_DOC_parser_not_available':
                 blockers.append({**meta,"reason":"binary_opened_content_and_period_not_verified"});continue
+            if source.get('programme_scope')=='full_degree_doctoral_scholarship_not_TKU_exchange':
+                blockers.append({**meta,"reason":"2026_full_degree_doctoral_scholarship_not_TKU_exchange", "content_locator":"Actual legacy DOC body; offline text lines in legacy_doc_content_review.json"});continue
             if source['id']=='8e3de1e08d6326e72eaed8aa':
                 assert '2026年辽宁大学辽宁省政府外国留学生奖学金生项目专业目录' in source['text']
                 blockers.append({**meta,"reason":"2026_full_degree_doctoral_scholarship_not_TKU_exchange", "content_locator":"xl/worksheets/sheet1.xml A1"});continue
@@ -65,9 +100,13 @@ def build():
                 blockers.append({**meta,"reason":"redirect_domain_requires_identity_review"});continue
             if OUTBOUND_TITLE.search(source.get("title","")):
                 blockers.append({**meta,"reason":"host_outbound_page_not_TKU_incoming_rule"});continue
+            if DEGREE_TITLE.search(source.get('title','')):
+                blockers.append({**meta,'reason':'general_degree_admission_page_not_verified_exchange_rules'});continue
             paragraphs=source.get("paragraphs") or [line.strip() for line in source.get("text","").splitlines() if len(line.strip())>=35]
             for key,pattern in PATTERNS.items():
-                matches=[(i,p) for i,p in enumerate(paragraphs,1) if re.search(pattern,p,re.I) and len(p)<=2200]
+                source_context=bool(INCOMING_CONTEXT.search(source.get('title','')+' '+source['source_url']))
+                matches=[(i,p) for i,p in enumerate(paragraphs,1) if re.search(pattern,p,re.I) and 35<=len(p)<=2200
+                         and (key not in ACADEMIC_FIELDS or source_context or INCOMING_CONTEXT.search(p))]
                 # Preserve verbatim evidence, no inferred numeric threshold or deadline.
                 for number,quote in matches[:2]:
                     pages=[p['page'] for p in source.get('pages',[]) if quote in (p.get('text') or '')]
@@ -90,8 +129,17 @@ def build():
     for curated in json.loads((BUNDLE/'curated_partner_facts.json').read_text()) if (BUNDLE/'curated_partner_facts.json').exists() else []:
         row=next(row for row in rows if row['id']==curated['id'])
         row['fields'].update(curated['fields'])
-        row['reviewed_host_year_fields']=list(curated['fields'])
-    (BUNDLE/"partner_enrichment.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False)+"\n" for r in rows))
+        row['reviewed_host_period_fields']=[k for k,f in curated['fields'].items() if f.get('source_period_verified')]
+        row['reviewed_host_year_fields']=list(row['reviewed_host_period_fields'])
+        row['content_reviewed_host_reference_fields']=list(curated['fields'])
+    # PDF text can contain Unicode line separators, which Python splitlines()
+    # treats as record boundaries. Retain those characters through JSON escapes.
+    def json_line(row):
+        text=json.dumps(row,ensure_ascii=False)
+        for char in ('\u0085','\u2028','\u2029'):
+            text=text.replace(char,f'\\u{ord(char):04x}')
+        return text+'\n'
+    (BUNDLE/"partner_enrichment.jsonl").write_text("".join(json_line(r) for r in rows))
     print(json.dumps(dict(institutions=len(rows),with_public_references=sum(bool(r["fields"]) for r in rows),
                          excerpt_count=sum(len(r["reference_excerpts"]) for r in rows),
                          fields=dict(Counter(key for row in rows for key in row["fields"]))),ensure_ascii=False))
