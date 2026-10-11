@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="9" time="96.534" timestamp="2026-10-11T21:01:39.007175+00:00" hostname="53f3dafad1d0"><testcase classname="tests.e2e.test_ncu_sixteenth_life" name="test_complete_legacy_chinese_cards[kansai-\u95dc\u897f\u5927\u5b78-Kansai University-\u4f4f\u5bbf\u8207\u5bbf\u820d-terms7-390]" time="16.654" /><testcase classname="tests.e2e.test_ncu_sixteenth_life" name="test_complete_legacy_chinese_cards[kansai-\u95dc\u897f\u5927\u5b78-Kansai University-\u4f4f\u5bbf\u8207\u5bbf\u820d-terms7-1440]" time="7.879" /><testcase classname="tests.e2e.test_ncu_sixteenth_life" name="test_complete_legacy_chinese_cards[kyutech-\u4e5d\u5dde\u5de5\u696d-Kyushu Institute of Technology-\u8ab2\u696d\u8207\u6559\u5b78-terms8-390]" time="5.062" /><testcase classname="tests.e2e.test_ncu_sixteenth_life" name="test_complete_legacy_chinese_cards[kyutech-\u4e5d\u5dde\u5de5\u696d-Kyushu Institute of Technology-\u8ab2\u696d\u8207\u6559\u5b78-terms8-1440]" time="7.684" /><testcase classname="tests.e2e.test_ncu_sixteenth_life" name="test_complete_legacy_chinese_cards[sungshin-\u8aa0\u4fe1\u5973\u5b50-Sungshin Women's University-\u8ab2\u696d\u8207\u6559\u5b78-terms9-390]" time="4.379" /><testcase classname="tests.e2e.test_ncu_sixteenth_life" name="test_complete_legacy_chinese_cards[sungshin-\u8aa0\u4fe1\u5973\u5b50-Sungshin Women's University-\u8ab2\u696d\u8207\u6559\u5b78-terms9-1440]" time="7.654" /><testcase classname="tests.e2e.test_ncu_sixteenth_life" name="test_complete_legacy_chinese_cards[undip-\u8fea\u6ce2\u5167\u6208\u7f85-Universitas Diponegoro-\u8ab2\u696d\u8207\u6559\u5b78-terms10-390]" time="5.251" /><testcase classname="tests.e2e.test_ncu_sixteenth_life" name="test_complete_legacy_chinese_cards[undip-\u8fea\u6ce2\u5167\u6208\u7f85-Universitas Diponegoro-\u8ab2\u696d\u8207\u6559\u5b78-terms10-1440]" time="7.863" /><testcase classname="tests.e2e.test_ncu_sixteenth_life" name="test_complete_legacy_chinese_cards[tuaf-\u592a\u539f\u8fb2\u6797-THAI NGUYEN UNIVERSITY OF AGRICULTURE AND FORESTRY-\u6bcf\u6708\u751f\u6d3b\u9810\u7b97-terms11-390]" time="33.918"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;#partner-table .partner-card&quot;).filter(has=locator(&quot;.school-detail-trigger[data-school-name$=\&quot;THAI NGUYEN UNIVERSITY OF AGRICULTURE AND FORESTRY\&quot;]&quot;)).first.locator(&quot;:scope &gt; summary&quot;)">page = &lt;Page url='http://127.0.0.1:38923/?view=list&amp;home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&amp;q=%E5%A4%AA%E5%8E%9F%E8%BE%B2%E6%9E%97#partners'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:38923', data_dir=PosixPath('/tmp/ncu16-browser-remainder/web-e2e-data0'))
+tmp_path = PosixPath('/tmp/ncu16-browser-remainder/test_complete_legacy_chinese_c8')
+width = 390, slug = 'tuaf', query = '太原農林'
+name = 'THAI NGUYEN UNIVERSITY OF AGRICULTURE AND FORESTRY', title = '每月生活預算'
+terms = ['原文僅$符號', '幣別仍待確認']
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    @pytest.mark.parametrize('slug,query,name,title,terms', CASES)
+    def test_complete_legacy_chinese_cards(page, live_server, tmp_path, width, slug, query, name, title, terms):
+        page.set_viewport_size({'width': width, 'height': 956})
+        page.emulate_media(reduced_motion='reduce')
+        errors = []
+        page.on('pageerror', lambda error: errors.append(str(error)))
+        select_ncu(page, live_server)
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(query)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        trigger = f'.school-detail-trigger[data-school-name$="{name}"]'
+        if width &lt; 700:
+&gt;           page.locator('#partner-table .partner-card').filter(has=page.locator(trigger)).first.locator(':scope &gt; summary').click()
+
+tests/e2e/test_ncu_sixteenth_life.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7f9861924ad0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7f9820fa2700&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator("#partner-table .partner-card").filter(has=locator(".school-detail-trigger[data-school-name$=\"THAI NGUYEN UNIVERSITY OF AGRICULTURE AND FORESTRY\"]")).first.locator(":scope &gt; summary")
+
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TimeoutError</failure></testcase></testsuite></testsuites>
