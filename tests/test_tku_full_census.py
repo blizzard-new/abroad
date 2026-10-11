@@ -49,8 +49,8 @@ def test_all_22_fields_preserve_reference_missing_and_current_counts():
                     assert f['value'] is None
                 assert f['evidence']
     assert audit['field_counts']['quota']['verified_current']==4
-    assert audit['field_counts']['coordinates']['verified_asset']==3
-    assert audit['field_counts']['campus_photo']['verified_asset']==13
+    assert audit['field_counts']['coordinates']['verified_asset']>=260
+    assert audit['field_counts']['campus_photo']['verified_asset']>=264
 
 
 def test_home_application_windows_never_promote_directory_or_old_quota():
@@ -67,13 +67,20 @@ def test_home_application_windows_never_promote_directory_or_old_quota():
     assert len(fetch_tku_partner_universities(include_agreements=False))==4
 
 
-def test_reviewed_host_year_is_not_home_nomination_and_failed_forms_stay_failed():
+def test_reviewed_host_year_is_not_home_nomination_and_form_retries_keep_history():
     curated=json.loads((BUNDLE/'curated_partner_facts.json').read_text())[0]
     assert curated['id']=='tku-sister-178'
     assert school_audit('明治大學 Meiji University')['fields']['quota']['status']=='not_verified_new'
     fields=curated['fields']
     assert fields['latest_forms']['status']=='reference_only'
-    assert all(r['http_status']==503 and r['error'] and not r['local_file'] for r in fields['latest_forms']['attachment_checks'])
+    assert all(r['http_status']==503 and r['error'] and not r['local_file'] for r in fields['latest_forms']['attachment_check_history'])
+    checks=fields['latest_forms']['attachment_checks']
+    assert len(checks)==5 and all(r['http_status']==200 and r['prior_http_status']==503 and r['content_reviewed'] for r in checks)
+    for r in checks:
+        blob=read_bytes(BUNDLE/r['local_file'])
+        assert hashlib.sha256(blob).hexdigest()==r['sha256'] and blob.startswith((b'%PDF',b'PK'))
+    assert any('after April 2026' in e['quote'] for e in fields['latest_forms']['evidence'])
+    assert any('Courses (AY2026)' in e['quote'] for e in fields['latest_forms']['evidence'])
     assert fields['course_schedule']['status']=='explicit_not_finalized'
     for fact in fields.values():
         for e in fact['evidence']:
@@ -88,11 +95,12 @@ def test_reviewed_host_year_is_not_home_nomination_and_failed_forms_stay_failed(
 
 def test_licensed_images_require_author_license_hash_and_actual_visual_review():
     photos=json.loads((BUNDLE/'campus_asset_manifest.json').read_text())
-    assert len(photos)==13
-    assert sum(p.get('acquisition_status')=='reused_baseline_asset' for p in photos)==1
+    assert len(photos)>=264
+    assert sum(p.get('acquisition_status')=='reused_baseline_asset' for p in photos)==54
     for photo in photos:
         assert photo['review_status']=='verified_asset' and photo['author'] and photo['license']
-        assert photo['license_url'].startswith('https://') and photo['identity_source_url'].startswith('https://sister.tku.edu.tw/')
+        assert photo['license_url'].startswith('https://')
+        assert photo['identity_source_url'].startswith(('https://sister.tku.edu.tw/','https://oieie.tku.edu.tw/'))
         path=BUNDLE.parents[1]/photo['local_path'].split('?')[0].removeprefix('/')
         assert hashlib.sha256(path.read_bytes()).hexdigest()==photo['sha256']==photo['visual_review']['sha256']
         assert photo['visual_review']['result']=='pass' and photo['photo_date']
@@ -107,8 +115,8 @@ def test_offline_full_api_and_non_current_profile(tmp_path,monkeypatch):
     client=TestClient(create_app(tmp_path))
     dashboard=client.get('/student-dashboard',params={'school':'TKU'}).json()
     assert len(dashboard['partner_universities'])==287
-    assert sum(p['image_status']=='verified' for p in dashboard['partner_universities'])==13
-    assert sum(p['location']['geocode_status']=='verified' for p in dashboard['partner_universities'])==3
+    assert sum(p['image_status']=='verified' for p in dashboard['partner_universities'])>=264
+    assert sum(p['location']['geocode_status']=='verified' for p in dashboard['partner_universities'])>=260
     ritsu=dashboard['partner_universities'][0]
     assert ritsu['image_url'] and ritsu['location']['latitude']==35.032579
     assert ritsu['location']['precision']=='representative'
@@ -125,6 +133,22 @@ def test_offline_full_api_and_non_current_profile(tmp_path,monkeypatch):
     assert client.post('/tku/eligibility-check',json={'partner_id':'meiji'}).status_code==422
     forms=client.get('/application-center/catalog',params={'school':'TKU','target_school':meiji['school_name'],'academic_year':'2027-2028'}).json()
     assert not forms['workflow_found'] and forms['items']==[]
+
+
+def test_reuse_requires_reviewed_identity_and_campus_scene_not_chinese_name_only():
+    reviews={r['id']:r for r in json.loads((BUNDLE/'reused_asset_review.json').read_text())}
+    assert len(reviews)==287
+    vub=reviews['tku-sister-7']
+    assert vub['photo_decision']==vub['coordinate_decision']=='rejected_wrong_institution'
+    assert 'Vrije Universiteit Brussel' in vub['rejection_reason'] and 'Université libre de Bruxelles' in vub['rejection_reason']
+    assert 'accepted_photo' not in vub and 'accepted_coordinate' not in vub
+    assert reviews['tku-sister-260']['photo_decision']=='rejected_not_campus_scene'
+    assert 'accepted_photo' not in reviews['tku-sister-260']
+    assert 'accepted_coordinate' in reviews['tku-sister-260']
+    utar=reviews['tku-sister-163']
+    assert 'Sungai Long' in utar['campus_pair_scope'] and 'Kampar' in utar['campus_pair_scope']
+    assert utar['accepted_coordinate']['location']['precision']=='representative'
+    assert all(r['identity_evidence'] and r['checked_at'] for r in reviews.values())
 
 
 def test_tku_browser_asset_scope_and_visible_attribution_do_not_use_shared_unlicensed_match():

@@ -86,6 +86,15 @@ def build():
     locations={r['id']:r for r in json.loads((BUNDLE/'campus_location_manifest.json').read_text())}
     commons={r['id']:r for r in json.loads((BUNDLE/'commons_campus_index.json').read_text())}
     coordinates={r['id']:r for r in json.loads((BUNDLE/'campus_candidates.json').read_text())}
+    photo_batches=json.loads((BUNDLE/'commons_asset_batches.json').read_text()) if (BUNDLE/'commons_asset_batches.json').exists() else []
+    coordinate_batches=json.loads((BUNDLE/'wikidata_asset_batches.json').read_text()) if (BUNDLE/'wikidata_asset_batches.json').exists() else []
+    geographic_reviews={r['id']:r for r in json.loads((BUNDLE/'wikidata_asset_review.json').read_text())} if (BUNDLE/'wikidata_asset_review.json').exists() else {}
+    alternative_reviews={r['id']:r for r in json.loads((BUNDLE/'official_geography_review.json').read_text())} if (BUNDLE/'official_geography_review.json').exists() else {}
+    def search_checks(records,identifier):
+        return [dict(source_url=r['source_url'],checked_at=r['checked_at'],http_status=r.get('http_status'),error=r.get('error'),
+            retry_after=r.get('retry_after'),resume_not_before=r.get('resume_not_before'),query=r.get('query'),
+            candidate_count=len(r.get('response',{}).get('search',[])) if r.get('service')=='wikidata' else len(r.get('response',{}).get('query',{}).get('pages',{})))
+            for r in records if r['institution_id']==identifier]
     schools = []
     for row in census:
         cells = {}
@@ -117,12 +126,24 @@ def build():
                     cells[key]['reason']='公開來源已查，尚未取得可核實本期／本計畫的此欄原文；開啟錯誤及接待校／母校適用範圍分別列出。不代表官方明示尚未公告。'
             if key=='campus_photo':
                 cells[key]['asset_search_check']={k:v for k,v in commons.get(row['id'],{}).items() if k!='response'}
+                checks=search_checks(photo_batches,row['id'])
+                if checks:
+                    cells[key]['asset_search_history']=[cells[key]['asset_search_check'],*checks]
+                    cells[key]['asset_search_check']=checks[-1]
                 photo=photos.get(row['id'])
                 if photo:
                     cells[key].update(status='verified_asset',reason='實際校景、作者與自由授權已核對；歷史拍攝期及校區標明，不代表当期交換校區。',
                         public_reference=dict(value=photo['caption'],status='verified_asset',evidence=[dict(source_url=photo['source_url'],checked_at=photo['checked_at'],applicable_year=photo['applicable_year'],role='licensed_campus_photo',locator='Commons Summary/Licensing and downloaded visual review',quote=photo['identity_quote'],license=photo['license'],license_url=photo['license_url'],sha256=photo['sha256'])]))
             if key=='coordinates':
                 cells[key]['asset_search_check']=coordinates.get(row['id'],{})
+                checks=search_checks(coordinate_batches,row['id'])
+                if checks:
+                    cells[key]['asset_search_history']=[cells[key]['asset_search_check'],*checks]
+                    cells[key]['asset_search_check']=checks[-1]
+                if row['id'] in geographic_reviews:
+                    cells[key]['candidate_review']={k:v for k,v in geographic_reviews[row['id']].items() if k not in {'accepted_coordinate'}}
+                if row['id'] in alternative_reviews:
+                    cells[key]['alternative_candidate_review']={k:v for k,v in alternative_reviews[row['id']].items() if k!='accepted_coordinate'}
                 location=locations.get(row['id'])
                 if location:
                     cells[key].update(status='verified_asset',reason=location['location']['note'],public_reference=dict(value={'latitude':location['location']['latitude'],'longitude':location['location']['longitude'],'precision':location['location']['precision']},status='verified_asset',evidence=[location['evidence']]))

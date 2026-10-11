@@ -52,7 +52,52 @@ def main():
     if (B/'meiji_2027_attachment_checks.json').exists():
         facts['latest_forms']['attachment_checks']=json.loads((B/'meiji_2027_attachment_checks.json').read_text())
         facts['latest_forms']['reason']+=' 五份指定模板本次開啟均HTTP503，僅文件要求及連結適用期已核實；附件內容和可開啟性尚未核實。'
-    (B/"curated_partner_facts.json").write_text(json.dumps([dict(id="tku-sister-178",fields=facts)],ensure_ascii=False,indent=2)+"\n")
+    retry=B/'meiji_2027_attachment_checks_retry1.json'
+    if retry.exists():
+        checks=json.loads(retry.read_text())
+        assert len(checks)==5 and all(r.get('source_id') and r.get('content_reviewed') for r in checks)
+        facts['latest_forms']['attachment_check_history']=facts['latest_forms']['attachment_checks']
+        facts['latest_forms']['attachment_checks']=checks
+        facts['latest_forms']['reason']='五份指定模板有限重試後HTTP200，原檔SHA256與PDF／Word內文均核對；首次503留存歷史。連結由AY2027簡章p.8確認，Word自身未載年度、英語表內AY2026課表僅參考。淡江當期提名未核實。'
+        forms=[captured(r['source_id']) for r in checks]
+        for source,needle in zip(forms,['This certification is valid for the date after April 2026','1000-2000','400-','1000-2000','1000 words or more']):
+            f=fact('latest_forms',facts['latest_forms']['value'],1,needle,source,source['applicable_year'])[1]
+            if not source.get('pages'):f['evidence'][0]['locator']='DOCX word/document.xml text'
+            facts['latest_forms']['evidence']+=f['evidence']
+        facts['latest_forms']['value']+=' 已實讀五模板：健康證明須2026/4後由醫師英／日文填寫，X光為入學前一年內；日文大學部理工及希望指導之農學另列三位教師，日文研究生三位教師除助教、經營研究科免填；英語表內AY2026課表只供參考，不表示2027課程已定。'
+        for source,needle in [(forms[0],'X-rays taken within 1year'),(forms[1],'指導を希望する教員'),(forms[2],'Courses (AY2026)'),(forms[4],'not required for applicants to the Graduate School of Business Administration')]:
+            extra=fact('latest_forms','',1,needle,source,source['applicable_year'])[1]
+            if not source.get('pages'):extra['evidence'][0]['locator']='DOCX word/document.xml text'
+            facts['latest_forms']['evidence']+=extra['evidence']
+    curated=[dict(id='tku-sister-178',fields=facts)]
+    retry_index=B/'host_source_retry_checks.json'
+    if retry_index.exists():
+        jwu_meta=next((r for r in json.loads(retry_index.read_text()) if '2027-28_AdmissionGuide.pdf' in r['source_url'] and r.get('http_status')==200),None)
+        if jwu_meta:
+            jwu=captured(jwu_meta['source_id']);assert len(jwu['pages'])==21 and '2027-2028 Program' in jwu['pages'][0]['text']
+            def jwfact(key,value,page,needle,year='2027–2028 host incoming programme; TKU nomination unverified'):
+                result=fact(key,value,page,needle,jwu,year)
+                result[1]['reason']='實讀日本女子大學官方2027–2028接待交換簡章；學期／語言track與淡江當期提名對應未核實，不產生母校名額或文件流程。'
+                for e in result[1]['evidence']:e['application_round']='Fall September2027 / Spring April2028 / winter intensive2028; separate host admission deadlines'
+                return result
+            jfacts=dict([
+                jwfact('host_eligibility','接待校明示接受男性交換生，不能因校名推定僅限女性；英文建築設計交換須有相關主修先修背景且僅秋季。',2,'accepts male exchange students'),
+                jwfact('host_language','日語regular programme須完成至少兩年日語學習；到校分班A2/B1，N3/N2為課程目標／程度，不能改成母校或接待校統一JLPT證書門檻。英文建築設計可選preA1/A1初級日語課，但須相關主修背景。',4,'at least two year of Japanese language study'),
+                jwfact('department_scope','2027/4起八學部16系，經濟學部新增；2028/4時尚設計與人間科學為未來不同年度，不套進2027年初。英文建築設計僅秋季並需相關背景；一般日語regular programme可依學歷、語言与課程容量跨系選課。',5,'previous study experience in a related major'),
+                jwfact('study_period','一年2027/9中旬–2028/7底；秋單學期至2028/1底、秋加冬集中至2月底；冬加春2028/2初–月底再4初–7底；春單學期2028/4初–7底，各選項分開。',6,'Mid-September 2027 ~ End of July 2028'),
+                jwfact('host_nomination_deadline','一年／秋／秋加冬：2027/3/1；冬加春：2027/7/31；春單學期：2027/9/30。都是接待校母校提名期限，淡江校內甄選期限仍未知。',20,'NOMINATION & APPLICATION SCHEDULE'),
+                jwfact('host_deadline','一年／秋／秋加冬：2027/4/10；冬加春：2027/9/1；春單學期：2027/11/1。不得用此期限表示淡江仍收新申請。',20,'April 10, 2027'),
+                jwfact('course_restrictions','日語regular programme每學期至少14學分、日語5堂每週共10學分且至少兩門regular courses；英文建築設計至少12學分且限秋季。p.10英語課表明示只是2026例子、不保證同課開設；不當2027已定課表。',7,'Minimum credits: 14 credits per semester'),
+                jwfact('housing','兩種校外share house與寄宿家庭：share house1步行3分鐘、2大眾運輸45分鐘；寄宿最長公共運輸約一小時。有不同設備／餐食，沒有保證每位學生分配同房型。',15,'ACCOMMODATION'),
+                jwfact('housing_costs','簡章p.15估share house1每月JPY87,000、2每月JPY120,000，各JPY40,000入住費由JWU支援；寄宿約USD30（原文JPY4,840）每日另加通勤及安排費。原文USD1=JPY160與30美元對應4,840日圓算術不一致，保留待確認；不是現行匯率或固定帳單。',15,'87,000'),
+                jwfact('costs','選冬季集中日語文化課約JPY10,000實習費，實際依內容調整；6學分，需母校與秋或春合併提名，一年交換預期參加。不把此額當整個交換總費。',9,'Approximately ¥10,000'),
+                jwfact('campus','官方接待國際處Mejiro校址2-8-1 Mejirodai, Bunkyo-ku, Tokyo；建築及院系修課依programme核對，地址不是宿舍或已確定TKU分配校區。',21,'2-8-1 Mejirodai'),
+                jwfact('transport','接待校international student supporters可協助接機、選課、設施及語言交流；屬支援服務而非免費機票／每位保證接送。住宿步行3分鐘與運輸45分鐘／一小時依房型分开。',14,'Airport pick-up assistance'),
+            ])
+            for key,page,needle in [('host_eligibility',5,'previous study experience'),('host_language',7,'aiming for N3'),('course_restrictions',8,'Minimum credits: 12'),('course_restrictions',10,'examples from the 2026 academic year'),('housing_costs',15,'40,000 yen move-in fee'),('housing_costs',15,'US＄30')]:
+                jfacts[key]['evidence']+=jwfact(key,'',page,needle)[1]['evidence']
+            curated.append(dict(id='tku-sister-326',fields=jfacts))
+    (B/"curated_partner_facts.json").write_text(json.dumps(curated,ensure_ascii=False,indent=2)+"\n")
     locations=[]
     source=next(captured(p.stem.split('.')[0]) for p in captures(B/'host_census_sources')
                 if captured(p.stem.split('.')[0])['source_url']=='https://www.rhul.ac.uk/')
@@ -70,8 +115,20 @@ def main():
         evidence=dict(source_url='https://commons.wikimedia.org/wiki/File:Seikei_University_(16).jpg',quote='Camera location 35° 42′ 41.3″ N, 139° 34′ 23.8″ E; official address 東京都武蔵野市吉祥寺北町3-3-1',checked_at=seikei['checked_at'],applicable_year='2017 campus photograph point; current address verified 2026-10-11',role='licensed_campus_photo_location',locator='Commons Camera location + official Access address')))
     from tku_baseline_assets import existing_ritsumeikan_location
     locations.append(existing_ritsumeikan_location())
+    reviews=B/'reused_asset_review.json'
+    if reviews.exists():
+        present={r['id'] for r in locations}
+        locations.extend(r['accepted_coordinate'] for r in json.loads(reviews.read_text()) if 'accepted_coordinate' in r and r['id'] not in present)
+    geographic_reviews=B/'wikidata_asset_review.json'
+    if geographic_reviews.exists():
+        present={r['id'] for r in locations}
+        locations.extend(r['accepted_coordinate'] for r in json.loads(geographic_reviews.read_text()) if 'accepted_coordinate' in r and r['id'] not in present)
+    official_reviews=B/'official_geography_review.json'
+    if official_reviews.exists():
+        present={r['id'] for r in locations}
+        locations.extend(r['accepted_coordinate'] for r in json.loads(official_reviews.read_text()) if 'accepted_coordinate' in r and r['id'] not in present)
     (B/'campus_location_manifest.json').write_text(json.dumps(locations,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps(dict(curated_host_institutions=1,host_fields=len(facts),new_physical_campus_locations=2,reused_baseline_representative_locations=1,total_displayable_locations=len(locations))))
+    print(json.dumps(dict(curated_host_institutions=len(curated),host_fields=sum(len(r['fields']) for r in curated),new_physical_campus_locations=2,reused_baseline_representative_locations=1,total_displayable_locations=len(locations))))
 
 
 if __name__=='__main__':main()

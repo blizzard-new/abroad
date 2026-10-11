@@ -50,6 +50,15 @@ def build():
             source=json.loads(gzip.decompress(read_bytes(path)))
             if source.get("error"):
                 blockers.append({**meta,"reason":"official_endpoint_open_failed"});continue
+            if source.get('http_status') != 200:
+                blockers.append({**meta,"reason":"non_200_response_not_verified_source_content"});continue
+            if source.get('content_extraction_status')=='legacy_DOC_parser_not_available':
+                blockers.append({**meta,"reason":"binary_opened_content_and_period_not_verified"});continue
+            if source['id']=='8e3de1e08d6326e72eaed8aa':
+                assert '2026年辽宁大学辽宁省政府外国留学生奖学金生项目专业目录' in source['text']
+                blockers.append({**meta,"reason":"2026_full_degree_doctoral_scholarship_not_TKU_exchange", "content_locator":"xl/worksheets/sheet1.xml A1"});continue
+            if urlsplit(source['source_url']).path.lower().endswith(('.pdf','.docx')) and not source.get('local_file'):
+                blockers.append({**meta,"reason":"expected_document_missing_verified_binary"});continue
             if BAD_BODY.search(source.get("text","")[:1000]):
                 blockers.append({**meta,"reason":"challenge_page_not_source_content"});continue
             if not same_host(source["source_url"],source.get("final_url",source["source_url"])):
@@ -61,10 +70,12 @@ def build():
                 matches=[(i,p) for i,p in enumerate(paragraphs,1) if re.search(pattern,p,re.I) and len(p)<=2200]
                 # Preserve verbatim evidence, no inferred numeric threshold or deadline.
                 for number,quote in matches[:2]:
+                    pages=[p['page'] for p in source.get('pages',[]) if quote in (p.get('text') or '')]
+                    locator=f"PDF page {','.join(map(str,pages))}; extracted line {number}" if pages else f"Extracted paragraph/line {number}; title: {source.get('title','PDF')}"
                     references.append(dict(key=key, value=quote, status="reference_only",
                         reason="接待校官方公開原文參考；來源年度、校區及淡江提名計畫對應尚未核實。不能當作本期母校申請資格或文件。",
                         evidence=[dict(source_id=source["id"], source_url=source["source_url"],
-                            final_url=source.get("final_url"), locator=f"Extracted paragraph/line {number}; title: {source.get('title','PDF')}",
+                            final_url=source.get("final_url"), locator=locator,
                             quote=quote, applicable_year="source period not independently established; public reference only",
                             role="host_general_reference", application_round="TKU nomination/programme mapping not verified",
                             checked_at=source["checked_at"], content_sha256=source["sha256"])]))

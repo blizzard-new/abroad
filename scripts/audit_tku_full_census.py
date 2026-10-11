@@ -26,7 +26,7 @@ def main():
     for source in sources:
         if not source.get('local_file'):continue
         path=B/'host_census_sources'/source['local_file'];blob=read_bytes(path)
-        valid_magic=blob.startswith(b'%PDF') or blob.startswith(b'PK')
+        valid_magic=blob.startswith((b'%PDF',b'PK',bytes.fromhex('d0cf11e0a1b11ae1')))
         assert valid_magic and hashlib.sha256(blob).hexdigest()==source['sha256']
         attachments.append(dict(source_url=source['source_url'],file=source['local_file'],bytes=len(blob),sha256=source['sha256'],magic_valid=valid_magic,checked_at=source['checked_at']))
     unchanged=[]
@@ -50,22 +50,27 @@ def main():
     unknown={k:287-v.get('verified_current',0)-v.get('verified_asset',0) for k,v in audit['field_counts'].items()}
     record_count=len(load_tku_records(include_reference=True))
     assert record_count==128
-    states=dict(Counter(s.get('http_status','connection_error') for s in sources if s.get('error')))
+    states=dict(Counter(s.get('http_status') or 'connection_error' for s in sources if s.get('http_status')!=200 or s.get('error')))
+    photos=json.loads((B/'campus_asset_manifest.json').read_text())
+    locations=json.loads((B/'campus_location_manifest.json').read_text())
+    reused_photos=sum(p.get('acquisition_status')=='reused_baseline_asset' for p in photos)
+    reused_locations=sum(p.get('acquisition_status')=='reused_baseline_asset' for p in locations)
     result=dict(base_commit=BASE,checked_date='2026-10-11',directory_rows=286,institutions=287,programme_rows=153,
         original_programmes_preserved=record_count,first_round_history_rows=25,first_round_history_quota=50,
         latest_round_schools=4,latest_round_quota=7,newly_open_applications=0,destination_profiles=len(profiles),
         institutions_with_official_reference_excerpts=sum(bool(r['fields']) for r in map(json.loads,(B/'partner_enrichment.jsonl').read_text().splitlines())),
-        public_source_captures=len(sources),opened_sources=sum(not s.get('error') for s in sources),failed_sources=sum(bool(s.get('error')) for s in sources),
-        source_failure_statuses=states,downloaded_attachments=attachments,licensed_visual_reviewed_photos=13,
-        new_licensed_photos=12,reused_baseline_photos=1,verified_physical_campus_coordinates=2,
-        reused_baseline_representative_coordinates=1,total_displayable_coordinates=3,
+        public_source_captures=len(sources),opened_sources=sum(s.get('http_status')==200 and not s.get('error') for s in sources),failed_sources=sum(s.get('http_status')!=200 or bool(s.get('error')) for s in sources),
+        source_failure_statuses=states,downloaded_attachments=attachments,licensed_visual_reviewed_photos=len(photos),
+        new_licensed_photos=len(photos)-reused_photos,reused_baseline_photos=reused_photos,
+        verified_physical_campus_coordinates=sum(p['location']['precision']=='campus' for p in locations),
+        reused_baseline_representative_coordinates=reused_locations,total_displayable_coordinates=len(locations),
         current_or_asset_gap_counts=unknown,field_counts=audit['field_counts'],other_home_bundles=unchanged,
         original_tku_destination_prefix='byte_identical_to_base',schools=schools,
         scope_note='來源開啟與原文索引不等於所有欄位已核实；287校每校22欄缺口全列。名額只有4校最新已截止梯次，照片／實體校園座標核對另列，不代表提名校區。',
         blockers=['除最新四校外，當期母校名額與資格尚未核實；總覽不能作本期可選。',
             '接待校一般原文需核對當期、學制、院系、校區與淡江提名；舊文件不混入當期文件。',
-            'Wikidata及Commons批次HTTP429已停止，未查完項明確保留技術狀態。',
-            '明治2027五份指定模板HTTP503，未列可開啟附件；原文規定和連結適用期另存。',
+            'Wikidata及Commons首輪HTTP429失敗歷史保留；冷卻後查核批次、候選及未解校區身份另列，未接受素材不自動補值。',
+            '明治五模板的首次503與有限重試結果分開保存；成功開啟模板仍是接待校文件，不能推定淡江提名對應。',
             '原四校63項缺口與18項矛盾保留，不以新全量資料層掩蓋。'])
     (B/'full_census_acceptance.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({k:v for k,v in result.items() if k not in {'schools','downloaded_attachments','field_counts'}},ensure_ascii=False))

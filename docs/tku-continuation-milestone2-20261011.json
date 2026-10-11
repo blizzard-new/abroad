@@ -1,0 +1,141 @@
+{
+  "base_commit": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "checked_date": "2026-10-11",
+  "denominator": 287,
+  "milestone1": {
+    "photos": 66,
+    "coordinates": 68
+  },
+  "current": {
+    "photos": 264,
+    "coordinates": 260,
+    "photo_percent": 91.99,
+    "coordinate_percent": 90.59,
+    "photo_gaps": 23,
+    "coordinate_gaps": 27
+  },
+  "delta_from_milestone1": {
+    "photos": 198,
+    "coordinates": 192
+  },
+  "host_retry_checks": 265,
+  "host_retry_statuses": {
+    "200": 241,
+    "202": 3,
+    "503": 15,
+    "403": 3,
+    "404": 2,
+    "500": 1
+  },
+  "official_alternative_checks": 48,
+  "official_alternative_statuses": {
+    "200": 42,
+    "connection_error": 3,
+    "503": 2,
+    "404": 1
+  },
+  "commons_searches": 332,
+  "wikidata_and_named_page_searches": 290,
+  "official_geography_checks": 61,
+  "scope": "逐校已完成本輪可安全核對的已知公開路徑；不宣稱全球所有可能來源、所有來源內容／年度或6314欄已完整核實。不得越過403、429或重複503。",
+  "stop_rules": [
+    "429按Retry-After停止服務／主機並保存恢復時間。",
+    "每個503端點至多一次後續重試；五個明治模板早期重疊抓取的實際額外次數另列歷史，不抹除。",
+    "403及挑戰回應不嘗試cookie、代理、憑證或保護繞過。",
+    "來源只提供多校區／母體不明／不同城市或沒有數值時保留缺口。",
+    "名額283校未核實本期；來源未核實新版不等於官方明示尚未公告。"
+  ],
+  "semantic_host_year_review": {
+    "institutions": 2,
+    "fields": 26,
+    "note": "明治AY2027、日本女子2027–2028；均為接待校incoming，未推定TKU當期提名。其餘一般原文索引未當作完整年度／計畫審核。"
+  },
+  "tests": {
+    "milestone2-unit.xml": {
+      "tests": "72",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "37.833"
+    },
+    "milestone2-browser.xml": {
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "42.053"
+    },
+    "milestone2-shared.xml": {
+      "tests": "26",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "15.954"
+    },
+    "milestone2-source-scope.xml": {
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "1.449"
+    }
+  },
+  "pack_only": {
+    "status": "passed",
+    "files": 3616,
+    "original_files_unchanged": 2576,
+    "original_archives_unchanged": 5,
+    "logical_archives": 7,
+    "delivered_parts": 18,
+    "restored_capture_bytes": 145316671,
+    "archive_bytes": 137893875,
+    "no_loose_raw_captures_or_logical_zips": true,
+    "sha256_for_every_part_archive_member": true
+  },
+  "original_five_home_bundles": [
+    {
+      "home": "cgu",
+      "files": 3,
+      "status": "byte_identical_to_base"
+    },
+    {
+      "home": "ntpu",
+      "files": 12,
+      "status": "byte_identical_to_base"
+    },
+    {
+      "home": "ntu",
+      "files": 17,
+      "status": "byte_identical_to_base"
+    },
+    {
+      "home": "ccu",
+      "files": 1215,
+      "status": "byte_identical_to_base"
+    },
+    {
+      "home": "ncu",
+      "files": 13,
+      "status": "byte_identical_to_base"
+    }
+  ],
+  "tku_original_profile_prefix": "byte_identical_to_base",
+  "host_capture_history": {
+    "public_source_captures": 1980,
+    "opened_sources": 1636,
+    "failed_sources": 344,
+    "source_failure_statuses": {
+      "202": 3,
+      "503": 280,
+      "403": 21,
+      "404": 22,
+      "connection_error": 15,
+      "412": 1,
+      "500": 1,
+      "302": 1
+    }
+  },
+  "downloaded_attachment_captures": 76,
+  "unique_attachment_urls": 71,
+  "unique_attachment_sha256": 71
+}

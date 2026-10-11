@@ -16,22 +16,24 @@ def test_tku_census_licensed_photos_load_and_points_keep_scope(page,live_server,
     results=page.evaluate('''async () => {
         const rows=state.dashboard.partner_universities;
         const licensed=rows.filter(r=>r.image_status==='verified');
-        const photos=await Promise.all(licensed.map(async row=>{
+        const photos=[];
+        for (const row of licensed) {
             const image=new Image();image.src=row.image_url;await image.decode();
             const visual=schoolImageFor(row.school_name,row.country);
-            return {name:row.school_name,width:image.naturalWidth,height:image.naturalHeight,
+            photos.push({name:row.school_name,width:image.naturalWidth,height:image.naturalHeight,
                 source:visual.official_page_url,author:row.reference_data.campus_photo_author,
-                license:visual.license_name,license_url:visual.license_url};
-        }));
+                license:visual.license_name,license_url:visual.license_url});
+        }
         const module=await import('/static/partner-map.js');
         return {photos,points:module.pointsFor(rows).features,
             located:rows.filter(module.hasCoordinates).map(r=>({name:r.school_name,precision:r.location.precision})),
             unavailable:rows.filter(r=>!module.hasCoordinates(r)).length};
     }''')
-    assert len(results['photos'])==13
+    assert len(results['photos'])>=264
     assert all(p['width']>0 and p['height']>0 and p['author'] and p['license_url'] for p in results['photos'])
-    assert len(results['points'])==len(results['located'])==3 and results['unavailable']==284
-    assert sum(p['precision']=='representative' for p in results['located'])==1
+    assert len(results['points'])==len(results['located'])>=260
+    assert results['unavailable']==287-len(results['points'])
+    assert sum(p['precision']=='representative' for p in results['located'])>=255
     assert {p['properties']['name'] for p in results['points']}=={p['name'] for p in results['located']}
     page.locator('#partner-search').fill('成蹊')
     expect(page.locator('#partner-table')).to_have_attribute('data-result-count','1')
