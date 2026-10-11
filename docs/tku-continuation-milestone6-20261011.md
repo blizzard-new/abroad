@@ -1,4 +1,4 @@
-第六批完成原98校範圍內的有限來源收斂，並優先撤下兩張整合阻擋照片。分支 `data/tku-completeness-20261011`，main基準 `59a20f27fcee00fb597abc79e75ec11778317422`，第五批固定輸入 `4f142ea36e69338d2956b4ea5d3d37a9f4116e52`，資料checkpoint `8be84f32dc456f287309947699aeb4a0cf5531d0`。同Draft PR13，沒有merge／deploy。
+第六批完成原98校範圍內的有限來源收斂，並優先撤下兩張整合阻擋照片。分支 `data/tku-completeness-20261011`，main基準 `59a20f27fcee00fb597abc79e75ec11778317422`，第五批固定輸入 `4f142ea36e69338d2956b4ea5d3d37a9f4116e52`，資料checkpoint `154abd57a742ff1c7fdad6a2a4ed566006407639`。同Draft PR13，沒有merge／deploy。
 
 原42校官方根入口均已嘗試；SHA比對排除3個同正文HTTP／index別名的「新增來源」說法。初始分類為9校尚有未讀相關official leaf、12校指定入口失敗、21校已讀但無適用正文；本輪後7校接入61欄參考、12校入口失敗、23校已讀仍無適用內容。原98校累計27接入／36外部限制／35需來源，71校仍無可接入參考。原36限制逐項完全保留，沒有重試。
 
@@ -16,13 +16,15 @@ UADE一般學期／短期／dual-degree／freemover分開，兩份未載年指�
 
 本輪56host capture records／54URL（兩Aizu格式複核重用同網址另ID），另4份照片原頁／原來源／歷史查核。10PDF（8文字＋2視讀map）、2CoE XLSX可開；2加密OLE不可讀內容、1DOCXtimeout另列。HTTP200本身不等於有適用內容。累計2700captures／2303opened／397failed含重試與歷史，不當2700當期規則。
 
-最終相關TKU／CGU／NTPU／共用回歸：220 passed、4 skipped、0failed/errors，90.953秒；4skip為既有CGU條件。實際390/1280 browser 4 passed、0failed/errors，70.3秒，真實展開學校卡片、來源及生活指南，最新年／track、unknown quota與兩撤下圖片／credit核對。不是全repository／另一session NTU全綠宣稱。OpenAPI --check與真實兩JS node --check exit0。
+附件總表追加source_id／original_capture_id與正文擷取狀態，修正「HTTP200無error即正文可讀」：6筆legacy DOC原件紀錄仍未解析；6筆後續離線解析紀錄已有實際正文，對應5個原件，剩1個原件未得可讀解析。兩層以來源ID區分、原始bytes／SHA不變，不把成功解析當限制。這項邊界Focused 10 passed、5.159秒；初次9pass/1fail是把12筆都當未解析的錯誤測試假設，真實解析紀錄查明後更正並保留失敗log/XML。上列新增文件的12可讀／2加密／1timeout分類不變。附件metadata修正沒有改UI；瀏覽器證據驗的是相同UI程式與實際資料欄。
+
+最終相關TKU／CGU／NTPU／共用回歸：220 passed、4 skipped、0failed/errors，80.97秒；4skip為既有CGU條件。實際390/1280 browser 4 passed、0failed/errors，70.3秒，真實展開學校卡片、來源及生活指南，最新年／track、unknown quota與兩撤下圖片／credit核對。不是全repository／另一session NTU全綠宣稱。OpenAPI --check與真實兩JS node --check exit0。
 
 Pack-only只用manifest與transport parts還原4529檔／21封存／45分片、332,697,911 bytes，逐檔SHA通過；舊4455檔／15archives／36parts原樣，新增74members（56hostJSON＋10PDF＋2XLSX＋2OLE＋4photo captures）。M3/M4/M5的45快照、既有40校285人工欄、原128programmes／4profiles前綴及其他CGU3／NTPU12／NTU17／CCU1215／NCU13官方檔不變。
 
 初始錯誤及中間驗證保留：Focused4pass/3fail與full217pass/3fail/4skip是3個測試字串／shape／NQU缺欄假設，按實際原文／schema修正；新增CoE後Focused6pass/1fail因生成audit未重建，依序重建後最終完整套件核對全部實際API值。前一完整220pass/4skip86.85秒是最後3文件前，不能代替上列最終測試。照片browser未展開指南、最後文件抓取用不存在--output exit2、fitz未安裝／PNG未生成功能錯誤均保留或如實記載，改用真實--checks与已裝pdftoppm，沒有宣稱初次成功或安裝依賴。
 
-第六批與照片fix只動TKU資料／抓取與生成器／測試／證據，無新增共享registry/API/UI/资格/母校文件catalog更動。整份PR較main既有shared api.py、school_content.py、app.js、index.html、regions.js等由主session統一整合；未動他校工作區、憑證、存取、付款或安全設定。
+第六批與照片fix只動TKU資料／抓取與生成器／測試／證據，無新增共享registry/API/UI/资格/母校文件catalog更動。整份PR較main需主session統一整合的共享檔明列：`docs/api/openapi.json`、`src/exchange_info/api.py`、`src/exchange_info/school_content.py`、`src/exchange_info/static/app.js`、`src/exchange_info/static/index.html`、`src/exchange_info/static/regions.js`、`tests/test_fit_signals.py`、`tests/test_school_completeness.py`。既有API／profile路由使用TKU獨立照片與座標ledger，協議參考頁不標當期官方已核實；UI顯示TKU來源／年期／圖片credit及相關區域別名。以上不由本輪新增來源重寫。未動他校工作區、憑證、存取、付款或安全設定。
 
 重現：以已凍結 `milestone6_*_inputs/checks` 及pack為來源，依序執行remaining_document_reviews、milestone6_reviews、milestone6_handoff、curated_references、public_references、census_audit、census_profiles、audit_tku_full_census、continuation_milestone及測試。intake builders用於請求前凍結，不能事後用新的index重造原「未嘗試」清單。爬取driver僅固定inputs，保留失敗與cooldown；不用網路即可重建交付資料。
 

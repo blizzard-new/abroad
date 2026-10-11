@@ -3,7 +3,7 @@
   "main_baseline": "59a20f27fcee00fb597abc79e75ec11778317422",
   "m5_input": "4f142ea36e69338d2956b4ea5d3d37a9f4116e52",
   "photo_fix_commit": "35e28149c926705ea620692baefcddce89bab3d4",
-  "data_checkpoint": "8be84f32dc456f287309947699aeb4a0cf5531d0",
+  "data_checkpoint": "154abd57a742ff1c7fdad6a2a4ed566006407639",
   "checked_date": "2026-10-11",
   "pr": "https://github.com/blizzard-new/abroad/pull/13",
   "original98": {
@@ -120,7 +120,7 @@
       "errors": 0,
       "skipped": 4,
       "passed": 220,
-      "seconds": 90.953
+      "seconds": 80.97
     },
     "browser": {
       "tests": 4,
@@ -202,9 +202,47 @@
     "before_audit_rebuild": "6passed/1failed: added CoE manual fact ran against stale generated audit; rebuilt in dependency order; final suite includes exact API-value checks",
     "fixed_photo_browser": "initial2failed because guide detail was collapsed; explicit expand fixes retained originals",
     "final_document_cli": "initialexit2: --output unsupported; corrected --inputs/--checks; original argparse output retained",
-    "map_renderer": "fitz ModuleNotFoundError and absent PNG view: corrected using installed pdftoppm; four actual rendered pages viewed; no dependency installed"
+    "map_renderer": "fitz ModuleNotFoundError and absent PNG view: corrected using installed pdftoppm; four actual rendered pages viewed; no dependency installed",
+    "legacy_doc_metadata": "Initial focused9passed/1failed: test incorrectly treated all12 legacy DOC records as unparsed; actual six original downloads plus six later offline text/parser records, covering five originals. Capture IDs now distinguish the states; final focused10passed and full suite verify real parsed content and unchanged raw SHA."
   },
   "remaining_requests_file": "milestone6_remaining_source_outcomes.json",
   "remaining_asset_reasons_file": "milestone6_asset_outcomes.json",
-  "global_source_exhaustion_proven": false
+  "global_source_exhaustion_proven": false,
+  "attachment_metadata_verification": {
+    "original_legacy_doc_captures": 6,
+    "original_legacy_doc_files": 6,
+    "original_capture_content_opened": 0,
+    "offline_parser_captures": 6,
+    "offline_parser_unique_original_files": 5,
+    "offline_parser_content_opened": 6,
+    "source_ids_and_original_capture_ids_preserved": true,
+    "raw_bytes_unchanged": true,
+    "focused": {
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 10,
+      "seconds": 5.159
+    },
+    "initial_incorrect_assertion": {
+      "tests": 10,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 9,
+      "seconds": 5.001
+    },
+    "note": "HTTP200 only establishes download. Six original DOC captures remain unparsed; six later linked offline parser results contain actual text, covering five originals. One original has no readable parser result. Earlier all12-unparsed assertion was incorrect and retained as a failed test."
+  },
+  "shared_files_for_parent_integration": [
+    "docs/api/openapi.json",
+    "src/exchange_info/api.py",
+    "src/exchange_info/school_content.py",
+    "src/exchange_info/static/app.js",
+    "src/exchange_info/static/index.html",
+    "src/exchange_info/static/regions.js",
+    "tests/test_fit_signals.py",
+    "tests/test_school_completeness.py"
+  ]
 }

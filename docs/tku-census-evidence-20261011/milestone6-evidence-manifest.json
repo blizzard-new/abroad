@@ -1,5 +1,5 @@
 {
-  "data_checkpoint": "8be84f32dc456f287309947699aeb4a0cf5531d0",
+  "data_checkpoint": "154abd57a742ff1c7fdad6a2a4ed566006407639",
   "tests": {
     "scoped": {
       "tests": 224,
@@ -7,7 +7,7 @@
       "errors": 0,
       "skipped": 4,
       "passed": 220,
-      "seconds": 90.953
+      "seconds": 80.97
     },
     "browser": {
       "tests": 4,
@@ -20,7 +20,7 @@
     "openapi": "exit0 current contract",
     "javascript": "node --check actual app.js / tku-campus-assets.js exit0"
   },
-  "entries": 68,
+  "entries": 76,
   "files": [
     {
       "file": "tku-milestone6-browser-final.log.gz",
@@ -128,11 +128,39 @@
       "original_sha256": "b8b55c8104bc2a65495bc5c7360940ff4e2841c770b22e9d66837744365d8a2b"
     },
     {
+      "file": "tku-milestone6-full-acceptance-legacy-metadata-fix.log.gz",
+      "bytes": 2132,
+      "sha256": "c0df159835eb138b607ffdaaef532a2d0deb6c26a0623e24b5c989ad8518a24f",
+      "original_bytes": 4483,
+      "original_sha256": "d624d757b348cfef755cc6c948568ac06747ec835462a6db4ff79bce3c00725f"
+    },
+    {
       "file": "tku-milestone6-handoff-build.log.gz",
       "bytes": 302,
       "sha256": "d5074e1c3d925463e57655c9b93698246eaf300ad359760abd1b57210f996ab0",
       "original_bytes": 618,
       "original_sha256": "f709f051893822a68dce342b43cb4005fb11e7e8074f6d601f8d80ed8f8b8367"
+    },
+    {
+      "file": "tku-milestone6-legacy-metadata-audit.log.gz",
+      "bytes": 2132,
+      "sha256": "c0df159835eb138b607ffdaaef532a2d0deb6c26a0623e24b5c989ad8518a24f",
+      "original_bytes": 4483,
+      "original_sha256": "d624d757b348cfef755cc6c948568ac06747ec835462a6db4ff79bce3c00725f"
+    },
+    {
+      "file": "tku-milestone6-legacy-metadata-focused.log.gz",
+      "bytes": 68,
+      "sha256": "2f10faf98fb1d179b71a62c868fe6be3c304b0ca2963968ba7110ab306966d78",
+      "original_bytes": 116,
+      "original_sha256": "c2d3833e0590eced021e78885181f2f9dd861fbb2a6dcd68c0e1d4da4744538b"
+    },
+    {
+      "file": "tku-milestone6-legacy-metadata-incorrect-all12-assumption.log.gz",
+      "bytes": 1132,
+      "sha256": "11cbd8b9398171e3947241c27c06becab30fe2755ad80fc7bf19a4ed71e0d295",
+      "original_bytes": 2848,
+      "original_sha256": "e4ebc6654e4380478c78fbab2a2ff73212e0ef96a93a621ae1d6e89c0b4ba94c"
     },
     {
       "file": "tku-milestone6-manual-reviews-final.log.gz",
@@ -268,6 +296,13 @@
       "original_sha256": "e2b488846918030dbc0735da984e4b760735893ff6ba8cde3f838742ebc92cb7"
     },
     {
+      "file": "tku-milestone6-validation-before-legacy-metadata.log.gz",
+      "bytes": 116,
+      "sha256": "f3b8308b86076630f52947ef9d8414a4e0a1ce69cf359cfa9411dc71b822269b",
+      "original_bytes": 379,
+      "original_sha256": "9bebd9cccb3cb0a3b61120bbbf9609f19b4777a3532fefd8855f33f74369aed1"
+    },
+    {
       "file": "tku-milestone6-validation-initial-failed.log.gz",
       "bytes": 1402,
       "sha256": "0f496d0c89603091e55337ff444f23925724ba40d99e3b90c2ea9604244f4620",
@@ -277,9 +312,9 @@
     {
       "file": "tku-milestone6-validation.log.gz",
       "bytes": 116,
-      "sha256": "f3b8308b86076630f52947ef9d8414a4e0a1ce69cf359cfa9411dc71b822269b",
+      "sha256": "2fe34df935396bf9cd97ecaac25663af512cff69f4c7aa8563466e083c2e54e0",
       "original_bytes": 379,
-      "original_sha256": "9bebd9cccb3cb0a3b61120bbbf9609f19b4777a3532fefd8855f33f74369aed1"
+      "original_sha256": "64bc139856b137bc1ae348da3f22a30b949e5c19e1b3feb518bb241722d9fe20"
     },
     {
       "file": "tku-milestone6-browser-final.xml.gz",
@@ -324,11 +359,32 @@
       "original_sha256": "4a942dee05e8940492e168178fd877c74aeabe399520089e5e514536d77b0643"
     },
     {
+      "file": "tku-milestone6-legacy-metadata-focused.xml.gz",
+      "bytes": 648,
+      "sha256": "8a0f8cc729cec0cfc31afdf07976efdacbc927de173709cdd6af4d574d91ef53",
+      "original_bytes": 1691,
+      "original_sha256": "18c95cedec042763f9c0767c9c2818165c71c2314701e9f503273c5eb2f1b972"
+    },
+    {
+      "file": "tku-milestone6-legacy-metadata-incorrect-all12-assumption.xml.gz",
+      "bytes": 1620,
+      "sha256": "9a14cfbee95fc3ec63255d36efcb514fadcb6649db07bf4cc9941fe6d1d624d4",
+      "original_bytes": 4304,
+      "original_sha256": "47f388fdfe216e1364d5eee3f9ac806e3ddb8eecda8f483c22a24fe932678f20"
+    },
+    {
       "file": "tku-milestone6-validation-before-final-documents.xml.gz",
       "bytes": 6507,
       "sha256": "9f2285944bf8e30de015aafb6cf1c88e4046fee9c0e9ae4c8c48831a8c15daa1",
       "original_bytes": 34750,
       "original_sha256": "142b8ceca62689b011274fc53bfb0efd42edb852f7c1db009bbc7c067156a37f"
+    },
+    {
+      "file": "tku-milestone6-validation-before-legacy-metadata.xml.gz",
+      "bytes": 6510,
+      "sha256": "c684e53aea3021c355e357a4c8390e60557a47572986f2bc116e05214ee31720",
+      "original_bytes": 34750,
+      "original_sha256": "8bee031cd3211824e588ad396c66501b00be49bf4c5c9345f5a5a5f47dcd2649"
     },
     {
       "file": "tku-milestone6-validation-initial-failed.xml.gz",
@@ -339,10 +395,10 @@
     },
     {
       "file": "tku-milestone6-validation.xml.gz",
-      "bytes": 6510,
-      "sha256": "c684e53aea3021c355e357a4c8390e60557a47572986f2bc116e05214ee31720",
+      "bytes": 6500,
+      "sha256": "2a1112bf66540ab478fbecf562f70c149be36258fe4184c9947199090df1b2ab",
       "original_bytes": 34750,
-      "original_sha256": "8bee031cd3211824e588ad396c66501b00be49bf4c5c9345f5a5a5f47dcd2649"
+      "original_sha256": "6212ced34c18637dcd66cfe9d293fd6c2eff24ddef0b1aee6a646f19679b8fe2"
     },
     {
       "file": "tku-milestone6-pack-only-final.json",
