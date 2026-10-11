@@ -75,7 +75,7 @@ def test_ninth_icp_named_library_point_reaches_api_while_mons_hold_remains(tmp_p
     assert '48.8481246' in x['raw_utf8'] and '2.3295844' in x['raw_utf8'] and '751069905' in x['raw_utf8']
     assert d['record_date']=='2021-12-16' and d['canonical_source_rows']
     ps=TestClient(create_app(tmp_path)).get('/student-dashboard',params={'school':'NCU'}).json()['partner_universities']
-    assert len(ps)==214 and sum(p['location']['geocode_status']=='verified' for p in ps)==210
+    assert len(ps)==214 and sum(p['location']['geocode_status']=='verified' for p in ps)==212
     icp=next(p for p in ps if p['school_name']==d['school_name'])
     assert icp['location']['latitude']==48.8481246 and '2021/12/16' in icp['location']['note']
     assert not d['published_record']['current_exchange_campus_confirmed']

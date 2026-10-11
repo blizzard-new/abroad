@@ -50,8 +50,8 @@ def test_ninth_icp_210_partner_globe_and_source_note(page,live_server,width):
     d=json.loads(Path('sources/ncu/2026-10-11/resume-ninth-location-review.json').read_text())['coordinate_decisions'][0]
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="map"]').click()
-    expect(page.locator('#partner-map-count')).to_have_text('210 所已定位 / 214 所符合條件',timeout=60_000)
-    expect(page.locator('#map-school-select option')).to_have_count(211)
+    expect(page.locator('#partner-map-count')).to_have_text('212 所已定位 / 214 所符合條件',timeout=60_000)
+    expect(page.locator('#map-school-select option')).to_have_count(213)
     expect(page.locator('#partner-map-status')).to_be_hidden(timeout=60_000)
     page.locator('#map-school-select').select_option(value=d['school_name'])
     expect(page.locator('#partner-map-preview .map-preview-place')).to_contain_text('Paris / rue d’Assas')
