@@ -2959,7 +2959,7 @@ def create_app(
         rows: list[PartnerCoverage] = []
         if university.id == "tku":
             from .tku_assets import campus_photos
-            from .tku_census import school_audit
+            from .tku_census import school_identifier
         for partner in partners:
             normalized = normalize_school(partner.school_name)
             visual = school_images.get((partner.school_name, partner.country or ""))
@@ -2970,8 +2970,8 @@ def create_app(
                 from .ncu_completion import campus_photo
                 visual = campus_photo(partner.school_name, partner.country)
             if university.id == "tku":
-                audited=school_audit(partner.school_name)
-                photo=campus_photos().get(audited['id']) if audited else None
+                identifier=school_identifier(partner.school_name)
+                photo=campus_photos().get(identifier) if identifier else None
                 visual={"status":"verified","checked_at":photo['checked_at']} if photo else None
             partner_experiences = experience_map.get(normalized, [])
             workflow = workflow_map.get(normalized)

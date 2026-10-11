@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from functools import lru_cache
 
-from .tku_census import school_audit
+from .tku_census import school_identifier
 from .tku_data import BUNDLE
 from .university_locations import UniversityLocation
 
@@ -27,8 +27,8 @@ def photo_modification_note(photo):
 def attach_images(dashboard,base_url):
     partners=[]
     for partner in dashboard.partner_universities:
-        row=school_audit(partner.school_name)
-        photo=campus_photos().get(row["id"]) if row else None
+        identifier=school_identifier(partner.school_name)
+        photo=campus_photos().get(identifier) if identifier else None
         updates=dict(image_url=None,image_source_url=None,image_page_url=None,image_status="missing")
         if photo:
             reference=dict(partner.reference_data)
@@ -50,8 +50,8 @@ def school_location(partner, data_dir=None):
         operator = local_location_override(data_dir, partner.school_name, partner.country)
         if operator is not None:
             return operator
-    row=school_audit(partner.school_name)
-    record=campus_locations().get(row["id"]) if row else None
+    identifier=school_identifier(partner.school_name)
+    record=campus_locations().get(identifier) if identifier else None
     if not record:
         return UniversityLocation(school_name=partner.school_name,country=partner.country,
             geocode_status="pending",note="尚未核實實體校園座標；不以國家、城市中心或近名外校替代。已查來源、候選、限流歷史與身份／校區待確認原因保留於TKU逐校查核資料。")
@@ -59,8 +59,8 @@ def school_location(partner, data_dir=None):
 
 
 def complete_profile(profile):
-    row=school_audit(profile.school_name)
-    photo=campus_photos().get(row["id"]) if row else None
+    identifier=school_identifier(profile.school_name)
+    photo=campus_photos().get(identifier) if identifier else None
     if not photo:
         return profile
     from .models import StudentGuidePhoto

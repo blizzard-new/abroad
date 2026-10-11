@@ -24,14 +24,13 @@ class TKUEligibilityRequest(BaseModel):
 def register_tku_eligibility_routes(app: FastAPI):
     @app.get('/tku/partner-census')
     def partner_census():
-        from .tku_census import census_audit
-        audit=census_audit()
-        return {key:value for key,value in audit.items() if key!='schools'}
+        from .tku_census import census_summary
+        return census_summary()
 
     @app.get('/tku/partner-census/{institution_id}')
     def partner_census_school(institution_id: str):
-        from .tku_census import census_audit
-        row=next((r for r in census_audit()['schools'] if r['id']==institution_id),None)
+        from .tku_census import school_audit_by_id
+        row=school_audit_by_id(institution_id)
         if row is None:raise HTTPException(status_code=404,detail='此機構不在淡江全量名錄／甄選清單聯集中。')
         return row
 

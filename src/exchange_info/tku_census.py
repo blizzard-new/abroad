@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
+from pathlib import Path
 from functools import lru_cache
 
 from .models import (ExchangeFieldEvidence, PartnerExchangeDetailField, PartnerProgramOption,
@@ -9,9 +11,73 @@ from .models import (ExchangeFieldEvidence, PartnerExchangeDetailField, PartnerP
 from .tku_data import BUNDLE
 
 
+class _SchoolAuditIndex(Mapping):
+    """Expand one complete audit row per reader; aliases share immutable bytes."""
+    def __init__(self, aliases, rows):
+        self.aliases = aliases
+        self.rows = rows
+
+    def __getitem__(self, name):
+        return json.loads(self.rows[self.aliases[name]])
+
+    def __iter__(self):
+        return iter(self.aliases)
+
+    def __len__(self):
+        return len(self.aliases)
+
+
 @lru_cache(maxsize=1)
+def _snapshot_at(path, mtime_ns, size):
+    with Path(path).open(encoding="utf-8") as handle:
+        original = json.load(handle)
+    rows = {}
+    aliases = {}
+    for row in original["schools"]:
+        identifier = row["id"]
+        if identifier in rows:
+            raise ValueError("Duplicate TKU census institution ID")
+        rows[identifier] = json.dumps(row, ensure_ascii=False, separators=(",", ":")).encode()
+        names = {row["school_name"], census_school_name(row)}
+        names.update(programme_map()[pid]["fields"]["school_name"]["value"]
+                     for pid in row.get("programme_ids", []))
+        # Preserve the existing ordered alias overwrite semantics exactly.
+        aliases.update({name: identifier for name in names})
+    summary = json.dumps({k:v for k,v in original.items() if k != "schools"},
+                         ensure_ascii=False, separators=(",", ":")).encode()
+    return summary, rows, _SchoolAuditIndex(aliases, rows)
+
+
+def _snapshot():
+    path = BUNDLE / "full_census_audit.json"
+    stat = path.stat()
+    return _snapshot_at(str(path), stat.st_mtime_ns, stat.st_size)
+
+
+def census_summary():
+    return json.loads(_snapshot()[0])
+
+
+def census_rows():
+    for payload in _snapshot()[1].values():
+        yield json.loads(payload)
+
+
 def census_audit():
-    return json.loads((BUNDLE / "full_census_audit.json").read_text(encoding="utf-8"))
+    """Retain the full export interface without caching mutable expanded rows."""
+    return {**census_summary(), "schools": list(census_rows())}
+
+
+census_audit.cache_clear = _snapshot_at.cache_clear
+
+
+def school_audit_by_id(identifier):
+    payload = _snapshot()[1].get(identifier)
+    return json.loads(payload) if payload is not None else None
+
+
+def school_identifier(school_name):
+    return _snapshot()[2].aliases.get(school_name)
 
 
 def census_school_name(row):
@@ -28,20 +94,17 @@ def school_audit(school_name):
     return school_index().get(school_name)
 
 
-@lru_cache(maxsize=1)
 def school_index():
-    result={}
-    for row in census_audit()["schools"]:
-        names={row["school_name"],census_school_name(row)}
-        names.update(programme_map()[pid]["fields"]["school_name"]["value"] for pid in row.get("programme_ids",[]))
-        result.update({name:row for name in names})
-    return result
+    return _snapshot()[2]
+
+
+school_index.cache_clear = _snapshot_at.cache_clear
 
 
 def reference_partners(current_partners):
     current_names = {p.school_name for p in current_partners}
     output=[]
-    for row in census_audit()["schools"]:
+    for row in census_rows():
         programmes=[programme_map()[pid] for pid in row.get("programme_ids", [])]
         if any(p["fields"]["school_name"]["value"] in current_names for p in programmes):
             continue
