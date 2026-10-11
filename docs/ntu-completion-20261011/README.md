@@ -7,3 +7,5 @@
 478個原始本文版本由16份ZIP分件保存，manifest可驗SHA；回填ZIP含22張PDF核對圖但不重複包rawbody分件。當前96項focused通過（1略過）、13項瀏覽器通過、全288校受保護欄位／重建一致；固定PR8組合23項視覺／座標／內容測試通過。第三批2182全套与17項PR8browser是先前source版本證據，並未宣稱第四批重跑全套。未合併／部署，Library先前401且父端停止重試，沒有Library檔案ID。
 
 原優先候選全文抽取另保存在[sources/ntu 的可攜文字ZIP](../../sources/ntu/priority-original-cached-texts-2026-10-11.zip)，932個sourceID、890個本文SHA、937筆校源欄對照；包括未核實候選，掃描仍須原檔核對。回填ZIP也附這個文字包。品質notebook讀取固定stage4快照，避免日後current更新影響本批重現。
+
+第五批完成另外5校的20組原優先全文，新增51則候選，固定閱讀進度120/501、餘381。新增[11表可回填Excel](stage5/288校逐欄查核_可回填.xlsx)、[合併659則候選JSON](stage5/結構化候選資料.json)、[51則增量](stage5/候選增量.json)與[報告/原文核對ZIP](stage5/問題解決報告.md)。第五批僅docs研究候選，runtime仍為第四批608則／96+13測試通過；659則沒有冒稱runtime測試完成。current別名仍固定第四批，前5批快照各自保留。
