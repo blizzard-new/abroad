@@ -64,7 +64,7 @@ def test_tku_sidecar_respects_operator_review_in_dashboard_and_life(tmp_path, st
     partner = next(p for p in fetch_tku_partner_universities() if school_audit(p.school_name)['id'] in campus_locations())
     record = dict(school_name=partner.school_name, country=partner.country, geocode_status=status,
                   latitude=35.1 if status=='verified' else None, longitude=135.1 if status=='verified' else None,
-                  precision='campus', source_url='https://example.edu/review', note='operator review')
+                  precision='campus', source_url='https://example.edu/review', geocoded_at='2026-10-11T00:00:00Z', note='operator review')
     if status=='invalid':record.update(geocode_status='verified',latitude=1234,longitude=135)
     path=tmp_path/'processed/university_locations.jsonl';path.parent.mkdir();path.write_text(json.dumps(record)+'\n')
     with TestClient(create_app(tmp_path)) as client:
