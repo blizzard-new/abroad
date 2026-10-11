@@ -1,5 +1,7 @@
 # 中央逐校補完查核，2026-10-11
 
+**最新第十八批：諾曼第課單51頁＋指南17頁完成全文與圖像核讀，更新6欄。** 467項回歸、72項最終聚焦測試及手機／桌面實測通過，8圖全實看；214生活API待翻譯0。有限多頁待完成340筆，其中78已引用、74不同SHA、2476頁／部件。名額與嚴格當期缺格未提升。詳見[第十八批原件紀錄](resume/eighteenth/README.md)、[未完成清單](resume/eighteenth/unfinished-source-list.csv)、[驗證證據](resume/eighteenth/validation.json)。以下保留歷史批次紀錄。
+
 **最新第十七批：六份原件12頁完成全文與圖像核讀，更新五校9欄（含2項原缺參考）。** 465項回歸、69項中文與來源測試、10手機／桌面情境通過；214校生活API待翻譯0，1399歷史PNG不變。有限多頁待完成342筆，其中80已引用、76不同SHA、2544頁／部件。116名額仍未知。詳見[第十七批範圍](resume/seventeenth/README.md)、[未完成清單](resume/seventeenth/unfinished-source-list.csv)、[驗證紀錄](resume/seventeenth/validation.json)。後續批次段落為歷史紀錄。
 
 **最新第十六批：517段中文對照涵蓋539筆原待翻譯證據，214校生活API待翻譯數歸零。** 66項聚焦測試、460項中央／位置回歸、24手機／桌面情境通過；123筆已核專有名稱顯示對照不改共用偵測器。1399歷史PNG不變。精確盤點348多頁來源仍待完整核讀／適用性判定，其中86已引用、82不同SHA、2556頁／部件；待讀不算外部阻礙。詳見[第十六批範圍](resume/sixteenth/README.md)、[文件清單](resume/sixteenth/unfinished-source-list.csv)、[驗證紀錄](resume/sixteenth/validation.json)。後續第十五批等數字保留為歷史紀錄。
