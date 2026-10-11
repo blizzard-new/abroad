@@ -103,3 +103,70 @@ def test_ncu_new_rules_photos_and_source_limits_reach_visible_ui(page, live_serv
         page.locator(".student-guide-photo-grid figure").first.screenshot(path=str(out / "ncu-alicante-campus-photo-credits.png"))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
+
+
+@pytest.mark.parametrize("query,width,initial_count,overview,life", [
+    ("馬賽中央", 390, 5, "良好", "CampusFrance"),
+    ("諾曼第高等", 1280, 4, "母校B2certificate", "1200€"),
+    ("傳播與跨文化", 390, 5, "C1", "required"),
+    ("魯昂", 1280, 0, "stronglyrecommended", "CROUS"),
+    ("霍恩海姆", 390, 6, "不要求提交語言證明", "79€"),
+    ("列日", 1280, 6, "HEC與Law至少B2", "2026/9/9"),
+    ("威尼斯卡福", 390, 4, "English", "170€"),
+    ("諾德", 1280, 5, "recommendedC1", "91014"),
+])
+def test_ncu_second_public_pass_documents_years_and_life_are_visible(page, live_server, query, width, initial_count, overview, life):
+    page.set_viewport_size({"width": width, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    expect(page.locator("#boot-splash")).to_be_hidden(timeout=60_000)
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill(query)
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    summary = page.locator("#partner-table .partner-card > summary").first
+    if summary.is_visible():
+        summary.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    expect(page.locator("#detail-overview .partner-student-summary")).to_be_visible()
+    expect(page.locator("#detail-overview")).to_contain_text(overview)
+    page.locator("#ncu-source-audit > summary").click()
+    expect(page.locator("#ncu-source-audit-body")).to_contain_text("116", timeout=60_000)
+    if query == "諾曼第高等":
+        expect(page.locator("#ncu-source-audit-body")).to_contain_text("4/30–5/15")
+        expect(page.locator("#ncu-source-audit-body")).to_contain_text("4/15–4/30")
+    if query == "列日":
+        expect(page.locator("#ncu-source-audit-body")).to_contain_text("冬考2026錯年")
+        expect(page.locator("#ncu-source-audit-body")).to_contain_text("非正式成績也接受")
+    if query == "諾德":
+        expect(page.locator("#ncu-source-audit-body")).to_contain_text("HTTP403")
+        expect(page.locator("#ncu-source-audit-body")).to_contain_text("JS渲染")
+    page.locator("#detail-tab-application").click()
+    initial = page.locator("#detail-application .workflow-step").filter(has_text="核對外校當期文件並依通知申請").first
+    initial.locator(":scope > summary").click()
+    expect(initial.locator(".workflow-documents > li")).to_have_count(initial_count)
+    if query == "魯昂":
+        expect(page.locator("#detail-application")).to_contain_text(re.compile(r"Rouen初次審查後(?:Learning Agreement|修課協議)"))
+    if query == "諾曼第高等":
+        expect(page.locator("#detail-application")).to_contain_text("錄取後HUB行政註冊")
+    if query == "諾德":
+        expect(page.locator("#detail-application")).to_contain_text("特定placement犯罪紀錄")
+    if query == "威尼斯卡福":
+        expect(page.locator("#detail-application")).to_contain_text("抵達後居留文件")
+    page.locator("#detail-tab-life").click()
+    page.locator("#detail-life .life-official-guide > summary").click()
+    expect(page.locator("#destination-official-content")).to_contain_text(life)
+    out = Path("/workspace/ncu-completion-20261011/browser-pass2")
+    out.mkdir(parents=True, exist_ok=True)
+    page.locator("#detail-life").scroll_into_view_if_needed()
+    page.screenshot(path=str(out / f"ncu-pass2-{query}-{width}.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors

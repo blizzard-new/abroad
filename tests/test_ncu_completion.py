@@ -248,3 +248,159 @@ def test_government_visa_documents_are_post_offer_and_do_not_enter_host_initial_
     assert all(d["stage"] == "post_offer" and d["conditional"] for d in visa["document_requirements"])
     initial = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-048-host-apply")
     assert not any("入學許可" in d["name"] or "992" in d["name"] for d in initial["document_requirements"])
+
+
+def test_em_normandie_new_incoming_pack_conflicts_and_hub_documents_keep_stages(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    partner = school("Normandie")
+    params = {"school": partner.school_name, "home_school": "NCU"}
+    audit = client.get("/partner-source-audit", params=params).json()
+    assert "4/30–5/15" in audit["fields"]["host_deadline"]["unresolved"]
+    assert "4/15–4/30" in audit["fields"]["host_deadline"]["unresolved"]
+    assert "3／4" in audit["fields"]["host_documents"]["unresolved"]
+    assert "6000／4500AED" in audit["fields"]["visa"]["unresolved"]
+    assert "語言課不計" in audit["fields"]["courses"]["note"]
+    rejected = next(s for s in audit["collection_attempts"] if s["id"] == "ncu-009-site-20261011")
+    assert rejected["authority_kind"] == "discovery_rejected"
+    workflow = client.get("/application-workflow", params=params).json()
+    initial = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-009-host-apply")
+    assert len(initial["document_requirements"]) == 4
+    assert any("Learning Agreement" in d["name"] and d["conditional"] for d in initial["document_requirements"])
+    hub = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-009-host-post-offer-hub-enrolment")
+    assert len(hub["document_requirements"]) == 3
+    assert all(d["stage"] == "post_offer" for d in hub["document_requirements"])
+    assert "不用CVEC" in audit["fields"]["tuition"]["note"]
+    assert all(not s["deadline_reminder_eligible"] for s in workflow["steps"])
+
+
+def test_isit_degree_c1_does_not_become_exchange_and_insurance_conflict_is_preserved(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    partner = school("ISIT,")
+    params = {"school": partner.school_name, "home_school": "NCU"}
+    audit = client.get("/partner-source-audit", params=params).json()
+    assert "MasterdegreeC1不可套exchange" in audit["fields"]["language"]["unresolved"]
+    assert "recommended／required" in audit["fields"]["insurance"]["unresolved"]
+    assert "2025/26" in audit["fields"]["host_deadline"]["note"]
+    assert "2026/9/11" in audit["fields"]["study_period"]["note"]
+    workflow = client.get("/application-workflow", params=params).json()
+    initial = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-019-host-apply")
+    assert len(initial["document_requirements"]) == 5
+    assert any("保險" in d["name"] for d in initial["document_requirements"])
+    govt = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-019-host-government-france-taiwan-preparation")
+    assert all(d["stage"] == "post_offer" and d["conditional"] for d in govt["document_requirements"])
+    assert "電子列印" in govt["document_requirements"][1]["name"]
+    assert not any("具名法國學校LOA" in d["name"] for d in initial["document_requirements"])
+
+
+def test_rouen_portal_checklist_and_fee_remain_missing_with_a_later_pre_acceptance_la(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    partner = school("Rouen")
+    params = {"school": partner.school_name, "home_school": "NCU"}
+    audit = client.get("/partner-source-audit", params=params).json()
+    assert audit["fields"]["host_documents"]["status"] == "missing"
+    assert audit["fields"]["tuition"]["status"] == "missing"
+    assert "stronglyrecommended" in audit["fields"]["language"]["note"]
+    assert "RENTREE2024" in audit["fields"]["arrival"]["note"]
+    workflow = client.get("/application-workflow", params=params).json()
+    initial = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-037-host-apply")
+    later = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-037-host-post-initial-learning-agreement")
+    assert not initial["document_requirements"]
+    assert later["document_requirements"][0]["stage"] == "after_application"
+    assert "外校LOA前" in later["timing"]
+
+
+def test_hohenheim_exchange_fee_and_housing_deadline_are_not_general_degree_fees(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    partner = school("Hohenheim")
+    params = {"school": partner.school_name, "home_school": "NCU"}
+    audit = client.get("/partner-source-audit", params=params).json()
+    assert "只StudentServicesfee" in audit["fields"]["tuition"]["note"]
+    assert "174.50" in audit["fields"]["tuition"]["note"]
+    assert "7/15–12/15 vs6/30–1/15" in audit["fields"]["housing"]["unresolved"]
+    assert "不要求提交語言證明" in audit["fields"]["language"]["note"]
+    assert "October2022" in audit["fields"]["cost"]["note"]
+    workflow = client.get("/application-workflow", params=params).json()
+    initial = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-049-host-apply")
+    assert len(initial["document_requirements"]) == 6
+    assert any("高中" in d["name"] for d in initial["document_requirements"])
+    assert sum(d["conditional"] for d in initial["document_requirements"]) == 3
+    assert not any("語言" in d["name"] for d in initial["document_requirements"])
+
+
+def test_liege_unofficial_transcript_language_faculty_scope_and_calendar_wrong_year(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    partner = school("Liège")
+    params = {"school": partner.school_name, "home_school": "NCU"}
+    audit = client.get("/partner-source-audit", params=params).json()
+    assert "非正式成績也接受" in audit["fields"]["host_documents"]["note"]
+    assert "HEC與Law至少B2" in audit["fields"]["language"]["note"]
+    assert "推薦" not in audit["fields"]["language"]["note"]
+    assert "冬考2026錯年" in audit["fields"]["study_period"]["unresolved"]
+    assert "recommendation" in audit["fields"]["host_deadline"]["note"]
+    workflow = client.get("/application-workflow", params=params).json()
+    initial = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-051-host-apply")
+    assert len(initial["document_requirements"]) == 6
+    assert any("非正式版" in d["name"] for d in initial["document_requirements"])
+    original = next(s for s in audit["source_evidence"] if s["id"] == "ncu-051-pass2-9682b3e8cd")
+    assert "2026" in original["pages"][0]["text"]
+
+
+def test_cafoscari_overseas_relative_deadline_forms_year_and_course_restrictions(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    partner = school("Foscari")
+    params = {"school": partner.school_name, "home_school": "NCU"}
+    audit = client.get("/partner-source-audit", params=params).json()
+    assert "一個月" in audit["fields"]["host_deadline"]["note"]
+    assert "12ECTS" in audit["fields"]["courses"]["note"]
+    assert "Erasmus70%範圍套Overseas" in audit["fields"]["courses"]["note"]
+    assert "不能只取一個" in audit["fields"]["courses"]["note"]
+    guide = next(s for s in audit["source_evidence"] if s["id"] == "ncu-077-p2x-7a067016e3")
+    assert "2025.pdf" in guide["url"] and "2026/2027" in guide["pages"][0]["text"]
+    assert guide["content_status"]["all_pages_read"]
+    workflow = client.get("/application-workflow", params=params).json()
+    initial = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-077-host-apply")
+    assert len(initial["document_requirements"]) == 4
+    later = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-077-host-arrival-permit-documents")
+    assert len(later["document_requirements"]) == 7
+    assert all(d["conditional"] and d["stage"] == "post_offer" for d in later["document_requirements"])
+    catalog = client.get("/application-center/catalog", params={"school": "NCU", "target_school": partner.school_name, "academic_year": "116"}).json()
+    forms = [d for d in catalog["items"] if "一頁空白表" in d["name"]]
+    assert len(forms) == 1 and forms[0]["official_form_verified"]
+    assert not forms[0]["download_available"] and forms[0]["needs_confirmation"]
+
+
+def test_nord_b2_minimum_c1_recommendation_funding_year_and_placement_condition(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    partner = school("Nord University")
+    params = {"school": partner.school_name, "home_school": "NCU"}
+    audit = client.get("/partner-source-audit", params=params).json()
+    assert "minimumB2" in audit["fields"]["language"]["note"]
+    assert "recommendedC1" in audit["fields"]["language"]["note"]
+    assert "提名視作B2confirmation" in audit["fields"]["language"]["note"]
+    assert "Spring2026 NOK91014" in audit["fields"]["host_documents"]["note"]
+    assert "HTTP403" in audit["fields"]["visa"]["unresolved"]
+    assert "JS渲染" in audit["fields"]["housing"]["unresolved"]
+    workflow = client.get("/application-workflow", params=params).json()
+    initial = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-082-host-apply")
+    assert len(initial["document_requirements"]) == 5
+    assert not any("犯罪" in d["name"] for d in initial["document_requirements"])
+    later = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-082-host-placement-criminal-record")
+    assert later["document_requirements"][0]["conditional"]
+    assert not any(s["deadline_reminder_eligible"] for s in workflow["steps"])
+
+
+def test_centrale_current_identity_and_five_documents_do_not_invent_language_score(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    partner = school("Centrale Marseile")
+    assert partner.website == "https://www.centrale-mediterranee.fr/"
+    params = {"school": partner.school_name, "home_school": "NCU"}
+    audit = client.get("/partner-source-audit", params=params).json()
+    assert "沒有公開統一CEFR" in audit["fields"]["language"]["note"]
+    assert "S8" in audit["fields"]["eligibility"]["note"]
+    assert "Marseille／Nice" in audit["fields"]["city"]["unresolved"]
+    workflow = client.get("/application-workflow", params=params).json()
+    initial = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-006-host-apply")
+    assert len(initial["document_requirements"]) == 5
+    assert all(d["stage"] == "student_application" for d in initial["document_requirements"])
+    assert not any("語言" in d["name"] or "LOA" in d["name"] for d in initial["document_requirements"])
+    assert all(not s["deadline_reminder_eligible"] for s in workflow["steps"])

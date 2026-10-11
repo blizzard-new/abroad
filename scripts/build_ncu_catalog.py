@@ -35,7 +35,7 @@ from exchange_info.ncu_student_view import (
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = ROOT / "sources/ncu/2026-10-08"
 COMPLETION_SOURCES = ROOT / "sources/ncu/2026-10-11"
-CHECKED = "2026-10-11T10:13:35+00:00"
+CHECKED = "2026-10-11T10:48:35+00:00"
 ORIGINAL_CHECKED = "2026-10-08T00:00:00+00:00"
 HOME = "國立中央大學"
 ROUND = "第一梯次"

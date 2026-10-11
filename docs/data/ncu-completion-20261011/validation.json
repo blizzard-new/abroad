@@ -49,12 +49,45 @@
       "local_log": "/workspace/ncu-completion-20261011/browser-new-r3.log",
       "log_sha256": "f65ca06944345778768093e03549fa39d0faa21afb8b2f9dca8982710e4eb6cb",
       "note": "本機隔離runtime，unset Supabase；未執行CI。"
+    },
+    {
+      "suite": "second_pass_ncu_and_shared",
+      "passed": 412,
+      "skipped": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-pass2-final.log",
+      "log_sha256": "d531e51d24abf2d69df0ac5b0525711c42bd002e8cb0d8a02aea621dc1a09ab7",
+      "note": "新八校21項completion資料/API測試包含於套件，含確定重建／來源／year／條件／舊校回歸；本機隔離runtime無CI。"
+    },
+    {
+      "suite": "second_pass_six_school_memory",
+      "passed": 4,
+      "skipped": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-pass2-memory.log",
+      "log_sha256": "e069fbaff4f996c8d8ada96295788feec3d6d9dcc1973e388c45159608763c6a",
+      "note": "六校共享catalogue記憶體回歸；無CI。"
+    },
+    {
+      "suite": "second_pass_browser_eight_new_schools",
+      "passed": 8,
+      "skipped": 0,
+      "deselected": 6,
+      "local_log": "/workspace/ncu-completion-20261011/browser-pass2.log",
+      "log_sha256": "3432f39bb51b5e7c1074a097132aaf6911912739b13da5c5f1c4265c3e22a009",
+      "note": "八校新內容390／1280實測；第一輪六案例未在此command重跑，首輪紀錄分開，screenshots人工查看。"
+    },
+    {
+      "suite": "second_pass_cgu_ntpu_ntu_data_api_regression",
+      "passed": 103,
+      "skipped": 4,
+      "local_log": "/workspace/ncu-completion-20261011/tests-pass2-regression.log",
+      "log_sha256": "bde72e71b2c31a742863e801482c0b78ef523670be43561f3d4818757a501d9c",
+      "note": "CGU/NTPU/NTU同分支資料/API回歸；4項原有Phase C data reviewed跳過，未新增skip；首輪另更廣248通過/4skip，不相加當唯一測試数。"
     }
   ],
   "openapi_snapshot": "scripts/export_openapi.py --check: current",
   "javascript": "node --check: passed",
   "diff_whitespace": "git diff --check: passed",
-  "browser_unique_case_count": 6,
+  "browser_unique_case_count": 14,
   "browser_viewport_widths": [
     390,
     1280
@@ -68,5 +101,24 @@
   ],
   "ci_run": false,
   "production_database_changed": false,
-  "deployed": false
+  "deployed": false,
+  "second_pass_browser_unique_case_count": 8,
+  "source_coverage": {
+    "original_drive_attempts": 459,
+    "original_drive_full_read": 29,
+    "new_attempts": 491,
+    "distinct_urls": 473,
+    "successful_attempts": 427,
+    "failed_attempts": 64,
+    "manual_passage_records": 137,
+    "full_native_pdf_records": 26,
+    "successful_unread_candidates": 274,
+    "manually_reviewed_school_references": 106,
+    "exchange_item_denominator": 214,
+    "licensed_campus_photos": 125,
+    "base_visible_verified_coordinates": 10,
+    "current_host_full_116_approval": 0
+  },
+  "last_main_recheck_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "note": "首輪與第二輪驗證分列，不把首輪log偽裝當第二輪重跑。"
 }
