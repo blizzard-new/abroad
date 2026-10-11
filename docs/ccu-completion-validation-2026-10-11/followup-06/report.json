@@ -1,0 +1,496 @@
+{
+  "production_frozen_commit": "e3b2df94e37cea03b8f9402e55622326a08700db",
+  "unit_test_candidate_commit": "fe827b4b7d45b11d7fdacfd2be0ff2a1c72e00c3",
+  "prior_handoff_commit": "ebe059fc317bf1cb55a0604b3ce354fe6fa12939",
+  "latest_origin_main_rechecked": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "production_git_objects": {
+    "src": "cb3e99b8c50eb16efaebc019bb77730e975f1f6d",
+    "scripts": "faca58f804134b492cc35eaf28bf9ad07a01fdb0",
+    "data": "d96a635c71b07e955d323dedd566462fba412b49",
+    "pyproject.toml": "9fc12547a48486285c6f000421a4b5cdee3c3869",
+    "uv.lock": "72a4b1691f8718ea632cd95d68c1a251a4b53496",
+    "supabase": "c23e95f1f3bbce8cfd696566e1ad2db6ebf101d6"
+  },
+  "six_production_trees_identical_after_test_changes": true,
+  "all_ccu_unit_cgu_ntpu_shared_regressions": {
+    "tests": 389,
+    "passed": 385,
+    "failed_or_errors": 0,
+    "skipped": 4,
+    "elapsed_seconds": 311.922,
+    "failures": [],
+    "skip_reasons": [
+      {
+        "test": {
+          "classname": "tests.test_cgu_bundled_data",
+          "name": "test_bundled_cgu_workflows_are_available_without_local_cache",
+          "time": "0.000"
+        },
+        "reason": {
+          "type": "pytest.skip",
+          "message": "Phase C data reviewed"
+        }
+      },
+      {
+        "test": {
+          "classname": "tests.test_cgu_bundled_data",
+          "name": "test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+          "time": "0.000"
+        },
+        "reason": {
+          "type": "pytest.skip",
+          "message": "Phase C data reviewed"
+        }
+      },
+      {
+        "test": {
+          "classname": "tests.test_cgu_bundled_data",
+          "name": "test_bundled_cgu_completeness_report_matches_export",
+          "time": "0.000"
+        },
+        "reason": {
+          "type": "pytest.skip",
+          "message": "Phase C data reviewed"
+        }
+      },
+      {
+        "test": {
+          "classname": "tests.test_cgu_bundled_data",
+          "name": "test_backfilled_cgu_workflows_keep_current_details_reference_only",
+          "time": "0.000"
+        },
+        "reason": {
+          "type": "pytest.skip",
+          "message": "Phase C data reviewed"
+        }
+      }
+    ]
+  },
+  "completion_mobile_desktop": {
+    "tests": 18,
+    "passed": 18,
+    "failed_or_errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 54.507,
+    "failures": [],
+    "skip_reasons": []
+  },
+  "initial_full_batch_unit": {
+    "tests": 389,
+    "passed": 382,
+    "failed_or_errors": 3,
+    "skipped": 4,
+    "elapsed_seconds": 311.469,
+    "failures": [
+      {
+        "classname": "tests.test_ccu_overseas",
+        "name": "test_source_contradictions_are_visible_and_do_not_make_reminders[49-academic_calendar]",
+        "time": "0.143"
+      },
+      {
+        "classname": "tests.test_ccu_public_followup",
+        "name": "test_personal_form_access_has_an_explicit_official_instruction",
+        "time": "0.046"
+      },
+      {
+        "classname": "tests.test_ccu_support",
+        "name": "test_ccu_provenance_and_explicit_old_attachments",
+        "time": "1.838"
+      }
+    ],
+    "skip_reasons": [
+      {
+        "test": {
+          "classname": "tests.test_cgu_bundled_data",
+          "name": "test_bundled_cgu_workflows_are_available_without_local_cache",
+          "time": "0.000"
+        },
+        "reason": {
+          "type": "pytest.skip",
+          "message": "Phase C data reviewed"
+        }
+      },
+      {
+        "test": {
+          "classname": "tests.test_cgu_bundled_data",
+          "name": "test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+          "time": "0.000"
+        },
+        "reason": {
+          "type": "pytest.skip",
+          "message": "Phase C data reviewed"
+        }
+      },
+      {
+        "test": {
+          "classname": "tests.test_cgu_bundled_data",
+          "name": "test_bundled_cgu_completeness_report_matches_export",
+          "time": "0.000"
+        },
+        "reason": {
+          "type": "pytest.skip",
+          "message": "Phase C data reviewed"
+        }
+      },
+      {
+        "test": {
+          "classname": "tests.test_cgu_bundled_data",
+          "name": "test_backfilled_cgu_workflows_keep_current_details_reference_only",
+          "time": "0.000"
+        },
+        "reason": {
+          "type": "pytest.skip",
+          "message": "Phase C data reviewed"
+        }
+      }
+    ]
+  },
+  "root_assertion_repair": {
+    "tests": 13,
+    "passed": 13,
+    "failed_or_errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 6.488,
+    "failures": [],
+    "skip_reasons": []
+  },
+  "initial_focused": {
+    "tests": 6,
+    "passed": 4,
+    "failed_or_errors": 2,
+    "skipped": 0,
+    "elapsed_seconds": 17.995,
+    "failures": [
+      {
+        "classname": "tests.test_ccu_current_sungshin_and_worklist",
+        "name": "test_sungshin_2027_nomination_cell_and_doctoral_limit_stay_conflicting",
+        "time": "0.110"
+      },
+      {
+        "classname": "tests.test_ccu_current_sungshin_and_worklist",
+        "name": "test_current_medical_template_is_downloadable_and_old_xray_is_not_universal",
+        "time": "3.307"
+      }
+    ],
+    "skip_reasons": []
+  },
+  "focused_repaired_before_freeze": {
+    "tests": 6,
+    "passed": 6,
+    "failed_or_errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 17.591,
+    "failures": [],
+    "skip_reasons": []
+  },
+  "initial_browser_focus": {
+    "tests": 2,
+    "passed": 0,
+    "failed_or_errors": 2,
+    "skipped": 0,
+    "elapsed_seconds": 70.902,
+    "failures": [
+      {
+        "classname": "tests.e2e.test_ccu_completion",
+        "name": "test_sungshin_current_medical_template_and_stale_nomination_year_are_visible[390]",
+        "time": "37.897"
+      },
+      {
+        "classname": "tests.e2e.test_ccu_completion",
+        "name": "test_sungshin_current_medical_template_and_stale_nomination_year_are_visible[1440]",
+        "time": "32.630"
+      }
+    ],
+    "skip_reasons": []
+  },
+  "browser_focus_repaired": {
+    "tests": 2,
+    "passed": 2,
+    "failed_or_errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 11.605,
+    "failures": [],
+    "skip_reasons": []
+  },
+  "resolutions": {
+    "initial_focused": "Test read source_id from a model exposing source_url; corrected assertion. API document catalogue loaded the bundled old workflow; refreshed only Sungshin published row via CCU-specific script.",
+    "initial_browser_focus": "Incorrect test-only data-detail-tab selector; used existing #detail-tab-application.",
+    "full_unit": "Three old assertions updated narrowly: Sungshin current calendar while retaining old mirror conflict; host missing 643 to 638; exactly two Sungshin summary fields now cite current partner sources. No case removed or waived.",
+    "baseline_ccu_test_style": "Existing test_support import order, dict literals and subprocess check=False corrected; test behavior retained."
+  },
+  "new_exclusions": 0,
+  "strict_source_validator_blob_unchanged": "28daf5e1f982a19a1056cb884d1f838e70f49867",
+  "acceptance_gate": {
+    "baseline_commit": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "candidate_head": "fe827b4b7d45b11d7fdacfd2be0ff2a1c72e00c3",
+    "exchange_list": 104,
+    "global_agreements": null,
+    "quotas": {
+      "available": 52,
+      "numeric_positive": 49,
+      "unlimited": 3,
+      "blank": 3,
+      "not_open": 49,
+      "explicit_zero": 0
+    },
+    "all_home_windows_closed": true,
+    "profile_counts_all_six_schools": {
+      "國立臺北大學": 206,
+      "淡江大學": 4,
+      "長庚大學": 77,
+      "國立臺灣大學": 288,
+      "國立中正大學": 104,
+      "國立中央大學": 214
+    },
+    "official_website_identity_count": 102,
+    "coordinates": 101,
+    "licensed_photos": 100,
+    "matrix_counts": {
+      "host_fields": {
+        "reference_only": 313,
+        "missing": 638,
+        "verified_current": 350,
+        "needs_confirmation": 382,
+        "conflict": 84,
+        "explicit_not_announced": 1
+      },
+      "profile_fields": {
+        "verified_current": 368,
+        "missing": 176,
+        "reference_only": 95,
+        "needs_confirmation": 89
+      },
+      "general_campus_fields": {
+        "verified_current": 290,
+        "missing": 438
+      }
+    },
+    "old_official_data_preserved_except_reviewed_workflow_row": true,
+    "published_workflow_refresh": {
+      "changed_rows": 1,
+      "school_name": "Sungshin Women's University 誠信女子大學",
+      "other_rows_preserved_byte_for_byte": 54
+    },
+    "original_ccu_profiles_sha256": "1375f32052bcdeaedfe696073e7ada6d40f40bdebeba0dc1e7f82353e38b78e6",
+    "package": {
+      "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+      "sha256": "61e5fda2da30363cae0b727179a04d550e4638075ecb8c61dc2e56339f9356fe",
+      "ccu_files_verified": 3556
+    }
+  },
+  "reproduction": {
+    "byte_identical": true,
+    "sha256": {
+      "campus-coordinate-review.json": "7bc1413c8f92205990aea421e9a856d2213d84b3f50dfed371d7540b37039f25",
+      "campus-assets.json": "24bf23a9eca5c593993ce623b15f24a34afdab90c09e9ff55ef7c1a4b499311c",
+      "completion-manual-fields.json": "9a01c041c29cdb4b67bfd6cdb396890ac43edd8d66b990a6dd2aa9c4a4eb491b",
+      "completion-sungshin-documents.json": "4ccdb9df91be7e4c23c932a273e9402a7c6bfcd7c09617fea7d0ef7dabf6a160",
+      "completion-reviewed-fields.json": "e39cc70b15abc0d6c6c9e532a38d81d70222f29252ed0a054de3a13057efb800",
+      "destination_profiles.jsonl": "44a05e8e72c74b51ff79269572865ea84ae4aeb29f944e1391bb7332c35ac278",
+      "completion-inventory.json": "9a514557c783e299858b2aaaf7994cc201df637a4304d3c941d0342da4feb194",
+      "completion-inventory.csv": "5a03673704bbfae190dff04b99871148f57b4b68220f94c99445defdcccad214",
+      "completion-followup-gap-research.json": "ee5e0e87d2346019babc42f56834b10460feef2984e47d319c3071df1b0bb454",
+      "completion-followup-gap-research.csv": "a30d36a6dfb08b3a3b11b5748d1dd92a6ceed7a58dc7796165926c9ad9ca8502",
+      "completion-public-source-screening.json": "4a0147b8bff91371235072a299bc02c476701b15ecec51e76766208df1d8d706",
+      "completion-remaining-public-worklist.json": "e5552e7549a1fcb71d073a2194a54538f6b8619ecc830b85b39483e89d625b53",
+      "completion-remaining-public-worklist.csv": "283c717fcc559fc98e0fcd50dee9b7671bd5eef10044e194aab79babd0185d3b",
+      "application_workflows.jsonl": "b51421bd0c61fa487e532c322d243d8f8d72083172096326f0fe00e8ebef1380"
+    },
+    "outputs": 14
+  },
+  "completion_source_receipts": {
+    "count": 1240,
+    "decisions": {
+      "acquired_not_policy_verified": 710,
+      "excluded_specific_review": 7,
+      "used_with_explicit_field_status": 463,
+      "technical_failure": 52,
+      "challenge_or_error_page": 7,
+      "used_access_requirement_evidence": 1
+    },
+    "new_receipts_since_prior_handoff": 23
+  },
+  "remaining_reading_counts": {
+    "schools": 104,
+    "sources": 2220,
+    "source_review_states": {
+      "mapped_passages_read_remaining_body_unclaimed": 757,
+      "reviewed_scoped_exclusion": 124,
+      "source_failure_or_body_not_obtained": 198,
+      "scoped_body_read_recorded": 176,
+      "readable_body_without_recorded_review": 420,
+      "metadata_or_asset_candidate_not_policy_body": 517,
+      "same_bytes_as_recorded_read_source": 28
+    },
+    "coordinate_gaps": 3,
+    "photo_gaps": 4,
+    "website_gaps": 2,
+    "host_missing_fields": 638,
+    "public_reading_record_missing_sources": 410,
+    "priority_policy_candidates": 37
+  },
+  "public_body_reading_records": 32,
+  "additional_discovered_targets_not_yet_fetched_or_read": 8,
+  "external_access_limited_steps": [
+    {
+      "ccu_page": 49,
+      "school_name": "Sungshin Women's University 誠信女子大學",
+      "fields": [
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 66,
+      "school_name": "University of Economics and Law (UEL), Vietnam National University Ho Chi Minh City 越南胡志明市 經濟法律大學",
+      "fields": [
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 88,
+      "school_name": "Faculty of Management, Economics & Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)",
+      "fields": [
+        "documents",
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 89,
+      "school_name": "University of Southern Denmark 南丹麥大學",
+      "fields": [
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 112,
+      "school_name": "Czech University of Life Sciences Prague 捷克布拉格生科大學",
+      "fields": [
+        "application_forms"
+      ]
+    },
+    {
+      "ccu_page": 120,
+      "school_name": "Queensland University of Technology 昆士蘭科技大學",
+      "fields": [
+        "application_forms"
+      ]
+    }
+  ],
+  "remaining_assets": [
+    {
+      "ccu_page": 44,
+      "school_name": "Keimyung University 啟明大學",
+      "gaps": [
+        "website"
+      ],
+      "limitation_type": "source_failure",
+      "exclusive_access_proven": false
+    },
+    {
+      "ccu_page": 66,
+      "school_name": "University of Economics and Law (UEL), Vietnam National University Ho Chi Minh City 越南胡志明市 經濟法律大學",
+      "gaps": [
+        "photo"
+      ],
+      "limitation_type": "reuse_permission_not_verified",
+      "exclusive_access_proven": false
+    },
+    {
+      "ccu_page": 71,
+      "school_name": "Dong Nai Technology University (DNTU) 同奈科技大學",
+      "gaps": [
+        "coordinates",
+        "photo"
+      ],
+      "limitation_type": "read_insufficient",
+      "exclusive_access_proven": false
+    },
+    {
+      "ccu_page": 80,
+      "school_name": "Presidency University 總統大學",
+      "gaps": [
+        "photo"
+      ],
+      "limitation_type": "reuse_permission_not_verified",
+      "exclusive_access_proven": false
+    },
+    {
+      "ccu_page": 96,
+      "school_name": "Saint Petersburg Electrotechnical University 聖彼得堡國立電子科技大學",
+      "gaps": [
+        "website"
+      ],
+      "limitation_type": "source_failure",
+      "exclusive_access_proven": false
+    },
+    {
+      "ccu_page": 111,
+      "school_name": "SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)",
+      "gaps": [
+        "coordinates"
+      ],
+      "limitation_type": "read_insufficient",
+      "exclusive_access_proven": false
+    },
+    {
+      "ccu_page": 119,
+      "school_name": "Universidad Internacional 墨西哥國際大學",
+      "gaps": [
+        "coordinates",
+        "photo"
+      ],
+      "limitation_type": "source_failure",
+      "exclusive_access_proven": false
+    }
+  ],
+  "gamma": {
+    "official_source_id": "p0-followup-global-page",
+    "official_source_url": "https://oia.ccu.edu.tw/p/412-1008-1509.php?Lang=zh-tw",
+    "official_title": "全球姊妹校",
+    "iframe_url": "https://gamma.app/embed/hdozbiaaek5nkn0",
+    "classification": "source_failure",
+    "official_exclusive_access_proven": false,
+    "evidence": "官方頁正文與iframe已讀；公开HTML應用殼、匿名snapshot FORBIDDEN以及正常TLS Chromium ERR_CERT_AUTHORITY_INVALID沒有證明文件僅校方可取得。",
+    "minimal_fallback_document": "國際處〈全球姊妹校〉內嵌Gamma的現行完整全卡片PDF匯出，附更新日期（這是需求描述，不是猜測官方檔名）；若國際處已有同內容CSV/XLSX可替代。",
+    "minimum_fields": [
+      "國家",
+      "官方合作校名稱／校區／院系",
+      "協議或合作類型",
+      "來源更新／生效日期（有載才填）"
+    ],
+    "denominator": null
+  },
+  "integration_points_this_batch": {
+    "existing_ccu_adapters": [
+      "src/exchange_info/ccu_completion.py",
+      "src/exchange_info/ccu_overseas.py"
+    ],
+    "new_ccu_module": "src/exchange_info/ccu_sungshin_current.py",
+    "published_ccu_workflow_rows_changed": 1,
+    "other_workflow_rows_byte_preserved": 54,
+    "shared_registry_api_ui_qualification_changes": []
+  },
+  "previous_pr8_comparison_file_is_fifth_batch_snapshot": true,
+  "current_comparison_to_fixed_pr8_9927ec1d": {
+    "coordinates": {
+      "prior_pr8": 30,
+      "ccu_current": 101,
+      "overlap": 30,
+      "additional": 71
+    },
+    "photos": {
+      "prior_pr8": 31,
+      "ccu_current": 100,
+      "overlap": 31,
+      "additional": 69
+    }
+  },
+  "evidence_files": 41,
+  "full_2668_suite_rerun": false,
+  "prior_platform_blockers": {
+    "unchanged_ntu_screenshot_path_failures": "Prior full2668 run; immutable main reproduction preserved in earlier report. No NTU directory change or waiver.",
+    "jena390_prior_flake": "Prior second batch failure later passed isolated unmodified; root cause unproven.",
+    "supabase_runtime": "Pinned Postgres image Docker vfs layer no-space failure already handed integrator. Not retried this batch, no database/runtime validation claimed."
+  },
+  "quality_workflow": "disabled_manually retained; no enable, merge or deploy action"
+}
