@@ -1,0 +1,53 @@
+CONFTEST LOADED!
+..............F
+=================================== FAILURES ===================================
+_ test_complete_legacy_chinese_cards[kansai-\u95dc\u897f\u5927\u5b78-Kansai University-\u4f4f\u5bbf\u8207\u5bbf\u820d-terms7-390] _
+
+page = <Page url='http://127.0.0.1:39395/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E9%97%9C%E...B8#school=%E9%97%9C%E8%A5%BF%E5%9C%8B%E9%9A%9B%E5%A4%A7%E5%AD%B8%20Kansai%20University%20of%20International%20Studies'>
+live_server = LiveServer(base_url='http://127.0.0.1:39395', data_dir=PosixPath('/tmp/ncu16-browser-verified/web-e2e-data0'))
+tmp_path = PosixPath('/tmp/ncu16-browser-verified/test_complete_legacy_chinese_c14')
+width = 390, slug = 'kansai', query = '關西大學', name = 'Kansai University'
+title = '住宿與宿舍', terms = ['債務保證上限', '不是須先存入']
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    @pytest.mark.parametrize('slug,query,name,title,terms', CASES)
+    def test_complete_legacy_chinese_cards(page, live_server, tmp_path, width, slug, query, name, title, terms):
+        page.set_viewport_size({'width': width, 'height': 956})
+        page.emulate_media(reduced_motion='reduce')
+        errors = []
+        page.on('pageerror', lambda error: errors.append(str(error)))
+        select_ncu(page, live_server)
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(query)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        trigger = f'.school-detail-trigger[data-school-name*="{name}"]'
+        if width < 700:
+            page.locator('#partner-table .partner-card').filter(has=page.locator(trigger)).first.locator(':scope > summary').click()
+        page.locator(f'#partner-table {trigger}:visible').first.click()
+        page.locator('#detail-tab-life').click()
+        card = page.locator('#life-content .life-card').filter(has=page.locator('h3').filter(has_text=title))
+        expect(card).to_have_count(1)
+        body = card.locator('.life-evidence-text').first
+        expect(body).not_to_contain_text('中文翻譯尚未完成')
+        for term in terms:
+>           expect(body).to_contain_text(term)
+E           AssertionError: Locator expected to contain text '債務保證上限'
+E           Actual value: 舊來校交換簡介明示交換生住指定校外宿舍，約30000–47000円／月、餐食另計；不能用一般學生租屋介紹或Miki友愛寮代替交換指定房。當期詳細通知由接收校提供給母校。
+E           一般住房頁介紹學生課物件／租屋公司，不保證交換床位、自選、公寓／指定宿舍份額。未取得116宿舍申請表、截止期限、押金、寢具及個人分配。
+E           現有簡介只說宿舍詳細信息另給母校，沒有當期空白申請或截止；不能把時程表一般交換申請當宿舍截止期限。 
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#life-content .life-card").filter(has=locator("h3").filter(has_text="住宿與宿舍")).locator(".life-evidence-text").first
+E               14 × locator resolved to <p class="life-evidence-text">舊來校交換簡介明示交換生住指定校外宿舍，約30000–47000円／月、餐食另計；不能用一般學生租…</p>
+E                  - unexpected value "舊來校交換簡介明示交換生住指定校外宿舍，約30000–47000円／月、餐食另計；不能用一般學生租屋介紹或Miki友愛寮代替交換指定房。當期詳細通知由接收校提供給母校。
+E           一般住房頁介紹學生課物件／租屋公司，不保證交換床位、自選、公寓／指定宿舍份額。未取得116宿舍申請表、截止期限、押金、寢具及個人分配。
+E           現有簡介只說宿舍詳細信息另給母校，沒有當期空白申請或截止；不能把時程表一般交換申請當宿舍截止期限。"
+E           
+E           Aria snapshot:
+E           - paragraph: 舊來校交換簡介明示交換生住指定校外宿舍，約30000–47000円／月、餐食另計；不能用一般學生租屋介紹或Miki友愛寮代替交換指定房。當期詳細通知由接收校提供給母校。 一般住房頁介紹學生課物件／租屋公司，不保證交換床位、自選、公寓／指定宿舍份額。未取得116宿舍申請表、截止期限、押金、寢具及個人分配。 現有簡介只說宿舍詳細信息另給母校，沒有當期空白申請或截止；不能把時程表一般交換申請當宿舍截止期限。
+
+tests/e2e/test_ncu_sixteenth_life.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ncu_sixteenth_life.py::test_complete_legacy_chinese_cards[kansai-\u95dc\u897f\u5927\u5b78-Kansai University-\u4f4f\u5bbf\u8207\u5bbf\u820d-terms7-390]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 14 passed in 116.04s (0:01:56)
