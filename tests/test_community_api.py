@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import hashlib
 from datetime import timedelta
 
@@ -67,7 +68,7 @@ def test_question_answer_and_experience_submission_are_moderated(
 ) -> None:
     ensure_data_dirs(tmp_path)
     partner = _partner()
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = TestClient(create_app(tmp_path))
     headers = _community_headers(tmp_path, client)
 
@@ -142,7 +143,7 @@ def test_question_answer_and_experience_submission_are_moderated(
 def test_community_submission_rejects_contact_details(tmp_path, monkeypatch) -> None:
     ensure_data_dirs(tmp_path)
     partner = _partner()
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = TestClient(create_app(tmp_path))
     headers = _community_headers(tmp_path, client)
 

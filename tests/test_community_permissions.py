@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import hashlib
 from datetime import timedelta
 
@@ -823,7 +824,7 @@ def test_account_deletion_keeps_public_content_but_removes_private_links(
         source_url="https://example.edu/exchange",
     )
     monkeypatch.setattr(
-        "exchange_info.api.fetch_partner_universities", lambda: [partner]
+        'exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner])
     )
     client = TestClient(create_app(tmp_path))
     first_account, first_headers, first_identity = _account(

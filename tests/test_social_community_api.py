@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import hashlib
 from datetime import timedelta
 
@@ -57,7 +58,7 @@ def test_posts_chat_and_invitation_only_private_messages(tmp_path, monkeypatch) 
     ensure_data_dirs(tmp_path)
     partner = _partner()
     monkeypatch.setattr(
-        "exchange_info.api.fetch_partner_universities", lambda: [partner]
+        'exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner])
     )
     client = TestClient(create_app(tmp_path))
     first, first_headers = _identity(tmp_path, client, "匿名海風")
@@ -169,7 +170,7 @@ def test_private_conversation_retry_replays_generated_resources(
     ensure_data_dirs(tmp_path)
     partner = _partner()
     monkeypatch.setattr(
-        "exchange_info.api.fetch_partner_universities", lambda: [partner]
+        'exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner])
     )
     client = TestClient(create_app(tmp_path))
     _, sender_headers = _identity(tmp_path, client, "匿名海風")
@@ -210,7 +211,7 @@ def test_social_post_requires_a_valid_anonymous_identity(tmp_path, monkeypatch) 
     ensure_data_dirs(tmp_path)
     partner = _partner()
     monkeypatch.setattr(
-        "exchange_info.api.fetch_partner_universities", lambda: [partner]
+        'exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner])
     )
     client = TestClient(create_app(tmp_path))
 

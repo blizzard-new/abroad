@@ -634,6 +634,7 @@ function alignAccountSchool() {
 function clearProtectedCatalog() {
   window.UniWayDocumentWorkbench?.reset();
   state.dashboard = null;
+  $("#catalogue-source-status").hidden = true;
   state.applicationPeriodOptions = null;
   state.applicationPeriodRequestId += 1;
   renderApplicationPeriodOptions();
@@ -1175,7 +1176,7 @@ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {})
 
 async function loadSchoolImages() {
   try {
-    const payload = await fetchJson("/static/assets/school-images.json?v=20261011-coverage-1");
+    const payload = await fetchJson("/static/assets/school-images.json?v=20261011-source-recovery-1");
     state.schoolImages = Array.isArray(payload?.schools)
       ? payload.schools.filter((item) => item && item.school_name)
       : [];
@@ -3731,6 +3732,7 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
   const request = beginSchoolDataRequest("dashboard", requestedSchool);
   state.partnerDataLoading = true;
   state.partnerDataError = false;
+  $("#catalogue-source-status").hidden = true;
   syncPartnerView();
   setLoadingState();
   const loadingAnnouncementRevision = state.statusRevision;
@@ -3779,6 +3781,21 @@ function setLoadingState() {
   });
 }
 
+function catalogueSourceUnavailable() {
+  return state.dashboard?.catalogue_source?.status === "unavailable";
+}
+
+function renderCatalogueSourceStatus() {
+  const banner = $("#catalogue-source-status");
+  const source = state.dashboard?.catalogue_source;
+  banner.hidden = !source || activeHomeSchool() !== "長庚大學";
+  if (banner.hidden) { banner.textContent = ""; return; }
+  const time = source.last_success_at ? formatDate(source.last_success_at) : "尚無成功取得時間";
+  const title = source.status === "unavailable" ? "長庚合作校來源暫不可用" : source.last_attempt_result === "failed" ? "長庚合作校來源暫不可用，保留歷次資料" : source.status === "retrieved" ? "長庚合作校來源已取得" : "長庚合作校使用歷次資料";
+  banner.innerHTML = `<strong>${escapeHtml(title)}</strong><p>來源取得時間：${escapeHtml(time)}。取得時間不代表當期已核實；年度、名額與開放狀態請依原資料及官方公告確認。</p><a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554" target="_blank" rel="noopener">交換來源</a> · <a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17533" target="_blank" rel="noopener">雙學位來源</a><button type="button" class="text-button" data-reload-catalogue>重新讀取來源狀態</button>`;
+  banner.querySelector("[data-reload-catalogue]").addEventListener("click", () => loadDashboard({ refreshed: true }));
+}
+
 function renderDashboard() {
   discoveryData();
   renderDiscoveryRecents();
@@ -3786,7 +3803,8 @@ function renderDashboard() {
   const lastChecked = formatDate(data.last_checked);
   const documents = data.document_explanations || data.rule_explanations || [];
 
-  $("#coverage-rate").textContent = String(data.partner_universities.length);
+  renderCatalogueSourceStatus();
+  $("#coverage-rate").textContent = catalogueSourceUnavailable() ? "—" : String(data.partner_universities.length);
   $("#source-count").textContent = String(data.sources.length);
   $("#last-checked").textContent = lastChecked.slice(0, 10);
   $("#top-updated").textContent = `資料更新：${lastChecked}`;
@@ -7615,7 +7633,7 @@ function showPartnerMapStatus(title, message, { retry = false, loading = false }
   status.innerHTML = `${loading ? '<span class="map-loading-orbit" aria-hidden="true"></span>' : ""}<strong>${escapeHtml(title)}</strong><p>${escapeHtml(message)}</p>${loading ? "" : `<div class="map-status-actions">${retry ? '<button type="button" class="primary-button" data-map-retry>重新嘗試</button>' : ""}<button type="button" class="secondary-button" data-map-list>返回列表</button></div>`}`;
   status.querySelector("[data-map-list]")?.addEventListener("click", () => setPartnerView("list"));
   status.querySelector("[data-map-retry]")?.addEventListener("click", () => {
-    if (state.partnerDataError) loadDashboard();
+    if (state.partnerDataError || catalogueSourceUnavailable()) loadDashboard();
     else retryPartnerMap();
   });
 }
@@ -7660,11 +7678,15 @@ function syncPartnerView() {
     $("#partner-map-preview").hidden = true;
     showPartnerMapStatus("暫時無法取得學校資料", "請確認連線後重試；你的搜尋與篩選條件已保留。", { retry: true }); return;
   }
+  if (catalogueSourceUnavailable()) {
+    $("#partner-map-preview").hidden = true;
+    showPartnerMapStatus("合作校來源暫不可用", "尚無可用的歷次資料，請稍後重新讀取來源狀態。", { retry: true }); return;
+  }
   if (partnerMapController) { partnerMapController.update(partnerMapSnapshot()); return; }
   if (partnerMapLoadPromise || partnerMapLoadFailed) return;
   showPartnerMapStatus("正在準備你的世界地圖", "首次載入需要一點時間。", { loading: true });
   const generation = partnerMapGeneration;
-  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261011-coverage-1&attempt=${generation}`)
+  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261011-source-recovery-1&attempt=${generation}`)
     .then((module) => module.createPartnerMap({ renderPreview: renderMapPreview, onSchoolSelect: loadDiscoveryPreview, onList: () => setPartnerView("list"), onRetry: retryPartnerMap, onIcons: initIcons, freshEngine: generation > 0 }))
     .then((controller) => {
       if (generation !== partnerMapGeneration) { controller.destroy(); return; }
@@ -7791,6 +7813,7 @@ function partnerPageSize() {
 }
 
 function renderPartnerCount(total, shown) {
+  if (catalogueSourceUnavailable()) { $("#partner-result-count").textContent = "來源暫不可用"; return; }
   const line = $("#partner-result-count");
   if (!line) return;
   line.textContent = !total ? "" : shown < total ? `共 ${total} 所，先顯示 ${shown} 所` : `共 ${total} 所`;
@@ -7805,7 +7828,7 @@ function renderPartnerTable() {
   renderPartnerCount(partners.length, visible.length);
 
   if (!partners.length) {
-    renderEmpty("#partner-table", "沒有符合的學校", "調整國家、學院、學制或關鍵字後再試一次。");
+    renderEmpty("#partner-table", catalogueSourceUnavailable() ? "合作校來源暫不可用" : "沒有符合的學校", catalogueSourceUnavailable() ? "尚無可用的歷次資料，請稍後重新讀取或前往官方來源確認。" : "調整國家、學院、學制或關鍵字後再試一次。");
     $("#show-more-partners").hidden = true;
     if (window.location.hash === "#partners") writePartnerUrl();
     syncPartnerView();

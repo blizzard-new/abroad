@@ -464,6 +464,10 @@ def _fetch_sheet_rows(
     except (requests.RequestException, ValueError, json.JSONDecodeError):
         return []
 
+    return _partner_rows_from_payload(payload, program_type=program_type, source_url=source_url)
+
+
+def _partner_rows_from_payload(payload: dict[str, Any], *, program_type: str, source_url: str) -> list[PartnerUniversity]:
     labels = [col.get("label") or "" for col in payload["table"]["cols"]]
     universities: list[PartnerUniversity] = []
     for row in payload["table"]["rows"]:

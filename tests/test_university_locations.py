@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -64,7 +65,7 @@ def test_dashboard_adds_location_without_changing_partnerships(tmp_path, monkeyp
     import exchange_info.api as api
     partner = PartnerUniversity(school_name="Location test university", country="日本", program_type="交換學生", quota="2", source_url="https://example.edu/official")
     monkeypatch.setattr(api, "build_student_dashboard", lambda *a, **k: StudentDashboard(partner_universities=[partner]))
-    monkeypatch.setattr(api, "fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr(api, 'create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     processed = tmp_path / "processed"
     processed.mkdir()
     (processed / "university_locations.jsonl").write_text(verified().model_dump_json() + "\n", encoding="utf-8")

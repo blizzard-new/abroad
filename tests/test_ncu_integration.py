@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime
 import gzip
 import json
@@ -212,7 +213,7 @@ def test_api_reads_ncu_offline_and_exposes_page_evidence_and_life(
     def forbidden():
         raise AssertionError("NCU runtime must use its own offline catalogue")
 
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", forbidden)
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(forbidden))
     monkeypatch.setattr("exchange_info.api.fetch_ntpu_partner_universities", forbidden)
     client = TestClient(create_app(tmp_path))
     dashboard = client.get("/student-dashboard", params={"school": "NCU"})

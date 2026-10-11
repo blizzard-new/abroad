@@ -396,7 +396,8 @@ from .storage import (
     upsert_destination_profile,
     upsert_partner_research,
 )
-from .student_view import build_student_dashboard, fetch_partner_universities
+from .student_view import build_student_dashboard
+from .cgu_catalogue import CatalogueView, create_cgu_catalogue
 from .ccu_student_view import (
     build_ccu_student_dashboard,
     fetch_ccu_partner_universities,
@@ -874,6 +875,18 @@ def create_app(
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
     partner_cache: dict[str, list] = {}
     partner_cache_lock = threading.Lock()
+    cgu_catalogue = None
+    cgu_catalogue_lock = threading.Lock()
+
+    def cgu_catalogue_view() -> CatalogueView:
+        nonlocal cgu_catalogue
+        if cgu_catalogue is None:
+            with cgu_catalogue_lock:
+                if cgu_catalogue is None:
+                    cgu_catalogue = create_cgu_catalogue(resolved_data_dir)
+                    app.state.cgu_catalogue = cgu_catalogue
+        return cgu_catalogue.view()
+
     experience_collection_lock = threading.Lock()
     workflow_collection_lock = app.state.content_review_lock = threading.RLock()
     community_lock = threading.Lock()
@@ -1152,6 +1165,11 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == CGU.id:
+            view = cgu_catalogue_view()
+            if view.source.status == "unavailable":
+                raise HTTPException(status_code=503, detail="長庚合作校來源暫不可用，尚無可用的歷次資料；請稍後重試。", headers={"Retry-After": "60"})
+            return apply_partner_research(view.partners, load_partner_research(resolved_data_dir), home_university=university.school_name, copy_nested=False)
         if university.id == "tku":
             # Window state is time-sensitive across dashboards, advisors and plans.
             return apply_partner_research(
@@ -1172,7 +1190,7 @@ def create_app(
                         if university.id == NTU.id
                         else fetch_ntpu_partner_universities()
                         if university.id == NTPU.id
-                        else fetch_partner_universities()
+                        else []
                     )
         return apply_partner_research(
             partner_cache[university.id],
@@ -1258,6 +1276,7 @@ def create_app(
                 load_processed_pages(resolved_data_dir),
                 load_exchange_info(resolved_data_dir),
                 raw_files_dir=resolved_data_dir / "raw_files",
+                fetch_partner_sheets=False,
             )
             with dashboard_cache_lock:
                 dashboard_cache[university.id] = (time.monotonic(), signature, dashboard)
@@ -1297,7 +1316,9 @@ def create_app(
             return build_tku_student_dashboard()
         if university.id == NTU.id:
             return build_ntu_student_dashboard(partner_universities=partners_for_university(university))
-        # Building this one downloads the partner sheet and parses a dozen official PDFs: 10 to 40 seconds on the free
+        # The base dashboard parses official PDFs; partner rows are overlaid from the
+        # shared source provider on every response, never retained in this cache.
+        # Building this one parses a dozen official PDFs: 10 to 40 seconds on the free
         # host. The result is kept; once it is a few minutes old the next visitor still gets it at once while a fresh one
         # is built in the background. Only when the data files behind it were rewritten (or nothing was built yet) does
         # a visitor wait for a new one.
@@ -1312,8 +1333,14 @@ def create_app(
         if cached and cached[1] == signature:
             if time.monotonic() - cached[0] >= DASHBOARD_CACHE_SECONDS:
                 refresh_dashboard_in_background(university, signature)
-            return cached[2].model_copy(deep=True)
-        return build_cached_dashboard(university, signature).model_copy(deep=True)
+            base_dashboard = cached[2]
+        else:
+            base_dashboard = build_cached_dashboard(university, signature)
+        view = cgu_catalogue_view()
+        return base_dashboard.model_copy(deep=True, update={
+            "partner_universities": apply_partner_research(view.partners, load_partner_research(resolved_data_dir), home_university=university.school_name, copy_nested=False),
+            "catalogue_source": view.source,
+        })
 
     def warm_catalogue_caches() -> None:
         """Do the slow first-time work now, so the first visitor after a restart does not wait for it.
@@ -1358,10 +1385,20 @@ def create_app(
         universities = [scoped_university]
         if not home_school:
             universities += [item for item in SUPPORTED_UNIVERSITIES if item.id != scoped_university.id]
+        unavailable = None
         for university in universities:
-            for partner in partners_for_university(university):
+            try:
+                partners = partners_for_university(university)
+            except HTTPException as error:
+                if error.status_code != 503 or home_school:
+                    raise
+                unavailable = error
+                continue
+            for partner in partners:
                 if normalize_school(partner.school_name) == normalized:
                     return university, partner
+        if unavailable:
+            raise unavailable
         raise HTTPException(status_code=404, detail="這所學校不在目前支援大學的當期合作校名單中。")
 
     def partner_for_school(school: str, home_school: str | None = None):

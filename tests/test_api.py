@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime, timezone
 
 from fastapi.testclient import TestClient
@@ -76,7 +77,7 @@ def test_api_reads_processed_data_without_full_text(tmp_path, monkeypatch) -> No
     assert "UniWay｜臺灣大學生留學與交換平台" in frontend.text
 
     assert client.get("/health").json()["pages"] == 1
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: []))
     universities = client.get("/universities").json()
     assert universities[0]["school_name"] == "長庚大學"
     assert universities[0]["supported"] is True

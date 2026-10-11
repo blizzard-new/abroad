@@ -1,5 +1,6 @@
 """Meaningful runtime checks for geography, source-bound documents and scopes."""
 
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import hashlib
 import json
 
@@ -224,7 +225,7 @@ def test_tampered_document_source_is_rejected(tmp_path, monkeypatch):
 def test_direct_life_link_uses_resolved_ccu_home_without_query(tmp_path, monkeypatch):
     from exchange_info import api
 
-    monkeypatch.setattr(api, "fetch_partner_universities", list)
+    monkeypatch.setattr(api, 'create_cgu_catalogue', fixed_cgu_catalogue(list))
     monkeypatch.setattr(api, "fetch_ntpu_partner_universities", list)
     monkeypatch.setattr(api, "fetch_ntu_partner_universities", list)
     client = TestClient(create_app(tmp_path))

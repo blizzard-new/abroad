@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import hashlib
 import json
 import subprocess
@@ -191,7 +192,7 @@ def test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner(tmp
     from exchange_info.application_documents import build_application_document_catalog
     cgu=PartnerUniversity(program_type='交換學生',school_name='林肯大學 Lincoln University',country='紐西蘭',
         source_url='https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554')
-    monkeypatch.setattr('exchange_info.api.fetch_partner_universities',lambda:[cgu])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue',fixed_cgu_catalogue(lambda:[cgu]))
     client=TestClient(create_app(tmp_path))
     ntu=fetch_ntu_partner_universities()
     cases=[('CGU','長庚大學',cgu,'116'),

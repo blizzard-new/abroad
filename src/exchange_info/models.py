@@ -2637,7 +2637,20 @@ class HomeSelectionRules(BaseModel):
     language_certificate_required: bool = False
 
 
+class CatalogueSourceStatus(BaseModel):
+    status: Literal["retrieved", "saved_reference", "unavailable"]
+    last_success_at: datetime | None = None
+    last_attempt_at: datetime | None = None
+    last_attempt_result: Literal["success", "failed"] | None = None
+    failure_reason: str | None = None
+    snapshot_hash: str | None = None
+    source_urls: list[str] = Field(default_factory=list)
+    # Retrieval time does not establish the academic year or current publication status.
+    current_cycle_verified: bool = False
+
+
 class StudentDashboard(BaseModel):
+    catalogue_source: CatalogueSourceStatus | None = None
     school_name: str = "長庚大學"
     last_checked: datetime | None = None
     academic_score_minimum: float | None = None

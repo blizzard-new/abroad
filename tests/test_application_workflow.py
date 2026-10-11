@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime, timezone
 
 from fastapi.testclient import TestClient
@@ -479,7 +480,7 @@ def test_workflow_api_reads_cache_and_rejects_public_refresh(tmp_path, monkeypat
     ensure_data_dirs(tmp_path)
     partner = _partner()
     replace_application_workflow(_workflow(), tmp_path)
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = TestClient(create_app(tmp_path))
 
     cached = client.get("/application-workflow", params={"school": partner.school_name})
@@ -520,7 +521,7 @@ def test_workflow_api_applies_department_override(tmp_path, monkeypatch) -> None
         }
     )
     replace_application_workflow(workflow, tmp_path)
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = TestClient(create_app(tmp_path))
 
     response = client.get(
@@ -549,7 +550,7 @@ def test_workflow_api_selects_the_requested_published_round(tmp_path, monkeypatc
         ),
         tmp_path,
     )
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = TestClient(create_app(tmp_path))
 
     response = client.get(

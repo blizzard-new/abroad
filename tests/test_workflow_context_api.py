@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from fastapi.testclient import TestClient
 
 from exchange_info.api import create_app
@@ -19,7 +20,7 @@ def test_details_use_effective_rounds_and_department_overrides(tmp_path,monkeypa
     store.publish_workflow(workflow,'fixture')
     partner=PartnerUniversity(program_type='交換學生',country='日本',school_name=workflow.school_name,
         website='https://example.edu/',source_url='https://example.edu/exchange')
-    monkeypatch.setattr(api,'fetch_partner_universities',lambda:[partner])
+    monkeypatch.setattr(api,'create_cgu_catalogue',fixed_cgu_catalogue(lambda:[partner]))
     repository=JsonlAccountRepository(tmp_path)
     auth=session(repository,UserAccount(display_name='規則測試',student_status_verified=True,
         verified_university='長庚大學',verified_department='資訊工程學系'),'workflow-context-token')

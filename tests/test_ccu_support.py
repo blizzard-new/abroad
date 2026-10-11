@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import hashlib
 import json
 import subprocess
@@ -259,7 +260,7 @@ def test_ccu_api_dispatch_and_workflow(tmp_path, monkeypatch):
     def no_cgu(*args, **kwargs):
         raise AssertionError("CCU must not use CGU live retrieval")
 
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", no_cgu)
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(no_cgu))
     client = TestClient(create_app(tmp_path))
     universities = client.get("/universities").json()
     assert next(u for u in universities if u["id"] == "ccu")["colleges"] == list(

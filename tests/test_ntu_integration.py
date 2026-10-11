@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime
 import json
 from pathlib import Path
@@ -91,7 +92,7 @@ def test_ntu_dashboard_uses_announced_taipei_times_without_percent_grade_gate():
 def test_ntu_catalog_api_works_offline_and_keeps_pending_visible(monkeypatch, tmp_path):
     def network_not_allowed():
         raise AssertionError("NTU must not fetch CGU or NTPU at runtime")
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", network_not_allowed)
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(network_not_allowed))
     monkeypatch.setattr("exchange_info.api.fetch_ntpu_partner_universities", network_not_allowed)
     client = TestClient(create_app(tmp_path))
     assert [row["id"] for row in client.get("/universities").json()] == ["cgu", "ntpu", "ntu", "ccu", "ncu", "tku"]

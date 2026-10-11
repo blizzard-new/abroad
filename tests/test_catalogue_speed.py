@@ -1,6 +1,7 @@
 """The first-time work the free host used to repeat for every visitor is done once and kept."""
 from __future__ import annotations
 
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import threading
 import time
 from types import SimpleNamespace
@@ -27,7 +28,7 @@ def counted(tmp_path, monkeypatch):
         calls["dashboard"] += 1
         return StudentDashboard(school_name=CGU, partner_universities=[PARTNER])
 
-    monkeypatch.setattr(api, "fetch_partner_universities", lambda: [PARTNER])
+    monkeypatch.setattr(api, 'create_cgu_catalogue', fixed_cgu_catalogue(lambda: [PARTNER]))
     monkeypatch.setattr(api, "fetch_ntpu_partner_universities", lambda: [PARTNER])
     monkeypatch.setattr(api, "build_student_dashboard", build_dashboard)
     monkeypatch.setattr(api, "build_ntpu_student_dashboard", lambda **kwargs: StudentDashboard(school_name=NTPU, partner_universities=[PARTNER]))

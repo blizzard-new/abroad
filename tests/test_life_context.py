@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime, timedelta, timezone
 from io import BytesIO
 import json
@@ -181,7 +182,7 @@ def test_context_api_reads_without_network_and_rejects_unknown_school(tmp_path, 
     save_account_sessions([AccountSessionRecord(account_id="life-reader",
         token_hash=hashlib.sha256(b"life-reader-token").hexdigest(),
         expires_at=utc_now()+timedelta(days=1))], tmp_path)
-    monkeypatch.setattr(api, "fetch_partner_universities", lambda *a, **kw: [partner("明治大學 Meiji University")])
+    monkeypatch.setattr(api, 'create_cgu_catalogue', fixed_cgu_catalogue(lambda *a, **kw: [partner("明治大學 Meiji University")]))
     monkeypatch.setattr(life, "search_text", lambda *a, **kw: pytest.fail("GET triggered search"))
     client = TestClient(create_app(data_dir=tmp_path), headers={"Authorization": "Bearer life-reader-token"})
     result = client.get("/school-life-context", params={"school": "明治大學 Meiji University", "home_school": "長庚大學"})

@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import json
 import subprocess
 from pathlib import Path
@@ -9,7 +10,7 @@ from exchange_info.university_registry import CGU, NTPU
 
 
 def test_universities_expose_colleges_without_partner_data(tmp_path, monkeypatch):
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: []))
     with TestClient(create_app(tmp_path)) as client:
         response = client.get("/universities")
     assert response.status_code == 200
