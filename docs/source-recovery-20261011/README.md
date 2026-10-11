@@ -12,7 +12,7 @@
 | contracts／delivery／NCU stream parity | PASSED：原workflow、35SQL／Actions／uv不變，OpenAPI／JS／compile，NTU1373觀察與TKU4529pack成員、NCU214+2177記錄完整核驗。 |
 | 完整cache內容 | PASSED：TKU287校13,024,247 bytes→2,148,697無損cache；CCU104校9,310,485→1,123,661；每校canonical bytes／全部公開映射相等、原來源驗證全部執行。 |
 | 同175步cold／warm，460MiB門檻 | cold／warm PASSED：175步各完整完成，峰值437.215／447.801MiB，無defer-budget、server log均0bytes。原assert/wait不放寬，僅已授權TKU inventory期望由264圖260點更新為262圖264點，差異receipt保存。 |
-| 完整pytest套件 | RUNNING，已觀察瀏覽器失敗，尚未通過；原四shard最多2組同時，實際collection為3110 unique。TKU旧264張斷言與安全撤圖後262張不符已定位，其餘待完整traceback。固定SHA整輪完成後才修，原失敗保留。 |
+| 完整pytest套件 | **FAILED：3110 unique＝3073 passed／24 failed／13 skipped，0 setup error、0漏列／未結算**。四分片起訖同一clean5e SHA；原log/XML與[完整逐案結算](integration-final7-full-suite-summary.json)、[24失敗分類](final7-all-failure-classification.json)保留。不是整體驗收通過。 |
 | 本SHA完整Supabase runtime／wheel fresh install | PASSED：35SQL／真Storage／2PostgREST／17治理檢查；wheel6955檔逐hash／CRC，fresh target六校API、原workflow及兩撤回圖切換前後404。此SHA wheel SHA256 `a035d5a3039444fc4bd6914d61f01c21e1fddc2ec266c80b77d0034ab0fa6a7d`。 |
 
 程式修復：TKU與CCU先逐校讀取，再保留無損壓縮不可變快取，按請求還原完整紀錄；不刪來源、欄位或接受條件。TKU首次並行讀取只建一次完整snapshot；截斷JSON／最後一校來源失敗都不能留下部分成功快取。另修正TKU照片撤回工具CLI／package雙匯入。NCU4個測試截圖OUT改至獨立目錄，不改test function AST／assert／wait，已回報父協調源分支同步。
@@ -37,3 +37,7 @@ TKU兩拒用圖：Sunderland錯校圖、UAEMEX授權人／署名鏈未核實圖�
 排隊輸入獨立審查：[NTU1389body/44ZIP/648引用](ntu-ninth-fixed-input-audit.json)、[112新增觀察與429結論之有界語意複核](queued-ntu-ninth-independent-semantic-review.json)、[相同分母生活來源缺口](ntu-ninth-independent-life-gap.json)、[NCU13新原件與66圖頁hash](ncu-thirteenth-fixed-input-audit.json)、[NCU原文與獨立圖頁複核範圍](queued-ncu-thirteenth-independent-semantic-review.json)。不是排隊新版本的整合驗收；不把作者的所有全文／視讀宣稱移作本審核結果。
 
 新增唯讀NCU14審查：[45原始回應hash／143 PDF頁重抽取／39上游render hash](ncu-fourteenth-fixed-input-audit.json)、[三校中文與13張實際圖頁的獨立有界複核](queued-ncu-fourteenth-independent-semantic-review.json)。CUK五頁純影像全文視讀；仁荷10/19與10/21、紙本及18／19學分矛盾保留；馬來亞iBT4／80、邀請年份與校曆錯年、已關閉住宿及健康表YES語意保留。不宣稱全文讀完1351課程列或所有143頁。214校仍unknown／agreement_only，新增33條文件均需校方确认。
+
+串流多次中斷後同執行器仍存續，原session70902未重跑；最新可恢復進度見[checkpoint](final7-full-progress-not-final.json)。NCUa1d6b7aa已取回並通過24回應／223分類來源byte核验（r1無回應紀錄缺hash假設錯誤保留，r2改保留null通過）；尚未整合。外部修復／合併／雙重rebuild及final8 harness均已保存，不代表已執行。5e wheel改為完整bytes可還原的lossless recipe，還原hash與原a035d5a3完全一致。
+
+完整原長跑於20:25:46Z結束，未因串流中斷重啟。24失敗＝15待公告舊斷言、2已撤圖舊計數、3隔離JS漏activeHomeSchool、1共用script版本、1Turku舊到校文字、2Kansai查核日期舊斷言。Kansai畫面正確顯示2026-10-11T17:10:51.196064+00:00，不能為舊測試把資料退回10/09。13skip原理由保留（9 Phase C、4無Ollama）。接續有界來源審查、逐hunk合併與修复，再跑新固定SHA驗收。

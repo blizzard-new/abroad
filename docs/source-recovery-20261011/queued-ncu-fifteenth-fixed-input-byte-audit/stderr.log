@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_ncu_fifteenth_git.py", line 18, in <module>
+    for sid,source in old_sources.items():assert sources[sid]['sha256']==source['sha256'],sid
+                                                 ~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'sha256'

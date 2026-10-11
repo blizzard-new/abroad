@@ -1,0 +1,95 @@
+{
+  "sha": "5e7114182093fa77203ee946a4f86a88d3b10345",
+  "counts": {
+    "passed": 2632,
+    "failed": 6,
+    "skipped": 13
+  },
+  "failures": [
+    {
+      "case": "tests.e2e.test_tku_census_assets::test_tku_census_licensed_photos_load_and_points_keep_scope[390]",
+      "message": "assert 262 == 264\n +  where 262 = len([{'name': '\\u7acb\\u547d\\u9928\\u5927\\u5b78 Ritsumeikan University', 'width': 1600, 'height': 900, 'source': 'https://commons.wikimedia.org/wiki/File:Zonshinkan_Hall_at_Ritsumeikan_Univ.jpg', 'author': 'AngloFrench91', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0', 'capture_period': 'Taken on\\xa010 September 2016 11:13:37', 'capture_period_status': 'verified_capture_period'}, {'name': '\\u9577\\u5d0e\\u5916\\u570b\\u8a9e\\u5927\\u5b78 Nagasaki University of Foreign Studies', 'width': 519, 'height': 284, 'source': 'https:",
+      "trace_head": "tests/e2e/test_tku_census_assets.py:34: in test_tku_census_licensed_photos_load_and_points_keep_scope\n    assert len(results['photos'])==264\nE   assert 262 == 264\nE    +  where 262 = len([{'name': '\\u7acb\\u547d\\u9928\\u5927\\u5b78 Ritsumeikan University', 'width': 1600, 'height': 900, 'source': 'https://commons.wikimedia.org/wiki/File:Zonshinkan_Hall_at_Ritsumeikan_Univ.jpg', 'author': 'AngloFrench91', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0', 'capture_period': 'Taken on\\xa010 September 2016 11:13:37', 'capture_period_status': 'verified_capture_period'}, {'name': '\\u9577\\u5d0e\\u5916\\u570b\\u8a9e\\u5927\\u5b78 Nagasaki University of Foreign Studies"
+    },
+    {
+      "case": "tests.e2e.test_tku_census_assets::test_tku_census_licensed_photos_load_and_points_keep_scope[1280]",
+      "message": "assert 262 == 264\n +  where 262 = len([{'name': '\\u7acb\\u547d\\u9928\\u5927\\u5b78 Ritsumeikan University', 'width': 1600, 'height': 900, 'source': 'https://commons.wikimedia.org/wiki/File:Zonshinkan_Hall_at_Ritsumeikan_Univ.jpg', 'author': 'AngloFrench91', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0', 'capture_period': 'Taken on\\xa010 September 2016 11:13:37', 'capture_period_status': 'verified_capture_period'}, {'name': '\\u9577\\u5d0e\\u5916\\u570b\\u8a9e\\u5927\\u5b78 Nagasaki University of Foreign Studies', 'width': 519, 'height': 284, 'source': 'https:",
+      "trace_head": "tests/e2e/test_tku_census_assets.py:34: in test_tku_census_licensed_photos_load_and_points_keep_scope\n    assert len(results['photos'])==264\nE   assert 262 == 264\nE    +  where 262 = len([{'name': '\\u7acb\\u547d\\u9928\\u5927\\u5b78 Ritsumeikan University', 'width': 1600, 'height': 900, 'source': 'https://commons.wikimedia.org/wiki/File:Zonshinkan_Hall_at_Ritsumeikan_Univ.jpg', 'author': 'AngloFrench91', 'license': 'CC BY-SA 4.0', 'license_url': 'https://creativecommons.org/licenses/by-sa/4.0', 'capture_period': 'Taken on\\xa010 September 2016 11:13:37', 'capture_period_status': 'verified_capture_period'}, {'name': '\\u9577\\u5d0e\\u5916\\u570b\\u8a9e\\u5927\\u5b78 Nagasaki University of Foreign Studies"
+    },
+    {
+      "case": "tests.test_ccu_semantics::test_frontend_matches_structured_language_and_document_statuses",
+      "message": "AssertionError: <anonymous_script>:2\n    if (activeHomeSchool() === \"淡江大學\") {\n    ^\n  \n  ReferenceError: activeHomeSchool is not defined\n      at partnerAvailabilityMeta (eval at <anonymous> ([eval]:16:7), <anonymous>:2:3)\n      at partnerMatch (eval at <anonymous> ([eval]:16:7), <anonymous>:5:24)\n      at [eval]:21:19\n      at runScriptInThisContext (node:internal/vm:219:10)\n      at node:internal/process/execution:451:12\n      at [eval]-wrapper:6:24\n      at runScriptInContext (node:internal/process/execution:449:60)\n      at evalFunction (node:internal/process/execution:283:30)\n      at eva",
+      "trace_head": "/workspace/abroad-globe-20261011/tests/test_ccu_semantics.py:312: in test_frontend_matches_structured_language_and_document_statuses\n    assert result.returncode == 0, result.stderr\nE   AssertionError: <anonymous_script>:2\nE       if (activeHomeSchool() === \"淡江大學\") {\nE       ^\nE     \nE     ReferenceError: activeHomeSchool is not defined\nE         at partnerAvailabilityMeta (eval at <anonymous> ([eval]:16:7), <anonymous>:2:3)\nE         at partnerMatch (eval at <anonymous> ([eval]:16:7), <anonymous>:5:24)\nE         at [eval]:21:19\nE         at runScriptInThisContext (node:internal/vm:219:10)\nE         at node:internal/process/execution:451:12\nE         at [eval]-wrapper:6:24\nE         at runSc"
+    },
+    {
+      "case": "tests.test_independent_page_routing::test_route_assets_are_cache_busted_together",
+      "message": "AssertionError: assert '20261011-six-school-final-1' == '20261011-ncu-integration-2'\n  \n  - 20261011-ncu-integration-2\n  + 20261011-six-school-final-1",
+      "trace_head": "/workspace/abroad-globe-20261011/tests/test_independent_page_routing.py:64: in test_route_assets_are_cache_busted_together\n    assert versions[\"app.js\"] == versions[\"community-reader.js\"]\nE   AssertionError: assert '20261011-six-school-final-1' == '20261011-ncu-integration-2'\nE     \nE     - 20261011-ncu-integration-2\nE     + 20261011-six-school-final-1"
+    },
+    {
+      "case": "tests.test_pending_availability_semantics::test_unknown_quota_and_dates_do_not_imply_an_official_announcement_state",
+      "message": "AssertionError: <anonymous_script>:2\n    if (activeHomeSchool() === \"淡江大學\") {\n    ^\n  \n  ReferenceError: activeHomeSchool is not defined\n      at partnerAvailabilityMeta (eval at <anonymous> ([eval]:8:31), <anonymous>:2:3)\n      at [eval]:15:22\n      at runScriptInThisContext (node:internal/vm:219:10)\n      at node:internal/process/execution:451:12\n      at [eval]-wrapper:6:24\n      at runScriptInContext (node:internal/process/execution:449:60)\n      at evalFunction (node:internal/process/execution:283:30)\n      at evalTypeScript (node:internal/process/execution:295:3)\n      at node:internal/m",
+      "trace_head": "tests/test_pending_availability_semantics.py:44: in test_unknown_quota_and_dates_do_not_imply_an_official_announcement_state\n    assert result.returncode == 0, result.stderr\nE   AssertionError: <anonymous_script>:2\nE       if (activeHomeSchool() === \"淡江大學\") {\nE       ^\nE     \nE     ReferenceError: activeHomeSchool is not defined\nE         at partnerAvailabilityMeta (eval at <anonymous> ([eval]:8:31), <anonymous>:2:3)\nE         at [eval]:15:22\nE         at runScriptInThisContext (node:internal/vm:219:10)\nE         at node:internal/process/execution:451:12\nE         at [eval]-wrapper:6:24\nE         at runScriptInContext (node:internal/process/execution:449:60)\nE         at evalFunction (node:i"
+    },
+    {
+      "case": "tests.test_school_photo_and_match::test_match_missing_profile_fields_and_real_mismatches",
+      "message": "AssertionError: <anonymous_script>:2\n    if (activeHomeSchool() === \"淡江大學\") {\n    ^\n  \n  ReferenceError: activeHomeSchool is not defined\n      at partnerAvailabilityMeta (eval at <anonymous> ([eval]:16:31), <anonymous>:2:3)\n      at partnerMatch (eval at <anonymous> ([eval]:16:31), <anonymous>:5:24)\n      at [eval]:20:19\n      at runScriptInThisContext (node:internal/vm:219:10)\n      at node:internal/process/execution:451:12\n      at [eval]-wrapper:6:24\n      at runScriptInContext (node:internal/process/execution:449:60)\n      at evalFunction (node:internal/process/execution:283:30)\n      at e",
+      "trace_head": "/workspace/abroad-globe-20261011/tests/test_school_photo_and_match.py:76: in test_match_missing_profile_fields_and_real_mismatches\n    assert result.returncode == 0, result.stderr\nE   AssertionError: <anonymous_script>:2\nE       if (activeHomeSchool() === \"淡江大學\") {\nE       ^\nE     \nE     ReferenceError: activeHomeSchool is not defined\nE         at partnerAvailabilityMeta (eval at <anonymous> ([eval]:16:31), <anonymous>:2:3)\nE         at partnerMatch (eval at <anonymous> ([eval]:16:31), <anonymous>:5:24)\nE         at [eval]:20:19\nE         at runScriptInThisContext (node:internal/vm:219:10)\nE         at node:internal/process/execution:451:12\nE         at [eval]-wrapper:6:24\nE         at runSc"
+    }
+  ],
+  "skips": [
+    {
+      "case": "tests.e2e.test_web_next_phase::test_content_admins_independently_attest_every_source_before_publish",
+      "message": "Phase C"
+    },
+    {
+      "case": "tests.e2e.test_web_next_phase::test_content_admin_downloads_snapshot_bound_destination_profile_review_queue",
+      "message": "Phase C"
+    },
+    {
+      "case": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime::test_fixed_10_questions_no_oom",
+      "message": "Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "case": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime::test_cold_start_under_90s",
+      "message": "Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "case": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime::test_overlong_prompt_handled",
+      "message": "Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "case": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime::test_service_recovers_after_timeout",
+      "message": "Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "case": "tests.test_application_plan_api::test_application_plan_api_uses_bundled_workflow_with_isolated_runtime_data",
+      "message": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_application_workflow::test_workflow_api_reads_cache_and_rejects_public_refresh",
+      "message": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_application_workflow::test_workflow_api_applies_department_override",
+      "message": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_cgu_bundled_data::test_bundled_cgu_workflows_are_available_without_local_cache",
+      "message": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_cgu_bundled_data::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+      "message": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_cgu_bundled_data::test_bundled_cgu_completeness_report_matches_export",
+      "message": "Phase C data reviewed"
+    },
+    {
+      "case": "tests.test_cgu_bundled_data::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+      "message": "Phase C data reviewed"
+    }
+  ],
+  "planned_repairs": "harnesses/repair_final7_observed_failures.py; not applied until complete fixed-SHA run ends"
+}

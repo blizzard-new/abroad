@@ -1,37 +1,47 @@
 {
-  "as_of": "2026-10-11T20:05:51.619850+00:00",
+  "as_of": "2026-10-11T20:26:34.697923+00:00",
   "sha": "5e7114182093fa77203ee946a4f86a88d3b10345",
-  "complete": false,
-  "status": "RUNNING_WITH_FAILURES",
-  "not_a_final_unique_case_tally": true,
+  "complete": true,
   "shards": [
     {
       "shard": 0,
       "status": "failed",
-      "observed_call_passed": 2632,
-      "observed_call_failed": 6,
-      "observed_setup_errors": 0
+      "call_passed": 2632,
+      "call_failed": 6,
+      "skipped": 13
     },
     {
       "shard": 1,
       "status": "failed",
-      "observed_call_passed": 143,
-      "observed_call_failed": 10,
-      "observed_setup_errors": 0
+      "call_passed": 143,
+      "call_failed": 10,
+      "skipped": 0
     },
     {
       "shard": 2,
-      "status": "running",
-      "observed_call_passed": 119,
-      "observed_call_failed": 0,
-      "observed_setup_errors": 0
+      "status": "passed",
+      "call_passed": 153,
+      "call_failed": 0,
+      "skipped": 0
     },
     {
       "shard": 3,
-      "status": "running",
-      "observed_call_passed": 0,
-      "observed_call_failed": 0,
-      "observed_setup_errors": 0
+      "status": "failed",
+      "call_passed": 145,
+      "call_failed": 8,
+      "skipped": 0
     }
+  ],
+  "active_or_original_process_session": 70902,
+  "app_worktree_clean": true,
+  "queued_inputs": {
+    "NCU": "a1d6b7aa7539998613c44e9130e3915c7115bb38",
+    "NTU": "23757a06778f7569716a19987dd1d39effce13f2"
+  },
+  "remaining": [
+    "Finish original run; summarize all3110exactlyonce with raw24failures and13skip reasons",
+    "Diagnose twoKansai rawtracebacks separately; repair knownstale labels/count and missingJS dependencies plus pairedassetversion",
+    "Complete boundedNCU15semanticreview, mergefixedNCU/NTUhunks preservingTurku/Meiji",
+    "Focusedchecks thenfinalcleanSHAfullgates; await any finalNCUinput withoutmovingactiveinputs"
   ]
 }
