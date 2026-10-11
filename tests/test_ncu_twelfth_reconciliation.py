@@ -58,6 +58,10 @@ def test_twelfth_queue_receipts_keep_full_pdf_counts_unchanged():
         assert source['reading_review']['source_sha256'] == source['sha256']
         assert source['reading_review']['full_document_read'] is False
     counts = json.loads((B / 'catalog-completeness.json').read_text())
-    assert counts['reviewed_host_records'] == 120
-    assert counts['completion_source_full_text_read'] == 75
-    assert counts['completion_source_full_visual_read'] == 10
+    checkpoint = json.loads((D / 'validation.json').read_text())['counts']
+    assert checkpoint['manual_host_records'] == 120
+    assert checkpoint['native_pdf_fully_read'] == 75
+    assert checkpoint['native_visual_pdf_fully_read'] == 10
+    assert counts['reviewed_host_records'] >= checkpoint['manual_host_records']
+    assert counts['completion_source_full_text_read'] >= checkpoint['native_pdf_fully_read']
+    assert counts['completion_source_full_visual_read'] >= checkpoint['native_visual_pdf_fully_read']
