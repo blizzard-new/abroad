@@ -1,5 +1,7 @@
 # 中央逐校補完查核，2026-10-11
 
+**最新第二十五批：兩校8份來源、5文件30頁與3網頁主文核讀，15欄更新。** 491回歸與8瀏覽器情境通過，8圖全實看，214生活API待翻譯0。手冊版次、錯向表單、文件阶段與舊住宿預算分開保留。詳見[第二十五批](resume/twentyfifth/README.md)、[未完成清單](resume/twentyfifth/unfinished-source-list.csv)、[驗證](resume/twentyfifth/validation.json)。以下保留歷史紀錄。
+
 **最新第二十四批：两校8個新官方來源、5份文件19頁全讀、3網頁主文核讀；更新25欄，9個原缺口增來源參考。** 488回歸、文件／住宿8個手機桌面情境通過且8圖全實看；214生活API待翻譯0。BUEM舊表追加文件與租期價差、摩納哥未標房價週期分開保留。詳見[第二十四批](resume/twentyfourth/README.md)、[未完成清單](resume/twentyfourth/unfinished-source-list.csv)、[驗證](resume/twentyfourth/validation.json)。以下保留歷史紀錄。
 
 **最新第二十三批：五校5份7頁原文／原圖全讀，21個來源參考欄與20個明列缺口，人工覆蓋149校。** 485回歸、五校手機／桌面10情境通過且10圖全實看；214生活API待翻譯0。BUEM混校原文及HKBP語言／費用矛盾保留。詳見[第二十三批](resume/twentythird/README.md)、[未完成清單](resume/twentythird/unfinished-source-list.csv)、[驗證](resume/twentythird/validation.json)。以下保留歷史紀錄。
