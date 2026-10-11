@@ -1,0 +1,525 @@
+{
+  "production_frozen_commit": "2555a082963ca396dbb541bf36eb03d5f0dc0706",
+  "prior_handoff_commit": "6bd8c3c2d964b8134968b28a204ee24e8f949997",
+  "latest_origin_main_rechecked": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "production_git_objects": {
+    "src": "5cf6dd9c37cff00e0879218947f9669344ce7fe0",
+    "scripts": "b14ba70903115f3fa1e2301563327206e4c9a257",
+    "data": "d96a635c71b07e955d323dedd566462fba412b49",
+    "pyproject.toml": "9fc12547a48486285c6f000421a4b5cdee3c3869",
+    "uv.lock": "72a4b1691f8718ea632cd95d68c1a251a4b53496",
+    "supabase": "c23e95f1f3bbce8cfd696566e1ad2db6ebf101d6"
+  },
+  "all_ccu_unit_cgu_ntpu_shared_regressions": {
+    "tests": 398,
+    "passed": 394,
+    "failed_or_errors": 0,
+    "skipped": 4,
+    "elapsed_seconds": 315.635,
+    "failures": [],
+    "skip_reasons": [
+      {
+        "classname": "tests.test_cgu_bundled_data",
+        "name": "test_bundled_cgu_workflows_are_available_without_local_cache",
+        "reason": "Phase C data reviewed"
+      },
+      {
+        "classname": "tests.test_cgu_bundled_data",
+        "name": "test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+        "reason": "Phase C data reviewed"
+      },
+      {
+        "classname": "tests.test_cgu_bundled_data",
+        "name": "test_bundled_cgu_completeness_report_matches_export",
+        "reason": "Phase C data reviewed"
+      },
+      {
+        "classname": "tests.test_cgu_bundled_data",
+        "name": "test_backfilled_cgu_workflows_keep_current_details_reference_only",
+        "reason": "Phase C data reviewed"
+      }
+    ]
+  },
+  "completion_mobile_desktop": {
+    "tests": 24,
+    "passed": 24,
+    "failed_or_errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 71.937,
+    "failures": [],
+    "skip_reasons": []
+  },
+  "initial_focused": {
+    "tests": 14,
+    "passed": 12,
+    "failed_or_errors": 2,
+    "skipped": 0,
+    "elapsed_seconds": 7.565,
+    "failures": [
+      {
+        "classname": "tests.test_ccu_public_priority_batch",
+        "name": "test_sungshin_current_form_aliases_and_stale_form_years_are_explicit"
+      },
+      {
+        "classname": "tests.test_ccu_public_priority_batch",
+        "name": "test_current_ucy_reference_fields_are_exposed_through_school_scoped_api"
+      }
+    ],
+    "skip_reasons": []
+  },
+  "corrected_focused": {
+    "tests": 14,
+    "passed": 14,
+    "failed_or_errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 8.192,
+    "failures": [],
+    "skip_reasons": []
+  },
+  "initial_focused_failure_resolution": "Two test setup errors only: spelling expectation for closed Spring2026 form and nonexistent /partners endpoint; corrected to actual published phrase and /student-dashboard. No case removed or waived.",
+  "source_quote_guard_initial_failures": "Initial UCSI quote assertions rejected assumed phrasing. Corrected to exact visible official body, without altering thresholds or years.",
+  "repeatability": {
+    "runs": 2,
+    "files_checked": 29,
+    "changed_files": [],
+    "file_hashes": {
+      "src/exchange_info/official_data/ccu/completion-followup-gap-research.json": "ed1680240dbb205414a51fba6cedfb2080e1367e79676bc8b69444a8e3adae5b",
+      "src/exchange_info/official_data/ccu/completion-remaining-limitations.json": "765986e2fcdcc6b72bb5d2783d8535a05e6d414a44c9063fda8671be3f5d3040",
+      "src/exchange_info/official_data/ccu/completion-remaining-public-worklist.csv": "95b0fc268f216326d7747bc7277867fa5d8f2194a1356f3e9dc889e0e63276ea",
+      "src/exchange_info/official_data/ccu/completion-reviewed-fields.json": "52bc38452af26df5c415fb7f283b1ad7cccd1b5c395652d5ac6a319fb245e7f4",
+      "src/exchange_info/official_data/ccu/completion-sungshin-documents.json": "50d10d2a2a5fd524005205f9f86238141b4770069c79940227bea69a577a7b06",
+      "src/exchange_info/official_data/ccu/completion-targets.json": "219d89f6ac59dc9b31a532417d0e5674fff1ed2bcdd3e27b9d9a15dec9538a07",
+      "src/exchange_info/official_data/ccu/completion-inventory.json": "4b96fe4dafe5a0dc0b4f250c502a7d192cdfad9fedc42a84f0e8199d2e4e1193",
+      "src/exchange_info/official_data/ccu/completion-baseline.json": "6446dec1b2bdfc7e88b3f1928f631979f95980ad8982ceae54e5fd5e0f7c4551",
+      "src/exchange_info/official_data/ccu/completion-followup-gap-baseline.json": "a521ad1c3d36958b3e179224e562c0d2ec901ad5b675b260ca8c7f72e8fc868f",
+      "src/exchange_info/official_data/ccu/completion-seventh-baseline.json": "190b6e4d6982fbb06cae75fcd3bc902393597cbfbca5f3f7720aa4268b8b256b",
+      "src/exchange_info/official_data/ccu/completion-inventory.csv": "5c0492cd74641c723118b62a961ef25451123b78ed598a3ba77dccce70386603",
+      "src/exchange_info/official_data/ccu/completion-public-source-screening.json": "887f7d1e04e76723f6c4d47b86a8f3e7dc8cd8316c5cbb239397c79a77e06642",
+      "src/exchange_info/official_data/ccu/completion-pr8-coverage-comparison.json": "3793ac4f10932cdfc5a9b1f5ae3a53707f8d039fd72129f45ae7b5a4088c366e",
+      "src/exchange_info/official_data/ccu/completion-reference-document-links.json": "3b86b40abbc30fe5bf0cf7a7c0153a5e98c9d8efc85516543c0eef311aa1d5ae",
+      "src/exchange_info/official_data/ccu/completion-followup-gap-baseline.csv": "2ab5791fd205c7460ac6560432ac561b7b589724b7923c70f0484f9eb4f7e4c7",
+      "src/exchange_info/official_data/ccu/application_workflows.jsonl": "aa6716f05c52f766d1f1ec30f2bd310dbef5f0f9566c87be05d029d23ed96c7d",
+      "src/exchange_info/official_data/ccu/completion-reference-document-reviews.json": "f2beb1d927434521e08a1533926633ebc186ca474809b8e6d21759e3b8fe10a6",
+      "src/exchange_info/official_data/ccu/completion-service-link-queue.json": "9b4631aa874b3d789c403bfbb303643eabfaeef2535d8028fbba54cf4e0dd0ca",
+      "src/exchange_info/official_data/ccu/completion-public-folder-file-links.json": "cfa12ab38fae2820aaa8009c6f3113cbeb1011f93722d758290d6f5d4bb85121",
+      "src/exchange_info/official_data/ccu/destination_profiles.jsonl": "ed59dff90279e350715ad6274ecc330643eccbdce1e2f4d4e42747e7fac0939c",
+      "src/exchange_info/official_data/ccu/completion-public-body-reviews.json": "9a24f4662dd33ea67c6284200a7996778c7b4ce862d1f44b75c536d402800083",
+      "src/exchange_info/official_data/ccu/completion-followup-gap-research.csv": "1e7614ea29eda98c5be52f8cd0fce9bd6b03011c86c418f1d42b5787aa04cdde",
+      "src/exchange_info/official_data/ccu/completion-seventh-reading-input.json": "675745ee726507da37c5a2fe1641ba822bfa404005f6b12acc4dc76e55ed810a",
+      "src/exchange_info/official_data/ccu/completion-archive-layout.json": "d12dfcf4c0966f5221dde8bdd4108a3dbc0ff2ebe108750c0378e2e99bac7587",
+      "src/exchange_info/official_data/ccu/completion-baseline.csv": "e9007c451540e4bf63fe56e1fe474d90ece79596bbe493facbd2fcf606597608",
+      "src/exchange_info/official_data/ccu/completion-remaining-public-worklist.json": "c03b4c90c5bc0fa579397a3da9868dc77d7eee3fb2ec55387a1845cc0716fcbe",
+      "src/exchange_info/official_data/ccu/completion-seventh-acquisition-plan.json": "733ae3c5567546b0b5c18eea7603d5a0a87b227196db52dea4f95e99724c4fba",
+      "src/exchange_info/official_data/ccu/completion-seventh-public-progress.json": "4af40323a90cd20a06bd8bd997077431310ade88e2aa5ba5bc7af708644cf620",
+      "src/exchange_info/official_data/ccu/completion-manual-fields.json": "dbf61782062d00bec1ff9cb878663213084d1d606310f474322715ae5e107cc8"
+    }
+  },
+  "source_reading": {
+    "prior_commit": "6bd8c3c2d964b8134968b28a204ee24e8f949997",
+    "checked_at": "2026-10-11",
+    "priority_urls_processed": 37,
+    "priority_distinct_bodies_processed": 36,
+    "priority_disposition_counts": {
+      "unversioned_template": 1,
+      "campus_index": 2,
+      "service_index": 2,
+      "undated_incoming_reference": 2,
+      "undated_insurance_reference": 1,
+      "campus_reference": 1,
+      "programme_index": 2,
+      "outgoing_not_ccu_incoming": 3,
+      "superseded_undated_reference": 1,
+      "historical_notice_index": 1,
+      "fee_index_distinct_population": 1,
+      "undated_incoming_and_outgoing_separated": 1,
+      "undated_kl_housing_reference": 1,
+      "sheet_visible_grid": 1,
+      "wrapper_body_not_document": 2,
+      "folder_listing_not_document": 1,
+      "conference_not_exchange": 1,
+      "exchange_index": 1,
+      "undated_incoming_housing": 1,
+      "erasmus_charter_not_bilateral_rules": 1,
+      "factsheet_index": 1,
+      "undated_incoming_overview": 1,
+      "mobility_index": 1,
+      "event_not_exchange": 1,
+      "undated_business_exchange_index": 2,
+      "undated_housing_services": 1,
+      "current_incoming_index": 1,
+      "current_housing_index": 1,
+      "additional_source": 25
+    },
+    "new_scoped_reading_records": 61,
+    "new_scoped_reading_independent_bodies": 61,
+    "reading_record_is_not_policy_verification": true,
+    "old_priority_still_without_recorded_read": [],
+    "current_counts": {
+      "schools": 104,
+      "sources": 2251,
+      "source_review_states": {
+        "mapped_passages_read_remaining_body_unclaimed": 777,
+        "reviewed_scoped_exclusion": 124,
+        "source_failure_or_body_not_obtained": 207,
+        "scoped_body_read_recorded": 216,
+        "readable_body_without_recorded_review": 380,
+        "metadata_or_asset_candidate_not_policy_body": 517,
+        "same_bytes_as_recorded_read_source": 30
+      },
+      "coordinate_gaps": 3,
+      "photo_gaps": 4,
+      "website_gaps": 1,
+      "host_missing_fields": 618,
+      "public_reading_record_missing_sources": 370,
+      "priority_policy_candidates": 0
+    },
+    "remaining_school_public_source_urls": 370,
+    "remaining_school_public_independent_bodies": 369,
+    "remaining_public_sources_exhausted": false,
+    "changed_platform_fields": 32,
+    "changed_host_fields": 30,
+    "previously_missing_host_fields_filled": 20,
+    "external_private_steps": [
+      {
+        "ccu_page": 49,
+        "fields": [
+          "application_forms"
+        ]
+      },
+      {
+        "ccu_page": 66,
+        "fields": [
+          "application_forms"
+        ]
+      },
+      {
+        "ccu_page": 88,
+        "fields": [
+          "documents",
+          "application_forms"
+        ]
+      },
+      {
+        "ccu_page": 89,
+        "fields": [
+          "application_forms"
+        ]
+      },
+      {
+        "ccu_page": 112,
+        "fields": [
+          "application_forms"
+        ]
+      },
+      {
+        "ccu_page": 120,
+        "fields": [
+          "application_forms"
+        ]
+      }
+    ]
+  },
+  "changed_fields_artifact": "src/exchange_info/official_data/ccu/completion-seventh-public-progress.json",
+  "new_public_acquisitions": {
+    "count": 31,
+    "http_200": 24,
+    "http_502": 2,
+    "http_503": 5,
+    "http_200_anubis_not_body": 1,
+    "policy_body_not_inferred_from_status": true
+  },
+  "acceptance_and_package": {
+    "baseline_commit": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "candidate_head": "2555a082963ca396dbb541bf36eb03d5f0dc0706",
+    "exchange_list": 104,
+    "global_agreements": null,
+    "quotas": {
+      "available": 52,
+      "numeric_positive": 49,
+      "unlimited": 3,
+      "blank": 3,
+      "not_open": 49,
+      "explicit_zero": 0
+    },
+    "all_home_windows_closed": true,
+    "profile_counts_all_six_schools": {
+      "國立臺北大學": 206,
+      "淡江大學": 4,
+      "長庚大學": 77,
+      "國立臺灣大學": 288,
+      "國立中正大學": 104,
+      "國立中央大學": 214
+    },
+    "official_website_identity_count": 103,
+    "coordinates": 101,
+    "licensed_photos": 100,
+    "matrix_counts": {
+      "host_fields": {
+        "reference_only": 314,
+        "missing": 618,
+        "verified_current": 357,
+        "needs_confirmation": 393,
+        "conflict": 85,
+        "explicit_not_announced": 1
+      },
+      "profile_fields": {
+        "verified_current": 369,
+        "missing": 175,
+        "reference_only": 95,
+        "needs_confirmation": 89
+      },
+      "general_campus_fields": {
+        "verified_current": 291,
+        "missing": 437
+      }
+    },
+    "old_official_data_preserved_except_reviewed_workflow_rows": true,
+    "published_workflow_refresh": {
+      "changed_rows": 2,
+      "school_names": [
+        "Sungshin Women's University 誠信女子大學",
+        "University of Southern Denmark 南丹麥大學"
+      ],
+      "reviewed_pages": [
+        49,
+        89
+      ],
+      "other_rows_preserved_byte_for_byte": 53
+    },
+    "original_ccu_profiles_sha256": "1375f32052bcdeaedfe696073e7ada6d40f40bdebeba0dc1e7f82353e38b78e6",
+    "package": {
+      "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+      "sha256": "2217d53041dcd68e0610bbbc66200b0d21916700861da25494882e400169a001",
+      "ccu_files_verified": 3641
+    }
+  },
+  "strict_source_validator_blob_unchanged": "28daf5e1f982a19a1056cb884d1f838e70f49867",
+  "shared_files_changed_this_batch": [],
+  "whole_pr_shared_integration_paths": [
+    "src/exchange_info/api.py",
+    "src/exchange_info/static/index.html",
+    "pyproject.toml"
+  ],
+  "school_specific_ui_path": "src/exchange_info/static/ccu-partner-details.js",
+  "no_credentials_permissions_payments_or_security_changes": true,
+  "merge_or_deploy": false,
+  "full_platform_suite_rerun": false,
+  "prior_full_platform_limitations_retained": "Earlier 2668-test full-platform attempt has immutable-main NTU screenshot path failures and one Jena intermittent assertion; not claimed fixed by this CCU batch.",
+  "database_runtime_validated": false,
+  "database_limitations": "Pinned Postgres Docker layer space blocker previously handed to integrator; not retried, no global Docker or remote Supabase changes.",
+  "workflow_states": [
+    [
+      "Web quality",
+      "disabled_manually"
+    ],
+    [
+      "Deploy to Supabase",
+      "active"
+    ]
+  ],
+  "branch_workflow_run_count_before_push": 0,
+  "compressed_evidence_files": [
+    {
+      "file": "generation.log.gz",
+      "sha256": "975a83ddfd989405f8b32a7e39121a09120e207fd5e4752106631ffe32bf4ca8",
+      "uncompressed_sha256": "cbb7190e21c03ad3b49171f98f6bbdede9f3e15909d12405cb8e11a6f952a7ce"
+    },
+    {
+      "file": "generation-final.log.gz",
+      "sha256": "ff800e749ebea642a9d64b27ce2458da9db6545e399a40913be193008254a96e",
+      "uncompressed_sha256": "643d4e5d4ef0c671e34a814429cfd4b7cc2dc3de53f126a682c447e614f4a0c8"
+    },
+    {
+      "file": "reproduction.log.gz",
+      "sha256": "9fd3c0d2075fa9cb2a8da1eb73356d8a6934684c1c3b0f15f1caaab4138a72b2",
+      "uncompressed_sha256": "8f7eb8823c4a1939742225fb8fb4b19fbaad50832729c95e86eae0f0e51589b6"
+    },
+    {
+      "file": "reproduction.json.gz",
+      "sha256": "a112a2c008a90a7b74ea70c6246aad53e2fde68c6966e82a4da165687f73e113",
+      "uncompressed_sha256": "da41dd12118ea24fbd4f7bdc4b064f743cb29ea6778852f2e59feaa325b23452"
+    },
+    {
+      "file": "focused.log.gz",
+      "sha256": "1baf8f6d82e1e5025592f90d5418db30bc64c5d84527921deca608805473f334",
+      "uncompressed_sha256": "c49b215ed8640e154a1e16e35f73c3d530584d00b5386435cbc20d0d114eea8a"
+    },
+    {
+      "file": "focused.junit.xml.gz",
+      "sha256": "e12b1689ae2d779a615d08d99b8979235b5a92d9702b8d06d6f4be4649529b97",
+      "uncompressed_sha256": "1b539fc6757fdf2c2853cba5d84a2dd4dae10002c10ea4aa1f61f1cae7ad5c85"
+    },
+    {
+      "file": "focused-corrected.log.gz",
+      "sha256": "04c1c02ea99b618227e6ca56de34a5c8b984899004e9804606f6779d13685b42",
+      "uncompressed_sha256": "463825a0edf22dfea1d2d7e228ac41df3cca44c9b89cb22abfaeb928c22945ec"
+    },
+    {
+      "file": "focused-corrected.junit.xml.gz",
+      "sha256": "4abd55b9de950913e86b9b3d9b4189337111adab0c8961cda3c1ca54b102bb94",
+      "uncompressed_sha256": "21bec0c0bc1a6e1bc9c3b9f0ff5407f616386ce68f1d97ea2adb521efc319285"
+    },
+    {
+      "file": "all-unit.log.gz",
+      "sha256": "f4bf9112d6773052cd194ab5b83646cce1d6a0a5de4699060333333cf59aa9d2",
+      "uncompressed_sha256": "d2a8e963b96da1d95f5da6d5dd1f61f6af9e88f415f8eee96289fe5f9bb5be1b"
+    },
+    {
+      "file": "all-unit.junit.xml.gz",
+      "sha256": "e860a7076b4ccb78366fda48d48e02be68f0fb2e6e1fc1995e0a35071f2f9e04",
+      "uncompressed_sha256": "d8f7a92f0190206c2dfb72534ef093dd3135c4d5f66c5fdbfef8b2bfd67f893b"
+    },
+    {
+      "file": "all-unit-command.json.gz",
+      "sha256": "c5d70915deebb631f734982d933b13502e177028ddbbe3e038fb32391958b49f",
+      "uncompressed_sha256": "877ba20c81195d662b0cc0848897ed6f77ac00c4ac0d8c8072bc96af2f7f94ea"
+    },
+    {
+      "file": "all-unit-result.json.gz",
+      "sha256": "a416dc64b21c66043e466f1a0e9e2816f82b336f098e125fab734299375e914a",
+      "uncompressed_sha256": "c52b37ded31652c5da0c2953196a9004e7cca8b0c4ca6dfbb4d6e3ac5e6ed06f"
+    },
+    {
+      "file": "browser.log.gz",
+      "sha256": "08709ec95ab1be443b2581e2e957601aa7ca9a175a4826841c06df03cc143291",
+      "uncompressed_sha256": "5bbd30bc4a1cc2669ae232e827cdef68ee0d855e20f9dc682fa039d12100c54c"
+    },
+    {
+      "file": "browser.junit.xml.gz",
+      "sha256": "18c515f6c65da0b4568df22ba8c37f513922a61e253b842cb1648b4fcee69316",
+      "uncompressed_sha256": "d045508228a9bc32ab80e1c0aa96c368bd8e43aecac269e73a512933f8856dac"
+    },
+    {
+      "file": "browser-command.json.gz",
+      "sha256": "53ea761c4c871b31f5810566e95d97f83d9cc47459def3e4b3c38d3ff200882a",
+      "uncompressed_sha256": "cd5883141da6615e57ee3b3fe022fef380f8e5cbc2a7a4d82ea6d72a048ffff2"
+    },
+    {
+      "file": "browser-result.json.gz",
+      "sha256": "db2a33d8c8cb07d33d7e869c01d10146a15c9d38d751e9bb798039d109529e7c",
+      "uncompressed_sha256": "5c29dcbacb02c562828a7daf6ad61cc93680f8e5acda3dd9ee7566c8fd1b63ed"
+    },
+    {
+      "file": "wheel-build.log.gz",
+      "sha256": "12e70f31f003cb0366d19b29ac04787cf8e34ba9b9282e038efca78f283f7356",
+      "uncompressed_sha256": "54b40a1500664ccc0e8112815d6febc9e62d0b23545484ed8799cf1bed07d380"
+    },
+    {
+      "file": "wheel-gate.log.gz",
+      "sha256": "cf1494a185fb86ec9a905fd30be612ad4d2b520fa443f2b3506feae943dd8dba",
+      "uncompressed_sha256": "5a60edbc402890343239338e1b12588ef0d6831a0c48a32d22e009a4b442f838"
+    },
+    {
+      "file": "wheel-gate.json.gz",
+      "sha256": "cf1494a185fb86ec9a905fd30be612ad4d2b520fa443f2b3506feae943dd8dba",
+      "uncompressed_sha256": "5a60edbc402890343239338e1b12588ef0d6831a0c48a32d22e009a4b442f838"
+    },
+    {
+      "file": "gamma-public-doc-browser.json.gz",
+      "sha256": "cd28cb0bdcf97b8ea6eba0d886ad562fea2d16317cccffcdccdfc010e54ef757",
+      "uncompressed_sha256": "c415c1d33614b6bae274f9c777f9845f0fd7a0623120699b3bd96003b8fa1d66"
+    },
+    {
+      "file": "source-file-manifest.json.gz",
+      "sha256": "102ef436c00e8a774d77b41fe5715dde97cc9537cd6d732d2a5b951bd178476a",
+      "uncompressed_sha256": "5d513bab0187c9fadbc51c385e2f8d3e3b8b3c6b7741a8ef79b7e027ee4cee88"
+    },
+    {
+      "file": "screenshot-manifest.json.gz",
+      "sha256": "a83dbb12b091021d9d849516f814d11bf7e9ddc790da18543ea272523ab60fd7",
+      "uncompressed_sha256": "00eca91a328429554824d39a931d3421b7565071911736e4fbbc03a054f81c66"
+    },
+    {
+      "file": "frozen-production.json.gz",
+      "sha256": "9b9ea3a02977ee7ac1d06ee86af15884e0af0d2afba7391829efd4224a7c1b34",
+      "uncompressed_sha256": "a06c50855de4630f12372b0b5361533f3d48cb65ec497858632042ec3af0a5dd"
+    },
+    {
+      "file": "workflows-readback.json.gz",
+      "sha256": "03395b43a19e3fc695c56efcde9c60a438a1e5602f11855282d1c517592cac1c",
+      "uncompressed_sha256": "5adec00c57f613f224e22efc066e97c8ce51ea9cb840732d0845ab104bc11995"
+    },
+    {
+      "file": "branch-runs-before.json.gz",
+      "sha256": "40c15ebd62c767ef16c84af91ec5b5aec4a1439cbf40eded20e8a49dc1d45912",
+      "uncompressed_sha256": "a2790a384d7d281e7395679000c35d27768d89dbd7052f725b8f4688beb59915"
+    },
+    {
+      "file": "pr-before.json.gz",
+      "sha256": "53316ce4d82caf91f26ec55b05a19a4c69e40582479cf32194a34c4e13bd7fb0",
+      "uncompressed_sha256": "e1a31a04205248ac0acadde52852530afbc6091fd92fc91451eca5358a92ae88"
+    },
+    {
+      "file": "antiword-tool-receipt.json.gz",
+      "sha256": "4cbe22ecb31dcea955731adf727b142e9a518b3b3a79990a3c64d4979b8ad974",
+      "uncompressed_sha256": "4cf59b3e1a49fb8a8b10f07269334692572f90a1bc5465901c9038ef87c36422"
+    },
+    {
+      "file": "reading-alias-comparison.json.gz",
+      "sha256": "2d3bb564fca1d62261be4161c9a7a9c77a37b4481d19dac672431793e9b11466",
+      "uncompressed_sha256": "df1584bc1809092cd239f54f6da93b42149edf9f9db753ceafc82f5f9d92d7f0"
+    },
+    {
+      "file": "ruff-final.log.gz",
+      "sha256": "47f394a1497b1873bc6e6d6f9bb92aa51b990821f1ddd7770a933ffd29c456cd",
+      "uncompressed_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "p115-1440.png",
+      "sha256": "276353c82406fc606118b780abe0a408cb85403cb818a9b4b19367a3ab86686d",
+      "visually_inspected": true
+    },
+    {
+      "file": "p115-390.png",
+      "sha256": "e38f2134aaf530e81226e590a83a7bb5f89e6f214e2f1ac3e4dec2f145597ca9",
+      "visually_inspected": false
+    },
+    {
+      "file": "p63-1440.png",
+      "sha256": "c340264f5e252f3e83630bdfa41b0e324f9093b0ca77bd53fca4b5e8c673cbdf",
+      "visually_inspected": false
+    },
+    {
+      "file": "p63-390.png",
+      "sha256": "9ff6ce3c426d0b90b1fb7a8f1dae570cea73263701be18bad615fe3dd62bdb3c",
+      "visually_inspected": false
+    },
+    {
+      "file": "p84-1440.png",
+      "sha256": "634dc5f20246594ad5d4510a54ed4b3d1fba9e247e70b2b2234d1a5c528f079f",
+      "visually_inspected": false
+    },
+    {
+      "file": "p84-390.png",
+      "sha256": "bc95af35bb7afc7900e1ee5c75750e434b4d44828873208b930e2c81eb9a99b3",
+      "visually_inspected": true
+    }
+  ],
+  "reading_count_definition": "61 source-scoped HTTP reading records; distinct-body metric uses original raw SHA. Includes limited indexes/wrappers and semantic aliases, not 61 independent current policies.",
+  "semantic_alias_checks": [
+    {
+      "source_ids": [
+        "p49-seventh-discovered-target-8",
+        "p49-seventh-discovered-target-11"
+      ],
+      "same_original_http_bytes": false,
+      "same_normalized_visible_text": true,
+      "same_resolved_route_before_query": true,
+      "interpretation": "Raw acquisition SHA counts separate responses; equal visible text/form route is not a second policy or new academic year."
+    },
+    {
+      "source_ids": [
+        "p84-seventh-discovered-target-13",
+        "p84-seventh-discovered-target-15"
+      ],
+      "same_original_http_bytes": false,
+      "same_normalized_visible_text": true,
+      "same_resolved_route_before_query": true,
+      "interpretation": "Raw acquisition SHA counts separate responses; equal visible text/form route is not a second policy or new academic year."
+    }
+  ],
+  "production_frozen_objects_confirmed_after_all_tests": true,
+  "ruff_changed_scripts_and_tests": "pass"
+}

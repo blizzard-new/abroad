@@ -59,10 +59,11 @@ def main():
     assert len(original_workflows) == len(current_workflows)
     changed_workflows = [(json.loads(old), json.loads(new))
                          for old, new in zip(original_workflows, current_workflows, strict=True) if old != new]
-    assert len(changed_workflows) == 1
-    sungshin_name = next(p.school_name for p in partners if p.source_pages == [49])
-    assert all(old["school_name"] == new["school_name"] == sungshin_name
-               for old, new in changed_workflows)
+    reviewed_pages = {49, 89}
+    reviewed_names = {p.school_name for p in partners if p.source_pages[0] in reviewed_pages}
+    assert len(changed_workflows) == len(reviewed_pages)
+    assert {old["school_name"] for old, _ in changed_workflows} == reviewed_names
+    assert all(old["school_name"] == new["school_name"] for old, new in changed_workflows)
     original = subprocess.check_output(["git", "show", BASE + ":src/exchange_info/official_data/ccu/destination_profiles.jsonl"], cwd=ROOT)
     new = (BUNDLE / "destination_profiles.jsonl").read_bytes()
     assert new.startswith(original) and len(new.splitlines()) == 104
@@ -93,9 +94,10 @@ def main():
               "coordinates": point_count, "licensed_photos": image_count,
               "matrix_counts": {group: dict(Counter(f["status"] for row in fields.values() for f in row[group].values()))
                                 for group in ["host_fields", "profile_fields", "general_campus_fields"]},
-              "old_official_data_preserved_except_reviewed_workflow_row": True,
-              "published_workflow_refresh": {"changed_rows": 1, "school_name": sungshin_name,
-                                             "other_rows_preserved_byte_for_byte": len(current_workflows) - 1},
+              "old_official_data_preserved_except_reviewed_workflow_rows": True,
+              "published_workflow_refresh": {"changed_rows": len(changed_workflows), "school_names": sorted(reviewed_names),
+                                             "reviewed_pages": sorted(reviewed_pages),
+                                             "other_rows_preserved_byte_for_byte": len(current_workflows) - len(changed_workflows)},
               "original_ccu_profiles_sha256": hashlib.sha256(original).hexdigest(),
               "package": package}
     args.output.parent.mkdir(parents=True, exist_ok=True)

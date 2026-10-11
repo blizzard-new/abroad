@@ -11,8 +11,8 @@
   "initial_counts": {
     "coordinate_gaps": 3,
     "licensed_photo_gaps": 4,
-    "website_identity_gaps": 2,
-    "host_missing_fields": 638
+    "website_identity_gaps": 1,
+    "host_missing_fields": 618
   },
   "schools": [
     {
@@ -15330,6 +15330,39 @@
           "classification": "acquired_not_policy_verified"
         },
         {
+          "source_id": "p44-seventh-official-adams-bluebook",
+          "source_url": "https://kac.kmu.ac.kr/kac/7739/subview.do",
+          "checked_at": "2026-10-11T15:39:01.893696+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://kac.kmu.ac.kr/kac/7739/subview.do",
+          "title": null,
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "bundled_file": "completion_sources/p44-seventh-official-adams-bluebook.html.gz",
+          "classification": "source_failure"
+        },
+        {
+          "source_id": "p44-seventh-official-calendar",
+          "source_url": "https://www.keimyung.ac.kr/page.jsp?mnu_uid=3373",
+          "checked_at": "2026-10-11T15:25:28.565835+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.keimyung.ac.kr/page.jsp?mnu_uid=3373",
+          "title": null,
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "bundled_file": "completion_sources/p44-seventh-official-calendar.html.gz",
+          "classification": "source_failure"
+        },
+        {
+          "source_id": "p44-seventh-official-campusmap",
+          "source_url": "https://www.keimyung.ac.kr/page.jsp?mnu_uid=3319",
+          "checked_at": "2026-10-11T15:25:28.566062+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.keimyung.ac.kr/page.jsp?mnu_uid=3319",
+          "title": null,
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "bundled_file": "completion_sources/p44-seventh-official-campusmap.html.gz",
+          "classification": "source_failure"
+        },
+        {
           "source_id": "p44-website-secondary",
           "source_url": "https://www.kmu.ac.kr/uni/eng/main.jsp",
           "checked_at": "2026-10-11T09:48:06.200988+00:00",
@@ -17619,6 +17652,61 @@
           "classification": "acquired_not_policy_verified"
         },
         {
+          "source_id": "p49-seventh-discovered-target-10",
+          "source_url": "https://forms.gle/smWwKwCnvb4Gj4Bo9",
+          "checked_at": "2026-10-11T15:27:59.445980+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Fall 2026 Exchange Student Nomination Form",
+          "sha256": "59fc9566d41cf729f93f39ff622c47902f1ac49466dfb8d3925bfda39d941a1c",
+          "bundled_file": "completion_sources/p49-seventh-discovered-target-10.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p49-seventh-discovered-target-11",
+          "source_url": "https://forms.gle/QfsMfMs5onkAYsnG9",
+          "checked_at": "2026-10-11T15:27:59.726093+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Spring 2027 Exchange Student Nomination Form",
+          "sha256": "6052d40f03d8f1ba6cab85e9b2b271cd63ce5e7183c4e3197d99ecfd61821898",
+          "bundled_file": "completion_sources/p49-seventh-discovered-target-11.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p49-seventh-discovered-target-12",
+          "source_url": "https://forms.gle/zWDdWnANSoToEXU48",
+          "checked_at": "2026-10-11T15:28:00.384028+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Spring 2026 Exchange Student Nomination Form",
+          "sha256": "bbda5e1a2623e65754377fed184e9c29725bef7d79e8426b8fbde323ec652240",
+          "bundled_file": "completion_sources/p49-seventh-discovered-target-12.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p49-seventh-discovered-target-8",
+          "source_url": "https://docs.google.com/forms/d/e/1FAIpQLScj33BhDg2c7F9OBcHTeUPsHA2-91jXNKivaJ6zDqIEzEmu2g/viewform?usp=dialog",
+          "checked_at": "2026-10-11T15:27:59.243308+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Spring 2027 Exchange Student Nomination Form",
+          "sha256": "3977eca7e2020e8e461ca48602e28a20d90eb174870be082d02dae9bdc3c1b17",
+          "bundled_file": "completion_sources/p49-seventh-discovered-target-8.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p49-seventh-discovered-target-9",
+          "source_url": "https://drive.google.com/drive/folders/1EYhpOwumPw4EFUNplyjiyqHz_qi2TZTd",
+          "checked_at": "2026-10-11T15:27:59.312676+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Sungshin-Spring 2026 Fact Sheet & Materials - Google Drive",
+          "sha256": "a9b907d54d88cf37e3761200b6c707486e7c234826f02387df48f6b1112eb724",
+          "bundled_file": "completion_sources/p49-seventh-discovered-target-9.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
           "source_id": "p49-wikidata",
           "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q7640246.json",
           "checked_at": "2026-10-11T08:38:06.947710+00:00",
@@ -17746,8 +17834,8 @@
           "field": "application_forms",
           "field_status": "conflict",
           "classification": "personal_access_required",
-          "reason": "公开当期附件可读，但提名表内旧年和提名网址差異待校方確認；個人portal最新字段需本人帳號。",
-          "value": "已開啟當期checklist／Medical Assessment兩頁PDF、15頁Online Application Manual、nomination XLSX。醫療表學生填性別／血型／生日、10項Yes/No/Remarks及日期／姓名／簽名，無通用醫師簽章格；額外重大健康文件個別提交。學生portal需email驗證、sign up/sign in、Save後還必須Final Submission；手冊範例不是已登入私有表完整必填集。Nomination XLSX的Sheet1!V1實際仍要求正本於2025-12-01到達，與2027公告的2026-11-23矛盾，不能把檔名Spring2027當內容正確；PDF及checklist短提名網址不同，官方最新公告長網址保留來源，未猜其相同表。",
+          "reason": "已解公開提名同表身份與舊年度入口；XLSX舊到件年、舊表／folder链接及個人TIS完整表適用仍待核。",
+          "value": "已開啟當期checklist／Medical Assessment兩頁PDF、15頁Online Application Manual、nomination XLSX。醫療表學生填性別／血型／生日、10項Yes/No/Remarks及日期／姓名／簽名，無通用醫師簽章格；額外重大健康文件個別提交。學生portal需email驗證、sign up/sign in、Save後還必須Final Submission；手冊範例不是已登入私有表完整必填集。Nomination XLSX的Sheet1!V1實際仍要求正本於2025-12-01到達，與2027公告的2026-11-23矛盾，不能把檔名Spring2027當內容正確。本批已實讀5入口：公告長網址與PDFp3 Qfs短鏈解析為同一Spring2027 Google form ID、日期一致；只讀公開Page1/2、未填Next或送出，Google登入提示是保存進度而非已證強制登入。Page1需overall GPA（範例非門檻）、母校英文名、標為Nationality但選項實為大學名、coordinator及email；含中正選項不代表本期校內開放。PDFp1 smW短鏈實為Fall2026表，checklist zWD短鏈實為已關閉Spring2026表，不能拿舊表提名。公告Drive folder實列Spring2026材料／2025修改日，此為列表核對，不假定每附件正文已讀；當期直接公告PDF仍保留。學生TIS signup/login私有表與公開coordinator提名分開。",
           "evidence": [
             {
               "source_id": "p49-official-spring2027-attachment-113856",
@@ -17800,6 +17888,61 @@
               "status": "conflict",
               "location_in_source": "XLSX Sheet1!V1; actual cell, not PDF page",
               "note": "XLSX Sheet1!V1; actual cell, not PDF page"
+            },
+            {
+              "source_id": "p49-seventh-discovered-target-8",
+              "source_url": "https://docs.google.com/forms/d/e/1FAIpQLScj33BhDg2c7F9OBcHTeUPsHA2-91jXNKivaJ6zDqIEzEmu2g/viewform?usp=dialog",
+              "source_pages": [],
+              "excerpt": "Spring 2027 Exchange Student Nomination Form",
+              "academic_year": "Spring2027",
+              "application_round": "Spring2027",
+              "checked_at": "2026-10-11T15:27:59.243308+00:00",
+              "content_hash": "3977eca7e2020e8e461ca48602e28a20d90eb174870be082d02dae9bdc3c1b17",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-seventh-discovered-target-9",
+              "source_url": "https://drive.google.com/drive/folders/1EYhpOwumPw4EFUNplyjiyqHz_qi2TZTd",
+              "source_pages": [],
+              "excerpt": "Sungshin-Spring 2026",
+              "academic_year": "資料夾僅Spring2026檔案列表，未讀其中各PDF正文",
+              "application_round": "資料夾僅Spring2026檔案列表，未讀其中各PDF正文",
+              "checked_at": "2026-10-11T15:27:59.312676+00:00",
+              "content_hash": "a9b907d54d88cf37e3761200b6c707486e7c234826f02387df48f6b1112eb724",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-seventh-discovered-target-10",
+              "source_url": "https://forms.gle/smWwKwCnvb4Gj4Bo9",
+              "source_pages": [],
+              "excerpt": "Fall 2026 Exchange Student Nomination Form",
+              "academic_year": "Fall2026",
+              "application_round": "Fall2026",
+              "checked_at": "2026-10-11T15:27:59.445980+00:00",
+              "content_hash": "59fc9566d41cf729f93f39ff622c47902f1ac49466dfb8d3925bfda39d941a1c",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-seventh-discovered-target-11",
+              "source_url": "https://forms.gle/QfsMfMs5onkAYsnG9",
+              "source_pages": [],
+              "excerpt": "Spring 2027 Exchange Student Nomination Form",
+              "academic_year": "Spring2027",
+              "application_round": "Spring2027",
+              "checked_at": "2026-10-11T15:27:59.726093+00:00",
+              "content_hash": "6052d40f03d8f1ba6cab85e9b2b271cd63ce5e7183c4e3197d99ecfd61821898",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-seventh-discovered-target-12",
+              "source_url": "https://forms.gle/zWDdWnANSoToEXU48",
+              "source_pages": [],
+              "excerpt": "Spring 2026 Exchange Student Nomination Form",
+              "academic_year": "Spring2026 closed form",
+              "application_round": "Spring2026 closed form",
+              "checked_at": "2026-10-11T15:28:00.384028+00:00",
+              "content_hash": "bbda5e1a2623e65754377fed184e9c29725bef7d79e8426b8fbde323ec652240",
+              "status": "conflict"
             }
           ],
           "official_not_announced": false,
@@ -21416,6 +21559,28 @@
           "classification": "acquired_not_policy_verified"
         },
         {
+          "source_id": "p57-seventh-dorm-fee-graduate-returning",
+          "source_url": "https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_SGS_TC.pdf",
+          "checked_at": "2026-10-11T15:27:58.801695+00:00",
+          "http_status": 502,
+          "error": "HTTPError: 502 Server Error: Bad Gateway for url: https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_SGS_TC.pdf",
+          "title": null,
+          "sha256": "a2bf91b93b0312bb303ea88d66b61a71909f28cae65bcbb232a84b0cf5fbebe1",
+          "bundled_file": "completion_sources/p57-seventh-dorm-fee-graduate-returning.html.gz",
+          "classification": "source_failure"
+        },
+        {
+          "source_id": "p57-seventh-dorm-fee-undergraduate-new",
+          "source_url": "https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_TC.pdf",
+          "checked_at": "2026-10-11T15:27:59.095550+00:00",
+          "http_status": 502,
+          "error": "HTTPError: 502 Server Error: Bad Gateway for url: https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_TC.pdf",
+          "title": null,
+          "sha256": "a2bf91b93b0312bb303ea88d66b61a71909f28cae65bcbb232a84b0cf5fbebe1",
+          "bundled_file": "completion_sources/p57-seventh-dorm-fee-undergraduate-new.html.gz",
+          "classification": "source_failure"
+        },
+        {
           "source_id": "p57-wikidata",
           "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q847993.json",
           "checked_at": "2026-10-11T08:38:07.837079+00:00",
@@ -24208,34 +24373,6 @@
       "requested_assets": [],
       "unresolved_host_fields": [
         {
-          "field": "program_scope",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "eligibility",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "nomination_deadline",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "application_deadline",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
           "field": "documents",
           "classification": "research_incomplete",
           "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
@@ -24251,20 +24388,6 @@
         },
         {
           "field": "academic_calendar",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "course_restrictions",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "housing",
           "classification": "research_incomplete",
           "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
           "official_not_announced": false,
@@ -24447,6 +24570,17 @@
           "classification": "acquired_not_policy_verified"
         },
         {
+          "source_id": "p63-seventh-current-student-exchange",
+          "source_url": "https://www.ucsiuniversity.edu.my/student-exchange-programme",
+          "checked_at": "2026-10-11T15:27:58.035547+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Student Exchange Programme",
+          "sha256": "dc2fff0aa3ec7cf5084ba9bc98cfe40c24ef3f9115d096978f8b7cc995260e25",
+          "bundled_file": "completion_sources/p63-seventh-current-student-exchange.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
           "source_id": "p63-wikidata",
           "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q7864125.json",
           "checked_at": "2026-10-11T08:38:08.361003+00:00",
@@ -24461,21 +24595,45 @@
       "pending_host_policy_reviews": [
         {
           "field": "program_scope",
-          "field_status": "missing",
+          "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "明載舊年度的接待參考，不是2027當期規則；中正本期未開放。",
+          "value": "UCSI歷史incoming exchange由母校聯絡、甄選及申請；一般課程英文。現行partner頁沒有列中正，未因此判協議失效，2027有效協議待核。",
+          "evidence": [
+            {
+              "source_id": "p63-followup-inbound",
+              "source_url": "https://www.ucsiuniversity.edu.my/inbound-student-exchange-programme",
+              "source_pages": [],
+              "excerpt": "run entirely by the students’ home universities",
+              "academic_year": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "application_round": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T11:41:30.753091+00:00",
+              "content_hash": "61fa1b105c107b9ad65e8b3428346144edb0fe9c4d5d3b36db0c88369ec54047",
+              "status": "reference_only"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "eligibility",
-          "field_status": "missing",
+          "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "明載舊年度的接待參考，不是2027當期規則；中正本期未開放。",
+          "value": "歷史incoming須母校在學、至少完成一學期、良好成績及身心健康；未載數字GPA或自加年級限制。",
+          "evidence": [
+            {
+              "source_id": "p63-followup-inbound",
+              "source_url": "https://www.ucsiuniversity.edu.my/inbound-student-exchange-programme",
+              "source_pages": [],
+              "excerpt": "Must have completed at least one semester of studies",
+              "academic_year": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "application_round": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T11:41:30.753091+00:00",
+              "content_hash": "61fa1b105c107b9ad65e8b3428346144edb0fe9c4d5d3b36db0c88369ec54047",
+              "status": "reference_only"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
@@ -24483,21 +24641,19 @@
           "field": "language",
           "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "無，但教學環境主要使用的語言是英文",
+          "reason": "明載舊年度的接待參考，不是2027當期規則；中正本期未開放。",
+          "value": "歷史incoming IELTS5.5／TOEFL500，母校全英授課者可豁免測驗；未列新版iBT換算，不代替中正語言要求。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                63
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "無，但教學環境主要使用的語言是英文",
-              "reference_excerpt": "無，但教學環境主要使用的語言是英文",
-              "note": null
+              "source_id": "p63-followup-inbound",
+              "source_url": "https://www.ucsiuniversity.edu.my/inbound-student-exchange-programme",
+              "source_pages": [],
+              "excerpt": "IELTS 5.5 and TOEFL 500",
+              "academic_year": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "application_round": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T11:41:30.753091+00:00",
+              "content_hash": "61fa1b105c107b9ad65e8b3428346144edb0fe9c4d5d3b36db0c88369ec54047",
+              "status": "reference_only"
             }
           ],
           "official_not_announced": false,
@@ -24505,21 +24661,45 @@
         },
         {
           "field": "nomination_deadline",
-          "field_status": "missing",
+          "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "明載舊年度的接待參考，不是2027當期規則；中正本期未開放。",
+          "value": "歷史Jan2025入學：母校提名2024-09-12；表只到Jan2025，2027提名日尚未核實。",
+          "evidence": [
+            {
+              "source_id": "p63-followup-inbound",
+              "source_url": "https://www.ucsiuniversity.edu.my/inbound-student-exchange-programme",
+              "source_pages": [],
+              "excerpt": "12 September 2024",
+              "academic_year": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "application_round": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T11:41:30.753091+00:00",
+              "content_hash": "61fa1b105c107b9ad65e8b3428346144edb0fe9c4d5d3b36db0c88369ec54047",
+              "status": "reference_only"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "application_deadline",
-          "field_status": "missing",
+          "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "明載舊年度的接待參考，不是2027當期規則；中正本期未開放。",
+          "value": "歷史Jan2025入學：文件2024-10-03；不是2027校外期限，不產生當期提醒。",
+          "evidence": [
+            {
+              "source_id": "p63-followup-inbound",
+              "source_url": "https://www.ucsiuniversity.edu.my/inbound-student-exchange-programme",
+              "source_pages": [],
+              "excerpt": "3 October 2024",
+              "academic_year": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "application_round": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T11:41:30.753091+00:00",
+              "content_hash": "61fa1b105c107b9ad65e8b3428346144edb0fe9c4d5d3b36db0c88369ec54047",
+              "status": "reference_only"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
@@ -24555,21 +24735,45 @@
         },
         {
           "field": "course_restrictions",
-          "field_status": "missing",
+          "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "明載舊年度的接待參考，不是2027當期規則；中正本期未開放。",
+          "value": "歷史incoming課程選擇於每學期前三週；具體2027開課、校區／專業先修及名額待核，不以全英授課保證所有課可選。",
+          "evidence": [
+            {
+              "source_id": "p63-followup-inbound",
+              "source_url": "https://www.ucsiuniversity.edu.my/inbound-student-exchange-programme",
+              "source_pages": [],
+              "excerpt": "First three (3) weeks of each semester",
+              "academic_year": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "application_round": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T11:41:30.753091+00:00",
+              "content_hash": "61fa1b105c107b9ad65e8b3428346144edb0fe9c4d5d3b36db0c88369ec54047",
+              "status": "reference_only"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "housing",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "實際住宿正文已讀，限定KL一般服務；沒有當期交換分配證明。",
+          "value": "KL校區Blocks D/E一般校內宿舍主要雙人，E有限單人套房；外宿Angkasa Condominiums由UCSI Peterson管理。Sarawak／Bandar Springhill另校區，沒有2027交換床位、房型或租金保證。",
+          "evidence": [
+            {
+              "source_id": "p63-life-1",
+              "source_url": "https://www.ucsiuniversity.edu.my/accommodation/Kuala-Lumpur?display=Kuala-Lumpur-Campus",
+              "source_pages": [],
+              "excerpt": "Angkasa",
+              "academic_year": "未標學年KL一般住宿頁，2027交換適用尚未核實",
+              "application_round": "未標學年KL一般住宿頁，2027交換適用尚未核實",
+              "checked_at": "2026-10-11T08:43:10.597433+00:00",
+              "content_hash": "d362872a5b234c39cedb5ae38f69db404c8428fe2fbc25ed06e709d0f1513cfa",
+              "status": "needs_confirmation"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
@@ -24637,21 +24841,19 @@
           "field": "exchange_duration",
           "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "一學期(one semester)",
+          "reason": "明載舊年度的接待參考，不是2027當期規則；中正本期未開放。",
+          "value": "歷史incoming可交換一或兩學期；有效協議／當期接待期仍需核實。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                63
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "一學期(one semester)",
-              "reference_excerpt": "一學期(one semester)",
-              "note": null
+              "source_id": "p63-followup-inbound",
+              "source_url": "https://www.ucsiuniversity.edu.my/inbound-student-exchange-programme",
+              "source_pages": [],
+              "excerpt": "One semester or two semesters",
+              "academic_year": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "application_round": "頁內入學表僅Jan2024至Jan2025；歷史incoming參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T11:41:30.753091+00:00",
+              "content_hash": "61fa1b105c107b9ad65e8b3428346144edb0fe9c4d5d3b36db0c88369ec54047",
+              "status": "reference_only"
             }
           ],
           "official_not_announced": false,
@@ -28218,6 +28420,17 @@
           "title": null,
           "sha256": "88d32c11087c44a6da5fc6d84bc3c08aadc711da4c269e2c2d0b998911e90540",
           "bundled_file": "completion_sources/p71-ror.json",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p71-seventh-official-360-bus",
+          "source_url": "https://360campus.dntu.edu.vn/?Type=risjjL7NsQZ",
+          "checked_at": "2026-10-11T15:39:01.893935+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Đại Học Công Nghệ Đồng Nai 360°",
+          "sha256": "5a9efa6f6e4cb5a5f8188a6241d88b4bec381b8ff22494c835714e983f3578f2",
+          "bundled_file": "completion_sources/p71-seventh-official-360-bus.html.gz",
           "classification": "acquired_not_policy_verified"
         },
         {
@@ -33127,83 +33340,6 @@
       "requested_assets": [],
       "unresolved_host_fields": [
         {
-          "field": "nomination_deadline",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "application_deadline",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "documents",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "academic_calendar",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "course_restrictions",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "housing",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "housing_deadline",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "costs",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "insurance",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "visa",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "arrival",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
           "field": "host_tuition",
           "classification": "research_incomplete",
           "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
@@ -33356,6 +33492,116 @@
           "classification": "acquired_not_policy_verified"
         },
         {
+          "source_id": "p84-seventh-current-bilateral-form",
+          "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2025/03/EXCHANGE-STUDENT-APPLICATION-FORM.docx",
+          "checked_at": "2026-10-11T15:37:23.321378+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": null,
+          "sha256": "9a4edccceddfa13035b85419e6c48036a8ef7fc460e778139937e2fe91044938",
+          "bundled_file": "completion_sources/p84-seventh-current-bilateral-form.zip",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p84-seventh-current-calendar",
+          "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/Academic-Calendar-2026-27-en.pdf",
+          "checked_at": "2026-10-11T15:37:23.320655+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": null,
+          "sha256": "a6a65592297bd48d8a4d8d2c3d7bd4dafda04e541363495852916d4510305dde",
+          "bundled_file": "completion_sources/p84-seventh-current-calendar.pdf",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p84-seventh-current-entry",
+          "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/04/ENTRY-PERMIT-REGULATIONS.pdf",
+          "checked_at": "2026-10-11T15:37:24.239170+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": null,
+          "sha256": "efb1d85b0915adb848fc9bec06ed8ba800afddfa5f52fbeeef143c06ca77449c",
+          "bundled_file": "completion_sources/p84-seventh-current-entry.pdf",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p84-seventh-current-factsheet",
+          "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/INFORMATION-SHEET-FOR-ucy-2026-2027-new.pdf",
+          "checked_at": "2026-10-11T15:37:23.320352+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": null,
+          "sha256": "6e0740b7d7102db7d15eda456bc9426f4dbd356826998b1f0c2bb7e2d5644e66",
+          "bundled_file": "completion_sources/p84-seventh-current-factsheet.pdf",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p84-seventh-current-insurance",
+          "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/04/HEALTH-INSURANCE-2026-27.pdf",
+          "checked_at": "2026-10-11T15:37:23.992285+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": null,
+          "sha256": "061d9ff2c8515a136c68b82b071742d7fddad7082e4fa6f71d5600f42357f8bd",
+          "bundled_file": "completion_sources/p84-seventh-current-insurance.pdf",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p84-seventh-current-language",
+          "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/Language-requirements-for-erasmus-incoming-students.pdf",
+          "checked_at": "2026-10-11T15:37:23.320966+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": null,
+          "sha256": "53746d8ace8b233bca66f03312ee4360188ce7468c0c85095bc479797c9fbaaf",
+          "bundled_file": "completion_sources/p84-seventh-current-language.pdf",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p84-seventh-discovered-target-13",
+          "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus/studies-incoming-er/",
+          "checked_at": "2026-10-11T15:28:00.433044+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Σπουδές Εισερχόμενη – International Relations",
+          "sha256": "164d95d789bdc7ddcfbd7237628b7a00232d201a4110b527dee4087fde420c49",
+          "bundled_file": "completion_sources/p84-seventh-discovered-target-13.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p84-seventh-discovered-target-14",
+          "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus-international-2/studies-incoming/",
+          "checked_at": "2026-10-11T15:28:01.275614+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Σπουδές Εισερχόμενη – International Relations",
+          "sha256": "03862412551c165c612e79b9098c27190b9f370e312c94e44f8860cbe32ac7ef",
+          "bundled_file": "completion_sources/p84-seventh-discovered-target-14.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p84-seventh-discovered-target-15",
+          "source_url": "https://www.ucy.ac.cy/ir/studies-incoming-er/?lang=el",
+          "checked_at": "2026-10-11T15:28:01.758733+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Σπουδές Εισερχόμενη – International Relations",
+          "sha256": "74ae219efdb0fddc769ebb69a609d0bfb4c38888b5d8a06e79467f47c938b5d6",
+          "bundled_file": "completion_sources/p84-seventh-discovered-target-15.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p84-seventh-international-english",
+          "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus-international/studies-incoming/?lang=en",
+          "checked_at": "2026-10-11T15:37:24.803837+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Studies Incoming – International Relations",
+          "sha256": "006890e0be7838b99516be5fa6c20257acacd2da9729b621198efab456eb7f35",
+          "bundled_file": "completion_sources/p84-seventh-international-english.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
           "source_id": "p84-wikidata",
           "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q1520608.json",
           "checked_at": "2026-10-11T08:38:09.678628+00:00",
@@ -33370,23 +33616,32 @@
       "pending_host_policy_reviews": [
         {
           "field": "program_scope",
-          "field_status": "reference_only",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "不可跨系申請 學士生不可修碩士課程",
+          "reason": "接待校當期正文已讀；不證明中正有效當期學科協議或校內可申請。",
+          "value": "2026–2027接待Erasmus與其他有效交換協議均須母校正式提名及相關學科協議；非Erasmus有独立申請／Learning Agreement。Erasmus International KA171的生活交通津貼是另一有協議計畫，不視為中正交換保證補助。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                84
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "不可跨系申請 學士生不可修碩士課程",
-              "reference_excerpt": "不可跨系申請 學士生不可修碩士課程",
-              "note": null
+              "source_id": "p84-seventh-discovered-target-13",
+              "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus/studies-incoming-er/",
+              "source_pages": [],
+              "excerpt": "μέσω άλλων συμφωνιών συνεργασίας",
+              "academic_year": "2026–2027 incoming正文，Last Updated 2026-10-08；中正本期未開放參考",
+              "application_round": "2026–2027 incoming正文，Last Updated 2026-10-08；中正本期未開放參考",
+              "checked_at": "2026-10-11T15:28:00.433044+00:00",
+              "content_hash": "164d95d789bdc7ddcfbd7237628b7a00232d201a4110b527dee4087fde420c49",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p84-seventh-international-english",
+              "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus-international/studies-incoming/?lang=en",
+              "source_pages": [],
+              "excerpt": "with which an Erasmus International agreement exists",
+              "academic_year": "Erasmus International頁更新2026-09-15；個別協議適用另核",
+              "application_round": "Erasmus International頁更新2026-09-15；個別協議適用另核",
+              "checked_at": "2026-10-11T15:37:24.803837+00:00",
+              "content_hash": "006890e0be7838b99516be5fa6c20257acacd2da9729b621198efab456eb7f35",
+              "status": "needs_confirmation"
             }
           ],
           "official_not_announced": false,
@@ -33394,23 +33649,34 @@
         },
         {
           "field": "eligibility",
-          "field_status": "reference_only",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "不可跨系申請 學士生不可修碩士課程",
+          "reason": "接待校當期正文已讀；不證明中正有效當期學科協議或校內可申請。",
+          "value": "接待端須母校提名及2026–2027相關學科有效協議，不可自行提名；Computer Science才要求GPA6.5/10。未由接待學科選課彈性撤銷中正歷史不可跨系限制；學制與協議須另核。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_id": "p84-seventh-discovered-target-13",
+              "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus/studies-incoming-er/",
+              "source_pages": [],
+              "excerpt": "ΔΕΝ ΔΥΝΑΤΑΙ",
+              "academic_year": "2026–2027 incoming正文，Last Updated 2026-10-08；中正本期未開放參考",
+              "application_round": "2026–2027 incoming正文，Last Updated 2026-10-08；中正本期未開放參考",
+              "checked_at": "2026-10-11T15:28:00.433044+00:00",
+              "content_hash": "164d95d789bdc7ddcfbd7237628b7a00232d201a4110b527dee4087fde420c49",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p84-seventh-current-language",
+              "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/Language-requirements-for-erasmus-incoming-students.pdf",
               "source_pages": [
-                84
+                1
               ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "不可跨系申請 學士生不可修碩士課程",
-              "reference_excerpt": "不可跨系申請 學士生不可修碩士課程",
-              "note": null
+              "excerpt": "A GPA of 6.5/10",
+              "academic_year": "2026–2027官方incoming頁所連附件；Erasmus／雙邊適用分開，中正本期未開放",
+              "application_round": "Spring2027接待參考；非中正可申請名額",
+              "checked_at": "2026-10-11T15:37:23.320966+00:00",
+              "content_hash": "53746d8ace8b233bca66f03312ee4360188ce7468c0c85095bc479797c9fbaaf",
+              "status": "needs_confirmation"
             }
           ],
           "official_not_announced": false,
@@ -33418,159 +33684,216 @@
         },
         {
           "field": "language",
-          "field_status": "reference_only",
+          "field_status": "conflict",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "English B2 : IELTS 5.5 - 6.0 TOEIC (R&L) Total 785 – 940 TOEFL iBT 72 – 94",
+          "reason": "當期公開頁與當期所連PDF對母校語言證明接受範圍相反，須UCY確認；不同於英文授課學程主任的明示例外。",
+          "value": "2026/27 Fact Sheet及language附件要求English B2，主要教學為希臘文、其他學系英語課有限。PDF拒一般母校／OLS證明，但可全英讀滿一年學程主任證明或英語母語護照；2026-10-08网页又接受母校B2修課證明，兩來源相反，保留conflict，不自行選較寬或換算數值測驗。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_id": "p84-seventh-current-factsheet",
+              "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/INFORMATION-SHEET-FOR-ucy-2026-2027-new.pdf",
               "source_pages": [
-                84
+                2
               ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "English B2 : IELTS 5.5 - 6.0 TOEIC (R&L) Total 785 – 940 TOEFL iBT 72 – 94",
-              "reference_excerpt": "English B2 : IELTS 5.5 - 6.0 TOEIC (R&L) Total 785 – 940 TOEFL iBT 72 – 94",
-              "note": null
+              "excerpt": "English B2",
+              "academic_year": "2026–2027官方incoming頁所連附件；Erasmus／雙邊適用分開，中正本期未開放",
+              "application_round": "Spring2027接待參考；非中正可申請名額",
+              "checked_at": "2026-10-11T15:37:23.320352+00:00",
+              "content_hash": "6e0740b7d7102db7d15eda456bc9426f4dbd356826998b1f0c2bb7e2d5644e66",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p84-seventh-current-language",
+              "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/Language-requirements-for-erasmus-incoming-students.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "OLS certificates will not be accepted",
+              "academic_year": "2026–2027官方incoming頁所連附件；Erasmus／雙邊適用分開，中正本期未開放",
+              "application_round": "Spring2027接待參考；非中正可申請名額",
+              "checked_at": "2026-10-11T15:37:23.320966+00:00",
+              "content_hash": "53746d8ace8b233bca66f03312ee4360188ce7468c0c85095bc479797c9fbaaf",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p84-seventh-discovered-target-13",
+              "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus/studies-incoming-er/",
+              "source_pages": [],
+              "excerpt": "παρακολούθησαν μαθήματα γλωσσών μέχρι το επίπεδο Β2",
+              "academic_year": "2026–2027 incoming正文，Last Updated 2026-10-08；中正本期未開放參考",
+              "application_round": "2026–2027 incoming正文，Last Updated 2026-10-08；中正本期未開放參考",
+              "checked_at": "2026-10-11T15:28:00.433044+00:00",
+              "content_hash": "164d95d789bdc7ddcfbd7237628b7a00232d201a4110b527dee4087fde420c49",
+              "status": "conflict"
             }
           ],
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "nomination_deadline",
-          "field_status": "missing",
-          "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "application_deadline",
-          "field_status": "missing",
-          "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "documents",
-          "field_status": "missing",
-          "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "application_forms",
-          "field_status": "reference_only",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "https://drive.google.com/file/d/1UYNN9ROBEMajhVUJ_lTCGmax33SxVoR0/view?usp= sharing",
+          "reason": "無年度模板已讀且可開啟；不能把URL2025/03視為申請學年，也不證明中正本期開放。",
+          "value": "已打開現行2026/27頁所連非Erasmus Exchange DOCX：學年20__–20__留白、個人／母校／學制1st/2nd/3rd／接待學科／期間／語言／工作經驗；學生、母校department與International Office、接待department與Mobility Office簽名日期。模板版本與CCU當期適用未核；Erasmus個人表則提名後寄链接，兩路徑分開。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                84
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "https://drive.google.com/file/d/1UYNN9ROBEMajhVUJ_lTCGmax33SxVoR0/view?usp= sharing",
-              "reference_excerpt": "https://drive.google.com/file/d/1UYNN9ROBEMajhVUJ_lTCGmax33SxVoR0/view?usp= sharing",
-              "note": null
+              "source_id": "p84-seventh-current-bilateral-form",
+              "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2025/03/EXCHANGE-STUDENT-APPLICATION-FORM.docx",
+              "source_pages": [],
+              "excerpt": "ACADEMIC YEAR 20__ - 20__",
+              "academic_year": "2026/27公開頁所連非Erasmus DOCX；模板學年留白、版本日期未標",
+              "application_round": "非Erasmus Exchange模板參考；不推定中正協議適用",
+              "checked_at": "2026-10-11T15:37:23.321378+00:00",
+              "content_hash": "9a4edccceddfa13035b85419e6c48036a8ef7fc460e778139937e2fe91044938",
+              "status": "needs_confirmation",
+              "location_in_source": "DOCX paragraph heading and SIGNATURES section; no fixed pagination asserted"
+            },
+            {
+              "source_id": "p84-seventh-discovered-target-13",
+              "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus/studies-incoming-er/",
+              "source_pages": [],
+              "excerpt": "ο σύνδεσμος θα αποστέλλεται",
+              "academic_year": "2026–2027 incoming正文，Last Updated 2026-10-08；中正本期未開放參考",
+              "application_round": "2026–2027 incoming正文，Last Updated 2026-10-08；中正本期未開放參考",
+              "checked_at": "2026-10-11T15:28:00.433044+00:00",
+              "content_hash": "164d95d789bdc7ddcfbd7237628b7a00232d201a4110b527dee4087fde420c49",
+              "status": "needs_confirmation"
             }
           ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
-          "field": "academic_calendar",
-          "field_status": "missing",
-          "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
           "field": "course_restrictions",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "housing",
-          "field_status": "missing",
-          "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "housing_deadline",
-          "field_status": "missing",
-          "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "costs",
-          "field_status": "missing",
-          "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "學科協議／Erasmus與CCU歷史限制不同範圍；具體課程未核實。",
+          "value": "當期Fact Sheet平均30ECTS、無re-sit。language附件的Erasmus可同School組合並跨School1–2課但多數須協議department；非Erasmus未證同等跨系權，中正歷史禁止跨系／本科修碩士保留另核。2026/27冬春課程列表標TBA僅此子項，不宣稱所有接待規定尚未公告。",
+          "evidence": [
+            {
+              "source_id": "p84-seventh-current-factsheet",
+              "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/INFORMATION-SHEET-FOR-ucy-2026-2027-new.pdf",
+              "source_pages": [
+                2
+              ],
+              "excerpt": "30 ECTS",
+              "academic_year": "2026–2027官方incoming頁所連附件；Erasmus／雙邊適用分開，中正本期未開放",
+              "application_round": "Spring2027接待參考；非中正可申請名額",
+              "checked_at": "2026-10-11T15:37:23.320352+00:00",
+              "content_hash": "6e0740b7d7102db7d15eda456bc9426f4dbd356826998b1f0c2bb7e2d5644e66",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p84-seventh-current-language",
+              "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/Language-requirements-for-erasmus-incoming-students.pdf",
+              "source_pages": [
+                2
+              ],
+              "excerpt": "1 -2 courses from other Schools",
+              "academic_year": "2026–2027官方incoming頁所連附件；Erasmus／雙邊適用分開，中正本期未開放",
+              "application_round": "Spring2027接待參考；非中正可申請名額",
+              "checked_at": "2026-10-11T15:37:23.320966+00:00",
+              "content_hash": "53746d8ace8b233bca66f03312ee4360188ce7468c0c85095bc479797c9fbaaf",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p84-seventh-discovered-target-13",
+              "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus/studies-incoming-er/",
+              "source_pages": [],
+              "excerpt": "Εαρινό εξάμηνο 2026-2027 (TBA)",
+              "academic_year": "2026–2027 incoming正文，Last Updated 2026-10-08；中正本期未開放參考",
+              "application_round": "2026–2027 incoming正文，Last Updated 2026-10-08；中正本期未開放參考",
+              "checked_at": "2026-10-11T15:28:00.433044+00:00",
+              "content_hash": "164d95d789bdc7ddcfbd7237628b7a00232d201a4110b527dee4087fde420c49",
+              "status": "needs_confirmation"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "insurance",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "正文Erasmus條件已讀，CCU個人雙邊／居留保險要求未獨立核實。",
+          "value": "2026/27公開頁所連Erasmus醫療附件：EU/EEA可EHIC；第三國或無EHIC者須母國保險涵蓋Cyprus。非Erasmus及個人居留程序適用、保額與費率待校方核；不把列出的保險公司視為推薦／唯一選擇。",
+          "evidence": [
+            {
+              "source_id": "p84-seventh-current-insurance",
+              "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/04/HEALTH-INSURANCE-2026-27.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "with coverage in Cyprus",
+              "academic_year": "2026–2027官方incoming頁所連附件；Erasmus／雙邊適用分開，中正本期未開放",
+              "application_round": "Spring2027接待參考；非中正可申請名額",
+              "checked_at": "2026-10-11T15:37:23.992285+00:00",
+              "content_hash": "061d9ff2c8515a136c68b82b071742d7fddad7082e4fa6f71d5600f42357f8bd",
+              "status": "needs_confirmation"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "visa",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "已讀附件全部8頁但Erasmus計畫、國籍認證與主管機關最新要求需個人適用查核；不代送件。",
+          "value": "現行所連8頁entry附件分Non-EU但在EU就讀、Non-EU且在Non-EU就讀、到校後及續留四階段；台灣／CCU雙邊個案不可直接套Erasmus。附件正文含校方送Migration審查、原件認證／醫療與前後不同費項；無承諾核准、沒有用此未標版本PDF當最新主管機關法律結論。",
+          "evidence": [
+            {
+              "source_id": "p84-seventh-current-entry",
+              "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/04/ENTRY-PERMIT-REGULATIONS.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "WHO STUDY IN NON-EU COUNTRIES",
+              "academic_year": "2026–2027官方incoming頁所連附件；Erasmus／雙邊適用分開，中正本期未開放",
+              "application_round": "Spring2027接待參考；非中正可申請名額",
+              "checked_at": "2026-10-11T15:37:24.239170+00:00",
+              "content_hash": "efb1d85b0915adb848fc9bec06ed8ba800afddfa5f52fbeeef143c06ca77449c",
+              "status": "needs_confirmation"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "arrival",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "接待校當期正文已讀；不證明中正有效當期學科協議或校內可申請。",
+          "value": "當期Spring迎新／註冊2027-01-13至15；entry附件說Non-EU Erasmus arrival後7–10日提交after-arrival documents，CCU非Erasmus適用未核，不能稱免簽到校或保證接機。",
+          "evidence": [
+            {
+              "source_id": "p84-seventh-current-factsheet",
+              "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/INFORMATION-SHEET-FOR-ucy-2026-2027-new.pdf",
+              "source_pages": [
+                2
+              ],
+              "excerpt": "13-15/01/2027",
+              "academic_year": "2026–2027官方incoming頁所連附件；Erasmus／雙邊適用分開，中正本期未開放",
+              "application_round": "Spring2027接待參考；非中正可申請名額",
+              "checked_at": "2026-10-11T15:37:23.320352+00:00",
+              "content_hash": "6e0740b7d7102db7d15eda456bc9426f4dbd356826998b1f0c2bb7e2d5644e66",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p84-seventh-current-entry",
+              "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/04/ENTRY-PERMIT-REGULATIONS.pdf",
+              "source_pages": [
+                5
+              ],
+              "excerpt": "Within 7-10 days",
+              "academic_year": "2026–2027官方incoming頁所連附件；Erasmus／雙邊適用分開，中正本期未開放",
+              "application_round": "Spring2027接待參考；非中正可申請名額",
+              "checked_at": "2026-10-11T15:37:24.239170+00:00",
+              "content_hash": "efb1d85b0915adb848fc9bec06ed8ba800afddfa5f52fbeeef143c06ca77449c",
+              "status": "needs_confirmation"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
@@ -36310,7 +36633,7 @@
           "field_status": "needs_confirmation",
           "classification": "research_incomplete",
           "reason": "精確正文／附件核實；以年度、身分、學制、校區分流，矛盾與私人後發表單保留待核。",
-          "value": "镜像稱在截止前申请可保证住房；主辦校區依錄取信；具體宿舍与费率依当期通知。 一般國際exchange四city：Odense／Esbjerg／Kolding／Sønderborg依deadline保障，Sønderborg degree不保；online交換申請後即可申宿舍、不必等offer，但2027年度未明。 Sønderborg未年住宿exchange保障與degree不保障分開、preferences不保；November1 CET未當2027日期。 一般Odense住宿DalumAcademy僅Autumn，可不能當Spring2027住房選項；furnished與shared设施不保特定room。 一般Esbjerg依deadline住房保障；原房間尺寸「10-6m2」疑似字誤保留，不改成16m2或造房型。 一般Esbjerg接受offer後WelcomeLetter列租約／付款；遲簽約或deposit可能失房，保障僅首次、不保偏好房型，續住／離境重返不能再保。 一般Kolding接受offer後WelcomeLetter列租約／付款；遲簽約或deposit可能失房，保障僅首次、不保偏好房型，續住／離境重返不能再保。 一般Odense接受offer後WelcomeLetter列租約／付款；遲簽約或deposit可能失房，保障僅首次、不保偏好房型，續住／離境重返不能再保。 actualhousingexchange各城一offer有deadline前條件，不保首選；1Nov23:59CET/6日accept/14日coolingoff未印2027，保待核。",
+          "value": "镜像稱在截止前申请可保证住房；主辦校區依錄取信；具體宿舍与费率依当期通知。 一般國際exchange四city：Odense／Esbjerg／Kolding／Sønderborg依deadline保障，Sønderborg degree不保；online交換申請後即可申宿舍、不必等offer，但2027年度未明。 Sønderborg未年住宿exchange保障與degree不保障分開、preferences不保；November1 CET未當2027日期。 一般Odense住宿DalumAcademy僅Autumn，可不能當Spring2027住房選項；furnished與shared设施不保特定room。 一般Esbjerg依deadline住房保障；原房間尺寸「10-6m2」疑似字誤保留，不改成16m2或造房型。 一般Esbjerg接受offer後WelcomeLetter列租約／付款；遲簽約或deposit可能失房，保障僅首次、不保偏好房型，續住／離境重返不能再保。 一般Kolding接受offer後WelcomeLetter列租約／付款；遲簽約或deposit可能失房，保障僅首次、不保偏好房型，續住／離境重返不能再保。 一般Odense接受offer後WelcomeLetter列租約／付款；遲簽約或deposit可能失房，保障僅首次、不保偏好房型，續住／離境重返不能再保。 actualhousingexchange各城一offer有deadline前條件，不保首選；1Nov23:59CET/6日accept/14日coolingoff未印2027，保待核。 本次完整住房頁補核：Exchange保障城市為Odense／Kolding／Esbjerg／Vejle／Sønderborg，限按期申請；Sønderborg full-degree不保障。僅一offer、非首選保證；中央頁一般6日接受及14日cooling，部分城市welcome letter／7日另制不統一。",
           "evidence": [
             {
               "source_id": "p89-mirror",
@@ -36432,6 +36755,17 @@
               "note": "actualhousingexchange各城一offer有deadline前條件，不保首選；1Nov23:59CET/6日accept/14日coolingoff未印2027，保待核。",
               "content_hash": "6b9d9f101a027e6eded086dbcb9361cde17afce75b54ea05d97894cf218c8ff5",
               "text_sha256": "423fcbf37a152975a7677bcfa69970e7bd7980686a32dc3520d02f815c1f5244"
+            },
+            {
+              "source_id": "p89-life-1",
+              "source_url": "https://www.sdu.dk/en/uddannelse/studenthousing",
+              "source_pages": [],
+              "excerpt": "Vejle",
+              "academic_year": "現行SDU一般exchange住房正文；未標Spring2027適用學年",
+              "application_round": "現行SDU一般exchange住房正文；未標Spring2027適用學年",
+              "checked_at": "2026-10-11T08:43:41.022683+00:00",
+              "content_hash": "212bdea65494b668f702308af12e2255e80736e6bda57e8e2ec02aa72e620fb4",
+              "status": "needs_confirmation"
             }
           ],
           "official_not_announced": false,
@@ -36442,7 +36776,7 @@
           "field_status": "needs_confirmation",
           "classification": "research_incomplete",
           "reason": "精確正文／附件核實；以年度、身分、學制、校區分流，矛盾與私人後發表單保留待核。",
-          "value": "一般Spring宿舍11/1，按时申请保证住宿；年度适用未核，不与nonEU校外申请10/1合并。 一般February entry住房11/1，限一city，offer6日內回覆、14日coolingoff；該test路徑實有政策正文／2026更新，不由路徑叫test排除，也不升2027年度。 一般Esbjerg住房offer回覆7日，與他city分開；2月entry11/1申請，未明2027當期。私人WelcomeLetter列簽約／付款期限，不造日期。 一般Kolding住房offer回覆7日，與他city分開；2月entry11/1申請，未明2027當期。私人WelcomeLetter列簽約／付款期限，不造日期。 一般Odense住房offer回覆6日，與他city分開；2月entry11/1申請，未明2027當期。私人WelcomeLetter列簽約／付款期限，不造日期。",
+          "value": "一般Spring宿舍11/1，按时申请保证住宿；年度适用未核，不与nonEU校外申请10/1合并。 一般February entry住房11/1，限一city，offer6日內回覆、14日coolingoff；該test路徑實有政策正文／2026更新，不由路徑叫test排除，也不升2027年度。 一般Esbjerg住房offer回覆7日，與他city分開；2月entry11/1申請，未明2027當期。私人WelcomeLetter列簽約／付款期限，不造日期。 一般Kolding住房offer回覆7日，與他city分開；2月entry11/1申請，未明2027當期。私人WelcomeLetter列簽約／付款期限，不造日期。 一般Odense住房offer回覆6日，與他city分開；2月entry11/1申請，未明2027當期。私人WelcomeLetter列簽約／付款期限，不造日期。 本次完整住房頁補核：中央頁住房5/1及11/1為23:59CET，未標2027；此為保住房申請門檻，不等每校區個人合約／付款期限或EU學生申請日。原城市個別6／7日接受差異保留。",
           "evidence": [
             {
               "source_id": "p89-mirror",
@@ -36510,6 +36844,17 @@
               "content_hash": "1e546f8970fbfa641d16395f3e2c1a2e3dcac8332c9be02cd5692fae3cda146f",
               "text_sha256": "7f0b8c18b0c1e74c199e0d8145605af64c84f9734be401c3dba3bb6c6f2b62e4",
               "note": "evidence.status為欄位匯總；來源角色／實際年度由academic_year與原來源分開保存，未年／舊期未升2027。"
+            },
+            {
+              "source_id": "p89-life-1",
+              "source_url": "https://www.sdu.dk/en/uddannelse/studenthousing",
+              "source_pages": [],
+              "excerpt": "Vejle",
+              "academic_year": "現行SDU一般exchange住房正文；未標Spring2027適用學年",
+              "application_round": "現行SDU一般exchange住房正文；未標Spring2027適用學年",
+              "checked_at": "2026-10-11T08:43:41.022683+00:00",
+              "content_hash": "212bdea65494b668f702308af12e2255e80736e6bda57e8e2ec02aa72e620fb4",
+              "status": "needs_confirmation"
             }
           ],
           "official_not_announced": false,
@@ -38785,9 +39130,7 @@
       "school_name": "Saint Petersburg Electrotechnical University 聖彼得堡國立電子科技大學",
       "country": "俄羅斯",
       "availability_status": "not_open",
-      "requested_assets": [
-        "website"
-      ],
+      "requested_assets": [],
       "unresolved_host_fields": [
         {
           "field": "academic_calendar",
@@ -38946,6 +39289,39 @@
           "sha256": "7a666e28b39034df7fa1a83c818a5a6170a3ba53a186349d2e133455c48872ab",
           "bundled_file": "completion_sources/p96-ror.json",
           "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p96-seventh-linked-university",
+          "source_url": "https://etu.ru/en/university/",
+          "checked_at": "2026-10-11T15:37:25.055610+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://etu.ru/en/university/",
+          "title": null,
+          "sha256": "2f85832e31ca57711e6107af6b142363351ae516adb71c69afc643fac26be7f6",
+          "bundled_file": "completion_sources/p96-seventh-linked-university.html.gz",
+          "classification": "source_failure"
+        },
+        {
+          "source_id": "p96-seventh-official-rafu",
+          "source_url": "https://rafu.etu.ru/",
+          "checked_at": "2026-10-11T15:25:28.566325+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Russian-African Network University (RAfU)",
+          "sha256": "69bfe679071dbd82f359bbfe9ec182c011b2b25e6b4d8ac32b9d1a104ad74d2e",
+          "bundled_file": "completion_sources/p96-seventh-official-rafu.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p96-seventh-official-scm2026",
+          "source_url": "https://scm.etu.ru/",
+          "checked_at": "2026-10-11T15:25:28.566768+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://scm.etu.ru/",
+          "title": null,
+          "sha256": "2f85832e31ca57711e6107af6b142363351ae516adb71c69afc643fac26be7f6",
+          "bundled_file": "completion_sources/p96-seventh-official-scm2026.html.gz",
+          "classification": "source_failure"
         },
         {
           "source_id": "p96-website-secondary",
@@ -46669,6 +47045,17 @@
           "classification": "acquired_not_policy_verified"
         },
         {
+          "source_id": "p111-seventh-contact-public",
+          "source_url": "https://www.opf.slu.cz/",
+          "checked_at": "2026-10-11T15:25:28.568916+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Making sure you're not a bot!",
+          "sha256": "f59b08ff1581d33b76d7f302374bb0b40fe4816192cb26483d2f3189612a8285",
+          "bundled_file": "completion_sources/p111-seventh-contact-public.html.gz",
+          "classification": "source_failure"
+        },
+        {
           "source_id": "p111-wikidata",
           "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q354333.json",
           "checked_at": "2026-10-11T08:38:12.292868+00:00",
@@ -48474,27 +48861,6 @@
           "personal_access_required": null
         },
         {
-          "field": "housing",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "housing_deadline",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "costs",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
           "field": "insurance",
           "classification": "research_incomplete",
           "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
@@ -48654,6 +49020,50 @@
           "title": null,
           "sha256": "3819c850bac71795409a393fd666873817dc5cb3a7ea34f27685c91446c0c3a8",
           "bundled_file": "completion_sources/p115-ror.json",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p115-seventh-housing-application",
+          "source_url": "https://www.csun.edu/housing/future-residents/apply-student-housing",
+          "checked_at": "2026-10-11T15:27:58.036135+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Apply for Student Housing | CSU Northridge",
+          "sha256": "4e32ed9b7249ad56854a89531ecb4ef052e90b1cbd03fbe56ce6df54ff0d0ab4",
+          "bundled_file": "completion_sources/p115-seventh-housing-application.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p115-seventh-housing-calendar",
+          "source_url": "https://www.csun.edu/housing/resources/housing-calendar",
+          "checked_at": "2026-10-11T15:27:58.036597+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Housing Calendar | CSU Northridge",
+          "sha256": "0f3b24ef36b1cd806b3f450b134d1ef18403e80f9ca84bce9918ebe7a1067db0",
+          "bundled_file": "completion_sources/p115-seventh-housing-calendar.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p115-seventh-housing-rates",
+          "source_url": "https://www.csun.edu/housing/future-residents/housing-rates",
+          "checked_at": "2026-10-11T15:27:58.036689+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Housing Rates | CSU Northridge",
+          "sha256": "8e1720832bd53514b5f81d2523e8af0c9e3dc6ce4e4302bebcc56d130260cdfe",
+          "bundled_file": "completion_sources/p115-seventh-housing-rates.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p115-seventh-visiting-student-housing",
+          "source_url": "https://www.csun.edu/housing/about-us/visiting-student-housing",
+          "checked_at": "2026-10-11T15:27:58.035847+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Visiting Student Housing | CSU Northridge",
+          "sha256": "0acba92f412e92aa60d9ce5c5673fd395bf6d501e7a32d100b6647d21c3d9417",
+          "bundled_file": "completion_sources/p115-seventh-visiting-student-housing.html.gz",
           "classification": "acquired_not_policy_verified"
         },
         {
@@ -48831,31 +49241,100 @@
         },
         {
           "field": "housing",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "一般年度住宿正文已核；CCU歷史自費SAC個人資格、Spring契約與床位尚未核實。",
+          "value": "2026/27 CSUN Park Apartments/Suites一般宿舍候補，約3500床、先到先處理、無交換床位保證；免費加入waitlist，住宿正式申請需CSUN Portal帳號及USD50費。Family Housing為有配偶／小孩等另一資格與USD500押金，不能套所有交換生。",
+          "evidence": [
+            {
+              "source_id": "p115-seventh-housing-application",
+              "source_url": "https://www.csun.edu/housing/future-residents/apply-student-housing",
+              "source_pages": [],
+              "excerpt": "only approximately 3,500 bed spaces",
+              "academic_year": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "application_round": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "checked_at": "2026-10-11T15:27:58.036135+00:00",
+              "content_hash": "4e32ed9b7249ad56854a89531ecb4ef052e90b1cbd03fbe56ce6df54ff0d0ab4",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p115-seventh-housing-application",
+              "source_url": "https://www.csun.edu/housing/future-residents/apply-student-housing",
+              "source_pages": [],
+              "excerpt": "$50 housing application fee",
+              "academic_year": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "application_round": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "checked_at": "2026-10-11T15:27:58.036135+00:00",
+              "content_hash": "4e32ed9b7249ad56854a89531ecb4ef052e90b1cbd03fbe56ce6df54ff0d0ab4",
+              "status": "needs_confirmation"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "housing_deadline",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "取得開放與處理方式；未見春季獨立締約日，不等官方明示尚未公告。",
+          "value": "2026/27新住戶住宿申請2026-03-24開放；頁面建議儘速、先到先處理，現已有候補，沒有查得Spring2027獨立截止。住房calendar的2026-07-17 17:00是Fall首期付款／financial aid核驗，不當Spring申請截止。",
+          "evidence": [
+            {
+              "source_id": "p115-seventh-housing-calendar",
+              "source_url": "https://www.csun.edu/housing/resources/housing-calendar",
+              "source_pages": [],
+              "excerpt": "New Residents: 2026-2027 Academic Year Applications Open",
+              "academic_year": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "application_round": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "checked_at": "2026-10-11T15:27:58.036597+00:00",
+              "content_hash": "0f3b24ef36b1cd806b3f450b134d1ef18403e80f9ca84bce9918ebe7a1067db0",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p115-seventh-housing-application",
+              "source_url": "https://www.csun.edu/housing/future-residents/apply-student-housing",
+              "source_pages": [],
+              "excerpt": "first-come, first-served basis",
+              "academic_year": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "application_round": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "checked_at": "2026-10-11T15:27:58.036135+00:00",
+              "content_hash": "4e32ed9b7249ad56854a89531ecb4ef052e90b1cbd03fbe56ce6df54ff0d0ab4",
+              "status": "needs_confirmation"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "costs",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "一般2026/27全年費表已讀；交換／SAC春季實際租約與program tuition分開待核。",
+          "value": "Park2026/27學年合約2026-08-22至2027-05-15，雙人有廚房總USD11351、無廚房9153、Suite8812（後兩另meal plan）；初始USD50 included表總額，RHA15另收。表USD1256/1011/973是分期款而非月租；晚搬入pro-rate。Spring單期租約／SAC學費及全部生活成本未核，不用全年價格除二作報價。",
+          "evidence": [
+            {
+              "source_id": "p115-seventh-housing-rates",
+              "source_url": "https://www.csun.edu/housing/future-residents/housing-rates",
+              "source_pages": [],
+              "excerpt": "Total Housing Costs",
+              "academic_year": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "application_round": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "checked_at": "2026-10-11T15:27:58.036689+00:00",
+              "content_hash": "8e1720832bd53514b5f81d2523e8af0c9e3dc6ce4e4302bebcc56d130260cdfe",
+              "status": "needs_confirmation"
+            },
+            {
+              "source_id": "p115-seventh-housing-rates",
+              "source_url": "https://www.csun.edu/housing/future-residents/housing-rates",
+              "source_pages": [],
+              "excerpt": "This is an installment payment plan, not monthly rent.",
+              "academic_year": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "application_round": "CSUN一般Housing Academic Year2026–2027；SAC/CCU個人交換租約適用另核",
+              "checked_at": "2026-10-11T15:27:58.036689+00:00",
+              "content_hash": "8e1720832bd53514b5f81d2523e8af0c9e3dc6ce4e4302bebcc56d130260cdfe",
+              "status": "needs_confirmation"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
@@ -51094,13 +51573,24 @@
         "sha256": "55f11043568b80ec2f93c0cf397cc93357f50d8aa6881eafd6dd5502959cde78",
         "bundled_file": "completion_sources/p0-gamma-public-build-manifest.html.gz",
         "classification": "acquired_not_policy_verified"
+      },
+      {
+        "source_id": "p0-seventh-gamma-public-doc",
+        "source_url": "https://gamma.app/docs/hdozbiaaek5nkn0",
+        "checked_at": "2026-10-11T15:27:59.134565+00:00",
+        "http_status": 200,
+        "error": null,
+        "title": "Gamma",
+        "sha256": "8743774a8411581da66bb669e53bf878b3c09d5f37832c350306b7f990060f52",
+        "bundled_file": "completion_sources/p0-seventh-gamma-public-doc.html.gz",
+        "classification": "acquired_not_policy_verified"
       }
     ]
   },
   "current_counts": {
     "coordinate_gaps": 3,
     "licensed_photo_gaps": 4,
-    "website_identity_gaps": 2,
-    "host_missing_fields": 638
+    "website_identity_gaps": 1,
+    "host_missing_fields": 618
   }
 }

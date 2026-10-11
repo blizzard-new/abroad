@@ -23,9 +23,13 @@
         "p44-root-alternative",
         "p44-ror",
         "p44-ror-name",
+        "p44-seventh-official-adams-bluebook",
+        "p44-seventh-official-calendar",
+        "p44-seventh-official-campusmap",
         "p44-website-secondary",
         "p44-wikidata"
-      ]
+      ],
+      "seventh_result": "官方calendar、campusmap及Adams Bluebook新路徑均503；沒有可讀正文核網站身份，非校方帳號限制。"
     },
     {
       "ccu_page": 66,
@@ -91,8 +95,10 @@
         "p71-root",
         "p71-ror",
         "p71-ror-name",
+        "p71-seventh-official-360-bus",
         "p71-wikidata"
-      ]
+      ],
+      "seventh_result": "公開360 bus新入口為Javascript容器；無institution marker或影像重用授權，不由viewer位置推GPS。"
     },
     {
       "ccu_page": 80,
@@ -124,33 +130,6 @@
       ]
     },
     {
-      "ccu_page": 96,
-      "school_name": "Saint Petersburg Electrotechnical University 聖彼得堡國立電子科技大學",
-      "country": "俄羅斯",
-      "asset_gaps": [
-        "website"
-      ],
-      "limitation_type": "source_failure",
-      "reason": "已讀3頁LETI Fact Sheet p1列etu.ru，正文未年；官方網頁請求仍503/timeout，沒有宣稱新版網站身份已核或只供校方取得。",
-      "official_exclusive_access_proven": false,
-      "next_action": "使用未讀公開來源清單；不重試已無新線索的同一失敗路徑。圖片須新的明確授權及身份，不能由官方刊登推許可。",
-      "attempted_source_ids": [
-        "p96-commons",
-        "p96-followup-accreditation",
-        "p96-followup-domain-www",
-        "p96-followup-root-russian",
-        "p96-reference-folder-1",
-        "p96-reference-link-1",
-        "p96-reference-link-1-file-1",
-        "p96-root",
-        "p96-root-alternative",
-        "p96-ror",
-        "p96-ror-name",
-        "p96-website-secondary",
-        "p96-wikidata"
-      ]
-    },
-    {
       "ccu_page": 111,
       "school_name": "SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)",
       "country": "捷克",
@@ -172,8 +151,10 @@
         "p111-root-alternative",
         "p111-ror",
         "p111-ror-name",
+        "p111-seventh-contact-public",
         "p111-wikidata"
-      ]
+      ],
+      "seventh_result": "官方opf.slu.cz新路徑HTTP200為Anubis挑戰；未繞過。opakarvina.cz為另一中學，已排除身份，非大學校園座標。"
     },
     {
       "ccu_page": 119,
@@ -263,12 +244,30 @@
       "協議或合作類型",
       "來源更新／生效日期（有載才填）"
     ],
-    "denominator": null
+    "denominator": null,
+    "seventh_result": {
+      "source_id": "p0-seventh-gamma-public-doc",
+      "public_doc_url": "https://gamma.app/docs/hdozbiaaek5nkn0",
+      "http_status": 200,
+      "body_result": "空pageProps、無全卡片正文或公開export链接",
+      "normal_tls_browser_error": "ERR_CERT_AUTHORITY_INVALID",
+      "exclusive_access_proven": false,
+      "complete_public_export_obtained": false
+    }
   },
   "public_reading_remains": {
     "worklist": "completion-remaining-public-worklist.json",
-    "reading_record_missing_sources": 413,
-    "priority_policy_candidates": 40,
-    "external_cannot_solve_scope": "只有worklist中带实际正文的个人账号/提名步骤与图片权利持有人授权；不能把全部missing或HTTP失败标为需校方取得。"
+    "reading_record_missing_sources": 370,
+    "independent_bodies": 369,
+    "priority_policy_candidates": 0,
+    "external_cannot_solve_scope": "僅實際個人帳號／提名步驟及權利持有人圖授權；其他未讀來源繼續查，並非終止清單。"
+  },
+  "seventh_leti_resolution": {
+    "ccu_page": 96,
+    "website": "https://etu.ru/en/university/",
+    "identity_source_id": "p96-seventh-official-rafu",
+    "main_url_source_id": "p96-seventh-linked-university",
+    "main_url_http_status": 503,
+    "reason": "官方子站LETI正文與主站anchor核身份；主URL取得503另記，不宣稱網站正文取得成功。"
   }
 }

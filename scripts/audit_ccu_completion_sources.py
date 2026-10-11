@@ -14,6 +14,7 @@ from fetch_ccu_completion_sources import BUNDLE as B
 from fetch_ccu_completion_sources import OUT
 
 EXCLUSIONS = {
+    "p0-seventh-gamma-public-doc": "Public /docs route has empty pageProps and no document body or export links; normal-TLS browser fails. Full agreements denominator remains unknown, not exclusive-access proof.",
     "p34-campus-specific": "Incorrect candidate Q1321805 is Titán, not Nagoya University; excluded. Correct entity Q1191132 separately reviewed.",
     "p69-reference-folder-1": "Initial acquisition used a folder-child key shared by two parent folders. Preserve response but exclude ambiguous provenance; use p69-reference-link-N-file-M instead.",
     "p69-reference-folder-2": "Initial folder-child naming was not unique to the parent; use the exact parent-link child manifest instead.",

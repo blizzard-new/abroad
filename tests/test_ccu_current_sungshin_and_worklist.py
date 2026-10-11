@@ -76,7 +76,7 @@ def test_sdu_missing_fields_remain_unverified_year_and_account_access_is_scoped(
 def test_remaining_worklist_separates_reading_duplicates_assets_and_external_steps():
     queue = read("completion-remaining-public-worklist.json")
     assert len(queue["schools"]) == 104
-    assert queue["counts"]["host_missing_fields"] == 638
+    assert queue["counts"]["host_missing_fields"] == 618
     sources = [s for r in queue["schools"] for s in r["sources"]] + queue["shared_and_global_sources"]
     assert len(sources) == len({s["source_id"] for s in sources}) == queue["counts"]["sources"]
     assert all(s["source_url"] and s["checked_at"] for s in sources)
@@ -84,6 +84,6 @@ def test_remaining_worklist_separates_reading_duplicates_assets_and_external_ste
     assert "p104-mirror" in duplicates["same_bytes_as_recorded_read_sources"]
     assert duplicates["review_state"] != "readable_body_without_recorded_review"
     limitations = read("completion-remaining-limitations.json")
-    assert {r["ccu_page"] for r in limitations["schools"]} == {44, 66, 71, 80, 96, 111, 119}
+    assert {r["ccu_page"] for r in limitations["schools"]} == {44, 66, 71, 80, 111, 119}
     assert all(not r["official_exclusive_access_proven"] for r in limitations["schools"])
     assert limitations["gamma"]["denominator"] is None and not limitations["gamma"]["official_exclusive_access_proven"]

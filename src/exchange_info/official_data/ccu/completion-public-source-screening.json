@@ -1,12 +1,12 @@
 {
   "checked_at": "2026-10-11",
-  "source_count": 1240,
+  "source_count": 1271,
   "decisions": {
-    "acquired_not_policy_verified": 710,
-    "excluded_specific_review": 7,
-    "used_with_explicit_field_status": 463,
-    "technical_failure": 52,
-    "challenge_or_error_page": 7,
+    "acquired_not_policy_verified": 712,
+    "excluded_specific_review": 8,
+    "used_with_explicit_field_status": 483,
+    "technical_failure": 59,
+    "challenge_or_error_page": 8,
     "used_access_requirement_evidence": 1
   },
   "photo_exclusions": {
@@ -513,6 +513,22 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p0-seventh-gamma-public-doc",
+      "ccu_page": 0,
+      "source_url": "https://gamma.app/docs/hdozbiaaek5nkn0",
+      "resolved_url": "https://gamma.app/docs/hdozbiaaek5nkn0",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:27:59.134565+00:00",
+      "tls_verify": true,
+      "original_sha256": "8743774a8411581da66bb669e53bf878b3c09d5f37832c350306b7f990060f52",
+      "bundled_file": "completion_sources/p0-seventh-gamma-public-doc.html.gz",
+      "response_bytes_verified": true,
+      "decision": "excluded_specific_review",
+      "field_statuses": [],
+      "reason": "Public /docs route has empty pageProps and no document body or export links; normal-TLS browser fails. Full agreements denominator remains unknown, not exclusive-access proof."
     },
     {
       "source_id": "p10-campus_contact-1",
@@ -3103,6 +3119,22 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p111-seventh-contact-public",
+      "ccu_page": 111,
+      "source_url": "https://www.opf.slu.cz/",
+      "resolved_url": "https://www.slu.cz/opf/cz/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:25:28.568916+00:00",
+      "tls_verify": true,
+      "original_sha256": "f59b08ff1581d33b76d7f302374bb0b40fe4816192cb26483d2f3189612a8285",
+      "bundled_file": "completion_sources/p111-seventh-contact-public.html.gz",
+      "response_bytes_verified": true,
+      "decision": "challenge_or_error_page",
+      "field_statuses": [],
+      "reason": "HTTP 200 challenge/error title is not university content."
+    },
+    {
       "source_id": "p111-wikidata",
       "ccu_page": 111,
       "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q354333.json",
@@ -4144,6 +4176,76 @@
       "tls_verify": true,
       "original_sha256": "3819c850bac71795409a393fd666873817dc5cb3a7ea34f27685c91446c0c3a8",
       "bundled_file": "completion_sources/p115-ror.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p115-seventh-housing-application",
+      "ccu_page": 115,
+      "source_url": "https://www.csun.edu/housing/future-residents/apply-student-housing",
+      "resolved_url": "https://www.csun.edu/housing/future-residents/apply-student-housing",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:27:58.036135+00:00",
+      "tls_verify": true,
+      "original_sha256": "4e32ed9b7249ad56854a89531ecb4ef052e90b1cbd03fbe56ce6df54ff0d0ab4",
+      "bundled_file": "completion_sources/p115-seventh-housing-application.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p115-seventh-housing-calendar",
+      "ccu_page": 115,
+      "source_url": "https://www.csun.edu/housing/resources/housing-calendar",
+      "resolved_url": "https://www.csun.edu/housing/resources/housing-calendar",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:27:58.036597+00:00",
+      "tls_verify": true,
+      "original_sha256": "0f3b24ef36b1cd806b3f450b134d1ef18403e80f9ca84bce9918ebe7a1067db0",
+      "bundled_file": "completion_sources/p115-seventh-housing-calendar.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p115-seventh-housing-rates",
+      "ccu_page": 115,
+      "source_url": "https://www.csun.edu/housing/future-residents/housing-rates",
+      "resolved_url": "https://www.csun.edu/housing/future-residents/housing-rates",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:27:58.036689+00:00",
+      "tls_verify": true,
+      "original_sha256": "8e1720832bd53514b5f81d2523e8af0c9e3dc6ce4e4302bebcc56d130260cdfe",
+      "bundled_file": "completion_sources/p115-seventh-housing-rates.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p115-seventh-visiting-student-housing",
+      "ccu_page": 115,
+      "source_url": "https://www.csun.edu/housing/about-us/visiting-student-housing",
+      "resolved_url": "https://www.csun.edu/housing/about-us/visiting-student-housing",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:27:58.035847+00:00",
+      "tls_verify": true,
+      "original_sha256": "0acba92f412e92aa60d9ce5c5673fd395bf6d501e7a32d100b6647d21c3d9417",
+      "bundled_file": "completion_sources/p115-seventh-visiting-student-housing.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -10488,6 +10590,54 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p44-seventh-official-adams-bluebook",
+      "ccu_page": 44,
+      "source_url": "https://kac.kmu.ac.kr/kac/7739/subview.do",
+      "resolved_url": "https://kac.kmu.ac.kr/kac/7739/subview.do",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://kac.kmu.ac.kr/kac/7739/subview.do",
+      "checked_at": "2026-10-11T15:39:01.893696+00:00",
+      "tls_verify": true,
+      "original_sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+      "bundled_file": "completion_sources/p44-seventh-official-adams-bluebook.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://kac.kmu.ac.kr/kac/7739/subview.do"
+    },
+    {
+      "source_id": "p44-seventh-official-calendar",
+      "ccu_page": 44,
+      "source_url": "https://www.keimyung.ac.kr/page.jsp?mnu_uid=3373",
+      "resolved_url": "https://www.keimyung.ac.kr/page.jsp?mnu_uid=3373",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.keimyung.ac.kr/page.jsp?mnu_uid=3373",
+      "checked_at": "2026-10-11T15:25:28.565835+00:00",
+      "tls_verify": true,
+      "original_sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+      "bundled_file": "completion_sources/p44-seventh-official-calendar.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.keimyung.ac.kr/page.jsp?mnu_uid=3373"
+    },
+    {
+      "source_id": "p44-seventh-official-campusmap",
+      "ccu_page": 44,
+      "source_url": "https://www.keimyung.ac.kr/page.jsp?mnu_uid=3319",
+      "resolved_url": "https://www.keimyung.ac.kr/page.jsp?mnu_uid=3319",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.keimyung.ac.kr/page.jsp?mnu_uid=3319",
+      "checked_at": "2026-10-11T15:25:28.566062+00:00",
+      "tls_verify": true,
+      "original_sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+      "bundled_file": "completion_sources/p44-seventh-official-campusmap.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.keimyung.ac.kr/page.jsp?mnu_uid=3319"
+    },
+    {
       "source_id": "p44-website-secondary",
       "ccu_page": 44,
       "source_url": "https://www.kmu.ac.kr/uni/eng/main.jsp",
@@ -11505,6 +11655,98 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p49-seventh-discovered-target-10",
+      "ccu_page": 49,
+      "source_url": "https://forms.gle/smWwKwCnvb4Gj4Bo9",
+      "resolved_url": "https://docs.google.com/forms/d/e/1FAIpQLSc4EavoEE0KuwPskjasV9Ux6f8HC-huNNNza0Ob_FDafbQrgA/viewform?usp=send_form",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:27:59.445980+00:00",
+      "tls_verify": true,
+      "original_sha256": "59fc9566d41cf729f93f39ff622c47902f1ac49466dfb8d3925bfda39d941a1c",
+      "bundled_file": "completion_sources/p49-seventh-discovered-target-10.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p49-seventh-discovered-target-11",
+      "ccu_page": 49,
+      "source_url": "https://forms.gle/QfsMfMs5onkAYsnG9",
+      "resolved_url": "https://docs.google.com/forms/d/e/1FAIpQLScj33BhDg2c7F9OBcHTeUPsHA2-91jXNKivaJ6zDqIEzEmu2g/viewform?usp=send_form",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:27:59.726093+00:00",
+      "tls_verify": true,
+      "original_sha256": "6052d40f03d8f1ba6cab85e9b2b271cd63ce5e7183c4e3197d99ecfd61821898",
+      "bundled_file": "completion_sources/p49-seventh-discovered-target-11.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict",
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p49-seventh-discovered-target-12",
+      "ccu_page": 49,
+      "source_url": "https://forms.gle/zWDdWnANSoToEXU48",
+      "resolved_url": "https://docs.google.com/forms/d/e/1FAIpQLSfe4eyJzraVdddeJWgBbdi7Q4NEcJ7tztrzM5S43hDTUfNv2w/closedform",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:28:00.384028+00:00",
+      "tls_verify": true,
+      "original_sha256": "bbda5e1a2623e65754377fed184e9c29725bef7d79e8426b8fbde323ec652240",
+      "bundled_file": "completion_sources/p49-seventh-discovered-target-12.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p49-seventh-discovered-target-8",
+      "ccu_page": 49,
+      "source_url": "https://docs.google.com/forms/d/e/1FAIpQLScj33BhDg2c7F9OBcHTeUPsHA2-91jXNKivaJ6zDqIEzEmu2g/viewform?usp=dialog",
+      "resolved_url": "https://docs.google.com/forms/d/e/1FAIpQLScj33BhDg2c7F9OBcHTeUPsHA2-91jXNKivaJ6zDqIEzEmu2g/viewform?usp=dialog",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:27:59.243308+00:00",
+      "tls_verify": true,
+      "original_sha256": "3977eca7e2020e8e461ca48602e28a20d90eb174870be082d02dae9bdc3c1b17",
+      "bundled_file": "completion_sources/p49-seventh-discovered-target-8.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict",
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p49-seventh-discovered-target-9",
+      "ccu_page": 49,
+      "source_url": "https://drive.google.com/drive/folders/1EYhpOwumPw4EFUNplyjiyqHz_qi2TZTd",
+      "resolved_url": "https://drive.google.com/drive/folders/1EYhpOwumPw4EFUNplyjiyqHz_qi2TZTd",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:27:59.312676+00:00",
+      "tls_verify": true,
+      "original_sha256": "a9b907d54d88cf37e3761200b6c707486e7c234826f02387df48f6b1112eb724",
+      "bundled_file": "completion_sources/p49-seventh-discovered-target-9.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p49-wikidata",
@@ -12864,6 +13106,38 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p57-seventh-dorm-fee-graduate-returning",
+      "ccu_page": 57,
+      "source_url": "https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_SGS_TC.pdf",
+      "resolved_url": "https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_SGS_TC.pdf",
+      "http_status": 502,
+      "error": "HTTPError: 502 Server Error: Bad Gateway for url: https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_SGS_TC.pdf",
+      "checked_at": "2026-10-11T15:27:58.801695+00:00",
+      "tls_verify": true,
+      "original_sha256": "a2bf91b93b0312bb303ea88d66b61a71909f28cae65bcbb232a84b0cf5fbebe1",
+      "bundled_file": "completion_sources/p57-seventh-dorm-fee-graduate-returning.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 502 Server Error: Bad Gateway for url: https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_SGS_TC.pdf"
+    },
+    {
+      "source_id": "p57-seventh-dorm-fee-undergraduate-new",
+      "ccu_page": 57,
+      "source_url": "https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_TC.pdf",
+      "resolved_url": "https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_TC.pdf",
+      "http_status": 502,
+      "error": "HTTPError: 502 Server Error: Bad Gateway for url: https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_TC.pdf",
+      "checked_at": "2026-10-11T15:27:59.095550+00:00",
+      "tls_verify": true,
+      "original_sha256": "a2bf91b93b0312bb303ea88d66b61a71909f28cae65bcbb232a84b0cf5fbebe1",
+      "bundled_file": "completion_sources/p57-seventh-dorm-fee-undergraduate-new.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 502 Server Error: Bad Gateway for url: https://www.must.edu.mo/images/Admission/files/Dormitory_Fee_TC.pdf"
+    },
+    {
       "source_id": "p57-wikidata",
       "ccu_page": 57,
       "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q847993.json",
@@ -13685,9 +13959,11 @@
       "original_sha256": "61fa1b105c107b9ad65e8b3428346144edb0fe9c4d5d3b36db0c88369ec54047",
       "bundled_file": "completion_sources/p63-followup-inbound.html.gz",
       "response_bytes_verified": true,
-      "decision": "acquired_not_policy_verified",
-      "field_statuses": [],
-      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "reference_only"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p63-host_entry-1",
@@ -13733,9 +14009,11 @@
       "original_sha256": "d362872a5b234c39cedb5ae38f69db404c8428fe2fbc25ed06e709d0f1513cfa",
       "bundled_file": "completion_sources/p63-life-1.html.gz",
       "response_bytes_verified": true,
-      "decision": "acquired_not_policy_verified",
-      "field_statuses": [],
-      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p63-life-2",
@@ -13800,6 +14078,22 @@
       "tls_verify": true,
       "original_sha256": "d9ff9b524edc712e5387d32b85b6328e490a61c9ce283e6997f61e8e492c8afd",
       "bundled_file": "completion_sources/p63-ror.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p63-seventh-current-student-exchange",
+      "ccu_page": 63,
+      "source_url": "https://www.ucsiuniversity.edu.my/student-exchange-programme",
+      "resolved_url": "https://www.ucsiuniversity.edu.my/student-exchange-programme",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:27:58.035547+00:00",
+      "tls_verify": true,
+      "original_sha256": "dc2fff0aa3ec7cf5084ba9bc98cfe40c24ef3f9115d096978f8b7cc995260e25",
+      "bundled_file": "completion_sources/p63-seventh-current-student-exchange.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -15723,6 +16017,22 @@
       "tls_verify": true,
       "original_sha256": "88d32c11087c44a6da5fc6d84bc3c08aadc711da4c269e2c2d0b998911e90540",
       "bundled_file": "completion_sources/p71-ror.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p71-seventh-official-360-bus",
+      "ccu_page": 71,
+      "source_url": "https://360campus.dntu.edu.vn/?Type=risjjL7NsQZ",
+      "resolved_url": "https://360campus.dntu.edu.vn/?Type=risjjL7NsQZ",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:39:01.893935+00:00",
+      "tls_verify": true,
+      "original_sha256": "5a9efa6f6e4cb5a5f8188a6241d88b4bec381b8ff22494c835714e983f3578f2",
+      "bundled_file": "completion_sources/p71-seventh-official-360-bus.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -18086,6 +18396,187 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p84-seventh-current-bilateral-form",
+      "ccu_page": 84,
+      "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2025/03/EXCHANGE-STUDENT-APPLICATION-FORM.docx",
+      "resolved_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2025/03/EXCHANGE-STUDENT-APPLICATION-FORM.docx",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:37:23.321378+00:00",
+      "tls_verify": true,
+      "original_sha256": "9a4edccceddfa13035b85419e6c48036a8ef7fc460e778139937e2fe91044938",
+      "bundled_file": "completion_sources/p84-seventh-current-bilateral-form.zip",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p84-seventh-current-calendar",
+      "ccu_page": 84,
+      "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/Academic-Calendar-2026-27-en.pdf",
+      "resolved_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/Academic-Calendar-2026-27-en.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:37:23.320655+00:00",
+      "tls_verify": true,
+      "original_sha256": "a6a65592297bd48d8a4d8d2c3d7bd4dafda04e541363495852916d4510305dde",
+      "bundled_file": "completion_sources/p84-seventh-current-calendar.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p84-seventh-current-entry",
+      "ccu_page": 84,
+      "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/04/ENTRY-PERMIT-REGULATIONS.pdf",
+      "resolved_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/04/ENTRY-PERMIT-REGULATIONS.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:37:24.239170+00:00",
+      "tls_verify": true,
+      "original_sha256": "efb1d85b0915adb848fc9bec06ed8ba800afddfa5f52fbeeef143c06ca77449c",
+      "bundled_file": "completion_sources/p84-seventh-current-entry.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p84-seventh-current-factsheet",
+      "ccu_page": 84,
+      "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/INFORMATION-SHEET-FOR-ucy-2026-2027-new.pdf",
+      "resolved_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/INFORMATION-SHEET-FOR-ucy-2026-2027-new.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:37:23.320352+00:00",
+      "tls_verify": true,
+      "original_sha256": "6e0740b7d7102db7d15eda456bc9426f4dbd356826998b1f0c2bb7e2d5644e66",
+      "bundled_file": "completion_sources/p84-seventh-current-factsheet.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict",
+        "needs_confirmation",
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p84-seventh-current-insurance",
+      "ccu_page": 84,
+      "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/04/HEALTH-INSURANCE-2026-27.pdf",
+      "resolved_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/04/HEALTH-INSURANCE-2026-27.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:37:23.992285+00:00",
+      "tls_verify": true,
+      "original_sha256": "061d9ff2c8515a136c68b82b071742d7fddad7082e4fa6f71d5600f42357f8bd",
+      "bundled_file": "completion_sources/p84-seventh-current-insurance.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p84-seventh-current-language",
+      "ccu_page": 84,
+      "source_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/Language-requirements-for-erasmus-incoming-students.pdf",
+      "resolved_url": "https://www.ucy.ac.cy/ir/wp-content/uploads/sites/113/2026/03/Language-requirements-for-erasmus-incoming-students.pdf",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:37:23.320966+00:00",
+      "tls_verify": true,
+      "original_sha256": "53746d8ace8b233bca66f03312ee4360188ce7468c0c85095bc479797c9fbaaf",
+      "bundled_file": "completion_sources/p84-seventh-current-language.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict",
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p84-seventh-discovered-target-13",
+      "ccu_page": 84,
+      "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus/studies-incoming-er/",
+      "resolved_url": "https://www.ucy.ac.cy/ir/mobility/erasmus/studies-incoming-er/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:28:00.433044+00:00",
+      "tls_verify": true,
+      "original_sha256": "164d95d789bdc7ddcfbd7237628b7a00232d201a4110b527dee4087fde420c49",
+      "bundled_file": "completion_sources/p84-seventh-discovered-target-13.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict",
+        "needs_confirmation",
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p84-seventh-discovered-target-14",
+      "ccu_page": 84,
+      "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus-international-2/studies-incoming/",
+      "resolved_url": "https://www.ucy.ac.cy/ir/mobility/erasmus-international-2/studies-incoming/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:28:01.275614+00:00",
+      "tls_verify": true,
+      "original_sha256": "03862412551c165c612e79b9098c27190b9f370e312c94e44f8860cbe32ac7ef",
+      "bundled_file": "completion_sources/p84-seventh-discovered-target-14.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p84-seventh-discovered-target-15",
+      "ccu_page": 84,
+      "source_url": "https://www.ucy.ac.cy/ir/studies-incoming-er/?lang=el",
+      "resolved_url": "https://www.ucy.ac.cy/ir/mobility/erasmus/studies-incoming-er/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:28:01.758733+00:00",
+      "tls_verify": true,
+      "original_sha256": "74ae219efdb0fddc769ebb69a609d0bfb4c38888b5d8a06e79467f47c938b5d6",
+      "bundled_file": "completion_sources/p84-seventh-discovered-target-15.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p84-seventh-international-english",
+      "ccu_page": 84,
+      "source_url": "https://www.ucy.ac.cy/ir/mobility/erasmus-international/studies-incoming/?lang=en",
+      "resolved_url": "https://www.ucy.ac.cy/ir/mobility/erasmus-international/studies-incoming/?lang=en",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:37:24.803837+00:00",
+      "tls_verify": true,
+      "original_sha256": "006890e0be7838b99516be5fa6c20257acacd2da9729b621198efab456eb7f35",
+      "bundled_file": "completion_sources/p84-seventh-international-english.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
       "source_id": "p84-wikidata",
       "ccu_page": 84,
       "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q1520608.json",
@@ -18953,9 +19444,11 @@
       "original_sha256": "212bdea65494b668f702308af12e2255e80736e6bda57e8e2ec02aa72e620fb4",
       "bundled_file": "completion_sources/p89-life-1.html.gz",
       "response_bytes_verified": true,
-      "decision": "acquired_not_policy_verified",
-      "field_statuses": [],
-      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p89-life-2",
@@ -20252,6 +20745,56 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p96-seventh-linked-university",
+      "ccu_page": 96,
+      "source_url": "https://etu.ru/en/university/",
+      "resolved_url": "https://etu.ru/en/university/",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://etu.ru/en/university/",
+      "checked_at": "2026-10-11T15:37:25.055610+00:00",
+      "tls_verify": true,
+      "original_sha256": "2f85832e31ca57711e6107af6b142363351ae516adb71c69afc643fac26be7f6",
+      "bundled_file": "completion_sources/p96-seventh-linked-university.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://etu.ru/en/university/"
+    },
+    {
+      "source_id": "p96-seventh-official-rafu",
+      "ccu_page": 96,
+      "source_url": "https://rafu.etu.ru/",
+      "resolved_url": "https://rafu.etu.ru/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T15:25:28.566325+00:00",
+      "tls_verify": true,
+      "original_sha256": "69bfe679071dbd82f359bbfe9ec182c011b2b25e6b4d8ac32b9d1a104ad74d2e",
+      "bundled_file": "completion_sources/p96-seventh-official-rafu.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p96-seventh-official-scm2026",
+      "ccu_page": 96,
+      "source_url": "https://scm.etu.ru/",
+      "resolved_url": "https://scm.etu.ru/",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://scm.etu.ru/",
+      "checked_at": "2026-10-11T15:25:28.566768+00:00",
+      "tls_verify": true,
+      "original_sha256": "2f85832e31ca57711e6107af6b142363351ae516adb71c69afc643fac26be7f6",
+      "bundled_file": "completion_sources/p96-seventh-official-scm2026.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://scm.etu.ru/"
     },
     {
       "source_id": "p96-website-secondary",
