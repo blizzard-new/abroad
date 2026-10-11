@@ -45,6 +45,9 @@ def school_field_addition(profile: DestinationProfile, field: str) -> dict | Non
 
 def complete_destination_profile(profile: DestinationProfile, data_dir: Path, *, locations: dict | None = None) -> DestinationProfile:
     """Only fill the exact gaps researched; never overwrite later operator edits."""
+    if profile.home_university == "國立中央大學":
+        from .ncu_completion import attach_profile_campus_photo
+        profile = attach_profile_campus_photo(profile)
     key = (school_identity_key(profile.home_university or ""),
         school_identity_key(profile.school_name), profile.country)
     supplement = _supplements().get(key, {})

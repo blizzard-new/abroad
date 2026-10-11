@@ -1,0 +1,110 @@
+{
+  "school_name": "龍谷大學 Ryukoku University",
+  "country": "日本",
+  "identity_source_url": "https://ror.org/012tqgb57",
+  "original_ror_payload": {
+    "admin": {
+      "created": {
+        "date": "2018-11-14",
+        "schema_version": "1.0"
+      },
+      "last_modified": {
+        "date": "2026-10-06",
+        "schema_version": "2.1"
+      }
+    },
+    "domains": [],
+    "established": 1639,
+    "external_ids": [
+      {
+        "all": [
+          "501100010626"
+        ],
+        "preferred": "501100010626",
+        "type": "fundref"
+      },
+      {
+        "all": [
+          "grid.440926.d"
+        ],
+        "preferred": "grid.440926.d",
+        "type": "grid"
+      },
+      {
+        "all": [
+          "0000 0001 0744 5780"
+        ],
+        "preferred": null,
+        "type": "isni"
+      },
+      {
+        "all": [
+          "Q1071862"
+        ],
+        "preferred": null,
+        "type": "wikidata"
+      }
+    ],
+    "id": "https://ror.org/012tqgb57",
+    "links": [
+      {
+        "type": "website",
+        "value": "https://www.ryukoku.ac.jp/"
+      },
+      {
+        "type": "wikipedia",
+        "value": "https://en.wikipedia.org/wiki/Ryukoku_University"
+      }
+    ],
+    "locations": [
+      {
+        "geonames_details": {
+          "continent_code": "AS",
+          "continent_name": "Asia",
+          "country_code": "JP",
+          "country_name": "Japan",
+          "country_subdivision_code": "26",
+          "country_subdivision_name": "Kyoto",
+          "lat": 35.02107,
+          "lng": 135.75385,
+          "name": "Kyoto"
+        },
+        "geonames_id": 1857910
+      }
+    ],
+    "names": [
+      {
+        "lang": "en",
+        "types": [
+          "ror_display",
+          "label"
+        ],
+        "value": "Ryukoku University"
+      },
+      {
+        "lang": "ja",
+        "types": [
+          "label"
+        ],
+        "value": "龍谷大学"
+      }
+    ],
+    "relationships": [
+      {
+        "label": "Ryukoku University Junior College",
+        "type": "child",
+        "id": "https://ror.org/03ek3zg96"
+      }
+    ],
+    "status": "active",
+    "types": [
+      "education",
+      "funder"
+    ]
+  },
+  "excluded_same_domain_identity": "Ryukoku Junior College",
+  "review_note": "同域名不能作identity。正確Ryukoku University active education與日本國別、名稱核對，Junior College不沿用。",
+  "checked_at": "2026-10-11T09:46:20+00:00",
+  "query_source_url": "https://api.ror.org/v2/organizations?query=Ryukoku%20University",
+  "query_response_sha256": "8fa7bad7eb24ac180f74460cb8cd42ac692ed3bdb81c116f97563ab11c373b8a"
+}
