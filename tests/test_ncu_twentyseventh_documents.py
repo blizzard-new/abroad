@@ -53,7 +53,9 @@ def test_new_reviews_do_not_promote_arrival_document_or_unverified_deadlines():
     comillas = steps['ncu-073-host-apply'].document_requirements
     assert len(comillas) == 1 and comillas[0].stage == 'post_offer'
     assert comillas[0].needs_confirmation and comillas[0].applicability_status == 'reference_only'
-    assert steps['ncu-109-host-apply'].document_requirements == []
+    archived = json.loads((DOCS / 'added-host-records.json').read_text())
+    assert archived['ncu-109']['host_documents'] == []
+    assert all(d.needs_confirmation for d in steps['ncu-109-host-apply'].document_requirements)
     assert steps['ncu-111-host-apply'].document_requirements == []
     assert len(steps['ncu-100-host-apply'].document_requirements) == 4
     assert all(w.review_status == 'pending_review' for w in workflows)
