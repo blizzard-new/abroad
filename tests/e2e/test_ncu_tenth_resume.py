@@ -1,11 +1,12 @@
 """Real student views show precise campus and document/year limits."""
 from pathlib import Path
+import os
 import json
 import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
 from .test_ncu_ninth_resume import point_screenshot
-OUT=Path('docs/data/ncu-completion-20261011/resume/tenth/browser')
+OUT = Path(os.environ.get('NCU_RESUME_BROWSER_OUTPUT', '/tmp/ncu-final-browser'))
 @pytest.mark.parametrize('width',[390,1280])
 def test_tenth_two_named_campuses(page,live_server,width):
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))

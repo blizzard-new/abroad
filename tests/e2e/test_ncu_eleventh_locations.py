@@ -1,12 +1,13 @@
 """The two final representative points and their actual photo campus reach Chromium."""
 import json
 from pathlib import Path
+import os
 import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
 from .test_open_catalog import wait_until
 
-OUT = Path('docs/data/ncu-completion-20261011/resume/eleventh/browser')
+OUT = Path(os.environ.get('NCU_RESUME_BROWSER_OUTPUT', '/tmp/ncu-final-browser'))
 
 
 @pytest.mark.parametrize('width', [390, 1280])

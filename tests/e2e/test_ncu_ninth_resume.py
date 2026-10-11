@@ -1,10 +1,11 @@
 """New PDF distinctions are readable in real mobile and desktop student views."""
 from pathlib import Path
+import os
 import json
 import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
-OUT=Path('docs/data/ncu-completion-20261011/resume/ninth/browser')
+OUT = Path(os.environ.get('NCU_RESUME_BROWSER_OUTPUT', '/tmp/ncu-final-browser'))
 
 def point_screenshot(target,path):
     for detail in target.locator('xpath=ancestor::details').all():

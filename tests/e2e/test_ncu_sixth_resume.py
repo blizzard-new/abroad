@@ -1,10 +1,11 @@
 """New source limits and stage-specific documents reach actual desktop/mobile UI."""
 from pathlib import Path
+import os
 import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
 
-OUT=Path('docs/data/ncu-completion-20261011/resume/sixth/browser')
+OUT = Path(os.environ.get('NCU_RESUME_BROWSER_OUTPUT', '/tmp/ncu-final-browser'))
 
 @pytest.mark.parametrize('query,width,overview,life,count,later',[
     ('信州',390,'特別研究生','¥95,000',9,'信州COE系統再次提交文件'),
