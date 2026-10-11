@@ -18,6 +18,42 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "docs/ntu-completion-20261011"
 
 
+def classify_review_axes(row, observations, sources, decision=None, more_public_leads=False):
+    """Keep publication, transport and unfinished reading as separate questions."""
+    decision = decision or {}
+    reviewed_hashes = {s.get("sha256") for s in decision.get("sources", []) if s.get("sha256")}
+    reviewed_hashes |= {s.get("sha256") for s in observations if s.get("sha256")}
+    candidates = [s["source"] for s in sources if s.get("field_candidate_counts", {}).get(row["field"], 0)]
+    readable = [s for s in candidates if s["access_status"] == "content_available"]
+    unread = [s for s in readable if s.get("sha256") not in reviewed_hashes]
+    publication = "not_determined_for_target_cycle"
+    if row["field"] == "home_selection" and row["target_requirement_confirmed"]:
+        publication = "official_NTU_shared_current_cycle_rule"
+    elif row["field"] == "quota":
+        publication = "official_zero_not_open" if row["target_requirement_confirmed"] else "official_NTU_selection_cell_blank"
+    elif any(o["applicability_status"] == "explicitly_pending_announcement" for o in observations):
+        publication = "official_statement_future_details_pending"
+    elif observations:
+        publication = "public_reference_in_original_scope"
+    elif row["reference_present"]:
+        publication = "prior_reference_current_cycle_unconfirmed"
+    access = "readable_field_candidate_body" if readable else "reviewed_public_reference_body" if observations or decision else "no_readable_field_candidate_obtained"
+    progress = "pending_public_body_read" if unread else "pending_public_link_followup" if more_public_leads else "bounded_field_search_no_verified_text"
+    if decision:
+        progress = "manual_semantic_review_partial_more_bodies" if unread else decision["outcome"]
+    elif observations:
+        progress = "reviewed_reference_partial_more_bodies" if unread else "reviewed_reference_partial_scope"
+    elif row["reference_present"]:
+        progress = "prior_reference_with_unread_public_candidates" if unread else "prior_reference_target_scope_not_rechecked"
+    return {"publication_status": publication, "field_access_status": access,
+            "review_progress": progress, "manual_review_outcome": decision.get("outcome", ""),
+            "manual_review_note_zh": decision.get("note_zh", ""),
+            "readable_candidate_source_ids": sorted({s["source_id"] for s in readable}),
+            "unread_candidate_source_ids": sorted({s["source_id"] for s in unread}),
+            "unread_candidate_body_count": len({s.get("sha256") or s["source_id"] for s in unread}),
+            "external_blocker_exclusive": not (row["reference_present"] or row["target_requirement_confirmed"] or readable or observations or decision) and bool(sources) and all(s["source"]["access_status"] != "content_available" for s in sources)}
+
+
 def export(output=OUTPUT, access_path=None):
     records, summary = audit(ROOT)
     snapshot = json.loads((ROOT / "sources/ntu/completion-2026-10-11.json").read_text())
@@ -26,6 +62,8 @@ def export(output=OUTPUT, access_path=None):
         access_path = ROOT / "sources/ntu/host-access-2026-10-11.json.gz"
     access = json.loads(gzip.decompress(access_path.read_bytes()))
     schools = {r["portal_id"]: r for r in snapshot["schools"]}
+    manual_path = ROOT / "sources/ntu/semantic-review-current-2026-10-11.json"
+    manual = {(r["portal_id"], r["field"]): r for r in json.loads(manual_path.read_text())} if manual_path.exists() else {}
     attempts = {r["portal_id"]: r for r in access["schools"]}
     robots = {urlsplit(r["url"]).netloc: r for r in access["robots_receipts"]}
     issues = []
@@ -55,6 +93,10 @@ def export(output=OUTPUT, access_path=None):
         if query.get("unfetched_seeds") or query.get("queued_discovery_leads"):
             reasons.add("additional_public_leads_not_yet_read")
         periods = {r["applicability_status"] for r in observations}
+        enriched = [{**o, "sha256": snapshot["public_source_reviews"][o["source_id"]]["sha256"]} for o in observations]
+        decision = manual.get((row["portal_id"], row["field"]))
+        axes = classify_review_axes(row, enriched, sources, decision,
+            bool(query.get("unfetched_seeds") or query.get("queued_discovery_leads")))
         issue = "target_scope_unconfirmed"
         if row["target_requirement_confirmed"]:
             issue = "asset_or_home_fact_checked_exchange_assignment_still_separate"
@@ -70,9 +112,13 @@ def export(output=OUTPUT, access_path=None):
             issue = "prior_reference_target_year_or_subfields_unconfirmed"
         elif row["field"] in {"coordinates", "photos"}:
             issue = "campus_identity_or_licensed_asset_unresolved"
+        elif decision:
+            issue = "manual_semantic_review_partial_scope" if observations else decision["outcome"]
         elif any(r["source"]["access_status"] == "content_available" and
                  r.get("field_candidate_counts", {}).get(row["field"], 0) for r in sources):
             issue = "discovery_lead_requires_semantic_review"
+        elif any(r["source"]["access_status"] == "content_available" for r in sources):
+            issue = "available_public_body_field_not_yet_located_or_read"
         elif "transport_proxy_503" in reasons:
             issue = "technical_transport_failure_prevents_check"
         elif reasons:
@@ -83,7 +129,7 @@ def export(output=OUTPUT, access_path=None):
         dependencies = sorted({r["access_dependency"] for r in observations if r.get("access_dependency")})
         if dependencies:
             issue = "public_reference_details_after_acceptance"
-        issue_row = {**row, "issue_code": issue, "access_reasons": sorted(reasons),
+        issue_row = {**row, **axes, "issue_code": issue, "access_reasons": sorted(reasons),
             "reviewed_fact_zh": fact, "applicability": " | ".join(dict.fromkeys(r["scope"] for r in observations)),
             "pdf_pages": " | ".join(str(r["pdf_page"]) for r in observations if r.get("pdf_page")),
             "source_quote_ids": sorted({r["quote_source_id"] for r in observations}),
@@ -96,6 +142,10 @@ def export(output=OUTPUT, access_path=None):
         reviewed_host_schools=sum(bool(r["observations"]) for r in schools.values()),
         new_life_evidence=sum(len(r.get("life_evidence", [])) for r in schools.values()),
         issue_codes=dict(Counter(r["issue_code"] for r in issues)),
+        publication_statuses=dict(Counter(r["publication_status"] for r in issues)),
+        review_progresses=dict(Counter(r["review_progress"] for r in issues)),
+        readable_unread_rows=sum(bool(r["unread_candidate_body_count"]) for r in issues),
+        exclusive_external_blocker_rows=sum(r["external_blocker_exclusive"] for r in issues),
         original_handoff_comparison={"original_workbook_retrieved": False, "reported_previous_denominator": 282,
             "rebuilt_denominator": 288, "pending_selection_denominator": 282, "zero_selection_denominator": 6,
             "comparison_method": "Rebuilt using the current official portal IDs. The old workbook was not obtained; neither cell equality nor exact school membership overlap is claimed.",
@@ -133,6 +183,8 @@ def export(output=OUTPUT, access_path=None):
         sheets.append(("臺大116-1正式共通規則", [{**fact, "source_url": home["source_url"],
             "checked_at": home["checked_at"], "quote_source_id": home["source_id"]}
             for fact in home["facts"]]))
+    if manual:
+        sheets.append(("候選段落語意分類", list(manual.values())))
     for title, items in sheets:
         ws = book.create_sheet(title)
         keys = list(dict.fromkeys(k for item in items for k in item))

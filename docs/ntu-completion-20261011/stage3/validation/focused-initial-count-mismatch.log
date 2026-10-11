@@ -1,0 +1,17 @@
+CONFTEST LOADED!
+...................F...s................................................ [ 67%]
+..................................                                       [100%]
+=================================== FAILURES ===================================
+______ test_error_page_navigation_is_not_served_as_student_life_evidence _______
+
+    def test_error_page_navigation_is_not_served_as_student_life_evidence():
+        records = list(life._bundled_ntu_research().values())
+        assert len(records) == 288
+>       assert sum(len(row.evidence) for row in records) == 1843
+E       assert 1913 == 1843
+E        +  where 1913 = sum(<generator object test_error_page_navigation_is_not_served_as_student_life_evidence.<locals>.<genexpr> at 0x7f81f4839be0>)
+
+tests/test_ntu_destination_enrichment.py:141: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_destination_enrichment.py::test_error_page_navigation_is_not_served_as_student_life_evidence
+1 failed, 104 passed, 1 skipped in 61.81s (0:01:01)
