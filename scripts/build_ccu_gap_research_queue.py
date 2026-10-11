@@ -54,6 +54,8 @@ def build():
                             "reason": field["reason"], "value": field["value"], "evidence": field["evidence"],
                             "official_not_announced": classification == "official_not_announced",
                             "personal_access_required": True if classification == "personal_access_required" else None})
+            if field.get("access_requirement_evidence"):
+                pending[-1]["access_requirement_evidence"] = field["access_requirement_evidence"]
         if requested_assets or missing or pending:
             rows.append({
                 "ccu_page": page, "school_name": school["school_name"], "country": school["country"],

@@ -32,7 +32,7 @@ def main():
             for group in groups:
                 fields = row[group].values() if group.endswith("fields") else [row[group]]
                 for field in fields:
-                    for ev in field["evidence"]:
+                    for ev in [*field["evidence"], *field.get("access_requirement_evidence", [])]:
                         if ev.get("source_id"):
                             used[ev["source_id"]].add(field["status"])
     results = []

@@ -78,10 +78,17 @@ def test_uel_actual_sign_in_message_does_not_claim_nomination_authorization():
     f = fields()["application_forms"]
     assert f["research_classification"] == "personal_access_required"
     assert "不宣稱只有提名者有權限" in f["value"] and "未讀题目／年度" in f["value"]
+    assert all(ev["source_id"] != record["source_id"] for ev in f["evidence"])
+    access = f["access_requirement_evidence"][0]
+    assert access["source_id"] == record["source_id"]
+    assert hashlib.sha256(body(record)).hexdigest() == access["content_hash"]
     audit = next(r for r in read("completion-public-source-screening.json")["sources"]
                  if r["source_id"] == record["source_id"])
     assert audit["decision"] == "used_access_requirement_evidence"
     assert audit["field_statuses"] == ["needs_confirmation"]
+    queue = next(r for r in read("completion-followup-gap-research.json")["schools"] if r["ccu_page"] == 66)
+    pending = next(r for r in queue["pending_host_policy_reviews"] if r["field"] == "application_forms")
+    assert pending["access_requirement_evidence"][0]["content_hash"] == record["sha256"]
 
 
 def test_uel_undated_deadlines_and_later_stage_documents_stay_separate():
