@@ -1,0 +1,100 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_ncu_completion.py",
+    "tests/test_ncu_document_conditions.py",
+    "tests/test_ncu_eivp_resume.py",
+    "tests/test_ncu_fourth_pass.py",
+    "tests/test_ncu_integration.py",
+    "tests/test_ncu_japan3.py",
+    "tests/test_ncu_ktu_meiji_resume.py",
+    "tests/test_ncu_location_holds.py",
+    "tests/test_ncu_location_precedence.py",
+    "tests/test_ncu_next3_review_corrections.py",
+    "tests/test_ncu_nufs_kumamoto_ryukoku.py",
+    "tests/test_ncu_photo_license_review.py",
+    "tests/test_ncu_resume_assets.py",
+    "tests/test_ncu_shizuoka_chuo_kansai.py",
+    "tests/test_ncu_snapshot_cache.py",
+    "tests/test_ncu_source_collector.py",
+    "tests/test_ncu_tcu_toyama_fukui.py",
+    "tests/test_university_locations.py",
+    "-q",
+    "--junitxml=/workspace/recovery-evidence-20261011/ncu-fifth-integrated-unit-r2/results.xml"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T16:42:46.546292+00:00",
+  "start_guard": {
+    "sha": "3d97dd2efa9df6c974317069dd986f1518f02d94",
+    "tree": "3f9c06ca18507ba5941135f7b1d2b48a09c731fe",
+    "status": ""
+  },
+  "timeout_seconds": 1800,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/test_ncu_completion.py": {
+      "sha256": "fcdc6d8df75a1b985a9283c2eb09a941c0cea6db47d353180ddd636e2020bed4"
+    },
+    "tests/test_ncu_document_conditions.py": {
+      "sha256": "8eddc50f8a321f4fde5eaafc62d01739718d83901c0346112877fef018556b09"
+    },
+    "tests/test_ncu_eivp_resume.py": {
+      "sha256": "d7739cd9fc63d49870dcdb33fe3d327b5e77c55eece6ec7954ca35bafca87bc3"
+    },
+    "tests/test_ncu_fourth_pass.py": {
+      "sha256": "ac18c48c924e86dfa331b0467e21d29a3cfbf9a732852eb666949bfa262be294"
+    },
+    "tests/test_ncu_integration.py": {
+      "sha256": "ad0822655879c2f28bae5ec5699b87ca8600a46fb3bbc4b648b0245585ee92e4"
+    },
+    "tests/test_ncu_japan3.py": {
+      "sha256": "dcef4d913cfa5b415ccd6ca1168266e56640338c4bbc9066a5d4632b8b65b396"
+    },
+    "tests/test_ncu_ktu_meiji_resume.py": {
+      "sha256": "3b87c674247423b44278d498b071b3b4f06447b03b926031b8e71d1c956ce1d2"
+    },
+    "tests/test_ncu_location_holds.py": {
+      "sha256": "0e6b5d22fcb4949b29a93f2b8b7f4b01d7d45fe313aebb91ab4307411f5c18b5"
+    },
+    "tests/test_ncu_location_precedence.py": {
+      "sha256": "03416381e298310c004c2cab56584a6d76882df96124569f4d86e07db1f2ff70"
+    },
+    "tests/test_ncu_next3_review_corrections.py": {
+      "sha256": "4d88e300b2b8064d2f9106c737988d8e4c4cc6c558c6ab123d0fccfdc6429ed1"
+    },
+    "tests/test_ncu_nufs_kumamoto_ryukoku.py": {
+      "sha256": "6ad6ef403d9c9d6ead938fe40308ad5e3e59cb6725c3c87a73a0da4576ae59dd"
+    },
+    "tests/test_ncu_photo_license_review.py": {
+      "sha256": "ecb06d87b3917980e0a46caadaa684896759382906c046fd1c7772e60b3a5d17"
+    },
+    "tests/test_ncu_resume_assets.py": {
+      "sha256": "da4728e398f5f1d8314bc7b10763e29d448fb31aae1e9b28fb8281cbf53fc2c4"
+    },
+    "tests/test_ncu_shizuoka_chuo_kansai.py": {
+      "sha256": "9c1833c4837e3f01e4f853fa55dc2c99b66f93d97bfd7f9533f4fcfa7b5625da"
+    },
+    "tests/test_ncu_snapshot_cache.py": {
+      "sha256": "b57c2f5ec7721ad39751be08d490d4c60898561d57a0297b86484dfad31176f5"
+    },
+    "tests/test_ncu_source_collector.py": {
+      "sha256": "5061e945e661097a546f2237739085311187838e8aed224bb07adfadcfe4ec65"
+    },
+    "tests/test_ncu_tcu_toyama_fukui.py": {
+      "sha256": "c7de3dff89239cd63f08e83199ba0a10b0355c19dc0dbce1b63988feae73b8a1"
+    },
+    "tests/test_university_locations.py": {
+      "sha256": "13312f0847da9df399362b7156c8ad0fa38ee2a0f3102cf6069d14ca7a1ec2d0"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T16:45:18.119339+00:00",
+  "end_guard": {
+    "sha": "3d97dd2efa9df6c974317069dd986f1518f02d94",
+    "tree": "3f9c06ca18507ba5941135f7b1d2b48a09c731fe",
+    "status": ""
+  }
+}

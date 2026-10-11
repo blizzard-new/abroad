@@ -1,0 +1,30 @@
+{
+  "command": [
+    "env",
+    "TMPDIR=/workspace/integration-next1-pip-tmp",
+    "python",
+    "/workspace/recovery-tools-20261011/install_increment_wheel.py"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T17:11:51.030354+00:00",
+  "start_guard": {
+    "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+    "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+    "status": ""
+  },
+  "timeout_seconds": 1800,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "/workspace/recovery-tools-20261011/install_increment_wheel.py": {
+      "sha256": "6f061b16b9438c436e98ae4a1a60dc0a2655f665eb0d6f05eeb84068a0b0a471"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T17:12:57.722921+00:00",
+  "end_guard": {
+    "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+    "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+    "status": ""
+  }
+}

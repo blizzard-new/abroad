@@ -1,0 +1,30 @@
+{
+  "command": [
+    "env",
+    "TMPDIR=/tmp/integration-next1-full-shard-2-tmp",
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history",
+    "-q",
+    "--junitxml=/workspace/recovery-evidence-20261011/integration-next1-discovery-setup-rerun/results.xml"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T17:26:52.371307+00:00",
+  "start_guard": {
+    "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+    "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+    "status": ""
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {},
+  "exit_code": 0,
+  "finished_at": "2026-10-11T17:27:14.385922+00:00",
+  "end_guard": {
+    "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+    "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+    "status": ""
+  }
+}

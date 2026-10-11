@@ -1,0 +1,1663 @@
+CONFTEST LOADED!
+FFFFFFFF...............                                                  [100%]
+=================================== FAILURES ===================================
+_ test_fifth_photo_licence_and_campus_caption[\u862d\u65af-390-G\xe9rald Garitan-CC BY-SA 4.0] _
+
+page = <Page url='http://127.0.0.1:50109/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E8%98%AD%E6%96%AF#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:50109', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-65/web-e2e-data0'))
+query = '蘭斯', width = 390, author = 'Gérald Garitan', licence = 'CC BY-SA 4.0'
+
+    @pytest.mark.parametrize('query,width,author,licence',[
+     ('蘭斯',390,'Gérald Garitan','CC BY-SA 4.0'),
+     ('阿沙芬堡',1280,'Aschaffenburczyk','CC BY-SA 3.0'),
+     ('巴登-',390,'Wladyslaw Sojka','FAL'),
+     ('巴登-',1280,'Wladyslaw Sojka','FAL'),
+     ('韓國天主教',390,'poly','CC0'),
+     ('南洋理工商管',390,'Sengkang','Copyrighted free use'),
+     ('布勞爪哇',1280,'Lorrainevyu','CC BY 4.0'),
+     ('艾爾朗加',1280,'antonov0002','CC BY 3.0'),
+    ])
+    def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,author,licence):
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
+        select_ncu(page,live_server)
+        page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
+>       expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+E       AssertionError: Locator expected to contain text '本期名額待公告'
+E       Actual value: 
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             法國
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     蘭斯大學 The University of Reims Champagne-Ardenne
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：法國Reims的Moulin de la Housse校區；2024年秋季歷史校景，非Croix-Rouge或市中心行政總部。作者：Gérald Garitan；授權：CC BY-SA 4.0；拍攝日期：2024-10-05 15:32:55。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-023名額原文：3（PDF第1頁）。這是歷史額度，未填入116名額。【115年度第1頁，非116門檻】本列無語言文字，不代表免語檢
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 法國
+E                 蘭斯大學 The University of Reims Champagne-Ardenne
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-023名額原文：3（PDF第1頁）。這是歷史額度，未填入116名額。【115年度第1頁，非116門檻】本列無語言文字，不代表免語檢
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：法國Reims的Moulin de la Housse校區；2024年秋季歷史校景，非Croix-Rouge或市中心行政總部。作者：Gérald Garitan；授權：CC BY-SA 4.0；拍攝日期：2024-10-05 15:32:55。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E            
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#partner-table")
+E           14 × locator resolved to <div aria-busy="false" id="partner-table" aria-live="polite" data-result-count="1" class="partner-results">…</div>
+E              - unexpected value "
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             法國
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     蘭斯大學 The University of Reims Champagne-Ardenne
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：法國Reims的Moulin de la Housse校區；2024年秋季歷史校景，非Croix-Rouge或市中心行政總部。作者：Gérald Garitan；授權：CC BY-SA 4.0；拍攝日期：2024-10-05 15:32:55。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-023名額原文：3（PDF第1頁）。這是歷史額度，未填入116名額。【115年度第1頁，非116門檻】本列無語言文字，不代表免語檢
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 法國
+E                 蘭斯大學 The University of Reims Champagne-Ardenne
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-023名額原文：3（PDF第1頁）。這是歷史額度，未填入116名額。【115年度第1頁，非116門檻】本列無語言文字，不代表免語檢
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：法國Reims的Moulin de la Housse校區；2024年秋季歷史校景，非Croix-Rouge或市中心行政總部。作者：Gérald Garitan；授權：CC BY-SA 4.0；拍攝日期：2024-10-05 15:32:55。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E           "
+E       
+E       Aria snapshot:
+E       - group:
+E         - img "蘭斯大學 The University of Reims Champagne-Ardenne校園照片"
+E         - text: 法國
+E         - strong: 蘭斯大學 The University of Reims Champagne-Ardenne
+E         - text: 合作備查／本期名額待核實 · 交換學生
+
+tests/e2e/test_ncu_fifth_photos.py:26: AssertionError
+_ test_fifth_photo_licence_and_campus_caption[\u963f\u6c99\u82ac\u5821-1280-Aschaffenburczyk-CC BY-SA 3.0] _
+
+page = <Page url='http://127.0.0.1:50109/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E9%98%BF%E6%B2%99%E8%8A%AC%E5%A0%A1#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:50109', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-65/web-e2e-data0'))
+query = '阿沙芬堡', width = 1280, author = 'Aschaffenburczyk'
+licence = 'CC BY-SA 3.0'
+
+    @pytest.mark.parametrize('query,width,author,licence',[
+     ('蘭斯',390,'Gérald Garitan','CC BY-SA 4.0'),
+     ('阿沙芬堡',1280,'Aschaffenburczyk','CC BY-SA 3.0'),
+     ('巴登-',390,'Wladyslaw Sojka','FAL'),
+     ('巴登-',1280,'Wladyslaw Sojka','FAL'),
+     ('韓國天主教',390,'poly','CC0'),
+     ('南洋理工商管',390,'Sengkang','Copyrighted free use'),
+     ('布勞爪哇',1280,'Lorrainevyu','CC BY 4.0'),
+     ('艾爾朗加',1280,'antonov0002','CC BY 3.0'),
+    ])
+    def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,author,licence):
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
+        select_ncu(page,live_server)
+        page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
+>       expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+E       AssertionError: Locator expected to contain text '本期名額待公告'
+E       Actual value: 
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             德國
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：德國Aschaffenburg應用科技大學校園建築，2012年照片，非泛用Aschaffenburg城景。作者：Aschaffenburczyk；授權：CC BY-SA 3.0；拍攝日期：18 October 2012, 08:35:04。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】參考冬季2026/9/15–2027/3/14、夏季2027/3/15–9/14；資料表的授課／考試日期部分明列tbc，不能作確定行程。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】2026/27参考：冬季／全年提名3/25–5/15，申請6/1；夏季提名9/1–11/15，申請12/1。網頁目前開放Summer 2027；均非中央116秋季截止。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】主校址Würzburger Straße 45, Aschaffenburg；不可把應用科學大學當成其他同名學校。【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】正常每學期30 ECTS；學校沒有ECTS最低強制門檻，但強烈建議至少10 ECTS。德文及英文授課課程分開選，不能把建議10轉成硬性資格。
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 德國
+E                 阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】參考冬季2026/9/15–2027/3/14、夏季2027/3/15–9/14；資料表的授課／考試日期部分明列tbc，不能作確定行程。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】2026/27参考：冬季／全年提名3/25–5/15，申請6/1；夏季提名9/1–11/15，申請12/1。網頁目前開放Summer 2027；均非中央116秋季截止。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】主校址Würzburger Straße 45, Aschaffenburg；不可把應用科學大學當成其他同名學校。【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】正常每學期30 ECTS；學校沒有ECTS最低強制門檻，但強烈建議至少10 ECTS。德文及英文授課課程分開選，不能把建議10轉成硬性資格。
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：德國Aschaffenburg應用科技大學校園建築，2012年照片，非泛用Aschaffenburg城景。作者：Aschaffenburczyk；授權：CC BY-SA 3.0；拍攝日期：18 October 2012, 08:35:04。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E            
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#partner-table")
+E           14 × locator resolved to <div aria-busy="false" id="partner-table" aria-live="polite" data-result-count="1" class="partner-results">…</div>
+E              - unexpected value "
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             德國
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：德國Aschaffenburg應用科技大學校園建築，2012年照片，非泛用Aschaffenburg城景。作者：Aschaffenburczyk；授權：CC BY-SA 3.0；拍攝日期：18 October 2012, 08:35:04。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】參考冬季2026/9/15–2027/3/14、夏季2027/3/15–9/14；資料表的授課／考試日期部分明列tbc，不能作確定行程。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】2026/27参考：冬季／全年提名3/25–5/15，申請6/1；夏季提名9/1–11/15，申請12/1。網頁目前開放Summer 2027；均非中央116秋季截止。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】主校址Würzburger Straße 45, Aschaffenburg；不可把應用科學大學當成其他同名學校。【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】正常每學期30 ECTS；學校沒有ECTS最低強制門檻，但強烈建議至少10 ECTS。德文及英文授課課程分開選，不能把建議10轉成硬性資格。
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 德國
+E                 阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】參考冬季2026/9/15–2027/3/14、夏季2027/3/15–9/14；資料表的授課／考試日期部分明列tbc，不能作確定行程。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】2026/27参考：冬季／全年提名3/25–5/15，申請6/1；夏季提名9/1–11/15，申請12/1。網頁目前開放Summer 2027；均非中央116秋季截止。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】主校址Würzburger Straße 45, Aschaffenburg；不可把應用科學大學當成其他同名學校。【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】正常每學期30 ECTS；學校沒有ECTS最低強制門檻，但強烈建議至少10 ECTS。德文及英文授課課程分開選，不能把建議10轉成硬性資格。
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：德國Aschaffenburg應用科技大學校園建築，2012年照片，非泛用Aschaffenburg城景。作者：Aschaffenburczyk；授權：CC BY-SA 3.0；拍攝日期：18 October 2012, 08:35:04。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E           "
+E       
+E       Aria snapshot:
+E       - table:
+E         - rowgroup:
+E           - row "國家 學校 計畫 可申請身分 名額／期間 重點條件 收藏":
+E             - columnheader "國家"
+E             - columnheader "學校"
+E             - columnheader "計畫"
+E             - columnheader "可申請身分"
+E             - columnheader "名額／期間"
+E             - columnheader "重點條件"
+E             - columnheader "收藏"
+E         - rowgroup:
+E           - row "德國 阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences校園照片 阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences 交換學生 本期名額待核實 可先加入志願規劃；能否申請須先確認本期名額與條件 -- 116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】參考冬季2026/9/15–2027/3/14、夏季2027/3/15–9/14；資料表的授課／考試日期部分明列tbc，不能作確定行程。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】2026/27参考：冬季／全年提名3/25–5/15，申請6/1；夏季提名9/1–11/15，申請12/1。網頁目前開放Summer 2027；均非中央116秋季截止。（適用年度待確認） 加入比較阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences":
+E             - cell "德國"
+E             - cell "阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences校園照片 阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences":
+E               - img "阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences校園照片"
+E               - button "阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences"
+E               - group: 來源
+E             - cell "交換學生 本期名額待核實 可先加入志願規劃；能否申請須先確認本期名額與條件"
+E             - cell "--"
+E             - cell "116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】參考冬季2026/9/15–2027/3/14、夏季2027/3/15–9/14；資料表的授課／考試日期部分明列tbc，不能作確定行程。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【Aschaffenburg外校AY2026–2027資料表／申請指引，非AY2027–2028；2026/10/11查核，中央116校別／名額／track仍未核實。】2026/27参考：冬季／全年提名3/25–5/15，申請6/1；夏季提名9/1–11/15，申請12/1。網頁目前開放Summer 2027；均非中央116秋季截止。（適用年度待確認）"
+E             - cell:
+E               - group: 資格與語言
+E             - cell "加入比較阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences":
+E               - button "加入比較阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences": 加入比較
+
+tests/e2e/test_ncu_fifth_photos.py:26: AssertionError
+_ test_fifth_photo_licence_and_campus_caption[\u5df4\u767b--390-Wladyslaw Sojka-FAL] _
+
+page = <Page url='http://127.0.0.1:50109/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E5%B7%B4%E7%99%BB-#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:50109', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-65/web-e2e-data0'))
+query = '巴登-', width = 390, author = 'Wladyslaw Sojka', licence = 'FAL'
+
+    @pytest.mark.parametrize('query,width,author,licence',[
+     ('蘭斯',390,'Gérald Garitan','CC BY-SA 4.0'),
+     ('阿沙芬堡',1280,'Aschaffenburczyk','CC BY-SA 3.0'),
+     ('巴登-',390,'Wladyslaw Sojka','FAL'),
+     ('巴登-',1280,'Wladyslaw Sojka','FAL'),
+     ('韓國天主教',390,'poly','CC0'),
+     ('南洋理工商管',390,'Sengkang','Copyrighted free use'),
+     ('布勞爪哇',1280,'Lorrainevyu','CC BY 4.0'),
+     ('艾爾朗加',1280,'antonov0002','CC BY 3.0'),
+    ])
+    def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,author,licence):
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
+        select_ncu(page,live_server)
+        page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
+>       expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+E       AssertionError: Locator expected to contain text '本期名額待公告'
+E       Actual value: 
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             德國
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：德國DHBW Lörrach校區建築，2011年歷史校景；非Karlsruhe或其他DHBW校區。作者：Wladyslaw Sojka (Taxiarchos228)；授權：FAL；拍攝日期：2011-09-24（原頁日期；原始上傳文字另列2011-09-11，保留差異）。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權 · 攝影者網站校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】已公告Spring2027：3/22開課與必到welcome，約6/25結束；延長只特殊理由預先討論。2022Guide四terms只是舊架構，不當秋2027確定校曆。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】Spring2027母校提名2026/10/31、學生申請2026/11/30；與中央116秋2027無關。沒有確認秋2027當期deadline，不能複製翌年或建立提醒。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】只查Lörrach，DHBW有九locations不能通套；2022Guide描述Hangstrasse、KBC MarieCurie與Vitra WeilamRhein建築校區，須中央當期協議／接收通知确认。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】2027fact sheet授課英／德需B2；2022Guide可B2證明或母校正式letter確認能跟英文課，德文課可母校簽字成功修德文課或B2certificate。舊替代證明是否仍接受待當期確認。
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 德國
+E                 巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】已公告Spring2027：3/22開課與必到welcome，約6/25結束；延長只特殊理由預先討論。2022Guide四terms只是舊架構，不當秋2027確定校曆。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】Spring2027母校提名2026/10/31、學生申請2026/11/30；與中央116秋2027無關。沒有確認秋2027當期deadline，不能複製翌年或建立提醒。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】只查Lörrach，DHBW有九locations不能通套；2022Guide描述Hangstrasse、KBC MarieCurie與Vitra WeilamRhein建築校區，須中央當期協議／接收通知确认。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】2027fact sheet授課英／德需B2；2022Guide可B2證明或母校正式letter確認能跟英文課，德文課可母校簽字成功修德文課或B2certificate。舊替代證明是否仍接受待當期確認。
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：德國DHBW Lörrach校區建築，2011年歷史校景；非Karlsruhe或其他DHBW校區。作者：Wladyslaw Sojka (Taxiarchos228)；授權：FAL；拍攝日期：2011-09-24（原頁日期；原始上傳文字另列2011-09-11，保留差異）。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權 · 攝影者網站
+E             
+E            
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#partner-table")
+E           14 × locator resolved to <div aria-busy="false" id="partner-table" aria-live="polite" data-result-count="1" class="partner-results">…</div>
+E              - unexpected value "
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             德國
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：德國DHBW Lörrach校區建築，2011年歷史校景；非Karlsruhe或其他DHBW校區。作者：Wladyslaw Sojka (Taxiarchos228)；授權：FAL；拍攝日期：2011-09-24（原頁日期；原始上傳文字另列2011-09-11，保留差異）。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權 · 攝影者網站校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】已公告Spring2027：3/22開課與必到welcome，約6/25結束；延長只特殊理由預先討論。2022Guide四terms只是舊架構，不當秋2027確定校曆。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】Spring2027母校提名2026/10/31、學生申請2026/11/30；與中央116秋2027無關。沒有確認秋2027當期deadline，不能複製翌年或建立提醒。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】只查Lörrach，DHBW有九locations不能通套；2022Guide描述Hangstrasse、KBC MarieCurie與Vitra WeilamRhein建築校區，須中央當期協議／接收通知确认。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】2027fact sheet授課英／德需B2；2022Guide可B2證明或母校正式letter確認能跟英文課，德文課可母校簽字成功修德文課或B2certificate。舊替代證明是否仍接受待當期確認。
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 德國
+E                 巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】已公告Spring2027：3/22開課與必到welcome，約6/25結束；延長只特殊理由預先討論。2022Guide四terms只是舊架構，不當秋2027確定校曆。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】Spring2027母校提名2026/10/31、學生申請2026/11/30；與中央116秋2027無關。沒有確認秋2027當期deadline，不能複製翌年或建立提醒。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】只查Lörrach，DHBW有九locations不能通套；2022Guide描述Hangstrasse、KBC MarieCurie與Vitra WeilamRhein建築校區，須中央當期協議／接收通知确认。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】2027fact sheet授課英／德需B2；2022Guide可B2證明或母校正式letter確認能跟英文課，德文課可母校簽字成功修德文課或B2certificate。舊替代證明是否仍接受待當期確認。
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：德國DHBW Lörrach校區建築，2011年歷史校景；非Karlsruhe或其他DHBW校區。作者：Wladyslaw Sojka (Taxiarchos228)；授權：FAL；拍攝日期：2011-09-24（原頁日期；原始上傳文字另列2011-09-11，保留差異）。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權 · 攝影者網站
+E             
+E           "
+E       
+E       Aria snapshot:
+E       - group:
+E         - img "巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)校園照片"
+E         - text: 德國
+E         - strong: 巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)
+E         - text: 合作備查／本期名額待核實 · 交換學生
+
+tests/e2e/test_ncu_fifth_photos.py:26: AssertionError
+_ test_fifth_photo_licence_and_campus_caption[\u5df4\u767b--1280-Wladyslaw Sojka-FAL] _
+
+page = <Page url='http://127.0.0.1:50109/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E5%B7%B4%E7%99%BB-#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:50109', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-65/web-e2e-data0'))
+query = '巴登-', width = 1280, author = 'Wladyslaw Sojka', licence = 'FAL'
+
+    @pytest.mark.parametrize('query,width,author,licence',[
+     ('蘭斯',390,'Gérald Garitan','CC BY-SA 4.0'),
+     ('阿沙芬堡',1280,'Aschaffenburczyk','CC BY-SA 3.0'),
+     ('巴登-',390,'Wladyslaw Sojka','FAL'),
+     ('巴登-',1280,'Wladyslaw Sojka','FAL'),
+     ('韓國天主教',390,'poly','CC0'),
+     ('南洋理工商管',390,'Sengkang','Copyrighted free use'),
+     ('布勞爪哇',1280,'Lorrainevyu','CC BY 4.0'),
+     ('艾爾朗加',1280,'antonov0002','CC BY 3.0'),
+    ])
+    def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,author,licence):
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
+        select_ncu(page,live_server)
+        page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
+>       expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+E       AssertionError: Locator expected to contain text '本期名額待公告'
+E       Actual value: 
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             德國
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：德國DHBW Lörrach校區建築，2011年歷史校景；非Karlsruhe或其他DHBW校區。作者：Wladyslaw Sojka (Taxiarchos228)；授權：FAL；拍攝日期：2011-09-24（原頁日期；原始上傳文字另列2011-09-11，保留差異）。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權 · 攝影者網站校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】已公告Spring2027：3/22開課與必到welcome，約6/25結束；延長只特殊理由預先討論。2022Guide四terms只是舊架構，不當秋2027確定校曆。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】Spring2027母校提名2026/10/31、學生申請2026/11/30；與中央116秋2027無關。沒有確認秋2027當期deadline，不能複製翌年或建立提醒。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】只查Lörrach，DHBW有九locations不能通套；2022Guide描述Hangstrasse、KBC MarieCurie與Vitra WeilamRhein建築校區，須中央當期協議／接收通知确认。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】2027fact sheet授課英／德需B2；2022Guide可B2證明或母校正式letter確認能跟英文課，德文課可母校簽字成功修德文課或B2certificate。舊替代證明是否仍接受待當期確認。
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 德國
+E                 巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】已公告Spring2027：3/22開課與必到welcome，約6/25結束；延長只特殊理由預先討論。2022Guide四terms只是舊架構，不當秋2027確定校曆。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】Spring2027母校提名2026/10/31、學生申請2026/11/30；與中央116秋2027無關。沒有確認秋2027當期deadline，不能複製翌年或建立提醒。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】只查Lörrach，DHBW有九locations不能通套；2022Guide描述Hangstrasse、KBC MarieCurie與Vitra WeilamRhein建築校區，須中央當期協議／接收通知确认。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】2027fact sheet授課英／德需B2；2022Guide可B2證明或母校正式letter確認能跟英文課，德文課可母校簽字成功修德文課或B2certificate。舊替代證明是否仍接受待當期確認。
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：德國DHBW Lörrach校區建築，2011年歷史校景；非Karlsruhe或其他DHBW校區。作者：Wladyslaw Sojka (Taxiarchos228)；授權：FAL；拍攝日期：2011-09-24（原頁日期；原始上傳文字另列2011-09-11，保留差異）。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權 · 攝影者網站
+E             
+E            
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#partner-table")
+E           14 × locator resolved to <div aria-busy="false" id="partner-table" aria-live="polite" data-result-count="1" class="partner-results">…</div>
+E              - unexpected value "
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             德國
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：德國DHBW Lörrach校區建築，2011年歷史校景；非Karlsruhe或其他DHBW校區。作者：Wladyslaw Sojka (Taxiarchos228)；授權：FAL；拍攝日期：2011-09-24（原頁日期；原始上傳文字另列2011-09-11，保留差異）。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權 · 攝影者網站校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】已公告Spring2027：3/22開課與必到welcome，約6/25結束；延長只特殊理由預先討論。2022Guide四terms只是舊架構，不當秋2027確定校曆。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】Spring2027母校提名2026/10/31、學生申請2026/11/30；與中央116秋2027無關。沒有確認秋2027當期deadline，不能複製翌年或建立提醒。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】只查Lörrach，DHBW有九locations不能通套；2022Guide描述Hangstrasse、KBC MarieCurie與Vitra WeilamRhein建築校區，須中央當期協議／接收通知确认。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】2027fact sheet授課英／德需B2；2022Guide可B2證明或母校正式letter確認能跟英文課，德文課可母校簽字成功修德文課或B2certificate。舊替代證明是否仍接受待當期確認。
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 德國
+E                 巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】已公告Spring2027：3/22開課與必到welcome，約6/25結束；延長只特殊理由預先討論。2022Guide四terms只是舊架構，不當秋2027確定校曆。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】Spring2027母校提名2026/10/31、學生申請2026/11/30；與中央116秋2027無關。沒有確認秋2027當期deadline，不能複製翌年或建立提醒。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】只查Lörrach，DHBW有九locations不能通套；2022Guide描述Hangstrasse、KBC MarieCurie與Vitra WeilamRhein建築校區，須中央當期協議／接收通知确认。【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】2027fact sheet授課英／德需B2；2022Guide可B2證明或母校正式letter確認能跟英文課，德文課可母校簽字成功修德文課或B2certificate。舊替代證明是否仍接受待當期確認。
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：德國DHBW Lörrach校區建築，2011年歷史校景；非Karlsruhe或其他DHBW校區。作者：Wladyslaw Sojka (Taxiarchos228)；授權：FAL；拍攝日期：2011-09-24（原頁日期；原始上傳文字另列2011-09-11，保留差異）。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權 · 攝影者網站
+E             
+E           "
+E       
+E       Aria snapshot:
+E       - table:
+E         - rowgroup:
+E           - row "國家 學校 計畫 可申請身分 名額／期間 重點條件 收藏":
+E             - columnheader "國家"
+E             - columnheader "學校"
+E             - columnheader "計畫"
+E             - columnheader "可申請身分"
+E             - columnheader "名額／期間"
+E             - columnheader "重點條件"
+E             - columnheader "收藏"
+E         - rowgroup:
+E           - row "德國 巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)校園照片 巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW) 交換學生 本期名額待核實 可先加入志願規劃；能否申請須先確認本期名額與條件 -- 116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】已公告Spring2027：3/22開課與必到welcome，約6/25結束；延長只特殊理由預先討論。2022Guide四terms只是舊架構，不當秋2027確定校曆。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】Spring2027母校提名2026/10/31、學生申請2026/11/30；與中央116秋2027無關。沒有確認秋2027當期deadline，不能複製翌年或建立提醒。（適用年度待確認） 加入比較巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)":
+E             - cell "德國"
+E             - cell "巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)校園照片 巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)":
+E               - img "巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)校園照片"
+E               - button "巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)"
+E               - group: 來源
+E             - cell "交換學生 本期名額待核實 可先加入志願規劃；能否申請須先確認本期名額與條件"
+E             - cell "--"
+E             - cell "116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】已公告Spring2027：3/22開課與必到welcome，約6/25結束；延長只特殊理由預先討論。2022Guide四terms只是舊架構，不當秋2027確定校曆。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【DHBW Lörrach Spring2027 fact sheet／課程，網址2024指南內文Edition September2022；不推DHBW全部校區；2026/10/11查核，中央116校別／名額／track仍未核實。】Spring2027母校提名2026/10/31、學生申請2026/11/30；與中央116秋2027無關。沒有確認秋2027當期deadline，不能複製翌年或建立提醒。（適用年度待確認）"
+E             - cell:
+E               - group: 資格與語言
+E             - cell "加入比較巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)":
+E               - button "加入比較巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)": 加入比較
+
+tests/e2e/test_ncu_fifth_photos.py:26: AssertionError
+_ test_fifth_photo_licence_and_campus_caption[\u97d3\u570b\u5929\u4e3b\u6559-390-poly-CC0] _
+
+page = <Page url='http://127.0.0.1:50109/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E9%9F%93%E5%9C%8B%E5%A4%A9%E4%B8%BB%E6%95%99#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:50109', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-65/web-e2e-data0'))
+query = '韓國天主教', width = 390, author = 'poly', licence = 'CC0'
+
+    @pytest.mark.parametrize('query,width,author,licence',[
+     ('蘭斯',390,'Gérald Garitan','CC BY-SA 4.0'),
+     ('阿沙芬堡',1280,'Aschaffenburczyk','CC BY-SA 3.0'),
+     ('巴登-',390,'Wladyslaw Sojka','FAL'),
+     ('巴登-',1280,'Wladyslaw Sojka','FAL'),
+     ('韓國天主教',390,'poly','CC0'),
+     ('南洋理工商管',390,'Sengkang','Copyrighted free use'),
+     ('布勞爪哇',1280,'Lorrainevyu','CC BY 4.0'),
+     ('艾爾朗加',1280,'antonov0002','CC BY 3.0'),
+    ])
+    def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,author,licence):
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
+        select_ncu(page,live_server)
+        page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
+>       expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+E       AssertionError: Locator expected to contain text '本期名額待公告'
+E       Actual value: 
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             南韓
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     韓國天主教大學 The Catholic University of Korea
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：韓國天主教大學首爾Songeui醫學校區，2019年；左為醫生物研究院、右為Songeui Hall。不是Bucheon Songsim校區，也不表示中央交換可修醫學。作者：poly；授權：CC0；拍攝日期：2019-01-05 14:08:02。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-155名額原文：3（PDF第6頁）。這是歷史額度，未填入116名額。【115年度第6頁，非116門檻】無語言要求
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 南韓
+E                 韓國天主教大學 The Catholic University of Korea
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-155名額原文：3（PDF第6頁）。這是歷史額度，未填入116名額。【115年度第6頁，非116門檻】無語言要求
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：韓國天主教大學首爾Songeui醫學校區，2019年；左為醫生物研究院、右為Songeui Hall。不是Bucheon Songsim校區，也不表示中央交換可修醫學。作者：poly；授權：CC0；拍攝日期：2019-01-05 14:08:02。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E            
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#partner-table")
+E           14 × locator resolved to <div aria-busy="false" id="partner-table" aria-live="polite" data-result-count="1" class="partner-results">…</div>
+E              - unexpected value "
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             南韓
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     韓國天主教大學 The Catholic University of Korea
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：韓國天主教大學首爾Songeui醫學校區，2019年；左為醫生物研究院、右為Songeui Hall。不是Bucheon Songsim校區，也不表示中央交換可修醫學。作者：poly；授權：CC0；拍攝日期：2019-01-05 14:08:02。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-155名額原文：3（PDF第6頁）。這是歷史額度，未填入116名額。【115年度第6頁，非116門檻】無語言要求
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 南韓
+E                 韓國天主教大學 The Catholic University of Korea
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-155名額原文：3（PDF第6頁）。這是歷史額度，未填入116名額。【115年度第6頁，非116門檻】無語言要求
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：韓國天主教大學首爾Songeui醫學校區，2019年；左為醫生物研究院、右為Songeui Hall。不是Bucheon Songsim校區，也不表示中央交換可修醫學。作者：poly；授權：CC0；拍攝日期：2019-01-05 14:08:02。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E           "
+E       
+E       Aria snapshot:
+E       - group:
+E         - img "韓國天主教大學 The Catholic University of Korea校園照片"
+E         - text: 南韓
+E         - strong: 韓國天主教大學 The Catholic University of Korea
+E         - text: 合作備查／本期名額待核實 · 交換學生
+
+tests/e2e/test_ncu_fifth_photos.py:26: AssertionError
+_ test_fifth_photo_licence_and_campus_caption[\u5357\u6d0b\u7406\u5de5\u5546\u7ba1-390-Sengkang-Copyrighted free use] _
+
+page = <Page url='http://127.0.0.1:50109/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E5%8D%97%E6%B4%8B%E7%90%86%E5%B7%A5%E5%95%86%E7%AE%A1#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:50109', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-65/web-e2e-data0'))
+query = '南洋理工商管', width = 390, author = 'Sengkang'
+licence = 'Copyrighted free use'
+
+    @pytest.mark.parametrize('query,width,author,licence',[
+     ('蘭斯',390,'Gérald Garitan','CC BY-SA 4.0'),
+     ('阿沙芬堡',1280,'Aschaffenburczyk','CC BY-SA 3.0'),
+     ('巴登-',390,'Wladyslaw Sojka','FAL'),
+     ('巴登-',1280,'Wladyslaw Sojka','FAL'),
+     ('韓國天主教',390,'poly','CC0'),
+     ('南洋理工商管',390,'Sengkang','Copyrighted free use'),
+     ('布勞爪哇',1280,'Lorrainevyu','CC BY 4.0'),
+     ('艾爾朗加',1280,'antonov0002','CC BY 3.0'),
+    ])
+    def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,author,licence):
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
+        select_ncu(page,live_server)
+        page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
+>       expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+E       AssertionError: Locator expected to contain text '本期名額待公告'
+E       Actual value: 
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             新加坡
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     南洋理工商管學院 Nanyang Polytechnic School of Business Management (NYP)
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：新加坡Nanyang Polytechnic校園庭園，2006年歷史照片；商管學院為該校所屬學院，不能誤當Nanyang Technological University或據此指定商管教室。作者：User:Sengkang；授權：Copyrighted free use；拍攝日期：2006-11。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-159名額原文：2（PDF第6頁）。這是歷史額度，未填入116名額。【115年度第6頁，非116門檻】English Proficiency Certificate
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 新加坡
+E                 南洋理工商管學院 Nanyang Polytechnic School of Business Management (NYP)
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-159名額原文：2（PDF第6頁）。這是歷史額度，未填入116名額。【115年度第6頁，非116門檻】English Proficiency Certificate
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：新加坡Nanyang Polytechnic校園庭園，2006年歷史照片；商管學院為該校所屬學院，不能誤當Nanyang Technological University或據此指定商管教室。作者：User:Sengkang；授權：Copyrighted free use；拍攝日期：2006-11。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E            
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#partner-table")
+E           14 × locator resolved to <div aria-busy="false" id="partner-table" aria-live="polite" data-result-count="1" class="partner-results">…</div>
+E              - unexpected value "
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             新加坡
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     南洋理工商管學院 Nanyang Polytechnic School of Business Management (NYP)
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：新加坡Nanyang Polytechnic校園庭園，2006年歷史照片；商管學院為該校所屬學院，不能誤當Nanyang Technological University或據此指定商管教室。作者：User:Sengkang；授權：Copyrighted free use；拍攝日期：2006-11。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-159名額原文：2（PDF第6頁）。這是歷史額度，未填入116名額。【115年度第6頁，非116門檻】English Proficiency Certificate
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 新加坡
+E                 南洋理工商管學院 Nanyang Polytechnic School of Business Management (NYP)
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-159名額原文：2（PDF第6頁）。這是歷史額度，未填入116名額。【115年度第6頁，非116門檻】English Proficiency Certificate
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：新加坡Nanyang Polytechnic校園庭園，2006年歷史照片；商管學院為該校所屬學院，不能誤當Nanyang Technological University或據此指定商管教室。作者：User:Sengkang；授權：Copyrighted free use；拍攝日期：2006-11。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E           "
+E       
+E       Aria snapshot:
+E       - group:
+E         - img "南洋理工商管學院 Nanyang Polytechnic School of Business Management (NYP)校園照片"
+E         - text: 新加坡
+E         - strong: 南洋理工商管學院 Nanyang Polytechnic School of Business Management (NYP)
+E         - text: 合作備查／本期名額待核實 · 交換學生
+
+tests/e2e/test_ncu_fifth_photos.py:26: AssertionError
+_ test_fifth_photo_licence_and_campus_caption[\u5e03\u52de\u722a\u54c7-1280-Lorrainevyu-CC BY 4.0] _
+
+page = <Page url='http://127.0.0.1:50109/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E5%B8%83%E5%8B%9E%E7%88%AA%E5%93%87#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:50109', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-65/web-e2e-data0'))
+query = '布勞爪哇', width = 1280, author = 'Lorrainevyu', licence = 'CC BY 4.0'
+
+    @pytest.mark.parametrize('query,width,author,licence',[
+     ('蘭斯',390,'Gérald Garitan','CC BY-SA 4.0'),
+     ('阿沙芬堡',1280,'Aschaffenburczyk','CC BY-SA 3.0'),
+     ('巴登-',390,'Wladyslaw Sojka','FAL'),
+     ('巴登-',1280,'Wladyslaw Sojka','FAL'),
+     ('韓國天主教',390,'poly','CC0'),
+     ('南洋理工商管',390,'Sengkang','Copyrighted free use'),
+     ('布勞爪哇',1280,'Lorrainevyu','CC BY 4.0'),
+     ('艾爾朗加',1280,'antonov0002','CC BY 3.0'),
+    ])
+    def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,author,licence):
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
+        select_ncu(page,live_server)
+        page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
+>       expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+E       AssertionError: Locator expected to contain text '本期名額待公告'
+E       Actual value: 
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             印尼
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     布勞爪哇大學 University of Brawijaya
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：印尼Malang布勞爪哇大學校門，2025年9月27日；校門可見Universitas Brawijaya，不借同名中學或軍事博物館。作者：Lorrainevyu；授權：CC BY 4.0；拍攝日期：2025-09-27 14:58:48。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-204名額原文：5（PDF第7頁）。這是歷史額度，未填入116名額。【115年度第7頁，非116門檻】TOEFL ITP 500 or IELTS 5.5 or TOEIC
+E       equivalent
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 印尼
+E                 布勞爪哇大學 University of Brawijaya
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-204名額原文：5（PDF第7頁）。這是歷史額度，未填入116名額。【115年度第7頁，非116門檻】TOEFL ITP 500 or IELTS 5.5 or TOEIC
+E       equivalent
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：印尼Malang布勞爪哇大學校門，2025年9月27日；校門可見Universitas Brawijaya，不借同名中學或軍事博物館。作者：Lorrainevyu；授權：CC BY 4.0；拍攝日期：2025-09-27 14:58:48。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E            
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#partner-table")
+E           14 × locator resolved to <div aria-busy="false" id="partner-table" aria-live="polite" data-result-count="1" class="partner-results">…</div>
+E              - unexpected value "
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             印尼
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     布勞爪哇大學 University of Brawijaya
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：印尼Malang布勞爪哇大學校門，2025年9月27日；校門可見Universitas Brawijaya，不借同名中學或軍事博物館。作者：Lorrainevyu；授權：CC BY 4.0；拍攝日期：2025-09-27 14:58:48。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-204名額原文：5（PDF第7頁）。這是歷史額度，未填入116名額。【115年度第7頁，非116門檻】TOEFL ITP 500 or IELTS 5.5 or TOEIC
+E       equivalent
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 印尼
+E                 布勞爪哇大學 University of Brawijaya
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-204名額原文：5（PDF第7頁）。這是歷史額度，未填入116名額。【115年度第7頁，非116門檻】TOEFL ITP 500 or IELTS 5.5 or TOEIC
+E       equivalent
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：印尼Malang布勞爪哇大學校門，2025年9月27日；校門可見Universitas Brawijaya，不借同名中學或軍事博物館。作者：Lorrainevyu；授權：CC BY 4.0；拍攝日期：2025-09-27 14:58:48。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E           "
+E       
+E       Aria snapshot:
+E       - table:
+E         - rowgroup:
+E           - row "國家 學校 計畫 可申請身分 名額／期間 重點條件 收藏":
+E             - columnheader "國家"
+E             - columnheader "學校"
+E             - columnheader "計畫"
+E             - columnheader "可申請身分"
+E             - columnheader "名額／期間"
+E             - columnheader "重點條件"
+E             - columnheader "收藏"
+E         - rowgroup:
+E           - row "印尼 布勞爪哇大學 University of Brawijaya校園照片 布勞爪哇大學 University of Brawijaya 交換學生 本期名額待核實 可先加入志願規劃；能否申請須先確認本期名額與條件 -- 116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認） 加入比較布勞爪哇大學 University of Brawijaya":
+E             - cell "印尼"
+E             - cell "布勞爪哇大學 University of Brawijaya校園照片 布勞爪哇大學 University of Brawijaya":
+E               - img "布勞爪哇大學 University of Brawijaya校園照片"
+E               - button "布勞爪哇大學 University of Brawijaya"
+E               - group: 來源
+E             - cell "交換學生 本期名額待核實 可先加入志願規劃；能否申請須先確認本期名額與條件"
+E             - cell "--"
+E             - cell "116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）"
+E             - cell:
+E               - group: 資格與語言
+E             - cell "加入比較布勞爪哇大學 University of Brawijaya":
+E               - button "加入比較布勞爪哇大學 University of Brawijaya": 加入比較
+
+tests/e2e/test_ncu_fifth_photos.py:26: AssertionError
+_ test_fifth_photo_licence_and_campus_caption[\u827e\u723e\u6717\u52a0-1280-antonov0002-CC BY 3.0] _
+
+page = <Page url='http://127.0.0.1:50109/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E8%89%BE%E7%88%BE%E6%9C%97%E5%8A%A0#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:50109', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-65/web-e2e-data0'))
+query = '艾爾朗加', width = 1280, author = 'antonov0002', licence = 'CC BY 3.0'
+
+    @pytest.mark.parametrize('query,width,author,licence',[
+     ('蘭斯',390,'Gérald Garitan','CC BY-SA 4.0'),
+     ('阿沙芬堡',1280,'Aschaffenburczyk','CC BY-SA 3.0'),
+     ('巴登-',390,'Wladyslaw Sojka','FAL'),
+     ('巴登-',1280,'Wladyslaw Sojka','FAL'),
+     ('韓國天主教',390,'poly','CC0'),
+     ('南洋理工商管',390,'Sengkang','Copyrighted free use'),
+     ('布勞爪哇',1280,'Lorrainevyu','CC BY 4.0'),
+     ('艾爾朗加',1280,'antonov0002','CC BY 3.0'),
+    ])
+    def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,author,licence):
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
+        select_ncu(page,live_server)
+        page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
+>       expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+E       AssertionError: Locator expected to contain text '本期名額待公告'
+E       Actual value: 
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             印尼
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     艾爾朗加大學 Airlangga University
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：印尼Surabaya艾爾朗加大學人文學院（Jl Dharmawangsa Dalam／Campus B）歷史校舍；原件2011年上傳，非MERR C校區新貌。作者：antonov0002；授權：CC BY 3.0；拍攝日期：原件只列2011-11-28原始上傳日期；不能當作已核拍攝日。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-207名額原文：2（PDF第7頁）。這是歷史額度，未填入116名額。【115年度第7頁，非116門檻】TOEFL ITP 500, IELTS 5.0, IBT 70
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 印尼
+E                 艾爾朗加大學 Airlangga University
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-207名額原文：2（PDF第7頁）。這是歷史額度，未填入116名額。【115年度第7頁，非116門檻】TOEFL ITP 500, IELTS 5.0, IBT 70
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：印尼Surabaya艾爾朗加大學人文學院（Jl Dharmawangsa Dalam／Campus B）歷史校舍；原件2011年上傳，非MERR C校區新貌。作者：antonov0002；授權：CC BY 3.0；拍攝日期：原件只列2011-11-28原始上傳日期；不能當作已核拍攝日。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E            
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#partner-table")
+E           14 × locator resolved to <div aria-busy="false" id="partner-table" aria-live="polite" data-result-count="1" class="partner-results">…</div>
+E              - unexpected value "
+E           
+E             
+E               國家學校計畫可申請身分名額／期間重點條件收藏
+E               
+E           
+E             印尼
+E             
+E               
+E                 
+E           
+E             照片暫時無法載入
+E           
+E                 
+E                   
+E                     艾爾朗加大學 Airlangga University
+E                   
+E                   
+E                   來源學校網站官方來源圖片來源校園參考照片：印尼Surabaya艾爾朗加大學人文學院（Jl Dharmawangsa Dalam／Campus B）歷史校舍；原件2011年上傳，非MERR C校區新貌。作者：antonov0002；授權：CC BY 3.0；拍攝日期：原件只列2011-11-28原始上傳日期；不能當作已核拍攝日。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E                 
+E               
+E             
+E             交換學生本期名額待核實可先加入志願規劃；能否申請須先確認本期名額與條件
+E             --
+E             116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E             資格與語言116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-207名額原文：2（PDF第7頁）。這是歷史額度，未填入116名額。【115年度第7頁，非116門檻】TOEFL ITP 500, IELTS 5.0, IBT 70
+E             
+E           
+E             
+E           
+E           
+E             
+E           
+E           
+E           
+E             
+E               
+E           
+E             照片暫時無法載入
+E           
+E               
+E                 印尼
+E                 艾爾朗加大學 Airlangga University
+E                 合作備查／本期名額待核實 · 交換學生
+E                 
+E               
+E               
+E             
+E             
+E               
+E               校園照片已核對官網待人工複核心得待整理流程部分查核生活資訊部分查核
+E               
+E           
+E             
+E             
+E               本期名額待核實
+E               可先加入志願規劃；能否申請須先確認本期名額與條件完整說明116學年度第一梯次名額與校別名單預定2026/10/12公告（簡章第2、6頁）；目前僅有115表列參考。外校當期名額、track及全部申請條件仍須核對。
+E             
+E           
+E               
+E                 計畫交換學生
+E                 名額依公告
+E                 研修期間116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。
+E                 合作校參考時程中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E                 適用身分依公告
+E               
+E               申請重點116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。115年度列ncu-207名額原文：2（PDF第7頁）。這是歷史額度，未填入116名額。【115年度第7頁，非116門檻】TOEFL ITP 500, IELTS 5.0, IBT 70
+E               
+E               
+E                 
+E                   查看完整資訊
+E                 
+E                 
+E           
+E             加入比較
+E           
+E               
+E               學校網站官方來源圖片來源校園參考照片：印尼Surabaya艾爾朗加大學人文學院（Jl Dharmawangsa Dalam／Campus B）歷史校舍；原件2011年上傳，非MERR C校區新貌。作者：antonov0002；授權：CC BY 3.0；拍攝日期：原件只列2011-11-28原始上傳日期；不能當作已核拍攝日。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 · 圖片授權
+E             
+E           "
+E       
+E       Aria snapshot:
+E       - table:
+E         - rowgroup:
+E           - row "國家 學校 計畫 可申請身分 名額／期間 重點條件 收藏":
+E             - columnheader "國家"
+E             - columnheader "學校"
+E             - columnheader "計畫"
+E             - columnheader "可申請身分"
+E             - columnheader "名額／期間"
+E             - columnheader "重點條件"
+E             - columnheader "收藏"
+E         - rowgroup:
+E           - row "印尼 艾爾朗加大學 Airlangga University校園照片 艾爾朗加大學 Airlangga University 交換學生 本期名額待核實 可先加入志願規劃；能否申請須先確認本期名額與條件 -- 116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認） 加入比較艾爾朗加大學 Airlangga University":
+E             - cell "印尼"
+E             - cell "艾爾朗加大學 Airlangga University校園照片 艾爾朗加大學 Airlangga University":
+E               - img "艾爾朗加大學 Airlangga University校園照片"
+E               - button "艾爾朗加大學 Airlangga University"
+E               - group: 來源
+E             - cell "交換學生 本期名額待核實 可先加入志願規劃；能否申請須先確認本期名額與條件"
+E             - cell "--"
+E             - cell "116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。／參考時程：中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）"
+E             - cell:
+E               - group: 資格與語言
+E             - cell "加入比較艾爾朗加大學 Airlangga University":
+E               - button "加入比較艾爾朗加大學 Airlangga University": 加入比較
+
+tests/e2e/test_ncu_fifth_photos.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ncu_fifth_photos.py::test_fifth_photo_licence_and_campus_caption[\u862d\u65af-390-G\xe9rald Garitan-CC BY-SA 4.0]
+FAILED tests/e2e/test_ncu_fifth_photos.py::test_fifth_photo_licence_and_campus_caption[\u963f\u6c99\u82ac\u5821-1280-Aschaffenburczyk-CC BY-SA 3.0]
+FAILED tests/e2e/test_ncu_fifth_photos.py::test_fifth_photo_licence_and_campus_caption[\u5df4\u767b--390-Wladyslaw Sojka-FAL]
+FAILED tests/e2e/test_ncu_fifth_photos.py::test_fifth_photo_licence_and_campus_caption[\u5df4\u767b--1280-Wladyslaw Sojka-FAL]
+FAILED tests/e2e/test_ncu_fifth_photos.py::test_fifth_photo_licence_and_campus_caption[\u97d3\u570b\u5929\u4e3b\u6559-390-poly-CC0]
+FAILED tests/e2e/test_ncu_fifth_photos.py::test_fifth_photo_licence_and_campus_caption[\u5357\u6d0b\u7406\u5de5\u5546\u7ba1-390-Sengkang-Copyrighted free use]
+FAILED tests/e2e/test_ncu_fifth_photos.py::test_fifth_photo_licence_and_campus_caption[\u5e03\u52de\u722a\u54c7-1280-Lorrainevyu-CC BY 4.0]
+FAILED tests/e2e/test_ncu_fifth_photos.py::test_fifth_photo_licence_and_campus_caption[\u827e\u723e\u6717\u52a0-1280-antonov0002-CC BY 3.0]
+8 failed, 15 passed in 188.10s (0:03:08)

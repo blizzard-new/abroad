@@ -1,7 +1,14 @@
 from pathlib import Path
-import json,hashlib,shutil,re
+import json,hashlib,shutil,re,os
+original_copyfile = shutil.copyfile
+def copyfile_preserving_shared_evidence(source, target):
+ if Path(target).exists() and os.path.samefile(source, target):
+  return str(target)
+ return original_copyfile(source, target)
+shutil.copyfile = copyfile_preserving_shared_evidence
 root=Path('/workspace/recovery-evidence-20261011');target=Path('/workspace/abroad-globe-evidence/docs/source-recovery-20261011');target.mkdir(parents=True,exist_ok=True)
 runs=[]
+running_names={folder.name for folder in root.iterdir() if folder.is_dir() and (folder/'metadata.json').exists() and json.loads((folder/'metadata.json').read_text()).get('test_result')=='running'}
 for folder in sorted(root.iterdir()):
  if not folder.is_dir() or not (folder/'metadata.json').exists():continue
  meta=json.loads((folder/'metadata.json').read_text())
@@ -18,6 +25,7 @@ for folder in sorted(root.iterdir()):
 # Capture only public source results, memory samples, test screenshots and audit reports; never runtime auth/account data.
 for folder in root.iterdir():
  if not folder.is_dir():continue
+ if any(folder.name.startswith(name) for name in running_names):continue
  for p in folder.rglob('*'):
   if not p.is_file() or 'runtime-data' in p.parts:continue
   is_memory='memory' in folder.name and p.name in ('memory-samples.json','server.log')

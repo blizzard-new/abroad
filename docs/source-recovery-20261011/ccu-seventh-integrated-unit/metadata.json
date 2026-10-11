@@ -1,0 +1,168 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_ccu_bounded_healthcare.py",
+    "tests/test_ccu_completion.py",
+    "tests/test_ccu_composite_provenance.py",
+    "tests/test_ccu_current_sungshin_and_worklist.py",
+    "tests/test_ccu_czu_usj_followup.py",
+    "tests/test_ccu_eighteenth_pass.py",
+    "tests/test_ccu_eighth_pass.py",
+    "tests/test_ccu_fifteenth_pass.py",
+    "tests/test_ccu_fifth_pass.py",
+    "tests/test_ccu_followup_validation.py",
+    "tests/test_ccu_fourteenth_pass.py",
+    "tests/test_ccu_fourth_pass.py",
+    "tests/test_ccu_nineteenth_pass.py",
+    "tests/test_ccu_ninth_pass.py",
+    "tests/test_ccu_overseas.py",
+    "tests/test_ccu_parent_fixes.py",
+    "tests/test_ccu_public_followup.py",
+    "tests/test_ccu_public_priority_batch.py",
+    "tests/test_ccu_saintgits_marker.py",
+    "tests/test_ccu_second_pass.py",
+    "tests/test_ccu_semantics.py",
+    "tests/test_ccu_seventeenth_pass.py",
+    "tests/test_ccu_seventh_pass.py",
+    "tests/test_ccu_sixteenth_pass.py",
+    "tests/test_ccu_sixth_pass.py",
+    "tests/test_ccu_support.py",
+    "tests/test_ccu_third_pass.py",
+    "tests/test_ccu_tls_security.py",
+    "tests/test_ccu_twentieth_pass.py",
+    "tests/test_ccu_twentyfifth_pass.py",
+    "tests/test_ccu_twentyfirst_pass.py",
+    "tests/test_ccu_twentysecond_pass.py",
+    "tests/test_ccu_twentysixth_pass.py",
+    "tests/test_ccu_twentythird_pass.py",
+    "tests/test_ccu_uel_public_followup.py",
+    "-q",
+    "--junitxml=/workspace/recovery-evidence-20261011/ccu-seventh-integrated-unit/results.xml"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T16:59:09.719515+00:00",
+  "start_guard": {
+    "sha": "46227c972caf0d5f04b9d94167fc138f8a7fcc05",
+    "tree": "751869d8427a5e4d110588d0f3232e5eda0a3f44",
+    "status": ""
+  },
+  "timeout_seconds": 1800,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/test_ccu_bounded_healthcare.py": {
+      "sha256": "bd9e9d927dc582c530f219b3a28bd2433d6bd6f02750d333a62ed9c92db49383"
+    },
+    "tests/test_ccu_completion.py": {
+      "sha256": "81ee85879ac3fe42f1606e9288372f832d8e32aaf8c8e4c45512c70dba719884"
+    },
+    "tests/test_ccu_composite_provenance.py": {
+      "sha256": "667c59b2ff5c954671b43b9f3923b34a1c8c9459a6189ae5babdd85645762618"
+    },
+    "tests/test_ccu_current_sungshin_and_worklist.py": {
+      "sha256": "df7f5d039e2cb4dc96ef6c8577cb77975335e8e5dc38b5cab997a9f0f8a61e18"
+    },
+    "tests/test_ccu_czu_usj_followup.py": {
+      "sha256": "d5a7dc5b8dbae04999ccb24ba1162f86b5c31c229ff79bc1334f92b724cf51c7"
+    },
+    "tests/test_ccu_eighteenth_pass.py": {
+      "sha256": "23be600ed935825ce01d23f107390d705789bb719c757ba60bb76dd786e4414f"
+    },
+    "tests/test_ccu_eighth_pass.py": {
+      "sha256": "da09fc21fbc800e302f356040fc662bb0bc2e114242c3ef6dfce82e70a557940"
+    },
+    "tests/test_ccu_fifteenth_pass.py": {
+      "sha256": "790ab00ab0bdc706287dc23842514dc9b33c7b2b6008ab0312647f30fbca1f5a"
+    },
+    "tests/test_ccu_fifth_pass.py": {
+      "sha256": "a9a8cfb6e691b28135d7a6beb639b3afe2a0f5c4e53313a6c6d9842d2192eea6"
+    },
+    "tests/test_ccu_followup_validation.py": {
+      "sha256": "e235d42ceadd464f93e75c65c34f8d76027fc97e3b3f2383f6e2791628542aba"
+    },
+    "tests/test_ccu_fourteenth_pass.py": {
+      "sha256": "1f5350d52697ee413f3aeba9280276fe3db08efb0d41072f76ee587c4b40c50e"
+    },
+    "tests/test_ccu_fourth_pass.py": {
+      "sha256": "bf8f2fd39edb0165457391aaa71770731052bd7178a00c192e7713c87b69bc4a"
+    },
+    "tests/test_ccu_nineteenth_pass.py": {
+      "sha256": "d72b61a8cd526b6ebee7fe2158cbb97d5711a047a51e4a683c5f4336eb4e15fb"
+    },
+    "tests/test_ccu_ninth_pass.py": {
+      "sha256": "9ff817b8b7af234f9de6b7f23945348a4570b3a723cd3c2d04da1d56167b0766"
+    },
+    "tests/test_ccu_overseas.py": {
+      "sha256": "d59056e92d8400ee047ec9f2887cd87cd32728e5811660e70618336768e5403d"
+    },
+    "tests/test_ccu_parent_fixes.py": {
+      "sha256": "618896a636bb7fec7ddcc666f9c6cde20c6701197854a17100a173000cd511ba"
+    },
+    "tests/test_ccu_public_followup.py": {
+      "sha256": "488d5bd3f28055cab946c35b3fd59829e3f952247a255e5e048c38153df47cef"
+    },
+    "tests/test_ccu_public_priority_batch.py": {
+      "sha256": "a51571019a480eb6ccc2137bb5898a2ee008996bd8d465736f52bad7ca3fbd5c"
+    },
+    "tests/test_ccu_saintgits_marker.py": {
+      "sha256": "2ee2b2b1a2b1d8c5d074c0af60a27c553c9ba7153a47746c8679c81afcb273dd"
+    },
+    "tests/test_ccu_second_pass.py": {
+      "sha256": "43aaeb63db8f01f2cbd96774838f4e0e6ce3fe8c745f98e3253911fe238a0676"
+    },
+    "tests/test_ccu_semantics.py": {
+      "sha256": "a0dd4ef187349cd5a77c9af75be6086f9ccacfd0758bff701ef5159311eff135"
+    },
+    "tests/test_ccu_seventeenth_pass.py": {
+      "sha256": "28f29e0641b6650425a8f924591e521a07bdb5adb21c40c1e1f71a5aa6a42507"
+    },
+    "tests/test_ccu_seventh_pass.py": {
+      "sha256": "27a758193fbc3c67b934ae04f1bcad7cdfcbb0fa847945637cd1b7b7759fb94b"
+    },
+    "tests/test_ccu_sixteenth_pass.py": {
+      "sha256": "1ce69e418f2b50287fa3db558a6953a4dc9f698aba57047704c081aa92321497"
+    },
+    "tests/test_ccu_sixth_pass.py": {
+      "sha256": "0355ed21eb5d0b34bf6e7be1cb1cfbe42db6d5f5cd93308ed45b17312285d1e8"
+    },
+    "tests/test_ccu_support.py": {
+      "sha256": "2b0bc5019496d6a3ce56b7d29fa4afa695fac9cbf191369472ce582ae2192f52"
+    },
+    "tests/test_ccu_third_pass.py": {
+      "sha256": "5a764a44cc100906cb6f19ab08169ad29d5d71d45b8b75a4ba57523fee7b89e1"
+    },
+    "tests/test_ccu_tls_security.py": {
+      "sha256": "5ffdea19265e086f0e41abab53642bf51e1b7013ceb9c174984c977dd66b645e"
+    },
+    "tests/test_ccu_twentieth_pass.py": {
+      "sha256": "3e72f022e85ba5429cbd33e69ee89b58bb9bee11459801b82f63d237bce9509e"
+    },
+    "tests/test_ccu_twentyfifth_pass.py": {
+      "sha256": "bc6013569a7d6cdf386cf75860529245270a963d9628a4caaa5d8f66b6e65f4a"
+    },
+    "tests/test_ccu_twentyfirst_pass.py": {
+      "sha256": "b556d118adcd95a82e28e3bf36430778e18b10b4f8003174357207b69137eb74"
+    },
+    "tests/test_ccu_twentysecond_pass.py": {
+      "sha256": "947c7e2b6c9c1fff083b511f40ea535d38eea3e554368f51fc090a11b63d535f"
+    },
+    "tests/test_ccu_twentysixth_pass.py": {
+      "sha256": "09bf574292a31dc4bde3376a8f31c93d6200c5356c4bc7906eb50161d384de61"
+    },
+    "tests/test_ccu_twentythird_pass.py": {
+      "sha256": "9ba3e74a2fae78d73ab4680afdfff8b3de571443299b73285c0d586b43a819b5"
+    },
+    "tests/test_ccu_uel_public_followup.py": {
+      "sha256": "e825347620feb0980e0e9caa023fbb8eb26890408c05679e14a54f9a3c268c09"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T17:03:59.573799+00:00",
+  "end_guard": {
+    "sha": "46227c972caf0d5f04b9d94167fc138f8a7fcc05",
+    "tree": "751869d8427a5e4d110588d0f3232e5eda0a3f44",
+    "status": ""
+  }
+}

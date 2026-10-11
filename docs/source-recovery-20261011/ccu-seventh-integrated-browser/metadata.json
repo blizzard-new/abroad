@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/e2e/test_ccu_public_priority_batch.py",
+    "tests/e2e/test_ccu_current_sungshin.py",
+    "-q",
+    "--junitxml=/workspace/recovery-evidence-20261011/ccu-seventh-integrated-browser/results.xml"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T16:59:11.284123+00:00",
+  "start_guard": {
+    "sha": "46227c972caf0d5f04b9d94167fc138f8a7fcc05",
+    "tree": "751869d8427a5e4d110588d0f3232e5eda0a3f44",
+    "status": ""
+  },
+  "timeout_seconds": 1800,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/e2e/test_ccu_public_priority_batch.py": {
+      "sha256": "85a0ee697ae27d820ee18f2425ffc5a764f4fd3b300deef0e30e8d3f6304fb68"
+    }
+  },
+  "exit_code": 4,
+  "finished_at": "2026-10-11T16:59:12.688318+00:00",
+  "end_guard": {
+    "sha": "46227c972caf0d5f04b9d94167fc138f8a7fcc05",
+    "tree": "751869d8427a5e4d110588d0f3232e5eda0a3f44",
+    "status": ""
+  }
+}

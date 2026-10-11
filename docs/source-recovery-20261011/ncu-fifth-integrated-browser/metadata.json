@@ -1,0 +1,40 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/e2e/test_ncu_fifth_photos.py",
+    "tests/e2e/test_ncu_ktu_meiji_resume.py",
+    "tests/e2e/test_ncu_resume_assets.py",
+    "-q",
+    "--junitxml=/workspace/recovery-evidence-20261011/ncu-fifth-integrated-browser/results.xml"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T16:43:20.513006+00:00",
+  "start_guard": {
+    "sha": "3d97dd2efa9df6c974317069dd986f1518f02d94",
+    "tree": "3f9c06ca18507ba5941135f7b1d2b48a09c731fe",
+    "status": ""
+  },
+  "timeout_seconds": 1800,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/e2e/test_ncu_fifth_photos.py": {
+      "sha256": "8a09b72f56f635ab8b42bbab184eeb8e3454bb8e07f522de0830246ed31f230f"
+    },
+    "tests/e2e/test_ncu_ktu_meiji_resume.py": {
+      "sha256": "b05aa844a6a6bc7cb6a8b86d2f267984a3fb378e36b541f8ebf37c4cf7f17b03"
+    },
+    "tests/e2e/test_ncu_resume_assets.py": {
+      "sha256": "c32d395e03a9c8e85ba65d9f1561178b0aaaa544f47889166aabb3eeb056c8cf"
+    }
+  },
+  "exit_code": 1,
+  "finished_at": "2026-10-11T16:46:31.518114+00:00",
+  "end_guard": {
+    "sha": "3d97dd2efa9df6c974317069dd986f1518f02d94",
+    "tree": "3f9c06ca18507ba5941135f7b1d2b48a09c731fe",
+    "status": ""
+  }
+}
