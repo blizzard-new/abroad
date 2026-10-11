@@ -21,7 +21,7 @@
 | 校園照片 | 97／104 | 真實影像、作者、授權 URL、來源頁、校區說明及 SHA256；保留下載原始 bytes |
 | 官方網站身份 | 101／104 | 100 網站正文＋Ateneo 當期簡章直接列示 URL；網址身份與網站連線成功分開 |
 | 接待欄位矩陣 | 17 × 104 = 1,768 | current 316、reference 336、missing 702、needs_confirmation 339、conflict 74、explicit_not_announced 1 |
-| 校園／院系欄位矩陣 | 7 × 104 = 728 | current 363、reference 97、missing 178、needs_confirmation 90 |
+| 校園／院系欄位矩陣 | 7 × 104 = 728 | current 362、reference 97、missing 179、needs_confirmation 90 |
 | 另列一般校園欄位 | 7 × 104 = 728 | current 281、missing 447；不得與接待政策欄重複算完整度 |
 | 讀過內容的參考附件 | 25 | 其中 Ateneo 本科／研究所各一份明載 Spring 2027；其他舊年或未標年分開 |
 | 新抓取紀錄 | 1,067 | 成功、失敗、HTTP 200 阻擋頁、錯誤候選均留存；不是 1,067 項已核實政策 |
