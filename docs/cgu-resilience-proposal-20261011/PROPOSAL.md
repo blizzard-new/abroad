@@ -55,7 +55,7 @@ Repository中的CGU bundle目前只有catalog-completeness、destination profile
 3. 加入可選`catalogue_source`回應metadata與CGU提示UI，更新OpenAPI契約與資源版本；其他學校不填來源狀態，也不改其partner records。若查找目標不在「失效來源下的舊名冊」，不能聲稱已確認不在當期名單。
 4. 加入已核實CGU seed及專用新測試（例如`test_cgu_catalogue_recovery.py`、`test_cgu_source_status.py`）。不改NTU接手的13項fixture檔案。
 
-[範圍查核](scope-check.json)：依父端分工，NTU負責13項fixture與缺失原文；本方案處理CGU production取得／快取／回復及新測試。查核時只見PR8、PR9開啟，固定PR9沒有修改上述CGU取得／API／model或13項fixture檔案；其他三校仍做其校別資料。可見變更與父端分工沒有重複。未推送的工作無法從PR diff驗證，正式接線前以父端分工為準。本輪未動任何這些來源檔案。
+[範圍查核](scope-check.json)：依父端分工，NTU負責13項fixture與缺失原文；本方案處理CGU production取得／快取／回復及新測試。查核開始時見PR8、PR9；執行中另出現CCU PR10 `c18aebfceeedf8fceba5e4b24bbdf9dbebf0af18`，已補做完整git diff查核（避免PR API只列前100檔）。固定PR9沒有修改上述CGU取得／API／model或13項fixture檔案。PR10雖修改api.py，hunk僅為CCU照片、coverage與座標接線，未改CGU來源取得、partner cache或dashboard cache；[相關diff](pr10-relevant-diff.patch)已保存。PR10與PR8視覺路徑的交集應另行整合審查，不在本CGU來源方案內。可見變更與父端分工沒有重複。未推送的工作無法從PR diff驗證，正式接線前以父端分工為準。本輪未動任何這些來源檔案。
 
 ## 已執行測試，與尚未完成的驗收
 

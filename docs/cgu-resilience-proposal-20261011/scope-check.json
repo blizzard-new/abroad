@@ -23,5 +23,18 @@
   "pr9_reviewed_sha": "4566f7f2b51b3b5c188f5394a56d7b5df190d1c5",
   "pr9_changes_in_proposed_production_or_owned_fixture_files": [],
   "ownership": "Per parent: NTU owns fixing the 13 test fixture dependencies and raw source delivery; this proposal is scoped to CGU production fetch/cache/fallback and new separate tests. Other three tasks collect their own school data. No shared source edits made.",
-  "limit": "Unpushed work cannot be discovered from PR diffs; parent task allocation remains the ownership source of truth."
+  "limit": "Unpushed work cannot be discovered from PR diffs; parent task allocation remains the ownership source of truth.",
+  "pr10_scope_check": {
+    "number": 10,
+    "title": "CCU：補查104個交換身份、校園素材與分期來源",
+    "headRefOid": "c18aebfceeedf8fceba5e4b24bbdf9dbebf0af18",
+    "headRefName": "data/ccu-completion-20261011",
+    "changed_file_count": 3106,
+    "production_cgu_or_ntu_owned_fixture_overlap": [
+      "src/exchange_info/api.py"
+    ],
+    "new_cgu_paths": [],
+    "paths_source": "exact git diff, not truncated PR file API",
+    "hunk_review": "CCU-only image/coverage/location hooks. No change to CGU fetch, partner_cache or dashboard cache. It does overlap PR8 visual paths and needs separate integration review."
+  }
 }
