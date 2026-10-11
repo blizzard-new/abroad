@@ -28,6 +28,7 @@ _audit_snapshot_lock = threading.Lock()
 # Cache serialized, scoped records rather than two complete all-school graphs.
 # Each caller parses its own result, so mutations cannot leak to another reader.
 _AUDIT_CACHE_BYTES = 8 * 1024 * 1024
+_AUDIT_CACHE_ITEMS = 16
 _audit_cache: OrderedDict[tuple, bytes] = OrderedDict()
 _audit_cache_bytes = 0
 
@@ -94,7 +95,8 @@ def _read_audit_snapshot(path: Path, signature: tuple[int, int], field: str, val
     rows = [row for row in _iter_audit_rows(path) if row.get(field) in selected]
     payload = json.dumps(rows, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     if len(payload) <= _AUDIT_CACHE_BYTES:
-        while _audit_cache and _audit_cache_bytes + len(payload) > _AUDIT_CACHE_BYTES:
+        while _audit_cache and (_audit_cache_bytes + len(payload) > _AUDIT_CACHE_BYTES
+                                or len(_audit_cache) >= _AUDIT_CACHE_ITEMS):
             _, old = _audit_cache.popitem(last=False)
             _audit_cache_bytes -= len(old)
         _audit_cache[key] = payload

@@ -112,3 +112,9 @@ def test_cache_is_bounded_in_bytes_and_never_truncates_large_records(snapshot, m
     assert actual=={**audits[0],'source_evidence':sources[:1]}
     assert ncu._audit_cache_bytes<=100
     assert all(len(blob)<=100 for blob in ncu._audit_cache.values())
+
+
+def test_empty_results_cannot_accumulate_unbounded_cache_keys(snapshot):
+    for i in range(24):assert ncu.ncu_field_audit(f'未收錄-{i}') is None
+    assert len(ncu._audit_cache)<=ncu._AUDIT_CACHE_ITEMS
+    assert ncu._audit_cache_bytes<=ncu._AUDIT_CACHE_BYTES
