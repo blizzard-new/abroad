@@ -27,7 +27,7 @@ FIELDS = {
     "housing": "住宿資訊",
     "cost": "費用與生活預算",
     "insurance_visa": "保險與簽證",
-    "life_sources": "獨立接待校官方生活來源",
+    "life_sources": "官方生活參考（逐段保留來源範圍）",
     "coordinates": "校名國家與校區核對座標",
     "photos": "校園照片與可用授權",
 }
@@ -85,7 +85,7 @@ def audit(root: Path = ROOT) -> tuple[list[dict], dict]:
                 record = life.get(key, {})
                 evidence = record.get("evidence", [])
                 available = bool(evidence)
-                status = "scoped_official_reference" if available else "no_independent_host_text"
+                status = "scoped_official_reference" if available else "no_scoped_life_text"
                 urls = sorted({s["url"] for e in evidence for s in e.get("sources", [])})
                 checked = record.get("checked_at")
                 note = "來源存在不等於十個生活面向完整；依各段原日期與範圍。"

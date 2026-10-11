@@ -1,6 +1,6 @@
 """Verify portable NTU source bodies, quotation pages and the historic 59-body handoff.
 
-Read-only, offline. Download all six current archive parts and both manifests
+Read-only, offline. Download every archive part listed in the current manifest
 into sources/ntu before running this script from the checkout.
 """
 from contextlib import ExitStack
@@ -18,7 +18,12 @@ def verify():
     manifest = json.loads((SOURCES / "reviewed-source-bodies-current-manifest.json").read_text())
     snapshot = json.loads((SOURCES / "completion-2026-10-11.json").read_text())
     entries = {entry["source_id"]: entry for entry in manifest["entries"]}
-    assert len(entries) == manifest["source_count"] == 217
+    assert len(entries) == manifest["source_count"] >= 217
+    stage2_path = SOURCES / "reviewed-source-bodies-stage2-manifest.json"
+    if stage2_path.exists():
+        stage2 = json.loads(stage2_path.read_text())
+        assert stage2["source_count"] == 217
+        assert all(entries[e["source_id"]] == e for e in stage2["entries"])
     normal = lambda text: re.sub(r"\s+", " ", text).strip()
     with ExitStack() as stack:
         archives = {}
@@ -41,6 +46,11 @@ def verify():
                 pages = json.loads(archive.read(f"extractions/{sid}.pages.json"))
                 page = next(p for p in pages if p["page"] == page_number)
                 assert quote in normal(page["text"]), (sid, page_number)
+        manual_path = SOURCES / "semantic-review-current-2026-10-11.json"
+        manual = json.loads(manual_path.read_text()) if manual_path.exists() else []
+        for row in manual:
+            for source in row["sources"]:
+                assert entries[source["source_id"]]["sha256"] == source["sha256"]
         home = json.loads((SOURCES / "home-selection-current-2026-10-11.json").read_text())
         entry = entries[home["source_id"]]
         assert entry["sha256"] == home["sha256"]
@@ -54,6 +64,7 @@ def verify():
     return {"current_bodies": len(entries), "reviewed_citations": len(snapshot["public_source_reviews"]),
             "current_archive_parts": len(manifest["archive_files"]), "historical_bodies": len(historical),
             "home_source_citations_checked": 1,
+            "manual_semantic_rows_checked": len(manual),
             "all_body_and_archive_hashes_match": True, "all_quote_pages_match": True,
             "historical_cached_read_has_not_been_backfilled_with_a_hash": True}
 
