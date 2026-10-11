@@ -62,6 +62,9 @@ def build(snapshot_path: Path = SNAPSHOT) -> dict:
     for row in snapshot.get("translations", []):
         translations[(row["url"], row["original"])] = row
     translations_path.write_text(json.dumps(list(translations.values()), ensure_ascii=False, indent=2) + "\n")
+    from exchange_info.ntu_completion import apply_completion, SOURCE as COMPLETION_SOURCE
+    if COMPLETION_SOURCE.exists():
+        apply_completion(PACKAGE / "official_data/ntu", apply_assets=True)
     return {"photos": sum(r["status"] == "verified" for r in snapshot["photos"]),
             "locations": sum(r["geocode_status"] == "verified" for r in snapshot["locations"]),
             "life_with_evidence": sum(bool(r.evidence) for r in life)}
