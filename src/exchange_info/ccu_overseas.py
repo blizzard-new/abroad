@@ -358,6 +358,8 @@ def enrich_workflow(workflow, partner: PartnerUniversity):
     )
     workflow.steps.insert(5, life_step)
     enrich_documents(workflow, partner)
+    from .ccu_sungshin_current import enrich_sungshin_workflow
+    enrich_sungshin_workflow(workflow, partner)
     refs = {ev.source_url: ev for field in fields.values() for ev in field.evidence}
     for guide in reviewed_profiles().get(partner.source_pages[0], {}).get("supplementary_life_guidance", []):
         ev = guide["evidence"][0]

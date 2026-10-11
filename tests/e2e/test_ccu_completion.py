@@ -12,6 +12,35 @@ HOME = "國立中正大學"
 
 
 @pytest.mark.parametrize("width", [390, 1440])
+def test_sungshin_current_medical_template_and_stale_nomination_year_are_visible(page, live_server, width):
+    partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 49)
+    page.set_viewport_size({"width": width, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+    page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+    receiving = page.locator("#detail-overview .ccu-receiving-school-details")
+    expect(receiving.locator("[data-ccu-field]")).to_have_count(17, timeout=30_000)
+    forms = receiving.locator('[data-ccu-field="application_forms"]')
+    forms.locator("> summary").click()
+    expect(forms).to_contain_text("來源矛盾")
+    expect(forms).to_contain_text("2025-12-01")
+    calendar = receiving.locator('[data-ccu-field="academic_calendar"]')
+    calendar.locator("> summary").click()
+    expect(calendar).to_contain_text("2027-03-02")
+    expect(calendar).to_contain_text("2027-02-17")
+    page.locator('#detail-tab-application').click()
+    step = page.locator("#detail-application .workflow-step").filter(
+        has=page.locator(".workflow-documents li b").filter(has_text="Personal Medical Assessment")
+    )
+    step.locator("> summary").click()
+    medical = step.locator(".workflow-documents li").filter(has_text="Personal Medical Assessment")
+    expect(medical).to_contain_text("自填健康評估")
+    expect(medical).to_contain_text("學生")
+    expect(medical.locator("a")).to_have_attribute("href", "https://www.sungshin.ac.kr/bbs/int/3828/113856/download.do#page=2")
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+
+
+@pytest.mark.parametrize("width", [390, 1440])
 def test_uel_undated_language_and_current_calendar_conflicts_remain_reference(page, live_server, width):
     partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 66)
     page.set_viewport_size({"width": width, "height": 956})

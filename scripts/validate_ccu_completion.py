@@ -51,7 +51,18 @@ def main():
     preserved = subprocess.check_output(["git", "diff", "--name-only", BASE, "--", "src/exchange_info/official_data"], cwd=ROOT, text=True).splitlines()
     assert all(path.startswith(("src/exchange_info/official_data/ccu/completion",
                                "src/exchange_info/official_data/ccu/campus-"))
-               or path == "src/exchange_info/official_data/ccu/destination_profiles.jsonl" for path in preserved), preserved
+               or path in {"src/exchange_info/official_data/ccu/destination_profiles.jsonl",
+                           "src/exchange_info/official_data/ccu/application_workflows.jsonl"} for path in preserved), preserved
+    original_workflows = subprocess.check_output(
+        ["git", "show", BASE + ":src/exchange_info/official_data/ccu/application_workflows.jsonl"], cwd=ROOT).splitlines()
+    current_workflows = (BUNDLE / "application_workflows.jsonl").read_bytes().splitlines()
+    assert len(original_workflows) == len(current_workflows)
+    changed_workflows = [(json.loads(old), json.loads(new))
+                         for old, new in zip(original_workflows, current_workflows, strict=True) if old != new]
+    assert len(changed_workflows) == 1
+    sungshin_name = next(p.school_name for p in partners if p.source_pages == [49])
+    assert all(old["school_name"] == new["school_name"] == sungshin_name
+               for old, new in changed_workflows)
     original = subprocess.check_output(["git", "show", BASE + ":src/exchange_info/official_data/ccu/destination_profiles.jsonl"], cwd=ROOT)
     new = (BUNDLE / "destination_profiles.jsonl").read_bytes()
     assert new.startswith(original) and len(new.splitlines()) == 104
@@ -60,14 +71,16 @@ def main():
     assert profile_counts[HOME] == 104 and profile_counts["長庚大學"] == 77 and profile_counts["國立臺北大學"] == 206
     image_count = sum(p.image_status == "verified" for p in partners)
     point_count = sum(p.location is not None and p.location.geocode_status == "verified" for p in partners)
-    assert image_count == 100 and point_count == 100
+    assert image_count == 100 and point_count == 101
     package = None
     if args.wheel:
         with ZipFile(args.wheel) as archive:
             prefix = "exchange_info/"
             expected = [*list((BUNDLE / "completion_sources").glob("*")),
                         *list((BUNDLE.parents[1] / "static/assets/ccu/campuses").glob("*")),
-                        *list(BUNDLE.glob("completion-*")), *list(BUNDLE.glob("campus-*")), BUNDLE / "destination_profiles.jsonl"]
+                        *list(BUNDLE.glob("completion-*")), *list(BUNDLE.glob("campus-*")),
+                        BUNDLE / "destination_profiles.jsonl", BUNDLE / "application_workflows.jsonl",
+                        *[BUNDLE.parents[1] / name for name in ["ccu_completion.py", "ccu_overseas.py", "ccu_sungshin_current.py"]]]
             for file in expected:
                 if file.is_file():
                     assert archive.read(prefix + str(file.relative_to(BUNDLE.parents[1]))) == file.read_bytes(), file
@@ -80,7 +93,10 @@ def main():
               "coordinates": point_count, "licensed_photos": image_count,
               "matrix_counts": {group: dict(Counter(f["status"] for row in fields.values() for f in row[group].values()))
                                 for group in ["host_fields", "profile_fields", "general_campus_fields"]},
-              "old_official_data_preserved": True, "original_ccu_profiles_sha256": hashlib.sha256(original).hexdigest(),
+              "old_official_data_preserved_except_reviewed_workflow_row": True,
+              "published_workflow_refresh": {"changed_rows": 1, "school_name": sungshin_name,
+                                             "other_rows_preserved_byte_for_byte": len(current_workflows) - 1},
+              "original_ccu_profiles_sha256": hashlib.sha256(original).hexdigest(),
               "package": package}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
