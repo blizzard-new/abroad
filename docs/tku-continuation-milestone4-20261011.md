@@ -194,3 +194,5 @@ Repository `blizzard-new/abroad`，分支 `data/tku-completeness-20261011`；延
 機讀報告：`tku-continuation-milestone4-20261011.json`。每份XML、日誌、重建、pack-only、preservation與四校UI截圖雜湊：`tku-census-evidence-20261011/milestone4-evidence-manifest.json`。
 
 原始失敗日誌／JUnit含尾端空白，staged whitespace檢查實際曾exit2。僅該4份log/XML（實際檔數以manifest為準）無損GZIP封裝，解壓逐byte／SHA等同原輸出，保留失敗歷史；沒有刪空白或重建覆蓋學校資料。2026-10-11 15:55:36 UTC最小git status與已保存報告讀取證明環境可用，檢查點另存。
+
+追加交付檢查：API的版本化JS快取為24小時，故更新index.html的app.js版本至20261011-tku-host-references-1。實際TestClient GET首頁、版本化app.js及新TKU模組皆200；回傳app.js SHA與已完成201／4單元及4 browser測試的09f9235a固定檢查點完全一致，學校資料未改。cache smoke證據另存，總43份證據。

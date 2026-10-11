@@ -58858,20 +58858,32 @@
           "decompression_exact": true
         }
       ]
+    },
+    "static_cache_smoke": {
+      "status": "passed",
+      "checked_at": "2026-10-11T16:03:18.944920+00:00",
+      "html_status": 200,
+      "app_url": "/static/app.js?v=20261011-tku-host-references-1",
+      "app_http_status": 200,
+      "cache_control": "public, max-age=86400",
+      "served_app_sha256": "c8ba97f49963a59a9363b4b7e01263d0c9834bb9685f495bb13b64f3bf820efe",
+      "unchanged_from_tested_delivery_commit": "09f9235abd88b22b76c8e20e2e93ba98a5d92237",
+      "tku_module_http_status": 200,
+      "scope": "HTML script version query only; all tested JS and school data unchanged"
     }
   },
   "integration": {
     "new_school_module": "src/exchange_info/static/tku-partner-details.js",
     "shared_files_changed_this_milestone": [
       "src/exchange_info/static/app.js: TKU-only agreement labels, receiving fields, quota label and full profile guide branch",
-      "src/exchange_info/static/index.html: load TKU module before app.js",
+      "src/exchange_info/static/index.html: load TKU module before app.js and bump modified app.js cache version",
       "tests/test_tku_support.py: load real module/school context for existing JS harness and assert unverified vs unannounced"
     ],
     "new_registry_api_eligibility_document_catalog_or_security_changes": false
   },
   "tested_code_sha256": {
     "src/exchange_info/static/app.js": "c8ba97f49963a59a9363b4b7e01263d0c9834bb9685f495bb13b64f3bf820efe",
-    "src/exchange_info/static/index.html": "0e682d1d5136235de271c731855369237976093ab6376d33cae90c775296ce67",
+    "src/exchange_info/static/index.html": "fd71237e8e318c5df0b13b4bd60b28673f1a2f6e1bb645858b6842bb32511b96",
     "src/exchange_info/static/tku-partner-details.js": "7b6342b226c8fb90412e902fd193118efc192dee78f8173b6a2fd2315467e603",
     "tests/test_tku_support.py": "1bda7837dcb4e13ef06bcf2081fcb5be78cd2ef613443f5cd3542c7774ca985c",
     "tests/test_tku_milestone4.py": "45047f44a03fde8ec022f9a563509853e146a67b6eb47c38a0bea71b4ea5d1bd",
@@ -59073,6 +59085,10 @@
     "docs/tku-census-evidence-20261011/milestone4-environment-checkpoint.json": {
       "bytes": 7407,
       "sha256": "6013b2a9aa9876afad2628538dcc849cfdadac1b7e4e403af587f38dd0502bb7"
+    },
+    "docs/tku-census-evidence-20261011/milestone4-static-cache-smoke.json": {
+      "bytes": 530,
+      "sha256": "433bf7cb73b0eff8a30261e62bf11c973a2613ec5d557b7fc1da7ff79d03334f"
     }
   },
   "limits_note": "Source year verified ≠ current TKU verified. All new facts are host-only references;54 former HTTP200 snapshots were not presumed readable. Preserve no-bypass errors, historical cycles, blank values and scope contradictions. Asset search exhaustion concerns bounded retained sets only; known unread Adelaide public map explicit. No merge/deploy/security/credential changes."
