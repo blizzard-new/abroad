@@ -32,3 +32,9 @@ NTU既有截圖測試重現條件、原main對照、未套用的tmp_path提案�
 FGES新增Vauban代表marker，WeNov另列未當個人分配。已讀母大學2026–2027簡章16頁，其中期限內文2025、FGES學院Spring2027期限2026、語言強度與校曆差異均保存待確認。學生表個人帳號是公開正文要求，與fges.eu來源失敗分開。QUT已讀2027費率及Semester1校曆，免學費Exchange／付費StudyAbroad／排除Exchange的獎助分開；TOEFL舊刻度與2022條文未自行更新。實際減少17個原缺欄，current缺值673。
 
 24個新增來源已入completion_sources，含正常讀取、失敗與未核年度。Keimyung新cms及LETI更多網域入口503；UNINTER development／university入口503；Saintgits mandatory disclosure正常200但未找到可引用GPS；HCMUTE官方虛擬導覽正常200但只讀到panorama平面像素座標，不能轉成經緯度。這些都不是官方明示尚未公告或個人權限證明。逐校確切URL、時間、狀態與原bytes在current gap JSON／CSV。
+
+## 第四批公开資料续查
+
+新增60個正常TLS來源嘗試，逐字證據及URL均入current gap JSON／CSV，總1194來源並不代表當期政策數。CZU官方2026/2027 current頁、7個個人流程子頁及住宿／保險原文實讀；USJ官方2026–2027 PDF5頁、學期calendar、申請流程、non-European DOCX、分科English modules、住宿／保險／visa頁實讀。Hloubětín價表按自2026-01-01右欄14700/10500核值，旁欄未標年14000/10000不混用；該校外宿舍不取代Suchdol校園座標。QUT SiA為StudyAbroad段落，不能保證MoU交換住宿。实际缺值673→649。
+
+Karviná捷克及舊faculty contact入口HTTP200均為Anubis挑戰頁，不是正文／本人權限。DNTU公開tour.js及faculty campus頁仍未得到可用GPS；viewer.js404只代表該檔當時不可讀。Gamma正常docs viewer及其公開manifest／client chunks已取得，仍未取得CCU全清單，不由客戶端檔或匿名FORBIDDEN推定本人權限。Brno入口已追至bilateral/freemover正文，但泛用頁未標當期且含舊Erasmus地域條款，未填成2027資格。Cyprus international-exchange頁為Erasmus Mundus一般介紹而非中正當期bilateral資料，未升格。

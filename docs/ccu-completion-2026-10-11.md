@@ -20,11 +20,11 @@
 | 可定位校園代表點 | 99／104 | 獨立身份、國家與校區複核；5 筆未猜值 |
 | 校園照片 | 100／104 | 真實影像、作者、授權 URL、來源頁、校區說明及 SHA256；保留下載原始 bytes |
 | 官方網站身份 | 102／104 | 101 網站正文／官方國際處＋Ateneo 當期簡章直接列示 URL；網址身份與網站連線成功分開 |
-| 接待欄位矩陣 | 17 × 104 = 1,768 | current 337、reference 330、missing 673、needs_confirmation 348、conflict 79、explicit_not_announced 1 |
+| 接待欄位矩陣 | 17 × 104 = 1,768 | current 351、reference 322、missing 649、needs_confirmation 365、conflict 80、explicit_not_announced 1 |
 | 校園／院系欄位矩陣 | 7 × 104 = 728 | current 368、reference 95、missing 176、needs_confirmation 89 |
 | 另列一般校園欄位 | 7 × 104 = 728 | current 288、missing 440；不得與接待政策欄重複算完整度 |
 | 讀過內容的參考附件 | 25 | 其中 Ateneo 本科／研究所各一份明載 Spring 2027；其他舊年或未標年分開 |
-| 新抓取紀錄 | 1,134 | 成功、失敗、HTTP 200 阻擋頁、錯誤候選均留存；不是 1,134 項已核實政策 |
+| 新抓取紀錄 | 1,194 | 成功、失敗、HTTP 200 阻擋頁、錯誤候選均留存；不是 1,194 項已核實政策 |
 
 PR #8 固定 head `9927ec1d8765a9772671bbaa68e7f920995f1258` 已恢復既有 30 點、31 照片，均與本次核對重疊。因此 **真正新增 69 點、69 照片**，不將顯示恢復重算為新增資料。[逐校重疊比對](../src/exchange_info/official_data/ccu/completion-pr8-coverage-comparison.json)。
 
@@ -34,7 +34,7 @@ PR #8 固定 head `9927ec1d8765a9772671bbaa68e7f920995f1258` 已恢復既有 30 
 - [完整欄位與原文依據](../src/exchange_info/official_data/ccu/completion-reviewed-fields.json)：每欄明示狀態、原因、官方 URL、實體 PDF 頁碼或文字／JSON 位置、原文、適用年度與查核時間。
 - [校園素材](../src/exchange_info/official_data/ccu/campus-assets.json)、[座標複核](../src/exchange_info/official_data/ccu/campus-coordinate-review.json)、[照片選擇／排除](../src/exchange_info/official_data/ccu/campus-photo-review.json)。ROR 城市不是校園座標；多校區照片與地圖點不必相同，逐校明示。
 - [附件內容年度複核](../src/exchange_info/official_data/ccu/completion-reference-document-reviews.json)、[官方 PDF 精確附件連結](../src/exchange_info/official_data/ccu/completion-reference-document-links.json)、[公開資料夾檔案連結](../src/exchange_info/official_data/ccu/completion-public-folder-file-links.json)。資料夾子檔案鍵含父連結序號，不猜 Google ID。
-- [全部來源篩選與排除](../src/exchange_info/official_data/ccu/completion-public-source-screening.json)。423 來源被特定欄位引用、44 技術失敗、4 阻擋／錯誤頁、7 特定候選排除、656 僅抓取未核实政策。原 bytes 位於 `completion_sources/`；HTML gzip 無損保存，原 response SHA 與儲存 SHA 分開。
+- [全部來源篩選與排除](../src/exchange_info/official_data/ccu/completion-public-source-screening.json)。443 來源被特定欄位引用、46 技術失敗、6 阻擋／錯誤頁、7 特定候選排除、692 僅抓取未核实政策。原 bytes 位於 `completion_sources/`；HTML gzip 無損保存，原 response SHA 與儲存 SHA 分開。
 
 ## 已確認的重要差異
 
@@ -55,7 +55,7 @@ PR #8 固定 head `9927ec1d8765a9772671bbaa68e7f920995f1258` 已恢復既有 30 
 - 5 點未刊登：p68 HCMUTE（兩個 P625，缺一手定位選擇）、p71 DNTU、p74 Saintgits、p111 Karviná 商學院、p119 Uninter Mexico。相機視窗或未確認子校区不能當 marker。
 - 4 校尚無可刊登的已複核授權照片：p66 UEL、p71 DNTU、p80 Presidency、p119 Uninter Mexico。
 - 2 校官方網站正文／身份補查仍受阻或新版尚未核實：p44 Keimyung、p96 LETI。Ateneo 網域已由當期官方簡章正文核實，但首頁抓取仍受阻。
-- 673 接待欄缺值，其餘非 current 欄各有年份、衝突或範圍理由；尤其當期完整文件集、提名後個人表、住宿床位、費用、課程／学制限制不能由一般服務入口推定。
+- 649 接待欄缺值，其餘非 current 欄各有年份、衝突或範圍理由；尤其當期完整文件集、提名後個人表、住宿床位、費用、課程／学制限制不能由一般服務入口推定。
 
 ## 程式與合併邊界
 
@@ -81,6 +81,8 @@ PR #8 固定 head `9927ec1d8765a9772671bbaa68e7f920995f1258` 已恢復既有 30 
 python scripts/fetch_ccu_completion_sources.py --kind root
 python scripts/fetch_ccu_reference_school_documents.py
 python scripts/build_ccu_reference_document_reviews.py
+python scripts/review_ccu_public_followup.py
+python scripts/review_ccu_czu_usj_followup.py
 python scripts/build_ccu_completion_reviews.py
 python scripts/build_ccu_campus_assets.py
 python scripts/compact_ccu_completion_archives.py
@@ -101,3 +103,5 @@ PLAYWRIGHT_BROWSERS_PATH=/tmp/ccu-playwright python -m pytest -q tests/test_ccu_
 第三批續查FGES與QUT，新增1個身份明確的校園marker、填補17個原缺值；期限／語言／校曆矛盾保留，非current項的研究分類與已嘗試URL可在current gap JSON／CSV檢索。母校原partners、49灰字狀態、55原介紹prefix及其他五校資料未改。第三批測試與固定commit證據另列，不覆寫首兩批實測報告。
 
 [第三批固定版本與證據](ccu-completion-validation-2026-10-11/followup-03/report.json)：production `102164aca2bb55b967dea77dc0820db80d71ede7`。全部CCU單元、CGU/NTPU及共用數量回歸365項為361通過／4既有略過；completion手機／桌面10項通過，無新增排除。3249個CCU打包檔案逐byte核對，wheel SHA256 `5ba8dc58e8ad11d90bce90d738505d8a22796e6af52caba370226f81c416d26e`。未重跑全套2668項；首批NTU路徑失敗及第二批Jena390不穩定仍保留。
+
+第四批續查CZU、USJ及QUT住宿，共減少24個原缺欄，現缺值649；CZU2026/2027頁明確區分當期／舊年、Erasmus／non-Erasmus、冬季申請日／Spring未核日期。考試期間只有Summer段原文明示To be specified，其餘日期已核實，不把整份校曆當未公告。USJ2026–2027 PDF5頁及公開Non-European DOCX正文已讀；語言一般B1 recommended／臨床及翻譯B2 mandatory分開，Spring重考PDF7/3與web7/2矛盾保留，個人表未核年份。僅提名後另給通知不自動視為本人登入權限；USJ表格續查分類為research_incomplete。CZU UIS明示個人credentials才標須本人權限。
