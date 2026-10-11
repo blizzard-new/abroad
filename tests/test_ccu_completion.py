@@ -2,15 +2,14 @@
 import gzip
 import hashlib
 import json
-from pathlib import Path
 
-from fastapi.testclient import TestClient
 import pytest
+from fastapi.testclient import TestClient
 
 from exchange_info.api import create_app
+from exchange_info.ccu_completion_sources import validate_completion_source
 from exchange_info.ccu_sources import BUNDLE, HOME
 from exchange_info.ccu_student_view import fetch_ccu_partner_universities
-from exchange_info.ccu_completion_sources import validate_completion_source
 from exchange_info.storage import load_destination_profiles
 
 
@@ -162,8 +161,8 @@ def test_real_api_serves_all_profiles_and_local_photographs_without_other_school
 
 def test_shared_alias_photos_and_points_cannot_replace_reviewed_ccu_campus(monkeypatch, tmp_path):
     from exchange_info import api
-    from exchange_info.school_identity import school_identity_key
     from exchange_info.ccu_profile import school_location
+    from exchange_info.school_identity import school_identity_key
     from exchange_info.university_locations import UniversityLocation
 
     partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 103)

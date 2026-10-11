@@ -5,15 +5,14 @@ Receiving policies do not change the mother's not_open or blank quota statuses.
 """
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import gzip
 import json
 import re
-from pathlib import Path
+from datetime import UTC, datetime
 
+from fetch_ccu_completion_sources import BUNDLE as B
+from fetch_ccu_completion_sources import OUT
 from pypdf import PdfReader
-
-from fetch_ccu_completion_sources import BUNDLE as B, OUT
 
 
 def read(name):
@@ -94,7 +93,7 @@ def main():
             photo["campus_caption"] = "FHNW Campus Brugg-Windisch共同校園主入口；官方列School of Business在此校區。地圖為Olten代表點，照片不代表個人接收校區。"
         (B / photo_path).write_text(json.dumps(photo, ensure_ascii=False, indent=2) + "\n")
         prior = photos["selected"].get(str(page), {})
-        reviewed_at = prior.get("visually_reviewed_at") if prior.get("reviewed_photo_record") == photo_path else datetime.now(timezone.utc).isoformat()
+        reviewed_at = prior.get("visually_reviewed_at") if prior.get("reviewed_photo_record") == photo_path else datetime.now(UTC).isoformat()
         photos["selected"][str(page)] = {"source": "commons_alternatives", "metadata_label": label, "pageid": pageid, "artifact_label": artifact,
             "decision": "accepted", "reviewed_photo_record": photo_path, "visually_reviewed_at": reviewed_at,
             "campus_note": note, "identity_note": note, "visual_evidence_artifact": "Original Commons bytes viewed through view_image; source and campus content independently inspected"}

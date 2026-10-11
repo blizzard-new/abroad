@@ -2,18 +2,18 @@
 from __future__ import annotations
 
 import argparse
-from collections import Counter
 import hashlib
 import json
 import re
-from pathlib import Path
 import subprocess
+from collections import Counter
+from pathlib import Path
 from zipfile import ZipFile
 
-from exchange_info.ccu_sources import BUNDLE, HOME
-from exchange_info.ccu_student_view import fetch_ccu_partner_universities
 from exchange_info.ccu_campus_assets import reviewed_assets
 from exchange_info.ccu_completion import reviewed_completion
+from exchange_info.ccu_sources import BUNDLE, HOME
+from exchange_info.ccu_student_view import fetch_ccu_partner_universities
 from exchange_info.storage import load_destination_profiles
 
 BASE = "59a20f27fcee00fb597abc79e75ec11778317422"
