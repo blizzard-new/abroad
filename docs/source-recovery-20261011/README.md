@@ -4,16 +4,16 @@
 
 固定資料仍為CCU `52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8`、NCU `a2df55b16f72455f7154d7afff44934fc8dbf99d`、NTU `c7357f974faaec8e60ef19698d4d21633c322dc8`、TKU `93cbd9dfee3af95f9ecc89cceb1ccd0e100778af`。相對main59 migration增量0；CGU154／NTPU409／NTU288原workflow逐byte不變。資料來源與全部既有測試函式不受本次記憶體修復改寫。
 
-父指示排隊的新輸入：NCU `48fcc27446f8cadb19f45cae415852af67f76a1e`、NTU `23757a06778f7569716a19987dd1d39effce13f2`。目前只讀盤點固定差異，尚未合入；先完成當前乾淨SHA重驗，再逐hunk接入，並重跑最終完整組合／記憶體／DB，不將來源分支結果當組合驗收。
+父指示排隊的新輸入：NCU先前 `48fcc27446f8cadb19f45cae415852af67f76a1e`，19:25只讀核到遠端新head `084f500f091838afe09ddf4f716bffd5ace9b906` 正核差異；NTU `23757a06778f7569716a19987dd1d39effce13f2`。目前只讀盤點固定差異，尚未合入；先完成當前乾淨SHA重驗，再逐hunk接入，並重跑最終完整組合／記憶體／DB，不將來源分支結果當組合驗收。
 
 | 目前5e711418門檻 | 狀態 |
 |---|---|
 | targeted regression | PASSED：61 cases，含25新增JSON／並行／完整來源失敗不發布快取案例；原NTU/CCU/TKU生命資料完整性與withdrawn圖檢查保留。 |
 | contracts／delivery／NCU stream parity | PASSED：原workflow、35SQL／Actions／uv不變，OpenAPI／JS／compile，NTU1373觀察與TKU4529pack成員、NCU214+2177記錄完整核驗。 |
 | 完整cache內容 | PASSED：TKU287校13,024,247 bytes→2,148,697無損cache；CCU104校9,310,485→1,123,661；每校canonical bytes／全部公開映射相等、原來源驗證全部執行。 |
-| 同175步cold／warm，460MiB門檻 | cold RUNNING；warm NOTRUN。原assert/wait不放寬，僅已授權TKU inventory期望由264圖260點更新為262圖264點，差異receipt保存。 |
+| 同175步cold／warm，460MiB門檻 | cold／warm PASSED：175步各完整完成，峰值437.215／447.801MiB，無defer-budget、server log均0bytes。原assert/wait不放寬，僅已授權TKU inventory期望由264圖260點更新為262圖264點，差異receipt保存。 |
 | 完整pytest套件 | NOTRUN；未繼承舊SHA通過。預期新增25案例，最終以實際collection／四shard聯集為分母。 |
-| 本SHA完整Supabase runtime／wheel fresh install | NOTRUN；7a7的歷史完整通過不能替代本SHA。 |
+| 本SHA完整Supabase runtime／wheel fresh install | runtime RUNNING；wheel NOTRUN；7a7的歷史完整通過不能替代本SHA。 |
 
 程式修復：TKU與CCU先逐校讀取，再保留無損壓縮不可變快取，按請求還原完整紀錄；不刪來源、欄位或接受條件。TKU首次並行讀取只建一次完整snapshot；截斷JSON／最後一校來源失敗都不能留下部分成功快取。另修正TKU照片撤回工具CLI／package雙匯入。NCU4個測試截圖OUT改至獨立目錄，不改test function AST／assert／wait，已回報父協調源分支同步。
 

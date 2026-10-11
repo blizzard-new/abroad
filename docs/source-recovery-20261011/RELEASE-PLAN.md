@@ -48,4 +48,4 @@ TKU兩拒用照片已移至 `sources/tku/withdrawn-campus-assets/`，不在publi
 
 ## 本次續作保存點
 
-5e711418為TKU／CCU逐校串流及無損快取候選；61focused／contracts／來源交付／NCU完整payload通過，cold正在執行；本SHA的warm、完整suite、wheel及完整runtime待完成。先前7a7／2d0／80b均保留記憶體超460MiB失敗，不用較早SHA的完整runtime或wheel混代。NCU48fcc與NTU23757排隊，當前乾淨SHA重驗後才接入並再次驗證完整組合、最終資料量記憶體與DB。父對話依最後同一固定SHA證據協調正式順序。
+5e711418為TKU／CCU逐校串流及無損快取候選；61focused／contracts／來源交付／NCU完整payload通過，cold／warm同175步均通過（437.215／447.801MiB）；完整runtime執行中，完整suite及wheel待完成。先前7a7／2d0／80b均保留記憶體超460MiB失敗，不用較早SHA的完整runtime或wheel混代。NCU48fcc與NTU23757排隊，當前乾淨SHA重驗後才接入並再次驗證完整組合、最終資料量記憶體與DB。父對話依最後同一固定SHA證據協調正式順序。
