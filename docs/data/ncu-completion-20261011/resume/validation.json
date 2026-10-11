@@ -12,18 +12,21 @@
   "tests": [
     {
       "passed": 54,
-      "log": "tests-54.log",
-      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_completion.py tests/test_ncu_fourth_pass.py tests/test_university_locations.py -q"
+      "log": "tests-54.txt",
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_completion.py tests/test_ncu_fourth_pass.py tests/test_university_locations.py -q",
+      "log_sha256": "cf24535b80fe65bd88ce519df3784474472612e34fb114ce3894263811662212"
     },
     {
       "passed": 6,
-      "log": "tests-source-memory-6.log",
-      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_resume_assets.py tests/test_catalogue_memory.py -q"
+      "log": "tests-source-memory-6.txt",
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_resume_assets.py tests/test_catalogue_memory.py -q",
+      "log_sha256": "472019a034c7538858a538d580a90fa62039083584b16d2de407a543df90f7a4"
     },
     {
       "passed": 8,
-      "log": "browser-8.log",
-      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_resume_assets.py -q"
+      "log": "browser-8.txt",
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_resume_assets.py -q",
+      "log_sha256": "0c23d634f0bba6af8310804f3172c34e825e5a78e7ab6975e02ff18a2e4695b5"
     }
   ],
   "image_review": [
@@ -85,5 +88,11 @@
   "ci_run": false,
   "deployed": false,
   "database_mutation": false,
-  "shared_matcher_changed": false
+  "shared_matcher_changed": false,
+  "post_timestamp_recheck": {
+    "passed": 1,
+    "deselected": 30,
+    "log": "post-attribution-timestamp.txt",
+    "note": "只重跑照片原件、署名與身份完整性測試；其餘新來源測試此前已完成。"
+  }
 }
