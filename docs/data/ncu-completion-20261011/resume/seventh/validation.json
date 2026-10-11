@@ -1,0 +1,159 @@
+{
+  "checked_at": "2026-10-11T16:23:13.543549+00:00",
+  "base_checkpoint": "d11a98bf7bf1634dec36ac3c3d3e7e2dc821ce5d",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 202,
+    "unique_photo_sha256": 199,
+    "displayed_partner_locations": 197,
+    "photo_gaps": 12,
+    "location_gaps": 17,
+    "strict_current_field_gaps": 3239,
+    "public_unread_candidates": 293,
+    "reviewed_host_records": 120,
+    "completion_sources": 721,
+    "passages_reviewed": 337,
+    "native_pdf_fully_read": 59,
+    "native_and_visual_pdf_fully_read": 6
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "426 passed in 166.90s",
+      "evidence": "tests-ncu-all.txt",
+      "scope": "Full suite before final two caption wording cleanups; all data identities and points final."
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_completion.py tests/test_ncu_seventh_assets.py -q",
+      "result": "32 passed in 19.31s",
+      "evidence": "tests-final-caption.txt",
+      "scope": "After final captions, rebuild, API, source SHA and photo attribution checks."
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_seventh_assets.py tests/e2e/test_ncu_resume_assets.py -k 'seventh or mother_marker' -q",
+      "result": "4 passed, 10 deselected in 64.04s (0:01:04)",
+      "evidence": "browser-check.txt"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "browser_review": {
+    "scope": "Two real photos with credits and licences; nine named campus previews and opened campus/source notes; NCU mother and197partnerglobe. No overflow or JS errors.",
+    "initial_visually_viewed": [
+      "蘇門答臘-390-photo.png",
+      "胡志明市自然科學-1280-photo.png",
+      "ncu-009-map-preview.png",
+      "ncu-013-map-preview.png",
+      "ncu-mother-and-197-points.png"
+    ],
+    "final_visually_viewed": [
+      "browser/蘇門答臘-390-photo.png",
+      "browser/胡志明市自然科學-1280-photo.png",
+      "browser/ncu-100-campus-note.png",
+      "browser/ncu-086-campus-note.png",
+      "browser/ncu-024-campus-note.png",
+      "browser/ncu-089-campus-note.png",
+      "browser/ncu-055-campus-note.png",
+      "browser/ncu-009-campus-note.png",
+      "browser/ncu-020-campus-note.png",
+      "browser/ncu-013-campus-note.png",
+      "browser/ncu-208-campus-note.png"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "browser/ncu-009-campus-note.png",
+      "sha256": "da34e79e5a2cfc30859f25609dfa6690f5b9552c63c726717aa0b73072293197"
+    },
+    {
+      "path": "browser/ncu-009-map-preview.png",
+      "sha256": "fbf7fc97f3e24f2b343a7f2e9d53d6b955b2bbbc2c242dddd783f1f52d77d8d8"
+    },
+    {
+      "path": "browser/ncu-013-campus-note.png",
+      "sha256": "385673449ec14a30a0236696a4d5578e64ada4199b5a4727a2a4cde8a091665e"
+    },
+    {
+      "path": "browser/ncu-013-map-preview.png",
+      "sha256": "72e6e0a964439f1a13167a0de6c9e27ed556dff64c714c2692a1b810ea225b09"
+    },
+    {
+      "path": "browser/ncu-020-campus-note.png",
+      "sha256": "fe3c785cb43a1bf4e0af705cce8d114a74161c363a77cc8fd5965f2d2ba896e6"
+    },
+    {
+      "path": "browser/ncu-020-map-preview.png",
+      "sha256": "9a6bce3750cb3bb0cca1426b6aa5a2fa58c0a79d42bc33128651ef252eb1430f"
+    },
+    {
+      "path": "browser/ncu-024-campus-note.png",
+      "sha256": "8e8937e837563638c35a94922f28d29fbf2a0544668068572b38b1f0194bde2c"
+    },
+    {
+      "path": "browser/ncu-024-map-preview.png",
+      "sha256": "8e412e7f7260da6b4f96ccf32713f32dfd9e9b75c2c0afc06031344b7d0f66ba"
+    },
+    {
+      "path": "browser/ncu-055-campus-note.png",
+      "sha256": "dba6582f16e63c9f7b24412d9e14896b23c6f890426072114918d000c3bed37a"
+    },
+    {
+      "path": "browser/ncu-055-map-preview.png",
+      "sha256": "ce22b23ea90d22b8352cd7e96fe3e9791d55007afc9eadfa0fb29421394e89a1"
+    },
+    {
+      "path": "browser/ncu-086-campus-note.png",
+      "sha256": "f565f8b4578e7e618bbcb9a6e1bc634851c64c7c048a52ca03feea7671303ee6"
+    },
+    {
+      "path": "browser/ncu-086-map-preview.png",
+      "sha256": "98efba70db641c5fd69dc8ed9deac7b49acfd47cdce7f8d0ce0ed9c298025627"
+    },
+    {
+      "path": "browser/ncu-089-campus-note.png",
+      "sha256": "08c456cc94cd262731a95faa1fe1d2a35cd5c21ab7c731aead057abd91ffaa9c"
+    },
+    {
+      "path": "browser/ncu-089-map-preview.png",
+      "sha256": "a1219113171d90c1d24474708a367b432e0590170802187687a24979a9f61838"
+    },
+    {
+      "path": "browser/ncu-100-campus-note.png",
+      "sha256": "f677833c6c97e5be38f23ae379a7435ec885a555a2a98e5c95b1fad53d8fd2fd"
+    },
+    {
+      "path": "browser/ncu-100-map-preview.png",
+      "sha256": "d2cd7228ab61c44bcad78dcdd8c7e57955ec7deef22516735b012c8f25b3e1dd"
+    },
+    {
+      "path": "browser/ncu-208-campus-note.png",
+      "sha256": "1b8a68c8d7f0cd7fd7f35f5cfb151a4e0aa27a2804facc1aa84a2c5bd312a147"
+    },
+    {
+      "path": "browser/ncu-208-map-preview.png",
+      "sha256": "608a574aeb29830bca8a443c701c6141bac97e310e066676a4cecd007cf0cbe8"
+    },
+    {
+      "path": "browser/ncu-mother-and-197-points.png",
+      "sha256": "61d347f1a9b105d10491966cdd8e1b9fbaf1cddc61d8b3fa10062b83323ea450"
+    },
+    {
+      "path": "browser/胡志明市自然科學-1280-life.png",
+      "sha256": "45e7d1aa280313e2da8f5bef4ecf68cfbaf8a16b1d74781474e86d1f8c99d851"
+    },
+    {
+      "path": "browser/胡志明市自然科學-1280-photo.png",
+      "sha256": "1e6fcadb499dfc8f45e28b82cfde2a51a747ee6a5e4fe36aa5b63aaab95cb458"
+    },
+    {
+      "path": "browser/蘇門答臘-390-life.png",
+      "sha256": "7ce4e44253d0d15578e7f9900e07a6c478f943996cef891488df20f3b544641f"
+    },
+    {
+      "path": "browser/蘇門答臘-390-photo.png",
+      "sha256": "f2f3124723f6849fadcf9bb66f03156b6291d28eb0ab419bf511da59a7e8fad8"
+    }
+  ]
+}
