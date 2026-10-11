@@ -1,0 +1,9 @@
+# NCU瀏覽器輸出隔離修正
+
+整合者指出新增驗收會覆寫既有追蹤截圖。來源分支掃描共找到11個NCU測試檔，已改用各測例的`tmp_path/browser`；第十二批代理測試將既有輸出環境變數指向該暫存目錄。原始測试與歷次證據完整保留，沒有改產品或來源資料。
+
+52項真實Chromium測試全通過（501.67秒）。逐項AST比較確認全部`assert`與`expect`不變；前後1399張既有tracked PNG逐位元相同。本輪新圖僅存在repo外pytest暫存，不自動寫回歷史證據。詳見validation.json的命令、每檔斷言與SHA、完整測試log及JUnit結果。
+
+修正檔：eighth_locations、eleventh_locations、fifth_photos、ktu_meiji_resume、ninth_resume、resume_assets、seventh_assets、sixth_resume、tenth_resume、thirteenth_packets、twelfth_reconciliation，均在tests/e2e/test_ncu_前綴下。
+
+資料仍固定第十三批：122校人工記錄、735來源／405閱讀、239成功待讀、214代表位置與202授權照片。第十四批仍在repo外準備，未冒稱已提交。跨任務thread工具在本環境不可用，因此本修正由源分支全掃描確認；未宣稱取得整合者未提交的檔案。

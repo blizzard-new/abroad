@@ -1,5 +1,4 @@
 """Resume checkpoint: real credited photos and source-scoped points reach Chromium."""
-from pathlib import Path
 import re
 
 import pytest
@@ -8,7 +7,6 @@ from playwright.sync_api import expect
 from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import wait_until
 
-OUTPUT = Path('docs/data/ncu-completion-20261011/resume/eleventh/browser')
 
 
 def select_ncu(page, live_server):
@@ -29,7 +27,8 @@ def select_ncu(page, live_server):
     ('淑名', 390, 'Mineralsab'), ('肯特', 390, 'Kauffner'),
     ('瑪麗路易', 1280, 'Ludovic Godard'), ('光州', 1280, 'Wiki.blurbs'),
 ])
-def test_resume_photo_bytes_and_actual_attribution_visible(page, live_server, query, width, author):
+def test_resume_photo_bytes_and_actual_attribution_visible(page, live_server, query, width, author, tmp_path):
+    OUTPUT = tmp_path / 'browser'
     errors=[]
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.set_viewport_size({'width':width,'height':956})
@@ -59,7 +58,8 @@ def test_resume_photo_bytes_and_actual_attribution_visible(page, live_server, qu
     assert not errors
 
 
-def test_resume_mother_marker_and_all_partner_points_reach_real_globe(page,live_server):
+def test_resume_mother_marker_and_all_partner_points_reach_real_globe(page,live_server, tmp_path):
+    OUTPUT = tmp_path / 'browser'
     page.set_viewport_size({'width':1280,'height':956})
     page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server)
@@ -75,7 +75,8 @@ def test_resume_mother_marker_and_all_partner_points_reach_real_globe(page,live_
 
 
 @pytest.mark.parametrize('width',[390,1280])
-def test_eivp_programme_year_and_missing_documents_visible(page,live_server,width):
+def test_eivp_programme_year_and_missing_documents_visible(page,live_server,width, tmp_path):
+    OUTPUT = tmp_path / 'browser'
     page.set_viewport_size({'width':width,'height':956})
     page.emulate_media(reduced_motion='reduce')
     errors=[]

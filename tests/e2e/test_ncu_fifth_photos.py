@@ -1,11 +1,9 @@
 """New original photographs and their exact grants reach the real interface."""
-from pathlib import Path
 import re
 import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
 from .test_open_catalog import wait_until
-OUTPUT=Path('docs/data/ncu-completion-20261011/resume/fifth/browser')
 
 @pytest.mark.parametrize('query,width,author,licence',[
  ('蘭斯',390,'Gérald Garitan','CC BY-SA 4.0'),
@@ -17,7 +15,8 @@ OUTPUT=Path('docs/data/ncu-completion-20261011/resume/fifth/browser')
  ('布勞爪哇',1280,'Lorrainevyu','CC BY 4.0'),
  ('艾爾朗加',1280,'antonov0002','CC BY 3.0'),
 ])
-def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,author,licence):
+def test_fifth_photo_licence_and_campus_caption(page,live_server,query,width,author,licence, tmp_path):
+    OUTPUT = tmp_path / 'browser'
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server)

@@ -1,5 +1,4 @@
 """Inspect both new packets and living references on real mobile/desktop UI."""
-from pathlib import Path
 
 import pytest
 from playwright.sync_api import expect
@@ -12,12 +11,12 @@ from .test_open_catalog import wait_until, sign_in_cookie, attach_session
     ('tsukuba','筑波大學','筑波大學 University of Tsukuba','筑波Web Entry初次申請與條件文件'),
     ('sookmyung','淑名女子大學',"淑名女子大學 Sookmyung Woman's University",'淑明初次七類申請文件'),
 ])
-def test_thirteenth_public_packet_and_life(page,live_server,width,slug,query,name,title):
+def test_thirteenth_public_packet_and_life(page,live_server,width,slug,query,name,title, tmp_path):
     page.set_viewport_size({'width':width,'height':956})
     page.emulate_media(reduced_motion='reduce')
     errors=[]
     page.on('pageerror',lambda error:errors.append(str(error)))
-    out=Path('docs/data/ncu-completion-20261011/resume/thirteenth/browser')
+    out=tmp_path / 'browser'
     out.mkdir(parents=True,exist_ok=True)
     enter_public_site(page,live_server,'partners')
     expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)

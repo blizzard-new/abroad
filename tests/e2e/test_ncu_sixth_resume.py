@@ -1,10 +1,8 @@
 """New source limits and stage-specific documents reach actual desktop/mobile UI."""
-from pathlib import Path
 import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
 
-OUT=Path('docs/data/ncu-completion-20261011/resume/sixth/browser')
 
 @pytest.mark.parametrize('query,width,overview,life,count,later',[
     ('信州',390,'特別研究生','¥95,000',9,'信州COE系統再次提交文件'),
@@ -12,7 +10,8 @@ OUT=Path('docs/data/ncu-completion-20261011/resume/sixth/browser')
     ('特魯瓦',390,'free mover','€333–600',1,'UTT抵達文件與住宿安排'),
     ('駒澤',1280,'不單靠協議年','14間',0,None),
 ])
-def test_sixth_year_programme_forms_and_life_visible(page,live_server,query,width,overview,life,count,later):
+def test_sixth_year_programme_forms_and_life_visible(page,live_server,query,width,overview,life,count,later, tmp_path):
+    OUT = tmp_path / 'browser'
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':956});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)

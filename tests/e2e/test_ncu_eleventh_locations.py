@@ -6,11 +6,11 @@ from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
 from .test_open_catalog import wait_until
 
-OUT = Path('docs/data/ncu-completion-20261011/resume/eleventh/browser')
 
 
 @pytest.mark.parametrize('width', [390, 1280])
-def test_eleventh_named_campuses_and_licensed_photos(page, live_server, width):
+def test_eleventh_named_campuses_and_licensed_photos(page, live_server, width, tmp_path):
+    OUT = tmp_path / 'browser'
     errors = []
     page.on('pageerror', lambda e: errors.append(str(e)))
     page.set_viewport_size({'width': width, 'height': 1050})

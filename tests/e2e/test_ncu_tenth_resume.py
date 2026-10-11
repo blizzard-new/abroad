@@ -5,9 +5,9 @@ import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
 from .test_ncu_ninth_resume import point_screenshot
-OUT=Path('docs/data/ncu-completion-20261011/resume/tenth/browser')
 @pytest.mark.parametrize('width',[390,1280])
-def test_tenth_two_named_campuses(page,live_server,width):
+def test_tenth_two_named_campuses(page,live_server,width, tmp_path):
+    OUT = tmp_path / 'browser'
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="map"]').click()
@@ -24,7 +24,8 @@ def test_tenth_two_named_campuses(page,live_server,width):
 
 @pytest.mark.parametrize('query,width,phrase',[
  ('卡斯魯爾',390,'2026/27空白DOCX已讀'),('圖爾庫',1280,'2027春迎新1/7–8')])
-def test_tenth_host_reference_and_post_offer_scope(page,live_server,query,width,phrase):
+def test_tenth_host_reference_and_post_offer_scope(page,live_server,query,width,phrase, tmp_path):
+    OUT = tmp_path / 'browser'
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
