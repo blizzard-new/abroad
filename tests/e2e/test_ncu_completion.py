@@ -165,7 +165,7 @@ def test_ncu_second_public_pass_documents_years_and_life_are_visible(page, live_
     page.locator("#detail-tab-life").click()
     page.locator("#detail-life .life-official-guide > summary").click()
     expect(page.locator("#destination-official-content")).to_contain_text(life)
-    out = Path("/workspace/ncu-completion-20261011/browser-pass2")
+    out = Path(os.environ.get("VISUAL_EVIDENCE_DIR", "/tmp/ncu-completion-browser")) / "pass2"
     out.mkdir(parents=True, exist_ok=True)
     page.locator("#detail-life").scroll_into_view_if_needed()
     page.screenshot(path=str(out / f"ncu-pass2-{query}-{width}.png"))
@@ -234,14 +234,14 @@ def test_ncu_third_public_us_tracks_documents_and_life_reach_ui(page, live_serve
         expect(funding.locator(".workflow-documents > li").filter(has_text="Financial Verification Form電子簽署")).to_be_visible()
         expect(funding.locator(".workflow-documents > li").filter(has_text="Personal Information Verification電子簽署")).to_be_visible()
     if "夏威夷" in query or "威斯康辛" in query:
-        out = Path("/workspace/ncu-completion-20261011/browser-pass3")
+        out = Path(os.environ.get("VISUAL_EVIDENCE_DIR", "/tmp/ncu-completion-browser")) / "pass3"
         out.mkdir(parents=True, exist_ok=True)
         (health if "夏威夷" in query else funding).locator(".workflow-documents").scroll_into_view_if_needed()
         page.screenshot(path=str(out / f"ncu-pass3-workflow-{query.split()[0]}-{width}.png"))
     page.locator("#detail-tab-life").click()
     page.locator("#detail-life .life-official-guide > summary").click()
     expect(page.locator("#destination-official-content")).to_contain_text(life)
-    out = Path("/workspace/ncu-completion-20261011/browser-pass3")
+    out = Path(os.environ.get("VISUAL_EVIDENCE_DIR", "/tmp/ncu-completion-browser")) / "pass3"
     out.mkdir(parents=True, exist_ok=True)
     page.locator("#detail-life").scroll_into_view_if_needed()
     page.screenshot(path=str(out / f"ncu-pass3-{query.split()[0]}-{width}.png"))
