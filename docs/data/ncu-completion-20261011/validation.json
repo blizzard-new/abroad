@@ -82,12 +82,52 @@
       "local_log": "/workspace/ncu-completion-20261011/tests-pass2-regression.log",
       "log_sha256": "bde72e71b2c31a742863e801482c0b78ef523670be43561f3d4818757a501d9c",
       "note": "CGU/NTPU/NTU同分支資料/API回歸；4項原有Phase C data reviewed跳過，未新增skip；首輪另更廣248通過/4skip，不相加當唯一測試数。"
+    },
+    {
+      "suite": "third_pass_ncu_and_shared_after_visual_corrections",
+      "passed": 420,
+      "skipped": 0,
+      "deselected": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-pass3-visual-final.log",
+      "committed_log": "tests-pass3-visual-final.txt",
+      "log_sha256": "95056304ef5b73582655ddc4d7eb48af9fa22cf9f301d8477c1171d914ac503e",
+      "note": "包含29項completion資料/API測試；214項精確track、缺自費不得借流程、全重建／source／year／条件及既有NCU資料回歸。 本機隔離runtime、unset Supabase；無CI。"
+    },
+    {
+      "suite": "third_pass_shared_workflow_cgu_ntpu_ntu_regression",
+      "passed": 140,
+      "skipped": 7,
+      "deselected": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-pass3-workflow-regression.log",
+      "committed_log": "tests-pass3-workflow-regression.txt",
+      "log_sha256": "93727ad0e1e1d69251f189a5d169d3851284363815e0f7f5475c7242a0337115",
+      "note": "共享current/reference選擇修改後CGU/NTPU/NTU與流程API回歸；7原有Phase C skip來自根conftest，未新增跳過。 本機隔離runtime、unset Supabase；無CI。"
+    },
+    {
+      "suite": "third_pass_six_school_memory_final",
+      "passed": 4,
+      "skipped": 0,
+      "deselected": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-pass3-memory-final.log",
+      "committed_log": "tests-pass3-memory-final.txt",
+      "log_sha256": "3e8a838a71e0c39d031c5ef1215e8fc5ff300380f076c052275973a3ad7a987c",
+      "note": "最終source535及圖文附件資料、track選擇改動後六校memory回歸。 本機隔離runtime、unset Supabase；無CI。"
+    },
+    {
+      "suite": "third_pass_five_us_tracks_expanded_documents_browser",
+      "passed": 5,
+      "skipped": 0,
+      "deselected": 14,
+      "local_log": "/workspace/ncu-completion-20261011/browser-pass3-expanded-final.log",
+      "committed_log": "browser-pass3-expanded-final.txt",
+      "log_sha256": "c728280882dce06b5256073ef01cf991e158d0bc7212426ee9df115fcd80db25",
+      "note": "390／1280，初次文件4／10／4項、自費正確rule_id、健康確認／provider拆分與兩份VISP電子簽署實際展開可見；官方生活／年份矛盾實見，無JS錯誤或横向溢出。其他14案例不在此command重跑。"
     }
   ],
   "openapi_snapshot": "scripts/export_openapi.py --check: current",
   "javascript": "node --check: passed",
   "diff_whitespace": "git diff --check: passed",
-  "browser_unique_case_count": 14,
+  "browser_unique_case_count": 19,
   "browser_viewport_widths": [
     390,
     1280
@@ -106,19 +146,44 @@
   "source_coverage": {
     "original_drive_attempts": 459,
     "original_drive_full_read": 29,
-    "new_attempts": 491,
-    "distinct_urls": 473,
-    "successful_attempts": 427,
-    "failed_attempts": 64,
-    "manual_passage_records": 137,
-    "full_native_pdf_records": 26,
-    "successful_unread_candidates": 274,
-    "manually_reviewed_school_references": 106,
+    "new_attempts": 535,
+    "distinct_urls": 516,
+    "successful_attempts": 469,
+    "failed_attempts": 66,
+    "manual_passage_records": 176,
+    "full_native_pdf_records": 36,
+    "successful_unread_candidates": 277,
+    "manually_reviewed_school_references": 111,
     "exchange_item_denominator": 214,
     "licensed_campus_photos": 125,
     "base_visible_verified_coordinates": 10,
-    "current_host_full_116_approval": 0
+    "current_host_full_116_approval": 0,
+    "distinct_urls_without_fragment": 515,
+    "full_visual_and_native_pdf_records": 2,
+    "full_visual_pages": 12
   },
   "last_main_recheck_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
-  "note": "首輪與第二輪驗證分列，不把首輪log偽裝當第二輪重跑。"
+  "note": "首輪、第二輪、第三輪分列；19是歷次唯一browser案例，第三輪command只重跑五項，另外14 deselected。不把首輪或失敗log當第三輪最終驗證。",
+  "superseded_checks": [
+    {
+      "suite": "third_pass_before_exact_track_fix",
+      "passed": 415,
+      "failed": 2,
+      "committed_log": "tests-pass3-before-track-fix.txt",
+      "log_sha256": "3b886427792decb1235bbde2d0e82f81f4b1f91a1c493a9a97b238091fca020c",
+      "reason": "一般與自費被same_school附註寬鬆匹配，新增API測試實際失敗；僅NCU改為完整track後，最終420通過。此log不是通過驗證。"
+    }
+  ],
+  "third_pass_browser_unique_case_count": 5,
+  "third_pass_screenshots": [
+    "ncu-pass3-workflow-夏威夷大學馬諾阿分校-1280.png",
+    "ncu-pass3-workflow-夏威夷大學馬諾阿分校（自費）-390.png",
+    "ncu-pass3-workflow-威斯康辛大學麥迪遜-1280.png",
+    "ncu-pass3-夏威夷大學馬諾阿分校-1280.png",
+    "ncu-pass3-夏威夷大學馬諾阿分校（自費）-390.png",
+    "ncu-pass3-威斯康辛大學麥迪遜-1280.png",
+    "ncu-pass3-紐約州立大學奧斯威格分校-390.png",
+    "ncu-pass3-紐約州立大學奧斯威格分校（自費）-1280.png"
+  ],
+  "third_pass_screenshot_review_note": "生活5張及展開後續文件3張已人工查看；官方部分查核標示、自費track、費用參考與stage文件可見。"
 }
