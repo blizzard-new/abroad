@@ -97,6 +97,10 @@ def main():
             for key,page,needle in [('host_eligibility',5,'previous study experience'),('host_language',7,'aiming for N3'),('course_restrictions',8,'Minimum credits: 12'),('course_restrictions',10,'examples from the 2026 academic year'),('housing_costs',15,'40,000 yen move-in fee'),('housing_costs',15,'US＄30')]:
                 jfacts[key]['evidence']+=jwfact(key,'',page,needle)[1]['evidence']
             curated.append(dict(id='tku-sister-326',fields=jfacts))
+    if (B/'milestone3_reviewed_host_facts.json').exists():
+        additions=json.loads((B/'milestone3_reviewed_host_facts.json').read_text())
+        assert not {r['id'] for r in curated}.intersection(r['id'] for r in additions)
+        curated.extend(additions)
     (B/"curated_partner_facts.json").write_text(json.dumps(curated,ensure_ascii=False,indent=2)+"\n")
     locations=[]
     source=next(captured(p.stem.split('.')[0]) for p in captures(B/'host_census_sources')
@@ -127,6 +131,10 @@ def main():
     if official_reviews.exists():
         present={r['id'] for r in locations}
         locations.extend(r['accepted_coordinate'] for r in json.loads(official_reviews.read_text()) if 'accepted_coordinate' in r and r['id'] not in present)
+    additional_reviews=B/'milestone3_geography_review.json'
+    if additional_reviews.exists():
+        present={r['id'] for r in locations}
+        locations.extend(r['accepted_coordinate'] for r in json.loads(additional_reviews.read_text()) if 'accepted_coordinate' in r and r['id'] not in present)
     (B/'campus_location_manifest.json').write_text(json.dumps(locations,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(dict(curated_host_institutions=len(curated),host_fields=sum(len(r['fields']) for r in curated),new_physical_campus_locations=2,reused_baseline_representative_locations=1,total_displayable_locations=len(locations))))
 

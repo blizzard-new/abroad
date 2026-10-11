@@ -1,5 +1,5 @@
 """Explicit reviewed files only; prior rejected attempts and bytes remain intact."""
-import hashlib,json,time,requests
+import hashlib,json,time,requests,re
 from PIL import Image
 from capture_tku_asset_batch import B,HEADERS,now,paused
 from capture_tku_reviewed_photo_candidates import plain
@@ -10,11 +10,15 @@ PICKS={**TITLES,335:'Baruch College October 2025.jpg',333:'Swu beidamen1.JPG',31
 PICKS.update({8:'2009-0520-BrandonUniversity.jpg',71:'St Johns St Augustine Hall.jpg'})
 PICKS.update({334:'Ciudaduniversitariaentrada.jpg',232:'Ui Central Library, Crystal of Knowledge Library.jpg',49:'New Era University College (220709) 01.jpg'})
 PICKS.update({69:'Wills Memorial Building Tower (from south-west, post-2000s-restoration).jpg',219:'Hacettepe Üniversitesi Beytepe Kampüsü - Hacettepe University Beytepe Campus (10.05.2023) 171.jpg',17:'Université Paris-Sorbonne.jpg',52:'Edificio CUPA.jpg',216:'Business Breakthrough University(Kojimachi).JPG'})
+PICKS.update({9:'Athabasca University (J).jpg',41:'0 DanKooKU 6.jpg',151:'Chemistry Building, ECNU.jpg',30:'The University of Electro-Communications gate.jpg',211:'贵州大学 - Guizhou University - 2015.07 - panoramio.jpg',317:'Trường Đại học Đồng Tháp.jpg',322:'Hogeschool Zeeland.PNG',320:'Establishment of IIC University of Technology.jpg'})
+PICKS.update({99:'Fine Arts building at San Francisco State University, California, US.jpg',78:'UMSL 01.jpg',342:'MAHEMANIPALEDU.jpg',4:'Foundation Building UQ Gatton Campus from SW (2009).jpg',75:'California State University, Sacramento - University Library.jpg',150:"Jiang'an Library of Sichuan University.JPG",307:"2023-10-10 陕西西安 长安大学 Chang'an University 01.jpg",32:'Kyoto Tachibana University.JPG',65:'Block B, University of the West of England - geograph.org.uk - 6031781.jpg',86:'Albert C. Jacobs Life Sciences Center Trinity College Hartford.jpg'})
+PICKS[41]='0 DanKooKU 3a.jpg'
+PICKS[52]='EidicioA FCPyS.jpg'
 
 def main():
     path=B/'new_photo_candidates.json';records=json.loads(path.read_text());done={(r['id'],r['title']) for r in records}
     schools={r['id']:r for r in map(json.loads,(B/'partner_census.jsonl').read_text().splitlines())}
-    searches=[r for r in json.loads((B/'commons_asset_batches.json').read_text()) if r.get('phase') in {'reviewed_campus_alternative','commons_exact_category','quoted_institution_alternative'}]
+    searches=[r for r in json.loads((B/'commons_asset_batches.json').read_text()) if r.get('phase') in {'reviewed_campus_alternative','commons_exact_category','quoted_institution_alternative','native_institution_campus_search','strict_photo_date_alternative','dated_named_campus_subcategory'}]
     for s in searches:
         n=int(s['institution_id'].rsplit('-',1)[-1]);title='File:'+PICKS[n] if n in PICKS else None
         if not title or (s['institution_id'],title) in done:continue
@@ -25,7 +29,12 @@ def main():
         info=p['imageinfo'][0];m=info['extmetadata'];d=schools[s['institution_id']]
         license=plain(m,'LicenseShortName');artist=plain(m,'Artist')
         assert license in {'CC0','Public domain','CC BY 2.0','CC BY 2.5','CC BY 3.0','CC BY 4.0','CC BY-SA 2.0','CC BY-SA 2.5','CC BY-SA 3.0','CC BY-SA 4.0'} and artist
-        r=dict(id=d['id'],title=title,school_name=d['school_name'],country=d['country'],source_url=info['descriptionurl'],image_source_url=info['url'],download_url=info.get('thumburl') or info['url'],author=artist,license=license,license_url=(m.get('LicenseUrl',{}).get('value') or info['descriptionurl']+'#Licensing').replace('http://creativecommons.org/','https://creativecommons.org/'),license_capture_url=s['source_url'],metadata_source_sha256=s['sha256'],metadata_checked_at=s['checked_at'],checked_at=now().isoformat(),identity_source_url=d['directory_url'],identity_address=d['directory_address'],photo_date=plain(m,'DateTimeOriginal') or '來源未提供拍攝日期；不以查核日期替代',identity_quote=plain(m,'ImageDescription') or title,caption=(plain(m,'ImageDescription') or title)+' — '+title,applicable_year='historic named institution campus scene; current TKU nomination campus unverified',transformations='Commons upstream thumbnail; downloaded bytes unchanged',campus_pair_scope='命名照片校區與代表座標分開核對；未推定為淡江本期提名校區。',review_status='metadata_reviewed_visual_pending',acquisition_batch='official_identity_alternative')
+        date=plain(m,'DateTimeOriginal')
+        if not re.search(r'\b(?:18|19|20)\d{2}\b',date) or re.search('upload',date,re.I):
+            date=next((x['value'] for x in info.get('metadata',[]) if x['name']=='DateTimeOriginal'),'')
+        if not re.search(r'\b(?:18|19|20)\d{2}\b',date):
+            print(json.dumps(dict(id=d['id'],title=title,status='capture_year_not_verified_no_download')),flush=True);continue
+        r=dict(id=d['id'],title=title,school_name=d['school_name'],country=d['country'],source_url=info['descriptionurl'],image_source_url=info['url'],download_url=info.get('thumburl') or info['url'],author=artist,license=license,license_url=(m.get('LicenseUrl',{}).get('value') or info['descriptionurl']+'#Licensing').replace('http://creativecommons.org/','https://creativecommons.org/'),license_capture_url=s['source_url'],metadata_source_sha256=s['sha256'],metadata_checked_at=s['checked_at'],checked_at=now().isoformat(),identity_source_url=d['directory_url'],identity_address=d['directory_address'],photo_date=date,identity_quote=plain(m,'ImageDescription') or title,caption=(plain(m,'ImageDescription') or title)+' — '+title,applicable_year='historic named institution campus scene; current TKU nomination campus unverified',transformations='Commons upstream thumbnail; downloaded bytes unchanged',campus_pair_scope='命名照片校區與代表座標分開核對；未推定為淡江本期提名校區。',review_status='metadata_reviewed_visual_pending',acquisition_batch='official_identity_alternative')
         try:
             res=requests.get(r['download_url'],headers=HEADERS,timeout=(8,30));r.update(http_status=res.status_code,retry_after=res.headers.get('Retry-After'))
             if res.status_code==429:
@@ -44,7 +53,7 @@ def main():
                 with Image.open(file) as image:r.update(width=image.width,height=image.height)
                 r.update(local_path='/static/assets/tku-campuses/'+file.name,sha256=hashlib.sha256(res.content).hexdigest(),bytes=len(res.content))
         except (requests.RequestException,OSError) as e:r.update(error=str(e),review_status='download_failed')
-        records.append(r);path.write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n')
+        records.append(r);done.add((r['id'],title));path.write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n')
         print(json.dumps(dict(id=r['id'],title=title,http_status=r.get('http_status'),error=r.get('error'))),flush=True)
         if r.get('http_status')==429:break
         time.sleep(3)

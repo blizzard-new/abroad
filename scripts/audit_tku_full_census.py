@@ -22,8 +22,13 @@ def main():
     profiles=[DestinationProfile.model_validate_json(line) for line in (B/'destination_profiles.jsonl').read_text().splitlines()]
     assert len(profiles)==len({p.school_name for p in profiles})==287
     sources=[json.loads(gzip.decompress(read_bytes(p))) for p in captures(B/'host_census_sources')]
-    attachments=[]
+    attachments=[];rendered_documents=[]
     for source in sources:
+        if source.get('rendered_file'):
+            blob=read_bytes(B/'host_census_sources'/source['rendered_file'])
+            assert blob.startswith(b'%PDF') and hashlib.sha256(blob).hexdigest()==source['rendered_sha256']
+            assert source.get('pages') and source['parser']['macro_security_level']==3 and source['parser']['external_link_update']==0
+            rendered_documents.append(dict(source_id=source['id'],original_capture_id=source['original_capture_id'],source_url=source['source_url'],file=source['rendered_file'],bytes=len(blob),sha256=source['rendered_sha256'],pages=len(source['pages']),status='offline_render_not_downloaded_original',checked_at=source['checked_at']))
         if not source.get('local_file'):continue
         path=B/'host_census_sources'/source['local_file'];blob=read_bytes(path)
         valid_magic=blob.startswith((b'%PDF',b'PK',bytes.fromhex('d0cf11e0a1b11ae1')))
@@ -60,7 +65,7 @@ def main():
         latest_round_schools=4,latest_round_quota=7,newly_open_applications=0,destination_profiles=len(profiles),
         institutions_with_official_reference_excerpts=sum(bool(r['fields']) for r in map(json.loads,(B/'partner_enrichment.jsonl').read_text().splitlines())),
         public_source_captures=len(sources),opened_sources=sum(s.get('http_status')==200 and not s.get('error') for s in sources),failed_sources=sum(s.get('http_status')!=200 or bool(s.get('error')) for s in sources),
-        source_failure_statuses=states,downloaded_attachments=attachments,licensed_visual_reviewed_photos=len(photos),
+        source_failure_statuses=states,downloaded_attachments=attachments,offline_rendered_documents=rendered_documents,licensed_visual_reviewed_photos=len(photos),
         new_licensed_photos=len(photos)-reused_photos,reused_baseline_photos=reused_photos,
         verified_physical_campus_coordinates=sum(p['location']['precision']=='campus' for p in locations),
         reused_baseline_representative_coordinates=reused_locations,total_displayable_coordinates=len(locations),

@@ -403,8 +403,9 @@ def test_completeness_is_per_school_field_and_general_pages_are_partial(tmp_path
             assert items['host_documents']['status']=='partial' and items['housing_costs']['status']=='partial'
             assert items['scholarships']['status']=='available'
         profile=client.get('/destination-profile',params=dict(school=name,home_school='TKU')).json()
-        assert len(profile['student_guide_sections'])==14
-        assert all(s['source_urls'] and '2026-10-08' in s['points'][0] for s in profile['student_guide_sections'])
+        assert len(profile['student_guide_sections'])==(26 if row.id.endswith('nagasaki') else 14)
+        assert all(s['source_urls'] and '2026-10-08' in s['points'][0] for s in profile['student_guide_sections'][:14])
+        assert all(s['source_urls'] and '2026-10-11' in s['points'][0] and '母校申請流程未核實' in s['caution'] for s in profile['student_guide_sections'][14:])
         assert profile['coverage_status']=='official_partial'
         assert any(s['caution'] for s in profile['student_guide_sections'])
 

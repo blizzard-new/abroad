@@ -90,6 +90,9 @@ def build():
     coordinate_batches=json.loads((BUNDLE/'wikidata_asset_batches.json').read_text()) if (BUNDLE/'wikidata_asset_batches.json').exists() else []
     geographic_reviews={r['id']:r for r in json.loads((BUNDLE/'wikidata_asset_review.json').read_text())} if (BUNDLE/'wikidata_asset_review.json').exists() else {}
     alternative_reviews={r['id']:r for r in json.loads((BUNDLE/'official_geography_review.json').read_text())} if (BUNDLE/'official_geography_review.json').exists() else {}
+    if (BUNDLE/'milestone3_geography_review.json').exists():
+        alternative_reviews.update({r['id']:r for r in json.loads((BUNDLE/'milestone3_geography_review.json').read_text())})
+    photo_holds={r['id']:r for r in json.loads((BUNDLE/'photo_date_holds.json').read_text())} if (BUNDLE/'photo_date_holds.json').exists() else {}
     def search_checks(records,identifier):
         return [dict(source_url=r['source_url'],checked_at=r['checked_at'],http_status=r.get('http_status'),error=r.get('error'),
             retry_after=r.get('retry_after'),resume_not_before=r.get('resume_not_before'),query=r.get('query'),
@@ -131,9 +134,13 @@ def build():
                     cells[key]['asset_search_history']=[cells[key]['asset_search_check'],*checks]
                     cells[key]['asset_search_check']=checks[-1]
                 photo=photos.get(row['id'])
+                if row['id'] in photo_holds:
+                    cells[key]['capture_period_hold']=photo_holds[row['id']]
+                    cells[key]['reason']=photo_holds[row['id']]['reason']
                 if photo:
                     cells[key].update(status='verified_asset',reason='實際校景、作者與自由授權已核對；歷史拍攝期及校區標明，不代表当期交換校區。',
                         public_reference=dict(value=photo['caption'],status='verified_asset',evidence=[dict(source_url=photo['source_url'],checked_at=photo['checked_at'],applicable_year=photo['applicable_year'],role='licensed_campus_photo',locator='Commons Summary/Licensing and downloaded visual review',quote=photo['identity_quote'],license=photo['license'],license_url=photo['license_url'],sha256=photo['sha256'])]))
+                    cells[key]['public_reference']['evidence']+=photo.get('photo_date_evidence',[])
             if key=='coordinates':
                 cells[key]['asset_search_check']=coordinates.get(row['id'],{})
                 checks=search_checks(coordinate_batches,row['id'])
@@ -146,7 +153,9 @@ def build():
                     cells[key]['alternative_candidate_review']={k:v for k,v in alternative_reviews[row['id']].items() if k!='accepted_coordinate'}
                 location=locations.get(row['id'])
                 if location:
-                    cells[key].update(status='verified_asset',reason=location['location']['note'],public_reference=dict(value={'latitude':location['location']['latitude'],'longitude':location['location']['longitude'],'precision':location['location']['precision']},status='verified_asset',evidence=[location['evidence']]))
+                    cells[key].update(status='verified_asset',reason=location['location']['note'],public_reference=dict(value={'latitude':location['location']['latitude'],'longitude':location['location']['longitude'],'precision':location['location']['precision']},status='verified_asset',evidence=location['evidence'] if isinstance(location['evidence'],list) else [location['evidence']]))
+                elif alternative_reviews.get(row['id'],{}).get('status')=='conflicting_official_coordinates_requires_confirmation':
+                    cells[key]['reason']=alternative_reviews[row['id']]['reason']
         schools.append({**row, "fields": cells,'public_source_checks':enrichment.get(row['id'],{}).get('source_checks',[]),
                         'source_blockers':enrichment.get(row['id'],{}).get('blockers',[])})
     counts = {key: dict(Counter(r["fields"][key]["status"] for r in schools)) for key in FIELDS}

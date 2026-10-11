@@ -90,7 +90,7 @@ def main():
         decisions=json.loads(visual.read_text());present={r['id'] for r in records}
         for photo in json.loads(candidates.read_text()):
             review=decisions.get(photo['id'])
-            if photo['id'] in present or not review or review['result']!='pass' or review['sha256']!=photo.get('sha256'):continue
+            if not review or review['result']!='pass' or review['sha256']!=photo.get('sha256'):continue
             assert review['sha256']==photo['sha256']
             file=ROOT/'src/exchange_info'/photo['local_path'].removeprefix('/')
             assert hashlib.sha256(file.read_bytes()).hexdigest()==photo['sha256']
@@ -98,7 +98,10 @@ def main():
                 photo.update(source_metadata_conflict=review['metadata_conflict'],caption='The Saigon International University — Lewis Campus（照片招牌）；Commons檔名Fleming與招牌矛盾保留，不推定為Fleming。')
             if review.get('campus_scope'):photo['campus_pair_scope']=review['campus_scope']
             photo.update(review_status='verified_asset',visual_review=review,acquisition_status='new_reviewed_licensed_download')
+            records=[r for r in records if r['id']!=photo['id']]
             records.append(photo)
+    from tku_photo_date_policy import apply_capture_year_policy
+    records=apply_capture_year_policy(records)
     (BUNDLE/"campus_asset_manifest.json").write_text(json.dumps(records,ensure_ascii=False,indent=2)+"\n")
     print(json.dumps(dict(photos=len(records),downloaded=sum('local_path' in r for r in records),bytes=sum(r.get("bytes",0) for r in records),visual_review_required=True)))
 
