@@ -1,3 +1,3 @@
-# 臺大288校候選查核交付
+# 臺大288校目前候選研究交付
 
-請由[問題解決報告](問題解決報告.md)開始；可回填Excel與4032列候選JSON均在本目錄。開發候選未合併或部署。
+請由[問題解決報告](問題解決報告.md)開始。4032列可回填Excel、候選JSON与11項臺大正式共通規則均有來源與頁碼。217份原始證據在sources/ntu的6份獨立ZIP，59份第一批正文另封存；可離線執行scripts/verify_ntu_reviewed_source_archives.py核對。全回歸2178通過13略過；第一批原13個失敗日誌原樣保留，現已補充真實CGU來源條件的更正。未合併／部署，2820列仍未全核完，Library401停止重試且無Library檔案ID。固定第一批在commit4566f7f2及stage1-return-package.zip。

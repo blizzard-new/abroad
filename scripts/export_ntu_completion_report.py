@@ -5,6 +5,7 @@ Run with a Python installation providing openpyxl for the optional Excel export.
 from __future__ import annotations
 
 from collections import Counter
+import argparse
 import csv
 import gzip
 import json
@@ -17,10 +18,13 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "docs/ntu-completion-20261011"
 
 
-def export():
+def export(output=OUTPUT, access_path=None):
     records, summary = audit(ROOT)
     snapshot = json.loads((ROOT / "sources/ntu/completion-2026-10-11.json").read_text())
-    access = json.loads(gzip.decompress((ROOT / "sources/ntu/host-access-2026-10-11.json.gz").read_bytes()))
+    access_path = access_path or ROOT / "sources/ntu/host-access-current-2026-10-11.json.gz"
+    if not access_path.exists():
+        access_path = ROOT / "sources/ntu/host-access-2026-10-11.json.gz"
+    access = json.loads(gzip.decompress(access_path.read_bytes()))
     schools = {r["portal_id"]: r for r in snapshot["schools"]}
     attempts = {r["portal_id"]: r for r in access["schools"]}
     robots = {urlsplit(r["url"]).netloc: r for r in access["robots_receipts"]}
@@ -76,10 +80,14 @@ def export():
         else:
             issue = "not_found_in_bounded_search_not_proof_unannounced"
         fact = "\n".join(r["text_zh"] for r in observations)
+        dependencies = sorted({r["access_dependency"] for r in observations if r.get("access_dependency")})
+        if dependencies:
+            issue = "public_reference_details_after_acceptance"
         issue_row = {**row, "issue_code": issue, "access_reasons": sorted(reasons),
             "reviewed_fact_zh": fact, "applicability": " | ".join(dict.fromkeys(r["scope"] for r in observations)),
             "pdf_pages": " | ".join(str(r["pdf_page"]) for r in observations if r.get("pdf_page")),
             "source_quote_ids": sorted({r["quote_source_id"] for r in observations}),
+            "access_dependencies": dependencies,
             "source_attempt_count": len(query["sources"]),
             "unfetched_lead_count": len(query.get("unfetched_seeds", [])) + len(query.get("queued_discovery_leads", [])),
             "reviewer_reply": "", "verified_source_url": "", "verified_scope": "", "verified_quote_or_page": ""}
@@ -92,20 +100,39 @@ def export():
             "rebuilt_denominator": 288, "pending_selection_denominator": 282, "zero_selection_denominator": 6,
             "comparison_method": "Rebuilt using the current official portal IDs. The old workbook was not obtained; neither cell equality nor exact school membership overlap is claimed.",
             "coverage": "All 282 currently pending schools × original ten fields are retained; 6 zero-quota schools and four extra field groups are also included."})
-    OUTPUT.mkdir(exist_ok=True, parents=True)
-    (OUTPUT / "review-summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")
-    (OUTPUT / "all-school-review.json").write_text(json.dumps(issues, ensure_ascii=False, indent=2) + "\n")
-    with (OUTPUT / "all-school-review.csv").open("w", newline="", encoding="utf-8-sig") as file:
-        writer = csv.DictWriter(file, fieldnames=list(issues[0]))
+    output.mkdir(exist_ok=True, parents=True)
+    (output / "review-summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")
+    (output / "all-school-review.json").write_text(json.dumps(issues, ensure_ascii=False, indent=2) + "\n")
+    with (output / "all-school-review.csv").open("w", newline="", encoding="utf-8-sig") as file:
+        writer = csv.DictWriter(file, fieldnames=list(issues[0]), lineterminator="\n")
         writer.writeheader()
-        writer.writerows({k: " | ".join(map(str, v)) if isinstance(v, list) else v for k, v in r.items()} for r in issues)
+        def csv_value(value):
+            if isinstance(value, list):
+                value = " | ".join(map(str, value))
+            if isinstance(value, str):
+                value = "\n".join(line.rstrip() for line in value.split("\n"))
+            return value
+
+        writer.writerows({k: csv_value(v) for k, v in r.items()} for r in issues)
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill, Alignment
     from openpyxl.worksheet.datavalidation import DataValidation
     book = Workbook()
     book.remove(book.active)
-    sheets = [("288校逐欄回填", issues), ("來源原文索引", list(snapshot["public_source_reviews"].values())),
+    source_index = list(snapshot["public_source_reviews"].values())
+    home_path = ROOT / "sources/ntu/home-selection-current-2026-10-11.json"
+    home = json.loads(home_path.read_text()) if home_path.exists() else None
+    if home:
+        source_index.append({"source_id": home["source_id"], "url": home["source_url"],
+            "title": "臺大116-1正式甄選簡章", "checked_at": home["checked_at"],
+            "sha256": home["sha256"], "original_quote": home["original_quote"],
+            "quote_pdf_page": home["quote_pdf_page"], "official_authority": home["authority"]})
+    sheets = [("288校逐欄回填", issues), ("來源原文索引", source_index),
               ("當日臺大來源", [snapshot["list_receipt"] | {"rows": "288筆；完整收據見候選JSON"}, *snapshot["home_source_checks"]])]
+    if home:
+        sheets.append(("臺大116-1正式共通規則", [{**fact, "source_url": home["source_url"],
+            "checked_at": home["checked_at"], "quote_source_id": home["source_id"]}
+            for fact in home["facts"]]))
     for title, items in sheets:
         ws = book.create_sheet(title)
         keys = list(dict.fromkeys(k for item in items for k in item))
@@ -136,10 +163,14 @@ def export():
             ws.add_data_validation(validation)
             letter = ws.cell(1, keys.index("reviewer_reply") + 1).column_letter
             validation.add(f"{letter}2:{letter}{len(items)+1}")
-    book.save(OUTPUT / "288校逐欄查核_可回填.xlsx")
-    print(json.dumps({"rows": len(issues), "sources": len(snapshot["public_source_reviews"]),
+    book.save(output / "288校逐欄查核_可回填.xlsx")
+    print(json.dumps({"rows": len(issues), "sources": len(source_index),
         "observations": summary["new_observations"], "issue_codes": summary["issue_codes"]}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
-    export()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, default=OUTPUT)
+    parser.add_argument("--access", type=Path)
+    args = parser.parse_args()
+    export(args.output, args.access)
