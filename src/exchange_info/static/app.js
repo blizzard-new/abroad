@@ -1234,6 +1234,16 @@ function schoolVisualRecordFor(schoolName, country = null) {
     return state.ncuSchoolImages.find(row => visualSchoolIdentity(row.school_name) === visualSchoolIdentity(schoolName)
       && visualCountryIdentity(row.country) === visualCountryIdentity(country)) || { status: "license_unverified" };
   }
+  if (home === "淡江大學") {
+    const partner = state.dashboard.partner_universities.find(row => visualSchoolIdentity(row.school_name) === visualSchoolIdentity(schoolName)
+      && visualCountryIdentity(row.country) === visualCountryIdentity(country));
+    const evidence = partner?.reference_data;
+    return partner?.image_status === "verified" && partner.image_url && evidence?.campus_photo_author
+      ? { status: "verified", local_path: partner.image_url, official_page_url: partner.image_page_url,
+          license_name: evidence.campus_photo_license, license_url: evidence.campus_photo_license_url,
+          note: `攝影：${evidence.campus_photo_author} · ${evidence.campus_photo_license}` }
+      : { status: "missing" };
+  }
   if (home === "國立中正大學") {
     const partner = state.dashboard.partner_universities.find(row => visualSchoolIdentity(row.school_name) === visualSchoolIdentity(schoolName)
       && visualCountryIdentity(row.country) === visualCountryIdentity(country));

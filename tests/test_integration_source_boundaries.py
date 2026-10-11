@@ -54,3 +54,24 @@ def test_scoped_photos_keep_image_and_credit_together_without_cross_school_fallb
     '''
     result=subprocess.run(['node','-e',script,str(Path('src/exchange_info/static/app.js').resolve())],capture_output=True,text=True)
     assert result.returncode==0,result.stderr
+
+
+@pytest.mark.parametrize('status', ['pending', 'needs_review', 'verified', 'invalid'])
+def test_tku_sidecar_respects_operator_review_in_dashboard_and_life(tmp_path, status):
+    from exchange_info.tku_assets import campus_locations
+    from exchange_info.tku_census import school_audit
+    from exchange_info.tku_student_view import fetch_tku_partner_universities
+    partner = next(p for p in fetch_tku_partner_universities() if school_audit(p.school_name)['id'] in campus_locations())
+    record = dict(school_name=partner.school_name, country=partner.country, geocode_status=status,
+                  latitude=35.1 if status=='verified' else None, longitude=135.1 if status=='verified' else None,
+                  precision='campus', source_url='https://example.edu/review', note='operator review')
+    if status=='invalid':record.update(geocode_status='verified',latitude=1234,longitude=135)
+    path=tmp_path/'processed/university_locations.jsonl';path.parent.mkdir();path.write_text(json.dumps(record)+'\n')
+    with TestClient(create_app(tmp_path)) as client:
+        rows=client.get('/student-dashboard',params={'school':'TKU'}).json()['partner_universities']
+        actual=next(p for p in rows if p['school_name']==partner.school_name)['location']
+        assert actual['geocode_status']==('needs_review' if status=='invalid' else status)
+        assert actual['latitude']==(35.1 if status=='verified' else None)
+        life=client.get('/school-life-context',params={'school':partner.school_name,'home_school':'TKU'})
+        assert life.status_code==200
+        assert life.json()['location_note'].startswith('地理參考：' if status=='verified' else '尚無已核對的校區座標')

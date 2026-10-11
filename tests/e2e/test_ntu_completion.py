@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 import pytest
 from playwright.sync_api import expect
@@ -38,6 +39,6 @@ def test_dated_host_reference_is_readable_with_pending_home_quota(page, live_ser
     expect(page.locator('[data-life-theme="safety"]')).to_contain_text("Guard Me")
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
-    output = Path("docs/ntu-completion-20261011/browser")
+    output = Path(os.environ.get("VISUAL_EVIDENCE_DIR", "/tmp/ntu-completion-browser"))
     output.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(output / f"upei-reference-{width}.png"))
