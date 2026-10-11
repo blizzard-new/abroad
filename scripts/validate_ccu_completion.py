@@ -49,8 +49,8 @@ def main():
                 for ev in field["evidence"]:
                     assert all(ev.get(k) for k in ["source_url", "checked_at", "academic_year", "excerpt"])
     preserved = subprocess.check_output(["git", "diff", "--name-only", BASE, "--", "src/exchange_info/official_data"], cwd=ROOT, text=True).splitlines()
-    assert all(path.startswith("src/exchange_info/official_data/ccu/completion")
-               or path.startswith("src/exchange_info/official_data/ccu/campus-")
+    assert all(path.startswith(("src/exchange_info/official_data/ccu/completion",
+                               "src/exchange_info/official_data/ccu/campus-"))
                or path == "src/exchange_info/official_data/ccu/destination_profiles.jsonl" for path in preserved), preserved
     original = subprocess.check_output(["git", "show", BASE + ":src/exchange_info/official_data/ccu/destination_profiles.jsonl"], cwd=ROOT)
     new = (BUNDLE / "destination_profiles.jsonl").read_bytes()

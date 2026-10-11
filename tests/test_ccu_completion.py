@@ -88,7 +88,7 @@ def test_reviewed_campuses_are_precise_and_unknowns_are_not_city_centres():
 def test_photos_have_identity_licence_author_and_original_bytes():
     photos = {r["ccu_page"]: r["photo"] for r in read("campus-assets.json")["schools"]}
     assert sum(f["status"] == "verified_current" for f in photos.values()) == 100
-    for page, field in photos.items():
+    for field in photos.values():
         if field["status"] != "verified_current":
             assert field["value"] is None
             continue
