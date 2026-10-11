@@ -2,18 +2,18 @@
 from __future__ import annotations
 
 import argparse
-from collections import Counter
 import hashlib
 import json
 import re
-from pathlib import Path
 import subprocess
+from collections import Counter
+from pathlib import Path
 from zipfile import ZipFile
 
-from exchange_info.ccu_sources import BUNDLE, HOME
-from exchange_info.ccu_student_view import fetch_ccu_partner_universities
 from exchange_info.ccu_campus_assets import reviewed_assets
 from exchange_info.ccu_completion import reviewed_completion
+from exchange_info.ccu_sources import BUNDLE, HOME
+from exchange_info.ccu_student_view import fetch_ccu_partner_universities
 from exchange_info.storage import load_destination_profiles
 
 BASE = "59a20f27fcee00fb597abc79e75ec11778317422"
@@ -49,8 +49,8 @@ def main():
                 for ev in field["evidence"]:
                     assert all(ev.get(k) for k in ["source_url", "checked_at", "academic_year", "excerpt"])
     preserved = subprocess.check_output(["git", "diff", "--name-only", BASE, "--", "src/exchange_info/official_data"], cwd=ROOT, text=True).splitlines()
-    assert all(path.startswith("src/exchange_info/official_data/ccu/completion")
-               or path.startswith("src/exchange_info/official_data/ccu/campus-")
+    assert all(path.startswith(("src/exchange_info/official_data/ccu/completion",
+                               "src/exchange_info/official_data/ccu/campus-"))
                or path == "src/exchange_info/official_data/ccu/destination_profiles.jsonl" for path in preserved), preserved
     original = subprocess.check_output(["git", "show", BASE + ":src/exchange_info/official_data/ccu/destination_profiles.jsonl"], cwd=ROOT)
     new = (BUNDLE / "destination_profiles.jsonl").read_bytes()
@@ -60,7 +60,7 @@ def main():
     assert profile_counts[HOME] == 104 and profile_counts["長庚大學"] == 77 and profile_counts["國立臺北大學"] == 206
     image_count = sum(p.image_status == "verified" for p in partners)
     point_count = sum(p.location is not None and p.location.geocode_status == "verified" for p in partners)
-    assert image_count == 97 and point_count == 95
+    assert image_count == 100 and point_count == 100
     package = None
     if args.wheel:
         with ZipFile(args.wheel) as archive:

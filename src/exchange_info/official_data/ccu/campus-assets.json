@@ -4854,10 +4854,46 @@
         "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
       },
       "photo": {
-        "status": "missing",
-        "value": null,
-        "reason": "未取得對應校園且有明確重用授權的照片。",
-        "evidence": []
+        "status": "verified_current",
+        "value": {
+          "artist": "Adoreplus",
+          "license_name": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+          "source_page_url": "https://commons.wikimedia.org/wiki/File:ToaNhaTrungTam.jpg",
+          "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/0/0b/ToaNhaTrungTam.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+          "campus_caption": "Center Building at HCMUTE",
+          "checked_at": "2026-10-11T11:15:05.003083+00:00",
+          "local_path": "/static/assets/ccu/campuses/p68-b8a7c828f77c.jpg",
+          "sha256": "b8a7c828f77cff56bc615e6563ddf2c26ee173454e10e5046a0189fa19200b47",
+          "width": 960,
+          "height": 720,
+          "modifications": "原樣保存Commons所提供影像；Commons縮圖尺寸依來源URL，不另裁切或用AI修改。",
+          "applicability": "真實校園照片；攝影時間依原頁，查核日不是拍攝日，不保證2027校園外觀或個人分配校區。"
+        },
+        "reason": "HCMUTE中央大樓校景，Commons作者Adoreplus、CC BY-SA4.0、2016-04-09。官方2025-12-26改名HCM-UTE與母校HCMUTE身份相同；舊照片不宣稱2027外觀。",
+        "evidence": [
+          {
+            "source_id": "p68-followup-photo-exact",
+            "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AToaNhaTrungTam.jpg%7CFile%3ASPKTHCM.jpg",
+            "source_pages": [],
+            "academic_year": "一般校園照片及授權；攝影日期另依來源",
+            "checked_at": "2026-10-11T11:12:56.194727+00:00",
+            "content_hash": "8fce235b81f472903b100cdda1c3709a78895113080c1f0d21e2fcccb4bdf8dc",
+            "excerpt": "{\"DateTime\": {\"value\": \"2016-04-09 11:14:57\", \"source\": \"mediawiki-metadata\", \"hidden\": \"\"}, \"ObjectName\": {\"value\": \"ToaNhaTrungTam\", \"source\": \"mediawiki-metadata\"}, \"CommonsMetadataExtension\": {\"value\": 1.2, \"source\": \"extension\", \"hidden\": \"\"}, \"Categories\": {\"value\": \"Ho Chi Minh City University of Technology and Education|Self-published work\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"Assessments\": {\"value\": \"\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"ImageDescription\": {\"value\": \"Center Building at HCMUTE\", \"source\": \"commons-desc-page\"}, \"DateTimeOriginal\": {\"value\": \"2016-04-09\", \"source\": \"commons-desc-page\"}, \"Credit\": {\"value\": \"<span class=\\\"int-own-work\\\" lang=\\\"en\\\">Own work</span>\", \"source\": \"commons-desc-page\"}, \"Artist\": {\"value\": \"<a href=\\\"//commons.wikimedia.org/w/index.php?title=User:Adoreplus&amp;action=edit&amp;redlink=1\\\" class=\\\"new\\\" title=\\\"User:Adoreplus (page does not exist)\\\">Adoreplus</a>\", \"source\": \"commons-desc-page\"}, \"LicenseShortName\": {\"value\": \"CC BY-SA 4.0\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"UsageTerms\": {\"value\": \"Creative Commons Attribution-Share Alike 4.0\", \"source\": \"commons-desc-page\"}, \"AttributionRequired\": {\"value\": \"true\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"LicenseUrl\": {\"value\": \"https://creativecommons.org/licenses/by-sa/4.0\", \"source\": \"commons-desc-page\"}, \"Copyrighted\": {\"value\": \"True\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"Restrictions\": {\"value\": \"\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"License\": {\"value\": \"cc-by-sa-4.0\", \"source\": \"commons-templates\", \"hidden\": \"\"}}",
+            "location_in_source": "query.pages.48088400.imageinfo[0].extmetadata"
+          },
+          {
+            "source_id": "p68-followup-main",
+            "source_url": "https://hcmute.edu.vn/",
+            "source_pages": [],
+            "excerpt": "Ngày 26/12/2025, Thủ tướng Chính phủ đã có Quyết định số 2809/QĐ-TTg",
+            "academic_year": "校名變更決定2025-12-26；不是2027外觀證明",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T11:09:39.875782+00:00",
+            "content_hash": "dce8e5258271aa0a27f41cd8123559597657b383b76a8550a9ce165980de54c5",
+            "status": "verified_current"
+          }
+        ]
       }
     },
     {
@@ -5225,10 +5261,58 @@
         74
       ],
       "coordinates": {
-        "status": "missing",
-        "value": null,
-        "evidence": [],
-        "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
+        "status": "verified_current",
+        "value": {
+          "school_name": "Saintigits Group of Institutions 聖基茲工學院",
+          "country": "印度",
+          "city": "Kottayam",
+          "latitude": 9.5100096,
+          "longitude": 76.5513594,
+          "geocode_status": "verified",
+          "geocoded_at": "2026-10-11T13:00:53.831063+00:00",
+          "source_url": "https://goo.gl/maps/zxt3rGJ8S46DX3ws7",
+          "identity_source_url": "https://saintgits.org/saintgits-design-school/contact-us/",
+          "precision": "representative",
+          "note": "官方同集團Design School聯絡頁（工學院contact路由實際轉址）所連地圖，目的地明確命名Saintgits College of Engineering (Autonomous), Kottayam, Kerala。採!3d/!4d機構marker9.5100096,76.5513594，不採@視窗經度76.5491707，不採既有空拍照片的camera GPS；此為工學院代表點，不保證個人授課樓或Design School交換資格。"
+        },
+        "reason": "官方同集團Design School聯絡頁（工學院contact路由實際轉址）所連地圖，目的地明確命名Saintgits College of Engineering (Autonomous), Kottayam, Kerala。採!3d/!4d機構marker9.5100096,76.5513594，不採@視窗經度76.5491707，不採既有空拍照片的camera GPS；此為工學院代表點，不保證個人授課樓或Design School交換資格。",
+        "evidence": [
+          {
+            "source_id": "p74-engineering-root-followup",
+            "source_url": "https://saintgits.org/saintgits-college-of-engineering/",
+            "source_pages": [],
+            "excerpt": "Saintgits College of Engineering",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T13:00:06.621654+00:00",
+            "content_hash": "e03f7ea237f4d8c17c2fa20fb0642afff5f0a565fec02fdb56fd92c0b899ac2a",
+            "status": "verified_current"
+          },
+          {
+            "source_id": "p74-engineering-contact-followup",
+            "source_url": "https://saintgits.org/saintgits-college-of-engineering/contact-us/",
+            "source_pages": [],
+            "excerpt": "Saintgits Design School; https://goo.gl/maps/zxt3rGJ8S46DX3ws7",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T13:00:05.015898+00:00",
+            "content_hash": "335e65ca8f07368b5d38a1aa2e9b83cc4308fab3c9965083782f93b514aa391a",
+            "status": "verified_current",
+            "resolved_url": "https://saintgits.org/saintgits-design-school/contact-us/"
+          },
+          {
+            "source_id": "p74-engineering-official-map-marker",
+            "source_url": "https://goo.gl/maps/zxt3rGJ8S46DX3ws7",
+            "source_pages": [],
+            "excerpt": "Saintgits+College+of+Engineering+(Autonomous),+Kottayam,+Kerala !3d9.5100096!4d76.5513594",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T13:00:53.831063+00:00",
+            "content_hash": "3507d5dc6b261fffaf099f8f03c33b20c0d1f40f17ac41d5ab094357b14540f0",
+            "status": "verified_current",
+            "resolved_url": "https://www.google.com/maps/place/Saintgits+College+of+Engineering+(Autonomous),+Kottayam,+Kerala/@9.5100096,76.5491707,17z/data=!4m6!3m5!1s0x3b062ed484f475a7:0xea66b5d0e55062ca!8m2!3d9.5100096!4d76.5513594!16s%2Fm%2F0125pkyd?coh=164777&entry=tt&shorturl=1"
+          }
+        ]
       },
       "photo": {
         "status": "verified_current",
@@ -5490,10 +5574,46 @@
         ]
       },
       "photo": {
-        "status": "missing",
-        "value": null,
-        "reason": "實際影像以畢業人物為主，校園辨識不足；不作校園照片。",
-        "evidence": []
+        "status": "verified_current",
+        "value": {
+          "artist": "Ghantajayaram",
+          "license_name": "CC0",
+          "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+          "source_page_url": "https://commons.wikimedia.org/wiki/File:E-waste-lab.jpg",
+          "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/E-waste-lab.jpg/1280px-E-waste-lab.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "campus_caption": "Vel Tech University電子／塑膠廢棄物技術育成中心外觀（Commons來源2015）；非主校門。",
+          "checked_at": "2026-10-11T11:17:03.957083+00:00",
+          "local_path": "/static/assets/ccu/campuses/p77-0c546fd829c6.jpg",
+          "sha256": "0c546fd829c6cffcfd03cc9a3e05c890025d31fed19aec1596b52650c3aa21ba",
+          "width": 1280,
+          "height": 797,
+          "modifications": "原樣保存Commons所提供影像；Commons縮圖尺寸依來源URL，不另裁切或用AI修改。",
+          "applicability": "真實校園照片；攝影時間依原頁，查核日不是拍攝日，不保證2027校園外觀或個人分配校區。"
+        },
+        "reason": "Vel Tech University電子及塑膠廢棄物育成中心外觀，Commons作者Ghantajayaram、CC0、2015。官方大學首頁連至VelTechTBI，該頁列E-Waste & Plastic Waste設施；不是Vel Tech Multi Tech姊妹學院或人物活動照。",
+        "evidence": [
+          {
+            "source_id": "p77-followup-lab-exact",
+            "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AE-waste-lab.jpg%7CFile%3AVtmt1.jpg",
+            "source_pages": [],
+            "academic_year": "一般校園照片及授權；攝影日期另依來源",
+            "checked_at": "2026-10-11T11:15:55.143522+00:00",
+            "content_hash": "b7ddaeb675104620cb5446f8a58c354e16933d210b0c5db5232bd399b2d6225e",
+            "excerpt": "{\"DateTime\": {\"value\": \"2016-01-09 16:27:33\", \"source\": \"mediawiki-metadata\", \"hidden\": \"\"}, \"ObjectName\": {\"value\": \"E-waste-lab\", \"source\": \"mediawiki-metadata\"}, \"CommonsMetadataExtension\": {\"value\": 1.2, \"source\": \"extension\", \"hidden\": \"\"}, \"Categories\": {\"value\": \"CC-Zero|Electronic waste in India|Uploaded with en.wp upload wizard|Avadi|Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"Assessments\": {\"value\": \"\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"ImageDescription\": {\"value\": \"VEL TECH University E-waste lab image\", \"source\": \"commons-desc-page\"}, \"DateTimeOriginal\": {\"value\": \"2015-06-10\", \"source\": \"commons-desc-page\"}, \"Credit\": {\"value\": \"<span class=\\\"int-own-work\\\" lang=\\\"en\\\">Own work</span>\", \"source\": \"commons-desc-page\"}, \"Artist\": {\"value\": \"<a href=\\\"//commons.wikimedia.org/w/index.php?title=User:Ghantajayaram&amp;action=edit&amp;redlink=1\\\" class=\\\"new\\\" title=\\\"User:Ghantajayaram (page does not exist)\\\">Ghantajayaram</a>\", \"source\": \"commons-desc-page\"}, \"LicenseShortName\": {\"value\": \"CC0\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"UsageTerms\": {\"value\": \"Creative Commons Zero, Public Domain Dedication\", \"source\": \"commons-desc-page\"}, \"AttributionRequired\": {\"value\": \"false\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"LicenseUrl\": {\"value\": \"http://creativecommons.org/publicdomain/zero/1.0/deed.en\", \"source\": \"commons-desc-page\"}, \"Copyrighted\": {\"value\": \"True\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"Restrictions\": {\"value\": \"\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"License\": {\"value\": \"cc0\", \"source\": \"commons-templates\", \"hidden\": \"\"}}",
+            "location_in_source": "query.pages.46251541.imageinfo[0].extmetadata"
+          },
+          {
+            "source_id": "p77-followup-tbi-official",
+            "source_url": "https://veltechtbi.com/",
+            "source_pages": [],
+            "excerpt": "E-Waste & Plastic Waste Recycling Facility",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T11:18:36.102884+00:00",
+            "content_hash": "d8c615c0bb5e1dd260e45cf55edc7bb67a8e509efc97951df69c8c10bffb3058",
+            "status": "verified_current"
+          }
+        ]
       }
     },
     {
@@ -5505,10 +5625,45 @@
         79
       ],
       "coordinates": {
-        "status": "missing",
-        "value": null,
-        "evidence": [],
-        "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
+        "status": "verified_current",
+        "value": {
+          "school_name": "Kalinga Institute of Industrial Technology 卡林噶工業技術學院",
+          "country": "印度",
+          "city": "Bhubaneswar",
+          "latitude": 20.3555462,
+          "longitude": 85.8161006,
+          "geocode_status": "verified",
+          "geocoded_at": "2026-10-11T11:12:22.760317+00:00",
+          "source_url": "https://maps.app.goo.gl/aVsBrYACMTfHZiqDA",
+          "identity_source_url": "https://kiit.ac.in/contact/",
+          "precision": "representative",
+          "note": "官方Contact頁Patia地址連至此KIIT機構marker；不是@視窗值或KISS校區。"
+        },
+        "reason": "官方Contact頁Patia地址連至此KIIT機構marker；不是@視窗值或KISS校區。",
+        "evidence": [
+          {
+            "source_id": "p79-followup-contact",
+            "source_url": "https://kiit.ac.in/contact/",
+            "source_pages": [],
+            "excerpt": "KIIT | Contact Us",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T11:09:39.879975+00:00",
+            "content_hash": "9467ed2e549572dea995b09a8172ee5f7a00a1050b792cd3013c457fea5c0b1c",
+            "status": "verified_current"
+          },
+          {
+            "source_id": "p79-followup-official-map",
+            "source_url": "https://maps.app.goo.gl/aVsBrYACMTfHZiqDA",
+            "source_pages": [],
+            "excerpt": "KIIT - Kalinga Institute of Industrial Technology !3d20.3555462!4d85.8161006",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T11:12:22.760317+00:00",
+            "content_hash": "ee69aad5366c6a82d9085f4a7c97a62ae3b38c020f5546009818177f7dd11202",
+            "status": "verified_current"
+          }
+        ]
       },
       "photo": {
         "status": "verified_current",
@@ -6103,10 +6258,47 @@
         88
       ],
       "coordinates": {
-        "status": "missing",
-        "value": null,
-        "evidence": [],
-        "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
+        "value": {
+          "school_name": "Faculty of Management, Economics & Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)",
+          "country": "法國",
+          "city": "Lille",
+          "latitude": 50.63312,
+          "longitude": 3.0439062,
+          "geocode_status": "verified",
+          "geocoded_at": "2026-10-11T11:33:18.117808+00:00",
+          "source_url": "https://all-lacatho.fr/en/establishments/fges-faculty-of-management-economics-sciences",
+          "identity_source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+          "precision": "representative",
+          "note": "母大學當期簡章p10指定All為宿舍官方服務，該FGES公開地圖markers與building地址分別核實Vauban／WeNov。代表點選FGES Campus Vauban（business/economics/finance/life sciences），不能代替WeNov（其他領域）或個人接收校區；不是map viewport。"
+        },
+        "status": "verified_current",
+        "reason": "FGES自己的公開地圖marker及building名稱地址一同核對，沒有借用母大學其他院系點。",
+        "evidence": [
+          {
+            "source_id": "p88-followup-parent-2026-2027",
+            "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+            "source_pages": [
+              10
+            ],
+            "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+            "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+            "checked_at": "2026-10-11T11:33:18.118610+00:00",
+            "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+            "status": "verified_current",
+            "excerpt": "www.all-lacatho.fr/en/list-accommodation"
+          },
+          {
+            "source_id": "p88-followup-campus-provider",
+            "source_url": "https://all-lacatho.fr/en/establishments/fges-faculty-of-management-economics-sciences",
+            "source_pages": [],
+            "academic_year": "一般FGES校區身份，查核2026-10-11；不是個人校區分配",
+            "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+            "checked_at": "2026-10-11T11:33:18.117808+00:00",
+            "content_hash": "642d0ff9d4b9e7b4be592495af2efc8691371b4da948f0242ac3c49a35fb8ead",
+            "status": "verified_current",
+            "excerpt": "公開SSR mapId=establishment-details-map，building31／establishment5：FGES Campus Vauban，60 bd Vauban, 59800 Lille，lat50.63312,lng3.0439062；另一marker32為FGES Campus WeNov，lat50.63395,lng3.0199757。"
+          }
+        ]
       },
       "photo": {
         "status": "verified_current",
@@ -7255,10 +7447,46 @@
         ]
       },
       "photo": {
-        "status": "missing",
-        "value": null,
-        "reason": "未取得對應校園且有明確重用授權的照片。",
-        "evidence": []
+        "status": "verified_current",
+        "value": {
+          "artist": "FHNWStabKom",
+          "license_name": "CC BY-SA 4.0",
+          "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+          "source_page_url": "https://commons.wikimedia.org/wiki/File:FHNW_Campus_Brugg_Windisch.jpg",
+          "image_source_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/FHNW_Campus_Brugg_Windisch.jpg/1280px-FHNW_Campus_Brugg_Windisch.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+          "campus_caption": "FHNW Campus Brugg-Windisch共同校園主入口；官方列School of Business在此校區。地圖為Olten代表點，照片不代表個人接收校區。",
+          "checked_at": "2026-10-11T11:17:03.608625+00:00",
+          "local_path": "/static/assets/ccu/campuses/p104-867622f89ea8.jpg",
+          "sha256": "867622f89ea8dbd56e256b680c9169c42158e6cad01b772ebf4df5f34a895257",
+          "width": 1280,
+          "height": 853,
+          "modifications": "原樣保存Commons所提供影像；Commons縮圖尺寸依來源URL，不另裁切或用AI修改。",
+          "applicability": "真實校園照片；攝影時間依原頁，查核日不是拍攝日，不保證2027校園外觀或個人分配校區。"
+        },
+        "reason": "FHNW Campus Brugg-Windisch共同校園主入口。官方校區頁正文Our schools明載School of Business；屬商學院所在的共同校區，非商學院專用建築。地圖代表點仍為Olten；照片不是Olten／Basel／Muttenz或個人分配證明。",
+        "evidence": [
+          {
+            "source_id": "p104-followup-commons-category",
+            "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&generator=search&gsrsearch=Fachhochschule+Nordwestschweiz&gsrnamespace=6&gsrlimit=30",
+            "source_pages": [],
+            "academic_year": "一般校園照片及授權；攝影日期另依來源",
+            "checked_at": "2026-10-11T11:15:53.702547+00:00",
+            "content_hash": "a049ec60ce21182c63545bb394d3a564bc3e0bef7a6e07d13efeaf07a1348817",
+            "excerpt": "{\"DateTime\": {\"value\": \"2026-08-11 10:01:44\", \"source\": \"mediawiki-metadata\", \"hidden\": \"\"}, \"ObjectName\": {\"value\": \"FHNW Campus Brugg Windisch\", \"source\": \"mediawiki-metadata\"}, \"CommonsMetadataExtension\": {\"value\": 1.2, \"source\": \"extension\", \"hidden\": \"\"}, \"Categories\": {\"value\": \"Fachhochschule Nordwestschweiz|Universities of Applied Sciences|Self-published work|Files with coordinates missing SDC location of creation|Buildings in Windisch\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"Assessments\": {\"value\": \"\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"GPSLatitude\": {\"value\": \"47.481710\", \"source\": \"commons-desc-page\"}, \"GPSLongitude\": {\"value\": \"8.211007\", \"source\": \"commons-desc-page\"}, \"GPSMapDatum\": {\"value\": \"WGS-84\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"ImageDescription\": {\"value\": \"The main entrance of the main campus of the FHNW University of Applied Sciences and Arts in Brugg-Windisch\", \"source\": \"commons-desc-page\"}, \"DateTimeOriginal\": {\"value\": \"2026-08-11 12:06:16\", \"source\": \"commons-desc-page\"}, \"Credit\": {\"value\": \"<span class=\\\"int-own-work\\\" lang=\\\"en\\\">Own work</span>\", \"source\": \"commons-desc-page\"}, \"Artist\": {\"value\": \"<a href=\\\"//commons.wikimedia.org/wiki/User:FHNWStabKom\\\" title=\\\"User:FHNWStabKom\\\">FHNWStabKom</a>\", \"source\": \"commons-desc-page\"}, \"LicenseShortName\": {\"value\": \"CC BY-SA 4.0\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"UsageTerms\": {\"value\": \"Creative Commons Attribution-Share Alike 4.0\", \"source\": \"commons-desc-page\"}, \"AttributionRequired\": {\"value\": \"true\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"LicenseUrl\": {\"value\": \"https://creativecommons.org/licenses/by-sa/4.0\", \"source\": \"commons-desc-page\"}, \"Copyrighted\": {\"value\": \"True\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"Restrictions\": {\"value\": \"\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"License\": {\"value\": \"cc-by-sa-4.0\", \"source\": \"commons-templates\", \"hidden\": \"\"}}",
+            "location_in_source": "query.pages.197225656.imageinfo[0].extmetadata"
+          },
+          {
+            "source_id": "p104-followup-brugg-business-campus",
+            "source_url": "https://www.fhnw.ch/en/about-fhnw/locations/brugg-windisch",
+            "source_pages": [],
+            "excerpt": "The School of Business, Computer Science and Information Technology, Education and Engineering and Environment",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T11:17:01.600478+00:00",
+            "content_hash": "3117f189e29138a08d32cc4c8c8f9ab275860d8e9120e71976cd21b5121fd53d",
+            "status": "verified_current"
+          }
+        ]
       }
     },
     {
@@ -7270,10 +7498,45 @@
         105
       ],
       "coordinates": {
-        "status": "missing",
-        "value": null,
-        "evidence": [],
-        "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
+        "status": "verified_current",
+        "value": {
+          "school_name": "Ankara Social Science University 土耳其安卡拉社會科技大學",
+          "country": "土耳其",
+          "city": "Ankara（Ankara 主校）",
+          "latitude": 39.94273159999999,
+          "longitude": 32.8564133,
+          "geocode_status": "verified",
+          "geocoded_at": "2026-10-11T11:12:22.760822+00:00",
+          "source_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.9101023314993!2d32.85319811498272!3d39.94340047942294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d345aee5549aa1%3A0x6e8d93e2bbc3606c!2sAnkara+Sosyal+Bilimler+%C3%9Cniversitesi!5e0!3m2!1str!2str!4v1509309846464",
+          "identity_source_url": "https://www.asbu.edu.tr/tr/iletisim",
+          "precision": "representative",
+          "note": "官方土耳其文İletişim頁所嵌地圖解析為Hükümet Meydani No:2校址marker；不採39.94340047942294／32.85319811498272視窗值，不套Northern Cyprus校區。"
+        },
+        "reason": "官方土耳其文İletişim頁所嵌地圖解析為Hükümet Meydani No:2校址marker；不採39.94340047942294／32.85319811498272視窗值，不套Northern Cyprus校區。",
+        "evidence": [
+          {
+            "source_id": "p105-followup-contact-tr",
+            "source_url": "https://www.asbu.edu.tr/tr/iletisim",
+            "source_pages": [],
+            "excerpt": "İletişim | ANKARA SOSYAL BİLİMLER      ÜNİVERSİTESİ",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T11:09:40.659798+00:00",
+            "content_hash": "2272680f0b1a38c4ab3b67d8827a0aa658669b3ecaa14d6a177aa824563b48b6",
+            "status": "verified_current"
+          },
+          {
+            "source_id": "p105-followup-official-map",
+            "source_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.9101023314993!2d32.85319811498272!3d39.94340047942294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d345aee5549aa1%3A0x6e8d93e2bbc3606c!2sAnkara+Sosyal+Bilimler+%C3%9Cniversitesi!5e0!3m2!1str!2str!4v1509309846464",
+            "source_pages": [],
+            "excerpt": "Social Sciences University of Ankara, Hacı Bayram, Ulus, Hükümet Meydani No:2 [39.94273159999999,32.8564133]",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T11:12:22.760822+00:00",
+            "content_hash": "6585b4f9eeccb9db00ed3ab497492f2bc62dda21a4139da3a35cb4c882947a96",
+            "status": "verified_current"
+          }
+        ]
       },
       "photo": {
         "status": "verified_current",
@@ -7402,10 +7665,45 @@
         107
       ],
       "coordinates": {
-        "status": "missing",
-        "value": null,
-        "evidence": [],
-        "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
+        "status": "verified_current",
+        "value": {
+          "school_name": "University of Pardubice 捷克巴爾杜比彩大學",
+          "country": "捷克",
+          "city": "Pardubice",
+          "latitude": 50.04816,
+          "longitude": 15.7693999,
+          "geocode_status": "verified",
+          "geocoded_at": "2026-10-11T11:09:41.806272+00:00",
+          "source_url": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2562.0689742122604!2d15.7677468!3d50.0475392!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470dccc33b38a13d%3A0x1a11560fb4c7d5e8!2sUniverzita%20Pardubice!5e0!3m2!1scs!2scz!4v1764070522018!5m2!1scs!2scz",
+          "identity_source_url": "https://www.upce.cz/en/contacts-0",
+          "precision": "representative",
+          "note": "官方Contacts頁嵌入的同一place ID地圖，正文marker為Studentská95；不採Mapy視窗或Google embed初始視窗座標。"
+        },
+        "reason": "官方Contacts頁嵌入的同一place ID地圖，正文marker為Studentská95；不採Mapy視窗或Google embed初始視窗座標。",
+        "evidence": [
+          {
+            "source_id": "p107-campus_contact-1",
+            "source_url": "https://www.upce.cz/en/contacts-0",
+            "source_pages": [],
+            "excerpt": "Contacts | Univerzita Pardubice",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T08:43:58.922912+00:00",
+            "content_hash": "f2d205775a82d46c81a2c62491838002715cdc21960ec28d4e5ead7d57d869f5",
+            "status": "verified_current"
+          },
+          {
+            "source_id": "p107-followup-google-map",
+            "source_url": "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2562.0689742122604!2d15.7677468!3d50.0475392!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470dccc33b38a13d%3A0x1a11560fb4c7d5e8!2sUniverzita%20Pardubice!5e0!3m2!1scs!2scz!4v1764070522018!5m2!1scs!2scz",
+            "source_pages": [],
+            "excerpt": "Univerzita Pardubice, Studentská 95, 532 10 Pardubice II [50.04816,15.7693999]",
+            "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+            "application_round": "一般校園參考",
+            "checked_at": "2026-10-11T11:09:41.806272+00:00",
+            "content_hash": "aedbbe3c9b942cd19181a5d8d3992eea39843665ce21e87241f305950286b065",
+            "status": "verified_current"
+          }
+        ]
       },
       "photo": {
         "status": "verified_current",
