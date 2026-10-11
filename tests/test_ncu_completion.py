@@ -143,7 +143,7 @@ def test_api_dashboard_coverage_detail_and_life_agree_on_photos(tmp_path):
     client = TestClient(create_app(tmp_path))
     dashboard = client.get("/student-dashboard", params={"school": "NCU"}).json()
     assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 193
-    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 181
+    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 186
     assert all(p["location"]["latitude"] is None for p in dashboard["partner_universities"] if p["location"]["geocode_status"] != "verified")
     coverage = client.get("/coverage", params={"school": "NCU"}).json()
     assert sum(p["image_status"] == "verified" for p in coverage["partners"]) == 193

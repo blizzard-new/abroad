@@ -31,12 +31,9 @@ def campus_location(partner, fallback):
     stat = LOCATIONS.stat()
     candidate = _locations_snapshot((stat.st_mtime_ns, stat.st_size)).get(
         (school_identity_key(partner.school_name), partner.country))
-    if candidate is None or (
-        candidate.geocode_status != "verified"
-        and fallback is not None and fallback.geocode_status == "verified"
-    ):
-        return fallback
-    return candidate
+    # A scoped review can reject a shared point's campus. Preserve that hold
+    # when integrating newer shared catalogues; only absent reviews fall back.
+    return fallback if candidate is None else candidate
 
 
 @lru_cache(maxsize=1)
