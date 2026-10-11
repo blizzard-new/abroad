@@ -2,24 +2,23 @@
 from __future__ import annotations
 
 import json
+import zlib
 from collections.abc import Mapping
 from functools import lru_cache
 
 from .ccu_completion_sources import validate_completion_source
 from .ccu_sources import BUNDLE
+from .json_stream import read_json_object_array
 from .models import ExchangeFieldEvidence, PartnerExchangeDetailField, PartnerUniversity
 
 
 class _ReviewedCompletionIndex(Mapping):
-    """Retain validated serialized rows; expand only the requested institution."""
-    def __init__(self, rows):
-        self._records = {
-            row["ccu_page"]: json.dumps(row, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
-            for row in rows
-        }
+    """Retain validated compressed rows; expand only the requested institution."""
+    def __init__(self, records):
+        self._records = records
 
     def __getitem__(self, page):
-        return json.loads(self._records[page])
+        return json.loads(zlib.decompress(self._records[page]))
 
     def __iter__(self):
         return iter(self._records)
@@ -33,11 +32,12 @@ def reviewed_completion():
     path = BUNDLE / "completion-reviewed-fields.json"
     if not path.exists():
         return {}
-    rows = json.loads(path.read_text())["schools"]
-    if len(rows) != 104 or len({r["ccu_page"] for r in rows}) != 104:
-        raise ValueError("CCU completion requires 104 unique exchange identities")
+    records = {}
     checked = {}
-    for row in rows:
+
+    def receive(row):
+        if row["ccu_page"] in records:
+            raise ValueError("CCU completion requires 104 unique exchange identities")
         if set(row.get("host_override_keys", [])) - set(row["host_fields"]):
             raise ValueError("Unknown CCU receiving supplement key")
         for field in [*row["general_campus_fields"].values(), *row["host_fields"].values()]:
@@ -47,7 +47,15 @@ def reviewed_completion():
                 raise ValueError("CCU completion facts need provenance")
             for ev in field["evidence"]:
                 validate_completion_source(BUNDLE, ev, checked)
-    return _ReviewedCompletionIndex(rows)
+        records[row["ccu_page"]] = zlib.compress(
+            json.dumps(row, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        )
+
+    with path.open(encoding="utf-8") as handle:
+        read_json_object_array(handle, "schools", receive)
+    if len(records) != 104:
+        raise ValueError("CCU completion requires 104 unique exchange identities")
+    return _ReviewedCompletionIndex(records)
 
 
 def apply_completion(partner: PartnerUniversity) -> PartnerUniversity:
