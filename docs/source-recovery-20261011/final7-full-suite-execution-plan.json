@@ -1,0 +1,12 @@
+{
+  "candidate": "5e7114182093fa77203ee946a4f86a88d3b10345",
+  "harness_sha256": "af98cfe82a254e726b201e5705db26933120a00fb16c1d15beb5d5ea3648745b",
+  "full_suite_entrypoint": "scripts/run_web_quality_tests.py",
+  "partitions": 4,
+  "concurrent_workers": 2,
+  "test_assertions_and_waits_unchanged": true,
+  "collection_no_exclusions": true,
+  "temporary_storage": "Per-shard TMPDIR under /workspace to leave /tmp tmpfs headroom for retained evidence; all original tests and partitioning unchanged.",
+  "screenshot_retention": "Copies any tmp_path/browser PNG into dedicated fixed raw evidence after shard completes; hash verified before scratch retirement.",
+  "prepared_at": "2026-10-11T19:32:32.166217+00:00"
+}

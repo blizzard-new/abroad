@@ -1,6 +1,6 @@
 """Run the unchanged full-suite shard harness at a single clean candidate."""
 from pathlib import Path
-import concurrent.futures, json, subprocess
+import concurrent.futures, hashlib, json, shutil, subprocess
 
 app=Path('/workspace/abroad-globe-20261011')
 raw=Path('/workspace/recovery-evidence-20261011')
@@ -9,7 +9,7 @@ sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=app,text=True).strip(
 assert not subprocess.check_output(['git','status','--porcelain'],cwd=app).strip()
 def run(i):
     name=f'{prefix}-full-shard-{i}'
-    tmp=Path('/tmp')/(name+'-tmp');tmp.mkdir(exist_ok=False)
+    tmp=Path('/workspace')/(name+'-tmp');tmp.mkdir(exist_ok=False)
     env=['EXCHANGE_TEST_POSTGRES=1',f'TMPDIR={tmp}',
          'PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/workspace/integration-tools/browsers/chromium-1234/chrome-linux64/chrome']
     for variable,suffix in [('VISUAL_EVIDENCE_DIR','images'),('TKU_CENSUS_ASSET_EVIDENCE','tku-images'),
@@ -23,6 +23,19 @@ def run(i):
              '--shard',str(i),'--shards','4','--junitxml',str(raw/name/'result.xml'),
              '--evidence-dir',str(raw/name/'shard-coverage')]
     result=subprocess.run(command,cwd=app,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
+    # Upstream NCU isolates screenshots with tmp_path/browser. Retain every
+    # such image after the run, without touching any test or browser assertion.
+    captures=[]
+    for folder in sorted(tmp.rglob('browser')):
+        if not folder.is_dir():continue
+        for source in sorted(folder.rglob('*.png')):
+            target=raw/(name+'-pytest-browser-images')/source.relative_to(tmp)
+            target.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copy2(source,target)
+            digest=hashlib.sha256(source.read_bytes()).hexdigest()
+            assert hashlib.sha256(target.read_bytes()).hexdigest()==digest
+            captures.append({'path':str(target.relative_to(raw)),'sha256':digest,'bytes':source.stat().st_size})
+    (raw/(name+'-temporary-browser-captures.json')).write_text(json.dumps(captures,indent=2)+'\n')
     print(json.dumps({'shard':i,'sha':sha,'exit':result.returncode,'stdout':result.stdout,'stderr':result.stderr}),flush=True)
     return result.returncode
 with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
