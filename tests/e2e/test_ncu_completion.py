@@ -164,7 +164,7 @@ def test_ncu_fourth_public_pass_initial_later_forms_year_and_life_reach_visible_
         expect(later).to_contain_text("I94")
     if query == "北亞利桑那":
         expect(later).to_contain_text("Statement of Understanding")
-    out = Path("/workspace/ncu-completion-20261011/browser-pass4")
+    out = Path(os.environ.get("VISUAL_EVIDENCE_DIR", "/tmp/ncu-completion-browser")) / "pass4"
     out.mkdir(parents=True, exist_ok=True)
     later.locator(".workflow-documents").scroll_into_view_if_needed()
     page.screenshot(path=str(out / f"ncu-pass4-workflow-{query}-{width}.png"))
