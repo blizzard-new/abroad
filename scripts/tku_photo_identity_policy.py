@@ -1,6 +1,9 @@
 """Explicit fixed-photo withdrawals override stale visual/date passes."""
 import json
-from tku_capture_io import BUNDLE
+if __package__:
+ from .tku_capture_io import BUNDLE
+else:
+ from tku_capture_io import BUNDLE
 
 def apply_photo_identity_policy(records):
  path=BUNDLE/'fixed_photo_blocker_holds.json'
