@@ -1,5 +1,7 @@
 # 中央逐校補完查核，2026-10-11
 
+**最新第二十批：五校10份14頁全文與原圖核讀，新5校55欄，人工覆蓋134校。** 476回歸與五校手機／桌面10情境通過，10圖全實看；214生活API待翻譯0。斷線通知後先保存67c0d26檢查點再完成驗收，母校22:01:49 UTC仍未取得116名額表。詳見[第二十批來源及驗收](resume/twentieth/README.md)、[未完成清單](resume/twentieth/unfinished-source-list.csv)、[驗證證據](resume/twentieth/validation.json)。以下保留歷史批次紀錄。
+
 **最新第十九批：ECE、IDRAC、京畿、世宗10份29頁全文與原圖核讀，新增4校46個人工欄位，人工覆蓋129校。** 472回歸與四校手機／桌面8情境驗證通過，8圖全實看；214生活API待翻譯0。有限多頁待完成333份，原年與當期未核實限制保留。詳見[第十九批原件紀錄](resume/nineteenth/README.md)、[未完成清單](resume/nineteenth/unfinished-source-list.csv)、[驗證證據](resume/nineteenth/validation.json)。以下保留歷史批次紀錄。
 
 **最新第十八批：諾曼第課單51頁＋指南17頁完成全文與圖像核讀，更新6欄。** 467項回歸、72項最終聚焦測試及手機／桌面實測通過，8圖全實看；214生活API待翻譯0。有限多頁待完成340筆，其中78已引用、74不同SHA、2476頁／部件。名額與嚴格當期缺格未提升。詳見[第十八批原件紀錄](resume/eighteenth/README.md)、[未完成清單](resume/eighteenth/unfinished-source-list.csv)、[驗證證據](resume/eighteenth/validation.json)。以下保留歷史批次紀錄。
