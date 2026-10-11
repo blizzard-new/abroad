@@ -472,6 +472,88 @@
     ]
   },
   {
+    "name": "growth-before-cold-memory-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "growth-before-warm-memory-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "growth-contracts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "growth-scoped-tku-targeted",
+    "result": "failed",
+    "exit_code": 4,
+    "start_guard": {
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+      "status": "M src/exchange_info/api.py\n M src/exchange_info/tku_assets.py\n M src/exchange_info/tku_census.py\n M src/exchange_info/tku_eligibility_routes.py\n?? tests/test_tku_scoped_audit.py"
+    },
+    "end_guard": {
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+      "status": "M src/exchange_info/api.py\n M src/exchange_info/tku_assets.py\n M src/exchange_info/tku_census.py\n M src/exchange_info/tku_eligibility_routes.py\n?? tests/test_tku_scoped_audit.py"
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "growth-scoped-tku-targeted-r2",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+      "status": "M src/exchange_info/api.py\n M src/exchange_info/tku_assets.py\n M src/exchange_info/tku_census.py\n M src/exchange_info/tku_eligibility_routes.py\n?? tests/test_tku_scoped_audit.py"
+    },
+    "end_guard": {
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+      "status": "M src/exchange_info/api.py\n M src/exchange_info/tku_assets.py\n M src/exchange_info/tku_census.py\n M src/exchange_info/tku_eligibility_routes.py\n?? tests/test_tku_scoped_audit.py"
+    },
+    "pytest_summary": [
+      "44 passed in 20.40s"
+    ]
+  },
+  {
     "name": "integrated-browser",
     "result": "passed",
     "exit_code": 0,
@@ -952,6 +1034,54 @@
     ]
   },
   {
+    "name": "ncu-fourth-fixed-input-audit",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ncu-fourth-fixed-input-audit-r2",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ncu-fourth-live-pdf-hashes",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
     "name": "ncu-streaming-and-counts",
     "result": "passed",
     "exit_code": 0,
@@ -997,6 +1127,172 @@
     "end_guard": {
       "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
       "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ntu3-browser",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": [
+      "91 passed in 1059.26s (0:17:39)"
+    ]
+  },
+  {
+    "name": "ntu3-cold-memory-command",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ntu3-contracts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ntu3-delivery",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ntu3-full-unit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": [
+      "2293 passed, 12 skipped in 813.60s (0:13:33)"
+    ]
+  },
+  {
+    "name": "ntu3-isolated-postgres-rpc",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": [
+      "2 passed in 6.15s"
+    ]
+  },
+  {
+    "name": "ntu3-live-source-fetch",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ntu3-ncu-payload-parity",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ntu3-warm-memory-command",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ntu3-wheel-build",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
       "status": ""
     },
     "pytest_summary": []
@@ -1231,6 +1527,38 @@
     "end_guard": {
       "sha": "eaf4e1b975c80b6adad2d446a8610277bdba8bf9",
       "tree": "729ee4eb8326cff06c8f94fbc29f792d1defcc15",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "tku-second-fixed-input-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "tku-second-license-consistency",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8e65c47d1d42bd0d065ff53c8d6572d0be994bf2",
+      "tree": "d3dbe221995e77548efdc4d5ba99e2442d496884",
       "status": ""
     },
     "pytest_summary": []

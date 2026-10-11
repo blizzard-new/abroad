@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_ncu_fourth_git.py", line 41, in <module>
+    assert all(r['quota'] is None and r['availability_status'] == 'agreement_only' for r in partners)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/recovery-tools-20261011/audit_ncu_fourth_git.py", line 41, in <genexpr>
+    assert all(r['quota'] is None and r['availability_status'] == 'agreement_only' for r in partners)
+               ~^^^^^^^^^
+KeyError: 'quota'

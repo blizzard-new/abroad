@@ -1,0 +1,28 @@
+{
+  "retired_at": "2026-10-11T13:05:48.291313+00:00",
+  "reason": "Only owned obsolete replay source trees removed after complete measurements and manifest recheck. Git commits, manifests, raw logs and diagnostic Python retained.",
+  "cleanup_retry": "Initial rmtree refused a tests symlink after both source trees were verified and removed. Retry unlinked only that symlink; target untouched.",
+  "snapshots": [
+    {
+      "snapshot": "recovery-baseline-985224fd",
+      "source_sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+      "files_verified_before_retirement": 2788,
+      "manifest_retained": "/workspace/recovery-baseline-985224fd/source-manifest.json",
+      "removed_only": [
+        "src",
+        "tests"
+      ]
+    },
+    {
+      "snapshot": "baseline-third-pass-23365f9",
+      "source_sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+      "files_verified_before_retirement": 5799,
+      "manifest_retained": "/workspace/baseline-third-pass-23365f9/source-manifest.json",
+      "removed_only": [
+        "src",
+        "tests"
+      ]
+    }
+  ],
+  "probe_data_files": 4334
+}

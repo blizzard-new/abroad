@@ -1,0 +1,556 @@
+Auto-merging src/exchange_info/tku_assets.py
+Merge made by the 'ort' strategy.
+ .../browser-asset-evidence-manifest.json           |       8 +-
+ .../licensed-campus-detail-1280.json               |    7509 +-
+ .../licensed-campus-detail-390.json                |    7509 +-
+ .../milestone1-reuse-browser.xml                   |       1 +
+ .../milestone1-reuse-unit.xml                      |       1 +
+ .../milestone2-browser.xml                         |       1 +
+ .../milestone2-pack-only-validation.json           |      12 +
+ .../milestone2-shared.xml                          |       1 +
+ .../milestone2-source-scope.xml                    |       1 +
+ .../milestone2-unit.xml                            |       1 +
+ docs/tku-continuation-milestone2-20261011.json     |     141 +
+ docs/tku-continuation-milestone2-20261011.md       |     100 +
+ docs/tku-full-census-20261011.md                   |       2 +
+ docs/tku-reuse-milestone1-20261011.json            |      65 +
+ docs/tku-reuse-milestone1-20261011.md              |      13 +
+ scripts/audit_tku_full_census.py                   |      21 +-
+ scripts/build_tku_campus_assets.py                 |      18 +
+ scripts/build_tku_census_audit.py                  |      21 +
+ scripts/build_tku_continuation_milestone.py        |      44 +
+ scripts/build_tku_curated_references.py            |      61 +-
+ scripts/build_tku_official_geography_review.py     |      51 +
+ scripts/build_tku_public_references.py             |      13 +-
+ scripts/build_tku_reused_asset_review.py           |      99 +
+ scripts/capture_tku_alternative_photos.py          |      52 +
+ scripts/capture_tku_asset_aliases.py               |      25 +
+ scripts/capture_tku_asset_batch.py                 |      87 +
+ scripts/capture_tku_campus_alternatives.py         |      32 +
+ scripts/capture_tku_campus_categories.py           |      23 +
+ scripts/capture_tku_census_hosts.py                |      51 +-
+ scripts/capture_tku_host_alternatives.py           |      34 +
+ scripts/capture_tku_host_retries.py                |      44 +
+ scripts/capture_tku_named_wikipedia.py             |      28 +
+ scripts/capture_tku_official_maps.py               |      54 +
+ scripts/capture_tku_photo_coordinates.py           |      14 +
+ scripts/capture_tku_quoted_campus_gaps.py          |      18 +
+ scripts/capture_tku_reviewed_photo_candidates.py   |      71 +
+ scripts/fetch_tku_asset_entities.py                |      42 +
+ scripts/pack_tku_census_evidence.py                |      25 +-
+ scripts/promote_tku_meiji_form_retries.py          |      41 +
+ scripts/review_tku_wikidata_candidates.py          |      69 +
+ .../tku/asset_batch_sources/.gitignore             |       3 +
+ .../tku/asset_source_retries/.gitignore            |       5 +
+ .../commons-probe-after-cooldown.json              |      10 +
+ .../home-116-news-recheck.json                     |       8 +
+ .../home-custom-news-oct8-recheck.json             |       7 +
+ .../tku/brandon_named_coordinate_alternative.json  |      36 +
+ .../official_data/tku/campus_asset_manifest.json   |   10774 +-
+ .../tku/campus_location_manifest.json              |    9563 +
+ .../official_data/tku/capture_pack_manifest.json   |    5241 +
+ .../capture_packs/tku-public-captures-005.zip.000  |     Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-005.zip.001  |     Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-005.zip.002  |     Bin 0 -> 4943153 bytes
+ .../capture_packs/tku-public-captures-006.zip.000  |     Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-006.zip.001  |     Bin 0 -> 7973933 bytes
+ .../official_data/tku/commons_asset_batches.json   |  102224 ++
+ .../tku/commons_photo_coordinate_candidates.json   |     156 +
+ .../tku/continuation_gap_closure.json              |   80720 ++
+ .../official_data/tku/curated_partner_facts.json   |     587 +-
+ .../official_data/tku/destination_profiles.jsonl   |     506 +-
+ .../official_data/tku/full_census_acceptance.json  |   12555 +-
+ .../official_data/tku/full_census_audit.json       |   53069 +-
+ .../tku/host_census_capture_index.json             |    3376 +-
+ .../tku/host_source_alternative_checks.json        |     722 +
+ .../tku/host_source_retry_checks.json              |    3205 +
+ .../tku/meiji_2027_attachment_checks_retry1.json   |     185 +
+ .../official_data/tku/new_photo_candidates.json    |    6708 +
+ .../official_data/tku/new_photo_visual_review.json |    1298 +
+ .../tku/new_photo_visual_review_history.json       |    1723 +
+ .../tku/official_geography_checks.json             |     956 +
+ .../tku/official_geography_review.json             |     482 +
+ .../official_data/tku/partner_enrichment.jsonl     |     242 +-
+ .../official_data/tku/reused_asset_candidates.json |   12033 +
+ .../official_data/tku/reused_asset_review.json     |   14950 +
+ .../official_data/tku/wikidata_asset_batches.json  |   20435 +
+ .../tku/wikidata_asset_countries.json              |    3437 +
+ .../official_data/tku/wikidata_asset_entities.json | 1049697 +++++++++++++++++
+ .../official_data/tku/wikidata_asset_review.json   |   14496 +
+ .../tku/wikipedia_named_institutions.json          |     360 +
+ .../assets/tku-campuses/tku-sister-10-batch.jpg    |     Bin 0 -> 256195 bytes
+ .../assets/tku-campuses/tku-sister-100-batch.jpg   |     Bin 0 -> 474400 bytes
+ .../assets/tku-campuses/tku-sister-103-batch.jpg   |     Bin 0 -> 259696 bytes
+ .../assets/tku-campuses/tku-sister-105-batch.jpg   |     Bin 0 -> 275069 bytes
+ .../assets/tku-campuses/tku-sister-107-batch.jpg   |     Bin 0 -> 240492 bytes
+ .../assets/tku-campuses/tku-sister-108-batch.png   |     Bin 0 -> 1293744 bytes
+ .../assets/tku-campuses/tku-sister-11-batch.jpg    |     Bin 0 -> 509039 bytes
+ .../assets/tku-campuses/tku-sister-110-batch.jpg   |     Bin 0 -> 336003 bytes
+ .../assets/tku-campuses/tku-sister-117-batch.jpg   |     Bin 0 -> 326619 bytes
+ .../assets/tku-campuses/tku-sister-118-batch.jpg   |     Bin 0 -> 344056 bytes
+ .../assets/tku-campuses/tku-sister-119-batch.jpg   |     Bin 0 -> 290182 bytes
+ .../assets/tku-campuses/tku-sister-12-batch.jpg    |     Bin 0 -> 339966 bytes
+ .../tku-campuses/tku-sister-123-alternative.jpg    |     Bin 0 -> 91042 bytes
+ .../tku-campuses/tku-sister-127-alternative.jpg    |     Bin 0 -> 377155 bytes
+ .../assets/tku-campuses/tku-sister-130-batch.jpg   |     Bin 0 -> 153890 bytes
+ .../tku-campuses/tku-sister-133-alternative.jpg    |     Bin 0 -> 425703 bytes
+ .../tku-campuses/tku-sister-135-alternative.jpg    |     Bin 0 -> 334344 bytes
+ .../assets/tku-campuses/tku-sister-140-batch.jpg   |     Bin 0 -> 143554 bytes
+ .../assets/tku-campuses/tku-sister-141-batch.jpg   |     Bin 0 -> 373983 bytes
+ .../assets/tku-campuses/tku-sister-146-batch.jpg   |     Bin 0 -> 455317 bytes
+ .../assets/tku-campuses/tku-sister-147-batch.jpg   |     Bin 0 -> 233372 bytes
+ .../assets/tku-campuses/tku-sister-15-batch.jpg    |     Bin 0 -> 471602 bytes
+ .../assets/tku-campuses/tku-sister-151-batch.jpg   |     Bin 0 -> 198673 bytes
+ .../tku-campuses/tku-sister-152-alternative.jpg    |     Bin 0 -> 330547 bytes
+ .../assets/tku-campuses/tku-sister-154-batch.jpg   |     Bin 0 -> 265355 bytes
+ .../assets/tku-campuses/tku-sister-161-batch.jpg   |     Bin 0 -> 326994 bytes
+ .../assets/tku-campuses/tku-sister-167-batch.jpg   |     Bin 0 -> 320925 bytes
+ .../assets/tku-campuses/tku-sister-168-batch.jpg   |     Bin 0 -> 184851 bytes
+ .../assets/tku-campuses/tku-sister-169-batch.jpg   |     Bin 0 -> 291586 bytes
+ .../tku-sister-17-alternative-b5dd1804.jpg         |     Bin 0 -> 356745 bytes
+ .../tku-campuses/tku-sister-171-alternative.jpg    |     Bin 0 -> 407258 bytes
+ .../tku-campuses/tku-sister-173-alternative.jpg    |     Bin 0 -> 304656 bytes
+ .../assets/tku-campuses/tku-sister-174-batch.jpg   |     Bin 0 -> 260554 bytes
+ .../assets/tku-campuses/tku-sister-175-batch.jpg   |     Bin 0 -> 256573 bytes
+ .../assets/tku-campuses/tku-sister-176-batch.jpg   |     Bin 0 -> 219600 bytes
+ .../assets/tku-campuses/tku-sister-177-batch.jpg   |     Bin 0 -> 190547 bytes
+ .../assets/tku-campuses/tku-sister-183-batch.jpg   |     Bin 0 -> 97471 bytes
+ .../assets/tku-campuses/tku-sister-184-batch.jpg   |     Bin 0 -> 251933 bytes
+ .../assets/tku-campuses/tku-sister-185-batch.jpg   |     Bin 0 -> 782540 bytes
+ .../assets/tku-campuses/tku-sister-186-batch.jpg   |     Bin 0 -> 376357 bytes
+ .../tku-campuses/tku-sister-187-alternative.jpg    |     Bin 0 -> 426063 bytes
+ .../assets/tku-campuses/tku-sister-188-batch.jpg   |     Bin 0 -> 265350 bytes
+ .../assets/tku-campuses/tku-sister-190-batch.jpg   |     Bin 0 -> 162682 bytes
+ .../assets/tku-campuses/tku-sister-191-batch.jpg   |     Bin 0 -> 261106 bytes
+ .../assets/tku-campuses/tku-sister-192-batch.jpg   |     Bin 0 -> 170420 bytes
+ .../assets/tku-campuses/tku-sister-193-batch.jpg   |     Bin 0 -> 145086 bytes
+ .../assets/tku-campuses/tku-sister-194-batch.jpg   |     Bin 0 -> 276175 bytes
+ .../assets/tku-campuses/tku-sister-195-batch.jpg   |     Bin 0 -> 216484 bytes
+ .../assets/tku-campuses/tku-sister-197-batch.jpg   |     Bin 0 -> 53558 bytes
+ .../assets/tku-campuses/tku-sister-198-batch.jpg   |     Bin 0 -> 583413 bytes
+ .../assets/tku-campuses/tku-sister-199-batch.jpg   |     Bin 0 -> 180546 bytes
+ .../assets/tku-campuses/tku-sister-20-batch.jpg    |     Bin 0 -> 411042 bytes
+ .../assets/tku-campuses/tku-sister-200-batch.jpg   |     Bin 0 -> 125765 bytes
+ .../assets/tku-campuses/tku-sister-201-batch.jpg   |     Bin 0 -> 438511 bytes
+ .../assets/tku-campuses/tku-sister-202-batch.jpg   |     Bin 0 -> 296949 bytes
+ .../tku-campuses/tku-sister-203-alternative.jpg    |     Bin 0 -> 51127 bytes
+ .../tku-campuses/tku-sister-207-alternative.jpg    |     Bin 0 -> 169159 bytes
+ .../assets/tku-campuses/tku-sister-209-batch.jpg   |     Bin 0 -> 192094 bytes
+ .../assets/tku-campuses/tku-sister-21-batch.jpg    |     Bin 0 -> 364473 bytes
+ .../assets/tku-campuses/tku-sister-210-batch.jpg   |     Bin 0 -> 300601 bytes
+ .../assets/tku-campuses/tku-sister-211-batch.jpg   |     Bin 0 -> 435180 bytes
+ .../tku-campuses/tku-sister-212-alternative.jpg    |     Bin 0 -> 264918 bytes
+ .../assets/tku-campuses/tku-sister-213-batch.jpg   |     Bin 0 -> 332033 bytes
+ .../assets/tku-campuses/tku-sister-214-batch.jpg   |     Bin 0 -> 72500 bytes
+ .../tku-campuses/tku-sister-215-alternative.jpg    |     Bin 0 -> 195389 bytes
+ .../tku-sister-216-alternative-74d54b3d.jpg        |     Bin 0 -> 309686 bytes
+ .../tku-campuses/tku-sister-217-alternative.jpg    |     Bin 0 -> 234784 bytes
+ .../assets/tku-campuses/tku-sister-218-batch.jpg   |     Bin 0 -> 533246 bytes
+ .../tku-sister-219-alternative-203e3833.jpg        |     Bin 0 -> 179191 bytes
+ .../tku-campuses/tku-sister-219-alternative.jpg    |     Bin 0 -> 337871 bytes
+ .../assets/tku-campuses/tku-sister-22-batch.jpg    |     Bin 0 -> 224539 bytes
+ .../assets/tku-campuses/tku-sister-221-batch.jpg   |     Bin 0 -> 288066 bytes
+ .../assets/tku-campuses/tku-sister-223-batch.jpg   |     Bin 0 -> 274783 bytes
+ .../assets/tku-campuses/tku-sister-224-batch.jpg   |     Bin 0 -> 180114 bytes
+ .../assets/tku-campuses/tku-sister-225-batch.jpg   |     Bin 0 -> 66141 bytes
+ .../assets/tku-campuses/tku-sister-227-batch.jpg   |     Bin 0 -> 409226 bytes
+ .../assets/tku-campuses/tku-sister-228-batch.jpg   |     Bin 0 -> 305149 bytes
+ .../assets/tku-campuses/tku-sister-23-batch.jpg    |     Bin 0 -> 174765 bytes
+ .../tku-sister-232-alternative-f0b19f38.jpg        |     Bin 0 -> 380012 bytes
+ .../assets/tku-campuses/tku-sister-236-batch.jpg   |     Bin 0 -> 631612 bytes
+ .../assets/tku-campuses/tku-sister-238-batch.jpg   |     Bin 0 -> 268161 bytes
+ .../assets/tku-campuses/tku-sister-239-batch.jpg   |     Bin 0 -> 428387 bytes
+ .../tku-campuses/tku-sister-24-alternative.jpg     |     Bin 0 -> 118344 bytes
+ .../tku-campuses/tku-sister-240-alternative.jpg    |     Bin 0 -> 431106 bytes
+ .../assets/tku-campuses/tku-sister-241-batch.jpg   |     Bin 0 -> 407557 bytes
+ .../assets/tku-campuses/tku-sister-243-batch.jpg   |     Bin 0 -> 392357 bytes
+ .../tku-campuses/tku-sister-244-alternative.jpg    |     Bin 0 -> 158270 bytes
+ .../assets/tku-campuses/tku-sister-245-batch.jpg   |     Bin 0 -> 569584 bytes
+ .../assets/tku-campuses/tku-sister-246-batch.jpg   |     Bin 0 -> 405948 bytes
+ .../tku-campuses/tku-sister-248-alternative.jpg    |     Bin 0 -> 187512 bytes
+ .../assets/tku-campuses/tku-sister-249-batch.jpg   |     Bin 0 -> 226349 bytes
+ .../assets/tku-campuses/tku-sister-25-batch.jpg    |     Bin 0 -> 360820 bytes
+ .../assets/tku-campuses/tku-sister-251-batch.jpg   |     Bin 0 -> 130965 bytes
+ .../assets/tku-campuses/tku-sister-252-batch.jpg   |     Bin 0 -> 339135 bytes
+ .../assets/tku-campuses/tku-sister-258-batch.jpg   |     Bin 0 -> 380501 bytes
+ .../assets/tku-campuses/tku-sister-26-batch.jpg    |     Bin 0 -> 58394 bytes
+ .../assets/tku-campuses/tku-sister-260-batch.jpg   |     Bin 0 -> 409751 bytes
+ .../assets/tku-campuses/tku-sister-261-batch.jpg   |     Bin 0 -> 443679 bytes
+ .../assets/tku-campuses/tku-sister-263-batch.jpg   |     Bin 0 -> 603376 bytes
+ .../tku-campuses/tku-sister-264-alternative.jpg    |     Bin 0 -> 182836 bytes
+ .../assets/tku-campuses/tku-sister-266-batch.jpg   |     Bin 0 -> 96145 bytes
+ .../assets/tku-campuses/tku-sister-267-batch.jpg   |     Bin 0 -> 274669 bytes
+ .../tku-campuses/tku-sister-268-alternative.jpg    |     Bin 0 -> 281106 bytes
+ .../assets/tku-campuses/tku-sister-27-batch.jpg    |     Bin 0 -> 406002 bytes
+ .../assets/tku-campuses/tku-sister-270-batch.png   |     Bin 0 -> 1474216 bytes
+ .../assets/tku-campuses/tku-sister-272-batch.jpg   |     Bin 0 -> 295158 bytes
+ .../assets/tku-campuses/tku-sister-276-batch.jpg   |     Bin 0 -> 559929 bytes
+ .../assets/tku-campuses/tku-sister-277-batch.jpg   |     Bin 0 -> 166377 bytes
+ .../assets/tku-campuses/tku-sister-278-batch.jpg   |     Bin 0 -> 217497 bytes
+ .../tku-campuses/tku-sister-279-alternative.jpg    |     Bin 0 -> 472401 bytes
+ .../assets/tku-campuses/tku-sister-28-batch.jpg    |     Bin 0 -> 554359 bytes
+ .../assets/tku-campuses/tku-sister-280-batch.jpg   |     Bin 0 -> 334718 bytes
+ .../assets/tku-campuses/tku-sister-281-batch.jpg   |     Bin 0 -> 285463 bytes
+ .../assets/tku-campuses/tku-sister-283-batch.jpg   |     Bin 0 -> 261210 bytes
+ .../assets/tku-campuses/tku-sister-284-batch.jpg   |     Bin 0 -> 283935 bytes
+ .../assets/tku-campuses/tku-sister-285-batch.jpg   |     Bin 0 -> 314453 bytes
+ .../assets/tku-campuses/tku-sister-290-batch.jpg   |     Bin 0 -> 347293 bytes
+ .../assets/tku-campuses/tku-sister-299-batch.jpg   |     Bin 0 -> 237950 bytes
+ .../assets/tku-campuses/tku-sister-3-batch.jpg     |     Bin 0 -> 441877 bytes
+ .../assets/tku-campuses/tku-sister-300-batch.jpg   |     Bin 0 -> 416318 bytes
+ .../tku-campuses/tku-sister-301-alternative.jpg    |     Bin 0 -> 117270 bytes
+ .../assets/tku-campuses/tku-sister-301-batch.jpg   |     Bin 0 -> 389672 bytes
+ .../assets/tku-campuses/tku-sister-303-batch.jpg   |     Bin 0 -> 284414 bytes
+ .../assets/tku-campuses/tku-sister-306-batch.jpg   |     Bin 0 -> 349341 bytes
+ .../assets/tku-campuses/tku-sister-307-batch.jpg   |     Bin 0 -> 614457 bytes
+ .../assets/tku-campuses/tku-sister-308-batch.jpg   |     Bin 0 -> 205910 bytes
+ .../assets/tku-campuses/tku-sister-31-batch.jpg    |     Bin 0 -> 90406 bytes
+ .../assets/tku-campuses/tku-sister-310-batch.jpg   |     Bin 0 -> 299846 bytes
+ .../assets/tku-campuses/tku-sister-311-batch.jpg   |     Bin 0 -> 380503 bytes
+ .../assets/tku-campuses/tku-sister-313-batch.jpg   |     Bin 0 -> 203404 bytes
+ .../tku-campuses/tku-sister-314-alternative.jpg    |     Bin 0 -> 214708 bytes
+ .../tku-campuses/tku-sister-315-alternative.jpg    |     Bin 0 -> 205841 bytes
+ .../assets/tku-campuses/tku-sister-319-batch.jpg   |     Bin 0 -> 147405 bytes
+ .../assets/tku-campuses/tku-sister-32-batch.jpg    |     Bin 0 -> 359961 bytes
+ .../assets/tku-campuses/tku-sister-321-batch.jpg   |     Bin 0 -> 256573 bytes
+ .../assets/tku-campuses/tku-sister-322-batch.png   |     Bin 0 -> 11756 bytes
+ .../assets/tku-campuses/tku-sister-323-batch.jpg   |     Bin 0 -> 202591 bytes
+ .../assets/tku-campuses/tku-sister-324-batch.jpg   |     Bin 0 -> 249478 bytes
+ .../assets/tku-campuses/tku-sister-326-batch.jpg   |     Bin 0 -> 365120 bytes
+ .../assets/tku-campuses/tku-sister-330-batch.jpg   |     Bin 0 -> 646826 bytes
+ .../tku-campuses/tku-sister-333-alternative.jpg    |     Bin 0 -> 316388 bytes
+ .../tku-sister-334-alternative-af085f10.jpg        |     Bin 0 -> 81227 bytes
+ .../tku-campuses/tku-sister-335-alternative.jpg    |     Bin 0 -> 194857 bytes
+ .../assets/tku-campuses/tku-sister-37-batch.jpg    |     Bin 0 -> 27879 bytes
+ .../assets/tku-campuses/tku-sister-38-batch.jpg    |     Bin 0 -> 362741 bytes
+ .../assets/tku-campuses/tku-sister-39-batch.jpg    |     Bin 0 -> 450639 bytes
+ .../assets/tku-campuses/tku-sister-4-batch.jpg     |     Bin 0 -> 111796 bytes
+ .../assets/tku-campuses/tku-sister-40-batch.jpg    |     Bin 0 -> 192359 bytes
+ .../assets/tku-campuses/tku-sister-41-batch.jpg    |     Bin 0 -> 137676 bytes
+ .../assets/tku-campuses/tku-sister-42-batch.jpg    |     Bin 0 -> 98001 bytes
+ .../assets/tku-campuses/tku-sister-43-batch.jpg    |     Bin 0 -> 353333 bytes
+ .../tku-campuses/tku-sister-45-alternative.jpg     |     Bin 0 -> 137902 bytes
+ .../assets/tku-campuses/tku-sister-47-batch.jpg    |     Bin 0 -> 138349 bytes
+ .../tku-sister-49-alternative-e533df6b.jpg         |     Bin 0 -> 333073 bytes
+ .../assets/tku-campuses/tku-sister-50-batch.jpg    |     Bin 0 -> 368895 bytes
+ .../assets/tku-campuses/tku-sister-52-batch.jpg    |     Bin 0 -> 254098 bytes
+ .../assets/tku-campuses/tku-sister-53-batch.jpg    |     Bin 0 -> 333335 bytes
+ .../tku-campuses/tku-sister-54-alternative.jpg     |     Bin 0 -> 82343 bytes
+ .../assets/tku-campuses/tku-sister-55-batch.jpg    |     Bin 0 -> 261796 bytes
+ .../assets/tku-campuses/tku-sister-56-batch.jpg    |     Bin 0 -> 415406 bytes
+ .../assets/tku-campuses/tku-sister-57-batch.jpg    |     Bin 0 -> 343006 bytes
+ .../assets/tku-campuses/tku-sister-59-batch.jpg    |     Bin 0 -> 1017439 bytes
+ .../assets/tku-campuses/tku-sister-6-batch.jpg     |     Bin 0 -> 276784 bytes
+ .../assets/tku-campuses/tku-sister-60-batch.jpg    |     Bin 0 -> 289661 bytes
+ .../tku-campuses/tku-sister-61-alternative.jpg     |     Bin 0 -> 420961 bytes
+ .../assets/tku-campuses/tku-sister-62-batch.jpg    |     Bin 0 -> 250379 bytes
+ .../assets/tku-campuses/tku-sister-63-batch.jpg    |     Bin 0 -> 72513 bytes
+ .../assets/tku-campuses/tku-sister-65-batch.jpg    |     Bin 0 -> 974204 bytes
+ .../assets/tku-campuses/tku-sister-66-batch.jpg    |     Bin 0 -> 391498 bytes
+ .../assets/tku-campuses/tku-sister-67-batch.jpg    |     Bin 0 -> 431820 bytes
+ .../assets/tku-campuses/tku-sister-68-batch.jpg    |     Bin 0 -> 112801 bytes
+ .../tku-sister-69-alternative-802b3cb1.jpg         |     Bin 0 -> 637538 bytes
+ .../tku-campuses/tku-sister-69-alternative.jpg     |     Bin 0 -> 485045 bytes
+ .../assets/tku-campuses/tku-sister-7-batch.jpg     |     Bin 0 -> 1000392 bytes
+ .../assets/tku-campuses/tku-sister-70-batch.jpg    |     Bin 0 -> 142472 bytes
+ .../tku-campuses/tku-sister-71-alternative.jpg     |     Bin 0 -> 367245 bytes
+ .../assets/tku-campuses/tku-sister-72-batch.jpg    |     Bin 0 -> 404745 bytes
+ .../assets/tku-campuses/tku-sister-73-batch.jpg    |     Bin 0 -> 409131 bytes
+ .../tku-campuses/tku-sister-74-alternative.jpg     |     Bin 0 -> 240384 bytes
+ .../assets/tku-campuses/tku-sister-75-batch.jpg    |     Bin 0 -> 449590 bytes
+ .../assets/tku-campuses/tku-sister-76-batch.jpg    |     Bin 0 -> 329278 bytes
+ .../assets/tku-campuses/tku-sister-77-batch.jpg    |     Bin 0 -> 517524 bytes
+ .../assets/tku-campuses/tku-sister-78-batch.png    |     Bin 0 -> 581657 bytes
+ .../assets/tku-campuses/tku-sister-79-batch.jpg    |     Bin 0 -> 421009 bytes
+ .../tku-campuses/tku-sister-8-alternative.jpg      |     Bin 0 -> 372019 bytes
+ .../assets/tku-campuses/tku-sister-80-batch.jpg    |     Bin 0 -> 98449 bytes
+ .../assets/tku-campuses/tku-sister-81-batch.jpg    |     Bin 0 -> 441599 bytes
+ .../assets/tku-campuses/tku-sister-82-batch.jpg    |     Bin 0 -> 47802 bytes
+ .../assets/tku-campuses/tku-sister-83-batch.jpg    |     Bin 0 -> 483859 bytes
+ .../assets/tku-campuses/tku-sister-84-batch.jpg    |     Bin 0 -> 192113 bytes
+ .../assets/tku-campuses/tku-sister-85-batch.jpg    |     Bin 0 -> 215786 bytes
+ .../tku-campuses/tku-sister-86-alternative.jpg     |     Bin 0 -> 195478 bytes
+ .../tku-campuses/tku-sister-87-alternative.jpg     |     Bin 0 -> 361157 bytes
+ .../assets/tku-campuses/tku-sister-88-batch.png    |     Bin 0 -> 2392147 bytes
+ .../assets/tku-campuses/tku-sister-89-batch.jpg    |     Bin 0 -> 381342 bytes
+ .../assets/tku-campuses/tku-sister-9-batch.jpg     |     Bin 0 -> 79512 bytes
+ .../assets/tku-campuses/tku-sister-90-batch.jpg    |     Bin 0 -> 525037 bytes
+ .../assets/tku-campuses/tku-sister-92-batch.jpg    |     Bin 0 -> 520368 bytes
+ .../assets/tku-campuses/tku-sister-93-batch.jpg    |     Bin 0 -> 460003 bytes
+ .../assets/tku-campuses/tku-sister-94-batch.jpg    |     Bin 0 -> 483598 bytes
+ .../assets/tku-campuses/tku-sister-95-batch.jpg    |     Bin 0 -> 466055 bytes
+ .../assets/tku-campuses/tku-sister-96-batch.jpg    |     Bin 0 -> 445715 bytes
+ .../assets/tku-campuses/tku-sister-97-batch.jpg    |     Bin 0 -> 336276 bytes
+ .../assets/tku-campuses/tku-sister-98-batch.jpg    |     Bin 0 -> 261630 bytes
+ .../assets/tku-campuses/tku-sister-99-batch.jpg    |     Bin 0 -> 113705 bytes
+ src/exchange_info/static/tku-campus-assets.js      |       2 +-
+ src/exchange_info/tku_assets.py                    |       8 +-
+ tests/e2e/test_tku_census_assets.py                |      16 +-
+ tests/test_tku_bounded_sources.py                  |      83 +
+ tests/test_tku_continuation.py                     |       2 +-
+ tests/test_tku_full_census.py                      |      42 +-
+ 289 files changed, 1411734 insertions(+), 14591 deletions(-)
+ create mode 100644 docs/tku-census-evidence-20261011/milestone1-reuse-browser.xml
+ create mode 100644 docs/tku-census-evidence-20261011/milestone1-reuse-unit.xml
+ create mode 100644 docs/tku-census-evidence-20261011/milestone2-browser.xml
+ create mode 100644 docs/tku-census-evidence-20261011/milestone2-pack-only-validation.json
+ create mode 100644 docs/tku-census-evidence-20261011/milestone2-shared.xml
+ create mode 100644 docs/tku-census-evidence-20261011/milestone2-source-scope.xml
+ create mode 100644 docs/tku-census-evidence-20261011/milestone2-unit.xml
+ create mode 100644 docs/tku-continuation-milestone2-20261011.json
+ create mode 100644 docs/tku-continuation-milestone2-20261011.md
+ create mode 100644 docs/tku-reuse-milestone1-20261011.json
+ create mode 100644 docs/tku-reuse-milestone1-20261011.md
+ create mode 100644 scripts/build_tku_continuation_milestone.py
+ create mode 100644 scripts/build_tku_official_geography_review.py
+ create mode 100644 scripts/build_tku_reused_asset_review.py
+ create mode 100644 scripts/capture_tku_alternative_photos.py
+ create mode 100644 scripts/capture_tku_asset_aliases.py
+ create mode 100644 scripts/capture_tku_asset_batch.py
+ create mode 100644 scripts/capture_tku_campus_alternatives.py
+ create mode 100644 scripts/capture_tku_campus_categories.py
+ create mode 100644 scripts/capture_tku_host_alternatives.py
+ create mode 100644 scripts/capture_tku_host_retries.py
+ create mode 100644 scripts/capture_tku_named_wikipedia.py
+ create mode 100644 scripts/capture_tku_official_maps.py
+ create mode 100644 scripts/capture_tku_photo_coordinates.py
+ create mode 100644 scripts/capture_tku_quoted_campus_gaps.py
+ create mode 100644 scripts/capture_tku_reviewed_photo_candidates.py
+ create mode 100644 scripts/fetch_tku_asset_entities.py
+ create mode 100644 scripts/promote_tku_meiji_form_retries.py
+ create mode 100644 scripts/review_tku_wikidata_candidates.py
+ create mode 100644 src/exchange_info/official_data/tku/asset_batch_sources/.gitignore
+ create mode 100644 src/exchange_info/official_data/tku/asset_source_retries/.gitignore
+ create mode 100644 src/exchange_info/official_data/tku/asset_source_retries/commons-probe-after-cooldown.json
+ create mode 100644 src/exchange_info/official_data/tku/asset_source_retries/home-116-news-recheck.json
+ create mode 100644 src/exchange_info/official_data/tku/asset_source_retries/home-custom-news-oct8-recheck.json
+ create mode 100644 src/exchange_info/official_data/tku/brandon_named_coordinate_alternative.json
+ create mode 100644 src/exchange_info/official_data/tku/capture_packs/tku-public-captures-005.zip.000
+ create mode 100644 src/exchange_info/official_data/tku/capture_packs/tku-public-captures-005.zip.001
+ create mode 100644 src/exchange_info/official_data/tku/capture_packs/tku-public-captures-005.zip.002
+ create mode 100644 src/exchange_info/official_data/tku/capture_packs/tku-public-captures-006.zip.000
+ create mode 100644 src/exchange_info/official_data/tku/capture_packs/tku-public-captures-006.zip.001
+ create mode 100644 src/exchange_info/official_data/tku/commons_asset_batches.json
+ create mode 100644 src/exchange_info/official_data/tku/commons_photo_coordinate_candidates.json
+ create mode 100644 src/exchange_info/official_data/tku/continuation_gap_closure.json
+ create mode 100644 src/exchange_info/official_data/tku/host_source_alternative_checks.json
+ create mode 100644 src/exchange_info/official_data/tku/host_source_retry_checks.json
+ create mode 100644 src/exchange_info/official_data/tku/meiji_2027_attachment_checks_retry1.json
+ create mode 100644 src/exchange_info/official_data/tku/new_photo_candidates.json
+ create mode 100644 src/exchange_info/official_data/tku/new_photo_visual_review.json
+ create mode 100644 src/exchange_info/official_data/tku/new_photo_visual_review_history.json
+ create mode 100644 src/exchange_info/official_data/tku/official_geography_checks.json
+ create mode 100644 src/exchange_info/official_data/tku/official_geography_review.json
+ create mode 100644 src/exchange_info/official_data/tku/reused_asset_candidates.json
+ create mode 100644 src/exchange_info/official_data/tku/reused_asset_review.json
+ create mode 100644 src/exchange_info/official_data/tku/wikidata_asset_batches.json
+ create mode 100644 src/exchange_info/official_data/tku/wikidata_asset_countries.json
+ create mode 100644 src/exchange_info/official_data/tku/wikidata_asset_entities.json
+ create mode 100644 src/exchange_info/official_data/tku/wikidata_asset_review.json
+ create mode 100644 src/exchange_info/official_data/tku/wikipedia_named_institutions.json
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-10-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-100-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-103-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-105-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-107-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-108-batch.png
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-11-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-110-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-117-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-118-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-119-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-12-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-123-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-127-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-130-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-133-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-135-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-140-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-141-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-146-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-147-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-15-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-151-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-152-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-154-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-161-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-167-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-168-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-169-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-17-alternative-b5dd1804.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-171-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-173-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-174-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-175-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-176-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-177-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-183-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-184-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-185-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-186-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-187-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-188-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-190-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-191-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-192-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-193-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-194-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-195-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-197-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-198-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-199-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-20-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-200-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-201-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-202-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-203-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-207-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-209-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-21-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-210-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-211-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-212-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-213-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-214-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-215-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-216-alternative-74d54b3d.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-217-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-218-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-219-alternative-203e3833.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-219-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-22-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-221-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-223-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-224-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-225-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-227-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-228-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-23-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-232-alternative-f0b19f38.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-236-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-238-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-239-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-24-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-240-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-241-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-243-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-244-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-245-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-246-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-248-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-249-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-25-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-251-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-252-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-258-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-26-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-260-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-261-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-263-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-264-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-266-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-267-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-268-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-27-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-270-batch.png
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-272-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-276-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-277-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-278-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-279-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-28-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-280-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-281-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-283-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-284-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-285-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-290-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-299-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-3-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-300-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-301-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-301-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-303-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-306-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-307-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-308-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-31-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-310-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-311-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-313-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-314-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-315-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-319-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-32-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-321-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-322-batch.png
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-323-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-324-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-326-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-330-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-333-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-334-alternative-af085f10.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-335-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-37-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-38-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-39-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-4-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-40-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-41-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-42-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-43-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-45-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-47-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-49-alternative-e533df6b.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-50-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-52-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-53-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-54-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-55-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-56-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-57-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-59-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-6-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-60-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-61-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-62-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-63-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-65-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-66-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-67-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-68-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-69-alternative-802b3cb1.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-69-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-7-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-70-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-71-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-72-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-73-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-74-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-75-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-76-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-77-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-78-batch.png
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-79-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-8-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-80-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-81-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-82-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-83-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-84-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-85-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-86-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-87-alternative.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-88-batch.png
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-89-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-9-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-90-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-92-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-93-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-94-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-95-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-96-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-97-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-98-batch.jpg
+ create mode 100644 src/exchange_info/static/assets/tku-campuses/tku-sister-99-batch.jpg
+ create mode 100644 tests/test_tku_bounded_sources.py

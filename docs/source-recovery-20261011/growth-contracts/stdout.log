@@ -1,0 +1,150 @@
+RUN ['/workspace/.abroad-cloud-tools/python/bin/uv', 'lock', '--check']
+RUN ['/workspace/abroad-six-final/.venv/bin/python', '-m', 'compileall', '-q', 'src']
+RUN ['node', '--check', 'src/exchange_info/static/app.js']
+RUN ['node', '--check', 'src/exchange_info/static/partner-map.js']
+RUN ['node', '--check', 'src/exchange_info/static/content-review.js']
+RUN ['node', '--check', 'src/exchange_info/static/icon-motion.js']
+RUN ['node', '--check', 'src/exchange_info/static/tku-campus-assets.js']
+RUN ['/workspace/abroad-six-final/.venv/bin/python', 'scripts/export_openapi.py', '--check']
+OpenAPI contract is current: /workspace/abroad-globe-20261011/docs/api/openapi.json
+RUN ['/workspace/abroad-six-final/.venv/bin/python', 'scripts/validate_supabase_migrations.py']
+202607190001_ai_rag.sql: 25 statements, 1 SQL bodies, 0 PL/pgSQL units
+202607280002_application_content_governance.sql: 17 statements, 0 SQL bodies, 0 PL/pgSQL units
+20260728120722_accounts_workspaces.sql: 16 statements, 0 SQL bodies, 0 PL/pgSQL units
+20260728121446_notifications.sql: 11 statements, 0 SQL bodies, 0 PL/pgSQL units
+20260728130940_document_vault.sql: 25 statements, 0 SQL bodies, 1 PL/pgSQL units
+20260728213255_email_verification_challenges.sql: 6 statements, 0 SQL bodies, 0 PL/pgSQL units
+20260729100000_form_drafts.sql: 5 statements, 0 SQL bodies, 0 PL/pgSQL units
+20260729143531_dual_application_workflow_review.sql: 3 statements, 0 SQL bodies, 0 PL/pgSQL units
+20260807154026_application_workflow_revision_edit_history.sql: 2 statements, 0 SQL bodies, 0 PL/pgSQL units
+20260819090000_destination_profile_review_events.sql: 7 statements, 0 SQL bodies, 0 PL/pgSQL units
+20260819110000_destination_profile_promotion_events.sql: 6 statements, 0 SQL bodies, 0 PL/pgSQL units
+20260819130000_destination_profile_publication_rollbacks.sql: 8 statements, 0 SQL bodies, 0 PL/pgSQL units
+20260819150000_application_workflow_publication_rollbacks.sql: 6 statements, 0 SQL bodies, 1 PL/pgSQL units
+20260819170000_application_workflow_publication_integrity.sql: 3 statements, 0 SQL bodies, 1 PL/pgSQL units
+20260821190000_transient_auth_state.sql: 23 statements, 0 SQL bodies, 3 PL/pgSQL units
+20260823100000_atomic_auth_account_mutations.sql: 25 statements, 0 SQL bodies, 6 PL/pgSQL units
+20260823130000_atomic_workspace_and_suspension.sql: 44 statements, 0 SQL bodies, 9 PL/pgSQL units
+20260823160000_atomic_public_community.sql: 123 statements, 3 SQL bodies, 17 PL/pgSQL units
+20260824100000_atomic_private_community.sql: 60 statements, 6 SQL bodies, 3 PL/pgSQL units
+20260829100000_atomic_account_deletion.sql: 27 statements, 1 SQL bodies, 6 PL/pgSQL units
+20260830100000_application_workflow_issue_reports.sql: 29 statements, 0 SQL bodies, 4 PL/pgSQL units
+20260901100000_atomic_application_content_governance.sql: 6 statements, 0 SQL bodies, 2 PL/pgSQL units
+20260930100000_discussion_threads_reactions.sql: 29 statements, 0 SQL bodies, 7 PL/pgSQL units
+20261002120000_workspace_selection_and_planning.sql: 5 statements, 0 SQL bodies, 1 PL/pgSQL units
+20261003100000_open_school_boards.sql: 5 statements, 0 SQL bodies, 2 PL/pgSQL units
+20261003110000_analytics.sql: 29 statements, 0 SQL bodies, 2 PL/pgSQL units
+20261007100000_school_choice_replaces_student_card.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+20261008100000_user_feedback.sql: 7 statements, 0 SQL bodies, 0 PL/pgSQL units
+20261008110000_revoke_rls_auto_enable_api_access.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+20261008120000_fix_match_document_chunks_search_path.sql: 1 statements, 0 SQL bodies, 0 PL/pgSQL units
+20261008130000_ntu_school_board.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+20261009135343_ccu_ncu_school_board_compatibility.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+20261009153249_verified_email_school_community.sql: 2 statements, 0 SQL bodies, 2 PL/pgSQL units
+20261009153347_community_byline_aliases.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+20261009153438_atomic_governance_commands.sql: 4 statements, 0 SQL bodies, 2 PL/pgSQL units
+Validated 35 migrations: 564 statements, 11 SQL bodies, 74 PL/pgSQL units
+{
+  "checks": [
+    {
+      "command": [
+        "/workspace/.abroad-cloud-tools/python/bin/uv",
+        "lock",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/abroad-six-final/.venv/bin/python",
+        "-m",
+        "compileall",
+        "-q",
+        "src"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/partner-map.js"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/content-review.js"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/icon-motion.js"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/tku-campus-assets.js"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/abroad-six-final/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/abroad-six-final/.venv/bin/python",
+        "scripts/validate_supabase_migrations.py"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "workflow_parity": {
+    "cgu": {
+      "count": 154,
+      "byte_identical_to_original_f6ad1b8": true,
+      "file_sha256": "aba900557387d97d6928ec628542d3b5d3ffcddf436e4ee7b0a255de20d77750"
+    },
+    "ntpu": {
+      "count": 409,
+      "byte_identical_to_original_f6ad1b8": true,
+      "file_sha256": "34ec03a6cbc108ec9962d210eaf29fdf85ed83df0841b3647a5be11b5621aaa9"
+    },
+    "ntu": {
+      "count": 288,
+      "byte_identical_to_original_f6ad1b8": true,
+      "file_sha256": "cd1260230654a3d537e1a10f4fd03340adc04b7bcc8c25db13f262df5568ca1d"
+    }
+  },
+  "protected_files_unchanged": [
+    "supabase/migrations",
+    "uv.lock",
+    ".github/workflows",
+    "src/exchange_info/ntu_official_changes.py",
+    "src/exchange_info/static/icon-motion.js"
+  ],
+  "governance_identity_functions_unchanged": true
+}
+PACKAGE_SELECTION 3411 required new public source/asset files selected; dependency requirements unchanged
+PARENT_13_TEST_FUNCTIONS_UNCHANGED 13

@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_tku_scoped_audit.py",
+    "tests/test_tku_full_census.py",
+    "tests/test_tku_continuation.py",
+    "tests/test_tku_bounded_sources.py",
+    "tests/test_integration_source_boundaries.py",
+    "tests/test_memory_startup.py",
+    "-q",
+    "-rs"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T13:29:44.323705+00:00",
+  "start_guard": {
+    "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+    "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/tku_assets.py\n M src/exchange_info/tku_census.py\n M src/exchange_info/tku_eligibility_routes.py\n?? tests/test_tku_scoped_audit.py"
+  },
+  "timeout_seconds": 900,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {},
+  "exit_code": 4,
+  "finished_at": "2026-10-11T13:29:44.578380+00:00",
+  "end_guard": {
+    "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+    "tree": "310ca361e7fad669fd392e7729fe7ac1098ed217",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/tku_assets.py\n M src/exchange_info/tku_census.py\n M src/exchange_info/tku_eligibility_routes.py\n?? tests/test_tku_scoped_audit.py"
+  }
+}

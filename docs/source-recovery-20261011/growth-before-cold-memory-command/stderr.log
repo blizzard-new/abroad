@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/profile_growth_memory.py", line 222, in <module>
+    assert max(max(row['rss_bytes'],row['peak_rss_bytes']) for row in rows) < budget_mib*1024*1024, f'Completed workload exceeded {budget_mib:g} MiB acceptance budget'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Completed workload exceeded 460 MiB acceptance budget

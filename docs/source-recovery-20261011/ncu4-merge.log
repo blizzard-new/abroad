@@ -1,0 +1,85 @@
+Auto-merging tests/e2e/test_ncu_completion.py
+Auto-merging tests/test_ncu_integration.py
+Merge made by the 'ort' strategy.
+ docs/data/ncu-completion-20261011/README.md        |    56 +-
+ .../browser-pass4-first.txt.gz                     |   Bin 0 -> 6328 bytes
+ .../browser-pass4-stage-final.txt                  |     3 +
+ ...douglas-public-incoming-browser-capture.json.gz |   Bin 0 -> 43714 bytes
+ .../exchange-field-inventory.csv                   |    12 +-
+ .../exchange-field-inventory.json.gz               |   Bin 892033 -> 939008 bytes
+ .../data/ncu-completion-20261011/field-counts.json |    44 +-
+ .../fourth-pass-browser-reviewed-images.json       |    68 +
+ .../fourth-pass-check-commands.json                |    11 +
+ .../fourth-pass-public-browser-probes.json         |  1521 +++
+ .../home-fourth-last-recheck.json                  |    18 +
+ .../home-fourth-recheck.json                       |    18 +
+ ...33\347\276\205\351\207\214\351\201\224-390.png" |   Bin 0 -> 150284 bytes
+ ...6\345\210\251\346\241\221\351\202\243-1280.png" |   Bin 0 -> 400662 bytes
+ ...74\345\260\274\346\211\230\345\267\264-390.png" |   Bin 0 -> 146580 bytes
+ ...-\350\222\231\347\211\271\345\251\201-1280.png" |   Bin 0 -> 413309 bytes
+ ...e-\350\245\277\351\233\252\346\242\250-390.png" |   Bin 0 -> 149596 bytes
+ ...3\346\240\274\346\213\211\346\226\257-1280.png" |   Bin 0 -> 406083 bytes
+ ...33\347\276\205\351\207\214\351\201\224-390.png" |   Bin 0 -> 150740 bytes
+ ...6\345\210\251\346\241\221\351\202\243-1280.png" |   Bin 0 -> 409842 bytes
+ ...74\345\260\274\346\211\230\345\267\264-390.png" |   Bin 0 -> 171202 bytes
+ ...-\350\222\231\347\211\271\345\251\201-1280.png" |   Bin 0 -> 522429 bytes
+ ...w-\350\245\277\351\233\252\346\242\250-390.png" |   Bin 0 -> 163416 bytes
+ ...3\346\240\274\346\213\211\346\226\257-1280.png" |   Bin 0 -> 417920 bytes
+ .../successful-public-unread-candidates.json.gz    |   Bin 0 -> 35005 bytes
+ .../tests-pass4-memory-final.txt                   |     3 +
+ .../tests-pass4-ncu-shared-final.txt               |     8 +
+ .../tests-pass4-ncu-shared.txt                     |    82 +
+ .../ncu-completion-20261011/tests-pass4-new-r2.txt |    21 +
+ .../ncu-completion-20261011/tests-pass4-new.txt    |    17 +
+ .../tests-pass4-regression.txt                     |     4 +
+ .../unresolved-fields.json.gz                      |   Bin 1870498 -> 1970160 bytes
+ docs/data/ncu-completion-20261011/validation.json  |   128 +-
+ scripts/build_ncu_catalog.py                       |     2 +-
+ sources/ncu/2026-10-11/document-conditions.json    |   608 +
+ sources/ncu/2026-10-11/host-web-evidence.json.gz   |   Bin 2637954 -> 3062136 bytes
+ sources/ncu/2026-10-11/reviewed-host-records.json  |  2478 ++++
+ .../official_data/ncu/application_workflows.jsonl  |   428 +-
+ .../official_data/ncu/catalog-completeness.json    |    18 +-
+ .../official_data/ncu/destination_profiles.jsonl   |    12 +-
+ .../official_data/ncu/document-conditions.json     |   608 +
+ .../official_data/ncu/exchange_info.json           |     2 +-
+ .../official_data/ncu/field-audit.json             | 12344 +++++++++++++++----
+ .../official_data/ncu/field-coverage.csv           |    12 +-
+ .../official_data/ncu/import-provenance.json       |     8 +-
+ src/exchange_info/official_data/ncu/pages.jsonl    |  2511 ++--
+ .../official_data/ncu/partner_research.jsonl       |   428 +-
+ src/exchange_info/official_data/ncu/partners.jsonl |    12 +-
+ .../official_data/ncu/source-evidence.json.gz      |   Bin 8126433 -> 8553531 bytes
+ .../official_data/ncu/student_dashboard.json       |     6 +-
+ tests/e2e/test_ncu_completion.py                   |    71 +
+ tests/test_ncu_fourth_pass.py                      |   167 +
+ tests/test_ncu_integration.py                      |     4 +-
+ 53 files changed, 17284 insertions(+), 4449 deletions(-)
+ create mode 100644 docs/data/ncu-completion-20261011/browser-pass4-first.txt.gz
+ create mode 100644 docs/data/ncu-completion-20261011/browser-pass4-stage-final.txt
+ create mode 100644 docs/data/ncu-completion-20261011/douglas-public-incoming-browser-capture.json.gz
+ create mode 100644 docs/data/ncu-completion-20261011/fourth-pass-browser-reviewed-images.json
+ create mode 100644 docs/data/ncu-completion-20261011/fourth-pass-check-commands.json
+ create mode 100644 docs/data/ncu-completion-20261011/fourth-pass-public-browser-probes.json
+ create mode 100644 docs/data/ncu-completion-20261011/home-fourth-last-recheck.json
+ create mode 100644 docs/data/ncu-completion-20261011/home-fourth-recheck.json
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-life-\344\275\233\347\276\205\351\207\214\351\201\224-390.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-life-\345\214\227\344\272\236\345\210\251\346\241\221\351\202\243-1280.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-life-\346\233\274\345\260\274\346\211\230\345\267\264-390.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-life-\350\222\231\347\211\271\345\251\201-1280.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-life-\350\245\277\351\233\252\346\242\250-390.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-life-\351\201\223\346\240\274\346\213\211\346\226\257-1280.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-workflow-\344\275\233\347\276\205\351\207\214\351\201\224-390.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-workflow-\345\214\227\344\272\236\345\210\251\346\241\221\351\202\243-1280.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-workflow-\346\233\274\345\260\274\346\211\230\345\267\264-390.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-workflow-\350\222\231\347\211\271\345\251\201-1280.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-workflow-\350\245\277\351\233\252\346\242\250-390.png"
+ create mode 100644 "docs/data/ncu-completion-20261011/ncu-pass4-workflow-\351\201\223\346\240\274\346\213\211\346\226\257-1280.png"
+ create mode 100644 docs/data/ncu-completion-20261011/successful-public-unread-candidates.json.gz
+ create mode 100644 docs/data/ncu-completion-20261011/tests-pass4-memory-final.txt
+ create mode 100644 docs/data/ncu-completion-20261011/tests-pass4-ncu-shared-final.txt
+ create mode 100644 docs/data/ncu-completion-20261011/tests-pass4-ncu-shared.txt
+ create mode 100644 docs/data/ncu-completion-20261011/tests-pass4-new-r2.txt
+ create mode 100644 docs/data/ncu-completion-20261011/tests-pass4-new.txt
+ create mode 100644 docs/data/ncu-completion-20261011/tests-pass4-regression.txt
+ create mode 100644 tests/test_ncu_fourth_pass.py
