@@ -462,12 +462,15 @@ def test_xlsx_parser_preserves_country_merges_and_quota_unknown_states():
 def test_frontend_marks_closed_and_reference_choices_unavailable():
     script=(BUNDLE.parents[1]/"static"/"app.js").read_text(encoding="utf-8")
     function=script.split("function partnerAvailabilityMeta(item) {",1)[1].split("function renderPartnerAvailabilityNotice",1)[0]
-    javascript="function partnerAvailabilityMeta(item) {"+function+"""
+    tku_module=(BUNDLE.parents[1]/"static"/"tku-partner-details.js").read_text(encoding="utf-8")
+    javascript="const window={}; const activeHomeSchool=()=> '淡江大學';\n"+tku_module+"\nfunction partnerAvailabilityMeta(item) {"+function+"""
     for (const status of ['closed', 'reference_only', 'quota_unconfirmed']) {
       const result = partnerAvailabilityMeta({availability_status: status});
       if (!result.blocked || result.status !== status) throw new Error(status);
     }
     if (partnerAvailabilityMeta({availability_status: 'open'}).blocked) throw new Error('open');
+    const agreement = partnerAvailabilityMeta({availability_status: 'agreement_only'});
+    if (!agreement.blocked || !agreement.shortLabel.includes('未核實') || agreement.shortLabel.includes('未公告')) throw new Error('unverified is not unannounced');
     """
     subprocess.run(["node","-e",javascript],check=True,capture_output=True,timeout=10)
     deadline=script.split("function partnerDeadlineReference(item) {",1)[1].split("function partnerSummaryPoints",1)[0]

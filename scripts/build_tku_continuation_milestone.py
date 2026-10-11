@@ -13,6 +13,8 @@ def main():
     initial_triage=json.loads((B/'milestone3_unread_triage.json').read_text())
     reviewed=json.loads((B/'curated_partner_facts.json').read_text())
     gap_reviews={r['id']:r for r in json.loads((B/'milestone3_asset_gap_reviews.json').read_text())} if (B/'milestone3_asset_gap_reviews.json').exists() else {}
+    if (B/'milestone4_asset_source_limits.json').exists():
+        gap_reviews={r['id']:r for r in json.loads((B/'milestone4_asset_source_limits.json').read_text())['schools']}
     for d in audit['schools']:
         latest={}
         for s in d['public_source_checks']:
@@ -36,6 +38,9 @@ def main():
             remaining_coordinate_requirement=None if location else gap_reviews.get(d['id'],{}).get('coordinate_reason','公開代表點及官方命名校園地圖已依記錄查核；多值、錯誤城市、舊新母體／校區、來源未提供數值或地圖只有視窗仍缺。需官方命名實體校區或可独立核對的單一代表點。')))
     checks=json.loads((B/'host_source_retry_checks.json').read_text());alternatives=json.loads((B/'host_source_alternative_checks.json').read_text())
     result=dict(base_commit=acceptance['base_commit'],checked_date='2026-10-11',denominator=287,
+        milestone4_handoff=dict(candidate_review='milestone4_candidate_content_reviews.json',fixed_candidates=69,
+            complete_available_bodies=64,partial_bodies=4,http404=1,remaining_reference_sources='milestone4_remaining_source_limits.json',
+            asset_source_limits='milestone4_asset_source_limits.json',note='固定69候選均已交代；來源年份確認不代表淡江本期核實，未耗盡的命名地圖另列。'),
         milestone1=dict(photos=66,coordinates=68),current=dict(photos=len(photos),coordinates=len(locations),photo_percent=round(len(photos)/287*100,2),coordinate_percent=round(len(locations)/287*100,2),photo_gaps=287-len(photos),coordinate_gaps=287-len(locations)),
         delta_from_milestone1=dict(photos=len(photos)-66,coordinates=len(locations)-68),
         host_retry_checks=len(checks),host_retry_statuses=dict(Counter(str(r.get('http_status') or 'connection_error') for r in checks)),

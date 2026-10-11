@@ -60,6 +60,12 @@ def build():
     index=json.loads((BUNDLE/"host_census_capture_index.json").read_text())
     rows=[]
     scopes={r['source_id']:r for r in json.loads((BUNDLE/'milestone3_source_scope_reviews.json').read_text())} if (BUNDLE/'milestone3_source_scope_reviews.json').exists() else {}
+    # Mixed brochures/directories/events must not create rules from sidebar hits.
+    # M4 references enter only through the human-reviewed field overlay below.
+    for filename in ['milestone4_candidate_content_reviews.json',
+                     'milestone4_followup_scope_reviews.json']:
+        if (BUNDLE/filename).exists():
+            scopes.update({r['source_id']:r for r in json.loads((BUNDLE/filename).read_text())})
     for institution in index:
         references=[]; blockers=[]
         for meta in institution["sources"]:
@@ -119,7 +125,14 @@ def build():
         row['reviewed_host_period_fields']=[k for k,f in curated['fields'].items() if f.get('source_period_verified')]
         row['reviewed_host_year_fields']=list(row['reviewed_host_period_fields'])
         row['content_reviewed_host_reference_fields']=list(curated['fields'])
-    (BUNDLE/"partner_enrichment.jsonl").write_text("".join(json.dumps(r,ensure_ascii=False)+"\n" for r in rows))
+    # PDF text can contain Unicode line separators, which Python splitlines()
+    # treats as record boundaries. Retain those characters through JSON escapes.
+    def json_line(row):
+        text=json.dumps(row,ensure_ascii=False)
+        for char in ('\u0085','\u2028','\u2029'):
+            text=text.replace(char,f'\\u{ord(char):04x}')
+        return text+'\n'
+    (BUNDLE/"partner_enrichment.jsonl").write_text("".join(json_line(r) for r in rows))
     print(json.dumps(dict(institutions=len(rows),with_public_references=sum(bool(r["fields"]) for r in rows),
                          excerpt_count=sum(len(r["reference_excerpts"]) for r in rows),
                          fields=dict(Counter(key for row in rows for key in row["fields"]))),ensure_ascii=False))
