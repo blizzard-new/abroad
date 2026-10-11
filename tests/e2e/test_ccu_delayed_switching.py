@@ -108,8 +108,8 @@ def test_old_home_responses_cannot_finish_newer_a_b_a_load(page, acceptance_serv
         assert page.evaluate("state.coverage === null")
         expect(page.locator("#partner-table .skeleton")).to_be_visible()
         gate.release(sequence=2)
-        wait_until(page, "state.dashboard?.school_name === '國立中正大學' && !state.applicationLoading && state.coverage?.destination_profile_count === 55")
-        assert page.evaluate("state.destinationProfiles.length") == 55
+        wait_until(page, "state.dashboard?.school_name === '國立中正大學' && !state.applicationLoading && state.coverage?.destination_profile_count === 104")
+        assert page.evaluate("state.destinationProfiles.length") == 104
         actual = page.request.get(server.base_url + "/application-center/templates", params={"school": HOME}).json()
         assert set(page.evaluate("state.applicationTemplates.map(t => t.id)")) == {x["id"] for x in actual}
         navigate(page, "application-center")

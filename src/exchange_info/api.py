@@ -412,6 +412,7 @@ from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
 from .university_registry import (
     CGU,
+    CCU,
     NTPU,
     NTU,
     NCU,
@@ -474,6 +475,10 @@ def _attach_school_images(
     base = base_url.rstrip("/")
     partners = []
     for school in dashboard.partner_universities:
+        if dashboard.school_name == CCU.school_name and "ccu_completion" in school.reference_data:
+            from .ccu_campus_assets import attach_reviewed_image
+            partners.append(attach_reviewed_image(school, base))
+            continue
         visual = visuals.get((school_identity_key(school.school_name), school.country or ""))
         if not visual:
             partners.append(school)
@@ -2895,6 +2900,9 @@ def create_app(
         for partner in partners:
             normalized = normalize_school(partner.school_name)
             visual = school_images.get((school_identity_key(partner.school_name), partner.country or ""))
+            if university.id == CCU.id and "ccu_completion" in partner.reference_data:
+                from .ccu_campus_assets import reviewed_image_coverage
+                visual = reviewed_image_coverage(partner)
             partner_experiences = experience_map.get(normalized, [])
             workflow = workflow_map.get(normalized)
             destination = destination_map.get((home_key, normalized))
@@ -3020,7 +3028,7 @@ def create_app(
         from .ccu_profile import school_location
         is_ccu = university_for(school).id == "ccu"
         return dashboard.model_copy(update={"partner_universities": [
-            partner.model_copy(update={"location": school_location(partner, public_location(locations, partner.school_name, partner.country)) if is_ccu else public_location(locations, partner.school_name, partner.country)})
+            partner.model_copy(update={"location": school_location(partner, public_location(locations, partner.school_name, partner.country), resolved_data_dir) if is_ccu else public_location(locations, partner.school_name, partner.country)})
             for partner in dashboard.partner_universities
         ]})
 
@@ -3762,7 +3770,7 @@ def create_app(
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
         if university.id == "ccu":
             from .ccu_profile import school_location
-            location = school_location(partner, location)
+            location = school_location(partner, location, resolved_data_dir)
         profile = destination_profile(school, home_school)
         context = build_life_context(partner, profile, location, resolved_data_dir)
         if university.id == "ccu":
@@ -3779,7 +3787,7 @@ def create_app(
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
         if university.id == "ccu":
             from .ccu_profile import school_location
-            location = school_location(partner, location)
+            location = school_location(partner, location, resolved_data_dir)
         result = refresh_life_research(partner, location, resolved_data_dir)
         context = school_life_context(school, home_school)
         return context.model_copy(update={"research_notes": result.notes})

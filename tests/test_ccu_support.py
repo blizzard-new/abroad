@@ -88,7 +88,8 @@ def test_ccu_provenance_and_explicit_old_attachments():
         for key, evidence in row.field_evidence.items():
             if key in {"website", "city", "location", "colleges", "degree_levels"}:
                 assert evidence.source_url.startswith("https://")
-                assert evidence.checked_at.date() == CHECKED_AT.date()
+                expected_date = "2026-10-11" if row.availability_status == "not_open" and key == "website" else CHECKED_AT.date().isoformat()
+                assert evidence.checked_at.date().isoformat() == expected_date
                 assert evidence.excerpt and evidence.academic_year
                 continue
             assert evidence.source_url.startswith("https://oia.ccu.edu.tw/")
