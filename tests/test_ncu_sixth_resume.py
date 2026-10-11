@@ -27,8 +27,9 @@ def test_sixth_raw_responses_and_visual_pages_match_saved_bytes():
     assert 'within 6 months' in health['page_transcriptions'][0]['text']
     assert health['reading_status']=='full_native_text_reviewed'
     spring=evidence['ncu-121-resume6-c8e63329ed']
-    assert spring['reading_status']=='public_source_pending_read'
-    assert not spring.get('reading_review')
+    assert spring['reading_status']=='full_native_text_reviewed'
+    assert spring['reading_review']['full_document_read']
+    assert spring['visual_review']['pdf_pages_reviewed']==[15]
 
 
 def test_funded_sdu_calls_do_not_become_ncu_eligibility():

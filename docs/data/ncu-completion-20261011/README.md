@@ -1,6 +1,6 @@
 # 中央逐校補完查核，2026-10-11
 
-**中斷後續作最新檢查點：202／214授權照片（199不同SHA）、209合作位置，中央母校另計。** 第八續作新增12具名校區代表點；429完整回歸、最終說明重建後36來源/API/可重建檢查、3項Chromium手機／桌面12校預覽及209地球验收通過。剩12圖5點、3227當期缺格；人工host120／214、721來源／337閱讀／59原生PDF全文與6圖文全文、293成功候選仍待讀。臺灣10/12 00:01實查尚未出現116名額表，214名額未知與提醒關閉維持。詳見[第八續作證據](resume/eighth/README.md)與[第六逐校閱讀](resume/sixth/README.md)；以下較早數字為歷史紀錄。
+**中斷後續作最新檢查點：202／214授權照片（199不同SHA）、210合作位置，中央母校另計。** 第九續作新增ICP具名圖書館點及28來源閱讀（20PDF原件、31頁實際視讀）；434完整回歸通過，browser實測結果見[第九續作驗證](resume/ninth/validation.json)。剩12圖4點、3226當期缺格；人工host120／214、721來源／365閱讀／75原生PDF全文與10圖文全文、265成功候選仍待讀。臺灣10/12 01:13實查尚未見116名額表，214名額未知與提醒關閉維持。詳見[第九續作證據](resume/ninth/README.md)；以下較早數字為歷史紀錄。
 
 基底 `59a20f27fcee00fb597abc79e75ec11778317422`，分支 `data/ncu-completion-20261011`。基底已含 PR6 六校記憶體修正與 PR7 臺大更新。本輪僅中央資料、照片及必要顯示適配；未部署、套正式 DB、合併 main、更動安全設定或執行 Quality CI。
 
@@ -8,7 +8,7 @@
 
 ## 分母與可追溯檔
 
-- 115名額表216列整理成214交換目錄項目，含院級／自費等 track，32國別標籤，並非214當期開放學校。[逐校19欄 JSON](exchange-field-inventory.json.gz)、[CSV](exchange-field-inventory.csv)、[原 main 基線](baseline-field-inventory.json.gz)、[各欄計數](field-counts.json)、[3250個當期未解欄位及已查 URL](unresolved-fields.json.gz)。
+- 115名額表216列整理成214交換目錄項目，含院級／自費等 track，32國別標籤，並非214當期開放學校。[逐校19欄 JSON](exchange-field-inventory.json.gz)、[CSV](exchange-field-inventory.csv)、[原 main 基線](baseline-field-inventory.json.gz)、[各欄計數](field-counts.json)、[3226個當期未解欄位及已查 URL](unresolved-fields.json.gz)。
 - [合作校頁](https://oia.ncu.edu.tw/p/412-1026-1850.php?Lang=zh-tw) 摘要329，更新2025/11/13；同頁[官方 XLS](https://oia.ncu.edu.tw/static/file/26/1026/img/274/2025Partner.xls) 有578協議列、331個原始國別＋英文名群組、42國別標籤。XLS SHA256 `23bbf7f17a404a81ca3088b1f1a0d280d7d6185c4ab6b05042df16ff8dd419d2`。
 - 逐字校名去重音／空白／標點且同國別安全對應119群組／119目錄項；212群組未硬併。329／331差異待官方釐清，MOU、雙聯及研究協議不自動當交換資格。見[完整協議原列／分類](../../../sources/ncu/2026-10-11/agreement-denominator-audit.json)。
 
