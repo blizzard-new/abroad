@@ -1,0 +1,128 @@
+CONFTEST LOADED!
+...............................FF....................................... [ 92%]
+......                                                                   [100%]
+=================================== FAILURES ===================================
+____ test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit[390] _____
+
+page = <Page url='http://127.0.0.1:41465/?view=list#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:41465', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-35/web-e2e-data4'))
+width = 390
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    def test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit(page, live_server, width):
+        reviewed = [r for r in json.loads(Path('sources/ntu/completion-2026-10-11.json').read_text())['schools'] if r.get('photo')]
+        assert len(reviewed) == 19
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        page.locator('#confirm-school').click()
+>       page.wait_for_function("state.dashboard?.school_name==='國立臺灣大學' && !state.partnerDataLoading")
+
+tests/e2e/test_integrated_reviewed_photos.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:12761: in wait_for_function
+    self._sync(
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:1151: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:940: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7faf9819b830>
+cb = <function Channel.send.<locals>.<lambda> at 0x7faf2c8bdd00>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'".
+E           
+E               at eval (<anonymous>)
+E               at predicate (eval at evaluate (:311:30), <anonymous>:4:60)
+E               at next (eval at evaluate (:311:30), <anonymous>:29:33)
+
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+____ test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit[1440] ____
+
+page = <Page url='http://127.0.0.1:41465/?view=list#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:41465', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-35/web-e2e-data4'))
+width = 1440
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    def test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit(page, live_server, width):
+        reviewed = [r for r in json.loads(Path('sources/ntu/completion-2026-10-11.json').read_text())['schools'] if r.get('photo')]
+        assert len(reviewed) == 19
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        page.locator('#confirm-school').click()
+>       page.wait_for_function("state.dashboard?.school_name==='國立臺灣大學' && !state.partnerDataLoading")
+
+tests/e2e/test_integrated_reviewed_photos.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:12761: in wait_for_function
+    self._sync(
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:1151: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:940: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7faf9819b830>
+cb = <function Channel.send.<locals>.<lambda> at 0x7faf2c437600>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Page.wait_for_function: EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is not an allowed source of script: script-src 'self'".
+E           
+E               at eval (<anonymous>)
+E               at predicate (eval at evaluate (:311:30), <anonymous>:4:60)
+E               at next (eval at evaluate (:311:30), <anonymous>:29:33)
+
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+=========================== short test summary info ============================
+FAILED tests/e2e/test_integrated_reviewed_photos.py::test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit[390]
+FAILED tests/e2e/test_integrated_reviewed_photos.py::test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit[1440]
+2 failed, 76 passed in 1000.91s (0:16:40)

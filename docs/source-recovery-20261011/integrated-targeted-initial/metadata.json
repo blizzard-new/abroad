@@ -1,0 +1,34 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_integration_source_boundaries.py",
+    "tests/test_cgu_catalogue_recovery.py",
+    "tests/test_visual_coverage.py",
+    "tests/test_university_locations.py",
+    "tests/test_school_photo_and_match.py",
+    "tests/test_ntu_completion.py",
+    "tests/test_ccu_completion.py",
+    "tests/test_ncu_completion.py",
+    "tests/test_ncu_integration.py::test_bundle_rebuilds_exactly_from_tracked_source_data",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T10:46:37.100771+00:00",
+  "start_guard": {
+    "sha": "afd76931002f21fa05ddb98fb3b540adb269dc4c",
+    "tree": "9fe9fc892e04ab403594f9696c27354978612917",
+    "status": "?? tests/test_integration_source_boundaries.py"
+  },
+  "timeout_seconds": 3600,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-11T10:47:30.146831+00:00",
+  "end_guard": {
+    "sha": "afd76931002f21fa05ddb98fb3b540adb269dc4c",
+    "tree": "9fe9fc892e04ab403594f9696c27354978612917",
+    "status": "?? tests/test_integration_source_boundaries.py"
+  }
+}

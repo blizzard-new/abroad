@@ -1,0 +1,39 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_scoped_life_memory.py",
+    "tests/test_ccu_completion.py",
+    "tests/test_catalogue_memory.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T12:14:13.095008+00:00",
+  "start_guard": {
+    "sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+    "tree": "992233dd41166e2f7640f5d742e19affae95a1c6",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/ccu_completion.py\n M src/exchange_info/ccu_completion_sources.py\n M src/exchange_info/ccu_overseas.py\n M src/exchange_info/ccu_profile.py\n M src/exchange_info/life_context.py\n M src/exchange_info/ncu_student_view.py\n M tests/test_catalogue_memory.py\n?? src/exchange_info/json_stream.py\n?? src/exchange_info/source_integrity.py\n?? tests/test_scoped_life_memory.py"
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/test_scoped_life_memory.py": {
+      "sha256": "e3897d85c58841802dfd597cc2a8bd2c9fa36b05d7d7c8e319a0069873f96b5f"
+    },
+    "tests/test_ccu_completion.py": {
+      "sha256": "f12c3dd0e57729e306723a91dbb3dfe4bee97b2bbaa6aa80713097e8f96292bb"
+    },
+    "tests/test_catalogue_memory.py": {
+      "sha256": "9786f07f93540da999693ca20b190a65bb424880f6f478751128fb0e223c09b2"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T12:14:27.031023+00:00",
+  "end_guard": {
+    "sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+    "tree": "992233dd41166e2f7640f5d742e19affae95a1c6",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/ccu_completion.py\n M src/exchange_info/ccu_completion_sources.py\n M src/exchange_info/ccu_overseas.py\n M src/exchange_info/ccu_profile.py\n M src/exchange_info/life_context.py\n M src/exchange_info/ncu_student_view.py\n M tests/test_catalogue_memory.py\n?? src/exchange_info/json_stream.py\n?? src/exchange_info/source_integrity.py\n?? tests/test_scoped_life_memory.py"
+  }
+}

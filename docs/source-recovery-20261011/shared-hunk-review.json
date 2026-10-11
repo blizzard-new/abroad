@@ -1,0 +1,62 @@
+{
+  "candidate": "0d3d671ef92344970e4de1797a81b050235eecbd",
+  "review": [
+    {
+      "path": "src/exchange_info/api.py",
+      "decision": "CGU來源供應器與六校adapter共存；CCU/NCU/TKU照片scope、coverage、位置呼叫點；2worker/1catalogue與逐步預熱，health不被阻塞。"
+    },
+    {
+      "path": "src/exchange_info/static/app.js",
+      "decision": "保留PR8精確校名/唯一別名/國別識別；新增source狀態；三校sidecar不誤回退；照片作者與授權可見。"
+    },
+    {
+      "path": "src/exchange_info/school_content.py",
+      "decision": "保留NCU profile照片適配與TKU独立來源；其餘校既有生活來源及年度不改。"
+    },
+    {
+      "path": "src/exchange_info/university_locations.py",
+      "decision": "CCU/NCU/TKU本地pending/needs_review/verified/非法座標優先，未核對資料不顯示坐標。"
+    },
+    {
+      "path": "src/exchange_info/application_rules.py",
+      "decision": "中央第三輪僅中央禁用會混淆自費/院系track的寬鬆same_school；其他校匹配原樣。"
+    },
+    {
+      "path": "src/exchange_info/static/assets/school-images.json",
+      "decision": "固定19新增照片與既有內容合併；UC3M校區分類不一致另以校方相簿獨立比對。"
+    },
+    {
+      "path": "src/exchange_info/official_data/university_locations.jsonl",
+      "decision": "全共享座標delta逐校檢查；NCU43→44唯一增量為馬來亞大學官方校圖點，非操作員待審覆寫。"
+    },
+    {
+      "path": "src/exchange_info/static/index.html",
+      "decision": "保留PR8頁面及各校sidecar載入順序，cache版本配對。"
+    },
+    {
+      "path": "src/exchange_info/models.py",
+      "decision": "StudentDashboard catalogue_source可選，其他五校省略空欄位；OpenAPI核對。"
+    },
+    {
+      "path": "pyproject.toml",
+      "decision": "僅增加CCU completion_sources與TKU zip分片package-data；依賴及build-system與main相同。"
+    },
+    {
+      "path": "src/exchange_info/official_data/{cgu,ntpu,ntu}/application_workflows.jsonl",
+      "decision": "原f6ad1b8 workflow位元組及154/409/288數目不變。"
+    },
+    {
+      "path": "src/exchange_info/{ncu_student_view,ccu_overseas,ccu_completion,ccu_profile,life_context}.py",
+      "decision": "串流/按校/序列化快取保留完整資料及驗證；214/1990、104、288全量相等檢查。"
+    },
+    {
+      "path": "supabase/migrations; .github/workflows; uv.lock",
+      "decision": "所有固定候選相對main無migration變更，受保護配置及lock不變；Quality仍disabled_manually。"
+    },
+    {
+      "path": "tests/",
+      "decision": "13父擁有原測試函數AST保持；fixtures為可追溯來源故障注入；新版分母與scope另有回歸。"
+    }
+  ],
+  "validation": "final-frozen-contracts plus frozen-final-full-unit/browser raw runs"
+}

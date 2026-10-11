@@ -1,0 +1,39 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_catalogue_speed.py",
+    "tests/test_catalogue_memory.py",
+    "tests/test_scoped_life_memory.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T12:20:52.576619+00:00",
+  "start_guard": {
+    "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+    "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+    "status": "M src/exchange_info/api.py\n M tests/test_catalogue_speed.py"
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/test_catalogue_speed.py": {
+      "sha256": "771afa5236636dd246937d01bd1ffc53e75b514b3f21590ccac56e8f3f87bf63"
+    },
+    "tests/test_catalogue_memory.py": {
+      "sha256": "9786f07f93540da999693ca20b190a65bb424880f6f478751128fb0e223c09b2"
+    },
+    "tests/test_scoped_life_memory.py": {
+      "sha256": "e3897d85c58841802dfd597cc2a8bd2c9fa36b05d7d7c8e319a0069873f96b5f"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T12:21:08.117586+00:00",
+  "end_guard": {
+    "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+    "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+    "status": "M src/exchange_info/api.py\n M tests/test_catalogue_speed.py"
+  }
+}

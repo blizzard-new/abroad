@@ -1,0 +1,55 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_scoped_life_memory.py",
+    "tests/test_ncu_snapshot_cache.py",
+    "tests/test_ccu_completion.py",
+    "tests/test_ccu_overseas.py",
+    "tests/test_catalogue_memory.py",
+    "tests/test_ntu_destination_enrichment.py",
+    "tests/test_ncu_completion.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T12:12:29.360124+00:00",
+  "start_guard": {
+    "sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+    "tree": "992233dd41166e2f7640f5d742e19affae95a1c6",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/ccu_completion_sources.py\n M src/exchange_info/ccu_overseas.py\n M src/exchange_info/ccu_profile.py\n M src/exchange_info/life_context.py\n M src/exchange_info/ncu_student_view.py\n M tests/test_catalogue_memory.py\n?? src/exchange_info/json_stream.py\n?? src/exchange_info/source_integrity.py\n?? tests/test_scoped_life_memory.py"
+  },
+  "timeout_seconds": 1200,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/test_scoped_life_memory.py": {
+      "sha256": "ebb0440e7d0a664d7f5db4955615f95b1d9903b7dc06ddeeffc36feefd810b16"
+    },
+    "tests/test_ncu_snapshot_cache.py": {
+      "sha256": "b57c2f5ec7721ad39751be08d490d4c60898561d57a0297b86484dfad31176f5"
+    },
+    "tests/test_ccu_completion.py": {
+      "sha256": "f12c3dd0e57729e306723a91dbb3dfe4bee97b2bbaa6aa80713097e8f96292bb"
+    },
+    "tests/test_ccu_overseas.py": {
+      "sha256": "0b84174a864ad638e7b12bdf8447b5e18a893997ac00b23c62625e595b638096"
+    },
+    "tests/test_catalogue_memory.py": {
+      "sha256": "9786f07f93540da999693ca20b190a65bb424880f6f478751128fb0e223c09b2"
+    },
+    "tests/test_ntu_destination_enrichment.py": {
+      "sha256": "be5047f814ec8f3b8e313572780c389b7056ab170fdb9b96e51a1b343164768b"
+    },
+    "tests/test_ncu_completion.py": {
+      "sha256": "5aa0d13989b2c4edd6961f6fcea7fa8ab4d164c535faeecb6c1211be894a4f3f"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T12:13:19.967519+00:00",
+  "end_guard": {
+    "sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+    "tree": "992233dd41166e2f7640f5d742e19affae95a1c6",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/ccu_completion_sources.py\n M src/exchange_info/ccu_overseas.py\n M src/exchange_info/ccu_profile.py\n M src/exchange_info/life_context.py\n M src/exchange_info/ncu_student_view.py\n M tests/test_catalogue_memory.py\n?? src/exchange_info/json_stream.py\n?? src/exchange_info/source_integrity.py\n?? tests/test_scoped_life_memory.py"
+  }
+}

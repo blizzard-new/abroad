@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/profile_memory.py", line 140, in <module>
+    sample(f'browser-{width}-{school}')
+  File "/workspace/recovery-tools-20261011/profile_memory.py", line 53, in sample
+    assert max(result['peak_rss_bytes'],result['rss_bytes']) < budget_mib * 1024 * 1024, f'Isolated process exceeded the {budget_mib:g} MiB acceptance budget'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Isolated process exceeded the 460 MiB acceptance budget

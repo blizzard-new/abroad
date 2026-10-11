@@ -1,0 +1,107 @@
+{
+  "command": [
+    "env",
+    "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/workspace/integration-tools/browsers/chromium-1234/chrome-linux64/chrome",
+    "VISUAL_EVIDENCE_DIR=/workspace/recovery-evidence-20261011/frozen-final-browser-images",
+    "TKU_CENSUS_ASSET_EVIDENCE=/workspace/recovery-evidence-20261011/frozen-final-tku-browser-images",
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/e2e/test_cgu_source_recovery.py",
+    "tests/e2e/test_six_school_visual_coverage.py",
+    "tests/e2e/test_ccu_completion.py",
+    "tests/e2e/test_ncu_completion.py",
+    "tests/e2e/test_ntu_destination_enrichment.py",
+    "tests/e2e/test_ntu_completion.py",
+    "tests/e2e/test_integrated_reviewed_photos.py",
+    "tests/e2e/test_ntu_official_changes.py",
+    "tests/e2e/test_tku_acceptance.py",
+    "tests/e2e/test_tku_census_assets.py",
+    "tests/e2e/test_open_catalog.py",
+    "tests/e2e/test_document_flow.py",
+    "tests/e2e/test_application_workspace.py",
+    "tests/e2e/test_multi_plan_workspace.py",
+    "tests/e2e/test_conditions_account_sync.py",
+    "tests/e2e/test_shared_conditions.py",
+    "tests/e2e/test_tku_governance_transactions.py",
+    "tests/e2e/test_tku_session_boundaries.py",
+    "tests/e2e/test_discussion_round2.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T12:29:31.158740+00:00",
+  "start_guard": {
+    "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+    "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+    "status": ""
+  },
+  "timeout_seconds": 3600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/e2e/test_cgu_source_recovery.py": {
+      "sha256": "9e0ddb50ce727d4b84b990951471a9fa6cd01574bea68b7a8937e145dfe1bb6b"
+    },
+    "tests/e2e/test_six_school_visual_coverage.py": {
+      "sha256": "267e79c2c5159b73507b6acc51736a8b77052270c6ff4c87c07e02299bb237a7"
+    },
+    "tests/e2e/test_ccu_completion.py": {
+      "sha256": "ed5fa389f9fd9a9cd129521104bb91f8ac6b476673054ca24c195ed435a5aa7c"
+    },
+    "tests/e2e/test_ncu_completion.py": {
+      "sha256": "fc98ce8af87bf88dd1e8d75c5e4920a548721a9dfc4c2bf8d0a84d98e07f8881"
+    },
+    "tests/e2e/test_ntu_destination_enrichment.py": {
+      "sha256": "b1499f20033aa6ff0a4ccbd105456315a5824b2f4a4678d0976fd24c6feadda4"
+    },
+    "tests/e2e/test_ntu_completion.py": {
+      "sha256": "32fbeed655fe6c31e99ccf656779369136415340bb4da0e66543df21b4591b45"
+    },
+    "tests/e2e/test_integrated_reviewed_photos.py": {
+      "sha256": "0ec6f3f3c665c9d3884130619bc95037a1947d424304168dc4d3d3fdd4f6073e"
+    },
+    "tests/e2e/test_ntu_official_changes.py": {
+      "sha256": "d584fd1f1ebdeae07de6e61fd140d013becb30c8cae189f99906d2fbe1d6c60a"
+    },
+    "tests/e2e/test_tku_acceptance.py": {
+      "sha256": "51a6862d3d5c99f44a24f8e3c66936c00f6866b70b51b31eee7229a8cc62dfcf"
+    },
+    "tests/e2e/test_tku_census_assets.py": {
+      "sha256": "49d436c180cc93a2b8503d2f8e72c13a1392dda007fbed8d9f761bdc35d14394"
+    },
+    "tests/e2e/test_open_catalog.py": {
+      "sha256": "8f8802b0a8645a8d6e2943c05e919908d6442d87051bc9ab6113d7fd38af5e9e"
+    },
+    "tests/e2e/test_document_flow.py": {
+      "sha256": "2dac940af87f47aa8035e7454ef19c9f2ff23a20d9b1a7445d24616dff1400c9"
+    },
+    "tests/e2e/test_application_workspace.py": {
+      "sha256": "2d134aaca91e47a190a0a39fec19060e7149a3bf7d7483d4d61fc7595e3d5ce9"
+    },
+    "tests/e2e/test_multi_plan_workspace.py": {
+      "sha256": "11c26d23388051ad4e97dc6263a3db39955793d138c64e9705a51664d9527c54"
+    },
+    "tests/e2e/test_conditions_account_sync.py": {
+      "sha256": "68a135aefe8e3b7b5b3255521206c04890b4d384b6dc673433ddb1a05d840b02"
+    },
+    "tests/e2e/test_shared_conditions.py": {
+      "sha256": "11dcbc1f217e1e026adde6da3517f60f91e2eef68baf08a4754be6ca207a8523"
+    },
+    "tests/e2e/test_tku_governance_transactions.py": {
+      "sha256": "6c9149d2a45f28c8f6646c2aa780397e4a59a87151c5bbd1d31b912860e7435a"
+    },
+    "tests/e2e/test_tku_session_boundaries.py": {
+      "sha256": "afb8247754e4eeaa11f7d12e4f0fe2c2566aae243ba8c0de0acb233933172c24"
+    },
+    "tests/e2e/test_discussion_round2.py": {
+      "sha256": "03c209102c9da7bad0ea048d8c369bee0aa35f569e86062f023431a26897a38e"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T12:47:24.470616+00:00",
+  "end_guard": {
+    "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+    "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+    "status": ""
+  }
+}

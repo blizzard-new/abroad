@@ -1,0 +1,59 @@
+{
+  "scope": "one local Uvicorn worker; browser load generator excluded from server RSS",
+  "same_final_data_before_and_after": true,
+  "source_and_frontend_changes_between_comparison_heads": [],
+  "school_counts": {
+    "CGU": 77,
+    "NTPU": 206,
+    "NTU": 288,
+    "CCU": 104,
+    "NCU": 214,
+    "TKU": 287
+  },
+  "workload": "12 rounds ×6 schools ×5 parallel APIs; 3 full NCU source audits; 3×8 CCU bursts before and after; 390/1440 repeated 3 times with 36 school switches +36 six-school life detail visits +6 NTU globe/photo/life flows; final GC",
+  "samples_per_run": 162,
+  "harness_sha256": "39e8f824ea82ff1d8887cde48120360ff1ad6c2f0bd78198db66a79863152699",
+  "before_failure_policy": "deferred the budget assertion to the end so all 162 steps complete; exit 1 and failed budget preserved",
+  "runs": [
+    {
+      "run": "latest-data-before-memory",
+      "runtime_source_sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+      "label": "warm before scoped-life/hash/cache repairs",
+      "samples": 162,
+      "maximum_rss_mib": 524.25390625,
+      "high_water_mib": 556.2734375,
+      "final_rss_mib": 522.28515625,
+      "headroom_below_512_mib": -44.2734375,
+      "passed_460_mib": false,
+      "all_workload_steps_completed": true,
+      "local_server_log_empty": true
+    },
+    {
+      "run": "pool-final-warm-memory",
+      "runtime_source_sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "label": "warm final",
+      "samples": 162,
+      "maximum_rss_mib": 449.59375,
+      "high_water_mib": 454.55859375,
+      "final_rss_mib": 448.1171875,
+      "headroom_below_512_mib": 57.44140625,
+      "passed_460_mib": true,
+      "all_workload_steps_completed": true,
+      "local_server_log_empty": true
+    },
+    {
+      "run": "pool-final-cold-memory",
+      "runtime_source_sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "label": "cold final",
+      "samples": 162,
+      "maximum_rss_mib": 454.1015625,
+      "high_water_mib": 458.4921875,
+      "final_rss_mib": 452.08984375,
+      "headroom_below_512_mib": 53.5078125,
+      "passed_460_mib": true,
+      "all_workload_steps_completed": true,
+      "local_server_log_empty": true
+    }
+  ],
+  "build_disk_incident": "Separate wheel staging briefly reached ENOSPC at 12:26:34–12:26:36 UTC and was removed. All measured API/browser assertions completed and each app server log was empty. The wheel failure and corrected successful build are both archived."
+}

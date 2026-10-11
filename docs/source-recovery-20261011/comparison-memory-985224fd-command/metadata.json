@@ -1,0 +1,30 @@
+{
+  "command": [
+    "env",
+    "EXCHANGE_WARM_CACHES=1",
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "/workspace/recovery-tools-20261011/profile_memory.py",
+    "comparison-memory-985224fd",
+    "--parallel",
+    "--translations",
+    "--soak",
+    "--burst",
+    "--browser",
+    "--burst-after-browser"
+  ],
+  "cwd": "/workspace/recovery-baseline-985224fd",
+  "started_at": "2026-10-11T10:59:10.036880+00:00",
+  "start_guard": {
+    "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+    "status": "archived src/tests snapshot; source-manifest.json records every file; no Git checkout"
+  },
+  "timeout_seconds": 2400,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-11T11:01:45.081621+00:00",
+  "end_guard": {
+    "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+    "status": "archived src/tests snapshot; source-manifest.json records every file; no Git checkout"
+  }
+}

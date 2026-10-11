@@ -1,0 +1,20 @@
+CONFTEST LOADED!
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_api_dashboard_coverage_detail_and_life_agree_on_photos __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-36/test_api_dashboard_coverage_de0')
+
+    def test_api_dashboard_coverage_detail_and_life_agree_on_photos(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        dashboard = client.get("/student-dashboard", params={"school": "NCU"}).json()
+        assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 125
+>       assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 43  # PR8 restores40; NCU adds3 independently reviewed points
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 44 == 43
+E        +  where 44 = sum(<generator object test_api_dashboard_coverage_detail_and_life_agree_on_photos.<locals>.<genexpr> at 0x7f7994b206c0>)
+
+tests/test_ncu_completion.py:112: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_completion.py::test_api_dashboard_coverage_detail_and_life_agree_on_photos
+1 failed in 1.51s

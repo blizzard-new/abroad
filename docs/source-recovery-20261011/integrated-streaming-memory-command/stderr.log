@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/profile_memory.py", line 147, in <module>
+    sample(f'after-browser-eight-concurrent-ccu-dashboard-{batch}')
+  File "/workspace/recovery-tools-20261011/profile_memory.py", line 52, in sample
+    assert max(result['peak_rss_bytes'],result['rss_bytes']) < 512 * 1024 * 1024, 'Isolated process exceeded the 512 MiB peak RSS budget'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Isolated process exceeded the 512 MiB peak RSS budget

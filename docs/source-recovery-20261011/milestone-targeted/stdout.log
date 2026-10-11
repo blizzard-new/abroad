@@ -1,0 +1,36 @@
+CONFTEST LOADED!
+.......F................................................................ [ 88%]
+.........                                                                [100%]
+=================================== FAILURES ===================================
+__ test_tku_sidecar_respects_operator_review_in_dashboard_and_life[verified] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-33/test_tku_sidecar_respects_oper2')
+status = 'verified'
+
+    @pytest.mark.parametrize('status', ['pending', 'needs_review', 'verified', 'invalid'])
+    def test_tku_sidecar_respects_operator_review_in_dashboard_and_life(tmp_path, status):
+        from exchange_info.tku_assets import campus_locations
+        from exchange_info.tku_census import school_audit
+        from exchange_info.tku_student_view import fetch_tku_partner_universities
+        partner = next(p for p in fetch_tku_partner_universities() if school_audit(p.school_name)['id'] in campus_locations())
+        record = dict(school_name=partner.school_name, country=partner.country, geocode_status=status,
+                      latitude=35.1 if status=='verified' else None, longitude=135.1 if status=='verified' else None,
+                      precision='campus', source_url='https://example.edu/review', note='operator review')
+        if status=='invalid':record.update(geocode_status='verified',latitude=1234,longitude=135)
+        path=tmp_path/'processed/university_locations.jsonl';path.parent.mkdir();path.write_text(json.dumps(record)+'\n')
+        with TestClient(create_app(tmp_path)) as client:
+            rows=client.get('/student-dashboard',params={'school':'TKU'}).json()['partner_universities']
+            actual=next(p for p in rows if p['school_name']==partner.school_name)['location']
+>           assert actual['geocode_status']==('needs_review' if status=='invalid' else status)
+E           AssertionError: assert 'needs_review' == 'verified'
+E             
+E             - verified
+E             + needs_review
+
+tests/test_integration_source_boundaries.py:73: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  exchange_info.university_locations:university_locations.py:72 Invalid university location in university_locations.jsonl at row 1
+WARNING  exchange_info.university_locations:university_locations.py:72 Invalid university location in university_locations.jsonl at row 1
+=========================== short test summary info ============================
+FAILED tests/test_integration_source_boundaries.py::test_tku_sidecar_respects_operator_review_in_dashboard_and_life[verified]
+1 failed, 80 passed in 54.54s

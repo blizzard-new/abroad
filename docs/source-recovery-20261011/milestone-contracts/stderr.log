@@ -1,0 +1,7 @@
+Using CPython 3.12.14 interpreter at: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12
+Resolved 87 packages in 1ms
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/verify_contracts.py", line 47, in <module>
+    assert all(str(p.relative_to(root/'src/exchange_info')) in selected for p in needed if p.is_file())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

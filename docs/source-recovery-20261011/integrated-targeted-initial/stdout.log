@@ -1,0 +1,141 @@
+CONFTEST LOADED!
+FFFF.................................................................... [ 81%]
+.......F........                                                         [100%]
+=================================== FAILURES ===================================
+__ test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life[pending] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-26/test_ncu_sidecar_respects_oper0')
+status = 'pending'
+
+    @pytest.mark.parametrize('status', ['pending', 'needs_review', 'verified', 'invalid'])
+    def test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life(tmp_path, status):
+        reviewed = next(r for r in json.loads(LOCATIONS.read_text())['locations'] if r['geocode_status']=='verified')
+        partner = next(p for p in fetch_ncu_partner_universities() if p.school_name==reviewed['school_name'])
+        record = dict(reviewed, geocode_status=status, note='local operator review takes priority')
+        if status in ('pending','needs_review'):record.update(latitude=None,longitude=None)
+        if status == 'verified':record.update(latitude=48.1,longitude=2.1)
+        if status == 'invalid':record.update(geocode_status='verified',latitude=1234)
+        path=tmp_path/'processed/university_locations.jsonl';path.parent.mkdir();path.write_text(json.dumps(record)+'\n')
+        expected=campus_location(partner,UniversityLocation(school_name=partner.school_name),tmp_path)
+        client=TestClient(create_app(tmp_path))
+        dashboard=client.get('/student-dashboard',params={'school':'NCU'}).json()
+        actual=next(r for r in dashboard['partner_universities'] if r['school_name']==partner.school_name)['location']
+        assert actual['geocode_status']==('needs_review' if status=='invalid' else status)
+        assert actual['latitude']==(48.1 if status=='verified' else None)
+        assert actual==expected.model_dump(mode='json')
+        life=client.get('/school-life-context',params={'school':partner.school_name,'home_school':'NCU'})
+        assert life.status_code==200
+>       assert life.json()['location']['latitude']==actual['latitude']
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'location'
+
+tests/test_integration_source_boundaries.py:33: KeyError
+_ test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life[needs_review] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-26/test_ncu_sidecar_respects_oper1')
+status = 'needs_review'
+
+    @pytest.mark.parametrize('status', ['pending', 'needs_review', 'verified', 'invalid'])
+    def test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life(tmp_path, status):
+        reviewed = next(r for r in json.loads(LOCATIONS.read_text())['locations'] if r['geocode_status']=='verified')
+        partner = next(p for p in fetch_ncu_partner_universities() if p.school_name==reviewed['school_name'])
+        record = dict(reviewed, geocode_status=status, note='local operator review takes priority')
+        if status in ('pending','needs_review'):record.update(latitude=None,longitude=None)
+        if status == 'verified':record.update(latitude=48.1,longitude=2.1)
+        if status == 'invalid':record.update(geocode_status='verified',latitude=1234)
+        path=tmp_path/'processed/university_locations.jsonl';path.parent.mkdir();path.write_text(json.dumps(record)+'\n')
+        expected=campus_location(partner,UniversityLocation(school_name=partner.school_name),tmp_path)
+        client=TestClient(create_app(tmp_path))
+        dashboard=client.get('/student-dashboard',params={'school':'NCU'}).json()
+        actual=next(r for r in dashboard['partner_universities'] if r['school_name']==partner.school_name)['location']
+        assert actual['geocode_status']==('needs_review' if status=='invalid' else status)
+        assert actual['latitude']==(48.1 if status=='verified' else None)
+        assert actual==expected.model_dump(mode='json')
+        life=client.get('/school-life-context',params={'school':partner.school_name,'home_school':'NCU'})
+        assert life.status_code==200
+>       assert life.json()['location']['latitude']==actual['latitude']
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'location'
+
+tests/test_integration_source_boundaries.py:33: KeyError
+__ test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life[verified] __
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-26/test_ncu_sidecar_respects_oper2')
+status = 'verified'
+
+    @pytest.mark.parametrize('status', ['pending', 'needs_review', 'verified', 'invalid'])
+    def test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life(tmp_path, status):
+        reviewed = next(r for r in json.loads(LOCATIONS.read_text())['locations'] if r['geocode_status']=='verified')
+        partner = next(p for p in fetch_ncu_partner_universities() if p.school_name==reviewed['school_name'])
+        record = dict(reviewed, geocode_status=status, note='local operator review takes priority')
+        if status in ('pending','needs_review'):record.update(latitude=None,longitude=None)
+        if status == 'verified':record.update(latitude=48.1,longitude=2.1)
+        if status == 'invalid':record.update(geocode_status='verified',latitude=1234)
+        path=tmp_path/'processed/university_locations.jsonl';path.parent.mkdir();path.write_text(json.dumps(record)+'\n')
+        expected=campus_location(partner,UniversityLocation(school_name=partner.school_name),tmp_path)
+        client=TestClient(create_app(tmp_path))
+        dashboard=client.get('/student-dashboard',params={'school':'NCU'}).json()
+        actual=next(r for r in dashboard['partner_universities'] if r['school_name']==partner.school_name)['location']
+        assert actual['geocode_status']==('needs_review' if status=='invalid' else status)
+        assert actual['latitude']==(48.1 if status=='verified' else None)
+        assert actual==expected.model_dump(mode='json')
+        life=client.get('/school-life-context',params={'school':partner.school_name,'home_school':'NCU'})
+        assert life.status_code==200
+>       assert life.json()['location']['latitude']==actual['latitude']
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'location'
+
+tests/test_integration_source_boundaries.py:33: KeyError
+__ test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life[invalid] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-26/test_ncu_sidecar_respects_oper3')
+status = 'invalid'
+
+    @pytest.mark.parametrize('status', ['pending', 'needs_review', 'verified', 'invalid'])
+    def test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life(tmp_path, status):
+        reviewed = next(r for r in json.loads(LOCATIONS.read_text())['locations'] if r['geocode_status']=='verified')
+        partner = next(p for p in fetch_ncu_partner_universities() if p.school_name==reviewed['school_name'])
+        record = dict(reviewed, geocode_status=status, note='local operator review takes priority')
+        if status in ('pending','needs_review'):record.update(latitude=None,longitude=None)
+        if status == 'verified':record.update(latitude=48.1,longitude=2.1)
+        if status == 'invalid':record.update(geocode_status='verified',latitude=1234)
+        path=tmp_path/'processed/university_locations.jsonl';path.parent.mkdir();path.write_text(json.dumps(record)+'\n')
+        expected=campus_location(partner,UniversityLocation(school_name=partner.school_name),tmp_path)
+        client=TestClient(create_app(tmp_path))
+        dashboard=client.get('/student-dashboard',params={'school':'NCU'}).json()
+        actual=next(r for r in dashboard['partner_universities'] if r['school_name']==partner.school_name)['location']
+        assert actual['geocode_status']==('needs_review' if status=='invalid' else status)
+        assert actual['latitude']==(48.1 if status=='verified' else None)
+        assert actual==expected.model_dump(mode='json')
+        life=client.get('/school-life-context',params={'school':partner.school_name,'home_school':'NCU'})
+        assert life.status_code==200
+>       assert life.json()['location']['latitude']==actual['latitude']
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'location'
+
+tests/test_integration_source_boundaries.py:33: KeyError
+------------------------------ Captured log call -------------------------------
+WARNING  exchange_info.university_locations:university_locations.py:72 Invalid university location in university_locations.jsonl at row 1
+WARNING  exchange_info.university_locations:university_locations.py:72 Invalid university location in university_locations.jsonl at row 1
+WARNING  exchange_info.university_locations:university_locations.py:72 Invalid university location in university_locations.jsonl at row 1
+WARNING  exchange_info.university_locations:university_locations.py:72 Invalid university location in university_locations.jsonl at row 1
+_________ test_api_dashboard_coverage_detail_and_life_agree_on_photos __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-26/test_api_dashboard_coverage_de0')
+
+    def test_api_dashboard_coverage_detail_and_life_agree_on_photos(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        dashboard = client.get("/student-dashboard", params={"school": "NCU"}).json()
+        assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 125
+>       assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 10
+E       assert 43 == 10
+E        +  where 43 = sum(<generator object test_api_dashboard_coverage_detail_and_life_agree_on_photos.<locals>.<genexpr> at 0x7f7b3ba39e50>)
+
+tests/test_ncu_completion.py:112: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_integration_source_boundaries.py::test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life[pending]
+FAILED tests/test_integration_source_boundaries.py::test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life[needs_review]
+FAILED tests/test_integration_source_boundaries.py::test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life[verified]
+FAILED tests/test_integration_source_boundaries.py::test_ncu_sidecar_respects_operator_reviews_in_dashboard_and_life[invalid]
+FAILED tests/test_ncu_completion.py::test_api_dashboard_coverage_detail_and_life_agree_on_photos
+5 failed, 83 passed in 47.15s

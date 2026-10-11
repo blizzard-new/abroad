@@ -1,0 +1,41 @@
+{
+  "command": [
+    "env",
+    "EXCHANGE_WARM_CACHES=1",
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "/workspace/recovery-tools-20261011/profile_memory.py",
+    "compact-final-warm-memory",
+    "--soak",
+    "--parallel",
+    "--translations",
+    "--burst",
+    "--browser",
+    "--burst-after-browser",
+    "--source-audits",
+    "--all-school-life",
+    "--budget-mib",
+    "460"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T12:15:28.181298+00:00",
+  "start_guard": {
+    "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+    "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+    "status": ""
+  },
+  "timeout_seconds": 2400,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "/workspace/recovery-tools-20261011/profile_memory.py": {
+      "sha256": "6f86e7bd529f2e4f7361626092a8d30c62268b62decc689cecd052c449925c06"
+    }
+  },
+  "exit_code": 1,
+  "finished_at": "2026-10-11T12:17:22.178105+00:00",
+  "end_guard": {
+    "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+    "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+    "status": ""
+  }
+}

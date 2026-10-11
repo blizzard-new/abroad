@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_ncu_integration.py",
+    "tests/test_ncu_completion.py",
+    "tests/test_integration_source_boundaries.py",
+    "tests/test_fit_signals.py::test_bundled_destination_profiles_yield_honest_budget_results",
+    "tests/test_school_completeness.py::test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T11:05:48.877660+00:00",
+  "start_guard": {
+    "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+    "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+    "status": "M src/exchange_info/ncu_student_view.py\n M tests/test_fit_signals.py\n M tests/test_school_completeness.py"
+  },
+  "timeout_seconds": 3600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-11T11:06:35.679330+00:00",
+  "end_guard": {
+    "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+    "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+    "status": "M src/exchange_info/ncu_student_view.py\n M tests/test_fit_signals.py\n M tests/test_school_completeness.py"
+  }
+}

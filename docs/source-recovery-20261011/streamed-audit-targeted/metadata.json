@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_ncu_snapshot_cache.py",
+    "tests/test_ncu_completion.py",
+    "tests/test_ncu_integration.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T11:50:37.127352+00:00",
+  "start_guard": {
+    "sha": "eaf4e1b975c80b6adad2d446a8610277bdba8bf9",
+    "tree": "729ee4eb8326cff06c8f94fbc29f792d1defcc15",
+    "status": ""
+  },
+  "timeout_seconds": 900,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-11T11:51:27.288548+00:00",
+  "end_guard": {
+    "sha": "eaf4e1b975c80b6adad2d446a8610277bdba8bf9",
+    "tree": "729ee4eb8326cff06c8f94fbc29f792d1defcc15",
+    "status": ""
+  }
+}

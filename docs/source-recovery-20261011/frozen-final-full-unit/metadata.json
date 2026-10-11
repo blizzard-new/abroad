@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "--ignore=tests/e2e",
+    "-q",
+    "-rs"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T12:30:16.771107+00:00",
+  "start_guard": {
+    "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+    "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+    "status": ""
+  },
+  "timeout_seconds": 2400,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {},
+  "exit_code": 0,
+  "finished_at": "2026-10-11T12:43:46.667029+00:00",
+  "end_guard": {
+    "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+    "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+    "status": ""
+  }
+}

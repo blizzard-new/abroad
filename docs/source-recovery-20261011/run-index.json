@@ -1,0 +1,1272 @@
+[
+  {
+    "name": "active-warmup-health",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": "M src/exchange_info/api.py\n M tests/test_catalogue_speed.py"
+    },
+    "end_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": "M src/exchange_info/api.py\n M tests/test_catalogue_speed.py"
+    },
+    "pytest_summary": [
+      "1 passed in 4.60s"
+    ]
+  },
+  {
+    "name": "bounded-memory-targeted",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "64e23349031e03771d625ace1ee9f9760f94dc55",
+      "tree": "b7080c3bb874e6d35f67ca4894c476290c6aaa21",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "64e23349031e03771d625ace1ee9f9760f94dc55",
+      "tree": "b7080c3bb874e6d35f67ca4894c476290c6aaa21",
+      "status": ""
+    },
+    "pytest_summary": [
+      "8 passed in 22.91s"
+    ]
+  },
+  {
+    "name": "bounded-source-audit-memory-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "64e23349031e03771d625ace1ee9f9760f94dc55",
+      "tree": "b7080c3bb874e6d35f67ca4894c476290c6aaa21",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "64e23349031e03771d625ace1ee9f9760f94dc55",
+      "tree": "b7080c3bb874e6d35f67ca4894c476290c6aaa21",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "browser-recovery-initial",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M docs/api/openapi.json\n M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/e2e/test_cgu_source_recovery.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "end_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M docs/api/openapi.json\n M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/e2e/test_cgu_source_recovery.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "pytest_summary": [
+      "2 failed, 2 passed in 13.82s"
+    ]
+  },
+  {
+    "name": "browser-recovery-r2",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M docs/api/openapi.json\n M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/e2e/test_cgu_source_recovery.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "end_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M docs/api/openapi.json\n M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/e2e/test_cgu_source_recovery.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "pytest_summary": [
+      "1 failed, 3 passed in 44.11s"
+    ]
+  },
+  {
+    "name": "browser-recovery-r3",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M docs/api/openapi.json\n M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/e2e/test_cgu_source_recovery.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "end_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M docs/api/openapi.json\n M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/e2e/test_cgu_source_recovery.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "pytest_summary": [
+      "4 passed in 13.85s"
+    ]
+  },
+  {
+    "name": "compact-completion-targeted",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+      "tree": "992233dd41166e2f7640f5d742e19affae95a1c6",
+      "status": "M src/exchange_info/api.py\n M src/exchange_info/ccu_completion.py\n M src/exchange_info/ccu_completion_sources.py\n M src/exchange_info/ccu_overseas.py\n M src/exchange_info/ccu_profile.py\n M src/exchange_info/life_context.py\n M src/exchange_info/ncu_student_view.py\n M tests/test_catalogue_memory.py\n?? src/exchange_info/json_stream.py\n?? src/exchange_info/source_integrity.py\n?? tests/test_scoped_life_memory.py"
+    },
+    "end_guard": {
+      "sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+      "tree": "992233dd41166e2f7640f5d742e19affae95a1c6",
+      "status": "M src/exchange_info/api.py\n M src/exchange_info/ccu_completion.py\n M src/exchange_info/ccu_completion_sources.py\n M src/exchange_info/ccu_overseas.py\n M src/exchange_info/ccu_profile.py\n M src/exchange_info/life_context.py\n M src/exchange_info/ncu_student_view.py\n M tests/test_catalogue_memory.py\n?? src/exchange_info/json_stream.py\n?? src/exchange_info/source_integrity.py\n?? tests/test_scoped_life_memory.py"
+    },
+    "pytest_summary": [
+      "23 passed in 11.26s"
+    ]
+  },
+  {
+    "name": "compact-final-cold-memory-command",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "compact-final-contracts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "compact-final-warm-memory-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "comparison-memory-985224fd-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+      "status": "archived src/tests snapshot; source-manifest.json records every file; no Git checkout"
+    },
+    "end_guard": {
+      "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+      "status": "archived src/tests snapshot; source-manifest.json records every file; no Git checkout"
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "final-contracts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "final-fixed-head-live-fetch",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "final-frozen-contracts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "final-frozen-delivery-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "final-full-unit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "pytest_summary": [
+      "2240 passed, 12 skipped in 633.12s (0:10:33)"
+    ]
+  },
+  {
+    "name": "final-live-source-command",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "final-ncu-browser",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "pytest_summary": [
+      "9 passed, 10 deselected in 280.68s (0:04:40)"
+    ]
+  },
+  {
+    "name": "final-release-live-fetch",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "final-scoped-memory-targeted",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+      "tree": "992233dd41166e2f7640f5d742e19affae95a1c6",
+      "status": "M src/exchange_info/api.py\n M src/exchange_info/ccu_completion_sources.py\n M src/exchange_info/ccu_overseas.py\n M src/exchange_info/ccu_profile.py\n M src/exchange_info/life_context.py\n M src/exchange_info/ncu_student_view.py\n M tests/test_catalogue_memory.py\n?? src/exchange_info/json_stream.py\n?? src/exchange_info/source_integrity.py\n?? tests/test_scoped_life_memory.py"
+    },
+    "end_guard": {
+      "sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+      "tree": "992233dd41166e2f7640f5d742e19affae95a1c6",
+      "status": "M src/exchange_info/api.py\n M src/exchange_info/ccu_completion_sources.py\n M src/exchange_info/ccu_overseas.py\n M src/exchange_info/ccu_profile.py\n M src/exchange_info/life_context.py\n M src/exchange_info/ncu_student_view.py\n M tests/test_catalogue_memory.py\n?? src/exchange_info/json_stream.py\n?? src/exchange_info/source_integrity.py\n?? tests/test_scoped_life_memory.py"
+    },
+    "pytest_summary": [
+      "98 passed in 44.42s"
+    ]
+  },
+  {
+    "name": "final-source-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "final-third-pass-source-parity",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "final-wheel-build",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "final-wheel-build-r2",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "fixed-985224fd-recovery-and-six-school",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+      "tree": "d90e41a228dda92e9c1c628045103d1c59e38706",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+      "tree": "d90e41a228dda92e9c1c628045103d1c59e38706",
+      "status": ""
+    },
+    "pytest_summary": [
+      "65 passed in 492.21s (0:08:12)"
+    ]
+  },
+  {
+    "name": "frozen-final-browser",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": [
+      "91 passed in 1063.04s (0:17:43)"
+    ]
+  },
+  {
+    "name": "frozen-final-full-unit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": [
+      "2287 passed, 12 skipped in 803.92s (0:13:23)"
+    ]
+  },
+  {
+    "name": "full-suite-three-failures-rerun",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+      "tree": "d90e41a228dda92e9c1c628045103d1c59e38706",
+      "status": "M docs/integration/cgu-source-recovery-20261011.md\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M tests/e2e/test_cgu_source_recovery.py\n M tests/test_cgu_catalogue_recovery.py\n M tests/test_school_photo_and_match.py"
+    },
+    "end_guard": {
+      "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+      "tree": "d90e41a228dda92e9c1c628045103d1c59e38706",
+      "status": "M docs/integration/cgu-source-recovery-20261011.md\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M tests/e2e/test_cgu_source_recovery.py\n M tests/test_cgu_catalogue_recovery.py\n M tests/test_school_photo_and_match.py"
+    },
+    "pytest_summary": [
+      "27 passed in 7.20s"
+    ]
+  },
+  {
+    "name": "integrated-browser",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "pytest_summary": [
+      "42 passed in 743.82s (0:12:23)"
+    ]
+  },
+  {
+    "name": "integrated-contracts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integrated-full-unit",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "pytest_summary": [
+      "2 failed, 2238 passed, 12 skipped in 730.61s (0:12:10)"
+    ]
+  },
+  {
+    "name": "integrated-memory-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integrated-source-audit-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integrated-source-audit-r2",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integrated-source-audit-r3",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integrated-streaming-memory-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integrated-targeted-initial",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "afd76931002f21fa05ddb98fb3b540adb269dc4c",
+      "tree": "9fe9fc892e04ab403594f9696c27354978612917",
+      "status": "?? tests/test_integration_source_boundaries.py"
+    },
+    "end_guard": {
+      "sha": "afd76931002f21fa05ddb98fb3b540adb269dc4c",
+      "tree": "9fe9fc892e04ab403594f9696c27354978612917",
+      "status": "?? tests/test_integration_source_boundaries.py"
+    },
+    "pytest_summary": [
+      "5 failed, 83 passed in 47.15s"
+    ]
+  },
+  {
+    "name": "integrated-targeted-r2",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "afd76931002f21fa05ddb98fb3b540adb269dc4c",
+      "tree": "9fe9fc892e04ab403594f9696c27354978612917",
+      "status": "M tests/e2e/test_ccu_completion.py\n M tests/e2e/test_ncu_completion.py\n M tests/test_ncu_completion.py\n?? tests/test_integration_source_boundaries.py"
+    },
+    "end_guard": {
+      "sha": "afd76931002f21fa05ddb98fb3b540adb269dc4c",
+      "tree": "9fe9fc892e04ab403594f9696c27354978612917",
+      "status": "M tests/e2e/test_ccu_completion.py\n M tests/e2e/test_ncu_completion.py\n M tests/test_ncu_completion.py\n?? tests/test_integration_source_boundaries.py"
+    },
+    "pytest_summary": [
+      "6 passed in 3.35s"
+    ]
+  },
+  {
+    "name": "latest-data-before-memory-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "live-source-run",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M docs/api/openapi.json\n M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_advisor.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/e2e/test_cgu_source_recovery.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "end_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M docs/api/openapi.json\n M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_advisor.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/e2e/test_cgu_source_recovery.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "loader-benchmark-old",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "loader-benchmark-streaming",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "6c8b83827c8889e6d71d8578fd997c96ba38f13e",
+      "tree": "74a615f5565f1e0e27667ce695a21b1766f18353",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "memory-985224fd-baseline-command",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+      "tree": "d90e41a228dda92e9c1c628045103d1c59e38706",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+      "tree": "d90e41a228dda92e9c1c628045103d1c59e38706",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "memory-bounded-two-diagnostic-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "memory-four-workers-one-catalogue-diagnostic-command",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "memory-held-diagnostic-command",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "milestone-browser",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "pytest_summary": [
+      "2 failed, 76 passed in 1000.91s (0:16:40)"
+    ]
+  },
+  {
+    "name": "milestone-contracts",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "8b77c468423d461bea0ea6bba9fa977387c838b3",
+      "tree": "0853580feebaf5591de3135f403f4340f730e905",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8b77c468423d461bea0ea6bba9fa977387c838b3",
+      "tree": "0853580feebaf5591de3135f403f4340f730e905",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "milestone-contracts-r2",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "milestone-delivery-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "milestone-delivery-audit-r2",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "milestone-full-unit",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "pytest_summary": [
+      "1 failed, 2250 passed, 12 skipped in 714.52s (0:11:54)"
+    ]
+  },
+  {
+    "name": "milestone-memory-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "milestone-ncu-count-diagnostic",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "pytest_summary": [
+      "1 failed in 1.51s"
+    ]
+  },
+  {
+    "name": "milestone-ntu-archives",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "8b77c468423d461bea0ea6bba9fa977387c838b3",
+      "tree": "0853580feebaf5591de3135f403f4340f730e905",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8b77c468423d461bea0ea6bba9fa977387c838b3",
+      "tree": "0853580feebaf5591de3135f403f4340f730e905",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "milestone-photo-license-live",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "3a4977c9281e54f9aba5b3be991c58a54205fc9e",
+      "tree": "6173689d323be49e5d05e46dda7c8aef37260afb",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "milestone-targeted",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "8b77c468423d461bea0ea6bba9fa977387c838b3",
+      "tree": "0853580feebaf5591de3135f403f4340f730e905",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "8b77c468423d461bea0ea6bba9fa977387c838b3",
+      "tree": "0853580feebaf5591de3135f403f4340f730e905",
+      "status": ""
+    },
+    "pytest_summary": [
+      "1 failed, 80 passed in 54.54s"
+    ]
+  },
+  {
+    "name": "ncu-streaming-and-counts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": "M src/exchange_info/ncu_student_view.py\n M tests/test_fit_signals.py\n M tests/test_school_completeness.py"
+    },
+    "end_guard": {
+      "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+      "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+      "status": "M src/exchange_info/ncu_student_view.py\n M tests/test_fit_signals.py\n M tests/test_school_completeness.py"
+    },
+    "pytest_summary": [
+      "126 passed in 40.49s"
+    ]
+  },
+  {
+    "name": "ntu-third-fixed-input-audit",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ntu-third-fixed-input-audit-r2",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "pool-final-cold-memory-command",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "pool-final-warm-memory-command",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "0d3d671ef92344970e4de1797a81b050235eecbd",
+      "tree": "fabc7e4a34d711a5828ada2d3eccae1d0e16b548",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "recovery-full-unit-initial",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M docs/api/openapi.json\n M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "end_guard": {
+      "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+      "tree": "d90e41a228dda92e9c1c628045103d1c59e38706",
+      "status": ""
+    },
+    "pytest_summary": [
+      "3 failed, 2193 passed, 12 skipped in 535.82s (0:08:55)"
+    ]
+  },
+  {
+    "name": "recovery-unit-initial",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "end_guard": {
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+      "status": "M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/test_cgu_catalogue_recovery.py"
+    },
+    "pytest_summary": [
+      "46 passed in 7.58s"
+    ]
+  },
+  {
+    "name": "repaired-browser",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "pytest_summary": [
+      "78 passed in 979.72s (0:16:19)"
+    ]
+  },
+  {
+    "name": "repaired-cold-full-memory-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "repaired-contracts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "repaired-full-unit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "pytest_summary": [
+      "2264 passed, 12 skipped in 748.02s (0:12:28)"
+    ]
+  },
+  {
+    "name": "repaired-warm-full-memory-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "scoped-life-memory-probe-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "streamed-audit-targeted",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "eaf4e1b975c80b6adad2d446a8610277bdba8bf9",
+      "tree": "729ee4eb8326cff06c8f94fbc29f792d1defcc15",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eaf4e1b975c80b6adad2d446a8610277bdba8bf9",
+      "tree": "729ee4eb8326cff06c8f94fbc29f792d1defcc15",
+      "status": ""
+    },
+    "pytest_summary": [
+      "135 passed in 45.75s"
+    ]
+  },
+  {
+    "name": "streamed-hash-memory-probe-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "streamed-ncu-full-payload-parity",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "eaf4e1b975c80b6adad2d446a8610277bdba8bf9",
+      "tree": "729ee4eb8326cff06c8f94fbc29f792d1defcc15",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eaf4e1b975c80b6adad2d446a8610277bdba8bf9",
+      "tree": "729ee4eb8326cff06c8f94fbc29f792d1defcc15",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "streamed-source-audit-memory-command",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "eaf4e1b975c80b6adad2d446a8610277bdba8bf9",
+      "tree": "729ee4eb8326cff06c8f94fbc29f792d1defcc15",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "eaf4e1b975c80b6adad2d446a8610277bdba8bf9",
+      "tree": "729ee4eb8326cff06c8f94fbc29f792d1defcc15",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "two-worker-scoped-memory-probe-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "eb4a5cddd03b6fc20a13794fd737780062a4a10c",
+      "tree": "9902bca0f329d248cb8dafe72bdcfc9aed74eb83",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "23365f9c58b059f1da6fb35b3554576ca124bb59",
+      "tree": "992233dd41166e2f7640f5d742e19affae95a1c6",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "warm-pool-targeted",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": "M src/exchange_info/api.py\n M tests/test_catalogue_speed.py"
+    },
+    "end_guard": {
+      "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+      "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+      "status": "M src/exchange_info/api.py\n M tests/test_catalogue_speed.py"
+    },
+    "pytest_summary": [
+      "19 passed in 12.18s"
+    ]
+  }
+]

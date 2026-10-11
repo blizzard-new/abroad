@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_integration_source_boundaries.py",
+    "tests/test_ncu_completion.py::test_api_dashboard_coverage_detail_and_life_agree_on_photos",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T10:48:31.094075+00:00",
+  "start_guard": {
+    "sha": "afd76931002f21fa05ddb98fb3b540adb269dc4c",
+    "tree": "9fe9fc892e04ab403594f9696c27354978612917",
+    "status": "M tests/e2e/test_ccu_completion.py\n M tests/e2e/test_ncu_completion.py\n M tests/test_ncu_completion.py\n?? tests/test_integration_source_boundaries.py"
+  },
+  "timeout_seconds": 3600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-11T10:48:36.866369+00:00",
+  "end_guard": {
+    "sha": "afd76931002f21fa05ddb98fb3b540adb269dc4c",
+    "tree": "9fe9fc892e04ab403594f9696c27354978612917",
+    "status": "M tests/e2e/test_ccu_completion.py\n M tests/e2e/test_ncu_completion.py\n M tests/test_ncu_completion.py\n?? tests/test_integration_source_boundaries.py"
+  }
+}

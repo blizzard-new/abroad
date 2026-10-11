@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_integration_source_boundaries.py",
+    "tests/test_tku_full_census.py",
+    "tests/test_tku_support.py",
+    "tests/test_fit_signals.py",
+    "tests/test_school_completeness.py",
+    "tests/test_ntu_completion.py",
+    "tests/test_ntu_destination_enrichment.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T11:23:05.705308+00:00",
+  "start_guard": {
+    "sha": "8b77c468423d461bea0ea6bba9fa977387c838b3",
+    "tree": "0853580feebaf5591de3135f403f4340f730e905",
+    "status": ""
+  },
+  "timeout_seconds": 1200,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-11T11:24:05.699221+00:00",
+  "end_guard": {
+    "sha": "8b77c468423d461bea0ea6bba9fa977387c838b3",
+    "tree": "0853580feebaf5591de3135f403f4340f730e905",
+    "status": ""
+  }
+}

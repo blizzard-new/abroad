@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_integrated_sources.py", line 42, in <module>
+    assert row['license_url'].replace('http://','https://').rstrip('/') == expected,(row['school_name'],row['license_url'],expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('魏瑪包豪斯大學 Bauhaus-Universitat Weimar', 'https://creativecommons.org/licenses/by-sa/2.0/de/deed.en', 'https://creativecommons.org/licenses/by-sa/2.0/de')

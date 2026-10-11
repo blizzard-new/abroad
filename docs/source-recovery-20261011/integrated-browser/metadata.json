@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/e2e/test_cgu_source_recovery.py",
+    "tests/e2e/test_six_school_visual_coverage.py",
+    "tests/e2e/test_ccu_completion.py",
+    "tests/e2e/test_ncu_completion.py",
+    "tests/e2e/test_ntu_destination_enrichment.py",
+    "tests/e2e/test_ntu_official_changes.py",
+    "tests/e2e/test_open_catalog.py",
+    "tests/e2e/test_document_flow.py",
+    "tests/e2e/test_application_workspace.py",
+    "tests/e2e/test_multi_plan_workspace.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T10:50:06.679134+00:00",
+  "start_guard": {
+    "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+    "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+    "status": ""
+  },
+  "timeout_seconds": 3600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-11T11:02:36.899469+00:00",
+  "end_guard": {
+    "sha": "b2aaee8f7cc770a550d18b19a9f213d34cccd978",
+    "tree": "6a1c010eaa96ea99bc18563f2dc509ebd795c28f",
+    "status": ""
+  }
+}

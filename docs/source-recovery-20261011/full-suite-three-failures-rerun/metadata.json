@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_advisor.py::test_advisor_and_document_check_api",
+    "tests/test_ncu_integration.py::test_bundle_rebuilds_exactly_from_tracked_source_data",
+    "tests/test_school_photo_and_match.py::test_match_missing_profile_fields_and_real_mismatches",
+    "tests/test_cgu_catalogue_recovery.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T10:43:26.990868+00:00",
+  "start_guard": {
+    "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+    "tree": "d90e41a228dda92e9c1c628045103d1c59e38706",
+    "status": "M docs/integration/cgu-source-recovery-20261011.md\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M tests/e2e/test_cgu_source_recovery.py\n M tests/test_cgu_catalogue_recovery.py\n M tests/test_school_photo_and_match.py"
+  },
+  "timeout_seconds": 3600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-11T10:43:36.474924+00:00",
+  "end_guard": {
+    "sha": "985224fd01748a6c591fc183362847d6d7d21c35",
+    "tree": "d90e41a228dda92e9c1c628045103d1c59e38706",
+    "status": "M docs/integration/cgu-source-recovery-20261011.md\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M tests/e2e/test_cgu_source_recovery.py\n M tests/test_cgu_catalogue_recovery.py\n M tests/test_school_photo_and_match.py"
+  }
+}

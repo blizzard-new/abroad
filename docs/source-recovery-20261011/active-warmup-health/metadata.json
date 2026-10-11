@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_catalogue_speed.py::test_active_warmup_keeps_health_responsive",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T12:21:46.932948+00:00",
+  "start_guard": {
+    "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+    "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+    "status": "M src/exchange_info/api.py\n M tests/test_catalogue_speed.py"
+  },
+  "timeout_seconds": 300,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {},
+  "exit_code": 0,
+  "finished_at": "2026-10-11T12:21:53.900580+00:00",
+  "end_guard": {
+    "sha": "1a3181fa32898954426a7133757a0d18b5297c21",
+    "tree": "9bfe875155253e10ae11360211398ab0096a29c1",
+    "status": "M src/exchange_info/api.py\n M tests/test_catalogue_speed.py"
+  }
+}

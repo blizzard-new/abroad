@@ -1,0 +1,72 @@
+CONFTEST LOADED!
+ssss.................................................................... [  3%]
+........................................................................ [  6%]
+..............s....................................ss................... [  9%]
+........................................................................ [ 12%]
+........................................................................ [ 15%]
+........................................................................ [ 19%]
+........................................................................ [ 22%]
+........................................................................ [ 25%]
+........................................................................ [ 28%]
+...........................................................sss.......... [ 31%]
+......s................................................................. [ 35%]
+........................................................................ [ 38%]
+........................................................................ [ 41%]
+........................................................................ [ 44%]
+.................................................F...................... [ 47%]
+........................................................................ [ 51%]
+........................................................................ [ 54%]
+........................................................................ [ 57%]
+........................................................................ [ 60%]
+........................................................................ [ 63%]
+........................................................................ [ 67%]
+........................................................................ [ 70%]
+........................................................................ [ 73%]
+........................................................................ [ 76%]
+..................................s..................................... [ 79%]
+........................................................................ [ 83%]
+..........................................F............................. [ 86%]
+........................................................................ [ 89%]
+........................................................................ [ 92%]
+........................................................................ [ 95%]
+........................................................................ [ 99%]
+....................                                                     [100%]
+=================================== FAILURES ===================================
+________ test_bundled_destination_profiles_yield_honest_budget_results _________
+
+    def test_bundled_destination_profiles_yield_honest_budget_results():
+        profiles = storage.load_destination_profiles()
+>       assert len(profiles) == 844
+E       AssertionError: assert 893 == 844
+E        +  where 893 = len([DestinationProfile(home_university='國立臺北大學', school_name='ESIC大學(ESIC University)', country='西班牙', city=None, cost_su...erified', coverage_note='已實際讀取並摘要 1 個合作校官方生活資訊頁，整理 3 個生活面向。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。'), ...])
+
+tests/test_fit_signals.py:119: AssertionError
+_ test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has _
+
+    def test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has():
+        profiles = storage.load_destination_profiles()
+        scores = []
+        for profile in profiles:
+            result = build_school_completeness(
+                PartnerUniversity(program_type="交換", school_name=profile.school_name, source_url=SOURCE), profile, None)
+            expected_fields = 17 if profile.home_university == "國立中央大學" else 10
+            assert 0 <= result.score <= 1 and result.total_count == len(result.items) == expected_fields
+            if profile.home_university == "國立中央大學":
+                assert by_key(result)["quota"].status == "needs_confirmation"
+            else:
+                assert by_key(result)["workflow"].status == "missing"
+            scores.append(result.score)
+        # New schools add profiles; explicitly preserve all existing home scopes.
+>       assert Counter(p.home_university for p in profiles)=={'長庚大學':77,'國立臺北大學':206,'國立臺灣大學':288,'國立中央大學':214,'國立中正大學':55,'淡江大學':4}
+E       AssertionError: assert Counter({'國立臺...7, '淡江大學': 4}) == {'長庚大學': 77, ...大學': 214, ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Differing items:
+E         {'國立中正大學': 104} != {'國立中正大學': 55}
+E         Use -v to get more diff
+
+tests/test_school_completeness.py:85: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_fit_signals.py::test_bundled_destination_profiles_yield_honest_budget_results
+FAILED tests/test_school_completeness.py::test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has
+2 failed, 2238 passed, 12 skipped in 730.61s (0:12:10)

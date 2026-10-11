@@ -1,0 +1,152 @@
+ .../282-school-ten-field-coverage.json             |     86 +
+ ...\270_\345\217\257\345\233\236\345\241\253.xlsx" |    Bin 647405 -> 1040947 bytes
+ .../46-life-gap-source-origin-comparison.json      |    614 +
+ docs/ntu-completion-20261011/README.md             |      2 +-
+ docs/ntu-completion-20261011/all-school-review.csv |   8081 +-
+ .../ntu-completion-20261011/all-school-review.json |  53915 +++++-
+ .../daily-baseline-2026-10-11.json                 |    170 +-
+ .../deliverables-manifest.json                     |    640 +-
+ .../original-129-semantic-dispositions.json        |  18287 ++
+ docs/ntu-completion-20261011/quality-review.ipynb  |    122 +-
+ .../readable-body-work-queue.json                  | 139569 ++++++++++++++
+ .../remaining-data-exceptions.json                 |   3939 +-
+ .../remaining-independent-host-life-research.json  |    502 +
+ .../remaining-semantic-review.json                 | 139654 +++++++++++++-
+ docs/ntu-completion-20261011/review-summary.json   |    155 +-
+ .../stage2-return-package.zip                      |    Bin 0 -> 1884162 bytes
+ .../stage3/282-school-ten-field-coverage.json      |     86 +
+ ...\270_\345\217\257\345\233\236\345\241\253.xlsx" |    Bin 0 -> 1040947 bytes
+ .../46-life-gap-source-origin-comparison.json      |    614 +
+ docs/ntu-completion-20261011/stage3/README.md      |      3 +
+ .../stage3/all-school-review.csv                   |   4055 +
+ .../stage3/all-school-review.json                  | 181797 ++++++++++++++++++
+ .../stage3/browser-pr8/ccu-1440.json               |      9 +
+ .../stage3/browser-pr8/ccu-390.json                |      9 +
+ .../stage3/browser-pr8/ccu-home-1440.png           |    Bin 0 -> 403542 bytes
+ .../stage3/browser-pr8/ccu-home-390.png            |    Bin 0 -> 200249 bytes
+ .../stage3/browser-pr8/ccu-map-1440.png            |    Bin 0 -> 471978 bytes
+ .../stage3/browser-pr8/ccu-map-390.png             |    Bin 0 -> 232266 bytes
+ .../stage3/browser-pr8/ccu-photo-missing-1440.png  |    Bin 0 -> 487613 bytes
+ .../stage3/browser-pr8/ccu-photo-missing-390.png   |    Bin 0 -> 155662 bytes
+ .../stage3/browser-pr8/ccu-photo-verified-1440.png |    Bin 0 -> 494141 bytes
+ .../stage3/browser-pr8/ccu-photo-verified-390.png  |    Bin 0 -> 163806 bytes
+ .../stage3/browser-pr8/cgu-1440.json               |      9 +
+ .../stage3/browser-pr8/cgu-390.json                |      9 +
+ .../stage3/browser-pr8/cgu-home-1440.png           |    Bin 0 -> 406802 bytes
+ .../stage3/browser-pr8/cgu-home-390.png            |    Bin 0 -> 201298 bytes
+ .../stage3/browser-pr8/cgu-map-1440.png            |    Bin 0 -> 470358 bytes
+ .../stage3/browser-pr8/cgu-map-390.png             |    Bin 0 -> 232209 bytes
+ .../stage3/browser-pr8/cgu-photo-verified-1440.png |    Bin 0 -> 502150 bytes
+ .../stage3/browser-pr8/cgu-photo-verified-390.png  |    Bin 0 -> 165192 bytes
+ .../stage3/browser-pr8/current-reference-1440.png  |    Bin 0 -> 845430 bytes
+ .../stage3/browser-pr8/current-reference-390.png   |    Bin 0 -> 275850 bytes
+ .../stage3/browser-pr8/ncu-1440.json               |      9 +
+ .../stage3/browser-pr8/ncu-390.json                |      9 +
+ .../stage3/browser-pr8/ncu-home-1440.png           |    Bin 0 -> 409206 bytes
+ .../stage3/browser-pr8/ncu-home-390.png            |    Bin 0 -> 202396 bytes
+ .../stage3/browser-pr8/ncu-map-1440.png            |    Bin 0 -> 471498 bytes
+ .../stage3/browser-pr8/ncu-map-390.png             |    Bin 0 -> 231248 bytes
+ .../stage3/browser-pr8/ncu-photo-missing-1440.png  |    Bin 0 -> 442550 bytes
+ .../stage3/browser-pr8/ncu-photo-missing-390.png   |    Bin 0 -> 156396 bytes
+ .../stage3/browser-pr8/ncu-photo-verified-1440.png |    Bin 0 -> 487270 bytes
+ .../stage3/browser-pr8/ncu-photo-verified-390.png  |    Bin 0 -> 162264 bytes
+ .../stage3/browser-pr8/ntpu-1440.json              |      9 +
+ .../stage3/browser-pr8/ntpu-390.json               |      9 +
+ .../stage3/browser-pr8/ntpu-home-1440.png          |    Bin 0 -> 410743 bytes
+ .../stage3/browser-pr8/ntpu-home-390.png           |    Bin 0 -> 202556 bytes
+ .../stage3/browser-pr8/ntpu-map-1440.png           |    Bin 0 -> 474265 bytes
+ .../stage3/browser-pr8/ntpu-map-390.png            |    Bin 0 -> 233587 bytes
+ .../stage3/browser-pr8/ntpu-photo-missing-1440.png |    Bin 0 -> 509114 bytes
+ .../stage3/browser-pr8/ntpu-photo-missing-390.png  |    Bin 0 -> 153965 bytes
+ .../browser-pr8/ntpu-photo-verified-1440.png       |    Bin 0 -> 506891 bytes
+ .../stage3/browser-pr8/ntpu-photo-verified-390.png |    Bin 0 -> 156673 bytes
+ .../stage3/browser-pr8/ntu-1440.json               |      9 +
+ .../stage3/browser-pr8/ntu-390.json                |      9 +
+ .../stage3/browser-pr8/ntu-home-1440.png           |    Bin 0 -> 408633 bytes
+ .../stage3/browser-pr8/ntu-home-390.png            |    Bin 0 -> 202130 bytes
+ .../stage3/browser-pr8/ntu-map-1440.png            |    Bin 0 -> 475394 bytes
+ .../stage3/browser-pr8/ntu-map-390.png             |    Bin 0 -> 235151 bytes
+ .../stage3/browser-pr8/ntu-photo-missing-1440.png  |    Bin 0 -> 489502 bytes
+ .../stage3/browser-pr8/ntu-photo-missing-390.png   |    Bin 0 -> 153543 bytes
+ .../browser-pr8/ntu-photo-needs_review-1440.png    |    Bin 0 -> 492135 bytes
+ .../browser-pr8/ntu-photo-needs_review-390.png     |    Bin 0 -> 156565 bytes
+ .../stage3/browser-pr8/ntu-photo-verified-1440.png |    Bin 0 -> 443351 bytes
+ .../stage3/browser-pr8/ntu-photo-verified-390.png  |    Bin 0 -> 167026 bytes
+ .../stage3/browser-pr8/tku-1440.json               |      9 +
+ .../stage3/browser-pr8/tku-390.json                |      9 +
+ .../stage3/browser-pr8/tku-home-1440.png           |    Bin 0 -> 404348 bytes
+ .../stage3/browser-pr8/tku-home-390.png            |    Bin 0 -> 200569 bytes
+ .../stage3/browser-pr8/tku-map-1440.png            |    Bin 0 -> 466529 bytes
+ .../stage3/browser-pr8/tku-map-390.png             |    Bin 0 -> 230179 bytes
+ .../stage3/browser-pr8/tku-photo-missing-1440.png  |    Bin 0 -> 503450 bytes
+ .../stage3/browser-pr8/tku-photo-missing-390.png   |    Bin 0 -> 159470 bytes
+ .../stage3/browser-pr8/tku-photo-verified-1440.png |    Bin 0 -> 505159 bytes
+ .../stage3/browser-pr8/tku-photo-verified-390.png  |    Bin 0 -> 167413 bytes
+ .../stage3/browser/upei-reference-1440.png         |    Bin 0 -> 376619 bytes
+ .../stage3/browser/upei-reference-390.png          |    Bin 0 -> 118271 bytes
+ .../stage3/daily-baseline-2026-10-11.json          |    253 +
+ .../stage3/deliverables-manifest.json              |    728 +
+ .../stage3/original-129-semantic-dispositions.json |  18287 ++
+ .../stage3/quality-review.ipynb                    |     96 +
+ .../stage3/readable-body-work-queue.json           | 139569 ++++++++++++++
+ .../stage3/remaining-data-exceptions.json          |   3093 +
+ .../remaining-independent-host-life-research.json  |    502 +
+ .../stage3/remaining-semantic-review.json          | 139569 ++++++++++++++
+ .../stage3/review-summary.json                     |    361 +
+ .../stage3/validation/288-school-acceptance.json   |   4034 +
+ .../validation/archive-verification-final.json     |      1 +
+ .../stage3/validation/browser-final.log            |      3 +
+ .../cgu-after-full/cgu-live-double-exact-gviz.json |      2 +
+ .../cgu-live-exact-source-check.json               |     24 +
+ .../cgu-live-exchange-exact-gviz.json              |      2 +
+ .../validation/cgu-after-full/check_cgu_live.py    |     11 +
+ .../cgu-live-double-exact-gviz.json                |      2 +
+ .../cgu-live-exact-source-check.json               |     24 +
+ .../cgu-live-exchange-exact-gviz.json              |      2 +
+ .../validation/cgu-before-full/check_cgu_live.py   |     11 +
+ .../stage3/validation/classification-final.log     |      3 +
+ .../stage3/validation/focused-current-metadata.log |      4 +
+ .../stage3/validation/focused-final.log            |      4 +
+ .../validation/focused-initial-count-mismatch.log  |     17 +
+ .../stage3/validation/full-regression-final.log    |     33 +
+ .../full-regression-source-snapshot.json           |  24569 +++
+ .../stage3/validation/pr8-combined-browser.log     |      3 +
+ .../stage3/validation/pr8-combined-focused.log     |      3 +
+ .../stage3/validation/pr8-intersection.json        |     96 +
+ .../stage3/validation/scope-and-rebuild.json       |    222 +
+ .../stage3/validation/summary.json                 |    139 +
+ ...247\243\346\261\272\345\240\261\345\221\212.md" |     66 +
+ ...0\270_\345\217\257\345\233\236\345\241\253.zip" |    Bin 0 -> 20532930 bytes
+ .../validation/288-school-acceptance.json          |    992 +-
+ .../validation/archive-verification-final.json     |      2 +-
+ .../validation/browser-final.log                   |      2 +-
+ .../validation/full-regression-final.log           |     14 +-
+ .../validation/scope-and-rebuild.json              |    132 +-
+ .../validation/summary.json                        |    138 +-
+ ...247\243\346\261\272\345\240\261\345\221\212.md" |    116 +-
+ ...0\270_\345\217\257\345\233\236\345\241\253.zip" |    Bin 1884162 -> 20532930 bytes
+ scripts/audit_ntu_completion.py                    |      4 +-
+ scripts/export_ntu_completion_report.py            |     54 +-
+ scripts/verify_ntu_reviewed_source_archives.py     |     15 +-
+ sources/ntu/completion-2026-10-11.json             |   5371 +-
+ sources/ntu/host-access-current-2026-10-11.json.gz |    Bin 533230 -> 541127 bytes
+ .../reviewed-source-bodies-current-manifest.json   |   1326 +-
+ .../reviewed-source-bodies-stage2-manifest.json    |   2221 +
+ ...wed-source-bodies-stage3-2026-10-11-part-07.zip |    Bin 0 -> 3647979 bytes
+ ...wed-source-bodies-stage3-2026-10-11-part-08.zip |    Bin 0 -> 6190932 bytes
+ ...wed-source-bodies-stage3-2026-10-11-part-09.zip |    Bin 0 -> 14618640 bytes
+ ...wed-source-bodies-stage3-2026-10-11-part-10.zip |    Bin 0 -> 1086495 bytes
+ ...wed-source-bodies-stage3-2026-10-11-part-11.zip |    Bin 0 -> 18371330 bytes
+ ...wed-source-bodies-stage3-2026-10-11-part-12.zip |    Bin 0 -> 6409974 bytes
+ .../ntu/semantic-review-current-2026-10-11.json    |   3648 +
+ .../official_data/ntu/catalog-completeness.json    |      8 +-
+ .../official_data/ntu/destination_profiles.jsonl   |    128 +-
+ .../official_data/ntu/import_provenance.json       |      8 +-
+ src/exchange_info/official_data/ntu/partners.jsonl |    128 +-
+ .../official_data/ntu/student_life.jsonl           |    348 +-
+ .../official_data/ntu/verification_status.json     |   3530 +-
+ src/exchange_info/static/assets/school-images.json |      2 +-
+ tests/test_ntu_completion.py                       |      2 +-
+ tests/test_ntu_destination_enrichment.py           |      2 +-
+ tests/test_ntu_review_classification.py            |     54 +
+ 151 files changed, 891291 insertions(+), 11086 deletions(-)

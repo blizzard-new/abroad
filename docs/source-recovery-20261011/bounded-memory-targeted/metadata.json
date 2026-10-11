@@ -1,0 +1,31 @@
+{
+  "command": [
+    "env",
+    "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/workspace/integration-tools/browsers/chromium-1234/chrome-linux64/chrome",
+    "VISUAL_EVIDENCE_DIR=/workspace/recovery-evidence-20261011/bounded-photo-images",
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_catalogue_memory.py",
+    "tests/test_ncu_completion.py::test_api_dashboard_coverage_detail_and_life_agree_on_photos",
+    "tests/e2e/test_integrated_reviewed_photos.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T11:47:37.580888+00:00",
+  "start_guard": {
+    "sha": "64e23349031e03771d625ace1ee9f9760f94dc55",
+    "tree": "b7080c3bb874e6d35f67ca4894c476290c6aaa21",
+    "status": ""
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-11T11:48:03.790336+00:00",
+  "end_guard": {
+    "sha": "64e23349031e03771d625ace1ee9f9760f94dc55",
+    "tree": "b7080c3bb874e6d35f67ca4894c476290c6aaa21",
+    "status": ""
+  }
+}

@@ -1,0 +1,101 @@
+ docs/api/openapi.json                              |     53 +
+ .../browser-asset-evidence-manifest.json           |     22 +
+ .../licensed-campus-detail-1280.json               |    186 +
+ .../licensed-campus-detail-1280.png                |    Bin 0 -> 872193 bytes
+ .../licensed-campus-detail-390.json                |    186 +
+ .../licensed-campus-detail-390.png                 |    Bin 0 -> 287938 bytes
+ .../remaining-browser-final.xml                    |      1 +
+ docs/tku-census-evidence-20261011/shared-final.xml |      1 +
+ .../test-case-results.json                         |  18767 ++
+ .../tku-assets-final-browser.xml                   |      1 +
+ .../tku-final-browser.xml                          |      1 +
+ .../tku-final-unit.xml                             |      1 +
+ .../unit-isolated-final.xml                        |      1 +
+ docs/tku-full-census-20261011.md                   |     39 +
+ docs/tku-full-census-validation-20261011.json      |    190 +
+ scripts/audit_tku_full_census.py                   |     74 +
+ scripts/build_tku_campus_assets.py                 |     88 +
+ scripts/build_tku_catalog.py                       |      3 +
+ scripts/build_tku_census_audit.py                  |    146 +
+ scripts/build_tku_census_profiles.py               |     54 +
+ scripts/build_tku_curated_references.py            |     77 +
+ scripts/build_tku_japanese_first_round.py          |     75 +
+ scripts/build_tku_public_references.py             |     89 +
+ scripts/capture_tku_campus_candidates.py           |    107 +
+ scripts/capture_tku_census_hosts.py                |    196 +
+ scripts/capture_tku_commons_campuses.py            |     59 +
+ scripts/pack_tku_census_evidence.py                |     46 +
+ scripts/refresh_tku_partner_census.py              |     91 +
+ scripts/tku_baseline_assets.py                     |     47 +
+ scripts/tku_capture_io.py                          |     55 +
+ src/exchange_info/api.py                           |     24 +-
+ .../official_data/tku/campus_asset_manifest.json   |    434 +
+ .../tku/campus_asset_visual_review.json            |     86 +
+ .../official_data/tku/campus_candidates.json       |   2761 +
+ .../tku/campus_location_manifest.json              |     74 +
+ .../tku/campus_source_candidates/.gitignore        |      3 +
+ .../official_data/tku/capture_pack_manifest.json   |  12994 +
+ .../official_data/tku/capture_packs/.gitignore     |      2 +
+ .../capture_packs/tku-public-captures-000.zip.000  |    Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-000.zip.001  |    Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-000.zip.002  |    Bin 0 -> 2565098 bytes
+ .../capture_packs/tku-public-captures-001.zip.000  |    Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-001.zip.001  |    Bin 0 -> 8479171 bytes
+ .../capture_packs/tku-public-captures-002.zip.000  |    Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-002.zip.001  |    Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-002.zip.002  |    Bin 0 -> 5659206 bytes
+ .../capture_packs/tku-public-captures-003.zip.000  |    Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-003.zip.001  |    Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-003.zip.002  |    Bin 0 -> 1517204 bytes
+ .../capture_packs/tku-public-captures-004.zip.000  |    Bin 0 -> 9437184 bytes
+ .../capture_packs/tku-public-captures-004.zip.001  |    Bin 0 -> 2947086 bytes
+ .../census_home_sources/jp-first-2027-guide.json   |     89 +
+ .../census_home_sources/jp-first-2027-guide.pdf    |    Bin 0 -> 1363982 bytes
+ .../jp-first-notice-22353-check.json               |      8 +
+ .../tku/census_home_sources/notices-20261011.json  |  19076 ++
+ .../official_data/tku/census_sources/.gitignore    |      3 +
+ .../tku/commons_campus_candidates/.gitignore       |      3 +
+ .../official_data/tku/commons_campus_index.json    |   4906 +
+ .../official_data/tku/curated_partner_facts.json   |    395 +
+ .../official_data/tku/curated_source_checks.json   |     72 +
+ .../official_data/tku/destination_profiles.jsonl   |    283 +
+ .../tku/earlier_round_programmes.jsonl             |     25 +
+ .../official_data/tku/full_census_acceptance.json  |  49339 ++++
+ .../official_data/tku/full_census_audit.json       | 221366 ++++++++++++++++++
+ .../official_data/tku/full_census_baseline.json    | 133097 +++++++++++
+ .../tku/host_census_capture_index.json             |  23099 ++
+ .../tku/host_census_sources/.gitignore             |      3 +
+ .../tku/meiji_2027_attachment_checks.json          |     67 +
+ .../official_data/tku/partner_census.jsonl         |    286 +
+ .../official_data/tku/partner_enrichment.jsonl     |    287 +
+ src/exchange_info/school_content.py                |      4 +
+ .../static/assets/tku-campuses/tku-sister-274.jpg  |    Bin 0 -> 339738 bytes
+ .../static/assets/tku-campuses/tku-sister-30.jpg   |    Bin 0 -> 265534 bytes
+ .../static/assets/tku-campuses/tku-sister-327.jpg  |    Bin 0 -> 599485 bytes
+ .../static/assets/tku-campuses/tku-sister-329.jpg  |    Bin 0 -> 10693932 bytes
+ .../static/assets/tku-campuses/tku-sister-336.jpg  |    Bin 0 -> 1858518 bytes
+ .../static/assets/tku-campuses/tku-sister-337.jpg  |    Bin 0 -> 328835 bytes
+ .../static/assets/tku-campuses/tku-sister-338.jpg  |    Bin 0 -> 856080 bytes
+ .../static/assets/tku-campuses/tku-sister-34.jpg   |    Bin 0 -> 61091 bytes
+ .../static/assets/tku-campuses/tku-sister-340.jpg  |    Bin 0 -> 720939 bytes
+ .../static/assets/tku-campuses/tku-sister-341.jpg  |    Bin 0 -> 238865 bytes
+ .../static/assets/tku-campuses/tku-sister-342.jpg  |    Bin 0 -> 708019 bytes
+ .../static/assets/tku-campuses/tku-sister-343.png  |    Bin 0 -> 3217900 bytes
+ src/exchange_info/static/index.html                |      2 +
+ src/exchange_info/static/regions.js                |      3 +
+ src/exchange_info/static/tku-campus-assets.css     |      8 +
+ src/exchange_info/static/tku-campus-assets.js      |     22 +
+ src/exchange_info/tku_assets.py                    |     63 +
+ src/exchange_info/tku_census.py                    |    104 +
+ src/exchange_info/tku_completeness.py              |      5 +-
+ src/exchange_info/tku_eligibility_routes.py        |     15 +-
+ src/exchange_info/tku_student_view.py              |      5 +-
+ src/exchange_info/tku_university.py                |      4 +-
+ tests/e2e/test_tku_acceptance.py                   |      8 +-
+ tests/e2e/test_tku_census_assets.py                |     50 +
+ tests/test_fit_signals.py                          |      2 +-
+ tests/test_school_completeness.py                  |      4 +-
+ tests/test_tku_continuation.py                     |      7 +-
+ tests/test_tku_full_census.py                      |    144 +
+ tests/test_tku_support.py                          |     15 +-
+ 100 files changed, 489880 insertions(+), 23 deletions(-)
