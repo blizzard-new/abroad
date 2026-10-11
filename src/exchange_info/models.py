@@ -2670,6 +2670,15 @@ class StudentDashboard(BaseModel):
     partner_universities: list[PartnerUniversity] = Field(default_factory=list)
     sources: list[SourceReference] = Field(default_factory=list)
 
+    @model_serializer(mode="wrap")
+    def serialize_catalogue_source(self, handler):
+        payload = handler(self)
+        # Preserve the byte-stable non-CGU bundles; source metadata is additive
+        # only for a dashboard with an actual catalogue source provider.
+        if self.catalogue_source is None:
+            payload.pop("catalogue_source", None)
+        return payload
+
 
 TeachingLanguage = Literal["english", "japanese", "chinese", "other"]
 

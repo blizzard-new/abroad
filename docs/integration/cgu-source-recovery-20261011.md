@@ -9,7 +9,7 @@
 - 成功批次更新間隔 600 秒，失敗重試至少 60 秒；背景更新 single flight，請求直接讀已存資料。runtime JSON 以同目錄 temporary file、fsync、os.replace 寫入，無額外 DB migration。
 - 隨程式交付 2026-10-11 09:58:47 UTC 的 77 筆顯示列及兩份原始公開 GVIZ 內容／SHA256 收據，供暫時性檔案系統的冷啟動備援。records SHA256 `afbd6356d0a46e1d593d04f3de5a47a4507c0f553bd3cd4a6e617cff689a3ade`。77 是顯示列，不是當期可申請學校總數。
 - 年度、名額、空白／零值、可申請與發布狀態皆保持來源原值。來源取得成功不等於當期資料已核實，`current_cycle_verified=false`。
-- 新增可選 `catalogue_source` API 欄位，區分 `retrieved`、`saved_reference`、`unavailable`，分列上次成功／本次嘗試時間與失敗原因。其他校此欄為 null。
+- 新增可選 `catalogue_source` API 欄位，區分 `retrieved`、`saved_reference`、`unavailable`，分列上次成功／本次嘗試時間與失敗原因。其他校省略此欄，保持既有 bundle 序列化格式。
 - 清單、地圖與詳細頁顯示來源時間／參考性；完全沒有有效備援時顯示暫不可用和「—」，CGU 相依查找回 503 + Retry-After 60。其餘五校及選校入口繼續使用。
 
 既有 API fixture 改為明確注入 `create_cgu_catalogue`，資料與斷言不變；不以測試中的成功冒充 live。NTU 任務負責的原 13 個 live 來源依賴測試修復與 PR #9 原文缺件仍單獨追蹤。

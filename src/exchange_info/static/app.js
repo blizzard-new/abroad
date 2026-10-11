@@ -3791,7 +3791,7 @@ function renderCatalogueSourceStatus() {
   banner.hidden = !source || activeHomeSchool() !== "長庚大學";
   if (banner.hidden) { banner.textContent = ""; return; }
   const time = source.last_success_at ? formatDate(source.last_success_at) : "尚無成功取得時間";
-  const title = source.status === "unavailable" ? "長庚合作校來源暫不可用" : source.last_attempt_result === "failed" ? "長庚合作校來源暫不可用，保留歷次資料" : source.status === "retrieved" ? "長庚合作校來源已取得" : "長庚合作校使用歷次資料";
+  const title = source.status === "unavailable" ? "長庚合作校來源暫不可用" : source.last_attempt_result === "failed" ? "長庚合作校來源更新暫不可用，保留歷次資料" : source.status === "retrieved" ? "長庚合作校來源已取得" : "長庚合作校使用歷次資料";
   banner.innerHTML = `<strong>${escapeHtml(title)}</strong><p>來源取得時間：${escapeHtml(time)}。取得時間不代表當期已核實；年度、名額與開放狀態請依原資料及官方公告確認。</p><a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554" target="_blank" rel="noopener">交換來源</a> · <a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17533" target="_blank" rel="noopener">雙學位來源</a><button type="button" class="text-button" data-reload-catalogue>重新讀取來源狀態</button>`;
   banner.querySelector("[data-reload-catalogue]").addEventListener("click", () => loadDashboard({ refreshed: true }));
 }

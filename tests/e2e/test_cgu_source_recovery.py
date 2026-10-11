@@ -45,7 +45,7 @@ def test_saved_outage_rows_and_detail_show_actual_source_time_then_recover(page,
     page.goto(url+'/?view=list#partners',wait_until='domcontentloaded')
     expect(page.locator('#boot-splash')).to_be_hidden(timeout=60000)
     banner=page.locator('#catalogue-source-status')
-    expect(banner).to_be_visible();expect(banner).to_contain_text('來源暫不可用，保留歷次資料')
+    expect(banner).to_be_visible();expect(banner).to_contain_text('來源更新暫不可用，保留歷次資料')
     expect(banner).to_contain_text('2026');expect(banner).to_contain_text('取得時間不代表當期已核實')
     assert page.evaluate('state.dashboard.partner_universities.length')==77
     page.screenshot(path=str(ARTIFACTS/f'outage-saved-{width}.png'),full_page=True)

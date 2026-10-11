@@ -178,7 +178,7 @@ def test_no_snapshot_returns_explicit_unavailable_and_retryable_lookup_only_for_
     for home in ('國立臺北大學','國立臺灣大學','國立中正大學','國立中央大學','淡江大學'):
         reply=client.get('/student-dashboard',params={'school':home})
         assert reply.status_code==200 and reply.json()['partner_universities']
-        assert reply.json()['catalogue_source'] is None
+        assert reply.json().get('catalogue_source') is None
 
 
 def test_quota_zero_missing_and_pending_states_survive_success_and_failure(tmp_path, seed):
