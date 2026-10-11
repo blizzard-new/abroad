@@ -19,7 +19,7 @@
 | 目的地介紹 | 104／104 | 原有 55 行逐 byte 保留，另補 49 本期未開放參考校 |
 | 可定位校園代表點 | 99／104 | 獨立身份、國家與校區複核；5 筆未猜值 |
 | 校園照片 | 100／104 | 真實影像、作者、授權 URL、來源頁、校區說明及 SHA256；保留下載原始 bytes |
-| 官方網站身份 | 102／104 | 101 網站正文／官方國際處＋Ateneo 當期簡章直接列示 URL；網址身份與網站連線成功分開 |
+| 官方網站身份 | 102／104 | 98 來自本次一般校園複核，另 4 沿用既有母校／接待校文件的網站身份依據；不表示 102 個網站正文都已成功讀取 |
 | 接待欄位矩陣 | 17 × 104 = 1,768 | current 351、reference 322、missing 649、needs_confirmation 365、conflict 80、explicit_not_announced 1 |
 | 校園／院系欄位矩陣 | 7 × 104 = 728 | current 368、reference 95、missing 176、needs_confirmation 89 |
 | 另列一般校園欄位 | 7 × 104 = 728 | current 288、missing 440；不得與接待政策欄重複算完整度 |
@@ -54,7 +54,7 @@ PR #8 固定 head `9927ec1d8765a9772671bbaa68e7f920995f1258` 已恢復既有 30 
 - 全球協議清單全量與分母：Gamma 可讀內容未取得。
 - 5 點未刊登：p68 HCMUTE（兩個 P625，缺一手定位選擇）、p71 DNTU、p74 Saintgits、p111 Karviná 商學院、p119 Uninter Mexico。相機視窗或未確認子校区不能當 marker。
 - 4 校尚無可刊登的已複核授權照片：p66 UEL、p71 DNTU、p80 Presidency、p119 Uninter Mexico。
-- 2 校官方網站正文／身份補查仍受阻或新版尚未核實：p44 Keimyung、p96 LETI。Ateneo 網域已由當期官方簡章正文核實，但首頁抓取仍受阻。
+- 2 校網站身份欄仍缺：p44 Keimyung、p96 LETI。一般校園複核另有 p58 Thammasat、p88 FGES、p111 Karvina、p119 Uninter 四校未新增網站正文依據，平台網站身份沿用已保存的母校／接待校文件。Ateneo 網域由當期官方簡章正文核實，首頁抓取仍受阻。
 - 649 接待欄缺值，其餘非 current 欄各有年份、衝突或範圍理由；尤其當期完整文件集、提名後個人表、住宿床位、費用、課程／学制限制不能由一般服務入口推定。
 
 ## 程式與合併邊界
@@ -105,3 +105,5 @@ PLAYWRIGHT_BROWSERS_PATH=/tmp/ccu-playwright python -m pytest -q tests/test_ccu_
 [第三批固定版本與證據](ccu-completion-validation-2026-10-11/followup-03/report.json)：production `102164aca2bb55b967dea77dc0820db80d71ede7`。全部CCU單元、CGU/NTPU及共用數量回歸365項為361通過／4既有略過；completion手機／桌面10項通過，無新增排除。3249個CCU打包檔案逐byte核對，wheel SHA256 `5ba8dc58e8ad11d90bce90d738505d8a22796e6af52caba370226f81c416d26e`。未重跑全套2668項；首批NTU路徑失敗及第二批Jena390不穩定仍保留。
 
 第四批續查CZU、USJ及QUT住宿，共減少24個原缺欄，現缺值649；CZU2026/2027頁明確區分當期／舊年、Erasmus／non-Erasmus、冬季申請日／Spring未核日期。考試期間只有Summer段原文明示To be specified，其餘日期已核實，不把整份校曆當未公告。USJ2026–2027 PDF5頁及公開Non-European DOCX正文已讀；語言一般B1 recommended／臨床及翻譯B2 mandatory分開，Spring重考PDF7/3與web7/2矛盾保留，個人表未核年份。僅提名後另給通知不自動視為本人登入權限；USJ表格續查分類為research_incomplete。CZU UIS明示個人credentials才標須本人權限。
+
+[第四批固定版本與證據](ccu-completion-validation-2026-10-11/followup-04/report.json)：production `0a2c840a8b43b67535c144667cbc071d251e7b20`。八個單元／CGU/NTPU共用回歸檔80項：76通過、4既有略過；completion手機／桌面14項通過。3426個CCU打包檔案逐byte核對，wheel SHA256 `5c1d27c9f3f4a062923ff4e1478a13cbfbced530195aa2fe939771a31766c916`。初次新增測試因中文措辭不同失敗，改比對官方英文後修復，原log仍保留。未重跑全套；Supabase亦未重新執行，最近只讀檢查為指定映像不存在，先前layer容量阻塞與NTU／Jena測試未解紀錄保留，未改寫成通過。
