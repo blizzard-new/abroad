@@ -22,13 +22,13 @@ def test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh(page
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立臺灣大學' && state.dashboard.partner_universities.length === 288")
-    assert page.evaluate("state.dashboard.partner_universities.filter(p => p.location?.geocode_status === 'verified').length") == 270
-    assert page.evaluate("state.dashboard.partner_universities.filter(p => p.image_status === 'verified').length") == 279
+    assert page.evaluate("state.dashboard.partner_universities.filter(p => p.location?.geocode_status === 'verified').length") == 285
+    assert page.evaluate("state.dashboard.partner_universities.filter(p => p.image_status === 'verified').length") == 285
     # Exercise the actual globe with local vendor/data assets.
     page.locator('[data-partner-view="map"]').click()
     expect(page.locator("#partner-globe canvas")).to_be_visible(timeout=30000)
     expect(page.locator("#partner-map-status")).to_be_hidden(timeout=30000)
-    assert page.locator("#map-school-select option").count() >= 270
+    assert page.locator("#map-school-select option").count() >= 285
     output = Path("/tmp/ntu-destinations-browser")
     output.mkdir(exist_ok=True)
     page.screenshot(path=str(output / f"globe-{width}.png"), full_page=True)

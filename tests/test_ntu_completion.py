@@ -31,8 +31,8 @@ def test_replay_is_idempotent_and_preserves_selection_and_workflows(tmp_path):
     for prior, after in zip(before, load_partners(bundle)):
         for field in ("eligibility", "quota", "application_deadline", "availability_status", "source_url", "country"):
             assert getattr(prior, field) == getattr(after, field)
-    assert first == {"schools": 288, "reviewed_observations": 130, "photo_additions": 13,
-                     "location_additions": 1, "fully_verified_current_cycle_schools": 0}
+    assert first == {"schools": 288, "reviewed_observations": 293, "photo_additions": 19,
+                     "location_additions": 16, "fully_verified_current_cycle_schools": 0}
 
 
 @pytest.mark.parametrize("failure", ["identity", "country", "selection", "period", "page", "quote", "inventory", "photo_identity", "coordinate_assignment"])

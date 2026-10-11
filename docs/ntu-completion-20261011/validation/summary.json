@@ -1,64 +1,139 @@
 {
-  "all_288_school_acceptance_test": "tests/test_ntu_completion.py::test_all_288_schools_accept_offline_reference_assets_and_guarded_workflows",
-  "focused_tests": {
-    "passed": 36,
-    "seconds": 46.97,
-    "exact_checkout": "data/ntu-completion-20261011"
+  "base_main_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "full_non_e2e_regression": {
+    "passed": 2178,
+    "failed": 0,
+    "skipped": 13,
+    "seconds": 717.79,
+    "live_cgu_source_verified_before_and_after": true,
+    "new_cgu_mock_or_fixture_added": false
+  },
+  "focused_ntu_and_location_tests": {
+    "passed": 98,
+    "seconds": 54.9,
+    "all_288_offline_api_asset_and_workflow_checks": true
   },
   "browser_tests": {
     "passed": 13,
-    "seconds": 99.93,
+    "seconds": 92.89,
     "widths": [
       390,
       1440
     ],
-    "tls_or_certificate_configuration_changes": false
+    "horizontal_overflow": false,
+    "javascript_errors": false,
+    "tls_or_certificate_settings_changed": false
   },
-  "full_non_e2e_regression": {
-    "passed": 2163,
-    "failed": 13,
-    "skipped": 13,
-    "seconds": 653.28,
-    "note": "Full run began before adding two final invalid-photo/coordinate cases. All 36 focused tests, including both added safety cases, were subsequently rerun and passed."
+  "source_condition_correction": {
+    "original_log_preserved": "../validation/full-regression.log",
+    "original_result": {
+      "passed": 2163,
+      "failed": 13,
+      "skipped": 13
+    },
+    "contemporaneous_cgu_response_body_captured": false,
+    "exact_main_59a20_live_retest": {
+      "passed": 13,
+      "seconds": 45.9
+    },
+    "ntu_branch_live_retest": {
+      "passed": 13,
+      "seconds": 43.98
+    },
+    "interpretation": "These13 are conditional on CGU source availability, not permanent pre-existing baseline defects or waivers. Actual unmocked CGU77 and Lincoln were verified before/after final full suite."
   },
-  "baseline_reproduction": {
-    "sha": "59a20f27fcee00fb597abc79e75ec11778317422",
-    "all_13_same_failures_reproduced": true,
-    "test_names": [
-      "tests/test_application_workflow_issue_reports.py::test_only_accounts_with_a_school_can_submit_without_mutating_formal_content",
-      "tests/test_application_workflow_issue_reports.py::test_submit_is_idempotent_and_rejects_target_or_payload_tampering",
-      "tests/test_application_workflow_issue_reports.py::test_report_rejects_contact_details_and_rate_limits_new_submissions",
-      "tests/test_application_workflow_issue_reports.py::test_admin_queue_and_terminal_review_are_protected_and_append_only",
-      "tests/test_application_workflow_issue_reports.py::test_local_account_deletion_deidentifies_reporter_without_deleting_report",
-      "tests/test_application_workflow_issue_reports.py::test_account_export_includes_only_public_issue_report_fields",
-      "tests/test_application_workflow_issue_reports.py::test_local_account_deletion_removes_closed_report",
-      "tests/test_application_workflow_issue_reports.py::test_review_of_deidentified_pending_report_is_replayable_during_cleanup_grace",
-      "tests/test_application_workflow_issue_reports.py::test_reviewer_account_deletion_removes_reviewer_identity",
-      "tests/test_experience_digests.py::test_the_experience_list_carries_each_sources_kind_and_digest",
-      "tests/test_experience_digests.py::test_a_school_with_no_crawled_data_still_lists_its_curated_story",
-      "tests/test_request_origin.py::test_without_a_public_address_photo_links_follow_the_request",
-      "tests/test_tku_governance_routes.py::test_issue_report_status_filter_excludes_terminal_reports"
-    ],
-    "pythonpath": "src of isolated detached baseline checkout"
+  "cgu_source_checks": {
+    "before": {
+      "checked_at": "2026-10-11T10:44:41.947723+00:00",
+      "scope": "Actual CGU live sheet URLs and actual unmocked fetch_partner_universities",
+      "parsed_partner_count": 77,
+      "lincoln_present": true,
+      "receipts": [
+        {
+          "url": "https://docs.google.com/spreadsheets/d/1EAOsiZkw5oWWUpAyXz-04aQWdSMR9f_c3Jup69LeiuA/gviz/tq?tqx=out:json&sheet=%E7%B8%BD%E8%A1%A8",
+          "checked_at": "2026-10-11T10:44:40.526921+00:00",
+          "http_status": 200,
+          "sha256": "ddf51f4650c08257043438bb072d14a09f13b8d54a26b0fa8020565f3e6db3c0",
+          "size_bytes": 72081,
+          "body_file": "cgu-live-exchange-exact-gviz.json"
+        },
+        {
+          "url": "https://docs.google.com/spreadsheets/d/1aQiwbtrQu1QOIOkFrOYl9WkzT0mqnZqIwI9KJCXGb4E/gviz/tq?tqx=out:json&sheet=%E7%B8%BD%E8%A1%A8",
+          "checked_at": "2026-10-11T10:44:40.977814+00:00",
+          "http_status": 200,
+          "sha256": "dcc3943fb94c67d94685b4309ae5093b2760c0d87ea2cac8dd83ac586c3c5252",
+          "size_bytes": 27493,
+          "body_file": "cgu-live-double-exact-gviz.json"
+        }
+      ]
+    },
+    "after": {
+      "checked_at": "2026-10-11T10:59:41.336577+00:00",
+      "scope": "Actual CGU live sheet URLs and actual unmocked fetch_partner_universities",
+      "parsed_partner_count": 77,
+      "lincoln_present": true,
+      "receipts": [
+        {
+          "url": "https://docs.google.com/spreadsheets/d/1EAOsiZkw5oWWUpAyXz-04aQWdSMR9f_c3Jup69LeiuA/gviz/tq?tqx=out:json&sheet=%E7%B8%BD%E8%A1%A8",
+          "checked_at": "2026-10-11T10:59:39.949195+00:00",
+          "http_status": 200,
+          "sha256": "ddf51f4650c08257043438bb072d14a09f13b8d54a26b0fa8020565f3e6db3c0",
+          "size_bytes": 72081,
+          "body_file": "cgu-live-exchange-exact-gviz.json"
+        },
+        {
+          "url": "https://docs.google.com/spreadsheets/d/1aQiwbtrQu1QOIOkFrOYl9WkzT0mqnZqIwI9KJCXGb4E/gviz/tq?tqx=out:json&sheet=%E7%B8%BD%E8%A1%A8",
+          "checked_at": "2026-10-11T10:59:40.290361+00:00",
+          "http_status": 200,
+          "sha256": "dcc3943fb94c67d94685b4309ae5093b2760c0d87ea2cac8dd83ac586c3c5252",
+          "size_bytes": 27493,
+          "body_file": "cgu-live-double-exact-gviz.json"
+        }
+      ]
+    }
+  },
+  "portable_source_archives": {
+    "current_bodies": 217,
+    "reviewed_citations": 191,
+    "current_archive_parts": 6,
+    "historical_bodies": 59,
+    "home_source_citations_checked": 1,
+    "all_body_and_archive_hashes_match": true,
+    "all_quote_pages_match": true,
+    "historical_cached_read_has_not_been_backfilled_with_a_hash": true
   },
   "excel": {
     "school_field_rows": 4032,
-    "source_index_rows": 60,
+    "source_index_rows": 192,
+    "home_rule_rows": 11,
     "formula_cells": 0
   },
   "notebook": {
     "code_cells_executed": 3,
-    "nbformat_validator_installed": false,
-    "note": "All cells have IDs and standard v4 structure; code cells executed successfully. nbformat package unavailable, no package installation attempted."
+    "format": "v4 with cell IDs",
+    "nbformat_validator_installed": false
   },
+  "coverage": {
+    "reviewed_observations": 293,
+    "reviewed_host_schools": 134,
+    "home_rule_facts": 11,
+    "added_life_excerpts": 221,
+    "total_life_excerpts": 1843,
+    "independent_life_schools": 242,
+    "photos": 285,
+    "locations": 285
+  },
+  "remaining_data": {
+    "quota_blank": 282,
+    "quota_explicit_zero": 6,
+    "fully_verified_current_cycle_schools": 0,
+    "life_source_gaps": 46,
+    "photo_gaps": 3,
+    "location_gaps": 3,
+    "semantic_candidate_rows_still_unreviewed": 129
+  },
+  "scope_and_rebuild_receipt": "scope-and-rebuild.json",
   "merge_or_deploy_performed": false,
-  "remaining_data_blockers": [
-    "282 blank current NTU selection quotas",
-    "0 schools have all current-cycle fields confirmed",
-    "9 licensed-campus-photo gaps",
-    "18 location gaps",
-    "transport proxy503 and other respected site access limits",
-    "old282 workbook not retrieved; exact overlap cannot be claimed",
-    "LibraryHTTP401; no upload IDs, parent stopped retries"
-  ]
+  "library_ids": [],
+  "library_blocker": "earlierHTTP401; parent explicitly stopped retries; delivered in DraftPR9"
 }
