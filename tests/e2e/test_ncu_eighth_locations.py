@@ -18,7 +18,7 @@ def test_eighth_twelve_campus_previews_and_sources_visible(page,live_server,widt
         page.locator('#map-school-select').select_option(value=row['school_name'])
         expect(page.locator('#partner-map-preview')).to_contain_text(row['school_name'])
         expect(page.locator('#partner-map-preview .map-preview-place')).to_contain_text(row['published_record']['city'])
-        expect(page.locator('#partner-map-preview')).to_contain_text('本期名額待公告')
+        expect(page.locator('#partner-map-preview')).to_contain_text('本期名額待核實')
         note=page.locator('#partner-map-preview .map-location-note');note.locator('summary').click()
         expect(note.locator('p')).to_contain_text(row['published_record']['note'])
         OUTPUT.mkdir(parents=True,exist_ok=True);note.screenshot(path=str(OUTPUT/f"{row['capture_row_id']}-{width}-campus-note.png"))

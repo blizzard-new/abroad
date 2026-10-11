@@ -1,0 +1,67 @@
+{
+  "original_failed_suite_sha": "5e7114182093fa77203ee946a4f86a88d3b10345",
+  "original_results_retained": true,
+  "changes": [
+    {
+      "path": "tests/e2e/test_tku_census_assets.py",
+      "reason": "Two rejected photo assets withdrawn; points remain 264 and all individual checks remain.",
+      "before_sha256": "b02677c1b860ac5def265cd9bb673329c39349ea381e66906ecafdde113b31cb",
+      "after_sha256": "435b42a5c66fef536516bf8f0c0f026315e2406db315318d65236dfdbbdc556d"
+    },
+    {
+      "path": "tests/test_ccu_semantics.py",
+      "reason": "Original isolated JS test omitted activeHomeSchool after the TKU branch was added; load actual function with explicit home-school fixture.",
+      "before_sha256": "a0dd4ef187349cd5a77c9af75be6086f9ccacfd0758bff701ef5159311eff135",
+      "after_sha256": "fdd86f5a9bca4a660fd70b8b8a0a32e74c95f093d0f9a26be5d1389f503ce33f"
+    },
+    {
+      "path": "tests/test_school_photo_and_match.py",
+      "reason": "Original isolated JS test omitted activeHomeSchool after the TKU branch was added; load actual function with explicit home-school fixture.",
+      "before_sha256": "03ef3e6fe1bca304d1bee0c9af743528497a173de93cb0dd8dcdd75944369282",
+      "after_sha256": "6cce142a9fde1070eab6a4eb5de738065e5db72e33841af63c61e46c40b0588b"
+    },
+    {
+      "path": "tests/test_pending_availability_semantics.py",
+      "reason": "Original isolated JS test omitted activeHomeSchool after the TKU branch was added; load actual function with explicit home-school fixture.",
+      "before_sha256": "4412f48f7f3e188ac94743dfd710286430a56e9d56eea3519ef66feee5987481",
+      "after_sha256": "d6ea0639c55f492a54f70f53401b560e231f06da2ecc893e5d718c262fe768ce"
+    },
+    {
+      "path": "tests/e2e/test_ncu_eighth_locations.py",
+      "reason": "Keep the visible pending assertion aligned with unknown availability, without asserting official non-announcement.",
+      "before_sha256": "62f14682f14f6ddb1367d2a48e27eddd2c5c3bfd0f55f0bee463691afcf40f24",
+      "after_sha256": "939da11a5351a5a9ce65bf2e65f6fa2814eb8ff86b6926fdb6d4697dd394a057"
+    },
+    {
+      "path": "tests/e2e/test_ncu_ninth_resume.py",
+      "reason": "Keep the visible pending assertion aligned with unknown availability, without asserting official non-announcement.",
+      "before_sha256": "433384e98dad189d9dc967456c54870c1d8f546cdc9782987cf34eab230fd255",
+      "after_sha256": "2e5c86061bf5739ed1d7a929681a57da9eaae99e84878fad11c32025c4e275b2"
+    },
+    {
+      "path": "tests/e2e/test_ncu_seventh_assets.py",
+      "reason": "Keep the visible pending assertion aligned with unknown availability, without asserting official non-announcement.",
+      "before_sha256": "c4ea78633ccfa10f17f25d84c717f0d186d2ad078b92a330a6cc9fa2d6c1f069",
+      "after_sha256": "f601259205f88ef0eb9b7c8a2b41550eb557d31aca7ce5893b09ee25d1bf9556"
+    },
+    {
+      "path": "tests/e2e/test_ncu_sixth_resume.py",
+      "reason": "Keep the visible pending assertion aligned with unknown availability, without asserting official non-announcement.",
+      "before_sha256": "0f24b73d734fec67f418742be22b757ec56cdce79a7f53efa0d49f4c7eda63a9",
+      "after_sha256": "37af1ad6f0bb9922a0d8e697fbbe775dd5ebb9d007e25ee4ff4e19d6b3bbf02e"
+    },
+    {
+      "path": "tests/e2e/test_ncu_school.py",
+      "reason": "Archived TYS arrival original a34e03ca68b1fd8f6d5f8fcf40a6ebd934d7c96d957511d7590a1d092412c124 says notify key-locker by noon on previous working day; no four-day rule. Retain visible arrival and insurance assertions.",
+      "before_sha256": "1b01dd3dc92d29e8cc2db3e7a45fbf24054f57bcc0ea5d7f150a3ae681f673b5",
+      "after_sha256": "b10837f036c9b9bbf42119f8dddd2dd7767fd4dbef45cd4c68a6a7e5a66225b5"
+    },
+    {
+      "path": "src/exchange_info/static/index.html",
+      "reason": "Version cooperating scripts together while preserving their load order and the existing routing contract.",
+      "before_sha256": "9c600bbeae1bee286b80f0fca2b7927afe633ab0f4e0be4082db547627f3153a",
+      "after_sha256": "7fb70731d7fe46e79dc4dbe979d06cd90da4521d78d5a5f2e55d53660e2712ae"
+    }
+  ],
+  "validation": "New clean candidate must pass focused and complete same-SHA gates."
+}

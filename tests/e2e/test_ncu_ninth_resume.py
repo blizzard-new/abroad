@@ -25,7 +25,7 @@ def test_ninth_year_scope_and_documents_visible(page,live_server,query,width,ove
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
     summary=page.locator('#partner-table .partner-card > summary').first
     if summary.is_visible():summary.click()
     trigger=page.locator('#partner-table .school-detail-trigger:visible')

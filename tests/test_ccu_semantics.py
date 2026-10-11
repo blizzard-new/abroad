@@ -258,14 +258,14 @@ def test_frontend_matches_structured_language_and_document_statuses():
     const source=fs.readFileSync(process.argv[1],'utf8');
     const payload=JSON.parse(fs.readFileSync(0,'utf8'));
     const cases=payload.cases;
-    const state={dashboard:{academic_gpa_minimum:3,academic_score_minimum:70}};
+    const state={homeSchool:'國立中正大學',dashboard:{academic_gpa_minimum:3,academic_score_minimum:70}};
     const homeSelectionRules=()=>state.dashboard.selection_rules || {};
     const homeAcademicPass=profile=>profile.academicScore>=70 && profile.academicGpa>=3;
     const partnerSummaryPoints=(item)=>item.student_summary_zh.eligibility_points;
     const homeCollegeValue=value=>value,normalize=value=>String(value||''),academicMinimum=()=>70;
     const collegeMatches=()=>true,degreeMatches=()=>true,coverageForSchool=()=>null,destinationProfileForSchool=()=>null;
     const escapeHtml=value=>String(value),highlightHtml=value=>String(value);
-    for(const name of ['academicScopeNeedsConfirmation','coupledAcademicScopeOptions','coupledAcademicScopeMatches','resolvedDegreeLevel','partnerDegreeScopeMatches','languageThresholdFromPartner','partnerAvailabilityMeta','partnerMatch','renderPartnerFieldEvidence']) {
+    for(const name of ['activeHomeSchool','academicScopeNeedsConfirmation','coupledAcademicScopeOptions','coupledAcademicScopeMatches','resolvedDegreeLevel','partnerDegreeScopeMatches','languageThresholdFromPartner','partnerAvailabilityMeta','partnerMatch','renderPartnerFieldEvidence']) {
       eval(source.match(new RegExp('^function '+name+'\\([^]*?^}','m'))[0]);
     }
     for(const test of cases) {

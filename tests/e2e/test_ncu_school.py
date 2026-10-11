@@ -489,7 +489,7 @@ def test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui(
     expect(insurance).to_be_visible()
     insurance.scroll_into_view_if_needed()
     expect(page.locator("#detail-life")).to_contain_text(
-        "4天" if school == "圖爾庫" else "24working hours"
+        "前一工作日中午" if school == "圖爾庫" else "24working hours"
     )
     out = Path("/tmp/ncu-audit/browser")
     out.mkdir(parents=True, exist_ok=True)

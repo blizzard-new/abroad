@@ -1,0 +1,53 @@
+{
+  "command": [
+    "env",
+    "EXCHANGE_TEST_POSTGRES=1",
+    "TMPDIR=/workspace/integration-final7-full-shard-3-tmp",
+    "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/workspace/integration-tools/browsers/chromium-1234/chrome-linux64/chrome",
+    "VISUAL_EVIDENCE_DIR=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-images",
+    "TKU_CENSUS_ASSET_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-tku-images",
+    "TKU_ACCEPTANCE_OUTPUT=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-tku-acceptance-images",
+    "CCU_ACCEPTANCE_OUTPUT=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-ccu-images",
+    "NCU_NEXT3_BROWSER_OUT=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-ncu-images",
+    "NCU_RESUME_BROWSER_OUTPUT=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-ncu-resume-images",
+    "CCU_PRIORITY_SCREENSHOTS=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-ccu-priority-images",
+    "NTU_REFERENCE_SCREENSHOTS=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-ntu-reference-images",
+    "CCU_ROUND8_SCREENSHOTS=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-ccu-round8-images",
+    "TKU_FIXED_PHOTO_UI_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-tku-fixed-photo-images",
+    "TKU_MILESTONE6_UI_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-tku-milestone6-images",
+    "TKU_MILESTONE4_UI_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-tku-milestone4-images",
+    "TKU_MILESTONE5_UI_EVIDENCE=/workspace/recovery-evidence-20261011/integration-final7-full-shard-3-tku-milestone5-images",
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "scripts/run_web_quality_tests.py",
+    "--shard",
+    "3",
+    "--shards",
+    "4",
+    "--junitxml",
+    "/workspace/recovery-evidence-20261011/integration-final7-full-shard-3/result.xml",
+    "--evidence-dir",
+    "/workspace/recovery-evidence-20261011/integration-final7-full-shard-3/shard-coverage"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T20:05:45.076371+00:00",
+  "start_guard": {
+    "sha": "5e7114182093fa77203ee946a4f86a88d3b10345",
+    "tree": "d6029a2dcf6c8a03b7b5ed217769e874b68a17ab",
+    "status": ""
+  },
+  "timeout_seconds": 3600,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "scripts/run_web_quality_tests.py": {
+      "sha256": "1d63519c8d90b7b6337c78d04862b2cbb7c1ebc5fafbbe2da6761f1b6af26c07"
+    }
+  },
+  "exit_code": 1,
+  "finished_at": "2026-10-11T20:25:46.605603+00:00",
+  "end_guard": {
+    "sha": "5e7114182093fa77203ee946a4f86a88d3b10345",
+    "tree": "d6029a2dcf6c8a03b7b5ed217769e874b68a17ab",
+    "status": ""
+  }
+}

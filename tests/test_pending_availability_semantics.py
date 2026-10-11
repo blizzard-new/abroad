@@ -8,9 +8,10 @@ def test_unknown_quota_and_dates_do_not_imply_an_official_announcement_state():
     script = r'''
     const assert = require('node:assert/strict');
     const source = require('node:fs').readFileSync(process.argv[1], 'utf8');
+    const state = {homeSchool: '國立中央大學'};
     let planning = true;
     const homeSelectionRules = () => ({pending_quota_planning: planning});
-    for (const name of ['partnerAvailabilityMeta','applicationPeriodMeta']) {
+    for (const name of ['activeHomeSchool','partnerAvailabilityMeta','applicationPeriodMeta']) {
       const match = source.match(new RegExp('^function '+name+'\\([^]*?^}', 'm'));
       assert.ok(match, name); eval(match[0]);
     }

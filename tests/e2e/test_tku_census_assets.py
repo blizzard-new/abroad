@@ -31,7 +31,7 @@ def test_tku_census_licensed_photos_load_and_points_keep_scope(page,live_server,
             located:rows.filter(module.hasCoordinates).map(r=>({name:r.school_name,precision:r.location.precision})),
             unavailable:rows.filter(r=>!module.hasCoordinates(r)).length};
     }''')
-    assert len(results['photos'])==264
+    assert len(results['photos'])==262
     assert all(p['width']>0 and p['height']>0 and p['author'] and p['license_url'] for p in results['photos'])
     assert all(p['capture_period'] and p['capture_period_status']=='verified_capture_period' for p in results['photos'])
     assert len(results['points'])==len(results['located'])==264
