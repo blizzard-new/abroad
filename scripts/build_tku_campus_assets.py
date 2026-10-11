@@ -81,6 +81,10 @@ def main():
         if review and review["sha256"]==record["sha256"]:
             record.update(review_status="verified_asset",visual_review=review)
     records.append(existing_ritsumeikan_photo())
+    reviews=BUNDLE/'reused_asset_review.json'
+    if reviews.exists():
+        present={r['id'] for r in records}
+        records.extend(r['accepted_photo'] for r in json.loads(reviews.read_text()) if 'accepted_photo' in r and r['id'] not in present)
     (BUNDLE/"campus_asset_manifest.json").write_text(json.dumps(records,ensure_ascii=False,indent=2)+"\n")
     print(json.dumps(dict(photos=len(records),downloaded=sum('local_path' in r for r in records),bytes=sum(r.get("bytes",0) for r in records),visual_review_required=True)))
 

@@ -70,6 +70,10 @@ def main():
         evidence=dict(source_url='https://commons.wikimedia.org/wiki/File:Seikei_University_(16).jpg',quote='Camera location 35° 42′ 41.3″ N, 139° 34′ 23.8″ E; official address 東京都武蔵野市吉祥寺北町3-3-1',checked_at=seikei['checked_at'],applicable_year='2017 campus photograph point; current address verified 2026-10-11',role='licensed_campus_photo_location',locator='Commons Camera location + official Access address')))
     from tku_baseline_assets import existing_ritsumeikan_location
     locations.append(existing_ritsumeikan_location())
+    reviews=B/'reused_asset_review.json'
+    if reviews.exists():
+        present={r['id'] for r in locations}
+        locations.extend(r['accepted_coordinate'] for r in json.loads(reviews.read_text()) if 'accepted_coordinate' in r and r['id'] not in present)
     (B/'campus_location_manifest.json').write_text(json.dumps(locations,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(dict(curated_host_institutions=1,host_fields=len(facts),new_physical_campus_locations=2,reused_baseline_representative_locations=1,total_displayable_locations=len(locations))))
 

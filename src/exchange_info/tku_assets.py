@@ -35,7 +35,9 @@ def attach_images(dashboard,base_url):
             reference.update(campus_photo_author=photo['author'],campus_photo_license=photo['license'],
                 campus_photo_license_url=photo['license_url'],campus_photo_caption=photo['caption'],
                 campus_photo_transformations=photo['transformations'],
-                campus_photo_modification_note=photo_modification_note(photo))
+                campus_photo_modification_note=photo_modification_note(photo),
+                campus_photo_campus_pair_scope=photo.get('campus_pair_scope') or '',
+                campus_photo_campus_pair_mismatch='different_campuses' if photo.get('campus_pair_mismatch') else 'not_established')
             updates.update(image_url=base_url.rstrip("/")+photo["local_path"],
                 image_source_url=photo["image_source_url"],image_page_url=photo["source_url"],image_status="verified",reference_data=reference)
         partners.append(partner.model_copy(update=updates))
@@ -59,5 +61,5 @@ def complete_profile(profile):
     from .models import StudentGuidePhoto
     images=[p for p in profile.guide_photos if p.source_url!=photo["source_url"]]
     images.append(StudentGuidePhoto(image_url=photo["local_path"],source_url=photo["source_url"],
-        alt=photo["caption"],caption=f"{photo['caption']}；{photo['author']}；{photo['license']}（{photo['license_url']}）。{photo_modification_note(photo)}；拍攝期{photo['photo_date']}，不代表本期指定交換校區。",category="campus"))
+        alt=photo["caption"],caption=f"{photo['caption']}；{photo['author']}；{photo['license']}（{photo['license_url']}）。{photo_modification_note(photo)}；拍攝期{photo['photo_date']}，不代表本期指定交換校區。{photo.get('campus_pair_scope','') if photo.get('campus_pair_mismatch') else ''}",category="campus"))
     return profile.model_copy(update={"guide_photos":images})

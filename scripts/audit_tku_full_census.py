@@ -51,14 +51,19 @@ def main():
     record_count=len(load_tku_records(include_reference=True))
     assert record_count==128
     states=dict(Counter(s.get('http_status','connection_error') for s in sources if s.get('error')))
+    photos=json.loads((B/'campus_asset_manifest.json').read_text())
+    locations=json.loads((B/'campus_location_manifest.json').read_text())
+    reused_photos=sum(p.get('acquisition_status')=='reused_baseline_asset' for p in photos)
+    reused_locations=sum(p.get('acquisition_status')=='reused_baseline_asset' for p in locations)
     result=dict(base_commit=BASE,checked_date='2026-10-11',directory_rows=286,institutions=287,programme_rows=153,
         original_programmes_preserved=record_count,first_round_history_rows=25,first_round_history_quota=50,
         latest_round_schools=4,latest_round_quota=7,newly_open_applications=0,destination_profiles=len(profiles),
         institutions_with_official_reference_excerpts=sum(bool(r['fields']) for r in map(json.loads,(B/'partner_enrichment.jsonl').read_text().splitlines())),
         public_source_captures=len(sources),opened_sources=sum(not s.get('error') for s in sources),failed_sources=sum(bool(s.get('error')) for s in sources),
-        source_failure_statuses=states,downloaded_attachments=attachments,licensed_visual_reviewed_photos=13,
-        new_licensed_photos=12,reused_baseline_photos=1,verified_physical_campus_coordinates=2,
-        reused_baseline_representative_coordinates=1,total_displayable_coordinates=3,
+        source_failure_statuses=states,downloaded_attachments=attachments,licensed_visual_reviewed_photos=len(photos),
+        new_licensed_photos=len(photos)-reused_photos,reused_baseline_photos=reused_photos,
+        verified_physical_campus_coordinates=sum(p['location']['precision']=='campus' for p in locations),
+        reused_baseline_representative_coordinates=reused_locations,total_displayable_coordinates=len(locations),
         current_or_asset_gap_counts=unknown,field_counts=audit['field_counts'],other_home_bundles=unchanged,
         original_tku_destination_prefix='byte_identical_to_base',schools=schools,
         scope_note='來源開啟與原文索引不等於所有欄位已核实；287校每校22欄缺口全列。名額只有4校最新已截止梯次，照片／實體校園座標核對另列，不代表提名校區。',
