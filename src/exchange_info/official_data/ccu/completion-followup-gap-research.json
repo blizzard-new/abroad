@@ -12,7 +12,7 @@
     "coordinate_gaps": 3,
     "licensed_photo_gaps": 4,
     "website_identity_gaps": 1,
-    "host_missing_fields": 618
+    "host_missing_fields": 608
   },
   "schools": [
     {
@@ -4125,20 +4125,6 @@
       "requested_assets": [],
       "unresolved_host_fields": [
         {
-          "field": "nomination_deadline",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "application_deadline",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
           "field": "academic_calendar",
           "classification": "research_incomplete",
           "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
@@ -4182,13 +4168,6 @@
         },
         {
           "field": "visa",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "arrival",
           "classification": "research_incomplete",
           "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
           "official_not_announced": false,
@@ -4365,21 +4344,20 @@
           "field": "eligibility",
           "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "不得跨系申請 (一)經各高校正式錄取的全日制在籍学生，本地生源； (二)热爱祖国，遵纪守法，身体健康，品行端正，成绩优秀；",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "2022秋港澳台協議校全日制在籍、本地生源、品行/健康/成績良好且母校推薦；無數字GPA。2027新版尚未核實；中正灰字本期未開放。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                17
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "source_id": "p17-reference-link-1",
+              "source_url": "https://gatxs.bfsu.edu.cn/f/view-554f15d26a204b3d987c7854ea03ae93-7a21a7e2552845f0a9b5eea426725318.htm",
+              "source_pages": [],
+              "excerpt": "获得本人就读大学推荐资格",
+              "academic_year": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "application_round": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T09:06:43.328083+00:00",
+              "content_hash": "6e98622f17d3d020f4f9a2c9eb96ab650e777eb2c74e5eacbebceec36a8e381e",
               "status": "reference_only",
-              "excerpt": "不得跨系申請 (一)經各高校正式錄取的全日制在籍学生，本地生源； (二)热爱祖国，遵纪守法，身体健康，品行端正，成绩优秀；",
-              "reference_excerpt": "不得跨系申請 (一)經各高校正式錄取的全日制在籍学生，本地生源； (二)热爱祖国，遵纪守法，身体健康，品行端正，成绩优秀；",
-              "note": null
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
             }
           ],
           "official_not_announced": false,
@@ -4411,21 +4389,47 @@
         },
         {
           "field": "nomination_deadline",
-          "field_status": "missing",
+          "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "2022秋歷史提名窗口2022-04-10至05-20；2027提名日尚未核實，不產生當期提醒。",
+          "evidence": [
+            {
+              "source_id": "p17-reference-link-1",
+              "source_url": "https://gatxs.bfsu.edu.cn/f/view-554f15d26a204b3d987c7854ea03ae93-7a21a7e2552845f0a9b5eea426725318.htm",
+              "source_pages": [],
+              "excerpt": "2022年05月20日",
+              "academic_year": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "application_round": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T09:06:43.328083+00:00",
+              "content_hash": "6e98622f17d3d020f4f9a2c9eb96ab650e777eb2c74e5eacbebceec36a8e381e",
+              "status": "reference_only",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "application_deadline",
-          "field_status": "missing",
+          "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "2022秋歷史學生線上申請2022-04-10至05-31；不當2027校外截止。",
+          "evidence": [
+            {
+              "source_id": "p17-reference-link-1",
+              "source_url": "https://gatxs.bfsu.edu.cn/f/view-554f15d26a204b3d987c7854ea03ae93-7a21a7e2552845f0a9b5eea426725318.htm",
+              "source_pages": [],
+              "excerpt": "2022年05月31日",
+              "academic_year": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "application_round": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T09:06:43.328083+00:00",
+              "content_hash": "6e98622f17d3d020f4f9a2c9eb96ab650e777eb2c74e5eacbebceec36a8e381e",
+              "status": "reference_only",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
@@ -4433,21 +4437,20 @@
           "field": "documents",
           "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "線上申請連結: https://gatxs.bfsu.edu.cn/a/loginf 繳交資料: 1. 學生本人簽名的“申请人聲明”頁（系统提供模板下载） 2. 所在院系或專業教師推薦信兩封(中文) 3. 大學在讀證明(第一階段繳交的在學證明) 4. 大學成绩單 5. 體檢證明 6. 港澳台居民来往内地（大陆）通行证 (台胞證) 请注意：1-4号材料原件由学生本人攜带，到校報到時提交至本校港澳台学生事務辦 公室， 5-6号材料原件由学生本人到校報到時現場出示以備查驗。",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "2022秋歷史6項：簽名申請人聲明、2封中文院系/專業教師推薦、在學證明、成績單、體檢證明、港澳台通行證。原件1–4到校交、5–6出示；未核2027必繳清單。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                17
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "source_id": "p17-reference-link-1",
+              "source_url": "https://gatxs.bfsu.edu.cn/f/view-554f15d26a204b3d987c7854ea03ae93-7a21a7e2552845f0a9b5eea426725318.htm",
+              "source_pages": [],
+              "excerpt": "报名资料清单如下",
+              "academic_year": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "application_round": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T09:06:43.328083+00:00",
+              "content_hash": "6e98622f17d3d020f4f9a2c9eb96ab650e777eb2c74e5eacbebceec36a8e381e",
               "status": "reference_only",
-              "excerpt": "線上申請連結: https://gatxs.bfsu.edu.cn/a/loginf 繳交資料: 1. 學生本人簽名的“申请人聲明”頁（系统提供模板下载） 2. 所在院系或專業教師推薦信兩封(中文) 3. 大學在讀證明(第一階段繳交的在學證明) 4. 大學成绩單 5. 體檢證明 6. 港澳台居民来往内地（大陆）通行证 (台胞證) 请注意：1-4号材料原件由学生本人攜带，到校報到時提交至本校港澳台学生事務辦 公室， 5-6号材料原件由学生本人到校報到時現場出示以備查驗。",
-              "reference_excerpt": "線上申請連結: https://gatxs.bfsu.edu.cn/a/loginf 繳交資料: 1. 學生本人簽名的“申请人聲明”頁（系统提供模板下载） 2. 所在院系或專業教師推薦信兩封(中文) 3. 大學在讀證明(第一階段繳交的在學證明) 4. 大學成绩單 5. 體檢證明 6. 港澳台居民来往内地（大陆）通行证 (台胞證) 请注意：1-4号材料原件由学生本人攜带，到校報到時提交至本校港澳台学生事務辦 公室， 5-6号材料原件由学生本人到校報到時現場出示以備查驗。",
-              "note": null
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
             }
           ],
           "official_not_announced": false,
@@ -4457,21 +4460,20 @@
           "field": "application_forms",
           "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "https://gatxs.bfsu.edu.cn/f/view-554f15d26a204b3d987c7854ea03ae93- 7a21a7e2552845f0a9b5eea426725318.htm",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "2022秋歷史母校提名表須原Excel與蓋章掃描PDF/圖片；學生gatxs系統填寫上傳、聲明模板在系統。此次只讀公告，未取得文末提名表附件/系統內完整模板，不當本期可用表。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                17
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "source_id": "p17-reference-link-1",
+              "source_url": "https://gatxs.bfsu.edu.cn/f/view-554f15d26a204b3d987c7854ea03ae93-7a21a7e2552845f0a9b5eea426725318.htm",
+              "source_pages": [],
+              "excerpt": "提名表样式见文末附件",
+              "academic_year": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "application_round": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T09:06:43.328083+00:00",
+              "content_hash": "6e98622f17d3d020f4f9a2c9eb96ab650e777eb2c74e5eacbebceec36a8e381e",
               "status": "reference_only",
-              "excerpt": "https://gatxs.bfsu.edu.cn/f/view-554f15d26a204b3d987c7854ea03ae93- 7a21a7e2552845f0a9b5eea426725318.htm",
-              "reference_excerpt": "https://gatxs.bfsu.edu.cn/f/view-554f15d26a204b3d987c7854ea03ae93- 7a21a7e2552845f0a9b5eea426725318.htm",
-              "note": null
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
             }
           ],
           "official_not_announced": false,
@@ -4549,11 +4551,24 @@
         },
         {
           "field": "arrival",
-          "field_status": "missing",
+          "field_status": "reference_only",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "2022秋歷史到校材料1–4原件交港澳台辦、5–6原件現場查驗；未載當期迎新/入住日期，2027到校日尚未核實。",
+          "evidence": [
+            {
+              "source_id": "p17-reference-link-1",
+              "source_url": "https://gatxs.bfsu.edu.cn/f/view-554f15d26a204b3d987c7854ea03ae93-7a21a7e2552845f0a9b5eea426725318.htm",
+              "source_pages": [],
+              "excerpt": "5-6号材料原件由学生本人到校报到时现场出示以备查验",
+              "academic_year": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "application_round": "官方2022-02-16通知明示2022秋；歷史參考，2027新版尚未核實",
+              "checked_at": "2026-10-11T09:06:43.328083+00:00",
+              "content_hash": "6e98622f17d3d020f4f9a2c9eb96ab650e777eb2c74e5eacbebceec36a8e381e",
+              "status": "reference_only",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
@@ -49924,34 +49939,6 @@
           "personal_access_required": null
         },
         {
-          "field": "application_deadline",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "academic_calendar",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "course_restrictions",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "housing",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
           "field": "housing_deadline",
           "classification": "research_incomplete",
           "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
@@ -49959,28 +49946,7 @@
           "personal_access_required": null
         },
         {
-          "field": "costs",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "insurance",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
           "field": "visa",
-          "classification": "research_incomplete",
-          "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "arrival",
           "classification": "research_incomplete",
           "reason": "尚未完成此欄的當期公開來源研究；已有失敗請求不證明全校資訊不存在。",
           "official_not_announced": false,
@@ -50048,6 +50014,61 @@
           "title": null,
           "sha256": "7d1cd4e59a9431ec4627ca9e455801a81459d7d19cf2fe69a15418db380175ab",
           "bundled_file": "completion_sources/p117-commons.json",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p117-eighth-calendar",
+          "source_url": "https://suny.oneonta.edu/academics/academic-calendar",
+          "checked_at": "2026-10-11T16:26:50.244125+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Academic Calendar",
+          "sha256": "8c1ef61757f09bef95f3fc24fc16f236b7c9374fd3a1fc5dfe822ed562ae80e6",
+          "bundled_file": "completion_sources/p117-eighth-calendar.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p117-eighth-exchange",
+          "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+          "checked_at": "2026-10-11T16:26:50.248808+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "International Exchange and Visiting Students",
+          "sha256": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+          "bundled_file": "completion_sources/p117-eighth-exchange.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p117-eighth-global-education",
+          "source_url": "https://suny.oneonta.edu/about/university-offices/office-global-education",
+          "checked_at": "2026-10-11T16:26:50.247967+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "Office of Global Education",
+          "sha256": "e361c318c9d0aba051b8324796711cf45c2acac7df920df24bacc6810ec5ecfc",
+          "bundled_file": "completion_sources/p117-eighth-global-education.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p117-eighth-health-insurance",
+          "source_url": "https://suny.oneonta.edu/about/university-offices/office-global-education/health-insurance",
+          "checked_at": "2026-10-11T16:30:01.352317+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "International Student Health Insurance",
+          "sha256": "c6a5112b03657f66ec1da192d8f6eb80374d42374573faa931f25f6a32a00093",
+          "bundled_file": "completion_sources/p117-eighth-health-insurance.html.gz",
+          "classification": "acquired_not_policy_verified"
+        },
+        {
+          "source_id": "p117-eighth-international-admission",
+          "source_url": "https://suny.oneonta.edu/admissions/international",
+          "checked_at": "2026-10-11T16:23:08.333429+00:00",
+          "http_status": 200,
+          "error": null,
+          "title": "International Admissions",
+          "sha256": "4d4fffd8b41b52edda87317a7bd066a6c4a9076d9e2d1e88da9db66f1d370865",
+          "bundled_file": "completion_sources/p117-eighth-international-admission.html.gz",
           "classification": "acquired_not_policy_verified"
         },
         {
@@ -50120,23 +50141,22 @@
       "pending_host_policy_reviews": [
         {
           "field": "program_scope",
-          "field_status": "reference_only",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "無交換名額限制，限大學部自費生",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "官方一般Exchange/Visiting partner名單列中正；exchange與fee-paying visiting可一學期或一學年，須母校提名，degree/transfer另程序。未標2027適用年，不因此把中正灰字變開放。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                117
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "無交換名額限制，限大學部自費生",
-              "reference_excerpt": "無交換名額限制，限大學部自費生",
-              "note": null
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "National Chung Cheng University, Taiwan",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
             }
           ],
           "official_not_announced": false,
@@ -50144,23 +50164,22 @@
         },
         {
           "field": "eligibility",
-          "field_status": "reference_only",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "無交換名額限制，限大學部自費生",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "一般接待交換/visiting须先母校正式提名、GPA3.0或B average及各交換協議標準。此為接待端未年規則，母校中正甄選另核，不自創換算。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                117
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "無交換名額限制，限大學部自費生",
-              "reference_excerpt": "無交換名額限制，限大學部自費生",
-              "note": null
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "3.0 or higher GPA requirement or B average",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
             }
           ],
           "official_not_announced": false,
@@ -50168,23 +50187,22 @@
         },
         {
           "field": "language",
-          "field_status": "reference_only",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "TOEFL iBT: 61 ↑ TOEFL PBT : 500 ↑ IELTS : 6.0 ↑ ITEP : 3.7 ↑ ELS - 112 Level TOEFL ITP : 500 ↑ (If coursework has been taken fully in English, official letter from home campus confirming this)",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "未年接待頁：iBT61/ITP500/PBT500/IELTS6.0/iTEP3.7/ELS112/Duolingo110，或母校簽函證明多數課英語。ITP限exchange/visiting；舊中正摘錄与接待尺度分開，2027證明格式待核。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                117
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "TOEFL iBT: 61 ↑ TOEFL PBT : 500 ↑ IELTS : 6.0 ↑ ITEP : 3.7 ↑ ELS - 112 Level TOEFL ITP : 500 ↑ (If coursework has been taken fully in English, official letter from home campus confirming this)",
-              "reference_excerpt": "TOEFL iBT: 61 ↑ TOEFL PBT : 500 ↑ IELTS : 6.0 ↑ ITEP : 3.7 ↑ ELS - 112 Level TOEFL ITP : 500 ↑ (If coursework has been taken fully in English, official letter from home campus confirming this)",
-              "note": null
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "TOEFL iBT (internet-based test) score of 61 or higher",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
             }
           ],
           "official_not_announced": false,
@@ -50202,33 +50220,45 @@
         },
         {
           "field": "application_deadline",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "未年頁列Fall May15/Spring November15；尚未明示2027Spring年度及時區，不能直接生成2026-11-15確定提醒。校內截止由母校另定，無提名日。",
+          "evidence": [
+            {
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "Spring semester admission: November 15",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
           "field": "documents",
-          "field_status": "reference_only",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "申請連結: https://oneonta-global-education.via-trm.com/visitor/programs/7023 Exchange Student Essay Exchange Student Recommendation Form Financial Support Documentation (documentation should be current - dated within 6 months of application deadline, must be translated in English & must include the conversion to U.S. dollars) • Certified bank statements (personal and/or from family/guardians), and/or scholarship and financial aid letters • Signed Letter of Financial Support (if student is being supported by anyone other than themselves) • NOTE: Financial documentation should show liquid assets (liquid assets are those financial resources which are readily available in cash or can be converted to cash easily). • Official Transcripts from most current university attended • Proof of English Proficiency (one of it) • Copy of photo and signature pages of passport (passport must be valid at least 6 months after your entry into the United States)",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "未年接待6類：essay、recommendation form、6月內英文/美元換算且可變現財力（第三人資助另簽support letter）、最近大學正式成績、語言證明、護照照片與簽名頁（入美後至少6月有效）。所需資金額未見此頁，2027個人portal項目未實讀。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                117
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "申請連結: https://oneonta-global-education.via-trm.com/visitor/programs/7023 Exchange Student Essay Exchange Student Recommendation Form Financial Support Documentation (documentation should be current - dated within 6 months of application deadline, must be translated in English & must include the conversion to U.S. dollars) • Certified bank statements (personal and/or from family/guardians), and/or scholarship and financial aid letters • Signed Letter of Financial Support (if student is being supported by anyone other than themselves) • NOTE: Financial documentation should show liquid assets (liquid assets are those financial resources which are readily available in cash or can be converted to cash easily). • Official Transcripts from most current university attended • Proof of English Proficiency (one of it) • Copy of photo and signature pages of passport (passport must be valid at least 6 months after your entry into the United States)",
-              "reference_excerpt": "申請連結: https://oneonta-global-education.via-trm.com/visitor/programs/7023 Exchange Student Essay Exchange Student Recommendation Form Financial Support Documentation (documentation should be current - dated within 6 months of application deadline, must be translated in English & must include the conversion to U.S. dollars) • Certified bank statements (personal and/or from family/guardians), and/or scholarship and financial aid letters • Signed Letter of Financial Support (if student is being supported by anyone other than themselves) • NOTE: Financial documentation should show liquid assets (liquid assets are those financial resources which are readily available in cash or can be converted to cash easily). • Official Transcripts from most current university attended • Proof of English Proficiency (one of it) • Copy of photo and signature pages of passport (passport must be valid at least 6 months after your entry into the United States)",
-              "note": null
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "Exchange Student Essay",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
             }
           ],
           "official_not_announced": false,
@@ -50236,55 +50266,83 @@
         },
         {
           "field": "application_forms",
-          "field_status": "reference_only",
-          "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "2023/01將公布最新簡章",
+          "field_status": "needs_confirmation",
+          "classification": "personal_access_required",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "官方未年流程：先母校提名，OGE Via-TRM Apply→Sign up→Sign in→Programs選United States:SUNY Oneonta與term。完整申請及錄取後Course Approval表在個人portal，未註冊/登入/填送；公開說明可讀不代表完整私有表已取得。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                117
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "2023/01將公布最新簡章",
-              "reference_excerpt": "2023/01將公布最新簡章",
-              "note": null
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "Create an account by clicking the small \"Sign up\" link",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ],
+          "official_not_announced": false,
+          "personal_access_required": true,
+          "access_requirement_evidence": [
+            {
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "After signing in to the OGE Global Portal",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "verified_current"
+            }
+          ]
+        },
+        {
+          "field": "course_restrictions",
+          "field_status": "needs_confirmation",
+          "classification": "research_incomplete",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "未年交換選課於到校Orientation，由年級/major優先且可能額滿，先準備10門major/nonmajor及100以上候補；部分200/300與capstone限major。F-1最低12credits，不能套所有J-1；英語placement及可能ELL另要求。2027每門課/先修待核。",
+          "evidence": [
+            {
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "F-1 students must register for a minimum of 12 credits.",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
             }
           ],
           "official_not_announced": false,
           "personal_access_required": null
         },
         {
-          "field": "academic_calendar",
-          "field_status": "missing",
-          "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "course_restrictions",
-          "field_status": "missing",
-          "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
           "field": "housing",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "Oneonta一般campus living有雙人/共用浴廁，後續年級quad/suite/Higgins apartments、gender-inclusive及免費洗衣。新生4學期/transfer2學期為degree對象，不强制套交換；未核2027交換床位/合約。",
+          "evidence": [
+            {
+              "source_id": "p117-campus_contact-1",
+              "source_url": "https://suny.oneonta.edu/why-oneonta/student-life/campus-living",
+              "source_pages": [],
+              "excerpt": "All first-year students",
+              "academic_year": "未標年一般Campus Living；exchange個人適用未核",
+              "application_round": "未標年一般Campus Living；exchange個人適用未核",
+              "checked_at": "2026-10-11T08:44:08.343890+00:00",
+              "content_hash": "e7b800d853d4bd9cc5304548d6c912132c13b357acd301e57c8321bcda19d356",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
@@ -50300,21 +50358,24 @@
         },
         {
           "field": "costs",
-          "field_status": "missing",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
-          "official_not_announced": false,
-          "personal_access_required": null
-        },
-        {
-          "field": "insurance",
-          "field_status": "missing",
-          "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "可核的2026/27保險費組件：Spring/Summer7月USD1396.28，monthly或fraction USD200.25/16日至USD105.40，依實際coverage指定。年度表套餐與逐月費不能互算成個人bill；住宿/伙食/交換或付費visiting學費及總生活預算未核，申請費0不等學費0。",
+          "evidence": [
+            {
+              "source_id": "p117-eighth-health-insurance",
+              "source_url": "https://suny.oneonta.edu/about/university-offices/office-global-education/health-insurance",
+              "source_pages": [],
+              "excerpt": "$1,396.28",
+              "academic_year": "官方2026–2027UHC費率；非全部交換生活預算",
+              "application_round": "官方2026–2027UHC費率；非全部交換生活預算",
+              "checked_at": "2026-10-11T16:30:01.352317+00:00",
+              "content_hash": "c6a5112b03657f66ec1da192d8f6eb80374d42374573faa931f25f6a32a00093",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
@@ -50330,11 +50391,24 @@
         },
         {
           "field": "arrival",
-          "field_status": "missing",
+          "field_status": "conflict",
           "classification": "research_incomplete",
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "value": null,
-          "evidence": [],
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "2026/27校曆Spring2027總表New Student Arrival/Orientation01-21至23，月別段寫22–23卻列Thursday–Saturday，正文不同，未選猜哪日正確。未年OGE peer mentors可協助接機，但不保個人免費接機或確定入住日。",
+          "evidence": [
+            {
+              "source_id": "p117-eighth-calendar",
+              "source_url": "https://suny.oneonta.edu/academics/academic-calendar",
+              "source_pages": [],
+              "excerpt": "22-23 Thursday-Saturday : New Student arrival and orientation.",
+              "academic_year": "官方2026–27 / Spring2027校曆兩處迎新日期衝突",
+              "application_round": "官方2026–27 / Spring2027校曆兩處迎新日期衝突",
+              "checked_at": "2026-10-11T16:26:50.244125+00:00",
+              "content_hash": "8c1ef61757f09bef95f3fc24fc16f236b7c9374fd3a1fc5dfe822ed562ae80e6",
+              "status": "conflict",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ],
           "official_not_announced": false,
           "personal_access_required": null
         },
@@ -50350,23 +50424,22 @@
         },
         {
           "field": "exchange_duration",
-          "field_status": "reference_only",
+          "field_status": "needs_confirmation",
           "classification": "research_incomplete",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "value": "一學期(one semester)/一學年(one year)",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "value": "未年Exchange/fee-paying Visiting可一學期或一學年；有效協議/中正個人批准與2027實際停留期限另核，不由partner清單推一年名額。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                117
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "一學期(one semester)/一學年(one year)",
-              "reference_excerpt": "一學期(one semester)/一學年(one year)",
-              "note": null
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "semester or academic year",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
             }
           ],
           "official_not_announced": false,
@@ -51591,6 +51664,6 @@
     "coordinate_gaps": 3,
     "licensed_photo_gaps": 4,
     "website_identity_gaps": 1,
-    "host_missing_fields": 618
+    "host_missing_fields": 608
   }
 }

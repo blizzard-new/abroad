@@ -1,10 +1,10 @@
 {
   "checked_at": "2026-10-11",
-  "source_count": 1271,
+  "source_count": 1276,
   "decisions": {
     "acquired_not_policy_verified": 712,
     "excluded_specific_review": 8,
-    "used_with_explicit_field_status": 483,
+    "used_with_explicit_field_status": 488,
     "technical_failure": 59,
     "challenge_or_error_page": 8,
     "used_access_requirement_evidence": 1
@@ -4451,9 +4451,11 @@
       "original_sha256": "e7b800d853d4bd9cc5304548d6c912132c13b357acd301e57c8321bcda19d356",
       "bundled_file": "completion_sources/p117-campus_contact-1.html.gz",
       "response_bytes_verified": true,
-      "decision": "acquired_not_policy_verified",
-      "field_statuses": [],
-      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p117-campus_contact-2",
@@ -4516,6 +4518,94 @@
       "tls_verify": true,
       "original_sha256": "7d1cd4e59a9431ec4627ca9e455801a81459d7d19cf2fe69a15418db380175ab",
       "bundled_file": "completion_sources/p117-commons.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p117-eighth-calendar",
+      "ccu_page": 117,
+      "source_url": "https://suny.oneonta.edu/academics/academic-calendar",
+      "resolved_url": "https://suny.oneonta.edu/academics/academic-calendar",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T16:26:50.244125+00:00",
+      "tls_verify": true,
+      "original_sha256": "8c1ef61757f09bef95f3fc24fc16f236b7c9374fd3a1fc5dfe822ed562ae80e6",
+      "bundled_file": "completion_sources/p117-eighth-calendar.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict",
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p117-eighth-exchange",
+      "ccu_page": 117,
+      "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+      "resolved_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T16:26:50.248808+00:00",
+      "tls_verify": true,
+      "original_sha256": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+      "bundled_file": "completion_sources/p117-eighth-exchange.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p117-eighth-global-education",
+      "ccu_page": 117,
+      "source_url": "https://suny.oneonta.edu/about/university-offices/office-global-education",
+      "resolved_url": "https://suny.oneonta.edu/about/university-offices/office-global-education",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T16:26:50.247967+00:00",
+      "tls_verify": true,
+      "original_sha256": "e361c318c9d0aba051b8324796711cf45c2acac7df920df24bacc6810ec5ecfc",
+      "bundled_file": "completion_sources/p117-eighth-global-education.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p117-eighth-health-insurance",
+      "ccu_page": 117,
+      "source_url": "https://suny.oneonta.edu/about/university-offices/office-global-education/health-insurance",
+      "resolved_url": "https://suny.oneonta.edu/about/university-offices/office-global-education/health-insurance",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T16:30:01.352317+00:00",
+      "tls_verify": true,
+      "original_sha256": "c6a5112b03657f66ec1da192d8f6eb80374d42374573faa931f25f6a32a00093",
+      "bundled_file": "completion_sources/p117-eighth-health-insurance.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "needs_confirmation",
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p117-eighth-international-admission",
+      "ccu_page": 117,
+      "source_url": "https://suny.oneonta.edu/admissions/international",
+      "resolved_url": "https://suny.oneonta.edu/admissions/international",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T16:23:08.333429+00:00",
+      "tls_verify": true,
+      "original_sha256": "4d4fffd8b41b52edda87317a7bd066a6c4a9076d9e2d1e88da9db66f1d370865",
+      "bundled_file": "completion_sources/p117-eighth-international-admission.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -6175,9 +6265,11 @@
       "original_sha256": "6e98622f17d3d020f4f9a2c9eb96ab650e777eb2c74e5eacbebceec36a8e381e",
       "bundled_file": "completion_sources/p17-reference-link-1.html.gz",
       "response_bytes_verified": true,
-      "decision": "acquired_not_policy_verified",
-      "field_statuses": [],
-      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "reference_only"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
       "source_id": "p17-root",
