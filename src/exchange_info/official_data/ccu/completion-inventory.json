@@ -14,72 +14,72 @@
   },
   "field_counts": {
     "host.program_scope": {
-      "reference_only": 37,
+      "reference_only": 36,
       "missing": 11,
       "verified_current": 31,
-      "needs_confirmation": 25
+      "needs_confirmation": 26
     },
     "host.eligibility": {
-      "reference_only": 34,
+      "reference_only": 33,
       "missing": 24,
       "verified_current": 23,
-      "needs_confirmation": 21,
+      "needs_confirmation": 22,
       "conflict": 2
     },
     "host.language": {
-      "reference_only": 44,
+      "reference_only": 43,
       "verified_current": 20,
       "missing": 12,
-      "needs_confirmation": 23,
+      "needs_confirmation": 24,
       "conflict": 5
     },
     "host.nomination_deadline": {
-      "missing": 53,
+      "missing": 52,
       "reference_only": 7,
-      "needs_confirmation": 19,
+      "needs_confirmation": 20,
       "conflict": 6,
       "verified_current": 19
     },
     "host.application_deadline": {
       "missing": 41,
       "verified_current": 20,
-      "reference_only": 11,
-      "needs_confirmation": 18,
+      "reference_only": 10,
+      "needs_confirmation": 19,
       "conflict": 14
     },
     "host.documents": {
-      "reference_only": 37,
+      "reference_only": 36,
       "verified_current": 24,
-      "needs_confirmation": 28,
+      "needs_confirmation": 29,
       "missing": 11,
       "conflict": 4
     },
     "host.application_forms": {
-      "reference_only": 33,
-      "needs_confirmation": 47,
+      "reference_only": 32,
+      "needs_confirmation": 48,
       "missing": 19,
       "verified_current": 5
     },
     "host.academic_calendar": {
-      "missing": 48,
+      "missing": 47,
       "verified_current": 29,
       "needs_confirmation": 9,
-      "conflict": 12,
+      "conflict": 13,
       "reference_only": 6
     },
     "host.course_restrictions": {
-      "missing": 49,
+      "missing": 48,
       "verified_current": 24,
-      "needs_confirmation": 24,
+      "needs_confirmation": 25,
       "conflict": 4,
       "reference_only": 3
     },
     "host.housing": {
       "missing": 32,
       "verified_current": 26,
-      "conflict": 5,
+      "conflict": 6,
       "needs_confirmation": 25,
-      "reference_only": 16
+      "reference_only": 15
     },
     "host.housing_deadline": {
       "missing": 78,
@@ -89,11 +89,11 @@
       "reference_only": 1
     },
     "host.costs": {
-      "missing": 44,
+      "missing": 43,
       "verified_current": 18,
       "reference_only": 13,
       "needs_confirmation": 16,
-      "conflict": 13
+      "conflict": 14
     },
     "host.insurance": {
       "missing": 42,
@@ -103,30 +103,30 @@
       "conflict": 3
     },
     "host.visa": {
-      "missing": 55,
-      "needs_confirmation": 26,
+      "missing": 54,
+      "needs_confirmation": 27,
       "verified_current": 14,
       "reference_only": 8,
       "conflict": 1
     },
     "host.arrival": {
-      "missing": 47,
+      "missing": 46,
       "verified_current": 30,
-      "needs_confirmation": 10,
+      "needs_confirmation": 11,
       "reference_only": 10,
       "conflict": 6,
       "explicit_not_announced": 1
     },
     "host.host_tuition": {
       "missing": 70,
-      "reference_only": 7,
-      "needs_confirmation": 16,
+      "reference_only": 6,
+      "needs_confirmation": 17,
       "verified_current": 11
     },
     "host.exchange_duration": {
-      "reference_only": 45,
+      "reference_only": 44,
       "missing": 13,
-      "needs_confirmation": 15,
+      "needs_confirmation": 16,
       "verified_current": 28,
       "conflict": 3
     },
@@ -265,8 +265,8 @@
       "partial_not_exhaustive": 33
     },
     "campus.coordinates": {
-      "verified_current": 99,
-      "missing": 5
+      "verified_current": 100,
+      "missing": 4
     },
     "campus.photo": {
       "verified_current": 100,
@@ -106727,50 +106727,51 @@
       ],
       "fields": {
         "host.program_scope": {
-          "status": "reference_only",
-          "value": "參考附件原文： out UEL CTP nomination form to nominate incoming exchange students: Step 1",
-          "reason": "只保存已讀附件的此欄原文與原年度。來源可能有不同計畫／學制，未解析成2027申請條件、期限、費用或完整文件集；本期未開放。",
+          "value": "UEL Credit Transfer Program(CTP)公開factsheet。母校提名→學生送件→錄取／簽證，不將Summer Camp、articulation或Erasmus funding當中正交換方案；PDF無年度。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
           "evidence": [
             {
-              "source_id": "p66-reference-link-1",
-              "source_url": "https://drive.usercontent.google.com/download?id=1yYGsn4fpauzvmT_oNee4o7PmBAPegBaj&export=download",
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
               "source_pages": [
-                4
+                2
               ],
-              "excerpt": " out UEL CTP nomination form to nominate incoming exchange students: Step 1",
-              "academic_year": "正文UEL Academic Year2023–2024 CTP",
-              "application_round": "歷史／其他梯次參考；2027新版尚未核實",
-              "checked_at": "2026-10-11T09:06:48.397132+00:00",
-              "content_hash": "4287d198a8102e8b83cca9cbecebce32faa5898e067bb0a1fcf977182b4bf270",
-              "status": "reference_only",
-              "bundled_attachment": "completion_sources/p66-reference-link-1.pdf"
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "UEL CTP Incoming Nomination Form"
             }
-          ]
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.eligibility": {
-          "status": "reference_only",
-          "value": "管理學院及法學院可申請",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
+          "value": "目前連結但未標年PDF：partner全時在學生、母校至少完成2學期、每交換學期至少3門課。母校舊參考附件的管理／法律範圍仍須依中正有效協議，沒有擴成全部院系。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
               "source_pages": [
-                66
+                1
               ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "管理學院及法學院可申請",
-              "reference_excerpt": "管理學院及法學院可申請",
-              "note": null
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "Must have completed at least 02 semesters of study at home institutions"
             }
-          ]
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.language": {
-          "status": "reference_only",
-          "value": "參考附件原文：L course list. At least in English Requirements: (IELTS > 5.0, TOEIC > 450 or equivalent) CREDITS TRANSFER PROGRAM (CTP) B1",
-          "reason": "只保存已讀附件的此欄原文與原年度。來源可能有不同計畫／學制，未解析成2027申請條件、期限、費用或完整文件集；本期未開放。",
+          "value": "目前未標年PDF視覺原文：minimum B2、IELTS ≥6.0或TOEIC ≥650／equivalent，母校英文證明也接受。舊2023–2024參考視覺原文為B1、IELTS ≥5.0／TOEIC ≥450；兩份純文字抽取均丟失等號而呈>，已按PDF第1／3頁實際符號核讀。不選舊較低門檻，也未宣稱新版2027已核實。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
           "evidence": [
             {
               "source_id": "p66-reference-link-1",
@@ -106778,26 +106779,76 @@
               "source_pages": [
                 3
               ],
-              "excerpt": "L course list. At least in English Requirements: (IELTS > 5.0, TOEIC > 450 or equivalent) CREDITS TRANSFER PROGRAM (CTP) B1",
+              "excerpt": "At least B1 in English (IELTS ≥ 5.0, TOEIC ≥ 450 or equivalent)",
               "academic_year": "正文UEL Academic Year2023–2024 CTP",
               "application_round": "歷史／其他梯次參考；2027新版尚未核實",
               "checked_at": "2026-10-11T09:06:48.397132+00:00",
               "content_hash": "4287d198a8102e8b83cca9cbecebce32faa5898e067bb0a1fcf977182b4bf270",
               "status": "reference_only",
-              "bundled_attachment": "completion_sources/p66-reference-link-1.pdf"
+              "bundled_attachment": "completion_sources/p66-reference-link-1.pdf",
+              "extracted_excerpt": "L course list. At least in English Requirements: (IELTS > 5.0, TOEIC > 450 or equivalent) CREDITS TRANSFER PROGRAM (CTP) B1",
+              "evidence_method": "Historical PDF page3 visually reviewed; extraction loses lower equality stroke",
+              "visual_review_file": "completion_sources/p66-visual-historical-language.png",
+              "visual_review_sha256": "5d8c7566849294d393d400e66d45e121942cad3a61ef0380a53dbbc856b4116c"
+            },
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "Minimum B2 level: IELTS ≥ 6.0, TOEIC ≥ 650 or equivalent",
+              "extracted_excerpt": "Minimum B2 level: IELTS > 6.0, TOEIC > 650 or equivalent",
+              "evidence_method": "PDF page1 visually reviewed; extraction loses lower equality stroke",
+              "visual_review_file": "completion_sources/p66-visual-current-language.png",
+              "visual_review_sha256": "6ab2c0ec509d3fa29edfd02579780092989b5e00d4736a0b9749732f6836c4c3"
+            },
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "English certification from home institution is also accepted"
             }
-          ]
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.nomination_deadline": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "未標年PDF：Semester1 June5、Semester2 September25、Semester3 February5。雖校曆另有2026–2027頁籤，不能替未標年提名日加2026／2027或把中正Spring一律套Semester2。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
+          "evidence": [
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "Nomination deadline   June 5   September 25   February 5"
+            }
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.application_deadline": {
-          "status": "reference_only",
-          "value": "參考附件原文：rd, Thu Duc City, Ho Chi Minh City 700000, Vienam Application deadline: Oct 15 Semester 2 AY 2023-2024 (Feb - June) Semester 1 AY 2023-2024 (Sep - Feb) Application deadline: June 15 Access our UEL E-Handbook for exchange students now to know more about Vietnam and dorm prices!",
-          "reason": "只保存已讀附件的此欄原文與原年度。來源可能有不同計畫／學制，未解析成2027申請條件、期限、費用或完整文件集；本期未開放。",
+          "value": "未標年PDF：Semester1 June15、Semester2 October5、Semester3 February15；舊2023–2024附件Semester2為October15。沒有核實2027個人截止，不套舊年或自行推年。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
           "evidence": [
             {
               "source_id": "p66-reference-link-1",
@@ -106812,82 +106863,175 @@
               "content_hash": "4287d198a8102e8b83cca9cbecebce32faa5898e067bb0a1fcf977182b4bf270",
               "status": "reference_only",
               "bundled_attachment": "completion_sources/p66-reference-link-1.pdf"
+            },
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "Application deadline   June 15   October 5   February 15"
             }
-          ]
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.documents": {
-          "status": "reference_only",
-          "value": "參考附件原文：size profile photo Nominated students prepare the required documents: 1. 2. 3. 4. 5. 6. 7. 8. Step 2 Coordinator from partner universities fill out UEL CTP nomination form to nominate incoming exchange students: Step 1",
-          "reason": "只保存已讀附件的此欄原文與原年度。來源可能有不同計畫／學制，未解析成2027申請條件、期限、費用或完整文件集；本期未開放。",
+          "value": "未標年PDF初申8項：CTP Application Form、成績單、提名信、英文CV、語言／母校英文證明、護照、Vietnam NA1 Visa Application Form、護照尺寸照片。錄取後才發Acceptance Letter、Learning Agreement、visa approval/guidelines；宿舍rental form/agreement與護照影本是住宿申請，不混入初申。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
           "evidence": [
             {
-              "source_id": "p66-reference-link-1",
-              "source_url": "https://drive.usercontent.google.com/download?id=1yYGsn4fpauzvmT_oNee4o7PmBAPegBaj&export=download",
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                2
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "Vietnam NA1 Visa Application Form"
+            },
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                2
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "UEL Learning Agreement"
+            }
+          ],
+          "research_classification": "research_incomplete"
+        },
+        "host.application_forms": {
+          "value": "目前官方CTP-OnlineApplication連結轉到Google Forms，實讀401回應正文You must sign in to access this content。須Google個人帳號才繼續，未登入、未讀题目／年度、未提交；不宣稱只有提名者有權限。未取得CTP application/nomination、NA1的2027版本，舊母校Drive表僅參考。",
+          "status": "needs_confirmation",
+          "reason": "依實際Google登入提示，不只依HTTP401分類；尚未核實帳號授權範圍或最新表單内容。",
+          "evidence": [
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                2
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "http://link.uel.edu.vn/CTP-OnlineApplication"
+            },
+            {
+              "source_id": "p66-official-ctp-application",
+              "source_url": "https://link.uel.edu.vn/CTP-OnlineApplication",
+              "source_pages": [],
+              "checked_at": "2026-10-11T13:06:13.387662+00:00",
+              "content_hash": "8af2adc17c30e1b49db9d8e23eefcf43707c1004424f2f5a82365a07106a357a",
+              "academic_year": "個人Google Forms入口，未讀到表單年份或題目",
+              "application_round": "提名後學生申請入口",
+              "status": "needs_confirmation",
+              "excerpt": "Sign in to your Google Account. You must sign in to access this content"
+            }
+          ],
+          "research_classification": "personal_access_required"
+        },
+        "host.academic_calendar": {
+          "value": "官方2026–2027第一頁籤／CSV：Semester1 2026-08-24→12-01；Semester2 2026-12-14→2027-03-27，Lunar New Year 2027-02-01→14。考試欄S1卻2025-11-20→12-01，S2開始2026-03-15到2027-03-27；S3semester寫2026-04-12→07-24、exam2027-07-05→2026-07-24。正文矛盾原樣保留，不替官方改年，精確個人考試／第三學期待確認。",
+          "status": "conflict",
+          "reason": "已讀2026-2027頁籤實際CSV儲存格；多項年份與區間矛盾，不只看文件名。",
+          "evidence": [
+            {
+              "source_id": "p66-academic-calendar-csv",
+              "source_url": "https://docs.google.com/spreadsheets/d/1PHNvK24paNm7AsSfUDczfc8JGgQjl1HX/export?format=csv",
+              "source_pages": [],
+              "source_locator": "CSV row1 col9; row12/14/16 cols19,27; current first tab2026-2027",
+              "checked_at": "2026-10-11T13:07:14.178563+00:00",
+              "content_hash": "a995feb422afe7aa2236a804a6a109f13d18b8665f6a3c311df27d3143569094",
+              "academic_year": "官方表格2026-2027頁籤；日期年份矛盾未改",
+              "application_round": "2027接待另核；中正本期未開放",
+              "status": "conflict",
+              "excerpt": "2026-2027 ACADEMIC CALENDAR; Semester2 14/12/2026 - 27/03/2027; Finals 15/03/2026 - 27/03/2027; Semester3 12/04/2026 - 24/07/2026; Finals 05/07/2027 - 24/07/2026"
+            }
+          ],
+          "research_classification": "research_incomplete"
+        },
+        "host.course_restrictions": {
+          "value": "未標年PDF：每學期至少3門，英文授課；Economics／Business／Management／Law各faculty列示，跨faculty須符合母校最低學分。1Vietnamese credit=1.5ECTS為UEL/VNUHCM規則，不保證中正抵免；linked General Curriculum頁無學年，未核2027實際開課／容量／協議領域。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
+          "evidence": [
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "Must register for at least 03 courses per exchange semester"
+            },
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                2
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "01 VC = 1.5 ECTS"
+            }
+          ],
+          "research_classification": "research_incomplete"
+        },
+        "host.housing": {
+          "value": "未標年factsheet p4稱VNUHCM Dormitory A/B USD55–138『monthly』；同官方連結住宿文UpdatedJuly2026 section1卻55–138『per6months』，計價單位矛盾未選定。DormB約500m、A約2km，23:00關閉；UEL協助rental application/agreement、1照片及護照影本，不保證2027床位。GuestHouse與私人公寓另列，不等同校內配額。",
+          "status": "conflict",
+          "reason": "住宿文件正文明示July2026，但與未標年factsheet租金單位不同；保留兩者不擅改。",
+          "evidence": [
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
               "source_pages": [
                 4
               ],
-              "excerpt": "size profile photo Nominated students prepare the required documents: 1. 2. 3. 4. 5. 6. 7. 8. Step 2 Coordinator from partner universities fill out UEL CTP nomination form to nominate incoming exchange students: Step 1",
-              "academic_year": "正文UEL Academic Year2023–2024 CTP",
-              "application_round": "歷史／其他梯次參考；2027新版尚未核實",
-              "checked_at": "2026-10-11T09:06:48.397132+00:00",
-              "content_hash": "4287d198a8102e8b83cca9cbecebce32faa5898e067bb0a1fcf977182b4bf270",
-              "status": "reference_only",
-              "bundled_attachment": "completion_sources/p66-reference-link-1.pdf"
-            }
-          ]
-        },
-        "host.application_forms": {
-          "status": "reference_only",
-          "value": "https://drive.google.com/file/d/1yYGsn4fpauzvmT_oNee4o7PmBAPegBaj/view?usp=sharin g",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
-          "evidence": [
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "monthly rent (USD)"
+            },
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                66
-              ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "https://drive.google.com/file/d/1yYGsn4fpauzvmT_oNee4o7PmBAPegBaj/view?usp=sharin g",
-              "reference_excerpt": "https://drive.google.com/file/d/1yYGsn4fpauzvmT_oNee4o7PmBAPegBaj/view?usp=sharin g",
-              "note": null
+              "source_id": "p66-accommodation-public-text",
+              "source_url": "https://docs.google.com/document/d/1rZVNqk4rdApcd1krsn7H2j53qrbtqqzND4wU4CYNuVI/export?format=txt",
+              "source_pages": [],
+              "source_locator": "section1 VNUHCM Dormitory B; UTF-8 public text export",
+              "checked_at": "2026-10-11T13:07:14.178832+00:00",
+              "content_hash": "cdaf87224268eb06dce88378343f15fbc709884668b53e91f87f6f08f84a36e3",
+              "academic_year": "Updated to July2026；2027個人租約另核",
+              "application_round": "2027接待參考",
+              "status": "conflict",
+              "excerpt": "Updated to July 2026; USD 55 to USD 138 per 6 months; closes daily at 11 PM"
             }
-          ]
-        },
-        "host.academic_calendar": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.course_restrictions": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
-        },
-        "host.housing": {
-          "status": "reference_only",
-          "value": "參考附件原文：Accommodation recommendations in Vietnam for exchange students DEPARTMENT OF COOPERATION AND DEVELOPMENT Email: dcd@uel.edu.vn Tel: (+84 28) 37244 555, (Ext: 6361) Address: R. A108, No 669 National Road 1, Quarter 3, Linh Xuan Ward, Thu Duc City, Ho Chi Minh City 700000, Vienam Application deadline: Oct 15 Semester 2 AY 2023-2024 (Feb - June) Semester 1 AY 2023-2024 (Sep - Feb) Application deadline: June 15 Access our UEL E-Handbook for exchange students now to know more about Vietnam and dorm prices!",
-          "reason": "只保存已讀附件的此欄原文與原年度。來源可能有不同計畫／學制，未解析成2027申請條件、期限、費用或完整文件集；本期未開放。",
-          "evidence": [
-            {
-              "source_id": "p66-reference-link-1",
-              "source_url": "https://drive.usercontent.google.com/download?id=1yYGsn4fpauzvmT_oNee4o7PmBAPegBaj&export=download",
-              "source_pages": [
-                8
-              ],
-              "excerpt": "Accommodation recommendations in Vietnam for exchange students DEPARTMENT OF COOPERATION AND DEVELOPMENT Email: dcd@uel.edu.vn Tel: (+84 28) 37244 555, (Ext: 6361) Address: R. A108, No 669 National Road 1, Quarter 3, Linh Xuan Ward, Thu Duc City, Ho Chi Minh City 700000, Vienam Application deadline: Oct 15 Semester 2 AY 2023-2024 (Feb - June) Semester 1 AY 2023-2024 (Sep - Feb) Application deadline: June 15 Access our UEL E-Handbook for exchange students now to know more about Vietnam and dorm prices!",
-              "academic_year": "正文UEL Academic Year2023–2024 CTP",
-              "application_round": "歷史／其他梯次參考；2027新版尚未核實",
-              "checked_at": "2026-10-11T09:06:48.397132+00:00",
-              "content_hash": "4287d198a8102e8b83cca9cbecebce32faa5898e067bb0a1fcf977182b4bf270",
-              "status": "reference_only",
-              "bundled_attachment": "completion_sources/p66-reference-link-1.pdf"
-            }
-          ]
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.housing_deadline": {
           "status": "missing",
@@ -106896,10 +107040,50 @@
           "evidence": []
         },
         "host.costs": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "未標年factsheet p4估生活USD540–1030/月，住房300–600、飲食150–250、交通/data40–80、個人50–100；行政費USD150/semester另計，optional fieldtrip估30。宿舍55–138的monthly／per6months矛盾未解，2027個人費率未核，不把估算當總繳費保證。",
+          "status": "conflict",
+          "reason": "一般估算文件未標學年；住宿單位矛盾，必繳行政費與可選旅遊費分開。",
+          "evidence": [
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                4
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "Total cost 540 - 1,030"
+            },
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                4
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "Mandatory administrative fee: USD 150/semester"
+            },
+            {
+              "source_id": "p66-accommodation-public-text",
+              "source_url": "https://docs.google.com/document/d/1rZVNqk4rdApcd1krsn7H2j53qrbtqqzND4wU4CYNuVI/export?format=txt",
+              "source_pages": [],
+              "source_locator": "section1 VNUHCM Dormitory B; UTF-8 public text export",
+              "checked_at": "2026-10-11T13:07:14.178832+00:00",
+              "content_hash": "cdaf87224268eb06dce88378343f15fbc709884668b53e91f87f6f08f84a36e3",
+              "academic_year": "Updated to July2026；2027個人租約另核",
+              "application_round": "2027接待參考",
+              "status": "conflict",
+              "excerpt": "Updated to July 2026; USD 55 to USD 138 per 6 months; closes daily at 11 PM"
+            }
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.insurance": {
           "status": "missing",
@@ -106908,21 +107092,77 @@
           "evidence": []
         },
         "host.visa": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "未標年factsheet p3：錄取審核後UEL向HCMC Immigration申請，估3–4週後發visa approval；學生到選定使領館領簽。不要在Acceptance Letter＋approval兩者到手前訂機票；提前旅遊入境可能須離境領學生簽再返。這是校方流程而非個人法律保證，未核2027台灣身分適用。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
+          "evidence": [
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "After 3-4 weeks"
+            },
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "MUST NOT book a flight until they receive both the UEL Letter"
+            }
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.arrival": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "value": "未標年factsheet p4：BuddyUp1對1mentor與機場pickup，接機限registering for VNUHCM’s accommodations，不推所有住宿均有。抵達／機票遵循校方錄取及簽證approval提醒，未核2027個人接機表／時間。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
+          "evidence": [
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                4
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "airport pickup"
+            },
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                4
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "if registering for VNUHCM’s accommodations"
+            }
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.host_tuition": {
-          "status": "reference_only",
-          "value": "參考附件原文：Be enrolled at UEL partner universities and pay tuition fees at their home universities as full-time students; Have completed at least 2 semesters of study at their home universities; Have to register for at least 3 courses from the UEL course list. At least in English Requirements: (IELTS > 5.0, TOEIC > 450 or equivalent) CREDITS TRANSFER PROGRAM (CTP) B1",
-          "reason": "只保存已讀附件的此欄原文與原年度。來源可能有不同計畫／學制，未解析成2027申請條件、期限、費用或完整文件集；本期未開放。",
+          "value": "舊母校附件只作參考列母校繳學費。目前未標年PDF只明示USD150/semester行政費，沒有新的tuition waiver條文；不能把行政費當學費或由partner推免學費，2027個人tuition待確認。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
           "evidence": [
             {
               "source_id": "p66-reference-link-1",
@@ -106937,28 +107177,56 @@
               "content_hash": "4287d198a8102e8b83cca9cbecebce32faa5898e067bb0a1fcf977182b4bf270",
               "status": "reference_only",
               "bundled_attachment": "completion_sources/p66-reference-link-1.pdf"
+            },
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                4
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "Mandatory administrative fee: USD 150/semester"
             }
-          ]
+          ],
+          "research_classification": "research_incomplete"
         },
         "host.exchange_duration": {
-          "status": "reference_only",
-          "value": "一學期(one semester)/一學年(one year)",
-          "reason": "母校歷史灰字摘錄，只提供既有協議／文件線索；本期不可申請，不作當期必備資料。",
+          "value": "未標年PDF區分one-semester與one-year exchange；p3的180day／365day是visa validity，不能當授課期間或自動延長。三個semester依學程安排，個人交換長度與2027正確校曆另核。",
+          "status": "needs_confirmation",
+          "reason": "官方目前連結PDF已讀，但正文未標年；尚未核實2027個人適用版本，母校本期未開放不變。",
           "evidence": [
             {
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
               "source_pages": [
-                66
+                3
               ],
-              "academic_year": "母校名冊灰字历史資料，未核实原適用年度",
-              "application_round": "歷史參考；2027春季本期未開放",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "reference_only",
-              "excerpt": "一學期(one semester)/一學年(one year)",
-              "reference_excerpt": "一學期(one semester)/一學年(one year)",
-              "note": null
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "One-semester"
+            },
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "One-year exchange"
             }
-          ]
+          ],
+          "research_classification": "research_incomplete"
         },
         "profile.city": {
           "status": "verified_current",
@@ -122564,10 +122832,58 @@
           "evidence": []
         },
         "campus.coordinates": {
-          "status": "missing",
-          "value": null,
-          "evidence": [],
-          "reason": "未取得唯一的校名、官方網域及國家一致的機構座標來源；不使用ROR城市中心。"
+          "status": "verified_current",
+          "value": {
+            "school_name": "Saintigits Group of Institutions 聖基茲工學院",
+            "country": "印度",
+            "city": "Kottayam（Pathamuttom 工學院校園）",
+            "latitude": 9.5100096,
+            "longitude": 76.5513594,
+            "geocode_status": "verified",
+            "geocoded_at": "2026-10-11T13:00:53.831063+00:00",
+            "source_url": "https://goo.gl/maps/zxt3rGJ8S46DX3ws7",
+            "identity_source_url": "https://saintgits.org/saintgits-design-school/contact-us/",
+            "precision": "representative",
+            "note": "官方同集團Design School聯絡頁（工學院contact路由實際轉址）所連地圖，目的地明確命名Saintgits College of Engineering (Autonomous), Kottayam, Kerala。採!3d/!4d機構marker9.5100096,76.5513594，不採@視窗經度76.5491707，不採既有空拍照片的camera GPS；此為工學院代表點，不保證個人授課樓或Design School交換資格。"
+          },
+          "reason": "官方同集團Design School聯絡頁（工學院contact路由實際轉址）所連地圖，目的地明確命名Saintgits College of Engineering (Autonomous), Kottayam, Kerala。採!3d/!4d機構marker9.5100096,76.5513594，不採@視窗經度76.5491707，不採既有空拍照片的camera GPS；此為工學院代表點，不保證個人授課樓或Design School交換資格。",
+          "evidence": [
+            {
+              "source_id": "p74-engineering-root-followup",
+              "source_url": "https://saintgits.org/saintgits-college-of-engineering/",
+              "source_pages": [],
+              "excerpt": "Saintgits College of Engineering",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T13:00:06.621654+00:00",
+              "content_hash": "e03f7ea237f4d8c17c2fa20fb0642afff5f0a565fec02fdb56fd92c0b899ac2a",
+              "status": "verified_current"
+            },
+            {
+              "source_id": "p74-engineering-contact-followup",
+              "source_url": "https://saintgits.org/saintgits-college-of-engineering/contact-us/",
+              "source_pages": [],
+              "excerpt": "Saintgits Design School; https://goo.gl/maps/zxt3rGJ8S46DX3ws7",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T13:00:05.015898+00:00",
+              "content_hash": "335e65ca8f07368b5d38a1aa2e9b83cc4308fab3c9965083782f93b514aa391a",
+              "status": "verified_current",
+              "resolved_url": "https://saintgits.org/saintgits-design-school/contact-us/"
+            },
+            {
+              "source_id": "p74-engineering-official-map-marker",
+              "source_url": "https://goo.gl/maps/zxt3rGJ8S46DX3ws7",
+              "source_pages": [],
+              "excerpt": "Saintgits+College+of+Engineering+(Autonomous),+Kottayam,+Kerala !3d9.5100096!4d76.5513594",
+              "academic_year": "一般校園身份與來源，查核2026-10-11；不是個人接收校區分配",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T13:00:53.831063+00:00",
+              "content_hash": "3507d5dc6b261fffaf099f8f03c33b20c0d1f40f17ac41d5ab094357b14540f0",
+              "status": "verified_current",
+              "resolved_url": "https://www.google.com/maps/place/Saintgits+College+of+Engineering+(Autonomous),+Kottayam,+Kerala/@9.5100096,76.5491707,17z/data=!4m6!3m5!1s0x3b062ed484f475a7:0xea66b5d0e55062ca!8m2!3d9.5100096!4d76.5513594!16s%2Fm%2F0125pkyd?coh=164777&entry=tt&shorturl=1"
+            }
+          ]
         },
         "campus.photo": {
           "status": "verified_current",
@@ -122624,8 +122940,7 @@
         "home.home_degree_year",
         "home.scholarship_old_window",
         "mother_list.language_requirement",
-        "host.document_set_completeness",
-        "campus.coordinates"
+        "host.document_set_completeness"
       ]
     },
     {

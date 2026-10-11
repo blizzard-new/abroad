@@ -1,12 +1,13 @@
 {
   "checked_at": "2026-10-11",
-  "source_count": 1194,
+  "source_count": 1217,
   "decisions": {
-    "acquired_not_policy_verified": 692,
+    "acquired_not_policy_verified": 702,
     "excluded_specific_review": 7,
-    "used_with_explicit_field_status": 443,
-    "technical_failure": 46,
-    "challenge_or_error_page": 6
+    "used_with_explicit_field_status": 449,
+    "technical_failure": 51,
+    "challenge_or_error_page": 7,
+    "used_access_requirement_evidence": 1
   },
   "photo_exclusions": {
     "81": "原P18為Ateneo Grade School，小學部照片，排除後改選Loyola校區真實校景。",
@@ -2942,6 +2943,54 @@
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
+      "source_id": "p111-faculty-international-public",
+      "ccu_page": 111,
+      "source_url": "https://www.slu.cz/opf/en/international",
+      "resolved_url": "https://www.slu.cz/opf/en/international",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:04:07.699978+00:00",
+      "tls_verify": true,
+      "original_sha256": "734c17a4f8668f654adb86faa161c18fbd8e92a7fcf10918fc348c6bd1c914fb",
+      "bundled_file": "completion_sources/p111-faculty-international-public.html.gz",
+      "response_bytes_verified": true,
+      "decision": "challenge_or_error_page",
+      "field_statuses": [],
+      "reason": "HTTP 200 challenge/error title is not university content."
+    },
+    {
+      "source_id": "p111-library-photo-metadata",
+      "ccu_page": 111,
+      "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Cmetadata&titles=File%3AKarvina+Silesian+University+library.jpg",
+      "resolved_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Cmetadata&titles=File%3AKarvina+Silesian+University+library.jpg",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T12:49:33.936346+00:00",
+      "tls_verify": true,
+      "original_sha256": "bfc707ed6bf9287200c7527d69d16ba24ae08eb35ee490d71dea4d0a7faa2556",
+      "bundled_file": "completion_sources/p111-library-photo-metadata.json",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p111-library-photo-original-page",
+      "ccu_page": 111,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Karvina_Silesian_University_library.jpg",
+      "resolved_url": "https://commons.wikimedia.org/wiki/File:Karvina_Silesian_University_library.jpg",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T12:49:34.381913+00:00",
+      "tls_verify": true,
+      "original_sha256": "231d5abcbeba879b91a4a51859aba3545aaa28f377807eb35935c11bf6db6b2b",
+      "bundled_file": "completion_sources/p111-library-photo-original-page.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p111-public-contact-czech",
       "ccu_page": 111,
       "source_url": "https://www.slu.cz/opf/cz/kontakty",
@@ -4489,6 +4538,38 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p119-diplomados-directions",
+      "ccu_page": 119,
+      "source_url": "https://diplomados.uninter.edu.mx/C%C3%B3mo-Llegar",
+      "resolved_url": "https://diplomados.uninter.edu.mx/C%C3%B3mo-Llegar",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://diplomados.uninter.edu.mx/C%C3%B3mo-Llegar",
+      "checked_at": "2026-10-11T13:00:04.277637+00:00",
+      "tls_verify": true,
+      "original_sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+      "bundled_file": "completion_sources/p119-diplomados-directions.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://diplomados.uninter.edu.mx/C%C3%B3mo-Llegar"
+    },
+    {
+      "source_id": "p119-events-map",
+      "ccu_page": 119,
+      "source_url": "https://uninter.edu.mx/eventos/",
+      "resolved_url": "https://uninter.edu.mx/eventos/",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/eventos/",
+      "checked_at": "2026-10-11T13:00:04.277014+00:00",
+      "tls_verify": true,
+      "original_sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+      "bundled_file": "completion_sources/p119-events-map.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/eventos/"
+    },
+    {
       "source_id": "p119-followup-commons-cuernavaca",
       "ccu_page": 119,
       "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Universidad+Internacional%22+%22Cuernavaca%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
@@ -4583,6 +4664,22 @@
       "decision": "technical_failure",
       "field_statuses": [],
       "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://universidad.uninter.edu.mx/"
+    },
+    {
+      "source_id": "p119-halloween-map",
+      "ccu_page": 119,
+      "source_url": "https://uninter.edu.mx/HALLOWEENFEST/",
+      "resolved_url": "https://uninter.edu.mx/HALLOWEENFEST/",
+      "http_status": 503,
+      "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/HALLOWEENFEST/",
+      "checked_at": "2026-10-11T13:00:04.277396+00:00",
+      "tls_verify": true,
+      "original_sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+      "bundled_file": "completion_sources/p119-halloween-map.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/HALLOWEENFEST/"
     },
     {
       "source_id": "p119-root",
@@ -13806,6 +13903,42 @@
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
+      "source_id": "p66-academic-calendar-csv",
+      "ccu_page": 66,
+      "source_url": "https://docs.google.com/spreadsheets/d/1PHNvK24paNm7AsSfUDczfc8JGgQjl1HX/export?format=csv",
+      "resolved_url": "https://doc-0g-4c-sheets.googleusercontent.com/export/f3kk9gtum31ktuqh54kn7i1e14/iunrd2ob9tsohg1caccf4altls/1791724030000/109711100734981109382/*/1PHNvK24paNm7AsSfUDczfc8JGgQjl1HX?format=csv",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:07:14.178563+00:00",
+      "tls_verify": true,
+      "original_sha256": "a995feb422afe7aa2236a804a6a109f13d18b8665f6a3c311df27d3143569094",
+      "bundled_file": "completion_sources/p66-academic-calendar-csv.csv.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p66-accommodation-public-text",
+      "ccu_page": 66,
+      "source_url": "https://docs.google.com/document/d/1rZVNqk4rdApcd1krsn7H2j53qrbtqqzND4wU4CYNuVI/export?format=txt",
+      "resolved_url": "https://doc-00-ac-docstext.googleusercontent.com/export/s8v029du74rmth76t5k6ldhbqs/v6rnl27jp3s6cant2aft53uk8s/1791724030000/106111401421832857879/*/1rZVNqk4rdApcd1krsn7H2j53qrbtqqzND4wU4CYNuVI?format=txt",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:07:14.178832+00:00",
+      "tls_verify": true,
+      "original_sha256": "cdaf87224268eb06dce88378343f15fbc709884668b53e91f87f6f08f84a36e3",
+      "bundled_file": "completion_sources/p66-accommodation-public-text.source.txt.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
       "source_id": "p66-campus-specific",
       "ccu_page": 66,
       "source_url": "https://maps.app.goo.gl/2d2svyzaJML5vAXK6",
@@ -13936,6 +14069,107 @@
       "reason": "HTTPError: 503 Server Error: Service Unavailable for url: https://international.uel.edu.vn/"
     },
     {
+      "source_id": "p66-official-academic-calendar",
+      "ccu_page": 66,
+      "source_url": "https://link.uel.edu.vn/AcademicCalendar",
+      "resolved_url": "https://docs.google.com/spreadsheets/d/1PHNvK24paNm7AsSfUDczfc8JGgQjl1HX/edit?usp=sharing&ouid=106111401421832857879&rtpof=true&sd=true",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:06:13.387346+00:00",
+      "tls_verify": true,
+      "original_sha256": "40d29aba5c067f15a5ec9dd536cb2cd24baa59528acb4a753a3a8b4a6f03729f",
+      "bundled_file": "completion_sources/p66-official-academic-calendar.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p66-official-accommodation-list",
+      "ccu_page": 66,
+      "source_url": "https://link.uel.edu.vn/AccommodationRecommedations",
+      "resolved_url": "https://docs.google.com/document/d/1rZVNqk4rdApcd1krsn7H2j53qrbtqqzND4wU4CYNuVI/edit?usp=sharing",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:06:13.389875+00:00",
+      "tls_verify": true,
+      "original_sha256": "206b97d5ab16d40517067dee13ad9cb260d3f4bcd0f742562b60f09de5b8b31c",
+      "bundled_file": "completion_sources/p66-official-accommodation-list.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p66-official-ctp-application",
+      "ccu_page": 66,
+      "source_url": "https://link.uel.edu.vn/CTP-OnlineApplication",
+      "resolved_url": "https://docs.google.com/forms/d/e/1FAIpQLSf97oetiQJ1ODDJVPvm7ejxI1Ph6uEAq41VOnGAhU-mIjI-Xg/viewform?usp=send_form",
+      "http_status": 401,
+      "error": "HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSf97oetiQJ1ODDJVPvm7ejxI1Ph6uEAq41VOnGAhU-mIjI-Xg/viewform?usp=send_form",
+      "checked_at": "2026-10-11T13:06:13.387662+00:00",
+      "tls_verify": true,
+      "original_sha256": "8af2adc17c30e1b49db9d8e23eefcf43707c1004424f2f5a82365a07106a357a",
+      "bundled_file": "completion_sources/p66-official-ctp-application.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_access_requirement_evidence",
+      "field_statuses": [
+        "needs_confirmation"
+      ],
+      "reason": "Actual Google sign-in body supports only the access requirement; no form contents, academic year or receiving-policy verification."
+    },
+    {
+      "source_id": "p66-official-curriculum",
+      "ccu_page": 66,
+      "source_url": "https://link.uel.edu.vn/GeneralCurriculum",
+      "resolved_url": "https://docs.google.com/spreadsheets/d/1GWLlR257vO9P0V_w1a8Xr-6XK23V_yp4WZTe4QxaYxY/edit?usp=sharing",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:06:13.388090+00:00",
+      "tls_verify": true,
+      "original_sha256": "2ac87d507068fd524dae7942cb62517b92d12210f60a17681328b08e03be830d",
+      "bundled_file": "completion_sources/p66-official-curriculum.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p66-official-factsheet-pdf",
+      "ccu_page": 66,
+      "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+      "resolved_url": "https://drive.usercontent.google.com/download?id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH&export=download",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:05:01.796078+00:00",
+      "tls_verify": true,
+      "original_sha256": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+      "bundled_file": "completion_sources/p66-official-factsheet-pdf.pdf",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "conflict",
+        "needs_confirmation"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p66-official-factsheet-shortlink",
+      "ccu_page": 66,
+      "source_url": "https://link.uel.edu.vn/Factsheet",
+      "resolved_url": "https://drive.google.com/file/d/1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH/view?usp=drive_link",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:04:06.442177+00:00",
+      "tls_verify": true,
+      "original_sha256": "2f824443b3b7194d0cb7143b98061d34b2af4ef5f1e37bc5fc3c4fa952e7ea20",
+      "bundled_file": "completion_sources/p66-official-factsheet-shortlink.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p66-reference-link-1",
       "ccu_page": 66,
       "source_url": "https://drive.usercontent.google.com/download?id=1yYGsn4fpauzvmT_oNee4o7PmBAPegBaj&export=download",
@@ -13949,7 +14183,7 @@
       "response_bytes_verified": true,
       "decision": "used_with_explicit_field_status",
       "field_statuses": [
-        "reference_only"
+        "needs_confirmation"
       ],
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
@@ -14330,6 +14564,22 @@
       "tls_verify": true,
       "original_sha256": "af48d1a684dfbaa3777b8626ca9d07e4ab61b3fbaff17c905c22b275d0483703",
       "bundled_file": "completion_sources/p68-life-1.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p68-official-public-map-contact",
+      "ccu_page": 68,
+      "source_url": "https://hcmute.edu.vn/ArticleId/3f7027d3-ae97-4fb3-a05c-b1612f12260f/lien-he",
+      "resolved_url": "https://hcmute.edu.vn/ArticleId/3f7027d3-ae97-4fb3-a05c-b1612f12260f/lien-he",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:04:06.443090+00:00",
+      "tls_verify": true,
+      "original_sha256": "4731209d8888b766dd06ac13f2ad68e5d5f710733eeb44cfdb7bb3f10943aa8c",
+      "bundled_file": "completion_sources/p68-official-public-map-contact.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -14942,6 +15192,22 @@
       "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
     },
     {
+      "source_id": "p71-campus-disclosure",
+      "ccu_page": 71,
+      "source_url": "https://dntu.edu.vn/ba-cong-khai",
+      "resolved_url": "https://dntu.edu.vn/ba-cong-khai",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:00:04.806129+00:00",
+      "tls_verify": true,
+      "original_sha256": "314773ebf0777218292d6676d7b556feaff69fa4c31f4e4512a86a5e38eddb35",
+      "bundled_file": "completion_sources/p71-campus-disclosure.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p71-campus_contact-1",
       "ccu_page": 71,
       "source_url": "https://360campus.dntu.edu.vn/",
@@ -14990,6 +15256,22 @@
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
     },
     {
+      "source_id": "p71-contact-public-script",
+      "ccu_page": 71,
+      "source_url": "https://dntu.edu.vn/js/contact.form.js",
+      "resolved_url": "https://dntu.edu.vn/js/contact.form.js",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:00:04.759111+00:00",
+      "tls_verify": true,
+      "original_sha256": "702a6981bc01b1b21b177750df54cd99ea4e5dd8c432a91305b7301e51e0589f",
+      "bundled_file": "completion_sources/p71-contact-public-script.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
       "source_id": "p71-followup-commons-dntu",
       "ccu_page": 71,
       "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Dong+Nai%22+university&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
@@ -15032,6 +15314,22 @@
       "tls_verify": true,
       "original_sha256": "13a3c6116024df3213e3635ecda4c9c78a526fef482a9736ff98721d66663fbc",
       "bundled_file": "completion_sources/p71-followup-library.html.gz",
+      "response_bytes_verified": true,
+      "decision": "acquired_not_policy_verified",
+      "field_statuses": [],
+      "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p71-main-public-script",
+      "ccu_page": 71,
+      "source_url": "https://dntu.edu.vn/js/main.js",
+      "resolved_url": "https://dntu.edu.vn/js/main.js",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:00:04.280967+00:00",
+      "tls_verify": true,
+      "original_sha256": "e8e643ae19bd75f63df935da490e97cc967db8d1d3ad722b79e0b1dd22db8d87",
+      "bundled_file": "completion_sources/p71-main-public-script.html.gz",
       "response_bytes_verified": true,
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
@@ -15669,6 +15967,76 @@
       "tls_verify": true,
       "original_sha256": "db14a4496a8de622fe00db3c2b42602d99f037bd7d9609d2849f03e341f3eb4f",
       "bundled_file": "completion_sources/p74-commons-exact-search.json",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p74-engineering-collaborations-public",
+      "ccu_page": 74,
+      "source_url": "https://saintgits.org/saintgits-college-of-engineering/international-collaborations/",
+      "resolved_url": "https://saintgits.org/saintgits-college-of-engineering/international-collaborations/",
+      "http_status": 404,
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://saintgits.org/saintgits-college-of-engineering/international-collaborations/",
+      "checked_at": "2026-10-11T13:04:06.443001+00:00",
+      "tls_verify": true,
+      "original_sha256": "f8001e4914d1e5f61c64b0fbbd5efd0ab4543f9092d548193d59c63903a2414b",
+      "bundled_file": "completion_sources/p74-engineering-collaborations-public.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://saintgits.org/saintgits-college-of-engineering/international-collaborations/"
+    },
+    {
+      "source_id": "p74-engineering-contact-followup",
+      "ccu_page": 74,
+      "source_url": "https://saintgits.org/saintgits-college-of-engineering/contact-us/",
+      "resolved_url": "https://saintgits.org/saintgits-design-school/contact-us/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:00:05.015898+00:00",
+      "tls_verify": true,
+      "original_sha256": "335e65ca8f07368b5d38a1aa2e9b83cc4308fab3c9965083782f93b514aa391a",
+      "bundled_file": "completion_sources/p74-engineering-contact-followup.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p74-engineering-official-map-marker",
+      "ccu_page": 74,
+      "source_url": "https://goo.gl/maps/zxt3rGJ8S46DX3ws7",
+      "resolved_url": "https://www.google.com/maps/place/Saintgits+College+of+Engineering+(Autonomous),+Kottayam,+Kerala/@9.5100096,76.5491707,17z/data=!4m6!3m5!1s0x3b062ed484f475a7:0xea66b5d0e55062ca!8m2!3d9.5100096!4d76.5513594!16s%2Fm%2F0125pkyd?coh=164777&entry=tt&shorturl=1",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:00:53.831063+00:00",
+      "tls_verify": true,
+      "original_sha256": "3507d5dc6b261fffaf099f8f03c33b20c0d1f40f17ac41d5ab094357b14540f0",
+      "bundled_file": "completion_sources/p74-engineering-official-map-marker.html.gz",
+      "response_bytes_verified": true,
+      "decision": "used_with_explicit_field_status",
+      "field_statuses": [
+        "verified_current"
+      ],
+      "reason": "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
+    },
+    {
+      "source_id": "p74-engineering-root-followup",
+      "ccu_page": 74,
+      "source_url": "https://saintgits.org/saintgits-college-of-engineering/",
+      "resolved_url": "https://saintgits.org/saintgits-college-of-engineering/",
+      "http_status": 200,
+      "error": null,
+      "checked_at": "2026-10-11T13:00:06.621654+00:00",
+      "tls_verify": true,
+      "original_sha256": "e03f7ea237f4d8c17c2fa20fb0642afff5f0a565fec02fdb56fd92c0b899ac2a",
+      "bundled_file": "completion_sources/p74-engineering-root-followup.html.gz",
       "response_bytes_verified": true,
       "decision": "used_with_explicit_field_status",
       "field_statuses": [
@@ -16831,6 +17199,22 @@
       "decision": "acquired_not_policy_verified",
       "field_statuses": [],
       "reason": "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
+    },
+    {
+      "source_id": "p80-international-exchange-public",
+      "ccu_page": 80,
+      "source_url": "https://presidencyuniversity.in/international-relations/",
+      "resolved_url": "https://presidencyuniversity.in/international-relations/",
+      "http_status": 404,
+      "error": "HTTPError: 404 Client Error: Not Found for url: https://presidencyuniversity.in/international-relations/",
+      "checked_at": "2026-10-11T13:04:06.442477+00:00",
+      "tls_verify": true,
+      "original_sha256": "fb08e883dc4a510a774d9309eb800dc4eac9c23a3b19c6d50885457464beb9d3",
+      "bundled_file": "completion_sources/p80-international-exchange-public.html.gz",
+      "response_bytes_verified": true,
+      "decision": "technical_failure",
+      "field_statuses": [],
+      "reason": "HTTPError: 404 Client Error: Not Found for url: https://presidencyuniversity.in/international-relations/"
     },
     {
       "source_id": "p80-life-1",

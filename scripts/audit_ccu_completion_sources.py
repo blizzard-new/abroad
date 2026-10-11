@@ -5,13 +5,13 @@ verify a receiving policy. Actual field decisions remain in the reviewed matrix.
 """
 from __future__ import annotations
 
-from collections import Counter, defaultdict
 import gzip
 import hashlib
 import json
-from pathlib import Path
+from collections import Counter, defaultdict
 
-from fetch_ccu_completion_sources import BUNDLE as B, OUT
+from fetch_ccu_completion_sources import BUNDLE as B
+from fetch_ccu_completion_sources import OUT
 
 EXCLUSIONS = {
     "p34-campus-specific": "Incorrect candidate Q1321805 is Titán, not Nagoya University; excluded. Correct entity Q1191132 separately reviewed.",
@@ -54,6 +54,10 @@ def main():
         title = (receipt.get("title") or "").casefold()
         if sid in EXCLUSIONS:
             decision, reason = "excluded_specific_review", EXCLUSIONS[sid]
+        elif (sid == "p66-official-ctp-application" and receipt.get("http_status") == 401
+              and used.get(sid) == {"needs_confirmation"} and payload is not None
+              and b"You must sign in to access this content" in payload):
+            decision, reason = "used_access_requirement_evidence", "Actual Google sign-in body supports only the access requirement; no form contents, academic year or receiving-policy verification."
         elif receipt.get("error") or receipt.get("http_status") != 200:
             decision, reason = "technical_failure", receipt.get("error") or "Non-200 response; not field evidence."
         elif any(term in title for term in ["anubis", "bot challenge", "not a bot", "making sure", "에러", "access denied", "processing", "just a moment"]):
@@ -62,7 +66,7 @@ def main():
             decision, reason = "used_with_explicit_field_status", "Only the cited field, year, programme and campus are supported; no whole-source current-policy promotion."
         else:
             decision, reason = "acquired_not_policy_verified", "Not used to fill a current field; may be a navigation entry, unrelated news, host outbound route, archive or unreviewed candidate."
-        if sid in used and decision != "used_with_explicit_field_status":
+        if sid in used and decision not in {"used_with_explicit_field_status", "used_access_requirement_evidence"}:
             raise ValueError("Excluded/unread source supports a published field: " + sid)
         results.append({"source_id": sid, "ccu_page": receipt.get("ccu_page"),
             "source_url": receipt["source_url"], "resolved_url": receipt.get("resolved_url"),

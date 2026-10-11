@@ -12,6 +12,30 @@ HOME = "國立中正大學"
 
 
 @pytest.mark.parametrize("width", [390, 1440])
+def test_uel_undated_language_and_current_calendar_conflicts_remain_reference(page, live_server, width):
+    partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 66)
+    page.set_viewport_size({"width": width, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+    page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+    reference = page.locator("#detail-overview .ccu-reference-host")
+    expect(reference).to_contain_text("中正本期未開放", timeout=30_000)
+    expect(reference.locator("[data-ccu-reference-field]")).to_have_count(17)
+    language = reference.locator('[data-ccu-reference-field="language"]')
+    language.locator("> summary").click()
+    expect(language).to_contain_text("IELTS ≥6.0")
+    expect(language.locator("> summary")).to_contain_text("待確認")
+    calendar = reference.locator('[data-ccu-reference-field="academic_calendar"]')
+    calendar.locator("> summary").click()
+    expect(calendar.locator("> summary")).to_contain_text("來源矛盾")
+    expect(calendar).to_contain_text("2026-03-15")
+    housing = reference.locator('[data-ccu-reference-field="housing"]')
+    housing.locator("> summary").click()
+    expect(housing).to_contain_text("per6months")
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+
+
+@pytest.mark.parametrize("width", [390, 1440])
 @pytest.mark.parametrize("ccu_page", [92, 112])
 def test_current_usj_czu_receiving_rules_remain_reference_tracks(page, live_server, width, ccu_page):
     partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == ccu_page)
