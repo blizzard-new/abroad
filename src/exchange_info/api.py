@@ -37,7 +37,7 @@ import secrets
 import threading
 import time
 import unicodedata
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 from datetime import datetime, timedelta, timezone
 from functools import partial
 from pathlib import Path
@@ -444,6 +444,7 @@ def _static_cache_control(path: str, versioned: bool) -> str:
     if path.endswith((".js", ".css", ".html", ".json", ".webmanifest")) and not versioned:
         return "no-cache"
     return "public, max-age=86400"
+CACHE_WARM_UP_DELAY_SECONDS = 15.0
 DASHBOARD_CACHE_SECONDS = 600.0
 PASSWORD_ITERATIONS = 390_000
 EMAIL_PATTERN = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
@@ -807,11 +808,17 @@ def create_app(
         previous_thread_tokens = thread_limiter.total_tokens
         thread_limiter.total_tokens = min(previous_thread_tokens, 2)
         catalogue_slots = asyncio.Semaphore(1)
+        warming_task = None
         if warm_up and os.environ.get("EXCHANGE_WARM_CACHES", "").strip().lower() in {"1", "on", "true", "yes"}:
-            threading.Thread(target=warm_up[0], name="warm-caches", daemon=True).start()
+            warming_task = asyncio.create_task(warm_up[0](), name="warm-caches")
+        _app.state.cache_warmup_task = warming_task
         try:
             yield
         finally:
+            if warming_task is not None:
+                warming_task.cancel()
+                with suppress(asyncio.CancelledError):
+                    await warming_task
             catalogue_slots = None
             thread_limiter.total_tokens = previous_thread_tokens
             analytics_service.flush_api_metrics()  # keep the last minute of request counts on a clean shutdown
@@ -1359,7 +1366,7 @@ def create_app(
             "catalogue_source": view.source,
         })
 
-    def warm_catalogue_caches() -> None:
+    async def warm_catalogue_caches() -> None:
         """Do the slow first-time work now, so the first visitor after a restart does not wait for it.
 
         On the free host that work took close to a minute of CPU (checking thousands of bundled translations, merging the
@@ -1367,7 +1374,7 @@ def create_app(
         """
         from . import public_translation
 
-        time.sleep(15)  # let the server start and pass its health check first
+        await asyncio.sleep(CACHE_WARM_UP_DELAY_SECONDS)  # let health become ready first
         steps = [
             public_translation._reference_translations,
             public_translation._bundled_machine_translations,
@@ -1384,7 +1391,10 @@ def create_app(
         started = time.monotonic()
         for step in steps:
             try:
-                step()
+                # Share the catalogue limit and worker arenas with real reads.
+                # Release between steps so waiting visitors can make progress.
+                async with catalogue_slots:
+                    await run_in_threadpool(step)
             except Exception:  # a warm-up that fails only means the first visitor pays for that step
                 logging.getLogger(__name__).exception("cache warm-up step failed")
         logging.getLogger(__name__).info("catalogue caches warmed in %.1f s", time.monotonic() - started)
