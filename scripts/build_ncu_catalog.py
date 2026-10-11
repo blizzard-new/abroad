@@ -35,7 +35,7 @@ from exchange_info.ncu_student_view import (
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = ROOT / "sources/ncu/2026-10-08"
 COMPLETION_SOURCES = ROOT / "sources/ncu/2026-10-11"
-CHECKED = "2026-10-11T10:13:35+00:00"
+CHECKED = "2026-10-11T11:22:19+00:00"
 ORIGINAL_CHECKED = "2026-10-08T00:00:00+00:00"
 HOME = "國立中央大學"
 ROUND = "第一梯次"
@@ -1614,7 +1614,14 @@ def build(output):
             "completion_source_attempts": len(completion_sources),
             "completion_source_downloaded": sum(not s.get("error") and s.get("status") == 200 for s in completion_sources),
             "completion_source_passages_reviewed": sum(bool(s.get("reading_review")) for s in completion_sources),
-            "completion_source_full_text_read": sum(s.get("reading_review", {}).get("full_document_read") is True for s in completion_sources),
+            "completion_source_full_text_read": sum(
+                s.get("reading_review", {}).get("full_document_read") is True
+                and s.get("reading_status") != "full_visual_and_native_reviewed"
+                for s in completion_sources),
+            "completion_source_full_visual_read": sum(
+                s.get("reading_review", {}).get("full_document_read") is True
+                and s.get("reading_status") == "full_visual_and_native_reviewed"
+                for s in completion_sources),
             "completion_source_attempts_not_read": sum(not s.get("reading_review") for s in completion_sources),
             "host_full_116_verification_count": 0,
             "pending_workflows": len(workflows),

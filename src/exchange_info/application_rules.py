@@ -106,7 +106,11 @@ def select_application_workflow(
         for workflow in workflows
         if (
             _normalize(workflow.school_name) == partner_key
-            or same_school(workflow.school_name, context.partner_university or "")
+            # NCU catalogue names carry distinct faculty / self-funded tracks.
+            # The institution matcher tolerates trailing Chinese notes, which
+            # would otherwise merge those tracks and reuse the wrong workflow.
+            or (not is_ncu(context.home_university)
+                and same_school(workflow.school_name, context.partner_university or ""))
         )
         and _matches_optional_filter(
             [workflow.academic_year] if workflow.academic_year else [],
@@ -816,7 +820,8 @@ def select_reference_workflow(
         for workflow in workflows
         if (
             _normalize(workflow.school_name) == partner_key
-            or same_school(workflow.school_name, context.partner_university or "")
+            or (not is_ncu(context.home_university)
+                and same_school(workflow.school_name, context.partner_university or ""))
         )
         and (not home_key or _normalize(workflow.home_university) == home_key)
         and workflow.steps
