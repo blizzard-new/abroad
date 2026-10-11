@@ -1,0 +1,873 @@
+{
+  "prior_commit": "1b9563c58e2fa83c3c2510a40b7ccdd126db9dd1",
+  "acceptance_scope": "104 CCU identities; finite263 flagged eighth readings and33 explicitly linked relevant child URLs; no whole-web exhaustion claim.",
+  "scope_accepted": true,
+  "all_public_research_exhausted": false,
+  "ready_to_wait_for_integration": true,
+  "flagged_readings_closed": 263,
+  "already_complete_extent_metadata_corrections": 17,
+  "actual_prior_partial_readings": 246,
+  "closure_states": {
+    "already_complete_extent_flag_normalized": 17,
+    "retained_scoped_read_and_closed_for_bounded_acceptance": 229,
+    "related_body_and_children_reviewed": 17
+  },
+  "new_sources": 33,
+  "new_http_200": 33,
+  "new_body_read_records": 33,
+  "new_complete_visible_child_bodies": 31,
+  "http_200_is_not_policy_verification": true,
+  "prior_host_status_counts": {
+    "reference_only": 313,
+    "missing": 604,
+    "verified_current": 359,
+    "needs_confirmation": 404,
+    "conflict": 87,
+    "explicit_not_announced": 1
+  },
+  "host_status_counts": {
+    "reference_only": 318,
+    "missing": 585,
+    "verified_current": 361,
+    "needs_confirmation": 416,
+    "conflict": 87,
+    "explicit_not_announced": 1
+  },
+  "changed_host_fields": 21,
+  "previously_missing_host_fields_filled": 19,
+  "changed_fields": [
+    {
+      "ccu_page": 18,
+      "school_name": "Nankai University 南開大學",
+      "field": "housing",
+      "previous_status": "missing",
+      "status": "reference_only",
+      "evidence_source_ids": [
+        "p18-ninth-housing"
+      ]
+    },
+    {
+      "ccu_page": 18,
+      "school_name": "Nankai University 南開大學",
+      "field": "insurance",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p18-ninth-insurance"
+      ]
+    },
+    {
+      "ccu_page": 56,
+      "school_name": "The Education University of Hong Kong 香港教育大學",
+      "field": "eligibility",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p56-ninth-application-traditional",
+        "p56-ninth-application-eligibility"
+      ]
+    },
+    {
+      "ccu_page": 56,
+      "school_name": "The Education University of Hong Kong 香港教育大學",
+      "field": "language",
+      "previous_status": "reference_only",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p56-reference-link-1",
+        "p56-ninth-application-traditional"
+      ]
+    },
+    {
+      "ccu_page": 56,
+      "school_name": "The Education University of Hong Kong 香港教育大學",
+      "field": "academic_calendar",
+      "previous_status": "missing",
+      "status": "verified_current",
+      "evidence_source_ids": [
+        "p56-ninth-calendar-pdf"
+      ]
+    },
+    {
+      "ccu_page": 56,
+      "school_name": "The Education University of Hong Kong 香港教育大學",
+      "field": "course_restrictions",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p56-ninth-course-registration"
+      ]
+    },
+    {
+      "ccu_page": 59,
+      "school_name": "King Mongkut’s Institute of Technology Ladkrabang 先皇技術學院",
+      "field": "application_forms",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p59-ninth-application-forms"
+      ]
+    },
+    {
+      "ccu_page": 75,
+      "school_name": "Chandigarh University 昌迪加爾大學",
+      "field": "program_scope",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p75-ninth-inbound"
+      ]
+    },
+    {
+      "ccu_page": 75,
+      "school_name": "Chandigarh University 昌迪加爾大學",
+      "field": "nomination_deadline",
+      "previous_status": "missing",
+      "status": "reference_only",
+      "evidence_source_ids": [
+        "p75-ninth-factsheet"
+      ]
+    },
+    {
+      "ccu_page": 75,
+      "school_name": "Chandigarh University 昌迪加爾大學",
+      "field": "application_deadline",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p75-ninth-inbound"
+      ]
+    },
+    {
+      "ccu_page": 75,
+      "school_name": "Chandigarh University 昌迪加爾大學",
+      "field": "academic_calendar",
+      "previous_status": "missing",
+      "status": "reference_only",
+      "evidence_source_ids": [
+        "p75-ninth-factsheet"
+      ]
+    },
+    {
+      "ccu_page": 75,
+      "school_name": "Chandigarh University 昌迪加爾大學",
+      "field": "housing",
+      "previous_status": "missing",
+      "status": "reference_only",
+      "evidence_source_ids": [
+        "p75-ninth-inbound"
+      ]
+    },
+    {
+      "ccu_page": 75,
+      "school_name": "Chandigarh University 昌迪加爾大學",
+      "field": "host_tuition",
+      "previous_status": "missing",
+      "status": "reference_only",
+      "evidence_source_ids": [
+        "p75-ninth-inbound"
+      ]
+    },
+    {
+      "ccu_page": 87,
+      "school_name": "University of Strasbourg 史特拉斯堡大學",
+      "field": "eligibility",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p87-ninth-bilateral"
+      ]
+    },
+    {
+      "ccu_page": 87,
+      "school_name": "University of Strasbourg 史特拉斯堡大學",
+      "field": "application_forms",
+      "previous_status": "needs_confirmation",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p87-r8-learning-contract-pdf",
+        "p87-r8-learning-contract-pdf",
+        "p87-ninth-bilateral"
+      ]
+    },
+    {
+      "ccu_page": 87,
+      "school_name": "University of Strasbourg 史特拉斯堡大學",
+      "field": "exchange_duration",
+      "previous_status": "missing",
+      "status": "verified_current",
+      "evidence_source_ids": [
+        "p87-ninth-bilateral"
+      ]
+    },
+    {
+      "ccu_page": 103,
+      "school_name": "ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院",
+      "field": "application_forms",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p103-ninth-factsheet"
+      ]
+    },
+    {
+      "ccu_page": 103,
+      "school_name": "ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院",
+      "field": "visa",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p103-ninth-factsheet"
+      ]
+    },
+    {
+      "ccu_page": 113,
+      "school_name": "Brno University of Technology 布爾諾科技大學",
+      "field": "housing",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p113-ninth-housing"
+      ]
+    },
+    {
+      "ccu_page": 113,
+      "school_name": "Brno University of Technology 布爾諾科技大學",
+      "field": "costs",
+      "previous_status": "missing",
+      "status": "reference_only",
+      "evidence_source_ids": [
+        "p113-ninth-costs"
+      ]
+    },
+    {
+      "ccu_page": 113,
+      "school_name": "Brno University of Technology 布爾諾科技大學",
+      "field": "insurance",
+      "previous_status": "missing",
+      "status": "needs_confirmation",
+      "evidence_source_ids": [
+        "p113-ninth-insurance"
+      ]
+    }
+  ],
+  "worklist_counts": {
+    "schools": 104,
+    "sources": 2294,
+    "source_review_states": {
+      "mapped_passages_read_remaining_body_unclaimed": 801,
+      "reviewed_scoped_exclusion": 124,
+      "source_failure_or_body_not_obtained": 209,
+      "scoped_body_read_recorded": 603,
+      "readable_body_without_recorded_review": 10,
+      "metadata_or_asset_candidate_not_policy_body": 517,
+      "same_bytes_as_recorded_read_source": 30
+    },
+    "coordinate_gaps": 3,
+    "photo_gaps": 4,
+    "website_gaps": 1,
+    "host_missing_fields": 585,
+    "public_reading_record_missing_sources": 0,
+    "priority_policy_candidates": 0
+  },
+  "external_private_steps": [
+    {
+      "ccu_page": 49,
+      "school_name": "Sungshin Women's University 誠信女子大學",
+      "fields": [
+        {
+          "field": "application_forms",
+          "status": "conflict",
+          "value": "已開啟當期checklist／Medical Assessment兩頁PDF、15頁Online Application Manual、nomination XLSX。醫療表學生填性別／血型／生日、11項Yes/No/Remarks及日期／姓名／簽名，無通用醫師簽章格；額外重大健康文件個別提交。學生portal需email驗證、sign up/sign in、Save後還必須Final Submission；手冊範例不是已登入私有表完整必填集。Nomination XLSX的Sheet1!V1實際仍要求正本於2025-12-01到達，與2027公告的2026-11-23矛盾，不能把檔名Spring2027當內容正確。本批已實讀5入口：公告長網址與PDFp3 Qfs短鏈解析為同一Spring2027 Google form ID、日期一致；只讀公開Page1/2、未填Next或送出，Google登入提示是保存進度而非已證強制登入。Page1需overall GPA（範例非門檻）、母校英文名、標為Nationality但選項實為大學名、coordinator及email；含中正選項不代表本期校內開放。PDFp1 smW短鏈實為Fall2026表，checklist zWD短鏈實為已關閉Spring2026表，不能拿舊表提名。公告Drive folder實列Spring2026材料／2025修改日，此為列表核對，不假定每附件正文已讀；當期直接公告PDF仍保留。學生TIS signup/login私有表與公開coordinator提名分開。",
+          "reason": "已解公開提名同表身份與舊年度入口；XLSX舊到件年、舊表／folder链接及個人TIS完整表適用仍待核。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p49-official-spring2027-attachment-113856",
+              "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113856/download.do",
+              "source_pages": [
+                2
+              ],
+              "excerpt": "Personal Medical Assessment",
+              "academic_year": "官方2026-09-16公告（09-18修改）的Spring2027附件；正文Spring2027/Fall2027，按Spring欄核實",
+              "application_round": "Spring2027接待Exchange；中正校內梯次另核",
+              "checked_at": "2026-10-11T14:29:36.481701+00:00",
+              "content_hash": "89d37a7b514a769b1a8814908757ea83ff05031d427e4111c656e52a38a00960",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-official-spring2027-attachment-113950",
+              "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113950/download.do",
+              "source_pages": [
+                11
+              ],
+              "excerpt": "Enter your email and password",
+              "academic_year": "官方2026-09-16公告（09-18修改）的Spring2027附件；正文Spring2027/Fall2027，按Spring欄核實",
+              "application_round": "Spring2027接待Exchange；中正校內梯次另核",
+              "checked_at": "2026-10-11T14:29:38.568717+00:00",
+              "content_hash": "58af774b11a416752cf3be8f5d357b15df6e8c4c817344ec709e219b0977ab16",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-official-spring2027-attachment-113950",
+              "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113950/download.do",
+              "source_pages": [
+                14
+              ],
+              "excerpt": "Final Submission",
+              "academic_year": "官方2026-09-16公告（09-18修改）的Spring2027附件；正文Spring2027/Fall2027，按Spring欄核實",
+              "application_round": "Spring2027接待Exchange；中正校內梯次另核",
+              "checked_at": "2026-10-11T14:29:38.568717+00:00",
+              "content_hash": "58af774b11a416752cf3be8f5d357b15df6e8c4c817344ec709e219b0977ab16",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-official-spring2027-attachment-113951",
+              "source_url": "https://www.sungshin.ac.kr/bbs/int/3828/113951/download.do",
+              "source_pages": [],
+              "excerpt": "I hereby agree and acknowledge that the nominees' original documents must arrive at Sungshin Women's University by 1 December 2025.\n(By selecting 'No', the nominee might not be accepted and/or the nominee's Certificate of Admission issuance will not be guaranteed.)",
+              "academic_year": "官方2026-09-16公告（09-18修改）的Spring2027附件；正文Spring2027/Fall2027，按Spring欄核實",
+              "application_round": "Spring2027接待Exchange；中正校內梯次另核",
+              "checked_at": "2026-10-11T14:29:40.189676+00:00",
+              "content_hash": "3676271aa83ee8be85bdf4e1dbaae8b07cbafd28d4b6321fffc78bfee7c18bed",
+              "status": "conflict",
+              "location_in_source": "XLSX Sheet1!V1; actual cell, not PDF page",
+              "note": "XLSX Sheet1!V1; actual cell, not PDF page"
+            },
+            {
+              "source_id": "p49-seventh-discovered-target-8",
+              "source_url": "https://docs.google.com/forms/d/e/1FAIpQLScj33BhDg2c7F9OBcHTeUPsHA2-91jXNKivaJ6zDqIEzEmu2g/viewform?usp=dialog",
+              "source_pages": [],
+              "excerpt": "Spring 2027 Exchange Student Nomination Form",
+              "academic_year": "Spring2027",
+              "application_round": "Spring2027",
+              "checked_at": "2026-10-11T15:27:59.243308+00:00",
+              "content_hash": "3977eca7e2020e8e461ca48602e28a20d90eb174870be082d02dae9bdc3c1b17",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-seventh-discovered-target-9",
+              "source_url": "https://drive.google.com/drive/folders/1EYhpOwumPw4EFUNplyjiyqHz_qi2TZTd",
+              "source_pages": [],
+              "excerpt": "Sungshin-Spring 2026",
+              "academic_year": "資料夾僅Spring2026檔案列表，未讀其中各PDF正文",
+              "application_round": "資料夾僅Spring2026檔案列表，未讀其中各PDF正文",
+              "checked_at": "2026-10-11T15:27:59.312676+00:00",
+              "content_hash": "a9b907d54d88cf37e3761200b6c707486e7c234826f02387df48f6b1112eb724",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-seventh-discovered-target-10",
+              "source_url": "https://forms.gle/smWwKwCnvb4Gj4Bo9",
+              "source_pages": [],
+              "excerpt": "Fall 2026 Exchange Student Nomination Form",
+              "academic_year": "Fall2026",
+              "application_round": "Fall2026",
+              "checked_at": "2026-10-11T15:27:59.445980+00:00",
+              "content_hash": "59fc9566d41cf729f93f39ff622c47902f1ac49466dfb8d3925bfda39d941a1c",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-seventh-discovered-target-11",
+              "source_url": "https://forms.gle/QfsMfMs5onkAYsnG9",
+              "source_pages": [],
+              "excerpt": "Spring 2027 Exchange Student Nomination Form",
+              "academic_year": "Spring2027",
+              "application_round": "Spring2027",
+              "checked_at": "2026-10-11T15:27:59.726093+00:00",
+              "content_hash": "6052d40f03d8f1ba6cab85e9b2b271cd63ce5e7183c4e3197d99ecfd61821898",
+              "status": "conflict"
+            },
+            {
+              "source_id": "p49-seventh-discovered-target-12",
+              "source_url": "https://forms.gle/zWDdWnANSoToEXU48",
+              "source_pages": [],
+              "excerpt": "Spring 2026 Exchange Student Nomination Form",
+              "academic_year": "Spring2026 closed form",
+              "application_round": "Spring2026 closed form",
+              "checked_at": "2026-10-11T15:28:00.384028+00:00",
+              "content_hash": "bbda5e1a2623e65754377fed184e9c29725bef7d79e8426b8fbde323ec652240",
+              "status": "conflict"
+            }
+          ],
+          "access_requirement_evidence": []
+        }
+      ]
+    },
+    {
+      "ccu_page": 59,
+      "school_name": "King Mongkut’s Institute of Technology Ladkrabang 先皇技術學院",
+      "fields": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "官方Application forms頁明示需註冊／登入且可能須特殊權限。只取得公開登入說明，未取得表格正文、清單或當期版本，未註冊/登入/填送。此限制僅該表格步驟，不代表全校政策私有。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p59-ninth-application-forms",
+              "source_url": "https://oia.kmitl.ac.th/application-form/",
+              "source_pages": [],
+              "excerpt": "Please Login or Register",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:17:50.391193+00:00",
+              "content_hash": "b49119f8c9e7ae7da6943e1c2267132d3cefad383379e4ad98da23baaec794d2",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
+          "access_requirement_evidence": [
+            {
+              "source_id": "p59-ninth-application-forms",
+              "source_url": "https://oia.kmitl.ac.th/application-form/",
+              "source_pages": [],
+              "excerpt": "requires special permission",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:17:50.391193+00:00",
+              "content_hash": "b49119f8c9e7ae7da6943e1c2267132d3cefad383379e4ad98da23baaec794d2",
+              "status": "verified_current"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ccu_page": 66,
+      "school_name": "University of Economics and Law (UEL), Vietnam National University Ho Chi Minh City 越南胡志明市 經濟法律大學",
+      "fields": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "目前官方CTP-OnlineApplication連結轉到Google Forms，實讀401回應正文You must sign in to access this content。須Google個人帳號才繼續，未登入、未讀题目／年度、未提交；不宣稱只有提名者有權限。未取得CTP application/nomination、NA1的2027版本，舊母校Drive表僅參考。",
+          "reason": "依實際Google登入提示，不只依HTTP401分類；尚未核實帳號授權範圍或最新表單内容。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p66-official-factsheet-pdf",
+              "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+              "source_pages": [
+                2
+              ],
+              "academic_year": "目前官方UEL短連結所列PDF4頁，正文未標學年度；不當成2027專屬版",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T13:05:01.796078+00:00",
+              "content_hash": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+              "status": "needs_confirmation",
+              "excerpt": "http://link.uel.edu.vn/CTP-OnlineApplication"
+            }
+          ],
+          "access_requirement_evidence": [
+            {
+              "source_id": "p66-official-ctp-application",
+              "source_url": "https://link.uel.edu.vn/CTP-OnlineApplication",
+              "source_pages": [],
+              "checked_at": "2026-10-11T13:06:13.387662+00:00",
+              "content_hash": "8af2adc17c30e1b49db9d8e23eefcf43707c1004424f2f5a82365a07106a357a",
+              "academic_year": "個人Google Forms入口，未讀到表單年份或題目",
+              "application_round": "提名後學生申請入口",
+              "status": "needs_confirmation",
+              "excerpt": "Sign in to your Google Account. You must sign in to access this content"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ccu_page": 87,
+      "school_name": "University of Strasbourg 史特拉斯堡大學",
+      "fields": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "選上後母校提供個人application link及說明，母校簽章整包後透過dedicated portal上傳；只讀公開流程與已取得舊空白LA，不宣稱已取得個人申請表／版本，未登入或填送。公開文件清單不因個人表單連結受限而隱藏。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p87-r8-learning-contract-pdf",
+              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "表內AcademicYear202_-202_空白；公開檔名/mtime2022非2027指定證據",
+              "application_round": "表內AcademicYear202_-202_空白；公開檔名/mtime2022非2027指定證據",
+              "checked_at": "2026-10-08T08:49:40.005737+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "sitaire 202_-202_ / Academic year 202_-202_ ● Identité/Identity Nom de l’étudiant /Name of the student : …………………………………………… Prénom / First name : ………………………………………………… Sexe / Sex : F M ● Établissement d’envoi / sending institution Établissement d’envoi / Name of the sending institution : ……………………………………………………………………………………………………………… Composante et/ou département / Faculty and/or depar",
+              "note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。三頁全文已讀：50%同department、學生+雙方兩協調人簽/日期、變更及續頁。publicfileview提供同站下載rawPath，短期下載URL重新讀viewer可重取。",
+              "content_hash": "054fbd5c6e55c700576a418d5dab631048dbd6a1f83af4b626532d25124d171b",
+              "text_sha256": "e6cc6347503d346468af213ffeb1e4f6fb126b1ba451e3a199b46af455ae5756"
+            },
+            {
+              "source_id": "p87-r8-learning-contract-pdf",
+              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "表內AcademicYear202_-202_空白；公開檔名/mtime2022非2027指定證據",
+              "application_round": "表內AcademicYear202_-202_空白；公開檔名/mtime2022非2027指定證據",
+              "checked_at": "2026-10-08T08:49:40.005737+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "ust select at least 50% of courses in one department Code du module Course unit code Intitulé du cours à l’Université de Strasbourg + Nom de l’enseignant (comme indiqué dans le guide pédagogique) Course Unit title at the University of Strasbourg + Name of the teacher (as indicated in the course catalogue) Nombre de crédits ECTS Number of ECTS credits TOTAL CRÉDITS ECTS/ total E",
+              "note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。三頁全文已讀：50%同department、學生+雙方兩協調人簽/日期、變更及續頁。publicfileview提供同站下載rawPath，短期下載URL重新讀viewer可重取。",
+              "content_hash": "054fbd5c6e55c700576a418d5dab631048dbd6a1f83af4b626532d25124d171b",
+              "text_sha256": "e6cc6347503d346468af213ffeb1e4f6fb126b1ba451e3a199b46af455ae5756"
+            },
+            {
+              "source_id": "p87-ninth-bilateral",
+              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+              "source_pages": [],
+              "excerpt": "your university will send you instructions and a link to the application form",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
+          "access_requirement_evidence": [
+            {
+              "source_id": "p87-ninth-bilateral",
+              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+              "source_pages": [],
+              "excerpt": "your university will send you instructions and a link to the application form",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "verified_current"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ccu_page": 88,
+      "school_name": "Faculty of Management, Economics & Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)",
+      "fields": [
+        {
+          "field": "documents",
+          "status": "needs_confirmation",
+          "value": "不是完整附件清單：FGES學院須語言證明、未限定證照、法／英B2為advised；母大學p9另列有效護照、目前成績單（必要時法／英／西翻譯，官方或非官方接受），法語授課需教師推薦函或等級證書。ICM另加CV、cover letter、語言證明，不能當所有中正交換生必備。錄取後醫師填的Medical Form是註冊／到校階段，與初申分開。語言強度與完整個人表仍待確認。",
+          "reason": "並列FGES與母大學各自清單，不把有條件ICM文件與後續醫療表混入初申；語言要求差異見language欄。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p88-mirror",
+              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "2026–2027",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T00:00:00Z",
+              "status": "verified_current",
+              "excerpt": "ted students French & English Certification required (there is no specific requirement regarding the type of certificate) - B2 level advised in French and/or English The updated version of our course catalogue will be sent to you by email, but you can also find it via the FGES faculty website Exchange students have access to all courses at FGES, regardless the field of study or level Fre",
+              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+              "content_hash": "c87dd8421eb814a5cc8282a3d98b6b01fe4db285c37b8c086947a754132f3247",
+              "text_sha256": "29a37bdb67af69c4a570cc488a49bde6bf9caacdbdf3a2b432dd7de86c8b7171"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                9
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "Copy of a valid passport"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                13
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "After your acceptance and to finalize your registration"
+            }
+          ],
+          "access_requirement_evidence": []
+        },
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "公開母校Spring提名表不是學生申請表，原表未標年。母大學2026–2027 p9明示：提名核可後學生收到email以建立自己的帳號、在平台完成申請，院系可再要求個人附件。完整學生表及個人截止須用提名後個人入口取得；沒有登入或提交，未核最新個人表版本。",
+          "reason": "官方正文明确提名後個人帳號，與HTTP468來源失敗分開。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p88-mirror",
+              "source_url": "https://drive.google.com/file/d/1pAZSH5Qp_O1XKo4NIZbAwT09cAaQFaCJ/view?usp=drive_link",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "2026–2027",
+              "application_round": "2026–2027",
+              "checked_at": "2026-10-08T00:00:00Z",
+              "status": "needs_confirmation",
+              "excerpt": " for Fall Semester / Full Academic Year Online Form for Spring Semester The link to the online incoming Exchange Application form will be sent to nominated students French & English Certification required (there is no specific requirement regarding the type of certificate) - B2 level advised in French and/or English The updated version of our course ca",
+              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+              "content_hash": "c87dd8421eb814a5cc8282a3d98b6b01fe4db285c37b8c086947a754132f3247",
+              "text_sha256": "29a37bdb67af69c4a570cc488a49bde6bf9caacdbdf3a2b432dd7de86c8b7171"
+            },
+            {
+              "source_id": "p88-hostv0",
+              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:52:59.874068+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "/ Computer sciences About the responsible person at the Sending University Full name Position Email address Submit VOTRE NAVIGATEUR EST OBSOLÈTE ! Mettez le à jour pour plus de sécurité, de vitesse et de confort. Google Chrome Mozilla Firefox Safari Opera Edge Fermer cette fenêtre ×",
+              "note": "實際FGES Spring母校提名表一次一學生，含母校、學生資料、主修與母校負責人。可讀字段不等學生申請表或2027獨立版本，無代填/提交。",
+              "content_hash": "5731796f2d1a6c646cd9459f11cbe41b107f6ab8617b85e769d6462f23f63cc8",
+              "text_sha256": "6368e37a4b1198b88374967880d6c9703d3b8133cfcbca287de0cc95e39608c5"
+            },
+            {
+              "source_id": "p88-followup-parent-2026-2027",
+              "source_url": "https://www.univ-catholille.fr/wp-content/uploads/Fact-Sheet-2026-27_digital.pdf",
+              "source_pages": [
+                9
+              ],
+              "academic_year": "母大學Lille Campus簡章封面／頁首2026–2027；部分期限內文2025，逐欄分開",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:33:18.118610+00:00",
+              "content_hash": "41ff7544793fad330c8857544e4aec3d25f96e7507101d9991b4feb6b72696c7",
+              "status": "verified_current",
+              "excerpt": "the student will receive an email to create his/her account"
+            }
+          ],
+          "access_requirement_evidence": []
+        }
+      ]
+    },
+    {
+      "ccu_page": 89,
+      "school_name": "University of Southern Denmark 南丹麥大學",
+      "fields": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "現行交換申請頁可下載完整English Language Requirement Form：學生與母校負責人簽名、日期、母校stamp/seal。表未標年度，且88分敘述與中正83待核；不能當作2027唯一必繳證明。 現行官方Exchange申請入口實際為帳號申請頁，明示按send才寄個人username/password；未輸入email或送出，沒有取得私有表內問題與年度。Guest入口l=60與Exchange l=178分開。",
+          "reason": "公开入口明确個人帳號寄送程序，只將私有申請表內容列為權限限制；公開語言模板與政策研究仍可繼續。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p89-r2-languageform",
+              "source_url": "https://www.sdu.dk/-/media/files/information_til/internationalstudents/exchange/sdulanguagerequirementform.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "共用英文能力表，未標年度",
+              "application_round": "共用英文能力表，未標年度",
+              "checked_at": "2026-10-08T04:34:50.684904+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "English Language Requirement Form for Exchange and Guest Students - this form must be signed by the student and the responsible person at the home university - to be enclosed to the application form to become an exchange or guest student A good standard of English is required to become an exchange student at the Univer",
+              "note": "完整表已讀，學生及母校簽章；表內等同IELTS6.5/TOEFL88，與中正轉載83及網站B2敘述須分別核對，不宣稱強制考試。",
+              "content_hash": "fdf3e501549dfeb4b7760ca7b1e3f49b35fa5567b503573fdcd9a0d6af253b2a",
+              "text_sha256": "ad9939c2c55195fc85713b94dda2fe1b17e060e97721c31f4a01fc7900393f79"
+            },
+            {
+              "source_id": "p89-public-exchange-form-from-official-apply",
+              "source_url": "https://www.sdu.dk/resources/net/ansskema.aspx?s=en&l=178",
+              "source_pages": [],
+              "excerpt": "you receive an e-mail with a username and password",
+              "academic_year": "現行官方公開正文，未標2027交換適用學年；一般接待參考",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T14:20:09.097495+00:00",
+              "content_hash": "69cf3470e01a743c714ee924995962b730b8e650f48d58c027a67022c6266c75",
+              "status": "needs_confirmation"
+            }
+          ],
+          "access_requirement_evidence": []
+        }
+      ]
+    },
+    {
+      "ccu_page": 103,
+      "school_name": "ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院",
+      "fields": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "School of Engineering母校提名後才收到Mobility-Online及完整文件／指引。僅讀公開factsheet與timeline，未取得個人表格與當期完整清單，未登入或填送。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p103-ninth-factsheet",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+              "source_pages": [
+                3
+              ],
+              "excerpt": "Nominated students will then receive access to our online application platform (Mobility-Online), including all necessary documents and instructions.",
+              "academic_year": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "application_round": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "checked_at": "2026-10-11T17:22:43.278704+00:00",
+              "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+              "status": "needs_confirmation",
+              "location_in_source": "PDF page(s): [3]"
+            }
+          ],
+          "access_requirement_evidence": [
+            {
+              "source_id": "p103-ninth-factsheet",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+              "source_pages": [],
+              "excerpt": "Nominated students will then receive access to our online application platform (Mobility-Online), including all necessary documents and instructions.",
+              "academic_year": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:22:43.278704+00:00",
+              "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+              "status": "verified_current"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ccu_page": 112,
+      "school_name": "Czech University of Life Sciences Prague 捷克布拉格生科大學",
+      "fields": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "先提名、確認後CZU UIS email發個人登入資訊，完整學生申請在UIS；non-Erasmus專用International Exchange Students Formular模板由email寄送，與Erasmus OLA／PDF LA分流。已讀公開操作，不登入、不提交；未取得non-Erasmus模板及個人版本，不能把公開Erasmus表當中正必備表。",
+          "reason": "已讀所引原文、年度及計畫；未提供個人錄取、住宿或課程名額保證。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p112-public-current-application",
+              "source_url": "https://www.czu.cz/en/r-9190-international-relations/r-14521-incoming-exchange-and-erasmus-students/r-20141-incoming-students-academic-year-2026-2027/r-20149-nomination-and-application-procedures-26-27",
+              "source_pages": [],
+              "academic_year": "CZU正文明示Academic year2026/2027；Erasmus與non-Erasmus exchange並列",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T12:30:46.578029+00:00",
+              "content_hash": "4454fc4714a728a84da4b27bac95270c36880b6973c8b4399f5036bda6d01686",
+              "status": "verified_current",
+              "excerpt": "The email contains your UIS login credentials"
+            },
+            {
+              "source_id": "p112-public-current-ola",
+              "source_url": "https://www.czu.cz/en/r-9190-international-relations/r-14521-incoming-exchange-and-erasmus-students/r-20141-incoming-students-academic-year-2026-2027/r-20152-online-learning-agreement-ola-26-27",
+              "source_pages": [],
+              "academic_year": "CZU正文明示Academic year2026/2027；Erasmus與non-Erasmus exchange並列",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T12:30:46.582413+00:00",
+              "content_hash": "842cc4eaa95454a55ae73893e83b12df9b99acaf1d697179d9f24aad5b5501aa",
+              "status": "verified_current",
+              "excerpt": "The template will be sent to students by e-mail together with instructions."
+            }
+          ],
+          "access_requirement_evidence": []
+        }
+      ]
+    },
+    {
+      "ccu_page": 117,
+      "school_name": "SUNY Oneonta 紐約州立大學安妮昂塔分校",
+      "fields": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "官方未年流程：先母校提名，OGE Via-TRM Apply→Sign up→Sign in→Programs選United States:SUNY Oneonta與term。完整申請及錄取後Course Approval表在個人portal，未註冊/登入/填送；公開說明可讀不代表完整私有表已取得。",
+          "reason": "接待官方正文已讀，年度與計畫範圍按此欄限制；不改中正本期未開放或名額。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "Create an account by clicking the small \"Sign up\" link",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML visible passage identified by exact excerpt; no PDF pagination asserted"
+            }
+          ],
+          "access_requirement_evidence": [
+            {
+              "source_id": "p117-eighth-exchange",
+              "source_url": "https://suny.oneonta.edu/academics/experiential-learning/study-abroad/exchange-and-visiting-students",
+              "source_pages": [],
+              "excerpt": "After signing in to the OGE Global Portal",
+              "academic_year": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "application_round": "官方一般Exchange/Visiting頁未標適用學年；2027Spring接待版本尚未核實",
+              "checked_at": "2026-10-11T16:26:50.248808+00:00",
+              "content_hash": "95a0c3b56e07e1fa732c4dc59e6465efbfc4ebb09dba8583a766ea84b633b0cd",
+              "status": "verified_current"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ccu_page": 120,
+      "school_name": "Queensland University of Technology 昆士蘭科技大學",
+      "fields": [
+        {
+          "field": "application_forms",
+          "status": "needs_confirmation",
+          "value": "QUT portal在線申請；exchange學生由accepted nomination所附link申請，acceptance of offer form是錄取後。已讀公開流程，未取得提名後學生個人表／欄位與版本；未登入、代填或付款。",
+          "reason": "接待官網明示交換提名後個人link；不是下載失敗或官方明示尚未公告。",
+          "classification": "personal_access_required",
+          "evidence": [
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "Applying via the link provided in your accepted nomination for an exchange place."
+            },
+            {
+              "source_id": "p120-followup-apply",
+              "source_url": "https://www.qut.edu.au/study/international/study-abroad-program/ready-to-apply",
+              "source_pages": [],
+              "academic_year": "QUT現行Study Abroad／Exchange公開頁，page updated2026-05-05；linked costs明示2027，非每段規定均標2027",
+              "application_round": "2027春季接待規定另核；母校本期可選／期限不由此改變",
+              "checked_at": "2026-10-11T11:44:54.928080+00:00",
+              "content_hash": "70bdfe05d2aef31f7fd352b7d7d2cf6ed98af3f48b6eb3175bd011cca8ebab75",
+              "status": "verified_current",
+              "excerpt": "Complete the acceptance of offer form and details."
+            }
+          ],
+          "access_requirement_evidence": []
+        }
+      ]
+    }
+  ],
+  "private_school_count": 10,
+  "private_field_count": 11,
+  "external_input_rows": 1407,
+  "strict_missing_input_rows": 585,
+  "nonpublication_claims_added": 0,
+  "new_asset_requests": 0,
+  "asset_counts_unchanged": {
+    "coordinates": 101,
+    "licensed_photos": 100,
+    "website_identities": 103
+  },
+  "shared_runtime_changes_in_ninth_round": [],
+  "immutable_prior_snapshot": "completion-eighth-public-progress.json; eighth reading-input preserved with its original flags and extents",
+  "remaining_limits": "585 strict missing host fields, unyear/historical/conflicting sources and individual access steps remain distinct. Current-version unverified is not officially unannounced. CCU home windows remain closed; Gamma denominator remains null. No account, contact, form submission, merge or deployment."
+}

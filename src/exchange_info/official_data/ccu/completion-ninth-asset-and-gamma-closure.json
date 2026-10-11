@@ -1,0 +1,988 @@
+{
+  "checked_at": "2026-10-11T17:43:09.675303+00:00",
+  "new_network_requests": 0,
+  "assets": [
+    {
+      "ccu_page": 44,
+      "school_name": "Keimyung University 啟明大學",
+      "asset_gaps": [
+        "website"
+      ],
+      "offline_recheck_at": "2026-10-11T17:43:09.675303+00:00",
+      "new_network_requests": 0,
+      "decision": "retain_missing",
+      "reason": "官方calendar、campusmap及Adams Bluebook新路徑均503；沒有可讀正文核網站身份，非校方帳號限制。",
+      "official_exclusive_access_proven": false,
+      "receipt_hashes_revalidated": [
+        {
+          "source_id": "p44-commons",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AEng+college.jpg",
+          "checked_at": "2026-10-11T08:38:06.600589+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "21db0a7844b0013871f39d8dce39d2e087eb98b700477cfb1c5df7a5360aca10",
+          "title": null
+        },
+        {
+          "source_id": "p44-followup-arts-college",
+          "source_url": "https://newcms.kmu.ac.kr/arteng/",
+          "checked_at": "2026-10-11T11:55:27.855613+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://newcms.kmu.ac.kr/arteng/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p44-followup-int-lounge",
+          "source_url": "https://newcms.kmu.ac.kr/kmuil/43346/subview.do",
+          "checked_at": "2026-10-11T11:09:42.067464+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://newcms.kmu.ac.kr/kmuil/43346/subview.do",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p44-followup-intlkor-home",
+          "source_url": "https://intlkor.kmu.ac.kr/sites/intlkor/index.do",
+          "checked_at": "2026-10-11T11:55:58.901262+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://intlkor.kmu.ac.kr/sites/intlkor/index.do",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p44-followup-intlkor-inbound",
+          "source_url": "https://intlkor.kmu.ac.kr/intlkor/9998/subview.do",
+          "checked_at": "2026-10-11T11:55:58.901541+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://intlkor.kmu.ac.kr/intlkor/9998/subview.do",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p44-root",
+          "source_url": "https://www.kmu.ac.kr/",
+          "checked_at": "2026-10-11T08:34:47.066444+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.kmu.ac.kr/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p44-root-alternative",
+          "source_url": "https://www.kmu.ac.kr/uni/eng/main.jsp",
+          "checked_at": "2026-10-11T08:44:40.321153+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.kmu.ac.kr/uni/eng/main.jsp",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p44-ror",
+          "source_url": "https://api.ror.org/v2/organizations?query.advanced=domains%3Akmu.ac.kr",
+          "checked_at": "2026-10-11T08:34:25.066095+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "a2ba6cc62710db7fc9ac348bb44339e55360b4a1ea23b2ba9ca09d9e92bd81ab",
+          "title": null
+        },
+        {
+          "source_id": "p44-ror-name",
+          "source_url": "https://api.ror.org/v2/organizations?query=Keimyung+University",
+          "checked_at": "2026-10-11T08:36:35.734380+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "e1a00fd4ef9402329f122ed711998254c12e56fce73fdf016293894946eb1401",
+          "title": null
+        },
+        {
+          "source_id": "p44-seventh-official-adams-bluebook",
+          "source_url": "https://kac.kmu.ac.kr/kac/7739/subview.do",
+          "checked_at": "2026-10-11T15:39:01.893696+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://kac.kmu.ac.kr/kac/7739/subview.do",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p44-seventh-official-calendar",
+          "source_url": "https://www.keimyung.ac.kr/page.jsp?mnu_uid=3373",
+          "checked_at": "2026-10-11T15:25:28.565835+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.keimyung.ac.kr/page.jsp?mnu_uid=3373",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p44-seventh-official-campusmap",
+          "source_url": "https://www.keimyung.ac.kr/page.jsp?mnu_uid=3319",
+          "checked_at": "2026-10-11T15:25:28.566062+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.keimyung.ac.kr/page.jsp?mnu_uid=3319",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p44-website-secondary",
+          "source_url": "https://www.kmu.ac.kr/uni/eng/main.jsp",
+          "checked_at": "2026-10-11T09:48:06.200988+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.kmu.ac.kr/uni/eng/main.jsp",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p44-wikidata",
+          "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q483402.json",
+          "checked_at": "2026-10-11T08:38:06.364149+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "5505475aa95bd09d12aac7b463a3969662a77047b51c275e883c7a7bb34ced16",
+          "title": null
+        }
+      ],
+      "next_required_input": {
+        "coordinates": "校方公開地圖之機構marker，明載正確校區地址與緯經度；不可城市／viewer／租屋點。",
+        "photo": "正確校園原始圖與權利人明確允許重用之授權，含來源、作者、授權版本與校區。",
+        "website": "可讀官方正文或校方校名／官方網域聲明，與CCU名冊身份一致。"
+      }
+    },
+    {
+      "ccu_page": 66,
+      "school_name": "University of Economics and Law (UEL), Vietnam National University Ho Chi Minh City 越南胡志明市 經濟法律大學",
+      "asset_gaps": [
+        "photo"
+      ],
+      "offline_recheck_at": "2026-10-11T17:43:09.675303+00:00",
+      "new_network_requests": 0,
+      "decision": "retain_missing",
+      "reason": "UEL身份已核；現有圖片候選沒有校園身份與可重用授權的完整鏈。Commons檢索無適合結果不證明不存在其他授權圖。",
+      "official_exclusive_access_proven": false,
+      "receipt_hashes_revalidated": [
+        {
+          "source_id": "p66-academic-calendar-csv",
+          "source_url": "https://docs.google.com/spreadsheets/d/1PHNvK24paNm7AsSfUDczfc8JGgQjl1HX/export?format=csv",
+          "checked_at": "2026-10-11T13:07:14.178563+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "a995feb422afe7aa2236a804a6a109f13d18b8665f6a3c311df27d3143569094",
+          "title": null
+        },
+        {
+          "source_id": "p66-accommodation-public-text",
+          "source_url": "https://docs.google.com/document/d/1rZVNqk4rdApcd1krsn7H2j53qrbtqqzND4wU4CYNuVI/export?format=txt",
+          "checked_at": "2026-10-11T13:07:14.178832+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "cdaf87224268eb06dce88378343f15fbc709884668b53e91f87f6f08f84a36e3",
+          "title": null
+        },
+        {
+          "source_id": "p66-campus-specific",
+          "source_url": "https://maps.app.goo.gl/2d2svyzaJML5vAXK6",
+          "checked_at": "2026-10-11T08:49:35.769453+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "dfd42a2d460525f0c8db08e033ddada8821a476519a53cf84398d3be389a6adf",
+          "title": "Google Maps"
+        },
+        {
+          "source_id": "p66-campus_contact-1",
+          "source_url": "https://maps.app.goo.gl/2d2svyzaJML5vAXK6",
+          "checked_at": "2026-10-11T08:43:12.281878+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "159c91551df319f0d6da08ca70c16ea0e66f017247e0f6045aadff91920912fa",
+          "title": "Google Maps"
+        },
+        {
+          "source_id": "p66-campus_contact-2",
+          "source_url": "https://www.uel.edu.vn/#contact-form-popup",
+          "checked_at": "2026-10-11T08:43:12.352090+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "dbd85f5e9a65749230417d8bf6cba28d4e11966cd51680d96add9db9b75fa46e",
+          "title": "Trường Đại học Kinh tế - Luật - UEL"
+        },
+        {
+          "source_id": "p66-commons-alternatives",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=University+of+Economics+and+Law+campus&gsrnamespace=6&gsrlimit=4&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1000",
+          "checked_at": "2026-10-11T08:45:46.771282+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "2da13e68e3140411b491c3b5a8b66e4ffcd3e4b92c4e74a5450038062d5633b3",
+          "title": null
+        },
+        {
+          "source_id": "p66-commons-exact-search",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=intitle%3A%22University+of+Economics+and+Law%22+filetype%3Abitmap&gsrnamespace=6&gsrlimit=6&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1000",
+          "checked_at": "2026-10-11T08:48:21.882548+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "493558841926571f476029180627afc161bb0f866d59e79b8207c78a77cfced7",
+          "title": null
+        },
+        {
+          "source_id": "p66-followup-commons-uel",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22UEL%22+%22Ho+Chi+Minh%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+          "checked_at": "2026-10-11T11:11:48.725212+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "a6c1bb47447e5c53e30e7392efb7c5e10151875b96508926ab315299cc1fa892",
+          "title": null
+        },
+        {
+          "source_id": "p66-followup-commons-viet",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Kinh+t%E1%BA%BF%22+%22Lu%E1%BA%ADt%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+          "checked_at": "2026-10-11T11:11:48.724371+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "c1c14b6fa232b30439248ca18ee376cf0fb4e9e07dd3181de518982aae890f36",
+          "title": null
+        },
+        {
+          "source_id": "p66-host_entry-1",
+          "source_url": "https://international.uel.edu.vn",
+          "checked_at": "2026-10-11T08:43:12.221785+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://international.uel.edu.vn/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p66-official-academic-calendar",
+          "source_url": "https://link.uel.edu.vn/AcademicCalendar",
+          "checked_at": "2026-10-11T13:06:13.387346+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "40d29aba5c067f15a5ec9dd536cb2cd24baa59528acb4a753a3a8b4a6f03729f",
+          "title": "4. UEL Academic Calendar.xlsx - Google Sheets"
+        },
+        {
+          "source_id": "p66-official-accommodation-list",
+          "source_url": "https://link.uel.edu.vn/AccommodationRecommedations",
+          "checked_at": "2026-10-11T13:06:13.389875+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "206b97d5ab16d40517067dee13ad9cb260d3f4bcd0f742562b60f09de5b8b31c",
+          "title": "6. UEL Accomodation recommedations for exchange students - Google Docs"
+        },
+        {
+          "source_id": "p66-official-ctp-application",
+          "source_url": "https://link.uel.edu.vn/CTP-OnlineApplication",
+          "checked_at": "2026-10-11T13:06:13.387662+00:00",
+          "http_status": 401,
+          "error": "HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSf97oetiQJ1ODDJVPvm7ejxI1Ph6uEAq41VOnGAhU-mIjI-Xg/viewform?usp=send_form",
+          "sha256": "8af2adc17c30e1b49db9d8e23eefcf43707c1004424f2f5a82365a07106a357a",
+          "title": null
+        },
+        {
+          "source_id": "p66-official-curriculum",
+          "source_url": "https://link.uel.edu.vn/GeneralCurriculum",
+          "checked_at": "2026-10-11T13:06:13.388090+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "2ac87d507068fd524dae7942cb62517b92d12210f60a17681328b08e03be830d",
+          "title": "3. UEL General Curriculum - Google Sheets"
+        },
+        {
+          "source_id": "p66-official-factsheet-pdf",
+          "source_url": "https://drive.google.com/uc?export=download&id=1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+          "checked_at": "2026-10-11T13:05:01.796078+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "f0569be2b56afd95bd1c915c323b2324c2b3b77e273bdf81993887922312f541",
+          "title": null
+        },
+        {
+          "source_id": "p66-official-factsheet-shortlink",
+          "source_url": "https://link.uel.edu.vn/Factsheet",
+          "checked_at": "2026-10-11T13:04:06.442177+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "2f824443b3b7194d0cb7143b98061d34b2af4ef5f1e37bc5fc3c4fa952e7ea20",
+          "title": "1. UEL Factsheet.pdf - Google Drive"
+        },
+        {
+          "source_id": "p66-reference-link-1",
+          "source_url": "https://drive.usercontent.google.com/download?id=1yYGsn4fpauzvmT_oNee4o7PmBAPegBaj&export=download",
+          "checked_at": "2026-10-11T09:06:48.397132+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "4287d198a8102e8b83cca9cbecebce32faa5898e067bb0a1fcf977182b4bf270",
+          "title": null
+        },
+        {
+          "source_id": "p66-root",
+          "source_url": "https://www.uel.edu.vn/",
+          "checked_at": "2026-10-11T08:35:04.598364+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "388acafc9f37567a5bcbfe8405144030e6e8e44f84e71e4a7008208b758f6608",
+          "title": "Trường Đại học Kinh tế - Luật - UEL"
+        },
+        {
+          "source_id": "p66-ror",
+          "source_url": "https://api.ror.org/v2/organizations?query.advanced=domains%3Auel.edu.vn",
+          "checked_at": "2026-10-11T08:34:27.915120+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "2d10a490150b148bfe7e69e2645e597ca83ea5034a776abb148b51869181cba9",
+          "title": null
+        },
+        {
+          "source_id": "p66-ror-name",
+          "source_url": "https://api.ror.org/v2/organizations?query=University+of+Economics+and+Law",
+          "checked_at": "2026-10-11T08:36:38.900759+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "f7b74401cebad4d963922976c6132b9c1e65adb13afe0650c25141837ad81030",
+          "title": null
+        },
+        {
+          "source_id": "p66-wikidata",
+          "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q10829073.json",
+          "checked_at": "2026-10-11T08:38:08.569125+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "99be74816539dc7b7f122ac99e957a7d11fc3b1f1e65e94d759e9831c89bd2f2",
+          "title": null
+        }
+      ],
+      "next_required_input": {
+        "coordinates": "校方公開地圖之機構marker，明載正確校區地址與緯經度；不可城市／viewer／租屋點。",
+        "photo": "正確校園原始圖與權利人明確允許重用之授權，含來源、作者、授權版本與校區。",
+        "website": "可讀官方正文或校方校名／官方網域聲明，與CCU名冊身份一致。"
+      }
+    },
+    {
+      "ccu_page": 71,
+      "school_name": "Dong Nai Technology University (DNTU) 同奈科技大學",
+      "asset_gaps": [
+        "coordinates",
+        "photo"
+      ],
+      "offline_recheck_at": "2026-10-11T17:43:09.675303+00:00",
+      "new_network_requests": 0,
+      "decision": "retain_missing",
+      "reason": "公開360 bus新入口為Javascript容器；無institution marker或影像重用授權，不由viewer位置推GPS。",
+      "official_exclusive_access_proven": false,
+      "receipt_hashes_revalidated": [
+        {
+          "source_id": "p71-campus-disclosure",
+          "source_url": "https://dntu.edu.vn/ba-cong-khai",
+          "checked_at": "2026-10-11T13:00:04.806129+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "314773ebf0777218292d6676d7b556feaff69fa4c31f4e4512a86a5e38eddb35",
+          "title": "Ba công khai"
+        },
+        {
+          "source_id": "p71-campus_contact-1",
+          "source_url": "https://360campus.dntu.edu.vn/",
+          "checked_at": "2026-10-11T08:43:17.540693+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "5a9efa6f6e4cb5a5f8188a6241d88b4bec381b8ff22494c835714e983f3578f2",
+          "title": "Đại Học Công Nghệ Đồng Nai 360°"
+        },
+        {
+          "source_id": "p71-commons-alternatives",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=Dong+Nai+Technology+University+campus&gsrnamespace=6&gsrlimit=4&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1000",
+          "checked_at": "2026-10-11T08:45:47.149213+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "ada2a601f24c7f102c6432340d6adca256996c391606174b387338725fe7cf7d",
+          "title": null
+        },
+        {
+          "source_id": "p71-commons-exact-search",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=intitle%3A%22DNTU%22+filetype%3Abitmap&gsrnamespace=6&gsrlimit=6&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1000",
+          "checked_at": "2026-10-11T08:48:22.046164+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "1c40dac3186272ec5831c36295827ea570f865ce2d61ed1e565cdbacdc0682e1",
+          "title": null
+        },
+        {
+          "source_id": "p71-contact-public-script",
+          "source_url": "https://dntu.edu.vn/js/contact.form.js",
+          "checked_at": "2026-10-11T13:00:04.759111+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "702a6981bc01b1b21b177750df54cd99ea4e5dd8c432a91305b7301e51e0589f",
+          "title": null
+        },
+        {
+          "source_id": "p71-followup-commons-dntu",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Dong+Nai%22+university&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+          "checked_at": "2026-10-11T11:11:49.351499+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "59b051def7481c3f6a02cce3f2c38d752e9b3940b51280420c125dd40aa879d7",
+          "title": null
+        },
+        {
+          "source_id": "p71-followup-commons-viet",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22C%C3%B4ng+ngh%E1%BB%87+%C4%90%E1%BB%93ng+Nai%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+          "checked_at": "2026-10-11T11:11:49.319194+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "ada2a601f24c7f102c6432340d6adca256996c391606174b387338725fe7cf7d",
+          "title": null
+        },
+        {
+          "source_id": "p71-followup-library",
+          "source_url": "https://lib.dntu.edu.vn/",
+          "checked_at": "2026-10-11T11:09:39.876323+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "13a3c6116024df3213e3635ecda4c9c78a526fef482a9736ff98721d66663fbc",
+          "title": "Thư viện - Trường Đại học Công nghệ Đồng Nai"
+        },
+        {
+          "source_id": "p71-main-public-script",
+          "source_url": "https://dntu.edu.vn/js/main.js",
+          "checked_at": "2026-10-11T13:00:04.280967+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "e8e643ae19bd75f63df935da490e97cc967db8d1d3ad722b79e0b1dd22db8d87",
+          "title": null
+        },
+        {
+          "source_id": "p71-official-postgraduate-public",
+          "source_url": "https://phongsaudaihoc.dntu.edu.vn/",
+          "checked_at": "2026-10-11T14:02:33.811047+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "07676c4ce773487a74912167f30cb3801fbc670f6ddba0c97a45f68aadb2ec2e",
+          "title": "Phòng Sau đại học, DNTU"
+        },
+        {
+          "source_id": "p71-public-map-economics",
+          "source_url": "https://khoakinhte.dntu.edu.vn/khuon-vien-co-so-vat-chat",
+          "checked_at": "2026-10-11T12:16:56.032498+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "c13f58ab19430874eb268b83c49d7fb37749d9c1080be45953af22175fe44290",
+          "title": "Khuôn viên & Cơ sở vật chất"
+        },
+        {
+          "source_id": "p71-public-tour-script",
+          "source_url": "https://360campus.dntu.edu.vn/data/tour.js",
+          "checked_at": "2026-10-11T12:16:56.032823+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "82f1197a3e58f9e0f1121a2f7a127e7fc6d40d961dcfa4914be8186bc5bf88ca",
+          "title": null
+        },
+        {
+          "source_id": "p71-public-tour-viewer",
+          "source_url": "https://360campus.dntu.edu.vn/data/viewer.js",
+          "checked_at": "2026-10-11T12:16:56.035147+00:00",
+          "http_status": 404,
+          "error": "HTTPError: 404 Client Error: Not Found for url: https://360campus.dntu.edu.vn/data/viewer.js",
+          "sha256": "dc1d54dab6ec8c00f70137927504e4f222c8395f10760b6beecfcfa94e08249f",
+          "title": null
+        },
+        {
+          "source_id": "p71-root",
+          "source_url": "https://dntu.edu.vn/",
+          "checked_at": "2026-10-11T08:35:09.327336+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "449d4a14c50286d83e94cf05b9da87ca118da7b0ad49cf2d82253710ac5ed069",
+          "title": "Trường Đại học Công nghệ Đồng Nai"
+        },
+        {
+          "source_id": "p71-ror",
+          "source_url": "https://api.ror.org/v2/organizations?query.advanced=domains%3Adntu.edu.vn",
+          "checked_at": "2026-10-11T08:34:28.545161+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "88d32c11087c44a6da5fc6d84bc3c08aadc711da4c269e2c2d0b998911e90540",
+          "title": null
+        },
+        {
+          "source_id": "p71-ror-name",
+          "source_url": "https://api.ror.org/v2/organizations?query=Dong+Nai+Technology+University",
+          "checked_at": "2026-10-11T08:36:39.644961+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "f29662befa7a8c7f6ea308331886425f78bc2cf0e8c978da64d94c3ed626d112",
+          "title": null
+        },
+        {
+          "source_id": "p71-seventh-official-360-bus",
+          "source_url": "https://360campus.dntu.edu.vn/?Type=risjjL7NsQZ",
+          "checked_at": "2026-10-11T15:39:01.893935+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "5a9efa6f6e4cb5a5f8188a6241d88b4bec381b8ff22494c835714e983f3578f2",
+          "title": "Đại Học Công Nghệ Đồng Nai 360°"
+        },
+        {
+          "source_id": "p71-wikidata",
+          "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q10829032.json",
+          "checked_at": "2026-10-11T08:38:08.975863+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "05b40eb333a35fb8abf3738574d8476e3291a48172d0d7dc616083b4c8dfa701",
+          "title": null
+        }
+      ],
+      "next_required_input": {
+        "coordinates": "校方公開地圖之機構marker，明載正確校區地址與緯經度；不可城市／viewer／租屋點。",
+        "photo": "正確校園原始圖與權利人明確允許重用之授權，含來源、作者、授權版本與校區。",
+        "website": "可讀官方正文或校方校名／官方網域聲明，與CCU名冊身份一致。"
+      }
+    },
+    {
+      "ccu_page": 80,
+      "school_name": "Presidency University 總統大學",
+      "asset_gaps": [
+        "photo"
+      ],
+      "offline_recheck_at": "2026-10-11T17:43:09.675303+00:00",
+      "new_network_requests": 0,
+      "decision": "retain_missing",
+      "reason": "印度Bangalore的Presidency，非孟加拉或Kolkata同名校；现有可辨識官方校景無已核重用授權，Commons候選不足。身份不明圖片不採。",
+      "official_exclusive_access_proven": false,
+      "receipt_hashes_revalidated": [
+        {
+          "source_id": "p80-campus_contact-1",
+          "source_url": "https://presidencyuniversity.in/contact",
+          "checked_at": "2026-10-11T08:43:31.657679+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "04867f48de8938be531d0add5e39fc9408c593b1fe02de516868805b9a665b9b",
+          "title": "Contact"
+        },
+        {
+          "source_id": "p80-campus_contact-2",
+          "source_url": "https://presidencyuniversity.in/innovation-incubation/pla-contact-us",
+          "checked_at": "2026-10-11T08:43:31.827686+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "3830a10a04ee7684bdf109092fa55d2d2b210190f929521bfa4cda9393277c97",
+          "title": "Contact us"
+        },
+        {
+          "source_id": "p80-commons-alternatives",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=Presidency+University+campus&gsrnamespace=6&gsrlimit=4&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1000",
+          "checked_at": "2026-10-11T08:45:48.059119+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "83e940c817a9b0d1773b6efdf471f22863e471b17aff22255e668ef2b6f113be",
+          "title": null
+        },
+        {
+          "source_id": "p80-commons-exact-search",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=intitle%3A%22Presidency%22+intitle%3A%22Bangalore%22+filetype%3Abitmap&gsrnamespace=6&gsrlimit=6&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1000",
+          "checked_at": "2026-10-11T08:48:22.358161+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "3cd6a462d5891dbcd462b7d39b607c9d00939db9b4c0f0d6564ec7228ee8b455",
+          "title": null
+        },
+        {
+          "source_id": "p80-followup-commons-bangalore",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Presidency%22+%22Bangalore%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+          "checked_at": "2026-10-11T11:11:49.987706+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "a722e8f34299ad201d36f9cb404d57a1219aafb1b229498692802c4d9069c09f",
+          "title": null
+        },
+        {
+          "source_id": "p80-followup-commons-bengaluru",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Presidency%22+%22Bengaluru%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+          "checked_at": "2026-10-11T11:11:50.055180+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "ee5948c6a29d937140e783422149db80ee45a0ad76422c4b423f9bc376b3afa2",
+          "title": null
+        },
+        {
+          "source_id": "p80-host_entry-1",
+          "source_url": "https://presidencyuniversity.in/life-at-presidency/international-engagement/about-us",
+          "checked_at": "2026-10-11T08:43:31.316259+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "c880a8950cd42b29daf262715d1b2e5100d699d65bc9e076178ecc6da2917b61",
+          "title": "About Us"
+        },
+        {
+          "source_id": "p80-host_entry-2",
+          "source_url": "https://presidencyuniversity.in/life-at-presidency/international-engagement/international-collaborations",
+          "checked_at": "2026-10-11T08:43:31.473853+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "9ee114c9a8909a22231eb1fc4d948a7d6d08d0b39d1ecd8730af46ef68bc0f44",
+          "title": "International Collaborations"
+        },
+        {
+          "source_id": "p80-international-exchange-public",
+          "source_url": "https://presidencyuniversity.in/international-relations/",
+          "checked_at": "2026-10-11T13:04:06.442477+00:00",
+          "http_status": 404,
+          "error": "HTTPError: 404 Client Error: Not Found for url: https://presidencyuniversity.in/international-relations/",
+          "sha256": "fb08e883dc4a510a774d9309eb800dc4eac9c23a3b19c6d50885457464beb9d3",
+          "title": null
+        },
+        {
+          "source_id": "p80-life-1",
+          "source_url": "https://presidencyuniversity.in/school/presidency-school-of-allied-and-healthcare-professions",
+          "checked_at": "2026-10-11T08:43:32.205695+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "f31999096a1e445159636ae8d4ff4f85d5b023521375270e0c5c0464a0604396",
+          "title": "School of Allied Health Sciences at Presidency University"
+        },
+        {
+          "source_id": "p80-life-2",
+          "source_url": "https://presidencyuniversity.in/research/sponsored-research/research-support",
+          "checked_at": "2026-10-11T08:43:32.698525+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "eed12e806f397c6d6da9ca33622920249e617055a8ee67e333f76d646031fd1f",
+          "title": "Research Support"
+        },
+        {
+          "source_id": "p80-root",
+          "source_url": "https://presidencyuniversity.in/",
+          "checked_at": "2026-10-11T08:35:13.177047+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "c71da757c31655dc45f520439e40a4aca8dc8b12d1c1ae1d2f3a48a707729a54",
+          "title": "Presidency University"
+        },
+        {
+          "source_id": "p80-ror",
+          "source_url": "https://api.ror.org/v2/organizations?query.advanced=domains%3Apresidencyuniversity.in",
+          "checked_at": "2026-10-11T08:34:29.443454+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "2d10a490150b148bfe7e69e2645e597ca83ea5034a776abb148b51869181cba9",
+          "title": null
+        },
+        {
+          "source_id": "p80-ror-name",
+          "source_url": "https://api.ror.org/v2/organizations?query=Presidency+University",
+          "checked_at": "2026-10-11T08:36:40.269684+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "e0e29cbbfc593ac8e0d13f339313c3b2145b2b0071c73b3de999ffdf0b622da3",
+          "title": null
+        },
+        {
+          "source_id": "p80-wikidata",
+          "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q22080602.json",
+          "checked_at": "2026-10-11T08:38:09.606052+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "20e38ef3a70eec9d8366eb7ea2357b086cf5e55ce848ba5303bc9b83aff8cd95",
+          "title": null
+        }
+      ],
+      "next_required_input": {
+        "coordinates": "校方公開地圖之機構marker，明載正確校區地址與緯經度；不可城市／viewer／租屋點。",
+        "photo": "正確校園原始圖與權利人明確允許重用之授權，含來源、作者、授權版本與校區。",
+        "website": "可讀官方正文或校方校名／官方網域聲明，與CCU名冊身份一致。"
+      }
+    },
+    {
+      "ccu_page": 111,
+      "school_name": "SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)",
+      "asset_gaps": [
+        "coordinates"
+      ],
+      "offline_recheck_at": "2026-10-11T17:43:09.675303+00:00",
+      "new_network_requests": 0,
+      "decision": "retain_missing",
+      "reason": "官方opf.slu.cz新路徑HTTP200為Anubis挑戰；未繞過。opakarvina.cz為另一中學，已排除身份，非大學校園座標。",
+      "official_exclusive_access_proven": false,
+      "receipt_hashes_revalidated": [
+        {
+          "source_id": "p111-commons-alternatives",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=Silesian+University+Karvina&gsrnamespace=6&gsrlimit=4&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1000",
+          "checked_at": "2026-10-11T08:45:49.601677+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "a002263aaca5c3557dea9b09118f4cb118f34a68635aa5f9faff3c4f9573a747",
+          "title": null
+        },
+        {
+          "source_id": "p111-faculty-international-public",
+          "source_url": "https://www.slu.cz/opf/en/international",
+          "checked_at": "2026-10-11T13:04:07.699978+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "734c17a4f8668f654adb86faa161c18fbd8e92a7fcf10918fc348c6bd1c914fb",
+          "title": "Making sure you're not a bot!"
+        },
+        {
+          "source_id": "p111-library-photo-metadata",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Cmetadata&titles=File%3AKarvina+Silesian+University+library.jpg",
+          "checked_at": "2026-10-11T12:49:33.936346+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "bfc707ed6bf9287200c7527d69d16ba24ae08eb35ee490d71dea4d0a7faa2556",
+          "title": null
+        },
+        {
+          "source_id": "p111-library-photo-original-page",
+          "source_url": "https://commons.wikimedia.org/wiki/File:Karvina_Silesian_University_library.jpg",
+          "checked_at": "2026-10-11T12:49:34.381913+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "231d5abcbeba879b91a4a51859aba3545aaa28f377807eb35935c11bf6db6b2b",
+          "title": "File:Karvina Silesian University library.jpg - Wikimedia Commons"
+        },
+        {
+          "source_id": "p111-public-contact-czech",
+          "source_url": "https://www.slu.cz/opf/cz/kontakty",
+          "checked_at": "2026-10-11T12:16:56.035847+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "83014ecf30c0878f389c857966736dc5e89af100457ca60a5876006b568037b3",
+          "title": "Making sure you're not a bot!"
+        },
+        {
+          "source_id": "p111-public-faculty-contact",
+          "source_url": "https://opf.slu.cz/cz/kontakty",
+          "checked_at": "2026-10-11T12:16:57.045664+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "81bd3af5a1b0ca4e90a448b71fe1ad77153a80da4012a48c8c8248c6a1e854a0",
+          "title": "Making sure you're not a bot!"
+        },
+        {
+          "source_id": "p111-root",
+          "source_url": "https://www.slu.cz/opf/en/",
+          "checked_at": "2026-10-11T08:35:28.180561+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "fe34e0e38faad4d19f54b1b70a81a199f59bcec186f480600e8c5df2f927f2ea",
+          "title": "Making sure you're not a bot!"
+        },
+        {
+          "source_id": "p111-root-alternative",
+          "source_url": "https://www.slu.cz/opf/en/contact",
+          "checked_at": "2026-10-11T08:44:44.707974+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "18628588a52c32df0ac58767e493fe49516bd2fcfcf069d99a0b4bac2579991d",
+          "title": "Making sure you're not a bot!"
+        },
+        {
+          "source_id": "p111-ror",
+          "source_url": "https://api.ror.org/v2/organizations?query.advanced=domains%3Aslu.cz",
+          "checked_at": "2026-10-11T08:34:31.905862+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "f0881acce0ef848e1df5fc43f4fa4153ef1640b666cc4e71bca2eef2d95eaa09",
+          "title": null
+        },
+        {
+          "source_id": "p111-ror-name",
+          "source_url": "https://api.ror.org/v2/organizations?query=Silesian+University+in+Opava",
+          "checked_at": "2026-10-11T08:36:43.236365+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "f0e20e35e2993d829bc2b539ad0ff11d5c42a5b3403e597375cf516a8888b679",
+          "title": null
+        },
+        {
+          "source_id": "p111-seventh-contact-public",
+          "source_url": "https://www.opf.slu.cz/",
+          "checked_at": "2026-10-11T15:25:28.568916+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "f59b08ff1581d33b76d7f302374bb0b40fe4816192cb26483d2f3189612a8285",
+          "title": "Making sure you're not a bot!"
+        },
+        {
+          "source_id": "p111-wikidata",
+          "source_url": "https://www.wikidata.org/wiki/Special:EntityData/Q354333.json",
+          "checked_at": "2026-10-11T08:38:12.292868+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "9d63db9f81e19fc2d9489fa142437296d0214fb60e767c0597f697d542211d1a",
+          "title": null
+        }
+      ],
+      "next_required_input": {
+        "coordinates": "校方公開地圖之機構marker，明載正確校區地址與緯經度；不可城市／viewer／租屋點。",
+        "photo": "正確校園原始圖與權利人明確允許重用之授權，含來源、作者、授權版本與校區。",
+        "website": "可讀官方正文或校方校名／官方網域聲明，與CCU名冊身份一致。"
+      }
+    },
+    {
+      "ccu_page": 119,
+      "school_name": "Universidad Internacional 墨西哥國際大學",
+      "asset_gaps": [
+        "coordinates",
+        "photo"
+      ],
+      "offline_recheck_at": "2026-10-11T17:43:09.675303+00:00",
+      "new_network_requests": 0,
+      "decision": "retain_missing",
+      "reason": "墨西哥Cuernavaca Uninter（非Brazil/BIU/SIU）；主站與本輪Spanish School皆故障，語言短期school不是校級學期degree exchange。代表點與已核授權校景仍無依據。",
+      "official_exclusive_access_proven": false,
+      "receipt_hashes_revalidated": [
+        {
+          "source_id": "p119-commons-alternatives",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=Universidad+Internacional+Cuernavaca&gsrnamespace=6&gsrlimit=4&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1000",
+          "checked_at": "2026-10-11T08:45:50.398923+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "c4fa8e7fa139e052c23aa776ce19db459e3b6fce52dfd37ca94921723e2f071a",
+          "title": null
+        },
+        {
+          "source_id": "p119-commons-exact-search",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=intitle%3A%22UNINTER%22+filetype%3Abitmap&gsrnamespace=6&gsrlimit=6&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1000",
+          "checked_at": "2026-10-11T08:48:22.864256+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "5efc3c1751ac4bb84aa3fa7f24f5416056cf4f69c65206d22f248333f7dbed3b",
+          "title": null
+        },
+        {
+          "source_id": "p119-diplomados-directions",
+          "source_url": "https://diplomados.uninter.edu.mx/C%C3%B3mo-Llegar",
+          "checked_at": "2026-10-11T13:00:04.277637+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://diplomados.uninter.edu.mx/C%C3%B3mo-Llegar",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p119-events-map",
+          "source_url": "https://uninter.edu.mx/eventos/",
+          "checked_at": "2026-10-11T13:00:04.277014+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/eventos/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p119-followup-commons-cuernavaca",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Universidad+Internacional%22+%22Cuernavaca%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+          "checked_at": "2026-10-11T11:11:50.921939+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "ada2a601f24c7f102c6432340d6adca256996c391606174b387338725fe7cf7d",
+          "title": null
+        },
+        {
+          "source_id": "p119-followup-commons-uninter",
+          "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=%22Uninter%22+%22Mexico%22&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200",
+          "checked_at": "2026-10-11T11:11:51.072174+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "15585a960deb87f6cff2d090e58cb15c9a19582768f3e979b10c3dcf10021251",
+          "title": null
+        },
+        {
+          "source_id": "p119-followup-development-root",
+          "source_url": "https://desarrollo.uninter.edu.mx/",
+          "checked_at": "2026-10-11T11:55:58.902208+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://desarrollo.uninter.edu.mx/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p119-followup-events",
+          "source_url": "https://uninter.edu.mx/eventos/",
+          "checked_at": "2026-10-11T11:09:44.065263+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/eventos/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p119-followup-languages",
+          "source_url": "https://spanishschool.uninter.edu.mx/",
+          "checked_at": "2026-10-11T11:55:27.856397+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://spanishschool.uninter.edu.mx/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p119-followup-university-root",
+          "source_url": "https://universidad.uninter.edu.mx/",
+          "checked_at": "2026-10-11T11:55:59.260528+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://universidad.uninter.edu.mx/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p119-halloween-map",
+          "source_url": "https://uninter.edu.mx/HALLOWEENFEST/",
+          "checked_at": "2026-10-11T13:00:04.277396+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/HALLOWEENFEST/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p119-official-spanishschool-public",
+          "source_url": "https://spanishschool.uninter.edu.mx/",
+          "checked_at": "2026-10-11T14:02:33.806665+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://spanishschool.uninter.edu.mx/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p119-root",
+          "source_url": "https://www.uninter.edu.mx/",
+          "checked_at": "2026-10-11T08:35:30.145972+00:00",
+          "http_status": 503,
+          "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://www.uninter.edu.mx/",
+          "sha256": "b5b660bc2bb92e97199b4b045f7e21eca39307fa087b8be85bb006cc7d83b34b",
+          "title": null
+        },
+        {
+          "source_id": "p119-ror",
+          "source_url": "https://api.ror.org/v2/organizations?query.advanced=domains%3Auninter.edu.mx",
+          "checked_at": "2026-10-11T08:34:32.540986+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "94825239159bbfbc7ac1594bdcefc5124c4228803d644f887ab17a8b75944e40",
+          "title": null
+        },
+        {
+          "source_id": "p119-ror-name",
+          "source_url": "https://api.ror.org/v2/organizations?query=Universidad+Internacional",
+          "checked_at": "2026-10-11T08:36:44.058468+00:00",
+          "http_status": 200,
+          "error": null,
+          "sha256": "7beacdb6c8f5ba8758f643272b15b817f85fcb59297b2aa8f2eb601b9549dba9",
+          "title": null
+        }
+      ],
+      "next_required_input": {
+        "coordinates": "校方公開地圖之機構marker，明載正確校區地址與緯經度；不可城市／viewer／租屋點。",
+        "photo": "正確校園原始圖與權利人明確允許重用之授權，含來源、作者、授權版本與校區。",
+        "website": "可讀官方正文或校方校名／官方網域聲明，與CCU名冊身份一致。"
+      }
+    }
+  ],
+  "gamma": {
+    "source_id": "p0-seventh-gamma-public-doc",
+    "source_url": "https://gamma.app/docs/hdozbiaaek5nkn0",
+    "original_checked_at": "2026-10-11T15:27:59.134565+00:00",
+    "content_hash": "8743774a8411581da66bb669e53bf878b3c09d5f37832c350306b7f990060f52",
+    "body_excerpt": "__NEXT_DATA__.props.pageProps = {}",
+    "denominator": null,
+    "official_exclusive_access_proven": false,
+    "decision": "retain_unknown_agreement_denominator",
+    "next_required_input": "CCU國際處有查核日／適用版次的全部協議卡片PDF/CSV/XLSX公開匯出；保留學制、院系、校區、計畫與是否開放，不要求帳號或私有憑證。"
+  }
+}

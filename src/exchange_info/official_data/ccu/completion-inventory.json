@@ -15,36 +15,36 @@
   "field_counts": {
     "host.program_scope": {
       "reference_only": 35,
-      "missing": 8,
+      "missing": 7,
       "verified_current": 31,
-      "needs_confirmation": 30
+      "needs_confirmation": 31
     },
     "host.eligibility": {
       "reference_only": 32,
-      "missing": 23,
+      "missing": 21,
       "verified_current": 23,
-      "needs_confirmation": 24,
+      "needs_confirmation": 26,
       "conflict": 2
     },
     "host.language": {
-      "reference_only": 41,
+      "reference_only": 40,
       "verified_current": 20,
       "missing": 11,
-      "needs_confirmation": 26,
+      "needs_confirmation": 27,
       "conflict": 6
     },
     "host.nomination_deadline": {
-      "missing": 49,
-      "reference_only": 9,
+      "missing": 48,
+      "reference_only": 10,
       "needs_confirmation": 20,
       "conflict": 6,
       "verified_current": 20
     },
     "host.application_deadline": {
-      "missing": 37,
+      "missing": 36,
       "verified_current": 21,
       "reference_only": 12,
-      "needs_confirmation": 20,
+      "needs_confirmation": 21,
       "conflict": 14
     },
     "host.documents": {
@@ -56,31 +56,31 @@
     },
     "host.application_forms": {
       "reference_only": 30,
-      "needs_confirmation": 50,
-      "missing": 18,
+      "needs_confirmation": 52,
+      "missing": 16,
       "verified_current": 5,
       "conflict": 1
     },
     "host.academic_calendar": {
-      "missing": 44,
-      "verified_current": 32,
+      "missing": 42,
+      "verified_current": 33,
       "needs_confirmation": 10,
       "conflict": 12,
-      "reference_only": 6
+      "reference_only": 7
     },
     "host.course_restrictions": {
-      "missing": 45,
+      "missing": 44,
       "verified_current": 23,
-      "needs_confirmation": 27,
+      "needs_confirmation": 28,
       "conflict": 5,
       "reference_only": 4
     },
     "host.housing": {
-      "missing": 27,
+      "missing": 24,
       "verified_current": 27,
       "conflict": 6,
-      "needs_confirmation": 28,
-      "reference_only": 16
+      "needs_confirmation": 29,
+      "reference_only": 18
     },
     "host.housing_deadline": {
       "missing": 76,
@@ -90,22 +90,22 @@
       "reference_only": 1
     },
     "host.costs": {
-      "missing": 40,
+      "missing": 39,
       "verified_current": 19,
-      "reference_only": 13,
+      "reference_only": 14,
       "needs_confirmation": 17,
       "conflict": 15
     },
     "host.insurance": {
-      "missing": 39,
+      "missing": 37,
       "verified_current": 24,
       "reference_only": 11,
-      "needs_confirmation": 27,
+      "needs_confirmation": 29,
       "conflict": 3
     },
     "host.visa": {
-      "missing": 52,
-      "needs_confirmation": 29,
+      "missing": 51,
+      "needs_confirmation": 30,
       "verified_current": 14,
       "reference_only": 8,
       "conflict": 1
@@ -119,16 +119,16 @@
       "explicit_not_announced": 1
     },
     "host.host_tuition": {
-      "missing": 70,
-      "reference_only": 6,
+      "missing": 69,
+      "reference_only": 7,
       "needs_confirmation": 17,
       "verified_current": 11
     },
     "host.exchange_duration": {
       "reference_only": 43,
-      "missing": 13,
+      "missing": 12,
       "needs_confirmation": 17,
-      "verified_current": 28,
+      "verified_current": 29,
       "conflict": 3
     },
     "profile.city": {
@@ -13678,10 +13678,23 @@
           "evidence": []
         },
         "host.housing": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "reference_only",
+          "value": "一般外國留學生公寓：八里台谊园2/3/4號、津南B/C/D；依當年政策與專業分校區、須線上預訂，失敗提供校外資訊。頁無年度，CCU台籍Spring2027接待住房資格、費率及期限未核實，不能套外國學位生床位或保證。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p18-ninth-housing",
+              "source_url": "https://sie.nankai.edu.cn/xyfw/zs.htm",
+              "source_pages": [],
+              "excerpt": "外国留学生的校区分配由学校根据当年政策及留学生专业所在校区统一安排",
+              "academic_year": "未標年外國留學生公寓一般參考；CCU台籍交換適用未核",
+              "application_round": "未標年外國留學生公寓一般參考；CCU台籍交換適用未核",
+              "checked_at": "2026-10-11T17:36:37.468941+00:00",
+              "content_hash": "2fab1fb4bff70f90ff1da38cdafa59c712df76244f35b7dccd1466fd4caabbda",
+              "status": "reference_only",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ]
         },
         "host.housing_deadline": {
           "status": "missing",
@@ -13696,10 +13709,23 @@
           "evidence": []
         },
         "host.insurance": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "一般校方頁明示校際交換按交流協議處理；外國留學生一般平安標準500元/學期、1000/年不能直接套CCU台籍交換。2027當期協議保障／保費／購買義務未核實。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p18-ninth-insurance",
+              "source_url": "https://sie.nankai.edu.cn/xyfw/bx.htm",
+              "source_pages": [],
+              "excerpt": "按校际交流协议处理保险事宜",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:36:37.469207+00:00",
+              "content_hash": "c1fa7c6e4e245a974f4316173304bfdbaf073fc7b1f9b92fb404206a0cd99136",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ]
         },
         "host.visa": {
           "status": "missing",
@@ -95777,15 +95803,39 @@
           ]
         },
         "host.eligibility": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "接待校一般學生交換：GPA至少2.5/4或等同成績，只受理夥伴母校挑選推薦，接待校有最終決定權。繁體中文頁是台港澳指定版本；未核2027春季完整資格，英文頁另載一年級通常不合資格。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p56-ninth-application-traditional",
+              "source_url": "https://www.eduhk.hk/gao/zh-hk/articles/inbound_application-and-eligibility",
+              "source_pages": [],
+              "excerpt": "學校推薦 學生需透過就讀學校申請本校的學生交換計劃，由夥伴學校挑選並向本校提交推薦名單，本校持有最終決定權。所有非透過原校遞交之申請，一概不受理。 成績要求 申請本校學生交換項目的同學的平均積點須達2.5（4為最高積點）或以上或持有等同成績。 英文能力要求 申請學生需達到以下英語能力要求（其中一項），並在遞交交換計劃申請時提供相關證明： 托福(TOEFL) 網絡化測驗 80 分或以上(適用於2026年1月21日前應試); 網絡化測驗 4 分或以上 (適用於2026年1月21日或之後應試) 雅思(IELTS) 學術組別 6 分或以上 學校推薦 獲學校老師證明英文能力，並提供推薦信",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:28:46.847572+00:00",
+              "content_hash": "122f7042b2927e426fa6898da3ec492416a9ba30a63d182fc1ae8d6f0ad38a91",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            },
+            {
+              "source_id": "p56-ninth-application-eligibility",
+              "source_url": "https://www.eduhk.hk/gao/articles/inbound_application-and-eligibility",
+              "source_pages": [],
+              "excerpt": "for a place in the programme. First-year students are normally NOT eligible. Grade Point Average Applicants are expected to attain a minimum",
+              "academic_year": "未標年英文regular inbound規定；繁體中文台港澳版本另讀，年級適用仍待接待校確認",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:22:45.786283+00:00",
+              "content_hash": "250d46379d5f002932f45cde0abba749078498032e93d2d8cb9cb447a23e0c06",
+              "status": "needs_confirmation"
+            }
+          ]
         },
         "host.language": {
-          "status": "reference_only",
-          "value": "參考附件原文：平均積點須達2.5（4為最高積點） 或以上或持有等同成績。優先考慮高年級學生。 英文能力要求 託福(TOEFL)網絡化測驗80 分或以上成績；或 雅思(IELTS)學術組別6分或以上成績；或 獲學校老師證明英文能力 學校推薦日期 9 月 學校推薦程式 學生需透過就讀學校申請本校的學生交換計劃，由夥伴學校挑選並 以電郵發送至 inbound@eduhk.hk 向本校提交推薦名單，本校持有 最終決定權。所有非透過原校遞交之申請，一概不受理。 申請日期 學生提名期限: 2025年9月29 日 學生申請期限: 2025 年 10 月 10 日 (包括完成網上報名及學生簽證申請) 申請交換計劃所需文 件 交換生須於規定的截止日期前，於網上申請系統(GEMS)填妥申請， 並將下列文件上傳到GEMS。 上傳到 GEMS： - 正式成績單掃描件 - 英語能力申明或託福/雅思成績單（如適用） 學生簽證所需文件 1. 來港就讀申請表 (ID995A) （可參考香港入境處網頁的來港就讀入境指南） 2. 內地學生：身分證 / 港澳通行證 （如有）影印本 臺灣學生：身分證，護照資料頁及戶政事務所認證的戶籍謄本 影印本 澳門學生：澳門居民往來香港特別行政區旅遊證影印本 3. 經濟證明 香港入境處需要6-8星期處理學生的來港就讀申請。由於香港入境 事務處已實施「電子簽證」安排，待審批完成後，本處會將入境簽 證 / 進入許可通知書電子版以電郵發給同學。 保險 所有交換生必須出發前購買在港逗留期間的旅行及醫療保險。保險 範圍應包括（但不限於）旅遊、新冠狀病毒疾病治療及住院費用、 新冠狀病毒疫苗的副作用治療及住院費用、人身",
-          "reason": "只保存已讀附件的此欄原文與原年度。來源可能有不同計畫／學制，未解析成2027申請條件、期限、費用或完整文件集；本期未開放。",
+          "status": "needs_confirmation",
+          "value": "一般接待英語門檻：iBT80（2026-01-21前應試）／新版iBT4（當日或之後應試）；IELTS Academic6；或學校老師英文能力推薦信。考試變更日不是交換申請年度，未自行換算分數或改中正母校門檻。舊2025/26附件80分另保留歷史證據。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "evidence": [
             {
               "source_id": "p56-reference-link-1",
@@ -95800,6 +95850,18 @@
               "content_hash": "fbd7d7f3591b713468e0d6a562457466c777bea24b9818dcbe0242a31f10f19c",
               "status": "reference_only",
               "bundled_attachment": "completion_sources/p56-reference-link-1.pdf"
+            },
+            {
+              "source_id": "p56-ninth-application-traditional",
+              "source_url": "https://www.eduhk.hk/gao/zh-hk/articles/inbound_application-and-eligibility",
+              "source_pages": [],
+              "excerpt": "學校推薦 學生需透過就讀學校申請本校的學生交換計劃，由夥伴學校挑選並向本校提交推薦名單，本校持有最終決定權。所有非透過原校遞交之申請，一概不受理。 成績要求 申請本校學生交換項目的同學的平均積點須達2.5（4為最高積點）或以上或持有等同成績。 英文能力要求 申請學生需達到以下英語能力要求（其中一項），並在遞交交換計劃申請時提供相關證明： 托福(TOEFL) 網絡化測驗 80 分或以上(適用於2026年1月21日前應試); 網絡化測驗 4 分或以上 (適用於2026年1月21日或之後應試) 雅思(IELTS) 學術組別 6 分或以上 學校推薦 獲學校老師證明英文能力，並提供推薦信",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:28:46.847572+00:00",
+              "content_hash": "122f7042b2927e426fa6898da3ec492416a9ba30a63d182fc1ae8d6f0ad38a91",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
             }
           ]
         },
@@ -95871,16 +95933,44 @@
           ]
         },
         "host.academic_calendar": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "verified_current",
+          "value": "2026/27正式一般校曆（2026-08-28更新）：Spring2027非畢業班授課01-04至05-03、考試05-04至17；畢業班授課01-04至04-12、考試04-13至24。加退選01-04至16。一般校曆適用各學程但允許學程例外，須核個人課程日曆；不推為全體交換生最晚離境或宿舍合約日。",
+          "reason": "正文適用年度及對象已分開；接待資訊不改中正當期校內甄選／開放狀態。",
+          "evidence": [
+            {
+              "source_id": "p56-ninth-calendar-pdf",
+              "source_url": "https://www.eduhk.hk/re/uploads/docs/000000000017784742948701Lcf4",
+              "source_pages": [
+                2
+              ],
+              "excerpt": "4 Jan - 3 May: Teaching Period (non-grad class)",
+              "academic_year": "正文Academic Calendar 2026/2027，Last Update 28 August 2026；Spring2027",
+              "application_round": "正文Academic Calendar 2026/2027，Last Update 28 August 2026；Spring2027",
+              "checked_at": "2026-10-11T17:29:58.596985+00:00",
+              "content_hash": "505fd6c2109ec89e544983c035821db3435c977eaef58508695c2df624929069",
+              "status": "verified_current",
+              "location_in_source": "PDF page(s): [2]"
+            }
+          ]
         },
         "host.course_restrictions": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "一般接待交換每學期最少12、最多15 credits（4–5門）；並非所有課英文授課，須核MOI；到校前選課，通常2週加退選，須母校批准。2027課單與席位未核實，2025/26下載課表僅歷史參考。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p56-ninth-course-registration",
+              "source_url": "https://www.eduhk.hk/gao/articles/inbound_course",
+              "source_pages": [],
+              "excerpt": "Medium of Instruction Most but not all classes at EdUHK are taught in English. Exchange students are strongly advised to pay attention to the medium of instruction of particular courses. Study Load Exchange students are required to take minimum 12 credits (4 courses) and maximum 15 credits (5 courses) during your exchange period at EdUHK. When you perform course registration, please take particular care to ensure that the whole registration process is completed. Students should make sure they have completed the entire course registration procedures, as they will not be accepted in any class activities and assessments of the unregistered courses, and hence no information about these courses will be displayed on the",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:22:47.034320+00:00",
+              "content_hash": "438348149be8b1efc36e42e817c617603eb1048a9fc78158c2857d3601fffa4a",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ]
         },
         "host.housing": {
           "status": "reference_only",
@@ -96636,7 +96726,6 @@
         "host.application_deadline",
         "host.documents",
         "host.application_forms",
-        "host.academic_calendar",
         "host.course_restrictions",
         "host.housing",
         "host.housing_deadline",
@@ -99501,10 +99590,37 @@
           "evidence": []
         },
         "host.application_forms": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "官方Application forms頁明示需註冊／登入且可能須特殊權限。只取得公開登入說明，未取得表格正文、清單或當期版本，未註冊/登入/填送。此限制僅該表格步驟，不代表全校政策私有。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p59-ninth-application-forms",
+              "source_url": "https://oia.kmitl.ac.th/application-form/",
+              "source_pages": [],
+              "excerpt": "Please Login or Register",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:17:50.391193+00:00",
+              "content_hash": "b49119f8c9e7ae7da6943e1c2267132d3cefad383379e4ad98da23baaec794d2",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ],
+          "research_classification": "personal_access_required",
+          "access_requirement_evidence": [
+            {
+              "source_id": "p59-ninth-application-forms",
+              "source_url": "https://oia.kmitl.ac.th/application-form/",
+              "source_pages": [],
+              "excerpt": "requires special permission",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:17:50.391193+00:00",
+              "content_hash": "b49119f8c9e7ae7da6943e1c2267132d3cefad383379e4ad98da23baaec794d2",
+              "status": "verified_current"
+            }
+          ]
         },
         "host.academic_calendar": {
           "status": "missing",
@@ -123241,10 +123357,23 @@
       ],
       "fields": {
         "host.program_scope": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "Inbound Semester Exchange／Visiting Student一般接待本科、碩士及research scholar；Spring Jan–June、Fall July–Dec。另有當前Fall2026/27 SEP partner scholarship公告，不能視為Spring2027已開放或所有學程可選。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p75-ninth-inbound",
+              "source_url": "https://www.cuchd.in/international/inbound-exchange.php",
+              "source_pages": [],
+              "excerpt": "Study Level: Undergraduate/masters/Research Scholar",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:17:47.918940+00:00",
+              "content_hash": "cf002b4a45da9bc816f5180e2604c2f23e24ad23778a33e9d3ce8f302b6fe28d",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ]
         },
         "host.eligibility": {
           "status": "missing",
@@ -123273,16 +123402,44 @@
           ]
         },
         "host.nomination_deadline": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "reference_only",
+          "value": "僅歷史2021 factsheet：spring提名11/15、fall4/15，當時online。未核2027；不可與未標年網頁申請10/30、3/30合併為同一年度時間軸。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p75-ninth-factsheet",
+              "source_url": "https://www.cuchd.in/international/brochure/factsheet.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "For spring semester- November 15th",
+              "academic_year": "正文Semester Dates 2021、Current mode of study Online；歷史參考",
+              "application_round": "正文Semester Dates 2021、Current mode of study Online；歷史參考",
+              "checked_at": "2026-10-11T17:22:39.921161+00:00",
+              "content_hash": "6700bd8a9932e48cd0b96e5abc014c58cbdb3b1cc8955bc0a23bd6f02e2a59de",
+              "status": "reference_only",
+              "location_in_source": "PDF page(s): [1]"
+            }
+          ]
         },
         "host.application_deadline": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "一般未標年網頁：spring申請10/30、fall3/30，未核Spring2027確切日；2021 PDF提名11/15、4/15另列歷史，不能猜選较晚日期。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p75-ninth-inbound",
+              "source_url": "https://www.cuchd.in/international/inbound-exchange.php",
+              "source_pages": [],
+              "excerpt": "Spring semester – October 30th Fall semester – March 30th",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:17:47.918940+00:00",
+              "content_hash": "cf002b4a45da9bc816f5180e2604c2f23e24ad23778a33e9d3ce8f302b6fe28d",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ]
         },
         "host.documents": {
           "status": "reference_only",
@@ -123325,10 +123482,25 @@
           ]
         },
         "host.academic_calendar": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "reference_only",
+          "value": "僅2021：Spring起始01-03 tentative至mid-May；Fall07-15 tentative至mid-Dec，當时online；不是2027授課、迎新或抵達日期。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p75-ninth-factsheet",
+              "source_url": "https://www.cuchd.in/international/brochure/factsheet.pdf",
+              "source_pages": [
+                1
+              ],
+              "excerpt": "Semester Dates 2021",
+              "academic_year": "正文Semester Dates 2021；歷史參考",
+              "application_round": "正文Semester Dates 2021；歷史參考",
+              "checked_at": "2026-10-11T17:22:39.921161+00:00",
+              "content_hash": "6700bd8a9932e48cd0b96e5abc014c58cbdb3b1cc8955bc0a23bd6f02e2a59de",
+              "status": "reference_only",
+              "location_in_source": "PDF page(s): [1]"
+            }
+          ]
         },
         "host.course_restrictions": {
           "status": "missing",
@@ -123337,10 +123509,23 @@
           "evidence": []
         },
         "host.housing": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "reference_only",
+          "value": "網頁Fall Intake July/Aug 2026–27公告SEP partner scholarship free accommodation；不同於Spring2027，不推為台灣交換生未來房源或費用保證。一般境外partner宿舍描述與2021 PDF須另核對。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p75-ninth-inbound",
+              "source_url": "https://www.cuchd.in/international/inbound-exchange.php",
+              "source_pages": [],
+              "excerpt": "We are open for the Fall Intake (July/ Aug ) 2026 – 27. Tuition fee is waived off at Chandigarh University & Free Accommodation under SEP partner scholarship.",
+              "academic_year": "正文Fall Intake July/Aug 2026–27；不同學期參考",
+              "application_round": "正文Fall Intake July/Aug 2026–27；不同學期參考",
+              "checked_at": "2026-10-11T17:17:47.918940+00:00",
+              "content_hash": "cf002b4a45da9bc816f5180e2604c2f23e24ad23778a33e9d3ce8f302b6fe28d",
+              "status": "reference_only",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ]
         },
         "host.housing_deadline": {
           "status": "missing",
@@ -123373,10 +123558,23 @@
           "evidence": []
         },
         "host.host_tuition": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "reference_only",
+          "value": "Fall Intake July/Aug 2026–27 SEP partner scholarship公告免學費；未核Spring2027及CCU協議適用，不推其他費用全免。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p75-ninth-inbound",
+              "source_url": "https://www.cuchd.in/international/inbound-exchange.php",
+              "source_pages": [],
+              "excerpt": "We are open for the Fall Intake (July/ Aug ) 2026 – 27. Tuition fee is waived off at Chandigarh University & Free Accommodation under SEP partner scholarship.",
+              "academic_year": "正文Fall Intake July/Aug 2026–27；不同學期參考",
+              "application_round": "正文Fall Intake July/Aug 2026–27；不同學期參考",
+              "checked_at": "2026-10-11T17:17:47.918940+00:00",
+              "content_hash": "cf002b4a45da9bc816f5180e2604c2f23e24ad23778a33e9d3ce8f302b6fe28d",
+              "status": "reference_only",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ]
         },
         "host.exchange_duration": {
           "status": "reference_only",
@@ -142979,215 +143177,21 @@
           ]
         },
         "host.eligibility": {
-          "value": null,
-          "status": "missing",
-          "reason": "第八輪所列公開政策仍未取得此欄本輪相符依據；未核實新版不等官方明示尚未公告。空表/戶別、提名後portal及台籍最新政府規則按欄另查。",
-          "evidence": [],
-          "research_category": "alternative_official_sources_not_fully_checked",
-          "research_note": "本輪已逐欄核對所列全文來源及部分政策段落，未找到本欄當期適用依據；其他段落／課程細目、舊年及計畫範圍仍待續查，不宣稱所有可讀來源全文已核，也不是官方明示尚未公告。",
-          "source_checks": [
+          "status": "needs_confirmation",
+          "value": "非歐洲伙伴大學雙邊交換須先核有效agreement，母校甄選推薦；滿足母校選拔不等於Strasbourg自動錄取。頁面一般資格／語言段無本期年度且出函段仍2025/26，Spring2027完整接待資格尚未核實。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
             {
-              "source_id": "p87-mirror",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "讀取失敗；HTTP 未取得；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B&export=download"
-            },
-            {
-              "source_id": "p87-host0",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-host1",
-              "source_url": "https://international-welcome.unistra.fr/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-hostf0",
-              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/mobility-in-exchange-programs/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-hostz0",
+              "source_id": "p87-ninth-bilateral",
               "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-hostz1",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view"
-            },
-            {
-              "source_id": "p87-hostz1-r2retry",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view",
-              "checked_at": "2026-10-08T04:34:48.208630+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view"
-            },
-            {
-              "source_id": "p87-mirror-r2retry",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view?usp=drive_link",
-              "checked_at": "2026-10-08T04:34:47.911047+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B&export=download"
-            },
-            {
-              "source_id": "p87-r8-apl-government",
-              "source_url": "https://www.service-public.gouv.fr/particuliers/actualites/A18981",
-              "checked_at": "2026-10-08T08:47:42.256473+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-benefits",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/financial-support-for-housing/",
-              "checked_at": "2026-10-08T08:34:54.050196+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-ccu-list",
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "checked_at": "2026-10-08T09:02:08.576691+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-coordinators",
-              "source_url": "https://seafile.unistra.fr/f/d64562f55160442fb57e/?dl=1",
-              "checked_at": "2026-10-08T08:53:20.050871+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已核對部分政策段落；其餘全文／課程細目仍待查讀，不宣稱本來源全文已核。"
-            },
-            {
-              "source_id": "p87-r8-health",
-              "source_url": "https://international-welcome.unistra.fr/healthcare-coverage-for-students-and-researchers/healthcare-for-students/",
-              "checked_at": "2026-10-08T08:47:42.253897+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-housing-guide",
-              "source_url": "https://seafile.unistra.fr/f/754056dcea7243839f3b/?dl=1",
-              "checked_at": "2026-10-08T08:47:42.253399+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已核對部分政策段落；其餘全文／課程細目仍待查讀，不宣稱本來源全文已核。"
-            },
-            {
-              "source_id": "p87-r8-housing-search",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/housing-search/",
-              "checked_at": "2026-10-08T08:34:53.015963+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-housing",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/",
-              "checked_at": "2026-10-08T08:34:53.015052+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-interuniversity",
-              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
-              "checked_at": "2026-10-08T08:51:14.702772+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-learning-contract-index",
-              "source_url": "https://seafile.unistra.fr/api/v2.1/share-links/49cb6651b50a4a349e7b/dirents/?path=%2F&thumbnail_size=48",
-              "checked_at": "2026-10-08T08:39:23.296994+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r8-learning-contract-pdf",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
-              "checked_at": "2026-10-08T08:49:40.005737+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-learning-contract-view",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
-              "checked_at": "2026-10-08T08:47:42.252914+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r8-mobility",
-              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/mobility-in-exchange-programs/",
-              "checked_at": "2026-10-08T08:26:40.167720+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-seafile",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/",
-              "checked_at": "2026-10-08T08:26:39.764504+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r8-visa",
-              "source_url": "https://international-welcome.unistra.fr/student-and-researcher-visa/student-visa-application/",
-              "checked_at": "2026-10-08T08:34:54.489382+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-profile-root",
-              "source_url": "https://international-welcome.unistra.fr/",
-              "checked_at": "2026-10-08T09:10:28.846932+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r19-5a6372841a",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/preparing-your-housing-search/",
-              "checked_at": "2026-10-08T16:09:37.857856+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r19-34b1fb84b6",
-              "source_url": "https://international-welcome.unistra.fr/transportation/by-plane-or-train/",
-              "checked_at": "2026-10-08T16:09:42.462769+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r20-b0677a9f38",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/moving-in/",
-              "checked_at": "2026-10-08T16:37:31.092052+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r21-02367f4090",
-              "source_url": "https://international-welcome.unistra.fr/fileadmin/user_upload/PDF/Before_moving_into_your_accomodation_5a.pdf",
-              "checked_at": "2026-10-08T17:20:52.601586+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r21-f68abae9a3",
-              "source_url": "https://international-welcome.unistra.fr/fileadmin/user_upload/PDF/GUIDE_DU_LOGEMENT_25_26.pdf",
-              "checked_at": "2026-10-08T17:20:59.723108+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+              "source_pages": [],
+              "excerpt": "partner institutions outside Europe",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
             }
           ]
         },
@@ -144145,9 +144149,9 @@
           ]
         },
         "host.application_forms": {
-          "value": "已實取公開3頁LearningAgreement：表內202_-202_空白、檔mtime2022，學生與母校/接收校各兩協調人簽名日期、課表ECTS及變更/續頁。至少50%課同department；本輪是否指定同模板及完整個人applicationportal未核，舊空白模板不作已填2027申請。",
           "status": "needs_confirmation",
-          "reason": "只核實所述來源/計畫及年度；未年條件與母校當期繳件分开，未取得新版/個人實表及席位，不猜缺值。",
+          "value": "選上後母校提供個人application link及說明，母校簽章整包後透過dedicated portal上傳；只讀公開流程與已取得舊空白LA，不宣稱已取得個人申請表／版本，未登入或填送。公開文件清單不因個人表單連結受限而隱藏。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
           "evidence": [
             {
               "source_id": "p87-r8-learning-contract-pdf",
@@ -144178,213 +144182,32 @@
               "note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。三頁全文已讀：50%同department、學生+雙方兩協調人簽/日期、變更及續頁。publicfileview提供同站下載rawPath，短期下載URL重新讀viewer可重取。",
               "content_hash": "054fbd5c6e55c700576a418d5dab631048dbd6a1f83af4b626532d25124d171b",
               "text_sha256": "e6cc6347503d346468af213ffeb1e4f6fb126b1ba451e3a199b46af455ae5756"
+            },
+            {
+              "source_id": "p87-ninth-bilateral",
+              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
+              "source_pages": [],
+              "excerpt": "your university will send you instructions and a link to the application form",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
             }
           ],
-          "research_category": "alternative_official_sources_not_fully_checked",
-          "research_note": "本輪已逐欄核對所列全文來源及部分政策段落，未找到本欄當期適用依據；其他段落／課程細目、舊年及計畫範圍仍待續查，不宣稱所有可讀來源全文已核，也不是官方明示尚未公告。",
-          "source_checks": [
+          "research_classification": "personal_access_required",
+          "access_requirement_evidence": [
             {
-              "source_id": "p87-mirror",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "讀取失敗；HTTP 未取得；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B&export=download"
-            },
-            {
-              "source_id": "p87-host0",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-host1",
-              "source_url": "https://international-welcome.unistra.fr/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-hostf0",
-              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/mobility-in-exchange-programs/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-hostz0",
+              "source_id": "p87-ninth-bilateral",
               "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-hostz1",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view"
-            },
-            {
-              "source_id": "p87-hostz1-r2retry",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view",
-              "checked_at": "2026-10-08T04:34:48.208630+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view"
-            },
-            {
-              "source_id": "p87-mirror-r2retry",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view?usp=drive_link",
-              "checked_at": "2026-10-08T04:34:47.911047+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B&export=download"
-            },
-            {
-              "source_id": "p87-r8-apl-government",
-              "source_url": "https://www.service-public.gouv.fr/particuliers/actualites/A18981",
-              "checked_at": "2026-10-08T08:47:42.256473+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-benefits",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/financial-support-for-housing/",
-              "checked_at": "2026-10-08T08:34:54.050196+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-ccu-list",
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "checked_at": "2026-10-08T09:02:08.576691+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-coordinators",
-              "source_url": "https://seafile.unistra.fr/f/d64562f55160442fb57e/?dl=1",
-              "checked_at": "2026-10-08T08:53:20.050871+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已核對部分政策段落；其餘全文／課程細目仍待查讀，不宣稱本來源全文已核。"
-            },
-            {
-              "source_id": "p87-r8-health",
-              "source_url": "https://international-welcome.unistra.fr/healthcare-coverage-for-students-and-researchers/healthcare-for-students/",
-              "checked_at": "2026-10-08T08:47:42.253897+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-housing-guide",
-              "source_url": "https://seafile.unistra.fr/f/754056dcea7243839f3b/?dl=1",
-              "checked_at": "2026-10-08T08:47:42.253399+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已核對部分政策段落；其餘全文／課程細目仍待查讀，不宣稱本來源全文已核。"
-            },
-            {
-              "source_id": "p87-r8-housing-search",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/housing-search/",
-              "checked_at": "2026-10-08T08:34:53.015963+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-housing",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/",
-              "checked_at": "2026-10-08T08:34:53.015052+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-interuniversity",
-              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
-              "checked_at": "2026-10-08T08:51:14.702772+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-learning-contract-index",
-              "source_url": "https://seafile.unistra.fr/api/v2.1/share-links/49cb6651b50a4a349e7b/dirents/?path=%2F&thumbnail_size=48",
-              "checked_at": "2026-10-08T08:39:23.296994+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r8-learning-contract-pdf",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
-              "checked_at": "2026-10-08T08:49:40.005737+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
-            },
-            {
-              "source_id": "p87-r8-learning-contract-view",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
-              "checked_at": "2026-10-08T08:47:42.252914+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r8-mobility",
-              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/mobility-in-exchange-programs/",
-              "checked_at": "2026-10-08T08:26:40.167720+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-seafile",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/",
-              "checked_at": "2026-10-08T08:26:39.764504+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r8-visa",
-              "source_url": "https://international-welcome.unistra.fr/student-and-researcher-visa/student-visa-application/",
-              "checked_at": "2026-10-08T08:34:54.489382+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-profile-root",
-              "source_url": "https://international-welcome.unistra.fr/",
-              "checked_at": "2026-10-08T09:10:28.846932+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r19-5a6372841a",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/preparing-your-housing-search/",
-              "checked_at": "2026-10-08T16:09:37.857856+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r19-34b1fb84b6",
-              "source_url": "https://international-welcome.unistra.fr/transportation/by-plane-or-train/",
-              "checked_at": "2026-10-08T16:09:42.462769+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r20-b0677a9f38",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/moving-in/",
-              "checked_at": "2026-10-08T16:37:31.092052+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r21-02367f4090",
-              "source_url": "https://international-welcome.unistra.fr/fileadmin/user_upload/PDF/Before_moving_into_your_accomodation_5a.pdf",
-              "checked_at": "2026-10-08T17:20:52.601586+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r21-f68abae9a3",
-              "source_url": "https://international-welcome.unistra.fr/fileadmin/user_upload/PDF/GUIDE_DU_LOGEMENT_25_26.pdf",
-              "checked_at": "2026-10-08T17:20:59.723108+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+              "source_pages": [],
+              "excerpt": "your university will send you instructions and a link to the application form",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "verified_current"
             }
           ]
         },
@@ -146568,215 +146391,21 @@
           ]
         },
         "host.exchange_duration": {
-          "value": null,
-          "status": "missing",
-          "reason": "第八輪所列公開政策仍未取得此欄本輪相符依據；未核實新版不等官方明示尚未公告。空表/戶別、提名後portal及台籍最新政府規則按欄另查。",
-          "evidence": [],
-          "research_category": "alternative_official_sources_not_fully_checked",
-          "research_note": "本輪已逐欄核對所列全文來源及部分政策段落，未找到本欄當期適用依據；其他段落／課程細目、舊年及計畫範圍仍待續查，不宣稱所有可讀來源全文已核，也不是官方明示尚未公告。",
-          "source_checks": [
+          "status": "verified_current",
+          "value": "非EU bilateral 2026/27第一campaign可第1學期、第2學期或full year；第二campaign僅第2學期。這是該接待campaign可申請範圍，未保CCU個人獲一年交換或母校期限延長。",
+          "reason": "正文適用年度及對象已分開；接待資訊不改中正當期校內甄選／開放狀態。",
+          "evidence": [
             {
-              "source_id": "p87-mirror",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view?usp=drive_link",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "讀取失敗；HTTP 未取得；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B&export=download"
-            },
-            {
-              "source_id": "p87-host0",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-host1",
-              "source_url": "https://international-welcome.unistra.fr/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-hostf0",
-              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/mobility-in-exchange-programs/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-hostz0",
+              "source_id": "p87-ninth-bilateral",
               "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-hostz1",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view"
-            },
-            {
-              "source_id": "p87-hostz1-r2retry",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view",
-              "checked_at": "2026-10-08T04:34:48.208630+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view"
-            },
-            {
-              "source_id": "p87-mirror-r2retry",
-              "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view?usp=drive_link",
-              "checked_at": "2026-10-08T04:34:47.911047+00:00",
-              "timestamp_precision": "datetime",
-              "result": "讀取失敗；HTTP 404；HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B&export=download"
-            },
-            {
-              "source_id": "p87-r8-apl-government",
-              "source_url": "https://www.service-public.gouv.fr/particuliers/actualites/A18981",
-              "checked_at": "2026-10-08T08:47:42.256473+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-benefits",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/financial-support-for-housing/",
-              "checked_at": "2026-10-08T08:34:54.050196+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-ccu-list",
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "checked_at": "2026-10-08T09:02:08.576691+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-coordinators",
-              "source_url": "https://seafile.unistra.fr/f/d64562f55160442fb57e/?dl=1",
-              "checked_at": "2026-10-08T08:53:20.050871+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已核對部分政策段落；其餘全文／課程細目仍待查讀，不宣稱本來源全文已核。"
-            },
-            {
-              "source_id": "p87-r8-health",
-              "source_url": "https://international-welcome.unistra.fr/healthcare-coverage-for-students-and-researchers/healthcare-for-students/",
-              "checked_at": "2026-10-08T08:47:42.253897+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-housing-guide",
-              "source_url": "https://seafile.unistra.fr/f/754056dcea7243839f3b/?dl=1",
-              "checked_at": "2026-10-08T08:47:42.253399+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已核對部分政策段落；其餘全文／課程細目仍待查讀，不宣稱本來源全文已核。"
-            },
-            {
-              "source_id": "p87-r8-housing-search",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/housing-search/",
-              "checked_at": "2026-10-08T08:34:53.015963+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-housing",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/",
-              "checked_at": "2026-10-08T08:34:53.015052+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-interuniversity",
-              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/courses-of-the-university-of-strasbourg-1/translate-to-english-les-accords-interuniversitaires/",
-              "checked_at": "2026-10-08T08:51:14.702772+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-learning-contract-index",
-              "source_url": "https://seafile.unistra.fr/api/v2.1/share-links/49cb6651b50a4a349e7b/dirents/?path=%2F&thumbnail_size=48",
-              "checked_at": "2026-10-08T08:39:23.296994+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r8-learning-contract-pdf",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
-              "checked_at": "2026-10-08T08:49:40.005737+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-learning-contract-view",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/files/?p=%2F2022-02-08%20Contrat_d_etudes_ENTRANTS_202_-202__bilingue-1.pdf",
-              "checked_at": "2026-10-08T08:47:42.252914+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r8-mobility",
-              "source_url": "https://international-welcome.unistra.fr/apply-to-the-university-of-strasbourg/mobility-in-exchange-programs/",
-              "checked_at": "2026-10-08T08:26:40.167720+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-r8-seafile",
-              "source_url": "https://seafile.unistra.fr/d/49cb6651b50a4a349e7b/",
-              "checked_at": "2026-10-08T08:26:39.764504+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r8-visa",
-              "source_url": "https://international-welcome.unistra.fr/student-and-researcher-visa/student-visa-application/",
-              "checked_at": "2026-10-08T08:34:54.489382+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
-            },
-            {
-              "source_id": "p87-profile-root",
-              "source_url": "https://international-welcome.unistra.fr/",
-              "checked_at": "2026-10-08T09:10:28.846932+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r19-5a6372841a",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/preparing-your-housing-search/",
-              "checked_at": "2026-10-08T16:09:37.857856+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r19-34b1fb84b6",
-              "source_url": "https://international-welcome.unistra.fr/transportation/by-plane-or-train/",
-              "checked_at": "2026-10-08T16:09:42.462769+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r20-b0677a9f38",
-              "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/moving-in/",
-              "checked_at": "2026-10-08T16:37:31.092052+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r21-02367f4090",
-              "source_url": "https://international-welcome.unistra.fr/fileadmin/user_upload/PDF/Before_moving_into_your_accomodation_5a.pdf",
-              "checked_at": "2026-10-08T17:20:52.601586+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p87-r21-f68abae9a3",
-              "source_url": "https://international-welcome.unistra.fr/fileadmin/user_upload/PDF/GUIDE_DU_LOGEMENT_25_26.pdf",
-              "checked_at": "2026-10-08T17:20:59.723108+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+              "source_pages": [],
+              "excerpt": "1 st campaign: Mobilities for 1 st semester, 2 nd semester and full year 2026/2027. Nominations from 09/02/2026 to 20/03/2026 Applications from 09/02/2026 to 15/04/2026 2 nd campaign: Mobilities in the 2 nd semester 2026/2027. Nominations and applications from 03/06/2026 to 01/10/2026",
+              "academic_year": "正文Application calendar 2026/2027，非EU bilateral第二學期Spring2027",
+              "application_round": "正文Application calendar 2026/2027，非EU bilateral第二學期Spring2027",
+              "checked_at": "2026-10-11T17:19:41.002223+00:00",
+              "content_hash": "15163d06951e4230b48223a5821db44572c1a78778fe8c00f055ea1ca9c7ec97",
+              "status": "verified_current",
+              "location_in_source": "HTML passage located by exact excerpt"
             }
           ]
         },
@@ -147423,7 +147052,6 @@
         "host.visa",
         "host.arrival",
         "host.host_tuition",
-        "host.exchange_duration",
         "profile.location",
         "profile.degree_levels",
         "profile.colleges",
@@ -177983,82 +177611,37 @@
           ]
         },
         "host.application_forms": {
-          "value": null,
-          "status": "missing",
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
-          "evidence": [],
-          "research_category": "alternative_official_sources_not_fully_checked",
-          "research_note": "已取得內容含候選段落，但尚未逐欄完成語意／年度／計畫核對。不是官方明示尚未公告，也不是必須聯絡學校的結論。",
-          "source_checks": [
+          "status": "needs_confirmation",
+          "value": "School of Engineering母校提名後才收到Mobility-Online及完整文件／指引。僅讀公開factsheet與timeline，未取得個人表格與當期完整清單，未登入或填送。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
             {
-              "source_id": "p103-host0",
+              "source_id": "p103-ninth-factsheet",
               "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
+              "source_pages": [
+                3
+              ],
+              "excerpt": "Nominated students will then receive access to our online application platform (Mobility-Online), including all necessary documents and instructions.",
+              "academic_year": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "application_round": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "checked_at": "2026-10-11T17:22:43.278704+00:00",
+              "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+              "status": "needs_confirmation",
+              "location_in_source": "PDF page(s): [3]"
+            }
+          ],
+          "research_classification": "personal_access_required",
+          "access_requirement_evidence": [
             {
-              "source_id": "p103-host1",
-              "source_url": "https://www.zhaw.ch/en/engineering/study/international-office/incoming-exchange-students/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-host2",
-              "source_url": "https://www.zhaw.ch/en/engineering/study/international-office/studying-in-switzerland/living-in-switzerland/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-profile-root",
-              "source_url": "https://www.zhaw.ch/en/engineering/",
-              "checked_at": "2026-10-08T09:10:31.389955+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r18-timeline",
-              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
-              "checked_at": "2026-10-08T15:27:37.780997+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r20-779abf7f3f",
-              "source_url": "https://www.zhaw.ch/en/study/before-your-studies/student-accommodation",
-              "checked_at": "2026-10-08T16:37:20.134443+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r20-cf357db4d0",
-              "source_url": "https://www.zhaw.ch/en/library/borrowing-ordering",
-              "checked_at": "2026-10-08T16:37:35.675312+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r20-b370a6b50d",
-              "source_url": "https://www.zhaw.ch/en/library/working-studying",
-              "checked_at": "2026-10-08T16:37:35.800714+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r20-d88f6bc025",
-              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/zhaw-incomings-en.pdf",
-              "checked_at": "2026-10-08T16:37:36.662069+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r20-9c1db278ea",
-              "source_url": "https://gpmpublic.zhaw.ch/GPMDocProdDPublic/Vorgabedokumente_ZHAW/Z_MB_Accommodation_possibilities_for_Incoming_Students_engl.pdf",
-              "checked_at": "2026-10-08T16:46:59.071844+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+              "source_id": "p103-ninth-factsheet",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+              "source_pages": [],
+              "excerpt": "Nominated students will then receive access to our online application platform (Mobility-Online), including all necessary documents and instructions.",
+              "academic_year": "PDF正文22.04.2026更新但未標適用學年；SoE本科／碩士",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T17:22:43.278704+00:00",
+              "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+              "status": "verified_current"
             }
           ]
         },
@@ -178649,82 +178232,23 @@
           ]
         },
         "host.visa": {
-          "value": null,
-          "status": "missing",
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
-          "evidence": [],
-          "research_category": "alternative_official_sources_not_fully_checked",
-          "research_note": "已取得內容含候選段落，但尚未逐欄完成語意／年度／計畫核對。不是官方明示尚未公告，也不是必須聯絡學校的結論。",
-          "source_checks": [
+          "status": "needs_confirmation",
+          "value": "SoE dated2026-04-22未標學年PDF：列非EU學生簽證及所有交換生抵達後L permit；財力例CHF1750/月，國籍例外須聯絡SoE。僅學校一般指引，未核台籍Spring2027最新政府條件或個人居留資格；未代申請。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
             {
-              "source_id": "p103-host0",
+              "source_id": "p103-ninth-factsheet",
               "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-host1",
-              "source_url": "https://www.zhaw.ch/en/engineering/study/international-office/incoming-exchange-students/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-host2",
-              "source_url": "https://www.zhaw.ch/en/engineering/study/international-office/studying-in-switzerland/living-in-switzerland/",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "timestamp_precision": "date",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-profile-root",
-              "source_url": "https://www.zhaw.ch/en/engineering/",
-              "checked_at": "2026-10-08T09:10:31.389955+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r18-timeline",
-              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
-              "checked_at": "2026-10-08T15:27:37.780997+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r20-779abf7f3f",
-              "source_url": "https://www.zhaw.ch/en/study/before-your-studies/student-accommodation",
-              "checked_at": "2026-10-08T16:37:20.134443+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r20-cf357db4d0",
-              "source_url": "https://www.zhaw.ch/en/library/borrowing-ordering",
-              "checked_at": "2026-10-08T16:37:35.675312+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r20-b370a6b50d",
-              "source_url": "https://www.zhaw.ch/en/library/working-studying",
-              "checked_at": "2026-10-08T16:37:35.800714+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r20-d88f6bc025",
-              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/zhaw-incomings-en.pdf",
-              "checked_at": "2026-10-08T16:37:36.662069+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
-            },
-            {
-              "source_id": "p103-r20-9c1db278ea",
-              "source_url": "https://gpmpublic.zhaw.ch/GPMDocProdDPublic/Vorgabedokumente_ZHAW/Z_MB_Accommodation_possibilities_for_Incoming_Students_engl.pdf",
-              "checked_at": "2026-10-08T16:46:59.071844+00:00",
-              "timestamp_precision": "datetime",
-              "result": "已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+              "source_pages": [
+                4
+              ],
+              "excerpt": "Non-EU citizens must apply for a student visa as early as possible after receiving their letter of acceptance. Students from Australia, Japan, New Zealand, Malaysia, Singapore, and the United Kingdom do not require a visa but must apply for a residence permit (“Aufenthaltsbewilligung”) through the SoE International Office. All exchange students must apply for a residence permit (L-Permit) upon arrival. Proof of financial means (CHF 1’750 per month) is required for both visa and resi- dence permit applications. Detailled information will be provided by the International Office after the applica- tion process.",
+              "academic_year": "PDF正文22.04.2026，未標2027適用；校方一般指引",
+              "application_round": "PDF正文22.04.2026，未標2027適用；校方一般指引",
+              "checked_at": "2026-10-11T17:22:43.278704+00:00",
+              "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
+              "status": "needs_confirmation",
+              "location_in_source": "PDF page(s): [4]"
             }
           ]
         },
@@ -207374,10 +206898,23 @@
           "evidence": []
         },
         "host.housing": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "一般BUT國際學生住宿指Pod Palackého vrchem，雙／三人房，滿房須自找；約6100總床位不是交換配額或保證。學位生住宿獎助不推為CCU必得，2027床位／申請日期未核實。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p113-ninth-housing",
+              "source_url": "https://www.vut.cz/en/life/guide/accommodation",
+              "source_pages": [],
+              "excerpt": "International students are accommodated on campus \"Pod Palackého vrchem\".",
+              "academic_year": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "application_round": "未標適用學年／梯次的一般接待校交換規定；2027春季適用未核實",
+              "checked_at": "2026-10-11T17:37:27.635587+00:00",
+              "content_hash": "2bdaa5672f98be1f802861b6fc829ce76aae477ac264ace55bb37b889835fd6b",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ]
         },
         "host.housing_deadline": {
           "status": "missing",
@@ -207386,16 +206923,42 @@
           "evidence": []
         },
         "host.costs": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "reference_only",
+          "value": "僅2025約價：Student halls4710CZK/月、private10000起/月、學生交通275/月、canteen115起/餐；來源換匯值為歷史，不用作2027匯率／整體預算或個人宿舍報價。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p113-ninth-costs",
+              "source_url": "https://www.vut.cz/en/life/guide/cost",
+              "source_pages": [],
+              "excerpt": "Approximate prices (valid for 2025)",
+              "academic_year": "正文Approximate prices valid for 2025；歷史參考",
+              "application_round": "正文Approximate prices valid for 2025；歷史參考",
+              "checked_at": "2026-10-11T17:37:28.897722+00:00",
+              "content_hash": "2e196ffd219f0747c320f3e6339c9522babb4e6600ba65c78a10c34843a550cf",
+              "status": "reference_only",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ]
         },
         "host.insurance": {
-          "status": "missing",
-          "value": null,
-          "reason": "未核實2027春季接收政策；本期未開放參考校，不以舊年度補值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "BUT一般頁分EU/EHIC與非EU及工作人員，載2023-09後非EU可向捷克授權保險商購comprehensive保險，另稱visa申請需符合捷克規定。無本期版本或台籍個案最新政府核實；保額、費用及國籍協議例外仍待確認，不套employees要求。",
+          "reason": "核對正文、文件頁碼、對象及適用年度；接待校資訊不改中正校內甄選／開放狀態。未標年不由查核日期推出2027。",
+          "evidence": [
+            {
+              "source_id": "p113-ninth-insurance",
+              "source_url": "https://www.vut.cz/en/life/guide/insurance",
+              "source_pages": [],
+              "excerpt": "From September, 2023",
+              "academic_year": "一般校方指引載September2023變更；未標2027學年，非法律完整指引",
+              "application_round": "一般校方指引載September2023變更；未標2027學年，非法律完整指引",
+              "checked_at": "2026-10-11T17:37:27.635821+00:00",
+              "content_hash": "8e5eec81f426abf294c118e6f7a3d107816ca54ca43ccf3ff136cf1eed0bc290",
+              "status": "needs_confirmation",
+              "location_in_source": "HTML passage located by exact excerpt"
+            }
+          ]
         },
         "host.visa": {
           "status": "missing",

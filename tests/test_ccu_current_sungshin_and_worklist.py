@@ -76,7 +76,7 @@ def test_sdu_missing_fields_remain_unverified_year_and_account_access_is_scoped(
 def test_remaining_worklist_separates_reading_duplicates_assets_and_external_steps():
     queue = read("completion-remaining-public-worklist.json")
     assert len(queue["schools"]) == 104
-    assert queue["counts"]["host_missing_fields"] == 604
+    assert queue["counts"]["host_missing_fields"] == 585
     sources = [s for r in queue["schools"] for s in r["sources"]] + queue["shared_and_global_sources"]
     assert len(sources) == len({s["source_id"] for s in sources}) == queue["counts"]["sources"]
     assert all(s["source_url"] and s["checked_at"] for s in sources)
