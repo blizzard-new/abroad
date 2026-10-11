@@ -1,5 +1,7 @@
 # 中央逐校補完查核，2026-10-11
 
+**最新第二十二批：五校9份19頁原文／原圖全部核讀，49個來源參考欄與4個明列待核缺口，人工覆蓋144校。** 482回歸、五校手機／桌面10情境通過且10图全實看；214生活API待翻譯0。22:37 UTC仍未取得116名額表。詳見[第二十二批](resume/twentysecond/README.md)、[未完成清單](resume/twentysecond/unfinished-source-list.csv)、[驗證](resume/twentysecond/validation.json)。以下保留歷史紀錄。
+
 **最新第二十一批：五校11份20頁全部原文／原圖核讀，新5校60欄，人工覆蓋139校。** 479回歸通過、五校10介面情境與兩校修訂後重验通過，最終12圖實看，天普照片預覽完成。214生活API待翻譯0；22:23 UTC仍未取得116名額表。詳見[第二十一批](resume/twentyfirst/README.md)、[未完成清單](resume/twentyfirst/unfinished-source-list.csv)、[驗證](resume/twentyfirst/validation.json)。以下保留歷史紀錄。
 
 **最新第二十批：五校10份14頁全文與原圖核讀，新5校55欄，人工覆蓋134校。** 476回歸與五校手機／桌面10情境通過，10圖全實看；214生活API待翻譯0。斷線通知後先保存67c0d26檢查點再完成驗收，母校22:01:49 UTC仍未取得116名額表。詳見[第二十批來源及驗收](resume/twentieth/README.md)、[未完成清單](resume/twentieth/unfinished-source-list.csv)、[驗證證據](resume/twentieth/validation.json)。以下保留歷史批次紀錄。
