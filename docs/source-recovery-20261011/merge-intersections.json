@@ -1,0 +1,65 @@
+{
+  "base": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "heads": {
+    "pr8": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+    "cgu": "985224fd01748a6c591fc183362847d6d7d21c35",
+    "pr9": "4566f7f2b51b3b5c188f5394a56d7b5df190d1c5",
+    "pr10": "c18aebfceeedf8fceba5e4b24bbdf9dbebf0af18",
+    "pr11": "5a3b690bff21e28ca85b438d285deb9236e706b9"
+  },
+  "changed_files": {
+    "pr8": 15,
+    "cgu": 51,
+    "pr9": 59,
+    "pr10": 3106,
+    "pr11": 179
+  },
+  "shared_paths": {
+    "src/exchange_info/api.py": [
+      "pr8",
+      "cgu",
+      "pr10",
+      "pr11"
+    ],
+    "src/exchange_info/official_data/university_locations.jsonl": [
+      "pr8",
+      "cgu",
+      "pr9"
+    ],
+    "src/exchange_info/school_content.py": [
+      "pr8",
+      "cgu",
+      "pr11"
+    ],
+    "src/exchange_info/static/app.js": [
+      "pr8",
+      "cgu",
+      "pr11"
+    ],
+    "src/exchange_info/static/index.html": [
+      "pr8",
+      "cgu",
+      "pr10",
+      "pr11"
+    ],
+    "tests/test_ccu_ninth_pass.py": [
+      "cgu",
+      "pr10"
+    ],
+    "tests/test_ccu_support.py": [
+      "cgu",
+      "pr10"
+    ],
+    "tests/test_university_locations.py": [
+      "cgu",
+      "pr9"
+    ]
+  },
+  "migrations": {
+    "pr8": [],
+    "cgu": [],
+    "pr9": [],
+    "pr10": [],
+    "pr11": []
+  }
+}

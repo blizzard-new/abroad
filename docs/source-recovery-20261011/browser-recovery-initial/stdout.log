@@ -1,0 +1,131 @@
+CONFTEST LOADED!
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_saved_outage_rows_and_detail_show_actual_source_time_then_recover[390] __
+
+page = <Page url='http://127.0.0.1:43599/?view=list&home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#partners'>
+recovery_server = ('http://127.0.0.1:43599', <exchange_info.cgu_catalogue.CguCatalogue object at 0x7f919fb62870>, [0.0])
+width = 390
+
+    @pytest.mark.parametrize('width',[390,1440])
+    def test_saved_outage_rows_and_detail_show_actual_source_time_then_recover(page,recovery_server,width):
+        url,store,tick=recovery_server
+        ARTIFACTS.mkdir(parents=True,exist_ok=True)
+        page.set_viewport_size({'width':width,'height':950});page.emulate_media(reduced_motion='reduce')
+        page.add_init_script(INSTRUMENT)
+        errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
+        page.goto(url+'/?view=list#partners',wait_until='domcontentloaded')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60000)
+        banner=page.locator('#catalogue-source-status')
+        expect(banner).to_be_visible();expect(banner).to_contain_text('來源暫不可用，保留歷次資料')
+        expect(banner).to_contain_text('2026');expect(banner).to_contain_text('取得時間不代表當期已核實')
+        assert page.evaluate('state.dashboard.partner_universities.length')==77
+        page.screenshot(path=str(ARTIFACTS/f'outage-saved-{width}.png'),full_page=True)
+>       page.evaluate('openSchoolDetail(state.dashboard.partner_universities[0].school_name)')
+
+tests/e2e/test_cgu_source_recovery.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:9385: in evaluate
+    self._sync(
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:472: in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:345: in evaluate
+    await self._channel.send(
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f919fdeabd0>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f9166dea0c0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Page.evaluate: ReferenceError: openSchoolDetail is not defined
+E               at eval (eval at evaluate (:311:30), <anonymous>:1:1)
+E               at eval (<anonymous>)
+E               at UtilityScript.evaluate (<anonymous>:311:30)
+E               at UtilityScript.<anonymous> (<anonymous>:1:44)
+
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ test_saved_outage_rows_and_detail_show_actual_source_time_then_recover[1440] _
+
+page = <Page url='http://127.0.0.1:55215/?view=list&home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#partners'>
+recovery_server = ('http://127.0.0.1:55215', <exchange_info.cgu_catalogue.CguCatalogue object at 0x7f9166dfcda0>, [0.0])
+width = 1440
+
+    @pytest.mark.parametrize('width',[390,1440])
+    def test_saved_outage_rows_and_detail_show_actual_source_time_then_recover(page,recovery_server,width):
+        url,store,tick=recovery_server
+        ARTIFACTS.mkdir(parents=True,exist_ok=True)
+        page.set_viewport_size({'width':width,'height':950});page.emulate_media(reduced_motion='reduce')
+        page.add_init_script(INSTRUMENT)
+        errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
+        page.goto(url+'/?view=list#partners',wait_until='domcontentloaded')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60000)
+        banner=page.locator('#catalogue-source-status')
+        expect(banner).to_be_visible();expect(banner).to_contain_text('來源暫不可用，保留歷次資料')
+        expect(banner).to_contain_text('2026');expect(banner).to_contain_text('取得時間不代表當期已核實')
+        assert page.evaluate('state.dashboard.partner_universities.length')==77
+        page.screenshot(path=str(ARTIFACTS/f'outage-saved-{width}.png'),full_page=True)
+>       page.evaluate('openSchoolDetail(state.dashboard.partner_universities[0].school_name)')
+
+tests/e2e/test_cgu_source_recovery.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:9385: in evaluate
+    self._sync(
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:472: in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:345: in evaluate
+    await self._channel.send(
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f919fdeabd0>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f9165075ee0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Page.evaluate: ReferenceError: openSchoolDetail is not defined
+E               at eval (eval at evaluate (:311:30), <anonymous>:1:1)
+E               at eval (<anonymous>)
+E               at UtilityScript.evaluate (<anonymous>:311:30)
+E               at UtilityScript.<anonymous> (<anonymous>:1:44)
+
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+=========================== short test summary info ============================
+FAILED tests/e2e/test_cgu_source_recovery.py::test_saved_outage_rows_and_detail_show_actual_source_time_then_recover[390]
+FAILED tests/e2e/test_cgu_source_recovery.py::test_saved_outage_rows_and_detail_show_actual_source_time_then_recover[1440]
+2 failed, 2 passed in 13.82s

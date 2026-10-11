@@ -1,0 +1,27 @@
+CONFTEST LOADED!
+.......................F                                                 [100%]
+=================================== FAILURES ===================================
+____ test_quota_zero_missing_and_pending_states_survive_success_and_failure ____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-22/test_quota_zero_missing_and_pe0')
+seed = {'format_version': 1, 'home_school': '長庚大學', 'source_state': 'complete_successful_fetch', 'fetched_at': '2026-10-11T09:58:47.453586+00:00', ...}
+
+    def test_quota_zero_missing_and_pending_states_survive_success_and_failure(tmp_path, seed):
+        candidate = deepcopy(seed)
+        for row, quota, status in zip(candidate['records'], ['0', None, ''], ['open', 'pending_quota', 'agreement_only']):
+            row['quota'] = quota
+            row['availability_status'] = status
+        candidate['records_sha256'] = cgu.records_hash(candidate['records'])
+        tick = [0.0]
+        store = cgu.CguCatalogue(tmp_path/'snapshot.json', fetcher=lambda:candidate, clock=lambda:tick[0])
+        success = store.refresh()
+>       assert [p.quota for p in success.partners[:3]] == ['0', None, '']
+E       AssertionError: assert ['2', '2', '2'] == ['0', None, '']
+E         
+E         At index 0 diff: '2' != '0'
+E         Use -v to get more diff
+
+tests/test_cgu_catalogue_recovery.py:193: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_cgu_catalogue_recovery.py::test_quota_zero_missing_and_pending_states_survive_success_and_failure
+1 failed, 23 passed in 4.99s

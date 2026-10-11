@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_cgu_catalogue_recovery.py",
+    "tests/test_catalogue_speed.py",
+    "tests/test_student_view.py",
+    "tests/test_api.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T10:26:36.198607+00:00",
+  "start_guard": {
+    "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+    "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/test_cgu_catalogue_recovery.py"
+  },
+  "timeout_seconds": 3600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-11T10:26:47.141073+00:00",
+  "end_guard": {
+    "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+    "tree": "57b97e8627e992b6112ea1a2fef09652a11ea062",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/models.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/styles.css\n M src/exchange_info/student_view.py\n M tests/e2e/conftest.py\n M tests/test_api.py\n M tests/test_application_document_catalog.py\n M tests/test_application_periods.py\n M tests/test_application_plan_api.py\n M tests/test_application_plan_schedule_api.py\n M tests/test_application_workflow.py\n M tests/test_catalog_access.py\n M tests/test_catalogue_speed.py\n M tests/test_ccu_followup_validation.py\n M tests/test_ccu_ninth_pass.py\n M tests/test_ccu_support.py\n M tests/test_college_options.py\n M tests/test_community_api.py\n M tests/test_community_permissions.py\n M tests/test_experience_collector.py\n M tests/test_life_context.py\n M tests/test_ncu_integration.py\n M tests/test_ntu_integration.py\n M tests/test_social_community_api.py\n M tests/test_tku_community_boundaries.py\n M tests/test_tku_support.py\n M tests/test_university_locations.py\n M tests/test_workflow_context_api.py\n?? src/exchange_info/cgu_catalogue.py\n?? src/exchange_info/official_data/cgu_catalogue/\n?? tests/cgu_catalogue_fixture.py\n?? tests/test_cgu_catalogue_recovery.py"
+  }
+}
