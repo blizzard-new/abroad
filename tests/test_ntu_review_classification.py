@@ -60,3 +60,25 @@ def test_host_current_year_fact_still_leaves_complete_rule_unconfirmed():
     assert result["publication_status"] == "official_host_target_cycle_partial_fact"
     assert original["target_requirement_confirmed"] is False
     assert result["review_progress"] == "reviewed_reference_partial_scope"
+
+
+def test_final_existing_candidate_conclusion_closes_reading_without_approving_target_rule():
+    original = row(reference=True)
+    decision = dict(outcome="external_information_required", bounded_field_conclusion_complete=True,
+        sources=[dict(source_id="a", sha256="body", field_fitness_note_zh="錄取後個人文件")],
+        missing_current_cycle_items=["個人錄取與簽證文件"])
+    result = classify_review_axes(original, [], [source("a", "content_available", "body")], decision,
+        more_public_leads=True)
+    assert result["bounded_field_conclusion_complete"]
+    assert result["field_final_conclusion"] == "external_information_required"
+    assert result["missing_current_cycle_items"] == ["個人錄取與簽證文件"]
+    assert result["publication_status"] == "prior_reference_current_cycle_unconfirmed"
+    assert original["target_requirement_confirmed"] is False
+
+
+def test_changed_candidate_body_cannot_be_closed_by_a_prior_version_conclusion():
+    decision = dict(outcome="insufficient_existing_source", bounded_field_conclusion_complete=True,
+                    sources=[dict(source_id="a", sha256="old")])
+    result = classify_review_axes(row(), [], [source("a", "content_available", "new")], decision)
+    assert not result["bounded_field_conclusion_complete"]
+    assert result["unread_candidate_body_count"] == 1

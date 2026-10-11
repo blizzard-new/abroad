@@ -13,6 +13,7 @@ from .life_context import LifeResearchSnapshot
 from .models import DestinationProfile, PartnerUniversity, SourceReference, StudentGuideSection
 from .ntu_partner_summary import with_ntu_partner_summary
 from .school_identity import school_identity_key
+from .ntu_field_review import FIELD_OUTCOMES
 from .university_locations import UniversityLocation, location_key
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -63,6 +64,23 @@ def validate(snapshot: dict, partners: list[PartnerUniversity], *, package: Path
         partner = expected[entry["portal_id"]]
         if (entry["school_name"], entry["country"]) != (partner.school_name, partner.country):
             raise ValueError("School, country or campus identity mismatch")
+        conclusions = entry.get("field_review_conclusions", [])
+        if len({r["field"] for r in conclusions}) != len(conclusions):
+            raise ValueError("Duplicate field conclusions")
+        for conclusion in conclusions:
+            if (conclusion.get("portal_id") != entry["portal_id"]
+                    or conclusion.get("school_name") != partner.school_name
+                    or conclusion.get("field") not in ALLOWED_FIELDS
+                    or conclusion.get("outcome") not in FIELD_OUTCOMES
+                    or conclusion.get("full_current_cycle_requirement_verified") is not False
+                    or conclusion.get("bounded_field_conclusion_complete") is not True
+                    or not conclusion.get("note_zh") or not conclusion.get("sources")):
+                raise ValueError("A bounded field conclusion cannot approve an entire current-cycle rule")
+            for source in conclusion["sources"]:
+                if (urlsplit(source["url"]).scheme != "https"
+                        or not re.fullmatch(r"[a-f0-9]{64}", source["sha256"])
+                        or not source.get("field_fitness_note_zh") or not source.get("checked_at")):
+                    raise ValueError("Every candidate requires its source version and field-specific reason")
         for observation in entry.get("observations", []):
             if observation["field"] not in ALLOWED_FIELDS or observation.get("selection_rule_confirmed") is not False:
                 raise ValueError("A reference observation cannot approve a selection rule")
@@ -109,6 +127,19 @@ def validate(snapshot: dict, partners: list[PartnerUniversity], *, package: Path
                 evidence = LifeEvidence.model_validate(raw)
                 if evidence.theme not in THEMES or not evidence.sources or not evidence.checked_at or evidence.kind != "official":
                     raise ValueError("Life additions need an official source, date and supported theme")
+    if bounded := snapshot.get("bounded_field_review"):
+        roster = {(r["portal_id"], r["field"]): set(r["readable_candidate_source_ids"])
+                  for r in bounded.get("field_roster", [])}
+        actual = {(e["portal_id"], c["field"]): {s["source_id"] for s in c["sources"]}
+                  for e in entries for c in e.get("field_review_conclusions", [])}
+        if (bounded.get("frozen_batch") != "stage9_fixed429"
+                or bounded.get("field_denominator") != 429
+                or len(roster) != 429 or actual != roster
+                or sum(len(e.get("field_review_conclusions", [])) for e in entries) != 429
+                or sum(bool(e.get("field_review_conclusions")) for e in entries) != 121):
+            raise ValueError("The fixed429 conclusion roster must remain complete and unchanged")
+    elif any(e.get("field_review_conclusions") for e in entries):
+        raise ValueError("Field conclusions require their frozen roster")
 
 
 def apply_completion(bundle: Path, snapshot_path: Path = SOURCE, *, apply_assets: bool = False,
@@ -128,6 +159,19 @@ def apply_completion(bundle: Path, snapshot_path: Path = SOURCE, *, apply_assets
     for partner in partners:
         entry = entries[partner.source_url.rsplit("/", 1)[-1]]
         observations = entry.get("observations", [])
+        conclusions = entry.get("field_review_conclusions", [])
+        if conclusions:
+            profile = profile_map[partner.school_name]
+            sections = [s for s in profile.student_guide_sections if s.key != "ntu-field-conclusions-20261011"]
+            sections.append(StudentGuideSection(key="ntu-field-conclusions-20261011",
+                title="公開資訊適用範圍與待確認事項",
+                summary="逐欄判讀已取得的公開來源；已核實參考仍按原學年、學期與交換身分適用。",
+                points=[FIELD_LABELS[c['field']] + "：" + FIELD_OUTCOMES[c['outcome']] + "。" + c['note_zh']
+                    + (" 待確認：" + "；".join(c['missing_current_cycle_items']) if c.get('missing_current_cycle_items') else "")
+                    for c in conclusions],
+                source_urls=list(dict.fromkeys(s['url'] for c in conclusions for s in c['sources'])),
+                caution="當期完整規定仍需臺大公告、接待校錄取文件及個人適用條件；不啟用截止提醒。"))
+            profile_map[partner.school_name] = profile.model_copy(update={"student_guide_sections": sections})
         if observations:
             lines = ["2026-10-11接待校公開來源補查；以下各項按各自文件期間及校區作參考，不能視為116-1最終甄選資格或截止提醒。"]
             for observation in observations:
@@ -159,6 +203,12 @@ def apply_completion(bundle: Path, snapshot_path: Path = SOURCE, *, apply_assets
                 for url, label in {r["source_url"]: r["source_title"] for r in observations}.items())
             profile_map[partner.school_name] = profile.model_copy(update={"student_guide_sections": sections, "sources": sources})
             observation_count += len(observations)
+        for conclusion in conclusions:
+            field = ledger_map[entry["portal_id"]]["fields"].setdefault(conclusion["field"], {})
+            # First-time observations may create source_urls and prior_status.
+            # Insert conclusions after those keys on both fresh builds and replay.
+            field.pop("candidate_field_conclusion", None)
+            field["candidate_field_conclusion"] = copy.deepcopy(conclusion)
         if entry.get("life_evidence"):
             from .life_context import LifeEvidence
             record = life_map[(partner.school_name, partner.country)]

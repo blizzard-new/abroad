@@ -13,6 +13,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from scripts.audit_ntu_completion import audit
+from exchange_info.ntu_field_review import FIELD_OUTCOMES
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "docs/ntu-completion-20261011"
@@ -40,16 +41,27 @@ def classify_review_axes(row, observations, sources, decision=None, more_public_
     elif row["reference_present"]:
         publication = "prior_reference_current_cycle_unconfirmed"
     access = "readable_field_candidate_body" if readable else "reviewed_public_reference_body" if observations or decision else "no_readable_field_candidate_obtained"
-    progress = "pending_public_body_read" if unread else "pending_public_link_followup" if more_public_leads else "bounded_field_search_no_verified_text"
+    progress = "pending_public_body_read" if unread else "additional_discovery_outside_frozen_review_scope" if more_public_leads else "bounded_field_search_no_verified_text"
     if decision:
         progress = "manual_semantic_review_partial_more_bodies" if unread else decision["outcome"]
+        if decision.get("bounded_field_conclusion_complete") and not unread:
+            progress = decision["outcome"]
     elif observations:
         progress = "reviewed_reference_partial_more_bodies" if unread else "reviewed_reference_partial_scope"
     elif row["reference_present"]:
         progress = "prior_reference_with_unread_public_candidates" if unread else "prior_reference_target_scope_not_rechecked"
+    legacy_context = {"readable_scanned_PDF_not_yet_reviewed": "scanned_context_only_no_verified_life_text",
+        "readable_index_details_not_yet_read": "existing_index_insufficient_field_evidence"}
+    progress = legacy_context.get(progress, progress)
     return {"publication_status": publication, "field_access_status": access,
             "review_progress": progress, "manual_review_outcome": decision.get("outcome", ""),
             "manual_review_note_zh": decision.get("note_zh", ""),
+            "field_final_conclusion": decision.get("outcome", "") if decision.get("bounded_field_conclusion_complete") else "",
+            "field_final_conclusion_zh": FIELD_OUTCOMES.get(decision.get("outcome"), "") if decision.get("bounded_field_conclusion_complete") else "",
+            "bounded_field_conclusion_complete": bool(decision.get("bounded_field_conclusion_complete")) and not unread,
+            "missing_current_cycle_items": decision.get("missing_current_cycle_items", []),
+            "necessary_public_links_not_fetched": decision.get("necessary_public_links_not_fetched", []),
+            "candidate_field_fitness": decision.get("sources", []) if decision.get("bounded_field_conclusion_complete") else [],
             "readable_candidate_source_ids": sorted({s["source_id"] for s in readable}),
             "unread_candidate_source_ids": sorted({s["source_id"] for s in unread}),
             "unread_candidate_body_count": len({s.get("sha256") or s["source_id"] for s in unread}),
@@ -125,7 +137,7 @@ def export(output=OUTPUT, access_path=None):
                  r.get("field_candidate_counts", {}).get(row["field"], 0) for r in sources):
             issue = "discovery_lead_requires_semantic_review"
         elif any(r["source"]["access_status"] == "content_available" for r in sources):
-            issue = "available_public_body_field_not_yet_located_or_read"
+            issue = "no_field_specific_candidate_or_verified_text_in_frozen_inventory"
         elif "transport_proxy_503" in reasons:
             issue = "technical_transport_failure_prevents_check"
         elif reasons:
@@ -136,6 +148,11 @@ def export(output=OUTPUT, access_path=None):
         dependencies = sorted({r["access_dependency"] for r in observations if r.get("access_dependency")})
         if dependencies:
             issue = "public_reference_details_after_acceptance"
+        if axes["bounded_field_conclusion_complete"]:
+            issue = decision["outcome"]
+            reasons.discard("additional_public_leads_not_yet_read")
+        issue = {"readable_scanned_PDF_not_yet_reviewed": "scanned_context_only_no_verified_life_text",
+                 "readable_index_details_not_yet_read": "existing_index_insufficient_field_evidence"}.get(issue, issue)
         issue_row = {**row, **axes, "issue_code": issue, "access_reasons": sorted(reasons),
             "reviewed_fact_zh": fact, "applicability": " | ".join(dict.fromkeys(r["scope"] for r in observations)),
             "pdf_pages": " | ".join(str(r["pdf_page"]) for r in observations if r.get("pdf_page")),
@@ -159,6 +176,8 @@ def export(output=OUTPUT, access_path=None):
         review_progresses=dict(Counter(r["review_progress"] for r in issues)),
         readable_unread_rows=sum(bool(r["unread_candidate_body_count"]) for r in issues),
         exclusive_external_blocker_rows=sum(r["external_blocker_exclusive"] for r in issues),
+        fixed429_final_conclusion_rows=sum(r["bounded_field_conclusion_complete"] for r in issues),
+        fixed429_outcomes=dict(Counter(r["field_final_conclusion"] for r in issues if r["bounded_field_conclusion_complete"])),
         original_handoff_comparison={"original_workbook_retrieved": False, "reported_previous_denominator": 282,
             "rebuilt_denominator": 288, "pending_selection_denominator": 282, "zero_selection_denominator": 6,
             "comparison_method": "Rebuilt using the current official portal IDs. The old workbook was not obtained; neither cell equality nor exact school membership overlap is claimed.",
@@ -204,6 +223,9 @@ def export(output=OUTPUT, access_path=None):
         sheets.append(("固定501項正文進度", progress["fields"]))
     if full_body:
         sheets.append(("逐源全文閱讀紀錄", full_body))
+    closed = [r for r in manual.values() if r.get("bounded_field_conclusion_complete")]
+    if closed:
+        sheets.append(("429欄最終結論", closed))
     for title, items in sheets:
         ws = book.create_sheet(title)
         keys = list(dict.fromkeys(k for item in items for k in item))
