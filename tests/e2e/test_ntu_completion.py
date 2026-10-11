@@ -24,7 +24,7 @@ def test_dated_host_reference_is_readable_with_pending_home_quota(page, live_ser
     wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("愛德華王子島大學")
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
     if width < 700:
         page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()

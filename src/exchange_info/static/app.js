@@ -4144,13 +4144,13 @@ function partnerAvailabilityMeta(item) {
       return {status, shortLabel:"116-1零名額", cardLabel:"116-1零名額／本期未開放", matchLabel:"本期未開放", reason:"官方名單已更新為零名額", blocked:true};
     }
     if (homeSelectionRules().pending_quota_planning && item.quota == null) {
-      return {status, shortLabel:"本期名額待公告", cardLabel:"合作備查／本期名額待公告", hint:"可先加入志願規劃；能否申請須等本期名額與條件公告", matchLabel:"本期名額待確認", reason:"本期甄選名額尚未公告", blocked:false, pending:true};
+      return {status, shortLabel:"本期名額待核實", cardLabel:"合作備查／本期名額待核實", hint:"可先加入志願規劃；能否申請須先確認本期名額與條件", matchLabel:"本期名額待確認", reason:"本期甄選名額尚未核實", blocked:false, pending:true};
     }
     return {
       status,
-      shortLabel: "合作備查／本期未公告",
-      cardLabel: "已簽約・本期沒開放名額",
-      hint: "已簽有交換合約，只是這一期沒有開放名額",
+      shortLabel: "合作備查／本期名額待確認",
+      cardLabel: "合作備查・本期名額待確認",
+      hint: "保留合作關係參考；本期是否開放及名額尚待確認",
       matchLabel: "本期名額待確認",
       reason: "交換合作關係備查",
       blocked: true,
@@ -4363,7 +4363,7 @@ function renderPlanningWorkspace() {
     $("#planning-update-durations").hidden = true;
     $("#planning-schedule-recovery").hidden = true;
     $("#planning-schedule-status").textContent = !target ? "選定目標後，就能預覽時程。"
-      : partnerAvailabilityMeta(partnerByName(target)).pending ? "本期名額待公告，可預覽參考流程；確認前不會加入截止提醒。"
+      : partnerAvailabilityMeta(partnerByName(target)).pending ? "本期名額待核實，可預覽參考流程；確認前不會加入截止提醒。"
       : !calendarTaskFeatureEnabled() ? "目前帳號尚未開放自動準備安排；仍可在日曆手動建立任務並查看官方期限。"
       : "填寫申請學年度與準備天數，先預覽，再加入你的日曆。";
   }
@@ -10920,7 +10920,7 @@ function applicationPeriodMeta(item) {
     closed: { label: "本梯次已截止", tone: "closed" },
     action_required: { label: "限符合身分者處理", tone: "action" },
     reference_only: { label: "原則時程參考", tone: "reference" },
-    needs_confirmation: { label: "待官方公告", tone: "pending" },
+    needs_confirmation: { label: "適用期間待確認", tone: "pending" },
   };
   const scopeMap = {
     home_application: "校內申請",

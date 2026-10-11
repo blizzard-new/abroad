@@ -174,7 +174,7 @@ def test_ntu_advisor_includes_pending_quota_and_agrees_with_evaluation(language_
     assert recommendation.target_match is not None
     assert all(row.eligibility_status == "needs_confirmation" for row in recommendation.recommendations)
     assert not zero_names.intersection(row.school_name for row in recommendation.recommendations)
-    assert any("本期甄選名額尚未公告" in note for note in recommendation.target_match.confirmation_items)
+    assert any("名額與申請狀態請依逐校證據核對" in note for note in recommendation.target_match.confirmation_items)
     request = PersonalApplicationPlanRequest(home_school=NTU.school_name, college=profile.college, department=profile.department,
         degree_level=profile.degree_level, academic_gpa=profile.academic_gpa, class_rank_percent=profile.class_rank_percent,
         language_test=language_test, language_score=score, preferences=[{"rank":1,"school_name":pending.school_name}])

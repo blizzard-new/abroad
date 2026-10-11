@@ -127,7 +127,7 @@ def test_the_quota_filter_says_this_period_and_a_signed_school_without_places_is
     page.wait_for_timeout(200)
     first = cards.first
     card_head = first.locator("summary").first
-    expect(card_head).to_contain_text("已簽約・本期沒開放名額")
+    expect(card_head).to_contain_text("合作備查・本期名額待確認")
     card_head.click()
     expect(first.locator(".partner-availability-notice")).to_contain_text("簽有交換合約")
     expect(first.locator(".partner-availability-notice")).to_contain_text("所以現在不能申請")
@@ -135,7 +135,7 @@ def test_the_quota_filter_says_this_period_and_a_signed_school_without_places_is
     page.wait_for_timeout(200)
     hint = page.locator("#partner-table .desktop-partner-table .availability-hint").first
     expect(hint).to_be_visible()
-    expect(hint).to_contain_text("已簽有交換合約，只是這一期沒有開放名額")
+    expect(hint).to_contain_text("保留合作關係參考；本期是否開放及名額尚待確認")
 
 
 def test_the_region_filter_fits_on_a_phone_and_on_a_desktop(page, live_server):

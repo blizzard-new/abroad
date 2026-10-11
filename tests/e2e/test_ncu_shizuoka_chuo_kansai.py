@@ -30,7 +30,7 @@ def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,nam
         page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill(name)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
     full_name={'shizuoka':'靜岡大學 Shizuoka University',
                'chuo':'日本中央大學 Chuo University',
                'kansai':'關西大學 Kansai University'}[slug]

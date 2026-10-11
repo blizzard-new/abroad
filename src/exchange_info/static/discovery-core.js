@@ -97,7 +97,7 @@
     if (!hasCriteria(c)) return { status: "none", reasons: [], label: "" };
     const options = item.program_options?.length ? item.program_options.map(o => assessOption({ ...item, ...o, student_summary_zh: o.student_summary_zh || {} }, c)) : [assessOption(item, c)];
     let result = options.find(o => o.status === "match") || options.find(o => o.status === "unknown") || options[0];
-    if (item.availability_status && item.availability_status !== "open" && result.status === "match") result = { ...result, status: "unknown", label: "條件待確認", reasons: [...result.reasons, "本期名額待公告"] };
+    if (item.availability_status && item.availability_status !== "open" && result.status === "match") result = { ...result, status: "unknown", label: "條件待確認", reasons: [...result.reasons, "本期開放狀態待確認"] };
     return result;
   }
   const api = { THEMES, empty, sanitize, sourceKey, sourceSnapshot, safeUrl, hasCriteria, assess };
