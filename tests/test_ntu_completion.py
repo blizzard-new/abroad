@@ -31,7 +31,7 @@ def test_replay_is_idempotent_and_preserves_selection_and_workflows(tmp_path):
     for prior, after in zip(before, load_partners(bundle)):
         for field in ("eligibility", "quota", "application_deadline", "availability_status", "source_url", "country"):
             assert getattr(prior, field) == getattr(after, field)
-    assert first == {"schools": 288, "reviewed_observations": 433, "photo_additions": 19,
+    assert first == {"schools": 288, "reviewed_observations": 700, "photo_additions": 19,
                      "location_additions": 16, "fully_verified_current_cycle_schools": 0}
 
 
@@ -95,8 +95,18 @@ def test_all_288_schools_accept_offline_reference_assets_and_guarded_workflows(t
             reference = reviewed[partner["school_name"]]
             assert partner["country"] == reference["country"]
             assert partner["quota"] in (None, "0 名") and partner["availability_status"] != "open"
+            application_points = partner["student_summary_zh"]["application_steps"]
+            # The public overview displays ten points. Every reference must
+            # remain visible there with its scope and source, including late
+            # cost/calendar paragraphs containing old years or conflicts.
+            if reference["observations"]:
+                assert len(application_points) <= 10
+            visible_application = "\n\n".join(application_points[:10])
             for observation in reference["observations"]:
                 assert observation["text_zh"] in partner["application_info"]
+                assert observation["text_zh"] in visible_application
+                assert observation["source_url"] in visible_application
+                assert observation["scope"] in visible_application
             if reference.get("photo"):
                 assert partner["image_status"] == "verified" and partner["image_url"]
             response = client.get("/destination-profile", params={"school": partner["school_name"], "home_school": "NTU"})

@@ -1,0 +1,222 @@
+{
+  "base_main_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "full_build_replay_byte_idempotent": true,
+  "replayed_files": {
+    "src/exchange_info/official_data/ntu/application_workflows.jsonl": "cd1260230654a3d537e1a10f4fd03340adc04b7bcc8c25db13f262df5568ca1d",
+    "src/exchange_info/official_data/ntu/student_experience_directory.json": "7d9eaee65a8aa3f40d1107462ab93e85de98db5b42a6394a1bcb23360917b620",
+    "src/exchange_info/official_data/ntu/list_verification.json": "810329d5a4fbba2e3078a474a58b1fe738f5d6f504d3db7876a6f2c1519a5ac3",
+    "src/exchange_info/official_data/ntu/partner_research.jsonl": "86957852c61026d51e5981c14cca8eec761c7ed181c014ebc5b56c541a4775ed",
+    "src/exchange_info/official_data/ntu/college_programmes.json": "99cb291f21f5fcdc8bc1fddf47c4054bbd67d435972e7272bd8a89d5f0bb536d",
+    "src/exchange_info/official_data/ntu/verification_status.json": "eff2e577bd94e8be1fb254a705097ab08baa30438dee4f434a727146178cf360",
+    "src/exchange_info/official_data/ntu/student_life.jsonl": "56c8de65a5e56217dcc930dd807fe13bb8bd651935b9b9067faeaa9097f5023d",
+    "src/exchange_info/official_data/ntu/catalog-completeness.json": "3bebcaad99099d5d53bb563dd55f39801b130cd39883a4bbb3c89b3057f7b3e9",
+    "src/exchange_info/official_data/ntu/student_dashboard.json": "a433109cedeff7c4a0ebd3fa9fe73fcfe02a9bdf08f2e70d9cb5dccc4fba4587",
+    "src/exchange_info/official_data/ntu/scholarships.json": "7601a922020571242cf900b623526583035535a8d55c8079eb579f91b57e74e4",
+    "src/exchange_info/official_data/ntu/exchange_info.json": "8bd8753871165f427f1319c610887aa26a2647af040c8488a32007bafce7e23a",
+    "src/exchange_info/official_data/ntu/home_rules.json": "4aa057b3defd32533f279e4b198b904904c6da2d3ac2d696139653581aa5bdb2",
+    "src/exchange_info/official_data/ntu/pages.jsonl": "03f312ae6de6b24b0682ecefd87ac33a149ecba9b3dba48185bd7b798dda086b",
+    "src/exchange_info/official_data/ntu/import_provenance.json": "9a5092d482d844469f7e29bf60983c5461424b3eb5bb98387fcd00c72727893d",
+    "src/exchange_info/official_data/ntu/destination_profiles.jsonl": "66c569bd81cc99e2a9c52543c659aac08368ec7ae5fe87cdf60d3ca0f92f67b3",
+    "src/exchange_info/official_data/ntu/partners.jsonl": "0b211480eb9bc17f27254734a89ce4a38c728e4adab99fad406aeddec6e3131f",
+    "src/exchange_info/official_data/ntu/documents.json": "73c07e400dc6e282ee23034e59c5153305be2cfcc0b0c64cfac50e55d9ef2154",
+    "src/exchange_info/static/assets/school-images.json": "73982ea9ecb8abf31bacf5e2240b262b0828139f752eb303e36bc4def5b27758",
+    "src/exchange_info/official_data/university_locations.jsonl": "be5d862688351c9456aeb2b4a136b3f64d6017930c2c373f90515616bfdf139c"
+  },
+  "build_results": [
+    {
+      "script": "scripts/build_ntu_catalog.py",
+      "returncode": 0,
+      "stdout": "NTU: 288 partners, 288 workflows, 288 destinations; 282 pending / 6 zero quotas\n",
+      "stderr": ""
+    },
+    {
+      "script": "scripts/build_ntu_destination_enrichment.py",
+      "returncode": 0,
+      "stdout": "{\"photos\": 266, \"locations\": 269, \"life_with_evidence\": 124}\n",
+      "stderr": ""
+    }
+  ],
+  "partner_protected_fields": [
+    "eligibility",
+    "quota",
+    "application_deadline",
+    "availability_status",
+    "source_url",
+    "country",
+    "school_name"
+  ],
+  "all_288_protected_partner_fields_identical": true,
+  "ntu_workflows_byte_identical": true,
+  "other_home_catalogs_byte_identical": [
+    {
+      "home": "tku",
+      "files": 47
+    },
+    {
+      "home": "cgu",
+      "files": 3
+    },
+    {
+      "home": "review",
+      "files": 2
+    },
+    {
+      "home": "ccu",
+      "files": 1215
+    },
+    {
+      "home": "ncu",
+      "files": 13
+    },
+    {
+      "home": "ntpu",
+      "files": 12
+    }
+  ],
+  "global_photo_changes": [
+    [
+      "聖心天主教大學",
+      "義大利"
+    ],
+    [
+      "馬里蘭大學",
+      "美國"
+    ],
+    [
+      "聖地牙哥．孔波斯特拉大學",
+      "西班牙"
+    ],
+    [
+      "昆士蘭大學",
+      "澳大利亞"
+    ],
+    [
+      "艾朗根紐倫堡大學",
+      "德國"
+    ],
+    [
+      "馬來亞大學",
+      "馬來西亞"
+    ],
+    [
+      "馬來西亞理工大學(UTM)",
+      "馬來西亞"
+    ],
+    [
+      "巴黎高等師範學院",
+      "法國"
+    ],
+    [
+      "聖安德魯斯大學",
+      "英國"
+    ],
+    [
+      "法國女性高等綜合理工學院",
+      "法國"
+    ],
+    [
+      "華沙理工大學",
+      "波蘭"
+    ],
+    [
+      "波爾多大學",
+      "法國"
+    ],
+    [
+      "阿德雷德大學",
+      "澳大利亞"
+    ],
+    [
+      "萊頓大學",
+      "荷蘭"
+    ],
+    [
+      "九州大學",
+      "日本"
+    ],
+    [
+      "馬德里卡洛斯三世大學",
+      "西班牙"
+    ],
+    [
+      "瑞士東部應用科技大學",
+      "瑞士"
+    ],
+    [
+      "雪梨科技大學",
+      "澳大利亞"
+    ],
+    [
+      "雷恩第一大學（原翰尼第一大學）",
+      "法國"
+    ]
+  ],
+  "global_location_changes": [
+    [
+      "托馬斯莫爾應用科技大學",
+      "比利時"
+    ],
+    [
+      "上海交通大學",
+      "大陸地區"
+    ],
+    [
+      "馬來亞大學",
+      "馬來西亞"
+    ],
+    [
+      "巴黎高等師範學院",
+      "法國"
+    ],
+    [
+      "雅典大學",
+      "希臘"
+    ],
+    [
+      "東京學藝大學",
+      "日本"
+    ],
+    [
+      "巴黎中央理工學院-電力高等學院",
+      "法國"
+    ],
+    [
+      "萊頓大學",
+      "荷蘭"
+    ],
+    [
+      "九州大學",
+      "日本"
+    ],
+    [
+      "馬德里卡洛斯三世大學",
+      "西班牙"
+    ],
+    [
+      "瑞士東部應用科技大學",
+      "瑞士"
+    ],
+    [
+      "御茶水女子大學",
+      "日本"
+    ],
+    [
+      "巴黎高等農業學院",
+      "法國"
+    ],
+    [
+      "巴黎高等政治學院",
+      "法國"
+    ],
+    [
+      "雷恩第一大學（原翰尼第一大學）",
+      "法國"
+    ],
+    [
+      "拉瑞爾應用科技大學",
+      "芬蘭"
+    ]
+  ],
+  "shared_app_js_byte_identical": true,
+  "deploy_performed": false
+}

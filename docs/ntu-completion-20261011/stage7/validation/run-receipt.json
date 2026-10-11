@@ -1,0 +1,44 @@
+{
+  "source_sha256": "19c8445d66b90fda7092c763088dbcec36a2b55c257f2d47c5206c1ef98f2d15",
+  "observations": 700,
+  "base_validated_659_source_sha256": "37ffe53b371ab6a3017ca554941d374256f1699ef92560f8be32463d5dcf12c8",
+  "current_cycle_rules_promoted": false,
+  "merge_or_deploy": false,
+  "pre_summary_fix_started_at": "2026-10-11T15:21:09.356120+00:00",
+  "started_at": "2026-10-11T15:43:30.370527+00:00",
+  "summary_adapter_sha256": "0fa42179c054bea4fab015810aa97f1dd4c3df47d6578eb6261ef013b1935908",
+  "test_files_sha256": {
+    "tests/test_ntu_completion.py": "37b123e5157b5543614825e4325ef3d22a08a54b6360515401ef4a992be1153d",
+    "tests/e2e/test_ntu_reference_scope.py": "4b1dae34130513cfcb6fb0d5f7ccf5d1f594f6e00f08ad31c4c3eb693984b122"
+  },
+  "materialized_files_sha256": {
+    "src/exchange_info/official_data/ntu/application_workflows.jsonl": "cd1260230654a3d537e1a10f4fd03340adc04b7bcc8c25db13f262df5568ca1d",
+    "src/exchange_info/official_data/ntu/student_experience_directory.json": "7d9eaee65a8aa3f40d1107462ab93e85de98db5b42a6394a1bcb23360917b620",
+    "src/exchange_info/official_data/ntu/list_verification.json": "810329d5a4fbba2e3078a474a58b1fe738f5d6f504d3db7876a6f2c1519a5ac3",
+    "src/exchange_info/official_data/ntu/partner_research.jsonl": "86957852c61026d51e5981c14cca8eec761c7ed181c014ebc5b56c541a4775ed",
+    "src/exchange_info/official_data/ntu/college_programmes.json": "99cb291f21f5fcdc8bc1fddf47c4054bbd67d435972e7272bd8a89d5f0bb536d",
+    "src/exchange_info/official_data/ntu/verification_status.json": "44c3c57e9eb1916141a85ed42e7370e8b460c0db0309abba5e7a6557023b34c7",
+    "src/exchange_info/official_data/ntu/student_life.jsonl": "532b314b647b57b094dbacc6c8edc1e3ef393d70888e7922649225a9c301b0a9",
+    "src/exchange_info/official_data/ntu/catalog-completeness.json": "8dcdf021787ed81acf90dce8fd32b4c2238ee951ed77a9f99de48d9e5903ff0e",
+    "src/exchange_info/official_data/ntu/student_dashboard.json": "a433109cedeff7c4a0ebd3fa9fe73fcfe02a9bdf08f2e70d9cb5dccc4fba4587",
+    "src/exchange_info/official_data/ntu/scholarships.json": "7601a922020571242cf900b623526583035535a8d55c8079eb579f91b57e74e4",
+    "src/exchange_info/official_data/ntu/exchange_info.json": "8bd8753871165f427f1319c610887aa26a2647af040c8488a32007bafce7e23a",
+    "src/exchange_info/official_data/ntu/home_rules.json": "4aa057b3defd32533f279e4b198b904904c6da2d3ac2d696139653581aa5bdb2",
+    "src/exchange_info/official_data/ntu/pages.jsonl": "03f312ae6de6b24b0682ecefd87ac33a149ecba9b3dba48185bd7b798dda086b",
+    "src/exchange_info/official_data/ntu/import_provenance.json": "d7149b75065c82f465bbc9c51d17277125e1678fecc69bd9145ddb89cbd5c80d",
+    "src/exchange_info/official_data/ntu/destination_profiles.jsonl": "d49edec3b0480a673c097009ee674dd4c54ce1c9d902e158432633fcc5cc40a9",
+    "src/exchange_info/official_data/ntu/partners.jsonl": "6680f1176d10648780ce3911fa8f23121d5ded4ca072cbd7e9545b2b41a7e8d5",
+    "src/exchange_info/official_data/ntu/documents.json": "73c07e400dc6e282ee23034e59c5153305be2cfcc0b0c64cfac50e55d9ef2154"
+  },
+  "e2e_marker_adjustment_note": "After grouping, both KGU cases passed. TUFS text is AY2026 without a space; expectation AY 2026 corrected to actual summary token. Full suite ignores E2E; no runtime/API test input changed.",
+  "e2e_screenshot_note": "Each year/conflict marker is now scrolled into view and its rendered list item asserted visible; final screenshot focuses the last scoped calendar item. Full suite ignores E2E; source/adapter/API tests unchanged.",
+  "completed_at": "2026-10-11T16:04:18.108679+00:00",
+  "archive_verifier_after_full_suite": {
+    "path": "scripts/verify_ntu_reviewed_source_archives.py",
+    "sha256": "529845018d5b4421c8f6a7dcceb65a88f64826dec56a75b0c1ccfc6ab7336cd1",
+    "validation_log": "repo-archive-verifier.log",
+    "application_source_adapter_data_and_pytest_files_unchanged_since_full_suite": true,
+    "actual_554_versions_347_quotes_and_historical59_verified": true,
+    "full_suite_did_not_execute_this_standalone_tool": true
+  }
+}
