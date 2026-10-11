@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+
+<head>
+
+    <title>PUC-Rio - Incoming Students - Online Application Form - Students</title>
+    
+    <!-- Javascript e elementos diversos para todo o site PUC -->
+    
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<!-- SIMBOLOS -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<!-- Ícone -->
+<link rel="shortcut icon" href="https://www.puc-rio.br/imagens/puc_brasao_icone_browser.png" type="image/x-icon" />
+
+
+<!-- CSS PUC -->
+<link href="https://www.puc-rio.br/styles/puc_interna.css" rel="stylesheet" type="text/css" />
+
+
+<!-- EFEITO : JQUERY -->
+<script src="https://www.puc-rio.br/js/jquery/jquery-3.1.1.min.js"></script>
+
+
+<!-- EFEITO : POP-UP LIGHTBOX PARA ELEMENTOS DIVERSOS -->
+<link href="https://www.puc-rio.br/js/puc_efeito_lity/dist/lity.css" rel="stylesheet">
+<script src="https://www.puc-rio.br/js/puc_efeito_lity/dist/lity.js"></script>
+
+
+<!-- EFEITO : APARECER E SUMIR -->
+<script src="https://www.puc-rio.br/js/puc_efeito_aparecer_sumir/puc_efeito_aparecer_sumir.js"></script>
+
+
+<!-- EFEITO : LUPA DA GALERIA DE IMAGENS -->
+<script src="https://www.puc-rio.br/js/puc_efeito_vermaior/puc_efeito_vermaior.js"></script>
+
+
+<!-- EFEITO : COPIA PARA MOBILE -->
+<script src="https://www.puc-rio.br/js/puc_efeito_copia_mobile/puc_copia_mobile.js"></script>
+
+
+<!-- EFEITO : SLIDESHOW RESPONSIVO -->
+<script src="https://www.puc-rio.br/js/puc_efeito_slideshow_responsivo/puc_efeito_slideshow_responsivo.js"></script>
+
+
+<!-- EFEITO : PLAYER VIMEO -->
+<script src="https://www.puc-rio.br/js/puc_efeito_vimeo/puc_efeito_vimeo.js"></script>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+
+<!-- EFEITO : SLIDESHOW JSSOR -->
+<!-- #region Jssor Slider Begin -->
+<!-- Generator: Jssor Slider Maker -->
+<!-- Source: http://www.jssor.com -->
+<!-- This code works with jquery library. -->
+<script src="https://www.puc-rio.br/js/puc_efeito_slideshow/jssor.slider-21.1.6.mini.js"></script>
+
+
+
+<!-- EFEITO : BACKGROUND POSITION P/ CARDS -->
+<script>
+
+window.addEventListener("load", bkggrafismo);
+window.addEventListener("resize", bkggrafismo);
+
+function bkggrafismo() {
+
+	var card = document.getElementsByClassName('card');
+	var cardquant = card.length;
+
+	for (var i=0; i<=cardquant; i++) {
+
+	// card[i].style.backgroundPosition = "0 " + card[i].offsetHeight * 0.6666 + "px" ;
+	card[i].style.backgroundPosition = "0 " + card[i].offsetHeight * 0.5 + "px" ;
+
+	}
+
+}
+
+
+</script>
+
+
+
+
+<script>
+
+jQuery(document).ready(function ($) {
+
+	var jssor_1_SlideoTransitions = [
+	  [{b:-1,d:1,o:-1},{b:0,d:1000,o:1}],
+	  [{b:1900,d:2000,x:-379,e:{x:7}}],
+	  [{b:1900,d:2000,x:-379,e:{x:7}}],
+	  [{b:-1,d:1,o:-1,r:288,sX:9,sY:9},{b:1000,d:900,x:-1400,y:-660,o:1,r:-288,sX:-9,sY:-9,e:{r:6}},{b:1900,d:1600,x:-200,o:-1,e:{x:16}}]
+	];
+
+	var jssor_1_options = {
+	  $AutoPlay: true,
+	  $SlideDuration: 1000,
+	  $SlideEasing: $Jease$.$OutQuint,
+	  $CaptionSliderOptions: {
+		$Class: $JssorCaptionSlideo$,
+		$Transitions: jssor_1_SlideoTransitions
+	  },
+	  $ArrowNavigatorOptions: {
+		$Class: $JssorArrowNavigator$
+	  },
+	  $BulletNavigatorOptions: {
+		$Class: $JssorBulletNavigator$
+	  }
+	};
+
+	var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+	/*responsive code begin*/
+	/*you can remove responsive code if you don't want the slider scales while window resizing*/
+	function ScaleSlider() {
+		var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+		if (refSize) {
+			refSize = Math.min(refSize, 3000);
+			jssor_1_slider.$ScaleWidth(refSize);
+		}
+		else {
+			window.setTimeout(ScaleSlider, 30);
+		}
+	}
+	ScaleSlider();
+	$(window).bind("load", ScaleSlider);
+	$(window).bind("resize", ScaleSlider);
+	$(window).bind("orientationchange", ScaleSlider);
+	/*responsive code end*/
+});
+</script>
+
+
+
+
+
+
+
+<!-- ============================== PUC-Rio - GTAG GLOBAL ==============================-->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-205JBFW571"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtagGlobalPUC(){dataLayer.push(arguments);}
+  gtagGlobalPUC('js', new Date());
+
+  gtagGlobalPUC('config', 'G-205JBFW571');
+</script>
+
+
+<script>
+var getArrayFromTag = function(tagname) {
+     //get the NodeList and transform it into an array
+     return Array.prototype.slice.call(document.getElementsByTagName(tagname));
+}
+
+setTimeout(function(){ 
+var links = getArrayFromTag("a");
+var buttons = getArrayFromTag("button");
+links = links.concat(buttons);
+
+for(var i=0, max=links.length; i<max; i++) {
+    var linkHref = links[i].href;
+    var linkText = links[i].innerText;
+    if (linkText === '' || linkText == null){
+       var linkImg = links[i].getElementsByTagName('img')[0];
+       if (linkImg == null)
+          continue;
+       var imgAlt = linkImg.getAttribute("alt");
+       if (imgAlt !== '' && imgAlt != null)
+           linkText = imgAlt;       
+       else{
+           var imgTitle = linkImg.getAttribute("title");
+           if (imgTitle !== '' && imgTitle != null)
+               linkText = imgTitle;
+           else
+               continue;
+       }
+    }
+    var currentPage = removeIndexFromUrl(window.location.href);
+    linkHref = removeIndexFromUrl(linkHref);
+
+    var gtagContent = "gtagGlobalPUC( \'event\', \'clique\', { \'event_category\':\'" + currentPage + "\', \'event_label\': \'" + linkText + "\', \'origin_url\':\'" + currentPage + "\', \'href\':\'" + linkHref + "\'});";
+    var defaultOnMouseDown = links[i].getAttribute("onmousedown");
+    if (defaultOnMouseDown != null)
+        var gtagContent = gtagContent + defaultOnMouseDown;
+    links[i].setAttribute("onmousedown", gtagContent);
+}
+}, 2000);
+
+function removeIndexFromUrl(url){
+    if (url == "undefined")
+        return url;
+
+    if (url.endsWith("/index.html"))
+    {
+        url = url.replace("/index.html","/");    
+    }
+    else if (url.endsWith("/#"))
+    {
+        url = url.replace("/#","/");    
+    }
+
+    return url;
+}
+</script>
+
+
+
+<!-- / SLIDESHOW -->
+
+
+<!-- PLUGIN DE ACESSIBILIDADE FREE -->
+<script src="/js/acessibilidade_acctoolbar.min.js"></script>
+<script>
+  window.onload = function() {
+    window.micAccessTool = new MicAccessTool({
+      link: 'http://your-awesome-website.com/your-accessibility-declaration.pdf',
+      contact: 'mailto:webrdc@puc-rio.br',
+      buttonPosition: 'right', // default is 'left'
+       forceLang: 'pt-br' // default is 'en' may be 'he-IL', 'ru-RU', or 'fr_FR'
+    });
+  }
+</script>
+
+
+
+    
+    <!-- CSS específico da CCCI -->
+    <link href="../styles/estilos_ccci.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+
+
+
+<!-- ============================================================================== ABRE PÁGINA == -->
+
+
+<body id="ccci">
+
+
+<!-- ===================================================================================== TOPO == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<header>
+
+
+<!-- Link acessibilidade, cabeçalho, brasão, título -->
+
+
+<!-- Código para janelas do Facebook -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+<!-- Link acessibilidade -->
+<a href="#link_pular_conteudo" id="puc_link_pular_para_conteudo">Pular para o conteúdo da página</a><span></span>
+
+<!-- Cabeçalho PUC (busca e índice de A a Z) -->
+<iframe src="/includes/puc_cabecalho.html" name="cabecalho" title="Cabeçalho PUC-Rio"></iframe>
+
+
+
+<div id="puc_topo_brasao_titulo_caminho">
+
+<!-- Brasão PUC -->
+<a href="http://www.puc-rio.br" target="_parent" title="Ir para a página inicial do site PUC-Rio" id="puc_cabecalho_brasao">
+<img src="/imagens/brasao_preto_vertical.svg" alt="Brasão da PUC-Rio" /></a>
+
+<div id="puc_topo_titulo_caminho">
+
+<h1>Coordenação Central de Cooperação Internacional</h1>
+
+<!-- fecha "puc_topo_brasao_titulo_caminho" e "puc_topo_titulo_caminho" no arquivo "include_header_menu.html" -->
+
+
+<!-- Caminho -->
+<nav>&gt; <a href="/ensinopesq/ccci">Intercâmbio Internacional</a> &gt; <a href="/ensinopesq/ccci/incoming">Incoming Students</a> &gt;</nav>
+
+
+<!-- Menu -->
+
+<!-- abre "puc_topo_brasao_titulo_caminho" e "puc_topo_titulo_caminho" no arquivo no arquivo "include_header_geral.html" -->
+</div>
+</div>
+
+
+<!-- Menu do site -->
+<div id="puc_menu_faixa">
+<button type="button" onclick="javascript:efeito_aparecer_sumir_menu('menu')">Menu</button>
+<div id="menu" class="puc_efeito_menu_sumir">
+
+<span></span>
+
+<a href="/ensinopesq/ccci/index.html" id="puc_link_index">Página inicial</a>
+<a href="/ensinopesq/ccci/academico/">Intercâmbio Acadêmico</a>
+<a href="/ensinopesq/ccci/curtaduracao/">Intercâmbio de Curta Duração</a>
+<a href="/ensinopesq/ccci/incoming/">Incoming Students (Alunos Internacionais)</a>
+<a href="/ensinopesq/ccci/sobre.html">Sobre a CCCI</a>
+<!-- <a href="/ensinopesq/ccci/estconv.html" id="puc_menu_link_lang">English</a> -->
+
+<span></span>
+
+</div><!-- fecha "menu" -->
+</div><!-- fecha "puc_menu_faixa" -->
+
+
+</header>
+
+
+
+
+
+<!-- ===================================================================================== MEIO == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<section id="conteudo">
+
+
+<!-- ================================================================== MEIO > COLUNA PRINCIPAL == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<!-- destino do link de acessibilidade "pular para conteúdo" -->
+<a id="link_pular_conteudo"></a>
+
+
+<article>
+
+
+<h2>Incoming Students</h2>
+
+<h3>Online Application Form - Students</h3>
+
+<div class="puc_texto_destaque_em_quadro_centro"> <span class="puc_texto_destaque">Deadlines for submitting the application form:</span>
+<p>  <strong>SEMESTER 1</strong><br>
+  February/March – July | October 15<sup>th</sup><br>
+  (exchange period starting in Feb/Mar - July)</p>
+<p><strong>SEMESTER 2</strong><br>
+  July/August – December | April 15<sup>th</sup><br>
+  (exchange period starting in July/Aug - Dec)</p>
+</div>
+      
+      
+<h4><br>
+  1 - Online Application Form</h4>
+<p>  The application form must be filled out on line by the student for all types of  registration (i.e. Intensive Program, Semester Exchange and Housing) accessing  the following link:</p>
+<p><a href="https://sis.ccci.puc-rio.br/Entrada/WebInscricaoCCCIEntrada/ValidacaoEmail.aspx?sessao=VmluY3Vsbz1JTlQmU2lzdGVtYT1DQ0NJJkFwbGljYWNhbz1JTlNDUklDQU8mRnVuY2FvPUNBREFTVFJPMVNFTSZJRD0xYzMxY2Y5NjI4NmI0OWQwOTNiOWI3ZGMwMjc0MzllMA__" target="_blank" class="puc_link_destaque_centralizado_TAG-A">ON LINE APPLICATION FORM</a></p>
+<p>  <br>
+  It is very  important that you inform in all documents a valid /updated e-mail address because it will be our main&nbsp;communication  channel.</p>
+<p><a href="http://www.puc-rio.br/ensinopesq/ccci/download/how_to_fill_out_the_online_application.pdf" target="_blank" class="puc_link_destaque_centralizado_TAG-A">HOW TO BEGIN THE APPLICATION PROCESS</a></p>
+<h4><br>
+  2 - Documentation Delivery (UPLOAD) and Acceptance  Process</h4>
+
+
+<p>After you have filled out  the&nbsp;<strong>online application</strong>&nbsp;form for the Intensive Portuguese  Program and/or the Regular Exchange Program, please make sure to send the&nbsp;<strong>required  documents</strong> following the instructions:</p>
+<p><strong>Uploading  the documents: </strong>You will  be able to upload your required and mandatory documents to finish your  application process clicking&nbsp;on the follow link.</p>
+<p><strong>Important</strong>: without the complete documentation we will  not be able to start the acceptance <strong>analysis</strong>.</p>
+
+<p><a href="https://sis.ccci.puc-rio.br/Entrada/WebLoginCCCIEntrada/Default.aspx?sessao=VmluY3Vsbz1JTlQmU2lzdExvZ2luPUNDQ0kmQXBwTG9naW49TE9HSU4mRnVuY0xvZ2luPUxPR0lOMVNFTSZTaXN0ZW1hPUNDQ0kmQXBsaWNhY2FvPUFDT01QQU5IQU1FTlRPJkZ1bmNhbz1DT05TVUxUQTFTRU0_" target="_blank" class="puc_link_destaque_centralizado_TAG-A">UPLOADING THE DOCUMENTS</a></p>
+
+<p>Checking your application acceptance.</p>
+
+<p>To check your application  /acceptance process,&nbsp;click on the button <strong>and</strong> access the <strong>following</strong> link:</p>
+<p><a href="https://sis.ccci.puc-rio.br/Entrada/WebLoginCCCIEntrada/Default.aspx?sessao=VmluY3Vsbz1JTlQmU2lzdExvZ2luPUNDQ0kmQXBwTG9naW49TE9HSU4mRnVuY0xvZ2luPUxPR0lOMVNFTSZTaXN0ZW1hPUNDQ0kmQXBsaWNhY2FvPUFDT01QQU5IQU1FTlRPJkZ1bmNhbz1DT05TVUxUQTFTRU0_" target="_blank" class="puc_link_destaque_centralizado_TAG-A"><strong>ACCEPTANCE PROCESS</strong></a></p>
+<p><strong>1)</strong> Após realizar a 1ª etapa da inscrição, o candidato deve acessar o <em>&ldquo;Acceptance Process&rdquo;</em> no <a href="https://www.puc-rio.br/ensinopesq/ccci/incoming/forms-hp_students.html"><strong>site da CCCI</strong></a>. <br>
+<em style="color: #0070c0;">(After  completing the registration online, the candidate must access the  &quot;Acceptance Process&quot; on the CCCI website.)</em></p>
+<p><strong>2)</strong> Ao <strong>fazer &ldquo;login&rdquo;</strong> no sistema o candidato  terá o botão &ldquo;Documentation&rdquo;, que irá redirecioná-lo para uma tela onde poderá  fazer o envio da documentação obrigatória (arquivos extensão .pdf). </p>
+<em style="color: #0070c0;">Upon logging into the system, the candidate will  now have the &quot;Documentation&quot; button, which will redirect them to a  screen where they can submit the mandatory documentation (files with .pdf  extension).</em>
+<p><a href="../imagens/img_ccci_incoming_form-hp-2.png" target="_blank"><img src="../imagens/img_ccci_incoming_form-hp-2.png" alt=""/></a></p>
+<p>3) Para  submeter um documento o candidato precisa clicar no botão  <img  src="../imagens/img_ccci_incoming_form-hp-3.png"> e em seguida escolher o documento .pdf  referente ao documento selecionado e enviá-lo para avaliação da CCCI.</p>
+<p><em style="color: #0070c0;">To submit a  document, the candidate needs to click on the button <img  src="../imagens/img_ccci_incoming_form-hp-3.png">  and then choose the .pdf document  corresponding to the selected file and submit it for evaluation by the CCCI.</em></p>
+<p><img  src="../imagens/img_ccci_incoming_form-hp-4.png"></p>
+<p><img  src="../imagens/img_ccci_incoming_form-hp-5.png"></p>
+<p><strong>4)</strong> Uma  vez enviado o documento ele irá para uma outra região destinada a documentos  enviados. </p>
+<p><em style="color: #0070c0;">Once the document is submitted, it will go to another section designated  for submitted documents.</em></p>
+<p><img  src="../imagens/img_ccci_incoming_form-hp-6.png"></p>
+<p><strong>5)</strong> Se  o documento for recusado o candidato poderá visualizar tal fato junto com a  justificativa pela qual o mesmo foi recusado. Uma vez recusado o candidato  poderá enviar um novo clicando em  <img src="../imagens/img_ccci_incoming_form-hp-3.png"></p>
+<p><em style="color: #0070c0;">If the document is rejected, the  candidate can view this information along with the justification for the  rejection. Once rejected, the candidate can submit a new one by clicking on</em>  <img src="../imagens/img_ccci_incoming_form-hp-3.png"></p>
+<p>&nbsp;</p>
+<p><img  src="../imagens/img_ccci_incoming_form-hp-7.png"></p>
+<p><strong>6) </strong>Após  a aprovação do documento o mesmo irá para uma região de <em>&ldquo;Approved Documents&rdquo;.</em></p>
+<p><em style="color: #0070c0;">After the  document is approved, it will move to an &quot;Approved Documents&quot;  section.</em></p>
+<p>&nbsp; </p>
+<h4>List of the required  documents for:</h4>
+<ul class="puc_lista_especial_TAG-UL puc_lista_recuada_TAG-UL">
+  <li>EXCHANGE  STUDENTS</li></ul>
+    <ul>
+  <li>01 photo (3 x 4 cm size)</li>
+  <li>Official Transcript</li>
+  <li>International Office nomination  <span lang="EN-US">e-mail.</span></li>
+  <li>A copy of students&nbsp; passport (main page) <span class="puc_texto_destaque">Mandatory</span></li>
+  <li>Personal Statement (introduce yourself and why you would like to study  at PUC-Rio).</li>
+  <li>Copy of health insurance with company name and policy number. <strong>Upload </strong> the proof of your <strong>International Health       Insurance Coverage </strong>for the entire duration of your stay in Brazil.       Please include the insurance company&rsquo;s name, policy number, dates of       coverage and company contact information (this document must be sent       until the deadline). <span class="puc_texto_destaque">Mandatory</span></li>
+<li><strong>Covid-19  Certificate of vaccination</strong> <span class="puc_texto_destaque">(Recommended)</span></li>
+  <li><strong><u>Yellow fever immunization</u></strong> - At least 10 days before the trip when the vaccine starts doing       effect. International students use to travel to other cities while are in       the program so we strongly recommend exchange students to take the yellow       fever vaccine, if they are not immunized yet. Please send us the       certificate of it.<span class="puc_texto_destaque">(Recommended)</span></li>
+      <li>A wire transfer sent to Faculdades Católicas referring to the  participation on the &nbsp;Pre-Term Portuguese as a Second Language Intensive  course (if it is the case) and the administrative cost payment.</li>
+      <li></li>
+    </ul>
+    <h4><span lang="EN-US">Documentation Delivery (UPLOAD) and Acceptance Process</span></h4>
+    <p><span lang="EN-US">After you have filled out the <strong>online application</strong> form for the Intensive Portuguese Program and/or the Regular Exchange Program, please make sure to send the <strong>required documents</strong> following the instructions:</span></p>
+    <p><strong><span lang="EN-US">Uploading the documents: </span></strong><span lang="EN-US">You will be able to upload your required and mandatory documents to finish your application process clicking on the follow link.</span></p>
+    <p><strong><span lang="EN-US">Important</span></strong><span lang="EN-US">: without the complete documentation we will not be able to start the acceptance <strong>analysis</strong>.</span></p>
+    <p><a href="https://sis.ccci.puc-rio.br/Entrada/WebLoginCCCIEntrada/Default.aspx?sessao=VmluY3Vsbz1JTlQmU2lzdExvZ2luPUNDQ0kmQXBwTG9naW49TE9HSU4mRnVuY0xvZ2luPUxPR0lOMlNFTSZTaXN0ZW1hPUNDQ0kmQXBsaWNhY2FvPUFDT01QQU5IQU1FTlRPJkZ1bmNhbz1DT05TVUxUQTJTRU0_" target="_blank"><strong>UPLOADING THE DOCUMENTS</strong></a></p>
+    <p>&nbsp;</p>
+<p>Please refer  to <a href="fees_tuition.html"><strong>http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html</strong> </a>to get more  information about the tuition, fees and wire transfer details.</p>
+<p><span class="puc_texto_destaque">Attention: </span>For the regular term course, an administrative cost will be  charged:<br>
+    For more  information about tuition and fees, please refer to:  
+    <a href="fees_tuition.html"><strong>http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html</strong></a></p>
+<p>  In case you have already done the payment do not forget to send us a copy  of the payment receipt. Otherwise you will be charged upon arrival.</p>
+<p><span class="puc_texto_destaque">IMPORTANT:</span> for next year - second term, the tuition  and costs are going to change. Please see the Tuition and fees link: <a href="fees_tuition.html"><strong>http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html<br>
+  <br>
+</strong></a></p>
+<ul class="puc_lista_especial_TAG-UL puc_lista_recuada_TAG-UL">
+  <li>INDEPENDENT STUDENTS</li>
+  </ul><ul>
+  <li>01 photo (3 x 4 cm size) </li>
+  <li>Official Transcript </li>
+  <li>Two Letters of Recommendation (former or current professors) </li>
+  <li>A copy of your passport (main page) <span class="puc_texto_destaque">Mandatory</span></li>
+  <li>Personal Statement (introduce yourself and why you would like to study  at PUC-Rio). </li>
+  <li>Copy of health insurance with company name and policy number. <strong>Upload </strong> the       proof of your <strong>International Health Insurance Coverage </strong>for the       entire duration of your stay in Brazil. Please include the insurance company&rsquo;s       name, policy number, dates of coverage and company contact information (this document must be sent       until the deadline). <span class="puc_texto_destaque">Mandatory</span></li>
+<li><strong>Covid-19  Certificate of vaccination</strong> <span class="puc_texto_destaque">(Recommended)</span></li>
+  <li><strong><u>Yellow fever immunization</u></strong> - At least 10 days before the trip when the vaccine starts doing       effect. International students use to travel to other cities while are in       the program so we strongly recommend exchange students to take the yellow       fever vaccine, if they are not immunized yet. Please send us the       certificate of it. <span class="puc_texto_destaque">(Recommended)</span></li>
+    <li>A wire transfer sent to Faculdades Católicas referring to the  participation on the Pre-Term Portuguese as a Second Language Intensive  course (if it is the case) and the administrative cost payment.</li>
+  </ul>
+  <p>    Please refer  to <a href="fees_tuition.html"><strong>http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html</strong></a><br>
+    to get more  information about the tuition, fees and wire transfer details.<br>
+    The  administrative cost will be charged before your arrival. Independent Students  are also required to pay tuition.<br>
+    In case you have already done the payment do not forget to send us a copy of  the payment receipt. Otherwise you will be charged upon arrival.</p>
+  <p><strong>About tuition</strong><br>
+    Please refer to <a href="fees_tuition.html"><strong>http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html</strong></a> for more information about tuition and  fees.</p>
+  <p><span class="puc_texto_destaque">IMPORTANT:</span> for <span lang="EN-US"><strong>next year</strong></span>, the tuition and fees are going to change. Please see the Tuition  and fees link: <a href="fees_tuition.html"><strong>http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html</strong></a><br>
+    <br>
+  </p>
+
+  <ul class="puc_lista_especial_TAG-UL puc_lista_recuada_TAG-UL">
+    <li>INTERNSHIP/RESEARCH STUDENTS:</li></ul>
+    <ul>
+    <li><strong>Deadlines:</strong> Fall semester-May 15th and Spring semester &ndash; October 15th</li>
+    <li><strong>Documents:</strong>
+      <ol class="puc_lista_numeros_TAG-OL">
+        <li> The international students must  complete the online form and submit all documentation required as follow: <strong>Online form</strong>: <a href="forms-hp_students.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/forms-hp_students.html</a> -  students must fill out the online forms with the &ldquo;<strong><em>status estagio</em></strong>&rdquo;.  And upload the documents to CCCI Office. 
+          Interns will  be registered as an internship/research student in our system.</li>
+        <li><strong>Documents:</strong> copy of passport, resume, photo, and letter from the home university stating  that the student is authorized to participate in an internship (this is not  mandatory for all because the student can come on their own).<br>
+  <br>
+          Copy of health insurance with  company name and policy number.  <strong>Upload </strong>the proof of your <strong>International Health Insurance  Coverage </strong>for the entire duration of your stay in Brazil. Please include the  insurance company&rsquo;s name, policy number, dates of coverage and company contact  information (this document must be sent       until the deadline).<br>
+  <br>
+  <strong>Covid-19 Certificate of vaccination </strong><span class="puc_texto_destaque">(Recommended)</span><br>
+  <br>
+  <strong><u>Yellow  fever immunization</u></strong> - At least 10  days before the trip when the vaccine starts doing effect. International  students use to travel to other cities while are in the program so we strongly  recommend exchange students to take the yellow fever vaccine, if they are not  immunized yet. Please send us the certificate of it.</li>
+        <li> The  International Office – (CCCI) will  issue a letter of acceptance to the applicant provided by the teacher.</li>
+        </ol>
+    </li>
+    </ul>
+    <h4><span lang="EN-US">Documentation Delivery (UPLOAD) and Acceptance Process</span></h4>
+    <p><span lang="EN-US">After you have filled out the <strong>online application</strong> form for the Intensive Portuguese Program and/or the Regular Exchange Program, please make sure to send the <strong>required documents</strong> following the instructions:</span></p>
+    <p><strong><span lang="EN-US">Uploading the documents: </span></strong><span lang="EN-US">You will be able to upload your required and mandatory documents to finish your application process clicking on the follow link.</span></p>
+    <p><strong><span lang="EN-US">Important</span></strong><span lang="EN-US">: without the complete documentation we will not be able to start the acceptance <strong>analysis</strong>.</span></p>
+    <p><a href="https://sis.ccci.puc-rio.br/Entrada/WebLoginCCCIEntrada/Default.aspx?sessao=VmluY3Vsbz1JTlQmU2lzdExvZ2luPUNDQ0kmQXBwTG9naW49TE9HSU4mRnVuY0xvZ2luPUxPR0lOMlNFTSZTaXN0ZW1hPUNDQ0kmQXBsaWNhY2FvPUFDT01QQU5IQU1FTlRPJkZ1bmNhbz1DT05TVUxUQTJTRU0_" target="_blank"><strong>UPLOADING THE DOCUMENTS</strong></a></p>
+    <p>&nbsp;</p>
+<p>  Please note  that all students must take the ONLINE Portuguese Placement <strong>Pre-test</strong>. Students accepted to study at PUC will  receive, in a timely fashion, an e-mail message informing them when the  placement test will be available online</p>
+
+<!-- Botão voltar -->
+<button onclick="javascript:history.back()" class="puc_link_voltar_TAG-BUTTON" title="Back">BACK</button>
+
+
+<!-- Contatos e redes sociais -->
+
+<div class="ccci_infos_titulo">
+  <h4>Contact / Social Media</h4></div>
+
+<div class="puc_layout_area-inicial_maior_nivelador" id="ccci_infos_conteudo">
+
+<div class="puc_layout_area-inicial_maior_esquerda">
+<div class="puc_layout_coluna_3cols_nivelador" id="ccci_infos">
+
+    <div class="puc_layout_coluna_1de3">
+    <p><strong>Address</strong></p>
+    <p>Rua Marquês de São Vicente 225,<br>
+    Edifício Padre Leonel Franca - 8º andar, Gávea<br>
+    CEP 22451-900<br />
+    Rio de Janeiro - RJ - BRASIL</p>
+    
+    <!-- Redes sociais -->
+    <div class="puc_links_redes_sociais_TAG-DIV">
+    <a href="https://www.facebook.com/puc4all" target="_blank" title="Facebook">
+    <img src="/imagens/puc_img_redesocial_facebook.png" alt="Facebook" /></a>
+    <a href="https://www.instagram.com/pucrio4all" target="_blank" title="Instagram">
+    <img src="/imagens/puc_img_redesocial_instagram.png" alt="Instagram" /></a>
+    <a href="https://www.youtube.com/pucriooficial" target="_blank" title="Youtube">
+    <img src="/imagens/puc_img_redesocial_youtube.png" alt="Youtube" /></a>
+    <!-- <a href="http://pucforall.blogspot.com.br" target="_blank" title="Blog">
+    <img src="/imagens/puc_img_redesocial_blog.png" alt="Blog" /></a> -->
+    <a href="http://newsletter.ccci.puc-rio.br" target="_blank" title="Newsletter">
+    <img src="/imagens/puc_img_redesocial_email.png" alt="Newsletter" /></a>
+    </div>
+    </div>
+
+<div class="puc_layout_coluna_2de3">
+    <p><strong>Office hours</strong></p>
+    <p>Monday to Friday:<br>
+    9h to 12h and 14h to 17h</p>
+</div>
+
+<div class="puc_layout_coluna_3de3">
+    <p><a href="https://sgu.rdc.puc-rio.br/SGUWeb/protocolo/WloginEstrangeiro.aspx?idCC=7" class="puc_link_destaque_TAG-A">Contact us</a></p>
+        
+    <!--<p>  Phone: (55-21) 3527-1577 / 1578<br />
+      Fax: (55-21) 3527-1094<br />
+      E-mail: <a href="mailto:incoming2@puc-rio.br">incoming2@puc-rio.br</a></p>-->
+    
+    </div>
+
+</div>
+</div>
+
+<div class="puc_layout_area-inicial_maior_direita">
+<div class="fb-page" data-href="https://www.facebook.com/puc4all" data-tabs="timeline" data-height="250" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/puc4all" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/puc4all">PUC for ALL</a></blockquote></div>
+</div>
+
+</div><!-- /puc_layout_area-inicial_maior_nivelador -->
+
+
+</article>
+
+
+
+
+
+<!-- ==================================================================== MEIO > COLUNA LATERAL == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<aside>
+
+<!-- <p>Veja também:</p>
+<p>&nbsp;</p> -->
+
+</aside>
+
+
+
+
+
+<!-- =============================================================================== FECHA MEIO == -->
+
+
+</section>
+
+
+<!-- =================================================================================== RODAPÉ == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<footer>
+
+    <iframe src="https://www.puc-rio.br/includes/puc_rodape.html" name="rodape" 
+    title="Rodapé PUC-Rio - endereço e copyright"></iframe>
+
+</footer>
+
+
+
+<!-- ============================================================================= FECHA PÁGINA == -->
+
+</body>
+</html>

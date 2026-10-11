@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+
+<head>
+
+    <title>PUC-Rio - Incoming Students - Portuguese as a Second Language at PUC-Rio</title>
+    
+    <!-- Javascript e elementos diversos para todo o site PUC -->
+    
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<!-- SIMBOLOS -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<!-- Ícone -->
+<link rel="shortcut icon" href="https://www.puc-rio.br/imagens/puc_brasao_icone_browser.png" type="image/x-icon" />
+
+
+<!-- CSS PUC -->
+<link href="https://www.puc-rio.br/styles/puc_interna.css" rel="stylesheet" type="text/css" />
+
+
+<!-- EFEITO : JQUERY -->
+<script src="https://www.puc-rio.br/js/jquery/jquery-3.1.1.min.js"></script>
+
+
+<!-- EFEITO : POP-UP LIGHTBOX PARA ELEMENTOS DIVERSOS -->
+<link href="https://www.puc-rio.br/js/puc_efeito_lity/dist/lity.css" rel="stylesheet">
+<script src="https://www.puc-rio.br/js/puc_efeito_lity/dist/lity.js"></script>
+
+
+<!-- EFEITO : APARECER E SUMIR -->
+<script src="https://www.puc-rio.br/js/puc_efeito_aparecer_sumir/puc_efeito_aparecer_sumir.js"></script>
+
+
+<!-- EFEITO : LUPA DA GALERIA DE IMAGENS -->
+<script src="https://www.puc-rio.br/js/puc_efeito_vermaior/puc_efeito_vermaior.js"></script>
+
+
+<!-- EFEITO : COPIA PARA MOBILE -->
+<script src="https://www.puc-rio.br/js/puc_efeito_copia_mobile/puc_copia_mobile.js"></script>
+
+
+<!-- EFEITO : SLIDESHOW RESPONSIVO -->
+<script src="https://www.puc-rio.br/js/puc_efeito_slideshow_responsivo/puc_efeito_slideshow_responsivo.js"></script>
+
+
+<!-- EFEITO : PLAYER VIMEO -->
+<script src="https://www.puc-rio.br/js/puc_efeito_vimeo/puc_efeito_vimeo.js"></script>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+
+<!-- EFEITO : SLIDESHOW JSSOR -->
+<!-- #region Jssor Slider Begin -->
+<!-- Generator: Jssor Slider Maker -->
+<!-- Source: http://www.jssor.com -->
+<!-- This code works with jquery library. -->
+<script src="https://www.puc-rio.br/js/puc_efeito_slideshow/jssor.slider-21.1.6.mini.js"></script>
+
+
+
+<!-- EFEITO : BACKGROUND POSITION P/ CARDS -->
+<script>
+
+window.addEventListener("load", bkggrafismo);
+window.addEventListener("resize", bkggrafismo);
+
+function bkggrafismo() {
+
+	var card = document.getElementsByClassName('card');
+	var cardquant = card.length;
+
+	for (var i=0; i<=cardquant; i++) {
+
+	// card[i].style.backgroundPosition = "0 " + card[i].offsetHeight * 0.6666 + "px" ;
+	card[i].style.backgroundPosition = "0 " + card[i].offsetHeight * 0.5 + "px" ;
+
+	}
+
+}
+
+
+</script>
+
+
+
+
+<script>
+
+jQuery(document).ready(function ($) {
+
+	var jssor_1_SlideoTransitions = [
+	  [{b:-1,d:1,o:-1},{b:0,d:1000,o:1}],
+	  [{b:1900,d:2000,x:-379,e:{x:7}}],
+	  [{b:1900,d:2000,x:-379,e:{x:7}}],
+	  [{b:-1,d:1,o:-1,r:288,sX:9,sY:9},{b:1000,d:900,x:-1400,y:-660,o:1,r:-288,sX:-9,sY:-9,e:{r:6}},{b:1900,d:1600,x:-200,o:-1,e:{x:16}}]
+	];
+
+	var jssor_1_options = {
+	  $AutoPlay: true,
+	  $SlideDuration: 1000,
+	  $SlideEasing: $Jease$.$OutQuint,
+	  $CaptionSliderOptions: {
+		$Class: $JssorCaptionSlideo$,
+		$Transitions: jssor_1_SlideoTransitions
+	  },
+	  $ArrowNavigatorOptions: {
+		$Class: $JssorArrowNavigator$
+	  },
+	  $BulletNavigatorOptions: {
+		$Class: $JssorBulletNavigator$
+	  }
+	};
+
+	var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+	/*responsive code begin*/
+	/*you can remove responsive code if you don't want the slider scales while window resizing*/
+	function ScaleSlider() {
+		var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+		if (refSize) {
+			refSize = Math.min(refSize, 3000);
+			jssor_1_slider.$ScaleWidth(refSize);
+		}
+		else {
+			window.setTimeout(ScaleSlider, 30);
+		}
+	}
+	ScaleSlider();
+	$(window).bind("load", ScaleSlider);
+	$(window).bind("resize", ScaleSlider);
+	$(window).bind("orientationchange", ScaleSlider);
+	/*responsive code end*/
+});
+</script>
+
+
+
+
+
+
+
+<!-- ============================== PUC-Rio - GTAG GLOBAL ==============================-->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-205JBFW571"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtagGlobalPUC(){dataLayer.push(arguments);}
+  gtagGlobalPUC('js', new Date());
+
+  gtagGlobalPUC('config', 'G-205JBFW571');
+</script>
+
+
+<script>
+var getArrayFromTag = function(tagname) {
+     //get the NodeList and transform it into an array
+     return Array.prototype.slice.call(document.getElementsByTagName(tagname));
+}
+
+setTimeout(function(){ 
+var links = getArrayFromTag("a");
+var buttons = getArrayFromTag("button");
+links = links.concat(buttons);
+
+for(var i=0, max=links.length; i<max; i++) {
+    var linkHref = links[i].href;
+    var linkText = links[i].innerText;
+    if (linkText === '' || linkText == null){
+       var linkImg = links[i].getElementsByTagName('img')[0];
+       if (linkImg == null)
+          continue;
+       var imgAlt = linkImg.getAttribute("alt");
+       if (imgAlt !== '' && imgAlt != null)
+           linkText = imgAlt;       
+       else{
+           var imgTitle = linkImg.getAttribute("title");
+           if (imgTitle !== '' && imgTitle != null)
+               linkText = imgTitle;
+           else
+               continue;
+       }
+    }
+    var currentPage = removeIndexFromUrl(window.location.href);
+    linkHref = removeIndexFromUrl(linkHref);
+
+    var gtagContent = "gtagGlobalPUC( \'event\', \'clique\', { \'event_category\':\'" + currentPage + "\', \'event_label\': \'" + linkText + "\', \'origin_url\':\'" + currentPage + "\', \'href\':\'" + linkHref + "\'});";
+    var defaultOnMouseDown = links[i].getAttribute("onmousedown");
+    if (defaultOnMouseDown != null)
+        var gtagContent = gtagContent + defaultOnMouseDown;
+    links[i].setAttribute("onmousedown", gtagContent);
+}
+}, 2000);
+
+function removeIndexFromUrl(url){
+    if (url == "undefined")
+        return url;
+
+    if (url.endsWith("/index.html"))
+    {
+        url = url.replace("/index.html","/");    
+    }
+    else if (url.endsWith("/#"))
+    {
+        url = url.replace("/#","/");    
+    }
+
+    return url;
+}
+</script>
+
+
+
+<!-- / SLIDESHOW -->
+
+
+<!-- PLUGIN DE ACESSIBILIDADE FREE -->
+<script src="/js/acessibilidade_acctoolbar.min.js"></script>
+<script>
+  window.onload = function() {
+    window.micAccessTool = new MicAccessTool({
+      link: 'http://your-awesome-website.com/your-accessibility-declaration.pdf',
+      contact: 'mailto:webrdc@puc-rio.br',
+      buttonPosition: 'right', // default is 'left'
+       forceLang: 'pt-br' // default is 'en' may be 'he-IL', 'ru-RU', or 'fr_FR'
+    });
+  }
+</script>
+
+
+
+    
+    <!-- CSS específico da CCCI -->
+    <link href="../styles/estilos_ccci.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+
+
+
+<!-- ============================================================================== ABRE PÁGINA == -->
+
+
+<body id="ccci">
+
+
+<!-- ===================================================================================== TOPO == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<header>
+
+
+<!-- Link acessibilidade, cabeçalho, brasão, título -->
+
+
+<!-- Código para janelas do Facebook -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+<!-- Link acessibilidade -->
+<a href="#link_pular_conteudo" id="puc_link_pular_para_conteudo">Pular para o conteúdo da página</a><span></span>
+
+<!-- Cabeçalho PUC (busca e índice de A a Z) -->
+<iframe src="/includes/puc_cabecalho.html" name="cabecalho" title="Cabeçalho PUC-Rio"></iframe>
+
+
+
+<div id="puc_topo_brasao_titulo_caminho">
+
+<!-- Brasão PUC -->
+<a href="http://www.puc-rio.br" target="_parent" title="Ir para a página inicial do site PUC-Rio" id="puc_cabecalho_brasao">
+<img src="/imagens/brasao_preto_vertical.svg" alt="Brasão da PUC-Rio" /></a>
+
+<div id="puc_topo_titulo_caminho">
+
+<h1>Coordenação Central de Cooperação Internacional</h1>
+
+<!-- fecha "puc_topo_brasao_titulo_caminho" e "puc_topo_titulo_caminho" no arquivo "include_header_menu.html" -->
+
+
+<!-- Caminho -->
+<nav>&gt; <a href="/ensinopesq/ccci">Intercâmbio Internacional</a> &gt; <a href="/ensinopesq/ccci/incoming">Incoming Students</a> &gt;</nav>
+
+
+<!-- Menu -->
+
+<!-- abre "puc_topo_brasao_titulo_caminho" e "puc_topo_titulo_caminho" no arquivo no arquivo "include_header_geral.html" -->
+</div>
+</div>
+
+
+<!-- Menu do site -->
+<div id="puc_menu_faixa">
+<button type="button" onclick="javascript:efeito_aparecer_sumir_menu('menu')">Menu</button>
+<div id="menu" class="puc_efeito_menu_sumir">
+
+<span></span>
+
+<a href="/ensinopesq/ccci/index.html" id="puc_link_index">Página inicial</a>
+<a href="/ensinopesq/ccci/academico/">Intercâmbio Acadêmico</a>
+<a href="/ensinopesq/ccci/curtaduracao/">Intercâmbio de Curta Duração</a>
+<a href="/ensinopesq/ccci/incoming/">Incoming Students (Alunos Internacionais)</a>
+<a href="/ensinopesq/ccci/sobre.html">Sobre a CCCI</a>
+<!-- <a href="/ensinopesq/ccci/estconv.html" id="puc_menu_link_lang">English</a> -->
+
+<span></span>
+
+</div><!-- fecha "menu" -->
+</div><!-- fecha "puc_menu_faixa" -->
+
+
+</header>
+
+
+
+
+
+<!-- ===================================================================================== MEIO == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<section id="conteudo">
+
+
+<!-- ================================================================== MEIO > COLUNA PRINCIPAL == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<!-- destino do link de acessibilidade "pular para conteúdo" -->
+<a id="link_pular_conteudo"></a>
+
+
+<article>
+
+
+<h2>Incoming Students</h2>
+
+<h3>Portuguese as a Second Language at PUC-Rio</h3>
+
+<!-- imagem genérica
+<img src="../imagens/img_incoming_portuguese.jpg" class="puc_imagem_grande" alt="Photo of students"> -->
+
+<!-- curso intensivo
+<img src="../imagens/banner_incoming_pt-intensive_2021-2_v2.jpg" class="puc_imagem_grande" alt="Intensive Portuguese Program"> -->
+
+<!-- curso normal-->
+<img src="../imagens/banner_incoming_pt-for-foreigners-online_v3.jpg" class="puc_imagem_grande" alt="Portuguese as a Second Language Course">
+
+
+
+
+
+
+
+
+<ul class="puc_lista_especial_TAG-UL puc_lista_recuada_TAG-UL">
+  <li><a href="../calendar">Central Coordination for International Cooperation - Calendar</a>
+  </li>
+</ul>
+
+
+<p>The <a href="http://www.letras.puc-rio.br">Department of Letters</a> at the Pontifícia Universidade Católica do Rio de Janeiro offers PORTUGUESE AS A SECOND LANGUAGE via regular and intensive courses. The objective of these courses is to develop  the student's ability to understand, speak, read and write Portuguese in both  formal and informal situations. This program also prepares international students to attend regular University courses in all academic areas, including  History, Anthropology, Literature, International Relations, Engineering, among others.</p>
+
+<p>There are five proficiency  levels offered in the Portuguese as a Second Language program. Level I, II and III consist of 90 hours of instruction per term (6 hours per week), corresponding to 6 academic credits. Level IV and V consist of 60 hours of instruction  per term (4 per week) corresponding to 4 academic credits.</p>
+
+<p><strong>Attention: In Brazil, a 1 hour/class corresponds to 50 minutes.</strong></p>
+
+<ul>
+<li><strong>Level I - BEGINNER</strong></li>
+<li><strong>Level II - INTERMEDIATE I</strong></li>
+<li><strong>Level III - INTERMEDIATE II</strong></li>
+<li><strong>Level IV - ADVANCED I</strong></li>
+<li><strong>Level V - ADVANCED II</strong></li>
+</ul>
+
+<p>In order to place candidates according to their proficiency in the Portuguese Language, students must take a mandatory PLACEMENT TEST which is available online. Candidates who test above Level V will be allowed to attend the university's regular undergraduate introductory Portuguese Language courses.</p>
+
+<p><strong>ACADEMIC CALENDAR:</strong> All levels of Portuguese as a Second Language are offered each year during both academic terms: 1<sup>st</sup> term: March - July; 2<sup>nd</sup> term: August - December.</p>
+
+<p>Students are also allowed to enroll in other classes at PUC-RIO according to their academic interest and Portuguese level of proficiency.</p>
+
+<div class="puc_texto_destaque_em_quadro_centro">
+<strong>DEADLINES FOR SUBMITTING ONLINE APPLICATION FORMS:</strong>
+<p style="margin:10px 0 10px 0;"><strong>April 15<sup>th</sup>  and October 15<sup>th</sup></strong></p>
+<a href="forms-hp_students.html" class="puc_link_destaque_centralizado_TAG-A"><strong>Online application</strong></a>
+</div>
+                      
+                      
+<p><strong> TO APPLY</strong>: Interested students must  contact CCCI by mail or e-mail and fill out the complete application form as well as mail the required  documents. Please visit the following website to  fill out the online application, see the required documents to upload. For more information: &lt;<a href="forms-hp_students.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/forms-hp_students.html</a>&gt;</p>
+
+<p> When the applicant is accepted, CCCI will send a LETTER OF ACCEPTANCE that will enable him/her to obtain a visa at a Brazilian Consulate. CCCI will also send information regarding course fees and the academic and Central Coordination for International Cooperation calendar, if available, for the period in which the student wishes to study at PUC-Rio.</p>
+
+<p><strong>VISA:</strong> A student visa is not required for the Intensive Pre-term course if the student does not intend to stay at PUC-Rio during the following regular semester term. Visas must be obtained BEFORE the student&acute;s entrance in Brazil. A tourist visa <strong>cannot</strong> be transferred into a student visa once inside the country.</p>
+
+<!-- Botão voltar -->
+<button onclick="javascript:history.back()" class="puc_link_voltar_TAG-BUTTON" title="Back">BACK</button>
+
+<hr>
+
+
+<h3 id="intensive">Pre-Term Portuguese as a Second Language Intensive Course</h3>
+
+<img src="../imagens/banner_incoming_pt-intensive_2021-2_v2.jpg" class="puc_imagem_grande" alt="Intensive Portuguese Program">
+
+<p style="padding-top:15px;"><em>Pre-Term Portuguese as a Second Language  Intensive Courses </em>is also  offered twice a year: January/February and July (not included in the annual  tuition).</p>
+<p> Enroll in our intensive Portuguese  course and be prepared to learn about Brazilian language and culture. Don't  miss the opportunity to take part in interactive classes which will prepare you  to engage in an exchange program in the best private university in Brazil.</p>
+<p> Our courses are composed of 90  class/hours (a class/hour is a session of 50 minutes), divided in 60  synchronous class/hours, and 30 asynchronous class/hours. There  are four levels of proficiency.</p>
+<p><strong>PRICES:</strong> Exchange and independent students pay the same  price for the Pre-term Intensive Portuguese Course. <br>
+<a href="fees_tuition.html"><strong>Follow this link for more  information and payment instructions</strong></a>.</p>
+
+<p><strong>Tuition: </strong>Kindly consult the provided  link for details regarding tuition and fees.<br>
+<a href="https://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html"><strong>https://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html </strong></a><strong></strong></p>
+
+	
+<!--<div style="background-color: lightyellow; font-size: 1.1em; font-weight: bold; padding: 5px; margin-left: 25px; margin-top: 10px; width: 70%;">Summer Session: January 29 - February 26 &amp; Winter Session: July 14 - August 08, 2025</div>-->
+
+<p> If you have any doubts, please, send an e-mail to: 
+<a href="mailto:incoming@puc-rio.br">incoming@puc-rio.br</a> or to <a href="mailto:incoming1@puc-rio.br">incoming1@puc-rio.br</a></p>
+<p>The Pre-Term Portuguese as a Second  Language Intensive Course consists in 90 hours of instruction per month.</p>
+<p>REMEMBER THAT THE PRE-TERM PORTUGUESE AS A SECOND LANGUAGE INTENSIVE COURSE DOES NOT PROVIDE ACADEMIC CREDITS OR TRANSCRIPTS. Students who take the intensive course will receive at the end of the month a certificate of completion with the final grade achieved.</p>
+<p>Students who intend to register for the Intensive Pre-Term Portuguese course AND the following regular term at PUC-Rio will have to comply with all the requirements of each academic period.</p>
+<p style="text-align:center;"><em><strong>PORTUGUESE AS A  SECOND LANGUAGE COURSES</strong></em><strong> are also available for GRADUATE STUDENTS</strong></p>
+
+
+<div class="puc_texto_destaque_em_quadro_centro">
+<strong>DEADLINES FOR SUBMITTING ONLINE APPLICATION FORMS:</strong>
+<p style="margin:10px 0 10px 0;"><strong>April 15<sup>th</sup>  and October 15<sup>th</sup></strong></p>
+<a href="forms-hp_students.html" class="puc_link_destaque_centralizado_TAG-A"><strong>Online application</strong></a>
+</div>
+
+
+
+<p><strong>TO APPLY</strong>: Interested students must contact CCCI by mail or  e-mail and fill out the complete application form as well as mail the required  documents. Please visit the following website to fill out the online  application, see the required documents to upload. For more information: &lt;<a href="forms-hp_students.html">https://www.puc-rio.br/ensinopesq/ccci/incoming/forms-hp_students.html</a>&gt;</p>
+
+<p> When the applicant is accepted, CCCI  will send a LETTER OF ACCEPTANCE that will enable the applicant to obtain a visa at a  Brazilian Consulate. CCCI will also send information regarding course fees and  the academic and Central Coordination for International Cooperation calendar,  if available, for the period in which the student wishes to study at PUC-Rio.</p>
+<p align="center"><strong>Portuguese as a Second Language Levels of Proficiency  at PUC-Rio and their equivalent in the CEFR Scale</strong></p>
+<table width="42%" border="0" align="center" cellspacing="0" class="puc_tabela_padrao_TAG-TABLE" style="text-align:center; max-width:630px;">
+<tr class="puc_tabela_linha_n1_TAG-TR"></tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td width="25%"><strong>CEFR PUC-Rio</strong></td>
+<td colspan="3"><strong>PUC-Rio</strong></td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td><strong>A2</strong></td>
+<td width="25%"><strong>Nivel                      1</strong></td>
+</tr>
+<tr class="puc_tabela_linha_clara_TAG-TR">
+<td><strong>B1</strong></td>
+<td><strong>Nivel                      2</strong></td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td><strong>B2</strong></td>
+<td><strong>Nivel                      3</strong></td>
+</tr>
+<tr class="puc_tabela_linha_clara_TAG-TR">
+<td><strong>C1</strong></td>
+<td><strong>Nivel                      4</strong></td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td><strong>C2</strong></td>
+<td><strong>Nivel                      5</strong></td>
+</tr>
+<!--
+
+  <tr class="puc_tabela_linha_n1_TAG-TR">
+    <td colspan="4">Graduate    Courses </td>
+  </tr>
+  <tr class="puc_tabela_linha_n2_TAG-TR">
+    <td rowspan="2"><strong>Masters and Doctorate</strong></td>
+    <td colspan="3"><strong>Tuition</strong></td>
+  </tr>
+  <tr class="puc_tabela_linha_n2_TAG-TR">
+    <td>Annual</td>
+    <td>Semestral</td>
+    <td>Monthly</td>
+  </tr>
+  <tr class="puc_tabela_linha_escura_TAG-TR">
+    <td><strong>Per    Credit</strong></td>
+    <td>R$  3.924,00</td>
+    <td>R$  1.962,00</td>
+    <td>R$  327,00</td>
+  </tr>
+  <tr class="puc_tabela_linha_clara_TAG-TR">
+    <td><strong>Registration in    Thesis Dissertation</strong></td>
+    <td>R$  32.184,00</td>
+    <td>R$  16.092,00</td>
+    <td>R$  2.682,00</td>
+  </tr>
+
+-->
+</table>
+
+<p><strong>VISA:</strong> A student visa is not required for the Intensive Pre-term course if the student does not intend to stay at PUC-Rio during the following regular semester term. Visas must be obtained BEFORE the student's entrance in Brazil. A tourist visa <strong>cannot</strong> be transferred into a student visa once inside the country.</p>
+
+<p><strong>PRICES:</strong> Exchange and independent students pay the same price  for the Pre-term Intensive Portuguese Course. <a href="fees_tuition.html"><strong>Follow this link for more information</strong></a>.</p>
+
+<p>For more information on: <a href="housing.html"><em><strong>Housing</strong></em></a></p>
+
+ 
+
+<p><br><a href="../download/incoming_portuguese_as_second_language_overview_2024-04-08.pdf" target="_blank" class="puc_link_destaque_centralizado_TAG-A">Program Overview</a></p>
+
+
+
+
+<!-- Botão voltar -->
+<button onclick="javascript:history.back()" class="puc_link_voltar_TAG-BUTTON" title="Back">BACK</button>
+
+
+<!-- Contatos e redes sociais -->
+
+<div class="ccci_infos_titulo">
+  <h4>Contact / Social Media</h4></div>
+
+<div class="puc_layout_area-inicial_maior_nivelador" id="ccci_infos_conteudo">
+
+<div class="puc_layout_area-inicial_maior_esquerda">
+<div class="puc_layout_coluna_3cols_nivelador" id="ccci_infos">
+
+    <div class="puc_layout_coluna_1de3">
+    <p><strong>Address</strong></p>
+    <p>Rua Marquês de São Vicente 225,<br>
+    Edifício Padre Leonel Franca - 8º andar, Gávea<br>
+    CEP 22451-900<br />
+    Rio de Janeiro - RJ - BRASIL</p>
+    
+    <!-- Redes sociais -->
+    <div class="puc_links_redes_sociais_TAG-DIV">
+    <a href="https://www.facebook.com/puc4all" target="_blank" title="Facebook">
+    <img src="/imagens/puc_img_redesocial_facebook.png" alt="Facebook" /></a>
+    <a href="https://www.instagram.com/pucrio4all" target="_blank" title="Instagram">
+    <img src="/imagens/puc_img_redesocial_instagram.png" alt="Instagram" /></a>
+    <a href="https://www.youtube.com/pucriooficial" target="_blank" title="Youtube">
+    <img src="/imagens/puc_img_redesocial_youtube.png" alt="Youtube" /></a>
+    <!-- <a href="http://pucforall.blogspot.com.br" target="_blank" title="Blog">
+    <img src="/imagens/puc_img_redesocial_blog.png" alt="Blog" /></a> -->
+    <a href="http://newsletter.ccci.puc-rio.br" target="_blank" title="Newsletter">
+    <img src="/imagens/puc_img_redesocial_email.png" alt="Newsletter" /></a>
+    </div>
+    </div>
+
+<div class="puc_layout_coluna_2de3">
+    <p><strong>Office hours</strong></p>
+    <p>Monday to Friday:<br>
+    9h to 12h and 14h to 17h</p>
+</div>
+
+<div class="puc_layout_coluna_3de3">
+    <p><a href="https://sgu.rdc.puc-rio.br/SGUWeb/protocolo/WloginEstrangeiro.aspx?idCC=7" class="puc_link_destaque_TAG-A">Contact us</a></p>
+        
+    <!--<p>  Phone: (55-21) 3527-1577 / 1578<br />
+      Fax: (55-21) 3527-1094<br />
+      E-mail: <a href="mailto:incoming2@puc-rio.br">incoming2@puc-rio.br</a></p>-->
+    
+    </div>
+
+</div>
+</div>
+
+<div class="puc_layout_area-inicial_maior_direita">
+<div class="fb-page" data-href="https://www.facebook.com/puc4all" data-tabs="timeline" data-height="250" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/puc4all" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/puc4all">PUC for ALL</a></blockquote></div>
+</div>
+
+</div><!-- /puc_layout_area-inicial_maior_nivelador -->
+
+
+</article>
+
+
+
+
+
+<!-- ==================================================================== MEIO > COLUNA LATERAL == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<aside>
+
+<!-- <p>Veja também:</p>
+<p>&nbsp;</p> -->
+
+</aside>
+
+
+
+
+
+<!-- =============================================================================== FECHA MEIO == -->
+
+
+</section>
+
+
+<!-- =================================================================================== RODAPÉ == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<footer>
+
+    <iframe src="https://www.puc-rio.br/includes/puc_rodape.html" name="rodape" 
+    title="Rodapé PUC-Rio - endereço e copyright"></iframe>
+
+</footer>
+
+
+
+<!-- ============================================================================= FECHA PÁGINA == -->
+
+</body>
+</html>

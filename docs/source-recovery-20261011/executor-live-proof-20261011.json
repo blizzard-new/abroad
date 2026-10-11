@@ -1,0 +1,62 @@
+{
+  "executed_at": "2026-10-11T19:38:59.470686+00:00",
+  "checks": [
+    {
+      "argv": [
+        "pwd"
+      ],
+      "exit_code": 0,
+      "stdout": "/tmp/abroad-recovery-capacity-20261011/workspace-abroad-globe-20261011\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "5e7114182093fa77203ee946a4f86a88d3b10345\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "executor_tool_commands_succeeded": true,
+  "quota_or_initialization_error_observed": false,
+  "not_an_account_billing_audit": true,
+  "full_suite": {
+    "collected_unique": 3110,
+    "shards": [
+      {
+        "shard": 0,
+        "status": "running",
+        "observed_completed_calls": 63,
+        "observed_failed_reports": 0
+      },
+      {
+        "shard": 1,
+        "status": "running",
+        "observed_completed_calls": 58,
+        "observed_failed_reports": 0
+      },
+      {
+        "shard": 2,
+        "status": "not_started"
+      },
+      {
+        "shard": 3,
+        "status": "not_started"
+      }
+    ],
+    "running_cases_not_claimed_passed": true
+  }
+}

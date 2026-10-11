@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+
+<head>
+
+    <title>PUC-Rio - Incoming Students - Tuition and Fees</title>
+    
+    <!-- Javascript e elementos diversos para todo o site PUC -->
+    
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<!-- SIMBOLOS -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<!-- Ícone -->
+<link rel="shortcut icon" href="https://www.puc-rio.br/imagens/puc_brasao_icone_browser.png" type="image/x-icon" />
+
+
+<!-- CSS PUC -->
+<link href="https://www.puc-rio.br/styles/puc_interna.css" rel="stylesheet" type="text/css" />
+
+
+<!-- EFEITO : JQUERY -->
+<script src="https://www.puc-rio.br/js/jquery/jquery-3.1.1.min.js"></script>
+
+
+<!-- EFEITO : POP-UP LIGHTBOX PARA ELEMENTOS DIVERSOS -->
+<link href="https://www.puc-rio.br/js/puc_efeito_lity/dist/lity.css" rel="stylesheet">
+<script src="https://www.puc-rio.br/js/puc_efeito_lity/dist/lity.js"></script>
+
+
+<!-- EFEITO : APARECER E SUMIR -->
+<script src="https://www.puc-rio.br/js/puc_efeito_aparecer_sumir/puc_efeito_aparecer_sumir.js"></script>
+
+
+<!-- EFEITO : LUPA DA GALERIA DE IMAGENS -->
+<script src="https://www.puc-rio.br/js/puc_efeito_vermaior/puc_efeito_vermaior.js"></script>
+
+
+<!-- EFEITO : COPIA PARA MOBILE -->
+<script src="https://www.puc-rio.br/js/puc_efeito_copia_mobile/puc_copia_mobile.js"></script>
+
+
+<!-- EFEITO : SLIDESHOW RESPONSIVO -->
+<script src="https://www.puc-rio.br/js/puc_efeito_slideshow_responsivo/puc_efeito_slideshow_responsivo.js"></script>
+
+
+<!-- EFEITO : PLAYER VIMEO -->
+<script src="https://www.puc-rio.br/js/puc_efeito_vimeo/puc_efeito_vimeo.js"></script>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+
+<!-- EFEITO : SLIDESHOW JSSOR -->
+<!-- #region Jssor Slider Begin -->
+<!-- Generator: Jssor Slider Maker -->
+<!-- Source: http://www.jssor.com -->
+<!-- This code works with jquery library. -->
+<script src="https://www.puc-rio.br/js/puc_efeito_slideshow/jssor.slider-21.1.6.mini.js"></script>
+
+
+
+<!-- EFEITO : BACKGROUND POSITION P/ CARDS -->
+<script>
+
+window.addEventListener("load", bkggrafismo);
+window.addEventListener("resize", bkggrafismo);
+
+function bkggrafismo() {
+
+	var card = document.getElementsByClassName('card');
+	var cardquant = card.length;
+
+	for (var i=0; i<=cardquant; i++) {
+
+	// card[i].style.backgroundPosition = "0 " + card[i].offsetHeight * 0.6666 + "px" ;
+	card[i].style.backgroundPosition = "0 " + card[i].offsetHeight * 0.5 + "px" ;
+
+	}
+
+}
+
+
+</script>
+
+
+
+
+<script>
+
+jQuery(document).ready(function ($) {
+
+	var jssor_1_SlideoTransitions = [
+	  [{b:-1,d:1,o:-1},{b:0,d:1000,o:1}],
+	  [{b:1900,d:2000,x:-379,e:{x:7}}],
+	  [{b:1900,d:2000,x:-379,e:{x:7}}],
+	  [{b:-1,d:1,o:-1,r:288,sX:9,sY:9},{b:1000,d:900,x:-1400,y:-660,o:1,r:-288,sX:-9,sY:-9,e:{r:6}},{b:1900,d:1600,x:-200,o:-1,e:{x:16}}]
+	];
+
+	var jssor_1_options = {
+	  $AutoPlay: true,
+	  $SlideDuration: 1000,
+	  $SlideEasing: $Jease$.$OutQuint,
+	  $CaptionSliderOptions: {
+		$Class: $JssorCaptionSlideo$,
+		$Transitions: jssor_1_SlideoTransitions
+	  },
+	  $ArrowNavigatorOptions: {
+		$Class: $JssorArrowNavigator$
+	  },
+	  $BulletNavigatorOptions: {
+		$Class: $JssorBulletNavigator$
+	  }
+	};
+
+	var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+	/*responsive code begin*/
+	/*you can remove responsive code if you don't want the slider scales while window resizing*/
+	function ScaleSlider() {
+		var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+		if (refSize) {
+			refSize = Math.min(refSize, 3000);
+			jssor_1_slider.$ScaleWidth(refSize);
+		}
+		else {
+			window.setTimeout(ScaleSlider, 30);
+		}
+	}
+	ScaleSlider();
+	$(window).bind("load", ScaleSlider);
+	$(window).bind("resize", ScaleSlider);
+	$(window).bind("orientationchange", ScaleSlider);
+	/*responsive code end*/
+});
+</script>
+
+
+
+
+
+
+
+<!-- ============================== PUC-Rio - GTAG GLOBAL ==============================-->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-205JBFW571"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtagGlobalPUC(){dataLayer.push(arguments);}
+  gtagGlobalPUC('js', new Date());
+
+  gtagGlobalPUC('config', 'G-205JBFW571');
+</script>
+
+
+<script>
+var getArrayFromTag = function(tagname) {
+     //get the NodeList and transform it into an array
+     return Array.prototype.slice.call(document.getElementsByTagName(tagname));
+}
+
+setTimeout(function(){ 
+var links = getArrayFromTag("a");
+var buttons = getArrayFromTag("button");
+links = links.concat(buttons);
+
+for(var i=0, max=links.length; i<max; i++) {
+    var linkHref = links[i].href;
+    var linkText = links[i].innerText;
+    if (linkText === '' || linkText == null){
+       var linkImg = links[i].getElementsByTagName('img')[0];
+       if (linkImg == null)
+          continue;
+       var imgAlt = linkImg.getAttribute("alt");
+       if (imgAlt !== '' && imgAlt != null)
+           linkText = imgAlt;       
+       else{
+           var imgTitle = linkImg.getAttribute("title");
+           if (imgTitle !== '' && imgTitle != null)
+               linkText = imgTitle;
+           else
+               continue;
+       }
+    }
+    var currentPage = removeIndexFromUrl(window.location.href);
+    linkHref = removeIndexFromUrl(linkHref);
+
+    var gtagContent = "gtagGlobalPUC( \'event\', \'clique\', { \'event_category\':\'" + currentPage + "\', \'event_label\': \'" + linkText + "\', \'origin_url\':\'" + currentPage + "\', \'href\':\'" + linkHref + "\'});";
+    var defaultOnMouseDown = links[i].getAttribute("onmousedown");
+    if (defaultOnMouseDown != null)
+        var gtagContent = gtagContent + defaultOnMouseDown;
+    links[i].setAttribute("onmousedown", gtagContent);
+}
+}, 2000);
+
+function removeIndexFromUrl(url){
+    if (url == "undefined")
+        return url;
+
+    if (url.endsWith("/index.html"))
+    {
+        url = url.replace("/index.html","/");    
+    }
+    else if (url.endsWith("/#"))
+    {
+        url = url.replace("/#","/");    
+    }
+
+    return url;
+}
+</script>
+
+
+
+<!-- / SLIDESHOW -->
+
+
+<!-- PLUGIN DE ACESSIBILIDADE FREE -->
+<script src="/js/acessibilidade_acctoolbar.min.js"></script>
+<script>
+  window.onload = function() {
+    window.micAccessTool = new MicAccessTool({
+      link: 'http://your-awesome-website.com/your-accessibility-declaration.pdf',
+      contact: 'mailto:webrdc@puc-rio.br',
+      buttonPosition: 'right', // default is 'left'
+       forceLang: 'pt-br' // default is 'en' may be 'he-IL', 'ru-RU', or 'fr_FR'
+    });
+  }
+</script>
+
+
+
+    
+    <!-- CSS específico da CCCI -->
+    <link href="../styles/estilos_ccci.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+
+
+
+<!-- ============================================================================== ABRE PÁGINA == -->
+
+
+<body id="ccci">
+
+
+<!-- ===================================================================================== TOPO == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<header>
+
+
+<!-- Link acessibilidade, cabeçalho, brasão, título -->
+
+
+<!-- Código para janelas do Facebook -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+<!-- Link acessibilidade -->
+<a href="#link_pular_conteudo" id="puc_link_pular_para_conteudo">Pular para o conteúdo da página</a><span></span>
+
+<!-- Cabeçalho PUC (busca e índice de A a Z) -->
+<iframe src="/includes/puc_cabecalho.html" name="cabecalho" title="Cabeçalho PUC-Rio"></iframe>
+
+
+
+<div id="puc_topo_brasao_titulo_caminho">
+
+<!-- Brasão PUC -->
+<a href="http://www.puc-rio.br" target="_parent" title="Ir para a página inicial do site PUC-Rio" id="puc_cabecalho_brasao">
+<img src="/imagens/brasao_preto_vertical.svg" alt="Brasão da PUC-Rio" /></a>
+
+<div id="puc_topo_titulo_caminho">
+
+<h1>Coordenação Central de Cooperação Internacional</h1>
+
+<!-- fecha "puc_topo_brasao_titulo_caminho" e "puc_topo_titulo_caminho" no arquivo "include_header_menu.html" -->
+
+
+<!-- Caminho -->
+<nav>&gt; <a href="/ensinopesq/ccci">Intercâmbio Internacional</a> &gt; <a href="/ensinopesq/ccci/incoming">Incoming Students</a> &gt;</nav>
+
+
+<!-- Menu -->
+
+<!-- abre "puc_topo_brasao_titulo_caminho" e "puc_topo_titulo_caminho" no arquivo no arquivo "include_header_geral.html" -->
+</div>
+</div>
+
+
+<!-- Menu do site -->
+<div id="puc_menu_faixa">
+<button type="button" onclick="javascript:efeito_aparecer_sumir_menu('menu')">Menu</button>
+<div id="menu" class="puc_efeito_menu_sumir">
+
+<span></span>
+
+<a href="/ensinopesq/ccci/index.html" id="puc_link_index">Página inicial</a>
+<a href="/ensinopesq/ccci/academico/">Intercâmbio Acadêmico</a>
+<a href="/ensinopesq/ccci/curtaduracao/">Intercâmbio de Curta Duração</a>
+<a href="/ensinopesq/ccci/incoming/">Incoming Students (Alunos Internacionais)</a>
+<a href="/ensinopesq/ccci/sobre.html">Sobre a CCCI</a>
+<!-- <a href="/ensinopesq/ccci/estconv.html" id="puc_menu_link_lang">English</a> -->
+
+<span></span>
+
+</div><!-- fecha "menu" -->
+</div><!-- fecha "puc_menu_faixa" -->
+
+
+</header>
+
+
+
+
+
+<!-- ===================================================================================== MEIO == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<section id="conteudo">
+
+
+<!-- ================================================================== MEIO > COLUNA PRINCIPAL == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<!-- destino do link de acessibilidade "pular para conteúdo" -->
+<a id="link_pular_conteudo"></a>
+
+
+<article>
+
+
+<h2>Incoming Students</h2>
+
+<h3>Tuition and Fees</h3>
+<h4><br>
+  Pre-term Intensive Portuguese Course</h4>
+  <ul>
+	<li><strong>For 2027 → Total: R$ 5.746,00 (Reais)</strong></li>
+  </ul>
+
+
+<ul class="puc_lista_especial_TAG-UL puc_lista_recuada_TAG-UL">
+<li><a name="paymentinstructions"></a>Payment instructions:</li>
+</ul>
+
+
+<p style="padding-bottom:10px;"> In  case you have questions, please contact our financial manager: <a href="mailto:manager@puc-rio.br">manager@puc-rio.br</a> with copy to <a href="mailto:incoming1@puc-rio.br">incoming1@puc-rio.br</a>.</p>
+<ul class="puc_lista_especial_TAG-UL puc_lista_recuada_TAG-UL">
+  <li>Wire transfer to:</li>
+</ul>
+<div class="puc_texto_destaque_em_quadro_centro" style="text-align:left;">
+	  <p style="margin-top:0;"><strong>Account name: FACULDADES CAT&Oacute;LICAS<br>
+      </strong>Bank SWIFT Routing address: ITAUBRSP</p>
+	  <p>IBAN code: BR98 6070 1190 0110 8000 0212 109C 1 <br>
+	    Bank name: ITAU UNIBANCO S/A <br>
+	    Account # 21210-9 <br>
+	    Branch # 1108 <br>
+	    Bank address: Rua Marqu&ecirc;s de S&atilde;o Vicente 225,   G&aacute;vea, Rio de Janeiro, RJ, BRAZIL, CEP 22.453-900</p>
+      
+      <div style="background:#FFF; padding:10px;">
+      <span class="puc_texto_destaque">IMPORTANT:</span>
+      <p><strong> 1. Do NOT send cash, checks,  money order or traveler   checks to the CCCI office! 
+        They will  not be accepted!</strong></p>
+
+<p><strong>2. Students should send a copy of the wire transfer  to the e-mails: <br>
+  - 
+  Financial manager: <a href="mailto:manager@puc-rio.br">manager@puc-rio.br</a> with copy to <a href="mailto:incoming1@puc-rio.br">incoming1@puc-rio.br</a>.</strong></p>
+
+<p><strong>3. Refunds will be issued  only up to one month prior to the course start date. In case of  reimbursement: operational costs related to acceptance and cancelation  processes and to bank transaction fees will be deducted from the total amount  refunded.</strong></p>
+<p class="puc_texto_destaque">International wire transfers may be subjected to service fees charged by the sender's bank.</p>
+<p class="puc_texto_destaque" style="margin-bottom:0;">All fees related to the wire transfer should be charged to the sender. Please be aware that you should choose the option "OUR" (so that all fees will be charged to you as the sender), not "BEN" (beneficiary), when conducting an international wire transfer to PUC-Rio (Faculdades Catolicas).</p>
+
+</div></div>
+      
+      
+      
+      
+<h4><br>
+  Administrative cost - Regular term</h4>
+<p>With the objective of providing our students with a variety of enriching activities during their stay in Rio de Janeiro, <strong>administrative cost</strong> will be charged to all <strong>international students</strong>. </p>
+<p> <strong> Exchange students:</strong> <br>
+  The administrative cost will be charged prior to arrival.<br></p>
+
+
+	
+	
+<p><strong>2027</strong><br>
+  &nbsp;One Semester attendance: Price:&nbsp;<strong>R$ 1.252,00 Reais</strong><br>
+  One Year Attendance:&nbsp;<strong>R$ 1.882,00 Reais</strong></p>
+<p>&nbsp;</p>	
+	
+<!-- Independent students -->	
+<p><strong>Independent students:</strong> <br>
+  The administrative cost will be charged prior to arrival.<br></p>
+<p><strong>2027</strong><br>
+  One Semester attendance: Price:&nbsp;<strong>R$ 2.250,00 Reais</strong><br>
+  One Year Attendance:&nbsp;<strong>R$ 3.417,00 Reais</strong></p>
+<p>&nbsp;</p>
+	
+<!-- Period extension fee -->	
+<h4><br>Period extension fee</h4>
+
+<p><strong>Exchange students:</strong></p>
+<p> An<strong> </strong>extension fee will be charged if students decide to study at PUC-Rio the following semester. Exchange students are entitled to attend courses at PUC-Rio up to two  regular terms plus the Pre-Term Portuguese as a Second Language Intensive</p>
+<p><strong>Prices for<br>
+  </strong><strong>2027 semestre: R$ 630,00</strong></p>
+<p>&nbsp; </p>
+
+<p><strong>Independent  students:</strong></p>
+<p>  An<strong> </strong>extension fee  will be charged if students decide to study at PUC-Rio the following semester.</p>
+<p><strong>Prices for:<br>
+  </strong><strong>2027  semester: R$ 1.167,00</strong></p>
+<p><strong></strong></p>
+
+<p><strong>The extension fee will not be refunded if students withdraw from their international program extension.</strong></p>
+<p><strong>Payment  instructions:</strong><br>
+  Check the instructions <strong><a href="#paymentinstructions">above</a></strong></p>
+<p class="puc_texto_destaque"> Important:</p>
+<ol class="puc_lista_numeros_TAG-OL">
+  <li>Please, send us a copy of the wire transfer done to the e-mails: Financial manager: <a href="mailto:manager@puc-rio.br">manager@puc-rio.br</a> with copy to <a href="mailto:incoming1@puc-rio.br">incoming1@puc-rio.br</a></li>
+  <li>Refunds will be issued only up to one month prior  to the course start date. In case of reimbursement:  operational costs related to acceptance and cancelation processes and to bank  transaction fees will be deducted from the total amount refunded.</li>
+  <li>The extension fee will not be refunded if students withdraw from their international program extension.</li>
+</ol>
+<p class="puc_texto_destaque_em_quadro_centro"><span class="puc_texto_destaque">Attention:</span><br>
+  Please be aware that, if PUC-Rio's Central Coordination for International Cooperation (CCCI) does not receive the total amount in Reais for the pre-term intensive course or registration fees, due to an exchange rate difference or bank transfer fees, the remaining balance must be paid upon your arrival at PUC-Rio.</p>
+
+<p><strong>Accommodation Program</strong></p>
+<p>The  monthly rent for the homestay is currently R$2.500,00, including  breakfast. If an option of lunch or dinner is available, the cost is R$2.875,00  per month. These prices will remain the same for the 2027.</p>
+<h4><br>Tuition</h4>
+<p><strong>Exchange students:</strong><br>
+  Exchange students do not pay tuition fee.</p>
+<p><strong>Independent  Student:</strong><br>
+  Independent  Students pay tuition. The academic tuition will be charged according to the  number of credits taken in each term.</p>
+<p class="puc_texto_destaque">Tuition Fee - Method of Payment:<br>
+  <span style="font-weight:normal;">The fees must be paid in Reais (R$) currency rate.</span></p>
+<p><strong>Example:</strong> </p>
+<p>If the student registered online for 19-20 credits, he will pay for  19-20 credits. According to PUC's table of values, in <strong>2026</strong> International  regular students must pay the total tuition of <strong>R$ 44.802,00</strong> per term or <strong>R$  7.467,00</strong> per month over 6 months for 19-20 credits. In the case of an  international student who arrives ON TIME for classes in late February/early  March or August, the student will pay for 40 credits in the first and second  monthly installments and for 19-20 credits in the third and fourth installments.</p>
+<p><strong>In case the student wants to cancel any class, the  reimbursement will only appear in the next month's installment.</strong></p>
+<p><strong>If the student adds more classes during the Drop &amp; Add period the  tuition amount will change too.</strong></p>
+<p><strong>Ex: Before the Drop &amp; Add the  students had chosen 20 credits and during the Drop &amp; Add added one  class of (2 credits). His/her tuition will change from 20 credits  to 22 credits; consequently, the difference of these 2 credits will appear in  the others installments</strong>.</p>
+<p><strong>After  the Drop &amp; Add day, if the student cancel (drop) any class, the total of  the tuition and the installments will  not change.</strong></p>
+<p class="puc_texto_destaque">Method of Payment:<br>
+  The fees must be paid in Reais (R$), according to the dollar rate of the day.</p>
+<h4><a name="ctch"></a><br>
+Tuition for 2026</h4>
+
+
+
+<div style="overflow-x:auto;">
+<table border="0" align="center" cellspacing="0" class="puc_tabela_padrao_TAG-TABLE puc_tabela_linha_alternada_TAG-TABLE" style="text-align:center;">
+
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="4">Undergraduate Courses</td>
+</tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td rowspan="2"><strong>Number of<br>
+Credits</strong></td>
+<td colspan="3"><strong>Tuition</strong></td>
+</tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td><strong>Annual</strong></td>
+<td><strong>Semestral</strong></td>
+<td><strong>Monthly</strong></td>
+</tr>
+<tr>
+<td><strong>01</strong></td>
+<td>R$ 6.600,00 </td>
+<td>R$ 3.300,00 </td>
+<td>R$ 550,00</td>
+</tr>
+<tr>
+<td><strong>02</strong></td>
+<td>R$ 9.264,00</td>
+<td>R$ 4.632,00</td>
+<td>R$ 772,00</td>
+</tr>
+<tr>
+<td><strong>03</strong></td>
+<td>R$ 15.528,00 </td>
+<td>R$ 7.764,00</td>
+<td>R$ 1.294,00</td>
+</tr>
+<tr>
+<td><strong>04</strong></td>
+<td>R$ 18.144,00</td>
+<td>R$ 9.072,00</td>
+<td>R$ 1.512,00</td>
+</tr>
+<tr>
+<td><strong>05</strong></td>
+<td>R$ 26.352,00</td>
+<td>R$ 13.176,00</td>
+<td>R$ 2.196,00</td>
+</tr>
+<tr>
+<td><strong>06</strong></td>
+<td>R$ 27.660,00</td>
+<td>R$ 13.830,00</td>
+<td>R$ 2.305,00</td>
+</tr>
+<tr>
+<td><strong>07 - 08</strong></td>
+<td>R$ 55.572,00</td>
+<td>R$ 27.786,00</td>
+<td>R$ 4.631,00</td>
+</tr>
+<tr>
+<td><strong>09 - 10</strong></td>
+<td>R$ 68.868,00 </td>
+<td>R$ 34.434,00 </td>
+<td>R$ 5.739,00</td>
+</tr>
+<tr>
+<td><strong>11 - 12</strong></td>
+<td>R$ 73.380,00</td>
+<td> R$ 36.690,00 </td>
+<td>R$ 6.115,00</td>
+</tr>
+<tr>
+<td><strong>13 - 14</strong></td>
+<td>R$ 77.124,00</td>
+<td> R$ 38.562,00</td>
+<td> R$ 6.427,00</td>
+</tr>
+<tr>
+<td><strong>15 - 16</strong></td>
+<td>R$ 82.524,00</td>
+<td> R$ 41.262,00 </td>
+<td>R$ 6.877,00</td>
+</tr>
+<tr>
+<td><strong>17 - 18</strong></td>
+<td>R$ 86.052,00</td>
+<td> R$ 43.026,00 </td>
+<td>R$ 7.171,00</td>
+</tr>
+<tr>
+<td><strong>19 - 20</strong></td>
+<td>R$ 89.604,00</td>
+<td> R$ 44.802,00 </td>
+<td>R$ 7.467,00</td>
+</tr>
+<tr>
+<td><strong>21 - 22</strong></td>
+<td>R$ 92.376,00</td>
+<td> R$ 46.188,00 </td>
+<td>R$ 7.698,00</td>
+</tr>
+<tr>
+<td><strong>23 - 24</strong></td>
+<td>R$ 94.380,00 </td>
+<td>R$ 47.190,00 </td>
+<td>R$ 7.865,00</td>
+</tr>
+<tr>
+<td><strong>25</strong></td>
+<td>R$ 96.504,00</td>
+<td> R$ 48.252,00 </td>
+<td>R$ 8.042,00</td>
+</tr>
+<tr>
+<td><strong>26</strong></td>
+<td>R$ 97.824,00</td>
+<td> R$ 48.912,00 </td>
+<td>R$ 8.152,00</td>
+</tr>
+<tr>
+<td><strong>27</strong></td>
+<td>R$ 98.760,00 </td>
+<td> R$ 49.380,00	</td>
+<td>R$ 8.230,00</td>
+</tr>
+<tr>
+<td><strong>28</strong></td>
+<td>R$ 99.648,00 </td>
+<td>R$ 49.824,00 </td>
+<td>R$ 8.304,00</td>
+</tr>
+<tr>
+<td><strong>29</strong></td>
+<td>R$ 100.872,00</td>
+<td> 	R$ 50.436,00	</td>
+<td>R$ 8.406,00</td>
+</tr>
+<tr>
+<td><strong>30</strong></td>
+<td>R$ 101.280,00</td>
+<td>  	R$ 50.640,00	<br></td>
+<td>R$ 8.440,00</td>
+</tr>
+	<!--
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="4">Graduate Courses</td>
+</tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td rowspan="2"><strong>Masters and<br>
+Doctorate</strong></td>
+<td colspan="3"><strong>Tuition</strong></td>
+</tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td><strong>Annual</strong></td>
+<td><strong>Semestral</strong></td>
+<td><strong>Monthly</strong></td>
+</tr>
+<tr>
+<td><strong>Per Credit</strong></td>
+<td align="right">R$ 5.940,00</td>
+<td align="right">R$ 2.970,00</td>
+<td align="right">R$ 495,00</td>
+</tr>
+<tr>
+<td><strong>Registration<br>
+in Thesis<br>
+Dissertation</strong></td>
+<td align="right">R$ 48.096,00</td>
+<td align="right">R$ 24.048,00</td>
+<td align="right">R$    4.008,00</td>
+</tr>
+
+<tr>
+<td colspan="4" align="right" style="background:#FFFFFF;">Atualização: 06/01/2025</td>
+</tr>
+-->
+</table>
+</div>
+
+
+
+<p align="center" class="puc_texto_destaque">  <br>
+IMPORTANT:</p>
+<p class="puc_texto_destaque_em_quadro_centro"><strong>Please be  aware that the payments as tuition,  extension fee  can  ONLY be made in cash (Reais). </strong></p>
+
+<!-- Botão voltar -->
+  <button onclick="javascript:history.back()" class="puc_link_voltar_TAG-BUTTON" title="Back">BACK</button>
+  
+  
+  <!-- Contatos e redes sociais -->
+  
+<div class="ccci_infos_titulo">
+  <h4>Contact / Social Media</h4></div>
+
+<div class="puc_layout_area-inicial_maior_nivelador" id="ccci_infos_conteudo">
+
+<div class="puc_layout_area-inicial_maior_esquerda">
+<div class="puc_layout_coluna_3cols_nivelador" id="ccci_infos">
+
+    <div class="puc_layout_coluna_1de3">
+    <p><strong>Address</strong></p>
+    <p>Rua Marquês de São Vicente 225,<br>
+    Edifício Padre Leonel Franca - 8º andar, Gávea<br>
+    CEP 22451-900<br />
+    Rio de Janeiro - RJ - BRASIL</p>
+    
+    <!-- Redes sociais -->
+    <div class="puc_links_redes_sociais_TAG-DIV">
+    <a href="https://www.facebook.com/puc4all" target="_blank" title="Facebook">
+    <img src="/imagens/puc_img_redesocial_facebook.png" alt="Facebook" /></a>
+    <a href="https://www.instagram.com/pucrio4all" target="_blank" title="Instagram">
+    <img src="/imagens/puc_img_redesocial_instagram.png" alt="Instagram" /></a>
+    <a href="https://www.youtube.com/pucriooficial" target="_blank" title="Youtube">
+    <img src="/imagens/puc_img_redesocial_youtube.png" alt="Youtube" /></a>
+    <!-- <a href="http://pucforall.blogspot.com.br" target="_blank" title="Blog">
+    <img src="/imagens/puc_img_redesocial_blog.png" alt="Blog" /></a> -->
+    <a href="http://newsletter.ccci.puc-rio.br" target="_blank" title="Newsletter">
+    <img src="/imagens/puc_img_redesocial_email.png" alt="Newsletter" /></a>
+    </div>
+    </div>
+
+<div class="puc_layout_coluna_2de3">
+    <p><strong>Office hours</strong></p>
+    <p>Monday to Friday:<br>
+    9h to 12h and 14h to 17h</p>
+</div>
+
+<div class="puc_layout_coluna_3de3">
+    <p><a href="https://sgu.rdc.puc-rio.br/SGUWeb/protocolo/WloginEstrangeiro.aspx?idCC=7" class="puc_link_destaque_TAG-A">Contact us</a></p>
+        
+    <!--<p>  Phone: (55-21) 3527-1577 / 1578<br />
+      Fax: (55-21) 3527-1094<br />
+      E-mail: <a href="mailto:incoming2@puc-rio.br">incoming2@puc-rio.br</a></p>-->
+    
+    </div>
+
+</div>
+</div>
+
+<div class="puc_layout_area-inicial_maior_direita">
+<div class="fb-page" data-href="https://www.facebook.com/puc4all" data-tabs="timeline" data-height="250" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/puc4all" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/puc4all">PUC for ALL</a></blockquote></div>
+</div>
+
+</div><!-- /puc_layout_area-inicial_maior_nivelador -->
+
+
+</article>
+
+
+
+
+
+<!-- ==================================================================== MEIO > COLUNA LATERAL == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<aside>
+
+<!-- <p>Veja também:</p>
+<p>&nbsp;</p> -->
+
+</aside>
+
+
+
+
+
+<!-- =============================================================================== FECHA MEIO == -->
+
+
+</section>
+
+
+<!-- =================================================================================== RODAPÉ == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<footer>
+
+    <iframe src="https://www.puc-rio.br/includes/puc_rodape.html" name="rodape" 
+    title="Rodapé PUC-Rio - endereço e copyright"></iframe>
+
+</footer>
+
+
+
+<!-- ============================================================================= FECHA PÁGINA == -->
+
+</body>
+</html>

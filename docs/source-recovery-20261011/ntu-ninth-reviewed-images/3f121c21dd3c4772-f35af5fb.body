@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Cache-Control"  content="No-Cache">
+<meta http-equiv="Pragma" content="No-Cache">
+<meta name="format-detection" content="telephone=no">
+<title>Kyungpook National University</title>
+<link rel="shortcut icon" href="../img/new/favicon.ico">
+<meta name="author" content="Kyungpook National University">
+<meta name="keywords" content="KNU, Kyungpook National University">
+<meta name="description" content="Kyungpook National University">
+<link rel="stylesheet" type="text/css" href="../css/common.css?1713340600">
+<link rel="stylesheet" type="text/css" href="../css/layout.css?1659940956">
+<link rel="stylesheet" type="text/css" href="../css/content.css?1745224396">
+<link rel="stylesheet" type="text/css" href="../css/main.css?1787818792">
+<link rel="stylesheet" type="text/css" href="../css/board.css?1543975092">
+<script type="text/javascript"> 
+if( navigator.appVersion.indexOf("MSIE 6") > -1 || navigator.appVersion.indexOf("MSIE 7") > -1 || navigator.appVersion.indexOf("MSIE 8") > -1){}else{
+	document.write('<link rel="stylesheet" type="text/css" href="../css/mobile.css">');
+}
+</script>
+<link rel="stylesheet" type="text/css" href="../css/jquery.mmenu.all.css?1490929787" />
+
+<!-- <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.4.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui-1.12.1.js"></script>
+<script type="text/javascript" src="../js/jquery.form.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.cycle2.js?1489139507"></script>
+<script type="text/javascript" src="../js/jquery.cycle2.carousel.js?1489139506"></script>
+<script type="text/javascript" src="../js/jquery.flexslider.js?1489139507"></script>
+<script type="text/javascript" src="../js/jquery.jqtransform.js?1489139507"></script>
+<script type="text/javascript" id="menujs" src="../js/menu.js?1618904265"></script>
+<script type="text/javascript" id="mmenujs" src="../js/jquery.mmenu.min.all.js?1658470422"></script>
+
+
+<!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="../css/ie.css">
+    <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script>
+jQuery(function(){
+    var win = jQuery(window);
+	var top = jQuery(window).scrollTop();
+
+	var speed          = 500;
+	var easing         = 'linear';
+	var layer         = jQuery('#aside-quick');
+	var layerTopOffset = 0;
+    layer.css('position', 'absolute');
+    if (top > 0 )
+        win.scrollTop(layerTopOffset+top);
+    else
+        win.scrollTop(0);
+    jQuery(window).scroll(function(){
+        yPosition = win.scrollTop() - 260;
+        if (yPosition < 0)
+        {
+            yPosition = 40;
+        }
+        layer.animate({"top":yPosition }, {duration:speed, easing:easing, queue:false});
+    });
+});
+</script>
+<script type="text/javascript">
+$.noConflict();
+
+var P = 1;
+var M = 1;
+var S = 1;
+var mobile = 0;
+var pc = 0;
+var pc_menu = "";
+var mobile_menu = "";
+
+jQuery(function(){
+	jQuery('.comm_sel').jqTransform();
+	pc_menu = jQuery("#header_ajax").html();
+	pc_menu = pc_menu.replace(/산학연구처\(산학협력단\)/gi,'산학연구처<br>(산학협력단)');
+	mobile_menu = pc_menu.replace(/id=\"top1/gi,'id=\"m1top1').replace(/id=\"top2/gi,'id=\"m1top2');
+	mobile_menu = mobile_menu.replace(/간호대 오시/gi,'간호대<br>오시');
+	mobile = 0;
+	pc = 0;
+	shows();	
+	
+	jQuery(window).resize(function(){  // 화면 리사이즈시 다시검사
+		shows();
+	});
+});
+
+function shows(){
+	
+	var win_w = jQuery(window).width();
+	if( navigator.appVersion.indexOf("MSIE 6") > -1 || navigator.appVersion.indexOf("MSIE 7") > -1 || navigator.appVersion.indexOf("MSIE 8") > -1){
+		win_w = 1234;
+	}	
+	win_w = win_w+17;
+	if(win_w <= 1023){
+		if(mobile == 0){
+			jQuery("#header_ajax").html("");
+			jQuery("#header_ajax").html(mobile_menu);
+			jQuery('#menu').mmenu({
+				"slidingSubmenus": false,
+				extensions: ["pageshadow"]
+			});
+			MinitTopMenu(0,0);
+			pc = 0;
+			mobile = 1;
+			
+			jQuery('a#m_search_img').on('click', function(e) {
+				jQuery("#top_search").slideToggle();
+				return false;
+			});	
+			
+			jQuery('a#search').on('click', function(e) {
+				e.preventDefault();
+				
+				msearch();
+			});
+			
+		 	jQuery('input#txt').on('keyup', function(e) {
+				if (e.keyCode == 13) {
+					msearch();
+				}
+			});
+
+			function msearch() {
+				if (jQuery('input#txt').val() == "") {
+					alert('Please enter the keyword.');
+					jQuery('input#txt').focus();
+					return false;
+				}
+
+				jQuery('form[name=search]').submit();
+			}			
+		}
+	}else{
+			
+		if(pc == 0){
+			if(mobile == 1){
+				var API = jQuery("#menu").data( "mmenu" );
+				API.close();
+			}
+			jQuery("#header_ajax").html("");
+			jQuery("#header_ajax").html(pc_menu);
+			initTopMenu(0,0);
+			pc = 1;
+			mobile = 0;
+
+			jQuery('a#search').on('click', function(e) {
+				e.preventDefault();
+				
+				search();
+			});
+			
+		 	jQuery('input#txt').on('keyup', function(e) {
+				if (e.keyCode == 13) {
+					search();
+				}
+			});
+
+			function search() {
+				if (jQuery('input#txt').val() == "") {
+					alert('Please enter the keyword.');
+					jQuery('input#txt').focus();
+					return false;
+				}
+				
+				jQuery('form[name=search]').submit();
+			}			
+		}
+	}
+	ContentResize();
+}
+</script>
+<noscript>
+<p>JavaScript 를 사용할 수 없습니다.<br />일부 콘텐츠가 정상적으로 작동하지 않을 가능성이 있습니다.</p>
+</noscript></head>
+
+<body class="bbg">
+  <div id="wrap" class="sbg">
+    <div id="header_ajax">
+<div id="skipnavi">
+	<ul>
+	<li><a href="#content">본문 내용으로 바로가기</a></li>
+	<li><a href="#gnb">주 메뉴로 바로가기</a></li>
+	<li><a href="#snb">부 메뉴로 바로가기</a></li>
+	</ul>
+<hr />
+</div>
+<div id="header">
+	<!-- start_topwrap -->
+	<div id="topwrap">
+	<div class="d_width">
+		<div id="logo"><a href="../main/main.htm"><img src="../img/new/logo_w.png" alt="KNU"></a></div>
+		<div class="topmn">
+			<ul class="topmn_tab3">
+			<li class="foreign"><a href="http://www.knu.ac.kr/" target="_blank">KOREAN</a></li>
+			<li class="foreign"><a href="http://cn.knu.ac.kr/" target="_blank">CHINESE</a></li>
+						<li>
+												</li>
+			<li><a href="../siteinfo/sitemap.htm">SITEMAP</a></li>
+			</ul>
+			<div id="top_search"><form name="search" action="http://search.knu.ac.kr/RSA/front/Search.jsp" method="post" target="_new" accept-charset="utf-8"><div class="form"><input type="text" name="qt" id="txt" placeholder="search"  title="search" onKeyPress="javascript:if(event.keyCode == 13) return false;"><a href="#" id="search"><img src="../img/new/topsearch_ico.png"></a></div></form></div>
+		</div>
+		<div class="topsns">
+			<a href="https://www.facebook.com/studyatKNU" target="_blank"><img src="../img/new/ico_facebook.png" alt="facebook"></a>
+			<a href="https://twitter.com/knustory" target="_blank"><img src="../img/new/ico_twitter.png" alt="twitter"></a>
+			<a href="https://www.instagram.com/knu_international/?hl=ko" target="_blank"><img src="../img/new/ico_insta.png" alt="instagram"></a>
+			<a href="https://www.youtube.com/channel/UCcVR1TUWcB9Ku6FslF-SgUg" target="_blank"><img src="../img/new/ico_youtube.png" alt="youtube"></a>
+		</div>
+		<div class="clear"></div>
+		<div class="va_mo m_gnb"><a href="#menu"><img src="../img/new/ico_m_gnb_w.png" alt="All view navigation" title=""></a></div>
+		<div class="va_mo m_search"><a href="#" id="m_search_img"><img src="../img/new/ico_m_search_w.png" alt="Search" title=""></a></div>
+	</div>
+	</div>
+	<!-- //end_topwrap -->
+		<div id="gnb"><a name="gnb"></a>					
+						<!-- start_gnbmn -->
+						<div id="gnbmn" class="d_width">
+						<h2>Main Navigation</h2>
+						<nav id="menu">
+						<ul id="top1menu" class="depth1">
+						<li><span><a href="../intro/about04.htm" id="top1m1">ABOUT KNU</a></span>
+							<ul id="top2m1" class="depth2">	
+							<div class="gnb_tit img1">ABOUT KNU<span>Global KNU</span></div>
+							<li id="top2m1m1" class="fst"><span><a href="../intro/about04.htm">Overview</a></span>
+							
+								<ul class="depth3">
+								<li><span><a href="../intro/about04.htm">Profile</a></span></li>
+								<li><span><a href="../intro/about03.htm">Educational Goals</a></span></li>
+								<li><span><a href="../intro/about02.htm">KNU Today</a></span></li>
+								<li><span><a href="../intro/about01.htm">KNU History</a></span></li>
+								<li><span><a href="../intro/about05.htm">Symbols</a></span></li>
+								<li><span><a href="../intro/about07.htm">Infographic</a></span></li>
+								</ul>
+								
+							</li>
+							<li id="top2m1m2"><span><a href="../intro/greeting01.htm">Office of the President</a></span>
+								<ul class="depth3">
+								<li><span><a href="../intro/greeting01.htm">Welcoming Remarks</a></span></li>
+								<li><span><a href="../intro/greeting02.htm">Professional Profile</a></span></li>
+								<li><span><a href="../intro/greeting03.htm">History of the Presidency</a></span></li>
+								</ul>
+							</li>							
+							<li id="top2m1m3"><span><a href="../intro/org01.htm">Organizational<span class="va_pc"></span> Chart</a></span></li>							
+							<li id="top2m1m5"><span><a href="../intro/global01.htm">Office of<span class="va_pc"></span> International<span class="va_pc"></span>Affairs</a></span></li>
+							<li id="top2m1m4"><span><a href="../intro/map01.htm">Getting to KNU</a></span>
+								<ul class="depth3">
+								<li><span><a href="../intro/map01.htm">Getting to KNU</a></span></li>
+								<li><span><a href="../intro/map02.htm">Getting to School of<span class="va_pc"></span>Medicine, College of Dentistry,<span class="va_pc"></span>College of Nursing</a></span></li>
+								<li><span><a href="../intro/map03.htm">Shuttle Bus</a></span></li>
+								<li><span><a href="../intro/map04.htm">Campus Map</a></span></li> 
+								<li><span ><a href="https://home.knu.ac.kr/HOME/knuprmap2/index.html" target="_blank">Cyber Tour<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>							
+							</ul>
+						</li>
+						<li><span><a href="#none" id="top1m2">INTERNATIONAL</a></span>
+							<ul id="top2m2" class="depth2">
+							<div class="gnb_tit img2">ADMISSION<span>Global KNU</span></div>
+							<li id="top2m2m1" class="fst"><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1549935033">Academic Degree Program</a></span>
+							<!-- <ul class="depth3">
+								<li><span><a href="../admission/foreign01.htm">Undergraduate</a></span></li>
+								<li><span><a href="../admission/foreign02.htm">Graduate</a></span></li>
+								</ul> -->
+								<ul class="depth3">
+									<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1549935033" target="_blank">Undergraduate<span class="ico_nw"></span></a></span></li>
+									<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1729758639" target="_blank">Graduate<span class="ico_nw"></span></a></span></li>
+									<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1711940030" target="_blank">Global Korea Scholarship<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>
+							<li id="top2m2m2"><span><a href="../admission/exchange01.htm">Exchange Student <span class="va_pc"></span>Program</a></span></li>
+							<li id="top2m2m3"><span><a href="../admission/double01.htm">Double Degree<span class="va_pc"></span>Program</a></span>
+								<!-- <ul class="depth3">
+								<li><span><a href="../admission/double02.htm">3+1 Double Degree</a></span></li>
+								<li><span><a href="../admission/double01.htm">2+2 Double Degree</a></span></li>
+								</ul> -->	
+							</li>
+							<li id="top2m2m4"><span><a href="../admission/visiting01.htm">Visiting Student<span class="va_pc"></span> (Free Mover)&nbspProgram</a></span></li>
+							<li id="top2m2m5"><span><a href="../admission/korean01.htm">Korean Language<span class="va_pc"></span>Program</a></span></li>
+							<li id="top2m2m6"><span><a href="../admission/summer01.htm">Summer School <span class="va_pc"></span>Program</a></span>
+								 <!--<ul class="depth3">
+								<li><span><a href="../admission/summer01.htm">Summer School(Session 1 & 2)</a></span></li>
+								<li><span><a href="../admission/summer02.htm">Summer School(Chinese)</a></span></li>
+								<li><span><a href="../admission/summer03.htm">Summer School(Japanese)</a></span></li>
+								</ul> -->
+							</li>
+							<li id="top2m2m7"><span><a href="../admission/visiting02.htm">Visiting Scholar<span class="va_pc"></span>Program</a></span></li>
+							<!--<li id="top2m2m8"><span><a href="../admission/challenge01.htm">Global Challenger<span class="va_pc"></span>Program</a></span></li>-->
+							</ul>
+						</li>
+						<li><span><a href="../edu/school01.htm" id="top1m3">EDUCATION</a></span>
+							<ul id="top2m3" class="depth2">
+							<div class="gnb_tit img3">EDUCATION<span>Global KNU</span></div>
+							<li id="top2m3m1" class="fst"><span><a href="../edu/school01.htm">Departments Introduction</a></span>
+								<ul class="depth3">
+								<li><span><a href="../edu/school01.htm">Undergraduate</a></span></li>
+								<li><span><a href="https://home.knu.ac.kr/HOME/graden/" target="_blank">Graduate School<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="http://gsis.knu.ac.kr/" target="_blank">International Graduate School<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>
+							<li id="top2m3m2"><span><a href="../edu/academic01.htm">Academic Administration</a></span>
+								<ul class="depth3">
+								<li><span><a href="../edu/academic01.htm">Academic Calendar</a></span></li>
+								<li><span><a href="../edu/academic02_02.htm">Undergraduate</a></span></li>
+								<li><span><a href="https://knuin.knu.ac.kr/public/stddm/edu.knu" target="_blank">Curriculum <span class="ico_nw"></span></a></span></li>
+								<li><span><a href="https://knuin.knu.ac.kr/public/stddm/lectPlnInqr.knu" target="_blank">Class Hour/Syllabus<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="https://lssrq.knu.ac.kr/login.knu?lang=en" target="_blank">Course Registration<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>
+							<li id="top2m3m3"><span><a href="../edu/support01.htm">Education Support </a></span>
+								<ul class="depth3">
+								<li><span><a href="http://kudos.knu.ac.kr/eng/" target="_blank">Library<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="http://lms.knu.ac.kr/" target="_blank" >Smart U-Learning<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="http://lang.knu.ac.kr/" target="_blank">Language Institute<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="http://iwc.knu.ac.kr/" target="_blank">International Writing Center<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>
+							</ul>
+						</li>
+						<li><span><a href="../research/lab00.htm" id="top1m4">RESEARCH</a></span>						
+							<ul id="top2m4" class="depth2">
+							<div class="gnb_tit img4">RESEARCH<span>Global KNU</span></div>
+							<li id="top2m4m1" class="fst"><span><a href="../research/lab00.htm">Research Centers</a></span>
+								<ul class="depth3">
+								<li><span><a href="../research/lab01.htm">Humanities/Social Sciences</a></span></li>
+								<li><span><a href="../research/lab02.htm">Natural Sciences</a></span></li>
+								<li><span><a href="../research/lab03.htm">Engineering</a></span></li>
+								<li><span><a href="../research/lab04.htm">Agricultural Sciences</a></span></li>
+								<li><span><a href="../research/lab05.htm">Medical Sciences</a></span></li>
+								</ul>
+							</li>
+							<li id="top2m4m4" class="fst"><span><a href="../research/research00.htm">Research Achievements</a></li>
+							<li id="top2m4m5" class="fst"><span><a href="../research/research01.htm">Research Videos</a></li>
+							 <!--<li id="top2m4m4" class="fst"><span><a href="../research/achieve00.htm">Research Achievements</a></span>
+								<ul class="depth3">
+								<li><span><a href="../research/achieve01.htm">Arts and Humanities</a></span></li>
+								<li><span><a href="../research/achieve02.htm">Social Sciences / Business</a></span></li>
+								<li><span><a href="../research/achieve03.htm">Natural Sciences</a></span></li>
+								<li><span><a href="../research/achieve04.htm">Engineering / Technology</a></span></li>
+								<li><span><a href="../research/achieve05.htm">Life Sciences</a></span></li>
+								<li><span><a href="../research/achieve06.htm">Medicine</a></span></li>
+								</ul>
+							  </li>-->
+							<li id="top2m4m2"><span><a href="../research/researcher2018_05.htm">Good Researcher</a></span></li>
+							<li id="top2m4m3"><span><a href="https://iac.knu.ac.kr/eng" target="_blank">Office of Research and<span class="va_pc"></span>Industry-University<span class="va_pc"></span>Cooperation<span class="ico_nw"></span></a></li>
+							<li id="top2m4m6"><span><a href="https://research.knu.ac.kr/" target="_blank">KNU Researcher<span class="ico_nw"></span></a></li>
+							<!-- <li id="top2m4m3"><span><a href="https://home.knu.ac.kr/HOME/knuprmap2/index.html" target="_blank">Office of Research and<span class="va_pc"></span>Industry-University<span class="va_pc"></span>Cooperation<span class="ico_nw"></span></a></li> -->
+							</ul>
+						</li>
+						<li><span><a href="../campus/service03.htm" id="top1m5">CAMPUS LIFE</a></span>						
+							<ul id="top2m5" class="depth2">
+							<div class="gnb_tit img5">CAMPUS LIFE<span>Global KNU</span></div>
+							<li id="top2m5m2"><span><a href="../campus/service03.htm">Student support</a></span>
+								<ul class="depth3">
+								<li><span><a href="../campus/service03.htm">Housing</a></span></li>
+								<li><span><a href="../campus/service01.htm">Career Development</a></span></li>
+								<li><span><a href="../campus/service02.htm">Facilities</a></span></li>
+								</ul>
+							</li>
+							<li id="top2m5m3"><span><a href="../campus/life01.htm">Student Life</a></span>
+								<ul class="depth3">
+								<li><span><a href="../campus/life01.htm">Health Insurance</a></span></li>
+								<li><span><a href="../campus/life02.htm">Disabled Student Support Center</a></span></li>
+								<li><span><a href="http://coop.knu.ac.kr/pages/board/list.php?board_sid=9" target="_blank">On-campus cafeteria menus<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="http://counsel.knu.ac.kr/" target="_blank">Student counselling center<span class="ico_nw"></span></a></span></li>
+								<!-- <li><span><a href="../campus/life03.htm">International Programs</a></span></li> -->
+								</ul>
+							</li>
+							<li id="top2m5m4"><span><a href="../campus/info01.htm">Life at KNU</a></span>
+								<ul class="depth3">
+								<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730012177" target="_blank">Scholarships<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730012369" target="_blank">Visa<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730117729" target="_blank">Q&A<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1729835413"  target="_blank">Int'l Students Guidebook<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>
+							<!-- <li id="top2m5m1" class="fst"><span><a href="../campus/volunteer01.htm">Volunteer</a></span>
+								<ul class="depth3">
+								<li><span><a href="../campus/volunteer01.htm">Volunteer program</a></span></li>
+								</ul>
+							</li> -->
+							</ul>
+						</li>
+						<li><span><a href="../board/notice01.htm" id="top1m6">NEWS</a></span>
+							<ul id="top2m6" class="depth2">
+							<div class="gnb_tit img6">NEWS<span>Global KNU</span></div>
+							<li id="top2m6m1" class="fst"><span><a href="../board/notice01.htm">Notice</a></span></li>
+							<li id="top2m6m2"><span><a href="../board/news01.htm">News</a></span></li>
+							<li id="top2m6m3"><span><a href="../board/job01.htm">Job Openings</a></span></li>
+							<li id="top2m6m4"><span><a href="../board/gallery01.htm">KNU Gallery</a></span>
+								<ul class="depth3">
+								<li><span><a href="../board/gallery01.htm">Photo</a></span></li>
+								<li><span><a href="../board/gallery01_02.htm">Video</a></span></li>
+								</ul>
+							</li>
+							
+							<!-- <li id="top2m6m5"><span><a href="../board/news02.htm">SDGs</a></span>
+								<ul class="depth3">
+								<li><span><a href="../board/gallery03.htm">SDGs Report</a></span></li>
+								<li><span><a href="../board/gallery04.htm">Separate SDGs Report</a></span></li>
+								</ul>
+							</li> -->
+							
+						
+							<!-- <li id="top2m6m6"><span><a href="../board/covid.htm">COVID-19 Notice</a></span></li> -->
+							</ul>
+						</li>
+						<li><span class=""><a href="../alumni/KNUalumni.htm" id="top1m7">KNU Alumni</a></span>	
+							<ul id="top2m7" class="depth2">
+								<div class="gnb_tit img6">Alumni</div>
+								<li id="top2m7m1" class="fst"><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730184515" target="_blank">Number of Alumni<span class="ico_nw"></span></a></span></li>
+								<li id="top2m7m2"><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730184740" target="_blank">Alumni Story<span class="ico_nw"></span></a></span></li>
+								<li id="top2m7m3"><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730184810" target="_blank">News Letter<span class="ico_nw"></span></a></span></li>
+							</ul>
+						</li>
+						</ul>
+						</nav>
+						</div>
+						<!-- //end_gnbmn -->
+							
+					<script type="text/javascript">initTopMenu(0,0);</script>
+					<div id="id_gnb_bg" class="gnb_bg"></div>
+		</div>
+
+		<div class="clear"></div>
+</div>
+</div>    <div id="svisual" class="svbg sv2bg">
+			<div class="dark"></div>
+			<!-- <div class="svtit d_width"><img src="/wbbs/img/vtit.png" alt="Change KNU 글로벌 지식선도대학을 향하여"></div> -->
+</div>	    <div id="container" class="d_width">
+      <div id="snb"><a name="snb"></a>
+	<h2>INTERNATIONAL</h2> 
+	<div id="snbmn">
+	<ul id="snb2m">
+	<li id="snb2m1"><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1549935033">Academic Degree Program</a>
+		<ul id="snb3m1">
+			<li id="snb3m1m1"><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1549935033">Undergraduate</a></li>
+			<li id="snb3m1m2"><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1729758639">Graduate</a></li>
+			<li id="snb3m1m2"><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1711940030">Global Korea Scholarship</a></li>
+		</ul>
+		<!-- <ul id="snb3m1">
+		<li id="snb3m1m1"><a href="../admission/foreign01.htm">Undergraduate</a></li>
+		<li id="snb3m1m2"><a href="../admission/foreign02.htm">Graduate</a></li>
+		<li id="snb3m1m2"><a href="../admission/foreign02.htm">Graduate</a></li>
+		</ul> -->
+	</li>
+	<li id="snb2m2"><a href="../admission/exchange01.htm">Exchange Student Program</a></li>
+	<li id="snb2m3"><a href="../admission/double01.htm">Double Degree Program</a>
+		<!-- <ul id="snb3m5">
+		<li id="snb3m5m2"><a href="../admission/double02.htm">3+1 Double Degree </a></li>
+		<li id="snb3m5m1"><a href="../admission/double01.htm">2+2 Double Degree </a></li>
+		</ul> -->
+	</li>
+	<li id="snb2m4"><a href="../admission/visiting01.htm">Visiting Student<br>(Free Mover) Program</a></li>
+	<li id="snb2m5"><a href="../admission/korean01.htm">Korean Language Program</a></li>
+	<li id="snb2m6"><a href="../admission/summer01.htm">Summer School Program</a>
+		<!-- <ul id="snb3m4">
+		<li id="snb3m4m1"><a href="../admission/summer01.htm">Summer School(Session 1 & 2)</a></li>
+		<li id="snb3m4m2"><a href="../admission/summer02.htm">Summer School(Chinese)</a></li>
+		<li id="snb3m4m3"><a href="../admission/summer03.htm">Summer School(Japanese)</a></li>
+		</ul> -->
+	</li>
+	<li id="snb2m7"><a href="../admission/visiting02.htm">Visiting Scholar Program</a></li>
+	<!--<li id="snb2m8"><a href="../admission/challenge01.htm">Global Challenger Program</a></li>-->
+	</ul>
+	</div>
+	<script type="text/javascript">initsnbMenu(2,1);</script>
+	<noscript></noscript>
+</div>      <div id="content" class="cbg">
+        <div id="body_head">
+	<div id="location">
+		<h4>현재위치</h4>
+		<ul>
+		<li><a href='../' title='HOME'>HOME</a></li><li><a href='/~eng/admission/foreign03.htm' title='International'>International</a></li><li class='on'><a href='/~eng/admission/exchange01.htm' title='Exchange Student Program'>Exchange Student Program</a></li>		</ul>
+		<div class="clear"></div>
+	</div>
+	<div id="pnb">
+		<ul>
+		<li><a href="#pnb" onclick="zoomFont(1);return false;" onkeypress="if(event.keyCode == 13){this.onclick}" title="글씨크기를 확대합니다"><img src="../img/btn_font_p.gif" alt="글씨크기확대" /></a></li>
+		<li><a href="#pnb" onclick="zoomFont(0);return false;" onkeypress="if(event.keyCode == 13){this.onclick}" title="글씨크기를 기본값으로 합니다"><img src="../img/btn_font_d.gif" alt="글자크기기본" /></a></li>
+		<li><a href="#pnb" onclick="zoomFont(-1);return false;" onkeypress="if(event.keyCode == 13){this.onclick}" title="글씨크기를 축소합니다"><img src="../img/btn_font_m.gif" alt="글씨크기축소" /></a></li>
+		<li><a href="#pnb"  onclick="contentPrint(1);return false;" title="새창을 띄워 화면을 프린트합니다"><img src="../img/btn_print.gif" alt="인쇄"/></a></li>
+		</ul>
+		<noscript>자바스크립트를 사용할 수 없는 환경에서는 글쓰크기 확대 및 축소, 프린트기능을 사용하실 수 없습니다.</noscript>
+	</div>
+	<div class="clear"></div>
+	<div id="body_title">
+		<h1>Exchange Student Program</h1>
+	</div>
+</div>        <div id="body_content">
+          <!-- start -->
+          <div id="aside-quick">
+            <ul>
+              <li><a href="#con01">Eligibility</a></li>
+              <li><a href="#con02">Required Documents</a></li>
+              <li><a href="#con03">Acceptance Packet</a></li>
+              <li><a href="#con04">Academic Calendar</a></li>
+              <li><a href="#con05">Transcripts</a></li>
+              <li><a href="#con06">Courses</a></li>
+              <li><a href="#con07">Internship</a></li>
+              <li><a href="#con08">Housing</a></li>
+              <li><a href="#con09">KNU Student Buddy Program</a></li>
+              <li><a href="#con10">Korean National Health Insurance Service (NHIS)</a></li>
+              <li><a href="#con11">More Information</a></li>
+              <li><a href="#con12">Exchange Program Photos</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <img src="../img/admission/double_bg.png" alt="knu university">
+          </div>
+          <div class="graybg mtp10">
+            <p class="fwb">Study/Internship/Culture/Networking</p>
+            <p>Experience a new learning environment, include a part-time internship in the Korean workplace, and build
+              your international network as an exchange student at Kyungpook National University.</p>
+          </div>
+          <p class="tac mtp10"><a href="../download/KNU Fact Sheet 2027 Spring.pdf" target="_blank"
+              class="btn_d btn_small btn_custom">KNU Fact Sheet</a></p>
+          
+
+          <h3><a name="con01">Eligibility</a></h3>
+          <p>Currently enrolled on undergraduate program at KNU partner institution</p>
+          <p>※ If your university is not KNU partner institution, please check <a
+              href="https://en.knu.ac.kr/admission/visiting01.htm" style="text-decoration:underline;">Visiting Student
+              Program</a></p>
+          <ul class="bu">
+            <li>Language proficiency in either English or Korean</li>
+            <li>Nomination and Application Schedule</li>
+          </ul>
+          <table class="t1 tac">
+            <colgroup>
+              <col style="width:25%">
+              <col style="width:25%">
+              <col style="width:25%">
+              <col style="width:25%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">Starting Semester</th>
+                <th scope="col">Nomination Deadline</th>
+                <th scope="col">Application Deadline</th>
+                <th scope="col">Acceptance (Email)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Spring Semester</th>
+                <td>October 15</td>
+                <td>October 30</td>
+                <td>Late December</td>
+              </tr>
+              <tr>
+                <th scope="row">Fall Semester</th>
+                <td>April 15</td>
+                <td>April 30</td>
+                <td>Late June</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3><a name="con02">Required Documents</a></h3>
+          <div class="gr1bx mbp10">
+            <ol class="list1">
+              <li class="fwb">Online Application: fill out <a href="http://en.knu.ac.kr/admission/exchange_app2.htm"
+                  class="btn_d btn_xxsmall">here</a></li>
+              <li class="fwb">Letter of Recommendation from Home University</li>
+              <li class="fwb">Certificate of Enrollment of Home University</br>
+				<span class="pointr">For non-OECD country nationals, authentication like Apostille or Korean embassy/consulate legalization is additionally needed on this document</span>
+              </li>
+              <li class="fwb">Official Academic Transcript</li>
+              <li class="fwb">Passport Copy (Personal Information Page)</li>
+              <li class="fwb">Color ID Photo (for student ID card)</li>
+              <li class="fwb">Official e-Bank/Financial Statement (Electronically issued documents are accepted as originals. if the document is not issued electronically, an original hard copy must be submitted by post.)</br>(KRW 8,000,000 for
+                1 semester, KRW 16,000,000 for 2 or more semesters)</li>
+              <li class="fwb">Certificate of Family Relations (only If you have a bank statement in your parent’s name)</li>
+            </ol>
+          </div>
+          <p>※ <b>For non-OECD countries, the authenticated certificate of enrollment must be submitted by post. As processing times for apostille certificates and consular legalization may vary and be delayed depending on the country, we strongly recommend preparing the required documents well in advance.</b><br>
+		  <b>Mailing address: </b>Inbound Mobility Teams, Office of International Affairs<br>
+		  Kyungpook National University<br>
+		  80, Daehakro, Bukgu, Daegu, Republic of Korea, 41566
+		  </p>
+          <p>※ Language Proficiency Test (TOEFL/TOEIC) submission is not required.</p>
+          <p>※ All required documents should be submitted through the online application site below.</p>
+          <h3><a name="con03">Acceptance Packet</a></h3>
+          <p>The acceptance packet will include the certificate of admission (if needed for visa purposes), the letter
+            of acceptance, the welcome letter (including the arrival information sheet, the course registration and
+            academic schedule). The acceptance packet will be delivered to a student’s email individually so that the
+            student can apply for the student visa.</p>
+
+          <h3><a name="con04">Academic Calendar: see from <a href="https://en.knu.ac.kr/edu/academic01.htm"
+                class="btn_d btn_xxsmall">here</a></a></h3>
+          <ul class="bu">
+            <li>Spring semester starts on March 2</li>
+            <li>Fall Semester starts on September 1</li>
+          </ul>
+          <p>※ Orientation for both semesters will be given upon arrival</p>
+
+          <h3><a name="con05">Transcripts</a></h3>
+          <ul class="bu">
+            <li>Available on the KNU website <a href="https://knu.certpia.com/" target="_blank"
+                class="btn_d btn_xxsmall">here</a></li>
+            <li>It will be sent to international students’ home university coordinators in July (for the spring
+              Semester), and February (for the fall Semester)</li>
+          </ul>
+
+          <h3><a name="con06">Courses</a></h3>
+          <p>A variety of courses are offered in English by individual colleges and departments, along with courses
+            specially designed to offer a new perspective and understanding of Korea.<br>The list of courses taught in
+            English will be available in January for the following spring semester or July for the following fall
+            semester. In addition, this list will be sent to all accepted exchange students by e-mail with instructions
+            on course registration.<br>The normal course load for students at KNU is 5-6 courses (which is usually 18
+            Korean credits). Most KNU classes are three-credit courses and in order to get three credits in KNU,
+            students have to complete 45 hours of studies (3 hours × 15 weeks). (1 course = 3 US credits, 45 class hours
+            per semester, including exam period)</p>
+          <ul class="bu">
+            <li><span class="fwb">Undergraduate : </span>Maximum number of credit that undergraduate students can take
+              per semester is 18 credit (six courses).</li>
+            <li><span class="fwb">Graduate : </span>Maximum number of credit that graduate students can take per
+              semester is 9 credit (three courses).</li>
+          </ul>
+          <div class="gr1bx tac course_btn">
+            <a href="../download/Spring 2026 KNU Courses.xlsx"
+              download class="btn_d btn_small btn_custom">Spring 2026 Course List</a>
+            <a href="../download/Fall 2026 KNU Courses.xlsx"
+              download class="btn_d btn_small btn_custom">Fall 2026 Course List</a>
+            <!-- <a href="https://docs.google.com/spreadsheets/d/1XbbeZrb2DfObSRYPNKBtbKdC6j3jS3i9b7_7vyPA1Z4/edit?usp=sharing"
+              target="_blank" class="btn_d btn_small btn_custom">Course List for Fall 2025</a> -->
+            <!-- <a href="https://docs.google.com/spreadsheets/d/1kqQFlbq3EtoxGb6fxK97DzlVZVETA0Gky0vzKAJNxYc/edit?usp=sharing"
+              target="_blank" class="btn_d btn_small btn_custom">Course List for Spring 2025</a> -->
+            <!-- <a href="../download/Yearly Course List.pdf" target="_blank" class="btn_d btn_small btn_custom">Yearly
+              Course List (without Syllabus)</a> -->
+          </div>
+          <h3><a name="#">K-SAC (Korean Society and Culture) Program</a></h3>
+          <p>The College of Social Science at Kyungpook National University launched a new program, the "K-SAC (Korean
+            Society and Culture) Program" – opening courses from many different majors in the Social Sciences, from
+            Political Science and Diplomacy, Sociology, Psychology, to Media Communication, and issuing a certificate if
+            students take at least 4 courses according to the certificate program requirements. Courses from the program
+            with the required elective courses. The goal of the program is to introduce KNU students to the social
+            sciences more broadly while also introducing incoming international students to Korean culture. For more
+            detailed information, please check its brochure below.</p>
+
+          <p class="tac mtp10"><a href="../download/K-SAC Program Brochure_KNU.pdf" target="_blank"
+              class="btn_d btn_small btn_custom">K-SAC Program Brochure</a></p>
+
+          <h3><a name="con07">Internship</a></h3>
+          <p>KNU provides international students with a unique opportunity to incorporate an internship into their
+            exchange semester through its network of diverse Korean companies, including multinational conglomerates,
+            SMEs, local governments, and NGOs. The program offers a platform for students to gain experience in Korean
+            cooperation.<br>
+            English serves as the primary language of communication. The activities assigned to students vary ba　sed on
+            their individual backgrounds, skills, and the specific requirements of the host company. Each company has
+            its own set of conditions and expectations. It's important to note that the Global Internship Program is an
+            unpaid opportunity and does not provide academic credits.<br>
+            Internships are arranged at the beginning of the semester and have a duration of 12 weeks. Students are
+            expected to dedicate approximately 12 hours per week to their internship responsibilities depending on the
+            host company’s condition. Additionally, opportunities may be available during the Summer and Winter
+            vacations, subject to change.</p>
+
+          <p class="tac mtp10"><a href="../download/2026 SPRING KNU Global Internship Instruction.pdf" target="_blank"
+              class="btn_d btn_small btn_custom">Internship Instruction</a></p>
+
+          <h3><a name="con08">Housing</a></h3>
+          <p>All exchange students are automatically assigned to a shared room (double room) in one of several on-campus
+            dormitories. The dormitory fee for one semester varies depending on the requested meal plan and can range
+            from around USD$500 for no meal plan to USD$1000 for three meals per day at the dormitory cafeteria.</p>
+          <p>※ Special dietary options are not available at the dorm cafeteria.</p>
+
+          <h3><a name="con09">KNU Student Buddy Program</a></h3>
+          <p>All new coming exchange students are assigned a Korean student buddy who will help you adjust to a life at
+            Kyungpook National University. Your buddy will contact you via e-mail prior to your departure for Korea.</p>
+
+          <h3><a name="con10">Korean National Health Insurance Service (NHIS)</a></h3>
+          <p>Any international students who is staying in Korea holding a D-2 visa is subject to a mandatory
+            subscription to National Health Insurance from March, 2021. According to the National Health Insurance
+            Service (NHIS), the generic cost for international students is around KRW 71,520 ($60) the exact cost will
+            be available on your monthly bills. Once you enroll, you can receive various benefits including dental and
+            oriental medical treatment, health checkups, and pregnancy and childbirth-related medical expenses as the
+            Korean citizens receive.<br><br>No action is required from students, as you are automatically subscribed to
+            health insurance by the NHIS once you receive your ARC. Your NHI card and subscription guide are sent to
+            your residential address in Korea based on the information of ARC.</p>
+          <ul class="bu">
+            <li>French and Japanese citizenship holder can apply not to subscribe the NHIS by visiting the Office of
+              NHIS in Buk-gu, Daegu, Republic of Korea, after one’s arrival at KNU.</li>
+            <li>NHIS Website: <a href="https://www.nhis.or.kr/english/index.do" target="_blank"
+                class="btn_d btn_xxsmall">here</a></li>
+            <li>Call: 033-811-2000 (English, Chinese, Vietnamese, and Uzbek)</li>
+          </ul>
+
+          <h3><a name="con11">More Information</a></h3>
+          <!-- <p class="graybx">
+            if you need further information or any help, please contact the exchange program coordinator, Ms. Haejin
+            Shin at <a href="mailto: shinhj@knu.ac.kr" class="underline"> shinhj@knu.ac.kr</a>, and Ms. Jungmin Lee at
+            <a href="mailto:sabroad@knu.ac.kr" class="underline">sabroad@knu.ac.kr</a> (for housing and the Global
+            Internship Program).
+            <br>
+            As a national university, Kyungpook National University adheres to the policies of the Republic of Korea
+            regarding abuse, harassment, discrimination, sexual exploitation and blackmail. Reporting and investigation
+            procedures are that of the Republic of Korea.
+          </p> -->
+		  
+		  <p class="graybx">
+            Nomination and Application: <a href="mailto: inbound1@knu.ac.kr" class="underline">inbound1@knu.ac.kr</a><br>
+			Courses, Dormitory, Scholarships, orientation, etc.: <a href="mailto: sabroad@knu.ac.kr" class="underline">sabroad@knu.ac.kr</a>
+          </p>
+		  
+		  
+          <div class="tac mtp20">
+            <a href="https://en.knu.ac.kr/admission/exchange_app2.htm" title="Online application."
+              class="btn_d btn_round btn_red">Online application</a>
+          </div>
+
+
+          <h3><a name="con12">Exchange Program Photos</a></h3>
+          <div class="summersc-list">
+            <img src="../img/admission/programphoto.png" usemap="#imgmap20241227172221">
+            <map id="imgmap20241227172221" name="imgmap20241227172221">
+              <area shape="rect" coords="0,0,230,150" href="https://en.knu.ac.kr/img/admission/programphoto1.jpg"
+                target="_blank">
+              <area shape="rect" coords="230,0,460,150" href="https://en.knu.ac.kr/img/admission/programphoto2.jpg"
+                target="_blank">
+              <area shape="rect" coords="460,0,690,150" href="https://en.knu.ac.kr/img/admission/programphoto3.jpg"
+                target="_blank">
+              <area shape="rect" coords="690,0,920,150" href="https://en.knu.ac.kr/img/admission/programphoto4.JPG"
+                target="_blank">
+              <area shape="rect" coords="0,150,230,300" href="https://en.knu.ac.kr/img/admission/programphoto5.JPG"
+                target="_blank">
+              <area shape="rect" coords="230,150,460,300" href="https://en.knu.ac.kr/img/admission/programphoto6.jpg"
+                target="_blank">
+              <area shape="rect" coords="460,150,690,300" href="https://en.knu.ac.kr/img/admission/programphoto7.jpg"
+                target="_blank">
+              <area shape="rect" coords="690,150,920,300" href="https://en.knu.ac.kr/img/admission/programphoto8.jpg"
+                target="_blank">
+              <area shape="rect" coords="0,300,230,450" href="https://en.knu.ac.kr/img/admission/programphoto9.jpg"
+                target="_blank">
+              <area shape="rect" coords="230,300,460,450" href="https://en.knu.ac.kr/img/admission/programphoto10.jpg"
+                target="_blank">
+              <area shape="rect" coords="460,300,690,450" href="https://en.knu.ac.kr/img/admission/programphoto11.jpg"
+                target="_blank">
+              <area shape="rect" coords="690,300,920,450" href="https://en.knu.ac.kr/img/admission/programphoto12.jpg"
+                target="_blank">
+              <area shape="rect" coords="0,450,230,600" href="https://en.knu.ac.kr/img/admission/programphoto13.jpg"
+                target="_blank">
+              <area shape="rect" coords="230,450,460,600" href="https://en.knu.ac.kr/img/admission/programphoto14.jpg"
+                target="_blank">
+              <area shape="rect" coords="460,450,690,600" href="https://en.knu.ac.kr/img/admission/programphoto15.jpg"
+                target="_blank">
+              <area shape="rect" coords="690,450,920,600" href="https://en.knu.ac.kr/img/admission/programphoto16.JPG"
+                target="_blank">
+            </map>
+          </div>
+          <!-- //end -->
+        </div>
+      </div>
+            <div class="clear"></div>
+    </div>
+  </div>
+  <div id="footer">
+<div id="f_site" class="d_width">
+		<div class="list univ">
+		<strong>Undergraduate</strong>
+			<ul>
+			<li><a href="http://humanities.knu.ac.kr/" target="_blank">College of Humanities</a></li>
+			<li><a href="http://social.knu.ac.kr/" target="_blank">College of Social Sciences</a></li>
+			<li><a href="http://cns.knu.ac.kr/" target="_blank">College of Natural Sciences</a></li>
+			<li><a href="http://cec.knu.ac.kr/" target="_blank" >College of Economics & Business Administration</a></li>
+			<li><a href="http://eng.knu.ac.kr/english" target="_blank">College of Engineering</a></li>
+			<li><a href="http://it.knu.ac.kr/" target="_blank" >College of IT Engineering</a></li>
+			<li><a href="http://cals.knu.ac.kr/" target="_blank" >College of Agriculture and Life Sciences </a></li>
+			<li><a href="http://mvarts.knu.ac.kr/" target="_blank">College of Music and Arts</a></li>
+			<li><a href="http://knutc.knu.ac.kr/" target="_blank">Teachers’ College</a></li>
+			<li><a href="http://med.knu.ac.kr/eng/" target="_blank" >School of Medicine</a></li>
+			<li><a href="https://dent.knu.ac.kr/eng" target="_blank">School of Dentistry</a></li>
+			<li><a href="http://vet.knu.ac.kr/" target="_blank">College of Veterinary Medicine</a></li>
+			<li><a href="http://cohe.knu.ac.kr/" target="_blank">College of Human Ecology</a></li>
+			<li><a href="http://nurs.knu.ac.kr/eng/" target="_blank">College of Nursing</a></li>
+			<li><a href="http://pharmpf.knu.ac.kr/eng/" target="_blank" >School of Pharmacy</a></li>
+			<li><a href="http://cee.knu.ac.kr/" target="_blank">College of Ecology and Environmental Science</a></li>
+			<li><a href="https://encst.knu.ac.kr/" target="_blank">College of Science and Technology</a></li>
+			<!-- <li><a href="http://gls.knu.ac.kr/eng" target="_blank" >Global Leaders’ School</a></li> -->
+			<li><a href="http://puad.knu.ac.kr/" target="_blank">School of Public Administration</a></li>
+			<li><a href="http://udm.knu.ac.kr/" target="_blank" >Undeclared Majors</a></li>
+			<li><a href="http://gls.knu.ac.kr/eng/index.html" target="_blank" >Global Leaders School</a></li>
+			<!-- <li><a href="http://law.knu.ac.kr/" target="_blank" >Law School</a></li> -->
+			<!-- <li><a href="http://tbudm.knu.ac.kr/" target="_blank">School of Science Technology, Biology and Undeclared Majors</a></li> -->
+			<!-- <li><a href="http://shw.knu.ac.kr/" target="_blank" >School of Health and Welfare</a></li> -->
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="list graduate">
+		<strong>Graduate</strong>		
+			<ul class="left">
+			<!-- <p class="pointgr2">General Graduate school</p> -->
+			<li><a href="http://grad.knu.ac.kr" target="_blank">General Graduate School</a></li>
+			<!-- <p class="pt30 pointgr2">Professional Graduate School</p> -->
+			
+			<!-- <p class="pointgr2">Specialized Graduate School</p> -->
+			<li><a href="http://gse.knu.ac.kr/" target="_blank" >Graduate School of Education</a></li>
+			<li><a href="http://gspa.knu.ac.kr/" target="_blank">Graduate School of Public Administration</a></li>
+			<li><a href="http://cec.knu.ac.kr/HOME/biz/sub.htm?nav_code=biz1467295441" target="_blank">Graduate School of Business Administration</a></li>
+			<li><a href="http://health.knu.ac.kr/" target="_blank" >Graduate School of Public Health</a></li>
+			<li><a href="http://ind.knu.ac.kr/" target="_blank">Graduate School of Industry</a></li>
+			<li><a href="https://www.knu.ac.kr/wbbs/wbbs/contents/index.action?menu_url=edu/school04_01&menu_idx=41">Graduate School of Agricultural Development</a></li>
+			<li><a href="http://gsis.knu.ac.kr/" target="_blank">Graduate School of International Studies</a></li>
+			<li><a href="http://social.knu.ac.kr/HOME/coss/sub.htm?nav_code=cos1466989409" target="_blank">Graduate School of Policy and Infomation</a></li>
+			</ul>
+			<!-- <li><a href="http://med.knu.ac.kr/eng" target="_blank">School of Medicine</a></li> -->
+			<!-- <li><a href="http://dent.knu.ac.kr/eng" target="_blank">School of Dentistry</a></li> -->
+			<li><a href="https://www.knu.ac.kr/wbbs/wbbs/contents/index.action?menu_url=edu/school04_02&menu_idx=41">Graduate School of Forensic and Investigative Science</a></li>
+			<li><a href="http://seoksa.knu.ac.kr/" target="_blank">Graduate School of Science and Technology</a></li>
+			<li><a href="http://lawschool.knu.ac.kr/" target="_blank">Law School</a></li>
+			<ul class="left">
+			</ul>
+		</div>
+
+	
+		<div class="clear"></div>
+</div>
+<address>
+<div class="d_width">
+	<div class="d2"><p><strong>Daegu Main Campus</strong>80, Daehak-ro, Buk-gu, Daegu, Republic of Korea.</p>
+		<ul>
+		<li>Undergraduate : +82-53-950-2436, ugapply@knu.ac.kr</li>
+		<li>Graduate: +82-950-2435, admission@knu.ac.kr</li>
+		<li>GKS: +82-53-950-2434, gks2000@knu.ac.kr</li>
+		<li>Inbound Exchange: inbound1@knu.ac.kr, sabroad@knu.ac.kr</li>
+		</ul>
+	</div>
+	<div class="d2"><p><strong>Sangju Campus</strong>2559, Gyeongsang-daero, Sangju-si, Gyeongsangbuk-do 37224 Korea.</p>
+		<ul>
+		<li>TEL: +82-54-530-1561</li>
+		<li>FAX: +82-54-532-6005</li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+	<div id="copyright">Copyright(c) Kyungpook National University. <span class="va_mo"></span>All rights reserved.</div>
+</div>
+</address>
+</div></body>
+
+</html>

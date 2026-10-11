@@ -1,0 +1,1403 @@
+
+<!doctype html>
+<html lang="en" data-ng-app="srs">
+<head>
+
+    <title>Continuing Studies at UVic international programs | Continuing Studies at UVic</title>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="Author" content="Emma Lecours" />
+    <meta name="Description" content="Build global readiness with UVic Continuing Studies. Enhance English, communication and practical skills for international success." />
+    <meta name="Keywords" content="" />
+    <link rel="canonical" href="https://continuingstudies.uvic.ca/international-students/international-programs" />
+    <meta property="og:title" content="Continuing Studies at UVic international programs" />
+    <meta property="og:url" content="https://continuingstudies.uvic.ca/international-students/international-programs" />
+    <meta property="og:description" content="Build global readiness with UVic Continuing Studies. Enhance English, communication and practical skills for international success." />
+
+<meta property="fb:app_id" content="482926851874319" />
+<meta name="facebook-domain-verification" content="3ypocnosq4zr1qzaylgawm02zjilxd" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@uviccontinuing" />
+<meta property="og:type" content="website" />
+
+        <meta property="og:image" content="https://continuingstudies.uvic.ca/media/rlobifac/dcs-getglobalready.jpg" />
+
+<meta property="og:site_name" content="Continuing Studies at UVic" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="57x57" href="/content/images/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/content/images/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="/content/images/apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/content/images/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/content/images/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/content/images/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/content/images/apple-touch-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/content/images/apple-touch-icon-180x180.png" />
+<script type="text/javascript">
+    var webApiUrl = 'https://continuingstudies.uvic.ca/srs';
+    var virtualPath = '';
+    var logInUrl = 'Account/Login';
+</script>
+<link rel="stylesheet" href="/css/blockgridlayout.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/lib/revolution-slider/rs-plugin/css/settings.css" />
+<link href="/Content/Site.css" rel="stylesheet" type="text/css" /><link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/lib/open-sans-fonts/open-sans.css" rel="stylesheet" type="text/css" /><link href="/lib/poppins-fonts/poppins.css" rel="stylesheet" type="text/css" /><link href="/lib/jquery/jquery.fancybox-3.5.7.min.css" rel="stylesheet" type="text/css" /><link href="/lib/jquery/jquery.fancybox-3.5.7.thumbs.css" rel="stylesheet" type="text/css" /><link href="/Scripts/ng-table-1.0.0.min.css" rel="stylesheet" type="text/css" /><link href="/lib/fontawesome/css/all.min.css" rel="stylesheet" type="text/css" />
+<script src="/App_Plugins/UmbracoForms/Assets/promise-polyfill/dist/polyfill.min.js?v=13.9.5" type="application/javascript"></script><script src="/App_Plugins/UmbracoForms/Assets/aspnet-client-validation/dist/aspnet-validation.min.js?v=13.9.5" type="application/javascript"></script>
+<link href="/Content/custom.css" rel="stylesheet" type="text/css" /></head>
+<body id="body" data-ng-cloak>
+
+
+            <noscript>
+                <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KTX9SC"
+                        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+            </noscript>
+            <script>
+                (function (w, d, s, l, i) {
+                    w[l] = w[l] || []; w[l].push({
+                        'gtm.start':
+                            new Date().getTime(), event: 'gtm.js'
+                    }); var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                            '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+                })(window, document, 'script', 'dataLayer', 'GTM-KTX9SC');</script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+</script>
+    <div class="wrapper"  data-ng-class="{ 'loading' : loadingClient || isBusy }">
+            <div id="top">
+<div class="header edge-blue">
+    <!-- Topbar -->
+    <div class="topbar shadow-sm">
+        <div class="container">
+<div class="row justify-content-between align-items-center">
+    <div class="col-auto header-uvic-logo me-auto">
+        <a href="https://uvic.ca" target="_blank" title="Visit UVic.ca" rel="noopener noreferrer">
+            <img itemprop="image" id="uvic-logo" class="img-fluid d-none d-md-block" src="/Content/Images/UVic-Logo.png"
+                 alt="University of Victoria" />
+            <img itemprop="image" id="uvic-logo-no-name" class="img-fluid d-block d-md-none pt-1 ps-2" src="/Content/Images/UVic-Logo-no-name.png"
+                 alt="University of Victoria" />
+        </a>
+    </div>
+    <div class="col-auto navbar navbar-right display-block ms-auto pe-2" role="navigation" aria-label="Account Navigation">
+        <ul class="loginbar nav navbar-nav" data-ng-hide="loadingClient">
+            <li class="rounded dropdown min-width-200" data-ng-if="loggedIn">
+                <a href="/Account" class="link rounded">
+                    HI <strong data-ng-bind="::displayName"></strong>
+                </a>
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/Account">My account</a></li>
+                    <li><a href="/Account/Courses">Courses</a></li>
+                    <li><a href="/Account/Messages">Messages <strong data-ng-if="::newMessages">({{ ::newMessages }})</strong></a></li>
+                    <li><a href="/Account/Transcripts">Transcripts and statements</a></li>
+                    <li><a href="/Account/Cart">Shop cart <strong data-ng-if="cart.items.length">({{ cart.items.length }})</strong></a></li>
+                    <li><a href="https://continuingstudies.uvic.ca/srs/Account/Login?Logout=1">Sign out</a></li>
+                </ul>
+            </li>
+            <li class="width-auto" data-ng-if="cart.items.length">
+                <a href="/Account/Cart" data-ng-class="{'d-none d-md-block':loggedIn}" class="dcs-cart rounded">
+                    <span class="white-text" title="Shopping cart"><i class="fa fa-shopping-cart"></i></span> (<span data-ng-bind="cart.items.length"></span>)
+                </a>
+            </li>
+            <li class="width-auto rounded">
+                <a data-ng-if="loggedIn" href="https://continuingstudies.uvic.ca/srs/Account/Login?Logout=1"
+                   class="logout letter-spacing-1 rounded d-none d-md-block">
+                    Sign Out
+                </a>
+                <a data-ng-if="!loggedIn" href="https://continuingstudies.uvic.ca/srs/Account/Login?ReturnUrl=/Account" class="logout letter-spacing-1 rounded float-end">
+                    Sign in
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+        </div>
+    </div>
+    <div class="navbar navbar-default d-none d-md-block" >
+<div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="row mx-auto">
+        <div class="header-dcs-wordmark">
+            <a href="/" aria-label="home">
+                <img itemprop="logo" id="dcs-wordmark" class="img-fluid" src="/media/1knb2y34/dcs-wordmark.png"
+                     alt="Continuing Studies at UVic wordmark" />
+            </a>
+        </div>
+
+    </div>
+</div>        <div class="clearfix"></div>
+    </div>
+    <!--<div id="top-nav" class="collapse navbar-collapse navbar-responsive-collapse" role="navigation" aria-label="Site Navigation">-->
+		<div class="main-navigation shadow" role="navigation">
+
+<nav class="navbar navbar-expand-md navbar-light uvic-dark-blue">
+    <div class="container-lg">
+        <a href="/" aria-label="Continuing Studies Homepage"><img src="https://continuingstudies.uvic.ca/media/1knb2y34/dcs-wordmark.png" alt="Continuing Studies Wordmark" width="150" class="navbar-brand d-md-none"></a>
+
+        <div class="mobile-buttons">
+            <button class="navbar-toggler navbar-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mobileSearch" aria-controls="mobileSearch" aria-expanded="false" aria-label="Toggle search">
+                <span class="search-toggler-icon"><i class="fa fa-search"></i></span>
+            </button>
+
+            <button class="navbar-toggler navbar-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#dcsMegamenu" aria-controls="dcsMegamenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon icon-toggle"></span><span class="full-width-menu">Menu</span>
+            </button>
+        </div>
+        <!-- Start mobile SEARCH -->
+        <div class="collapse navbar-collapse" id="mobileSearch">
+            <ul class="navbar-nav justify-content-between">
+                <li class="nav-item glass d-md-none dropdown-center" id="search-menu-mobile">
+                    <div class="mega-content">
+                        <div class="container-fluid">
+                            <form action="/Search" class="sky-form page-search-form" method="get">
+                                <div class="inline-group">
+                                    <div class="input-group">
+                                        <input name="q" type="text" class="form-control rounded" placeholder="I'm looking for ..." autofocus />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn-u btn" aria-label="Search Button"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="dcsMegamenu">
+            <ul class="navbar-nav justify-content-between">
+                <!-- begin HOUSE -->
+                <li class="nav-item house">
+                    <a href="/" class="d-none d-md-block nav-link" aria-label="Continuing Studies Homepage"><i class="fa fa-lg fa-home" aria-hidden="true"></i></a>
+                </li>
+                <!-- Start mobile ELC -->
+
+                <!-- end mobile ELC -->
+                <!-- Begin STUDY OPTIONS -->
+                <li class="nav-item flex-fill dropdown dropdown-mega position-static">
+                    <a class="nav-link w-100 dropdown-toggle" id="study-options" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Study options</a>
+                    <!-- Begin megamenu dropdown -->
+                    <div class="dropdown-menu shadow" aria-labelledby="study-options">
+                        <div class="mega-content">
+                            <div class="container-fluid">
+                                <!--Begin inside of tab-->
+                                <div class="row">
+                                    <div class="responsive-tabs d-md-flex align-items-start">
+                                        <div class="nav flex-column nav-pills me-3" id="v-pills-studyoptions-tab" role="tablist" aria-orientation="vertical">
+                                            <a class="nav-link active text-end" id="v-pills-programs-tab" data-bs-toggle="pill" data-bs-target="#v-pills-programs" type="button" role="tab" aria-controls="v-pills-programs" aria-selected="true">Programs<i class="fa fa-nav-pill fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-courses-tab" data-bs-toggle="pill" data-bs-target="#v-pills-courses" type="button" role="tab" aria-controls="v-pills-courses" aria-selected="false">Courses<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-custom-tab" data-bs-toggle="pill" data-bs-target="#v-pills-custom" type="button" role="tab" aria-controls="v-pills-custom" aria-selected="false">Custom group training<i class="fa fa-caret-right"></i></a>
+                                        </div>
+                                        <div class="tab-content" id="v-pills-studyoptions-tabContent">
+                                            <div class="card tab-pane fade show active" id="v-pills-programs" role="tabpanel" aria-labelledby="v-pills-programs-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-programs">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-programs" aria-expanded="false"
+                                                           aria-controls="collapse-programs">
+                                                            Programs <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-programs" class="collapse" data-bs-parent="#v-pills-studyoptions-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-programs">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/study-options/programs">Programs overview</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/programs">All programs</a>
+                                                                    <a class="list-group-item" href="/study-options/programs/online-programs">Online programs</a>
+                                                                    <a class="list-group-item" href="/study-options/programs/credit-programs">Credit programs</a>
+                                                                    <a class="list-group-item" href="/study-options/programs/indigenous-focused-programs">Indigenous focused programs</a>
+                                                                    <a class="list-group-item" href="/international-students/international-programs">International programs</a>
+                                                                    <a class="list-group-item" href="/study-options/programs/new-programs">Programs coming soon</a>
+                                                                    <a class="list-group-item" href="/elc">English Language Centre</a>
+                                                                    <a class="list-group-item" href="/study-options/programs/un-accredited-sustainable-development-training">UN Accredited Sustainable Development Training</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/study-options/programs/credentials-overview">Credentials overview</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/study-options/programs/credentials-overview/diplomas">Diplomas</a>
+                                                                    <a class="list-group-item" href="/study-options/programs/credentials-overview/certificates">Certificates</a>
+                                                                    <a class="list-group-item" href="/study-options/programs/credentials-overview/micro-credentials">Micro-credentials</a>
+                                                                    <a class="list-group-item" href="/study-options/programs/credentials-overview/digital-credentials">Digital credentials</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/study-options/programs/helpful-resources">Helpful resources</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/student-services/career-services">Career services</a>
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/delivery-styles">Delivery styles</a>
+                                                                    <a class="list-group-item" href="/info-for/professional-programming/expert-perspectives">Expert perspectives</a>
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/fees-and-payment">Fees and payment</a>
+                                                                    <a class="list-group-item" href="/help-centre/financial-info-and-support">Financial support</a>
+                                                                    <a class="list-group-item" href="/help-centre/online-learning">Online learning</a>
+                                                                    <a class="list-group-item" href="/help-centre/policies">Policies</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade show" id="v-pills-courses" role="tabpanel" aria-labelledby="v-pills-courses-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-courses">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-courses" aria-expanded="false"
+                                                           aria-controls="collapse-courses">
+                                                            Courses <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-courses" class="collapse" data-bs-parent="#v-pills-studyoptions-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-courses">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/study-options/courses">Courses overview</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/courses">All courses</a>
+                                                                    <a class="list-group-item" href="/topics">All topics</a>
+                                                                    <a class="list-group-item" href="/study-options/courses/online-courses">Online courses</a>
+                                                                    <a class="list-group-item" href="/study-options/courses/course-collections">Course collections</a>
+                                                                    <a class="list-group-item" href="/study-options/courses/calendar">Course calendar</a>
+                                                                </div>
+                                                            </div>
+															<div class="col px-3">
+                                                                <h5><a href="/study-options/courses">Courses by location</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/study-options/courses/west-shore-courses">John Horgan Campus (Langford)</a>
+                                                                    <a class="list-group-item" href="/humanities-social-sciences-and-law/series/uvic-on-the-peninsula">Mary Winspear Centre (Sidney)</a>
+																	<a class="list-group-item" href="/courses?location=N/A%20-%20Online">Online</a>
+                                                                    <a class="list-group-item" href="/courses?location=UVic%20campus">UVic Campus</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/study-options/courses/helpful-resources">Helpful resources</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/delivery-styles">Delivery styles</a>
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/how-to-register">Registration info</a>
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/fees-and-payment">Fees and payment</a>
+                                                                    <a class="list-group-item" href="/help-centre/policies">Policies</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade show" id="v-pills-custom" role="tabpanel" aria-labelledby="v-pills-custom-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-custom">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-custom" aria-expanded="false"
+                                                           aria-controls="collapse-custom">
+                                                            Custom group training <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-custom" class="collapse" data-bs-parent="#v-pills-studyoptions-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-custom">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/study-options/custom-learning-solutions">Custom Learning Solutions</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/study-options/custom-learning-solutions/domestic-cls">Domestic</a>
+                                                                    <a class="list-group-item" href="/study-options/custom-learning-solutions/international-cls">International</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--End inside of tab-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End megamenu dropdown -->
+                        </div>
+                    </div>
+                </li>
+                <!-- End STUDY OPTIONS -->
+                <!-- Begin INFO FOR -->
+                <li class="nav-item flex-fill dropdown dropdown-mega position-static">
+                    <a class="nav-link w-100 dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Info for</a>
+                    <!-- Begin megamenu dropdown -->
+                    <div class="dropdown-menu shadow">
+                        <div class="mega-content">
+                            <!--Begin inside of tab-->
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="responsive-tabs d-md-flex align-items-start">
+                                        <div class="nav flex-column nav-pills me-3" id="v-pills-infofor-tab" role="tablist" aria-orientation="vertical">
+                                            <a class="nav-link active text-end" id="v-pills-career-tab" data-bs-toggle="pill" data-bs-target="#v-pills-career" type="button" role="tab" aria-controls="v-pills-career" aria-selected="true">Career professionals<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-lifelong-tab" data-bs-toggle="pill" data-bs-target="#v-pills-lifelong" type="button" role="tab" aria-controls="v-pills-lifelong" aria-selected="false">Lifelong learners<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-International-tab" data-bs-toggle="pill" data-bs-target="#v-pills-International" type="button" role="tab" aria-controls="v-pills-International" aria-selected="false">International students<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-undergraduates-tab" data-bs-toggle="pill" data-bs-target="#v-pills-undergraduates" type="button" role="tab" aria-controls="v-pills-undergraduates" aria-selected="false">UVic undergraduate students<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-indigenous-tab" data-bs-toggle="pill" data-bs-target="#v-pills-indigenous" type="button" role="tab" aria-controls="v-pills-indigenous" aria-selected="false">Indigenous learners<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-groups-tab" data-bs-toggle="pill" data-bs-target="#v-pills-groups" type="button" role="tab" aria-controls="v-pills-groups" aria-selected="false">Groups<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-partnerships-tab" data-bs-toggle="pill" data-bs-target="#v-pills-partnerships" type="button" role="tab" aria-controls="v-pills-partnerships" aria-selected="false">Partnerships<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-Agents-tab" data-bs-toggle="pill" data-bs-target="#v-pills-agents" type="button" role="tab" aria-controls="v-pills-agents" aria-selected="false">Agents and institutions<i class="fa fa-caret-right"></i></a>
+                                        </div>
+                                        <div class="tab-content" id="v-pills-infofor-tabContent">
+                                            <div class="card tab-pane fade show active" id="v-pills-career" role="tabpanel" aria-labelledby="v-pills-career-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-career">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-career" aria-expanded="false"
+                                                           aria-controls="collapse-career">
+                                                            Career professionals <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-career" class="collapse" data-bs-parent="#v-pills-infofor-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-career">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/info-for/professional-programming">Professional development</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/info-for/professional-programming/professional-programs">Professional programs</a>
+                                                                    <a class="list-group-item" href="/study-options/programs/credentials-overview/micro-credentials">Micro-credentials</a>
+                                                                    <a class="list-group-item" href="/info-for/professional-programming/funded-programs">Funded programs</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/study-options/programs/helpful-resources">Helpful resources</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/student-services/career-services">Career services</a>
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/delivery-styles">Delivery styles</a>
+                                                                    <a class="list-group-item" href="/info-for/professional-programming/expert-perspectives">Expert perspectives</a>
+                                                                    <a class="list-group-item" href="/help-centre/financial-info-and-support">Financial support</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade" id="v-pills-lifelong" role="tabpanel" aria-labelledby="v-pills-lifelong-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-lifelong">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-lifelong" aria-expanded="false"
+                                                           aria-controls="collapse-lifelong">
+                                                            Lifelong learners <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-lifelong" class="collapse" data-bs-parent="#v-pills-infofor-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-lifelong">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/info-for/lifelong-learning">Lifelong learning</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/info-for/community-programming">All community programming</a>
+                                                                    <a class="list-group-item" href="/study-options/courses/west-shore-courses">John Horgan Campus (Langford)</a>
+                                                                    <a class="list-group-item" href="/humanities-social-sciences-and-law/series/uvic-on-the-peninsula">UVic on the Peninsula (Sidney)</a>
+                                                                    <a class="list-group-item" href="/study-options/courses/calendar">Course calendar</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade" id="v-pills-International" role="tabpanel" aria-labelledby="v-pills-International-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-International">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-International" aria-expanded="false"
+                                                           aria-controls="collapse-International">
+                                                            International students <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-International" class="collapse" data-bs-parent="#v-pills-infofor-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-International">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/international-students/studying-in-canada">Studying in Canada</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/international-students/international-programs">International programs</a>
+                                                                    <a class="list-group-item" href="/elc">English Language Centre</a>
+                                                                    <a class="list-group-item" href="/study-options/custom-learning-solutions/international-cls">Custom Learning Solutions </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/international-students/travelling-to-canada">Travelling to Canada</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/international-students/travelling-to-canada/travel-restrictions">Planning your travel</a>
+                                                                    <a class="list-group-item" href="/international-students/travelling-to-canada/immigration-documents">Immigration documents</a>
+                                                                    <a class="list-group-item" href="/international-students/travelling-to-canada/medical-insurance">Medical insurance</a>
+                                                                    <a class="list-group-item" href="/international-students/travelling-to-canada/airport-info">Airport info</a>
+                                                                    <a class="list-group-item" href="/international-students/travelling-to-canada/what-to-pack">What to pack</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/international-students/living-in-Canada">Living in Canada</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/international-students/living-in-Canada/about-victoria">About Victoria</a>
+                                                                    <a class="list-group-item" href="/international-students/living-in-Canada/about-uvic">About UVic</a>
+                                                                    <a class="list-group-item" href="/international-students/living-in-Canada/accommodation">Accommodation</a>
+                                                                    <a class="list-group-item" href="/international-students/living-in-canada/international-student-services">Student services</a>
+                                                                    <a class="list-group-item" href="/international-students/living-in-Canada/your-finances-and-budget">Your finances and budget</a>
+                                                                    <a class="list-group-item" href="/international-students/living-in-Canada/working-in-canada">Working in Canada</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade" id="v-pills-undergraduates" role="tabpanel" aria-labelledby="v-pills-undergraduates-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-undergraduates">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-undergraduates" aria-expanded="false"
+                                                           aria-controls="collapse-undergraduates">
+                                                            UVic undergraduate students <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-undergraduates" class="collapse" data-bs-parent="#v-pills-infofor-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-undergraduates">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/info-for/undergraduate-students">UVic undergraduate students</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/info-for/undergraduate-students/concurrent-programs">Concurrent programs for undergraduate students</a>
+                                                                    <a class="list-group-item" href="/info-for/undergraduate-students/programs-for-after-graduation">Programs for after graduation</a>
+                                                                    <a class="list-group-item" href="/info-for/undergraduate-students/courses-for-general-interest">Courses for general interest</a>
+                                                                </div>
+                                                            </div>
+															</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade" id="v-pills-indigenous" role="tabpanel" aria-labelledby="v-pills-indigenous-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-indigenous">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-indigenous" aria-expanded="false"
+                                                           aria-controls="collapse-indigenous">
+                                                            Indigenous learners <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-indigenous" class="collapse" data-bs-parent="#v-pills-infofor-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-indigenous">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/info-for/indigenous-supports">Indigenous supports</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/study-options/programs/indigenous-focused-programs">Indigenous focused programs</a>
+                                                                    <a class="list-group-item" href="/info-for/indigenous-supports/funding">Financial support</a>
+                                                                    <a class="list-group-item" href="https://www.uvic.ca/services/indigenous/students/band-funded/index.php" target="_blank">Sponsorship  <i class="fal fa-external-link"> </i></a>
+                                                                    <a class="list-group-item" href="/info-for/indigenous-supports/student-supports">Student supports</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade" id="v-pills-groups" role="tabpanel" aria-labelledby="v-pills-groups-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-groups">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-groups" aria-expanded="false"
+                                                           aria-controls="collapse-groups">
+                                                            Groups <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-groups" class="collapse" data-bs-parent="#v-pills-infofor-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-groups">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/study-options/custom-learning-solutions">Custom Learning Solutions</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/study-options/custom-learning-solutions/domestic-cls">Domestic</a>
+                                                                    <a class="list-group-item" href="/study-options/custom-learning-solutions/international-cls">International</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade" id="v-pills-partnerships" role="tabpanel" aria-labelledby="v-pills-partnerships-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-partnerships">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-partnerships" aria-expanded="false"
+                                                           aria-controls="collapse-partnerships">
+                                                            Partnerships<i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-partnerships" class="collapse" data-bs-parent="#v-pills-infofor-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-partnerships">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/info-for/partnerships-with-continuing-studies">Partnerships</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/info-for/partnerships-with-continuing-studies/academic-partnerships">Academic partnerships</a>
+                                                                    <a class="list-group-item" href="/info-for/partnerships-with-continuing-studies/industry-partnerships">Industry partnerships</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade" id="v-pills-agents" role="tabpanel" aria-labelledby="v-pills-Agents-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-agents">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-agents" aria-expanded="false"
+                                                           aria-controls="collapse-agents">
+                                                            Agents and institutions<i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-agents" class="collapse" data-bs-parent="#v-pills-infofor-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-agents">
+                                                    <div class="card-body">
+                                                         <div class="row px-3">
+                                                            <div class="col-sm-12 col-md-4 px-3">
+                                                                <h5><a href="/info-for/agents/resources-for-agents-and-institutions">Resources for agents and institutions</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/info-for/agents/resources-for-agents-and-institutions/promotional-materials">Promotional materials</a>
+                                                                    <a class="list-group-item" href="https://portfolio.uvic.ca:8095/portfolio_netpublish_2/#" target="_blank">Photo gallery</a>
+                                                                    <a class="list-group-item" href="/info-for/agents/resources-for-agents-and-institutions/videos">Videos</a>
+                                                                    <a class="list-group-item" href="/info-for/agents/resources-for-agents-and-institutions/homestay-information">Homestay info for agents and institutions</a>
+                                                                    <a class="list-group-item" href="/elc/current-students/elc-schedules">Schedules and calendars (ELC programs only)</a>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 px-3">
+                                                                <h5>&nbsp;</h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/policies/elc-policies">ELC program policies</a>
+                                                                    <a class="list-group-item" href="/business-and-management/student-resources/program-policies">Business program FAQs</a>
+                                                                    <a class="list-group-item" href="/info-for/agents">Agent training</a>
+                                                                    <a class="list-group-item" href="/info-for/agents/resources-for-agents-and-institutions/contact">Contact International Recruitment team</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End inside of tab-->
+                        </div>
+                    </div>
+                    <!-- End megamenu dropdown -->
+                </li>
+                <!-- End INFO FOR -->
+                <!--Begin TOPICS-->
+                <li class="nav-item flex-fill dropdown dropdown-mega position-static">
+                    <a class="nav-link w-100 dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Topics</a>
+                    <div class="dropdown-menu shadow">
+                        <div class="mega-content">
+                            <!--Begin inside of tab-->
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="responsive-tabs d-md-flex align-items-start">
+                                        <div class="nav flex-column nav-pills me-3" id="v-pills-supertopics-tab" role="tablist" aria-orientation="vertical">
+                                            <a class="nav-link active text-end" id="v-pills-topics-tab" data-bs-toggle="pill" data-bs-target="#v-pills-topics" type="button" role="tab" aria-controls="v-pills-topics" aria-selected="true">Browse topics<i class="fa fa-caret-right"></i></a>
+                                        </div>
+                                        <div class="tab-content" id="v-pills-topics-tabContent">
+                                            <div class="card tab-pane fade show active" id="v-pills-topics" role="tabpanel" aria-labelledby="v-pills-topics-tab">
+                                                <div id="collapse-alltopics" class="collapse show" data-bs-parent="#content" role="tabpanel"
+                                                     aria-labelledby="heading-alltopics">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col-sm-12 col-md-4 px-3">
+                                                                <h5><a href="/topics">All topics</a></h5>
+                                                                <div class="list-group list-group-flush">
+                                                                    <a class="list-group-item" href="/ai-data-technology">Artificial Intelligence (AI), Data and Technology</a>
+                                                                    <a class="list-group-item" href="/arts">Arts</a>
+                                                                    <a class="list-group-item" href="/business-and-management">Business and Management</a>
+                                                                    <a class="list-group-item" href="/communication-and-public-relations">Communication and Public Relations</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 px-3">
+                                                                <h5 class="d-none d-md-block">&nbsp;</h5>
+                                                                <div class="list-group list-group-flush">
+                                                                    <a class="list-group-item" href="/elc">English Language Centre	</a>
+                                                                    <a class="list-group-item" href="/health-wellness-and-safety">Health, Wellness and Safety</a>
+                                                                    <a class="list-group-item" href="/humanities-social-sciences-and-law">Humanities, Social Sciences and Law</a>
+                                                                    <a class="list-group-item" href="/languages">Languages</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-4 px-3">
+                                                                <h5 class="d-none d-md-block">&nbsp;</h5>
+                                                                <div class="list-group list-group-flush">
+                                                                    <a class="list-group-item" href="/museums-heritage-and-indigenous-culture">Museums, Heritage and Indigenous Culture 	</a>
+                                                                    <a class="list-group-item" href="/science-and-the-environment">Science and the Environment	</a>
+                                                                    <a class="list-group-item" href="/teaching-learning-and-development">Teaching, Learning and Development</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--end TOPICS-->
+                <!--Begin HELP CENTRE-->
+                <li class="nav-item flex-fill dropdown dropdown-mega position-static ">
+                    <a class="nav-link w-100 dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside">Help centre</a>
+                    <div class="dropdown-menu shadow">
+                        <div class="mega-content">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <!--Begin tab stuff-->
+                                    <div class="responsive-tabs d-md-flex align-items-start">
+                                        <div class="nav flex-column nav-pills" id="v-pills-help-tab" role="tablist" aria-orientation="vertical">
+                                            <a class="nav-link text-end active" id="v-pills-contact-tab" data-bs-toggle="pill" data-bs-target="#v-pills-contact" type="button" role="tab" aria-controls="v-pills-contact" aria-selected="false">Contact us<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-about-tab" data-bs-toggle="pill" data-bs-target="#v-pills-about" type="button" role="tab" aria-controls="v-pills-about" aria-selected="true">About us<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-studying-tab" data-bs-toggle="pill" data-bs-target="#v-pills-studying" type="button" role="tab" aria-controls="v-pills-studying" aria-selected="false">Enrollment and policies<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-financial-tab" data-bs-toggle="pill" data-bs-target="#v-pills-financial" type="button" role="tab" aria-controls="v-pills-financial" aria-selected="false">Financial info and support<i class="fa fa-caret-right"></i></a>
+                                            <a class="nav-link text-end" id="v-pills-current-tab" data-bs-toggle="pill" data-bs-target="#v-pills-current" type="button" role="tab" aria-controls="v-pills-current" aria-selected="false">Student services<i class="fa fa-caret-right"></i></a>
+                                        </div>
+                                        <div class="tab-content" id="v-pills-help-tabContent">
+                                            <div class="card tab-pane fade show" id="v-pills-about" role="tabpanel" aria-labelledby="v-pills-about-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-about">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-about" aria-expanded="false"
+                                                           aria-controls="collapse-about">
+                                                            About us <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-about" class="collapse" data-bs-parent="#v-pills-help-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-about">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/about">About us</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/about/continuing-studies">Continuing Studies</a>
+                                                                    <a class="list-group-item" href="/help-centre/about/team">Meet our team</a>
+                                                                    <a class="list-group-item" href="/help-centre/about/elc">English Language Centre</a>
+                                                                    <a class="list-group-item" href="/help-centre/about/university-of-victoria">University of Victoria</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/about/our-focus">Our focus</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/about/our-focus/strategic-plan">Strategic plan</a>
+                                                                    <a class="list-group-item" href="/help-centre/about/our-focus/indigenous-commitment">Indigenous commitment</a>
+                                                                    <a class="list-group-item" href="/help-centre/about/our-focus/equity-diversity-inclusion">Equity, diversity and inclusion</a>
+                                                                    <a class="list-group-item" href="/help-centre/about/our-focus/our-17-un-sustainable-development-goals-sdgs">Our 17 UN Sustainable Development Goals</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/about/work-with-us">Work with us</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/about/work-with-us/instructors">Instructors</a>
+                                                                    <a class="list-group-item" href="/help-centre/about/work-with-us/partners">Partners</a>
+                                                                    <a class="list-group-item" href="/info-for/agents/new-prospective-agents">Agents</a>
+                                                                    <a class="list-group-item" href="/help-centre/about/work-with-us/staff-positions">Staff positions</a>
+                                                                    <a class="list-group-item" href="/help-centre/about/work-with-us/volunteers">Volunteers</a>
+                                                                    <a class="list-group-item" href="/help-centre/about/work-with-us/homestay-hosts">Homestay hosts</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade" id="v-pills-studying" role="tabpanel" aria-labelledby="v-pills-studying-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-studying">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-studying" aria-expanded="false"
+                                                           aria-controls="collapse-studying">
+                                                            Enrollment and policies <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-studying" class="collapse" data-bs-parent="#v-pills-help-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-studying">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/enrollment">Enrollment</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/how-to-register">How to register</a>
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/fees-and-payment">Fees and payment</a>
+                                                                    <a class="list-group-item" href="/help-centre/financial-info-and-support">Financial support</a>
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/delivery-styles">Delivery styles</a>
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/credit-vs-non-credit">Credit vs non-credit</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/online-learning">Online learning</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/online-learning/system-requirements">System requirements</a>
+                                                                    <a class="list-group-item" href="https://www.uvic.ca/systems/support/computerssoftware/microsoft365/index.php" target="_blank">Microsoft 365  <i class="fal fa-external-link"> </i></a>
+                                                                    <a class="list-group-item" href="/help-centre/online-learning/online-learning-FAQ">Online learning FAQ</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/policies">Policies</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/policies/registration-policies">Registration policies</a>
+                                                                    <a class="list-group-item" href="/help-centre/policies/english-proficiency">English proficiency</a>
+                                                                    <a class="list-group-item" href="/help-centre/policies/elc-policies">ELC policies</a>
+                                                                    <a class="list-group-item" href="/help-centre/policies/privacy-policy">Privacy policy</a>
+                                                                    <a class="list-group-item" href="/help-centre/policies/academic-integrity">Academic integrity</a>
+                                                                    <a class="list-group-item" href="/help-centre/policies/online-behaviour-policy">Online behaviour policy</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade" id="v-pills-financial" role="tabpanel" aria-labelledby="v-pills-financial-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-financial">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-financial" aria-expanded="false"
+                                                           aria-controls="collapse-financial">
+                                                            Financial info and support <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-financial" class="collapse" data-bs-parent="#v-pills-help-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-financial">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/financial-info-and-support">Financial info</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/fees-and-payment">Fees and payment</a>
+                                                                    <a class="list-group-item" href="/help-centre/enrollment/fees-and-payment/taxes">Student and income taxes</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/financial-info-and-support">financial support</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/financial-info-and-support/financial-support-for-individuals">For individuals</a>
+                                                                    <a class="list-group-item" href="/help-centre/financial-info-and-support/Strongerbc-future-skills-grant">StrongerBC Future Skills Grant</a>
+                                                                    <a class="list-group-item" href="/help-centre/financial-info-and-support/financial-support-for-groups">For groups</a>
+                                                                    <a class="list-group-item" href="/info-for/professional-programming/uvic-staff-rate">For UVic employees</a>
+                                                                    <a class="list-group-item" href="/info-for/professional-programming/uvic-grad-rate">For UVic graduate students</a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade" id="v-pills-current" role="tabpanel" aria-labelledby="v-pills-current-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-current">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-current" aria-expanded="false"
+                                                           aria-controls="collapse-current">
+                                                            Student services <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-current" class="collapse" data-bs-parent="#v-pills-help-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-current">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/student-services/preparing-for-your-studies">Preparing for your studies</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/student-services/preparing-for-your-studies/classrooms">Finding your classroom</a>
+                                                                    <a class="list-group-item" href="/help-centre/student-services/preparing-for-your-studies/netlink">Setting up your Netlink ID</a>
+                                                                    <a class="list-group-item" href="/help-centre/student-services/preparing-for-your-studies/accessing-online-courses">Accessing online courses</a>
+                                                                    <a class="list-group-item" href="/help-centre/student-services/preparing-for-your-studies/academic-integrity-resources">Academic integrity resources</a>
+                                                                    <a class="list-group-item" href="/help-centre/student-services/preparing-for-your-studies/student-faq">Student FAQ</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/student-services/student-support-services">Student support services</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/student-services/student-support-services/on-campus-services">On-campus services</a>
+                                                                    <a class="list-group-item" href="/help-centre/student-services/student-support-services/student-support-coordinator">Student support coordinator</a>
+                                                                    <a class="list-group-item" href="/help-centre/student-services/career-services">Career services</a>
+                                                                    <a class="list-group-item" href="/help-centre/student-services/student-support-services/immigration-advising">Immigration advising</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card tab-pane fade show active" id="v-pills-contact" role="tabpanel" aria-labelledby="v-pills-contact-tab">
+                                                <div class="card-header position-relative" role="tab" id="heading-contact">
+                                                    <h5 class="mb-0">
+                                                        <a class="collapsed stretched-link" data-bs-toggle="collapse" href="#collapse-contact" aria-expanded="false"
+                                                           aria-controls="collapse-contact">
+                                                            Contact us <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapse-contact" class="collapse" data-bs-parent="#v-pills-help-tabContent" role="tabpanel"
+                                                     aria-labelledby="heading-contact">
+                                                    <div class="card-body">
+                                                        <div class="row px-3">
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/contact">Contact us</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/contact/ask-a-question">Ask a question </a>
+                                                                    <a class="list-group-item" href="/help-centre/contact/our-location">Our location</a>
+                                                                    <a class="list-group-item" href="/help-centre/contact/technical-assistance">Online learning technical assistance</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col px-3">
+                                                                <h5><a href="/help-centre/contact/stay-connected">Stay connected</a></h5>
+                                                                <div class="list-group-flush">
+                                                                    <a class="list-group-item" href="/help-centre/contact/enews">Join E-News</a>
+                                                                    <a class="list-group-item" href="/help-centre/contact/social-media">Find us on social media</a>
+                                                                    <a class="list-group-item" href="/newsfeed">Newsfeed</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End tab stuff-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- end HELP CENTRE -->
+                <!-- Start SEARCH -->
+                <li class="nav-item glass dropdown-center" id="search-menu">
+                    <a href="#" class="nav-link d-none d-md-block " id="search-dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-lg fa-search" title="Search"></i></a>
+                    <div class="dropdown-menu shadow " aria-labelledby="search-dropdown">
+                        <div class="mega-content px-3">
+                            <div class="container-fluid">
+                                <form action="/Search" class="sky-form page-search-form pe-4 ps-2" method="get">
+                                    <div class="inline-group">
+                                        <div class="input-group">
+                                            <input name="q" type="text" class="form-control rounded" placeholder="I'm looking for ..." autofocus />
+                                            <span class="input-group-btn">
+                                                <button type="submit" class="btn-u btn" aria-label="Search Button"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- End SEARCH -->
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    </div>
+</div>            </div>
+            <div id="page" class="container-md content">
+                <div id="header">    <div id="breadcrumb" class="breadcrumbs">
+        <p>
+<span><a href="/">Home</a> / </span>Continuing Studies at UVic international programs        </p>
+    </div>
+<div data-ng-if="success" class="alert alert-success" data-ng-bind="success"></div>
+<div data-ng-if="error" class="alert alert-warning" data-ng-bind="error"></div></div>
+                    <div class="row">
+                        
+
+    <div id="featureImage">
+        <img alt='Image of international students' src='/media/rlobifac/dcs-getglobalready.jpg' class='main img-fluid'/>
+    </div>
+    <div class="dcs-border-bottom margin-bottom-30">
+    <h1>Continuing Studies at UVic international programs</h1>
+</div>
+
+<div class="entry-content">
+    <h2>Let's get global ready.</h2>
+<div class="row mb-4">
+<div class="col-lg-6">
+<p>In Continuing Studies at the University of Victoria (UVic), we believe in the power of international education and training to build connections, enhance innovation and prepare you to become a successful global citizen.</p>
+<p>Here's what getting "global ready" looks like:</p>
+<h3>An interconnected world</h3>
+<p>Working well together across borders, boundaries and differences is essential to solving the complex issues of our time. Our international programs focus on developing advanced communication skills and engaging with real-world issues through active, competency-based learning.</p>
+<h3>A unique experience</h3>
+<p>Every educational journey is different. Improve your language skills to live or work abroad and learn about different cultures to develop new collaboration skills. As you approach your goals from new angles, the new knowledge and skills you’ll gain will further your future success.</p>
+<h3>Building relationships</h3>
+<p>We are proud to work collaboratively with many international partners to provide the resources you need to build professional networks and lifelong connections around the world.</p>
+</div>
+<div class=" col-lg-6 col-sm-10 my-2">
+<div class="card dcs-blue ms-3">
+<div class="responsive-video card-img-top"><iframe width="560" height="315" src="https://www.youtube.com/embed/APz6MI_YHvA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"></iframe></div>
+<div class="card-body text-center dcs-blue">
+<p class="card-text">Watch video: Get Global Ready</p>
+</div>
+</div>
+</div>
+</div>
+<h2 class="mt-4">What we offer</h2>
+<div class="narrow-text">
+<p>If you're a student, professional or an organization, we can help you thrive and reach your personal or professional goals. Let’s take a closer look at how you can get global ready:</p>
+</div>
+<div class="py-2 mb-1 global-ready-tabs"><!-- Nav pills -->
+<ul class="nav nav-tabs text-center d-flex  flex-md-nowrap flex-sm-wrap justify-content align-self-stretch">
+<li class="nav-item align-self-stretch"><a href="#Glance" class="nav-link active text-black h-100 border" data-bs-toggle="pill"><i class="fal fa-books fa-2x">&nbsp;</i><br>Overview</a></li>
+<li class="nav-item align-self-stretch"><a href="#English" class="nav-link h-100 border" data-bs-toggle="pill"><i class="fal fa-comments fa-2x">&nbsp;</i><br>Improve your English</a></li>
+<li class="nav-item align-self-stretch"><a href="#Degree" class="nav-link h-100 border" data-bs-toggle="pill"><i class="fal fa-graduation-cap fa-2x">&nbsp;</i><br>Pursue a degree or diploma</a></li>
+<li class="nav-item align-self-stretch"><a href="#Skills" class="nav-link h-100 border" data-bs-toggle="pill"><i class="fal fa-briefcase fa-2x">&nbsp;</i><br>Gain professional skills</a></li>
+<li class="nav-item align-self-stretch"><a href="#Teaching" class="nav-link h-100 border" data-bs-toggle="pill"><i class="fal fa-chalkboard-teacher fa-2x">&nbsp;</i> <br>Enhance your teaching</a></li>
+<li class="nav-item align-self-stretch"><a href="#Customized" class="nav-link h-100 border" data-bs-toggle="pill"><i class="fal fa-cog fa-2x">&nbsp;</i><br>Customize team training</a></li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content bg-white">
+<div id="Glance" class="container tab-pane active">
+<h3>Welcome to the Division</h3>
+<div class="row mb-4">
+<div class="col-md-7">
+<p>The <a href="/help-centre/about/continuing-studies/">Division of Continuing Studies</a> offers a wide variety of adult education options for UVic international students and professionals. Our innovative programs are designed by industry-leading experts to advance learners in their academic and career goals. Learners enhance their language and/or professional skill sets through programs delivered in on-campus, online or hybrid formats.</p>
+<p>With extensive resources, specialized instructors and collaborative networks at UVic and beyond, offering students a global education is what we do best!</p>
+<p><i class="fal fa-lg fa-book-open">&nbsp;</i> <a rel="noopener" href="https://pubhtml5.com/ggaa/djtz/" target="_blank" title="Interactive PDF" class="no-linkicon">View Get Global Ready Booklet (interactive PDF)</a></p>
+<p><i class="fal fa-lg fa-file-pdf">&nbsp;</i> <a rel="noopener" href="/media/h4rg5i1m/dcs-international-programsataglance.pdf" target="_blank" title="DCS International Programsataglance">Download Programs at a Glance Handout (PDF)</a></p>
+</div>
+<div class="col-md-5"><img class="img-fluid " src="/media/rtwe3qvv/getglobalready-dcsbuilding.jpg" alt="Photo of students walking outside the Continuing Studies building on a summer day"></div>
+</div>
+</div>
+<div id="English" class="container tab-pane fade">
+<h3>Improve your English</h3>
+<div class="row mb-4">
+<div class="col-md-7">
+<p>UVic's award-winning<a href="/elc" title="English Language Centre"> English Language Centre</a> (ELC) is home to a multicultural community of students pursuing unique language-learning goals (through on-campus or online studies). We are committed to your support and success, which is why our program staff coordinate every aspect of the experience so you can focus on classes, enjoy activities and deepen your cultural competencies as global citizens.</p>
+<h3>10+ week programs</h3>
+<ul>
+<li><a href="/elc/programs/elpi-intensive-english" title="ELPI - Intensive English">Intensive English ELPI</a>
+<ul>
+<li>January, April, September ELPI (12 weeks)</li>
+<li>Summer ELPI (10 weeks)</li>
+</ul>
+</li>
+<li>Intensive English + <a href="/elc/programs/project-based-presentations" title="Project-based Presentations">Project-based Presentations (PbP)</a></li>
+</ul>
+<h3>2-6 week programs</h3>
+<ul>
+<li><a href="/elc/programs/language-culture" title="Language and Culture">Language and Culture</a>&nbsp;<a href="/elc/programs/online-conversation-lounge-membership" title="Online Conversation Lounge Membership"></a></li>
+<li><a href="/elc/programs/english-communication-for-healthcare" title="English Communication for Healthcare" data-anchor="#">English Communication for Healthcare</a></li>
+<li><a href="/elc/programs/cultural-discovery" title="Cultural Discovery">Cultural Discovery (online)</a></li>
+</ul>
+<a href="/elc/programs/customized-english-for-global-communication-egc" title="English for Global Communication (EGC)"></a>
+<p><a href="/elc/programs" title="Programs" class="btn btn-default">View all English programs</a></p>
+</div>
+<div class="col-md-5">
+<div class="card dcs-blue ms-3">
+<div class="responsive-video card-img-top"><iframe width="560" height="315" src="https://www.youtube.com/embed/xudtWQSpGak" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"></iframe></div>
+<div class="card-body text-center dcs-blue">
+<p class="card-text">Get Global Ready: Improve your English</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="Degree" class="container tab-pane fade">
+<h3>Pursue a degree or diploma</h3>
+<div class="row mb-4">
+<div class="col-md-7">
+<p>Studying English is often the first step if you want to further pursue academic or professional studies at UVic. The ELC offers many options to get you closer to your goals:</p>
+<h4>University Admission Preparation (UAP)</h4>
+<p>An advanced English program for those who meet UVic’s admission requirements (except for English proficiency). Many UAP learners qualify for conditional admission, with a passing UAP grade satisfying the English requirement, for entry into their UVic undergraduate degree. <a href="/elc/programs/university-admission-preparation-uap" title="University Admission Preparation (UAP)">Learn more about UAP.</a></p>
+<h4>UVic Pathway</h4>
+<p>This first-year program allows you to meet UVic's English language requirement while completing academic credit courses as part of an undergraduate degree. <a href="/elc/programs/university-pathway-program" title="University Pathway Program">Learn more about Pathway.</a></p>
+<h4>ELC Preliminary Admission</h4>
+<p>Do you want to enter undergraduate degree programs at the University of Victoria (UVic)? The ELC Preliminary Admission is designed to help you meet UVic’s English requirements within 24 months.Learn more about ELPI.&nbsp;<a href="/elc/programs/elc-preliminary-admission" title="ELC Preliminary Admission">Learn more about Preliminary Admission</a>.</p>
+<p><a href="/elc/topics/university-preparation-programs" title="University Preparation Programs" class="btn btn-default">View all University Prep programs</a></p>
+</div>
+<div class="col-md-5">
+<div class="card dcs-blue ms-3">
+<div class="responsive-video card-img-top"><iframe width="560" height="315" src="https://www.youtube.com/embed/VFtauWS4lTw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"></iframe></div>
+<div class="card-body text-center dcs-blue">
+<p class="card-text">Get Global Ready: Pursue a degree or diploma</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="Skills" class="container tab-pane fade">
+<h3>Gain professional skills</h3>
+<div class="row mb-4">
+<div class="col-md-7">
+<p>An incredible community of international learners choose to get global ready through our online, and face-to-face, business programs at Continuing Studies.</p>
+<p>Our certificate, diploma and micro-certificate programs will support you with learning about current business practices, leadership skills, communication strategies, marketing, analytics, new technologies and more.</p>
+<p>Students in these programs are eligible to work part-time during their studies, and full-time during scheduled breaks. The DIGM and DAMS programs (see below) also meet the eligibility requirements by&nbsp;<a href="/international-students/travelling-to-canada/ircc-updates-frequently-asked-questions">Immigration, Refugees and Citizenship Canada (IRCC)</a> for application to the&nbsp;<a href="/international-students/living-in-canada/working-in-canada/post-graduation-work-permit-information-session">Post Graduate Work Permit (PGWP).</a></p>
+<h4>Business programs:</h4>
+<ul>
+<li><a href="/business-and-management/programs/business-administration-certificate">Certificate in Business Administration (CBA)</a></li>
+<li><a href="/business-and-management/programs/business-administration-diploma">Diploma in Business Administration (DBA)</a></li>
+<li><a href="/ai-data-technology/programs/data-analytics" title="Data Analytics">Certificate in Data Analytics (CDA)</a></li>
+<li><a href="/data-computing-and-technology/programs/data-analytics-for-management-science">Diploma in Data Analytics for Management Science (DAMS)</a></li>
+<li><a href="/business-and-management/programs/digital-marketing" title="Digital Marketing">Diploma in Digital Marketing (DIGM)</a></li>
+<li><a href="/business-and-management/programs/trade-and-construction-management" title="Trade and Construction Management">Certificate inTrade and Construction Management (TCM)</a></li>
+</ul>
+<p><a href="/business-and-management/programs" title="Programs" class="btn btn-default">View more Business programs</a></p>
+</div>
+<div class="col-md-5">
+<div class="card dcs-blue ms-3">
+<div class="responsive-video card-img-top"><iframe width="560" height="315" src="https://www.youtube.com/embed/ffrF9-6OVHg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"></iframe></div>
+<div class="card-body text-center dcs-blue">
+<p class="card-text">Get Global Ready: Gain Professional Skills</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="Teaching" class="container tab-pane fade">
+<h3>Enhance your teaching</h3>
+<div class="row mb-4">
+<div class="col-md-7">
+<p>The ELC's expertise in English language programming includes professional development training if you are an international educator who teaches English, or teaches their subject area(s) in English. Academic and curriculum specialists at the ELC develop a variety of options for pre-service and in-service international educators, covering fields from early childhood education to the post-secondary level.</p>
+<p>In these programs, you’ll explore education-related topics from a Canadian perspective while building a professional network. Our interactive learning environment allows you to develop confident English communication skills and to enhance teaching methodologies so you can teach more effectively in your home country.</p>
+<h4>Programs for International Educators:</h4>
+<ul>
+<li><a href="/elc/programs/customized-english-as-a-medium-of-instruction" title="Customized English as a Medium of Instruction">Customized English as a Medium of Instruction</a></li>
+<li><a href="/elc/programs/customized-teaching-english-as-a-foreign-language" title="Customized Teaching English as a Foreign Language">Customized Teaching English as a Foreign Language</a></li>
+</ul>
+<p>To arrange a program for your group, please <a href="/study-options/custom-learning-solutions/international-cls/lets-connect?QuestionsBox" data-anchor="?QuestionsBox">contact us</a>.</p>
+<p><a href="/elc/topics/teacher-training-programs" title="Teacher Training Programs" class="btn btn-default">More about teacher training programs</a></p>
+</div>
+<div class="col-md-5">
+<div class="card dcs-blue ms-3">
+<div class="responsive-video card-img-top"><iframe width="560" height="315" src="https://www.youtube.com/embed/GK3jZP17Ua0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"></iframe></div>
+<div class="card-body text-center dcs-blue">
+<p class="card-text">Get Global Ready: Enhance your teaching</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="Customized" class="container tab-pane fade">
+<h3>Customize team training</h3>
+<div class="row">
+<div class="col-md-7">
+<p>Continuing Studies has extensive experience offering customized, international training programs to institutional, corporate and government groups.</p>
+<p>We use a collaborative three-step process to develop specialized training programs that equip you with fresh, relevant skills to prepare you for success in your studies and careers.</p>
+<img src="/media/v3ypu4il/customized-1.jpg?width=400&amp;height=71" alt="Blue bar with the word Discovery." width="300">
+<p>We work with you to better understand your current situation and your team’s learning needs or goals.</p>
+<img src="/media/gn2mqous/customized-2.jpg?width=400&amp;height=71" alt="Blue bar with the word Design." width="300">
+<p>We identify your priority learning objectives, and program elements, and then collaborate with our team of advisers, educators and real-world experts to design a program uniquely suited to your group.</p>
+<img src="/media/oyzp2z4l/customized-3.jpg?width=400&amp;height=71" alt="Blue bar with the word Delivery." width="300">
+<p>Our instructors deliver your customized program, ensuring your expectations are met, and provide opportunities for reflection and feedback.</p>
+<p><a href="/study-options/custom-learning-solutions/international-cls" title="International Custom Learning Solutions" class="btn btn-default mb-2">Learn more about customized team training</a></p>
+</div>
+<div class="col-md-5">
+<div class="card dcs-blue ms-3">
+<div class="responsive-video card-img-top"><iframe width="560" height="315" src="https://www.youtube.com/embed/MxinOCNgFP4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"></iframe></div>
+<div class="card-body text-center dcs-blue">
+<p class="card-text">Get Global Ready: Customize team training</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="dcs-lightblue-box rounded-2x">
+<div class="row mt-3 pb-2">
+<div class="col-sm-7 order-sm-2">
+<h2>Why choose Continuing Studies at UVic?</h2>
+<p>As a UVic international student, you’ll be studying at one of the best universities in Canada. UVic is consistently ranked as one of Canada’s&nbsp;<a rel="noopener" href="https://www.uvic.ca/about-uvic/rankings-reputation/index.php" target="_blank">top-ranked comprehensive universities</a>. Since UVic started in 1963, Continuing Studies has been an integral part of campus, providing adult and continuing education programming to domestic and international students. We partner with all UVic faculties to provide stimulating, high-quality education opportunities to local and international learners.</p>
+</div>
+<div class="col-sm-5 order-sm-1"><img class="img-fluid pe-3" src="/media/e3tpabl1/getglobalready-whydcs.jpg?width=500&amp;height=333.33333333333337" alt="Photo of UVic student holding workbooks and smiling at the camera." width="500" height="333.33333333333337"></div>
+</div>
+<h3>If you choose to study with Continuing Studies at UVic, you’ll benefit from:</h3>
+<div class="row pt-2">
+<div class="col-sm-6">
+<div class="row margin-bottom-20 sm-text-center">
+<div class="col-lg-2 col-md-3 col-sm-2  text-center"><img class="img-responsive img-inline no-padding center-block" src="/upload/DCS/international-programming/IPP-networking.png" alt=""></div>
+<div class="col-lg-10 col-md-9 col-sm-10"><strong>International experience</strong> – We have a long history of offering customized and scheduled programming to learners from around the world. As an international student at UVic, you can expect world-class education with a global perspective, preparing you for wherever your studies or career lead you in the future.</div>
+</div>
+<div class="row margin-bottom-20 sm-text-center">
+<div class="col-lg-2 col-md-3 col-sm-2  text-center"><img class="img-responsive img-inline no-padding center-block" src="/upload/DCS/international-programming/IPP-instructors.png" alt=""></div>
+<div class="col-lg-10 col-md-9 col-sm-10"><strong>Welcoming environments</strong> – We aspire to create an intercultural community that promotes harmony and understanding between everyone. Our academic programs are complemented by social activities where you can meet new friends and share the unique aspects of your country or culture in a safe, respectful environment.</div>
+</div>
+<div class="row margin-bottom-20 sm-text-center">
+<div class="col-lg-2 col-md-3 col-sm-2  text-center"><img class="img-responsive img-inline no-padding center-block" src="/upload/DCS/international-programming/IPP-awards.png" alt=""></div>
+<div class="col-lg-10 col-md-9 col-sm-10"><strong>English-language development</strong> – Our award-winning team of English language specialists (in the ELC programs) are here to help you develop your English skills and prepare you for further studies or a career in an international market.</div>
+</div>
+</div>
+<div class="col-sm-6">
+<div class="row margin-bottom-20 sm-text-center">
+<div class="col-lg-2 col-md-3 col-sm-2  text-center"><img class="img-responsive img-inline no-padding center-block" src="/upload/DCS/international-programming/IPP-online-learning.png" alt=""></div>
+<div class="col-lg-10 col-md-9 col-sm-10"><strong>Talented experts</strong> – Learn from a team of experienced instructors and presenters who are real-world experts, delivering relevant and practical content in your field of study. To bring a truly global perspective to your studies, there will be many opportunities to network and make long-lasting connections.</div>
+</div>
+<div class="row margin-bottom-20 sm-text-center">
+<div class="col-lg-2 col-md-3 col-sm-2 "><img class="img-responsive img-inline no-padding center-block" src="/upload/DCS/international-programming/IPP-support.png" alt=""></div>
+<div class="col-lg-10 col-md-9 col-sm-10"><strong>Dedicated on-campus support</strong> – We understand it can be scary and challenging to move to a new country. Our student services and specialized support staff are here to help you every step of the way—before, during and after your studies. Students have access to the Student Wellness Centre, Campus Security Services 24/7, Virtual Centre for Student Learning, Immigration advising, Career counselling and more. <a href="/international-students/living-in-canada/international-student-services">Learn more about Student Services</a>.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row mt-4">
+<div class="col-sm-6 pb-5"><img class="img-fluid pe-3" src="/media/yo1k4eyy/uvic-aerialmap.jpg" alt="Detailed aerial map of the UVic campus, showing that campus is located right on the scenic ocean and that there are many amenities within walking distance."></div>
+<div class="col-sm-6">
+<h2>About UVic and Continuing Studies</h2>
+<p><strong>World-class education in Canada’s best small city</strong></p>
+<p>With extensive resources, specialized instructors and collaborative networks at UVic and beyond, getting global ready is what we do best. <a href="/international-students/living-in-Canada/about-uvic">Learn more about UVic.</a></p>
+<h3>UVic highlights</h3>
+<ul>
+<li>#1 Canadian comprehensive university for graduate employability</li>
+<li>22,020 students (undergraduate and graduate)</li>
+<li>International students from over 100 countries</li>
+<li>5,000 employees, including 900 full-time faculty members</li>
+<li>15 minutes to downtown Victoria; 15 minutes to the beach</li>
+<li>Natural campus environment with gardens, hiking trails and wildlife</li>
+</ul>
+<h3>The English Language Centre (ELC)</h3>
+<p>If you're an international student where English is not your first language, we offer a variety of academic and professional programs through the English Language Centre (ELC). The ELC has been delivering high-quality intensive English language programs at UVic since 1970 and is one of the largest English schools for foreign students in Canada. <a href="/elc">Learn more about the ELC.</a></p>
+</div>
+<div class="row">
+<div class="col-md-6">
+<div class="card">
+<div class="responsive-video card-img-top dcs-blue"><iframe width="560" height="315" src="https://www.youtube.com/embed/8e3pN7zkXcY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"></iframe></div>
+<div class="card-body dcs-blue text-center">
+<p class="card-text">Watch video: What's it like to live in Victoria, BC?</p>
+</div>
+</div>
+</div>
+<div class="col-md-6">
+<h2 class="mt-3">About Victoria, BC</h2>
+<p>Victoria is a vibrant city on Vancouver Island and Canada’s spectacular West Coast. Famous for its natural environment, mild climate and welcoming community, Victoria’s relaxed island lifestyle makes it the perfect place to live and learn for international students.</p>
+<h3>Victoria facts and highlights:</h3>
+<ul>
+<li>Population of Greater Victoria: 400,000+</li>
+<li>Capital city of British Columbia</li>
+<li>Approximately 30-minute flight to Vancouver or Seattle</li>
+<li>Over 200 downtown restaurants and pubs</li>
+<li>Excellent shopping in a beautiful, clean city</li>
+<li>World-famous gardens and outdoor activities</li>
+</ul>
+<p><a rel="noopener" href="/international-students/living-in-Canada/about-victoria" target="_blank" class="btn btn-default">Discover Victoria, BC</a></p>
+</div>
+</div>
+<div class="dcs-lightblue-box my-5">
+<h2 class="mt-4">Stay connected</h2>
+<p>Have questions about where to start, our programs, or what it’s like to live and study in Victoria? Reach out today to connect.</p>
+<div class="row align-items-stretch">
+<div class="col-sm-4">
+<div class="tag-box tag-box-v3 height-250">
+<h3 class="no-margin-top">Contact</h3>
+Tel: <a href="tel:12507218469">1-250-721-8469</a><br>Fax: 1-250-721-8774<br>Email: <a href="mailto:recruitasst@uvic.ca">recruitasst@uvic.ca</a><br>Web: <a rel="noopener" href="/" target="_blank" title="Continuing Studies at UVic">continuingstudies.uvic.ca</a></div>
+</div>
+<div class="col-sm-4 ">
+<div class="tag-box tag-box-v3 height-250">
+<h3 class="no-margin-top">Address</h3>
+Division of Continuing Studies<br>University of Victoria<br>PO Box 1700 STN CSC<br>Victoria, BC V8W 2Y2<br>Canada</div>
+</div>
+<div class="col-sm-4">
+<div class="tag-box tag-box-v3 height-250">
+<h3 class="no-margin-top">Social media</h3>
+<p><a rel="noopener noreferrer" href="https://www.facebook.com/uviccontinuingstudies" target="_blank" title="Connect with Continuing Studies on Facebook"> <i class="fab fa-lg fa-facebook-square text-dcs-blue">&nbsp;</i> /uviccontinuingstudies</a></p>
+<p><a rel="noopener noreferrer" href="https://www.youtube.com/channel/UCelwEs8oKXow1UcfnrZFYOQ" target="_blank" title="Connect with Continuing Studies on YouTube"> <i class="fab fa-lg fa-youtube-square text-dcs-blue">&nbsp;</i>@UVicContinuingStudies </a></p>
+<p><a rel="noopener noreferrer" href="https://www.linkedin.com/company/uviccontinuingstudies" target="_blank" title="Connect with Continuing Studies on LinkedIn"> <i class="fab fa-lg fa-linkedin text-dcs-blue">&nbsp;</i>/uviccontinuingstudies</a></p>
+<p><a rel="noopener" href="https://www.facebook.com/EnglishLanguageCentre" target="_blank"><i class="fab fa-lg fa-facebook-square  text-elc-red">&nbsp;</i> /EnglishLanguageCentre&nbsp;</a></p>
+<p><a rel="noopener" href="https://www.facebook.com/UVicHomestayELC" target="_blank"><i class="fab fa-lg fa-facebook-square  text-elc-red">&nbsp;</i> /UVicHomestayELC</a></p>
+<p><a rel="noopener" href="https://www.instagram.com/elc_uvic/" target="_blank"><i class="fab fa-lg fa-instagram-square  text-elc-red">&nbsp;</i> /elc_uvic&nbsp;</a></p>
+<p><a rel="noopener" href="https://www.youtube.com/user/EnglishLanguageUVIC/featured" target="_blank"><i class="fab fa-lg fa-youtube-square  text-elc-red">&nbsp;</i> /EnglishLanguageUVic&nbsp;</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="row align-items-center dcs-grey">
+<div class="col-sm-8 px-5  ">
+<h2>Territory acknowledgement</h2>
+<div></div>
+<p>We acknowledge and respect the Lək̓ʷəŋən (Songhees and Xʷsepsəm/Esquimalt) Peoples on whose territory the university stands, and the Lək̓ʷəŋən and W̱SÁNEĆ Peoples whose historical relationships with the land continue to this day.</p>
+</div>
+<div class="col-sm-4"><img class="img-fluid " src="/media/anopirbg/territory.jpg?width=500&amp;height=333.33333333333337" alt="Photo of the carved pole outside of the first people's house on campus." width="500" height="333.33333333333337"></div>
+</div>
+</div>
+</div>
+
+                    </div>
+            </div>
+            <div id="bottom"><div class="footer-v2 border-top-med" role="contentinfo">
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- Footer menu -->
+                <div class="footer-menu col-md-5 col-xs-6 col-xxs-12 row" role="navigation" aria-label="Footer Menu">
+                    <!-- 1st column of footer menu -->
+                    <div class="col">
+                        <ul class="footer-menu-first">
+                            <li><a href="/about">About</a></li>
+                            <li><a href="/Newsfeed">Newsfeed</a></li>
+                            <li><a href="/calendar">Calendar</a></li>
+                            <li><a href="/enews">Join E-News</a></li>
+                            <li><a href="/help-centre/contact">Contact us</a> </li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <ul class="footer-menu-second">
+                            <li><a href="/Account">My account</a></li>
+                            <li><a href="https://srsnet.uvcs.uvic.ca/srsnet/" target="_blank" rel="noopener noreferrer">Staff login</a></li>
+                            <li><a href="https://www.uvic.ca/" target="_blank" rel="noopener noreferrer">Visit UVic.ca</a></li>
+                            <li><a href="https://www.uvic.ca/cas/login?service=http%3A%2F%2Fwww.uvic.ca%2F" target="_blank" rel="noopener noreferrer">UVic My page</a></li>
+                            <li><a href="/about/careers">Careers</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Footer Address -->
+                <div class="col-md-4 col-xs-6 col-xxs-12 footer-address">
+                    <h5>Visit Registration</h5>
+                    <address itemprop="address" itemscope="" itemtype="https://schema.org/PostalAddress">2nd Floor | Continuing Studies Building&#xA;University of Victoria Campus&#xA;3800 Finnerty Road | Victoria BC | Canada</address>
+                    <p>
+                        <strong>Tel</strong>
+                        <a data-ng-href="{{ ::('tel:' + ('250-472-4747' | phoneLink)) }}" itemprop="telephone">
+                            250-472-4747
+                        </a> |
+                        <strong>Email</strong>
+                        <a href="mailto:uvcsreg@uvic.ca" itemprop="email">uvcsreg@uvic.ca</a>
+                    </p>
+                </div>
+
+                <!-- Social Links -->
+                <div class="col-md-3 col-xs-12 footer-right-box">
+                    <ul class="footer-socials list-inline">
+                        <li class="list-inline-item">
+                            <a href="https://www.facebook.com/uviccontinuingstudies" target="_blank"
+                               title="Connect with Continuing Studies on Facebook" rel="noopener noreferrer">
+                                <i class="fab fa-3x fa-facebook-square"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.youtube.com/channel/UCelwEs8oKXow1UcfnrZFYOQ" target="_blank"
+                               title="Connect with Continuing Studies on YouTube" rel="noopener noreferrer">
+                                <i class="fab fa-3x fa-youtube-square"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.linkedin.com/company/uviccontinuingstudies/" target="_blank"
+                               title="Connect with Continuing Studies on LinkedIn" rel="noopener noreferrer">
+                                <i class="fab fa-3x fa-linkedin"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <p>
+                        2026 &copy; Continuing Studies at UVic<br />
+                        <a href="/help-centre/policies">Legal Notices</a> |
+                        <a href="/Sitemap">Sitemap</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div>
+    </div>
+
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+
+<script type="text/javascript" src="/Scripts/angular.min.js"></script><script type="text/javascript" src="/Scripts/angular-route.min.js"></script><script type="text/javascript" src="/Scripts/angular-sanitize.min.js"></script><script type="text/javascript" src="/Scripts/angular-cookies.min.js"></script><script type="text/javascript" src="/Scripts/angular-resource.min.js"></script><script type="text/javascript" src="/Scripts/angular-messages.min.js"></script><script type="text/javascript" src="/Scripts/ngStorage.js"></script><script type="text/javascript" src="/Scripts/ui-bootstrap-tpls.2.5.0.min.js"></script><script type="text/javascript" src="/Scripts/ng-table.min.js"></script><script type="text/javascript" src="/lib/bootstrap-notify/bootstrap-notify.min.js"></script><script type="text/javascript" src="/Scripts/angular-relative-date-2.1.0.min.js"></script><script type="text/javascript" src="/lib/lodash/lodash.min.js"></script><script type="text/javascript" src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script><script type="text/javascript" src="/Scripts/site.js"></script><script type="text/javascript" src="/Scripts/Parts.js"></script><script type="text/javascript" src="/lib/jquery/jquery.fancybox-3.5.7.min.js"></script><script type="text/javascript" src="/lib/jquery/jquery.fancybox-3.5.7.thumbs.js"></script><script type="text/javascript" src="/Scripts/Utilities.js"></script><script type="text/javascript" src="/Scripts/Custom.js"></script><script type="text/javascript">//<![CDATA[
+jQuery(document).ready(function(){cs('.go-pot', 'z-index:-1;opacity:0;float:left;position:absolute;');var abc = jQuery('.sp'); if (abc.length > 0) abc.addClass('go-pot');});//]]></script><script type="text/javascript" src="/Scripts/Api/Start.js"></script><script type="text/javascript" src="/Scripts/Api/Filters.js"></script><script type="text/javascript" src="/Scripts/Api/GA4Service.js"></script><script type="text/javascript">//<![CDATA[
+app.value('sharedResources', {"AddFeeTypeDirectlyError":"Attached items cannot be added directly.","AddToWaitingListSuccess":"You've been successfully added to the waiting list.","AddToWaitingListError":"Could not add you to the waiting list","AddToWishListSuccess":"You've successfully added this course to your wish list. Please confirm that your email address in \"My account\" is up to date so that you can be notified when this course becomes available.","CartAddError":"Could not add the item to your cart. It is no longer available or is now sold out.","CartAddRequisiteAnonError":"This course {itemCode} has prerequisites. Please sign in to confirm you've met the prerequisites and add the course to your cart.","CartMissingRequisites":"You must complete prerequisite(s) before adding {itemCode}.","CartFeeFilterMismatch":"Sorry, you don't meet the eligibility criteria for {itemCode}.","CartPromoCodeApplied":"Promo code applied!","CartPromoCodeError":"Promo code is invalid or already used.","CartQuantityError":"Could not update quantity.","CourseStatusOpen":"Courses open for registration","ENewsMessage":"Thank you for your interest in Continuing Studies at UVic. A confirmation email has been sent to you. Please click the confirmation link to confirm your subscription.","RemoveFromWishList":"Are you sure you want to remove \"{0}\" from your wishlist?","RemoveFromWaitingList":"Are you sure you want to remove yourself from the waiting list for","MandatoryAttachmentError":"Could not add the item {itemCode} to your cart. Please make sure you meet the eligibility criteria like application form, prerequisite(s), etc.","UserCannotAddItemToFundedCart":"You may only have in your cart items that qualify for the grant. To add {itemCode}, please delete all items in your cart and try again.","UserCannotAddFundedItemToCart":"You currently have items in your cart that do not qualify for the grant. To add {itemCode}, please delete all items in your cart and try again.","CartGenericError":"Something went wrong. Please refresh the page and try again.","UserCannotPurchaseItem":"This item {itemCode} cannot be purchased. "});//]]></script><script type="text/javascript">//<![CDATA[
+app.value('toolTips', {"CoursesFull":"This course is full. Please visit the course page to join the waiting list.","CoursesNotAvailable":"Please visit the course page for more information."});//]]></script><script type="text/javascript">//<![CDATA[
+app.value('srsPaths', {"WaitlistExternalFormSection":"/Form/Waitlist?id=","WaitlistExternalFormProduct":"/Form/Waitlist?code="});//]]></script><script type="text/javascript" src="/lib/revolution-slider/rs-plugin/js/jquery.themepunch.revolution.min.js"></script><script type="text/javascript" src="/lib/revolution-slider/rs-plugin/js/jquery.themepunch.tools.min.js"></script><script type="text/javascript" src="/lib/revolution-slider/revolution-slider.js"></script>
+
+
+<script type="text/javascript">//<![CDATA[
+jQuery(document).ready(function(){RevolutionSlider.initRSfullWidth();});//]]></script>
+<style>
+
+
+
+.global-ready-tabs .tab-content{
+border: 1px solid #0072bc;
+}
+
+/* THE TAB CONTAINER */
+
+
+/* THE FULL TAB */
+.global-ready-tabs  .nav.nav-tabs .nav-item{
+      border: none;
+ border-top-right-radius:5px;
+border-top-left-radius:5px;
+background-color:#eee;
+margin-right:10px;
+}
+
+/* THE LINK PART */
+.global-ready-tabs  .nav.nav-tabs .nav-link{
+padding-top:15px;
+padding-bottom:15px;
+color:#495057;
+}
+/* HOVERED TAB */
+.global-ready-tabs  .nav-tabs .nav-item:hover{
+  border: none;
+
+}
+
+/* HOVERED LINK */
+.global-ready-tabs  .nav-tabs .nav-link:hover{
+background-color:#0072bc;
+color:#fff;
+}
+
+
+/* CURRENT TAB */
+ .global-ready-tabs  .nav-tabs .nav-link.active{
+    color: #fff;
+    background-color: #0072bc;
+height:100%;
+  border: none;
+box-shadow:3px -3px #fdb913;
+
+}
+.yellow-underline{
+text-decoration: underline;
+text-decoration-color: #fdb913;
+text-underline-offset: 5px;
+}
+
+@media (max-width: 750px) {
+.global-ready-tabs .nav.nav-tabs .nav-link{
+    max-width: 120px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+}
+</style><script>
+(function(storage) {
+    if (!storage) return;
+    const key = location.host + "cookieBanner";
+    var closed = storage.getItem(key);
+    if (!closed) {
+        $('#bottom').after('<div> \
+<div class="collapse show edge-yellow" style="padding: 2rem 0; z-index: 9999;border-top: 1px solid #3f4247;\
+    position: fixed; right: 0; bottom: 0; left: 0;" id="cookies-banner" role="alert"> \
+    <div class="container"> \
+        <p style=" color: #212121;padding-bottom:10px;">This website stores cookies on your computer. These cookies are used to collect information about how you interact with our website and allow us to remember you. We use this information in order to improve and customize your browsing experience and for analytics and metrics about our visitors both on this website and other media. To find out more about the cookies we use, please visit <a href="https://www.uvic.ca/info/terms-of-use/index.php#ipn-protection-of-privacy-policy" style="color:#000;text-decoration:underline;">UVic\'s Privacy&nbsp;Policy</a>.</p> \
+        <div class="btn-row margin-bottom-10"><button aria-controls="cookies-banner" aria-expanded="false" class="btn btn-default btn-lg rounded" data-bs-target="#cookies-banner" data-bs-toggle="collapse" id="cookies-btn">Close</button></div> \
+    </div> \
+</div> \
+</div>');
+        $('#cookies-banner').on('hide.bs.collapse', function() {
+            storage.setItem(key, true);
+        });
+    }
+})(localStorage);
+if (window.jQuery && jQuery.easing && !jQuery.easing.easeInOutExpo) {
+jQuery.easing.easeInOutExpo = jQuery.easing.swing;
+}
+</script>
+<style>
+.tp-bullets{-webkit-transform:translateZ(0px);}
+html {
+scroll-behavior: smooth;
+}
+.sidebar .dcs-sidebar-blue,
+.sidebar .dcs-sidebar-blue-glance {
+  padding: 1rem !important;
+}
+</style></body>
+</html>

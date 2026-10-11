@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Cache-Control"  content="No-Cache">
+<meta http-equiv="Pragma" content="No-Cache">
+<meta name="format-detection" content="telephone=no">
+<title>Kyungpook National University</title>
+<link rel="shortcut icon" href="../img/new/favicon.ico">
+<meta name="author" content="Kyungpook National University">
+<meta name="keywords" content="KNU, Kyungpook National University">
+<meta name="description" content="Kyungpook National University">
+<link rel="stylesheet" type="text/css" href="../css/common.css?1713340600">
+<link rel="stylesheet" type="text/css" href="../css/layout.css?1659940956">
+<link rel="stylesheet" type="text/css" href="../css/content.css?1745224396">
+<link rel="stylesheet" type="text/css" href="../css/main.css?1787818792">
+<link rel="stylesheet" type="text/css" href="../css/board.css?1543975092">
+<script type="text/javascript"> 
+if( navigator.appVersion.indexOf("MSIE 6") > -1 || navigator.appVersion.indexOf("MSIE 7") > -1 || navigator.appVersion.indexOf("MSIE 8") > -1){}else{
+	document.write('<link rel="stylesheet" type="text/css" href="../css/mobile.css">');
+}
+</script>
+<link rel="stylesheet" type="text/css" href="../css/jquery.mmenu.all.css?1490929787" />
+
+<!-- <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.4.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui-1.12.1.js"></script>
+<script type="text/javascript" src="../js/jquery.form.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<script type="text/javascript" src="../js/jquery.cycle2.js?1489139507"></script>
+<script type="text/javascript" src="../js/jquery.cycle2.carousel.js?1489139506"></script>
+<script type="text/javascript" src="../js/jquery.flexslider.js?1489139507"></script>
+<script type="text/javascript" src="../js/jquery.jqtransform.js?1489139507"></script>
+<script type="text/javascript" id="menujs" src="../js/menu.js?1618904265"></script>
+<script type="text/javascript" id="mmenujs" src="../js/jquery.mmenu.min.all.js?1658470422"></script>
+
+
+<!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="../css/ie.css">
+    <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script>
+jQuery(function(){
+    var win = jQuery(window);
+	var top = jQuery(window).scrollTop();
+
+	var speed          = 500;
+	var easing         = 'linear';
+	var layer         = jQuery('#aside-quick');
+	var layerTopOffset = 0;
+    layer.css('position', 'absolute');
+    if (top > 0 )
+        win.scrollTop(layerTopOffset+top);
+    else
+        win.scrollTop(0);
+    jQuery(window).scroll(function(){
+        yPosition = win.scrollTop() - 260;
+        if (yPosition < 0)
+        {
+            yPosition = 40;
+        }
+        layer.animate({"top":yPosition }, {duration:speed, easing:easing, queue:false});
+    });
+});
+</script>
+<script type="text/javascript">
+$.noConflict();
+
+var P = 1;
+var M = 1;
+var S = 1;
+var mobile = 0;
+var pc = 0;
+var pc_menu = "";
+var mobile_menu = "";
+
+jQuery(function(){
+	jQuery('.comm_sel').jqTransform();
+	pc_menu = jQuery("#header_ajax").html();
+	pc_menu = pc_menu.replace(/산학연구처\(산학협력단\)/gi,'산학연구처<br>(산학협력단)');
+	mobile_menu = pc_menu.replace(/id=\"top1/gi,'id=\"m1top1').replace(/id=\"top2/gi,'id=\"m1top2');
+	mobile_menu = mobile_menu.replace(/간호대 오시/gi,'간호대<br>오시');
+	mobile = 0;
+	pc = 0;
+	shows();	
+	
+	jQuery(window).resize(function(){  // 화면 리사이즈시 다시검사
+		shows();
+	});
+});
+
+function shows(){
+	
+	var win_w = jQuery(window).width();
+	if( navigator.appVersion.indexOf("MSIE 6") > -1 || navigator.appVersion.indexOf("MSIE 7") > -1 || navigator.appVersion.indexOf("MSIE 8") > -1){
+		win_w = 1234;
+	}	
+	win_w = win_w+17;
+	if(win_w <= 1023){
+		if(mobile == 0){
+			jQuery("#header_ajax").html("");
+			jQuery("#header_ajax").html(mobile_menu);
+			jQuery('#menu').mmenu({
+				"slidingSubmenus": false,
+				extensions: ["pageshadow"]
+			});
+			MinitTopMenu(0,0);
+			pc = 0;
+			mobile = 1;
+			
+			jQuery('a#m_search_img').on('click', function(e) {
+				jQuery("#top_search").slideToggle();
+				return false;
+			});	
+			
+			jQuery('a#search').on('click', function(e) {
+				e.preventDefault();
+				
+				msearch();
+			});
+			
+		 	jQuery('input#txt').on('keyup', function(e) {
+				if (e.keyCode == 13) {
+					msearch();
+				}
+			});
+
+			function msearch() {
+				if (jQuery('input#txt').val() == "") {
+					alert('Please enter the keyword.');
+					jQuery('input#txt').focus();
+					return false;
+				}
+
+				jQuery('form[name=search]').submit();
+			}			
+		}
+	}else{
+			
+		if(pc == 0){
+			if(mobile == 1){
+				var API = jQuery("#menu").data( "mmenu" );
+				API.close();
+			}
+			jQuery("#header_ajax").html("");
+			jQuery("#header_ajax").html(pc_menu);
+			initTopMenu(0,0);
+			pc = 1;
+			mobile = 0;
+
+			jQuery('a#search').on('click', function(e) {
+				e.preventDefault();
+				
+				search();
+			});
+			
+		 	jQuery('input#txt').on('keyup', function(e) {
+				if (e.keyCode == 13) {
+					search();
+				}
+			});
+
+			function search() {
+				if (jQuery('input#txt').val() == "") {
+					alert('Please enter the keyword.');
+					jQuery('input#txt').focus();
+					return false;
+				}
+				
+				jQuery('form[name=search]').submit();
+			}			
+		}
+	}
+	ContentResize();
+}
+</script>
+<noscript>
+<p>JavaScript 를 사용할 수 없습니다.<br />일부 콘텐츠가 정상적으로 작동하지 않을 가능성이 있습니다.</p>
+</noscript></head>
+<body class="bbg">
+<div id="wrap" class="sbg">
+	<div id="header_ajax">
+<div id="skipnavi">
+	<ul>
+	<li><a href="#content">본문 내용으로 바로가기</a></li>
+	<li><a href="#gnb">주 메뉴로 바로가기</a></li>
+	<li><a href="#snb">부 메뉴로 바로가기</a></li>
+	</ul>
+<hr />
+</div>
+<div id="header">
+	<!-- start_topwrap -->
+	<div id="topwrap">
+	<div class="d_width">
+		<div id="logo"><a href="../main/main.htm"><img src="../img/new/logo_w.png" alt="KNU"></a></div>
+		<div class="topmn">
+			<ul class="topmn_tab3">
+			<li class="foreign"><a href="http://www.knu.ac.kr/" target="_blank">KOREAN</a></li>
+			<li class="foreign"><a href="http://cn.knu.ac.kr/" target="_blank">CHINESE</a></li>
+						<li>
+												</li>
+			<li><a href="../siteinfo/sitemap.htm">SITEMAP</a></li>
+			</ul>
+			<div id="top_search"><form name="search" action="http://search.knu.ac.kr/RSA/front/Search.jsp" method="post" target="_new" accept-charset="utf-8"><div class="form"><input type="text" name="qt" id="txt" placeholder="search"  title="search" onKeyPress="javascript:if(event.keyCode == 13) return false;"><a href="#" id="search"><img src="../img/new/topsearch_ico.png"></a></div></form></div>
+		</div>
+		<div class="topsns">
+			<a href="https://www.facebook.com/studyatKNU" target="_blank"><img src="../img/new/ico_facebook.png" alt="facebook"></a>
+			<a href="https://twitter.com/knustory" target="_blank"><img src="../img/new/ico_twitter.png" alt="twitter"></a>
+			<a href="https://www.instagram.com/knu_international/?hl=ko" target="_blank"><img src="../img/new/ico_insta.png" alt="instagram"></a>
+			<a href="https://www.youtube.com/channel/UCcVR1TUWcB9Ku6FslF-SgUg" target="_blank"><img src="../img/new/ico_youtube.png" alt="youtube"></a>
+		</div>
+		<div class="clear"></div>
+		<div class="va_mo m_gnb"><a href="#menu"><img src="../img/new/ico_m_gnb_w.png" alt="All view navigation" title=""></a></div>
+		<div class="va_mo m_search"><a href="#" id="m_search_img"><img src="../img/new/ico_m_search_w.png" alt="Search" title=""></a></div>
+	</div>
+	</div>
+	<!-- //end_topwrap -->
+		<div id="gnb"><a name="gnb"></a>					
+						<!-- start_gnbmn -->
+						<div id="gnbmn" class="d_width">
+						<h2>Main Navigation</h2>
+						<nav id="menu">
+						<ul id="top1menu" class="depth1">
+						<li><span><a href="../intro/about04.htm" id="top1m1">ABOUT KNU</a></span>
+							<ul id="top2m1" class="depth2">	
+							<div class="gnb_tit img1">ABOUT KNU<span>Global KNU</span></div>
+							<li id="top2m1m1" class="fst"><span><a href="../intro/about04.htm">Overview</a></span>
+							
+								<ul class="depth3">
+								<li><span><a href="../intro/about04.htm">Profile</a></span></li>
+								<li><span><a href="../intro/about03.htm">Educational Goals</a></span></li>
+								<li><span><a href="../intro/about02.htm">KNU Today</a></span></li>
+								<li><span><a href="../intro/about01.htm">KNU History</a></span></li>
+								<li><span><a href="../intro/about05.htm">Symbols</a></span></li>
+								<li><span><a href="../intro/about07.htm">Infographic</a></span></li>
+								</ul>
+								
+							</li>
+							<li id="top2m1m2"><span><a href="../intro/greeting01.htm">Office of the President</a></span>
+								<ul class="depth3">
+								<li><span><a href="../intro/greeting01.htm">Welcoming Remarks</a></span></li>
+								<li><span><a href="../intro/greeting02.htm">Professional Profile</a></span></li>
+								<li><span><a href="../intro/greeting03.htm">History of the Presidency</a></span></li>
+								</ul>
+							</li>							
+							<li id="top2m1m3"><span><a href="../intro/org01.htm">Organizational<span class="va_pc"></span> Chart</a></span></li>							
+							<li id="top2m1m5"><span><a href="../intro/global01.htm">Office of<span class="va_pc"></span> International<span class="va_pc"></span>Affairs</a></span></li>
+							<li id="top2m1m4"><span><a href="../intro/map01.htm">Getting to KNU</a></span>
+								<ul class="depth3">
+								<li><span><a href="../intro/map01.htm">Getting to KNU</a></span></li>
+								<li><span><a href="../intro/map02.htm">Getting to School of<span class="va_pc"></span>Medicine, College of Dentistry,<span class="va_pc"></span>College of Nursing</a></span></li>
+								<li><span><a href="../intro/map03.htm">Shuttle Bus</a></span></li>
+								<li><span><a href="../intro/map04.htm">Campus Map</a></span></li> 
+								<li><span ><a href="https://home.knu.ac.kr/HOME/knuprmap2/index.html" target="_blank">Cyber Tour<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>							
+							</ul>
+						</li>
+						<li><span><a href="#none" id="top1m2">INTERNATIONAL</a></span>
+							<ul id="top2m2" class="depth2">
+							<div class="gnb_tit img2">ADMISSION<span>Global KNU</span></div>
+							<li id="top2m2m1" class="fst"><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1549935033">Academic Degree Program</a></span>
+							<!-- <ul class="depth3">
+								<li><span><a href="../admission/foreign01.htm">Undergraduate</a></span></li>
+								<li><span><a href="../admission/foreign02.htm">Graduate</a></span></li>
+								</ul> -->
+								<ul class="depth3">
+									<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1549935033" target="_blank">Undergraduate<span class="ico_nw"></span></a></span></li>
+									<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1729758639" target="_blank">Graduate<span class="ico_nw"></span></a></span></li>
+									<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1711940030" target="_blank">Global Korea Scholarship<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>
+							<li id="top2m2m2"><span><a href="../admission/exchange01.htm">Exchange Student <span class="va_pc"></span>Program</a></span></li>
+							<li id="top2m2m3"><span><a href="../admission/double01.htm">Double Degree<span class="va_pc"></span>Program</a></span>
+								<!-- <ul class="depth3">
+								<li><span><a href="../admission/double02.htm">3+1 Double Degree</a></span></li>
+								<li><span><a href="../admission/double01.htm">2+2 Double Degree</a></span></li>
+								</ul> -->	
+							</li>
+							<li id="top2m2m4"><span><a href="../admission/visiting01.htm">Visiting Student<span class="va_pc"></span> (Free Mover)&nbspProgram</a></span></li>
+							<li id="top2m2m5"><span><a href="../admission/korean01.htm">Korean Language<span class="va_pc"></span>Program</a></span></li>
+							<li id="top2m2m6"><span><a href="../admission/summer01.htm">Summer School <span class="va_pc"></span>Program</a></span>
+								 <!--<ul class="depth3">
+								<li><span><a href="../admission/summer01.htm">Summer School(Session 1 & 2)</a></span></li>
+								<li><span><a href="../admission/summer02.htm">Summer School(Chinese)</a></span></li>
+								<li><span><a href="../admission/summer03.htm">Summer School(Japanese)</a></span></li>
+								</ul> -->
+							</li>
+							<li id="top2m2m7"><span><a href="../admission/visiting02.htm">Visiting Scholar<span class="va_pc"></span>Program</a></span></li>
+							<!--<li id="top2m2m8"><span><a href="../admission/challenge01.htm">Global Challenger<span class="va_pc"></span>Program</a></span></li>-->
+							</ul>
+						</li>
+						<li><span><a href="../edu/school01.htm" id="top1m3">EDUCATION</a></span>
+							<ul id="top2m3" class="depth2">
+							<div class="gnb_tit img3">EDUCATION<span>Global KNU</span></div>
+							<li id="top2m3m1" class="fst"><span><a href="../edu/school01.htm">Departments Introduction</a></span>
+								<ul class="depth3">
+								<li><span><a href="../edu/school01.htm">Undergraduate</a></span></li>
+								<li><span><a href="https://home.knu.ac.kr/HOME/graden/" target="_blank">Graduate School<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="http://gsis.knu.ac.kr/" target="_blank">International Graduate School<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>
+							<li id="top2m3m2"><span><a href="../edu/academic01.htm">Academic Administration</a></span>
+								<ul class="depth3">
+								<li><span><a href="../edu/academic01.htm">Academic Calendar</a></span></li>
+								<li><span><a href="../edu/academic02_02.htm">Undergraduate</a></span></li>
+								<li><span><a href="https://knuin.knu.ac.kr/public/stddm/edu.knu" target="_blank">Curriculum <span class="ico_nw"></span></a></span></li>
+								<li><span><a href="https://knuin.knu.ac.kr/public/stddm/lectPlnInqr.knu" target="_blank">Class Hour/Syllabus<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="https://lssrq.knu.ac.kr/login.knu?lang=en" target="_blank">Course Registration<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>
+							<li id="top2m3m3"><span><a href="../edu/support01.htm">Education Support </a></span>
+								<ul class="depth3">
+								<li><span><a href="http://kudos.knu.ac.kr/eng/" target="_blank">Library<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="http://lms.knu.ac.kr/" target="_blank" >Smart U-Learning<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="http://lang.knu.ac.kr/" target="_blank">Language Institute<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="http://iwc.knu.ac.kr/" target="_blank">International Writing Center<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>
+							</ul>
+						</li>
+						<li><span><a href="../research/lab00.htm" id="top1m4">RESEARCH</a></span>						
+							<ul id="top2m4" class="depth2">
+							<div class="gnb_tit img4">RESEARCH<span>Global KNU</span></div>
+							<li id="top2m4m1" class="fst"><span><a href="../research/lab00.htm">Research Centers</a></span>
+								<ul class="depth3">
+								<li><span><a href="../research/lab01.htm">Humanities/Social Sciences</a></span></li>
+								<li><span><a href="../research/lab02.htm">Natural Sciences</a></span></li>
+								<li><span><a href="../research/lab03.htm">Engineering</a></span></li>
+								<li><span><a href="../research/lab04.htm">Agricultural Sciences</a></span></li>
+								<li><span><a href="../research/lab05.htm">Medical Sciences</a></span></li>
+								</ul>
+							</li>
+							<li id="top2m4m4" class="fst"><span><a href="../research/research00.htm">Research Achievements</a></li>
+							<li id="top2m4m5" class="fst"><span><a href="../research/research01.htm">Research Videos</a></li>
+							 <!--<li id="top2m4m4" class="fst"><span><a href="../research/achieve00.htm">Research Achievements</a></span>
+								<ul class="depth3">
+								<li><span><a href="../research/achieve01.htm">Arts and Humanities</a></span></li>
+								<li><span><a href="../research/achieve02.htm">Social Sciences / Business</a></span></li>
+								<li><span><a href="../research/achieve03.htm">Natural Sciences</a></span></li>
+								<li><span><a href="../research/achieve04.htm">Engineering / Technology</a></span></li>
+								<li><span><a href="../research/achieve05.htm">Life Sciences</a></span></li>
+								<li><span><a href="../research/achieve06.htm">Medicine</a></span></li>
+								</ul>
+							  </li>-->
+							<li id="top2m4m2"><span><a href="../research/researcher2018_05.htm">Good Researcher</a></span></li>
+							<li id="top2m4m3"><span><a href="https://iac.knu.ac.kr/eng" target="_blank">Office of Research and<span class="va_pc"></span>Industry-University<span class="va_pc"></span>Cooperation<span class="ico_nw"></span></a></li>
+							<li id="top2m4m6"><span><a href="https://research.knu.ac.kr/" target="_blank">KNU Researcher<span class="ico_nw"></span></a></li>
+							<!-- <li id="top2m4m3"><span><a href="https://home.knu.ac.kr/HOME/knuprmap2/index.html" target="_blank">Office of Research and<span class="va_pc"></span>Industry-University<span class="va_pc"></span>Cooperation<span class="ico_nw"></span></a></li> -->
+							</ul>
+						</li>
+						<li><span><a href="../campus/service03.htm" id="top1m5">CAMPUS LIFE</a></span>						
+							<ul id="top2m5" class="depth2">
+							<div class="gnb_tit img5">CAMPUS LIFE<span>Global KNU</span></div>
+							<li id="top2m5m2"><span><a href="../campus/service03.htm">Student support</a></span>
+								<ul class="depth3">
+								<li><span><a href="../campus/service03.htm">Housing</a></span></li>
+								<li><span><a href="../campus/service01.htm">Career Development</a></span></li>
+								<li><span><a href="../campus/service02.htm">Facilities</a></span></li>
+								</ul>
+							</li>
+							<li id="top2m5m3"><span><a href="../campus/life01.htm">Student Life</a></span>
+								<ul class="depth3">
+								<li><span><a href="../campus/life01.htm">Health Insurance</a></span></li>
+								<li><span><a href="../campus/life02.htm">Disabled Student Support Center</a></span></li>
+								<li><span><a href="http://coop.knu.ac.kr/pages/board/list.php?board_sid=9" target="_blank">On-campus cafeteria menus<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="http://counsel.knu.ac.kr/" target="_blank">Student counselling center<span class="ico_nw"></span></a></span></li>
+								<!-- <li><span><a href="../campus/life03.htm">International Programs</a></span></li> -->
+								</ul>
+							</li>
+							<li id="top2m5m4"><span><a href="../campus/info01.htm">Life at KNU</a></span>
+								<ul class="depth3">
+								<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730012177" target="_blank">Scholarships<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730012369" target="_blank">Visa<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730117729" target="_blank">Q&A<span class="ico_nw"></span></a></span></li>
+								<li><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1729835413"  target="_blank">Int'l Students Guidebook<span class="ico_nw"></span></a></span></li>
+								</ul>
+							</li>
+							<!-- <li id="top2m5m1" class="fst"><span><a href="../campus/volunteer01.htm">Volunteer</a></span>
+								<ul class="depth3">
+								<li><span><a href="../campus/volunteer01.htm">Volunteer program</a></span></li>
+								</ul>
+							</li> -->
+							</ul>
+						</li>
+						<li><span><a href="../board/notice01.htm" id="top1m6">NEWS</a></span>
+							<ul id="top2m6" class="depth2">
+							<div class="gnb_tit img6">NEWS<span>Global KNU</span></div>
+							<li id="top2m6m1" class="fst"><span><a href="../board/notice01.htm">Notice</a></span></li>
+							<li id="top2m6m2"><span><a href="../board/news01.htm">News</a></span></li>
+							<li id="top2m6m3"><span><a href="../board/job01.htm">Job Openings</a></span></li>
+							<li id="top2m6m4"><span><a href="../board/gallery01.htm">KNU Gallery</a></span>
+								<ul class="depth3">
+								<li><span><a href="../board/gallery01.htm">Photo</a></span></li>
+								<li><span><a href="../board/gallery01_02.htm">Video</a></span></li>
+								</ul>
+							</li>
+							
+							<!-- <li id="top2m6m5"><span><a href="../board/news02.htm">SDGs</a></span>
+								<ul class="depth3">
+								<li><span><a href="../board/gallery03.htm">SDGs Report</a></span></li>
+								<li><span><a href="../board/gallery04.htm">Separate SDGs Report</a></span></li>
+								</ul>
+							</li> -->
+							
+						
+							<!-- <li id="top2m6m6"><span><a href="../board/covid.htm">COVID-19 Notice</a></span></li> -->
+							</ul>
+						</li>
+						<li><span class=""><a href="../alumni/KNUalumni.htm" id="top1m7">KNU Alumni</a></span>	
+							<ul id="top2m7" class="depth2">
+								<div class="gnb_tit img6">Alumni</div>
+								<li id="top2m7m1" class="fst"><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730184515" target="_blank">Number of Alumni<span class="ico_nw"></span></a></span></li>
+								<li id="top2m7m2"><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730184740" target="_blank">Alumni Story<span class="ico_nw"></span></a></span></li>
+								<li id="top2m7m3"><span><a href="https://home.knu.ac.kr/HOME/global/sub.htm?nav_code=glo1730184810" target="_blank">News Letter<span class="ico_nw"></span></a></span></li>
+							</ul>
+						</li>
+						</ul>
+						</nav>
+						</div>
+						<!-- //end_gnbmn -->
+							
+					<script type="text/javascript">initTopMenu(0,0);</script>
+					<div id="id_gnb_bg" class="gnb_bg"></div>
+		</div>
+
+		<div class="clear"></div>
+</div>
+</div>	<div id="svisual" class="svbg sv3bg">
+			<div class="dark"></div>
+			<!-- <div class="svtit d_width"><img src="/wbbs/img/vtit.png" alt="Change KNU 글로벌 지식선도대학을 향하여"></div> -->
+</div>		<div id="container" class="d_width">
+			<div id="snb"><a name="snb"></a>
+	<h2>EDUCATION</h2> 
+	<div id="snbmn">
+	<ul id="snb2m">
+	<li id="snb2m1"><a href="../edu/school01.htm">Departments Introduction</a>
+		<ul id="snb3m1">
+		<li id="snb3m1m1"><a href="../edu/school01.htm">Undergraduate</a></li>
+		<li id="snb3m1m2"><a href="https://home.knu.ac.kr/HOME/graden/" target="_blank">Graduate School<span class="ico_nw"></span></a></li>
+		<!--<li id="snb3m1m2"><a href="http://grad.knu.ac.kr/eng" target="_blank">Graduate School<span class="ico_nw"></span></a></li>-->
+		<li id="snb3m1m3"><a href="http://gsis.knu.ac.kr/" target="_blank">International Graduate School<span class="ico_nw"></span></a></li>
+		</ul>
+	</li>
+	<li id="snb2m2"><a href="../edu/academic01.htm">Academic Administration</a>
+		<ul id="snb3m2">
+		<li id="snb3m2m1"><a href="../edu/academic01.htm">Academic Calendar</a></li>
+		<li id="snb3m2m2"><a href="../edu/academic02_02.htm">Undergraduate</a></li>
+		<li id="snb3m2m4"><a href="http://knu.ac.kr/wbbs/wbbs/contents/index.action?menu_url=curriculum1/index&noDeco=true" target="_blank">Curriculum <span class="ico_nw"></span></a></li>
+		<li id="snb3m2m5"><a href="https://knuin.knu.ac.kr/public/stddm/lectPlnInqr.knu" target="_blank">Class Hour/Syllabus<span class="ico_nw"></span></a></li>
+		<li id="snb3m2m3"><a href="https://lssrq.knu.ac.kr/login.knu?lang=en" target="_blank">Course Registration<span class="ico_nw"></span></a></li>
+		</ul>
+	</li>
+	<!-- <li id="snb2m3"><a href="http://en.knu.ac.kr/" target="_blank">International Affairs<span class="ico_nw"></span></a></li> -->
+	<li id="snb2m4"><a href="../edu/support01.htm">Education Support</a>
+		<ul id="snb3m4">
+		<li id="snb3m4m1"><a href="http://kudos.knu.ac.kr/eng/" target="_blank">Library<span class="ico_nw"></span></a></li>
+		<li id="snb3m4m3"><a href="http://lms.knu.ac.kr/" target="_blank">Smart U-Learning<span class="ico_nw"></span></a></li>
+		<li id="snb3m4m5"><a href="http://lang.knu.ac.kr/" target="_blank">Language Institute<span class="ico_nw"></span></a></li>
+		<li id="snb3m4m6"><a href="http://iwc.knu.ac.kr/" target="_blank">International Writing Center<span class="ico_nw"></span></a></li>
+		</ul>
+	</li>
+	
+	</ul>
+	</div>
+	<script type="text/javascript">initsnbMenu(2,1);</script>
+	<noscript>자바스크립트를 사용할 수 없는 환경에서는 현재 페이지에 해당되는 메뉴활성화를 보실 수 없습니다.</noscript>
+</div>			<div id="content" class="cbg">
+				<div id="body_head">
+	<div id="location">
+		<h4>현재위치</h4>
+		<ul>
+		<li><a href='../' title='HOME'>HOME</a></li><li><a href='/~eng/edu/school01.htm' title='Education'>Education</a></li><li><a href='/~eng/edu/academic01.htm' title='Academic Administration'>Academic Administration</a></li><li class='on'><a href='/~eng/edu/academic01.htm' title='Academic Calendar'>Academic Calendar</a></li>		</ul>
+		<div class="clear"></div>
+	</div>
+	<div id="pnb">
+		<ul>
+		<li><a href="#pnb" onclick="zoomFont(1);return false;" onkeypress="if(event.keyCode == 13){this.onclick}" title="글씨크기를 확대합니다"><img src="../img/btn_font_p.gif" alt="글씨크기확대" /></a></li>
+		<li><a href="#pnb" onclick="zoomFont(0);return false;" onkeypress="if(event.keyCode == 13){this.onclick}" title="글씨크기를 기본값으로 합니다"><img src="../img/btn_font_d.gif" alt="글자크기기본" /></a></li>
+		<li><a href="#pnb" onclick="zoomFont(-1);return false;" onkeypress="if(event.keyCode == 13){this.onclick}" title="글씨크기를 축소합니다"><img src="../img/btn_font_m.gif" alt="글씨크기축소" /></a></li>
+		<li><a href="#pnb"  onclick="contentPrint(1);return false;" title="새창을 띄워 화면을 프린트합니다"><img src="../img/btn_print.gif" alt="인쇄"/></a></li>
+		</ul>
+		<noscript>자바스크립트를 사용할 수 없는 환경에서는 글쓰크기 확대 및 축소, 프린트기능을 사용하실 수 없습니다.</noscript>
+	</div>
+	<div class="clear"></div>
+	<div id="body_title">
+		<h1>Academic Calendar</h1>
+	</div>
+</div>				<div id="body_content">
+				<!-- start -->
+					
+
+
+
+
+				<h2 class="left fst">2026</h2>
+				<div class="selectyear right">
+					<a href="?year=2025&type=cal_04" class="prev" title="previous year"><span>previous</span></a> 
+					<span>2026</span>
+					<a href="?year=2027&type=cal_04" class="next" title="next year"><span>next</span></a>
+				</div>
+				<!-- <div class="right mrp10"><a href="../download/2017yearSchedule.hwp" title="" class="btn_m haksa ico_download">2017 Schedule</a></div> -->
+				<div class="clear"></div>
+
+				<div id="calendar">
+
+
+				
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>1					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>01.01(목)</span>New Year's Day</li>
+												<li><span class=daydate'>01.07(수) ~ 01.08(목)</span>[Graduate School] Submission of Final Thesis</li>
+												<li><span class=daydate'>01.20(화) ~ 01.22(목)</span>1st Semester Course Package Registration</li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>2					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>02.03(화) ~ 02.05(목)</span>2026 Academic Year Freshman Enrollment</li>
+												<li><span class=daydate'>02.13(금)</span>1st Semester Course Registration</li>
+												<li><span class=daydate'>02.16(월) ~ 02.18(수)</span>Lunar New Year Holiday</li>
+												<li><span class=daydate'>02.20(금)</span>2025 Academic Year Spring Commencement</li>
+												<li><span class=daydate'>02.23(월) ~ 02.26(목)</span>2026 1st Semester Returning Student Registration</li>
+												<li><span class=daydate'>02.23(월) ~ 02.25(수)</span>[Graduate School] Enrollment Application for Course Completed Students</li>
+												<li><span class=daydate'>02.25(수) ~ 02.27(금)</span>[Graduate School] Comprehensive Exam Application</li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>3					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>03.01(일)</span>Independence Movement Day</li>
+												<li><span class=daydate'>03.02(월)</span>Substitute Holiday</li>
+												<li><span class=daydate'>03.02(월) ~ 03.03(화)</span>[Graduate School] Report on the Comprehensive Exam implementation Plan</li>
+												<li><span class=daydate'>03.02(월) ~ 03.06(금)</span>[Graduate School] Report on the Appointment of Thesis Advisor</li>
+												<li><span class=daydate'>03.03(화)</span>Semester Begins</li>
+												<li><span class=daydate'>03.04(수) ~ 03.06(금)</span>1st Semester Course Add/Drop Preiod</li>
+												<li><span class=daydate'>03.04(수) ~ 03.10(화)</span>[Graduate School] Comprehensive Exam</li>
+												<li><span class=daydate'>03.09(월)</span>1st Semester Course Add/Drop Preiod</li>
+												<li><span class=daydate'>03.09(월) ~ 03.10(화)</span>[Graduate School] Tuition Payment for Course Completed</li>
+												<li><span class=daydate'>03.12(목) ~ 03.13(금)</span>[Graduate School] Comprehensive Exam Results Submission</li>
+												<li><span class=daydate'>03.16(월) ~ 03.18(수)</span>[Graduate School] Application for Thesis Submission Candidates</li>
+												<li><span class=daydate'>03.17(화) ~ 03.19(목)</span>1st Semester Course Revision Period</li>
+												<li><span class=daydate'>03.23(월)</span>End of Leave of Absence Application Period</li>
+												<li><span class=daydate'>03.27(금)</span>1/4 of Semester Completed</li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>4					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>04.01(수) ~ 04.03(금)</span>[Graduate School] Recommendation of Thesis Reviewers</li>
+												<li><span class=daydate'>04.08(수) ~ 04.10(금)</span>[Graduate School] Submission of Review Copies of thesis</li>
+												<li><span class=daydate'>04.13(월) ~ 04.14(화)</span>[Graduate School] Reporting Thesis Submission Results</li>
+												<li><span class=daydate'>04.15(수) ~ 04.16(목)</span>[Graduate School] Payment of Thesis Review Fees</li>
+												<li><span class=daydate'>04.16(목) ~ 04.22(수)</span>Midterm Exams</li>
+												<li><span class=daydate'>04.23(목)</span>2/4 of Semester Completed</li>
+												<li><span class=daydate'>04.23(목)</span>End of General Leave of Absence Application Period</li>
+												<li><span class=daydate'>04.23(목)</span>[Graduate School] Approval of Thesis Reviewers</li>
+												<li><span class=daydate'>04.27(월)</span>[Graduate School] Start of Thesis Review</li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>5					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>05.01(금)</span>Labor Day</li>
+												<li><span class=daydate'>05.05(화)</span>[Graduate School] Submission of Review Copies of thesisChildren's Day</li>
+												<li><span class=daydate'>05.22(금)</span>3/4 of Semester Completed</li>
+												<li><span class=daydate'>05.22(금)</span>End of General Leave of Absence Application (Childcare, Ilness, Startup)</li>
+												<li><span class=daydate'>05.25(월)</span>Substitute Holiday</li>
+												<li><span class=daydate'>05.28(목)</span>80th Anniversary </li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>6					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>06.01(월) ~ 06.05(금)</span>[Graduate School] End of Thesis Review</li>
+												<li><span class=daydate'>06.03(수)</span>9th Local Elections</li>
+												<li><span class=daydate'>06.06(토)</span>Memorial Day</li>
+												<li><span class=daydate'>06.08(월) ~ 06.09(화)</span>[Graduate School] Submission of Thesis Review Results</li>
+												<li><span class=daydate'>06.09(화) ~ 06.15(월)</span>Make-up Classes</li>
+												<li><span class=daydate'>06.16(화) ~ 06.22(월)</span>Final Exams</li>
+												<li><span class=daydate'>06.22(월) ~ 06.29(월)</span>[Graduate School] Submission of Electronic Thesis Files</li>
+												<li><span class=daydate'>06.23(화)</span>Start of Summer Vacation</li>
+												<li><span class=daydate'>06.24(수)</span>Summer Session Begins</li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>7					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>07.01(수)</span>Start of Leave of Absence Applications</li>
+												<li><span class=daydate'>07.08(수) ~ 07.09(목)</span>[Graduate School] Submission of Final Thesis</li>
+												<li><span class=daydate'>07.21(화) ~ 07.23(목)</span>2nd Semester Course Package Registration</li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>8					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>08.11(화) ~ 08.13(목)</span>2nd Semester Course Registration</li>
+												<li><span class=daydate'>08.17(월)</span>Substitute Holiday</li>
+												<li><span class=daydate'>08.17(월) ~ 08.19(수)</span>[Graduate School] Enrollment Application for Course Completed Students</li>
+												<li><span class=daydate'>08.18(화)</span>Start of Leave of Absence Applications</li>
+												<li><span class=daydate'>08.19(수) ~ 08.21(금)</span>[Graduate School] Comprehensive Exam Application</li>
+												<li><span class=daydate'>08.21(금)</span>2025 Academic Year Fall Commencement</li>
+												<li><span class=daydate'>08.24(월) ~ 08.27(목)</span>2026 2nd Semester Returning Student Registration</li>
+												<li><span class=daydate'>08.24(월) ~ 08.25(화)</span>[Graduate School] Submission of Comprehensive Exam Plan</li>
+												<li><span class=daydate'>08.26(수) ~ 09.01(화)</span>[Graduate School] Comprehensive Exam </li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>9					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>09.01(화)</span>Semester Begins</li>
+												<li><span class=daydate'>09.01(화) ~ 09.04(금)</span>[Graduate School] Reporting of Thesis Advisor Appointment</li>
+												<li><span class=daydate'>09.02(수) ~ 09.07(월)</span>2nd Semester Course Add/Drop Period</li>
+												<li><span class=daydate'>09.02(수) ~ 09.03(목)</span>[Graduate School] Tuition Payment for Course Completed</li>
+												<li><span class=daydate'>09.03(목) ~ 09.04(금)</span>[Graduate School] Comprehensive Exam Results Submission</li>
+												<li><span class=daydate'>09.07(월) ~ 09.11(금)</span>2027 University Admissions(Early Decision) Applications</li>
+												<li><span class=daydate'>09.09(수) ~ 09.11(금)</span>[Graduate School] Application for Thesis Submission Candidate</li>
+												<li><span class=daydate'>09.15(화) ~ 09.17(목)</span>2nd Semester Course Revision Period</li>
+												<li><span class=daydate'>09.21(월)</span>End of Leave of Absence Application Period</li>
+												<li><span class=daydate'>09.21(월) ~ 09.23(수)</span>[Graduate School] Recommendation of Thesis Reviewers</li>
+												<li><span class=daydate'>09.24(목) ~ 09.27(일)</span>Chuseok Holidays</li>
+												<li><span class=daydate'>09.29(화)</span>1/4 of Semester Completed</li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>10					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>10.05(월)</span>Substitute Holiday</li>
+												<li><span class=daydate'>10.06(화) ~ 10.08(목)</span>[Graduate School] Submission of Review Copies of thesis</li>
+												<li><span class=daydate'>10.09(금)</span>Hangul Day</li>
+												<li><span class=daydate'>10.12(월) ~ 10.13(화)</span>[Graduate School] Reporting Thesis Submission Results</li>
+												<li><span class=daydate'>10.19(월) ~ 10.20(화)</span>[Graduate School] Payment of Thesis Review Fees</li>
+												<li><span class=daydate'>10.21(수) ~ 10.27(화)</span>Midterm Exams</li>
+												<li><span class=daydate'>10.22(목)</span>[Graduate School] Approval of Thesis Reviewers</li>
+												<li><span class=daydate'>10.26(월)</span>[Graduate School] Start of Thesis Review</li>
+												<li><span class=daydate'>10.28(수)</span>2/4 of Semester Completed End of General Leave of Absence Application Period</li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>11					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>11.24(화)</span>3/4 of Semester Completed</li>
+												<li><span class=daydate'>11.24(화)</span>End of Leave of Absence Application(Childcare, Illness, Startup)</li>
+												<li><span class=daydate'>11.30(월) ~ 12.04(금)</span>[Graduate School] End of Thesis Review</li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+
+				<dl>
+					<dt scope="row">
+						<span>2026.</span>12					</dt>
+					<dd class="list">
+						<ul>
+
+												<li><span class=daydate'>12.07(월) ~ 12.08(화)</span>[Graduate School] Submission of Thesis Review Results</li>
+												<li><span class=daydate'>12.08(화) ~ 12.11(금)</span>Make-up Classes</li>
+												<li><span class=daydate'>12.14(월) ~ 12.18(금)</span>Final Exams</li>
+												<li><span class=daydate'>12.21(월)</span>Start of Winter Vacation</li>
+												<li><span class=daydate'>12.21(월) ~ 12.29(화)</span>[Graduate School] Submission of Electronic Thesis Files</li>
+												<li><span class=daydate'>12.22(화)</span>Winter Session Begins</li>
+												<li><span class=daydate'>12.31(목)</span>Year-End Ceremony</li>
+						
+						</ul>
+					</dd>
+					<div class="clear"></div>
+				</dl>
+
+
+				</div>
+ 				<!-- //end -->
+				</div>
+			</div>
+						<div class="clear"></div>
+	</div>
+</div>
+<div id="footer">
+<div id="f_site" class="d_width">
+		<div class="list univ">
+		<strong>Undergraduate</strong>
+			<ul>
+			<li><a href="http://humanities.knu.ac.kr/" target="_blank">College of Humanities</a></li>
+			<li><a href="http://social.knu.ac.kr/" target="_blank">College of Social Sciences</a></li>
+			<li><a href="http://cns.knu.ac.kr/" target="_blank">College of Natural Sciences</a></li>
+			<li><a href="http://cec.knu.ac.kr/" target="_blank" >College of Economics & Business Administration</a></li>
+			<li><a href="http://eng.knu.ac.kr/english" target="_blank">College of Engineering</a></li>
+			<li><a href="http://it.knu.ac.kr/" target="_blank" >College of IT Engineering</a></li>
+			<li><a href="http://cals.knu.ac.kr/" target="_blank" >College of Agriculture and Life Sciences </a></li>
+			<li><a href="http://mvarts.knu.ac.kr/" target="_blank">College of Music and Arts</a></li>
+			<li><a href="http://knutc.knu.ac.kr/" target="_blank">Teachers’ College</a></li>
+			<li><a href="http://med.knu.ac.kr/eng/" target="_blank" >School of Medicine</a></li>
+			<li><a href="https://dent.knu.ac.kr/eng" target="_blank">School of Dentistry</a></li>
+			<li><a href="http://vet.knu.ac.kr/" target="_blank">College of Veterinary Medicine</a></li>
+			<li><a href="http://cohe.knu.ac.kr/" target="_blank">College of Human Ecology</a></li>
+			<li><a href="http://nurs.knu.ac.kr/eng/" target="_blank">College of Nursing</a></li>
+			<li><a href="http://pharmpf.knu.ac.kr/eng/" target="_blank" >School of Pharmacy</a></li>
+			<li><a href="http://cee.knu.ac.kr/" target="_blank">College of Ecology and Environmental Science</a></li>
+			<li><a href="https://encst.knu.ac.kr/" target="_blank">College of Science and Technology</a></li>
+			<!-- <li><a href="http://gls.knu.ac.kr/eng" target="_blank" >Global Leaders’ School</a></li> -->
+			<li><a href="http://puad.knu.ac.kr/" target="_blank">School of Public Administration</a></li>
+			<li><a href="http://udm.knu.ac.kr/" target="_blank" >Undeclared Majors</a></li>
+			<li><a href="http://gls.knu.ac.kr/eng/index.html" target="_blank" >Global Leaders School</a></li>
+			<!-- <li><a href="http://law.knu.ac.kr/" target="_blank" >Law School</a></li> -->
+			<!-- <li><a href="http://tbudm.knu.ac.kr/" target="_blank">School of Science Technology, Biology and Undeclared Majors</a></li> -->
+			<!-- <li><a href="http://shw.knu.ac.kr/" target="_blank" >School of Health and Welfare</a></li> -->
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<div class="list graduate">
+		<strong>Graduate</strong>		
+			<ul class="left">
+			<!-- <p class="pointgr2">General Graduate school</p> -->
+			<li><a href="http://grad.knu.ac.kr" target="_blank">General Graduate School</a></li>
+			<!-- <p class="pt30 pointgr2">Professional Graduate School</p> -->
+			
+			<!-- <p class="pointgr2">Specialized Graduate School</p> -->
+			<li><a href="http://gse.knu.ac.kr/" target="_blank" >Graduate School of Education</a></li>
+			<li><a href="http://gspa.knu.ac.kr/" target="_blank">Graduate School of Public Administration</a></li>
+			<li><a href="http://cec.knu.ac.kr/HOME/biz/sub.htm?nav_code=biz1467295441" target="_blank">Graduate School of Business Administration</a></li>
+			<li><a href="http://health.knu.ac.kr/" target="_blank" >Graduate School of Public Health</a></li>
+			<li><a href="http://ind.knu.ac.kr/" target="_blank">Graduate School of Industry</a></li>
+			<li><a href="https://www.knu.ac.kr/wbbs/wbbs/contents/index.action?menu_url=edu/school04_01&menu_idx=41">Graduate School of Agricultural Development</a></li>
+			<li><a href="http://gsis.knu.ac.kr/" target="_blank">Graduate School of International Studies</a></li>
+			<li><a href="http://social.knu.ac.kr/HOME/coss/sub.htm?nav_code=cos1466989409" target="_blank">Graduate School of Policy and Infomation</a></li>
+			</ul>
+			<!-- <li><a href="http://med.knu.ac.kr/eng" target="_blank">School of Medicine</a></li> -->
+			<!-- <li><a href="http://dent.knu.ac.kr/eng" target="_blank">School of Dentistry</a></li> -->
+			<li><a href="https://www.knu.ac.kr/wbbs/wbbs/contents/index.action?menu_url=edu/school04_02&menu_idx=41">Graduate School of Forensic and Investigative Science</a></li>
+			<li><a href="http://seoksa.knu.ac.kr/" target="_blank">Graduate School of Science and Technology</a></li>
+			<li><a href="http://lawschool.knu.ac.kr/" target="_blank">Law School</a></li>
+			<ul class="left">
+			</ul>
+		</div>
+
+	
+		<div class="clear"></div>
+</div>
+<address>
+<div class="d_width">
+	<div class="d2"><p><strong>Daegu Main Campus</strong>80, Daehak-ro, Buk-gu, Daegu, Republic of Korea.</p>
+		<ul>
+		<li>Undergraduate : +82-53-950-2436, ugapply@knu.ac.kr</li>
+		<li>Graduate: +82-950-2435, admission@knu.ac.kr</li>
+		<li>GKS: +82-53-950-2434, gks2000@knu.ac.kr</li>
+		<li>Inbound Exchange: inbound1@knu.ac.kr, sabroad@knu.ac.kr</li>
+		</ul>
+	</div>
+	<div class="d2"><p><strong>Sangju Campus</strong>2559, Gyeongsang-daero, Sangju-si, Gyeongsangbuk-do 37224 Korea.</p>
+		<ul>
+		<li>TEL: +82-54-530-1561</li>
+		<li>FAX: +82-54-532-6005</li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+	<div id="copyright">Copyright(c) Kyungpook National University. <span class="va_mo"></span>All rights reserved.</div>
+</div>
+</address>
+</div></body>
+</html>
