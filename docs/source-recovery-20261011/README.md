@@ -1,4 +1,18 @@
-# 四校固定輸入隔離整合：最終驗收進行中
+# 固定候選2d0e1a3b：記憶體修復後重新驗收
+
+目前候選 [2d0e1a3b5e505be52830f509081028fca8d3b4b0](https://github.com/blizzard-new/abroad/commit/2d0e1a3b5e505be52830f509081028fca8d3b4b0)，tree `e0a743533087e868ddfc55c036a08ea99dda3661`；[Draft PR12](https://github.com/blizzard-new/abroad/pull/12)。只推隔離候選及證據，沒有merge main／正式DB／部署或安全設定變更。
+
+本SHA已通過55個focused cases（24新增JSON／並行快取回歸＋31既有資料／撤回圖／快取案例）、contracts、delivery audit、NCU完整payload parity。175步cold RUNNING；warm、完整pytest、此SHA的wheel與完整Supabase runtime NOTRUN。7a7的通過不繼承。
+
+修復只變更 `json_stream.py`（新增object-array逐項reader，既有array reader不改）、`tku_census.py`（逐校讀取與single build lock）、`tku_photo_identity_policy.py`（CLI與package匯入相容），加24新案例；全部原資料、既有測試函式、workflow、SQL位元組不變。前次a731 focused為54passed／1failed（獨立import的ModuleNotFoundError），2d0修復後55passed；兩者原始log/XML皆保留。
+
+7a7 cold原始失敗：第8／175取樣峰值472.656MiB；完整diagnostic另跑175步，功能assert全過但峰值472.055MiB，因此最終exit1。新候選仍以460MiB原門檻驗收。逐校snapshot原型的287校payload、摘要、別名hash全部相符；孤立載入峰值180.04→65.72MiB僅診斷比較，不替代完整負載。
+
+固定四校資料输入仍為下述CCU52ed／NCUa2df／NTUc735／TKU93cb。父交付的新NCU `48fcc27446f8cadb19f45cae415852af67f76a1e` 已排隊，依指示須先完成當前乾淨SHA重驗再接增量，沒有在測試途中浮動更新。4個NCU screenshot輸出修復檔案與7a7commit已回報父對話供源分支同步。
+
+以下7a7表格及照片／來源結果是歷史固定SHA紀錄；最終驗收仍未完成。發布與回滾安排見 [計畫](RELEASE-PLAN.md)。
+
+# 歷史7a7c7e35固定資料檢查
 
 候選 [7a7c7e3560527ce08ca225c0930397772a8b79aa](https://github.com/blizzard-new/abroad/commit/7a7c7e3560527ce08ca225c0930397772a8b79aa)，tree `61d4824d59c3477960ace89fbcf5f02d4ca030ce`；[Draft PR12](https://github.com/blizzard-new/abroad/pull/12)。本任務沒有 merge main、部署或正式 DB 寫入；只讀再次確認 main59a20f27、Quality374368612 disabled_manually。Render main autoDeploy 及安全／帳務設定未改。
 

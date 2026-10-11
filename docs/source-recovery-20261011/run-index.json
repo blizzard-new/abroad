@@ -1446,6 +1446,22 @@
     "pytest_summary": []
   },
   {
+    "name": "integration-final4-cold-complete-diagnostic-command",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "7a7c7e3560527ce08ca225c0930397772a8b79aa",
+      "tree": "61d4824d59c3477960ace89fbcf5f02d4ca030ce",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "7a7c7e3560527ce08ca225c0930397772a8b79aa",
+      "tree": "61d4824d59c3477960ace89fbcf5f02d4ca030ce",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
     "name": "integration-final4-cold-memory-command",
     "result": "failed",
     "exit_code": 1,
@@ -1556,6 +1572,90 @@
       "status": ""
     },
     "pytest_summary": []
+  },
+  {
+    "name": "integration-final5-contracts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "2d0e1a3b5e505be52830f509081028fca8d3b4b0",
+      "tree": "e0a743533087e868ddfc55c036a08ea99dda3661",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "2d0e1a3b5e505be52830f509081028fca8d3b4b0",
+      "tree": "e0a743533087e868ddfc55c036a08ea99dda3661",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integration-final5-delivery-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "2d0e1a3b5e505be52830f509081028fca8d3b4b0",
+      "tree": "e0a743533087e868ddfc55c036a08ea99dda3661",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "2d0e1a3b5e505be52830f509081028fca8d3b4b0",
+      "tree": "e0a743533087e868ddfc55c036a08ea99dda3661",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integration-final5-ncu-stream-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "2d0e1a3b5e505be52830f509081028fca8d3b4b0",
+      "tree": "e0a743533087e868ddfc55c036a08ea99dda3661",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "2d0e1a3b5e505be52830f509081028fca8d3b4b0",
+      "tree": "e0a743533087e868ddfc55c036a08ea99dda3661",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integration-final5-tku-streaming-focused",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "a731aa071cfc0617d6884525c45bca5d60210f19",
+      "tree": "d3fcc8197937578627026a5d1ad59268db72031d",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "a731aa071cfc0617d6884525c45bca5d60210f19",
+      "tree": "d3fcc8197937578627026a5d1ad59268db72031d",
+      "status": ""
+    },
+    "pytest_summary": [
+      "1 failed, 54 passed in 34.78s"
+    ]
+  },
+  {
+    "name": "integration-final5-tku-streaming-focused-repaired",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "2d0e1a3b5e505be52830f509081028fca8d3b4b0",
+      "tree": "e0a743533087e868ddfc55c036a08ea99dda3661",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "2d0e1a3b5e505be52830f509081028fca8d3b4b0",
+      "tree": "e0a743533087e868ddfc55c036a08ea99dda3661",
+      "status": ""
+    },
+    "pytest_summary": [
+      "55 passed in 21.55s"
+    ]
   },
   {
     "name": "integration-next1-contracts",

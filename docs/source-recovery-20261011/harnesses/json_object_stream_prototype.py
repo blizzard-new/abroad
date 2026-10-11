@@ -23,9 +23,9 @@ def read_json_object_array(handle, array_key, on_item, chunk_size=256 * 1024):
 
     def whitespace():
         nonlocal buffer
-        buffer = buffer.lstrip()
+        buffer = buffer.lstrip(' \t\r\n')
         while not buffer and not eof and more():
-            buffer = buffer.lstrip()
+            buffer = buffer.lstrip(' \t\r\n')
 
     def consume(token):
         nonlocal buffer

@@ -1,0 +1,32 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_tku_streamed_snapshot.py",
+    "tests/test_tku_scoped_audit.py",
+    "tests/test_tku_fixed_photo_blockers.py",
+    "tests/test_tku_full_census.py",
+    "tests/test_ncu_snapshot_cache.py",
+    "-q",
+    "--junitxml=/workspace/recovery-evidence-20261011/integration-final5-tku-streaming-focused-repaired/result.xml"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T19:01:45.965971+00:00",
+  "start_guard": {
+    "sha": "2d0e1a3b5e505be52830f509081028fca8d3b4b0",
+    "tree": "e0a743533087e868ddfc55c036a08ea99dda3661",
+    "status": ""
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {},
+  "exit_code": 0,
+  "finished_at": "2026-10-11T19:02:10.111380+00:00",
+  "end_guard": {
+    "sha": "2d0e1a3b5e505be52830f509081028fca8d3b4b0",
+    "tree": "e0a743533087e868ddfc55c036a08ea99dda3661",
+    "status": ""
+  }
+}

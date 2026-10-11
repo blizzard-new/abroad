@@ -1,0 +1,20 @@
+CONFTEST LOADED!
+...........................F...........................                  [100%]
+=================================== FAILURES ===================================
+__________ test_fixed_photo_gate_cannot_be_undone_by_old_visual_pass ___________
+
+    def test_fixed_photo_gate_cannot_be_undone_by_old_visual_pass():
+>    from scripts.tku_photo_identity_policy import apply_photo_identity_policy
+
+tests/test_tku_fixed_photo_blockers.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Explicit fixed-photo withdrawals override stale visual/date passes."""
+    import json
+>   from tku_capture_io import BUNDLE
+E   ModuleNotFoundError: No module named 'tku_capture_io'
+
+scripts/tku_photo_identity_policy.py:3: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_tku_fixed_photo_blockers.py::test_fixed_photo_gate_cannot_be_undone_by_old_visual_pass
+1 failed, 54 passed in 34.78s
