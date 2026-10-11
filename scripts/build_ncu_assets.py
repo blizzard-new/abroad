@@ -48,7 +48,7 @@ def build(review_path, *, output_path=None):
             metadata = json.loads(metadata_path.read_text())
         picture = next(pic for pic in metadata["query"]["pages"].values() if pic["title"] == source["title"])
         meta = picture["imageinfo"][0]["extmetadata"]
-        when = meta.get("DateTimeOriginal", {}).get("value", "原來源未列拍攝日期")
+        when = source.get("photographed_at_original") or meta.get("DateTimeOriginal", {}).get("value", "原來源未列拍攝日期")
         description = BeautifulSoup(source["description_html"], "html.parser").get_text(" ", strip=True)
         rows.append({
             "school_name": source["school_name"], "country": source["country"],
@@ -57,7 +57,7 @@ def build(review_path, *, output_path=None):
             "content_sha256": digest, "title_original": source["title"], "description_original": description,
             "photographed_at_original": when, "author": author, "license": source["license"],
             "license_url": license_url, "identity_source_url": source["identity_source_url"],
-            "checked_at": review["checked_at"], "review_note": source["review_note"],
+            "checked_at": source.get("reviewed_at", review["checked_at"]), "review_note": source["review_note"],
             "caption_zh": f"校園參考照片：{source['title'].removeprefix('File:')}。作者：{author}；授權：{source['license']}；拍攝日期：{when}。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。",
         })
     output = output_path or ROOT / "src/exchange_info/official_data/ncu/campus-assets.json"

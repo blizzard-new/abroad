@@ -1,0 +1,89 @@
+{
+  "resume_base_sha": "358a72e7302476ba8dd19c47c35fc398fc205a47",
+  "repository_base_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "checked_at": "2026-10-11",
+  "photos": 146,
+  "unique_photo_sha256": 145,
+  "located_partners": 122,
+  "partner_denominator": 214,
+  "mother_location": "National Central University, Taiwan, Zhongli; Q714891",
+  "strict_field_gaps": 3370,
+  "successful_public_candidates_still_unread": 319,
+  "tests": [
+    {
+      "passed": 54,
+      "log": "tests-54.log",
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_completion.py tests/test_ncu_fourth_pass.py tests/test_university_locations.py -q"
+    },
+    {
+      "passed": 6,
+      "log": "tests-source-memory-6.log",
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_resume_assets.py tests/test_catalogue_memory.py -q"
+    },
+    {
+      "passed": 8,
+      "log": "browser-8.log",
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_resume_assets.py -q"
+    }
+  ],
+  "image_review": [
+    {
+      "file": "browser/ncu-mother-and-122-points.png",
+      "sha256": "a66ddebf0cbf6925c52f67c65325f0989bc0eb37e749af57b2b941041ed22ef8",
+      "reviewed": true,
+      "scope": "Seven photo figure captures viewed in contact sheet; Temple mobile life and mother globe viewed separately; remaining full life captures machine-checked only."
+    },
+    {
+      "file": "browser/上海大學-390-photo.png",
+      "sha256": "d176a1d3bb9e3a45d4971bafb7e7a3d3d55f91e504fb5d207d404ccbea7d807a",
+      "reviewed": true,
+      "scope": "Seven photo figure captures viewed in contact sheet; Temple mobile life and mother globe viewed separately; remaining full life captures machine-checked only."
+    },
+    {
+      "file": "browser/北海道-1280-photo.png",
+      "sha256": "bdcfa8a8cd363d6a2c2f13029fa339507c5dc18f204545bfa5e6d417fd0a05d5",
+      "reviewed": true,
+      "scope": "Seven photo figure captures viewed in contact sheet; Temple mobile life and mother globe viewed separately; remaining full life captures machine-checked only."
+    },
+    {
+      "file": "browser/南京信息-390-photo.png",
+      "sha256": "12e2db7e7cda11b071e2e8abbb35f518d9b7c41aabbb35a367766c34ee39862d",
+      "reviewed": true,
+      "scope": "Seven photo figure captures viewed in contact sheet; Temple mobile life and mother globe viewed separately; remaining full life captures machine-checked only."
+    },
+    {
+      "file": "browser/大阪公立-1280-photo.png",
+      "sha256": "b18152f3279183fe10a418e9f912ef7de70843dcc1a32f955bf07b52d8cb5e57",
+      "reviewed": true,
+      "scope": "Seven photo figure captures viewed in contact sheet; Temple mobile life and mother globe viewed separately; remaining full life captures machine-checked only."
+    },
+    {
+      "file": "browser/天普-390-life.png",
+      "sha256": "213a430229d0fc854ed05a691700b06162e4fd17f222cca8a2b0db1685b8437e",
+      "reviewed": true,
+      "scope": "Seven photo figure captures viewed in contact sheet; Temple mobile life and mother globe viewed separately; remaining full life captures machine-checked only."
+    },
+    {
+      "file": "browser/天普-390-photo.png",
+      "sha256": "c759ba282570e225539253e30d8c4a4f9b1a8af49ad3ffa37453f0a743f0e042",
+      "reviewed": true,
+      "scope": "Seven photo figure captures viewed in contact sheet; Temple mobile life and mother globe viewed separately; remaining full life captures machine-checked only."
+    },
+    {
+      "file": "browser/新潟-390-photo.png",
+      "sha256": "d0af70de99e6bc2dd9ad837e1af1aec8262a884e634653936894cd6db2f29337",
+      "reviewed": true,
+      "scope": "Seven photo figure captures viewed in contact sheet; Temple mobile life and mother globe viewed separately; remaining full life captures machine-checked only."
+    },
+    {
+      "file": "browser/曼尼托巴-1280-photo.png",
+      "sha256": "e1d84412637631f46ea7120cca6b9a8fff6e91e1190ba44ffcb5794d71b781a4",
+      "reviewed": true,
+      "scope": "Seven photo figure captures viewed in contact sheet; Temple mobile life and mother globe viewed separately; remaining full life captures machine-checked only."
+    }
+  ],
+  "ci_run": false,
+  "deployed": false,
+  "database_mutation": false,
+  "shared_matcher_changed": false
+}
