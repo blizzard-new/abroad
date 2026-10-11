@@ -1,0 +1,53 @@
+{
+  "base": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "heads": {
+    "PR8": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+    "PR9": "ed7479073df36deb8fc0393e86fedb102e1cf2b7",
+    "PR10": "cf4d86f22d89ee698315d46177daf00b49dd8706",
+    "PR11": "358a72e7302476ba8dd19c47c35fc398fc205a47",
+    "PR13": "88bd00531d9a77fb98ba54dbfd8786cbde18db96"
+  },
+  "changed_files": {
+    "PR8": 15,
+    "PR9": 236,
+    "PR10": 3147,
+    "PR11": 244,
+    "PR13": 364
+  },
+  "shared_paths": {
+    "src/exchange_info/api.py": [
+      "PR8",
+      "PR10",
+      "PR11",
+      "PR13"
+    ],
+    "src/exchange_info/official_data/university_locations.jsonl": [
+      "PR8",
+      "PR9"
+    ],
+    "src/exchange_info/school_content.py": [
+      "PR8",
+      "PR11",
+      "PR13"
+    ],
+    "src/exchange_info/static/app.js": [
+      "PR8",
+      "PR11"
+    ],
+    "src/exchange_info/static/index.html": [
+      "PR8",
+      "PR10",
+      "PR11",
+      "PR13"
+    ],
+    "tests/test_fit_signals.py": [
+      "PR10",
+      "PR13"
+    ],
+    "tests/test_school_completeness.py": [
+      "PR10",
+      "PR13"
+    ]
+  },
+  "scope": "Paths changed in each fixed input relative to main; inherited changes are counted as overlap, not proof of independent edits."
+}

@@ -1,0 +1,65 @@
+{
+  "runs": [
+    {
+      "run": "growth-before-cold-memory",
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "samples": 175,
+      "peak_rss_mib": 470.73828125,
+      "max_sample_rss_mib": 468.234375,
+      "last_rss_mib": 466.296875,
+      "budget_mib": 460,
+      "result": "failed",
+      "clean_start_and_end": true,
+      "harness_sha256": "f71bf3bf6e3bc2ed38610a3beef0c2d9978bd756f11846aac8aee36845c3eefe"
+    },
+    {
+      "run": "growth-before-warm-memory",
+      "sha": "59aa522a96699743bf6010f4b9178a33f85e1a47",
+      "samples": 175,
+      "peak_rss_mib": 463.5546875,
+      "max_sample_rss_mib": 458.48046875,
+      "last_rss_mib": 457.125,
+      "budget_mib": 460,
+      "result": "failed",
+      "clean_start_and_end": true,
+      "harness_sha256": "f71bf3bf6e3bc2ed38610a3beef0c2d9978bd756f11846aac8aee36845c3eefe"
+    },
+    {
+      "run": "growth-final-cold-memory",
+      "sha": "7cb20ff3f28e6dd854d649499cc5982a529589bf",
+      "samples": 175,
+      "peak_rss_mib": 446.421875,
+      "max_sample_rss_mib": 443.90625,
+      "last_rss_mib": 442.078125,
+      "budget_mib": 460,
+      "result": "passed",
+      "clean_start_and_end": true,
+      "harness_sha256": "f71bf3bf6e3bc2ed38610a3beef0c2d9978bd756f11846aac8aee36845c3eefe"
+    },
+    {
+      "run": "growth-final-warm-memory",
+      "sha": "7cb20ff3f28e6dd854d649499cc5982a529589bf",
+      "samples": 175,
+      "peak_rss_mib": 457.41015625,
+      "max_sample_rss_mib": 456.21875,
+      "last_rss_mib": 456.21875,
+      "budget_mib": 460,
+      "result": "passed",
+      "clean_start_and_end": true,
+      "harness_sha256": "f71bf3bf6e3bc2ed38610a3beef0c2d9978bd756f11846aac8aee36845c3eefe"
+    }
+  ],
+  "same_175_step_harness": true,
+  "same_data_and_frontend_assets": true,
+  "changed_paths": [
+    "docs/integration/cgu-source-recovery-20261011.md",
+    "src/exchange_info/api.py",
+    "src/exchange_info/tku_assets.py",
+    "src/exchange_info/tku_census.py",
+    "src/exchange_info/tku_eligibility_routes.py",
+    "tests/test_tku_scoped_audit.py"
+  ],
+  "repair": "Keep complete TKU audit rows as serialized bytes with bounded lookup and fresh complete export; no API fields removed. All 287 rows/aliases compared in targeted tests.",
+  "load": "12 rounds x 6 schools x 5 parallel APIs, translations, NCU source audits, CCU and TKU 8-way bursts, 6 viewport cycles (390/1440 repeated3), each all-six selection and life, NTU photo/life/globe, TKU all264 photo decodes and260 points, exact source summary/3 largest-or-edge full rows. Single app worker, Chromium external load generator.",
+  "environment_note": "Both post-fix runs overlapped the first local Supabase startup ENOSPC incident (13:32:36–13:33:24), which was cleaned up. All 175 memory assertions completed, no app errors; app SHA and tree unchanged. Raw stdout/stderr/server logs preserved. Not a production load guarantee."
+}

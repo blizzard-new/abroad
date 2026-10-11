@@ -1,0 +1,51 @@
+CONFTEST LOADED!
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_calendar_appears_first_and_tools_still_work[390] _____________
+
+page = <Page url='http://127.0.0.1:43811/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#calendar'>
+live_server = LiveServer(base_url='http://127.0.0.1:43811', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-57/web-e2e-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1754])
+    def test_calendar_appears_first_and_tools_still_work(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        session = verified_login(page, live_server)
+        # Test today's reminder without assuming the account's default reminder schedule.
+        response = requests.patch(f"{live_server.base_url}/auth/me", headers=_auth_headers(session), json={"notification_preferences": {"web_enabled": True, "deadline_reminder_days": [0]}})
+        assert response.ok, response.text
+        page.reload()
+        page.evaluate("location.hash='#calendar'")
+        expect(page.locator(".calendar-day")).to_have_count(42)
+        capture(page, f"calendar-initial-{width}.png")
+>       assert page.locator(".calendar-month-panel").bounding_box()["y"] < 450
+E       assert 653.84375 < 450
+
+tests/e2e/test_application_ui_refinements.py:61: AssertionError
+____________ test_calendar_appears_first_and_tools_still_work[1754] ____________
+
+page = <Page url='http://127.0.0.1:43811/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#calendar'>
+live_server = LiveServer(base_url='http://127.0.0.1:43811', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-57/web-e2e-data0'))
+width = 1754
+
+    @pytest.mark.parametrize("width", [390, 1754])
+    def test_calendar_appears_first_and_tools_still_work(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        session = verified_login(page, live_server)
+        # Test today's reminder without assuming the account's default reminder schedule.
+        response = requests.patch(f"{live_server.base_url}/auth/me", headers=_auth_headers(session), json={"notification_preferences": {"web_enabled": True, "deadline_reminder_days": [0]}})
+        assert response.ok, response.text
+        page.reload()
+        page.evaluate("location.hash='#calendar'")
+        expect(page.locator(".calendar-day")).to_have_count(42)
+        capture(page, f"calendar-initial-{width}.png")
+>       assert page.locator(".calendar-month-panel").bounding_box()["y"] < 450
+E       assert 590.6875 < 450
+
+tests/e2e/test_application_ui_refinements.py:61: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[390]
+FAILED tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[1754]
+2 failed in 23.39s

@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_pending_availability_semantics.py",
+    "tests/test_ntu_integration.py",
+    "tests/test_school_photo_and_match.py",
+    "tests/test_tku_support.py",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T13:56:10.859929+00:00",
+  "start_guard": {
+    "sha": "7cb20ff3f28e6dd854d649499cc5982a529589bf",
+    "tree": "e59d1d07755ea7511020d4f5769f26a3e6115a19",
+    "status": "M src/exchange_info/advisor.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/discovery-core.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/multi-plan.js\n M tests/e2e/test_ncu_completion.py\n M tests/e2e/test_ncu_hokkaido.py\n M tests/e2e/test_ncu_japan3.py\n M tests/e2e/test_ncu_kyutech.py\n M tests/e2e/test_ncu_niigata.py\n M tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py\n M tests/e2e/test_ncu_school.py\n M tests/e2e/test_ncu_shizuoka_chuo_kansai.py\n M tests/e2e/test_ncu_tcu_toyama_fukui.py\n M tests/e2e/test_ntu_completion.py\n M tests/e2e/test_ntu_official_changes.py\n M tests/e2e/test_ntu_school.py\n M tests/e2e/test_region_search.py\n M tests/test_ntu_integration.py\n?? tests/test_pending_availability_semantics.py"
+  },
+  "timeout_seconds": 900,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {},
+  "exit_code": 0,
+  "finished_at": "2026-10-11T13:56:33.733658+00:00",
+  "end_guard": {
+    "sha": "7cb20ff3f28e6dd854d649499cc5982a529589bf",
+    "tree": "e59d1d07755ea7511020d4f5769f26a3e6115a19",
+    "status": "M src/exchange_info/advisor.py\n M src/exchange_info/static/app.js\n M src/exchange_info/static/discovery-core.js\n M src/exchange_info/static/index.html\n M src/exchange_info/static/multi-plan.js\n M tests/e2e/test_ncu_completion.py\n M tests/e2e/test_ncu_hokkaido.py\n M tests/e2e/test_ncu_japan3.py\n M tests/e2e/test_ncu_kyutech.py\n M tests/e2e/test_ncu_niigata.py\n M tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py\n M tests/e2e/test_ncu_school.py\n M tests/e2e/test_ncu_shizuoka_chuo_kansai.py\n M tests/e2e/test_ncu_tcu_toyama_fukui.py\n M tests/e2e/test_ntu_completion.py\n M tests/e2e/test_ntu_official_changes.py\n M tests/e2e/test_ntu_school.py\n M tests/e2e/test_region_search.py\n M tests/test_ntu_integration.py\n?? tests/test_pending_availability_semantics.py"
+  }
+}

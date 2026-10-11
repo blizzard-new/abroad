@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "/workspace/integration-tools/run_pinned_flat_runtime_with_legacy_tree.py"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T13:32:36.972077+00:00",
+  "start_guard": {
+    "sha": "7cb20ff3f28e6dd854d649499cc5982a529589bf",
+    "tree": "e59d1d07755ea7511020d4f5769f26a3e6115a19",
+    "status": ""
+  },
+  "timeout_seconds": 1800,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "/workspace/integration-tools/run_pinned_flat_runtime_with_legacy_tree.py": {
+      "sha256": "9566f57e232ce11d73360471a2ea3f34ef56e9bd76196ce74824263d6b1740cb"
+    }
+  },
+  "exit_code": 1,
+  "finished_at": "2026-10-11T13:33:24.621891+00:00",
+  "end_guard": {
+    "sha": "7cb20ff3f28e6dd854d649499cc5982a529589bf",
+    "tree": "e59d1d07755ea7511020d4f5769f26a3e6115a19",
+    "status": ""
+  }
+}

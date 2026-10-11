@@ -1,0 +1,58 @@
+CONFTEST LOADED!
+ssss.................................................................... [  3%]
+........................................................................ [  6%]
+..............s....................................ss................... [  9%]
+........................................................................ [ 12%]
+........................................................................ [ 15%]
+........................................................................ [ 18%]
+........................................................................ [ 21%]
+........................................................................ [ 24%]
+........................................................................ [ 27%]
+..............................................................sss....... [ 30%]
+.........s.............................................................. [ 34%]
+........................................................................ [ 37%]
+........................................................................ [ 40%]
+........................................................................ [ 43%]
+........................................................................ [ 46%]
+........................................................................ [ 49%]
+.....F.................................................................. [ 52%]
+........................................................................ [ 55%]
+........................................................................ [ 58%]
+........................................................................ [ 61%]
+........................................................................ [ 64%]
+........................................................................ [ 68%]
+........................................................................ [ 71%]
+........................................................................ [ 74%]
+...................................
+=================================== FAILURES ===================================
+_________________ test_route_assets_are_cache_busted_together __________________
+
+    def test_route_assets_are_cache_busted_together() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        versions = assert_versioned_static_assets(html, (
+            "styles.css", "product-v2.css", "app.js", "discovery-core.js",
+            "discovery-ui.js", "uniway.css", "advisor-mascot.css", "community-reader.js",
+        ))
+        # The paired expiry fix must load both cooperating scripts at the same
+        # version; never restore a historical URL merely to satisfy a literal test.
+>       assert versions["app.js"] == versions["community-reader.js"]
+E       AssertionError: assert '20261011-pending-semantics-1' == '20261011-integration-3'
+E         
+E         - 20261011-integration-3
+E         + 20261011-pending-semantics-1
+
+/workspace/abroad-globe-20261011/tests/test_independent_page_routing.py:64: AssertionError
+=========================== short test summary info ============================
+SKIPPED [1] ../../../workspace/abroad-globe-20261011/tests/integration/test_local_ai_runtime.py:64: Ollama not running or gemma4:12b not loaded
+SKIPPED [1] ../../../workspace/abroad-globe-20261011/tests/integration/test_local_ai_runtime.py:71: Ollama not running or gemma4:12b not loaded
+SKIPPED [1] ../../../workspace/abroad-globe-20261011/tests/integration/test_local_ai_runtime.py:79: Ollama not running or gemma4:12b not loaded
+SKIPPED [1] ../../../workspace/abroad-globe-20261011/tests/integration/test_local_ai_runtime.py:91: Ollama not running or gemma4:12b not loaded
+SKIPPED [1] ../../../workspace/abroad-globe-20261011/tests/test_application_plan_api.py: Phase C data reviewed
+SKIPPED [2] ../../../workspace/abroad-globe-20261011/tests/test_application_workflow.py: Phase C data reviewed
+SKIPPED [4] ../../../workspace/abroad-globe-20261011/tests/test_cgu_bundled_data.py: Phase C data reviewed
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py:355: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+1 failed, 1751 passed, 11 skipped in 812.79s (0:13:32)

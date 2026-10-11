@@ -1,0 +1,38 @@
+{
+  "command": [
+    "env",
+    "PYTHONPATH=/workspace/recovery-tools-20261011:/workspace/abroad-globe-20261011/src:/workspace/abroad-globe-20261011",
+    "UNIWAY_GLASS_ARTIFACT_DIR=/workspace/recovery-evidence-20261011/ccu2-calendar-scoped-diagnostic-images",
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "calendar_layout_probe_plugin",
+    "tests/e2e/test_application_ui_refinements.py",
+    "-k",
+    "calendar_appears_first_and_tools_still_work",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T14:38:28.393731+00:00",
+  "start_guard": {
+    "sha": "3129ce1bfcf6987a872574587cc53b60043d64ba",
+    "tree": "6f78825d430fbe395cc62cee0a790a9b300dbbc9",
+    "status": ""
+  },
+  "timeout_seconds": 300,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/e2e/test_application_ui_refinements.py": {
+      "sha256": "3432c0c86ff1bef5c88ffcc21ad035ce19412058605f71a8fc95ee5490039fe5"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T14:38:58.993645+00:00",
+  "end_guard": {
+    "sha": "3129ce1bfcf6987a872574587cc53b60043d64ba",
+    "tree": "6f78825d430fbe395cc62cee0a790a9b300dbbc9",
+    "status": ""
+  }
+}

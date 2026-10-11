@@ -1,0 +1,181 @@
+{
+  "checked_at": "2026-10-11T13:43:29.783027+00:00",
+  "base": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "inputs": [
+    {
+      "input": "PR8",
+      "sha": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+      "migration_changes": []
+    },
+    {
+      "input": "PR9",
+      "sha": "ed7479073df36deb8fc0393e86fedb102e1cf2b7",
+      "migration_changes": []
+    },
+    {
+      "input": "PR10",
+      "sha": "cf4d86f22d89ee698315d46177daf00b49dd8706",
+      "migration_changes": []
+    },
+    {
+      "input": "PR11",
+      "sha": "358a72e7302476ba8dd19c47c35fc398fc205a47",
+      "migration_changes": []
+    },
+    {
+      "input": "PR13",
+      "sha": "88bd00531d9a77fb98ba54dbfd8786cbde18db96",
+      "migration_changes": []
+    },
+    {
+      "input": "candidate",
+      "sha": "38b709cab68eb6bb7fa7383f9c6a6f07c9d8d87f",
+      "migration_changes": []
+    }
+  ],
+  "production_db_commands_executed": false,
+  "local_isolated_database_migrations_executed": 35,
+  "local_full_runtime_results": "growth-full-supabase-runtime-r3 passed on7cb20ff3; semantics-final runtime will be recorded separately. All migrations and runtime harnesses unchanged.",
+  "migration_files": [
+    {
+      "name": "202607190001_ai_rag.sql",
+      "sha256": "20b6d508e9eca5d3d18265dd5d8569e3c87bc00570fe505ee2df6e4a45543379"
+    },
+    {
+      "name": "202607280002_application_content_governance.sql",
+      "sha256": "f518c1c6b55bcd8b8d6173cdccb681214685f3498d1e0205090515365e363017"
+    },
+    {
+      "name": "20260728120722_accounts_workspaces.sql",
+      "sha256": "9ea0cee97aab2c7dab1be76a8a2cc9d8cacc64047eb46b35d260b57597773914"
+    },
+    {
+      "name": "20260728121446_notifications.sql",
+      "sha256": "c358ea95eb4f7756c9d71d1864d2fda2ca366d40d281ee51beda700586f4a256"
+    },
+    {
+      "name": "20260728130940_document_vault.sql",
+      "sha256": "9fade187428ad0c3a93551c034ff10b7bf8ce14d3e0f8db90d8bac42dedfe371"
+    },
+    {
+      "name": "20260728213255_email_verification_challenges.sql",
+      "sha256": "9c9e19ab0d08124af28d1a7794f7f25f8a38d24cce03062e09a1f3352ab6eefd"
+    },
+    {
+      "name": "20260729100000_form_drafts.sql",
+      "sha256": "688eab6b7540c06cf0ba1aa6998e4b9fdda3189218ef3afd5947686647acdd54"
+    },
+    {
+      "name": "20260729143531_dual_application_workflow_review.sql",
+      "sha256": "50a2138773ab7e0c1961b17d316b077e243586d9bc0f85db87d583e1ef655c24"
+    },
+    {
+      "name": "20260807154026_application_workflow_revision_edit_history.sql",
+      "sha256": "1d0c46c5d446b2c22f8f461c347d7f834c4d25cf4b1fd395f63a48802fed43aa"
+    },
+    {
+      "name": "20260819090000_destination_profile_review_events.sql",
+      "sha256": "e3791dce44856f393e873b2867eb8c4f306aad4af04fa46af51a8a397062b0fb"
+    },
+    {
+      "name": "20260819110000_destination_profile_promotion_events.sql",
+      "sha256": "6ddf5014889d9e637d187df604d4e4606987899f13ca80b0d1d78df065960e8e"
+    },
+    {
+      "name": "20260819130000_destination_profile_publication_rollbacks.sql",
+      "sha256": "89b793c57396b266caaff382b35fd2947d1ad192cddbaa816765b789a2fe0d95"
+    },
+    {
+      "name": "20260819150000_application_workflow_publication_rollbacks.sql",
+      "sha256": "27a49c215b7ea4636745be6c928bb813fa0937b715eae784046daed353a17cc5"
+    },
+    {
+      "name": "20260819170000_application_workflow_publication_integrity.sql",
+      "sha256": "d83c1999b27a3c3f0a9b3224a2f0ff61cece5a762892495aaabb8c8c623e8c11"
+    },
+    {
+      "name": "20260821190000_transient_auth_state.sql",
+      "sha256": "b9a877965de13d33308ee4eb489d40a7727f72517543c27a3b307e3ad9638632"
+    },
+    {
+      "name": "20260823100000_atomic_auth_account_mutations.sql",
+      "sha256": "020f5c80c846fbe640ee83645530dd46c1e77ed4af43e53bec3288ee611dbd3c"
+    },
+    {
+      "name": "20260823130000_atomic_workspace_and_suspension.sql",
+      "sha256": "2318af0d20c6988c2320b0af2f3d4bff88f79a1971f9c7291dc66bcf99925833"
+    },
+    {
+      "name": "20260823160000_atomic_public_community.sql",
+      "sha256": "3ba3d7e020f662ad3ea55c12119cfeae54d12771cde8c8b627f78aa402e74e45"
+    },
+    {
+      "name": "20260824100000_atomic_private_community.sql",
+      "sha256": "8db548e8a6dc328990a08b89b17ccdb1ee8c003461e095dc3ac2503abb9c51ac"
+    },
+    {
+      "name": "20260829100000_atomic_account_deletion.sql",
+      "sha256": "027d3684f399209ed417cd5a2a1ba55674945a517f634f06daeb64118010190c"
+    },
+    {
+      "name": "20260830100000_application_workflow_issue_reports.sql",
+      "sha256": "37d968d842ab5ab4f1f9b321abaac0f93aba6843cf2579c3a622ef434213e727"
+    },
+    {
+      "name": "20260901100000_atomic_application_content_governance.sql",
+      "sha256": "8458a92be5cf2a13588fd094bae858fbdd51ab95a951a303c62b3cd679ce5be6"
+    },
+    {
+      "name": "20260930100000_discussion_threads_reactions.sql",
+      "sha256": "372d13424c07518e8f5282883a8aa3b74482dbe01e674d1f7d3e4076026a156e"
+    },
+    {
+      "name": "20261002120000_workspace_selection_and_planning.sql",
+      "sha256": "2a3e08feadf3dfb663bb866b060b3a72eb4b47bea269e49391cc9ee55d1fb0d8"
+    },
+    {
+      "name": "20261003100000_open_school_boards.sql",
+      "sha256": "229839cd0257f78f35aed19716684532c2c0cf2fba07e8223cf222095bb1d9ce"
+    },
+    {
+      "name": "20261003110000_analytics.sql",
+      "sha256": "040347413a8d0510e6d02aa2f39ef0ff8e4738d16e317fa42827f92730d646e9"
+    },
+    {
+      "name": "20261007100000_school_choice_replaces_student_card.sql",
+      "sha256": "57850e4c111ca9f8cf4db7203df398a5fd83d6a33f2115c4129d49c1ea834032"
+    },
+    {
+      "name": "20261008100000_user_feedback.sql",
+      "sha256": "30493a43abcbce750964f02efa2842c60b2de3b44c185ec5f320c725551855c0"
+    },
+    {
+      "name": "20261008110000_revoke_rls_auto_enable_api_access.sql",
+      "sha256": "06f926968550b85f35bb3fa4323a4137cccdb1233a60d3a51d63459fb058e114"
+    },
+    {
+      "name": "20261008120000_fix_match_document_chunks_search_path.sql",
+      "sha256": "1ad3751ad7b2bce149d6c5ef6cf2ee0bda3a356ac67c75df39583be387fd5432"
+    },
+    {
+      "name": "20261008130000_ntu_school_board.sql",
+      "sha256": "943041c12ed45a1f70d9947f7cbd0e01f7f9e85ad05a41f4d6d046e4c624ff9c"
+    },
+    {
+      "name": "20261009135343_ccu_ncu_school_board_compatibility.sql",
+      "sha256": "f47591d0da841005374946dfd172475ead79afd6cd77d33bf6ccc3daa34614fa"
+    },
+    {
+      "name": "20261009153249_verified_email_school_community.sql",
+      "sha256": "8bd1f0fc162a5b6353e9d2a29c857657b2d69e87c0aaa2019295b7dbcc25d045"
+    },
+    {
+      "name": "20261009153347_community_byline_aliases.sql",
+      "sha256": "a4ef4b272ffeb5bc6f44edd112f0269c203160238fc276b60f3621cb53ca0ba2"
+    },
+    {
+      "name": "20261009153438_atomic_governance_commands.sql",
+      "sha256": "dad7ca35dffbc2bab52d086b7ba8e0726c2736430f083a1c6e3cb2fa18990f49"
+    }
+  ]
+}

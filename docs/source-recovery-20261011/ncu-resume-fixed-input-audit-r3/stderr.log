@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_ncu_resume_fixed.py", line 41, in <module>
+    info=next(iter(metadata['query']['pages'].values()))['imageinfo'][0];ext=info['extmetadata'];assert ext['LicenseShortName']['value']==r['license']
+                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

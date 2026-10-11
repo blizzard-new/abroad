@@ -1,0 +1,3157 @@
+{"shard": 1, "total_cases": 2891, "total_files": 275, "browser_cases_per_shard": [134, 134, 134, 134], "case_counts_per_shard": [2489, 134, 134, 134], "files_per_shard": [["tests/e2e/test_analytics_tracking.py", "tests/e2e/test_ccu_scope_documents.py", "tests/e2e/test_ccu_twentyfirst_pass.py", "tests/e2e/test_cgu_source_recovery.py", "tests/e2e/test_departure_tips_and_experience_digests.py", "tests/e2e/test_document_flow.py", "tests/e2e/test_life_context.py", "tests/e2e/test_multi_plan_workspace.py", "tests/e2e/test_ncu_japan3.py", "tests/e2e/test_notification_changes.py", "tests/e2e/test_ntu_completion.py", "tests/e2e/test_ntu_school.py", "tests/e2e/test_region_search.py", "tests/e2e/test_shared_conditions.py", "tests/e2e/test_task_documents_ui.py", "tests/e2e/test_tku_acceptance.py", "tests/e2e/test_tku_session_boundaries.py", "tests/e2e/test_web_next_phase.py", "tests/integration/test_local_ai_runtime.py", "tests/test_account_read_cache.py", "tests/test_account_workspace_api.py", "tests/test_advisor.py", "tests/test_advisor_mascot_contract.py", "tests/test_ai_gateway.py", "tests/test_ai_privacy.py", "tests/test_analytics_api.py", "tests/test_analytics_core.py", "tests/test_analytics_frontend_contract.py", "tests/test_analytics_report.py", "tests/test_api.py", "tests/test_application_document_catalog.py", "tests/test_application_documents_api.py", "tests/test_application_periods.py", "tests/test_application_plan_api.py", "tests/test_application_plan_schedule_api.py", "tests/test_application_plan_scheduling.py", "tests/test_application_rules.py", "tests/test_application_workflow.py", "tests/test_application_workflow_issue_report_migration.py", "tests/test_application_workflow_issue_reports.py", "tests/test_atomic_account_deletion_migration.py", "tests/test_atomic_auth_mutations.py", "tests/test_atomic_private_community_migration.py", "tests/test_atomic_public_community_api.py", "tests/test_atomic_public_community_migration.py", "tests/test_atomic_workspace_moderation.py", "tests/test_auth_api.py", "tests/test_b4_04_ai_limits.py", "tests/test_brand_assets.py", "tests/test_calendar_conflicts.py", "tests/test_calendar_sync_api.py", "tests/test_calendar_task_scheduling.py", "tests/test_catalog_access.py", "tests/test_catalogue_memory.py", "tests/test_catalogue_speed.py", "tests/test_ccu_bounded_healthcare.py", "tests/test_ccu_completion.py", "tests/test_ccu_composite_provenance.py", "tests/test_ccu_czu_usj_followup.py", "tests/test_ccu_eighteenth_pass.py", "tests/test_ccu_eighth_pass.py", "tests/test_ccu_fifteenth_pass.py", "tests/test_ccu_fifth_pass.py", "tests/test_ccu_followup_validation.py", "tests/test_ccu_fourteenth_pass.py", "tests/test_ccu_fourth_pass.py", "tests/test_ccu_nineteenth_pass.py", "tests/test_ccu_ninth_pass.py", "tests/test_ccu_overseas.py", "tests/test_ccu_parent_fixes.py", "tests/test_ccu_public_followup.py", "tests/test_ccu_saintgits_marker.py", "tests/test_ccu_second_pass.py", "tests/test_ccu_semantics.py", "tests/test_ccu_seventeenth_pass.py", "tests/test_ccu_seventh_pass.py", "tests/test_ccu_sixteenth_pass.py", "tests/test_ccu_sixth_pass.py", "tests/test_ccu_support.py", "tests/test_ccu_third_pass.py", "tests/test_ccu_tls_security.py", "tests/test_ccu_twentieth_pass.py", "tests/test_ccu_twentyfifth_pass.py", "tests/test_ccu_twentyfirst_pass.py", "tests/test_ccu_twentysecond_pass.py", "tests/test_ccu_twentysixth_pass.py", "tests/test_ccu_twentythird_pass.py", "tests/test_ccu_uel_public_followup.py", "tests/test_cgu_bundled_data.py", "tests/test_cgu_catalogue_recovery.py", "tests/test_change_impact.py", "tests/test_chinese_public_content.py", "tests/test_classifier.py", "tests/test_cli.py", "tests/test_college_options.py", "tests/test_community_api.py", "tests/test_community_browsing.py", "tests/test_community_permissions.py", "tests/test_community_repositories.py", "tests/test_content_governance_wrapper.py", "tests/test_content_summary.py", "tests/test_dependency_security_baseline.py", "tests/test_destination_tips.py", "tests/test_discovery.py", "tests/test_discussion_round2.py", "tests/test_document_check_entitlements.py", "tests/test_document_vault.py", "tests/test_email_verification.py", "tests/test_entitlements.py", "tests/test_experience_collector.py", "tests/test_experience_digests.py", "tests/test_feedback.py", "tests/test_feedback_migration.py", "tests/test_fit_signals.py", "tests/test_flutter_independent_pages.py", "tests/test_flutter_navigation_hierarchy.py", "tests/test_flutter_production_copy.py", "tests/test_form_drafts.py", "tests/test_frontend_contract.py", "tests/test_health_head.py", "tests/test_home_and_forum_routes.py", "tests/test_hong_kong_country.py", "tests/test_http_client.py", "tests/test_icon_motion_contract.py", "tests/test_independent_page_routing.py", "tests/test_integration_source_boundaries.py", "tests/test_jsonl_storage_integrity.py", "tests/test_lai_10_security_audit.py", "tests/test_legal_pages.py", "tests/test_life_context.py", "tests/test_loading_screen.py", "tests/test_local_ai.py", "tests/test_match_document_chunks_migration.py", "tests/test_multi_application_plan.py", "tests/test_my_application_entry.py", "tests/test_native_app_contract.py", "tests/test_ncu_completion.py", "tests/test_ncu_document_conditions.py", "tests/test_ncu_fourth_pass.py", "tests/test_ncu_integration.py", "tests/test_ncu_japan3.py", "tests/test_ncu_next3_review_corrections.py", "tests/test_ncu_nufs_kumamoto_ryukoku.py", "tests/test_ncu_shizuoka_chuo_kansai.py", "tests/test_ncu_snapshot_cache.py", "tests/test_ncu_source_collector.py", "tests/test_ncu_tcu_toyama_fukui.py", "tests/test_next_phase_contract.py", "tests/test_notification_changes.py", "tests/test_notifications.py", "tests/test_ntpu_bundled_data.py", "tests/test_ntpu_support.py", "tests/test_ntu_audit.py", "tests/test_ntu_completion.py", "tests/test_ntu_destination_enrichment.py", "tests/test_ntu_integration.py", "tests/test_ntu_official_changes.py", "tests/test_ntu_review_classification.py", "tests/test_ntu_school_board_migration.py", "tests/test_open_catalog_signup.py", "tests/test_partner_localization.py", "tests/test_partner_map_geometry.py", "tests/test_partner_research.py", "tests/test_pending_availability_semantics.py", "tests/test_pipeline.py", "tests/test_public_translation.py", "tests/test_public_translation_cold_cache.py", "tests/test_qualification_scope_consistency.py", "tests/test_rag.py", "tests/test_regions.py", "tests/test_request_origin.py", "tests/test_requirements_traceability.py", "tests/test_responsive_css.py", "tests/test_review_source_candidates.py", "tests/test_review_source_metadata_candidates.py", "tests/test_rls_auto_enable_migration.py", "tests/test_school_choice.py", "tests/test_school_choice_migration.py", "tests/test_school_completeness.py", "tests/test_school_content.py", "tests/test_school_image_collector.py", "tests/test_school_photo_and_match.py", "tests/test_scoped_life_memory.py", "tests/test_selection_conditions_sync.py", "tests/test_social_community_api.py", "tests/test_source_applicability_cleanup.py", "tests/test_source_metadata_research_audit.py", "tests/test_source_replacement_transport_audit.py", "tests/test_static_caching.py", "tests/test_student_view.py", "tests/test_submission_progress.py", "tests/test_supabase_migration_syntax.py", "tests/test_supabase_repositories.py", "tests/test_supabase_runtime_validation.py", "tests/test_supabase_setup_check.py", "tests/test_task_documents_and_reference_plan.py", "tests/test_terms_consent.py", "tests/test_tku_acceptance_runner.py", "tests/test_tku_bounded_sources.py", "tests/test_tku_community_boundaries.py", "tests/test_tku_continuation.py", "tests/test_tku_full_census.py", "tests/test_tku_governance_commands.py", "tests/test_tku_governance_routes.py", "tests/test_tku_privacy_regressions.py", "tests/test_tku_scoped_audit.py", "tests/test_tku_support.py", "tests/test_tku_web_evidence.py", "tests/test_transient_auth.py", "tests/test_translation_requests.py", "tests/test_university_locations.py", "tests/test_uniway_ui_contract.py", "tests/test_visual_coverage.py", "tests/test_web_review_findings_contract.py", "tests/test_workflow_catalog_cache.py", "tests/test_workflow_context_api.py", "tests/test_workflow_structuring.py", "tests/test_workload_planning.py", "tests/test_workload_planning_api.py"], ["tests/e2e/test_application_ui_refinements.py", "tests/e2e/test_ccu_seventeenth_pass.py", "tests/e2e/test_ccu_twentieth_pass.py", "tests/e2e/test_discussion_reader.py", "tests/e2e/test_document_workbench.py", "tests/e2e/test_feedback_page.py", "tests/e2e/test_icon_motion.py", "tests/e2e/test_ncu_acceptance.py", "tests/e2e/test_ncu_school.py", "tests/e2e/test_ntu_destination_enrichment.py", "tests/e2e/test_open_catalog.py", "tests/e2e/test_planning_workspace.py", "tests/e2e/test_six_school_visual_coverage.py", "tests/e2e/test_system_motion.py", "tests/e2e/test_tku_census_assets.py", "tests/e2e/test_tku_governance_transactions.py", "tests/e2e/test_travel_theme.py", "tests/e2e/test_workload_journey.py"], ["tests/e2e/test_application_periods.py", "tests/e2e/test_application_workspace.py", "tests/e2e/test_ccu_completion.py", "tests/e2e/test_ccu_composite_provenance.py", "tests/e2e/test_ccu_nineteenth_pass.py", "tests/e2e/test_ccu_school.py", "tests/e2e/test_ccu_twentysecond_pass.py", "tests/e2e/test_discovery_workspace.py", "tests/e2e/test_fit_and_completeness_ui.py", "tests/e2e/test_icon_rendering.py", "tests/e2e/test_loading_screen.py", "tests/e2e/test_mascot_solid.py", "tests/e2e/test_ncu_kyutech.py", "tests/e2e/test_ncu_shizuoka_chuo_kansai.py", "tests/e2e/test_ntu_official_changes.py", "tests/e2e/test_responsive_layout.py", "tests/e2e/test_student_journey_ux.py", "tests/e2e/test_terms_consent.py", "tests/e2e/test_tku_source_rendering.py"], ["tests/e2e/test_ccu_candidate_acceptance.py", "tests/e2e/test_ccu_delayed_switching.py", "tests/e2e/test_ccu_eighteenth_pass.py", "tests/e2e/test_conditions_account_sync.py", "tests/e2e/test_discussion_round2.py", "tests/e2e/test_glass_theme.py", "tests/e2e/test_integrated_reviewed_photos.py", "tests/e2e/test_my_application_entry.py", "tests/e2e/test_navigation_guide.py", "tests/e2e/test_ncu_completion.py", "tests/e2e/test_ncu_hokkaido.py", "tests/e2e/test_ncu_niigata.py", "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py", "tests/e2e/test_ncu_tcu_toyama_fukui.py", "tests/e2e/test_partner_globe.py", "tests/e2e/test_school_chinese_content.py", "tests/e2e/test_school_lists.py", "tests/e2e/test_tku_draft_handoff.py", "tests/e2e/test_unified_preparation.py"]], "coverage": "all collected files; no new exclusions"}
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-six-final/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /tmp/abroad-recovery-capacity-20261011/workspace-abroad-globe-20261011
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 134 items
+
+tests/e2e/test_application_ui_refinements.py::test_matching_actions_are_readable_and_aligned[390] PASSED [  0%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_matching_actions_are_readable_and_aligned[390] call passed 8.151s
+
+tests/e2e/test_application_ui_refinements.py::test_matching_actions_are_readable_and_aligned[1754] PASSED [  1%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_matching_actions_are_readable_and_aligned[1754] call passed 6.999s
+
+tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[390] FAILED [  2%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[390] call failed 4.151s
+tests/e2e/test_application_ui_refinements.py:61: in test_calendar_appears_first_and_tools_still_work
+    assert page.locator(".calendar-month-panel").bounding_box()["y"] < 450
+E   assert 653.84375 < 450
+
+tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[1754] FAILED [  2%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[1754] call failed 5.061s
+tests/e2e/test_application_ui_refinements.py:61: in test_calendar_appears_first_and_tools_still_work
+    assert page.locator(".calendar-month-panel").bounding_box()["y"] < 450
+E   assert 590.6875 < 450
+
+tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u570b\u7acb\u81fa\u5317\u5927\u5b78-\u6cd5\u5f8b\u5b78\u9662-\u6cd5\u5f8b\u5b78\u7cfb-\u5546\u5b78\u9662] PASSED [  3%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u570b\u7acb\u81fa\u5317\u5927\u5b78-\u6cd5\u5f8b\u5b78\u9662-\u6cd5\u5f8b\u5b78\u7cfb-\u5546\u5b78\u9662] call passed 15.716s
+
+tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u9577\u5e9a\u5927\u5b78-\u5de5\u5b78\u9662-\u8cc7\u8a0a\u5de5\u7a0b\u5b78\u7cfb-\u91ab\u5b78\u9662] PASSED [  4%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u9577\u5e9a\u5927\u5b78-\u5de5\u5b78\u9662-\u8cc7\u8a0a\u5de5\u7a0b\u5b78\u7cfb-\u91ab\u5b78\u9662] call passed 11.791s
+
+tests/e2e/test_application_ui_refinements.py::test_calendar_preparation_and_completion_through_tools PASSED [  5%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_calendar_preparation_and_completion_through_tools call passed 14.157s
+
+tests/e2e/test_ccu_seventeenth_pass.py::test_nagoya_pair_filters_use_one_option[390] PASSED [  5%]WEB_CASE tests/e2e/test_ccu_seventeenth_pass.py::test_nagoya_pair_filters_use_one_option[390] call passed 17.109s
+
+tests/e2e/test_ccu_seventeenth_pass.py::test_nagoya_pair_filters_use_one_option[1440] PASSED [  6%]WEB_CASE tests/e2e/test_ccu_seventeenth_pass.py::test_nagoya_pair_filters_use_one_option[1440] call passed 11.286s
+
+tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[98-390] PASSED [  7%]WEB_CASE tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[98-390] call passed 7.884s
+
+tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[98-1440] PASSED [  8%]WEB_CASE tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[98-1440] call passed 7.795s
+
+tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[102-390] PASSED [  8%]WEB_CASE tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[102-390] call passed 8.324s
+
+tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[102-1440] PASSED [  9%]WEB_CASE tests/e2e/test_ccu_seventeenth_pass.py::test_unyear_templates_have_separate_applicability_warning[102-1440] call passed 6.813s
+
+tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\u5bbf\u820d\u7533\u8acb\u8868-1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf-390] PASSED [ 10%]WEB_CASE tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\u5bbf\u820d\u7533\u8acb\u8868-1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf-390] call passed 7.164s
+
+tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\u5bbf\u820d\u7533\u8acb\u8868-1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf-1440] PASSED [ 11%]WEB_CASE tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\u5bbf\u820d\u7533\u8acb\u8868-1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf-1440] call passed 7.175s
+
+tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\u5065\u5eb7\uff0fTB-1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy-390] PASSED [ 11%]WEB_CASE tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\u5065\u5eb7\uff0fTB-1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy-390] call passed 6.350s
+
+tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\u5065\u5eb7\uff0fTB-1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy-1440] PASSED [ 12%]WEB_CASE tests/e2e/test_ccu_twentieth_pass.py::test_hufs_templates_show_pending_version_and_real_signers[\u5065\u5eb7\uff0fTB-1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy-1440] call passed 7.408s
+
+tests/e2e/test_ccu_twentieth_pass.py::test_dit_extra_grade_sheet_stays_pending_and_conditional[390] PASSED [ 13%]WEB_CASE tests/e2e/test_ccu_twentieth_pass.py::test_dit_extra_grade_sheet_stays_pending_and_conditional[390] call passed 5.973s
+
+tests/e2e/test_ccu_twentieth_pass.py::test_dit_extra_grade_sheet_stays_pending_and_conditional[1440] PASSED [ 14%]WEB_CASE tests/e2e/test_ccu_twentieth_pass.py::test_dit_extra_grade_sheet_stays_pending_and_conditional[1440] call passed 6.259s
+
+tests/e2e/test_ccu_twentieth_pass.py::test_hiof_course_conditions_keep_campus_and_semester_scope[390] PASSED [ 14%]WEB_CASE tests/e2e/test_ccu_twentieth_pass.py::test_hiof_course_conditions_keep_campus_and_semester_scope[390] call passed 5.781s
+
+tests/e2e/test_ccu_twentieth_pass.py::test_hiof_course_conditions_keep_campus_and_semester_scope[1440] PASSED [ 15%]WEB_CASE tests/e2e/test_ccu_twentieth_pass.py::test_hiof_course_conditions_keep_campus_and_semester_scope[1440] call passed 7.057s
+
+tests/e2e/test_discussion_reader.py::test_lazy_reader_permalink_saved_and_back_restore <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_discussion_reader.py PASSED [ 16%]WEB_CASE tests/e2e/test_discussion_reader.py::test_lazy_reader_permalink_saved_and_back_restore call passed 8.818s
+
+tests/e2e/test_discussion_reader.py::test_quote_draft_and_cookie_reply <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_discussion_reader.py PASSED [ 17%]WEB_CASE tests/e2e/test_discussion_reader.py::test_quote_draft_and_cookie_reply call passed 9.531s
+
+tests/e2e/test_discussion_reader.py::test_mobile_reader_keyboard_exit_and_comment_failure_isolated <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_discussion_reader.py PASSED [ 17%]WEB_CASE tests/e2e/test_discussion_reader.py::test_mobile_reader_keyboard_exit_and_comment_failure_isolated call passed 4.046s
+
+tests/e2e/test_discussion_reader.py::test_guest_can_enter_login_from_modal_and_resume_article <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_discussion_reader.py PASSED [ 18%]WEB_CASE tests/e2e/test_discussion_reader.py::test_guest_can_enter_login_from_modal_and_resume_article call passed 6.232s
+
+tests/e2e/test_document_workbench.py::test_document_panes_keep_draft_and_legacy_tools_have_one_form[390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_document_workbench.py PASSED [ 19%]WEB_CASE tests/e2e/test_document_workbench.py::test_document_panes_keep_draft_and_legacy_tools_have_one_form[390] call passed 10.895s
+
+tests/e2e/test_document_workbench.py::test_document_panes_keep_draft_and_legacy_tools_have_one_form[1754] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_document_workbench.py PASSED [ 20%]WEB_CASE tests/e2e/test_document_workbench.py::test_document_panes_keep_draft_and_legacy_tools_have_one_form[1754] call passed 9.444s
+
+tests/e2e/test_document_workbench.py::test_generated_pdf_is_checked_and_saved_only_with_separate_consent <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_document_workbench.py PASSED [ 20%]WEB_CASE tests/e2e/test_document_workbench.py::test_generated_pdf_is_checked_and_saved_only_with_separate_consent call passed 14.552s
+
+tests/e2e/test_document_workbench.py::test_switching_template_discards_previous_file_consent_and_late_check <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_document_workbench.py PASSED [ 21%]WEB_CASE tests/e2e/test_document_workbench.py::test_switching_template_discards_previous_file_consent_and_late_check call passed 8.850s
+
+tests/e2e/test_document_workbench.py::test_editing_after_generation_does_not_offer_old_pdf_as_current_document <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_document_workbench.py PASSED [ 22%]WEB_CASE tests/e2e/test_document_workbench.py::test_editing_after_generation_does_not_offer_old_pdf_as_current_document call passed 12.299s
+
+tests/e2e/test_document_workbench.py::test_logout_clears_live_fields_and_selected_check_file <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_document_workbench.py PASSED [ 23%]WEB_CASE tests/e2e/test_document_workbench.py::test_logout_clears_live_fields_and_selected_check_file call passed 10.568s
+
+tests/e2e/test_feedback_page.py::test_the_menu_has_a_user_reviews_entry_that_opens_the_page PASSED [ 23%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_menu_has_a_user_reviews_entry_that_opens_the_page call passed 3.233s
+
+tests/e2e/test_feedback_page.py::test_a_message_that_is_too_short_is_not_sent PASSED [ 24%]WEB_CASE tests/e2e/test_feedback_page.py::test_a_message_that_is_too_short_is_not_sent call passed 3.745s
+
+tests/e2e/test_feedback_page.py::test_the_counter_the_stars_and_the_clear_button_work PASSED [ 25%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_counter_the_stars_and_the_clear_button_work call passed 3.001s
+
+tests/e2e/test_feedback_page.py::test_sending_a_message_thanks_the_visitor_and_sends_what_was_typed PASSED [ 26%]WEB_CASE tests/e2e/test_feedback_page.py::test_sending_a_message_thanks_the_visitor_and_sends_what_was_typed call passed 5.151s
+
+tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[429-{}-\u9001\u51fa\u5f97\u592a\u983b\u7e41\u4e86] PASSED [ 26%]WEB_CASE tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[429-{}-\u9001\u51fa\u5f97\u592a\u983b\u7e41\u4e86] call passed 3.187s
+
+tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[503-{}-\u66ab\u6642\u7121\u6cd5\u9001\u51fa] PASSED [ 27%]WEB_CASE tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[503-{}-\u66ab\u6642\u7121\u6cd5\u9001\u51fa] call passed 3.005s
+
+tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[422-{"detail": "\u8acb\u4e0d\u8981\u5728\u5167\u5bb9\u88e1\u653e\u592a\u591a\u9023\u7d50\u3002"}-\u8acb\u4e0d\u8981\u5728\u5167\u5bb9\u88e1\u653e\u592a\u591a\u9023\u7d50\u3002] PASSED [ 28%]WEB_CASE tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[422-{"detail": "\u8acb\u4e0d\u8981\u5728\u5167\u5bb9\u88e1\u653e\u592a\u591a\u9023\u7d50\u3002"}-\u8acb\u4e0d\u8981\u5728\u5167\u5bb9\u88e1\u653e\u592a\u591a\u9023\u7d50\u3002] call passed 3.402s
+
+tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[422-{"detail": [{"msg": "too short"}]}-\u5167\u5bb9\u7684\u683c\u5f0f\u4e0d\u7b26] PASSED [ 29%]WEB_CASE tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[422-{"detail": [{"msg": "too short"}]}-\u5167\u5bb9\u7684\u683c\u5f0f\u4e0d\u7b26] call passed 3.420s
+
+tests/e2e/test_feedback_page.py::test_the_network_going_away_does_not_lose_the_text PASSED [ 29%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_network_going_away_does_not_lose_the_text call passed 3.285s
+
+tests/e2e/test_feedback_page.py::test_the_hidden_field_for_bots_cannot_be_reached_by_a_person PASSED [ 30%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_hidden_field_for_bots_cannot_be_reached_by_a_person call passed 2.943s
+
+tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[320] PASSED [ 31%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[320] call passed 2.721s
+
+tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[390] PASSED [ 32%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[390] call passed 2.506s
+
+tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[1280] PASSED [ 32%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[1280] call passed 3.079s
+
+tests/e2e/test_feedback_page.py::test_the_administrator_reads_the_message_in_the_inbox_and_marks_it_done PASSED [ 33%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_administrator_reads_the_message_in_the_inbox_and_marks_it_done call passed 6.240s
+
+tests/e2e/test_feedback_page.py::test_an_ordinary_student_cannot_open_the_inbox PASSED [ 34%]WEB_CASE tests/e2e/test_feedback_page.py::test_an_ordinary_student_cannot_open_the_inbox call passed 5.301s
+
+tests/e2e/test_feedback_page.py::test_a_message_written_in_markup_is_shown_as_plain_text_in_the_inbox PASSED [ 35%]WEB_CASE tests/e2e/test_feedback_page.py::test_a_message_written_in_markup_is_shown_as_plain_text_in_the_inbox call passed 6.313s
+
+tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph PASSED [ 35%]WEB_CASE tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph call passed 4.155s
+
+tests/e2e/test_icon_motion.py::test_reduced_motion_switches_morphicons_to_an_immediate_final_state PASSED [ 36%]WEB_CASE tests/e2e/test_icon_motion.py::test_reduced_motion_switches_morphicons_to_an_immediate_final_state call passed 3.583s
+
+tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[390] PASSED [ 37%]WEB_CASE tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[390] call passed 33.658s
+
+tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[1440] PASSED [ 38%]WEB_CASE tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[1440] call passed 24.395s
+
+tests/e2e/test_ncu_school.py::test_ncu_hiroshima_fee_image_coe_and_departure_stages_reach_mobile_ui PASSED [ 38%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_hiroshima_fee_image_coe_and_departure_stages_reach_mobile_ui call passed 14.114s
+
+tests/e2e/test_ncu_school.py::test_ncu_omu_optional_english_and_iwing_health_reach_mobile_program_and_life PASSED [ 39%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_omu_optional_english_and_iwing_health_reach_mobile_program_and_life call passed 14.078s
+
+tests/e2e/test_ncu_school.py::test_ncu_nuist_versions_and_ujn_hong_kong_scope_reach_visible_mobile_content[\u5357\u4eac\u4fe1\u606f\u5de5\u7a0b-\u4e2d\u6587\u300c\u50c5\u9650\u300d-Twin Room | 2,000\u20142,500 CNY per year-ncu-nuist-versions-390.png] PASSED [ 40%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_nuist_versions_and_ujn_hong_kong_scope_reach_visible_mobile_content[\u5357\u4eac\u4fe1\u606f\u5de5\u7a0b-\u4e2d\u6587\u300c\u50c5\u9650\u300d-Twin Room | 2,000\u20142,500 CNY per year-ncu-nuist-versions-390.png] call passed 9.453s
+
+tests/e2e/test_ncu_school.py::test_ncu_nuist_versions_and_ujn_hong_kong_scope_reach_visible_mobile_content[\u6fdf\u5357\u5927\u5b78-\u4e0d\u80fd\u4f4f\u570b\u969b\u751f\u5bbf\u820d-31/10/2024-ncu-ujn-hk-scope-390.png] PASSED [ 41%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_nuist_versions_and_ujn_hong_kong_scope_reach_visible_mobile_content[\u6fdf\u5357\u5927\u5b78-\u4e0d\u80fd\u4f4f\u570b\u969b\u751f\u5bbf\u820d-31/10/2024-ncu-ujn-hk-scope-390.png] call passed 11.221s
+
+tests/e2e/test_ncu_school.py::test_ncu_tju_application_and_arrival_files_and_conversion_note_reach_mobile_ui PASSED [ 41%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_tju_application_and_arrival_files_and_conversion_note_reach_mobile_ui call passed 10.232s
+
+tests/e2e/test_ncu_school.py::test_ncu_chd_workbook_and_tju_document_catalog_are_visible PASSED [ 42%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_chd_workbook_and_tju_document_catalog_are_visible call passed 10.785s
+
+tests/e2e/test_ncu_school.py::test_ncu_content_source_pages_home_host_and_life[390] PASSED [ 43%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_content_source_pages_home_host_and_life[390] call passed 14.430s
+
+tests/e2e/test_ncu_school.py::test_ncu_content_source_pages_home_host_and_life[1440] PASSED [ 44%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_content_source_pages_home_host_and_life[1440] call passed 16.759s
+
+tests/e2e/test_ncu_school.py::test_ncu_undip_2027_pending_dates_and_ten_scoped_files_reach_mobile_ui PASSED [ 44%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_undip_2027_pending_dates_and_ten_scoped_files_reach_mobile_ui call passed 9.040s
+
+tests/e2e/test_ncu_school.py::test_ncu_grade_scale_year_exclusion_and_real_document_form PASSED [ 45%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_grade_scale_year_exclusion_and_real_document_form call passed 8.692s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui[\u5716\u723e\u5eab-A1\u2013C2\u516d\u7d1a-EUR120000-guardian joint account] FAILED [ 46%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui[\u5716\u723e\u5eab-A1\u2013C2\u516d\u7d1a-EUR120000-guardian joint account] call failed 16.659s
+tests/e2e/test_ncu_school.py:480: in test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui
+    expect(page.locator("#detail-application")).to_contain_text(application_text)
+E   AssertionError: Locator expected to contain text 'A1–C2六級'
+E   Actual value: 
+E           詳細申請流程
+E           
+E       
+E         
+E         
+E           官方來源已整理，4 個步驟仍需確認
+E           已核對母校116-1；相關公開附件23份，個別外校原文與當期適用性另核對。
+E           適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/11 上午10:13
+E         
+E       
+E       
+E         
+E         
+E           適用年度或梯次仍待確認
+E           來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+E         
+E       
+E       
+E         
+E         
+E           這是尚未完成正式發布的參考流程
+E           可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+E         
+E       
+E       
+E         共 9 個步驟
+E         
+E           
+E             回報規定錯誤
+E           
+E           
+E             重新載入流程資料
+E           
+E         
+E       
+E       
+E         
+E       
+E         
+E           1
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             核對中央116-1資格與當期名額
+E             
+E           
+E           
+E         
+E         
+E           大學部平均60、研究生70；至少一學年在學成績，碩一可附大學成績；在職專班可申請但無研修獎學金。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做目前大五／大六不具資格；須導師或指導教授與系所同意。陸生不得申請大陸、僑生不得申請原僑居地；雙重國籍勿選擇所持國籍國家。前一年錄取後自願放棄者原則上不得申請；交換期间須保有學籍並以甄選身分出國。116名額預定2026/10/12公告；115名單僅參考。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           2
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             完成中央線上申請並列印簽核
+E             
+E           
+E           
+E         
+E         
+E           2026/11/16 09:00開放；2026/12/4 12:00關閉（臺灣時間）。正式必繳語檢须先備妥上傳。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E         
+E           
+E           
+E             精確期限已有來源，但流程尚未正式發布。
+E             最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+E           
+E         
+E           
+E       
+E         送件方式
+E         線上申請／上傳
+E         
+E       
+E           
+E       
+E         
+E           我的送件紀錄尚未開始
+E           線上申請／上傳 · 學生手動
+E         
+E         
+E           下一步先備齊文件並再次核對官方送件方式。
+E           承辦中央國際事務處／所屬系所
+E           期限截止：2026/12/04 上午04:00
+E           收件證明尚未記錄
+E         
+E         
+E         
+E           登入後記錄進度
+E           
+E         
+E         所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E       
+E           
+E           
+E           開啟這一步的官方頁面
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           3
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             繳交中央校內紙本甄選文件至系所
+E             
+E           
+E           
+E         
+E         
+E           學生2026/12/11 17:00前繳至系所；系所彙整12/18 17:00前送國際處。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E         
+E           
+E           
+E             精確期限已有來源，但流程尚未正式發布。
+E             最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+E           
+E         
+E           
+E       
+E         送件方式
+E         紙本送件
+E         承辦地點：所屬系所必須送達：2026/12/11 上午09:00
+E       
+E           
+E       
+E         
+E           我的送件紀錄尚未開始
+E           紙本送件 · 學生手動
+E         
+E         
+E           下一步先備齊文件並再次核對官方送件方式。
+E           承辦中央國際事務處／所屬系所
+E           期限必須送達：2026/12/11 上午09:00
+E           收件證明尚未記錄
+E         
+E         
+E         
+E           登入後記錄進度
+E           
+E         
+E         所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E       
+E           具體要做其他能力證明／作品及外校語檢為選繳；外校語檢仍須提名前取得。正式份數簡章未列，須核對系所通知。
+E           這一步要準備
+E       
+E         
+E         系統申請表（列印完成簽核）文件形式待確認 · 簽署：依表格完成簽核 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         家長同意書文件形式待確認 · 簽署：家長本人親筆簽名、學生簽名（現行表格第2頁） · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+E       
+E       
+E         
+E         學生個人資料提供同意書文件形式待確認 · 簽署：申請人簽名並勾選同意 · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+E       
+E       
+E         
+E         校內必繳正式語言檢定成績單影本（不接受網路截圖或補繳）影本 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         中文版歷年成績單（碩一另附大學歷年成績）文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         中文版成績名次證明書文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         國際移動力完成證明書文件形式待確認 · 核章：右下方國際處章戳 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           4
+E           
+E             甄選與提名 · 中央國際事務處／所屬系所
+E             核對校內錄取並準備提名
+E             
+E           
+E           
+E         
+E         
+E           2027/1/11 09:00公告校內錄取；國際處再通知外校申請方式。校內錄取不代表外校錄取。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           5
+E           
+E             合作校申請 · 學生與兩校國際處
+E             核對外校當期文件並依通知申請
+E             
+E           
+E           
+E         
+E         
+E           Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。
+E           規劃範圍（當期適用待確認）116 學年度
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處及合作校提名通知所列承辦人
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】英文正式歷年成績單（手簽章或電子正式認證）、語言證明、護照有照頁／正式ID；居留證或駕照不能代替ID。線上SoleMOVE申請。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】非EU雙邊學生的LA僅母校要求時附簽章PDF，否則在SoleMOVE列proposed study plan；Erasmus+ ICM另有必繳LA，不能套全部中央交換。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】秋季／全年非EU/EEA申請3/15–4/15、EU/EEA至4/30；春季全體9/1–10/15，23:59芬蘭時間。未標116實際年度。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】PDF Fall2026非EU提名3/1–4/1申請3/15–4/15；Spring2027提名卻寫2027/8/15–10/1，申請為2026/9/1–10/15，原文順序矛盾。官網年例申請Fall非EU4/15、EU4/30、Spring10/15 Finnish23:59；不自動校正PDF提名年或推定116截止。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】授課語言至少B2，可母校簽章證明、Language Assessment Sheet或接受正式考試；證明附申請時兩年內。TOEIC、Duolingo、OLS不接受，英語授課學士以上及母語英語有不同附件替代方式。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】网页在2026/1/26前後TOEFL段落標題寫ITP，內容又列iBT舊制72及分項範圍、新制4分各項4，命名矛盾保留；不作regex自動資格。IELTS總6.0，one skill retake限原試60日內；PTE Academic62。
+E           這一步要準備
+E       
+E         
+E         英文正式歷年成績單階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 簽署：母校正式簽章或電子認證 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         B2語言能力證明／適用豁免替代附件階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         護照有照頁或正式ID階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         Learning Agreement（非EU雙邊，母校要求時）階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 適用條件：母校要求LA；Erasmus+ ICM依其方案必繳 · 文件形式待確認 · 簽署：學生、母校簽章 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           6
+E           
+E             行前準備 · 中央國際事務處／所屬系所
+E             確認課程、學分與中央註冊繳費
+E             
+E           
+E           
+E         
+E         
+E           依外校修課規定；無規定時至少兩門課且一門專業課。學則另要求兩門或六學分，採認由系所審定。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做中央仍須保有學籍、完成註冊及繳學雜費；延畢生另按轉換學分及兩階段程序處理。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           7
+E           
+E             行前準備 · 中央國際事務處／所屬系所
+E             出國前兩週完成中央行前程序
+E             出國前兩週
+E           
+E           
+E         
+E         
+E           完成中央交換及雙聯行前程序單，自行辦理護照、簽證、足額醫療／意外／急難救助保險及役男出國許可。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E       
+E         
+E         
+E           目前只有參考時程，沒有當期精確日期。
+E           參考：出國前兩週；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+E         
+E       
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做須依外校建議抵達日到校；本校宿舍先辦保留或退宿。外校住宿申請、住宿保證及截止另核對，不推定有保證宿舍。
+E           這一步要準備
+E       
+E         
+E         中央交換及雙聯計畫學生行前程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           8
+E           
+E             抵達後 · 中央國際事務處／所屬系所
+E             到校註冊並回報當地聯絡方式
+E             
+E           
+E           
+E         
+E         
+E           依外校完成報到、選課；中央國際處調查國外地址及聯絡方式，保持聯繫。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           9
+E           
+E             返國後 · 中央國際事務處／所屬系所
+E             返國後一週完成中央返校程序
+E             返國後一週內
+E           
+E           
+E         
+E         
+E           填中央返校程序單並繳心得WORD電子檔（800–1500字、至少四張照片）；取得外校成績並在畢業前完成採認。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E       
+E         
+E         
+E           目前只有參考時程，沒有當期精確日期。
+E           參考：返國後一週內；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+E         
+E       
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           
+E           這一步要準備
+E       
+E         
+E         中央交換及雙聯計畫學生返校程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         心得WORD電子檔（800–1500字、至少四張照片）文件形式待確認 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E       
+E         本流程使用的官方來源
+E         
+E           
+E                 中央116-1甄選簡章母校當期正式公告 · 優先級 1
+E               
+E                 中央115名額表（歷史參考）母校當期正式公告 · 優先級 1
+E               
+E                 FACT-SHEET-2026-2027_UTU.pdf PDF合作校官方資訊 · 優先級 4
+E               
+E                 Turku官方交換申請文件與期限合作校官方資訊 · 優先級 4
+E               
+E                 Turku課程限制及2027春課表發布合作校官方資訊 · 優先級 4
+E               
+E                 Turku 新生說明會 2026／Spring2027合作校官方資訊 · 優先級 4
+E               
+E                 Turku現連Language Assessment Sheet DOC合作校官方資訊 · 優先級 4
+E               
+E                 Turku現連non-Erasmus Learning Agreement DOCX合作校官方資訊 · 優先級 4
+E               
+E                 How to Apply for Exchange Studies合作校官方資訊 · 優先級 4
+E               
+E         
+E         截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+E       
+E          
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("#detail-application")
+E       13 × locator resolved to <section tabindex="0" role="tabpanel" id="detail-application" class="detail-section workflow-section" aria-labelledby="detail-tab-application">…</section>
+E          - unexpected value "
+E           詳細申請流程
+E           
+E       
+E         
+E         
+E           官方來源已整理，4 個步驟仍需確認
+E           已核對母校116-1；相關公開附件23份，個別外校原文與當期適用性另核對。
+E           適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/11 上午10:13
+E         
+E       
+E       
+E         
+E         
+E           適用年度或梯次仍待確認
+E           來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+E         
+E       
+E       
+E         
+E         
+E           這是尚未完成正式發布的參考流程
+E           可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+E         
+E       
+E       
+E         共 9 個步驟
+E         
+E           
+E             回報規定錯誤
+E           
+E           
+E             重新載入流程資料
+E           
+E         
+E       
+E       
+E         
+E       
+E         
+E           1
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             核對中央116-1資格與當期名額
+E             
+E           
+E           
+E         
+E         
+E           大學部平均60、研究生70；至少一學年在學成績，碩一可附大學成績；在職專班可申請但無研修獎學金。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做目前大五／大六不具資格；須導師或指導教授與系所同意。陸生不得申請大陸、僑生不得申請原僑居地；雙重國籍勿選擇所持國籍國家。前一年錄取後自願放棄者原則上不得申請；交換期间須保有學籍並以甄選身分出國。116名額預定2026/10/12公告；115名單僅參考。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           2
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             完成中央線上申請並列印簽核
+E             
+E           
+E           
+E         
+E         
+E           2026/11/16 09:00開放；2026/12/4 12:00關閉（臺灣時間）。正式必繳語檢须先備妥上傳。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E         
+E           
+E           
+E             精確期限已有來源，但流程尚未正式發布。
+E             最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+E           
+E         
+E           
+E       
+E         送件方式
+E         線上申請／上傳
+E         
+E       
+E           
+E       
+E         
+E           我的送件紀錄尚未開始
+E           線上申請／上傳 · 學生手動
+E         
+E         
+E           下一步先備齊文件並再次核對官方送件方式。
+E           承辦中央國際事務處／所屬系所
+E           期限截止：2026/12/04 上午04:00
+E           收件證明尚未記錄
+E         
+E         
+E         
+E           登入後記錄進度
+E           
+E         
+E         所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E       
+E           
+E           
+E           開啟這一步的官方頁面
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           3
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             繳交中央校內紙本甄選文件至系所
+E             
+E           
+E           
+E         
+E         
+E           學生2026/12/11 17:00前繳至系所；系所彙整12/18 17:00前送國際處。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E         
+E           
+E           
+E             精確期限已有來源，但流程尚未正式發布。
+E             最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+E           
+E         
+E           
+E       
+E         送件方式
+E         紙本送件
+E         承辦地點：所屬系所必須送達：2026/12/11 上午09:00
+E       
+E           
+E       
+E         
+E           我的送件紀錄尚未開始
+E           紙本送件 · 學生手動
+E         
+E         
+E           下一步先備齊文件並再次核對官方送件方式。
+E           承辦中央國際事務處／所屬系所
+E           期限必須送達：2026/12/11 上午09:00
+E           收件證明尚未記錄
+E         
+E         
+E         
+E           登入後記錄進度
+E           
+E         
+E         所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E       
+E           具體要做其他能力證明／作品及外校語檢為選繳；外校語檢仍須提名前取得。正式份數簡章未列，須核對系所通知。
+E           這一步要準備
+E       
+E         
+E         系統申請表（列印完成簽核）文件形式待確認 · 簽署：依表格完成簽核 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         家長同意書文件形式待確認 · 簽署：家長本人親筆簽名、學生簽名（現行表格第2頁） · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+E       
+E       
+E         
+E         學生個人資料提供同意書文件形式待確認 · 簽署：申請人簽名並勾選同意 · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+E       
+E       
+E         
+E         校內必繳正式語言檢定成績單影本（不接受網路截圖或補繳）影本 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         中文版歷年成績單（碩一另附大學歷年成績）文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         中文版成績名次證明書文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         國際移動力完成證明書文件形式待確認 · 核章：右下方國際處章戳 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           4
+E           
+E             甄選與提名 · 中央國際事務處／所屬系所
+E             核對校內錄取並準備提名
+E             
+E           
+E           
+E         
+E         
+E           2027/1/11 09:00公告校內錄取；國際處再通知外校申請方式。校內錄取不代表外校錄取。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           5
+E           
+E             合作校申請 · 學生與兩校國際處
+E             核對外校當期文件並依通知申請
+E             
+E           
+E           
+E         
+E         
+E           Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。
+E           規劃範圍（當期適用待確認）116 學年度
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處及合作校提名通知所列承辦人
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】英文正式歷年成績單（手簽章或電子正式認證）、語言證明、護照有照頁／正式ID；居留證或駕照不能代替ID。線上SoleMOVE申請。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】非EU雙邊學生的LA僅母校要求時附簽章PDF，否則在SoleMOVE列proposed study plan；Erasmus+ ICM另有必繳LA，不能套全部中央交換。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】秋季／全年非EU/EEA申請3/15–4/15、EU/EEA至4/30；春季全體9/1–10/15，23:59芬蘭時間。未標116實際年度。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】PDF Fall2026非EU提名3/1–4/1申請3/15–4/15；Spring2027提名卻寫2027/8/15–10/1，申請為2026/9/1–10/15，原文順序矛盾。官網年例申請Fall非EU4/15、EU4/30、Spring10/15 Finnish23:59；不自動校正PDF提名年或推定116截止。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】授課語言至少B2，可母校簽章證明、Language Assessment Sheet或接受正式考試；證明附申請時兩年內。TOEIC、Duolingo、OLS不接受，英語授課學士以上及母語英語有不同附件替代方式。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】网页在2026/1/26前後TOEFL段落標題寫ITP，內容又列iBT舊制72及分項範圍、新制4分各項4，命名矛盾保留；不作regex自動資格。IELTS總6.0，one skill retake限原試60日內；PTE Academic62。
+E           這一步要準備
+E       
+E         
+E         英文正式歷年成績單階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 簽署：母校正式簽章或電子認證 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         B2語言能力證明／適用豁免替代附件階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         護照有照頁或正式ID階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         Learning Agreement（非EU雙邊，母校要求時）階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 適用條件：母校要求LA；Erasmus+ ICM依其方案必繳 · 文件形式待確認 · 簽署：學生、母校簽章 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           6
+E           
+E             行前準備 · 中央國際事務處／所屬系所
+E             確認課程、學分與中央註冊繳費
+E             
+E           
+E           
+E         
+E         
+E           依外校修課規定；無規定時至少兩門課且一門專業課。學則另要求兩門或六學分，採認由系所審定。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做中央仍須保有學籍、完成註冊及繳學雜費；延畢生另按轉換學分及兩階段程序處理。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           7
+E           
+E             行前準備 · 中央國際事務處／所屬系所
+E             出國前兩週完成中央行前程序
+E             出國前兩週
+E           
+E           
+E         
+E         
+E           完成中央交換及雙聯行前程序單，自行辦理護照、簽證、足額醫療／意外／急難救助保險及役男出國許可。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E       
+E         
+E         
+E           目前只有參考時程，沒有當期精確日期。
+E           參考：出國前兩週；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+E         
+E       
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做須依外校建議抵達日到校；本校宿舍先辦保留或退宿。外校住宿申請、住宿保證及截止另核對，不推定有保證宿舍。
+E           這一步要準備
+E       
+E         
+E         中央交換及雙聯計畫學生行前程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           8
+E           
+E             抵達後 · 中央國際事務處／所屬系所
+E             到校註冊並回報當地聯絡方式
+E             
+E           
+E           
+E         
+E         
+E           依外校完成報到、選課；中央國際處調查國外地址及聯絡方式，保持聯繫。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           9
+E           
+E             返國後 · 中央國際事務處／所屬系所
+E             返國後一週完成中央返校程序
+E             返國後一週內
+E           
+E           
+E         
+E         
+E           填中央返校程序單並繳心得WORD電子檔（800–1500字、至少四張照片）；取得外校成績並在畢業前完成採認。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E       
+E         
+E         
+E           目前只有參考時程，沒有當期精確日期。
+E           參考：返國後一週內；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+E         
+E       
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           
+E           這一步要準備
+E       
+E         
+E         中央交換及雙聯計畫學生返校程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         心得WORD電子檔（800–1500字、至少四張照片）文件形式待確認 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E       
+E         本流程使用的官方來源
+E         
+E           
+E                 中央116-1甄選簡章母校當期正式公告 · 優先級 1
+E               
+E                 中央115名額表（歷史參考）母校當期正式公告 · 優先級 1
+E               
+E                 FACT-SHEET-2026-2027_UTU.pdf PDF合作校官方資訊 · 優先級 4
+E               
+E                 Turku官方交換申請文件與期限合作校官方資訊 · 優先級 4
+E               
+E                 Turku課程限制及2027春課表發布合作校官方資訊 · 優先級 4
+E               
+E                 Turku 新生說明會 2026／Spring2027合作校官方資訊 · 優先級 4
+E               
+E                 Turku現連Language Assessment Sheet DOC合作校官方資訊 · 優先級 4
+E               
+E                 Turku現連non-Erasmus Learning Agreement DOCX合作校官方資訊 · 優先級 4
+E               
+E                 How to Apply for Exchange Studies合作校官方資訊 · 優先級 4
+E               
+E         
+E         截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+E       
+E         "
+E   
+E   Aria snapshot:
+E   - tabpanel "申請方式":
+E     - heading "詳細申請流程" [level=2]
+E     - strong: 官方來源已整理，4 個步驟仍需確認
+E     - paragraph: 已核對母校116-1；相關公開附件23份，個別外校原文與當期適用性另核對。
+E     - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/11 上午10:13
+E     - strong: 適用年度或梯次仍待確認
+E     - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+E     - strong: 這是尚未完成正式發布的參考流程
+E     - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+E     - strong: 共 9 個步驟
+E     - button "回報規定錯誤"
+E     - button "重新載入流程資料"
+E     - group:
+E       - text: 校內申請 · 中央國際事務處／所屬系所
+E       - strong: 核對中央116-1資格與當期名額
+E     - group:
+E       - text: 校內申請 · 中央國際事務處／所屬系所
+E       - strong: 完成中央線上申請並列印簽核
+E     - group:
+E       - text: 校內申請 · 中央國際事務處／所屬系所
+E       - strong: 繳交中央校內紙本甄選文件至系所
+E     - group:
+E       - text: 甄選與提名 · 中央國際事務處／所屬系所
+E       - strong: 核對校內錄取並準備提名
+E     - group:
+E       - text: 合作校申請 · 學生與兩校國際處
+E       - strong: 核對外校當期文件並依通知申請
+E     - group:
+E       - text: 行前準備 · 中央國際事務處／所屬系所
+E       - strong: 確認課程、學分與中央註冊繳費
+E     - group:
+E       - text: 行前準備 · 中央國際事務處／所屬系所
+E       - strong: 出國前兩週完成中央行前程序
+E       - text: 出國前兩週
+E     - group:
+E       - text: 抵達後 · 中央國際事務處／所屬系所
+E       - strong: 到校註冊並回報當地聯絡方式
+E     - group:
+E       - text: 返國後 · 中央國際事務處／所屬系所
+E       - strong: 返國後一週完成中央返校程序
+E       - text: 返國後一週內
+E     - strong: 本流程使用的官方來源
+E     - link "中央116-1甄選簡章 母校當期正式公告 · 優先級 1":
+E       - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf
+E     - link "中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1":
+E       - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf
+E     - link "FACT-SHEET-2026-2027_UTU.pdf PDF 合作校官方資訊 · 優先級 4":
+E       - /url: https://drive.google.com/file/d/13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF/view
+E     - link "Turku官方交換申請文件與期限 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies
+E     - link "Turku課程限制及2027春課表發布 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/en/study-at-utu/courses-in-english-for-exchange-students
+E     - link "Turku 新生說明會 2026／Spring2027 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/en/study-at-utu/accepted-exchange-students/orientation
+E     - link "Turku現連Language Assessment Sheet DOC 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc
+E     - link "Turku現連non-Erasmus Learning Agreement DOCX 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/sites/default/files/media/Learning_Agreement_non-EU_0.docx
+E     - link "How to Apply for Exchange Studies 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies
+E     - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+
+tests/e2e/test_ncu_school.py::test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui[\u592a\u539f\u8fb2\u6797-\u73fe\u9023DOCX\u5be6\u969b\u662f\u5df2\u586b2024\u201325\u7bc4\u4f8b-60\uff0f\u5e74-\u672a\u8907\u88fd\u59d3\u540d\u3001\u751f\u65e5\u3001\u5730\u5740\u3001\u8b49\u4ef6\u865f\u78bc] PASSED [ 47%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui[\u592a\u539f\u8fb2\u6797-\u73fe\u9023DOCX\u5be6\u969b\u662f\u5df2\u586b2024\u201325\u7bc4\u4f8b-60\uff0f\u5e74-\u672a\u8907\u88fd\u59d3\u540d\u3001\u751f\u65e5\u3001\u5730\u5740\u3001\u8b49\u4ef6\u865f\u78bc] call passed 11.366s
+
+tests/e2e/test_ncu_school.py::test_ncu_shanghai_visual_versions_and_life_are_visible[\u4e0a\u6d77\u8ca1\u7d93-26-27\u5b66\u5e74_\u4e0a\u6d77\u8d22\u7ecf\u5927\u5b66\u6765\u6821\u4ea4\u6362\u751f\u4fe1\u606f\u624b\u518c.pdf PDF-2025--2026-1000\u20131500] PASSED [ 47%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_shanghai_visual_versions_and_life_are_visible[\u4e0a\u6d77\u8ca1\u7d93-26-27\u5b66\u5e74_\u4e0a\u6d77\u8d22\u7ecf\u5927\u5b66\u6765\u6821\u4ea4\u6362\u751f\u4fe1\u606f\u624b\u518c.pdf PDF-2025--2026-1000\u20131500] call passed 13.196s
+
+tests/e2e/test_ncu_school.py::test_ncu_shanghai_visual_versions_and_life_are_visible[\u4e0a\u6d77\u5927\u5b78-\u4e0a\u6d77\u5927\u5b66\u6e2f\u6fb3\u53f0\u4ea4\u6362\u751f\u7533\u8bf7\u6307\u5357.pdf PDF-2020-10\u5143\u4eba\u6c11\u5e63] PASSED [ 48%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_shanghai_visual_versions_and_life_are_visible[\u4e0a\u6d77\u5927\u5b78-\u4e0a\u6d77\u5927\u5b66\u6e2f\u6fb3\u53f0\u4ea4\u6362\u751f\u7533\u8bf7\u6307\u5357.pdf PDF-2020-10\u5143\u4eba\u6c11\u5e63] call passed 10.679s
+
+tests/e2e/test_ncu_school.py::test_ncu_uos_visual_evidence_and_conditional_housing_form_are_visible PASSED [ 49%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_uos_visual_evidence_and_conditional_housing_form_are_visible call passed 10.796s
+
+tests/e2e/test_ncu_school.py::test_ncu_uny_degree_history_and_empty_exchange_resources_are_visible PASSED [ 50%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_uny_degree_history_and_empty_exchange_resources_are_visible call passed 13.438s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5357\u4eac\u5927\u5b78-10\u5143\u5c01\u9802-\u6e2f\u6fb3\u901a\u884c\u8b49\u6383\u63cf\u4ef6-\u6838\u5c0d\u5916\u6821\u7b2c\u4e8c\u968e\u6bb5\u88dc\u4ef6-ncu-nju-second-batch-390.png] PASSED [ 50%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5357\u4eac\u5927\u5b78-10\u5143\u5c01\u9802-\u6e2f\u6fb3\u901a\u884c\u8b49\u6383\u63cf\u4ef6-\u6838\u5c0d\u5916\u6821\u7b2c\u4e8c\u968e\u6bb5\u88dc\u4ef6-ncu-nju-second-batch-390.png] call passed 11.202s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u540c\u6fdf-\u7d71\u4e00\u5b89\u6392\u6821\u5167\u4f4f\u5bbf-\u901a\u884c\u8bc1\u626b\u63cf\u4ef6-\u53f0\u80de\u8b49\uff0f\u56de\u9109\u8b49\u6383\u63cf-ncu-tongji-new-list-390.png] PASSED [ 51%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u540c\u6fdf-\u7d71\u4e00\u5b89\u6392\u6821\u5167\u4f4f\u5bbf-\u901a\u884c\u8bc1\u626b\u63cf\u4ef6-\u53f0\u80de\u8b49\uff0f\u56de\u9109\u8b49\u6383\u63cf-ncu-tongji-new-list-390.png] call passed 11.398s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5fa9\u65e6-6\uff0f8\u4eba\u5957\u9593\u30012\u4eba\u4e00\u623f-\u4e2a\u4eba\u5883\u5916\u4fdd\u9669\u5355-\u4e0a\u6d77\u5168\u671f\u91ab\u7642\uff0f\u4eba\u8eab\u610f\u5916\u4fdd\u55aePDF-ncu-fudan-initial-insurance-390.png] PASSED [ 52%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5fa9\u65e6-6\uff0f8\u4eba\u5957\u9593\u30012\u4eba\u4e00\u623f-\u4e2a\u4eba\u5883\u5916\u4fdd\u9669\u5355-\u4e0a\u6d77\u5168\u671f\u91ab\u7642\uff0f\u4eba\u8eab\u610f\u5916\u4fdd\u55aePDF-ncu-fudan-initial-insurance-390.png] call passed 11.085s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5317\u4eac\u5e2b\u7bc4-60\u201380 RMB\uff0f\u5929\uff0f\u4eba-\u6700\u4f4e6\u5b66\u5206-\u8fd1\u671f\u85cd\uff0f\u767d\u5e95JPEG\u7167-ncu-bnu-slides-workflow-390.png] PASSED [ 52%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5317\u4eac\u5e2b\u7bc4-60\u201380 RMB\uff0f\u5929\uff0f\u4eba-\u6700\u4f4e6\u5b66\u5206-\u8fd1\u671f\u85cd\uff0f\u767d\u5e95JPEG\u7167-ncu-bnu-slides-workflow-390.png] call passed 9.785s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u6771\u5357\u5927\u5b78-\u5e8a\u54c1\u5148\u81ea\u5099-\u7121\u9808\u63a5\u6a5f\u670d\u52d9\u8005-\u5148\u7531\u5169\u6821\u78ba\u8a8d\u9ad4\u6aa2\u5c0d\u7b49\u4e92\u514d-ncu-seu-reciprocal-health-390.png] PASSED [ 53%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u6771\u5357\u5927\u5b78-\u5e8a\u54c1\u5148\u81ea\u5099-\u7121\u9808\u63a5\u6a5f\u670d\u52d9\u8005-\u5148\u7531\u5169\u6821\u78ba\u8a8d\u9ad4\u6aa2\u5c0d\u7b49\u4e92\u514d-ncu-seu-reciprocal-health-390.png] call passed 10.167s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u6d59\u6c5f\u5927\u5b78-\u5bbf\u4f4d\u7dca\u5f35\u53ef\u80fd\u8de8\u6821\u5340-\u4fdd\u9669\u5355\u626b\u63cf\u4ef6\u53ef\u5f85\u6536\u5230\u5165\u5b66\u901a\u77e5\u540e\u518d\u63d0\u4ea4-\u53ef\u9304\u53d6\u5f8c\u88dc\uff0c\u4ea6\u53ef\u5148\u5099-ncu-zju-insurance-later-390.png] PASSED [ 54%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u6d59\u6c5f\u5927\u5b78-\u5bbf\u4f4d\u7dca\u5f35\u53ef\u80fd\u8de8\u6821\u5340-\u4fdd\u9669\u5355\u626b\u63cf\u4ef6\u53ef\u5f85\u6536\u5230\u5165\u5b66\u901a\u77e5\u540e\u518d\u63d0\u4ea4-\u53ef\u9304\u53d6\u5f8c\u88dc\uff0c\u4ea6\u53ef\u5148\u5099-ncu-zju-insurance-later-390.png] call passed 8.330s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u91cd\u6176\u5927\u5b78-\u4e0d\u4e00\u5b9a\u80fd\u63d0\u4f9b\u6821\u5167\u5bbf\u820d-2026\u5e7410\u670830\u65e5-\u6700\u665a\u958b\u5b78\u5831\u5230\u63d0\u4f9b-ncu-cqu-latest-registration-390.png] PASSED [ 55%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u91cd\u6176\u5927\u5b78-\u4e0d\u4e00\u5b9a\u80fd\u63d0\u4f9b\u6821\u5167\u5bbf\u820d-2026\u5e7410\u670830\u65e5-\u6700\u665a\u958b\u5b78\u5831\u5230\u63d0\u4f9b-ncu-cqu-latest-registration-390.png] call passed 9.356s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5ec8\u9580-\u6f33\u5dde3\u8a2d\u8a08\u985e-Statement of Health Condition-\u5065\u5eb7\u72c0\u6cc1\u8072\u660e\uff08\u5be6\u969bDOCX-ncu-xmu-health-docx-390.png] PASSED [ 55%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5ec8\u9580-\u6f33\u5dde3\u8a2d\u8a08\u985e-Statement of Health Condition-\u5065\u5eb7\u72c0\u6cc1\u8072\u660e\uff08\u5be6\u969bDOCX-ncu-xmu-health-docx-390.png] call passed 8.905s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u897f\u5357\u5927\u5b78-\u4e0d\u80fd\u66ffPG2\u4eba\u623f\u586b\u540c\u50f9-\u7b2c\u4e09\u9801-\u85dd\u8853\u7b49\u4e13\u4e1a\u4f5c\u54c1\u96c6-ncu-swu-major-portfolio-390.png] PASSED [ 56%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u897f\u5357\u5927\u5b78-\u4e0d\u80fd\u66ffPG2\u4eba\u623f\u586b\u540c\u50f9-\u7b2c\u4e09\u9801-\u85dd\u8853\u7b49\u4e13\u4e1a\u4f5c\u54c1\u96c6-ncu-swu-major-portfolio-390.png] call passed 9.060s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u83ef\u4e2d\u5e2b\u7bc4-\u623f\u578b\u4e0d\u4fdd\u8bc1-\u6700\u8fd1 6\u4e2a\u6708\u5185\u4f53\u68c0\u62a5\u544a-\u5230\u6821\u5f8c\u4ea4\uff0c\u884c\u524d\u8cfc\u8cb7-ncu-ccnu-arrival-insurance-390.png] PASSED [ 57%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u83ef\u4e2d\u5e2b\u7bc4-\u623f\u578b\u4e0d\u4fdd\u8bc1-\u6700\u8fd1 6\u4e2a\u6708\u5185\u4f53\u68c0\u62a5\u544a-\u5230\u6821\u5f8c\u4ea4\uff0c\u884c\u524d\u8cfc\u8cb7-ncu-ccnu-arrival-insurance-390.png] call passed 10.457s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5317\u4eac\u90f5\u96fb-\u4e0d\u5e36\u6dcb\u6d74-\u4e8c\u5bf8\u85cd\u5e95-\u85cd\u5e95\uff0f\u767d\u5e95\u7248\u672c\u5dee\u7570\u5f85\u78ba\u8a8d-ncu-bupt-photo-conflict-390.png] PASSED [ 58%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5317\u4eac\u90f5\u96fb-\u4e0d\u5e36\u6dcb\u6d74-\u4e8c\u5bf8\u85cd\u5e95-\u85cd\u5e95\uff0f\u767d\u5e95\u7248\u672c\u5dee\u7570\u5f85\u78ba\u8a8d-ncu-bupt-photo-conflict-390.png] call passed 8.972s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u83ef\u5357\u7406\u5de5-600\u20131500-\u7533\u8acb\u6587\u4ef6\u96fb\u5b50\u6a94-\u7a7a\u767d\u9644\u8868\u672a\u53d6\u5f97-ncu-scut-missing-blank-form-390.png] PASSED [ 58%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u83ef\u5357\u7406\u5de5-600\u20131500-\u7533\u8acb\u6587\u4ef6\u96fb\u5b50\u6a94-\u7a7a\u767d\u9644\u8868\u672a\u53d6\u5f97-ncu-scut-missing-blank-form-390.png] call passed 8.589s
+
+tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5ee3\u897f\u5927\u5b78-\u666e\u901a\u75be\u75c5\u4e0d\u8ce0-\u6bcf\u5e74 3 \u6708\u81f3\u6b21\u5e74 7 \u6708-\u6307\u5b9a\u610f\u5916\u91ab\u7642\u4fdd\u96aa-ncu-gxu-local-accident-insurance-390.png] PASSED [ 59%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5ee3\u897f\u5927\u5b78-\u666e\u901a\u75be\u75c5\u4e0d\u8ce0-\u6bcf\u5e74 3 \u6708\u81f3\u6b21\u5e74 7 \u6708-\u6307\u5b9a\u610f\u5916\u91ab\u7642\u4fdd\u96aa-ncu-gxu-local-accident-insurance-390.png] call passed 9.504s
+
+tests/e2e/test_ncu_school.py::test_ncu_nuist_image_packet_documents_and_taiwan_life_reach_mobile_ui PASSED [ 60%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_nuist_image_packet_documents_and_taiwan_life_reach_mobile_ui call passed 9.299s
+
+tests/e2e/test_ncu_school.py::test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scoped[390] PASSED [ 61%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scoped[390] call passed 14.911s
+
+tests/e2e/test_ncu_school.py::test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scoped[1440] PASSED [ 61%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scoped[1440] call passed 14.887s
+
+tests/e2e/test_ncu_school.py::test_ncu_mother_nomination_and_insurance_alternatives_are_visible_catalog_items[Xian Jiaotong University-\u7504\u9078\u8207\u63d0\u540d-\u6bcd\u6821\u586b\u9001\u63a8\u85a6\u5b78\u751f\u4ea4\u63db\u4fe1\u606f\u532f\u7e3dExcel\uff08\u5b78\u751f\u4e0d\u7528\u81ea\u884c\u4ee3\u586b\uff09-ncu-xjtu-mother-nomination-390.png] PASSED [ 62%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_mother_nomination_and_insurance_alternatives_are_visible_catalog_items[Xian Jiaotong University-\u7504\u9078\u8207\u63d0\u540d-\u6bcd\u6821\u586b\u9001\u63a8\u85a6\u5b78\u751f\u4ea4\u63db\u4fe1\u606f\u532f\u7e3dExcel\uff08\u5b78\u751f\u4e0d\u7528\u81ea\u884c\u4ee3\u586b\uff09-ncu-xjtu-mother-nomination-390.png] call passed 5.449s
+
+tests/e2e/test_ncu_school.py::test_ncu_mother_nomination_and_insurance_alternatives_are_visible_catalog_items[Huazhong University-\u884c\u524d\u6e96\u5099-\u5883\u5916\u4fdd\u55ae\u8b49\u660e\uff08\u884c\u524d\u8cfc\u8cb7\uff1b\u96fb\u5b50\u7248\u5bc4\u9001\u6216\u5230\u6821\u7e73\u4ea4\u64c7\u4e00\uff09-ncu-hust-insurance-alternatives-390.png] PASSED [ 63%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_mother_nomination_and_insurance_alternatives_are_visible_catalog_items[Huazhong University-\u884c\u524d\u6e96\u5099-\u5883\u5916\u4fdd\u55ae\u8b49\u660e\uff08\u884c\u524d\u8cfc\u8cb7\uff1b\u96fb\u5b50\u7248\u5bc4\u9001\u6216\u5230\u6821\u7e73\u4ea4\u64c7\u4e00\uff09-ncu-hust-insurance-alternatives-390.png] call passed 4.088s
+
+tests/e2e/test_ncu_school.py::test_ncu_seu_condition_and_zju_alternative_forms_are_visible_in_document_center[Southeast University-\u5408\u4f5c\u6821\u7533\u8acb-\u5065\u5eb7\u6aa2\u67e5\u8868\uff08\u9808\u5148\u7531\u5169\u6821\u78ba\u8a8d\u5c0d\u7b49\u4e92\u514d\uff09-ncu-seu-health-condition-catalog-390.png] PASSED [ 64%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_seu_condition_and_zju_alternative_forms_are_visible_in_document_center[Southeast University-\u5408\u4f5c\u6821\u7533\u8acb-\u5065\u5eb7\u6aa2\u67e5\u8868\uff08\u9808\u5148\u7531\u5169\u6821\u78ba\u8a8d\u5c0d\u7b49\u4e92\u514d\uff09-ncu-seu-health-condition-catalog-390.png] call passed 6.262s
+
+tests/e2e/test_ncu_school.py::test_ncu_seu_condition_and_zju_alternative_forms_are_visible_in_document_center[Zhejiang University-\u5408\u4f5c\u6821\u7533\u8acb-\u4ea4\u6362-ncu-zju-form-alternatives-catalog-390.png] PASSED [ 64%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_seu_condition_and_zju_alternative_forms_are_visible_in_document_center[Zhejiang University-\u5408\u4f5c\u6821\u7533\u8acb-\u4ea4\u6362-ncu-zju-form-alternatives-catalog-390.png] call passed 5.438s
+
+tests/e2e/test_ncu_school.py::test_ncu_seu_condition_and_zju_alternative_forms_are_visible_in_document_center[SOUTHWEST UNIVERSITY-\u5408\u4f5c\u6821\u7533\u8acb-\u4f5c\u54c1\u96c6-ncu-swu-portfolio-condition-catalog-390.png] PASSED [ 65%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_seu_condition_and_zju_alternative_forms_are_visible_in_document_center[SOUTHWEST UNIVERSITY-\u5408\u4f5c\u6821\u7533\u8acb-\u4f5c\u54c1\u96c6-ncu-swu-portfolio-condition-catalog-390.png] call passed 4.920s
+
+tests/e2e/test_ncu_school.py::test_ncu_science_tokyo_track_coe_health_and_2027_tiec_fee_reach_mobile_content PASSED [ 66%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_science_tokyo_track_coe_health_and_2027_tiec_fee_reach_mobile_content call passed 8.699s
+
+tests/e2e/test_ncu_school.py::test_ncu_chiba_initial_health_language_choices_closed_dorm_and_insurance_reach_mobile_ui PASSED [ 67%]WEB_CASE tests/e2e/test_ncu_school.py::test_ncu_chiba_initial_health_language_choices_closed_dorm_and_insurance_reach_mobile_ui call passed 12.499s
+
+tests/e2e/test_ntu_destination_enrichment.py::test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh[390] PASSED [ 67%]WEB_CASE tests/e2e/test_ntu_destination_enrichment.py::test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh[390] call passed 35.518s
+
+tests/e2e/test_ntu_destination_enrichment.py::test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh[1440] PASSED [ 68%]WEB_CASE tests/e2e/test_ntu_destination_enrichment.py::test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh[1440] call passed 55.849s
+
+tests/e2e/test_open_catalog.py::test_visitor_switches_schools_without_an_account <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_open_catalog.py PASSED [ 69%]WEB_CASE tests/e2e/test_open_catalog.py::test_visitor_switches_schools_without_an_account call passed 9.030s
+
+tests/e2e/test_open_catalog.py::test_account_without_a_school_is_asked_once_after_google_returns <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_open_catalog.py PASSED [ 70%]WEB_CASE tests/e2e/test_open_catalog.py::test_account_without_a_school_is_asked_once_after_google_returns call passed 9.319s
+
+tests/e2e/test_open_catalog.py::test_signing_out_keeps_the_catalogue_open <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_open_catalog.py PASSED [ 70%]WEB_CASE tests/e2e/test_open_catalog.py::test_signing_out_keeps_the_catalogue_open call passed 4.849s
+
+tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_planning_workspace.py PASSED [ 71%]WEB_CASE tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[390] call passed 12.277s
+
+tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[1754] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_planning_workspace.py PASSED [ 72%]WEB_CASE tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[1754] call passed 10.683s
+
+tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[expired] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_planning_workspace.py PASSED [ 73%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[expired] call passed 5.881s
+
+tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unverified] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_planning_workspace.py PASSED [ 73%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unverified] call passed 6.274s
+
+tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_year] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_planning_workspace.py PASSED [ 74%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_year] call passed 8.205s
+
+tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[missing_source] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_planning_workspace.py PASSED [ 75%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[missing_source] call passed 8.030s
+
+tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_round] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_planning_workspace.py PASSED [ 76%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_round] call passed 7.449s
+
+tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unpublished] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_planning_workspace.py PASSED [ 76%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unpublished] call passed 9.655s
+
+tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_planning_workspace.py PASSED [ 77%]WEB_CASE tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[390] call passed 6.360s
+
+tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[1754] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_planning_workspace.py PASSED [ 78%]WEB_CASE tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[1754] call passed 9.125s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[cgu-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 79%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[cgu-1440] call passed 117.594s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[cgu-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 79%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[cgu-390] call passed 62.986s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntpu-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 80%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntpu-1440] call passed 92.843s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntpu-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 81%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntpu-390] call passed 67.167s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntu-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 82%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntu-1440] call passed 88.252s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntu-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 82%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntu-390] call passed 67.919s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ccu-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 83%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ccu-1440] call passed 78.026s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ccu-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 84%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ccu-390] call passed 54.210s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ncu-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 85%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ncu-1440] call passed 119.336s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ncu-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 85%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ncu-390] call passed 66.407s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[tku-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 86%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[tku-1440] call passed 81.945s
+
+tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[tku-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 87%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[tku-390] call passed 44.589s
+
+tests/e2e/test_six_school_visual_coverage.py::test_home_marker_and_catalogue_follow_all_six_school_switches <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_six_school_visual_coverage.py PASSED [ 88%]WEB_CASE tests/e2e/test_six_school_visual_coverage.py::test_home_marker_and_catalogue_follow_all_six_school_switches call passed 90.725s
+
+tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history PASSED [ 88%]WEB_CASE tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history call passed 10.382s
+
+tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] PASSED [ 89%]WEB_CASE tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] call passed 6.023s
+
+tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] PASSED [ 90%]WEB_CASE tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] call passed 7.042s
+
+tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[1440] PASSED [ 91%]WEB_CASE tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[1440] call passed 5.196s
+
+tests/e2e/test_system_motion.py::test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion PASSED [ 91%]WEB_CASE tests/e2e/test_system_motion.py::test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion call passed 2.944s
+
+tests/e2e/test_system_motion.py::test_reduced_motion_live_change_and_missing_runtime_are_usable PASSED [ 92%]WEB_CASE tests/e2e/test_system_motion.py::test_reduced_motion_live_change_and_missing_runtime_are_usable call passed 5.208s
+
+tests/e2e/test_tku_census_assets.py::test_tku_census_licensed_photos_load_and_points_keep_scope[390] PASSED [ 93%]WEB_CASE tests/e2e/test_tku_census_assets.py::test_tku_census_licensed_photos_load_and_points_keep_scope[390] call passed 11.799s
+
+tests/e2e/test_tku_census_assets.py::test_tku_census_licensed_photos_load_and_points_keep_scope[1280] PASSED [ 94%]WEB_CASE tests/e2e/test_tku_census_assets.py::test_tku_census_licensed_photos_load_and_points_keep_scope[1280] call passed 8.261s
+
+tests/e2e/test_tku_governance_transactions.py::test_current_admin_workbench_source_attestations_publish_and_destination_rollback <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_tku_governance_transactions.py PASSED [ 94%]WEB_CASE tests/e2e/test_tku_governance_transactions.py::test_current_admin_workbench_source_attestations_publish_and_destination_rollback call passed 53.420s
+
+tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive PASSED [ 95%]WEB_CASE tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive call passed 5.443s
+
+tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city PASSED [ 96%]WEB_CASE tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city call passed 7.720s
+
+tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it PASSED [ 97%]WEB_CASE tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it call passed 9.743s
+
+tests/e2e/test_travel_theme.py::test_school_switcher_without_selected_school PASSED [ 97%]WEB_CASE tests/e2e/test_travel_theme.py::test_school_switcher_without_selected_school call passed 1.654s
+
+tests/e2e/test_workload_journey.py::test_capacity_persists_replans_and_document_action_focuses_first_gap[390] PASSED [ 98%]WEB_CASE tests/e2e/test_workload_journey.py::test_capacity_persists_replans_and_document_action_focuses_first_gap[390] call passed 4.627s
+
+tests/e2e/test_workload_journey.py::test_capacity_persists_replans_and_document_action_focuses_first_gap[1754] PASSED [ 99%]WEB_CASE tests/e2e/test_workload_journey.py::test_capacity_persists_replans_and_document_action_focuses_first_gap[1754] call passed 6.501s
+
+tests/e2e/test_workload_journey.py::test_waiting_then_resuming_does_not_reset_completed_work PASSED [100%]WEB_CASE tests/e2e/test_workload_journey.py::test_waiting_then_resuming_does_not_reset_completed_work call passed 7.375s
+
+
+=================================== FAILURES ===================================
+____________ test_calendar_appears_first_and_tools_still_work[390] _____________
+tests/e2e/test_application_ui_refinements.py:61: in test_calendar_appears_first_and_tools_still_work
+    assert page.locator(".calendar-month-panel").bounding_box()["y"] < 450
+E   assert 653.84375 < 450
+____________ test_calendar_appears_first_and_tools_still_work[1754] ____________
+tests/e2e/test_application_ui_refinements.py:61: in test_calendar_appears_first_and_tools_still_work
+    assert page.locator(".calendar-month-panel").bounding_box()["y"] < 450
+E   assert 590.6875 < 450
+_ test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui[\u5716\u723e\u5eab-A1\u2013C2\u516d\u7d1a-EUR120000-guardian joint account] _
+tests/e2e/test_ncu_school.py:480: in test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui
+    expect(page.locator("#detail-application")).to_contain_text(application_text)
+E   AssertionError: Locator expected to contain text 'A1–C2六級'
+E   Actual value: 
+E           詳細申請流程
+E           
+E       
+E         
+E         
+E           官方來源已整理，4 個步驟仍需確認
+E           已核對母校116-1；相關公開附件23份，個別外校原文與當期適用性另核對。
+E           適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/11 上午10:13
+E         
+E       
+E       
+E         
+E         
+E           適用年度或梯次仍待確認
+E           來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+E         
+E       
+E       
+E         
+E         
+E           這是尚未完成正式發布的參考流程
+E           可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+E         
+E       
+E       
+E         共 9 個步驟
+E         
+E           
+E             回報規定錯誤
+E           
+E           
+E             重新載入流程資料
+E           
+E         
+E       
+E       
+E         
+E       
+E         
+E           1
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             核對中央116-1資格與當期名額
+E             
+E           
+E           
+E         
+E         
+E           大學部平均60、研究生70；至少一學年在學成績，碩一可附大學成績；在職專班可申請但無研修獎學金。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做目前大五／大六不具資格；須導師或指導教授與系所同意。陸生不得申請大陸、僑生不得申請原僑居地；雙重國籍勿選擇所持國籍國家。前一年錄取後自願放棄者原則上不得申請；交換期间須保有學籍並以甄選身分出國。116名額預定2026/10/12公告；115名單僅參考。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           2
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             完成中央線上申請並列印簽核
+E             
+E           
+E           
+E         
+E         
+E           2026/11/16 09:00開放；2026/12/4 12:00關閉（臺灣時間）。正式必繳語檢须先備妥上傳。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E         
+E           
+E           
+E             精確期限已有來源，但流程尚未正式發布。
+E             最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+E           
+E         
+E           
+E       
+E         送件方式
+E         線上申請／上傳
+E         
+E       
+E           
+E       
+E         
+E           我的送件紀錄尚未開始
+E           線上申請／上傳 · 學生手動
+E         
+E         
+E           下一步先備齊文件並再次核對官方送件方式。
+E           承辦中央國際事務處／所屬系所
+E           期限截止：2026/12/04 上午04:00
+E           收件證明尚未記錄
+E         
+E         
+E         
+E           登入後記錄進度
+E           
+E         
+E         所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E       
+E           
+E           
+E           開啟這一步的官方頁面
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           3
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             繳交中央校內紙本甄選文件至系所
+E             
+E           
+E           
+E         
+E         
+E           學生2026/12/11 17:00前繳至系所；系所彙整12/18 17:00前送國際處。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E         
+E           
+E           
+E             精確期限已有來源，但流程尚未正式發布。
+E             最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+E           
+E         
+E           
+E       
+E         送件方式
+E         紙本送件
+E         承辦地點：所屬系所必須送達：2026/12/11 上午09:00
+E       
+E           
+E       
+E         
+E           我的送件紀錄尚未開始
+E           紙本送件 · 學生手動
+E         
+E         
+E           下一步先備齊文件並再次核對官方送件方式。
+E           承辦中央國際事務處／所屬系所
+E           期限必須送達：2026/12/11 上午09:00
+E           收件證明尚未記錄
+E         
+E         
+E         
+E           登入後記錄進度
+E           
+E         
+E         所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E       
+E           具體要做其他能力證明／作品及外校語檢為選繳；外校語檢仍須提名前取得。正式份數簡章未列，須核對系所通知。
+E           這一步要準備
+E       
+E         
+E         系統申請表（列印完成簽核）文件形式待確認 · 簽署：依表格完成簽核 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         家長同意書文件形式待確認 · 簽署：家長本人親筆簽名、學生簽名（現行表格第2頁） · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+E       
+E       
+E         
+E         學生個人資料提供同意書文件形式待確認 · 簽署：申請人簽名並勾選同意 · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+E       
+E       
+E         
+E         校內必繳正式語言檢定成績單影本（不接受網路截圖或補繳）影本 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         中文版歷年成績單（碩一另附大學歷年成績）文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         中文版成績名次證明書文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         國際移動力完成證明書文件形式待確認 · 核章：右下方國際處章戳 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           4
+E           
+E             甄選與提名 · 中央國際事務處／所屬系所
+E             核對校內錄取並準備提名
+E             
+E           
+E           
+E         
+E         
+E           2027/1/11 09:00公告校內錄取；國際處再通知外校申請方式。校內錄取不代表外校錄取。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           5
+E           
+E             合作校申請 · 學生與兩校國際處
+E             核對外校當期文件並依通知申請
+E             
+E           
+E           
+E         
+E         
+E           Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。
+E           規劃範圍（當期適用待確認）116 學年度
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處及合作校提名通知所列承辦人
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】英文正式歷年成績單（手簽章或電子正式認證）、語言證明、護照有照頁／正式ID；居留證或駕照不能代替ID。線上SoleMOVE申請。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】非EU雙邊學生的LA僅母校要求時附簽章PDF，否則在SoleMOVE列proposed study plan；Erasmus+ ICM另有必繳LA，不能套全部中央交換。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】秋季／全年非EU/EEA申請3/15–4/15、EU/EEA至4/30；春季全體9/1–10/15，23:59芬蘭時間。未標116實際年度。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】PDF Fall2026非EU提名3/1–4/1申請3/15–4/15；Spring2027提名卻寫2027/8/15–10/1，申請為2026/9/1–10/15，原文順序矛盾。官網年例申請Fall非EU4/15、EU4/30、Spring10/15 Finnish23:59；不自動校正PDF提名年或推定116截止。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】授課語言至少B2，可母校簽章證明、Language Assessment Sheet或接受正式考試；證明附申請時兩年內。TOEIC、Duolingo、OLS不接受，英語授課學士以上及母語英語有不同附件替代方式。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】网页在2026/1/26前後TOEFL段落標題寫ITP，內容又列iBT舊制72及分項範圍、新制4分各項4，命名矛盾保留；不作regex自動資格。IELTS總6.0，one skill retake限原試60日內；PTE Academic62。
+E           這一步要準備
+E       
+E         
+E         英文正式歷年成績單階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 簽署：母校正式簽章或電子認證 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         B2語言能力證明／適用豁免替代附件階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         護照有照頁或正式ID階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         Learning Agreement（非EU雙邊，母校要求時）階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 適用條件：母校要求LA；Erasmus+ ICM依其方案必繳 · 文件形式待確認 · 簽署：學生、母校簽章 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           6
+E           
+E             行前準備 · 中央國際事務處／所屬系所
+E             確認課程、學分與中央註冊繳費
+E             
+E           
+E           
+E         
+E         
+E           依外校修課規定；無規定時至少兩門課且一門專業課。學則另要求兩門或六學分，採認由系所審定。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做中央仍須保有學籍、完成註冊及繳學雜費；延畢生另按轉換學分及兩階段程序處理。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           7
+E           
+E             行前準備 · 中央國際事務處／所屬系所
+E             出國前兩週完成中央行前程序
+E             出國前兩週
+E           
+E           
+E         
+E         
+E           完成中央交換及雙聯行前程序單，自行辦理護照、簽證、足額醫療／意外／急難救助保險及役男出國許可。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E       
+E         
+E         
+E           目前只有參考時程，沒有當期精確日期。
+E           參考：出國前兩週；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+E         
+E       
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做須依外校建議抵達日到校；本校宿舍先辦保留或退宿。外校住宿申請、住宿保證及截止另核對，不推定有保證宿舍。
+E           這一步要準備
+E       
+E         
+E         中央交換及雙聯計畫學生行前程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           8
+E           
+E             抵達後 · 中央國際事務處／所屬系所
+E             到校註冊並回報當地聯絡方式
+E             
+E           
+E           
+E         
+E         
+E           依外校完成報到、選課；中央國際處調查國外地址及聯絡方式，保持聯繫。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           9
+E           
+E             返國後 · 中央國際事務處／所屬系所
+E             返國後一週完成中央返校程序
+E             返國後一週內
+E           
+E           
+E         
+E         
+E           填中央返校程序單並繳心得WORD電子檔（800–1500字、至少四張照片）；取得外校成績並在畢業前完成採認。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E       
+E         
+E         
+E           目前只有參考時程，沒有當期精確日期。
+E           參考：返國後一週內；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+E         
+E       
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           
+E           這一步要準備
+E       
+E         
+E         中央交換及雙聯計畫學生返校程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         心得WORD電子檔（800–1500字、至少四張照片）文件形式待確認 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E       
+E         本流程使用的官方來源
+E         
+E           
+E                 中央116-1甄選簡章母校當期正式公告 · 優先級 1
+E               
+E                 中央115名額表（歷史參考）母校當期正式公告 · 優先級 1
+E               
+E                 FACT-SHEET-2026-2027_UTU.pdf PDF合作校官方資訊 · 優先級 4
+E               
+E                 Turku官方交換申請文件與期限合作校官方資訊 · 優先級 4
+E               
+E                 Turku課程限制及2027春課表發布合作校官方資訊 · 優先級 4
+E               
+E                 Turku 新生說明會 2026／Spring2027合作校官方資訊 · 優先級 4
+E               
+E                 Turku現連Language Assessment Sheet DOC合作校官方資訊 · 優先級 4
+E               
+E                 Turku現連non-Erasmus Learning Agreement DOCX合作校官方資訊 · 優先級 4
+E               
+E                 How to Apply for Exchange Studies合作校官方資訊 · 優先級 4
+E               
+E         
+E         截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+E       
+E          
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("#detail-application")
+E       13 × locator resolved to <section tabindex="0" role="tabpanel" id="detail-application" class="detail-section workflow-section" aria-labelledby="detail-tab-application">…</section>
+E          - unexpected value "
+E           詳細申請流程
+E           
+E       
+E         
+E         
+E           官方來源已整理，4 個步驟仍需確認
+E           已核對母校116-1；相關公開附件23份，個別外校原文與當期適用性另核對。
+E           適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/11 上午10:13
+E         
+E       
+E       
+E         
+E         
+E           適用年度或梯次仍待確認
+E           來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+E         
+E       
+E       
+E         
+E         
+E           這是尚未完成正式發布的參考流程
+E           可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+E         
+E       
+E       
+E         共 9 個步驟
+E         
+E           
+E             回報規定錯誤
+E           
+E           
+E             重新載入流程資料
+E           
+E         
+E       
+E       
+E         
+E       
+E         
+E           1
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             核對中央116-1資格與當期名額
+E             
+E           
+E           
+E         
+E         
+E           大學部平均60、研究生70；至少一學年在學成績，碩一可附大學成績；在職專班可申請但無研修獎學金。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做目前大五／大六不具資格；須導師或指導教授與系所同意。陸生不得申請大陸、僑生不得申請原僑居地；雙重國籍勿選擇所持國籍國家。前一年錄取後自願放棄者原則上不得申請；交換期间須保有學籍並以甄選身分出國。116名額預定2026/10/12公告；115名單僅參考。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           2
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             完成中央線上申請並列印簽核
+E             
+E           
+E           
+E         
+E         
+E           2026/11/16 09:00開放；2026/12/4 12:00關閉（臺灣時間）。正式必繳語檢须先備妥上傳。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E         
+E           
+E           
+E             精確期限已有來源，但流程尚未正式發布。
+E             最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+E           
+E         
+E           
+E       
+E         送件方式
+E         線上申請／上傳
+E         
+E       
+E           
+E       
+E         
+E           我的送件紀錄尚未開始
+E           線上申請／上傳 · 學生手動
+E         
+E         
+E           下一步先備齊文件並再次核對官方送件方式。
+E           承辦中央國際事務處／所屬系所
+E           期限截止：2026/12/04 上午04:00
+E           收件證明尚未記錄
+E         
+E         
+E         
+E           登入後記錄進度
+E           
+E         
+E         所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E       
+E           
+E           
+E           開啟這一步的官方頁面
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           3
+E           
+E             校內申請 · 中央國際事務處／所屬系所
+E             繳交中央校內紙本甄選文件至系所
+E             
+E           
+E           
+E         
+E         
+E           學生2026/12/11 17:00前繳至系所；系所彙整12/18 17:00前送國際處。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E         
+E           
+E           
+E             精確期限已有來源，但流程尚未正式發布。
+E             最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+E           
+E         
+E           
+E       
+E         送件方式
+E         紙本送件
+E         承辦地點：所屬系所必須送達：2026/12/11 上午09:00
+E       
+E           
+E       
+E         
+E           我的送件紀錄尚未開始
+E           紙本送件 · 學生手動
+E         
+E         
+E           下一步先備齊文件並再次核對官方送件方式。
+E           承辦中央國際事務處／所屬系所
+E           期限必須送達：2026/12/11 上午09:00
+E           收件證明尚未記錄
+E         
+E         
+E         
+E           登入後記錄進度
+E           
+E         
+E         所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E       
+E           具體要做其他能力證明／作品及外校語檢為選繳；外校語檢仍須提名前取得。正式份數簡章未列，須核對系所通知。
+E           這一步要準備
+E       
+E         
+E         系統申請表（列印完成簽核）文件形式待確認 · 簽署：依表格完成簽核 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         家長同意書文件形式待確認 · 簽署：家長本人親筆簽名、學生簽名（現行表格第2頁） · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+E       
+E       
+E         
+E         學生個人資料提供同意書文件形式待確認 · 簽署：申請人簽名並勾選同意 · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+E       
+E       
+E         
+E         校內必繳正式語言檢定成績單影本（不接受網路截圖或補繳）影本 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         中文版歷年成績單（碩一另附大學歷年成績）文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         中文版成績名次證明書文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         國際移動力完成證明書文件形式待確認 · 核章：右下方國際處章戳 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           4
+E           
+E             甄選與提名 · 中央國際事務處／所屬系所
+E             核對校內錄取並準備提名
+E             
+E           
+E           
+E         
+E         
+E           2027/1/11 09:00公告校內錄取；國際處再通知外校申請方式。校內錄取不代表外校錄取。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           5
+E           
+E             合作校申請 · 學生與兩校國際處
+E             核對外校當期文件並依通知申請
+E             
+E           
+E           
+E         
+E         
+E           Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。
+E           規劃範圍（當期適用待確認）116 學年度
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處及合作校提名通知所列承辦人
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】英文正式歷年成績單（手簽章或電子正式認證）、語言證明、護照有照頁／正式ID；居留證或駕照不能代替ID。線上SoleMOVE申請。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】非EU雙邊學生的LA僅母校要求時附簽章PDF，否則在SoleMOVE列proposed study plan；Erasmus+ ICM另有必繳LA，不能套全部中央交換。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】秋季／全年非EU/EEA申請3/15–4/15、EU/EEA至4/30；春季全體9/1–10/15，23:59芬蘭時間。未標116實際年度。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】PDF Fall2026非EU提名3/1–4/1申請3/15–4/15；Spring2027提名卻寫2027/8/15–10/1，申請為2026/9/1–10/15，原文順序矛盾。官網年例申請Fall非EU4/15、EU4/30、Spring10/15 Finnish23:59；不自動校正PDF提名年或推定116截止。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】授課語言至少B2，可母校簽章證明、Language Assessment Sheet或接受正式考試；證明附申請時兩年內。TOEIC、Duolingo、OLS不接受，英語授課學士以上及母語英語有不同附件替代方式。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】网页在2026/1/26前後TOEFL段落標題寫ITP，內容又列iBT舊制72及分項範圍、新制4分各項4，命名矛盾保留；不作regex自動資格。IELTS總6.0，one skill retake限原試60日內；PTE Academic62。
+E           這一步要準備
+E       
+E         
+E         英文正式歷年成績單階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 簽署：母校正式簽章或電子認證 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         B2語言能力證明／適用豁免替代附件階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         護照有照頁或正式ID階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         Learning Agreement（非EU雙邊，母校要求時）階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 適用條件：母校要求LA；Erasmus+ ICM依其方案必繳 · 文件形式待確認 · 簽署：學生、母校簽章 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           6
+E           
+E             行前準備 · 中央國際事務處／所屬系所
+E             確認課程、學分與中央註冊繳費
+E             
+E           
+E           
+E         
+E         
+E           依外校修課規定；無規定時至少兩門課且一門專業課。學則另要求兩門或六學分，採認由系所審定。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做中央仍須保有學籍、完成註冊及繳學雜費；延畢生另按轉換學分及兩階段程序處理。
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           7
+E           
+E             行前準備 · 中央國際事務處／所屬系所
+E             出國前兩週完成中央行前程序
+E             出國前兩週
+E           
+E           
+E         
+E         
+E           完成中央交換及雙聯行前程序單，自行辦理護照、簽證、足額醫療／意外／急難救助保險及役男出國許可。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E       
+E         
+E         
+E           目前只有參考時程，沒有當期精確日期。
+E           參考：出國前兩週；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+E         
+E       
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           具體要做須依外校建議抵達日到校；本校宿舍先辦保留或退宿。外校住宿申請、住宿保證及截止另核對，不推定有保證宿舍。
+E           這一步要準備
+E       
+E         
+E         中央交換及雙聯計畫學生行前程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           8
+E           
+E             抵達後 · 中央國際事務處／所屬系所
+E             到校註冊並回報當地聯絡方式
+E             
+E           
+E           
+E         
+E         
+E           依外校完成報到、選課；中央國際處調查國外地址及聯絡方式，保持聯繫。
+E           適用範圍116 學年度第一梯次
+E           
+E           
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           
+E           
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E         
+E           9
+E           
+E             返國後 · 中央國際事務處／所屬系所
+E             返國後一週完成中央返校程序
+E             返國後一週內
+E           
+E           
+E         
+E         
+E           填中央返校程序單並繳心得WORD電子檔（800–1500字、至少四張照片）；取得外校成績並在畢業前完成採認。
+E           適用範圍116 學年度第一梯次
+E           此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+E           
+E       
+E         
+E         
+E           目前只有參考時程，沒有當期精確日期。
+E           參考：返國後一週內；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+E         
+E       
+E           
+E       
+E         送件方式
+E         送件方式待確認
+E         官方資料尚未明確標示紙本、線上或親送方式。
+E       
+E           我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+E           
+E           這一步要準備
+E       
+E         
+E         中央交換及雙聯計畫學生返校程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+E       
+E       
+E         
+E         心得WORD電子檔（800–1500字、至少四張照片）文件形式待確認 · 適用性及送件細節待確認
+E       
+E           
+E           發現資格、期限、文件或送件資訊不一致？回報此步驟
+E         
+E       
+E       
+E       
+E         本流程使用的官方來源
+E         
+E           
+E                 中央116-1甄選簡章母校當期正式公告 · 優先級 1
+E               
+E                 中央115名額表（歷史參考）母校當期正式公告 · 優先級 1
+E               
+E                 FACT-SHEET-2026-2027_UTU.pdf PDF合作校官方資訊 · 優先級 4
+E               
+E                 Turku官方交換申請文件與期限合作校官方資訊 · 優先級 4
+E               
+E                 Turku課程限制及2027春課表發布合作校官方資訊 · 優先級 4
+E               
+E                 Turku 新生說明會 2026／Spring2027合作校官方資訊 · 優先級 4
+E               
+E                 Turku現連Language Assessment Sheet DOC合作校官方資訊 · 優先級 4
+E               
+E                 Turku現連non-Erasmus Learning Agreement DOCX合作校官方資訊 · 優先級 4
+E               
+E                 How to Apply for Exchange Studies合作校官方資訊 · 優先級 4
+E               
+E         
+E         截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+E       
+E         "
+E   
+E   Aria snapshot:
+E   - tabpanel "申請方式":
+E     - heading "詳細申請流程" [level=2]
+E     - strong: 官方來源已整理，4 個步驟仍需確認
+E     - paragraph: 已核對母校116-1；相關公開附件23份，個別外校原文與當期適用性另核對。
+E     - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/11 上午10:13
+E     - strong: 適用年度或梯次仍待確認
+E     - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+E     - strong: 這是尚未完成正式發布的參考流程
+E     - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+E     - strong: 共 9 個步驟
+E     - button "回報規定錯誤"
+E     - button "重新載入流程資料"
+E     - group:
+E       - text: 校內申請 · 中央國際事務處／所屬系所
+E       - strong: 核對中央116-1資格與當期名額
+E     - group:
+E       - text: 校內申請 · 中央國際事務處／所屬系所
+E       - strong: 完成中央線上申請並列印簽核
+E     - group:
+E       - text: 校內申請 · 中央國際事務處／所屬系所
+E       - strong: 繳交中央校內紙本甄選文件至系所
+E     - group:
+E       - text: 甄選與提名 · 中央國際事務處／所屬系所
+E       - strong: 核對校內錄取並準備提名
+E     - group:
+E       - text: 合作校申請 · 學生與兩校國際處
+E       - strong: 核對外校當期文件並依通知申請
+E     - group:
+E       - text: 行前準備 · 中央國際事務處／所屬系所
+E       - strong: 確認課程、學分與中央註冊繳費
+E     - group:
+E       - text: 行前準備 · 中央國際事務處／所屬系所
+E       - strong: 出國前兩週完成中央行前程序
+E       - text: 出國前兩週
+E     - group:
+E       - text: 抵達後 · 中央國際事務處／所屬系所
+E       - strong: 到校註冊並回報當地聯絡方式
+E     - group:
+E       - text: 返國後 · 中央國際事務處／所屬系所
+E       - strong: 返國後一週完成中央返校程序
+E       - text: 返國後一週內
+E     - strong: 本流程使用的官方來源
+E     - link "中央116-1甄選簡章 母校當期正式公告 · 優先級 1":
+E       - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf
+E     - link "中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1":
+E       - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf
+E     - link "FACT-SHEET-2026-2027_UTU.pdf PDF 合作校官方資訊 · 優先級 4":
+E       - /url: https://drive.google.com/file/d/13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF/view
+E     - link "Turku官方交換申請文件與期限 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies
+E     - link "Turku課程限制及2027春課表發布 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/en/study-at-utu/courses-in-english-for-exchange-students
+E     - link "Turku 新生說明會 2026／Spring2027 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/en/study-at-utu/accepted-exchange-students/orientation
+E     - link "Turku現連Language Assessment Sheet DOC 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc
+E     - link "Turku現連non-Erasmus Learning Agreement DOCX 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/sites/default/files/media/Learning_Agreement_non-EU_0.docx
+E     - link "How to Apply for Exchange Studies 合作校官方資訊 · 優先級 4":
+E       - /url: https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies
+E     - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+- generated xml file: /workspace/recovery-evidence-20261011/ccu2-full-shard-1/result.xml -
+============================= slowest 25 durations =============================
+119.34s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ncu-1440]
+117.59s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[cgu-1440]
+92.84s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntpu-1440]
+90.72s call     tests/e2e/test_six_school_visual_coverage.py::test_home_marker_and_catalogue_follow_all_six_school_switches
+88.25s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntu-1440]
+81.94s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[tku-1440]
+78.03s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ccu-1440]
+67.92s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntu-390]
+67.17s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ntpu-390]
+66.41s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ncu-390]
+62.99s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[cgu-390]
+55.85s call     tests/e2e/test_ntu_destination_enrichment.py::test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh[1440]
+54.21s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[ccu-390]
+53.42s call     tests/e2e/test_tku_governance_transactions.py::test_current_admin_workbench_source_attestations_publish_and_destination_rollback
+44.59s call     tests/e2e/test_six_school_visual_coverage.py::test_real_six_school_map_home_gaps_filters_photos_and_detail[tku-390]
+35.52s call     tests/e2e/test_ntu_destination_enrichment.py::test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh[390]
+33.66s call     tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[390]
+24.39s call     tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[1440]
+17.11s call     tests/e2e/test_ccu_seventeenth_pass.py::test_nagoya_pair_filters_use_one_option[390]
+16.76s call     tests/e2e/test_ncu_school.py::test_ncu_content_source_pages_home_host_and_life[1440]
+16.66s call     tests/e2e/test_ncu_school.py::test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui[\u5716\u723e\u5eab-A1\u2013C2\u516d\u7d1a-EUR120000-guardian joint account]
+15.72s call     tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u570b\u7acb\u81fa\u5317\u5927\u5b78-\u6cd5\u5f8b\u5b78\u9662-\u6cd5\u5f8b\u5b78\u7cfb-\u5546\u5b78\u9662]
+14.91s call     tests/e2e/test_ncu_school.py::test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scoped[390]
+14.89s call     tests/e2e/test_ncu_school.py::test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scoped[1440]
+14.55s call     tests/e2e/test_document_workbench.py::test_generated_pdf_is_checked_and_saved_only_with_separate_consent
+=========================== short test summary info ============================
+FAILED tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[390] - assert 653.84375 < 450
+FAILED tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[1754] - assert 590.6875 < 450
+FAILED tests/e2e/test_ncu_school.py::test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui[\u5716\u723e\u5eab-A1\u2013C2\u516d\u7d1a-EUR120000-guardian joint account] - AssertionError: Locator expected to contain text 'A1–C2六級'
+Actual value: 
+        詳細申請流程
+        
+    
+      
+      
+        官方來源已整理，4 個步驟仍需確認
+        已核對母校116-1；相關公開附件23份，個別外校原文與當期適用性另核對。
+        適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/11 上午10:13
+      
+    
+    
+      
+      
+        適用年度或梯次仍待確認
+        來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+      
+    
+    
+      
+      
+        這是尚未完成正式發布的參考流程
+        可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+      
+    
+    
+      共 9 個步驟
+      
+        
+          回報規定錯誤
+        
+        
+          重新載入流程資料
+        
+      
+    
+    
+      
+    
+      
+        1
+        
+          校內申請 · 中央國際事務處／所屬系所
+          核對中央116-1資格與當期名額
+          
+        
+        
+      
+      
+        大學部平均60、研究生70；至少一學年在學成績，碩一可附大學成績；在職專班可申請但無研修獎學金。
+        適用範圍116 學年度第一梯次
+        
+        
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        具體要做目前大五／大六不具資格；須導師或指導教授與系所同意。陸生不得申請大陸、僑生不得申請原僑居地；雙重國籍勿選擇所持國籍國家。前一年錄取後自願放棄者原則上不得申請；交換期间須保有學籍並以甄選身分出國。116名額預定2026/10/12公告；115名單僅參考。
+        
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        2
+        
+          校內申請 · 中央國際事務處／所屬系所
+          完成中央線上申請並列印簽核
+          
+        
+        
+      
+      
+        2026/11/16 09:00開放；2026/12/4 12:00關閉（臺灣時間）。正式必繳語檢须先備妥上傳。
+        適用範圍116 學年度第一梯次
+        
+        
+      
+        
+        
+          精確期限已有來源，但流程尚未正式發布。
+          最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+        
+      
+        
+    
+      送件方式
+      線上申請／上傳
+      
+    
+        
+    
+      
+        我的送件紀錄尚未開始
+        線上申請／上傳 · 學生手動
+      
+      
+        下一步先備齊文件並再次核對官方送件方式。
+        承辦中央國際事務處／所屬系所
+        期限截止：2026/12/04 上午04:00
+        收件證明尚未記錄
+      
+      
+      
+        登入後記錄進度
+        
+      
+      所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+    
+        
+        
+        開啟這一步的官方頁面
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        3
+        
+          校內申請 · 中央國際事務處／所屬系所
+          繳交中央校內紙本甄選文件至系所
+          
+        
+        
+      
+      
+        學生2026/12/11 17:00前繳至系所；系所彙整12/18 17:00前送國際處。
+        適用範圍116 學年度第一梯次
+        此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+        
+      
+        
+        
+          精確期限已有來源，但流程尚未正式發布。
+          最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+        
+      
+        
+    
+      送件方式
+      紙本送件
+      承辦地點：所屬系所必須送達：2026/12/11 上午09:00
+    
+        
+    
+      
+        我的送件紀錄尚未開始
+        紙本送件 · 學生手動
+      
+      
+        下一步先備齊文件並再次核對官方送件方式。
+        承辦中央國際事務處／所屬系所
+        期限必須送達：2026/12/11 上午09:00
+        收件證明尚未記錄
+      
+      
+      
+        登入後記錄進度
+        
+      
+      所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+    
+        具體要做其他能力證明／作品及外校語檢為選繳；外校語檢仍須提名前取得。正式份數簡章未列，須核對系所通知。
+        這一步要準備
+    
+      
+      系統申請表（列印完成簽核）文件形式待確認 · 簽署：依表格完成簽核 · 適用性及送件細節待確認
+    
+    
+      
+      家長同意書文件形式待確認 · 簽署：家長本人親筆簽名、學生簽名（現行表格第2頁） · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+    
+    
+      
+      學生個人資料提供同意書文件形式待確認 · 簽署：申請人簽名並勾選同意 · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+    
+    
+      
+      校內必繳正式語言檢定成績單影本（不接受網路截圖或補繳）影本 · 適用性及送件細節待確認
+    
+    
+      
+      中文版歷年成績單（碩一另附大學歷年成績）文件形式待確認 · 適用性及送件細節待確認
+    
+    
+      
+      中文版成績名次證明書文件形式待確認 · 適用性及送件細節待確認
+    
+    
+      
+      國際移動力完成證明書文件形式待確認 · 核章：右下方國際處章戳 · 適用性及送件細節待確認
+    
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        4
+        
+          甄選與提名 · 中央國際事務處／所屬系所
+          核對校內錄取並準備提名
+          
+        
+        
+      
+      
+        2027/1/11 09:00公告校內錄取；國際處再通知外校申請方式。校內錄取不代表外校錄取。
+        適用範圍116 學年度第一梯次
+        
+        
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        具體要做簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。
+        
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        5
+        
+          合作校申請 · 學生與兩校國際處
+          核對外校當期文件並依通知申請
+          
+        
+        
+      
+      
+        Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。
+        規劃範圍（當期適用待確認）116 學年度
+        此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處及合作校提名通知所列承辦人
+        
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        具體要做【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】英文正式歷年成績單（手簽章或電子正式認證）、語言證明、護照有照頁／正式ID；居留證或駕照不能代替ID。線上SoleMOVE申請。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】非EU雙邊學生的LA僅母校要求時附簽章PDF，否則在SoleMOVE列proposed study plan；Erasmus+ ICM另有必繳LA，不能套全部中央交換。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】秋季／全年非EU/EEA申請3/15–4/15、EU/EEA至4/30；春季全體9/1–10/15，23:59芬蘭時間。未標116實際年度。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】PDF Fall2026非EU提名3/1–4/1申請3/15–4/15；Spring2027提名卻寫2027/8/15–10/1，申請為2026/9/1–10/15，原文順序矛盾。官網年例申請Fall非EU4/15、EU4/30、Spring10/15 Finnish23:59；不自動校正PDF提名年或推定116截止。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】授課語言至少B2，可母校簽章證明、Language Assessment Sheet或接受正式考試；證明附申請時兩年內。TOEIC、Duolingo、OLS不接受，英語授課學士以上及母語英語有不同附件替代方式。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】网页在2026/1/26前後TOEFL段落標題寫ITP，內容又列iBT舊制72及分項範圍、新制4分各項4，命名矛盾保留；不作regex自動資格。IELTS總6.0，one skill retake限原試60日內；PTE Academic62。
+        這一步要準備
+    
+      
+      英文正式歷年成績單階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 簽署：母校正式簽章或電子認證 · 適用性及送件細節待確認
+    
+    
+      
+      B2語言能力證明／適用豁免替代附件階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+    
+    
+      
+      護照有照頁或正式ID階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+    
+    
+      
+      Learning Agreement（非EU雙邊，母校要求時）階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 適用條件：母校要求LA；Erasmus+ ICM依其方案必繳 · 文件形式待確認 · 簽署：學生、母校簽章 · 適用性及送件細節待確認
+    
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        6
+        
+          行前準備 · 中央國際事務處／所屬系所
+          確認課程、學分與中央註冊繳費
+          
+        
+        
+      
+      
+        依外校修課規定；無規定時至少兩門課且一門專業課。學則另要求兩門或六學分，採認由系所審定。
+        適用範圍116 學年度第一梯次
+        
+        
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        具體要做中央仍須保有學籍、完成註冊及繳學雜費；延畢生另按轉換學分及兩階段程序處理。
+        
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        7
+        
+          行前準備 · 中央國際事務處／所屬系所
+          出國前兩週完成中央行前程序
+          出國前兩週
+        
+        
+      
+      
+        完成中央交換及雙聯行前程序單，自行辦理護照、簽證、足額醫療／意外／急難救助保險及役男出國許可。
+        適用範圍116 學年度第一梯次
+        此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+        
+    
+      
+      
+        目前只有參考時程，沒有當期精確日期。
+        參考：出國前兩週；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+      
+    
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        具體要做須依外校建議抵達日到校；本校宿舍先辦保留或退宿。外校住宿申請、住宿保證及截止另核對，不推定有保證宿舍。
+        這一步要準備
+    
+      
+      中央交換及雙聯計畫學生行前程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+    
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        8
+        
+          抵達後 · 中央國際事務處／所屬系所
+          到校註冊並回報當地聯絡方式
+          
+        
+        
+      
+      
+        依外校完成報到、選課；中央國際處調查國外地址及聯絡方式，保持聯繫。
+        適用範圍116 學年度第一梯次
+        
+        
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        
+        
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        9
+        
+          返國後 · 中央國際事務處／所屬系所
+          返國後一週完成中央返校程序
+          返國後一週內
+        
+        
+      
+      
+        填中央返校程序單並繳心得WORD電子檔（800–1500字、至少四張照片）；取得外校成績並在畢業前完成採認。
+        適用範圍116 學年度第一梯次
+        此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+        
+    
+      
+      
+        目前只有參考時程，沒有當期精確日期。
+        參考：返國後一週內；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+      
+    
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        
+        這一步要準備
+    
+      
+      中央交換及雙聯計畫學生返校程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+    
+    
+      
+      心得WORD電子檔（800–1500字、至少四張照片）文件形式待確認 · 適用性及送件細節待確認
+    
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+    
+      本流程使用的官方來源
+      
+        
+              中央116-1甄選簡章母校當期正式公告 · 優先級 1
+            
+              中央115名額表（歷史參考）母校當期正式公告 · 優先級 1
+            
+              FACT-SHEET-2026-2027_UTU.pdf PDF合作校官方資訊 · 優先級 4
+            
+              Turku官方交換申請文件與期限合作校官方資訊 · 優先級 4
+            
+              Turku課程限制及2027春課表發布合作校官方資訊 · 優先級 4
+            
+              Turku 新生說明會 2026／Spring2027合作校官方資訊 · 優先級 4
+            
+              Turku現連Language Assessment Sheet DOC合作校官方資訊 · 優先級 4
+            
+              Turku現連non-Erasmus Learning Agreement DOCX合作校官方資訊 · 優先級 4
+            
+              How to Apply for Exchange Studies合作校官方資訊 · 優先級 4
+            
+      
+      截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+    
+       
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator("#detail-application")
+    13 × locator resolved to <section tabindex="0" role="tabpanel" id="detail-application" class="detail-section workflow-section" aria-labelledby="detail-tab-application">…</section>
+       - unexpected value "
+        詳細申請流程
+        
+    
+      
+      
+        官方來源已整理，4 個步驟仍需確認
+        已核對母校116-1；相關公開附件23份，個別外校原文與當期適用性另核對。
+        適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/11 上午10:13
+      
+    
+    
+      
+      
+        適用年度或梯次仍待確認
+        來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+      
+    
+    
+      
+      
+        這是尚未完成正式發布的參考流程
+        可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+      
+    
+    
+      共 9 個步驟
+      
+        
+          回報規定錯誤
+        
+        
+          重新載入流程資料
+        
+      
+    
+    
+      
+    
+      
+        1
+        
+          校內申請 · 中央國際事務處／所屬系所
+          核對中央116-1資格與當期名額
+          
+        
+        
+      
+      
+        大學部平均60、研究生70；至少一學年在學成績，碩一可附大學成績；在職專班可申請但無研修獎學金。
+        適用範圍116 學年度第一梯次
+        
+        
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        具體要做目前大五／大六不具資格；須導師或指導教授與系所同意。陸生不得申請大陸、僑生不得申請原僑居地；雙重國籍勿選擇所持國籍國家。前一年錄取後自願放棄者原則上不得申請；交換期间須保有學籍並以甄選身分出國。116名額預定2026/10/12公告；115名單僅參考。
+        
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        2
+        
+          校內申請 · 中央國際事務處／所屬系所
+          完成中央線上申請並列印簽核
+          
+        
+        
+      
+      
+        2026/11/16 09:00開放；2026/12/4 12:00關閉（臺灣時間）。正式必繳語檢须先備妥上傳。
+        適用範圍116 學年度第一梯次
+        
+        
+      
+        
+        
+          精確期限已有來源，但流程尚未正式發布。
+          最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+        
+      
+        
+    
+      送件方式
+      線上申請／上傳
+      
+    
+        
+    
+      
+        我的送件紀錄尚未開始
+        線上申請／上傳 · 學生手動
+      
+      
+        下一步先備齊文件並再次核對官方送件方式。
+        承辦中央國際事務處／所屬系所
+        期限截止：2026/12/04 上午04:00
+        收件證明尚未記錄
+      
+      
+      
+        登入後記錄進度
+        
+      
+      所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+    
+        
+        
+        開啟這一步的官方頁面
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        3
+        
+          校內申請 · 中央國際事務處／所屬系所
+          繳交中央校內紙本甄選文件至系所
+          
+        
+        
+      
+      
+        學生2026/12/11 17:00前繳至系所；系所彙整12/18 17:00前送國際處。
+        適用範圍116 學年度第一梯次
+        此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+        
+      
+        
+        
+          精確期限已有來源，但流程尚未正式發布。
+          最後查核：2026/10/11 下午12:41；目前狀態為 pending_review，不會加入行事曆或截止提醒。
+        
+      
+        
+    
+      送件方式
+      紙本送件
+      承辦地點：所屬系所必須送達：2026/12/11 上午09:00
+    
+        
+    
+      
+        我的送件紀錄尚未開始
+        紙本送件 · 學生手動
+      
+      
+        下一步先備齊文件並再次核對官方送件方式。
+        承辦中央國際事務處／所屬系所
+        期限必須送達：2026/12/11 上午09:00
+        收件證明尚未記錄
+      
+      
+      
+        登入後記錄進度
+        
+      
+      所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+    
+        具體要做其他能力證明／作品及外校語檢為選繳；外校語檢仍須提名前取得。正式份數簡章未列，須核對系所通知。
+        這一步要準備
+    
+      
+      系統申請表（列印完成簽核）文件形式待確認 · 簽署：依表格完成簽核 · 適用性及送件細節待確認
+    
+    
+      
+      家長同意書文件形式待確認 · 簽署：家長本人親筆簽名、學生簽名（現行表格第2頁） · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+    
+    
+      
+      學生個人資料提供同意書文件形式待確認 · 簽署：申請人簽名並勾選同意 · 適用性及送件細節待確認官方參考表格（當期適用待確認）
+    
+    
+      
+      校內必繳正式語言檢定成績單影本（不接受網路截圖或補繳）影本 · 適用性及送件細節待確認
+    
+    
+      
+      中文版歷年成績單（碩一另附大學歷年成績）文件形式待確認 · 適用性及送件細節待確認
+    
+    
+      
+      中文版成績名次證明書文件形式待確認 · 適用性及送件細節待確認
+    
+    
+      
+      國際移動力完成證明書文件形式待確認 · 核章：右下方國際處章戳 · 適用性及送件細節待確認
+    
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        4
+        
+          甄選與提名 · 中央國際事務處／所屬系所
+          核對校內錄取並準備提名
+          
+        
+        
+      
+      
+        2027/1/11 09:00公告校內錄取；國際處再通知外校申請方式。校內錄取不代表外校錄取。
+        適用範圍116 學年度第一梯次
+        
+        
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        具體要做簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。
+        
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        5
+        
+          合作校申請 · 學生與兩校國際處
+          核對外校當期文件並依通知申請
+          
+        
+        
+      
+      
+        Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。
+        規劃範圍（當期適用待確認）116 學年度
+        此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處及合作校提名通知所列承辦人
+        
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        具體要做【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】英文正式歷年成績單（手簽章或電子正式認證）、語言證明、護照有照頁／正式ID；居留證或駕照不能代替ID。線上SoleMOVE申請。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】非EU雙邊學生的LA僅母校要求時附簽章PDF，否則在SoleMOVE列proposed study plan；Erasmus+ ICM另有必繳LA，不能套全部中央交換。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】秋季／全年非EU/EEA申請3/15–4/15、EU/EEA至4/30；春季全體9/1–10/15，23:59芬蘭時間。未標116實際年度。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】PDF Fall2026非EU提名3/1–4/1申請3/15–4/15；Spring2027提名卻寫2027/8/15–10/1，申請為2026/9/1–10/15，原文順序矛盾。官網年例申請Fall非EU4/15、EU4/30、Spring10/15 Finnish23:59；不自動校正PDF提名年或推定116截止。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】授課語言至少B2，可母校簽章證明、Language Assessment Sheet或接受正式考試；證明附申請時兩年內。TOEIC、Duolingo、OLS不接受，英語授課學士以上及母語英語有不同附件替代方式。【Turku現行公開交換申請頁；未核實116方案；2026/10/11查核，中央116校別／名額／track仍未核實。】网页在2026/1/26前後TOEFL段落標題寫ITP，內容又列iBT舊制72及分項範圍、新制4分各項4，命名矛盾保留；不作regex自動資格。IELTS總6.0，one skill retake限原試60日內；PTE Academic62。
+        這一步要準備
+    
+      
+      英文正式歷年成績單階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 簽署：母校正式簽章或電子認證 · 適用性及送件細節待確認
+    
+    
+      
+      B2語言能力證明／適用豁免替代附件階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+    
+    
+      
+      護照有照頁或正式ID階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 文件形式待確認 · 適用性及送件細節待確認
+    
+    
+      
+      Learning Agreement（非EU雙邊，母校要求時）階段：申請 · 適用性：歷史參考 · 外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。 · 適用條件：母校要求LA；Erasmus+ ICM依其方案必繳 · 文件形式待確認 · 簽署：學生、母校簽章 · 適用性及送件細節待確認
+    
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        6
+        
+          行前準備 · 中央國際事務處／所屬系所
+          確認課程、學分與中央註冊繳費
+          
+        
+        
+      
+      
+        依外校修課規定；無規定時至少兩門課且一門專業課。學則另要求兩門或六學分，採認由系所審定。
+        適用範圍116 學年度第一梯次
+        
+        
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        具體要做中央仍須保有學籍、完成註冊及繳學雜費；延畢生另按轉換學分及兩階段程序處理。
+        
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        7
+        
+          行前準備 · 中央國際事務處／所屬系所
+          出國前兩週完成中央行前程序
+          出國前兩週
+        
+        
+      
+      
+        完成中央交換及雙聯行前程序單，自行辦理護照、簽證、足額醫療／意外／急難救助保險及役男出國許可。
+        適用範圍116 學年度第一梯次
+        此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+        
+    
+      
+      
+        目前只有參考時程，沒有當期精確日期。
+        參考：出國前兩週；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+      
+    
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        具體要做須依外校建議抵達日到校；本校宿舍先辦保留或退宿。外校住宿申請、住宿保證及截止另核對，不推定有保證宿舍。
+        這一步要準備
+    
+      
+      中央交換及雙聯計畫學生行前程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+    
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        8
+        
+          抵達後 · 中央國際事務處／所屬系所
+          到校註冊並回報當地聯絡方式
+          
+        
+        
+      
+      
+        依外校完成報到、選課；中央國際處調查國外地址及聯絡方式，保持聯繫。
+        適用範圍116 學年度第一梯次
+        
+        
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        
+        
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+      
+        9
+        
+          返國後 · 中央國際事務處／所屬系所
+          返國後一週完成中央返校程序
+          返國後一週內
+        
+        
+      
+      
+        填中央返校程序單並繳心得WORD電子檔（800–1500字、至少四張照片）；取得外校成績並在畢業前完成採認。
+        適用範圍116 學年度第一梯次
+        此步驟仍有送件或文件細節待確認。請聯絡：國立中央大學國際事務處
+        
+    
+      
+      
+        目前只有參考時程，沒有當期精確日期。
+        參考：返國後一週內；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+      
+    
+        
+    
+      送件方式
+      送件方式待確認
+      官方資料尚未明確標示紙本、線上或親送方式。
+    
+        我的送件紀錄送件方式待確認官方方式確認前不能標記完成。
+        
+        這一步要準備
+    
+      
+      中央交換及雙聯計畫學生返校程序單（最新表格須向國際處取得）文件形式待確認 · 適用性及送件細節待確認
+    
+    
+      
+      心得WORD電子檔（800–1500字、至少四張照片）文件形式待確認 · 適用性及送件細節待確認
+    
+        
+        發現資格、期限、文件或送件資訊不一致？回報此步驟
+      
+    
+    
+    
+      本流程使用的官方來源
+      
+        
+              中央116-1甄選簡章母校當期正式公告 · 優先級 1
+            
+              中央115名額表（歷史參考）母校當期正式公告 · 優先級 1
+            
+              FACT-SHEET-2026-2027_UTU.pdf PDF合作校官方資訊 · 優先級 4
+            
+              Turku官方交換申請文件與期限合作校官方資訊 · 優先級 4
+            
+              Turku課程限制及2027春課表發布合作校官方資訊 · 優先級 4
+            
+              Turku 新生說明會 2026／Spring2027合作校官方資訊 · 優先級 4
+            
+              Turku現連Language Assessment Sheet DOC合作校官方資訊 · 優先級 4
+            
+              Turku現連non-Erasmus Learning Agreement DOCX合作校官方資訊 · 優先級 4
+            
+              How to Apply for Exchange Studies合作校官方資訊 · 優先級 4
+            
+      
+      截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+    
+      "
+
+Aria snapshot:
+- tabpanel "申請方式":
+  - heading "詳細申請流程" [level=2]
+  - strong: 官方來源已整理，4 個步驟仍需確認
+  - paragraph: 已核對母校116-1；相關公開附件23份，個別外校原文與當期適用性另核對。
+  - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/11 上午10:13
+  - strong: 適用年度或梯次仍待確認
+  - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+  - strong: 這是尚未完成正式發布的參考流程
+  - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+  - strong: 共 9 個步驟
+  - button "回報規定錯誤"
+  - button "重新載入流程資料"
+  - group:
+    - text: 校內申請 · 中央國際事務處／所屬系所
+    - strong: 核對中央116-1資格與當期名額
+  - group:
+    - text: 校內申請 · 中央國際事務處／所屬系所
+    - strong: 完成中央線上申請並列印簽核
+  - group:
+    - text: 校內申請 · 中央國際事務處／所屬系所
+    - strong: 繳交中央校內紙本甄選文件至系所
+  - group:
+    - text: 甄選與提名 · 中央國際事務處／所屬系所
+    - strong: 核對校內錄取並準備提名
+  - group:
+    - text: 合作校申請 · 學生與兩校國際處
+    - strong: 核對外校當期文件並依通知申請
+  - group:
+    - text: 行前準備 · 中央國際事務處／所屬系所
+    - strong: 確認課程、學分與中央註冊繳費
+  - group:
+    - text: 行前準備 · 中央國際事務處／所屬系所
+    - strong: 出國前兩週完成中央行前程序
+    - text: 出國前兩週
+  - group:
+    - text: 抵達後 · 中央國際事務處／所屬系所
+    - strong: 到校註冊並回報當地聯絡方式
+  - group:
+    - text: 返國後 · 中央國際事務處／所屬系所
+    - strong: 返國後一週完成中央返校程序
+    - text: 返國後一週內
+  - strong: 本流程使用的官方來源
+  - link "中央116-1甄選簡章 母校當期正式公告 · 優先級 1":
+    - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf
+  - link "中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1":
+    - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf
+  - link "FACT-SHEET-2026-2027_UTU.pdf PDF 合作校官方資訊 · 優先級 4":
+    - /url: https://drive.google.com/file/d/13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF/view
+  - link "Turku官方交換申請文件與期限 合作校官方資訊 · 優先級 4":
+    - /url: https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies
+  - link "Turku課程限制及2027春課表發布 合作校官方資訊 · 優先級 4":
+    - /url: https://www.utu.fi/en/study-at-utu/courses-in-english-for-exchange-students
+  - link "Turku 新生說明會 2026／Spring2027 合作校官方資訊 · 優先級 4":
+    - /url: https://www.utu.fi/en/study-at-utu/accepted-exchange-students/orientation
+  - link "Turku現連Language Assessment Sheet DOC 合作校官方資訊 · 優先級 4":
+    - /url: https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc
+  - link "Turku現連non-Erasmus Learning Agreement DOCX 合作校官方資訊 · 優先級 4":
+    - /url: https://www.utu.fi/sites/default/files/media/Learning_Agreement_non-EU_0.docx
+  - link "How to Apply for Exchange Studies 合作校官方資訊 · 優先級 4":
+    - /url: https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies
+  - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+================== 3 failed, 131 passed in 2232.82s (0:37:12) ==================
+WEB_SHARD 1 exit=1 elapsed=2238.676s

@@ -1,0 +1,24 @@
+{
+  "sha": "3129ce1bfcf6987a872574587cc53b60043d64ba",
+  "application_unchanged_while_full_suite_running": true,
+  "findings": [
+    {
+      "kind": "application layout",
+      "cases": 2,
+      "problem": "CGU source-status aside enters global flow and displaces calendar; desktop also obscured by navigation rail.",
+      "diagnostic": "Original two tests pass with external CSS only scoping catalogue notice to public exploration routes. No production code changed yet."
+    },
+    {
+      "kind": "data preservation",
+      "cases": 1,
+      "problem": "NCU Turku supplement overwrites already-reviewed form matrix/signatures, course/campus details and arrival guidance.",
+      "hunk_review": "Only3 shared original/supplement records: WSU and Manitoba replacements preserve material coverage; Turku requires explicit per-field recovery with original source/year scope."
+    },
+    {
+      "kind": "test fixture interaction",
+      "cases": 1,
+      "problem": "asyncio.run in lifespan test fails while session-scoped Playwright synchronous driver has a running event loop in the main thread.",
+      "remediation": "Execute unchanged lifecycle assertions in a dedicated worker event loop, preserving startup bound and teardown restoration checks."
+    }
+  ]
+}

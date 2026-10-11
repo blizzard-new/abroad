@@ -1,0 +1,35 @@
+{
+  "time": "2026-10-11T14:12:37.529312+00:00",
+  "sha": "38b709cab68eb6bb7fa7383f9c6a6f07c9d8d87f",
+  "new_authorized_input": "ebe059fc317bf1cb55a0604b3ce354fe6fa12939",
+  "reason": "Partial suites superseded by newly supplied fixed CCU data; final candidate will run all collected tests across repository four-shard harness. Old partial counts are not complete acceptance.",
+  "interrupted": [
+    {
+      "run": "semantics-final-browser",
+      "wrapper_pid": 123831,
+      "pytest_pid": 123875
+    },
+    {
+      "run": "semantics-final-full-unit",
+      "wrapper_pid": 124411,
+      "pytest_pid": 124442
+    }
+  ],
+  "browser_cleanup_SIGTERM_after_incomplete_SIGINT": [
+    123937,
+    123916,
+    123957,
+    130122,
+    130123,
+    123917,
+    123952,
+    123912,
+    123900,
+    123875
+  ],
+  "actual_unit_failure_before_interrupt": {
+    "test": "test_route_assets_are_cache_busted_together",
+    "reason": "app.js changed cache version without matching community-reader.js",
+    "status": "must fix before next frozen candidate; failure retained"
+  }
+}

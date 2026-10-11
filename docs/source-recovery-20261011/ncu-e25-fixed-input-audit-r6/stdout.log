@@ -1,0 +1,79 @@
+{
+  "source_commit": "e25ff02a1ebc69ea126a814d105e88b272539351",
+  "compared_to": "f44eaf82a2a1133f1ba91466034ae6e8d7ebc822",
+  "sourcepacks": [
+    {
+      "name": "resume-visual-sourcepack.json.gz",
+      "receipts": 191,
+      "sha256": "20000c8eccaa6bebb41ea918c3bfa157ecbec8e85d3dda5fefff0650a4c7ec2d"
+    },
+    {
+      "name": "resume-second-sourcepack.json.gz",
+      "receipts": 216,
+      "sha256": "0df8acab86c34865a31281b0fef59db15b8af09f9883a4d20871a40670a45ca2"
+    },
+    {
+      "name": "resume-discovery-sourcepack.json.gz",
+      "receipts": 112,
+      "sha256": "c3948759c578e821c0d78d70f4eda567cdb8bd0895edf8788eff7e42ae433047"
+    },
+    {
+      "name": "resume-third-photo-sourcepack.json.gz",
+      "receipts": 96,
+      "sha256": "11c0417ca39ec9d14c66bfe510475dc3b93eed2eefc254e8151d0751b196ce38"
+    },
+    {
+      "name": "resume-third-location-sourcepack.json.gz",
+      "receipts": 7,
+      "sha256": "81d57d17dcdbe71c108541e557790eac4e9861455e2c8b06328d4cfbd48f2ff6"
+    },
+    {
+      "name": "resume-eivp-original-responses.json.gz",
+      "receipts": 6,
+      "sha256": "3e0ec2ebc31be6874e146e009531b83a269e84b0a17c56c6741bd9e6ebfde91b"
+    }
+  ],
+  "sourcepack_receipts": 628,
+  "raw_text_bodies_hash_verified": 428,
+  "embedded_PDF_bodies_hash_verified": 2,
+  "all_193_photo_files_decoded": true,
+  "unique_photo_hashes": 190,
+  "prior_146_images_and_license_fields_exactly_preserved": true,
+  "prior_notes_html_sanitized_only": [
+    "九州工業大學 Kyushu Institute of Technology",
+    "江原國立大學 Kangwon National University"
+  ],
+  "prior_location_count": 123,
+  "new_location_count": 182,
+  "protected_files": [
+    "src/exchange_info/official_data/ncu/partners.jsonl",
+    "src/exchange_info/official_data/ncu/application_workflows.jsonl",
+    "sources/ncu/2026-10-11/host-web-evidence.json.gz"
+  ],
+  "only_EIVP_generated_row_changes": [
+    {
+      "path": "src/exchange_info/official_data/ncu/partners.jsonl",
+      "row_index": 6,
+      "changed_keys": [
+        "tuition_info",
+        "application_deadline",
+        "eligibility",
+        "study_period",
+        "application_info",
+        "student_summary_zh"
+      ]
+    },
+    {
+      "path": "src/exchange_info/official_data/ncu/application_workflows.jsonl",
+      "row_index": 6,
+      "changed_keys": [
+        "last_checked",
+        "sources",
+        "steps",
+        "coverage_note"
+      ]
+    }
+  ],
+  "migration_delta": [],
+  "visual_and_identity_review_status": "pending; raw hash/metadata verification does not substitute for visual institution review"
+}

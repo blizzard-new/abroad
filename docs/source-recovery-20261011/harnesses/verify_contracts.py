@@ -8,7 +8,7 @@ def run(command):
  if r.returncode: raise SystemExit(r.returncode)
 run(['/workspace/.abroad-cloud-tools/python/bin/uv','lock','--check'])
 run([sys.executable,'-m','compileall','-q','src'])
-for name in ('app.js','partner-map.js','content-review.js','icon-motion.js','tku-campus-assets.js'):
+for name in ('app.js','partner-map.js','content-review.js','icon-motion.js','tku-campus-assets.js','discovery-core.js','multi-plan.js'):
  run(['node','--check',f'src/exchange_info/static/{name}'])
 run([sys.executable,'scripts/export_openapi.py','--check'])
 run([sys.executable,'scripts/validate_supabase_migrations.py'])

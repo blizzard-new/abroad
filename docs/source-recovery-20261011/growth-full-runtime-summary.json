@@ -1,0 +1,86 @@
+{
+  "status": "passed",
+  "cleanup_status": "passed",
+  "migration_count": 35,
+  "permissions": {
+    "browser_grants": 0,
+    "rls_tables": 37,
+    "tables": 37,
+    "workflow_issue_service_rpcs": 3
+  },
+  "storage": {
+    "nested_objects_listed": 2,
+    "orphans_removed": 1,
+    "referenced_preserved": 1
+  },
+  "storage_api_scope": "real_storage_api_file_backend",
+  "community_multi_instance": {
+    "postgrest_instances": 2,
+    "private_message_block_races": 1,
+    "private_message_blocked": 0,
+    "private_message_commits": 1,
+    "private_message_integrity_conflicts": 0,
+    "private_opposite_invitations": 2,
+    "private_report_review_commits": 1,
+    "private_report_review_conflicts": 1,
+    "public_idempotent_commits": 1,
+    "public_idempotent_replays": 1,
+    "public_parent_child_races": 1
+  },
+  "community_rollbacks": {
+    "late_failures_propagated": 6,
+    "partial_rows": 0,
+    "private_conversation_rollbacks": 1,
+    "private_message_rollbacks": 1,
+    "private_report_review_rollbacks": 1,
+    "private_report_rollbacks": 1,
+    "public_moderation_rollbacks": 1,
+    "public_publication_rollbacks": 1
+  },
+  "tku_selected_community_policy": {
+    "blank_or_unsupported_bylines_denied": 3,
+    "committed_resources": 15,
+    "cross_school_comments": 6,
+    "cross_school_posts": 6,
+    "preview_matches_sql_byline": true,
+    "registry_alias_vectors": 40,
+    "retry_duplicates": 0,
+    "school_boards": 6,
+    "self_declared_byline_denied": true,
+    "unverified_writes_denied": 12,
+    "verified_alias_publications": 2
+  },
+  "workspace": {
+    "committed": 1,
+    "conflict": 1
+  },
+  "account_deletion": {
+    "rollback_preserved_rows": 8,
+    "storage_delete_replays": 1,
+    "storage_jobs_completed": 1,
+    "storage_objects_deleted": 1,
+    "storage_timeout_receipts_preserved": 1,
+    "workflow_issue_closed_deleted": 1,
+    "workflow_issue_pending_deidentified": 2,
+    "workflow_issue_purge_controls_preserved": 1,
+    "workflow_issue_purged": 2,
+    "workflow_issue_retention_shortened": 1,
+    "workflow_issue_review_replays": 1,
+    "workflow_issue_reviewer_deidentified": 1,
+    "workflow_issue_rollback_preserved_rows": 4
+  },
+  "atomic_governance": {
+    "actual_command_audit_count": 31,
+    "actual_rpc_post_count": 74,
+    "check_count": 17,
+    "followup_checks": [
+      "exact_original_workflow_and_destination_envelope_replay_no_mutations",
+      "legacy_fallback_refresh_superseded_reference_pending_public_unchanged",
+      "truly_overlapping_processes_exact_CAS_one_winner_and_envelope_replay",
+      "actual_postgrest_cap2_complete_five_table_snapshot_and_normal_write"
+    ]
+  },
+  "sha": "7cb20ff3f28e6dd854d649499cc5982a529589bf",
+  "runtime_raw_log": "growth-full-supabase-runtime-r3/stdout.log",
+  "production_services_contacted": false
+}

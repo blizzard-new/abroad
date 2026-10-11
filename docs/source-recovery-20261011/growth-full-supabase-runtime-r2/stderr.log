@@ -1,0 +1,148 @@
+RUNTIME VALIDATION FAILED: Command failed (1): docker compose -f /workspace/integration-tools/runtime-flat-workspace-abroad-globe-20261011.yml -p exchange-supabase-runtime-local-1776e-d71faad0 up -d storage
+Volume exchange-supabase-runtime-local-1776e-d71faad0_storage-data  Creating
+ Volume exchange-supabase-runtime-local-1776e-d71faad0_storage-data  Created
+ Container exchange-supabase-runtime-local-1776e-d71faad0-postgres-1  Running
+ Container exchange-supabase-runtime-local-1776e-d71faad0-postgrest-1  Running
+ Container exchange-supabase-runtime-local-1776e-d71faad0-storage-1  Creating
+ Container exchange-supabase-runtime-local-1776e-d71faad0-storage-1  Error response from daemon: no space left on device
+Error response from daemon: no space left on device
+postgrest_secondary-1  | 11/Oct/2026:13:40:42 +0000: Starting PostgREST 14.12...
+postgrest-1            | 11/Oct/2026:13:40:42 +0000: Starting PostgREST 14.12...
+postgrest_secondary-1  | 11/Oct/2026:13:40:42 +0000: API server listening on 0.0.0.0:3000
+postgrest_secondary-1  | 11/Oct/2026:13:40:42 +0000: Listener connected to PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit on "postgres:5432" and listening for database notifications on the "pgrst" channel
+postgrest-1            | 11/Oct/2026:13:40:42 +0000: API server listening on 0.0.0.0:3000
+postgrest_secondary-1  | 11/Oct/2026:13:40:42 +0000: Successfully connected to PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit
+postgrest_secondary-1  | 11/Oct/2026:13:40:42 +0000: Connection Pool initialized with a maximum size of 10 connections
+postgrest_secondary-1  | 11/Oct/2026:13:40:42 +0000: Config reloaded
+postgrest_secondary-1  | 11/Oct/2026:13:40:42 +0000: Schema cache queried in 63.1 milliseconds
+postgrest_secondary-1  | 11/Oct/2026:13:40:42 +0000: Schema cache loaded 59 Relations, 40 Relationships, 48 RPCs, 0 Domain Representations, 4 Media Type Handlers, 1196 Timezones
+postgrest-1            | 11/Oct/2026:13:40:42 +0000: Listener connected to PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit on "postgres:5432" and listening for database notifications on the "pgrst" channel
+postgrest_secondary-1  | 11/Oct/2026:13:40:42 +0000: Schema cache loaded in 0.5 milliseconds
+postgrest-1            | 11/Oct/2026:13:40:42 +0000: Successfully connected to PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit
+postgrest-1            | 11/Oct/2026:13:40:42 +0000: Connection Pool initialized with a maximum size of 10 connections
+postgrest-1            | 11/Oct/2026:13:40:42 +0000: Config reloaded
+postgrest-1            | 172.18.0.1 - anon [11/Oct/2026:13:40:42 +0000] "GET / HTTP/1.1" 503 119 "" "Python-urllib/3.12"
+postgrest-1            | 11/Oct/2026:13:40:42 +0000: {"code":"PGRST002","details":null,"hint":null,"message":"Could not query the database for the schema cache. Retrying."}
+postgrest-1            | 11/Oct/2026:13:40:42 +0000: Schema cache queried in 69.3 milliseconds
+postgrest-1            | 11/Oct/2026:13:40:42 +0000: Schema cache loaded 59 Relations, 40 Relationships, 48 RPCs, 0 Domain Representations, 4 Media Type Handlers, 1196 Timezones
+postgrest-1            | 11/Oct/2026:13:40:42 +0000: Schema cache loaded in 2.6 milliseconds
+postgres-1             | 	        workflow_payload = excluded.workflow_payload,
+postgres-1             | 	        required_review_count = excluded.required_review_count,
+postgres-1             | 	        review_approvals = excluded.review_approvals,
+postgres-1             | 	        edit_history = excluded.edit_history,
+postgres-1             | 	        reviewed_by = excluded.reviewed_by,
+postgres-1             | 	        reviewed_at = excluded.reviewed_at,
+postgres-1             | 	        review_note = excluded.review_note,
+postgres-1             | 	        publication_action = excluded.publication_action,
+postgres-1             | 	        rolled_back_from_revision_id = excluded.rolled_back_from_revision_id,
+postgres-1             | 	        restored_revision_id = excluded.restored_revision_id
+postgres-1             | 	    returning * into v_revision;
+postgres-1             | 	
+postgres-1             | 	    -- 3. Determine the corresponding audit action
+postgres-1             | 	    if p_status = 'pending_review' then
+postgres-1             | 	        v_action := 'detected';
+postgres-1             | 	    elsif p_status = 'rejected' then
+postgres-1             | 	        v_action := 'rejected';
+postgres-1             | 	    elsif p_status = 'superseded' then
+postgres-1             | 	        v_action := 'superseded';
+postgres-1             | 	    elsif p_status = 'published' then
+postgres-1             | 	        if p_publication_action = 'rollback' then
+postgres-1             | 	            v_action := 'rolled_back';
+postgres-1             | 	        else
+postgres-1             | 	            v_action := 'published';
+postgres-1             | 	        end if;
+postgres-1             | 	    else
+postgres-1             | 	        v_action := 'detected';
+postgres-1             | 	    end if;
+postgres-1             | 	
+postgres-1             | 	    -- 4. Append to the audit log
+postgres-1             | 	    insert into public.application_workflow_audit_log (
+postgres-1             | 	        workflow_key,
+postgres-1             | 	        revision_id,
+postgres-1             | 	        action,
+postgres-1             | 	        actor_id,
+postgres-1             | 	        note,
+postgres-1             | 	        metadata,
+postgres-1             | 	        created_at
+postgres-1             | 	    ) values (
+postgres-1             | 	        p_workflow_key,
+postgres-1             | 	        p_revision_id,
+postgres-1             | 	        v_action,
+postgres-1             | 	        p_reviewed_by,
+postgres-1             | 	        p_review_note,
+postgres-1             | 	        jsonb_build_object(
+postgres-1             | 	            'status', p_status,
+postgres-1             | 	            'version', p_version,
+postgres-1             | 	            'publication_action', p_publication_action,
+postgres-1             | 	            'review_approvals_count', jsonb_array_length(p_review_approvals)
+postgres-1             | 	        ),
+postgres-1             | 	        p_updated_at
+postgres-1             | 	    ) returning * into v_audit;
+postgres-1             | 	
+postgres-1             | 	    return jsonb_build_object(
+postgres-1             | 	        'revision', to_jsonb(v_revision),
+postgres-1             | 	        'audit', to_jsonb(v_audit)
+postgres-1             | 	    );
+postgres-1             | 	end;
+postgres-1             | 	$$;
+postgres-1             | [local] 2026-10-11 13:40:41.232 UTC [500] postgres@postgres LOG:  statement: create or replace function public.exchange_commit_application_workflow_publication(
+postgres-1             | 	    p_workflow_key text,
+postgres-1             | 	    p_home_university text,
+postgres-1             | 	    p_partner_university text,
+postgres-1             | 	    p_program_type text,
+postgres-1             | 	    p_academic_year text,
+postgres-1             | 	    p_application_round text,
+postgres-1             | 	    p_published_version integer,
+postgres-1             | 	    p_published_payload jsonb,
+postgres-1             | 	    p_published_at timestamptz,
+postgres-1             | 	    p_current_revision_id text,
+postgres-1             | 	    p_updated_at timestamptz
+postgres-1             | 	) returns jsonb
+postgres-1             | 	language plpgsql
+postgres-1             | 	set search_path = ''
+postgres-1             | 	as $$
+postgres-1             | 	declare
+postgres-1             | 	    v_workflow public.application_workflows%rowtype;
+postgres-1             | 	begin
+postgres-1             | 	    perform pg_advisory_xact_lock(hashtextextended('exchange-content-governance-command', 0));
+postgres-1             | 	    insert into public.application_workflows (
+postgres-1             | 	        workflow_key,
+postgres-1             | 	        home_university,
+postgres-1             | 	        partner_university,
+postgres-1             | 	        program_type,
+postgres-1             | 	        academic_year,
+postgres-1             | 	        application_round,
+postgres-1             | 	        published_version,
+postgres-1             | 	        published_payload,
+postgres-1             | 	        published_at,
+postgres-1             | 	        current_revision_id,
+postgres-1             | 	        updated_at
+postgres-1             | 	    ) values (
+postgres-1             | 	        p_workflow_key,
+postgres-1             | 	        p_home_university,
+postgres-1             | 	        p_partner_university,
+postgres-1             | 	        p_program_type,
+postgres-1             | 	        p_academic_year,
+postgres-1             | 	        p_application_round,
+postgres-1             | 	        p_published_version,
+postgres-1             | 	        p_published_payload,
+postgres-1             | 	        p_published_at,
+postgres-1             | 	        p_current_revision_id,
+postgres-1             | 	        p_updated_at
+postgres-1             | 	    )
+postgres-1             | 	    on conflict (workflow_key) do update set
+postgres-1             | 	        home_university = excluded.home_university,
+postgres-1             | 	        partner_university = excluded.partner_university,
+postgres-1             | 	        program_type = excluded.program_type,
+postgres-1             | 	        academic_year = excluded.academic_year,
+postgres-1             | 	        application_round = excluded.application_round,
+postgres-1             | 	        published_version = excluded.published_version,
+postgres-1             | 	        published_payload = excluded.published_payload,
+postgres-1             | 	        published_at = excluded.published_at,
+postgres-1             | 	        current_revision_id = excluded.current_revision_id,
+postgres-1             | 	        updated_at = excluded.updated_at
+postgres-1             | 	    returning * into v_workflow;
+postgres-1             | 	
+postgres-1             | 	    return to_jsonb(v_workflow);
+postgres-1             | 	end;
+postgres-1             | 	$$;

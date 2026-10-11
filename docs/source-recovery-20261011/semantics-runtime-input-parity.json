@@ -1,0 +1,15 @@
+{
+  "source_sha": "7cb20ff3f28e6dd854d649499cc5982a529589bf",
+  "candidate_sha": "38b709cab68eb6bb7fa7383f9c6a6f07c9d8d87f",
+  "unchanged_paths": [
+    "supabase/migrations",
+    "supabase/runtime-validation",
+    "scripts/validate_supabase_runtime.py",
+    "scripts/validate_tku_community_runtime.py",
+    "src/exchange_info/content_governance.py",
+    "src/exchange_info/community_repositories.py",
+    "src/exchange_info/tku_census.py",
+    "src/exchange_info/api.py"
+  ],
+  "purpose": "Prior successful full-runtime evidence is content-applicable; final repeated runtime will use candidateSHA. No SQL or API changes in pending-label repair."
+}

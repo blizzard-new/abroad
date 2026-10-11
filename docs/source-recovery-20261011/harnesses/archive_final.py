@@ -6,7 +6,7 @@ for folder in sorted(root.iterdir()):
  if not folder.is_dir() or not (folder/'metadata.json').exists():continue
  meta=json.loads((folder/'metadata.json').read_text())
  if meta['test_result']=='running':continue
- for name in ('metadata.json','stdout.log','stderr.log'):
+ for name in ('metadata.json','stdout.log','stderr.log','result.xml','shard-coverage/partition.json','shard-coverage/collect-nodeids.txt','shard-coverage/result.json','diagnostic-scope.json'):
   p=folder/name
   if p.exists():
    out=target/folder.name/name;out.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,out)
@@ -21,13 +21,13 @@ for folder in root.iterdir():
  for p in folder.rglob('*'):
   if not p.is_file() or 'runtime-data' in p.parts:continue
   is_memory='memory' in folder.name and p.name in ('memory-samples.json','server.log')
-  is_public=folder.name.endswith('live-source-acceptance') or folder.name=='photo-license-live'
+  is_public=folder.name.endswith('live-source-acceptance') or folder.name in ('photo-license-live','ncu-osaka-live-source')
   is_visual=folder.name.endswith('images') or folder.name.startswith('browser-source-fixtures')
   is_campus_receipt=folder.name=='uc3m-campus-check' and p.name=='receipts.json'
   if is_memory or is_public or is_visual or is_campus_receipt:
    out=target/p.relative_to(root);out.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,out)
 for p in root.iterdir():
- if p.is_file() and p.suffix in ('.json','.log','.txt'):
+ if p.is_file() and (p.suffix in ('.json','.log','.txt') or p.name=='ncu-resume-live-ror-sourcepack.json.gz'):
   shutil.copyfile(p,target/p.name)
 for p in Path('/workspace/recovery-tools-20261011').iterdir():
  if p.suffix in ('.py','.md'):

@@ -1,0 +1,70 @@
+{
+  "response_bodies_fabricated": false,
+  "application_state_mocked": false,
+  "trace": [
+    {
+      "url": "http://127.0.0.1:56569/application-center/templates?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&program_type=exchange",
+      "path": "/application-center/templates",
+      "sequence": 1,
+      "status": 200,
+      "body_sha256": "9db96c2473d29d703e7b4478cafd9f58e3b279101ed7acf798add135c07f2f73",
+      "released": true
+    },
+    {
+      "url": "http://127.0.0.1:56569/student-dashboard?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8",
+      "path": "/student-dashboard",
+      "sequence": 1,
+      "status": 200,
+      "body_sha256": "c6886da795dbfe37a5d434bac88c1cb57249ea4ec5802a3d9f2d18d6ce60e00f",
+      "released": true
+    },
+    {
+      "url": "http://127.0.0.1:56569/coverage?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8",
+      "path": "/coverage",
+      "sequence": 1,
+      "status": 200,
+      "body_sha256": "b113c3d3da2f8947793eb7fb82cc08dfc46d538251a84ab530a036b5bd712a70",
+      "released": true
+    },
+    {
+      "url": "http://127.0.0.1:56569/destination-profiles?home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&compact=true",
+      "path": "/destination-profiles",
+      "sequence": 1,
+      "status": 200,
+      "body_sha256": "aa4f10357a9908eb208db9c2181a25df2954776303d080e420ecfd769d435f31",
+      "released": true
+    },
+    {
+      "url": "http://127.0.0.1:56569/student-dashboard?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8",
+      "path": "/student-dashboard",
+      "sequence": 2,
+      "status": 200,
+      "body_sha256": "c6886da795dbfe37a5d434bac88c1cb57249ea4ec5802a3d9f2d18d6ce60e00f",
+      "released": true
+    },
+    {
+      "url": "http://127.0.0.1:56569/application-center/templates?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&program_type=exchange",
+      "path": "/application-center/templates",
+      "sequence": 2,
+      "status": 200,
+      "body_sha256": "9db96c2473d29d703e7b4478cafd9f58e3b279101ed7acf798add135c07f2f73",
+      "released": true
+    },
+    {
+      "url": "http://127.0.0.1:56569/coverage?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8",
+      "path": "/coverage",
+      "sequence": 2,
+      "status": 200,
+      "body_sha256": "b113c3d3da2f8947793eb7fb82cc08dfc46d538251a84ab530a036b5bd712a70",
+      "released": true
+    },
+    {
+      "url": "http://127.0.0.1:56569/destination-profiles?home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&compact=true",
+      "path": "/destination-profiles",
+      "sequence": 2,
+      "status": 200,
+      "body_sha256": "aa4f10357a9908eb208db9c2181a25df2954776303d080e420ecfd769d435f31",
+      "released": true
+    }
+  ]
+}

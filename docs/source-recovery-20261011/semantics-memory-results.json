@@ -1,0 +1,21 @@
+{
+  "runs": [
+    {
+      "run": "semantics-final-cold-memory",
+      "sha": "38b709cab68eb6bb7fa7383f9c6a6f07c9d8d87f",
+      "samples": 175,
+      "peak_rss_mib": 452.14453125,
+      "max_sample_rss_mib": 448.35546875,
+      "result": "passed"
+    },
+    {
+      "run": "semantics-final-warm-memory",
+      "sha": "38b709cab68eb6bb7fa7383f9c6a6f07c9d8d87f",
+      "samples": 175,
+      "peak_rss_mib": 449.5703125,
+      "max_sample_rss_mib": 445.0234375,
+      "result": "passed"
+    }
+  ],
+  "scope": "NTU3/NCU4/TKU2 plus CCUfirst; does NOT cover subsequently supplied CCUsecondebe059fc"
+}

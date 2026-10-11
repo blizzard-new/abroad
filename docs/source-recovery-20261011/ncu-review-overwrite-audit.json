@@ -1,0 +1,972 @@
+{
+  "candidate": "3129ce1bfcf6987a872574587cc53b60043d64ba",
+  "status": "requires semantic review; neither blind replacement nor blanket union is sufficient",
+  "rows": [
+    {
+      "row_id": "ncu-081",
+      "field_replacements": {
+        "language": {
+          "previous": {
+            "points": [
+              "官網B2與兩年內語言證明；可用母校蓋章簽名B2函／Language Assessment Sheet／認可測驗，不接受OLS、TOEIC、Duolingo。全英文學士以上學位或native有transcript重傳形式豁免。中央接受TOEIC，不等於Turku也接受。",
+              "官網TOEFL段落標ITP但值為iBT，分界寫2026/1/26，舊總72／新4各科4；另IELTS6、PTE62、不收MyBest、IELTS單科60天內重考。保留ITP／iBT及日期差異，不由regex自行改為ETS分界。"
+            ],
+            "sources": [
+              {
+                "id": "host-turku-apply",
+                "page": null
+              }
+            ],
+            "unresolved": "當期TOEFL名稱／分界及學制豁免需確認；home與host證明不能混用。"
+          },
+          "replacement": {
+            "points": [
+              "授課語言至少B2，可母校簽章證明、Language Assessment Sheet或接受正式考試；證明附申請時兩年內。TOEIC、Duolingo、OLS不接受，英語授課學士以上及母語英語有不同附件替代方式。",
+              "网页在2026/1/26前後TOEFL段落標題寫ITP，內容又列iBT舊制72及分項範圍、新制4分各項4，命名矛盾保留；不作regex自動資格。IELTS總6.0，one skill retake限原試60日內；PTE Academic62。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-081-follow-4929af9e27",
+                "page": null
+              }
+            ],
+            "unresolved": "TOEFL標題／測驗制度矛盾、116當期有效門檻及豁免文件待外校確認。"
+          }
+        },
+        "courses": {
+          "previous": {
+            "points": [
+              "建議30ECTS／semester不是host強制最低，遵守home要求；LA不保證席位，另Peppi／課程方式註冊。可跨領域但需先修；非PhD研究／thesis至少半數課業是coursework且自行找supervisor，PhD例外。",
+              "Medicine／Dentistry本主修限定，biomed／mental health／nursing依背景、neuroscience minor另有開放；TSE限business且Turku／Pori分開，advanced課须相關25ECTS。Law／Education非本主修依剩餘位，不能一律判關閉。",
+              "可修鄰校Åbo Akademi但至少50%在UTU；语言課建議2–3，申請FAQ另最多半數。Spring2027課表官網明載2026/11/15發布，仍非Spring2028。"
+            ],
+            "sources": [
+              {
+                "id": "host-turku-courses",
+                "page": null
+              },
+              {
+                "id": "host-turku-apply",
+                "page": null
+              }
+            ],
+            "unresolved": "116當期課表、席位、先修與非典型學制待逐課核對。"
+          },
+          "replacement": {
+            "points": [
+              "30 ECTS／學期是建議，不是硬性門檻；Medicine／Economics限該領域主修，Law／Education其他主修視容量。語言中心課最多計畫的一半，若選Åbo Akademi課至少半數課須Turku。",
+              "秋季課通常5/15、春季11/15確認，申請時可能尚不更新；舊課僅參考，不保證再開。LA同意亦不保證註冊名額。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-081-follow-4929af9e27",
+                "page": null
+              }
+            ],
+            "unresolved": null
+          }
+        },
+        "eligibility": {
+          "previous": {
+            "points": [
+              "須partner／network提名及到校前至少兩年／四學期相關背景；master課可研究生或學士最後一年。PDF稱三或四年級，官網最後一年較具体，需按本人學制確認。Turku、Pori、Rauma不同校區不由校名硬指派。"
+            ],
+            "sources": [
+              {
+                "id": "13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF",
+                "page": 2
+              },
+              {
+                "id": "host-turku-apply",
+                "page": null
+              }
+            ],
+            "unresolved": "中央116協議／學制與各課程背景、campus待確認。"
+          },
+          "replacement": {
+            "points": [
+              "抵達前至少兩年／四學期學習；修碩士須碩士生或學士最後一年。母校SoleMOVE提名及對應協議，學科須有基礎。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-081-follow-4929af9e27",
+                "page": null
+              }
+            ],
+            "unresolved": null
+          }
+        },
+        "arrival": {
+          "previous": {
+            "points": [
+              "已公告Spring2027orientation1/7–8，不當作116Spring2028日期。DVV身分登記須official ID、非EU居留卡、Peppi註冊證明，online form至少到辦公室前一天，護照本人到場；2026pop-in舊日期不用作2027提醒。",
+              "TYS租約起月第一工作日中午後才可領鑰匙；非營業時間可安排tutor或key locker，locker需前一工作日中午前通知，入住需Tenant Pages檢查。領鑰匙時間不減租期，週末抵達需先安排；不替學生寄出通知。"
+            ],
+            "sources": [
+              {
+                "id": "host-turku-orient",
+                "page": null
+              },
+              {
+                "id": "host-turku-tys-arrival",
+                "page": null
+              }
+            ],
+            "unresolved": "116orientation／DVV場次、入住與到校交通仍待查。"
+          },
+          "replacement": {
+            "points": [
+              "提名後SoleMOVE寄啟用信，申請通常3–4週審理；提交後及早依供應商期限找住宿，保險／居留與旅行再依錄取安排。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-081-follow-4929af9e27",
+                "page": null
+              }
+            ],
+            "unresolved": null
+          }
+        },
+        "host_deadline": {
+          "previous": {
+            "points": [
+              "PDF Fall2026非EU提名3/1–4/1申請3/15–4/15；Spring2027提名卻寫2027/8/15–10/1，申請為2026/9/1–10/15，原文順序矛盾。官網年例申請Fall非EU4/15、EU4/30、Spring10/15 Finnish23:59；不自動校正PDF提名年或推定116截止。"
+            ],
+            "sources": [
+              {
+                "id": "13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF",
+                "page": 1
+              },
+              {
+                "id": "host-turku-apply",
+                "page": null
+              }
+            ],
+            "unresolved": "Spring2027提名年份矛盾待官方確認；1162027–28期限仍未取得。"
+          },
+          "replacement": {
+            "points": [
+              "秋季／全年非EU/EEA申請3/15–4/15、EU/EEA至4/30；春季全體9/1–10/15，23:59芬蘭時間。未標116實際年度。",
+              "PDF Fall2026非EU提名3/1–4/1申請3/15–4/15；Spring2027提名卻寫2027/8/15–10/1，申請為2026/9/1–10/15，原文順序矛盾。官網年例申請Fall非EU4/15、EU4/30、Spring10/15 Finnish23:59；不自動校正PDF提名年或推定116截止。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-081-follow-4929af9e27",
+                "page": null
+              },
+              {
+                "id": "13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF",
+                "page": 1
+              },
+              {
+                "id": "host-turku-apply",
+                "page": null
+              }
+            ],
+            "unresolved": "Spring2027提名年份矛盾待官方確認；1162027–28期限仍未取得。"
+          }
+        },
+        "host_documents": {
+          "previous": {
+            "points": [
+              "SoleMove收到母校提名後啟用，交英文正式簽章或電子驗證Transcript、Language Certificate、護照照片頁或official ID；居留卡或駕照不可替代ID。",
+              "填proposed study plan並等外校endorse；非EU bilateral若母校要求LA則上傳學生／母校簽章PDF，Erasmus+ICM必繳LA、Erasmus OLA在錄取後按已核准課目填。方案不同不一律要求同一版LA。",
+              "Language Assessment Sheet由學生及具第一手認識的專業語言老師共同評估／簽名，老師加official stamp。non-EU LA現連Word有學生簽名、母校departmental與institutional coordinator、外校departmental與institutional coordinator欄；依交換方案確認核章次序。",
+              "現連Language Assessment Sheet已將DOC轉為兩頁並逐頁視覺核對：A1–C2六級，Listening、Reading、Spoken Interaction、Spoken Production、Writing五项，學生及教師各逐項選一級；兩方簽名／日期及教師official stamp。轉檔頁碼不是原件固定PDF頁碼。"
+            ],
+            "sources": [
+              {
+                "id": "host-turku-apply",
+                "page": null
+              },
+              {
+                "id": "host-turku-languageform",
+                "page": null
+              },
+              {
+                "id": "host-turku-la",
+                "page": null
+              }
+            ],
+            "unresolved": "已讀官網現連表並完成語言評量矩陣視覺核對；116bilateral／ICM方案及簽章適用仍待確認。"
+          },
+          "replacement": {
+            "points": [
+              "英文正式歷年成績單（手簽章或電子正式認證）、語言證明、護照有照頁／正式ID；居留證或駕照不能代替ID。線上SoleMOVE申請。",
+              "非EU雙邊學生的LA僅母校要求時附簽章PDF，否則在SoleMOVE列proposed study plan；Erasmus+ ICM另有必繳LA，不能套全部中央交換。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-081-follow-4929af9e27",
+                "page": null
+              }
+            ],
+            "unresolved": null
+          }
+        }
+      },
+      "document_replacements": {
+        "host_documents": {
+          "previous": [
+            {
+              "name": "英文正式Transcript（手簽章或電子驗證）",
+              "source_urls": [
+                "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+              ],
+              "needs_confirmation": true,
+              "signatures": [
+                "母校正式認證"
+              ],
+              "stamps": [
+                "母校章戳或電子驗證"
+              ]
+            },
+            {
+              "name": "兩年內語言證明／Language Assessment Sheet（簽章）",
+              "source_urls": [
+                "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+              ],
+              "needs_confirmation": true,
+              "signatures": [
+                "學生與language assessor（Assessment Sheet）"
+              ],
+              "stamps": [
+                "母校章戳"
+              ],
+              "official_form_url": "https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc"
+            },
+            {
+              "name": "護照照片頁／official ID（非駕照／居留卡）",
+              "source_urls": [
+                "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+              ],
+              "needs_confirmation": true
+            },
+            {
+              "name": "SoleMove Proposed Study Plan",
+              "source_urls": [
+                "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+              ],
+              "needs_confirmation": true
+            },
+            {
+              "name": "依bilateral／ICM方案Learning Agreement PDF",
+              "source_urls": [
+                "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+              ],
+              "needs_confirmation": true,
+              "signatures": [
+                "學生",
+                "母校departmental coordinator",
+                "母校institutional coordinator",
+                "外校departmental coordinator",
+                "外校institutional coordinator"
+              ],
+              "stamps": [
+                "母校"
+              ],
+              "official_form_url": "https://www.utu.fi/sites/default/files/media/Learning_Agreement_non-EU_0.docx"
+            }
+          ],
+          "replacement": [
+            {
+              "name": "英文正式歷年成績單",
+              "source_urls": [
+                "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。",
+              "signatures": [
+                "母校正式簽章或電子認證"
+              ]
+            },
+            {
+              "name": "B2語言能力證明／適用豁免替代附件",
+              "source_urls": [
+                "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。"
+            },
+            {
+              "name": "護照有照頁或正式ID",
+              "source_urls": [
+                "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。"
+            },
+            {
+              "name": "Learning Agreement（非EU雙邊，母校要求時）",
+              "source_urls": [
+                "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。",
+              "conditional": true,
+              "condition": "母校要求LA；Erasmus+ ICM依其方案必繳",
+              "signatures": [
+                "學生",
+                "母校簽章"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "row_id": "ncu-001",
+      "field_replacements": {
+        "study_period": {
+          "previous": {
+            "points": [
+              "官網目前列2024校曆及2025 draft，不用其開學／考試日期作116年出發；研究所商管Quarter是兩quarter合一學期，與一般Session分開。"
+            ],
+            "sources": [
+              {
+                "id": "host-wsu-browser-excerpt",
+                "page": null
+              }
+            ],
+            "unresolved": "最新2027–28官方校曆需Important Dates；此頁沒有當期校曆。"
+          },
+          "replacement": {
+            "points": [
+              "一般Autumn約3–6月、Spring約7–11月，一或兩session；同頁所列精確授課／迎新／考試與SGSM quarter日期都是2025。",
+              "2027 Academic Year官方入口已存在，包含Autumn/Spring/Summer與Quarters不同dashboard／calendar；此次公開動態dashboard在瀏覽器仍只顯示loading，尚未擷取日期，這不是官方尚未公告。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-001-p4-54db69ba2f",
+                "page": null
+              },
+              {
+                "id": "ncu-001-p4m-3fda12e20d",
+                "page": null
+              }
+            ],
+            "unresolved": "2027已公告動態入口；精確日期尚未讀取，116迎新／考試及個人offer待核對。"
+          }
+        },
+        "host_documents": {
+          "previous": {
+            "points": [
+              "提名後StudyLink申請Exchange program，勿選完整Bachelor／Master degree；備護照（如已有）、認證最新成績及英文譯本、英文能力證明（如適用），檔名分別PASSPORT／TRANSCRIPTS／ENGLISH CERTIFICATE。"
+            ],
+            "sources": [
+              {
+                "id": "host-wsu-browser-excerpt",
+                "page": null
+              }
+            ],
+            "unresolved": "官網完整2027–28文件包及交換協議track適用待核對；原文excerpt未宣稱整頁本地成功。"
+          },
+          "replacement": {
+            "points": [
+              "International Application System線上申請；certified最新成績單（必要時英文翻譯，檔名TRANSCRIPTS）；護照影本僅if available（PASSPORT）；適用者認可英文證明（ENGLISH CERTIFICATE）。母校提名函not usually required，不把它當全體初次必繳。",
+              "錄取後才簽兩頁Acceptance Form及繳適用款項；自己購買OSHC者交保障證明，再核發eCoE。個人offer與表格只在成功錄取後提供，尚未取得116個人文件包。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-001-p4-54db69ba2f",
+                "page": null
+              }
+            ],
+            "unresolved": null
+          }
+        }
+      },
+      "document_replacements": {
+        "host_documents": {
+          "previous": [
+            {
+              "name": "護照（如已有；PASSPORT）",
+              "source_urls": [
+                "https://www.westernsydney.edu.au/globalmobility/studyabroad/how-to-apply"
+              ],
+              "needs_confirmation": true
+            },
+            {
+              "name": "認證最新英文成績（TRANSCRIPTS）",
+              "source_urls": [
+                "https://www.westernsydney.edu.au/globalmobility/studyabroad/how-to-apply"
+              ],
+              "needs_confirmation": true
+            },
+            {
+              "name": "英文能力證明（如適用；ENGLISH CERTIFICATE）",
+              "source_urls": [
+                "https://www.westernsydney.edu.au/globalmobility/studyabroad/how-to-apply"
+              ],
+              "needs_confirmation": true
+            }
+          ],
+          "replacement": [
+            {
+              "name": "WSU Exchange線上申請",
+              "source_urls": [
+                "https://www.westernsydney.edu.au/international/applying/how-to-apply/study-abroad"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。"
+            },
+            {
+              "name": "Certified最新成績單／必要英文翻譯（TRANSCRIPTS）",
+              "source_urls": [
+                "https://www.westernsydney.edu.au/international/applying/how-to-apply/study-abroad"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。"
+            },
+            {
+              "name": "護照影本（PASSPORT，if available）",
+              "source_urls": [
+                "https://www.westernsydney.edu.au/international/applying/how-to-apply/study-abroad"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。",
+              "conditional": true,
+              "condition": "初次申請時護照可取得者，後續本人簽證另需"
+            },
+            {
+              "name": "認可英語證明（ENGLISH CERTIFICATE）",
+              "source_urls": [
+                "https://www.westernsydney.edu.au/international/applying/how-to-apply/study-abroad"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。",
+              "conditional": true,
+              "condition": "非英語母語且非tertiary英語授課，依外校認可豁免确认"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "row_id": "ncu-101",
+      "field_replacements": {
+        "language": {
+          "previous": {
+            "points": [
+              "須英文能力證明PDF；語言分數與豁免分大學／研究所官方規則，不能用母校不限級數代替外校門檻。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 2
+              },
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 3
+              }
+            ],
+            "unresolved": "已取得2027–28表，但所連英文門檻／豁免專頁尚須依學制核對。"
+          },
+          "replacement": {
+            "points": [
+              "UG除Law等例外：IELTS6.5各6；TOEFL舊86各20、新制4.5各4（2026/1/21+），原頁舊制寫beforeJan20，Jan20邊界措辭需確認；PTE58、Cambridge180、DET120各literacy/comprehension/production/conversation105。",
+              "PG IELTS6.5未在總頁列相同各6；PTE61（不是UG58）；TOEFL新4.5各4／舊86各20、不接受MyBest；DET120各reading/writing/listening/speaking100。不同量表分項不相互替代，department可higher。",
+              "UGscore須開學時兩年內；PG超兩年invalid。兩者waiver有指定教育／國家條件，臺灣全英授課不能直接當任何國家degree均豁免。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4a-4eebe286c5",
+                "page": null
+              },
+              {
+                "id": "ncu-101-p4a-9c65c55cf7",
+                "page": null
+              }
+            ],
+            "unresolved": "本人UG/PG、Law例外、TOEFLJan20邊界與當期waiver文件須確認；中央正式語檢另层要求。"
+          }
+        },
+        "housing": {
+          "previous": {
+            "points": [
+              "宿舍建議及早申請，Fall申請4/1開放、Winter 5/1開放；房型及meal plan費用各異，未承諾保證分配或最終住宿截止。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 1
+              },
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 4
+              }
+            ],
+            "unresolved": "宿舍最新價目、申請年份及最終期限需核對Housing專頁／住宿通知。"
+          },
+          "replacement": {
+            "points": [
+              "on-campus stronglyrecommended不是mandatory／guarantee；主輪建議portalopening就申請，Fall4/1／Winter5/1是開放日而不是截止。secondround提名後盡快。",
+              "目前housing頁入住是2026–2027，有不同private/meals／suitewithoutmeals，2027/28房源／价格／movein尚未核實。ResidenceBursary9/1–10/15不是住宿申請deadline，也未驗證所有exchange符合。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 1
+              },
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 4
+              },
+              {
+                "id": "ncu-101-p4z-df70a82f1d",
+                "page": null
+              },
+              {
+                "id": "ncu-101-p4z-55ca80d354",
+                "page": null
+              }
+            ],
+            "unresolved": "116住房最終deadline／房型价錢／guarantee尚未核實，opening不能當截止。"
+          }
+        },
+        "insurance": {
+          "previous": {
+            "points": [
+              "資料表要求學生自行在原居國安排旅行／醫療保險；須另外符合中央足額醫療、意外及海外急難救助規定。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 4
+              }
+            ],
+            "unresolved": null
+          },
+          "replacement": {
+            "points": [
+              "2027/28表p4明确交換需從母國購買travelhealthinsurance，供應商由學生自行選。沒有在此資料表要求全部購UMstudentinsurance或列統一premium；保障範圍／期間及校內healthsupport另核對。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 4
+              }
+            ],
+            "unresolved": "完整最低保額／evacuationrepatriation、宿舍或個別major保險證明尚未核實。"
+          }
+        },
+        "courses": {
+          "previous": {
+            "points": [
+              "不開放Architecture、Education、Engineering、Health Sciences及Asper Business；Computer Science 1000–4000全部不開放，Psychology／English honours亦限制。",
+              "Law僅可供已有高年級法學背景者；Music、Social Work等是否允許依課程及容量核對。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 3
+              }
+            ],
+            "unresolved": null
+          },
+          "replacement": {
+            "points": [
+              "校級IC availableArts／Science／agri／environment／kinesiology／Music等、Law／SocialWorklimited。Architecture／Education／Engineering／HealthSciences／AsperBusiness不可用；UGComputerScience1000–4000、Psych／EnglishHonours不可。不是全校所有coursecatalog都开放。",
+              "2027/28課表官方明确notyetavailable；旧offering与catalog只能參考，部分网页殘留26/27lateSpring字样，不推當期確定開課。研究所programme／先備與本人qualification另審。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 3
+              },
+              {
+                "id": "ncu-101-p4z-df70a82f1d",
+                "page": null
+              }
+            ],
+            "unresolved": "當期課表官方尚未available、IC fulltime最低課數及collegecapacity／中央採認仍待核對。"
+          }
+        },
+        "eligibility": {
+          "previous": {
+            "points": [
+              "大學部須由母校認定學業良好；研究所申請較競爭，須完成四年制大學、近兩年GPA至少3.0。三年制學士不適用研究所交換，可另申請1000–4000級大學課程。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 2
+              }
+            ],
+            "unresolved": null
+          },
+          "replacement": {
+            "points": [
+              "本ICuniversity-wide交換官方partner名單列NationalCentralUniversity；Architecture／Engineering／Asper各自行管理交換，不等於IC可選全部。",
+              "UGgoodacademicstanding由母校定且須language；PGcompetitive、已完成fouryearUG、最後兩fullstudyyear GPA至少3.0/B；三年學士不能PG，但可UG1000–4000level，不按學位名字regex判。Law建议高年級相關專業背景，limited。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4f-30200b8ff5",
+                "page": null
+              },
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 2
+              },
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 3
+              }
+            ],
+            "unresolved": "外校partner名單有中央，但中央116名額／track／院級協議仍待核實，不自動開放。"
+          }
+        },
+        "study_period": {
+          "previous": {
+            "points": [
+              "Fall學期9–12月；Winter 1–4月；2027–28精確校曆尚未定，orientation約9月初／1月初。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 2
+              }
+            ],
+            "unresolved": "資料表明載精確日期尚未決定；不可捏造開學／考試日時。"
+          },
+          "replacement": {
+            "points": [
+              "資料表明说2027/28exactdatesnotyetdetermined：秋9–12月、冬1–4月、迎新9月初／1月初，class/exams年底／4月中下旬。Summer表p1寫condensed8week、p2寫fourweek，尚未確認。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 2
+              }
+            ],
+            "unresolved": "此处官方明确exactdates尚未定，與已公告卻未讀區分；summer4／8week矛盾待確認。"
+          }
+        },
+        "visa": {
+          "previous": {
+            "points": [
+              "依國籍及交換期間查加拿大官方study permit、visa／eTA規則；此表只提供官方移民連結，不足以判斷每位學生適用許可。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 4
+              }
+            ],
+            "unresolved": "加拿大官方許可、財力、送件資料與期限須依個人及交換期核對。"
+          },
+          "replacement": {
+            "points": [
+              "2026/5更新的UMexchange頁：一term<6mo可visitor讀書，仍需依國籍TRV／eTA；兩term以上需studypermit、勿LOI未核發先入境。讀書permit費150CAD／biometric85是該版参考，不代表全部學生都需。",
+              "校方列studypermit standardIMM1294、UMLOA／StandardizedLetter／WelcomeLetter、passport、財力、PALexceptionletter、studyplan／explanation、photos與個人requiredmedical／biometrics。無外校tuition的exchange安排依IRCC条件可PALexception，仍要本人文件核對，不把永久国籍判断寫死。",
+              "2026/10/11查IRCC：home與DLI交換安排且不付外校tuition可PAL／TAL豁免，須提交proof並由IRCC審查；不是免studypermit。Québec多数即使免PAL仍需CAQ，具體CAQ例外另查。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4z-deb87b65a7",
+                "page": null
+              },
+              {
+                "id": "ncu-can-p4g-0bc09d2de3",
+                "page": null
+              }
+            ],
+            "unresolved": "116最新政府財力／PAL例外／offcampuswork资格與本人個案清單待核對；school頁一般說明不是法律核准。"
+          }
+        },
+        "arrival": {
+          "previous": {
+            "points": [
+              "抵達前參加線上orientation，接收校方報到資訊；Buddy資源可供認識校園。不可用約略開學月份決定機票。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 2
+              },
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 4
+              },
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 5
+              }
+            ],
+            "unresolved": null
+          },
+          "replacement": {
+            "points": [
+              "IC有exchangeorientation／Buddyprogramme可抵達前聯繫，2027/28精確orientationdate官方未定。UMWelcomeLetter隨身與passport／適用入境、LOI文件；到邊境核對studypermit。",
+              "不可把residence2026/27move-in当116。immigration頁指出若2–3週前仍未有studypermitdecision應與接收coordinator核對方案；未聯系，本平台只保留待確認流程。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 4
+              },
+              {
+                "id": "ncu-101-p4z-deb87b65a7",
+                "page": null
+              },
+              {
+                "id": "ncu-101-p4z-55ca80d354",
+                "page": null
+              }
+            ],
+            "unresolved": "最新迎新／住宿move-in／抵達交通及本人mandatorycheckin資料待核實。"
+          }
+        },
+        "host_deadline": {
+          "previous": {
+            "points": [
+              "Fall 2027及／或Winter 2028主梯次：提名3/15，申請4/15；僅Winter次梯次：提名8/1，申請9/1。資料表未列時刻，依提名通知確認年份與時區後再設定提醒。",
+              "Summer 2027另為提名3/15、申請3/31，早於中央116標準秋季出發範圍。Global Affairs獎學金另列提名2/5、申請2/26，不是一般申請截止或保證補助。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 1
+              }
+            ],
+            "unresolved": "截止只列月日；需提名信確認年份／時間與所選梯次。"
+          },
+          "replacement": {
+            "points": [
+              "2027秋／2028冬主輪nom2027/3/15、app4/15；winteronly第二輪nom2027/8/1、app9/1，主輪recommended不是强制只能主輪。",
+              "資料表summer2027nom3/15、app3/31，而網頁app4/15包括summer，矛盾保留；summer非中央116常規秋季，不能改用4/15。GAC scholarship又有2/5nom2/26app與參與可變，不套臺灣全體。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4z-df70a82f1d",
+                "page": null
+              },
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 1
+              }
+            ],
+            "unresolved": "時區時刻／中央116提名與summer兩期限矛盾待核對；homequota未確認仍不建立host提醒。"
+          }
+        },
+        "tuition": {
+          "previous": {
+            "points": [
+              "交換生免Manitoba學費，仍繳中央學雜費；外校學生組織等約CAD150／學期，課程另可能有實習／實驗／書本CAD100–200／門。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 4
+              }
+            ],
+            "unresolved": null
+          },
+          "replacement": {
+            "points": [
+              "IC交換免外校tuition，studentorganization約CAD150／term、lab／fieldtrip視course另付；教材100–200／course，額外費不是免學費一起全免。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 4
+              }
+            ],
+            "unresolved": null
+          }
+        },
+        "host_documents": {
+          "previous": {
+            "points": [
+              "由母校線上提名，外校再寄申請入口與指引；不接受email提名。",
+              "上傳英文或正式翻譯歷年成績PDF（抬頭與評分尺度）、詳細study plan、1–2頁.doc personal statement、英文能力PDF。研究生另交大學成績PDF及母校研究所身分／課程結構證明函PDF。",
+              "文件適用說明（研究所申請另交大學歷年成績PDF）：僅研究所交換適用。",
+              "文件適用說明（研究所申請另交母校研究所身分／課程結構函PDF）：由exchange coordinator或supervisor提供；僅研究所適用。"
+            ],
+            "sources": [
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 1
+              },
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 2
+              },
+              {
+                "id": "1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT",
+                "page": 3
+              }
+            ],
+            "unresolved": null
+          },
+          "replacement": {
+            "points": [
+              "online nomination不收email；提名後email學生與coordinator系統guide。初次線上：正式英文成績／officialtranslationPDF含母校抬頭gradingscale，詳細studyplan（網頁五門courseplan），1–2頁personalstatement .doc（exchange原因與personal/academic/professionalgoals），適用Englishproof PDF。",
+              "PG另本科成績／fouryeardegree資格與研究所在學acceptanceletter，officialletterhead寫programstructure/focus。由exchange coordinator或supervisor提供；僅研究所適用。原文fullguide只提名後email未取得，不把通用提名當全部問卷已讀。"
+            ],
+            "sources": [
+              {
+                "id": "ncu-101-p4z-df70a82f1d",
+                "page": null
+              },
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 2
+              },
+              {
+                "id": "ncu-101-p4a-38fdd699f9",
+                "page": 3
+              }
+            ],
+            "unresolved": "個人portal最新guide／额外問卷待提名後；網頁onceaccepted給portal與前段nomination後給portal時點不一，需接收通知確認。"
+          }
+        }
+      },
+      "document_replacements": {
+        "host_documents": {
+          "previous": [
+            {
+              "name": "英文／正式翻譯歷年成績PDF（校名抬頭及評分尺度）",
+              "source_urls": [
+                "https://drive.google.com/file/d/1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT/view#page=2"
+              ]
+            },
+            {
+              "name": "申請portal內詳細study plan",
+              "source_urls": [
+                "https://drive.google.com/file/d/1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT/view#page=2"
+              ]
+            },
+            {
+              "name": "1–2頁.doc personal statement",
+              "source_urls": [
+                "https://drive.google.com/file/d/1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT/view#page=2"
+              ]
+            },
+            {
+              "name": "英文能力證明PDF（豁免依學制查核）",
+              "source_urls": [
+                "https://drive.google.com/file/d/1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT/view#page=3"
+              ]
+            },
+            {
+              "name": "研究所申請另交大學歷年成績PDF",
+              "source_urls": [
+                "https://drive.google.com/file/d/1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT/view#page=3"
+              ],
+              "needs_confirmation": true
+            },
+            {
+              "name": "研究所申請另交母校研究所身分／課程結構函PDF",
+              "source_urls": [
+                "https://drive.google.com/file/d/1AML0E9CXUoPyoVyhc05Wpj653l1mrkfT/view#page=3"
+              ],
+              "needs_confirmation": true
+            }
+          ],
+          "replacement": [
+            {
+              "name": "UM提名後線上Exchange application",
+              "source_urls": [
+                "https://umanitoba.ca/international/inbound-exchange/application-requirements"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。"
+            },
+            {
+              "name": "正式英文成績／officialtranslation含抬頭gradingscale（PDF）",
+              "source_urls": [
+                "https://umanitoba.ca/sites/default/files/2026-05/2026-27-exchange-info-sheet.pdf#page=2"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。"
+            },
+            {
+              "name": "詳細Study Plan／五門courseplan",
+              "source_urls": [
+                "https://umanitoba.ca/international/inbound-exchange/application-requirements"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。"
+            },
+            {
+              "name": "Personal Statement（1–2頁.doc）",
+              "source_urls": [
+                "https://umanitoba.ca/sites/default/files/2026-05/2026-27-exchange-info-sheet.pdf#page=2"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。"
+            },
+            {
+              "name": "Englishproficiencyproof PDF",
+              "source_urls": [
+                "https://umanitoba.ca/sites/default/files/2026-05/2026-27-exchange-info-sheet.pdf#page=3"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。",
+              "conditional": true,
+              "condition": "未符合本人UG／PG當期豁免者"
+            },
+            {
+              "name": "PG申請本科正式成績／fouryeardegree資格",
+              "source_urls": [
+                "https://umanitoba.ca/sites/default/files/2026-05/2026-27-exchange-info-sheet.pdf#page=3"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。",
+              "conditional": true,
+              "condition": "申請Master／PhD level，不把3yearUG自動當fouryear"
+            },
+            {
+              "name": "PG在學acceptanceletter／programstructure與focus",
+              "source_urls": [
+                "https://umanitoba.ca/sites/default/files/2026-05/2026-27-exchange-info-sheet.pdf#page=3"
+              ],
+              "needs_confirmation": true,
+              "stage": "student_application",
+              "applicability_status": "reference_only",
+              "applicability_note": "外校已讀參考規則；中央116年度校別、名額、track與最新通知仍待核實。",
+              "conditional": true,
+              "condition": "申請Master／PhD level；由exchange coordinator或supervisor提供officialletterhead，公開原文未明列手寫簽名。"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "review": {
+    "ncu-001": "Later source moves old dates to explicit 2027 dynamic-page unread state, preserves optional passport/English documents and stage, adds post-offer conditions. Retain replacement with its source scope.",
+    "ncu-101": "Later sources preserve all material earlier facts and add UG/PG distinctions, document formats/conditions, government exceptions and explicit source conflicts. Retain replacement.",
+    "ncu-081": "Material loss confirmed: Language Assessment Sheet original matrix/signatures/stamp/form URL, LA full form signatories, special course restrictions/thesis/ECTS/campus, orientation/DVV/TYS arrival instructions, and MyBest rejection. Restore the separately source-backed original details with year/scope qualifications alongside newer summary; do not overwrite or blanket-union unrelated schools."
+  },
+  "repair_status": "planned after current frozen full acceptance; no application files modified"
+}

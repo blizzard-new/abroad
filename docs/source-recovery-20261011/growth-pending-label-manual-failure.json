@@ -1,0 +1,57 @@
+{
+  "sha": "7cb20ff3f28e6dd854d649499cc5982a529589bf",
+  "time": "2026-10-11T13:53:50.173293+00:00",
+  "manual_acceptance": "failed",
+  "input": {
+    "availability_status": "agreement_only",
+    "quota": null,
+    "quota_status": "not_published",
+    "availability_note": "尚未核實本期名額"
+  },
+  "observed_ui": {
+    "status": "agreement_only",
+    "shortLabel": "本期名額待公告",
+    "cardLabel": "合作備查／本期名額待公告",
+    "hint": "可先加入志願規劃；能否申請須等本期名額與條件公告",
+    "matchLabel": "本期名額待確認",
+    "reason": "本期甄選名額尚未公告",
+    "blocked": false,
+    "pending": true
+  },
+  "screenshot": "growth-final-browser-images/ntu-photo-missing-390.png",
+  "expected": "Unknown/pending quota must not assert official non-announcement or a confirmed absence of places. Preserve explicit zero and separately evidenced explicit_not_announced.",
+  "affected_shared_paths": [
+    "static/app.js",
+    "static/discovery-core.js",
+    "static/multi-plan.js",
+    "static/index.html",
+    "advisor.py"
+  ],
+  "cancelled_runs": [
+    {
+      "run": "growth-final-browser",
+      "pytest_pid": 99316,
+      "reason": "Stop superseded acceptance after a reproduced user-visible semantic error; preserve raw partial run and rerun full scoped suites after repair."
+    },
+    {
+      "run": "growth-final-full-unit",
+      "pytest_pid": 120728,
+      "reason": "Stop superseded acceptance after a reproduced user-visible semantic error; preserve raw partial run and rerun full scoped suites after repair."
+    }
+  ],
+  "browser_cleanup": {
+    "time": "2026-10-11T13:55:18.713441+00:00",
+    "SIGTERM_owned_pytest_tree_after_SIGINT_did_not_complete": [
+      99364,
+      99342,
+      99380,
+      123182,
+      123183,
+      99343,
+      99379,
+      99338,
+      99326,
+      99316
+    ]
+  }
+}
