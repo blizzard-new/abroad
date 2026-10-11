@@ -1,0 +1,30 @@
+{
+  "response_bodies_fabricated": false,
+  "application_state_mocked": false,
+  "trace": [
+    {
+      "url": "http://127.0.0.1:45009/application-workflow?school=Kyung+Hee+University+%E6%85%B6%E7%86%99%E5%A4%A7%E5%AD%B8&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8",
+      "path": "/application-workflow",
+      "sequence": 1,
+      "status": 200,
+      "body_sha256": "a258dbba7e59ccee2eae777ace8fc779d97cc3455ae801843442809bae803104",
+      "released": true
+    },
+    {
+      "url": "http://127.0.0.1:45009/destination-profile?school=Kyung%20Hee%20University%20%E6%85%B6%E7%86%99%E5%A4%A7%E5%AD%B8&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8",
+      "path": "/destination-profile",
+      "sequence": 1,
+      "status": 200,
+      "body_sha256": "a4bce8e8147bcea4e16de107106f88fb826aea4cf60c39a63db7d1dacec752b2",
+      "released": true
+    },
+    {
+      "url": "http://127.0.0.1:45009/school-data-completeness?school=Kyung%20Hee%20University%20%E6%85%B6%E7%86%99%E5%A4%A7%E5%AD%B8&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8",
+      "path": "/school-data-completeness",
+      "sequence": 1,
+      "status": 200,
+      "body_sha256": "c2e60b9fcc428f05a4beabde2b93d5fe74727e547d59d2ef3436a0410f21cb38",
+      "released": true
+    }
+  ]
+}

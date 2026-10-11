@@ -1,0 +1,1233 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	HCMC University of Technology and Engineering
+</title><link href="/CSS/show_img.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.min.js" type="text/javascript"></script>    <script src="/Scripts/Common.js" type="text/javascript"></script>
+    <script src="/Scripts/PagingContent.js" type="text/javascript"></script>
+    <link href="/Components/lightbox/css/lightbox.css" rel="stylesheet" type="text/css" />
+    <script src="/Components//lightbox/js/lightbox.min.js" type="text/javascript"></script>
+    <link href="/CSS/search_Article.css" rel="stylesheet" />
+    <script language="javascript" type="text/javascript">
+        function SearchProcess(event) {
+            if (event.keyCode == 13) {
+                OnSearch(document.getElementById('txtSearchArticle').value);
+                return false;
+            }
+            return true;
+        }
+        function OnSearch(query) {
+            PSCPortal.Services.CMS.SearchAndPaging(query, currentPage, OnSearchSuccess, OnSearchFailed);
+        }
+
+        function OnSearchSuccess(results, context, methodName) {
+            var position = results.indexOf('_');
+            totalRecords = results.substring(0, position);
+            results = results.substring(position + 1);
+            LoadContentAndPaging(results);
+        }
+        function OnSearchFailed(results, context, methodName) {
+        }
+
+        function retitleUrl(str) {
+            str = str.replace(/^\s+|\s+$/g, ''); // trim
+            str = str.toLowerCase();
+            // remove accents, swap ñ for n, etc
+            var from = "àáảãạăằắẳẵặâầấẩẫậđèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ·/_,:;";
+            var to = "aaaaaaaaaaaaaaaaadeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyy------";
+            for (var i = 0, l = from.length ; i < l ; i++) {
+                str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+            }
+            str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+              .replace(/\s+/g, '-') // collapse whitespace and replace by -
+              .replace(/-+/g, '-'); // collapse dashes
+            return str;
+        };
+
+        function popunder() {
+            $('a').not('[href^="http"],[href^="https"],[href^="mailto:"],[href^="#"]').each(function () {
+                $(this).prop('href', function (index, value) {
+                    if (value != undefined) {
+                        var index = value.indexOf("Default.aspx");
+                        if (index >= 0)
+                            return value = "/" + value.substring(index, value.length);
+                    }
+                });
+            });
+            var articleId = '' != '' ? '' : '';
+            var topicId = '' != '' ? '' : '';
+            var moduleId = '' != '' ? '' : '';
+            if (articleId != '') {
+                if (window.history.state == null) {
+                    if (articleId.indexOf("/") > -1)
+                        articleId = articleId.substr(0, articleId.indexOf("/"));
+                    window.history.replaceState({ ArticleId: articleId }, "ArticleId", "/ArticleId/" + articleId + "/" + retitleUrl(''));
+                }
+            }
+            if (topicId != '') {
+                if (window.history.state == null) {
+                    if (topicId.indexOf("/") > -1)
+                        topicId = topicId.substr(0, topicId.indexOf("/"));
+                    window.history.replaceState({ TopicId: topicId }, "TopicId", "/TopicId/" + topicId + "/" + retitleUrl(''));
+                }
+            }
+            
+        }
+    </script>
+
+
+<link href="/WebResource.axd?d=KrvXLeD9KFJZV4bXH2SRLNa6vWvm3aLWkoLeRMlxd-npidFy9khP0MSAQw_EjDl8gkPYzj8tHhEhO36o68fBjotRAwM4N_ptba2kj6f7DORGGD9iX5mrFhXC3JqP-CUM-gzkGAipEjnNZjdrLjZAUw2&amp;t=638423073240000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=04aYdQmtfd87S44aTvL8wwpHXCH4sfP0kyXHdXtKRJrJhjZEqID9Cz8--WsTL48rbi_OOQm-udYKe9Cwm7gmsE-zkruV1Ml5MyyGbYsOquFCUDP8YNbMJBBpoxhFkz9yHECK0ccDRTu6aEqWei5GhIr6Z7q5uAJ64lQqihymmiA1&amp;t=638423073240000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /><link href="/WebResource.axd?d=6vGE14A8tAAO7ljT-_Q-JCh5mmzawSTix31jnZ_r5cF5WbCqjl4mtxUd4yq-hKJu5Dkp-ccpkxTbVhSf2UtbVFGradmWXKz4Nftx8f5c6Hxy5dl1al4k2SB4wYmZD61xV-UvWTeVXqFN_yh9wAB7mg2&amp;t=638423073240000000" type="text/css" rel="stylesheet" class="Telerik_stylesheet" /></head>
+<body class="body" onload='popunder();'>
+
+    <form name="form1" method="post" action="./" id="form1">
+<input type="hidden" name="RadScriptManager1_TSM" id="RadScriptManager1_TSM" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPaA8FDzhkZjI3ZTE2YjdkNmRlORgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAgURUmFkV2luZG93TWFuYWdlcjEFOmN0bDA1JHBvcnRsZXRfZTIwNTAwOTEtMGE4Zi00M2NiLWJkZDItNTU0OTVhZDJlMzVjJFJhZE1lbnUQBAYwkuCYf/wxVv/lG9OrvJrLWJrphXcJg3PD6Xuitg==" />
+
+
+<script src="/Telerik.Web.UI.WebResource.axd?_TSM_HiddenField_=RadScriptManager1_TSM&amp;compress=1&amp;_TSM_CombinedScripts_=%3b%3bSystem.Web.Extensions%2c+Version%3d4.0.0.0%2c+Culture%3dneutral%2c+PublicKeyToken%3d31bf3856ad364e35%3aen-US%3ab7585254-495e-4311-9545-1f910247aca5%3aea597d4b%3bTelerik.Web.UI%2c+Version%3d2024.1.131.45%2c+Culture%3dneutral%2c+PublicKeyToken%3d121fae78165ba3d4%3aen-US%3a9948a144-ff46-44f4-9ae0-6f54d8eaff7b%3a16e4e7cd%3af7645509%3a24ee1bba%3ab2e06756%3a92fe8ea0%3afa31b949%3ac128760b%3a874f8ea2%3a4877f69a%3a33715776%3a19620875%3af46195d3%3a490a9d4e%3abd8f85e4%3ae330518b%3a2003d0b8%3a1e771326%3a88144a7a%3ac8618e41%3a1a73651d%3a333f8d94" type="text/javascript"></script>
+<script src="Services/CMS.asmx/js" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+        <div id="RadWindowManager1" style="display:none;">
+	<!-- 2024.1.131.45 --><div id="RadWindowManager1_alerttemplate" style="display:none;">
+        <div class="rwDialogPopup radalert">
+            <div class="rwDialogText">
+            {1}
+            </div>
+
+            <div>
+                <a  onclick="$find('{0}').close(true);"
+                class="rwPopupButton" href="javascript:void(0);">
+                    <span class="rwOuterSpan">
+                        <span class="rwInnerSpan">##LOC[OK]##</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+        </div><div id="RadWindowManager1_prompttemplate" style="display:none;">
+         <div class="rwDialogPopup radprompt">
+                <div class="rwDialogText">
+                {1}
+                </div>
+                <div>
+                    <script type="text/javascript">
+                    function RadWindowprompt_detectenter(id, ev, input)
+                    {
+                        if (!ev) ev = window.event;
+                        if (ev.keyCode == 13)
+                        {
+                            var but = input.parentNode.parentNode.getElementsByTagName("A")[0];
+                            if (but)
+                            {
+                                if (but.click) but.click();
+                                else if (but.onclick)
+                                {
+                                    but.focus(); var click = but.onclick; but.onclick = null; if (click) click.call(but);
+                                }
+                            }
+                           return false;
+                        }
+                        else return true;
+                    }
+                    </script>
+                    <input title="Enter Value" onkeydown="return RadWindowprompt_detectenter('{0}', event, this);" type="text"  class="rwDialogInput" value="{2}" />
+                </div>
+                <div>
+                    <a onclick="$find('{0}').close(this.parentNode.parentNode.getElementsByTagName('input')[0].value);"
+                        class="rwPopupButton" href="javascript:void(0);" ><span class="rwOuterSpan"><span class="rwInnerSpan">##LOC[OK]##</span></span></a>
+                    <a onclick="$find('{0}').close(null);" class="rwPopupButton"  href="javascript:void(0);"><span class="rwOuterSpan"><span class="rwInnerSpan">##LOC[Cancel]##</span></span></a>
+                </div>
+            </div>
+        </div><div id="RadWindowManager1_confirmtemplate" style="display:none;">
+        <div class="rwDialogPopup radconfirm">
+            <div class="rwDialogText">
+            {1}
+            </div>
+            <div>
+                <a onclick="$find('{0}').close(true);"  class="rwPopupButton" href="javascript:void(0);" ><span class="rwOuterSpan"><span class="rwInnerSpan">##LOC[OK]##</span></span></a>
+                <a onclick="$find('{0}').close(false);" class="rwPopupButton"  href="javascript:void(0);"><span class="rwOuterSpan"><span class="rwInnerSpan">##LOC[Cancel]##</span></span></a>
+            </div>
+        </div>
+        </div><input id="RadWindowManager1_ClientState" name="RadWindowManager1_ClientState" type="hidden" />
+</div>
+        
+        
+<link href="/Resources/ImagesPortal/HomePage/main.css" rel="stylesheet" />
+<link href="/CSS/mainPortlets.css" rel="stylesheet" />
+<script language="javascript" type="text/javascript">
+    function SearchProcess(event) {
+        if (event.keyCode == 13) {
+            OnSearch(document.getElementById('txtSearchArticle').value);
+            return false;
+        }
+        return true;
+    }
+    function OnSearch(query) {
+        PSCPortal.Services.CMS.SearchAndPaging(query, currentPage, OnSearchSuccess, OnSearchFailed);
+    }
+
+    function OnSearchSuccess(results, context, methodName) {
+        var position = results.indexOf('_');
+        totalRecords = results.substring(0, position);
+        results = results.substring(position + 1);
+        LoadContentAndPaging(results);
+    }
+    function OnSearchFailed(results, context, methodName) {
+    }
+
+</script>
+<div class="page">
+    <div class="wrapper">
+        <table cellspacing="0" cellpadding="0" border="0">
+	<tr>
+		<td colspan="3"><div id="pnTop">
+			<div id="pnTopDisplay" style="width:1000px;float:right;">
+				<div id='ctl05_portlet_6270f247-1344-47be-991d-2f8e49a3cddb' style="padding:15px 0px 0px 0px;width:225px;float:right"><div>
+					<div class="sup_menu">
+<ul>
+    <li><a href="#">Sitemap</a></li>
+    <li><a href="#">|</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#">|</a></li>
+    <li><a href="http://hcmute.edu.vn">Vietnamese</a></li>
+</ul>
+<div class="search">
+<input class="fram_search" id="txtSearchArticle" onkeydown="return SearchProcess(event);" type="text" /><input class="bt_search" type="button" onclick="OnSearch(document.getElementById('txtSearchArticle').value);" />
+</div>
+<!--End search-->
+</div>
+
+				</div></div><div id='ctl05_portlet_d912a9c6-02c7-4e62-925f-a609706669a7' style="padding:15px 0px 0px 0px;width:1000px;float:left"><div>
+					<div class="logo_ute"><a href="http://en.hcmute.edu.vn/"><img alt="" src="/Resources/Images/SubDomain/HomePage/Gioi%20thieu/%C4%90%E1%BB%95i%20t%C3%AAn%20tr%C6%B0%E1%BB%9Dng/Tieng%20Anh%20edit.jpg" style="width: 1000px; height: 172px;" /></a></div>
+
+				</div></div><div id='ctl05_portlet_e2050091-0a8f-43cb-bdd2-55495ad2e35c' style="padding:10px 0px 0px 0px;width:1000px;float:left"><div>
+					
+<link href="/Portlets/MenuRad/Menu.Green.css" rel="stylesheet" type="text/css" />
+<div tabindex="0" id="ctl05_portlet_e2050091-0a8f-43cb-bdd2-55495ad2e35c_RadMenu" class="RadMenu RadMenu_Green rmSized" style="z-index: 1; width: 100%;">
+						<ul class="rmRootGroup rmHorizontal">
+							<li class="rmItem rmFirst"><a class="rmLink rmRootLink" href="Portlets/MenuRad/#"><span class="rmText">INTRODUCTION </span></a><div class="rmSlide">
+								<ul class="rmVertical rmGroup rmLevel1">
+									<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=5300f271-e2a6-4f40-9890-fc8022048ce5"><span class="rmText">MESSAGE FROM HCMUTE PRESIDENT  </span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">OVERVIEW</span></a><div class="rmSlide">
+										<ul class="rmVertical rmGroup rmLevel2">
+											<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=cf8e6c67-f2b5-48af-990e-b230f343d74a"><span class="rmText">HISTORY</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Default.aspx?ArticleId=88619748-da53-4f27-934d-e709f320b4ce"><span class="rmText">VISION AND MISSION</span></a></li>
+										</ul>
+									</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">ADMINISTRATION </span></a><div class="rmSlide">
+										<ul class="rmVertical rmGroup rmLevel2">
+											<li class="rmItem rmFirst"><a class="rmLink" href="#"><span class="rmText">COMMUNIST PARTY</span></a></li><li class="rmItem "><a class="rmLink" href="#"><span class="rmText">UNIVERSITY COUNCIL </span></a><div class="rmSlide">
+												<ul class="rmVertical rmGroup rmLevel3">
+													<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=81f7ebd5-325d-406e-a7c9-da6d8356c3ad"><span class="rmText">PRESIDENT OF UNIVERSITY COUNCIL</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Default.aspx?ArticleId=2f55eda8-0e90-4e03-8758-79c2c3937a0d"><span class="rmText">COUNCIL MEMBERS</span></a></li>
+												</ul>
+											</div></li><li class="rmItem "><a class="rmLink" href="Default.aspx?ArticleId=73bbe8dd-e2a4-48ee-9feb-db78d6c089e1"><span class="rmText">PRESIDENTIAL BOARD</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">BRAND</span></a><div class="rmSlide">
+												<ul class="rmVertical rmGroup rmLevel3">
+													<li class="rmItem rmFirst"><a class="rmLink" href="https://phongtruyenthongso.hcmute.edu.vn/"><span class="rmText">DIGITAL ARCHIVE ROOM</span></a></li><li class="rmItem "><a class="rmLink" href="https://drive.google.com/drive/folders/1boomc_ENfYzyJqnKDrSVAGLCcNfIEuvJ?zarsrc=1303"><span class="rmText">BRAND IDENTITY</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">YEARBOOK</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="https://drive.google.com/file/d/1SpPOv1etOMZAhURHIILpFcsgeSCLgFmr/view"><span class="rmText">YEARBOOK OF 55TH FOUNDING ANNIVERSARY</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="https://drive.google.com/file/d/1a97jJ58Zbu_64csHMs9_Ws3Y0V0EhOEt/view"><span class="rmText">YEARBOOK OF 60TH FOUNDING ANNIVERSARY</span></a></li>
+														</ul>
+													</div></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">HCMUTE SIXTIETH- YEAR JOURNAL</span></a></li>
+												</ul>
+											</div></li>
+										</ul>
+									</div></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">ORGANIZATIONAL STRUCTURE </span></a><div class="rmSlide">
+										<ul class="rmVertical rmGroup rmLevel2">
+											<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=5193ecda-84a1-4907-b9c4-b6fdd694f2dd"><span class="rmText">ORGANIZATIONAL CHART </span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">DIVISION LEADERS </span></a><div class="rmSlide">
+												<ul class="rmVertical rmGroup rmLevel3">
+													<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=97ba0aca-f6d9-4ae8-91d7-f3a7f7ebf276"><span class="rmText">FACULTY</span></a></li><li class="rmItem "><a class="rmLink" href="Default.aspx?ArticleId=03b07728-55e4-4bdd-a4b4-a68c5a85a91f"><span class="rmText">OFFICE</span></a></li><li class="rmItem "><a class="rmLink" href="Default.aspx?ArticleId=b7610125-d46f-4805-bfa3-84c08477cdf5"><span class="rmText">CENTER</span></a></li><li class="rmItem "><a class="rmLink" href="Default.aspx?ArticleId=97f3f416-f3b9-49da-b50f-2dcb58a82587"><span class="rmText">BINH PHUOC CAMPUS</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Default.aspx?ArticleId=0577a544-49d0-4cb6-a332-338ffc579ca2"><span class="rmText">JOURNAL OF TECHNICAL EDUCATION SCIENCE (JTE)</span></a></li>
+												</ul>
+											</div></li>
+										</ul>
+									</div></li>
+								</ul>
+							</div></li><li class="rmItem "><a class="rmLink rmRootLink" href="Portlets/MenuRad/#"><span class="rmText">WHITE PAPERS</span></a><div class="rmSlide">
+								<ul class="rmVertical rmGroup rmLevel1">
+									<li class="rmItem rmFirst rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">QUALITY ASSURANCE</span></a><div class="rmSlide">
+										<ul class="rmVertical rmGroup rmLevel2">
+											<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=562e1264-8e5d-444f-8ba3-7f3823f3d858"><span class="rmText">Institutional Accreditation by Ministry of Education and Training (MOET)</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Default.aspx?ArticleId=d7c0869f-967b-4911-8318-06547e42a940"><span class="rmText">AUN-QA accredited training programs</span></a></li>
+										</ul>
+									</div></li>
+								</ul>
+							</div></li><li class="rmItem "><a class="rmLink rmRootLink" href="Portlets/MenuRad/#"><span class="rmText">DIVISIONS</span></a><div class="rmSlide">
+								<ul class="rmVertical rmGroup rmLevel1">
+									<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">FACULTIES</span></a><div class="rmSlide">
+										<ul class="rmVertical rmGroup rmLevel2">
+											<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">1. Political Science and Law</span></a></li><li class="rmItem "><a class="rmLink" href="https://fme.hcmute.edu.vn/Default.aspx?PageId=e01db6f6-8373-4b73-931c-c821c36809c7"><span class="rmText"> 2. Mechanical Engineering</span></a></li><li class="rmItem "><a class="rmLink" href="https://fae.hcmute.edu.vn/Default.aspx?PageId=e657256e-47c8-46c8-a3e3-875639f4450d"><span class="rmText">3.  Energy Engineering and Transport</span></a></li><li class="rmItem "><a class="rmLink" href="https://fcft.hcmute.edu.vn/Default.aspx?PageId=272eec81-a53b-46a7-91a0-cc578039a240"><span class="rmText">4. Chemistry and Life Sciences</span></a></li><li class="rmItem "><a class="rmLink" href="https://fit.hcmute.edu.vn/Default.aspx?PageId=48a07b93-9863-4cd1-ac80-6562d6178da7&amp;fbclid=IwAR2oKV0xSxQl7xb6T9-_gBnLxRMLMAGAninZxGOSXyn2W43FbJDfnzNkwek"><span class="rmText">5. Information Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">6. Advanced Education</span></a></li><li class="rmItem "><a class="rmLink" href="https://feee.hcmute.edu.vn/Default.aspx?PageId=353eb420-6f23-4891-8857-43bbd10fd9c1"><span class="rmText">7. Electrical and Electronics Engineering</span></a></li><li class="rmItem "><a class="rmLink" href="https://fgam.hcmute.edu.vn/Default.aspx?PageId=d6416094-da3c-4ca6-b1ec-7a5c15c53197"><span class="rmText">8. Arts and Media</span></a></li><li class="rmItem "><a class="rmLink" href="https://fas.hcmute.edu.vn/Default.aspx?PageId=de22ea7d-2ce8-4a98-87a6-24eaa0c6cc61"><span class="rmText">9. Applied Sciences</span></a></li><li class="rmItem "><a class="rmLink" href="https://fe.hcmute.edu.vn/Default.aspx?PageId=874cb0d4-4a23-4274-85d7-4cf48d3da392&amp;fbclid=IwAR1q0wPUateDy31e3Sh-Jd77FZBLZrXraBPkE7RssXE1VirYPBhjjVOQ2kQ"><span class="rmText">10. Economics</span></a></li><li class="rmItem "><a class="rmLink" href="https://ffl.hcmute.edu.vn/en"><span class="rmText">11. Foreign Languages</span></a></li><li class="rmItem "><a class="rmLink" href="https://fce.hcmute.edu.vn/Default.aspx?PageId=53c44691-a3cf-4366-b464-3e7e40de0a35"><span class="rmText">12. Civil Engineering</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">13. Institute of Technical Education</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="https://enfie.hcmute.edu.vn/"><span class="rmText">14. Institute of International Education</span></a></li>
+										</ul>
+									</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">OFFICES</span></a><div class="rmSlide">
+										<ul class="rmVertical rmGroup rmLevel2">
+											<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">1. Dormitory Management</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">2.  Student Affairs</span></a></li><li class="rmItem "><a class="rmLink" href="https://aao.hcmute.edu.vn/Default.aspx?PageId=6393db26-24eb-403e-a91f-af8422678c33"><span class="rmText">3. Academic Affairs</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">2. Training Cooperation and Development</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">4. General Administration</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">5. Finance and Planning</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">6. Testing and Quality Assurance</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText"> 7. Science and Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">8. Enterprise Relations</span></a></li><li class="rmItem "><a class="rmLink" href="https://oia.hcmute.edu.vn/"><span class="rmText"> 9. International Affairs</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">10. Construction Project Management and Bidding</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">10. Equipment and Maintenance</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">11.  Facilities Management</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">12. Brand Management and Communications</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">13. Organization and Personnel</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">14. Journal of Technical Education Science</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">15. Health Care</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">16. University Party Committee</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">17. Postgraduate School</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">18. Institute of International Education</span></a></li>
+										</ul>
+									</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">CENTERS</span></a><div class="rmSlide">
+										<ul class="rmVertical rmGroup rmLevel2">
+											<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">1. Software Technology Center</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">2. National Defense and Security Training</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">3. Physical Education</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">4. Learning Resources and Digital Learning</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">5. Innovation, Startup and Technology Transfer</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">6. Information and Network</span></a></li>
+										</ul>
+									</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">BINH PHUOC CAMPUS</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="https://jte.edu.vn/"><span class="rmText"> 	  Journal of Technical Education Science</span></a></li>
+								</ul>
+							</div></li><li class="rmItem "><a class="rmLink rmRootLink" href="Portlets/MenuRad/#"><span class="rmText">ADMISSION </span></a><div class="rmSlide">
+								<ul class="rmVertical rmGroup rmLevel1">
+									<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=9ba0eca6-905c-40f8-a62f-fbbcf268caa7"><span class="rmText">STUDENTS-CULTURAL EXCHANGE PROGRAM</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Default.aspx?ArticleId=49d02a23-bfb8-476a-888d-4444e04d2740"><span class="rmText">FULL-TIME PROGRAM</span></a></li>
+								</ul>
+							</div></li><li class="rmItem "><a class="rmLink rmRootLink" href="Portlets/MenuRad/#"><span class="rmText">ACADEMICS</span></a><div class="rmSlide">
+								<ul class="rmVertical rmGroup rmLevel1">
+									<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=11458b0e-26ca-4f8f-9f6d-08103b29d233"><span class="rmText">INTRODUCTION</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="http://en.hcmute.edu.vn/ArticleId/11458b0e-26ca-4f8f-9f6d-08103b29d233/academic-programs"><span class="rmText">TRAINING PROGRAMS</span></a><div class="rmSlide">
+										<ul class="rmVertical rmGroup rmLevel2">
+											<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=a87ccb49-63c3-4ca8-b0b2-a71bfe8945f3"><span class="rmText">UNDERGRADUATE</span></a><div class="rmSlide">
+												<ul class="rmVertical rmGroup rmLevel3">
+													<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">1.Mechanical Engineering</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Industrial Engineering</span></a></li><li class="rmItem "><a class="rmLink" href="Default.aspx?ArticleId=5ed31c7f-1573-4ef5-a4fa-f26678c51496"><span class="rmText">Furniture and Wood technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Machine Manufacturing Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Mechanical Engineering Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Mechatronics Engineering Technology</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Robotics and Artificial Intelligence</span></a></li>
+														</ul>
+													</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">2.Electrical and Electronic Engineering</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Biomedical Engineering</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Electrical and Electronics Engineering Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Electronics and Communications Engineering Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Automation and Control Engineering Technology</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Computer Engineering Technology</span></a></li>
+														</ul>
+													</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">3.Vehicle and Energy Engineering</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Automative Engineering Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Thermal Engineering Technology</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Renewable Energy Engineering Technology</span></a></li>
+														</ul>
+													</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">4.Graphic Arts and Media</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Graphics Design</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Printing Engineering Technology</span></a></li>
+														</ul>
+													</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">5.Information and Technology</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Information Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Computer Engineering Technology</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Data Engineering</span></a></li>
+														</ul>
+													</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">6.Civil Engineering</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Transportation Engineering</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Construction Engineering Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Construction Management</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Architecture</span></a></li>
+														</ul>
+													</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">7.Garment Technology and Fashion Design</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Garment Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Domestic Science</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Fashion Design</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Textile Materials Technology</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Restaurants and Eatery Services Management</span></a></li>
+														</ul>
+													</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">8.Economics</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Industrial Management</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Accounting</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">E-Commerce</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">International Business</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Logistics and Supply Chain Management</span></a></li>
+														</ul>
+													</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">9.Chemical and Food Technology</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Food Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Chemical Engineering Technology</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Environmental Engineering Technology</span></a></li>
+														</ul>
+													</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">10.Foreign Languages</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">English Linguistics</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Teaching English to Speakers of Other Languages</span></a></li>
+														</ul>
+													</div></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">11.Applied Sciences</span></a><div class="rmSlide">
+														<ul class="rmVertical rmGroup rmLevel4">
+															<li class="rmItem rmFirst rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">Materials Technology</span></a></li>
+														</ul>
+													</div></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">12.Institute of Technical Education</span></a></li>
+												</ul>
+											</div></li><li class="rmItem "><a class="rmLink" href="Default.aspx?ArticleId=b3ab04b2-5e0d-4e4a-9c67-2eb94af45f12"><span class="rmText">GRADUATE</span></a><div class="rmSlide">
+												<ul class="rmVertical rmGroup rmLevel3">
+													<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">1. EDUCATION</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">2. THEORY AND METHODOLOGY IN TECHNOLOGY</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">3. ENGINEERING MECHANICS</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">4. MECHANICAL ENGINEERING</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">5. VEHICLE ENGINEERING</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">6. ELECTRICAL ENGINEERING</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">7. ELECTRONIC ENGINEERING</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">8. CIVIL ENGINEERING</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">9. THERMAL ENGINEERING</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">10. MECHATRONICS ENGINEERING</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">11. AUTOMATION AND CONTROL ENGINEERING</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">12. ENVIRONMENTAL ENGINEERING</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">13. TELECOMMUNICATIONS ENGINEERING</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">14. COMPUTER SCIENCE</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">15. ECONOMICS AND MANAGEMENT</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">16. EDUCATIONAL MANAGEMENT</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">17. FOOD TECHNOLOGY</span></a></li>
+												</ul>
+											</div></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">ARTICULATION</span></a><div class="rmSlide">
+												<ul class="rmVertical rmGroup rmLevel3">
+													<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">1. Electrical and Electronics Engineering Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">2. Automotive Engineering Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">3. Construction Engineering Technology</span></a></li><li class="rmItem "><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">4. Printing Engineering Technology</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">5. Machine Manufacturing Technology</span></a></li>
+												</ul>
+											</div></li>
+										</ul>
+									</div></li>
+								</ul>
+							</div></li><li class="rmItem "><a class="rmLink rmRootLink" href="Portlets/MenuRad/#"><span class="rmText">RESEARCH</span></a><div class="rmSlide">
+								<ul class="rmVertical rmGroup rmLevel1">
+									<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=c4988e88-b110-43dc-b239-0eca25d94af4"><span class="rmText">INTRODUCTION</span></a></li><li class="rmItem "><a class="rmLink" href="https://jte.edu.vn/index.php/jte"><span class="rmText">JOURNAL OF TECHNICAL EDUCATION SCIENCE</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">SCIENTIFIC RESEARCH ACTIVITIES</span></a><div class="rmSlide">
+										<ul class="rmVertical rmGroup rmLevel2">
+											<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=12464a34-c5db-42d5-8d80-947596f57e60"><span class="rmText">STUDENTS' ACTIVITIES</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Default.aspx?ArticleId=2cea08c8-7767-4a36-9fd9-64f71c979604"><span class="rmText">LECTURERS' ACTIVITIES</span></a></li>
+										</ul>
+									</div></li>
+								</ul>
+							</div></li><li class="rmItem "><a class="rmLink rmRootLink" href="https://oia.hcmute.edu.vn/"><span class="rmText">OUTREACH</span></a><div class="rmSlide">
+								<ul class="rmVertical rmGroup rmLevel1">
+									<li class="rmItem rmFirst"><a class="rmLink" href="Portlets/MenuRad/#"><span class="rmText">ENTERPRISE RELATIONS</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="https://oia.hcmute.edu.vn/"><span class="rmText">INTERNATIONAL RELATIONS</span></a></li>
+								</ul>
+							</div></li><li class="rmItem rmLast"><a class="rmLink rmRootLink" href="#"><span class="rmText">ALUMNI</span></a><div class="rmSlide">
+								<ul class="rmVertical rmGroup rmLevel1">
+									<li class="rmItem rmFirst"><a class="rmLink" href="Default.aspx?ArticleId=4beeb38a-ac84-4041-9497-c709b59ab8df"><span class="rmText">ABOUT ALUMNI COMMUNITY</span></a></li><li class="rmItem rmLast"><a class="rmLink" href="Default.aspx?TopicId=799f785e-fb30-47f8-9902-4bcdec6ec7a4"><span class="rmText">ALUMNI EVENTS</span></a></li>
+								</ul>
+							</div></li>
+						</ul><input id="ctl05_portlet_e2050091-0a8f-43cb-bdd2-55495ad2e35c_RadMenu_ClientState" name="ctl05_portlet_e2050091-0a8f-43cb-bdd2-55495ad2e35c_RadMenu_ClientState" type="hidden" />
+					</div>
+
+				</div></div><div id='ctl05_portlet_1ab2ae4b-c98b-4ea1-bf96-3969fd1a7668' style="padding:20px 10px 0px 0px;width:1000px;height:40px;float:left"><div>
+					<div class="marquee">
+<div class="marquee-content">
+Ho Chi Minh City University of Technology and Education has been renamed Ho Chi Minh City University of Technology and Engineering (HCM-UTE) under Decision No. 2809/QĐ-TTg issued by the Prime Minister. Smart governnance &amp; Empowering the HCM-UTE brand.
+</div>
+</div>
+<style>
+    .marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    background: #fff;
+    }
+    .marquee-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-left 50s linear infinite;
+    color: red;
+    font-weight: bold;
+    font-size: 16px;
+    }
+    @keyframes scroll-left {
+    0% {
+    transform: translateX(0%);
+    }
+    100% {
+    transform: translateX(-100%);
+    }
+    }
+    /* Hover dừng lại (optional) */
+    .marquee-content:hover {
+    animation-play-state: paused;
+    }
+</style>
+
+				</div></div>
+			</div>
+		</div></td>
+	</tr><tr valign="top">
+		<td><div id="pnLeft">
+			<div id="pnLeftDisplay" style="">
+
+			</div>
+		</div></td><td><div id="pnCenter">
+			<div id="pnCenterDisplay" style="padding:5px 20px 0px 0px;width:672px;float:left">
+				<div id='ctl05_portlet_27456614-a310-4ab2-bcb4-d8c02ebae655' style="width:672px;float:left"><div>
+					
+<link href="/Portlets/NivoSlider/CSS/nivo-slider.css" rel="stylesheet" />
+<link href="/Portlets/NivoSlider/CSS/themes/default/default.css" rel="stylesheet" />
+<script src="/Portlets/NivoSlider/Scripts/jquery.nivo.slider.js"></script>
+
+
+<div class="container" style="height: 350px;">
+    <div class="slider-wrapper theme-default">
+        <div id="slider" class="nivoSlider">
+            
+                    <a href="" target="_blank">
+                        <img src="/Resources/imagesPortlet/27456614-a310-4ab2-bcb4-d8c02ebae655/33003286-05ba-4410-b47c-64289e7bd205.jpg" title="" /></a>
+                
+                    <a href="https://handbook.hcmute.edu.vn/tieu-diem-2025/en.html" target="_blank">
+                        <img src="/Resources/imagesPortlet/27456614-a310-4ab2-bcb4-d8c02ebae655/Eng-Thumbnail.jpg" title="" /></a>
+                
+                    <a href="https://en.hcmute.edu.vn/ArticleId/594a02a9-0988-4b34-8da1-8e9075e98297/annoucement-on-the-universitys-name-change" target="_blank">
+                        <img src="/Resources/imagesPortlet/27456614-a310-4ab2-bcb4-d8c02ebae655/Banner F-Web HCMUTE.png" title="" /></a>
+                
+                    <a href="" target="_blank">
+                        <img src="/Resources/imagesPortlet/27456614-a310-4ab2-bcb4-d8c02ebae655/National.jpg" title="" /></a>
+                
+                    <a href="" target="_blank">
+                        <img src="/Resources/imagesPortlet/27456614-a310-4ab2-bcb4-d8c02ebae655/Tot nghiep 2.jpg" title="" /></a>
+                
+                    <a href="" target="_blank">
+                        <img src="/Resources/imagesPortlet/27456614-a310-4ab2-bcb4-d8c02ebae655/Tot nghiep 1.jpg" title="" /></a>
+                
+                    <a href="" target="_blank">
+                        <img src="/Resources/imagesPortlet/27456614-a310-4ab2-bcb4-d8c02ebae655/Tot nghiep.jpg" title="" /></a>
+                
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".nivoSlider").nivoSlider({
+            effect: 'random',
+            slices: 25,
+            boxCols: 8,
+            boxRows: 4,
+            animSpeed: 500,
+            pauseTime: 3000,
+            startSlide: 0,
+            directionNav: true,
+            controlNav: true,
+            controlNavThumbs: false,
+            pauseOnHover: true,
+            manualAdvance: false,
+            prevText: 'Prev',
+            nextText: 'Next',
+            randomStart: false,
+            beforeChange: function () { },
+            afterChange: function () { },
+            slideshowEnd: function () { },
+            lastSlide: function () { },
+            afterLoad: function () { }
+        });
+        $('.nivoSlider').css('height', '350px');
+        $('.nivoSlider img').css('height', '350px');
+    })
+
+</script>
+
+				</div></div><div id='ctl05_portlet_734708b7-5091-4485-b321-5e64f08d0f00' style="padding:15px 10px 0px 0px;width:320px;float:left"><div>
+					
+<div class="frame_hor">
+    <div class="ct_frame_L">
+        <div class="tintuc"><a href="/?TopicId=ed79caf2-1b13-4e49-8d9f-48f7ef30f6c9">News</a></div>
+        <a class="title" id="article10cad728-92e8-41f4-b5a9-92bb8cf2c667" href="/?ArticleId=10cad728-92e8-41f4-b5a9-92bb8cf2c667">HCM-UTE Signs Memoranda of Understanding with Seven Legal Practice Organizations, Expanding Internship Opportunities for Law Students</a>
+        <div class="img_ct">
+            <a href="#" class="shadow-radial">
+                <img style="cursor: hand; width: 267px; height: 95px; float: left;" src="/Services/GetArticleImage.ashx?option=0&Id=10cad728-92e8-41f4-b5a9-92bb8cf2c667"
+                    alt="" />
+            </a>
+        </div>
+        <p class="date">Date 02/10/2026</p>
+        <p class="mota"></p>
+        <ul class="tinkhac">
+            
+                    <li>
+                        <a href="/?ArticleId=d288bacc-3ab8-4daf-9f14-770a7262e3e4">
+                            HCM-UTE Attends the 2026 University–Enterprise Cooperation Forum and Shares Its Model of Co-creating Value with Industry
+                            <span>30/09/2026</span>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/?ArticleId=f0bef4fc-953b-4fa0-a201-2e7bb78e223c">
+                            HCM-UTE Works with Yaskawa to Review More Than Two Years of the Yaskawa Mechatro Lab and Plan Its Second Phase
+                            <span>28/09/2026</span>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/?ArticleId=11664f7e-46f5-4105-a232-79e741af1b3d">
+                            HCM-UTE Equips Final-Year Students with Labor Law Knowledge before They Enter the Job Market
+                            <span>23/09/2026</span>
+                        </a>
+                    </li>
+                
+        </ul>
+        <div class="slide">
+            <a class="slide-up" href="/?TopicId=ed79caf2-1b13-4e49-8d9f-48f7ef30f6c9">See all</a>
+        </div>
+    </div>
+</div>
+
+				</div></div><div id='ctl05_portlet_78f3ebc0-ce75-4199-a8c2-b1267131b8de' style="padding:15px 10px 0px 0px;width:320px;float:right"><div>
+					
+<div class="frame_hor">
+    <div class="ct_frame_L">
+        <div class="hocbong"><a href="/?TopicId=48283ffd-a4d2-4e9f-9943-5d45cfa094b7">International Projects</a></div>
+        <a class="title" id="articlebacde2a9-6982-41e3-a373-05f54094d5af" href="/?ArticleId=bacde2a9-6982-41e3-a373-05f54094d5af">HCMUTE Organized the International Conference on Mechatronics Technology (ICMT 2025) – An Academic Forum Connecting Global Knowledge  </a>
+        <div class="img_ct">
+            <a href="#" class="shadow-radial">
+                <img style="cursor: hand; width: 267px; height: 95px; float: left;" src="/Services/GetArticleImage.ashx?option=0&Id=bacde2a9-6982-41e3-a373-05f54094d5af"
+                    alt="" />
+            </a>
+        </div>
+        <p class="date">Date 13/11/2025</p>
+        <p class="mota"></p>
+        <ul class="tinkhac">
+            
+                    <li>
+                        <a href="/?ArticleId=d7ec1d5a-15bd-442b-a648-2c24c64fd772">
+                            The Opening of the Asian Graduate Studies Summit (A-GRASS 2025) at HCMUTE
+                            <span>30/05/2025</span>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/?ArticleId=e9e8c719-8ea8-4f8a-885c-c41219da0917">
+                            HCMUTE Launches GreenEdAsia Project: Advancing Green Transition in Southeast Asian Higher Education
+                            <span>17/02/2025</span>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/?ArticleId=c3e3c095-928e-47a7-bc6e-8a35433946ab">
+                            HCMUTE hosts the final round of the 2024 Ho Chi Minh city AI Challenge
+                            <span>22/10/2024</span>
+                        </a>
+                    </li>
+                
+        </ul>
+        <div class="slide">
+            <a class="slide-up" href="/?TopicId=48283ffd-a4d2-4e9f-9943-5d45cfa094b7">See all</a>
+        </div>
+    </div>
+</div>
+
+				</div></div><div id='ctl05_portlet_4a421386-aa21-4dcc-84cd-6c411f39c7c7' style="width:670px;float:left"><div>
+					<img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/Nam%202024/Breaking%20news%202.jpg" style="width: 670px; height: 31px;" />
+
+				</div></div><div id='ctl05_portlet_2d16fb59-c20b-4661-a4f9-fdcdc650dcfe' style="width:670px;height:45px;float:left"><div>
+					<table>
+    <tbody>
+        <tr>
+            <td><a href="https://hcmute.edu.vn/TopicId/c6f6a3aa-84e4-447a-a70a-f7c82360c9f1"><img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/Nam 2024/1.LEARNING  AND RESEARCH ACTIVITIES.jpg" style="width: 200px; height: 39px; margin-top: 5px; margin-bottom: 10px;" /></a><a href="https://hcmute.edu.vn/TopicId/9ca2dd37-88a0-4e14-b4a2-5905fb70650a"><img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/Nam%202024/2.STUDENT%20LIFE.jpg" style="width: 200px; height: 39px;" /></a><a href="https://en.hcmute.edu.vn/TopicId/f8392050-74b3-4be0-aab8-bbebeedb2eb8/enterprise-and-international-relations"><img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/Nam%202024/3.%20ENTERPRISE%20AND%20INTERNATIONAL%20RELATIONS.jpg" style="width: 200px; height: 39px; margin-top: 5px; margin-bottom: 10px;" /></a></td>
+        </tr>
+    </tbody>
+</table>
+<br />
+
+				</div></div><div id='ctl05_portlet_e312930c-fac5-44cd-ab38-b64effb72407' style="width:670px;float:left"><div>
+					<div class="photobanner5" style="text-align: left;"><a href="https://careerhub.hcmute.edu.vn/"><img alt="" src="/Resources/Images/SubDomain/HomePage/Tieng%20Anh/Slide/Nen%20hoc%20tap%20tieng%20Anh.jpg" style="width: 200px; height: 120px; margin-bottom: 10px;" /></a><a href="https://careerhub.hcmute.edu.vn/"><img alt="" src="/Resources/Images/SubDomain/HomePage/Tieng%20Anh/Slide/Nen%20ky%20tuc%20xa.jpg" style="width: 200px; height: 120px; margin-bottom: 10px;" /></a><a href="https://careerhub.hcmute.edu.vn/"><img alt="" src="/Resources/Images/SubDomain/HomePage/Tieng%20Anh/Slide/Nen%20doi%20ngoai%20tieng%20Anh.jpg" style="width: 200px; height: 120px; margin-bottom: 10px;" /></a></div>
+<style type="text/css">
+    /*photobanner5*/
+    width: 670px;
+    }
+    /*keyframe animations*/
+    .first2 {
+    -webkit-animation: bannermove5 5s linear infinite;
+    -moz-animation: bannermove5 5s linear infinite;
+    -ms-animation: bannermove5 5s linear infinite;
+    -o-animation: bannermove5 5s linear infinite;
+    animation: bannermove5 5s linear infinite;
+    }
+    @keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-moz-keyframes bannermove5 {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-webkit-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-ms-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-o-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    .photobanner5 {
+    width:670px;
+    margin-bottom: 0px;
+    }
+    .photobanner5 img {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    }
+    .photobanner5 img:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    cursor: pointer;
+    -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    }
+</style>
+<style type="text/css">
+    /*photobanner5*/
+    width: 670px;
+    }
+    /*keyframe animations*/
+    .first2 {
+    -webkit-animation: bannermove5 5s linear infinite;
+    -moz-animation: bannermove5 5s linear infinite;
+    -ms-animation: bannermove5 5s linear infinite;
+    -o-animation: bannermove5 5s linear infinite;
+    animation: bannermove5 5s linear infinite;
+    }
+    @keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-moz-keyframes bannermove5 {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-webkit-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-ms-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-o-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    .photobanner5 {
+    width:670px;
+    margin-bottom: 0px;
+    }
+    .photobanner5 img {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    }
+    .photobanner5 img:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    cursor: pointer;
+    -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    }
+</style>
+
+				</div></div><div id='ctl05_portlet_b087f47f-14c8-4787-bdf0-5b15dda0231e' style="height:200px;float:left"><div>
+					<table cellspacing="1" style="left: -7.85714px; width: 637.571px; height: 224.714px; top: -3.28571px;">
+    <tbody>
+        <tr>
+            <td style="text-align: left; vertical-align: top; width: 200px;">
+            <p style="margin-left: 40px; text-align: left;"><span style="font-family: Arial;"><strong><span style="font-size: 11px; color: #0c0c0c;"><a href="https://hcmute.edu.vn/ArticleId/a23e271c-1dd9-44ab-b13b-c586759272f5/hcm-ute-successfully-hosts-gtsd-2026-advancing-green-technology-and-sustainable-development">HCM-UTE Successfully Hosts GTSD 2026, Advancing Green Technology and Sustainable Development</a></span></strong></span></p>
+            <p style="margin-left: 40px; text-align: left;"><span style="font-size: 9px; font-family: Arial;">On July 30&ndash;31, 2026, Ho Chi Minh City University of Technology and Engineering (HCM-UTE, formerly Ho Chi Minh City University of Technology and Education) successfully hosted The 8th International Conference on Green Technology and Sustainable Development (GTSD 2026).</span></p>
+            </td>
+            <td style="text-align: left; vertical-align: top; width: 200px;">
+            <p style="margin-left: 40px; text-align: left;"><span style="margin: 0px auto; padding: 0px; font-size: 11px; font-family: Arial; color: #0070c0;"><strong style="margin: 0px auto; padding: 0px;"><span style="margin: 0px auto; padding: 0px; color: #000000;"><a href="https://en.hcmute.edu.vn/ArticleId/ecb03803-0d56-4cb6-ab71-0daeb0153086/hcm-ute-signed-mou-with-the-vnu-hcm-dormitory-and-urban-area-management-center-to-strengthen-student-support">HCM-UTE Signed MOU with the VNU-HCM Dormitory and Urban Area Management Center to Strengthen Student Support</a><a href="https://en.hcmute.edu.vn/ArticleId/8adbf1fd-971b-4dc1-b44d-4c090a10c80c/hcmute-celebrated-inauguration-ceremony-of-the-creative-and-startup-zone-beehive">
+            </a></span></strong></span></p>
+            <p style="margin-left: 40px; text-align: left;"><span style="margin: 0px auto; padding: 0px; font-size: 9px; text-align: justify; font-family: Arial;">On the morning of August 13, 2026, Ho Chi Minh City University of Technology and Engineering (HCM-UTE, formerly Ho Chi Minh City University of Technology and Education) held a signing ceremony for a Memorandum of Understanding (MOU) and an exchange session on experience in space leasing and utilization with the Dormitory and Urban Area Management Center of Vietnam National University Ho Chi Minh City (VNU-HCM).</span></p>
+            </td>
+            <td style="text-align: left; vertical-align: top;">
+            <p style="margin-left: 40px; text-align: left;"><span style="font-size: 11px; font-family: Arial;"><strong><span style="color: #000000;"><a href="https://en.hcmute.edu.vn/ArticleId/2822c78b-84db-40b0-9c1a-e8fb92c94f4d/hcm-ute-mahasarakham-university-thailand-academic-exchange-program-concludes-with-research-for-sustainable-development">HCM-UTE &ndash; Mahasarakham University (Thailand) Academic Exchange Program Concludes with Research for Sustainable Development</a></span></strong></span></p>
+            <p style="margin-left: 40px; text-align: left;"><span style="margin: 0px auto; padding: 0px; text-align: justify; font-size: 9px; font-family: Arial;">As part of the international cooperation program between Ho Chi Minh City University of Technology and Engineering (HCM-UTE, formerly Ho Chi Minh City University of Technology and Education) and Mahasarakham University (MSU), Thailand, the Faculty of Foreign Languages at HCM-UTE, in collaboration with several academic faculties, organized an academic exchange program for 30 students from Mahasarakham University from July 6&ndash;9, 2026.</span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br />
+
+				</div></div><div id='ctl05_portlet_624b95b9-e6d5-4a4a-9b23-24b827f67b14' style="width:670px;height:40px;float:left"><div>
+					<a href="https://en.hcmute.edu.vn/TopicId/799f785e-fb30-47f8-9902-4bcdec6ec7a4/alumni-events"><img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/Nam%202024/4.ALUMNI%20EVENTS%20.jpg" style="width: 190px; height: 40px; margin-left: 100px; margin-top: 0px; margin-bottom: 25px;" /></a><a href="https://hcmute.edu.vn/TopicId/57ec372e-6b80-4c7d-aade-84f0fa3d62d5"><img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/Nam%202024/5.CURRENT%20AND%20FORMER%20STAFF%20AND%20LECTURERS%20.jpg" style="width: 190px; height: 37px; margin-left: 120px; margin-top: 0px; margin-bottom: 25px;" /></a>
+
+				</div></div><div id='ctl05_portlet_c2d5e752-c8ba-49f5-9e63-f03770ec94b6' style="width:700px;float:left"><div>
+					<div class="photobanner5" style="text-align: left;"><a href="https://careerhub.hcmute.edu.vn/"><img alt="" src="/Resources/Images/SubDomain/HomePage/Tieng%20Anh/Slide/Nen%20hoi%20thao.jpg" style="width: 270px; height: 162px;" /></a><a href="https://careerhub.hcmute.edu.vn/"><img alt="" src="/Resources/Images/SubDomain/HomePage/Tieng%20Anh/Slide/Trung%20thu%20anh%20nen.jpg" style="width: 270px; height: 162px; margin-left: 55px;" /></a></div>
+<style type="text/css">
+    /*photobanner5*/
+    width: 670px;
+    }
+    /*keyframe animations*/
+    .first2 {
+    -webkit-animation: bannermove5 5s linear infinite;
+    -moz-animation: bannermove5 5s linear infinite;
+    -ms-animation: bannermove5 5s linear infinite;
+    -o-animation: bannermove5 5s linear infinite;
+    animation: bannermove5 5s linear infinite;
+    }
+    @keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-moz-keyframes bannermove5 {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-webkit-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-ms-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-o-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    .photobanner5 {
+    width:670px;
+    margin-bottom: 0px;
+    }
+    .photobanner5 img {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    }
+    .photobanner5 img:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    cursor: pointer;
+    -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    }
+</style>
+<style type="text/css">
+    /*photobanner5*/
+    width: 670px;
+    }
+    /*keyframe animations*/
+    .first2 {
+    -webkit-animation: bannermove5 5s linear infinite;
+    -moz-animation: bannermove5 5s linear infinite;
+    -ms-animation: bannermove5 5s linear infinite;
+    -o-animation: bannermove5 5s linear infinite;
+    animation: bannermove5 5s linear infinite;
+    }
+    @keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-moz-keyframes bannermove5 {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-webkit-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-ms-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-o-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    .photobanner5 {
+    width:670px;
+    margin-bottom: 0px;
+    }
+    .photobanner5 img {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    }
+    .photobanner5 img:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    cursor: pointer;
+    -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    }
+</style>
+
+				</div></div><div id='ctl05_portlet_13271e4a-df9d-4e82-b79b-1beee8ee1f50' style="width:670px;height:150px;float:left"><div>
+					<table cellspacing="1" style="left: -29px; width: 650.8px; height: 237.8px; top: -3.28571px;">
+    <tbody>
+        <tr>
+            <td style="text-align: left; vertical-align: top; width: 200px;">
+            <p style="text-align: left; margin-left: 40px;"><span style="font-family: Arial;"><strong><span style="font-size: 11px; color: #0c0c0c;"><a href="https://en.hcmute.edu.vn/ArticleId/6e176546-83e3-4510-bd2d-c8c6918f47a5/hcmute-alumni-sports-festival-2025-a-gathering-of-sportsmanship-and-connection-with-hcmute">HCMUTE Alumni Sports Festival 2025: A Gathering of Sportsmanship and Connection with HCMUTE</a></span></strong></span></p>
+            <p style="text-align: left; margin-left: 40px;"><span style="font-size: 9px; font-family: Arial;">
+            With the desire to create a healthy and meaningful sports playground while strengthening the bonds among generations of alumni, faculty, and businesses, on September 21, 2025, the Alumni Association of Ho Chi Minh City University of Technology and Education (HCMUTE) organized the 2025 Alumni Sports Festival, attracting the enthusiastic participation of nearly 200 athletes from various units, enterprises, and alumni groups.</span></p>
+            </td>
+            <td style="text-align: left; vertical-align: top; width: 200px;">
+            <p style="margin-left: 40px; text-align: left;"><span style="font-family: Arial;"><span style="margin: 0px auto; padding: 0px; font-size: 12px; color: #0070c0;"><strong style="margin: 0px auto; padding: 0px;"><span style="margin: 0px auto; padding: 0px; color: #000000;"><a href="https://en.hcmute.edu.vn/ArticleId/11eca2f7-9bcb-4cdf-bc6a-3af21fd90f69/official-launch-of-the-accreditation-survey-for-eight-academic-programs-at-hcmute"></a><a href="https://en.hcmute.edu.vn/ArticleId/0da1fd27-ca72-4475-9323-8f45ea68af3a/hcmute-trade-union-brought-a-loving-mid-autumn-festival-to-the-children-of-staff-and-employees">HCMUTE Trade Union Brought a Loving Mid-Autumn Festival to the Children of Staff and Employees</a></span></strong></span><a href="https://hcmute.edu.vn/?ArticleId=99fbd293-b297-49a5-89e8-48e60b48cd2d" style="margin: 0px auto; padding: 0px; text-decoration-line: none; text-align: justify; font-size: x-small;"><span style="margin: 0px auto; padding: 0px; color: #0070c0;"><br style="margin: 0px auto; padding: 0px;" />
+            </span></a><span style="margin: 0px auto; padding: 0px; text-align: justify; font-size: 9px;">In harmony with the joyful spirit of the Mid-Autumn Festival, on the evening of October 3, 2025 (the 12th day of the 8th lunar month), the Trade Union of Ho Chi Minh City University of Technology and Education (HCMUTE) organized the &ldquo;Mid-Autumn Festival Night 2025&rdquo; program for the children of the university&rsquo;s staff and employees.</span></span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br />
+
+				</div></div>
+			</div>
+		</div></td><td><div id="pnRight">
+			<div id="pnRightDisplay" style="width:300px; height:300px">
+				<div id='ctl05_portlet_317ad451-fb39-4f72-86ed-df5018ecc4e4' style="float:left;"><div>
+					<a href="https://360.hcmute.edu.vn/"><img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/360%20tour.jpg" style="width: 300px; height: 187px;" /></a>
+
+				</div></div><div id='ctl05_portlet_145222c8-1afa-494f-8865-6663e3d42e42' style="padding:20px 0px 0px 0px;width:308px;float:left"><div>
+					<div class="photobanner5" style="text-align: left;"><a href="https://icmt2025.hcmute.edu.vn/"><img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/Nam%202025/Hoi%20thao.jpg" style="width: 306px; height: 88px;" /></a></div>
+<div class="photobanner5" style="text-align: left;">
+<strong><span style="font-size: 12px; color: #000000;">
+<style type="text/css">
+    /*photobanner5*/
+    width: 600px;
+    }
+    /*keyframe animations*/
+    .first2 {
+    -webkit-animation: bannermove5 5s linear infinite;
+    -moz-animation: bannermove5 5s linear infinite;
+    -ms-animation: bannermove5 5s linear infinite;
+    -o-animation: bannermove5 5s linear infinite;
+    animation: bannermove5 5s linear infinite;
+    }
+    @keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-moz-keyframes bannermove5 {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-webkit-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-ms-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-o-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    .photobanner5 {
+    width:600px;
+    margin-bottom: 0px;
+    }
+    .photobanner5 img {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    }
+    .photobanner5 img:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    cursor: pointer;
+    -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    }
+</style>
+</span></strong></div>
+
+				</div></div><div id='ctl05_portlet_41226aae-2450-4887-99cc-f8d548710844' style="width:300px; float:left"><div>
+					<div class="photobanner5" style="text-align: left;"><a href="https://greenedasia.hcmute.edu.vn/"><img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/Album%20anh/Nut%20lien%20ket.png" style="width: 310px; height: 77px;" /></a></div>
+<div class="photobanner5" style="text-align: left;">
+<strong><span style="font-size: 12px; color: #000000;">
+<style type="text/css">
+    /*photobanner5*/
+    width: 600px;
+    }
+    /*keyframe animations*/
+    .first2 {
+    -webkit-animation: bannermove5 5s linear infinite;
+    -moz-animation: bannermove5 5s linear infinite;
+    -ms-animation: bannermove5 5s linear infinite;
+    -o-animation: bannermove5 5s linear infinite;
+    animation: bannermove5 5s linear infinite;
+    }
+    @keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-moz-keyframes bannermove5 {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-webkit-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-ms-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-o-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    .photobanner5 {
+    width:600px;
+    margin-bottom: 0px;
+    }
+    .photobanner5 img {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    }
+    .photobanner5 img:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    cursor: pointer;
+    -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    }
+</style>
+</span></strong></div>
+
+				</div></div><div id='ctl05_portlet_c4d58793-5907-434b-a839-29a1d04fdc93' style="width:300px; float:left"><div>
+					<div class="photobanner5" style="text-align: left;">&nbsp;</div>
+&nbsp;
+<p class="photobanner5" style="text-align: left;"><a href="https://jte.edu.vn/index.php/jte/index"><img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/Tap%20chi%20MOI.jpg" style="width: 300px; height: 105px;" /></a></p>
+<p style="text-align: left;"><a href="https://careerhub.hcmute.edu.vn/"><img alt="" src="/Resources/Images/SubDomain/HomePage/Nut/New/z4365501568531_9f056efcfffbab395288fb5e04023ec3.jpg" style="width: 300px; height: 113px;" /></a></p>
+<style type="text/css">
+    /*photobanner5*/
+    width: 600px;
+    }
+    /*keyframe animations*/
+    .first2 {
+    -webkit-animation: bannermove5 5s linear infinite;
+    -moz-animation: bannermove5 5s linear infinite;
+    -ms-animation: bannermove5 5s linear infinite;
+    -o-animation: bannermove5 5s linear infinite;
+    animation: bannermove5 5s linear infinite;
+    }
+    @keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-moz-keyframes bannermove5 {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-webkit-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-ms-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    @-o-keyframes "bannermove5" {
+    0% {
+    margin-left: 0px;
+    }
+    100% {
+    margin-left: -2125px;
+    }
+    }
+    .photobanner5 {
+    width:600px;
+    margin-bottom: 0px;
+    }
+    .photobanner5 img {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    }
+    .photobanner5 img:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    cursor: pointer;
+    -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    }
+</style>
+
+				</div></div><div id='ctl05_portlet_ca175fe5-e422-4d64-abd1-1307d9dbad7c' style="float:left;"><div>
+					<iframe width="300" height="200" src="https://www.youtube.com/embed/0TCk2TbwQ2s?si=RXZKYOYaPqADGlmN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+				</div></div><div id='ctl05_portlet_19957df1-5483-4e49-837c-f79c39682112' style="height:500px;float:left"><div>
+					<iframe frameborder="0" src="//www.facebook.com/plugins/likebox.php?href=https://www.facebook.com/dhspkt.hcmute?fref=ts
+ref=stream;width=300&amp;height=1500&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=true&amp;show_border=true" scrolling="no" style="border: medium none; overflow: hidden; width: 300px; height: 800px;" allowtransparency="true"></iframe>
+
+				</div></div><div id='ctl05_portlet_1047fd1a-4629-4a3b-b5a9-d47052c11b07' style="padding:0px 0px 0px 0px;width:155px;float:right"><div>
+					<div class="xahoi">
+<ul>
+    <li><a href="#"><img alt="" src="/Resources/ImagesPortal/HomePage/facebook_1.png" /></a></li>
+    <li><a href="#"><img alt="" src="/Resources/ImagesPortal/HomePage/twiter_1.png" /></a></li>
+    <li><a href="https://www.youtube.com/@UTETVChannel"><img alt="" src="/Resources/ImagesPortal/HomePage/youtube_1.png" /></a></li>
+</ul>
+</div>
+
+				</div></div>
+			</div>
+		</div></td>
+	</tr><tr>
+		<td colspan="3"><div id="pnBottom">
+			<div id="pnBottomDisplay" style="padding:10px 0px 0px 0px;width:100%;line-height:normal;background-color:#3155A6;position:relative;height:110px">
+				<div id='ctl05_portlet_6acb8022-ac8b-4e3a-82ea-2f0b3b4f16c3' style="padding:0px 10px 10px 0px;width:155px;float:right"><div>
+					
+<div class="truycap">
+    <div class="online" style="width:155px;">
+        <p class="line_online"><span style="width:100px;float:left">Visit month:</span><span id="ctl05_portlet_6acb8022-ac8b-4e3a-82ea-2f0b3b4f16c3_Label4">15,006</span></p>
+        <p><span style="width:100px;float:left">Visit total:</span><span id="ctl05_portlet_6acb8022-ac8b-4e3a-82ea-2f0b3b4f16c3_Label1">321,457</span></p>
+    </div>
+</div>
+
+				</div></div><div id='ctl05_portlet_03dbf1da-b733-42ed-9a5a-481fde83089b' style="padding:15px 0px 10px 10px;width:670px;float:left"><div>
+					<div class="school">
+<p><span style="color: #ffffff;">Copyright &copy; 2013, HCMC University of Technology and Engineering<br />
+<strong>Add:</strong> No 1 Vo Van Ngan Street, Thu Duc Ward, Ho Chi Minh City<br />
+<strong>Tel: </strong>(+84 - 028) 38968641 - (+84 -028) 38961333 -&nbsp;(+84 -028)&nbsp;37221223<br />
+<strong>Fax:</strong>&nbsp;(+84 - 028) 38964922<br />
+<strong>E-mail: </strong>oia@hcmute.edu.vn</span></p>
+</div>
+
+				</div></div>
+			</div>
+		</div></td>
+	</tr>
+</table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#pnCenter .container .frame_hor").each(function (index) {
+            $(this).addClass("frame_hor_" + index);
+            console.log(index + "_item", "========");
+        });
+    });
+</script>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+window.__TsmHiddenField = $get('RadScriptManager1_TSM');Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadWindowManager, {"clientStateFieldID":"RadWindowManager1_ClientState","formID":"form1","iconUrl":"","minimizeIconUrl":"","name":"RadWindowManager1","skin":"Default","windowControls":"[]"}, null, null, $get("RadWindowManager1"));
+});
+Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadMenu, {"_childListElementCssClass":null,"_skin":"Green","attributes":{},"clientStateFieldID":"ctl05_portlet_e2050091-0a8f-43cb-bdd2-55495ad2e35c_RadMenu_ClientState","collapseAnimation":"{\"duration\":450}","expandAnimation":"{\"duration\":450}","itemData":[{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=5300f271-e2a6-4f40-9890-fc8022048ce5"},{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=cf8e6c67-f2b5-48af-990e-b230f343d74a"},{"navigateUrl":"~/Default.aspx?ArticleId=88619748-da53-4f27-934d-e709f320b4ce"}],"navigateUrl":"#"},{"items":[{},{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=81f7ebd5-325d-406e-a7c9-da6d8356c3ad"},{"navigateUrl":"~/Default.aspx?ArticleId=2f55eda8-0e90-4e03-8758-79c2c3937a0d"}]},{"navigateUrl":"~/Default.aspx?ArticleId=73bbe8dd-e2a4-48ee-9feb-db78d6c089e1"},{"items":[{"navigateUrl":"https://phongtruyenthongso.hcmute.edu.vn/"},{"navigateUrl":"https://drive.google.com/drive/folders/1boomc_ENfYzyJqnKDrSVAGLCcNfIEuvJ?zarsrc=1303"},{"items":[{"navigateUrl":"https://drive.google.com/file/d/1SpPOv1etOMZAhURHIILpFcsgeSCLgFmr/view"},{"navigateUrl":"https://drive.google.com/file/d/1a97jJ58Zbu_64csHMs9_Ws3Y0V0EhOEt/view"}],"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=5193ecda-84a1-4907-b9c4-b6fdd694f2dd"},{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=97ba0aca-f6d9-4ae8-91d7-f3a7f7ebf276"},{"navigateUrl":"~/Default.aspx?ArticleId=03b07728-55e4-4bdd-a4b4-a68c5a85a91f"},{"navigateUrl":"~/Default.aspx?ArticleId=b7610125-d46f-4805-bfa3-84c08477cdf5"},{"navigateUrl":"~/Default.aspx?ArticleId=97f3f416-f3b9-49da-b50f-2dcb58a82587"},{"navigateUrl":"~/Default.aspx?ArticleId=0577a544-49d0-4cb6-a332-338ffc579ca2"}],"navigateUrl":"#"}],"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=562e1264-8e5d-444f-8ba3-7f3823f3d858"},{"navigateUrl":"~/Default.aspx?ArticleId=d7c0869f-967b-4911-8318-06547e42a940"}],"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"items":[{"navigateUrl":"#"},{"navigateUrl":"https://fme.hcmute.edu.vn/Default.aspx?PageId=e01db6f6-8373-4b73-931c-c821c36809c7"},{"navigateUrl":"https://fae.hcmute.edu.vn/Default.aspx?PageId=e657256e-47c8-46c8-a3e3-875639f4450d"},{"navigateUrl":"https://fcft.hcmute.edu.vn/Default.aspx?PageId=272eec81-a53b-46a7-91a0-cc578039a240"},{"navigateUrl":"https://fit.hcmute.edu.vn/Default.aspx?PageId=48a07b93-9863-4cd1-ac80-6562d6178da7\u0026fbclid=IwAR2oKV0xSxQl7xb6T9-_gBnLxRMLMAGAninZxGOSXyn2W43FbJDfnzNkwek"},{"navigateUrl":"#"},{"navigateUrl":"https://feee.hcmute.edu.vn/Default.aspx?PageId=353eb420-6f23-4891-8857-43bbd10fd9c1"},{"navigateUrl":"https://fgam.hcmute.edu.vn/Default.aspx?PageId=d6416094-da3c-4ca6-b1ec-7a5c15c53197"},{"navigateUrl":"https://fas.hcmute.edu.vn/Default.aspx?PageId=de22ea7d-2ce8-4a98-87a6-24eaa0c6cc61"},{"navigateUrl":"https://fe.hcmute.edu.vn/Default.aspx?PageId=874cb0d4-4a23-4274-85d7-4cf48d3da392\u0026fbclid=IwAR1q0wPUateDy31e3Sh-Jd77FZBLZrXraBPkE7RssXE1VirYPBhjjVOQ2kQ"},{"navigateUrl":"https://ffl.hcmute.edu.vn/en"},{"navigateUrl":"https://fce.hcmute.edu.vn/Default.aspx?PageId=53c44691-a3cf-4366-b464-3e7e40de0a35"},{"navigateUrl":"#"},{"navigateUrl":"https://enfie.hcmute.edu.vn/"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"https://aao.hcmute.edu.vn/Default.aspx?PageId=6393db26-24eb-403e-a91f-af8422678c33"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"https://oia.hcmute.edu.vn/"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"https://jte.edu.vn/"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=9ba0eca6-905c-40f8-a62f-fbbcf268caa7"},{"navigateUrl":"~/Default.aspx?ArticleId=49d02a23-bfb8-476a-888d-4444e04d2740"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=11458b0e-26ca-4f8f-9f6d-08103b29d233"},{"items":[{"items":[{"items":[{"navigateUrl":"#"},{"navigateUrl":"~/Default.aspx?ArticleId=5ed31c7f-1573-4ef5-a4fa-f26678c51496"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"}],"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"~/Default.aspx?ArticleId=a87ccb49-63c3-4ca8-b0b2-a71bfe8945f3"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"~/Default.aspx?ArticleId=b3ab04b2-5e0d-4e4a-9c67-2eb94af45f12"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"},{"navigateUrl":"#"}],"navigateUrl":"#"}],"navigateUrl":"http://en.hcmute.edu.vn/ArticleId/11458b0e-26ca-4f8f-9f6d-08103b29d233/academic-programs"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=c4988e88-b110-43dc-b239-0eca25d94af4"},{"navigateUrl":"https://jte.edu.vn/index.php/jte"},{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=12464a34-c5db-42d5-8d80-947596f57e60"},{"navigateUrl":"~/Default.aspx?ArticleId=2cea08c8-7767-4a36-9fd9-64f71c979604"}],"navigateUrl":"#"}],"navigateUrl":"#"},{"items":[{"navigateUrl":"#"},{"navigateUrl":"https://oia.hcmute.edu.vn/"}],"navigateUrl":"https://oia.hcmute.edu.vn/"},{"items":[{"navigateUrl":"~/Default.aspx?ArticleId=4beeb38a-ac84-4041-9497-c709b59ab8df"},{"navigateUrl":"~/Default.aspx?TopicId=799f785e-fb30-47f8-9902-4bcdec6ec7a4"}]}]}, null, null, $get("ctl05_portlet_e2050091-0a8f-43cb-bdd2-55495ad2e35c_RadMenu"));
+});
+//]]>
+</script>
+</form>
+</body>
+</html>

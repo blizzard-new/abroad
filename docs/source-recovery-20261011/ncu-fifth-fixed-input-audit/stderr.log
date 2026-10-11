@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_ncu_fifth_git.py", line 25, in <module>
+    b=base64.b64decode(r['raw_base64']) if 'raw_base64'in r else r['raw_utf8'].encode('utf-8');assert hashlib.sha256(b).hexdigest()==receipt['sha256'],(name,receipt['url']);receipts[receipt['sha256']]={'receipt':receipt,'body':b}
+                                                                 ~^^^^^^^^^^^^
+KeyError: 'raw_utf8'

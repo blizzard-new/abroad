@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-11T16:26:37.387674+00:00",
+  "application_sha": "160aeacd15521d63df6a5624bd12821cc5d26cea",
+  "application_pushed": true,
+  "full_test_summary": {
+    "passed": 2906,
+    "skipped": 13
+  },
+  "full_test_unique_cases": 2919,
+  "notrun_collected_cases": 0,
+  "memory_attempts": [
+    {
+      "run": "integration160-cold-memory",
+      "completed_samples": 114,
+      "required_samples": 175,
+      "max_sample_rss_mib": 453.25390625,
+      "max_recorded_peak_mib": 457.52734375,
+      "status": "failed before completion",
+      "reason": "30-second screenshot timeout"
+    },
+    {
+      "run": "integration160-cold-r2-memory",
+      "completed_samples": 104,
+      "required_samples": 175,
+      "max_sample_rss_mib": 442.4453125,
+      "max_recorded_peak_mib": 448.59765625,
+      "status": "failed before completion",
+      "reason": "90-second desktop NTU-to-CCU dashboard wait timeout"
+    }
+  ],
+  "memory_acceptance": "pending observed cold rerun and warm run",
+  "full_local_runtime": "passed r2; initial ENOSPC failure retained",
+  "wheel_sha256": "2af961b4f031bda5f8a54b90cf92b52e1fb9f364302f716626f6b8d3706973a7",
+  "wheel_files": 6579,
+  "production_actions": "none"
+}

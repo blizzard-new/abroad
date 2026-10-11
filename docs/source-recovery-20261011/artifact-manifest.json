@@ -1,13 +1,13 @@
 [
   {
     "path": "README.md",
-    "bytes": 6398,
-    "sha256": "5882357e555bd6b09d34af55a109e713b522a51bf1869a3aa23bab7bfec8dbfa"
+    "bytes": 5289,
+    "sha256": "63f5e64bf37d93f7a5853263f26078642fd1aa274bc6b9e71eaaed0d773d83e3"
   },
   {
     "path": "RELEASE-PLAN.md",
-    "bytes": 8166,
-    "sha256": "a949219c64d8039f344b395e1198d2b0e488bfcf7064d2239ad3275968528641"
+    "bytes": 8053,
+    "sha256": "5aee4ed6d3ff628c39f862b80fc98af86d0470512ef031999f62e688fb35d80a"
   },
   {
     "path": "RUNS.md",
@@ -568,6 +568,11 @@
     "path": "ccu2-calendar-scoped-diagnostic-images/calendar-refined-390.png",
     "bytes": 188581,
     "sha256": "7e122334c6e015d69cecd2a90a3b60c2d177759b6a7063edc44b02464c2a6629"
+  },
+  {
+    "path": "ccu2-completed-pytest-temp-retired.json",
+    "bytes": 1117,
+    "sha256": "406131243d3346b695d10502770ab3c444ceebaae8ad528c2f96dc3ab43edcee"
   },
   {
     "path": "ccu2-delivery-audit.json",
@@ -2245,6 +2250,11 @@
     "sha256": "1e4be83c1a49fb7fc16168a3a1dc557cadd3e0eace9d863b00bffb194ac5c5f7"
   },
   {
+    "path": "checkpoint-160aeacd-full.json",
+    "bytes": 1207,
+    "sha256": "b89f0ccae41191f52cf7c0f17605ce90d10f571221a15a8cf64b8b76f195359f"
+  },
+  {
     "path": "checkpoint-160aeacd.json",
     "bytes": 86887,
     "sha256": "c9a09be3ab7b2245f5d50da2b1cda89aa16f774971c6788c6a078fa41cc8377a"
@@ -2253,6 +2263,11 @@
     "path": "checkpoint-8e65c47d.md",
     "bytes": 1383,
     "sha256": "a861b02f22370f477d2035c91512f943582a9a3648fbe3341787307cfad4403a"
+  },
+  {
+    "path": "checkpoint-before160-full-16541847.md",
+    "bytes": 6398,
+    "sha256": "5882357e555bd6b09d34af55a109e713b522a51bf1869a3aa23bab7bfec8dbfa"
   },
   {
     "path": "checkpoint-wheel-retired.json",
@@ -4476,8 +4491,8 @@
   },
   {
     "path": "harnesses/RELEASE-PLAN.md",
-    "bytes": 8166,
-    "sha256": "a949219c64d8039f344b395e1198d2b0e488bfcf7064d2239ad3275968528641"
+    "bytes": 8053,
+    "sha256": "5aee4ed6d3ff628c39f862b80fc98af86d0470512ef031999f62e688fb35d80a"
   },
   {
     "path": "harnesses/archive_checkpoint.py",
@@ -4515,6 +4530,11 @@
     "sha256": "6ee170370ceb5c4aebd0a46c083b1816fc126f26f17796eeca8afeb95f1c4ec1"
   },
   {
+    "path": "harnesses/audit_integration160_delivery.py",
+    "bytes": 4957,
+    "sha256": "410151ca21f4a5cfa7a332ff791dabebfb7884130a1af702da590416ca6a38de"
+  },
+  {
     "path": "harnesses/audit_milestone_delivery.py",
     "bytes": 4699,
     "sha256": "b752411d3ebccfe259253eccdf0fafbd5da4c9d14047a46ba289d978f04a18c1"
@@ -4523,6 +4543,16 @@
     "path": "harnesses/audit_ncu_e25_fixed.py",
     "bytes": 10026,
     "sha256": "4f9b05c9bbc024ca8e2d2290fba215d23593ac979784a3c9e1409a173595d017"
+  },
+  {
+    "path": "harnesses/audit_ncu_fifth_git.py",
+    "bytes": 6687,
+    "sha256": "1c45d04e07647ffe881f557ea0d3c02ca0205ca23307e6489e7573725ef22540"
+  },
+  {
+    "path": "harnesses/audit_ncu_fifth_semantics.py",
+    "bytes": 7023,
+    "sha256": "2a1a6abe860eb32d4186d7c1288541ca2b25c8d435ac03eb1991ae4404293ca5"
   },
   {
     "path": "harnesses/audit_ncu_fourth_git.py",
@@ -4590,6 +4620,11 @@
     "sha256": "7a09da716e7ff03548ce2436bebaeb8325827287f392d84e66060a6a53e07810"
   },
   {
+    "path": "harnesses/build_integration160_wheel.py",
+    "bytes": 4416,
+    "sha256": "d53ad6c050c50512960f02b2feb3e2fe0cc9d2fe395da500c8d97c990d37d7b2"
+  },
+  {
     "path": "harnesses/build_ntu3_wheel.py",
     "bytes": 4400,
     "sha256": "06991237608c4ea16ab05b911e195012160aa97a80f9cc1f4f79d8787573c30c"
@@ -4618,6 +4653,16 @@
     "path": "harnesses/check_photo_sources_live.py",
     "bytes": 1703,
     "sha256": "a88fe9afbb0b424cc6c0b1e689ee2388b57a033228ef439fff3d9ee12ba0a18e"
+  },
+  {
+    "path": "harnesses/deduplicate_historical_evidence.py",
+    "bytes": 2194,
+    "sha256": "fd02a47f15283103e8b14d9b8f00a5f791314e98e0de15560bc57ab7fb7f3337"
+  },
+  {
+    "path": "harnesses/deduplicate_owned_uv_archives.py",
+    "bytes": 2023,
+    "sha256": "2dc06ce6baf671c470eeec3df3f8002e58da6085738666adf0e37f725adfc7aa"
   },
   {
     "path": "harnesses/extract_baseline.py",
@@ -4655,9 +4700,19 @@
     "sha256": "db9a75863eabeb17a4f3f09816aae7972cbd1558c82b1e6cf382b4b1e046d592"
   },
   {
+    "path": "harnesses/install_integration160_wheel.py",
+    "bytes": 4538,
+    "sha256": "727923b9abae83b334ac96059b49125e68db4e8438cfe6cd82fbd5eb4666d36c"
+  },
+  {
     "path": "harnesses/install_semantics_wheel.py",
     "bytes": 4513,
     "sha256": "4f343ffb02ad6c16ed94986ad73eb25a99d704774e09b5c88a1d0598a029007b"
+  },
+  {
+    "path": "harnesses/integration160_verify_ncu_payloads.py",
+    "bytes": 1763,
+    "sha256": "6892ccb6d9c608bf1d7c5038681d40968031eb997268fc921dbde922248dc1e1"
   },
   {
     "path": "harnesses/live_source_acceptance.py",
@@ -4693,6 +4748,11 @@
     "path": "harnesses/ntu3_verify_ncu_payloads.py",
     "bytes": 1753,
     "sha256": "dd3da072c81ac45e9463cabf81c8c2cb0dab090c80c4998bdbf73c6e433f7d43"
+  },
+  {
+    "path": "harnesses/observe_memory_browser_failures.py",
+    "bytes": 2413,
+    "sha256": "6b4262cf65fbc1522ba7dbb172760eac61ced4616ff7f2be07022fc7f95db715"
   },
   {
     "path": "harnesses/pr-body.md",
@@ -4843,6 +4903,11 @@
     "path": "harnesses/write_final_evidence.py",
     "bytes": 10070,
     "sha256": "d86574df9fae5090bde08a3502a3f8423090601699115f6f8a1aff065d79de34"
+  },
+  {
+    "path": "historical-evidence-deduplication.json",
+    "bytes": 4328394,
+    "sha256": "aab9946c7dd4077573a50f070fb22fef6862ea3e6ab5b1d5934f6d2bc6c8800f"
   },
   {
     "path": "integrated-browser/metadata.json",
@@ -5393,6 +5458,1836 @@
     "path": "integrated-targeted-r2/stdout.log",
     "bytes": 115,
     "sha256": "a373a4a1010f28ac62e9776aeaf229bf0ff824d962815a90316495ca73efbead"
+  },
+  {
+    "path": "integration160-cold-images/ntu-destinations/globe-390.png",
+    "bytes": 256396,
+    "sha256": "dad8845708de6f3c7fbe1ceb2bb1b55ab38f48fcf83bbfa4a0c5a7b4dc549163"
+  },
+  {
+    "path": "integration160-cold-images/ntu-destinations/life-390.png",
+    "bytes": 667308,
+    "sha256": "4284f3c034f80407e6d1a05c3c8e7ca45a387c537de1fcb54eb6b23553639295"
+  },
+  {
+    "path": "integration160-cold-memory/memory-samples.json",
+    "bytes": 22438,
+    "sha256": "56a9ec0982516048265d15dd5eb3c9132217445271ef026c5d87ff1bca975700"
+  },
+  {
+    "path": "integration160-cold-memory/server.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-cold-memory-command/input-scripts/profile_growth_memory.py",
+    "bytes": 15785,
+    "sha256": "f71bf3bf6e3bc2ed38610a3beef0c2d9978bd756f11846aac8aee36845c3eefe"
+  },
+  {
+    "path": "integration160-cold-memory-command/metadata.json",
+    "bytes": 1347,
+    "sha256": "89e261a39b9f92bc07d992908f72fdbbfeb5218b063dfb08c57880d0dad2607d"
+  },
+  {
+    "path": "integration160-cold-memory-command/stderr.log",
+    "bytes": 1671,
+    "sha256": "a6a72cdeafd85dd7f84b1e45fbc199b01cd592781144c94704d1407e0f529960"
+  },
+  {
+    "path": "integration160-cold-memory-command/stdout.log",
+    "bytes": 3428,
+    "sha256": "08a99effcdf4ea67e9d2b67f11ea4ab6efe7d431a46f4122eb850c1208c6fa24"
+  },
+  {
+    "path": "integration160-cold-memory-r2-command/input-scripts/profile_growth_memory.py",
+    "bytes": 15785,
+    "sha256": "f71bf3bf6e3bc2ed38610a3beef0c2d9978bd756f11846aac8aee36845c3eefe"
+  },
+  {
+    "path": "integration160-cold-memory-r2-command/metadata.json",
+    "bytes": 1353,
+    "sha256": "357f06e1b329b09ba3ed176b3b6a601fc2a3b15b295a3f3fb1cacd06b730c90c"
+  },
+  {
+    "path": "integration160-cold-memory-r2-command/stderr.log",
+    "bytes": 1633,
+    "sha256": "72ff16ce9e515c645b721aae2ce7cc1f83f1e279c246fb7dc785a701bf88f010"
+  },
+  {
+    "path": "integration160-cold-memory-r2-command/stdout.log",
+    "bytes": 3037,
+    "sha256": "539ddfa1bdb1e232ce8ea337222cb9f77a53844569bf001114b4311ce8c50659"
+  },
+  {
+    "path": "integration160-cold-memory-wrapper.log",
+    "bytes": 1200,
+    "sha256": "971ecbebd2754fd77480eb945935821440a2ad90b46338c36c761d31cd150819"
+  },
+  {
+    "path": "integration160-cold-r2-images/ntu-destinations/globe-390.png",
+    "bytes": 256376,
+    "sha256": "f534cff0d166a523984d469fda9e4c384f36cc94f266892ad68ad15ef22f85d5"
+  },
+  {
+    "path": "integration160-cold-r2-images/ntu-destinations/life-390.png",
+    "bytes": 667285,
+    "sha256": "bd4c3f333fb749f31c011307ddbdbf899e750c2107a1ea1e5e3efc54da492d34"
+  },
+  {
+    "path": "integration160-cold-r2-memory/memory-samples.json",
+    "bytes": 20367,
+    "sha256": "751f8117b2a5af3c0f05e81f6aef4ce9186d7da89b13f5a1a21bca0f204d7556"
+  },
+  {
+    "path": "integration160-cold-r2-memory/server.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-cold-r3-images/ntu-destinations/globe-390.png",
+    "bytes": 256544,
+    "sha256": "f39fcd0ba13e571fb7c2cca9e68fd578bac3f85f4d2b217b1bffeb26af64c9fb"
+  },
+  {
+    "path": "integration160-cold-r3-images/ntu-destinations/life-390.png",
+    "bytes": 667444,
+    "sha256": "4cb22c6a2a877a05c43b934990884bdf00be5db54a758323a82ed5235860c8d7"
+  },
+  {
+    "path": "integration160-cold-r3-memory/memory-samples.json",
+    "bytes": 20787,
+    "sha256": "11097c64608d2df886aaf6dc665235d7c8e0137aa405b9cb5dad79b07d26b1a8"
+  },
+  {
+    "path": "integration160-cold-r3-memory/server.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-delivery/input-scripts/audit_integration160_delivery.py",
+    "bytes": 4957,
+    "sha256": "410151ca21f4a5cfa7a332ff791dabebfb7884130a1af702da590416ca6a38de"
+  },
+  {
+    "path": "integration160-delivery/metadata.json",
+    "bytes": 979,
+    "sha256": "d6478dc3dc774508c863d2e6702acd71da80db88a2364a49c4226328bce7d19f"
+  },
+  {
+    "path": "integration160-delivery/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-delivery/stdout.log",
+    "bytes": 1468,
+    "sha256": "00b41b374c1e557187074b58497c8c363ee08ad231112bf99bc426c3d50d369d"
+  },
+  {
+    "path": "integration160-delivery-audit.json",
+    "bytes": 12658,
+    "sha256": "8455513290160b411305488231f64da8854711d0dbe1c47df6612a50a8a4ae95"
+  },
+  {
+    "path": "integration160-delivery-wrapper.log",
+    "bytes": 892,
+    "sha256": "744aa95fc3b2c60d6a24d4cd50aaea4f90619c9c8485c73e1e602b165c980dbe"
+  },
+  {
+    "path": "integration160-full-shard-0/input-scripts/run_web_quality_tests.py",
+    "bytes": 8144,
+    "sha256": "1d63519c8d90b7b6337c78d04862b2cbb7c1ebc5fafbbe2da6761f1b6af26c07"
+  },
+  {
+    "path": "integration160-full-shard-0/metadata.json",
+    "bytes": 2038,
+    "sha256": "0773b985a02d48fa6ea0825600e87ec99e44e315d2bf217352dd9769d1b846c8"
+  },
+  {
+    "path": "integration160-full-shard-0/result.xml",
+    "bytes": 371671,
+    "sha256": "8fee171aa6e6eaa26bb3b4ac99e520cddd1d118ad7897fb51209efbce1083e23"
+  },
+  {
+    "path": "integration160-full-shard-0/shard-coverage/collect-nodeids.txt",
+    "bytes": 268603,
+    "sha256": "bcc45ab510aeb401b79f987630c0c88201400fd7680c39c721fab473258be538"
+  },
+  {
+    "path": "integration160-full-shard-0/shard-coverage/partition.json",
+    "bytes": 12586,
+    "sha256": "2a435ecd84605c0bfc73287b3c05898f3e1c674b9495d7e21e30013495748579"
+  },
+  {
+    "path": "integration160-full-shard-0/shard-coverage/result.json",
+    "bytes": 138,
+    "sha256": "567f2c68e974332d1b28503f88e7cd8c1429c1b539b459aaa63262d74263f4d4"
+  },
+  {
+    "path": "integration160-full-shard-0/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-full-shard-0/stdout.log",
+    "bytes": 827672,
+    "sha256": "be6b2012b5113761401397ac1ae9751d12adafb4ca77e3c0b9b17d8c876f58a0"
+  },
+  {
+    "path": "integration160-full-shard-0-images/no-snapshot-1440.png",
+    "bytes": 332774,
+    "sha256": "f46d265f8bc41683869b214447605e316f1da3018e8b6b6f42e7c428a55527e0"
+  },
+  {
+    "path": "integration160-full-shard-0-images/no-snapshot-390.png",
+    "bytes": 212731,
+    "sha256": "e421c0998f5990dd517ecf820645fb683a7e548620c94783430f937c47f3a344"
+  },
+  {
+    "path": "integration160-full-shard-0-images/outage-detail-1440.png",
+    "bytes": 1187239,
+    "sha256": "a7f33bc81a58a551bf06afd2f630f53a231c200aa75cb9e61471cd93a1e5319f"
+  },
+  {
+    "path": "integration160-full-shard-0-images/outage-detail-390.png",
+    "bytes": 544133,
+    "sha256": "479fe5fd1af1afd02f1baf219e5d2adc7c3b8e4b3a83c7b8e2507bae98081934"
+  },
+  {
+    "path": "integration160-full-shard-0-images/outage-saved-1440.png",
+    "bytes": 1418960,
+    "sha256": "8e280434c6d6a72e4ababe2de6b441a40cbf38e7d1fce33e652c16acebc14584"
+  },
+  {
+    "path": "integration160-full-shard-0-images/outage-saved-390.png",
+    "bytes": 632532,
+    "sha256": "7cb0e9e339487062baf1de3d9ec974c47b31b410fb39734019cba876bddd4c70"
+  },
+  {
+    "path": "integration160-full-shard-0-images/upei-reference-1440.png",
+    "bytes": 375757,
+    "sha256": "28313bc4871fe143f40ddd3bed4b672b33d398cb8bd1f0f983e487bc74ec464b"
+  },
+  {
+    "path": "integration160-full-shard-0-images/upei-reference-390.png",
+    "bytes": 118250,
+    "sha256": "08aa6492f2af6dec28997dfc9377fb1ead7cbc13ac1bf1942954b326fd0c968e"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/conditional-catalog-persistence-1280.json",
+    "bytes": 618,
+    "sha256": "3096a12bbf83ced74b0393d28bba69564087da53e7410e2bda1c14721b8c064e"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/conditional-catalog-persistence-1280.png",
+    "bytes": 328351,
+    "sha256": "b9e1f75305ec58e6bbb3eb638f684a5c91b1d09cc2301de944fc80da59766cb9"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/conditional-catalog-persistence-390.json",
+    "bytes": 617,
+    "sha256": "2a4e090a6e3cf8298b3d2327295fcd18c1fe29e9e521d4387304dd3176f40e17"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/conditional-catalog-persistence-390.png",
+    "bytes": 122307,
+    "sha256": "12d54f14fa83abf1d434e80f4b670b04477594da3cc8c07c45731cf0bd3754a7"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/conditions-native-years-1280.json",
+    "bytes": 381,
+    "sha256": "93b2cdf8c1740d157e25ac82908033d976472e38aefcc572974e8d0a21b11371"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/conditions-native-years-1280.png",
+    "bytes": 274232,
+    "sha256": "49c59b47f2c0866dbf0b5954367d77428cae240d9bb090fbfac22cb2a004f8b7"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/conditions-native-years-390.json",
+    "bytes": 380,
+    "sha256": "a3f21c01eb8ebb387dc1a6cdfe1b894cbdb0ea4541a9b612a6d8579bb4213079"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/conditions-native-years-390.png",
+    "bytes": 100293,
+    "sha256": "924e9ea62d216874d52e505e27b1db8e6d391454bff3aacdb882586d0165b86b"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/filters-favorites-comparison-1280.json",
+    "bytes": 396,
+    "sha256": "708a440cbb14db29fa199ec7b1a740a226a6420c8c188c07661a389e8eca6bf8"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/filters-favorites-comparison-1280.png",
+    "bytes": 370632,
+    "sha256": "5e9eb71401d7dc3a22367b39a55dd86c2e636b4defff263eac2c66d6a8f1047a"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/filters-favorites-comparison-390.json",
+    "bytes": 395,
+    "sha256": "cfdf24ea473ab4942a065f4af76caad9734db0aabc7145667a7804813d8f4875"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/filters-favorites-comparison-390.png",
+    "bytes": 117097,
+    "sha256": "7b1491a32a70e33d0e8f5102dec703f223148ebc5554ec5c615a68af20082e67"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/jlpt-home-check-and-persistence-1280.json",
+    "bytes": 325,
+    "sha256": "c07427e74e1fef37e301aeaf759001516ac42394edd6da734f9c6c65b7c86d04"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/jlpt-home-check-and-persistence-1280.png",
+    "bytes": 748084,
+    "sha256": "f3082272661b0e377e12cd323c15f9eceb9c9aad2af020639792000af0008485"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/jlpt-home-check-and-persistence-390.json",
+    "bytes": 324,
+    "sha256": "a2937eedfc5505af949dee18f2df208e406914abf86aed5bf3acdfa38d62bcfc"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/jlpt-home-check-and-persistence-390.png",
+    "bytes": 206112,
+    "sha256": "c7827dca577f77e212e11df8d27614c1c69a8539cb380473ef40c80e4133ccf2"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/shared-home-query-navigation-1280.json",
+    "bytes": 352,
+    "sha256": "88132ddb5ae17570e3b409dd9b4d7ddfbb3167cb2f74a284c252c1dfddd2e894"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/shared-home-query-navigation-1280.png",
+    "bytes": 327858,
+    "sha256": "0ab7d121bb99dcef3451b41ba4996557452e1214eb55c72425af58ded4a4745f"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/shared-home-query-navigation-390.json",
+    "bytes": 351,
+    "sha256": "55dd1b13ee09bfd58396426f09848122a27ad12d4e2d0f6d9f502c5f9f63ccbf"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/shared-home-query-navigation-390.png",
+    "bytes": 123064,
+    "sha256": "6cb295766b1a854823b48437aef51343487f9139f71e54f9d9d2b89d86db42a5"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-autobiography-preparation-1280-render-1.png",
+    "bytes": 133669,
+    "sha256": "b02a47503b23045c777e1c9de1bf56faee91a68036013a5ee7750bfd2255be29"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-autobiography-preparation-1280-render-2.png",
+    "bytes": 77649,
+    "sha256": "ff6f359b84963ed543093bf286484e544a417aef1930ed710ea40e78bd86bc55"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-autobiography-preparation-1280.json",
+    "bytes": 917,
+    "sha256": "2deb00bd7f9543216bbc69c5d5b1b195df82e8291429c47829b6c56fdeb249f9"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-autobiography-preparation-1280.pdf",
+    "bytes": 75271,
+    "sha256": "4933d852ad7b2cdac30c4186e1ba7da4b06b3c51af57a731b37988067f78b500"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-autobiography-preparation-1280.png",
+    "bytes": 377800,
+    "sha256": "fb83532f899d6f6712f5559f2aef1a23296c03f98f5cc1b98b68dcfa783d286d"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-autobiography-preparation-390-render-1.png",
+    "bytes": 133669,
+    "sha256": "b02a47503b23045c777e1c9de1bf56faee91a68036013a5ee7750bfd2255be29"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-autobiography-preparation-390-render-2.png",
+    "bytes": 77649,
+    "sha256": "ff6f359b84963ed543093bf286484e544a417aef1930ed710ea40e78bd86bc55"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-autobiography-preparation-390.json",
+    "bytes": 913,
+    "sha256": "512a654e20f1c2fd5a44637d694becffda9ceed0b3486a1926cd030d67d64c12"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-autobiography-preparation-390.pdf",
+    "bytes": 75271,
+    "sha256": "4933d852ad7b2cdac30c4186e1ba7da4b06b3c51af57a731b37988067f78b500"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-autobiography-preparation-390.png",
+    "bytes": 131733,
+    "sha256": "a67671286e2dd9913e49f1b7052fe7ad743b9ddb66e44df43721d22166f9052f"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-study-plan-preparation-1280-render-1.png",
+    "bytes": 134447,
+    "sha256": "7744c45d14dbd46dda797bb9d3a8e18aea730281fba5b4b1ba9dc892ce365616"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-study-plan-preparation-1280-render-2.png",
+    "bytes": 80285,
+    "sha256": "a2f20349a791816e5bdfa79c9dcf06406883011e1f777c22e7475fa01d4bd4a9"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-study-plan-preparation-1280.json",
+    "bytes": 905,
+    "sha256": "c75a975ad23e29ac2b996f73043919f8136bc2c7490892cd7ffe9bb94c810b49"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-study-plan-preparation-1280.pdf",
+    "bytes": 76164,
+    "sha256": "091b0ef5bc9346157b62e09637d0cc38b8cb70fcd4e339205eab752d2c11babd"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-study-plan-preparation-1280.png",
+    "bytes": 380751,
+    "sha256": "eee00b4866235ec02809c6f1a3d99dfaf4bd9108ed5feb397211c35267e84612"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-study-plan-preparation-390-render-1.png",
+    "bytes": 134447,
+    "sha256": "7744c45d14dbd46dda797bb9d3a8e18aea730281fba5b4b1ba9dc892ce365616"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-study-plan-preparation-390-render-2.png",
+    "bytes": 80285,
+    "sha256": "a2f20349a791816e5bdfa79c9dcf06406883011e1f777c22e7475fa01d4bd4a9"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-study-plan-preparation-390.json",
+    "bytes": 901,
+    "sha256": "641bb1eb20a00076dea34df31a097e3f139d011890f7f711156294ba3e358084"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-study-plan-preparation-390.pdf",
+    "bytes": 76164,
+    "sha256": "091b0ef5bc9346157b62e09637d0cc38b8cb70fcd4e339205eab752d2c11babd"
+  },
+  {
+    "path": "integration160-full-shard-0-tku-acceptance-images/tku-study-plan-preparation-390.png",
+    "bytes": 133582,
+    "sha256": "e378b70061945dbbab0c274a142c5adf569ca944642e0d04970fa7959bf94b37"
+  },
+  {
+    "path": "integration160-full-shard-0-wrapper.log",
+    "bytes": 1879,
+    "sha256": "4cdc6f52935c1a70df00d4bf2ddb23ea4bdadabd203dd6ee838d67a5a7714602"
+  },
+  {
+    "path": "integration160-full-shard-1/input-scripts/run_web_quality_tests.py",
+    "bytes": 8144,
+    "sha256": "1d63519c8d90b7b6337c78d04862b2cbb7c1ebc5fafbbe2da6761f1b6af26c07"
+  },
+  {
+    "path": "integration160-full-shard-1/metadata.json",
+    "bytes": 2038,
+    "sha256": "2735ff8be4ca45a69eda4b305306903d635d4e1f91447acfee4840b0599b689f"
+  },
+  {
+    "path": "integration160-full-shard-1/result.xml",
+    "bytes": 25331,
+    "sha256": "3a57d28b55c44bb876b6b209f6d8a844971f7dfd911941c506d414810203f2a8"
+  },
+  {
+    "path": "integration160-full-shard-1/shard-coverage/collect-nodeids.txt",
+    "bytes": 19476,
+    "sha256": "498102f8167f21405ca6a9fbdc3df93dbff627816c353d0a53577ffdedd7a415"
+  },
+  {
+    "path": "integration160-full-shard-1/shard-coverage/partition.json",
+    "bytes": 12586,
+    "sha256": "5b4d89bb374c844433c8ee3e83f881ae82bd75be87683a8770e97c4d695469dd"
+  },
+  {
+    "path": "integration160-full-shard-1/shard-coverage/result.json",
+    "bytes": 139,
+    "sha256": "bc4fa8ac41948ca1af14f99354b16fe0dc6e47499eb1c5bbae657f134084c882"
+  },
+  {
+    "path": "integration160-full-shard-1/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-full-shard-1/stdout.log",
+    "bytes": 61540,
+    "sha256": "635ea695f5e1701f7c3d194725488388053983a31501aab731442da25bf1288c"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/a-b-a-newest-home-document-fields-1440.png",
+    "bytes": 356816,
+    "sha256": "596cb1b9e43f973b335270c42b0449aeb5f6f45dbd2831854f9a087e29a2e41e"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/a-b-a-newest-home-document-fields-390.png",
+    "bytes": 128852,
+    "sha256": "342c410e667cbff9f9ec499255e3222ec2a772f491e2a708f3c2236c95b65a0b"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/external-template-1440.json",
+    "bytes": 384,
+    "sha256": "ad87300aa1e4bf06d46b4d1770c97e2b95f1ee2448ea8d4c4735c5f378087f43"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/external-template-390.json",
+    "bytes": 383,
+    "sha256": "51ff5bd00fa4c7a6b47c4c5c1455ef2b2b72e1128a904e3051329a667a7c7a3c"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/home-\u570b\u7acb\u4e2d\u6b63\u5927\u5b78-1440.png",
+    "bytes": 351785,
+    "sha256": "f4545c25964cd188399d03d2089863be8a88bb67236130596f589aeeca1e1e2c"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/home-\u570b\u7acb\u4e2d\u6b63\u5927\u5b78-390.png",
+    "bytes": 128404,
+    "sha256": "79288fae4e1fd6a1bca8d5617b8cee2cee33dbfbce515d4b08f9497758a77174"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/home-\u570b\u7acb\u81fa\u5317\u5927\u5b78-1440.png",
+    "bytes": 341867,
+    "sha256": "4ba5b2720c39464f86508b32db9ef1be56915a07d298f68df53e64ad3aa93dd3"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/home-\u570b\u7acb\u81fa\u5317\u5927\u5b78-390.png",
+    "bytes": 115597,
+    "sha256": "1c1045b54c39decf83e7850c561889bcea6c9ababc7a78bc5ab5c7d76d412fd6"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/home-\u570b\u7acb\u81fa\u7063\u5927\u5b78-1440.png",
+    "bytes": 350277,
+    "sha256": "562a0388558eb0e089c5c7781a5e12fcace1666a0fc2fe242ca0d76952a59ebd"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/home-\u570b\u7acb\u81fa\u7063\u5927\u5b78-390.png",
+    "bytes": 121605,
+    "sha256": "c5a04f62c65837c08ac6d2fc5d04d61b7d4289e589f031004fceff2020243576"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/home-\u9577\u5e9a\u5927\u5b78-1440.png",
+    "bytes": 349120,
+    "sha256": "a9b2a168707827812ca11d43c2f1b0682269204c85b729e3e333041503d08ef9"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/home-\u9577\u5e9a\u5927\u5b78-390.png",
+    "bytes": 120668,
+    "sha256": "c9434f65de876d2f697d774680b4a7e3ae2c8a1bf457d34a95a701ba7c7e3a01"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/late-detail-keeps-newest-qualification-source-1440.png",
+    "bytes": 443804,
+    "sha256": "a881ee3ecee3bdcc60ee74cb20d3699fdeff89970b3166c0cbd6691993c64eda"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/late-detail-keeps-newest-qualification-source-390.png",
+    "bytes": 130460,
+    "sha256": "068a4f1967eee046e988891dfd5a624833a749c73ce5ea60c9c72ff956e00e18"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/late-target-source-and-draft-reloaded-1440.png",
+    "bytes": 433535,
+    "sha256": "80e6a1fa8d8d698c22a742027ff0909ebb11d5586f84a665bb77d645bfcbd9bb"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/late-target-source-and-draft-reloaded-390.png",
+    "bytes": 148545,
+    "sha256": "1f67f358e17fd66cc313459f5ad78df84db3a37d3612e7cbed96709d1ef98a4e"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/queued-save-original-home-reloaded-1440.png",
+    "bytes": 411519,
+    "sha256": "169ab927e37b76ce0988231b5a984ed3531ab3810673cf23fb856fb590659609"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/queued-save-original-home-reloaded-390.png",
+    "bytes": 148545,
+    "sha256": "1f67f358e17fd66cc313459f5ad78df84db3a37d3612e7cbed96709d1ef98a4e"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-advisor-1440.png",
+    "bytes": 321365,
+    "sha256": "e60a1da97ab8ef9561b64b37c0d4b5a04dcdbb0a5c0324e00a28fc01c89ead0e"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-advisor-390.png",
+    "bytes": 149070,
+    "sha256": "edf6e63e91257e09a9951f97f602da61748478cd226d62cdc25895c122ea8849"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-dashboard-cold-loads.json",
+    "bytes": 460,
+    "sha256": "7ff14a995d048b17632468aba01d190fda32258377c4bca767f0b731f7886b9b"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-document-stages-conditions-1440.png",
+    "bytes": 265074,
+    "sha256": "18701e227f10e317d49ddaa87ca0f259bab5687491a759e300fb01a0a11cce35"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-document-stages-conditions-390.png",
+    "bytes": 120798,
+    "sha256": "be865c17ac03b4e28f3d1ef94070f84dddbf99fdd9ddad799cde6d7001528d24"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-favorites-comparison-1440.png",
+    "bytes": 507218,
+    "sha256": "229846b7e538780377c5950843a38d9277485a1406713098f7a6a3ca7e9fa8c2"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-favorites-comparison-390.png",
+    "bytes": 101270,
+    "sha256": "c1f911972b348f10f9eb56b70dd9c11d08c142cd3785ae3f956f0a123ac4c4c2"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-plan-reloaded-1440.png",
+    "bytes": 433535,
+    "sha256": "80e6a1fa8d8d698c22a742027ff0909ebb11d5586f84a665bb77d645bfcbd9bb"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-plan-reloaded-390.png",
+    "bytes": 148545,
+    "sha256": "1f67f358e17fd66cc313459f5ad78df84db3a37d3612e7cbed96709d1ef98a4e"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-public-extension-template-1440.png",
+    "bytes": 290050,
+    "sha256": "6c6dd78e942a6b0ac6556609bf6c17aa878f3b560e53d9f56a4e67bfa2c0b5fc"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-public-extension-template-390.png",
+    "bytes": 126190,
+    "sha256": "662bb00a5d68bc86f996862012019ea076d273e489f253374f71a4fde42356c7"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-response-delay-detail-1440.json",
+    "bytes": 1308,
+    "sha256": "89ee03fa93d6749acdb421f48b17db8f1eb82a4b10659ccc9f756d4efdd8d2bb"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-response-delay-detail-390.json",
+    "bytes": 1308,
+    "sha256": "89ee03fa93d6749acdb421f48b17db8f1eb82a4b10659ccc9f756d4efdd8d2bb"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-response-delay-home-1440.json",
+    "bytes": 2772,
+    "sha256": "31174ad103eae664c9053d66d6fed3cc6d9f2be876cfdf1f322fcd7fb4b0340a"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-response-delay-home-390.json",
+    "bytes": 2772,
+    "sha256": "a9c4343eca4cefae558739c6df789588c1fdd6ec7ca2186891a40c94b891296e"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-response-delay-target-1440.json",
+    "bytes": 508,
+    "sha256": "3ad64abccad9958dbc1b75d928fda9dde557960093b4f00cc9f29788315f1f54"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-response-delay-target-390.json",
+    "bytes": 508,
+    "sha256": "3ad64abccad9958dbc1b75d928fda9dde557960093b4f00cc9f29788315f1f54"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-tool-draft-reloaded-exchange-application-data-1440.png",
+    "bytes": 409499,
+    "sha256": "6fc54ec0e03ff77c0fc3bd870e17f1ad41ec41836c38c2b6a9da06cfc875ae93"
+  },
+  {
+    "path": "integration160-full-shard-1-ccu-images/real-tool-draft-reloaded-exchange-application-data-390.png",
+    "bytes": 123572,
+    "sha256": "83cf070fd87bd4f76b9daceea07f920120d0cb60aed8ea39a12c4679387f0617"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ccu-1440.json",
+    "bytes": 174,
+    "sha256": "ec33759e766a4c20318c2166e7bcbb7d3e7f5746150256cfefd3ba8c515a1b23"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ccu-390.json",
+    "bytes": 173,
+    "sha256": "36357e715a006507b8efbfe25bc1df68255fe97f65d4c2a173efd3611e637945"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ccu-home-1440.png",
+    "bytes": 402340,
+    "sha256": "1249dba80eac08a7aef1de3e61320d0279e629ec86f41948ecfda9ee4bc7a8c7"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ccu-home-390.png",
+    "bytes": 199113,
+    "sha256": "f106dc929f9f6e4f1f1ba2bdb5176250747e71df1b7ce1a766708710ed68eb8f"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ccu-map-1440.png",
+    "bytes": 473498,
+    "sha256": "fd010f3931d4f67a532b6bfdae26f08275083b123a6547749906a07359672d6d"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ccu-map-390.png",
+    "bytes": 234239,
+    "sha256": "c037da2a33a301d5b6cbc7648d6fae0a90486ae15d1ee42d90092e4497d5c9a3"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ccu-photo-missing-1440.png",
+    "bytes": 506944,
+    "sha256": "896ee55bbd2785f661cdfd941f05bea56309c1b0b70aa1a7920f2b04b77b2e73"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ccu-photo-missing-390.png",
+    "bytes": 166468,
+    "sha256": "b4a359d3b2814de756fe3e38abdcca7406b32debf82e5a717eaebb19bccd45b9"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ccu-photo-verified-1440.png",
+    "bytes": 507667,
+    "sha256": "e8ff882940ff4c83402023e9772a4f5af7469b186c6b87c116bad72912271c56"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ccu-photo-verified-390.png",
+    "bytes": 162493,
+    "sha256": "2a9291d2fdd50a2a09edf3045c9cda951427dd2d7f603d80f9ef3795fde53b8f"
+  },
+  {
+    "path": "integration160-full-shard-1-images/cgu-1440.json",
+    "bytes": 167,
+    "sha256": "64b314f491c229b4540194eb938a08dd8faefac1f1bf9cb9bebaa95e98f07ad7"
+  },
+  {
+    "path": "integration160-full-shard-1-images/cgu-390.json",
+    "bytes": 166,
+    "sha256": "2da4187c9e1c594c6c5509ee4e13ea60fe2e8333b0474ed7079b4bce3a9a49f1"
+  },
+  {
+    "path": "integration160-full-shard-1-images/cgu-home-1440.png",
+    "bytes": 437093,
+    "sha256": "93f5e6f78168a59392eadb1611d84c28008b179f0f04feaede22c35616e5b690"
+  },
+  {
+    "path": "integration160-full-shard-1-images/cgu-home-390.png",
+    "bytes": 228721,
+    "sha256": "58037f9c2f2481ce6c97f6e80e6500da3a20d022435e44d5dbbc28c80bbc2ba8"
+  },
+  {
+    "path": "integration160-full-shard-1-images/cgu-map-1440.png",
+    "bytes": 501551,
+    "sha256": "80e3a45a3eda1e7c96c5c06be34f0f42f7cd111b131c05e4b5ef271e8fd73661"
+  },
+  {
+    "path": "integration160-full-shard-1-images/cgu-map-390.png",
+    "bytes": 260822,
+    "sha256": "a49d7a25b7f196a38d73ec2dc502a4956309899c13155a9d880d8eb4ee1e5db0"
+  },
+  {
+    "path": "integration160-full-shard-1-images/cgu-photo-verified-1440.png",
+    "bytes": 470727,
+    "sha256": "a5c2ce454a198a061ee817874126f9652f650afbeddab5f161f65a4dd6355ddd"
+  },
+  {
+    "path": "integration160-full-shard-1-images/cgu-photo-verified-390.png",
+    "bytes": 191936,
+    "sha256": "30c3d56f695587f692ba6ef65c75be310f6c5589b0175cf3a6203a541248b6fb"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ncu-1440.json",
+    "bytes": 175,
+    "sha256": "726abba5800c6a54c14b2f99f9616ef95f548818ab28eff05e33af6665a8c817"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ncu-390.json",
+    "bytes": 174,
+    "sha256": "0db2ede643685d1d4bf4603fd97df0f4af91df2a0dd76f27fb1de0d81e7b0ee3"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ncu-home-1440.png",
+    "bytes": 408675,
+    "sha256": "44f4dea0f5ea0c8deab5260c2a9d8f1506ab77ea58631f4d0e1e5e9a2cba7b78"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ncu-home-390.png",
+    "bytes": 201818,
+    "sha256": "12c96bf4ea80e7d329f8fc403bb319e6ec7d1077fa551f9ecb01d8020f77f841"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ncu-map-1440.png",
+    "bytes": 470152,
+    "sha256": "566a44c330d36a435e0d1bb6f13d7e37b84661a418383d3ffbf34b3f125b27d5"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ncu-map-390.png",
+    "bytes": 231262,
+    "sha256": "a6b39ab885db1bbdb0d356d19adbe607d3a952addab50c5b7abe748223fab988"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ncu-photo-verified-1440.png",
+    "bytes": 425908,
+    "sha256": "1045aac4351d18c7cd8afe675a79f0f3d93ecb0004a314da5f1b778ea6cd912c"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ncu-photo-verified-390.png",
+    "bytes": 165352,
+    "sha256": "db0959a8e2ad133e23baaadc1dffae04098403465a277ae6652211cb8c2ee5e4"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntpu-1440.json",
+    "bytes": 175,
+    "sha256": "e660cd28edafc11e091461f7884d7ae9a14733ef9c59602b01d4f9f07fa1ff1c"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntpu-390.json",
+    "bytes": 174,
+    "sha256": "5e2802bdf98fd0da4f818ff2b12e698d9da8203725f709fc21aa2ce53d0fc95f"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntpu-home-1440.png",
+    "bytes": 408925,
+    "sha256": "4863cd1cf21c645c1779dda908abe3a70956f71ae99caa17535d395762c06980"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntpu-home-390.png",
+    "bytes": 201670,
+    "sha256": "b67ec6279b4a1523cb3163df4e4e21028092197b4775c151790a2401ca10ec0c"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntpu-map-1440.png",
+    "bytes": 472717,
+    "sha256": "c112761e13d53058999143fa6fb3f7e7d113e0d23ea8b4cc125325e696509987"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntpu-map-390.png",
+    "bytes": 232742,
+    "sha256": "c6dda86c2d32cb07d7e541357a0336ddfd9fd3dc6ae5407e83f598e4a17bff44"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntpu-photo-missing-1440.png",
+    "bytes": 509391,
+    "sha256": "957108d51a37c1ea78876c2c672bbc6315e150e58fc52b941d7ecea9b88f256e"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntpu-photo-missing-390.png",
+    "bytes": 152014,
+    "sha256": "69e5fb7a599452367af9dede1d3342f7739d0c30bae83e4b295d5f0fb5de9859"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntpu-photo-verified-1440.png",
+    "bytes": 508573,
+    "sha256": "8ffa9229ac548a5cd66b737a843f524c681a973f991d060d5425f2e2dc7c2c31"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntpu-photo-verified-390.png",
+    "bytes": 155827,
+    "sha256": "3cc99417bd6be67f4c35b41e731954224c1c36cf1c041a40f8c95c0e60f2623d"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-1440.json",
+    "bytes": 174,
+    "sha256": "6c6e81fb1609f93a4d3366ca52f78717aea764e2b9332f14eab967717535b91b"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-390.json",
+    "bytes": 173,
+    "sha256": "827f6c56291383fd7a11a6dd8bc0b64987cc792620390326a8d10ad213677033"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-destinations/globe-1440.png",
+    "bytes": 467873,
+    "sha256": "c7ddc4b649182eec3524e37b5e9d4e738039b4df9bb17fec8bc2db45b2bde5c2"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-destinations/globe-390.png",
+    "bytes": 256576,
+    "sha256": "7d873ec8ee1e844c7f6a8eb6b55a2a363f87424ff18692089d736443753526c0"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-destinations/life-1440.png",
+    "bytes": 1327569,
+    "sha256": "d58619d9560a9ef7be778e27ab220acd426ad8b520bccaf98d0831e3f8e4bfca"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-destinations/life-390.png",
+    "bytes": 667444,
+    "sha256": "4cb22c6a2a877a05c43b934990884bdf00be5db54a758323a82ed5235860c8d7"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-home-1440.png",
+    "bytes": 407003,
+    "sha256": "ef71c09e7eb96eb609a5895f77c12ac70f7e1fd17952f1433b17eb57ca159c69"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-home-390.png",
+    "bytes": 201299,
+    "sha256": "406b062824d5bb9bd1a32d34d405a126113f6b5763d4564706bdf8e96386f60d"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-map-1440.png",
+    "bytes": 473589,
+    "sha256": "14b6b39cd603f9905b4600b4c377ac5b879df4433572f57e585e07c041baee08"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-map-390.png",
+    "bytes": 234426,
+    "sha256": "5218ac9088a36c5db5620163c181c4b9bb34b1fee09f69ca8e58bc8fdf97dfb4"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-photo-missing-1440.png",
+    "bytes": 489807,
+    "sha256": "88374b5d2af26c241c0008587561225164d78f785f6d69e036df1e2f456b2b71"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-photo-missing-390.png",
+    "bytes": 152128,
+    "sha256": "9f89c06dd9be054431a7d309bb6656a998446d81f5b1ca12b39a8ba93bc96979"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-photo-needs_review-1440.png",
+    "bytes": 492615,
+    "sha256": "355690baa8d421f6be6cfa8f7f00babf4e55d7cf5f557be51f60c6a81ede44fa"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-photo-needs_review-390.png",
+    "bytes": 155277,
+    "sha256": "efc6bd7beaace5df197d53b14a532f18d48785cc8ad5d8455dd8435a2c373430"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-photo-verified-1440.png",
+    "bytes": 447878,
+    "sha256": "bca0b394f634c08462f169b08e5bf8341582442272e33d6271338e1937f9e0d2"
+  },
+  {
+    "path": "integration160-full-shard-1-images/ntu-photo-verified-390.png",
+    "bytes": 165282,
+    "sha256": "eb647f6090ed6edfc9a40a13c3930e31c3c8f3b5b182c30d967a7c299ff579b7"
+  },
+  {
+    "path": "integration160-full-shard-1-images/tku-1440.json",
+    "bytes": 169,
+    "sha256": "21afb42e9233d664a6baf5a284001004f39a934d119aa9313a3fecbb281cce47"
+  },
+  {
+    "path": "integration160-full-shard-1-images/tku-390.json",
+    "bytes": 168,
+    "sha256": "c236fbbf54e54d5fe6dfb946bde5d6bf12867d523104e1ba90ab5411a221212d"
+  },
+  {
+    "path": "integration160-full-shard-1-images/tku-home-1440.png",
+    "bytes": 412114,
+    "sha256": "7ee73c918e209774471452190742eb4cde843a2607a267173cb1d4ba05d9d5e7"
+  },
+  {
+    "path": "integration160-full-shard-1-images/tku-home-390.png",
+    "bytes": 204506,
+    "sha256": "9ab6c9f75858982f987f178db9a255903bd3c08acd02ebde2124e7169769d5c0"
+  },
+  {
+    "path": "integration160-full-shard-1-images/tku-map-1440.png",
+    "bytes": 475778,
+    "sha256": "239e5c68a317c5fdafcb5b3365661eb7ce3488513642efa8935fa3e1b13453d2"
+  },
+  {
+    "path": "integration160-full-shard-1-images/tku-map-390.png",
+    "bytes": 233968,
+    "sha256": "7462ea3ff1270cb69484af5516a6816710ae506039c4d555fa02f916e4b4fdec"
+  },
+  {
+    "path": "integration160-full-shard-1-images/tku-photo-missing-1440.png",
+    "bytes": 473821,
+    "sha256": "2dae835f20fccc80a772885b309e2724fd2b0333fb646faca865918300b17d44"
+  },
+  {
+    "path": "integration160-full-shard-1-images/tku-photo-missing-390.png",
+    "bytes": 158395,
+    "sha256": "866ff48b7083dd08afa9dfebf1c8326fdf10ea86fe5be521f9ddc43308c143c3"
+  },
+  {
+    "path": "integration160-full-shard-1-images/tku-photo-verified-1440.png",
+    "bytes": 507349,
+    "sha256": "04d2423227b3b0c967e240011d90002777d3f8e04479a695fc671343c8f4d3d3"
+  },
+  {
+    "path": "integration160-full-shard-1-images/tku-photo-verified-390.png",
+    "bytes": 167574,
+    "sha256": "afa82a6e98e6763ca362adb73d9ec9564db1ff9fbacad4401d012c553c0f2073"
+  },
+  {
+    "path": "integration160-full-shard-1-tku-images/licensed-campus-detail-1280.json",
+    "bytes": 224580,
+    "sha256": "ec6f55117ade660d5658d0240c4a34b4469202f3eed7157c6a60d728484488ef"
+  },
+  {
+    "path": "integration160-full-shard-1-tku-images/licensed-campus-detail-1280.png",
+    "bytes": 883297,
+    "sha256": "56df66cfccb77c22c0f3d075827a872b74c9deb74ff79e2810cb6a46e9020ee6"
+  },
+  {
+    "path": "integration160-full-shard-1-tku-images/licensed-campus-detail-390.json",
+    "bytes": 224580,
+    "sha256": "ec6f55117ade660d5658d0240c4a34b4469202f3eed7157c6a60d728484488ef"
+  },
+  {
+    "path": "integration160-full-shard-1-tku-images/licensed-campus-detail-390.png",
+    "bytes": 274207,
+    "sha256": "367d924e8026c88b26a2e36622e12046f69ea1140ffa2804823ce4ffb00ba9cb"
+  },
+  {
+    "path": "integration160-full-shard-1-wrapper.log",
+    "bytes": 1879,
+    "sha256": "1736c9eb13a6808606a6b94275504e0cd4227f49bca07e451e13e0b6e41f26e1"
+  },
+  {
+    "path": "integration160-full-shard-2/input-scripts/run_web_quality_tests.py",
+    "bytes": 8144,
+    "sha256": "1d63519c8d90b7b6337c78d04862b2cbb7c1ebc5fafbbe2da6761f1b6af26c07"
+  },
+  {
+    "path": "integration160-full-shard-2/metadata.json",
+    "bytes": 2038,
+    "sha256": "b744e495f28fcb6eca5ee59da0259b06df459f0cb1651bada705f3106f9fac18"
+  },
+  {
+    "path": "integration160-full-shard-2/result.xml",
+    "bytes": 20920,
+    "sha256": "9d01eadf85472a8b4dc39fa747b8a267c13a4ae6320a5ae8ed3067e0afb16bd7"
+  },
+  {
+    "path": "integration160-full-shard-2/shard-coverage/collect-nodeids.txt",
+    "bytes": 15156,
+    "sha256": "c422fda514066b49211fb05804623d44eacb9f1288637d68d26b5d1c6bb5c695"
+  },
+  {
+    "path": "integration160-full-shard-2/shard-coverage/partition.json",
+    "bytes": 12586,
+    "sha256": "d12367c97ba0394fc65fdb946e070c051e546c10e7f9f01c6e8a9b1411c0d58e"
+  },
+  {
+    "path": "integration160-full-shard-2/shard-coverage/result.json",
+    "bytes": 139,
+    "sha256": "f5d881d3011a52c6d4fd5cac578efef0da5a6fa9b8a9e78d1ec724999f9c0c8e"
+  },
+  {
+    "path": "integration160-full-shard-2/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-full-shard-2/stdout.log",
+    "bytes": 55392,
+    "sha256": "3bf7378c9d29c2362f8b240b989144f8d9164873b99d0cd334d8cacf4c31c4bc"
+  },
+  {
+    "path": "integration160-full-shard-2-images/ateneo-reference-1440.png",
+    "bytes": 360927,
+    "sha256": "0d4701bfce88c016f4e719647da708a671a84e40c4d3152f2096878f8133ad17"
+  },
+  {
+    "path": "integration160-full-shard-2-images/ateneo-reference-390.png",
+    "bytes": 117146,
+    "sha256": "197226555efed767bed292daee0ec25ca58d44c35bbf0ecc8733710ca003ab39"
+  },
+  {
+    "path": "integration160-full-shard-2-images/current-reference-1440.png",
+    "bytes": 845527,
+    "sha256": "8ea0f15b9fc67188751074281d742991819ea9685d540b60a4318a86ebb359f9"
+  },
+  {
+    "path": "integration160-full-shard-2-images/current-reference-390.png",
+    "bytes": 275934,
+    "sha256": "864ceebfbeb5f9fd00175f8f9f9ad5ab3ebab763dac14895bedd988c1f13763e"
+  },
+  {
+    "path": "integration160-full-shard-2-wrapper.log",
+    "bytes": 1879,
+    "sha256": "a354024d904a37d35344fd21ca39f7494d06f4c06e960038a58c4d03c89e406b"
+  },
+  {
+    "path": "integration160-full-shard-3/input-scripts/run_web_quality_tests.py",
+    "bytes": 8144,
+    "sha256": "1d63519c8d90b7b6337c78d04862b2cbb7c1ebc5fafbbe2da6761f1b6af26c07"
+  },
+  {
+    "path": "integration160-full-shard-3/metadata.json",
+    "bytes": 2038,
+    "sha256": "0935f241d08bcb4b7f2b849e826b548af3d7e7f0919b7d2c85e17d9458f44782"
+  },
+  {
+    "path": "integration160-full-shard-3/result.xml",
+    "bytes": 23792,
+    "sha256": "f46dc0a8099559878c49cef52f43147a60d0df71eb570903fbeb709e886527bc"
+  },
+  {
+    "path": "integration160-full-shard-3/shard-coverage/collect-nodeids.txt",
+    "bytes": 17983,
+    "sha256": "9ac32df8e51907e8b80be12066d5fe79690c6f9f3ba7582cae085f592d707f10"
+  },
+  {
+    "path": "integration160-full-shard-3/shard-coverage/partition.json",
+    "bytes": 12586,
+    "sha256": "e7494ed08219307025cc14a67dfc6c46c0df9a1a67e0af3779a4e2473a9e80f9"
+  },
+  {
+    "path": "integration160-full-shard-3/shard-coverage/result.json",
+    "bytes": 139,
+    "sha256": "9531ab6efe7734a14aa68e1c1109267c56ca5b18369a85e738b070163342c866"
+  },
+  {
+    "path": "integration160-full-shard-3/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-full-shard-3/stdout.log",
+    "bytes": 60124,
+    "sha256": "e3fbe27cc59853e9fef21c8c1ff0430805a1576fff2da775b518c9fc57b54e6c"
+  },
+  {
+    "path": "integration160-full-shard-3-ccu-images/composite-source-119-1440.png",
+    "bytes": 378828,
+    "sha256": "01daec00c8fbdea6e369088257f9decbd1452e2565a96f0386b138e5d71ea248"
+  },
+  {
+    "path": "integration160-full-shard-3-ccu-images/composite-source-119-390.png",
+    "bytes": 160784,
+    "sha256": "34c277b9390476e5c42bd16bc63cf2504d6eff93075876cc7da9ad76824d930e"
+  },
+  {
+    "path": "integration160-full-shard-3-ccu-images/composite-source-83-1440.png",
+    "bytes": 372270,
+    "sha256": "c08eb84dfed9b1563879d9108f83a65006b6dc897657e6990088792d0cdde328"
+  },
+  {
+    "path": "integration160-full-shard-3-ccu-images/composite-source-83-390.png",
+    "bytes": 143269,
+    "sha256": "467ca844429807254d31016fdc7579078b4f262df4c9edcd6567d95ebab96122"
+  },
+  {
+    "path": "integration160-full-shard-3-images/ncu-alicante-campus-photo-credits.png",
+    "bytes": 93805,
+    "sha256": "26b28bde1ff02892d8e4dd14e9e790caae0b04e714e3f97517436378df23f566"
+  },
+  {
+    "path": "integration160-full-shard-3-images/ncu-\u5df4\u767b-390.png",
+    "bytes": 160722,
+    "sha256": "3f4d52ad56984e35a673b661c12b7c885259e23513fe938c6e5474fafa6a734f"
+  },
+  {
+    "path": "integration160-full-shard-3-images/ncu-\u6258\u99ac\u65af-1280.png",
+    "bytes": 440742,
+    "sha256": "36b2dde037230cb020124bd3512459f2ff6e85d5b7425f81e4f7627e1e06f848"
+  },
+  {
+    "path": "integration160-full-shard-3-images/ncu-\u6771\u82ac\u862d-390.png",
+    "bytes": 144089,
+    "sha256": "c8a1e97976c28d73622ff2b8e5f02d4effaf7d024bb18f02ccb0fa3d653c61de"
+  },
+  {
+    "path": "integration160-full-shard-3-images/ncu-\u7b26\u8332\u5821-1280.png",
+    "bytes": 452512,
+    "sha256": "7900b9942d99189a69b050b45ac5b783728d43f3ef2fcacdf51f0190bdf5dc67"
+  },
+  {
+    "path": "integration160-full-shard-3-images/ncu-\u8aa0\u4fe1-390.png",
+    "bytes": 154094,
+    "sha256": "cf04739a2ffbcfcd9c603d5da3b965c326afefed66571b7dbd80e863053ea27c"
+  },
+  {
+    "path": "integration160-full-shard-3-images/ncu-\u963f\u5229\u574e\u7279-1280.png",
+    "bytes": 388336,
+    "sha256": "0d2cabaaad3130ba9935993312609dd2bbaa6c7f159c0f74c38a7b7cb7b2e0fd"
+  },
+  {
+    "path": "integration160-full-shard-3-images/ntu-19-decoded-1440.json",
+    "bytes": 15716,
+    "sha256": "f7f8a0e08132858f7d5534afda82135f29f75964a0d5207545605c1ec63d8fea"
+  },
+  {
+    "path": "integration160-full-shard-3-images/ntu-19-decoded-390.json",
+    "bytes": 15716,
+    "sha256": "f7f8a0e08132858f7d5534afda82135f29f75964a0d5207545605c1ec63d8fea"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass2/ncu-pass2-\u50b3\u64ad\u8207\u8de8\u6587\u5316-390.png",
+    "bytes": 159600,
+    "sha256": "d5281b90b8c289a4be3de29722f4dae951d2c9622f463c32b9491a536e8f51aa"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass2/ncu-pass2-\u5217\u65e5-1280.png",
+    "bytes": 410218,
+    "sha256": "1a15f7642f24faf575738021e0739e4cbea8a222e928d84f19b18b8129a7dbca"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass2/ncu-pass2-\u5a01\u5c3c\u65af\u5361\u798f-390.png",
+    "bytes": 156476,
+    "sha256": "f28b1406690ae1cce657ef1434d28a207f3b58fa73aa9761c609e9476925bed2"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass2/ncu-pass2-\u8afe\u5fb7-1280.png",
+    "bytes": 428390,
+    "sha256": "bf4049a74bc7d49aa03d495c2cdafb8186f9b0f33da935b4a264dad83d6261fc"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass2/ncu-pass2-\u8afe\u66fc\u7b2c\u9ad8\u7b49-1280.png",
+    "bytes": 412889,
+    "sha256": "3fdeb47968c2a2409d27310c5c33b45fbaf4f03b9c42d30dee2c9d77b327532b"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass2/ncu-pass2-\u970d\u6069\u6d77\u59c6-390.png",
+    "bytes": 149034,
+    "sha256": "980962e93426574e5e017fb9546c2c30ebadab380663c13def7a63594416ddd2"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass2/ncu-pass2-\u99ac\u8cfd\u4e2d\u592e-390.png",
+    "bytes": 153072,
+    "sha256": "e0bf3965f90b0ec5f1367971f55163d51e9d6dbd1c541fd342f5a297bae96590"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass2/ncu-pass2-\u9b6f\u6602-1280.png",
+    "bytes": 432746,
+    "sha256": "9b7d8ecd1245b2d062fa6f195afc4e4689ba358beff3a55e96291c110e7a58e7"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass3/ncu-pass3-workflow-\u590f\u5a01\u5937\u5927\u5b78\u99ac\u8afe\u963f\u5206\u6821-1280.png",
+    "bytes": 428723,
+    "sha256": "292710b7f11e932201d22c2c52e5d18db3414554a7831b485aba68dd730ae2cf"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass3/ncu-pass3-workflow-\u590f\u5a01\u5937\u5927\u5b78\u99ac\u8afe\u963f\u5206\u6821\uff08\u81ea\u8cbb\uff09-390.png",
+    "bytes": 166120,
+    "sha256": "b18e887033a180c0b0d16837973a4042e661a6f804a1455aad11968c4c021a48"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass3/ncu-pass3-workflow-\u5a01\u65af\u5eb7\u8f9b\u5927\u5b78\u9ea5\u8fea\u905c-1280.png",
+    "bytes": 521946,
+    "sha256": "75d6a750665950cab9861675f00bbecec1f6b675a6cb78c80bc4e3b81477d531"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass3/ncu-pass3-\u590f\u5a01\u5937\u5927\u5b78\u99ac\u8afe\u963f\u5206\u6821-1280.png",
+    "bytes": 421903,
+    "sha256": "db0667adffecef41e1bbab36a0909726afa3988f65b8259611e86cea48ccf1d2"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass3/ncu-pass3-\u590f\u5a01\u5937\u5927\u5b78\u99ac\u8afe\u963f\u5206\u6821\uff08\u81ea\u8cbb\uff09-390.png",
+    "bytes": 153725,
+    "sha256": "0b631a110474c6091a11be3b8a7f592cc84c04d2a068ee5f3881af2827271f98"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass3/ncu-pass3-\u5a01\u65af\u5eb7\u8f9b\u5927\u5b78\u9ea5\u8fea\u905c-1280.png",
+    "bytes": 423016,
+    "sha256": "1b9f9016528bf810973a3c1c86f381caedd53f66e7d0f317d9f18234ab3f0aa2"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass3/ncu-pass3-\u7d10\u7d04\u5dde\u7acb\u5927\u5b78\u5967\u65af\u5a01\u683c\u5206\u6821-390.png",
+    "bytes": 157861,
+    "sha256": "28c228f60988c13acbce962a87bf63d77a228bdac6a0fb92a8beaad83f025f18"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass3/ncu-pass3-\u7d10\u7d04\u5dde\u7acb\u5927\u5b78\u5967\u65af\u5a01\u683c\u5206\u6821\uff08\u81ea\u8cbb\uff09-1280.png",
+    "bytes": 428984,
+    "sha256": "4d1b2852c4fe09938849f0f9fff57ea28bdde04e56973e5e4b6e905dd1a7e508"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-life-\u4f5b\u7f85\u91cc\u9054-390.png",
+    "bytes": 162021,
+    "sha256": "66c07708ed7c1ea2bae3cbb5f7c8cffcfd1cb672c83b1d71b79b7b94bafec3a6"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-life-\u5317\u4e9e\u5229\u6851\u90a3-1280.png",
+    "bytes": 425992,
+    "sha256": "3310caa9ddbe8ab366816f40009b0c6c343e8005e3af253ce7525626b77bbfea"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-life-\u66fc\u5c3c\u6258\u5df4-390.png",
+    "bytes": 157691,
+    "sha256": "46ce94460d35d83644706ddad09fe726eccf9a8b74e0bdfc0368e05f89dec65c"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-life-\u8499\u7279\u5a41-1280.png",
+    "bytes": 410566,
+    "sha256": "e2176abe869d983282e9d2ba4d38a1b5d7754318e1c359dad4a0163ceccef168"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-life-\u897f\u96ea\u68a8-390.png",
+    "bytes": 157341,
+    "sha256": "05f4d8403f33b109d0a27d530a9ac0d7d1d336b0ddbb2153c88662b4330f57ab"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-life-\u9053\u683c\u62c9\u65af-1280.png",
+    "bytes": 434155,
+    "sha256": "02f9c769ec97d8a8d557ff8ced293adc8eb0f7f8c1932d4aaa417e0d832508e9"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-workflow-\u4f5b\u7f85\u91cc\u9054-390.png",
+    "bytes": 154882,
+    "sha256": "bfd1251a2d8acd0c22d93c5315da521272abf4d5a55df884a207b7a2c3ea97e3"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-workflow-\u5317\u4e9e\u5229\u6851\u90a3-1280.png",
+    "bytes": 416846,
+    "sha256": "1d67a285e86c086ff363f3ec022bafd5f1ab7d755f53339f3e9d6e5868adafa7"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-workflow-\u66fc\u5c3c\u6258\u5df4-390.png",
+    "bytes": 178137,
+    "sha256": "be12d00c521aba7fff384dda410f3a8326aedabc3bca5a728c8527dd0e0cc143"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-workflow-\u8499\u7279\u5a41-1280.png",
+    "bytes": 530130,
+    "sha256": "38f5aab94375912707de30dbdc7de94912bf2cfce80f149f8253d53cad93cfdb"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-workflow-\u897f\u96ea\u68a8-390.png",
+    "bytes": 164963,
+    "sha256": "599903cea9f899194fd189ed3a71a718d1ebeb1bf252c84558a5635304a21ecc"
+  },
+  {
+    "path": "integration160-full-shard-3-images/pass4/ncu-pass4-workflow-\u9053\u683c\u62c9\u65af-1280.png",
+    "bytes": 425992,
+    "sha256": "2c73226c9f607eb1dda7b02a4e0570043bbcbc6676c9b6ff22eb9dc0056b4ce5"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-1440-arrival.png",
+    "bytes": 370686,
+    "sha256": "211a5ea4a43258ebf813a4ffce3ee9f9ff6b4a95d7b424a5e9599a16c0a15c06"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-1440-card-or-row.png",
+    "bytes": 411113,
+    "sha256": "ca706786d8cffee7068afeecded2cb815dce764a396dcc4c8ccd77a3d9191a48"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-1440-coe-visa.png",
+    "bytes": 360136,
+    "sha256": "69f7b5a6dd52d1f6be704e8a03fb120068a7ca7341d880ac0dc8e5069557bc91"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-1440-life.png",
+    "bytes": 492760,
+    "sha256": "1ed05647a0b03508265acc90c6f5895dd504019a2bdc8d1bccdbcf252897b3ab"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-1440-overview.png",
+    "bytes": 2189081,
+    "sha256": "33221530eca2a913d92422cfa131950094e556d96bc35bac90a07be4d14a82a7"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-1440-packet.png",
+    "bytes": 376170,
+    "sha256": "96ee6ba7c088088c75d9db93bd6a3ba5454c8972665529f3427b6cbbb22ec736"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-1440-source-gap.png",
+    "bytes": 465961,
+    "sha256": "f0f00f584c9cee098852ed7fcfa6d521914a1892d483430f2069a7a140c60761"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-390-arrival.png",
+    "bytes": 133827,
+    "sha256": "00db4d27e0f4d096508be822429a71668ab57dc877eb409ec8641631f624b193"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-390-card-or-row.png",
+    "bytes": 163296,
+    "sha256": "789e27a161acc042747f261d7c94c00a9a2ccd496c5a3913227a090bfb55a0dd"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-390-coe-visa.png",
+    "bytes": 141237,
+    "sha256": "ccd1d747e7d6381a45cc51118196d1ed152dd0b41b9aedc9af96842e6d93086a"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-390-life.png",
+    "bytes": 168271,
+    "sha256": "be3f8c1daa66a1597085dccbeb9c72b3a37883c4757176891a0e775ee3146c11"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-390-overview.png",
+    "bytes": 1569965,
+    "sha256": "334d0aff2183a3a6f853bd475ac2e0992bfff06f7434ea04126028c79623d957"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-390-packet.png",
+    "bytes": 141084,
+    "sha256": "146b04feb4f0efa49160a81c49f18192fd0226b3d14e2dee544cb856b157a582"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/kumamoto-390-source-gap.png",
+    "bytes": 131594,
+    "sha256": "29a91fe09d05c70ab6389f84fb97c6367690baff3fef76cc3a8cf765c5968a0b"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-1440-arrival.png",
+    "bytes": 328526,
+    "sha256": "f62f2fa210e61646094905fcca92b9c0105b9634260884a0b1c9f49be6c0df56"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-1440-card-or-row.png",
+    "bytes": 394715,
+    "sha256": "7b711195741813b064feaf793e9b9ff9e801bc8ba2cd89dc074eec31fce5fa39"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-1440-coe-visa.png",
+    "bytes": 363806,
+    "sha256": "71f297ec6f80555b7ffe9f510b83972540997ce396dd7bdee6b92a36b1a91faa"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-1440-life.png",
+    "bytes": 474766,
+    "sha256": "7d5a74c606f6b6ae3da3db2934e0850adf5b5c0bc20d4aac6f7c4f02d4d7e360"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-1440-overview.png",
+    "bytes": 2428055,
+    "sha256": "20d97d7787eb6d2bf2798b764f8970154645d685c60d47b4b40ee145869441e6"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-1440-packet.png",
+    "bytes": 390823,
+    "sha256": "f284c1cdc0c33bbff1814e4a49d3e764cf65a9352accac2c6e3c7a1a346e5ec7"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-390-arrival.png",
+    "bytes": 137052,
+    "sha256": "bed4d7e6d9ee55f17aba21fd7a741b598ec250edfdbbb8dc1c562a853427a77a"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-390-card-or-row.png",
+    "bytes": 159734,
+    "sha256": "441025ca7c9865678f35681b9e7495c5dfd6c0fa04283d711596c9cf6f699a05"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-390-coe-visa.png",
+    "bytes": 137112,
+    "sha256": "a551502557bc21eab84fa13e0806807b954f38f66721292a8c36acf5d4fa8d8e"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-390-life.png",
+    "bytes": 178770,
+    "sha256": "bf648dbb80bc3ea75c8f7279c8bb1db1965c720f4c02d311c82c0e83629912e8"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-390-overview.png",
+    "bytes": 1672925,
+    "sha256": "45c5106274400a92a4ad38a8a1a6b87c8242470053f078ccfc2fa167a69bdc80"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/nufs-390-packet.png",
+    "bytes": 134379,
+    "sha256": "57702e1770965be7ae4cc42b7f9199ef6218d37a0fbfb661ad8e45360f12908b"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-10-1-task-checked.png",
+    "bytes": 476092,
+    "sha256": "554a366c6eb7c15371405807f8eecaabbf6b53d643f05565fd0709ab995360e6"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-2-2-task-checked.png",
+    "bytes": 301396,
+    "sha256": "118d4908c547f175c5566b075a1c52d8e18f58965514c16acf0c75d7ba7205d4"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-2-3-task-checked.png",
+    "bytes": 299461,
+    "sha256": "85af7b179fef2e987188a022d3eb9db5b8550cfb16bf7f9f07deae1b6373420b"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-arrival.png",
+    "bytes": 413187,
+    "sha256": "6e8ccae6074a8e1f6cba3e29326d6526895454201b0c7af86cca62255dce2671"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-card-or-row.png",
+    "bytes": 384816,
+    "sha256": "2000e97460bc7b45e6fedaf95d0b48f1c777d6588606653c9d3931680de8f8f8"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-coe-visa.png",
+    "bytes": 368629,
+    "sha256": "1035b73dbd99e4d366cdfce263060539d91bd751847ee7bdd190fd687838b8c0"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-corrected-catalog.png",
+    "bytes": 660897,
+    "sha256": "cc3fe80888653a379317b1ef50338eede7a777b89f8bc57afa78bdc98e88a377"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-life.png",
+    "bytes": 477979,
+    "sha256": "51bf616270194fd118e78042e7e68a7073abcbaea132f8c8844da932f5ff344b"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-overview.png",
+    "bytes": 2422738,
+    "sha256": "1cf101f89326b539ebab2513d9b15ee4de9a83d8d5230b026ff1efed80a8e879"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-packet.png",
+    "bytes": 390876,
+    "sha256": "dc07477b09daf9a0d8dc77089bd41fc9a0f68ff62c5fc9998043f5b6ef44904f"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-saved-checklist.json",
+    "bytes": 1529,
+    "sha256": "7cbe74af8112b7c32a410bb41013709e87ef53f5a59d156066ac67ed2423b0f6"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-1440-source-gap.png",
+    "bytes": 458949,
+    "sha256": "28202b7077df4b34ab2585a9d210bbecf83aa4e836abf74df5386c92fed05a48"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-10-1-task-checked.png",
+    "bytes": 180949,
+    "sha256": "2db2197ee9f32514c8e7372c4b61e269ec847bafc5715a945a5236f04098f7fd"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-2-2-task-checked.png",
+    "bytes": 174906,
+    "sha256": "b3d6ea522a1e4646c5387f1a74daca6b94776dd50de56d273dbf9e6ddde27495"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-2-3-task-checked.png",
+    "bytes": 164699,
+    "sha256": "1491a93cb3b410b67409394b18e2e20f1ea5c2fca001cdb346da3464876f1c92"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-arrival.png",
+    "bytes": 136297,
+    "sha256": "fbfacde6e8a98add8520d581a3d6a984d0dff6d2ca90ae6b9d4dc3962dcfd76d"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-card-or-row.png",
+    "bytes": 163204,
+    "sha256": "e03606a1ccc31a36b75439d086ac41db64fe966962dd99c42591811118b8d4dc"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-coe-visa.png",
+    "bytes": 141490,
+    "sha256": "ea25f16a5d20fd0843517f5e5956c986b93e74df92f1dd3467c77c485bdd2d3b"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-corrected-catalog.png",
+    "bytes": 519347,
+    "sha256": "827ce2062bf06bd75646d7ad0985deb94a93b4622a2dc4ebef5ae306d695a812"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-life.png",
+    "bytes": 165669,
+    "sha256": "ca0f5ce41b07d5afcdca29416463ea11e0598973af2ac64b56e19c018d63de17"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-overview.png",
+    "bytes": 1624040,
+    "sha256": "6d01eba7ab8f80dc7d4d25f7394d96081d9962b6b673dce9110aecb4a9e9da86"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-packet.png",
+    "bytes": 137854,
+    "sha256": "46b79debe7ccc46708e12aeaa87d50b9b23a93c7f80656b599d67b2e991ce540"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-saved-checklist.json",
+    "bytes": 1529,
+    "sha256": "7cbe74af8112b7c32a410bb41013709e87ef53f5a59d156066ac67ed2423b0f6"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-images/ryukoku-390-source-gap.png",
+    "bytes": 133545,
+    "sha256": "13dca7d90f12b25c20d27d2486dc9381fade7004dacc5d7ed4239527cf231c45"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/eivp-1280-application.png",
+    "bytes": 392152,
+    "sha256": "7bc23678f25e28079e1763be441dad415799bc284e858e4683c712d1695fd6d9"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/eivp-1280-life.png",
+    "bytes": 440612,
+    "sha256": "ae093ad4c817eb2abc6964295ac680b7821f3960ea3298eba1fdbc31d5a00009"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/eivp-390-application.png",
+    "bytes": 148030,
+    "sha256": "74b26d5b43073fa96fab7b6441ef6ef20085f05e5914318bd8016ff8f056e2e2"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/eivp-390-life.png",
+    "bytes": 154275,
+    "sha256": "a276f5fff4e0b69e302d0fd66f48a53ea3a5641c42a4c46a1464fe7f6c80d9c9"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/ncu-mother-and-181-points.png",
+    "bytes": 325534,
+    "sha256": "09ae37ae08930e9e7445b798b9bef584e97b9e8af0df1f57db86e6e05ced81e4"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u5149\u5dde-1280-life.png",
+    "bytes": 371895,
+    "sha256": "e6cd9d0da45fb065c10dbd3be279e80113faa5df326d9408d717e6c3ccb846d8"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u5149\u5dde-1280-photo.png",
+    "bytes": 80966,
+    "sha256": "d8962b7f0dc325d2c0c4e652c26468d07c039964044a9643767a5b26a249a8a5"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u5967\u80e1\u65af-390-life.png",
+    "bytes": 199887,
+    "sha256": "f1420e1c4a85fa0c2925827e98571aeef80afdda5e9703424f0d0e410e774f72"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u5967\u80e1\u65af-390-photo.png",
+    "bytes": 103166,
+    "sha256": "884cefac88de64585558818a0ab89b7056c03256edec4998b9131f64b8d5e77c"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u5e03\u62c9\u63d0\u65af-1280-life.png",
+    "bytes": 373296,
+    "sha256": "c6b12cc2f26ac3a1918d84b54c4cc08bc3f39d36a343b6f51c7ccd7ba6e43a9d"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u5e03\u62c9\u63d0\u65af-1280-photo.png",
+    "bytes": 75184,
+    "sha256": "62a2b23072394b4cd5b18caec209296dbcb6ac4655752f50cf826569e5685c0a"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u6dd1\u540d-390-life.png",
+    "bytes": 206201,
+    "sha256": "774c5c0638750aa27cb24ab0f59a2cc2de1ad056ceac3781087f576f8df9752b"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u6dd1\u540d-390-photo.png",
+    "bytes": 110757,
+    "sha256": "c88f5b88f6d1a27728e97d990daa59e37034a84643b5ddee10649859995c6fdc"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u746a\u9e97\u8def\u6613-1280-life.png",
+    "bytes": 406932,
+    "sha256": "0b3be7758afeb7dbcecc935fe060453bd61b6073f21ec46a3e0e18523cae8c17"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u746a\u9e97\u8def\u6613-1280-photo.png",
+    "bytes": 104597,
+    "sha256": "09b520065b14333bf9e424ddeb99cc31893d8a129736c967e04927b2c0e56ca6"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u7d10\u7d04\u5dde\u7acb\u5927\u5b78\u5967\u65af\u5a01\u683c\u5206\u6821\uff08\u81ea\u8cbb\uff09-1280-life.png",
+    "bytes": 395276,
+    "sha256": "bc1d91f95f41a254bec5207c93fc6f471ea8de66d27d891555c7cf5973130ec1"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u7d10\u7d04\u5dde\u7acb\u5927\u5b78\u5967\u65af\u5a01\u683c\u5206\u6821\uff08\u81ea\u8cbb\uff09-1280-photo.png",
+    "bytes": 74846,
+    "sha256": "31657fd0cd7154d21b011a19c52f06b61598c2f056cac59662366a03db29aec6"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u80af\u7279-390-life.png",
+    "bytes": 200591,
+    "sha256": "639cb6ed660c59e4f10b99fa1b67ab897222af212a44ffde7512a2960c945cd6"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u80af\u7279-390-photo.png",
+    "bytes": 114957,
+    "sha256": "f39e0503f29f0112030e3b73abece95e6b6a3abf08d7a7a94d958f7e8b65a8e8"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u9053\u683c\u62c9\u65af-390-life.png",
+    "bytes": 199750,
+    "sha256": "b8c6f0b7d8197fd8621a37162e5c43dc7dfd48f34fbb266963ed8e637b91ad79"
+  },
+  {
+    "path": "integration160-full-shard-3-ncu-resume-images/\u9053\u683c\u62c9\u65af-390-photo.png",
+    "bytes": 107674,
+    "sha256": "9adf79fcb103506d35a996fcceb4b6a02784818a8fc395dc02048a33ceb2161b"
+  },
+  {
+    "path": "integration160-full-shard-3-wrapper.log",
+    "bytes": 1879,
+    "sha256": "50b39d836b4699ff222be53861d4f7f6dd8c12e9623a450d73f83a8d8a013fed"
+  },
+  {
+    "path": "integration160-full-suite-summary.json",
+    "bytes": 6551,
+    "sha256": "749fc9eed403d17e3808e94fe1abd3182f72cdac17c4cbaff4329f423cc828b0"
+  },
+  {
+    "path": "integration160-full-supabase-runtime/input-scripts/run_pinned_flat_runtime_with_legacy_tree.py",
+    "bytes": 3222,
+    "sha256": "9566f57e232ce11d73360471a2ea3f34ef56e9bd76196ce74824263d6b1740cb"
+  },
+  {
+    "path": "integration160-full-supabase-runtime/metadata.json",
+    "bytes": 990,
+    "sha256": "bec991f039b87e0fcbc32a76d0419232649bf1fbd3e693952609dd9b8dbce46c"
+  },
+  {
+    "path": "integration160-full-supabase-runtime/stderr.log",
+    "bytes": 10246,
+    "sha256": "ae3d21c699869f8134b7a5ca7801cffaaf27401193f6a419ad9bba6d45afe926"
+  },
+  {
+    "path": "integration160-full-supabase-runtime/stdout.log",
+    "bytes": 3080,
+    "sha256": "9389dd5f89434b00cbec02ceb221c6313ca1602be5d1ba0d2a80bbdc4aa4f196"
+  },
+  {
+    "path": "integration160-full-supabase-runtime-r2/input-scripts/run_pinned_flat_runtime_with_legacy_tree.py",
+    "bytes": 3222,
+    "sha256": "9566f57e232ce11d73360471a2ea3f34ef56e9bd76196ce74824263d6b1740cb"
+  },
+  {
+    "path": "integration160-full-supabase-runtime-r2/metadata.json",
+    "bytes": 990,
+    "sha256": "7fc450f49a48f17a62dbd206dda23788b39aadbf134007873819e71b067fe75c"
+  },
+  {
+    "path": "integration160-full-supabase-runtime-r2/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-full-supabase-runtime-r2/stdout.log",
+    "bytes": 3965133,
+    "sha256": "9d45561b89f07841af7d594809b32713aaea55e5990aa42ef9211211237d4d6e"
+  },
+  {
+    "path": "integration160-installed-target-retired.json",
+    "bytes": 461,
+    "sha256": "42e8c5938aa0ab9ea78e94eae41302efb602195961d98edcd2fccccf31dfab1d"
+  },
+  {
+    "path": "integration160-installed-wheel/input-scripts/install_integration160_wheel.py",
+    "bytes": 4538,
+    "sha256": "727923b9abae83b334ac96059b49125e68db4e8438cfe6cd82fbd5eb4666d36c"
+  },
+  {
+    "path": "integration160-installed-wheel/metadata.json",
+    "bytes": 940,
+    "sha256": "4c34b5c34e3673f629d207717a10dec2eabfe0b476b6f2cad005597c55b927bb"
+  },
+  {
+    "path": "integration160-installed-wheel/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-installed-wheel/stdout.log",
+    "bytes": 3295,
+    "sha256": "7f0d041465e9858724634f0a32ed2d995c552a96f0201fce5cd97089236fc636"
+  },
+  {
+    "path": "integration160-installed-wheel-integrity.json",
+    "bytes": 500,
+    "sha256": "cab8dc0a77e3c486596004a4e6d0558c717331aeb1ee309cb110f27ecd6af487"
+  },
+  {
+    "path": "integration160-installed-wheel-smoke.json",
+    "bytes": 3225,
+    "sha256": "cdec314c6282f9897603b821cdb3e24868b534dc320e28e43bdbf1526719fed1"
+  },
+  {
+    "path": "integration160-installed-wheel-wrapper.log",
+    "bytes": 853,
+    "sha256": "aa67993f0bdf7af9f87c93275e0fe0cb4556c3d317bbf832abab06eecd5caf5a"
+  },
+  {
+    "path": "integration160-migration-audit.json",
+    "bytes": 7405,
+    "sha256": "80fa73f2137b400420d2387be799b24a5a75cf501222f265cecab68bff72bb43"
+  },
+  {
+    "path": "integration160-ncu-parity/input-scripts/integration160_verify_ncu_payloads.py",
+    "bytes": 1763,
+    "sha256": "6892ccb6d9c608bf1d7c5038681d40968031eb997268fc921dbde922248dc1e1"
+  },
+  {
+    "path": "integration160-ncu-parity/metadata.json",
+    "bytes": 989,
+    "sha256": "b9143317404cdfc36bd3f7daa0f1561f68bfde4cd8e944890293d3625a4d94a0"
+  },
+  {
+    "path": "integration160-ncu-parity/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-ncu-parity/stdout.log",
+    "bytes": 1130,
+    "sha256": "5d0fa87d1b8501599c6b1fb1928d9de73161134622fb2f80357956c9964d2c85"
+  },
+  {
+    "path": "integration160-ncu-parity-wrapper.log",
+    "bytes": 902,
+    "sha256": "8c710daeb4156e568c85e0b4e7d62148dbbad8a4685d77f3dac1f935d0765475"
+  },
+  {
+    "path": "integration160-ncu-streamed-payload-parity.json",
+    "bytes": 1130,
+    "sha256": "5d0fa87d1b8501599c6b1fb1928d9de73161134622fb2f80357956c9964d2c85"
+  },
+  {
+    "path": "integration160-runtime-summary.json",
+    "bytes": 1608,
+    "sha256": "797eadc6549876d1398f4626d67a5e33824a4bdf494ebe41d5b01cde7d800725"
+  },
+  {
+    "path": "integration160-wheel-build/input-scripts/build_integration160_wheel.py",
+    "bytes": 4416,
+    "sha256": "d53ad6c050c50512960f02b2feb3e2fe0cc9d2fe395da500c8d97c990d37d7b2"
+  },
+  {
+    "path": "integration160-wheel-build/metadata.json",
+    "bytes": 974,
+    "sha256": "06b7950a97fbda3ff4ddbc685b152413172b0d8a83eb4b92be0c1766c3a5210a"
+  },
+  {
+    "path": "integration160-wheel-build/stderr.log",
+    "bytes": 202,
+    "sha256": "a19eaa8ff49e99390ff2e6d1521bcf1f23b244d1621c92c0b52e2d46b0d1d8ad"
+  },
+  {
+    "path": "integration160-wheel-build/stdout.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-wheel-build-r2/input-scripts/build_integration160_wheel.py",
+    "bytes": 4416,
+    "sha256": "d53ad6c050c50512960f02b2feb3e2fe0cc9d2fe395da500c8d97c990d37d7b2"
+  },
+  {
+    "path": "integration160-wheel-build-r2/metadata.json",
+    "bytes": 936,
+    "sha256": "cff06d72fe77d2ea663ccca05422bb862682e39f0c9668435cd00e9344c9c0e4"
+  },
+  {
+    "path": "integration160-wheel-build-r2/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integration160-wheel-build-r2/stdout.log",
+    "bytes": 558806,
+    "sha256": "40d7398f0e193ff47bb071c45b3b69046f98d9bf4da5c4390a01df38a8144a69"
+  },
+  {
+    "path": "integration160-wheel-build-r2-wrapper.log",
+    "bytes": 849,
+    "sha256": "5bf580b329a4213a4b81fb0152ef30cb5fabcf92f2d4c02e769edd7c85d56dcd"
+  },
+  {
+    "path": "integration160-wheel-build-wrapper.log",
+    "bytes": 887,
+    "sha256": "312ef686815d83b6f91447c0d0afd96300035005940b669ffeb0c0e9e50955a7"
+  },
+  {
+    "path": "integration160-wheel-integrity.json",
+    "bytes": 1382352,
+    "sha256": "122fe3e9663efde936efdcc65af97719e8007859f017fe00fec38f16836a4756"
   },
   {
     "path": "latest-data-before-memory/memory-samples.json",
@@ -6685,6 +8580,636 @@
     "sha256": "b8a7c828f77cff56bc615e6563ddf2c26ee173454e10e5046a0189fa19200b47"
   },
   {
+    "path": "ncu-fifth-fixed-input-audit/input-scripts/audit_ncu_fifth_git.py",
+    "bytes": 5913,
+    "sha256": "f97351e20ffdcf41dbc20d0a2c82397eb5a6fde10ce8d810907f0bbb6d60890a"
+  },
+  {
+    "path": "ncu-fifth-fixed-input-audit/metadata.json",
+    "bytes": 959,
+    "sha256": "be55ea3d5b78b985d926e0de1b44f3967c69c7eb52b651d16b9383951eb39f48"
+  },
+  {
+    "path": "ncu-fifth-fixed-input-audit/stderr.log",
+    "bytes": 454,
+    "sha256": "d13c5f63ba67e1e997f2891001d51ab0cea18dacb4fc08c39c6afd7379a02756"
+  },
+  {
+    "path": "ncu-fifth-fixed-input-audit/stdout.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "ncu-fifth-fixed-input-audit-r2/input-scripts/audit_ncu_fifth_git.py",
+    "bytes": 6687,
+    "sha256": "1c45d04e07647ffe881f557ea0d3c02ca0205ca23307e6489e7573725ef22540"
+  },
+  {
+    "path": "ncu-fifth-fixed-input-audit-r2/metadata.json",
+    "bytes": 959,
+    "sha256": "6ee88443e6a5326362b0776fe0e2d3cc3a851bc1f3bf32ba82b2296dd3994bad"
+  },
+  {
+    "path": "ncu-fifth-fixed-input-audit-r2/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "ncu-fifth-fixed-input-audit-r2/stdout.log",
+    "bytes": 17563,
+    "sha256": "8377c70a2740f9aec923b9adee67f279436d882a48cd963a93991746e0347452"
+  },
+  {
+    "path": "ncu-fifth-fixed-input-audit-r2-wrapper.log",
+    "bytes": 872,
+    "sha256": "7e51470359f1c8675e80e63db395f7cc71bf1b1650acca3741b68744ea92de51"
+  },
+  {
+    "path": "ncu-fifth-fixed-input-audit-wrapper.log",
+    "bytes": 872,
+    "sha256": "4fd37f969691d0284585b24a94135cfe34dc4cad95b8e64e0d6d9d1dd2d25e31"
+  },
+  {
+    "path": "ncu-fifth-fixed-input-audit.json",
+    "bytes": 46354,
+    "sha256": "cacf44542ed14d91e097c619a881ef88d5be6a61400e6afae2f2e74df1a47346"
+  },
+  {
+    "path": "ncu-fifth-independent-semantics/input-scripts/audit_ncu_fifth_semantics.py",
+    "bytes": 6736,
+    "sha256": "355ec7d86674f51ca599c8a4b0df0f5ef54d14922b4c04cd66b94045a64fb984"
+  },
+  {
+    "path": "ncu-fifth-independent-semantics/metadata.json",
+    "bytes": 971,
+    "sha256": "a5ca19005b69dbb35d76e3cbca6d159680e7701105b0138468cc3c5f1db9796c"
+  },
+  {
+    "path": "ncu-fifth-independent-semantics/stderr.log",
+    "bytes": 359,
+    "sha256": "9d24e6e732901bf9103edb67861545530e98cec66722b9a69016091200268bc1"
+  },
+  {
+    "path": "ncu-fifth-independent-semantics/stdout.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "ncu-fifth-independent-semantics-r2/input-scripts/audit_ncu_fifth_semantics.py",
+    "bytes": 7023,
+    "sha256": "2a1a6abe860eb32d4186d7c1288541ca2b25c8d435ac03eb1991ae4404293ca5"
+  },
+  {
+    "path": "ncu-fifth-independent-semantics-r2/metadata.json",
+    "bytes": 971,
+    "sha256": "2f5a6f72f459ec51d6fb3fbab76cc10d2a5decdb4e9c4844829f5d6c7b2a0ee5"
+  },
+  {
+    "path": "ncu-fifth-independent-semantics-r2/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "ncu-fifth-independent-semantics-r2/stdout.log",
+    "bytes": 891,
+    "sha256": "b3630be8c86d828be1bfaecb6fcdaf4422174013323580c088e6d331cc6e38f3"
+  },
+  {
+    "path": "ncu-fifth-independent-source-review.json",
+    "bytes": 5314,
+    "sha256": "c036f8a87d00c191edbad5af7b6e73ce4a19aece89ef0df3c52e79c8344e4994"
+  },
+  {
+    "path": "ncu-fifth-ktu-render.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "ncu-fifth-map-live-source-acceptance/hiroshima-short-link-receipt.json",
+    "bytes": 589,
+    "sha256": "fb144fadc9df70f9d97988de827cf94e31e0c2ec96df32610f65251d98d5a3cf"
+  },
+  {
+    "path": "ncu-fifth-meiji-health-render.log",
+    "bytes": 2016,
+    "sha256": "1e76d1d3b48dd052799de9c12cd4c7df264442cf363c530c55e63065b1678227"
+  },
+  {
+    "path": "ncu-fifth-meiji-photo-render.log",
+    "bytes": 2016,
+    "sha256": "1e76d1d3b48dd052799de9c12cd4c7df264442cf363c530c55e63065b1678227"
+  },
+  {
+    "path": "ncu-fifth-new-photo-source-fields.json",
+    "bytes": 7211,
+    "sha256": "e536953379a4c8ccb26d0b839bef166fdcc2774d1b998eab18ca018ee088c33c"
+  },
+  {
+    "path": "ncu-fifth-pr11-readonly.json",
+    "bytes": 179,
+    "sha256": "b3a9f8f4299e39c7c18f90c6d44d252cdec982ace12b8b5774edc9920cf20bcb"
+  },
+  {
+    "path": "ncu-fifth-reviewed-host.json",
+    "bytes": 584550,
+    "sha256": "2007171687bfcc3fc04b513b842a0dd0b234c395b31eac95663030d443f964ad"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/2df59e116ed9b55a6519.jpg",
+    "bytes": 393220,
+    "sha256": "2df59e116ed9b55a65192df725d0bea548e6d1bc859fb871ccbcc31d6ee8f6f3"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/682858e10ae0af0bd595.jpg",
+    "bytes": 745804,
+    "sha256": "682858e10ae0af0bd5952f4de8f78aec167f60e40154d142ae45a29f8e8b60c1"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/813f3b39c26d4be3a207.jpg",
+    "bytes": 260484,
+    "sha256": "813f3b39c26d4be3a207e2ad943bf9c82dee9b70804c916781f15aa686caadf8"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/b3c475a3a017007d6547.jpg",
+    "bytes": 228869,
+    "sha256": "b3c475a3a017007d6547c0aa2f2c780963f196c797d06fe349c9c3bbf3859c3e"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/cf55bd3d4c6aef6f0aa0.jpg",
+    "bytes": 468389,
+    "sha256": "cf55bd3d4c6aef6f0aa0943ffbba888a3c15842c6894ed6d8bec7dddc632721f"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/contact-1.jpg",
+    "bytes": 123388,
+    "sha256": "6929b20c8c7d4dfe6823fc68e0ffceeb281be87b4793bd9a83d0c86e49ebb615"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/contact-2.jpg",
+    "bytes": 92191,
+    "sha256": "aed4843b1dde1d42a01e593a16c112d88a1c1654319836c3408f7b37d1adc3d3"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/de98fe51d8988b0f0057.jpg",
+    "bytes": 281282,
+    "sha256": "de98fe51d8988b0f0057284da3bc20a171b102c0d01e32f6afbfc4d1ce967777"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/entities_ncu-042_entity.json.raw",
+    "bytes": 97329,
+    "sha256": "d3c94aea52bac41bf6f93a2e01e8df1966a226cbfda954c8ea26dde8143ce82c"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/entities_ncu-060_entity.json.raw",
+    "bytes": 56330,
+    "sha256": "7d287247245a1503c7f79901b52c7759ce4ab91004ec0a787740a1c4b3a2c8d1"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/entity-discovery_ncu-179_entity.json.raw",
+    "bytes": 37523,
+    "sha256": "1300eeb5d61412c223283408ef05e1e5c56195cfa5abbce46b6ca274785daa94"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/entity-discovery_ncu-212_entity.json.raw",
+    "bytes": 12807,
+    "sha256": "367b440acd20fc1a4d700d6388643dadbc8a79b438accaca12de24a07cab9042"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/f541d238840692ade188.jpg",
+    "bytes": 150270,
+    "sha256": "f541d238840692ade188e64ed05bd125be044e0720c8b70384df39c5f7301726"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fifth-locations_cuk-map-script.js.raw",
+    "bytes": 17246,
+    "sha256": "af15f7082b9bfb178d22aecaa53621d7c2a799cbc9e8b350f4ab2e98d27cd6a0"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fifth-support_cuk-campus.html.raw",
+    "bytes": 6481,
+    "sha256": "f39506dbffb15e1b0f923e9b51f00f3bd376c3c5e64992962a965f5e7a012606"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fifth-support_cuk-campus.html.txt",
+    "bytes": 275,
+    "sha256": "92dbee64198d30a59b94337ddfe50e63819009370c56b9bbc6fd93f18b77e697"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fifth-support_cuk-location.html.raw",
+    "bytes": 115926,
+    "sha256": "d9444c9f4a25eb39cd53f81ba8bc75dc90860fce0c08b53ca19a0bab42309e6c"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fifth-support_cuk-location.html.txt",
+    "bytes": 13333,
+    "sha256": "533444cef084c4ea4d7c5c8058ca6fc78bb5e8e6472559701f336b03d0e1fe7c"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fifth-support_hiroshima-higashi.html.raw",
+    "bytes": 46028,
+    "sha256": "16007371b53726715cefd9412c97b02e633749ad5e66741767036d97544bf4fc"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fifth-support_hiroshima-higashi.html.txt",
+    "bytes": 7082,
+    "sha256": "32eebe00cb4abaca50d048aa64169eee2693cac454579ac95ad5fc44f03c6f8b"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fifth-support_hiroshima-main-map.html.raw",
+    "bytes": 219695,
+    "sha256": "ede81e1d763233edbbba8f3de5ef9fda05b18eb51313254f9aa8abc39f391061"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fifth-support_hiroshima-main-map.html.txt",
+    "bytes": 131,
+    "sha256": "0b84ea1612aa30d442f6722d07d11f781aff3b7272d27870fc502b7ca760df9a"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_hcmute-home_page.html.raw",
+    "bytes": 84736,
+    "sha256": "0c1f4489e4b5d66212190bedee4830f8cf9536cce58a909ba0765628af31306e"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_hcmute-home_page.html.txt",
+    "bytes": 8494,
+    "sha256": "950febe657ff7f95e4d5f947650769fe294a8bc8e8f0e8a334a3073d7eacb054"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_hiroshima-campus_page.html.raw",
+    "bytes": 39600,
+    "sha256": "b75eb22524c5c7c5bb7c2c18e48215ee27ff76d0a471ebc65afb6346dbd6fe1e"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_hiroshima-campus_page.html.txt",
+    "bytes": 5838,
+    "sha256": "f9ddcd35a955548fcd86221758a40e266bc384cf98a689051a8bc759cad77b5a"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_hm-lothstrasse_page.html.raw",
+    "bytes": 43618,
+    "sha256": "7c2663551d6133b73b16d07c7d532c2e659ef312a4220ea65cd7bde1d60d53ee"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_hm-lothstrasse_page.html.txt",
+    "bytes": 6452,
+    "sha256": "69e351b2959240f1412fb78848322dcc5780117c5b5d0a46a159fc95fc173109"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_minho-official-gps_page.html.raw",
+    "bytes": 107976,
+    "sha256": "0d7a2e8ca105084ecb046b7b057b949d08766cbd9b910d4448c5fc05a53fb786"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_minho-official-gps_page.html.txt",
+    "bytes": 1404,
+    "sha256": "e4a2646dfcbf0f002988a47fe559081257135820b8e8411ec37d5bd7c05c9b8f"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_monaco-contact_page.html.raw",
+    "bytes": 86881,
+    "sha256": "1a08d6cc819018dc3063bcda683dadccaf443de8aaa2206ad88ca03890ee14f6"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_monaco-contact_page.html.txt",
+    "bytes": 4871,
+    "sha256": "5b946f8beb7bd371f86e59f3c1ad5667b4fb28da18eda94b7e999b1978b4d9b9"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_nefu-cn_page.html.raw",
+    "bytes": 102275,
+    "sha256": "274701ec3390052e0a95c97be603c3358c99415adaaf3bcac8bc1c6c73b9b7c8"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/fourth-location-support_nefu-cn_page.html.txt",
+    "bytes": 26746,
+    "sha256": "52eb1d285d122b10b7c3ac0f8d0484c86fa07577d70f8da9ed613c6aa3dea35f"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ktu-facts-1.jpg",
+    "bytes": 314605,
+    "sha256": "7415c5b8ef6b56d03847162810d9eeea7302b7d9b36831d1225bd4c27d225403"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ktu-facts-2.jpg",
+    "bytes": 416056,
+    "sha256": "ff5d611fc9b5e498f6c23e0107777d3a6783ce9e6b4060672535c907a7f5e2f2"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ktu-facts-3.jpg",
+    "bytes": 359671,
+    "sha256": "d3b2367b946bc7926eea3e7879c47c460a378e95554038f38fb795c59e12a55e"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ktu-facts-4.jpg",
+    "bytes": 316126,
+    "sha256": "9fdf77b776c70fbbde5002ed35b113ce4b2a0dc51dec01416f30e2048c8cba54"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ktu-facts-5.jpg",
+    "bytes": 388668,
+    "sha256": "39278df7670e61904a2c95e2b077502bad3fc19b49207804e00dd476c9fab741"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ktu-facts-6.jpg",
+    "bytes": 321024,
+    "sha256": "f568153c2fddc463454fc3be8639661647c12c21af845a951f94fd390bd97115"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ktu-facts-7.jpg",
+    "bytes": 284167,
+    "sha256": "6a5800c45076acecc99de0cd5dafaae55d1d5fe08d18b77bb1599ae8ecff94a6"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ktu-facts-8.jpg",
+    "bytes": 436331,
+    "sha256": "4a56c5df6c15c2b36796dbb587faff3062c20cdc2400357799b62289131f0b7b"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ktu-facts-9.jpg",
+    "bytes": 322968,
+    "sha256": "2d57c84d65ce6c15e97a75ed2c455bab862e9f7b73667ebeb0ad36ce006311cc"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ktu-la-stored-text.txt",
+    "bytes": 5503,
+    "sha256": "5a541b6348d2d99d2b376712502d716908c088a78b5d8feb3f247432006fd10b"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-docx-independent-text.json",
+    "bytes": 8629,
+    "sha256": "7dee246adb4b97338aac25ce5061e3c9d8aec82c324dac8af21776e6de63bd8b"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-facts-embedded-0-white.jpg",
+    "bytes": 108596,
+    "sha256": "9b4c703a2e35fd627ba12ea413bac904abe6c4cd4acf1a165b25308ef28118ab"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-facts-embedded-0.png",
+    "bytes": 23401,
+    "sha256": "ef833181c3a3a588506fb7382155ef381559a812c3a60740ff10b975e3ea795e"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-facts-embedded-1-white.jpg",
+    "bytes": 55047,
+    "sha256": "5a9e56ee83c02ac91a7143bb1e9a4fdb5d352bf49f8527d9ce8df4e4c8ade326"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-facts-embedded-1.png",
+    "bytes": 15949,
+    "sha256": "39816f195bc338dc7fdfcbb78985f9ead7bb681642ca49b7869dbae049f4e3c9"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-facts-embedded-2.png",
+    "bytes": 140859,
+    "sha256": "3791d4337bb95d4901edc551a714354935acb97443d782c20bc082a88e27b132"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-facts-embedded-3.png",
+    "bytes": 21012,
+    "sha256": "765d9fb2ba7f699b692a55d7fad2d320f1beb6c137f212b6b9c666afa51306a8"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-facts-embedded-images.json",
+    "bytes": 871,
+    "sha256": "e7cda8d5a5b5f616ab34cbb1370141c0152116d6890b9c08bafffb574da8aa1e"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-guide-1.jpg",
+    "bytes": 177534,
+    "sha256": "e589d91322fbd889ec669abc27fe3694823fb5c59c2a05e374b715812ad7fea7"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-guide-2.jpg",
+    "bytes": 169693,
+    "sha256": "45284bab080b26a9d1742ea2fe8fc63dfc4d996711eda02aefb4ad65c4fd341f"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-guide-3.jpg",
+    "bytes": 130655,
+    "sha256": "51c2be2ec91fcd113af76cf342884fa2b8d12b8c6c271d0efd42d1d9b336d2b4"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-guide-4.jpg",
+    "bytes": 124976,
+    "sha256": "3dc13759939d011c1d3e0a6b31e01b14c2fda2eb7d223108260a8cc44f35b5ac"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-guide-5.jpg",
+    "bytes": 182225,
+    "sha256": "5ef45ee905c28d3d73e3e9859d56a3006b35941ac4aa692f52d2601a887121ce"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-guide-6.jpg",
+    "bytes": 183536,
+    "sha256": "09922ef2f031d3aaf35109f1db357b374a6c23acf090e7b44d4a344757219adb"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-guide-7.jpg",
+    "bytes": 131724,
+    "sha256": "063b136ac6b76fabfdf86d883a8e49ca4c51c89a4eb4fef320d7ab795e58f13b"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-guide-8.jpg",
+    "bytes": 166805,
+    "sha256": "7e1acd65f330e9405e64b111d6060fbaa55b30a73532c7b6952c81a52f702838"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-guide-9.jpg",
+    "bytes": 74175,
+    "sha256": "1dc3986fec7137820e024650cbac4d57509ec2670b27104fb0200a9b2c6b8886"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-health-1.jpg",
+    "bytes": 163493,
+    "sha256": "b71ef525ba027c2b4cad31ada65b99092bb6fc8a73a8100671b8ef89e8e42bdc"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/meiji-photo-1.jpg",
+    "bytes": 103978,
+    "sha256": "2160a700cd55dd14a45a3d37712c6eedf617d9b308b7b68cfe5bd2218d35f02a"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-047-resume-fifth-photo-declaration.txt",
+    "bytes": 6712,
+    "sha256": "ad918ccaa8f4cf40e33b149260c9c925552650e799d059255510590336e4f8cb"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-047-resume-fifth-photo-terms.txt",
+    "bytes": 11454,
+    "sha256": "19bcdf29cc4e67e33ce57196a2319030cefc51e560b68d3168e7fc27fde8ba66"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-047-resume-fifth-photo-upload_history.txt",
+    "bytes": 519,
+    "sha256": "9254fe03c12e0c2318ced8800b675b274a02bae7d4565285a5ee2f368245467b"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-calendar.raw",
+    "bytes": 108381,
+    "sha256": "aba5dcf273c2d3399a60216793e1f6922cbf0af9568ffed88be1f09c86a96035"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-calendar.txt",
+    "bytes": 16587,
+    "sha256": "926fcfccc3a574c1cd5d79520d7edb25cc111a2cc74f8fbeec49b4c13130f6a2"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-facts.pdf",
+    "bytes": 4430229,
+    "sha256": "531c6817c688ad5021628992a68802c85dcaad956aad26792c67bff4615498cd"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-facts.raw",
+    "bytes": 4430229,
+    "sha256": "531c6817c688ad5021628992a68802c85dcaad956aad26792c67bff4615498cd"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-facts.txt",
+    "bytes": 678,
+    "sha256": "5c55caae337ea972a25211b0cd8ea88fcad5a80510ddfe410e5ba62b486686b1"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-la.raw",
+    "bytes": 41472,
+    "sha256": "1db654779ee0bf6083d9576e5fe2901e41f3694c0c548d2e704421bcc908654b"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-policy.pdf",
+    "bytes": 116171,
+    "sha256": "374ec01eec763e0c96046b4ecf29314de821cc9bc75752ddf9a3ba39b007fc53"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-policy.raw",
+    "bytes": 116171,
+    "sha256": "374ec01eec763e0c96046b4ecf29314de821cc9bc75752ddf9a3ba39b007fc53"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-policy.txt",
+    "bytes": 12938,
+    "sha256": "5405dce6c570e938a40840d3a8b097650437fdcbbcbbbd1ad840377efd236ce7"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-relocation.raw",
+    "bytes": 129533,
+    "sha256": "77efc239de7990be92ca42694091dcda42030e495e6a0097a8d6448181645d14"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-resume-ktu-relocation.txt",
+    "bytes": 22345,
+    "sha256": "c7d5bbd912320cd1bb90c95088ea789c113a93c7c8cecc6e80fbc1c39c798e24"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-site-20261011-body.txt",
+    "bytes": 12377,
+    "sha256": "6131786a6f70589b74a4b6e6e314b8c7ac221d930495ebeaf05af4a9d682231e"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-091-site-20261011-record.json",
+    "bytes": 24716,
+    "sha256": "5e317fcd9f42bf01835335acf3bc4ee0e84208e7eca5836ccdb3a4caba5cd555"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-facts.raw",
+    "bytes": 347835,
+    "sha256": "32692670dacf19c58721feb560becacecb095809b233413de1ee83c764b3be7f"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-facts.txt",
+    "bytes": 21196,
+    "sha256": "576f1bc22f6ce8fb9e5fc5817777dae4a5c36afacca0a65ee33943165d158f4e"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-guidelines.pdf",
+    "bytes": 391928,
+    "sha256": "70e016cf31d21724bf7db39d348b2651ab2f35944292c4bcad66b7d9f78d47c2"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-guidelines.raw",
+    "bytes": 391928,
+    "sha256": "70e016cf31d21724bf7db39d348b2651ab2f35944292c4bcad66b7d9f78d47c2"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-guidelines.txt",
+    "bytes": 30561,
+    "sha256": "3076798ba3fb89c6a875d433167785c6e4940bc3f53ce09aef4ab925db8c5453"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-health.pdf",
+    "bytes": 167789,
+    "sha256": "17f103881539b6b3afcc8a2efb3f21e016c9c8fbb770517fc55c3912d471295a"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-health.raw",
+    "bytes": 167789,
+    "sha256": "17f103881539b6b3afcc8a2efb3f21e016c9c8fbb770517fc55c3912d471295a"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-health.txt",
+    "bytes": 5679,
+    "sha256": "717a1d1ad953932aac025aa83f9d8db34c849dedc86a58f8be3e33f717bf9ef8"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-pg-en.raw",
+    "bytes": 29184,
+    "sha256": "6f298ea8ed6087db66a3ac37688c65e003cb6852f7c26cdc466154f042f256cb"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-pg-ja.raw",
+    "bytes": 29736,
+    "sha256": "95e9c6ec492407515fd4158267303cdacafa6731c387e13eac0af3c371fe678f"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-photo.pdf",
+    "bytes": 261536,
+    "sha256": "d8a90210a6bf5f6f445d61a6e87fa903c6363c73f39476057d2481595360fe9b"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-photo.raw",
+    "bytes": 261536,
+    "sha256": "d8a90210a6bf5f6f445d61a6e87fa903c6363c73f39476057d2481595360fe9b"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-photo.txt",
+    "bytes": 881,
+    "sha256": "523299019458c348254d91313c10d3d7e3fa8c25ebfac84417f7295d35e8719c"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-ug-en.raw",
+    "bytes": 29928,
+    "sha256": "1c053d46511eea0efb2bdf5a77ce5eac6325285b083a6cb07eca78d46f2de9d8"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-resume-meiji-ug-ja.raw",
+    "bytes": 30192,
+    "sha256": "6a8bfa3aa25bc02260e588b58b066190b8aa4380f0825055b1a42a2a6ad7fab1"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-site-20261011-body.txt",
+    "bytes": 6894,
+    "sha256": "78ea577472591652ca75aebabdfa696621962b06265ead840222a6c5f0579e51"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-138-site-20261011-record.json",
+    "bytes": 26051,
+    "sha256": "b7c8a2dda34a81e59b29de56f1c6167d5802d993b3a89da25dce3757edbc0c43"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-158-resume-fifth-photo-declaration.txt",
+    "bytes": 5201,
+    "sha256": "cfdecc4a23476712c41e82f06244fa2f6f45511c32213c10d6e6078e22be16b7"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-158-resume-fifth-photo-terms.txt",
+    "bytes": 4936,
+    "sha256": "f829b8fa6ddd9558492548b2b347c0201e92860a09e1300f807fbec530983734"
+  },
+  {
+    "path": "ncu-fifth-reviewed-images/ncu-158-resume-fifth-photo-upload_history.txt",
+    "bytes": 356,
+    "sha256": "9232e6e738f31d9ee3589defe766a7484ca97fbbc92a0d2a3ef7333caedafdb8"
+  },
+  {
     "path": "ncu-fourth-fixed-input-audit/input-scripts/audit_ncu_fourth_git.py",
     "bytes": 3558,
     "sha256": "e80b5aadfd1fb4d652b8d2f25e9b4791958c627ee0317fe0f73b2c45d58ac733"
@@ -6755,9 +9280,29 @@
     "sha256": "a7000934c353fd907eed751e13744acaef741e98b593ff02e398122ed2dbbaf6"
   },
   {
+    "path": "ncu-midnight-live-source-acceptance/entry.html",
+    "bytes": 52320,
+    "sha256": "fd40a2dd6e01171f6cf3275adbfcdefa77a1d06c9029fc600b68ceea0c47e1ef"
+  },
+  {
+    "path": "ncu-midnight-live-source-acceptance/receipt.json",
+    "bytes": 771,
+    "sha256": "cfd7d547148b75439a21837fe89bc3facd0f083deea8ce308be79dbb361fd7e1"
+  },
+  {
     "path": "ncu-ntu-shared-location-delta.json",
     "bytes": 1288,
     "sha256": "a924ed7fcdf6582e6b49b2f5d677dc57b40ad28c58e3511344a4df5c90f6740e"
+  },
+  {
+    "path": "ncu-oct12-live-source-acceptance/entry.html",
+    "bytes": 52320,
+    "sha256": "fd40a2dd6e01171f6cf3275adbfcdefa77a1d06c9029fc600b68ceea0c47e1ef"
+  },
+  {
+    "path": "ncu-oct12-live-source-acceptance/receipt.json",
+    "bytes": 770,
+    "sha256": "4ab35c102bfda72184ec63189fc0261ccf6f162594d7d0913422133d1decf097"
   },
   {
     "path": "ncu-osaka-live-source/api.txt",
@@ -8501,13 +11046,28 @@
   },
   {
     "path": "owned-artifact-relocations.json",
-    "bytes": 11577,
-    "sha256": "7b774c5b3d3798d403553fcb7a669c4c861cc10d41100f53c33cc37c0b94527d"
+    "bytes": 14739,
+    "sha256": "3910b924e89bda2e30eacdc6cc28d6656561cc73cb266d8e6b72ed6ae5146eba"
+  },
+  {
+    "path": "owned-relocation-enospc-recovery.json",
+    "bytes": 764,
+    "sha256": "0a6ad32b5d02eb831d7602d4fe34b5cf7cb05702aff4f20b0a4fd7daad185811"
+  },
+  {
+    "path": "owned-runtime-r2-capacity-preservation.json",
+    "bytes": 563,
+    "sha256": "0999c8e47ff2fa26f28c7695e7d5ec4cc394c8de61bf0560dba310c4213d7590"
   },
   {
     "path": "owned-snapshot-retirement.json",
     "bytes": 1097,
     "sha256": "a1d69f00e008520b72689c6460b984c23c1c4689ea41110a96d375def198ea2e"
+  },
+  {
+    "path": "owned-uv-archive-deduplication.json",
+    "bytes": 523165,
+    "sha256": "643c6a4a7c179fe55fe1f59011cf8cec73cb03feda07cb4449e8eabdcab15f94"
   },
   {
     "path": "photo-license-live/receipts.json",
@@ -9260,14 +11820,24 @@
     "sha256": "72b3b066a10937e6160db0deb17d00ad8feaa7ba6e32ba3c479b3ffeaea98348"
   },
   {
+    "path": "restored-two-historical-wheel-paths.json",
+    "bytes": 1180,
+    "sha256": "a0d8e7ec1bd89ce8e6da16266899e0869b3118c645825f6dceb444fca8926719"
+  },
+  {
+    "path": "restored-two-six-wheel-paths-after-runtime.json",
+    "bytes": 1163,
+    "sha256": "70ed3b88668fcd385218c70c02f637b1eec69eb30ad2df880654eb3bbbd2dd41"
+  },
+  {
     "path": "retired-diagnostic-source-manifest.json",
     "bytes": 653581,
     "sha256": "d0cdcf95f335976bc5460c5a424ffa5d41685e077f596512fc62bfa0ccc7e3d5"
   },
   {
     "path": "run-index.json",
-    "bytes": 442226,
-    "sha256": "5784af2c524751c556bb10aa4a4d7c33b8f1779495e77fe814ea360e60476512"
+    "bytes": 450183,
+    "sha256": "6b6128df2a01a54e29b7cd87176d84a26d51253a45241f9d52e2ada9f19747f7"
   },
   {
     "path": "scoped-life-memory-probe/memory-samples.json",
@@ -10048,6 +12618,11 @@
     "path": "supabase-docs-readonly.json",
     "bytes": 2959,
     "sha256": "b1b04e26c434de6ca92ba008fdbbcccdd78021a7700937dccf20cdf08aefcd90"
+  },
+  {
+    "path": "tku-fourth-photo-blocker-check.json",
+    "bytes": 8516,
+    "sha256": "cb2133051262adb3a5ba089753fc74652ebba34011ddb0831392c883cc43e0f7"
   },
   {
     "path": "tku-second-contact-images/contact-01.jpg",

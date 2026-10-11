@@ -1,0 +1,431 @@
+const campusList = [
+	{ campusId: '1', campusName: '성심교정', campusNameEn: 'Songsim Campus' },
+	{ campusId: '2', campusName: '성의교정', campusNameEn: 'Songeui Campus' },
+	{ campusId: '3', campusName: '성신교정', campusNameEn: 'Songsin Campus' }
+];
+const DEFAULT_CAMPUS = '1';
+let SELECTED_CAMPUS = getCampusFromURL();
+const MARKER_IMAGE_SRC = '/_res/cuk/_share/img/campus-map/number_img.png';
+
+	
+// URL에서 캠퍼스 정보 가져오기
+function getCampusFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    localStorage.setItem('selectedCampus', params.get('campus') || DEFAULT_CAMPUS);
+    return params.get('campus') || DEFAULT_CAMPUS;
+}
+		
+// 카카오맵 API 초기화 및 지도 생성
+function initMap() {
+	// 카카오맵 API가 로드되면 실행
+    kakao.maps.load(() => {
+		// 중심 좌표
+		const mapCenter = [
+			{ campus: '1', lat: 37.485931, lng: 126.804622 },
+			{ campus: '2', lat: 37.5000792, lng: 127.005247 },
+			{ campus: '3', lat: 37.5857654, lng: 127.0048121 }
+		]
+		const DEFAULT_MARKER_POSITION = new kakao.maps.LatLng(mapCenter.find(item => item.campus == SELECTED_CAMPUS).lat, mapCenter.find(item => item.campus == SELECTED_CAMPUS).lng);
+		
+		function addMarker(position, idx) {
+			if(position.latitude == 0 || position.longitude == 0 || position.orderNo == 0) {
+				return;
+			}
+			
+			const markerImage = new kakao.maps.MarkerImage(MARKER_IMAGE_SRC, new kakao.maps.Size(32, 36), {
+				spriteSize: new kakao.maps.Size(32, 2291), 
+				// 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+            	spriteOrigin : new kakao.maps.Point(0, 46 * (idx - 1)),
+            	// 마커 좌표에 일치시킬 이미지 내에서의 좌표
+            	offset: new kakao.maps.Point(16, 36)
+
+			});
+			
+			const marker = new kakao.maps.Marker({
+				position: new kakao.maps.LatLng(position.latitude, position.longitude),
+				image: markerImage,
+				clickable: true
+			});
+			marker.setMap(map);
+			return marker;
+		}
+		
+		// 캠퍼스별 장소 목록 가져오기
+		function fetchPlaceList(campus) {
+		    return fetch(`?mode=getPlaceListByCondition&campus=${campus}`)
+		        .then(response => response.json())
+		        .then(data => data.items || [])
+		        .catch(error => {
+		            console.error('Error fetching place list:', error);
+		            return [];
+			});
+		}
+		
+		// 장소 상세 정보 가져오기
+		function fetchPlaceDetails(placeId) {
+		    return fetch(`?mode=getPlace&id=${placeId}`)
+		        .then(response => response.json())
+		        .then(data => data.item || null)
+		        .catch(error => {
+		            console.error('Error fetching place details:', error);
+		            return null;
+			});
+		}
+		
+		// 리스트 아이템 활성화
+		function activateListItem(listItem) {
+		    const placeListItems = document.querySelectorAll('.map-info-list li');
+		    placeListItems.forEach(item => {
+		        item.classList.remove('active');
+		    });
+		    listItem.classList.add('active');
+		}
+		
+		// 팝업 닫기
+		function closePopup() {
+		    const popupWrap = document.querySelector('.cm-popup-wrap');
+		    popupWrap.classList.remove('visible');
+		}
+		
+        const container = document.getElementById('map');
+        const options = {
+            center: DEFAULT_MARKER_POSITION,
+            level: 3
+        };
+        const map = new kakao.maps.Map(container, options);
+
+        const positions = [];
+        const placeListUl = document.querySelector('.map-info-list ul');
+        placeListUl.innerHTML = '';
+
+        // 모바일 여부 확인
+        function isMobile() {
+		    return /Android|iPhone|iPad|iPod|Windows Phone|webOS|BlackBerry|Opera Mini|IEMobile|WPDesktop|Tablet/i.test(navigator.userAgent);
+        }
+        
+        // 지도 이동
+        function mapPanToPositionByDevice(position) {
+            if (position.latlng.getLat() && position.latlng.getLng()) {
+				// PC에서 마커가 안 보이는 문제로 인해 좌표 값을 조정
+				if(!isMobile() && window.innerWidth > 1024) {
+					map.panTo(new kakao.maps.LatLng(position.latlng.getLat(), position.latlng.getLng() + 0.003));
+				} else {
+					// 모바일 기기나 작은 화면에서는 마커 위치 조정 없이 그대로 노출 
+					map.panTo(position.latlng);
+				}
+                
+            } else {
+				// 위도, 경도 데이터가 없다면 기본 위치로 이동
+				map.panTo(DEFAULT_MARKER_POSITION);
+			}
+		}
+		
+		// 위치 목록 업데이트
+		function updatePositions(newPositions) {
+		    // 장소 목록 초기화
+		    placeListUl.innerHTML = '';
+		
+		    // 기존 장소 데이터 삭제
+		    positions.splice(0, positions.length);
+		
+		    // 새로운 장소 데이터 추가
+		    newPositions.forEach(position => {
+		        positions.push(position);
+		        createPlaceListItem(position);  // 추가된 위치를 바로 리스트에 생성
+		    });
+		}
+		
+		// 장소 클릭 핸들러 함수 추가
+		function handlePlaceClick(event, position, listItem) {
+		    if (event) {
+				event.preventDefault();
+			}
+			
+		    handleMarkerClick(position.marker, position, listItem);
+		
+		    kakao.maps.event.addListener(position.marker, 'click', function() {
+		        handleMarkerClick(position.marker, position, listItem);
+		    });
+		
+		    mapPanToPositionByDevice(position);
+		
+		    const placeListItems = document.querySelectorAll('.map-info-list li');
+		    placeListItems.forEach(item => {
+		        item.classList.remove('active');
+		    });
+		    listItem.classList.add('active');
+		    
+		    if(isMobile() || window.innerWidth <= 1024) {
+			    document.querySelector('.map-wrap').classList.add('info-close');
+			    document.querySelector('.btn-info').classList.add('open');
+			}
+		}
+
+		// 마커 클릭 이벤트 핸들러
+		function handleMarkerClick(marker, position, listItem) {
+		    const placeId = position.id;
+		    activateListItem(listItem);
+		    fetchPlaceDetails(placeId).then(place => {
+		        if (!place) return;
+
+		        const popupWrap = document.querySelector('.cm-popup-wrap');
+		        let abbreviation = locale == 'en' ? place.abbreviationEn : place.abbreviation;
+		        abbreviation = abbreviation ? abbreviation : '';
+		        let placeName = locale == 'en' ? place.placeNameEn : place.placeName;
+		        placeName = placeName ? placeName : '';
+		        placeName = abbreviation ? `${placeName}(${abbreviation})` : placeName;
+		        
+		        let description = locale == 'en' ? place.descriptionEn : place.description;
+		        description = description ? description.replaceAll('\\n', '').split(/\r\n|\r|\n/).map(item => `<li>${item}</li>`).join('') : '';
+		        let subTitle = locale == 'en' ? place.subTitleEn : place.subTitle;
+		        subTitle = subTitle ? subTitle : '';
+		        
+				const referringCampus = new URLSearchParams(window.location.search).get('referringCampus');
+				
+		        popupWrap.innerHTML = 
+		            `<div class="cm-popup-box">
+		                <div class="cm-popup-title-box" style="display:flex;align-items:center;justify-content:space-between;padding-right:45px;">
+		                    <p><span>${placeName}</span></p>
+		                    ${place.latitude && place.longitude ? `<a href="/ko/about/campus-map-info.do?place_name=${place.placeName}&lat=${place.latitude}&lng=${place.longitude}&referringCampus=${referringCampus}&campus=${SELECTED_CAMPUS}" target="_blank" class="btn-to s-btn right">${locale == 'ko' ? '도착지' : 'Destination'}</a>` : ''}
+		                </div>
+		                <div class="cm-popup-info-box">
+		                    ${place.fileName ? `<div class="popup-img-box"><img src="${place.fileName}" alt="${placeName} 사진"></div>` : ''}
+		                    <div class="popup-con-box">
+		                        ${subTitle ? `<div><p class="building-info">${locale == 'ko' ? '뜻 : ' : 'Meaning : '}${subTitle}</p></div>` : ''}
+		                        ${description ? `<ul>${description}</ul>` : ''}
+		                    </div>
+		                </div><a class="btn-close" href="#"><span class="hide">${locale == 'ko' ? '닫기' : 'Close'}</span></a>
+		            </div>`;
+		
+		        popupWrap.classList.add('visible');
+		
+		        const btnClose = document.querySelector('.btn-close');
+		        btnClose.addEventListener('click', function(event) {
+		            event.preventDefault();
+		            closePopup();
+		        });
+		    });
+		    
+		    // 선택한 마커의 목록 항목으로 스크롤
+		    listItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
+
+		// 장소 목록 생성
+        function createPlaceListItem(position) {
+            const placeListLi = document.createElement('li');
+			
+            placeListLi.innerHTML = `
+                <a href="#" title="${position.title ? position.title : ''}">
+                    <span class="map-info-name">${position.title ? position.title : ''}${position.abbreviation ? `(${position.abbreviation})` : ''}</span>
+                </a>`;
+            
+            placeListUl.appendChild(placeListLi);
+
+            placeListLi.addEventListener('click', function(event) {
+				handlePlaceClick(event, position, placeListLi);
+            });
+            
+			// .map-info-box .map-info-list > ul > li > a > span:before 스프라이트 이미지의 y축 위치를 계산합니다.
+			var yOffset = -46 * (position.orderNo - 1);
+			// 스프라이트 이미지의 y축 위치를 설정합니다.
+		    placeListLi.querySelector('a span').style.setProperty('--background-position', `0 ${yOffset}px`);
+            
+        	if (position.marker) {
+		        kakao.maps.event.addListener(position.marker, 'click', function(event) {
+		            handlePlaceClick(event, position, placeListLi);
+		        });
+		    }
+        }
+        
+        // 검색 결과 문구 생성
+        function createListSearchResult() {
+            const searchInput = document.getElementById('searchInput');
+            const searchResult = document.getElementById('searchResult');
+            searchResult.innerHTML = `&#39;<span>${searchInput.value}</span>&#39;에 대한 검색결과 총 <span>${positions.length}</span>건`;
+            searchResult.classList.remove('hide');
+		}
+		
+	    // 캠퍼스별 장소 목록 가져오기
+		fetchPlaceList(SELECTED_CAMPUS).then(placeList => {
+		    const newPositions = placeList.map(place => ({
+		        id: place.id,
+		        orderNo: place.orderNo,
+		        latlng: new kakao.maps.LatLng(place.latitude, place.longitude),
+		        title: locale == 'en' ? place.placeNameEn : place.placeName,
+		        abbreviation: locale == 'en' ? place.abbreviationEn : place.abbreviation,
+		        subTitle: locale == 'en' ? place.subTitleEn : place.subTitle,
+		        description: locale == 'en' ? place.descriptionEn : place.description,
+				marker: addMarker(place, place.orderNo)
+		    }));
+		
+		    updatePositions(newPositions);
+		});
+
+        // 검색 이벤트
+	    const searchForm = document.getElementById('searchForm');
+	    if(searchForm) {
+			searchForm.addEventListener('submit', function(event) {
+			    event.preventDefault();
+			    const searchInput = document.getElementById('searchInput');
+			    const searchKeyword = searchInput.value;
+			    const searchResult = document.getElementById('searchResult');
+			
+			    if (searchKeyword) {
+			        fetch(`?mode=getPlaceListByCondition&campus=${SELECTED_CAMPUS}&search=${searchKeyword}`)
+			            .then(response => response.json())
+			            .then(data => {
+			                const newPositions = data.items.map(place => ({
+			                    id: place.id,
+			                    latlng: new kakao.maps.LatLng(place.latitude, place.longitude),
+			                    orderNo: place.orderNo,
+			                    title: locale == 'en' ? place.placeNameEn : place.placeName,
+			                    abbreviation: locale == 'en' ? place.abbreviationEn : place.abbreviation,
+			                    subTitle: locale == 'en' ? place.subTitleEn : place.subTitle,
+			                    description: locale == 'en' ? place.descriptionEn : place.description,
+			                    marker: addMarker(place, place.orderNo)
+			                }));
+			
+			                if (newPositions.length > 0) {
+			                    updatePositions(newPositions);
+			                    createListSearchResult();
+			                } else {
+			                    searchResult.innerHTML = `&#39;<span>${searchKeyword}</span>&#39;에 대한 검색결과가 없습니다.`;
+			                    searchResult.classList.remove('hide');
+			                    updatePositions([]);
+			                }
+			            })
+			            .catch(error => {
+			                console.error('Error fetching place list:', error);
+			            });
+			    } else {
+					SELECTED_CAMPUS = localStorage.getItem('selectedCampus') || DEFAULT_CAMPUS;
+					
+			        fetchPlaceList(SELECTED_CAMPUS).then(placeList => {
+			            const newPositions = placeList.map(place => ({
+			                id: place.id,
+			                latlng: new kakao.maps.LatLng(place.latitude, place.longitude),
+			                orderNo: place.orderNo,
+			                title: locale == 'en' ? place.placeNameEn : place.placeName,
+			                abbreviation: locale == 'en' ? place.abbreviationEn : place.abbreviation,
+			                subTitle: locale == 'en' ? place.subTitleEn : place.subTitle,
+			                description: locale == 'en' ? place.descriptionEn : place.description,
+			                marker: addMarker(place, place.orderNo)
+			            }));
+			
+			            updatePositions(newPositions);
+			            searchResult.classList.add('hide');
+			        });
+			    }
+			});
+		}
+    });
+}
+
+// 페이지 로드 시 지도 생성
+window.onload = initMap;
+
+// 페이지 로드 시 referringCampus 파라미터 값의 교정을 탭의 가장 먼저 위치하게 하기
+function repositionCampusTab() {
+    const params = new URLSearchParams(window.location.search);
+    const referringCampusId = params.get('referringCampus');
+    
+    if (!referringCampusId) return;
+
+    const referringCampus = campusList.find(item => item.campusId == referringCampusId)?.campusName;
+    if (!referringCampus) return;
+
+    const campusTabBox = document.querySelector('.campus-tab-box ul');
+    if (!campusTabBox) return;
+
+    const campusTab = Array.from(campusTabBox.querySelectorAll('li'))
+        .find(item => item.querySelector('a span')?.textContent === referringCampus);
+    
+    if (campusTab) {
+        campusTabBox.prepend(campusTab);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	// 캠퍼스 탭 위치 변경
+	repositionCampusTab();
+	
+	// 캠퍼스 선택 이벤트
+	const campusSelect = document.querySelector('.campus-tab-box');
+    if (campusSelect) {
+        campusSelect.addEventListener('click', function(event) {
+            const campusName = event.target.textContent;
+            
+            campusList.forEach(function(item) {
+				if (item.campusName == campusName || item.campusNameEn == campusName) {
+					SELECTED_CAMPUS = item.campusId;
+				}
+			});
+            
+			localStorage.setItem('selectedCampus', SELECTED_CAMPUS);
+			
+			
+			// URL 파라미터 업데이트
+			const newURL = new URL(window.location);
+			newURL.searchParams.set('campus', SELECTED_CAMPUS);
+			window.history.pushState({}, '', newURL);
+			
+			initMap();
+			addActiveSelectedCampus();
+			updateKakaoMapHref();
+			
+			searchResult.classList.add('hide');
+			searchInput.value = '';
+
+			document.querySelector('.cm-popup-wrap').classList.remove('visible');			
+			songsimButtonArea();
+        });
+    }
+    
+	function addActiveSelectedCampus() {
+		SELECTED_CAMPUS = localStorage.getItem('selectedCampus') || DEFAULT_CAMPUS;
+		document.querySelectorAll('.campus-tab-box ul li a').forEach(function(item) {
+			item.classList.remove('active');
+			campusList.forEach(function(campus) {
+				if (campus.campusId == SELECTED_CAMPUS) {
+					if (item.querySelector('span').textContent == campus.campusName || item.querySelector('span').textContent == campus.campusNameEn) {
+						item.classList.add('active');
+					}
+				}
+			});
+		});
+	}
+	addActiveSelectedCampus();
+	
+	// 카카오 길찾기 href 업데이트
+	function updateKakaoMapHref() {
+        const kakaoMapInfo = document.querySelector('.map-tab-box li a.campus-map-info');
+        if (kakaoMapInfo) {
+			const newURL = new URL(kakaoMapInfo.href);
+			newURL.searchParams.set('referringCampus', SELECTED_CAMPUS);
+			newURL.searchParams.set('campus', SELECTED_CAMPUS);
+			kakaoMapInfo.href = newURL;
+        }
+    }
+    updateKakaoMapHref();
+
+	// ESC 키로 팝업 닫기
+    document.addEventListener('keydown', function(event) {
+        if (event.keyCode === 27) {
+            const popupWrap = document.querySelector('.cm-popup-wrap');
+            popupWrap.classList.remove('visible');
+        }
+    });
+	
+	// 버튼 영역 성심교정에서만 노출 
+	function songsimButtonArea() {
+		const buttonArea = document.querySelector('.map-btn-wrap');
+		if (buttonArea) {
+			if (SELECTED_CAMPUS == '1') {
+				buttonArea.classList.remove('hide');
+			} else {
+				buttonArea.classList.add('hide');
+			}
+		}
+	}
+	songsimButtonArea();
+});

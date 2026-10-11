@@ -6,9 +6,9 @@
 
 本轮起點 main `59a20f27fcee00fb597abc79e75ec11778317422`。依賴為：main → PR8 `9927ec1d8765a9772671bbaa68e7f920995f1258` 共用地球識別 → CGU 雙來源完整快照恢復／共用記憶體修復 → PR9 `ed7479073df36deb8fc0393e86fedb102e1cf2b7`、PR10 `ebe059fc317bf1cb55a0604b3ce354fe6fa12939`、PR11 `358a72e7302476ba8dd19c47c35fc398fc205a47`、PR13 `88bd00531d9a77fb98ba54dbfd8786cbde18db96` → 逐 hunk 協調及完整驗收。
 
-完整全庫上一輪固定候選 `3129ce1bfcf6987a872574587cc53b60043d64ba` 已結束：2874 passed、4 failed、13 skipped；該輪175步冷暖記憶體及完整35-migration runtime通過，但四項失敗阻止接受。後續 NCU `e25ff02a1ebc69ea126a814d105e88b272539351`、Turku舊核實明細保留、17筆校區待核、CGU來源横幅排版及測試event-loop隔離修正，已納入 `2d0202319e457bb2273584b17c41056deb464a89`；406 targeted與24 browser通過。CCU `6bd8c3c2d964b8134968b28a204ee24e8f949997` 經原件複核、醫療題目11→10校正後，形成未推候選 `160aeacd15521d63df6a5624bd12821cc5d26cea`，目前進行針對測試。下一NCU固定SHA需逐hunk核對資料層hold規則等價性，不能疊加或覆蓋現有明確校區限制。
+當前候選 `160aeacd15521d63df6a5624bd12821cc5d26cea` 已正常推送Draft PR12供復原。完整2,919 unique cases對帳：2,906 passed、13 skipped、0 failed、0 notrun；同SHA全量35-migration runtime、6,579檔wheel與隔離安裝、來源交付、原三校workflow parity均通過。175步冷測先後因截圖與桌面切校等待逾時未完成，原失敗保留；第三次加觀察器重跑，暖測尚未執行。因此目前仍不可標為完整接受。舊3129的四個全套失敗已在160修正並全套回歸，不沿用舊記憶體結果。
 
-TKU `563fb9328c7ce15efc1ac3883d8c3d641df01e98` 因Sunderland錯用UWE照片、UAEMEX作者署名待釐清，尚未接受整合；NTU `acf0cebb24ae58b70c5604b2f1261fe8ae2c46ad` 只做唯讀範圍檢查，等待stage5正式匯入的新固定SHA。所有新資料、修復、套件、冷暖記憶體與全部測試須綁定最終新固定SHA，不能沿用較小資料量或舊版本結果。本文件後續的「最終候選」均指README明確記錄完成驗收的固定SHA，不是目前PR的浮動head。
+下一固定輸入為NCU `baf98c0df400ef96aa83fb587107eb22513c0b97`、CCU `258ce9bbb38081792658f9720bdb457a5344b2bb`、NTU `dc9bbcddcf2cd2cf47ef7768e530c6aab6fa4401`。TKU `1619ba890e3dc282bb26f92ebeeeece375e9ffe8`仍含Sunderland错校圖與UAEMEX作者待核阻擋。新資料在當前固定驗收結束後再逐hunk整合，重新綁定固定SHA驗收；不能以作者測試或前批通過代替。NCU僅保留一套資料層候選優先規則及explicit operator override，僅解除有具名新證據的7位置；Meiji租金「約五月」原件為約五個月，須同步source和derived更正。
 
 共用面包括 api.py 照片 scope／coverage／三處座標呼叫、school_content.py、university_locations.py、共享位置／照片、index.html 資產版本與載入次序、app.js 選校／來源狀態／名額語意、discovery-core.js、multi-plan.js、套件 package-data、OpenAPI、測試分母與完整來源交付。另逐欄檢查 NCU supplement 覆寫舊查核明細、CCU completion 與有界快取、TKU 完整索引與逐校原件。Git 沒有衝突不足以證明內容正確。
 

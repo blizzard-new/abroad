@@ -1,0 +1,94 @@
+{
+  "source_commit": "baf98c0df400ef96aa83fb587107eb22513c0b97",
+  "completed_at": "2026-10-11T16:24:44.963150+00:00",
+  "status": "source review passed with one wording correction required during integration",
+  "photos": [
+    {
+      "school": "蘭斯大學 The University of Reims Champagne-Ardenne",
+      "sha256": "de98fe51d8988b0f0057284da3bc20a171b102c0d01e32f6afbfc4d1ce967777",
+      "source_artist": "Gérald Garitan",
+      "license": "CC BY-SA 4.0",
+      "source_date": "2024-10-05 15:32:55",
+      "source_description": "Campus Moulin de la housse.",
+      "independently_viewed": true
+    },
+    {
+      "school": "阿沙芬堡應用科學大學 Aschaffenburg University of Applied Sciences",
+      "sha256": "2df59e116ed9b55a65192df725d0bea548e6d1bc859fb871ccbcc31d6ee8f6f3",
+      "source_artist": "Aschaffenburczyk",
+      "license": "CC BY-SA 3.0",
+      "source_date": "18 October 2012, 08:35:04",
+      "source_description": "Hochschule Aschaffenburg",
+      "independently_viewed": true
+    },
+    {
+      "school": "巴登-符騰堡州立合作大學 Baden-Wuerttemberg Cooperative State University (DHBW)",
+      "sha256": "813f3b39c26d4be3a207e2ad943bf9c82dee9b70804c916781f15aa686caadf8",
+      "license": "FAL",
+      "original_author_declaration_terms_and_upload_history_read": true,
+      "independently_viewed": true
+    },
+    {
+      "school": "韓國天主教大學 The Catholic University of Korea",
+      "sha256": "b3c475a3a017007d6547c0aa2f2c780963f196c797d06fe349c9c3bbf3859c3e",
+      "source_artist": "poly",
+      "license": "CC0",
+      "source_date": "2019-01-05 14:08:02",
+      "source_description": "가톨릭대학교 성의교정 內의 의생명산업연구원(左), 성의회관(右,대학본부 및 대학원본부 기능)",
+      "independently_viewed": true
+    },
+    {
+      "school": "南洋理工商管學院 Nanyang Polytechnic School of Business Management (NYP)",
+      "sha256": "cf55bd3d4c6aef6f0aa0943ffbba888a3c15842c6894ed6d8bec7dddc632721f",
+      "license": "Copyrighted free use",
+      "original_author_declaration_terms_and_upload_history_read": true,
+      "independently_viewed": true
+    },
+    {
+      "school": "布勞爪哇大學 University of Brawijaya",
+      "sha256": "682858e10ae0af0bd5952f4de8f78aec167f60e40154d142ae45a29f8e8b60c1",
+      "source_artist": "Lorrainevyu",
+      "license": "CC BY 4.0",
+      "source_date": "2025-09-27 14:58:48",
+      "source_description": "gerbang pintu masuk universitas brawijaya",
+      "independently_viewed": true
+    },
+    {
+      "school": "艾爾朗加大學 Airlangga University",
+      "sha256": "f541d238840692ade188e64ed05bd125be044e0720c8b70384df39c5f7301726",
+      "source_artist": "antonov0002",
+      "license": "CC BY 3.0",
+      "source_date": "28 November 2011 (original upload date)",
+      "source_description": "faculty of humanities, airlangga university",
+      "independently_viewed": true
+    }
+  ],
+  "seven_named_locations_original_numeric_derivation_verified": true,
+  "coordinate_scope": "Representative named campus only; none confirms current NCU exchange assignment. Catholic photo is Songeui while point is Songsim; explicit distinction preserved.",
+  "manual_host_review": {
+    "ktu": "2021 policy full four-page native text; 2025/26 nine-page image factsheet all pages viewed; current undated incoming, 2026/27 calendar and general relocation read with version conflicts; original binary DOC stored text and coordinator signature sections inspected. No GUI rendering of binary DOC claimed.",
+    "meiji": "AY2027 nine-page guidelines all native text and all nine rendered pages viewed; doctor health form and photo guide individually viewed; four DOCX document.xml text fully read; factsheet HTML and all four embedded images viewed, including rent and insurance tables. Landing source year/COE/cost/course-version conflicts retained.",
+    "preserved_conflicts": [
+      "KTU 2021 versus 2025/26 nomination/application dates",
+      "KTU semester/exam end differences and separate exchange/general housing costs",
+      "Meiji late-March versus August2027 course availability statements",
+      "Meiji Spring2027 page versus legacy2026 email template",
+      "Meiji May2026 housing prices apply to Spring2027, not guaranteed Fall2027"
+    ]
+  },
+  "required_integration_correction": {
+    "path": "sources/ncu/2026-10-11/reviewed-host-records.json",
+    "row": "ncu-138.fields.housing.points[2]",
+    "from": "首學期約五月全額",
+    "to": "首學期約五個月全額",
+    "source": "Original factsheet: first one semester (about 5 months); this is duration, not month of May. Apply source and derived outputs atomically."
+  },
+  "merge_constraints": [
+    "Preserve explicit operator location override precedence and one NCU candidate-hold rule; missing record alone permits verified shared fallback.",
+    "Keep ten remaining unresolved candidate holds and Mons; replace only seven newly substantiated rows.",
+    "Retain prior Turku full A1–C2 assessment/signature supplement.",
+    "Incoming API precedence test currently writes supposed shared fallback into operator-override file; bind actual shared catalog in fixture, preserving both precedence assertions."
+  ],
+  "current_cycle_completion": false,
+  "new_116_quota_verified": false
+}
