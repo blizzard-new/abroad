@@ -1,0 +1,174 @@
+{
+  "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+  "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+  "status": "failed",
+  "counts": {
+    "passed": 2956,
+    "skipped": 13,
+    "error": 1
+  },
+  "collected_unique_cases": 2970,
+  "all_collected_nodes_accounted_exactly_once": true,
+  "all_shards_same_clean_fixed_sha": true,
+  "notrun": 0,
+  "shards": [
+    {
+      "shard": 0,
+      "run": "integration-next1-full-shard-0",
+      "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+      "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "result": "passed",
+      "exit_code": 0,
+      "counts": {
+        "passed": 2529,
+        "skipped": 13
+      },
+      "collected": 2542,
+      "started_at": "2026-10-11T17:04:48.827359+00:00",
+      "finished_at": "2026-10-11T17:42:34.837558+00:00"
+    },
+    {
+      "shard": 1,
+      "run": "integration-next1-full-shard-1",
+      "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+      "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "result": "passed",
+      "exit_code": 0,
+      "counts": {
+        "passed": 143
+      },
+      "collected": 143,
+      "started_at": "2026-10-11T17:04:48.827504+00:00",
+      "finished_at": "2026-10-11T17:38:23.743451+00:00"
+    },
+    {
+      "shard": 2,
+      "run": "integration-next1-full-shard-2",
+      "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+      "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "result": "failed",
+      "exit_code": 1,
+      "counts": {
+        "passed": 142,
+        "error": 1
+      },
+      "collected": 143,
+      "started_at": "2026-10-11T17:04:48.827353+00:00",
+      "finished_at": "2026-10-11T17:25:06.367854+00:00"
+    },
+    {
+      "shard": 3,
+      "run": "integration-next1-full-shard-3",
+      "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+      "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "result": "passed",
+      "exit_code": 0,
+      "counts": {
+        "passed": 142
+      },
+      "collected": 142,
+      "started_at": "2026-10-11T17:04:48.829074+00:00",
+      "finished_at": "2026-10-11T17:33:55.892485+00:00"
+    }
+  ],
+  "nonpassing_cases": [
+    {
+      "nodeid": "tests/e2e/test_web_next_phase.py::test_content_admins_independently_attest_every_source_before_publish",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Phase C",
+      "detail": "/workspace/abroad-globe-20261011/tests/e2e/test_web_next_phase.py:3573: Phase C"
+    },
+    {
+      "nodeid": "tests/e2e/test_web_next_phase.py::test_content_admin_downloads_snapshot_bound_destination_profile_review_queue",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Phase C",
+      "detail": "/workspace/abroad-globe-20261011/tests/e2e/test_web_next_phase.py:4549: Phase C"
+    },
+    {
+      "nodeid": "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_fixed_10_questions_no_oom",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Ollama not running or gemma4:12b not loaded",
+      "detail": "/workspace/abroad-globe-20261011/tests/integration/test_local_ai_runtime.py:64: Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "nodeid": "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_cold_start_under_90s",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Ollama not running or gemma4:12b not loaded",
+      "detail": "/workspace/abroad-globe-20261011/tests/integration/test_local_ai_runtime.py:71: Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "nodeid": "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_overlong_prompt_handled",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Ollama not running or gemma4:12b not loaded",
+      "detail": "/workspace/abroad-globe-20261011/tests/integration/test_local_ai_runtime.py:79: Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "nodeid": "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_service_recovers_after_timeout",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Ollama not running or gemma4:12b not loaded",
+      "detail": "/workspace/abroad-globe-20261011/tests/integration/test_local_ai_runtime.py:91: Ollama not running or gemma4:12b not loaded"
+    },
+    {
+      "nodeid": "tests/test_application_plan_api.py::test_application_plan_api_uses_bundled_workflow_with_isolated_runtime_data",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Phase C data reviewed",
+      "detail": "/workspace/abroad-globe-20261011/tests/test_application_plan_api.py:239: Phase C data reviewed"
+    },
+    {
+      "nodeid": "tests/test_application_workflow.py::test_workflow_api_reads_cache_and_rejects_public_refresh",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Phase C data reviewed",
+      "detail": "/workspace/abroad-globe-20261011/tests/test_application_workflow.py:479: Phase C data reviewed"
+    },
+    {
+      "nodeid": "tests/test_application_workflow.py::test_workflow_api_applies_department_override",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Phase C data reviewed",
+      "detail": "/workspace/abroad-globe-20261011/tests/test_application_workflow.py:497: Phase C data reviewed"
+    },
+    {
+      "nodeid": "tests/test_cgu_bundled_data.py::test_bundled_cgu_workflows_are_available_without_local_cache",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Phase C data reviewed",
+      "detail": "/workspace/abroad-globe-20261011/tests/test_cgu_bundled_data.py:10: Phase C data reviewed"
+    },
+    {
+      "nodeid": "tests/test_cgu_bundled_data.py::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Phase C data reviewed",
+      "detail": "/workspace/abroad-globe-20261011/tests/test_cgu_bundled_data.py:40: Phase C data reviewed"
+    },
+    {
+      "nodeid": "tests/test_cgu_bundled_data.py::test_bundled_cgu_completeness_report_matches_export",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Phase C data reviewed",
+      "detail": "/workspace/abroad-globe-20261011/tests/test_cgu_bundled_data.py:91: Phase C data reviewed"
+    },
+    {
+      "nodeid": "tests/test_cgu_bundled_data.py::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+      "result": "skipped",
+      "seconds": 0.0,
+      "message": "Phase C data reviewed",
+      "detail": "/workspace/abroad-globe-20261011/tests/test_cgu_bundled_data.py:1275: Phase C data reviewed"
+    },
+    {
+      "nodeid": "tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history",
+      "result": "error",
+      "seconds": 0.128,
+      "message": "failed on setup with \"playwright._impl._errors.Error: Browser.new_context: Response has been disposed\"",
+      "detail": "/workspace/abroad-globe-20261011/tests/e2e/conftest.py:478: in page\n    context = browser.new_context(viewport={\"width\": 1280, \"height\": 900})\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16125: in new_context\n    self._sync(\n/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_browser.py:174: in new_context\n    channel = await self._channel.send(\"newContext\", None, params)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send\n    return await self._connection.wrap_api_call(\n/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nE   playwright._impl._errors.Error: Browser.new_context: Response has been disposed"
+    }
+  ]
+}

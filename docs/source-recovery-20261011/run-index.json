@@ -1402,6 +1402,42 @@
     ]
   },
   {
+    "name": "integration-next1-full-shard-0",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+      "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+      "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "status": ""
+    },
+    "pytest_summary": [
+      "================ 2529 passed, 13 skipped in 2249.74s (0:37:29) ================="
+    ]
+  },
+  {
+    "name": "integration-next1-full-shard-1",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+      "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+      "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "status": ""
+    },
+    "pytest_summary": [
+      "======================= 143 passed in 2001.36s (0:33:21) ======================="
+    ]
+  },
+  {
     "name": "integration-next1-full-shard-2",
     "result": "failed",
     "exit_code": 1,
@@ -1417,6 +1453,24 @@
     },
     "pytest_summary": [
       "================== 142 passed, 1 error in 1198.04s (0:19:58) ==================="
+    ]
+  },
+  {
+    "name": "integration-next1-full-shard-3",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+      "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+      "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "status": ""
+    },
+    "pytest_summary": [
+      "======================= 142 passed in 1732.11s (0:28:52) ======================="
     ]
   },
   {
@@ -1479,6 +1533,88 @@
     "end_guard": {
       "sha": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
       "tree": "29a814ee913f20eafb909a2fab63836cca4f6637",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integration-next2-contracts",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integration-next2-delivery-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integration-next2-full-shard-2",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": [
+      "============= 8 failed, 10 passed, 126 errors in 127.24s (0:02:07) ============="
+    ]
+  },
+  {
+    "name": "integration-next2-full-supabase-runtime",
+    "result": "failed",
+    "exit_code": 1,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "integration-next2-ncu-payload-parity",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
       "status": ""
     },
     "pytest_summary": []
@@ -2554,6 +2690,38 @@
     "pytest_summary": [
       "406 passed in 147.65s (0:02:27)"
     ]
+  },
+  {
+    "name": "ntu-eighth-fixed-archive-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": []
+  },
+  {
+    "name": "ntu-eighth-fixed-scope-audit",
+    "result": "passed",
+    "exit_code": 0,
+    "start_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "end_guard": {
+      "sha": "dbc4afd64b4116e199c218d0d22e4223c9ff2db1",
+      "tree": "2d48fe8b26394e4f24088cb6dec871772228cc02",
+      "status": ""
+    },
+    "pytest_summary": []
   },
   {
     "name": "ntu-seventh-fixed-source-audit",

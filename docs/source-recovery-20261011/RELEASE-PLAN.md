@@ -47,3 +47,7 @@
 ## 尚未執行的正式步驟
 
 本隔離任務沒有執行 production DB migration/history/backup 的最終現況驗收、production DB write、main merge 或 production deploy；所有本地通過仍需父對話按上述順序協調正式發布。需要額外批准時，必須精確列出「讀哪個正式狀態／套哪些 SQL／更新哪個 main SHA／部署或回滾哪個版本」，不能用籠統的任務授權擴充範圍。
+
+## 本次續作保存點
+
+已推送dbc4afd64b4116e199c218d0d22e4223c9ff2db1，CCU第八批已整合且完整測試仍在進行／有browser崩潰與Storage ENOSPC失敗。下一固定組合改為NCUa2df55b1、CCU52ed6370（資料a4e425d4）、NTUc7357f97；須完成固定輸入獨立審查後再建立新SHA及完整驗收。以上不改正式發布邊界，最新原始passed/failed/error/skipped/notrun以README及逐run檔為準。

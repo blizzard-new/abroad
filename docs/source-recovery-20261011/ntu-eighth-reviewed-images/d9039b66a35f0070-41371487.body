@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+
+<head>
+
+    <title>PUC-Rio - Incoming Students - Students</title>
+    
+    <!-- Javascript e elementos diversos para todo o site PUC -->
+    
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<!-- SIMBOLOS -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<!-- Ícone -->
+<link rel="shortcut icon" href="https://www.puc-rio.br/imagens/puc_brasao_icone_browser.png" type="image/x-icon" />
+
+
+<!-- CSS PUC -->
+<link href="https://www.puc-rio.br/styles/puc_interna.css" rel="stylesheet" type="text/css" />
+
+
+<!-- EFEITO : JQUERY -->
+<script src="https://www.puc-rio.br/js/jquery/jquery-3.1.1.min.js"></script>
+
+
+<!-- EFEITO : POP-UP LIGHTBOX PARA ELEMENTOS DIVERSOS -->
+<link href="https://www.puc-rio.br/js/puc_efeito_lity/dist/lity.css" rel="stylesheet">
+<script src="https://www.puc-rio.br/js/puc_efeito_lity/dist/lity.js"></script>
+
+
+<!-- EFEITO : APARECER E SUMIR -->
+<script src="https://www.puc-rio.br/js/puc_efeito_aparecer_sumir/puc_efeito_aparecer_sumir.js"></script>
+
+
+<!-- EFEITO : LUPA DA GALERIA DE IMAGENS -->
+<script src="https://www.puc-rio.br/js/puc_efeito_vermaior/puc_efeito_vermaior.js"></script>
+
+
+<!-- EFEITO : COPIA PARA MOBILE -->
+<script src="https://www.puc-rio.br/js/puc_efeito_copia_mobile/puc_copia_mobile.js"></script>
+
+
+<!-- EFEITO : SLIDESHOW RESPONSIVO -->
+<script src="https://www.puc-rio.br/js/puc_efeito_slideshow_responsivo/puc_efeito_slideshow_responsivo.js"></script>
+
+
+<!-- EFEITO : PLAYER VIMEO -->
+<script src="https://www.puc-rio.br/js/puc_efeito_vimeo/puc_efeito_vimeo.js"></script>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+
+<!-- EFEITO : SLIDESHOW JSSOR -->
+<!-- #region Jssor Slider Begin -->
+<!-- Generator: Jssor Slider Maker -->
+<!-- Source: http://www.jssor.com -->
+<!-- This code works with jquery library. -->
+<script src="https://www.puc-rio.br/js/puc_efeito_slideshow/jssor.slider-21.1.6.mini.js"></script>
+
+
+
+<!-- EFEITO : BACKGROUND POSITION P/ CARDS -->
+<script>
+
+window.addEventListener("load", bkggrafismo);
+window.addEventListener("resize", bkggrafismo);
+
+function bkggrafismo() {
+
+	var card = document.getElementsByClassName('card');
+	var cardquant = card.length;
+
+	for (var i=0; i<=cardquant; i++) {
+
+	// card[i].style.backgroundPosition = "0 " + card[i].offsetHeight * 0.6666 + "px" ;
+	card[i].style.backgroundPosition = "0 " + card[i].offsetHeight * 0.5 + "px" ;
+
+	}
+
+}
+
+
+</script>
+
+
+
+
+<script>
+
+jQuery(document).ready(function ($) {
+
+	var jssor_1_SlideoTransitions = [
+	  [{b:-1,d:1,o:-1},{b:0,d:1000,o:1}],
+	  [{b:1900,d:2000,x:-379,e:{x:7}}],
+	  [{b:1900,d:2000,x:-379,e:{x:7}}],
+	  [{b:-1,d:1,o:-1,r:288,sX:9,sY:9},{b:1000,d:900,x:-1400,y:-660,o:1,r:-288,sX:-9,sY:-9,e:{r:6}},{b:1900,d:1600,x:-200,o:-1,e:{x:16}}]
+	];
+
+	var jssor_1_options = {
+	  $AutoPlay: true,
+	  $SlideDuration: 1000,
+	  $SlideEasing: $Jease$.$OutQuint,
+	  $CaptionSliderOptions: {
+		$Class: $JssorCaptionSlideo$,
+		$Transitions: jssor_1_SlideoTransitions
+	  },
+	  $ArrowNavigatorOptions: {
+		$Class: $JssorArrowNavigator$
+	  },
+	  $BulletNavigatorOptions: {
+		$Class: $JssorBulletNavigator$
+	  }
+	};
+
+	var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+	/*responsive code begin*/
+	/*you can remove responsive code if you don't want the slider scales while window resizing*/
+	function ScaleSlider() {
+		var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+		if (refSize) {
+			refSize = Math.min(refSize, 3000);
+			jssor_1_slider.$ScaleWidth(refSize);
+		}
+		else {
+			window.setTimeout(ScaleSlider, 30);
+		}
+	}
+	ScaleSlider();
+	$(window).bind("load", ScaleSlider);
+	$(window).bind("resize", ScaleSlider);
+	$(window).bind("orientationchange", ScaleSlider);
+	/*responsive code end*/
+});
+</script>
+
+
+
+
+
+
+
+<!-- ============================== PUC-Rio - GTAG GLOBAL ==============================-->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-205JBFW571"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtagGlobalPUC(){dataLayer.push(arguments);}
+  gtagGlobalPUC('js', new Date());
+
+  gtagGlobalPUC('config', 'G-205JBFW571');
+</script>
+
+
+<script>
+var getArrayFromTag = function(tagname) {
+     //get the NodeList and transform it into an array
+     return Array.prototype.slice.call(document.getElementsByTagName(tagname));
+}
+
+setTimeout(function(){ 
+var links = getArrayFromTag("a");
+var buttons = getArrayFromTag("button");
+links = links.concat(buttons);
+
+for(var i=0, max=links.length; i<max; i++) {
+    var linkHref = links[i].href;
+    var linkText = links[i].innerText;
+    if (linkText === '' || linkText == null){
+       var linkImg = links[i].getElementsByTagName('img')[0];
+       if (linkImg == null)
+          continue;
+       var imgAlt = linkImg.getAttribute("alt");
+       if (imgAlt !== '' && imgAlt != null)
+           linkText = imgAlt;       
+       else{
+           var imgTitle = linkImg.getAttribute("title");
+           if (imgTitle !== '' && imgTitle != null)
+               linkText = imgTitle;
+           else
+               continue;
+       }
+    }
+    var currentPage = removeIndexFromUrl(window.location.href);
+    linkHref = removeIndexFromUrl(linkHref);
+
+    var gtagContent = "gtagGlobalPUC( \'event\', \'clique\', { \'event_category\':\'" + currentPage + "\', \'event_label\': \'" + linkText + "\', \'origin_url\':\'" + currentPage + "\', \'href\':\'" + linkHref + "\'});";
+    var defaultOnMouseDown = links[i].getAttribute("onmousedown");
+    if (defaultOnMouseDown != null)
+        var gtagContent = gtagContent + defaultOnMouseDown;
+    links[i].setAttribute("onmousedown", gtagContent);
+}
+}, 2000);
+
+function removeIndexFromUrl(url){
+    if (url == "undefined")
+        return url;
+
+    if (url.endsWith("/index.html"))
+    {
+        url = url.replace("/index.html","/");    
+    }
+    else if (url.endsWith("/#"))
+    {
+        url = url.replace("/#","/");    
+    }
+
+    return url;
+}
+</script>
+
+
+
+<!-- / SLIDESHOW -->
+
+
+<!-- PLUGIN DE ACESSIBILIDADE FREE -->
+<script src="/js/acessibilidade_acctoolbar.min.js"></script>
+<script>
+  window.onload = function() {
+    window.micAccessTool = new MicAccessTool({
+      link: 'http://your-awesome-website.com/your-accessibility-declaration.pdf',
+      contact: 'mailto:webrdc@puc-rio.br',
+      buttonPosition: 'right', // default is 'left'
+       forceLang: 'pt-br' // default is 'en' may be 'he-IL', 'ru-RU', or 'fr_FR'
+    });
+  }
+</script>
+
+
+
+    
+    <!-- CSS específico da CCCI -->
+    <link href="../styles/estilos_ccci.css" rel="stylesheet" type="text/css" />
+    
+</head>
+
+
+
+
+
+<!-- ============================================================================== ABRE PÁGINA == -->
+
+
+<body id="ccci">
+
+
+<!-- ===================================================================================== TOPO == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<header>
+
+
+<!-- Link acessibilidade, cabeçalho, brasão, título -->
+
+
+<!-- Código para janelas do Facebook -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+<!-- Link acessibilidade -->
+<a href="#link_pular_conteudo" id="puc_link_pular_para_conteudo">Pular para o conteúdo da página</a><span></span>
+
+<!-- Cabeçalho PUC (busca e índice de A a Z) -->
+<iframe src="/includes/puc_cabecalho.html" name="cabecalho" title="Cabeçalho PUC-Rio"></iframe>
+
+
+
+<div id="puc_topo_brasao_titulo_caminho">
+
+<!-- Brasão PUC -->
+<a href="http://www.puc-rio.br" target="_parent" title="Ir para a página inicial do site PUC-Rio" id="puc_cabecalho_brasao">
+<img src="/imagens/brasao_preto_vertical.svg" alt="Brasão da PUC-Rio" /></a>
+
+<div id="puc_topo_titulo_caminho">
+
+<h1>Coordenação Central de Cooperação Internacional</h1>
+
+<!-- fecha "puc_topo_brasao_titulo_caminho" e "puc_topo_titulo_caminho" no arquivo "include_header_menu.html" -->
+
+
+<!-- Caminho -->
+<nav>&gt; <a href="/ensinopesq/ccci">Intercâmbio Internacional</a> &gt; <a href="/ensinopesq/ccci/incoming">Incoming Students</a> &gt;</nav>
+
+
+<!-- Menu -->
+
+<!-- abre "puc_topo_brasao_titulo_caminho" e "puc_topo_titulo_caminho" no arquivo no arquivo "include_header_geral.html" -->
+</div>
+</div>
+
+
+<!-- Menu do site -->
+<div id="puc_menu_faixa">
+<button type="button" onclick="javascript:efeito_aparecer_sumir_menu('menu')">Menu</button>
+<div id="menu" class="puc_efeito_menu_sumir">
+
+<span></span>
+
+<a href="/ensinopesq/ccci/index.html" id="puc_link_index">Página inicial</a>
+<a href="/ensinopesq/ccci/academico/">Intercâmbio Acadêmico</a>
+<a href="/ensinopesq/ccci/curtaduracao/">Intercâmbio de Curta Duração</a>
+<a href="/ensinopesq/ccci/incoming/">Incoming Students (Alunos Internacionais)</a>
+<a href="/ensinopesq/ccci/sobre.html">Sobre a CCCI</a>
+<!-- <a href="/ensinopesq/ccci/estconv.html" id="puc_menu_link_lang">English</a> -->
+
+<span></span>
+
+</div><!-- fecha "menu" -->
+</div><!-- fecha "puc_menu_faixa" -->
+
+
+</header>
+
+
+
+
+
+<!-- ===================================================================================== MEIO == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<section id="conteudo">
+
+
+<!-- ================================================================== MEIO > COLUNA PRINCIPAL == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<!-- destino do link de acessibilidade "pular para conteúdo" -->
+<a id="link_pular_conteudo"></a>
+
+
+<article>
+
+
+<h2>Incoming Students</h2>
+
+<h3>Students</h3>
+
+
+<a name="exchange"></a>
+<h4>Exchange students</h4>
+<p><strong>WHO:</strong> Undergraduate and graduate students enrolled in institutions that have an exchange agreement with PUC-Rio. In addition to the Portuguese as a Second Language (required) course, these students may attend other regular courses according to her/his area of interest.</p>
+<p><strong>CREDITS:</strong> Academic credits are obtained.</p>
+<p><strong>TRANSCRIPT:</strong> The student will receive an official PUC-Rio transcript listing the courses taken with its corresponding total number of class-hours, number of credits obtained and the final course grade.</p>
+<p><strong>APPLICATION:</strong> In addition to the specific exchange program requirements and application process of the student&acute;s home institution and study abroad office, the student must also observe all the requirements and deadlines of the PUC-Rio application process.</p>
+<p><strong>Required documents:</strong> Online application forms filled out, upload the required documents. Personal Statement (introduce yourself and why you would like to study at PUC-Rio), Official Transcript, Copy of health insurance with company name and policy number covering COVID 19 <strong><u>(recommended)</u></strong>, a copy of passport (main  page), 01 photo (3 cm x 4cm),<strong> Covid 19 Certificate of vaccination, <u>Yellow fever immunization (recommended),</u></strong> the administrative cost  payment.</p>
+<p>Please visit the following website to fill out the  online application, and see the required documents to send  and for more information: <a href="forms-hp_students.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/forms-hp_students.html</a></p>
+<p><strong>a) Students must send the  required documents to PUC-Rio:</strong></p>
+<p>Please visit the following site to fill out the  online application form: <a href="forms-hp_students.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/forms-hp_students.html</a></p>
+<p class="puc_texto_destaque">DEADLINES</p>
+<ul>
+  <strong>April</strong><strong>15th</strong> (exchange period starting in Jul-Aug)
+  <li><strong>October 15th</strong> (exchange period starting in Feb/Mar)</li>
+</ul>
+<p><strong>TUITION / FEES:</strong> Exchange students do not pay tuition.</p>
+<p><strong>An administrative cost</strong> is charged. International students are allowed to attend courses at PUC-Rio up to two regular terms plus the Pre-Term Portuguese as a second language Intensive Course.</p>
+<p> Students registered for a year or those  who request extension of the student exchange period, will pay the renewal of the <strong> administrative cost</strong> charged 
+  
+  during the deadline for the Exchange Period Extension.</p>
+<p>For current costs of tuition and fees, please  refer to: <a href="fees_tuition.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html</a></p>
+<p><strong>VISA:</strong> A student visa is required. The visa must be obtained <strong>BEFORE</strong> the student&acute;s  entrance in Brazil. A tourist visa cannot be transferred  into a student visa  inside the country. When the applicant is accepted, CCCI will send a  LETTER OF ACCEPTANCE that will enable him/her to obtain a visa at a Brazilian  Consulate.</p>
+<!-- Botão voltar -->
+<button onclick="javascript:history.back()" class="puc_link_voltar_TAG-BUTTON" title="Back">BACK</button>
+
+<hr>
+<a name="independent"></a>
+
+<h4>Independent students</h4>
+<p><strong>WHO:</strong> Undergraduate  and graduate students enrolled in institutions that do not have an exchange  agreement with PUC-Rio. In addition to the Portuguese as  a second language (required) course, these students  may attend other regular courses according to his/her area of interest. </p>
+<p><strong>CREDITS:</strong> Academic credits are obtained.</p>
+<p><strong>TRANSCRIPT:</strong> The student will receive an official PUC-Rio transcript listing the  courses taken with its  corresponding total number of class-hours, number of credits obtained  and the final course grade.</p>
+<p><strong>APPLICATION:</strong> The procedures for Independent   Student registration are the following:</p>
+<p><strong>a) Required documents:</strong> Online application forms filled out, upload the required documents. Personal Statement (introduce  yourself and why you would like to study at PUC-Rio), <strong>02  recommendation letters (originals and signed), </strong>Official Transcript, Copy  of health insurance with company name and policy number covering COVID 19,  <strong><u>(recommended)</u></strong> a copy of passport (main page), 01 photo (3 cm  x 4cm),<strong> Covid 19 Certificate of vaccination, <u> </u><u>Yellow fever immunization (recommended),</u></strong> the administrative cost  payment.</p>
+<p>Please visit the following website to  fill out the online application<strong>, see the  required documents to send&nbsp; and for more  information: <a href="forms-hp_students.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/forms-hp_students.html</a></strong></p>
+<p class="puc_texto_destaque">DEADLINES for submitting applications:</p>
+<ul><li><strong>April</strong><strong> 15th</strong> (exchange period starting in Jul-Aug)</li>
+  <li><strong>October 15th</strong> (exchange period starting in 
+    
+    Feb/Mar)</li>
+</ul>
+<p><strong>b)</strong> Upon acceptance of the  applicant, CCCI will send him/her a LETTER OF ACCEPTANCE  that will enable him/her to obtain a student visa  at a Brazilian Consulate. </p>
+<p><strong>c) TO REGISTER:</strong> The student must present  him/herself at The International Office - CCCI one week before the first day of classes to confirm  registration with a copy of the letter of acceptance sent by CCCI and the passport  with a STUDENT VISA valid for the entire academic period. Students will not be registered  without the appropriate visa. </p>
+<p><strong>TUITION/FEES: An  administrative cost is charged</strong>. Independent   Students pay tuition.</p>
+<p>The academic tuition will be charged according to the number of credits taken in each term. In Brazil, the yearly tuition is divided into 12 monthly payments. The semester (term) tuition is divided into 6 monthly installments for regular students. Thus, in our first term of the year (late February/early March to late June/early July), students make 6 payments: in January, February, March, April, May and June; The same happens in the second term, with payments in July, August, September, October, November and December.</p>
+<p><strong>For the international students it is divided differently, based on the date of arrival.</strong></p>
+<p>Because  international exchange and Independent  students arrive at the university only in the second month  of the semester, the semester tuition will be divided into 4 installments  (March, April, May, June), THE FIRST TWO INSTALLMENTS  EQUAL the sum of 2 monthly  tuition payments each. In  case of a late  registration, the total tuition  amount will be divided  into 3 monthly payments (April, May, June).</p>
+<p>Please refer to <a href="fees_tuition.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html</a> to get more information  about the tuitions and fees.</p>
+<p class="puc_texto_destaque">Method of Payment:<br>
+  The fees must be paid in Reais (R$), according to the dollar rate of the day.</p>
+<p><strong>Independent Students  will receive by e-mail the bill and the payment must be done before the 3<sup>rd</sup> day of the month, in order to avoid an extra fine.</strong></p>
+<p><strong>REMEMBER  THAT, ACCORDING TO THE NEW DELIBERATION FOR INTERNATIONAL STUDENTS, YOU ARE  ALLOWED TO ATTEND A MAXIMUM OF 5 COURSES, CORRESPONDING TO A MAXIMUM OF 24  CREDITS, AND A MINIMUM OF 2 COURSES OR 08 CREDITS PER SEMESTER AT PUC-RIO</strong>.  (Remember that the exchange rate fluctuates in Brazil).</p>
+<p><strong>An administrative cost</strong>&nbsp;is charged. International students are allowed to attend courses  at PUC-Rio up to two regular terms plus the Pre-Term Portuguese as a second  language Intensive Course. </p>
+<p>Independent   Students are entitled to attend courses at PUC-Rio for up to two regular terms plus the  Intensive Pre-Term Portuguese Course.</p>
+<p>Students  registered for a year or those who request extension of the student exchange  period, must pay  the renewal of the <strong> administrative cost </strong> charged during the deadline for  the Exchange Period Extension. For more information about tuition and fees,  please refer to: <a href="fees_tuition.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html</a></p>
+<p><strong>VISA:</strong> Student  visa is required. The visa must be obtained BEFORE the entrance in Brazil. A  tourist visa cannot  be transferred into a student visa once inside the country.</p>
+<p><span class="puc_texto_destaque">IMPORTANT:</span> for next year the tuition and fees are going to  change. Please see the Tuition and fees link: <a href="fees_tuition.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html</a></p>
+
+
+<h4><br>
+  Independent  Student - Portuguese as Second Language Regular Semester/Year</h4>
+<p><strong>WHO:</strong> Undergraduate and graduate students, professionals  or any adult  (minimum age: 18) with a full secondary school degree. In addition to Portuguese  as a Second Language course (required), the student may attend other regular  courses according to his/her area of interest.</p>
+<p>The Portuguese as a Second  Language regular semester &nbsp;course is  designed to develop the students&rsquo; ability to understand and use both spoken and  written Portuguese, in order to develop communication skills.</p>
+<p><strong>CREDITS:</strong> Academic credits are only obtained upon completion of regular semester courses.</p>
+<p><strong>TRANSCRIPT:</strong> The student will receive  an official PUC-Rio transcript listing the courses taken with its corresponding  total number of class hours, the number of credits obtained and the final course  grade. </p>
+<p><strong>APPLICATION:</strong> The procedures for Independent   Student registration are the following:</p>
+<p><strong>a) Required  documents:</strong>&nbsp;Online application forms filled out, Personal  Statement (introduce yourself and why you would like to study at  PUC-Rio),&nbsp;<strong>02  recommendation letters (originals and signed),&nbsp;</strong>Official  Transcript, Copy of health insurance with company name and policy number covering COVID 19,  a copy of passport (main page), 01 photo (3 cm  x 4cm),<strong> Covid 19 Certificate of  vaccination, <u> Yellow fever immunization ( recommended),</u></strong> the administrative cost payment.</p>
+<p>Please visit the following website to  download the application<strong>, see the  required documents to send,&nbsp; and for more  information: <a href="forms-hp_students.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/forms-hp_students.html</a></strong></p>
+<p class="puc_texto_destaque"> DEADLINES for submitting  applications:</p>
+<ul>
+  <li><strong>April 15th</strong> (exchange period starting in Jul-Aug)</li>
+  <li><strong>October 15th</strong> (exchange period  starting in Feb/Mar) </li>
+</ul>
+<p><strong>b)</strong> Upon acceptance of the  applicant, CCCI will send him/her a LETTER OF ACCEPTANCE that will enable him/her to obtain a student visa  at a Brazilian Consulate.</p>
+<p><strong>c) TO REGISTER:</strong> The  student must present him/herself at The International Office - CCCI one week before the first day of  classes to confirm registration with a copy of the letter of acceptance sent by  CCCI and the passport with a STUDENT VISA valid for the entire academic period.  Students will not be registered without the appropriate visa. </p>
+<p><strong>TUITION/FEES:</strong> The academic tuition will be charged  according to the number of credits taken in each term. In Brazil, the yearly  tuition is divided into 12 monthly payments. The semester (term) tuition is  divided into 6 monthly installments for regular students. Thus, in our first  term of the year (late February/early March to late June/early July), students  make 6 payments: in January, February, March, April, May and June; The same  happens in the second term, with payments in July, August, September, October,  November and December. </p>
+<p><strong>For the international students it is divided differently,  based on the date of arrival.</strong></p>
+<p>Because international  exchange and Independent  students arrive to the university only in the second month  of the semester, the semester tuition will be divided into 4 installments  (March, April, May, June), THE FIRST TWO INSTALLMENTS ARE EQUAL to the sum of 2  monthly tuition payments each. In  case of a late registration, the total tuition  amount will be divided into 3 monthly payments (April, May, June). International non-degree-seeking students are part of the Center of Theology  and Human Sciences (CTCH) due to their attendance of the mandatory Portuguese  classes. </p>
+<p>Please refer to <a href="fees_tuition.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/fees_tuition.html</a> to get more  information about the tuitions and fees. </p>
+<p><strong>Method of Payment:</strong></p>
+<p>The  fees must be paid in Reais (R$), according to the dollar rate of the day.</p>
+<p><strong>REMEMBER THAT, ACCORDING TO THE NEW  DELIBERATION FOR INTERNATIONAL STUDENTS, YOU ARE ALLOWED TO ATTEND A MAXIMUM OF  5 COURSES, CORRESPONDING TO A MAXIMUM OF 24 CREDITS, AND A MINIMUM OF 2 COURSES  OR 08 CREDITS PER SEMESTER AT PUC-RIO</strong>. (Remember that the exchange rate fluctuates  in Brazil). </p>
+<p><strong>An administrative cost</strong>&nbsp;is charged. International Students are allowed to attend courses  at PUC-Rio up to two regular terms plus the Pre-Term Portuguese as a second  language Intensive Course. </p>
+<p>Independent  Students are entitled to attend  courses at PUC-Rio for up to two regular terms plus the Intensive Pre-Term  Portuguese Course. </p>
+<p>Students registered for a year or those who  request extension of the student exchange period, must pay the renewal of the <strong>administrative cost </strong> charged during the deadline for the Exchange Period  Extension. </p>
+<p><strong>VISA:</strong> Student visa is required.  The visa must be obtained BEFORE the entrance in Brazil. A tourist visa cannot  be transferred into a student visa once inside the country.</p>
+<!-- Botão voltar -->
+<button onclick="javascript:history.back()" class="puc_link_voltar_TAG-BUTTON" title="Back">BACK</button>
+
+<hr>
+<a name="double"></a>
+
+<h4>Double Degree Students</h4>
+<p><strong>WHO: </strong>Double  Degree is a program between PUC-Rio and:</p>
+
+<ul class="puc_lista_especial_TAG-UL">
+<li>America</li>
+</ul>
+
+
+
+<table width="81%" align="center" cellpadding="0" cellspacing="0" class="puc_tabela_padrao_TAG-TABLE">
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="3">Peru</td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td width="50%">Partner University</td>
+<td width="20%">Course</td>
+<td width="30%">Academic Professor</td>
+</tr>
+<tr>
+<td>Pontifícia Universidad Católica del Peru</td>
+<td>Industrial Engineering</td>
+<td>Prof. Luciana Pessoa<br>(Department  of Industrial Engineering)</td>
+</tr>
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="3">United States</td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td>Partner University</td>
+<td>Course</td>
+<td>Academic Professor</td>
+</tr>
+<tr>
+<td><a href="http://www.newpaltz.edu/" target="_blank">State University of New York at New Paltz</a></td>
+<td>Business</td>
+<td>Prof. Graziela  Fortunato&nbsp;<br>
+(IAG-School of Business)</td>
+</tr>
+</table>
+
+<ul class="puc_lista_especial_TAG-UL">
+<li>Europe</li>
+</ul>
+<table width="81%" align="center" cellpadding="0" cellspacing="0" class="puc_tabela_padrao_TAG-TABLE">
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="3">France</td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td width="50%">Partner University</td>
+<td width="20%">Course</td>
+<td width="30%">Academic Professor</td>
+</tr>
+<tr>
+<td>Chimie ParisTech</td>
+<td>Chemical Engineering</td>
+<td>Prof. Álvaro Veiga<br>(Department  of Electrical Engineering)</td>
+</tr>
+<tr>
+<td>TELECOM Paris</td>
+<td>Computer Engineering, Electrical Engineering and  Telecommunications</td>
+<td>Prof. Alvaro Veiga<br>
+(Department of Electrical Engineering)</td>
+</tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td colspan="3" align="center"><strong>Groupe Écoles Centrales</strong></td>
+</tr>
+<tr>
+<td>CentraleSupélec </td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr>
+<td><a href="http://www.ec-lille.fr/fr/index.html" target="_blank">École    Centrale de Lille</a></td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr>
+<td><a href="http://www.ec-lyon.fr/" target="_blank">École    Centrale de Lyon</a></td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr>
+<td><a href="https://www.centrale-marseille.fr/" target="_blank">École Centrale de Marseille</a></td>
+<td>Engineering</td>
+<td>Prof. Sérgio Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr>
+<td><a href="http://www.ec-nantes.fr/" target="_blank">École Centrale de Nantes</a></td>
+<td>Engineering</td>
+<td>Prof. Sérgio    Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td colspan="3" align="center"><strong>Groupe Institut Mines-Telecom</strong></td>
+</tr>
+<tr>
+<td>IMT Atlantique</td>
+<td>Engineering </td>
+<td>Prof. Sérgio Fontoura<br>
+(Department of Civil Engineering)</td>
+</tr>
+<tr>
+<td>IMT Nord Europe</td>
+<td>Engineering </td>
+<td>Prof. Sérgio Fontoura<br>
+(Department of Civil Engineering)</td>
+</tr>
+<tr>
+<td>IMT Mines Albi-Carmaux</td>
+<td>Engineering </td>
+<td>Prof. Sérgio Fontoura<br>
+(Department of Civil Engineering)</td>
+</tr>
+<tr>
+<td>IMT Mines Alès</td>
+<td>Engineering </td>
+<td>Prof. Sérgio Fontoura<br>
+(Department of Civil Engineering)</td>
+</tr>
+<tr>
+<td>Mines Nancy</td>
+<td>Engineering </td>
+<td>Prof. Sérgio Fontoura<br>
+(Department of Civil Engineering)</td>
+</tr>
+<tr>
+<td>Mines Saint-Etienne</td>
+<td>Engineering </td>
+<td>Prof. Sérgio Fontoura<br>
+(Department of Civil Engineering)</td>
+</tr>
+<tr>
+<td>Télécom SudParis</td>
+<td>Engineering </td>
+<td>Prof. Sérgio Fontoura<br>
+(Department of Civil Engineering)</td>
+</tr>
+<tr>
+<td>Institut Mines-Télécom Business School</td>
+<td>Engineering </td>
+<td>Prof. Sérgio Fontoura<br>
+(Department of Civil Engineering)</td>
+</tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td colspan="3" align="center"><strong>Groupe INSA</strong></td>
+</tr>
+<tr>
+<td>INSA Centre Val de Loire </td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td>INSA  Hauts de France</td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td><a href="https://www.insa-lyon.fr/" target="_blank">INSA Lyon </a></td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td>INSA Rennes </td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td>INSA Rouen </td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td>INSA Strasbourg </td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td>INSA Toulouse </td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="3">Germany</td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td>Partner    University</td>
+<td>Course</td>
+<td>Academic    Professor</td>
+</tr>
+<tr>
+<td><a href="http://www.tu-braunschweig.de/" target="_blank">Technische    Universitat Braunschweig</a></td>
+<td>Engineering</td>
+<td>Prof. Raul Feitosa<br>
+(Department of Electrical Engineering)</td>
+</tr>
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="3">Italy</td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td>Partner University</td>
+<td>Course</td>
+<td>Academic    Professor</td>
+</tr>
+<tr>
+<td><a href="http://www.polimi.it/english/" target="_blank">Politécnico    di Milano</a></td>
+<td>Engineering</td>
+<td>Prof. Sergio Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr>
+<td>Università Degli Studi di    Perugia (Master level) </td>
+<td>Psychology</td>
+<td>Prof. Jean Natividad <br>
+(Department of Psychology)</td>
+</tr>
+</table>
+
+<p> The double degree program is a special cooperative  program between  
+  PUC-Rio and other institutions (see the list of  institution on the website).  
+  The students who have concluded the first two years  at his/her home  
+institution can spend two years studying at PUC-Rio  and obtain the two  degrees: one from PUC-Rio and one from his/her home institution.</p>
+<p>The international students who participate in this  program are considered to be a part of the exchange program and are subject to  the same rules. Furthermore, as they will obtain a diploma from PUC-Rio, they  must provide the documents 
+  &nbsp;listed below  and that they pursue a certain number of obligatory courses, in  particular, disciplines of religious culture (see the statement below).</p>
+<p><strong>1. </strong>Documents. In order for the university to be able  to register the students and,  ultimately, give them a diploma, they must provide the following documents,  translated into Portuguese by an official translator.  
+  The student should verify whether it is in their  best interest to do the&nbsp;translation  in his/her country or in Brazil.</p>
+<ol style="list-style:lower-alpha;">
+  <li> Copy of official birth certificate</li>
+  <li> Certified copy of Bachelor's degree</li>
+  <li> Record of preparatory grades</li>
+  <li> Record of grades from the first two years at his/her  home university</li>
+  <li> Record of grades from the  Bachelor's degree</li>
+<li> and from the last three years of the High School (Not necessary for French institutions)</li>
+</ol>
+<p><strong>2. </strong>PUC is a  Catholic university. All of the students, independent of their religion, must  obtain a certain number of credits in qualified subjects such as religious  formation. It is impossible to receive a diploma from PUC without satisfying  this condition. It is important that the international students are aware of  this rule.</p>
+<p> The following  is the list of mandatory religious culture subjects: </p>
+<p>CRE1100 O Homem e o fen&ocirc;meno religioso<br>
+  CRE1160 &Eacute;tica Profissional</p>
+<p class="puc_texto_destaque_em_quadro_centro">Watch  the video: "Vid&eacute;o d'orientation pour pr&eacute;parer un double
+  dipl&ocirc;me &agrave; la PUC-Rio":<br>
+  <strong><img src="../imagens/ico_videodownload.png" alt="item" align="absmiddle">&nbsp;<a href="http://midia.puc-rio.br/ensinopesq/ccci/videos/video_ccci_dupla_diplomacao.mp4" target="_blank">Arquivo para download&nbsp;(tamanho: 127Mb)</a><br>
+  <img src="../imagens/ico_youtube.png" alt="item" align="absmiddle">&nbsp;<a href="https://www.youtube.com/watch?v=q4HDofryVo4" target="_blank">Youtube</a></strong><a href="https://www.youtube.com/watch?v=q4HDofryVo4" target="_blank"></a></p>
+<h4 id="doublefr"><br>
+  Double Dipl&ocirc;me</h4>
+<p><b>QUI:</b> Le double dipl&ocirc;me est un programme sp&eacute;cial de coop&eacute;ration entre la  PUC-Rio et:</p>
+<ul class="puc_lista_especial_TAG-UL">
+<li>America</li>
+</ul>
+<table width="81%" align="center" cellpadding="0" cellspacing="0" class="puc_tabela_padrao_TAG-TABLE">
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="3">Peru</td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td width="50%">Partner University</td>
+<td width="20%">Course</td>
+<td width="30%">Academic Professor</td>
+</tr>
+<tr>
+<td>Pontifícia Universidad Católica del Peru</td>
+<td>Industrial Engineering</td>
+<td>Prof. Luciana Pessoa<br>
+(Department  of Industrial Engineering)</td>
+</tr>
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="3">United States</td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td>Partner University</td>
+<td>Course</td>
+<td>Academic Professor</td>
+</tr>
+<tr>
+<td><a href="http://www.newpaltz.edu/" target="_blank">State University of New York at New Paltz</a></td>
+<td>Business</td>
+<td>Prof. Graziela  Fortunato&nbsp;<br>
+(IAG-School of Business)</td>
+</tr>
+</table>
+<ul class="puc_lista_especial_TAG-UL">
+<li>Europe</li>
+</ul>
+<table width="81%" align="center" cellpadding="0" cellspacing="0" class="puc_tabela_padrao_TAG-TABLE">
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="3">France</td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td width="50%">Partner University</td>
+<td width="20%">Course</td>
+<td width="30%">Academic Professor</td>
+</tr>
+<tr>
+<td>Chimie ParisTech</td>
+<td>Chemical Engineering</td>
+<td>Prof. Álvaro Veiga<br>
+(Department  of Electrical Engineering)</td>
+</tr>
+<tr>
+<td>TELECOM Paris</td>
+<td>Computer Engineering, Electrical Engineering and  Telecommunications</td>
+<td>Prof. Alvaro Veiga<br>
+(Department of Electrical Engineering)</td>
+</tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td colspan="3" align="center"><strong>Groupe Écoles Centrales</strong></td>
+</tr>
+<tr>
+<td>CentraleSupélec </td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr>
+<td><a href="http://www.ec-lille.fr/fr/index.html" target="_blank">École    Centrale de Lille</a></td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr>
+<td><a href="http://www.ec-lyon.fr/" target="_blank">École    Centrale de Lyon</a></td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr>
+<td><a href="https://www.centrale-marseille.fr/" target="_blank">École Centrale de Marseille</a></td>
+<td>Engineering</td>
+<td>Prof. Sérgio Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr>
+<td><a href="http://www.ec-nantes.fr/" target="_blank">École Centrale de Nantes</a></td>
+<td>Engineering</td>
+<td>Prof. Sérgio    Lifschitz<br>
+(Department of Informatics)</td>
+</tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td colspan="3" align="center"><strong>Groupe Institut Mines-Telecom</strong></td>
+</tr>
+<tr>
+<td>IMT Atlantique</td>
+<td>Engineering </td>
+<td>Prof. Sérgio Fontoura<br>
+(Department of  Civil Engineering)</td>
+</tr>
+<tr>
+<td>IMT Lille Douai</td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Fontoura<br>
+(Department of  Civil Engineering)</td>
+</tr>
+<tr>
+<td>IMT Mines Albi</td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Fontoura<br>
+(Department of  Civil Engineering)</td>
+</tr>
+<tr>
+<td>IMT Mines Alès</td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Fontoura<br>
+(Department of  Civil Engineering)</td>
+</tr>
+<tr>
+<td>Mines Nancy</td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Fontoura<br>
+(Department of  Civil Engineering)</td>
+</tr>
+<tr>
+<td>Mines Saint-Etienne</td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Fontoura<br>
+(Department of  Civil Engineering)</td>
+</tr>
+<tr>
+<td>Télécom SudParis</td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Fontoura<br>
+(Department of  Civil Engineering)</td>
+</tr>
+<tr>
+<td>Institut Mines-Télécom    Business School</td>
+<td>Engineering </td>
+<td>Prof. Sérgio    Fontoura<br>
+(Department of  Civil Engineering)</td>
+</tr>
+<tr class="puc_tabela_linha_n2_TAG-TR">
+<td colspan="3" align="center"><strong>Groupe INSA</strong></td>
+</tr>
+<tr>
+<td>INSA Centre Val de Loire </td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td><a href="https://www.insa-lyon.fr/" target="_blank">INSA Lyon </a></td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td>INSA Rennes </td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td>INSA Rouen </td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td>INSA Toulouse </td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr>
+<td>INSA Strasbourg </td>
+<td>Engineering</td>
+<td>Prof. Florian Pradelle<br>
+(Department of Mechanical    Engineering)</td>
+</tr>
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="3">Germany</td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td>Partner    University</td>
+<td>Course</td>
+<td>Academic    Professor</td>
+</tr>
+<tr>
+<td><a href="http://www.tu-braunschweig.de/" target="_blank">Technische    Universitat Braunschweig</a></td>
+<td>Engineering</td>
+<td>Prof. Raul Feitosa<br>
+(Department of Electrical Engineering)</td>
+</tr>
+<tr class="puc_tabela_linha_n1_TAG-TR">
+<td colspan="3">Italy</td>
+</tr>
+<tr class="puc_tabela_linha_escura_TAG-TR">
+<td>Partner University</td>
+<td>Course</td>
+<td>Academic    Professor</td>
+</tr>
+<tr>
+<td><a href="http://www.polimi.it/english/" target="_blank">Politécnico    di Milano</a></td>
+<td>Engineering</td>
+<td>Prof. Sergio Lifschitz<br>
+  (Department of Informatics)</td>
+</tr>
+<tr>
+<td>Università Degli Studi di    Perugia (Master level) </td>
+<td>Psychology</td>
+<td>Prof. Jean Natividad <br>
+  (Department of Psychology)</td>
+</tr>
+</table>
+<p>Les &eacute;tudiants qui ont conclu  les deux premi&egrave;res ann&eacute;es de cours &agrave; l&acute;<em>institution d&rsquo;attache</em> peuvent  venir &agrave; PUC-Rio, y passer deux ans et obtenir les deux dipl&ocirc;mes d'ing&eacute;nieur :  celui de PUC-Rio et celui de l&acute;<em>institution d&rsquo;attache</em></p>
+<p>Les &eacute;tudiants fran&ccedil;ais qui participent &agrave; ce programme sont 
+  
+  
+  
+  consider&eacute;s comme appartenant au programme d'&eacute;change et sont soumis 
+  
+  
+  
+  aux m&ecirc;mes r&eacute;gles. En plus, comme ils obtiendront un dipl&ocirc;me 
+  
+  
+  
+  de PUC-Rio, il faut qu'ils fournissent les documents ci-dessous et qu'ils suivent 
+  
+  
+  
+  un certain nombre de cours obligatoires, en particulier,des disciplines de culture 
+  
+  
+  
+  religieuse (voir remarque ci-dessous).</p>
+<p> <b>1.</b> Documents. Pour que   l&rsquo;institution puisse faire 
+  
+  
+  
+  l'inscription des el&egrave;ves et, &agrave; terme, 
+  
+  
+  
+  leur donner un diplome d'ing&eacute;nieur, il faut qu'ils 
+  
+  
+  
+  apportent les documents suivants, traduits en portugais:par 
+  
+  
+  
+  un traducteur officiel. L'&eacute;l&egrave;ve doit v&eacute;rifier 
+  
+  
+  
+  s'il est plus interessant de faire la traduction en 
+  
+  
+  
+  France ou au Br&eacute;sil.</p>
+<ol style="list-style:lower-alpha;">
+  <li> Extrait d'acte de naissance</li>
+  <li> Copie certifi&eacute;e du dipl&ocirc;me de baccalaureat</li>
+  <li> Relev&eacute; des notes des classes preparatoires</li>
+  <li> Relev&eacute; des notes des deux ans de centrale</li>
+  <li> relev&eacute;s de notes du baccalaureat et&nbsp; des 3 derni&egrave;res ann&eacute;es d&acute;&eacute;tudes (Cedocument       n&rsquo;est pas nécessaire pour les institutions françaises)</li>
+</ol>
+<ol style="list-style:lower-alpha;">
+</ol>
+<p><strong>2.</strong> PUC est une universit&eacute; catholique. Tous les &eacute;tudiants, 
+  
+  
+  
+  independament de leur religion, sont tenus d'obtenir 
+  
+  
+  
+  un certain nombre d'unit&eacute;s de valeur en mati&egrave;res 
+  
+  
+  
+  qualifi&eacute;es comme de formation religieuse. Il 
+  
+  
+  
+  est impossible de recevoir un dipl&ocirc;me de PUC sans 
+  
+  
+  
+  satisfaire &agrave; cette condition. Il est important 
+  
+  
+  
+  que les &eacute;tudiants fran&ccedil;ais soient au courant 
+  
+  
+  
+  de cette r&egrave;gle.</p>
+La liste des matières obligatoires de 
+                    
+                    
+                    
+                    culture religieuse est la suivante:<br>
+CRE1100 O Homem e o fen&ocirc;meno religioso<br>
+CRE1160 &Eacute;tica Profissional
+</div>
+<p class="puc_texto_destaque_em_quadro_centro">IT IS IMPORTANT TO STRESS THAT THE STUDENT VISA MUST BE OBTAINED BEFORE THE ENTRANCE IN BRAZIL. A TOURIST VISA CAN NOT BE TRANSFERRED INTO A STUDENT VISA INSIDE THE COUNTRY.</p>
+<p>International  students can study at PUC-RIO as Exchange Students, as Independent  Students or as  Extension Students. However, please  be aware that after your arrival in Brazil you are not able to change  your student status. For instance, if you are registered as an Independent  Student  you cannot change your  status to Extension Student or Exchange Student. <strong>Remember that if you only come to  participate  in the Intensive Portuguese  Course, a student  visa is not required. However,  if you intend to study during the entire semester, the tourist visa is  not accepted, and   a student visa is therefore required.</strong> Please read the Registration Procedures carefully. </p>
+<p class="puc_texto_destaque">IMPORTANT:<br>
+  Please be aware that all payments (tuition, orientation fee, administrative cost, etc.) must be made in cash (Reais). Traveler's checks, credit cards, checks are not accepted.</p>
+  
+<!-- Botão voltar -->
+<button onclick="javascript:history.back()" class="puc_link_voltar_TAG-BUTTON" title="Back">BACK</button>  
+
+<!--
+<hr>
+<a name="internship"></a>
+
+<h4>Internship or Research students </h4>
+<p>The Brazilian law requires that students  seeking for internships need to officially be enrolled in a Brazilian  university.  They need to enroll as an  intern-status student at the International Office &ndash; CCCI website and agree to  our terms of applications, as well as sending the required documentation (copy  of passport, letter of recommendation and appointment to the internship etc…)</p>
+<p>  In order to help the students in their  registration in a Brazilian institution the Pontifícia Universidade Católica do  Rio de Janeiro – PUC-Rio, accepts the internship/research students nominated  following the requirements below.</p>
+<p>  The student  may obtain a student internship in two ways:</p>
+<ol class="puc_lista_numeros_TAG-OL">
+  <li> Academic  Internship within PUC;</li>
+  <li> Academic  Internship outside of PUC with supervision from professors of PUC-Rio.</li>
+</ol>
+
+
+<p class="puc_texto_destaque_em_quadro_centro"><span class="puc_texto_destaque">DEADLINES for submitting  applications:</span><br>
+  <strong>  May 15th</strong> (exchange period       starting in Jul-Aug)<br>
+  <strong>October 15th</strong> (exchange period starting in Feb/Mar)</p>
+<ul class="puc_lista_especial_TAG-UL puc_lista_recuada_TAG-UL">
+  <li>Documents:</li>
+</ul>
+<p>  The  international students must complete the online form and submit all  documentation required as follow:    </p>
+<ol class="puc_lista_numeros_TAG-OL">
+  <li><strong>Online form: <a href="forms-hp_students.html">http://www.puc-rio.br/ensinopesq/ccci/incoming/forms-hp_students.html</a></strong> - students must fill out the online forms with the &ldquo;<em>Status Estagio</em>&rdquo;.  And send the documents to CCCI Office.<br>
+    Interns will be registered as an  internship/research student in our system.</li>
+  <li> <strong>Documents:</strong> copy of passport, resume, photo,  letter from the home university stating  that the student is authorized to participate in an internship.</li>
+  <li>Official Transcript, Copy of health insurance with company name and policy number covering COVID 19,  a copy of passport (main page), 01 photo (3 cm x 4cm), <strong>Covid 19 Certificate of vaccination (recommended)</strong>,  the administrative cost payment. </li>
+  <li> The International Office – (CCCI) will issue a letter of acceptance to the  applicant provided by the professor.</li>
+</ol>-->
+
+<!-- Botão voltar -->
+<!--<button onclick="javascript:history.back()" class="puc_link_voltar_TAG-BUTTON" title="Back">BACK</button>-->
+
+
+<!-- Contatos e redes sociais -->
+
+<div class="ccci_infos_titulo">
+  <h4>Contact / Social Media</h4></div>
+
+<div class="puc_layout_area-inicial_maior_nivelador" id="ccci_infos_conteudo">
+
+<div class="puc_layout_area-inicial_maior_esquerda">
+<div class="puc_layout_coluna_3cols_nivelador" id="ccci_infos">
+
+    <div class="puc_layout_coluna_1de3">
+    <p><strong>Address</strong></p>
+    <p>Rua Marquês de São Vicente 225,<br>
+    Edifício Padre Leonel Franca - 8º andar, Gávea<br>
+    CEP 22451-900<br />
+    Rio de Janeiro - RJ - BRASIL</p>
+    
+    <!-- Redes sociais -->
+    <div class="puc_links_redes_sociais_TAG-DIV">
+    <a href="https://www.facebook.com/puc4all" target="_blank" title="Facebook">
+    <img src="/imagens/puc_img_redesocial_facebook.png" alt="Facebook" /></a>
+    <a href="https://www.instagram.com/pucrio4all" target="_blank" title="Instagram">
+    <img src="/imagens/puc_img_redesocial_instagram.png" alt="Instagram" /></a>
+    <a href="https://www.youtube.com/pucriooficial" target="_blank" title="Youtube">
+    <img src="/imagens/puc_img_redesocial_youtube.png" alt="Youtube" /></a>
+    <!-- <a href="http://pucforall.blogspot.com.br" target="_blank" title="Blog">
+    <img src="/imagens/puc_img_redesocial_blog.png" alt="Blog" /></a> -->
+    <a href="http://newsletter.ccci.puc-rio.br" target="_blank" title="Newsletter">
+    <img src="/imagens/puc_img_redesocial_email.png" alt="Newsletter" /></a>
+    </div>
+    </div>
+
+<div class="puc_layout_coluna_2de3">
+    <p><strong>Office hours</strong></p>
+    <p>Monday to Friday:<br>
+    9h to 12h and 14h to 17h</p>
+</div>
+
+<div class="puc_layout_coluna_3de3">
+    <p><a href="https://sgu.rdc.puc-rio.br/SGUWeb/protocolo/WloginEstrangeiro.aspx?idCC=7" class="puc_link_destaque_TAG-A">Contact us</a></p>
+        
+    <!--<p>  Phone: (55-21) 3527-1577 / 1578<br />
+      Fax: (55-21) 3527-1094<br />
+      E-mail: <a href="mailto:incoming2@puc-rio.br">incoming2@puc-rio.br</a></p>-->
+    
+    </div>
+
+</div>
+</div>
+
+<div class="puc_layout_area-inicial_maior_direita">
+<div class="fb-page" data-href="https://www.facebook.com/puc4all" data-tabs="timeline" data-height="250" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/puc4all" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/puc4all">PUC for ALL</a></blockquote></div>
+</div>
+
+</div><!-- /puc_layout_area-inicial_maior_nivelador -->
+
+
+</article>
+
+
+
+
+
+<!-- ==================================================================== MEIO > COLUNA LATERAL == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<aside>
+
+<!-- <p>Veja também:</p>
+<p>&nbsp;</p> -->
+
+</aside>
+
+
+
+
+
+<!-- =============================================================================== FECHA MEIO == -->
+
+
+</section>
+
+
+<!-- =================================================================================== RODAPÉ == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<footer>
+
+    <iframe src="https://www.puc-rio.br/includes/puc_rodape.html" name="rodape" 
+    title="Rodapé PUC-Rio - endereço e copyright"></iframe>
+
+</footer>
+
+
+
+<!-- ============================================================================= FECHA PÁGINA == -->
+
+</body>
+</html>

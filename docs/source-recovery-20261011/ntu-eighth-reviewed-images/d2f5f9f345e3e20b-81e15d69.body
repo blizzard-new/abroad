@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+
+<head>
+
+    <title>PUC-Rio - Incoming Students - VISA</title>
+    
+    <!-- Javascript e elementos diversos para todo o site PUC -->
+    
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<!-- SIMBOLOS -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<!-- Ícone -->
+<link rel="shortcut icon" href="https://www.puc-rio.br/imagens/puc_brasao_icone_browser.png" type="image/x-icon" />
+
+
+<!-- CSS PUC -->
+<link href="https://www.puc-rio.br/styles/puc_interna.css" rel="stylesheet" type="text/css" />
+
+
+<!-- EFEITO : JQUERY -->
+<script src="https://www.puc-rio.br/js/jquery/jquery-3.1.1.min.js"></script>
+
+
+<!-- EFEITO : POP-UP LIGHTBOX PARA ELEMENTOS DIVERSOS -->
+<link href="https://www.puc-rio.br/js/puc_efeito_lity/dist/lity.css" rel="stylesheet">
+<script src="https://www.puc-rio.br/js/puc_efeito_lity/dist/lity.js"></script>
+
+
+<!-- EFEITO : APARECER E SUMIR -->
+<script src="https://www.puc-rio.br/js/puc_efeito_aparecer_sumir/puc_efeito_aparecer_sumir.js"></script>
+
+
+<!-- EFEITO : LUPA DA GALERIA DE IMAGENS -->
+<script src="https://www.puc-rio.br/js/puc_efeito_vermaior/puc_efeito_vermaior.js"></script>
+
+
+<!-- EFEITO : COPIA PARA MOBILE -->
+<script src="https://www.puc-rio.br/js/puc_efeito_copia_mobile/puc_copia_mobile.js"></script>
+
+
+<!-- EFEITO : SLIDESHOW RESPONSIVO -->
+<script src="https://www.puc-rio.br/js/puc_efeito_slideshow_responsivo/puc_efeito_slideshow_responsivo.js"></script>
+
+
+<!-- EFEITO : PLAYER VIMEO -->
+<script src="https://www.puc-rio.br/js/puc_efeito_vimeo/puc_efeito_vimeo.js"></script>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+
+<!-- EFEITO : SLIDESHOW JSSOR -->
+<!-- #region Jssor Slider Begin -->
+<!-- Generator: Jssor Slider Maker -->
+<!-- Source: http://www.jssor.com -->
+<!-- This code works with jquery library. -->
+<script src="https://www.puc-rio.br/js/puc_efeito_slideshow/jssor.slider-21.1.6.mini.js"></script>
+
+
+
+<!-- EFEITO : BACKGROUND POSITION P/ CARDS -->
+<script>
+
+window.addEventListener("load", bkggrafismo);
+window.addEventListener("resize", bkggrafismo);
+
+function bkggrafismo() {
+
+	var card = document.getElementsByClassName('card');
+	var cardquant = card.length;
+
+	for (var i=0; i<=cardquant; i++) {
+
+	// card[i].style.backgroundPosition = "0 " + card[i].offsetHeight * 0.6666 + "px" ;
+	card[i].style.backgroundPosition = "0 " + card[i].offsetHeight * 0.5 + "px" ;
+
+	}
+
+}
+
+
+</script>
+
+
+
+
+<script>
+
+jQuery(document).ready(function ($) {
+
+	var jssor_1_SlideoTransitions = [
+	  [{b:-1,d:1,o:-1},{b:0,d:1000,o:1}],
+	  [{b:1900,d:2000,x:-379,e:{x:7}}],
+	  [{b:1900,d:2000,x:-379,e:{x:7}}],
+	  [{b:-1,d:1,o:-1,r:288,sX:9,sY:9},{b:1000,d:900,x:-1400,y:-660,o:1,r:-288,sX:-9,sY:-9,e:{r:6}},{b:1900,d:1600,x:-200,o:-1,e:{x:16}}]
+	];
+
+	var jssor_1_options = {
+	  $AutoPlay: true,
+	  $SlideDuration: 1000,
+	  $SlideEasing: $Jease$.$OutQuint,
+	  $CaptionSliderOptions: {
+		$Class: $JssorCaptionSlideo$,
+		$Transitions: jssor_1_SlideoTransitions
+	  },
+	  $ArrowNavigatorOptions: {
+		$Class: $JssorArrowNavigator$
+	  },
+	  $BulletNavigatorOptions: {
+		$Class: $JssorBulletNavigator$
+	  }
+	};
+
+	var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+	/*responsive code begin*/
+	/*you can remove responsive code if you don't want the slider scales while window resizing*/
+	function ScaleSlider() {
+		var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+		if (refSize) {
+			refSize = Math.min(refSize, 3000);
+			jssor_1_slider.$ScaleWidth(refSize);
+		}
+		else {
+			window.setTimeout(ScaleSlider, 30);
+		}
+	}
+	ScaleSlider();
+	$(window).bind("load", ScaleSlider);
+	$(window).bind("resize", ScaleSlider);
+	$(window).bind("orientationchange", ScaleSlider);
+	/*responsive code end*/
+});
+</script>
+
+
+
+
+
+
+
+<!-- ============================== PUC-Rio - GTAG GLOBAL ==============================-->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-205JBFW571"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtagGlobalPUC(){dataLayer.push(arguments);}
+  gtagGlobalPUC('js', new Date());
+
+  gtagGlobalPUC('config', 'G-205JBFW571');
+</script>
+
+
+<script>
+var getArrayFromTag = function(tagname) {
+     //get the NodeList and transform it into an array
+     return Array.prototype.slice.call(document.getElementsByTagName(tagname));
+}
+
+setTimeout(function(){ 
+var links = getArrayFromTag("a");
+var buttons = getArrayFromTag("button");
+links = links.concat(buttons);
+
+for(var i=0, max=links.length; i<max; i++) {
+    var linkHref = links[i].href;
+    var linkText = links[i].innerText;
+    if (linkText === '' || linkText == null){
+       var linkImg = links[i].getElementsByTagName('img')[0];
+       if (linkImg == null)
+          continue;
+       var imgAlt = linkImg.getAttribute("alt");
+       if (imgAlt !== '' && imgAlt != null)
+           linkText = imgAlt;       
+       else{
+           var imgTitle = linkImg.getAttribute("title");
+           if (imgTitle !== '' && imgTitle != null)
+               linkText = imgTitle;
+           else
+               continue;
+       }
+    }
+    var currentPage = removeIndexFromUrl(window.location.href);
+    linkHref = removeIndexFromUrl(linkHref);
+
+    var gtagContent = "gtagGlobalPUC( \'event\', \'clique\', { \'event_category\':\'" + currentPage + "\', \'event_label\': \'" + linkText + "\', \'origin_url\':\'" + currentPage + "\', \'href\':\'" + linkHref + "\'});";
+    var defaultOnMouseDown = links[i].getAttribute("onmousedown");
+    if (defaultOnMouseDown != null)
+        var gtagContent = gtagContent + defaultOnMouseDown;
+    links[i].setAttribute("onmousedown", gtagContent);
+}
+}, 2000);
+
+function removeIndexFromUrl(url){
+    if (url == "undefined")
+        return url;
+
+    if (url.endsWith("/index.html"))
+    {
+        url = url.replace("/index.html","/");    
+    }
+    else if (url.endsWith("/#"))
+    {
+        url = url.replace("/#","/");    
+    }
+
+    return url;
+}
+</script>
+
+
+
+<!-- / SLIDESHOW -->
+
+
+<!-- PLUGIN DE ACESSIBILIDADE FREE -->
+<script src="/js/acessibilidade_acctoolbar.min.js"></script>
+<script>
+  window.onload = function() {
+    window.micAccessTool = new MicAccessTool({
+      link: 'http://your-awesome-website.com/your-accessibility-declaration.pdf',
+      contact: 'mailto:webrdc@puc-rio.br',
+      buttonPosition: 'right', // default is 'left'
+       forceLang: 'pt-br' // default is 'en' may be 'he-IL', 'ru-RU', or 'fr_FR'
+    });
+  }
+</script>
+
+
+
+    
+    <!-- CSS específico da CCCI -->
+    <link href="../styles/estilos_ccci.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+
+
+
+<!-- ============================================================================== ABRE PÁGINA == -->
+
+
+<body id="ccci">
+
+
+<!-- ===================================================================================== TOPO == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<header>
+
+
+<!-- Link acessibilidade, cabeçalho, brasão, título -->
+
+
+<!-- Código para janelas do Facebook -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+<!-- Link acessibilidade -->
+<a href="#link_pular_conteudo" id="puc_link_pular_para_conteudo">Pular para o conteúdo da página</a><span></span>
+
+<!-- Cabeçalho PUC (busca e índice de A a Z) -->
+<iframe src="/includes/puc_cabecalho.html" name="cabecalho" title="Cabeçalho PUC-Rio"></iframe>
+
+
+
+<div id="puc_topo_brasao_titulo_caminho">
+
+<!-- Brasão PUC -->
+<a href="http://www.puc-rio.br" target="_parent" title="Ir para a página inicial do site PUC-Rio" id="puc_cabecalho_brasao">
+<img src="/imagens/brasao_preto_vertical.svg" alt="Brasão da PUC-Rio" /></a>
+
+<div id="puc_topo_titulo_caminho">
+
+<h1>Coordenação Central de Cooperação Internacional</h1>
+
+<!-- fecha "puc_topo_brasao_titulo_caminho" e "puc_topo_titulo_caminho" no arquivo "include_header_menu.html" -->
+
+
+<!-- Caminho -->
+<nav>&gt; <a href="/ensinopesq/ccci">Intercâmbio Internacional</a> &gt; <a href="/ensinopesq/ccci/incoming">Incoming Students</a> &gt;</nav>
+
+
+<!-- Menu -->
+
+<!-- abre "puc_topo_brasao_titulo_caminho" e "puc_topo_titulo_caminho" no arquivo no arquivo "include_header_geral.html" -->
+</div>
+</div>
+
+
+<!-- Menu do site -->
+<div id="puc_menu_faixa">
+<button type="button" onclick="javascript:efeito_aparecer_sumir_menu('menu')">Menu</button>
+<div id="menu" class="puc_efeito_menu_sumir">
+
+<span></span>
+
+<a href="/ensinopesq/ccci/index.html" id="puc_link_index">Página inicial</a>
+<a href="/ensinopesq/ccci/academico/">Intercâmbio Acadêmico</a>
+<a href="/ensinopesq/ccci/curtaduracao/">Intercâmbio de Curta Duração</a>
+<a href="/ensinopesq/ccci/incoming/">Incoming Students (Alunos Internacionais)</a>
+<a href="/ensinopesq/ccci/sobre.html">Sobre a CCCI</a>
+<!-- <a href="/ensinopesq/ccci/estconv.html" id="puc_menu_link_lang">English</a> -->
+
+<span></span>
+
+</div><!-- fecha "menu" -->
+</div><!-- fecha "puc_menu_faixa" -->
+
+
+</header>
+
+
+
+
+
+<!-- ===================================================================================== MEIO == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<section id="conteudo">
+
+
+<!-- ================================================================== MEIO > COLUNA PRINCIPAL == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<!-- destino do link de acessibilidade "pular para conteúdo" -->
+<a id="link_pular_conteudo"></a>
+
+
+<article>
+
+
+<h2>Incoming Students</h2>
+
+<h3>VISA</h3>
+<p><strong>VISA:</strong> A student visa is  required. The visa must be obtained <strong>BEFORE</strong> the student´s entrance in Brazil. A tourist visa cannot be transferred into a  student visa inside the country. When the applicant is accepted, CCCI will send  a LETTER OF ACCEPTANCE that will enable him/her to obtain a visa at a Brazilian  Consulate.</p>
+<p>  A student visa is  required. The process may take a few weeks, so begin early. <strong>Under NO  circumstances should you apply for a tourist visa.</strong> They are valid for only  90 days and cannot be extended.</p>
+<p>  You must obtain the  visa from the Brazilian consulate in your area of jurisdiction and in some  cases; a personal visit to the consulate may be required. You should apply for  a visa from the consulate whose area of jurisdiction includes your permanent  home. If this is not possible or is very inconvenient, you may request that the  consulate within the area of jurisdiction of your home institution accept and  process your visa application.</p>
+<p>  In order to obtain  your visa, you must provide the documents listed below. However, this list  should not be considered all-inclusive. The Brazilian consulate processing the  visa reserves the right to make other requirements when deemed necessary. <em>Important:  call the consulate in your particular area of jurisdiction to confirm the  procedure, which might differ from  city  or state.</em></p>
+<p>  Entry into Brazil must  take place within 90 days from the date when the visa was issued. This visa is  good for multiple entries, for the time of the visa's duration. If necessary,  an extension may be obtained with the Federal Police in Brazil, if requested at  least 30 days prior to its expiration. Student Visa (i.e. VITEM-I or VITEM IV)  holders are not allowed to engage in any paid activity in Brazil.<br>
+  <br>
+</p>
+<a href="../download/PRE DEPARTURE MANUAL 2024.pdf" target="_blank" class="puc_link_destaque_centralizado_TAG-A">More details: check  the Pre-Departure Manual</a>
+<h4><br>
+  Federal Police:  </h4>
+<p><strong>Step by step to make the appointment</strong></p>
+<p>  The Federal Police only accepts the students that  are scheduled on the website.  If it  passes 90 days after your arrival, there is the possibility that you have to  pay a fine, which they will inform you once you are there, so be prepared.</p>
+<p>  The Brazilian authorities require International  student to register their visa in the first 90 days of their arrival.</p>
+<p>  Students have to request an appointment at  the federal Police website:  
+  <strong><a href="https://www.gov.br/pf/pt-br/assuntos/imigracao" target="_blank">https://www.gov.br/pf/pt-br/assuntos/imigracao</a></strong></p>
+<p>  Make sure that you request your appointment  within 05 days of your arrival to have  
+  enough time to pay the required fees and get official  documents.</p>
+<p>  In case the students fail to register the  visa within in the 90 days. They will pay a daily  
+  fine for the authorities and may jeopardize  their stay in the country.<br>
+  <br>
+</p>
+<a href="../download/Federal Police Step by Step.pdf" target="_blank" class="puc_link_destaque_centralizado_TAG-A">Federal Police - Registration - Step by step</a>
+
+<!-- Botão voltar -->
+<button onclick="javascript:history.back()" class="puc_link_voltar_TAG-BUTTON" title="Back">BACK</button>
+
+
+<!-- Contatos e redes sociais -->
+
+<div class="ccci_infos_titulo">
+  <h4>Contact / Social Media</h4></div>
+
+<div class="puc_layout_area-inicial_maior_nivelador" id="ccci_infos_conteudo">
+
+<div class="puc_layout_area-inicial_maior_esquerda">
+<div class="puc_layout_coluna_3cols_nivelador" id="ccci_infos">
+
+    <div class="puc_layout_coluna_1de3">
+    <p><strong>Address</strong></p>
+    <p>Rua Marquês de São Vicente 225,<br>
+    Edifício Padre Leonel Franca - 8º andar, Gávea<br>
+    CEP 22451-900<br />
+    Rio de Janeiro - RJ - BRASIL</p>
+    
+    <!-- Redes sociais -->
+    <div class="puc_links_redes_sociais_TAG-DIV">
+    <a href="https://www.facebook.com/puc4all" target="_blank" title="Facebook">
+    <img src="/imagens/puc_img_redesocial_facebook.png" alt="Facebook" /></a>
+    <a href="https://www.instagram.com/pucrio4all" target="_blank" title="Instagram">
+    <img src="/imagens/puc_img_redesocial_instagram.png" alt="Instagram" /></a>
+    <a href="https://www.youtube.com/pucriooficial" target="_blank" title="Youtube">
+    <img src="/imagens/puc_img_redesocial_youtube.png" alt="Youtube" /></a>
+    <!-- <a href="http://pucforall.blogspot.com.br" target="_blank" title="Blog">
+    <img src="/imagens/puc_img_redesocial_blog.png" alt="Blog" /></a> -->
+    <a href="http://newsletter.ccci.puc-rio.br" target="_blank" title="Newsletter">
+    <img src="/imagens/puc_img_redesocial_email.png" alt="Newsletter" /></a>
+    </div>
+    </div>
+
+<div class="puc_layout_coluna_2de3">
+    <p><strong>Office hours</strong></p>
+    <p>Monday to Friday:<br>
+    9h to 12h and 14h to 17h</p>
+</div>
+
+<div class="puc_layout_coluna_3de3">
+    <p><a href="https://sgu.rdc.puc-rio.br/SGUWeb/protocolo/WloginEstrangeiro.aspx?idCC=7" class="puc_link_destaque_TAG-A">Contact us</a></p>
+        
+    <!--<p>  Phone: (55-21) 3527-1577 / 1578<br />
+      Fax: (55-21) 3527-1094<br />
+      E-mail: <a href="mailto:incoming2@puc-rio.br">incoming2@puc-rio.br</a></p>-->
+    
+    </div>
+
+</div>
+</div>
+
+<div class="puc_layout_area-inicial_maior_direita">
+<div class="fb-page" data-href="https://www.facebook.com/puc4all" data-tabs="timeline" data-height="250" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/puc4all" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/puc4all">PUC for ALL</a></blockquote></div>
+</div>
+
+</div><!-- /puc_layout_area-inicial_maior_nivelador -->
+
+
+</article>
+
+
+
+
+
+<!-- ==================================================================== MEIO > COLUNA LATERAL == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<aside>
+
+<!-- <p>Veja também:</p>
+<p>&nbsp;</p> -->
+
+</aside>
+
+
+
+
+
+<!-- =============================================================================== FECHA MEIO == -->
+
+
+</section>
+
+
+<!-- =================================================================================== RODAPÉ == -->
+<!-- ============================================================================================= -->
+<!-- ============================================================================================= -->
+
+
+<footer>
+
+    <iframe src="https://www.puc-rio.br/includes/puc_rodape.html" name="rodape" 
+    title="Rodapé PUC-Rio - endereço e copyright"></iframe>
+
+</footer>
+
+
+
+<!-- ============================================================================= FECHA PÁGINA == -->
+
+</body>
+</html>

@@ -9,13 +9,20 @@ assert base_sha=='4a011fab8ecdb98e4bca2ca2368ec28eaf194b78'
 assert git('rev-parse','MERGE_HEAD').decode().strip()=='1b9563c58e2fa83c3c2510a40b7ccdd126db9dd1'
 old='11項Yes/No/Remarks'.encode();new='10項Yes/No/Remarks'.encode()
 paths=git('diff','--name-only','--diff-filter=U').decode().splitlines()
-assert paths and all(p.startswith('src/exchange_info/official_data/ccu/') for p in paths)
-for p in paths:
-    base,ours,theirs=[git('show',f':{i}:{p}') for i in (1,2,3)]
+merge_base=git('merge-base','HEAD','MERGE_HEAD').decode().strip()
+ours_changed=set(git('diff','--name-only',merge_base,'HEAD').decode().splitlines())
+theirs_changed=set(git('diff','--name-only',merge_base,'MERGE_HEAD').decode().splitlines())
+overlap=sorted(ours_changed & theirs_changed)
+assert len(overlap)==5 and all(p.startswith('src/exchange_info/official_data/ccu/') for p in overlap)
+for p in overlap:
+    base=git('show',merge_base+':'+p);ours=git('show','HEAD:'+p);theirs=git('show','MERGE_HEAD:'+p)
     assert ours==base.replace(old,new),p
     assert old in theirs,p
-    (app/p).write_bytes(theirs.replace(old,new))
-    git('add','--',p)
+    expected=theirs.replace(old,new)
+    if p in paths:
+        (app/p).write_bytes(expected);git('add','--',p)
+    else:
+        assert (app/p).read_bytes()==expected,p
 bundle=app/'src/exchange_info/official_data/ccu'
 source=bundle/'completion-eighth-field-input.json'
 fields=json.loads(source.read_text())
@@ -38,4 +45,4 @@ data['upstream_baseline_sha256']=hashlib.sha256(git('show','MERGE_HEAD:src/excha
 data['integration_baseline_note']='Prior integrated CCU fields, retaining the previously verified10-question Medical Assessment correction. Other baseline fields exactly match the upstream seventh batch.'
 data['prior_fields']=prior
 baseline.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
-(raw/'ccu-eighth-merge-resolution.json').write_text(json.dumps({'base':base_sha,'input':'1b9563c58e2fa83c3c2510a40b7ccdd126db9dd1','conflicts_resolved':paths,'overlap':'Only prior11to10medical correction','source_clarifications':review['integration_clarifications_required'],'baseline_provenance':data['upstream_baseline_sha256']},ensure_ascii=False,indent=2)+'\n')
+(raw/'ccu-eighth-merge-resolution.json').write_text(json.dumps({'base':base_sha,'input':'1b9563c58e2fa83c3c2510a40b7ccdd126db9dd1','conflicts_resolved':paths,'automerged_overlap_files_individually_verified':overlap,'overlap':'Every overlapping file equals full incoming content plus only the prior11to10medical correction','source_clarifications':review['integration_clarifications_required'],'baseline_provenance':data['upstream_baseline_sha256']},ensure_ascii=False,indent=2)+'\n')

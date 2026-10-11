@@ -6,6 +6,11 @@ target_root=Path('/tmp/abroad-recovery-capacity-20261011');target_root.mkdir(exi
 receipt=Path('/workspace/recovery-evidence-20261011/owned-artifact-relocations.json')
 records=json.loads(receipt.read_text()) if receipt.exists() else []
 allowed={
+ '/workspace/integration-next1-wheel-artifacts-20261011',
+ '/workspace/abroad-pr5',
+ '/workspace/abroad-evidence',
+ '/workspace/memory-fix-probe-20261011',
+ '/workspace/globe-baseline-59a20f2',
  '/workspace/globe-evidence-20261011',
  '/workspace/integration-evidence/memory-final-498-release-checks/wheel',
  '/workspace/integration-evidence/pr5-final2-checks/wheel',

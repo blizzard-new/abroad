@@ -1,0 +1,40 @@
+{"mode": "complete original harness with exact-rootfs VFS packaging adaptation", "repository": "/tmp/abroad-recovery-capacity-20261011/workspace-abroad-globe-20261011", "original_pinned_image": "supabase/postgres:17.6.1.136@sha256:f371b5f3f2ac0a05703f33d6e6134515fb2498cab708fb948a0aeb7481467c00", "local_image": "sha256:d42429364090df059929f6009e67d0d4194330af0e22415070dcc1c658ebec50", "runtime_config_identical": true, "compose_only_difference": "postgres image identity for local repack", "migrations": 35}
+Runtime Compose project: exchange-supabase-runtime-local-434ac-3f94637b
+Starting isolated PostgreSQL...
+  migration applied: 202607190001_ai_rag.sql
+  migration applied: 202607280002_application_content_governance.sql
+  migration applied: 20260728120722_accounts_workspaces.sql
+  migration applied: 20260728121446_notifications.sql
+  migration applied: 20260728130940_document_vault.sql
+  migration applied: 20260728213255_email_verification_challenges.sql
+  migration applied: 20260729100000_form_drafts.sql
+  migration applied: 20260729143531_dual_application_workflow_review.sql
+  migration applied: 20260807154026_application_workflow_revision_edit_history.sql
+  migration applied: 20260819090000_destination_profile_review_events.sql
+  migration applied: 20260819110000_destination_profile_promotion_events.sql
+  migration applied: 20260819130000_destination_profile_publication_rollbacks.sql
+  migration applied: 20260819150000_application_workflow_publication_rollbacks.sql
+  migration applied: 20260819170000_application_workflow_publication_integrity.sql
+  migration applied: 20260821190000_transient_auth_state.sql
+  migration applied: 20260823100000_atomic_auth_account_mutations.sql
+  migration applied: 20260823130000_atomic_workspace_and_suspension.sql
+  migration applied: 20260823160000_atomic_public_community.sql
+  migration applied: 20260824100000_atomic_private_community.sql
+  migration applied: 20260829100000_atomic_account_deletion.sql
+  migration applied: 20260830100000_application_workflow_issue_reports.sql
+  migration applied: 20260901100000_atomic_application_content_governance.sql
+  migration applied: 20260930100000_discussion_threads_reactions.sql
+  migration applied: 20261002120000_workspace_selection_and_planning.sql
+  migration applied: 20261003100000_open_school_boards.sql
+  migration applied: 20261003110000_analytics.sql
+  migration applied: 20261007100000_school_choice_replaces_student_card.sql
+  migration applied: 20261008100000_user_feedback.sql
+  migration applied: 20261008110000_revoke_rls_auto_enable_api_access.sql
+  migration applied: 20261008120000_fix_match_document_chunks_search_path.sql
+  migration applied: 20261008130000_ntu_school_board.sql
+  migration applied: 20261009135343_ccu_ncu_school_board_compatibility.sql
+  migration applied: 20261009153249_verified_email_school_community.sql
+  migration applied: 20261009153347_community_byline_aliases.sql
+  migration applied: 20261009153438_atomic_governance_commands.sql
+Starting two isolated PostgREST instances...
+Starting isolated Supabase Storage API...

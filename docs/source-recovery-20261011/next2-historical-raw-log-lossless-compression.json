@@ -1,0 +1,34 @@
+{
+  "completed_at": "2026-10-11T17:51:14.077046+00:00",
+  "scope": "Only two completed Oct9 historical raw logs losslessly gzip-packed and fully decompressed/hash-verified before retiring uncompressed duplicate. All original bytes are recoverable; failure preserved. No current tests/source/wheels/environments/Docker/config touched.",
+  "files": [
+    {
+      "original": "/workspace/integration-evidence/six-full-shard-0/stdout.log",
+      "lossless_archive": "/workspace/integration-evidence/six-full-shard-0/stdout.log.gz",
+      "original_bytes": 206368091,
+      "original_sha256": "bfd1883b6a936ecb5b0922c21cf8b70f6580f194b9926cd08bb91126d11335cd",
+      "archive_bytes": 10654136,
+      "archive_sha256": "d1520bea18c1e0f7efd1e0b67a23445a5635380172a0c086c4573b08589a7c4e",
+      "decompress_command": [
+        "gzip",
+        "-dc",
+        "/workspace/integration-evidence/six-full-shard-0/stdout.log.gz"
+      ],
+      "original_test_result_preserved": "failed"
+    },
+    {
+      "original": "/workspace/integration-evidence/six-full-shard-0/results.xml",
+      "lossless_archive": "/workspace/integration-evidence/six-full-shard-0/results.xml.gz",
+      "original_bytes": 148799422,
+      "original_sha256": "3cfed3ae555844993dfa748e6276168ffa2631f1419d63179906abcea4a51abb",
+      "archive_bytes": 7425480,
+      "archive_sha256": "b0749200688d6aaff292e573b87e137207ef55c2459343e3b1c94394ffc1f646",
+      "decompress_command": [
+        "gzip",
+        "-dc",
+        "/workspace/integration-evidence/six-full-shard-0/results.xml.gz"
+      ],
+      "original_test_result_preserved": "failed"
+    }
+  ]
+}

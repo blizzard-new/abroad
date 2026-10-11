@@ -1,0 +1,1323 @@
+<!DOCTYPE HTML><!DOCTYPE HTML><html lang="en-US">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="An up-to-date calendar including pertinent information for students, staff, and faculty.">
+      <meta name="keywords" content="calendar, schedule">
+      <!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+      <title>calendar - Registrar | Montana State University</title>
+      <meta name="theme-color" content="#333333" />
+<link rel="icon" sizes="192x192" href="/_resources/msu/2/images/structure/logos/msu-icon.png" />
+<link href="/_resources/msu/2/styles/styles.css?d=20220222" rel="stylesheet" media="screen" />
+<meta name="referrer" content="no-referrer-when-downgrade" />      <link href="/_resources/msu/2/slick/slick.css" rel="stylesheet" type="text/css">
+      <link href="/_resources/msu/2/slick/slick-theme.css" rel="stylesheet" type="text/css">
+      <link href="/_resources/msu/2/styles/slickslider.css" rel="stylesheet" type="text/css"><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><script type="text/javascript">
+			OUC = typeof OUC !== "undefined" ? OUC : {};
+			OUC.XSLVariables = typeof OUC.XSLVariables !== "undefined" ? OUC.XSLVariables : {};
+			OUC.XSLVariables.dirName="/registrar/";
+			OUC.XSLVariables.pageName=OUC.XSLVariables.dirName+"calendar.html";
+			OUC.XSLVariables.httpRoot="https://www.montana.edu/registrar/";
+			
+			MUSGLOB = typeof MUSGLOB !== "undefined" ? MUSGLOB : {};
+			MUSGLOB.brandHref="https://www.montana.edu";
+			MUSGLOB.programsRoot="https://www.montana.edu/academics/";
+			// note that this uses same convention as the ecma data attribute api
+			
+			var page_id="https://www.montana.edu/registrar/calendar.html";
+			
+		</script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+					new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+					j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+					'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+					})(window,document,'script','dataLayer','GTM-WKPFHC');</script><script src="https://www.google.com/recaptcha/api.js?render=explicit"></script><script>
+				function waitForRecaptchaResponse(widget_id, maxWaitTime = 10000, interval = 100) {
+					return new Promise((resolve, reject) => {
+						const startTime = Date.now();
+
+						function checkResponse(widget_id) {
+							if (grecaptcha.getResponse(widget_id)) {
+								resolve(grecaptcha.getResponse(widget_id));
+							} else if (Date.now() - startTime > maxWaitTime) {
+								reject(new Error("Recaptcha response timeout"));
+							} else {
+								setTimeout(function() {
+									checkResponse(widget_id);
+								}, interval);
+							}
+						}
+
+						grecaptcha.execute(widget_id);
+						checkResponse(widget_id);
+					});
+				}
+				
+				function handleFormSubmission(formId, widget_id) {
+					waitForRecaptchaResponse(widget_id)
+						.then(token => {
+							let $form = $("#"+formId);
+							let fval = $form.valid(); 
+				
+							if(fval){
+								if (token) {
+									$form.submit();
+								} else{
+									throw new Error("Recaptcha verification failed");
+								}
+							}
+
+				
+							
+						})
+						.catch(error => {
+							console.error("Recaptcha error:", error);
+							$("#recaptcha-form-fail").fadeAlert();
+						});
+				}
+			
+			</script></head>
+   <body class="responsive">
+      <div class="mus-topalert" id="mus-topalert" data-alert-url="https://www.montana.edu/assets/feeds/homepage-alert.html" style="display:none;"></div>
+      <header class="wrapper" id="header" role="banner">
+         <div class="container" id="banner"><img class="visible-print" src="/_resources/msu/2/images/structure/msublackhorizsm.png" height="63" width="250" alt="images/structure/msublackhorizsm.png"><div class="row clearfix hidden-print">
+               <div class="col-sm-12 cf">
+                  <div class="row">
+                     <div class="col-sm-4 col-md-6 column pull-right text-right hidden-xs nav pull-right text-left" id="header-tools">
+                        <div class="row clearfix">
+                           <div id="searchbox" class="col-md-6 col-lg-6 col-sm-12 text-right column search pull-right" role="search">
+                              <div class="row">
+                                 <div class="col-md-12">
+                                    <form id="search" method="get" action="https://www.montana.edu/search/" class="form-horizontal" role="search"><input type="hidden" name="cx" value="008992511269271655684:zana6q1rfbs"><input type="hidden" name="cof" value="FORID:11"><div class="input-group input-group-sm"><label for="srch-term" class="sr-only">Search</label><input type="search" id="srch-term" name="q" class="form-control" placeholder="Search pages &amp; people"><span class="input-group-btn"><button class="btn btn-default btn-search" name="sa" type="submit"><span class="fa fa-search"><span class="sr-only">Search</span></span></button></span></div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div id="stick" data-spy="affix" data-offset-top="125">
+                        <ul class="siteheaderlinks">
+                           <li id="sitelogo"><a class="navbar-brand" href="https://www.montana.edu"><img src="/_resources/msu/2/images/structure/headers/MSU-horiz-reverse-web-header.svg" alt="Montana State University in Bozeman" title="Montana State University in Bozeman" height="44" width="174"></a></li>
+                        </ul>
+                        <ul id="mobile_buttons" class="visible-xs nav pull-right text-left navbar-nav">
+                           <li class="pull-left" id="menu-nav"><a href="#" title="Menu" id="menuButton" class="menu-button pull-left"><span class="burger-icon"><span class="sr-only"></span></span></a></li>
+                           <li class="pull-right" id="menu-search"><a title="Search" href="#" class="pull-left dropdown-toggle" data-toggle="dropdown"><span class="fa fa-search"><span class="sr-only">Search</span></span></a></li>
+                        </ul>
+                        <div id="menu-search-open" class="hidden-md hidden-lg hidden-sm clearfix">
+                           <div class="col-sm-12">
+                              <form id="mobile_search" method="get" action="https://www.montana.edu/search/" class="form-horizontal form-inline grey-background " role="search"><input type="hidden" name="cx" value="008992511269271655684:zana6q1rfbs"><input type="hidden" name="cof" value="FORID:11"><div class="input-group input-group"><label for="srch-term2" class="sr-only">Search</label><input id="srch-term2" type="search" name="q" class="form-control" placeholder="Search pages &amp; people"><span class="input-group-btn"><button class="btn btn-default btn-search" name="sa" type="submit">
+                                          															Search
+                                          														</button></span></div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+      <div class="container" id="content">
+         <div class="row">
+            <div id="left" class="col-xs-12 col-sm-3 hidden-print">
+               <nav class="mainnav clearfix" role="navigation"><button id="expandme" class="cf">
+                     <p class="box-shadow-menu"> Site Menu <span class="fa fa-chevron-down"><span class="sr-only">expand</span></span></p></button><div id="expand_section">
+                     <ul class="sr-only">
+                        <li><a href="#maincontent">Skip Navigation</a></li>
+                     </ul>
+                     </div>
+               </nav>
+            </div>
+            <div id="rightpane" class="background-divided col-xs-12 pull-right page-content sec col-sm-9">
+               <div class="row">
+                  <div id="breadcrumb" class="clearfix col-sm-12 hidden-print">
+                     <ul class="breadcrumb">
+                        <li><a href="/registrar/">Office of the Registrar</a></li>
+                        <li>calendar</li>
+                     </ul>
+                  </div>
+                  <div class="col-sm-12 page-header clearfix">
+                     <h1>Calendar</h1>
+                     <div class="row clearfix hidden-print">
+                        <div id="yamm-placeholder">
+                           <div id="stick2" class="col-sm-12 affix-top" data-spy="affix" data-offset-top="125">
+                              <div id="stickpad" class="row">
+                                 <div class=" yamm">
+                                    <div class="container">
+                                       <div id="navbar-collapse-1"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-12 clearfix page-wrapper">
+                     <div class="row">
+                        <main id="maincontent" role="main" class=" col-sm-12">
+                           <!-- don't self close -->
+                           <div class="btn-container"><a role="button" class="btn btn-primary " title="Add/Drop Schedule" href="/registrar/add_drop_schedule.html"><span aria-hidden="true" class="fa ">&nbsp;</span>Add/Drop Schedule</a><a role="button" class="btn btn-primary " title="Withdrawal Schedule" href="/registrar/withdrawal_refund_schedule.html"><span aria-hidden="true" class="fa ">&nbsp;</span>Withdrawal Schedule</a><a role="button" class="btn btn-primary " title="Priority Registration Schedule" href="/registrar/registration_schedule.html"><span aria-hidden="true" class="fa ">&nbsp;</span>Priority Registration Schedule</a><a role="button" class="btn btn-primary " title="Final Week Schedule" href="/registrar/exam_schedule.html"><span aria-hidden="true" class="fa ">&nbsp;</span>Final Week Schedule</a></div>
+                           <h2 style="text-align: left;">2026 - 2027 Academic Calendar</h2>
+                           <div class="table-responsive">
+                              <div class="table-responsive">
+                                 <div class="table-responsive">
+                                    <table class="table_dark table table-striped table-condensed">
+                                       <caption>&nbsp;</caption>
+                                       <thead>
+                                          <tr>
+                                             <th scope="col">
+                                                <div class="responsive-cell">Fall 2026</div>
+                                             </th>
+                                             <th scope="col">
+                                                <div class="responsive-cell">&nbsp;</div>
+                                             </th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell">First Day of School</div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Wednesday, August 26</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell">Last day to self-add&nbsp;</div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Tuesday, September 1&nbsp;</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell">Labor Day (no classes, offices closed)&nbsp;</div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Monday, September 7</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell">Last day to add, via instructor</div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Wednesday, September 9&nbsp;</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell">Last day to self-drop&nbsp;</div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Wednesday, September 9&nbsp;</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell"><span>Last day to drop, via advisor, without a "W" grade &nbsp;</span></div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Wednesday, September 16</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell"><span>Last day to confirm bill</span></div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Wednesday, September 16</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell"><span>Priority Registration opens for Spring 2027</span></div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Monday, November 2</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell">Veteran's Day (no classes, offices closed)</div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Wednesday, November 11</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell">Last day to drop with a "W" grade via advisor</div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Wednesday, November 18&nbsp;</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell"><span>Fall Break (no classes, offices open) (offices closed 26 - 27)</span></div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">November 23 - 27</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell">Semester Ends</div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Thursday, December 17</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell">Commencement</div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">Friday, December 18</div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="responsive-cell">Detailed Fall 2026</div>
+                                             </td>
+                                             <td>
+                                                <div class="responsive-cell">
+                                                   <div class="panel-group" id="accordiond84e286">
+                                                      <div class="panel paneld84e286_d84e295">
+                                                         <div class="panel-heading">
+                                                            <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e286_d84e295"><i class="fa fa-caret-down"></i>Detailed Fall 2026</a></h2>
+                                                         </div>
+                                                         <div class="panel-collapse collapse" id="collapsed84e286_d84e295">
+                                                            <div class="panel-body">
+                                                               <table class="table_dark table table-striped table-condensed">
+                                                                  <caption>&nbsp;</caption>
+                                                                  <thead>
+                                                                     <tr>
+                                                                        <th scope="col">Fall 2026</th>
+                                                                        <th scope="col">&nbsp;</th>
+                                                                     </tr>
+                                                                  </thead>
+                                                                  <tbody>
+                                                                     <tr>
+                                                                        <td><span>Classes begin</span></td>
+                                                                        <td>Wednesday, August 26</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Last day to self-add&nbsp;</span></td>
+                                                                        <td>Tuesday, September 1</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Labor Day (no classes, offices closed)&nbsp;</span></td>
+                                                                        <td>Monday, September 7&nbsp;</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Last day to add, via instructor</span></td>
+                                                                        <td>Wednesday, September 9&nbsp;</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Last day to self-drop&nbsp;</span></td>
+                                                                        <td>Wednesday, September 9&nbsp;</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Last day to drop, via advisor, without a "W" grade &nbsp;</span></td>
+                                                                        <td>Wednesday, September 16&nbsp;</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Last day to confirm bill</span></td>
+                                                                        <td>Wednesday, September 16&nbsp;</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Fall 2026 Graduation Application Deadline for Graduate Students&nbsp;</span></td>
+                                                                        <td>Sunday, September 20</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Spring 2027 Graduation Application Deadline for Undergraduate Students (including
+                                                                              Gallatin College AA/AS/AAS)</span></td>
+                                                                        <td>Thursday, October 15</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>First day to apply for Spring 2027 residency&nbsp;</span></td>
+                                                                        <td><span>Sunday, November 1</span></td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Priority Registration Opens for Spring 2027</span></td>
+                                                                        <td><span>Nov 2 - Nov 20</span></td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td>Veteran's Day (no classes, offices closed)&nbsp;</td>
+                                                                        <td>Wednesday, November 11</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Fall Course Evaluations</span></td>
+                                                                        <td>TBA</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Last day to drop with a "W" grade via advisor&nbsp;</span></td>
+                                                                        <td>Wednesday, November 18</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Fall Break (no classes, offices open) (offices closed 26 - 27)</span></td>
+                                                                        <td>November 23 - 27</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><a title="Final Week Schedule" href="/registrar/exam_schedule.html">Final Week Schedule</a></td>
+                                                                        <td>Monday, December 14 - Thursday 17</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Last day to apply for Spring 2027 residency</span></td>
+                                                                        <td>Tuesday, December 15&nbsp;</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><span>Last Day of Finals</span></td>
+                                                                        <td>December 17</td>
+                                                                     </tr>
+                                                                     <tr>
+                                                                        <td><a title="Commencement" href="/commencement/">Commencement</a></td>
+                                                                        <td>December 18</td>
+                                                                     </tr>
+                                                                  </tbody>
+                                                               </table>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table><br><div class="panel-group" id="accordiond84e406">
+                                       <div class="panel paneld84e406_d84e415">
+                                          <div class="panel-heading">
+                                             <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e406_d84e415"><i class="fa fa-caret-down"></i>Spring 2027</a></h2>
+                                          </div>
+                                          <div class="panel-collapse collapse" id="collapsed84e406_d84e415">
+                                             <div class="panel-body">
+                                                <table class="table_dark table table-striped table-condensed">
+                                                   <caption>&nbsp;</caption>
+                                                   <thead>
+                                                      <tr>
+                                                         <th scope="col">Spring 2027</th>
+                                                         <th scope="col">&nbsp;</th>
+                                                      </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                      <tr>
+                                                         <td>First Day of School</td>
+                                                         <td>Tuesday, January 12&nbsp;&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Martin L. King Day (no classes, offices closed)&nbsp;</td>
+                                                         <td>Monday, January 18</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to self-add</td>
+                                                         <td>Tuesday, January 19&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to add, via instructor</td>
+                                                         <td>Tuesday, January 26&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to self-drop</td>
+                                                         <td>Tuesday, January 26</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to drop, via advisor, without a "W" grade</td>
+                                                         <td>Tuesday, February 2</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to confirm bill</td>
+                                                         <td>Tuesday, February 2</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Presidents Day (no classes, offices closed)&nbsp;</td>
+                                                         <td>Monday, February 15</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Spring Break (no classes, offices open)&nbsp;</td>
+                                                         <td>March 15 - 19&nbsp;&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>University Day (no classes, offices open)</td>
+                                                         <td>Friday, March 26</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Priority Registration Opens for Summer and Fall 2027</td>
+                                                         <td>TBA</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to drop with a "W" grade, via advisor</td>
+                                                         <td>Wednesday, April 14&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Semester Ends</td>
+                                                         <td>Thursday, May 6&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Commencement</td>
+                                                         <td>Friday, May 7&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>
+                                                            <p>Detailed Spring 2027</p>
+                                                            <p>&nbsp;</p>
+                                                         </td>
+                                                         <td>
+                                                            <div class="panel-group" id="accordiond84e476">
+                                                               <div class="panel paneld84e476_d84e485">
+                                                                  <div class="panel-heading">
+                                                                     <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e476_d84e485"><i class="fa fa-caret-down"></i>Detailed Spring 2027</a></h2>
+                                                                  </div>
+                                                                  <div class="panel-collapse collapse" id="collapsed84e476_d84e485">
+                                                                     <div class="panel-body">
+                                                                        <table class="table_dark table table-striped table-condensed">
+                                                                           <caption>&nbsp;</caption>
+                                                                           <thead>
+                                                                              <tr>
+                                                                                 <th scope="col">Spring 2027</th>
+                                                                                 <th scope="col">&nbsp;</th>
+                                                                              </tr>
+                                                                           </thead>
+                                                                           <tbody>
+                                                                              <tr>
+                                                                                 <td>Classes begin</td>
+                                                                                 <td>Tuesday, January 12</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Martin L. King Day (no classes, offices closed)&nbsp;</td>
+                                                                                 <td>Monday, January 18&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to self-add</td>
+                                                                                 <td>Tuesday, January 19&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to add, via instructor&nbsp;</td>
+                                                                                 <td>Tuesday, January 26&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to self-drop&nbsp;</td>
+                                                                                 <td>Tuesday, January 26&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to drop, via advisor, without a "W" grade</td>
+                                                                                 <td>Tuesday, February 2&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to confirm bill</td>
+                                                                                 <td>Tuesday, February 2&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Spring 2027 Graduation Application Deadline for Graduate Students&nbsp;</td>
+                                                                                 <td>Friday, February 5&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Presidents Day (no classes, offices closed)&nbsp;</td>
+                                                                                 <td>Monday, February 15&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Summer/Fall 2027 Graduation Application Deadline for Undergraduate Students (Including
+                                                                                    Gallatin College AA/AS/AAS)&nbsp;</td>
+                                                                                 <td>Monday, March 1&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Spring Break (no classes, offices open)&nbsp;</td>
+                                                                                 <td>March 15 - 19&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>University Day (no classes, offices open)&nbsp;</td>
+                                                                                 <td>Friday, March 26&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Priority Registration Opens for Summer/Fall 2027&nbsp;</td>
+                                                                                 <td>TBA&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>First day to apply for summer 2027 residency reclassification&nbsp;</td>
+                                                                                 <td>Thursday, April 1&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to drop with a "W" grade, via advisor</td>
+                                                                                 <td>Wednesday, April 14&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td><a title="Final Week Schedule" href="/registrar/exam_schedule.html">Final Week Schedule</a></td>
+                                                                                 <td>May 3 - 6&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last Day of Finals</td>
+                                                                                 <td>Thursday, May 6&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td><a title="Commencement" href="/commencement/">Commencement</a></td>
+                                                                                 <td>Friday, May 7&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to apply for summer 2027 residency reclassification</td>
+                                                                                 <td>Tuesday, June 1&nbsp;</td>
+                                                                              </tr>
+                                                                           </tbody>
+                                                                        </table>
+                                                                     </div>
+                                                                  </div>
+                                                               </div>
+                                                            </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="panel-group" id="accordiond84e595">
+                                       <div class="panel paneld84e595_d84e604">
+                                          <div class="panel-heading">
+                                             <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e595_d84e604"><i class="fa fa-caret-down"></i>Summer 2027</a></h2>
+                                          </div>
+                                          <div class="panel-collapse collapse" id="collapsed84e595_d84e604">
+                                             <div class="panel-body">
+                                                <table class="table_dark table table-striped table-condensed">
+                                                   <caption>&nbsp;</caption>
+                                                   <thead>
+                                                      <tr>
+                                                         <th scope="col">Summer 2027</th>
+                                                         <th scope="col">&nbsp;</th>
+                                                      </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                      <tr>
+                                                         <td>Full Semester 12-week Session</td>
+                                                         <td>Monday, May 17 - Friday, August 6&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Full Semester 12-week session&nbsp;</td>
+                                                         <td>Monday, May 17&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>May 4X4&nbsp;</td>
+                                                         <td>Monday, May 17</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Memorial Day (no classes, offices closed)</td>
+                                                         <td>Monday, May 31</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>First day to apply for Fall 2027 residency&nbsp;</td>
+                                                         <td>Tuesday, June 1&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>June 4X4</td>
+                                                         <td>Monday, June 14</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Independence Day (no classes, offices closed)</td>
+                                                         <td>Monday, July 5 (observed)&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>July 4X4</td>
+                                                         <td>Monday, July 12</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to apply for Fall 2027 residency</td>
+                                                         <td>Sunday, August 1&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Semester Ends</td>
+                                                         <td>Friday, August 6</td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="panel-group" id="accordiond84e665">
+                                       <div class="panel paneld84e665_d84e674">
+                                          <div class="panel-heading">
+                                             <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e665_d84e674"><i class="fa fa-caret-down"></i>Fall 2027</a></h2>
+                                          </div>
+                                          <div class="panel-collapse collapse" id="collapsed84e665_d84e674">
+                                             <div class="panel-body">
+                                                <table class="table_dark table table-striped table-condensed">
+                                                   <caption>&nbsp;</caption>
+                                                   <thead>
+                                                      <tr>
+                                                         <th scope="col">Fall 2027</th>
+                                                         <th scope="col">&nbsp;</th>
+                                                      </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                      <tr>
+                                                         <td>First Day of School</td>
+                                                         <td>Wednesday, Aug 25</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to self-add</td>
+                                                         <td>Tuesday, August 31&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Labor Day (no classes, offices closed)&nbsp;</td>
+                                                         <td>Monday, September 6</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to add, via instructor</td>
+                                                         <td>Wednesday, September 8&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to self-drop</td>
+                                                         <td>Wednesday, September 8&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to drop, via advisor, without a "W" grade</td>
+                                                         <td>Wednesday, September 15</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to confirm bill</td>
+                                                         <td>Wednesday, September 15&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Priority Registration opens for Spring 2028</td>
+                                                         <td>TBA</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Veteran's Day (no classes, offices closed)&nbsp;</td>
+                                                         <td>Thursday, November 11</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td><span>Last day to drop with a "W" grade, via advisor</span></td>
+                                                         <td>Wednesday, November 17&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td><span>Fall Break (no classes, offices open) (offices closed 25 - 26)</span></td>
+                                                         <td>November 22 - 26&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Semester Ends</td>
+                                                         <td>&nbsp;Thursday, December&nbsp; 16</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Commencement</td>
+                                                         <td>&nbsp;Friday, December 17</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Detailed Fall 2027</td>
+                                                         <td>
+                                                            <div class="panel-group" id="accordiond84e732">
+                                                               <div class="panel paneld84e732_d84e741">
+                                                                  <div class="panel-heading">
+                                                                     <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e732_d84e741"><i class="fa fa-caret-down"></i>Detailed Fall 2027</a></h2>
+                                                                  </div>
+                                                                  <div class="panel-collapse collapse" id="collapsed84e732_d84e741">
+                                                                     <div class="panel-body">
+                                                                        <table class="table_dark table table-striped table-condensed">
+                                                                           <caption>&nbsp;</caption>
+                                                                           <thead>
+                                                                              <tr>
+                                                                                 <th scope="col">Fall 2027</th>
+                                                                                 <th scope="col">&nbsp;</th>
+                                                                              </tr>
+                                                                           </thead>
+                                                                           <tbody>
+                                                                              <tr>
+                                                                                 <td>Classes begin</td>
+                                                                                 <td>Wednesday, August 25&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to self-add</td>
+                                                                                 <td>Tuesday, August 31&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Labor Day (no classes, offices closed)&nbsp;</td>
+                                                                                 <td>Monday, September 6&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to add, via instructor&nbsp;</td>
+                                                                                 <td>Wednesday, September 8&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to self-drop&nbsp;</td>
+                                                                                 <td>Wednesday, September 8&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to drop, via advisor, without a "W" grade</td>
+                                                                                 <td>Wednesday, September 15&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to confirm bill</td>
+                                                                                 <td>Wednesday, September 15&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Fall 2027 Graduation Application Deadline for Graduate Students&nbsp;</td>
+                                                                                 <td>Monday, September 20&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Spring 2028 Graduation Application Deadline for Undergraduate Students (Including
+                                                                                    Gallatin College AA/AS/AAS)&nbsp;</td>
+                                                                                 <td>Friday, October 1&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Priority Registration Opens for Spring 2028</td>
+                                                                                 <td>TBA</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>First day to apply for spring 2028 residency reclassification&nbsp;</td>
+                                                                                 <td>Monday, November 1&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to drop with a "W" grade, via advisor</td>
+                                                                                 <td>Wednesday, November 17</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td><a title="Final Week Schedule" href="/registrar/exam_schedule.html">Final Week Schedule</a></td>
+                                                                                 <td>December 13 - 16&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to apply for Spring 2028 residency reclassification</td>
+                                                                                 <td>Wednesday, December 15&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last Day of Finals</td>
+                                                                                 <td>Thursday, December 16&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td><a title="Commencement" href="/commencement/">Commencement</a></td>
+                                                                                 <td>Friday, December 17&nbsp;</td>
+                                                                              </tr>
+                                                                           </tbody>
+                                                                        </table>
+                                                                     </div>
+                                                                  </div>
+                                                               </div>
+                                                            </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="panel-group" id="accordiond84e842">
+                                       <div class="panel paneld84e842_d84e851">
+                                          <div class="panel-heading">
+                                             <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e842_d84e851"><i class="fa fa-caret-down"></i>Spring 2028</a></h2>
+                                          </div>
+                                          <div class="panel-collapse collapse" id="collapsed84e842_d84e851">
+                                             <div class="panel-body">
+                                                <table class="table_dark table table-striped table-condensed">
+                                                   <caption>&nbsp;</caption>
+                                                   <thead>
+                                                      <tr>
+                                                         <th scope="col">Spring 2028</th>
+                                                         <th scope="col">&nbsp;</th>
+                                                      </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                      <tr>
+                                                         <td>First Day of School</td>
+                                                         <td>Tuesday, January 11</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Martin L. King Day (no classes, offices closed)&nbsp;</td>
+                                                         <td>Monday, January 17</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to self-add</td>
+                                                         <td>Tuesday, January 18&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to add, via instructor</td>
+                                                         <td>Tuesday, January 25&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to self-drop</td>
+                                                         <td>Tuesday, January 25&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to drop, via advisor, without a "W" grade</td>
+                                                         <td>Tuesday, February 1&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to confirm bill</td>
+                                                         <td>Tuesday, February 1&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Presidents Day (no classes, offices closed)&nbsp;</td>
+                                                         <td>Monday, February 21</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Spring Break (no classes, offices open)&nbsp;</td>
+                                                         <td>March 13 - 17</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Priority Registration opens for Summer and Fall 2028</td>
+                                                         <td>TBA</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Last day to drop with a "W" grade, via advisor&nbsp;</td>
+                                                         <td>Tuesday, April 11</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>University Day (no classes, offices open)</td>
+                                                         <td>Friday, April 14</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Semester Ends</td>
+                                                         <td>Thursday, May 4&nbsp;</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Commencement</td>
+                                                         <td>Friday, May 5</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>&nbsp;</td>
+                                                         <td>
+                                                            <div class="panel-group" id="accordiond84e910">
+                                                               <div class="panel paneld84e910_d84e919">
+                                                                  <div class="panel-heading">
+                                                                     <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e910_d84e919"><i class="fa fa-caret-down"></i>Detailed Spring 2028</a></h2>
+                                                                  </div>
+                                                                  <div class="panel-collapse collapse" id="collapsed84e910_d84e919">
+                                                                     <div class="panel-body">
+                                                                        <table class="table_dark table table-striped table-condensed">
+                                                                           <caption>&nbsp;</caption>
+                                                                           <thead>
+                                                                              <tr>
+                                                                                 <th scope="col">Spring 2028</th>
+                                                                                 <th scope="col">&nbsp;</th>
+                                                                              </tr>
+                                                                           </thead>
+                                                                           <tbody>
+                                                                              <tr>
+                                                                                 <td>Classes begin</td>
+                                                                                 <td>Tuesday, January 11&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Martin L. King Day (no classes, offices closed)&nbsp;</td>
+                                                                                 <td>Monday, January 17&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to self-add</td>
+                                                                                 <td>Tuesday, January 18&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to add, via instructor&nbsp;</td>
+                                                                                 <td>Tuesday, January 25</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to self-drop&nbsp;</td>
+                                                                                 <td>Tuesday, January 25</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to drop, via advisor, without a "W" grade</td>
+                                                                                 <td>Tuesday, February 1&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to confirm bill</td>
+                                                                                 <td>Tuesday, February 1&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Spring 2028 Graduation Application Deadline for Graduate Students&nbsp;</td>
+                                                                                 <td>Saturday, February 5&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Presidents Day (no classes, offices closed)&nbsp;</td>
+                                                                                 <td>Monday, February 21</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Summer/Fall 2028 Graduation Application Deadline for Undergraduate Students (Including
+                                                                                    Gallatin College AA/AS/AAS)&nbsp;</td>
+                                                                                 <td>Wednesday, March 1&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Spring Break (no classes, offices open)&nbsp;</td>
+                                                                                 <td>March 13 - 17&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Priority Registration Opens for Spring 2028</td>
+                                                                                 <td>TBA</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>First day to apply for summer 2028 residency reclassification&nbsp;</td>
+                                                                                 <td>Saturday, April 1&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to drop with a "W" grade, via advisor</td>
+                                                                                 <td>Tuesday, April 11&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>University Day (no classes, offices open)&nbsp;</td>
+                                                                                 <td>Friday, April 14&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td><a title="Final Week Schedule" href="/registrar/exam_schedule.html">Final Week Schedule</a></td>
+                                                                                 <td>May 1 - 4&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last Day of Finals</td>
+                                                                                 <td>Thursday, May 4&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td><a title="Commencement" href="/commencement/">Commencement</a></td>
+                                                                                 <td>Friday, May 5&nbsp;</td>
+                                                                              </tr>
+                                                                              <tr>
+                                                                                 <td>Last day to apply for summer 2028 residency reclassification</td>
+                                                                                 <td>Thursday, June 1&nbsp;</td>
+                                                                              </tr>
+                                                                           </tbody>
+                                                                        </table>
+                                                                     </div>
+                                                                  </div>
+                                                               </div>
+                                                            </div>
+                                                         </td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <h2>Past Terms</h2>
+                                    <div class="panel-group" id="accordiond84e1030">
+                                       <div class="panel paneld84e1030_d84e1039">
+                                          <div class="panel-heading">
+                                             <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e1030_d84e1039"><i class="fa fa-caret-down"></i>Summer 2026</a></h2>
+                                          </div>
+                                          <div class="panel-collapse collapse" id="collapsed84e1030_d84e1039">
+                                             <div class="panel-body">
+                                                <div class="responsive-cell">
+                                                   <div class="responsive-cell">
+                                                      <table class="table_dark table table-striped table-condensed">
+                                                         <caption>&nbsp;</caption>
+                                                         <thead>
+                                                            <tr>
+                                                               <th scope="col">Summer 2026</th>
+                                                               <th scope="col">&nbsp;</th>
+                                                            </tr>
+                                                         </thead>
+                                                         <tbody>
+                                                            <tr>
+                                                               <td>Full Semester 12-week Session&nbsp;</td>
+                                                               <td>Monday, May 18 - Friday, August 7</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>May 4x4 Begins</td>
+                                                               <td>Monday, May 18 - Friday, June 12</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>First 6-week Session</td>
+                                                               <td>Monday, May 18 - Friday, June 26</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Memorial Day (no classes, offices closed)</td>
+                                                               <td>Monday, May 25</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>First day to apply for Fall 2027 residency</td>
+                                                               <td>Tuesday, June 1&nbsp;</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>June 4x4 Begins</td>
+                                                               <td>Monday, June 15 - Friday, July 10</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>8-week Intersession</td>
+                                                               <td>Monday, June 15 - Friday, August 7</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Second 6-week Session</td>
+                                                               <td>Monday, June 29 - Friday, August 7</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Independence Day (no classes, offices closed)</td>
+                                                               <td>Friday, July 3 (observed)&nbsp;</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>July 4X4 Begins</td>
+                                                               <td>Monday, July 13 - Friday, August 7</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Late Summer Start</td>
+                                                               <td>Monday, July 27 - Friday, August 21</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Last day to apply for Fall 2026 residency</td>
+                                                               <td>Saturday, August 1&nbsp;</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Semester Ends</td>
+                                                               <td>Friday, August 7&nbsp;</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>&nbsp;</td>
+                                                               <td>
+                                                                  <p><a title="How to Add/Drop Summer Courses" href="https://www.montana.edu/registrar/add_drop_summer.html">How to Add/Drop Summer Courses</a></p>
+                                                                  <p><a title="Add/Drop Summer Schedule" href="/registrar/add_drop_schedule.html">Add/Drop Summer Schedule</a></p>
+                                                                  <p><a title="Withdrawal/Refund Schedule for Summer Courses" href="/registrar/withdrawal_refund_schedule.html">Withdrawal/Refund Schedule for Summer Courses</a></p>
+                                                               </td>
+                                                            </tr>
+                                                         </tbody>
+                                                      </table>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="panel paneld84e1030_d84e1106">
+                                          <div class="panel-heading">
+                                             <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e1030_d84e1106"><i class="fa fa-caret-down"></i>Spring 2026</a></h2>
+                                          </div>
+                                          <div class="panel-collapse collapse" id="collapsed84e1030_d84e1106">
+                                             <div class="panel-body">
+                                                <div class="responsive-cell">
+                                                   <div class="responsive-cell">
+                                                      <table class="table_dark table table-striped table-condensed">
+                                                         <caption>&nbsp;</caption>
+                                                         <thead>
+                                                            <tr>
+                                                               <th scope="col">Spring 2026</th>
+                                                               <th scope="col">&nbsp;</th>
+                                                            </tr>
+                                                         </thead>
+                                                         <tbody>
+                                                            <tr>
+                                                               <td>First day of school</td>
+                                                               <td>Tuesday, January 13</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Martin L. King Day (no classes, offices closed)</td>
+                                                               <td>Monday, January 19</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Last day to self-add&nbsp;</td>
+                                                               <td>Tuesday, January 20</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td><span>Last day to add, via instructor</span></td>
+                                                               <td>Tuesday, January 27</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Last day to self-drop&nbsp;</td>
+                                                               <td>Tuesday, January 27</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Last day to drop, via advisor, without a "W" grade</td>
+                                                               <td>Tuesday, February 3</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Last day to confirm bill</td>
+                                                               <td>Tuesday, February 3</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Presidents Day (no classes, offices closed)</td>
+                                                               <td>Monday, February 16</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Spring Break (no classes, offices open)</td>
+                                                               <td>March 16 - 20&nbsp;</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Priority Registration Opens for Summer and Fall 2026</td>
+                                                               <td>Wednesday, March 25</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>University Day (no classes, offices open)</td>
+                                                               <td>Friday, April 3</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td><span>Last day to drop with a "W" grade via advisor&nbsp;</span></td>
+                                                               <td>Wednesday, April 15</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Semester Ends</td>
+                                                               <td>Thursday, May 7</td>
+                                                            </tr>
+                                                            <tr>
+                                                               <td>Commencement</td>
+                                                               <td>Friday, May 8</td>
+                                                            </tr>
+                                                         </tbody>
+                                                      </table>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="panel paneld84e1030_d84e1166">
+                                          <div class="panel-heading">
+                                             <h2 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle collapsed" href="#collapsed84e1030_d84e1166"><i class="fa fa-caret-down"></i>Fall 2025</a></h2>
+                                          </div>
+                                          <div class="panel-collapse collapse" id="collapsed84e1030_d84e1166">
+                                             <div class="panel-body">
+                                                <table class="table_dark table table-striped table-condensed">
+                                                   <caption>&nbsp;</caption>
+                                                   <thead>
+                                                      <tr>
+                                                         <th scope="col">Fall 2025</th>
+                                                         <th scope="col">&nbsp;</th>
+                                                      </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                      <tr>
+                                                         <td>First day of school</td>
+                                                         <td>Wednesday, August 20</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td><span>Last day to self-add Fall 2025</span></td>
+                                                         <td><span>Tuesday, August 26</span></td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Labor Day (no classes, offices closed)</td>
+                                                         <td>Monday, September 1</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>L<span>ast day to add, via instructor, Fall 2025&nbsp;</span></td>
+                                                         <td><span>Wednesday, September 3</span></td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td><span>Last day to self-drop Fall 2025</span></td>
+                                                         <td><span>Wednesday, September 3</span></td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td><span>Last day to drop, via advisor, Fall 2025&nbsp; without a "W" grade &nbsp;</span></td>
+                                                         <td><span>Wednesday, September 10</span></td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td><span>Last day to confirm bill</span></td>
+                                                         <td><span>Wednesday, September 10</span></td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td><span>Priority Registration Opens for Spring 2026</span></td>
+                                                         <td><span>Tuesday, October 21</span></td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Veteran's Day (no classes, offices closed)</td>
+                                                         <td>Tuesday, November 11</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td><span>Last day to drop Fall 2025 with a "W" grade via advisor&nbsp;</span></td>
+                                                         <td><span>Wednesday, November 12</span></td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Fall Break (no classes, offices open) (offices closed 27 - 28)</td>
+                                                         <td>November 24 - 28</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Semester Ends</td>
+                                                         <td>Thursday, December 11</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Commencement</td>
+                                                         <td>Friday, December 12</td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <p>&nbsp;</p>
+                                    <p>&nbsp;</p>
+                                 </div>
+                              </div>
+                           </div>
+                           <p>&nbsp;</p>
+                           <p>&nbsp;</p>
+                           <p>&nbsp;</p>
+                           <p>&nbsp;</p>
+                           <p>&nbsp;</p>
+                           <p>&nbsp;</p>
+                        </main>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <aside class="col-sm-3 col-xs-12 clearleft hidden-print" id="leftoptions">
+               <ul class="list-inline icon-32"></ul>
+            </aside>
+            <address class="col-xs-12 clearleft hidden-print include-file  col-sm-3 " id="contact">
+               <hr>
+               <p><strong>Office of the Registrar<br /></strong>Montana State University<br /><a href="/campusmap/?#!/buildings/18">111 Montana Hall (campus map)<br /></a>P.O. Box 172660<br />Bozeman, MT 59717-2660</p>
+<p><strong>Office Hours<br /></strong>8 a.m. to 5 p.m.<br />Monday through Friday<strong><br /></strong><em>Excludes University Holidays</em></p>
+<p><strong>Contact</strong><br />Telephone: (406) 994-6650<br />Fax: (406) 994-1972<br />Email: <a onclick="_gaq.push(['msu._trackEvent', 'Registrar', 'Click', 'Contact - registrar@montana.edu']);" href="/cdn-cgi/l/email-protection#235146444a5057514251634e4c4d57424d420d464756"><span class="__cf_email__" data-cfemail="8efcebe9e7fdfafceffccee3e1e0faefe0efa0ebeafb">[email&#160;protected]</span></a></p>
+<p><strong>Registrar<br /></strong>Antoni Campeau</p></address>
+         </div>
+      </div>
+      <div class="wrapper clearfix">
+         <div class="container"></div>
+      </div>
+      <footer class="hidden-print" id="footer">
+         <div class="inner-wrapper">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="row"><div class="col-sm-3 col-xs-6 col-ts-12">
+<ul>
+<li>
+<h3>More Information</h3>
+</li>
+<li><a id="footer-nav" href="https://www.montana.edu/accessibility/" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Resources - Accessibility']);">Accessibility</a></li>
+<li><a id="footer-nav" href="https://www.montana.edu/admissions/" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Audience - Admissions']);">Admissions</a></li>
+<li><a id="footer-nav" href="https://www.msuaf.org/" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Audience - Alumni']);">Alumni</a></li>
+<li><a id="footer-nav" href="https://www.montana.edu/students/index.html" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Audience - Current Students']);">Current Students</a></li>
+<li><a id="footer-nav" href="http://www.montana.edu/fs/" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Audience - Faculty Staff']);">Faculty &amp; Staff</a></li>
+<li><a id="footer-nav" href="https://www.montana.edu/parents/index.html" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Audience - Parents Family']);">Parents &amp; Family</a></li>
+<li><a id="footer-nav" href="https://www.montana.edu/sustainability/index.html" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Audience - Sustainability']);">Sustainability</a></li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 col-ts-12">
+<ul>
+<li>
+<h3>Resources</h3>
+</li>
+<li><a id="footer-nav" href="https://www.montana.edu/contact/" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Resources - Contact']);">Contact&nbsp;List</a></li>
+<li><a id="footer-nav" href="https://www.montana.edu/search/employees.html?mus.q=&amp;gsc.q=&amp;mus.d=" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Resources - Directories']);">Directories</a></li>
+<li><a id="footer-nav" href="https://www.montana.edu/access-success/">Access and Success</a></li>
+<li><a id="footer-nav" href="https://jobs.montana.edu/" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Resources - Jobs']);">Jobs</a></li>
+<li><a id="footer-nav" href="https://www.montana.edu/legalcounsel/legal-privacy/index.html" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Resources - Legal and Privacy Policy']);">Legal &amp; Privacy Policy</a></li>
+<li><a id="footer-nav" href="https://www.montana.edu/assist/index.html">Mental Health Assistance</a></li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 col-ts-12">
+<ul>
+<li>
+<h3>Follow Us</h3>
+</li>
+<li class="social-horizontal"><a id="footer-nav" title="Montana State on Facebook" href="https://www.facebook.com/montanastate" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Social - Facebook']);"><span class="fa fa-facebook-square"><span class="sr-only">Facebook</span></span></a> <a id="footer-nav" title="Montana State on Twitter" href="https://twitter.com/montanastate" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Social - Twitter']);"><span class="fa fa-twitter"><span class="sr-only">Twitter</span></span></a> <a id="footer-nav" title="Montana State on YouTube" href="https://www.youtube.com/user/montanastateu" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Social - YouTube']);"><span class="fa fa-youtube-play"><span class="sr-only">YouTube</span></span></a> <a id="footer-nav" title="Montana State on Instagram" href="http://instagram.com/montanastateuniversity" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Social - Instagram']);"><span class="fa fa-instagram"><span class="sr-only">Instagram</span></span></a> <a id="footer-nav" title="Montana State on LinkedIn" href="https://www.linkedin.com/edu/montana-state-university-bozeman-18753" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - Social - LinkedIn']);"><span class="fa fa-linkedin"><span class="sr-only">LinkedIn</span></span></a></li>
+</ul>
+<p>Located in <a id="footer-nav" href="https://www.montana.edu/marketing/about-msu/bozeman/" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - About Bozeman']);" style="text-decoration: underline;">Bozeman, MT</a></p>
+<p>For questions or comments contact the <a id="footer-nav" href="https://www.montana.edu/askus/" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - AskUs Link']);" style="text-decoration: underline;">Ask Us Desk</a>.</p>
+<p style="margin-top: 1.5em;"><a id="footer-nav" href="http://outlookweb.montana.edu/" style="text-decoration: underline;">Email</a>&nbsp;&nbsp;&nbsp; <a id="footer-nav" href="https://ecat1.montana.edu/" style="text-decoration: underline;">Canvas</a>&nbsp;&nbsp;&nbsp; <a id="footer-nav" href="http://www.montana.edu/mymsu" style="text-decoration: underline;">MyMSU (formerly MyInfo) </a></p>
+</div>                        <div class="col-sm-3 col-xs-6 col-ts-12">
+                           <div class="brand muted pull-right"><a href="https://www.montana.edu/" onclick="_gaq.push(['msu._trackEvent', 'HomePage', 'Click', 'Footer - MSU Logo']); "><img src="/_resources/msu/2/images/structure/msulogo-reverse-footer.png" alt="Montana State University: Mountains and Minds"></a></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div id="ouc-direct-edit-wrapper" style="hidden"><a class="editlink" id="oudirectedit" href=""><span class="sr-only">edit</span></a></div>
+         <div id="ouc-ob-fill" style="hidden"><a style="text-decoration:none; float:right;" id="de" href="https://a.cms.omniupdate.com/11/?skin=montana&amp;account=MSU-Bozeman&amp;site=Registrar&amp;action=de&amp;path=/calendar.pcf" > </a></div>
+      </footer>
+      
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript" src="/_resources/msu/2/scripts/script.js?d=20210902">// <![CDATA[
+
+// ]]></script>
+<script type="text/javascript" src="/_resources/msu/2/slick/slick.js"></script>
+      <script type="text/javascript" src="/_resources/msu/2/scripts/slick-init.js?d=20210727">// <![CDATA[
+
+// ]]></script>
+<script type="text/javascript" src="/_resources/msu/2/scripts/extra-slick.js?d=20210727">// <![CDATA[
+
+// ]]></script></body>
+</html>

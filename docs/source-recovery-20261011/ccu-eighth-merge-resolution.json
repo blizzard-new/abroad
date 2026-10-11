@@ -1,0 +1,30 @@
+{
+  "base": "4a011fab8ecdb98e4bca2ca2368ec28eaf194b78",
+  "input": "1b9563c58e2fa83c3c2510a40b7ccdd126db9dd1",
+  "conflicts_resolved": [],
+  "automerged_overlap_files_individually_verified": [
+    "src/exchange_info/official_data/ccu/completion-followup-gap-research.json",
+    "src/exchange_info/official_data/ccu/completion-inventory.json",
+    "src/exchange_info/official_data/ccu/completion-manual-fields.json",
+    "src/exchange_info/official_data/ccu/completion-remaining-public-worklist.json",
+    "src/exchange_info/official_data/ccu/completion-reviewed-fields.json"
+  ],
+  "overlap": "Every overlapping file equals full incoming content plus only the prior11to10medical correction",
+  "source_clarifications": [
+    {
+      "page": 117,
+      "field": "housing",
+      "original": "新生4學期/transfer2學期為degree對象",
+      "replacement": "一般新生須住4學期；轉學生可不住宿，選擇住校者须住2學期，均為degree對象",
+      "reason": "Original housing body explicitly says transfer students are not required to live on campus; two semesters applies only when choosing campus housing."
+    },
+    {
+      "page": 117,
+      "field": "costs",
+      "original": "monthly或fraction USD200.25/16日至USD105.40",
+      "replacement": "monthly或fraction USD200.25；最多16日 USD105.40",
+      "reason": "Actual table separates Monthly (or fraction of) from Up to16Days. Clarify the Chinese period without changing the source, amount or status."
+    }
+  ],
+  "baseline_provenance": "248cccc36c636b28cc606af1e137334dce11d6108cbc9bc42df3a2c987b34927"
+}
