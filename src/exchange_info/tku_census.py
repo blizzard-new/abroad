@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import threading
+import zlib
 from collections.abc import Mapping
 from pathlib import Path
 from functools import lru_cache
@@ -17,13 +18,13 @@ _snapshot_lock = threading.RLock()
 
 
 class _SchoolAuditIndex(Mapping):
-    """Expand one complete audit row per reader; aliases share immutable bytes."""
+    """Expand one complete audit row per reader; aliases share compressed bytes."""
     def __init__(self, aliases, rows):
         self.aliases = aliases
         self.rows = rows
 
     def __getitem__(self, name):
-        return json.loads(self.rows[self.aliases[name]])
+        return json.loads(zlib.decompress(self.rows[self.aliases[name]]))
 
     def __iter__(self):
         return iter(self.aliases)
@@ -41,7 +42,9 @@ def _snapshot_at(path, mtime_ns, size):
         identifier = row["id"]
         if identifier in rows:
             raise ValueError("Duplicate TKU census institution ID")
-        rows[identifier] = json.dumps(row, ensure_ascii=False, separators=(",", ":")).encode()
+        rows[identifier] = zlib.compress(
+            json.dumps(row, ensure_ascii=False, separators=(",", ":")).encode()
+        )
         names = {row["school_name"], census_school_name(row)}
         names.update(programme_map()[pid]["fields"]["school_name"]["value"]
                      for pid in row.get("programme_ids", []))
@@ -73,7 +76,7 @@ def census_summary():
 
 def census_rows():
     for payload in _snapshot()[1].values():
-        yield json.loads(payload)
+        yield json.loads(zlib.decompress(payload))
 
 
 def census_audit():
@@ -86,7 +89,7 @@ census_audit.cache_clear = _clear_snapshot
 
 def school_audit_by_id(identifier):
     payload = _snapshot()[1].get(identifier)
-    return json.loads(payload) if payload is not None else None
+    return json.loads(zlib.decompress(payload)) if payload is not None else None
 
 
 def school_identifier(school_name):
