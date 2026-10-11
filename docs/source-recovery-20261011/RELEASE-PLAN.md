@@ -6,7 +6,7 @@
 
 本轮起點 main `59a20f27fcee00fb597abc79e75ec11778317422`。依賴為：main → PR8 `9927ec1d8765a9772671bbaa68e7f920995f1258` 共用地球識別 → CGU 雙來源完整快照恢復／共用記憶體修復 → PR9 `ed7479073df36deb8fc0393e86fedb102e1cf2b7`、PR10 `ebe059fc317bf1cb55a0604b3ce354fe6fa12939`、PR11 `358a72e7302476ba8dd19c47c35fc398fc205a47`、PR13 `88bd00531d9a77fb98ba54dbfd8786cbde18db96` → 逐 hunk 協調及完整驗收。
 
-當前候選 `160aeacd15521d63df6a5624bd12821cc5d26cea` 已正常推送Draft PR12供復原。完整2,919 unique cases對帳：2,906 passed、13 skipped、0 failed、0 notrun；同SHA全量35-migration runtime、6,579檔wheel與隔離安裝、來源交付、原三校workflow parity均通過。175步冷測先後因截圖與桌面切校等待逾時未完成，原失敗保留；第三次加觀察器重跑，暖測尚未執行。因此目前仍不可標為完整接受。舊3129的四個全套失敗已在160修正並全套回歸，不沿用舊記憶體結果。
+當前候選 `160aeacd15521d63df6a5624bd12821cc5d26cea` 已正常推送Draft PR12供復原。完整2,919 unique cases對帳：2,906 passed、13 skipped、0 failed、0 notrun；同SHA全量35-migration runtime、6,579檔wheel與隔離安裝、來源交付、原三校workflow parity均通過。同SHA175步冷／暖負載完整通過原460 MiB門檻，兩次較早截圖／切校等待逾時失敗原樣保留，沒有宣稱已證明根因。此固定資料批次已完成本地驗收，下一批資料須重新驗收。舊3129的四個全套失敗已在160修正並全套回歸，不沿用舊記憶體結果。
 
 下一固定輸入為NCU `baf98c0df400ef96aa83fb587107eb22513c0b97`、CCU `258ce9bbb38081792658f9720bdb457a5344b2bb`、NTU `dc9bbcddcf2cd2cf47ef7768e530c6aab6fa4401`。TKU `1619ba890e3dc282bb26f92ebeeeece375e9ffe8`仍含Sunderland错校圖與UAEMEX作者待核阻擋。新資料在當前固定驗收結束後再逐hunk整合，重新綁定固定SHA驗收；不能以作者測試或前批通過代替。NCU僅保留一套資料層候選優先規則及explicit operator override，僅解除有具名新證據的7位置；Meiji租金「約五月」原件為約五個月，須同步source和derived更正。
 

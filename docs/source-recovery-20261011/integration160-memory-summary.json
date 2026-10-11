@@ -1,0 +1,39 @@
+{
+  "scope": "One local Uvicorn worker; browser driver excluded from server RSS",
+  "underlying_workload_sha256": "f71bf3bf6e3bc2ed38610a3beef0c2d9978bd756f11846aac8aee36845c3eefe",
+  "observer_sha256": "6b4262cf65fbc1522ba7dbb172760eac61ced4616ff7f2be07022fc7f95db715",
+  "workload_and_wait_limits_unchanged": true,
+  "prior_failures_preserved": [
+    "integration160-cold-memory-command: screenshot timeout after 114 samples",
+    "integration160-cold-memory-r2-command: NTU to CCU desktop switch timeout after 104 samples"
+  ],
+  "prior_failure_root_cause": "Not established; no claim that concurrency alone caused either timeout.",
+  "runs": [
+    {
+      "run": "integration160-cold-r3-memory",
+      "command_run": "integration160-cold-memory-r3-command",
+      "samples": 175,
+      "maximum_rss_mib": 450.99609375,
+      "high_water_mib": 452.52734375,
+      "final_rss_mib": 449.02734375,
+      "budget_mib": 460,
+      "passed": true,
+      "clean_source_sha": "160aeacd15521d63df6a5624bd12821cc5d26cea",
+      "tree": "fb517db5d7dbfec18ca160e54f3a3622d8893635",
+      "local_server_log_empty": true
+    },
+    {
+      "run": "integration160-warm-memory",
+      "command_run": "integration160-warm-memory-command",
+      "samples": 175,
+      "maximum_rss_mib": 441.76171875,
+      "high_water_mib": 443.49609375,
+      "final_rss_mib": 440.76171875,
+      "budget_mib": 460,
+      "passed": true,
+      "clean_source_sha": "160aeacd15521d63df6a5624bd12821cc5d26cea",
+      "tree": "fb517db5d7dbfec18ca160e54f3a3622d8893635",
+      "local_server_log_empty": true
+    }
+  ]
+}

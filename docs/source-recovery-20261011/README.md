@@ -1,13 +1,13 @@
 # 六校隔離驗收證據
 
-目前固定且已正常推送的隔離候選：[160aeacd15521d63df6a5624bd12821cc5d26cea](https://github.com/blizzard-new/abroad/commit/160aeacd15521d63df6a5624bd12821cc5d26cea)，tree `fb517db5d7dbfec18ca160e54f3a3622d8893635`，[Draft PR12](https://github.com/blizzard-new/abroad/pull/12)。**仍在驗收，尚未宣告可發布**。此檢查點 supersedes 前次README的「未推／全量尚未執行」狀態；[原檢查點原文](checkpoint-before160-full-16541847.md)保留歷史。
+目前固定且已正常推送的隔離候選：[160aeacd15521d63df6a5624bd12821cc5d26cea](https://github.com/blizzard-new/abroad/commit/160aeacd15521d63df6a5624bd12821cc5d26cea)，tree `fb517db5d7dbfec18ca160e54f3a3622d8893635`，[Draft PR12](https://github.com/blizzard-new/abroad/pull/12)。**此固定資料批次本地驗收完成；下一批增量仍待驗收，尚未正式發布**。此檢查點 supersedes 前次README的「未推／全量尚未執行」狀態；[原檢查點原文](checkpoint-before160-full-16541847.md)保留歷史。
 
 ## 160aeacd 固定結果
 
 - **完整收集2,919 unique cases：2,906 passed、13 skipped、0 failed、0 notrun**。[逐案例對帳](integration160-full-suite-summary.json)核對四分片collection、JUnit聯集與clean起訖SHA，沒有遺漏／重複；9項既有Phase C、4項缺Ollama模型保持skip。`integration160-full-shard-0..3`保留stdout/stderr、XML及分母。兩項本機PostgreSQL opt-in案例實際執行，不是略過。
 - [完整本機Supabase runtime](integration160-runtime-summary.json) **passed**：35 migrations、37 RLS表、0 browser grants、真實Storage API、兩個PostgREST；六校各6貼文／留言、12次未驗證信箱拒絕、40 alias、治理74 RPC／31 audit／17檢查、六種晚期失敗0部分寫入、CAS／replay／帳號刪除／清理均通過。原始成功run `integration160-full-supabase-runtime-r2/`；初次Storage啟動ENOSPC失敗完整保留。
 - `integration160-wheel-build-r2`、`integration160-installed-wheel`、`integration160-delivery`、`integration160-ncu-parity`及`next-ccu-sixth-contracts` **passed**。實際wheel與隔離安裝6,579檔逐hash相同，checkout外六校smoke及CGU雙來源77筆通過；SHA256 `2af961b4f031bda5f8a54b90cf92b52e1fb9f364302f716626f6b8d3706973a7`，940,658,817 bytes。原CGU154／NTPU409／NTU288 workflow bytes不變，35 SQL相對main59不變。
-- **175步冷暖記憶體尚未通過完整验收**。第一次冷run114樣本後截圖30秒逾時；第二次104樣本後桌面NTU→CCU切校90秒逾時。原始腳本、460MiB門檻及等待未放寬；[精確樣本／峰值](checkpoint-160aeacd-full.json)。第三次冷run只加失敗觀察器，記錄網路、狀態及截圖，原負載程式SHA固定；暖run尚未執行。部分樣本不能當完整通過。
+- [同固定SHA完整175步冷／暖記憶體](integration160-memory-summary.json) **passed**：冷RSS峰值450.996／HWM452.527 MiB，暖RSS峰值441.762／HWM443.496 MiB，皆低於原460 MiB門檻；每次175樣本與最終GC完整、伺服器log空。只新增失敗觀察器，原負載SHA、等待與斷言未改。前兩次114／104樣本後截圖／切校等待逾時原始失敗保留，未宣稱已證明根因。
 
 容量處理只針對本任務擁有的工具、歷史證據及產物。10,007份同byte二進位檔核hash後共用inode，內容與原路徑保留；搬移中斷後均恢復原路徑。所有wheel與原始證據保留，沒有prune Docker或改系統／部署設定；機讀收據為`historical-evidence-deduplication.json`及`owned-...json`。
 
