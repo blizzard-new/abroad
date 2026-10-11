@@ -1,0 +1,156 @@
+{
+  "checked_at": "2026-10-11T14:24:58.692871+00:00",
+  "base_checkpoint": "f44eaf82a2a1133f1ba91466034ae6e8d7ebc822",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 179,
+    "unique_photo_sha256": 177,
+    "displayed_partner_locations": 176,
+    "photo_gaps": 35,
+    "location_gaps": 38,
+    "strict_current_field_gaps": 3283,
+    "public_unread_candidates": 319
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_completion.py tests/test_ncu_fourth_pass.py tests/test_university_locations.py tests/test_ncu_resume_assets.py tests/test_catalogue_memory.py -q",
+      "result": "61 passed in 34.85s",
+      "evidence": "tests-source-api.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_resume_assets.py -q",
+      "result": "8 passed in 68.04s",
+      "evidence": "browser-check.txt"
+    }
+  ],
+  "browser_review": {
+    "visually_viewed": [
+      "browser-credits-contact.jpg",
+      "browser/克萊蒙-390-life.png",
+      "browser/ncu-mother-and-176-points.png"
+    ],
+    "scope": "七張實際photo figure及署名全部看圖，完整生活頁只另視讀Clermont，其餘六完整頁為browser斷言通過，不宣称逐頁人工視讀。"
+  },
+  "artifacts": [
+    {
+      "path": "browser/ncu-mother-and-176-points.png",
+      "sha256": "acf21e4683f4413137e088d2d6eb3d3cacf617cf42446d4c93aca22d361e0776"
+    },
+    {
+      "path": "browser/上海財經-1280-life.png",
+      "sha256": "871e963d2e74d8598f02fe8f798810bed2387e758baca758f7c9d91b0c7c81fb"
+    },
+    {
+      "path": "browser/上海財經-1280-photo.png",
+      "sha256": "b373e7ff6085d7842f2eabd407196ec3123b25949345eb67f9de3f369321664c"
+    },
+    {
+      "path": "browser/克萊蒙-390-life.png",
+      "sha256": "5bc6facb42400cf9671ee5d2e0657b03990d0f7582c007d499db54a797b3228d"
+    },
+    {
+      "path": "browser/克萊蒙-390-photo.png",
+      "sha256": "0cc7e93608445b220676580c5d7a10a83ca1efe5b8457fe1f1fff7de85e81b2f"
+    },
+    {
+      "path": "browser/加州大學爾灣-390-life.png",
+      "sha256": "3da648778fc3083c3365b619cd079476e36fb53f94b1daa5c0253bb983cf7940"
+    },
+    {
+      "path": "browser/加州大學爾灣-390-photo.png",
+      "sha256": "773cc2823e37bc1a218efc0b07fcb573b92a7d2db245473d9895a6cba4ed648a"
+    },
+    {
+      "path": "browser/夏威夷大學馬諾阿分校（自費）-390-life.png",
+      "sha256": "a740b2b11dfc90643113a83483498f017b9df862fbf3c632066c5f472412ebd8"
+    },
+    {
+      "path": "browser/夏威夷大學馬諾阿分校（自費）-390-photo.png",
+      "sha256": "e2b639705d52dccfa6844e49adf9892eecc9de25554e6dafa45414d5f5d7daec"
+    },
+    {
+      "path": "browser/拉薩爾博舍-1280-life.png",
+      "sha256": "80e8123272fb06305a5c0d2dfc9075bb6385128c262b9e2e569534ba1a39d632"
+    },
+    {
+      "path": "browser/拉薩爾博舍-1280-photo.png",
+      "sha256": "2af7dd291cee0836e6932730137c10b85f0a36a0242f8cb28adef8306bc532cd"
+    },
+    {
+      "path": "browser/穆罕默迪亞-390-life.png",
+      "sha256": "a61c8d4e87f9d529a577f7fc1ae336fae54883e8be3c2cda6d7359df0bdda4a5"
+    },
+    {
+      "path": "browser/穆罕默迪亞-390-photo.png",
+      "sha256": "7961824247995a425a4ff6699cf314798ea8a9339bcee68b7479ba9083e66f98"
+    },
+    {
+      "path": "browser/關西國際-1280-life.png",
+      "sha256": "76b7c59e15537f36511864ff4ea2c4fc845fccf67b516277418a38d4b86b6b51"
+    },
+    {
+      "path": "browser/關西國際-1280-photo.png",
+      "sha256": "b0f6622d96becfbd0eee94330787840551f0f1b603d3ac2e2e72eaf2248465a2"
+    },
+    {
+      "path": "browser-check.txt",
+      "sha256": "77786e8eb1f11c80c41b96bfe4190a15898a9f3f7a23122569d688d6cdd84289"
+    },
+    {
+      "path": "browser-credits-contact.jpg",
+      "sha256": "42c00d89e15cab7a5378b92d9192fafe953aeed5886b050ff33ed25f291e5fa8"
+    },
+    {
+      "path": "entity-contact-01.jpg",
+      "sha256": "996a411cd595396facd5b519351731e16422a5474bde00687e818cb0bc1a1d9f"
+    },
+    {
+      "path": "entity-contact-02.jpg",
+      "sha256": "ba5a37b98fa28d6e7f047962034ff43ee86f96ae5532e96695cdc721d3349eeb"
+    },
+    {
+      "path": "entity-contact-03.jpg",
+      "sha256": "574c6f2baef8d22f4aae46fc19971e14a1e716c16893fc81bfd204a8b16502b6"
+    },
+    {
+      "path": "search-contact-01.jpg",
+      "sha256": "a6b07a66f9e82d6a7061851515f641e6bc5ff3f068de297981bdcce3d5b82734"
+    },
+    {
+      "path": "search-contact-02.jpg",
+      "sha256": "0976d9338d1362b756e65e30eb0dc48b0d10985a494d90d7bf21d90c52d517c4"
+    },
+    {
+      "path": "search-contact-03.jpg",
+      "sha256": "3260ed363eb923cd7dfbd0d17976778901a49b4165e84b4931fe381d439eecac"
+    },
+    {
+      "path": "search-contact-04.jpg",
+      "sha256": "d4cc688ec757d0db323907f54380132aaa8c048599b56c549188bc9a121ab416"
+    },
+    {
+      "path": "search-contact-05.jpg",
+      "sha256": "774fcef12de48262ae6aee31f8713cf1f149ac6a22d7b2fbd96a0d1f624b5212"
+    },
+    {
+      "path": "search-contact-06.jpg",
+      "sha256": "9c78a49f3492fd4dbd8c1b57552d5ed19f8db46643f05849c942ed9ebf5ff84d"
+    },
+    {
+      "path": "search-contact-07.jpg",
+      "sha256": "079eeca149b8baa449415eef1db3aeded3ce3d6e5cb100458ba99bb742e8efc5"
+    },
+    {
+      "path": "search-contact-08.jpg",
+      "sha256": "804dedc9e56c881e93e91fce6196652ad3dd63d50c755262876a682d08faede2"
+    },
+    {
+      "path": "search-contact-09.jpg",
+      "sha256": "14ba37b8568faaa9417d0f902d88014d32e5969c91a0805058bb28320f3e9c38"
+    },
+    {
+      "path": "tests-source-api.txt",
+      "sha256": "672ff44e9cefff403d11478739b924d21ae592fc3f2ad7c13c732771343c3c55"
+    }
+  ]
+}

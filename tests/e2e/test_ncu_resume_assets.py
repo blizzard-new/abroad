@@ -8,7 +8,7 @@ from playwright.sync_api import expect
 from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import wait_until
 
-OUTPUT = Path('docs/data/ncu-completion-20261011/resume/browser')
+OUTPUT = Path('docs/data/ncu-completion-20261011/resume/second/browser')
 
 
 def select_ncu(page, live_server):
@@ -24,10 +24,10 @@ def select_ncu(page, live_server):
 
 
 @pytest.mark.parametrize('query,width,author', [
-    ('天普', 390, 'Audrey'), ('北海道', 1280, 'ノボホショコロトソ'),
-    ('新潟', 390, '恩田透'), ('曼尼托巴', 1280, 'JamesTeterenko'),
-    ('南京信息', 390, 'Zubair71'), ('大阪公立', 1280, 'KishujiRapid'),
-    ('上海大學', 390, 'YULIN Peng'),
+    ('克萊蒙', 390, 'Benoît Prieur'), ('拉薩爾博舍', 1280, 'LaDivia'),
+    ('加州大學爾灣', 390, 'Mikejuinwind123'), ('關西國際', 1280, 'Kirakirameister'),
+    ('夏威夷大學馬諾阿分校（自費）', 390, 'Historyrus82'), ('上海財經', 1280, 'MomodaniSakura'),
+    ('穆罕默迪亞', 390, 'Mhdfardhan'),
 ])
 def test_resume_photo_bytes_and_actual_attribution_visible(page, live_server, query, width, author):
     errors=[]
@@ -64,11 +64,11 @@ def test_resume_mother_marker_and_all_partner_points_reach_real_globe(page,live_
     page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server)
     page.locator('[data-partner-view="map"]').click()
-    expect(page.locator('#partner-map-count')).to_have_text('122 所已定位 / 214 所符合條件',timeout=60_000)
-    expect(page.locator('#map-school-select option')).to_have_count(123)
+    expect(page.locator('#partner-map-count')).to_have_text('176 所已定位 / 214 所符合條件',timeout=60_000)
+    expect(page.locator('#map-school-select option')).to_have_count(177)
     expect(page.locator('#map-home')).to_be_enabled()
     expect(page.locator('.map-home-marker')).to_contain_text('中央',timeout=60_000)
     page.locator('#map-home').click()
     OUTPUT.mkdir(parents=True,exist_ok=True)
-    page.screenshot(path=str(OUTPUT/'ncu-mother-and-122-points.png'))
+    page.screenshot(path=str(OUTPUT/'ncu-mother-and-176-points.png'))
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')

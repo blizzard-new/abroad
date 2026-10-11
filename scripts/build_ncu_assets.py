@@ -49,6 +49,7 @@ def build(review_path, *, output_path=None):
         picture = next(pic for pic in metadata["query"]["pages"].values() if pic["title"] == source["title"])
         meta = picture["imageinfo"][0]["extmetadata"]
         when = source.get("photographed_at_original") or meta.get("DateTimeOriginal", {}).get("value", "原來源未列拍攝日期")
+        when = BeautifulSoup(when, "html.parser").get_text(" ", strip=True)
         description = BeautifulSoup(source["description_html"], "html.parser").get_text(" ", strip=True)
         rows.append({
             "school_name": source["school_name"], "country": source["country"],

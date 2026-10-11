@@ -52,3 +52,36 @@ def test_mother_is_taiwan_ncu_and_namesakes_are_not_borrowed(tmp_path):
     tracks=[x for x in partners if 'Hokkaido' in x['school_name']]
     assert len(tracks)==2 and tracks[0]['image_url']==tracks[1]['image_url']
     assert tracks[0]['school_name']!=tracks[1]['school_name']
+
+
+def test_second_resume_provenance_rows_raw_points_and_country_rejections():
+    audits=json.loads((ROOT/'src/exchange_info/official_data/ncu/field-audit.json').read_text())
+    canonical={r['school_name']:r['source_rows'] for r in audits}
+    for prefix in ['resume-second','resume-discovery']:
+        review=json.loads((SOURCE/(prefix+'-review.json')).read_text())
+        pack=json.loads(gzip.decompress((SOURCE/(prefix+'-sourcepack.json.gz')).read_bytes()))
+        bodies={r['receipt'].get('sha256'):r['raw_utf8'] for r in pack if 'raw_utf8' in r}
+        for digest,raw in bodies.items():
+            assert hashlib.sha256(raw.encode()).hexdigest()==digest
+        for row in review['photo_decisions']+review['coordinate_decisions']:
+            assert row['canonical_source_rows']==canonical[row['school_name']]
+            record=row.get('published_record')
+            if not record:continue
+            raw=bodies[record['source_sha256']]
+            if row.get('qid'):
+                entity=json.loads(raw)['entities'][row['qid']]
+                claims=[c for c in entity['claims']['P625'] if c.get('rank')!='deprecated' and 'datavalue' in c.get('mainsnak',{})]
+                qualifier=row.get('selected_campus_qualifier')
+                if qualifier:
+                    claims=[c for c in claims if any(q.get('datavalue',{}).get('value',{}).get('id')==qualifier for q in c.get('qualifiers',{}).get('P518',[]))]
+                points={(c['mainsnak']['datavalue']['value']['latitude'],c['mainsnak']['datavalue']['value']['longitude']) for c in claims}
+                assert points=={(record['latitude'],record['longitude'])}
+            else:
+                assert str(record['latitude']) in raw and str(record['longitude']) in raw
+            assert record['current_exchange_campus_confirmed'] is False
+    discovery=json.loads((SOURCE/'resume-discovery-review.json').read_text())
+    held={r['capture_row_id'] for r in discovery['coordinate_decisions'] if r['decision']=='pending_not_published'}
+    assert {'ncu-078','ncu-080','ncu-098','ncu-154','ncu-205','ncu-208'} <= held
+    photos=json.loads((ROOT/'src/exchange_info/official_data/ncu/campus-assets.json').read_text())['photos']
+    assert not any('Suleyman Demirel' in r['school_name'] for r in photos)
+    assert all('<' not in r['photographed_at_original'] for r in photos)
