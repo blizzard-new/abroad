@@ -1,0 +1,31 @@
+CONFTEST LOADED!
+........F..                                                              [100%]
+=================================== FAILURES ===================================
+______ test_resume_mother_marker_and_all_partner_points_reach_real_globe _______
+
+page = <Page url='http://127.0.0.1:40853/?view=map&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:40853', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-6/web-e2e-data0'))
+
+    def test_resume_mother_marker_and_all_partner_points_reach_real_globe(page,live_server):
+        page.set_viewport_size({'width':1280,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        select_ncu(page,live_server)
+        page.locator('[data-partner-view="map"]').click()
+>       expect(page.locator('#partner-map-count')).to_have_text('180 所已定位 / 214 所符合條件',timeout=60_000)
+E       AssertionError: Locator expected to have text '180 所已定位 / 214 所符合條件'
+E       Actual value: 181 所已定位 / 214 所符合條件 
+E       Call log:
+E         - Expect "to_have_text" with timeout 60000ms
+E         - waiting for locator("#partner-map-count")
+E           2 × locator resolved to <span aria-live="polite" id="partner-map-count"></span>
+E             - unexpected value ""
+E           115 × locator resolved to <span aria-live="polite" id="partner-map-count">181 所已定位 / 214 所符合條件</span>
+E               - unexpected value "181 所已定位 / 214 所符合條件"
+E       
+E       Aria snapshot:
+E       - text: 181 所已定位 / 214 所符合條件
+
+tests/e2e/test_ncu_resume_assets.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ncu_resume_assets.py::test_resume_mother_marker_and_all_partner_points_reach_real_globe
+1 failed, 10 passed in 144.10s (0:02:24)

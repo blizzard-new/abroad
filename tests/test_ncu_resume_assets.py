@@ -44,7 +44,10 @@ def test_mother_is_taiwan_ncu_and_namesakes_are_not_borrowed(tmp_path):
     assert len(partners)==214
     assert all(x.get('quota') is None and x['availability_status']=='agreement_only' for x in partners)
     can_tho=next(x for x in partners if 'Can Tho' in x['school_name'])
-    assert can_tho.get('image_url') is None
+    assert can_tho.get('image_url')
+    can_photo=next(x for x in json.loads((ROOT/'src/exchange_info/official_data/ncu/campus-assets.json').read_text())['photos'] if x['school_name']==can_tho['school_name'])
+    assert can_photo['country']=='越南' and 'Cantho University' in can_photo['title_original']
+    assert 'Kent' not in can_photo['title_original']
     florida=next(x for x in partners if 'University of Florida' in x['school_name'])
     photo=next(x for x in json.loads((ROOT/'src/exchange_info/official_data/ncu/campus-assets.json').read_text())['photos'] if x['school_name']==florida['school_name'])
     assert 'Reitz Union' in photo['title_original']

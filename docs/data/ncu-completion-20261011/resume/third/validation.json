@@ -1,0 +1,125 @@
+{
+  "checked_at": "2026-10-11T14:44:49.680866+00:00",
+  "base_checkpoint": "07bc44967a3cc47155ea362e973ec34a5158c7f3",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 193,
+    "unique_photo_sha256": 190,
+    "displayed_partner_locations": 181,
+    "photo_gaps": 21,
+    "location_gaps": 33,
+    "strict_current_field_gaps": 3264,
+    "public_unread_candidates": 317,
+    "reviewed_host_records": 116,
+    "completion_sources": 652,
+    "passages_reviewed": 245,
+    "native_pdf_fully_read": 47
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "400 passed in 166.76s",
+      "evidence": "tests-ncu-all.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_resume_assets.py -q",
+      "result": "11 passed in 91.57s",
+      "evidence": "browser-check.txt"
+    }
+  ],
+  "browser_review": {
+    "visually_viewed": [
+      "browser-credits-contact.jpg",
+      "browser/eivp-390-application.png",
+      "browser/eivp-1280-life.png",
+      "browser/ncu-mother-and-181-points.png"
+    ],
+    "scope": "八張實際照片和署名全看，另視讀EIVP手機申請、桌面生活及母校／181點地球；其他全頁截圖只斷言，不宣稱全部人工視讀。"
+  },
+  "artifacts": [
+    {
+      "path": "browser/eivp-1280-application.png",
+      "sha256": "875f3756a5df0867e80c56ac84403fbef6f0dafde8db2e7fadb858628529c25e"
+    },
+    {
+      "path": "browser/eivp-1280-life.png",
+      "sha256": "2173ce25181cbf137c88fe001e385becf72f832c4883712417cf7fe957cbe09b"
+    },
+    {
+      "path": "browser/eivp-390-application.png",
+      "sha256": "385be819909600d685d154cfd494eb145f00d2938fc46c4c50fdb6f6587ecfd4"
+    },
+    {
+      "path": "browser/eivp-390-life.png",
+      "sha256": "4d5153b897bb0b0c284d78cad9a2239c84fc04a83595569ffe12ba5a785cc44d"
+    },
+    {
+      "path": "browser/ncu-mother-and-181-points.png",
+      "sha256": "8534fd538c768b5246d5634403db3ca1d3d53a313e651e75ae912158913e0b45"
+    },
+    {
+      "path": "browser/光州-1280-life.png",
+      "sha256": "e6cd9d0da45fb065c10dbd3be279e80113faa5df326d9408d717e6c3ccb846d8"
+    },
+    {
+      "path": "browser/光州-1280-photo.png",
+      "sha256": "d8962b7f0dc325d2c0c4e652c26468d07c039964044a9643767a5b26a249a8a5"
+    },
+    {
+      "path": "browser/奧胡斯-390-life.png",
+      "sha256": "f1420e1c4a85fa0c2925827e98571aeef80afdda5e9703424f0d0e410e774f72"
+    },
+    {
+      "path": "browser/奧胡斯-390-photo.png",
+      "sha256": "884cefac88de64585558818a0ab89b7056c03256edec4998b9131f64b8d5e77c"
+    },
+    {
+      "path": "browser/布拉提斯-1280-life.png",
+      "sha256": "c6b12cc2f26ac3a1918d84b54c4cc08bc3f39d36a343b6f51c7ccd7ba6e43a9d"
+    },
+    {
+      "path": "browser/布拉提斯-1280-photo.png",
+      "sha256": "62a2b23072394b4cd5b18caec209296dbcb6ac4655752f50cf826569e5685c0a"
+    },
+    {
+      "path": "browser/淑名-390-life.png",
+      "sha256": "c265d564d6073a7600058c1c15002cb71b06767f8ae68e1ff91a655f14b0a062"
+    },
+    {
+      "path": "browser/淑名-390-photo.png",
+      "sha256": "4df6fd25462f2619bd6c35216baa31f953de2ec3aba257b4e77644a3c4e0fb0c"
+    },
+    {
+      "path": "browser/瑪麗路易-1280-life.png",
+      "sha256": "0b3be7758afeb7dbcecc935fe060453bd61b6073f21ec46a3e0e18523cae8c17"
+    },
+    {
+      "path": "browser/瑪麗路易-1280-photo.png",
+      "sha256": "09b520065b14333bf9e424ddeb99cc31893d8a129736c967e04927b2c0e56ca6"
+    },
+    {
+      "path": "browser/紐約州立大學奧斯威格分校（自費）-1280-life.png",
+      "sha256": "bc1d91f95f41a254bec5207c93fc6f471ea8de66d27d891555c7cf5973130ec1"
+    },
+    {
+      "path": "browser/紐約州立大學奧斯威格分校（自費）-1280-photo.png",
+      "sha256": "31657fd0cd7154d21b011a19c52f06b61598c2f056cac59662366a03db29aec6"
+    },
+    {
+      "path": "browser/肯特-390-life.png",
+      "sha256": "639cb6ed660c59e4f10b99fa1b67ab897222af212a44ffde7512a2960c945cd6"
+    },
+    {
+      "path": "browser/肯特-390-photo.png",
+      "sha256": "f39e0503f29f0112030e3b73abece95e6b6a3abf08d7a7a94d958f7e8b65a8e8"
+    },
+    {
+      "path": "browser/道格拉斯-390-life.png",
+      "sha256": "b8c6f0b7d8197fd8621a37162e5c43dc7dfd48f34fbb266963ed8e637b91ad79"
+    },
+    {
+      "path": "browser/道格拉斯-390-photo.png",
+      "sha256": "9adf79fcb103506d35a996fcceb4b6a02784818a8fc395dc02048a33ceb2161b"
+    }
+  ]
+}
