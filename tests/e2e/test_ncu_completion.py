@@ -1,5 +1,6 @@
 """Read new host rules, original conflicts and photo credits in real Chromium."""
 from pathlib import Path
+import os
 import re
 
 import pytest
@@ -95,7 +96,7 @@ def test_ncu_new_rules_photos_and_source_limits_reach_visible_ui(page, live_serv
     if query == "托馬斯":
         expect(page.locator("#destination-official-content")).to_contain_text("不是先來先得")
         expect(page.locator("#destination-official-content")).to_contain_text("5560")
-    out = Path("/workspace/ncu-completion-20261011/browser")
+    out = Path(os.environ.get("VISUAL_EVIDENCE_DIR", "output/ncu-completion-browser"))
     out.mkdir(parents=True, exist_ok=True)
     page.locator("#detail-life").scroll_into_view_if_needed()
     page.screenshot(path=str(out / f"ncu-{query}-{width}.png"))

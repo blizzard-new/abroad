@@ -1,5 +1,6 @@
 """Real CCU reference-school screens, licensed image requests and mobile layout."""
 import json
+import os
 from pathlib import Path
 from urllib.parse import quote
 
@@ -27,6 +28,7 @@ def test_closed_reference_school_shows_separate_current_host_tracks_and_credited
     expect(attribution).to_contain_text("Loyola")
     expect(attribution.locator("p").first).not_to_contain_text("Grade School")
     assert page.request.get(live_server.base_url + partner.image_url).status == 200
+    assert page.locator("#school-detail-photo img").get_attribute("src").endswith(partner.image_url)
     reference = page.locator("#detail-overview .ccu-reference-host")
     expect(reference).to_contain_text("中正本期未開放")
     expect(reference.locator("[data-ccu-reference-field]")).to_have_count(17)
@@ -40,7 +42,7 @@ def test_closed_reference_school_shows_separate_current_host_tracks_and_credited
     expect(language).to_contain_text("iBT80")
     assert len({a.get_attribute("href") for a in deadline.locator("a").all()}) >= 2
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
-    output = Path("/tmp/ccu-completion-browser")
+    output = Path(os.environ.get("VISUAL_EVIDENCE_DIR", "output/ccu-completion-browser"))
     output.mkdir(exist_ok=True)
     deadline.scroll_into_view_if_needed()
     page.screenshot(path=str(output / f"ateneo-reference-{width}.png"))
@@ -62,5 +64,6 @@ def test_current_partner_has_correct_school_of_engineering_photo_and_primary_coo
     assert partner.location.latitude == 47.4972243
     assert json.loads(partner.reference_data["ccu_campus_assets"])["photo"]["artist"]
     assert page.request.get(live_server.base_url + partner.image_url).status == 200
+    assert page.locator("#school-detail-photo img").get_attribute("src").endswith(partner.image_url)
     expect(page.locator("#detail-overview .ccu-receiving-school-details [data-ccu-field]")).to_have_count(17)
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")

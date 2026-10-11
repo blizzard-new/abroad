@@ -38,3 +38,22 @@
 本輪 CGU 修复以及上述 #9/#10/#11 相對 main 的 migration 變更為 0。新增來源狀態是 API additive 欄位；舊程式可忽略 runtime source_cache，舊前端可忽略此欄。回滾候選程式不需刪除 DB 或來源證據。
 
 後續父對話決定正式順序前，必須先核對當時 main、每PR固定head、正式DB已套用migration清單與備份／還原證據。Render main commit 自動部署已開啟，而 Supabase Actions 受帳務阻擋，不能假設 main push 會同步 DB。若未來批次帶migration，應先完成隔離升級／舊程式相容性驗證，再依父對話批准執行「可前向相容DB -> 程式 -> 真實健康與功能驗收」；破壞性資料變更另需精確批准。程式退版與DB還原必須分別規劃，不自動下 destructive down migration。此分支沒有執行任何上述正式步驟。
+
+## 固定批次整合檢查點
+
+已在隔離分支依序納入 #9 `4566f7f`、#10 `c18aebf`、#11 `5a3b690`。尚未纳入任何 TKU 本輪新資料，NTU 原文缺件仍未解。
+
+逐 hunk 處理：
+
+- NTU ENS Ulm 更新保留 PR8 四個母校點，未整檔覆蓋共用位置。
+- CCU 的照片與 coverage 使用同份校別 sidecar，其他校保留 PR8 VisualRecordIndex；三個位置入口傳本機資料目錄。
+- NCU 照片不回落至未複核共用舊圖，95/97的CCU座標／照片與43/125的NCU座標／照片使用不同分母和校別。CCU／NCU 前端均使用對應已複核圖片及署名，不以共用別名圖片搭配不同作者授權。
+- NCU 新增本機 operator verified/pending/needs_review/invalid 優先於 sidecar 的回歸；dashboard和生活頁一致。原始學校身份判斷未改動。
+- 新 `catalogue_source` 未提供時省略，保持其他五校既有 bundle 序列化格式；NCU離線重建已重驗。
+- 一致更新app／community-reader入口版本，保留CGU來源提示、地球及手機導航修正。
+
+PR8+CGU固定 `985224fd`：65 tests passed（含六校真實API/地球與390/1440 browser）；單worker初輪12樣本最大RSS338.027MiB，未逾512MiB。此為加入三校新批次**之前**的基線，不代替整合後驗收。
+
+整合初輪88案例：83 passed、5 failed；4為新增測試假定life回應含location物件（實際契約是location_note），1為NCU舊base預期10點（PR8+新批次實為43）。保留原始紀錄，修正測試對齊已驗證契約及合併分母後相關6案例全過。完整整合suite、擴充browser、暖機512MiB尚待最終證據。
+
+原始CCU公開來源與CSV保留其CRLF／尾端空白，以維持原件SHA；全檔 `git diff --check` 會報原件空白，沒有改寫證據消除訊息。程式／測試檔的diff檢查另行通過。
