@@ -37,7 +37,7 @@ def main():
     ev[1]["resolved_url"] = contact["resolved_url"]
     ev[2]["resolved_url"] = marker["resolved_url"]
     row = {"school_name": partner["school_name"], "country": partner["country"],
-           "city": "Kottayam（Pathamuttom 工學院校園）", "latitude": 9.5100096, "longitude": 76.5513594,
+           "city": "Kottayam", "latitude": 9.5100096, "longitude": 76.5513594,
            "geocode_status": "verified", "geocoded_at": marker["checked_at"],
            "source_url": marker["source_url"], "identity_source_url": contact["resolved_url"],
            "precision": "representative", "note": note}
