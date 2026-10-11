@@ -1,0 +1,34 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_ccu_streamed_completion.py",
+    "tests/test_scoped_life_memory.py",
+    "tests/test_tku_streamed_snapshot.py",
+    "tests/test_tku_scoped_audit.py",
+    "tests/test_tku_fixed_photo_blockers.py",
+    "tests/test_tku_full_census.py",
+    "tests/test_ncu_snapshot_cache.py",
+    "-q",
+    "--junitxml=/workspace/recovery-evidence-20261011/integration-final7-bounded-caches-focused/result.xml"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T19:10:17.416773+00:00",
+  "start_guard": {
+    "sha": "5e7114182093fa77203ee946a4f86a88d3b10345",
+    "tree": "d6029a2dcf6c8a03b7b5ed217769e874b68a17ab",
+    "status": ""
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {},
+  "exit_code": 0,
+  "finished_at": "2026-10-11T19:10:56.160277+00:00",
+  "end_guard": {
+    "sha": "5e7114182093fa77203ee946a4f86a88d3b10345",
+    "tree": "d6029a2dcf6c8a03b7b5ed217769e874b68a17ab",
+    "status": ""
+  }
+}

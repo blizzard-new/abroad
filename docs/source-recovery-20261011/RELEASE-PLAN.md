@@ -4,11 +4,11 @@
 
 ## 固定輸入與依賴
 
-本輪起點 main `59a20f27fcee00fb597abc79e75ec11778317422`。PR8共用地球識別與CGU來源恢復／記憶體修復為基底；最新已推送候選 `2d0e1a3b5e505be52830f509081028fca8d3b4b0` 包含 NTU PR9 `c7357f974faaec8e60ef19698d4d21633c322dc8`、CCU PR10 `52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8`、NCU PR11 `a2df55b16f72455f7154d7afff44934fc8dbf99d`、TKU PR13 `93cbd9dfee3af95f9ecc89cceb1ccd0e100778af`。逐hunk順序 CCU e16381c → NCU d0c84c5 → NTU 7e0c29e → TKU ca194735。
+本輪起點 main `59a20f27fcee00fb597abc79e75ec11778317422`。PR8共用地球識別與CGU來源恢復／記憶體修復為基底；最新已推送候選 `5e7114182093fa77203ee946a4f86a88d3b10345` 包含 NTU PR9 `c7357f974faaec8e60ef19698d4d21633c322dc8`、CCU PR10 `52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8`、NCU PR11 `a2df55b16f72455f7154d7afff44934fc8dbf99d`、TKU PR13 `93cbd9dfee3af95f9ecc89cceb1ccd0e100778af`。逐hunk順序 CCU e16381c → NCU d0c84c5 → NTU 7e0c29e → TKU ca194735。
 
 共用面包括 api.py 照片scope／coverage／座標、school_content.py、university_locations.py、共享照片／位置、app.js選校／來源／名額、index.html載入次序、discovery-core.js、multi-plan.js、package-data、OpenAPI、分母與來源交付。NCU保留候選優先與explicit operator override、圖爾庫舊文件及簽章、明治五個月；CCU保留三項原文修正；TKU保留lazy identifier及operator override，同時接入NICS資料。Git無衝突不代表語意正確。
 
-TKU兩拒用照片已移至 `sources/tku/withdrawn-campus-assets/`，不在public static或Python package source。保留研究原件不等允許公開部署；發布前必須驗 direct URL404、六校cache/fallback無復活、最終wheel無路徑／內容hash。完整候選現在驗收中，任何較早SHA綠燈不能代替 2d0e1a3b。
+TKU兩拒用照片已移至 `sources/tku/withdrawn-campus-assets/`，不在public static或Python package source。保留研究原件不等允許公開部署；發布前必須驗 direct URL404、六校cache/fallback無復活、最終wheel無路徑／內容hash。完整候選現在驗收中，任何較早SHA綠燈不能代替 5e711418。
 
 歷史160aeacd是上一資料批次完整驗收點（2919 unique，2906pass13skip，完整runtime、wheel、175冷暖<460MiB）；4a011fab批次2970unique為2956pass13skip1setup error，另一次單案重跑pass不替代全套；dbc4afd6批次2985unique為2803pass43fail126setup error13skip且Storage ENOSPC。完整原始結果均保留。
 
@@ -48,4 +48,4 @@ TKU兩拒用照片已移至 `sources/tku/withdrawn-campus-assets/`，不在publi
 
 ## 本次續作保存點
 
-2d0e1a3b為記憶體修復後候選；55focused cases／contracts／来源交付／NCU完整payload通過，冷測正在執行；本SHA的完整suite、warm、wheel及完整runtime尚待完成。7a7歷史runtime與wheel通過，但冷測及175步完整diagnostic皆超460MiB，故不能發布。NCU48fcc增量排隊待當前重驗完再接入，不改動正在測試的資料。全部passed／failed／notrun依README及原始逐run紀錄判斷，不以不同SHA結果混代。
+5e711418為TKU／CCU逐校串流及無損快取候選；61focused／contracts／來源交付／NCU完整payload通過，cold正在執行；本SHA的warm、完整suite、wheel及完整runtime待完成。先前7a7／2d0／80b均保留記憶體超460MiB失敗，不用較早SHA的完整runtime或wheel混代。NCU48fcc與NTU23757排隊，當前乾淨SHA重驗後才接入並再次驗證完整組合、最終資料量記憶體與DB。父對話依最後同一固定SHA證據協調正式順序。

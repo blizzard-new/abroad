@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/observe_final4_memory_browser_failures.py", line 28, in <module>
+    runpy.run_path(str(original),run_name='__main__')
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/recovery-tools-20261011/profile_final4_growth_memory.py", line 159, in <module>
+    sample(f'browser-{width}-{school}')
+  File "/workspace/recovery-tools-20261011/profile_final4_growth_memory.py", line 55, in sample
+    assert '--defer-budget' in sys.argv or max(result['peak_rss_bytes'],result['rss_bytes']) < budget_mib * 1024 * 1024, f'Isolated process exceeded the {budget_mib:g} MiB acceptance budget'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Isolated process exceeded the 460 MiB acceptance budget

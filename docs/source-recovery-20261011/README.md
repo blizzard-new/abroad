@@ -1,37 +1,35 @@
-# 固定候選2d0e1a3b：記憶體修復後重新驗收
+# 四校隔離候選：記憶體修復驗收進行中
 
-目前候選 [2d0e1a3b5e505be52830f509081028fca8d3b4b0](https://github.com/blizzard-new/abroad/commit/2d0e1a3b5e505be52830f509081028fca8d3b4b0)，tree `e0a743533087e868ddfc55c036a08ea99dda3661`；[Draft PR12](https://github.com/blizzard-new/abroad/pull/12)。只推隔離候選及證據，沒有merge main／正式DB／部署或安全設定變更。
+目前 [候選5e7114182093fa77203ee946a4f86a88d3b10345](https://github.com/blizzard-new/abroad/commit/5e7114182093fa77203ee946a4f86a88d3b10345)，tree `d6029a2dcf6c8a03b7b5ed217769e874b68a17ab`；[Draft PR12](https://github.com/blizzard-new/abroad/pull/12)。本任務只正常推隔離分支與證據，沒有merge main、production DB或部署，沒有修改Quality停用、Render autoDeploy、保護、憑證或帳務。
 
-本SHA已通過55個focused cases（24新增JSON／並行快取回歸＋31既有資料／撤回圖／快取案例）、contracts、delivery audit、NCU完整payload parity。175步cold RUNNING；warm、完整pytest、此SHA的wheel與完整Supabase runtime NOTRUN。7a7的通過不繼承。
+固定資料仍為CCU `52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8`、NCU `a2df55b16f72455f7154d7afff44934fc8dbf99d`、NTU `c7357f974faaec8e60ef19698d4d21633c322dc8`、TKU `93cbd9dfee3af95f9ecc89cceb1ccd0e100778af`。相對main59 migration增量0；CGU154／NTPU409／NTU288原workflow逐byte不變。資料來源與全部既有測試函式不受本次記憶體修復改寫。
 
-修復只變更 `json_stream.py`（新增object-array逐項reader，既有array reader不改）、`tku_census.py`（逐校讀取與single build lock）、`tku_photo_identity_policy.py`（CLI與package匯入相容），加24新案例；全部原資料、既有測試函式、workflow、SQL位元組不變。前次a731 focused為54passed／1failed（獨立import的ModuleNotFoundError），2d0修復後55passed；兩者原始log/XML皆保留。
+父指示排隊的新輸入：NCU `48fcc27446f8cadb19f45cae415852af67f76a1e`、NTU `23757a06778f7569716a19987dd1d39effce13f2`。目前只讀盤點固定差異，尚未合入；先完成當前乾淨SHA重驗，再逐hunk接入，並重跑最終完整組合／記憶體／DB，不將來源分支結果當組合驗收。
 
-7a7 cold原始失敗：第8／175取樣峰值472.656MiB；完整diagnostic另跑175步，功能assert全過但峰值472.055MiB，因此最終exit1。新候選仍以460MiB原門檻驗收。逐校snapshot原型的287校payload、摘要、別名hash全部相符；孤立載入峰值180.04→65.72MiB僅診斷比較，不替代完整負載。
+| 目前5e711418門檻 | 狀態 |
+|---|---|
+| targeted regression | PASSED：61 cases，含25新增JSON／並行／完整來源失敗不發布快取案例；原NTU/CCU/TKU生命資料完整性與withdrawn圖檢查保留。 |
+| contracts／delivery／NCU stream parity | PASSED：原workflow、35SQL／Actions／uv不變，OpenAPI／JS／compile，NTU1373觀察與TKU4529pack成員、NCU214+2177記錄完整核驗。 |
+| 完整cache內容 | PASSED：TKU287校13,024,247 bytes→2,148,697無損cache；CCU104校9,310,485→1,123,661；每校canonical bytes／全部公開映射相等、原來源驗證全部執行。 |
+| 同175步cold／warm，460MiB門檻 | cold RUNNING；warm NOTRUN。原assert/wait不放寬，僅已授權TKU inventory期望由264圖260點更新為262圖264點，差異receipt保存。 |
+| 完整pytest套件 | NOTRUN；未繼承舊SHA通過。預期新增25案例，最終以實際collection／四shard聯集為分母。 |
+| 本SHA完整Supabase runtime／wheel fresh install | NOTRUN；7a7的歷史完整通過不能替代本SHA。 |
 
-固定四校資料输入仍為下述CCU52ed／NCUa2df／NTUc735／TKU93cb。父交付的新NCU `48fcc27446f8cadb19f45cae415852af67f76a1e` 已排隊，依指示須先完成當前乾淨SHA重驗再接增量，沒有在測試途中浮動更新。4個NCU screenshot輸出修復檔案與7a7commit已回報父對話供源分支同步。
+程式修復：TKU與CCU先逐校讀取，再保留無損壓縮不可變快取，按請求還原完整紀錄；不刪來源、欄位或接受條件。TKU首次並行讀取只建一次完整snapshot；截斷JSON／最後一校來源失敗都不能留下部分成功快取。另修正TKU照片撤回工具CLI／package雙匯入。NCU4個測試截圖OUT改至獨立目錄，不改test function AST／assert／wait，已回報父協調源分支同步。
 
-以下7a7表格及照片／來源結果是歷史固定SHA紀錄；最終驗收仍未完成。發布與回滾安排見 [計畫](RELEASE-PLAN.md)。
+| 保留的歷史原始結果 | 固定SHA範圍，不能混用 |
+|---|---|
+| 160aeacd | 2919 unique＝2906passed／13skipped；完整runtime／wheel／175冷暖低於460MiB，屬較早資料批次。 |
+| 4a011fab | 2970 unique＝2956passed／13skipped／1setup error；另一次單案pass不替代完整失敗。 |
+| dbc4afd6 | 2985 unique＝2803passed／43failed／126setup errors／13skipped，0漏列。126 setup的test body未執行；另有Storage ENOSPC，完整runtime未通過。 |
+| ca194735 | 完整suite CANCELLED；3085 collected，觀察118 call passed、2967未完成／未執行；4新增NCU模組寫tracked截圖，保存原log與截圖後修復輸出位置。 |
+| 7a7c7e35 | contracts、完整35SQL真Storage runtime、wheel與隔離安裝PASSED；cold第8／175取樣472.656MiB FAILED，167步notrun。另跑完整175步diagnostic功能通過但峰值472.055MiB，最終exit1。full pytest未跑。 |
+| a731aa07 | 54passed／1failed：照片政策獨立import缺tku_capture_io；保留原log/XML，2d0修復。 |
+| 2d0e1a3b | 55focused／contracts／來源核驗passed；cold第107／175步461.191MiB FAILED，68步notrun；其他最終gates未跑。 |
+| 80b09999 | 55focused／contracts／來源核驗passed；cold第121／175步460.238MiB FAILED，54步notrun；未放寬門檻，其他最終gates未跑。 |
 
-# 歷史7a7c7e35固定資料檢查
-
-候選 [7a7c7e3560527ce08ca225c0930397772a8b79aa](https://github.com/blizzard-new/abroad/commit/7a7c7e3560527ce08ca225c0930397772a8b79aa)，tree `61d4824d59c3477960ace89fbcf5f02d4ca030ce`；[Draft PR12](https://github.com/blizzard-new/abroad/pull/12)。本任務沒有 merge main、部署或正式 DB 寫入；只讀再次確認 main59a20f27、Quality374368612 disabled_manually。Render main autoDeploy 及安全／帳務設定未改。
-
-固定輸入：CCU `52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8`；NCU `a2df55b16f72455f7154d7afff44934fc8dbf99d`；NTU `c7357f974faaec8e60ef19698d4d21633c322dc8`；TKU `93cbd9dfee3af95f9ecc89cceb1ccd0e100778af`。逐 hunk commits：CCU e16381c → NCU d0c84c5 → NTU 7e0c29e → TKU ca194735 → NCU測試截圖輸出位置7a7c7e35。全部固定輸入為候選祖先，工作樹乾淨；相對main59的migration增量0。
-
-TKU Sunderland錯校圖及UAEMEX未核實署名／授權人鏈圖已移至 `sources/tku/withdrawn-campus-assets/` 研究區。全1149張應用圖片掃描無兩圖副本；最終wheel逐檔hash／路徑無兩圖；實際隔離安裝載入六校dashboard前後，兩個原URL皆404。保留262展示照片、264座標；研究保存不等於可公開部署。
+TKU兩拒用圖：Sunderland錯校圖、UAEMEX授權人／署名鏈未核實圖已移至 `sources/tku/withdrawn-campus-assets/`。7a7的1149應用image hash掃描、最終wheel所有6955檔hash／CRC、六校dashboard前後原URL404均通過。wheel SHA256 `b3e3dfe6c560dfd02c85bb4a89a246b914ff35774d2fe7bcdd596c47a6728953`，現已無損封存成可完整還原的ZIP byte-range recipe，全bytes重新還原hash核驗後才回收重複wheel；原始測試／截圖證據沒有刪除。新候選仍需新wheel與同樣公開路徑檢查。
 
 獨立來源核對：CCU全部21欄差異，19新補欄；離線两輪145資料檔完全一致，保留先前10項體檢、可選換宿與105.40/16日修正。NCU全部26新定位名稱與原數值、兩張照片及18校中文資料變更核對，保留圖爾庫原文件／簽章與明治五個月修正；214代表點／202照片（199唯一），不代表116指定校區或當期開放。NTU全部673新增中文說明、1228原件版本／42ZIP及611引用核驗；原46校獨立接待網域生活來源缺39，全288同標準缺44，任一生活內容缺16。TKU全部320新增M3–M6中文值、108來源／387引用核對，4529pack檔、45分片、262圖片hash與拍攝期檢查通過。原文為風險抽查，不宣稱獨立全文重讀全部作者501組或全網資料。
 
-| 7a7c7e35 驗收項目 | 原始結果 |
-|---|---|
-| contracts／來源交付／NCU串流完整性 | PASSED；CGU154/NTPU409/NTU288逐byte parity、35SQL／uv／Actions不變、OpenAPI／JS／compile；NTU1373觀察、TKU4529pack成員、NCU214+2177完整記錄核驗。 |
-| 完整本地Supabase runtime | PASSED；35migrations、真Storage file backend、2 PostgREST、37表RLS且0 browser grants；治理17檢查／74 RPC／31 audit；6校12個unverified拒絕、40aliases；6種late failure全回滾0partial rows；cleanup PASSED。原始stdout完整保存，另有短summary。 |
-| wheel與隔離安裝 | PASSED；6,955檔共1,564,025,091未壓縮bytes逐hash相符，package-data完整、CRC通過；wheel SHA256 `b3e3dfe6c560dfd02c85bb4a89a246b914ff35774d2fe7bcdd596c47a6728953`。wheel fresh target、既有受驗證dependency venv，沒有宣稱全新dependency解析。CGU官方live雙來源成功、六校API與原workflow通過，撤回圖404。 |
-| 175步冷／暖記憶體 | 冷測FAILED：第8取樣（首輪TKU）峰值472.656MiB >460；餘下167取樣未執行。暖測NOTRUN。另啟完整diagnostic（僅將budget失敗延至結尾，仍需exit1），不作通過。負載、等待與460MiB門檻不變；僅TKU固定inventory期望由264圖260點調整為262圖264點，差異receipt保存。 |
-| 原完整測試套件 | 此SHA NOTRUN，記憶體回歸需修復後重新固定候選再執行原4shard、最多2個同時；不得繼承舊SHA通過紀錄。 |
-
-ca194735 的完整suite已CANCELLED：3085 collected，觀察到118個call passed，剩餘2967未完成／未執行；沒有完整pass。原因是4個新增NCU模組將截圖写入tracked docs，已保存截圖／log後還原並在7a7只修OUT輸出路徑；全部test function AST／assert／wait未改。
-
-上一版dbc4afd6：2985 unique＝2803 passed／43 failed／126 setup errors／13 skipped，0漏列；126 setup errors的test body未執行。多數browser crash/closed，另有discovery globe initialized真實assertion timeout，不能一概歸因環境。其Storage ENOSPC失敗也保留。較早160aeacd、4a011fab的结果只屬各自SHA。
-
-歷史見 [ca194 checkpoint](checkpoint-ca194-f08acbf.md)、[dbc4 checkpoint](checkpoint-dbc4-f728af8.md)；完整 [run index](run-index.json)、[runtime摘要](integration-final4-full-runtime-summary.json)、[wheel檔案hash](integration-final4-wheel-integrity.json)、[固定輸入與migration](final4-fixed-input-ancestry.json)、[發布／回滾計畫](RELEASE-PLAN.md)。目前不是上線成功或發布許可；最終所有門檻完成後再更新。
+檢視 [原始run-index](run-index.json)、[完整runtime歷史原始摘要](integration-final4-full-runtime-summary.json)、[發布與回滾計畫](RELEASE-PLAN.md)、[2d0保存點](checkpoint-2d0-55ee3669.md)、[7a7保存點](checkpoint-7a7-a20abe6c.md)。未merge／部署；本地任一通過也不代表正式DB已同步或上線成功。
