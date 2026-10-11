@@ -64,9 +64,9 @@ def test_tenth_existing_host_records_preserved_and_uef_blank_not_invented():
     assert delta['ncu-056']['after']['fields']['host_documents']['gap_only']
 
 
-def test_tenth_public_api_has_212_points_and_keeps_mons_and_quota_holds(tmp_path):
+def test_tenth_public_api_keeps_current_points_and_quota_holds(tmp_path):
     ps=TestClient(create_app(tmp_path)).get('/student-dashboard',params={'school':'NCU'}).json()['partner_universities']
-    assert len(ps)==214 and sum(p['location']['geocode_status']=='verified' for p in ps)==212
+    assert len(ps)==214 and sum(p['location']['geocode_status']=='verified' for p in ps)==214
     assert all(p.get('quota') is None and p['availability_status']=='agreement_only' for p in ps)
     mons=next(p for p in ps if 'De Mons' in p['school_name'])
-    assert mons['location']['geocode_status']=='needs_review' and mons['location'].get('latitude') is None
+    assert mons['location']['geocode_status']=='verified' and mons['location']['latitude']==50.459072565

@@ -87,7 +87,14 @@ def test_every_usable_photo_has_reviewed_original_bytes_attribution_and_licence(
     assert campus_photo(school("Alicante").school_name, "臺灣") is None
 
 
-def test_candidate_gps_is_private_until_campus_verification_and_country_stays_scoped():
+def test_candidate_gps_is_private_until_campus_verification_and_country_stays_scoped(tmp_path, monkeypatch):
+    import exchange_info.ncu_completion as completion
+    fixture = json.loads(completion.LOCATIONS.read_text())
+    row = next(x for x in fixture["locations"] if "De Mons" in x["school_name"])
+    row.update(geocode_status="needs_review", latitude=50.458519, longitude=3.949833)
+    path = tmp_path / "candidate-locations.json"
+    path.write_text(json.dumps(fixture))
+    monkeypatch.setattr(completion, "LOCATIONS", path)
     pending = school("Mons")
     loc = campus_location(pending, None)
     assert loc.geocode_status == "needs_review" and loc.latitude is None and loc.longitude is None
@@ -143,7 +150,7 @@ def test_api_dashboard_coverage_detail_and_life_agree_on_photos(tmp_path):
     client = TestClient(create_app(tmp_path))
     dashboard = client.get("/student-dashboard", params={"school": "NCU"}).json()
     assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 202
-    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 212
+    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 214
     assert all(p["location"]["latitude"] is None for p in dashboard["partner_universities"] if p["location"]["geocode_status"] != "verified")
     coverage = client.get("/coverage", params={"school": "NCU"}).json()
     assert sum(p["image_status"] == "verified" for p in coverage["partners"]) == 202

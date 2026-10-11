@@ -50,8 +50,8 @@ def test_seventh_new_markers_and_photos_reach_ncu_api_without_changing_quota(tmp
     c=TestClient(create_app(tmp_path))
     ps=c.get('/student-dashboard',params={'school':'NCU'}).json()['partner_universities']
     assert len(ps)==214 and all(p.get('quota') is None and p['availability_status']=='agreement_only' for p in ps)
-    assert sum(p['location']['geocode_status']=='verified' for p in ps)==212
+    assert sum(p['location']['geocode_status']=='verified' for p in ps)==214
     assert sum(p['image_status']=='verified' for p in ps)==202
     mons=next(p for p in ps if 'De Mons' in p['school_name'])
-    assert mons['location']['geocode_status']=='needs_review'
-    assert mons['location'].get('latitude') is None
+    assert mons['location']['geocode_status']=='verified'
+    assert mons['location']['latitude'] == 50.459072565

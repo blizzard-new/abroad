@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-11T17:28:40.999630+00:00",
+  "checked_at": "2026-10-11T17:45:27.971590+00:00",
   "locations": [
     {
       "school_name": "塞吉巴黎大學 Cergy Paris Université",
@@ -136,41 +136,6 @@
       "coordinate_scope": "reviewed_institution_representative",
       "current_exchange_campus_confirmed": false,
       "review_record": "resume-visual-review.json#ncu-052"
-    },
-    {
-      "school_name": "芒斯大學 Université De Mons",
-      "country": "比利時",
-      "city": null,
-      "latitude": 50.458519,
-      "longitude": 3.949833,
-      "geocode_status": "needs_review",
-      "geocoded_at": "2026-10-11T00:00:00+00:00",
-      "source_url": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_de_Mons-Hainaut_(1).JPG",
-      "identity_source_url": "https://ror.org/02qnnz951",
-      "precision": "campus",
-      "note": "照片GPS與圖示校區已比對，但尚未以當期外校資料確認該校區仍為交換教學地點；不在地球放置候選座標。 UMons Warocqué建築之照片拍攝位置；來源明列GPS、校名及校區，已視覺核對照片與校名／國別。原照片日期2012-12-04；此圖示校區不證明116錄取校區，實際交換地點另依提名／錄取確認。",
-      "source_sha256": "6d845da767f12d961e777f82a40dfb80312859e8de6692be3250f2b415dcf0e5",
-      "source_original_fields": {
-        "GPSLatitude": {
-          "value": "50.458519",
-          "source": "commons-desc-page"
-        },
-        "GPSLongitude": {
-          "value": "3.949833",
-          "source": "commons-desc-page"
-        },
-        "ImageDescription": {
-          "value": "<b><a href=\"https://en.wikipedia.org/wiki/Mons\" class=\"extiw\" title=\"w:Mons\">Mons</a></b> (Belgium), place Warocqué, 17 - Building of the former School of Business Warocqué (in french \"École de Commerce de Warocqué\") built in 1902 by the architects Burton and Dutrieux, current Warocqué Economics and Management Faculty (in french \"Faculté Warocqué d'Économie et de Gestion\") part of <a href=\"https://en.wikipedia.org/wiki/University_of_Mons\" class=\"extiw\" title=\"w:University of Mons\">University of Mons</a>.",
-          "source": "commons-desc-page"
-        },
-        "Categories": {
-          "value": "GFDL|Taken with Canon EOS 600D|License migration redundant|Université de Mons-Hainaut|Buildings in Mons (Hainaut)|Self-published work|Uploaded by Jean-Pol GRANDMONT|Files with coordinates missing SDC location of creation (50° N, 3° E)|Place Warocqué, Mons",
-          "source": "commons-categories",
-          "hidden": ""
-        }
-      },
-      "coordinate_scope": "named_campus_photo_position",
-      "current_exchange_campus_confirmed": false
     },
     {
       "school_name": "蘇黎世應用科學大學 Zurich University of Applied Sciences",
@@ -3647,6 +3612,43 @@
       "coordinate_scope": "named_university_campus_library_or_campus_marker",
       "current_exchange_campus_confirmed": false,
       "review_record": "resume-tenth-location-review.json#ncu-132"
+    },
+    {
+      "school_name": "芒斯大學 Université De Mons",
+      "country": "比利時",
+      "city": "Mons / Warocqué",
+      "latitude": 50.459072565,
+      "longitude": 3.950398812,
+      "geocode_status": "verified",
+      "geocoded_at": "2026-10-11T17:45:27.971590+00:00",
+      "source_url": "https://mumons.be/en/piecesdumois/le-mercure-de-warocque-representation-dans-les-archives-de-lumons/",
+      "identity_source_url": "https://mumons.be/en/piecesdumois/le-mercure-de-warocque-representation-dans-les-archives-de-lumons/",
+      "precision": "representative",
+      "note": "蒙斯大學Warocqué經濟與管理學院樓宇代表點。大學博物館MUMONS文章（2025/4/11更新）確認此樓仍屬UMONS，具名地圖列Place Warocqué 17；採樓宇標記，不採2012照片拍攝位置。非Charleroi或其他校區；116接收學院仍待確認。",
+      "source_sha256": "b7e1f1733355408a16df5f25ce5f987e458891e2045bffcd5ecd583d1ab362d3",
+      "coordinate_scope": "named_university_building_marker",
+      "current_exchange_campus_confirmed": false,
+      "review_record": "resume-eleventh-location-review.json#ncu-053"
+    },
+    {
+      "school_name": "長安大學 Changan University",
+      "country": "中國",
+      "city": "Xi’an / Weishui",
+      "latitude": 34.3713614,
+      "longitude": 108.8969417,
+      "geocode_status": "verified",
+      "geocoded_at": "2026-10-11T17:45:27.971590+00:00",
+      "source_url": "https://www.openstreetmap.org/way/271773865",
+      "identity_source_url": "https://en.chd.edu.cn/5782/list.htm",
+      "precision": "representative",
+      "note": "長安大學渭水校區代表點，與2007年渭水圖書館配圖同校區。校方英文Maps將Wei Shui與本部／小寨分列；OpenStreetMap具名校區範圍列營運者長安大學及chd.edu.cn官網，採其範圍內代表點（ODbL 1.0，© OpenStreetMap contributors）。非南校區；資料未確認116接收院系或精確入口。",
+      "source_sha256": "4f76a78ccc789c12938c4e9c1a3ed9178ca9c98bea16adc9679832a285cb57e6",
+      "coordinate_scope": "named_university_campus_polygon_label_point",
+      "current_exchange_campus_confirmed": false,
+      "review_record": "resume-eleventh-location-review.json#ncu-181",
+      "coordinate_license": "ODbL 1.0",
+      "coordinate_license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+      "coordinate_attribution": "© OpenStreetMap contributors"
     }
   ]
 }

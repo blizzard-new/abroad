@@ -42,7 +42,7 @@ def test_eighth_specific_markers_do_not_promote_viewports_or_conflicting_buildin
 def test_eighth_points_reach_api_and_mons_hold_still_wins(tmp_path):
     ps=TestClient(create_app(tmp_path)).get('/student-dashboard',params={'school':'NCU'}).json()['partner_universities']
     assert len(ps)==214
-    assert sum(p['location']['geocode_status']=='verified' for p in ps)==212
+    assert sum(p['location']['geocode_status']=='verified' for p in ps)==214
     assert sum(p['image_status']=='verified' for p in ps)==202
     by={p['school_name']:p for p in ps}
     for d in records():
@@ -51,4 +51,4 @@ def test_eighth_points_reach_api_and_mons_hold_still_wins(tmp_path):
         assert r['note']==p['location']['note']
     assert all(p.get('quota') is None and p['availability_status']=='agreement_only' for p in ps)
     mons=next(p for p in ps if 'De Mons' in p['school_name'])
-    assert mons['location']['geocode_status']=='needs_review' and mons['location'].get('latitude') is None
+    assert mons['location']['geocode_status']=='verified' and mons['location']['latitude']==50.459072565
