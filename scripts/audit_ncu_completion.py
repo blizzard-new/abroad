@@ -84,7 +84,7 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     with args.output.with_suffix(".csv").open("w", newline="") as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(["school_name", "country", "source_rows", *result["counts"]])
         for row in result["schools"]:
             writer.writerow([row["school_name"], row["country"], ";".join(row["source_rows"]),
