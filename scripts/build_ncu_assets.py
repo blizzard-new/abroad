@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import UTC, datetime
+import gzip
 import hashlib
 import json
 from pathlib import Path
@@ -34,7 +35,10 @@ def reviewed_license_url(source):
         for key in ("declaration", "terms", "upload_history"):
             evidence = proof.get(key, {})
             path = ROOT / evidence.get("file", "")
-            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != evidence.get("sha256"):
+            data = path.read_bytes() if path.is_file() else b""
+            if path.suffix == ".gz" and data:
+                data = gzip.decompress(data)
+            if not data or hashlib.sha256(data).hexdigest() != evidence.get("sha256"):
                 raise ValueError("非CC授權原件或原作者上傳歷史缺失／SHA不符。")
         if not proof.get("author_identity_note") or not proof.get("grant_excerpt"):
             raise ValueError("非CC授權須記錄作者身份及原始授權原文。")

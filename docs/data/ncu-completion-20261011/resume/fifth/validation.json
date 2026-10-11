@@ -30,6 +30,12 @@
     {
       "command": "node --check src/exchange_info/static/app.js; git diff --check",
       "result": "passed (commands separately invoked; no CI/deploy)"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_photo_license_review.py tests/test_ncu_integration.py::test_bundle_rebuilds_exactly_from_tracked_source_data -q",
+      "result": "14 passed in 6.06s",
+      "evidence": "tests-lossless-license-pack.txt",
+      "scope": "After lossless gzip packing of raw HTML; SHA remains original response bytes."
     }
   ],
   "browser_review": {

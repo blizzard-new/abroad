@@ -32,3 +32,5 @@ Reims Moulin de la Housse（Gérald Garitan／CC BY-SA4.0）、Aschaffenburg（A
 UI只補NCU照片caption的可點條款及原作者網站，未重寫共用matcher。app／community-reader版本成對更新；其他home顯示預設邏輯保留。未merge、部署、改正式DB／Quality／安全設定、憑證或權限。
 
 剩14圖／26點及314公開候選仍須續查，任務未完成。另23個短HTML候選已在外部工作目錄閱讀、沿官方連結取得續查原件，尚未寫入本檢查點或虛算來源已讀；後續批次須將審查紀錄與實際欄位一併保存。原中斷任務第五輪未提交檔案仍未轉移，本批是新環境可驗證重建。
+
+原始授權HTML保留伺服器空白，用無損gzip儲存而不修改原件以迎合whitespace檢查；builder解壓後驗原始SHA。完成418全回歸後僅做此封裝，另跑13授權／具名位置＋1完整bundle重建，共14項通過。初次失敗log亦無損gzip保留；最終程式與資料差異檢查重新通過。
