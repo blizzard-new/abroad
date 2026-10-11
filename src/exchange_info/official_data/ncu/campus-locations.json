@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-11T15:01:47.112127+00:00",
+  "checked_at": "2026-10-11T15:22:52.108342+00:00",
   "locations": [
     {
       "school_name": "塞吉巴黎大學 Cergy Paris Université",
@@ -3209,19 +3209,36 @@
     {
       "school_name": "廣島大學 Hiroshima University",
       "country": "日本",
-      "city": null,
-      "latitude": null,
-      "longitude": null,
-      "geocode_status": "needs_review",
-      "geocoded_at": "2026-10-11T15:01:47.112127+00:00",
-      "source_url": "https://www.hiroshima-u.ac.jp/en/access",
-      "identity_source_url": "https://www.hiroshima-u.ac.jp/en/access",
+      "city": "Higashihiroshima / Kagamiyama",
+      "latitude": 34.4022006,
+      "longitude": 132.713964,
+      "geocode_status": "verified",
+      "geocoded_at": "2026-10-11T15:22:52.108342+00:00",
+      "source_url": "https://www.google.com/maps/dir/HIROSHIMA+STATION,+%EF%BC%92%E7%95%AA%EF%BC%93%EF%BC%97%E5%8F%B7+Matsubaracho,+Minami+Ward,+Hiroshima/Hiroshima+University,+1+Chome-3-2+Kagamiyama,+Higashihiroshima,+Hiroshima+739-8511/@34.4180603,132.5298302,12z/am=t/data=!4m15!4m14!1m5!1m1!1s0x355a9f53bc20533b:0x28413f32450be7eb!2m2!1d132.4753786!2d34.397667!1m5!1m1!1s0x355aa23e6f628dbb:0xb41b8827fb5fd7dd!2m2!1d132.713964!2d34.4022006!3e3!5i1?shorturl=1",
+      "identity_source_url": "https://www.hiroshima-u.ac.jp/en/access/higashihiroshima",
       "precision": "representative",
-      "note": "廣島官方列Higashi-Hiroshima、Kasumi、Higashi-Senda三校區，原共享／Wikidata城市点34.382222,132.458056尚未核清具名校區；NCU逐校待確認優先於共用verified fallback，不將候選放入地球。116錄取校區亦待通知。",
-      "source_sha256": "b75eb22524c5c7c5bb7c2c18e48215ee27ff76d0a471ebc65afb6346dbd6fe1e",
-      "coordinate_scope": "explicit_campus_hold",
+      "note": "續查官方Higashi-Hiroshima交通頁，原始具名校區link導向1 Chome-3-2 Kagamiyama的Google路線終點；取終點34.4022006,132.713964，不取站點、@地圖中心或原共享34.382222,132.458056。已核Higashi-Hiroshima代表點，Kasumi／Higashi-Senda另址；116實際交換分配仍未核實。",
+      "source_sha256": "ede81e1d763233edbbba8f3de5ef9fda05b18eb51313254f9aa8abc39f391061",
+      "coordinate_scope": "reviewed_named_campus",
       "current_exchange_campus_confirmed": false,
-      "review_record": "resume-fourth-location-review.json#ncu-115"
+      "review_record": "resume-fifth-location-review.json#ncu-115"
+    },
+    {
+      "school_name": "韓國天主教大學 The Catholic University of Korea",
+      "country": "南韓",
+      "city": "Bucheon / Songsim",
+      "latitude": 37.485931,
+      "longitude": 126.804622,
+      "geocode_status": "verified",
+      "geocoded_at": "2026-10-11T15:22:52.108342+00:00",
+      "source_url": "https://www.catholic.ac.kr/_custom/cuk/resource/js/app/campus-map/app.campus-map.js",
+      "identity_source_url": "https://www.catholic.ac.kr/en/about/location_songsim.do",
+      "precision": "representative",
+      "note": "韓國天主教大學官方campus-map程式明列campus1=Songsim與校區中心37.485931,126.804622，交通頁同為Bucheon市Jibong-ro43。此為校方選定校區代表中心，不是從城市中心猜測；不使用Wikidata首爾Songsin神學點。照片另明列Songeui醫學校區，二者不可混為同一校區；116交換分配待通知。",
+      "source_sha256": "af15f7082b9bfb178d22aecaa53621d7c2a799cbc9e8b350f4ab2e98d27cd6a0",
+      "coordinate_scope": "official_named_campus_map_center",
+      "current_exchange_campus_confirmed": false,
+      "review_record": "resume-fifth-location-review.json#ncu-154"
     }
   ]
 }
