@@ -31,11 +31,11 @@ def test_replay_is_idempotent_and_preserves_selection_and_workflows(tmp_path):
     for prior, after in zip(before, load_partners(bundle)):
         for field in ("eligibility", "quota", "application_deadline", "availability_status", "source_url", "country"):
             assert getattr(prior, field) == getattr(after, field)
-    assert first == {"schools": 288, "reviewed_observations": 1373, "photo_additions": 19,
+    assert first == {"schools": 288, "reviewed_observations": 1485, "photo_additions": 19,
                      "location_additions": 16, "fully_verified_current_cycle_schools": 0}
 
 
-@pytest.mark.parametrize("failure", ["identity", "country", "selection", "period", "page", "quote", "inventory", "photo_identity", "coordinate_assignment"])
+@pytest.mark.parametrize("failure", ["identity", "country", "selection", "period", "page", "quote", "inventory", "photo_identity", "coordinate_assignment", "field_finality", "field_source", "field_roster"])
 def test_invalid_batch_fails_before_writing_any_catalog_file(tmp_path, failure):
     snapshot = json.loads(SOURCE.read_text())
     entry = next(r for r in snapshot["schools"] if r["portal_id"] == "26")
@@ -55,8 +55,14 @@ def test_invalid_batch_fails_before_writing_any_catalog_file(tmp_path, failure):
         snapshot["list_receipt"]["rows"][0]["quota"] = "3 名"
     elif failure == "photo_identity":
         next(r for r in snapshot["schools"] if r.get("photo"))["photo"]["country"] = "另一國"
-    else:
+    elif failure == "coordinate_assignment":
         next(r for r in snapshot["schools"] if r.get("location"))["location_review"]["assigned_exchange_campus_confirmed"] = True
+    elif failure == "field_finality":
+        next(r for r in snapshot["schools"] if r.get("field_review_conclusions"))["field_review_conclusions"][0]["full_current_cycle_requirement_verified"] = True
+    elif failure == "field_source":
+        next(r for r in snapshot["schools"] if r.get("field_review_conclusions"))["field_review_conclusions"][0]["sources"][0]["field_fitness_note_zh"] = ""
+    else:
+        snapshot["bounded_field_review"]["field_roster"].pop()
     bundle = tmp_path / "bundle"
     shutil.copytree(BUNDLE, bundle)
     source = tmp_path / "candidate.json"
@@ -71,7 +77,11 @@ def test_explicit_years_conflicts_and_pending_announcement_remain_distinct():
     snapshot = json.loads(SOURCE.read_text())
     rows = {r["portal_id"]: r for r in snapshot["schools"]}
     validate(snapshot, load_partners())
-    assert all(r["applicability_status"] == "target_year_explicit" for r in rows["26"]["observations"])
+    ochanomizu = rows["26"]["observations"]
+    assert any(r["applicability_status"] == "target_year_explicit" for r in ochanomizu)
+    old_nhi = [r for r in ochanomizu if "2021" in r["scope"]]
+    assert old_nhi and all(r["applicability_status"] == "older_year_reference" for r in old_nhi)
+    assert all(r["applicability_status"] == "target_year_explicit" for r in ochanomizu if r not in old_nhi)
     uqam = [r for r in rows["1061"]["observations"] if r["field"] == "documents"]
     assert uqam[0]["applicability_status"] == "version_conflict" and "2025" in uqam[0]["text_zh"]
     assert any(r["applicability_status"] == "explicitly_pending_announcement" for r in rows["974"]["observations"])
@@ -115,6 +125,12 @@ def test_all_288_schools_accept_offline_reference_assets_and_guarded_workflows(t
                 guide = next(r for r in response.json()["student_guide_sections"] if r["key"] == "ntu-host-references-20261011")
                 assert len(guide["points"]) == len(reference["observations"])
                 assert all(r["source_url"] in guide["source_urls"] for r in reference["observations"])
+            if reference.get("field_review_conclusions"):
+                guide = next(r for r in response.json()["student_guide_sections"] if r["key"] == "ntu-field-conclusions-20261011")
+                assert len(guide["points"]) == len(reference["field_review_conclusions"])
+                for conclusion in reference["field_review_conclusions"]:
+                    assert any(conclusion["note_zh"] in point for point in guide["points"])
+                    assert all(source["url"] in guide["source_urls"] for source in conclusion["sources"])
             workflow = client.get("/application-workflow", params={"school": partner["school_name"], "home_school": "NTU", "academic_year": "116"})
             assert workflow.status_code == 200
             assert workflow.json()["published_at"] is None

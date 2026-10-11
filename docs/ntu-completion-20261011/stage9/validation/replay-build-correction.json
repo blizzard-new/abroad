@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-11T18:49:10.830894+00:00",
+  "complete_prior_run": "2189 passed, 1 failed, 13 skipped",
+  "failure": "tests/test_ntu_integration.py::test_ntu_catalog_rebuilds_from_tracked_source_snapshot",
+  "cause": "60 verification field objects inserted candidate conclusions before initially absent source_urls/status; fresh build and replay key order differed.",
+  "fix": "Write candidate conclusions after the observation loop has created all field metadata; pop/reinsert as the last field key.",
+  "original_test_assertions_unchanged": true,
+  "old_and_new_verification_json_values_identical": true,
+  "source_sha256_unchanged": "268623555d5b4bfc8c25e7eaf6c9dfd745afaf7f67e79f593d5c2fdb3f21cb89",
+  "after_code_sha256": "8deca0b267215cbb395b21808dc8b737ef7eeaf33f0e5ddb0cf496ed0267b434",
+  "targeted_correction_check": "2 passed in 3.79s",
+  "full_rerun_required": true
+}

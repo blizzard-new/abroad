@@ -1,0 +1,416 @@
+{
+  "tested_source_sha256": "268623555d5b4bfc8c25e7eaf6c9dfd745afaf7f67e79f593d5c2fdb3f21cb89",
+  "observations": 1485,
+  "tests": {
+    "full-regression": {
+      "final_line": "2190 passed, 13 skipped in 836.58s (0:13:56)",
+      "log": "full-regression.log",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "--ignore=tests/e2e"
+      ]
+    },
+    "browser": {
+      "final_line": "19 passed in 144.25s (0:02:24)",
+      "log": "browser.log",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ntu_school.py",
+        "tests/e2e/test_ntu_destination_enrichment.py",
+        "tests/e2e/test_ntu_official_changes.py",
+        "tests/e2e/test_ntu_completion.py",
+        "tests/e2e/test_ntu_reference_scope.py"
+      ]
+    },
+    "pr8-combined-focused": {
+      "final_line": "37 passed in 63.54s (0:01:03)",
+      "log": "pr8-combined-focused.log",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_visual_coverage.py",
+        "tests/test_school_photo_and_match.py",
+        "tests/test_university_locations.py",
+        "tests/test_ntu_completion.py",
+        "tests/test_ntu_official_changes.py"
+      ]
+    },
+    "pr8-combined-browser": {
+      "final_line": "32 passed in 612.95s (0:10:12)",
+      "log": "pr8-combined-browser.log",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ntu_school.py",
+        "tests/e2e/test_ntu_destination_enrichment.py",
+        "tests/e2e/test_ntu_official_changes.py",
+        "tests/e2e/test_ntu_completion.py",
+        "tests/e2e/test_ntu_reference_scope.py",
+        "tests/e2e/test_six_school_visual_coverage.py"
+      ]
+    }
+  },
+  "excel": {
+    "sheet_rows": {
+      "288校逐欄回填": 4032,
+      "來源原文索引": 649,
+      "當日臺大來源": 3,
+      "臺大116-1正式共通規則": 11,
+      "候選段落語意分類": 1009,
+      "固定501項正文進度": 501,
+      "逐源全文閱讀紀錄": 4025,
+      "429欄最終結論": 429
+    },
+    "formula_cells": 0,
+    "GUI_visual_workbook_review_performed": false
+  },
+  "scope": {
+    "base_main_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "full_build_replay_byte_idempotent": true,
+    "replayed_files": {
+      "src/exchange_info/official_data/ntu/application_workflows.jsonl": "cd1260230654a3d537e1a10f4fd03340adc04b7bcc8c25db13f262df5568ca1d",
+      "src/exchange_info/official_data/ntu/student_experience_directory.json": "7d9eaee65a8aa3f40d1107462ab93e85de98db5b42a6394a1bcb23360917b620",
+      "src/exchange_info/official_data/ntu/list_verification.json": "810329d5a4fbba2e3078a474a58b1fe738f5d6f504d3db7876a6f2c1519a5ac3",
+      "src/exchange_info/official_data/ntu/partner_research.jsonl": "86957852c61026d51e5981c14cca8eec761c7ed181c014ebc5b56c541a4775ed",
+      "src/exchange_info/official_data/ntu/college_programmes.json": "99cb291f21f5fcdc8bc1fddf47c4054bbd67d435972e7272bd8a89d5f0bb536d",
+      "src/exchange_info/official_data/ntu/verification_status.json": "9d840bbdcb70688191c05c146e3ec6d99420f1fef8c88c4386ae67a141a3de31",
+      "src/exchange_info/official_data/ntu/student_life.jsonl": "e7fe85bc07ebc123a7d3e89996b41eca2a5a7f0193738e7a4b468e8f036eafc7",
+      "src/exchange_info/official_data/ntu/catalog-completeness.json": "725eee56738ae3e6200c445d66071cda7ba720ea9cfae9a5fca3194b6293d253",
+      "src/exchange_info/official_data/ntu/student_dashboard.json": "a433109cedeff7c4a0ebd3fa9fe73fcfe02a9bdf08f2e70d9cb5dccc4fba4587",
+      "src/exchange_info/official_data/ntu/scholarships.json": "7601a922020571242cf900b623526583035535a8d55c8079eb579f91b57e74e4",
+      "src/exchange_info/official_data/ntu/exchange_info.json": "8bd8753871165f427f1319c610887aa26a2647af040c8488a32007bafce7e23a",
+      "src/exchange_info/official_data/ntu/home_rules.json": "4aa057b3defd32533f279e4b198b904904c6da2d3ac2d696139653581aa5bdb2",
+      "src/exchange_info/official_data/ntu/pages.jsonl": "03f312ae6de6b24b0682ecefd87ac33a149ecba9b3dba48185bd7b798dda086b",
+      "src/exchange_info/official_data/ntu/import_provenance.json": "e990979d3b59ade0210891d4b2d7ea7152075c8dd5c194c3f140658f7bf0abed",
+      "src/exchange_info/official_data/ntu/destination_profiles.jsonl": "aa4effa1a977747ac023250a8056843eba70b57bd6c354d61cc57c4873cae719",
+      "src/exchange_info/official_data/ntu/partners.jsonl": "729641193f51f19a109d504e8e7cee387e8cd3d1d789405273f7c8072b1905dd",
+      "src/exchange_info/official_data/ntu/documents.json": "73c07e400dc6e282ee23034e59c5153305be2cfcc0b0c64cfac50e55d9ef2154",
+      "src/exchange_info/static/assets/school-images.json": "28f265054ec37b783557f6aa3ed01dc0f1416f21f7417f83c146ab76e6e22cfa",
+      "src/exchange_info/official_data/university_locations.jsonl": "be5d862688351c9456aeb2b4a136b3f64d6017930c2c373f90515616bfdf139c"
+    },
+    "build_results": [
+      {
+        "script": "scripts/build_ntu_catalog.py",
+        "returncode": 0,
+        "stdout": "NTU: 288 partners, 288 workflows, 288 destinations; 282 pending / 6 zero quotas\n",
+        "stderr": ""
+      },
+      {
+        "script": "scripts/build_ntu_destination_enrichment.py",
+        "returncode": 0,
+        "stdout": "{\"photos\": 266, \"locations\": 269, \"life_with_evidence\": 124}\n",
+        "stderr": ""
+      }
+    ],
+    "partner_protected_fields": [
+      "eligibility",
+      "quota",
+      "application_deadline",
+      "availability_status",
+      "source_url",
+      "country",
+      "school_name"
+    ],
+    "all_288_protected_partner_fields_identical": true,
+    "ntu_workflows_byte_identical": true,
+    "other_home_catalogs_byte_identical": [
+      {
+        "home": "tku",
+        "files": 47
+      },
+      {
+        "home": "cgu",
+        "files": 3
+      },
+      {
+        "home": "review",
+        "files": 2
+      },
+      {
+        "home": "ccu",
+        "files": 1215
+      },
+      {
+        "home": "ncu",
+        "files": 13
+      },
+      {
+        "home": "ntpu",
+        "files": 12
+      }
+    ],
+    "global_photo_changes": [
+      [
+        "雪梨科技大學",
+        "澳大利亞"
+      ],
+      [
+        "法國女性高等綜合理工學院",
+        "法國"
+      ],
+      [
+        "九州大學",
+        "日本"
+      ],
+      [
+        "馬里蘭大學",
+        "美國"
+      ],
+      [
+        "馬德里卡洛斯三世大學",
+        "西班牙"
+      ],
+      [
+        "瑞士東部應用科技大學",
+        "瑞士"
+      ],
+      [
+        "馬來西亞理工大學(UTM)",
+        "馬來西亞"
+      ],
+      [
+        "雷恩第一大學（原翰尼第一大學）",
+        "法國"
+      ],
+      [
+        "昆士蘭大學",
+        "澳大利亞"
+      ],
+      [
+        "波爾多大學",
+        "法國"
+      ],
+      [
+        "阿德雷德大學",
+        "澳大利亞"
+      ],
+      [
+        "聖安德魯斯大學",
+        "英國"
+      ],
+      [
+        "聖心天主教大學",
+        "義大利"
+      ],
+      [
+        "馬來亞大學",
+        "馬來西亞"
+      ],
+      [
+        "聖地牙哥．孔波斯特拉大學",
+        "西班牙"
+      ],
+      [
+        "艾朗根紐倫堡大學",
+        "德國"
+      ],
+      [
+        "華沙理工大學",
+        "波蘭"
+      ],
+      [
+        "萊頓大學",
+        "荷蘭"
+      ],
+      [
+        "巴黎高等師範學院",
+        "法國"
+      ]
+    ],
+    "global_location_changes": [
+      [
+        "九州大學",
+        "日本"
+      ],
+      [
+        "御茶水女子大學",
+        "日本"
+      ],
+      [
+        "馬德里卡洛斯三世大學",
+        "西班牙"
+      ],
+      [
+        "上海交通大學",
+        "大陸地區"
+      ],
+      [
+        "瑞士東部應用科技大學",
+        "瑞士"
+      ],
+      [
+        "巴黎高等農業學院",
+        "法國"
+      ],
+      [
+        "巴黎高等政治學院",
+        "法國"
+      ],
+      [
+        "巴黎中央理工學院-電力高等學院",
+        "法國"
+      ],
+      [
+        "雷恩第一大學（原翰尼第一大學）",
+        "法國"
+      ],
+      [
+        "馬來亞大學",
+        "馬來西亞"
+      ],
+      [
+        "萊頓大學",
+        "荷蘭"
+      ],
+      [
+        "東京學藝大學",
+        "日本"
+      ],
+      [
+        "巴黎高等師範學院",
+        "法國"
+      ],
+      [
+        "拉瑞爾應用科技大學",
+        "芬蘭"
+      ],
+      [
+        "雅典大學",
+        "希臘"
+      ],
+      [
+        "托馬斯莫爾應用科技大學",
+        "比利時"
+      ]
+    ],
+    "shared_app_js_byte_identical": true,
+    "deploy_performed": false
+  },
+  "archive": {
+    "current_bodies": 1389,
+    "reviewed_citations": 648,
+    "distinct_source_ids": 1388,
+    "same_source_id_versions_preserved": true,
+    "quote_pages_reextracted_from_verified_raw_PDF": 64,
+    "manual_visual_quote_pages_checked": 1,
+    "manual_visual_evidence_image_hashes_checked": 12,
+    "current_archive_parts": 44,
+    "historical_bodies": 59,
+    "home_source_citations_checked": 1,
+    "manual_semantic_rows_checked": 1009,
+    "all_body_and_archive_hashes_match": true,
+    "all_quote_pages_match": true,
+    "historical_cached_read_has_not_been_backfilled_with_a_hash": true
+  },
+  "pr8_intersection": {
+    "base_main_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "pr8_fixed_head": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+    "ntu_source_sha256": "268623555d5b4bfc8c25e7eaf6c9dfd745afaf7f67e79f593d5c2fdb3f21cb89",
+    "simulation_worktree": "/workspace/abroad-ntu-pr8-acceptance-20261011",
+    "actual_PR9_changed_file_intersection": [
+      "src/exchange_info/official_data/university_locations.jsonl"
+    ],
+    "location_record_changes_PR9": [
+      [
+        "上海交通大學",
+        "大陸地區"
+      ],
+      [
+        "九州大學",
+        "日本"
+      ],
+      [
+        "巴黎中央理工學院-電力高等學院",
+        "法國"
+      ],
+      [
+        "巴黎高等師範學院",
+        "法國"
+      ],
+      [
+        "巴黎高等政治學院",
+        "法國"
+      ],
+      [
+        "巴黎高等農業學院",
+        "法國"
+      ],
+      [
+        "御茶水女子大學",
+        "日本"
+      ],
+      [
+        "托馬斯莫爾應用科技大學",
+        "比利時"
+      ],
+      [
+        "拉瑞爾應用科技大學",
+        "芬蘭"
+      ],
+      [
+        "東京學藝大學",
+        "日本"
+      ],
+      [
+        "瑞士東部應用科技大學",
+        "瑞士"
+      ],
+      [
+        "萊頓大學",
+        "荷蘭"
+      ],
+      [
+        "雅典大學",
+        "希臘"
+      ],
+      [
+        "雷恩第一大學（原翰尼第一大學）",
+        "法國"
+      ],
+      [
+        "馬來亞大學",
+        "馬來西亞"
+      ],
+      [
+        "馬德里卡洛斯三世大學",
+        "西班牙"
+      ]
+    ],
+    "location_record_changes_PR8": [
+      [
+        "國立中央大學",
+        "臺灣"
+      ],
+      [
+        "國立中正大學",
+        "臺灣"
+      ],
+      [
+        "國立臺灣大學",
+        "臺灣"
+      ],
+      [
+        "淡江大學",
+        "臺灣"
+      ]
+    ],
+    "location_record_intersection": [],
+    "simulation_only_no_shared_file_change_in_PR9": true,
+    "merged_or_deployed": false
+  },
+  "prior1373_observations_and2124_runtime_life_evidence_unchanged": true,
+  "fixed429_all_terminal_conclusions_complete": true,
+  "whole_current_cycle_fields_verified": 0,
+  "new_fetches": 0,
+  "merged_or_deployed": false
+}
