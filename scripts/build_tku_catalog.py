@@ -322,6 +322,9 @@ def build_platform_data(current):
     (BUNDLE/'host_documents.json').write_text(json.dumps(host_catalog,ensure_ascii=False,indent=2)+'\n')
     for filename,rows in [("application_workflows.jsonl",workflows),("destination_profiles.jsonl",destinations)]:
         (BUNDLE/filename).write_text("".join(row.model_dump_json()+"\n" for row in rows))
+    if (BUNDLE/'full_census_audit.json').exists():
+        from build_tku_census_profiles import build as build_census_profiles
+        build_census_profiles()
 
 
 if __name__ == "__main__": main()

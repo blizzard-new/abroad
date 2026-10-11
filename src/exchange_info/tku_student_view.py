@@ -51,7 +51,7 @@ def tku_partner_summary(record) -> PartnerStudentSummary:
         ],tuition_points=costs,translated_from_english=False)
 
 
-def fetch_tku_partner_universities(*, reference_time: datetime | None = None) -> list[PartnerUniversity]:
+def fetch_tku_partner_universities(*, reference_time: datetime | None = None, include_agreements: bool = True) -> list[PartnerUniversity]:
     now = reference_time or datetime.now(timezone.utc)
     if now.utcoffset() is None: raise ValueError("reference_time needs timezone")
     current = load_tku_rounds()[0]
@@ -83,6 +83,9 @@ def fetch_tku_partner_universities(*, reference_time: datetime | None = None) ->
             tuition_info=str(value("costs")), source_url=evidence.source_url,
             student_summary_zh=tku_partner_summary(record),
         ))
+    if include_agreements:
+        from .tku_census import reference_partners
+        rows += reference_partners(rows)
     return rows
 
 

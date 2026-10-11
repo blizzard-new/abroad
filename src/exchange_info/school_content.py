@@ -45,6 +45,10 @@ def school_field_addition(profile: DestinationProfile, field: str) -> dict | Non
 
 def complete_destination_profile(profile: DestinationProfile, data_dir: Path, *, locations: dict | None = None) -> DestinationProfile:
     """Only fill the exact gaps researched; never overwrite later operator edits."""
+    if profile.home_university == "淡江大學":
+        from .tku_assets import complete_profile
+        # TKU campus identity and licensed photos have their own reviewed ledger.
+        return complete_profile(profile)
     key = (school_identity_key(profile.home_university or ""),
         school_identity_key(profile.school_name), profile.country)
     supplement = _supplements().get(key, {})
