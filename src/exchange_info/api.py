@@ -476,6 +476,9 @@ def _attach_school_images(
     if dashboard.school_name == NCU.school_name:
         from .ncu_completion import attach_campus_photos
         return attach_campus_photos(dashboard, base_url=base_url)
+    if dashboard.school_name == "淡江大學":
+        from .tku_assets import attach_images
+        return attach_images(dashboard,base_url)
     visuals = _load_school_image_manifest()
     base = base_url.rstrip("/")
     partners = []
@@ -2938,6 +2941,9 @@ def create_app(
             if normalize_school(record.home_university) == home_key
         }
         rows: list[PartnerCoverage] = []
+        if university.id == "tku":
+            from .tku_assets import campus_photos
+            from .tku_census import school_audit
         for partner in partners:
             normalized = normalize_school(partner.school_name)
             visual = school_images.get((partner.school_name, partner.country or ""))
@@ -2947,6 +2953,10 @@ def create_app(
             if university.id == NCU.id:
                 from .ncu_completion import campus_photo
                 visual = campus_photo(partner.school_name, partner.country)
+            if university.id == "tku":
+                audited=school_audit(partner.school_name)
+                photo=campus_photos().get(audited['id']) if audited else None
+                visual={"status":"verified","checked_at":photo['checked_at']} if photo else None
             partner_experiences = experience_map.get(normalized, [])
             workflow = workflow_map.get(normalized)
             destination = destination_map.get((home_key, normalized))
@@ -2986,7 +2996,9 @@ def create_app(
                     ),
                     image_last_checked=(visual.get("checked_at") if visual else None),
                     official_website_status=(
-                        website_research.verification_status
+                        "needs_confirmation"
+                        if university.id == "tku" and partner.availability_status in {"agreement_only","reference_only"}
+                        else website_research.verification_status
                         if website_research
                         else "official_verified" if partner.website else "not_collected"
                     ),
@@ -3073,6 +3085,8 @@ def create_app(
         is_ccu = university_for(school).id == "ccu"
         is_ncu = university_for(school).id == NCU.id
         from .ncu_completion import campus_location
+        is_tku = university_for(school).id == "tku"
+        from .tku_assets import school_location as tku_school_location
         partners = []
         for partner in dashboard.partner_universities:
             location = public_location(locations, partner.school_name, partner.country)
@@ -3080,6 +3094,8 @@ def create_app(
                 location = school_location(partner, location, resolved_data_dir)
             elif is_ncu:
                 location = campus_location(partner, location, resolved_data_dir)
+            elif is_tku:
+                location = tku_school_location(partner, resolved_data_dir)
             partners.append(partner.model_copy(update={"location": location}))
         return dashboard.model_copy(update={"partner_universities": partners})
 
@@ -3825,6 +3841,9 @@ def create_app(
         if university.id == "ccu":
             from .ccu_profile import school_location
             location = school_location(partner, location, resolved_data_dir)
+        if university.id == "tku":
+            from .tku_assets import school_location
+            location = school_location(partner, resolved_data_dir)
         profile = destination_profile(school, home_school)
         context = build_life_context(partner, profile, location, resolved_data_dir)
         if university.id == "ccu":
@@ -3845,6 +3864,9 @@ def create_app(
         if university.id == "ccu":
             from .ccu_profile import school_location
             location = school_location(partner, location, resolved_data_dir)
+        if university.id == "tku":
+            from .tku_assets import school_location
+            location = school_location(partner, resolved_data_dir)
         result = refresh_life_research(partner, location, resolved_data_dir)
         context = school_life_context(school, home_school)
         return context.model_copy(update={"research_notes": result.notes})

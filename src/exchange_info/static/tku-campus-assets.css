@@ -1,0 +1,8 @@
+/* Keep TKU's required author/license text readable over campus photography. */
+body[data-tku-campus-assets] #school-detail-photo .school-image-credit {
+  max-width: min(680px, calc(100vw - 76px));
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .94);
+  color: #18324b;
+}

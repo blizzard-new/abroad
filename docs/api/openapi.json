@@ -24505,6 +24505,59 @@
         "summary": "Eligibility Check"
       }
     },
+    "/tku/partner-census": {
+      "get": {
+        "operationId": "partner_census_tku_partner_census_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Partner Census"
+      }
+    },
+    "/tku/partner-census/{institution_id}": {
+      "get": {
+        "operationId": "partner_census_school_tku_partner_census__institution_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "institution_id",
+            "required": true,
+            "schema": {
+              "title": "Institution Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Partner Census School"
+      }
+    },
     "/universities": {
       "get": {
         "operationId": "universities_universities_get",

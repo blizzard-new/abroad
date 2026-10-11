@@ -234,9 +234,9 @@ def test_revision_wins_and_expired_internal_round_never_looks_open():
     before=datetime(2026,9,22,tzinfo=timezone.utc)
     active=datetime(2026,9,24,tzinfo=timezone.utc)
     after=datetime(2026,9,30,4,1,tzinfo=timezone.utc)
-    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=before)}=={"quota_unconfirmed"}
-    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=active)}=={"open"}
-    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=after)}=={"closed"}
+    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=before,include_agreements=False)}=={"quota_unconfirmed"}
+    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=active,include_agreements=False)}=={"open"}
+    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=after,include_agreements=False)}=={"closed"}
     periods=build_tku_student_dashboard(reference_time=after).application_periods
     assert periods[0].deadline_at.isoformat()=="2026-09-30T12:00:00+08:00"
     assert periods[0].status=="closed" and periods[0].reminder_eligible is False
@@ -277,15 +277,16 @@ def test_offline_api_registry_documents_search_and_life_profile(tmp_path,monkeyp
     client=TestClient(create_app(tmp_path))
     supported=client.get("/universities").json()
     tku=next(u for u in supported if u["id"]=="tku")
-    assert tku["partner_count"]==4 and tku["support_level"]=="basic"
+    assert tku["partner_count"]==287 and tku["support_level"]=="basic"
     response=client.get("/student-dashboard",params={"school":"TKU"})
     assert response.status_code==200,response.text
     dashboard=response.json()
-    assert dashboard["school_name"]=="淡江大學" and len(dashboard["partner_universities"])==4
-    assert all(p["availability_status"]=="closed" for p in dashboard["partner_universities"])
+    assert dashboard["school_name"]=="淡江大學" and len(dashboard["partner_universities"])==287
+    assert all(p["availability_status"]=="closed" for p in dashboard["partner_universities"][:4])
+    assert all(p["availability_status"] in {"agreement_only","reference_only"} and p['quota'] is None for p in dashboard['partner_universities'][4:])
     assert "JST" in dashboard["partner_universities"][0]["application_deadline"]
     assert "9/30" in dashboard["partner_universities"][0]["availability_note"]
-    for partner in dashboard['partner_universities']:
+    for partner in dashboard['partner_universities'][:4]:
         summary=partner['student_summary_zh']
         assert summary['eligibility_points'] and summary['application_steps'] and summary['tuition_points']
         assert 'JLPT N2' in ' '.join(summary['eligibility_points']) and '研究所N1' in ' '.join(summary['eligibility_points'])
