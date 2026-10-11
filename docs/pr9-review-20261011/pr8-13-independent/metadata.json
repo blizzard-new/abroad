@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_application_workflow_issue_reports.py::test_only_accounts_with_a_school_can_submit_without_mutating_formal_content",
+    "tests/test_application_workflow_issue_reports.py::test_submit_is_idempotent_and_rejects_target_or_payload_tampering",
+    "tests/test_application_workflow_issue_reports.py::test_report_rejects_contact_details_and_rate_limits_new_submissions",
+    "tests/test_application_workflow_issue_reports.py::test_admin_queue_and_terminal_review_are_protected_and_append_only",
+    "tests/test_application_workflow_issue_reports.py::test_local_account_deletion_deidentifies_reporter_without_deleting_report",
+    "tests/test_application_workflow_issue_reports.py::test_account_export_includes_only_public_issue_report_fields",
+    "tests/test_application_workflow_issue_reports.py::test_local_account_deletion_removes_closed_report",
+    "tests/test_application_workflow_issue_reports.py::test_review_of_deidentified_pending_report_is_replayable_during_cleanup_grace",
+    "tests/test_application_workflow_issue_reports.py::test_reviewer_account_deletion_removes_reviewer_identity",
+    "tests/test_experience_digests.py::test_the_experience_list_carries_each_sources_kind_and_digest",
+    "tests/test_experience_digests.py::test_a_school_with_no_crawled_data_still_lists_its_curated_story",
+    "tests/test_request_origin.py::test_without_a_public_address_photo_links_follow_the_request",
+    "tests/test_tku_governance_routes.py::test_issue_report_status_filter_excludes_terminal_reports"
+  ],
+  "code_root": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T09:41:46.331881+00:00",
+  "executable": "/workspace/abroad-six-final/.venv/bin/python",
+  "isolation": "dedicated dev runtime; production EXCHANGE/SUPABASE/DB environment excluded",
+  "test_result": "passed",
+  "finished_at": "2026-10-11T09:43:09.326130+00:00",
+  "exit_code": 0
+}
