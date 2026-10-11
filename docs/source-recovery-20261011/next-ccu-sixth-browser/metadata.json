@@ -1,0 +1,44 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/e2e/test_ccu_completion.py",
+    "tests/e2e/test_ccu_delayed_switching.py",
+    "tests/e2e/test_ccu_scope_documents.py",
+    "tests/e2e/test_cgu_source_recovery.py",
+    "--junitxml=/workspace/recovery-evidence-20261011/next-ccu-sixth-browser/results.xml"
+  ],
+  "cwd": "/workspace/abroad-globe-20261011",
+  "started_at": "2026-10-11T15:34:26.164255+00:00",
+  "start_guard": {
+    "sha": "160aeacd15521d63df6a5624bd12821cc5d26cea",
+    "tree": "fb517db5d7dbfec18ca160e54f3a3622d8893635",
+    "status": ""
+  },
+  "timeout_seconds": 1800,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/e2e/test_ccu_completion.py": {
+      "sha256": "6636e02b410e7a41f2aa3a9ea0c8b59d1627f459c70f563ac5cbb7c69e6a47e5"
+    },
+    "tests/e2e/test_ccu_delayed_switching.py": {
+      "sha256": "5124ad3f82aec8eb6fa1365eafb3febbb88b670edd96b2da939af6aab94591d2"
+    },
+    "tests/e2e/test_ccu_scope_documents.py": {
+      "sha256": "8abe93e7874f8dc0881be42df2726605cc6031f6887ee3767373c4a4dd7fe031"
+    },
+    "tests/e2e/test_cgu_source_recovery.py": {
+      "sha256": "7a2bb701c39c6e2e694bcfb158842c775fc85e248486161d0953a02b6f00e145"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T15:37:54.398377+00:00",
+  "end_guard": {
+    "sha": "160aeacd15521d63df6a5624bd12821cc5d26cea",
+    "tree": "fb517db5d7dbfec18ca160e54f3a3622d8893635",
+    "status": ""
+  }
+}

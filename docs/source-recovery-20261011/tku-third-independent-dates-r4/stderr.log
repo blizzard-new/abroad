@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_tku_third_dates.py", line 38, in <module>
+    r,i=item;meta=i.get('extmetadata',{});info=plain(meta.get('DateTimeOriginal',{}).get('value'));exif=next((plain(x.get('value')) for x in i.get('metadata',[]) if x.get('name')=='DateTimeOriginal'),'');quoted=json.loads(ev['quote']);assert quoted=={'information_date':info,'camera_exif_date_time_original':exif},(photo['id'],quoted,info,exif)
+                                                                                                                                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('tku-sister-340', {'information_date': '8 April 2007\xa0(according to Exif data)', 'camera_exif_date_time_original': '    :  :     :  :  '}, '8 April 2007\xa0(according to Exif data)', ':  :     :  :')

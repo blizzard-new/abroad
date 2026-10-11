@@ -1,0 +1,107 @@
+{
+  "source_commit": "6bd8c3c2d964b8134968b28a204ee24e8f949997",
+  "parent_candidate": "2d0202319e457bb2273584b17c41056deb464a89",
+  "time": "2026-10-11T15:33:56.971424+00:00",
+  "status": "independent scoped source review completed; candidate tests still pending",
+  "photo_sha_attribution": "100 unchanged from accepted batch",
+  "production_tree_identity": "six author production trees independently match report",
+  "hcmute_marker": {
+    "chain": [
+      "official conferences.hcmute.edu.vn index",
+      "gtsd2026.hcmute.edu.vn address link",
+      "maps.app.goo.gl/StEAfixJb3seGqCA7",
+      "Google named HCMC University marker"
+    ],
+    "position": [
+      10.8506324,
+      106.7719131
+    ],
+    "viewport_not_used": 106.7693382,
+    "individual_assigned_campus": false
+  },
+  "sungshin_review": {
+    "critical_pdf_pages_visually_inspected": 14,
+    "native_pdfs_inspected": [
+      "113854 Korean factsheet crosscheck",
+      "113855 English factsheet9pp",
+      "113856 checklist and medical2pp",
+      "113949 courseguide9pp",
+      "113950 applicationmanual15pp"
+    ],
+    "xlsx_cells": "ccu-sixth-xlsx-independent-cells.json",
+    "9_requirements": {
+      "required": 8,
+      "optional": 1,
+      "first_seven": "online plus mother postal originals",
+      "photo": "online only"
+    },
+    "medical_question_count": 10,
+    "original_template_bytes_changed": false,
+    "preserved_conflicts": [
+      "nomination XLSX Sheet1!V1 original arrival December1 2025 vs Spring2027 call November23 2026",
+      "doctoral max9 p2 vs12 p4",
+      "self medical current vs conditional older clinician/Xray text",
+      "Fall2027 original arrival/CoA year2026",
+      "transcript July vsMidAugust",
+      "housing fixed dates vswithin1–2days",
+      "different nomination form links not assumed identical"
+    ],
+    "scope": [
+      "2026Spring/Fall course workbook and courseguide not current2027 classes",
+      "no private portal entry or claim of complete private fields",
+      "mother CCU application remains closed",
+      "not all104school host data complete"
+    ]
+  },
+  "semantic_hunk_review": {
+    "ccu_completion": "keep serialized104 cache and strict receipts + two reviewed Sungshin summary fields",
+    "ccu_overseas": "keep bounded cache, add scoped Sungshin9docs",
+    "workflow": "onlySungshin row changed; other54 raw lines identical; mother steps model-equal",
+    "tests": "retain integration source identity dates, use exact Sungshin current citations; no cases dropped"
+  },
+  "isolated_typo_correction": [
+    {
+      "path": "scripts/review_ccu_sungshin_current.py",
+      "before": "acd64a0c41736d25c8fafd791aed75030e5490bf349033d371ff939f7edfce4f",
+      "after": "31465872cd27e9c75418bf5152b47aa9b87cfcdcb98ce8cd2ab63a3bf949c509"
+    },
+    {
+      "path": "src/exchange_info/official_data/ccu/application_workflows.jsonl",
+      "before": "b51421bd0c61fa487e532c322d243d8f8d72083172096326f0fe00e8ebef1380",
+      "after": "908b62852e4f9b717ca5d6a49655bb19ce38dbe2d5814ed328873a26e2e1ccfa"
+    },
+    {
+      "path": "src/exchange_info/official_data/ccu/completion-inventory.json",
+      "before": "9a514557c783e299858b2aaaf7994cc201df637a4304d3c941d0342da4feb194",
+      "after": "36bbd6a54a32ff33ee1abced9cfce55a724b95219680d839bacf72b67c602416"
+    },
+    {
+      "path": "src/exchange_info/official_data/ccu/completion-manual-fields.json",
+      "before": "9a01c041c29cdb4b67bfd6cdb396890ac43edd8d66b990a6dd2aa9c4a4eb491b",
+      "after": "075cbbbcbc4c74b8ddcae7247e2c25880a377476262cafac42f2bdf42679c3d0"
+    },
+    {
+      "path": "src/exchange_info/official_data/ccu/completion-followup-gap-research.json",
+      "before": "ee5e0e87d2346019babc42f56834b10460feef2984e47d319c3071df1b0bb454",
+      "after": "cc26ee7a708a3eef9197b5e0507bbba78cd08ece92a8b21c0a17a7d9bee975a1"
+    },
+    {
+      "path": "src/exchange_info/official_data/ccu/completion-remaining-public-worklist.json",
+      "before": "e5552e7549a1fcb71d073a2194a54538f6b8619ecc830b85b39483e89d625b53",
+      "after": "3ddeed41dd4a790436bb63ddd752b826625c528d7c865175fece37e48e4b30db"
+    },
+    {
+      "path": "src/exchange_info/official_data/ccu/completion-reviewed-fields.json",
+      "before": "e39cc70b15abc0d6c6c9e532a38d81d70222f29252ed0a054de3a13057efb800",
+      "after": "25ea6503031e3e099bca158b283a212d00520a4fcaaa5a844465e02920a2aab6"
+    }
+  ],
+  "remaining": {
+    "missing_host_fields": 638,
+    "photo_gaps": 4,
+    "coordinate_gaps": 3,
+    "identity_gaps": 2,
+    "public_source_reading_backlog": 410
+  },
+  "all_school_completion": false
+}

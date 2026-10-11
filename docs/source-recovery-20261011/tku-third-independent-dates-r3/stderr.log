@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_tku_third_dates.py", line 34, in <module>
+    item=index.get((ev['content_sha256'],photo['title']))
+                                         ~~~~~^^^^^^^^^
+KeyError: 'title'

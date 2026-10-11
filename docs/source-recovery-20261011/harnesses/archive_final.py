@@ -6,7 +6,7 @@ for folder in sorted(root.iterdir()):
  if not folder.is_dir() or not (folder/'metadata.json').exists():continue
  meta=json.loads((folder/'metadata.json').read_text())
  if meta['test_result']=='running':continue
- for name in ('metadata.json','stdout.log','stderr.log','result.xml','shard-coverage/partition.json','shard-coverage/collect-nodeids.txt','shard-coverage/result.json','diagnostic-scope.json'):
+ for name in ('metadata.json','stdout.log','stderr.log','result.xml','results.xml','shard-coverage/partition.json','shard-coverage/collect-nodeids.txt','shard-coverage/result.json','diagnostic-scope.json'):
   p=folder/name
   if p.exists():
    out=target/folder.name/name;out.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,out)

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_tku_third_dates.py", line 21, in <module>
+    body=r['response_text'].encode();assert hashlib.sha256(body).hexdigest()==r['sha256'];checked+=1
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

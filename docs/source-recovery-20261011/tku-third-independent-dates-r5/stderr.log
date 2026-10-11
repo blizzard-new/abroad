@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/recovery-tools-20261011/audit_tku_third_dates.py", line 39, in <module>
+    assert photo['photo_date'] in [info,exif],(photo['id'],photo['photo_date'],info,exif)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('tku-sister-26', '2007-03-29', '30 March 2007 (original upload date)', '')

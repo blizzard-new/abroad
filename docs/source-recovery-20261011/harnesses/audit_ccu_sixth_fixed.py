@@ -5,6 +5,7 @@ import gzip, hashlib, json, subprocess
 from bs4 import BeautifulSoup
 from PIL import Image
 from exchange_info.ccu_completion_sources import validate_completion_source
+from exchange_info.models import UniversityApplicationWorkflow, ApplicationStep
 
 app=Path('/workspace/abroad-globe-20261011')
 root=Path('/tmp/ccu-sixth-fixed-review-20261011')
@@ -91,9 +92,11 @@ assert len(before_lines)==len(after_lines)==55
 changed_workflows=[(json.loads(a),json.loads(b)) for a,b in zip(before_lines,after_lines) if a!=b]
 assert len(changed_workflows)==1 and changed_workflows[0][0]['school_name']==changed_workflows[0][1]['school_name']=="Sungshin Women's University 誠信女子大學"
 for a,b in changed_workflows:
+    a=UniversityApplicationWorkflow.model_validate(a).model_dump(mode='json')
+    b=UniversityApplicationWorkflow.model_validate(b).model_dump(mode='json')
     for step in a['steps']:
         if step['phase'] in ['校內申請','校內甄選']:
-            assert step==next(x for x in b['steps'] if x['rule_id']==step['rule_id'])
+            assert ApplicationStep.model_validate(step)==ApplicationStep.model_validate(next(x for x in b['steps'] if x['rule_id']==step['rule_id']))
     assert a['review_status']==b['review_status']
 profiles=(bundle/'destination_profiles.jsonl').read_bytes().splitlines(keepends=True)
 assert hashlib.sha256(b''.join(profiles[:55])).hexdigest()=='1375f32052bcdeaedfe696073e7ada6d40f40bdebeba0dc1e7f82353e38b78e6'

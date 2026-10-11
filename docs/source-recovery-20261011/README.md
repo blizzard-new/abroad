@@ -2,7 +2,7 @@
 
 最新**完整執行但未通過**的固定候選：`3129ce1bfcf6987a872574587cc53b60043d64ba`，tree `6f78825d430fbe395cc62cee0a790a9b300dbbc9`。四分片完整對帳2,891個collected node：**2,874 passed／4 failed／13 skipped**，沒有排除或未對帳案例。四分片起訖均同一clean SHA。[逐案例對帳](ccu2-full-suite-summary.json)及 `ccu2-full-shard-0..3` 原始stdout、JUnit、collection/partition、metadata皆保留。13 skips為9項既有Phase C、4項缺Ollama模型，未當通過。
 
-4失敗：兩種寬度的行事曆被全域來源橫幅推下；土庫新摘要蓋掉先前已讀Language Assessment表格細節；記憶體單元案例在Playwright session迴圈啟動後呼叫asyncio.run。[根因與独立重現](ccu2-known-failures-review.json)。CSS注入診斷2 passed只證明根因，**不算未修改候選通過**。隔離修正進行中，將固定新SHA完整重驗。
+4失敗：兩種寬度的行事曆被全域來源橫幅推下；土庫新摘要蓋掉先前已讀Language Assessment表格細節；記憶體單元案例在Playwright session迴圈啟動後呼叫asyncio.run。[根因與独立重現](ccu2-known-failures-review.json)。CSS注入診斷2 passed只證明根因，**不算未修改候選通過**。四項根因已在後續隔離候選修正並通過針對回歸；最終新固定SHA仍須完整重驗。
 
 同一3129候選已完成：
 
@@ -12,11 +12,21 @@
 
 最新已正常推送的應用檢查點仍是[8e65c47d](https://github.com/blizzard-new/abroad/commit/8e65c47d1d42bd0d065ff53c8d6572d0be994bf2)，[Draft PR12](https://github.com/blizzard-new/abroad/pull/12)。[舊檢查點報告](checkpoint-8e65c47d.md)不覆蓋3129及之後資料。3129未標作驗收通過推送。
 
+## 未推隔離候選160aeacd：僅針對回歸通過
+
+`160aeacd15521d63df6a5624bd12821cc5d26cea`整合NCU e25、CCU 6bd及必要隔離修正，依父指示暫不推應用分支。[逐run原始結果與固定SHA](checkpoint-160aeacd.json)。NCU修正程式在前一合併候選的406 targeted及24 browser通過；CCU合併後在同一clean160aeacd完成**345 unit passed、40 browser passed、契約檢查passed**。這些套件有重疊，不能相加當全庫覆蓋率；406／24執行時尚未形成固定新commit，不等同160aeacd全量驗收。
+
+- NCU17筆明確pending-campus hold採資料層優先，保留已核實operator override；Chuo後樂園及SJTU閔行具名新證據不受舊hold誤擋。原三校CGU154／NTPU409／NTU288workflow位元組不變。[hunk核對](next-ncu-hunk-reconciliation.json)。父已通知新NCU worker也修優先序，下一固定SHA須逐hunk對照並保留一套明確規則，不疊加fallback。
+- [CCU獨立原件審核](ccu-sixth-independent-source-review.json)：4766檔案、463引用收據、HCMUTE官方→具名Google marker、Sungshin七附件及14關鍵頁實際檢視；兩XLSX逐格擷取。原54其他workflow位元組及母校步驟語意保留。醫療表10題被寫為11題，已在builder／來源審核資料及衍生欄位一致校正，原PDF不變；舊年份／博士9vs12／醫療適用矛盾保留。仍638host missing。
+- [TKU日期原件檢查](tku-third-independent-date-review.json)核對264張拍攝時期；17新增／替換實圖已逐張檢視。日期正確不解除Sunderland錯校或UAEMEX署名阻擋。日期helper前六輪錯誤來自稽核程式對JSON／HTML wire編碼、baseline title、空白EXIF、原作者補證與upload日期區分的假設，原始失敗保留，r7完成；不是以豁免產品錯誤通過。
+
+160aeacd的**全庫、175步冷暖記憶體、新wheel安裝、完整Supabase runtime尚未執行**。不沿用3129通過數據。等待NCU／TKU／NTU下一個固定輸入；此證據檢查點不代表可發布或全校資料完成。
+
 ## 下一輪固定輸入與阻擋
 
 - NCU PR11 `e25ff02a1ebc69ea126a814d105e88b272539351`：[固定原件核對](ncu-e25-fixed-input-audit.json)、[逐圖／PDF／校區複核](ncu-e25-independent-review.json)。193圖片全解碼、47新增條目逐圖檢視；EIVP四HTML與兩PDF共7頁核對。直接整合會將廣島共用舊點誤回填為第182點，必須阻擋，預期181點。Chuo後樂園與SJTU閔行新具名證據可個別解除舊暫緩，不代表116分配校區。仍缺21照片／33位置、317成功未讀來源及大量當期欄，不能稱全校完整。
 - TKU PR13 `563fb9328c7ce15efc1ac3883d8c3d641df01e98`：[264圖解碼／26分片4219成員hash](tku-third-fixed-input-audit.json)通過；[校名／署名檢查有阻擋](tku-third-photo-blockers.json)。`tku-sister-65` Sunderland誤用UWE Frenchay照片；`tku-sister-52`作者只有Unknown author，待原始署名證據。尚未合入，264張不能全列已驗收。
-- CCU PR10 `6bd8c3c2d964b8134968b28a204ee24e8f949997`只讀核對中。HCMUTE新位置及Sungshin Spring2027七附件／九文件須審核期限來源優先序、原54筆其他workflow不變與母校已關閉期限。作者測試不直接計作整合通過。
+- CCU PR10 `6bd8c3c2d964b8134968b28a204ee24e8f949997`已完成上列独立原件審核與針對整合回歸；只有104校有限資料，仍638host missing、410已取公開來源待指定範圍閱讀。作者測試沒有計作整合通過。
 - NTU `acf0cebb24ae58b70c5604b2f1261fe8ae2c46ad`：[只讀範圍核對](ntu-stage5-readonly-scope-review.json)。runtime608，stage5另51候選尚未匯入，文件659=608+51。等待原工作者交完成匯入固定SHA；尚未合入、不代作者重做。
 
 ## 發布邊界
