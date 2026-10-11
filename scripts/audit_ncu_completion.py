@@ -27,9 +27,9 @@ def inventory():
     lm, im = {identity(row): row for row in locations}, {identity(row): row for row in images}
     if (bundle / "campus-locations.json").exists():
         for row in json.loads((bundle / "campus-locations.json").read_text())["locations"]:
-            previous = lm.get(identity(row), {})
-            if row.get("geocode_status") == "verified" or previous.get("geocode_status") != "verified":
-                lm[identity(row)] = row
+            # Match the NCU runtime: an explicit campus hold overrides a
+            # shared verified point until that scoped review is resolved.
+            lm[identity(row)] = row
     if (bundle / "campus-assets.json").exists():
         # This scoped list contains only reviewed identities and licence proofs.
         im = {identity(row): row for row in json.loads((bundle / "campus-assets.json").read_text())["photos"]}

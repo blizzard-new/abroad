@@ -1185,7 +1185,7 @@ async function loadSchoolImages() {
     state.schoolImages = [];
   }
   try {
-    const payload = await fetchJson("/static/assets/ncu-school-images.json?v=20261011-ncu-campus-1");
+    const payload = await fetchJson("/static/assets/ncu-school-images.json?v=20261011-ncu-campus-2");
     state.ncuSchoolImages = Array.isArray(payload?.schools)
       ? payload.schools.filter((item) => item.status === "verified" && item.local_path)
       : [];
@@ -8059,7 +8059,7 @@ function renderPartnerLinks(item) {
   return [website, source, imageSource, rankingSource].filter(Boolean).join("");
 }
 
-function renderSchoolImageCredit(item) {
+function renderSchoolImageCredit(item, includeNote = true) {
   const visual = schoolVisualRecordFor(item.school_name, item.country);
   const sourceNote = visual?.note || "";
   const note = visual?.artist && !sourceNote.includes(visual.artist)
@@ -8068,7 +8068,8 @@ function renderSchoolImageCredit(item) {
   if (visual?.license_name) {
     const license = String(visual.license_url || "").replace(/^http:\/\//, "https://");
     const safeLicense = /^https:\/\/(?:creativecommons\.org|commons\.wikimedia\.org)\//.test(license);
-    return `<small class="school-image-credit">${escapeHtml(note)}${safeLicense ? ` · <a href="${escapeHtml(license)}" target="_blank" rel="noreferrer">圖片授權</a>` : ""}</small>`;
+    const authorUrl = activeHomeSchool() === "國立中央大學" ? safeSourceUrl(visual.author_url) : "";
+    return `<small class="school-image-credit">${includeNote ? escapeHtml(note) : ""}${safeLicense ? ` · <a href="${escapeHtml(license)}" target="_blank" rel="noreferrer">圖片授權</a>` : ""}${authorUrl ? ` · <a href="${escapeHtml(authorUrl)}" target="_blank" rel="noreferrer">攝影者網站</a>` : ""}</small>`;
   }
   if (!note.startsWith("攝影：")) return visual ? '<small class="school-image-credit">圖片來源已核對；再利用授權待確認。</small>' : "";
   return `<small class="school-image-credit">${escapeHtml(note)}${note.includes("CC BY-SA 3.0") ? ' · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">圖片授權</a>' : ""}</small>`;
@@ -8842,7 +8843,7 @@ function renderStudentSurvivalGuide(item, profile) {
                   <img src="${escapeHtml(photo.image_url)}" alt="${escapeHtml(photo.alt)}" loading="lazy" />
                   <span>${photo.category === "campus" ? "校園" : "住宿"}</span>
                 </a>
-                <figcaption>${escapeHtml(photo.caption)}${photo.category === "campus" && activeHomeSchool() !== "國立中央大學" ? renderSchoolImageCredit(item) : ""}</figcaption>
+                <figcaption>${escapeHtml(photo.caption)}${photo.category === "campus" ? renderSchoolImageCredit(item, activeHomeSchool() !== "國立中央大學") : ""}</figcaption>
               </figure>`).join("")}
           </div>
         </section>` : ""}

@@ -2,6 +2,7 @@
 import json
 
 import pytest
+import exchange_info.ncu_completion as completion
 
 from exchange_info.ncu_completion import campus_location
 from exchange_info.ncu_student_view import build_ncu_student_dashboard
@@ -14,7 +15,13 @@ def partner(name):
     return next(p for p in build_ncu_student_dashboard().partner_universities if name in p.school_name)
 
 
-def test_hiroshima_explicit_campus_hold_precedes_verified_shared_fallback(tmp_path):
+def test_hiroshima_explicit_campus_hold_precedes_verified_shared_fallback(tmp_path, monkeypatch):
+    source=json.loads(completion.LOCATIONS.read_text())
+    row=next(r for r in source["locations"] if "Hiroshima" in r["school_name"])
+    row.update(geocode_status="needs_review", latitude=None, longitude=None, note="校區待審測試")
+    scoped=tmp_path/"scoped-review.json"
+    scoped.write_text(json.dumps(source))
+    monkeypatch.setattr(completion,"LOCATIONS",scoped)
     p = partner("Hiroshima")
     shared = public_location(load_university_locations(tmp_path), p.school_name, p.country)
     assert shared.geocode_status == "verified"  # reproduces the integrated input conflict
@@ -27,6 +34,7 @@ def test_hiroshima_explicit_campus_hold_precedes_verified_shared_fallback(tmp_pa
 
 
 @pytest.mark.parametrize("name,latitude,longitude,scope", [
+    ("Hiroshima", 34.4022006, 132.713964, "Higashi"),
     ("Chuo", 35.708143, 139.748968, "Korakuen"),
     ("Shanghai Jiao Tong", 31.025393, 121.436348, "閔行"),
 ])

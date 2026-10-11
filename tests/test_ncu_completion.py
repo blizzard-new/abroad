@@ -73,7 +73,7 @@ def test_every_usable_photo_has_reviewed_original_bytes_attribution_and_licence(
     photos = json.loads((BUNDLE / "campus-assets.json").read_text())["photos"]
     reviews = json.loads((SOURCE / "campus-photo-reviews.json").read_text())["rows"]
     accepted = {(r["school_name"], r["country"]): r for r in reviews if r["review_status"] == "accepted_campus_reference"}
-    assert len(photos) == len(accepted) == 193
+    assert len(photos) == len(accepted) == 200
     for photo in photos:
         content = ROOT / "src/exchange_info" / photo["image_url"].removeprefix("/")
         assert hashlib.sha256(content.read_bytes()).hexdigest() == photo["content_sha256"]
@@ -142,11 +142,11 @@ def test_original_year_conflicts_and_reading_limits_are_visible_in_source_audit(
 def test_api_dashboard_coverage_detail_and_life_agree_on_photos(tmp_path):
     client = TestClient(create_app(tmp_path))
     dashboard = client.get("/student-dashboard", params={"school": "NCU"}).json()
-    assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 193
-    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 181
+    assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 200
+    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 188
     assert all(p["location"]["latitude"] is None for p in dashboard["partner_universities"] if p["location"]["geocode_status"] != "verified")
     coverage = client.get("/coverage", params={"school": "NCU"}).json()
-    assert sum(p["image_status"] == "verified" for p in coverage["partners"]) == 193
+    assert sum(p["image_status"] == "verified" for p in coverage["partners"]) == 200
     partner = next(p for p in dashboard["partner_universities"] if "Alicante" in p["school_name"])
     photo = client.get(partner["image_url"])
     assert photo.status_code == 200 and photo.headers["content-type"] == "image/jpeg"
