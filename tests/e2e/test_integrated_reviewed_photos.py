@@ -20,7 +20,7 @@ def test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit(page, live_
     page.locator('#school-switcher').click()
     page.locator('[data-home-school="國立臺灣大學"]').click()
     page.locator('#confirm-school').click()
-    page.wait_for_function("state.dashboard?.school_name==='國立臺灣大學' && !state.partnerDataLoading")
+    page.wait_for_function("() => state.dashboard?.school_name==='國立臺灣大學' && !state.partnerDataLoading")
     results=page.evaluate('''async reviews => {
       const results=[];
       for(const review of reviews) {
@@ -30,7 +30,7 @@ def test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit(page, live_
         const bitmap=await createImageBitmap(await response.blob());
         results.push({name:partner.school_name,country:partner.country,status:response.status,
           width:bitmap.width,height:bitmap.height,api:partner.image_url,visual:visual.local_path,
-          credit:visual.note,license:visual.license_name,license_url:visual.license_url});
+          credit:renderSchoolImageCredit(partner),license:visual.license_name,license_url:visual.license_url});
         bitmap.close();
       }
       return results;
@@ -42,6 +42,14 @@ def test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit(page, live_
         assert actual['api'].endswith(photo['local_path']) and actual['visual']==photo['local_path']
         assert photo['artist'] in actual['credit'] and actual['license_url']==photo['license_url']
         assert actual['license']==photo['license_name']
+    if width < 700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+        page.locator('#glass-menu-toggle').click()
+    page.locator('[data-partner-view="list"]').click()
+    page.locator('#partner-search').fill('馬來西亞理工')
+    if width < 700:page.locator('#partner-table .partner-card > summary').first.click()
+    page.locator('#partner-table .school-detail-trigger:visible').first.click()
+    expect(page.locator('#school-detail-photo .school-image-credit')).to_contain_text('Chongkian')
+    expect(page.locator('#school-detail-photo .school-image-credit')).to_contain_text('CC BY-SA 4.0')
     assert not errors
     output=Path(os.environ.get('VISUAL_EVIDENCE_DIR','/tmp/integrated-reviewed-photos'));output.mkdir(parents=True,exist_ok=True)
     (output/f'ntu-19-decoded-{width}.json').write_text(json.dumps(results,ensure_ascii=False,indent=2)+'\n')

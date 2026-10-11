@@ -64,7 +64,7 @@ def test_catalogue_backpressure_keeps_health_available_and_releases_slots(tmp_pa
 
     app = create_app(tmp_path)
     release = threading.Event()
-    two_active = threading.Event()
+    one_active = threading.Event()
     active = 0
     peak = 0
 
@@ -75,8 +75,8 @@ def test_catalogue_backpressure_keeps_health_available_and_releases_slots(tmp_pa
         nonlocal active, peak
         active += 1
         peak = max(peak, active)
-        if active == 2:
-            two_active.set()
+        if active == 1:
+            one_active.set()
         try:
             while not release.is_set():
                 await asyncio.sleep(.01)
@@ -87,11 +87,24 @@ def test_catalogue_backpressure_keeps_health_available_and_releases_slots(tmp_pa
     with TestClient(app) as client, ThreadPoolExecutor(max_workers=4) as pool:
         responses = [pool.submit(client.get, "/coverage") for _ in range(3)]
         try:
-            assert two_active.wait(5)
+            assert one_active.wait(5)
             assert pool.submit(client.get, "/health").result(timeout=5).status_code == 200
-            assert active == 2 and peak == 2
+            assert active == 1 and peak == 1
         finally:
             release.set()
         assert all(future.result(timeout=5).json() == {"complete": True} for future in responses)
         assert client.get("/coverage").status_code == 200
-        assert active == 0 and peak == 2
+        assert active == 0 and peak == 1
+
+
+def test_worker_capacity_is_bounded_only_for_the_app_lifespan(tmp_path):
+    from anyio.to_thread import current_default_thread_limiter
+    from exchange_info.api import create_app
+    app=create_app(tmp_path)
+    async def check():
+        limiter=current_default_thread_limiter()
+        before=limiter.total_tokens
+        async with app.router.lifespan_context(app):
+            assert limiter.total_tokens==min(before,4)
+        assert limiter.total_tokens==before
+    asyncio.run(check())

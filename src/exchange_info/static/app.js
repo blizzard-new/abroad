@@ -8061,7 +8061,9 @@ function renderPartnerLinks(item) {
 
 function renderSchoolImageCredit(item) {
   const visual = schoolVisualRecordFor(item.school_name, item.country);
-  const note = visual?.note || "";
+  const sourceNote = visual?.note || "";
+  const note = visual?.artist && !sourceNote.includes(visual.artist)
+    ? `攝影：${visual.artist} · ${visual.license_name || ""} · ${sourceNote}` : sourceNote;
   if (visual && visual.status !== "verified") return `<small class="school-image-credit">${visual.status === "needs_review" ? "照片待核對" : "照片待補"}：${escapeHtml(note || "尚未取得可核實的照片與授權來源。")}</small>`;
   if (visual?.license_name) {
     const license = String(visual.license_url || "").replace(/^http:\/\//, "https://");

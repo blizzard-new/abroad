@@ -109,7 +109,7 @@ def test_api_dashboard_coverage_detail_and_life_agree_on_photos(tmp_path):
     client = TestClient(create_app(tmp_path))
     dashboard = client.get("/student-dashboard", params={"school": "NCU"}).json()
     assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 125
-    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 43  # PR8 restores40; NCU adds3 independently reviewed points
+    assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 44  # PR8 restores40; NCU adds3; NTU second batch verifies the shared Malaya campus
     assert all(p["location"]["latitude"] is None for p in dashboard["partner_universities"] if p["location"]["geocode_status"] != "verified")
     coverage = client.get("/coverage", params={"school": "NCU"}).json()
     assert sum(p["image_status"] == "verified" for p in coverage["partners"]) == 125

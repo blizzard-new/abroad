@@ -798,16 +798,21 @@ def create_app(
     @asynccontextmanager
     async def lifespan(_app: FastAPI):
         nonlocal catalogue_slots
-        # Build at most two large catalogue responses concurrently on the
-        # 512 MiB host. Wait asynchronously, leaving health/auth/static requests
-        # and the worker pool available. Each server lifespan owns its limiter.
-        catalogue_slots = asyncio.Semaphore(2)
+        # Large source graphs leave allocator arenas in each worker thread.
+        # Bound both threads and concurrent catalogue expansion on the 512 MiB
+        # host; requests wait asynchronously without dropping any source fields.
+        from anyio.to_thread import current_default_thread_limiter
+        thread_limiter = current_default_thread_limiter()
+        previous_thread_tokens = thread_limiter.total_tokens
+        thread_limiter.total_tokens = min(previous_thread_tokens, 4)
+        catalogue_slots = asyncio.Semaphore(1)
         if warm_up and os.environ.get("EXCHANGE_WARM_CACHES", "").strip().lower() in {"1", "on", "true", "yes"}:
             threading.Thread(target=warm_up[0], name="warm-caches", daemon=True).start()
         try:
             yield
         finally:
             catalogue_slots = None
+            thread_limiter.total_tokens = previous_thread_tokens
             analytics_service.flush_api_metrics()  # keep the last minute of request counts on a clean shutdown
 
     app = FastAPI(
