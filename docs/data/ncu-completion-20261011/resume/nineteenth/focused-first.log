@@ -1,0 +1,17 @@
+CONFTEST LOADED!
+.F..                                                                     [100%]
+=================================== FAILURES ===================================
+_____ test_idrac_initial_attachments_and_post_arrival_health_are_separate ______
+
+    def test_idrac_initial_attachments_and_post_arrival_health_are_separate():
+        from exchange_info import storage
+        workflows = [w for w in storage.load_bundled_application_workflows() if w.home_university == '國立中央大學']
+        workflow = next(w for w in workflows if w.school_name.startswith('IDRAC'))
+>       initial = next(s for s in workflow.steps if s.rule_id == 'ncu-013-host-application')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/test_ncu_nineteenth_documents.py:35: StopIteration
+=========================== short test summary info ============================
+FAILED tests/test_ncu_nineteenth_documents.py::test_idrac_initial_attachments_and_post_arrival_health_are_separate
+1 failed, 3 passed in 2.00s
