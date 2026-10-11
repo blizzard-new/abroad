@@ -12,7 +12,7 @@ from exchange_info.ccu_student_view import fetch_ccu_partner_universities
 @pytest.mark.parametrize("width", [390, 1440])
 @pytest.mark.parametrize("ccu_page", [92, 117])
 def test_round8_years_and_price_basis_survive_reference_rendering(page, live_server, width, ccu_page):
-    partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages == [ccu_page])
+    partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == ccu_page)
     page.set_viewport_size({"width": width, "height": 956})
     page.emulate_media(reduced_motion="reduce")
     page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
