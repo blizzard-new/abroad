@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="48.469" timestamp="2026-10-11T11:42:50.842397+00:00" hostname="e5e438874453"><testcase classname="tests.test_ccu_ninth_pass" name="test_profile_review_covers_source_backed_geography_and_distinct_life" time="8.629"><failure message="AssertionError: assert 'Ankara' == 'Ankara（Ankara 主校）'&#10;  &#10;  - Ankara（Ankara 主校）&#10;  + Ankara">def test_profile_review_covers_source_backed_geography_and_distinct_life():
+        rows = reviewed_profiles()
+        assert len(rows) == 55
+        assert len(reviewed_documents()) &gt;= 31
+        for page, row in rows.items():
+            partner = at(page)
+            if row["fields"]["city"]["value"]:
+&gt;               assert partner.location.city == row["fields"]["city"]["value"]
+E               AssertionError: assert 'Ankara' == 'Ankara（Ankara 主校）'
+E                 
+E                 - Ankara（Ankara 主校）
+E                 + Ankara
+
+tests/test_ccu_ninth_pass.py:35: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ccu_candidate_acceptance" name="test_real_document_center_stages_conditions_templates_and_saved_draft[390]" time="39.750" /></testsuite></testsuites>
