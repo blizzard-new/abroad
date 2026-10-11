@@ -27,7 +27,10 @@ def test_five_originals_and_seven_physical_pages_are_read():
 def test_mixed_identity_and_language_conflicts_are_not_silently_resolved():
     rows = json.loads((ROOT / 'sources/ncu/2026-10-11/reviewed-host-records.json').read_text())
     txt = lambda rid, field: '\n'.join(rows[rid]['fields'][field]['points'])
-    assert all(rows['ncu-061']['fields'][k]['gap_only'] for k in ['eligibility', 'language', 'study_period'])
+    # Batch 24 adds an identity-verified official calendar; retain the original conflict evidence.
+    original = json.loads((DOCS / 'added-host-records.json').read_text())
+    assert all(original['ncu-061']['fields'][k]['gap_only'] for k in ['eligibility', 'language', 'study_period'])
+    assert all(rows['ncu-061']['fields'][k]['gap_only'] for k in ['eligibility', 'language'])
     assert '不能據此變更既有BUEM照片與座標' in txt('ncu-061', 'city')
     assert '不能宣稱所有學生免語言證明' in txt('ncu-202', 'language')
     assert 'IELST 4.0' in txt('ncu-202', 'language')
