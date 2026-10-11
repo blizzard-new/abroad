@@ -1,0 +1,72 @@
+{
+  "reviewed_at": "2026-10-11T13:31:21.427701+00:00",
+  "photo_gap_portal_ids": [
+    "9",
+    "12",
+    "67"
+  ],
+  "coordinate_gap_portal_ids": [
+    "9",
+    "12",
+    "1302"
+  ],
+  "gap_count_photos": 3,
+  "gap_count_coordinates": 3,
+  "new_assets_adopted": 0,
+  "checks": [
+    {
+      "portal_ids": [
+        "9",
+        "12"
+      ],
+      "school_names": [
+        "加州大學",
+        "加州州立大學"
+      ],
+      "reason": "交換校區未分派；不能以系統總部或任選單一校區照片／座標替代",
+      "parent_or_NTU_campus_assignment_received": false
+    },
+    {
+      "portal_id": "67",
+      "school_name": "特魯瓦科技大學",
+      "official_legal_url": "https://www.utt.fr/mentions-legales",
+      "reason": "正式網站再製需許可；未向校方發信。CommonsAPI robots unavailable；搜索沒有取得同一校區且作者授權與圖片本體均可核對的照片。EUt+logo不採用。",
+      "official_page_body_archive": "stage2/source b2085d9b7f8ec1d0"
+    },
+    {
+      "portal_id": "1302",
+      "school_name": "蒙斯大學",
+      "verified_address_url": "https://www.studyinbelgium.be/en/universite-de-mons",
+      "verified_address": "Head office, Place du Parc20,7000Mons",
+      "address_source_id": "d68c4aabf749ab6a",
+      "reason": "官方校圖robots unavailable；政府来源地址未附同一校區精確座標。索引找到的BdDolez31與Charleroi為不同地址／校區；Warocque17照片座標尚無当前官方地址／校區交叉核实，不把这些点混填PlaceParc20。",
+      "rejected_search_snippet_leads": [
+        {
+          "url": "https://www.geonames.org/6696587",
+          "name": "Université De Mons-Hainaut/Site Charleroi",
+          "coordinates": [
+            50.41389,
+            4.4508
+          ],
+          "reason": "不同城市／校區"
+        },
+        {
+          "url": "https://jm.maptons.com/p/753487204",
+          "address": "Bd Dolez31",
+          "coordinates": [
+            50.4516865,
+            3.9589928
+          ],
+          "reason": "非PlaceParc20、聚合地图尚无primary交叉核实"
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/File:Universit%C3%A9_de_Mons-Hainaut_(1).JPG",
+          "address": "PlaceWarocque17",
+          "depicted_point_dms": "50°27′30.66998″N3°56′59.39999″E",
+          "reason": "仅搜索索引照片元数据；尚無2026官方当前校区交叉核实，不作为已验证点"
+        }
+      ]
+    }
+  ],
+  "search_scope_note": "索引线索不是新正文或已通过校區校验的资产；没有重试真实403/429，没有改变TLS验证或鉴权。"
+}

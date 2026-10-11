@@ -33,6 +33,8 @@ def classify_review_axes(row, observations, sources, decision=None, more_public_
         publication = "official_zero_not_open" if row["target_requirement_confirmed"] else "official_NTU_selection_cell_blank"
     elif any(o["applicability_status"] == "explicitly_pending_announcement" for o in observations):
         publication = "official_statement_future_details_pending"
+    elif any(o["applicability_status"] == "target_year_explicit" for o in observations):
+        publication = "official_host_target_cycle_partial_fact"
     elif observations:
         publication = "public_reference_in_original_scope"
     elif row["reference_present"]:
@@ -64,6 +66,11 @@ def export(output=OUTPUT, access_path=None):
     schools = {r["portal_id"]: r for r in snapshot["schools"]}
     manual_path = ROOT / "sources/ntu/semantic-review-current-2026-10-11.json"
     manual = {(r["portal_id"], r["field"]): r for r in json.loads(manual_path.read_text())} if manual_path.exists() else {}
+    progress_path = ROOT / "sources/ntu/priority-review-progress-current-2026-10-11.json"
+    progress = json.loads(progress_path.read_text()) if progress_path.exists() else None
+    original_sets = {(r["portal_id"], r["field"]): r for r in progress["fields"]} if progress else {}
+    full_body_path = ROOT / "sources/ntu/full-body-review-current-2026-10-11.json"
+    full_body = json.loads(full_body_path.read_text()) if full_body_path.exists() else []
     attempts = {r["portal_id"]: r for r in access["schools"]}
     robots = {urlsplit(r["url"]).netloc: r for r in access["robots_receipts"]}
     issues = []
@@ -137,6 +144,12 @@ def export(output=OUTPUT, access_path=None):
             "source_attempt_count": len(query["sources"]),
             "unfetched_lead_count": len(query.get("unfetched_seeds", [])) + len(query.get("queued_discovery_leads", [])),
             "reviewer_reply": "", "verified_source_url": "", "verified_scope": "", "verified_quote_or_page": ""}
+        original_set = original_sets.get((row["portal_id"], row["field"]))
+        issue_row.update(
+            fixed_priority_original_body_set_complete=original_set["all_original_cached_candidates_read"] if original_set else None,
+            original_cached_candidate_count=original_set["original_cached_candidate_body_count"] if original_set else None,
+            original_cached_read_count=original_set["read_count"] if original_set else None,
+            original_cached_remaining_source_ids=original_set["remaining_source_ids"] if original_set else [])
         issues.append(issue_row)
     summary.update(access_attempts=access["counts"], new_observations=sum(len(r["observations"]) for r in schools.values()),
         reviewed_host_schools=sum(bool(r["observations"]) for r in schools.values()),
@@ -150,6 +163,8 @@ def export(output=OUTPUT, access_path=None):
             "rebuilt_denominator": 288, "pending_selection_denominator": 282, "zero_selection_denominator": 6,
             "comparison_method": "Rebuilt using the current official portal IDs. The old workbook was not obtained; neither cell equality nor exact school membership overlap is claimed.",
             "coverage": "All 282 currently pending schools × original ten fields are retained; 6 zero-quota schools and four extra field groups are also included."})
+    if progress:
+        summary["full_body_priority_progress"] = {k: v for k, v in progress.items() if k != "fields"}
     output.mkdir(exist_ok=True, parents=True)
     (output / "review-summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n")
     (output / "all-school-review.json").write_text(json.dumps(issues, ensure_ascii=False, indent=2) + "\n")
@@ -185,6 +200,10 @@ def export(output=OUTPUT, access_path=None):
             for fact in home["facts"]]))
     if manual:
         sheets.append(("候選段落語意分類", list(manual.values())))
+    if progress:
+        sheets.append(("固定501項正文進度", progress["fields"]))
+    if full_body:
+        sheets.append(("逐源全文閱讀紀錄", full_body))
     for title, items in sheets:
         ws = book.create_sheet(title)
         keys = list(dict.fromkeys(k for item in items for k in item))

@@ -1,0 +1,43 @@
+from research_curator import Curator
+from pathlib import Path
+import json
+c=Curator();f=c.fact;d=c.decision;b=c.body_review;q=json.loads((Path(__file__).parent/'priority-source-roster.json').read_text())
+for pid,note in [('1001','原cached5正文全讀；IAESTE/outbound及2020/21舊简報不是臺大赴澳門incoming門檻，书院donation不是住费。另已讀正确inbound新增规则，非宣稱未公告。'),('800','原cached8正文全讀；outbound費用／buddy志願者語言不是incoming門檻；incoming2027要項已發但Box当前robots限制造成正文未取得，現有chart只採共通text、分支需版面与当期guideline。')]:
+ for field,sids in q[pid]['fields'].items():
+  for sid in sids:b(pid,sid,[field],note)
+  d(pid,field,sids,'reviewed_source_scope_split',note)
+sid='39e1e1e52fd7a6d7';quote='Semester Exchange Programmes';scope='澳門GAO incoming semester exchange未標學年；与VisitingResearcher/IAESTE分開'
+f('1001',sid,'eligibility','澳門semester交換須協議伙伴母校提名，不收individual；一或兩學期免接待校學費。相邻Visiting Researcher要求研究生已完成2學期、3–12月等是另計畫，不能套semester交換的年級／GPA。',scope,quote,locator='Semester Exchange Programmes vs Visiting Student Researcher Eligibility')
+f('1001',sid,'documents','澳門semester提名由母校交英文累積GPA成績、計畫／年級、course selection、CV、personalstatement、母校推薦；研究型PG另researchproject。提名accepted後學生上傳1.5吋白底彩照、護照、最新英文成績及適用醫保；mainlandID/通行證條件不套台灣。arrival另3月內指定健檢、英文肺Xray、破傷風紀錄與3張白底照片，不當初輪全部必繳。',scope,quote,locator='Nomination / Application / Registration upon arrival')
+f('1001',sid,'deadlines','澳門incoming semester頁不載精確提名／申請日，但明确acceptednominee才收onlineapplicationlink；晚於該online deadline只可到校後修课登记。页面3–4月／9–10月是Visiting Researcher窗口，7workingdays Erasmus回覆提醒也不是semester截止。',scope,quote,locator='Semester Application vs Visiting Researcher periods / Erasmus timing')
+f('1001',sid,'courses','澳門院級agreement限該院課，校級可跨校院但须先修與餘額；学分转認须母校academicadvisor。不是保證跨院所有課可修；2027待当期确认。',scope,quote,theme='academics',locator='Faculty-level vs university-level agreement course scope')
+b('1001',sid,['eligibility','documents','deadlines','cost','courses'],'完整10866字incoming四种計畫已讀，semester／research／internship／Erasmus的条件与时程分開。')
+sid='5005c6bd53a7535c';quote='2027年度交換留学募集要項'
+f('800',sid,'documents','神奈川incoming页已有2027年度募集要項：母校在online開始前收到指示，學生需讀要項与科目chart再線上提交全部文件，缺修时校方個別聯絡。公開Box要項目前robots讀取不可用，正文未取到不等於2027未公告；未憑概要杜撰完整文件。','神奈川2027募集heading；Box正文未得、母校online步骤',quote,period='target_year_explicit',locator='2027年度交換留学募集要項 / 申請方法')
+f('800',sid,'cost','神奈川incoming參考JPY4月一學期500000–700000、10月一年1200000–1400000；表列房200000/500000、保險與Mediphone23000/40000、食150000/300000、通学0–50000/0–100000、其他约100000/200000。價格段未標2027，保險可隨時調；獎學金80000/月明标2026且下一年可能調整、每伙伴每学期仅能推薦一位，非臺大甄选名額。','神奈川incoming mixed-cycle頁；費用参考未標年、獎學金明确2026',quote,period='older_year_reference',theme='cost',locator='生活費参考 table vs 給付金額2026年度受入れ')
+f('800',sid,'courses','神奈川官網明确2027英語開課清單於2027/3發布、2027 syllabus於2027/4；现有英語list只reference，不声称2027完整课表已发布或全部2027資料皆未公告。','神奈川incoming2027明确future publication schedule',quote,period='explicitly_pending_announcement',theme='academics',locator='FAQ新年度英語科目與syllabus publication month')
+sid='ebe0705564d758ec';quote='An exchange student must take at least 6 classes/semester'
+f('800',sid,'courses','神奈川共通chart本科／subject-study研每學期至少6課、research-focus研至少1；本科不能研究所課，碩士可本科，博士除日語不能本科。MinatoMirai日語学分課由J-CAT判定约150/N3且placement決定，N4以下不能creditedJapanese但可非学分support；日文「6科目以上」与英文「more than6」不一致，優先保留共通明文atleast6并標分支用词差異。','神奈川未標年2頁chart；Minato Mirai日語／Yokohama须咨询',quote,page=1,theme='academics',locator='p1 Generalinformation vs p2 Japanese language course branches')
+# Original PDF is scanned. The short title is separately transcribed and all pages verified visually.
+sid='64063575a13c4723';quote='Kumamoto University Short-Term Exchange Program';scope='熊本官網12頁掃描brochure未印學年，URL路径2022/02旧刊；不用作2027已核實'
+f('1293',sid,'eligibility','熊本扫描brochure p4稱合作校正規在學、foreign本科大三、全期維持母校学籍；不把該旧刊大三門檻升格2027，也須與当期factsheet核对。',scope,quote,page=4,period='older_year_reference',locator='Visually verified p4 Program Overview')
+f('1293',sid,'courses','熊本扫描p5 E course一年至少20credits含英语STEP至少12；半年至少10含STEP6。J一年20/半年10；日語學分每半年上限7，原注每週至少7課／semester10credit；E其他課須事前相談且不算programcompletion，GE／專業日語N2为目安且非全部向STEP开放。',scope,quote,page=5,period='older_year_reference',theme='academics',locator='Visually verified p5 E/J requirements and notes')
+f('1293',sid,'cost','熊本扫描p8月估JPY交通6000、食30000、寮與utility30000、手機5000、其他35000；初期保險30000、single寮deposit等28000、internet32000/year，另机票及自行車購買／登記／保險。optional海外私人保险约15000一次，非必繳國保替代。這與2025factsheet 80000寮／100000外租等不同版估算並存，不挑一改2027。',scope,quote,page=8,period='older_year_reference',theme='cost',locator='Visually verified p8 Primary Expenditure Example; monthly vs initial/year')
+f('1293',sid,'housing','熊本扫描p9 STEP優先国际会馆但非保证，校园东约1.5km自车10分。singleJPY17000/月含共益不含utility，deposit18000+futon10000，internet32000/year；四私房共享unit17000/月含utility/common、deposit10000+futon10000及同internet。p8单身deposit等28000其实18000+10000，非与p9 deposit矛盾。',scope,quote,page=9,period='older_year_reference',theme='housing',locator='Visually verified p9 room types / inclusion / moving-in charges')
+f('1293',sid,'calendar','熊本扫描p7一般spring4月中、fall9月下、考试spring7月下–8月上/fall1月下–2月上；p5duration列4月至9/3、10月至3/9為在籍期間，不把10月入学duration當精確授課起日。无2027年月日，年曆註可変更。',scope,quote,page=7,period='older_year_reference',locator='Visually verified p7 events vs p5 course duration')
+b('1293',sid,['eligibility','language','deadlines','documents','cost','housing','courses','calendar'],'原PDF45.9MB、抽文字33字，但已OCR辅助+目視所有12页，条件／费用表逐值核对；brochure不載實際申请文件與截止，只連申請官網，不以掃描難解析判不可访问。',visual_pages=list(range(1,13)),visual_files=[f'kumamoto-brochure-{n:02d}.png' for n in range(1,13)])
+# Hawaii now has appropriate incoming application sources, supplementing wrong-scope earlier candidates.
+sid='9d771d3d197e0206';quote='How to Apply: Undergraduate Students';scope='UH Manoa MIX现行入口連Spring2027guideline；fall日期仍未標年度'
+f('14',sid,'eligibility','UH Manoa MIX本科交换／Hoakipa须伙伴在籍母校提名、英语合格、GPA2.5/4，不能已有bachelor；已有学士即使现又读本科仍依postgraduate程序，BA/MA尚未拿学士則走本科。','UH Manoa MIX undergraduate vs postgraduate degree classification；undated',quote,locator='Eligibility / previous bachelor degree')
+f('14',sid,'deadlines','UH Manoa MIX UG及PG秋提名12/1–2/1、学生申请12/1–3/1，春提名7/1–9/1、申请7/1–10/1；不是住宿5/1与12/1。页面目前链接Spring2027guideline，秋月份未标年度不填2027确定日。',scope,quote,locator='Nomination & Application Deadlines; Spring2027guide context')
+f('14',sid,'documents','UH Manoa本科须MIX+UH本科两申请、官方成績、适用英语、护照、MIX財力(UScitizen/PR免)、风险/consent/waiver协议；不填財力Section3则另sponsor近银行证据。非英语机构原文+官方英译，成績须母校直送/认证平台/密封/母校Dropbox，學生自行email不收；本科交換可申请applicationfee waiver，誤付不能退。',scope,quote,locator='Application requirements / Steps1–4 transcript/form/fee-waiver scope')
+sid2='847dc827134e6479';q2='How to Apply: Postgraduate Students'
+f('14',sid2,'eligibility','UH Manoa MIX研須開學前具學士且現讀研究所、伙伴在籍提名与英语合格；页面未列研GPA数字，不能把本科2.5套研。Graduate BUS課不對交換/visiting開放；其他Shidler graduate課另要求與CV，不能把不开放BUS泛為所有商學均禁止。','UH Manoa MIX PG entrance；undated, Spring2027guide linked',q2,locator='PG Eligibility / Shidler caveat')
+f('14',sid2,'documents','UH Manoa研须MIX+Graduate两申请、全部就读院校本科与研官方成績及学位证、在籍／研成績、英语、護照、财力及waiver；想修商学另CV。研成績只由颁证records office直送/密封/认证平台，不能学生或其他院工作人员email；与本科可母校coordinator上传范围不同。','UH Manoa MIX PG docs；undated, Spring2027guide linked',q2,locator='PG Applications / transcripts from every university / Steps2–4')
+sid3='0c4c276ca668e032';q3='English Language Requirements'
+f('14',sid3,'language','UH Manoa语言页更新2025/10但明确2026及以后iBT入学3.5／免ELIPT5，旧61/100；IELTS5.5/7、DET90/135、Essentials7/10.5、Cambridge161/185。本科另ITP500/600、PTE44/68与EIKEN/GEPT(合格但不免ELIPT)；研表未列ITP/PTE/GEPT不要套。低于免test門檻且无免试需开学前ELIPT，可能1–3ELI课；母校臺大不在表列大学免试名單。','UH Manoa English requirements；2026新尺度明示但非2027独立年版',q3,locator='UG vs PG tables / exemption list / ELI placement')
+f('14',sid3,'documents','UH Manoa语测申请时2年内，本科伙伴coordinator可交、可能再要official；研须testingauthority official直送GraduateDivision。本科native/6年指定英语国家学校/US60creditGPA2等例外，研限最近5年指定国家学士以上；不是仅母校英语授课就一律免测。','UH Manoa language submission age / UG vs PG exemptions；undated',q3,locator='Test submissions and exemptions for UG/PG')
+sid4='49f3e2c99d2f3038';q4='Program Costs and Fees'
+f('14',sid4,'cost','UH Manoa E交换母校付学费、host学费与mandatorystudentfees免；Hoakipa V为resident tuition150%且另mandatoryfees，Independent V为nonresident+fees。Coursefees／房餐不含waiver，金額须MIX FinancialCertificationForm、housingrates；不能以E全免套V或用2024城市租金当所有budget。','UH Manoa E vs Hoakipa/IndependentV现行程序，未標当期費率',q4,theme='cost',locator='Tuition and Student Fees / waivers exclusions / estimated-cost form')
+for sid,fields in [(sid,['eligibility','deadlines','documents','cost']),(sid2,['eligibility','deadlines','documents','courses']),(sid3,['language','documents']),(sid4,['cost','insurance_visa']),('4c908d6f99b3cc1c',['eligibility','documents'])]:b('14',sid,fields,'已完整讀此現行incoming正文，包括所有Exchange/Hoakipa/Independent段落，degree分类、月份未标年、2种科系/fee门槛与官方直送要求区分。')
+c.save();print('observations',sum(len(s['observations']) for s in c.schools.values()))

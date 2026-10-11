@@ -138,7 +138,7 @@ def test_all_ntu_destinations_have_reviewed_or_explicitly_missing_overlays():
 def test_error_page_navigation_is_not_served_as_student_life_evidence():
     records = list(life._bundled_ntu_research().values())
     assert len(records) == 288
-    assert sum(len(row.evidence) for row in records) == 1913
+    assert sum(len(row.evidence) for row in records) == 1963
     akita = next(row for row in records if row.school_name == "秋田大學")
     assert akita.status == "partial" and akita.evidence
     assert not any("404" in source.url for row in akita.evidence for source in row.sources)

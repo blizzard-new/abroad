@@ -52,3 +52,11 @@ def test_published_current_home_rules_are_distinct_from_pending_school_quotas():
     quota = classify_review_axes(row("quota"), [], [])
     assert home["publication_status"] == "official_NTU_shared_current_cycle_rule"
     assert quota["publication_status"] == "official_NTU_selection_cell_blank"
+
+
+def test_host_current_year_fact_still_leaves_complete_rule_unconfirmed():
+    original = row(reference=True)
+    result = classify_review_axes(original, [dict(applicability_status="target_year_explicit")], [])
+    assert result["publication_status"] == "official_host_target_cycle_partial_fact"
+    assert original["target_requirement_confirmed"] is False
+    assert result["review_progress"] == "reviewed_reference_partial_scope"
