@@ -9,6 +9,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from .ccu_sources import BUNDLE, require_usable_source
+from .source_integrity import file_sha256
 from .models import (
     ExchangeFieldEvidence,
     PartnerProgramOption,
@@ -64,9 +65,7 @@ def reviewed_profiles() -> dict[int, dict]:
                     raise ValueError("Changed CCU profile evidence; rereview source")
                 if (
                     source.get("bundled_file")
-                    and hashlib.sha256(
-                        (BUNDLE / source["bundled_file"]).read_bytes()
-                    ).hexdigest()
+                    and file_sha256(BUNDLE / source["bundled_file"])
                     != source["sha256"]
                 ):
                     raise ValueError("Changed CCU profile source attachment")
@@ -322,11 +321,11 @@ def align_completeness(result, partner: PartnerUniversity):
 
 def align_life_context(context, partner, profile, location):
     """Use each CCU life field's actual sources and preserve local research rows."""
-    from .ccu_overseas import STATUS_LABELS, describe_field, reviewed_rows
+    from .ccu_overseas import STATUS_LABELS, describe_field, reviewed_row
     from .life_context import LifeEvidence, LifeSource
 
     row = reviewed_profiles().get(partner.source_pages[0])
-    host = reviewed_rows().get(partner.source_pages[0])
+    host = reviewed_row(partner.source_pages[0])
     if not row or not host:
         return context
     fields = {

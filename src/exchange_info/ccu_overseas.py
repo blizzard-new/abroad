@@ -5,6 +5,9 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import threading
+from pathlib import Path
+from .json_stream import json_array_items
 from functools import lru_cache
 
 from .ccu_sources import (
@@ -15,6 +18,7 @@ from .ccu_sources import (
     describe_evidence_list,
     require_usable_source,
 )
+from .source_integrity import file_sha256
 from .models import (
     ApplicationDocumentRequirement,
     ApplicationStep,
@@ -62,91 +66,126 @@ def _flat(value: str) -> str:
     return re.sub(r"\s+", " ", value).strip()
 
 
-@lru_cache(maxsize=1)
-def reviewed_rows() -> dict[int, dict]:
-    rows = json.loads((BUNDLE / "overseas-reviewed-fields.json").read_text())
-    if len(rows) != 55 or len({r["ccu_page"] for r in rows}) != 55:
-        raise ValueError(
-            "CCU overseas review must cover all 55 current/quota-unknown identities"
-        )
-    for row in rows:
-        if set(row["fields"]) != set(LABELS):
-            raise ValueError(f"CCU incomplete field matrix: {row['ccu_page']}")
-        for field in row["fields"].values():
-            if field["status"] == "verified_current" and (
-                not field["value"] or not field["evidence"]
-                or not any(ev["status"] == "verified_current" for ev in field["evidence"])
+def _validate_reviewed_row(row):
+    if set(row["fields"]) != set(LABELS):
+        raise ValueError(f"CCU incomplete field matrix: {row['ccu_page']}")
+    for field in row["fields"].values():
+        if field["status"] == "verified_current" and (
+            not field["value"] or not field["evidence"]
+            or not any(ev["status"] == "verified_current" for ev in field["evidence"])
+        ):
+            raise ValueError(
+                "Current overseas fact requires a value and checked evidence"
+            )
+        if field["value"] is None and field["status"] != "missing":
+            raise ValueError("Do not imply a known value for an unknown field")
+        for ev in field["evidence"]:
+            source = json.loads(
+                (
+                    BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
+                ).read_text()
+            )
+            require_usable_source(source)
+            if ev["status"] == "verified_current" and source.get(
+                "access_result"
+            ) in {
+                "challenge_page", "captcha_required", "empty_response",
+                "unrelated_content_anomaly", "password_protected",
+            }:
+                raise ValueError(
+                    "Unread CCU access response cannot support current policy"
+                )
+            text_hash = hashlib.sha256(
+                json.dumps(
+                    source.get("text_pages", []), ensure_ascii=False
+                ).encode()
+            ).hexdigest()
+            if (
+                source.get("sha256") != ev["content_hash"]
+                or text_hash != ev["text_sha256"]
             ):
                 raise ValueError(
-                    "Current overseas fact requires a value and checked evidence"
+                    "Changed CCU overseas source: review contents before promoting"
                 )
-            if field["value"] is None and field["status"] != "missing":
-                raise ValueError("Do not imply a known value for an unknown field")
-            for ev in field["evidence"]:
-                source = json.loads(
-                    (
-                        BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
-                    ).read_text()
-                )
-                require_usable_source(source)
-                if ev["status"] == "verified_current" and source.get(
-                    "access_result"
-                ) in {
-                    "challenge_page", "captcha_required", "empty_response",
-                    "unrelated_content_anomaly", "password_protected",
-                }:
-                    raise ValueError(
-                        "Unread CCU access response cannot support current policy"
-                    )
-                text_hash = hashlib.sha256(
-                    json.dumps(
-                        source.get("text_pages", []), ensure_ascii=False
-                    ).encode()
-                ).hexdigest()
+            if source.get("bundled_file"):
+                if file_sha256(BUNDLE / source["bundled_file"]) != source["sha256"]:
+                    raise ValueError("Changed CCU bundled partner form")
+            if source.get("status", "").startswith("web_extracted_"):
+                # A browser-tool extraction is not a raw HTTP/PDF download.
+                response = source.get("web_extraction_response", "")
                 if (
-                    source.get("sha256") != ev["content_hash"]
-                    or text_hash != ev["text_sha256"]
+                    not response
+                    or hashlib.sha256(response.encode()).hexdigest()
+                    != source["sha256"]
                 ):
-                    raise ValueError(
-                        "Changed CCU overseas source: review contents before promoting"
-                    )
-                if source.get("bundled_file"):
-                    contents = (BUNDLE / source["bundled_file"]).read_bytes()
-                    if hashlib.sha256(contents).hexdigest() != source["sha256"]:
-                        raise ValueError("Changed CCU bundled partner form")
-                if source.get("status", "").startswith("web_extracted_"):
-                    # A browser-tool extraction is not a raw HTTP/PDF download.
-                    response = source.get("web_extraction_response", "")
-                    if (
-                        not response
-                        or hashlib.sha256(response.encode()).hexdigest()
-                        != source["sha256"]
-                    ):
-                        raise ValueError("Changed CCU web extraction response")
-                pages = ev["source_pages"] or list(
-                    range(1, len(source.get("text_pages", [])) + 1)
+                    raise ValueError("Changed CCU web extraction response")
+            pages = ev["source_pages"] or list(
+                range(1, len(source.get("text_pages", [])) + 1)
+            )
+            text = " ".join(_flat(source["text_pages"][p - 1]) for p in pages)
+            if not _flat(ev["excerpt"]) or _flat(ev["excerpt"]) not in text:
+                raise ValueError(
+                    f"CCU overseas evidence not in source: {ev['source_id']}"
                 )
-                text = " ".join(_flat(source["text_pages"][p - 1]) for p in pages)
-                if not _flat(ev["excerpt"]) or _flat(ev["excerpt"]) not in text:
-                    raise ValueError(
-                        f"CCU overseas evidence not in source: {ev['source_id']}"
-                    )
-                if (
-                    not ev["academic_year"]
-                    or not ev["checked_at"]
-                    or not ev["source_url"]
-                ):
-                    raise ValueError("Missing overseas provenance")
-                # A field can retain both a current rule and an older or
-                # unyear policy for comparison. Each excerpt keeps its own
-                # applicability rather than inheriting the aggregate state.
-                if ev["status"] not in STATUS_LABELS or ev["status"] == "missing":
-                    raise ValueError("Invalid CCU overseas evidence status")
-    return {row["ccu_page"]: row for row in rows}
+            if (
+                not ev["academic_year"]
+                or not ev["checked_at"]
+                or not ev["source_url"]
+            ):
+                raise ValueError("Missing overseas provenance")
+            # A field can retain both a current rule and an older or
+            # unyear policy for comparison. Each excerpt keeps its own
+            # applicability rather than inheriting the aggregate state.
+            if ev["status"] not in STATUS_LABELS or ev["status"] == "missing":
+                raise ValueError("Invalid CCU overseas evidence status")
+
+
+def _selected_reviewed_rows(bundle, page=None):
+    rows = {}
+    identities = set()
+    count = 0
+    with (bundle / "overseas-reviewed-fields.json").open(encoding="utf-8") as handle:
+        for row in json_array_items(handle):
+            count += 1
+            identities.add(row["ccu_page"])
+            if page is None or row["ccu_page"] == page:
+                _validate_reviewed_row(row)
+                rows[row["ccu_page"]] = row
+    if count != 55 or len(identities) != 55:
+        raise ValueError("CCU overseas review must cover all 55 current/quota-unknown identities")
+    return rows
+
+
+@lru_cache(maxsize=1)
+def reviewed_rows() -> dict[int, dict]:
+    """Full audit/build interface: validate every receiving-school source."""
+    return _selected_reviewed_rows(BUNDLE)
+
+
+_reviewed_row_lock = threading.Lock()
+
+
+@lru_cache(maxsize=4)
+def _reviewed_row_payload(bundle: Path, signature: tuple[int, int], page: int) -> bytes:
+    row = _selected_reviewed_rows(bundle, page).get(page)
+    return json.dumps(row, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+
+
+def reviewed_row(page: int) -> dict | None:
+    """Public detail lookup: retain four serialized rows, never the whole graph.
+
+    The whole array and identity count are still parsed; all evidence returned
+    for the selected school passes the same hash, source and excerpt checks.
+    """
+    path = BUNDLE / "overseas-reviewed-fields.json"
+    stat = path.stat()
+    with _reviewed_row_lock:
+        payload = _reviewed_row_payload(BUNDLE, (stat.st_mtime_ns, stat.st_size), page)
+    return json.loads(payload)
 
 
 def apply_overseas_review(partner: PartnerUniversity) -> PartnerUniversity:
-    row = reviewed_rows().get(partner.source_pages[0])
+    row = reviewed_row(partner.source_pages[0])
     if not row:
         return partner
     if (

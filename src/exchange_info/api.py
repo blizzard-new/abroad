@@ -793,6 +793,7 @@ def create_app(
         "/application-center/templates", "/application-center/catalog", "/application-period-options",
         "/application-workflow", "/advisor/plan", "/advisor/ask",
         "/school-life-context", "/school-data-completeness", "/student-experiences",
+        "/partner-source-audit",
     }
 
     @asynccontextmanager
@@ -804,7 +805,7 @@ def create_app(
         from anyio.to_thread import current_default_thread_limiter
         thread_limiter = current_default_thread_limiter()
         previous_thread_tokens = thread_limiter.total_tokens
-        thread_limiter.total_tokens = min(previous_thread_tokens, 4)
+        thread_limiter.total_tokens = min(previous_thread_tokens, 2)
         catalogue_slots = asyncio.Semaphore(1)
         if warm_up and os.environ.get("EXCHANGE_WARM_CACHES", "").strip().lower() in {"1", "on", "true", "yes"}:
             threading.Thread(target=warm_up[0], name="warm-caches", daemon=True).start()

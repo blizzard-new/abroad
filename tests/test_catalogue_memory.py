@@ -105,6 +105,6 @@ def test_worker_capacity_is_bounded_only_for_the_app_lifespan(tmp_path):
         limiter=current_default_thread_limiter()
         before=limiter.total_tokens
         async with app.router.lifespan_context(app):
-            assert limiter.total_tokens==min(before,4)
+            assert limiter.total_tokens==min(before,2)
         assert limiter.total_tokens==before
     asyncio.run(check())

@@ -1,12 +1,31 @@
 """CCU general campus references for all 104 identities, including closed rows."""
 from __future__ import annotations
 
+from collections.abc import Mapping
 from functools import lru_cache
 import json
 
 from .ccu_sources import BUNDLE
 from .ccu_completion_sources import validate_completion_source
 from .models import ExchangeFieldEvidence, PartnerUniversity
+
+
+class _ReviewedCompletionIndex(Mapping):
+    """Retain validated serialized rows; expand only the requested institution."""
+    def __init__(self, rows):
+        self._records = {
+            row["ccu_page"]: json.dumps(row, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+            for row in rows
+        }
+
+    def __getitem__(self, page):
+        return json.loads(self._records[page])
+
+    def __iter__(self):
+        return iter(self._records)
+
+    def __len__(self):
+        return len(self._records)
 
 
 @lru_cache(maxsize=1)
@@ -26,7 +45,7 @@ def reviewed_completion():
                 raise ValueError("CCU completion facts need provenance")
             for ev in field["evidence"]:
                 validate_completion_source(BUNDLE, ev, checked)
-    return {row["ccu_page"]: row for row in rows}
+    return _ReviewedCompletionIndex(rows)
 
 
 def apply_completion(partner: PartnerUniversity) -> PartnerUniversity:
