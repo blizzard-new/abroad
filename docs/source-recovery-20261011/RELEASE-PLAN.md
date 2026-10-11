@@ -28,6 +28,25 @@ TKU兩拒用照片已移至 `sources/tku/withdrawn-campus-assets/`，不在publi
 
 ## 安全發布順序
 
+```mermaid
+flowchart TD
+  MAIN[main59：核對正式DB實際版本] --> BASE[PR8共用地球與CGU來源保護]
+  BASE --> CAND[Draft PR12單一隔離候選]
+  CCU[PR10 CCU固定SHA] --> CAND
+  NCU[PR11 NCU固定SHA與保留既有修正] --> CAND
+  NTU[PR9 NTU固定SHA與來源年期] --> CAND
+  TKU[PR13 TKU固定SHA與兩圖撤回] --> CAND
+  CAND --> GATE[同一clean SHA：全套／來源／記憶體／runtime／wheel]
+  GATE --> PARENT[父對話核准有限發布範圍]
+  MAIN --> DB{正式DB定義已符合？}
+  DB -->|否| SQL[父協調另授權必要SQL並驗證]
+  DB -->|是| RELEASE[父協調一次main更新]
+  SQL --> RELEASE
+  PARENT --> RELEASE
+  RELEASE --> RENDER[Render實際部署SHA與健康驗收]
+```
+
+
 1. 保持 Draft，先完成本地完整驗收：全部 collected tests 分組聯集無遺漏／重複、六校手機桌面／帳號保存／校別切換／文件條件、原 CGU154／NTPU409／NTU288 workflow 位元組 parity、來源與授權、真實 wheel 安裝、完整本地 Supabase runtime，以及同一175步冷暖負載的460 MiB門檻。保留所有失敗、取消、skip及未執行項；不能拿重疊測試次數相加冒充唯一案例数。
 2. 父對話依固定證據決定有限資料是否符合此次發布範圍。CCU／NCU／TKU／NTU 未取得、歷年參考、待確認、官方明示尚未公告與零名額保留區分；來源HTTP200、照片或座標增加不等於當期流程完成。
 3. 正式改動前，只讀核對 main、Render 實際成功 deploy SHA／服務健康、production migration history 與必要函式定義、備份與可回復點。不要假定 main 等於 production。若無已授權讀取工具，回報具體缺少哪個讀取，不能新增憑證。

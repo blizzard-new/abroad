@@ -4,7 +4,7 @@
 
 固定資料仍為CCU `52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8`、NCU `a2df55b16f72455f7154d7afff44934fc8dbf99d`、NTU `c7357f974faaec8e60ef19698d4d21633c322dc8`、TKU `93cbd9dfee3af95f9ecc89cceb1ccd0e100778af`。相對main59 migration增量0；CGU154／NTPU409／NTU288原workflow逐byte不變。資料來源與全部既有測試函式不受本次記憶體修復改寫。
 
-父指示排隊的新輸入：NCU先前 `48fcc27446f8cadb19f45cae415852af67f76a1e`，19:25只讀核到遠端新head `084f500f091838afe09ddf4f716bffd5ace9b906`，已核實僅11個測試的暫存輸出改動，資料／應用程式不變、所有assert／wait AST相同；NTU `23757a06778f7569716a19987dd1d39effce13f2`。目前只讀盤點固定差異，尚未合入；先完成當前乾淨SHA重驗，再逐hunk接入，並重跑最終完整組合／記憶體／DB，不將來源分支結果當組合驗收。
+父指示排隊的新輸入：NCU先前 `48fcc27446f8cadb19f45cae415852af67f76a1e`，19:25只讀核到遠端新head `084f500f091838afe09ddf4f716bffd5ace9b906`，已核實僅11個測試的暫存輸出改動，資料／應用程式不變、所有assert／wait AST相同；NTU `23757a06778f7569716a19987dd1d39effce13f2`。目前已完成固定原件hash／版本與重點語意唯讀審查，尚未合入；先完成當前乾淨SHA重驗，再逐hunk接入，並重跑最終完整組合／記憶體／DB，不將來源分支結果當組合驗收。
 
 | 目前5e711418門檻 | 狀態 |
 |---|---|
@@ -12,7 +12,7 @@
 | contracts／delivery／NCU stream parity | PASSED：原workflow、35SQL／Actions／uv不變，OpenAPI／JS／compile，NTU1373觀察與TKU4529pack成員、NCU214+2177記錄完整核驗。 |
 | 完整cache內容 | PASSED：TKU287校13,024,247 bytes→2,148,697無損cache；CCU104校9,310,485→1,123,661；每校canonical bytes／全部公開映射相等、原來源驗證全部執行。 |
 | 同175步cold／warm，460MiB門檻 | cold／warm PASSED：175步各完整完成，峰值437.215／447.801MiB，無defer-budget、server log均0bytes。原assert/wait不放寬，僅已授權TKU inventory期望由264圖260點更新為262圖264點，差異receipt保存。 |
-| 完整pytest套件 | RUNNING；原四shard最多2組同時，新增25回歸案例，最終以實際collection／四shard聯集為分母。 |
+| 完整pytest套件 | RUNNING，已觀察瀏覽器失敗，尚未通過；原四shard最多2組同時，實際collection為3110 unique。TKU旧264張斷言與安全撤圖後262張不符已定位，其餘待完整traceback。固定SHA整輪完成後才修，原失敗保留。 |
 | 本SHA完整Supabase runtime／wheel fresh install | PASSED：35SQL／真Storage／2PostgREST／17治理檢查；wheel6955檔逐hash／CRC，fresh target六校API、原workflow及兩撤回圖切換前後404。此SHA wheel SHA256 `a035d5a3039444fc4bd6914d61f01c21e1fddc2ec266c80b77d0034ab0fa6a7d`。 |
 
 程式修復：TKU與CCU先逐校讀取，再保留無損壓縮不可變快取，按請求還原完整紀錄；不刪來源、欄位或接受條件。TKU首次並行讀取只建一次完整snapshot；截斷JSON／最後一校來源失敗都不能留下部分成功快取。另修正TKU照片撤回工具CLI／package雙匯入。NCU4個測試截圖OUT改至獨立目錄，不改test function AST／assert／wait，已回報父協調源分支同步。
@@ -33,3 +33,5 @@ TKU兩拒用圖：Sunderland錯校圖、UAEMEX授權人／署名鏈未核實圖�
 獨立來源核對：CCU全部21欄差異，19新補欄；離線两輪145資料檔完全一致，保留先前10項體檢、可選換宿與105.40/16日修正。NCU全部26新定位名稱與原數值、兩張照片及18校中文資料變更核對，保留圖爾庫原文件／簽章與明治五個月修正；214代表點／202照片（199唯一），不代表116指定校區或當期開放。NTU全部673新增中文說明、1228原件版本／42ZIP及611引用核驗；原46校獨立接待網域生活來源缺39，全288同標準缺44，任一生活內容缺16。TKU全部320新增M3–M6中文值、108來源／387引用核對，4529pack檔、45分片、262圖片hash與拍攝期檢查通過。原文為風險抽查，不宣稱獨立全文重讀全部作者501組或全網資料。
 
 檢視 [原始run-index](run-index.json)、[完整runtime歷史原始摘要](integration-final4-full-runtime-summary.json)、[發布與回滾計畫](RELEASE-PLAN.md)、[2d0保存點](checkpoint-2d0-55ee3669.md)、[7a7保存點](checkpoint-7a7-a20abe6c.md)。未merge／部署；本地任一通過也不代表正式DB已同步或上線成功。
+
+排隊輸入獨立審查：[NTU1389body/44ZIP/648引用](ntu-ninth-fixed-input-audit.json)、[112新增觀察與429結論之有界語意複核](queued-ntu-ninth-independent-semantic-review.json)、[相同分母生活來源缺口](ntu-ninth-independent-life-gap.json)、[NCU13新原件與66圖頁hash](ncu-thirteenth-fixed-input-audit.json)、[NCU原文與獨立圖頁複核範圍](queued-ncu-thirteenth-independent-semantic-review.json)。不是排隊新版本的整合驗收；不把作者的所有全文／視讀宣稱移作本審核結果。
