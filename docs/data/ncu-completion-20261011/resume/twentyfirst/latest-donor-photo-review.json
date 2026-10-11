@@ -1,0 +1,194 @@
+{
+  "checked_at": "2026-10-11T22:12:10.851920+00:00",
+  "scope": "12剩餘缺圖項目候選搜尋與逐筆排除；僅照片相關欄，未合入任何donor名額、年度、資格或共用matcher。名稱搜索只是候選篩選，不自動認定相同學校。",
+  "source_receipts": [
+    {
+      "pr": 9,
+      "fixed_sha": "23757a06778f7569716a19987dd1d39effce13f2",
+      "path": "src/exchange_info/official_data/ntu/partners.jsonl",
+      "source_url": "https://github.com/blizzard-new/abroad/blob/23757a06778f7569716a19987dd1d39effce13f2/src/exchange_info/official_data/ntu/partners.jsonl",
+      "retrieved_exit_code": 0,
+      "response_sha256": "729641193f51f19a109d504e8e7cee387e8cd3d1d789405273f7c8072b1905dd",
+      "record_count": 288
+    },
+    {
+      "pr": 10,
+      "fixed_sha": "52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8",
+      "path": "src/exchange_info/official_data/ccu/campus-assets.json",
+      "source_url": "https://github.com/blizzard-new/abroad/blob/52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8/src/exchange_info/official_data/ccu/campus-assets.json",
+      "retrieved_exit_code": 0,
+      "response_sha256": "24bf23a9eca5c593993ce623b15f24a34afdab90c09e9ff55ef7c1a4b499311c",
+      "record_count": 104
+    },
+    {
+      "pr": 13,
+      "fixed_sha": "93cbd9dfee3af95f9ecc89cceb1ccd0e100778af",
+      "path": "src/exchange_info/official_data/tku/campus_asset_manifest.json",
+      "source_url": "https://github.com/blizzard-new/abroad/blob/93cbd9dfee3af95f9ecc89cceb1ccd0e100778af/src/exchange_info/official_data/tku/campus_asset_manifest.json",
+      "retrieved_exit_code": 0,
+      "response_sha256": "76afdfc8a59ba264f716adc12dec14a183f17892782cb02ecadea095922215ab",
+      "record_count": 262
+    }
+  ],
+  "candidate_reviews": [
+    {
+      "ncu_row_id": "ncu-022",
+      "donor_pr": 9,
+      "donor_sha": "23757a06778f7569716a19987dd1d39effce13f2",
+      "donor_school_name": "雷恩第一大學（原翰尼第一大學）",
+      "donor_country": "法國",
+      "photo_metadata": {
+        "image_status": "missing",
+        "image_page_url": null,
+        "source_url": "https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/818"
+      },
+      "decision": "not_reused",
+      "reason": "不同機構，雷恩第一大學不是雷恩商學院；且donor無照片。"
+    },
+    {
+      "ncu_row_id": "ncu-036",
+      "donor_pr": 9,
+      "donor_sha": "23757a06778f7569716a19987dd1d39effce13f2",
+      "donor_school_name": "特魯瓦科技大學",
+      "donor_country": "法國",
+      "photo_metadata": {
+        "image_status": "missing",
+        "image_page_url": null,
+        "source_url": "https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/67"
+      },
+      "decision": "not_reused",
+      "reason": "同國校名候選，但donor image_status=missing、image_page_url空，沒有可重用照片。"
+    },
+    {
+      "ncu_row_id": "ncu-215",
+      "donor_pr": 10,
+      "donor_sha": "52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8",
+      "donor_school_name": "University of Economics and Law (UEL), Vietnam National University Ho Chi Minh City 越南胡志明市 經濟法律大學",
+      "donor_country": "越南",
+      "photo_metadata": {
+        "photo": {
+          "status": "missing",
+          "value": null,
+          "reason": "未取得對應校園且有明確重用授權的照片。",
+          "evidence": []
+        }
+      },
+      "decision": "not_reused",
+      "reason": "同大學系統不同成員：經濟法律大學不是International University；且donor無照片。"
+    },
+    {
+      "ncu_row_id": "ncu-215",
+      "donor_pr": 10,
+      "donor_sha": "52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8",
+      "donor_school_name": "Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學",
+      "donor_country": "越南",
+      "photo_metadata": {
+        "photo": {
+          "status": "verified_current",
+          "value": {
+            "artist": "Nguyen Chi Trung",
+            "license_name": "CC BY-SA 1.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/1.0",
+            "source_page_url": "https://commons.wikimedia.org/wiki/File:HCMUT_Library_in_main_campus.jpg",
+            "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/3/38/HCMUT_Library_in_main_campus.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+            "campus_caption": "Thư viện Trường Đại học Bách khoa",
+            "checked_at": "2026-10-11T08:52:46.345764+00:00",
+            "local_path": "/static/assets/ccu/campuses/p67-9d89032bfa7d.jpg",
+            "sha256": "9d89032bfa7d9fa63697316965ce1a28f6b7fb4f145da969ae17a777b1d8328b",
+            "width": 1280,
+            "height": 960,
+            "modifications": "原樣保存Commons所提供影像；Commons縮圖尺寸依來源URL，不另裁切或用AI修改。",
+            "applicability": "真實校園照片；攝影時間依原頁，查核日不是拍攝日，不保證2027校園外觀或個人分配校區。"
+          },
+          "reason": "已目視檢查真實校園影像，與Commons原頁校名、校區及名冊國家核對；影像校區依原頁說明，不保證個人接收校區。",
+          "evidence": [
+            {
+              "source_id": "p67-commons",
+              "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AHCMUT+Library+in+main+campus.jpg",
+              "source_pages": [],
+              "academic_year": "一般校園照片及授權；攝影日期另依來源",
+              "checked_at": "2026-10-11T08:38:08.864733+00:00",
+              "content_hash": "0d1b96e7550e5b8c47b76e86505512df5ba2c97062ffb4b4478889a574275ba9",
+              "excerpt": "File:HCMUT Library in main campus.jpg; Thư viện Trường Đại học Bách khoa; Nguyen Chi Trung; CC BY-SA 1.0",
+              "location_in_source": "Commons imageinfo/extmetadata or file description Licensing section"
+            }
+          ]
+        }
+      },
+      "decision": "not_reused",
+      "reason": "同城/系統不同成員，HCMUT百科大學圖書館不能用作International University。授權存在不等於身分相符。"
+    },
+    {
+      "ncu_row_id": "ncu-215",
+      "donor_pr": 10,
+      "donor_sha": "52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8",
+      "donor_school_name": "Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學",
+      "donor_country": "越南",
+      "photo_metadata": {
+        "photo": {
+          "status": "verified_current",
+          "value": {
+            "artist": "Adoreplus",
+            "license_name": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "source_page_url": "https://commons.wikimedia.org/wiki/File:ToaNhaTrungTam.jpg",
+            "image_source_url": "https://upload.wikimedia.org/wikipedia/commons/0/0b/ToaNhaTrungTam.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+            "campus_caption": "Center Building at HCMUTE",
+            "checked_at": "2026-10-11T11:15:05.003083+00:00",
+            "local_path": "/static/assets/ccu/campuses/p68-b8a7c828f77c.jpg",
+            "sha256": "b8a7c828f77cff56bc615e6563ddf2c26ee173454e10e5046a0189fa19200b47",
+            "width": 960,
+            "height": 720,
+            "modifications": "原樣保存Commons所提供影像；Commons縮圖尺寸依來源URL，不另裁切或用AI修改。",
+            "applicability": "真實校園照片；攝影時間依原頁，查核日不是拍攝日，不保證2027校園外觀或個人分配校區。"
+          },
+          "reason": "HCMUTE中央大樓校景，Commons作者Adoreplus、CC BY-SA4.0、2016-04-09。官方2025-12-26改名HCM-UTE與母校HCMUTE身份相同；舊照片不宣稱2027外觀。",
+          "evidence": [
+            {
+              "source_id": "p68-followup-photo-exact",
+              "source_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1200&titles=File%3AToaNhaTrungTam.jpg%7CFile%3ASPKTHCM.jpg",
+              "source_pages": [],
+              "academic_year": "一般校園照片及授權；攝影日期另依來源",
+              "checked_at": "2026-10-11T11:12:56.194727+00:00",
+              "content_hash": "8fce235b81f472903b100cdda1c3709a78895113080c1f0d21e2fcccb4bdf8dc",
+              "excerpt": "{\"DateTime\": {\"value\": \"2016-04-09 11:14:57\", \"source\": \"mediawiki-metadata\", \"hidden\": \"\"}, \"ObjectName\": {\"value\": \"ToaNhaTrungTam\", \"source\": \"mediawiki-metadata\"}, \"CommonsMetadataExtension\": {\"value\": 1.2, \"source\": \"extension\", \"hidden\": \"\"}, \"Categories\": {\"value\": \"Ho Chi Minh City University of Technology and Education|Self-published work\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"Assessments\": {\"value\": \"\", \"source\": \"commons-categories\", \"hidden\": \"\"}, \"ImageDescription\": {\"value\": \"Center Building at HCMUTE\", \"source\": \"commons-desc-page\"}, \"DateTimeOriginal\": {\"value\": \"2016-04-09\", \"source\": \"commons-desc-page\"}, \"Credit\": {\"value\": \"<span class=\\\"int-own-work\\\" lang=\\\"en\\\">Own work</span>\", \"source\": \"commons-desc-page\"}, \"Artist\": {\"value\": \"<a href=\\\"//commons.wikimedia.org/w/index.php?title=User:Adoreplus&amp;action=edit&amp;redlink=1\\\" class=\\\"new\\\" title=\\\"User:Adoreplus (page does not exist)\\\">Adoreplus</a>\", \"source\": \"commons-desc-page\"}, \"LicenseShortName\": {\"value\": \"CC BY-SA 4.0\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"UsageTerms\": {\"value\": \"Creative Commons Attribution-Share Alike 4.0\", \"source\": \"commons-desc-page\"}, \"AttributionRequired\": {\"value\": \"true\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"LicenseUrl\": {\"value\": \"https://creativecommons.org/licenses/by-sa/4.0\", \"source\": \"commons-desc-page\"}, \"Copyrighted\": {\"value\": \"True\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"Restrictions\": {\"value\": \"\", \"source\": \"commons-desc-page\", \"hidden\": \"\"}, \"License\": {\"value\": \"cc-by-sa-4.0\", \"source\": \"commons-templates\", \"hidden\": \"\"}}",
+              "location_in_source": "query.pages.48088400.imageinfo[0].extmetadata"
+            },
+            {
+              "source_id": "p68-followup-main",
+              "source_url": "https://hcmute.edu.vn/",
+              "source_pages": [],
+              "excerpt": "Ngày 26/12/2025, Thủ tướng Chính phủ đã có Quyết định số 2809/QĐ-TTg",
+              "academic_year": "校名變更決定2025-12-26；不是2027外觀證明",
+              "application_round": "一般校園參考",
+              "checked_at": "2026-10-11T11:09:39.875782+00:00",
+              "content_hash": "dce8e5258271aa0a27f41cd8123559597657b383b76a8550a9ce165980de54c5",
+              "status": "verified_current"
+            }
+          ]
+        }
+      },
+      "decision": "not_reused",
+      "reason": "HCMUTE科技工程大學中央大樓不是International University；不可用校名近似、所在城市或共同首字套用。"
+    },
+    {
+      "ncu_row_id": "ncu-213",
+      "donor_pr": 13,
+      "donor_sha": "93cbd9dfee3af95f9ecc89cceb1ccd0e100778af",
+      "donor_school_name": "太原大學",
+      "donor_country": "越南",
+      "photo_metadata": {
+        "source_url": "https://commons.wikimedia.org/wiki/File:ThaiNguyenUniversity-mainadmin-bldg.JPG",
+        "caption": "Main administration building, Thai Nguyen University, Thai Nguyen, Vietnam",
+        "identity_address": "Tan Thinh Ward, Thai Nguyen City",
+        "identity_quote": "Main administration building, Thai Nguyen University, Thai Nguyen, Vietnam",
+        "license": "CC0"
+      },
+      "decision": "not_reused",
+      "reason": "太原大學系統主行政楼，不是已核實太原農林大學TUAF校園；不以同系統關係替代成員學校/教學校區核對。"
+    }
+  ],
+  "new_usable_photos": 0,
+  "remaining_photo_gaps": 12,
+  "read_method_note": "廣泛git fetch未於合理等待內完成，主動終止僅本次唯讀fetch（退出143）；改GitHub contents GET固定SHA三檔皆退出0。不是環境断線或來源授權拒絕。"
+}
