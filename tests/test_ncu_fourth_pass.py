@@ -160,7 +160,7 @@ def test_fourth_pass_keeps_original_native_source_bytes_and_reading_counters_sep
     records = json.loads(gzip.decompress((ROOT / "sources/ncu/2026-10-11/host-web-evidence.json.gz").read_bytes()))
     reviewed = {s["id"]: s for s in records if "-p4" in s["id"]}
     full = [s for s in reviewed.values() if s.get("reading_review", {}).get("full_document_read")]
-    assert len(full) == 9 and all(s["format"] == "pdf" for s in full)
+    assert len(full) == 16 and all(s["format"] == "pdf" for s in full)
     assert all(s["reading_review"]["source_sha256"] == s["sha256"] for s in full)
     assert len(reviewed["ncu-001-p4-03e653da33"]["pages"]) == 28
     assert not reviewed["ncu-001-p4-03e653da33"]["reading_review"]["full_document_read"]

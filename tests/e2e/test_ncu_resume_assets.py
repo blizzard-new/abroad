@@ -65,13 +65,13 @@ def test_resume_mother_marker_and_all_partner_points_reach_real_globe(page,live_
     page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server)
     page.locator('[data-partner-view="map"]').click()
-    expect(page.locator('#partner-map-count')).to_have_text('188 所已定位 / 214 所符合條件',timeout=60_000)
-    expect(page.locator('#map-school-select option')).to_have_count(189)
+    expect(page.locator('#partner-map-count')).to_have_text('214 所已定位 / 214 所符合條件',timeout=60_000)
+    expect(page.locator('#map-school-select option')).to_have_count(215)
     expect(page.locator('#map-home')).to_be_enabled()
     expect(page.locator('.map-home-marker')).to_contain_text('中央',timeout=60_000)
     page.locator('#map-home').click()
     OUTPUT.mkdir(parents=True,exist_ok=True)
-    page.screenshot(path=str(OUTPUT/'ncu-mother-and-188-points.png'))
+    page.screenshot(path=str(OUTPUT/'ncu-mother-and-214-points.png'))
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
 
 

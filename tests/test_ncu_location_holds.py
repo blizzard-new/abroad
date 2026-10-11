@@ -62,7 +62,12 @@ def test_operator_review_can_resolve_a_scoped_hold_without_changing_other_countr
     assert campus_location(p.model_copy(update={"country": "臺灣"}), None, tmp_path) is None
 
 
-def test_missing_primary_coordinates_do_not_ban_an_independent_verified_source():
+def test_missing_primary_coordinates_do_not_ban_an_independent_verified_source(tmp_path, monkeypatch):
+    source=json.loads(completion.LOCATIONS.read_text())
+    source["locations"]=[r for r in source["locations"] if "Bingöl" not in r["school_name"]]
+    scoped=tmp_path/"missing-primary.json"
+    scoped.write_text(json.dumps(source))
+    monkeypatch.setattr(completion,"LOCATIONS",scoped)
     p = partner("Bingöl")
     independent = UniversityLocation(
         school_name=p.school_name, country=p.country, latitude=38.8, longitude=40.5,
