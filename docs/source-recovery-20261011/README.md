@@ -4,7 +4,7 @@
 
 固定資料仍為CCU `52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8`、NCU `a2df55b16f72455f7154d7afff44934fc8dbf99d`、NTU `c7357f974faaec8e60ef19698d4d21633c322dc8`、TKU `93cbd9dfee3af95f9ecc89cceb1ccd0e100778af`。相對main59 migration增量0；CGU154／NTPU409／NTU288原workflow逐byte不變。資料來源與全部既有測試函式不受本次記憶體修復改寫。
 
-父指示排隊的新輸入：NCU先前 `48fcc27446f8cadb19f45cae415852af67f76a1e`，19:25只讀核到遠端新head `084f500f091838afe09ddf4f716bffd5ace9b906`，已核實僅11個測試的暫存輸出改動，資料／應用程式不變、所有assert／wait AST相同；NTU `23757a06778f7569716a19987dd1d39effce13f2`。目前已完成固定原件hash／版本與重點語意唯讀審查，尚未合入；先完成當前乾淨SHA重驗，再逐hunk接入，並重跑最終完整組合／記憶體／DB，不將來源分支結果當組合驗收。
+父指示排隊的新輸入：NTU `23757a06778f7569716a19987dd1d39effce13f2`；NCU截至20:05只讀遠端head `13a4afdc0e99cd5f9b4c66bca5bc426d68bdfd4b`，含先前084f500f暫存輸出修復、840955e0三校原件新增與223待讀佇列的182項有界評估文件。全部僅排隊審查，尚未合入5e；先完成當前乾淨SHA重驗，再逐hunk接入，並重跑最終完整組合／記憶體／DB，不將來源分支結果當組合驗收。084相對48fcc的11測試只有暫存輸出差異、assert／wait AST相同；合併仍須保留目前通用「待核實」語意。
 
 | 目前5e711418門檻 | 狀態 |
 |---|---|
@@ -35,3 +35,5 @@ TKU兩拒用圖：Sunderland錯校圖、UAEMEX授權人／署名鏈未核實圖�
 檢視 [原始run-index](run-index.json)、[完整runtime歷史原始摘要](integration-final4-full-runtime-summary.json)、[發布與回滾計畫](RELEASE-PLAN.md)、[2d0保存點](checkpoint-2d0-55ee3669.md)、[7a7保存點](checkpoint-7a7-a20abe6c.md)。未merge／部署；本地任一通過也不代表正式DB已同步或上線成功。
 
 排隊輸入獨立審查：[NTU1389body/44ZIP/648引用](ntu-ninth-fixed-input-audit.json)、[112新增觀察與429結論之有界語意複核](queued-ntu-ninth-independent-semantic-review.json)、[相同分母生活來源缺口](ntu-ninth-independent-life-gap.json)、[NCU13新原件與66圖頁hash](ncu-thirteenth-fixed-input-audit.json)、[NCU原文與獨立圖頁複核範圍](queued-ncu-thirteenth-independent-semantic-review.json)。不是排隊新版本的整合驗收；不把作者的所有全文／視讀宣稱移作本審核結果。
+
+新增唯讀NCU14審查：[45原始回應hash／143 PDF頁重抽取／39上游render hash](ncu-fourteenth-fixed-input-audit.json)、[三校中文與13張實際圖頁的獨立有界複核](queued-ncu-fourteenth-independent-semantic-review.json)。CUK五頁純影像全文視讀；仁荷10/19與10/21、紙本及18／19學分矛盾保留；馬來亞iBT4／80、邀請年份與校曆錯年、已關閉住宿及健康表YES語意保留。不宣稱全文讀完1351課程列或所有143頁。214校仍unknown／agreement_only，新增33條文件均需校方确认。

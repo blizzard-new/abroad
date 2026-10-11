@@ -1,28 +1,37 @@
 {
-  "recorded_at": "2026-10-11T19:50:03.268194+00:00",
+  "as_of": "2026-10-11T20:05:51.619850+00:00",
   "sha": "5e7114182093fa77203ee946a4f86a88d3b10345",
-  "collected_unique": 3110,
-  "status": "running with failures; counts not final acceptance",
+  "complete": false,
+  "status": "RUNNING_WITH_FAILURES",
+  "not_a_final_unique_case_tally": true,
   "shards": [
     {
       "shard": 0,
-      "status": "running",
-      "observed_call_passes": 148,
-      "observed_failure_events": 2
+      "status": "failed",
+      "observed_call_passed": 2632,
+      "observed_call_failed": 6,
+      "observed_setup_errors": 0
     },
     {
       "shard": 1,
-      "status": "running",
-      "observed_call_passes": 125,
-      "observed_failure_events": 10
+      "status": "failed",
+      "observed_call_passed": 143,
+      "observed_call_failed": 10,
+      "observed_setup_errors": 0
     },
     {
       "shard": 2,
-      "status": "notstarted"
+      "status": "running",
+      "observed_call_passed": 119,
+      "observed_call_failed": 0,
+      "observed_setup_errors": 0
     },
     {
       "shard": 3,
-      "status": "notstarted"
+      "status": "running",
+      "observed_call_passed": 0,
+      "observed_call_failed": 0,
+      "observed_setup_errors": 0
     }
   ]
 }

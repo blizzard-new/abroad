@@ -1,0 +1,34 @@
+{
+  "base": "a2df55b16f72455f7154d7afff44934fc8dbf99d",
+  "ours": "5e7114182093fa77203ee946a4f86a88d3b10345",
+  "theirs": "084f500f091838afe09ddf4f716bffd5ace9b906",
+  "local_host_records": [
+    "ncu-081",
+    "ncu-138"
+  ],
+  "incoming_retains_base_at_those_rows": true,
+  "local_condition_additions": [
+    {
+      "school_name": "圖爾庫大學 University of Turku",
+      "rule_id": "ncu-081-host-apply",
+      "requirement_name": "Language Assessment Sheet（選用此語言證明時）",
+      "source_urls": [
+        "https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc"
+      ],
+      "source_versions": [
+        {
+          "url": "https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc",
+          "source_id": "host-turku-languageform",
+          "sha256": "19e5b1d39ae0a663afb83bbab4257fc7f2a52f83c3c4edd7807147ab4db01d67"
+        }
+      ],
+      "requires_on_campus_housing": false,
+      "requires_institutional_confirmation": true,
+      "confirmation_note": "僅選用此表作語言能力證明者；認可測驗或適用豁免附件不因此另加此表。 當期可接受選項及表格須核對。",
+      "scope_note": "原已查核表格參考；不核准中央116當期。"
+    }
+  ],
+  "local_condition_removals": [],
+  "incoming_condition_new_count": 25,
+  "proposed_resolution": "Replace unchanged incoming Turku/Meiji old rows with existing integration rows, union conditions by school/rule/requirement retaining local scoped source edits, then offline rebuild twice. Use upstream tmp_path outputs, retain current pending-unverified UI assertions; reconcile additional outdated assertions only after full failure trace."
+}
