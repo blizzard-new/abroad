@@ -1,11 +1,9 @@
 """New PDF distinctions are readable in real mobile and desktop student views."""
 from pathlib import Path
-import os
 import json
 import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
-OUT = Path(os.environ.get('NCU_RESUME_BROWSER_OUTPUT', '/tmp/ncu-final-browser'))
 
 def point_screenshot(target,path):
     for detail in target.locator('xpath=ancestor::details').all():
@@ -21,7 +19,8 @@ def point_screenshot(target,path):
     ('信州',390,'2026春原包已讀','¥95,000'),
     ('關西大學',1280,'2027春初次六類共通','未標年homestay leaflet補充'),
 ])
-def test_ninth_year_scope_and_documents_visible(page,live_server,query,width,overview,life):
+def test_ninth_year_scope_and_documents_visible(page,live_server,query,width,overview,life, tmp_path):
+    OUT = tmp_path / 'browser'
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
@@ -47,7 +46,8 @@ def test_ninth_year_scope_and_documents_visible(page,live_server,query,width,ove
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth') and not errors
 
 @pytest.mark.parametrize('width',[390,1280])
-def test_ninth_icp_210_partner_globe_and_source_note(page,live_server,width):
+def test_ninth_icp_210_partner_globe_and_source_note(page,live_server,width, tmp_path):
+    OUT = tmp_path / 'browser'
     d=json.loads(Path('sources/ncu/2026-10-11/resume-ninth-location-review.json').read_text())['coordinate_decisions'][0]
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="map"]').click()

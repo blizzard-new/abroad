@@ -1,0 +1,113 @@
+CONFTEST LOADED!
+.FFFF...                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_packets_do_not_activate_current_quota_deadlines_or_downloads[unknown-unknown-ncu-136-Tsukuba-18-6] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-51/test_packets_do_not_activate_c0')
+row = 'ncu-136', name = 'Tsukuba', documents = 18, stages = 6
+admission = 'unknown', housing = 'unknown'
+
+    @pytest.mark.parametrize('row,name,documents,stages', [('ncu-136','Tsukuba',18,6), ('ncu-151','Sookmyung',7,2)])
+    @pytest.mark.parametrize('admission,housing', [('unknown','unknown'), ('accepted','on_campus')])
+    def test_packets_do_not_activate_current_quota_deadlines_or_downloads(tmp_path,row,name,documents,stages,admission,housing):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        assert partner.quota is None and partner.availability_status == 'agreement_only'
+        client = TestClient(create_app(tmp_path))
+        response = client.get('/application-workflow', params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
+        assert response.status_code == 200
+        workflow = response.json()
+        assert workflow['review_status'] == 'pending_review' and workflow['published_at'] is None
+        host = [s for s in workflow['steps'] if s['rule_id'].startswith(row+'-host-')]
+        assert len(host) == stages + 1
+        assert all(s['deadline_at'] is None and not s['deadline_reminder_eligible'] for s in host)
+        catalog = client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116','host_admission_status':admission,'housing_choice':housing}).json()
+        conditional = [d for d in catalog['items'] if d['applicability']]
+>       assert len(conditional) == documents
+E       assert 0 == 18
+E        +  where 0 = len([])
+
+tests/test_ncu_thirteenth_packets.py:65: AssertionError
+_ test_packets_do_not_activate_current_quota_deadlines_or_downloads[unknown-unknown-ncu-151-Sookmyung-7-2] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-51/test_packets_do_not_activate_c1')
+row = 'ncu-151', name = 'Sookmyung', documents = 7, stages = 2
+admission = 'unknown', housing = 'unknown'
+
+    @pytest.mark.parametrize('row,name,documents,stages', [('ncu-136','Tsukuba',18,6), ('ncu-151','Sookmyung',7,2)])
+    @pytest.mark.parametrize('admission,housing', [('unknown','unknown'), ('accepted','on_campus')])
+    def test_packets_do_not_activate_current_quota_deadlines_or_downloads(tmp_path,row,name,documents,stages,admission,housing):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        assert partner.quota is None and partner.availability_status == 'agreement_only'
+        client = TestClient(create_app(tmp_path))
+        response = client.get('/application-workflow', params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
+        assert response.status_code == 200
+        workflow = response.json()
+        assert workflow['review_status'] == 'pending_review' and workflow['published_at'] is None
+        host = [s for s in workflow['steps'] if s['rule_id'].startswith(row+'-host-')]
+        assert len(host) == stages + 1
+        assert all(s['deadline_at'] is None and not s['deadline_reminder_eligible'] for s in host)
+        catalog = client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116','host_admission_status':admission,'housing_choice':housing}).json()
+        conditional = [d for d in catalog['items'] if d['applicability']]
+>       assert len(conditional) == documents
+E       assert 0 == 7
+E        +  where 0 = len([])
+
+tests/test_ncu_thirteenth_packets.py:65: AssertionError
+_ test_packets_do_not_activate_current_quota_deadlines_or_downloads[accepted-on_campus-ncu-136-Tsukuba-18-6] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-51/test_packets_do_not_activate_c2')
+row = 'ncu-136', name = 'Tsukuba', documents = 18, stages = 6
+admission = 'accepted', housing = 'on_campus'
+
+    @pytest.mark.parametrize('row,name,documents,stages', [('ncu-136','Tsukuba',18,6), ('ncu-151','Sookmyung',7,2)])
+    @pytest.mark.parametrize('admission,housing', [('unknown','unknown'), ('accepted','on_campus')])
+    def test_packets_do_not_activate_current_quota_deadlines_or_downloads(tmp_path,row,name,documents,stages,admission,housing):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        assert partner.quota is None and partner.availability_status == 'agreement_only'
+        client = TestClient(create_app(tmp_path))
+        response = client.get('/application-workflow', params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
+        assert response.status_code == 200
+        workflow = response.json()
+        assert workflow['review_status'] == 'pending_review' and workflow['published_at'] is None
+        host = [s for s in workflow['steps'] if s['rule_id'].startswith(row+'-host-')]
+        assert len(host) == stages + 1
+        assert all(s['deadline_at'] is None and not s['deadline_reminder_eligible'] for s in host)
+        catalog = client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116','host_admission_status':admission,'housing_choice':housing}).json()
+        conditional = [d for d in catalog['items'] if d['applicability']]
+>       assert len(conditional) == documents
+E       assert 0 == 18
+E        +  where 0 = len([])
+
+tests/test_ncu_thirteenth_packets.py:65: AssertionError
+_ test_packets_do_not_activate_current_quota_deadlines_or_downloads[accepted-on_campus-ncu-151-Sookmyung-7-2] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-51/test_packets_do_not_activate_c3')
+row = 'ncu-151', name = 'Sookmyung', documents = 7, stages = 2
+admission = 'accepted', housing = 'on_campus'
+
+    @pytest.mark.parametrize('row,name,documents,stages', [('ncu-136','Tsukuba',18,6), ('ncu-151','Sookmyung',7,2)])
+    @pytest.mark.parametrize('admission,housing', [('unknown','unknown'), ('accepted','on_campus')])
+    def test_packets_do_not_activate_current_quota_deadlines_or_downloads(tmp_path,row,name,documents,stages,admission,housing):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        assert partner.quota is None and partner.availability_status == 'agreement_only'
+        client = TestClient(create_app(tmp_path))
+        response = client.get('/application-workflow', params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
+        assert response.status_code == 200
+        workflow = response.json()
+        assert workflow['review_status'] == 'pending_review' and workflow['published_at'] is None
+        host = [s for s in workflow['steps'] if s['rule_id'].startswith(row+'-host-')]
+        assert len(host) == stages + 1
+        assert all(s['deadline_at'] is None and not s['deadline_reminder_eligible'] for s in host)
+        catalog = client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116','host_admission_status':admission,'housing_choice':housing}).json()
+        conditional = [d for d in catalog['items'] if d['applicability']]
+>       assert len(conditional) == documents
+E       assert 0 == 7
+E        +  where 0 = len([])
+
+tests/test_ncu_thirteenth_packets.py:65: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_thirteenth_packets.py::test_packets_do_not_activate_current_quota_deadlines_or_downloads[unknown-unknown-ncu-136-Tsukuba-18-6]
+FAILED tests/test_ncu_thirteenth_packets.py::test_packets_do_not_activate_current_quota_deadlines_or_downloads[unknown-unknown-ncu-151-Sookmyung-7-2]
+FAILED tests/test_ncu_thirteenth_packets.py::test_packets_do_not_activate_current_quota_deadlines_or_downloads[accepted-on_campus-ncu-136-Tsukuba-18-6]
+FAILED tests/test_ncu_thirteenth_packets.py::test_packets_do_not_activate_current_quota_deadlines_or_downloads[accepted-on_campus-ncu-151-Sookmyung-7-2]
+4 failed, 4 passed in 6.09s

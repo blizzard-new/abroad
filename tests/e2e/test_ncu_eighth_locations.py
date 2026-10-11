@@ -1,13 +1,12 @@
 from pathlib import Path
-import os
 import json
 import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
-OUTPUT = Path(os.environ.get('NCU_RESUME_BROWSER_OUTPUT', '/tmp/ncu-next-browser'))
 
 @pytest.mark.parametrize('width',[390,1280])
-def test_eighth_twelve_campus_previews_and_sources_visible(page,live_server,width):
+def test_eighth_twelve_campus_previews_and_sources_visible(page,live_server,width, tmp_path):
+    OUTPUT = tmp_path / 'browser'
     rows=json.loads(Path('sources/ncu/2026-10-11/resume-eighth-location-review.json').read_text())['coordinate_decisions']
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')

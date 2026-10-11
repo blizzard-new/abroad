@@ -1,13 +1,11 @@
-from pathlib import Path
-import os
 import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
 
-OUTPUT = Path(os.environ.get('NCU_RESUME_BROWSER_OUTPUT', '/tmp/ncu-next-browser'))
 
 @pytest.mark.parametrize('query,width,rid',[('考納斯',390,'ncu-091'),('考納斯',1280,'ncu-091'),('明治',390,'ncu-138'),('明治',1280,'ncu-138')])
-def test_source_years_documents_and_cost_scopes_in_actual_browser(page,live_server,query,width,rid):
+def test_source_years_documents_and_cost_scopes_in_actual_browser(page,live_server,query,width,rid, tmp_path):
+    OUTPUT = tmp_path / 'browser'
     errors=[]
     page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':1050})

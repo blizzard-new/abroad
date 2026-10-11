@@ -1,16 +1,15 @@
 from pathlib import Path
-import os
 import pytest
 from playwright.sync_api import expect
 from .test_ncu_resume_assets import select_ncu
 from .test_open_catalog import wait_until
-OUTPUT = Path(os.environ.get('NCU_RESUME_BROWSER_OUTPUT', '/tmp/ncu-next-browser'))
 
 @pytest.mark.parametrize('query,width,author,licence,scope',[
     ('蘇門答臘',390,'Fandiamendra','CC BY-SA 4.0','2019年4月29日'),
     ('胡志明市自然科學',1280,'trungydang','CC BY 3.0','227 Nguyễn Văn Cừ'),
 ])
-def test_seventh_real_photo_and_licence_visible(page,live_server,query,width,author,licence,scope):
+def test_seventh_real_photo_and_licence_visible(page,live_server,query,width,author,licence,scope, tmp_path):
+    OUTPUT = tmp_path / 'browser'
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.set_viewport_size({'width':width,'height':1050});page.emulate_media(reduced_motion='reduce')
     select_ncu(page,live_server);page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(query)
@@ -27,7 +26,8 @@ def test_seventh_real_photo_and_licence_visible(page,live_server,query,width,aut
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth') and not errors
 
 
-def test_seventh_nine_named_campus_previews_on_globe(page,live_server):
+def test_seventh_nine_named_campus_previews_on_globe(page,live_server, tmp_path):
+    OUTPUT = tmp_path / 'browser'
     import json
     rows=json.loads(Path('sources/ncu/2026-10-11/resume-seventh-location-review.json').read_text())['coordinate_decisions']
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
