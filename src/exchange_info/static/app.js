@@ -88,6 +88,7 @@ const state = {
   personalApplicationPlan: null,
   destinationProfiles: [],
   schoolImages: [],
+  ncuSchoolImages: [],
   calendarEvents: [],
   preparationTasks: {},
   planningAvailability: null,
@@ -1176,12 +1177,20 @@ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {})
 
 async function loadSchoolImages() {
   try {
-    const payload = await fetchJson("/static/assets/school-images.json?v=20261011-source-recovery-1");
+    const payload = await fetchJson("/static/assets/school-images.json?v=20261011-integration-1");
     state.schoolImages = Array.isArray(payload?.schools)
       ? payload.schools.filter((item) => item && item.school_name)
       : [];
   } catch (_) {
     state.schoolImages = [];
+  }
+  try {
+    const payload = await fetchJson("/static/assets/ncu-school-images.json?v=20261011-ncu-campus-1");
+    state.ncuSchoolImages = Array.isArray(payload?.schools)
+      ? payload.schools.filter((item) => item.status === "verified" && item.local_path)
+      : [];
+  } catch (_) {
+    state.ncuSchoolImages = [];
   }
 }
 
@@ -1220,6 +1229,22 @@ function visualSchoolAliases(value) {
 
 let schoolVisualSource = null, schoolVisualExact = new Map(), schoolVisualAliases = new Map();
 function schoolVisualRecordFor(schoolName, country = null) {
+  const home = state.dashboard?.school_name;
+  if (home === "國立中央大學") {
+    return state.ncuSchoolImages.find(row => visualSchoolIdentity(row.school_name) === visualSchoolIdentity(schoolName)
+      && visualCountryIdentity(row.country) === visualCountryIdentity(country)) || { status: "license_unverified" };
+  }
+  if (home === "國立中正大學") {
+    const partner = state.dashboard.partner_universities.find(row => visualSchoolIdentity(row.school_name) === visualSchoolIdentity(schoolName)
+      && visualCountryIdentity(row.country) === visualCountryIdentity(country));
+    if (partner?.reference_data?.ccu_completion) {
+      let photo;
+      try { photo = JSON.parse(partner.reference_data.ccu_campus_assets || "{}").photo; } catch (_) { /* Attribution stays absent. */ }
+      return photo && partner.image_status === "verified" ? { status: "verified", local_path: partner.image_url,
+        license_name: photo.license_name, license_url: photo.license_url,
+        note: `攝影：${photo.artist} · ${photo.license_name} · ${photo.campus_caption}` } : { status: "missing" };
+    }
+  }
   if (schoolVisualSource !== state.schoolImages) {
     schoolVisualSource = state.schoolImages;
     schoolVisualExact = new Map(); schoolVisualAliases = new Map();
@@ -7686,7 +7711,7 @@ function syncPartnerView() {
   if (partnerMapLoadPromise || partnerMapLoadFailed) return;
   showPartnerMapStatus("正在準備你的世界地圖", "首次載入需要一點時間。", { loading: true });
   const generation = partnerMapGeneration;
-  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261011-source-recovery-1&attempt=${generation}`)
+  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261011-integration-1&attempt=${generation}`)
     .then((module) => module.createPartnerMap({ renderPreview: renderMapPreview, onSchoolSelect: loadDiscoveryPreview, onList: () => setPartnerView("list"), onRetry: retryPartnerMap, onIcons: initIcons, freshEngine: generation > 0 }))
     .then((controller) => {
       if (generation !== partnerMapGeneration) { controller.destroy(); return; }
@@ -8203,6 +8228,7 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {
       body.innerHTML = `<p>查核日：${escapeHtml(report.checked_at)}。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。</p>
         <ul>${Object.values(report.fields).map(row=>`<li><strong>${escapeHtml(row.label)}</strong>：${escapeHtml(row.note)}${row.unresolved ? `<small>${escapeHtml(row.unresolved)}</small>`:""}${row.key.startsWith("home_") || row.key === "quota" ? (row.original_evidence || []).map(p=>`<details><summary>${escapeHtml(p.source_title)} · 原文第${escapeHtml(p.page)}頁</summary><p>${escapeHtml(p.applicability)} · 查核${escapeHtml(p.checked_at)} · <a href="${escapeHtml(safeSourceUrl(p.source_url))}" target="_blank" rel="noopener noreferrer">官方來源</a></p><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("") : ""}</li>`).join("")}</ul>
         ${report.source_evidence.map(src=>`<details><summary>${escapeHtml(src.label)} · ${src.source_excerpt_only ? "必要欄位摘錄" : `${src.pages.length}個來源頁／段`}；${src.content_status?.text_page_count ?? 0}頁有文字；${src.content_status?.visual_reviewed_page_count ?? 0}頁已視覺查核${src.content_status?.visual_reviewed_image_count ? `；${src.content_status.visual_reviewed_image_count}張原文圖片已視覺查核` : ""}</summary><p>${escapeHtml(report.read_sources.find(row=>row.id === src.id)?.applicability || "適用性待核對")}</p><p><a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">官方公開來源</a> · 查核${escapeHtml(src.checked_at)}${src.excerpt_note_zh ? `<small>${escapeHtml(src.excerpt_note_zh)}</small>` : ""}${src.conversion_review?.note_zh ? `<small>${escapeHtml(src.conversion_review.note_zh)}</small>` : ""}${src.visual_review?.instructions_zh ? `<small>${escapeHtml(src.visual_review.instructions_zh)}</small>` : ""}${(src.text_quality_issues || []).length ? `<small>${escapeHtml(src.text_quality_issues.map(x=>`${x.reason}（頁${x.pages.join("、")}）`).join("；"))}</small>` : ""}${(src.non_text_pages || []).length ? `<small>${src.non_text_pages.every(page => page == null) ? "無固定PDF頁碼的來源含空白段／工作表" : `第${escapeHtml(src.non_text_pages.join("、"))}頁無可抽取文字`}；${src.content_status?.all_pages_read ? "已有原件SHA相符的閱讀紀錄；文字／視覺查核範圍分列，原始空頁仍保留。" : "須看官方原頁，未視為全文核對完成。"}</small>` : ""}</p>${src.privacy_note ? `<p class="ncu-source-scope">${escapeHtml(src.privacy_note)}</p>` : ""}${ncuSourceReadingScope(src) && ncuSourceReadingScope(src) !== src.privacy_note ? `<p class="ncu-source-reading-scope">閱讀範圍：${escapeHtml(ncuSourceReadingScope(src))}</p>` : ""}${src.pages.map(p=>`<details><summary>${p.archive_member ? `原文表格 ${escapeHtml(p.archive_member)}（ZIP內檔案，無PDF頁碼）` : p.image ? `原文圖片 ${escapeHtml(p.image)}（無PDF頁碼）` : p.slide ? `原文投影片 ${escapeHtml(p.slide)}（無PDF頁碼）` : p.sheet ? `原文工作表 ${escapeHtml(p.sheet)}（無PDF頁碼）` : p.page == null ? (src.source_excerpt_only ? "必要欄位摘錄（無固定PDF頁碼）" : "原文（無固定PDF頁碼）") : `原文第${escapeHtml(p.page)}頁`}</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text || (p.sheet ? "此工作表沒有非空儲存格；原始空白工作表另保留，閱讀狀態依同SHA逐工作表紀錄。" : "此頁無可抽取文字；請看原件及另外標示的視覺核對摘錄。"))}</pre></details>`).join("")}${(src.page_transcriptions || []).map(p=>`<details class="ncu-visual-passage"><summary>視覺核對摘錄（原PDF第${escapeHtml(p.page)}頁）</summary><p>人工核對的選定原文段落；原始抽取另外保留，並非全文轉錄或本期適用性核准。</p><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("")}</details>`).join("")}
+        ${(report.collection_attempts || []).filter(src => src.exclusion_reason).length ? `<section><p>已排除的候選來源：校名、國家或incoming方案不符，保留查核證據，不當外校申請規則。</p><ul>${report.collection_attempts.filter(src => src.exclusion_reason).map(src => `<li>${escapeHtml(src.exclusion_reason)} · <a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">候選來源</a></li>`).join("")}</ul></section>` : ""}
         ${report.unretrieved_sources.length ? `<section><p>未取得來源：以下是本次讀取失敗的網址，不推定登入限定、官方未公告或停止交換。</p><ul>${report.unretrieved_sources.map(src=>`<li class="ncu-unretrieved-source" data-source-id="${escapeHtml(src.id)}"><strong>${escapeHtml(src.id)}</strong>：${escapeHtml(src.reason)}${src.url ? ` · <a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">已查網址（本次未取得）</a>` : ""}</li>`).join("")}</ul></section>`:""}`;
       element.dataset.loaded = "true";
     } catch (error) { body.textContent = `查核記錄讀取失敗：${error.message}`; }
@@ -8768,7 +8794,9 @@ function renderGuideChecklist(items, profile) {
 function renderStudentSurvivalGuide(item, profile) {
   const sections = profile.student_guide_sections || [];
   const dormPhotos = profile.guide_photos || [];
-  const campusPhoto = item.image_url ? [{
+  const scopedPhotoAlreadyIncluded = activeHomeSchool() === "國立中央大學"
+    && dormPhotos.some((photo) => photo.category === "campus" && item.image_url?.endsWith(photo.image_url));
+  const campusPhoto = item.image_url && !scopedPhotoAlreadyIncluded ? [{
     image_url: item.image_url,
     source_url: item.image_page_url || item.image_source_url || item.website,
     alt: `${item.school_name}校園照片`,
@@ -8802,7 +8830,7 @@ function renderStudentSurvivalGuide(item, profile) {
                   <img src="${escapeHtml(photo.image_url)}" alt="${escapeHtml(photo.alt)}" loading="lazy" />
                   <span>${photo.category === "campus" ? "校園" : "住宿"}</span>
                 </a>
-                <figcaption>${escapeHtml(photo.caption)}${photo.category === "campus" ? renderSchoolImageCredit(item) : ""}</figcaption>
+                <figcaption>${escapeHtml(photo.caption)}${photo.category === "campus" && activeHomeSchool() !== "國立中央大學" ? renderSchoolImageCredit(item) : ""}</figcaption>
               </figure>`).join("")}
           </div>
         </section>` : ""}

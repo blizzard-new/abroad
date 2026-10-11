@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import logging
 from datetime import datetime
+from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
@@ -52,24 +53,47 @@ def load_university_locations(data_dir: Path) -> dict[tuple[str, str], Universit
     """
     records: dict[tuple[str, str], UniversityLocation] = {}
     for path in (LOCATION_CATALOG, Path(data_dir) / "processed" / "university_locations.jsonl"):
-        if not path.exists():
-            continue
-        for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
-            if not line.strip():
-                continue
-            raw = None
-            try:
-                raw = json.loads(line)
-                record = UniversityLocation.model_validate(raw)
-            except (ValueError, ValidationError):
-                logger.warning("Invalid university location in %s at row %d", path.name, number)
-                if isinstance(raw, dict) and isinstance(raw.get("school_name"), str):
-                    country = raw.get("country") if isinstance(raw.get("country"), str) else None
-                    record = UniversityLocation(school_name=raw["school_name"], country=country, geocode_status="needs_review")
-                else:
-                    continue
-            records[location_key(record.school_name, record.country)] = record
+        records.update(_read_location_file(path))
     return VisualRecordIndex(records)
+
+
+def _read_location_file(path: Path) -> dict:
+    records = {}
+    if not path.exists():
+        return records
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        raw = None
+        try:
+            raw = json.loads(line)
+            record = UniversityLocation.model_validate(raw)
+        except (ValueError, ValidationError):
+            logger.warning("Invalid university location in %s at row %d", path.name, number)
+            if isinstance(raw, dict) and isinstance(raw.get("school_name"), str):
+                country = raw.get("country") if isinstance(raw.get("country"), str) else None
+                record = UniversityLocation(school_name=raw["school_name"], country=country, geocode_status="needs_review")
+            else:
+                continue
+        records[location_key(record.school_name, record.country)] = record
+    return records
+
+
+@lru_cache(maxsize=4)
+def _operator_locations(path: Path, mtime_ns: int, size: int):
+    return VisualRecordIndex(_read_location_file(path))
+
+
+def local_location_override(data_dir: Path, school_name: str, country: str | None = None) -> UniversityLocation | None:
+    """A local review (including pending/invalid) precedes a school's sidecar."""
+    path = Path(data_dir) / "processed/university_locations.jsonl"
+    if not path.exists():
+        return None
+    stat = path.stat()
+    records = _operator_locations(path, stat.st_mtime_ns, stat.st_size)
+    if records.get((school_name, country or "")) is None:
+        return None
+    return public_location(records, school_name, country).model_copy(update={"school_name": school_name, "country": country})
 
 
 def public_location(records, school_name: str, country: str | None = None) -> UniversityLocation:

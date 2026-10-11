@@ -1,0 +1,72 @@
+{
+  "base_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "checked_date": "2026-10-11",
+  "suites": [
+    {
+      "suite": "ncu_and_shared_final",
+      "passed": 408,
+      "skipped": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-ncu-final-r2.log",
+      "log_sha256": "b1981d70f9ab22ed2a7789a3caa2273a9f1561da71e738d82b3060535746a845",
+      "note": "本機隔離runtime，unset Supabase；未執行CI。"
+    },
+    {
+      "suite": "other_home_regressions",
+      "passed": 248,
+      "skipped": 4,
+      "local_log": "/workspace/ncu-completion-20261011/tests-regression.log",
+      "log_sha256": "02086e2d9c4d53bf21a25e17670acccb959428ab33dd923a00b6e732589bfc34",
+      "note": "4既有skip來自根conftest的Phase C data reviewed，未新增跳過。"
+    },
+    {
+      "suite": "exact_rebuild_and_new_scope",
+      "passed": 10,
+      "skipped": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-rebuild-new.log",
+      "log_sha256": "51ffc0f93ad976224b036cef6c694d6fb5fcb09be1e177674b3459c9c301d980",
+      "note": "本機隔離runtime，unset Supabase；未執行CI。"
+    },
+    {
+      "suite": "new_data_api_final",
+      "passed": 13,
+      "skipped": 0,
+      "local_log": "/workspace/ncu-completion-20261011/tests-completion-final-r2.log",
+      "log_sha256": "aa723a79e53f5abc7cc19187df766de57e63508ef40d59fba3895161fc7bae68",
+      "note": "本機隔離runtime，unset Supabase；未執行CI。"
+    },
+    {
+      "suite": "browser_first_four",
+      "passed": 4,
+      "skipped": 0,
+      "local_log": "/workspace/ncu-completion-20261011/browser-final.log",
+      "log_sha256": "56f4a181367f2fd7ca0d97ee0c87a25f721f974498288e2f55c7e58d2959c045",
+      "note": "前四browser案例通過，另兩項原斷言字串修正後獨立通過；不得把有失敗的first run當全部通過。"
+    },
+    {
+      "suite": "browser_remaining_two_after_assertion_fix",
+      "passed": 2,
+      "skipped": 0,
+      "local_log": "/workspace/ncu-completion-20261011/browser-new-r3.log",
+      "log_sha256": "f65ca06944345778768093e03549fa39d0faa21afb8b2f9dca8982710e4eb6cb",
+      "note": "本機隔離runtime，unset Supabase；未執行CI。"
+    }
+  ],
+  "openapi_snapshot": "scripts/export_openapi.py --check: current",
+  "javascript": "node --check: passed",
+  "diff_whitespace": "git diff --check: passed",
+  "browser_unique_case_count": 6,
+  "browser_viewport_widths": [
+    390,
+    1280
+  ],
+  "browser_console_errors": 0,
+  "horizontal_overflow": false,
+  "current_host_full_116_approval": 0,
+  "limitations": [
+    "未整合PR8，實際分支座標10；合併後預計43尚未browser驗證。",
+    "sourcecoverage仍部分補查，不宣稱214當期完備。"
+  ],
+  "ci_run": false,
+  "production_database_changed": false,
+  "deployed": false
+}

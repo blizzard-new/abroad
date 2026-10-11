@@ -473,6 +473,9 @@ def _attach_school_images(
     *,
     base_url: str,
 ) -> StudentDashboard:
+    if dashboard.school_name == NCU.school_name:
+        from .ncu_completion import attach_campus_photos
+        return attach_campus_photos(dashboard, base_url=base_url)
     visuals = _load_school_image_manifest()
     base = base_url.rstrip("/")
     partners = []
@@ -2941,6 +2944,9 @@ def create_app(
             if university.id == CCU.id and "ccu_completion" in partner.reference_data:
                 from .ccu_campus_assets import reviewed_image_coverage
                 visual = reviewed_image_coverage(partner)
+            if university.id == NCU.id:
+                from .ncu_completion import campus_photo
+                visual = campus_photo(partner.school_name, partner.country)
             partner_experiences = experience_map.get(normalized, [])
             workflow = workflow_map.get(normalized)
             destination = destination_map.get((home_key, normalized))
@@ -3065,10 +3071,17 @@ def create_app(
         locations = load_university_locations(resolved_data_dir)
         from .ccu_profile import school_location
         is_ccu = university_for(school).id == "ccu"
-        return dashboard.model_copy(update={"partner_universities": [
-            partner.model_copy(update={"location": school_location(partner, public_location(locations, partner.school_name, partner.country), resolved_data_dir) if is_ccu else public_location(locations, partner.school_name, partner.country)})
-            for partner in dashboard.partner_universities
-        ]})
+        is_ncu = university_for(school).id == NCU.id
+        from .ncu_completion import campus_location
+        partners = []
+        for partner in dashboard.partner_universities:
+            location = public_location(locations, partner.school_name, partner.country)
+            if is_ccu:
+                location = school_location(partner, location, resolved_data_dir)
+            elif is_ncu:
+                location = campus_location(partner, location, resolved_data_dir)
+            partners.append(partner.model_copy(update={"location": location}))
+        return dashboard.model_copy(update={"partner_universities": partners})
 
     @app.post("/public-translations")
     def public_translations(payload: PublicTranslationBatch) -> dict:
@@ -3806,6 +3819,9 @@ def create_app(
     ) -> SchoolLifeContext:
         university, partner = partner_context_for_school(school, home_school)
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
+        if university.id == NCU.id:
+            from .ncu_completion import campus_location
+            location = campus_location(partner, location, resolved_data_dir)
         if university.id == "ccu":
             from .ccu_profile import school_location
             location = school_location(partner, location, resolved_data_dir)
@@ -3823,6 +3839,9 @@ def create_app(
     ) -> SchoolLifeContext:
         university, partner = partner_context_for_school(school, home_school)
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
+        if university.id == NCU.id:
+            from .ncu_completion import campus_location
+            location = campus_location(partner, location, resolved_data_dir)
         if university.id == "ccu":
             from .ccu_profile import school_location
             location = school_location(partner, location, resolved_data_dir)
