@@ -1,5 +1,7 @@
 # 中央逐校補完查核，2026-10-11
 
+**最新第三十二批是恢復點，尚非最終驗收。** 五份21頁核讀、三欄與一生活卡修正；16受影響檢查通過，變更兩校待翻譯0。剩282未全文讀來源／61曾引用；有效SHA56，無SHA摘錄2、重複別名3。完整回歸／瀏覽器依使用者要求集中到固定最終候選SHA。詳見[恢復點](resume/thirtysecond/README.md)、[驗證範圍](resume/thirtysecond/validation.json)。
+
 **最新第三十一批：四PDF13頁及一空白工作簿三sheet全讀，已引用待讀71→66份。** 三校七欄，510回歸／6瀏覽器情境與6圖實看；751中文對照、214校待翻譯0。靜岡修士接收與全校位置名錄分開，含住房預算及單人房單位釐清。詳見[第三十一批](resume/thirtyfirst/README.md)、[未完成清單](resume/thirtyfirst/unfinished-source-list.csv)、[驗證](resume/thirtyfirst/validation.json)。以下保留歷史紀錄。
 
 **最新第三十批：兩空白政府表全讀、關西同SHA全文補視讀；71份已引用仍待全讀。** 三校六欄，507回歸／6瀏覽器情境及6圖全實看，745中文對照、214校待翻譯0。兩大型課表仍明列未全讀。詳見[第三十批](resume/thirtieth/README.md)、[未完成清單](resume/thirtieth/unfinished-source-list.csv)、[驗證](resume/thirtieth/validation.json)。以下保留歷史紀錄。

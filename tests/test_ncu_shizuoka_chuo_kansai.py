@@ -193,5 +193,5 @@ def test_selected_public_passages_visuals_and_version_dates_remain_bound_to_orig
     attempts=json.loads((SOURCES/'host-shizuoka-chuo-kansai-original-manifest-20261009.json').read_text())
     assert len(attempts)==51 and all(a['checked_at'].startswith('2026-10-09')for a in attempts)
     assert {a['id'] for a in attempts if sources[a['id']]['content_status']['all_pages_read']} == {
-        'host-kansai-next-08', 'host-shizuoka-next-02', 'host-shizuoka-next-03', 'host-shizuoka-next-04'
+        'host-kansai-next-08', 'host-shizuoka-next-02', 'host-shizuoka-next-03', 'host-shizuoka-next-04', 'host-chuo-next-02'
     }
