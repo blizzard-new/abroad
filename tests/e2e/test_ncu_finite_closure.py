@@ -5,7 +5,7 @@ from .test_ncu_resume_assets import select_ncu
 
 CASES = [
     ('ramon-spain', 'Ramon Llull', 'overview', '西班牙文B2'),
-    ('utar-malaysia', 'Tunku', 'overview', 'RM1000-RM1200'),
+    ('utar-malaysia', 'Tunku', 'overview', 'RM1000'),
     ('kyutech-original', 'Kyushu Institute', 'source', '2026/3/17英文課表'),
     ('aarhus-course', 'Aarhus', 'audit', '一般一學院'),
     ('chuo-agreement', 'Chuo', 'audit', '2026年7月交換協議'),
@@ -43,6 +43,11 @@ def test_final_source_scope_and_identity(page, live_server, tmp_path, width, slu
             card.locator(':scope > summary').click()
             expect(card).to_contain_text('全物理頁原生核讀')
             expect(card).to_contain_text('不代表中央116')
+    if slug == 'utar-malaysia':
+        # The visible Chinese card uses an en dash; avoid the hidden raw source copy.
+        card = page.locator('#detail-overview li:visible').filter(has_text='RM1000').first
+        expect(card).to_be_visible()
+        card.scroll_into_view_if_needed()
     page.evaluate('() => document.fonts.ready')
     card.evaluate('''(node, needle) => {
         const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
@@ -52,12 +57,15 @@ def test_final_source_scope_and_identity(page, live_server, tmp_path, width, slu
             if (start >= 0) {
                 const range = document.createRange();
                 range.setStart(text, start); range.setEnd(text, start + needle.length);
-                window.scrollBy({top: range.getBoundingClientRect().top - 200, behavior: 'instant'});
+                const rect = range.getBoundingClientRect();
+                if (!rect.width || !rect.height) continue;
+                window.scrollBy({top: rect.top - 200, behavior: 'instant'});
                 return;
             }
         }
         throw new Error('Missing marker ' + needle);
     }''', term)
+    page.wait_for_timeout(250)
     page.screenshot(path=str(tmp_path / f'{slug}-{width}-final.png'))
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
     assert not errors
