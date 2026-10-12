@@ -304,6 +304,9 @@ def main():
     from exchange_info.ntu_official_changes import apply_official_changes, SNAPSHOT as OFFICIAL_CHANGES
     if OFFICIAL_CHANGES.exists():
         apply_official_changes(OUTPUT)
+    from exchange_info.ntu_completion import apply_completion, SOURCE as COMPLETION_SOURCE
+    if COMPLETION_SOURCE.exists():
+        apply_completion(OUTPUT)
     print(f"NTU: {len(partner_rows)} partners, {len(workflows)} workflows, {len(destinations)} destinations; 282 pending / 6 zero quotas")
 
 

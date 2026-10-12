@@ -1,0 +1,337 @@
+CONFTEST LOADED!
+FFFFFFFFFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+_ test_only_accounts_with_a_school_can_submit_without_mutating_formal_content __
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_only_accounts_with_a_scho0')
+
+    def test_only_accounts_with_a_school_can_submit_without_mutating_formal_content(
+        tmp_path: Path,
+    ) -> None:
+        app = create_app(tmp_path)
+        client = TestClient(app)
+>       workflow = _workflow(client)
+                   ^^^^^^^^^^^^^^^^^
+
+tests/test_application_workflow_issue_reports.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7fe42aa3bb30>
+
+    def _workflow(client: TestClient) -> dict:
+        response = client.get(
+            "/application-workflow",
+            params={"school": LINCOLN, "home_school": "長庚大學"},
+        )
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_application_workflow_issue_reports.py:65: AssertionError
+______ test_submit_is_idempotent_and_rejects_target_or_payload_tampering _______
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_submit_is_idempotent_and_0')
+
+    def test_submit_is_idempotent_and_rejects_target_or_payload_tampering(
+        tmp_path: Path,
+    ) -> None:
+        app = create_app(tmp_path)
+        client = TestClient(app)
+>       workflow = _workflow(client)
+                   ^^^^^^^^^^^^^^^^^
+
+tests/test_application_workflow_issue_reports.py:187: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7fe4299174d0>
+
+    def _workflow(client: TestClient) -> dict:
+        response = client.get(
+            "/application-workflow",
+            params={"school": LINCOLN, "home_school": "長庚大學"},
+        )
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_application_workflow_issue_reports.py:65: AssertionError
+_____ test_report_rejects_contact_details_and_rate_limits_new_submissions ______
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_report_rejects_contact_de0')
+
+    def test_report_rejects_contact_details_and_rate_limits_new_submissions(
+        tmp_path: Path,
+    ) -> None:
+        app = create_app(tmp_path)
+        client = TestClient(app)
+>       workflow = _workflow(client)
+                   ^^^^^^^^^^^^^^^^^
+
+tests/test_application_workflow_issue_reports.py:245: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7fe429758350>
+
+    def _workflow(client: TestClient) -> dict:
+        response = client.get(
+            "/application-workflow",
+            params={"school": LINCOLN, "home_school": "長庚大學"},
+        )
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_application_workflow_issue_reports.py:65: AssertionError
+______ test_admin_queue_and_terminal_review_are_protected_and_append_only ______
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_admin_queue_and_terminal_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe42958c3b0>
+
+    def test_admin_queue_and_terminal_review_are_protected_and_append_only(
+        tmp_path: Path,
+        monkeypatch,
+    ) -> None:
+        app = create_app(tmp_path)
+        client = TestClient(app)
+>       workflow = _workflow(client)
+                   ^^^^^^^^^^^^^^^^^
+
+tests/test_application_workflow_issue_reports.py:290: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7fe429363b90>
+
+    def _workflow(client: TestClient) -> dict:
+        response = client.get(
+            "/application-workflow",
+            params={"school": LINCOLN, "home_school": "長庚大學"},
+        )
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_application_workflow_issue_reports.py:65: AssertionError
+__ test_local_account_deletion_deidentifies_reporter_without_deleting_report ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_local_account_deletion_de0')
+
+    def test_local_account_deletion_deidentifies_reporter_without_deleting_report(
+        tmp_path: Path,
+    ) -> None:
+        app = create_app(tmp_path)
+        client = TestClient(app)
+>       workflow = _workflow(client)
+                   ^^^^^^^^^^^^^^^^^
+
+tests/test_application_workflow_issue_reports.py:376: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7fe42918e210>
+
+    def _workflow(client: TestClient) -> dict:
+        response = client.get(
+            "/application-workflow",
+            params={"school": LINCOLN, "home_school": "長庚大學"},
+        )
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_application_workflow_issue_reports.py:65: AssertionError
+_________ test_account_export_includes_only_public_issue_report_fields _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_account_export_includes_o0')
+
+    def test_account_export_includes_only_public_issue_report_fields(tmp_path: Path) -> None:
+        app = create_app(tmp_path)
+        client = TestClient(app)
+>       workflow = _workflow(client)
+                   ^^^^^^^^^^^^^^^^^
+
+tests/test_application_workflow_issue_reports.py:405: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7fe428fa1ac0>
+
+    def _workflow(client: TestClient) -> dict:
+        response = client.get(
+            "/application-workflow",
+            params={"school": LINCOLN, "home_school": "長庚大學"},
+        )
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_application_workflow_issue_reports.py:65: AssertionError
+______________ test_local_account_deletion_removes_closed_report _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_local_account_deletion_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe428fe8d40>
+
+    def test_local_account_deletion_removes_closed_report(tmp_path: Path, monkeypatch) -> None:
+        app = create_app(tmp_path)
+        client = TestClient(app)
+>       workflow = _workflow(client)
+                   ^^^^^^^^^^^^^^^^^
+
+tests/test_application_workflow_issue_reports.py:434: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7fe428dd05c0>
+
+    def _workflow(client: TestClient) -> dict:
+        response = client.get(
+            "/application-workflow",
+            params={"school": LINCOLN, "home_school": "長庚大學"},
+        )
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_application_workflow_issue_reports.py:65: AssertionError
+_ test_review_of_deidentified_pending_report_is_replayable_during_cleanup_grace _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_review_of_deidentified_pe0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe428dfabd0>
+
+    def test_review_of_deidentified_pending_report_is_replayable_during_cleanup_grace(
+        tmp_path: Path,
+        monkeypatch,
+    ) -> None:
+        app = create_app(tmp_path)
+        client = TestClient(app)
+>       workflow = _workflow(client)
+                   ^^^^^^^^^^^^^^^^^
+
+tests/test_application_workflow_issue_reports.py:479: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7fe428ced880>
+
+    def _workflow(client: TestClient) -> dict:
+        response = client.get(
+            "/application-workflow",
+            params={"school": LINCOLN, "home_school": "長庚大學"},
+        )
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_application_workflow_issue_reports.py:65: AssertionError
+___________ test_reviewer_account_deletion_removes_reviewer_identity ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_reviewer_account_deletion0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe428a2c980>
+
+    def test_reviewer_account_deletion_removes_reviewer_identity(
+        tmp_path: Path,
+        monkeypatch,
+    ) -> None:
+        app = create_app(tmp_path)
+        client = TestClient(app)
+>       workflow = _workflow(client)
+                   ^^^^^^^^^^^^^^^^^
+
+tests/test_application_workflow_issue_reports.py:541: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7fe4289ffd70>
+
+    def _workflow(client: TestClient) -> dict:
+        response = client.get(
+            "/application-workflow",
+            params={"school": LINCOLN, "home_school": "長庚大學"},
+        )
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_application_workflow_issue_reports.py:65: AssertionError
+________ test_the_experience_list_carries_each_sources_kind_and_digest _________
+
+bundled = <function bundled.<locals>.write at 0x7fe42883e0c0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_the_experience_list_carri0')
+
+    def test_the_experience_list_carries_each_sources_kind_and_digest(bundled, tmp_path):
+        bundled(digest_payload())
+        rows = [make_source(), make_source(url="https://www.reddit.com/r/china/comments/1", platform="Reddit", source_type=ExperienceSourceType.COMMUNITY)]
+        save_student_experiences(rows, tmp_path)
+        response = TestClient(create_app(tmp_path)).get("/student-experiences", params={"school": SCHOOL, "home_school": "長庚大學"})
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_experience_digests.py:187: AssertionError
+_______ test_a_school_with_no_crawled_data_still_lists_its_curated_story _______
+
+bundled = <function bundled.<locals>.write at 0x7fe42865aac0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_a_school_with_no_crawled_0')
+
+    def test_a_school_with_no_crawled_data_still_lists_its_curated_story(bundled, tmp_path):
+        bundled(digest_payload())
+        response = TestClient(create_app(tmp_path)).get("/student-experiences", params={"school": SCHOOL, "home_school": "長庚大學"})
+>       sources = response.json()["sources"]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'sources'
+
+tests/test_experience_digests.py:197: KeyError
+_________ test_without_a_public_address_photo_links_follow_the_request _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe4286a0cb0>
+
+    def test_without_a_public_address_photo_links_follow_the_request(monkeypatch):
+        monkeypatch.delenv("EXCHANGE_PUBLIC_BASE_URL", raising=False)
+        monkeypatch.delenv("RENDER_EXTERNAL_URL", raising=False)
+        client = TestClient(create_app(), base_url="http://127.0.0.1:8000")
+        text = client.get("/student-dashboard", params={"school": "長庚大學"}).text
+>       assert '"http://127.0.0.1:8000/static/assets/schools/' in text
+E       assert '"http://127.0.0.1:8000/static/assets/schools/' in '{"school_name":"長庚大學","last_checked":"2026-10-11T09:24:08.129249Z","academic_score_minimum":70.0,"academic_score_rule...RegulationManagement/RegulationDetail/17a33812-80d0-45f1-b4ef-6c2cf40a0c50","category":"scholarship","summary":null}]}'
+
+tests/test_request_origin.py:96: AssertionError
+__________ test_issue_report_status_filter_excludes_terminal_reports ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-9/test_issue_report_status_filte0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fe428173ad0>
+
+    def test_issue_report_status_filter_excludes_terminal_reports(tmp_path, monkeypatch):
+        from test_application_workflow_issue_reports import _session, _workflow, _payload
+    
+        app = create_app(tmp_path)
+        client = TestClient(app)
+        _, student = _session(app, email="filter-student@example.com", has_school=True)
+        account, admin = _session(app, email="filter-admin@example.com", has_school=False)
+        monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", account.email)
+>       created = client.post("/application-workflow-issue-reports", json=_payload(_workflow(client)),
+                                                                                   ^^^^^^^^^^^^^^^^^
+            headers={**student, "X-Content-Report-Mutation-ID": "synthetic-filter-report-create"})
+
+tests/test_tku_governance_routes.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <starlette.testclient.TestClient object at 0x7fe428118170>
+
+    def _workflow(client: TestClient) -> dict:
+        response = client.get(
+            "/application-workflow",
+            params={"school": LINCOLN, "home_school": "長庚大學"},
+        )
+>       assert response.status_code == 200
+E       assert 404 == 200
+E        +  where 404 = <Response [404 Not Found]>.status_code
+
+tests/test_application_workflow_issue_reports.py:65: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_application_workflow_issue_reports.py::test_only_accounts_with_a_school_can_submit_without_mutating_formal_content
+FAILED tests/test_application_workflow_issue_reports.py::test_submit_is_idempotent_and_rejects_target_or_payload_tampering
+FAILED tests/test_application_workflow_issue_reports.py::test_report_rejects_contact_details_and_rate_limits_new_submissions
+FAILED tests/test_application_workflow_issue_reports.py::test_admin_queue_and_terminal_review_are_protected_and_append_only
+FAILED tests/test_application_workflow_issue_reports.py::test_local_account_deletion_deidentifies_reporter_without_deleting_report
+FAILED tests/test_application_workflow_issue_reports.py::test_account_export_includes_only_public_issue_report_fields
+FAILED tests/test_application_workflow_issue_reports.py::test_local_account_deletion_removes_closed_report
+FAILED tests/test_application_workflow_issue_reports.py::test_review_of_deidentified_pending_report_is_replayable_during_cleanup_grace
+FAILED tests/test_application_workflow_issue_reports.py::test_reviewer_account_deletion_removes_reviewer_identity
+FAILED tests/test_experience_digests.py::test_the_experience_list_carries_each_sources_kind_and_digest
+FAILED tests/test_experience_digests.py::test_a_school_with_no_crawled_data_still_lists_its_curated_story
+FAILED tests/test_request_origin.py::test_without_a_public_address_photo_links_follow_the_request
+FAILED tests/test_tku_governance_routes.py::test_issue_report_status_filter_excludes_terminal_reports
+13 failed in 7.14s

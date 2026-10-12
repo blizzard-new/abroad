@@ -81,14 +81,27 @@ def test_dashboard_adds_location_without_changing_partnerships(tmp_path, monkeyp
 
 
 def test_bundled_locations_are_valid_unique_and_sourced():
+    import json
     import exchange_info.university_locations as locations
+    completion = json.loads(Path("sources/ntu/completion-2026-10-11.json").read_text())
+    reviewed_locations = {
+        locations.location_key(r["school_name"], r["country"]): r
+        for r in completion["schools"] if r.get("location")
+    }
     rows = [UniversityLocation.model_validate_json(line) for line in locations.LOCATION_CATALOG.read_text(encoding="utf-8").splitlines()]
     keys = [locations.location_key(r.school_name, r.country) for r in rows]
     assert len(keys) == len(set(keys))
     for row in rows:
         if row.geocode_status == "verified":
-            assert row.source_url.startswith("https://www.wikidata.org/wiki/Q")
-            assert row.identity_source_url.startswith("https://ror.org/")
+            if reviewed := reviewed_locations.get(locations.location_key(row.school_name, row.country)):
+                assert row.source_url == reviewed["location"]["source_url"]
+                assert row.identity_source_url == reviewed["location"]["identity_source_url"]
+                assert reviewed["location_review"]["official_campus_source_url"].startswith("https://")
+                assert reviewed["location_review"]["assigned_exchange_campus_confirmed"] is False
+                assert (row.latitude, row.longitude) == (reviewed["location"]["latitude"], reviewed["location"]["longitude"])
+            else:
+                assert row.source_url.startswith("https://www.wikidata.org/wiki/Q")
+                assert row.identity_source_url.startswith("https://ror.org/")
             assert row.city and row.geocoded_at
             assert -90 <= row.latitude <= 90 and -180 <= row.longitude <= 180
 

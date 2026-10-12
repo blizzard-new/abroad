@@ -138,7 +138,7 @@ def test_all_ntu_destinations_have_reviewed_or_explicitly_missing_overlays():
 def test_error_page_navigation_is_not_served_as_student_life_evidence():
     records = list(life._bundled_ntu_research().values())
     assert len(records) == 288
-    assert sum(len(row.evidence) for row in records) == 1622
+    assert sum(len(row.evidence) for row in records) == 2146
     akita = next(row for row in records if row.school_name == "秋田大學")
     assert akita.status == "partial" and akita.evidence
     assert not any("404" in source.url for row in akita.evidence for source in row.sources)
@@ -162,12 +162,18 @@ def test_ntu_public_api_serves_photos_locations_and_life_without_network(tmp_pat
         assert response.status_code == 200
         partners = response.json()["partner_universities"]
         assert len(partners) == 288
-        assert sum(p["image_status"] == "verified" for p in partners) == 266
+        assert sum(p["image_status"] == "verified" for p in partners) == 285
+        completion = json.loads(Path("sources/ntu/completion-2026-10-11.json").read_text())
+        reviewed = {(r["school_name"], r["country"]): r["photo"] for r in completion["schools"] if r.get("photo")}
         pending = json.loads(Path("sources/ntu/photo-license-review-2026-10-09.json").read_text())["rows"]
         for row in pending:
             partner = next(p for p in partners if p["school_name"] == row["school_name"])
-            assert partner["image_status"] == "needs_review" and not partner["image_url"]
-        assert sum(p["location"]["geocode_status"] == "verified" for p in partners) == 269
+            addition = reviewed.get((row["school_name"], row["country"]))
+            if addition:
+                assert partner["image_status"] == "verified" and partner["image_url"].endswith(addition["local_path"])
+            else:
+                assert partner["image_status"] == "needs_review" and not partner["image_url"]
+        assert sum(p["location"]["geocode_status"] == "verified" for p in partners) == 285
         # The systems have no single destination point; no HQ marker is inserted.
         for p in partners:
             if p["school_name"] in {"加州大學", "加州州立大學"}:

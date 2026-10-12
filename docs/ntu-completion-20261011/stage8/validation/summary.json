@@ -1,0 +1,744 @@
+{
+  "tested_source_sha256": "5db7af8aa58f079053332be0d6a695e2ab08dae20a198d283adde6b8cb9d88ab",
+  "summary_adapter_sha256": "0fa42179c054bea4fab015810aa97f1dd4c3df47d6578eb6261ef013b1935908",
+  "observations": 1373,
+  "tests": {
+    "full-regression": {
+      "final_line": "2185 passed, 13 skipped in 725.67s (0:12:05)",
+      "source_sha256": "5db7af8aa58f079053332be0d6a695e2ab08dae20a198d283adde6b8cb9d88ab",
+      "log": "full-regression.log",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "--ignore=tests/e2e"
+      ]
+    },
+    "browser": {
+      "final_line": "17 passed in 135.61s (0:02:15)",
+      "source_sha256": "5db7af8aa58f079053332be0d6a695e2ab08dae20a198d283adde6b8cb9d88ab",
+      "log": "browser.log",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ntu_school.py",
+        "tests/e2e/test_ntu_destination_enrichment.py",
+        "tests/e2e/test_ntu_official_changes.py",
+        "tests/e2e/test_ntu_completion.py",
+        "tests/e2e/test_ntu_reference_scope.py"
+      ]
+    },
+    "pr8-combined-focused": {
+      "final_line": "34 passed in 68.42s (0:01:08)",
+      "source_sha256": "5db7af8aa58f079053332be0d6a695e2ab08dae20a198d283adde6b8cb9d88ab",
+      "log": "pr8-combined-focused.log",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_visual_coverage.py",
+        "tests/test_school_photo_and_match.py",
+        "tests/test_university_locations.py",
+        "tests/test_ntu_completion.py",
+        "tests/test_ntu_official_changes.py"
+      ]
+    },
+    "pr8-combined-browser": {
+      "final_line": "30 passed in 627.31s (0:10:27)",
+      "source_sha256": "5db7af8aa58f079053332be0d6a695e2ab08dae20a198d283adde6b8cb9d88ab",
+      "log": "pr8-combined-browser.log",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ntu_school.py",
+        "tests/e2e/test_ntu_destination_enrichment.py",
+        "tests/e2e/test_ntu_official_changes.py",
+        "tests/e2e/test_ntu_completion.py",
+        "tests/e2e/test_ntu_reference_scope.py",
+        "tests/e2e/test_six_school_visual_coverage.py"
+      ]
+    }
+  },
+  "all_references_text_scope_and_URL_visible_in_first10_API_summary_points": true,
+  "api_visibility_test": "test_all_288_schools_accept_offline_reference_assets_and_guarded_workflows",
+  "excel": {
+    "sheet_rows": {
+      "288校逐欄回填": 4032,
+      "來源原文索引": 612,
+      "當日臺大來源": 3,
+      "臺大116-1正式共通規則": 11,
+      "候選段落語意分類": 625,
+      "固定501項正文進度": 501,
+      "逐源全文閱讀紀錄": 2229
+    },
+    "formula_cells": 0,
+    "GUI_visual_workbook_review_performed": false
+  },
+  "scope": {
+    "base_main_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "full_build_replay_byte_idempotent": true,
+    "replayed_files": {
+      "src/exchange_info/official_data/ntu/application_workflows.jsonl": "cd1260230654a3d537e1a10f4fd03340adc04b7bcc8c25db13f262df5568ca1d",
+      "src/exchange_info/official_data/ntu/student_experience_directory.json": "7d9eaee65a8aa3f40d1107462ab93e85de98db5b42a6394a1bcb23360917b620",
+      "src/exchange_info/official_data/ntu/list_verification.json": "810329d5a4fbba2e3078a474a58b1fe738f5d6f504d3db7876a6f2c1519a5ac3",
+      "src/exchange_info/official_data/ntu/partner_research.jsonl": "86957852c61026d51e5981c14cca8eec761c7ed181c014ebc5b56c541a4775ed",
+      "src/exchange_info/official_data/ntu/college_programmes.json": "99cb291f21f5fcdc8bc1fddf47c4054bbd67d435972e7272bd8a89d5f0bb536d",
+      "src/exchange_info/official_data/ntu/verification_status.json": "6ad6ec47c4c6ee0beaaee2442e46d6768d503b90e0aa47c3e549ea4db4d3e636",
+      "src/exchange_info/official_data/ntu/student_life.jsonl": "31929860e0745211fd6c9a7064f660772a09a219050af46c02c0cb0c013eae43",
+      "src/exchange_info/official_data/ntu/catalog-completeness.json": "15c8676e826607efa8f2c6c971b95679ed060e57e821e0c20b283424fde38560",
+      "src/exchange_info/official_data/ntu/student_dashboard.json": "a433109cedeff7c4a0ebd3fa9fe73fcfe02a9bdf08f2e70d9cb5dccc4fba4587",
+      "src/exchange_info/official_data/ntu/scholarships.json": "7601a922020571242cf900b623526583035535a8d55c8079eb579f91b57e74e4",
+      "src/exchange_info/official_data/ntu/exchange_info.json": "8bd8753871165f427f1319c610887aa26a2647af040c8488a32007bafce7e23a",
+      "src/exchange_info/official_data/ntu/home_rules.json": "4aa057b3defd32533f279e4b198b904904c6da2d3ac2d696139653581aa5bdb2",
+      "src/exchange_info/official_data/ntu/pages.jsonl": "03f312ae6de6b24b0682ecefd87ac33a149ecba9b3dba48185bd7b798dda086b",
+      "src/exchange_info/official_data/ntu/import_provenance.json": "44d6a9a29077cfb22e8793aef5f42be980d1815ae1122dfec13482cb1615484f",
+      "src/exchange_info/official_data/ntu/destination_profiles.jsonl": "335180afc421bdb3ba257507cbbd45228a124533de47e8b54cfa1de7bf077ff4",
+      "src/exchange_info/official_data/ntu/partners.jsonl": "ef6173e433a5a55fdde90fd60a9e9076382d48e9a6a823dc6bc522c0066a0640",
+      "src/exchange_info/official_data/ntu/documents.json": "73c07e400dc6e282ee23034e59c5153305be2cfcc0b0c64cfac50e55d9ef2154",
+      "src/exchange_info/static/assets/school-images.json": "a5a1667c75fa083065903c9a8b4975d4eb346d14a09ecb0c17edd0971b611625",
+      "src/exchange_info/official_data/university_locations.jsonl": "be5d862688351c9456aeb2b4a136b3f64d6017930c2c373f90515616bfdf139c"
+    },
+    "build_results": [
+      {
+        "script": "scripts/build_ntu_catalog.py",
+        "returncode": 0,
+        "stdout": "NTU: 288 partners, 288 workflows, 288 destinations; 282 pending / 6 zero quotas\n",
+        "stderr": ""
+      },
+      {
+        "script": "scripts/build_ntu_destination_enrichment.py",
+        "returncode": 0,
+        "stdout": "{\"photos\": 266, \"locations\": 269, \"life_with_evidence\": 124}\n",
+        "stderr": ""
+      }
+    ],
+    "partner_protected_fields": [
+      "eligibility",
+      "quota",
+      "application_deadline",
+      "availability_status",
+      "source_url",
+      "country",
+      "school_name"
+    ],
+    "all_288_protected_partner_fields_identical": true,
+    "ntu_workflows_byte_identical": true,
+    "other_home_catalogs_byte_identical": [
+      {
+        "home": "tku",
+        "files": 47
+      },
+      {
+        "home": "cgu",
+        "files": 3
+      },
+      {
+        "home": "review",
+        "files": 2
+      },
+      {
+        "home": "ccu",
+        "files": 1215
+      },
+      {
+        "home": "ncu",
+        "files": 13
+      },
+      {
+        "home": "ntpu",
+        "files": 12
+      }
+    ],
+    "global_photo_changes": [
+      [
+        "艾朗根紐倫堡大學",
+        "德國"
+      ],
+      [
+        "萊頓大學",
+        "荷蘭"
+      ],
+      [
+        "波爾多大學",
+        "法國"
+      ],
+      [
+        "馬里蘭大學",
+        "美國"
+      ],
+      [
+        "雷恩第一大學（原翰尼第一大學）",
+        "法國"
+      ],
+      [
+        "阿德雷德大學",
+        "澳大利亞"
+      ],
+      [
+        "馬來西亞理工大學(UTM)",
+        "馬來西亞"
+      ],
+      [
+        "九州大學",
+        "日本"
+      ],
+      [
+        "巴黎高等師範學院",
+        "法國"
+      ],
+      [
+        "馬德里卡洛斯三世大學",
+        "西班牙"
+      ],
+      [
+        "瑞士東部應用科技大學",
+        "瑞士"
+      ],
+      [
+        "聖地牙哥．孔波斯特拉大學",
+        "西班牙"
+      ],
+      [
+        "聖安德魯斯大學",
+        "英國"
+      ],
+      [
+        "聖心天主教大學",
+        "義大利"
+      ],
+      [
+        "法國女性高等綜合理工學院",
+        "法國"
+      ],
+      [
+        "昆士蘭大學",
+        "澳大利亞"
+      ],
+      [
+        "雪梨科技大學",
+        "澳大利亞"
+      ],
+      [
+        "馬來亞大學",
+        "馬來西亞"
+      ],
+      [
+        "華沙理工大學",
+        "波蘭"
+      ]
+    ],
+    "global_location_changes": [
+      [
+        "萊頓大學",
+        "荷蘭"
+      ],
+      [
+        "巴黎高等農業學院",
+        "法國"
+      ],
+      [
+        "托馬斯莫爾應用科技大學",
+        "比利時"
+      ],
+      [
+        "雷恩第一大學（原翰尼第一大學）",
+        "法國"
+      ],
+      [
+        "上海交通大學",
+        "大陸地區"
+      ],
+      [
+        "九州大學",
+        "日本"
+      ],
+      [
+        "巴黎高等師範學院",
+        "法國"
+      ],
+      [
+        "馬德里卡洛斯三世大學",
+        "西班牙"
+      ],
+      [
+        "雅典大學",
+        "希臘"
+      ],
+      [
+        "東京學藝大學",
+        "日本"
+      ],
+      [
+        "巴黎中央理工學院-電力高等學院",
+        "法國"
+      ],
+      [
+        "瑞士東部應用科技大學",
+        "瑞士"
+      ],
+      [
+        "巴黎高等政治學院",
+        "法國"
+      ],
+      [
+        "拉瑞爾應用科技大學",
+        "芬蘭"
+      ],
+      [
+        "御茶水女子大學",
+        "日本"
+      ],
+      [
+        "馬來亞大學",
+        "馬來西亞"
+      ]
+    ],
+    "shared_app_js_byte_identical": true,
+    "deploy_performed": false
+  },
+  "archive": {
+    "current_bodies": 1228,
+    "reviewed_citations": 611,
+    "distinct_source_ids": 1227,
+    "same_source_id_versions_preserved": true,
+    "quote_pages_reextracted_from_verified_raw_PDF": 63,
+    "manual_visual_quote_pages_checked": 1,
+    "manual_visual_evidence_image_hashes_checked": 12,
+    "current_archive_parts": 42,
+    "historical_bodies": 59,
+    "home_source_citations_checked": 1,
+    "manual_semantic_rows_checked": 625,
+    "all_body_and_archive_hashes_match": true,
+    "all_quote_pages_match": true,
+    "historical_cached_read_has_not_been_backfilled_with_a_hash": true
+  },
+  "pr8_intersection": {
+    "base_main_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "pr8_fixed_head": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+    "ntu_source_sha256": "5db7af8aa58f079053332be0d6a695e2ab08dae20a198d283adde6b8cb9d88ab",
+    "simulation_worktree": "/workspace/abroad-ntu-pr8-acceptance-20261011",
+    "actual_PR9_changed_file_intersection": [
+      "src/exchange_info/official_data/university_locations.jsonl"
+    ],
+    "location_record_changes_PR9": [
+      [
+        "上海交通大學",
+        "大陸地區"
+      ],
+      [
+        "九州大學",
+        "日本"
+      ],
+      [
+        "巴黎中央理工學院-電力高等學院",
+        "法國"
+      ],
+      [
+        "巴黎高等師範學院",
+        "法國"
+      ],
+      [
+        "巴黎高等政治學院",
+        "法國"
+      ],
+      [
+        "巴黎高等農業學院",
+        "法國"
+      ],
+      [
+        "御茶水女子大學",
+        "日本"
+      ],
+      [
+        "托馬斯莫爾應用科技大學",
+        "比利時"
+      ],
+      [
+        "拉瑞爾應用科技大學",
+        "芬蘭"
+      ],
+      [
+        "東京學藝大學",
+        "日本"
+      ],
+      [
+        "瑞士東部應用科技大學",
+        "瑞士"
+      ],
+      [
+        "萊頓大學",
+        "荷蘭"
+      ],
+      [
+        "雅典大學",
+        "希臘"
+      ],
+      [
+        "雷恩第一大學（原翰尼第一大學）",
+        "法國"
+      ],
+      [
+        "馬來亞大學",
+        "馬來西亞"
+      ],
+      [
+        "馬德里卡洛斯三世大學",
+        "西班牙"
+      ]
+    ],
+    "location_record_changes_PR8": [
+      [
+        "國立中央大學",
+        "臺灣"
+      ],
+      [
+        "國立中正大學",
+        "臺灣"
+      ],
+      [
+        "國立臺灣大學",
+        "臺灣"
+      ],
+      [
+        "淡江大學",
+        "臺灣"
+      ]
+    ],
+    "location_record_intersection": [],
+    "simulation_only_no_shared_file_change_in_PR9": true,
+    "merged_or_deployed": false
+  },
+  "isolated_harness_correction": {
+    "checked_at": "2026-10-11T17:11:56.727596+00:00",
+    "cause": "Existing partial-JavaScript extraction test omitted dependencies added by fixed PR8 school-photo implementation. Assertions unchanged.",
+    "test_path": "/workspace/abroad-ntu-pr8-acceptance-20261011/tests/test_school_photo_and_match.py",
+    "test_before_sha256": "83ced0a77310172f2d11d7eff1fdaea501c35231bd056046dd959900c724ce6b",
+    "test_after_sha256": "f358070ad77542e8626204e348d2812794c617b36c8b3632f95e52bb73126d75",
+    "fixed_PR8_head": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+    "fixed_PR8_app_js_sha256": "3942ee3f3066ff5c866e4466099193d480c42bf833a47e97e9a44d58c7128d55",
+    "only_isolated_test_harness_changed": true,
+    "shared_PR9_files_unchanged": true,
+    "merge_or_deploy": false
+  },
+  "superseded_failed_runs": [
+    {
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "--ignore=tests/e2e"
+      ],
+      "cwd": "/workspace/abroad-ntu-completion-20261011",
+      "started_at": "2026-10-11T17:05:00.444672+00:00",
+      "log": "full-regression-before-life-count-refresh.log",
+      "returncode": 1,
+      "completed_at": "2026-10-11T17:19:40.491002+00:00",
+      "failure_cause": "Old fixed-count life fixture expected1963; reviewed dataset contains2124. Error-page exclusion assertions unchanged.",
+      "correction_receipt": "life-count-fixture-refresh.json",
+      "test_files_sha256_before": {
+        "tests/test_tku_continuation.py": "30db25ddbeb52b8a38b81f71bd9d68ce035738b7b02f7997a9fc7ffbe8c7e833",
+        "tests/test_community_permissions.py": "e4c0201d36d0f962ca9ca2b0850ea81b2a145f67dacf4cfaa5b1a864aaa0021c",
+        "tests/test_community_api.py": "dc4a8f2820890c96e919de73d147785084e4413ecdd92d5c30edce0df2078e6b",
+        "tests/test_calendar_task_scheduling.py": "305da5733d0f43203eb76a175fcf1c0b90d093b1ab0b1d9a47a8d59633a09a54",
+        "tests/test_partner_research.py": "c68b7e849856a8c624b3dd5f63b33deaa72091419684067b1b245b14290efcb3",
+        "tests/test_regions.py": "cb7bab63f5a75c1a67c1913e89e03865f2e71967b0937b87b5aa0095f8940e4d",
+        "tests/test_http_client.py": "ddb463e02460a0400c0e6cce8dc4ef97f0f8d9939e70266aa5141c5d5dd6dea0",
+        "tests/test_ccu_second_pass.py": "43aaeb63db8f01f2cbd96774838f4e0e6ce3fe8c745f98e3253911fe238a0676",
+        "tests/test_frontend_contract.py": "aedde3cca8f3f0251cd5aa8a05cc9902bfd869a6e5633f20def60264ad57cb53",
+        "tests/test_public_translation_cold_cache.py": "16aac697e0da5ab914a4fa6d5a1d8f3827662e66c1096c8b154c44d5476a00ef",
+        "tests/test_ccu_third_pass.py": "a1a1dc8489b6fa180618dd6486e1e2a962122fb1fd4a356f02f73f7d3b0a702d",
+        "tests/test_multi_application_plan.py": "79ce8b69d0905654f16ed961ec844686604483737183f1c71c72de11678f5912",
+        "tests/test_notifications.py": "7dbaa5b898125772de7083d93294fcd251368bcba6afd1b2b3f95f3bd238a0d1",
+        "tests/test_calendar_sync_api.py": "dacd3da5d6914304a1695407d0234356bc26c05f7e162b7a398c708f346096c6",
+        "tests/test_icon_motion_contract.py": "0d7c36a90e6ad1e32056c316571630e2cd9097a5df3927be7cd75e6571d6dbde",
+        "tests/test_ntpu_bundled_data.py": "7831cf274596c55f129e68d0f45c88be6996a7322b39e1a6dad17b410f693e65",
+        "tests/test_submission_progress.py": "d22cb0783f39dd2c2e7431ea5f7f64f18112801aec08b1d69bb51d6097524d06",
+        "tests/test_ncu_snapshot_cache.py": "bf971768c98c61008af238ede629f126d4bda36c9ced874733de02baeedf3bb2",
+        "tests/test_home_and_forum_routes.py": "a26acd41683cccd7fad4d9d8cc3d513eb8803413aacb88f42692d80790b28ab3",
+        "tests/test_application_plan_schedule_api.py": "a253bff0fb346ddab2f331f9fe683a3ff21d9f732a0181a9e91924e19d798bfe",
+        "tests/test_ccu_eighth_pass.py": "da09fc21fbc800e302f356040fc662bb0bc2e114242c3ef6dfce82e70a557940",
+        "tests/test_ncu_nufs_kumamoto_ryukoku.py": "6ad6ef403d9c9d6ead938fe40308ad5e3e59cb6725c3c87a73a0da4576ae59dd",
+        "tests/test_ncu_source_collector.py": "5061e945e661097a546f2237739085311187838e8aed224bb07adfadcfe4ec65",
+        "tests/test_review_source_metadata_candidates.py": "5b1f41161e59a7f41b511052476c5a81f9248f1592d479809c2598fa6d16063f",
+        "tests/test_legal_pages.py": "3f198723a1fd5b07a166c4af2cb1d412a6c3a6f283d4aa25eaca2dbd3a735080",
+        "tests/test_school_choice.py": "59d4dc93cb57b007569ffd1fe425daa6538cc137a8eb5fa84a0bcfc2d54990c6",
+        "tests/test_atomic_private_community_migration.py": "bc454fc49e7a27ec5c5d6e1ebccf498fa207a936a92d9de519d06c47333489e7",
+        "tests/test_health_head.py": "180bca80b78e4d0e90ad51189b14eca7298a4e1697985e6f86e18ee94137b96d",
+        "tests/test_university_locations.py": "4298bd084db99bb97482b5573256c8289c6af014b1e6633d80b3005b63d7cba9",
+        "tests/test_rls_auto_enable_migration.py": "a7e52715eb04347672fc77763c8ba75394b97c7914fca67c74ff2f57a6f742f2",
+        "tests/test_ai_privacy.py": "e885373eee8387c0c652e9491f7aa9c47af053fafb22d5455cbea5f8ca62f022",
+        "tests/test_transient_auth.py": "3ba3f220818bc4629d18025d81a580c8dc15163c55605e6644c31130e4bc420d",
+        "tests/test_ccu_seventh_pass.py": "27a758193fbc3c67b934ae04f1bcad7cdfcbb0fa847945637cd1b7b7759fb94b",
+        "tests/test_application_plan_api.py": "a2ae418bee485fe4b131ccbd44aef348646cb33ad680399ee135163dcbee06cf",
+        "tests/test_application_periods.py": "271466a241f71c358641c915df0ebe8a3625b1310a7d2951d1975171892a7d73",
+        "tests/test_atomic_account_deletion_migration.py": "2151063b6c2c353cae1a84b5aee6550c2bc9c27e29ba21568edbb32be7f37878",
+        "tests/test_workflow_structuring.py": "280b37c060e82f72b93421f01aa600654bf50fe412e591cbc7a8729b00bb922e",
+        "tests/test_content_governance_wrapper.py": "ca7a5a242a4c410c98408985901367e7cca10119cd922286df95da9da3af83a7",
+        "tests/test_catalogue_memory.py": "a89ff6844335dc974b271059b4e32b3d4f7ada9f36ed2a97972531f97396f089",
+        "tests/test_school_content.py": "4b4acb303375e92ca2aeca56593680b75ddf8f7897de7e4590f5e7152b602de0",
+        "tests/test_ccu_fourteenth_pass.py": "1f5350d52697ee413f3aeba9280276fe3db08efb0d41072f76ee587c4b40c50e",
+        "tests/test_public_translation.py": "823a71e2c245ea8cf49f123c5be3cd6255103fcea018af9d3efaf2e5249923af",
+        "tests/test_workflow_catalog_cache.py": "b5bdda8cce311b275775597915d39ac68e5ac4a7ddb0ee3a7b4d77a86e8bdcaf",
+        "tests/test_tku_governance_routes.py": "2b97eba1f8d0107346eb52525592e43c782194649e4724917cf3d59d52249570",
+        "tests/test_ccu_support.py": "9208b49fa4a31ba52d3c121454858c77af9cf4be8311a0cdf7d4d5eb43c79b35",
+        "tests/test_ntpu_support.py": "e50ef72f355c5060d2ebc35e1a3d20fa2b13ebee732a06682c48b06b4ee68a51",
+        "tests/test_discovery.py": "7ba3ddad9f72a3cf4d95ac7e3840ca5c2869f906574d51c17f60b71daccfffe2",
+        "tests/test_local_ai.py": "f49a9c9a18718383cb03292c007840dc40b95e998a0c2406a80126afa9f68d31",
+        "tests/test_tku_privacy_regressions.py": "d47b52bc8829c846c1de9894b599c04c163c8757b226b08f96b97a2c98678d75",
+        "tests/test_school_image_collector.py": "d225b53d5ffddbef6e4e2d8c70fca526e7c49faf25daf4ee26e7800fcafb1691",
+        "tests/test_community_repositories.py": "2ff567f0e82fcd398deab103dda4e9b3bae9dd1bbeb4f54e111ddaaf9977afbe",
+        "tests/test_atomic_workspace_moderation.py": "06bafc1f35d9e0890900253b1f09c0732940265c483b34cf68cfb3b5fc906663",
+        "tests/test_school_photo_and_match.py": "83ced0a77310172f2d11d7eff1fdaea501c35231bd056046dd959900c724ce6b",
+        "tests/test_source_replacement_transport_audit.py": "6406537b2de99b5deb8927c2a2cf1f6f229dcc72e57285fd3ac7692bd0ed6795",
+        "tests/test_workflow_context_api.py": "fc3b2a9cdb50e8993fbcfb5a4cc4c9ab335a1408363006d32d501666a10140e0",
+        "tests/test_match_document_chunks_migration.py": "78015a9a40a4f8b8db9430a738708a168627033cf1857124261f1d0f4f928e29",
+        "tests/test_calendar_conflicts.py": "afe5e770bafa65a183e9ceb4a124e27787648184ad091e4bb9f12760c0f2b542",
+        "tests/test_ccu_seventeenth_pass.py": "28f29e0641b6650425a8f924591e521a07bdb5adb21c40c1e1f71a5aa6a42507",
+        "tests/test_ccu_twentyfirst_pass.py": "b556d118adcd95a82e28e3bf36430778e18b10b4f8003174357207b69137eb74",
+        "tests/test_flutter_navigation_hierarchy.py": "8a591bef3b683563181db3770cbdf301d1bc650a3f5e71b07c4ad100f0af530c",
+        "tests/test_college_options.py": "1bfae203650315342d21b993960abbe72591f6a6809f384b0a98cd4d6f5bedcb",
+        "tests/test_catalogue_speed.py": "6e7ab0e835c9b5a54438683c14cca718d0ffa10a2ca3c8f0c9677a27610b04aa",
+        "tests/test_ccu_bounded_healthcare.py": "bd9e9d927dc582c530f219b3a28bd2433d6bd6f02750d333a62ed9c92db49383",
+        "tests/test_catalog_access.py": "d94fae87b36581196e6f14ff78d56f26cce5ac6c6753a036dde2e0fbf1fa8be2",
+        "tests/test_tku_web_evidence.py": "434f5a429620ccf900e1e93adc8c1a288562c6445ece183f26f2f9ec1796f642",
+        "tests/test_requirements_traceability.py": "d952783a05fe1770956c41b9cc9217745cab379557c4b8af41f443861171bc98",
+        "tests/test_ccu_twentysecond_pass.py": "947c7e2b6c9c1fff083b511f40ea535d38eea3e554368f51fc090a11b63d535f",
+        "tests/test_analytics_report.py": "7dedf70a0051852a8aff2f418b487aabbe7a3a890ad84121bfc8a44fe29995c0",
+        "tests/test_life_context.py": "8360b3f5c2c23429f7a6536d23ea193e1f03c870f4171e223876ea2ea8ab594a",
+        "tests/test_ntu_official_changes.py": "fd472b43c0681094037fdcac01879d162f0a786b60595c0eed9fdba37d9d8566",
+        "tests/test_account_read_cache.py": "8b2d25fde74ac789dfdc96e040ae42952abbf4447f7823134ca02972bd51a1b5",
+        "tests/test_partner_map_geometry.py": "2c2fdabdbeab5aaac98526bc1d90dc341cc48646cf2f0ac1aa098088ee8179b9",
+        "tests/test_ccu_fourth_pass.py": "bf8f2fd39edb0165457391aaa71770731052bd7178a00c192e7713c87b69bc4a",
+        "tests/test_supabase_migration_syntax.py": "a1a1cb61896a91d72fd653f77e67fb2a00e77af09c77545be6a9a2850a8647a9",
+        "tests/test_ntu_audit.py": "ab42d6e70ccf186d1e49a56f1eec7deea4f02dd29133e7127a5adf57157307b4",
+        "tests/test_native_app_contract.py": "695977463689d3e7601e426c3bee134ad06c94886abd9a1f3fd9c4de34a9289d",
+        "tests/test_ccu_fifth_pass.py": "a9a8cfb6e691b28135d7a6beb639b3afe2a0f5c4e53313a6c6d9842d2192eea6",
+        "tests/test_ccu_twentieth_pass.py": "3e72f022e85ba5429cbd33e69ee89b58bb9bee11459801b82f63d237bce9509e",
+        "tests/test_social_community_api.py": "7df90397add10257de8b15ae978254897dba2e2f8460d8eb9025d4d260f5a2d2",
+        "tests/test_independent_page_routing.py": "54bf4939aba7999244b66232c3b4d969621d5991122228096bdf8ab010399e48",
+        "tests/test_email_verification.py": "ea92267a2cc9321ec5f573b6ac5dddba47a437f5823e64185392b759b0d1d90f",
+        "tests/test_ncu_integration.py": "67e9564ca6f1df846ae6b7486539c072edab9d2e5330e603be50ad13bebe62ad",
+        "tests/test_notification_changes.py": "ac1d43aecbb2850e8c1d86e567282a213db9e8879be4204cdd37198a1bead2f2",
+        "tests/test_ccu_nineteenth_pass.py": "d72b61a8cd526b6ebee7fe2158cbb97d5711a047a51e4a683c5f4336eb4e15fb",
+        "tests/test_b4_04_ai_limits.py": "3fa834880d2ba13526986b9b5040a4a39b0377e26650b2f27bc46c41a5a5184d",
+        "tests/test_source_applicability_cleanup.py": "cf4267b70b345b68b77845b1e01476113d14dbb989787ad3f57f316fe19cb6ae",
+        "tests/test_ccu_semantics.py": "a0dd4ef187349cd5a77c9af75be6086f9ccacfd0758bff701ef5159311eff135",
+        "tests/test_brand_assets.py": "530c8243903650588e79a1cf58688be41619ca5992d34aeaffc8769b6c1db647",
+        "tests/test_classifier.py": "da03df2bc877b6021f4ddab4e8087bc0084849d796884ca693c0056128668a07",
+        "tests/test_flutter_independent_pages.py": "4f2c3cc533e26d3d75ae8bc31ca679ff6b7d3e881f978137d38b04034ab319e3",
+        "tests/test_selection_conditions_sync.py": "c25681a8c2875762a51165ae09261c9f1f5cad579ee8e77c500a39225f5e37b7",
+        "tests/test_application_workflow.py": "923e357985164c7aea9e4965dcdfc0a79bef7f9baa50554d154b24539f2c8f62",
+        "tests/test_ai_gateway.py": "eb3ea9137ee2e3ed48be587ef20116e63c153cb9092bf566cc2b8302fd58f7f9",
+        "tests/test_hong_kong_country.py": "cb2c75f62437b83d56b234498b93a111dc2998247057b658e3450be156d23e4f",
+        "tests/test_review_source_candidates.py": "ad9d07d9b2153dbeeade999151cf0a594bef3d03823dd6192b9b28bdb8990146",
+        "tests/test_ntu_integration.py": "5daf4f8c446d3d49ae1d1a2699dbb6899233c2bb24b434678f949667f27c6602",
+        "tests/test_destination_tips.py": "1086be48ae8611e2db4f0408b21d03ad73a24f3806742fa2e6394f99bfe9cb53",
+        "tests/test_qualification_scope_consistency.py": "580e60e372f4d3aeb80f428b98021778252eec2c642175e7469f15785f2e32d3",
+        "tests/test_ntu_review_classification.py": "731238b0260385129063cf19ac22572e6024beaac98aa2c8b2d9aa903c00219f",
+        "tests/test_terms_consent.py": "c975f22b6e9a20f0a26d221ccf4bcb96909d44a81ff9413042d1ce2f7237dde1",
+        "tests/test_analytics_core.py": "a29338ac830ea5862a0825947afcb2dbd3c9addcf4ac715b8c97669dc21bb18d",
+        "tests/test_student_view.py": "88bb687880c0e30f39fc2c160b192f761e28d963b97ebd91350fdd6f7ebd6524",
+        "tests/test_atomic_public_community_api.py": "f6f361581f30b1c364b77137f80e00ee6959254e09a6e9eab308a2659ebb9b01",
+        "tests/test_application_rules.py": "070b5821998311cd893ae87c8520c32753a4e49308cff1806155c25056c97692",
+        "tests/test_community_browsing.py": "77c4bb561611600c430314742490f08f856e6ba162135810f7feee7b4a53cfb9",
+        "tests/test_content_summary.py": "7b94f3a82e78db8caf2ed65218da428918422d33267e0053f5e76fa1ce1a3bd9",
+        "tests/test_ncu_next3_review_corrections.py": "4d88e300b2b8064d2f9106c737988d8e4c4cc6c558c6ab123d0fccfdc6429ed1",
+        "tests/test_atomic_public_community_migration.py": "8ed8c90d8b758514e011d119926f2230bbe7b29a40534a619ec623624d8bd9ab",
+        "tests/static_asset_contract.py": "350dc2f3ba21079840247456879d0d2367a2af52879bd307ffc368c48c650d72",
+        "tests/test_analytics_api.py": "df49af24b234b04f0fa15e1b8fd2eb6aa9277197ab45176da15fba7095d4a0dd",
+        "tests/test_rag.py": "eafbd390ad88b51228cd0fa72dee7f2913ea82d37bfdcde289f16e17a592a8a1",
+        "tests/test_ccu_tls_security.py": "5ffdea19265e086f0e41abab53642bf51e1b7013ceb9c174984c977dd66b645e",
+        "tests/test_workload_planning.py": "941ee4f460c1cbc7359fcf441cddc33e3de352eb74ffe68e85087c1151e011c2",
+        "tests/test_ccu_sixteenth_pass.py": "1ce69e418f2b50287fa3db558a6953a4dc9f698aba57047704c081aa92321497",
+        "tests/test_cli.py": "5c12635985f0c8c3ce9e3a9efbd6d0f92e95ef55689a46014ee22b6b41ef995e",
+        "tests/test_fit_signals.py": "6653d220d2a933436285fb8136d17c924ace9f4c652e87869834d50af851d4bb",
+        "tests/test_web_review_findings_contract.py": "2adbc38b16b9e6bd85b8a09c72931df589c815312d53225fa3c21275e4ca2b76",
+        "tests/test_account_workspace_api.py": "ff0879823860b083ecd43aad695f1e135a647a16720c8da8534408724ad88c6b",
+        "tests/test_jsonl_storage_integrity.py": "84ce880c87683ebd24a479c92c16d512a700850a70e79c17971a6bccf35a8bf1",
+        "tests/test_ccu_twentyfifth_pass.py": "bc6013569a7d6cdf386cf75860529245270a963d9628a4caaa5d8f66b6e65f4a",
+        "tests/test_partner_localization.py": "2e962178c142939779af3bb7af0ee8a4d4e5dba556ea3ea28a5e25fe3269b5b8",
+        "tests/test_ccu_composite_provenance.py": "667c59b2ff5c954671b43b9f3923b34a1c8c9459a6189ae5babdd85645762618",
+        "tests/test_tku_acceptance_runner.py": "513ddb9afed7fe6f4162c6ad511729e7909697467ef3f7bfbcec334b82640af7",
+        "tests/test_task_documents_and_reference_plan.py": "7e88832c790bd53e684874508fccae93d2c2ea96e8a2462826e52019f2e0acf1",
+        "tests/test_flutter_production_copy.py": "278a3715ec6aafc9d9736ba9ff4ff2f93d3356fd0fdf297a5523c76fe7fa0d78",
+        "tests/test_experience_digests.py": "36167cba832c60ca5bb5351f6c09159c7fbd0236d1aacc92e56271e2ceffcd94",
+        "tests/test_application_workflow_issue_reports.py": "cfe43bf926525963f08d123b3bdb1cdc31a69f31ee42ea0a2f85402816bc63be",
+        "tests/test_supabase_repositories.py": "e2805984dc8f7f64728b71269fbebfceeca1f6bccb8a37ae45cdfebf2533b780",
+        "tests/test_analytics_frontend_contract.py": "f619e2fbcc3ad03bd946ddd409a6ac9451163e0894f951e8908d16149067d102",
+        "tests/test_loading_screen.py": "abde053d05e28fb131e6a3d1c71cbde28c01dcf49bc2405d0a02345c1bfe24b7",
+        "tests/test_tku_governance_commands.py": "5822472beeeb7c377a3f25dc59c0403e10bba77f5e3f92ba1e7a4a16ce156213",
+        "tests/test_ntu_school_board_migration.py": "728f6087585558249299d6e94a01fedde7f98445d8243ba7b3d7e5be7e4e2c04",
+        "tests/test_next_phase_contract.py": "889400de317c740636648cb1029b3ad45104ecc3e1d79d59ea3e269e3368691d",
+        "tests/test_translation_requests.py": "e0c5a22928ebbf4f2d18eff9d01d944d39da1465f7815029da004d1bd717dd8d",
+        "tests/test_api.py": "ad266f0da77840226920b93b90059da4ca7d672e3c766d5468606e5d87332a78",
+        "tests/test_ccu_twentysixth_pass.py": "09bf574292a31dc4bde3376a8f31c93d6200c5356c4bc7906eb50161d384de61",
+        "tests/test_dependency_security_baseline.py": "eeaa3209d4176cda5eca94e2f406239b492f38d593e5ab334e1531b7c7237263",
+        "tests/test_ncu_document_conditions.py": "8eddc50f8a321f4fde5eaafc62d01739718d83901c0346112877fef018556b09",
+        "tests/test_ccu_followup_validation.py": "f4469b2d9a2dbbeae11aea551573282bee41d0f340ac178ecb382ef76fafc3d1",
+        "tests/test_cgu_bundled_data.py": "69d3c693c7fe04d8603db205149c5aac257d8f876865e1289c83669bd277066b",
+        "tests/test_source_metadata_research_audit.py": "963d794f90b0126b205d1c8f15b86a87e2280b6b908b98c2739542a8ad935eef",
+        "tests/test_tku_community_boundaries.py": "4d51cf9d9f6840a474cec77bc1341d21749c4f47c856673db83f954247cad0ed",
+        "tests/test_tku_support.py": "ed29b98ef0b3a3c3d7d24c5b229b84751572cadd700d8128b19af12cf9828bbf",
+        "tests/test_school_completeness.py": "f9a80820694feb9591c239ea7317f6e8a2b540d304c2cdd1c0bba4db1afc3a18",
+        "tests/test_chinese_public_content.py": "042cf11e1a130493875810e1b01e6dec1b5ffcdee1cad8094d868a5440c239ed",
+        "tests/conftest.py": "230efca4b7a1a6c15900bb747c4d92e1cb2f3c512c73bd7f2858442769c9936f",
+        "tests/test_supabase_runtime_validation.py": "ea9682ce41047dacbbbd9efa639bfa67e1c3142bf5588c5e743dccb2a4e54d38",
+        "tests/test_ntu_destination_enrichment.py": "1d47d8f6fd8e82f912583af7f862e0b425bccba8ee810c01600128f3a45450f9",
+        "tests/test_application_document_catalog.py": "0f8cef60efc488c7c7d2ab5c2f56e413d560502ca370c473c8b209f416a6c7d2",
+        "tests/test_discussion_round2.py": "08c04d474aa58b01266aa556c08cc99bd675893b6a10f5731c28e615d3680018",
+        "tests/test_school_choice_migration.py": "6dd4f698f0a078af2a576c424b9d7cc590e3ebd26673e9790dead6574da1404c",
+        "tests/test_ntu_completion.py": "ea5c0150c3621ad455039155cab64545f964d9b8c187c26baabfba752efc2c3d",
+        "tests/test_entitlements.py": "d69e7bda20267b6e3f9960bc284d73f4e3e68e2a87b8345d407332f0c9860a22",
+        "tests/test_open_catalog_signup.py": "d461eb1355b2f4343258d21739eb31f9d751fde871583ce95e20fccf3eb726e9",
+        "tests/test_ncu_tcu_toyama_fukui.py": "c7de3dff89239cd63f08e83199ba0a10b0355c19dc0dbce1b63988feae73b8a1",
+        "tests/test_application_plan_scheduling.py": "e78d931d056a41045764d2a300948298fd81319e3fa5b669882674a92b88f943",
+        "tests/test_feedback_migration.py": "45d56eb0e5dec715b066787cee456ff1b2fa911618c3bc590b3395a4828d8783",
+        "tests/test_ccu_twentythird_pass.py": "9ba3e74a2fae78d73ab4680afdfff8b3de571443299b73285c0d586b43a819b5",
+        "tests/test_ccu_ninth_pass.py": "186e985b80a39682f6dcd4b9ad55417d0a26a41abadf0722da2538763fad4583",
+        "tests/test_advisor.py": "cd0a1b453be4545d853d19614055cd6c45d72e6f0a37705be4455b5a708870fa",
+        "tests/test_pipeline.py": "e23e73a688095ce7bd9abd3fbebb8df49199f021f5760b53f8bc15528a1fabe3",
+        "tests/test_advisor_mascot_contract.py": "7bee8ba65887cab90f9b2b563e00a4e73dee1074c03159b979198b7b3120a22f",
+        "tests/test_ncu_japan3.py": "dcef4d913cfa5b415ccd6ca1168266e56640338c4bbc9066a5d4632b8b65b396",
+        "tests/test_request_origin.py": "ec84627c9f50749a63028d4abd42d75ac5b29e29c5fb36f70bf2149efa90f496",
+        "tests/test_supabase_setup_check.py": "ba084a0c08659af344c3385e2d3826a44dc257724686f37de66fddbc4103312a",
+        "tests/test_application_workflow_issue_report_migration.py": "d81001418edc1b744cb315a64f5de10114af3d9e1eb680aef2098364ed700d52",
+        "tests/test_lai_10_security_audit.py": "fb4ea2eb032a0595e78d80e2869242812aa8ab4c8e59f5d24ac76b0cbf8778bf",
+        "tests/test_feedback.py": "cab3e830bd048019c639088cc65c904acc6d269632be7252d202f12766d946ef",
+        "tests/test_responsive_css.py": "5d133e15a20d8646d67f80f47abb4debc546bf58610cd4c614c22335a7f5c1c4",
+        "tests/test_ccu_parent_fixes.py": "618896a636bb7fec7ddcc666f9c6cde20c6701197854a17100a173000cd511ba",
+        "tests/test_ccu_sixth_pass.py": "0355ed21eb5d0b34bf6e7be1cb1cfbe42db6d5f5cd93308ed45b17312285d1e8",
+        "tests/test_form_drafts.py": "39eb71d17886f38ec6053c4c57f5140c99ce358aca5857dd753e04a521affde1",
+        "tests/test_uniway_ui_contract.py": "91464b1506d9ff45e014acec91b7699c0eb36ff5d5ae2a56b2ff779e6fc5fae3",
+        "tests/test_document_check_entitlements.py": "ab107763d77c46fd48f9999d5046115fa9868c1fe3b6a3578c80fcafcb1cccdc",
+        "tests/test_ccu_eighteenth_pass.py": "23be600ed935825ce01d23f107390d705789bb719c757ba60bb76dd786e4414f",
+        "tests/test_static_caching.py": "5d728cf6524b0023d0bdf57f5f1c70a8305c07518bff3b52a702f7aa4bb5f5df",
+        "tests/test_ccu_fifteenth_pass.py": "790ab00ab0bdc706287dc23842514dc9b33c7b2b6008ab0312647f30fbca1f5a",
+        "tests/test_document_vault.py": "548695335051bb701de5ce6ca0c87712a8036f6d9ab249bd11fc20064720b7b4",
+        "tests/test_change_impact.py": "72b3568ce330c0c29f48fba0a86e6413b89b672cdceaff71a9c0e7829033a3cb",
+        "tests/test_my_application_entry.py": "3314a3f7679f028bc497afa37b4cd0ba494c3a7ff183e0640e46e95cec66ca62",
+        "tests/test_ncu_shizuoka_chuo_kansai.py": "9c1833c4837e3f01e4f853fa55dc2c99b66f93d97bfd7f9533f4fcfa7b5625da",
+        "tests/test_application_documents_api.py": "e844d32f10fd55178c6b362feffe82e0ff7373a6a86f104df15eb562b5030762",
+        "tests/test_atomic_auth_mutations.py": "bc73c805554cf5e21180c0747d7639cc01fa718d09215e28b84b642363f0f972",
+        "tests/test_auth_api.py": "635359aa96c3692f867a301641d29fda9a2162a24f3bfa87900366b4a50bd113",
+        "tests/test_experience_collector.py": "8bcaf2a868abf535cc651bfe4280e1296a7ca7082d8d560a7e70e94084c02c8b",
+        "tests/test_ccu_overseas.py": "5fb3994ed10166aba1aeaf3d611017d94d19cefcef71938ae2797584fbfff5f2",
+        "tests/test_workload_planning_api.py": "963a21e6d3f43ce8d7442a5aebae25f72a95f9a0451d11498e044eb2a7a86965",
+        "tests/e2e/test_ccu_delayed_switching.py": "f9e34592d97087af12cb7f110983317f1a1bd76235da8d8f7f72a4621505115a",
+        "tests/e2e/test_conditions_account_sync.py": "68a135aefe8e3b7b5b3255521206c04890b4d384b6dc673433ddb1a05d840b02",
+        "tests/e2e/test_application_workspace.py": "2d134aaca91e47a190a0a39fec19060e7149a3bf7d7483d4d61fc7595e3d5ce9",
+        "tests/e2e/test_ccu_scope_documents.py": "8abe93e7874f8dc0881be42df2726605cc6031f6887ee3767373c4a4dd7fe031",
+        "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py": "ceb1e52928d99a81bea57c8c31e062d6c8933947dd56287047e02cf0add03b52",
+        "tests/e2e/test_ntu_reference_scope.py": "4b1dae34130513cfcb6fb0d5f7ccf5d1f594f6e00f08ad31c4c3eb693984b122",
+        "tests/e2e/test_responsive_layout.py": "cb82fc47b15184f91652fd40acc2825ad511dd9c590c7936487bd4eb37e61787",
+        "tests/e2e/test_task_documents_ui.py": "6027c28203dd8b282301139bd2dd14f6469fa0c5ba11ac02fa0af89c6cf95b79",
+        "tests/e2e/test_application_periods.py": "277eac5fcda59977ebb0dd57adfa2ff8d356dcbd1ec5c3f3a853eb63372b2eca",
+        "tests/e2e/test_school_lists.py": "fc16db1f0829db5f5088f4c556707e8fc34a5dcfb8c6d13d11546272667cfd11",
+        "tests/e2e/test_analytics_tracking.py": "724cd2a667880e38de7e58d0321f2f84abc090550df131ae6d584c43ed9f5d63",
+        "tests/e2e/test_tku_source_rendering.py": "635e853ea5970f24a2e5b06d723c638ceffe40150c43d3692e6eb0a1d26182e2",
+        "tests/e2e/test_ncu_niigata.py": "9aff23e48239ffe5da0dab851532674d48d05bd9862148281f5de5d6f7d7a720",
+        "tests/e2e/test_mascot_solid.py": "4ee0c156c61693fd88fda9588cf54752210cf7e2d05d8385eb9f564720e2b00b",
+        "tests/e2e/test_travel_theme.py": "5e40f0fd01e268058829d2835a665f0304cb0a2afe91a33c886090d52a541cc9",
+        "tests/e2e/test_ncu_hokkaido.py": "00c796ebbfc8b165084123be2ba479e93a882a1c77877edc5049f3961aba4276",
+        "tests/e2e/test_ccu_seventeenth_pass.py": "9c68040dd74c54bbb018b8e285f79833371d932f369bf5dde55c268d4acd4254",
+        "tests/e2e/test_document_workbench.py": "1b582b22d683ba7e9729e23c148eba26dc2f2805ea322721f67fa62c9e541f98",
+        "tests/e2e/test_document_flow.py": "2dac940af87f47aa8035e7454ef19c9f2ff23a20d9b1a7445d24616dff1400c9",
+        "tests/e2e/test_ccu_twentyfirst_pass.py": "6b533bdcfb4213a66d15b9361bccb523f141e23e71e632a9e68cb0164f7b3d56",
+        "tests/e2e/test_tku_governance_transactions.py": "6c9149d2a45f28c8f6646c2aa780397e4a59a87151c5bbd1d31b912860e7435a",
+        "tests/e2e/test_navigation_guide.py": "6ff69d9131867bb45d01976a7850265ddbb8193792766139d5227ea18335ec77",
+        "tests/e2e/test_departure_tips_and_experience_digests.py": "491b589b72591e828c0c4846bc1266e816b5eba09371ced8e4d8f1043570d08e",
+        "tests/e2e/test_ccu_twentysecond_pass.py": "71e3543c845a26055e5a2ca202bc6a3a70726f96a46aa76f8b2fbc060df5f70a",
+        "tests/e2e/test_glass_theme.py": "fd95f79626d58e954cb2614c9a35aa236f8c629f4a873131a9b2b1a100a5730a",
+        "tests/e2e/test_life_context.py": "65c3c599c4af3f9a0f85ac78772129a8900e0ebc6d05d3faf6ec2c2a6d33b494",
+        "tests/e2e/test_ntu_official_changes.py": "b12ea373f45bd4347fb63db0c6d79a92d0dbd0dae25f5ca6d3f064cc36b18efc",
+        "tests/e2e/test_ntu_school.py": "844be11df78c155611d54fd27011c2b0b963d8e1e003c0a8613fa000a8211fb7",
+        "tests/e2e/test_tku_acceptance.py": "4cdf92e8f478d06157ed204fd4177867612353fb6813b9d85f912b7460265501",
+        "tests/e2e/test_feedback_page.py": "a8085b16ee0e88dfe965150ffbf8fc011159941b99cd3690b5e3768ba8ec9965",
+        "tests/e2e/test_ccu_twentieth_pass.py": "aab42da76917dedbc53f9d73466c22075c3ae48442bbb2db4abf074013e9e45a",
+        "tests/e2e/test_notification_changes.py": "9714e6280b25a17e62cbfdb64f49e8319f9d9126c0256d496132d7033773400a",
+        "tests/e2e/test_ccu_nineteenth_pass.py": "e550159c0230ad1fbe252bb08d2d5b0b0315c10a915a0ad1b5e8f03eab0a6345",
+        "tests/e2e/test_icon_rendering.py": "4a05a8154fc6344e85d56170144d163a0036a18038d25e835e4f4598dfc19ba5",
+        "tests/e2e/test_ncu_school.py": "50db8302b3309b976190892656e48067d87a838e29a4658d2c79817e4db6cf44",
+        "tests/e2e/test_tku_session_boundaries.py": "afb8247754e4eeaa11f7d12e4f0fe2c2566aae243ba8c0de0acb233933172c24",
+        "tests/e2e/test_terms_consent.py": "e6032f41bda2dbe34d35be18e9acfdf1cc6258e28b79299c8e0fc408ead63dc1",
+        "tests/e2e/test_planning_workspace.py": "fcddf65f971effd0147dbd463df776e881792c9b11d8c9ccf4ead4dfde670001",
+        "tests/e2e/test_school_chinese_content.py": "ebf4c2fc8781e60b4518d91e618cc9b3621a9f115472df309ca902a1335ac2a6",
+        "tests/e2e/__init__.py": "13fb1f56dc4d65507671609b28bb9ff419e7d28dba47cfa6c6f90f12f7a42572",
+        "tests/e2e/test_open_catalog.py": "8f8802b0a8645a8d6e2943c05e919908d6442d87051bc9ab6113d7fd38af5e9e",
+        "tests/e2e/test_fit_and_completeness_ui.py": "1280a5c0ddbcfe61f5fddcf0d7d108741918f40bd7439c95f89071d2ec1f4de0",
+        "tests/e2e/test_system_motion.py": "c151505304ae50172c7a40d80472d2e5b8a93becb44854acb8e37065e92ce947",
+        "tests/e2e/test_shared_conditions.py": "11dcbc1f217e1e026adde6da3517f60f91e2eef68baf08a4754be6ca207a8523",
+        "tests/e2e/test_region_search.py": "a95d470d84f71f852542f1d2c7cfa709767e336c9282464d4871048110429477",
+        "tests/e2e/test_ncu_acceptance.py": "d46d8bb0fde42c414555ed168d7139a0c2384803310856e8efb548be53d03952",
+        "tests/e2e/test_student_journey_ux.py": "36cc1cb4c69e034bef0929f9c4cb8cb0e303534860087d0d9027e78bf16ea5ff",
+        "tests/e2e/test_ccu_composite_provenance.py": "798226541d8fb1756dc994c1866148c97d996d0a70754bde606a170527e09da5",
+        "tests/e2e/test_partner_globe.py": "151c9ab4545697902212628a61b18d331aafaacc84ff1180a6839d0ea28bcba2",
+        "tests/e2e/test_loading_screen.py": "c293846ae416a3539247f2af1e08a1117c2fc4b3e644a1510082f7e9ff7e0c45",
+        "tests/e2e/test_discussion_reader.py": "2c1ddc0d26c5865064f6d90594c5324d1b49bd6d7c6bbe79bdd26e1c4f1921ee",
+        "tests/e2e/test_unified_preparation.py": "255bdd4c8a5244291f8dc5752973a86b327cb3b723e0855062f2eb43d4c2b7e6",
+        "tests/e2e/test_application_ui_refinements.py": "3432c0c86ff1bef5c88ffcc21ad035ce19412058605f71a8fc95ee5490039fe5",
+        "tests/e2e/test_web_next_phase.py": "b3a6cb83a31956e805329435d491e31ebac35fe10e3afb4fb73c968a0d602431",
+        "tests/e2e/test_ccu_candidate_acceptance.py": "f014db3181b037876afb5aabe0e48565b47327729f346c579b66e1412495c3c4",
+        "tests/e2e/conftest.py": "d292498fba4179204844f64656b0d6f9e2ae306af7d451b92ed68f18b3b41903",
+        "tests/e2e/test_ntu_destination_enrichment.py": "b1499f20033aa6ff0a4ccbd105456315a5824b2f4a4678d0976fd24c6feadda4",
+        "tests/e2e/test_discussion_round2.py": "03c209102c9da7bad0ea048d8c369bee0aa35f569e86062f023431a26897a38e",
+        "tests/e2e/test_ncu_kyutech.py": "4f4a629330cc351c989a3247758a8e9dee6820fbe4065dd7d1af1d8987eecc21",
+        "tests/e2e/test_ntu_completion.py": "6bb97bc1acb5a9e8fc873c502f249789f3b0b58e805faddbffab057c3161c5c7",
+        "tests/e2e/test_ncu_tcu_toyama_fukui.py": "b5e7941587c364c392b39df5fc46988e86455712e855ba7b67e303dd40952c3b",
+        "tests/e2e/test_ccu_school.py": "f90da700d5a0f4155c6529e17992ce977b6f00ab7e7f353b39e5eadf7a8aef4b",
+        "tests/e2e/test_ncu_japan3.py": "4f792908e563951c7192000894c1303afe52c644327a3a481199b38b08732405",
+        "tests/e2e/test_multi_plan_workspace.py": "11c26d23388051ad4e97dc6263a3db39955793d138c64e9705a51664d9527c54",
+        "tests/e2e/test_icon_motion.py": "59ffece7729d1efa1df84550d0d11ae515867f8e5c151e60756dba77bbf14099",
+        "tests/e2e/test_tku_draft_handoff.py": "01565f504c0436aa325ab402799a9aeb93ac60a388f520eb005515d3d55b3fce",
+        "tests/e2e/test_ccu_eighteenth_pass.py": "2bdd31a3b669fef94f602534348c80c21f25bd39db9caf386b7131acabc1f3a1",
+        "tests/e2e/test_discovery_workspace.py": "3d2cddc1647dd0906655d80fc92368ea7586e8a7e4ba3e141cb901cbbd937c91",
+        "tests/e2e/test_my_application_entry.py": "187ccd3b32414398217d31f22576dd33dce6e7e994cf93143d5f837133beff98",
+        "tests/e2e/test_ncu_shizuoka_chuo_kansai.py": "29abc1d76a44c9de9f0307ae84347c623235bb105277865aac55a1ccf99425ce",
+        "tests/e2e/test_workload_journey.py": "4a839e052f9ce8dc006aaaf1ace2e94cf965d5a22aedb1edb38c8754e2400701",
+        "tests/integration/test_local_ai_runtime.py": "a3b020a7deed3cefa71379459642e831adf3e16fdb100473eb099f666d7321be"
+      }
+    },
+    {
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_visual_coverage.py",
+        "tests/test_school_photo_and_match.py",
+        "tests/test_university_locations.py",
+        "tests/test_ntu_completion.py",
+        "tests/test_ntu_official_changes.py"
+      ],
+      "cwd": "/workspace/abroad-ntu-pr8-acceptance-20261011",
+      "started_at": "2026-10-11T17:05:00.445538+00:00",
+      "log": "pr8-combined-focused-before-isolated-harness-fix.log",
+      "returncode": 1,
+      "completed_at": "2026-10-11T17:06:20.448528+00:00",
+      "failure_cause": "Partial-JavaScript extraction test omitted fixed PR8 helper dependencies.",
+      "correction": "Only isolated acceptance-tree test harness dependencies expanded; original assertions and fixed PR8 app.js bytes unchanged.",
+      "correction_receipt": "isolated-test-harness-fix.json"
+    }
+  ],
+  "life_count_fixture_refresh": {
+    "checked_at": "2026-10-11T17:20:43.797759+00:00",
+    "path": "tests/test_ntu_destination_enrichment.py",
+    "before_sha256": "1d47d8f6fd8e82f912583af7f862e0b425bccba8ee810c01600128f3a45450f9",
+    "after_sha256": "07a21145af39aa0a9e3e72efe2875edcf61a13590b493d79d08dbc111e51c84d",
+    "before_expected_life_paragraphs": 1963,
+    "after_expected_life_paragraphs": 2124,
+    "incremental_reviewed_life_paragraphs": 161,
+    "source_sha256": "5db7af8aa58f079053332be0d6a695e2ab08dae20a198d283adde6b8cb9d88ab",
+    "error_page_exclusion_assertions_unchanged": true,
+    "runtime_source_and_code_unchanged": true,
+    "cause": "Dataset expanded with reviewed life references; pre-existing fixed-count fixture still represented previous snapshot."
+  },
+  "original_ten_field_fully_verified_rows": 0,
+  "merged_or_deployed": false
+}

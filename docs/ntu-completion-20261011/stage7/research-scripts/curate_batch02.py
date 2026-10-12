@@ -1,0 +1,21 @@
+from research_curator import Curator,ROOT
+from pathlib import Path
+import json,hashlib
+pending=json.loads((ROOT/'batch01-pending-adoption.json').read_text());c=Curator();c.schools={s['portal_id']:s for s in pending['school_state_with_candidates']};c.sources=pending['public_source_reviews'];f=c.fact
+base_ids={o['observation_id'] for s in json.loads((Path('/workspace/abroad-ntu-completion-20261011')/'sources/ntu/completion-2026-10-11.json').read_text())['schools'] for o in s['observations']}
+sid='9b137fa929f90e42';quote='Information Sheet for AY2027'
+f('27',sid,'eligibility','TUFS AY2027要項准本科／研究生，博士課不對exchange開放；至少完成母校1學期并交1學期母校成績，其他非協定機構成績不接受。GPA2.0/4.0以上；不能以JASSO2.3/3.0取代初申門檻。','TUFS Information Sheet AY2027，9/17/2026發布；含Fall2027入學，未延伸Spring2028',quote,page=2,period='target_year_explicit')
+f('27',sid,'language','TUFS AY2027英CEFRB2或日JLPTN2；可TOEFL/IELTS/TOEICL&R及S&W/Cambridge/JLPT。无法交指定证书者须母校能力推薦；英日母語或全英日degree仍需母校說明信，不是免全部證明。','TUFS AY2027 incoming語言；Fall2027參考，不延伸Spring2028',quote,page=2,period='target_year_explicit')
+f('27',sid,'deadlines','TUFS AY2027表明列Fall2027從January2027開初申、2027/3/15截止；COE web申請同ISEPTUFS截止。提名後入口與password由母校轉交，不把初申日當臺大甄選或直接啟用提醒。','TUFS Fall2027 initial application；不是Spring2027的2026/11/15截止',quote,page=1,period='target_year_explicit')
+f('27',sid,'documents','TUFS AY2027列7項：Checklist、Participation Agreement、Health、最新英日母校成績、語言證明、Study Plan、passportcopy；學生完成交換/COE表后母校收齐文件与applicationnumber逐一上傳。文件清單公開；入口password在提名後給，不是整份初申要求都不可得。','TUFS AY2027 incoming initial documents/COE/application-number流程；Fall2027适用，當期表式仍需核對',quote,page=1,period='target_year_explicit')
+f('27',sid,'insurance_visa','TUFS AY2027要求交換生NHI及两種校方保險Gakkensai／Inbound-futai；入境後加入，即使已有母國保險仍須校方保險。另24/7醫療協助服務强制但明说不是保險；COE由校代辦、有效visa后入境。個人簽證文件仍依使領館，不作個案法律結論。','TUFS AY2027校方到校保險／COE流程；Fall2027参考',quote,page=3,period='target_year_explicit')
+f('27',sid,'courses','TUFS AY2027每週至少7堂課；交換在8月／2月結束者原則不能修其後Summer/Winter intensivequarter。只Spring/Fall入學、不能到日後原則延長；GLIP InteractiveEnglish(EnglishA)不开放。','TUFS AY2027 incoming课程負荷與期末intensive限制；Fall2027参考',quote,page=2,period='target_year_explicit')
+f('27',sid,'housing','TUFS AY2027宿舍不保證且不能選棟；申請表必须勾希望住宿，未於此流程申请不能住校寮。單人1/2/3號月租JPY32000/31000/46000，3號keymoney30000；床具强制15000可變。spring/fall入住期按原semester，非台大名額。','TUFS AY2027 on-campus housing及費率；Fall2027局部正式事實，仍subject to change',quote,page=3,period='target_year_explicit')
+f('27',sid,'cost','TUFS AY2027表食物JPY50000/月、水電約12000/月、課本文具20000/quarter、NHI約1100/月、協助service約2000/交換期間。校方保險10390/5月或14870/11月明确括註In case of AY2026，保留舊費率，不當2027当期确定保险總額。','TUFS AY2027 Estimated Living Costs；其中University Insurance标AY2026、不同期間勿混加',quote,page=4,period='target_year_explicit')
+f('27',sid,'calendar','TUFS AY2027表春4/1/2027至8月初，秋9月底2027至2月初2028；Winter row却寫Early February2027至3/31/2028，與前後quarter順序矛盾，原PDF目視也是2027。沒有自行補成2028，winter起日仍須校方更正。','TUFS AY2027 tentative academiccalendar；p1 winter起年內部矛盾',quote,page=1,period='version_conflict')
+f('27','86c66fb54aa7c3b6','eligibility','TUFS一般申請頁明示ISEPTUFS GPA取申請前一學期；獎學金JASSO原則前一學年，兩者量尺／期間不同。GPA換算問題由母校coordinator詢問，校方不回答學生個人換算詢問。','TUFS ISEPTUFS共通网页未标年度；GPA calculation period vs JASSO','Application Procedures for Exchange Programs')
+f('27','40e01dc4c9056056','documents','公開2027春Checklist：Study Plan约500words且不能只是課表；health各項未填須母校/醫師說明，passport需涵蓋交換或附申辦／換發說明。成績须申請開放後發行，前一學期黃色；JASSO前一年紅線，否則当不申獎學金。表式是2027春截止2026/11/15，不直接當2027秋當期新版。','TUFS 2027 Spring Application Checklist（2701）；非Fall2027新表保证','2027 Spring Application Checklist',page=1,period='older_year_reference')
+# Preserve the visually confirmed calendar defect and exact version/page receipt.
+c.body_review('27',sid,['calendar','deadlines','documents'],'四頁正文已讀；p1渲染目視核Fall2027申請表與winter起年2027原印字，內部矛盾沒有改標。',visual_pages=[1],visual_files=['tufs2027-page1.png'])
+new=[{'portal_id':s['portal_id'],'school_name':s['school_name'],**o} for s in c.schools.values() for o in s['observations'] if o['observation_id'] not in base_ids]
+(ROOT/'pending-adoption.json').write_text(json.dumps({'base_source_sha256':pending['base_source_sha256'],'new_observations':new,'public_source_reviews':c.sources,'school_state_with_candidates':list(c.schools.values()),'runtime_saved':False},ensure_ascii=False,indent=2)+'\n');print('all staged facts',len(new))

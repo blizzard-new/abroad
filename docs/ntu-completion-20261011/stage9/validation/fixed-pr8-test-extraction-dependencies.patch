@@ -1,0 +1,20 @@
+--- a/tests/test_school_photo_and_match.py
++++ b/tests/test_school_photo_and_match.py
+@@ -34,6 +34,7 @@
+     const fs = require('node:fs');
+     const source = fs.readFileSync(process.argv[1], 'utf8');
+     const state = {eligibilityProfile: null, schoolImages: []};
++    let schoolVisualSource = null, schoolVisualExact = new Map(), schoolVisualAliases = new Map();
+     const coverageForSchool = () => null;
+     const destinationProfileForSchool = () => null;
+     const homeCollegeValue = value => ['工學院', '管理學院', '醫學院'].includes(value) ? value : '';
+@@ -41,7 +42,8 @@
+     const partnerSummaryPoints = item => item.eligibility_points || [];
+     for (const name of ['normalize', 'escapeHtml', 'academicScopeNeedsConfirmation', 'collegeMatches', 'degreeMatches', 'coupledAcademicScopeOptions', 'coupledAcademicScopeMatches', 'resolvedDegreeLevel', 'partnerDegreeScopeMatches',
+       'languageThresholdFromPartner', 'partnerAvailabilityMeta', 'partnerMatch',
+-      'renderPartnerMatchExplanation', 'schoolImageFor', 'renderSchoolPhoto']) {
++      'renderPartnerMatchExplanation', 'visualSchoolIdentity', 'visualCountryIdentity', 'visualSchoolAliases',
++      'schoolVisualRecordFor', 'schoolImageFor', 'renderSchoolPhoto']) {
+       const match = source.match(new RegExp('^function ' + name + '\\([^]*?^}', 'm'));
+       assert.ok(match, name); eval(match[0]);
+     }

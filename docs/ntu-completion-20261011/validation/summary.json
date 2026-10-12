@@ -1,0 +1,139 @@
+{
+  "base_main_sha": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "final_candidate_source_sha256": "75b2c6ebbd021e616e62bffaf79e9207531b2bea85aa31800e8d071b339e5844",
+  "full_non_e2e_regression": {
+    "passed": 2182,
+    "failed": 0,
+    "skipped": 13,
+    "seconds": 773.97,
+    "tested_source_sha256": "6ed2605c4ffb5e43a0e62db0553f186e3a228f6dca439ef0302cd94d7042d636"
+  },
+  "post_full_changes": {
+    "source_delta": [
+      "field_labels",
+      "field_labels_note"
+    ],
+    "observations_and_sources_and_assets_identical": true,
+    "report_only_classification_correction": "已公告116-1共通校內規則與名額空白分開；可讀與已有參考不歸為純外部阻礙。",
+    "final_classification_tests": {
+      "passed": 6,
+      "failed": 0
+    },
+    "final_focused_log": "focused-current-metadata.log",
+    "final_focused_tests": {
+      "passed": 107,
+      "skipped": 1,
+      "seconds": 55.89,
+      "failed": 0
+    }
+  },
+  "feature_browser": {
+    "passed": 13,
+    "seconds": 99.92,
+    "widths": [
+      390,
+      1440
+    ],
+    "runtime_facts_identical_to_final_snapshot": true
+  },
+  "pr8_simulation": {
+    "fixed_head": "9927ec1d8765a9772671bbaa68e7f920995f1258",
+    "focused_passed": 22,
+    "browser_passed": 17,
+    "browser_seconds": 526.13,
+    "file_intersection": [
+      "src/exchange_info/official_data/university_locations.jsonl"
+    ],
+    "location_record_intersection": [],
+    "combined_worktree_only": true,
+    "shared_js_in_actual_PR9_unchanged": true,
+    "merged_or_deployed": false,
+    "tested_candidate_source_sha256": "6ed2605c4ffb5e43a0e62db0553f186e3a228f6dca439ef0302cd94d7042d636",
+    "runtime_facts_identical_to_final_snapshot": true
+  },
+  "cgu_source_checks": {
+    "before": {
+      "checked_at": "2026-10-11T12:05:38.900874+00:00",
+      "scope": "Actual CGU live sheet URLs and actual unmocked fetch_partner_universities",
+      "parsed_partner_count": 77,
+      "lincoln_present": true,
+      "receipts": [
+        {
+          "url": "https://docs.google.com/spreadsheets/d/1EAOsiZkw5oWWUpAyXz-04aQWdSMR9f_c3Jup69LeiuA/gviz/tq?tqx=out:json&sheet=%E7%B8%BD%E8%A1%A8",
+          "checked_at": "2026-10-11T12:05:37.519810+00:00",
+          "http_status": 200,
+          "sha256": "ddf51f4650c08257043438bb072d14a09f13b8d54a26b0fa8020565f3e6db3c0",
+          "size_bytes": 72081,
+          "body_file": "cgu-live-exchange-exact-gviz.json"
+        },
+        {
+          "url": "https://docs.google.com/spreadsheets/d/1aQiwbtrQu1QOIOkFrOYl9WkzT0mqnZqIwI9KJCXGb4E/gviz/tq?tqx=out:json&sheet=%E7%B8%BD%E8%A1%A8",
+          "checked_at": "2026-10-11T12:05:37.839872+00:00",
+          "http_status": 200,
+          "sha256": "dcc3943fb94c67d94685b4309ae5093b2760c0d87ea2cac8dd83ac586c3c5252",
+          "size_bytes": 27493,
+          "body_file": "cgu-live-double-exact-gviz.json"
+        }
+      ]
+    },
+    "after": {
+      "checked_at": "2026-10-11T12:23:38.093261+00:00",
+      "scope": "Actual CGU live sheet URLs and actual unmocked fetch_partner_universities",
+      "parsed_partner_count": 77,
+      "lincoln_present": true,
+      "receipts": [
+        {
+          "url": "https://docs.google.com/spreadsheets/d/1EAOsiZkw5oWWUpAyXz-04aQWdSMR9f_c3Jup69LeiuA/gviz/tq?tqx=out:json&sheet=%E7%B8%BD%E8%A1%A8",
+          "checked_at": "2026-10-11T12:23:36.741934+00:00",
+          "http_status": 200,
+          "sha256": "ddf51f4650c08257043438bb072d14a09f13b8d54a26b0fa8020565f3e6db3c0",
+          "size_bytes": 72081,
+          "body_file": "cgu-live-exchange-exact-gviz.json"
+        },
+        {
+          "url": "https://docs.google.com/spreadsheets/d/1aQiwbtrQu1QOIOkFrOYl9WkzT0mqnZqIwI9KJCXGb4E/gviz/tq?tqx=out:json&sheet=%E7%B8%BD%E8%A1%A8",
+          "checked_at": "2026-10-11T12:23:37.108669+00:00",
+          "http_status": 200,
+          "sha256": "dcc3943fb94c67d94685b4309ae5093b2760c0d87ea2cac8dd83ac586c3c5252",
+          "size_bytes": 27493,
+          "body_file": "cgu-live-double-exact-gviz.json"
+        }
+      ]
+    },
+    "new_fixture_added": false,
+    "original_13_failure_log_preserved": "../../validation/full-regression.log",
+    "interpretation": "原13失敗受CGU真實來源可用性影響，非永久既存錯誤或免責；本批全套前後均確認真實77校與Lincoln。"
+  },
+  "portable_archive_verification": {
+    "current_bodies": 345,
+    "reviewed_citations": 268,
+    "current_archive_parts": 12,
+    "historical_bodies": 59,
+    "home_source_citations_checked": 1,
+    "manual_semantic_rows_checked": 178,
+    "all_body_and_archive_hashes_match": true,
+    "all_quote_pages_match": true,
+    "historical_cached_read_has_not_been_backfilled_with_a_hash": true
+  },
+  "excel": {
+    "sheet_rows": {
+      "288校逐欄回填": 4032,
+      "來源原文索引": 269,
+      "當日臺大來源": 3,
+      "臺大116-1正式共通規則": 11,
+      "候選段落語意分類": 178
+    },
+    "formula_cells": 0
+  },
+  "notebook": {
+    "code_cells_executed": 3,
+    "execution_errors": 0
+  },
+  "all_current_cycle_fields_verified_schools": 0,
+  "original_2820_current_cycle_rows_fully_verified": 0,
+  "library_file_ids": [],
+  "library_blocker": "Earlier HTTP401; parent explicitly stopped retries",
+  "original_workbook_retrieved": false,
+  "parent_parallel_11_school_results_received": false,
+  "deploy_performed": false
+}

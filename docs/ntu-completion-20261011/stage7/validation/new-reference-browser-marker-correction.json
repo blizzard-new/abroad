@@ -1,0 +1,16 @@
+{
+  "initial_failed": 4,
+  "initial_causes": {
+    "Tokyo2": "Shared overview shows only first10 application paragraphs; later AY2026 cost and calendar conflict absent despite imported data",
+    "KGU2": "First expected marker26/27 instead of preserved2026–27; later calendar also beyond10-point renderer"
+  },
+  "corrected_marker_tokens": [
+    "AY2026",
+    "2026–27",
+    "Tentative"
+  ],
+  "implementation_fix": "NTU-only application summary groups reviewed references by nine fields, preserving every paragraph in at most10 display points; sharedapp.js unchanged",
+  "source_snapshot_sha256": "19c8445d66b90fda7092c763088dbcec36a2b55c257f2d47c5206c1ef98f2d15",
+  "post_grouping_first_result": "2 KGU passed; 2 TUFS failed solely on erroneous spaced AY 2026 expectation despite all paragraphs visible",
+  "post_grouping_marker_correction": "Summary fact and scope preserve AY2026; browser expectation corrected, source text unchanged"
+}
