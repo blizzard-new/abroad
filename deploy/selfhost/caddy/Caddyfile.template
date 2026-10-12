@@ -1,0 +1,33 @@
+# Caddy (installed on Windows itself, not in Docker) is the only thing the internet talks to.
+# It gets and renews the HTTPS certificate on its own (Let's Encrypt), compresses, and passes requests to the web service.
+# scripts/05-install-caddy.ps1 fills in the two values and writes the real file to C:\uniway\caddy\Caddyfile.
+{
+	email __ACME_EMAIL__
+	servers {
+		timeouts {
+			read_header 20s
+			idle 2m
+		}
+	}
+}
+
+__DOMAIN__ {
+	encode zstd gzip
+
+	# The visitor's address is written here by Caddy itself, overwriting whatever the visitor sent,
+	# and the program trusts only this header (EXCHANGE_CLIENT_IP_HEADER=X-Client-IP).
+	reverse_proxy 127.0.0.1:8000 {
+		header_up X-Client-IP {remote_host}
+		# while the web service restarts (an update, a reboot) keep retrying for a few seconds instead of answering 502 at once
+		lb_try_duration 20s
+		lb_try_interval 500ms
+	}
+
+	log {
+		output file C:\uniway\logs\access.log {
+			roll_size 50MiB
+			roll_keep 10
+			roll_keep_for 720h     # the privacy policy says connection logs are deleted after about 30 days
+		}
+	}
+}

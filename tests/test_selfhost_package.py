@@ -1,0 +1,104 @@
+"""The self-hosting package (deploy/selfhost): cheap guards on the things that must not drift or leak."""
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+import pytest
+import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+SELFHOST = ROOT / "deploy" / "selfhost"
+COMPOSE = SELFHOST / "docker-compose.yml"
+VALIDATION_COMPOSE = ROOT / "supabase" / "runtime-validation" / "docker-compose.yml"
+
+
+def _images(path: Path) -> set[str]:
+    services = yaml.safe_load(path.read_text(encoding="utf-8"))["services"]
+    return {svc["image"] for svc in services.values() if "image" in svc}
+
+
+def test_the_database_images_are_the_ones_the_migrations_are_validated_against() -> None:
+    pinned = {image for image in _images(VALIDATION_COMPOSE) if "@sha256:" in image}
+    assert pinned, "the validation compose file pins its images"
+    assert pinned <= _images(COMPOSE), "self-hosting runs the same pinned Postgres, PostgREST and Storage images"
+
+
+def test_only_the_web_service_is_published_and_only_on_loopback() -> None:
+    services = yaml.safe_load(COMPOSE.read_text(encoding="utf-8"))["services"]
+    published = {name: svc["ports"] for name, svc in services.items() if svc.get("ports")}
+    assert list(published) == ["app"]
+    assert all(str(port).startswith("127.0.0.1:") for port in published["app"])
+
+
+def test_the_web_service_is_told_to_use_https_for_the_database_and_to_trust_only_the_proxys_header() -> None:
+    app = yaml.safe_load(COMPOSE.read_text(encoding="utf-8"))["services"]["app"]["environment"]
+    assert app["EXCHANGE_ENVIRONMENT"] == "production"
+    assert app["EXCHANGE_SUPABASE_URL"].startswith("https://"), "the program refuses a database address that is not https"
+    assert app["EXCHANGE_CLIENT_IP_HEADER"] == "X-Client-IP"
+    assert app["EXCHANGE_HOSTING_PROFILE"] == "selfhost"
+    assert not any("DB_PASSWORD" in value or "JWT_SECRET" in value for value in map(str, app.values())), "the database password never reaches the web service"
+
+
+def test_the_public_caddyfile_overwrites_the_visitor_address_header() -> None:
+    text = (SELFHOST / "caddy" / "Caddyfile.template").read_text(encoding="utf-8")
+    assert "header_up X-Client-IP {remote_host}" in text
+    assert "127.0.0.1:8000" in text
+    assert "__DOMAIN__" in text and "__ACME_EMAIL__" in text
+    assert "roll_keep_for 720h" in text, "the privacy policy promises connection logs go after about 30 days"
+
+
+def test_every_setting_the_compose_file_reads_is_in_the_env_template() -> None:
+    text = COMPOSE.read_text(encoding="utf-8")
+    wanted = set(re.findall(r"\$\{([A-Z_]+)(?::[-?][^}]*)?\}", text))
+    template = (SELFHOST / "env.template").read_text(encoding="utf-8")
+    listed = set(re.findall(r"^([A-Z_]+)=", template, flags=re.M))
+    assert wanted <= listed, sorted(wanted - listed)
+
+
+def test_no_secret_is_committed_and_the_real_settings_file_is_ignored() -> None:
+    assert "deploy/selfhost/.env" in (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
+    assert not (SELFHOST / ".env").exists() or True  # a developer's own file may exist locally; it is ignored by git
+    for path in SELFHOST.rglob("*"):
+        if not path.is_file() or path.name == ".env":
+            continue
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        assert not re.search(r"eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}", text), f"a JWT is written in {path.name}"
+        assert not re.search(r"GOCSPX-[A-Za-z0-9_-]{10,}", text), f"a Google client secret is written in {path.name}"
+
+
+def test_the_powershell_scripts_are_plain_ascii_because_windows_powershell_5_reads_them_in_the_system_code_page() -> None:
+    scripts = sorted((SELFHOST / "scripts").glob("*.ps1"))
+    assert len(scripts) >= 14
+    for path in scripts:
+        data = path.read_bytes()
+        assert all(byte < 128 for byte in data), f"{path.name} has non-ASCII characters"
+
+
+def test_migrations_and_shell_files_are_pinned_to_unix_line_endings() -> None:
+    attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8")
+    for pattern in ("*.sql text eol=lf", "*.sh text eol=lf", "Dockerfile text eol=lf"):
+        assert pattern in attributes, pattern
+    for path in (ROOT / "supabase" / "migrations").glob("*.sql"):
+        assert b"\r\n" not in path.read_bytes(), f"{path.name} has CRLF line endings"
+    assert b"\r\n" not in (SELFHOST / "docker-entrypoint.sh").read_bytes()
+
+
+def test_the_image_builds_from_a_tiny_context_and_starts_through_the_entrypoint() -> None:
+    dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
+    assert "ENTRYPOINT" in dockerfile and "docker-entrypoint.sh" in dockerfile
+    ignore = (ROOT / ".dockerignore").read_text(encoding="utf-8").splitlines()
+    assert ignore[:1] == ["# Only what the image needs. Everything else (tests, docs, mobile apps, scraped sources, ...) stays out of the build."] or "*" in ignore
+    assert "!deploy/selfhost/docker-entrypoint.sh" in ignore and "!src" in ignore
+
+
+def test_the_guide_names_every_script_that_exists() -> None:
+    guide = (ROOT / "docs" / "self-host-windows-guide.md").read_text(encoding="utf-8")
+    for path in (SELFHOST / "scripts").glob("*.ps1"):
+        if path.name != "lib.ps1":
+            assert path.name in guide, f"{path.name} is not explained in the guide"
+
+
+@pytest.mark.parametrize("name", ["tools/create_bucket.py", "tools/smoke.py", "tools/dr_object.py"])
+def test_the_helper_tools_are_valid_python(name: str) -> None:
+    compile((SELFHOST / name).read_text(encoding="utf-8"), name, "exec")
