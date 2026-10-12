@@ -1937,8 +1937,10 @@ def test_kyutech_original_reading_ranges_visuals_failed_attempts_and_old_scope()
     assert '尚未閱讀單門完整syllabus' in search['reading_review']['scope']
     assert '26470831' in search['pages'][0]['text'] and '先進' in search['pages'][0]['text']
     excerpt = sources['host-kyutech-lsse-timetable2026-en-web-excerpt']
-    assert excerpt['source_excerpt_only'] and not excerpt.get('sha256')
-    assert not excerpt['content_status']['all_pages_read']
+    assert not excerpt['source_excerpt_only']
+    assert excerpt['sha256'] == '2184c648c5af82588ca5390e3c5849f92b9b9346f0e4eb8223f04fb1d564e3e1'
+    assert excerpt['content_status']['all_pages_read']
+    assert excerpt['previous_excerpt_archive'].endswith('kyutech-previous-excerpt.json')
     blank = sources['host-kyutech-gcc2026oct-blank']
     assert blank['content_status']['all_pages_read'] and blank['pages'][0]['page'] is None
     assert '兩表' in blank['reading_review']['scope'] and '入館願' not in indexable_source_text(blank)
