@@ -115,7 +115,9 @@ def test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exceptio
 def test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life(tmp_path, row, name, initial, stages, conditions):
     partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
     audit = ncu_field_audit(partner.school_name)
-    assert len(audit['fields']) == 17 and audit['checked_at'].startswith('2026-10-11' if row == 'ncu-129' else '2026-10-09')
+    reviewed = json.loads((SOURCES / 'reviewed-host-records.json').read_text())
+    reviewed.update(json.loads((ROOT / 'sources/ncu/2026-10-11/reviewed-host-records.json').read_text()))
+    assert len(audit['fields']) == 17 and audit['checked_at'] == reviewed[row]['checked_at']
     sources = source_records()
     for key, field in audit['fields'].items():
         assert field['original_evidence'], key
@@ -176,7 +178,8 @@ def test_selected_public_passages_visuals_and_version_dates_remain_bound_to_orig
     for ident,pages in [('host-kansai-next-07',[9]),('host-kansai-next-08',[1,5])]:
         s=sources[ident];ex=json.loads((SOURCES/f'{ident}-public-excerpt.json').read_text())
         assert [p['page']for p in s['pages']]==pages and s['source_excerpt_only']
-        assert s['sha256']==ex['source_sha256'] and not s['content_status']['all_pages_read']
+        assert s['sha256']==ex['source_sha256']
+        assert s['content_status']['all_pages_read'] == (ident == 'host-kansai-next-08')
         changed={'sha256':'changed','pages':[{'page':1,'text':'new'}]}
         attach_public_field_excerpt(changed,ex)
         assert not changed['pages'] and changed['error']
@@ -189,4 +192,4 @@ def test_selected_public_passages_visuals_and_version_dates_remain_bound_to_orig
         assert item['source_sha256']==sources[item['source_id']]['sha256']
     attempts=json.loads((SOURCES/'host-shizuoka-chuo-kansai-original-manifest-20261009.json').read_text())
     assert len(attempts)==51 and all(a['checked_at'].startswith('2026-10-09')for a in attempts)
-    assert all(not sources[a['id']]['content_status']['all_pages_read']for a in attempts)
+    assert {a['id'] for a in attempts if sources[a['id']]['content_status']['all_pages_read']} == {'host-kansai-next-08'}
