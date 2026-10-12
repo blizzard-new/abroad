@@ -1,7 +1,7 @@
 # Update to the newest code from GitHub, or go back to the previous version.
 #   powershell -ExecutionPolicy Bypass -File .\update.ps1            (update)
 #   powershell -ExecutionPolicy Bypass -File .\update.ps1 -Rollback  (undo the last update)
-param([switch]$Rollback, [string]$Branch = 'main')
+param([switch]$Rollback, [string]$Branch = '')   # default: the branch this folder is on
 . "$PSScriptRoot\lib.ps1"
 
 if ($Rollback) {
@@ -20,6 +20,7 @@ Write-Step 'Taking a backup first'
 & "$PSScriptRoot\backup.ps1" -SkipCloud
 if ($LASTEXITCODE -ne 0) { throw 'backup failed - not updating' }
 
+if (-not $Branch) { $Branch = (& git -C $script:RepoRoot rev-parse --abbrev-ref HEAD).Trim() }
 Write-Step ("Fetching {0}" -f $Branch)
 Push-Location $script:RepoRoot
 try {
