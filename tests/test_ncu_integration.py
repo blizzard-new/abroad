@@ -1745,7 +1745,9 @@ def test_omu_originals_optional_rows_old_sheet_isolation_and_outage_provenance()
     assert '2026' in course['pages'][0]['text'] and '文学部専門科目' in course['pages'][0]['text']
     assert '文学部専門科目' not in indexable_source_text(course)
     old = sources['18V9vNjSgs4HCh9YSLlzmQYs_qXvLn9yK']
-    assert old['reading_review']['pages_reviewed'] == [1, 2, 3] and not old['content_status']['all_pages_read']
+    assert old['reading_review']['pages_reviewed'] == [1, 2, 3, 4]
+    assert old['content_status']['all_pages_read']
+    assert old['visual_review']['pdf_pages_reviewed'] == [1, 2, 3, 4]
     assert 'by April 10, 2025' not in indexable_source_text(old)
     for sid in ['host-omu-exchangeprogram', 'host-omu-i-wing', 'host-omu-housing-index', 'host-omu-campus-access', 'host-omu-graduate-timetable']:
         outage = sources[sid]
