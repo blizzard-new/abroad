@@ -37,8 +37,8 @@
 - 本次2026-10-12 00:58:35 UTC母校首頁HTTP200，仍116簡章＋115校別表；只表示本次頁面未觀察到116名單，不推全網一定未發布。
 - 原停止任務第五輪未提交資料沒有轉入；本分支成果均由可取得來源重新建立，不引用遺失本地測試作證據。
 
-此候選固定後只集中跑一次完整回歸與受影響browser場景；結果另記驗證文件。原1399及此前1948受控PNG已核未變。所有browser新截圖僅tmp_path產生，不覆寫既有照片或截圖。原件頁圖非授權校景。
+此候選固定後已集中跑一次完整回歸與受影響browser場景；含失敗、修復及補測的精確範圍見[最終驗收](FINAL-ACCEPTANCE.md)與[驗證清單](validation.json)。原1399及此前1948受控PNG已核未變。所有browser新截圖僅tmp_path產生，不覆寫既有照片或截圖。原件頁圖非授權校景。
 
-`recovery/stage.py`已套用，不可無差別重跑。原件重取腳本、實讀文字、必要原圖及回應收據已保存；TUAF 198MB手冊不重複進git，保留原件SHA及實讀頁；六頁sample只核第一頁，不發布其餘未知範例。完整原件仍可按官方URL重取，重取後必核SHA。重建命令 `PYTHONPATH=src:. .venv/bin/python scripts/build_ncu_catalog.py`。
+`recovery/stage.py`及`recovery/repair_read_scope.py`已套用，不可無差別重跑。原件重取腳本、實讀文字、必要原圖及回應收據已保存；TUAF 198MB手冊不重複進git，保留原件SHA及實讀頁；六頁sample只核第一頁，不發布其餘未知範例。完整原件仍可按官方URL重取，重取後必核SHA。重建命令 `PYTHONPATH=src:. .venv/bin/python scripts/build_ncu_catalog.py`。
 
 整合替代任務 `01a12ca9-17d9-717b-9db1-90cdcda560a6`維持userpaused。無合併／部署／正式DB／Quality／付費／憑證／權限變更。
