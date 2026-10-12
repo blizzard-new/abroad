@@ -1175,28 +1175,84 @@ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {})
 
 async function loadSchoolImages() {
   try {
-    const payload = await fetchJson("/static/assets/school-images.json?v=20261008-ntu-1");
+    const payload = await fetchJson("/static/assets/school-images.json?v=20261011-coverage-1");
     state.schoolImages = Array.isArray(payload?.schools)
-      ? payload.schools.filter((item) => item.status === "verified" && item.local_path)
+      ? payload.schools.filter((item) => item && item.school_name)
       : [];
   } catch (_) {
     state.schoolImages = [];
   }
 }
 
+function visualSchoolIdentity(value, loose = false) {
+  let name = String(value ?? "").normalize("NFKC").replace(/\s+/g, " ").trim();
+  name = name.replace(/\s*黑龍江省哈爾\s*濱市\s*$/, "").trim();
+  name = name.replace(/\s*\([^()]*(?:交換學生計畫|訪問學生計畫)[^()]*\)\s*$/, "").trim();
+  const english = name.search(/[A-Za-z]/);
+  name = (english < 0 ? name : name.slice(english)).replace(/^[ ()（）\[\]【】,，;；]+|[ ()（）\[\]【】,，;；]+$/g, "").toLowerCase().replace(/ß/g, "ss").replace(/ς/g, "σ");
+  return loose ? name.normalize("NFKD").replace(/\p{M}/gu, "").replace(/[^\p{L}\p{N}]/gu, "") : name;
+}
+
+function visualCountryIdentity(value) {
+  const country = String(value || "").trim();
+  return ({ "南韓": "韓國", "台灣": "臺灣", "中國": "中國大陸", "大陸地區": "中國大陸" })[country] || country;
+}
+
+function visualSchoolAliases(value) {
+  const aliases = [visualSchoolIdentity(value, true)];
+  let name = String(value ?? "").normalize("NFKC").replace(/\s+/g, " ").trim();
+  name = name.replace(/\s*\([^()]*(?:交換學生計畫|訪問學生計畫)[^()]*\)\s*$/, "").trim();
+  const english = name.search(/[A-Za-z]/);
+  const scoped = /校區|分校|研究所|研究科|學部|大學.*學院|大学.*学院|\bcampus\b|\bfaculty\b|\bdepartment\b|\bschool of\b|\bcollege of\b/i.test(name);
+  const trim = (s) => s.replace(/^[ ()（）\[\]【】,，;；]+|[ ()（）\[\]【】,，;；]+$/g, "");
+  const institution = /^[\u3400-\u9fff ]{2,}(?:大學|大学|學院|学院|技術院|技术院)$/;
+  if (english >= 0 && !scoped) {
+    const prefix = trim(name.slice(0, english)), suffix = name.slice(english);
+    const chinese = suffix.search(/[\u3400-\u9fff]/);
+    if (chinese >= 0 && institution.test(trim(suffix.slice(chinese)))) {
+      aliases.push(visualSchoolIdentity(suffix.slice(0, chinese), true), visualSchoolIdentity(trim(suffix.slice(chinese)), true));
+    }
+    if (institution.test(prefix)) aliases.push(visualSchoolIdentity(prefix, true));
+  }
+  return [...new Set(aliases.filter(Boolean))];
+}
+
+let schoolVisualSource = null, schoolVisualExact = new Map(), schoolVisualAliases = new Map();
+function schoolVisualRecordFor(schoolName, country = null) {
+  if (schoolVisualSource !== state.schoolImages) {
+    schoolVisualSource = state.schoolImages;
+    schoolVisualExact = new Map(); schoolVisualAliases = new Map();
+    for (const row of state.schoolImages) schoolVisualExact.set(JSON.stringify([visualSchoolIdentity(row.school_name), row.country || ""]), row);
+    for (const row of schoolVisualExact.values()) {
+      for (const name of visualSchoolAliases(row.school_name)) {
+        const key = JSON.stringify([name, visualCountryIdentity(row.country)]);
+        if (!schoolVisualAliases.has(key)) schoolVisualAliases.set(key, new Set());
+        schoolVisualAliases.get(key).add(row);
+      }
+    }
+  }
+  const exact = schoolVisualExact.get(JSON.stringify([visualSchoolIdentity(schoolName), country || ""]));
+  if (exact) return exact; // Preserve explicit needs_review/missing decisions.
+  for (const name of visualSchoolAliases(schoolName)) {
+    const matches = schoolVisualAliases.get(JSON.stringify([name, visualCountryIdentity(country)]));
+    if (matches?.size) return matches.size === 1 ? [...matches][0] : null;
+  }
+  return null;
+}
+
 function schoolImageFor(schoolName, country = null) {
-  return state.schoolImages.find(
-    (item) => normalize(item.school_name) === normalize(schoolName)
-      && (!country || item.country === country)
-  );
+  const visual = schoolVisualRecordFor(schoolName, country);
+  return visual?.status === "verified" && visual.local_path ? visual : null;
 }
 
 function renderSchoolPhoto(item, variant = "card") {
+  const record = schoolVisualRecordFor(item.school_name, item.country);
   const visual = schoolImageFor(item.school_name, item.country)
-    || (item.image_status === "verified" && item.image_url ? { local_path: item.image_url } : null);
-  const label = item.country || "交換學校";
+    || (!record && item.image_status === "verified" && item.image_url ? { local_path: item.image_url } : null);
+  const status = record?.status || item.image_status;
+  const label = visual ? "照片暫時無法載入" : status === "needs_review" ? "照片待核對" : status === "error" ? "照片擷取失敗" : "照片待補";
   const fallback = `
-    <span class="school-photo-fallback" aria-hidden="true">
+    <span class="school-photo-fallback" ${visual ? 'aria-hidden="true"' : 'role="img"'} aria-label="${escapeHtml(item.school_name)}：${escapeHtml(label)}">
       <i data-lucide="school"></i><span>${escapeHtml(label)}</span>
     </span>`;
   const loading = variant === "detail" ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
@@ -7539,6 +7595,7 @@ function renderMapPreview(item) {
   const language = partnerSummaryPoints(item, "eligibility_points");
   return `<div class="map-preview-top">
     <button type="button" class="map-preview-close" data-close-map-preview aria-label="關閉學校預覽">×</button>
+    ${renderSchoolPhoto(item, "map")}
     <div class="map-preview-place">${escapeHtml([location.city, item.country].filter(Boolean).join(" · "))}</div>
     <h4>${escapeHtml(item.school_name)}</h4>
     <span class="coverage-chip ${availability.blocked ? "empty" : ""}">${escapeHtml(availability.shortLabel)}</span>
@@ -7607,7 +7664,7 @@ function syncPartnerView() {
   if (partnerMapLoadPromise || partnerMapLoadFailed) return;
   showPartnerMapStatus("正在準備你的世界地圖", "首次載入需要一點時間。", { loading: true });
   const generation = partnerMapGeneration;
-  partnerMapLoadPromise = import(`/static/partner-map.js?v=20260929-chinese-1&attempt=${generation}`)
+  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261011-coverage-1&attempt=${generation}`)
     .then((module) => module.createPartnerMap({ renderPreview: renderMapPreview, onSchoolSelect: loadDiscoveryPreview, onList: () => setPartnerView("list"), onRetry: retryPartnerMap, onIcons: initIcons, freshEngine: generation > 0 }))
     .then((controller) => {
       if (generation !== partnerMapGeneration) { controller.destroy(); return; }
@@ -7933,11 +7990,11 @@ function renderPartnerLinks(item) {
   const source = item.source_url
     ? `<a href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">官方來源</a>`
     : "";
-  const visual = schoolImageFor(item.school_name, item.country);
+  const visual = schoolVisualRecordFor(item.school_name, item.country);
   const imagePage = visual?.official_page_url || item.image_page_url;
   const imageSource = imagePage
     ? `<a href="${escapeHtml(imagePage)}" target="_blank" rel="noreferrer">圖片來源</a>${renderSchoolImageCredit(item)}`
-    : "";
+    : renderSchoolImageCredit(item);
   const rankingSource = item.ranking_source_url
     ? `<a href="${escapeHtml(item.ranking_source_url)}" target="_blank" rel="noreferrer">排名來源</a>`
     : "";
@@ -7945,14 +8002,15 @@ function renderPartnerLinks(item) {
 }
 
 function renderSchoolImageCredit(item) {
-  const visual = schoolImageFor(item.school_name, item.country);
+  const visual = schoolVisualRecordFor(item.school_name, item.country);
   const note = visual?.note || "";
+  if (visual && visual.status !== "verified") return `<small class="school-image-credit">${visual.status === "needs_review" ? "照片待核對" : "照片待補"}：${escapeHtml(note || "尚未取得可核實的照片與授權來源。")}</small>`;
   if (visual?.license_name) {
     const license = String(visual.license_url || "").replace(/^http:\/\//, "https://");
     const safeLicense = /^https:\/\/(?:creativecommons\.org|commons\.wikimedia\.org)\//.test(license);
     return `<small class="school-image-credit">${escapeHtml(note)}${safeLicense ? ` · <a href="${escapeHtml(license)}" target="_blank" rel="noreferrer">圖片授權</a>` : ""}</small>`;
   }
-  if (!note.startsWith("攝影：")) return "";
+  if (!note.startsWith("攝影：")) return visual ? '<small class="school-image-credit">圖片來源已核對；再利用授權待確認。</small>' : "";
   return `<small class="school-image-credit">${escapeHtml(note)}${note.includes("CC BY-SA 3.0") ? ' · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">圖片授權</a>' : ""}</small>`;
 }
 
@@ -12733,6 +12791,9 @@ function bindEvents() {
   document.addEventListener("error", (event) => {
     const image = event.target;
     if (image instanceof HTMLImageElement && image.dataset.removeOnError === "true") {
+      const fallback = image.parentElement?.querySelector(".school-photo-fallback");
+      fallback?.removeAttribute("aria-hidden");
+      fallback?.setAttribute("role", "img");
       image.remove();
     }
   }, true);

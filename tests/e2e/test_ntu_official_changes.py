@@ -1,4 +1,6 @@
 """Today's reference text remains visibly scoped in both responsive views."""
+import os
+from pathlib import Path
 import pytest
 from playwright.sync_api import expect
 from .conftest import enter_public_site, open_navigation
@@ -31,6 +33,6 @@ def test_current_portal_reference_is_visible_without_opening_quota(page,live_ser
     expect(page.locator('#school-detail-view .partner-student-summary')).to_contain_text('最終條件與甄選名額仍待確認')
     assert page.evaluate("state.dashboard.partner_universities.find(p=>p.school_name==='明斯特大學').quota") is None
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
-    from pathlib import Path
-    target=Path('/workspace/ntu-research-2026-10-10/test-evidence');target.mkdir(exist_ok=True)
+    target = Path(os.environ.get('VISUAL_EVIDENCE_DIR', 'output/ntu-official-changes'))
+    target.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(target/f'current-reference-{width}.png'))

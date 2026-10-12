@@ -452,17 +452,18 @@ HOME_UNIVERSITY_BOARDS = {item.school_name for item in SUPPORTED_UNIVERSITIES}
 
 
 def _load_school_image_manifest() -> dict[tuple[str, str], dict[str, object]]:
+    from .school_identity import VisualRecordIndex
     if not SCHOOL_IMAGE_MANIFEST.exists():
         return {}
     try:
         payload = json.loads(SCHOOL_IMAGE_MANIFEST.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return {}
-    return {
+    return VisualRecordIndex({
         (school_identity_key(str(item.get("school_name", ""))), str(item.get("country") or "")): item
         for item in payload.get("schools", [])
         if isinstance(item, dict) and item.get("school_name")
-    }
+    })
 
 
 def _attach_school_images(
@@ -474,7 +475,7 @@ def _attach_school_images(
     base = base_url.rstrip("/")
     partners = []
     for school in dashboard.partner_universities:
-        visual = visuals.get((school_identity_key(school.school_name), school.country or ""))
+        visual = visuals.get((school.school_name, school.country or ""))
         if not visual:
             partners.append(school)
             continue
@@ -2894,7 +2895,7 @@ def create_app(
         rows: list[PartnerCoverage] = []
         for partner in partners:
             normalized = normalize_school(partner.school_name)
-            visual = school_images.get((school_identity_key(partner.school_name), partner.country or ""))
+            visual = school_images.get((partner.school_name, partner.country or ""))
             partner_experiences = experience_map.get(normalized, [])
             workflow = workflow_map.get(normalized)
             destination = destination_map.get((home_key, normalized))

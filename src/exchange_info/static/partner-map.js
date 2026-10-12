@@ -263,6 +263,8 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     const usable = hasCoordinates(home);
     $("#map-home").disabled = !usable;
     $("#map-home").title = usable ? home.school_name : "所屬大學座標待確認";
+    const homeStatus = $("#partner-map-home-status");
+    homeStatus.textContent = usable ? `★ ${home.school_name}：${home.location.city || "母校"}代表位置已核對。` : `★ ${home?.school_name || "所屬大學"}座標待確認；合作校與申請資訊仍可瀏覽。`;
     if (!usable) return;
     const button = document.createElement("button"); button.type = "button"; button.className = "map-home-marker";
     const star = document.createElement("span"); star.textContent = "★"; star.setAttribute("aria-hidden", "true");
@@ -313,6 +315,25 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
       : "地圖位置為校級代表點；實際交換校區請以錄取資訊為準。";
     select.replaceChildren(new Option("選擇地圖上的學校", ""), ...located.map((p) => new Option(`${p.school_name} · ${p.country || ""}`, p.school_name)));
     select.value = selectedName;
+    const missing = current.partners.filter((p) => !hasCoordinates(p));
+    const gaps = $("#partner-map-gaps");
+    gaps.hidden = missing.length === 0;
+    gaps.querySelector("summary").textContent = `查看 ${missing.length} 所待定位學校與來源`;
+    const rows = missing.map((item) => {
+      const li = document.createElement("li");
+      const button = document.createElement("button"); button.type = "button";
+      button.className = "text-action school-detail-trigger"; button.dataset.schoolName = item.school_name;
+      button.textContent = `${item.school_name} · ${item.country || "國家待確認"}`;
+      const reason = document.createElement("p");
+      reason.textContent = `${item.location?.geocode_status === "needs_review" ? "身分或校區待複核" : "座標待確認"}：${item.location?.note || "尚未取得可核實的校區位置。"}`;
+      li.append(button, reason);
+      const source = item.location?.source_url || item.source_url;
+      if (/^https?:\/\//i.test(source || "")) {
+        const link = document.createElement("a"); link.href = source; link.target = "_blank"; link.rel = "noreferrer"; link.textContent = "查核來源"; li.append(link);
+      }
+      return li;
+    });
+    gaps.querySelector("ul").replaceChildren(...rows);
     applyData();
   }
 
