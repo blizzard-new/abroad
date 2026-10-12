@@ -523,19 +523,19 @@ def test_tuaf_visual_sidecar_reaches_offline_audit_and_rejects_changed_sha():
     source = next(d for d in raw if d["id"] == "host-tuaf-2026")
     sidecar = json.loads((ROOT / "sources/ncu/2026-10-08/host-tuaf-2026-visual-review.json").read_text())
     assert source["visual_review"] == sidecar
-    assert sidecar["pdf_page"] == 2 and source["content_status"]["page_count"] == 2
-    assert source["content_status"]["visual_reviewed_page_count"] == 1
+    assert sidecar["pdf_pages_reviewed"] == [1, 2] and source["content_status"]["page_count"] == 2
+    assert source["content_status"]["visual_reviewed_page_count"] == 2
     assert source["content_status"]["visual_reviewed"]
     partner = next(p for p in fetch_ncu_partner_universities() if "太原農林" in p.school_name)
     audit = ncu_field_audit(partner.school_name)
     row = next(s for s in audit["read_sources"] if s["id"] == "host-tuaf-2026")
-    assert row["content_status"]["visual_reviewed_page_count"] == 1
+    assert row["content_status"]["visual_reviewed_page_count"] == 2
     source["sha256"] = "different-original"
     attach_visual_review(source, sidecar)
     assert not source_content_status(source)["visual_reviewed"]
     assert not source.get("visual_review")
     source["sha256"] = sidecar["source_sha256"]
-    attach_visual_review(source, {**sidecar, "pdf_page": 99})
+    attach_visual_review(source, {**sidecar, "pdf_pages_reviewed": [99]})
     assert not source_content_status(source)["visual_reviewed"]
 
 

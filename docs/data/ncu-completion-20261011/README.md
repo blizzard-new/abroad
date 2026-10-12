@@ -1,5 +1,7 @@
 # 中央逐校補完查核，2026-10-11
 
+**最新第二十九批：五份已引用原件11頁全讀，已引用待讀79→74，多頁待讀300→295。** 四校22欄；504回歸、8瀏覽器情境通過、8圖全實看，735中文來源對照及214校待翻譯0。TUAF原生費用錯序改用視覺摘錄索引，福井缺失附頁不補寫。詳見[第二十九批](resume/twentyninth/README.md)、[未完成清單](resume/twentyninth/unfinished-source-list.csv)、[驗證](resume/twentyninth/validation.json)。以下保留歷史紀錄。
+
 **最新第二十八批：八份17頁全讀，人工155校，多頁待讀307→300。** 六校57欄與UA／NAU來源映射修正；501回歸、12瀏覽器情境通過、12圖全實看，214生活API待翻譯0。詳見[第二十八批](resume/twentyeighth/README.md)、[未完成清單](resume/twentyeighth/unfinished-source-list.csv)、[驗證](resume/twentyeighth/validation.json)。以下保留歷史紀錄。
 
 **最新第二十七批：五份原件10頁全讀，三校新增人工核讀，總152校；待讀多頁312→307。** 497回歸與10瀏覽器情境通過，10圖全實看，214生活API待翻譯0。兩張嵌圖另存人工原文，未改原生抽取；母校限制、付費方案與計價週期分開。詳見[第二十七批](resume/twentyseventh/README.md)、[未完成清單](resume/twentyseventh/unfinished-source-list.csv)、[驗證](resume/twentyseventh/validation.json)。以下保留歷史紀錄。
