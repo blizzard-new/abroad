@@ -1,0 +1,20 @@
+CONFTEST LOADED!
+F....                                                                    [100%]
+=================================== FAILURES ===================================
+______ test_five_originals_and_thirteen_physical_pdf_pages_are_traceable _______
+
+    def test_five_originals_and_thirteen_physical_pdf_pages_are_traceable():
+        ss = {s['id']: s for s in json.loads(gzip.decompress((ROOT / 'src/exchange_info/official_data/ncu/source-evidence.json.gz').read_bytes()))}
+        raw = {s['source_id']: s for s in json.loads(gzip.decompress((ROOT / 'sources/ncu/2026-10-11/resume-thirtyfirst-original-responses.json.gz').read_bytes()))}
+        ledger = json.loads((DOCS / 'reading-ledger.json').read_text())['items']
+        assert len(ledger) == 5 and sum(len(r['pages_reviewed']) for r in ledger) == 13
+        for row in ledger:
+            s = ss[row['source_id']]
+            assert hashlib.sha256(base64.b64decode(raw[s['id']]['body'])).hexdigest() == row['source_sha256'] == s['sha256']
+>           assert s['content_status']['all_pages_read']
+E           assert False
+
+tests/test_ncu_thirtyfirst_documents.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_thirtyfirst_documents.py::test_five_originals_and_thirteen_physical_pdf_pages_are_traceable
+1 failed, 4 passed in 2.69s

@@ -1,5 +1,7 @@
 # 中央逐校補完查核，2026-10-11
 
+**最新第三十一批：四PDF13頁及一空白工作簿三sheet全讀，已引用待讀71→66份。** 三校七欄，510回歸／6瀏覽器情境與6圖實看；751中文對照、214校待翻譯0。靜岡修士接收與全校位置名錄分開，含住房預算及單人房單位釐清。詳見[第三十一批](resume/thirtyfirst/README.md)、[未完成清單](resume/thirtyfirst/unfinished-source-list.csv)、[驗證](resume/thirtyfirst/validation.json)。以下保留歷史紀錄。
+
 **最新第三十批：兩空白政府表全讀、關西同SHA全文補視讀；71份已引用仍待全讀。** 三校六欄，507回歸／6瀏覽器情境及6圖全實看，745中文對照、214校待翻譯0。兩大型課表仍明列未全讀。詳見[第三十批](resume/thirtieth/README.md)、[未完成清單](resume/thirtieth/unfinished-source-list.csv)、[驗證](resume/thirtieth/validation.json)。以下保留歷史紀錄。
 
 **最新第二十九批：五份已引用原件11頁全讀，已引用待讀79→74，多頁待讀300→295。** 四校22欄；504回歸、8瀏覽器情境通過、8圖全實看，735中文來源對照及214校待翻譯0。TUAF原生費用錯序改用視覺摘錄索引，福井缺失附頁不補寫。詳見[第二十九批](resume/twentyninth/README.md)、[未完成清單](resume/twentyninth/unfinished-source-list.csv)、[驗證](resume/twentyninth/validation.json)。以下保留歷史紀錄。
