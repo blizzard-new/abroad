@@ -118,3 +118,17 @@ def test_the_restore_test_takes_its_own_fresh_backup_instead_of_comparing_an_old
     assert "$fresh = -not $Dump" in restore_test
     assert "if ($fresh -and ($liveTotal - $restoredTotal) -gt $allowed)" in restore_test
     assert "0.8" not in restore_test
+
+
+def test_the_security_check_only_looks_and_the_guide_says_what_to_do_when_broken_into() -> None:
+    script = (SELFHOST / "scripts" / "security-check.ps1").read_text(encoding="utf-8")
+    # Read-only by design: it must never change the computer, only report. (Advice strings may name Set-LocalUser, Rename-LocalUser,
+    # Set-NetFirewallProfile and Update-MpSignature; nothing else that changes state is allowed to appear.)
+    for forbidden in (
+        "New-NetFirewallRule", "Set-ItemProperty", "New-ItemProperty", "Stop-Service", "Stop-Process", "Restart-Computer",
+        "Register-ScheduledTask", "Unregister-ScheduledTask", "Remove-LocalUser", "Set-Content", "Out-File", "net user", "docker rm", "docker stop",
+    ):
+        assert forbidden not in script, forbidden
+    guide = (ROOT / "docs" / "self-host-windows-guide.md").read_text(encoding="utf-8")
+    for needed in ("security-check.ps1", "如果被攻破", "撤銷 rclone 的 Drive 授權", "-PasswordNeverExpires $true", "Get-NetFirewallPortFilter"):
+        assert needed in guide, needed
