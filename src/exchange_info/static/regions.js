@@ -6,6 +6,7 @@
   // [Chinese name, English name, ...other words a student might type]
   const COUNTRIES = {
     "east-asia": [
+      ["台灣", "Taiwan", "臺灣"],
       ["大陸地區", "China", "中國", "中國大陸", "中華人民共和國", "mainland"], ["中國", "China"], ["中國大陸", "China", "mainland"],
       ["香港", "Hong Kong"], ["澳門", "Macau"], ["臺灣", "Taiwan", "台灣"], ["日本", "Japan"], ["韓國", "South Korea", "Korea", "南韓"], ["南韓", "South Korea", "Korea", "韓國"], ["蒙古", "Mongolia"],
     ],
@@ -36,11 +37,13 @@
     "latin-america": [
       ["巴西", "Brazil"], ["阿根廷", "Argentina"], ["智利", "Chile"], ["哥倫比亞", "Colombia"], ["秘魯", "Peru"], ["烏拉圭", "Uruguay"],
       ["厄瓜多", "Ecuador"], ["古巴", "Cuba"], ["巴拿馬", "Panama"], ["哥斯大黎加", "Costa Rica"], ["瓜地馬拉", "Guatemala"],
+      ["巴拉圭", "Paraguay"],
     ],
     "oceania": [["澳洲", "Australia", "澳大利亞"], ["澳大利亞", "Australia", "澳洲"], ["紐西蘭", "New Zealand"], ["斐濟", "Fiji"]],
     "africa": [
       ["摩洛哥", "Morocco"], ["南非", "South Africa"], ["埃及", "Egypt"], ["肯亞", "Kenya"], ["迦納", "Ghana"], ["突尼西亞", "Tunisia"],
       ["奈及利亞", "Nigeria"], ["衣索比亞", "Ethiopia"], ["坦尚尼亞", "Tanzania"], ["塞內加爾", "Senegal"],
+      ["馬拉威", "Malawi"],
     ],
   };
 

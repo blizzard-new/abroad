@@ -1,0 +1,23 @@
+{
+  "cases": [
+    {
+      "case": "tests.e2e.test_ncu_shizuoka_chuo_kansai::test_ncu_reference_scope_and_student_content[kansai-\\u95dc\\u897f\\u5927\\u5b78-\\u521d\\u6b21\\u516d\\u985e\\u5171\\u901a\\uff0c\\u4e26\\u975e\\u6bcd\\u6821\\u4e03\\u4ef6-6-390]",
+      "message": "AssertionError: Locator expected to contain text '2026-10-09'\nActual value: 查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。 \nCall log:\n  - Expect \"to_contain_text\" with timeout 60000ms\n  - waiting for locator(\"#ncu-source-audit-body > p\").first\n    118 × locator resolved to <p>查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方…</p>\n        - unexpected value \"查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。\"\n\nAria snapshot:\n- paragraph: 查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。",
+      "traceback": "tests/e2e/test_ncu_shizuoka_chuo_kansai.py:48: in test_ncu_reference_scope_and_student_content\n    expect(page.locator('#ncu-source-audit-body > p').first).to_contain_text('2026-10-09',timeout=60_000)\nE   AssertionError: Locator expected to contain text '2026-10-09'\nE   Actual value: 查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。 \nE   Call log:\nE     - Expect \"to_contain_text\" with timeout 60000ms\nE     - waiting for locator(\"#ncu-source-audit-body > p\").first\nE       118 × locator resolved to <p>查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方…</p>\nE           - unexpected value \"查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。\"\nE   \nE   Aria snapshot:\nE   - paragraph: 查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。",
+      "xml": "docs/source-recovery-20261011-takeover/original-final7/integration-final7-full-shard-3/result.xml"
+    },
+    {
+      "case": "tests.e2e.test_ncu_shizuoka_chuo_kansai::test_ncu_reference_scope_and_student_content[kansai-\\u95dc\\u897f\\u5927\\u5b78-\\u521d\\u6b21\\u516d\\u985e\\u5171\\u901a\\uff0c\\u4e26\\u975e\\u6bcd\\u6821\\u4e03\\u4ef6-6-1440]",
+      "message": "AssertionError: Locator expected to contain text '2026-10-09'\nActual value: 查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。 \nCall log:\n  - Expect \"to_contain_text\" with timeout 60000ms\n  - waiting for locator(\"#ncu-source-audit-body > p\").first\n    122 × locator resolved to <p>查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方…</p>\n        - unexpected value \"查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。\"\n\nAria snapshot:\n- paragraph: 查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。",
+      "traceback": "tests/e2e/test_ncu_shizuoka_chuo_kansai.py:48: in test_ncu_reference_scope_and_student_content\n    expect(page.locator('#ncu-source-audit-body > p').first).to_contain_text('2026-10-09',timeout=60_000)\nE   AssertionError: Locator expected to contain text '2026-10-09'\nE   Actual value: 查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。 \nE   Call log:\nE     - Expect \"to_contain_text\" with timeout 60000ms\nE     - waiting for locator(\"#ncu-source-audit-body > p\").first\nE       122 × locator resolved to <p>查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方…</p>\nE           - unexpected value \"查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。\"\nE   \nE   Aria snapshot:\nE   - paragraph: 查核日：2026-10-11T17:10:51.196064+00:00。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。",
+      "xml": "docs/source-recovery-20261011-takeover/original-final7/integration-final7-full-shard-3/result.xml"
+    }
+  ],
+  "source_verified_checked_at": {
+    "shizuoka": "2026-10-09T04:48:16.100749+00:00",
+    "chuo": "2026-10-09T04:48:16.100749+00:00",
+    "kansai": "2026-10-11T17:10:51.196064+00:00"
+  },
+  "fix": "Preserve the visible timestamp assertion and 60000ms timeout, strengthen each school expectation from date to exact source-checked timestamp; screenshots isolated with tmp_path/browser.",
+  "data_not_reverted": true
+}

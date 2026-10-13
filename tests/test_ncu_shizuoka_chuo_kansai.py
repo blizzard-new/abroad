@@ -115,7 +115,7 @@ def test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exceptio
 def test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life(tmp_path, row, name, initial, stages, conditions):
     partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
     audit = ncu_field_audit(partner.school_name)
-    assert len(audit['fields']) == 17 and audit['checked_at'].startswith('2026-10-09')
+    assert len(audit['fields']) == 17 and audit['checked_at'].startswith('2026-10-11' if row == 'ncu-129' else '2026-10-09')
     sources = source_records()
     for key, field in audit['fields'].items():
         assert field['original_evidence'], key

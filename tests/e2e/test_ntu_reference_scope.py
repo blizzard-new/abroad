@@ -1,4 +1,5 @@
 """Keep programme years and source conflicts visible in the public NTU summary."""
+import os
 from pathlib import Path
 
 import pytest
@@ -30,7 +31,7 @@ def test_new_reference_scope_is_readable_without_approving_home_selection(
     wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill(school)
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
     if width < 700:
         page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
@@ -48,6 +49,6 @@ def test_new_reference_scope_is_readable_without_approving_home_selection(
     ) is None
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
-    destination = Path("docs/ntu-completion-20261011/stage7/validation/new-reference-browser")
+    destination = Path(os.environ.get("NTU_REFERENCE_SCREENSHOTS", "/tmp/ntu-reference-browser"))
     destination.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(destination / f"{school}-{width}.png"))

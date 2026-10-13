@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime, timezone
 
 from exchange_info.application_documents import all_application_templates
@@ -91,7 +92,7 @@ def test_catalog_exposes_only_confirmed_official_form_as_download(
         ),
         tmp_path,
     )
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = _authenticated_client(tmp_path)
 
     response = client.get(

@@ -9,8 +9,8 @@ PROFILE = {
     "aliases": ("淡江大學", "淡江", "淡大", "TKU", "Tamkang University"),
     "hero_image": "/static/assets/tku-campus-placeholder.svg",
     "official_url": "https://oieie.tku.edu.tw/",
-    "coverage_note": "部分支援：2027–2028日語第二次甄選4校7名，已截止；英歐及中文組新版尚未核實，124筆舊期資料獨立保存。",
-    "support_level": "basic", "partner_count_hint": 4,
+    "coverage_note": "部分支援：287校全量名錄／甄選機構聯集；2027–2028日語二甄4校7名已截止。新增第一梯25校50歷史名額，其他協議及一般原文列參考；新版、校區、期限與照片授權缺口逐校保存。",
+    "support_level": "basic", "partner_count_hint": 287,
     "academic_score_minimum": 75,
     "student_card_signals": ("淡江大學", "TAMKANGUNIVERSITY", "TKU"),
     # This is a registration directory, not a list of eligible exchange units.

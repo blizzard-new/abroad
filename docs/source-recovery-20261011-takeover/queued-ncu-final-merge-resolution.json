@@ -1,0 +1,48 @@
+{
+  "base": "a2df55b16f72455f7154d7afff44934fc8dbf99d",
+  "ours": "c301711b",
+  "theirs": "a1d6b7aa7539998613c44e9130e3915c7115bb38",
+  "preserved_existing_host_records": 52,
+  "new_host_records": [
+    "ncu-136",
+    "ncu-147",
+    "ncu-151",
+    "ncu-155",
+    "ncu-197"
+  ],
+  "preserved_corrected_rows": [
+    "ncu-081",
+    "ncu-138"
+  ],
+  "audited_upstream_existing_updates": [
+    "ncu-048",
+    "ncu-080",
+    "ncu-084",
+    "ncu-085",
+    "ncu-086",
+    "ncu-104",
+    "ncu-105"
+  ],
+  "conditions_union_count": 242,
+  "all_existing_condition_records_preserved": true,
+  "conflicted_paths": [
+    "docs/data/ncu-completion-20261011/exchange-field-inventory.json.gz",
+    "sources/ncu/2026-10-11/document-conditions.json",
+    "src/exchange_info/official_data/ncu/application_workflows.jsonl",
+    "src/exchange_info/official_data/ncu/destination_profiles.jsonl",
+    "src/exchange_info/official_data/ncu/document-conditions.json",
+    "src/exchange_info/official_data/ncu/field-coverage.csv",
+    "src/exchange_info/official_data/ncu/import-provenance.json",
+    "src/exchange_info/official_data/ncu/partners.jsonl",
+    "tests/e2e/test_ncu_eighth_locations.py",
+    "tests/e2e/test_ncu_eleventh_locations.py",
+    "tests/e2e/test_ncu_fifth_photos.py",
+    "tests/e2e/test_ncu_ktu_meiji_resume.py",
+    "tests/e2e/test_ncu_ninth_resume.py",
+    "tests/e2e/test_ncu_resume_assets.py",
+    "tests/e2e/test_ncu_seventh_assets.py",
+    "tests/e2e/test_ncu_sixth_resume.py",
+    "tests/e2e/test_ncu_tenth_resume.py"
+  ],
+  "validation_required": "NCU offline rebuild twice; all existing source row preservation; same-SHA complete gates"
+}

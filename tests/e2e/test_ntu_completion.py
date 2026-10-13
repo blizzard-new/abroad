@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 import pytest
 from playwright.sync_api import expect
@@ -23,7 +24,7 @@ def test_dated_host_reference_is_readable_with_pending_home_quota(page, live_ser
     wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("愛德華王子島大學")
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
     if width < 700:
         page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
@@ -38,13 +39,13 @@ def test_dated_host_reference_is_readable_with_pending_home_quota(page, live_ser
     expect(page.locator('[data-life-theme="safety"]')).to_contain_text("Guard Me")
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
-    output = Path("docs/ntu-completion-20261011/browser")
+    output = Path(os.environ.get("VISUAL_EVIDENCE_DIR", "/tmp/ntu-completion-browser"))
     output.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(output / f"upei-reference-{width}.png"))
 
 
 @pytest.mark.parametrize("width", [390, 1440])
-def test_field_conclusion_and_specific_missing_items_remain_visible(page, live_server, width):
+def test_field_conclusion_and_specific_missing_items_remain_visible(page, live_server, width, tmp_path):
     page.set_viewport_size({"width": width, "height": 956})
     page.emulate_media(reduced_motion="reduce")
     enter_public_site(page, live_server, "partners")
@@ -71,6 +72,6 @@ def test_field_conclusion_and_specific_missing_items_remain_visible(page, live_s
     expect(card).to_be_visible()
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert page.evaluate("state.dashboard.partner_universities.find(p => p.school_name === '國立慶北大學').quota") is None
-    output = Path("docs/ntu-completion-20261011/stage9/validation/field-conclusion-browser")
+    output = tmp_path / "browser"
     output.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(output / f"knu-field-conclusion-{width}.png"))

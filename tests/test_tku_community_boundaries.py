@@ -1,4 +1,5 @@
 """Synthetic regressions for the explicitly selected community membership policy."""
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from concurrent.futures import ThreadPoolExecutor
 
 import pytest
@@ -111,7 +112,7 @@ def test_byline_preview_matches_stored_post_and_comment(tmp_path, mode):
 
 def test_private_mutations_replay_without_duplicate_resources_and_reject_foreign_actor(tmp_path, monkeypatch):
     partner = _partner()
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = TestClient(create_app(tmp_path))
     _, sender, _ = _account(tmp_path, client, "合成寄件者")
     _, recipient, recipient_identity = _account(tmp_path, client, "合成收件者")
@@ -149,7 +150,7 @@ def test_private_mutations_replay_without_duplicate_resources_and_reject_foreign
 def test_failed_initial_message_rolls_back_invitation_and_retry_is_safe(tmp_path, monkeypatch):
     import exchange_info.community_repositories as repositories
     partner = _partner()
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = TestClient(create_app(tmp_path))
     _, sender, _ = _account(tmp_path, client, "合成原子寄件者")
     _, _, recipient = _account(tmp_path, client, "合成原子收件者")

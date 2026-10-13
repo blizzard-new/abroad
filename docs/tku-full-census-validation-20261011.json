@@ -1,0 +1,190 @@
+{
+  "repository": "blizzard-new/abroad",
+  "branch": "data/tku-completeness-20261011",
+  "base_commit": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "checked_date": "2026-10-11",
+  "data_summary": {
+    "base_commit": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "checked_date": "2026-10-11",
+    "directory_rows": 286,
+    "institutions": 287,
+    "programme_rows": 153,
+    "original_programmes_preserved": 128,
+    "first_round_history_rows": 25,
+    "first_round_history_quota": 50,
+    "latest_round_schools": 4,
+    "latest_round_quota": 7,
+    "newly_open_applications": 0,
+    "destination_profiles": 287,
+    "institutions_with_official_reference_excerpts": 124,
+    "public_source_captures": 1662,
+    "opened_sources": 1349,
+    "failed_sources": 313,
+    "source_failure_statuses": {
+      "503": 263,
+      "403": 18,
+      "404": 19,
+      "connection_error": 12,
+      "412": 1
+    },
+    "licensed_visual_reviewed_photos": 13,
+    "new_licensed_photos": 12,
+    "reused_baseline_photos": 1,
+    "verified_physical_campus_coordinates": 2,
+    "reused_baseline_representative_coordinates": 1,
+    "total_displayable_coordinates": 3,
+    "current_or_asset_gap_counts": {
+      "home_eligibility": 287,
+      "home_language": 284,
+      "host_eligibility": 284,
+      "host_language": 284,
+      "quota": 283,
+      "home_deadline": 283,
+      "host_deadline": 284,
+      "host_nomination_deadline": 285,
+      "documents": 283,
+      "latest_forms": 287,
+      "study_period": 283,
+      "department_scope": 286,
+      "campus": 284,
+      "course_restrictions": 284,
+      "housing": 284,
+      "housing_costs": 285,
+      "costs": 284,
+      "insurance": 284,
+      "living_costs": 285,
+      "transport": 285,
+      "coordinates": 284,
+      "campus_photo": 274
+    },
+    "other_home_bundles": [
+      {
+        "home": "cgu",
+        "files": 3,
+        "status": "byte_identical_to_base"
+      },
+      {
+        "home": "ntpu",
+        "files": 12,
+        "status": "byte_identical_to_base"
+      },
+      {
+        "home": "ntu",
+        "files": 17,
+        "status": "byte_identical_to_base"
+      },
+      {
+        "home": "ccu",
+        "files": 1215,
+        "status": "byte_identical_to_base"
+      },
+      {
+        "home": "ncu",
+        "files": 13,
+        "status": "byte_identical_to_base"
+      }
+    ],
+    "original_tku_destination_prefix": "byte_identical_to_base",
+    "scope_note": "來源開啟與原文索引不等於所有欄位已核实；287校每校22欄缺口全列。名額只有4校最新已截止梯次，照片／實體校園座標核對另列，不代表提名校區。",
+    "blockers": [
+      "除最新四校外，當期母校名額與資格尚未核實；總覽不能作本期可選。",
+      "接待校一般原文需核對當期、學制、院系、校區與淡江提名；舊文件不混入當期文件。",
+      "Wikidata及Commons批次HTTP429已停止，未查完項明確保留技術狀態。",
+      "明治2027五份指定模板HTTP503，未列可開啟附件；原文規定和連結適用期另存。",
+      "原四校63項缺口與18項矛盾保留，不以新全量資料層掩蓋。"
+    ]
+  },
+  "downloaded_attachment_magic_and_sha256_verified": 43,
+  "capture_pack_validation": {
+    "files": 2576,
+    "archives": 5,
+    "raw_bytes": 101491855,
+    "all_member_sha256_verified": true,
+    "loose_sources_present": false,
+    "whole_zip_present": false,
+    "ordered_parts_only": true
+  },
+  "software_validation": {
+    "collected": 2660,
+    "collection_sha256": "b35cdc120d5f57232ee7976d9e8dc5fcd5aee4357303fd23c587007a2d773d18",
+    "first_full_attempt": {
+      "passed": 2159,
+      "failed": 13,
+      "skipped": 15,
+      "error": 470,
+      "total": 2657,
+      "reason_for_setup_errors": "Playwright default browser absent; subsequent browser reruns use PLAYWRIGHT_BROWSERS_PATH=/tmp/tku-browsers.",
+      "runner_head_metadata": "59a20f27fcee00fb597abc79e75ec11778317422",
+      "tested_worktree_contains_uncommitted_tku_changes": true
+    },
+    "latest_observed_counts": {
+      "passed": 2643,
+      "skipped": 15,
+      "failed": 2
+    },
+    "latest_observed_total": 2660,
+    "clean_full_suite_pass": false,
+    "final_tku_unit_and_offline_cases": 46,
+    "final_tku_browser_cases": 14,
+    "full_census_asset_browser_cases": 2,
+    "shared_count_region_cases": 26,
+    "workflow_digest_isolated_cases": 48,
+    "remaining_browser_rerun_cases": 3,
+    "isolated_base_workflow_digest_result": {
+      "base": "59a20f27fcee00fb597abc79e75ec11778317422",
+      "passed": 48,
+      "seconds": 29.65,
+      "log_sha256": "ccbad8e68ad52f4376c13b8d74ba54993ac6a9bfdfcacdab207a7862d13f0934"
+    },
+    "caveat": "Initial full-run workflow/digest failures passed both fixed-base and branch isolated reruns; ordering/transient root cause is not established. Latest-case accounting is not a single clean full-suite result.",
+    "remaining_failed_cases": [
+      {
+        "classname": "tests.e2e.test_ntu_official_changes",
+        "name": "test_current_portal_reference_is_visible_without_opening_quota[390]",
+        "status": "failed",
+        "observed_in": "rerun-shard-2/junit.xml",
+        "time_seconds": 17.795,
+        "failure_evidence": "tests/e2e/test_ntu_official_changes.py:35: in test_current_portal_reference_is_visible_without_opening_quota\n    target=Path('/workspace/ntu-research-2026-10-10/test-evidence');target.mkdir(exist_ok=True)\n                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1311: in mkdir\n    os.mkdir(self, mode)\nE   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/ntu-research-2026-10-10/test-evidence'"
+      },
+      {
+        "classname": "tests.e2e.test_ntu_official_changes",
+        "name": "test_current_portal_reference_is_visible_without_opening_quota[1440]",
+        "status": "failed",
+        "observed_in": "rerun-shard-2/junit.xml",
+        "time_seconds": 19.577,
+        "failure_evidence": "tests/e2e/test_ntu_official_changes.py:35: in test_current_portal_reference_is_visible_without_opening_quota\n    target=Path('/workspace/ntu-research-2026-10-10/test-evidence');target.mkdir(exist_ok=True)\n                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1311: in mkdir\n    os.mkdir(self, mode)\nE   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/ntu-research-2026-10-10/test-evidence'"
+      }
+    ],
+    "blocker": "Two NTU browser tests hard-code /workspace/ntu-research-2026-10-10/test-evidence. That other-session parent directory does not exist. It was not created, and NTU tests/data were not modified."
+  },
+  "static_checks": {
+    "openapi_snapshot": "passed",
+    "javascript_syntax": "passed",
+    "git_diff_check": "passed",
+    "other_home_data": "all five bundles byte-identical to fixed base; original TKU four destination rows byte-identical prefix"
+  },
+  "delivery": {
+    "method": "GitHub connector Git-data blob/tree/commit and expected-SHA branch-ref update; fixed remote commit and draft PR reported in final handoff.",
+    "shell_transport": "GitHub HTTPS git/gh returned HTTP503 and gh JSON parser error; no credentials/access changed.",
+    "blob_limit": "Initial MCP 16MiB request rejected; immutable logical ZIP evidence split into at most9MiB parts with member/part/archive SHA256 verification."
+  },
+  "integration": {
+    "shared_files": [
+      "src/exchange_info/api.py",
+      "src/exchange_info/school_content.py",
+      "src/exchange_info/static/index.html",
+      "src/exchange_info/static/regions.js",
+      "docs/api/openapi.json"
+    ],
+    "shared_matcher_changed": false,
+    "shared_globe_renderer_changed": false,
+    "pr8_boundary": "PR #8 head9927ec1d8765a9772671bbaa68e7f920995f1258 restores baseline TKU1 photo/1 representative point. This branch explicitly retains that same asset, adds12 licensed photos and2 campus points, yielding13/287 photos and3/287 displayable points. The baseline point keeps representative precision; only2 new points are independently verified campus points."
+  },
+  "scope": {
+    "main_merged": false,
+    "deployed": false,
+    "quality_workflow_enabled": false,
+    "credentials_or_permissions_modified": false,
+    "other_session_directory_modified": false
+  }
+}

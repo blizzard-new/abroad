@@ -31,8 +31,10 @@ from .models import (
 
 
 def fetch_ccu_partner_universities() -> list[PartnerUniversity]:
+    from .ccu_campus_assets import apply_campus_assets
+    from .ccu_completion import apply_completion
     return [
-        PartnerUniversity.model_validate_json(line)
+        apply_completion(apply_campus_assets(PartnerUniversity.model_validate_json(line)))
         for line in (BUNDLE / "partners.jsonl").read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]

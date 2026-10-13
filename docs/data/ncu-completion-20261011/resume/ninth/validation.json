@@ -1,0 +1,136 @@
+{
+  "checked_at": "2026-10-11T17:26:07.809867+00:00",
+  "base_checkpoint": "128007852e7e6063b098237cb780ae0596142279",
+  "counts": {
+    "photos": 202,
+    "unique_photo_sha256": 199,
+    "partner_locations": 210,
+    "mother_separate": true,
+    "manual_host_records": 120,
+    "sources": 721,
+    "readings": 365,
+    "native_pdf_fully_read": 75,
+    "native_visual_pdf_fully_read": 10,
+    "public_unread": 265,
+    "current_field_gaps": 3226,
+    "current_quota_unknown": 214
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "434 passed in 174.33s",
+      "evidence": "tests-ncu-all.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_ninth_resume.py tests/e2e/test_ncu_resume_assets.py -k 'ninth or mother_marker' -q",
+      "result": "9 passed, 10 deselected in 82.73s",
+      "evidence": "browser-check.txt"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "failure_history": [
+    {
+      "file": "tests-ncu-all-before-fixture-updates.txt.gz",
+      "result": "431 passed,3failed",
+      "reason": "Updated historical full-read count9to16, new test exact EM workflow id, Kansai checked_at10/11 after actual review; final full suite passed."
+    },
+    {
+      "file": "browser-check-before-fixture-updates.txt.gz",
+      "result": "6passed3failed",
+      "reason": "Kansai substring selected KUINS and globe selected before renderer ready; exact Kansai University and renderer readiness."
+    },
+    {
+      "file": "browser-before-opening-collapsed-details.txt.gz",
+      "result": "8passed1failed",
+      "reason": "Shinshu first matching li hidden in collapsed overview content."
+    },
+    {
+      "file": "browser-before-stable-point-locator.txt.gz",
+      "result": "8passed1failed",
+      "reason": "Live .first locator switched from student summary to asynchronously injected completeness list; diagnostic saved separately. Scoped final locator to partner-student-summary and opened ancestor details using actual clicks. No UI mutation or weaker assertions."
+    }
+  ],
+  "browser_visual_review": {
+    "scope": "Six host overview and life focused points, ICP source note at390/1280, NCU mother and210 partner globe, EM and Kansai application viewport; screenshots actually viewed. Application screenshot viewport does not show every document; DOM assertions and unit stage-preservation checks provide remaining evidence. No runtime JS errors across six hosts; no horizontal overflow across tested widths.",
+    "viewed": [
+      {
+        "path": "browser/佛羅里達-1280-life-point.png",
+        "sha256": "71c5ee5a6bcd3e2832ca60ef079fac0ffa219d4163dbb3fa1ea27a3efae98bfc"
+      },
+      {
+        "path": "browser/佛羅里達-1280-overview-point.png",
+        "sha256": "7a59748bcb5e697d3673e3cb5d9793bbf8f0e8528a9bef9574626fef7d59991f"
+      },
+      {
+        "path": "browser/信州-390-life-point.png",
+        "sha256": "99b592f340f86ff892e27d64e673e8bb0ed49190c7db4192912c551d04cc8ec7"
+      },
+      {
+        "path": "browser/信州-390-overview-point.png",
+        "sha256": "89570dcd7730edb9b03220b119dfe040beede868cb9359cde9fd8028416cdc42"
+      },
+      {
+        "path": "browser/拉羅歇爾-390-life-point.png",
+        "sha256": "8b0081b221db9648bf3e17d8ddcb03d0497135142fc6b717450198e256c495c5"
+      },
+      {
+        "path": "browser/拉羅歇爾-390-overview-point.png",
+        "sha256": "591acd5979469ef24146103ac5c67039fc02e938ca5dcc6f3498c16c6d3a8bbd"
+      },
+      {
+        "path": "browser/蘇黎世-1280-life-point.png",
+        "sha256": "16ac105d9c75ac6c1837621d187345688f45727660152e2e2ee383fded2fe949"
+      },
+      {
+        "path": "browser/蘇黎世-1280-overview-point.png",
+        "sha256": "7ef4bff2eb155b3181926f8e03266ac43e80d7d77c94b6a92c5daba4e11db908"
+      },
+      {
+        "path": "browser/諾曼第-390-life-point.png",
+        "sha256": "04bb7f47635954e3d55b73ae3430ca79cd709ac7b29eb792bd53fa31886e6004"
+      },
+      {
+        "path": "browser/諾曼第-390-overview-point.png",
+        "sha256": "01fac42f20e2cedc40f9f5d59c625297784ca385b7a6d2ad0cd86c1788bda12c"
+      },
+      {
+        "path": "browser/關西大學-1280-life-point.png",
+        "sha256": "fea506451163481ff41c19005499220fa159b0f927262f84df8dca512012f43f"
+      },
+      {
+        "path": "browser/關西大學-1280-overview-point.png",
+        "sha256": "10c943e6d5960b0431e31a8157f00df4eb1e8d7e8b7e8c70b0cfb8be03b6e0ba"
+      },
+      {
+        "path": "browser/icp-1280-location.png",
+        "sha256": "a161868c36696816a76cd966a2d19338ac422658930be06507bd404fff05bb43"
+      },
+      {
+        "path": "browser/icp-390-location.png",
+        "sha256": "3816e6284e7edf299d0380a63e27b0343b3ffe67456d51ff01cb1bead6df6542"
+      },
+      {
+        "path": "browser/ncu-mother-and-210-points.png",
+        "sha256": "26e64a4bf21f7277f93a3d331af1efdb1a4c8b52a0ba005fa01f9702172063b0"
+      },
+      {
+        "path": "browser/諾曼第-390-application.png",
+        "sha256": "275c3e75d2e68d91bffd23ce60191a7ea521cd04ecaa73f1913ad9d5a8263bf2"
+      },
+      {
+        "path": "browser/關西大學-1280-application.png",
+        "sha256": "3913e7b5e2f03646669481254eb135529c173b6d2c5008bc7dde06151be3a115"
+      }
+    ]
+  },
+  "source_visual_review": {
+    "actual_visual_pages": 31,
+    "manifest": "reading-manifest.json",
+    "note": "20 full native PDFs; only designated31 pages also visually read; four full native-and-visual files. Not all PDFs described as visually complete."
+  },
+  "authority": "sameDraftPR11 only; no merge/deploy/prodDB/Quality/security/credential changes",
+  "integration": "NCU sidecar precedence preserved including Mons hold; common matcher unchanged."
+}

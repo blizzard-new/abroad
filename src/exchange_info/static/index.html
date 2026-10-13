@@ -17,18 +17,19 @@
     <link rel="stylesheet" href="/static/mascot.css?v=20261007-solid-1" />
     <link rel="stylesheet" href="/static/advisor-mascot.css?v=20261007-solid-1" />
     <link rel="stylesheet" href="/static/uniway.css?v=20260820-uniway-1" />
-    <link rel="stylesheet" href="/static/partner-map.css?v=20261011-coverage-1" />
+    <link rel="stylesheet" href="/static/partner-map.css?v=20261011-integration-3" />
     <link rel="stylesheet" href="/static/school-detail.css?v=20260924-concise-zh-1" />
     <link rel="stylesheet" href="/static/discovery.css?v=20261004-digest-1" />
     <link rel="stylesheet" href="/static/navigation.css?v=20260929-tools-headings-1" />
     <link rel="stylesheet" href="/static/travel.css?v=20260927-home-1" />
     <link rel="stylesheet" href="/static/motion.css?v=20260926-motion-1" />
     <link rel="stylesheet" href="/static/journey.css?v=20260929-photos-1" />
+    <link rel="stylesheet" href="/static/tku-campus-assets.css?v=20261011-reviewed-1" />
     <link rel="stylesheet" href="/static/journey-canvas.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2" />
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
-    <link rel="stylesheet" href="/static/glass-theme.css?v=20261001-ui-refinements-1" />
+    <link rel="stylesheet" href="/static/glass-theme.css?v=20261011-source-layout-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261008-ncu-conditions-1" />
@@ -378,6 +379,7 @@
         </header>
 
         <div id="page-status" class="page-status" role="status" aria-live="polite"></div>
+        <aside id="catalogue-source-status" class="catalogue-source-status" role="status" aria-live="polite" hidden></aside>
 
         <div id="dashboard-view">
           <section id="guide" class="page-section study-guide" data-university-page="guide" aria-labelledby="guide-title" hidden>
@@ -744,7 +746,7 @@
             <details class="journey-filter-drawer" open>
               <summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i>篩選<i data-lucide="chevron-down" aria-hidden="true"></i></summary>
             <div class="filter-panel" aria-label="合作學校篩選條件">
-              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">當期名額已列</option><option value="not_open">本季未開放（官方灰字）</option><option value="needs_confirmation">名額尚未核實</option><option value="zero_quota">零名額</option><option value="fee_paying">自費計畫</option><option value="closed">表列交換校／校內申請已截止</option><option value="reference_only">舊期參考／不能作當期申請</option><option value="quota_unconfirmed">當期名額或期間待確認</option><option value="agreement_only">合作備查／本期未公告</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
+              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">當期名額已列</option><option value="not_open">本季未開放（官方灰字）</option><option value="needs_confirmation">名額尚未核實</option><option value="zero_quota">零名額</option><option value="fee_paying">自費計畫</option><option value="closed">表列交換校／校內申請已截止</option><option value="reference_only">舊期參考／不能作當期申請</option><option value="quota_unconfirmed">當期名額或期間待確認</option><option value="agreement_only">合作備查／本期名額待確認</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
               <label for="region-filter"><span>地區</span><select id="region-filter"></select></label>
               <label for="country-filter"><span>國家</span><select id="country-filter"></select></label>
               <label for="college-filter"><span>學院</span><select id="college-filter"></select></label>
@@ -1205,21 +1207,21 @@
     <dialog id="discussion-moderation" aria-labelledby="discussion-moderation-title"><header class="discussion-reader-header"><h2 id="discussion-moderation-title">討論管理</h2><button id="discussion-moderation-close" type="button" class="secondary-button">返回討論</button></header><div class="discussion-article"><label>內容狀態<select id="discussion-moderation-filter"><option value="pending">待審核</option><option value="approved">已公開</option><option value="hidden">已隱藏</option></select></label><div id="discussion-moderation-body"></div></div></dialog>
     <script src="/static/public-content-zh.js?v=20261007-requests-1" defer></script>
     <script src="/static/regions.js?v=20261008-ntu-review-2" defer></script>
-    <script src="/static/discovery-core.js?v=20260924-selection-1" defer></script>
+    <script src="/static/discovery-core.js?v=20261011-ncu-integration-2" defer></script>
     <script src="/static/discovery-ui.js?v=20261004-digest-2" defer></script>
     <script src="/static/navigation.js?v=20261001-planning-workspace-1" defer></script>
     <script src="/static/motion.js?v=20261007-forum-1" defer></script>
-    <script src="/static/community-reader.js?v=20261011-coverage-1" defer></script>
+    <script src="/static/community-reader.js?v=20261011-six-school-final-2" defer></script>
     <script src="/static/community-moderation.js?v=20260930-discussion-2b" defer></script>
     <script src="/static/academic-units.js?v=20261001-departments-1" defer></script>
     <script src="/static/ccu-academic-units.js?v=20261008-ccu-filter-23" defer></script>
     <script src="/static/ccu-language-conditions.js?v=20261008" defer></script>
-    <script src="/static/ccu-partner-details.js?v=20261008-life-1" defer></script>
+    <script src="/static/ccu-partner-details.js?v=20261011-completion-1" defer></script>
     <script src="/static/tku-academic-units.js?v=20261008-tku-acceptance-1" defer></script>
     <dialog id="planning-target-change-dialog" class="planning-change-dialog" aria-labelledby="planning-target-change-title">
       <form method="dialog"><span class="section-kicker">更換目標前，先確認影響</span><h2 id="planning-target-change-title">改用這所學校規劃？</h2><p id="planning-target-change-summary"></p><ul id="planning-target-change-impact"></ul><footer><button id="planning-target-change-cancel" class="secondary-button" value="cancel">保留原目標</button><button class="primary-button" value="confirm">確認更換目標</button></footer></form>
     </dialog>
-    <script src="/static/multi-plan.js?v=20261008-ncu-conditions-1" defer></script>
+    <script src="/static/multi-plan.js?v=20261011-ncu-integration-2" defer></script>
     <script src="/static/application-workspace.js?v=20261002-flow-2" defer></script>
     <script src="/static/application-journey.js?v=20261008-ncu-1" defer></script>
     <script src="/static/document-workbench.js?v=20261008-ncu-1" defer></script>
@@ -1227,6 +1229,8 @@
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
     <script src="/static/feedback.js?v=20261008-2" defer></script>
     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
-    <script src="/static/app.js?v=20261011-coverage-1" defer></script>
+    <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
+    <script src="/static/app.js?v=20261011-six-school-final-2" defer></script>
+    <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>
   </body>
 </html>

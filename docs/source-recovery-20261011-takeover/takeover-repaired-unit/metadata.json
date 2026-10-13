@@ -1,0 +1,44 @@
+{
+  "command": [
+    "/workspace/abroad/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_ccu_semantics.py",
+    "tests/test_school_photo_and_match.py",
+    "tests/test_pending_availability_semantics.py",
+    "tests/test_independent_page_routing.py",
+    "-q",
+    "--junitxml=/workspace/recovery-evidence-20261011/takeover-repaired-unit/result.xml"
+  ],
+  "cwd": "/workspace/abroad",
+  "started_at": "2026-10-11T20:44:39.508449+00:00",
+  "start_guard": {
+    "sha": "5e7114182093fa77203ee946a4f86a88d3b10345",
+    "tree": "d6029a2dcf6c8a03b7b5ed217769e874b68a17ab",
+    "status": "M src/exchange_info/static/index.html\n M tests/e2e/test_ncu_eighth_locations.py\n M tests/e2e/test_ncu_ninth_resume.py\n M tests/e2e/test_ncu_school.py\n M tests/e2e/test_ncu_seventh_assets.py\n M tests/e2e/test_ncu_shizuoka_chuo_kansai.py\n M tests/e2e/test_ncu_sixth_resume.py\n M tests/e2e/test_tku_census_assets.py\n M tests/test_ccu_semantics.py\n M tests/test_pending_availability_semantics.py\n M tests/test_school_photo_and_match.py"
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "input_scripts": {
+    "tests/test_ccu_semantics.py": {
+      "sha256": "fdd86f5a9bca4a660fd70b8b8a0a32e74c95f093d0f9a26be5d1389f503ce33f"
+    },
+    "tests/test_school_photo_and_match.py": {
+      "sha256": "6cce142a9fde1070eab6a4eb5de738065e5db72e33841af63c61e46c40b0588b"
+    },
+    "tests/test_pending_availability_semantics.py": {
+      "sha256": "d6ea0639c55f492a54f70f53401b560e231f06da2ecc893e5d718c262fe768ce"
+    },
+    "tests/test_independent_page_routing.py": {
+      "sha256": "54bf4939aba7999244b66232c3b4d969621d5991122228096bdf8ab010399e48"
+    }
+  },
+  "exit_code": 0,
+  "finished_at": "2026-10-11T20:45:13.927979+00:00",
+  "end_guard": {
+    "sha": "5e7114182093fa77203ee946a4f86a88d3b10345",
+    "tree": "d6029a2dcf6c8a03b7b5ed217769e874b68a17ab",
+    "status": "M src/exchange_info/static/index.html\n M tests/e2e/test_ncu_eighth_locations.py\n M tests/e2e/test_ncu_ninth_resume.py\n M tests/e2e/test_ncu_school.py\n M tests/e2e/test_ncu_seventh_assets.py\n M tests/e2e/test_ncu_shizuoka_chuo_kansai.py\n M tests/e2e/test_ncu_sixth_resume.py\n M tests/e2e/test_tku_census_assets.py\n M tests/test_ccu_semantics.py\n M tests/test_pending_availability_semantics.py\n M tests/test_school_photo_and_match.py"
+  }
+}

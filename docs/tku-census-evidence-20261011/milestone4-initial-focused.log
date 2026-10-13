@@ -1,0 +1,22 @@
+CONFTEST LOADED!
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_host_programme_conflicts_historical_prices_and_template_years_remain_visible _
+
+    def test_host_programme_conflicts_historical_prices_and_template_years_remain_visible():
+        rows={r['id']:r['fields'] for r in data('milestone4_reviewed_host_facts.json')}
+        assert '未列淡江' in rows['tku-sister-19']['host_eligibility']['value']
+        assert '2026/27' in rows['tku-sister-19']['study_period']['value']
+        assert '來源矛盾' in rows['tku-sister-16']['host_language']['value']
+        assert 'à venir' in rows['tku-sister-16']['study_period']['value']
+        assert not rows['tku-sister-16']['host_language']['source_period_verified']
+        assert not any(f['source_period_verified'] for f in rows['tku-sister-211'].values())
+        assert '不是2027' in rows['tku-sister-211']['housing_costs']['value']
+        u=rows['tku-sister-54']
+>       assert '2027/1/14' in u['host_deadline']['value'] and '2027/7/1' in u['host_deadline']['value'] and '矛盾' in u['host_deadline']['value']
+E       AssertionError: assert ('2027/1/14' in '接待校2027第一學期（3–7月）申請2026/9/1–2027/1/14；第二學期（8–12月）2027/4/1–7/1。PDF2026–27列10–1月／4–6月概略窗口，與網頁不同；保留矛盾，以網頁精確日期向接待校核對。研究實習全年開放屬另一方案。不是淡江母校截止。' and '2027/7/1' in '接待校2027第一學期（3–7月）申請2026/9/1–2027/1/14；第二學期（8–12月）2027/4/1–7/1。PDF2026–27列10–1月／4–6月概略窗口，與網頁不同；保留矛盾，以網頁精確日期向接待校核對。研究實習全年開放屬另一方案。不是淡江母校截止。')
+
+tests/test_tku_milestone4.py:53: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_tku_milestone4.py::test_host_programme_conflicts_historical_prices_and_template_years_remain_visible
+1 failed, 4 passed in 3.96s

@@ -2574,3 +2574,8 @@ details[open] > summary > svg:last-child {
 /* Every school's catalogue is public; the gate rules above only apply to a locked section. */
 .site-data-note { display: flex; gap: .5rem; align-items: flex-start; max-width: 60rem; margin: 2rem auto 1rem; padding: 0 1rem; font-size: .8125rem; line-height: 1.5; color: var(--muted, #6b7280); }
 .site-data-note svg, .site-data-note i { flex: none; width: 1rem; height: 1rem; margin-top: .125rem; }
+
+.catalogue-source-status { margin: 12px 0 20px; padding: 14px 18px; border: 1px solid #bfccd2; border-radius: 12px; background: #f3f7f8; color: #223e48; font-size: .875rem; overflow-wrap: anywhere; }
+.catalogue-source-status[hidden] { display: none; }
+.catalogue-source-status p { margin: 6px 0; line-height: 1.6; }
+.catalogue-source-status button { margin-left: 12px; }

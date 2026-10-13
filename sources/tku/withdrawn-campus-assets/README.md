@@ -1,0 +1,1 @@
+These two original research images are rejected for publication. They are outside the application package and public static directory. Do not copy them into src, wheels or deployment assets. Historical evidence records retain the withdrawn URLs.

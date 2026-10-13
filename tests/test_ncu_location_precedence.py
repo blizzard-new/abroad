@@ -1,0 +1,39 @@
+"""NCU campus holds must survive a newer shared catalogue during integration."""
+import json
+from pathlib import Path
+
+import pytest
+from fastapi.testclient import TestClient
+
+from exchange_info.api import create_app
+import exchange_info.ncu_completion as completion
+import exchange_info.university_locations as locations
+from exchange_info.ncu_completion import campus_location
+from exchange_info.ncu_student_view import build_ncu_student_dashboard
+from exchange_info.university_locations import UniversityLocation
+
+
+@pytest.mark.parametrize('name_fragment',['Hiroshima University','Université De Mons'])
+def test_explicit_ncu_campus_hold_shadows_shared_verified_point(tmp_path,name_fragment,monkeypatch):
+    partner=next(p for p in build_ncu_student_dashboard().partner_universities if name_fragment in p.school_name)
+    # Keep testing an explicit hold even after a later source resolves this
+    # school's live representative point. The fixture simulates a new review.
+    source=json.loads(completion.LOCATIONS.read_text())
+    row=next(r for r in source['locations'] if r['school_name']==partner.school_name)
+    row.update(geocode_status='needs_review',latitude=34.382222,longitude=132.458056,
+               note='Explicit campus review must suppress a newer shared point.')
+    scoped_path=tmp_path/'scoped-locations.json'
+    scoped_path.write_text(json.dumps(source))
+    monkeypatch.setattr(completion,'LOCATIONS',scoped_path)
+    fallback=UniversityLocation(school_name=partner.school_name,country=partner.country,city='UNREVIEWED SHARED CAMPUS',latitude=34.382222,longitude=132.458056,geocode_status='verified',geocoded_at='2026-10-11T14:57:00Z',source_url='https://www.wikidata.org/wiki/Q115220')
+    scoped=campus_location(partner,fallback)
+    assert scoped.geocode_status=='needs_review'
+    assert scoped.latitude is None and scoped.longitude is None
+    shared_path=tmp_path/'shared-catalog.jsonl'
+    shared_path.write_text(fallback.model_dump_json()+'\n')
+    monkeypatch.setattr(locations,'LOCATION_CATALOG',shared_path)
+    client=TestClient(create_app(tmp_path))
+    dashboard=client.get('/student-dashboard',params={'school':'NCU'}).json()
+    shown=next(p for p in dashboard['partner_universities'] if p['school_name']==partner.school_name)
+    assert shown['location']['geocode_status']=='needs_review'
+    assert shown['location']['latitude'] is None and shown['location']['longitude'] is None

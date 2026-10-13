@@ -8,6 +8,7 @@ import re
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
+from collections.abc import Mapping
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -155,18 +156,34 @@ def reviewed_life_snapshot(snapshot: LifeResearchSnapshot) -> LifeResearchSnapsh
     })
 
 
+class _LifeSnapshotIndex(Mapping):
+    """Keep compact validated JSON; return fresh models only for requested hosts."""
+    def __init__(self, records):
+        self._records = records
+
+    def __getitem__(self, key):
+        return LifeResearchSnapshot.model_validate_json(self._records[key])
+
+    def __iter__(self):
+        return iter(self._records)
+
+    def __len__(self):
+        return len(self._records)
+
+
 @lru_cache(maxsize=1)
-def _bundled_ntu_research() -> dict[tuple[str, str], LifeResearchSnapshot]:
+def _bundled_ntu_research() -> Mapping[tuple[str, str], LifeResearchSnapshot]:
     records = {}
     if BUNDLED_NTU_LIFE.exists():
-        for line in BUNDLED_NTU_LIFE.read_text(encoding="utf-8").splitlines():
-            try:
-                row = reviewed_life_snapshot(LifeResearchSnapshot.model_validate_json(line))
-                if row.extraction_version == EXTRACTION_VERSION:
-                    records[(school_identity_key(row.school_name), row.country or "")] = row
-            except ValueError:
-                continue
-    return records
+        with BUNDLED_NTU_LIFE.open(encoding="utf-8") as handle:
+            for line in handle:
+                try:
+                    row = reviewed_life_snapshot(LifeResearchSnapshot.model_validate_json(line))
+                    if row.extraction_version == EXTRACTION_VERSION:
+                        records[(school_identity_key(row.school_name), row.country or "")] = row.model_dump_json().encode("utf-8")
+                except ValueError:
+                    continue
+    return _LifeSnapshotIndex(records)
 
 
 def read_research(partner: PartnerUniversity, data_dir: Path) -> LifeResearchSnapshot:

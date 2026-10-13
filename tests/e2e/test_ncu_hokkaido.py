@@ -23,7 +23,7 @@ def test_ncu_hokkaido_two_agreements_documents_scope_and_life(page,live_server,w
         page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill(f'北海道大學({level})')
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
     if width<700:page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()
     expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('2027春')

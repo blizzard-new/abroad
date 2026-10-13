@@ -1,0 +1,163 @@
+{
+  "checked_at": "2026-10-11T20:11:07.089796+00:00",
+  "base_checkpoint": "13a4afdc0e99cd5f9b4c66bca5bc426d68bdfd4b",
+  "counts": {
+    "historic_catalogue": 214,
+    "partner_representative_locations": 214,
+    "mother_location_separate": true,
+    "licensed_photos": 202,
+    "unique_photo_sha256": 199,
+    "photos_missing": 12,
+    "manual_host_records": 125,
+    "completion_source_records": 785,
+    "source_reading_records": 675,
+    "fixed_candidates": 223,
+    "fixed_candidates_assessed": 223,
+    "original_bodies_read_selected_or_full_html": 205,
+    "original_shell_bodies_not_read": 18,
+    "literal_redirect_resolved": 1,
+    "fixed_candidates_body_unavailable": 17,
+    "fixed_candidates_not_assessed": 0,
+    "new_sources": 5,
+    "new_source_bodies_read": 4,
+    "new_source_body_unavailable": 1,
+    "new_raw_responses": 24,
+    "changed_hosts": 7,
+    "changed_fields": 11,
+    "newly_populated_fields": 6,
+    "full_native_pdf": 75,
+    "full_visual_pdf": 24,
+    "image_only_full_visual_pdf": 1,
+    "unknown_116_quotas": 214,
+    "current_full_verification": 0,
+    "strict_current_gaps": 3222,
+    "strict_current_denominator": 4066
+  },
+  "tests": {
+    "focused-final": {
+      "passed": 3,
+      "seconds": 0.705
+    },
+    "browser-final": {
+      "passed": 12,
+      "seconds": 94.932
+    },
+    "regression-final": {
+      "passed": 459,
+      "seconds": 185.669
+    }
+  },
+  "initial_checks": {
+    "focused": "2 passed in0.76s",
+    "browser": "6 passed in50.60s, DOM only assertions missed pending card translation; corrected data and strengthened tests",
+    "regression": "458 passed in182.77s before Chinese-prose correction",
+    "initial_regression_command_error": "Two guessed test filenames did not exist; zero tests ran; corrected to existing NCU/location/document files and final run passed."
+  },
+  "visual_review": {
+    "viewports": [
+      390,
+      1440
+    ],
+    "final_images": [
+      {
+        "path": "browser-final/lab-1440-0-life.png",
+        "sha256": "0ad657b8bbb188dbf1e325d3bf8ac0bd1d32af4e73da57d728067907d15fba05",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/lab-390-0-life.png",
+        "sha256": "c6968ccd8edc0488b5c1ee9230f8084a2225318b0d643bbcd931870437cf2ac0",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/minho-1440-0-life.png",
+        "sha256": "325ccc4d5bbbcf4e28e8aa9361d80b8e625ede1516c3c62013585b217f08380a",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/minho-1440-1-life.png",
+        "sha256": "325ccc4d5bbbcf4e28e8aa9361d80b8e625ede1516c3c62013585b217f08380a",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/minho-390-0-life.png",
+        "sha256": "06d1461660c2e2cf6c84adf271dfde5368b89fdf8619f5488cafba79db76e5c6",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/minho-390-1-life.png",
+        "sha256": "1ea62f636168f762e693d5bced40b6100bd15b1e86f9ff614fe9732d61cc098d",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/nau-1440-0-life.png",
+        "sha256": "874015337928514bf6ded9d446eb2c8467594fafcd88de17e470ddc1595d41f7",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/nau-390-0-life.png",
+        "sha256": "03a6febd2dfba34f84828ee57f4bf77bebc9e4b8938f2016254eee663d3d91bb",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/uf-1440-0-life.png",
+        "sha256": "cced48405b24d03e0eff8c61c2ba5ce94c581171cb659f975d54639ab742ba12",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/uf-390-0-life.png",
+        "sha256": "232d8bd1f0ee89b4572f174307940457304d1198781b98c931c7e24ddf1ad1ba",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/upper-1440-0-life.png",
+        "sha256": "f32feaec4bd045de701e6cb1d32245ceb375cdb27b4704ae702cafb40cde25f1",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/upper-390-0-life.png",
+        "sha256": "353ab9d09ed8bcd6b56e02a7bcb2f226520a54f820edd6c87ba56e2241000ebf",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/wurzburg-1440-0-life.png",
+        "sha256": "701aee2e0717a90c17a2b4d40c2fb3af1db8a0cc815f91b956d83571c4b11d9c",
+        "actually_viewed": true
+      },
+      {
+        "path": "browser-final/wurzburg-390-0-life.png",
+        "sha256": "7440578e5d1c066b5ad70360cff5105c5151cf33a85c3589cc34635aee54094d",
+        "actually_viewed": true
+      }
+    ],
+    "actually_viewed_count": 14,
+    "initial_issue_images": [
+      "browser-initial/nau-390-life.png",
+      "browser-initial/nau-1440-life.png"
+    ],
+    "initial_issue_fixed": "New/changed reviewed-field prose translated fully to Chinese; existing translation detector unchanged. Actual life-card assertions now required.",
+    "remaining_ui_scope": "Other previously authored life-card prose can still show translation pending (e.g. unchanged NAU budget/courses and UF budget); this batch does not claim all legacy cards translated."
+  },
+  "not_run": [
+    "Full repository/non-NCU test suite",
+    "Production DB operations",
+    "Deployment/merge",
+    "Cross-home-school integrated PR8 browser suite"
+  ],
+  "environment_limitation": "Remote Chromium HTTPS navigation returned ERR_CERT_AUTHORITY_INVALID on source checks; verified-TLS requests worked. No TLS bypass, login, new credentials or permission expansion. Local app Chromium was fully operational.",
+  "external_access_limits": [
+    "UEFSharePoint401",
+    "GoogleDrive owner-disabled download",
+    "CityU security response / old HTTP not-found page",
+    "VNU-HCMInternational security gate",
+    "USeoulSSO",
+    "SPA shells without body after public requests and browser trust failure"
+  ],
+  "remaining_public_work": "Previously partial course catalogues (including EM Normandie47remaining pages, Inha23-page courses and CUK1351-rowXLSX) remain partial; they are not classified as external blockers. This finite223-candidate pass did not reopen every previously selected long document.",
+  "source_sha256": {
+    "host-web-evidence.json.gz": "a0f645f86a8da4eb408dedc80ef71c5e8fd608365b9c177ac3eb52ebbe694632",
+    "reviewed-host-records.json": "f688c3d6e4fa84fcaf93420208d308c2cfd2242e123a99f176ebfeb54590dcc5",
+    "resume-fifteenth-original-responses.json.gz": "35506a2c6d7909b7e9fc631bb6c680d50e7a2fcc6e7d61b03136eb567997a4e8"
+  },
+  "scope": "Same DraftPR11; no force push/newPR/merge/deploy/prodDB/Quality/matcher/security/credential changes. 116 host holds/reminders unchanged."
+}

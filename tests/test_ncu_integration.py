@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime
 import gzip
 import json
@@ -154,12 +155,12 @@ def test_different_year_workflow_is_not_current_and_home_host_documents_are_sepa
     host = current.steps[4]
     assert len(home.document_requirements) == 7
     assert any("名次" in d.name for d in home.document_requirements)
-    assert any("personal statement" in d.name for d in host.document_requirements)
+    assert any("personal statement" in d.name.casefold() for d in host.document_requirements)
     assert not any(
         "家長同意" in d.name or "名次" in d.name for d in host.document_requirements
     )
     assert all(
-        "drive.google.com" in u
+        "https://umanitoba.ca/" in u
         for d in host.document_requirements
         for u in d.source_urls
     )
@@ -212,7 +213,7 @@ def test_api_reads_ncu_offline_and_exposes_page_evidence_and_life(
     def forbidden():
         raise AssertionError("NCU runtime must use its own offline catalogue")
 
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", forbidden)
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(forbidden))
     monkeypatch.setattr("exchange_info.api.fetch_ntpu_partner_universities", forbidden)
     client = TestClient(create_app(tmp_path))
     dashboard = client.get("/student-dashboard", params={"school": "NCU"})

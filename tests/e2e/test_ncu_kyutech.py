@@ -21,7 +21,7 @@ def test_ncu_kyutech_support_levels_arrival_split_and_reading_scope(page, live_s
     if width < 700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
         page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click(); page.locator('#partner-search').fill('九州工業')
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
     if width < 700:
         page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()

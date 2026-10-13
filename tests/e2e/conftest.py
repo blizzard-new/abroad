@@ -409,10 +409,11 @@ def live_server(tmp_path_factory) -> LiveServer:
             ),
         ),
     ]
-    original_fetch = api_module.fetch_partner_universities
+    original_fetch = api_module.create_cgu_catalogue
     original_student_fetch = student_view_module.fetch_partner_universities
     original_document_fetch = student_view_module.fetch_document_explanations
-    api_module.fetch_partner_universities = lambda: partners
+    from cgu_catalogue_fixture import fixed_cgu_catalogue
+    api_module.create_cgu_catalogue = fixed_cgu_catalogue(lambda: partners)
     student_view_module.fetch_partner_universities = lambda: partners
     student_view_module.fetch_document_explanations = lambda **_: []
     app = create_app(data_dir)
@@ -439,7 +440,7 @@ def live_server(tmp_path_factory) -> LiveServer:
     else:
         server.should_exit = True
         thread.join(timeout=5)
-        api_module.fetch_partner_universities = original_fetch
+        api_module.create_cgu_catalogue = original_fetch
         student_view_module.fetch_partner_universities = original_student_fetch
         student_view_module.fetch_document_explanations = original_document_fetch
         raise RuntimeError("E2E server did not start in time.")
@@ -448,7 +449,7 @@ def live_server(tmp_path_factory) -> LiveServer:
     finally:
         server.should_exit = True
         thread.join(timeout=10)
-        api_module.fetch_partner_universities = original_fetch
+        api_module.create_cgu_catalogue = original_fetch
         student_view_module.fetch_partner_universities = original_student_fetch
         student_view_module.fetch_document_explanations = original_document_fetch
 

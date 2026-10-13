@@ -117,8 +117,8 @@ def test_tku_list_filters_favorites_comparison_and_reload(page, live_server, wid
     session, errors = start(page, live_server, width, "partners")
     page.locator('[data-partner-view="list"]').click()
     table = page.locator("#partner-table")
-    expect(table).to_have_attribute("data-result-count", "4")
-    assert page.evaluate("state.dashboard.partner_universities.every(row=>row.availability_status==='closed')")
+    expect(table).to_have_attribute("data-result-count", "287")
+    assert page.evaluate("state.dashboard.partner_universities.slice(0,4).every(row=>row.availability_status==='closed') && state.dashboard.partner_universities.slice(4).every(row=>['reference_only','agreement_only'].includes(row.availability_status)&&row.quota===null)")
     page.locator("#availability-filter").select_option("open")
     expect(table).to_have_attribute("data-result-count", "0")
     page.locator("#availability-filter").select_option("closed")
@@ -151,7 +151,7 @@ def test_tku_list_filters_favorites_comparison_and_reload(page, live_server, wid
     page.reload()
     expect(page.locator("#favorite-count")).to_have_text("2 所")
     expect(page.locator("#selection-workspace .discovery-candidate")).to_have_count(2)
-    record(page, "filters-favorites-comparison", width, errors, listed=4, open=0,
+    record(page, "filters-favorites-comparison", width, errors, listed=287, current_round=4, open=0,
         saved_favorites=names[:2], reload_preserved=True)
 
 
@@ -193,7 +193,7 @@ def test_tku_documents_stages_conditions_official_sources_and_target_persistence
     year = page.locator('#application-context-form input[name="academic_year"]')
     year.fill("2027-2028"); year.press("Tab")
     wait_until(page, "!state.applicationLoading")
-    names = page.evaluate("state.dashboard.partner_universities.map(row=>row.school_name)")
+    names = page.evaluate("state.dashboard.partner_universities.slice(0,4).map(row=>row.school_name)")
     for name in names:
         previous = page.evaluate("state.applicationContext.target_school")
         page.locator("#application-target-school").select_option(name)

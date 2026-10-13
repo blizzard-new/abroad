@@ -1,0 +1,82 @@
+{
+  "checked_at": "2026-10-11T17:40:45.754319+00:00",
+  "base_checkpoint": "02c01657b949bfd0289853da6a9c54d30fed4e3b",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 202,
+    "unique_photo_sha256": 199,
+    "partner_locations": 212,
+    "mother_separate": true,
+    "manual_host_records": 120,
+    "sources": 722,
+    "readings": 374,
+    "native_pdf_fully_read": 75,
+    "native_visual_pdf_fully_read": 10,
+    "public_unread": 257,
+    "strict_current_field_gaps": 3224,
+    "current_quota_unknown": 214
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "438 passed in 170.87s",
+      "evidence": "tests-ncu-all.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_tenth_resume.py tests/e2e/test_ncu_resume_assets.py -k 'tenth or mother_marker' -q",
+      "result": "5 passed, 10 deselected in 69.81s",
+      "evidence": "browser-check.txt"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "previous_runs": [
+    {
+      "file": "tests-before-final-sourcepack-rebuild.txt.gz",
+      "result": "437passed1failed",
+      "reason": "Additional failed-location response receipts changed sourcepack SHA after build; import-provenance stale. Rebuilt finalsourcepack and campusnote, full438 passed."
+    },
+    {
+      "file": "browser-before-photo-campus-note.txt.gz",
+      "result": "5passed10deselected",
+      "reason": "Followed by explicit Chinese note distinguishing OMU Sugimoto photo from Nakamozu point, then rerunall5."
+    }
+  ],
+  "visual_review": {
+    "browser_scope": "Allseven finalPNG actually viewed. ReimsandOMU namedpoints andopenedsourceat390/1280;HKAformfieldandtimingscopeat390;Turkuhistoricalorientationat1280;NCUmotherplus212pointglobe. DOM assertions HKA4initialdocuments,nohorizontaloverflow,nopageerror. Older10browsercasesnotrerun.",
+    "final_browser_images": [
+      {
+        "path": "browser/hka-390-form-scope.png",
+        "sha256": "55022ef67e570763a2ad907e30f993258bd4cc3ea0fc838cf29c0ff705942732"
+      },
+      {
+        "path": "browser/ncu-023-1280-location.png",
+        "sha256": "27ab8a0044fd799b2c6f552f2fd4dad53e6973049906d7e7d1e4be0b6211c9bb"
+      },
+      {
+        "path": "browser/ncu-023-390-location.png",
+        "sha256": "7f970b2c586d17525718f1462fb3e20a27dfbaeb168ea7677224d198b0daf9bf"
+      },
+      {
+        "path": "browser/ncu-132-1280-location.png",
+        "sha256": "87c0de10afd966b5117472d6f1804720fcab44bf2f2d94a6512465ab5b8b3b9c"
+      },
+      {
+        "path": "browser/ncu-132-390-location.png",
+        "sha256": "51bada0d59d2dc4d72614ac5f32eb980b77c34087e7f5ae7fcd968f0631b63b7"
+      },
+      {
+        "path": "browser/ncu-mother-and-212-points.png",
+        "sha256": "6fe60055b8a2126076d0948f4733e43ee2aa96bbc05863739f90c049772564f5"
+      },
+      {
+        "path": "browser/turku-1280-orientation.png",
+        "sha256": "adb2154b69a7a5b076bb758a37aa8189969e010b997e8e4c8c23e2537db7d4fe"
+      }
+    ],
+    "source": "HKAentireonepageLibreOfficeconversionactuallyviewed;DOCXsourcefullXMLread;convertedPDFnotnativeofficialPDF"
+  },
+  "restrictions": "sameDraftPR11only;no merge/deploy/prodDB/Quality/security/credential changes;sharedmatcherandrendererunchanged"
+}

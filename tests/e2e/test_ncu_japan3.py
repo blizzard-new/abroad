@@ -38,7 +38,7 @@ def test_ncu_japan3_actual_language_packet_read_scope_and_life(
         page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill(name)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
     if width < 700:
         page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()

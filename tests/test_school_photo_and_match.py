@@ -33,15 +33,16 @@ def test_match_missing_profile_fields_and_real_mismatches():
     const assert = require('node:assert/strict');
     const fs = require('node:fs');
     const source = fs.readFileSync(process.argv[1], 'utf8');
-    const state = {eligibilityProfile: null, schoolImages: []};
+    const state = {homeSchool: '長庚大學', eligibilityProfile: null, schoolImages: []};
+    let schoolVisualSource = null, schoolVisualExact = new Map(), schoolVisualAliases = new Map();
     const coverageForSchool = () => null;
     const destinationProfileForSchool = () => null;
     const homeCollegeValue = value => ['工學院', '管理學院', '醫學院'].includes(value) ? value : '';
     const homeSelectionRules = () => ({partner_requirements_need_confirmation:false,pending_quota_planning:true});
     const partnerSummaryPoints = item => item.eligibility_points || [];
-    for (const name of ['normalize', 'escapeHtml', 'academicScopeNeedsConfirmation', 'collegeMatches', 'degreeMatches', 'coupledAcademicScopeOptions', 'coupledAcademicScopeMatches', 'resolvedDegreeLevel', 'partnerDegreeScopeMatches',
+    for (const name of ['activeHomeSchool', 'normalize', 'escapeHtml', 'academicScopeNeedsConfirmation', 'collegeMatches', 'degreeMatches', 'coupledAcademicScopeOptions', 'coupledAcademicScopeMatches', 'resolvedDegreeLevel', 'partnerDegreeScopeMatches',
       'languageThresholdFromPartner', 'partnerAvailabilityMeta', 'partnerMatch',
-      'renderPartnerMatchExplanation', 'schoolImageFor', 'renderSchoolPhoto']) {
+      'renderPartnerMatchExplanation', 'visualSchoolIdentity', 'visualCountryIdentity', 'visualSchoolAliases', 'schoolVisualRecordFor', 'schoolImageFor', 'renderSchoolPhoto']) {
       const match = source.match(new RegExp('^function ' + name + '\\([^]*?^}', 'm'));
       assert.ok(match, name); eval(match[0]);
     }

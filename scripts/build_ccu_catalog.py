@@ -838,9 +838,17 @@ def main():
     issues = [issue for row in workflows for issue in workflow_structure_issues(row)]
     if issues:
         raise ValueError(f"CCU workflow structure failed: {issues}")
-    (BUNDLE / "application_workflows.jsonl").write_text(
-        "".join(r.model_dump_json() + "\n" for r in workflows), encoding="utf-8"
-    )
+    workflow_path = BUNDLE / "application_workflows.jsonl"
+    # A newer model serializer may omit old explicit null/default properties.
+    # Preserve published response bytes when the generated workflow means the
+    # same thing, including the existing ordering and individual document rows.
+    from exchange_info.models import ApplicationWorkflow
+    existing_workflows = [ApplicationWorkflow.model_validate_json(line)
+                          for line in workflow_path.read_text().splitlines()] if workflow_path.exists() else []
+    old_by_id = {row.workflow_id: row.model_dump(mode="json") for row in existing_workflows}
+    new_by_id = {row.workflow_id: row.model_dump(mode="json") for row in workflows}
+    if old_by_id != new_by_id:
+        workflow_path.write_text("".join(r.model_dump_json() + "\n" for r in workflows), encoding="utf-8")
     (BUNDLE / "destination_profiles.jsonl").write_text(
         "".join(destination_profile(row).model_dump_json() + "\n" for row in rows if row.partner_exchange_details),
         encoding="utf-8",
@@ -876,6 +884,14 @@ def main():
     (BUNDLE / "completeness.json").write_text(
         json.dumps(stats, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
+    # Reference-school profiles are independent of the 55 active host reviews.
+    # Keep the original catalogue workflow and then regenerate their supplement.
+    if (BUNDLE / "completion-reviewed-fields.json").exists():
+        from build_ccu_completion_reviews import main as build_completion_reviews
+        from build_ccu_completion_inventory import main as build_completion_inventory
+
+        build_completion_reviews()
+        build_completion_inventory()
     print(json.dumps(stats, ensure_ascii=False))
 
 

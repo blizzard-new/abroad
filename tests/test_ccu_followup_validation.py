@@ -106,7 +106,11 @@ def test_destination_home_alias_keeps_real_profile_and_canonical_home(monkeypatc
     profiles = storage.load_destination_profiles(tmp_path, include_bundled_baseline=True)
     profile = next(row for row in profiles if row.home_university == home and row.coverage_status != "not_collected")
     partner = PartnerUniversity(school_name=profile.school_name, country=profile.country, program_type="交換學生", source_url="https://oia.ccu.edu.tw/")
-    monkeypatch.setattr(api, collector, lambda: [partner])
+    if collector == "fetch_partner_universities":
+        from cgu_catalogue_fixture import fixed_cgu_catalogue
+        monkeypatch.setattr(api, "create_cgu_catalogue", fixed_cgu_catalogue(lambda: [partner]))
+    else:
+        monkeypatch.setattr(api, collector, lambda: [partner])
     client = TestClient(api.create_app(tmp_path))
     response = client.get("/destination-profile", params={"school": profile.school_name, "home_school": alias})
     assert response.status_code == 200

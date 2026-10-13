@@ -265,7 +265,7 @@ def _score_partner(
     coupled_scope = coupled_academic_scope_matches(partner, profile.college, degree)
     degree_match = partner_degree_scope_matches(partner, profile.college, degree) if degree else None
     if partner.availability_status != "open":
-        confirmation_items.append("本期甄選名額尚未公告；可先規劃，能否申請須等官方更新")
+        confirmation_items.append("名額與申請狀態請依逐校證據核對；參考資料不代表當期可申請")
         gaps.append(confirmation_items[-1])
 
     if profile.college:

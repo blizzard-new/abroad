@@ -1,0 +1,19 @@
+{
+  "byte_identical": true,
+  "sha256": {
+    "completion-manual-fields.json": "8a9be91a8fc542025b3d2854a1affe01547880661c0c799489ea847a7b07007e",
+    "campus-coordinate-review.json": "34d0aa1e70fb611c776651721ddb0c5c6226a6a2cda747b7e604520dddf8262c",
+    "completion-reviewed-fields.json": "0d8906dfca72d83035c2f79acd133723985c5863b151ecb056287f1f7bbee3fd",
+    "campus-assets.json": "a58e420bdcdec9d0440b0d4b0613b8632fa6a1701d4a5f6038d72b3dec18ec1e",
+    "completion-inventory.json": "7701b296fcade1a6c76d5fb4e600d7f2db3f451e1e59db704448c1eb6ea333a8",
+    "completion-followup-gap-research.json": "3d653b59d99bc4e59c75cacbcebfe65d799715ba9b39832ba3b9fdd53b67b07d"
+  },
+  "steps": [
+    "review_ccu_public_followup.py",
+    "build_ccu_campus_assets.py",
+    "build_ccu_completion_reviews.py",
+    "audit_ccu_completion_sources.py",
+    "build_ccu_completion_inventory.py",
+    "build_ccu_gap_research_queue.py"
+  ]
+}

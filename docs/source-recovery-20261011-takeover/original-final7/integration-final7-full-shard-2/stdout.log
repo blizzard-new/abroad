@@ -1,0 +1,346 @@
+{"shard": 2, "total_cases": 3110, "total_files": 315, "browser_cases_per_shard": [153, 153, 153, 153], "case_counts_per_shard": [2651, 153, 153, 153], "files_per_shard": [["tests/e2e/test_application_periods.py", "tests/e2e/test_ccu_nineteenth_pass.py", "tests/e2e/test_ccu_public_round8.py", "tests/e2e/test_ccu_seventeenth_pass.py", "tests/e2e/test_ccu_twentieth_pass.py", "tests/e2e/test_conditions_account_sync.py", "tests/e2e/test_document_workbench.py", "tests/e2e/test_integrated_reviewed_photos.py", "tests/e2e/test_mascot_solid.py", "tests/e2e/test_my_application_entry.py", "tests/e2e/test_ncu_eleventh_locations.py", "tests/e2e/test_ncu_hokkaido.py", "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py", "tests/e2e/test_ntu_destination_enrichment.py", "tests/e2e/test_ntu_reference_scope.py", "tests/e2e/test_region_search.py", "tests/e2e/test_system_motion.py", "tests/e2e/test_terms_consent.py", "tests/e2e/test_tku_acceptance.py", "tests/e2e/test_tku_census_assets.py", "tests/e2e/test_tku_milestone6.py", "tests/e2e/test_web_next_phase.py", "tests/integration/test_local_ai_runtime.py", "tests/test_account_read_cache.py", "tests/test_account_workspace_api.py", "tests/test_advisor.py", "tests/test_advisor_mascot_contract.py", "tests/test_ai_gateway.py", "tests/test_ai_privacy.py", "tests/test_analytics_api.py", "tests/test_analytics_core.py", "tests/test_analytics_frontend_contract.py", "tests/test_analytics_report.py", "tests/test_api.py", "tests/test_application_document_catalog.py", "tests/test_application_documents_api.py", "tests/test_application_periods.py", "tests/test_application_plan_api.py", "tests/test_application_plan_schedule_api.py", "tests/test_application_plan_scheduling.py", "tests/test_application_rules.py", "tests/test_application_workflow.py", "tests/test_application_workflow_issue_report_migration.py", "tests/test_application_workflow_issue_reports.py", "tests/test_atomic_account_deletion_migration.py", "tests/test_atomic_auth_mutations.py", "tests/test_atomic_private_community_migration.py", "tests/test_atomic_public_community_api.py", "tests/test_atomic_public_community_migration.py", "tests/test_atomic_workspace_moderation.py", "tests/test_auth_api.py", "tests/test_b4_04_ai_limits.py", "tests/test_brand_assets.py", "tests/test_calendar_conflicts.py", "tests/test_calendar_sync_api.py", "tests/test_calendar_task_scheduling.py", "tests/test_catalog_access.py", "tests/test_catalogue_memory.py", "tests/test_catalogue_speed.py", "tests/test_ccu_bounded_healthcare.py", "tests/test_ccu_completion.py", "tests/test_ccu_composite_provenance.py", "tests/test_ccu_current_sungshin_and_worklist.py", "tests/test_ccu_czu_usj_followup.py", "tests/test_ccu_eighteenth_pass.py", "tests/test_ccu_eighth_pass.py", "tests/test_ccu_fifteenth_pass.py", "tests/test_ccu_fifth_pass.py", "tests/test_ccu_followup_validation.py", "tests/test_ccu_fourteenth_pass.py", "tests/test_ccu_fourth_pass.py", "tests/test_ccu_nineteenth_pass.py", "tests/test_ccu_ninth_pass.py", "tests/test_ccu_overseas.py", "tests/test_ccu_parent_fixes.py", "tests/test_ccu_public_convergence.py", "tests/test_ccu_public_followup.py", "tests/test_ccu_public_priority_batch.py", "tests/test_ccu_public_round8.py", "tests/test_ccu_saintgits_marker.py", "tests/test_ccu_second_pass.py", "tests/test_ccu_semantics.py", "tests/test_ccu_seventeenth_pass.py", "tests/test_ccu_seventh_pass.py", "tests/test_ccu_sixteenth_pass.py", "tests/test_ccu_sixth_pass.py", "tests/test_ccu_streamed_completion.py", "tests/test_ccu_support.py", "tests/test_ccu_third_pass.py", "tests/test_ccu_tls_security.py", "tests/test_ccu_twentieth_pass.py", "tests/test_ccu_twentyfifth_pass.py", "tests/test_ccu_twentyfirst_pass.py", "tests/test_ccu_twentysecond_pass.py", "tests/test_ccu_twentysixth_pass.py", "tests/test_ccu_twentythird_pass.py", "tests/test_ccu_uel_public_followup.py", "tests/test_cgu_bundled_data.py", "tests/test_cgu_catalogue_recovery.py", "tests/test_change_impact.py", "tests/test_chinese_public_content.py", "tests/test_classifier.py", "tests/test_cli.py", "tests/test_college_options.py", "tests/test_community_api.py", "tests/test_community_browsing.py", "tests/test_community_permissions.py", "tests/test_community_repositories.py", "tests/test_content_governance_wrapper.py", "tests/test_content_summary.py", "tests/test_dependency_security_baseline.py", "tests/test_destination_tips.py", "tests/test_discovery.py", "tests/test_discussion_round2.py", "tests/test_document_check_entitlements.py", "tests/test_document_vault.py", "tests/test_email_verification.py", "tests/test_entitlements.py", "tests/test_experience_collector.py", "tests/test_experience_digests.py", "tests/test_feedback.py", "tests/test_feedback_migration.py", "tests/test_fit_signals.py", "tests/test_flutter_independent_pages.py", "tests/test_flutter_navigation_hierarchy.py", "tests/test_flutter_production_copy.py", "tests/test_form_drafts.py", "tests/test_frontend_contract.py", "tests/test_health_head.py", "tests/test_home_and_forum_routes.py", "tests/test_hong_kong_country.py", "tests/test_http_client.py", "tests/test_icon_motion_contract.py", "tests/test_independent_page_routing.py", "tests/test_integration_source_boundaries.py", "tests/test_jsonl_storage_integrity.py", "tests/test_lai_10_security_audit.py", "tests/test_legal_pages.py", "tests/test_life_context.py", "tests/test_loading_screen.py", "tests/test_local_ai.py", "tests/test_match_document_chunks_migration.py", "tests/test_multi_application_plan.py", "tests/test_my_application_entry.py", "tests/test_native_app_contract.py", "tests/test_ncu_completion.py", "tests/test_ncu_document_conditions.py", "tests/test_ncu_eighth_locations.py", "tests/test_ncu_eivp_resume.py", "tests/test_ncu_eleventh_locations.py", "tests/test_ncu_fourth_pass.py", "tests/test_ncu_integration.py", "tests/test_ncu_japan3.py", "tests/test_ncu_ktu_meiji_resume.py", "tests/test_ncu_location_holds.py", "tests/test_ncu_location_precedence.py", "tests/test_ncu_next3_review_corrections.py", "tests/test_ncu_ninth_resume.py", "tests/test_ncu_nufs_kumamoto_ryukoku.py", "tests/test_ncu_photo_license_review.py", "tests/test_ncu_resume_assets.py", "tests/test_ncu_seventh_assets.py", "tests/test_ncu_shizuoka_chuo_kansai.py", "tests/test_ncu_sixth_resume.py", "tests/test_ncu_snapshot_cache.py", "tests/test_ncu_source_collector.py", "tests/test_ncu_tcu_toyama_fukui.py", "tests/test_ncu_tenth_resume.py", "tests/test_next_phase_contract.py", "tests/test_notification_changes.py", "tests/test_notifications.py", "tests/test_ntpu_bundled_data.py", "tests/test_ntpu_support.py", "tests/test_ntu_audit.py", "tests/test_ntu_completion.py", "tests/test_ntu_destination_enrichment.py", "tests/test_ntu_integration.py", "tests/test_ntu_official_changes.py", "tests/test_ntu_review_classification.py", "tests/test_ntu_school_board_migration.py", "tests/test_open_catalog_signup.py", "tests/test_partner_localization.py", "tests/test_partner_map_geometry.py", "tests/test_partner_research.py", "tests/test_pending_availability_semantics.py", "tests/test_pipeline.py", "tests/test_public_translation.py", "tests/test_public_translation_cold_cache.py", "tests/test_qualification_scope_consistency.py", "tests/test_rag.py", "tests/test_regions.py", "tests/test_request_origin.py", "tests/test_requirements_traceability.py", "tests/test_responsive_css.py", "tests/test_review_source_candidates.py", "tests/test_review_source_metadata_candidates.py", "tests/test_rls_auto_enable_migration.py", "tests/test_school_choice.py", "tests/test_school_choice_migration.py", "tests/test_school_completeness.py", "tests/test_school_content.py", "tests/test_school_image_collector.py", "tests/test_school_photo_and_match.py", "tests/test_scoped_life_memory.py", "tests/test_selection_conditions_sync.py", "tests/test_social_community_api.py", "tests/test_source_applicability_cleanup.py", "tests/test_source_metadata_research_audit.py", "tests/test_source_replacement_transport_audit.py", "tests/test_static_caching.py", "tests/test_student_view.py", "tests/test_submission_progress.py", "tests/test_supabase_migration_syntax.py", "tests/test_supabase_repositories.py", "tests/test_supabase_runtime_validation.py", "tests/test_supabase_setup_check.py", "tests/test_task_documents_and_reference_plan.py", "tests/test_terms_consent.py", "tests/test_tku_acceptance_runner.py", "tests/test_tku_bounded_sources.py", "tests/test_tku_community_boundaries.py", "tests/test_tku_continuation.py", "tests/test_tku_fixed_photo_blockers.py", "tests/test_tku_full_census.py", "tests/test_tku_governance_commands.py", "tests/test_tku_governance_routes.py", "tests/test_tku_milestone3.py", "tests/test_tku_milestone4.py", "tests/test_tku_milestone5.py", "tests/test_tku_milestone6.py", "tests/test_tku_privacy_regressions.py", "tests/test_tku_scoped_audit.py", "tests/test_tku_streamed_snapshot.py", "tests/test_tku_support.py", "tests/test_tku_web_evidence.py", "tests/test_transient_auth.py", "tests/test_translation_requests.py", "tests/test_university_locations.py", "tests/test_uniway_ui_contract.py", "tests/test_visual_coverage.py", "tests/test_web_review_findings_contract.py", "tests/test_workflow_catalog_cache.py", "tests/test_workflow_context_api.py", "tests/test_workflow_structuring.py", "tests/test_workload_planning.py", "tests/test_workload_planning_api.py"], ["tests/e2e/test_ccu_candidate_acceptance.py", "tests/e2e/test_ccu_delayed_switching.py", "tests/e2e/test_ccu_public_priority_batch.py", "tests/e2e/test_ccu_scope_documents.py", "tests/e2e/test_cgu_source_recovery.py", "tests/e2e/test_discussion_round2.py", "tests/e2e/test_document_flow.py", "tests/e2e/test_feedback_page.py", "tests/e2e/test_multi_plan_workspace.py", "tests/e2e/test_ncu_ktu_meiji_resume.py", "tests/e2e/test_ncu_kyutech.py", "tests/e2e/test_ncu_ninth_resume.py", "tests/e2e/test_ncu_school.py", "tests/e2e/test_ncu_seventh_assets.py", "tests/e2e/test_ncu_tcu_toyama_fukui.py", "tests/e2e/test_ntu_official_changes.py", "tests/e2e/test_ntu_school.py", "tests/e2e/test_shared_conditions.py", "tests/e2e/test_six_school_visual_coverage.py", "tests/e2e/test_tku_draft_handoff.py", "tests/e2e/test_tku_fixed_photo_blockers.py", "tests/e2e/test_tku_source_rendering.py"], ["tests/e2e/test_analytics_tracking.py", "tests/e2e/test_ccu_completion.py", "tests/e2e/test_ccu_eighteenth_pass.py", "tests/e2e/test_ccu_public_convergence.py", "tests/e2e/test_ccu_school.py", "tests/e2e/test_ccu_twentyfirst_pass.py", "tests/e2e/test_departure_tips_and_experience_digests.py", "tests/e2e/test_discovery_workspace.py", "tests/e2e/test_fit_and_completeness_ui.py", "tests/e2e/test_glass_theme.py", "tests/e2e/test_icon_motion.py", "tests/e2e/test_navigation_guide.py", "tests/e2e/test_ncu_acceptance.py", "tests/e2e/test_ncu_japan3.py", "tests/e2e/test_ncu_niigata.py", "tests/e2e/test_ncu_tenth_resume.py", "tests/e2e/test_notification_changes.py", "tests/e2e/test_responsive_layout.py", "tests/e2e/test_school_chinese_content.py", "tests/e2e/test_student_journey_ux.py", "tests/e2e/test_tku_milestone4.py", "tests/e2e/test_tku_session_boundaries.py", "tests/e2e/test_unified_preparation.py"], ["tests/e2e/test_application_ui_refinements.py", "tests/e2e/test_application_workspace.py", "tests/e2e/test_ccu_composite_provenance.py", "tests/e2e/test_ccu_twentysecond_pass.py", "tests/e2e/test_discussion_reader.py", "tests/e2e/test_icon_rendering.py", "tests/e2e/test_life_context.py", "tests/e2e/test_loading_screen.py", "tests/e2e/test_ncu_completion.py", "tests/e2e/test_ncu_eighth_locations.py", "tests/e2e/test_ncu_fifth_photos.py", "tests/e2e/test_ncu_resume_assets.py", "tests/e2e/test_ncu_shizuoka_chuo_kansai.py", "tests/e2e/test_ncu_sixth_resume.py", "tests/e2e/test_ntu_completion.py", "tests/e2e/test_open_catalog.py", "tests/e2e/test_partner_globe.py", "tests/e2e/test_planning_workspace.py", "tests/e2e/test_school_lists.py", "tests/e2e/test_task_documents_ui.py", "tests/e2e/test_tku_governance_transactions.py", "tests/e2e/test_tku_milestone5.py", "tests/e2e/test_travel_theme.py", "tests/e2e/test_workload_journey.py"]], "coverage": "all collected files; no new exclusions"}
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-six-final/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /tmp/abroad-recovery-capacity-20261011/workspace-abroad-globe-20261011
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 153 items
+
+tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens PASSED [  0%]WEB_CASE tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens call passed 4.786s
+
+tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked PASSED [  1%]WEB_CASE tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked call passed 3.143s
+
+tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything PASSED [  1%]WEB_CASE tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything call passed 3.666s
+
+tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in PASSED [  2%]WEB_CASE tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in call passed 5.565s
+
+tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser PASSED [  3%]WEB_CASE tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser call passed 3.532s
+
+tests/e2e/test_ccu_completion.py::test_sungshin_current_medical_template_and_stale_nomination_year_are_visible[390] PASSED [  3%]WEB_CASE tests/e2e/test_ccu_completion.py::test_sungshin_current_medical_template_and_stale_nomination_year_are_visible[390] call passed 4.032s
+
+tests/e2e/test_ccu_completion.py::test_sungshin_current_medical_template_and_stale_nomination_year_are_visible[1440] PASSED [  4%]WEB_CASE tests/e2e/test_ccu_completion.py::test_sungshin_current_medical_template_and_stale_nomination_year_are_visible[1440] call passed 2.653s
+
+tests/e2e/test_ccu_completion.py::test_uel_undated_language_and_current_calendar_conflicts_remain_reference[390] PASSED [  5%]WEB_CASE tests/e2e/test_ccu_completion.py::test_uel_undated_language_and_current_calendar_conflicts_remain_reference[390] call passed 2.376s
+
+tests/e2e/test_ccu_completion.py::test_uel_undated_language_and_current_calendar_conflicts_remain_reference[1440] PASSED [  5%]WEB_CASE tests/e2e/test_ccu_completion.py::test_uel_undated_language_and_current_calendar_conflicts_remain_reference[1440] call passed 2.057s
+
+tests/e2e/test_ccu_completion.py::test_current_usj_czu_receiving_rules_remain_reference_tracks[92-390] PASSED [  6%]WEB_CASE tests/e2e/test_ccu_completion.py::test_current_usj_czu_receiving_rules_remain_reference_tracks[92-390] call passed 2.363s
+
+tests/e2e/test_ccu_completion.py::test_current_usj_czu_receiving_rules_remain_reference_tracks[92-1440] PASSED [  7%]WEB_CASE tests/e2e/test_ccu_completion.py::test_current_usj_czu_receiving_rules_remain_reference_tracks[92-1440] call passed 2.317s
+
+tests/e2e/test_ccu_completion.py::test_current_usj_czu_receiving_rules_remain_reference_tracks[112-390] PASSED [  7%]WEB_CASE tests/e2e/test_ccu_completion.py::test_current_usj_czu_receiving_rules_remain_reference_tracks[112-390] call passed 2.312s
+
+tests/e2e/test_ccu_completion.py::test_current_usj_czu_receiving_rules_remain_reference_tracks[112-1440] PASSED [  8%]WEB_CASE tests/e2e/test_ccu_completion.py::test_current_usj_czu_receiving_rules_remain_reference_tracks[112-1440] call passed 2.213s
+
+tests/e2e/test_ccu_completion.py::test_fges_faculty_and_parent_conflicts_are_visible_with_both_sources[390] PASSED [  9%]WEB_CASE tests/e2e/test_ccu_completion.py::test_fges_faculty_and_parent_conflicts_are_visible_with_both_sources[390] call passed 2.263s
+
+tests/e2e/test_ccu_completion.py::test_fges_faculty_and_parent_conflicts_are_visible_with_both_sources[1440] PASSED [  9%]WEB_CASE tests/e2e/test_ccu_completion.py::test_fges_faculty_and_parent_conflicts_are_visible_with_both_sources[1440] call passed 2.257s
+
+tests/e2e/test_ccu_completion.py::test_qut_2027_fees_and_reference_status_do_not_create_an_exchange_offer[390] PASSED [ 10%]WEB_CASE tests/e2e/test_ccu_completion.py::test_qut_2027_fees_and_reference_status_do_not_create_an_exchange_offer[390] call passed 2.536s
+
+tests/e2e/test_ccu_completion.py::test_qut_2027_fees_and_reference_status_do_not_create_an_exchange_offer[1440] PASSED [ 11%]WEB_CASE tests/e2e/test_ccu_completion.py::test_qut_2027_fees_and_reference_status_do_not_create_an_exchange_offer[1440] call passed 2.607s
+
+tests/e2e/test_ccu_completion.py::test_iit_bombay_current_receiving_policy_preserves_closed_home_status[390] PASSED [ 11%]WEB_CASE tests/e2e/test_ccu_completion.py::test_iit_bombay_current_receiving_policy_preserves_closed_home_status[390] call passed 1.922s
+
+tests/e2e/test_ccu_completion.py::test_iit_bombay_current_receiving_policy_preserves_closed_home_status[1440] PASSED [ 12%]WEB_CASE tests/e2e/test_ccu_completion.py::test_iit_bombay_current_receiving_policy_preserves_closed_home_status[1440] call passed 2.519s
+
+tests/e2e/test_ccu_completion.py::test_closed_reference_school_shows_separate_current_host_tracks_and_credited_campus[390] PASSED [ 13%]WEB_CASE tests/e2e/test_ccu_completion.py::test_closed_reference_school_shows_separate_current_host_tracks_and_credited_campus[390] call passed 2.028s
+
+tests/e2e/test_ccu_completion.py::test_closed_reference_school_shows_separate_current_host_tracks_and_credited_campus[1440] PASSED [ 13%]WEB_CASE tests/e2e/test_ccu_completion.py::test_closed_reference_school_shows_separate_current_host_tracks_and_credited_campus[1440] call passed 2.787s
+
+tests/e2e/test_ccu_completion.py::test_current_partner_has_correct_school_of_engineering_photo_and_primary_coordinate[390] PASSED [ 14%]WEB_CASE tests/e2e/test_ccu_completion.py::test_current_partner_has_correct_school_of_engineering_photo_and_primary_coordinate[390] call passed 1.791s
+
+tests/e2e/test_ccu_completion.py::test_current_partner_has_correct_school_of_engineering_photo_and_primary_coordinate[1440] PASSED [ 15%]WEB_CASE tests/e2e/test_ccu_completion.py::test_current_partner_has_correct_school_of_engineering_photo_and_primary_coordinate[1440] call passed 2.681s
+
+tests/e2e/test_ccu_eighteenth_pass.py::test_actual_degree_select_and_current_year_in_both_modes[390] PASSED [ 15%]WEB_CASE tests/e2e/test_ccu_eighteenth_pass.py::test_actual_degree_select_and_current_year_in_both_modes[390] call passed 9.449s
+
+tests/e2e/test_ccu_eighteenth_pass.py::test_actual_degree_select_and_current_year_in_both_modes[1440] PASSED [ 16%]WEB_CASE tests/e2e/test_ccu_eighteenth_pass.py::test_actual_degree_select_and_current_year_in_both_modes[1440] call passed 11.335s
+
+tests/e2e/test_ccu_eighteenth_pass.py::test_hcmute_email_sender_and_pilsen_transfers_render[390] PASSED [ 16%]WEB_CASE tests/e2e/test_ccu_eighteenth_pass.py::test_hcmute_email_sender_and_pilsen_transfers_render[390] call passed 5.263s
+
+tests/e2e/test_ccu_eighteenth_pass.py::test_hcmute_email_sender_and_pilsen_transfers_render[1440] PASSED [ 17%]WEB_CASE tests/e2e/test_ccu_eighteenth_pass.py::test_hcmute_email_sender_and_pilsen_transfers_render[1440] call passed 6.368s
+
+tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[56-390] PASSED [ 18%]WEB_CASE tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[56-390] call passed 2.216s
+
+tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[56-1440] PASSED [ 18%]WEB_CASE tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[56-1440] call passed 2.239s
+
+tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[59-390] PASSED [ 19%]WEB_CASE tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[59-390] call passed 2.276s
+
+tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[59-1440] PASSED [ 20%]WEB_CASE tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[59-1440] call passed 2.407s
+
+tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[75-390] PASSED [ 20%]WEB_CASE tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[75-390] call passed 2.327s
+
+tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[75-1440] PASSED [ 21%]WEB_CASE tests/e2e/test_ccu_public_convergence.py::test_convergence_reference_years_and_access_survive_rendering[75-1440] call passed 2.351s
+
+tests/e2e/test_ccu_school.py::test_ccu_deadlines_forms_and_research_progress[390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 22%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_deadlines_forms_and_research_progress[390] call passed 5.293s
+
+tests/e2e/test_ccu_school.py::test_ccu_deadlines_forms_and_research_progress[1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 22%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_deadlines_forms_and_research_progress[1440] call passed 4.256s
+
+tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[35-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 23%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[35-390] call passed 2.362s
+
+tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[35-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 24%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[35-1440] call passed 3.553s
+
+tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[61-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 24%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[61-390] call passed 2.385s
+
+tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[61-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 25%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[61-1440] call passed 2.664s
+
+tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[105-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 26%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[105-390] call passed 2.744s
+
+tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[105-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 26%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_submission_result_calendar_and_campus_boundaries[105-1440] call passed 2.183s
+
+tests/e2e/test_ccu_school.py::test_ccu_profile_life_and_individual_document_stages_render[390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 27%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_profile_life_and_individual_document_stages_render[390] call passed 2.893s
+
+tests/e2e/test_ccu_school.py::test_ccu_profile_life_and_individual_document_stages_render[1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 28%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_profile_life_and_individual_document_stages_render[1440] call passed 4.346s
+
+tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[34-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 28%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[34-390] call passed 2.187s
+
+tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[34-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 29%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[34-1440] call passed 2.876s
+
+tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[68-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 30%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[68-390] call passed 1.779s
+
+tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[68-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 30%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[68-1440] call passed 2.340s
+
+tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[95-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 31%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[95-390] call passed 2.054s
+
+tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[95-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 32%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[95-1440] call passed 3.234s
+
+tests/e2e/test_ccu_school.py::test_all_six_school_grade_fields_remain_isolated <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 32%]WEB_CASE tests/e2e/test_ccu_school.py::test_all_six_school_grade_fields_remain_isolated call passed 25.852s
+
+tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[98-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 33%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[98-390] call passed 2.160s
+
+tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[98-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 33%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[98-1440] call passed 3.152s
+
+tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[102-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 34%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[102-390] call passed 2.243s
+
+tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[102-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 35%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[102-1440] call passed 2.565s
+
+tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[101-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 35%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[101-390] call passed 2.020s
+
+tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[101-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 36%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_new_public_forms_and_source_conflict_categories[101-1440] call passed 3.077s
+
+tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[32-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 37%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[32-390] call passed 1.852s
+
+tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[32-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 37%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[32-1440] call passed 2.445s
+
+tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[37-390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 38%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[37-390] call passed 2.170s
+
+tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[37-1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_ccu_school.py PASSED [ 39%]WEB_CASE tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[37-1440] call passed 3.533s
+
+tests/e2e/test_ccu_twentyfirst_pass.py::test_ryukoku_conflict_and_later_signed_pledge_are_visible[390] PASSED [ 39%]WEB_CASE tests/e2e/test_ccu_twentyfirst_pass.py::test_ryukoku_conflict_and_later_signed_pledge_are_visible[390] call passed 3.115s
+
+tests/e2e/test_ccu_twentyfirst_pass.py::test_ryukoku_conflict_and_later_signed_pledge_are_visible[1440] PASSED [ 40%]WEB_CASE tests/e2e/test_ccu_twentyfirst_pass.py::test_ryukoku_conflict_and_later_signed_pledge_are_visible[1440] call passed 4.444s
+
+tests/e2e/test_ccu_twentyfirst_pass.py::test_fhnw_grant_remains_conditional_and_template_unverified[390] PASSED [ 41%]WEB_CASE tests/e2e/test_ccu_twentyfirst_pass.py::test_fhnw_grant_remains_conditional_and_template_unverified[390] call passed 2.399s
+
+tests/e2e/test_ccu_twentyfirst_pass.py::test_fhnw_grant_remains_conditional_and_template_unverified[1440] PASSED [ 41%]WEB_CASE tests/e2e/test_ccu_twentyfirst_pass.py::test_fhnw_grant_remains_conditional_and_template_unverified[1440] call passed 4.712s
+
+tests/e2e/test_ccu_twentyfirst_pass.py::test_sdu_city_specific_reply_days_and_later_contract_are_visible[390] PASSED [ 42%]WEB_CASE tests/e2e/test_ccu_twentyfirst_pass.py::test_sdu_city_specific_reply_days_and_later_contract_are_visible[390] call passed 2.634s
+
+tests/e2e/test_ccu_twentyfirst_pass.py::test_sdu_city_specific_reply_days_and_later_contract_are_visible[1440] PASSED [ 43%]WEB_CASE tests/e2e/test_ccu_twentyfirst_pass.py::test_sdu_city_specific_reply_days_and_later_contract_are_visible[1440] call passed 5.574s
+
+tests/e2e/test_departure_tips_and_experience_digests.py::test_the_departure_tab_shows_the_countrys_guide_with_its_draft_notice_and_sources PASSED [ 43%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_the_departure_tab_shows_the_countrys_guide_with_its_draft_notice_and_sources call passed 2.651s
+
+tests/e2e/test_departure_tips_and_experience_digests.py::test_a_school_in_japan_shows_the_japan_guide_with_the_paperwork_and_bank_warnings PASSED [ 44%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_school_in_japan_shows_the_japan_guide_with_the_paperwork_and_bank_warnings call passed 2.626s
+
+tests/e2e/test_departure_tips_and_experience_digests.py::test_topic_chips_scroll_in_place_and_never_change_the_page_address PASSED [ 45%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_topic_chips_scroll_in_place_and_never_change_the_page_address call passed 3.209s
+
+tests/e2e/test_departure_tips_and_experience_digests.py::test_a_country_without_a_guide_gets_a_polite_pointer_to_the_official_site PASSED [ 45%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_country_without_a_guide_gets_a_polite_pointer_to_the_official_site call passed 2.442s
+
+tests/e2e/test_departure_tips_and_experience_digests.py::test_a_server_error_is_not_mistaken_for_a_missing_guide PASSED [ 46%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_server_error_is_not_mistaken_for_a_missing_guide call passed 2.687s
+
+tests/e2e/test_departure_tips_and_experience_digests.py::test_stories_with_a_chinese_write_up_lead_and_the_rest_are_filed_as_references PASSED [ 47%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_stories_with_a_chinese_write_up_lead_and_the_rest_are_filed_as_references call passed 2.235s
+
+tests/e2e/test_departure_tips_and_experience_digests.py::test_opening_a_story_shows_the_chinese_write_up_and_how_it_was_made PASSED [ 47%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_opening_a_story_shows_the_chinese_write_up_and_how_it_was_made call passed 2.983s
+
+tests/e2e/test_departure_tips_and_experience_digests.py::test_a_saved_story_still_opens_with_its_write_up PASSED [ 48%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_saved_story_still_opens_with_its_write_up call passed 5.076s
+
+tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader PASSED [ 49%]WEB_CASE tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader call passed 13.789s
+
+tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout PASSED [ 49%]WEB_CASE tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout call passed 14.463s
+
+tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history PASSED [ 50%]WEB_CASE tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history call passed 9.106s
+
+tests/e2e/test_fit_and_completeness_ui.py::test_new_condition_fields_round_trip_through_the_saved_conditions_payload PASSED [ 50%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_new_condition_fields_round_trip_through_the_saved_conditions_payload call passed 4.469s
+
+tests/e2e/test_fit_and_completeness_ui.py::test_fit_details_state_reasons_and_never_say_affordable PASSED [ 51%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_fit_details_state_reasons_and_never_say_affordable call passed 2.901s
+
+tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[390] PASSED [ 52%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[390] call passed 2.397s
+
+tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[1754] PASSED [ 52%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[1754] call passed 4.847s
+
+tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 53%]WEB_CASE tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[390] call passed 3.496s
+
+tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[834] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 54%]WEB_CASE tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[834] call passed 2.917s
+
+tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[1754] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 54%]WEB_CASE tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[1754] call passed 2.786s
+
+tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 55%]WEB_CASE tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[390] call passed 7.638s
+
+tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 56%]WEB_CASE tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[1440] call passed 9.308s
+
+tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[390] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 56%]WEB_CASE tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[390] call passed 3.587s
+
+tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[834] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 57%]WEB_CASE tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[834] call passed 3.707s
+
+tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 58%]WEB_CASE tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[1440] call passed 3.326s
+
+tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[390-620] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 58%]WEB_CASE tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[390-620] call passed 2.371s
+
+tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[834-956] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 59%]WEB_CASE tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[834-956] call passed 3.578s
+
+tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[1280-720] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 60%]WEB_CASE tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[1280-720] call passed 3.309s
+
+tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[1754-956] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 60%]WEB_CASE tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[1754-956] call passed 4.783s
+
+tests/e2e/test_glass_theme.py::test_mobile_navigation_focus_escape_and_login <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 61%]WEB_CASE tests/e2e/test_glass_theme.py::test_mobile_navigation_focus_escape_and_login call passed 3.080s
+
+tests/e2e/test_glass_theme.py::test_compact_rail_labels_and_tools_follow_pointer_and_keyboard[False] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 62%]WEB_CASE tests/e2e/test_glass_theme.py::test_compact_rail_labels_and_tools_follow_pointer_and_keyboard[False] call passed 2.445s
+
+tests/e2e/test_glass_theme.py::test_compact_rail_labels_and_tools_follow_pointer_and_keyboard[True] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_glass_theme.py PASSED [ 62%]WEB_CASE tests/e2e/test_glass_theme.py::test_compact_rail_labels_and_tools_follow_pointer_and_keyboard[True] call passed 2.408s
+
+tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph PASSED [ 63%]WEB_CASE tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph call passed 2.622s
+
+tests/e2e/test_icon_motion.py::test_reduced_motion_switches_morphicons_to_an_immediate_final_state PASSED [ 64%]WEB_CASE tests/e2e/test_icon_motion.py::test_reduced_motion_switches_morphicons_to_an_immediate_final_state call passed 1.593s
+
+tests/e2e/test_navigation_guide.py::test_home_is_the_guide_and_the_forum_is_one_click_away <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 64%]WEB_CASE tests/e2e/test_navigation_guide.py::test_home_is_the_guide_and_the_forum_is_one_click_away call passed 2.616s
+
+tests/e2e/test_navigation_guide.py::test_an_old_guide_link_opens_the_home_page <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 65%]WEB_CASE tests/e2e/test_navigation_guide.py::test_an_old_guide_link_opens_the_home_page call passed 1.894s
+
+tests/e2e/test_navigation_guide.py::test_an_old_community_link_opens_the_forum <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 66%]WEB_CASE tests/e2e/test_navigation_guide.py::test_an_old_community_link_opens_the_forum call passed 1.793s
+
+tests/e2e/test_navigation_guide.py::test_guide_shared_shell_and_back_forward_without_loops <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 66%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_shared_shell_and_back_forward_without_loops call passed 3.456s
+
+tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[budget] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 67%]WEB_CASE tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[budget] call passed 2.002s
+
+tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[application-center] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 67%]WEB_CASE tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[application-center] call passed 2.381s
+
+tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[school=\u6797\u80af\u5927\u5b78 Lincoln University] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 68%]WEB_CASE tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[school=\u6797\u80af\u5927\u5b78 Lincoln University] call passed 2.394s
+
+tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 69%]WEB_CASE tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return call passed 6.138s
+
+tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 69%]WEB_CASE tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward call passed 2.926s
+
+tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 70%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393] call passed 2.204s
+
+tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 71%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834] call passed 2.807s
+
+tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_navigation_guide.py PASSED [ 71%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440] call passed 2.697s
+
+tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[390] PASSED [ 72%]WEB_CASE tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[390] call passed 14.838s
+
+tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[1440] PASSED [ 73%]WEB_CASE tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[1440] call passed 14.983s
+
+tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[kuins-\u95dc\u897f\u570b\u969b\u5927\u5b78-11\u985e\u521d\u6b21\u53c3\u8003\u4ef6-11-https://drive.google.com/file/d/13TdQ1U2b_ZrDuvPl876SKV0UpL8KWn9R/view-\u7121\u9069\u7528\u5e74\u5ea6-390] PASSED [ 73%]WEB_CASE tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[kuins-\u95dc\u897f\u570b\u969b\u5927\u5b78-11\u985e\u521d\u6b21\u53c3\u8003\u4ef6-11-https://drive.google.com/file/d/13TdQ1U2b_ZrDuvPl876SKV0UpL8KWn9R/view-\u7121\u9069\u7528\u5e74\u5ea6-390] call passed 5.467s
+
+tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[kuins-\u95dc\u897f\u570b\u969b\u5927\u5b78-11\u985e\u521d\u6b21\u53c3\u8003\u4ef6-11-https://drive.google.com/file/d/13TdQ1U2b_ZrDuvPl876SKV0UpL8KWn9R/view-\u7121\u9069\u7528\u5e74\u5ea6-1440] PASSED [ 74%]WEB_CASE tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[kuins-\u95dc\u897f\u570b\u969b\u5927\u5b78-11\u985e\u521d\u6b21\u53c3\u8003\u4ef6-11-https://drive.google.com/file/d/13TdQ1U2b_ZrDuvPl876SKV0UpL8KWn9R/view-\u7121\u9069\u7528\u5e74\u5ea6-1440] call passed 9.231s
+
+tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[komazawa-\u99d2\u6fa4\u5927\u5b78-\u516b\u985e\u521d\u6b21\u4ef6-8-https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view-2025-390] PASSED [ 75%]WEB_CASE tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[komazawa-\u99d2\u6fa4\u5927\u5b78-\u516b\u985e\u521d\u6b21\u4ef6-8-https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view-2025-390] call passed 5.744s
+
+tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[komazawa-\u99d2\u6fa4\u5927\u5b78-\u516b\u985e\u521d\u6b21\u4ef6-8-https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view-2025-1440] PASSED [ 75%]WEB_CASE tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[komazawa-\u99d2\u6fa4\u5927\u5b78-\u516b\u985e\u521d\u6b21\u4ef6-8-https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view-2025-1440] call passed 8.869s
+
+tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-390] PASSED [ 76%]WEB_CASE tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-390] call passed 7.247s
+
+tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-1440] PASSED [ 77%]WEB_CASE tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-1440] call passed 10.456s
+
+tests/e2e/test_ncu_niigata.py::test_ncu_niigata_iec_graduate_finance_and_source_scope[390] PASSED [ 77%]WEB_CASE tests/e2e/test_ncu_niigata.py::test_ncu_niigata_iec_graduate_finance_and_source_scope[390] call passed 6.765s
+
+tests/e2e/test_ncu_niigata.py::test_ncu_niigata_iec_graduate_finance_and_source_scope[1440] PASSED [ 78%]WEB_CASE tests/e2e/test_ncu_niigata.py::test_ncu_niigata_iec_graduate_finance_and_source_scope[1440] call passed 9.395s
+
+tests/e2e/test_ncu_tenth_resume.py::test_tenth_two_named_campuses[390] PASSED [ 79%]WEB_CASE tests/e2e/test_ncu_tenth_resume.py::test_tenth_two_named_campuses[390] call passed 11.663s
+
+tests/e2e/test_ncu_tenth_resume.py::test_tenth_two_named_campuses[1280] PASSED [ 79%]WEB_CASE tests/e2e/test_ncu_tenth_resume.py::test_tenth_two_named_campuses[1280] call passed 20.023s
+
+tests/e2e/test_ncu_tenth_resume.py::test_tenth_host_reference_and_post_offer_scope[\u5361\u65af\u9b6f\u723e-390-2026/27\u7a7a\u767dDOCX\u5df2\u8b80] PASSED [ 80%]WEB_CASE tests/e2e/test_ncu_tenth_resume.py::test_tenth_host_reference_and_post_offer_scope[\u5361\u65af\u9b6f\u723e-390-2026/27\u7a7a\u767dDOCX\u5df2\u8b80] call passed 5.294s
+
+tests/e2e/test_ncu_tenth_resume.py::test_tenth_host_reference_and_post_offer_scope[\u5716\u723e\u5eab-1280-2027\u6625\u8fce\u65b01/7\u20138] PASSED [ 81%]WEB_CASE tests/e2e/test_ncu_tenth_resume.py::test_tenth_host_reference_and_post_offer_scope[\u5716\u723e\u5eab-1280-2027\u6625\u8fce\u65b01/7\u20138] call passed 8.062s
+
+tests/e2e/test_notification_changes.py::test_student_change_comparison_retries_and_fits_dialog[390] PASSED [ 81%]WEB_CASE tests/e2e/test_notification_changes.py::test_student_change_comparison_retries_and_fits_dialog[390] call passed 3.470s
+
+tests/e2e/test_notification_changes.py::test_student_change_comparison_retries_and_fits_dialog[1754] PASSED [ 82%]WEB_CASE tests/e2e/test_notification_changes.py::test_student_change_comparison_retries_and_fits_dialog[1754] call passed 4.506s
+
+tests/e2e/test_notification_changes.py::test_unverified_account_syncs_its_workspace_like_any_other PASSED [ 83%]WEB_CASE tests/e2e/test_notification_changes.py::test_unverified_account_syncs_its_workspace_like_any_other call passed 3.126s
+
+tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[320-640] PASSED [ 83%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[320-640] call passed 11.241s
+
+tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[375-812] PASSED [ 84%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[375-812] call passed 9.577s
+
+tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[414-896] PASSED [ 84%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[414-896] call passed 9.986s
+
+tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[768-1024] PASSED [ 85%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[768-1024] call passed 10.072s
+
+tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[812-375] PASSED [ 86%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[812-375] call passed 10.144s
+
+tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[375-812] PASSED [ 86%]WEB_CASE tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[375-812] call passed 1.881s
+
+tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[768-1024] PASSED [ 87%]WEB_CASE tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[768-1024] call passed 1.956s
+
+tests/e2e/test_responsive_layout.py::test_the_compose_button_shows_its_words_on_a_tablet PASSED [ 88%]WEB_CASE tests/e2e/test_responsive_layout.py::test_the_compose_button_shows_its_words_on_a_tablet call passed 1.778s
+
+tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390] PASSED [ 88%]WEB_CASE tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390] call passed 9.852s
+
+tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[1754] PASSED [ 89%]WEB_CASE tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[1754] call passed 7.918s
+
+tests/e2e/test_student_journey_ux.py::test_calendar_empty_state_enters_planning_and_bad_dates_offer_recovery[390] PASSED [ 90%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_calendar_empty_state_enters_planning_and_bad_dates_offer_recovery[390] call passed 4.963s
+
+tests/e2e/test_student_journey_ux.py::test_calendar_empty_state_enters_planning_and_bad_dates_offer_recovery[1754] PASSED [ 90%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_calendar_empty_state_enters_planning_and_bad_dates_offer_recovery[1754] call passed 5.926s
+
+tests/e2e/test_student_journey_ux.py::test_task_duration_changes_require_new_preview_and_save_adjusted_start[390] PASSED [ 91%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_task_duration_changes_require_new_preview_and_save_adjusted_start[390] call passed 4.948s
+
+tests/e2e/test_student_journey_ux.py::test_task_duration_changes_require_new_preview_and_save_adjusted_start[1754] PASSED [ 92%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_task_duration_changes_require_new_preview_and_save_adjusted_start[1754] call passed 5.690s
+
+tests/e2e/test_student_journey_ux.py::test_unknown_language_is_saved_without_zero_and_term_carries_to_documents PASSED [ 92%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_unknown_language_is_saved_without_zero_and_term_carries_to_documents call passed 5.383s
+
+tests/e2e/test_student_journey_ux.py::test_documents_show_current_phase_and_only_selected_print_items[390] PASSED [ 93%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_documents_show_current_phase_and_only_selected_print_items[390] call passed 3.234s
+
+tests/e2e/test_student_journey_ux.py::test_documents_show_current_phase_and_only_selected_print_items[1754] PASSED [ 94%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_documents_show_current_phase_and_only_selected_print_items[1754] call passed 4.826s
+
+tests/e2e/test_student_journey_ux.py::test_target_change_can_be_cancelled_and_preserves_old_tasks_and_draft PASSED [ 94%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_target_change_can_be_cancelled_and_preserves_old_tasks_and_draft call passed 8.187s
+
+tests/e2e/test_student_journey_ux.py::test_known_mismatch_has_no_choose_target_action_and_recommendation_is_not_probability PASSED [ 95%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_known_mismatch_has_no_choose_target_action_and_recommendation_is_not_probability call passed 4.262s
+
+tests/e2e/test_tku_milestone4.py::test_new_host_references_render_with_year_and_unverified_home_scope[390] PASSED [ 96%]WEB_CASE tests/e2e/test_tku_milestone4.py::test_new_host_references_render_with_year_and_unverified_home_scope[390] call passed 13.884s
+
+tests/e2e/test_tku_milestone4.py::test_new_host_references_render_with_year_and_unverified_home_scope[1280] PASSED [ 96%]WEB_CASE tests/e2e/test_tku_milestone4.py::test_new_host_references_render_with_year_and_unverified_home_scope[1280] call passed 17.698s
+
+tests/e2e/test_tku_session_boundaries.py::test_expired_school_reader_closes_and_discards_drafts_and_late_responses[none] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_tku_session_boundaries.py PASSED [ 97%]WEB_CASE tests/e2e/test_tku_session_boundaries.py::test_expired_school_reader_closes_and_discards_drafts_and_late_responses[none] call passed 6.948s
+
+tests/e2e/test_tku_session_boundaries.py::test_expired_school_reader_closes_and_discards_drafts_and_late_responses[comments] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_tku_session_boundaries.py PASSED [ 98%]WEB_CASE tests/e2e/test_tku_session_boundaries.py::test_expired_school_reader_closes_and_discards_drafts_and_late_responses[comments] call passed 5.516s
+
+tests/e2e/test_tku_session_boundaries.py::test_expired_school_reader_closes_and_discards_drafts_and_late_responses[detail] <- ../../../workspace/abroad-globe-20261011/tests/e2e/test_tku_session_boundaries.py PASSED [ 98%]WEB_CASE tests/e2e/test_tku_session_boundaries.py::test_expired_school_reader_closes_and_discards_drafts_and_late_responses[detail] call passed 5.527s
+
+tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[390] PASSED [ 99%]WEB_CASE tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[390] call passed 6.853s
+
+tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[1754] PASSED [100%]WEB_CASE tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[1754] call passed 9.845s
+
+
+- generated xml file: /workspace/recovery-evidence-20261011/integration-final7-full-shard-2/result.xml -
+============================= slowest 25 durations =============================
+25.85s call     tests/e2e/test_ccu_school.py::test_all_six_school_grade_fields_remain_isolated
+20.02s call     tests/e2e/test_ncu_tenth_resume.py::test_tenth_two_named_campuses[1280]
+17.70s call     tests/e2e/test_tku_milestone4.py::test_new_host_references_render_with_year_and_unverified_home_scope[1280]
+14.98s call     tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[1440]
+14.84s call     tests/e2e/test_ncu_acceptance.py::test_ncu_matching_favorites_documents_plan_reload_and_home_switch[390]
+14.46s call     tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout
+13.88s call     tests/e2e/test_tku_milestone4.py::test_new_host_references_render_with_year_and_unverified_home_scope[390]
+13.79s call     tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader
+11.66s call     tests/e2e/test_ncu_tenth_resume.py::test_tenth_two_named_campuses[390]
+11.34s call     tests/e2e/test_ccu_eighteenth_pass.py::test_actual_degree_select_and_current_year_in_both_modes[1440]
+11.24s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[320-640]
+10.46s call     tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-1440]
+10.14s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[812-375]
+10.07s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[768-1024]
+9.99s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[414-896]
+9.85s call     tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390]
+9.84s call     tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[1754]
+9.58s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[375-812]
+9.45s call     tests/e2e/test_ccu_eighteenth_pass.py::test_actual_degree_select_and_current_year_in_both_modes[390]
+9.39s call     tests/e2e/test_ncu_niigata.py::test_ncu_niigata_iec_graduate_finance_and_source_scope[1440]
+9.31s call     tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[1440]
+9.23s call     tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[kuins-\u95dc\u897f\u570b\u969b\u5927\u5b78-11\u985e\u521d\u6b21\u53c3\u8003\u4ef6-11-https://drive.google.com/file/d/13TdQ1U2b_ZrDuvPl876SKV0UpL8KWn9R/view-\u7121\u9069\u7528\u5e74\u5ea6-1440]
+9.11s call     tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+8.87s call     tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[komazawa-\u99d2\u6fa4\u5927\u5b78-\u516b\u985e\u521d\u6b21\u4ef6-8-https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view-2025-1440]
+8.19s call     tests/e2e/test_student_journey_ux.py::test_target_change_can_be_cancelled_and_preserves_old_tasks_and_draft
+======================= 153 passed in 771.12s (0:12:51) ========================
+WEB_SHARD 2 exit=0 elapsed=779.287s

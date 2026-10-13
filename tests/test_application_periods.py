@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime, timezone
 
 import pytest
@@ -107,7 +108,7 @@ def test_real_plan_api_projects_deadline_only_for_selected_round(tmp_path,monkey
         step.deadline_checked_at=datetime(2026,10,1,tzinfo=timezone.utc)
         step.deadline_source_url="https://example.edu/notice"
     replace_application_workflow(source,tmp_path)
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities",lambda:[partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue',fixed_cgu_catalogue(lambda:[partner]))
     client=_verified_client(tmp_path)
     response=client.post("/application-plan/evaluate",json=_payload("長庚大學",[partner.school_name],"資訊工程學系"))
     assert response.status_code==200

@@ -1,0 +1,19 @@
+diff --git a/tests/e2e/test_ntu_official_changes.py b/tests/e2e/test_ntu_official_changes.py
+--- a/tests/e2e/test_ntu_official_changes.py
++++ b/tests/e2e/test_ntu_official_changes.py
+@@ -7,7 +7,7 @@ from .test_open_catalog import wait_until
+ 
+ 
+ @pytest.mark.parametrize('width',[390,1440])
+-def test_current_portal_reference_is_visible_without_opening_quota(page,live_server,width):
++def test_current_portal_reference_is_visible_without_opening_quota(page,live_server,width,tmp_path):
+     page.set_viewport_size({'width':width,'height':956})
+     page.emulate_media(reduced_motion='reduce')
+     enter_public_site(page,live_server,'partners')
+@@ -32,5 +32,5 @@ def test_current_portal_reference_is_visible_without_opening_quota(page,live_server
+     assert page.evaluate("state.dashboard.partner_universities.find(p=>p.school_name==='明斯特大學').quota") is None
+     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+     from pathlib import Path
+-    target=Path('/workspace/ntu-research-2026-10-10/test-evidence');target.mkdir(exist_ok=True)
++    target=tmp_path/'test-evidence';target.mkdir(exist_ok=True)
+     page.screenshot(path=str(target/f'current-reference-{width}.png'))

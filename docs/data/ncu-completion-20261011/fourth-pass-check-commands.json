@@ -1,0 +1,11 @@
+{
+  "generation_checked_at": "2026-10-11T12:41:25+00:00",
+  "commands": {
+    "ncu_shared": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. TMPDIR=/workspace/ncu-completion-tmp /workspace/abroad/.venv/bin/python -m pytest tests/test_ncu*.py tests/test_application_rules.py tests/test_workflow_context_api.py tests/test_school_content.py -q",
+    "other_home_regression": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. TMPDIR=/workspace/ncu-completion-tmp /workspace/abroad/.venv/bin/python -m pytest tests/test_cgu_bundled_data.py tests/test_ntpu_bundled_data.py tests/test_ntpu_support.py tests/test_ntu*.py tests/test_application_workflow.py tests/test_workflow_structuring.py tests/test_workflow_context_api.py -q",
+    "memory": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. TMPDIR=/workspace/ncu-completion-tmp /workspace/abroad/.venv/bin/python -m pytest tests/test_catalogue_memory.py -q",
+    "browser": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. TMPDIR=/workspace/ncu-completion-tmp PLAYWRIGHT_BROWSERS_PATH=/workspace/.abroad-cloud-tools/ms-playwright /workspace/abroad/.venv/bin/python -m pytest tests/e2e/test_ncu_completion.py -k fourth_public_pass -q"
+  },
+  "ci_run": false,
+  "no_production_database": true
+}

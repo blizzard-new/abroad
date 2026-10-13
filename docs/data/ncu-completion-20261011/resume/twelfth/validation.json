@@ -1,0 +1,92 @@
+{
+  "checked_at": "2026-10-11T18:09:55.400807+00:00",
+  "base_checkpoint": "a2df55b16f72455f7154d7afff44934fc8dbf99d",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 202,
+    "unique_photo_sha256": 199,
+    "partner_locations": 214,
+    "mother_separate": true,
+    "manual_host_records": 120,
+    "sources": 722,
+    "readings": 383,
+    "native_pdf_fully_read": 75,
+    "native_visual_pdf_fully_read": 10,
+    "public_unread": 248,
+    "strict_current_field_gaps": 3222,
+    "current_quota_unknown": 214,
+    "new_independent_document_sources": 0
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "445 passed in 167.89s",
+      "evidence": "tests-ncu-all.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_twelfth_reconciliation.py -q",
+      "result": "2 passed in 30.70s",
+      "evidence": "browser-check.txt"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "visual_review": {
+    "browser_scope": "All12PNGactuallyviewed;390and1440NUFSexisting13conditionaldocumentsand8stages,CoE/visa/arrival/life/cost/GJPvsSpecialAuditor,deadlinesandremindersremainreferenceonly. Twooverviewfullpageimagesarescaledlayoutproof,DOMassertionsandotherlocalizedcapturesverifytext;notclaimingeveryscaledwordlegible.",
+    "final_browser_images": [
+      {
+        "path": "browser/nufs-1440-arrival.png",
+        "sha256": "f62f2fa210e61646094905fcca92b9c0105b9634260884a0b1c9f49be6c0df56"
+      },
+      {
+        "path": "browser/nufs-1440-card-or-row.png",
+        "sha256": "63bec27a9594c409799885a9bf4cc43ce5fdb81227d9d468ebbd1c3cb73c9e08"
+      },
+      {
+        "path": "browser/nufs-1440-coe-visa.png",
+        "sha256": "5c1cfa194ebf00236dbc374e937eb619a074b5b6cc73e5e5aec74e5e247fbd46"
+      },
+      {
+        "path": "browser/nufs-1440-life.png",
+        "sha256": "7d5a74c606f6b6ae3da3db2934e0850adf5b5c0bc20d4aac6f7c4f02d4d7e360"
+      },
+      {
+        "path": "browser/nufs-1440-overview.png",
+        "sha256": "8ecdd6d20da1a5e41e0f3ea54d2025640f086dde9d00814d65e3a790716bca59"
+      },
+      {
+        "path": "browser/nufs-1440-packet.png",
+        "sha256": "f284c1cdc0c33bbff1814e4a49d3e764cf65a9352accac2c6e3c7a1a346e5ec7"
+      },
+      {
+        "path": "browser/nufs-390-arrival.png",
+        "sha256": "bed4d7e6d9ee55f17aba21fd7a741b598ec250edfdbbb8dc1c562a853427a77a"
+      },
+      {
+        "path": "browser/nufs-390-card-or-row.png",
+        "sha256": "b289873dc908b6ffa95a474296c656534d92dddc5dee0788b49142328a024d43"
+      },
+      {
+        "path": "browser/nufs-390-coe-visa.png",
+        "sha256": "a6ee8e8e8ecf2310e311ce40b8f6c3ad6e64920bc159bb779f93519b3219f2c0"
+      },
+      {
+        "path": "browser/nufs-390-life.png",
+        "sha256": "bf648dbb80bc3ea75c8f7279c8bb1db1965c720f4c02d311c82c0e83629912e8"
+      },
+      {
+        "path": "browser/nufs-390-overview.png",
+        "sha256": "48349b195d4354d0b009f243c74509716c5645970de4795394f5119e4d4aeef2"
+      },
+      {
+        "path": "browser/nufs-390-packet.png",
+        "sha256": "93dcdd75a9c782b5717c625b151a47dd740dc5f450c3e6e580cf1d84953cb7d1"
+      }
+    ],
+    "source_scope": "7existingPDFs24pagesnativeandactualvisualrevalidation,14directsourcesexactSHA+5memberssameZIPcontainer. Repeateddocumentsexcludedfromnewhostsource/PDFcounts. XLSXsingleSheet1nativereadonly;noLibreOfficeconversionavailableincurrentPATH."
+  },
+  "review_note": "UncommittedproposalinitiallyshadowedricherbaseNUFS/IPSArecords;removedbeforetestsandcommit. Hostrecords,workflows,studentprofilesandpartnersremainbyte-identicaltoparent;onlysourcequeueauditstatus/provenanceandreviewevidencechange.",
+  "restrictions": "sameDraftPR11only;no merge/deploy/prodDB/Quality/security/credentialchanges;sharedmatcherandrendererunchanged"
+}

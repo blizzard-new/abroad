@@ -1,10 +1,9 @@
 from __future__ import annotations
 import json
-import copy
 import gzip
 import threading
 from datetime import datetime, timezone
-from functools import lru_cache
+from collections import OrderedDict
 from pathlib import Path
 from .models import (
     ApplicationPeriodStatus,
@@ -14,6 +13,7 @@ from .models import (
     StudentDashboard,
 )
 from .student_view import _application_period_status
+from .json_stream import json_array_items as _json_array_items
 
 NCU_OFFICIAL_DATA_DIR = Path(__file__).parent / "official_data/ncu"
 NCU_GUIDELINES_URL = (
@@ -26,21 +26,59 @@ NCU_CHECKED_AT = datetime(2026, 10, 8, tzinfo=timezone.utc)
 _audit_snapshot_lock = threading.Lock()
 
 
-@lru_cache(maxsize=2)
-def _read_audit_snapshot(path: Path, signature: tuple[int, int]):
-    raw = path.read_bytes()
-    return json.loads(gzip.decompress(raw) if path.suffix == ".gz" else raw)
+# Cache serialized, scoped records rather than two complete all-school graphs.
+# Each caller parses its own result, so mutations cannot leak to another reader.
+_AUDIT_CACHE_BYTES = 8 * 1024 * 1024
+_AUDIT_CACHE_ITEMS = 16
+_audit_cache: OrderedDict[tuple, bytes] = OrderedDict()
+_audit_cache_bytes = 0
 
 
-def _audit_snapshot(filename: str):
+
+def _iter_audit_rows(path: Path):
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8") as handle:
+        yield from _json_array_items(handle)
+
+
+def _read_audit_snapshot(path: Path, signature: tuple[int, int], field: str, values: tuple[str, ...]):
+    global _audit_cache_bytes
+    key = (path, signature, field, values)
+    if key in _audit_cache:
+        _audit_cache.move_to_end(key)
+        return _audit_cache[key]
+    selected = set(values)
+    rows = [row for row in _iter_audit_rows(path) if row.get(field) in selected]
+    payload = json.dumps(rows, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    if len(payload) <= _AUDIT_CACHE_BYTES:
+        while _audit_cache and (_audit_cache_bytes + len(payload) > _AUDIT_CACHE_BYTES
+                                or len(_audit_cache) >= _AUDIT_CACHE_ITEMS):
+            _, old = _audit_cache.popitem(last=False)
+            _audit_cache_bytes -= len(old)
+        _audit_cache[key] = payload
+        _audit_cache_bytes += len(payload)
+    return payload
+
+
+def _clear_audit_cache():
+    global _audit_cache_bytes
+    with _audit_snapshot_lock:
+        _audit_cache.clear()
+        _audit_cache_bytes = 0
+
+
+_read_audit_snapshot.cache_clear = _clear_audit_cache
+
+
+def _audit_snapshot(filename: str, field: str, values):
     path = NCU_OFFICIAL_DATA_DIR / filename
     stat = path.stat()
     signature = (stat.st_mtime_ns, stat.st_size)
-    # A detail requests completeness and source audit concurrently. Parse each
-    # immutable bundle once, and invalidate it when the file changes. Returned
-    # records below are copied so a caller cannot modify this shared snapshot.
+    # Single flight also bounds concurrent cold decompression. Do not retain
+    # unrelated institutions' evidence; every selected source remains complete.
     with _audit_snapshot_lock:
-        return _read_audit_snapshot(path, signature)
+        payload = _read_audit_snapshot(path, signature, field, tuple(sorted(values)))
+    return json.loads(payload)
 
 
 def _payload(filename):
@@ -48,13 +86,10 @@ def _payload(filename):
 
 
 def fetch_ncu_partner_universities() -> list[PartnerUniversity]:
-    return [
-        PartnerUniversity.model_validate_json(line)
-        for line in (NCU_OFFICIAL_DATA_DIR / "partners.jsonl")
-        .read_text(encoding="utf-8")
-        .splitlines()
-        if line.strip()
-    ]
+    # Stream the reviewed JSONL; read_text().splitlines() retains two copies of
+    # the whole Unicode source while the validated models are being built.
+    with (NCU_OFFICIAL_DATA_DIR / "partners.jsonl").open(encoding="utf-8") as handle:
+        return [PartnerUniversity.model_validate_json(line) for line in handle if line.strip()]
 
 
 def build_ncu_student_dashboard(
@@ -105,25 +140,20 @@ def ncu_exchange_info(partners=None) -> ExchangeInfo:
 
 
 def ncu_processed_pages() -> list[ProcessedPage]:
-    return [
-        ProcessedPage.model_validate_json(line)
-        for line in (NCU_OFFICIAL_DATA_DIR / "pages.jsonl")
-        .read_text(encoding="utf-8")
-        .splitlines()
-        if line.strip()
-    ]
+    with (NCU_OFFICIAL_DATA_DIR / "pages.jsonl").open(encoding="utf-8") as handle:
+        return [ProcessedPage.model_validate_json(line) for line in handle if line.strip()]
 
 
 def ncu_field_audit(school_name: str) -> dict | None:
     row = next(
         (
             row
-            for row in _audit_snapshot("field-audit.json")
+            for row in _audit_snapshot("field-audit.json", "school_name", (school_name,))
             if row["school_name"] == school_name
         ),
         None,
     )
-    return copy.deepcopy(row) if row is not None else None
+    return row
 
 
 def ncu_source_audit(school_name: str) -> dict | None:
@@ -134,8 +164,8 @@ def ncu_source_audit(school_name: str) -> dict | None:
     return {
         **audit,
         "source_evidence": [
-            copy.deepcopy(row)
-            for row in _audit_snapshot("source-evidence.json.gz")
+            row
+            for row in _audit_snapshot("source-evidence.json.gz", "id", source_ids)
             if row["id"] in source_ids
         ],
     }

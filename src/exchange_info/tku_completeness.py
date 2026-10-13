@@ -63,7 +63,10 @@ def write_tku_completeness_matrix(records):
 
 
 def build_tku_school_completeness(partner):
-    record=next(r for r in load_tku_records() if r.fields['school_name'].value==partner.school_name)
+    record=next((r for r in load_tku_records() if r.fields['school_name'].value==partner.school_name),None)
+    if record is None:
+        from .tku_census import census_school_completeness
+        return census_school_completeness(partner)
     row=matrix_row(record)
     items=[]
     for cell in row['fields']:
