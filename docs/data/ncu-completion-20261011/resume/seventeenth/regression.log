@@ -1,0 +1,20 @@
+CONFTEST LOADED!
+........................................................................ [ 15%]
+........................................................................ [ 30%]
+........................................................................ [ 46%]
+........................................................................ [ 61%]
+........................................................................ [ 77%]
+........................................................................ [ 92%]
+...................F.............                                        [100%]
+=================================== FAILURES ===================================
+_ test_twelfth_keeps_existing_conditional_documents_stages_and_course_readings _
+
+    def test_twelfth_keeps_existing_conditional_documents_stages_and_course_readings():
+        h = json.loads((S / 'reviewed-host-records.json').read_text())
+>       assert 'ncu-018' not in h and 'ncu-130' not in h
+E       AssertionError: assert ('ncu-018' not in {'ncu-045': {'source_ids': ['ncu-045-follow-bf3e6af643', 'ncu-045-follow-3c990a435a', 'ncu-german-taipei-student-20261.../2。116年月日時仍待當期通知。'], 'sources': [{'id': 'ncu-096-follow-76a58c4060', 'page': 2}], 'unresolved': None}, ...}, ...}, ...})
+
+tests/test_ncu_twelfth_reconciliation.py:43: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_twelfth_reconciliation.py::test_twelfth_keeps_existing_conditional_documents_stages_and_course_readings
+1 failed, 464 passed in 184.49s (0:03:04)

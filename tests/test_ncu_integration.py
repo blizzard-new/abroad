@@ -524,19 +524,19 @@ def test_tuaf_visual_sidecar_reaches_offline_audit_and_rejects_changed_sha():
     source = next(d for d in raw if d["id"] == "host-tuaf-2026")
     sidecar = json.loads((ROOT / "sources/ncu/2026-10-08/host-tuaf-2026-visual-review.json").read_text())
     assert source["visual_review"] == sidecar
-    assert sidecar["pdf_page"] == 2 and source["content_status"]["page_count"] == 2
-    assert source["content_status"]["visual_reviewed_page_count"] == 1
+    assert sidecar["pdf_pages_reviewed"] == [1, 2] and source["content_status"]["page_count"] == 2
+    assert source["content_status"]["visual_reviewed_page_count"] == 2
     assert source["content_status"]["visual_reviewed"]
     partner = next(p for p in fetch_ncu_partner_universities() if "太原農林" in p.school_name)
     audit = ncu_field_audit(partner.school_name)
     row = next(s for s in audit["read_sources"] if s["id"] == "host-tuaf-2026")
-    assert row["content_status"]["visual_reviewed_page_count"] == 1
+    assert row["content_status"]["visual_reviewed_page_count"] == 2
     source["sha256"] = "different-original"
     attach_visual_review(source, sidecar)
     assert not source_content_status(source)["visual_reviewed"]
     assert not source.get("visual_review")
     source["sha256"] = sidecar["source_sha256"]
-    attach_visual_review(source, {**sidecar, "pdf_page": 99})
+    attach_visual_review(source, {**sidecar, "pdf_pages_reviewed": [99]})
     assert not source_content_status(source)["visual_reviewed"]
 
 
@@ -1746,7 +1746,9 @@ def test_omu_originals_optional_rows_old_sheet_isolation_and_outage_provenance()
     assert '2026' in course['pages'][0]['text'] and '文学部専門科目' in course['pages'][0]['text']
     assert '文学部専門科目' not in indexable_source_text(course)
     old = sources['18V9vNjSgs4HCh9YSLlzmQYs_qXvLn9yK']
-    assert old['reading_review']['pages_reviewed'] == [1, 2, 3] and not old['content_status']['all_pages_read']
+    assert old['reading_review']['pages_reviewed'] == [1, 2, 3, 4]
+    assert old['content_status']['all_pages_read']
+    assert old['visual_review']['pdf_pages_reviewed'] == [1, 2, 3, 4]
     assert 'by April 10, 2025' not in indexable_source_text(old)
     for sid in ['host-omu-exchangeprogram', 'host-omu-i-wing', 'host-omu-housing-index', 'host-omu-campus-access', 'host-omu-graduate-timetable']:
         outage = sources[sid]
@@ -1938,8 +1940,10 @@ def test_kyutech_original_reading_ranges_visuals_failed_attempts_and_old_scope()
     assert '尚未閱讀單門完整syllabus' in search['reading_review']['scope']
     assert '26470831' in search['pages'][0]['text'] and '先進' in search['pages'][0]['text']
     excerpt = sources['host-kyutech-lsse-timetable2026-en-web-excerpt']
-    assert excerpt['source_excerpt_only'] and not excerpt.get('sha256')
-    assert not excerpt['content_status']['all_pages_read']
+    assert not excerpt['source_excerpt_only']
+    assert excerpt['sha256'] == '2184c648c5af82588ca5390e3c5849f92b9b9346f0e4eb8223f04fb1d564e3e1'
+    assert excerpt['content_status']['all_pages_read']
+    assert excerpt['previous_excerpt_archive'].endswith('kyutech-previous-excerpt.json')
     blank = sources['host-kyutech-gcc2026oct-blank']
     assert blank['content_status']['all_pages_read'] and blank['pages'][0]['page'] is None
     assert '兩表' in blank['reading_review']['scope'] and '入館願' not in indexable_source_text(blank)

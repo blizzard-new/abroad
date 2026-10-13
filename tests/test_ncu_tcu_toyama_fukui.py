@@ -60,10 +60,12 @@ def test_next3_home_host_and_coe_stages_remain_separate_and_pending(tmp_path, ro
 
 def test_source_check_dates_and_archive_citations_follow_actual_sources():
     sources = source_records()
+    reviewed = json.loads((SOURCES / 'reviewed-host-records.json').read_text())
+    reviewed.update(json.loads((ROOT / 'sources/ncu/2026-10-11/reviewed-host-records.json').read_text()))
     for row, name, *_ in CASES:
         partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
         audit = ncu_field_audit(partner.school_name)
-        assert audit['checked_at'].startswith('2026-10-09')
+        assert audit['checked_at'] == reviewed[row]['checked_at']
         for key, field in audit['fields'].items():
             if key.startswith('home_') or key == 'quota':
                 continue

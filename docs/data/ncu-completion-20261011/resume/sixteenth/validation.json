@@ -1,0 +1,57 @@
+{
+  "checked_at": "2026-10-11T21:04:54.100192+00:00",
+  "base_sha": "a1d6b7aa7539998613c44e9130e3915c7115bb38",
+  "affected_partner_items_before": 117,
+  "pending_cards_before": 483,
+  "pending_evidence_before": 539,
+  "reviewed_original_texts": 517,
+  "reviewed_chinese_display_bindings": 123,
+  "reference_rows_before": 17,
+  "reference_rows_after": 657,
+  "reference_rows_before_unchanged": true,
+  "all_partner_api": {
+    "checked_at": "2026-10-11T21:01:57.972611+00:00",
+    "partners": 214,
+    "pending_evidence_rows": 0,
+    "pending_cards": 0,
+    "affected_partners": 0
+  },
+  "translation_tests": {
+    "passed": 66,
+    "failed": 0
+  },
+  "ncu_location_regression": {
+    "passed": 460,
+    "failed": 0,
+    "note": "此前完整回歸；隨後資料顯示綁定與兩項新增測試由66項聚焦套件驗證。"
+  },
+  "browser_cases_passed": 24,
+  "browser_runs": [
+    {
+      "file": "browser-verified.xml",
+      "passed": 14,
+      "failed": 1,
+      "resolved_failure": "測試子字串選到關西國際大學；已改精確名稱結尾，關西兩尺寸均在下一輪通過。"
+    },
+    {
+      "file": "browser-remainder.xml",
+      "passed": 8,
+      "failed": 1,
+      "resolved_failure": "TUAF測試選校器缺(TUAF)正式名稱尾碼；已更正，兩尺寸在下一輪通過。"
+    },
+    {
+      "file": "browser-tuaf.xml",
+      "passed": 2,
+      "failed": 0
+    }
+  ],
+  "screenshots": 24,
+  "screenshots_visually_inspected": 12,
+  "historic_png_checked": 1399,
+  "historic_png_changed": 0,
+  "source_bundles_changed": false,
+  "shared_runtime_or_matcher_changed": false,
+  "current_quota_unknown": 214,
+  "strict_current_gaps": 3222,
+  "open_work": "348筆已收集多頁來源盤點仍待完整核讀／逐項適用性判定；本批翻譯未提升來源閱讀或116適用性。"
+}

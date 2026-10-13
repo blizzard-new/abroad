@@ -1,0 +1,41 @@
+CONFTEST LOADED!
+........................................................................ [ 15%]
+........................................................................ [ 30%]
+........................................................................ [ 46%]
+........................................................................ [ 61%]
+................................................F....................... [ 77%]
+.....................................F.................................. [ 92%]
+.................................                                        [100%]
+=================================== FAILURES ===================================
+_ test_ninth_preserves_kansai_and_shinshu_existing_years_and_every_document_stage _
+
+    def test_ninth_preserves_kansai_and_shinshu_existing_years_and_every_document_stage():
+        new=records();old=json.loads((ROOT/'sources/ncu/2026-10-08/reviewed-host-records.json').read_text())
+        for rid in ['ncu-129','ncu-121']:
+            assert set(old[rid]['source_ids'])<=set(new[rid]['source_ids'])
+            for key,field in old[rid]['fields'].items():
+>               assert set(field['points'])<=set(new[rid]['fields'][key]['points'])
+E               AssertionError: assert {'Fall 2027暫定...留，不採錯字當正式校曆。'} <= {'2027–28資訊表列...留，不採錯字當正式校曆。'}
+E
+E                 Extra items in the left set:
+E                 'Fall 2027暫定：9/15入住宿舍、9/16–24 orientation、9/27上課至2028/2/1，1/25–2/1考試。文件明載日期調整中，訂票前核對。'
+
+tests/test_ncu_ninth_resume.py:35: AssertionError
+_______ test_older_supplements_preserve_existing_2025_and_2027_readings ________
+
+    def test_older_supplements_preserve_existing_2025_and_2027_readings():
+        current=json.loads((SOURCE/'reviewed-host-records.json').read_text())
+        original=json.loads((ROOT/'sources/ncu/2026-10-08/reviewed-host-records.json').read_text())
+        for rid in ['ncu-119','ncu-121']:
+            for key,field in original[rid]['fields'].items():
+>               assert set(field['points']).issubset(current[rid]['fields'][key]['points'])
+E               AssertionError: assert False
+E                +  where False = <built-in method issubset of set object at 0x7fb47f477760>(['2027秋季暫定：9/15入住宿舍、9/16–24 迎新、9/27上課至2028/2/1，1/25–2/1考試。文件明載日期調整中，訂票前核對。', '英文暑假結束寫2026/9/26，日文寫2027/9/26；年份矛盾已保留，不採.../4初、2027春10月初。', '2027–28資訊表列2027春成績單約2027年10月初、2027秋約2028年4月初寄送；日文另註依學生需求才寄母校，英文只說會寄母校。是否須事先申請紙本及寄送方式應確認，不能承諾自動按日到件。'])
+E                +    where <built-in method issubset of set object at 0x7fb47f477760> = {'Fall 2027暫定：9/15入住宿舍、9/16–24 orientation、9/27上課至2028/2/1，1/25–2/1考試。文件明載日期調整中，訂票前核對。', '英文暑假結束寫2026/9/26，日文寫2027/9/26；年份矛盾已保留，不採錯字當正式校曆。'}.issubset
+E                +      where {'Fall 2027暫定：9/15入住宿舍、9/16–24 orientation、9/27上課至2028/2/1，1/25–2/1考試。文件明載日期調整中，訂票前核對。', '英文暑假結束寫2026/9/26，日文寫2027/9/26；年份矛盾已保留，不採錯字當正式校曆。'} = set(['Fall 2027暫定：9/15入住宿舍、9/16–24 orientation、9/27上課至2028/2/1，1/25–2/1考試。文件明載日期調整中，訂票前核對。', '英文暑假結束寫2026/9/26，日文寫2027/9/26；年份矛盾已保留，不採錯字當正式校曆。'])
+
+tests/test_ncu_sixth_resume.py:90: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_ninth_resume.py::test_ninth_preserves_kansai_and_shinshu_existing_years_and_every_document_stage
+FAILED tests/test_ncu_sixth_resume.py::test_older_supplements_preserve_existing_2025_and_2027_readings
+2 failed, 463 passed in 177.97s (0:02:57)

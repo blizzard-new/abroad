@@ -40,8 +40,13 @@ def test_twelfth_same_sha_and_zip_members_do_not_become_new_source_counts():
 
 def test_twelfth_keeps_existing_conditional_documents_stages_and_course_readings():
     h = json.loads((S / 'reviewed-host-records.json').read_text())
-    assert 'ncu-018' not in h and 'ncu-130' not in h
     original = json.loads((ROOT / 'sources/ncu/2026-10-08/reviewed-host-records.json').read_text())
+    # Later source reviews may add other fields without replacing these packets.
+    for row_id in ('ncu-018', 'ncu-130'):
+        supplement = h.get(row_id, {})
+        for key in ('host_documents', 'host_document_stages'):
+            if key in supplement:
+                assert supplement[key] == original[row_id].get(key, [])
     nufs = original['ncu-130']
     assert len(nufs['host_document_stages']) == 8
     assert len(next(s for s in nufs['host_document_stages'] if s['id'] == 'initial-reference')['document_requirements']) == 13

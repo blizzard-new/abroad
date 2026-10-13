@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="7" time="68.769" timestamp="2026-10-11T21:12:01.354935+00:00" hostname="53f3dafad1d0"><testcase classname="tests.e2e.test_ncu_seventeenth_documents" name="test_full_read_details_on_actual_page[pknu-\u91dc\u6176-Pukyong National University-\u8ab2\u696d\u8207\u6559\u5b78-terms0-390]" time="17.248" /><testcase classname="tests.e2e.test_ncu_seventeenth_documents" name="test_full_read_details_on_actual_page[pknu-\u91dc\u6176-Pukyong National University-\u8ab2\u696d\u8207\u6559\u5b78-terms0-1440]" time="7.570" /><testcase classname="tests.e2e.test_ncu_seventeenth_documents" name="test_full_read_details_on_actual_page[ipsa-\u822a\u592a\u5de5\u7a0b-Institute of Polytechnic Science and Aeronautics(IPSA)-\u8ab2\u696d\u8207\u6559\u5b78-terms1-390]" time="5.245" /><testcase classname="tests.e2e.test_ncu_seventeenth_documents" name="test_full_read_details_on_actual_page[ipsa-\u822a\u592a\u5de5\u7a0b-Institute of Polytechnic Science and Aeronautics(IPSA)-\u8ab2\u696d\u8207\u6559\u5b78-terms1-1440]" time="8.251" /><testcase classname="tests.e2e.test_ncu_seventeenth_documents" name="test_full_read_details_on_actual_page[shinshu-\u4fe1\u5dde-Shinshu University-\u8ab2\u696d\u8207\u6559\u5b78-terms2-390]" time="5.261" /><testcase classname="tests.e2e.test_ncu_seventeenth_documents" name="test_full_read_details_on_actual_page[shinshu-\u4fe1\u5dde-Shinshu University-\u8ab2\u696d\u8207\u6559\u5b78-terms2-1440]" time="8.066" /><testcase classname="tests.e2e.test_ncu_seventeenth_documents" name="test_full_read_details_on_actual_page[strasbourg-\u53f2\u7279\u62c9\u65af\u5821-Universite de Strasbourg-\u6587\u5316\u9069\u61c9\u8207\u4ea4\u53cb-terms3-390]" time="17.053"><failure message="AssertionError: Locator expected to contain text '國際處行政窗口'&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#life-content .life-card&quot;).filter(has=locator(&quot;h3&quot;).filter(has_text=&quot;文化適應與交友&quot;)).locator(&quot;.life-evidence-text&quot;).first&#10;&#10;Aria snapshot:&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- main:&#10;  - button &quot;開啟功能選單&quot;&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - status&#10;  - region &quot;史特拉斯堡大學 Universite de Strasbourg&quot;:&#10;    - button &quot;加入比較史特拉斯堡大學 Universite de Strasbourg&quot;&#10;    - button &quot;登入建立計畫&quot;&#10;    - img &quot;史特拉斯堡大學 Universite de Strasbourg校園照片&quot;&#10;    - text: 校園參考照片：Neustadt (52297125377).jpg。作者：Kent Wang from Barcelona, Spain；授權：CC BY-SA 2.0；拍攝日期：2022-05-07 15:24。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 ·&#10;    - link &quot;圖片授權&quot;:&#10;      - /url: https://creativecommons.org/licenses/by-sa/2.0&#10;    - text: 法國 · 交換學生 下一站&#10;    - strong: 法國&#10;    - text: Strasbourg&#10;    - heading &quot;史特拉斯堡大學 Universite de Strasbourg&quot; [level=1]&#10;    - text: 我的資格&#10;    - strong: 尚未進行資格初判&#10;    - text: 合作校參考時程&#10;    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【Strasbourg AY2027–2028 factsheet；2026/6更新。】2027–28主梯次（秋、春、全年）：母校提名2027/2/8–3/19，學生申請2/8–4/15；僅春季補梯次：提名與申請2027/6/1–10/1。未列截止時刻。（適用年度待確認）&#10;    - text: 語言門檻&#10;    - strong: 【Strasbourg AY2027–2028 factsheet；2026/6更新。】資料表語言證明列DELF、DALF、TEF及TCF；實際證明種類與所選學院要求須由院方確認，不以通用英語測驗取代所需法語證明。；【…&#10;    - text: 生活費參考&#10;    - strong: 尚未取得並核對外校生活費與收費。&#10;    - text: 交換名額&#10;    - strong: 依公告&#10;    - text: 研修期間&#10;    - strong:&#10;      - text: 116母校方案：2027/9–2028/2&#10;      - strong: 一學期&#10;      - text: 、2027/9–2028/6&#10;      - strong: 一學年&#10;      - text: 、2028/2–6&#10;      - strong: 一學期&#10;      - text: ；實際依外校校曆與可提名學期確認。 【Strasbourg AY2027–2028 交換資訊表；2026/6更新。】秋季約2027/9–2028/1、春季2028/1–6；交換&#10;      - strong: 一學期&#10;      - text: 或全年，新生說明會精確日期待定。&#10;    - tablist &quot;交換學校詳細資訊&quot;:&#10;      - tab &quot;快速了解&quot;&#10;      - tab &quot;申請方式&quot;&#10;      - tab &quot;生活情報&quot; [selected]&#10;      - tab &quot;出發前提醒&quot;&#10;      - tab &quot;學生心得&quot;&#10;      - tab &quot;學生社群&quot;&#10;    - tabpanel &quot;生活情報&quot;:&#10;      - heading &quot;生活情報&quot; [level=2]&#10;      - status: 正在更新資料…&#10;      - button &quot;找學生分享&quot;&#10;      - button &quot;更新中&quot; [disabled]&#10;      - group: 資料說明&#10;      - group: 官方生活指南&#10;      - article:&#10;        - heading &quot;住宿與宿舍&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 住宿申請整合在線上學術申請中，另可用Studapart。新版交換資訊表引用EUR201–550／月，原文明載此價格屬2025–26，不能當2027–28費用。&#10;        - group: 原文與來源&#10;        - text: AI 推論&#10;        - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。&#10;        - group: 推論依據&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;課業與教學&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 以30 ECTS／學期、60 ECTS／年為參考學習量；課程依協議與學院限制，修課協議須母校及外校確認。 秋季約2027/9–2028/1、春季2028/1–6；交換一學期或全年，新生說明會精確日期待定。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;校園活動與社交&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 校方迎新活動的精確日期尚待通知；可參考 CTS 市區交通及校方學生支援資訊。抵達後有兩週期限可變更學習協議。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;安全、醫療與保險&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 資料表說明，若未持有涵蓋整段法國停留期間的私人醫療保險，須經 etudiant.ameli.fr 辦理法國社會保險；仍須符合中央足額意外保險及急難救助要求。&#10;        - group: 原文與來源&#10;        - text: AI 推論&#10;        - paragraph: 可先查詢上述健康服務；接診、語言與保險適用性仍須確認。&#10;        - group: 推論依據&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;文化適應與交朋友&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 2027–28資料表列國際處行政窗口位於國際大學之家（Maison universitaire internationale），地址為11 Presqu’Île Malraux，67100 Strasbourg；此地址不是全部院系授課校區，實際位置須依接收學院確認。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - group: 待補資料（5 項）&#10;    - complementary &quot;申請準備進度與官方來源&quot;:&#10;      - heading &quot;我的申請進度&quot; [level=2]&#10;      - progressbar &quot;申請準備進度&quot;:&#10;        - strong: 0 / 5 已完成&#10;        - text: 準備中&#10;      - paragraph:&#10;        - text: 登入以保存進度&#10;        - button &quot;登入&quot;&#10;      - checkbox &quot;確認資格與語言門檻&quot; [disabled]&#10;      - text: 確認資格與語言門檻&#10;      - checkbox &quot;比較課程、費用與生活&quot; [disabled]&#10;      - text: 比較課程、費用與生活&#10;      - checkbox &quot;備妥校內申請文件&quot; [disabled]&#10;      - text: 備妥校內申請文件&#10;      - checkbox &quot;完成校內甄選送件&quot; [disabled]&#10;      - text: 完成校內甄選送件&#10;      - checkbox &quot;完成合作校線上申請&quot; [disabled]&#10;      - text: 完成合作校線上申請&#10;      - strong: 送件前確認&#10;      - paragraph: 截止日與資格以當期官方公告為準。&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">page = &lt;Page url='http://127.0.0.1:33971/?view=list&amp;home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&amp;q=%E5%8F%B2%E...%96%AF%E5%A0%A1#school=%E5%8F%B2%E7%89%B9%E6%8B%89%E6%96%AF%E5%A0%A1%E5%A4%A7%E5%AD%B8%20Universite%20de%20Strasbourg'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:33971', data_dir=PosixPath('/tmp/ncu17-browser/web-e2e-data0'))
+tmp_path = PosixPath('/tmp/ncu17-browser/test_full_read_details_on_actu6')
+width = 390, slug = 'strasbourg', query = '史特拉斯堡'
+name = 'Universite de Strasbourg', title = '文化適應與交友'
+terms = ['國際處行政窗口', '不是全部院系']
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    @pytest.mark.parametrize('slug,query,name,title,terms', CASES)
+    def test_full_read_details_on_actual_page(page, live_server, tmp_path, width, slug, query, name, title, terms):
+        page.set_viewport_size({'width': width, 'height': 956})
+        page.emulate_media(reduced_motion='reduce')
+        errors = []
+        page.on('pageerror', lambda error: errors.append(str(error)))
+        select_ncu(page, live_server)
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(query)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        trigger = f'.school-detail-trigger[data-school-name$="{name}"]'
+        if width &lt; 700:
+            page.locator('#partner-table .partner-card').filter(has=page.locator(trigger)).first.locator(':scope &gt; summary').click()
+        page.locator(f'#partner-table {trigger}:visible').first.click()
+        if title:
+            page.locator('#detail-tab-life').click()
+            card = page.locator('#life-content .life-card').filter(has=page.locator('h3').filter(has_text=title))
+            body = card.locator('.life-evidence-text').first
+            for term in terms:
+&gt;               expect(body).to_contain_text(term)
+E               AssertionError: Locator expected to contain text '國際處行政窗口'
+E               Actual value: None
+E               Error: element(s) not found
+E               Call log:
+E                 - Expect "to_contain_text" with timeout 5000ms
+E                 - waiting for locator("#life-content .life-card").filter(has=locator("h3").filter(has_text="文化適應與交友")).locator(".life-evidence-text").first
+E
+E               Aria snapshot:
+E               - link "跳到主要內容":
+E                 - /url: "#main-content"
+E               - main:
+E                 - button "開啟功能選單"
+E                 - link "UniWay 首頁":
+E                   - /url: "#home"
+E                   - strong: UniWay
+E                 - status
+E                 - region "史特拉斯堡大學 Universite de Strasbourg":
+E                   - button "加入比較史特拉斯堡大學 Universite de Strasbourg"
+E                   - button "登入建立計畫"
+E                   - img "史特拉斯堡大學 Universite de Strasbourg校園照片"
+E                   - text: 校園參考照片：Neustadt (52297125377).jpg。作者：Kent Wang from Barcelona, Spain；授權：CC BY-SA 2.0；拍攝日期：2022-05-07 15:24。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 ·
+E                   - link "圖片授權":
+E                     - /url: https://creativecommons.org/licenses/by-sa/2.0
+E                   - text: 法國 · 交換學生 下一站
+E                   - strong: 法國
+E                   - text: Strasbourg
+E                   - heading "史特拉斯堡大學 Universite de Strasbourg" [level=1]
+E                   - text: 我的資格
+E                   - strong: 尚未進行資格初判
+E                   - text: 合作校參考時程
+E                   - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【Strasbourg AY2027–2028 factsheet；2026/6更新。】2027–28主梯次（秋、春、全年）：母校提名2027/2/8–3/19，學生申請2/8–4/15；僅春季補梯次：提名與申請2027/6/1–10/1。未列截止時刻。（適用年度待確認）
+E                   - text: 語言門檻
+E                   - strong: 【Strasbourg AY2027–2028 factsheet；2026/6更新。】資料表語言證明列DELF、DALF、TEF及TCF；實際證明種類與所選學院要求須由院方確認，不以通用英語測驗取代所需法語證明。；【…
+E                   - text: 生活費參考
+E                   - strong: 尚未取得並核對外校生活費與收費。
+E                   - text: 交換名額
+E                   - strong: 依公告
+E                   - text: 研修期間
+E                   - strong:
+E                     - text: 116母校方案：2027/9–2028/2
+E                     - strong: 一學期
+E                     - text: 、2027/9–2028/6
+E                     - strong: 一學年
+E                     - text: 、2028/2–6
+E                     - strong: 一學期
+E                     - text: ；實際依外校校曆與可提名學期確認。 【Strasbourg AY2027–2028 交換資訊表；2026/6更新。】秋季約2027/9–2028/1、春季2028/1–6；交換
+E                     - strong: 一學期
+E                     - text: 或全年，新生說明會精確日期待定。
+E                   - tablist "交換學校詳細資訊":
+E                     - tab "快速了解"
+E                     - tab "申請方式"
+E                     - tab "生活情報" [selected]
+E                     - tab "出發前提醒"
+E                     - tab "學生心得"
+E                     - tab "學生社群"
+E                   - tabpanel "生活情報":
+E                     - heading "生活情報" [level=2]
+E                     - status: 正在更新資料…
+E                     - button "找學生分享"
+E                     - button "更新中" [disabled]
+E                     - group: 資料說明
+E                     - group: 官方生活指南
+E                     - article:
+E                       - heading "住宿與宿舍" [level=3]
+E                       - text: 官方
+E                       - paragraph: 住宿申請整合在線上學術申請中，另可用Studapart。新版交換資訊表引用EUR201–550／月，原文明載此價格屬2025–26，不能當2027–28費用。
+E                       - group: 原文與來源
+E                       - text: AI 推論
+E                       - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+E                       - group: 推論依據
+E                       - group: 繼續查詢
+E                     - article:
+E                       - heading "課業與教學" [level=3]
+E                       - text: 官方
+E                       - paragraph: 以30 ECTS／學期、60 ECTS／年為參考學習量；課程依協議與學院限制，修課協議須母校及外校確認。 秋季約2027/9–2028/1、春季2028/1–6；交換一學期或全年，新生說明會精確日期待定。
+E                       - group: 原文與來源
+E                       - group: 繼續查詢
+E                     - article:
+E                       - heading "校園活動與社交" [level=3]
+E                       - text: 官方
+E                       - paragraph: 校方迎新活動的精確日期尚待通知；可參考 CTS 市區交通及校方學生支援資訊。抵達後有兩週期限可變更學習協議。
+E                       - group: 原文與來源
+E                       - group: 繼續查詢
+E                     - article:
+E                       - heading "安全、醫療與保險" [level=3]
+E                       - text: 官方
+E                       - paragraph: 資料表說明，若未持有涵蓋整段法國停留期間的私人醫療保險，須經 etudiant.ameli.fr 辦理法國社會保險；仍須符合中央足額意外保險及急難救助要求。
+E                       - group: 原文與來源
+E                       - text: AI 推論
+E                       - paragraph: 可先查詢上述健康服務；接診、語言與保險適用性仍須確認。
+E                       - group: 推論依據
+E                       - group: 繼續查詢
+E                     - article:
+E                       - heading "文化適應與交朋友" [level=3]
+E                       - text: 官方
+E                       - paragraph: 2027–28資料表列國際處行政窗口位於國際大學之家（Maison universitaire internationale），地址為11 Presqu’Île Malraux，67100 Strasbourg；此地址不是全部院系授課校區，實際位置須依接收學院確認。
+E                       - group: 原文與來源
+E                       - group: 繼續查詢
+E                     - group: 待補資料（5 項）
+E                   - complementary "申請準備進度與官方來源":
+E                     - heading "我的申請進度" [level=2]
+E                     - progressbar "申請準備進度":
+E                       - strong: 0 / 5 已完成
+E                       - text: 準備中
+E                     - paragraph:
+E                       - text: 登入以保存進度
+E                       - button "登入"
+E                     - checkbox "確認資格與語言門檻" [disabled]
+E                     - text: 確認資格與語言門檻
+E                     - checkbox "比較課程、費用與生活" [disabled]
+E                     - text: 比較課程、費用與生活
+E                     - checkbox "備妥校內申請文件" [disabled]
+E                     - text: 備妥校內申請文件
+E                     - checkbox "完成校內甄選送件" [disabled]
+E                     - text: 完成校內甄選送件
+E                     - checkbox "完成合作校線上申請" [disabled]
+E                     - text: 完成合作校線上申請
+E                     - strong: 送件前確認
+E                     - paragraph: 截止日與資格以當期官方公告為準。
+E               - paragraph:
+E                 - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E                 - button "停用匿名使用統計"
+E                 - text: 。
+E                 - link "隱私權政策":
+E                   - /url: /privacy
+E                 - link "使用條款":
+E                   - /url: /terms
+
+tests/e2e/test_ncu_seventeenth_documents.py:35: AssertionError</failure></testcase></testsuite></testsuites>
