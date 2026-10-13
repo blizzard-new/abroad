@@ -188,7 +188,7 @@ cd C:\uniway
 git clone -c core.autocrlf=false --branch main https://github.com/blizzard-new/abroad.git app
 ```
 
-> **套件目前還在分支 `selfhost/windows-deploy`，還沒合併進 `main`。** 在它合併之前，上面那行請把 `--branch main` 改成 `--branch selfhost/windows-deploy`；合併之後才用 `main`。之後執行 `update.ps1` 會自動跟著你目前所在的分支更新。
+> 之後執行 `update.ps1` 會自動跟著這個資料夾目前所在的分支更新，不用再指定分支。
 
 第一次會要你用 GitHub 帳號登入（瀏覽器會跳出來）。倉庫很大（約 1.4 GB），需要幾分鐘。
 
