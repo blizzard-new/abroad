@@ -333,7 +333,7 @@ powershell -ExecutionPolicy Bypass -File .\07-setup-backup.ps1
 powershell -ExecutionPolicy Bypass -File .\restore-test.ps1
 ```
 
-預期 `restore test passed`。它把最新備份還原到一個**拋棄式的資料庫**再比對筆數，不會碰正式資料。**第一次備份後做一次，之後每個月做一次。**
+預期 `restore test passed`。它會先自己做一次**新的備份**（只留在本機，不上傳），再把這份備份還原到一個**拋棄式的資料庫**，和正式資料庫比對每張表的筆數，不會碰正式資料。**第一次備份後做一次，之後每個月做一次。**（一定要用新備份：正式資料庫一直在增加，拿幾個小時前的備份來比，筆數會少一些，是正常的，但會被誤判成還原失敗。）
 
 ### H3. 備份到你的 Google Drive（加密）
 
