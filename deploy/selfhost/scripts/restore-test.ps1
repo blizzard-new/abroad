@@ -1,10 +1,19 @@
-# Prove a backup works: restore the newest database dump into a throw-away database and compare row counts with the live one.
+# Prove a backup works: take a fresh backup, restore it into a throw-away database and compare row counts with the live one.
 # Do this once after the first backup and then monthly. It never touches the live database.
+# With -Dump an older backup is restored instead; then only the table list and 'no table has more rows than live' are checked,
+# because the live database has grown since that dump was made.
 #   powershell -ExecutionPolicy Bypass -File .\restore-test.ps1 [-Dump C:\uniway\backups\db\uniway-db-....dump]
 param([string]$Dump = '')
 . "$PSScriptRoot\lib.ps1"
 
+$fresh = -not $Dump
 if (-not $Dump) {
+    # A fresh backup first: the live database keeps growing (visits, health checks), so a dump from hours ago is compared with a
+    # bigger database and a complete restore can look short.
+    Write-Step 'Taking a fresh backup (kept on this computer only) so the comparison is against what the database holds now'
+    $global:LASTEXITCODE = 0
+    & "$PSScriptRoot\backup.ps1" -SkipCloud
+    if ($global:LASTEXITCODE -ne 0) { throw 'the fresh backup failed: see the lines above and the backup log in the logs folder' }
     $latest = Get-ChildItem -Path (Join-Path $script:UniwayHome 'backups\db') -Filter 'uniway-db-*.dump' | Sort-Object LastWriteTime -Descending | Select-Object -First 1
     if (-not $latest) { throw 'no database backup found: run backup.ps1 first' }
     $Dump = $latest.FullName
@@ -44,13 +53,16 @@ try {
         if (-not $rm.ContainsKey($t)) { Write-Bad ("table {0} missing in the restore" -f $t); $bad++ }
         elseif ($rm[$t] -gt $n) { Write-Bad ("{0}: restore has {1} rows, live only {2}" -f $t, $rm[$t], $n); $bad++ }
     }
-    # an empty restore must not pass: the restored rows have to be most of what the live database holds now
     # The migration list (uniway_schema_migrations) is left out of the dump on purpose, so it must not count here: on a young
     # database it is most of the rows and a complete restore would look empty.
     $skip = 'uniway_schema_migrations'
     $liveTotal = 0; foreach ($l in $live) { $i = $l.LastIndexOf('='); if ($l.Substring(0, $i) -ne $skip) { $liveTotal += [int64]$l.Substring($i + 1) } }
     $restoredTotal = 0; foreach ($k in $rm.Keys) { if ($k -ne $skip) { $restoredTotal += $rm[$k] } }
-    if ($liveTotal -gt 0 -and $restoredTotal -lt ($liveTotal * 0.8)) { Write-Bad ("restore holds {0} rows, live holds {1}" -f $restoredTotal, $liveTotal); $bad++ }
+    # An empty restore must not pass. The fresh dump is only seconds older than the live database, so the live total may be a few
+    # rows bigger: allow 20 percent, but at least 5 rows.
+    $allowed = [math]::Max([math]::Ceiling($liveTotal * 0.2), 5)
+    if ($fresh -and ($liveTotal - $restoredTotal) -gt $allowed) { Write-Bad ("restore holds {0} data rows, live holds {1} (more than {2} short)" -f $restoredTotal, $liveTotal, $allowed); $bad++ }
+    if (-not $fresh) { Write-Warn 'an older dump was compared with the database as it is now: only the table list and "no table has more rows than live" were checked' }
     if ($bad -eq 0) { Write-Ok ("restore test passed: {0} tables present, {1} data rows restored (live now: {2}; the migration list is not counted)" -f $tables, $restoredTotal, $liveTotal) } else { throw "restore test FAILED ($bad problem(s))" }
 } finally {
     Invoke-Quiet { docker rm -f $name }

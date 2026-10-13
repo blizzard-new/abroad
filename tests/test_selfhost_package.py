@@ -110,3 +110,11 @@ def test_the_restore_test_does_not_count_the_migration_list_that_the_dump_leaves
     assert "--exclude-table-data=public.uniway_schema_migrations" in backup
     assert "$skip = 'uniway_schema_migrations'" in restore_test
     assert restore_test.count("-ne $skip") == 2
+
+
+def test_the_restore_test_takes_its_own_fresh_backup_instead_of_comparing_an_old_dump_with_a_growing_database() -> None:
+    restore_test = (SELFHOST / "scripts" / "restore-test.ps1").read_text(encoding="utf-8")
+    assert '& "$PSScriptRoot\\backup.ps1" -SkipCloud' in restore_test
+    assert "$fresh = -not $Dump" in restore_test
+    assert "if ($fresh -and ($liveTotal - $restoredTotal) -gt $allowed)" in restore_test
+    assert "0.8" not in restore_test
