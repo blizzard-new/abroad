@@ -102,3 +102,11 @@ def test_the_guide_names_every_script_that_exists() -> None:
 @pytest.mark.parametrize("name", ["tools/create_bucket.py", "tools/smoke.py", "tools/dr_object.py"])
 def test_the_helper_tools_are_valid_python(name: str) -> None:
     compile((SELFHOST / name).read_text(encoding="utf-8"), name, "exec")
+
+
+def test_the_restore_test_does_not_count_the_migration_list_that_the_dump_leaves_out() -> None:
+    backup = (SELFHOST / "scripts" / "backup.ps1").read_text(encoding="utf-8")
+    restore_test = (SELFHOST / "scripts" / "restore-test.ps1").read_text(encoding="utf-8")
+    assert "--exclude-table-data=public.uniway_schema_migrations" in backup
+    assert "$skip = 'uniway_schema_migrations'" in restore_test
+    assert restore_test.count("-ne $skip") == 2

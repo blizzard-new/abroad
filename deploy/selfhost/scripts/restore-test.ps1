@@ -45,10 +45,13 @@ try {
         elseif ($rm[$t] -gt $n) { Write-Bad ("{0}: restore has {1} rows, live only {2}" -f $t, $rm[$t], $n); $bad++ }
     }
     # an empty restore must not pass: the restored rows have to be most of what the live database holds now
-    $liveTotal = 0; foreach ($l in $live) { $liveTotal += [int64]$l.Substring($l.LastIndexOf('=') + 1) }
-    $restoredTotal = 0; foreach ($v in $rm.Values) { $restoredTotal += $v }
+    # The migration list (uniway_schema_migrations) is left out of the dump on purpose, so it must not count here: on a young
+    # database it is most of the rows and a complete restore would look empty.
+    $skip = 'uniway_schema_migrations'
+    $liveTotal = 0; foreach ($l in $live) { $i = $l.LastIndexOf('='); if ($l.Substring(0, $i) -ne $skip) { $liveTotal += [int64]$l.Substring($i + 1) } }
+    $restoredTotal = 0; foreach ($k in $rm.Keys) { if ($k -ne $skip) { $restoredTotal += $rm[$k] } }
     if ($liveTotal -gt 0 -and $restoredTotal -lt ($liveTotal * 0.8)) { Write-Bad ("restore holds {0} rows, live holds {1}" -f $restoredTotal, $liveTotal); $bad++ }
-    if ($bad -eq 0) { Write-Ok ("restore test passed: {0} tables present, {1} rows restored (live now: {2})" -f $tables, $restoredTotal, $liveTotal) } else { throw "restore test FAILED ($bad problem(s))" }
+    if ($bad -eq 0) { Write-Ok ("restore test passed: {0} tables present, {1} data rows restored (live now: {2}; the migration list is not counted)" -f $tables, $restoredTotal, $liveTotal) } else { throw "restore test FAILED ($bad problem(s))" }
 } finally {
     Invoke-Quiet { docker rm -f $name }
 }
