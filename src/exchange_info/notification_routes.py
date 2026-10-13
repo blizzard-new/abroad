@@ -6,7 +6,13 @@ from .change_impact import affected_task_impacts
 from .notifications import NotificationService, account_has_affected_plan, workflow_action_url
 
 
-def register_notification_routes(app: FastAPI, authenticated_account, authenticated_admin) -> None:
+def register_notification_routes(
+    app: FastAPI,
+    authenticated_account,
+    authenticated_admin,
+    *,
+    catalogue_source_provider=None,
+) -> None:
     app.state.notification_service = NotificationService(
         app.state.account_repository, content_store=app.state.content_governance_store,
     )
@@ -26,6 +32,10 @@ def register_notification_routes(app: FastAPI, authenticated_account, authentica
         # Generate only this account's reminders; no email dispatch occurs on a read.
         app.state.notification_service.refresh_account(account)
         app.state.notification_service.refresh_content_updates(accounts=[account])
+        if catalogue_source_provider is not None:
+            app.state.notification_service.refresh_catalogue_source(
+                account, catalogue_source_provider()
+            )
         return center(account.id,limit)
 
     @app.patch('/account/notifications/read-all',response_model=NotificationCenterEnvelope)
@@ -40,7 +50,7 @@ def register_notification_routes(app: FastAPI, authenticated_account, authentica
         account,_=authenticated_account(request)
         private(response)
         row=app.state.account_repository.find_notification_by_id(account.id,notification_id)
-        if row is None:
+        if row is None or row.deleted_at is not None:
             raise HTTPException(status_code=404,detail='找不到這則通知。')
         if row.read_at is not None:
             return row
@@ -48,6 +58,24 @@ def register_notification_routes(app: FastAPI, authenticated_account, authentica
         if marked is None:
             raise HTTPException(status_code=404,detail='找不到這則通知。')
         return marked
+
+    @app.delete('/account/notifications',response_model=NotificationCenterEnvelope)
+    def delete_all(request: Request,response: Response):
+        account,_=authenticated_account(request)
+        private(response)
+        app.state.account_repository.delete_all_notifications(account.id,utc_now())
+        return center(account.id)
+
+    @app.delete('/account/notifications/{notification_id}',status_code=204)
+    def delete(notification_id: str,request: Request,response: Response):
+        account,_=authenticated_account(request)
+        private(response)
+        deleted=app.state.account_repository.delete_notification(
+            account.id,notification_id,utc_now()
+        )
+        if deleted is None:
+            raise HTTPException(status_code=404,detail='找不到這則通知。')
+        return Response(status_code=204,headers=dict(response.headers))
 
     @app.post('/admin/notifications/run-due',response_model=NotificationRunResult)
     def run_due(request: Request,response: Response):
@@ -63,7 +91,7 @@ def register_notification_routes(app: FastAPI, authenticated_account, authentica
         account, _ = authenticated_account(request)
         private(response)
         notification = app.state.account_repository.find_notification_by_id(account.id, notification_id)
-        if notification is None or notification.kind != 'content_update':
+        if notification is None or notification.deleted_at is not None or notification.kind != 'content_update':
             raise HTTPException(status_code=404, detail='找不到這則規定更新通知。')
         revision_id = notification.dedupe_key.removeprefix('content-update:')
         rows = app.state.content_governance_store.list_revisions()

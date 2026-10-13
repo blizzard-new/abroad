@@ -15,10 +15,20 @@ def start(page, live_server, route="home"):
 
 
 def test_home_is_the_guide_and_the_forum_is_one_click_away(page, live_server):
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.on("console", lambda message: errors.append(message.text) if message.type == "error" else None)
     start(page, live_server)
     nav = page.locator(".uniway-public-nav")
     expect(nav.get_by_role("link", name="申請指南", exact=True)).to_have_count(0)
     expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#page-back")).to_be_visible()
+    assert page.locator("#page-back").evaluate("button => button.closest('#main-content') !== null")
+    assert page.locator("#page-back").evaluate("button => button.closest('#glass-navigation') === null")
+    back = page.locator("#page-back").bounding_box()
+    guide = page.locator("#guide").bounding_box()
+    assert abs(back["x"] - guide["x"]) <= 1
+    assert back["y"] < guide["y"]
     expect(page.locator(".guide-stages > li")).to_have_count(4)
     expect(page.locator("#community-hub")).to_be_hidden()
     expect(nav.locator('[data-public-route="home"]')).to_have_attribute("aria-current", "page")
@@ -37,6 +47,7 @@ def test_home_is_the_guide_and_the_forum_is_one_click_away(page, live_server):
     expect(page).to_have_url(f"{live_server.base_url}/#home")
     expect(page.locator("#guide")).to_be_visible()
     expect(page.locator("#guide-title")).to_be_focused()
+    assert not errors
 
 
 def test_an_old_guide_link_opens_the_home_page(page, live_server):
@@ -123,12 +134,10 @@ def test_school_return_retains_filters_scroll_and_forward(page, live_server):
     page.evaluate("scrollTo({top: 900, behavior: 'instant'})")
     page.wait_for_function("scrollY > 500")
     tabs = page.locator(".detail-tabs").bounding_box()
-    toolbar = page.locator(".route-toolbar").bounding_box()
-    # The toolbar now lives in the left rail. It must not occlude sticky tabs.
-    if tabs["x"] < toolbar["x"] + toolbar["width"] and toolbar["x"] < tabs["x"] + tabs["width"]:
-        assert tabs["y"] >= toolbar["y"] + toolbar["height"]
-    else:
-        assert toolbar["x"] + toolbar["width"] <= tabs["x"]
+    back_bar = page.locator(".page-back-bar").bounding_box()
+    # The return control belongs to the page header and must stay above sticky detail tabs.
+    assert abs(back_bar["x"] - tabs["x"]) <= 1
+    assert back_bar["y"] + back_bar["height"] <= tabs["y"]
     page.locator("#back-to-schools").click()
     expect(page).to_have_url(before_url)
     expect(page.locator("#partner-search")).to_have_value("Lincoln")

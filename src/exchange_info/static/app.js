@@ -636,7 +636,6 @@ function alignAccountSchool() {
 function clearProtectedCatalog() {
   window.UniWayDocumentWorkbench?.reset();
   state.dashboard = null;
-  $("#catalogue-source-status").hidden = true;
   state.applicationPeriodOptions = null;
   state.applicationPeriodRequestId += 1;
   renderApplicationPeriodOptions();
@@ -911,7 +910,7 @@ function applyTheme(theme, { persist = true } = {}) {
     const target = nextTheme === "dark" ? "淺色" : "深色";
     button.setAttribute("aria-label", `切換為${target}模式`);
     button.dataset.tooltip = `${target}模式`;
-    button.innerHTML = `<i data-lucide="${nextTheme === "dark" ? "sun" : "moon"}" aria-hidden="true"></i>`;
+    button.innerHTML = `<i data-lucide="${nextTheme === "dark" ? "sun" : "moon"}" aria-hidden="true"></i><span class="rail-action-label">${target}模式</span>`;
   }
   if (persist) {
     try {
@@ -2062,15 +2061,16 @@ function renderNotificationCenter() {
   }
   if (badge) {
     badge.hidden = state.notificationUnreadCount < 1;
-    badge.textContent = state.notificationUnreadCount > 99 ? "99+" : String(state.notificationUnreadCount);
   }
   const list = $("#notification-center-list");
   const status = $("#notification-center-status");
   const readAll = $("#notification-read-all");
-  if (!list || !status || !readAll) return;
+  const deleteAll = $("#notification-delete-all");
+  if (!list || !status || !readAll || !deleteAll) return;
   readAll.disabled = state.notificationUnreadCount < 1 || state.notificationLoading;
+  deleteAll.disabled = state.notifications.length < 1 || state.notificationLoading;
   if (state.notificationLoading) {
-    status.textContent = "正在整理你的截止提醒…";
+    status.textContent = "正在整理你的通知…";
     list.innerHTML = '<div class="notification-center-loading"><span></span><span></span><span></span></div>';
     return;
   }
@@ -2078,27 +2078,29 @@ function renderNotificationCenter() {
     ? `${state.notificationUnreadCount} 則未讀通知`
     : "目前沒有未讀通知";
   if (!state.notifications.length) {
-    list.innerHTML = '<div class="notification-center-empty"><i data-lucide="bell-ring" aria-hidden="true"></i><strong>目前沒有通知</strong><p>建立申請計畫後，系統會提醒截止日及人工確認發布的官方規定異動。</p></div>';
+    list.innerHTML = '<div class="notification-center-empty"><i data-lucide="bell-ring" aria-hidden="true"></i><strong>目前沒有通知</strong><p>系統會提醒截止日、人工確認發布的官方規定，以及合作校來源更新。</p></div>';
     initIcons();
     return;
   }
   list.innerHTML = state.notifications.map((item) => {
     const unread = !item.read_at;
     const contentUpdate = item.kind === "content_update";
+    const catalogueUpdate = item.kind === "catalogue_update";
     const smartStart = String(item.source_key || "").startsWith("calendar-start:");
-    const sourceUrl = contentUpdate ? notificationOfficialSourceUrl(item) : "";
+    const sourceUrl = contentUpdate || catalogueUpdate ? notificationOfficialSourceUrl(item) : "";
     return `
       <article class="notification-center-item ${unread ? "is-unread" : ""}">
-        <div class="notification-center-item-icon"><i data-lucide="${contentUpdate ? "file-clock" : smartStart ? "play" : "calendar-clock"}" aria-hidden="true"></i></div>
+        <div class="notification-center-item-icon"><i data-lucide="${contentUpdate ? "file-clock" : catalogueUpdate ? "database-zap" : smartStart ? "play" : "calendar-clock"}" aria-hidden="true"></i></div>
         <div class="notification-center-item-content">
-          <div class="notification-center-item-meta"><span>${contentUpdate ? "官方規定更新" : smartStart ? "建議開始準備日" : `截止前 ${escapeHtml(item.reminder_days)} 天`}</span><time datetime="${escapeHtml(item.created_at)}">${escapeHtml(formatDate(item.created_at))}</time></div>
+          <div class="notification-center-item-meta"><span>${contentUpdate ? "官方規定更新" : catalogueUpdate ? "合作校來源更新" : smartStart ? "建議開始準備日" : `截止前 ${escapeHtml(item.reminder_days)} 天`}</span><time datetime="${escapeHtml(item.created_at)}">${escapeHtml(formatDate(item.created_at))}</time></div>
           <h2>${escapeHtml(item.title)}</h2>
           <p>${escapeHtml(item.body)}</p>
           ${contentUpdate ? `<button type="button" class="text-action" data-notification-changes="${escapeHtml(item.id)}" aria-expanded="false">查看逐項變更</button><section class="notification-changes" aria-label="這次規定變更" aria-live="polite" hidden></section>` : ""}
           <div class="notification-center-item-actions">
-            <a href="${escapeHtml(notificationActionUrl(item))}" data-open-notification="${escapeHtml(item.id)}">${contentUpdate ? "查看這所學校" : smartStart ? "查看任務安排" : "查看申請時程"}</a>
+            <a href="${escapeHtml(notificationActionUrl(item))}" data-open-notification="${escapeHtml(item.id)}">${contentUpdate ? "查看這所學校" : catalogueUpdate ? "查看合作學校" : smartStart ? "查看任務安排" : "查看申請時程"}</a>
             ${sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer" class="notification-official-source">查看官方來源<i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}
             ${unread ? `<button type="button" class="text-action" data-read-notification="${escapeHtml(item.id)}">標為已讀</button>` : '<span class="notification-read-label"><i data-lucide="check" aria-hidden="true"></i>已讀</span>'}
+            <button type="button" class="text-action notification-delete" data-delete-notification="${escapeHtml(item.id)}" aria-label="刪除通知：${escapeHtml(item.title)}"><i data-lucide="trash-2" aria-hidden="true"></i>刪除</button>
           </div>
         </div>
       </article>`;
@@ -2214,6 +2216,32 @@ async function markAllNotificationsRead() {
     state.notifications = center.items || [];
     state.notificationUnreadCount = center.unread_count || 0;
     renderNotificationCenter();
+  } catch (error) {
+    announce(error.message, "error");
+    button.disabled = false;
+  }
+}
+
+async function deleteNotification(notificationId) {
+  await fetchJson(`/account/notifications/${encodeURIComponent(notificationId)}`, {
+    method: "DELETE",
+  });
+  state.notifications = state.notifications.filter((item) => item.id !== notificationId);
+  state.notificationUnreadCount = state.notifications.filter((item) => !item.read_at).length;
+  renderNotificationCenter();
+  announce("通知已刪除", "success");
+}
+
+async function deleteAllNotifications() {
+  if (!state.notifications.length || !window.confirm("要刪除通知中心內的全部通知嗎？此動作無法復原。")) return;
+  const button = $("#notification-delete-all");
+  button.disabled = true;
+  try {
+    const center = await fetchJson("/account/notifications", { method: "DELETE" });
+    state.notifications = center.items || [];
+    state.notificationUnreadCount = center.unread_count || 0;
+    renderNotificationCenter();
+    announce("全部通知已刪除", "success");
   } catch (error) {
     announce(error.message, "error");
     button.disabled = false;
@@ -3790,7 +3818,6 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
   const request = beginSchoolDataRequest("dashboard", requestedSchool);
   state.partnerDataLoading = true;
   state.partnerDataError = false;
-  $("#catalogue-source-status").hidden = true;
   syncPartnerView();
   setLoadingState();
   const loadingAnnouncementRevision = state.statusRevision;
@@ -3843,17 +3870,6 @@ function catalogueSourceUnavailable() {
   return state.dashboard?.catalogue_source?.status === "unavailable";
 }
 
-function renderCatalogueSourceStatus() {
-  const banner = $("#catalogue-source-status");
-  const source = state.dashboard?.catalogue_source;
-  banner.hidden = !source || activeHomeSchool() !== "長庚大學";
-  if (banner.hidden) { banner.textContent = ""; return; }
-  const time = source.last_success_at ? formatDate(source.last_success_at) : "尚無成功取得時間";
-  const title = source.status === "unavailable" ? "長庚合作校來源暫不可用" : source.last_attempt_result === "failed" ? "長庚合作校來源更新暫不可用，保留歷次資料" : source.status === "retrieved" ? "長庚合作校來源已取得" : "長庚合作校使用歷次資料";
-  banner.innerHTML = `<strong>${escapeHtml(title)}</strong><p>來源取得時間：${escapeHtml(time)}。取得時間不代表當期已核實；年度、名額與開放狀態請依原資料及官方公告確認。</p><a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554" target="_blank" rel="noopener">交換來源</a> · <a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17533" target="_blank" rel="noopener">雙學位來源</a><button type="button" class="text-button" data-reload-catalogue>重新讀取來源狀態</button>`;
-  banner.querySelector("[data-reload-catalogue]").addEventListener("click", () => loadDashboard({ refreshed: true }));
-}
-
 function renderDashboard() {
   discoveryData();
   renderDiscoveryRecents();
@@ -3861,7 +3877,6 @@ function renderDashboard() {
   const lastChecked = formatDate(data.last_checked);
   const documents = data.document_explanations || data.rule_explanations || [];
 
-  renderCatalogueSourceStatus();
   $("#coverage-rate").textContent = catalogueSourceUnavailable() ? "—" : String(data.partner_universities.length);
   $("#source-count").textContent = String(data.sources.length);
   $("#last-checked").textContent = lastChecked.slice(0, 10);
@@ -12909,6 +12924,7 @@ function bindEvents() {
   document.querySelectorAll("[data-close-profile]").forEach((button) => button.addEventListener("click", closeProfileDialog));
   document.querySelectorAll("[data-close-notifications]").forEach((button) => button.addEventListener("click", closeNotificationDialog));
   $("#notification-read-all").addEventListener("click", markAllNotificationsRead);
+  $("#notification-delete-all").addEventListener("click", deleteAllNotifications);
   $("#notification-center-list").addEventListener("click", async (event) => {
     const changesButton = event.target.closest("[data-notification-changes]");
     if (changesButton) { await showNotificationChanges(changesButton); return; }
@@ -12920,6 +12936,17 @@ function bindEvents() {
       } catch (error) {
         announce(error.message, "error");
         readButton.disabled = false;
+      }
+      return;
+    }
+    const deleteButton = event.target.closest("[data-delete-notification]");
+    if (deleteButton) {
+      deleteButton.disabled = true;
+      try {
+        await deleteNotification(deleteButton.dataset.deleteNotification);
+      } catch (error) {
+        announce(error.message, "error");
+        deleteButton.disabled = false;
       }
       return;
     }

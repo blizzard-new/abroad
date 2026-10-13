@@ -880,6 +880,21 @@ def test_premium_web_material_keeps_glass_hierarchy_without_heavy_button_chrome(
     assert "background-color: rgba(17, 30, 44, 0.94)" in styles
 
 
+def test_desktop_navigation_rail_expands_full_labels_without_moving_content() -> None:
+    html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+    navigation = (STATIC_DIR / "navigation.js").read_text(encoding="utf-8")
+    styles = (STATIC_DIR / "glass-theme.css").read_text(encoding="utf-8")
+
+    assert 'class="rail-action-label">重新整理</span>' in html
+    assert 'class="rail-action-label">通知中心</span>' in html
+    assert ".glass-navigation-rail:is(:hover, :focus-within)" in styles
+    assert "width: 76px" in styles
+    assert "width: 240px" in styles
+    assert "margin-left: 288px" in styles
+    assert "glass-rail-tooltip" not in styles
+    assert "glass-rail-tooltip" not in navigation
+
+
 def test_grounded_advisor_and_document_checker_are_independent_pages() -> None:
     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
@@ -1060,10 +1075,17 @@ def test_web_notification_center_and_explicit_email_opt_in_are_present() -> None
     assert 'id="notification-button"' in html
     assert 'id="notification-dialog"' in html
     assert 'id="notification-center-list"' in html
+    assert 'id="notification-delete-all"' in html
+    assert "全部已讀" in html
+    assert "全部刪除" in html
     assert 'name="email_notifications"' in html
     assert "只有勾選並儲存後才排入寄送" in html
     assert 'fetchJson("/account/notifications?limit=50")' in script
     assert 'fetchJson("/account/notifications/read-all"' in script
+    assert 'method: "DELETE"' in script
+    assert 'data-delete-notification' in script
+    assert "合作校來源更新" in script
+    assert 'id="catalogue-source-status"' not in html
     assert 'values.get("email_notifications") === "on"' in script
     assert "紙本送件以送達日計算" in html
     assert "官方規定更新" in script

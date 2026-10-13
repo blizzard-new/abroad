@@ -6,6 +6,7 @@ import json
 import time
 from datetime import date, timedelta
 from io import StringIO
+from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 from uuid import uuid4
 
@@ -1273,11 +1274,51 @@ def test_authenticated_plan_notifications_and_progress_sync_across_devices(
     login_through_web(page, live_server, email)
 
     expect(page.locator("#notification-button")).to_be_visible()
+    expect(page.locator("#notification-badge")).to_be_visible()
+    dot_box = page.locator("#notification-badge").bounding_box()
+    assert dot_box and dot_box["width"] == 10 and dot_box["height"] == 10
+    rail = page.locator("#glass-navigation")
+    rail.hover()
+    expect(rail).to_have_css("width", "240px")
+    expect(page.locator("#notification-button .rail-action-label")).to_be_visible()
+    expect(page.locator("#notification-button .rail-action-label")).to_have_text("通知中心")
+    page.evaluate("document.activeElement?.blur()")
+    page.locator("#guide-title").hover()
+    expect(rail).to_have_css("width", "76px")
+    Path("output/notification-center").mkdir(parents=True, exist_ok=True)
+    page.screenshot(
+        path="output/notification-center/notification-red-dot-1280.png",
+        full_page=False,
+    )
     page.locator("#notification-button").click()
     expect(page.locator("#notification-dialog")).to_be_visible()
     expect(page.locator("#notification-center-list")).to_contain_text(
         "E2E 交換申請期限提醒"
     )
+    expect(page.locator("#notification-center-list")).to_contain_text("長庚合作校")
+    expect(page.locator("#notification-read-all")).to_have_text("全部已讀")
+    expect(page.locator("#notification-delete-all")).to_have_text("全部刪除")
+    page.screenshot(
+        path="output/notification-center/notification-center-1280.png",
+        full_page=True,
+    )
+    page.set_viewport_size({"width": 390, "height": 844})
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    page.screenshot(
+        path="output/notification-center/notification-center-390.png",
+        full_page=True,
+    )
+    page.set_viewport_size({"width": 1280, "height": 900})
+    custom_notification = page.locator(".notification-center-item").filter(
+        has_text="E2E 交換申請期限提醒"
+    )
+    custom_notification.locator("[data-delete-notification]").click()
+    expect(custom_notification).to_have_count(0)
+    page.locator("#notification-read-all").click()
+    expect(page.locator("#notification-badge")).to_be_hidden()
+    page.once("dialog", lambda dialog: dialog.accept())
+    page.locator("#notification-delete-all").click()
+    expect(page.locator("#notification-center-list")).to_contain_text("目前沒有通知")
     page.locator("[data-close-notifications]").last.click()
 
     page.evaluate("window.location.hash = '#overview'")

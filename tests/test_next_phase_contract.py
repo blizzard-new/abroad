@@ -697,14 +697,16 @@ def test_submission_progress_contract_tracks_manual_status_and_proof_metadata(tm
     assert {"home_school", "progress_key", "action", "method", "proof_metadata"} <= transition.keys()
 
 
-def test_notification_contract_exposes_center_read_and_admin_run_routes(tmp_path) -> None:
+def test_notification_contract_exposes_center_read_delete_and_admin_run_routes(tmp_path) -> None:
     client = TestClient(create_app(tmp_path))
     openapi = client.get("/openapi.json").json()
     paths = openapi["paths"]
     schemas = openapi["components"]["schemas"]
 
     assert "get" in paths["/account/notifications"]
+    assert "delete" in paths["/account/notifications"]
     assert "patch" in paths["/account/notifications/{notification_id}/read"]
+    assert "delete" in paths["/account/notifications/{notification_id}"]
     assert "patch" in paths["/account/notifications/read-all"]
     assert "post" in paths["/admin/notifications/run-due"]
     assert {
@@ -713,6 +715,7 @@ def test_notification_contract_exposes_center_read_and_admin_run_routes(tmp_path
         "deadline_at",
         "reminder_days",
         "read_at",
+        "deleted_at",
     } <= schemas["AccountNotification"]["properties"].keys()
     assert {
         "created_count",

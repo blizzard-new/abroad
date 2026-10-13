@@ -19,6 +19,7 @@ from .models import (
     ApplicationSubmissionMethod,
     ApplicationWorkflowRevision,
     ApplicationWorkflowReviewStatus,
+    CatalogueSourceStatus,
     NotificationDelivery,
     NotificationRunResult,
     UniversityApplicationWorkflow,
@@ -432,6 +433,57 @@ def content_update_notification(
     )
 
 
+def catalogue_source_notification(
+    account: UserAccount,
+    source: CatalogueSourceStatus,
+    now: datetime | None = None,
+) -> AccountNotification | None:
+    """Turn each meaningful CGU catalogue-source generation into one web notice."""
+    if (
+        not account.notification_preferences.web_enabled
+        or not _school_matches(account.home_university, "長庚大學")
+    ):
+        return None
+    current = _aware_utc(now or utc_now())
+    if source.status == "unavailable":
+        title = "長庚合作校來源暫不可用"
+    elif source.last_attempt_result == "failed":
+        title = "長庚合作校來源更新暫不可用，保留歷次資料"
+    elif source.status == "retrieved":
+        title = "長庚合作校來源已取得"
+    else:
+        title = "長庚合作校使用歷次資料"
+    source_time = (
+        _aware_utc(source.last_success_at)
+        .astimezone(TAIPEI_TIMEZONE)
+        .strftime("%Y/%m/%d %H:%M")
+        if source.last_success_at
+        else "尚無成功取得時間"
+    )
+    generation = (
+        source.last_attempt_at.isoformat()
+        if source.last_attempt_result == "failed" and source.last_attempt_at
+        else source.snapshot_hash
+        or (source.last_success_at.isoformat() if source.last_success_at else "none")
+    )
+    return AccountNotification(
+        account_id=account.id,
+        dedupe_key=f"catalogue-source:cgu:{source.status}:{source.last_attempt_result or 'none'}:{generation}",
+        kind="catalogue_update",
+        channels=["web"],
+        title=title,
+        body=(
+            f"來源取得時間：{source_time}。取得時間不代表當期已核實；"
+            "年度、名額與開放狀態請依原資料及官方公告確認。"
+        ),
+        action_url="/#partners",
+        source_key="catalogue-source:cgu",
+        source_url=source.source_urls[0] if source.source_urls else None,
+        scheduled_for=current,
+        created_at=current,
+    )
+
+
 class NotificationService:
     def __init__(
         self,
@@ -453,10 +505,16 @@ class NotificationService:
         existing = self.repository.find_notification_by_dedupe(
             account.id, candidate.dedupe_key
         )
+        if existing is not None and existing.deleted_at is not None:
+            return 0, 0
         notification = existing or self.repository.save_notification(candidate)
         created_count = int(existing is None and notification.id == candidate.id)
         queued_email_count = 0
-        if account.notification_preferences.email_enabled and account.email:
+        if (
+            candidate.kind != "catalogue_update"
+            and account.notification_preferences.email_enabled
+            and account.email
+        ):
             delivery = self.repository.find_delivery(notification.id, "email")
             if delivery is None:
                 self.repository.save_delivery(
@@ -543,6 +601,18 @@ class NotificationService:
             queued_email_count += queued
         return created_count, queued_email_count
 
+    def refresh_catalogue_source(
+        self,
+        account: UserAccount,
+        source: CatalogueSourceStatus,
+        now: datetime | None = None,
+    ) -> tuple[int, int]:
+        current = _aware_utc(now or utc_now())
+        candidate = catalogue_source_notification(account, source, current)
+        if candidate is None:
+            return 0, 0
+        return self._persist_candidate(account, candidate, current)
+
     def refresh_content_updates(
         self,
         now: datetime | None = None,
@@ -606,6 +676,8 @@ class NotificationService:
         account: UserAccount,
         notification: AccountNotification,
     ) -> bool:
+        if notification.deleted_at is not None or notification.kind == "catalogue_update":
+            return False
         preferences = account.notification_preferences
         if not preferences.email_enabled or not account.email:
             return False

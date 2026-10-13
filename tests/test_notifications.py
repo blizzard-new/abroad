@@ -36,6 +36,7 @@ from exchange_info.models import (
     ApplicationWorkflowRollbackRequest,
     ApplicationWorkflowRevision,
     ApplicationWorkflowSource,
+    CatalogueSourceStatus,
     UniversityApplicationWorkflow,
     UserAccount,
     utc_now,
@@ -905,6 +906,17 @@ def test_notifications_migration_is_server_only() -> None:
     assert "unique (account_id, dedupe_key)" in normalized
     assert "unique (notification_id, channel)" in normalized
 
+    deletion_migration = (
+        Path(__file__).parents[1]
+        / "supabase"
+        / "migrations"
+        / "20261013090000_notification_deletion.sql"
+    ).read_text(encoding="utf-8")
+    deletion_normalized = " ".join(deletion_migration.casefold().split())
+    assert "add column if not exists deleted_at timestamptz" in deletion_normalized
+    assert "'catalogue_update'" in deletion_normalized
+    assert "where deleted_at is null" in deletion_normalized
+
 
 def _notification_api(tmp_path, monkeypatch, *, email_enabled: bool = False):
     repository = JsonlAccountRepository(tmp_path / "repository")
@@ -941,8 +953,15 @@ def test_notification_center_requires_login_and_supports_read_state(
     assert client.get("/account/notifications").status_code == 401
     first = client.get("/account/notifications", headers=headers)
     assert first.status_code == 200
-    assert first.json()["unread_count"] == 1
-    notification = first.json()["items"][0]
+    assert first.json()["unread_count"] == 2
+    assert any(
+        item["kind"] == "catalogue_update"
+        and item["title"] == "長庚合作校使用歷次資料"
+        for item in first.json()["items"]
+    )
+    notification = next(
+        item for item in first.json()["items"] if item["kind"] == "deadline"
+    )
     assert notification["reminder_days"] == 7
     assert "必須送達" in notification["body"]
 
@@ -952,7 +971,7 @@ def test_notification_center_requires_login_and_supports_read_state(
     )
     assert read.status_code == 200
     assert read.json()["read_at"] is not None
-    assert client.get("/account/notifications", headers=headers).json()["unread_count"] == 0
+    assert client.get("/account/notifications", headers=headers).json()["unread_count"] == 1
 
     other = _paper_account(datetime.now(TAIPEI) + timedelta(days=7))
     repository.save_account(other)
@@ -992,7 +1011,7 @@ def test_notification_center_can_mark_all_owned_notifications_read(
 
     assert marked.status_code == 200
     assert marked.json()["unread_count"] == 0
-    assert len(marked.json()["items"]) == 2
+    assert len(marked.json()["items"]) == 3
     assert all(item["read_at"] is not None for item in marked.json()["items"])
 
 
@@ -1006,10 +1025,65 @@ def test_notification_center_queues_email_only_after_opt_in(tmp_path, monkeypatc
     response = client.get("/account/notifications", headers=headers)
 
     assert response.status_code == 200
-    notification = response.json()["items"][0]
+    notification = next(
+        item for item in response.json()["items"] if item["kind"] == "deadline"
+    )
     delivery = repository.find_delivery(notification["id"], "email")
     assert delivery is not None
     assert delivery.status == "pending"
+
+
+def test_catalogue_source_notification_is_web_only_and_deduplicated(tmp_path) -> None:
+    repository = JsonlAccountRepository(tmp_path / "repository")
+    account = _paper_account(datetime.now(TAIPEI) + timedelta(days=7), email_enabled=True)
+    repository.save_account(account)
+    service = NotificationService(repository)
+    source = CatalogueSourceStatus(
+        status="retrieved",
+        last_success_at=datetime(2026, 10, 13, tzinfo=timezone.utc),
+        last_attempt_at=datetime(2026, 10, 13, tzinfo=timezone.utc),
+        last_attempt_result="success",
+        snapshot_hash="catalogue-generation-1",
+        source_urls=["https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554"],
+    )
+
+    assert service.refresh_catalogue_source(account, source) == (1, 0)
+    assert service.refresh_catalogue_source(account, source) == (0, 0)
+    notification = repository.list_notifications(account.id)[0]
+    assert notification.kind == "catalogue_update"
+    assert notification.channels == ["web"]
+    assert notification.title == "長庚合作校來源已取得"
+    assert repository.find_delivery(notification.id, "email") is None
+
+
+def test_notification_center_can_delete_one_or_all_without_recreating_them(
+    tmp_path, monkeypatch
+) -> None:
+    client, headers, repository, account = _notification_api(tmp_path, monkeypatch)
+    first = client.get("/account/notifications", headers=headers)
+    items = first.json()["items"]
+    assert len(items) == 2
+
+    deleted = client.delete(
+        f"/account/notifications/{items[0]['id']}", headers=headers
+    )
+    assert deleted.status_code == 204
+    assert len(client.get("/account/notifications", headers=headers).json()["items"]) == 1
+    assert client.delete(
+        f"/account/notifications/{items[0]['id']}", headers=headers
+    ).status_code == 404
+
+    cleared = client.delete("/account/notifications", headers=headers)
+    assert cleared.status_code == 200
+    assert cleared.json() == {"items": [], "unread_count": 0}
+    assert client.get("/account/notifications", headers=headers).json() == {
+        "items": [],
+        "unread_count": 0,
+    }
+    for item in items:
+        row = repository.find_notification_by_dedupe(account.id, item["dedupe_key"])
+        assert row is not None
+        assert row.deleted_at is not None
 
 
 def test_admin_can_run_due_notification_job(tmp_path, monkeypatch) -> None:

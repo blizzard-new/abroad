@@ -44,6 +44,14 @@ body.unified-shell { --nav-header-height: 74px; --nav-toolbar-height: 66px; }
 .route-toolbar #school-switcher strong { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .route-toolbar #school-switcher > span:nth-child(2) { min-width: 0; }
 .route-toolbar .school-switcher-icon { background: none; height: 28px; width: 28px; }
+.page-back-bar {
+  width: calc(100% - 48px); max-width: 1240px; margin: 0 auto;
+  padding-top: 16px;
+}
+.page-back-bar .route-back {
+  border: 1px solid var(--uw-line); background: var(--uw-surface);
+  box-shadow: var(--uw-shadow-soft);
+}
 .application-tools { position: relative; flex-shrink: 0; }
 .application-tools > summary { display: flex; align-items: center; gap: 7px; min-height: 44px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--uw-line); background: var(--uw-surface); color: var(--uw-text); font-weight: 650; cursor: pointer; list-style: none; }
 .application-tools > summary::-webkit-details-marker, .guide-faq > summary::-webkit-details-marker { display: none; }
@@ -121,6 +129,7 @@ html[data-theme="dark"] .guide-stage { --stage-ink: var(--uw-text); }
   .unified-shell .uniway-public-nav { grid-column: 1 / -1; grid-row: 2; min-width: 0; width: 100%; overflow-x: auto; scrollbar-width: none; }
   .unified-shell .uniway-public-nav a { min-height: 40px; display: flex; align-items: center; }
   .unified-shell .route-toolbar { padding: 6px 16px; min-height: 58px; gap: 8px; }
+  .page-back-bar { width: calc(100% - 32px); padding-top: 12px; }
   .unified-shell #dashboard-view > [data-university-page], .unified-shell .school-detail-view, .unified-shell .global-community-section { width: calc(100% - 32px); padding-top: 20px; }
   .guide-intro { padding: 16px 10px 28px; }
   .guide-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -156,5 +165,5 @@ html[data-theme="dark"] .guide-stage { --stage-ink: var(--uw-text); }
   .guide-plan-link, .guide-faq { padding: 16px; font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .route-toolbar *, .study-guide * { transition: none; animation: none; scroll-behavior: auto; }
+  .route-toolbar *, .page-back-bar *, .study-guide * { transition: none; animation: none; scroll-behavior: auto; }
 }
