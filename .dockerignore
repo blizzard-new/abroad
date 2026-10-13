@@ -1,0 +1,8 @@
+# Only what the image needs. Everything else (tests, docs, mobile apps, scraped sources, ...) stays out of the build.
+*
+!pyproject.toml
+!README.md
+!src
+!deploy/selfhost/docker-entrypoint.sh
+**/__pycache__
+**/*.pyc

@@ -1,0 +1,161 @@
+# Everything that runs in Docker on the server computer: the database, its REST/storage front doors,
+# a tiny internal gateway, and the web service itself.
+# The only thing published to the host is the web service, on 127.0.0.1:8000, for Caddy (installed on Windows itself).
+# Step by step: docs/self-host-windows-guide.md
+name: uniway
+
+services:
+  db:
+    # Same pinned images that scripts/validate_supabase_runtime.py already validates the migrations against.
+    image: supabase/postgres:17.6.1.136@sha256:f371b5f3f2ac0a05703f33d6e6134515fb2498cab708fb948a0aeb7481467c00
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?missing DB_PASSWORD - run scripts/02-generate-secrets.ps1 first}
+      POSTGRES_DB: postgres
+      JWT_SECRET: ${JWT_SECRET:?missing JWT_SECRET - run scripts/02-generate-secrets.ps1 first}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    shm_size: 1gb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -h localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  rest:
+    image: postgrest/postgrest:v14.12@sha256:54000f24847d01a2c2302e0041cf0618b875c57fb48507d743cfa9aaa50bf43c
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGRST_DB_URI: postgres://authenticator:${DB_PASSWORD}@db:5432/postgres
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_EXTRA_SEARCH_PATH: public,extensions
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_DB_MAX_ROWS: "1000"           # what Supabase's hosted service does; the program was written against it
+      PGRST_JWT_SECRET: ${JWT_SECRET}
+      PGRST_DB_USE_LEGACY_GUCS: "false"
+      PGRST_ADMIN_SERVER_PORT: "3001"
+      PGRST_ADMIN_SERVER_HOST: localhost    # "postgrest --ready" (the healthcheck) only works with this
+    healthcheck:
+      test: ["CMD", "postgrest", "--ready"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  storage:
+    image: supabase/storage-api:v1.60.4@sha256:c8eb9858eafec891a97c27125470aaad54703c3f4eb4d55ca7f1bf6c6411febf
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      rest:
+        condition: service_started
+    environment:
+      ANON_KEY: ${ANON_KEY}
+      SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      POSTGREST_URL: http://rest:3000
+      AUTH_JWT_SECRET: ${JWT_SECRET}
+      DATABASE_URL: postgres://supabase_storage_admin:${DB_PASSWORD}@db:5432/postgres
+      STORAGE_PUBLIC_URL: http://storage:5000
+      REQUEST_ALLOW_X_FORWARDED_PATH: "true"
+      FILE_SIZE_LIMIT: "52428800"
+      STORAGE_BACKEND: file
+      GLOBAL_S3_BUCKET: uniway-storage
+      FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+      TENANT_ID: uniway
+      REGION: local
+      ENABLE_IMAGE_TRANSFORMATION: "false"
+    volumes:
+      - storage-data:/var/lib/storage
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:5000/status"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+
+  # Gives the program one address (https://gateway) that looks like Supabase's: /rest/v1/... and /storage/v1/...
+  # Not published outside Docker, so nothing on the internet can reach the database's REST door.
+  gateway:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      rest:
+        condition: service_healthy
+      storage:
+        condition: service_healthy
+    volumes:
+      - ./gateway/Caddyfile:/etc/caddy/Caddyfile:ro
+      - gateway-data:/data              # keeps the internal certificate authority the same across restarts
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8000/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # Copies ONLY the public certificate of the gateway's internal authority (never its private keys) to where the web service can read it.
+  ca-export:
+    image: alpine:3
+    restart: "no"
+    depends_on:
+      gateway:
+        condition: service_healthy
+    volumes:
+      - gateway-data:/data:ro
+      - ca-public:/out
+    command: ["sh", "-c", "cp /data/caddy/pki/authorities/local/root.crt /out/root.crt && chmod 644 /out/root.crt"]
+
+  app:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    image: uniway-app:local
+    restart: unless-stopped
+    depends_on:
+      gateway:
+        condition: service_healthy
+      ca-export:
+        condition: service_completed_successfully
+    # Only on this computer's loopback: the internet reaches it through Caddy, which writes the visitor's address into
+    # X-Client-IP itself (the program believes only that header).
+    ports:
+      - "127.0.0.1:8000:8000"
+    command: ["uvicorn", "exchange_info.api:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "${APP_WORKERS:-1}"]
+    volumes:
+      - ./tools:/opt/selfhost:ro      # small checks run inside the container, where the database address works
+      - ca-public:/ca-public:ro       # the gateway's public certificate, so the program trusts https://gateway
+    environment:
+      EXCHANGE_ENVIRONMENT: production
+      EXCHANGE_ACCOUNT_REPOSITORY: supabase
+      EXCHANGE_VAULT_BACKEND: supabase
+      EXCHANGE_FORM_DRAFT_BACKEND: supabase
+      EXCHANGE_EMAIL_VERIFICATION_BACKEND: disabled
+      EXCHANGE_CLIENT_IP_HEADER: X-Client-IP
+      EXCHANGE_WARM_CACHES: "1"
+      EXCHANGE_HOSTING_PROFILE: selfhost
+      EXCHANGE_SUPABASE_URL: https://gateway
+      INTERNAL_CA_FILE: /ca-public/root.crt
+      REQUESTS_CA_BUNDLE: /tmp/ca-bundle.pem      # written by docker-entrypoint.sh: public CAs + the gateway's own
+      SSL_CERT_FILE: /tmp/ca-bundle.pem
+      EXCHANGE_SUPABASE_SECRET_KEY: ${SERVICE_ROLE_KEY}
+      EXCHANGE_VAULT_MASTER_KEY: ${VAULT_MASTER_KEY}
+      EXCHANGE_EMAIL_VERIFICATION_SECRET: ${EMAIL_VERIFICATION_SECRET}
+      EXCHANGE_PUBLIC_BASE_URL: https://${DOMAIN}
+      EXCHANGE_CONTENT_ADMIN_EMAILS: ${ADMIN_EMAILS:-}
+      EXCHANGE_CONTACT_EMAIL: ${CONTACT_EMAIL:-}
+      GOOGLE_OAUTH_CLIENT_ID: ${GOOGLE_OAUTH_CLIENT_ID:-}
+      GOOGLE_OAUTH_CLIENT_SECRET: ${GOOGLE_OAUTH_CLIENT_SECRET:-}
+
+volumes:
+  gateway-data:
+    name: uniway_gateway
+  ca-public:
+    name: uniway_ca_public
+  db-data:
+    name: uniway_db
+  storage-data:
+    name: uniway_storage

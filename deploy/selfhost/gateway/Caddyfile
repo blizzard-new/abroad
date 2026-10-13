@@ -1,0 +1,33 @@
+# Internal only (see docker-compose.yml): gives the program Supabase-shaped addresses in front of PostgREST and Storage.
+#
+# The program refuses a database address that is not https:// (it would be sending the service key in the clear), so this
+# gateway speaks HTTPS inside Docker with a certificate from Caddy's own internal authority. The program is told to trust
+# that authority (docker-entrypoint.sh builds its CA bundle). Nothing here is reachable from outside Docker.
+{
+	admin off
+	local_certs
+	auto_https disable_redirects
+}
+
+# plain HTTP, only for Docker's healthcheck inside this container
+http://:8000 {
+	respond /health "ok" 200
+	respond "not found" 404
+}
+
+https://gateway {
+	tls internal
+
+	handle /health {
+		respond "ok" 200
+	}
+	handle_path /rest/v1/* {
+		reverse_proxy rest:3000
+	}
+	handle_path /storage/v1/* {
+		reverse_proxy storage:5000
+	}
+	handle {
+		respond "not found" 404
+	}
+}

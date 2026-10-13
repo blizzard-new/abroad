@@ -1,0 +1,8 @@
+# Files whose exact bytes matter get Unix line endings on every machine, including Windows with core.autocrlf=true.
+# A database migration compares the text of existing functions (and builds new ones from its own text), so a stray CR
+# changes behaviour; shell scripts and the Dockerfile fail outright with CRLF.
+*.sql text eol=lf
+*.sh text eol=lf
+Dockerfile text eol=lf
+.dockerignore text eol=lf
+deploy/selfhost/gateway/Caddyfile text eol=lf

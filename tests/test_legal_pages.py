@@ -78,3 +78,22 @@ def test_the_stylesheet_exists_and_the_pages_load_nothing_from_other_sites():
         assert "<script" not in html, "the site's content security policy allows scripts from itself only"
         assert not re.search(r'(?:src|href)="https?://(?!developers\.google\.com/terms/)', html), name
     assert (STATIC / "legal.css").is_file()
+
+
+def test_a_self_hosted_deployment_names_its_own_hosting_instead_of_supabase_and_render(monkeypatch):
+    monkeypatch.setenv("EXCHANGE_CONTACT_EMAIL", "hello@example.com")
+    monkeypatch.setenv("EXCHANGE_HOSTING_PROFILE", "selfhost")
+    text = TestClient(create_app()).get("/privacy").text
+    assert "{{" not in text
+    assert "營運者自行管理的伺服器，位於台灣" in text and "Google Drive" in text and "台灣境內" in text
+    assert "約 30 天後自動刪除" in text
+    for gone in ("Supabase", "Render", "Cloudflare", "雪梨", "新加坡", "存放在台灣境外"):
+        assert gone not in text, gone
+    assert "登入：Google" in text
+
+
+def test_an_unknown_hosting_profile_falls_back_to_the_hosted_wording(monkeypatch):
+    monkeypatch.setenv("EXCHANGE_CONTACT_EMAIL", "hello@example.com")
+    monkeypatch.setenv("EXCHANGE_HOSTING_PROFILE", "something-else")
+    text = TestClient(create_app()).get("/privacy").text
+    assert "Supabase" in text and "Render" in text and "台灣境外" in text and "{{" not in text
