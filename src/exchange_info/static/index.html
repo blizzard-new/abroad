@@ -9,10 +9,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/brand/favicon-16.png?v=20261004-logo-2" />
     <link rel="apple-touch-icon" sizes="180x180" href="/static/assets/brand/apple-touch-icon.png?v=20261004-logo-2" />
     <title>UniWay｜臺灣大學生留學與交換平台</title>
-    <link rel="stylesheet" href="/static/styles.css?v=20261003-open-1" />
+    <link rel="stylesheet" href="/static/styles.css?v=20261013-notification-rail-1" />
     <link rel="stylesheet" href="/static/design-system.css?v=20260716-platform-12" />
     <link rel="stylesheet" href="/static/platform.css?v=20260721-student-survival-4" />
-    <link rel="stylesheet" href="/static/product-v2.css?v=20261006-terms-1" />
+    <link rel="stylesheet" href="/static/product-v2.css?v=20261013-notification-rail-1" />
     <link rel="stylesheet" href="/static/icon-motion.css?v=20260820-icon-motion-1" />
     <link rel="stylesheet" href="/static/mascot.css?v=20261007-solid-1" />
     <link rel="stylesheet" href="/static/advisor-mascot.css?v=20261007-solid-1" />
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2" />
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
-    <link rel="stylesheet" href="/static/glass-theme.css?v=20261011-source-layout-1" />
+    <link rel="stylesheet" href="/static/glass-theme.css?v=20261013-expanding-rail-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261008-ncu-conditions-1" />
@@ -113,9 +113,9 @@
         </div>
           <div class="topbar-actions">
             <div class="topbar-status"><span class="live-dot" aria-hidden="true"></span><span id="top-updated">資料載入中</span></div>
-            <button id="theme-toggle" type="button" class="icon-button" aria-label="切換為淺色模式" data-tooltip="淺色模式"><i data-lucide="sun" aria-hidden="true"></i></button>
-            <button id="refresh-button" type="button" class="icon-button" aria-label="重新整理最新資料" data-tooltip="重新整理"><i data-lucide="refresh-cw" aria-hidden="true"></i></button>
-            <button id="notification-button" type="button" class="icon-button notification-button" aria-label="開啟通知中心" aria-haspopup="dialog" data-tooltip="通知" hidden><i data-lucide="bell" aria-hidden="true"></i><span id="notification-badge" class="notification-badge" aria-hidden="true" hidden></span></button>
+            <button id="theme-toggle" type="button" class="icon-button" aria-label="切換為深色模式" data-tooltip="深色模式"><i data-lucide="moon" aria-hidden="true"></i><span class="rail-action-label">深色模式</span></button>
+            <button id="refresh-button" type="button" class="icon-button" aria-label="重新整理最新資料" data-tooltip="重新整理"><i data-lucide="refresh-cw" aria-hidden="true"></i><span class="rail-action-label">重新整理</span></button>
+            <button id="notification-button" type="button" class="icon-button notification-button" aria-label="開啟通知中心" aria-haspopup="dialog" data-tooltip="通知" hidden><i data-lucide="bell" aria-hidden="true"></i><span class="rail-action-label">通知中心</span><span id="notification-badge" class="notification-badge" aria-hidden="true" hidden></span></button>
             <div id="account-workspace-sync-control" class="workspace-sync-control" hidden>
               <div id="account-workspace-sync-status" class="workspace-sync-status" data-sync-state="syncing" role="status" aria-live="polite" aria-atomic="true" aria-busy="true">
                 <span class="workspace-sync-status-icon" aria-hidden="true"><i data-lucide="loader-circle"></i></span>
@@ -1213,7 +1213,7 @@
     <script src="/static/regions.js?v=20261008-ntu-review-2" defer></script>
     <script src="/static/discovery-core.js?v=20261011-ncu-integration-2" defer></script>
     <script src="/static/discovery-ui.js?v=20261004-digest-2" defer></script>
-    <script src="/static/navigation.js?v=20261001-planning-workspace-1" defer></script>
+    <script src="/static/navigation.js?v=20261013-expanding-rail-1" defer></script>
     <script src="/static/motion.js?v=20261007-forum-1" defer></script>
     <script src="/static/community-reader.js?v=20261011-six-school-final-2" defer></script>
     <script src="/static/community-moderation.js?v=20260930-discussion-2b" defer></script>
@@ -1234,7 +1234,7 @@
     <script src="/static/feedback.js?v=20261008-2" defer></script>
     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
     <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
-    <script src="/static/app.js?v=20261011-six-school-final-2" defer></script>
+    <script src="/static/app.js?v=20261013-notification-rail-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>
   </body>
 </html>

@@ -877,6 +877,21 @@ def test_premium_web_material_keeps_glass_hierarchy_without_heavy_button_chrome(
     assert "background-color: rgba(17, 30, 44, 0.94)" in styles
 
 
+def test_desktop_navigation_rail_expands_full_labels_without_moving_content() -> None:
+    html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+    navigation = (STATIC_DIR / "navigation.js").read_text(encoding="utf-8")
+    styles = (STATIC_DIR / "glass-theme.css").read_text(encoding="utf-8")
+
+    assert 'class="rail-action-label">重新整理</span>' in html
+    assert 'class="rail-action-label">通知中心</span>' in html
+    assert ".glass-navigation-rail:is(:hover, :focus-within)" in styles
+    assert "width: 76px" in styles
+    assert "width: 240px" in styles
+    assert "margin-left: 288px" in styles
+    assert "glass-rail-tooltip" not in styles
+    assert "glass-rail-tooltip" not in navigation
+
+
 def test_grounded_advisor_and_document_checker_are_independent_pages() -> None:
     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")

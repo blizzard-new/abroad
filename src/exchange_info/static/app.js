@@ -909,7 +909,7 @@ function applyTheme(theme, { persist = true } = {}) {
     const target = nextTheme === "dark" ? "淺色" : "深色";
     button.setAttribute("aria-label", `切換為${target}模式`);
     button.dataset.tooltip = `${target}模式`;
-    button.innerHTML = `<i data-lucide="${nextTheme === "dark" ? "sun" : "moon"}" aria-hidden="true"></i>`;
+    button.innerHTML = `<i data-lucide="${nextTheme === "dark" ? "sun" : "moon"}" aria-hidden="true"></i><span class="rail-action-label">${target}模式</span>`;
   }
   if (persist) {
     try {

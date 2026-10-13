@@ -1278,6 +1278,14 @@ def test_authenticated_plan_notifications_and_progress_sync_across_devices(
     expect(page.locator("#notification-badge")).to_be_visible()
     dot_box = page.locator("#notification-badge").bounding_box()
     assert dot_box and dot_box["width"] == 10 and dot_box["height"] == 10
+    rail = page.locator("#glass-navigation")
+    rail.hover()
+    expect(rail).to_have_css("width", "240px")
+    expect(page.locator("#notification-button .rail-action-label")).to_be_visible()
+    expect(page.locator("#notification-button .rail-action-label")).to_have_text("通知中心")
+    page.evaluate("document.activeElement?.blur()")
+    page.locator("#guide-title").hover()
+    expect(rail).to_have_css("width", "76px")
     Path("output/notification-center").mkdir(parents=True, exist_ok=True)
     page.screenshot(
         path="output/notification-center/notification-red-dot-1280.png",

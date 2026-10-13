@@ -132,41 +132,11 @@
   rail?.addEventListener("scroll", syncToolsPanel, { passive: true });
   syncToolsPanel();
 
-  const tip = document.createElement("div");
-  tip.className = "glass-rail-tooltip";
-  tip.setAttribute("aria-hidden", "true");
-  document.body.append(tip);
-  let tipTarget = null;
-  function hideTip() { tip.classList.remove("is-visible"); tipTarget = null; }
-  function showTip(control) {
-    if (mobile.matches || control.closest(".application-tools-panel")) return;
-    const label = control.querySelector("#account-workspace-sync-label")?.textContent
-      || control.getAttribute("aria-label") || control.textContent.trim();
-    if (!label) return;
-    tipTarget = control;
-    tip.textContent = label;
-    const rect = control.getBoundingClientRect();
-    tip.style.left = `${rail.getBoundingClientRect().right + 12}px`;
-    tip.style.top = `${Math.max(24, Math.min(rect.top + rect.height / 2, innerHeight - 24))}px`;
-    tip.classList.add("is-visible");
-  }
-  rail?.querySelectorAll('.uniway-header-brand, [data-public-route], .application-nav-chevron, .route-back, #school-switcher, .topbar-actions button, .workspace-sync-status').forEach(control => {
+  rail?.querySelectorAll('[data-public-route]').forEach(control => {
     if (!control.hasAttribute("aria-label") && control.matches("[data-public-route]")) control.setAttribute("aria-label", control.textContent.trim());
-    if (control.matches(".application-nav-chevron")) control.setAttribute("aria-label", "展開我的申請工具");
-    control.addEventListener("pointerenter", () => showTip(control));
-    control.addEventListener("pointerleave", hideTip);
-    control.addEventListener("focus", () => showTip(control));
-    control.addEventListener("blur", hideTip);
   });
+  rail?.querySelector(".application-nav-chevron")?.setAttribute("aria-label", "展開我的申請工具");
   tools?.querySelector("summary")?.setAttribute("aria-label", "展開我的申請工具");
-  tools?.querySelector("summary")?.addEventListener("focus", event => showTip(event.currentTarget));
-  tools?.querySelector("summary")?.addEventListener("blur", hideTip);
-  document.addEventListener("keydown", event => { if (event.key === "Escape") hideTip(); });
-  window.addEventListener("hashchange", hideTip);
-  window.addEventListener("resize", hideTip);
-  rail?.addEventListener("scroll", hideTip, { passive: true });
-  // Account, school and theme names can change after the first render.
-  new MutationObserver(() => { if (tipTarget) showTip(tipTarget); }).observe(rail, { subtree: true, childList: true, attributes: true, attributeFilter: ["aria-label"] });
   function setSidebar(open, { restoreFocus = false } = {}) {
     if (!rail || !toggle || !backdrop) return;
     const expanded = mobile.matches && open;

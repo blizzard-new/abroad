@@ -73,8 +73,11 @@ def test_verified_catalog_search_map_and_saved_school(page, live_server, width):
         expect(page.locator("#account-workspace-sync-label")).to_be_visible()
         assert page.locator("#account-workspace-sync-label").bounding_box()["width"] > 20
     else:
+        rail = page.locator("#glass-navigation")
         page.locator(".workspace-sync-status").hover()
-        expect(page.locator(".glass-rail-tooltip.is-visible")).to_contain_text("已同步")
+        expect(rail).to_have_css("width", "240px")
+        expect(page.locator("#account-workspace-sync-label")).to_be_visible()
+        expect(page.locator("#account-workspace-sync-label")).to_have_text("已同步")
     page.locator('.uniway-public-nav [data-public-route="partners"]').click()
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("Lincoln")
@@ -99,6 +102,8 @@ def test_verified_catalog_search_map_and_saved_school(page, live_server, width):
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     capture(page, f"verified-school-{width}.png")
     open_navigation(page)
+    if width <= 900:
+        page.locator("#glass-menu-close").click()
     page.locator("#back-to-schools").click()
     expect(page.locator("#partner-search")).to_have_value("Lincoln")
     open_navigation(page)
@@ -213,7 +218,7 @@ def test_mobile_navigation_focus_escape_and_login(page, live_server):
 
 
 @pytest.mark.parametrize("reduced", [False, True])
-def test_compact_rail_labels_and_tools_follow_pointer_and_keyboard(page, live_server, reduced):
+def test_compact_rail_expands_with_full_labels_for_pointer_and_keyboard(page, live_server, reduced):
     page.set_viewport_size({"width": 1754, "height": 956})
     page.emulate_media(reduced_motion="reduce" if reduced else "no-preference")
     enter_public_site(page, live_server, "forum")
@@ -221,20 +226,30 @@ def test_compact_rail_labels_and_tools_follow_pointer_and_keyboard(page, live_se
     assert rail.bounding_box()["width"] == 76
     expect(rail.locator('[data-public-route="public-board"]')).to_have_count(0)
     guide = rail.get_by_role("link", name="論壇", exact=True)
-    tip = page.locator(".glass-rail-tooltip")
+    label = guide.locator("span")
+    expect(label).to_be_hidden()
+    content_x = page.locator("#community-hub").bounding_box()["x"]
+    capture(page, f"rail-collapsed-{'reduced' if reduced else 'animated'}.png")
     guide.hover()
-    expect(tip).to_have_class("glass-rail-tooltip is-visible")
-    expect(tip).to_have_text("論壇")
-    duration = tip.evaluate("el => getComputedStyle(el).transitionDuration")
+    expect(rail).to_have_css("width", "240px")
+    expect(label).to_be_visible()
+    expect(label).to_have_text("論壇")
+    expect(rail.get_by_text("學校搜尋", exact=True)).to_be_visible()
+    expect(rail.get_by_text("我的申請", exact=True)).to_be_visible()
+    assert page.locator("#community-hub").bounding_box()["x"] == content_x
+    capture(page, f"rail-expanded-{'reduced' if reduced else 'animated'}.png")
+    duration = rail.evaluate("el => getComputedStyle(el).transitionDuration")
     assert (duration == "0s") == reduced
     page.locator("#community-hub-title").hover()
-    expect(tip).not_to_have_class("glass-rail-tooltip is-visible")
+    expect(rail).to_have_css("width", "76px")
+    expect(label).to_be_hidden()
     guide.focus()
-    expect(tip).to_have_text("論壇")
-    expect(tip).to_have_class("glass-rail-tooltip is-visible")
-    page.keyboard.press("Escape")
-    expect(tip).not_to_have_class("glass-rail-tooltip is-visible")
+    expect(rail).to_have_css("width", "240px")
+    expect(label).to_be_visible()
+    page.evaluate("document.activeElement?.blur()")
+    expect(rail).to_have_css("width", "76px")
     rail.locator("#application-tools > summary").focus()
+    expect(rail).to_have_css("width", "240px")
     page.keyboard.press("Enter")
     panel = rail.locator(".application-tools-panel")
     expect(panel).to_be_visible()
@@ -243,4 +258,4 @@ def test_compact_rail_labels_and_tools_follow_pointer_and_keyboard(page, live_se
     expect(panel).to_be_visible()
     page.locator("#community-hub-title").click()
     expect(panel).not_to_be_visible()
-    capture(page, f"compact-rail-{'reduced' if reduced else 'animated'}.png")
+    capture(page, f"expanding-rail-{'reduced' if reduced else 'animated'}.png")

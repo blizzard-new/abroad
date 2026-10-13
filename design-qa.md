@@ -1,3 +1,69 @@
+# Design QA: Supabase-style expanding navigation rail
+
+## Comparison target
+
+- Source visual truth: the user's latest two Supabase screenshots, showing the same project page with a 58 px icon-only rail and an approximately 260 px hover-expanded rail.
+- Implementation screenshots: `output/expanding-rail/rail-collapsed-animated.png` and `output/expanding-rail/rail-expanded-animated.png`, plus the reduced-motion variants in the same directory.
+- Primary viewport and density: 1754 × 956 CSS px at device scale factor 1; full-page captures are 1754 × 1189 px.
+- State: light theme, guest session, 長庚大學 guide page. The rail was compared in its resting, pointer-hover, keyboard-focus, and nested application-menu states.
+
+## Full-view comparison evidence
+
+The Supabase reference keeps the page canvas fixed while the left navigation grows over the reserved gutter. The implementation follows that behavior: its resting rail is 76 px wide, its expanded rail is 240 px wide, and the guide content remains anchored at x = 288 px in both states. The compact state shows only the established UniWay and Lucide iconography; hover or keyboard focus reveals the full UniWay brand, route names, school selector, theme, refresh, notification, sync, and account labels without moving the page.
+
+The reference's dark graphite palette was treated as interaction and proportion guidance rather than a replacement visual system. UniWay's existing translucent light/dark surfaces, type, active-state color, radii, and icon family are retained, so the new behavior reads as part of the existing product rather than a copied foreign shell.
+
+## Focused region comparison evidence
+
+- Collapsed state: all text is removed from visual flow with zero-width, hidden labels rather than clipped fragments. Every icon remains centered in the 76 px rail and retains its accessible name.
+- Expanded state: route rows, utility actions, account identity, and status copy restore at consistent alignment inside the 240 px surface. Long supporting text is allowed to wrap vertically instead of overflowing horizontally.
+- Layout stability: browser geometry confirms that the guide content's x-position does not change between collapsed and expanded states.
+- Nested controls: the application selector still opens from the expanded rail and remains usable without collapsing its parent surface.
+
+## Required fidelity surfaces
+
+- Fonts and typography: Existing UniWay families, weights, line height, and Chinese labels are preserved. Labels reveal as complete words and remain optically aligned with their icons.
+- Spacing and layout rhythm: 76/240 px rail widths reproduce the compact-to-full relationship in the reference while fitting UniWay's existing 16 px page inset. The page gutter is reserved, eliminating hover-induced content movement.
+- Colors and visual tokens: Existing theme tokens remain intact in light and dark modes. Active, hover, danger-dot, muted status, border, and focus colors keep their established semantics.
+- Image quality and asset fidelity: No new imagery was required. The existing UniWay logo and Lucide icons remain vector-sharp; no CSS art, replacement SVG, or placeholder asset was introduced.
+- Copy and content: Full Chinese route and utility names are now available in the expanded state. The notification label integrates with the existing unread red dot and accessible unread count.
+- Responsiveness: At tablet and mobile widths the existing drawer behavior remains in place, so the hover rail does not create an unusable touch-only interaction.
+
+## Findings
+
+- No actionable P0, P1, or P2 visual mismatch remains for the requested expanding-sidebar behavior.
+
+## Open questions
+
+- None. The reference clearly defines the collapsed and expanded behavior; UniWay's established palette and content provide the product-specific styling.
+
+## Comparison history
+
+- Initial implementation review: collapsed and expanded captures matched the reference's interaction hierarchy, but a browser integration check exposed an obsolete tooltip listener. The listener was removed before final capture.
+- Final comparison: the rail expands cleanly, labels are complete, content remains stationary, nested menus work, and no clipping or horizontal overflow was observed.
+
+## Primary interactions and runtime checks
+
+- Verified pointer hover expansion and collapse, keyboard `focus-within` expansion, focus-retained open state, reduced-motion behavior, nested application menu, notification label/red-dot integration, and unchanged mobile drawer behavior.
+- Verified light/dark theme switching and desktop, tablet, and mobile responsive states with browser error collection enabled.
+
+## Implementation checklist
+
+- [x] Default to a compact icon-only desktop rail.
+- [x] Expand the complete rail and reveal full names on pointer hover.
+- [x] Provide the same disclosure for keyboard focus.
+- [x] Keep the page canvas fixed while the rail expands.
+- [x] Preserve the notification indicator, application selector, account controls, and mobile drawer.
+- [x] Honor reduced-motion preferences.
+
+## Follow-up polish
+
+- None required for this scoped change.
+
+final result: passed
+
+---
+
 # Design QA: source notifications and notification management
 
 ## Comparison target
