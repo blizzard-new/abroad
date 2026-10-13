@@ -278,7 +278,6 @@ def test_guest_can_save_device_selections_and_plan_actions_require_login(
     page.locator('#glass-navigation a[data-public-route="overview"]').click()
     expect(page.locator("#school-onboarding")).to_be_visible()
     page.locator('#school-options [data-home-school="長庚大學"]').click()
-    page.locator("#confirm-school").click()
     expect(page.locator("#school-onboarding")).to_be_hidden()
     page.wait_for_function("() => !state.homeSchoolLoading && !state.partnerDataLoading")
     page.evaluate("window.location.hash = '#overview'")

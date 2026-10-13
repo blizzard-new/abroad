@@ -43,7 +43,6 @@ def test_visitor_switches_schools_without_an_account(page, live_server):
     expect(page.locator("#school-switcher")).to_be_enabled()
     page.locator("#school-switcher").click()
     page.locator(f'[data-home-school="{NTPU}"]').click()
-    page.locator("#confirm-school").click()
     expect(page.locator("#school-switcher-label")).to_have_text(NTPU)
     expect(page.locator("#auth-dialog")).to_be_hidden()
     wait_until(page, "Boolean(state.dashboard && state.dashboard.school_name === '國立臺北大學')")
@@ -56,7 +55,6 @@ def test_account_without_a_school_is_asked_once_after_google_returns(page, live_
     page.goto(f"{live_server.base_url}/#auth=success")
     expect(page.locator("#school-onboarding")).to_be_visible(timeout=30_000)
     page.locator(f'[data-home-school="{NTPU}"]').click()
-    page.locator("#confirm-school").click()
     expect(page.locator("#school-onboarding")).to_be_hidden()
     expect(page.locator("#school-switcher-label")).to_have_text(NTPU)
     profile = requests.get(

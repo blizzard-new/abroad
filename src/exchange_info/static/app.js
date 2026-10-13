@@ -74,6 +74,7 @@ const state = {
   homeSchool: "",
   selectedHomeSchool: "長庚大學",
   chooseSchoolForAccount: false,
+  choosingSchool: false,
   pendingSchoolPrompt: false,
   supportedUniversities: [],
   coverage: null,
@@ -1362,6 +1363,26 @@ function renderCoverageBadges(item) {
   return `${image}${website}${experience}${workflow}${destination}`;
 }
 
+// The mark in front of each school's name. Official emblems go in SCHOOL_EMBLEM_FILES, {school name: image path}, once the
+// school has agreed to their use; until then a two-character mark in the school's own tint stands in.
+const SCHOOL_BADGES = {
+  "長庚大學": { text: "長庚", tint: 172 },
+  "國立臺北大學": { text: "北大", tint: 215 },
+  "國立臺灣大學": { text: "臺大", tint: 140 },
+  "國立中正大學": { text: "中正", tint: 8 },
+  "國立中央大學": { text: "中央", tint: 235 },
+  "淡江大學": { text: "淡江", tint: 35 },
+};
+const SCHOOL_EMBLEM_FILES = {};
+
+function schoolBadge(item) {
+  const preset = SCHOOL_BADGES[item.school_name];
+  const text = preset?.text || String(item.short_name || item.school_name || "").replace(/^國立/, "").slice(0, 2);
+  const emblem = SCHOOL_EMBLEM_FILES[item.school_name];
+  const inner = emblem ? `<img src="${escapeHtml(emblem)}" alt="" decoding="async" />` : escapeHtml(text);
+  return { tint: preset?.tint ?? 200, html: `<span class="school-emblem" aria-hidden="true">${inner}</span>` };
+}
+
 function renderSchoolOptions(query = "") {
   const container = $("#school-options");
   if (!container) return;
@@ -1372,15 +1393,17 @@ function renderSchoolOptions(query = "") {
   });
   $("#school-search-empty").hidden = universities.length > 0;
   container.innerHTML = universities
-    .map(
-      (item) => `
-        <button type="button" class="school-option${item.school_name === state.selectedHomeSchool ? " selected" : ""}" data-home-school="${escapeHtml(item.school_name)}" role="option" aria-selected="${item.school_name === state.selectedHomeSchool}">
-          ${item.hero_image ? `<img src="${escapeHtml(item.hero_image)}" alt="${escapeHtml(item.school_name)}識別圖" />` : `<span class="planning-match-icon" aria-hidden="true"><i data-lucide="school"></i></span>`}
-          <span><strong>${escapeHtml(item.school_name)}</strong><small>${escapeHtml(item.coverage_note)}</small></span>
+    .map((item) => {
+      const badge = schoolBadge(item);
+      const isSelected = item.school_name === state.selectedHomeSchool;
+      return `
+        <button type="button" class="school-option${isSelected ? " selected" : ""}" data-home-school="${escapeHtml(item.school_name)}" role="option" aria-selected="${isSelected}" style="--school-tint:${badge.tint}">
+          ${badge.html}
+          <span class="school-option-name">${escapeHtml(item.school_name)}</span>
           <span class="school-option-status">${item.partner_count ? `${item.partner_count} 間合作校` : "資料建置中"}</span>
-          <i data-lucide="${item.school_name === state.selectedHomeSchool ? "circle-check" : "circle"}" aria-hidden="true"></i>
-        </button>`
-    )
+          <i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i>
+        </button>`;
+    })
     .join("");
   initIcons();
 }
@@ -13028,18 +13051,20 @@ function bindEvents() {
   });
 
   $("#school-search").addEventListener("input", (event) => renderSchoolOptions(event.target.value));
-  $("#school-options").addEventListener("click", (event) => {
+  // Choosing a school is a single click: it saves the choice (for a new account) and opens that school's page.
+  $("#school-options").addEventListener("click", async (event) => {
     const option = event.target.closest("[data-home-school]");
-    if (!option) return;
-    state.selectedHomeSchool = option.dataset.homeSchool;
-    renderSchoolOptions($("#school-search").value);
+    if (!option || state.choosingSchool) return;
+    const school = option.dataset.homeSchool;
+    state.choosingSchool = true;
+    state.selectedHomeSchool = school;
+    try {
+      if (state.chooseSchoolForAccount) await saveAccountSchool(school);
+      setHomeSchool(school);
+    } finally {
+      state.choosingSchool = false;
+    }
   });
-  $("#confirm-school").addEventListener("click", async () => {
-    const school = state.selectedHomeSchool;
-    if (state.chooseSchoolForAccount) await saveAccountSchool(school);
-    setHomeSchool(school);
-  });
-  $("#browse-first").addEventListener("click", browseWithoutSchoolSelection);
   document.addEventListener("keydown", handleOnboardingKeydown);
 
   $("#partner-search").addEventListener("input", (event) => {

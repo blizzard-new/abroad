@@ -24,7 +24,6 @@ def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,nam
     open_navigation(page)
     page.locator('#school-switcher').click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator('#confirm-school').click()
     wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
     if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
         page.locator('#glass-menu-toggle').click()

@@ -111,7 +111,7 @@ def test_ncu_matching_favorites_documents_plan_reload_and_home_switch(page, live
 
     def switch_school(school):
         open_navigation(page); page.locator('#school-switcher').click()
-        page.locator(f'[data-home-school="{school}"]').click(); page.locator('#confirm-school').click()
+        page.locator(f'[data-home-school="{school}"]').click()
         wait_until(page, f"state.dashboard?.school_name === '{school}' && state.accountWorkspaceLoadingCount === 0", timeout=60)
         if width < 700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
             page.locator('#glass-menu-toggle').click()

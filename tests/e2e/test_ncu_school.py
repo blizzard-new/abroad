@@ -17,7 +17,6 @@ def test_ncu_hiroshima_fee_image_coe_and_departure_stages_reach_mobile_ui(page,l
     open_navigation(page)
     page.locator('#school-switcher').click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator('#confirm-school').click()
     wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60.0)
     if page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
         page.locator('#glass-menu-toggle').click()
@@ -75,7 +74,7 @@ def test_ncu_omu_optional_english_and_iwing_health_reach_mobile_program_and_life
     enter_public_site(page, live_server, 'partners')
     expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
     open_navigation(page); page.locator('#school-switcher').click()
-    page.locator('[data-home-school="國立中央大學"]').click(); page.locator('#confirm-school').click()
+    page.locator('[data-home-school="國立中央大學"]').click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
     if page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
         page.locator('#glass-menu-toggle').click()
@@ -136,7 +135,6 @@ def test_ncu_nuist_versions_and_ujn_hong_kong_scope_reach_visible_mobile_content
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
@@ -177,7 +175,6 @@ def test_ncu_tju_application_and_arrival_files_and_conversion_note_reach_mobile_
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
@@ -223,7 +220,6 @@ def test_ncu_chd_workbook_and_tju_document_catalog_are_visible(page, live_server
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
@@ -277,7 +273,6 @@ def test_ncu_content_source_pages_home_host_and_life(page, live_server, width):
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if (
         width < 700
         and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true"
@@ -355,7 +350,6 @@ def test_ncu_undip_2027_pending_dates_and_ten_scoped_files_reach_mobile_ui(page,
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
@@ -449,7 +443,6 @@ def test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui(
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(
@@ -514,7 +507,6 @@ def test_ncu_shanghai_visual_versions_and_life_are_visible(page, live_server, sc
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
@@ -557,7 +549,6 @@ def test_ncu_uos_visual_evidence_and_conditional_housing_form_are_visible(page, 
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
@@ -610,7 +601,6 @@ def test_ncu_uny_degree_history_and_empty_exchange_resources_are_visible(page, l
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
@@ -664,7 +654,6 @@ def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
@@ -728,7 +717,6 @@ def test_ncu_nuist_image_packet_documents_and_taiwan_life_reach_mobile_ui(page, 
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
@@ -946,7 +934,7 @@ def test_ncu_science_tokyo_track_coe_health_and_2027_tiec_fee_reach_mobile_conte
     enter_public_site(page,live_server,'partners')
     expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
     open_navigation(page);page.locator('#school-switcher').click()
-    page.locator('[data-home-school="國立中央大學"]').click();page.locator('#confirm-school').click()
+    page.locator('[data-home-school="國立中央大學"]').click()
     wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60.0)
     if page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill('東京科學')
@@ -992,7 +980,7 @@ def test_ncu_chiba_initial_health_language_choices_closed_dorm_and_insurance_rea
     enter_public_site(page, live_server, 'partners')
     expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
     open_navigation(page); page.locator('#school-switcher').click()
-    page.locator('[data-home-school="國立中央大學"]').click(); page.locator('#confirm-school').click()
+    page.locator('[data-home-school="國立中央大學"]').click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
     if page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
         page.locator('#glass-menu-toggle').click()

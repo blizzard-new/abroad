@@ -20,7 +20,7 @@ def test_next3_reference_packets_and_living_content(page,live_server,width,slug,
     out=Path(os.environ.get('NCU_NEXT3_BROWSER_OUT','/workspace/ncu-verification-tmp/next3-browser'));out.mkdir(parents=True,exist_ok=True)
     enter_public_site(page,live_server,'partners');expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
     open_navigation(page);page.locator('#school-switcher').click()
-    page.locator('[data-home-school="國立中央大學"]').click();page.locator('#confirm-school').click()
+    page.locator('[data-home-school="國立中央大學"]').click()
     wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
     if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(name)

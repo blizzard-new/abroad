@@ -20,7 +20,6 @@ def test_new_student_picks_a_school_and_lands_on_selection_and_confirmation(page
     page.locator(ENTRY).click()
     expect(page.locator("#school-onboarding")).to_be_visible()
     page.locator(f'[data-home-school="{NTPU}"]').click()
-    page.locator("#confirm-school").click()
     expect(page.locator("#school-onboarding")).to_be_hidden()
     assert_selection_page(page)
 
