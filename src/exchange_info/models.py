@@ -3333,7 +3333,7 @@ class AccountNotification(BaseModel):
     id: str = Field(default_factory=lambda: uuid4().hex)
     account_id: str = Field(min_length=1, max_length=80)
     dedupe_key: str = Field(min_length=1, max_length=500)
-    kind: Literal["deadline", "content_update"] = "deadline"
+    kind: Literal["deadline", "content_update", "catalogue_update"] = "deadline"
     channels: list[Literal["web", "email"]] = Field(default_factory=list, max_length=2)
     title: str = Field(min_length=1, max_length=180)
     body: str = Field(min_length=1, max_length=1000)
@@ -3344,6 +3344,7 @@ class AccountNotification(BaseModel):
     reminder_days: int | None = Field(default=None, ge=0, le=90)
     scheduled_for: datetime = Field(default_factory=utc_now)
     read_at: datetime | None = None
+    deleted_at: datetime | None = None
     created_at: datetime = Field(default_factory=utc_now)
 
 

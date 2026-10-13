@@ -475,15 +475,3 @@ body.unified-shell .calendar-alert-brief > button { font-size:12px; white-space:
   body.unified-shell .application-packet-list { max-height:none; padding:2px; }
   body.unified-shell .advisor-school-actions { grid-column:1/-1; grid-template-columns:1fr 1fr; }
 }
-
-/* Keep catalogue provenance in its own reading area without displacing tools. */
-body:not(.public-exploration-mode) #catalogue-source-status { display: none; }
-body.unified-shell .catalogue-source-status {
-  width: calc(100% - 144px); max-width: 1400px; margin: 16px 32px 0 112px;
-}
-@media (min-width: 1600px) {
-  body.unified-shell .catalogue-source-status { margin-left: calc(112px + (100% - 1544px) / 2); }
-}
-@media (max-width: 900px) {
-  body.unified-shell .catalogue-source-status { width: calc(100% - 28px); margin: 14px 14px 0; }
-}

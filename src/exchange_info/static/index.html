@@ -115,7 +115,7 @@
             <div class="topbar-status"><span class="live-dot" aria-hidden="true"></span><span id="top-updated">資料載入中</span></div>
             <button id="theme-toggle" type="button" class="icon-button" aria-label="切換為淺色模式" data-tooltip="淺色模式"><i data-lucide="sun" aria-hidden="true"></i></button>
             <button id="refresh-button" type="button" class="icon-button" aria-label="重新整理最新資料" data-tooltip="重新整理"><i data-lucide="refresh-cw" aria-hidden="true"></i></button>
-            <button id="notification-button" type="button" class="icon-button notification-button" aria-label="開啟通知中心" aria-haspopup="dialog" data-tooltip="通知" hidden><i data-lucide="bell" aria-hidden="true"></i><span id="notification-badge" class="notification-badge" hidden>0</span></button>
+            <button id="notification-button" type="button" class="icon-button notification-button" aria-label="開啟通知中心" aria-haspopup="dialog" data-tooltip="通知" hidden><i data-lucide="bell" aria-hidden="true"></i><span id="notification-badge" class="notification-badge" aria-hidden="true" hidden></span></button>
             <div id="account-workspace-sync-control" class="workspace-sync-control" hidden>
               <div id="account-workspace-sync-status" class="workspace-sync-status" data-sync-state="syncing" role="status" aria-live="polite" aria-atomic="true" aria-busy="true">
                 <span class="workspace-sync-status-icon" aria-hidden="true"><i data-lucide="loader-circle"></i></span>
@@ -242,8 +242,11 @@
       <div class="account-dialog-shell notification-dialog-shell">
         <button type="button" class="icon-button dialog-close" data-close-notifications aria-label="關閉"><i data-lucide="x" aria-hidden="true"></i></button>
         <div class="notification-dialog-heading">
-          <div><span class="eyebrow">申請時程</span><h1 id="notification-title">通知中心</h1><p>紙本送件以送達日計算。</p></div>
-          <button id="notification-read-all" type="button" class="text-action">全部標為已讀</button>
+          <div><span class="eyebrow">申請動態</span><h1 id="notification-title">通知中心</h1><p>申請時程、官方規定與合作校來源更新。紙本送件以送達日計算。</p></div>
+          <div class="notification-dialog-actions">
+            <button id="notification-read-all" type="button" class="text-action">全部已讀</button>
+            <button id="notification-delete-all" type="button" class="text-action is-danger">全部刪除</button>
+          </div>
         </div>
         <div id="notification-center-status" class="notification-center-status" role="status" aria-live="polite"></div>
         <div id="notification-center-list" class="notification-center-list"></div>
@@ -382,8 +385,6 @@
         </nav>
 
         <div id="page-status" class="page-status" role="status" aria-live="polite"></div>
-        <aside id="catalogue-source-status" class="catalogue-source-status" role="status" aria-live="polite" hidden></aside>
-
         <div id="dashboard-view">
           <section id="guide" class="page-section study-guide" data-university-page="guide" aria-labelledby="guide-title" hidden>
             <header class="guide-intro">

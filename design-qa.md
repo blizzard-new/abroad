@@ -1,3 +1,67 @@
+# Design QA: source notifications and notification management
+
+## Comparison target
+
+- Source visual truth: chat attachments `codex-clipboard-6588886a-1984-4ea8-8b86-f473fa238855.png` (101 × 838 px navigation rail) and `codex-clipboard-7e6e7d2f-237d-4c81-9df5-e7af6b7416e8.png` (1802 × 861 px guide page), plus the user's focused bell-tooltip crop in the follow-up request.
+- Implementation screenshots: `output/notification-center/notification-red-dot-1280.png`, `output/notification-center/notification-center-1280.png`, `output/notification-center/notification-center-390.png`, `output/cgu-source-recovery/outage-saved-1440.png`, and `output/cgu-source-recovery/outage-saved-390.png`.
+- Viewports and density: 1280 × 900 and 390 × 844 CSS px for the notification flow, plus 1440 × 950 and 390 × 950 CSS px for source-recovery states; device scale factor 1 throughout. Full-page notification captures are 1280 × 1072 and 390 × 1699 px. No density resampling was needed.
+- State: light theme, authenticated 長庚大學 account, two unread notifications, notification dialog open; source-recovery captures cover saved-reference, unavailable, and recovered catalogue states. The visual target and rendered captures were reviewed together in the same light-theme guide context.
+
+## Full-view comparison evidence
+
+The source guide screenshot shows the three-line 長庚 catalogue-source message above the hero and the notification entry in the left rail. In the rendered guide and recovery captures, that top-left message is absent, so the hero begins without the extra provenance block and the rest of the supplied page composition remains intact. The authenticated rail retains the same bell location and gains a compact red unread dot without changing the rail width or icon geometry.
+
+The open notification-center captures show the former source title, retrieval time, verification disclaimer, destination link, and official-source link as a first-class notification. At desktop width the dialog remains visually centered and separated from the page by the existing blur treatment. At 390 px it becomes a single-column sheet; its header actions, notification copy, and item actions wrap without overlap or horizontal overflow.
+
+## Focused region comparison evidence
+
+- Rail bell: browser geometry confirms a 10 × 10 px red dot anchored within the existing bell button. The dot carries no duplicate spoken text; the button's accessible label exposes the unread count.
+- Notification actions: `全部已讀` and red-semantic `全部刪除` remain 44 px-high controls. Each row provides a Lucide trash icon with a text label and notification-specific accessible name. Mobile captures confirm that the controls remain separate and tappable.
+- Source-message destination: browser recovery captures and DOM checks confirm there is no `#catalogue-source-status` banner. Source-unavailable guidance remains in the catalogue list/map, while account-specific source events appear in the notification center.
+
+## Required fidelity surfaces
+
+- Fonts and typography: Existing UI families and optical weights are preserved. Notification title, metadata, body, and actions maintain the established hierarchy and wrap cleanly at 390 px.
+- Spacing and layout rhythm: Desktop dialog alignment, 16–17 px item padding, 44 px action targets, separators, and mobile single-column flow remain consistent with the product shell. No viewport overflow was detected.
+- Colors and visual tokens: The unread dot and destructive actions use the existing danger red; unread rows retain the existing blue wash, and disabled controls retain the existing muted state.
+- Image quality and asset fidelity: The supplied UniWay logo and suitcase artwork remain unchanged. All new functional icons use the existing Lucide set; no image or custom SVG substitute was introduced.
+- Copy and content: The source acquisition title, timestamp, and official-verification disclaimer are preserved in the new destination. Action labels match the requested `全部已讀` and `全部刪除`; destructive bulk deletion explicitly warns that it cannot be undone.
+
+## Findings
+
+- No actionable P0, P1, or P2 mismatch remains for the requested notification-center change.
+
+## Open questions
+
+- The supplied visual target does not depict an open notification-center design, so the dialog was evaluated against the existing product design system and the user's explicit functional copy rather than against a new pixel-specific mockup.
+
+## Comparison history
+
+- Initial rendered pass: no P0/P1/P2 issue was found. Desktop and mobile captures showed readable hierarchy, intact source content, correct destructive emphasis, and no clipping, so no visual correction iteration was required.
+
+## Primary interactions and runtime checks
+
+- Verified unread-dot visibility, notification-dialog opening, individual deletion, mark-all-read, bulk-delete confirmation, empty state, source-notification deduplication, deletion persistence, and future-source recovery behavior.
+- Verified 1280 px desktop and 390 px mobile widths with no horizontal overflow, and checked page-error collection during catalogue recovery.
+- Browser coverage: the focused notification flow and four source-recovery variants passed.
+
+## Implementation checklist
+
+- [x] Remove the catalogue-source banner from the page upper-left.
+- [x] Create deduplicated web notifications for meaningful catalogue-source states.
+- [x] Show a red dot whenever unread notifications exist.
+- [x] Add all-read, delete-all, and per-notification delete controls.
+- [x] Prevent deleted generated notifications from reappearing on the next refresh.
+- [x] Verify desktop, mobile, empty, unavailable, saved-reference, and recovered states.
+
+## Follow-up polish
+
+- None required for this scoped change.
+
+final result: passed
+
+---
+
 # Design QA: page-level return control
 
 ## Comparison target

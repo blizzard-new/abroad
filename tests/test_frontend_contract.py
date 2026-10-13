@@ -1057,10 +1057,17 @@ def test_web_notification_center_and_explicit_email_opt_in_are_present() -> None
     assert 'id="notification-button"' in html
     assert 'id="notification-dialog"' in html
     assert 'id="notification-center-list"' in html
+    assert 'id="notification-delete-all"' in html
+    assert "全部已讀" in html
+    assert "全部刪除" in html
     assert 'name="email_notifications"' in html
     assert "只有勾選並儲存後才排入寄送" in html
     assert 'fetchJson("/account/notifications?limit=50")' in script
     assert 'fetchJson("/account/notifications/read-all"' in script
+    assert 'method: "DELETE"' in script
+    assert 'data-delete-notification' in script
+    assert "合作校來源更新" in script
+    assert 'id="catalogue-source-status"' not in html
     assert 'values.get("email_notifications") === "on"' in script
     assert "紙本送件以送達日計算" in html
     assert "官方規定更新" in script

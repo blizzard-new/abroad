@@ -10084,20 +10084,13 @@ h2[tabindex="-1"]:focus {
 
 .notification-badge {
   position: absolute;
-  top: -3px;
-  right: -4px;
-  display: grid;
-  min-width: 19px;
-  height: 19px;
-  padding: 0 5px;
-  place-items: center;
+  top: 5px;
+  right: 5px;
+  width: 10px;
+  height: 10px;
   border: 2px solid var(--surface);
   border-radius: 999px;
   background: #d92d20;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 800;
-  line-height: 1;
 }
 
 .notification-dialog-shell {
@@ -10132,14 +10125,28 @@ h2[tabindex="-1"]:focus {
   line-height: 1.55;
 }
 
+.notification-dialog-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
 .notification-dialog-heading .text-action {
   flex: 0 0 auto;
   min-height: 44px;
+  padding-inline: 10px;
 }
 
 .notification-dialog-heading .text-action:disabled {
   opacity: 0.45;
   cursor: default;
+}
+
+.notification-dialog-heading .text-action.is-danger,
+.notification-center-item-actions .notification-delete {
+  color: var(--danger, #b42318);
 }
 
 .notification-center-status {
@@ -10245,6 +10252,16 @@ h2[tabindex="-1"]:focus {
   color: var(--ink-soft);
 }
 
+.notification-center-item-actions .notification-delete {
+  gap: 5px;
+  margin-left: auto;
+}
+
+.notification-center-item-actions .notification-delete svg {
+  width: 14px;
+  height: 14px;
+}
+
 .notification-official-source svg {
   width: 14px;
   height: 14px;
@@ -10337,6 +10354,10 @@ h2[tabindex="-1"]:focus {
 
   .notification-dialog-heading .text-action {
     justify-self: start;
+  }
+
+  .notification-dialog-actions {
+    justify-content: flex-start;
   }
 
   .notification-center-list {

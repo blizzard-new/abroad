@@ -450,6 +450,12 @@ class AccountRepository(Protocol):
 
     def mark_all_notifications_read(self, account_id: str, read_at: datetime) -> int: ...
 
+    def delete_notification(
+        self, account_id: str, notification_id: str, deleted_at: datetime
+    ) -> AccountNotification | None: ...
+
+    def delete_all_notifications(self, account_id: str, deleted_at: datetime) -> int: ...
+
     def find_delivery(
         self, notification_id: str, channel: str
     ) -> NotificationDelivery | None: ...
@@ -1275,7 +1281,7 @@ class JsonlAccountRepository:
         rows = [
             row
             for row in load_account_notifications(self.data_dir)
-            if row.account_id == account_id
+            if row.account_id == account_id and row.deleted_at is None
         ]
         return sorted(rows, key=lambda row: row.created_at, reverse=True)[:limit]
 
@@ -1322,7 +1328,11 @@ class JsonlAccountRepository:
             matched: AccountNotification | None = None
             updated_rows: list[AccountNotification] = []
             for row in rows:
-                if row.id == notification_id and row.account_id == account_id:
+                if (
+                    row.id == notification_id
+                    and row.account_id == account_id
+                    and row.deleted_at is None
+                ):
                     row = row.model_copy(update={"read_at": read_at})
                     matched = row
                 updated_rows.append(row)
@@ -1336,8 +1346,46 @@ class JsonlAccountRepository:
             count = 0
             updated_rows: list[AccountNotification] = []
             for row in rows:
-                if row.account_id == account_id and row.read_at is None:
+                if (
+                    row.account_id == account_id
+                    and row.read_at is None
+                    and row.deleted_at is None
+                ):
                     row = row.model_copy(update={"read_at": read_at})
+                    count += 1
+                updated_rows.append(row)
+            if count:
+                save_account_notifications(updated_rows, self.data_dir)
+            return count
+
+    def delete_notification(
+        self, account_id: str, notification_id: str, deleted_at: datetime
+    ) -> AccountNotification | None:
+        with self._locked("account_notifications"):
+            rows = load_account_notifications(self.data_dir)
+            matched: AccountNotification | None = None
+            updated_rows: list[AccountNotification] = []
+            for row in rows:
+                if (
+                    row.id == notification_id
+                    and row.account_id == account_id
+                    and row.deleted_at is None
+                ):
+                    row = row.model_copy(update={"deleted_at": deleted_at})
+                    matched = row
+                updated_rows.append(row)
+            if matched is not None:
+                save_account_notifications(updated_rows, self.data_dir)
+            return matched
+
+    def delete_all_notifications(self, account_id: str, deleted_at: datetime) -> int:
+        with self._locked("account_notifications"):
+            rows = load_account_notifications(self.data_dir)
+            count = 0
+            updated_rows: list[AccountNotification] = []
+            for row in rows:
+                if row.account_id == account_id and row.deleted_at is None:
+                    row = row.model_copy(update={"deleted_at": deleted_at})
                     count += 1
                 updated_rows.append(row)
             if count:
@@ -2213,6 +2261,7 @@ class SupabaseAccountRepository:
             params={
                 "select": "*",
                 "account_id": f"eq.{account_id}",
+                "deleted_at": "is.null",
                 "order": "created_at.desc",
                 "limit": str(limit),
             },
@@ -2278,6 +2327,7 @@ class SupabaseAccountRepository:
             params={
                 "id": f"eq.{notification_id}",
                 "account_id": f"eq.{account_id}",
+                "deleted_at": "is.null",
             },
             json_body={"read_at": read_at.isoformat()},
             prefer="return=representation",
@@ -2288,8 +2338,38 @@ class SupabaseAccountRepository:
         rows = self._request(
             "PATCH",
             self._notifications_table,
-            params={"account_id": f"eq.{account_id}", "read_at": "is.null"},
+            params={
+                "account_id": f"eq.{account_id}",
+                "read_at": "is.null",
+                "deleted_at": "is.null",
+            },
             json_body={"read_at": read_at.isoformat()},
+            prefer="return=representation",
+        )
+        return len(rows)
+
+    def delete_notification(
+        self, account_id: str, notification_id: str, deleted_at: datetime
+    ) -> AccountNotification | None:
+        rows = self._request(
+            "PATCH",
+            self._notifications_table,
+            params={
+                "id": f"eq.{notification_id}",
+                "account_id": f"eq.{account_id}",
+                "deleted_at": "is.null",
+            },
+            json_body={"deleted_at": deleted_at.isoformat()},
+            prefer="return=representation",
+        )
+        return AccountNotification.model_validate(rows[0]) if rows else None
+
+    def delete_all_notifications(self, account_id: str, deleted_at: datetime) -> int:
+        rows = self._request(
+            "PATCH",
+            self._notifications_table,
+            params={"account_id": f"eq.{account_id}", "deleted_at": "is.null"},
+            json_body={"deleted_at": deleted_at.isoformat()},
             prefer="return=representation",
         )
         return len(rows)

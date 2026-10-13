@@ -553,6 +553,18 @@
             "title": "Dedupe Key",
             "type": "string"
           },
+          "deleted_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deleted At"
+          },
           "id": {
             "title": "Id",
             "type": "string"
@@ -561,7 +573,8 @@
             "default": "deadline",
             "enum": [
               "deadline",
-              "content_update"
+              "content_update",
+              "catalogue_update"
             ],
             "title": "Kind",
             "type": "string"
@@ -17502,6 +17515,22 @@
       }
     },
     "/account/notifications": {
+      "delete": {
+        "operationId": "delete_all_account_notifications_delete",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationCenterEnvelope"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Delete All"
+      },
       "get": {
         "operationId": "notifications_account_notifications_get",
         "parameters": [
@@ -17559,6 +17588,38 @@
           }
         },
         "summary": "Read All"
+      }
+    },
+    "/account/notifications/{notification_id}": {
+      "delete": {
+        "operationId": "delete_account_notifications__notification_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "notification_id",
+            "required": true,
+            "schema": {
+              "title": "Notification Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete"
       }
     },
     "/account/notifications/{notification_id}/changes": {
@@ -24588,7 +24649,7 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-09.2",
+  "x-contract-version": "2026-10-13.1",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",

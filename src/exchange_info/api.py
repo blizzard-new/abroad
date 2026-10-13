@@ -1009,7 +1009,12 @@ def create_app(
             raise HTTPException(status_code=403, detail="此功能僅限內容管理員使用。")
         return account, session
 
-    register_notification_routes(app, authenticated_account, authenticated_content_admin)
+    register_notification_routes(
+        app,
+        authenticated_account,
+        authenticated_content_admin,
+        catalogue_source_provider=lambda: cgu_catalogue_view().source,
+    )
     register_workflow_review_routes(app, authenticated_content_admin)
     register_content_governance_routes(app, authenticated_content_admin,
                                       data_dir=resolved_data_dir, static_dir=STATIC_DIR)
