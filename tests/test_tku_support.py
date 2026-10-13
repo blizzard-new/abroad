@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import hashlib
 import json
 import subprocess
@@ -191,7 +192,7 @@ def test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner(tmp
     from exchange_info.application_documents import build_application_document_catalog
     cgu=PartnerUniversity(program_type='交換學生',school_name='林肯大學 Lincoln University',country='紐西蘭',
         source_url='https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554')
-    monkeypatch.setattr('exchange_info.api.fetch_partner_universities',lambda:[cgu])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue',fixed_cgu_catalogue(lambda:[cgu]))
     client=TestClient(create_app(tmp_path))
     ntu=fetch_ntu_partner_universities()
     cases=[('CGU','長庚大學',cgu,'116'),
@@ -233,9 +234,9 @@ def test_revision_wins_and_expired_internal_round_never_looks_open():
     before=datetime(2026,9,22,tzinfo=timezone.utc)
     active=datetime(2026,9,24,tzinfo=timezone.utc)
     after=datetime(2026,9,30,4,1,tzinfo=timezone.utc)
-    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=before)}=={"quota_unconfirmed"}
-    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=active)}=={"open"}
-    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=after)}=={"closed"}
+    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=before,include_agreements=False)}=={"quota_unconfirmed"}
+    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=active,include_agreements=False)}=={"open"}
+    assert {r.availability_status for r in fetch_tku_partner_universities(reference_time=after,include_agreements=False)}=={"closed"}
     periods=build_tku_student_dashboard(reference_time=after).application_periods
     assert periods[0].deadline_at.isoformat()=="2026-09-30T12:00:00+08:00"
     assert periods[0].status=="closed" and periods[0].reminder_eligible is False
@@ -276,15 +277,16 @@ def test_offline_api_registry_documents_search_and_life_profile(tmp_path,monkeyp
     client=TestClient(create_app(tmp_path))
     supported=client.get("/universities").json()
     tku=next(u for u in supported if u["id"]=="tku")
-    assert tku["partner_count"]==4 and tku["support_level"]=="basic"
+    assert tku["partner_count"]==287 and tku["support_level"]=="basic"
     response=client.get("/student-dashboard",params={"school":"TKU"})
     assert response.status_code==200,response.text
     dashboard=response.json()
-    assert dashboard["school_name"]=="淡江大學" and len(dashboard["partner_universities"])==4
-    assert all(p["availability_status"]=="closed" for p in dashboard["partner_universities"])
+    assert dashboard["school_name"]=="淡江大學" and len(dashboard["partner_universities"])==287
+    assert all(p["availability_status"]=="closed" for p in dashboard["partner_universities"][:4])
+    assert all(p["availability_status"] in {"agreement_only","reference_only"} and p['quota'] is None for p in dashboard['partner_universities'][4:])
     assert "JST" in dashboard["partner_universities"][0]["application_deadline"]
     assert "9/30" in dashboard["partner_universities"][0]["availability_note"]
-    for partner in dashboard['partner_universities']:
+    for partner in dashboard['partner_universities'][:4]:
         summary=partner['student_summary_zh']
         assert summary['eligibility_points'] and summary['application_steps'] and summary['tuition_points']
         assert 'JLPT N2' in ' '.join(summary['eligibility_points']) and '研究所N1' in ' '.join(summary['eligibility_points'])
@@ -402,8 +404,9 @@ def test_completeness_is_per_school_field_and_general_pages_are_partial(tmp_path
             assert items['host_documents']['status']=='partial' and items['housing_costs']['status']=='partial'
             assert items['scholarships']['status']=='available'
         profile=client.get('/destination-profile',params=dict(school=name,home_school='TKU')).json()
-        assert len(profile['student_guide_sections'])==14
-        assert all(s['source_urls'] and '2026-10-08' in s['points'][0] for s in profile['student_guide_sections'])
+        assert len(profile['student_guide_sections'])==(26 if row.id.endswith('nagasaki') else 14)
+        assert all(s['source_urls'] and '2026-10-08' in s['points'][0] for s in profile['student_guide_sections'][:14])
+        assert all(s['source_urls'] and '2026-10-11' in s['points'][0] and '母校申請流程未核實' in s['caution'] for s in profile['student_guide_sections'][14:])
         assert profile['coverage_status']=='official_partial'
         assert any(s['caution'] for s in profile['student_guide_sections'])
 
@@ -460,12 +463,15 @@ def test_xlsx_parser_preserves_country_merges_and_quota_unknown_states():
 def test_frontend_marks_closed_and_reference_choices_unavailable():
     script=(BUNDLE.parents[1]/"static"/"app.js").read_text(encoding="utf-8")
     function=script.split("function partnerAvailabilityMeta(item) {",1)[1].split("function renderPartnerAvailabilityNotice",1)[0]
-    javascript="function partnerAvailabilityMeta(item) {"+function+"""
+    tku_module=(BUNDLE.parents[1]/"static"/"tku-partner-details.js").read_text(encoding="utf-8")
+    javascript="const window={}; const activeHomeSchool=()=> '淡江大學';\n"+tku_module+"\nfunction partnerAvailabilityMeta(item) {"+function+"""
     for (const status of ['closed', 'reference_only', 'quota_unconfirmed']) {
       const result = partnerAvailabilityMeta({availability_status: status});
       if (!result.blocked || result.status !== status) throw new Error(status);
     }
     if (partnerAvailabilityMeta({availability_status: 'open'}).blocked) throw new Error('open');
+    const agreement = partnerAvailabilityMeta({availability_status: 'agreement_only'});
+    if (!agreement.blocked || !agreement.shortLabel.includes('未核實') || agreement.shortLabel.includes('未公告')) throw new Error('unverified is not unannounced');
     """
     subprocess.run(["node","-e",javascript],check=True,capture_output=True,timeout=10)
     deadline=script.split("function partnerDeadlineReference(item) {",1)[1].split("function partnerSummaryPoints",1)[0]

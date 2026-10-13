@@ -129,8 +129,10 @@ def test_receiving_reciprocity_cap_preserves_ccu_home_quota():
 def test_fges_partial_certificate_requirement_and_approximate_welcome():
     p = at(88)
     docs = p.partner_exchange_details["documents"]
-    assert docs.status == "verified_current" and "不是完整附件清單" in docs.value
+    assert docs.status == "needs_confirmation" and "不是完整附件清單" in docs.value
     assert "advised" in docs.value and "未限定證照" in docs.value
+    assert "有效護照" in docs.value and "錄取後" in docs.value
+    assert any("Fact-Sheet-2026-27" in e.source_url and e.source_pages == [9] for e in docs.evidence)
     arrival = p.partner_exchange_details["arrival"]
     assert arrival.status == "verified_current" and "1月第一週" in arrival.value
     assert "未列確切日" in arrival.value

@@ -22,7 +22,7 @@ def test_current_portal_reference_is_visible_without_opening_quota(page,live_ser
     page.evaluate("location.hash='#partners'")
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill('明斯特大學')
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
     if width<700:
         page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()

@@ -112,7 +112,13 @@ def test_overseas_counts_do_not_claim_full_coverage_or_turn_fetches_into_current
 def test_source_contradictions_are_visible_and_do_not_make_reminders(page, field):
     partner = at(page)
     detail = partner.partner_exchange_details[field]
-    assert detail.status == "conflict" and detail.evidence
+    if page == 49 and field == "academic_calendar":
+        assert detail.status == "verified_current" and detail.evidence
+        assert "2027-03-02" in detail.value and "2027-02-17" in detail.value
+        archived = reviewed_rows()[49]["fields"][field]
+        assert archived["status"] == "conflict" and "02-29" in archived["value"]
+    else:
+        assert detail.status == "conflict" and detail.evidence
     workflow = next(
         row
         for row in read_jsonl(
@@ -198,11 +204,11 @@ def test_changed_source_requires_semantic_recheck(tmp_path, monkeypatch):
 
 def test_api_and_storage_deliver_life_guides_without_changing_cgu(tmp_path):
     profiles = load_destination_profiles(tmp_path, include_bundled_baseline=True)
-    assert sum(p.home_university == HOME for p in profiles) == 55
+    assert sum(p.home_university == HOME for p in profiles) == 104
     assert sum(p.home_university == "長庚大學" for p in profiles) == 77
     client = TestClient(create_app(tmp_path))
     response = client.get("/destination-profiles", params={"home_school": HOME})
-    assert response.status_code == 200 and len(response.json()) == 55
+    assert response.status_code == 200 and len(response.json()) == 104
     partner = at(43)
     response = client.get(
         "/destination-profile",

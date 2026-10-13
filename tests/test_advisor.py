@@ -365,7 +365,9 @@ def test_document_checker_reads_docx_and_flags_missing_study_plan_sections(monke
 
 
 def test_advisor_and_document_check_api(tmp_path, monkeypatch) -> None:
+    from cgu_catalogue_fixture import fixed_cgu_catalogue
     dashboard = _dashboard()
+    monkeypatch.setattr("exchange_info.api.create_cgu_catalogue", fixed_cgu_catalogue(lambda: dashboard.partner_universities))
     monkeypatch.setattr(
         "exchange_info.api.build_student_dashboard",
         lambda pages, info, **kwargs: dashboard,

@@ -1,9 +1,10 @@
 """The first-time work the free host used to repeat for every visitor is done once and kept."""
 from __future__ import annotations
 
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import threading
 import time
-from types import SimpleNamespace
+import asyncio
 
 import pytest
 from fastapi.testclient import TestClient
@@ -27,7 +28,7 @@ def counted(tmp_path, monkeypatch):
         calls["dashboard"] += 1
         return StudentDashboard(school_name=CGU, partner_universities=[PARTNER])
 
-    monkeypatch.setattr(api, "fetch_partner_universities", lambda: [PARTNER])
+    monkeypatch.setattr(api, 'create_cgu_catalogue', fixed_cgu_catalogue(lambda: [PARTNER]))
     monkeypatch.setattr(api, "fetch_ntpu_partner_universities", lambda: [PARTNER])
     monkeypatch.setattr(api, "build_student_dashboard", build_dashboard)
     monkeypatch.setattr(api, "build_ntpu_student_dashboard", lambda **kwargs: StudentDashboard(school_name=NTPU, partner_universities=[PARTNER]))
@@ -90,15 +91,17 @@ def test_a_caller_cannot_change_what_the_next_visitor_gets(counted) -> None:
     assert len(second["partner_universities"]) == 1 and calls["dashboard"] == 1
 
 
-def _warm_threads():
-    return [thread for thread in threading.enumerate() if thread.name == "warm-caches"]
+def _wait_for_warm_up(client):
+    async def wait():
+        await asyncio.wait_for(asyncio.shield(client.app.state.cache_warmup_task), 30)
+    client.portal.call(wait)
 
 
 def test_the_warm_up_is_off_unless_asked_for(counted, monkeypatch) -> None:
     data_dir, calls = counted
     monkeypatch.delenv("EXCHANGE_WARM_CACHES", raising=False)
-    with TestClient(api.create_app(data_dir)):
-        assert not _warm_threads()
+    with TestClient(api.create_app(data_dir)) as client:
+        assert client.app.state.cache_warmup_task is None
     assert calls["dashboard"] == 0
 
 
@@ -107,10 +110,9 @@ def test_the_warm_up_builds_the_dashboards_before_the_first_visitor_asks(counted
     monkeypatch.setenv("EXCHANGE_WARM_CACHES", "1")
     for name in ("_reference_translations", "_bundled_machine_translations", "_display_patterns", "_identifier_pattern"):
         monkeypatch.setattr(public_translation, name, lambda: None)
-    monkeypatch.setattr(api, "time", SimpleNamespace(monotonic=time.monotonic, sleep=lambda seconds: None))
+    monkeypatch.setattr(api, "CACHE_WARM_UP_DELAY_SECONDS", 0)
     with TestClient(api.create_app(data_dir)) as client:
-        for thread in _warm_threads():
-            thread.join(timeout=30)
+        _wait_for_warm_up(client)
         assert calls["dashboard"] == 1, "the warm-up built the CGU dashboard"
         assert client.get("/student-dashboard", params={"school": CGU}).status_code == 200
         assert calls["dashboard"] == 1, "so the first visitor did not have to"
@@ -122,9 +124,42 @@ def test_a_failing_warm_up_step_does_not_stop_the_site(counted, monkeypatch) -> 
     monkeypatch.setattr(public_translation, "_reference_translations", lambda: (_ for _ in ()).throw(RuntimeError("boom")))
     for name in ("_bundled_machine_translations", "_display_patterns", "_identifier_pattern"):
         monkeypatch.setattr(public_translation, name, lambda: None)
-    monkeypatch.setattr(api, "time", SimpleNamespace(monotonic=time.monotonic, sleep=lambda seconds: None))
+    monkeypatch.setattr(api, "CACHE_WARM_UP_DELAY_SECONDS", 0)
     with TestClient(api.create_app(data_dir)) as client:
-        for thread in _warm_threads():
-            thread.join(timeout=30)
+        _wait_for_warm_up(client)
         assert client.get("/health").status_code == 200
         assert calls["dashboard"] == 1, "the steps after the failing one still ran"
+
+
+def test_warmup_delay_does_not_block_health_or_outlive_lifespan(counted, monkeypatch):
+    data_dir, calls = counted
+    monkeypatch.setenv("EXCHANGE_WARM_CACHES", "1")
+    monkeypatch.setattr(api, "CACHE_WARM_UP_DELAY_SECONDS", 60)
+    with TestClient(api.create_app(data_dir)) as client:
+        task = client.app.state.cache_warmup_task
+        assert task is not None and not task.done()
+        assert client.get("/health").status_code == 200
+        assert calls["dashboard"] == 0
+    assert task.cancelled()
+    assert calls["dashboard"] == 0
+
+
+def test_active_warmup_keeps_health_responsive(counted, monkeypatch):
+    data_dir, calls = counted
+    monkeypatch.setenv("EXCHANGE_WARM_CACHES", "1")
+    monkeypatch.setattr(api, "CACHE_WARM_UP_DELAY_SECONDS", 0)
+    entered = threading.Event()
+    release = threading.Event()
+    def blocking_step():
+        entered.set()
+        assert release.wait(10)
+    monkeypatch.setattr(public_translation, "_reference_translations", blocking_step)
+    with TestClient(api.create_app(data_dir)) as client:
+        try:
+            assert entered.wait(5)
+            assert client.get("/health").status_code == 200
+            assert calls["dashboard"] == 0
+        finally:
+            release.set()
+        _wait_for_warm_up(client)
+        assert calls["dashboard"] == 1

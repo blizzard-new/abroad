@@ -10,6 +10,7 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from exchange_info.models import (
     PartnerUniversity,
     PartnerStudentSummary,
@@ -33,7 +34,9 @@ from exchange_info.ncu_student_view import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = ROOT / "sources/ncu/2026-10-08"
-CHECKED = "2026-10-08T00:00:00+00:00"
+COMPLETION_SOURCES = ROOT / "sources/ncu/2026-10-11"
+CHECKED = "2026-10-11T12:41:25+00:00"
+ORIGINAL_CHECKED = "2026-10-08T00:00:00+00:00"
 HOME = "國立中央大學"
 ROUND = "第一梯次"
 FIELDS = {
@@ -286,6 +289,11 @@ def build(output):
     web_evidence = json.loads(
         gzip.decompress((SOURCES / "host-web-evidence.json.gz").read_bytes())
     )
+    completion_evidence = COMPLETION_SOURCES / "host-web-evidence.json.gz"
+    completion_sources = []
+    if completion_evidence.exists():
+        completion_sources = json.loads(gzip.decompress(completion_evidence.read_bytes()))
+        web_evidence.extend(completion_sources)
     docs = {x["id"]: x for x in evidence + web_evidence}
     for d in docs.values():
         excerpt_path = SOURCES / f"{d['id']}-public-excerpt.json"
@@ -299,6 +307,21 @@ def build(output):
             d["index_review"] = load_json(index_review_path)
         d["content_status"] = source_content_status(d)
     reviewed = load_json(SOURCES / "reviewed-host-records.json")
+    # Reject malformed original records before a supplement could hide them.
+    validate_reviewed_host_documents(reviewed)
+    corrections_path = COMPLETION_SOURCES / "website-corrections.json"
+    website_corrections = load_json(corrections_path) if corrections_path.exists() else {}
+    completion_reviews = COMPLETION_SOURCES / "reviewed-host-records.json"
+    if completion_reviews.exists():
+        supplements = load_json(completion_reviews)
+        validate_reviewed_host_documents(supplements)
+        for row_id, supplement in supplements.items():
+            previous = reviewed.get(row_id, {})
+            reviewed[row_id] = {
+                **previous, **supplement,
+                "fields": {**previous.get("fields", {}), **supplement.get("fields", {})},
+                "source_ids": list(dict.fromkeys(previous.get("source_ids", []) + supplement["source_ids"])),
+            }
     validate_reviewed_host_documents(reviewed)
     from pypdf import PdfReader
 
@@ -349,7 +372,7 @@ def build(output):
         }.get(rs[0]["country"], rs[0]["country"])
         rowids = [r["id"] for r in rs]
         review = next((reviewed[r["id"]] for r in rs if r["id"] in reviewed), None)
-        record_checked = review.get("checked_at", CHECKED) if review else CHECKED
+        record_checked = review.get("checked_at", ORIGINAL_CHECKED) if review else ORIGINAL_CHECKED
         research.append(
             dict(
                 home_university=HOME,
@@ -376,6 +399,7 @@ def build(output):
         )
         selected = [
             docs[fid] for fid in related if fid in docs and docs[fid].get("pages")
+            and docs[fid].get("authority_kind") != "discovery_rejected"
         ]
         # The NCU-produced introduction has these literal labels. Selection is by
         # file content, not an inference of publication year or current applicability.
@@ -441,6 +465,14 @@ def build(output):
             if urls:
                 website = urls[0].rstrip(".,;)")
                 break
+        if review and review.get("verified_official_website"):
+            website = review["verified_official_website"]
+        website_correction = next((website_corrections[rid] for rid in rowids if rid in website_corrections), None)
+        if website_correction:
+            if website_correction["country"] != country:
+                raise ValueError("NCU更正網址國家與原目錄不符，須重新核對身份。")
+            website = website_correction["website"]
+            research[-1]["note"] = website_correction["note"]
         research[-1]["official_website"] = website
         period = "116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。"
         deadline = "中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。"
@@ -471,6 +503,8 @@ def build(output):
             ],
             translated_from_english=False,
         )
+        if website_correction:
+            summary["application_steps"].append(website_correction["note"])
         partner = dict(
             program_type="自費訪問（歷史方案）" if paid else "交換學生",
             availability_status="agreement_only",
@@ -1152,8 +1186,8 @@ def build(output):
                     # All reviewed host records are reference material with the
                     # 116 year/track still unapproved. An empty field-level gap
                     # never overrides that record-level applicability limit.
-                    status="needs_confirmation",
-                    reference_status="reviewed_partial_reference",
+                    status="missing" if value.get("gap_only") else "needs_confirmation",
+                    reference_status="reviewed_gap_only" if value.get("gap_only") else "reviewed_partial_reference",
                     current_applicability_status="unconfirmed",
                     note=" ".join(value["points"]),
                     source_urls=list(dict.fromkeys(docs[ref["id"]]["url"] for ref in value["sources"])),
@@ -1213,6 +1247,14 @@ def build(output):
                     }
                     for fid in related
                     if fid not in docs or docs[fid].get("error")
+                ],
+                collection_attempts=[
+                    {key: docs[fid].get(key) for key in (
+                        "id", "url", "final_url", "checked_at", "status", "sha256",
+                        "authority_kind", "reading_status", "exclusion_reason", "error",
+                        "extraction_note", "content_status",
+                    ) if docs[fid].get(key) is not None}
+                    for fid in related if fid in docs
                 ],
             )
         )
@@ -1415,6 +1457,9 @@ def build(output):
     # Fail before writing any bundle files when a reviewed condition no longer
     # maps to the actual school, workflow step, document, or original bytes.
     conditions = load_json(SOURCES / "document-conditions.json")
+    completion_conditions = COMPLETION_SOURCES / "document-conditions.json"
+    if completion_conditions.exists():
+        conditions.extend(load_json(completion_conditions))
     validate_document_conditions(conditions, workflows, docs)
     write_json(
         output / "student_dashboard.json",
@@ -1485,13 +1530,19 @@ def build(output):
         {
             "checked_at": CHECKED,
             "builder": "scripts/build_ncu_catalog.py",
-            "base_commit": "f6ad1b8",
+            "base_commit": "59a20f27fcee00fb597abc79e75ec11778317422",
+            "original_import_base_commit": "f6ad1b8",
             "input_sha256": {
                 path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                 for path in sorted(SOURCES.iterdir())
                 if path.is_file() and path.suffix in {".json", ".gz", ".pdf", ".jpg"}
             },
             "table_year": "115",
+            "completion_input_sha256": {
+                str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
+                for path in sorted(COMPLETION_SOURCES.iterdir())
+                if path.is_file() and path.suffix in {".json", ".gz", ".pdf", ".jpg"}
+            },
             "home_year": "116",
             "current_host_coverage": "partial",
             "automatic_eligibility_inference": False,
@@ -1560,6 +1611,18 @@ def build(output):
                 for x in audit
             ),
             "reviewed_host_records": len(reviewed),
+            "completion_source_attempts": len(completion_sources),
+            "completion_source_downloaded": sum(not s.get("error") and s.get("status") == 200 for s in completion_sources),
+            "completion_source_passages_reviewed": sum(bool(s.get("reading_review")) for s in completion_sources),
+            "completion_source_full_text_read": sum(
+                s.get("reading_review", {}).get("full_document_read") is True
+                and s.get("reading_status") != "full_visual_and_native_reviewed"
+                for s in completion_sources),
+            "completion_source_full_visual_read": sum(
+                s.get("reading_review", {}).get("full_document_read") is True
+                and s.get("reading_status") == "full_visual_and_native_reviewed"
+                for s in completion_sources),
+            "completion_source_attempts_not_read": sum(not s.get("reading_review") for s in completion_sources),
             "host_full_116_verification_count": 0,
             "pending_workflows": len(workflows),
             "provenance_note": "提取不是當期資格核准；逐欄缺口與原文分列於field-audit.json。",
@@ -1568,6 +1631,13 @@ def build(output):
     print(
         json.dumps(load_json(output / "catalog-completeness.json"), ensure_ascii=False)
     )
+    campus_reviews = COMPLETION_SOURCES / "campus-photo-reviews.json"
+    if campus_reviews.exists():
+        from scripts.build_ncu_assets import build as build_campus_assets
+        build_campus_assets(campus_reviews, output_path=output / "campus-assets.json")
+    campus_locations = COMPLETION_SOURCES / "campus-locations.json"
+    if campus_locations.exists():
+        write_json(output / "campus-locations.json", load_json(campus_locations))
 
 
 if __name__ == "__main__":

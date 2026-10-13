@@ -1,0 +1,152 @@
+{
+  "checked_at": "2026-10-11T15:09:37.762143+00:00",
+  "base_checkpoint": "e25ff02a1ebc69ea126a814d105e88b272539351",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 193,
+    "unique_photo_sha256": 190,
+    "displayed_partner_locations": 186,
+    "photo_gaps": 21,
+    "location_gaps": 28,
+    "strict_current_field_gaps": 3259,
+    "public_unread_candidates": 314,
+    "reviewed_host_records": 118,
+    "completion_sources": 665,
+    "passages_reviewed": 261,
+    "native_pdf_fully_read": 51,
+    "native_and_visual_pdf_fully_read": 3
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "405 passed in 160.26s",
+      "evidence": "tests-ncu-all.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_ktu_meiji_resume.py -q",
+      "result": "4 passed in 41.25s",
+      "evidence": "browser-check.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_resume_assets.py -k mother_marker -q",
+      "result": "1 passed, 10 deselected in 26.52s",
+      "evidence": "browser-globe.txt"
+    }
+  ],
+  "browser_review": {
+    "visually_viewed": [
+      "browser/ncu-091-390-application.png",
+      "browser/ncu-091-1280-life.png",
+      "browser/ncu-138-390-application.png",
+      "browser/ncu-138-1280-life.png",
+      "browser/ncu-mother-and-186-points.png"
+    ],
+    "scope": "人工視讀上述5張實际browser畫面，其餘截圖由browser斷言驗證，不宣稱全部人工視讀。原件KTU9頁factsheet及Meiji4圖表、guide第5／8頁另逐圖視讀。"
+  },
+  "artifacts": [
+    {
+      "path": "browser/ncu-091-1280-application.png",
+      "sha256": "cca96ef088ef025d74113e79bcc2571a74fbf2e14aaadbf706873f9f200cd2b2"
+    },
+    {
+      "path": "browser/ncu-091-1280-life.png",
+      "sha256": "af3bc8de2d564b68e303180cf9c4db6cf887f8275e3367616e6c7f9d44e42a14"
+    },
+    {
+      "path": "browser/ncu-091-390-application.png",
+      "sha256": "a42b2843f68d7b2d0d05cd880974e11985ad2928181f2c9d83082c9bd555e49a"
+    },
+    {
+      "path": "browser/ncu-091-390-life.png",
+      "sha256": "0937ee0b5ce812117ca6f2e05009d4e9a1b0c38de5570807df025bea42482a9c"
+    },
+    {
+      "path": "browser/ncu-138-1280-application.png",
+      "sha256": "4a7d0c7bc9f6017737ae407ba1929dfb48c10f7aae4625072096bef774b9cfd0"
+    },
+    {
+      "path": "browser/ncu-138-1280-life.png",
+      "sha256": "43843a5986c8e562f62cda7b0a8bfc3971da5b29f219df5cda1b9b4804b0feec"
+    },
+    {
+      "path": "browser/ncu-138-390-application.png",
+      "sha256": "730d3ce9abc64312068106443b247ee7cb1f940e50f3d72475aaebc3a7dd9c70"
+    },
+    {
+      "path": "browser/ncu-138-390-life.png",
+      "sha256": "2e4cdbf340a04959ea08dd1beed51a72ef2cc9081c28b478c736ad3d872f9ee0"
+    },
+    {
+      "path": "browser/ncu-mother-and-186-points.png",
+      "sha256": "c0957751121eab44890555891c4bdd127944ca04c219b9caabd0341ba41ee318"
+    },
+    {
+      "path": "source-visuals/ktu-facts-2025-26-page-1.png",
+      "sha256": "669e77f8d008b215cce01eea0d16e67287715b986f6ee73650876d4f333bb0d5"
+    },
+    {
+      "path": "source-visuals/ktu-facts-2025-26-page-2.png",
+      "sha256": "5b55118d423883598be2c69eb86505f87a81d5e1edd406e7d639783e07232baf"
+    },
+    {
+      "path": "source-visuals/ktu-facts-2025-26-page-3.png",
+      "sha256": "0f2511f5b35967d47c403ddc55bfc5115db4d330295e767835d5229c48b2c2d2"
+    },
+    {
+      "path": "source-visuals/ktu-facts-2025-26-page-4.png",
+      "sha256": "1fe6044554816698f6bd3b3c0accadac59233699f255bcad12d8a875f8bbd39b"
+    },
+    {
+      "path": "source-visuals/ktu-facts-2025-26-page-5.png",
+      "sha256": "6f7ec05fbddcbd0b4069c1026dc6e4995306412007d6b1b83b137a972329225b"
+    },
+    {
+      "path": "source-visuals/ktu-facts-2025-26-page-6.png",
+      "sha256": "62245a323103ebdf43434c50a30bc3cdcaf5f90dd0c8c64f2b74750557d1c10f"
+    },
+    {
+      "path": "source-visuals/ktu-facts-2025-26-page-7.png",
+      "sha256": "27300c019ef109f59e3fe2aaeb1629f963481ef173ff55904c7859477f5927c8"
+    },
+    {
+      "path": "source-visuals/ktu-facts-2025-26-page-8.png",
+      "sha256": "7a0f94497c209e40b54c1385c2f2f7922af933de59479536cfdcba83f1dfd8f7"
+    },
+    {
+      "path": "source-visuals/ktu-facts-2025-26-page-9.png",
+      "sha256": "ccbb00bca8591abbddf056df7310658f0d88e244cba6c2732d675daf1fd2f892"
+    },
+    {
+      "path": "source-visuals/meiji-facts-image-3-browser-white.png",
+      "sha256": "b989427e296dd93404051a00ea735e3ff5211a312ee8872dbda8bc9c66a20b24"
+    },
+    {
+      "path": "source-visuals/meiji-facts-image-3.png",
+      "sha256": "ef833181c3a3a588506fb7382155ef381559a812c3a60740ff10b975e3ea795e"
+    },
+    {
+      "path": "source-visuals/meiji-facts-image-4-browser-white.png",
+      "sha256": "a6d099dd820239343bf60e2ea12c9f12ba64f8f5e53740911220b712909879f2"
+    },
+    {
+      "path": "source-visuals/meiji-facts-image-4.png",
+      "sha256": "39816f195bc338dc7fdfcbb78985f9ead7bb681642ca49b7869dbae049f4e3c9"
+    },
+    {
+      "path": "source-visuals/meiji-facts-image-5.png",
+      "sha256": "3791d4337bb95d4901edc551a714354935acb97443d782c20bc082a88e27b132"
+    },
+    {
+      "path": "source-visuals/meiji-facts-image-7.png",
+      "sha256": "765d9fb2ba7f699b692a55d7fad2d320f1beb6c137f212b6b9c666afa51306a8"
+    },
+    {
+      "path": "source-visuals/meiji-guidelines-2027-page-5.png",
+      "sha256": "9d1b1863f70619aea9392dfb61ca8694ed060103d74a24ef6daa27ca6180b6b3"
+    },
+    {
+      "path": "source-visuals/meiji-guidelines-2027-page-8.png",
+      "sha256": "af544d3ba3054a5136f55da33d0d2db0764a945f5b603af911914e676d632ed5"
+    }
+  ]
+}

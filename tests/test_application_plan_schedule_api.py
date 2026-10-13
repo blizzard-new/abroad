@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from test_application_plan_api import _verified_client, _partner, _workflow, _payload
 from exchange_info.storage import ensure_data_dirs, replace_application_workflow
 
@@ -6,7 +7,7 @@ def setup_plan(tmp_path, monkeypatch):
     ensure_data_dirs(tmp_path)
     partner=_partner("測試合作校")
     replace_application_workflow(_workflow("長庚大學",partner.school_name),tmp_path)
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities",lambda:[partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue',fixed_cgu_catalogue(lambda:[partner]))
     client=_verified_client(tmp_path)
     payload=_payload("長庚大學",[partner.school_name],"資訊工程學系")
     plan=client.post("/application-plan/evaluate",json=payload).json()

@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime
 import json
 from pathlib import Path
@@ -91,7 +92,7 @@ def test_ntu_dashboard_uses_announced_taipei_times_without_percent_grade_gate():
 def test_ntu_catalog_api_works_offline_and_keeps_pending_visible(monkeypatch, tmp_path):
     def network_not_allowed():
         raise AssertionError("NTU must not fetch CGU or NTPU at runtime")
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", network_not_allowed)
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(network_not_allowed))
     monkeypatch.setattr("exchange_info.api.fetch_ntpu_partner_universities", network_not_allowed)
     client = TestClient(create_app(tmp_path))
     assert [row["id"] for row in client.get("/universities").json()] == ["cgu", "ntpu", "ntu", "ccu", "ncu", "tku"]
@@ -173,7 +174,7 @@ def test_ntu_advisor_includes_pending_quota_and_agrees_with_evaluation(language_
     assert recommendation.target_match is not None
     assert all(row.eligibility_status == "needs_confirmation" for row in recommendation.recommendations)
     assert not zero_names.intersection(row.school_name for row in recommendation.recommendations)
-    assert any("本期甄選名額尚未公告" in note for note in recommendation.target_match.confirmation_items)
+    assert any("名額與申請狀態請依逐校證據核對" in note for note in recommendation.target_match.confirmation_items)
     request = PersonalApplicationPlanRequest(home_school=NTU.school_name, college=profile.college, department=profile.department,
         degree_level=profile.degree_level, academic_gpa=profile.academic_gpa, class_rank_percent=profile.class_rank_percent,
         language_test=language_test, language_score=score, preferences=[{"rank":1,"school_name":pending.school_name}])

@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 import pytest
 from playwright.sync_api import expect
@@ -29,8 +30,8 @@ def test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh(page
     expect(page.locator("#partner-globe canvas")).to_be_visible(timeout=30000)
     expect(page.locator("#partner-map-status")).to_be_hidden(timeout=30000)
     assert page.locator("#map-school-select option").count() >= 285
-    output = Path("/tmp/ntu-destinations-browser")
-    output.mkdir(exist_ok=True)
+    output = Path(os.environ.get("VISUAL_EVIDENCE_DIR", "/tmp/ntu-destinations-browser")) / "ntu-destinations"
+    output.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(output / f"globe-{width}.png"), full_page=True)
     page.locator("#map-school-select").select_option("聖保羅大學")
     expect(page.locator("#partner-map-preview")).to_be_visible()

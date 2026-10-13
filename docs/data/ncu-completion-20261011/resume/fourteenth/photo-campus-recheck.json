@@ -1,0 +1,65 @@
+{
+  "donor_heads": {
+    "PR9": "c7357f974faaec8e60ef19698d4d21633c322dc8",
+    "PR10": "52ed6370c63f053da445a9aff6eb9e2a3d2ad6c8",
+    "PR13": "93cbd9dfee3af95f9ecc89cceb1ccd0e100778af"
+  },
+  "decision": "無新照片可供剩12缺口採用；沒有將近名機構或無授權official圖片補入。",
+  "exclusions": [
+    {
+      "candidate": "EM Normandie / Rennes / UTT舊共用official照片",
+      "reason": "status=verified不是開放授權；缺作者／授權欄位，未採用。"
+    },
+    {
+      "candidate": "TKU tku-sister-280 Thai Nguyen University main administrative building",
+      "reason": "CC0 Joel Bradshaw 2012為母體Thai Nguyen University，未證明TUAF校園；不因隸屬關係移用。"
+    },
+    {
+      "candidate": "TKU tku-sister-330 Saigon International University Lewis/Fleming campus",
+      "reason": "不是越南國立胡志明市國際大學，且校區描述與檔名有差異，未採用。"
+    },
+    {
+      "candidate": "新CUK/仁荷/馬來亞原件頁內照片",
+      "reason": "校方文件公开不等於圖片開放授權，不採為校景資產。"
+    }
+  ],
+  "files": [
+    {
+      "path": "tku-latest-assets.json",
+      "sha256": "6bf4558af0fcf657df53cd817282b7a3f5fe8e6edc7aec5cbc94d8af89ac8946"
+    },
+    {
+      "path": "tku-latest-scoped-assets.json",
+      "sha256": "76afdfc8a59ba264f716adc12dec14a183f17892782cb02ecadea095922215ab"
+    },
+    {
+      "path": "ccu-latest-assets.json",
+      "sha256": "24bf23a9eca5c593993ce623b15f24a34afdab90c09e9ff55ef7c1a4b499311c"
+    },
+    {
+      "path": "ntu-latest-assets.json",
+      "sha256": "a5a1667c75fa083065903c9a8b4975d4eb346d14a09ecb0c17edd0971b611625"
+    }
+  ],
+  "campus_recheck": [
+    {
+      "row_id": "ncu-155",
+      "finding": "新factsheet第5頁與舊FAQ明示Songsim在富川，既有代表座標已為Songsim；現有授權圖另標Songeui醫學校區，不稱接收校區。"
+    },
+    {
+      "row_id": "ncu-147",
+      "finding": "仁荷仁川100 Inha-ro與既有代表點身分一致，非仁荷工專。"
+    },
+    {
+      "row_id": "ncu-197",
+      "finding": "馬來亞吉隆坡50603與既有代表點身分一致，非沙巴大學。"
+    }
+  ],
+  "photo_counts_unchanged": {
+    "photos": 202,
+    "distinct_sha256": 199,
+    "missing": 12,
+    "locations": 214,
+    "mother_counted_separately": true
+  }
+}

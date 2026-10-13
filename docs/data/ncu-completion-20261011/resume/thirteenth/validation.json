@@ -1,0 +1,220 @@
+{
+  "checked_at": "2026-10-11T18:41:20.851901+00:00",
+  "base_checkpoint": "6532bd7541b6d129f34a0be04f95b63cc3d4478f",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 202,
+    "unique_photo_sha256": 199,
+    "partner_locations": 214,
+    "mother_separate": true,
+    "manual_host_records": 122,
+    "sources": 735,
+    "readings": 405,
+    "native_pdf_fully_read": 75,
+    "native_visual_pdf_fully_read": 17,
+    "public_unread": 239,
+    "strict_current_field_gaps": 3222,
+    "current_quota_unknown": 214,
+    "new_independent_sources": 13,
+    "new_pdf_visual_pages": 66,
+    "new_reference_documents": 25
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "450 passed in 177.32s (0:02:57)",
+      "evidence": "tests-ncu-all.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_thirteenth_packets.py -q",
+      "result": "4 passed in 62.07s (0:01:02)",
+      "evidence": "browser-check.txt"
+    },
+    {
+      "command": "rebuild catalogue and compare every bundle file SHA",
+      "result": "passed",
+      "evidence": "rebuild-byte-check.json"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "visual_review": {
+    "final_browser_images": [
+      {
+        "path": "browser/sookmyung-1440-confirmation.png",
+        "sha256": "8bfa9ef6cc2db501be726636d7810a49a9cdf68157b12b60d9a83d387c59f83f",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/sookmyung-1440-documents.png",
+        "sha256": "c8ceca3a294d846d08d1f8b008c4bd849720d692397bda68c088bce7d7ba11b1",
+        "final_capture_actually_viewed": true
+      },
+      {
+        "path": "browser/sookmyung-1440-housing.png",
+        "sha256": "4fbe734641906a186677f23f8533070a0838ceea3aae6639d13ad09933242779",
+        "final_capture_actually_viewed": true
+      },
+      {
+        "path": "browser/sookmyung-1440-life.png",
+        "sha256": "01cee04dadc9a00e43855f477571fc95683f4afd9a418de1a606db11a3a46843",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/sookmyung-1440-overview-focus.png",
+        "sha256": "005577ec8e2eb8ba91e48596f64fdf2f33ba388bc549dac6eee161b561930bf6",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/sookmyung-1440-overview.png",
+        "sha256": "e20b450d3eca061ac6205d528bee007ff805bb5ffde327c36b94f0c1ee6d3290",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/sookmyung-1440-packet.png",
+        "sha256": "c8ceca3a294d846d08d1f8b008c4bd849720d692397bda68c088bce7d7ba11b1",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/sookmyung-390-confirmation.png",
+        "sha256": "b9485dd6e014e7e4d6a7e743389e926418a64d66e4c18b392bae77a74a2af90f",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/sookmyung-390-documents.png",
+        "sha256": "3f331d987b8cf13f1c80c9b32a46eaedc2e6f919e659419a064ab93d19dc3e92",
+        "final_capture_actually_viewed": true
+      },
+      {
+        "path": "browser/sookmyung-390-housing.png",
+        "sha256": "a877dd00dcb896a093e79e30b356dbba1fb391e42de7c73e0d9057ac69dbd7c4",
+        "final_capture_actually_viewed": true
+      },
+      {
+        "path": "browser/sookmyung-390-life.png",
+        "sha256": "d0a5a4839ef8556bc974b33959156e87774a58997ae58fb9f4300fc469319c56",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/sookmyung-390-overview-focus.png",
+        "sha256": "4ff073b6703e5abcdf63f391b403cc0e20abcd5c47f7da6bbdf4b7a766bb6f44",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/sookmyung-390-overview.png",
+        "sha256": "fccb08628a7f06aecfc5fab53a98ebc1ddcba59e9f5b994192590bcedb485bf8",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/sookmyung-390-packet.png",
+        "sha256": "6a356a7e3c66ed6ac236a9485f19709c02414409ce8b18408f146caaa88068a3",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-1440-coe.png",
+        "sha256": "604d3f552e5663c12511e3a10445b006bd9ec04d7fbe1522b9d33fae055fcd7d",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-1440-confirmation.png",
+        "sha256": "097ade1899b9ca0b6654cb5bd95d665b61a699d60b27f280a53e97269d914513",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-1440-documents.png",
+        "sha256": "cec1bd2b31e7999c648fc15f0f1bc04827b2833274bdba6ae1c62ec5585759df",
+        "final_capture_actually_viewed": true
+      },
+      {
+        "path": "browser/tsukuba-1440-housing.png",
+        "sha256": "87e2e12da5a3704b70b1c4a54a1dfdc941760258566acbe179f9cc3559a5e502",
+        "final_capture_actually_viewed": true
+      },
+      {
+        "path": "browser/tsukuba-1440-life.png",
+        "sha256": "ff1365cc76d6434dc0e456286889aa414ff62fe3ddba22fd37b6d4fa6476d83f",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-1440-overview-focus.png",
+        "sha256": "767e5412e670a60d4d67b36bdba7bdab96f33256f2c2b03a6f2cbec5d9201e66",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-1440-overview.png",
+        "sha256": "1ea0601ad12ab0210aa76015ecf6d8e0830d2996906c91e50ab85840438042ff",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-1440-packet.png",
+        "sha256": "cec1bd2b31e7999c648fc15f0f1bc04827b2833274bdba6ae1c62ec5585759df",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-1440-sponsor-documents.png",
+        "sha256": "31a32dc019167b90536389a1cbdf6ada7ebbc053ce5a23c6141560ff8fb58140",
+        "final_capture_actually_viewed": true
+      },
+      {
+        "path": "browser/tsukuba-390-coe.png",
+        "sha256": "07444c852cb3d955030d98d2f9842c6d27e2a6cf4d7b99ee089adc809f336c61",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-390-confirmation.png",
+        "sha256": "32ba8a0a13cc09580d8e9cf05e15cacd79a460841847c14569339830c8c239fd",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-390-documents.png",
+        "sha256": "2ff2aa49e6044fbdd3a68e62486b4fbbaced8601a71040d36430c2070b150e9f",
+        "final_capture_actually_viewed": true
+      },
+      {
+        "path": "browser/tsukuba-390-housing.png",
+        "sha256": "f9cdd6d455ccb687ac4e0440460df06cd2731f815b5673216f420f0bf349a1ef",
+        "final_capture_actually_viewed": true
+      },
+      {
+        "path": "browser/tsukuba-390-life.png",
+        "sha256": "4e804bdbf61c89286182b3cf8743962c68ea99fe94e7dcbf999a86ec6e6db475",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-390-overview-focus.png",
+        "sha256": "c9dcc0c587efadace3242f7d2af0dc8876bd20995fef968c5e91e370a617b44b",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-390-overview.png",
+        "sha256": "09bdebcb4832794ca3d331e32654319c91bffe3a405e2c5883bfc4bddd56aeaf",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-390-packet.png",
+        "sha256": "c639b5b9fb992e817b167b762a483bd1b9858491bafebfb2d8ff3aed318a6730",
+        "final_capture_actually_viewed": false
+      },
+      {
+        "path": "browser/tsukuba-390-sponsor-documents.png",
+        "sha256": "09fb945cd470eaa35cc63d5b7aae2bdb8df2355e73d1533c88cc6bf6a7e10a61",
+        "final_capture_actually_viewed": true
+      }
+    ],
+    "scope": "Before-summary-translation all26 earlier screenshots actually viewed. Final10 document/sponsor/housing captures separately actually viewed; remaining22 final captures browser-generated and DOM-validated, not claimed individually visually re-read. Long overview thumbnails show layout only. All7 official PDFs66 pages native and actual visual read; DOCX2 native XML only."
+  },
+  "initial_failures": {
+    "targeted": "4failed4passed: missing explicit document policies; 25 SHA-bound policies added, no shared runtime rewrite",
+    "first_full": "450passed then visual inspection found partial untranslated new summary; completed Chinese summaries, retained originals and reran full tests",
+    "browser": "prior4passed, then local actual inspection and added explicit life-evidence text assertions/focused captures"
+  },
+  "source_input_sha256": {
+    "host-web-evidence.json.gz": "07ccb79d582a834e15f16652f71b2d089668c9d8dab14a518726956ea15e556d",
+    "reviewed-host-records.json": "98e3c960b63140d77923ea1416300f95676fd0d1b830f724d9651eb0ff800e05",
+    "document-conditions.json": "038278db5278923c8dba4551e135efbf7707b8cea20ad761b96963e350f63c96",
+    "resume-thirteenth-original-responses.json.gz": "670a2e13425fc37295ba01b2184631efa0264a55a64f49703177240df75c8a9b"
+  },
+  "restrictions": "sameDraftPR11 only; no merge/deploy/prodDB/Quality/security/credential changes; shared matcher/renderer unchanged"
+}

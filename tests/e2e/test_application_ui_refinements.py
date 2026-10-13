@@ -57,6 +57,7 @@ def test_calendar_appears_first_and_tools_still_work(page, live_server, width):
     page.reload()
     page.evaluate("location.hash='#calendar'")
     expect(page.locator(".calendar-day")).to_have_count(42)
+    expect(page.locator("#catalogue-source-status")).to_be_hidden()
     capture(page, f"calendar-initial-{width}.png")
     assert page.locator(".calendar-month-panel").bounding_box()["y"] < 450
     expect(page.locator("#deadline-reminder-center")).to_be_hidden()

@@ -1,0 +1,36 @@
+{
+  "id": "45b6c66351967feb7f3b3c57",
+  "source_url": "https://en.wikipedia.org/w/api.php?action=query&format=json&titles=Brandon+University&prop=pageprops%7Ccoordinates&ppprop=wikibase_item&colimit=max",
+  "checked_at": "2026-10-11T12:40:41.079253+00:00",
+  "service": "wikipedia",
+  "http_status": 200,
+  "retry_after": null,
+  "sha256": "8f69991a66bb5be8f9388b456d8ee790ddde1008db5a331b78ca41892306366f",
+  "response": {
+    "batchcomplete": "",
+    "query": {
+      "pages": {
+        "880566": {
+          "pageid": 880566,
+          "ns": 0,
+          "title": "Brandon University",
+          "pageprops": {
+            "wikibase_item": "Q4957110"
+          },
+          "coordinates": [
+            {
+              "lat": 49.84527778,
+              "lon": -99.9625,
+              "primary": "",
+              "globe": "earth"
+            }
+          ]
+        }
+      }
+    },
+    "limits": {
+      "coordinates": 500
+    }
+  },
+  "response_text": "{\"batchcomplete\":\"\",\"query\":{\"pages\":{\"880566\":{\"pageid\":880566,\"ns\":0,\"title\":\"Brandon University\",\"pageprops\":{\"wikibase_item\":\"Q4957110\"},\"coordinates\":[{\"lat\":49.84527778,\"lon\":-99.9625,\"primary\":\"\",\"globe\":\"earth\"}]}}},\"limits\":{\"coordinates\":500}}"
+}

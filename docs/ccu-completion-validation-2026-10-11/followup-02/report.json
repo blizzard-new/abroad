@@ -1,0 +1,334 @@
+{
+  "frozen_commit": "b786ec8d7a2efff3c294e23489a74637e1b3db45",
+  "baseline_main": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "prior_handoff_commit": "cf4d86f22d89ee698315d46177daf00b49dd8706",
+  "production_git_objects": {
+    "src": "768f2cbc53d0dabccccfae6f5afc3b13f531a80a",
+    "scripts": "d9a055ca38a537c1e666aa344ba2fb02f794d67f",
+    "data": "d96a635c71b07e955d323dedd566462fba412b49",
+    "pyproject.toml": "9fc12547a48486285c6f000421a4b5cdee3c3869",
+    "uv.lock": "72a4b1691f8718ea632cd95d68c1a251a4b53496",
+    "supabase": "c23e95f1f3bbce8cfd696566e1ad2db6ebf101d6"
+  },
+  "initial_selected_regression": {
+    "tests": 452,
+    "failures": 3,
+    "errors": 0,
+    "skipped": 4,
+    "passed": 445,
+    "elapsed_seconds": 830.981
+  },
+  "corrected_regression_files": {
+    "tests": 41,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 41,
+    "elapsed_seconds": 78.244
+  },
+  "new_and_existing_completion_browser": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 6,
+    "elapsed_seconds": 22.827
+  },
+  "unchanged_jena_reproduction_with_pre_fix_profile_test": {
+    "tests": 2,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 1,
+    "elapsed_seconds": 48.469
+  },
+  "actual_failures": [
+    {
+      "case": "CCU photo prose assertion",
+      "cause": "assertion looked for 人物; exclusion reason says 多人擺拍",
+      "resolution": "meaningful accepted/rejected photo byte inequality; rerun passed"
+    },
+    {
+      "case": "old CCU profile city equality",
+      "cause": "new ASBU point shortened Ankara（Ankara 主校） to Ankara",
+      "resolution": "old main-campus display label retained; all nine-pass tests passed"
+    },
+    {
+      "case": "CCU Jena document center width390",
+      "cause": "official link hidden after opening conditional extension details; timing/rerender cause not proven",
+      "resolution": "same unmodified case passed in isolated reproduction; keep initial failure as instability"
+    }
+  ],
+  "full_suite_rerun_after_second_batch": false,
+  "new_exclusions": 0,
+  "prior_full_suite_evidence": "../report.json; belongs to c18aebf, not this frozen data revision",
+  "acceptance_gate": {
+    "baseline_commit": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "candidate_head": "b786ec8d7a2efff3c294e23489a74637e1b3db45",
+    "exchange_list": 104,
+    "global_agreements": null,
+    "quotas": {
+      "available": 52,
+      "numeric_positive": 49,
+      "unlimited": 3,
+      "blank": 3,
+      "not_open": 49,
+      "explicit_zero": 0
+    },
+    "all_home_windows_closed": true,
+    "profile_counts_all_six_schools": {
+      "國立臺北大學": 206,
+      "淡江大學": 4,
+      "長庚大學": 77,
+      "國立臺灣大學": 288,
+      "國立中正大學": 104,
+      "國立中央大學": 214
+    },
+    "official_website_identity_count": 102,
+    "coordinates": 98,
+    "licensed_photos": 100,
+    "matrix_counts": {
+      "host_fields": {
+        "reference_only": 331,
+        "missing": 690,
+        "verified_current": 330,
+        "needs_confirmation": 342,
+        "conflict": 74,
+        "explicit_not_announced": 1
+      },
+      "profile_fields": {
+        "verified_current": 368,
+        "missing": 176,
+        "reference_only": 95,
+        "needs_confirmation": 89
+      },
+      "general_campus_fields": {
+        "verified_current": 287,
+        "missing": 441
+      }
+    },
+    "old_official_data_preserved": true,
+    "original_ccu_profiles_sha256": "1375f32052bcdeaedfe696073e7ada6d40f40bdebeba0dc1e7f82353e38b78e6",
+    "package": {
+      "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+      "sha256": "204525fa114211c03d7014ae49326f11932a40a7fbe591d1edfdb04710aa2a8b",
+      "ccu_files_verified": 3186
+    }
+  },
+  "source_screening": {
+    "source_count": 1110,
+    "decisions": {
+      "acquired_not_policy_verified": 648,
+      "excluded_specific_review": 7,
+      "used_with_explicit_field_status": 416,
+      "technical_failure": 35,
+      "challenge_or_error_page": 4
+    }
+  },
+  "supabase_runtime": {
+    "result": "failed",
+    "error": "failed to register layer: no space left on device",
+    "driver": "vfs",
+    "own_project_resources_after_cleanup": 0,
+    "notes": "normal pinned validator image; only own recoverable task files moved/deleted; no global pruning, Docker configuration change or remote database"
+  },
+  "lint": {
+    "final_result": "All checks passed!",
+    "earlier_environment_errors": [
+      "No module named ruff",
+      "default uv tools directory read-only",
+      "assumed tool bin path absent"
+    ],
+    "recovery": "command-local UV_TOOL_DIR/UV_TOOL_BIN_DIR/UV_CACHE_DIR in task-owned workspace; actual final lint succeeded"
+  },
+  "profile_55_prefix_preserved": true,
+  "current_gaps": {
+    "coordinate_gaps": 6,
+    "licensed_photo_gaps": 4,
+    "website_identity_gaps": 2,
+    "host_missing_fields": 690
+  },
+  "pending_next_stage_sources_excluded_from_frozen_package": true,
+  "evidence_manifest": [
+    {
+      "file": "followup-ccu-regression-tests.log.gz",
+      "original_sha256": "b6d19f94f840073cbb5ab2edbd88a8fb5f07b5df812058489202b94899a799a8",
+      "stored_sha256": "39eda741801d6cbb5509ad03351d724237ec410d7227a6611e382576ed9b61b6",
+      "original_bytes": 93
+    },
+    {
+      "file": "followup-ccu-regression-tests-repaired.log.gz",
+      "original_sha256": "2c7271d1f506537b2a0db448135838098f801e6279135c969e814964ee79d106",
+      "stored_sha256": "0a3808c203f0e1a3a5ae32ffe2c6b6fb860727f36539c78449f244ce4b40e7b3",
+      "original_bytes": 10218
+    },
+    {
+      "file": "followup-ccu-regression-suite.xml.gz",
+      "original_sha256": "bfb26953e5d44b6eb78a36c66870a737d40b37f5e0a6d2c417c153234f194cf4",
+      "stored_sha256": "6c4ceec87eb28bd1ee73ee489b72c500aea817bb209452c393e272a21b0ab189",
+      "original_bytes": 77756
+    },
+    {
+      "file": "followup-selection.txt",
+      "original_sha256": "2bc44bdb760b928e7862789fc57e2b61f2ec6b617cee1ac27c88a6746639f520",
+      "stored_sha256": "2bc44bdb760b928e7862789fc57e2b61f2ec6b617cee1ac27c88a6746639f520",
+      "original_bytes": 48296
+    },
+    {
+      "file": "followup-targeted-repaired-tests.log.gz",
+      "original_sha256": "13b12912f6ca04fc1eaa4d1e583bb89560c0261218d3e5e434c59f77458719cf",
+      "stored_sha256": "f799317f3ddaf640f8e8b68b23f9c878a4a3d0d96ade933f4fe57bc855cef40e",
+      "original_bytes": 2020
+    },
+    {
+      "file": "followup-targeted-repaired-suite.xml.gz",
+      "original_sha256": "0b3c484d3caac068bba6464d087ea69c0db2cbd485196f052f1f5272adb5f864",
+      "stored_sha256": "b9a11d89f5df84285ee57b21d6c2bfeb0457c87c08947d0177557a149d24bd60",
+      "original_bytes": 6477
+    },
+    {
+      "file": "followup-targeted-final-tests.log.gz",
+      "original_sha256": "4b1314ec2e8f317aaec9e8a40cb6ce55893a0d285a8af0b879c1a4afa2420cb4",
+      "stored_sha256": "3b833e7c7efc039c3a8ef055d2628a752f7147b365f3e6449719e89e394d2017",
+      "original_bytes": 117
+    },
+    {
+      "file": "followup-targeted-final-suite.xml.gz",
+      "original_sha256": "45c613f819464b87e4ef41763cea188a8e7e1dcaa3125f481de59a8b2ae3bed4",
+      "stored_sha256": "108fbf735e111587f6b2f585a54dab040ffa67da8d376a7f89526bdcde5b25ac",
+      "original_bytes": 4681
+    },
+    {
+      "file": "followup-failures-reproduction.log.gz",
+      "original_sha256": "dd40ccbffa59169e1f39583f48ff937b2e7788d14e10302d70cb86d1c20437c6",
+      "stored_sha256": "8b15b62b00fe57713fccc1be3b74dfdee169711bbe99cba1cc27ad68bf0f3ad9",
+      "original_bytes": 1085
+    },
+    {
+      "file": "followup-failures-reproduction.xml.gz",
+      "original_sha256": "d85fc506930653051a15807c4f17e1b58768b7da39143bcf0789bdfce0139f6f",
+      "stored_sha256": "f3c268b8e7355fc5bb6dd02e3a36baceb268930dd041afc01a76b3380c717992",
+      "original_bytes": 1315
+    },
+    {
+      "file": "followup-corrected-regressions.log.gz",
+      "original_sha256": "98b772e626345db867d8640568cf35a2b73f87886a75ff147a897367164c2070",
+      "stored_sha256": "c15195091e7bf2da50315e447edb2d6aa3937800b3acc1b5b2141bbe84263f98",
+      "original_bytes": 127
+    },
+    {
+      "file": "followup-corrected-regressions.xml.gz",
+      "original_sha256": "ebb9f0036e6ebd9b70a4308ce68deb56e44d731dcc3d83def703983d743b6585",
+      "stored_sha256": "7363c9b56ec23a420298cfead4145113ac332c22d1961db457f754fa2b07e88c",
+      "original_bytes": 5735
+    },
+    {
+      "file": "followup-new-browser.log.gz",
+      "original_sha256": "7c4fa7843eb64e2377616956e9165430141c5604681e90fdd7e126620fc3771f",
+      "stored_sha256": "088c20d0222373844d9289fcd197762a191f60536002dc602e46fd18cf2405a2",
+      "original_bytes": 116
+    },
+    {
+      "file": "followup-new-browser.xml.gz",
+      "original_sha256": "97f06dd72a2a22ec106c4a8650182a5b928e86285c9f3dcfbb0db861670a455a",
+      "stored_sha256": "c5d31346b7a8a7e882922c8a8302ef7fe301f1c4ff5308335f44f01aec1bee80",
+      "original_bytes": 1202
+    },
+    {
+      "file": "followup-data-gate.log.gz",
+      "original_sha256": "701d918f97924f5ba22024a8e70f4f40f47a228673efe446d44b02a914efac34",
+      "stored_sha256": "45129d1fbd699446a3443d0498a30167b2d6311d9299616c933a026c78be3e04",
+      "original_bytes": 1415
+    },
+    {
+      "file": "followup-data-gate-repaired.log.gz",
+      "original_sha256": "aa4acbf45cc5bdab656bd59e12c0ee8ceb48257aff362d6a3bf5e1c13fdfbb71",
+      "stored_sha256": "02eaf2a3e31c2219a669c9c7578700e81b9f917da87cce35908da63c31ff6960",
+      "original_bytes": 1286
+    },
+    {
+      "file": "followup-final-wheel-gate.json",
+      "original_sha256": "37eea1a54641c8e7883f3d60d5528f0169dc6c11eac7b88d242481f143065fda",
+      "stored_sha256": "37eea1a54641c8e7883f3d60d5528f0169dc6c11eac7b88d242481f143065fda",
+      "original_bytes": 1460
+    },
+    {
+      "file": "followup-final-wheel-gate.log.gz",
+      "original_sha256": "37eea1a54641c8e7883f3d60d5528f0169dc6c11eac7b88d242481f143065fda",
+      "stored_sha256": "8473ff3480f9e4179f8adaf55054bf8bc071c4cbfa11ccdcd551cc2d82d71f18",
+      "original_bytes": 1460
+    },
+    {
+      "file": "followup-final-wheel-build.log.gz",
+      "original_sha256": "d10286d4817a00298b0bfe5807d3267e41a0666960ca7b5913183291c8a9bf4b",
+      "stored_sha256": "c562d161321c181d003e82d8f5bc0a600fef4dfdd6f4f267241b253c134845a5",
+      "original_bytes": 2325801
+    },
+    {
+      "file": "followup-supabase-runtime.log.gz",
+      "original_sha256": "3192e1c963e26943a6bcb40596713a3b478450936ebafc378a985ab48536c24c",
+      "stored_sha256": "3206c1f1abfae6695edfd9b308257f642a0558d4220c5de1cb6115d7f9948eae",
+      "original_bytes": 20045
+    },
+    {
+      "file": "followup-runtime-capacity-evidence.json",
+      "original_sha256": "f927600b2c4ce68a891150eb9902587e67d602f121f5c1fffd450b3743134ac0",
+      "stored_sha256": "f927600b2c4ce68a891150eb9902587e67d602f121f5c1fffd450b3743134ac0",
+      "original_bytes": 1187
+    },
+    {
+      "file": "temporary-capacity-recovery.json",
+      "original_sha256": "f8ed9b7584f400bf05a1518ed913942ca99294b41b2fa27afbc2240a5d62aa7a",
+      "stored_sha256": "f8ed9b7584f400bf05a1518ed913942ca99294b41b2fa27afbc2240a5d62aa7a",
+      "original_bytes": 734
+    },
+    {
+      "file": "followup-own-artifact-recovery.json",
+      "original_sha256": "93ccc598ec0e34d7de9d371802c17b6a7a18e05faedf01987b02b0bfd483ae5b",
+      "stored_sha256": "93ccc598ec0e34d7de9d371802c17b6a7a18e05faedf01987b02b0bfd483ae5b",
+      "original_bytes": 413
+    },
+    {
+      "file": "followup-clean-build-recovery.json",
+      "original_sha256": "b07a0d4773f2837f1f5cb6227a51b8585aa1d59e24df6d61f296b5a199ef8ce4",
+      "stored_sha256": "b07a0d4773f2837f1f5cb6227a51b8585aa1d59e24df6d61f296b5a199ef8ce4",
+      "original_bytes": 225
+    },
+    {
+      "file": "second-batch-freeze.json",
+      "original_sha256": "3ee0a870b43ed4bc6af498f477be9cb8a0b565a036c8328d459be4c03b901d33",
+      "stored_sha256": "3ee0a870b43ed4bc6af498f477be9cb8a0b565a036c8328d459be4c03b901d33",
+      "original_bytes": 2044
+    },
+    {
+      "file": "followup-tested-data-hashes.json",
+      "original_sha256": "90299d0b7cd1c4fc8ecd06e1180b6203ed1c958cb51e8d008244cce45352b659",
+      "stored_sha256": "90299d0b7cd1c4fc8ecd06e1180b6203ed1c958cb51e8d008244cce45352b659",
+      "original_bytes": 401
+    },
+    {
+      "file": "followup-ruff.log.gz",
+      "original_sha256": "49ab8cc7369d897dfbd652e627621140486a4e334f5cb642688e575835f6eaea",
+      "stored_sha256": "68125c3acf31c95320962a627674e0a2f1d4495ec9bc494c2390be1f2b1ad02a",
+      "original_bytes": 79
+    },
+    {
+      "file": "followup-ruff-available.log.gz",
+      "original_sha256": "013c016e03125d12c95144f44758cf9a6dbe0a01df65d468c5cc5b65844ff7bd",
+      "stored_sha256": "f396fcd24896f5f271492e0076e896bb9abd4c5e662e1af8aab67cedb37a2f7f",
+      "original_bytes": 107
+    },
+    {
+      "file": "followup-ruff-safe-fixes.log.gz",
+      "original_sha256": "e1e5f1a743cbe32ff5f783a099049cd764e164ca7e389624bb18ac625f6d82d9",
+      "stored_sha256": "39f2b0f4950c1a5c06c88cb91fe737d7a5204395cf61d74fdfcc32b54d766dea",
+      "original_bytes": 39
+    },
+    {
+      "file": "followup-ruff-final.log.gz",
+      "original_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stored_sha256": "47f394a1497b1873bc6e6d6f9bb92aa51b990821f1ddd7770a933ffd29c456cd",
+      "original_bytes": 19
+    }
+  ]
+}

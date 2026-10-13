@@ -8796,6 +8796,97 @@
         "title": "CalendarTaskUrgency",
         "type": "string"
       },
+      "CatalogueSourceStatus": {
+        "properties": {
+          "current_cycle_verified": {
+            "default": false,
+            "title": "Current Cycle Verified",
+            "type": "boolean"
+          },
+          "failure_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Reason"
+          },
+          "last_attempt_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Attempt At"
+          },
+          "last_attempt_result": {
+            "anyOf": [
+              {
+                "enum": [
+                  "success",
+                  "failed"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Attempt Result"
+          },
+          "last_success_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Success At"
+          },
+          "snapshot_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snapshot Hash"
+          },
+          "source_urls": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Urls",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "retrieved",
+              "saved_reference",
+              "unavailable"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "CatalogueSourceStatus",
+        "type": "object"
+      },
       "CommunityAnswer": {
         "properties": {
           "author_id": {
@@ -15268,6 +15359,16 @@
             },
             "title": "Application Periods",
             "type": "array"
+          },
+          "catalogue_source": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CatalogueSourceStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "document_explanations": {
             "items": {
@@ -24402,6 +24503,59 @@
           }
         },
         "summary": "Eligibility Check"
+      }
+    },
+    "/tku/partner-census": {
+      "get": {
+        "operationId": "partner_census_tku_partner_census_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Partner Census"
+      }
+    },
+    "/tku/partner-census/{institution_id}": {
+      "get": {
+        "operationId": "partner_census_school_tku_partner_census__institution_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "institution_id",
+            "required": true,
+            "schema": {
+              "title": "Institution Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Partner Census School"
       }
     },
     "/universities": {

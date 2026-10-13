@@ -1,0 +1,121 @@
+{
+  "checked_at": "2026-10-11T15:32:44.650931+00:00",
+  "base_checkpoint": "d29daa6ed49fa51e689d03cb9da21055feaa3e14",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 200,
+    "unique_photo_sha256": 197,
+    "displayed_partner_locations": 188,
+    "photo_gaps": 14,
+    "location_gaps": 26,
+    "strict_current_field_gaps": 3250,
+    "public_unread_candidates": 314,
+    "reviewed_host_records": 118,
+    "completion_sources": 665,
+    "passages_reviewed": 261,
+    "native_pdf_fully_read": 51,
+    "native_and_visual_pdf_fully_read": 3
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "418 passed in 165.46s",
+      "evidence": "tests-ncu-all.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_fifth_photos.py tests/e2e/test_ncu_resume_assets.py -k 'fifth_photo or mother_marker' -q",
+      "result": "9 passed, 10 deselected in 81.45s",
+      "evidence": "browser-check.txt"
+    },
+    {
+      "command": "node --check src/exchange_info/static/app.js; git diff --check",
+      "result": "passed (commands separately invoked; no CI/deploy)"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_photo_license_review.py tests/test_ncu_integration.py::test_bundle_rebuilds_exactly_from_tracked_source_data -q",
+      "result": "14 passed in 6.06s",
+      "evidence": "tests-lossless-license-pack.txt",
+      "scope": "After lossless gzip packing of raw HTML; SHA remains original response bytes."
+    }
+  ],
+  "browser_review": {
+    "all_eight_photo_figures_visually_viewed_before_punctuation_cleanup": true,
+    "final_visually_viewed": [
+      "browser/巴登--390-photo.png",
+      "browser/南洋理工商管-390-photo.png",
+      "browser/韓國天主教-390-photo.png",
+      "browser/ncu-mother-and-188-points.png"
+    ],
+    "scope": "先逐張看8個實際photo figure（DHBW兩viewport）；僅去掉重複句點後8案例與map重跑通過，最終再看3張授權／校區敏感圖及188地球。其餘最終截圖由browser斷言，不冒稱全部最後版本人工視讀。"
+  },
+  "artifacts": [
+    {
+      "path": "browser/ncu-mother-and-188-points.png",
+      "sha256": "a80aeb35e382b1f345e0eda100b40e25cc686a458f6d7c10584b0324a4ecd614"
+    },
+    {
+      "path": "browser/南洋理工商管-390-life.png",
+      "sha256": "699044cfb60f9ab4eb2264ae8032c2494b9b35786763a2bcd322c70f67322d85"
+    },
+    {
+      "path": "browser/南洋理工商管-390-photo.png",
+      "sha256": "a3116402c60439a408c4f6e19bce19e5d100ee285dca911b86793b66a50a5d65"
+    },
+    {
+      "path": "browser/巴登--1280-life.png",
+      "sha256": "5a65d3a9176bec0e515d8bb34538995ba0ad2b6468ab27778165106919b13cfe"
+    },
+    {
+      "path": "browser/巴登--1280-photo.png",
+      "sha256": "bd282386397f2c3eff6d980d76f6747161be902af6689c2554c5319b9a3bf5d0"
+    },
+    {
+      "path": "browser/巴登--390-life.png",
+      "sha256": "7098341f011a0afc98f0ec943cf73f96f3cac93fae840b26df0003141f3e7f9f"
+    },
+    {
+      "path": "browser/巴登--390-photo.png",
+      "sha256": "55162ba73ccadae22f0fe64ca239314f3fdf85a2c657c424c52cf10e0128e4d0"
+    },
+    {
+      "path": "browser/布勞爪哇-1280-life.png",
+      "sha256": "7d93bde99a59cc5cdeb9ad93d2496b2d3ee63f7d11fe4695dbe367a39e8ee6e6"
+    },
+    {
+      "path": "browser/布勞爪哇-1280-photo.png",
+      "sha256": "40c741e9bd85fe5d3b353e81576ad29d609dc93e4b744aa2ca764661c39e2eab"
+    },
+    {
+      "path": "browser/艾爾朗加-1280-life.png",
+      "sha256": "eb802e8a639fd7f00b239715df5935524b79d584e1e2a95d3229cc55e5b5774e"
+    },
+    {
+      "path": "browser/艾爾朗加-1280-photo.png",
+      "sha256": "f040361eba71d23a295540faa8eabe595c3f861888fc1e134e04e427d309710c"
+    },
+    {
+      "path": "browser/蘭斯-390-life.png",
+      "sha256": "9336cf87ffae0dbd8548f5732b78b4283fa6fdbf3b2d8876cb07b6d580a5b535"
+    },
+    {
+      "path": "browser/蘭斯-390-photo.png",
+      "sha256": "bd397e8d2470ef8d556131ee3772a5f06bc0028c39e3e8e012391be421df7112"
+    },
+    {
+      "path": "browser/阿沙芬堡-1280-life.png",
+      "sha256": "98660e83726547a5e1cbc72257cd3d3919db0bed31a1a894edb970db0772a622"
+    },
+    {
+      "path": "browser/阿沙芬堡-1280-photo.png",
+      "sha256": "922a8151db140bb7efa41b1b938b5d4308e8e2f1e43e41181a75f71e0412f65d"
+    },
+    {
+      "path": "browser/韓國天主教-390-life.png",
+      "sha256": "f65d5cd0acb13dbbf9b32adea7345bec51e89ad061e5753aa7c41ab32eae6413"
+    },
+    {
+      "path": "browser/韓國天主教-390-photo.png",
+      "sha256": "fb06eb908d11ea8d5ca21bcdc32020cf6eed14f8100ec1bf6af3d49d395d9a4c"
+    }
+  ]
+}

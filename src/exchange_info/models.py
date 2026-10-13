@@ -2637,7 +2637,20 @@ class HomeSelectionRules(BaseModel):
     language_certificate_required: bool = False
 
 
+class CatalogueSourceStatus(BaseModel):
+    status: Literal["retrieved", "saved_reference", "unavailable"]
+    last_success_at: datetime | None = None
+    last_attempt_at: datetime | None = None
+    last_attempt_result: Literal["success", "failed"] | None = None
+    failure_reason: str | None = None
+    snapshot_hash: str | None = None
+    source_urls: list[str] = Field(default_factory=list)
+    # Retrieval time does not establish the academic year or current publication status.
+    current_cycle_verified: bool = False
+
+
 class StudentDashboard(BaseModel):
+    catalogue_source: CatalogueSourceStatus | None = None
     school_name: str = "長庚大學"
     last_checked: datetime | None = None
     academic_score_minimum: float | None = None
@@ -2656,6 +2669,15 @@ class StudentDashboard(BaseModel):
     rule_explanations: list[RuleExplanation] = Field(default_factory=list)
     partner_universities: list[PartnerUniversity] = Field(default_factory=list)
     sources: list[SourceReference] = Field(default_factory=list)
+
+    @model_serializer(mode="wrap")
+    def serialize_catalogue_source(self, handler):
+        payload = handler(self)
+        # Preserve the byte-stable non-CGU bundles; source metadata is additive
+        # only for a dashboard with an actual catalogue source provider.
+        if self.catalogue_source is None:
+            payload.pop("catalogue_source", None)
+        return payload
 
 
 TeachingLanguage = Literal["english", "japanese", "chinese", "other"]

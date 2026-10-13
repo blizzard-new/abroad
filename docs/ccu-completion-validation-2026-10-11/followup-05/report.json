@@ -1,0 +1,534 @@
+{
+  "frozen_commit": "62a9d9086e87bddef8290bd05ef8c1a0f51467e1",
+  "baseline_main": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "latest_origin_main_rechecked": "59a20f27fcee00fb597abc79e75ec11778317422",
+  "prior_handoff_commit": "0a089493e59426c61dc864db2ef49a40e92ea130",
+  "production_git_objects": {
+    "src": "804d31c82e253d603a91520c8aef12112bb1e567",
+    "scripts": "9405e783027eb01b312e99ae7ffd3a852f6d7852",
+    "data": "d96a635c71b07e955d323dedd566462fba412b49",
+    "pyproject.toml": "9fc12547a48486285c6f000421a4b5cdee3c3869",
+    "uv.lock": "72a4b1691f8718ea632cd95d68c1a251a4b53496",
+    "supabase": "c23e95f1f3bbce8cfd696566e1ad2db6ebf101d6"
+  },
+  "all_ccu_unit_cgu_ntpu_shared_regressions": {
+    "tests": 384,
+    "passed": 380,
+    "failed_or_errors": 0,
+    "skipped": 4,
+    "elapsed_seconds": 317.167
+  },
+  "completion_mobile_desktop": {
+    "tests": 16,
+    "passed": 16,
+    "failed_or_errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 49.858
+  },
+  "initial_candidate": {
+    "commit": "50aa3cd47c9732d2d8d083e47441743734cfab3e",
+    "unit": {
+      "tests": 384,
+      "passed": 152,
+      "failed_or_errors": 228,
+      "skipped": 4,
+      "elapsed_seconds": 113.34
+    },
+    "browser": {
+      "tests": 16,
+      "passed": 0,
+      "failed_or_errors": 16,
+      "skipped": 0,
+      "elapsed_seconds": 6.408
+    },
+    "resolution": "HTTP401 sign-in body was mistakenly placed in primary policy evidence. Moved it to separate access_requirement_evidence; the strict HTTP200 source validator is unchanged."
+  },
+  "intermediate_candidate": {
+    "commit": "17f91bb745b1503507e98208d2b05c93768a50cf",
+    "unit": {
+      "tests": 384,
+      "passed": 379,
+      "failed_or_errors": 1,
+      "skipped": 4,
+      "elapsed_seconds": 305.913
+    },
+    "browser": {
+      "tests": 16,
+      "passed": 16,
+      "failed_or_errors": 0,
+      "skipped": 0,
+      "elapsed_seconds": 50.601
+    },
+    "resolution": "Saintgits new city suffix disagreed with the existing source-backed Kottayam value. Restored the original city label; actual Engineering marker retained."
+  },
+  "focused_access_repair": {
+    "tests": 9,
+    "passed": 9,
+    "failed_or_errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 2.066
+  },
+  "focused_city_repair": {
+    "tests": 1,
+    "passed": 1,
+    "failed_or_errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 12.301
+  },
+  "strict_source_validator_blob_unchanged": "28daf5e1f982a19a1056cb884d1f838e70f49867",
+  "new_exclusions": 0,
+  "full_2668_suite_rerun_after_fifth_batch": false,
+  "prior_unresolved_tests": {
+    "first_full_suite": "../report.json: two unchanged NTU screenshot-path failures reproduced at immutable main, no waiver or NTU directory write",
+    "second_jena": "../followup-02/report.json: isolated unmodified Jena390 later passed; root cause unproven"
+  },
+  "acceptance_gate": {
+    "baseline_commit": "59a20f27fcee00fb597abc79e75ec11778317422",
+    "candidate_head": "62a9d9086e87bddef8290bd05ef8c1a0f51467e1",
+    "exchange_list": 104,
+    "global_agreements": null,
+    "quotas": {
+      "available": 52,
+      "numeric_positive": 49,
+      "unlimited": 3,
+      "blank": 3,
+      "not_open": 49,
+      "explicit_zero": 0
+    },
+    "all_home_windows_closed": true,
+    "profile_counts_all_six_schools": {
+      "國立臺北大學": 206,
+      "淡江大學": 4,
+      "長庚大學": 77,
+      "國立臺灣大學": 288,
+      "國立中正大學": 104,
+      "國立中央大學": 214
+    },
+    "official_website_identity_count": 102,
+    "coordinates": 100,
+    "licensed_photos": 100,
+    "matrix_counts": {
+      "host_fields": {
+        "reference_only": 313,
+        "missing": 643,
+        "verified_current": 351,
+        "needs_confirmation": 377,
+        "conflict": 83,
+        "explicit_not_announced": 1
+      },
+      "profile_fields": {
+        "verified_current": 368,
+        "missing": 176,
+        "reference_only": 95,
+        "needs_confirmation": 89
+      },
+      "general_campus_fields": {
+        "verified_current": 289,
+        "missing": 439
+      }
+    },
+    "old_official_data_preserved": true,
+    "original_ccu_profiles_sha256": "1375f32052bcdeaedfe696073e7ada6d40f40bdebeba0dc1e7f82353e38b78e6",
+    "package": {
+      "wheel": "taiwan_exchange_info-0.1.0-py3-none-any.whl",
+      "sha256": "4d97e47e7c775c0ceb9cc6b12901b6451af79938cfe84c03fb5dea0a5901967f",
+      "ccu_files_verified": 3490
+    }
+  },
+  "source_screening": {
+    "source_count": 1217,
+    "decisions": {
+      "acquired_not_policy_verified": 702,
+      "excluded_specific_review": 7,
+      "used_with_explicit_field_status": 449,
+      "technical_failure": 51,
+      "challenge_or_error_page": 7,
+      "used_access_requirement_evidence": 1
+    },
+    "additional_bundled_receipts": 23,
+    "access_evidence_not_policy": 1
+  },
+  "website_identity_distinction": {
+    "profile_website_identities": 102,
+    "general_campus_reviews": 98,
+    "existing_document_identities": 4,
+    "missing_identity_pages": [
+      44,
+      96
+    ],
+    "all_102_website_bodies_read": false
+  },
+  "remaining": {
+    "coordinate_pages": [
+      68,
+      71,
+      111,
+      119
+    ],
+    "licensed_photo_pages": [
+      66,
+      71,
+      80,
+      119
+    ],
+    "website_identity_pages": [
+      44,
+      96
+    ],
+    "host_missing_fields": 643,
+    "global_agreements": null,
+    "next_home_round_2027_fall": "not verified; no official unpublished claim"
+  },
+  "uel_source_chain": {
+    "official_url": "https://link.uel.edu.vn/Factsheet",
+    "drive_file_id": "1aXHDQmH9RRZMHhijVBTOs2a1M5JwAKqH",
+    "download_receipt": "p66-official-factsheet-pdf",
+    "actual_pages": 4,
+    "year": "not printed in factsheet body",
+    "visual_language": "new PDF page1 >=6.0 IELTS / >=650 TOEIC; historical2023-2024 page3 >=5.0 / >=450, lossy extractor shows >; original PDFs and PNG visual proof retained",
+    "calendar": "2026-2027 tab actual CSV rows12/14/16: exam/S3 years inconsistent; not corrected",
+    "housing": "July2026 source per6months vs undated PDF monthly; conflict retained",
+    "forms": "Actual Google sign-in body, not status401 alone; account authorization scope/form year not read"
+  },
+  "campus_review": "Official engineering contact route redirects to same-group Design School. Its map destination names Saintgits Engineering; actual !3d/!4d marker, not viewport or photo camera GPS. Existing Kottayam label preserved.",
+  "supabase_runtime": {
+    "retry_exit_code": 1,
+    "started_at_commit": "17f91bb745b1503507e98208d2b05c93768a50cf",
+    "runtime_script_blob": "5d8382ddb3b5484acb5abbc4fde70a80a82bbc7a",
+    "supabase_tree": "c23e95f1f3bbce8cfd696566e1ad2db6ebf101d6",
+    "runtime_relevant_code_unchanged_during_city_fix": true,
+    "workspace_free_before_retry": "12 GB after removing only this session generated prior/aborted wheels and build",
+    "failure": "Pinned postgres17.6.1.136 layer registration: no space left on device",
+    "image_inspection_exit": 1,
+    "image_status": "No such image",
+    "docker_driver": "vfs",
+    "passed": false,
+    "global_cleanup_or_driver_security_changes": false
+  },
+  "additional_public_research_outside_bundle": {
+    "gamma_browser": "Fresh anonymous browser stopped at net::ERR_CERT_AUTHORITY_INVALID; no ignore_https_errors, login or private query; full agreement denominator remains null",
+    "dntu_public_map": "Retrieved200 public map/KML with16 housing/route placemarks, no named university campus marker. Facebook response yielded only title, no post/map-link body. No coordinate or housing policy accepted; unrelated rental contacts not published.",
+    "source_urls": [
+      "https://www.google.com/maps/d/u/0/viewer?mid=1Ex2cip46QzR4kvV00nOO9w0swGKN7ao",
+      "https://www.google.com/maps/d/kml?mid=1Ex2cip46QzR4kvV00nOO9w0swGKN7ao&forcekml=1",
+      "https://www.facebook.com/dntuedu/posts/1511931400962645/",
+      "https://gamma.app/embed/hdozbiaaek5nkn0"
+    ]
+  },
+  "uncited_candidate_note": "p68-official-public-map-contact is a guessed route returning a generic portal, not accepted contact/map evidence.",
+  "reproduction": {
+    "byte_identical": true,
+    "sha256": {
+      "campus-coordinate-review.json": "adbb20db5f95bb3acc7d652293ffb76252d6d7bd1d37b69896d0112389942d01",
+      "campus-assets.json": "accd46c3537f977cf3fabac3dcf3b3636538482548d268380e00ad93281fad65",
+      "completion-manual-fields.json": "3674607b4f3ec85387f97538c4857e975a84938b9fc2d2975e061879c7ef8e53",
+      "completion-reviewed-fields.json": "b858a6e10fad4b087d3068519ccc9bee701eca46c48ded81900fa59876e45ef5",
+      "completion-inventory.json": "1a5599cc9d9254021513176f2b6a456aeb1491b4b5fe6b66bdb47488c11c2fc9",
+      "completion-public-source-screening.json": "f931b12b791e75e90f140ce57996b07914c45f8fed224b09416a54439915cb4b",
+      "completion-followup-gap-research.json": "2adeba4bbefb7dcae333989a2970179c9f523621fc975a373b67d4003b336644",
+      "completion-pr8-coverage-comparison.json": "3793ac4f10932cdfc5a9b1f5ae3a53707f8d039fd72129f45ae7b5a4088c366e"
+    },
+    "comparison_note": "PR8 fixed snapshot unchanged; the other seven are reproduced source-review outputs"
+  },
+  "final_test_source_sha256": {
+    "tests/test_ccu_bounded_healthcare.py": "bd9e9d927dc582c530f219b3a28bd2433d6bd6f02750d333a62ed9c92db49383",
+    "tests/test_ccu_completion.py": "3dc5c348f4db880fd67743b33e9bcba444e09b1c9e711382515f5dc5e73f7b6e",
+    "tests/test_ccu_composite_provenance.py": "667c59b2ff5c954671b43b9f3923b34a1c8c9459a6189ae5babdd85645762618",
+    "tests/test_ccu_czu_usj_followup.py": "d5a7dc5b8dbae04999ccb24ba1162f86b5c31c229ff79bc1334f92b724cf51c7",
+    "tests/test_ccu_eighteenth_pass.py": "23be600ed935825ce01d23f107390d705789bb719c757ba60bb76dd786e4414f",
+    "tests/test_ccu_eighth_pass.py": "da09fc21fbc800e302f356040fc662bb0bc2e114242c3ef6dfce82e70a557940",
+    "tests/test_ccu_fifteenth_pass.py": "790ab00ab0bdc706287dc23842514dc9b33c7b2b6008ab0312647f30fbca1f5a",
+    "tests/test_ccu_fifth_pass.py": "a9a8cfb6e691b28135d7a6beb639b3afe2a0f5c4e53313a6c6d9842d2192eea6",
+    "tests/test_ccu_followup_validation.py": "f4469b2d9a2dbbeae11aea551573282bee41d0f340ac178ecb382ef76fafc3d1",
+    "tests/test_ccu_fourteenth_pass.py": "1f5350d52697ee413f3aeba9280276fe3db08efb0d41072f76ee587c4b40c50e",
+    "tests/test_ccu_fourth_pass.py": "bf8f2fd39edb0165457391aaa71770731052bd7178a00c192e7713c87b69bc4a",
+    "tests/test_ccu_nineteenth_pass.py": "d72b61a8cd526b6ebee7fe2158cbb97d5711a047a51e4a683c5f4336eb4e15fb",
+    "tests/test_ccu_ninth_pass.py": "6a29eeeb40cd610ff5b204713e23bac756dd41b2657e8813ace9652c5bb53da7",
+    "tests/test_ccu_overseas.py": "0b84174a864ad638e7b12bdf8447b5e18a893997ac00b23c62625e595b638096",
+    "tests/test_ccu_parent_fixes.py": "618896a636bb7fec7ddcc666f9c6cde20c6701197854a17100a173000cd511ba",
+    "tests/test_ccu_public_followup.py": "76b789c471c3716ed1a189ce87a70df841fbb545009a88bc1df89d447a3f0afa",
+    "tests/test_ccu_saintgits_marker.py": "2ee2b2b1a2b1d8c5d074c0af60a27c553c9ba7153a47746c8679c81afcb273dd",
+    "tests/test_ccu_second_pass.py": "43aaeb63db8f01f2cbd96774838f4e0e6ce3fe8c745f98e3253911fe238a0676",
+    "tests/test_ccu_semantics.py": "a0dd4ef187349cd5a77c9af75be6086f9ccacfd0758bff701ef5159311eff135",
+    "tests/test_ccu_seventeenth_pass.py": "28f29e0641b6650425a8f924591e521a07bdb5adb21c40c1e1f71a5aa6a42507",
+    "tests/test_ccu_seventh_pass.py": "27a758193fbc3c67b934ae04f1bcad7cdfcbb0fa847945637cd1b7b7759fb94b",
+    "tests/test_ccu_sixteenth_pass.py": "1ce69e418f2b50287fa3db558a6953a4dc9f698aba57047704c081aa92321497",
+    "tests/test_ccu_sixth_pass.py": "0355ed21eb5d0b34bf6e7be1cb1cfbe42db6d5f5cd93308ed45b17312285d1e8",
+    "tests/test_ccu_support.py": "6eed9f983324aae9edb3ce1199dc5962f38fedd877167bfb47fa4011520e3fa0",
+    "tests/test_ccu_third_pass.py": "5a764a44cc100906cb6f19ab08169ad29d5d71d45b8b75a4ba57523fee7b89e1",
+    "tests/test_ccu_tls_security.py": "5ffdea19265e086f0e41abab53642bf51e1b7013ceb9c174984c977dd66b645e",
+    "tests/test_ccu_twentieth_pass.py": "3e72f022e85ba5429cbd33e69ee89b58bb9bee11459801b82f63d237bce9509e",
+    "tests/test_ccu_twentyfifth_pass.py": "bc6013569a7d6cdf386cf75860529245270a963d9628a4caaa5d8f66b6e65f4a",
+    "tests/test_ccu_twentyfirst_pass.py": "b556d118adcd95a82e28e3bf36430778e18b10b4f8003174357207b69137eb74",
+    "tests/test_ccu_twentysecond_pass.py": "947c7e2b6c9c1fff083b511f40ea535d38eea3e554368f51fc090a11b63d535f",
+    "tests/test_ccu_twentysixth_pass.py": "09bf574292a31dc4bde3376a8f31c93d6200c5356c4bc7906eb50161d384de61",
+    "tests/test_ccu_twentythird_pass.py": "9ba3e74a2fae78d73ab4680afdfff8b3de571443299b73285c0d586b43a819b5",
+    "tests/test_ccu_uel_public_followup.py": "e825347620feb0980e0e9caa023fbb8eb26890408c05679e14a54f9a3c268c09",
+    "tests/test_cgu_bundled_data.py": "69d3c693c7fe04d8603db205149c5aac257d8f876865e1289c83669bd277066b",
+    "tests/test_fit_signals.py": "dbe78a2bd3348299f3bde476876aee65d87e9eb04a46bd96e3bf3cfff91e2adc",
+    "tests/test_ntpu_bundled_data.py": "7831cf274596c55f129e68d0f45c88be6996a7322b39e1a6dad17b410f693e65",
+    "tests/test_ntpu_support.py": "e50ef72f355c5060d2ebc35e1a3d20fa2b13ebee732a06682c48b06b4ee68a51",
+    "tests/test_school_completeness.py": "29a7d23b3fc90565bc1f631d45ea6b972f9d619c18fcaf154c6efe94d65f64fc",
+    "tests/e2e/test_ccu_completion.py": "91bb58daccf6eebe70abbf6c3ff1faf07516a83a354afe26f5b5dcc573fa534d"
+  },
+  "evidence_manifest": [
+    {
+      "file": "fifth-all-unit.log.gz",
+      "original_sha256": "a68094d2f570906f283dab66865b05c674921e08226770dc4c7810beaa0df4a3",
+      "stored_sha256": "beddcf1cd19d278d606bfb6e62f68b535507c4506fb0a467ae22fc26d72accdb",
+      "original_bytes": 957138
+    },
+    {
+      "file": "fifth-all-unit.xml.gz",
+      "original_sha256": "a3480c379aa180565523f2abf7319173cbda4f210e2a7eb2fd5560fbeef84c16",
+      "stored_sha256": "89d3819517cded48a76cfd44cf4583e25c136dade009d93fccc95368ad93b655",
+      "original_bytes": 989349
+    },
+    {
+      "file": "fifth-all-unit-command.txt.gz",
+      "original_sha256": "251c20793e8f3ad31f68f1eb98b4e215d248c593472b0475d371285c39cad619",
+      "stored_sha256": "c45eea9ee76aa32dcc92d3ae8ea3c294655a5234a63045409469ad527516a477",
+      "original_bytes": 1372
+    },
+    {
+      "file": "fifth-browser.log.gz",
+      "original_sha256": "5718b2b1ab9cc84261030d2e35d472e09c2b34e31a6c6e28ca7e78d76ad3e95d",
+      "stored_sha256": "57c8c681ad3d7dc88fa17076d61d68f1b088115e43066aaa67b3944958ea551e",
+      "original_bytes": 62050
+    },
+    {
+      "file": "fifth-browser.xml.gz",
+      "original_sha256": "14cd66585c5a7a1392f83cef3dc9f19e36ceccc4b2c682ad75c68ab94f033c14",
+      "stored_sha256": "4c8bf1cd3aaff6cf50a4768aad641e2946523bcc75659cd1365b0759a6f7494e",
+      "original_bytes": 62798
+    },
+    {
+      "file": "fifth-all-unit-repaired.log.gz",
+      "original_sha256": "5a37e489db72623af0a7bbbde7504ffdbf63ad26d2c698548578060fda17f4c4",
+      "stored_sha256": "6f13d0d0208e904f1375e3f1412e0b6e6480bae62758da8217bb1736ea241db4",
+      "original_bytes": 1545
+    },
+    {
+      "file": "fifth-all-unit-repaired.xml.gz",
+      "original_sha256": "451c8d119a3dfbf1a1ab29835da8df5e7cdb0b5ae2b236127f0f27f2c2072dce",
+      "stored_sha256": "138e454d11b74d28235636eafc5bd0e75e388e223dbaa638260e5c6b868b7a8d",
+      "original_bytes": 57498
+    },
+    {
+      "file": "fifth-all-unit-repaired-command.txt.gz",
+      "original_sha256": "9630c6345eb9393d30d203ed3cf63d728305650af3e2ece7129e723e71c132ae",
+      "stored_sha256": "4508dbdb5eface9445ce7c4b4aa8db04dc610b3f2c7ee708e4b916985e58693a",
+      "original_bytes": 1381
+    },
+    {
+      "file": "fifth-browser-repaired.log.gz",
+      "original_sha256": "1ae2cf51047b148438e35b2ba446dbc18b4bb845df66e6bc158d988319bc4ff1",
+      "stored_sha256": "6f895b472d65e4b369d62c3bf795d372f0ea2aa511e31294d476bc2bd4e06402",
+      "original_bytes": 117
+    },
+    {
+      "file": "fifth-browser-repaired.xml.gz",
+      "original_sha256": "0a83b609cb68b02565576fb7cc897f6b54ce90cf709fa6d18acce4c15ba7d5a8",
+      "stored_sha256": "99c6b7471d1733a02dd2cb6df4003f5e137db5cd7f3f562512f161e6c4cadae1",
+      "original_bytes": 2686
+    },
+    {
+      "file": "fifth-all-unit-final.log.gz",
+      "original_sha256": "9557861797edc12fbd7234f43a352230d7db72f2befed99f6ce5a694d624ccd7",
+      "stored_sha256": "f26210a3369d7f98ea20c4b77c0aa6d57ad5424c7b882c6b4fb5e7e989c7f8ae",
+      "original_bytes": 540
+    },
+    {
+      "file": "fifth-all-unit-final.xml.gz",
+      "original_sha256": "4ff9f574f606fd4398163a423e666e99630549803250b8fe357c0ec37269a055",
+      "stored_sha256": "6fc1eaad95d12ded1ad8710382cd2bdef8aa232a5a2519c2c1ff0f4e4c3edc62",
+      "original_bytes": 56660
+    },
+    {
+      "file": "fifth-all-unit-final-command.txt.gz",
+      "original_sha256": "ffaecdea45853de0f7898145ae918a6ba234cdf46c3e7f4a10f9ddb032bf09da",
+      "stored_sha256": "916130640180be5efaa50d1395f092b3c798ec21fd570075b5b6fcdd56d4d029",
+      "original_bytes": 1378
+    },
+    {
+      "file": "fifth-browser-final.log.gz",
+      "original_sha256": "ed7948f41e03010aaff9ea00f29918053ef255846c978c37820d0f86cfb7fb73",
+      "stored_sha256": "7cc5de2f89caead9fe708ae9b75f1ff8d3f43b192f010d1049b416f65209ab9f",
+      "original_bytes": 117
+    },
+    {
+      "file": "fifth-browser-final.xml.gz",
+      "original_sha256": "2dc25a9931c9aeb3aafa522142137e500a39396debf6487636b00c6228b29c48",
+      "stored_sha256": "247e8d99031dd1fda98ff6a84c02258cb865f989f4fedf40588ce051fd830c10",
+      "original_bytes": 2686
+    },
+    {
+      "file": "fifth-root-fix.log.gz",
+      "original_sha256": "7c00d34fb7f06b96f64180b2c126530d11e46c5163fb1bd308e01cc74b2d0b91",
+      "stored_sha256": "2bba65bbcab34a2acb271fcf8aa2b84eddc044476d6ffb1bd610cc479150062d",
+      "original_bytes": 115
+    },
+    {
+      "file": "fifth-root-fix.xml.gz",
+      "original_sha256": "2e789e1dad9844f4521f920bad8b7cd68e5e4cf31b6bc278175cd3bdcfbdf6ce",
+      "stored_sha256": "c2f3e290229f0eba86d364e8393719d8612ac41060490cff3cb3fad9323c8e7e",
+      "original_bytes": 1582
+    },
+    {
+      "file": "fifth-city-repair.log.gz",
+      "original_sha256": "a4d2f5f0e7a449907b5884951c9601d13d014d9a5734efc068417b18e358a2a6",
+      "stored_sha256": "278fcea3c55d46b1aa5e2efb425a8faf13b33047fd991860e324ceeeb5a4e4b6",
+      "original_bytes": 116
+    },
+    {
+      "file": "fifth-city-repair.xml.gz",
+      "original_sha256": "28fcde8c7d9345184b2f7473275f5f172e2840ccbf8abd1ba5353e3d3630cff7",
+      "stored_sha256": "d05f1f4fb7641291a3b3ba843dd832d4b7064e93a8905a46be064efe49ec5cea",
+      "original_bytes": 389
+    },
+    {
+      "file": "fifth-generation-final.log.gz",
+      "original_sha256": "8b0fdf6a3053736f52b1dfd59654415b160d6a1210df707ce5b1f45e7462f17a",
+      "stored_sha256": "a17d55bf69f14800f97469a7cdda2096e70dc0fa978a316c8669861e03b3ca0e",
+      "original_bytes": 7993
+    },
+    {
+      "file": "fifth-screening-repaired.log.gz",
+      "original_sha256": "7dae62cb282056826c20e1b0d985d36aa7a11b76de02073e5aaf4826bd2da872",
+      "stored_sha256": "75a8713d769ccb5b8700b08e7358b5386b36a697acc7354c141ee633f46c7cc8",
+      "original_bytes": 274
+    },
+    {
+      "file": "fifth-uel-review-final.log.gz",
+      "original_sha256": "ab2656a68edb3f14d307107e24c9dc01daf257796068aaba90f99d468407f5c3",
+      "stored_sha256": "c9d04efb05456a00566821a4a767361aef04affdcd1c1bc7d9d860c66a96069c",
+      "original_bytes": 99
+    },
+    {
+      "file": "fifth-data-repaired.log.gz",
+      "original_sha256": "8572ff750dbfb3a617937cc6d07e36e438ac826f125499a86033044914c80152",
+      "stored_sha256": "17eaf2252cb60e59b57d45b37b9b536ef06f98d9c1a151a6a9305c09e2592a12",
+      "original_bytes": 7776
+    },
+    {
+      "file": "fifth-city-repair-generation.log.gz",
+      "original_sha256": "276c81685cf894ab77921998642916b0877281910d249a4c422d8d835123dcb5",
+      "stored_sha256": "42d783b29a0b129b058a479e67b384e1b1b9ba89ae12dfa18ee24f76df44809d",
+      "original_bytes": 7807
+    },
+    {
+      "file": "fifth-reproduction-final.log.gz",
+      "original_sha256": "e8e4acd16116bf99162f3e9782a94aa82afac246f74d43d7e34518c1371f9f16",
+      "stored_sha256": "be36635691887b0160975c63a25e617134d9be858285fca0cee219f1147d332f",
+      "original_bytes": 7906
+    },
+    {
+      "file": "fifth-reproduction-final.json",
+      "original_sha256": "9290a440124367b17f731a28adabfca258d9cbc8f95c1feff6e6b2dc4d7bb1d2",
+      "stored_sha256": "9290a440124367b17f731a28adabfca258d9cbc8f95c1feff6e6b2dc4d7bb1d2",
+      "original_bytes": 1009
+    },
+    {
+      "file": "fifth-lint.log.gz",
+      "original_sha256": "6e714a2a2c96fe0e77de715dda70e898dc12e45a6d67f9e4321edeceecf89da5",
+      "stored_sha256": "f3a202f0cde8e89fd8db7d86b1d4bef1643fa5c46243fb1e963167d808c6fdd3",
+      "original_bytes": 2952
+    },
+    {
+      "file": "fifth-lint-fix.log.gz",
+      "original_sha256": "18a1870e43654de125f6cf52d247a1e8da43d31a58999f7c8f4b52783084d1be",
+      "stored_sha256": "2b210422716f074f3244892945c0ba2dc1d232b7691266342f8408356367c630",
+      "original_bytes": 39
+    },
+    {
+      "file": "fifth-lint-final.log.gz",
+      "original_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stored_sha256": "47f394a1497b1873bc6e6d6f9bb92aa51b990821f1ddd7770a933ffd29c456cd",
+      "original_bytes": 19
+    },
+    {
+      "file": "fifth-lint-repaired.log.gz",
+      "original_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "stored_sha256": "47f394a1497b1873bc6e6d6f9bb92aa51b990821f1ddd7770a933ffd29c456cd",
+      "original_bytes": 19
+    },
+    {
+      "file": "fifth-diff-repaired.log.gz",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "original_bytes": 0
+    },
+    {
+      "file": "fifth-city-diff-final.log.gz",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "original_bytes": 0
+    },
+    {
+      "file": "fifth-frozen-tree-check.log.gz",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "original_bytes": 0
+    },
+    {
+      "file": "fifth-wheel-final-build.log.gz",
+      "original_sha256": "320d60af128169b3993cef1a15c92677702af43684b4ddc72d95d16a782bf9fa",
+      "stored_sha256": "b31882c98d8add71b85fdcc80ac35bb0d30fc80561aedd61f8c55f70cf9c0e29",
+      "original_bytes": 2464696
+    },
+    {
+      "file": "fifth-final-wheel-gate.log.gz",
+      "original_sha256": "6450a207b59cd00f2c4fbbe5b22a490d4155aa9706a61ab0119e23a9cd776f42",
+      "stored_sha256": "d82bf36d5ff4235679089023635889911983e0becf4d728f0f05c280324ab0b0",
+      "original_bytes": 1461
+    },
+    {
+      "file": "fifth-final-wheel-gate.json",
+      "original_sha256": "6450a207b59cd00f2c4fbbe5b22a490d4155aa9706a61ab0119e23a9cd776f42",
+      "stored_sha256": "6450a207b59cd00f2c4fbbe5b22a490d4155aa9706a61ab0119e23a9cd776f42",
+      "original_bytes": 1461
+    },
+    {
+      "file": "fifth-supabase-runtime-retry.log.gz",
+      "original_sha256": "1c7ee65151ca1eb530b7495b3d5e56185f06f4929e1e3e14116f8ec71b3bb96d",
+      "stored_sha256": "df24276ab09eb7ca6d9b11be57eb3ec9a6f6e812e8f5e55332197cfd5e522bbf",
+      "original_bytes": 20732
+    },
+    {
+      "file": "fifth-docker-read-only-info.log.gz",
+      "original_sha256": "d7ec0618f5ae83ccd17d5ae2974bc8f6905fc2a3df5712d00695655674fa2974",
+      "stored_sha256": "4a8d5fa54995098a7964dd8d9db84d324b3e67bdf62f063eb4b8a701b43bc4d1",
+      "original_bytes": 24
+    },
+    {
+      "file": "fifth-pinned-image-inspection.log.gz",
+      "original_sha256": "67d85e1a7bd12a40176e030484cf65a54e598424845d48d745543107ca8f5951",
+      "stored_sha256": "9cdcc25f043fc56b23360ba67bf60b47d0c076e10bd60404ee7bebfeddf419a6",
+      "original_bytes": 90
+    },
+    {
+      "file": "fifth-own-generated-capacity-recovery.json",
+      "original_sha256": "e75a6bf64227b66d269ac576f0a71ace8c3e7ed989d6ea4f08ea77b205e08cb0",
+      "stored_sha256": "e75a6bf64227b66d269ac576f0a71ace8c3e7ed989d6ea4f08ea77b205e08cb0",
+      "original_bytes": 2324
+    },
+    {
+      "file": "fifth-latest-main-fetch.log.gz",
+      "original_sha256": "3ac09ba006ad2d1b79fe32a3d663c76131b1c7696c6f5cf4ec28e2c694a8e8c0",
+      "stored_sha256": "2e0e01c33bceaea8ac3e299eb60f10b9ef01e17fcc6ac1e9e3a81537b1a0e943",
+      "original_bytes": 92
+    },
+    {
+      "file": "seventh-public-gamma-browser.log.gz",
+      "original_sha256": "3e98ee8239b47cee0e3846db4e5cece0ddf4779b47dd04637b2d6bb90a0dcba6",
+      "stored_sha256": "8860e7f73b82aa56e8b0705c5e1c0e658be66350ba149b68a16ad8bdc0aff71c",
+      "original_bytes": 504
+    },
+    {
+      "file": "gamma-public-browser.json",
+      "original_sha256": "54300322ce196c5b89a83232113e26db8c854f0bfea628af2e4e1a53c87ab0b4",
+      "stored_sha256": "54300322ce196c5b89a83232113e26db8c854f0bfea628af2e4e1a53c87ab0b4",
+      "original_bytes": 541
+    }
+  ]
+}

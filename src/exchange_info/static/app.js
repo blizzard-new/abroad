@@ -88,6 +88,7 @@ const state = {
   personalApplicationPlan: null,
   destinationProfiles: [],
   schoolImages: [],
+  ncuSchoolImages: [],
   calendarEvents: [],
   preparationTasks: {},
   planningAvailability: null,
@@ -634,6 +635,7 @@ function alignAccountSchool() {
 function clearProtectedCatalog() {
   window.UniWayDocumentWorkbench?.reset();
   state.dashboard = null;
+  $("#catalogue-source-status").hidden = true;
   state.applicationPeriodOptions = null;
   state.applicationPeriodRequestId += 1;
   renderApplicationPeriodOptions();
@@ -1175,12 +1177,20 @@ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {})
 
 async function loadSchoolImages() {
   try {
-    const payload = await fetchJson("/static/assets/school-images.json?v=20261011-coverage-1");
+    const payload = await fetchJson("/static/assets/school-images.json?v=20261011-integration-1");
     state.schoolImages = Array.isArray(payload?.schools)
       ? payload.schools.filter((item) => item && item.school_name)
       : [];
   } catch (_) {
     state.schoolImages = [];
+  }
+  try {
+    const payload = await fetchJson("/static/assets/ncu-school-images.json?v=20261011-ncu-campus-2");
+    state.ncuSchoolImages = Array.isArray(payload?.schools)
+      ? payload.schools.filter((item) => item.status === "verified" && item.local_path)
+      : [];
+  } catch (_) {
+    state.ncuSchoolImages = [];
   }
 }
 
@@ -1219,6 +1229,32 @@ function visualSchoolAliases(value) {
 
 let schoolVisualSource = null, schoolVisualExact = new Map(), schoolVisualAliases = new Map();
 function schoolVisualRecordFor(schoolName, country = null) {
+  const home = state.dashboard?.school_name;
+  if (home === "國立中央大學") {
+    return state.ncuSchoolImages.find(row => visualSchoolIdentity(row.school_name) === visualSchoolIdentity(schoolName)
+      && visualCountryIdentity(row.country) === visualCountryIdentity(country)) || { status: "license_unverified" };
+  }
+  if (home === "淡江大學") {
+    const partner = state.dashboard.partner_universities.find(row => visualSchoolIdentity(row.school_name) === visualSchoolIdentity(schoolName)
+      && visualCountryIdentity(row.country) === visualCountryIdentity(country));
+    const evidence = partner?.reference_data;
+    return partner?.image_status === "verified" && partner.image_url && evidence?.campus_photo_author
+      ? { status: "verified", local_path: partner.image_url, official_page_url: partner.image_page_url,
+          license_name: evidence.campus_photo_license, license_url: evidence.campus_photo_license_url,
+          note: `攝影：${evidence.campus_photo_author} · ${evidence.campus_photo_license}` }
+      : { status: "missing" };
+  }
+  if (home === "國立中正大學") {
+    const partner = state.dashboard.partner_universities.find(row => visualSchoolIdentity(row.school_name) === visualSchoolIdentity(schoolName)
+      && visualCountryIdentity(row.country) === visualCountryIdentity(country));
+    if (partner?.reference_data?.ccu_completion) {
+      let photo;
+      try { photo = JSON.parse(partner.reference_data.ccu_campus_assets || "{}").photo; } catch (_) { /* Attribution stays absent. */ }
+      return photo && partner.image_status === "verified" ? { status: "verified", local_path: partner.image_url,
+        license_name: photo.license_name, license_url: photo.license_url,
+        note: `攝影：${photo.artist} · ${photo.license_name} · ${photo.campus_caption}` } : { status: "missing" };
+    }
+  }
   if (schoolVisualSource !== state.schoolImages) {
     schoolVisualSource = state.schoolImages;
     schoolVisualExact = new Map(); schoolVisualAliases = new Map();
@@ -3731,6 +3767,7 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
   const request = beginSchoolDataRequest("dashboard", requestedSchool);
   state.partnerDataLoading = true;
   state.partnerDataError = false;
+  $("#catalogue-source-status").hidden = true;
   syncPartnerView();
   setLoadingState();
   const loadingAnnouncementRevision = state.statusRevision;
@@ -3779,6 +3816,21 @@ function setLoadingState() {
   });
 }
 
+function catalogueSourceUnavailable() {
+  return state.dashboard?.catalogue_source?.status === "unavailable";
+}
+
+function renderCatalogueSourceStatus() {
+  const banner = $("#catalogue-source-status");
+  const source = state.dashboard?.catalogue_source;
+  banner.hidden = !source || activeHomeSchool() !== "長庚大學";
+  if (banner.hidden) { banner.textContent = ""; return; }
+  const time = source.last_success_at ? formatDate(source.last_success_at) : "尚無成功取得時間";
+  const title = source.status === "unavailable" ? "長庚合作校來源暫不可用" : source.last_attempt_result === "failed" ? "長庚合作校來源更新暫不可用，保留歷次資料" : source.status === "retrieved" ? "長庚合作校來源已取得" : "長庚合作校使用歷次資料";
+  banner.innerHTML = `<strong>${escapeHtml(title)}</strong><p>來源取得時間：${escapeHtml(time)}。取得時間不代表當期已核實；年度、名額與開放狀態請依原資料及官方公告確認。</p><a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554" target="_blank" rel="noopener">交換來源</a> · <a href="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17533" target="_blank" rel="noopener">雙學位來源</a><button type="button" class="text-button" data-reload-catalogue>重新讀取來源狀態</button>`;
+  banner.querySelector("[data-reload-catalogue]").addEventListener("click", () => loadDashboard({ refreshed: true }));
+}
+
 function renderDashboard() {
   discoveryData();
   renderDiscoveryRecents();
@@ -3786,7 +3838,8 @@ function renderDashboard() {
   const lastChecked = formatDate(data.last_checked);
   const documents = data.document_explanations || data.rule_explanations || [];
 
-  $("#coverage-rate").textContent = String(data.partner_universities.length);
+  renderCatalogueSourceStatus();
+  $("#coverage-rate").textContent = catalogueSourceUnavailable() ? "—" : String(data.partner_universities.length);
   $("#source-count").textContent = String(data.sources.length);
   $("#last-checked").textContent = lastChecked.slice(0, 10);
   $("#top-updated").textContent = `資料更新：${lastChecked}`;
@@ -4061,6 +4114,10 @@ function languageThresholdFromPartner(item, languageTest, degreeLevel = null) {
 }
 
 function partnerAvailabilityMeta(item) {
+  if (activeHomeSchool() === "淡江大學") {
+    const tku = window.UniWayTkuDetails?.agreementMeta(item || {});
+    if (tku) return tku;
+  }
   const status = item?.availability_status || "open";
   if (["not_open", "needs_confirmation", "zero_quota", "fee_paying"].includes(status)) {
     const label = {not_open:"本季未開放（官方灰字）",needs_confirmation:"名額尚未核實",zero_quota:"零名額",fee_paying:"自費計畫"}[status];
@@ -4091,13 +4148,13 @@ function partnerAvailabilityMeta(item) {
       return {status, shortLabel:"116-1零名額", cardLabel:"116-1零名額／本期未開放", matchLabel:"本期未開放", reason:"官方名單已更新為零名額", blocked:true};
     }
     if (homeSelectionRules().pending_quota_planning && item.quota == null) {
-      return {status, shortLabel:"本期名額待公告", cardLabel:"合作備查／本期名額待公告", hint:"可先加入志願規劃；能否申請須等本期名額與條件公告", matchLabel:"本期名額待確認", reason:"本期甄選名額尚未公告", blocked:false, pending:true};
+      return {status, shortLabel:"本期名額待核實", cardLabel:"合作備查／本期名額待核實", hint:"可先加入志願規劃；能否申請須先確認本期名額與條件", matchLabel:"本期名額待確認", reason:"本期甄選名額尚未核實", blocked:false, pending:true};
     }
     return {
       status,
-      shortLabel: "合作備查／本期未公告",
-      cardLabel: "已簽約・本期沒開放名額",
-      hint: "已簽有交換合約，只是這一期沒有開放名額",
+      shortLabel: "合作備查／本期名額待確認",
+      cardLabel: "合作備查・本期名額待確認",
+      hint: "保留合作關係參考；本期是否開放及名額尚待確認",
       matchLabel: "本期名額待確認",
       reason: "交換合作關係備查",
       blocked: true,
@@ -4116,7 +4173,9 @@ function partnerAvailabilityMeta(item) {
 function renderPartnerAvailabilityNotice(item) {
   const availability = partnerAvailabilityMeta(item);
   if (!availability.blocked && !availability.pending) return "";
-  const fallback = availability.pending ? availability.hint
+  const fallback = activeHomeSchool() === "淡江大學" && availability.status === "agreement_only"
+    ? "姊妹校名錄列有合作關係；本期名額、院系計畫與開放狀態尚未核實，不表示官方明示尚未公告。"
+    : availability.pending ? availability.hint
     : homeSelectionRules().pending_quota_planning && /^0\s*名?$/.test(item.quota || "") ? "官方本期名單已更新為零名額，本期未開放申請。"
     : availability.status === "departmental_reference"
     ? "中央當期名單未列，請先向所屬學院或國際處確認是否開放。"
@@ -4310,7 +4369,7 @@ function renderPlanningWorkspace() {
     $("#planning-update-durations").hidden = true;
     $("#planning-schedule-recovery").hidden = true;
     $("#planning-schedule-status").textContent = !target ? "選定目標後，就能預覽時程。"
-      : partnerAvailabilityMeta(partnerByName(target)).pending ? "本期名額待公告，可預覽參考流程；確認前不會加入截止提醒。"
+      : partnerAvailabilityMeta(partnerByName(target)).pending ? "本期名額待核實，可預覽參考流程；確認前不會加入截止提醒。"
       : !calendarTaskFeatureEnabled() ? "目前帳號尚未開放自動準備安排；仍可在日曆手動建立任務並查看官方期限。"
       : "填寫申請學年度與準備天數，先預覽，再加入你的日曆。";
   }
@@ -7615,7 +7674,7 @@ function showPartnerMapStatus(title, message, { retry = false, loading = false }
   status.innerHTML = `${loading ? '<span class="map-loading-orbit" aria-hidden="true"></span>' : ""}<strong>${escapeHtml(title)}</strong><p>${escapeHtml(message)}</p>${loading ? "" : `<div class="map-status-actions">${retry ? '<button type="button" class="primary-button" data-map-retry>重新嘗試</button>' : ""}<button type="button" class="secondary-button" data-map-list>返回列表</button></div>`}`;
   status.querySelector("[data-map-list]")?.addEventListener("click", () => setPartnerView("list"));
   status.querySelector("[data-map-retry]")?.addEventListener("click", () => {
-    if (state.partnerDataError) loadDashboard();
+    if (state.partnerDataError || catalogueSourceUnavailable()) loadDashboard();
     else retryPartnerMap();
   });
 }
@@ -7660,11 +7719,15 @@ function syncPartnerView() {
     $("#partner-map-preview").hidden = true;
     showPartnerMapStatus("暫時無法取得學校資料", "請確認連線後重試；你的搜尋與篩選條件已保留。", { retry: true }); return;
   }
+  if (catalogueSourceUnavailable()) {
+    $("#partner-map-preview").hidden = true;
+    showPartnerMapStatus("合作校來源暫不可用", "尚無可用的歷次資料，請稍後重新讀取來源狀態。", { retry: true }); return;
+  }
   if (partnerMapController) { partnerMapController.update(partnerMapSnapshot()); return; }
   if (partnerMapLoadPromise || partnerMapLoadFailed) return;
   showPartnerMapStatus("正在準備你的世界地圖", "首次載入需要一點時間。", { loading: true });
   const generation = partnerMapGeneration;
-  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261011-coverage-1&attempt=${generation}`)
+  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261011-integration-1&attempt=${generation}`)
     .then((module) => module.createPartnerMap({ renderPreview: renderMapPreview, onSchoolSelect: loadDiscoveryPreview, onList: () => setPartnerView("list"), onRetry: retryPartnerMap, onIcons: initIcons, freshEngine: generation > 0 }))
     .then((controller) => {
       if (generation !== partnerMapGeneration) { controller.destroy(); return; }
@@ -7791,6 +7854,7 @@ function partnerPageSize() {
 }
 
 function renderPartnerCount(total, shown) {
+  if (catalogueSourceUnavailable()) { $("#partner-result-count").textContent = "來源暫不可用"; return; }
   const line = $("#partner-result-count");
   if (!line) return;
   line.textContent = !total ? "" : shown < total ? `共 ${total} 所，先顯示 ${shown} 所` : `共 ${total} 所`;
@@ -7805,7 +7869,7 @@ function renderPartnerTable() {
   renderPartnerCount(partners.length, visible.length);
 
   if (!partners.length) {
-    renderEmpty("#partner-table", "沒有符合的學校", "調整國家、學院、學制或關鍵字後再試一次。");
+    renderEmpty("#partner-table", catalogueSourceUnavailable() ? "合作校來源暫不可用" : "沒有符合的學校", catalogueSourceUnavailable() ? "尚無可用的歷次資料，請稍後重新讀取或前往官方來源確認。" : "調整國家、學院、學制或關鍵字後再試一次。");
     $("#show-more-partners").hidden = true;
     if (window.location.hash === "#partners") writePartnerUrl();
     syncPartnerView();
@@ -8001,14 +8065,17 @@ function renderPartnerLinks(item) {
   return [website, source, imageSource, rankingSource].filter(Boolean).join("");
 }
 
-function renderSchoolImageCredit(item) {
+function renderSchoolImageCredit(item, includeNote = true) {
   const visual = schoolVisualRecordFor(item.school_name, item.country);
-  const note = visual?.note || "";
+  const sourceNote = visual?.note || "";
+  const note = visual?.artist && !sourceNote.includes(visual.artist)
+    ? `攝影：${visual.artist} · ${visual.license_name || ""} · ${sourceNote}` : sourceNote;
   if (visual && visual.status !== "verified") return `<small class="school-image-credit">${visual.status === "needs_review" ? "照片待核對" : "照片待補"}：${escapeHtml(note || "尚未取得可核實的照片與授權來源。")}</small>`;
   if (visual?.license_name) {
     const license = String(visual.license_url || "").replace(/^http:\/\//, "https://");
     const safeLicense = /^https:\/\/(?:creativecommons\.org|commons\.wikimedia\.org)\//.test(license);
-    return `<small class="school-image-credit">${escapeHtml(note)}${safeLicense ? ` · <a href="${escapeHtml(license)}" target="_blank" rel="noreferrer">圖片授權</a>` : ""}</small>`;
+    const authorUrl = activeHomeSchool() === "國立中央大學" ? safeSourceUrl(visual.author_url) : "";
+    return `<small class="school-image-credit">${includeNote ? escapeHtml(note) : ""}${safeLicense ? ` · <a href="${escapeHtml(license)}" target="_blank" rel="noreferrer">圖片授權</a>` : ""}${authorUrl ? ` · <a href="${escapeHtml(authorUrl)}" target="_blank" rel="noreferrer">攝影者網站</a>` : ""}</small>`;
   }
   if (!note.startsWith("攝影：")) return visual ? '<small class="school-image-credit">圖片來源已核對；再利用授權待確認。</small>' : "";
   return `<small class="school-image-credit">${escapeHtml(note)}${note.includes("CC BY-SA 3.0") ? ' · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">圖片授權</a>' : ""}</small>`;
@@ -8180,6 +8247,7 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {
       body.innerHTML = `<p>查核日：${escapeHtml(report.checked_at)}。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。</p>
         <ul>${Object.values(report.fields).map(row=>`<li><strong>${escapeHtml(row.label)}</strong>：${escapeHtml(row.note)}${row.unresolved ? `<small>${escapeHtml(row.unresolved)}</small>`:""}${row.key.startsWith("home_") || row.key === "quota" ? (row.original_evidence || []).map(p=>`<details><summary>${escapeHtml(p.source_title)} · 原文第${escapeHtml(p.page)}頁</summary><p>${escapeHtml(p.applicability)} · 查核${escapeHtml(p.checked_at)} · <a href="${escapeHtml(safeSourceUrl(p.source_url))}" target="_blank" rel="noopener noreferrer">官方來源</a></p><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("") : ""}</li>`).join("")}</ul>
         ${report.source_evidence.map(src=>`<details><summary>${escapeHtml(src.label)} · ${src.source_excerpt_only ? "必要欄位摘錄" : `${src.pages.length}個來源頁／段`}；${src.content_status?.text_page_count ?? 0}頁有文字；${src.content_status?.visual_reviewed_page_count ?? 0}頁已視覺查核${src.content_status?.visual_reviewed_image_count ? `；${src.content_status.visual_reviewed_image_count}張原文圖片已視覺查核` : ""}</summary><p>${escapeHtml(report.read_sources.find(row=>row.id === src.id)?.applicability || "適用性待核對")}</p><p><a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">官方公開來源</a> · 查核${escapeHtml(src.checked_at)}${src.excerpt_note_zh ? `<small>${escapeHtml(src.excerpt_note_zh)}</small>` : ""}${src.conversion_review?.note_zh ? `<small>${escapeHtml(src.conversion_review.note_zh)}</small>` : ""}${src.visual_review?.instructions_zh ? `<small>${escapeHtml(src.visual_review.instructions_zh)}</small>` : ""}${(src.text_quality_issues || []).length ? `<small>${escapeHtml(src.text_quality_issues.map(x=>`${x.reason}（頁${x.pages.join("、")}）`).join("；"))}</small>` : ""}${(src.non_text_pages || []).length ? `<small>${src.non_text_pages.every(page => page == null) ? "無固定PDF頁碼的來源含空白段／工作表" : `第${escapeHtml(src.non_text_pages.join("、"))}頁無可抽取文字`}；${src.content_status?.all_pages_read ? "已有原件SHA相符的閱讀紀錄；文字／視覺查核範圍分列，原始空頁仍保留。" : "須看官方原頁，未視為全文核對完成。"}</small>` : ""}</p>${src.privacy_note ? `<p class="ncu-source-scope">${escapeHtml(src.privacy_note)}</p>` : ""}${ncuSourceReadingScope(src) && ncuSourceReadingScope(src) !== src.privacy_note ? `<p class="ncu-source-reading-scope">閱讀範圍：${escapeHtml(ncuSourceReadingScope(src))}</p>` : ""}${src.pages.map(p=>`<details><summary>${p.archive_member ? `原文表格 ${escapeHtml(p.archive_member)}（ZIP內檔案，無PDF頁碼）` : p.image ? `原文圖片 ${escapeHtml(p.image)}（無PDF頁碼）` : p.slide ? `原文投影片 ${escapeHtml(p.slide)}（無PDF頁碼）` : p.sheet ? `原文工作表 ${escapeHtml(p.sheet)}（無PDF頁碼）` : p.page == null ? (src.source_excerpt_only ? "必要欄位摘錄（無固定PDF頁碼）" : "原文（無固定PDF頁碼）") : `原文第${escapeHtml(p.page)}頁`}</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text || (p.sheet ? "此工作表沒有非空儲存格；原始空白工作表另保留，閱讀狀態依同SHA逐工作表紀錄。" : "此頁無可抽取文字；請看原件及另外標示的視覺核對摘錄。"))}</pre></details>`).join("")}${(src.page_transcriptions || []).map(p=>`<details class="ncu-visual-passage"><summary>視覺核對摘錄（原PDF第${escapeHtml(p.page)}頁）</summary><p>人工核對的選定原文段落；原始抽取另外保留，並非全文轉錄或本期適用性核准。</p><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("")}</details>`).join("")}
+        ${(report.collection_attempts || []).filter(src => src.exclusion_reason).length ? `<section><p>已排除的候選來源：校名、國家或incoming方案不符，保留查核證據，不當外校申請規則。</p><ul>${report.collection_attempts.filter(src => src.exclusion_reason).map(src => `<li>${escapeHtml(src.exclusion_reason)} · <a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">候選來源</a></li>`).join("")}</ul></section>` : ""}
         ${report.unretrieved_sources.length ? `<section><p>未取得來源：以下是本次讀取失敗的網址，不推定登入限定、官方未公告或停止交換。</p><ul>${report.unretrieved_sources.map(src=>`<li class="ncu-unretrieved-source" data-source-id="${escapeHtml(src.id)}"><strong>${escapeHtml(src.id)}</strong>：${escapeHtml(src.reason)}${src.url ? ` · <a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">已查網址（本次未取得）</a>` : ""}</li>`).join("")}</ul></section>`:""}`;
       element.dataset.loaded = "true";
     } catch (error) { body.textContent = `查核記錄讀取失敗：${error.message}`; }
@@ -8337,7 +8405,7 @@ function renderPrimaryFacts(item, destinationProfile = state.destinationCache.ge
     [deadline.label, deadline.value, "calendar-clock", "deadline"],
     ["語言門檻", partnerLanguageRequirement(item), "languages", "language"],
     ["生活費參考", truncate(destinationProfile?.cost_summary || "官方費用待查核", 130), "wallet-cards", "cost"],
-    ["交換名額", item.quota || (item.quota_status === "reference_only" ? "本季未開放" : item.quota_status === "not_published" ? "名額空白，待確認" : "依公告"), "users", "quota"],
+    ["交換名額", item.quota || (item.quota_status === "reference_only" ? (activeHomeSchool() === "淡江大學" ? "本期名額未核實" : "本季未開放") : item.quota_status === "not_published" ? "名額空白，待確認" : "依公告"), "users", "quota"],
     ["研修期間", localizedPartnerValue(item, "study_period", "study_period"), "calendar-range", "period"],
   ]
     .map(([label, value, icon, tone]) => `<div class="${tone || ""}"><i data-lucide="${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span><strong>${highlightHtml(value)}</strong></div>`)
@@ -8434,6 +8502,7 @@ function renderPartnerStudentSummary(item) {
 }
 
 function renderPartnerFieldEvidence(item) {
+  if (activeHomeSchool() === "淡江大學") return window.UniWayTkuDetails?.render(item, escapeHtml) || "";
   if (!item.field_evidence || !Object.keys(item.field_evidence).length) return "";
   const labels = {study_period:"交換期間", quota:"名額", eligibility:"合作校接收資格", language_requirement:"合作校語言", partner_application_prerequisite:"母校甄選／提名前提（非文件清單）", partner_documents:"合作校申請文件要求（未聲稱完整）", partner_application_deadline:"合作校申請截止", application_deadline:"中正校內截止", semester_dates:"學期日期", housing_info:"住宿資訊", tuition_info:"費用原文", course_restrictions:"課程限制", fact_sheet:"合作校簡章連結"};
   const statuses = {verified_current:"當期已核實",reference_only:"歷史參考",missing:"未載／未核實",needs_confirmation:"待確認",conflict:"來源矛盾，待確認",explicit_not_announced:"官方明示尚未公告"};
@@ -8459,7 +8528,7 @@ function renderUniversityOverview(item) {
   const facts = [
     ["計畫類型", item.program_type || "依校方公告"],
     ["適用學院／學制", [item.colleges, item.degree_levels].filter(Boolean).join("／") || "依校方公告"],
-    ["名額", item.quota || (item.quota_status === "reference_only" ? "本季未開放" : item.quota_status === "not_published" ? "名額空白，待確認" : "依校方公告")],
+    ["名額", item.quota || (item.quota_status === "reference_only" ? (activeHomeSchool() === "淡江大學" ? "本期名額未核實" : "本季未開放") : item.quota_status === "not_published" ? "名額空白，待確認" : "依校方公告")],
     ["研修期間", localizedPartnerValue(item, "study_period", "study_period", "依校方公告")],
     [deadline.label, deadline.value],
     ["學費", tuitionPoints.slice(0, 2).join("；") || "依校方公告"],
@@ -8477,7 +8546,7 @@ function renderUniversityOverview(item) {
         </div>
         ${renderPartnerAvailabilityNotice(item)}
         ${renderPartnerFieldEvidence(item)}
-        ${window.UniWayCcuDetails?.render(item, escapeHtml) || ""}
+        ${activeHomeSchool() === "淡江大學" ? "" : window.UniWayCcuDetails?.render(item, escapeHtml) || ""}
         <details class="overview-more school-data-completeness"><summary>這所學校的資料完整度</summary><div id="school-data-completeness-body" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div></details>
         ${activeHomeSchool() === "國立中央大學" ? '<details id="ncu-source-audit" class="overview-more"><summary>已查來源、適用年度與未解問題</summary><div id="ncu-source-audit-body">展開讀取逐欄查核與原文頁碼。</div></details>' : ""}
         <details class="overview-more"><summary>選校參考</summary><div id="quick-decision-fit">${renderQuickDecisionFit(item)}</div></details>
@@ -8640,7 +8709,7 @@ function renderDestinationProfile(item, profile) {
   const cityStamp = $("#school-detail-view .travel-stamp-city");
   if (cityStamp && profile.city) cityStamp.textContent = profile.city;
   $("#school-detail-primary-facts").innerHTML = renderPrimaryFacts(item, profile);
-  if (item.partner_exchange_details && Object.keys(item.partner_exchange_details).length && window.UniWayCcuDetails) {
+  if (profile.home_university !== "淡江大學" && item.partner_exchange_details && Object.keys(item.partner_exchange_details).length && window.UniWayCcuDetails) {
     const status = profile.coverage_status === "official_partial" ? "合作校生活資料部分核實" : "合作校生活資料仍待確認";
     container.innerHTML = `<div class="destination-profile-status partial"><div><strong>${escapeHtml(status)}</strong><p>${escapeHtml(profile.coverage_note || "")}</p><small>最後查核：${escapeHtml(formatDate(profile.last_checked))}</small></div></div>`
       + window.UniWayCcuDetails.render(item, escapeHtml, ["housing", "housing_deadline", "costs", "insurance", "visa", "arrival", "course_restrictions", "academic_calendar"]);
@@ -8745,7 +8814,9 @@ function renderGuideChecklist(items, profile) {
 function renderStudentSurvivalGuide(item, profile) {
   const sections = profile.student_guide_sections || [];
   const dormPhotos = profile.guide_photos || [];
-  const campusPhoto = item.image_url ? [{
+  const scopedPhotoAlreadyIncluded = activeHomeSchool() === "國立中央大學"
+    && dormPhotos.some((photo) => photo.category === "campus" && item.image_url?.endsWith(photo.image_url));
+  const campusPhoto = item.image_url && !scopedPhotoAlreadyIncluded ? [{
     image_url: item.image_url,
     source_url: item.image_page_url || item.image_source_url || item.website,
     alt: `${item.school_name}校園照片`,
@@ -8779,7 +8850,7 @@ function renderStudentSurvivalGuide(item, profile) {
                   <img src="${escapeHtml(photo.image_url)}" alt="${escapeHtml(photo.alt)}" loading="lazy" />
                   <span>${photo.category === "campus" ? "校園" : "住宿"}</span>
                 </a>
-                <figcaption>${escapeHtml(photo.caption)}${photo.category === "campus" ? renderSchoolImageCredit(item) : ""}</figcaption>
+                <figcaption>${escapeHtml(photo.caption)}${photo.category === "campus" ? renderSchoolImageCredit(item, activeHomeSchool() !== "國立中央大學") : ""}</figcaption>
               </figure>`).join("")}
           </div>
         </section>` : ""}
@@ -10857,7 +10928,7 @@ function applicationPeriodMeta(item) {
     closed: { label: "本梯次已截止", tone: "closed" },
     action_required: { label: "限符合身分者處理", tone: "action" },
     reference_only: { label: "原則時程參考", tone: "reference" },
-    needs_confirmation: { label: "待官方公告", tone: "pending" },
+    needs_confirmation: { label: "適用期間待確認", tone: "pending" },
   };
   const scopeMap = {
     home_application: "校內申請",

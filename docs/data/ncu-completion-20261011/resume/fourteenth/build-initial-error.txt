@@ -1,0 +1,5 @@
+Observed initial build error from scripts/build_ncu_catalog.py at UniversityApplicationWorkflow model validation:
+steps.7.submission.method
+Input should be 'paper', 'online', 'email', 'in_person', 'mixed' or 'unknown' [type=enum, input_value='postal', input_type=str]
+
+Resolution: corrected CUK and Inha reference postal stages to existing submission enum 'paper'. No schema or assertions changed.

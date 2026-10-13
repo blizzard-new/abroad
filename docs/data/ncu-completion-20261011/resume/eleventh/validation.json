@@ -1,0 +1,85 @@
+{
+  "checked_at": "2026-10-11T17:57:26.521318+00:00",
+  "base_checkpoint": "506e6f0bfa9010dd68d94505185c1ca86d9bf347",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 202,
+    "unique_photo_sha256": 199,
+    "partner_locations": 214,
+    "mother_separate": true,
+    "manual_host_records": 120,
+    "sources": 722,
+    "readings": 374,
+    "native_pdf_fully_read": 75,
+    "native_visual_pdf_fully_read": 10,
+    "public_unread": 257,
+    "strict_current_field_gaps": 3222,
+    "current_quota_unknown": 214
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "442 passed in 164.67s",
+      "evidence": "tests-ncu-all.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_eleventh_locations.py tests/e2e/test_ncu_resume_assets.py -k 'eleventh or mother_marker' -q",
+      "result": "3 passed, 10 deselected in 66.42s",
+      "evidence": "browser-check.txt"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "previous_runs": [
+    {
+      "result": "441 passed, 1 failed in 173.07s",
+      "file": "tests-before-mons-fixture-update.txt.gz",
+      "reason": "Seventh API test retained old Mons latitude-is-None expectation after status was updated. Corrected current live-data assertion; independent injected-hold tests still verify suppressed candidates and NCU-over-shared precedence."
+    }
+  ],
+  "visual_review": {
+    "browser_scope": "All9PNGactuallyviewed:390/1280MonsandWeishuilocationnotespluslicencecaption/photos;214partnerpointsandNCUmothermarker. Actualloadedimages,exactname/city,116limits,OSMattribution,nohorizontaloverflow,nopageerrors.",
+    "final_browser_images": [
+      {
+        "path": "browser/ncu-053-1280-location.png",
+        "sha256": "d432b4c5722edd13a3c5db58bed366eec4c09c4bec51788ad823a14d3b770732"
+      },
+      {
+        "path": "browser/ncu-053-1280-photo.png",
+        "sha256": "2c7e10e348c548e01297ac84753936a2a1d1613bdda288bd7a71ee0fc5296d07"
+      },
+      {
+        "path": "browser/ncu-053-390-location.png",
+        "sha256": "819d922ccedc24af87051ee31da1559829693fc7158bfe07a2873fb209acd538"
+      },
+      {
+        "path": "browser/ncu-053-390-photo.png",
+        "sha256": "a232335d1de3aab2966a1e133d00cb8204bc0a10decf4f55cf7c9c969416457f"
+      },
+      {
+        "path": "browser/ncu-181-1280-location.png",
+        "sha256": "a9c94374c9e8e5ca9c6cd1e7db55c801df732d2b9be01b48e141cd13eb63d631"
+      },
+      {
+        "path": "browser/ncu-181-1280-photo.png",
+        "sha256": "7dbe250a3200ce774088e857d2ddb1252e28b43566ee41fceada71dca82ea113"
+      },
+      {
+        "path": "browser/ncu-181-390-location.png",
+        "sha256": "ac14628a172419e333e427b4bbf9bc5b060ea5574e563a1af6b990b3a016d591"
+      },
+      {
+        "path": "browser/ncu-181-390-photo.png",
+        "sha256": "57ba89e172f547fb10dc7028a64a97eb764b565f086b4cc8c4ab7f69325500b4"
+      },
+      {
+        "path": "browser/ncu-mother-and-214-points.png",
+        "sha256": "6b95be19e869f30d5066eaee0af4941d6b137bfbe13822e1b3df12762ba25f5e"
+      }
+    ],
+    "source_scope": "Universitymuseumarticletextandlegalownershipsectionread;Changanfifthofficialmapvisuallyread;researchpaperp1-6text,p4imageonly,notfullpaperreview."
+  },
+  "restrictions": "sameDraftPR11only;no merge/deploy/prodDB/Quality/security/credentialchanges;sharedmatcherandrendererunchanged"
+}

@@ -128,7 +128,7 @@ window.UniWayMultiPlan = (() => {
       const saved=[...state.applications];
       const names=[...new Set([...schools.map(row=>row.school_name),...saved])];
       form.querySelectorAll("select").forEach((select,index)=>{
-        select.innerHTML=`<option value="">${index ? "暫不設定" : "請選擇學校"}</option>${names.map(name=>`<option value="${escapeHtml(name)}">${escapeHtml(name)}${activeHomeSchool() === "國立中央大學" && partnerAvailabilityMeta(partnerByName(name)).pending ? " · 本期名額待公告" : ""}</option>`).join("")}`;
+        select.innerHTML=`<option value="">${index ? "暫不設定" : "請選擇學校"}</option>${names.map(name=>`<option value="${escapeHtml(name)}">${escapeHtml(name)}${activeHomeSchool() === "國立中央大學" && partnerAvailabilityMeta(partnerByName(name)).pending ? " · 本期名額待核實" : ""}</option>`).join("")}`;
         select.value=saved[index] || "";
       });
     }

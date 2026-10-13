@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import hashlib
 from datetime import datetime, timezone, timedelta
 
@@ -135,8 +136,8 @@ def test_application_plan_api_applies_department_override_and_multiple_preferenc
     closed_partner = _partner("備查合作校", availability_status="agreement_only")
     replace_application_workflow(_workflow("長庚大學", open_partner.school_name), tmp_path)
     monkeypatch.setattr(
-        "exchange_info.api.fetch_partner_universities",
-        lambda: [open_partner, closed_partner],
+        'exchange_info.api.create_cgu_catalogue',
+        fixed_cgu_catalogue(lambda: [open_partner, closed_partner]),
     )
     client = _verified_client(tmp_path)
 
@@ -162,7 +163,7 @@ def test_application_plan_api_uses_the_other_department_rule(tmp_path, monkeypat
     ensure_data_dirs(tmp_path)
     partner = _partner("共同合作校")
     replace_application_workflow(_workflow("長庚大學", partner.school_name), tmp_path)
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = _verified_client(tmp_path)
 
     response = client.post(
@@ -218,7 +219,7 @@ def test_application_plan_api_rejects_duplicate_or_unknown_preferences(
 ) -> None:
     ensure_data_dirs(tmp_path)
     partner = _partner("唯一合作校")
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = _verified_client(tmp_path)
     payload = _payload("長庚大學", [partner.school_name], "資訊工程學系")
     payload["preferences"] = [
@@ -246,7 +247,7 @@ def test_application_plan_api_uses_bundled_workflow_with_isolated_runtime_data(
         if row.home_university == "長庚大學" and row.steps
     )
     partner = _partner(workflow.school_name)
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = _verified_client(tmp_path)
 
     payload = _payload("長庚大學", [partner.school_name], "資訊工程學系")

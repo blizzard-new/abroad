@@ -1,0 +1,92 @@
+CONFTEST LOADED!
+........F............................................................... [ 18%]
+........................................................................ [ 36%]
+....................FF.............................................F.... [ 54%]
+........................................................................ [ 72%]
+........................................................................ [ 90%]
+........................................                                 [100%]
+=================================== FAILURES ===================================
+_________ test_api_dashboard_coverage_detail_and_life_agree_on_photos __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-5/test_api_dashboard_coverage_de0')
+
+    def test_api_dashboard_coverage_detail_and_life_agree_on_photos(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        dashboard = client.get("/student-dashboard", params={"school": "NCU"}).json()
+        assert sum(p["image_status"] == "verified" for p in dashboard["partner_universities"]) == 193
+>       assert sum(p["location"]["geocode_status"] == "verified" for p in dashboard["partner_universities"]) == 180
+E       assert 181 == 180
+E        +  where 181 = sum(<generator object test_api_dashboard_coverage_detail_and_life_agree_on_photos.<locals>.<genexpr> at 0x7f242bd7de50>)
+
+tests/test_ncu_completion.py:146: AssertionError
+____ test_eivp_keeps_2026_programme_and_graduation_scope_separate_from_116 _____
+
+    def test_eivp_keeps_2026_programme_and_graduation_scope_separate_from_116():
+        audit=next(r for r in json.loads((BUNDLE/'field-audit.json').read_text()) if 'EIVP' in r['school_name'])
+        f=audit['fields']
+        assert f['host_documents']['status']=='missing'
+        assert f['cost']['status']=='missing'
+        assert 'B1 teacher' in f['language']['note']
+        assert 'TOEIC785' in f['language']['note'] and '不作交換入學門檻' in f['language']['note']
+        assert '2026/3/31' in f['host_deadline']['note']
+        assert 'AY2027' in f['host_deadline']['unresolved']
+        assert 'Diploma awarded' in f['courses']['note'] and '須確認' in f['courses']['note']
+        assert '€5,055' in f['tuition']['note'] and 'free-movers' in f['tuition']['note']
+        assert '不是保證' in f['housing']['note']
+        workflow=next(json.loads(x) for x in (BUNDLE/'application_workflows.jsonl').read_text().splitlines() if 'EIVP' in json.loads(x)['school_name'])
+        assert workflow['review_status']=='pending_review'
+        host=next(s for s in workflow['steps'] if s['rule_id']=='ncu-007-host-apply')
+>       assert host['document_requirements']==[]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'document_requirements'
+
+tests/test_ncu_eivp_resume.py:27: KeyError
+________ test_eivp_exact_raw_sources_and_native_pdf_pages_are_retained _________
+
+    def test_eivp_exact_raw_sources_and_native_pdf_pages_are_retained():
+        records=json.loads(gzip.decompress((SOURCE/'resume-eivp-original-responses.json.gz').read_bytes()))
+        evidence={r['id']:r for r in json.loads(gzip.decompress((SOURCE/'host-web-evidence.json.gz').read_bytes()))}
+        assert len(records)==6
+        for r in records:
+            data=base64.b64decode(r['raw_base64']) if 'raw_base64' in r else r['raw_utf8'].encode()
+            assert hashlib.sha256(data).hexdigest()==r['receipt']['sha256']==evidence[r['source_id']]['sha256']
+        syllabus=evidence['ncu-007-resume-syllabus-2026']
+        assert len(syllabus['pages'])==5 and '2026' in syllabus['pages'][2]['text']
+        assert syllabus['reading_review']['full_document_read'] is True
+        assert syllabus['reading_status']=='full_native_text_reviewed'
+        assert len(evidence['ncu-007-resume-brochure-2025']['pages'])==2
+        queue=json.loads(gzip.decompress((ROOT/'docs/data/ncu-completion-20261011/successful-public-unread-candidates.json.gz').read_bytes()))
+        assert not {'ncu-007-site-20261011','ncu-022-site-20261011'} & {r['id'] for r in queue}
+>       assert 'ncu-023-site-20261011' in {r['id'] for r in queue}  # Empty HTML still needs official follow-up.
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'ncu-023-site-20261011' in {'ncu-001-p4-56c4b22ea0', 'ncu-001-p4-b2d1fec5b6', 'ncu-001-p4-c781986e14', 'ncu-001-p4d-265a3ccf3e', 'ncu-001-p4d-3d12715dc5', 'ncu-001-p4d-6d5becbeab', ...}
+
+tests/test_ncu_eivp_resume.py:45: AssertionError
+____________ test_bundle_rebuilds_exactly_from_tracked_source_data _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-5/test_bundle_rebuilds_exactly_f0')
+
+    def test_bundle_rebuilds_exactly_from_tracked_source_data(tmp_path):
+        subprocess.run(
+            [sys.executable, "scripts/build_ncu_catalog.py", "--output-dir", str(tmp_path)],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            timeout=40,
+        )
+        for item in BUNDLE.iterdir():
+            if item.is_file():
+>               assert (tmp_path / item.name).read_bytes() == item.read_bytes(), item.name
+E               AssertionError: import-provenance.json
+E               assert b'{\n  "check...": false\n}\n' == b'{\n  "check...": false\n}\n'
+E                 
+E                 At index 67280 diff: b'8' != b'9'
+E                 Use -v to get more diff
+
+tests/test_ncu_integration.py:489: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_completion.py::test_api_dashboard_coverage_detail_and_life_agree_on_photos
+FAILED tests/test_ncu_eivp_resume.py::test_eivp_keeps_2026_programme_and_graduation_scope_separate_from_116
+FAILED tests/test_ncu_eivp_resume.py::test_eivp_exact_raw_sources_and_native_pdf_pages_are_retained
+FAILED tests/test_ncu_integration.py::test_bundle_rebuilds_exactly_from_tracked_source_data
+4 failed, 396 passed in 164.25s (0:02:44)

@@ -31,7 +31,7 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("蒙大拿州立大學")
     expect(page.locator("#partner-table")).to_contain_text("蒙大拿州立大學")
-    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
     if width < 700:
         page.locator("#partner-table .partner-card > summary").first.click()
         expect(page.locator("#partner-table .partner-card-summary")).to_contain_text("GPA")

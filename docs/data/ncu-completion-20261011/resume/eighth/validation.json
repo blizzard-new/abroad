@@ -1,0 +1,187 @@
+{
+  "checked_at": "2026-10-11T16:50:41.913791+00:00",
+  "base_checkpoint": "2d1cefdf41dc8adc35b08624b9d3d915ff52acd9",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 202,
+    "unique_photo_sha256": 199,
+    "displayed_partner_locations": 209,
+    "photo_gaps": 12,
+    "location_gaps": 5,
+    "strict_current_field_gaps": 3227,
+    "public_unread_candidates": 293,
+    "reviewed_host_records": 120,
+    "completion_sources": 721,
+    "passages_reviewed": 337,
+    "native_pdf_fully_read": 59,
+    "native_and_visual_pdf_fully_read": 6
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "429 passed in 170.73s",
+      "evidence": "tests-ncu-all.txt",
+      "scope": "Full suite with final12points; followed by student-facing note simplification, preserving full derivation in source review."
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_completion.py tests/test_ncu_seventh_assets.py tests/test_ncu_eighth_locations.py tests/test_ncu_integration.py::test_bundle_rebuilds_exactly_from_tracked_source_data -q",
+      "result": "36 passed in 25.26s",
+      "evidence": "tests-final-campus-copy.txt",
+      "scope": "Final notes and rebuilt provenance; API, source integrity and exact reproduction."
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_eighth_locations.py tests/e2e/test_ncu_resume_assets.py -k 'eighth or mother_marker' -q",
+      "result": "3 passed, 10 deselected in 79.25s (0:01:19)",
+      "evidence": "browser-check.txt"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "prior_failure": {
+    "evidence": "tests-before-final-source-note-rebuild.txt.gz",
+    "result": "428 passed,1failed",
+    "reason": "After an audit note correction, tracked import-provenance still contained prior source hash. Rebuilt from final source; exact reproduction and full suite now pass. No matcher/runtime change."
+  },
+  "browser_review": {
+    "scope": "All12newcampuses selected on actual globe, locations and openednotes checked at390and1280; NCUmother plus209partnerpoints and210dropdownoptions includingplaceholder. NooverfloworJSerror.",
+    "final_visually_viewed": [
+      "ncu-025-1280-campus-note.png",
+      "ncu-205-1280-campus-note.png",
+      "ncu-079-390-campus-note.png",
+      "ncu-214-390-campus-note.png",
+      "ncu-098-390-campus-note.png",
+      "ncu-mother-and-209-points.png"
+    ],
+    "after_initial_copy_refinement_visually_viewed": [
+      "ncu-078-1280-campus-note.png",
+      "ncu-080-1280-campus-note.png",
+      "ncu-094-1280-campus-note.png",
+      "ncu-098-1280-campus-note.png",
+      "ncu-124-1280-campus-note.png",
+      "ncu-197-1280-campus-note.png",
+      "ncu-025-1280-campus-note.png",
+      "ncu-075-1280-campus-note.png",
+      "ncu-214-1280-campus-note.png",
+      "ncu-205-1280-campus-note.png",
+      "ncu-079-1280-campus-note.png",
+      "ncu-083-1280-campus-note.png"
+    ],
+    "copy_review_note": "All12desktopnotes visually inspected after initial shortening; thenUMLP/Airlanggaphoto-campusdifferenceclarified. Finalchanged2notes,3mobilecasesandmotherglobevisuallyrechecked; all12x2alsoassertedinfinalChromiumrun."
+  },
+  "artifacts": [
+    {
+      "path": "browser/all-twelve-reviewed-1280.png",
+      "sha256": "8515ae298b59d59c1d516f89fd2f4b4549f91518e3cc13258bf825d4a843962d"
+    },
+    {
+      "path": "browser/all-twelve-reviewed-390.png",
+      "sha256": "fec004f996c5ce9a8f83cf7ca000d85bf7c58b342c7679bc669d730307fb76e6"
+    },
+    {
+      "path": "browser/ncu-025-1280-campus-note.png",
+      "sha256": "8c93d071428e28a34df9145011b827622990ecd3e384cde345a7a182562fd96b"
+    },
+    {
+      "path": "browser/ncu-025-390-campus-note.png",
+      "sha256": "bb279d28d69e68b8892ad283127e174176483a4e4c24ef0ef3e7ea20014af057"
+    },
+    {
+      "path": "browser/ncu-075-1280-campus-note.png",
+      "sha256": "022eac6c3010e8ef5afd5a7b1865273b3612698385bdeeef7120821e04390838"
+    },
+    {
+      "path": "browser/ncu-075-390-campus-note.png",
+      "sha256": "e1a612996c484befecb11479d06037b3369ea0d934324b48503c3133318d7e19"
+    },
+    {
+      "path": "browser/ncu-078-1280-campus-note.png",
+      "sha256": "510345a00cc2b729275073e68a7372770938d69949de7ce0135b7203e620f0c2"
+    },
+    {
+      "path": "browser/ncu-078-390-campus-note.png",
+      "sha256": "c342179dfff2e37e63e5468cc96d328dcd85a850cd8b1f85eb6473bfac74158b"
+    },
+    {
+      "path": "browser/ncu-079-1280-campus-note.png",
+      "sha256": "1f320f8a10c8294d3ae5359d7cdbc26512cdbedb52c7aec8abcb2b41afe9fc42"
+    },
+    {
+      "path": "browser/ncu-079-390-campus-note.png",
+      "sha256": "ca81930216ef22ac5f7c457c56d1e3aca771f673649cbec821518f3c43023cab"
+    },
+    {
+      "path": "browser/ncu-080-1280-campus-note.png",
+      "sha256": "d753911965cd68e9aa2f12c6ded5bf29b7f97369fa00707d7f90c8cf96eea08b"
+    },
+    {
+      "path": "browser/ncu-080-390-campus-note.png",
+      "sha256": "6b338a2c84216c7c194c9fe359ef2bb1d6841ffebf3a96eeeefbfb0e5d4a867b"
+    },
+    {
+      "path": "browser/ncu-083-1280-campus-note.png",
+      "sha256": "aee13df4574884e2a050a317a703901d3ce4545472e9e56258e305287f271b10"
+    },
+    {
+      "path": "browser/ncu-083-390-campus-note.png",
+      "sha256": "599b7fed0ad0c793986900955bca446db28d061cef1c3d80aacb09fb9cb9b527"
+    },
+    {
+      "path": "browser/ncu-094-1280-campus-note.png",
+      "sha256": "76431271c14d380ee8e76d202169acfdfabc6b6732244bc92bd72336e8401eb9"
+    },
+    {
+      "path": "browser/ncu-094-390-campus-note.png",
+      "sha256": "29d7b962801dc0cd1bb13f94679149003c69168cb69570813cfbe50617170fd2"
+    },
+    {
+      "path": "browser/ncu-098-1280-campus-note.png",
+      "sha256": "b80719d0aa1afdef0d9f9b8861887bb240f3eff395cccda94e0d88e82a8ae610"
+    },
+    {
+      "path": "browser/ncu-098-390-campus-note.png",
+      "sha256": "e95d65aa6396aff7808b73c07db18f9adde50e4ad9eaec819449bb233eefb75b"
+    },
+    {
+      "path": "browser/ncu-124-1280-campus-note.png",
+      "sha256": "c8b848ff3b4de435e03e26bb603dca2c08097e2f36c4525e3581868c5e888766"
+    },
+    {
+      "path": "browser/ncu-124-390-campus-note.png",
+      "sha256": "c2f790bf7fe0ea2377cca6ac33f2724a23fab1e444e32a8a5ba68a1e17946719"
+    },
+    {
+      "path": "browser/ncu-197-1280-campus-note.png",
+      "sha256": "d33d4c19cc68f60e6af7dcff3f41e7fc016222704a8ec9d6754944020fad3d84"
+    },
+    {
+      "path": "browser/ncu-197-390-campus-note.png",
+      "sha256": "d3ec8d472e7c8d788cb79b53b2a684dd0f69ab41ad9cfa071e366f68d5b14478"
+    },
+    {
+      "path": "browser/ncu-205-1280-campus-note.png",
+      "sha256": "2bae137cb73f99d39ac6728631e31e2b9570799a3ca35b8cef250895118b0ebb"
+    },
+    {
+      "path": "browser/ncu-205-390-campus-note.png",
+      "sha256": "263f145eaed7912bc0f550d1b411f8a1e8c04e23d60d9c72402dae0ec95d7bd3"
+    },
+    {
+      "path": "browser/ncu-214-1280-campus-note.png",
+      "sha256": "4f9962bb8eeffb660d535c11b6b417ae1892e1a47074f880a6b1e2b197d7fd39"
+    },
+    {
+      "path": "browser/ncu-214-390-campus-note.png",
+      "sha256": "4795816befef310641247d407d606af4e44bed86e48e3a989880ec6a1fd134d7"
+    },
+    {
+      "path": "browser/ncu-mother-and-209-points.png",
+      "sha256": "886b6178999892f0e4cca14a382ce6a6bb2df182d323b37f073dab93d130012d"
+    },
+    {
+      "path": "source-visuals/xamk-plan-2026-view.png",
+      "sha256": "d6bbde7606c979e67475514ad51d6598978330d2445e0650cd7698945b6e0044"
+    }
+  ]
+}

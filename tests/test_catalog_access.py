@@ -1,4 +1,5 @@
 """Catalog isolation and administrator publishing, with isolated accounts/data."""
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 import hashlib
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
@@ -39,7 +40,7 @@ def catalog(tmp_path, monkeypatch):
         CGU: [PartnerUniversity(program_type="交換學生", school_name="長庚限定合作校", country="日本", source_url="https://example.edu/exchange")],
         NTPU: [PartnerUniversity(program_type="交換學生", school_name="北大限定合作校", country="日本", source_url="https://example.edu/exchange")],
     }
-    monkeypatch.setattr(api, "fetch_partner_universities", lambda: partners[CGU])
+    monkeypatch.setattr(api, 'create_cgu_catalogue', fixed_cgu_catalogue(lambda: partners[CGU]))
     monkeypatch.setattr(api, "fetch_ntpu_partner_universities", lambda: partners[NTPU])
     monkeypatch.setattr(api, "build_student_dashboard", lambda *a, **k: StudentDashboard(school_name=CGU, partner_universities=partners[CGU]))
     monkeypatch.setattr(api, "build_ntpu_student_dashboard", lambda **k: StudentDashboard(school_name=NTPU, partner_universities=partners[NTPU]))

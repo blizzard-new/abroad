@@ -1,0 +1,82 @@
+CONFTEST LOADED!
+........................................................................ [ 18%]
+........................................................................ [ 36%]
+..................................................F..................... [ 54%]
+...................................................F.................... [ 73%]
+........................................................................ [ 91%]
+.................................                                        [100%]
+=================================== FAILURES ===================================
+_ test_different_year_workflow_is_not_current_and_home_host_documents_are_separate _
+
+    def test_different_year_workflow_is_not_current_and_home_host_documents_are_separate():
+        workflows = storage.load_bundled_application_workflows()
+        name = next(
+            p.school_name
+            for p in fetch_ncu_partner_universities()
+            if "Manitoba" in p.school_name
+        )
+        current = select_application_workflow(
+            workflows,
+            ApplicationRuleContext(
+                home_university=NCU.school_name,
+                partner_university=name,
+                academic_year="116",
+                application_round="第一梯次",
+            ),
+        )
+        assert current is not None
+        assert (
+            select_application_workflow(
+                workflows,
+                ApplicationRuleContext(
+                    home_university=NCU.school_name,
+                    partner_university=name,
+                    academic_year="115",
+                ),
+            )
+            is None
+        )
+        home = current.steps[2]
+        host = current.steps[4]
+        assert len(home.document_requirements) == 7
+        assert any("名次" in d.name for d in home.document_requirements)
+>       assert any("personal statement" in d.name for d in host.document_requirements)
+E       assert False
+E        +  where False = any(<generator object test_different_year_workflow_is_not_current_and_home_host_documents_are_separate.<locals>.<genexpr> at 0x7f65f24acc70>)
+
+tests/test_ncu_integration.py:157: AssertionError
+_____ test_existing_ncu_document_counts_and_scope_notes_reach_workflow_api _____
+
+tmp_path = PosixPath('/workspace/ncu-completion-tmp/pytest-of-agent/pytest-36/test_existing_ncu_document_cou0')
+
+    def test_existing_ncu_document_counts_and_scope_notes_reach_workflow_api(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        for english, count in [('Chiba University', 8), ('Institute of Science Tokyo', 1)]:
+            partner = next(p for p in fetch_ncu_partner_universities() if english in p.school_name)
+            workflow = client.get('/application-workflow', params={
+                'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',
+            }).json()
+            initial = next(s for s in workflow['steps'] if s['rule_id'].endswith('-host-apply'))
+            assert sum(d['copies'] == 1 for d in initial['document_requirements']) == count
+            visa = next(s for s in workflow['steps'] if s['rule_id'].endswith('-host-japan-student-visa'))
+            assert next(d for d in visa['document_requirements'] if d['name'] == '臺灣護照持COE：六個月內2吋白底照一張')['copies'] == 1
+        for english, note in [
+            ('University of Manitoba', '由exchange coordinator或supervisor提供；僅研究所適用。'),
+            ('Shinshu University', '原文if available，非全體強制JLPT。'),
+            ('Shibaura Institute of Technology', 'track限定規定；本附件未列全部申請文件。'),
+        ]:
+            partner = next(p for p in fetch_ncu_partner_universities() if english.casefold() in p.school_name.casefold())
+            workflow = client.get('/application-workflow', params={
+                'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',
+            }).json()
+            initial = next(s for s in workflow['steps'] if s['rule_id'].endswith('-host-apply'))
+>           assert note in '\n'.join(initial['details'])
+E           AssertionError: assert '由exchange coordinator或supervisor提供；僅研究所適用。' in '【Manitoba AY2027/28资料表（內文，September2026修訂；URL仍2026/27）与真正ICincoming頁；2026/10/11查核，中央116校別／名額／track仍未核實。】online nomina...Cincoming頁；2026/10/11查核，中央116校別／名額／track仍未核實。】UGscore須開學時兩年內；PG超兩年invalid。兩者waiver有指定教育／國家條件，臺灣全英授課不能直接當任何國家degree均豁免。'
+E            +  where '【Manitoba AY2027/28资料表（內文，September2026修訂；URL仍2026/27）与真正ICincoming頁；2026/10/11查核，中央116校別／名額／track仍未核實。】online nomina...Cincoming頁；2026/10/11查核，中央116校別／名額／track仍未核實。】UGscore須開學時兩年內；PG超兩年invalid。兩者waiver有指定教育／國家條件，臺灣全英授課不能直接當任何國家degree均豁免。' = <built-in method join of str object at 0x1556e10>(['【Manitoba AY2027/28资料表（內文，September2026修訂；URL仍2026/27）与真正ICincoming頁；2026/10/11查核，中央116校別／名額／track仍未核實。】online nomin...不是UG58）；TOEFL新4.5各4／舊86各20、不接受MyBest；DET120各reading/writing/listening/speaking100。不同量表分項不相互替代，department可higher。', ...])
+E            +    where <built-in method join of str object at 0x1556e10> = '\n'.join
+
+tests/test_ncu_integration.py:1714: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_integration.py::test_different_year_workflow_is_not_current_and_home_host_documents_are_separate
+FAILED tests/test_ncu_integration.py::test_existing_ncu_document_counts_and_scope_notes_reach_workflow_api
+2 failed, 391 passed in 327.11s (0:05:27)

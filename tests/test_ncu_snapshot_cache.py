@@ -62,7 +62,7 @@ def test_changed_bundle_signature_invalidates_each_snapshot(snapshot):
 
 def test_concurrent_details_read_each_bundle_once(snapshot, monkeypatch):
     root, audits, sources = snapshot
-    real = Path.read_bytes
+    real = ncu._iter_audit_rows
     calls = []; barrier = threading.Barrier(6); lock = threading.Lock()
 
     def read(path):
@@ -71,7 +71,7 @@ def test_concurrent_details_read_each_bundle_once(snapshot, monkeypatch):
             time.sleep(.02)
         return real(path)
 
-    monkeypatch.setattr(Path, 'read_bytes', read)
+    monkeypatch.setattr(ncu, '_iter_audit_rows', read)
 
     def load(index):
         barrier.wait()
@@ -90,3 +90,31 @@ def test_failed_snapshot_load_does_not_poison_retry(snapshot):
     with pytest.raises(json.JSONDecodeError): ncu.ncu_field_audit('測試大學')
     path.write_text(json.dumps(audits))
     assert ncu.ncu_field_audit('測試大學') == audits[0]
+
+
+@pytest.mark.parametrize('chunk_size', [1, 7, 64])
+def test_streamed_json_preserves_unicode_nested_arrays_and_escapes(chunk_size):
+    from io import StringIO
+    rows=[{'id':'a', 'text':'中文 \" [ ] 串流', 'pages':[{'text':'line\nnext'}]}, {'id':'b','null':None,'zero':0}]
+    assert list(ncu._json_array_items(StringIO(json.dumps(rows,ensure_ascii=False)),chunk_size))==rows
+
+
+@pytest.mark.parametrize('payload', ['', '{}', '[', '[{}', '[{},]', '[{}]x', '[{} {}]'])
+def test_streamed_json_rejects_incomplete_or_invalid_documents(payload):
+    from io import StringIO
+    with pytest.raises(json.JSONDecodeError):list(ncu._json_array_items(StringIO(payload),3))
+
+
+def test_cache_is_bounded_in_bytes_and_never_truncates_large_records(snapshot, monkeypatch):
+    root,audits,sources=snapshot
+    monkeypatch.setattr(ncu,'_AUDIT_CACHE_BYTES',100)
+    actual=ncu.ncu_source_audit('測試大學')
+    assert actual=={**audits[0],'source_evidence':sources[:1]}
+    assert ncu._audit_cache_bytes<=100
+    assert all(len(blob)<=100 for blob in ncu._audit_cache.values())
+
+
+def test_empty_results_cannot_accumulate_unbounded_cache_keys(snapshot):
+    for i in range(24):assert ncu.ncu_field_audit(f'未收錄-{i}') is None
+    assert len(ncu._audit_cache)<=ncu._AUDIT_CACHE_ITEMS
+    assert ncu._audit_cache_bytes<=ncu._AUDIT_CACHE_BYTES

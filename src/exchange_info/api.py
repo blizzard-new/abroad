@@ -37,7 +37,7 @@ import secrets
 import threading
 import time
 import unicodedata
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 from datetime import datetime, timedelta, timezone
 from functools import partial
 from pathlib import Path
@@ -396,7 +396,8 @@ from .storage import (
     upsert_destination_profile,
     upsert_partner_research,
 )
-from .student_view import build_student_dashboard, fetch_partner_universities
+from .student_view import build_student_dashboard
+from .cgu_catalogue import CatalogueView, create_cgu_catalogue
 from .ccu_student_view import (
     build_ccu_student_dashboard,
     fetch_ccu_partner_universities,
@@ -412,6 +413,7 @@ from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
 from .university_registry import (
     CGU,
+    CCU,
     NTPU,
     NTU,
     NCU,
@@ -442,6 +444,7 @@ def _static_cache_control(path: str, versioned: bool) -> str:
     if path.endswith((".js", ".css", ".html", ".json", ".webmanifest")) and not versioned:
         return "no-cache"
     return "public, max-age=86400"
+CACHE_WARM_UP_DELAY_SECONDS = 15.0
 DASHBOARD_CACHE_SECONDS = 600.0
 PASSWORD_ITERATIONS = 390_000
 EMAIL_PATTERN = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
@@ -471,10 +474,20 @@ def _attach_school_images(
     *,
     base_url: str,
 ) -> StudentDashboard:
+    if dashboard.school_name == NCU.school_name:
+        from .ncu_completion import attach_campus_photos
+        return attach_campus_photos(dashboard, base_url=base_url)
+    if dashboard.school_name == "淡江大學":
+        from .tku_assets import attach_images
+        return attach_images(dashboard,base_url)
     visuals = _load_school_image_manifest()
     base = base_url.rstrip("/")
     partners = []
     for school in dashboard.partner_universities:
+        if dashboard.school_name == CCU.school_name and "ccu_completion" in school.reference_data:
+            from .ccu_campus_assets import attach_reviewed_image
+            partners.append(attach_reviewed_image(school, base))
+            continue
         visual = visuals.get((school.school_name, school.country or ""))
         if not visual:
             partners.append(school)
@@ -781,21 +794,33 @@ def create_app(
         "/application-center/templates", "/application-center/catalog", "/application-period-options",
         "/application-workflow", "/advisor/plan", "/advisor/ask",
         "/school-life-context", "/school-data-completeness", "/student-experiences",
+        "/partner-source-audit",
     }
 
     @asynccontextmanager
     async def lifespan(_app: FastAPI):
         nonlocal catalogue_slots
-        # Build at most two large catalogue responses concurrently on the
-        # 512 MiB host. Wait asynchronously, leaving health/auth/static requests
-        # and the worker pool available. Each server lifespan owns its limiter.
-        catalogue_slots = asyncio.Semaphore(2)
+        # Large source graphs leave allocator arenas in each worker thread.
+        # Bound both threads and concurrent catalogue expansion on the 512 MiB
+        # host; requests wait asynchronously without dropping any source fields.
+        from anyio.to_thread import current_default_thread_limiter
+        thread_limiter = current_default_thread_limiter()
+        previous_thread_tokens = thread_limiter.total_tokens
+        thread_limiter.total_tokens = min(previous_thread_tokens, 2)
+        catalogue_slots = asyncio.Semaphore(1)
+        warming_task = None
         if warm_up and os.environ.get("EXCHANGE_WARM_CACHES", "").strip().lower() in {"1", "on", "true", "yes"}:
-            threading.Thread(target=warm_up[0], name="warm-caches", daemon=True).start()
+            warming_task = asyncio.create_task(warm_up[0](), name="warm-caches")
+        _app.state.cache_warmup_task = warming_task
         try:
             yield
         finally:
+            if warming_task is not None:
+                warming_task.cancel()
+                with suppress(asyncio.CancelledError):
+                    await warming_task
             catalogue_slots = None
+            thread_limiter.total_tokens = previous_thread_tokens
             analytics_service.flush_api_metrics()  # keep the last minute of request counts on a clean shutdown
 
     app = FastAPI(
@@ -874,6 +899,18 @@ def create_app(
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
     partner_cache: dict[str, list] = {}
     partner_cache_lock = threading.Lock()
+    cgu_catalogue = None
+    cgu_catalogue_lock = threading.Lock()
+
+    def cgu_catalogue_view() -> CatalogueView:
+        nonlocal cgu_catalogue
+        if cgu_catalogue is None:
+            with cgu_catalogue_lock:
+                if cgu_catalogue is None:
+                    cgu_catalogue = create_cgu_catalogue(resolved_data_dir)
+                    app.state.cgu_catalogue = cgu_catalogue
+        return cgu_catalogue.view()
+
     experience_collection_lock = threading.Lock()
     workflow_collection_lock = app.state.content_review_lock = threading.RLock()
     community_lock = threading.Lock()
@@ -1152,6 +1189,11 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == CGU.id:
+            view = cgu_catalogue_view()
+            if view.source.status == "unavailable":
+                raise HTTPException(status_code=503, detail="長庚合作校來源暫不可用，尚無可用的歷次資料；請稍後重試。", headers={"Retry-After": "60"})
+            return apply_partner_research(view.partners, load_partner_research(resolved_data_dir), home_university=university.school_name, copy_nested=False)
         if university.id == "tku":
             # Window state is time-sensitive across dashboards, advisors and plans.
             return apply_partner_research(
@@ -1172,7 +1214,7 @@ def create_app(
                         if university.id == NTU.id
                         else fetch_ntpu_partner_universities()
                         if university.id == NTPU.id
-                        else fetch_partner_universities()
+                        else []
                     )
         return apply_partner_research(
             partner_cache[university.id],
@@ -1258,6 +1300,7 @@ def create_app(
                 load_processed_pages(resolved_data_dir),
                 load_exchange_info(resolved_data_dir),
                 raw_files_dir=resolved_data_dir / "raw_files",
+                fetch_partner_sheets=False,
             )
             with dashboard_cache_lock:
                 dashboard_cache[university.id] = (time.monotonic(), signature, dashboard)
@@ -1297,7 +1340,9 @@ def create_app(
             return build_tku_student_dashboard()
         if university.id == NTU.id:
             return build_ntu_student_dashboard(partner_universities=partners_for_university(university))
-        # Building this one downloads the partner sheet and parses a dozen official PDFs: 10 to 40 seconds on the free
+        # The base dashboard parses official PDFs; partner rows are overlaid from the
+        # shared source provider on every response, never retained in this cache.
+        # Building this one parses a dozen official PDFs: 10 to 40 seconds on the free
         # host. The result is kept; once it is a few minutes old the next visitor still gets it at once while a fresh one
         # is built in the background. Only when the data files behind it were rewritten (or nothing was built yet) does
         # a visitor wait for a new one.
@@ -1312,10 +1357,16 @@ def create_app(
         if cached and cached[1] == signature:
             if time.monotonic() - cached[0] >= DASHBOARD_CACHE_SECONDS:
                 refresh_dashboard_in_background(university, signature)
-            return cached[2].model_copy(deep=True)
-        return build_cached_dashboard(university, signature).model_copy(deep=True)
+            base_dashboard = cached[2]
+        else:
+            base_dashboard = build_cached_dashboard(university, signature)
+        view = cgu_catalogue_view()
+        return base_dashboard.model_copy(deep=True, update={
+            "partner_universities": apply_partner_research(view.partners, load_partner_research(resolved_data_dir), home_university=university.school_name, copy_nested=False),
+            "catalogue_source": view.source,
+        })
 
-    def warm_catalogue_caches() -> None:
+    async def warm_catalogue_caches() -> None:
         """Do the slow first-time work now, so the first visitor after a restart does not wait for it.
 
         On the free host that work took close to a minute of CPU (checking thousands of bundled translations, merging the
@@ -1323,7 +1374,7 @@ def create_app(
         """
         from . import public_translation
 
-        time.sleep(15)  # let the server start and pass its health check first
+        await asyncio.sleep(CACHE_WARM_UP_DELAY_SECONDS)  # let health become ready first
         steps = [
             public_translation._reference_translations,
             public_translation._bundled_machine_translations,
@@ -1340,7 +1391,10 @@ def create_app(
         started = time.monotonic()
         for step in steps:
             try:
-                step()
+                # Share the catalogue limit and worker arenas with real reads.
+                # Release between steps so waiting visitors can make progress.
+                async with catalogue_slots:
+                    await run_in_threadpool(step)
             except Exception:  # a warm-up that fails only means the first visitor pays for that step
                 logging.getLogger(__name__).exception("cache warm-up step failed")
         logging.getLogger(__name__).info("catalogue caches warmed in %.1f s", time.monotonic() - started)
@@ -1358,10 +1412,20 @@ def create_app(
         universities = [scoped_university]
         if not home_school:
             universities += [item for item in SUPPORTED_UNIVERSITIES if item.id != scoped_university.id]
+        unavailable = None
         for university in universities:
-            for partner in partners_for_university(university):
+            try:
+                partners = partners_for_university(university)
+            except HTTPException as error:
+                if error.status_code != 503 or home_school:
+                    raise
+                unavailable = error
+                continue
+            for partner in partners:
                 if normalize_school(partner.school_name) == normalized:
                     return university, partner
+        if unavailable:
+            raise unavailable
         raise HTTPException(status_code=404, detail="這所學校不在目前支援大學的當期合作校名單中。")
 
     def partner_for_school(school: str, home_school: str | None = None):
@@ -2893,9 +2957,22 @@ def create_app(
             if normalize_school(record.home_university) == home_key
         }
         rows: list[PartnerCoverage] = []
+        if university.id == "tku":
+            from .tku_assets import campus_photos
+            from .tku_census import school_identifier
         for partner in partners:
             normalized = normalize_school(partner.school_name)
             visual = school_images.get((partner.school_name, partner.country or ""))
+            if university.id == CCU.id and "ccu_completion" in partner.reference_data:
+                from .ccu_campus_assets import reviewed_image_coverage
+                visual = reviewed_image_coverage(partner)
+            if university.id == NCU.id:
+                from .ncu_completion import campus_photo
+                visual = campus_photo(partner.school_name, partner.country)
+            if university.id == "tku":
+                identifier=school_identifier(partner.school_name)
+                photo=campus_photos().get(identifier) if identifier else None
+                visual={"status":"verified","checked_at":photo['checked_at']} if photo else None
             partner_experiences = experience_map.get(normalized, [])
             workflow = workflow_map.get(normalized)
             destination = destination_map.get((home_key, normalized))
@@ -2935,7 +3012,9 @@ def create_app(
                     ),
                     image_last_checked=(visual.get("checked_at") if visual else None),
                     official_website_status=(
-                        website_research.verification_status
+                        "needs_confirmation"
+                        if university.id == "tku" and partner.availability_status in {"agreement_only","reference_only"}
+                        else website_research.verification_status
                         if website_research
                         else "official_verified" if partner.website else "not_collected"
                     ),
@@ -3020,10 +3099,21 @@ def create_app(
         locations = load_university_locations(resolved_data_dir)
         from .ccu_profile import school_location
         is_ccu = university_for(school).id == "ccu"
-        return dashboard.model_copy(update={"partner_universities": [
-            partner.model_copy(update={"location": school_location(partner, public_location(locations, partner.school_name, partner.country)) if is_ccu else public_location(locations, partner.school_name, partner.country)})
-            for partner in dashboard.partner_universities
-        ]})
+        is_ncu = university_for(school).id == NCU.id
+        from .ncu_completion import campus_location
+        is_tku = university_for(school).id == "tku"
+        from .tku_assets import school_location as tku_school_location
+        partners = []
+        for partner in dashboard.partner_universities:
+            location = public_location(locations, partner.school_name, partner.country)
+            if is_ccu:
+                location = school_location(partner, location, resolved_data_dir)
+            elif is_ncu:
+                location = campus_location(partner, location, resolved_data_dir)
+            elif is_tku:
+                location = tku_school_location(partner, resolved_data_dir)
+            partners.append(partner.model_copy(update={"location": location}))
+        return dashboard.model_copy(update={"partner_universities": partners})
 
     @app.post("/public-translations")
     def public_translations(payload: PublicTranslationBatch) -> dict:
@@ -3761,9 +3851,15 @@ def create_app(
     ) -> SchoolLifeContext:
         university, partner = partner_context_for_school(school, home_school)
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
+        if university.id == NCU.id:
+            from .ncu_completion import campus_location
+            location = campus_location(partner, location, resolved_data_dir)
         if university.id == "ccu":
             from .ccu_profile import school_location
-            location = school_location(partner, location)
+            location = school_location(partner, location, resolved_data_dir)
+        if university.id == "tku":
+            from .tku_assets import school_location
+            location = school_location(partner, resolved_data_dir)
         profile = destination_profile(school, home_school)
         context = build_life_context(partner, profile, location, resolved_data_dir)
         if university.id == "ccu":
@@ -3778,9 +3874,15 @@ def create_app(
     ) -> SchoolLifeContext:
         university, partner = partner_context_for_school(school, home_school)
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
+        if university.id == NCU.id:
+            from .ncu_completion import campus_location
+            location = campus_location(partner, location, resolved_data_dir)
         if university.id == "ccu":
             from .ccu_profile import school_location
-            location = school_location(partner, location)
+            location = school_location(partner, location, resolved_data_dir)
+        if university.id == "tku":
+            from .tku_assets import school_location
+            location = school_location(partner, resolved_data_dir)
         result = refresh_life_research(partner, location, resolved_data_dir)
         context = school_life_context(school, home_school)
         return context.model_copy(update={"research_notes": result.notes})

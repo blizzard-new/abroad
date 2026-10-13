@@ -14,7 +14,7 @@ CASES = [('shizuoka','靜岡大學','一般初次八類與最新空白表缺口'
 
 @pytest.mark.parametrize('width',[390,1440])
 @pytest.mark.parametrize('slug,name,title,count',CASES)
-def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count):
+def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count,tmp_path):
     page.set_viewport_size({'width':width,'height':956})
     page.emulate_media(reduced_motion='reduce')
     errors=[]
@@ -30,7 +30,7 @@ def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,nam
         page.locator('#glass-menu-toggle').click()
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill(name)
-    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
     full_name={'shizuoka':'靜岡大學 Shizuoka University',
                'chuo':'日本中央大學 Chuo University',
                'kansai':'關西大學 Kansai University'}[slug]
@@ -45,7 +45,12 @@ def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,nam
            'kansai':['500000','11/10','MCL','三月']}
     for term in terms[slug]:expect(summary).to_contain_text(term)
     page.locator('#ncu-source-audit > summary').click()
-    expect(page.locator('#ncu-source-audit-body > p').first).to_contain_text('2026-10-09',timeout=60_000)
+    checked_at = {
+        'shizuoka': '2026-10-09T04:48:16.100749+00:00',
+        'chuo': '2026-10-09T04:48:16.100749+00:00',
+        'kansai': '2026-10-11T17:10:51.196064+00:00',
+    }[slug]
+    expect(page.locator('#ncu-source-audit-body > p').first).to_contain_text(checked_at,timeout=60_000)
     if slug=='shizuoka':
         failed=page.locator('.ncu-unretrieved-source[data-source-id="host-shizuoka-housing-current"]')
         expect(failed).to_be_visible(timeout=60_000)
@@ -59,7 +64,7 @@ def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,nam
         source.locator(':scope > summary').click()
         expect(source).to_contain_text('未逐門' if slug=='chuo' else '未取得PDF第19頁')
         assert source.get_by_role('link',name='官方公開來源').get_attribute('href')==url
-    out=Path('/tmp/ncu-audit/browser');out.mkdir(parents=True,exist_ok=True)
+    out=tmp_path/'browser';out.mkdir(parents=True,exist_ok=True)
     page.screenshot(path=str(out/f'ncu-shizuoka-chuo-kansai-{slug}-source-{width}.png'))
     page.locator('#detail-tab-application').click()
     group=page.locator('#detail-application .workflow-step').filter(has=page.locator(':scope > summary').filter(has_text=title)).first

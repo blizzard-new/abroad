@@ -1,0 +1,72 @@
+CONFTEST LOADED!
+......................F.F............................................... [ 17%]
+........................................................................ [ 34%]
+........................................................................ [ 51%]
+........................................................................ [ 69%]
+........................................................................ [ 86%]
+.........................................................                [100%]
+=================================== FAILURES ===================================
+_ test_oswego_track_fee_language_conflicts_and_download_denial_are_preserved[ncu-108-State University of New York Oswego\uff08\u81ea\u8cbb\uff09] _
+
+tmp_path = PosixPath('/workspace/ncu-completion-tmp/pytest-of-agent/pytest-22/test_oswego_track_fee_language1')
+rid = 'ncu-108', english = 'State University of New York Oswego（自費）'
+
+    @pytest.mark.parametrize("rid,english", [
+        ("ncu-106", "State University of New York Oswego"),
+        ("ncu-108", "State University of New York Oswego（自費）"),
+    ])
+    def test_oswego_track_fee_language_conflicts_and_download_denial_are_preserved(tmp_path, rid, english):
+        partner = school(english)
+        client = TestClient(create_app(tmp_path))
+        params = {"school": partner.school_name, "home_school": "NCU"}
+        audit = client.get("/partner-source-audit", params=params).json()
+        assert "Cambridge B2／C1" in audit["fields"]["language"]["unresolved"]
+        assert "free tuition與fee-paying" in audit["fields"]["tuition"]["note"]
+        assert "到校才付款" in audit["fields"]["tuition"]["note"]
+        assert "earlyJanuary" in audit["fields"]["tuition"]["note"]
+        assert "10個月" in audit["fields"]["housing"]["note"]
+        assert "2027/28" in audit["fields"]["study_period"]["note"]
+        denied = next(s for s in audit["source_evidence"] if s["id"] == "ncu-106-p3x-official-facts")
+        assert "owner hasn't given you permission" in denied["pages"][0]["text"]
+        assert not denied["content_status"]["all_pages_read"]
+        workflow = client.get("/application-workflow", params=params).json()
+>       initial = next(s for s in workflow["steps"] if s["rule_id"] == rid + "-host-apply")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/test_ncu_completion.py:429: StopIteration
+_ test_hawaii_postgraduate_official_documents_f1_and_visiting_fees_keep_scope[ncu-113-University of Hawai'i at Manoa\uff08\u81ea\u8cbb\uff09] _
+
+tmp_path = PosixPath('/workspace/ncu-completion-tmp/pytest-of-agent/pytest-22/test_hawaii_postgraduate_offic1')
+rid = 'ncu-113', english = "University of Hawai'i at Manoa（自費）"
+
+    @pytest.mark.parametrize("rid,english", [
+        ("ncu-107", "University of Hawai'i at Manoa"),
+        ("ncu-113", "University of Hawai'i at Manoa（自費）"),
+    ])
+    def test_hawaii_postgraduate_official_documents_f1_and_visiting_fees_keep_scope(tmp_path, rid, english):
+        partner = school(english)
+        client = TestClient(create_app(tmp_path))
+        params = {"school": partner.school_name, "home_school": "NCU"}
+        audit = client.get("/partner-source-audit", params=params).json()
+        assert "中央115免學費項限研究生" in audit["fields"]["eligibility"]["note"]
+        assert "免ELIPT門檻" in audit["fields"]["language"]["note"]
+        assert "3.5" in audit["fields"]["language"]["note"]
+        assert "records office" in audit["fields"]["host_documents"]["note"]
+        assert "不能refund" in audit["fields"]["tuition"]["note"]
+        assert "先繳後" in audit["fields"]["tuition"]["note"]
+        assert "22216" in audit["fields"]["cost"]["note"]
+        assert "27340" in audit["fields"]["cost"]["note"]
+        assert "舊J1與新F1" in audit["fields"]["visa"]["unresolved"]
+        fact = next(s for s in audit["source_evidence"] if s["id"] == "ncu-107-p3x-157177aad0")
+        assert fact["content_status"]["all_pages_read"]
+        workflow = client.get("/application-workflow", params=params).json()
+>       initial = next(s for s in workflow["steps"] if s["rule_id"] == rid + "-host-apply")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/test_ncu_completion.py:459: StopIteration
+=========================== short test summary info ============================
+FAILED tests/test_ncu_completion.py::test_oswego_track_fee_language_conflicts_and_download_denial_are_preserved[ncu-108-State University of New York Oswego\uff08\u81ea\u8cbb\uff09]
+FAILED tests/test_ncu_completion.py::test_hawaii_postgraduate_official_documents_f1_and_visiting_fees_keep_scope[ncu-113-University of Hawai'i at Manoa\uff08\u81ea\u8cbb\uff09]
+2 failed, 415 passed in 307.62s (0:05:07)

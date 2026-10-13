@@ -1,3 +1,4 @@
+from cgu_catalogue_fixture import fixed_cgu_catalogue
 from datetime import datetime, timezone
 
 from fastapi.testclient import TestClient
@@ -1387,7 +1388,7 @@ def test_experience_api_reads_cache_and_refreshes_selected_school(tmp_path, monk
     partner = _partner()
     cached = _source()
     replace_school_experiences(partner.school_name, [cached], tmp_path)
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     refreshed = _source(source_url="https://example.com/refreshed")
     monkeypatch.setattr(
         "exchange_info.api.collect_student_experiences",
@@ -1424,7 +1425,7 @@ def test_experience_api_reads_cache_and_refreshes_selected_school(tmp_path, monk
 def test_experience_refresh_records_verified_no_results(tmp_path, monkeypatch) -> None:
     ensure_data_dirs(tmp_path)
     partner = _partner()
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     monkeypatch.setattr(
         "exchange_info.api.collect_student_experiences",
         lambda partner, max_sources=12: [],
@@ -1457,7 +1458,7 @@ def test_destination_profile_api_returns_verified_official_summary(tmp_path, mon
         ],
         tmp_path,
     )
-    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: [partner]))
     client = TestClient(create_app(tmp_path))
 
     response = client.get(
@@ -1508,8 +1509,8 @@ def test_destination_profile_api_never_shares_research_between_home_schools(
         tmp_path,
     )
     monkeypatch.setattr(
-        "exchange_info.api.fetch_partner_universities",
-        lambda: [partner],
+        'exchange_info.api.create_cgu_catalogue',
+        fixed_cgu_catalogue(lambda: [partner]),
     )
     monkeypatch.setattr(
         "exchange_info.api.fetch_ntpu_partner_universities",

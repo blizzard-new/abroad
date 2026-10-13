@@ -1,0 +1,114 @@
+{
+  "checked_at": "2026-10-11T16:01:51.624304+00:00",
+  "base_checkpoint": "baf98c0df400ef96aa83fb587107eb22513c0b97",
+  "counts": {
+    "catalogue_items": 214,
+    "photos": 200,
+    "unique_photo_sha256": 197,
+    "displayed_partner_locations": 188,
+    "photo_gaps": 14,
+    "location_gaps": 26,
+    "strict_current_field_gaps": 3250,
+    "public_unread_candidates": 293,
+    "reviewed_host_records": 120,
+    "completion_sources": 721,
+    "passages_reviewed": 337,
+    "native_pdf_fully_read": 59,
+    "native_and_visual_pdf_fully_read": 6
+  },
+  "commands": [
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python -m pytest tests/test_ncu_*.py tests/test_university_locations.py tests/test_catalogue_memory.py -q",
+      "result": "423 passed in 163.82s (0:02:43)",
+      "evidence": "tests-ncu-all.txt"
+    },
+    {
+      "command": "env -u SUPABASE_URL -u SUPABASE_SERVICE_ROLE_KEY PYTHONPATH=src:. .venv/bin/python /workspace/.abroad-cloud/system-browser-pytest.py tests/e2e/test_ncu_sixth_resume.py -q",
+      "result": "4 passed in 51.21s",
+      "evidence": "browser-check.txt"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "browser_review": {
+    "scope": "4個生活頁和信州申請頁實際開啟；原第一輪截圖已視讀，合併修復後四案例重跑，最終視讀檔列下。",
+    "final_visually_viewed": [
+      "browser/信州-390-life.png",
+      "browser/駒澤-1280-life.png"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "browser/信州-390-application.png",
+      "sha256": "0d2c3319b7c945bfbb191d397857b3c40332961310b5244bd3b988470ab23173"
+    },
+    {
+      "path": "browser/信州-390-life.png",
+      "sha256": "b6110f6301c62f24e9ef03a1bc329af9534d13866fe7b01e623dfd472421c4f9"
+    },
+    {
+      "path": "browser/烏迪內-1280-application.png",
+      "sha256": "dd204fc4d5b57666b53d17e37e9849e6a89e29ed6177690f7d90067a3424ad4a"
+    },
+    {
+      "path": "browser/烏迪內-1280-life.png",
+      "sha256": "85b755092c24cdee18190b6faf48d0cb64a65565e325b7b370b7dda08ab82506"
+    },
+    {
+      "path": "browser/特魯瓦-390-application.png",
+      "sha256": "7680db4b02d7bd089bb187f63655bc0b870e963122f69ea8c92125e963c93735"
+    },
+    {
+      "path": "browser/特魯瓦-390-life.png",
+      "sha256": "75577da6adec305ae5f018ab3d6d6c6984c963c5e71fb6f343ca23d53316e6be"
+    },
+    {
+      "path": "browser/駒澤-1280-application.png",
+      "sha256": "416388f4dfd7104729b75a68410f9042be003b425e5fc01419d01c05faee6955"
+    },
+    {
+      "path": "browser/駒澤-1280-life.png",
+      "sha256": "63a27e4a65493f1b12a9cd75cc617f4ecc2426fc91bac12c93f9ad8e9f477f6d"
+    },
+    {
+      "path": "source-visuals/ncu-036-a7f02a135b-page-1.png",
+      "sha256": "ad3cb1e99c1f922a88ce2fc22838f6ae082e9bcd93954bb349599a7174a330f5"
+    },
+    {
+      "path": "source-visuals/ncu-098-06e4269bb7-page-3.png",
+      "sha256": "d824bf28719079f6d0baa62f013e439689c79a65d9c9cb4bda2b0122e0f9e9f3"
+    },
+    {
+      "path": "source-visuals/ncu-098-40f83142bc-page-3.png",
+      "sha256": "1b99d6b3a614f0ab132dc1399bc7d4735cd16027d152322dafb77dfd116ca102"
+    },
+    {
+      "path": "source-visuals/ncu-121-2c58bb1036-page-1.png",
+      "sha256": "fd36b5c40700eb4d9c49f68d4dab6c121df8791f2d80d4459aeface71066fe53"
+    },
+    {
+      "path": "source-visuals/ncu-121-8bd6a5159b-page-1.png",
+      "sha256": "78fec2741b3fc4308307d03985c1780694426910b1bb7c46ac3aef45d80c0b25"
+    },
+    {
+      "path": "source-visuals/ncu-121-9a831de302-page-15.png",
+      "sha256": "642cc57c8517a589a5efb7afdfe77bc808e5a3562cbec13e2b7447bb47a64fdb"
+    },
+    {
+      "path": "source-visuals/ncu-121-e4e7e506c8-page-4.png",
+      "sha256": "8be5a0fc4ca2fca336c63e7ca931e53d0ece4a9ea1f405ad6edfc9aba8b79368"
+    },
+    {
+      "path": "source-visuals/ncu-121-e4e7e506c8-page-6.png",
+      "sha256": "a65bbdc7e72e6c2b575813dac11762e2d484679ad9cef535e7bf7833af1c0d4e"
+    }
+  ],
+  "home_publication_recheck": {
+    "evidence": "home-publication-recheck.json",
+    "checked_at_taiwan": "2026-10-12T00:01:03.161407+08:00",
+    "status": "not_observed_published_at_check",
+    "quota_changed": false
+  }
+}
