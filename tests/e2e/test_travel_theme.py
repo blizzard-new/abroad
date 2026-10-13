@@ -42,7 +42,6 @@ def test_home_search_navigation_school_switcher_and_responsive(page, live_server
     expect(page.locator("#community-hub-title")).to_be_focused()
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立臺北大學"]').click()
-    page.locator("#confirm-school").click()
     expect(page.locator("#school-switcher-label")).to_have_text("國立臺北大學")
     expect(page.locator("#page-status .status-message")).to_be_hidden(timeout=15000)
     capture_sizes(page, "home")

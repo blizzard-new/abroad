@@ -21,7 +21,6 @@ def test_ncu_new_rules_photos_and_source_limits_reach_visible_ui(page, live_serv
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
@@ -124,7 +123,6 @@ def test_ncu_fourth_public_pass_initial_later_forms_year_and_life_reach_visible_
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
@@ -197,7 +195,6 @@ def test_ncu_second_public_pass_documents_years_and_life_are_visible(page, live_
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
@@ -261,7 +258,6 @@ def test_ncu_third_public_us_tracks_documents_and_life_reach_ui(page, live_serve
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
-    page.locator("#confirm-school").click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()

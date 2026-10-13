@@ -19,7 +19,6 @@ def test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh(page
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立臺灣大學"]').click()
-    page.locator("#confirm-school").click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立臺灣大學' && state.dashboard.partner_universities.length === 288")

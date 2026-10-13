@@ -82,7 +82,6 @@ def click_home(page, home):
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator(f'[data-home-school="{home}"]').click()
-    page.locator("#confirm-school").click()
     expect(page.locator("#school-switcher-label")).to_have_text(home)
 
 

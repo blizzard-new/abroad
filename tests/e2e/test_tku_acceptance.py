@@ -84,7 +84,6 @@ def test_tku_shared_home_query_follows_explicit_school_choice_and_navigation(pag
         open_navigation(page)
         page.locator('#school-switcher').click()
         page.locator(f'#school-options [data-home-school={json.dumps(home,ensure_ascii=False)}]').click()
-        page.locator('#confirm-school').click()
         wait_until(page, f"state.dashboard?.school_name === {json.dumps(home,ensure_ascii=False)} && !state.homeSchoolLoading && !state.applicationLoading")
         assert page.evaluate("new URL(location.href).searchParams.get('home')") == home
 
