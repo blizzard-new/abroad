@@ -87,7 +87,9 @@ def test_older_supplements_preserve_existing_2025_and_2027_readings():
     original=json.loads((ROOT/'sources/ncu/2026-10-08/reviewed-host-records.json').read_text())
     for rid in ['ncu-119','ncu-121']:
         for key,field in original[rid]['fields'].items():
-            assert set(field['points']).issubset(current[rid]['fields'][key]['points'])
+            # Seventeenth review translates the same provisional dates; every datum must survive.
+            expected = [p.replace('Fall 2027', '2027秋季').replace('orientation', '迎新') if rid == 'ncu-121' and key == 'study_period' else p for p in field['points']]
+            assert set(expected).issubset(current[rid]['fields'][key]['points'])
             assert all(s in current[rid]['fields'][key]['sources'] for s in field['sources'])
         assert current[rid]['applicability'].startswith(original[rid]['applicability'])
     assert '2027/4/25' in ' '.join(current['ncu-121']['fields']['host_deadline']['points'])

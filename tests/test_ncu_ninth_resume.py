@@ -32,7 +32,9 @@ def test_ninth_preserves_kansai_and_shinshu_existing_years_and_every_document_st
     for rid in ['ncu-129','ncu-121']:
         assert set(old[rid]['source_ids'])<=set(new[rid]['source_ids'])
         for key,field in old[rid]['fields'].items():
-            assert set(field['points'])<=set(new[rid]['fields'][key]['points'])
+            # Seventeenth review translates the same provisional dates; every datum must survive.
+            expected = [p.replace('Fall 2027', '2027秋季').replace('orientation', '迎新') if rid == 'ncu-121' and key == 'study_period' else p for p in field['points']]
+            assert set(expected).issubset(new[rid]['fields'][key]['points'])
             assert all(x in new[rid]['fields'][key]['sources'] for x in field['sources'])
     assert new['ncu-129']['host_document_stages']==old['ncu-129']['host_document_stages']
     assert new['ncu-129']['host_documents']==old['ncu-129'].get('host_documents',[])

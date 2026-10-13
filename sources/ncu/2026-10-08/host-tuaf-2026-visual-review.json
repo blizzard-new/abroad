@@ -1,14 +1,34 @@
 {
-  "checked_at": "2026-10-08",
-  "source_id": "host-tuaf-2026",
-  "source_url": "https://drive.google.com/uc?export=download&id=1-7YYn79jkUc1rhlliyWYpRTA5FmZQc-t",
   "source_sha256": "ef77d9fee3ba398fa571fadd669f7d17dd14ff87d6af69abcd66f2687561492d",
-  "pdf_page": 2,
-  "method": "Rendered official PDF page2 and visually checked fee rows; raw extraction retained",
-  "verified_rows": {
-    "administration_fee": "$70, to be submitted after students arrive at TUAF",
-    "visa_fee": "$95.00/6 Months (1 semester); $135.00/12 Months (2 semester)"
+  "pdf_pages_reviewed": [
+    1,
+    2
+  ],
+  "full_document_read": true,
+  "reviewed_at": "2026-10-11T23:58:22.331017+00:00",
+  "method": "原生全文與逐頁view_image人工核對；非OCR",
+  "rendered_pages": [
+    {
+      "pdf_page": 1,
+      "path": "docs/data/ncu-completion-20261011/resume/twentyninth/source-pages/host-tuaf-2026-p01.png",
+      "sha256": "286ce3e18e49f21cbb8897c8e7d8c0522e7684fabc8c410be00cd290796b022e"
+    },
+    {
+      "pdf_page": 2,
+      "path": "docs/data/ncu-completion-20261011/resume/twentyninth/source-pages/host-tuaf-2026-p02.png",
+      "sha256": "90ab4d641f3b1c0be637fc8636f407f4ddca4f5b6f55236eb4595c3fd762a9d6"
+    }
+  ],
+  "page_notes_zh": {
+    "1": "秋8/15–12/30春1/15–6/10年例。提名秋7/15春11/15；Acceptance段7/25／11/25，不武斷當学生申请截止。提名後給網申，收到完整application附件才發offer。申請表+7件：ToR、Englishproof、學生證、motivationbriefshorttermplan、recommendation、passport、localhospitalhealthcheck英譯。完整表內容另已讀，證明optional矛盾先保留。",
+    "2": "原生抽取fee順序錯：**視讀實際行政$70到校後，Visa$95/6month/$135/12month**，不是行政95簽證70。原頁只有$無USD明文，幣別未知；partner免tuition/nonpartner依course不等全免。travelinsurance母國買。Dorm$10無週期，food$90–110/month單餐1–1.3，bills7–15/month。不能把別手冊的月週期自動填此原頁或任意合總價。Fliphtmlhandbook入口不代表已讀全冊。校景及人物照片無重用授權。"
   },
-  "currency_note_zh": "本頁只寫$，未單獨證明幣別／2027費用",
-  "render_sha256": "0938175ae06af9fddd9aea7ed0fe3f0a93b2fd52fc52830b07f6776c7cc019eb"
+  "page_transcriptions": [
+    {
+      "page": 2,
+      "text": "TUITION FEE: Partner Universities: FREE. Non-partner universities: Based on registered courses.\nADMINISTRATION FEE: $70, to be submitted after students arrive at TUAF.\nVISA FEE: $95.00/6 Months (1 semester); $135.00/12 Months (2 semester).\nINSURANCE FEE: Students should purchase travel insurance in their home country.\nESTIMATED COST OF LIVING: Accommodation: $10 (Dormitory). Food: $90-110/month ($1-1.3/meal). Bills (Electricity, water, cleaning, etc.): $7-15/month.",
+      "note_zh": "逐行視讀p2；原生排序失真，不混用。原頁僅$，住宿未標週期；非當期116。"
+    }
+  ],
+  "include_native_with_selected_passages": false
 }

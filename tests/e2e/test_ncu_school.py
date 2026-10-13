@@ -465,7 +465,7 @@ def test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui(
     expect(page.locator("#ncu-source-audit-body")).to_contain_text(audit_text)
     if school == "太原農林":
         visual = page.locator("#ncu-source-audit-body > details").filter(has_text="TUAF2026交換program PDF").first
-        expect(visual.locator(":scope > summary")).to_contain_text("1頁已視覺查核")
+        expect(visual.locator(":scope > summary")).to_contain_text("2頁已視覺查核")
         source = (
             page.locator("#ncu-source-audit-body > details")
             .filter(has_text="僅必要欄位摘錄")
