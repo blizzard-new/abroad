@@ -127,8 +127,6 @@ body.unified-shell .glass-navigation-rail .uniway-public-nav a { display: flex; 
 body.unified-shell .glass-navigation-rail .uniway-public-nav a[aria-current="page"] { color: var(--uw-blue-strong); background: var(--uw-blue-soft); }
 body.unified-shell .glass-navigation-rail .uniway-public-nav .lucide { width: 20px; height: 20px; }
 body.unified-shell .glass-navigation-rail .route-toolbar { order: 2; display: flex; flex-direction: column; align-items: stretch; position: static; width: 100%; max-width: none; min-height: 0; padding: 14px 0 0; margin: 0; gap: 10px; border: 0; border-top: 1px solid var(--uw-line); border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; }
-body.unified-shell .glass-navigation-rail .route-back-slot { width: 100%; margin: 0; }
-body.unified-shell .glass-navigation-rail .route-back { justify-content: flex-start; width: 100%; }
 body.unified-shell .glass-navigation-rail #school-switcher { display: flex; width: 100%; max-width: none; padding: 8px 10px; }
 body.unified-shell .glass-navigation-rail .application-tools { width: 100%; }
 body.unified-shell .glass-navigation-rail .application-nav-group > summary { justify-content: flex-start; gap: 0; width: 100%; min-height: 46px; padding: 0; background: transparent; border-color: transparent; }
@@ -155,6 +153,13 @@ body.unified-shell .glass-mobile-header, .glass-menu-close { display: none; }
 body.unified-shell :is(.mobile-nav, .global-mobile-nav, .university-mobile-nav) { display: none !important; }
 body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view, body.unified-shell .global-community-section,
 body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { width: calc(100% - 320px); max-width: 1400px; margin: 0 32px 0 288px; padding: 28px 0 48px; }
+body.unified-shell .page-back-bar {
+  width: calc(100% - 320px); max-width: 1400px; margin: 0 32px 0 288px; padding-top: 20px;
+}
+body.unified-shell .page-back-bar .route-back {
+  background: var(--glass-surface); border-color: var(--glass-edge); box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
 body.unified-shell #overview:not([hidden]) { display: flex; flex-direction: column; gap: 24px; }
 body.unified-shell #overview > :is(.personal-plan-board, .today-brief, .recommended-match-section, .application-journey, .decision-workspace) { margin: 0; }
 body.unified-shell #overview .today-brief { padding: 24px; }
@@ -179,6 +184,7 @@ body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .feat
 body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .board-card-actions { flex-wrap: wrap; gap: 8px; }
 @media (min-width: 1800px) {
   body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view, body.unified-shell .global-community-section { margin-left: calc(288px + (100% - 1688px) / 2); }
+  body.unified-shell .page-back-bar { margin-left: calc(288px + (100% - 1688px) / 2); }
 }
 @media (max-width: 1200px) {
   body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub { grid-template-columns: minmax(0, 1fr); grid-template-areas: "heading" "feed" "boards"; }
@@ -197,6 +203,7 @@ body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .boar
   body.unified-shell .glass-mobile-header a > .lucide { width: 26px; height: 26px; color: var(--uw-blue-strong); }
   body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view, body.unified-shell .global-community-section,
   body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { width: calc(100% - 28px); margin-inline: 14px; padding: 20px 0 40px; }
+  body.unified-shell .page-back-bar { width: calc(100% - 28px); margin-inline: 14px; padding-top: 14px; }
 }
 @media (max-width: 600px) {
   body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub { gap: 16px; }
@@ -228,7 +235,7 @@ body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .boar
 @media (min-width: 901px) {
   body.unified-shell .glass-navigation-rail { width: 76px; padding: 16px 10px; gap: 14px; }
   body.unified-shell .glass-navigation-rail .uniway-header-brand { justify-content: center; padding: 0; min-height: 52px; }
-  body.unified-shell .glass-navigation-rail :is(.uniway-header-brand strong, [data-public-route] > span, .route-back > span, #school-switcher > span:nth-child(2), #account-button-label, .workspace-sync-status-label, .workspace-sync-retry span) {
+  body.unified-shell .glass-navigation-rail :is(.uniway-header-brand strong, [data-public-route] > span, #school-switcher > span:nth-child(2), #account-button-label, .workspace-sync-status-label, .workspace-sync-retry span) {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
   }
   body.unified-shell .glass-navigation-rail .uniway-public-nav a[data-public-route] { justify-content: center; width: 54px; height: 50px; padding: 12px; gap: 0; }
@@ -237,7 +244,7 @@ body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .boar
   body.unified-shell .glass-navigation-rail .application-nav-chevron { position: absolute; right: -1px; bottom: 0; width: 20px; min-height: 20px; border-radius: 7px; background: var(--glass-strong); color: var(--uw-blue-strong); }
   body.unified-shell .glass-navigation-rail .application-nav-chevron .lucide { width: 12px; height: 12px; }
   body.unified-shell .glass-navigation-rail .route-toolbar { gap: 8px; padding-top: 14px; }
-  body.unified-shell .glass-navigation-rail :is(.route-back, #school-switcher, #account-button) { justify-content: center; width: 54px; height: 48px; padding: 8px; gap: 0; }
+  body.unified-shell .glass-navigation-rail :is(#school-switcher, #account-button) { justify-content: center; width: 54px; height: 48px; padding: 8px; gap: 0; }
   body.unified-shell .glass-navigation-rail #school-switcher > .lucide { display: none; }
   body.unified-shell .glass-navigation-rail .topbar-actions { flex-direction: column; align-items: center; gap: 8px; padding-top: 14px; }
   body.unified-shell .glass-navigation-rail .workspace-sync-control:not([hidden]) { flex-direction: column; align-items: center; gap: 6px; }
@@ -255,17 +262,19 @@ body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .boar
   .application-tools-panel::backdrop { background: transparent; pointer-events: none; }
   body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view, body.unified-shell .global-community-section,
   body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { width: calc(100% - 144px); margin-left: 112px; }
+  body.unified-shell .page-back-bar { width: calc(100% - 144px); margin-left: 112px; }
 }
 @media (min-width: 1600px) {
   body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view, body.unified-shell .global-community-section,
   body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { margin-left: calc(112px + (100% - 1544px) / 2); }
+  body.unified-shell .page-back-bar { margin-left: calc(112px + (100% - 1544px) / 2); }
 }
 @media (prefers-reduced-motion: no-preference) {
   .glass-rail-tooltip { transition: opacity 160ms ease, transform 200ms var(--uw-motion-out), visibility 160ms; }
   body.unified-shell .glass-navigation-rail .application-nav-chevron .lucide { transition: transform 220ms var(--uw-motion-out); }
-  body.unified-shell .glass-navigation-rail :is(a[data-public-route], .topbar-actions button, .route-back, #school-switcher) .lucide { transition: transform 180ms var(--uw-motion-out); }
+  body.unified-shell :is(.glass-navigation-rail a[data-public-route], .glass-navigation-rail .topbar-actions button, .page-back-bar .route-back, .glass-navigation-rail #school-switcher) .lucide { transition: transform 180ms var(--uw-motion-out); }
   @media (hover: hover) and (pointer: fine) {
-    body.unified-shell .glass-navigation-rail :is(a[data-public-route], .topbar-actions button, .route-back, #school-switcher):not(:disabled):hover .lucide { transform: translateY(-2px); }
+    body.unified-shell :is(.glass-navigation-rail a[data-public-route], .glass-navigation-rail .topbar-actions button, .page-back-bar .route-back, .glass-navigation-rail #school-switcher):not(:disabled):hover .lucide { transform: translateY(-2px); }
   }
   @media (max-width: 900px) {
     body.unified-shell .glass-navigation-rail { transition: transform 260ms var(--uw-motion-out), visibility 260ms; }
