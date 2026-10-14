@@ -1599,6 +1599,7 @@ async function refreshHomeUniversityData() {
   const requestedSchool = activeHomeSchool();
   const requestId = ++state.homeSchoolRequestId;
   state.homeSchoolLoading = true;
+  startPageLoading("school-switch", `正在切換至${requestedSchool}的資料`);
   try {
     await Promise.all([
       loadDashboard({ homeSchool: requestedSchool }),
@@ -1616,6 +1617,7 @@ async function refreshHomeUniversityData() {
     announce(`${activeHomeSchool()}資料已切換`, "success");
   } finally {
     if (requestId === state.homeSchoolRequestId) state.homeSchoolLoading = false;
+    stopPageLoading("school-switch");
   }
 }
 
@@ -12612,10 +12614,71 @@ function renderEmpty(selector, title, message, kind = "empty") {
   initIcons();
 }
 
-function announce(message, type = "loading", persist = false) {
+const pageLoadingOperations = new Map();
+let pageLoadingHideTimer = 0;
+
+function ensureRuntimeLoadingOverlay() {
+  let overlay = document.querySelector("#runtime-loading-splash");
+  if (overlay) return overlay;
+  const bootSplash = document.querySelector("#boot-splash");
+  if (!bootSplash) return null;
+  overlay = bootSplash.cloneNode(true);
+  overlay.id = "runtime-loading-splash";
+  overlay.className = "boot-splash runtime-loading-splash";
+  overlay.hidden = true;
+  overlay.querySelector(".boot-splash-hint")?.remove();
+  overlay.querySelector(".boot-splash-hint-more")?.remove();
+  bootSplash.after(overlay);
+  return overlay;
+}
+
+function syncPageLoadingOverlay() {
+  const overlay = ensureRuntimeLoadingOverlay();
+  if (!overlay) return;
+  const message = pageLoadingOperations.get("school-switch")
+    || [...pageLoadingOperations.values()].at(-1)
+    || "";
+  window.clearTimeout(pageLoadingHideTimer);
+  if (message) {
+    overlay.setAttribute("aria-label", message);
+    document.body.setAttribute("aria-busy", "true");
+    // The boot splash already shows the same animation during initial start-up.
+    if (document.querySelector("#boot-splash")) return;
+    overlay.hidden = false;
+    overlay.classList.remove("is-leaving");
+    window.requestAnimationFrame(() => overlay.classList.add("is-active"));
+    return;
+  }
+  document.body.setAttribute("aria-busy", "false");
+  if (overlay.hidden) return;
+  overlay.classList.add("is-leaving");
+  pageLoadingHideTimer = window.setTimeout(() => {
+    overlay.hidden = true;
+    overlay.classList.remove("is-active", "is-leaving");
+  }, 340);
+}
+
+function startPageLoading(key, message) {
+  pageLoadingOperations.delete(key);
+  pageLoadingOperations.set(key, message);
+  syncPageLoadingOverlay();
+}
+
+function stopPageLoading(key) {
+  pageLoadingOperations.delete(key);
+  syncPageLoadingOverlay();
+}
+
+function announce(message, type = "info", persist = false) {
   state.statusRevision += 1;
   window.clearTimeout(state.statusTimer);
-  const icon = type === "error" ? "circle-alert" : type === "success" ? "circle-check" : "loader-circle";
+  if (type === "loading") {
+    $("#page-status").replaceChildren();
+    startPageLoading("page-status", message);
+    return;
+  }
+  stopPageLoading("page-status");
+  const icon = type === "error" ? "circle-alert" : type === "success" ? "circle-check" : "info";
   $("#page-status").innerHTML = `<div class="status-message ${escapeHtml(type)}"><i data-lucide="${icon}" aria-hidden="true"></i><span>${escapeHtml(message)}</span>${type === "error" ? '<button id="retry-load" type="button" class="secondary-button">重試</button>' : ""}</div>`;
   initIcons();
   if (!persist && type !== "error") {
@@ -12626,6 +12689,7 @@ function announce(message, type = "loading", persist = false) {
 function clearAnnouncement() {
   state.statusRevision += 1;
   window.clearTimeout(state.statusTimer);
+  stopPageLoading("page-status");
   $("#page-status").replaceChildren();
 }
 

@@ -1,6 +1,6 @@
 """Travel accents keep real search, collection and progress behavior intact."""
 from pathlib import Path
-from urllib.parse import parse_qs, urlsplit, quote
+from urllib.parse import parse_qs, urlsplit, quote, unquote
 from uuid import uuid4
 
 from playwright.sync_api import expect
@@ -52,6 +52,40 @@ def test_home_search_navigation_school_switcher_and_responsive(page, live_server
     page.locator('#community-feed-tabs a[href="#public-board"]').click()
     expect(page.get_by_role("heading", level=1)).to_have_text("公共留學板")
     assert not errors
+
+
+def test_school_switch_uses_the_existing_full_screen_loading_animation(page, live_server):
+    page.set_viewport_size({"width": 1730, "height": 837})
+    setup_catalog(page)
+    held = []
+
+    def hold_new_school_dashboard(route):
+        if "school=國立臺北大學" in unquote(route.request.url):
+            held.append(route)
+        else:
+            route.fallback()
+
+    page.route("**/student-dashboard?*", hold_new_school_dashboard)
+    open_partners(page, live_server, {"view": "list"})
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立臺北大學"]').click()
+    page.locator("#confirm-school").click()
+    page.wait_for_function("() => document.querySelector('#runtime-loading-splash:not([hidden])')")
+
+    overlay = page.locator("#runtime-loading-splash")
+    expect(overlay).to_be_visible()
+    expect(overlay).to_have_css("opacity", "1")
+    expect(overlay).to_contain_text("正在載入中")
+    expect(overlay).to_have_attribute("aria-label", "正在切換至國立臺北大學的資料")
+    expect(page.locator("#page-status .status-message.loading")).to_have_count(0)
+    assert page.evaluate("document.elementFromPoint(innerWidth / 2, 20).closest('#runtime-loading-splash') !== null")
+    Path("output/loading-overlay").mkdir(parents=True, exist_ok=True)
+    page.screenshot(path="output/loading-overlay/school-switch.png", full_page=False)
+
+    for route in held:
+        route.continue_()
+    expect(overlay).to_be_hidden(timeout=15_000)
+    expect(page.locator("#school-switcher-label")).to_have_text("國立臺北大學")
 
 
 def test_ticket_collection_and_destination_stamp_missing_city(page, live_server):

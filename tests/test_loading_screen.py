@@ -83,7 +83,7 @@ def test_tapping_the_mascot_cycles_hop_spin_wink() -> None:
 def test_the_script_and_style_versions_are_in_the_page() -> None:
     assert re.search(r'/static/mascot\.css\?v=\S+"', HTML) and re.search(r'/static/mascot\.js\?v=\S+"', HTML)
     versions = set(re.findall(r"/static/(?:mascot\.css|mascot\.js|advisor-mascot\.css|assets/mascot/suitcase\.webp)\?v=([\w-]+)", HTML))
-    assert versions == {"20261007-solid-1"}, "bumped together so nobody keeps an old copy"
+    assert versions == {"20261014-runtime-loading-1"}, "bumped together so nobody keeps an old copy"
 
 
 def test_it_cannot_show_before_the_saved_theme_is_applied() -> None:

@@ -8,6 +8,20 @@ from static_asset_contract import assert_versioned_static_assets
 STATIC_DIR = Path(__file__).resolve().parents[1] / "src" / "exchange_info" / "static"
 
 
+def test_transient_loading_uses_the_existing_mascot_overlay_instead_of_a_status_bar() -> None:
+    html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+    script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    styles = (STATIC_DIR / "mascot.css").read_text(encoding="utf-8")
+
+    assert 'id="boot-splash"' in html
+    assert 'overlay.id = "runtime-loading-splash"' in script
+    assert 'startPageLoading("school-switch"' in script
+    assert 'function announce(message, type = "info"' in script
+    assert 'if (type === "loading")' in script
+    assert '$("#page-status").replaceChildren();' in script
+    assert ".runtime-loading-splash.is-active" in styles
+
+
 def test_content_review_workbench_exposes_dual_review_without_student_navigation() -> None:
     html = (STATIC_DIR / "content-review.html").read_text(encoding="utf-8")
     script = (STATIC_DIR / "content-review.js").read_text(encoding="utf-8")

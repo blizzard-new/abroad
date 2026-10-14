@@ -1,3 +1,67 @@
+# Design QA: reusable full-screen loading animation
+
+## Comparison target
+
+- Source visual truth: the second screenshot in the user's 2026-10-14 request, showing the UniWay suitcase on the blue-to-peach full-screen gradient with `正在載入中…`; the first screenshot in that request identifies the horizontal `正在取得最新整理資料…` banner that must be removed.
+- Implementation screenshot: `output/loading-overlay/school-switch.png`.
+- Viewport and normalization: source and implementation are both 1730 × 837 px at a 1730 × 837 CSS-pixel viewport and device scale factor 1. No resampling or crop normalization was required.
+- State: light theme, school change from 長庚大學 to 國立臺北大學, with the replacement dashboard request intentionally held so the loading state can be inspected at full opacity.
+
+## Full-view comparison evidence
+
+The rendered school-switch state reproduces the selected target's full-screen composition: an opaque cool-blue/neutral/peach background, one centered suitcase mascot, its existing soft floor shadow, and the centered `正在載入中…` label. The former fixed horizontal status surface, spinner icon, border, and underlying interactive page are absent while data is loading. The implementation uses the same existing mascot image, animation layers, gradient tokens, and typography as the initial UniWay loading screen rather than creating a visually similar substitute.
+
+The overlay remains above the complete page and intercepts pointer targeting until all school-switch operations have finished. It then uses the existing short fade-out and exposes the success message on the restored page.
+
+## Focused region comparison evidence
+
+The central mascot/title region was inspected at original resolution. Subject, transparent edges, blue surface shading, handle crop, eye placement, floor shadow, title weight, three animated dots, and center alignment match the existing target component because the runtime state clones that exact component. No additional focused crop was necessary: the rest of the target is deliberately empty gradient canvas, and the full-size capture clearly exposes its color and opacity.
+
+## Required fidelity surfaces
+
+- Fonts and typography: The existing Poppins/Traditional Chinese fallback stack, 19 px title size, 700 weight, line height, letter spacing, and animated ellipsis are reused unchanged.
+- Spacing and layout rhythm: The mascot/title group stays centered with the same 18 px mascot bottom margin and 6 px grid gap. It remains within the viewport at desktop, tablet, mobile, and landscape sizes.
+- Colors and visual tokens: The source loading gradient and dark-theme counterpart are shared directly. The runtime overlay is fully opaque at rest; only its 180 ms entry and 320 ms exit transitions change opacity.
+- Image quality and asset fidelity: The implementation uses the existing 384 × 460 WebP suitcase asset at its authored aspect ratio. No generated image, CSS illustration, inline SVG, or placeholder was introduced.
+- Copy and content: Visible copy remains exactly `正在載入中…`. The live region receives the more specific `正在切換至國立臺北大學的資料` label for assistive technology without adding visual text.
+
+## Findings
+
+- No actionable P0, P1, or P2 mismatch remains for the requested loading-state replacement.
+
+## Open questions
+
+- None. The user selected an already-existing application loading component, so its visual definition and motion behavior are unambiguous.
+
+## Comparison history
+
+- Initial capture was taken during the 180 ms entry transition and therefore showed the page beneath the partially opaque overlay. This was capture timing rather than a persistent implementation state; the browser test now waits for opacity 1 before recording evidence.
+- Final 1730 × 837 comparison confirms the fully opaque state matches the selected loading screen and contains no horizontal loading banner.
+
+## Primary interactions and runtime checks
+
+- Held the new school's dashboard request and confirmed the overlay appears, blocks the page, keeps the specific accessible loading label, and contains no `.status-message.loading` element.
+- Released the request and confirmed the overlay hides, the selected school updates, and the success state remains available.
+- Existing browser coverage confirms the shared mascot state in dark mode, reduced-motion mode, 320/390/844/1280 px responsive viewports, slow requests, failed requests, and the 60-second fail-safe.
+- Browser runs completed without page errors in the school-switch flow.
+
+## Implementation checklist
+
+- [x] Replace the horizontal loading banner with the existing suitcase loading scene.
+- [x] Keep generic information, success, and error notices as non-spinning status messages.
+- [x] Hold the overlay until the complete school-switch request group finishes.
+- [x] Reuse the exact mascot asset, gradient, title, motion, dark mode, and reduced-motion behavior.
+- [x] Preserve specific screen-reader loading context.
+- [x] Verify entry, blocking, completion, error-safe boot behavior, and responsive states.
+
+## Follow-up polish
+
+- None required for this scoped change.
+
+final result: passed
+
+---
+
 # Design QA: Supabase-style expanding navigation rail
 
 ## Comparison target
