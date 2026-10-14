@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="/static/destination-tips.css?v=20261004-tips-2" />
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
     <link rel="stylesheet" href="/static/feedback.css?v=20261008-4" />
+    <link rel="stylesheet" href="/static/uniway-3d.css?v=20261014-webgl-3d-1" />
     <link rel="stylesheet" href="/static/responsive.css?v=20261007-responsive-1" />
     <noscript><style>.boot-splash { display: none !important; }</style></noscript>
   </head>
@@ -372,18 +373,61 @@
         <div id="dashboard-view">
           <section id="guide" class="page-section study-guide" data-university-page="guide" aria-labelledby="guide-title" hidden>
             <header class="guide-intro">
-              <div><span class="section-kicker">申請指南</span><h1 id="guide-title">你的交換旅程，<br>一步一步來。</h1><p>從選校到出發，找到你現在需要的下一步。</p></div>
-              <span class="uw-mascot guide-mascot" data-play data-tilt aria-hidden="true">
-                <span class="uw-mascot-shadow"></span>
-                <span class="uw-mascot-body">
-                  <span class="uw-mascot-tilt">
-                    <span class="uw-mascot-slab"></span>
-                    <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261014-runtime-loading-1" alt="" width="384" height="460" decoding="async" draggable="false" />
-                    <span class="uw-mascot-sheen"></span>
-                    <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+              <div class="uw-hero-copy-column">
+                <div class="uw-hero-badge-row">
+                  <span class="section-kicker"><i data-lucide="compass" aria-hidden="true"></i>申請指南 · 3D 全球航線</span>
+                  <span class="uw-hero-live-pill"><span class="uw-hero-live-dot" aria-hidden="true"></span><span>WebGL 即時互動地球儀</span></span>
+                </div>
+                <h1 id="guide-title">你的交換旅程，<br><span class="uw-hero-title-accent">一步一步飛向世界。</span></h1>
+                <p>從選校到出發，在 3D 互動地球上探索臺灣通往全球合作大學的交換航線，找到你現在需要的下一步。</p>
+                <div class="uw-3d-hub-bar" role="group" aria-label="熱門交換航線切換">
+                  <span class="uw-3d-hub-label"><i data-lucide="globe-2" aria-hidden="true"></i><span>點擊切換 3D 留學航線視角</span></span>
+                  <div class="uw-3d-hub-pills">
+                    <button type="button" class="uw-3d-hub-pill" data-hub-index="0" aria-pressed="true"><span class="uw-3d-hub-pill-dot" aria-hidden="true"></span><span>日本・東京／東北</span></button>
+                    <button type="button" class="uw-3d-hub-pill" data-hub-index="1" aria-pressed="false"><span class="uw-3d-hub-pill-dot" aria-hidden="true"></span><span>德國・慕尼黑</span></button>
+                    <button type="button" class="uw-3d-hub-pill" data-hub-index="2" aria-pressed="false"><span class="uw-3d-hub-pill-dot" aria-hidden="true"></span><span>美國・加州</span></button>
+                    <button type="button" class="uw-3d-hub-pill" data-hub-index="3" aria-pressed="false"><span class="uw-3d-hub-pill-dot" aria-hidden="true"></span><span>英國・倫敦</span></button>
+                    <button type="button" class="uw-3d-hub-pill" data-hub-index="4" aria-pressed="false"><span class="uw-3d-hub-pill-dot" aria-hidden="true"></span><span>澳洲・雪梨</span></button>
+                    <button type="button" class="uw-3d-hub-pill" data-hub-index="5" aria-pressed="false"><span class="uw-3d-hub-pill-dot" aria-hidden="true"></span><span>韓國・首爾</span></button>
+                  </div>
+                </div>
+                <div class="uw-hero-cta-row">
+                  <a class="uw-hero-cta-primary" href="#partners"><i data-lucide="globe" aria-hidden="true"></i><span>探索全球合作校</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+                  <a class="uw-hero-cta-secondary" href="#advisor" data-requires-home-school><i data-lucide="sparkles" aria-hidden="true"></i><span>啟動選校規劃</span></a>
+                  <a class="uw-hero-cta-secondary" href="#forum"><i data-lucide="messages-square" aria-hidden="true"></i><span>留學論壇</span></a>
+                </div>
+                <div class="uw-3d-telemetry-strip" aria-label="平台資料規模">
+                  <div class="uw-3d-stat-card"><strong>6 所</strong><small>已支援臺灣大學</small></div>
+                  <div class="uw-3d-stat-card"><strong>1,085+</strong><small>已整理合作校門檻</small></div>
+                  <div class="uw-3d-stat-card"><strong>360° 3D</strong><small>即時航線與光影互動</small></div>
+                </div>
+              </div>
+              <div class="uw-3d-viewport-shell" aria-label="3D 全球交換航線互動舞台">
+                <div class="uw-3d-orbital-ring" aria-hidden="true"></div>
+                <div class="uw-3d-orbital-ring ring-secondary" aria-hidden="true"></div>
+                <canvas id="uw-hero-webgl-canvas" class="uw-hero-webgl-canvas" width="680" height="620" aria-label="可拖曳旋轉的 3D 全球交換航線地球儀"></canvas>
+                <aside id="uw-3d-active-hub-card" class="uw-3d-active-hub-card" aria-live="polite">
+                  <span class="uw-3d-hub-card-kicker"><span>LIVE FLIGHT ARC</span><span>TW → WORLD</span></span>
+                  <h2 id="uw-3d-hub-card-title" class="uw-3d-hub-card-title">日本交換航線｜東京・東北・京都</h2>
+                  <p id="uw-3d-hub-card-meta" class="uw-3d-hub-card-meta">航程約 2,100 km · 亞洲最熱門交換目的地 · 涵蓋東北大學、早稻田、立命館等合作校</p>
+                  <a id="uw-3d-hub-card-link" class="uw-3d-hub-card-link" href="#partners" data-hub-country="日本"><span>查看此航線合作學校</span><i data-lucide="arrow-right" aria-hidden="true"></i></a>
+                </aside>
+                <div class="uw-3d-viewport-controls">
+                  <span>拖曳地球可 360° 旋轉</span>
+                  <button id="uw-3d-tour-toggle" type="button" class="uw-3d-tour-toggle" aria-pressed="true">自動巡航：開</button>
+                </div>
+                <span class="uw-mascot guide-mascot" data-play data-tilt aria-hidden="true">
+                  <span class="uw-mascot-shadow"></span>
+                  <span class="uw-mascot-body">
+                    <span class="uw-mascot-tilt">
+                      <span class="uw-mascot-slab"></span>
+                      <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261014-runtime-loading-1" alt="" width="384" height="460" decoding="async" draggable="false" />
+                      <span class="uw-mascot-sheen"></span>
+                      <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+                    </span>
                   </span>
                 </span>
-              </span>
+              </div>
             </header>
             <ol class="guide-stages">
               <li class="guide-stage guide-stage-explore"><span class="guide-stage-number">01</span><span class="guide-stage-icon"><i data-lucide="compass" aria-hidden="true"></i></span><h2>找到想去的學校</h2><p>比較課程、語言門檻與生活費。</p><a class="guide-action" href="#partners">探索學校<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
@@ -1199,7 +1243,7 @@
     <script src="/static/discovery-ui.js?v=20261004-digest-2" defer></script>
     <script src="/static/navigation.js?v=20261013-expanding-rail-1" defer></script>
     <script src="/static/motion.js?v=20261007-forum-1" defer></script>
-    <script src="/static/community-reader.js?v=20261013-picker-rail-1" defer></script>
+    <script src="/static/community-reader.js?v=20261014-runtime-loading-1" defer></script>
     <script src="/static/community-moderation.js?v=20260930-discussion-2b" defer></script>
     <script src="/static/academic-units.js?v=20261001-departments-1" defer></script>
     <script src="/static/ccu-academic-units.js?v=20261008-ccu-filter-23" defer></script>
@@ -1220,5 +1264,6 @@
     <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
     <script src="/static/app.js?v=20261014-runtime-loading-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>
+    <script src="/static/uniway-3d.js?v=20261014-webgl-3d-1" defer></script>
   </body>
 </html>

@@ -1,0 +1,646 @@
+/* UniWay 3D & Interactive Visual System (WebGL Shaders + 3D Perspective Depth + Specular Lighting) */
+
+:root,
+html[data-theme="light"] {
+  --uw-3d-stage-bg:
+    radial-gradient(circle at 74% 38%, rgba(22, 123, 161, 0.22), transparent 52%),
+    radial-gradient(circle at 22% 18%, rgba(41, 187, 203, 0.18), transparent 46%),
+    radial-gradient(circle at 82% 84%, rgba(221, 142, 69, 0.16), transparent 45%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(238, 248, 252, 0.88) 54%, rgba(224, 242, 250, 0.92) 100%);
+  --uw-3d-stage-border: rgba(22, 123, 161, 0.24);
+  --uw-3d-stage-shadow:
+    0 24px 60px rgba(16, 41, 86, 0.12),
+    0 4px 16px rgba(22, 123, 161, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --uw-3d-hud-bg: rgba(255, 255, 255, 0.84);
+  --uw-3d-hud-border: rgba(22, 123, 161, 0.26);
+  --uw-3d-accent: #0e83b6;
+  --uw-3d-accent-glow: rgba(14, 131, 182, 0.32);
+  --uw-3d-coral: #d94841;
+  --uw-3d-card-sheen: rgba(255, 255, 255, 0.68);
+  --uw-3d-card-edge: rgba(22, 123, 161, 0.34);
+  --uw-3d-orb-ring: rgba(14, 131, 182, 0.26);
+}
+
+html[data-theme="dark"] {
+  --uw-3d-stage-bg:
+    radial-gradient(circle at 74% 38%, rgba(56, 189, 248, 0.22), transparent 54%),
+    radial-gradient(circle at 20% 16%, rgba(99, 102, 241, 0.18), transparent 46%),
+    radial-gradient(circle at 82% 85%, rgba(244, 114, 182, 0.14), transparent 46%),
+    linear-gradient(135deg, rgba(15, 27, 46, 0.94) 0%, rgba(11, 21, 38, 0.96) 55%, rgba(16, 32, 54, 0.94) 100%);
+  --uw-3d-stage-border: rgba(128, 210, 237, 0.26);
+  --uw-3d-stage-shadow:
+    0 28px 68px rgba(2, 8, 20, 0.56),
+    0 0 36px rgba(56, 189, 248, 0.1),
+    inset 0 1px 0 rgba(186, 230, 253, 0.16);
+  --uw-3d-hud-bg: rgba(17, 30, 49, 0.84);
+  --uw-3d-hud-border: rgba(128, 210, 237, 0.28);
+  --uw-3d-accent: #5cc8f2;
+  --uw-3d-accent-glow: rgba(92, 200, 242, 0.34);
+  --uw-3d-coral: #ff8b7b;
+  --uw-3d-card-sheen: rgba(139, 191, 255, 0.16);
+  --uw-3d-card-edge: rgba(128, 210, 237, 0.42);
+  --uw-3d-orb-ring: rgba(92, 200, 242, 0.32);
+}
+
+/* ---- 3D Homepage Hero Stage ---- */
+body.unified-shell #guide .guide-intro {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+  align-items: center;
+  gap: 28px;
+  min-height: 450px;
+  margin-bottom: 26px;
+  padding: 36px 38px;
+  border: 1px solid var(--uw-3d-stage-border);
+  border-radius: 30px;
+  background: var(--uw-3d-stage-bg);
+  box-shadow: var(--uw-3d-stage-shadow);
+  overflow: hidden;
+  isolation: isolate;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+body.unified-shell #guide .guide-intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      560px circle at var(--uw-hero-mx, 68%) var(--uw-hero-my, 42%),
+      var(--uw-3d-accent-glow),
+      transparent 65%
+    );
+  opacity: 0.65;
+  transition: opacity 240ms ease;
+}
+
+.uw-hero-copy-column {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 620px;
+}
+
+.uw-hero-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.uw-hero-badge-row .section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--uw-3d-accent) 14%, var(--uw-surface));
+  border: 1px solid var(--uw-3d-hud-border);
+  color: var(--uw-3d-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  box-shadow: 0 4px 14px rgba(14, 131, 182, 0.1);
+}
+
+.uw-hero-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--uw-3d-hud-bg);
+  border: 1px solid var(--uw-3d-hud-border);
+  color: var(--uw-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.uw-hero-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.22);
+  animation: uw-3d-pulse 2.2s ease-in-out infinite;
+}
+
+body.unified-shell #guide .guide-intro h1 {
+  margin: 2px 0 4px;
+  font-size: clamp(32px, 3.6vw, 50px);
+  line-height: 1.22;
+  letter-spacing: -0.035em;
+  color: var(--uw-navy);
+  text-wrap: balance;
+}
+
+.uw-hero-title-accent {
+  background: linear-gradient(125deg, var(--uw-3d-accent) 0%, #2ab7ca 48%, var(--uw-3d-coral) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+body.unified-shell #guide .guide-intro > .uw-hero-copy-column > p {
+  margin: 0;
+  max-width: 520px;
+  font-size: 15.5px;
+  line-height: 1.72;
+  color: var(--uw-muted);
+}
+
+/* Interactive 3D Destination Hub Switcher Pills */
+.uw-3d-hub-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.uw-3d-hub-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--uw-muted);
+  letter-spacing: 0.04em;
+}
+
+.uw-3d-hub-pills {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  max-width: 510px;
+}
+
+.uw-3d-hub-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--uw-3d-hud-border);
+  background: var(--uw-3d-hud-bg);
+  color: var(--uw-text);
+  font-size: 12.5px;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease;
+}
+
+.uw-3d-hub-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--uw-3d-accent);
+  box-shadow: 0 6px 16px var(--uw-3d-accent-glow);
+}
+
+.uw-3d-hub-pill[aria-pressed="true"] {
+  background: linear-gradient(135deg, var(--uw-3d-accent), #14649c);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 8px 20px var(--uw-3d-accent-glow);
+}
+
+html[data-theme="dark"] .uw-3d-hub-pill[aria-pressed="true"] {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: #ffffff;
+}
+
+.uw-3d-hub-pill-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.85;
+}
+
+/* Hero CTA & Telemetry Row */
+.uw-hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.uw-hero-cta-primary,
+.uw-hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 11px 20px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 200ms ease;
+}
+
+.uw-hero-cta-primary {
+  background: linear-gradient(135deg, var(--uw-3d-coral), #b83731);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 24px rgba(217, 72, 65, 0.28);
+}
+
+html[data-theme="dark"] .uw-hero-cta-primary {
+  background: linear-gradient(135deg, #fb7185, #e11d48);
+  color: #ffffff;
+}
+
+.uw-hero-cta-primary:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px rgba(217, 72, 65, 0.38);
+}
+
+.uw-hero-cta-secondary {
+  background: var(--uw-3d-hud-bg);
+  color: var(--uw-navy);
+  border: 1px solid var(--uw-3d-hud-border);
+  backdrop-filter: blur(12px);
+}
+
+.uw-hero-cta-secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--uw-3d-accent);
+}
+
+.uw-hero-cta-primary .lucide,
+.uw-hero-cta-secondary .lucide {
+  width: 18px;
+  height: 18px;
+}
+
+/* 3D Telemetry Mini-Stats */
+.uw-3d-telemetry-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.uw-3d-stat-card {
+  position: relative;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--uw-3d-hud-bg);
+  border: 1px solid var(--uw-3d-hud-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+  transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 200ms ease;
+}
+
+.uw-3d-stat-card:hover {
+  transform: translateY(-3px) rotateX(4deg) rotateY(-4deg);
+  border-color: var(--uw-3d-accent);
+}
+
+.uw-3d-stat-card strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--uw-navy);
+  letter-spacing: -0.02em;
+}
+
+.uw-3d-stat-card small {
+  display: block;
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--uw-muted);
+}
+
+/* ---- Right Column: WebGL 3D Globe Viewport + Floating 3D Mascot ---- */
+.uw-3d-viewport-shell {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 390px;
+  aspect-ratio: 1.08 / 1;
+  max-height: 430px;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(14, 131, 182, 0.16), transparent 68%);
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  user-select: none;
+}
+
+.uw-hero-webgl-canvas {
+  position: absolute;
+  inset: -38px -24px;
+  width: calc(100% + 48px);
+  height: calc(100% + 76px);
+  display: block;
+  cursor: grab;
+  touch-action: pan-y;
+  z-index: 1;
+}
+
+.uw-hero-webgl-canvas:active {
+  cursor: grabbing;
+}
+
+/* Decorative 3D Orbital Rings around the WebGL Globe */
+.uw-3d-orbital-ring {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  border: 1px dashed var(--uw-3d-orb-ring);
+  pointer-events: none;
+  z-index: 1;
+  transform: rotateX(68deg) rotateY(-16deg) rotateZ(0deg);
+  animation: uw-3d-orbit-spin 28s linear infinite;
+}
+
+.uw-3d-orbital-ring.ring-secondary {
+  inset: 15%;
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--uw-3d-coral) 24%, transparent);
+  transform: rotateX(58deg) rotateY(24deg) rotateZ(0deg);
+  animation-duration: 36s;
+  animation-direction: reverse;
+}
+
+/* Floating Active Destination HUD Card over the 3D Globe */
+.uw-3d-active-hub-card {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 235px;
+  padding: 11px 14px;
+  border-radius: 16px;
+  background: var(--uw-3d-hud-bg);
+  border: 1px solid var(--uw-3d-hud-border);
+  box-shadow: 0 12px 28px rgba(15, 35, 68, 0.14);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transform: translateZ(40px);
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.uw-3d-hub-card-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--uw-3d-accent);
+}
+
+.uw-3d-hub-card-title {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--uw-navy);
+}
+
+.uw-3d-hub-card-meta {
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--uw-muted);
+  line-height: 1.45;
+}
+
+.uw-3d-hub-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--uw-3d-accent);
+  text-decoration: none;
+}
+
+.uw-3d-hub-card-link:hover {
+  text-decoration: underline;
+}
+
+.uw-3d-hub-card-link .lucide {
+  width: 14px;
+  height: 14px;
+}
+
+/* Interactive 3D Controls Badge (bottom-left of viewport) */
+.uw-3d-viewport-controls {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: var(--uw-3d-hud-bg);
+  border: 1px solid var(--uw-3d-hud-border);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--uw-muted);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.uw-3d-tour-toggle {
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--uw-3d-hud-border);
+  background: color-mix(in srgb, var(--uw-3d-accent) 14%, transparent);
+  color: var(--uw-navy);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.uw-3d-tour-toggle[aria-pressed="true"] {
+  background: var(--uw-3d-accent);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+/* Position the 3D Solid Suitcase Mascot as a Co-Pilot in the 3D Stage */
+body.unified-shell #guide .uw-3d-viewport-shell .guide-mascot {
+  --uw-mascot-size: 132px;
+  position: absolute;
+  right: 6px;
+  bottom: 8px;
+  z-index: 5;
+  margin: 0;
+  filter: drop-shadow(0 16px 28px rgba(14, 42, 86, 0.24));
+  transform: translateZ(55px);
+}
+
+/* ---- 3D Interactive Depth Stage Cards (.guide-stage) ---- */
+body.unified-shell #guide .guide-stages {
+  perspective: 1100px;
+}
+
+body.unified-shell :is(.guide-stage, .featured-board-card, .partner-card, .guide-plan-link) {
+  --uw-card-rx: 0deg;
+  --uw-card-ry: 0deg;
+  --uw-card-mx: 50%;
+  --uw-card-my: 50%;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  body.unified-shell :is(.guide-stage, .featured-board-card, .partner-card)[data-uw-3d-ready="true"] {
+    transform: perspective(950px) rotateX(var(--uw-card-rx, 0deg)) rotateY(var(--uw-card-ry, 0deg)) translateZ(0);
+    transition:
+      transform 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 240ms ease,
+      border-color 200ms ease;
+  }
+
+  body.unified-shell :is(.guide-stage, .featured-board-card, .partner-card)[data-uw-3d-ready="true"]:hover {
+    border-color: var(--uw-3d-card-edge);
+    box-shadow:
+      0 22px 44px rgba(15, 38, 76, 0.16),
+      0 0 24px var(--uw-3d-accent-glow);
+  }
+
+  /* Specular Holographic Spotlight Layer */
+  body.unified-shell :is(.guide-stage, .featured-board-card, .partner-card)[data-uw-3d-ready="true"]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      320px circle at var(--uw-card-mx, 50%) var(--uw-card-my, 50%),
+      var(--uw-3d-card-sheen),
+      transparent 68%
+    );
+    opacity: 0;
+    transition: opacity 220ms ease;
+    z-index: 0;
+  }
+
+  body.unified-shell :is(.guide-stage, .featured-board-card, .partner-card)[data-uw-3d-ready="true"]:hover::after {
+    opacity: 1;
+  }
+
+  /* True 3D Z-axis Parallax Elevation inside Guide Stage Cards */
+  body.unified-shell .guide-stage[data-uw-3d-ready="true"] .guide-stage-icon {
+    transform: translateZ(32px);
+    box-shadow: 0 10px 22px rgba(15, 38, 76, 0.12);
+    transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 220ms ease;
+  }
+
+  body.unified-shell .guide-stage[data-uw-3d-ready="true"]:hover .guide-stage-icon {
+    transform: translateZ(44px) scale(1.06);
+  }
+
+  body.unified-shell .guide-stage[data-uw-3d-ready="true"] .guide-stage-number {
+    transform: translateZ(24px);
+    font-weight: 800;
+  }
+
+  body.unified-shell .guide-stage[data-uw-3d-ready="true"] h2,
+  body.unified-shell .guide-stage[data-uw-3d-ready="true"] p,
+  body.unified-shell .guide-stage[data-uw-3d-ready="true"] .guide-action {
+    position: relative;
+    z-index: 1;
+    transform: translateZ(18px);
+  }
+}
+
+@keyframes uw-3d-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.25); opacity: 0.72; }
+}
+
+@keyframes uw-3d-orbit-spin {
+  from { transform: rotateX(68deg) rotateY(-16deg) rotateZ(0deg); }
+  to { transform: rotateX(68deg) rotateY(-16deg) rotateZ(360deg); }
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1080px) {
+  body.unified-shell #guide .guide-intro {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 28px 24px;
+  }
+
+  .uw-hero-copy-column {
+    max-width: 100%;
+  }
+
+  .uw-3d-viewport-shell {
+    min-height: 340px;
+    max-height: 380px;
+  }
+}
+
+@media (max-width: 640px) {
+  body.unified-shell #guide .guide-intro {
+    padding: 22px 18px;
+    border-radius: 22px;
+    gap: 20px;
+  }
+
+  .uw-3d-telemetry-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .uw-3d-stat-card {
+    padding: 8px 10px;
+  }
+
+  .uw-3d-stat-card strong {
+    font-size: 15px;
+  }
+
+  .uw-3d-viewport-shell {
+    min-height: 290px;
+    max-height: 320px;
+  }
+
+  body.unified-shell #guide .uw-3d-viewport-shell .guide-mascot {
+    --uw-mascot-size: 98px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uw-3d-orbital-ring,
+  .uw-hero-live-dot {
+    animation: none !important;
+  }
+}
