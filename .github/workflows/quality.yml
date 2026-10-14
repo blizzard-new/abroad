@@ -50,6 +50,12 @@ jobs:
           uv sync --frozen --extra dev
           uv run --frozen python -m playwright install --with-deps chromium
 
+      - name: Verify the committed React Aria school picker bundle
+        run: |
+          npm ci --prefix frontend/react-aria --no-fund --no-audit
+          npm run build --prefix frontend/react-aria
+          git diff --exit-code -- src/exchange_info/static/react-aria-school-picker.js src/exchange_info/static/react-aria-school-picker.css src/exchange_info/static/react-aria-school-picker.js.LEGAL.txt
+
       - name: Install PDF rendering tools from Ubuntu packages
         run: |
           sudo apt-get update

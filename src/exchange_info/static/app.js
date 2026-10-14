@@ -1379,10 +1379,21 @@ function schoolBadge(item) {
   const text = preset?.text || String(item.short_name || item.school_name || "").replace(/^國立/, "").slice(0, 2);
   const emblem = SCHOOL_EMBLEM_FILES[item.school_name];
   const inner = emblem ? `<img src="${escapeHtml(emblem)}" alt="" decoding="async" />` : escapeHtml(text);
-  return { tint: preset?.tint ?? 200, html: `<span class="school-emblem" aria-hidden="true">${inner}</span>` };
+  return { tint: preset?.tint ?? 200, text, html: `<span class="school-emblem" aria-hidden="true">${inner}</span>` };
 }
 
 function renderSchoolOptions(query = "") {
+  if (window.UniWaySchoolPicker) {
+    window.UniWaySchoolPicker.update({
+      schools: state.supportedUniversities.map(item => {
+        const badge = schoolBadge(item);
+        return { ...item, badgeText: badge.text, badgeTint: badge.tint };
+      }),
+      selectedSchool: state.selectedHomeSchool,
+      normalize,
+    });
+    return;
+  }
   const container = $("#school-options");
   if (!container) return;
   const normalizedQuery = normalize(query);
@@ -1415,8 +1426,17 @@ function openSchoolOnboarding() {
     ? activeElement
     : null;
   onboarding.hidden = false;
-  $("#onboarding-lock-note").hidden = !(state.account && state.chooseSchoolForAccount);
+  $("#school-switcher")?.setAttribute("aria-expanded", "true");
   document.body.classList.add("onboarding-open");
+  if (window.UniWaySchoolPicker) {
+    window.UniWaySchoolPicker.open({
+      accountChoice: Boolean(state.account && state.chooseSchoolForAccount),
+      onChoose: chooseHomeSchool,
+      onDismiss: dismissSchoolOnboarding,
+    });
+    return;
+  }
+  $("#onboarding-lock-note").hidden = !(state.account && state.chooseSchoolForAccount);
   window.setTimeout(() => $("#school-search")?.focus(), 40);
 }
 
@@ -1431,25 +1451,56 @@ function promptForAccountSchool() {
 async function saveAccountSchool(school) {
   state.chooseSchoolForAccount = false;
   if (!state.account) return;
+  const requestController = new AbortController();
+  const requestTimeout = window.setTimeout(() => requestController.abort(), 20_000);
   try {
     state.account = await fetchJson("/auth/me", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ home_university: school }),
+      signal: requestController.signal,
     });
     renderAccountState();
     window.UniWayAnalytics?.track("school_choose", { school: state.account.catalog_home_university || "other", via: "signup" });
   } catch (_) {
-    announce("學校暫時無法存到帳號，下次登入時可以再選一次。", "info", true);
+    announce(requestController.signal.aborted
+      ? "學校資料保存逾時，請重新整理確認是否已保存；目前先顯示這所學校的公開資料。"
+      : "學校暫時無法存到帳號，下次登入時可以再選一次。", "info", true);
+  } finally {
+    window.clearTimeout(requestTimeout);
   }
 }
 
 function closeSchoolOnboarding() {
+  window.UniWaySchoolPicker?.close();
   $("#school-onboarding").hidden = true;
+  $("#school-switcher")?.setAttribute("aria-expanded", "false");
   document.body.classList.remove("onboarding-open");
   const returnFocus = state.onboardingReturnFocus;
   state.onboardingReturnFocus = null;
   if (returnFocus?.isConnected) window.setTimeout(() => returnFocus.focus(), 0);
+}
+
+function dismissSchoolOnboarding() {
+  if (state.choosingSchool) return;
+  state.chooseSchoolForAccount = false;
+  state.pendingPersonalizedHash = "";
+  if (state.homeSchool) closeSchoolOnboarding();
+  else browseWithoutSchoolSelection();
+}
+
+async function chooseHomeSchool(school) {
+  if (state.choosingSchool || !state.supportedUniversities.some(item => item.school_name === school)) return;
+  state.choosingSchool = true;
+  state.selectedHomeSchool = school;
+  window.UniWaySchoolPicker?.setBusy(true);
+  try {
+    if (state.chooseSchoolForAccount) await saveAccountSchool(school);
+    setHomeSchool(school);
+  } finally {
+    state.choosingSchool = false;
+    window.UniWaySchoolPicker?.setBusy(false);
+  }
 }
 
 function browseWithoutSchoolSelection() {
@@ -1472,11 +1523,12 @@ function browseWithoutSchoolSelection() {
 }
 
 function handleOnboardingKeydown(event) {
+  if (window.UniWaySchoolPicker) return;
   const onboarding = $("#school-onboarding");
   if (onboarding.hidden) return;
   if (event.key === "Escape") {
     event.preventDefault();
-    browseWithoutSchoolSelection();
+    dismissSchoolOnboarding();
     return;
   }
   if (event.key !== "Tab") return;
@@ -13144,20 +13196,12 @@ function bindEvents() {
     applyTheme(state.theme === "dark" ? "light" : "dark");
   });
 
-  $("#school-search").addEventListener("input", (event) => renderSchoolOptions(event.target.value));
+  $("#onboarding-close")?.addEventListener("click", dismissSchoolOnboarding);
+  $("#school-search")?.addEventListener("input", (event) => renderSchoolOptions(event.target.value));
   // Choosing a school is a single click: it saves the choice (for a new account) and opens that school's page.
-  $("#school-options").addEventListener("click", async (event) => {
+  $("#school-options")?.addEventListener("click", async (event) => {
     const option = event.target.closest("[data-home-school]");
-    if (!option || state.choosingSchool) return;
-    const school = option.dataset.homeSchool;
-    state.choosingSchool = true;
-    state.selectedHomeSchool = school;
-    try {
-      if (state.chooseSchoolForAccount) await saveAccountSchool(school);
-      setHomeSchool(school);
-    } finally {
-      state.choosingSchool = false;
-    }
+    if (option) await chooseHomeSchool(option.dataset.homeSchool);
   });
   document.addEventListener("keydown", handleOnboardingKeydown);
 
