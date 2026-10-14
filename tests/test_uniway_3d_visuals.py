@@ -16,8 +16,8 @@ def test_uniway_3d_assets_are_versioned_and_csp_safe() -> None:
     versions = assert_versioned_static_assets(HTML, ("uniway-3d.css", "uniway-3d.js"))
     assert versions["uniway-3d.css"] == versions["uniway-3d.js"]
     assert 'id="uw-hero-webgl-canvas"' in HTML
-    assert 'id="uw-3d-active-hub-card"' in HTML
-    assert 'id="uw-3d-tour-toggle"' in HTML
+    assert 'id="uw-3d-hub-card-link"' in HTML
+    assert 'id="uw-3d-hub-card-title"' in HTML
     assert len(re.findall(r'class="uw-3d-hub-pill"', HTML)) == 6
 
 

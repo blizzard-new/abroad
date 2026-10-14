@@ -12,9 +12,9 @@
   const GLOBAL_HUBS = [
     {
       id: "jp",
-      label: "日本・東京／東北",
-      title: "日本交換航線｜東京・東北・京都",
-      meta: "航程約 2,100 km · 亞洲最熱門交換目的地 · 涵蓋東北大學、早稻田、立命館等合作校",
+      label: "日本",
+      title: "探索日本合作學校",
+      meta: "東京・東北・京都",
       countryFilter: "日本",
       lat: 35.68,
       lon: 139.76,
@@ -22,9 +22,9 @@
     },
     {
       id: "de",
-      label: "德國・慕尼黑／海德堡",
-      title: "德國交換航線｜慕尼黑・海德堡・柏林",
-      meta: "航程約 9,300 km · 歐洲理工與商管重鎮 · 豐富英語授課學程與免學費交換名額",
+      label: "德國",
+      title: "探索德國合作學校",
+      meta: "慕尼黑・海德堡・柏林",
       countryFilter: "德國",
       lat: 48.14,
       lon: 11.58,
@@ -32,9 +32,9 @@
     },
     {
       id: "us",
-      label: "美國・加州／西雅圖",
-      title: "北美交換航線｜加州・西雅圖・波士頓",
-      meta: "航程約 10,400 km · 頂尖研究型學府與矽谷創新圈 · 學期交換與雙聯學位多元選擇",
+      label: "美國",
+      title: "探索美國合作學校",
+      meta: "加州・西雅圖・波士頓",
       countryFilter: "美國",
       lat: 37.77,
       lon: -122.42,
@@ -42,9 +42,9 @@
     },
     {
       id: "uk",
-      label: "英國・倫敦／曼徹斯特",
-      title: "歐洲交換航線｜英國・法國・荷蘭",
-      meta: "航程約 9,700 km · 經典人文社科與金融學府 · 深度體驗歐洲跨文化學術生活",
+      label: "英國",
+      title: "探索英國合作學校",
+      meta: "倫敦・曼徹斯特・愛丁堡",
       countryFilter: "英國",
       lat: 51.51,
       lon: -0.13,
@@ -52,9 +52,9 @@
     },
     {
       id: "au",
-      label: "澳洲・雪梨／墨爾本",
-      title: "大洋洲交換航線｜雪梨・墨爾本・布里斯本",
-      meta: "航程約 7,200 km · 南半球英語留學首選 · 氣候宜人、時差小且生活機能完善",
+      label: "澳洲",
+      title: "探索澳洲合作學校",
+      meta: "雪梨・墨爾本・布里斯本",
       countryFilter: "澳洲",
       lat: -33.87,
       lon: 151.21,
@@ -62,9 +62,9 @@
     },
     {
       id: "kr",
-      label: "韓國・首爾",
-      title: "韓國交換航線｜首爾・釜山",
-      meta: "航程約 1,480 km · 亞洲創新與文化樞紐 · 英語與韓語授課雙軌課程齊全",
+      label: "韓國",
+      title: "探索韓國合作學校",
+      meta: "首爾・釜山",
       countryFilter: "韓國",
       lat: 37.57,
       lon: 126.98,
@@ -128,7 +128,7 @@
     ]);
   }
 
-  function mat4ModelView(yaw, pitch, dist, tx = 0.14, ty = -0.02) {
+  function mat4ModelView(yaw, pitch, dist, tx = 0.0, ty = -0.06) {
     const cy = Math.cos(yaw), sy = Math.sin(yaw);
     const cp = Math.cos(pitch), sp = Math.sin(pitch);
     // Rotate Y (yaw) then Rotate X (pitch), then translate in view space
@@ -733,7 +733,7 @@
       const view = mat4ModelView(
         state.yaw + state.pointerParallaxX * 0.08,
         state.pitch + state.pointerParallaxY * 0.06,
-        3.62
+        3.92
       );
 
       // 1. Draw Procedural 3D Globe
