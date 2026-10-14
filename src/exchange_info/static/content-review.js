@@ -99,6 +99,20 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function safeExternalUrl(value) {
+  const raw = String(value ?? "").trim();
+  if (!raw) return "#";
+  try {
+    const parsed = new URL(raw, window.location.origin);
+    if (parsed.protocol === "https:" || parsed.protocol === "http:") {
+      return parsed.href;
+    }
+  } catch (_error) {
+    // Reject malformed or non-HTTP URLs.
+  }
+  return "#";
+}
+
 function formatDate(value) {
   if (!value) return "待確認";
   const parsed = new Date(value);
@@ -190,7 +204,7 @@ function renderWorkflowIssueReports() {
           ${context ? `<div><dt>適用情境</dt><dd>${context}</dd></div>` : ""}
         </dl>
         <section class="workflow-issue-report-description"><strong>學生說明</strong><p>${escapeHtml(report.description)}</p></section>
-        <a class="workflow-issue-report-source" href="${escapeHtml(report.official_source_url)}" target="_blank" rel="noreferrer">開啟學生附上的官方來源 ↗</a>
+        <a class="workflow-issue-report-source" href="${escapeHtml(safeExternalUrl(report.official_source_url))}" target="_blank" rel="noreferrer">開啟學生附上的官方來源 ↗</a>
         ${report.status === "pending" ? `
           <div class="workflow-issue-report-review">
             <label><span>處理說明（至少 10 個字）</span><textarea data-workflow-issue-report-note minlength="10" maxlength="1000" rows="3" placeholder="記錄核對的官方頁面、判斷與後續處置。" ${reviewing ? "disabled" : ""}></textarea></label>
@@ -716,7 +730,7 @@ function renderComparison(revision) {
         <div class="comparison-items">${sourceChanges.map((source) => `
           <details>
             <summary><span><span class="change-kind change-${escapeHtml(source.change_type)}">${escapeHtml(changeTypeLabel(source.change_type))}</span>${escapeHtml(source.title)}</span><span>來源</span></summary>
-            <p class="comparison-source-url"><a href="${escapeHtml(source.source_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.source_url)}</a></p>
+            <p class="comparison-source-url"><a href="${escapeHtml(safeExternalUrl(source.source_url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.source_url)}</a></p>
             ${renderChangeTable(source.changes, "來源網址本身為新增或移除。")}
           </details>`).join("") || '<p class="comparison-empty">官方來源清單與來源屬性都相同。</p>'}</div>
       </div>
@@ -835,12 +849,12 @@ function sourceResearchLeadRelationshipLabel(relationship) {
 
 function renderSourceReplacementCandidate(candidate) {
   const supportingLinks = (candidate.supporting_urls || []).map((url) => `
-    <li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a></li>`).join("");
+    <li><a href="${escapeHtml(safeExternalUrl(url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a></li>`).join("");
   const researchLeads = (candidate.research_leads || []).map((lead) => `
     <li class="source-candidate-research-lead" data-eligible-as-replacement="false">
       <strong>${escapeHtml(lead.label)}</strong>
       <span>${escapeHtml(sourceResearchLeadRelationshipLabel(lead.relationship))} · HTTPS 已驗證 · 查核日 ${escapeHtml(lead.transport_checked_at)} · HTTP ${escapeHtml(lead.transport_http_status)}</span>
-      <a href="${escapeHtml(lead.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(lead.url)}</a>
+      <a href="${escapeHtml(safeExternalUrl(lead.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(lead.url)}</a>
       <small>不可直接替代：${escapeHtml(lead.reason_not_equivalent)}</small>
     </li>`).join("");
   const canPrefill = candidate.can_prefill === true;
@@ -860,7 +874,7 @@ function renderSourceReplacementCandidate(candidate) {
         <span class="transport-status">${escapeHtml(sourceReplacementTransportStatusLabel(candidate.transport_status))}</span>
         <small>${escapeHtml(candidate.batch_id)} · 研究日期 ${escapeHtml(candidate.checked_at)}</small>
       </header>
-      <p><a href="${escapeHtml(candidate.candidate_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(candidate.candidate_url)}</a></p>
+      <p><a href="${escapeHtml(safeExternalUrl(candidate.candidate_url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(candidate.candidate_url)}</a></p>
       <p class="source-candidate-transport">${escapeHtml(transportDetail || "尚無傳輸查核紀錄")}</p>
       <div class="source-candidate-evidence">
         <section><h6>自動研究證據（不能當作核准）</h6><ul>${candidate.automated_evidence.map((value) => `<li>${escapeHtml(value)}</li>`).join("")}</ul></section>
@@ -961,7 +975,7 @@ function renderApplicabilityEditor(revision) {
             <span>${needsMetadata ? "這次已逐頁確認並補齊來源證據資料" : "這次已逐頁確認此來源"}</span>
           </label>
         </legend>
-        <a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.title || source.url)}</a>
+        <a href="${escapeHtml(safeExternalUrl(source.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.title || source.url)}</a>
         ${renderSourceReferences(source)}
         <p class="applicability-source-progress" data-applicability-source-progress>本次未選取，不會儲存這列欄位。</p>
         ${needsMetadata ? '<p class="evidence-error applicability-source-metadata">這個來源尚未完整保存名稱、角色、權威層級與查核證據；補齊前不能核准。</p>' : ""}
@@ -1166,7 +1180,7 @@ function renderStep(step) {
         <p><strong>時程：</strong>${escapeHtml(step.timing || "待確認")}</p>
         <p>${escapeHtml(step.summary || "尚無摘要")}</p>
         <p><strong>文件：</strong>${escapeHtml(documents.join("、") || "沒有列出文件")}</p>
-        <p><strong>來源：</strong>${sources.length ? sources.map((url) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">官方連結</a>`).join("、") : "待補"}</p>
+        <p><strong>來源：</strong>${sources.length ? sources.map((url) => `<a href="${escapeHtml(safeExternalUrl(url))}" target="_blank" rel="noopener noreferrer">官方連結</a>`).join("、") : "待補"}</p>
       </div>
     </details>`;
 }
@@ -1284,7 +1298,7 @@ function renderRevision(revision) {
     const checkboxId = `approval-source-${revision.id}-${index}`;
     const showCheckbox = pending && !approvedByCurrent && !progress.ready;
     return `<li class="${row.secure && row.metadataComplete ? "" : "source-insecure"}">
-      <a href="${escapeHtml(row.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.title)}</a>
+      <a href="${escapeHtml(safeExternalUrl(row.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.title)}</a>
       ${row.detail ? `<small>${escapeHtml(row.detail)}</small>` : ""}
       ${renderSourceReferences(row)}
       ${row.metadataComplete ? "" : '<small class="evidence-error">此引用尚未完整建立來源證據資料，請先在適用範圍編輯器補齊。</small>'}
@@ -1301,7 +1315,7 @@ function renderRevision(revision) {
     const ruleSources = row.sources || [];
     const evidenceReady = ruleSources.length && ruleSources.every((source) => source.secure && source.metadataComplete) && !hasReviewMetadataIssues;
     const ruleSourceLinks = ruleSources.length
-      ? ruleSources.map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.title)}</a>${source.metadataComplete ? "" : '<span class="source-security-warning">缺來源證據</span>'}${source.secure ? "" : '<span class="source-security-warning">非 HTTPS</span>'}`).join("、")
+      ? ruleSources.map((source) => `<a href="${escapeHtml(safeExternalUrl(source.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.title)}</a>${source.metadataComplete ? "" : '<span class="source-security-warning">缺來源證據</span>'}${source.secure ? "" : '<span class="source-security-warning">非 HTTPS</span>'}`).join("、")
       : '<span class="evidence-error">缺少對應官方來源</span>';
     return `<li class="rule-${escapeHtml(row.type)}">
       <strong>${escapeHtml(row.title)}</strong>
@@ -2506,7 +2520,7 @@ function renderDestinationReviewCard(row) {
               ${(profile.sources || []).map((source) => `
                 <label>
                   <input type="checkbox" data-destination-review-source value="${escapeHtml(source.source_url)}" ${draftSourceUrls.has(source.source_url) ? "checked" : ""} />
-                  <span><strong>${escapeHtml(source.title)}</strong><a href="${escapeHtml(source.source_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.source_url)}</a>${source.summary ? `<small>${escapeHtml(source.summary)}</small>` : ""}</span>
+                  <span><strong>${escapeHtml(source.title)}</strong><a href="${escapeHtml(safeExternalUrl(source.source_url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(source.source_url)}</a>${source.summary ? `<small>${escapeHtml(source.summary)}</small>` : ""}</span>
                 </label>`).join("") || '<p class="approval-empty">目前沒有官方來源；只能選擇要求修正。</p>'}
             </div>
             <h5>二、逐項核對所有內容區塊</h5>
@@ -3456,7 +3470,7 @@ function sourceMetadataResearchCandidateMarkup(candidate) {
   const leads = (candidate.research_leads || [])
     .map((lead) => `
       <li>
-        <a href="${escapeHtml(lead.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(lead.label)}</a>
+        <a href="${escapeHtml(safeExternalUrl(lead.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(lead.label)}</a>
         <span>不可直接替代：${escapeHtml(lead.reason_not_equivalent)}</span>
       </li>`)
     .join("");
@@ -3499,7 +3513,7 @@ function renderSourceEvidenceGapSummary() {
     return `
       <article class="source-evidence-gap-group${active ? " is-active" : ""}">
         <div>
-          <a href="${escapeHtml(group.source_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(group.source_url)}</a>
+          <a href="${escapeHtml(safeExternalUrl(group.source_url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(group.source_url)}</a>
           <p>${escapeHtml((group.home_universities || []).join("、") || "母校待確認")} · ${escapeHtml(group.workflow_count)} 筆流程 · ${escapeHtml(group.critical_rule_reference_count)} 條關鍵規定引用</p>
           <small>${escapeHtml(schoolSummary || "合作校待確認")}${remainingSchoolCount ? `，另 ${escapeHtml(remainingSchoolCount)} 所` : ""}</small>
           ${sourceMetadataResearchCandidateMarkup(group.research_candidate)}

@@ -6,8 +6,11 @@ $e = Read-EnvFile
 $failed = 0
 
 Write-Step 'Inside the stack (web service, database REST door, private storage)'
-Invoke-Compose exec -T -e ("SMOKE_ANON_KEY=" + $e['ANON_KEY']) app python /opt/selfhost/smoke.py
-if ($LASTEXITCODE -ne 0) { $failed++ }
+$env:SMOKE_ANON_KEY = $e['ANON_KEY']
+try {
+    Invoke-Compose exec -T -e SMOKE_ANON_KEY app python /opt/selfhost/smoke.py
+    if ($LASTEXITCODE -ne 0) { $failed++ }
+} finally { Remove-Item Env:SMOKE_ANON_KEY -ErrorAction SilentlyContinue }
 
 Write-Step 'Containers'
 Invoke-Compose ps --format 'table {{.Service}}\t{{.State}}\t{{.Status}}'

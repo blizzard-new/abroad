@@ -752,6 +752,10 @@ class CommunityRepository(Protocol):
 
     def list_private_messages(self) -> list[PrivateMessage]: ...
 
+    def list_private_messages_for_conversation(
+        self, conversation_id: str
+    ) -> list[PrivateMessage]: ...
+
     def list_blocks(self) -> list[CommunityBlock]: ...
 
     def list_reports(self, *, now: datetime | None = None) -> list[CommunityReport]: ...
@@ -1400,6 +1404,15 @@ class JsonlCommunityRepository:
 
     def list_private_messages(self) -> list[PrivateMessage]:
         return load_private_messages(self.data_dir)
+
+    def list_private_messages_for_conversation(
+        self, conversation_id: str
+    ) -> list[PrivateMessage]:
+        return [
+            row
+            for row in load_private_messages(self.data_dir)
+            if row.conversation_id == conversation_id
+        ]
 
     def list_blocks(self) -> list[CommunityBlock]:
         return load_community_blocks(self.data_dir)
@@ -3037,6 +3050,20 @@ class SupabaseCommunityRepository:
             "GET",
             "exchange_community_private_messages",
             params={"select": "*", "order": "created_at.asc"},
+        )
+        return [PrivateMessage.model_validate(row) for row in rows]
+
+    def list_private_messages_for_conversation(
+        self, conversation_id: str
+    ) -> list[PrivateMessage]:
+        rows = self._request(
+            "GET",
+            "exchange_community_private_messages",
+            params={
+                "select": "*",
+                "conversation_id": f"eq.{conversation_id}",
+                "order": "created_at.asc",
+            },
         )
         return [PrivateMessage.model_validate(row) for row in rows]
 

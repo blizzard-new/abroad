@@ -739,9 +739,17 @@ class DocumentVaultService:
                 from io import BytesIO
 
                 with ZipFile(BytesIO(content)) as archive:
-                    valid = "[Content_Types].xml" in archive.namelist() and any(
-                        name.startswith("word/") for name in archive.namelist()
-                    )
+                    infos = archive.infolist()
+                    if (
+                        len(infos) > 1000
+                        or sum(max(0, info.file_size) for info in infos) > 50 * 1024 * 1024
+                    ):
+                        valid = False
+                    else:
+                        names = [info.filename for info in infos]
+                        valid = "[Content_Types].xml" in names and any(
+                            item.startswith("word/") for item in names
+                        )
             except BadZipFile:
                 valid = False
         if not valid:

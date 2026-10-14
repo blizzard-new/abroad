@@ -77,7 +77,12 @@ class FormDraftRepository(Protocol):
     ) -> ApplicationFormDraftRecord: ...
 
     def delete_record(
-        self, account_id: str, home_school_key: str, template_id: str
+        self,
+        account_id: str,
+        home_school_key: str,
+        template_id: str,
+        *,
+        revision: int | None = None,
     ) -> None: ...
 
     def purge_account(self, account_id: str) -> None: ...
@@ -127,7 +132,12 @@ class LocalFormDraftRepository:
         return record
 
     def delete_record(
-        self, account_id: str, home_school_key: str, template_id: str
+        self,
+        account_id: str,
+        home_school_key: str,
+        template_id: str,
+        *,
+        revision: int | None = None,
     ) -> None:
         rows = [
             row
@@ -136,6 +146,7 @@ class LocalFormDraftRepository:
                 row.account_id == account_id
                 and row.home_school_key == home_school_key
                 and row.template_id == template_id
+                and (revision is None or row.revision == revision)
             )
         ]
         save_application_form_drafts(rows, self.data_dir)
@@ -228,15 +239,23 @@ class SupabaseFormDraftRepository:
         return ApplicationFormDraftRecord.model_validate(rows[0]) if rows else record
 
     def delete_record(
-        self, account_id: str, home_school_key: str, template_id: str
+        self,
+        account_id: str,
+        home_school_key: str,
+        template_id: str,
+        *,
+        revision: int | None = None,
     ) -> None:
+        params = {
+            "account_id": f"eq.{account_id}",
+            "home_school_key": f"eq.{home_school_key}",
+            "template_id": f"eq.{template_id}",
+        }
+        if revision is not None:
+            params["revision"] = f"eq.{revision}"
         self._request(
             "DELETE",
-            params={
-                "account_id": f"eq.{account_id}",
-                "home_school_key": f"eq.{home_school_key}",
-                "template_id": f"eq.{template_id}",
-            },
+            params=params,
         )
 
     def purge_account(self, account_id: str) -> None:
@@ -247,6 +266,9 @@ class FormDraftService:
     def __init__(self, repository: FormDraftRepository, master_key: bytes) -> None:
         if len(master_key) != 32:
             raise FormDraftConfigurationError("加密表單草稿 master key 必須是 32 bytes。")
+        import threading
+
+        self._lock = threading.RLock()
         self.repository = repository
         self.encryption_key = hmac.new(
             master_key,
@@ -304,46 +326,47 @@ class FormDraftService:
         template_id: str,
         payload: ApplicationFormDraftSave,
     ) -> ApplicationFormDraft:
-        school_key = school_identity_key(payload.home_school)
-        current_record = self.repository.find_record(account_id, school_key, template_id)
-        current_revision = current_record.revision if current_record else 0
-        if payload.revision != current_revision:
-            raise FormDraftConflictError(
-                self._decode(current_record) if current_record is not None else None
-            )
-        revision = current_revision + 1
-        updated_at = utc_now()
-        plaintext = json.dumps(
-            {
-                "profile": payload.profile,
-                "answers": payload.answers,
-                "attachments": {
-                    field_id: [item.model_dump(mode="json") for item in items]
-                    for field_id, items in payload.attachments.items()
+        with self._lock:
+            school_key = school_identity_key(payload.home_school)
+            current_record = self.repository.find_record(account_id, school_key, template_id)
+            current_revision = current_record.revision if current_record else 0
+            if payload.revision != current_revision:
+                raise FormDraftConflictError(
+                    self._decode(current_record) if current_record is not None else None
+                )
+            revision = current_revision + 1
+            updated_at = utc_now()
+            plaintext = json.dumps(
+                {
+                    "profile": payload.profile,
+                    "answers": payload.answers,
+                    "attachments": {
+                        field_id: [item.model_dump(mode="json") for item in items]
+                        for field_id, items in payload.attachments.items()
+                    },
                 },
-            },
-            ensure_ascii=False,
-            sort_keys=True,
-            separators=(",", ":"),
-        ).encode("utf-8")
-        nonce = secrets.token_bytes(12)
-        record = ApplicationFormDraftRecord(
-            account_id=account_id,
-            home_school_key=school_key,
-            home_school=payload.home_school,
-            template_id=template_id,
-            template_version=payload.template_version,
-            revision=revision,
-            ciphertext="placeholder",
-            nonce=_b64(nonce),
-            plaintext_sha256=hashlib.sha256(plaintext).hexdigest(),
-            updated_at=updated_at,
-        )
-        ciphertext = AESGCM(self.encryption_key).encrypt(nonce, plaintext, self._aad(record))
-        saved = self.repository.save_record(
-            record.model_copy(update={"ciphertext": _b64(ciphertext)})
-        )
-        return self._decode(saved)
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+            nonce = secrets.token_bytes(12)
+            record = ApplicationFormDraftRecord(
+                account_id=account_id,
+                home_school_key=school_key,
+                home_school=payload.home_school,
+                template_id=template_id,
+                template_version=payload.template_version,
+                revision=revision,
+                ciphertext="placeholder",
+                nonce=_b64(nonce),
+                plaintext_sha256=hashlib.sha256(plaintext).hexdigest(),
+                updated_at=updated_at,
+            )
+            ciphertext = AESGCM(self.encryption_key).encrypt(nonce, plaintext, self._aad(record))
+            saved = self.repository.save_record(
+                record.model_copy(update={"ciphertext": _b64(ciphertext)})
+            )
+            return self._decode(saved)
 
     def delete_draft(
         self,
@@ -353,13 +376,16 @@ class FormDraftService:
         *,
         revision: int,
     ) -> None:
-        school_key = school_identity_key(home_school)
-        current = self.repository.find_record(account_id, school_key, template_id)
-        if current is None:
-            raise FormDraftNotFoundError("找不到這份表單草稿。")
-        if current.revision != revision:
-            raise FormDraftConflictError(self._decode(current))
-        self.repository.delete_record(account_id, school_key, template_id)
+        with self._lock:
+            school_key = school_identity_key(home_school)
+            current = self.repository.find_record(account_id, school_key, template_id)
+            if current is None:
+                raise FormDraftNotFoundError("找不到這份表單草稿。")
+            if current.revision != revision:
+                raise FormDraftConflictError(self._decode(current))
+            self.repository.delete_record(
+                account_id, school_key, template_id, revision=revision
+            )
 
     def purge_account(self, account_id: str) -> None:
         self.repository.purge_account(account_id)
