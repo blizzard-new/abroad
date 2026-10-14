@@ -14637,6 +14637,84 @@
         "title": "PublicCommunityResourceType",
         "type": "string"
       },
+      "PublicReportSubmitRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "default": "stale_info",
+            "enum": [
+              "stale_info",
+              "quota_mismatch",
+              "deadline_changed",
+              "broken_link",
+              "other"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "evidence_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Url"
+          },
+          "published_release_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published Release Id"
+          },
+          "published_revision_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published Revision Id"
+          },
+          "target_entity_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Target Entity Id",
+            "type": "string"
+          },
+          "target_entity_type": {
+            "default": "offering",
+            "enum": [
+              "offering",
+              "institution",
+              "experience"
+            ],
+            "title": "Target Entity Type",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 2000,
+            "minLength": 5,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "target_entity_id",
+          "text"
+        ],
+        "title": "PublicReportSubmitRequest",
+        "type": "object"
+      },
       "PublicTranslationBatch": {
         "properties": {
           "entries": {
@@ -14678,6 +14756,98 @@
           "text"
         ],
         "title": "PublicTranslationEntry",
+        "type": "object"
+      },
+      "PublicationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "approved_change_ids": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Approved Change Ids",
+            "type": "array"
+          },
+          "base_release_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Release Id"
+          },
+          "idempotency_key": {
+            "maxLength": 128,
+            "minLength": 4,
+            "title": "Idempotency Key",
+            "type": "string"
+          },
+          "reason": {
+            "maxLength": 1000,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "approved_change_ids",
+          "reason",
+          "idempotency_key"
+        ],
+        "title": "PublicationRequest",
+        "type": "object"
+      },
+      "PublicationRollbackRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "current_release_id": {
+            "minLength": 1,
+            "title": "Current Release Id",
+            "type": "string"
+          },
+          "idempotency_key": {
+            "maxLength": 128,
+            "minLength": 4,
+            "title": "Idempotency Key",
+            "type": "string"
+          },
+          "reason": {
+            "maxLength": 1000,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          },
+          "target_entity_keys": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Entity Keys"
+          },
+          "target_release_id": {
+            "minLength": 1,
+            "title": "Target Release Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "current_release_id",
+          "target_release_id",
+          "reason",
+          "idempotency_key"
+        ],
+        "title": "PublicationRollbackRequest",
         "type": "object"
       },
       "RecentDiscoveryView": {
@@ -14797,6 +14967,97 @@
         ],
         "title": "RecentDiscoveryView",
         "type": "object"
+      },
+      "ReviewDecisionRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "base_release_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Base Release Id"
+          },
+          "candidate_version": {
+            "minimum": 1.0,
+            "title": "Candidate Version",
+            "type": "integer"
+          },
+          "decision": {
+            "enum": [
+              "approve",
+              "reject",
+              "defer",
+              "recheck",
+              "flag_source"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "evidence_set_hash": {
+            "maxLength": 64,
+            "minLength": 64,
+            "title": "Evidence Set Hash",
+            "type": "string"
+          },
+          "idempotency_key": {
+            "maxLength": 128,
+            "minLength": 4,
+            "title": "Idempotency Key",
+            "type": "string"
+          },
+          "reason": {
+            "maxLength": 1000,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          },
+          "selected_fields": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Selected Fields",
+            "type": "array"
+          }
+        },
+        "required": [
+          "candidate_version",
+          "evidence_set_hash",
+          "decision",
+          "selected_fields",
+          "reason",
+          "idempotency_key"
+        ],
+        "title": "ReviewDecisionRequest",
+        "type": "object"
+      },
+      "ReviewStatus": {
+        "enum": [
+          "pending",
+          "approved",
+          "partially_approved",
+          "rejected",
+          "deferred",
+          "conflicting",
+          "published",
+          "superseded"
+        ],
+        "title": "ReviewStatus",
+        "type": "string"
+      },
+      "RiskLevel": {
+        "enum": [
+          "high",
+          "medium",
+          "low"
+        ],
+        "title": "RiskLevel",
+        "type": "string"
       },
       "RuleExplanation": {
         "properties": {
@@ -15132,6 +15393,47 @@
           "source_url"
         ],
         "title": "SourceReference",
+        "type": "object"
+      },
+      "SourceRefreshRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "default": "fetch",
+            "enum": [
+              "fetch",
+              "reprocess"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "force_unconditional": {
+            "default": false,
+            "title": "Force Unconditional",
+            "type": "boolean"
+          },
+          "reason": {
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          },
+          "resource_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resource Url"
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "title": "SourceRefreshRequest",
         "type": "object"
       },
       "SourceSummary": {
@@ -19022,6 +19324,197 @@
         "summary": "Source Candidates Csv"
       }
     },
+    "/admin/changes": {
+      "get": {
+        "description": "Screen 2 (Spec 13.3): List candidate change sets with candidate_version and evidence_set_hash.",
+        "operationId": "list_changes_admin_changes_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "risk",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/RiskLevel"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Risk"
+            }
+          },
+          {
+            "in": "query",
+            "name": "school",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "School"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cycle",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cycle"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/ReviewStatus"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response List Changes Admin Changes Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Changes"
+      }
+    },
+    "/admin/changes/{change_id}": {
+      "get": {
+        "description": "Screen 2 (Spec 9.2, 13.3): Detailed review card with old/new, evidence locators, base release, and conflicts.",
+        "operationId": "get_change_detail_admin_changes__change_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "change_id",
+            "required": true,
+            "schema": {
+              "title": "Change Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Change Detail Admin Changes  Change Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Change Detail"
+      }
+    },
+    "/admin/changes/{change_id}/review": {
+      "post": {
+        "description": "Screen 2 (Spec 9.2, 9.3, 13.3): Approve/reject/defer selected fields; returns 409 if stale.",
+        "operationId": "review_change_admin_changes__change_id__review_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "change_id",
+            "required": true,
+            "schema": {
+              "title": "Change Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewDecisionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Review Change Admin Changes  Change Id  Review Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Review Change"
+      }
+    },
     "/admin/community/content": {
       "get": {
         "operationId": "moderation_content_admin_community_content_get",
@@ -19796,6 +20289,69 @@
         "summary": "Destination Rollback"
       }
     },
+    "/admin/jobs/{job_id}": {
+      "get": {
+        "description": "Screen 6 (Spec 13.3): Check job status, error_class, and next scheduled retry.",
+        "operationId": "get_job_status_admin_jobs__job_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Job Status Admin Jobs  Job Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Job Status"
+      }
+    },
+    "/admin/maintenance/dashboard": {
+      "get": {
+        "description": "Screen 1 (Spec 13.1): Today's work, high-risk pending changes, broken sources, disk/backup/budget status.",
+        "operationId": "admin_dashboard_admin_maintenance_dashboard_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Admin Dashboard Admin Maintenance Dashboard Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Admin Dashboard"
+      }
+    },
     "/admin/notifications/run-due": {
       "post": {
         "operationId": "run_due_admin_notifications_run_due_post",
@@ -19814,6 +20370,130 @@
         "summary": "Run Due"
       }
     },
+    "/admin/publications": {
+      "post": {
+        "description": "Screen 6 (Spec 9.3, 13.3): Atomically publish approved change sets and switch publication_head.",
+        "operationId": "publish_changes_admin_publications_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Publish Changes Admin Publications Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Publish Changes"
+      }
+    },
+    "/admin/publications/rollback": {
+      "post": {
+        "description": "Screen 6 (Spec 9.4, 13.3): Roll back selected entities (or entire release) by creating a new release without deleting history.",
+        "operationId": "rollback_publication_admin_publications_rollback_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicationRollbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Rollback Publication Admin Publications Rollback Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rollback Publication"
+      }
+    },
+    "/admin/releases": {
+      "get": {
+        "description": "List all immutable releases and current publication_head for Screen 6.",
+        "operationId": "list_releases_admin_releases_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response List Releases Admin Releases Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Releases"
+      }
+    },
+    "/admin/reports": {
+      "get": {
+        "description": "List submitted public reports and pending experiences for Screen 5.",
+        "operationId": "list_admin_reports_admin_reports_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response List Admin Reports Admin Reports Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Admin Reports"
+      }
+    },
     "/admin/session": {
       "get": {
         "operationId": "session_admin_session_get",
@@ -19830,6 +20510,127 @@
           }
         },
         "summary": "Session"
+      }
+    },
+    "/admin/snapshots/{blob_id}/download": {
+      "get": {
+        "description": "Spec 11.4 / T19, T35: Authenticated admin-only snapshot download with source ACL & path traversal check.",
+        "operationId": "download_private_snapshot_admin_snapshots__blob_id__download_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "blob_id",
+            "required": true,
+            "schema": {
+              "title": "Blob Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "source_id",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "title": "Source Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Download Private Snapshot"
+      }
+    },
+    "/admin/sources": {
+      "get": {
+        "description": "List registered official sources for Screen 3.",
+        "operationId": "list_sources_admin_sources_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response List Sources Admin Sources Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Sources"
+      }
+    },
+    "/admin/sources/{source_id}/refresh": {
+      "post": {
+        "description": "Screen 3 (Spec 13.3): Trigger manual recheck/reprocess (returns 202 + job_id; blocks unapproved URLs).",
+        "operationId": "refresh_source_admin_sources__source_id__refresh_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "source_id",
+            "required": true,
+            "schema": {
+              "title": "Source Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourceRefreshRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Refresh Source Admin Sources  Source Id  Refresh Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Refresh Source"
       }
     },
     "/admin/web-release-readiness": {
@@ -23886,23 +24687,28 @@
     },
     "/experience-submissions": {
       "post": {
-        "operationId": "create_experience_submission_experience_submissions_post",
+        "description": "Submit student experience into pending moderation queue; blocks privilege escalation and isolates PII (Spec 11.3, 12, T19, T20).",
+        "operationId": "submit_experience_experience_submissions_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExperienceSubmissionCreate"
+                "additionalProperties": true,
+                "title": "Payload",
+                "type": "object"
               }
             }
           },
           "required": true
         },
         "responses": {
-          "202": {
+          "201": {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ExperienceSubmission"
+                  "additionalProperties": true,
+                  "title": "Response Submit Experience Experience Submissions Post",
+                  "type": "object"
                 }
               }
             },
@@ -23919,7 +24725,7 @@
             "description": "Validation Error"
           }
         },
-        "summary": "Create Experience Submission"
+        "summary": "Submit Experience"
       }
     },
     "/health": {
@@ -23940,6 +24746,205 @@
           }
         },
         "summary": "Health"
+      }
+    },
+    "/maintenance-preview": {
+      "get": {
+        "description": "Interactive Staging Preview UI covering all 6 Spec Section 13.1 Admin Screens + Public Release-Pinned Explorer.",
+        "operationId": "maintenance_preview_ui_maintenance_preview_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Maintenance Preview Ui"
+      }
+    },
+    "/maintenance/experience-submissions": {
+      "post": {
+        "description": "Submit student experience into pending moderation queue; blocks privilege escalation and isolates PII (Spec 11.3, 12, T19, T20).",
+        "operationId": "submit_experience_maintenance_experience_submissions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Payload",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Submit Experience Maintenance Experience Submissions Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Submit Experience"
+      }
+    },
+    "/offerings": {
+      "get": {
+        "description": "Public read-only API pinned to release_id (Spec 9.3, 13.3, T17, T19).",
+        "operationId": "get_public_offerings_offerings_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "home",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Home"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cycle",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cycle"
+            }
+          },
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Public Offerings Offerings Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Public Offerings"
+      }
+    },
+    "/offerings/{offering_id}": {
+      "get": {
+        "description": "Public read-only offering detail pinned to the same release_id as the list (Spec 9.3, 13.3, T17, T28).",
+        "operationId": "get_public_offering_detail_offerings__offering_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "offering_id",
+            "required": true,
+            "schema": {
+              "title": "Offering Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Public Offering Detail Offerings  Offering Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Public Offering Detail"
       }
     },
     "/partner-source-audit": {
@@ -24056,6 +25061,47 @@
           }
         },
         "summary": "Public Translations"
+      }
+    },
+    "/reports": {
+      "post": {
+        "description": "Public stale/error report bound to published revision/release; never directly mutates published data (Spec 12.4, 13.3).",
+        "operationId": "submit_public_report_reports_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicReportSubmitRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Submit Public Report Reports Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Submit Public Report"
       }
     },
     "/school-data-completeness": {

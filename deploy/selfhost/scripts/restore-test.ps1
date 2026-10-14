@@ -64,6 +64,22 @@ try {
     if ($fresh -and ($liveTotal - $restoredTotal) -gt $allowed) { Write-Bad ("restore holds {0} data rows, live holds {1} (more than {2} short)" -f $restoredTotal, $liveTotal, $allowed); $bad++ }
     if (-not $fresh) { Write-Warn 'an older dump was compared with the database as it is now: only the table list and "no table has more rows than live" were checked' }
     if ($bad -eq 0) { Write-Ok ("restore test passed: {0} tables present, {1} data rows restored (live now: {2}; the migration list is not counted)" -f $tables, $restoredTotal, $liveTotal) } else { throw "restore test FAILED ($bad problem(s))" }
+
+    # Verify cryptographic manifest + storage archive integrity (Spec 14.3, T33)
+    $stDir = Join-Path $script:UniwayHome 'backups\storage'
+    $latestManifest = Get-ChildItem -Path $stDir -Filter 'uniway-manifest-*.json' -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+    if ($latestManifest) {
+        $m = Get-Content -Raw -Path $latestManifest.FullName | ConvertFrom-Json
+        $dbFileCheck = Join-Path (Join-Path $script:UniwayHome 'backups\db') $m.db_dump_file
+        $stArchCheck = Join-Path $stDir $m.storage_archive_file
+        $stMetaCheck = Join-Path $stDir $m.storage_meta_file
+        if ((Get-FileHash -Algorithm SHA256 $dbFileCheck).Hash.ToLowerInvariant() -ne $m.db_dump_sha256) { throw 'Manifest DB dump SHA-256 mismatch' }
+        if ((Get-FileHash -Algorithm SHA256 $stArchCheck).Hash.ToLowerInvariant() -ne $m.storage_archive_sha256) { throw 'Manifest storage archive SHA-256 mismatch' }
+        if ((Get-FileHash -Algorithm SHA256 $stMetaCheck).Hash.ToLowerInvariant() -ne $m.storage_meta_sha256) { throw 'Manifest storage metadata SHA-256 mismatch' }
+        & docker run --rm -v ("{0}:/in:ro" -f $stDir) python:3.12-slim tar -tzf ("/in/" + $m.storage_archive_file) >$null
+        Assert-ExitCode 'storage archive tar verification'
+        Write-Ok ("storage & manifest verification passed: {0} (DB + Storage SHA-256 verified)" -f $latestManifest.Name)
+    }
 } finally {
     Invoke-Quiet { docker rm -f $name }
 }

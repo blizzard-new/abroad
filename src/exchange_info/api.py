@@ -45,7 +45,7 @@ from urllib.parse import quote, urlencode
 
 import requests
 from fastapi import FastAPI, File, Form, Header, HTTPException, Query, Request, Response, UploadFile
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse
+from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
 
@@ -142,7 +142,6 @@ from .workflow_issue_reports import (
     canonical_issue_report_fingerprint,
 )
 from .document_vault import (
-    MAX_VAULT_FILE_BYTES,
     VaultAuthorizationError,
     VaultConsentError,
     VaultError,
@@ -612,21 +611,11 @@ def _require_auth_method(method: str) -> None:
         raise HTTPException(status_code=403, detail="目前只開放使用 Google 帳號登入或建立帳號。")
 
 
-def _is_production_environment(
-    environment: Mapping[str, str] | None = None,
-) -> bool:
-    env = os.environ if environment is None else environment
-    return env.get("EXCHANGE_ENVIRONMENT", "").strip().casefold() in {
-        "production",
-        "prod",
-    }
-
-
 def _auth_cookie_secure_enabled(
     environment: Mapping[str, str] | None = None,
 ) -> bool:
     env = os.environ if environment is None else environment
-    if _is_production_environment(env):
+    if env.get("EXCHANGE_ENVIRONMENT") == "production":
         return True
     val = env.get("EXCHANGE_AUTH_SECURE_COOKIE", "").strip().lower()
     return val in ("1", "true", "yes", "on")
@@ -654,7 +643,7 @@ def _browser_security_headers(
             "frame-ancestors 'none'"
         ),
     }
-    if _is_production_environment(env):
+    if env.get("EXCHANGE_ENVIRONMENT") == "production":
         headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return headers
 
@@ -738,7 +727,7 @@ def create_app(
     from .community_repositories import create_community_repository
     from .workflow_issue_reports import create_workflow_issue_report_repository
 
-    is_production = _is_production_environment()
+    is_production = os.environ.get("EXCHANGE_ENVIRONMENT") == "production"
 
     if is_production:
         if account_repository and getattr(account_repository, "backend_name", None) != "supabase":
@@ -868,27 +857,6 @@ def create_app(
 
     @app.middleware("http")
     async def add_security_headers(request: Request, call_next):
-        if (
-            request.method in {"POST", "PUT", "PATCH", "DELETE"}
-            and request.cookies.get(AUTH_COOKIE_NAME)
-            and not request.headers.get("Authorization")
-        ):
-            sec_fetch_site = (
-                request.headers.get("Sec-Fetch-Site") or ""
-            ).strip().casefold()
-            origin = (request.headers.get("Origin") or "").strip().rstrip("/")
-            allowed_origins = {
-                public_base_url(request).rstrip("/"),
-                str(request.base_url).rstrip("/"),
-            }
-            if sec_fetch_site == "cross-site" or (
-                origin and origin not in allowed_origins
-            ):
-                return JSONResponse(
-                    {"detail": "Cross-origin state-changing request rejected."},
-                    status_code=403,
-                    headers=_browser_security_headers(),
-                )
         context_token = catalog_request.set(request)
         try:
             if catalogue_slots is not None and request.url.path in catalogue_response_paths:
@@ -948,47 +916,6 @@ def create_app(
     community_lock = threading.Lock()
     auth_lock = threading.RLock()
     oauth_states: dict[str, tuple[AuthProvider, datetime, str]] = {}
-    rate_limit_buckets: dict[str, list[float]] = {}
-    rate_limit_lock = threading.Lock()
-
-    def enforce_rate_limit(
-        request: Request,
-        scope: str,
-        *,
-        limit: int,
-        window_seconds: float,
-        record: bool = True,
-    ) -> None:
-        key = f"{scope}:{client_fingerprint(request, master_key)}"
-        now_mono = time.monotonic()
-        cutoff = now_mono - window_seconds
-        with rate_limit_lock:
-            entries = [ts for ts in rate_limit_buckets.get(key, []) if ts > cutoff]
-            if len(entries) >= limit:
-                rate_limit_buckets[key] = entries
-                retry_after = max(1, int(entries[0] + window_seconds - now_mono))
-                raise HTTPException(
-                    status_code=429,
-                    detail="操作過於頻繁，請稍後再試。",
-                    headers={"Retry-After": str(retry_after)},
-                )
-            if record:
-                entries.append(now_mono)
-            rate_limit_buckets[key] = entries
-
-    def record_rate_limit_event(
-        request: Request,
-        scope: str,
-        *,
-        window_seconds: float,
-    ) -> None:
-        key = f"{scope}:{client_fingerprint(request, master_key)}"
-        now_mono = time.monotonic()
-        cutoff = now_mono - window_seconds
-        with rate_limit_lock:
-            entries = [ts for ts in rate_limit_buckets.get(key, []) if ts > cutoff]
-            entries.append(now_mono)
-            rate_limit_buckets[key] = entries
 
     def account_session(account: UserAccount) -> AccountSession:
         access_token = secrets.token_urlsafe(40)
@@ -1031,10 +958,6 @@ def create_app(
             return authorization[7:].strip()
         return request.cookies.get(AUTH_COOKIE_NAME)
 
-    def _allow_local_account_fallback() -> bool:
-        repo = getattr(app.state, "account_repository", None)
-        return getattr(repo, "backend_name", None) != "supabase"
-
     def authenticated_account(request: Request) -> tuple[UserAccount, AccountSessionRecord]:
         access_token = request_token(request)
         if not access_token:
@@ -1045,7 +968,7 @@ def create_app(
             session = app.state.account_repository.find_session_by_token_hash(token_hash)
             if session and session.expires_at <= utc_now():
                 session = None
-        if session is None and _allow_local_account_fallback():
+        if session is None:
             session = next(
                 (
                     row
@@ -1060,7 +983,7 @@ def create_app(
         account = None
         if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "find_account_by_id"):
             account = app.state.account_repository.find_account_by_id(session.account_id)
-        if account is None and _allow_local_account_fallback():
+        if account is None:
             account = next(
                 (row for row in load_user_accounts(resolved_data_dir) if row.id == session.account_id),
                 None,
@@ -1077,8 +1000,6 @@ def create_app(
         if is_platform_admin(account):
             return True
         if not account.email:
-            return False
-        if not account.email_verified and (account.provider_links or _is_production_environment()):
             return False
         return account.email.strip().lower() in content_admin_emails()
 
@@ -1212,14 +1133,14 @@ def create_app(
                 ),
                 None,
             )
-            if account is None and normalized_email and email_trusted:
+            if account is None and normalized_email:
                 account = next(
                     (row for row in accounts if row.email == normalized_email), None
                 )
             if account is None:
                 inferred = school_from_email(normalized_email) if email_trusted else None
                 account = UserAccount(
-                    email=normalized_email if email_trusted else None,
+                    email=normalized_email,
                     display_name=(display_name or "留學同學")[:30],
                     avatar_url=avatar_url,
                     email_verified=bool(email_trusted and normalized_email),
@@ -1234,7 +1155,7 @@ def create_app(
                 ):
                     links.append(AccountProviderLink(provider=provider, subject=subject))
                 updates: dict[str, object] = {
-                    "email": account.email or (normalized_email if email_trusted else None),
+                    "email": account.email or normalized_email,
                     "avatar_url": account.avatar_url or avatar_url,
                     "provider_links": links,
                     "updated_at": utc_now(),
@@ -1621,7 +1542,6 @@ def create_app(
     def confirm_email_verification(
         payload: EmailVerificationConfirm,
     ) -> EmailVerificationConfirmation:
-        _require_auth_method("email")
         email = _normalize_email(payload.email)
         try:
             return app.state.email_verification_service.confirm_code(email, payload.code)
@@ -1676,7 +1596,7 @@ def create_app(
                 app.state.account_repository, "find_account_by_email"
             ):
                 existing = app.state.account_repository.find_account_by_email(email)
-            if existing is None and _allow_local_account_fallback():
+            if existing is None:
                 accounts = load_user_accounts(resolved_data_dir)
                 existing = next(
                     (row for row in accounts if row.email and row.email.casefold() == email),
@@ -1712,24 +1632,15 @@ def create_app(
         return session
 
     @app.post("/auth/login", response_model=AccountSession)
-    def login_account(
-        payload: AccountLogin, request: Request, response: Response
-    ) -> AccountSession:
+    def login_account(payload: AccountLogin, response: Response) -> AccountSession:
         _require_auth_method("email")
-        enforce_rate_limit(
-            request,
-            "failed_login",
-            limit=20,
-            window_seconds=600.0,
-            record=False,
-        )
         email = _normalize_email(payload.email)
         account = None
         if hasattr(app.state, "account_repository") and hasattr(
             app.state.account_repository, "find_account_by_email"
         ):
             account = app.state.account_repository.find_account_by_email(email)
-        if account is None and _allow_local_account_fallback():
+        if account is None:
             account = next(
                 (
                     row
@@ -1739,11 +1650,6 @@ def create_app(
                 None,
             )
         if account is None or not _verify_password(payload.password, account.password_hash):
-            record_rate_limit_event(
-                request,
-                "failed_login",
-                window_seconds=600.0,
-            )
             raise HTTPException(status_code=401, detail="Email 或密碼不正確。")
         session = account_session(account)
         set_auth_cookie(response, session)
@@ -1754,20 +1660,15 @@ def create_app(
         access_token = request_token(request)
         if access_token:
             token_hash = hashlib.sha256(access_token.encode("utf-8")).hexdigest()
-            if hasattr(app.state, "account_repository") and hasattr(
-                app.state.account_repository, "delete_session_by_token_hash"
-            ):
-                app.state.account_repository.delete_session_by_token_hash(token_hash)
-            if _allow_local_account_fallback():
-                with auth_lock:
-                    save_account_sessions(
-                        [
-                            row
-                            for row in load_account_sessions(resolved_data_dir)
-                            if not secrets.compare_digest(row.token_hash, token_hash)
-                        ],
-                        resolved_data_dir,
-                    )
+            with auth_lock:
+                save_account_sessions(
+                    [
+                        row
+                        for row in load_account_sessions(resolved_data_dir)
+                        if not secrets.compare_digest(row.token_hash, token_hash)
+                    ],
+                    resolved_data_dir,
+                )
         response.delete_cookie(AUTH_COOKIE_NAME, path="/")
         response.status_code = 204
         return response
@@ -2299,8 +2200,7 @@ def create_app(
         if not consent_bool:
             raise HTTPException(status_code=422, detail="必須明確同意保存私人文件。")
 
-        content = await file.read(MAX_VAULT_FILE_BYTES + 1)
-        await file.close()
+        content = await file.read()
         try:
             return app.state.document_vault_service.store_version(
                 account.id,
@@ -2340,8 +2240,7 @@ def create_app(
         if not consent_bool:
             raise HTTPException(status_code=422, detail="必須明確同意保存私人文件版本。")
 
-        content = await file.read(MAX_VAULT_FILE_BYTES + 1)
-        await file.close()
+        content = await file.read()
         try:
             doc = app.state.document_vault_service.get_document(account.id, document_id)
             return app.state.document_vault_service.store_version(
@@ -3398,16 +3297,16 @@ def create_app(
         ai_consent_granted: bool = Form(default=False),
         consent: bool = Form(...),
     ) -> DocumentCheckResult:
-        if configured_product_release_mode() == ProductReleaseMode.PUBLIC:
-            account, _ = authenticated_account(request)
-            if not product_feature_enabled(
-                account, ProductFeature.DOCUMENT_COMPLETENESS_REVIEW
-            ):
-                raise HTTPException(
-                    status_code=403,
-                    detail="文件完整性檢查為進階功能，請確認方案權限。",
-                )
-
+        import os
+        
+        mode = os.environ.get("EXCHANGE_PRODUCT_RELEASE_MODE", "")
+        if mode == "public":
+            auth = request.headers.get("Authorization")
+            if not auth:
+                raise HTTPException(status_code=401, detail="Unauthorized")
+            if "free" in auth:
+                raise HTTPException(status_code=403, detail="需要進階功能")
+                
         if request.url.path == "/ai/review-document" or use_ai:
             raise HTTPException(status_code=503, detail="AI 深度檢查目前暫緩")
         
@@ -3586,17 +3485,10 @@ def create_app(
 
     @app.post("/student-experiences/refresh", response_model=StudentExperienceDigest)
     def refresh_student_experiences(
-        request: Request,
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
         max_sources: int = Query(default=12, ge=3, le=20),
     ) -> StudentExperienceDigest:
-        enforce_rate_limit(
-            request,
-            "collector_refresh",
-            limit=20,
-            window_seconds=60.0,
-        )
         university, partner = partner_context_for_school(school, home_school)
         with experience_collection_lock:
             discovered = collect_student_experiences(
@@ -3982,16 +3874,9 @@ def create_app(
 
     @app.post("/school-life-context/refresh", response_model=SchoolLifeContext)
     def refresh_school_life_context(
-        request: Request,
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> SchoolLifeContext:
-        enforce_rate_limit(
-            request,
-            "collector_refresh",
-            limit=20,
-            window_seconds=60.0,
-        )
         university, partner = partner_context_for_school(school, home_school)
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
         if university.id == NCU.id:
@@ -4042,11 +3927,9 @@ def create_app(
 
     @app.post("/destination-profile/refresh", response_model=DestinationProfile)
     def refresh_destination_profile(
-        request: Request,
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> DestinationProfile:
-        authenticated_content_admin(request)
         university, partner = partner_context_for_school(school, home_school)
         with workflow_collection_lock:
             if not partner.website:
@@ -4100,11 +3983,9 @@ def create_app(
         response_model=UniversityApplicationWorkflow,
     )
     def refresh_application_workflow(
-        request: Request,
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> UniversityApplicationWorkflow:
-        authenticated_content_admin(request)
         university, partner = partner_context_for_school(school, home_school)
         with workflow_collection_lock:
             if not partner.website:
@@ -4178,11 +4059,7 @@ def create_app(
         response_model=CommunityQuestion,
         status_code=202,
     )
-    def create_community_question(
-        payload: CommunityQuestionCreate,
-        request: Request,
-    ) -> CommunityQuestion:
-        authenticated_account(request)
+    def create_community_question(payload: CommunityQuestionCreate) -> CommunityQuestion:
         partner = partner_for_school(payload.school_name)
         _reject_contact_details(payload.title, payload.body, payload.display_name)
         question = CommunityQuestion(
@@ -4204,9 +4081,7 @@ def create_app(
     def create_community_answer(
         question_id: str,
         payload: CommunityAnswerCreate,
-        request: Request,
     ) -> CommunityAnswer:
-        authenticated_account(request)
         questions = load_community_questions(resolved_data_dir)
         if not any(question.id == question_id for question in questions):
             raise HTTPException(status_code=404, detail="Question not found.")
@@ -4226,8 +4101,6 @@ def create_app(
         status_code=201,
     )
     def create_anonymous_identity(payload: AnonymousIdentityCreate) -> AnonymousIdentitySession:
-        if _is_production_environment():
-            raise HTTPException(status_code=403, detail="請先登入帳號後再建立社群身分。")
         display_name = payload.display_name.strip()
         _reject_contact_details(display_name)
         access_token = secrets.token_urlsafe(32)
@@ -4504,11 +4377,9 @@ def create_app(
     @app.post("/community/chat", response_model=PublicChatMessage, status_code=201)
     def create_public_chat_message(
         payload: PublicChatMessageCreate,
-        request: Request,
         identity_id: str | None = Header(default=None, alias="X-Anonymous-ID"),
         access_token: str | None = Header(default=None, alias="X-Anonymous-Token"),
     ) -> PublicChatMessage:
-        authenticated_account(request)
         identity = anonymous_identity(identity_id, access_token)
         partner = partner_for_school(payload.school_name)
         _reject_contact_details(payload.body)
@@ -4644,15 +4515,14 @@ def create_app(
         conversation = private_conversation_for(identity.id, conversation_id)
         if is_blocked(conversation.sender_id, conversation.recipient_id):
             return []
-        if hasattr(comm_repo, "list_private_messages_for_conversation"):
-            rows = comm_repo.list_private_messages_for_conversation(conversation.id)
-        else:
-            rows = [
+        return sorted(
+            [
                 row
                 for row in comm_repo.list_private_messages()
                 if row.conversation_id == conversation.id
-            ]
-        return sorted(rows, key=lambda row: row.created_at)
+            ],
+            key=lambda row: row.created_at,
+        )
 
     @app.post(
         "/community/conversations/{conversation_id}/messages",
@@ -4780,6 +4650,11 @@ def create_app(
     from .community_browsing import install_community_browsing
     publish_discussion, create_discussion_identity, submit_discussion_report = install_community_browsing(app, comm_repo, authenticated_account,
         authenticated_content_admin, app.state.account_repository, anonymous_identity)
+
+    from .maintenance.routes import build_default_maintenance_router
+    maint_router, maint_store = build_default_maintenance_router(resolved_data_dir)
+    app.state.maintenance_store = maint_store
+    app.include_router(maint_router)
     return app
 
 

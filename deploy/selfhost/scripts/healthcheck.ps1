@@ -16,7 +16,20 @@ function Test-Url([string]$Url) {
 if (-not (Test-Url 'http://127.0.0.1:8000/health')) {
     Log 'local web service not answering - trying docker compose up -d'
     $null = & docker info 2>&1
-    if ($LASTEXITCODE -ne 0) { Log 'Docker itself is not running (is Docker Desktop started? is the computer logged in?)'; exit 1 }
+    if ($LASTEXITCODE -ne 0) {
+        $dockerExe = 'C:\Program Files\Docker\Docker\Docker Desktop.exe'
+        if (Test-Path $dockerExe) {
+            Log 'Docker engine not running - starting Docker Desktop automatically (boot/power-loss recovery)'
+            Start-Process -FilePath $dockerExe
+            for ($w = 0; $w -lt 45; $w++) {
+                Start-Sleep -Seconds 2
+                $null = & docker info 2>&1
+                if ($LASTEXITCODE -eq 0) { break }
+            }
+        }
+        $null = & docker info 2>&1
+        if ($LASTEXITCODE -ne 0) { Log 'Docker itself is still not running after auto-start attempt'; exit 1 }
+    }
     Invoke-Compose up -d | Out-Null
     Start-Sleep -Seconds 60
     if (Test-Url 'http://127.0.0.1:8000/health') { Log 'recovered' } else { Log 'STILL DOWN after docker compose up -d: read: docker compose logs app' }

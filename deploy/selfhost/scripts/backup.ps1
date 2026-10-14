@@ -44,9 +44,33 @@ try {
     $metaInside = "/tmp/uniway-meta-$stamp.sql"
     & docker exec $dbId pg_dump -U supabase_admin -d postgres --data-only --inserts --column-inserts -t storage.buckets -t storage.objects -f $metaInside
     Assert-ExitCode 'pg_dump (storage metadata)'
-    & docker cp ($dbId + ':' + $metaInside) (Join-Path $stDir ("uniway-storage-meta-$stamp.sql"))
+    $metaFile = Join-Path $stDir ("uniway-storage-meta-$stamp.sql")
+    & docker cp ($dbId + ':' + $metaInside) $metaFile
     Assert-ExitCode 'docker cp (storage metadata)'
     & docker exec $dbId rm -f $metaInside
+
+    # 2c. cryptographic manifest binding DB dump + storage archive + storage metadata SQL (RPO 24h / RTO 4h, Spec 14.3, T33)
+    $stArchivePath = Join-Path $stDir $stFile
+    $manifestObj = [ordered]@{
+        backup_format_version = '1.1'
+        stamp                 = $stamp
+        created_at            = (Get-Date).ToUniversalTime().ToString('o')
+        rpo_target_hours      = 24
+        rto_target_hours      = 4
+        db_dump_file          = (Split-Path -Leaf $dumpFile)
+        db_dump_bytes         = (Get-Item $dumpFile).Length
+        db_dump_sha256        = (Get-FileHash -Algorithm SHA256 $dumpFile).Hash.ToLowerInvariant()
+        storage_archive_file  = $stFile
+        storage_archive_bytes = (Get-Item $stArchivePath).Length
+        storage_archive_sha256 = (Get-FileHash -Algorithm SHA256 $stArchivePath).Hash.ToLowerInvariant()
+        storage_meta_file     = (Split-Path -Leaf $metaFile)
+        storage_meta_bytes    = (Get-Item $metaFile).Length
+        storage_meta_sha256   = (Get-FileHash -Algorithm SHA256 $metaFile).Hash.ToLowerInvariant()
+    }
+    $manifestPath = Join-Path $stDir ("uniway-manifest-$stamp.json")
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($manifestPath, ($manifestObj | ConvertTo-Json -Depth 4), $utf8NoBom)
+    Log ("manifest written {0}" -f (Split-Path -Leaf $manifestPath))
 
     # 3. the settings file (secrets!) - it only ever leaves this computer through the encrypted remote
     $secretsDir = Join-Path $script:UniwayHome 'backups\secrets'
@@ -66,6 +90,7 @@ try {
     Prune $dbDir 'uniway-db-*.dump'
     Prune $stDir 'uniway-storage-*.tar.gz'
     Prune $stDir 'uniway-storage-meta-*.sql'
+    Prune $stDir 'uniway-manifest-*.json'
     Prune $secretsDir 'env-*.txt'
 
     # 5. copy to Google Drive through the encrypted rclone remote (nothing readable ever reaches Google)
