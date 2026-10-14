@@ -1,0 +1,56 @@
+CONFTEST LOADED!
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_bundle_rebuilds_exactly_from_tracked_source_data _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-13/test_bundle_rebuilds_exactly_f0')
+
+    def test_bundle_rebuilds_exactly_from_tracked_source_data(tmp_path):
+        subprocess.run(
+            [sys.executable, "scripts/build_ncu_catalog.py", "--output-dir", str(tmp_path)],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            timeout=40,
+        )
+        for item in BUNDLE.iterdir():
+            if item.is_file():
+>               assert (tmp_path / item.name).read_bytes() == item.read_bytes(), item.name
+E               AssertionError: import-provenance.json
+E               assert b'{\n  "check...": false\n}\n' == b'{\n  "check...": false\n}\n'
+E                 
+E                 At index 1624 diff: b'A' != b'_'
+E                 Use -v to get more diff
+
+tests/test_ncu_integration.py:490: AssertionError
+______ test_changes_are_owned_and_hide_unrelated_department_and_reviewer _______
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-13/test_changes_are_owned_and_hid0')
+
+    def test_changes_are_owned_and_hide_unrelated_department_and_reviewer(tmp_path):
+        store, published = _published_content_store(tmp_path/'content')
+        # A modern workspace stores application_round separately from the semester.
+        student = _content_account()
+        student.application_workspaces[0].application_context.application_round = '第一梯次'
+        student.application_workspaces[0].application_context.semester = '2027 春季'
+        unrelated = published.workflow.steps[0].model_copy(update={
+            'rule_id':'nursing-private-scope', 'title':'護理學系專用規定',
+            'scope':ApplicationRuleScope(departments=['護理學系']),
+        })
+        published = published.model_copy(update={'workflow':published.workflow.model_copy(
+            update={'steps':[*published.workflow.steps, unrelated]})})
+        store.save_revision(published)
+        repository = JsonlAccountRepository(tmp_path/'accounts')
+        headers = session(repository,student,'student-changes')
+        foreign = session(repository,UserAccount(email='foreign@example.com',display_name='別的學生'),'foreign-changes')
+        client = TestClient(create_app(tmp_path/'app',account_repository=repository,content_governance_store=store))
+        rows = client.get('/account/notifications',headers=headers).json()['items']
+>       assert len(rows) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([{'id': 'bfa71a356d224b9f96afe972cdc80889', 'account_id': '661b51ede8164705ba37311e89ee90f5', 'dedupe_key': 'catalogue...4705ba37311e89ee90f5', 'dedupe_key': 'content-update:2977639bedc74a1aaa271a1e6b3d2bb4', 'kind': 'content_update', ...}])
+
+tests/test_notification_changes.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_integration.py::test_bundle_rebuilds_exactly_from_tracked_source_data
+FAILED tests/test_notification_changes.py::test_changes_are_owned_and_hide_unrelated_department_and_reviewer
+2 failed in 6.07s

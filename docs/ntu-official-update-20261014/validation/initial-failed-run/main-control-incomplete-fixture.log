@@ -1,0 +1,124 @@
+CONFTEST LOADED!
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_bundle_rebuilds_exactly_from_tracked_source_data _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-12/test_bundle_rebuilds_exactly_f0')
+
+    def test_bundle_rebuilds_exactly_from_tracked_source_data(tmp_path):
+>       subprocess.run(
+            [sys.executable, "scripts/build_ncu_catalog.py", "--output-dir", str(tmp_path)],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            timeout=40,
+        )
+
+tests/test_ncu_integration.py:481: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = True, timeout = 40, check = True
+popenargs = (['/workspace/abroad/.venv/bin/python', 'scripts/build_ncu_catalog.py', '--output-dir', '/tmp/pytest-of-agent/pytest-12/test_bundle_rebuilds_exactly_f0'],)
+kwargs = {'cwd': PosixPath('/workspace/ntu-formal-update-20261014/main-control'), 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['/workspace/abroad/.venv/bin/python', 'scripts/build_ncu_catalog.py', '--output-dir', '/tmp/pytest-of-agent/pytest-12/test_bundle_rebuilds_exactly_f0']' returned non-zero exit status 2.
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:571: CalledProcessError
+______ test_changes_are_owned_and_hide_unrelated_department_and_reviewer _______
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-12/test_changes_are_owned_and_hid0')
+
+    def test_changes_are_owned_and_hide_unrelated_department_and_reviewer(tmp_path):
+        store, published = _published_content_store(tmp_path/'content')
+        # A modern workspace stores application_round separately from the semester.
+        student = _content_account()
+        student.application_workspaces[0].application_context.application_round = '第一梯次'
+        student.application_workspaces[0].application_context.semester = '2027 春季'
+        unrelated = published.workflow.steps[0].model_copy(update={
+            'rule_id':'nursing-private-scope', 'title':'護理學系專用規定',
+            'scope':ApplicationRuleScope(departments=['護理學系']),
+        })
+        published = published.model_copy(update={'workflow':published.workflow.model_copy(
+            update={'steps':[*published.workflow.steps, unrelated]})})
+        store.save_revision(published)
+        repository = JsonlAccountRepository(tmp_path/'accounts')
+        headers = session(repository,student,'student-changes')
+        foreign = session(repository,UserAccount(email='foreign@example.com',display_name='別的學生'),'foreign-changes')
+        client = TestClient(create_app(tmp_path/'app',account_repository=repository,content_governance_store=store))
+        rows = client.get('/account/notifications',headers=headers).json()['items']
+>       assert len(rows) == 1
+E       AssertionError: assert 2 == 1
+E        +  where 2 = len([{'id': 'ac20794750d44f739d9ff76b5e1b0df5', 'account_id': '03fc49838a5443e9bb4dcf2b7d02e3e3', 'dedupe_key': 'catalogue...43e9bb4dcf2b7d02e3e3', 'dedupe_key': 'content-update:9bb5738e300c42598788a49ad3d9b9d0', 'kind': 'content_update', ...}])
+
+tests/test_notification_changes.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_integration.py::test_bundle_rebuilds_exactly_from_tracked_source_data
+FAILED tests/test_notification_changes.py::test_changes_are_owned_and_hide_unrelated_department_and_reviewer
+2 failed in 1.90s

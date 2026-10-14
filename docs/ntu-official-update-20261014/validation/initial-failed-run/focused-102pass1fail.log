@@ -1,0 +1,29 @@
+CONFTEST LOADED!
+..F..................................................................... [ 69%]
+...............................                                          [100%]
+=================================== FAILURES ===================================
+_ test_ubc_new_document_resolves_year_without_rewriting_historical_fee_discovery _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-3/test_ubc_new_document_resolves0')
+
+    def test_ubc_new_document_resolves_year_without_rewriting_historical_fee_discovery(tmp_path):
+        source = load_update()
+        old = json.loads(Path("sources/ntu/completion-2026-10-11.json").read_text())
+        historic = next(s for s in old["schools"] if s["portal_id"] == "1")
+        partner = next(p for p in fetch_ntu_partner_universities() if p.source_url.endswith("/sn/1"))
+        assert partner.quota is None
+        assert source["ubc_update"]["new_fee_amount_first_discovery"] is False
+        for obs in historic["observations"]:
+            assert obs["text_zh"] in partner.application_info
+        details = partner.partner_exchange_details
+        assert all(d.status == "reference_only" for d in details.values())
+        assert all(d.evidence[0].academic_year == "2027/2028" for d in details.values())
+>       assert "2027/4/1" in details["deadlines"].value and "2027/9/15" in details["deadlines"].value
+E       AssertionError: assert ('2027/4/1' in 'UBC接收端第一輪提名2027/1/15–3/15（Term1、Term2、全年或split-year）；第二輪2027/7/1–8/25（Term2／split-year，Law與Computer Science不適用）。文件截止分別2027/4/1、9/15，由母校透過partner portal上傳；非臺大校內報名期限。' and '2027/9/15' in 'UBC接收端第一輪提名2027/1/15–3/15（Term1、Term2、全年或split-year）；第二輪2027/7/1–8/25（Term2／split-year，Law與Computer Science不適用）。文件截止分別2027/4/1、9/15，由母校透過partner portal上傳；非臺大校內報名期限。')
+E        +  where 'UBC接收端第一輪提名2027/1/15–3/15（Term1、Term2、全年或split-year）；第二輪2027/7/1–8/25（Term2／split-year，Law與Computer Science不適用）。文件截止分別2027/4/1、9/15，由母校透過partner portal上傳；非臺大校內報名期限。' = PartnerExchangeDetailField(value='UBC接收端第一輪提名2027/1/15–3/15（Term1、Term2、全年或split-year）；第二輪2027/7/1–8/25（Term2／split-ye...大甄選期限、配額或錄取保證')], research_category='verified_supported', research_note='年度已核實的海外接收參考，不啟用臺大甄選期限或配額。', source_checks=[]).value
+E        +  and   'UBC接收端第一輪提名2027/1/15–3/15（Term1、Term2、全年或split-year）；第二輪2027/7/1–8/25（Term2／split-year，Law與Computer Science不適用）。文件截止分別2027/4/1、9/15，由母校透過partner portal上傳；非臺大校內報名期限。' = PartnerExchangeDetailField(value='UBC接收端第一輪提名2027/1/15–3/15（Term1、Term2、全年或split-year）；第二輪2027/7/1–8/25（Term2／split-ye...大甄選期限、配額或錄取保證')], research_category='verified_supported', research_note='年度已核實的海外接收參考，不啟用臺大甄選期限或配額。', source_checks=[]).value
+
+tests/test_ntu_current_updates.py:81: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_current_updates.py::test_ubc_new_document_resolves_year_without_rewriting_historical_fee_discovery
+1 failed, 102 passed in 76.21s (0:01:16)

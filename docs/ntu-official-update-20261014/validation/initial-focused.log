@@ -1,0 +1,48 @@
+CONFTEST LOADED!
+................F................................F...................... [ 87%]
+..........                                                               [100%]
+=================================== FAILURES ===================================
+______ test_reapplying_updates_is_idempotent_and_preserves_unrelated_data ______
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_reapplying_updates_is_ide0')
+
+    def test_reapplying_updates_is_idempotent_and_preserves_unrelated_data(tmp_path):
+        shutil.copytree(BUNDLE,tmp_path/'bundle')
+        bundle=tmp_path/'bundle'
+        before={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in bundle.iterdir() if p.is_file()}
+        apply_official_changes(bundle)
+        # The dated completion overlay follows the historical portal replay.
+        from exchange_info.ntu_completion import apply_completion
+        apply_completion(bundle)
+        after={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in bundle.iterdir() if p.is_file()}
+>       assert before==after
+E       AssertionError: assert {'documents.j...0a44ee9', ...} == {'documents.j...0a44ee9', ...}
+E         
+E         Omitting 16 identical items, use -vv to show
+E         Differing items:
+E         {'verification_status.json': '7813c2aef3ec2c227ba9fd401813c6585a0bb2b5b45b53263a2a383ec4b59c0f'} != {'verification_status.json': '91c185ffa2029ce04989f53bd47516906162a2333c5f920039d64b03268a16f8'}
+E         Use -v to get more diff
+
+tests/test_ntu_official_changes.py:57: AssertionError
+____________ test_ntu_catalog_rebuilds_from_tracked_source_snapshot ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_ntu_catalog_rebuilds_from0')
+
+    def test_ntu_catalog_rebuilds_from_tracked_source_snapshot(tmp_path):
+        root = Path(__file__).parents[1]
+        subprocess.run([sys.executable, "scripts/build_ntu_catalog.py", "--output-dir", str(tmp_path)], cwd=root, check=True, capture_output=True, timeout=30)
+        bundled = root / "src/exchange_info/official_data/ntu"
+        for source in bundled.iterdir():
+            if source.is_file():
+>               assert (tmp_path / source.name).read_bytes() == source.read_bytes(), source.name
+E               AssertionError: partners.jsonl
+E               assert b'{"program_t...sh":false}}\n' == b'{"program_t...sh":false}}\n'
+E                 
+E                 At index 246235 diff: b'd' != b'c'
+E                 Use -v to get more diff
+
+tests/test_ntu_integration.py:192: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_official_changes.py::test_reapplying_updates_is_idempotent_and_preserves_unrelated_data
+FAILED tests/test_ntu_integration.py::test_ntu_catalog_rebuilds_from_tracked_source_snapshot
+2 failed, 80 passed in 70.44s (0:01:10)

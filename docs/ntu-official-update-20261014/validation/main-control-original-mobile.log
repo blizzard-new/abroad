@@ -1,0 +1,83 @@
+CONFTEST LOADED!
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_visitor_can_browse_ntu_filter_details_and_switch_back[390] ________
+
+page = <Page url='http://127.0.0.1:34667/?view=list#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:34667', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-7/web-e2e-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        open_navigation(page)
+>       page.locator("#school-switcher").click()
+
+tests/e2e/test_ntu_school.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7fca3851c350>
+cb = <function Channel.send.<locals>.<lambda> at 0x7fca1faa8e00>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator("#school-switcher")
+E               - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher page-school-switcher">…</button>
+E             - attempting click action
+E               2 × waiting for element to be visible, enabled and stable
+E                 - element is visible, enabled and stable
+E                 - scrolling into view if needed
+E                 - done scrolling
+E                 - <a href="#home" aria-label="UniWay 首頁" class="uniway-header-brand">…</a> from <aside tabindex="-1" role="dialog" aria-label="系統功能" aria-modal="true" id="glass-navigation" class="glass-navigation-rail">…</aside> subtree intercepts pointer events
+E               - retrying click action
+E               - waiting 20ms
+E               2 × waiting for element to be visible, enabled and stable
+E                 - element is visible, enabled and stable
+E                 - scrolling into view if needed
+E                 - done scrolling
+E                 - <a href="#home" aria-label="UniWay 首頁" class="uniway-header-brand">…</a> from <aside tabindex="-1" role="dialog" aria-label="系統功能" aria-modal="true" id="glass-navigation" class="glass-navigation-rail">…</aside> subtree intercepts pointer events
+E               - retrying click action
+E                 - waiting 100ms
+E               58 × waiting for element to be visible, enabled and stable
+E                  - element is visible, enabled and stable
+E                  - scrolling into view if needed
+E                  - done scrolling
+E                  - <a href="#home" aria-label="UniWay 首頁" class="uniway-header-brand">…</a> from <aside tabindex="-1" role="dialog" aria-label="系統功能" aria-modal="true" id="glass-navigation" class="glass-navigation-rail">…</aside> subtree intercepts pointer events
+E                - retrying click action
+E                  - waiting 500ms
+
+../../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TimeoutError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[390]
+1 failed in 36.05s
