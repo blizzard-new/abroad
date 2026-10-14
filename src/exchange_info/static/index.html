@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/static/styles.css?v=20261013-notification-rail-1" />
     <link rel="stylesheet" href="/static/design-system.css?v=20260716-platform-12" />
     <link rel="stylesheet" href="/static/platform.css?v=20261013-school-picker-1" />
+    <link rel="stylesheet" href="/static/react-aria-school-picker.css?v=20261014-aria-1" />
     <link rel="stylesheet" href="/static/product-v2.css?v=20261013-notification-rail-1" />
     <link rel="stylesheet" href="/static/icon-motion.css?v=20260820-icon-motion-1" />
     <link rel="stylesheet" href="/static/mascot.css?v=20261014-runtime-loading-1" />
@@ -125,6 +126,7 @@
     <section id="school-onboarding" class="school-onboarding" role="dialog" aria-modal="true" aria-labelledby="onboarding-title" hidden>
       <div class="onboarding-backdrop"></div>
       <div class="onboarding-shell">
+        <button id="onboarding-close" type="button" class="icon-button school-picker-close" aria-label="關閉學校選擇"><i data-lucide="x" aria-hidden="true"></i></button>
         <div class="onboarding-heading">
           <span class="platform-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="48" height="48" decoding="async" /></span>
           <div>
@@ -360,7 +362,7 @@
             <button id="back-to-application-center" type="button" class="route-back" hidden><i data-lucide="arrow-left" aria-hidden="true"></i><span>返回</span></button>
           </div>
           <div class="route-toolbar">
-            <button id="school-switcher" type="button" class="school-switcher page-school-switcher" aria-haspopup="dialog">
+            <button id="school-switcher" type="button" class="school-switcher page-school-switcher" aria-haspopup="dialog" aria-controls="school-onboarding" aria-expanded="false">
               <span class="school-switcher-icon"><i data-lucide="graduation-cap" aria-hidden="true"></i></span>
               <span><small>切換就讀學校</small><strong id="school-switcher-label">選擇就讀學校</strong></span>
               <i data-lucide="chevron-down" aria-hidden="true"></i>
@@ -1198,7 +1200,7 @@
     <script src="/static/discovery-core.js?v=20261011-ncu-integration-2" defer></script>
     <script src="/static/discovery-ui.js?v=20261004-digest-2" defer></script>
     <script src="/static/navigation.js?v=20261013-expanding-rail-1" defer></script>
-    <script src="/static/motion.js?v=20261007-forum-1" defer></script>
+    <script src="/static/motion.js?v=20261014-aria-picker-1" defer></script>
     <script src="/static/community-reader.js?v=20261013-picker-rail-1" defer></script>
     <script src="/static/community-moderation.js?v=20260930-discussion-2b" defer></script>
     <script src="/static/academic-units.js?v=20261001-departments-1" defer></script>
@@ -1218,7 +1220,8 @@
     <script src="/static/feedback.js?v=20261008-2" defer></script>
     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
     <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
-    <script src="/static/app.js?v=20261014-runtime-loading-1" defer></script>
+    <script src="/static/react-aria-school-picker.js?v=20261014-aria-1" defer></script>
+    <script src="/static/app.js?v=20261014-aria-picker-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>
   </body>
 </html>

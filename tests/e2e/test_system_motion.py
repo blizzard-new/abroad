@@ -62,7 +62,7 @@ def test_dialog_menu_details_tabs_and_mobile_layout(page, live_server, width):
     page.add_init_script(INSTRUMENT)
     setup_catalog(page)
     enter_public_site(page, live_server)
-    open_navigation(page)
+    # The school switcher is in the page toolbar, outside the navigation drawer.
     page.locator("#school-switcher").click()
     expect(page.locator("#school-onboarding")).to_be_visible()
     page.wait_for_function("() => __motionLog.some(x => x.animation.id === 'uniway:dialog')")
@@ -130,7 +130,6 @@ def test_reduced_motion_live_change_and_missing_runtime_are_usable(page, live_se
     page.wait_for_function("() => __motionLog.some(x => x.animation.id === 'uniway:route')")
     page.emulate_media(reduced_motion="reduce")
     page.wait_for_function("() => !document.getAnimations().some(a => a.id.startsWith('uniway:'))")
-    open_navigation(page)
     page.locator("#school-switcher").click()
     # Visitors pick their school without signing in.
     expect(page.locator("#school-onboarding")).to_be_visible()
@@ -143,5 +142,8 @@ def test_reduced_motion_live_change_and_missing_runtime_are_usable(page, live_se
     open_navigation(page)
     page.locator('.uniway-public-nav a[href="#home"]').click()
     expect(page.locator("#guide")).to_be_visible()
+    # Move out of the expanding rail before using a page control behind it.
+    page.mouse.move(1000, 24)
+    expect(page.locator("#glass-navigation")).to_have_css("width", "76px")
     page.locator("#page-back").click()
     expect(page.locator("#community-hub")).to_be_visible()

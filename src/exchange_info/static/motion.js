@@ -136,6 +136,7 @@
   document.documentElement.classList.add("uw-motion-ready");
   window.UniWayMotion = Object.freeze({
     route,
+    dialog: element => enqueue(dialogSurface(element), "dialog"),
     duration,
     get reduced() { return media.matches; },
     destroy() {
