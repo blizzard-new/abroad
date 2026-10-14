@@ -137,6 +137,16 @@ Safe 'the settings file' {
     else { Result 'OK' '.env can only be read by administrators and the system' }
 }
 
+Safe 'folder permissions' {
+    foreach ($sub in 'backups', 'caddy') {
+        $p = Join-Path $script:UniwayHome $sub
+        if (-not (Test-Path $p)) { continue }
+        $bad = @((Get-Acl $p).Access | Where-Object { $_.IdentityReference.Value -match '(^|\\)(Everyone|Users|Authenticated Users)$' -and $_.AccessControlType -eq 'Allow' })
+        if ($bad.Count -gt 0) { Result 'WARN' ("{0} can be accessed by ordinary users: run 01-prepare-windows.ps1 again to lock down its permissions" -f $p) }
+        else { Result 'OK' ("{0} is restricted to administrators and the system" -f $p) }
+    }
+}
+
 # ---- what has been happening ------------------------------------------------------------------------------------------------
 Write-Step 'Sign-in history'
 if (-not $isAdmin) { Write-Warn 'skipped (needs administrator)' }

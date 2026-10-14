@@ -229,8 +229,22 @@ def _extract_text(extension: str, content: bytes) -> tuple[str, int]:
     try:
         if extension == ".pdf":
             reader = PdfReader(BytesIO(content))
+            if len(reader.pages) > 100:
+                raise ValueError("PDF 頁數過多，單次檢查上限為 100 頁。")
             return "\n".join(page.extract_text() or "" for page in reader.pages), len(reader.pages)
         if extension == ".docx":
+            from zipfile import BadZipFile, ZipFile
+
+            try:
+                with ZipFile(BytesIO(content)) as archive:
+                    infos = archive.infolist()
+                    if (
+                        len(infos) > 1000
+                        or sum(max(0, info.file_size) for info in infos) > 50 * 1024 * 1024
+                    ):
+                        raise ValueError("DOCX 壓縮內容過大或異常，無法安全解析。")
+            except BadZipFile as error:
+                raise ValueError("檔案內容無法解析，請確認檔案沒有損壞或加密。") from error
             document = Document(BytesIO(content))
             paragraphs = [paragraph.text for paragraph in document.paragraphs]
             for table in document.tables:

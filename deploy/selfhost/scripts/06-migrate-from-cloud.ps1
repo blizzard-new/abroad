@@ -81,9 +81,13 @@ Write-Step 'Loading it into the local database'
 $dbId = Get-ContainerId 'db'
 & docker cp (Join-Path $work 'cloud-data.dump') ($dbId + ':/tmp/cloud-data.dump')
 Assert-ExitCode 'docker cp'
-& docker exec -e PGPASSWORD=$($e['DB_PASSWORD']) $dbId pg_restore -h 127.0.0.1 -U supabase_admin -d postgres --data-only --disable-triggers --no-owner --exit-on-error /tmp/cloud-data.dump
-Assert-ExitCode 'pg_restore'
+$env:PGPASSWORD = $e['DB_PASSWORD']
+try {
+    & docker exec -e PGPASSWORD $dbId pg_restore -h 127.0.0.1 -U supabase_admin -d postgres --data-only --disable-triggers --no-owner --exit-on-error /tmp/cloud-data.dump
+    Assert-ExitCode 'pg_restore'
+} finally { Remove-Item Env:PGPASSWORD -ErrorAction SilentlyContinue }
 & docker exec $dbId rm -f /tmp/cloud-data.dump
+Remove-Item (Join-Path $work 'cloud-data.dump') -Force -ErrorAction SilentlyContinue
 
 Write-Step 'Comparing row counts, table by table'
 $after = ConvertTo-CountMap (((Invoke-DbPsql $countSql) -split "`n") | Where-Object { $_ -match '=' })

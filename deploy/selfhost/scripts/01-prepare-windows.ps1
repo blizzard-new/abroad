@@ -10,7 +10,11 @@ Write-Step 'Folders'
 foreach ($d in 'logs', 'backups\db', 'backups\storage', 'caddy') {
     New-Item -ItemType Directory -Force -Path (Join-Path $script:UniwayHome $d) | Out-Null
 }
-Write-Ok ("created {0}\{{logs,backups,caddy}}" -f $script:UniwayHome)
+foreach ($secureDir in 'logs', 'backups', 'caddy') {
+    $targetPath = Join-Path $script:UniwayHome $secureDir
+    & icacls $targetPath /inheritance:r /grant:r ("{0}:(OI)(CI)F" -f $env:USERNAME) 'SYSTEM:(OI)(CI)F' 'Administrators:(OI)(CI)F' | Out-Null
+}
+Write-Ok ("created and locked down {0}\{{logs,backups,caddy}}" -f $script:UniwayHome)
 
 Write-Step 'Power: never sleep or hibernate while plugged in (the screen may still turn off)'
 & powercfg /change standby-timeout-ac 0 | Out-Null

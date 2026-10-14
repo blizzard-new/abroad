@@ -102,14 +102,14 @@
     }).join("");
     var lines = series.map(function (s) {
       var points = s.values.map(function (v, i) { return x(i).toFixed(1) + "," + y(v).toFixed(1); }).join(" ");
-      return '<polyline fill="none" stroke="' + s.color + '" stroke-width="2.2" stroke-linejoin="round" points="' + points + '"/>' +
+      return '<polyline fill="none" stroke="' + esc(s.color) + '" stroke-width="2.2" stroke-linejoin="round" points="' + points + '"/>' +
         s.values.map(function (v, i) {
-          return '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(v).toFixed(1) + '" r="2.6" fill="' + s.color + '"><title>' +
+          return '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(v).toFixed(1) + '" r="2.6" fill="' + esc(s.color) + '"><title>' +
             esc(days[i] + " " + s.name + " " + v) + "</title></circle>";
         }).join("");
     }).join("");
     return '<svg class="chart" viewBox="0 0 ' + width + " " + height + '" role="img" aria-label="每日趨勢">' + grid + labels + lines + "</svg>" +
-      '<div class="legend">' + series.map(function (s) { return '<span><i style="background:' + s.color + '"></i>' + esc(s.name) + "</span>"; }).join("") + "</div>";
+      '<div class="legend">' + series.map(function (s) { return '<span><i style="background:' + esc(s.color) + '"></i>' + esc(s.name) + "</span>"; }).join("") + "</div>";
   }
 
   function heatmap(grid) {

@@ -28,7 +28,24 @@ class SSRFSafeguardConnectionMixin:
             ip = res[4][0]
             try:
                 parsed_ip = ipaddress.ip_address(ip)
-                if parsed_ip.is_global and not parsed_ip.is_private and not parsed_ip.is_loopback and not parsed_ip.is_link_local and not parsed_ip.is_multicast:
+                check_ips = [parsed_ip]
+                if isinstance(parsed_ip, ipaddress.IPv6Address):
+                    if parsed_ip.ipv4_mapped is not None:
+                        check_ips.append(parsed_ip.ipv4_mapped)
+                    if parsed_ip.sixtofour is not None:
+                        check_ips.append(parsed_ip.sixtofour)
+                    if parsed_ip.teredo is not None:
+                        check_ips.extend(parsed_ip.teredo)
+                if all(
+                    candidate.is_global
+                    and not candidate.is_private
+                    and not candidate.is_loopback
+                    and not candidate.is_link_local
+                    and not candidate.is_multicast
+                    and not candidate.is_reserved
+                    and not candidate.is_unspecified
+                    for candidate in check_ips
+                ):
                     valid_ip = ip
                     break
             except ValueError:

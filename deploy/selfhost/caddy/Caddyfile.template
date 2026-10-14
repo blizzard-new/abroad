@@ -2,10 +2,13 @@
 # It gets and renews the HTTPS certificate on its own (Let's Encrypt), compresses, and passes requests to the web service.
 # scripts/05-install-caddy.ps1 fills in the two values and writes the real file to C:\uniway\caddy\Caddyfile.
 {
+	admin off
 	email __ACME_EMAIL__
 	servers {
 		timeouts {
 			read_header 20s
+			read_body 60s
+			write 60s
 			idle 2m
 		}
 	}
@@ -13,6 +16,9 @@
 
 __DOMAIN__ {
 	encode zstd gzip
+	request_body {
+		max_size 55MB
+	}
 
 	# The visitor's address is written here by Caddy itself, overwriting whatever the visitor sent,
 	# and the program trusts only this header (EXCHANGE_CLIENT_IP_HEADER=X-Client-IP).

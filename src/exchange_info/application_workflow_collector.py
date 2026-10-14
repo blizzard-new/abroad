@@ -374,7 +374,9 @@ def fetch_official_page_text(
     if not is_official_partner_url(url, official_website):
         return ""
     try:
-        response = requests.get(
+        from .http_client import get_safe_session
+
+        response = get_safe_session(require_https=False).get(
             url,
             timeout=timeout_seconds,
             headers={"User-Agent": "ExchangeInfoMVP/0.1 (+public academic information index)"},

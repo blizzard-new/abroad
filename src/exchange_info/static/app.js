@@ -2035,7 +2035,10 @@ function closeProfileDialog() {
 
 function notificationActionUrl(item) {
   const value = String(item?.action_url || "");
-  return value.startsWith("/") || value.startsWith("#") ? value : "/#deadlines";
+  if ((value.startsWith("/") && !value.startsWith("//") && !value.startsWith("/\\")) || value.startsWith("#")) {
+    return value;
+  }
+  return "/#deadlines";
 }
 
 function notificationOfficialSourceUrl(item) {
@@ -11619,7 +11622,7 @@ function renderPersonalApplicationPlan(plan) {
   result.innerHTML = `
     <div class="application-plan-result-heading">
       <span><i data-lucide="route" aria-hidden="true"></i></span>
-      <div><h3>你的 ${plan.home_school} 申請清單</h3><p>${escapeHtml(plan.disclaimer)}</p></div>
+      <div><h3>你的 ${escapeHtml(plan.home_school)} 申請清單</h3><p>${escapeHtml(plan.disclaimer)}</p></div>
     </div>
     <div class="application-plan-choices">${plan.choices.map((choice) => {
       const meta = applicationPlanStatusMeta(choice.status);

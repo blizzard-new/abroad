@@ -215,6 +215,9 @@ class EmailVerificationService:
             raise EmailVerificationConfigurationError(
                 "Email 驗證服務 secret 必須是 32 bytes。"
             )
+        import threading
+
+        self._lock = threading.RLock()
         self.repository = repository
         self._secret = secret
         self.sender = sender
@@ -244,65 +247,66 @@ class EmailVerificationService:
         *,
         now: datetime | None = None,
     ) -> EmailVerificationDispatch:
-        current = _aware_utc(now or utc_now())
-        normalized = self.normalize_email(email)
-        fingerprint = self.email_fingerprint(normalized)
-        rows = self.repository.list_email_verifications(fingerprint)
-        active = [
-            row
-            for row in rows
-            if row.consumed_at is None and row.expires_at > current
-        ]
-        if active and active[0].resend_available_at > current:
-            retry_after = int(
-                (active[0].resend_available_at - current).total_seconds()
+        with self._lock:
+            current = _aware_utc(now or utc_now())
+            normalized = self.normalize_email(email)
+            fingerprint = self.email_fingerprint(normalized)
+            rows = self.repository.list_email_verifications(fingerprint)
+            active = [
+                row
+                for row in rows
+                if row.consumed_at is None and row.expires_at > current
+            ]
+            if active and active[0].resend_available_at > current:
+                retry_after = int(
+                    (active[0].resend_available_at - current).total_seconds()
+                )
+                raise EmailVerificationRateLimitError(
+                    "驗證碼剛剛已寄出，請稍後再試。",
+                    retry_after,
+                )
+            recent = [
+                row
+                for row in rows
+                if row.requested_at >= current - timedelta(hours=1)
+            ]
+            if len(recent) >= EMAIL_VERIFICATION_HOURLY_LIMIT:
+                retry_at = min(row.requested_at for row in recent) + timedelta(hours=1)
+                raise EmailVerificationRateLimitError(
+                    "驗證碼要求次數過多，請稍後再試。",
+                    int((retry_at - current).total_seconds()),
+                )
+            code = f"{secrets.randbelow(1_000_000):06d}"
+            challenge = EmailVerificationChallenge(
+                email_fingerprint=fingerprint,
+                code_hash="0" * 64,
+                requested_at=current,
+                resend_available_at=current + EMAIL_VERIFICATION_RESEND_COOLDOWN,
+                expires_at=current + EMAIL_VERIFICATION_TTL,
             )
-            raise EmailVerificationRateLimitError(
-                "驗證碼剛剛已寄出，請稍後再試。",
-                retry_after,
+            challenge = challenge.model_copy(
+                update={
+                    "code_hash": self._challenge_hash(challenge.id, "code", code)
+                }
             )
-        recent = [
-            row
-            for row in rows
-            if row.requested_at >= current - timedelta(hours=1)
-        ]
-        if len(recent) >= EMAIL_VERIFICATION_HOURLY_LIMIT:
-            retry_at = min(row.requested_at for row in recent) + timedelta(hours=1)
-            raise EmailVerificationRateLimitError(
-                "驗證碼要求次數過多，請稍後再試。",
-                int((retry_at - current).total_seconds()),
+            self.repository.save_email_verification(challenge)
+            try:
+                self.sender.send(
+                    normalized,
+                    code,
+                    int(EMAIL_VERIFICATION_TTL.total_seconds() // 60),
+                )
+            except EmailVerificationDeliveryError:
+                self.repository.save_email_verification(
+                    challenge.model_copy(update={"consumed_at": current})
+                )
+                raise
+            return EmailVerificationDispatch(
+                email_hint=mask_email(normalized),
+                expires_at=challenge.expires_at,
+                resend_available_at=challenge.resend_available_at,
+                development_code=code if self.sender.development_mode else None,
             )
-        code = f"{secrets.randbelow(1_000_000):06d}"
-        challenge = EmailVerificationChallenge(
-            email_fingerprint=fingerprint,
-            code_hash="0" * 64,
-            requested_at=current,
-            resend_available_at=current + EMAIL_VERIFICATION_RESEND_COOLDOWN,
-            expires_at=current + EMAIL_VERIFICATION_TTL,
-        )
-        challenge = challenge.model_copy(
-            update={
-                "code_hash": self._challenge_hash(challenge.id, "code", code)
-            }
-        )
-        self.repository.save_email_verification(challenge)
-        try:
-            self.sender.send(
-                normalized,
-                code,
-                int(EMAIL_VERIFICATION_TTL.total_seconds() // 60),
-            )
-        except EmailVerificationDeliveryError:
-            self.repository.save_email_verification(
-                challenge.model_copy(update={"consumed_at": current})
-            )
-            raise
-        return EmailVerificationDispatch(
-            email_hint=mask_email(normalized),
-            expires_at=challenge.expires_at,
-            resend_available_at=challenge.resend_available_at,
-            development_code=code if self.sender.development_mode else None,
-        )
 
     def confirm_code(
         self,
@@ -311,61 +315,62 @@ class EmailVerificationService:
         *,
         now: datetime | None = None,
     ) -> EmailVerificationConfirmation:
-        current = _aware_utc(now or utc_now())
-        fingerprint = self.email_fingerprint(email)
-        rows = self.repository.list_email_verifications(fingerprint)
-        challenge = next(
-            (
-                row
-                for row in rows
-                if row.consumed_at is None and row.confirmed_at is None
-            ),
-            None,
-        )
-        if challenge is None:
-            raise EmailVerificationInvalidError(
-                "找不到可使用的驗證碼，請重新寄送。"
-            )
-        if challenge.expires_at <= current:
-            raise EmailVerificationExpiredError(
-                "驗證碼已過期，請重新寄送。"
-            )
-        if challenge.attempt_count >= EMAIL_VERIFICATION_MAX_ATTEMPTS:
-            raise EmailVerificationInvalidError(
-                "驗證嘗試次數已達上限，請重新寄送。"
-            )
-        expected = self._challenge_hash(challenge.id, "code", code)
-        if not hmac.compare_digest(challenge.code_hash, expected):
-            attempts = challenge.attempt_count + 1
-            self.repository.save_email_verification(
-                challenge.model_copy(
-                    update={
-                        "attempt_count": attempts,
-                        "consumed_at": (
-                            current
-                            if attempts >= EMAIL_VERIFICATION_MAX_ATTEMPTS
-                            else None
-                        ),
-                    }
-                )
-            )
-            raise EmailVerificationInvalidError("驗證碼不正確。")
-        token = secrets.token_urlsafe(40)
-        confirmed = challenge.model_copy(
-            update={
-                "confirmation_token_hash": self._challenge_hash(
-                    challenge.id,
-                    "confirmation",
-                    token,
+        with self._lock:
+            current = _aware_utc(now or utc_now())
+            fingerprint = self.email_fingerprint(email)
+            rows = self.repository.list_email_verifications(fingerprint)
+            challenge = next(
+                (
+                    row
+                    for row in rows
+                    if row.consumed_at is None and row.confirmed_at is None
                 ),
-                "confirmed_at": current,
-            }
-        )
-        self.repository.save_email_verification(confirmed)
-        return EmailVerificationConfirmation(
-            verification_token=token,
-            expires_at=confirmed.expires_at,
-        )
+                None,
+            )
+            if challenge is None:
+                raise EmailVerificationInvalidError(
+                    "找不到可使用的驗證碼，請重新寄送。"
+                )
+            if challenge.expires_at <= current:
+                raise EmailVerificationExpiredError(
+                    "驗證碼已過期，請重新寄送。"
+                )
+            if challenge.attempt_count >= EMAIL_VERIFICATION_MAX_ATTEMPTS:
+                raise EmailVerificationInvalidError(
+                    "驗證嘗試次數已達上限，請重新寄送。"
+                )
+            expected = self._challenge_hash(challenge.id, "code", code)
+            if not hmac.compare_digest(challenge.code_hash, expected):
+                attempts = challenge.attempt_count + 1
+                self.repository.save_email_verification(
+                    challenge.model_copy(
+                        update={
+                            "attempt_count": attempts,
+                            "consumed_at": (
+                                current
+                                if attempts >= EMAIL_VERIFICATION_MAX_ATTEMPTS
+                                else None
+                            ),
+                        }
+                    )
+                )
+                raise EmailVerificationInvalidError("驗證碼不正確。")
+            token = secrets.token_urlsafe(40)
+            confirmed = challenge.model_copy(
+                update={
+                    "confirmation_token_hash": self._challenge_hash(
+                        challenge.id,
+                        "confirmation",
+                        token,
+                    ),
+                    "confirmed_at": current,
+                }
+            )
+            self.repository.save_email_verification(confirmed)
+            return EmailVerificationConfirmation(
+                verification_token=token,
+                expires_at=confirmed.expires_at,
+            )
 
     def consume_registration_token(
         self,
@@ -374,25 +379,26 @@ class EmailVerificationService:
         *,
         now: datetime | None = None,
     ) -> None:
-        current = _aware_utc(now or utc_now())
-        fingerprint = self.email_fingerprint(email)
-        for challenge in self.repository.list_email_verifications(fingerprint):
-            if (
-                challenge.confirmed_at is None
-                or challenge.consumed_at is not None
-                or challenge.expires_at <= current
-                or challenge.confirmation_token_hash is None
-            ):
-                continue
-            expected = self._challenge_hash(challenge.id, "confirmation", token)
-            if hmac.compare_digest(challenge.confirmation_token_hash, expected):
-                self.repository.save_email_verification(
-                    challenge.model_copy(update={"consumed_at": current})
-                )
-                return
-        raise EmailVerificationInvalidError(
-            "Email 驗證已失效，請重新取得驗證碼。"
-        )
+        with self._lock:
+            current = _aware_utc(now or utc_now())
+            fingerprint = self.email_fingerprint(email)
+            for challenge in self.repository.list_email_verifications(fingerprint):
+                if (
+                    challenge.confirmed_at is None
+                    or challenge.consumed_at is not None
+                    or challenge.expires_at <= current
+                    or challenge.confirmation_token_hash is None
+                ):
+                    continue
+                expected = self._challenge_hash(challenge.id, "confirmation", token)
+                if hmac.compare_digest(challenge.confirmation_token_hash, expected):
+                    self.repository.save_email_verification(
+                        challenge.model_copy(update={"consumed_at": current})
+                    )
+                    return
+            raise EmailVerificationInvalidError(
+                "Email 驗證已失效，請重新取得驗證碼。"
+            )
 
     def purge_email(self, email: str | None) -> int:
         if not email:

@@ -44,8 +44,11 @@ Assert-ExitCode 'docker cp'
 # the record of which migrations ran belongs to the database being restored INTO, not to the backup, so it is left out
 & docker exec $dbId sh -c "pg_restore -l /tmp/restore.dump | grep -v uniway_schema_migrations > /tmp/restore.list"
 Assert-ExitCode 'listing the backup'
-& docker exec -e PGPASSWORD=$($e['DB_PASSWORD']) $dbId pg_restore -h 127.0.0.1 -U supabase_admin -d postgres --data-only --disable-triggers --no-owner -n public --exit-on-error -L /tmp/restore.list /tmp/restore.dump
-Assert-ExitCode 'pg_restore'
+$env:PGPASSWORD = $e['DB_PASSWORD']
+try {
+    & docker exec -e PGPASSWORD $dbId pg_restore -h 127.0.0.1 -U supabase_admin -d postgres --data-only --disable-triggers --no-owner -n public --exit-on-error -L /tmp/restore.list /tmp/restore.dump
+    Assert-ExitCode 'pg_restore'
+} finally { Remove-Item Env:PGPASSWORD -ErrorAction SilentlyContinue }
 & docker exec $dbId rm -f /tmp/restore.dump /tmp/restore.list
 
 if (Test-Path $meta) {

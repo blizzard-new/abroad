@@ -9,6 +9,8 @@ services:
     # Same pinned images that scripts/validate_supabase_runtime.py already validates the migrations against.
     image: supabase/postgres:17.6.1.136@sha256:f371b5f3f2ac0a05703f33d6e6134515fb2498cab708fb948a0aeb7481467c00
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD:?missing DB_PASSWORD - run scripts/02-generate-secrets.ps1 first}
       POSTGRES_DB: postgres
@@ -26,6 +28,8 @@ services:
   rest:
     image: postgrest/postgrest:v14.12@sha256:54000f24847d01a2c2302e0041cf0618b875c57fb48507d743cfa9aaa50bf43c
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     depends_on:
       db:
         condition: service_healthy
@@ -49,6 +53,8 @@ services:
   storage:
     image: supabase/storage-api:v1.60.4@sha256:c8eb9858eafec891a97c27125470aaad54703c3f4eb4d55ca7f1bf6c6411febf
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     depends_on:
       db:
         condition: service_healthy
@@ -83,6 +89,8 @@ services:
   gateway:
     image: caddy:2-alpine
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     depends_on:
       rest:
         condition: service_healthy
@@ -101,6 +109,8 @@ services:
   ca-export:
     image: alpine:3
     restart: "no"
+    security_opt:
+      - no-new-privileges:true
     depends_on:
       gateway:
         condition: service_healthy
@@ -115,6 +125,8 @@ services:
       dockerfile: Dockerfile
     image: uniway-app:local
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     depends_on:
       gateway:
         condition: service_healthy
@@ -124,7 +136,7 @@ services:
     # X-Client-IP itself (the program believes only that header).
     ports:
       - "127.0.0.1:8000:8000"
-    command: ["uvicorn", "exchange_info.api:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "${APP_WORKERS:-1}"]
+    command: ["uvicorn", "exchange_info.api:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "${APP_WORKERS:-1}", "--no-proxy-headers"]
     volumes:
       - ./tools:/opt/selfhost:ro      # small checks run inside the container, where the database address works
       - ca-public:/ca-public:ro       # the gateway's public certificate, so the program trusts https://gateway
