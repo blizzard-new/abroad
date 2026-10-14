@@ -43,6 +43,12 @@ jobs:
               handle.write(f"EXCHANGE_INFO_DATA_DIR={os.environ['RUNNER_TEMP']}/exchange-info-tests\n")
           PY
 
+      - name: Verify the committed Gradient Waves browser bundle
+        run: |
+          npm ci --prefix frontend/gradient-waves --no-fund --no-audit
+          npm run build --prefix frontend/gradient-waves
+          git diff --exit-code -- src/exchange_info/static/gradient-waves.js src/exchange_info/static/gradient-waves.css src/exchange_info/static/gradient-waves.js.LEGAL.txt
+
       - name: Install project and browser
         run: |
           python -m pip install --disable-pip-version-check uv==0.11.26

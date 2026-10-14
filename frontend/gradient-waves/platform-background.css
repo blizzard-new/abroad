@@ -1,0 +1,35 @@
+/* A viewport-sized ocean behind the existing frosted-glass platform. */
+body.unified-shell::before,
+body.unified-shell.global-home-mode[data-global-feed="all"]::before {
+  content: none;
+}
+
+body.unified-shell #platform-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, #14cdd8 0%, #4264cc 100%);
+}
+
+/* The shader stays at the requested opacity; glass keeps reading surfaces clear. */
+body.unified-shell {
+  --glass-surface: #ffffffe0;
+  --glass-strong: #fffffff5;
+}
+
+html[data-theme="dark"] body.unified-shell {
+  --glass-surface: #1a2d43eb;
+  --glass-strong: #1c3048fa;
+}
+
+body.unified-shell .guide-intro > div {
+  padding: 24px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 24px;
+  background: var(--glass-surface);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
