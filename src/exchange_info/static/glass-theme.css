@@ -150,10 +150,10 @@ body.unified-shell .glass-mobile-header, .glass-menu-close { display: none; }
 .glass-menu-backdrop { position: fixed; inset: 0; z-index: 43; background: #14223f66; border: 0; }
 body.unified-shell :is(.mobile-nav, .global-mobile-nav, .university-mobile-nav) { display: none !important; }
 body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view, body.unified-shell .global-community-section,
-body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { width: calc(100% - 320px); max-width: 1400px; margin: 0 32px 0 288px; padding: 28px 0 48px; }
+body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { width: calc(100% - 144px); max-width: 1400px; margin: 0 32px 0 112px; padding: 28px 0 48px; }
 body.unified-shell .page-back-bar {
   display: flex; align-items: center; gap: 12px;
-  width: calc(100% - 320px); max-width: 1400px; margin: 0 32px 0 288px; padding-top: 20px;
+  width: calc(100% - 144px); max-width: 1400px; margin: 0 32px 0 112px; padding-top: 20px;
 }
 body.unified-shell .page-back-bar .route-back {
   background: var(--glass-surface); border-color: var(--glass-edge); box-shadow: var(--glass-shadow);
@@ -217,10 +217,10 @@ body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .feat
 body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .featured-board-card p { font-size: 11px; line-height: 1.7; }
 body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .featured-board-card .text-action { font-size: 12px; }
 body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .board-card-actions { flex-wrap: wrap; gap: 8px; }
-@media (min-width: 1800px) {
+@media (min-width: 1600px) {
   body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view, body.unified-shell .global-community-section,
-  body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { margin-left: calc(288px + (100% - 1688px) / 2); }
-  body.unified-shell .page-back-bar { margin-left: calc(288px + (100% - 1688px) / 2); }
+  body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { margin-left: calc(112px + (100% - 1544px) / 2); }
+  body.unified-shell .page-back-bar { margin-left: calc(112px + (100% - 1544px) / 2); }
 }
 @media (max-width: 1200px) {
   body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub { grid-template-columns: minmax(0, 1fr); grid-template-areas: "heading" "feed" "boards"; }
@@ -332,8 +332,8 @@ body.unified-shell.global-home-mode[data-global-feed="all"] #community-hub .boar
   body.unified-shell .glass-navigation-rail .application-tools-panel[popover]:not(:popover-open) { display: none; }
   .application-tools-panel::backdrop { background: transparent; pointer-events: none; }
   body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view, body.unified-shell .global-community-section,
-  body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { width: calc(100% - 320px); margin-left: 288px; }
-  body.unified-shell .page-back-bar { width: calc(100% - 320px); margin-left: 288px; }
+  body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { width: calc(100% - 144px); margin-left: 112px; }
+  body.unified-shell .page-back-bar { width: calc(100% - 144px); margin-left: 112px; }
 }
 @media (prefers-reduced-motion: no-preference) {
   body.unified-shell .glass-navigation-rail { transition: width 220ms var(--uw-motion-out), padding 220ms var(--uw-motion-out), box-shadow 180ms ease; }
