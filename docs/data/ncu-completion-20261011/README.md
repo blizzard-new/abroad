@@ -1,5 +1,41 @@
 # 中央逐校補完查核，2026-10-11
 
+**最新：凍結300來源完成有限分類與實際引用頁核對，非全部214校完成。** 修正兩國拉曼同名來源；剩59曾引用來源的實際頁面除一份歷史表重取受阻外皆有核讀證據。仍有221未引用候選、59校尚無人工host紀錄及12缺圖，詳見[有限驗收與交接](resume/finite-closure/README.md)。 一次完整515項檢查的2項失敗已經受影響23項補測修復；10browser及2補拍通過，214校生活卡待翻譯0。[精確驗收範圍](resume/finite-closure/FINAL-ACCEPTANCE.md)。
+
+**最新第三十二批是恢復點，尚非最終驗收。** 五份21頁核讀、三欄與一生活卡修正；16受影響檢查通過，變更兩校待翻譯0。剩282未全文讀來源／61曾引用；有效SHA56，無SHA摘錄2、重複別名3。完整回歸／瀏覽器依使用者要求集中到固定最終候選SHA。詳見[恢復點](resume/thirtysecond/README.md)、[驗證範圍](resume/thirtysecond/validation.json)。
+
+**最新第三十一批：四PDF13頁及一空白工作簿三sheet全讀，已引用待讀71→66份。** 三校七欄，510回歸／6瀏覽器情境與6圖實看；751中文對照、214校待翻譯0。靜岡修士接收與全校位置名錄分開，含住房預算及單人房單位釐清。詳見[第三十一批](resume/thirtyfirst/README.md)、[未完成清單](resume/thirtyfirst/unfinished-source-list.csv)、[驗證](resume/thirtyfirst/validation.json)。以下保留歷史紀錄。
+
+**最新第三十批：兩空白政府表全讀、關西同SHA全文補視讀；71份已引用仍待全讀。** 三校六欄，507回歸／6瀏覽器情境及6圖全實看，745中文對照、214校待翻譯0。兩大型課表仍明列未全讀。詳見[第三十批](resume/thirtieth/README.md)、[未完成清單](resume/thirtieth/unfinished-source-list.csv)、[驗證](resume/thirtieth/validation.json)。以下保留歷史紀錄。
+
+**最新第二十九批：五份已引用原件11頁全讀，已引用待讀79→74，多頁待讀300→295。** 四校22欄；504回歸、8瀏覽器情境通過、8圖全實看，735中文來源對照及214校待翻譯0。TUAF原生費用錯序改用視覺摘錄索引，福井缺失附頁不補寫。詳見[第二十九批](resume/twentyninth/README.md)、[未完成清單](resume/twentyninth/unfinished-source-list.csv)、[驗證](resume/twentyninth/validation.json)。以下保留歷史紀錄。
+
+**最新第二十八批：八份17頁全讀，人工155校，多頁待讀307→300。** 六校57欄與UA／NAU來源映射修正；501回歸、12瀏覽器情境通過、12圖全實看，214生活API待翻譯0。詳見[第二十八批](resume/twentyeighth/README.md)、[未完成清單](resume/twentyeighth/unfinished-source-list.csv)、[驗證](resume/twentyeighth/validation.json)。以下保留歷史紀錄。
+
+**最新第二十七批：五份原件10頁全讀，三校新增人工核讀，總152校；待讀多頁312→307。** 497回歸與10瀏覽器情境通過，10圖全實看，214生活API待翻譯0。兩張嵌圖另存人工原文，未改原生抽取；母校限制、付費方案與計價週期分開。詳見[第二十七批](resume/twentyseventh/README.md)、[未完成清單](resume/twentyseventh/unfinished-source-list.csv)、[驗證](resume/twentyseventh/validation.json)。以下保留歷史紀錄。
+
+**最新第二十六批：五份待讀原件10頁全讀，五校41欄更新，待讀多頁317→312。** 494回歸、更新翻譯後12測試與10瀏覽器情境通過，10圖全實看，214生活API待翻譯0。補正來源引用盤點、保留方案及年度衝突。詳見[第二十六批](resume/twentysixth/README.md)、[未完成清單](resume/twentysixth/unfinished-source-list.csv)、[驗證](resume/twentysixth/validation.json)。以下保留歷史紀錄。
+
+**最新第二十五批：兩校8份來源、5文件30頁與3網頁主文核讀，15欄更新。** 491回歸與8瀏覽器情境通過，8圖全實看，214生活API待翻譯0。手冊版次、錯向表單、文件阶段與舊住宿預算分開保留。詳見[第二十五批](resume/twentyfifth/README.md)、[未完成清單](resume/twentyfifth/unfinished-source-list.csv)、[驗證](resume/twentyfifth/validation.json)。以下保留歷史紀錄。
+
+**最新第二十四批：两校8個新官方來源、5份文件19頁全讀、3網頁主文核讀；更新25欄，9個原缺口增來源參考。** 488回歸、文件／住宿8個手機桌面情境通過且8圖全實看；214生活API待翻譯0。BUEM舊表追加文件與租期價差、摩納哥未標房價週期分開保留。詳見[第二十四批](resume/twentyfourth/README.md)、[未完成清單](resume/twentyfourth/unfinished-source-list.csv)、[驗證](resume/twentyfourth/validation.json)。以下保留歷史紀錄。
+
+**最新第二十三批：五校5份7頁原文／原圖全讀，21個來源參考欄與20個明列缺口，人工覆蓋149校。** 485回歸、五校手機／桌面10情境通過且10圖全實看；214生活API待翻譯0。BUEM混校原文及HKBP語言／費用矛盾保留。詳見[第二十三批](resume/twentythird/README.md)、[未完成清單](resume/twentythird/unfinished-source-list.csv)、[驗證](resume/twentythird/validation.json)。以下保留歷史紀錄。
+
+**最新第二十二批：五校9份19頁原文／原圖全部核讀，49個來源參考欄與4個明列待核缺口，人工覆蓋144校。** 482回歸、五校手機／桌面10情境通過且10图全實看；214生活API待翻譯0。22:37 UTC仍未取得116名額表。詳見[第二十二批](resume/twentysecond/README.md)、[未完成清單](resume/twentysecond/unfinished-source-list.csv)、[驗證](resume/twentysecond/validation.json)。以下保留歷史紀錄。
+
+**最新第二十一批：五校11份20頁全部原文／原圖核讀，新5校60欄，人工覆蓋139校。** 479回歸通過、五校10介面情境與兩校修訂後重验通過，最終12圖實看，天普照片預覽完成。214生活API待翻譯0；22:23 UTC仍未取得116名額表。詳見[第二十一批](resume/twentyfirst/README.md)、[未完成清單](resume/twentyfirst/unfinished-source-list.csv)、[驗證](resume/twentyfirst/validation.json)。以下保留歷史紀錄。
+
+**最新第二十批：五校10份14頁全文與原圖核讀，新5校55欄，人工覆蓋134校。** 476回歸與五校手機／桌面10情境通過，10圖全實看；214生活API待翻譯0。斷線通知後先保存67c0d26檢查點再完成驗收，母校22:01:49 UTC仍未取得116名額表。詳見[第二十批來源及驗收](resume/twentieth/README.md)、[未完成清單](resume/twentieth/unfinished-source-list.csv)、[驗證證據](resume/twentieth/validation.json)。以下保留歷史批次紀錄。
+
+**最新第十九批：ECE、IDRAC、京畿、世宗10份29頁全文與原圖核讀，新增4校46個人工欄位，人工覆蓋129校。** 472回歸與四校手機／桌面8情境驗證通過，8圖全實看；214生活API待翻譯0。有限多頁待完成333份，原年與當期未核實限制保留。詳見[第十九批原件紀錄](resume/nineteenth/README.md)、[未完成清單](resume/nineteenth/unfinished-source-list.csv)、[驗證證據](resume/nineteenth/validation.json)。以下保留歷史批次紀錄。
+
+**最新第十八批：諾曼第課單51頁＋指南17頁完成全文與圖像核讀，更新6欄。** 467項回歸、72項最終聚焦測試及手機／桌面實測通過，8圖全實看；214生活API待翻譯0。有限多頁待完成340筆，其中78已引用、74不同SHA、2476頁／部件。名額與嚴格當期缺格未提升。詳見[第十八批原件紀錄](resume/eighteenth/README.md)、[未完成清單](resume/eighteenth/unfinished-source-list.csv)、[驗證證據](resume/eighteenth/validation.json)。以下保留歷史批次紀錄。
+
+**最新第十七批：六份原件12頁完成全文與圖像核讀，更新五校9欄（含2項原缺參考）。** 465項回歸、69項中文與來源測試、10手機／桌面情境通過；214校生活API待翻譯0，1399歷史PNG不變。有限多頁待完成342筆，其中80已引用、76不同SHA、2544頁／部件。116名額仍未知。詳見[第十七批範圍](resume/seventeenth/README.md)、[未完成清單](resume/seventeenth/unfinished-source-list.csv)、[驗證紀錄](resume/seventeenth/validation.json)。後續批次段落為歷史紀錄。
+
+**最新第十六批：517段中文對照涵蓋539筆原待翻譯證據，214校生活API待翻譯數歸零。** 66項聚焦測試、460項中央／位置回歸、24手機／桌面情境通過；123筆已核專有名稱顯示對照不改共用偵測器。1399歷史PNG不變。精確盤點348多頁來源仍待完整核讀／適用性判定，其中86已引用、82不同SHA、2556頁／部件；待讀不算外部阻礙。詳見[第十六批範圍](resume/sixteenth/README.md)、[文件清單](resume/sixteenth/unfinished-source-list.csv)、[驗證紀錄](resume/sixteenth/validation.json)。後續第十五批等數字保留為歷史紀錄。
+
 **最新第十五批：214／214合作校代表位置、202／214授權照片（199不同SHA），中央母校另計；人工host125／214。** 固定223候選全部查核分類：205正文閱讀、18原空殼（1循轉址取得首頁、17仍缺正文），不是223規則完整核實；785來源、675閱讀紀錄。7校11欄補充含6原缺值；3聚焦＋459回歸＋12手機／桌面測試過、14最終截圖實看、1399歷史PNG不變。仍缺12圖、3222／4066嚴格當期欄格、214名額未知。母校台灣10/12 03:59再查仍115表。詳見[本批範圍與尚未完成項](resume/fifteenth/README.md)、[逐候選ledger](resume/fifteenth/reading-ledger.json)、[測試證據](resume/fifteenth/validation.json)。以下四輪等較早數字保留為歷史紀錄，不是最新總量。
 
 基底 `59a20f27fcee00fb597abc79e75ec11778317422`，分支 `data/ncu-completion-20261011`。基底已含 PR6 六校記憶體修正與 PR7 臺大更新。本輪僅中央資料、照片及必要顯示適配；未部署、套正式 DB、合併 main、更動安全設定或執行 Quality CI。

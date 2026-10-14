@@ -11,7 +11,7 @@
     <title>UniWay｜臺灣大學生留學與交換平台</title>
     <link rel="stylesheet" href="/static/styles.css?v=20261013-notification-rail-1" />
     <link rel="stylesheet" href="/static/design-system.css?v=20260716-platform-12" />
-    <link rel="stylesheet" href="/static/platform.css?v=20260721-student-survival-4" />
+    <link rel="stylesheet" href="/static/platform.css?v=20261013-school-picker-1" />
     <link rel="stylesheet" href="/static/product-v2.css?v=20261013-notification-rail-1" />
     <link rel="stylesheet" href="/static/icon-motion.css?v=20260820-icon-motion-1" />
     <link rel="stylesheet" href="/static/mascot.css?v=20261014-runtime-loading-1" />
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2" />
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
-    <link rel="stylesheet" href="/static/glass-theme.css?v=20261013-expanding-rail-1" />
+    <link rel="stylesheet" href="/static/glass-theme.css?v=20261014-page-school-switcher-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261008-ncu-conditions-1" />
@@ -104,13 +104,6 @@
           <a id="back-to-global-home" class="icon-button board-home-button" href="#home" aria-label="返回留學首頁" data-tooltip="留學首頁"><i data-lucide="arrow-left" aria-hidden="true"></i></a>
           <div class="mobile-brand"><span class="brand-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40" decoding="async" /></span><span><strong>UniWay</strong><small id="mobile-school-label">選擇就讀學校</small></span></div>
         </header>
-<div class="route-toolbar" aria-label="頁面操作">
-          <button id="school-switcher" type="button" class="school-switcher" aria-haspopup="dialog">
-            <span class="school-switcher-icon"><i data-lucide="graduation-cap" aria-hidden="true"></i></span>
-            <span><small>目前就讀學校</small><strong id="school-switcher-label">選擇就讀學校</strong></span>
-            <i data-lucide="chevron-down" aria-hidden="true"></i>
-          </button>
-        </div>
           <div class="topbar-actions">
             <div class="topbar-status"><span class="live-dot" aria-hidden="true"></span><span id="top-updated">資料載入中</span></div>
             <button id="theme-toggle" type="button" class="icon-button" aria-label="切換為深色模式" data-tooltip="深色模式"><i data-lucide="moon" aria-hidden="true"></i><span class="rail-action-label">深色模式</span></button>
@@ -137,7 +130,7 @@
           <div>
             <span class="eyebrow">UniWay</span>
             <h1 id="onboarding-title">你目前就讀哪一所台灣大學？</h1>
-            <p>選擇後，我們會顯示你真正能申請的學校、資格與申請時程；也可以先略過直接瀏覽。</p>
+            <p>點一下你的學校，我們就會顯示你真正能申請的學校、資格與申請時程。</p>
             <p id="onboarding-lock-note" hidden><strong>請選你實際就讀的學校：</strong>學校會顯示在你的帳號與貼文上，選定後 3 天內不能更換。</p>
           </div>
         </div>
@@ -151,31 +144,15 @@
         </label>
 
         <div id="school-options" class="school-options" role="listbox" aria-label="可選擇的大學">
-          <button type="button" class="school-option selected" data-home-school="長庚大學" role="option" aria-selected="true">
-            <img src="/static/assets/cgu-campus.jpg" alt="長庚大學校園" />
-            <span><strong>長庚大學</strong><small>完整支援試點 · 75 所合作校</small></span>
-            <i data-lucide="circle-check" aria-hidden="true"></i>
-          </button>
-          <button type="button" class="school-option" data-home-school="國立臺北大學" role="option" aria-selected="false">
-            <img src="/static/assets/ntpu-campus.jpg" alt="國立臺北大學校園" />
-            <span><strong>國立臺北大學</strong><small>169 所本期開放 · 37 所交換合作校備查</small></span>
-            <i data-lucide="circle" aria-hidden="true"></i>
-          </button>
-          <button type="button" class="school-option" data-home-school="國立臺灣大學" role="option" aria-selected="false">
-            <img src="/static/assets/ntu-campus.svg" alt="國立臺灣大學識別圖" />
-            <span><strong>國立臺灣大學</strong><small>288項合作資料 · 282項名額待公布 · 6項零名額</small></span>
-            <i data-lucide="circle" aria-hidden="true"></i>
-          </button>
-          <button type="button" class="school-option" data-home-school="國立中央大學" role="option" aria-selected="false"><img src="/static/assets/ncu-campus.svg" alt="國立中央大學文字識別圖" /><span><strong>國立中央大學</strong><small>116-1簡章已公告 · 名額预定10/12公告</small></span><i data-lucide="circle" aria-hidden="true"></i></button>
+          <button type="button" class="school-option selected" data-home-school="長庚大學" role="option" aria-selected="true" style="--school-tint:172"><span class="school-emblem" aria-hidden="true">長庚</span><span class="school-option-name">長庚大學</span><span class="school-option-status">75 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="國立臺北大學" role="option" aria-selected="false" style="--school-tint:215"><span class="school-emblem" aria-hidden="true">北大</span><span class="school-option-name">國立臺北大學</span><span class="school-option-status">169 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="國立臺灣大學" role="option" aria-selected="false" style="--school-tint:140"><span class="school-emblem" aria-hidden="true">臺大</span><span class="school-option-name">國立臺灣大學</span><span class="school-option-status">288 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="國立中正大學" role="option" aria-selected="false" style="--school-tint:8"><span class="school-emblem" aria-hidden="true">中正</span><span class="school-option-name">國立中正大學</span><span class="school-option-status">52 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="國立中央大學" role="option" aria-selected="false" style="--school-tint:235"><span class="school-emblem" aria-hidden="true">中央</span><span class="school-option-name">國立中央大學</span><span class="school-option-status">214 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="淡江大學" role="option" aria-selected="false" style="--school-tint:35"><span class="school-emblem" aria-hidden="true">淡江</span><span class="school-option-name">淡江大學</span><span class="school-option-status">287 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
         </div>
         <p id="school-search-empty" class="school-search-empty" hidden>未找到這所學校；目前支援的學校請查看選單，其他台灣大學會依資料查核進度加入。</p>
 
-        <div class="onboarding-actions">
-          <button id="browse-first" type="button" class="secondary-button">先看看全部交換學校</button>
-          <button id="confirm-school" type="button" class="primary-button">
-            <span>選擇我的學校</span><i data-lucide="arrow-right" aria-hidden="true"></i>
-          </button>
-        </div>
         <small class="privacy-note"><i data-lucide="shield-check" aria-hidden="true"></i>瀏覽公開資料不需要登入；收藏、進度與社群功能才需要帳號。</small>
       </div>
     </section>
@@ -381,6 +358,13 @@
             <button id="page-back" type="button" class="route-back"><i data-lucide="arrow-left" aria-hidden="true"></i><span>返回</span></button>
             <button id="back-to-schools" type="button" class="route-back" hidden><i data-lucide="arrow-left" aria-hidden="true"></i><span>返回</span></button>
             <button id="back-to-application-center" type="button" class="route-back" hidden><i data-lucide="arrow-left" aria-hidden="true"></i><span>返回</span></button>
+          </div>
+          <div class="route-toolbar">
+            <button id="school-switcher" type="button" class="school-switcher page-school-switcher" aria-haspopup="dialog">
+              <span class="school-switcher-icon"><i data-lucide="graduation-cap" aria-hidden="true"></i></span>
+              <span><small>切換就讀學校</small><strong id="school-switcher-label">選擇就讀學校</strong></span>
+              <i data-lucide="chevron-down" aria-hidden="true"></i>
+            </button>
           </div>
         </nav>
 
@@ -1215,7 +1199,7 @@
     <script src="/static/discovery-ui.js?v=20261004-digest-2" defer></script>
     <script src="/static/navigation.js?v=20261013-expanding-rail-1" defer></script>
     <script src="/static/motion.js?v=20261007-forum-1" defer></script>
-    <script src="/static/community-reader.js?v=20261011-six-school-final-2" defer></script>
+    <script src="/static/community-reader.js?v=20261013-picker-rail-1" defer></script>
     <script src="/static/community-moderation.js?v=20260930-discussion-2b" defer></script>
     <script src="/static/academic-units.js?v=20261001-departments-1" defer></script>
     <script src="/static/ccu-academic-units.js?v=20261008-ccu-filter-23" defer></script>

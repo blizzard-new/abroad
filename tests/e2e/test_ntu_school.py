@@ -22,7 +22,6 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
         "nodes => nodes.map(node => node.dataset.homeSchool)"
     ) == ["長庚大學", "國立臺北大學", "國立臺灣大學", "國立中正大學", "國立中央大學", "淡江大學"]
     page.locator('[data-home-school="國立臺灣大學"]').click()
-    page.locator("#confirm-school").click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     expect(page.locator("#school-switcher-label")).to_have_text("國立臺灣大學")
@@ -63,7 +62,6 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="長庚大學"]').click()
-    page.locator("#confirm-school").click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '長庚大學'")

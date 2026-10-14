@@ -38,9 +38,11 @@ def test_home_displays_stored_posts_without_destination_sections(page, live_serv
     expect(page.locator(".featured-board-card")).to_have_count(3)
     assert page.locator(".discussion-summary").first.bounding_box()["y"] < 956
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
-    for control in ["theme-toggle", "refresh-button", "account-button", "school-switcher", "application-tools"]:
+    for control in ["theme-toggle", "refresh-button", "account-button", "application-tools"]:
         expect(page.locator(f"#glass-navigation #{control}")).to_have_count(1)
-    expect(page.locator("#main-content .uniway-public-nav, #main-content .route-toolbar, #main-content .topbar-actions")).to_have_count(0)
+    expect(page.locator("#glass-navigation #school-switcher")).to_have_count(0)
+    expect(page.locator("#main-content .uniway-public-nav, #main-content .topbar-actions")).to_have_count(0)
+    expect(page.locator(".page-back-bar #school-switcher")).to_be_visible()
     capture(page, f"discussion-home-{width}.png")
     page.locator(f'[data-discussion-open="{posts[0].id}"]').first.click()
     expect(page.locator("#discussion-article-title")).to_contain_text(marker)
@@ -163,14 +165,12 @@ def test_expanded_tools_do_not_overlap_account_controls(page, live_server, width
     ]
     tools.locator(".application-extra-tools > summary").click()
     bounds = page.locator("#glass-navigation").evaluate("""rail => {
-        const toolbar = rail.querySelector('.route-toolbar').getBoundingClientRect();
         const panel = rail.querySelector('.application-tools-panel').getBoundingClientRect();
         const actions = rail.querySelector('.topbar-actions').getBoundingClientRect();
-        return {toolbarBottom: toolbar.bottom, panelBottom: panel.bottom,
-                actionsTop: actions.top, scrollHeight: rail.scrollHeight, clientHeight: rail.clientHeight};
+        return {panelBottom: panel.bottom, actionsTop: actions.top,
+                scrollHeight: rail.scrollHeight, clientHeight: rail.clientHeight};
     }""")
     if width <= 900:
-        assert bounds["panelBottom"] <= bounds["toolbarBottom"] + 1
         assert bounds["actionsTop"] >= bounds["panelBottom"]
         assert bounds["scrollHeight"] >= bounds["clientHeight"]
     else:
@@ -237,10 +237,12 @@ def test_compact_rail_expands_with_full_labels_for_pointer_and_keyboard(page, li
     expect(rail.get_by_text("學校搜尋", exact=True)).to_be_visible()
     expect(rail.get_by_text("我的申請", exact=True)).to_be_visible()
     assert page.locator("#community-hub").bounding_box()["x"] == content_x
-    capture(page, f"rail-expanded-{'reduced' if reduced else 'animated'}.png")
+    rail_box = rail.bounding_box()
+    assert rail_box["x"] + rail_box["width"] > content_x, "the expanded rail should overlay the fixed page canvas"
+    capture(page, f"rail-overlay-expanded-{'reduced' if reduced else 'animated'}.png")
     duration = rail.evaluate("el => getComputedStyle(el).transitionDuration")
     assert (duration == "0s") == reduced
-    page.locator("#community-hub-title").hover()
+    page.mouse.move(1000, 24)
     expect(rail).to_have_css("width", "76px")
     expect(label).to_be_hidden()
     guide.focus()
@@ -256,6 +258,6 @@ def test_compact_rail_expands_with_full_labels_for_pointer_and_keyboard(page, li
     assert panel.evaluate('el => el.matches(":popover-open")')
     panel.get_by_role("link", name="選校與確認", exact=True).hover()
     expect(panel).to_be_visible()
-    page.locator("#community-hub-title").click()
+    page.mouse.click(1000, 700)
     expect(panel).not_to_be_visible()
     capture(page, f"expanding-rail-{'reduced' if reduced else 'animated'}.png")

@@ -1,0 +1,32 @@
+from pathlib import Path
+import json
+W=Path('/workspace/ncu-resume-work/twentieth')
+notes={
+'1vR0gVYttXYrTQxNhb900Gbr4BzwJFoJU':('2026–2027；布爾諾資訊科技學院FIT／Erasmus',[
+'BUT/FIT標誌及CZBRNO01，捷克布爾諾大學行政Antoninska1，資訊科技學院Bozetechova2，宿舍辦公Kolejni2三種址不可混同。2026/27學院原件不是全校/臺灣雙邊方案核准。冬季開始2026/9/7，申請3/31–5/31(需簽證4/30提前)；夏季開始2027/2/8，申請至11/15(需簽證10/15提前)，含延長留學。每學期13授課週+5考試週；原文迎新說開課前一週，但冬迎新9/7–11與開始9/7同週，夏迎新2/1–5吻合。強烈建議非必修，註冊最晚學期首週。電子申請唯一方式明指Erasmus，不能擴臺灣所有雙邊；未列附件/提名截止/住宿額度租金。課單連結year=2025雖本文2026–27，不算新年度已核課。']),
+'19_r844eDJUSvpbBQ5_VliZCKh3YAdaWK':('未註年母校介紹',[
+'BrnoUniversityofTechnology中英文/校徽、捷克Antoninska548/1地址與新件行政地址一致。舊大學/研究所、英文B2(anycertificateorconfirmation)，冬9–3月夏3–7月，與新FIT夏2/8開始不同。非EU簽證及全停留保險、出發至少60日前辦理為舊校方文字，不能當現行政府核定時程。']),
+'1QSeMwHSexme8AsYTQKKoMDPBXY_y9l3v':('未註年；原Franche-Comté校名',[
+'UniversiteFrancheComte標誌/univ-fcomte官方域；6院5學校6校區，Besancon/Belfort/Montbeliard/Lons-le-Saunier/Vesoul/Dole，不能選單一城作所有教學地址。學制介紹BA/Master/PhD/職業非全交換准入；交換1或2學期、30學分每學期。CLA另有FLE法語1週至全年與文化實習支持，沒有列費用/當期課單。照片著作LudovicGodard/JeanCharlesSexe不為開放許可。',
+'國際處PlaceSaintJacques25000Besancon非所有校區。提名秋5/15春10/15、入學與住宿申請秋6/1春11/1，無年不轉116。法语按方案B2或C1或教師等值信，其他授課語言測驗依所選方案；舊母校B2不能消除C1。稱提供所有國際交換校內宿舍，經MobilityOnline申請，但未年未核116名額；生活700–800EUR/月供參考，沒有列各項包含範圍。照片ThomasHazebrouck不為開放許可。']),
+'1BT0vrPgAHKyTh1MSJj1ZIlXSgO917mcE':('未註年母校介紹；明列新舊校名',[
+'標題UniversiteMarieetLouisPasteur(UMLP)瑪麗路易巴斯德、原Franche-Comte(UFC)風舍孔泰，校徽、法國Besancon4PlaceSaintJacques與原facts同城址，身分不能只靠名稱相似。大學/研究所；法語B2或教師等值信；9–1月/2–7月為無年母校參考。']),
+'1ZkcBoGJ0d135L-fSbdKbVj_EVNsYHR_P':('檔名2025–26；正文未註年',[
+'USPN校徽、F PARIS013、Villetaneuse IUT辦公L10199avenueJeanBaptisteClement93430，列其他校區不代表同地上課。提名秋/全年5/15春10/31，無學生申請截止。一般大學及研究所、部分M1/M2不開放，醫學除協議特許不開放；名額依協議無數字。一般法語B1必須B2強薦可教師/母校信/DELF/TCF母語免證明；LLSHS非Erasmus大學DELF B1/碩士DELF B2強制且教授視訊面試，不能以一般信替代。開學密集法語18小時，A2–C1分班非入學門檻。',
+'每學期可30ECTS全年60，實際認可學分由派出校/學生決定不是硬性最低30。母校email提名需姓名國籍生日emailISCED領域学期，學生MoveOn上傳學習協議、正式成績單、目的陳述、課程負責人推薦信、法語證明、CV、護照、母校學生證共8；OLA於申請完成接受後才簽，不初申先假定全簽。迎新接法語班、Tandem文化語言互助。申請表勾CROUS由空房分配，350–550EUR未明週期；生活約800/月。保險意外疾病民責、under28學生社保說法未核時效，不当當期法；TypeD/EEF依主管規定。秋9/1–1/31春2/1–6/30。']),
+'1aeRSUI95MKEzTrKG7AWpy6kQMCIt-cOY':('未註年母校介紹；商管國際方案限定',[
+'USPN/原Paris13明確中英校名及校徽、法國Villetaneuse99avenueJeanBaptisteClement吻合。五校區介紹；中央舊資格大學部且限InternationalProgrammeinBusinessandManagement，不自用外校一般研究所開放取代。語言原文B1preferable,orB2levelinEnglish，B1語種未明不可自行補成French；與一般法授原件不能擇低套英授商管。秋9–1月春1–6月，較新表2月春開始不同。']),
+'1fSWggjM147-lFXkgmUFXiX_GV7Zj_GyH':('2026–2027，理工學院＋全校概況',[
+'LinkopingLiU理工學院標誌、理工領域五組，跨學科/系選課須先備。母校提名必須，秋/全年提名與申請均4/15春10/15。非EU需申請且錄取至少30ECTS/學期為校方引居留要求，政府當期另核。英語不收證明但需能跟上技術課，不免母校資格。提名者錄取決定10週內，非人人錄取。非EU住宿優先/EU有餘位才配，不保證住宿(第2頁)。',
+'全校ExchangePartnerProfile2026–27郵址SE58183Linkoping瑞典、SLINKOPI01，四學院窗口不代表中央開放全部。秋8–1月春1–6月初，全時40小時/週、30credits/學期。住宿隨入學申請不保證、若獲LiU房約380EUR/月含暖電網；全部生活(已含房餐教材娛樂)約950EUR/月勿再加380。出發前健康與失損保險/EU EHIC；居留錄取後辦，約4月為校方概估非保證。瑞典語密集/兼讀課、身障支持，未列抵達確日。']),
+'1lw6Z-dz1j3SIRy_bzcsofMEDEEhXdhFD':('未註年母校介紹，紅字限定派出院別',[
+'LinkopingUniversity林雪平(目錄林雪坪)校徽、瑞典SE58183郵址與新件一致。紅字大學/研究所限理、工、生醫理工及資電學院學生申請，不用新全校4院聯絡表擴大。英語能力、修瑞典語課需瑞典語能力；不收英檢證明為舊外校參考非母校116免門檻。秋8/9–1月春1–6月。']),
+'1Kkl1LEnElibIowhWBt_V2ibjJT947aul':('2025–2026',[
+'Xamk全名校徽、芬蘭SFMIKKELI07官方Mikkeli Patteristonkatu3D郵箱68/50100，不同母校Kouvola地址。四格原圖核對：Kotka遊戲程式/遊戲技術/資安/物流/社會照護/健康照護僅實習；Kouvola數位國企與文化設計(遊戲/平面/修復/服務/室內家具/服装舞台)；Mikkeli環境工程/IT/青年工作實習/社工實習；Savonlinna生物產品/護理/物理治療主要實習。2025秋9/1–12/21、2026春1/12–4/30，學期首迎新，非母校舊1–5月日期。',
+'提名5/1及10/15，申請秋全年5/15春11/1，SoleMOVE提名申請，未列完整附件。Recommended英語學業/實習B2職員C1、芬蘭語none，不將職員C1套學生。ECTS學分制、5至0成績，原圖B77–88和C65–77在77重疊，E40–52及F<51亦重疊，不修補成績/自換算抵免。H接受。需全停留健康保險未列額度保費；住宿協助非保證房/無租金期限。亞太/雙邊窗口與各校區不同，教學/實習窗口分開。']),
+'1Nne_gYrk1GZVxT769QXOWR6xs21H-V_x':('未註年母校介紹',[
+'XAMK中英校名logo，芬蘭Kouvola Paraatikentta7/45100；維基來源簡介不作正式改名/合併主證。大學/研究所、英語B2、秋9–12月春1–5月，與外校2025–26春4/30不同。專業分佈要求查課程頁，不把Kouvola位置套4校區。'])}
+receipts={r['source_id']:r for r in json.load(open(W/'fetch-receipts.json'))};out=[]
+for sid,(year,pages) in notes.items():
+ assert len(pages)==receipts[sid]['page_count'];out.append({'source_id':sid,'sha256':receipts[sid]['sha256'],'document_year_scope':year,'native_pages_read':list(range(1,len(pages)+1)),'visual_pages_read':list(range(1,len(pages)+1)),'page_notes':list(enumerate(pages,1))})
+(W/'reading-notes.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(len(out),sum(len(x['page_notes'])for x in out))

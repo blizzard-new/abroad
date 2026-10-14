@@ -18,7 +18,6 @@ def test_dated_host_reference_is_readable_with_pending_home_quota(page, live_ser
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立臺灣大學"]').click()
-    page.locator("#confirm-school").click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
@@ -52,7 +51,6 @@ def test_field_conclusion_and_specific_missing_items_remain_visible(page, live_s
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立臺灣大學"]').click()
-    page.locator("#confirm-school").click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")

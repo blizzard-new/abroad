@@ -1,0 +1,49 @@
+CONFTEST LOADED!
+...........F.F                                                           [100%]
+=================================== FAILURES ===================================
+_ test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life[ncu-129-\u95dc\u897f\u5927\u5b78-6-9-12] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-92/test_degree_language_contradic2')
+row = 'ncu-129', name = '關西大學', initial = 6, stages = 9, conditions = 12
+
+    @pytest.mark.parametrize('row,name,initial,stages,conditions', CASES)
+    def test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life(tmp_path, row, name, initial, stages, conditions):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        audit = ncu_field_audit(partner.school_name)
+>       assert len(audit['fields']) == 17 and audit['checked_at'].startswith('2026-10-11' if row == 'ncu-129' else '2026-10-09')
+E       AssertionError: assert (17 == 17 and False)
+E        +  where 17 = len({'city': {'key': 'city', 'label': '城市與校區位置', 'status': 'needs_confirmation', 'note': '大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Ta... 研究所需找符合研究主題教授、日／英研究計畫供practicum審；因研究內容／日語不符可能改以本科exchange接收，研究科開課也可能取消。FAQ沒有GPA門檻，以母校推薦審，不移用其他一週營隊GPA3.0。', ...}, ...})
+E        +  and   False = <built-in method startswith of str object at 0x7f37f05e7dc0>('2026-10-11')
+E        +    where <built-in method startswith of str object at 0x7f37f05e7dc0> = '2026-10-12T00:11:37.937485+00:00'.startswith
+
+tests/test_ncu_shizuoka_chuo_kansai.py:118: AssertionError
+_ test_selected_public_passages_visuals_and_version_dates_remain_bound_to_original_bytes _
+
+    def test_selected_public_passages_visuals_and_version_dates_remain_bound_to_original_bytes():
+        sources=source_records()
+        for ident,pages in [('host-kansai-next-07',[9]),('host-kansai-next-08',[1,5])]:
+            s=sources[ident];ex=json.loads((SOURCES/f'{ident}-public-excerpt.json').read_text())
+            assert [p['page']for p in s['pages']]==pages and s['source_excerpt_only']
+            assert s['sha256']==ex['source_sha256']
+            assert s['content_status']['all_pages_read'] == (ident == 'host-kansai-next-08')
+            changed={'sha256':'changed','pages':[{'page':1,'text':'new'}]}
+            attach_public_field_excerpt(changed,ex)
+            assert not changed['pages'] and changed['error']
+        assert sources['host-chuo-next-01']['sha256']==sources['host-chuo-next-15']['sha256']
+        assert sources['host-chuo-next-01']['visual_review']['pdf_pages_reviewed']==[13,18]
+        assert sources['host-chuo-next-08']['visual_review']['pdf_pages_reviewed']==[1]
+        manifest=json.loads((ROOT/'docs/ncu-source-evidence/shizuoka-chuo-kansai-original-pages/manifest.json').read_text())
+        assert manifest['actual_images_viewed']==len(manifest['images'])==4
+        for item in manifest['images']:
+            assert item['source_sha256']==sources[item['source_id']]['sha256']
+        attempts=json.loads((SOURCES/'host-shizuoka-chuo-kansai-original-manifest-20261009.json').read_text())
+        assert len(attempts)==51 and all(a['checked_at'].startswith('2026-10-09')for a in attempts)
+>       assert all(not sources[a['id']]['content_status']['all_pages_read']for a in attempts)
+E       assert False
+E        +  where False = all(<generator object test_selected_public_passages_visuals_and_version_dates_remain_bound_to_original_bytes.<locals>.<genexpr> at 0x7f37f10ecd60>)
+
+tests/test_ncu_shizuoka_chuo_kansai.py:193: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life[ncu-129-\u95dc\u897f\u5927\u5b78-6-9-12]
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_selected_public_passages_visuals_and_version_dates_remain_bound_to_original_bytes
+2 failed, 12 passed in 12.79s

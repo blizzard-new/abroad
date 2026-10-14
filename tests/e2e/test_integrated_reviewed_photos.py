@@ -19,7 +19,6 @@ def test_ntu_nineteen_reviewed_photo_bytes_load_with_matching_credit(page, live_
     open_navigation(page)
     page.locator('#school-switcher').click()
     page.locator('[data-home-school="國立臺灣大學"]').click()
-    page.locator('#confirm-school').click()
     page.wait_for_function("() => state.dashboard?.school_name==='國立臺灣大學' && !state.partnerDataLoading")
     results=page.evaluate('''async reviews => {
       const results=[];

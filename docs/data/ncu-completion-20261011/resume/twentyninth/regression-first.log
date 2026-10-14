@@ -1,0 +1,40 @@
+CONFTEST LOADED!
+........................................................................ [ 14%]
+........................................................................ [ 28%]
+........................................................................ [ 42%]
+.................F...................................................... [ 57%]
+........................................................................ [ 71%]
+........................................................................ [ 85%]
+........F............................................................... [100%]
+=================================== FAILURES ===================================
+____ test_tuaf_visual_sidecar_reaches_offline_audit_and_rejects_changed_sha ____
+
+    def test_tuaf_visual_sidecar_reaches_offline_audit_and_rejects_changed_sha():
+        from exchange_info.ncu_source_coverage import attach_visual_review, source_content_status
+
+        raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+        source = next(d for d in raw if d["id"] == "host-tuaf-2026")
+        sidecar = json.loads((ROOT / "sources/ncu/2026-10-08/host-tuaf-2026-visual-review.json").read_text())
+        assert source["visual_review"] == sidecar
+>       assert sidecar["pdf_page"] == 2 and source["content_status"]["page_count"] == 2
+               ^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'pdf_page'
+
+tests/test_ncu_integration.py:526: KeyError
+_____ test_source_check_dates_and_archive_citations_follow_actual_sources ______
+
+    def test_source_check_dates_and_archive_citations_follow_actual_sources():
+        sources = source_records()
+        for row, name, *_ in CASES:
+            partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+            audit = ncu_field_audit(partner.school_name)
+>           assert audit['checked_at'].startswith('2026-10-09')
+E           AssertionError: assert False
+E            +  where False = <built-in method startswith of str object at 0x7f0bf5fc76e0>('2026-10-09')
+E            +    where <built-in method startswith of str object at 0x7f0bf5fc76e0> = '2026-10-11T23:58:22.331017+00:00'.startswith
+
+tests/test_ncu_tcu_toyama_fukui.py:66: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_integration.py::test_tuaf_visual_sidecar_reaches_offline_audit_and_rejects_changed_sha
+FAILED tests/test_ncu_tcu_toyama_fukui.py::test_source_check_dates_and_archive_citations_follow_actual_sources
+2 failed, 502 passed in 194.05s (0:03:14)

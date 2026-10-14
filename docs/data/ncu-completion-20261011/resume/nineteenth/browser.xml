@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="8" time="76.056" timestamp="2026-10-11T21:47:49.807412+00:00" hostname="53f3dafad1d0"><testcase classname="tests.e2e.test_ncu_nineteenth_documents" name="test_new_reviewed_hosts_visible[ece-ECE\u5df4\u9ece-ECE Ecole d'Ingenieurs-\u8ab2\u696d\u8207\u6559\u5b78-terms0-390]" time="17.529" /><testcase classname="tests.e2e.test_ncu_nineteenth_documents" name="test_new_reviewed_hosts_visible[ece-ECE\u5df4\u9ece-ECE Ecole d'Ingenieurs-\u8ab2\u696d\u8207\u6559\u5b78-terms0-1440]" time="8.007" /><testcase classname="tests.e2e.test_ncu_nineteenth_documents" name="test_new_reviewed_hosts_visible[idrac-IDRAC-IDRAC Business School-\u5b89\u5168\u3001\u91ab\u7642\u8207\u4fdd\u96aa-terms1-390]" time="5.438" /><testcase classname="tests.e2e.test_ncu_nineteenth_documents" name="test_new_reviewed_hosts_visible[idrac-IDRAC-IDRAC Business School-\u5b89\u5168\u3001\u91ab\u7642\u8207\u4fdd\u96aa-terms1-1440]" time="8.326" /><testcase classname="tests.e2e.test_ncu_nineteenth_documents" name="test_new_reviewed_hosts_visible[kyonggi-\u4eac\u757f-Kyonggi University-\u4f4f\u5bbf\u8207\u6821\u5712\u751f\u6d3b-terms2-390]" time="10.590"><failure message="AssertionError: Locator expected to contain text '2016'&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#life-content .life-card&quot;).filter(has=locator(&quot;h3&quot;).filter(has_text=&quot;住宿與校園生活&quot;))&#10;&#10;Aria snapshot:&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- main:&#10;  - button &quot;開啟功能選單&quot;&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - status&#10;  - region &quot;京畿大學 Kyonggi University&quot;:&#10;    - button &quot;加入比較京畿大學 Kyonggi University&quot;&#10;    - button &quot;登入建立計畫&quot;&#10;    - img &quot;京畿大學 Kyonggi University校園照片&quot;&#10;    - text: 校園參考照片：경기대학교 야경.jpg。作者：Motoko C. K.；授權：CC0；拍攝日期：2018-11-22 19:13:59。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 ·&#10;    - link &quot;圖片授權&quot;:&#10;      - /url: https://creativecommons.org/publicdomain/zero/1.0/deed.en&#10;    - text: 南韓 · 交換學生 下一站&#10;    - strong: 南韓&#10;    - text: Suwon&#10;    - heading &quot;京畿大學 Kyonggi University&quot; [level=1]&#10;    - text: 我的資格&#10;    - strong: 尚未進行資格初判&#10;    - text: 合作校參考時程&#10;    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）&#10;    - text: 語言門檻&#10;    - strong: 【京畿未註年母校簡介，附件明列2016下學期費率、2017–2018宿舍與韓語班期程；中央116年度校別、名額、方案及實際校區仍待核實；以下保留原件年度參考，不啟用期限提醒。】母校舊介紹語言欄寫「無」，未註年，不能據此…&#10;    - text: 生活費參考&#10;    - strong: 2016下學期韓語中心舊費率：一般註冊費100,000韓元，交換生免；10週學費一般1,250,000，交換生五折625,000韓元。此優惠僅語言班，不能推定普通學位交換免外校學費或仍適用116。&#10;    - text: 交換名額&#10;    - strong: 依公告&#10;    - text: 研修期間&#10;    - strong:&#10;      - text: 116母校方案：2027/9–2028/2&#10;      - strong: 一學期&#10;      - text: 、2027/9–2028/6&#10;      - strong: 一學年&#10;      - text: 、2028/2–6&#10;      - strong: 一學期&#10;      - text: ；實際依外校校曆與可提名學期確認。 【京畿未註年母校簡介，附件明列2016下學期費率、2017–2018宿舍與韓語班期程；中央116年度校別、名額、方案及實際校區仍待核實；以下保留原件年度參考，不啟用期限提醒。】母校欄僅寫秋／春學期；附件的2017年3/13–5/23、6/12–8/21、9/11–11/24及12/4–2018/2/14是韓語班日期，不能當普通交換或116校曆。&#10;    - tablist &quot;交換學校詳細資訊&quot;:&#10;      - tab &quot;快速了解&quot;&#10;      - tab &quot;申請方式&quot;&#10;      - tab &quot;生活情報&quot; [selected]&#10;      - tab &quot;出發前提醒&quot;&#10;      - tab &quot;學生心得&quot;&#10;      - tab &quot;學生社群&quot;&#10;    - tabpanel &quot;生活情報&quot;:&#10;      - heading &quot;生活情報&quot; [level=2]&#10;      - status: 正在更新資料…&#10;      - button &quot;找學生分享&quot;&#10;      - button &quot;更新中&quot; [disabled]&#10;      - group: 資料說明&#10;      - group: 官方生活指南&#10;      - article:&#10;        - heading &quot;住宿與宿舍&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 2016下學期費率、2017–18住宿參考：雙人房4／6／12個月為1,440,400／2,099,600／4,084,200韓元，已含100,000韓元押金。提前入住或延住須准，舊估約11,000韓元／日；抵校健檢另約15,000韓元。不是2026或116價格，亦無當期床位保證。&#10;        - group: 原文與來源&#10;        - text: AI 推論&#10;        - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。&#10;        - group: 推論依據&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;每月生活預算&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 2016下學期韓語中心舊費率：一般註冊費100,000韓元，交換生免；10週學費一般1,250,000，交換生五折625,000韓元。此優惠僅語言班，不能推定普通學位交換免外校學費或仍適用116。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;課業與教學&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 另附韓語中心班每期10週200小時、每週5天每天4小時，上午9–13時或下午13–17時。這是獨立語言班；沒有普通學位交換的課單、學分或抵免證據。 母校欄僅寫秋／春學期；附件的2017年3/13–5/23、6/12–8/21、9/11–11/24及12/4–2018/2/14是韓語班日期，不能當普通交換或116校曆。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;校園活動與社交&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 舊宿舍資料列抵校體檢約15,000韓元，屬2016–17參考；提前入住需宿舍允許。未載當期抵校、接送或報到日。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;安全、醫療與保險&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 舊母校簡介稱若未事先投保，可抵達後購買一年約200美元保險；未註當期保障、適用性或韓國國民健康保險規則，不作現行保費或免保證明。&#10;        - group: 原文與來源&#10;        - text: 官方&#10;        - paragraph: 舊母校簡介列抵達前辦D-2簽證；沒有當期主管機關文件或費率，須依錄取方案與國籍另核。&#10;        - group: 原文與來源&#10;        - text: AI 推論&#10;        - paragraph: 可先查詢上述健康服務；接診、語言與保險適用性仍須確認。&#10;        - group: 推論依據&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;文化適應與交朋友&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 京畿大學文件所列為韓國京畿道水原市靈通區光教山路154-42號校址（Gwanggyosan-ro）。此文件指水原，不能替代首爾校區或其他韓國學校。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - group: 待補資料（4 項）&#10;    - complementary &quot;申請準備進度與官方來源&quot;:&#10;      - heading &quot;我的申請進度&quot; [level=2]&#10;      - progressbar &quot;申請準備進度&quot;:&#10;        - strong: 0 / 5 已完成&#10;        - text: 準備中&#10;      - paragraph:&#10;        - text: 登入以保存進度&#10;        - button &quot;登入&quot;&#10;      - checkbox &quot;確認資格與語言門檻&quot; [disabled]&#10;      - text: 確認資格與語言門檻&#10;      - checkbox &quot;比較課程、費用與生活&quot; [disabled]&#10;      - text: 比較課程、費用與生活&#10;      - checkbox &quot;備妥校內申請文件&quot; [disabled]&#10;      - text: 備妥校內申請文件&#10;      - checkbox &quot;完成校內甄選送件&quot; [disabled]&#10;      - text: 完成校內甄選送件&#10;      - checkbox &quot;完成合作校線上申請&quot; [disabled]&#10;      - text: 完成合作校線上申請&#10;      - strong: 送件前確認&#10;      - paragraph: 截止日與資格以當期官方公告為準。&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">page = &lt;Page url='http://127.0.0.1:60621/?view=list&amp;home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&amp;q=%E4%BA%AC%E7%95%BF#school=%E4%BA%AC%E7%95%BF%E5%A4%A7%E5%AD%B8%20Kyonggi%20University'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:60621', data_dir=PosixPath('/tmp/ncu19-browser/web-e2e-data0'))
+tmp_path = PosixPath('/tmp/ncu19-browser/test_new_reviewed_hosts_visibl4')
+width = 390, slug = 'kyonggi', query = '京畿', name = 'Kyonggi University'
+title = '住宿與校園生活', terms = ['2016', '2017–18', '不是2026或116價格']
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    @pytest.mark.parametrize('slug,query,name,title,terms', CASES)
+    def test_new_reviewed_hosts_visible(page, live_server, tmp_path, width, slug, query, name, title, terms):
+        page.set_viewport_size({'width': width, 'height': 956})
+        page.emulate_media(reduced_motion='reduce')
+        errors = []
+        page.on('pageerror', lambda error: errors.append(str(error)))
+        select_ncu(page, live_server)
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(query)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        trigger = f'.school-detail-trigger[data-school-name$="{name}"]'
+        if width &lt; 700:
+            page.locator('#partner-table .partner-card').filter(has=page.locator(trigger)).first.locator(':scope &gt; summary').click()
+        page.locator(f'#partner-table {trigger}:visible').first.click()
+        page.locator('#detail-tab-life').click()
+        page.evaluate('() =&gt; document.fonts.ready')
+        page.wait_for_timeout(350)
+        card = page.locator('#life-content .life-card').filter(has=page.locator('h3').filter(has_text=title))
+        for term in terms:
+&gt;           expect(card).to_contain_text(term)
+E           AssertionError: Locator expected to contain text '2016'
+E           Actual value: None
+E           Error: element(s) not found
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#life-content .life-card").filter(has=locator("h3").filter(has_text="住宿與校園生活"))
+E
+E           Aria snapshot:
+E           - link "跳到主要內容":
+E             - /url: "#main-content"
+E           - main:
+E             - button "開啟功能選單"
+E             - link "UniWay 首頁":
+E               - /url: "#home"
+E               - strong: UniWay
+E             - status
+E             - region "京畿大學 Kyonggi University":
+E               - button "加入比較京畿大學 Kyonggi University"
+E               - button "登入建立計畫"
+E               - img "京畿大學 Kyonggi University校園照片"
+E               - text: 校園參考照片：경기대학교 야경.jpg。作者：Motoko C. K.；授權：CC0；拍攝日期：2018-11-22 19:13:59。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 ·
+E               - link "圖片授權":
+E                 - /url: https://creativecommons.org/publicdomain/zero/1.0/deed.en
+E               - text: 南韓 · 交換學生 下一站
+E               - strong: 南韓
+E               - text: Suwon
+E               - heading "京畿大學 Kyonggi University" [level=1]
+E               - text: 我的資格
+E               - strong: 尚未進行資格初判
+E               - text: 合作校參考時程
+E               - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E               - text: 語言門檻
+E               - strong: 【京畿未註年母校簡介，附件明列2016下學期費率、2017–2018宿舍與韓語班期程；中央116年度校別、名額、方案及實際校區仍待核實；以下保留原件年度參考，不啟用期限提醒。】母校舊介紹語言欄寫「無」，未註年，不能據此…
+E               - text: 生活費參考
+E               - strong: 2016下學期韓語中心舊費率：一般註冊費100,000韓元，交換生免；10週學費一般1,250,000，交換生五折625,000韓元。此優惠僅語言班，不能推定普通學位交換免外校學費或仍適用116。
+E               - text: 交換名額
+E               - strong: 依公告
+E               - text: 研修期間
+E               - strong:
+E                 - text: 116母校方案：2027/9–2028/2
+E                 - strong: 一學期
+E                 - text: 、2027/9–2028/6
+E                 - strong: 一學年
+E                 - text: 、2028/2–6
+E                 - strong: 一學期
+E                 - text: ；實際依外校校曆與可提名學期確認。 【京畿未註年母校簡介，附件明列2016下學期費率、2017–2018宿舍與韓語班期程；中央116年度校別、名額、方案及實際校區仍待核實；以下保留原件年度參考，不啟用期限提醒。】母校欄僅寫秋／春學期；附件的2017年3/13–5/23、6/12–8/21、9/11–11/24及12/4–2018/2/14是韓語班日期，不能當普通交換或116校曆。
+E               - tablist "交換學校詳細資訊":
+E                 - tab "快速了解"
+E                 - tab "申請方式"
+E                 - tab "生活情報" [selected]
+E                 - tab "出發前提醒"
+E                 - tab "學生心得"
+E                 - tab "學生社群"
+E               - tabpanel "生活情報":
+E                 - heading "生活情報" [level=2]
+E                 - status: 正在更新資料…
+E                 - button "找學生分享"
+E                 - button "更新中" [disabled]
+E                 - group: 資料說明
+E                 - group: 官方生活指南
+E                 - article:
+E                   - heading "住宿與宿舍" [level=3]
+E                   - text: 官方
+E                   - paragraph: 2016下學期費率、2017–18住宿參考：雙人房4／6／12個月為1,440,400／2,099,600／4,084,200韓元，已含100,000韓元押金。提前入住或延住須准，舊估約11,000韓元／日；抵校健檢另約15,000韓元。不是2026或116價格，亦無當期床位保證。
+E                   - group: 原文與來源
+E                   - text: AI 推論
+E                   - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+E                   - group: 推論依據
+E                   - group: 繼續查詢
+E                 - article:
+E                   - heading "每月生活預算" [level=3]
+E                   - text: 官方
+E                   - paragraph: 2016下學期韓語中心舊費率：一般註冊費100,000韓元，交換生免；10週學費一般1,250,000，交換生五折625,000韓元。此優惠僅語言班，不能推定普通學位交換免外校學費或仍適用116。
+E                   - group: 原文與來源
+E                   - group: 繼續查詢
+E                 - article:
+E                   - heading "課業與教學" [level=3]
+E                   - text: 官方
+E                   - paragraph: 另附韓語中心班每期10週200小時、每週5天每天4小時，上午9–13時或下午13–17時。這是獨立語言班；沒有普通學位交換的課單、學分或抵免證據。 母校欄僅寫秋／春學期；附件的2017年3/13–5/23、6/12–8/21、9/11–11/24及12/4–2018/2/14是韓語班日期，不能當普通交換或116校曆。
+E                   - group: 原文與來源
+E                   - group: 繼續查詢
+E                 - article:
+E                   - heading "校園活動與社交" [level=3]
+E                   - text: 官方
+E                   - paragraph: 舊宿舍資料列抵校體檢約15,000韓元，屬2016–17參考；提前入住需宿舍允許。未載當期抵校、接送或報到日。
+E                   - group: 原文與來源
+E                   - group: 繼續查詢
+E                 - article:
+E                   - heading "安全、醫療與保險" [level=3]
+E                   - text: 官方
+E                   - paragraph: 舊母校簡介稱若未事先投保，可抵達後購買一年約200美元保險；未註當期保障、適用性或韓國國民健康保險規則，不作現行保費或免保證明。
+E                   - group: 原文與來源
+E                   - text: 官方
+E                   - paragraph: 舊母校簡介列抵達前辦D-2簽證；沒有當期主管機關文件或費率，須依錄取方案與國籍另核。
+E                   - group: 原文與來源
+E                   - text: AI 推論
+E                   - paragraph: 可先查詢上述健康服務；接診、語言與保險適用性仍須確認。
+E                   - group: 推論依據
+E                   - group: 繼續查詢
+E                 - article:
+E                   - heading "文化適應與交朋友" [level=3]
+E                   - text: 官方
+E                   - paragraph: 京畿大學文件所列為韓國京畿道水原市靈通區光教山路154-42號校址（Gwanggyosan-ro）。此文件指水原，不能替代首爾校區或其他韓國學校。
+E                   - group: 原文與來源
+E                   - group: 繼續查詢
+E                 - group: 待補資料（4 項）
+E               - complementary "申請準備進度與官方來源":
+E                 - heading "我的申請進度" [level=2]
+E                 - progressbar "申請準備進度":
+E                   - strong: 0 / 5 已完成
+E                   - text: 準備中
+E                 - paragraph:
+E                   - text: 登入以保存進度
+E                   - button "登入"
+E                 - checkbox "確認資格與語言門檻" [disabled]
+E                 - text: 確認資格與語言門檻
+E                 - checkbox "比較課程、費用與生活" [disabled]
+E                 - text: 比較課程、費用與生活
+E                 - checkbox "備妥校內申請文件" [disabled]
+E                 - text: 備妥校內申請文件
+E                 - checkbox "完成校內甄選送件" [disabled]
+E                 - text: 完成校內甄選送件
+E                 - checkbox "完成合作校線上申請" [disabled]
+E                 - text: 完成合作校線上申請
+E                 - strong: 送件前確認
+E                 - paragraph: 截止日與資格以當期官方公告為準。
+E           - paragraph:
+E             - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E             - button "停用匿名使用統計"
+E             - text: 。
+E             - link "隱私權政策":
+E               - /url: /privacy
+E             - link "使用條款":
+E               - /url: /terms
+
+tests/e2e/test_ncu_nineteenth_documents.py:34: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ncu_nineteenth_documents" name="test_new_reviewed_hosts_visible[kyonggi-\u4eac\u757f-Kyonggi University-\u4f4f\u5bbf\u8207\u6821\u5712\u751f\u6d3b-terms2-1440]" time="12.636"><failure message="AssertionError: Locator expected to contain text '2016'&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#life-content .life-card&quot;).filter(has=locator(&quot;h3&quot;).filter(has_text=&quot;住宿與校園生活&quot;))&#10;&#10;Aria snapshot:&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- complementary &quot;系統功能&quot;:&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - navigation &quot;公開探索導覽&quot;:&#10;    - link &quot;首頁&quot;:&#10;      - /url: &quot;#home&quot;&#10;    - link &quot;學校搜尋&quot;:&#10;      - /url: &quot;#partners&quot;&#10;    - link &quot;論壇&quot;:&#10;      - /url: &quot;#forum&quot;&#10;    - link &quot;用戶評價&quot;:&#10;      - /url: &quot;#feedback&quot;&#10;    - group:&#10;      - link &quot;我的申請&quot;:&#10;        - /url: &quot;#advisor&quot;&#10;  - button &quot;返回上一頁&quot;: 返回&#10;  - button &quot;國立中央大學&quot;:&#10;    - strong: 國立中央大學&#10;  - button &quot;切換為深色模式&quot;&#10;  - button &quot;重新整理最新資料&quot;&#10;  - button &quot;登入或建立帳號&quot;: 登入&#10;- main:&#10;  - status&#10;  - region &quot;京畿大學 Kyonggi University&quot;:&#10;    - button &quot;加入比較京畿大學 Kyonggi University&quot;: 加入比較&#10;    - button &quot;登入建立計畫&quot;&#10;    - img &quot;京畿大學 Kyonggi University校園照片&quot;&#10;    - text: 校園參考照片：경기대학교 야경.jpg。作者：Motoko C. K.；授權：CC0；拍攝日期：2018-11-22 19:13:59。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 ·&#10;    - link &quot;圖片授權&quot;:&#10;      - /url: https://creativecommons.org/publicdomain/zero/1.0/deed.en&#10;    - text: 南韓 · 交換學生 下一站&#10;    - strong: 南韓&#10;    - text: Suwon&#10;    - heading &quot;京畿大學 Kyonggi University&quot; [level=1]&#10;    - text: 我的資格&#10;    - strong: 尚未進行資格初判&#10;    - text: 合作校參考時程&#10;    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）&#10;    - text: 語言門檻&#10;    - strong: 【京畿未註年母校簡介，附件明列2016下學期費率、2017–2018宿舍與韓語班期程；中央116年度校別、名額、方案及實際校區仍待核實；以下保留原件年度參考，不啟用期限提醒。】母校舊介紹語言欄寫「無」，未註年，不能據此…&#10;    - text: 生活費參考&#10;    - strong: 2016下學期韓語中心舊費率：一般註冊費100,000韓元，交換生免；10週學費一般1,250,000，交換生五折625,000韓元。此優惠僅語言班，不能推定普通學位交換免外校學費或仍適用116。&#10;    - text: 交換名額&#10;    - strong: 依公告&#10;    - text: 研修期間&#10;    - strong:&#10;      - text: 116母校方案：2027/9–2028/2&#10;      - strong: 一學期&#10;      - text: 、2027/9–2028/6&#10;      - strong: 一學年&#10;      - text: 、2028/2–6&#10;      - strong: 一學期&#10;      - text: ；實際依外校校曆與可提名學期確認。 【京畿未註年母校簡介，附件明列2016下學期費率、2017–2018宿舍與韓語班期程；中央116年度校別、名額、方案及實際校區仍待核實；以下保留原件年度參考，不啟用期限提醒。】母校欄僅寫秋／春學期；附件的2017年3/13–5/23、6/12–8/21、9/11–11/24及12/4–2018/2/14是韓語班日期，不能當普通交換或116校曆。&#10;    - tablist &quot;交換學校詳細資訊&quot;:&#10;      - tab &quot;快速了解&quot;&#10;      - tab &quot;申請方式&quot;&#10;      - tab &quot;生活情報&quot; [selected]&#10;      - tab &quot;出發前提醒&quot;&#10;      - tab &quot;學生心得&quot;&#10;      - tab &quot;學生社群&quot;&#10;    - tabpanel &quot;生活情報&quot;:&#10;      - heading &quot;生活情報&quot; [level=2]&#10;      - status: 暫無新資料 · 2026/10/11 下午09:48&#10;      - button &quot;找學生分享&quot;&#10;      - button &quot;更新資料&quot; [disabled]&#10;      - group: 資料說明&#10;      - group: 官方生活指南&#10;      - article:&#10;        - heading &quot;住宿與宿舍&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 2016下學期費率、2017–18住宿參考：雙人房4／6／12個月為1,440,400／2,099,600／4,084,200韓元，已含100,000韓元押金。提前入住或延住須准，舊估約11,000韓元／日；抵校健檢另約15,000韓元。不是2026或116價格，亦無當期床位保證。&#10;        - group: 原文與來源&#10;        - text: AI 推論&#10;        - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。&#10;        - group: 推論依據&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;每月生活預算&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 2016下學期韓語中心舊費率：一般註冊費100,000韓元，交換生免；10週學費一般1,250,000，交換生五折625,000韓元。此優惠僅語言班，不能推定普通學位交換免外校學費或仍適用116。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;課業與教學&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 另附韓語中心班每期10週200小時、每週5天每天4小時，上午9–13時或下午13–17時。這是獨立語言班；沒有普通學位交換的課單、學分或抵免證據。 母校欄僅寫秋／春學期；附件的2017年3/13–5/23、6/12–8/21、9/11–11/24及12/4–2018/2/14是韓語班日期，不能當普通交換或116校曆。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;校園活動與社交&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 舊宿舍資料列抵校體檢約15,000韓元，屬2016–17參考；提前入住需宿舍允許。未載當期抵校、接送或報到日。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;安全、醫療與保險&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 舊母校簡介稱若未事先投保，可抵達後購買一年約200美元保險；未註當期保障、適用性或韓國國民健康保險規則，不作現行保費或免保證明。&#10;        - group: 原文與來源&#10;        - text: 官方&#10;        - paragraph: 舊母校簡介列抵達前辦D-2簽證；沒有當期主管機關文件或費率，須依錄取方案與國籍另核。&#10;        - group: 原文與來源&#10;        - text: AI 推論&#10;        - paragraph: 可先查詢上述健康服務；接診、語言與保險適用性仍須確認。&#10;        - group: 推論依據&#10;        - group: 繼續查詢&#10;      - article:&#10;        - heading &quot;文化適應與交朋友&quot; [level=3]&#10;        - text: 官方&#10;        - paragraph: 京畿大學文件所列為韓國京畿道水原市靈通區光教山路154-42號校址（Gwanggyosan-ro）。此文件指水原，不能替代首爾校區或其他韓國學校。&#10;        - group: 原文與來源&#10;        - group: 繼續查詢&#10;      - group: 待補資料（4 項）&#10;    - complementary &quot;申請準備進度與官方來源&quot;:&#10;      - heading &quot;我的申請進度&quot; [level=2]&#10;      - progressbar &quot;申請準備進度&quot;:&#10;        - strong: 0 / 5 已完成&#10;        - text: 準備中&#10;      - paragraph:&#10;        - text: 登入以保存進度&#10;        - button &quot;登入&quot;&#10;      - checkbox &quot;確認資格與語言門檻&quot; [disabled]&#10;      - text: 確認資格與語言門檻&#10;      - checkbox &quot;比較課程、費用與生活&quot; [disabled]&#10;      - text: 比較課程、費用與生活&#10;      - checkbox &quot;備妥校內申請文件&quot; [disabled]&#10;      - text: 備妥校內申請文件&#10;      - checkbox &quot;完成校內甄選送件&quot; [disabled]&#10;      - text: 完成校內甄選送件&#10;      - checkbox &quot;完成合作校線上申請&quot; [disabled]&#10;      - text: 完成合作校線上申請&#10;      - strong: 送件前確認&#10;      - paragraph: 截止日與資格以當期官方公告為準。&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">page = &lt;Page url='http://127.0.0.1:60621/?view=list&amp;home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&amp;q=%E4%BA%AC%E7%95%BF#school=%E4%BA%AC%E7%95%BF%E5%A4%A7%E5%AD%B8%20Kyonggi%20University'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:60621', data_dir=PosixPath('/tmp/ncu19-browser/web-e2e-data0'))
+tmp_path = PosixPath('/tmp/ncu19-browser/test_new_reviewed_hosts_visibl5')
+width = 1440, slug = 'kyonggi', query = '京畿', name = 'Kyonggi University'
+title = '住宿與校園生活', terms = ['2016', '2017–18', '不是2026或116價格']
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    @pytest.mark.parametrize('slug,query,name,title,terms', CASES)
+    def test_new_reviewed_hosts_visible(page, live_server, tmp_path, width, slug, query, name, title, terms):
+        page.set_viewport_size({'width': width, 'height': 956})
+        page.emulate_media(reduced_motion='reduce')
+        errors = []
+        page.on('pageerror', lambda error: errors.append(str(error)))
+        select_ncu(page, live_server)
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(query)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        trigger = f'.school-detail-trigger[data-school-name$="{name}"]'
+        if width &lt; 700:
+            page.locator('#partner-table .partner-card').filter(has=page.locator(trigger)).first.locator(':scope &gt; summary').click()
+        page.locator(f'#partner-table {trigger}:visible').first.click()
+        page.locator('#detail-tab-life').click()
+        page.evaluate('() =&gt; document.fonts.ready')
+        page.wait_for_timeout(350)
+        card = page.locator('#life-content .life-card').filter(has=page.locator('h3').filter(has_text=title))
+        for term in terms:
+&gt;           expect(card).to_contain_text(term)
+E           AssertionError: Locator expected to contain text '2016'
+E           Actual value: None
+E           Error: element(s) not found
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#life-content .life-card").filter(has=locator("h3").filter(has_text="住宿與校園生活"))
+E
+E           Aria snapshot:
+E           - link "跳到主要內容":
+E             - /url: "#main-content"
+E           - complementary "系統功能":
+E             - link "UniWay 首頁":
+E               - /url: "#home"
+E               - strong: UniWay
+E             - navigation "公開探索導覽":
+E               - link "首頁":
+E                 - /url: "#home"
+E               - link "學校搜尋":
+E                 - /url: "#partners"
+E               - link "論壇":
+E                 - /url: "#forum"
+E               - link "用戶評價":
+E                 - /url: "#feedback"
+E               - group:
+E                 - link "我的申請":
+E                   - /url: "#advisor"
+E             - button "返回上一頁": 返回
+E             - button "國立中央大學":
+E               - strong: 國立中央大學
+E             - button "切換為深色模式"
+E             - button "重新整理最新資料"
+E             - button "登入或建立帳號": 登入
+E           - main:
+E             - status
+E             - region "京畿大學 Kyonggi University":
+E               - button "加入比較京畿大學 Kyonggi University": 加入比較
+E               - button "登入建立計畫"
+E               - img "京畿大學 Kyonggi University校園照片"
+E               - text: 校園參考照片：경기대학교 야경.jpg。作者：Motoko C. K.；授權：CC0；拍攝日期：2018-11-22 19:13:59。圖示校區見原始來源，116錄取校區仍待確認；照片未作內容修改。 ·
+E               - link "圖片授權":
+E                 - /url: https://creativecommons.org/publicdomain/zero/1.0/deed.en
+E               - text: 南韓 · 交換學生 下一站
+E               - strong: 南韓
+E               - text: Suwon
+E               - heading "京畿大學 Kyonggi University" [level=1]
+E               - text: 我的資格
+E               - strong: 尚未進行資格初判
+E               - text: 合作校參考時程
+E               - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。（適用年度待確認）
+E               - text: 語言門檻
+E               - strong: 【京畿未註年母校簡介，附件明列2016下學期費率、2017–2018宿舍與韓語班期程；中央116年度校別、名額、方案及實際校區仍待核實；以下保留原件年度參考，不啟用期限提醒。】母校舊介紹語言欄寫「無」，未註年，不能據此…
+E               - text: 生活費參考
+E               - strong: 2016下學期韓語中心舊費率：一般註冊費100,000韓元，交換生免；10週學費一般1,250,000，交換生五折625,000韓元。此優惠僅語言班，不能推定普通學位交換免外校學費或仍適用116。
+E               - text: 交換名額
+E               - strong: 依公告
+E               - text: 研修期間
+E               - strong:
+E                 - text: 116母校方案：2027/9–2028/2
+E                 - strong: 一學期
+E                 - text: 、2027/9–2028/6
+E                 - strong: 一學年
+E                 - text: 、2028/2–6
+E                 - strong: 一學期
+E                 - text: ；實際依外校校曆與可提名學期確認。 【京畿未註年母校簡介，附件明列2016下學期費率、2017–2018宿舍與韓語班期程；中央116年度校別、名額、方案及實際校區仍待核實；以下保留原件年度參考，不啟用期限提醒。】母校欄僅寫秋／春學期；附件的2017年3/13–5/23、6/12–8/21、9/11–11/24及12/4–2018/2/14是韓語班日期，不能當普通交換或116校曆。
+E               - tablist "交換學校詳細資訊":
+E                 - tab "快速了解"
+E                 - tab "申請方式"
+E                 - tab "生活情報" [selected]
+E                 - tab "出發前提醒"
+E                 - tab "學生心得"
+E                 - tab "學生社群"
+E               - tabpanel "生活情報":
+E                 - heading "生活情報" [level=2]
+E                 - status: 暫無新資料 · 2026/10/11 下午09:48
+E                 - button "找學生分享"
+E                 - button "更新資料" [disabled]
+E                 - group: 資料說明
+E                 - group: 官方生活指南
+E                 - article:
+E                   - heading "住宿與宿舍" [level=3]
+E                   - text: 官方
+E                   - paragraph: 2016下學期費率、2017–18住宿參考：雙人房4／6／12個月為1,440,400／2,099,600／4,084,200韓元，已含100,000韓元押金。提前入住或延住須准，舊估約11,000韓元／日；抵校健檢另約15,000韓元。不是2026或116價格，亦無當期床位保證。
+E                   - group: 原文與來源
+E                   - text: AI 推論
+E                   - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+E                   - group: 推論依據
+E                   - group: 繼續查詢
+E                 - article:
+E                   - heading "每月生活預算" [level=3]
+E                   - text: 官方
+E                   - paragraph: 2016下學期韓語中心舊費率：一般註冊費100,000韓元，交換生免；10週學費一般1,250,000，交換生五折625,000韓元。此優惠僅語言班，不能推定普通學位交換免外校學費或仍適用116。
+E                   - group: 原文與來源
+E                   - group: 繼續查詢
+E                 - article:
+E                   - heading "課業與教學" [level=3]
+E                   - text: 官方
+E                   - paragraph: 另附韓語中心班每期10週200小時、每週5天每天4小時，上午9–13時或下午13–17時。這是獨立語言班；沒有普通學位交換的課單、學分或抵免證據。 母校欄僅寫秋／春學期；附件的2017年3/13–5/23、6/12–8/21、9/11–11/24及12/4–2018/2/14是韓語班日期，不能當普通交換或116校曆。
+E                   - group: 原文與來源
+E                   - group: 繼續查詢
+E                 - article:
+E                   - heading "校園活動與社交" [level=3]
+E                   - text: 官方
+E                   - paragraph: 舊宿舍資料列抵校體檢約15,000韓元，屬2016–17參考；提前入住需宿舍允許。未載當期抵校、接送或報到日。
+E                   - group: 原文與來源
+E                   - group: 繼續查詢
+E                 - article:
+E                   - heading "安全、醫療與保險" [level=3]
+E                   - text: 官方
+E                   - paragraph: 舊母校簡介稱若未事先投保，可抵達後購買一年約200美元保險；未註當期保障、適用性或韓國國民健康保險規則，不作現行保費或免保證明。
+E                   - group: 原文與來源
+E                   - text: 官方
+E                   - paragraph: 舊母校簡介列抵達前辦D-2簽證；沒有當期主管機關文件或費率，須依錄取方案與國籍另核。
+E                   - group: 原文與來源
+E                   - text: AI 推論
+E                   - paragraph: 可先查詢上述健康服務；接診、語言與保險適用性仍須確認。
+E                   - group: 推論依據
+E                   - group: 繼續查詢
+E                 - article:
+E                   - heading "文化適應與交朋友" [level=3]
+E                   - text: 官方
+E                   - paragraph: 京畿大學文件所列為韓國京畿道水原市靈通區光教山路154-42號校址（Gwanggyosan-ro）。此文件指水原，不能替代首爾校區或其他韓國學校。
+E                   - group: 原文與來源
+E                   - group: 繼續查詢
+E                 - group: 待補資料（4 項）
+E               - complementary "申請準備進度與官方來源":
+E                 - heading "我的申請進度" [level=2]
+E                 - progressbar "申請準備進度":
+E                   - strong: 0 / 5 已完成
+E                   - text: 準備中
+E                 - paragraph:
+E                   - text: 登入以保存進度
+E                   - button "登入"
+E                 - checkbox "確認資格與語言門檻" [disabled]
+E                 - text: 確認資格與語言門檻
+E                 - checkbox "比較課程、費用與生活" [disabled]
+E                 - text: 比較課程、費用與生活
+E                 - checkbox "備妥校內申請文件" [disabled]
+E                 - text: 備妥校內申請文件
+E                 - checkbox "完成校內甄選送件" [disabled]
+E                 - text: 完成校內甄選送件
+E                 - checkbox "完成合作校線上申請" [disabled]
+E                 - text: 完成合作校線上申請
+E                 - strong: 送件前確認
+E                 - paragraph: 截止日與資格以當期官方公告為準。
+E           - paragraph:
+E             - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E             - button "停用匿名使用統計"
+E             - text: 。
+E             - link "隱私權政策":
+E               - /url: /privacy
+E             - link "使用條款":
+E               - /url: /terms
+
+tests/e2e/test_ncu_nineteenth_documents.py:34: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ncu_nineteenth_documents" name="test_new_reviewed_hosts_visible[sejong-\u4e16\u5b97-Sejong University-\u8ab2\u696d\u8207\u6559\u5b78-terms3-390]" time="5.001" /><testcase classname="tests.e2e.test_ncu_nineteenth_documents" name="test_new_reviewed_hosts_visible[sejong-\u4e16\u5b97-Sejong University-\u8ab2\u696d\u8207\u6559\u5b78-terms3-1440]" time="8.450" /></testsuite></testsuites>

@@ -22,6 +22,20 @@ def test_transient_loading_uses_the_existing_mascot_overlay_instead_of_a_status_
     assert ".runtime-loading-splash.is-active" in styles
 
 
+def test_school_switcher_is_prominent_beside_page_back_control() -> None:
+    html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+    rail_start = html.index('<aside id="glass-navigation"')
+    rail_end = html.index("</aside>", rail_start)
+    switcher = html.index('id="school-switcher"')
+    page_back_start = html.index('<nav class="page-back-bar"')
+    page_back_end = html.index("</nav>", page_back_start)
+
+    assert not rail_start < switcher < rail_end
+    assert page_back_start < switcher < page_back_end
+    assert html.index('id="page-back"', page_back_start) < switcher
+    assert "切換就讀學校" in html[page_back_start:page_back_end]
+
+
 def test_content_review_workbench_exposes_dual_review_without_student_navigation() -> None:
     html = (STATIC_DIR / "content-review.html").read_text(encoding="utf-8")
     script = (STATIC_DIR / "content-review.js").read_text(encoding="utf-8")
@@ -489,14 +503,18 @@ def test_content_review_workbench_exposes_dual_review_without_student_navigation
     assert "/admin/content-review" not in student_html
 
 
-def test_first_visit_school_choice_is_optional_and_current() -> None:
+def test_first_visit_school_choice_is_a_single_click_on_the_school_and_still_skippable_with_escape() -> None:
     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
 
     assert "你目前就讀哪一所台灣大學？" in html
-    assert "選擇我的學校" in html
-    assert "先看看全部交換學校" in html
-    assert "75 所合作校" in html
+    # The rows carry the school's name and nothing else; there are no confirm / browse buttons any more.
+    assert "選擇我的學校" not in html
+    assert "先看看全部交換學校" not in html
+    assert 'id="confirm-school"' not in html and 'id="browse-first"' not in html
+    assert "school-option-name" in html and "school-emblem" in html
+    assert "完整支援試點" not in html
+    assert "75 間合作校" in html
     assert "partner_count: 75" in script
     assert "partner_count: 206" in script
     assert "partner_count: 288" in script
@@ -722,8 +740,7 @@ def test_ntpu_uses_the_same_dynamic_web_shell() -> None:
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
 
     assert 'data-home-school="國立臺北大學"' in html
-    assert "/static/assets/ntpu-campus.jpg" in html
-    assert "169 所本期開放 · 37 所交換合作校備查" in html
+    assert "169 間合作校" in html
     assert 'id="availability-filter"' in html
     assert "合作學校" in html
     assert "refreshHomeUniversityData" in script
@@ -881,7 +898,7 @@ def test_premium_web_material_keeps_glass_hierarchy_without_heavy_button_chrome(
     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
     styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
 
-    assert "20260721-student-survival-4" in html
+    assert "/static/platform.css?v=" in html
     assert "Premium product refinement" in styles
     assert "Final cascade for the premium material" in styles
     assert "--premium-surface" in styles
@@ -891,7 +908,7 @@ def test_premium_web_material_keeps_glass_hierarchy_without_heavy_button_chrome(
     assert "background-color: rgba(17, 30, 44, 0.94)" in styles
 
 
-def test_desktop_navigation_rail_expands_full_labels_without_moving_content() -> None:
+def test_desktop_navigation_rail_expands_over_stationary_content() -> None:
     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
     navigation = (STATIC_DIR / "navigation.js").read_text(encoding="utf-8")
     styles = (STATIC_DIR / "glass-theme.css").read_text(encoding="utf-8")
@@ -901,7 +918,9 @@ def test_desktop_navigation_rail_expands_full_labels_without_moving_content() ->
     assert ".glass-navigation-rail:is(:hover, :focus-within)" in styles
     assert "width: 76px" in styles
     assert "width: 240px" in styles
-    assert "margin-left: 288px" in styles
+    assert "margin-left: 112px" in styles
+    assert "width: calc(100% - 144px)" in styles
+    assert "margin-left: 288px" not in styles
     assert "glass-rail-tooltip" not in styles
     assert "glass-rail-tooltip" not in navigation
 

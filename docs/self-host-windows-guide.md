@@ -492,8 +492,103 @@ powershell -ExecutionPolicy Bypass -File .\update.ps1 -Rollback
 - [ ] `access.log` 的 `remote_ip` 是訪客真實 IP。
 - [ ] 備份已跑過、`restore-test.ps1` 通過、Drive 上看得到亂碼檔名。
 - [ ] 遠端連線只透過 VPN／遠端工具，沒有裸露的遠端桌面。
+- [ ] 管理員帳號已改名、密碼 16 字元以上且設為不過期，`Autologon` 已用新名字重做。
+- [ ] `security-check.ps1` 沒有 `[FAIL]`，「最近 7 天有沒有從公網位址登入成功」是 OK（見「資安」那一章）。
 - [ ] `/privacy` 已寫成自架版本，聯絡信箱有填。
 - [ ] 不要把任何密鑰貼進聊天室、Email 或這個倉庫。
+
+---
+
+## 資安：加固、定期檢查，以及被攻破怎麼辦
+
+> 沒有任何系統能保證「攻不破」。目標是四件事：**入口不暴露、猜不中、就算進來傷害有限、發現得快也救得回來。**
+
+### 為什麼一定要做
+
+網際網路上有大量自動程式，每天掃描全世界所有 IP，找開著遠端登入的電腦，再用「Administrator ＋ 常見密碼清單」一個一個猜。**只要登入入口碰得到網際網路，通常幾小時到幾天內就會被找到，跟網站有沒有人知道、有沒有價值都無關。** 2026-10-13 這台電腦的實際紀錄：24 小時內來自 12 個以上陌生位址、334 次以上登入失敗，全部是對 `Administrator`。Windows 的帳號鎖定（失敗 10 次鎖 10 分鐘）擋住了猜測，但這不能當成唯一的防線。
+
+### 加固清單（照順序做，約 1～2 小時）
+
+**A. 入口（最重要）**
+
+1. **Tailscale**：Jerry 的電腦和你的電腦都安裝，從 `100.` 開頭的位址連線，確認連得上。
+2. **防火牆**：遠端桌面只允許 Tailscale 和區域網路。用埠號找規則（不受 Windows 語言影響；如果遠端桌面不是 3389 埠，把號碼換成 `(Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp').PortNumber` 查到的）：
+
+   ```powershell
+   Get-NetFirewallPortFilter -Protocol TCP | Where-Object { $_.LocalPort -eq '3389' } | Get-NetFirewallRule | Set-NetFirewallRule -RemoteAddress '100.64.0.0/10','LocalSubnet'
+   Get-NetFirewallPortFilter -Protocol UDP | Where-Object { $_.LocalPort -eq '3389' } | Get-NetFirewallRule | Set-NetFirewallRule -RemoteAddress '100.64.0.0/10','LocalSubnet'
+   ```
+
+3. **路由器**（請 Jerry）：刪掉所有轉到遠端桌面的規則，只留 80、443；UPnP 關閉；路由器管理密碼不用預設；關掉「從外網管理路由器」。**一定要在第 1 步確認 Tailscale 連得上之後才刪**，不然你連不進去。
+
+**B. 帳號**
+
+1. **密碼**：至少 16 個字元的隨機字串，存進密碼管理員。
+2. **改掉預設的管理員名稱**：`Rename-LocalUser -Name Administrator -NewName 你的新名字`。要連動處理三件事：用新名字重新執行 `Autologon64.exe`；你自己遠端桌面裡存的帳號；用 `Get-ScheduledTask -TaskName 'UniWay-*' | Select-Object TaskName, State` 確認排程還在。使用者資料夾不會改名，Docker 和網站不受影響。改名擋的是「猜 `Administrator`」的機器人，不是針對你的人；真正的防線是上面的 A。
+3. **密碼政策**：
+
+   ```powershell
+   net accounts /minpwlen:14 /maxpwage:unlimited
+   Set-LocalUser -Name 你的帳號名 -PasswordNeverExpires $true
+   ```
+
+   **第二行不能省**：Windows 預設密碼 42 天過期，過期後自動登入會失敗，重開機後網站就停著。
+4. **帳號鎖定維持開著**（`net accounts` 的「鎖定閾值」不要設成 0）。
+
+**C. Windows 本身**
+
+```powershell
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
+Update-MpSignature
+wevtutil sl Security /ms:268435456
+```
+
+防火牆三種網路都開、更新防毒定義、把安全性日誌加大到 256 MB（避免被一波攻擊洗掉證據）。**Windows 更新維持自動安裝**：有自動登入和 Docker 自動啟動之後，更新重開機是安全的。
+
+**D. 網站和 Google 帳號**
+
+- `.env` 裡 `ADMIN_EMAILS` 的每一個 Google 帳號，都要開**兩步驟驗證**，因為進管理頁就是靠 Google 登入。
+- 資料庫、檔案儲存只聽 `127.0.0.1`，網站只開 80/443，這些套件已經做好，`security-check.ps1` 會檢查。
+- 定期 `update.ps1`。
+
+**E. 備份**
+
+Google Drive 備份的授權如果被偷，攻擊者可以刪掉雲端備份。所以要有**第三份離線備份**：每週把 `C:\uniway\backups` 複製到一顆平時不接電腦的外接硬碟。
+
+**F. 實體**
+
+接網路線（Wi-Fi 不穩，也不好防）、接不斷電系統。自動登入代表任何碰得到電腦的人都能進桌面，電腦要放在安全的地方。
+
+### 檢查腳本（唯讀）
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\security-check.ps1
+```
+
+在系統管理員 PowerShell 執行。它只看、不改任何東西，檢查：管理員名稱、密碼與鎖定政策、自動登入帳號的密碼會不會過期、防火牆、遠端桌面是不是對所有人開放、Tailscale、對外監聽的埠、Docker 有沒有對外開埠、`.env` 的權限、最近 24 小時的失敗登入與鎖定、**最近 7 天有沒有從公網位址登入成功**、安全性日誌大小、防毒、Windows 更新、備份有沒有在跑、有沒有複製到 Drive。**加固完做一次，之後每個月做一次。** 輸出不含密碼、金鑰，也不印管理員的新名字，可以安全地貼給別人看。
+
+- `[FAIL]`：先處理。
+- `[WARN]`：看一下。例如入口關掉之前，「24 小時內 N 次失敗登入」本來就會有；入口關掉之後應該降到接近 0。
+
+### 如果被攻破
+
+**怎麼知道被攻破**（任何一項都要當真）：
+
+- `security-check.ps1` 出現「從公網位址登入成功」，而且不是你。
+- `Get-LocalUser` 多了不認識的帳號；排程工作、服務多了不認識的。
+- `docker ps` 多了不認識的容器；電腦 CPU 長時間滿載（可能被拿去挖礦）。
+- Drive 的備份被刪；Google 帳號收到異常登入通知。
+
+**處理順序：**
+
+1. **馬上斷網**：拔網路線或關 Wi-Fi，**不要關機**（保留現場）。
+2. **讓網站離線**：在 Cloudflare 刪掉 `app` 的 A 記錄。如果舊的 Render 和 Supabase 還在，Render 按 Resume，使用者先回舊站。
+3. **所有密鑰視為外洩，全部換掉**：Google 登入用戶端的密碼（新增密鑰再停用舊的）、`.env` 裡的資料庫密碼和各種金鑰、**撤銷 rclone 的 Drive 授權**（Google 帳號 → 第三方存取權）、Supabase 金鑰。
+4. **不要在這台電腦上「清理」**：重灌 Windows，照這份指南重新架設，從**確定沒被動過的備份**還原（要挑入侵日期之前的，見「災難還原」）。
+5. **評估資料外洩**：資料庫有信箱、顯示名稱、留言，沒有密碼（只用 Google 登入）；上傳的文件是加密存的。**資料如果可能被取走，依個資法可能需要通知當事人，請諮詢專業人士**，這份指南不能替你判斷。
+6. 找出對方怎麼進來的，補洞，再上線。
+
+**能不能救得回來，取決於事前準備**：離線備份、密鑰都在密碼管理員、這份處理順序先看過。
 
 ---
 

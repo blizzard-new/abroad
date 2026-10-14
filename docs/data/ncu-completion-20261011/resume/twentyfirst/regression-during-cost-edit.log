@@ -1,0 +1,29 @@
+CONFTEST LOADED!
+........................................................................ [ 15%]
+........................................................................ [ 30%]
+........................................................................ [ 45%]
+........................................................................ [ 60%]
+........................................................................ [ 75%]
+........................................................................ [ 90%]
+..................................F............                          [100%]
+=================================== FAILURES ===================================
+_________ test_scope_and_source_ambiguities_are_not_silently_resolved __________
+
+    def test_scope_and_source_ambiguities_are_not_silently_resolved():
+        rows = json.loads((ROOT / 'sources/ncu/2026-10-11/reviewed-host-records.json').read_text())
+        txt = lambda rid, field: '\n'.join(rows[rid]['fields'][field]['points'])
+        assert '非學位交換可接受B1' in txt('ncu-003', 'language')
+        assert '法語C1' in txt('ncu-057', 'language')
+        assert '不能自行改成英文C1' in txt('ncu-057', 'language')
+        assert '只合計1200' in txt('ncu-057', 'cost')
+        assert '2024–25' in txt('ncu-110', 'tuition')
+        assert '僅屬該院交換方案' in txt('ncu-204', 'tuition')
+>       assert '中央與天普兩校學雜費' in txt('ncu-110', 'tuition')
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert '2024–25' in '外校2025–26正文估食宿7500、旅行書籍及個人支出2750美元／學期；食宿不是單純房租。這些為概估，不是116保證總價，兩校學雜費、保險及可能的課程費另計。'
+E        +  where '外校2025–26正文估食宿7500、旅行書籍及個人支出2750美元／學期；食宿不是單純房租。這些為概估，不是116保證總價，兩校學雜費、保險及可能的課程費另計。' = <function test_scope_and_source_ambiguities_are_not_silently_resolved.<locals>.<lambda> at 0x7f424004d440>('ncu-110', 'cost')
+
+tests/test_ncu_twentyfirst_documents.py:64: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_twentyfirst_documents.py::test_scope_and_source_ambiguities_are_not_silently_resolved
+1 failed, 478 passed in 193.42s (0:03:13)

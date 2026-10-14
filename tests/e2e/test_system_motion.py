@@ -66,7 +66,7 @@ def test_dialog_menu_details_tabs_and_mobile_layout(page, live_server, width):
     page.locator("#school-switcher").click()
     expect(page.locator("#school-onboarding")).to_be_visible()
     page.wait_for_function("() => __motionLog.some(x => x.animation.id === 'uniway:dialog')")
-    page.locator("#confirm-school").click()
+    page.locator("#school-options .school-option.selected").click()
     expect(page.locator("#school-onboarding")).to_be_hidden()
     open_navigation(page)
     page.locator('.uniway-public-nav a[href="#forum"]').click()
@@ -135,7 +135,7 @@ def test_reduced_motion_live_change_and_missing_runtime_are_usable(page, live_se
     # Visitors pick their school without signing in.
     expect(page.locator("#school-onboarding")).to_be_visible()
     expect(page.locator("#auth-dialog")).to_be_hidden()
-    page.locator("#browse-first").click()
+    page.locator('[data-home-school="長庚大學"]').click()
     expect(page.locator("#school-onboarding")).to_be_hidden()
     # Progressive enhancement must not become a dependency for using the app.
     page.route("**/motion.js?*", lambda route: route.abort())

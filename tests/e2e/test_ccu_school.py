@@ -290,7 +290,6 @@ def test_all_six_school_grade_fields_remain_isolated(page, live_server):
             "nodes => nodes.map(node => node.dataset.homeSchool)"
         ) == ["長庚大學", "國立臺北大學", "國立臺灣大學", "國立中正大學", "國立中央大學", "淡江大學"]
         page.locator(f'[data-home-school="{school}"]').click()
-        page.locator("#confirm-school").click()
         wait_until(page, "state.dashboard?.school_name === " + json.dumps(school))
         page.evaluate("location.hash='#advisor'")
         for selector, visible in [

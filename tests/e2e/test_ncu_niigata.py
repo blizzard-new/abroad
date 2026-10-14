@@ -16,7 +16,7 @@ def test_ncu_niigata_iec_graduate_finance_and_source_scope(page, live_server, wi
     enter_public_site(page, live_server, 'partners')
     expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
     open_navigation(page); page.locator('#school-switcher').click()
-    page.locator('[data-home-school="國立中央大學"]').click(); page.locator('#confirm-school').click()
+    page.locator('[data-home-school="國立中央大學"]').click()
     wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60)
     if width < 700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
         page.locator('#glass-menu-toggle').click()

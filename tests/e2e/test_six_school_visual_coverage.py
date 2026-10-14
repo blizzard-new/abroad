@@ -145,7 +145,6 @@ def test_home_marker_and_catalogue_follow_all_six_school_switches(page, visual_s
         open_navigation(page)
         page.locator("#school-switcher").click(no_wait_after=True)
         page.locator(f'[data-home-school="{university.school_name}"]').click(no_wait_after=True)
-        page.locator("#confirm-school").click(no_wait_after=True)
         page.wait_for_function("school=>state.dashboard?.school_name===school&&!state.partnerDataLoading",arg=university.school_name,timeout=90000)
         page.locator('[data-partner-view="map"]').click(no_wait_after=True)
         ready(page)

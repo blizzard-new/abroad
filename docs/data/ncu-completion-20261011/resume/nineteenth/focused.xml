@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="4" time="1.985" timestamp="2026-10-11T21:47:13.015313+00:00" hostname="53f3dafad1d0"><testcase classname="tests.test_ncu_nineteenth_documents" name="test_ten_originals_have_complete_native_and_visual_review" time="0.492" /><testcase classname="tests.test_ncu_nineteenth_documents" name="test_idrac_initial_attachments_and_post_arrival_health_are_separate" time="1.327"><failure message="StopIteration">def test_idrac_initial_attachments_and_post_arrival_health_are_separate():
+        from exchange_info import storage
+        workflows = [w for w in storage.load_bundled_application_workflows() if w.home_university == '國立中央大學']
+        workflow = next(w for w in workflows if w.school_name.startswith('IDRAC'))
+&gt;       initial = next(s for s in workflow.steps if s.rule_id == 'ncu-013-host-application')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/test_ncu_nineteenth_documents.py:35: StopIteration</failure></testcase><testcase classname="tests.test_ncu_nineteenth_documents" name="test_conflicting_years_programmes_and_unknowns_are_retained" time="0.099" /><testcase classname="tests.test_ncu_nineteenth_documents" name="test_four_translated_addresses_keep_their_exact_source" time="0.006" /></testsuite></testsuites>
