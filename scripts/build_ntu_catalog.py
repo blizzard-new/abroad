@@ -307,7 +307,8 @@ def main():
     from exchange_info.ntu_completion import apply_completion, SOURCE as COMPLETION_SOURCE
     if COMPLETION_SOURCE.exists():
         apply_completion(OUTPUT)
-    print(f"NTU: {len(partner_rows)} partners, {len(workflows)} workflows, {len(destinations)} destinations; 282 pending / 6 zero quotas")
+    counts = json.loads((OUTPUT / "catalog-completeness.json").read_text(encoding="utf-8"))
+    print(f"NTU: {len(partner_rows)} partners, {len(workflows)} workflows, {len(destinations)} destinations; {counts['quota_pending_count']} pending / {counts['zero_quota_count']} zero / {counts.get('published_positive_quota_count', 0)} published quotas")
 
 
 if __name__ == "__main__":

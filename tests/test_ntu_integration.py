@@ -62,7 +62,7 @@ def test_bundle_does_not_promote_contract_or_historical_quotas(tmp_path):
     assert len(partners) == 288
     assert len({partner.source_url for partner in partners}) == 288
     assert len({school_identity_key(partner.school_name) for partner in partners}) == 288
-    assert sum(partner.quota is None for partner in partners) == 282
+    assert sum(partner.quota is None for partner in partners) == 274
     assert sum(partner.quota == "0 名" for partner in partners) == 6
     assert all(partner.availability_status != "open" for partner in partners)
     assert all(not partner.study_period or "名" not in partner.study_period for partner in partners)

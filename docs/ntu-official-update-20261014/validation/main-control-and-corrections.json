@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-10-14T03:03:51.899750+00:00",
+  "immutable_control_main_sha": "11589e7503222c379a3fa4942932b12012dd8ddb",
+  "control_logs": [
+    "main-control-original-mobile.log",
+    "main-control-remaining-four.log"
+  ],
+  "original_mobile_case_failure": "Original test opens sidebar then clicks the now-header switcher; sidebar intercepts clicks on unchanged main. Candidate tests close/omit navigation opening; original assertions preserved.",
+  "UBC_candidate_specific_failure": "Existing generic CCU receiver rendering took over NTU UBC guide when receiver fields became populated. Only NTU bypasses that branch now; 25 browser cases pass.",
+  "four_full_suite_failures_reproduced_on_main": [
+    "tests/test_change_impact.py::test_changed_step_maps_to_old_and_new_task_without_touching_progress",
+    "tests/test_change_impact.py::test_completed_old_task_is_flagged_for_recheck_and_kept",
+    "tests/test_change_impact.py::test_no_affected_tasks_when_plan_no_longer_matches",
+    "tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together"
+  ],
+  "notification_errors": "Same 404/KeyError on local JSON-repository control; not evidence of missing production database migration. No notification/migration repair performed.",
+  "acceptance_waiver": false,
+  "additional_failed_cases_reproduced_on_main": [
+    "tests/test_ncu_integration.py::test_bundle_rebuilds_exactly_from_tracked_source_data",
+    "tests/test_notification_changes.py::test_changes_are_owned_and_hide_unrelated_department_and_reviewer"
+  ],
+  "additional_main_control_log": "main-control-additional-two.log",
+  "remaining_baseline_issues_after_cache_pair_fix": 5
+}

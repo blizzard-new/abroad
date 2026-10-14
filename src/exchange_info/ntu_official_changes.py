@@ -46,6 +46,9 @@ def apply_official_changes(bundle: Path, snapshot_path: Path = SNAPSHOT) -> dict
         raise ValueError("list receipt does not retain the verified inventory")
     partners_path = bundle / "partners.jsonl"
     partners = [PartnerUniversity.model_validate_json(line) for line in partners_path.read_text().splitlines()]
+    from .ntu_current_updates import historical_selection_view
+    historical = historical_selection_view(partners)
+    historical_by_url = {p.source_url: p for p in historical}
     destinations_path = bundle / "destination_profiles.jsonl"
     destinations = [DestinationProfile.model_validate_json(line) for line in destinations_path.read_text().splitlines()]
     ledger_path = bundle / "verification_status.json"
@@ -60,7 +63,7 @@ def apply_official_changes(bundle: Path, snapshot_path: Path = SNAPSHOT) -> dict
         if update is None:
             result.append(partner)
             continue
-        if partner.quota is not None or partner.availability_status == "open":
+        if historical_by_url[partner.source_url].quota is not None or partner.availability_status == "open":
             raise ValueError(f"unexpected selection state for {portal_id}")
         if update["selection_quota"] is not None or update["list_marked_updated"]:
             raise ValueError(f"batch finality boundary changed for {portal_id}")
@@ -128,7 +131,8 @@ def apply_official_changes(bundle: Path, snapshot_path: Path = SNAPSHOT) -> dict
                     "value": change["after"], "selection_rule_confirmed": False})
     if touched != set(changes):
         raise ValueError("not all reviewed school IDs were found in the bundle")
-    if sum(p.quota is None for p in result) != 282 or sum(p.quota == "0 名" for p in result) != 6:
+    historical_result = historical_selection_view(result)
+    if sum(p.quota is None for p in historical_result) != 282 or sum(p.quota == "0 名" for p in historical_result) != 6:
         raise ValueError("selection quota guard failed")
     partners_path.write_text("".join(p.model_dump_json() + "\n" for p in result), encoding="utf-8")
     destinations_path.write_text("".join(destination_map[p.school_name].model_dump_json() + "\n" for p in destinations), encoding="utf-8")

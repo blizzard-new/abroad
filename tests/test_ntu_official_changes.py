@@ -34,10 +34,11 @@ def test_twenty_portal_updates_are_scoped_and_scores_preserve_their_scale(tmp_pa
     assert 'only' in partners['烏普薩拉大學'].application_info.lower()
     assert 'Physiology and Anatomy' in partners['烏普薩拉大學'].application_info
     assert 'March 2028' in partners['明斯特大學'].application_info
-    assert all(p.quota is None and p.availability_status!='open' for p in partners.values() if p.source_url in {s['official_url'] for s in snapshot['schools']})
+    assert all(p.availability_status!='open' for p in partners.values())
+    assert all(p.quota is None or p.quota_status=='published' for p in partners.values() if p.source_url in {s['official_url'] for s in snapshot['schools']})
     client=TestClient(create_app(tmp_path))
     dashboard=client.get('/student-dashboard',params={'school':'NTU'}).json()
-    assert sum(p['quota'] is None for p in dashboard['partner_universities'])==282
+    assert sum(p['quota'] is None for p in dashboard['partner_universities'])==274
     assert sum(p['quota']=='0 名' for p in dashboard['partner_universities'])==6
     workflow=client.get('/application-workflow',params={'school':'明斯特大學','home_school':'國立臺灣大學','academic_year':'116'}).json()
     assert workflow['review_status']=='pending_review' and workflow['published_at'] is None

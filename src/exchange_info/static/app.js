@@ -4184,6 +4184,14 @@ function partnerAvailabilityMeta(item) {
     };
   }
   if (status === "agreement_only") {
+    if (activeHomeSchool() === "國立臺灣大學" && item.quota_status === "published"
+      && item.field_evidence?.quota?.status === "verified_current"
+      && item.field_evidence.quota.source_url === "https://oia.ntu.edu.tw/outgoing/school.list"
+      && item.field_evidence.quota.academic_year === "116" && item.field_evidence.quota.application_round === "116-1") {
+      return {status, shortLabel:"116-1名額已公告", cardLabel:"116-1名額已公告／選填狀態待確認",
+        hint:item.availability_note, matchLabel:"名額已公告／選填待確認", reason:item.availability_note,
+        blocked:false, pending:true};
+    }
     if (homeSelectionRules().pending_quota_planning && /^0\s*名?$/.test(item.quota || "")) {
       return {status, shortLabel:"116-1零名額", cardLabel:"116-1零名額／本期未開放", matchLabel:"本期未開放", reason:"官方名單已更新為零名額", blocked:true};
     }
@@ -4409,7 +4417,9 @@ function renderPlanningWorkspace() {
     $("#planning-update-durations").hidden = true;
     $("#planning-schedule-recovery").hidden = true;
     $("#planning-schedule-status").textContent = !target ? "選定目標後，就能預覽時程。"
-      : partnerAvailabilityMeta(partnerByName(target)).pending ? "本期名額待核實，可預覽參考流程；確認前不會加入截止提醒。"
+      : partnerAvailabilityMeta(partnerByName(target)).pending ? (partnerByName(target)?.quota_status === "published"
+        ? "臺大名額已公告，選填狀態及其他条件仍須確認；可預覽參考流程，不加入未核實截止提醒。"
+        : "本期名額待核實，可預覽參考流程；確認前不會加入截止提醒。")
       : !calendarTaskFeatureEnabled() ? "目前帳號尚未開放自動準備安排；仍可在日曆手動建立任務並查看官方期限。"
       : "填寫申請學年度與準備天數，先預覽，再加入你的日曆。";
   }
@@ -8749,7 +8759,7 @@ function renderDestinationProfile(item, profile) {
   const cityStamp = $("#school-detail-view .travel-stamp-city");
   if (cityStamp && profile.city) cityStamp.textContent = profile.city;
   $("#school-detail-primary-facts").innerHTML = renderPrimaryFacts(item, profile);
-  if (profile.home_university !== "淡江大學" && item.partner_exchange_details && Object.keys(item.partner_exchange_details).length && window.UniWayCcuDetails) {
+  if (profile.home_university !== "淡江大學" && profile.home_university !== "國立臺灣大學" && item.partner_exchange_details && Object.keys(item.partner_exchange_details).length && window.UniWayCcuDetails) {
     const status = profile.coverage_status === "official_partial" ? "合作校生活資料部分核實" : "合作校生活資料仍待確認";
     container.innerHTML = `<div class="destination-profile-status partial"><div><strong>${escapeHtml(status)}</strong><p>${escapeHtml(profile.coverage_note || "")}</p><small>最後查核：${escapeHtml(formatDate(profile.last_checked))}</small></div></div>`
       + window.UniWayCcuDetails.render(item, escapeHtml, ["housing", "housing_deadline", "costs", "insurance", "visa", "arrival", "course_restrictions", "academic_calendar"]);
