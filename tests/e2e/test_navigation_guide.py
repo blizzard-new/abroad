@@ -151,10 +151,24 @@ def test_school_return_retains_filters_scroll_and_forward(page, live_server):
 
 @pytest.mark.parametrize("width", [393, 834, 1440])
 def test_guide_responsive_menu_keyboard_and_theme(page, live_server, width):
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.on("console", lambda message: errors.append(message.text) if message.type == "error" else None)
     page.set_viewport_size({"width": width, "height": 900})
     page.emulate_media(reduced_motion="reduce")
     start(page, live_server, "home")
     expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#glass-navigation #school-switcher")).to_have_count(0)
+    school_switcher = page.locator(".page-back-bar #school-switcher")
+    expect(school_switcher).to_be_visible()
+    expect(school_switcher.locator("small")).to_have_text("切換就讀學校")
+    back = page.locator(".page-back-bar .route-back:visible").bounding_box()
+    switcher = school_switcher.bounding_box()
+    assert switcher["x"] >= back["x"] + back["width"]
+    school_switcher.click()
+    expect(page.locator("#school-onboarding")).to_be_visible()
+    page.locator('#school-options [data-home-school="長庚大學"]').click()
+    expect(page.locator("#school-onboarding")).to_be_hidden()
     page.locator(".skip-link").focus()
     page.keyboard.press("Enter")
     expect(page).to_have_url(f"{live_server.base_url}/#home")
@@ -185,3 +199,4 @@ def test_guide_responsive_menu_keyboard_and_theme(page, live_server, width):
     if page.locator("#glass-menu-close").is_visible():
         page.locator("#glass-menu-close").click()
     page.screenshot(path=str(artifacts / f"guide-dark-{width}.png"), full_page=True)
+    assert not errors

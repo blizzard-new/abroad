@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2" />
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
-    <link rel="stylesheet" href="/static/glass-theme.css?v=20261013-expanding-rail-1" />
+    <link rel="stylesheet" href="/static/glass-theme.css?v=20261014-page-school-switcher-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261008-ncu-conditions-1" />
@@ -104,13 +104,6 @@
           <a id="back-to-global-home" class="icon-button board-home-button" href="#home" aria-label="返回留學首頁" data-tooltip="留學首頁"><i data-lucide="arrow-left" aria-hidden="true"></i></a>
           <div class="mobile-brand"><span class="brand-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40" decoding="async" /></span><span><strong>UniWay</strong><small id="mobile-school-label">選擇就讀學校</small></span></div>
         </header>
-<div class="route-toolbar" aria-label="頁面操作">
-          <button id="school-switcher" type="button" class="school-switcher" aria-haspopup="dialog">
-            <span class="school-switcher-icon"><i data-lucide="graduation-cap" aria-hidden="true"></i></span>
-            <span><small>目前就讀學校</small><strong id="school-switcher-label">選擇就讀學校</strong></span>
-            <i data-lucide="chevron-down" aria-hidden="true"></i>
-          </button>
-        </div>
           <div class="topbar-actions">
             <div class="topbar-status"><span class="live-dot" aria-hidden="true"></span><span id="top-updated">資料載入中</span></div>
             <button id="theme-toggle" type="button" class="icon-button" aria-label="切換為深色模式" data-tooltip="深色模式"><i data-lucide="moon" aria-hidden="true"></i><span class="rail-action-label">深色模式</span></button>
@@ -365,6 +358,13 @@
             <button id="page-back" type="button" class="route-back"><i data-lucide="arrow-left" aria-hidden="true"></i><span>返回</span></button>
             <button id="back-to-schools" type="button" class="route-back" hidden><i data-lucide="arrow-left" aria-hidden="true"></i><span>返回</span></button>
             <button id="back-to-application-center" type="button" class="route-back" hidden><i data-lucide="arrow-left" aria-hidden="true"></i><span>返回</span></button>
+          </div>
+          <div class="route-toolbar">
+            <button id="school-switcher" type="button" class="school-switcher page-school-switcher" aria-haspopup="dialog">
+              <span class="school-switcher-icon"><i data-lucide="graduation-cap" aria-hidden="true"></i></span>
+              <span><small>切換就讀學校</small><strong id="school-switcher-label">選擇就讀學校</strong></span>
+              <i data-lucide="chevron-down" aria-hidden="true"></i>
+            </button>
           </div>
         </nav>
 
