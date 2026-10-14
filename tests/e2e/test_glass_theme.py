@@ -237,10 +237,12 @@ def test_compact_rail_expands_with_full_labels_for_pointer_and_keyboard(page, li
     expect(rail.get_by_text("學校搜尋", exact=True)).to_be_visible()
     expect(rail.get_by_text("我的申請", exact=True)).to_be_visible()
     assert page.locator("#community-hub").bounding_box()["x"] == content_x
-    capture(page, f"rail-expanded-{'reduced' if reduced else 'animated'}.png")
+    rail_box = rail.bounding_box()
+    assert rail_box["x"] + rail_box["width"] > content_x, "the expanded rail should overlay the fixed page canvas"
+    capture(page, f"rail-overlay-expanded-{'reduced' if reduced else 'animated'}.png")
     duration = rail.evaluate("el => getComputedStyle(el).transitionDuration")
     assert (duration == "0s") == reduced
-    page.locator("#community-hub-title").hover()
+    page.mouse.move(1000, 24)
     expect(rail).to_have_css("width", "76px")
     expect(label).to_be_hidden()
     guide.focus()
@@ -256,6 +258,6 @@ def test_compact_rail_expands_with_full_labels_for_pointer_and_keyboard(page, li
     assert panel.evaluate('el => el.matches(":popover-open")')
     panel.get_by_role("link", name="選校與確認", exact=True).hover()
     expect(panel).to_be_visible()
-    page.locator("#community-hub-title").click()
+    page.mouse.click(1000, 700)
     expect(panel).not_to_be_visible()
     capture(page, f"expanding-rail-{'reduced' if reduced else 'animated'}.png")
