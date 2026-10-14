@@ -1,3 +1,68 @@
+# Design QA: overlaying expanded navigation rail
+
+## Comparison target
+
+- Source visual truth: the two screenshots in the user's 2026-10-14 request, showing the UniWay forum with the rail expanded and collapsed. The requested correction is behavioral and spatial: the collapsed rail may reserve its compact footprint, while the 240 px expanded surface should float over the page instead of permanently pushing the page to the right.
+- Implementation screenshots: `output/sidebar-overlay/rail-collapsed-animated.png` and `output/sidebar-overlay/rail-overlay-expanded-animated.png`, with reduced-motion variants in the same directory.
+- Source pixels: the supplied captures use two slightly different desktop crops. Implementation viewport: 1754 × 956 CSS px, device scale factor 1; full-page captures are 1754 × 1189 px. The comparison was normalized around the shared rail, return control, forum header, search panel, and right-side board cards rather than the differing bottom crop.
+- State: light theme, guest session, 長庚大學 forum, compact resting rail and pointer-hover expanded rail.
+
+## Full-view comparison evidence
+
+The corrected resting state places the forum canvas at x = 217 px in the 1754 px viewport instead of reserving the expanded rail's previous x = 288 px gutter. This returns the main forum composition toward the viewport center and recovers horizontal space for the feed and board cards.
+
+On hover, the rail grows from 76 px to 240 px as a fixed surface above the document. Browser geometry confirms the forum canvas remains at the same x-coordinate during the transition; at this viewport the rail overlaps the first 39 px of the page canvas. The title and search surface are therefore allowed to sit beneath the expanded navigation, matching the user's stated preference. Moving the pointer outside the overlay collapses it and restores access without moving or reflowing content.
+
+## Focused region comparison evidence
+
+- Collapsed rail: icons remain centered, the UniWay mark is unobstructed, and the main content begins after the compact navigation footprint rather than the expanded width.
+- Expanded rail: the existing 240 px labelled surface, active route, school selector, theme, refresh, and account actions remain intact. The rail's opaque glass surface separates labels from the content it covers.
+- Transition: screenshots before and after hover confirm the underlying forum title, cards, search input, and right column do not shift horizontally.
+
+## Required fidelity surfaces
+
+- Fonts and typography: Existing UniWay families, weights, Chinese labels, wrapping, and hierarchy are unchanged. Covered text belongs to the stationary page beneath the temporary overlay and is fully restored after pointer exit.
+- Spacing and layout rhythm: Desktop page width now uses `calc(100% - 144px)` with a 112 px compact-rail offset. Wide-screen centering is calculated from that compact footprint, not the expanded 240 px surface. Mobile spacing is unchanged.
+- Colors and visual tokens: Existing light/dark glass surfaces, active blue, borders, shadows, and focus tokens remain unchanged; only page geometry changes.
+- Image quality and asset fidelity: No image or icon asset changed. The UniWay logo and existing Lucide icons retain their authored size and sharpness.
+- Copy and content: No visible copy changed. Full route names remain available on hover and keyboard focus.
+- Accessibility and responsiveness: `:focus-within` still expands the rail for keyboard users, reduced-motion removes the width animation, and widths at or below 900 px continue using the existing modal drawer instead of hover behavior.
+
+## Findings
+
+- No actionable P0, P1, or P2 mismatch remains for the requested overlay behavior.
+
+## Open questions
+
+- None. The user explicitly accepted temporary content coverage and rejected a permanently expanded gutter.
+
+## Comparison history
+
+- Previous implementation reserved 288 px for the 240 px expanded rail even while collapsed. This kept content stationary but made the entire page read too far to the right.
+- Final implementation reserves only the compact 76 px rail plus spacing, keeps the canvas stationary, and layers the expanded rail above it. Desktop captures and browser geometry confirm the correction.
+
+## Primary interactions and runtime checks
+
+- Verified pointer expansion, pointer exit collapse, keyboard `focus-within` expansion, blur collapse, nested application popover, and click-away closure.
+- Verified normal and reduced-motion modes, mobile drawer behavior, responsive guide navigation, light/dark theme switching, and absence of horizontal document overflow.
+- Browser coverage: 18 passed. Frontend, notification, and next-phase contract coverage: 101 passed. JavaScript syntax, Python compilation, OpenAPI snapshot, and diff checks also passed.
+
+## Implementation checklist
+
+- [x] Remove the permanent 240 px page reservation.
+- [x] Reserve only the compact desktop rail footprint.
+- [x] Keep the page fixed while the expanded rail overlays it.
+- [x] Preserve hover, keyboard, nested-menu, mobile, and reduced-motion behavior.
+- [x] Verify collapsed and expanded screenshots against the supplied forum states.
+
+## Follow-up polish
+
+- None required for this scoped correction.
+
+final result: passed
+
+---
+
 # Design QA: Supabase-style expanding navigation rail
 
 ## Comparison target

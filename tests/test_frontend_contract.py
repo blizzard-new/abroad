@@ -880,7 +880,7 @@ def test_premium_web_material_keeps_glass_hierarchy_without_heavy_button_chrome(
     assert "background-color: rgba(17, 30, 44, 0.94)" in styles
 
 
-def test_desktop_navigation_rail_expands_full_labels_without_moving_content() -> None:
+def test_desktop_navigation_rail_expands_over_stationary_content() -> None:
     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
     navigation = (STATIC_DIR / "navigation.js").read_text(encoding="utf-8")
     styles = (STATIC_DIR / "glass-theme.css").read_text(encoding="utf-8")
@@ -890,7 +890,9 @@ def test_desktop_navigation_rail_expands_full_labels_without_moving_content() ->
     assert ".glass-navigation-rail:is(:hover, :focus-within)" in styles
     assert "width: 76px" in styles
     assert "width: 240px" in styles
-    assert "margin-left: 288px" in styles
+    assert "margin-left: 112px" in styles
+    assert "width: calc(100% - 144px)" in styles
+    assert "margin-left: 288px" not in styles
     assert "glass-rail-tooltip" not in styles
     assert "glass-rail-tooltip" not in navigation
 
