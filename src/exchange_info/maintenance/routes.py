@@ -566,8 +566,8 @@ def create_maintenance_router(
 <body>
   <header>
     <div>
-      <h1>UniWay 交換學校資訊維護系統（v1.1 本地伺服器版）— Staging 預覽工作台</h1>
-      <small style="color:var(--muted)">隔離預覽容器｜已載入 6 校（NTU / NTPU / NCU / CGU / CCU / TKU）共 1,124 筆 Offerings 影子基準</small>
+      <h1>UniWay 交換學校資訊維護系統（v1.1 本地伺服器版）— 正式維護工作台</h1>
+      <small style="color:var(--muted)">已載入 6 校（NTU / NTPU / NCU / CGU / CCU / TKU）共 1,124 筆 Offerings 基準資料</small>
     </div>
     <div>
       <span>目前公開 Release：<strong id="hdr-release" style="color:var(--ok)">載入中...</strong></span>
@@ -575,13 +575,13 @@ def create_maintenance_router(
     </div>
   </header>
 
-  <nav>
-    <button class="active" onclick="switchTab('s1', this)">1. 今日工作頁</button>
-    <button onclick="switchTab('s2', this)">2. 變更審核頁（逐欄核准／樂觀鎖）</button>
-    <button onclick="switchTab('s3', this)">3. 來源管理頁（白名單／手動重抓）</button>
-    <button onclick="switchTab('s4', this)">4. 學校與計畫主檔（6 校公開投影瀏覽）</button>
-    <button onclick="switchTab('s5', this)">5. 心得審核與問題回報</button>
-    <button onclick="switchTab('s6', this)">6. 發布與運維頁（原子發布／單校回滾）</button>
+  <nav id="main-nav">
+    <button class="active" data-action="switch-tab" data-tab="s1">1. 今日工作頁</button>
+    <button data-action="switch-tab" data-tab="s2">2. 變更審核頁（逐欄核准／樂觀鎖）</button>
+    <button data-action="switch-tab" data-tab="s3">3. 來源管理頁（白名單／手動重抓）</button>
+    <button data-action="switch-tab" data-tab="s4">4. 學校與計畫主檔（6 校公開投影瀏覽）</button>
+    <button data-action="switch-tab" data-tab="s5">5. 心得審核與問題回報</button>
+    <button data-action="switch-tab" data-tab="s6">6. 發布與運維頁（原子發布／單校回滾）</button>
   </nav>
 
   <main>
@@ -616,7 +616,7 @@ def create_maintenance_router(
         <h3>公開 Offerings 版本固定投影瀏覽器（GET /offerings）</h3>
         <div style="margin-bottom:12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
           <label>選擇母校：</label>
-          <select id="s4-home" onchange="loadOfferings()">
+          <select id="s4-home">
             <option value="ntu">國立臺灣大學 (ntu - 288 筆)</option>
             <option value="ntpu">國立臺北大學 (ntpu - 409 筆)</option>
             <option value="ncu">國立中央大學 (ncu - 214 筆)</option>
@@ -626,7 +626,7 @@ def create_maintenance_router(
           </select>
           <label>指定 Release ID（留空代表目前最新）：</label>
           <input type="text" id="s4-release" placeholder="例如 rel_..." style="width:220px" />
-          <button class="btn" onclick="loadOfferings()">查詢公開投影</button>
+          <button class="btn" data-action="load-offerings">查詢公開投影</button>
         </div>
         <div id="s4-summary" style="margin-bottom:12px"></div>
         <div id="s4-table"></div>
@@ -641,13 +641,13 @@ def create_maintenance_router(
           <p style="color:var(--muted);font-size:0.85rem">回報會綁定目前公開 release_id 進入待處理佇列，絕不直接改寫公開資料。</p>
           <input type="text" id="rep-entity" value="off_ntu_sample" style="width:100%;margin-bottom:8px" />
           <input type="text" id="rep-text" value="官方簡章名額已由 2 名更新為 4 名，請重新查核附件 PDF" style="width:100%;margin-bottom:8px" />
-          <button class="btn" onclick="submitReport()">送出回報</button>
+          <button class="btn" data-action="submit-report">送出回報</button>
         </div>
         <div class="card">
-          <h3>測試學生心得投稿與防提權攔截（POST /experience-submissions）</h3>
+          <h3>測試學生心得投稿與防提權攔截（POST /maintenance/experience-submissions）</h3>
           <p style="color:var(--muted);font-size:0.85rem">驗證 T20（夾帶 is_admin/review_status 立即 403）與 T26（保留真實交換年份 2023）。</p>
-          <button class="btn" onclick="submitExperience(false)">正常投稿（2023 年交換心得）</button>
-          <button class="btn danger" onclick="submitExperience(true)">模擬惡意提權投稿（夾帶 review_status=approved）</button>
+          <button class="btn" data-action="submit-exp" data-escalate="false">正常投稿（2023 年交換心得）</button>
+          <button class="btn danger" data-action="submit-exp" data-escalate="true">模擬惡意提權投稿（夾帶 review_status=approved）</button>
         </div>
       </div>
       <div class="card">
@@ -668,315 +668,360 @@ def create_maintenance_router(
   </main>
 
   <div id="toast"></div>
-
-  <script>
-    const ADMIN_HEADERS = {
-      "Content-Type": "application/json",
-      "X-Admin-Id": "admin_kevin",
-      "X-Admin-Role": "super_admin"
-    };
-
-    function showToast(msg, isErr = false) {
-      const el = document.getElementById("toast");
-      el.style.display = "block";
-      el.style.borderColor = isErr ? "var(--danger)" : "var(--ok)";
-      el.textContent = msg;
-      setTimeout(() => { el.style.display = "none"; }, 4500);
-    }
-
-    function switchTab(id, btn) {
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-      document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-      btn.classList.add("active");
-      refreshAll();
-    }
-
-    async function refreshDashboard() {
-      const r = await fetch("/admin/maintenance/dashboard", { headers: ADMIN_HEADERS });
-      const d = await r.json();
-      document.getElementById("hdr-release").textContent = d.current_release_id || "none";
-      document.getElementById("s1-metrics").innerHTML = `
-        <div class="card"><h3>高風險待審變更</h3><div style="font-size:1.8rem;font-weight:700;color:var(--warn)">${d.pending_high_risk_changes.length}</div><small style="color:var(--muted)">需人工逐欄核准才可發布</small></div>
-        <div class="card"><h3>異常來源數 / Dead-Letter</h3><div style="font-size:1.8rem;font-weight:700">${d.unhealthy_resources.length} / ${d.dead_letter_jobs.length}</div><small style="color:var(--muted)">HTTP 403/404/429 自動分類隔離</small></div>
-        <div class="card"><h3>外部付費模型／OCR 預算</h3><div style="font-size:1.4rem;font-weight:700;color:var(--ok)">NT$ ${d.budget_status.settled_spend_twd} / ${d.budget_status.monthly_budget_twd}</div><small style="color:var(--muted)">預設關閉外部付費 AI（Opt-in: ${d.budget_status.external_ai_opted_in}）</small></div>
-      `;
-      if (d.pending_high_risk_changes.length === 0) {
-        document.getElementById("s1-high-risk").innerHTML = "<p style='color:var(--muted)'>目前無高風險待審變更。</p>";
-      } else {
-        document.getElementById("s1-high-risk").innerHTML = `<table><thead><tr><th>ChangeSet ID</th><th>母校</th><th>風險</th><th>狀態</th><th>變更欄位數</th><th>來源類型</th></tr></thead><tbody>` +
-          d.pending_high_risk_changes.map(c => `<tr><td><code>${c.id}</code></td><td>${c.home_id}</td><td><span class="badge high">${c.risk}</span></td><td>${c.status}</td><td>${c.items.length}</td><td>${c.change_origin}</td></tr>`).join("") +
-          `</tbody></table>`;
-      }
-    }
-
-    async function refreshChanges() {
-      const r = await fetch("/admin/changes", { headers: ADMIN_HEADERS });
-      const d = await r.json();
-      const box = document.getElementById("s2-changes");
-      if (!d.items.length) {
-        box.innerHTML = "<p>無候選變更集。</p>";
-        return;
-      }
-      box.innerHTML = d.items.map(cs => {
-        const fieldsHtml = cs.items.map(it => `
-          <tr>
-            <td><input type="checkbox" class="fld-${cs.id}" value="${it.field_path}" checked /> <code>${it.field_path}</code></td>
-            <td><code>${JSON.stringify(it.before_value)}</code> (${it.before_state || 'none'})</td>
-            <td><code>${JSON.stringify(it.after_value)}</code> (<span class="badge ${it.after_state === 'conflicting' ? 'high' : 'ok'}">${it.after_state}</span>)</td>
-            <td>${it.reason}</td>
-            <td><strong>${it.approval_status}</strong></td>
-          </tr>
-        `).join("");
-        return `
-          <div class="card" style="background:#0f172a">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">
-              <div>
-                <strong><code>${cs.id}</code></strong> ｜ 母校：<code>${cs.home_id}</code> ｜ 狀態：<span class="badge warn">${cs.status}</span>
-                ｜ Version: <code>v${cs.candidate_version}</code> ｜ Base Release: <code>${cs.base_release_id}</code>
-              </div>
-              <div>
-                <button class="btn" onclick='reviewChange(${JSON.stringify(cs.id)}, ${cs.candidate_version}, ${JSON.stringify(cs.evidence_set_hash)}, ${JSON.stringify(cs.base_release_id)}, "approve")'>核准勾選欄位 (Approve Selected)</button>
-                <button class="btn secondary" onclick='reviewChange(${JSON.stringify(cs.id)}, ${cs.candidate_version}, ${JSON.stringify(cs.evidence_set_hash)}, ${JSON.stringify(cs.base_release_id)}, "defer")'>暫緩 (Defer)</button>
-              </div>
-            </div>
-            <table>
-              <thead><tr><th>勾選欄位</th><th>舊值 (Before)</th><th>新候選值 (After)</th><th>驗證矩陣與摘錄原因</th><th>欄位狀態</th></tr></thead>
-              <tbody>${fieldsHtml}</tbody>
-            </table>
-          </div>
-        `;
-      }).join("");
-    }
-
-    async function reviewChange(csId, candVer, evHash, baseRel, decision) {
-      const checks = Array.from(document.querySelectorAll(`.fld-${csId}:checked`)).map(el => el.value);
-      if (!checks.length) {
-        showToast("請至少勾選一個欄位！", true);
-        return;
-      }
-      const res = await fetch(`/admin/changes/${csId}/review`, {
-        method: "POST",
-        headers: ADMIN_HEADERS,
-        body: JSON.stringify({
-          candidate_version: candVer,
-          evidence_set_hash: evHash,
-          base_release_id: baseRel,
-          decision: decision,
-          selected_fields: checks,
-          reason: `Admin workbench ${decision} on fields: ${checks.join(",")}`,
-          idempotency_key: `idem_rev_${csId}_${Date.now()}`
-        })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        showToast(`審核遭攔截 (${res.status}): ${data.detail}`, true);
-      } else {
-        showToast(`審核成功！狀態：${data.change_set.status}` + (data.remaining_change_set ? `（未勾選欄位已自動拆為新待審卡 ${data.remaining_change_set.id}）` : ""));
-      }
-      refreshAll();
-    }
-
-    async function refreshSources() {
-      const r = await fetch("/admin/sources", { headers: ADMIN_HEADERS });
-      const d = await r.json();
-      document.getElementById("s3-sources").innerHTML = `<table><thead><tr><th>Source ID</th><th>母校</th><th>允許網域白名單</th><th>入口 URL</th><th>操作</th></tr></thead><tbody>` +
-        d.items.map(s => `
-          <tr>
-            <td><code>${s.id}</code></td>
-            <td>${s.owner_institution_id}</td>
-            <td><code>${s.approved_domains.join(", ")}</code></td>
-            <td><a href="${s.entry_url}" target="_blank" style="color:var(--accent)">${s.entry_url}</a></td>
-            <td>
-              <button class="btn" onclick="triggerRefresh('${s.id}', '${s.entry_url}')">排入重抓佇列</button>
-              <button class="btn danger" onclick="triggerRefresh('${s.id}', 'http://169.254.169.254/latest/meta-data/')">測試 SSRF 阻擋 (T21)</button>
-            </td>
-          </tr>
-        `).join("") + `</tbody></table>`;
-    }
-
-    async function triggerRefresh(sourceId, url) {
-      const res = await fetch(`/admin/sources/${sourceId}/refresh`, {
-        method: "POST",
-        headers: ADMIN_HEADERS,
-        body: JSON.stringify({ action: "fetch", resource_url: url, force_unconditional: false, reason: "Staging UI manual check" })
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        showToast(`安全策略攔截 (${res.status}): ${data.detail}`, true);
-      } else {
-        showToast(`已排入佇列！Job ID: ${data.job_id} (${data.status})`);
-      }
-    }
-
-    async function loadOfferings() {
-      const home = document.getElementById("s4-home").value;
-      const rel = document.getElementById("s4-release").value.trim();
-      const qs = new URLSearchParams({ home });
-      if (rel) qs.set("release_id", rel);
-      const r = await fetch(`/offerings?${qs.toString()}`);
-      const d = await r.json();
-      if (!r.ok) {
-        showToast(`查詢失敗: ${d.detail}`, true);
-        return;
-      }
-      const qSum = d.quota_summary;
-      document.getElementById("s4-summary").innerHTML = `
-        <div class="card" style="background:#0f172a;margin-bottom:10px">
-          <strong>固定版本 Release ID：<code>${d.release_id}</code></strong> ｜ 總筆數：<strong>${d.total_count}</strong>
-          ｜ 明確人數名額合計 (persons)：<strong>${qSum.persons_quota_total}</strong>
-          ｜ 學年名額單位合計 (academic_year_unit)：<strong>${qSum.academic_year_unit_total}</strong>
-          ｜ 未載明名額學校數 (not_stated)：<span class="badge warn">${qSum.unverified_or_not_stated_count}</span>
-          ｜ 明確 0 名額數 (zero)：<span class="badge high">${qSum.explicit_zero_count}</span>
-        </div>
-      `;
-      const slice = d.items.slice(0, 25);
-      document.getElementById("s4-table").innerHTML = `<table><thead><tr><th>Offering ID</th><th>母校</th><th>姊妹校 (Host Canonical Name)</th><th>國家</th><th>名額狀態 (value_state)</th><th>原始名額文字</th><th>新鮮度 / 驗證狀態</th></tr></thead><tbody>` +
-        slice.map(o => {
-          const qf = o.fields.quota || {};
-          const qv = qf.value || {};
-          return `<tr>
-            <td><code>${o.offering_id}</code></td>
-            <td>${o.home_institution.canonical_name}</td>
-            <td>${o.host_institution.canonical_name}</td>
-            <td>${o.host_institution.country_code}</td>
-            <td><span class="badge ${qf.value_state === 'known' ? 'ok' : (qf.value_state === 'zero' ? 'high' : 'warn')}">${qf.value_state}</span></td>
-            <td>${qv.original_text || '未記載'}</td>
-            <td><code>${qf.freshness_status}</code></td>
-          </tr>`;
-        }).join("") + `</tbody></table><small style="color:var(--muted)">顯示前 25 筆（共 ${d.total_count} 筆）</small>`;
-    }
-
-    async function submitReport() {
-      const entityId = document.getElementById("rep-entity").value;
-      const text = document.getElementById("rep-text").value;
-      const r = await fetch("/reports", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ target_entity_type: "offering", target_entity_id: entityId, category: "quota_mismatch", text })
-      });
-      const d = await r.json();
-      showToast(`問題回報已建立：${d.report_id} (${d.status})`);
-      refreshReports();
-    }
-
-    async function submitExperience(escalate) {
-      const body = {
-        home_id: "ntu",
-        host_id: "host_uc_berkeley",
-        experience_period: "2023 Fall",
-        experience_year: 2023,
-        summary_zh: "2023 秋季交換心得：課程扎實，建議提早申請宿舍。",
-        consent_agreed: true,
-        contact_email: "student@ntu.edu.tw"
-      };
-      if (escalate) {
-        body.review_status = "approved";
-        body.is_admin = true;
-      }
-      const r = await fetch("/maintenance/experience-submissions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
-      const d = await r.json();
-      if (!r.ok) {
-        showToast(`防提權防護成功攔截 (${r.status}): ${d.detail}`, true);
-      } else {
-        showToast(`投稿成功进入待審！ID: ${d.experience_id}，保留真實年份：${d.experience_year}`);
-      }
-      refreshReports();
-    }
-
-    async function refreshReports() {
-      const r = await fetch("/admin/reports", { headers: ADMIN_HEADERS });
-      const d = await r.json();
-      document.getElementById("s5-list").innerHTML = `<pre>${JSON.stringify(d, null, 2)}</pre>`;
-    }
-
-    async function refreshReleases() {
-      const [relRes, chgRes] = await Promise.all([
-        fetch("/admin/releases", { headers: ADMIN_HEADERS }),
-        fetch("/admin/changes?status=approved", { headers: ADMIN_HEADERS })
-      ]);
-      const relData = await relRes.json();
-      const chgData = await chgRes.json();
-      const approvedIds = chgData.items.map(i => i.id);
-      const box = document.getElementById("s6-approved-box");
-      if (approvedIds.length > 0) {
-        box.innerHTML = `<button class="btn" onclick='publishApproved(${JSON.stringify(approvedIds)}, ${JSON.stringify(relData.current_release_id)})'>原子發布已核准變更集 (${approvedIds.join(", ")})</button>`;
-      } else {
-        box.innerHTML = `<span style="color:var(--muted)">目前無已核准待發布之 ChangeSet（請先至「畫面 2」核准候選變更）。</span>`;
-      }
-      document.getElementById("s6-releases").innerHTML = `<table><thead><tr><th>Release ID</th><th>前版 Release</th><th>發布者</th><th>原因</th><th>狀態</th><th>操作</th></tr></thead><tbody>` +
-        relData.items.map(r => `
-          <tr>
-            <td><code>${r.id}</code> ${r.id === relData.current_release_id ? '<span class="badge ok">CURRENT HEAD</span>' : ''}</td>
-            <td><code>${r.previous_release_id || '-'}</code></td>
-            <td>${r.published_by}</td>
-            <td>${r.reason}</td>
-            <td>${r.status}</td>
-            <td>${r.id !== relData.current_release_id ? `<button class="btn secondary" onclick="rollbackTo('${relData.current_release_id}', '${r.id}')">以新 Release 回復至此版本 (T18)</button>` : ''}</td>
-          </tr>
-        `).join("") + `</tbody></table>
-        <h4 style="margin-top:16px">最近稽核軌跡 (Audit Events)</h4>
-        <pre>${JSON.stringify(relData.audit_events.slice(-8), null, 2)}</pre>`;
-    }
-
-    async function publishApproved(ids, baseRel) {
-      const r = await fetch("/admin/publications", {
-        method: "POST",
-        headers: ADMIN_HEADERS,
-        body: JSON.stringify({
-          approved_change_ids: ids,
-          base_release_id: baseRel,
-          reason: "Publish approved changes from Staging Workbench",
-          idempotency_key: `idem_pub_${Date.now()}`
-        })
-      });
-      const d = await r.json();
-      if (!r.ok) {
-        showToast(`發布失敗 (${r.status}): ${d.detail}`, true);
-      } else {
-        showToast(`原子發布成功！新 Release Head: ${d.release_id}`);
-      }
-      refreshAll();
-    }
-
-    async function rollbackTo(curRel, targetRel) {
-      const r = await fetch("/admin/publications/rollback", {
-        method: "POST",
-        headers: ADMIN_HEADERS,
-        body: JSON.stringify({
-          current_release_id: curRel,
-          target_release_id: targetRel,
-          reason: `Rollback to ${targetRel} from Staging Workbench`,
-          idempotency_key: `idem_rb_${Date.now()}`
-        })
-      });
-      const d = await r.json();
-      if (!r.ok) {
-        showToast(`回滾失敗 (${r.status}): ${d.detail}`, true);
-      } else {
-        showToast(`回滾完成！已建立新 Release: ${d.release_id}`);
-      }
-      refreshAll();
-    }
-
-    function refreshAll() {
-      refreshDashboard();
-      refreshChanges();
-      refreshSources();
-      loadOfferings();
-      refreshReports();
-      refreshReleases();
-    }
-
-    refreshAll();
-  </script>
+  <script src="/maintenance-preview.js"></script>
 </body>
 </html>"""
         return Response(content=html, media_type="text/html; charset=utf-8", headers=PRIVATE_NO_STORE)
+
+    @router.get("/maintenance-preview.js", include_in_schema=False)
+    def maintenance_preview_js() -> Response:
+        """External JS bundle for /maintenance-preview complying strictly with CSP script-src 'self' and script-src-attr 'none'."""
+        js = """(function () {
+  const ADMIN_HEADERS = {
+    "Content-Type": "application/json",
+    "X-Admin-Id": "admin_kevin",
+    "X-Admin-Role": "super_admin"
+  };
+
+  function showToast(msg, isErr) {
+    const el = document.getElementById("toast");
+    if (!el) return;
+    el.style.display = "block";
+    el.style.borderColor = isErr ? "var(--danger)" : "var(--ok)";
+    el.textContent = msg;
+    setTimeout(function () { el.style.display = "none"; }, 4500);
+  }
+
+  function switchTab(id, btn) {
+    document.querySelectorAll(".screen").forEach(function (s) { s.classList.remove("active"); });
+    document.querySelectorAll("nav button").forEach(function (b) { b.classList.remove("active"); });
+    const target = document.getElementById(id);
+    if (target) target.classList.add("active");
+    if (btn) btn.classList.add("active");
+    refreshAll();
+  }
+
+  async function refreshDashboard() {
+    const r = await fetch("/admin/maintenance/dashboard", { headers: ADMIN_HEADERS });
+    const d = await r.json();
+    document.getElementById("hdr-release").textContent = d.current_release_id || "none";
+    document.getElementById("s1-metrics").innerHTML =
+      '<div class="card"><h3>高風險待審變更</h3><div style="font-size:1.8rem;font-weight:700;color:var(--warn)">' + d.pending_high_risk_changes.length + '</div><small style="color:var(--muted)">需人工逐欄核准才可發布</small></div>' +
+      '<div class="card"><h3>異常來源數 / Dead-Letter</h3><div style="font-size:1.8rem;font-weight:700">' + d.unhealthy_resources.length + ' / ' + d.dead_letter_jobs.length + '</div><small style="color:var(--muted)">HTTP 403/404/429 自動分類隔離</small></div>' +
+      '<div class="card"><h3>外部付費模型／OCR 預算</h3><div style="font-size:1.4rem;font-weight:700;color:var(--ok)">NT$ ' + d.budget_status.settled_spend_twd + ' / ' + d.budget_status.monthly_budget_twd + '</div><small style="color:var(--muted)">預設關閉外部付費 AI（Opt-in: ' + d.budget_status.external_ai_opted_in + '）</small></div>';
+
+    if (d.pending_high_risk_changes.length === 0) {
+      document.getElementById("s1-high-risk").innerHTML = "<p style='color:var(--muted)'>目前無高風險待審變更。</p>";
+    } else {
+      document.getElementById("s1-high-risk").innerHTML =
+        "<table><thead><tr><th>ChangeSet ID</th><th>母校</th><th>風險</th><th>狀態</th><th>變更欄位數</th><th>來源類型</th></tr></thead><tbody>" +
+        d.pending_high_risk_changes.map(function (c) {
+          return "<tr><td><code>" + c.id + "</code></td><td>" + c.home_id + "</td><td><span class='badge high'>" + c.risk + "</span></td><td>" + c.status + "</td><td>" + c.items.length + "</td><td>" + c.change_origin + "</td></tr>";
+        }).join("") +
+        "</tbody></table>";
+    }
+  }
+
+  async function refreshChanges() {
+    const r = await fetch("/admin/changes", { headers: ADMIN_HEADERS });
+    const d = await r.json();
+    const box = document.getElementById("s2-changes");
+    if (!d.items.length) {
+      box.innerHTML = "<p>無候選變更集。</p>";
+      return;
+    }
+    box.innerHTML = d.items.map(function (cs) {
+      const fieldsHtml = cs.items.map(function (it) {
+        return "<tr>" +
+          "<td><input type='checkbox' class='fld-" + cs.id + "' value='" + it.field_path + "' checked /> <code>" + it.field_path + "</code></td>" +
+          "<td><code>" + JSON.stringify(it.before_value) + "</code> (" + (it.before_state || "none") + ")</td>" +
+          "<td><code>" + JSON.stringify(it.after_value) + "</code> (<span class='badge " + (it.after_state === "conflicting" ? "high" : "ok") + "'>" + it.after_state + "</span>)</td>" +
+          "<td>" + it.reason + "</td>" +
+          "<td><strong>" + it.approval_status + "</strong></td>" +
+          "</tr>";
+      }).join("");
+      return "<div class='card' style='background:#0f172a'>" +
+        "<div style='display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px'>" +
+          "<div><strong><code>" + cs.id + "</code></strong> ｜ 母校：<code>" + cs.home_id + "</code> ｜ 狀態：<span class='badge warn'>" + cs.status + "</span> ｜ Version: <code>v" + cs.candidate_version + "</code> ｜ Base Release: <code>" + cs.base_release_id + "</code></div>" +
+          "<div>" +
+            "<button class='btn' data-action='review-change' data-cs-id='" + cs.id + "' data-cand-ver='" + cs.candidate_version + "' data-ev-hash='" + cs.evidence_set_hash + "' data-base-rel='" + (cs.base_release_id || "") + "' data-decision='approve'>核准勾選欄位 (Approve Selected)</button>" +
+            "<button class='btn secondary' data-action='review-change' data-cs-id='" + cs.id + "' data-cand-ver='" + cs.candidate_version + "' data-ev-hash='" + cs.evidence_set_hash + "' data-base-rel='" + (cs.base_release_id || "") + "' data-decision='defer'>暫緩 (Defer)</button>" +
+          "</div>" +
+        "</div>" +
+        "<table><thead><tr><th>勾選欄位</th><th>舊值 (Before)</th><th>新候選值 (After)</th><th>驗證矩陣與摘錄原因</th><th>欄位狀態</th></tr></thead><tbody>" + fieldsHtml + "</tbody></table>" +
+        "</div>";
+    }).join("");
+  }
+
+  async function reviewChange(csId, candVer, evHash, baseRel, decision) {
+    const checks = Array.from(document.querySelectorAll(".fld-" + csId + ":checked")).map(function (el) { return el.value; });
+    if (!checks.length) {
+      showToast("請至少勾選一個欄位！", true);
+      return;
+    }
+    const res = await fetch("/admin/changes/" + encodeURIComponent(csId) + "/review", {
+      method: "POST",
+      headers: ADMIN_HEADERS,
+      body: JSON.stringify({
+        candidate_version: Number(candVer),
+        evidence_set_hash: evHash,
+        base_release_id: baseRel || null,
+        decision: decision,
+        selected_fields: checks,
+        reason: "Admin workbench " + decision + " on fields: " + checks.join(","),
+        idempotency_key: "idem_rev_" + csId + "_" + Date.now()
+      })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      showToast("審核遭攔截 (" + res.status + "): " + data.detail, true);
+    } else {
+      showToast("審核成功！狀態：" + data.change_set.status + (data.remaining_change_set ? "（未勾選欄位已自動拆為新待審卡 " + data.remaining_change_set.id + "）" : ""), false);
+    }
+    refreshAll();
+  }
+
+  async function refreshSources() {
+    const r = await fetch("/admin/sources", { headers: ADMIN_HEADERS });
+    const d = await r.json();
+    document.getElementById("s3-sources").innerHTML =
+      "<table><thead><tr><th>Source ID</th><th>母校</th><th>允許網域白名單</th><th>入口 URL</th><th>操作</th></tr></thead><tbody>" +
+      d.items.map(function (s) {
+        return "<tr>" +
+          "<td><code>" + s.id + "</code></td>" +
+          "<td>" + s.owner_institution_id + "</td>" +
+          "<td><code>" + s.approved_domains.join(", ") + "</code></td>" +
+          "<td><a href='" + s.entry_url + "' target='_blank' rel='noopener' style='color:var(--accent)'>" + s.entry_url + "</a></td>" +
+          "<td>" +
+            "<button class='btn' data-action='trigger-refresh' data-source-id='" + s.id + "' data-url='" + s.entry_url + "'>排入重抓佇列</button>" +
+            "<button class='btn danger' data-action='trigger-refresh' data-source-id='" + s.id + "' data-url='http://169.254.169.254/latest/meta-data/'>測試 SSRF 阻擋 (T21)</button>" +
+          "</td>" +
+          "</tr>";
+      }).join("") +
+      "</tbody></table>";
+  }
+
+  async function triggerRefresh(sourceId, url) {
+    const res = await fetch("/admin/sources/" + encodeURIComponent(sourceId) + "/refresh", {
+      method: "POST",
+      headers: ADMIN_HEADERS,
+      body: JSON.stringify({ action: "fetch", resource_url: url, force_unconditional: false, reason: "Workbench manual check" })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      showToast("安全策略攔截 (" + res.status + "): " + data.detail, true);
+    } else {
+      showToast("已排入佇列！Job ID: " + data.job_id + " (" + data.status + ")", false);
+    }
+  }
+
+  async function loadOfferings() {
+    const home = document.getElementById("s4-home").value;
+    const rel = document.getElementById("s4-release").value.trim();
+    const qs = new URLSearchParams({ home: home });
+    if (rel) qs.set("release_id", rel);
+    const r = await fetch("/offerings?" + qs.toString());
+    const d = await r.json();
+    if (!r.ok) {
+      showToast("查詢失敗: " + d.detail, true);
+      return;
+    }
+    const qSum = d.quota_summary;
+    document.getElementById("s4-summary").innerHTML =
+      "<div class='card' style='background:#0f172a;margin-bottom:10px'>" +
+        "<strong>固定版本 Release ID：<code>" + d.release_id + "</code></strong> ｜ 總筆數：<strong>" + d.total_count + "</strong>" +
+        " ｜ 明確人數名額合計 (persons)：<strong>" + qSum.persons_quota_total + "</strong>" +
+        " ｜ 學年名額單位合計 (academic_year_unit)：<strong>" + qSum.academic_year_unit_total + "</strong>" +
+        " ｜ 未載明名額學校數 (not_stated)：<span class='badge warn'>" + qSum.unverified_or_not_stated_count + "</span>" +
+        " ｜ 明確 0 名額數 (zero)：<span class='badge high'>" + qSum.explicit_zero_count + "</span>" +
+      "</div>";
+    const slice = d.items.slice(0, 25);
+    document.getElementById("s4-table").innerHTML =
+      "<table><thead><tr><th>Offering ID</th><th>母校</th><th>姊妹校 (Host Canonical Name)</th><th>國家</th><th>名額狀態 (value_state)</th><th>原始名額文字</th><th>新鮮度 / 驗證狀態</th></tr></thead><tbody>" +
+      slice.map(function (o) {
+        const qf = o.fields.quota || {};
+        const qv = qf.value || {};
+        const badgeCls = qf.value_state === "known" ? "ok" : (qf.value_state === "zero" ? "high" : "warn");
+        return "<tr>" +
+          "<td><code>" + o.offering_id + "</code></td>" +
+          "<td>" + o.home_institution.canonical_name + "</td>" +
+          "<td>" + o.host_institution.canonical_name + "</td>" +
+          "<td>" + o.host_institution.country_code + "</td>" +
+          "<td><span class='badge " + badgeCls + "'>" + qf.value_state + "</span></td>" +
+          "<td>" + (qv.original_text || "未記載") + "</td>" +
+          "<td><code>" + qf.freshness_status + "</code></td>" +
+          "</tr>";
+      }).join("") +
+      "</tbody></table><small style='color:var(--muted)'>顯示前 25 筆（共 " + d.total_count + " 筆）</small>";
+  }
+
+  async function submitReport() {
+    const entityId = document.getElementById("rep-entity").value;
+    const text = document.getElementById("rep-text").value;
+    const r = await fetch("/reports", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ target_entity_type: "offering", target_entity_id: entityId, category: "quota_mismatch", text: text })
+    });
+    const d = await r.json();
+    showToast("問題回報已建立：" + d.report_id + " (" + d.status + ")", false);
+    refreshReports();
+  }
+
+  async function submitExperience(escalate) {
+    const body = {
+      home_id: "ntu",
+      host_id: "host_uc_berkeley",
+      experience_period: "2023 Fall",
+      experience_year: 2023,
+      summary_zh: "2023 秋季交換心得：課程扎實，建議提早申請宿舍。",
+      consent_agreed: true,
+      contact_email: "student@ntu.edu.tw"
+    };
+    if (escalate) {
+      body.review_status = "approved";
+      body.is_admin = true;
+    }
+    const r = await fetch("/maintenance/experience-submissions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    const d = await r.json();
+    if (!r.ok) {
+      showToast("防提權防護成功攔截 (" + r.status + "): " + d.detail, true);
+    } else {
+      showToast("投稿成功進入待審！ID: " + d.experience_id + "，保留真實年份：" + d.experience_year, false);
+    }
+    refreshReports();
+  }
+
+  async function refreshReports() {
+    const r = await fetch("/admin/reports", { headers: ADMIN_HEADERS });
+    const d = await r.json();
+    document.getElementById("s5-list").innerHTML = "<pre>" + JSON.stringify(d, null, 2) + "</pre>";
+  }
+
+  async function refreshReleases() {
+    const results = await Promise.all([
+      fetch("/admin/releases", { headers: ADMIN_HEADERS }),
+      fetch("/admin/changes?status=approved", { headers: ADMIN_HEADERS })
+    ]);
+    const relData = await results[0].json();
+    const chgData = await results[1].json();
+    const approvedIds = chgData.items.map(function (i) { return i.id; });
+    const box = document.getElementById("s6-approved-box");
+    if (approvedIds.length > 0) {
+      box.innerHTML = "<button class='btn' data-action='publish-approved' data-ids='" + approvedIds.join(",") + "' data-base-rel='" + (relData.current_release_id || "") + "'>原子發布已核准變更集 (" + approvedIds.join(", ") + ")</button>";
+    } else {
+      box.innerHTML = "<span style='color:var(--muted)'>目前無已核准待發布之 ChangeSet（請先至「畫面 2」核准候選變更）。</span>";
+    }
+    document.getElementById("s6-releases").innerHTML =
+      "<table><thead><tr><th>Release ID</th><th>前版 Release</th><th>發布者</th><th>原因</th><th>狀態</th><th>操作</th></tr></thead><tbody>" +
+      relData.items.map(function (r) {
+        const isHead = r.id === relData.current_release_id;
+        return "<tr>" +
+          "<td><code>" + r.id + "</code> " + (isHead ? "<span class='badge ok'>CURRENT HEAD</span>" : "") + "</td>" +
+          "<td><code>" + (r.previous_release_id || "-") + "</code></td>" +
+          "<td>" + r.published_by + "</td>" +
+          "<td>" + r.reason + "</td>" +
+          "<td>" + r.status + "</td>" +
+          "<td>" + (!isHead ? "<button class='btn secondary' data-action='rollback-release' data-cur-rel='" + relData.current_release_id + "' data-target-rel='" + r.id + "'>以新 Release 回復至此版本 (T18)</button>" : "") + "</td>" +
+          "</tr>";
+      }).join("") +
+      "</tbody></table>" +
+      "<h4 style='margin-top:16px'>最近稽核軌跡 (Audit Events)</h4>" +
+      "<pre>" + JSON.stringify(relData.audit_events.slice(-8), null, 2) + "</pre>";
+  }
+
+  async function publishApproved(idsCsv, baseRel) {
+    const ids = idsCsv.split(",").filter(Boolean);
+    const r = await fetch("/admin/publications", {
+      method: "POST",
+      headers: ADMIN_HEADERS,
+      body: JSON.stringify({
+        approved_change_ids: ids,
+        base_release_id: baseRel || null,
+        reason: "Publish approved changes from Maintenance Workbench",
+        idempotency_key: "idem_pub_" + Date.now()
+      })
+    });
+    const d = await r.json();
+    if (!r.ok) {
+      showToast("發布失敗 (" + r.status + "): " + d.detail, true);
+    } else {
+      showToast("原子發布成功！新 Release Head: " + d.release_id, false);
+    }
+    refreshAll();
+  }
+
+  async function rollbackTo(curRel, targetRel) {
+    const r = await fetch("/admin/publications/rollback", {
+      method: "POST",
+      headers: ADMIN_HEADERS,
+      body: JSON.stringify({
+        current_release_id: curRel,
+        target_release_id: targetRel,
+        reason: "Rollback to " + targetRel + " from Maintenance Workbench",
+        idempotency_key: "idem_rb_" + Date.now()
+      })
+    });
+    const d = await r.json();
+    if (!r.ok) {
+      showToast("回滾失敗 (" + r.status + "): " + d.detail, true);
+    } else {
+      showToast("回滾完成！已建立新 Release: " + d.release_id, false);
+    }
+    refreshAll();
+  }
+
+  function refreshAll() {
+    refreshDashboard();
+    refreshChanges();
+    refreshSources();
+    loadOfferings();
+    refreshReports();
+    refreshReleases();
+  }
+
+  document.addEventListener("click", function (ev) {
+    const btn = ev.target.closest("[data-action]");
+    if (!btn) return;
+    const act = btn.getAttribute("data-action");
+    if (act === "switch-tab") {
+      switchTab(btn.getAttribute("data-tab"), btn);
+    } else if (act === "review-change") {
+      reviewChange(
+        btn.getAttribute("data-cs-id"),
+        btn.getAttribute("data-cand-ver"),
+        btn.getAttribute("data-ev-hash"),
+        btn.getAttribute("data-base-rel"),
+        btn.getAttribute("data-decision")
+      );
+    } else if (act === "trigger-refresh") {
+      triggerRefresh(btn.getAttribute("data-source-id"), btn.getAttribute("data-url"));
+    } else if (act === "load-offerings") {
+      loadOfferings();
+    } else if (act === "submit-report") {
+      submitReport();
+    } else if (act === "submit-exp") {
+      submitExperience(btn.getAttribute("data-escalate") === "true");
+    } else if (act === "publish-approved") {
+      publishApproved(btn.getAttribute("data-ids"), btn.getAttribute("data-base-rel"));
+    } else if (act === "rollback-release") {
+      rollbackTo(btn.getAttribute("data-cur-rel"), btn.getAttribute("data-target-rel"));
+    }
+  });
+
+  const homeSel = document.getElementById("s4-home");
+  if (homeSel) {
+    homeSel.addEventListener("change", function () { loadOfferings(); });
+  }
+
+  refreshAll();
+})();
+"""
+        return Response(content=js, media_type="application/javascript; charset=utf-8", headers=PRIVATE_NO_STORE)
 
     return router
 
