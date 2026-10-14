@@ -8,6 +8,20 @@ from static_asset_contract import assert_versioned_static_assets
 STATIC_DIR = Path(__file__).resolve().parents[1] / "src" / "exchange_info" / "static"
 
 
+def test_school_switcher_is_prominent_beside_page_back_control() -> None:
+    html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+    rail_start = html.index('<aside id="glass-navigation"')
+    rail_end = html.index("</aside>", rail_start)
+    switcher = html.index('id="school-switcher"')
+    page_back_start = html.index('<nav class="page-back-bar"')
+    page_back_end = html.index("</nav>", page_back_start)
+
+    assert not rail_start < switcher < rail_end
+    assert page_back_start < switcher < page_back_end
+    assert html.index('id="page-back"', page_back_start) < switcher
+    assert "切換就讀學校" in html[page_back_start:page_back_end]
+
+
 def test_content_review_workbench_exposes_dual_review_without_student_navigation() -> None:
     html = (STATIC_DIR / "content-review.html").read_text(encoding="utf-8")
     script = (STATIC_DIR / "content-review.js").read_text(encoding="utf-8")

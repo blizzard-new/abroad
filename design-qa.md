@@ -1,3 +1,62 @@
+# Design QA: page-header school switcher
+
+## Comparison target
+
+- Source visual truth: the user's supplied 307 × 93 px crop of the existing school control and 1895 × 331 px desktop page-header screenshot, with the request to remove the control from the left rail and place it immediately to the right of the return button.
+- Implementation screenshots: `output/navigation-guide/guide-1440.png`, `output/navigation-guide/guide-834.png`, and `output/navigation-guide/guide-393.png`.
+- Viewports and density: 1440 × 900, 834 × 900, and 393 × 900 CSS px at device scale factor 1. Full-page implementation captures are 1440 × 1035, 834 × 1379, and 393 × 1662 px respectively. No density normalization was needed.
+- State: light theme, 長庚大學 selected, application-guide home route; the school selector is closed and the route-back control is at its safe home boundary.
+
+## Full-view comparison evidence
+
+The supplied header reference and the browser-rendered captures were reviewed together. The left rail now contains only navigation and utility controls, while the school selector sits directly after the return control in the page header. The implementation preserves the user's existing pale glass visual system instead of introducing a foreign navigation style. At desktop, tablet, and mobile widths, the selector stays above the main page content and does not create horizontal overflow or push the guide cards out of alignment.
+
+## Focused region comparison evidence
+
+The header controls are legible in all three full-resolution captures, so a separate cropped capture was not necessary. The focused check confirmed the requested left-to-right order, a consistent 12 px desktop / 8 px mobile gap, visible graduation-cap and chevron affordances, the explicit “切換就讀學校” action label, and the current “長庚大學” value without clipping. On the 393 px viewport, both return and school controls remain on the same row and the school name remains readable.
+
+## Required fidelity surfaces
+
+- Fonts and typography: Existing UniWay Chinese UI typography, weight hierarchy, line height, and antialiasing are retained. The compact action label and stronger current-school value form a clear two-level hierarchy without truncation in the tested states.
+- Spacing and layout rhythm: The selector is immediately to the right of the return button, aligned vertically, and uses the existing page gutter at each responsive breakpoint. Its 54 px touch height and compact mobile sizing preserve rhythm without crowding the header.
+- Colors and visual tokens: Existing navy, blue-soft, glass-surface, glass-edge, and shadow tokens are reused. The stronger blue border and icon tile make the control discoverable while remaining consistent with nearby controls.
+- Image quality and asset fidelity: No new raster imagery was introduced. The existing UniWay logo, suitcase art, and Lucide graduation-cap/chevron icons remain sharp and unchanged; no placeholder, emoji, CSS drawing, or replacement asset was used.
+- Copy and content: “切換就讀學校” directly explains the action, while the live school value continues to be populated by the existing application state. The selector still opens the existing school-selection dialog.
+
+## Findings
+
+- No actionable P0, P1, or P2 visual mismatch remains for the requested relocation and prominence of the school selector.
+
+## Open questions
+
+- None. The requested placement and the existing control content were both explicit in the supplied screenshots.
+
+## Comparison history
+
+- Initial implementation comparison: the selector was removed from the left rail, placed after the return control, and given a visible action label plus stronger border/elevation. Browser captures at 1440, 834, and 393 px showed no actionable P0/P1/P2 issue, so no visual correction iteration was required.
+
+## Primary interactions and runtime checks
+
+- Verified the selector is absent from `#glass-navigation` and present inside `.page-back-bar`.
+- Verified selector visibility, left-to-right geometry, school-dialog opening and closing, responsive menu behavior, light/dark theme switching, nested application tools, and no horizontal overflow.
+- Browser console and uncaught page errors are asserted empty in the responsive test; the focused browser suite passed 10 tests.
+
+## Implementation checklist
+
+- [x] Remove the school selector from the left navigation rail.
+- [x] Place it immediately to the right of the visible return button.
+- [x] Add an explicit switching label while preserving the current-school value.
+- [x] Preserve keyboard focus, dialog behavior, and existing application state.
+- [x] Keep the header usable at desktop, tablet, and mobile widths.
+
+## Follow-up polish
+
+- None required for handoff.
+
+final result: passed
+
+---
+
 # Design QA: overlaying expanded navigation rail
 
 ## Comparison target
