@@ -72,11 +72,10 @@ SHORT_TERM_SOURCE_URL = (
     "188edb21-5c53-4cbe-9e55-81089f90528b"
 )
 SOURCE_CHECKED_AT = datetime(2026, 7, 16, tzinfo=timezone.utc)
-NTPU_SOURCE_CHECKED_AT = datetime(2026, 7, 20, tzinfo=timezone.utc)
+NTPU_SOURCE_CHECKED_AT = datetime(2026, 10, 3, tzinfo=timezone.utc)
 NTU_SOURCE_CHECKED_AT = datetime(2026, 10, 7, tzinfo=timezone.utc)
 NTPU_EXCHANGE_GUIDELINES_URL = (
-    "https://cms-carrier.ntpu.edu.tw/uploads/"
-    "2026_2027_Academic_Year_Outbound_Exchange_Program_Guidelines_1e5870e83d.pdf"
+    "https://cms-carrier.ntpu.edu.tw/uploads/116_16e535159d.pdf"
 )
 
 
