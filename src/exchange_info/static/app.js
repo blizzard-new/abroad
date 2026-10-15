@@ -7914,7 +7914,9 @@ function partnerNextDeadline(item) {
   if (partnerDeadlineCache.has(item)) return partnerDeadlineCache.get(item);
   const sources = [item?.partner_exchange_details?.application_deadline?.value, item?.nomination_deadline, item?.partner_application_deadline,
     partnerStudentSummary(item).application_deadline, item?.application_deadline];
-  const today = parseLocalDate(localDateKey());
+  // Built from the clock directly: a year that does not fit four digits would make parseLocalDate return null here.
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12);
   let best = null;
   for (const text of sources.map((value) => String(value || ""))) {
     const dates = [];

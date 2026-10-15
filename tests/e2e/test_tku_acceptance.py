@@ -131,10 +131,7 @@ def test_tku_list_filters_favorites_comparison_and_reload(page, live_server, wid
     expect(table).to_have_attribute("data-result-count", "4")
     names = page.evaluate("state.dashboard.partner_universities.map(row=>row.school_name)")
     for name in names[:2]:
-        if width < 700:
-            card = page.locator("#partner-table .partner-card").filter(has_text=name)
-            if not card.get_attribute("open"):
-                card.locator(":scope > summary").click()
+        # The heart sits on the card photo at every width, so the card needs no opening first.
         page.locator(f'#partner-table .favorite-toggle:visible[data-school-name={json.dumps(name,ensure_ascii=False)}]').click()
     page.evaluate("location.hash='#favorites'")
     expect(page.locator("#favorite-count")).to_have_text("2 所")
