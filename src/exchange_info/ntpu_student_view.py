@@ -238,11 +238,14 @@ def _school_name(body: str, language_group: str) -> str:
         for location in locations:
             flexible_location = r"\s*".join(re.escape(char) for char in location)
             before_group = re.sub(rf"\s+{flexible_location}$", "", before_group)
-        return before_group.strip(" ，,")
+        return re.sub(r"\s+", "", before_group.strip(" ，,"))
 
     marker = re.search(
-        r"\s+(?=(?:限|具備|建議|相當於|主修|僅|日本語能力試驗|"
-        r"TOEFL|IELTS|大學[:：]|學士[:：]|碩士[:：]|\d+\.[A-Z]|無\s+(?:無|\d)))",
+        r"\s+(?=(?:限|具備|建議|相當於|主修|須為主修|僅|日本語能力試驗|"
+        r"TOEFL|IELTS|多益\s*[\(（]?TOEIC|To study in English|"
+        r"大學(?:部)?\s*[:：]|學士\s*[:：]|碩士\s*[:：]|英語\s*track\s*[:：]|"
+        r"大三以上|課程以西班牙語為主|法律、商管|選修非語言課程|"
+        r"\d+\.[A-Z]|無(?:\s+(?:無|\d|日本語|建議|大學|英語|具備)|$)))",
         body,
         re.IGNORECASE,
     )
@@ -267,21 +270,41 @@ def _partner_from_block(
     if len(school_name) < 2:
         return None
     details = _compact(body[len(school_name) :])
-    period_match = re.search(r"(?:1|一)學期(?:\s*(?:或|/|／)\s*(?:1|一)學年)?", details)
-    study_period = period_match.group(0) if period_match else "依當期名額表"
-    quota_matches = re.findall(r"\b(\d{1,2})\s+(?=(?:1|一)學期)", details)
-    quota = (
-        f"{quota_matches[-1]} 名上限"
-        if quota_matches
-        else "當期名額表未列明人數；請洽臺北大學國際處確認。"
+    period_match = re.search(
+        r"(?<!第)(?:(?:1|一)學期(?:\s*(?:或|/|／)\s*(?:1|一)學?年)?|(?:1|一)學年)",
+        details,
     )
-    if re.search(r"限大學部|undergraduate students only", details, re.IGNORECASE):
+    study_period = period_match.group(0) if period_match else "依當期名額表"
+    if language_group == "中文組":
+        zh_quota_match = re.search(r"中文組\s+(\d{1,2})\b", details)
+        quota_matches = [zh_quota_match.group(1)] if zh_quota_match else []
+    else:
+        quota_matches = re.findall(
+            r"\b(\d{1,2})(?:\s*\([^)]*\))?\s+(?=(?<!第)(?:1|一)學(?:期|年))",
+            details,
+        )
+    if quota_matches:
+        quota = f"{quota_matches[-1]} 名上限"
+    elif "自費訪問生" in details or re.search(
+        r"(?:^|\s)-\s+(?=(?<!第)(?:1|一)學(?:期|年))", details
+    ):
+        quota = "無免學費交換名額（自費訪問／依簡章備註）"
+    else:
+        quota = "當期名額表未列明人數；請洽臺北大學國際處確認。"
+    if re.search(
+        r"限大學部|限學士(?:生|班)|undergraduate students only|restricted to\s*undergraduate students",
+        details,
+        re.IGNORECASE,
+    ):
         degree_levels = "大學部"
     elif re.search(r"研究生|碩士|master|doctoral", details, re.IGNORECASE):
         degree_levels = "大學部、研究所"
     else:
         degree_levels = "大學部、研究所（依合作校規定）"
-    college_match = re.search(r"限(.{2,80}?)(?:學生|申請)", details)
+    college_match = re.search(
+        r"(?<![只申請資格])限(?!學習領域)([^。；\n()（）]{2,40}?(?:學院|學系|系|院|領域))(?:學生|學士生|申請)?",
+        details,
+    )
     colleges = college_match.group(1).strip(" ：:，,") if college_match else "依合作校規定"
     eligibility = details[:1200] or "申請資格、語言與名額依 116 學年度官方名額表。"
     return PartnerUniversity(
@@ -320,8 +343,15 @@ def parse_ntpu_partner_pdf(
     for index, (_, _, body_start) in enumerate(positions):
         end = positions[index + 1][1] if index + 1 < len(positions) else len(text)
         block = text[body_start:end]
-        if "\n序號 國別" in block:
-            block = block.split("\n序號 國別", 1)[0]
+        for marker in (
+            "\n序號 國別",
+            "\n116學年度交換學校資訊一覽表",
+            "\n注意事項:",
+            "\n重要留意事項",
+            "\n註:",
+        ):
+            if marker in block:
+                block = block.split(marker, 1)[0]
         partner = _partner_from_block(
             block,
             language_group=language_group,
@@ -566,7 +596,7 @@ def _ntpu_116_period(reference_time: datetime | None = None) -> ApplicationPerio
             "簡章、英文版選送辦法與英語、日語、中文三組名額一覽表已隨公告發布。",
             "合作校名單與名額已更新為 116 學年度名額表（英語 133 列、日語 16 列、中文 21 列）；各校資格與限制仍以名額表原文為準。",
             "簡章載明：線上申請送出後，須於 2026/10/23 17:00 前將簽名申請表上傳至指定 Google 表單，逾期視為申請未完成。",
-            "面試通常於 11 月下旬、分發結果於 12 月下旬公告；以國際處當期公告為準。",
+            "公告時程載明：11 月中旬公布面試時間表，2026/11/23、11/25 舉行英語組面試，2026/11/27 舉行中、日語組面試，12 月下旬公告甄選結果。",
         ],
         source=SourceReference(
             title="116學年度赴外交換簡章公告",

@@ -16,10 +16,18 @@ NTPU_GUIDELINE = (
     "2026_2027_Academic_Year_Outbound_Exchange_Program_Guidelines_1e5870e83d.pdf"
 )
 NTPU_GUIDELINE_116 = "https://cms-carrier.ntpu.edu.tw/uploads/116_16e535159d.pdf"
+NTPU_ANNOUNCEMENT_115 = "https://new.ntpu.edu.tw/news/68d5e81963f5a608851f74c1"
+NTPU_ANNOUNCEMENT_116 = "https://new.ntpu.edu.tw/oia/news/6ab396bf7085cb4f0c81831f"
 _NTPU_GUIDELINES_BY_YEAR = {"115": NTPU_GUIDELINE, "116": NTPU_GUIDELINE_116}
+_NTPU_HOME_SOURCES_BY_YEAR = {
+    "115": {NTPU_GUIDELINE, NTPU_ANNOUNCEMENT_115},
+    "116": {NTPU_GUIDELINE_116, NTPU_ANNOUNCEMENT_116},
+}
 _NTPU_COMMON_TITLES = {
     "完成臺北大學線上申請與報名表": "ntpu-home-submit",
+    "完成臺北大學線上申請與文件上傳": "ntpu-home-submit",
     "參加書審、讀書計畫與語言面試": "ntpu-home-review",
+    "完成書審、研修計畫及語組面試": "ntpu-home-review",
 }
 
 
@@ -46,7 +54,7 @@ def preparation_identity(
             and step.title in _NTPU_COMMON_TITLES
             and _NTPU_GUIDELINES_BY_YEAR[workflow.academic_year] in step.source_urls
             and set(step.source_urls).issubset(
-                home_sources | {_NTPU_GUIDELINES_BY_YEAR[workflow.academic_year]}
+                home_sources | _NTPU_HOME_SOURCES_BY_YEAR[workflow.academic_year]
             )
             and not scope.colleges and not scope.departments
             and step.phase in {"校內申請", "甄選與分發"}):
