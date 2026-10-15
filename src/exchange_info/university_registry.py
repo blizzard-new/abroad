@@ -119,7 +119,7 @@ NCU = UniversityProfile(
     aliases=("國立中央大學", "中央大學", "中央", "中大", "NCU", "National Central University"),
     hero_image="/static/assets/ncu-campus.svg",
     official_url="https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",
-    coverage_note="116學年度第一梯次簡章已公告；名額預定2026/10/12公告。115年度合作項目僅供規劃，外校當期條件逐項待核對。",
+    coverage_note="116學年度第一梯次簡章與2026/10/13最新交換姐妹校列表已公告（11/16開放線上申請）；外校當期條件逐項待核對。",
     support_level="basic",
     partner_count_hint=214,
     academic_score_minimum=None,

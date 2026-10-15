@@ -20,9 +20,12 @@ NCU_GUIDELINES_URL = (
     "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf"
 )
 NCU_INDEX_URL = "https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw"
+NCU_LIST_116_URL = "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangeschoollist-1013.pdf"
 NCU_LIST_115_URL = "https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf"
 NCU_FORMS_URL = "https://oia.ncu.edu.tw/static/file/26/1026/img/272/forms-2022.pdf"
-NCU_CHECKED_AT = datetime(2026, 10, 8, tzinfo=timezone.utc)
+NCU_SYSTEM_UPGRADE_NOTICE_URL = "https://oia.ncu.edu.tw/p/406-1026-13073,r565.php?Lang=zh-tw"
+NCU_INFO_SESSION_116_1_URL = "https://oia.ncu.edu.tw/p/406-1026-14170,r565.php?Lang=zh-tw"
+NCU_CHECKED_AT = datetime(2026, 10, 15, 5, 0, tzinfo=timezone.utc)
 _audit_snapshot_lock = threading.Lock()
 
 
