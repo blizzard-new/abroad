@@ -11772,11 +11772,12 @@ function renderPersonalApplicationPlan(plan) {
   if (!result || !plan) return;
   const hasBlockingChoice = plan.choices.some((choice) => ["ineligible", "unavailable"].includes(choice.status));
   const hasConfirmation = plan.choices.some((choice) => choice.status === "needs_confirmation");
+  window.UniWayLatticeLoader?.park?.();
   result.className = `eligibility-result ${hasBlockingChoice || hasConfirmation ? "is-warning" : "is-pass"}`;
   result.innerHTML = `
     <div class="application-plan-result-heading">
       <span><i data-lucide="route" aria-hidden="true"></i></span>
-      <div><h3>你的 ${escapeHtml(plan.home_school)} 申請清單</h3><p>${escapeHtml(plan.disclaimer)}</p></div>
+      <div><div class="advisor-lattice-loader" data-eligibility-lattice hidden></div><h3>你的 ${escapeHtml(plan.home_school)} 申請清單</h3><p>${escapeHtml(plan.disclaimer)}</p></div>
     </div>
     <div class="application-plan-choices">${plan.choices.map((choice) => {
       const meta = applicationPlanStatusMeta(choice.status);
@@ -11789,6 +11790,7 @@ function renderPersonalApplicationPlan(plan) {
         </article>`;
     }).join("")}</div>
     <div class="eligibility-actions"><button id="view-matched-schools" type="button" class="secondary-button">回到合作校比較</button></div>`;
+  window.UniWayLatticeLoader?.setState("done", result.querySelector("[data-eligibility-lattice]"));
   $("#view-matched-schools")?.addEventListener("click", () => {
     state.partnerLimit = partnerPageSize();
     renderPartnerFilters();
@@ -11846,8 +11848,10 @@ async function checkEligibility(event) {
   const draftKey = conditionsDraftKey();
   state.advisorLoading = true;
   button.disabled = true;
+  window.UniWayLatticeLoader?.park?.();
   result.className = "eligibility-result";
-  result.innerHTML = '<div class="result-placeholder"><i data-lucide="loader-circle" aria-hidden="true"></i><strong>正在套用已查核規則</strong><span>不使用 AI 猜測；缺少的資料會列為待確認。</span></div>';
+  result.innerHTML = '<div class="result-placeholder"><div class="advisor-lattice-loader" data-eligibility-lattice hidden></div><i data-lucide="loader-circle" aria-hidden="true"></i><strong>正在套用已查核規則</strong><span>不使用 AI 猜測；缺少的資料會列為待確認。</span></div>';
+  window.UniWayLatticeLoader?.setState("loading", result.querySelector("[data-eligibility-lattice]"));
   initIcons();
   const profile = {
     college,
@@ -11894,6 +11898,7 @@ async function checkEligibility(event) {
     });
     if (state.account?.id !== requestedOwner || activeHomeSchool() !== requestedHome || requestId !== state.conditionsRequestId) return;
     if (draftKey !== conditionsDraftKey()) {
+      window.UniWayLatticeLoader?.setState("idle");
       result.innerHTML = '<p>查詢期間條件已修改，請重新核對志願。剛才的結果未套用或保存。</p>';
       announce("條件已修改，請重新核對志願。", "info");
       return;
@@ -11943,8 +11948,10 @@ async function checkEligibility(event) {
     announce("個人申請清單已建立並同步", "success");
   } catch (error) {
     if (error.staleSession || requestId !== state.conditionsRequestId || state.account?.id !== requestedOwner || activeHomeSchool() !== requestedHome) return;
+    window.UniWayLatticeLoader?.park?.();
     result.className = "eligibility-result is-warning";
-    result.innerHTML = `<div class="result-placeholder"><i data-lucide="triangle-alert" aria-hidden="true"></i><strong>暫時無法建立清單</strong><span>${escapeHtml(error.message)}</span></div>`;
+    result.innerHTML = `<div class="result-placeholder"><div class="advisor-lattice-loader" data-eligibility-lattice hidden></div><i data-lucide="triangle-alert" aria-hidden="true"></i><strong>暫時無法建立清單</strong><span>${escapeHtml(error.message)}</span></div>`;
+    window.UniWayLatticeLoader?.setState("error", result.querySelector("[data-eligibility-lattice]"));
     initIcons();
   } finally {
     if (requestId === state.conditionsRequestId) { state.advisorLoading = false; button.disabled = false; }
@@ -11971,6 +11978,7 @@ function resetPrivatePlanningExperience({ renderRelated = true } = {}) {
   if (clearEligibility) clearEligibility.hidden = true;
   const result = $("#eligibility-result");
   if (result) {
+    window.UniWayLatticeLoader?.park?.();
     result.className = "eligibility-result";
     result.innerHTML = '<div class="result-placeholder"><i data-lucide="clipboard-check" aria-hidden="true"></i><strong>還沒開始檢查</strong><span>填入資料後，系統會比對校內基本門檻與合作校公開條件。</span></div>';
   }
@@ -12242,6 +12250,7 @@ function setAdvisorAssistantState(nextState, detailOverride = "") {
   $("#advisor-assistant-detail").textContent = detailOverride || meta.detail;
   const eyebrow = assistant.querySelector(".advisor-assistant-eyebrow");
   if (eyebrow) eyebrow.textContent = meta.eyebrow;
+  window.UniWayLatticeLoader?.setState(safeState);
   assistant.classList.remove("is-entering");
   void assistant.offsetWidth;
   assistant.classList.add("is-entering");
