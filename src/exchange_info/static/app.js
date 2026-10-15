@@ -12965,7 +12965,8 @@ function isPersonalizedRoute(hash = window.location.hash) {
 
 function updateUniWayPublicNavigation(hash = window.location.hash) {
   window.UniWayMotion?.route(hash);
-  const activeRoute = isPersonalizedRoute(hash) || /^#guide(=|$)/.test(hash) ? "overview" : globalFeedForHash(hash)
+  // The guide belongs to 我的申請: it explains the steps the personalised pages carry out.
+  const activeRoute = isPersonalizedRoute(hash) ? "overview" : /^#guide(=|$)/.test(hash) ? "overview" : globalFeedForHash(hash)
     ? "forum"
     : (/^#school=/.test(hash) || hash === "#search" ? "partners" : hash.slice(1));
   document.querySelectorAll(".application-tools-panel a").forEach((link) => {

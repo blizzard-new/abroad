@@ -83,7 +83,7 @@ def test_tapping_the_mascot_cycles_hop_spin_wink() -> None:
 def test_the_script_and_style_versions_are_in_the_page() -> None:
     assert re.search(r'/static/mascot\.css\?v=\S+"', HTML) and re.search(r'/static/mascot\.js\?v=\S+"', HTML)
     versions = set(re.findall(r"/static/(?:mascot\.css|mascot\.js|advisor-mascot\.css|assets/mascot/suitcase\.webp)\?v=([\w-]+)", HTML))
-    assert versions == {"20261014-runtime-loading-1"}, "bumped together so nobody keeps an old copy"
+    assert versions == {"20261015-redesign-1"}, "bumped together so nobody keeps an old copy"
 
 
 def test_it_cannot_show_before_the_saved_theme_is_applied() -> None:
@@ -111,8 +111,8 @@ def test_the_mascot_is_a_solid_with_sides_a_front_and_light() -> None:
         assert 'class="uw-mascot-slab"' in markup and 'class="uw-mascot-sheen"' in markup and "data-tilt" in markup
 
 
-def test_the_home_page_header_shows_the_mascot_where_the_traveller_drawing_was() -> None:
+def test_the_home_page_shows_the_mascot_where_the_traveller_drawing_was() -> None:
     assert "journey-guide-art" not in HTML and "journey/explorer.webp" not in HTML
-    header = HTML[HTML.index('<header class="guide-intro">'):HTML.index("</header>", HTML.index('<header class="guide-intro">'))]
-    assert 'class="uw-mascot guide-mascot" data-play data-tilt' in header
+    landing = HTML[HTML.index('<section id="home-landing"'):HTML.index('<section id="guide"')]
+    assert 'class="uw-mascot pr-collage-mascot" data-play data-tilt' in landing
     assert "journey-guide-art" not in (STATIC / "journey.css").read_text(encoding="utf-8")

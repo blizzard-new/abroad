@@ -497,6 +497,12 @@ body.unified-shell #dashboard-view > #guide.pr-guide { container-type: inline-si
 .pr-guide-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr) 220px; gap: clamp(20px, 3cqi, 48px); align-items: start; }
 .pr-guide-toc { position: sticky; top: 16px; padding: 8px 0; }
 .pr-guide-search { display: flex; align-items: center; gap: 8px; width: 100%; box-sizing: border-box; padding: 9px 12px; border: 1px solid var(--uw-line); border-radius: 10px; background: var(--uw-surface); color: var(--uw-muted); font-size: 13px; cursor: text; }
+body.unified-shell .pr-guide-toc .guide-plan-link { margin-top: 18px; min-height: 0; gap: 10px; padding: 12px 14px; border-radius: 12px; box-shadow: none; font-size: 13px; }
+.pr-guide-toc .guide-plan-link .guide-plan-icon { display: grid; place-items: center; flex: 0 0 auto; width: 32px; height: 32px; border-radius: 10px; background: var(--uw-surface); color: var(--uw-blue-strong); }
+.pr-guide-toc .guide-plan-link .lucide { width: 16px; height: 16px; }
+.pr-guide-toc .guide-plan-link > span:nth-child(2) { flex: 1; min-width: 0; }
+.pr-guide-toc .guide-plan-link strong { color: var(--uw-navy); font-size: 13px; }
+.pr-guide-toc .guide-plan-link small { font-size: 12px; }
 .pr-guide-search .lucide { width: 15px; height: 15px; flex: 0 0 auto; }
 body.unified-shell #guide .pr-guide-search input { flex: 1; min-width: 0; min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--uw-text); font: inherit; font-size: 13px; box-shadow: none; }
 .pr-guide-search kbd { padding: 1px 6px; border: 1px solid var(--uw-line); border-radius: 5px; font-family: inherit; font-size: 11px; }
@@ -594,7 +600,11 @@ body.unified-shell .pr-guide-feedback .pr-report { margin-left: auto; padding: 0
 }
 
 /* ---------- 5. My applications (#overview): flat tracker ---------- */
-body.unified-shell #dashboard-view > #application-workspace[data-page="overview"] { container-type: inline-size; max-width: 1320px; margin-left: max(112px, calc(112px + (100% - 144px - 1320px) / 2)); gap: 16px; }
+body.unified-shell #dashboard-view > #application-workspace[data-page="overview"] { container-type: inline-size; max-width: 1320px; gap: 16px; }
+/* Below 900px the workspace keeps its own full-width layout; the rail offset only applies beside the rail. */
+@media (min-width: 901px) {
+  body.unified-shell #dashboard-view > #application-workspace[data-page="overview"] { margin-left: max(112px, calc(112px + (100% - 144px - 1320px) / 2)); }
+}
 body.unified-shell #application-workspace[data-page="overview"] > #overview:not([hidden]) { gap: 20px; }
 /* The workspace header keeps its stage tabs; the board below carries the page title. */
 body.unified-shell #application-workspace[data-page="overview"] .application-workspace-heading { padding: 10px 14px; border: 1px solid var(--uw-line); border-radius: 14px; background: var(--uw-surface); box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
