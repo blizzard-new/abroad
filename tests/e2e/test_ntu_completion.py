@@ -15,7 +15,6 @@ def test_dated_host_reference_is_readable_with_pending_home_quota(page, live_ser
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     enter_public_site(page, live_server, "partners")
-    open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立臺灣大學"]').click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
@@ -48,7 +47,6 @@ def test_field_conclusion_and_specific_missing_items_remain_visible(page, live_s
     page.set_viewport_size({"width": width, "height": 956})
     page.emulate_media(reduced_motion="reduce")
     enter_public_site(page, live_server, "partners")
-    open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立臺灣大學"]').click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
