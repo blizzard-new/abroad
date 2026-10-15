@@ -932,6 +932,20 @@ class TestMaintenanceMvpAcceptance(unittest.TestCase):
         self.assertEqual(summary["ntu"]["imported_offerings"], 288)
         self.assertEqual(summary["ntu"]["not_stated_quotas"], 282)
         self.assertEqual(summary["ntu"]["zero_quotas"], 6)
+        self.assertEqual(summary["ncu"]["imported_offerings"], 214)
+        self.assertEqual(summary["ntpu"]["imported_offerings"], 206)
+        self.assertEqual(summary["ccu"]["imported_offerings"], 104)
+        self.assertEqual(summary["tku"]["imported_offerings"], 287)
+
+        from exchange_info.maintenance.routes import build_default_maintenance_router
+        _, prod_store = build_default_maintenance_router(self.tmp_path / "prod_maint")
+        self.assertEqual(len(prod_store.change_sets), 0)
+        _, demo_store = build_default_maintenance_router(self.tmp_path / "demo_maint", seed_demo_changes=True)
+        self.assertIn("cs_ntu_116_quota_and_deadline", demo_store.change_sets)
+        dl_items = [
+            it for it in demo_store.change_sets["cs_ntu_116_quota_and_deadline"].items if it.field_path == "deadlines"
+        ]
+        self.assertEqual(dl_items[0].after_value, {"internal_deadline": "2026-11-09T16:00:00+08:00"})
 
     def test_t33_isolated_db_and_storage_backup_manifest_restore(self) -> None:
         """T33: 同時還原 DB + Storage 備份至隔離環境 -> 每個證據 blob_id 可開啟檔案且雜湊與 manifest 完全一致."""

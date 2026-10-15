@@ -387,45 +387,125 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             store, home_id="ncu", partner_rows=ncu_rows, default_cycle_label="116-1"
         )
 
-    # 3. CGU workflows (full import)
+    # 3. CGU catalogue / workflows (deduplicated outbound partners, excluding inbound TEEP)
     cgu_wf_path = official_data_root / "cgu" / "application_workflows.jsonl"
+    cgu_cache_path = official_data_root.parents[2] / "data" / "source_cache" / "cgu_catalogue.json"
+    cgu_by_key: dict[tuple[str, str], dict[str, Any]] = {}
+    if cgu_cache_path.exists():
+        cgu_cache = json.loads(cgu_cache_path.read_text(encoding="utf-8"))
+        for rec in cgu_cache.get("records", []):
+            school_name = str(rec.get("school_name") or "").strip()
+            country = str(rec.get("country") or "").strip()
+            if not school_name or country == "來臺蹲點實習計畫 TEEP" or "TEEP" in str(rec.get("program_type") or ""):
+                continue
+            avail = rec.get("availability_status") or "open"
+            cgu_by_key[(school_name, country)] = {
+                "school_name": school_name,
+                "country": country,
+                "academic_year": "115學年度",
+                "website": rec.get("website"),
+                "colleges": rec.get("colleges"),
+                "degree_levels": rec.get("degree_levels"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": avail,
+                "field_evidence": {"quota": {"status": "verified_current"}} if avail == "open" else {},
+                "source_url": rec.get("source_url") or "https://www.cgu.edu.tw/oia-ch",
+            }
     if cgu_wf_path.exists():
-        cgu_rows = []
         for line in cgu_wf_path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
             wf = json.loads(line)
-            cgu_rows.append(
-                {
-                    "school_name": wf.get("school_name"),
-                    "country": wf.get("country"),
-                    "academic_year": wf.get("academic_year"),
-                    "source_url": (wf.get("official_sources") or [{}])[0].get("source_url", "https://www.cgu.edu.tw/oia-ch"),
+            school_name = str(wf.get("school_name") or "").strip()
+            country = str(wf.get("country") or "").strip()
+            if not school_name or country == "來臺蹲點實習計畫 TEEP" or "TEEP" in str(wf.get("program_type") or ""):
+                continue
+            key = (school_name, country)
+            if key not in cgu_by_key:
+                is_open = wf.get("applicability_status") == "current_115_spring"
+                cgu_by_key[key] = {
+                    "school_name": school_name,
+                    "country": country,
+                    "academic_year": wf.get("academic_year") or "115學年度",
+                    "website": wf.get("partner_website"),
+                    "availability_status": "open" if is_open else "agreement_only",
+                    "field_evidence": {"quota": {"status": "verified_current"}} if is_open else {},
+                    "source_url": (wf.get("sources") or wf.get("official_sources") or [{}])[0].get(
+                        "url", "https://www.cgu.edu.tw/oia-ch"
+                    ),
                 }
-            )
-        school_reports["cgu"] = import_legacy_partner_rows_to_shadow_store(store, home_id="cgu", partner_rows=cgu_rows)
+    if cgu_by_key:
+        school_reports["cgu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="cgu", partner_rows=list(cgu_by_key.values()), default_cycle_label="115學年度"
+        )
 
-    # 4. NTPU workflows (full import)
+    # 4. NTPU destination_profiles + workflows (206 unique partner schools, 116 preferred over 115)
+    ntpu_dp_path = official_data_root / "ntpu" / "destination_profiles.jsonl"
     ntpu_wf_path = official_data_root / "ntpu" / "application_workflows.jsonl"
+    ntpu_wf_by_school: dict[str, dict[str, Any]] = {}
     if ntpu_wf_path.exists():
-        ntpu_rows = []
         for line in ntpu_wf_path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
             wf = json.loads(line)
+            sname = str(wf.get("school_name") or "").strip()
+            if not sname:
+                continue
+            prev = ntpu_wf_by_school.get(sname)
+            if prev is None or (wf.get("academic_year") == "116學年度" and prev.get("academic_year") != "116學年度"):
+                ntpu_wf_by_school[sname] = wf
+    ntpu_rows: list[dict[str, Any]] = []
+    if ntpu_dp_path.exists():
+        for line in ntpu_dp_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            dp = json.loads(line)
+            sname = str(dp.get("school_name") or "").strip()
+            wf = ntpu_wf_by_school.get(sname, {})
+            acad_year = wf.get("academic_year") or "116學年度"
+            is_current_116 = acad_year == "116學年度" and wf.get("applicability_status") != "reference_115"
             ntpu_rows.append(
                 {
-                    "school_name": wf.get("school_name"),
-                    "country": wf.get("country"),
-                    "academic_year": wf.get("academic_year") or "116學年度",
+                    "school_name": sname,
+                    "country": dp.get("country") or wf.get("country"),
+                    "academic_year": acad_year,
+                    "website": wf.get("partner_website"),
+                    "availability_status": "open" if is_current_116 else "agreement_only",
+                    "field_evidence": {"quota": {"status": "verified_current"}} if is_current_116 else {},
                     "source_url": "https://new.ntpu.edu.tw/oia",
                 }
             )
-        school_reports["ntpu"] = import_legacy_partner_rows_to_shadow_store(store, home_id="ntpu", partner_rows=ntpu_rows)
+    elif ntpu_wf_by_school:
+        for sname, wf in ntpu_wf_by_school.items():
+            acad_year = wf.get("academic_year") or "116學年度"
+            is_current_116 = acad_year == "116學年度"
+            ntpu_rows.append(
+                {
+                    "school_name": sname,
+                    "country": wf.get("country"),
+                    "academic_year": acad_year,
+                    "website": wf.get("partner_website"),
+                    "availability_status": "open" if is_current_116 else "agreement_only",
+                    "field_evidence": {"quota": {"status": "verified_current"}} if is_current_116 else {},
+                    "source_url": "https://new.ntpu.edu.tw/oia",
+                }
+            )
+    if ntpu_rows:
+        school_reports["ntpu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="ntpu", partner_rows=ntpu_rows, default_cycle_label="116學年度"
+        )
 
-    # 5. CCU workflows (full import)
+    # 5. CCU partners.jsonl (104 rows: 52 open, 49 reference_only, 3 not_published)
+    ccu_partners_path = official_data_root / "ccu" / "partners.jsonl"
     ccu_wf_path = official_data_root / "ccu" / "application_workflows.jsonl"
-    if ccu_wf_path.exists():
+    if ccu_partners_path.exists():
+        ccu_rows = [json.loads(line) for line in ccu_partners_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        school_reports["ccu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="ccu", partner_rows=ccu_rows, default_cycle_label="2027春季"
+        )
+    elif ccu_wf_path.exists():
         ccu_rows = []
         for line in ccu_wf_path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
@@ -441,23 +521,65 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             )
         school_reports["ccu"] = import_legacy_partner_rows_to_shadow_store(store, home_id="ccu", partner_rows=ccu_rows)
 
-    # 6. TKU workflows (full import)
+    # 6. TKU partners_current + destination_profiles (all 287 partner schools: 4 closed current + 283 agreement_only)
+    tku_cur_path = official_data_root / "tku" / "partners_current.jsonl"
+    tku_dp_path = official_data_root / "tku" / "destination_profiles.jsonl"
     tku_wf_path = official_data_root / "tku" / "application_workflows.jsonl"
-    if tku_wf_path.exists():
-        tku_rows = []
+    tku_by_school: dict[str, dict[str, Any]] = {}
+    if tku_cur_path.exists():
+        for line in tku_cur_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            cur = json.loads(line)
+            fields = cur.get("fields") or {}
+            sname = str((fields.get("school_name") or {}).get("value") or "").strip()
+            if not sname:
+                continue
+            q_num = cur.get("quota_number")
+            tku_by_school[sname] = {
+                "school_name": sname,
+                "country": (fields.get("country") or {}).get("value") or "日本",
+                "academic_year": cur.get("academic_year") or "2027-2028",
+                "website": (fields.get("website") or {}).get("value"),
+                "quota": f"{q_num} 名" if q_num is not None else (fields.get("quota") or {}).get("value"),
+                "quota_status": "published" if q_num is not None else "unknown",
+                "eligibility": (fields.get("eligibility") or {}).get("value"),
+                "language_requirement": (fields.get("language_requirement") or {}).get("value"),
+                "availability_status": "closed",
+                "field_evidence": {"quota": {"status": "verified_current"}},
+                "source_url": "https://oieie.tku.edu.tw/",
+            }
+    if tku_dp_path.exists():
+        for line in tku_dp_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            dp = json.loads(line)
+            sname = str(dp.get("school_name") or "").strip()
+            if not sname or sname in tku_by_school:
+                continue
+            tku_by_school[sname] = {
+                "school_name": sname,
+                "country": dp.get("country"),
+                "academic_year": "115學年度",
+                "availability_status": "agreement_only",
+                "source_url": "https://oieie.tku.edu.tw/",
+            }
+    elif tku_wf_path.exists() and not tku_by_school:
         for line in tku_wf_path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
             wf = json.loads(line)
-            tku_rows.append(
-                {
-                    "school_name": wf.get("school_name"),
-                    "country": wf.get("country"),
-                    "academic_year": wf.get("academic_year") or "116學年度",
-                    "source_url": "https://oieie.tku.edu.tw/",
-                }
-            )
-        school_reports["tku"] = import_legacy_partner_rows_to_shadow_store(store, home_id="tku", partner_rows=tku_rows)
+            sname = str(wf.get("school_name") or "").strip()
+            tku_by_school[sname] = {
+                "school_name": sname,
+                "country": wf.get("country"),
+                "academic_year": wf.get("academic_year") or "116學年度",
+                "source_url": "https://oieie.tku.edu.tw/",
+            }
+    if tku_by_school:
+        school_reports["tku"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="tku", partner_rows=list(tku_by_school.values()), default_cycle_label="116學年度"
+        )
 
     if store.current_release_id is None:
         store.create_initial_release(actor_id="system_bootstrap", reason="six_school_shadow_baseline")

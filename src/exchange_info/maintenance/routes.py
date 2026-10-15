@@ -1511,8 +1511,10 @@ def build_default_maintenance_router(
     data_dir: Any,
     *,
     official_data_root: Any = None,
+    seed_demo_changes: bool = False,
 ) -> tuple[APIRouter, MaintenanceStore]:
-    """Create a pre-seeded MaintenanceStore + APIRouter for FastAPI mounting and Staging browser preview."""
+    """Create a MaintenanceStore + APIRouter for FastAPI mounting and optional Staging browser preview."""
+    import os
     from pathlib import Path
     from .baseline_mapper import load_six_school_shadow_summary
     from .contracts import ChangeOrigin, QuotaUnit, QuotaValue, ValueState, canonical_json_hash
@@ -1524,33 +1526,37 @@ def build_default_maintenance_router(
     if off_root.exists():
         load_six_school_shadow_summary(off_root, store)
 
-    # Seed 2 realistic candidate change sets for Staging Workbench preview if none exist
+    # Seed candidate change sets ONLY when explicitly requested for Staging Workbench preview
+    should_seed_demo = seed_demo_changes or os.environ.get("UNIWAY_MAINT_SEED_DEMO") == "1"
     ntu_offs = [o for o in store.offerings.values() if o.home_id == "ntu"]
-    if ntu_offs and not store.change_sets:
-        sample_off = ntu_offs[0]
+    if should_seed_demo and ntu_offs and not store.change_sets:
+        sample_off = next(
+            (o for o in ntu_offs if "Vienna" in o.host_id or "維也納大學" in o.host_id),
+            ntu_offs[0],
+        )
         item_q = ChangeItemRecord(
             field_path="quota",
             before_value=sample_off.fields["quota"].value,
             after_value=QuotaValue(
                 value_state=ValueState.KNOWN,
-                amount=4,
-                unit=QuotaUnit.PERSONS,
-                original_text="4 名（116-1 最新簡章附件更新）",
+                amount=1,
+                unit=QuotaUnit.ACADEMIC_YEAR_UNIT,
+                original_text="全學年 1 名（一學期 2 名，116-1 最新官網學校列表更新）",
             ).model_dump(mode="json"),
             before_state=sample_off.fields["quota"].value_state,
             after_state=ValueState.KNOWN,
-            unit="persons",
+            unit=QuotaUnit.ACADEMIC_YEAR_UNIT.value,
             risk=RiskLevel.HIGH,
-            reason="系統比對發現：臺大國際事務處最新公布的 116-1 簡章 PDF 第 1 頁表格，已將該姊妹校交換名額更新為 4 名。",
+            reason="系統比對發現：臺大國際事務處最新公布的 116-1 赴外交換學校列表（oia.ntu.edu.tw/outgoing/school.list），已將該姊妹校交換名額更新為全學年 1 名（最多 2 人次）。",
         )
         item_dl = ChangeItemRecord(
             field_path="deadlines",
             before_value=None,
-            after_value={"internal_deadline": "2026-11-25T17:00:00+08:00"},
+            after_value={"internal_deadline": "2026-11-09T16:00:00+08:00"},
             before_state=None,
             after_state=ValueState.KNOWN,
             risk=RiskLevel.HIGH,
-            reason="系統比對發現：臺大校內甄選系統公告最新報名截止時間為 2026/11/25 17:00。",
+            reason="系統比對發現：臺大國際事務處公告 116 學年度第 1 學期出國交換學生甄選線上報名截止時間為 2026/11/09 16:00。",
         )
         ev_hash1 = canonical_json_hash([item_q.model_dump(mode="json"), item_dl.model_dump(mode="json")])
         cs1 = ChangeSetRecord(
