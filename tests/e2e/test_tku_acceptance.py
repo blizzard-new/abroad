@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 from playwright.sync_api import expect
 
-from .conftest import enter_public_site, open_navigation
+from .conftest import enter_public_site, open_navigation, open_partner_filters
 from .test_open_catalog import attach_session, sign_in_cookie, wait_until
 from .test_web_next_phase import _wait_for_workspace
 
@@ -118,6 +118,7 @@ def test_tku_list_filters_favorites_comparison_and_reload(page, live_server, wid
     table = page.locator("#partner-table")
     expect(table).to_have_attribute("data-result-count", "287")
     assert page.evaluate("state.dashboard.partner_universities.slice(0,4).every(row=>row.availability_status==='closed') && state.dashboard.partner_universities.slice(4).every(row=>['reference_only','agreement_only'].includes(row.availability_status)&&row.quota===null)")
+    open_partner_filters(page)
     page.locator("#availability-filter").select_option("open")
     expect(table).to_have_attribute("data-result-count", "0")
     page.locator("#availability-filter").select_option("closed")

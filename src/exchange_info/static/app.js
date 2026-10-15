@@ -4753,8 +4753,9 @@ function eligibilitySummary() {
 
 function upcomingDeadlines(limit = 3) {
   const today = localDateKey();
+  // An event whose date is not a plain YYYY-MM-DD has no day to show, so it is left out rather than handed on as null.
   return workflowDeadlineEvents()
-    .filter((event) => event.date >= today)
+    .filter((event) => event.date >= today && parseLocalDate(event.date))
     .sort((left, right) => left.date.localeCompare(right.date) || left.title.localeCompare(right.title, "zh-Hant"))
     .slice(0, limit)
     .map((event) => ({

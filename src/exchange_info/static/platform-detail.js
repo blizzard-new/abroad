@@ -68,7 +68,8 @@ window.UniWayDetail = (() => {
       fit.innerHTML = `<i data-lucide="circle-help" aria-hidden="true"></i><span>填寫條件後顯示你符合幾項 · <a href="#advisor">填寫條件</a></span>`;
     }
     const home = homeDeadline();
-    document.querySelector("#booking-home-deadline").textContent = home ? formatFull(parseLocalDate(home.date)) : "依官方公告";
+    const homeDate = home ? parseLocalDate(home.date) : null;
+    document.querySelector("#booking-home-deadline").textContent = homeDate ? formatFull(homeDate) : "依官方公告";
     const next = partnerNextDeadline(item);
     document.querySelector("#booking-partner-deadline").textContent = next ? formatFull(next) : truncate(partnerDeadlineReference(item).value, 36);
     const compare = document.querySelector("#detail-compare-button");
