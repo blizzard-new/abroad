@@ -110,3 +110,42 @@ def test_advisor_mascot_motion_is_loading_only_and_reduced_motion_safe() -> None
         r"@media\s*\([^)]*max-width[^)]*\)[\s\S]{0,3000}128px\b",
         styles,
     )
+
+
+def test_advisor_lattice_loader_is_wired_with_orbit_configuration() -> None:
+    react_dir = ROOT / "frontend" / "react-aria"
+    loader_jsx = (react_dir / "LatticeLoader.jsx").read_text(encoding="utf-8")
+    loader_css = (react_dir / "LatticeLoader.css").read_text(encoding="utf-8")
+    picker_jsx = (react_dir / "school-picker.jsx").read_text(encoding="utf-8")
+    bundle_js = (STATIC_DIR / "react-aria-school-picker.js").read_text(encoding="utf-8")
+    bundle_css = (STATIC_DIR / "react-aria-school-picker.css").read_text(encoding="utf-8")
+
+    assert "export default function LatticeLoader" in loader_jsx
+    assert ".lattice-loader" in loader_css
+    assert "import LatticeLoader from './LatticeLoader';" in picker_jsx
+    for expected in (
+        "status={isDone ? 'done' : 'working'}",
+        'label="Thinking"',
+        'doneLabel="Done in"',
+        'errorLabel="Failed after"',
+        'pattern="orbit"',
+        "grid={3}",
+        'shape="round"',
+        'doneColor="#22c55e"',
+        'errorColor="#ef4444"',
+        "cellSize={6}",
+        "gap={2}",
+        "fontSize={14}",
+        "step={90}",
+        "idleOpacity={0.15}",
+        "glow={false}",
+        'glowColor=""',
+        "showTimer",
+    ):
+        assert expected in picker_jsx
+
+    assert 'id="advisor-lattice-loader"' in HTML
+    assert "window.UniWayLatticeLoader?.setState(safeState);" in SCRIPT
+    assert "UniWayLatticeLoader" in bundle_js
+    assert ".lattice-loader" in bundle_css
+

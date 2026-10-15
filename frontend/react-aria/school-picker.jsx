@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { I18nProvider } from 'react-aria/I18nProvider';
 import { UNSAFE_PortalProvider } from 'react-aria/PortalProvider';
@@ -6,6 +7,7 @@ import {
   Autocomplete, Button, Dialog, Heading, Input, Label,
   ListBox, ListBoxItem, Modal, ModalOverlay, SearchField, Text,
 } from 'react-aria-components';
+import LatticeLoader from './LatticeLoader';
 import './school-picker.css';
 
 function Icon({ name, ...props }) {
@@ -135,3 +137,88 @@ if (host) {
     },
   };
 }
+
+function AdvisorThinkingStatus({ isDone = false, isError = false }) {
+  const loader = (
+    <LatticeLoader
+      status={isDone ? 'done' : 'working'}
+      label="Thinking"
+      doneLabel="Done in"
+      errorLabel="Failed after"
+      pattern="orbit"
+      grid={3}
+      shape="round"
+      doneColor="#22c55e"
+      errorColor="#ef4444"
+      cellSize={6}
+      gap={2}
+      fontSize={14}
+      step={90}
+      idleOpacity={0.15}
+      glow={false}
+      glowColor=""
+      showTimer
+    />
+  );
+  return isError ? <LatticeLoader {...loader.props} status="error" /> : loader;
+}
+
+const latticeHost = document.getElementById('advisor-lattice-loader');
+if (latticeHost) {
+  const latticeMount = document.createElement('div');
+  latticeHost.replaceChildren(latticeMount);
+  const latticeRoot = createRoot(latticeMount);
+  let runId = 0;
+  let activeState = 'idle';
+  let currentContainer = latticeHost;
+
+  const paintLattice = (nextContainer, state) => {
+    const target = nextContainer || latticeHost;
+    if (currentContainer && currentContainer !== target && currentContainer === latticeHost) {
+      latticeHost.hidden = true;
+    }
+    if (target.firstChild !== latticeMount) {
+      target.replaceChildren(latticeMount);
+    }
+    currentContainer = target;
+    if (state === 'idle') {
+      target.hidden = true;
+      activeState = 'idle';
+      try {
+        flushSync(() => latticeRoot.render(null));
+      } catch (_) {
+        latticeRoot.render(null);
+      }
+      return;
+    }
+    if (state === 'loading' && activeState !== 'loading') {
+      runId += 1;
+    } else if (runId === 0) {
+      runId = 1;
+    }
+    activeState = state;
+    target.hidden = false;
+    const isDone = state === 'success' || state === 'insufficient' || state === 'done';
+    const isError = state === 'error';
+    const element = <AdvisorThinkingStatus key={runId} isDone={isDone} isError={isError} />;
+    try {
+      flushSync(() => latticeRoot.render(element));
+    } catch (_) {
+      latticeRoot.render(element);
+    }
+  };
+
+  window.UniWayLatticeLoader = {
+    get state() { return activeState; },
+    park() {
+      if (latticeHost.firstChild !== latticeMount) {
+        latticeHost.replaceChildren(latticeMount);
+      }
+      currentContainer = latticeHost;
+    },
+    setState(state, container = null) {
+      paintLattice(container, state);
+    },
+  };
+}
+
