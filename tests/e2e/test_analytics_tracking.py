@@ -11,7 +11,7 @@ BROWSE_FIRST = "window.sessionStorage.setItem('exchange-guide-browse-first', '1'
 def open_partners(page, live_server):
     page.add_init_script(BROWSE_FIRST)
     page.goto(f"{live_server.base_url}/#partners")
-    expect(page.locator(".desktop-partner-table .school-detail-trigger").first).to_be_visible(timeout=30_000)
+    expect(page.locator("#partner-table .school-detail-trigger").first).to_be_visible(timeout=30_000)
 
 
 def recorded(live_server) -> list[dict]:
@@ -45,7 +45,7 @@ def test_a_visit_is_recorded_with_pages_searches_and_school_opens(page, live_ser
     page.wait_for_timeout(1500)
     page.locator("#partner-search").fill("")
     page.locator("#country-filter").select_option(index=1)
-    trigger = page.locator(".desktop-partner-table .school-detail-trigger").first
+    trigger = page.locator("#partner-table .school-detail-trigger").first
     school = trigger.get_attribute("data-school-name")
     trigger.click()
     expect(page.locator("#school-detail-title")).to_be_visible()
@@ -74,7 +74,7 @@ def test_a_visit_is_recorded_with_pages_searches_and_school_opens(page, live_ser
 def test_automated_browsers_are_not_tracked_unless_asked(page, live_server):
     open_partners(page, live_server)
     before = len(recorded(live_server))
-    page.locator(".desktop-partner-table .school-detail-trigger").first.click()
+    page.locator("#partner-table .school-detail-trigger").first.click()
     flush(page)
     page.wait_for_timeout(1500)
     assert len(recorded(live_server)) == before
@@ -86,7 +86,7 @@ def test_do_not_track_and_opt_out_stop_everything(page, live_server):
     page.add_init_script("Object.defineProperty(navigator, 'doNotTrack', {get: () => '1'})")
     open_partners(page, live_server)
     before = len(recorded(live_server))
-    page.locator(".desktop-partner-table .school-detail-trigger").first.click()
+    page.locator("#partner-table .school-detail-trigger").first.click()
     flush(page)
     page.wait_for_timeout(1500)
     assert len(recorded(live_server)) == before
@@ -104,7 +104,7 @@ def test_the_footer_button_opts_out_and_back_in(page, live_server):
     expect(toggle).to_have_text("已停用匿名使用統計，點此重新啟用")
     assert page.evaluate("localStorage.getItem('uniway-analytics-optout')") == "1"
     before = len(recorded(live_server))
-    page.locator(".desktop-partner-table .school-detail-trigger").first.click()
+    page.locator("#partner-table .school-detail-trigger").first.click()
     flush(page)
     page.wait_for_timeout(1500)
     assert len(recorded(live_server)) == before and page.evaluate("window.UniWayAnalytics.enabled()") is False

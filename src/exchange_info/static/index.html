@@ -816,17 +816,49 @@
             </div>
           </section>
 
-          <section id="partners" class="page-section" data-university-page="partners" aria-labelledby="partners-title" hidden>
-            <h2 id="partners-title" class="visually-hidden">學校搜尋</h2>
-            <div class="partner-view-toolbar">
-              <label class="search-field" for="partner-search"><span>搜尋學校</span><span class="control-with-icon"><i data-lucide="search" aria-hidden="true"></i><input id="partner-search" placeholder="學校、國家或申請條件" /></span></label>
-
-              <div class="partner-view-switch" role="group" aria-label="合作學校檢視方式">
-                <button type="button" data-partner-view="list" aria-pressed="true" aria-controls="partner-table"><i data-lucide="list" aria-hidden="true"></i>列表</button>
-                <button type="button" data-partner-view="map" aria-pressed="false" aria-controls="partner-map-panel"><i data-lucide="globe-2" aria-hidden="true"></i>3D 地圖</button>
+          <section id="partners" class="page-section pr-explore" data-university-page="partners" aria-labelledby="partners-title" hidden>
+            <header class="pr-explore-head">
+              <div>
+                <span class="pr-explore-context"><i data-lucide="graduation-cap" aria-hidden="true"></i><span id="partners-context">合作學校</span></span>
+                <h1 id="partners-title">找交換學校</h1>
               </div>
+              <div class="partner-view-switch pr-view-toggle" role="group" aria-label="合作學校檢視方式">
+                <button type="button" data-partner-view="list" aria-pressed="true" aria-controls="partner-table"><i data-lucide="layers" aria-hidden="true"></i>卡片</button>
+                <button type="button" data-partner-view="map" aria-pressed="false" aria-controls="partner-map-panel"><i data-lucide="map" aria-hidden="true"></i>地圖</button>
+              </div>
+            </header>
+            <div class="partner-view-toolbar pr-search" role="search">
+              <label class="pr-field search-field" for="partner-search">
+                <span class="pr-field-icon"><i data-lucide="map-pin" aria-hidden="true"></i></span>
+                <span class="pr-field-body"><small>國家、城市或學校</small><input id="partner-search" placeholder="例如：日本、仙台、東北大學" autocomplete="off" /></span>
+              </label>
+              <label class="pr-field" for="partner-term-tile">
+                <span class="pr-field-icon"><i data-lucide="calendar-range" aria-hidden="true"></i></span>
+                <span class="pr-field-body"><small>出發學期</small><select id="partner-term-tile" data-criteria-tile="term"><option value="">不限</option><option value="fall">秋季／上學期</option><option value="spring">春季／下學期</option></select></span>
+              </label>
+              <label class="pr-field" for="partner-test-tile">
+                <span class="pr-field-icon"><i data-lucide="languages" aria-hidden="true"></i></span>
+                <span class="pr-field-body"><small>語言檢定</small><select id="partner-test-tile" data-criteria-tile="test"><option value="">不限</option><option value="ielts">IELTS</option><option value="toefl">TOEFL iBT</option><option value="toeic">TOEIC</option><option value="jlpt">日檢 JLPT</option><option value="topik">韓檢 TOPIK</option><option value="duolingo">Duolingo</option></select></span>
+              </label>
+              <button id="partner-search-submit" type="button" class="pr-search-button"><i data-lucide="search" aria-hidden="true"></i>搜尋學校</button>
             </div>
+            <div id="partner-sort-tabs" class="pr-sort-tabs" role="tablist" aria-label="排序方式"></div>
             <div class="journey-search-layout">
+            <details class="journey-filter-drawer pr-facets" open>
+              <summary><i data-lucide="list-checks" aria-hidden="true"></i><span>篩選 <span id="partner-filter-count"></span></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+              <div class="filter-panel" aria-label="合作學校篩選條件">
+                <div class="pr-facets-head"><strong>篩選</strong><button id="clear-partner-filters" type="button" class="pr-clear">清除全部</button></div>
+                <div id="partner-facet-groups"></div>
+                <fieldset class="pr-facet pr-facet-selects">
+                  <legend>更多條件</legend>
+                  <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">當期名額已列</option><option value="not_open">本季未開放（官方灰字）</option><option value="needs_confirmation">名額尚未核實</option><option value="zero_quota">零名額</option><option value="fee_paying">自費計畫</option><option value="closed">表列交換校／校內申請已截止</option><option value="reference_only">舊期參考／不能作當期申請</option><option value="quota_unconfirmed">當期名額或期間待確認</option><option value="agreement_only">合作備查／本期名額待確認</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
+                  <label for="region-filter"><span>地區</span><select id="region-filter"></select></label>
+                  <label for="country-filter"><span>國家</span><select id="country-filter"></select></label>
+                  <label for="college-filter"><span>學院</span><select id="college-filter"></select></label>
+                  <label for="degree-filter"><span>學制</span><select id="degree-filter"></select></label>
+                </fieldset>
+              </div>
+            </details>
             <div class="journey-search-results">
             <div class="discovery-search-tools">
               <details id="discovery-criteria" class="discovery-criteria"><summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i>我的條件 <span id="discovery-criteria-count"></span></summary>
@@ -845,7 +877,7 @@
               <a class="discovery-open-workspace" href="#favorites"><i data-lucide="bookmark" aria-hidden="true"></i>我的選校 <span id="discovery-selection-count"></span></a>
             </div>
             <p id="discovery-criteria-result" class="discovery-muted" role="status"></p>
-            <p id="partner-result-count" class="partner-result-count"></p>
+            <div class="pr-results-head"><p id="partner-result-count" class="partner-result-count"></p><span id="partner-applied" class="pr-applied" role="status"></span></div>
             <div id="partner-table" class="partner-results" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-table"></div></div>
             <button id="show-more-partners" type="button" class="secondary-button centered-button" hidden>顯示更多學校</button>
             <section id="partner-map-panel" class="partner-map-panel" aria-label="全球交換合作網絡" hidden>
@@ -863,17 +895,6 @@
               <div class="partner-map-access"><label for="map-school-select">定位學校</label><select id="map-school-select"><option value="">選擇地圖上的學校</option></select><p id="partner-map-missing"></p><p id="partner-map-home-status" aria-live="polite"></p><details id="partner-map-gaps" hidden><summary></summary><ul></ul></details></div>
             </section>
             </div>
-            <details class="journey-filter-drawer" open>
-              <summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i>篩選<i data-lucide="chevron-down" aria-hidden="true"></i></summary>
-            <div class="filter-panel" aria-label="合作學校篩選條件">
-              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">當期名額已列</option><option value="not_open">本季未開放（官方灰字）</option><option value="needs_confirmation">名額尚未核實</option><option value="zero_quota">零名額</option><option value="fee_paying">自費計畫</option><option value="closed">表列交換校／校內申請已截止</option><option value="reference_only">舊期參考／不能作當期申請</option><option value="quota_unconfirmed">當期名額或期間待確認</option><option value="agreement_only">合作備查／本期名額待確認</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
-              <label for="region-filter"><span>地區</span><select id="region-filter"></select></label>
-              <label for="country-filter"><span>國家</span><select id="country-filter"></select></label>
-              <label for="college-filter"><span>學院</span><select id="college-filter"></select></label>
-              <label for="degree-filter"><span>學制</span><select id="degree-filter"></select></label>
-              <button id="clear-partner-filters" type="button" class="secondary-button"><i data-lucide="rotate-ccw" aria-hidden="true"></i><span>清除</span></button>
-            </div>
-            </details>
             </div>
           </section>
 
@@ -1276,18 +1297,26 @@
           <details id="sources" class="sources-disclosure page-section" data-university-page="documents" hidden><summary><span><strong>官方資料來源</strong></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div id="source-list" class="source-list"></div></details>
         </div>
 
-        <section id="school-detail-view" class="school-detail-view" aria-labelledby="school-detail-title" hidden>
-          <div class="detail-top-actions">
-            <div class="detail-save-actions">
-              <button id="detail-favorite-button" type="button" class="secondary-button favorite-toggle"><i data-lucide="bookmark" aria-hidden="true"></i><span>收藏</span></button>
-              <button id="detail-application-button" type="button" class="primary-button application-toggle"><i data-lucide="clipboard-plus" aria-hidden="true"></i><span>加入清單</span></button>
+        <section id="school-detail-view" class="school-detail-view pr-detail" aria-labelledby="school-detail-title" hidden>
+          <div class="pr-detail-top">
+            <nav class="pr-breadcrumb" aria-label="路徑">
+              <a href="#partners"><i data-lucide="arrow-left" aria-hidden="true"></i>找交換學校</a><span aria-hidden="true">/</span><span id="detail-crumb-country">國家</span><span aria-hidden="true">/</span><strong id="detail-crumb-school"></strong>
+            </nav>
+            <div class="detail-top-actions pr-detail-actions">
+              <button id="detail-share-button" type="button" class="pr-text-button"><i data-lucide="send" aria-hidden="true"></i><span>分享</span></button>
+              <button id="detail-favorite-button" type="button" class="pr-text-button favorite-toggle"><i data-lucide="heart" aria-hidden="true"></i><span>收藏</span></button>
             </div>
           </div>
-          <header class="school-detail-header">
-            <div id="school-detail-photo" class="school-detail-photo" aria-live="polite"></div>
-            <div class="school-detail-copy"><div class="travel-detail-heading"><span id="school-detail-country" class="eyebrow">交換學校</span><div id="school-destination-stamp" class="travel-destination-stamp" hidden></div></div><h1 id="school-detail-title">學校名稱</h1><p id="school-detail-summary" hidden></p></div>
-            <div id="school-detail-primary-facts" class="detail-primary-facts"></div>
+          <header class="school-detail-header pr-detail-header">
+            <div class="school-detail-copy"><div class="travel-detail-heading"><span id="school-detail-country" class="eyebrow">交換學校</span><div id="school-destination-stamp" class="travel-destination-stamp" hidden></div></div><h1 id="school-detail-title">學校名稱</h1><p id="school-detail-subline" class="pr-detail-subline"></p><p id="school-detail-summary" hidden></p></div>
           </header>
+          <div id="school-detail-gallery" class="pr-gallery" data-count="1">
+            <div id="school-detail-photo" class="school-detail-photo" aria-live="polite"></div>
+            <div id="school-detail-gallery-extra" class="pr-gallery-extra"></div>
+          </div>
+          <div class="pr-detail-body">
+          <div class="pr-detail-main">
+          <div id="school-detail-primary-facts" class="detail-primary-facts"></div>
           <nav class="detail-tabs" role="tablist" aria-label="交換學校詳細資訊">
             <button id="detail-tab-overview" type="button" role="tab" aria-selected="true" aria-controls="detail-overview" data-detail-target="detail-overview"><i data-lucide="compass" aria-hidden="true"></i>快速了解</button>
             <button id="detail-tab-application" type="button" role="tab" aria-selected="false" aria-controls="detail-application" data-detail-target="detail-application" tabindex="-1"><i data-lucide="route" aria-hidden="true"></i>申請方式</button>
@@ -1297,6 +1326,19 @@
             <button id="detail-tab-community" type="button" role="tab" aria-selected="false" aria-controls="detail-community" data-detail-target="detail-community" tabindex="-1"><i data-lucide="messages-square" aria-hidden="true"></i>學生社群</button>
           </nav>
           <div id="school-detail-content" class="school-detail-content"><div class="skeleton skeleton-dialog"></div></div>
+          </div>
+          <aside id="school-detail-booking" class="pr-booking" aria-label="申請摘要">
+            <small id="booking-term">交換申請</small>
+            <div id="booking-fit" class="pr-booking-fit"></div>
+            <dl class="pr-booking-dates">
+              <div><dt>校內甄選截止</dt><dd id="booking-home-deadline">依官方公告</dd></div>
+              <div><dt>合作校申請截止</dt><dd id="booking-partner-deadline">依官方公告</dd></div>
+            </dl>
+            <button id="detail-application-button" type="button" class="primary-button application-toggle"><i data-lucide="bookmark" aria-hidden="true"></i><span>加入我的志願</span></button>
+            <button id="detail-compare-button" type="button" class="secondary-button"><span>加入比較</span></button>
+            <p>加入志願後會自動排進申請日曆。</p>
+          </aside>
+          </div>
         </section>
       </main>
       <p class="site-data-note"><i data-lucide="info" aria-hidden="true"></i><span>資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），<button type="button" class="text-action" data-analytics-toggle>停用匿名使用統計</button>。<a href="/privacy">隱私權政策</a>　<a href="/terms">使用條款</a></span></p>
@@ -1353,6 +1395,8 @@
     <script src="/static/react-aria-school-picker.js?v=20261014-aria-1" defer></script>
     <script src="/static/app.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-home.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-explore.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-detail.js?v=20261015-redesign-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>
   </body>
 </html>

@@ -121,7 +121,7 @@ def test_school_return_retains_filters_scroll_and_forward(page, live_server):
     expect(page.locator("#boot-splash")).to_be_hidden()
     page.wait_for_function("() => !state.homeSchoolLoading && !state.partnerDataLoading")
     page.evaluate("() => state.periodOptionsReady")
-    trigger = page.locator('.desktop-partner-table .school-detail-trigger').first
+    trigger = page.locator('#partner-table .school-detail-trigger').first
     # Start from a real scroll position even when the compact search header fits above the fold.
     page.evaluate("scrollTo({top: 250, behavior: 'instant'})")
     trigger.scroll_into_view_if_needed()

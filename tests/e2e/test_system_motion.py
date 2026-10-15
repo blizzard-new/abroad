@@ -102,9 +102,9 @@ def test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion(page
     setup_catalog(page)
     open_partners(page, live_server, {"view": "list"})
     page.locator("#partner-search").fill("Lincoln")
-    expect(page.locator(".desktop-partner-table .school-detail-trigger")).to_have_text(LINCOLN)
+    expect(page.locator("#partner-table .school-detail-trigger")).to_have_text(LINCOLN)
     page.locator("#partner-search").fill("Meiji")
-    expect(page.locator(".desktop-partner-table .school-detail-trigger")).to_have_text(MEIJI)
+    expect(page.locator("#partner-table .school-detail-trigger")).to_have_text(MEIJI)
     assert all(x["delay"] <= 90 for x in motions(page, "result"))
     # User navigation may arrive before the previous animation completes.
     for route in ("forum", "home", "partners", "forum"):

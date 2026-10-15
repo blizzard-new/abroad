@@ -47,7 +47,7 @@ def test_saved_outage_rows_and_detail_show_actual_source_time_then_recover(page,
     assert page.locator('#catalogue-source-status').count()==0
     assert page.evaluate('state.dashboard.partner_universities.length')==77
     page.screenshot(path=str(ARTIFACTS/f'outage-saved-{width}.png'),full_page=True)
-    if width < 820: page.locator('.mobile-partner-list .partner-card > summary').first.click()
+    if width < 820: page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()
     expect(page.locator('#school-detail-view')).to_be_visible()
     assert page.locator('#catalogue-source-status').count()==0

@@ -84,7 +84,7 @@ def test_verified_catalog_search_map_and_saved_school(page, live_server, width):
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("Lincoln")
     page.locator("#country-filter").select_option("紐西蘭")
-    expect(page.locator("#partner-table tbody tr")).to_have_count(1)
+    expect(page.locator("#partner-table .pr-school-card")).to_have_count(1)
     if width < 700:
         page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .favorite-toggle:visible").first.click()

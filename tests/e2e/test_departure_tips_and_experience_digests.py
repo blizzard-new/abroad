@@ -18,7 +18,7 @@ def open_school(page, live_server, school, home):
     query = urlencode({"home": home, "view": "list", "q": SEARCH[school]})
     page.add_init_script("window.sessionStorage.setItem('exchange-guide-browse-first', '1')")
     page.goto(f"{live_server.base_url}/?{query}#partners")
-    trigger = page.locator(f'.desktop-partner-table .school-detail-trigger[data-school-name="{school}"]').first
+    trigger = page.locator(f'#partner-table .school-detail-trigger[data-school-name="{school}"]').first
     expect(trigger).to_be_visible(timeout=60_000)
     trigger.click()
     expect(page.locator("#school-detail-title")).to_have_text(school, timeout=60_000)

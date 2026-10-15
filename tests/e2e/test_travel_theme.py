@@ -35,7 +35,7 @@ def test_home_search_navigation_school_switcher_and_responsive(page, live_server
     expect(page.get_by_role("heading", level=1)).to_have_text("最新留學討論")
     page.locator('.uniway-public-nav a[data-public-route="partners"]').click()
     page.locator("#partner-search").fill("日本")
-    expect(page.locator(".desktop-partner-table .school-detail-trigger")).to_have_text(MEIJI)
+    expect(page.locator("#partner-table .school-detail-trigger")).to_have_text(MEIJI)
     assert parse_qs(urlsplit(page.url).query)["view"] == ["list"]
     page.locator("#page-back").click()
     expect(page).to_have_url(home_url)
@@ -106,7 +106,7 @@ def test_ticket_collection_and_destination_stamp_missing_city(page, live_server)
     page.route("**/destination-profile?*", profile_location)
     open_partners(page, live_server, {"view": "list"})
     for school in (LINCOLN, MEIJI):
-        page.locator(f'.desktop-partner-table .favorite-toggle[data-school-name="{school}"]').click()
+        page.locator(f'#partner-table .favorite-toggle[data-school-name="{school}"]').click()
     page.goto(f"{live_server.base_url}/#favorites")
     expect(page.locator(".travel-saved-ticket")).to_have_count(2)
     expect(page.locator(".travel-ticket-number")).to_have_text(["01", "02"])

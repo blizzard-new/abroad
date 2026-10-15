@@ -27,16 +27,10 @@ def test_next3_reference_packets_and_living_content(page,live_server,width,slug,
     expect(page.locator('#partner-table')).to_contain_text('本期名額待核實')
     trigger=f'.school-detail-trigger[data-school-name="{full_name}"]'
     card_term={'nufs':'GJP不強制JLPT','kumamoto':'非英語母語者須交','ryukoku':'建議300小時或N4'}[slug]
-    if width<700:
-        card=page.locator('#partner-table .partner-card').filter(has=page.locator(trigger))
-        card.locator(':scope > summary').click()
-        assert card_term in card.locator('.partner-card-summary').inner_text()
-        card.scroll_into_view_if_needed()
-    else:
-        row=page.locator('#partner-table tr').filter(has=page.locator(trigger))
-        row.locator('.partner-condition-disclosure > summary').click()
-        assert card_term in row.locator('.partner-condition-disclosure').inner_text()
-        row.scroll_into_view_if_needed()
+    card=page.locator('#partner-table .pr-school-card').filter(has=page.locator(trigger))
+    card.locator('.partner-card > summary').click()
+    assert card_term in card.locator('.partner-card-summary').inner_text()
+    card.scroll_into_view_if_needed()
     page.screenshot(path=str(out/f'{slug}-{width}-card-or-row.png'))
     page.locator(f'#partner-table {trigger}:visible').first.click()
     assert page.evaluate('new URLSearchParams(location.hash.slice(1)).get("school")')==full_name
