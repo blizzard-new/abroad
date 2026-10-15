@@ -38,8 +38,10 @@ def test_the_home_address_shows_the_landing_and_the_forum_address_the_feed() -> 
     assert re.search(r'<section id="home-landing"[^>]*data-university-page="home"', HTML)
 
 
-def test_old_links_to_the_guide_and_the_community_hub_still_work() -> None:
-    assert re.search(r'if \(hash === "#guide"\) \{[^}]*replaceState\(\{\}, "", "#home"\)', SCRIPT, re.S)
+def test_the_guide_is_its_own_page_and_the_old_community_hub_address_still_opens_the_forum() -> None:
+    assert re.search(r'const guideRoute = hash\.match\(/\^#guide\(\?:=\(\.\+\)\)\?\$/\)', SCRIPT)
+    assert "window.UniWayGuide?.show(" in SCRIPT
+    assert re.search(r'<section id="guide"[^>]*data-university-page="guide"', HTML)
     assert '"#forum" : "#home"' in SCRIPT, "the old #community-hub address opens the forum"
 
 

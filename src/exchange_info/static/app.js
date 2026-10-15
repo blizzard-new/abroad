@@ -249,6 +249,7 @@ const WORKFLOW_SOURCE_LABELS = {
 };
 const UNIVERSITY_PAGE_ROUTES = new Set([
   "home",
+  "guide",
   "feedback",
   "overview",
   "advisor",
@@ -268,6 +269,7 @@ const UNIVERSITY_PAGE_ROUTES = new Set([
 ]);
 const UNIVERSITY_PAGE_TITLES = {
   home: "首頁",
+  guide: "申請指南",
   feedback: "用戶評價",
   overview: "我的申請",
   advisor: "選校規劃",
@@ -5703,6 +5705,7 @@ function renderDocumentReadiness() {
         <input type="checkbox" class="document-readiness-checkbox" data-document-id="${escapeHtml(item.id)}" ${readinessStatus(item.id) === "ready" ? "checked" : ""} ${state.account ? "" : "disabled"} />
         <span><strong>${escapeHtml(item.title)}</strong>${item.conditional ? "<small>符合特定身分時才需要</small>" : ""}</span>
       </label>`).join("")}</div>`;
+  window.UniWayGuide?.refresh();
 }
 
 function updateDocumentReadiness(documentId, checked) {
@@ -12917,7 +12920,7 @@ function isUniversityBoardRoute(hash = window.location.hash) {
 }
 
 function isPublicExplorationRoute(hash = window.location.hash) {
-  return hash === "#home" || hash === "#feedback" || hash === "#partners" || hash === "#search" || /^#school=/.test(hash);
+  return hash === "#home" || hash === "#feedback" || hash === "#partners" || hash === "#search" || /^#school=/.test(hash) || /^#guide(=|$)/.test(hash);
 }
 
 function isPersonalizedRoute(hash = window.location.hash) {
@@ -12927,7 +12930,7 @@ function isPersonalizedRoute(hash = window.location.hash) {
 
 function updateUniWayPublicNavigation(hash = window.location.hash) {
   window.UniWayMotion?.route(hash);
-  const activeRoute = isPersonalizedRoute(hash) ? "overview" : globalFeedForHash(hash)
+  const activeRoute = isPersonalizedRoute(hash) || /^#guide(=|$)/.test(hash) ? "overview" : globalFeedForHash(hash)
     ? "forum"
     : (/^#school=/.test(hash) || hash === "#search" ? "partners" : hash.slice(1));
   document.querySelectorAll(".application-tools-panel a").forEach((link) => {
@@ -12944,11 +12947,6 @@ function updateUniWayPublicNavigation(hash = window.location.hash) {
 
 function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
   let hash = window.location.hash || "#home";
-  if (hash === "#guide") {
-    // The guide is the home page now; keep links to the old address working.
-    window.UniWayNavigation.replaceState({}, "", "#home");
-    hash = "#home";
-  }
   const globalFeed = globalFeedForHash(hash);
   const isUniversityPosts = hash === "#cgu-posts" || hash === "#university-posts";
   const isPublicExploration = isPublicExplorationRoute(hash);
@@ -13011,6 +13009,14 @@ function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
       $("#application-form-title").textContent = "正在載入申請文件";
       $("#application-form-description").textContent = "系統正在核對這份文件的欄位、份數與送件要求。";
     }
+    return;
+  }
+
+  const guideRoute = hash.match(/^#guide(?:=(.+))?$/);
+  if (guideRoute) {
+    // The article is drawn before the page is shown so the route heading exists when it is focused.
+    window.UniWayGuide?.show(guideRoute[1] ? decodeURIComponent(guideRoute[1]) : "");
+    showUniversityPage("guide", { resetScroll, focusHeading: resetScroll });
     return;
   }
 
