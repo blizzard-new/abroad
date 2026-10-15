@@ -45,13 +45,13 @@ def test_it_shows_the_mascot_while_the_page_waits_and_goes_when_the_page_is_read
     assert screen.locator(".uw-mascot-picture").evaluate("img => img.complete && img.naturalWidth === 384")
     # nothing behind it can be clicked while it is up
     assert page.evaluate("document.elementFromPoint(innerWidth / 2, 20).closest('#boot-splash') !== null")
-    page.wait_for_function("() => window.UniWaySplash && document.querySelector('#guide')")
+    page.wait_for_function("() => window.UniWaySplash && document.querySelector('#home-landing')")
     while not held:
         page.wait_for_timeout(100)
     for route in held:
         route.continue_()
     expect(page.locator(SCREEN)).to_have_count(0, timeout=20_000)
-    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#home-landing")).to_be_visible()
     assert "boot-splash-life" not in animation_names(page)
 
 
@@ -60,7 +60,7 @@ def test_it_also_goes_when_the_data_cannot_be_loaded(page, live_server):
     page.route(DASHBOARD, lambda route: route.fulfill(status=500, content_type="application/json", body='{"detail": "down"}'))
     page.goto(f"{live_server.base_url}/#home")
     expect(page.locator(SCREEN)).to_have_count(0, timeout=20_000)
-    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#home-landing")).to_be_visible()
 
 
 def test_a_page_that_never_finishes_still_gets_rid_of_it(page, live_server):

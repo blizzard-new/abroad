@@ -553,8 +553,8 @@ def test_partner_schools_use_verified_official_photo_manifest() -> None:
 
     assert 'id="school-detail-photo"' in html
     assert 'fetchJson("/static/assets/school-images.json?' in script
-    assert "renderSchoolPhoto(item, \"table\")" in script
     assert "renderSchoolPhoto(item, \"card\")" in script
+    assert "renderSchoolPhoto(item, \"detail\")" in script or 'variant === "detail"' in script
     assert "圖片來源" in script
     verified = {
         row["school_name"]
@@ -994,7 +994,7 @@ def test_repeated_information_cards_use_compact_progressive_disclosure() -> None
     assert '<details class="search-result-card">' in script
     assert "renderDiscoveryWorkspace();" in script
     assert "Compact disclosure lists" in styles
-    assert '<small>${escapeHtml(truncate(meta, 72))}</small>' in script
+    assert '<span class="pr-card-place">' in script
     assert "-webkit-line-clamp: 2" in styles
 
 
@@ -1200,7 +1200,6 @@ def test_unverified_partner_deadlines_are_presented_as_reference_schedules() -> 
     assert "資格與申請時程" in html
 
     function_names = [
-        "renderPartnerTableRow",
         "renderPartnerCard",
         "renderComparison",
         "renderPrimaryFacts",
@@ -1571,7 +1570,9 @@ def test_registration_uses_email_first_and_the_school_is_shown_and_locked_instea
 
     assert 'name="email_verification_token"' in html
     assert 'id="request-email-verification"' in html
-    assert 'id="profile-dialog"' in html
+    # The account settings are a full page (#profile); the old modal dialog is gone.
+    assert 'id="profile"' in html and 'data-university-page="profile"' in html
+    assert 'id="profile-dialog"' not in html
     assert 'fetchJson("/auth/email-verification/request"' in script
     assert ".profile-verification-summary" in styles
     # The student card check is gone: no upload panel, no calls to the removed endpoints.

@@ -1,3 +1,78 @@
+# Design QA: platform redesign (home, explore, school detail, guide, tracker, forum, profile)
+
+## Comparison target
+
+- Source visual truth: `design_handoff_uniway_redesign/designs/` from the 2026-10-15 request: `Home 1a Product Story`, `Explore Schools`, `School Detail`, `Application Guide`, `Application Tracker`, `Stories Forum` and `Profile Center`, rendered in a browser from their `.dc.html` files (React and Babel served locally), plus the handoff README.
+- Implementation screenshots: `docs/platform-redesign-2026-10-15/<screen>-<theme>-<width>.webp`, full-page captures of the running app with a signed-in test account where the page needs one.
+- Viewports and normalization: the design renders were taken at 1440 and 390 CSS px; the app was captured at 1440, 834 and 393 in light and dark. The designs do not draw an 834 layout, so 834 was checked for overflow and layout sanity only, not against a source image.
+- State: Chinese UI, 長庚大學 as the home school, real catalogue data from the local dev server.
+
+## Full-view comparison evidence
+
+Each screen was compared against its design render side by side. Composition, section order, card structure, sort tabs, facet panel, docs three-column layout, tracker list/board/timeline views, masonry forum and settings rows follow the designs. Colours come from the existing glass-theme tokens, so dark mode needs no second palette; only the values the designs fix in both themes are written in `platform-redesign.css`.
+
+## Focused region comparison evidence
+
+Regions inspected at original resolution: the home hero collage and map card, a school card's photo/badge/heart/compare overlay, the detail booking card and facts strip, the guide table of contents with the plan link, the tracker stats strip and ring buttons, the forum header with its mode switch, and the profile switch, chip and theme-card rows.
+
+## Required fidelity surfaces
+
+- Fonts and typography: the existing Poppins / Noto Sans TC stack; heading sizes follow the designs' clamp() values.
+- Spacing and layout rhythm: container queries (`cqi`) on each page root so layouts follow the page width, not the viewport; tablet and phone stack the home collage below 1180px.
+- Colours and tokens: new tokens in `glass-theme.css` for both themes; pages that the designs draw flat (guide, tracker, profile) drop the gradient canvas.
+- Image quality and asset fidelity: school photos reuse the existing reviewed images and credit lines. The home map is a static SVG outline derived from the Natural Earth data already in the repo; no new raster art.
+- Copy and content: design copy is used except where the data cannot back it (see Findings).
+
+## Findings
+
+- No P0 or P1 visual mismatch is known for the seven screens at 1440 and 393.
+- Deviations chosen on purpose, because the data does not exist: no monthly-cost or teaching-language facts (omitted, not invented); star ratings only when a post carries a 1–5 `rating`; the profile 語言 row is a disabled select because only Traditional Chinese exists.
+- Behaviour changes: `#guide` is now the docs-style guide instead of redirecting to `#home`; `#profile` is a page and the old modal dialog is removed on every width; theme preference gains `system`.
+- Not verified against a design: the 834 px layouts.
+- Full end-to-end run on the final commit (`6a97d753`): 543 passed, 284 failed, 2 skipped. 278 of the failures also fail on `main` without this change, and they stop at the same test line on the same element on both sides (NCU school data and phone navigation-drawer cases). The other 6 failed only under load: they pass on `main` and pass alone on this branch.
+- Still not verified: anything those 278 tests would do after the line where they stop, on either side.
+- Non-end-to-end suite on the final commit: 2595 passed, 9 failed, and all 9 also fail on `main`.
+
+## Open questions
+
+- None that block review. The README says the profile dialog "can remain on mobile"; it was removed everywhere because one form cannot live in two places.
+
+## Comparison history
+
+- Home hero overflowed near 1100 px: the collage now stacks below 1180 px.
+- Mobile home collage created an implicit second column: its cards are pinned to column 1.
+- Explore facet panel was squashed by legacy list-mode rules: raised specificity under `#partners.pr-explore`.
+- Detail photo credit stretched and the facts strip showed a grey empty cell: both fixed.
+- Guide, tracker and profile kept the gradient canvas in dark mode: flat-background rule now matches the dark selector.
+- Tracker ring buttons rendered as ovals and the workspace overflowed 85 px on phones: size reset, and the rail offset now applies only above 900 px.
+- The forum hub appeared under every other page: its display rule no longer overrides the rules that hide it.
+- Profile switch rows stacked their controls under the label: specificity fix.
+
+## Primary interactions and runtime checks
+
+- Home school buttons choose the school through the same path as the onboarding picker.
+- Explore sort tabs, facets, compare tray (max 3) and the phone filter drawer work; tests open the drawer first.
+- Profile: account button opens `#profile`; chips add and remove; saving sends the same PATCH fields as before; reload keeps the values; export downloads `/auth/me/export`; sign-out returns home; a signed-out deep link opens the sign-in dialog and lands on home; appearance cards switch light, dark and system, and system follows the device.
+- `tests/e2e/test_platform_redesign.py` covers overflow at three widths in both themes and the flows above; 14 tests passed when last run.
+
+## Implementation checklist
+
+- [x] Home landing, explore, school detail, guide, tracker, forum and profile pages.
+- [x] Light and dark themes through shared tokens.
+- [x] Existing deep links (`#public-board`, `#board=…`, `#language-school-board`, `#following`) still open the forum.
+- [x] Static asset versions bumped together.
+- [x] Screenshots stored under `docs/platform-redesign-2026-10-15/`.
+- [x] Full end-to-end re-run on the final commit (see Findings for what it does not cover).
+
+## Follow-up polish
+
+- Decide whether the 834 px layouts need a design.
+- Optional: a real rating field would let the stars and sort-by-rating appear.
+
+final result: passed with open items (see Findings)
+
+---
+
 # Design QA: reusable full-screen loading animation
 
 ## Comparison target

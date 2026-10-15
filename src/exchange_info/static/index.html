@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="/static/design-system.css?v=20260716-platform-12" />
     <link rel="stylesheet" href="/static/platform.css?v=20261013-school-picker-1" />
     <link rel="stylesheet" href="/static/react-aria-school-picker.css?v=20261014-aria-1" />
-    <link rel="stylesheet" href="/static/product-v2.css?v=20261013-notification-rail-1" />
+    <link rel="stylesheet" href="/static/product-v2.css?v=20261015-redesign-1" />
     <link rel="stylesheet" href="/static/icon-motion.css?v=20260820-icon-motion-1" />
-    <link rel="stylesheet" href="/static/mascot.css?v=20261014-runtime-loading-1" />
-    <link rel="stylesheet" href="/static/advisor-mascot.css?v=20261014-runtime-loading-1" />
+    <link rel="stylesheet" href="/static/mascot.css?v=20261015-redesign-1" />
+    <link rel="stylesheet" href="/static/advisor-mascot.css?v=20261015-redesign-1" />
     <link rel="stylesheet" href="/static/uniway.css?v=20260820-uniway-1" />
     <link rel="stylesheet" href="/static/partner-map.css?v=20261011-integration-3" />
     <link rel="stylesheet" href="/static/school-detail.css?v=20260924-concise-zh-1" />
@@ -30,7 +30,8 @@
     <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2" />
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
-    <link rel="stylesheet" href="/static/glass-theme.css?v=20261014-page-school-switcher-1" />
+    <link rel="stylesheet" href="/static/glass-theme.css?v=20261015-redesign-1" />
+    <link rel="stylesheet" href="/static/platform-redesign.css?v=20261015-redesign-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261008-ncu-conditions-1" />
@@ -48,7 +49,7 @@
         <span class="uw-mascot-body">
           <span class="uw-mascot-tilt">
             <span class="uw-mascot-slab"></span>
-            <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261014-runtime-loading-1" alt="" width="384" height="460" decoding="async" fetchpriority="high" draggable="false" />
+            <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261015-redesign-1" alt="" width="384" height="460" decoding="async" fetchpriority="high" draggable="false" />
             <span class="uw-mascot-sheen"></span>
             <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
           </span>
@@ -58,7 +59,7 @@
       <p class="boot-splash-hint" aria-hidden="true">伺服器剛醒來，需要多一點時間，再等一下就好。</p>
       <p class="boot-splash-hint-more" aria-hidden="true">已經等了一陣子；如果超過一分鐘還沒好，請重新整理頁面。</p>
     </div>
-    <script src="/static/mascot.js?v=20261014-runtime-loading-1"></script>
+    <script src="/static/mascot.js?v=20261015-redesign-1"></script>
     <a class="skip-link" href="#main-content">跳到主要內容</a>
     <aside id="glass-navigation" class="glass-navigation-rail" aria-label="系統功能" tabindex="-1">
       <button id="glass-menu-close" type="button" class="icon-button glass-menu-close" aria-label="關閉功能選單"><i data-lucide="x" aria-hidden="true"></i></button>
@@ -233,44 +234,6 @@
       </div>
     </section>
 
-    <section id="profile-dialog" class="account-dialog" role="dialog" aria-modal="true" aria-labelledby="profile-title" hidden>
-      <button type="button" class="dialog-backdrop" data-close-profile aria-label="關閉個人設定"></button>
-      <div class="account-dialog-shell profile-dialog-shell">
-        <button type="button" class="icon-button dialog-close" data-close-profile aria-label="關閉"><i data-lucide="x" aria-hidden="true"></i></button>
-        <div class="profile-heading"><span id="profile-avatar" class="profile-avatar"><i data-lucide="user-round" aria-hidden="true"></i></span><div><span class="eyebrow">我的帳號</span><h1 id="profile-title">個人設定</h1><p id="profile-email"></p></div></div>
-        <details class="discovery-recents" data-discovery-recents hidden></details>
-        <div id="profile-entitlement-status" class="profile-entitlement-status" hidden></div>
-        <div id="profile-verification-summary" class="profile-verification-summary" aria-live="polite"></div>
-        <section id="profile-email-verification" class="profile-email-verification" hidden>
-          <p><strong>校級看板限已驗證 Email 的會員查看、發文與留言，不限同校；公共板發文或留言也需要驗證。</strong><span id="profile-email-verification-address"></span></p>
-          <button id="request-profile-email-verification" type="button" class="secondary-button"><i data-lucide="mail-check" aria-hidden="true"></i><span>寄送驗證碼</span></button>
-          <div id="profile-email-verification-step" class="email-verification-code" hidden>
-            <label><span>六位數驗證碼</span><input id="profile-email-verification-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" /></label>
-            <button id="confirm-profile-email-verification" type="button" class="secondary-button">確認</button>
-          </div>
-          <div id="profile-email-verification-status" class="form-status" role="status"></div>
-        </section>
-        <form id="profile-form" class="account-form profile-form">
-          <label><span>公開暱稱</span><input name="display_name" minlength="2" maxlength="30" required /></label>
-          <label><span>目前就讀學校</span><input name="home_university" maxlength="80" value="長庚大學" aria-describedby="profile-school-note" /><small id="profile-school-note"></small></label>
-          <label><span>目標國家</span><input name="target_countries" maxlength="160" placeholder="日本、德國、澳洲" /><small>以頓號或逗號分隔</small></label>
-          <label><span>目前階段</span><select name="application_stage"><option value="exploring">探索學校</option><option value="eligibility">確認資格</option><option value="documents">準備文件</option><option value="submitted">已送出申請</option><option value="accepted">準備出發</option><option value="abroad">正在海外</option><option value="returned">已完成交換</option></select></label>
-          <fieldset class="profile-notification-settings">
-            <legend>提醒與通知</legend>
-            <label class="consent-row"><input name="web_notifications" type="checkbox" /><span>Web 站內截止提醒</span></label>
-            <label class="consent-row"><input name="email_notifications" type="checkbox" /><span>電子郵件 截止提醒（選擇加入）</span></label>
-            <label class="consent-row"><input name="content_updates" type="checkbox" /><span>官方規定與文件更新提醒</span></label>
-            <span class="profile-setting-label">截止前提醒日</span>
-            <div class="profile-reminder-days"><label><input name="reminder_days" type="checkbox" value="30" /><span>30 天</span></label><label><input name="reminder_days" type="checkbox" value="14" /><span>14 天</span></label><label><input name="reminder_days" type="checkbox" value="7" /><span>7 天</span></label><label><input name="reminder_days" type="checkbox" value="3" /><span>3 天</span></label><label><input name="reminder_days" type="checkbox" value="1" /><span>1 天</span></label></div>
-            <small>電子郵件 預設關閉，只有勾選並儲存後才排入寄送；可隨時關閉。行動裝置推播仍保持關閉。</small>
-          </fieldset>
-          <div class="form-status" role="status"></div>
-          <button type="submit" class="primary-button full-width"><i data-lucide="save" aria-hidden="true"></i><span>儲存設定</span></button>
-        </form>
-        <div class="profile-account-actions"><button id="logout-button" type="button" class="secondary-button"><i data-lucide="log-out" aria-hidden="true"></i><span>登出</span></button><button id="delete-account-button" type="button" class="text-action danger"><i data-lucide="trash-2" aria-hidden="true"></i><span>刪除帳號</span></button></div>
-      </div>
-    </section>
-
     <dialog id="workflow-issue-report-dialog" class="application-file-consent-dialog workflow-issue-report-dialog" aria-labelledby="workflow-issue-report-title">
       <form id="workflow-issue-report-form" novalidate>
         <header>
@@ -372,32 +335,296 @@
 
         <div id="page-status" class="page-status" role="status" aria-live="polite"></div>
         <div id="dashboard-view">
-          <section id="guide" class="page-section study-guide" data-university-page="guide" aria-labelledby="guide-title" hidden>
-            <header class="guide-intro">
-              <div><span class="section-kicker">申請指南</span><h1 id="guide-title">你的交換旅程，<br>一步一步來。</h1><p>從選校到出發，找到你現在需要的下一步。</p></div>
-              <span class="uw-mascot guide-mascot" data-play data-tilt aria-hidden="true">
-                <span class="uw-mascot-shadow"></span>
-                <span class="uw-mascot-body">
-                  <span class="uw-mascot-tilt">
-                    <span class="uw-mascot-slab"></span>
-                    <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261014-runtime-loading-1" alt="" width="384" height="460" decoding="async" draggable="false" />
-                    <span class="uw-mascot-sheen"></span>
-                    <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+          <section id="home-landing" class="page-section pr-home" data-university-page="home" aria-labelledby="home-landing-title" hidden>
+            <div class="pr-home-inner">
+              <div class="pr-guide-grid" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+              <section class="pr-hero" aria-labelledby="home-landing-title">
+                <div class="pr-hero-copy">
+                  <span class="pr-pill"><b id="home-pill-count">6 所大學</b><span id="home-pill-text">已整理 1,085 間合作校資料</span></span>
+                  <h1 id="home-landing-title">你能去哪些交換學校，<br><span>一次看清楚。</span></h1>
+                  <p class="pr-hero-note"><i data-lucide="shield-check" aria-hidden="true"></i><span>瀏覽公開資料不需要登入；收藏、進度與社群功能才需要帳號。</span></p>
+                </div>
+                <div class="pr-collage">
+                  <article class="pr-map-card" aria-labelledby="home-map-card-title">
+                    <header>
+                      <div><small>合作校地圖</small><strong id="home-map-card-title">合作校分布</strong></div>
+                      <span class="pr-segmented" aria-hidden="true"><span class="on">地圖</span><span>列表</span></span>
+                    </header>
+                    <div class="pr-map-host" data-home-map="hero" role="img" aria-label="合作校分布地圖"></div>
+                  </article>
+                  <article class="pr-plan-card" aria-labelledby="home-plan-title">
+                    <header><strong id="home-plan-title">我的交換計畫</strong><span id="home-plan-badge" class="pr-badge-peach">共 4 步</span></header>
+                    <ol id="home-plan-steps" class="pr-plan-steps"></ol>
+                  </article>
+                  <span class="uw-mascot pr-collage-mascot" data-play data-tilt aria-hidden="true">
+                    <span class="uw-mascot-shadow"></span>
+                    <span class="uw-mascot-body">
+                      <span class="uw-mascot-tilt">
+                        <span class="uw-mascot-slab"></span>
+                        <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261015-redesign-1" alt="" width="384" height="460" decoding="async" draggable="false" />
+                        <span class="uw-mascot-sheen"></span>
+                        <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+                      </span>
+                    </span>
                   </span>
-                </span>
-              </span>
-            </header>
-            <ol class="guide-stages">
-              <li class="guide-stage guide-stage-explore"><span class="guide-stage-number">01</span><span class="guide-stage-icon"><i data-lucide="compass" aria-hidden="true"></i></span><h2>找到想去的學校</h2><p>比較課程、語言門檻與生活費。</p><a class="guide-action" href="#partners">探索學校<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
-              <li class="guide-stage guide-stage-prepare"><span class="guide-stage-number">02</span><span class="guide-stage-icon"><i data-lucide="notebook-pen" aria-hidden="true"></i></span><h2>準備校內甄選</h2><p>確認資格、排志願，再準備文件。</p><a class="guide-action" href="#eligibility" data-requires-home-school>查看資格與志願<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
-              <li class="guide-stage guide-stage-apply"><span class="guide-stage-number">03</span><span class="guide-stage-icon"><i data-lucide="send" aria-hidden="true"></i></span><h2>完成合作校申請</h2><p>通過校內提名後，依合作校通知送件。</p><a class="guide-action" href="#application-center" data-requires-home-school>準備申請文件<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
-              <li class="guide-stage guide-stage-depart"><span class="guide-stage-number">04</span><span class="guide-stage-icon"><i data-lucide="luggage" aria-hidden="true"></i></span><h2>安排出發與生活</h2><p>錄取後確認簽證、住宿與保險。</p><a class="guide-action" href="#budget" data-requires-home-school>估算生活預算<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
-            </ol>
-            <div class="guide-bottom-row">
-              <a class="guide-plan-link" href="#overview" data-requires-home-school><span class="guide-plan-icon"><i data-lucide="route" aria-hidden="true"></i></span><span><strong>已經開始準備了？</strong><small>回到我的交換計畫</small></span><i data-lucide="arrow-right" aria-hidden="true"></i></a>
-              <details class="guide-faq"><summary>校內甄選和合作校申請有什麼不同？<i data-lucide="plus" aria-hidden="true"></i></summary><p>一般先由就讀學校甄選與提名，再向合作校申請。兩邊的文件與期限可能不同，請分別確認當期公告。</p><a href="#deadlines" data-requires-home-school>查看官方截止日<i data-lucide="arrow-right" aria-hidden="true"></i></a></details>
+                </div>
+              </section>
+
+              <section class="pr-supported" aria-label="目前支援的學校">
+                <span>目前支援</span>
+                <ul id="home-supported-list"></ul>
+              </section>
+
+              <section class="pr-section pr-features" aria-labelledby="home-features-title">
+                <div class="pr-section-head pr-section-head-split">
+                  <div><span class="pr-kicker">UniWay 能幫你做的事</span><h2 id="home-features-title">從找學校到出發，<br>每一步都有對應的工具。</h2></div>
+                  <p>公開資料不登入就能看。登入後可以收藏學校、安排時程，並保存每一份申請文件的進度。</p>
+                </div>
+                <div class="pr-bento">
+                  <article class="pr-tile pr-tile-wide">
+                    <div class="pr-tile-head">
+                      <div><span class="pr-chip pr-chip-blue"><i data-lucide="search" aria-hidden="true"></i></span><h3>學校搜尋</h3><p>比較課程、語言門檻與生活費。</p></div>
+                      <a class="pr-link" href="#partners">開始搜尋<i data-lucide="arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="pr-mini-search" aria-hidden="true">
+                      <div class="pr-mini-bar"><span class="pr-mini-input"><i data-lucide="search"></i>搜尋國家、城市或學校</span><span class="pr-mini-filter">國家<i data-lucide="chevron-down"></i></span><span class="pr-mini-filter">語言門檻<i data-lucide="chevron-down"></i></span><span class="pr-mini-filter">學期<i data-lucide="chevron-down"></i></span></div>
+                      <div class="pr-mini-row"><span class="pr-ph"></span><span><strong>東北大學</strong><small>日本・仙台</small></span><span class="pr-tag pr-tag-ok">符合資格</span></div>
+                      <div class="pr-mini-row"><span class="pr-ph"></span><span><strong>關西大學</strong><small>日本・大阪</small></span><span class="pr-tag pr-tag-warn">需補語言成績</span></div>
+                      <div class="pr-mini-row"><span class="pr-ph"></span><span><strong>誠信女子大學</strong><small>韓國・首爾</small></span><span class="pr-tag pr-tag-ok">符合資格</span></div>
+                    </div>
+                  </article>
+                  <article class="pr-tile">
+                    <div><span class="pr-chip pr-chip-lilac"><i data-lucide="list-checks" aria-hidden="true"></i></span><h3>資格與志願</h3><p>資格初判供參考，正式結果以校方認定為準。</p></div>
+                    <div class="pr-mini-checks" aria-hidden="true"><small class="pr-sample">示意</small>
+                      <div class="ok"><i data-lucide="circle-check"></i><span>在學成績門檻</span><small>符合</small></div>
+                      <div class="ok"><i data-lucide="circle-check"></i><span>語言檢定成績</span><small>符合</small></div>
+                      <div class="warn"><i data-lucide="clock-alert"></i><span>年級與學分限制</span><small>待確認</small></div>
+                    </div>
+                  </article>
+                  <article class="pr-tile">
+                    <div><span class="pr-chip pr-chip-peach"><i data-lucide="calendar-range" aria-hidden="true"></i></span><h3>申請日曆</h3><p>掌握期限，把準備任務安排在出發之前。</p></div>
+                    <div class="pr-mini-week" id="home-week" aria-hidden="true"></div>
+                    <div class="pr-mini-banner" id="home-week-banner" aria-hidden="true"><i data-lucide="clock-alert"></i><span>校內甄選截止，還有 3 天</span></div>
+                  </article>
+                  <article class="pr-tile">
+                    <div><span class="pr-chip pr-chip-cyan"><i data-lucide="scan-search" aria-hidden="true"></i></span><h3>文件檢查</h3><p>找出漏填、字數與簽名風險。</p></div>
+                    <div class="pr-mini-doc" aria-hidden="true"><small class="pr-sample">示意</small>
+                      <span class="line" style="width:62%"></span><span class="line" style="width:88%"></span>
+                      <span class="flag warn"><i data-lucide="file-pen-line"></i>簽名欄尚未填寫</span>
+                      <span class="line" style="width:76%"></span>
+                      <span class="flag amber"><i data-lucide="clock-alert"></i>讀書計畫超過字數上限</span>
+                    </div>
+                  </article>
+                  <article class="pr-tile">
+                    <div><span class="pr-chip pr-chip-amber"><i data-lucide="calculator" aria-hidden="true"></i></span><h3>交換預算</h3><p>用同一幣別估算總成本，並保留學校官方生活費來源。</p></div>
+                    <div class="pr-mini-cost" aria-hidden="true"><small class="pr-sample">示意</small>
+                      <div class="bar"><span style="flex:4" class="c1"></span><span style="flex:3" class="c2"></span><span style="flex:2" class="c3"></span><span style="flex:1.4" class="c4"></span></div>
+                      <ul><li><i class="c1"></i>住宿</li><li><i class="c2"></i>生活費</li><li><i class="c3"></i>機票</li><li><i class="c4"></i>保險與簽證</li></ul>
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <section class="pr-section pr-map-band" aria-labelledby="home-band-title">
+                <div class="pr-map-band-copy">
+                  <span class="pr-kicker">合作校地圖</span>
+                  <h2 id="home-band-title">從臺灣出發，<br><span id="home-band-total-line">看見 1,085 個選擇。</span></h2>
+                  <p>依國家、城市與學期篩選合作校，每一間都附上官方網站與資料更新時間。</p>
+                  <dl class="pr-stats">
+                    <div><dt id="home-stat-schools">6</dt><dd>所臺灣大學</dd></div>
+                    <div><dt id="home-stat-partners">1,085</dt><dd>間合作校資料</dd></div>
+                    <div><dt>逐筆</dt><dd>附官方來源</dd></div>
+                  </dl>
+                  <a class="pr-band-button" href="#partners" data-home-open-map>打開合作校地圖<i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+                </div>
+                <div class="pr-map-band-visual"><div class="pr-map-host" data-home-map="band" role="img" aria-label="從臺灣出發的合作校分布地圖"></div></div>
+              </section>
+
+              <section class="pr-section pr-journey" aria-labelledby="home-journey-title">
+                <div class="pr-section-head pr-section-head-row">
+                  <div><span class="pr-kicker">申請指南</span><h2 id="home-journey-title">你的交換旅程，<br>一步一步來。</h2><p>從選校到出發，找到你現在需要的下一步。</p></div>
+                  <a class="pr-link pr-link-lg" href="#guide">閱讀完整指南<i data-lucide="arrow-right" aria-hidden="true"></i></a>
+                </div>
+                <ol class="pr-stages">
+                  <li><div class="pr-stage-rail"><span class="pr-stage-no">01</span><span class="pr-stage-line"></span></div><span class="pr-chip pr-chip-blue"><i data-lucide="compass" aria-hidden="true"></i></span><h3>找到想去的學校</h3><p>比較課程、語言門檻與生活費。</p><a class="pr-link" href="#partners">探索學校<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
+                  <li><div class="pr-stage-rail"><span class="pr-stage-no">02</span><span class="pr-stage-line"></span></div><span class="pr-chip pr-chip-lilac"><i data-lucide="notebook-pen" aria-hidden="true"></i></span><h3>準備校內甄選</h3><p>確認資格、排志願，再準備文件。</p><a class="pr-link" href="#eligibility" data-requires-home-school>查看資格與志願<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
+                  <li><div class="pr-stage-rail"><span class="pr-stage-no">03</span><span class="pr-stage-line"></span></div><span class="pr-chip pr-chip-peach"><i data-lucide="send" aria-hidden="true"></i></span><h3>完成合作校申請</h3><p>通過校內提名後，依合作校通知送件。</p><a class="pr-link" href="#application-center" data-requires-home-school>準備申請文件<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
+                  <li><div class="pr-stage-rail"><span class="pr-stage-no">04</span><span class="pr-stage-line last"></span></div><span class="pr-chip pr-chip-cyan"><i data-lucide="luggage" aria-hidden="true"></i></span><h3>安排出發與生活</h3><p>錄取後確認簽證、住宿與保險。</p><a class="pr-link" href="#budget" data-requires-home-school>估算生活預算<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
+                </ol>
+              </section>
+
+              <section class="pr-section pr-forum-preview" aria-labelledby="home-forum-title">
+                <div class="pr-section-head pr-section-head-row">
+                  <div><span class="pr-kicker">論壇</span><h2 id="home-forum-title">每一段旅程，都有人同行</h2></div>
+                  <a class="pr-link pr-link-lg" href="#forum">前往論壇<i data-lucide="arrow-right" aria-hidden="true"></i></a>
+                </div>
+                <div class="pr-boards">
+                  <a class="pr-board" href="#public-board"><span class="pr-board-icon pr-chip-blue"><i data-lucide="messages-square" aria-hidden="true"></i></span><span><small>公共看板</small><strong>公共留學板</strong><span>跨校申請、簽證、住宿與海外生活。</span></span></a>
+                  <a class="pr-board" href="#university-feed" data-home-school-feed><span class="pr-board-icon pr-chip-lilac"><i data-lucide="graduation-cap" aria-hidden="true"></i></span><span><small>校級看板</small><strong data-home-school-board>長庚大學板</strong><span id="home-board-school-description">長庚學生的交換申請資訊與討論。</span></span></a>
+                  <a class="pr-board" href="#language-school-board"><span class="pr-board-icon pr-chip-peach"><i data-lucide="languages" aria-hidden="true"></i></span><span><small>公共主題板</small><strong>語言學校板</strong><span>課程與海外生活交流；不提供申請代辦。</span></span></a>
+                </div>
+              </section>
+
+              <section class="pr-section pr-cta" aria-labelledby="home-cta-title">
+                <div class="pr-cta-copy">
+                  <span class="uw-mascot pr-cta-mascot" data-play data-tilt aria-hidden="true">
+                    <span class="uw-mascot-shadow"></span>
+                    <span class="uw-mascot-body">
+                      <span class="uw-mascot-tilt">
+                        <span class="uw-mascot-slab"></span>
+                        <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261015-redesign-1" alt="" width="384" height="460" loading="lazy" decoding="async" draggable="false" />
+                        <span class="uw-mascot-sheen"></span>
+                        <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+                      </span>
+                    </span>
+                  </span>
+                  <div><h2 id="home-cta-title">你目前就讀哪一所台灣大學？</h2><p>點一下你的學校，我們就會顯示你真正能申請的學校、資格與申請時程。</p></div>
+                </div>
+                <div id="home-school-buttons" class="pr-school-buttons"></div>
+              </section>
+
+              <footer class="pr-footer">
+                <span class="pr-footer-brand"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="28" height="28" loading="lazy" decoding="async" /><strong>UniWay</strong><span>探索世界 · 完成申請</span></span>
+                <span class="pr-footer-links"><a href="#feedback">用戶評價</a><a href="/privacy">隱私權政策</a><a href="/terms">使用條款</a></span>
+              </footer>
             </div>
           </section>
+
+          <section id="guide" class="page-section pr-guide" data-university-page="guide" aria-labelledby="guide-title" hidden>
+            <div class="pr-guide-layout">
+              <aside id="guide-toc-panel" class="pr-guide-toc" aria-label="指南目錄">
+                <label class="pr-guide-search"><i data-lucide="search" aria-hidden="true"></i><input id="guide-search" type="text" placeholder="搜尋指南" aria-label="搜尋指南" autocomplete="off" /><kbd aria-hidden="true">⌘K</kbd></label>
+                <nav id="guide-toc" aria-label="文章列表"></nav>
+                <a class="guide-plan-link" href="#overview" data-requires-home-school><span class="guide-plan-icon"><i data-lucide="route" aria-hidden="true"></i></span><span><strong>已經開始準備了？</strong><small>回到我的交換計畫</small></span><i data-lucide="arrow-right" aria-hidden="true"></i></a>
+              </aside>
+              <article id="guide-article" class="pr-guide-article"><h1 id="guide-title">申請指南</h1></article>
+              <aside id="guide-outline" class="pr-guide-outline" aria-label="本頁內容"></aside>
+            </div>
+          </section>
+
+          <section id="profile" class="page-section pr-profile" data-university-page="profile" aria-labelledby="profile-title" hidden>
+            <div class="pr-profile-layout">
+              <aside class="pr-profile-nav" aria-label="設定選單">
+                <div class="pr-profile-user">
+                  <span id="profile-avatar" class="profile-avatar"><i data-lucide="user-round" aria-hidden="true"></i></span>
+                  <span><strong id="profile-nav-name">我的帳號</strong><small id="profile-nav-school"></small></span>
+                </div>
+                <div class="pr-profile-nav-group" role="group" aria-labelledby="profile-nav-account">
+                  <small id="profile-nav-account">帳號</small>
+                  <button type="button" data-profile-jump="profile-section-account" aria-current="true"><i data-lucide="user-round" aria-hidden="true"></i><span>個人資料</span></button>
+                  <button type="button" data-profile-jump="profile-row-school"><i data-lucide="graduation-cap" aria-hidden="true"></i><span>就讀學校</span></button>
+                  <button type="button" data-profile-jump="profile-section-notifications"><i data-lucide="bell" aria-hidden="true"></i><span>提醒與通知</span></button>
+                </div>
+                <div class="pr-profile-nav-group" role="group" aria-labelledby="profile-nav-prefs">
+                  <small id="profile-nav-prefs">偏好</small>
+                  <button type="button" data-profile-jump="profile-section-appearance"><i data-lucide="moon" aria-hidden="true"></i><span>外觀</span></button>
+                  <button type="button" data-profile-jump="profile-section-language"><i data-lucide="languages" aria-hidden="true"></i><span>語言</span></button>
+                </div>
+                <div class="pr-profile-nav-group" role="group" aria-labelledby="profile-nav-data">
+                  <small id="profile-nav-data">資料</small>
+                  <button type="button" data-profile-jump="profile-section-data"><i data-lucide="bookmark" aria-hidden="true"></i><span>收藏與比較</span></button>
+                  <button type="button" data-profile-jump="profile-row-export"><i data-lucide="file-text" aria-hidden="true"></i><span>匯出我的資料</span></button>
+                </div>
+              </aside>
+
+              <div class="pr-profile-main">
+                <h1 id="profile-title">個人資料</h1>
+                <p class="pr-profile-lede">這些資料會用來對照合作校資格，並顯示在你的公開貼文上。</p>
+                <details class="discovery-recents" data-discovery-recents hidden></details>
+                <div id="profile-entitlement-status" class="profile-entitlement-status" hidden></div>
+                <div id="profile-verification-summary" class="profile-verification-summary" aria-live="polite"></div>
+                <section id="profile-email-verification" class="profile-email-verification" hidden>
+                  <p><strong>校級看板限已驗證 Email 的會員查看、發文與留言，不限同校；公共板發文或留言也需要驗證。</strong><span id="profile-email-verification-address"></span></p>
+                  <button id="request-profile-email-verification" type="button" class="secondary-button"><i data-lucide="mail-check" aria-hidden="true"></i><span>寄送驗證碼</span></button>
+                  <div id="profile-email-verification-step" class="email-verification-code" hidden>
+                    <label><span>六位數驗證碼</span><input id="profile-email-verification-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" /></label>
+                    <button id="confirm-profile-email-verification" type="button" class="secondary-button">確認</button>
+                  </div>
+                  <div id="profile-email-verification-status" class="form-status" role="status"></div>
+                </section>
+
+                <form id="profile-form" class="account-form profile-form">
+                  <section id="profile-section-account" class="pr-set-panel" aria-label="個人資料">
+                    <div class="pr-set-row">
+                      <div class="pr-set-label"><strong id="profile-label-name">公開暱稱</strong><small id="profile-help-name">顯示在貼文與留言上，2–30 個字。</small></div>
+                      <div class="pr-set-control"><input class="pr-field" name="display_name" minlength="2" maxlength="30" required autocomplete="nickname" aria-labelledby="profile-label-name" aria-describedby="profile-help-name" /></div>
+                    </div>
+                    <div class="pr-set-row">
+                      <div class="pr-set-label"><strong id="profile-label-email">電子郵件</strong><small id="profile-help-email">不會顯示在公開貼文中。</small></div>
+                      <div class="pr-set-control"><span class="pr-field pr-field-static" role="textbox" aria-readonly="true" aria-labelledby="profile-label-email" aria-describedby="profile-help-email"><span id="profile-email">社群帳號</span></span><span id="profile-email-chip" class="pr-badge" hidden></span></div>
+                    </div>
+                    <div id="profile-row-school" class="pr-set-row">
+                      <div class="pr-set-label"><strong id="profile-label-school">目前就讀學校</strong><small id="profile-school-note">學校會顯示在你的帳號與貼文上，選定後 3 天內不能更換。</small></div>
+                      <div class="pr-set-control"><span class="pr-field pr-field-with-icon"><input name="home_university" maxlength="80" value="長庚大學" aria-labelledby="profile-label-school" aria-describedby="profile-school-note" /><i data-lucide="shield-check" aria-hidden="true"></i></span></div>
+                    </div>
+                    <div class="pr-set-row">
+                      <div class="pr-set-label"><strong id="profile-label-countries">目標國家</strong><small id="profile-help-countries">用來排序推薦的合作校。</small></div>
+                      <div class="pr-set-control pr-set-chips" role="group" aria-labelledby="profile-label-countries" aria-describedby="profile-help-countries">
+                        <input type="hidden" name="target_countries" maxlength="160" />
+                        <span id="profile-country-chips" class="pr-chip-list"></span>
+                        <span class="pr-country-add"><input id="profile-country-input" type="text" list="profile-country-options" maxlength="20" placeholder="國家名稱" aria-label="新增目標國家" hidden autocomplete="off" /><datalist id="profile-country-options"></datalist><button id="profile-country-add" type="button" class="pr-add-chip" aria-expanded="false"><i data-lucide="plus" aria-hidden="true"></i>新增</button></span>
+                      </div>
+                    </div>
+                    <div class="pr-set-row">
+                      <div class="pr-set-label"><strong id="profile-label-stage">目前階段</strong><small id="profile-help-stage">探索學校、確認資格、準備文件、已送出申請、準備出發、正在海外、已完成交換</small></div>
+                      <div class="pr-set-control"><select class="pr-field" name="application_stage" aria-labelledby="profile-label-stage" aria-describedby="profile-help-stage"><option value="exploring">探索學校</option><option value="eligibility">確認資格</option><option value="documents">準備文件</option><option value="submitted">已送出申請</option><option value="accepted">準備出發</option><option value="abroad">正在海外</option><option value="returned">已完成交換</option></select></div>
+                    </div>
+                  </section>
+
+                  <h2 id="profile-section-notifications-title" class="pr-set-heading">提醒與通知</h2>
+                  <fieldset id="profile-section-notifications" class="pr-set-panel profile-notification-settings">
+                    <legend class="visually-hidden">提醒與通知</legend>
+                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>Web 站內截止提醒</strong><small>在 UniWay 通知中心顯示</small></span><input class="pr-switch" name="web_notifications" type="checkbox" role="switch" /></label>
+                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>電子郵件 截止提醒（選擇加入）</strong><small>寄到你驗證過的信箱</small></span><input class="pr-switch" name="email_notifications" type="checkbox" role="switch" /></label>
+                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>官方規定與文件更新提醒</strong><small>合作校或學校公告有變動時通知你</small></span><input class="pr-switch" name="content_updates" type="checkbox" role="switch" /></label>
+                    <div class="pr-set-row" role="group" aria-labelledby="profile-label-days">
+                      <div class="pr-set-label"><strong id="profile-label-days" class="profile-setting-label">截止前提醒日</strong><small>可複選</small></div>
+                      <div class="pr-set-control profile-reminder-days"><label><input name="reminder_days" type="checkbox" value="30" /><span>30 天</span></label><label><input name="reminder_days" type="checkbox" value="14" /><span>14 天</span></label><label><input name="reminder_days" type="checkbox" value="7" /><span>7 天</span></label><label><input name="reminder_days" type="checkbox" value="3" /><span>3 天</span></label><label><input name="reminder_days" type="checkbox" value="1" /><span>1 天</span></label></div>
+                    </div>
+                    <p class="pr-set-note">電子郵件 預設關閉，只有勾選並儲存後才排入寄送；可隨時關閉。行動裝置推播仍保持關閉。</p>
+                  </fieldset>
+                  <div class="pr-set-save">
+                    <div class="form-status" role="status" aria-live="polite"></div>
+                    <button type="submit" class="primary-button"><i data-lucide="save" aria-hidden="true"></i><span>儲存設定</span></button>
+                  </div>
+                </form>
+
+                <h2 id="profile-section-appearance-title" class="pr-set-heading">外觀</h2>
+                <div id="profile-section-appearance" class="pr-theme-cards" role="radiogroup" aria-labelledby="profile-section-appearance-title">
+                  <button type="button" role="radio" aria-checked="false" data-theme-choice="light"><span class="pr-theme-preview" data-preview="light"><i></i><span><b></b><em></em></span></span><strong>淺色</strong></button>
+                  <button type="button" role="radio" aria-checked="false" data-theme-choice="dark"><span class="pr-theme-preview" data-preview="dark"><i></i><span><b></b><em></em></span></span><strong>深色</strong></button>
+                  <button type="button" role="radio" aria-checked="false" data-theme-choice="system"><span class="pr-theme-preview" data-preview="system"><i></i><span><b></b><em></em></span></span><strong>跟隨系統</strong></button>
+                </div>
+
+                <h2 id="profile-section-language-title" class="pr-set-heading">語言</h2>
+                <section id="profile-section-language" class="pr-set-panel" aria-labelledby="profile-section-language-title">
+                  <div class="pr-set-row">
+                    <div class="pr-set-label"><strong id="profile-label-language">介面語言</strong><small id="profile-help-language">目前只提供繁體中文介面，其他語言完成後會開放選擇。</small></div>
+                    <div class="pr-set-control"><select class="pr-field" disabled aria-labelledby="profile-label-language" aria-describedby="profile-help-language"><option>繁體中文</option></select></div>
+                  </div>
+                </section>
+
+                <h2 id="profile-section-data-title" class="pr-set-heading">資料</h2>
+                <section id="profile-section-data" class="pr-set-panel" aria-labelledby="profile-section-data-title">
+                  <div class="pr-set-row">
+                    <div class="pr-set-label"><strong>收藏與比較</strong><small id="profile-favorites-summary">你收藏的合作校與比較清單。</small></div>
+                    <div class="pr-set-control"><a class="pr-link" href="#favorites" data-requires-home-school>前往收藏<i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
+                  </div>
+                  <div id="profile-row-export" class="pr-set-row">
+                    <div class="pr-set-label"><strong>匯出我的資料</strong><small id="profile-export-note">下載帳號資料、社群身分代號與你送出的規定回報（JSON）。</small></div>
+                    <div class="pr-set-control"><button id="profile-export-button" type="button" class="secondary-button"><i data-lucide="download" aria-hidden="true"></i><span>下載資料</span></button></div>
+                  </div>
+                </section>
+
+                <div class="pr-danger-zone profile-account-actions">
+                  <div><strong>帳號</strong><small>刪除後收藏、申請進度與貼文都會移除，無法復原。</small></div>
+                  <div class="pr-danger-actions"><button id="logout-button" type="button" class="secondary-button"><i data-lucide="arrow-left" aria-hidden="true"></i><span>登出</span></button><button id="delete-account-button" type="button" class="text-action danger"><span>刪除帳號</span></button></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section id="feedback" class="page-section feedback-page" data-university-page="feedback" aria-labelledby="feedback-title" hidden>
             <header class="feedback-intro">
               <div>
@@ -411,7 +638,7 @@
                 <span class="uw-mascot-body">
                   <span class="uw-mascot-tilt">
                     <span class="uw-mascot-slab"></span>
-                    <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261014-runtime-loading-1" alt="" width="384" height="460" loading="lazy" decoding="async" draggable="false" />
+                    <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261015-redesign-1" alt="" width="384" height="460" loading="lazy" decoding="async" draggable="false" />
                     <span class="uw-mascot-sheen"></span>
                     <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
                   </span>
@@ -459,6 +686,28 @@
             </section>
           </section>
           <section id="overview" class="overview-section visual-overview" data-university-page="overview" aria-labelledby="personal-plan-title">
+            <section id="my-applications" class="pr-tracker" aria-labelledby="tracker-title">
+              <header class="pr-tracker-head">
+                <div class="pr-tracker-title"><h1 id="tracker-title">我的申請</h1><span class="pr-status-pill"><i aria-hidden="true"></i><span id="tracker-pill">交換申請</span></span></div>
+                <div class="pr-tracker-tools">
+                  <div class="pr-views" role="group" aria-label="檢視方式">
+                    <button type="button" data-tracker-view="list" aria-pressed="true"><i data-lucide="list-checks" aria-hidden="true"></i>列表</button>
+                    <button type="button" data-tracker-view="board" aria-pressed="false"><i data-lucide="layers" aria-hidden="true"></i>看板</button>
+                    <button type="button" data-tracker-view="timeline" aria-pressed="false"><i data-lucide="calendar-range" aria-hidden="true"></i>時程</button>
+                  </div>
+                  <button id="tracker-add" type="button" class="pr-navy-button"><i data-lucide="plus" aria-hidden="true"></i>新增任務<kbd aria-hidden="true">C</kbd></button>
+                </div>
+              </header>
+              <section id="tracker-stats" class="pr-stats-strip" aria-label="進度摘要"></section>
+              <div class="pr-tracker-grid">
+                <div id="tracker-main" class="pr-tasklist">
+                  <div class="pr-tasklist-bar"><i data-lucide="list-checks" aria-hidden="true"></i><span>依狀態分組</span><label>篩選<select id="tracker-filter" aria-label="依學校篩選任務"><option value="">全部學校</option></select><kbd aria-hidden="true">F</kbd></label></div>
+                  <div id="tracker-body" aria-live="polite"></div>
+                </div>
+                <aside id="tracker-side" class="pr-tracker-side" aria-label="志願與期限"></aside>
+              </div>
+            </section>
+
             <section class="personal-plan-board glass-panel" aria-labelledby="personal-plan-title">
               <div class="concise-heading">
                 <div><h2 id="personal-plan-title">我的交換計畫</h2></div>
@@ -527,11 +776,18 @@
             <section class="planning-documents glass-panel"><span class="planning-documents-icon"><i data-lucide="folder-check" aria-hidden="true"></i></span><div><h2>接著，準備申請文件</h2><p id="planning-document-status" aria-live="polite">目標學校會帶入文件工作區，依當期規定確認表格、簽章與份數。</p></div><a href="#application-center" class="secondary-button">開啟申請文件<i data-lucide="arrow-right" aria-hidden="true"></i></a></section>
           </section>
 
-          <section id="community-hub" class="page-section global-community-section" aria-labelledby="community-hub-title">
+          <section id="community-hub" class="page-section global-community-section pr-forum" aria-labelledby="community-hub-title">
             <div class="community-feed-header">
               <header class="community-home-heading">
-                <div><span id="community-home-kicker" class="section-kicker" hidden>全台學生共同交流</span><h1 id="community-hub-title">最新留學討論</h1><p id="community-home-description" hidden>查看跨校申請經驗、住宿、獎學金與海外生活討論。</p></div>
-                <button id="global-community-compose" type="button" class="primary-button" aria-label="發一篇文章"><i data-lucide="square-pen" aria-hidden="true"></i><span>發一篇文章</span></button>
+                <div><span id="community-home-kicker" class="section-kicker" hidden>全台學生共同交流</span><h1 id="community-hub-title">學長姐心得</h1><p id="community-home-description">每一段旅程，都有人同行。</p></div>
+                <div class="pr-forum-actions">
+                  <div class="pr-mode-switch" role="group" aria-label="內容類型">
+                    <button type="button" data-forum-mode="story" aria-pressed="true">心得</button>
+                    <button type="button" data-forum-mode="question" aria-pressed="false">提問</button>
+                    <button type="button" data-forum-mode="boards" aria-pressed="false">看板</button>
+                  </div>
+                  <button id="global-community-compose" type="button" class="primary-button" aria-label="發一篇文章"><i data-lucide="square-pen" aria-hidden="true"></i><span>寫心得</span></button>
+                </div>
               </header>
               <nav id="community-feed-tabs" class="community-feed-tabs" aria-label="貼文動態篩選">
                 <a href="#forum" data-community-route="all" aria-current="page"><i data-lucide="sparkles" aria-hidden="true"></i><span>全部</span></a>
@@ -541,6 +797,10 @@
                 <a href="#university-feed" data-community-route="university"><i data-lucide="graduation-cap" aria-hidden="true"></i><span><b data-home-school-short>長庚</b>板</span></a>
               </nav>
             </div>
+            <section id="forum-posters" class="pr-posters" aria-label="本學期最多人寫心得的學校" hidden>
+              <div class="pr-posters-head"><strong>本學期最多人寫心得的學校</strong><a href="#partners">更多</a></div>
+              <div id="forum-poster-row" class="pr-poster-row"></div>
+            </section>
             <section class="featured-board-grid" aria-label="留學看板">
               <article class="featured-board-card public-board-card">
                 <span class="board-avatar board-avatar-public" aria-hidden="true"><i data-lucide="messages-square"></i></span>
@@ -662,7 +922,7 @@
                         <span class="uw-mascot-body">
                           <span class="uw-mascot-tilt">
                             <span class="uw-mascot-slab"></span>
-                            <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261014-runtime-loading-1" alt="" width="384" height="460" loading="lazy" decoding="async" draggable="false" />
+                            <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261015-redesign-1" alt="" width="384" height="460" loading="lazy" decoding="async" draggable="false" />
                             <span class="uw-mascot-sheen"></span>
                             <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
                           </span>
@@ -686,17 +946,49 @@
             </div>
           </section>
 
-          <section id="partners" class="page-section" data-university-page="partners" aria-labelledby="partners-title" hidden>
-            <h2 id="partners-title" class="visually-hidden">學校搜尋</h2>
-            <div class="partner-view-toolbar">
-              <label class="search-field" for="partner-search"><span>搜尋學校</span><span class="control-with-icon"><i data-lucide="search" aria-hidden="true"></i><input id="partner-search" placeholder="學校、國家或申請條件" /></span></label>
-
-              <div class="partner-view-switch" role="group" aria-label="合作學校檢視方式">
-                <button type="button" data-partner-view="list" aria-pressed="true" aria-controls="partner-table"><i data-lucide="list" aria-hidden="true"></i>列表</button>
-                <button type="button" data-partner-view="map" aria-pressed="false" aria-controls="partner-map-panel"><i data-lucide="globe-2" aria-hidden="true"></i>3D 地圖</button>
+          <section id="partners" class="page-section pr-explore" data-university-page="partners" aria-labelledby="partners-title" hidden>
+            <header class="pr-explore-head">
+              <div>
+                <span class="pr-explore-context"><i data-lucide="graduation-cap" aria-hidden="true"></i><span id="partners-context">合作學校</span></span>
+                <h1 id="partners-title">找交換學校</h1>
               </div>
+              <div class="partner-view-switch pr-view-toggle" role="group" aria-label="合作學校檢視方式">
+                <button type="button" data-partner-view="list" aria-pressed="true" aria-controls="partner-table"><i data-lucide="layers" aria-hidden="true"></i>卡片</button>
+                <button type="button" data-partner-view="map" aria-pressed="false" aria-controls="partner-map-panel"><i data-lucide="map" aria-hidden="true"></i>地圖</button>
+              </div>
+            </header>
+            <div class="partner-view-toolbar pr-search" role="search">
+              <label class="pr-field search-field" for="partner-search">
+                <span class="pr-field-icon"><i data-lucide="map-pin" aria-hidden="true"></i></span>
+                <span class="pr-field-body"><small>國家、城市或學校</small><input id="partner-search" placeholder="例如：日本、仙台、東北大學" autocomplete="off" /></span>
+              </label>
+              <label class="pr-field" for="partner-term-tile">
+                <span class="pr-field-icon"><i data-lucide="calendar-range" aria-hidden="true"></i></span>
+                <span class="pr-field-body"><small>出發學期</small><select id="partner-term-tile" data-criteria-tile="term"><option value="">不限</option><option value="fall">秋季／上學期</option><option value="spring">春季／下學期</option></select></span>
+              </label>
+              <label class="pr-field" for="partner-test-tile">
+                <span class="pr-field-icon"><i data-lucide="languages" aria-hidden="true"></i></span>
+                <span class="pr-field-body"><small>語言檢定</small><select id="partner-test-tile" data-criteria-tile="test"><option value="">不限</option><option value="ielts">IELTS</option><option value="toefl">TOEFL iBT</option><option value="toeic">TOEIC</option><option value="jlpt">日檢 JLPT</option><option value="topik">韓檢 TOPIK</option><option value="duolingo">Duolingo</option></select></span>
+              </label>
+              <button id="partner-search-submit" type="button" class="pr-search-button"><i data-lucide="search" aria-hidden="true"></i>搜尋學校</button>
             </div>
+            <div id="partner-sort-tabs" class="pr-sort-tabs" role="tablist" aria-label="排序方式"></div>
             <div class="journey-search-layout">
+            <details class="journey-filter-drawer pr-facets" open>
+              <summary><i data-lucide="list-checks" aria-hidden="true"></i><span>篩選 <span id="partner-filter-count"></span></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+              <div class="filter-panel" aria-label="合作學校篩選條件">
+                <div class="pr-facets-head"><strong>篩選</strong><button id="clear-partner-filters" type="button" class="pr-clear">清除全部</button></div>
+                <div id="partner-facet-groups"></div>
+                <fieldset class="pr-facet pr-facet-selects">
+                  <legend>更多條件</legend>
+                  <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">當期名額已列</option><option value="not_open">本季未開放（官方灰字）</option><option value="needs_confirmation">名額尚未核實</option><option value="zero_quota">零名額</option><option value="fee_paying">自費計畫</option><option value="closed">表列交換校／校內申請已截止</option><option value="reference_only">舊期參考／不能作當期申請</option><option value="quota_unconfirmed">當期名額或期間待確認</option><option value="agreement_only">合作備查／本期名額待確認</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
+                  <label for="region-filter"><span>地區</span><select id="region-filter"></select></label>
+                  <label for="country-filter"><span>國家</span><select id="country-filter"></select></label>
+                  <label for="college-filter"><span>學院</span><select id="college-filter"></select></label>
+                  <label for="degree-filter"><span>學制</span><select id="degree-filter"></select></label>
+                </fieldset>
+              </div>
+            </details>
             <div class="journey-search-results">
             <div class="discovery-search-tools">
               <details id="discovery-criteria" class="discovery-criteria"><summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i>我的條件 <span id="discovery-criteria-count"></span></summary>
@@ -715,7 +1007,7 @@
               <a class="discovery-open-workspace" href="#favorites"><i data-lucide="bookmark" aria-hidden="true"></i>我的選校 <span id="discovery-selection-count"></span></a>
             </div>
             <p id="discovery-criteria-result" class="discovery-muted" role="status"></p>
-            <p id="partner-result-count" class="partner-result-count"></p>
+            <div class="pr-results-head"><p id="partner-result-count" class="partner-result-count"></p><span id="partner-applied" class="pr-applied" role="status"></span></div>
             <div id="partner-table" class="partner-results" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-table"></div></div>
             <button id="show-more-partners" type="button" class="secondary-button centered-button" hidden>顯示更多學校</button>
             <section id="partner-map-panel" class="partner-map-panel" aria-label="全球交換合作網絡" hidden>
@@ -733,17 +1025,6 @@
               <div class="partner-map-access"><label for="map-school-select">定位學校</label><select id="map-school-select"><option value="">選擇地圖上的學校</option></select><p id="partner-map-missing"></p><p id="partner-map-home-status" aria-live="polite"></p><details id="partner-map-gaps" hidden><summary></summary><ul></ul></details></div>
             </section>
             </div>
-            <details class="journey-filter-drawer" open>
-              <summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i>篩選<i data-lucide="chevron-down" aria-hidden="true"></i></summary>
-            <div class="filter-panel" aria-label="合作學校篩選條件">
-              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">當期名額已列</option><option value="not_open">本季未開放（官方灰字）</option><option value="needs_confirmation">名額尚未核實</option><option value="zero_quota">零名額</option><option value="fee_paying">自費計畫</option><option value="closed">表列交換校／校內申請已截止</option><option value="reference_only">舊期參考／不能作當期申請</option><option value="quota_unconfirmed">當期名額或期間待確認</option><option value="agreement_only">合作備查／本期名額待確認</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
-              <label for="region-filter"><span>地區</span><select id="region-filter"></select></label>
-              <label for="country-filter"><span>國家</span><select id="country-filter"></select></label>
-              <label for="college-filter"><span>學院</span><select id="college-filter"></select></label>
-              <label for="degree-filter"><span>學制</span><select id="degree-filter"></select></label>
-              <button id="clear-partner-filters" type="button" class="secondary-button"><i data-lucide="rotate-ccw" aria-hidden="true"></i><span>清除</span></button>
-            </div>
-            </details>
             </div>
           </section>
 
@@ -1146,18 +1427,26 @@
           <details id="sources" class="sources-disclosure page-section" data-university-page="documents" hidden><summary><span><strong>官方資料來源</strong></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div id="source-list" class="source-list"></div></details>
         </div>
 
-        <section id="school-detail-view" class="school-detail-view" aria-labelledby="school-detail-title" hidden>
-          <div class="detail-top-actions">
-            <div class="detail-save-actions">
-              <button id="detail-favorite-button" type="button" class="secondary-button favorite-toggle"><i data-lucide="bookmark" aria-hidden="true"></i><span>收藏</span></button>
-              <button id="detail-application-button" type="button" class="primary-button application-toggle"><i data-lucide="clipboard-plus" aria-hidden="true"></i><span>加入清單</span></button>
+        <section id="school-detail-view" class="school-detail-view pr-detail" aria-labelledby="school-detail-title" hidden>
+          <div class="pr-detail-top">
+            <nav class="pr-breadcrumb" aria-label="路徑">
+              <a href="#partners"><i data-lucide="arrow-left" aria-hidden="true"></i>找交換學校</a><span aria-hidden="true">/</span><span id="detail-crumb-country">國家</span><span aria-hidden="true">/</span><strong id="detail-crumb-school"></strong>
+            </nav>
+            <div class="detail-top-actions pr-detail-actions">
+              <button id="detail-share-button" type="button" class="pr-text-button"><i data-lucide="send" aria-hidden="true"></i><span>分享</span></button>
+              <button id="detail-favorite-button" type="button" class="pr-text-button favorite-toggle"><i data-lucide="heart" aria-hidden="true"></i><span>收藏</span></button>
             </div>
           </div>
-          <header class="school-detail-header">
-            <div id="school-detail-photo" class="school-detail-photo" aria-live="polite"></div>
-            <div class="school-detail-copy"><div class="travel-detail-heading"><span id="school-detail-country" class="eyebrow">交換學校</span><div id="school-destination-stamp" class="travel-destination-stamp" hidden></div></div><h1 id="school-detail-title">學校名稱</h1><p id="school-detail-summary" hidden></p></div>
-            <div id="school-detail-primary-facts" class="detail-primary-facts"></div>
+          <header class="school-detail-header pr-detail-header">
+            <div class="school-detail-copy"><div class="travel-detail-heading"><span id="school-detail-country" class="eyebrow">交換學校</span><div id="school-destination-stamp" class="travel-destination-stamp" hidden></div></div><h1 id="school-detail-title">學校名稱</h1><p id="school-detail-subline" class="pr-detail-subline"></p><p id="school-detail-summary" hidden></p></div>
           </header>
+          <div id="school-detail-gallery" class="pr-gallery" data-count="1">
+            <div id="school-detail-photo" class="school-detail-photo" aria-live="polite"></div>
+            <div id="school-detail-gallery-extra" class="pr-gallery-extra"></div>
+          </div>
+          <div class="pr-detail-body">
+          <div class="pr-detail-main">
+          <div id="school-detail-primary-facts" class="detail-primary-facts"></div>
           <nav class="detail-tabs" role="tablist" aria-label="交換學校詳細資訊">
             <button id="detail-tab-overview" type="button" role="tab" aria-selected="true" aria-controls="detail-overview" data-detail-target="detail-overview"><i data-lucide="compass" aria-hidden="true"></i>快速了解</button>
             <button id="detail-tab-application" type="button" role="tab" aria-selected="false" aria-controls="detail-application" data-detail-target="detail-application" tabindex="-1"><i data-lucide="route" aria-hidden="true"></i>申請方式</button>
@@ -1167,6 +1456,19 @@
             <button id="detail-tab-community" type="button" role="tab" aria-selected="false" aria-controls="detail-community" data-detail-target="detail-community" tabindex="-1"><i data-lucide="messages-square" aria-hidden="true"></i>學生社群</button>
           </nav>
           <div id="school-detail-content" class="school-detail-content"><div class="skeleton skeleton-dialog"></div></div>
+          </div>
+          <aside id="school-detail-booking" class="pr-booking" aria-label="申請摘要">
+            <small id="booking-term">交換申請</small>
+            <div id="booking-fit" class="pr-booking-fit"></div>
+            <dl class="pr-booking-dates">
+              <div><dt>校內甄選截止</dt><dd id="booking-home-deadline">依官方公告</dd></div>
+              <div><dt>合作校申請截止</dt><dd id="booking-partner-deadline">依官方公告</dd></div>
+            </dl>
+            <button id="detail-application-button" type="button" class="primary-button application-toggle"><i data-lucide="bookmark" aria-hidden="true"></i><span>加入我的志願</span></button>
+            <button id="detail-compare-button" type="button" class="secondary-button"><span>加入比較</span></button>
+            <p>加入志願後會自動排進申請日曆。</p>
+          </aside>
+          </div>
         </section>
       </main>
       <p class="site-data-note"><i data-lucide="info" aria-hidden="true"></i><span>資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），<button type="button" class="text-action" data-analytics-toggle>停用匿名使用統計</button>。<a href="/privacy">隱私權政策</a>　<a href="/terms">使用條款</a></span></p>
@@ -1198,10 +1500,10 @@
     <script src="/static/public-content-zh.js?v=20261007-requests-1" defer></script>
     <script src="/static/regions.js?v=20261008-ntu-review-2" defer></script>
     <script src="/static/discovery-core.js?v=20261011-ncu-integration-2" defer></script>
-    <script src="/static/discovery-ui.js?v=20261004-digest-2" defer></script>
+    <script src="/static/discovery-ui.js?v=20261015-redesign-1" defer></script>
     <script src="/static/navigation.js?v=20261013-expanding-rail-1" defer></script>
     <script src="/static/motion.js?v=20261014-aria-picker-1" defer></script>
-    <script src="/static/community-reader.js?v=20261015-ntu-official-source-1" defer></script>
+    <script src="/static/community-reader.js?v=20261015-redesign-1" defer></script>
     <script src="/static/community-moderation.js?v=20260930-discussion-2b" defer></script>
     <script src="/static/academic-units.js?v=20261001-departments-1" defer></script>
     <script src="/static/ccu-academic-units.js?v=20261008-ccu-filter-23" defer></script>
@@ -1211,7 +1513,7 @@
     <dialog id="planning-target-change-dialog" class="planning-change-dialog" aria-labelledby="planning-target-change-title">
       <form method="dialog"><span class="section-kicker">更換目標前，先確認影響</span><h2 id="planning-target-change-title">改用這所學校規劃？</h2><p id="planning-target-change-summary"></p><ul id="planning-target-change-impact"></ul><footer><button id="planning-target-change-cancel" class="secondary-button" value="cancel">保留原目標</button><button class="primary-button" value="confirm">確認更換目標</button></footer></form>
     </dialog>
-    <script src="/static/multi-plan.js?v=20261011-ncu-integration-2" defer></script>
+    <script src="/static/multi-plan.js?v=20261015-redesign-1" defer></script>
     <script src="/static/application-workspace.js?v=20261002-flow-2" defer></script>
     <script src="/static/application-journey.js?v=20261008-ncu-1" defer></script>
     <script src="/static/document-workbench.js?v=20261008-ncu-1" defer></script>
@@ -1221,7 +1523,14 @@
     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
     <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
     <script src="/static/react-aria-school-picker.js?v=20261014-aria-1" defer></script>
-    <script src="/static/app.js?v=20261015-ntu-official-source-1" defer></script>
+    <script src="/static/app.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-home.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-explore.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-detail.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-tracker.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-forum.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-profile.js?v=20261015-redesign-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>
   </body>
 </html>

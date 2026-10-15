@@ -10,6 +10,9 @@ const state = {
   country: "",
   college: "",
   degree: "",
+  partnerSort: "match",
+  partnerQuota: "",
+  partnerFit: "",
   partnerLimit: window.matchMedia("(max-width: 820px)").matches ? 20 : 30,
   documentType: "全部",
   statusTimer: null,
@@ -61,6 +64,7 @@ const state = {
   authSessionEpoch: 0,
   authRestoreState: "pending",
   authRestoreRequestId: 0,
+  profileFilledFor: "",
   quarantinedAccountOwnerId: "",
   authProviders: [],
   authMode: "login",
@@ -71,6 +75,7 @@ const state = {
   globalCommunityTimer: null,
   globalCommunityFeed: "all",
   theme: "light",
+  themePreference: "light",
   homeSchool: "",
   selectedHomeSchool: "長庚大學",
   chooseSchoolForAccount: false,
@@ -245,7 +250,9 @@ const WORKFLOW_SOURCE_LABELS = {
   community_experience: "經驗補充",
 };
 const UNIVERSITY_PAGE_ROUTES = new Set([
+  "home",
   "guide",
+  "profile",
   "feedback",
   "overview",
   "advisor",
@@ -264,7 +271,9 @@ const UNIVERSITY_PAGE_ROUTES = new Set([
   "search",
 ]);
 const UNIVERSITY_PAGE_TITLES = {
-  guide: "首頁",
+  home: "首頁",
+  guide: "申請指南",
+  profile: "個人中心",
   feedback: "用戶評價",
   overview: "我的申請",
   advisor: "選校規劃",
@@ -898,10 +907,22 @@ function initIcons() {
   }
 }
 
-function applyTheme(theme, { persist = true } = {}) {
-  const nextTheme = theme === "light" ? "light" : "dark";
+// The saved choice is "light", "dark" or "system". "system" follows the device (prefers-color-scheme) and keeps following it
+// when it changes; state.theme and data-theme always hold the colours actually shown ("light" or "dark").
+const systemThemeQuery = typeof window.matchMedia === "function" ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+function resolveTheme(preference) {
+  if (preference === "light" || preference === "dark") return preference;
+  return systemThemeQuery?.matches ? "dark" : "light";
+}
+
+function applyTheme(preference, { persist = true } = {}) {
+  const choice = ["light", "dark", "system"].includes(preference) ? preference : "dark";
+  const nextTheme = resolveTheme(choice);
+  state.themePreference = choice;
   state.theme = nextTheme;
   document.documentElement.dataset.theme = nextTheme;
+  document.documentElement.dataset.themePreference = choice;
   document.documentElement.style.colorScheme = nextTheme;
   const meta = $("#theme-color");
   if (meta) meta.setAttribute("content", nextTheme === "dark" ? "#080a0d" : "#f5f5f7");
@@ -914,11 +935,12 @@ function applyTheme(theme, { persist = true } = {}) {
   }
   if (persist) {
     try {
-      window.localStorage.setItem("exchange-guide-theme", nextTheme);
+      window.localStorage.setItem("exchange-guide-theme", choice);
     } catch (_) {
       // Theme still works when storage is unavailable.
     }
   }
+  window.UniWayProfile?.refreshTheme();
   initIcons();
 }
 
@@ -930,6 +952,9 @@ function initializeTheme() {
     storedTheme = "";
   }
   applyTheme(storedTheme || "light", { persist: false });
+  systemThemeQuery?.addEventListener?.("change", () => {
+    if (state.themePreference === "system") applyTheme("system", { persist: false });
+  });
 }
 
 function parseStoredJson(storage, key, fallback) {
@@ -1667,6 +1692,7 @@ function updateSchoolContext() {
   });
   populateGlobalCommunitySchools();
   renderBoardFollowControls();
+  window.UniWayHome?.render();
 }
 
 async function refreshHomeUniversityData() {
@@ -2010,12 +2036,22 @@ function closeAuthDialog() {
   state.dialogReturnFocus = null;
 }
 
+// The account's settings are a full page (#profile). Every place that used to open the old dialog still calls this.
 function openProfileDialog() {
   renderDiscoveryRecents();
   if (!state.account) {
     openAuthDialog();
     return;
   }
+  if (window.location.hash === "#profile") {
+    applyAppRoute({ loadFeed: false, resetScroll: true });
+    return;
+  }
+  window.location.hash = "#profile";
+}
+
+function fillProfileForm() {
+  renderDiscoveryRecents();
   const form = $("#profile-form");
   form.elements.display_name.value = state.account.display_name || "";
   // "Not chosen yet" shows blank. A picked school cannot be changed again for 3 days (the server enforces it too).
@@ -2026,7 +2062,7 @@ function openProfileDialog() {
   form.elements.home_university.disabled = Boolean(lockedUntil);
   $("#profile-school-note").textContent = lockedUntil
     ? `學校選定後 3 天內不能更換，${formatSchoolLock(lockedUntil)} 之後才能修改。`
-    : "選定後 3 天內不能更換，請確認後再儲存。";
+    : "學校會顯示在你的帳號與貼文上，選定後 3 天內不能更換。";
   form.elements.target_countries.value = (state.account.target_countries || []).join("、");
   form.elements.application_stage.value = state.account.application_stage || "exploring";
   const notifications = state.account.notification_preferences || {};
@@ -2037,13 +2073,19 @@ function openProfileDialog() {
   form.querySelectorAll('input[name="reminder_days"]').forEach((input) => {
     input.checked = reminderDays.has(Number(input.value));
   });
+  form.querySelector(".form-status").textContent = "";
+  state.profileFilledFor = state.account.id;
   $("#profile-email").textContent = state.account.email || "社群帳號";
   renderProfileVerificationSummary();
   renderProfileAvatar();
-  state.dialogReturnFocus = document.activeElement;
-  $("#profile-dialog").hidden = false;
-  document.body.classList.add("account-dialog-open");
-  window.setTimeout(() => form.elements.display_name.focus(), 40);
+  window.UniWayProfile?.refresh();
+}
+
+// A deep link to #profile may load before the session is known, and a sign-out can happen while the page is open.
+function syncProfileRoute() {
+  if (window.location.hash !== "#profile" || state.authRestoreState === "pending") return;
+  if (!state.account) applyAppRoute({ loadFeed: false, resetScroll: false });
+  else if (state.profileFilledFor !== state.account.id) fillProfileForm();
 }
 
 function schoolLockedUntil() {
@@ -2076,13 +2118,6 @@ function renderProfileVerificationSummary() {
     $("#profile-email-verification-status").textContent = "";
   }
   initIcons();
-}
-
-function closeProfileDialog() {
-  $("#profile-dialog").hidden = true;
-  document.body.classList.remove("account-dialog-open");
-  state.dialogReturnFocus?.focus?.();
-  state.dialogReturnFocus = null;
 }
 
 function notificationActionUrl(item) {
@@ -2307,7 +2342,7 @@ async function deleteAllNotifications() {
 
 function trapAccountDialogFocus(event) {
   if (event.key !== "Tab") return;
-  const dialog = [$("#notification-dialog"), $("#profile-dialog"), $("#auth-dialog")].find((item) => item && !item.hidden);
+  const dialog = [$("#notification-dialog"), $("#auth-dialog")].find((item) => item && !item.hidden);
   if (!dialog) return;
   const focusable = [...dialog.querySelectorAll('button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')]
     .filter((item) => !item.hidden && item.getClientRects().length > 0);
@@ -3462,6 +3497,8 @@ function renderAccountState() {
   }
   renderProfileAvatar();
   renderEntitlementStatus();
+  syncProfileRoute();
+  window.UniWayProfile?.refresh();
   renderBoardFollowControls();
   renderCalendarSync();
   renderDocumentCheckAccess();
@@ -3484,6 +3521,7 @@ function renderAccountState() {
   updateDetailFavoriteButton();
   updateDetailApplicationButton();
   renderAccountWorkspaceSyncStatus();
+  window.UniWayHome?.render();
   initIcons();
 }
 
@@ -3611,10 +3649,11 @@ function clearAuthenticatedClientState() {
   } catch (_) {
     // In-memory clearing still protects the signed-out page.
   }
-  ["#profile-dialog", "#notification-dialog"].forEach((selector) => {
-    const dialog = $(selector);
-    if (dialog) dialog.hidden = true;
-  });
+  state.profileFilledFor = "";
+  const notificationDialog = $("#notification-dialog");
+  if (notificationDialog) notificationDialog.hidden = true;
+  // The profile page only exists for a signed-in account, so signing out leaves it.
+  if (window.location.hash === "#profile") window.location.replace("#home");
   document.body.classList.remove("account-dialog-open");
   state.dialogReturnFocus = null;
   renderAccountState();
@@ -3812,7 +3851,7 @@ async function saveAccountProfile(event) {
     renderApplicationCalendar();
     await loadNotifications({ quiet: true });
     status.textContent = "已儲存";
-    window.setTimeout(closeProfileDialog, 500);
+    window.UniWayProfile?.refresh();
   } catch (error) {
     status.textContent = error.message;
   } finally {
@@ -3967,6 +4006,7 @@ function renderDashboard() {
   updateFavoriteCounts();
   populateGlobalCommunitySchools();
   if (calendarSyncFeatureEnabled() && state.calendarSync?.enabled) syncCalendarEvents({ quiet: true });
+  window.UniWayHome?.render();
 
   ["#partner-table", "#period-list", "#scholarship-list", "#documents-list"].forEach((selector) => {
     $(selector).setAttribute("aria-busy", "false");
@@ -4186,6 +4226,7 @@ function renderPersonalPlanSnapshot() {
   renderPlanningNextAction();
   window.UniWayJourney.render();
   window.UniWayApplicationWorkspace?.render();
+  window.UniWayTracker?.render();
   initIcons();
 }
 
@@ -4722,8 +4763,9 @@ function eligibilitySummary() {
 
 function upcomingDeadlines(limit = 3) {
   const today = localDateKey();
+  // An event whose date is not a plain YYYY-MM-DD has no day to show, so it is left out rather than handed on as null.
   return workflowDeadlineEvents()
-    .filter((event) => event.date >= today)
+    .filter((event) => event.date >= today && parseLocalDate(event.date))
     .sort((left, right) => left.date.localeCompare(right.date) || left.title.localeCompare(right.title, "zh-Hant"))
     .slice(0, limit)
     .map((event) => ({
@@ -5363,6 +5405,7 @@ function renderCalendarInsightsSummary(events = calendarDisplayEvents()) {
 }
 
 function renderApplicationCalendar() {
+  window.UniWayTracker?.render();
   const grid = $("#application-calendar-grid");
   if (!grid || !state.dashboard) return;
   ensureApplicationCalendarWorkflows();
@@ -5707,6 +5750,7 @@ function renderDocumentReadiness() {
         <input type="checkbox" class="document-readiness-checkbox" data-document-id="${escapeHtml(item.id)}" ${readinessStatus(item.id) === "ready" ? "checked" : ""} ${state.account ? "" : "disabled"} />
         <span><strong>${escapeHtml(item.title)}</strong>${item.conditional ? "<small>符合特定身分時才需要</small>" : ""}</span>
       </label>`).join("")}</div>`;
+  window.UniWayGuide?.refresh();
 }
 
 function updateDocumentReadiness(documentId, checked) {
@@ -7869,7 +7913,44 @@ function renderPartnerFilters() {
   });
 }
 
-function filteredPartners() {
+function partnerQuotaNumber(item) {
+  const match = String(item?.quota ?? "").match(/\d+/);
+  return match ? Number(match[0]) : null;
+}
+
+// The earliest upcoming date written in the partner's deadline fields; null when the text names none.
+const partnerDeadlineCache = new WeakMap();
+function partnerNextDeadline(item) {
+  if (partnerDeadlineCache.has(item)) return partnerDeadlineCache.get(item);
+  const sources = [item?.partner_exchange_details?.application_deadline?.value, item?.nomination_deadline, item?.partner_application_deadline,
+    partnerStudentSummary(item).application_deadline, item?.application_deadline];
+  // Built from the clock directly: a year that does not fit four digits would make parseLocalDate return null here.
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12);
+  let best = null;
+  for (const text of sources.map((value) => String(value || ""))) {
+    const dates = [];
+    for (const [, year, month, day] of text.matchAll(/(20\d{2})\s*[-/.年]\s*(\d{1,2})\s*[-/.月]\s*(\d{1,2})/g)) dates.push(new Date(Number(year), Number(month) - 1, Number(day), 12));
+    for (const [, month, day] of text.replace(/20\d{2}\s*[-/.年]\s*\d{1,2}\s*[-/.月]\s*\d{1,2}/g, " ").matchAll(/(\d{1,2})\s*月\s*(\d{1,2})\s*日?/g)) {
+      const candidate = new Date(today.getFullYear(), Number(month) - 1, Number(day), 12);
+      if (candidate < today) candidate.setFullYear(candidate.getFullYear() + 1);
+      dates.push(candidate);
+    }
+    const upcoming = dates.filter((date) => !Number.isNaN(date.getTime()) && date >= today).sort((a, b) => a - b)[0];
+    if (upcoming && (!best || upcoming < best)) best = upcoming;
+    if (best) break;
+  }
+  partnerDeadlineCache.set(item, best);
+  return best;
+}
+
+function partnerFitBucket(item) {
+  if (!state.eligibilityProfile) return "";
+  const tone = partnerMatch(item).tone;
+  return tone === "strong" ? "fit" : tone === "review" ? "review" : "";
+}
+
+function filteredPartners({ ignore = "", sort = true } = {}) {
   if (!state.dashboard) return [];
   const query = normalize(state.partnerQuery);
   const partners = state.dashboard.partner_universities.filter((item) => {
@@ -7877,17 +7958,25 @@ function filteredPartners() {
     const text = normalize(
       `${Object.values(item).join(" ")} ${item.location?.city || ""} ${JSON.stringify(item.student_summary_zh || {})} ${Object.values(destination || {}).join(" ")} ${window.UniWayRegions.searchText(item.country)}`
     );
+    const quota = partnerQuotaNumber(item);
     return (
       (!query || text.includes(query)) &&
       (!state.availability || (item.availability_status || "open") === state.availability) &&
       window.UniWayRegions.inRegion(item.country, state.region) &&
-      (!state.country || item.country === state.country) &&
+      (ignore === "country" || !state.country || item.country === state.country) &&
       (!state.college || academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, state.college)) &&
       (!state.degree || academicScopeNeedsConfirmation(item, "degree_levels") || degreeMatches(item.degree_levels, state.degree) !== false) &&
+      (ignore === "quota" || !state.partnerQuota || (state.partnerQuota === "2plus" ? (quota ?? 0) >= 2 : quota === 1)) &&
+      (ignore === "fit" || !state.partnerFit || partnerFitBucket(item) === state.partnerFit) &&
       coupledAcademicScopeMatches(item, state.college, state.degree) !== false && discoveryCriteriaMatch(item)
     );
   });
-  if (state.eligibilityProfile) {
+  if (!sort) return partners;
+  if (state.partnerSort === "deadline") {
+    partners.sort((left, right) => (partnerNextDeadline(left)?.getTime() ?? Infinity) - (partnerNextDeadline(right)?.getTime() ?? Infinity));
+  } else if (state.partnerSort === "quota") {
+    partners.sort((left, right) => (partnerQuotaNumber(right) ?? -1) - (partnerQuotaNumber(left) ?? -1));
+  } else if (state.eligibilityProfile) {
     partners.sort((left, right) => partnerMatch(right).score - partnerMatch(left).score);
   }
   return partners;
@@ -7967,7 +8056,7 @@ function renderPartnerCount(total, shown) {
 
 function renderPartnerTable() {
   const expandedSchools = new Set([...document.querySelectorAll("#partner-table .partner-card[open]")]
-    .map((card) => card.querySelector(".school-detail-trigger")?.dataset.schoolName));
+    .map((card) => card.closest("[data-school-card]")?.dataset.schoolCard));
   const partners = filteredPartners();
   const visible = partners.slice(0, state.partnerLimit);
   $("#partner-table").dataset.resultCount = String(partners.length);
@@ -7978,21 +8067,13 @@ function renderPartnerTable() {
     $("#show-more-partners").hidden = true;
     if (window.location.hash === "#partners") writePartnerUrl();
     syncPartnerView();
+    window.UniWayExplore?.render();
     return;
   }
 
-  const tableRows = visible.map(renderPartnerTableRow).join("");
-  const cards = visible.map(renderPartnerCard).join("");
-  $("#partner-table").innerHTML = `
-    <div class="desktop-partner-table">
-      <table class="partner-table">
-        <thead><tr><th>國家</th><th>學校</th><th>計畫</th><th>可申請身分</th><th>名額／期間</th><th>重點條件</th><th><span class="visually-hidden">收藏</span></th></tr></thead>
-        <tbody>${tableRows}</tbody>
-      </table>
-    </div>
-    <div class="mobile-partner-list">${cards}</div>`;
+  $("#partner-table").innerHTML = `<div class="pr-school-grid">${visible.map(renderPartnerCard).join("")}</div>`;
   document.querySelectorAll("#partner-table .partner-card").forEach((card) => {
-    if (expandedSchools.has(card.querySelector(".school-detail-trigger")?.dataset.schoolName)) card.open = true;
+    if (expandedSchools.has(card.closest("[data-school-card]")?.dataset.schoolCard)) card.open = true;
   });
 
   const moreButton = $("#show-more-partners");
@@ -8001,77 +8082,85 @@ function renderPartnerTable() {
   moreButton.textContent = remaining > 0 ? `顯示更多學校（還有 ${remaining} 所）` : "";
   if (window.location.hash === "#partners") writePartnerUrl();
   syncPartnerView();
+  window.UniWayExplore?.render();
   initIcons();
 }
 
-function renderPartnerTableRow(item) {
-  const period = localizedPartnerValue(item, "study_period", "study_period");
-  const deadline = partnerDeadlineReference(item);
-  const match = partnerMatch(item);
-  const availability = partnerAvailabilityMeta(item);
-  return `
-    <tr>
-      <td>${escapeHtml(item.country || "--")}</td>
-      <td>
-        <div class="partner-school-cell">
-          ${renderSchoolPhoto(item, "table")}
-          <div>
-            <button type="button" class="partner-name school-detail-trigger" data-school-name="${escapeHtml(item.school_name)}">
-              ${escapeHtml(item.school_name)}
-            </button>
-            ${renderPartnerMatchExplanation(match)}
-            ${discoveryMatchBadge(item)}<details class="partner-source-disclosure"><summary>來源</summary><div class="partner-links">${renderPartnerLinks(item)}</div><div class="coverage-chips">${renderCoverageBadges(item)}</div></details>
-          </div>
-        </div>
-      </td>
-      <td>${escapeHtml(item.program_type || "--")}${availability.blocked || availability.pending ? `<br><span class="coverage-chip empty">${escapeHtml(availability.shortLabel)}</span>${availability.hint ? `<small class="availability-hint">${escapeHtml(availability.hint)}</small>` : ""}` : ""}</td>
-      <td>${escapeHtml([item.colleges, item.degree_levels].filter(Boolean).join("／") || "--")}</td>
-      <td>${escapeHtml([item.quota, period, deadline.compact].filter(Boolean).join("／") || "--")}</td>
-      <td class="condition-cell"><details class="partner-condition-disclosure"><summary>資格與語言</summary>${renderStudentPointList(partnerSummaryPoints(item, "eligibility_points"), { limit: 3, compact: true })}</details></td>
-      <td>${renderFavoriteButton(item, true)}</td>
-    </tr>`;
+function partnerCardBadge(availability, match) {
+  if (availability.blocked || availability.pending) return { tone: "warn", label: availability.cardLabel };
+  if (state.eligibilityProfile) return match.tone === "strong" ? { tone: "ok", label: "符合資格" } : { tone: "warn", label: match.label };
+  return { tone: "ok", label: availability.cardLabel };
+}
+
+// Short chips taken from the catalogue itself; nothing is invented when a field is missing.
+function partnerCardTags(item) {
+  const tags = [];
+  const language = (item.language_conditions || []).map((condition) => condition.teaching_language).find(Boolean);
+  if (language) tags.push(`${language}授課`);
+  if (item.program_type) tags.push(item.program_type);
+  const quota = partnerQuotaNumber(item);
+  if (quota !== null) tags.push(`名額 ${quota}`);
+  const period = localizedPartnerValue(item, "study_period", "study_period", "");
+  if (period && period.length <= 12) tags.push(period);
+  return [...new Set(tags)].slice(0, 3);
+}
+
+function partnerCardFoot(item) {
+  const next = partnerNextDeadline(item);
+  return next
+    ? `<strong>截止 ${next.getMonth() + 1}/${String(next.getDate()).padStart(2, "0")}</strong> · ${escapeHtml(partnerDeadlineReference(item).label)}`
+    : `<span>截止日請依官方公告</span>`;
 }
 
 function renderPartnerCard(item) {
   const availability = partnerAvailabilityMeta(item);
-  const meta = [availability.cardLabel, item.program_type, item.colleges, item.degree_levels].filter(Boolean).join(" · ");
   const period = localizedPartnerValue(item, "study_period", "study_period");
   const deadline = partnerDeadlineReference(item);
   const match = partnerMatch(item);
+  const badge = partnerCardBadge(availability, match);
+  const name = escapeHtml(item.school_name);
+  const comparing = discoveryCompare.has(item.school_name);
+  const place = [item.country, item.location?.city].filter(Boolean).join("・");
+  const rating = state.schoolRatings?.[item.school_name];
   return `
-    <details class="partner-card">
-      <summary>
-        ${renderSchoolPhoto(item, "card")}
-        <span class="partner-card-copy">
-          <span class="partner-card-country">${escapeHtml(item.country || "未標示國家")}</span>
-          <strong>${escapeHtml(item.school_name)}</strong>
-          <small>${escapeHtml(truncate(meta, 72))}</small>
-          ${state.eligibilityProfile ? `<span class="match-pill ${match.tone}">${escapeHtml(match.label)}</span>` : ""}
-        </span>
-        <i data-lucide="chevron-down" aria-hidden="true"></i>
-      </summary>
-      <div class="partner-card-content">
-        ${discoveryMatchBadge(item)}
-        <div class="coverage-chips">${renderCoverageBadges(item)}</div>
-        ${renderPartnerAvailabilityNotice(item)}
-        <div class="partner-facts">
-          <div class="partner-fact"><span>計畫</span><strong>${escapeHtml(item.program_type || "依公告")}</strong></div>
-          <div class="partner-fact"><span>名額</span><strong>${escapeHtml(item.quota || "依公告")}</strong></div>
-          <div class="partner-fact"><span>研修期間</span><strong>${escapeHtml(period)}</strong></div>
-          <div class="partner-fact"><span>${escapeHtml(deadline.label)}</span><strong>${highlightHtml(deadline.value)}</strong></div>
-          <div class="partner-fact"><span>適用身分</span><strong>${escapeHtml([item.colleges, item.degree_levels].filter(Boolean).join("／") || "依公告")}</strong></div>
-        </div>
-        <div class="partner-card-summary"><strong>申請重點</strong>${renderStudentPointList(partnerSummaryPoints(item, "eligibility_points"), { limit: 3 })}</div>
-        ${state.eligibilityProfile ? `<div class="partner-match-reasons"><strong>為什麼排在這裡</strong><ul>${match.reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join("")}${match.risks.map((risk) => `<li class="risk">${escapeHtml(risk)}</li>`).join("")}</ul></div>` : ""}
-        <div class="partner-card-actions">
-          <button type="button" class="primary-button school-detail-trigger" data-school-name="${escapeHtml(item.school_name)}">
-            <i data-lucide="notebook-tabs" aria-hidden="true"></i><span>查看完整資訊</span>
-          </button>
-          ${renderFavoriteButton(item)}
-        </div>
-        <div class="partner-links">${renderPartnerLinks(item)}</div>
+    <article class="pr-school-card" data-school-card="${name}">
+      <div class="pr-card-media">
+        <details class="partner-card">
+          <summary aria-label="${name}：展開重點條件">
+            ${renderSchoolPhoto(item, "card")}
+            <span class="pr-badge pr-badge-${badge.tone}">${escapeHtml(badge.label)}</span>
+          </summary>
+          <div class="partner-card-content">
+            <div class="coverage-chips">${renderCoverageBadges(item)}</div>
+            ${renderPartnerAvailabilityNotice(item)}
+            <div class="partner-facts">
+              <div class="partner-fact"><span>計畫</span><strong>${escapeHtml(item.program_type || "依公告")}</strong></div>
+              <div class="partner-fact"><span>名額</span><strong>${escapeHtml(item.quota || "依公告")}</strong></div>
+              <div class="partner-fact"><span>研修期間</span><strong>${escapeHtml(period)}</strong></div>
+              <div class="partner-fact"><span>${escapeHtml(deadline.label)}</span><strong>${highlightHtml(deadline.value)}</strong></div>
+              <div class="partner-fact"><span>適用身分</span><strong>${escapeHtml([item.colleges, item.degree_levels].filter(Boolean).join("／") || "依公告")}</strong></div>
+            </div>
+            <div class="partner-card-summary"><strong>申請重點</strong>${renderStudentPointList(partnerSummaryPoints(item, "eligibility_points"), { limit: 3 })}</div>
+            ${state.eligibilityProfile ? `<div class="partner-match-reasons"><strong>為什麼排在這裡</strong><ul>${match.reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join("")}${match.risks.map((risk) => `<li class="risk">${escapeHtml(risk)}</li>`).join("")}</ul></div>` : ""}
+            <div class="partner-links">${renderPartnerLinks(item)}</div>
+          </div>
+        </details>
+        ${renderFavoriteButton(item, true, { heart: true })}
+        <label class="pr-compare${comparing ? " on" : ""}"><input type="checkbox" data-compare-pick="${name}"${comparing ? " checked" : ""} /><span class="pr-compare-box" aria-hidden="true"><i data-lucide="check"></i></span><span>加入比較</span></label>
       </div>
-    </details>`;
+      <div class="pr-card-body">
+        <div class="pr-card-title">
+          <button type="button" class="partner-name school-detail-trigger" data-school-name="${name}">${name}</button>
+          ${rating ? `<span class="pr-rating"><i data-lucide="star" aria-hidden="true"></i>${escapeHtml(String(rating.average))}<small>（${escapeHtml(String(rating.count))}）</small></span>` : ""}
+        </div>
+        <span class="pr-card-place">${escapeHtml(place || "未標示國家")}</span>
+        ${availability.hint ? `<small class="availability-hint">${escapeHtml(availability.hint)}</small>` : ""}
+        ${renderPartnerMatchExplanation(match)}
+        ${discoveryMatchBadge(item)}
+        <div class="pr-tags">${partnerCardTags(item).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
+        <span class="pr-card-foot">${partnerCardFoot(item)}</span>
+      </div>
+    </article>`;
 }
 
 function partnerStudentSummary(item) {
@@ -8197,7 +8286,7 @@ function activeSchoolSelections() {
   return state.account ? state.favorites : state.guestComparisons;
 }
 
-function renderFavoriteButton(item, iconOnly = false) {
+function renderFavoriteButton(item, iconOnly = false, { heart = false } = {}) {
   const saved = activeSchoolSelections().has(item.school_name);
   const label = state.account
     ? (saved ? "已收藏" : "收藏")
@@ -8207,7 +8296,7 @@ function renderFavoriteButton(item, iconOnly = false) {
     : `${saved ? "移出比較" : "加入比較"}${item.school_name}`;
   return `
     <button type="button" class="${iconOnly ? "icon-button" : "secondary-button"} favorite-toggle${saved ? " saved" : ""}" data-school-name="${escapeHtml(item.school_name)}" aria-pressed="${saved}" aria-label="${escapeHtml(ariaLabel)}"${iconOnly ? ` data-tooltip="${escapeHtml(state.account ? (saved ? "取消收藏" : "收藏") : (saved ? "移出比較" : "加入比較"))}"` : ""}>
-      <i data-lucide="${state.account ? (saved ? "bookmark-check" : "bookmark") : (saved ? "list-checks" : "list-plus")}" aria-hidden="true"></i>${iconOnly ? "" : `<span>${label}</span>`}
+      <i data-lucide="${heart ? "heart" : state.account ? (saved ? "bookmark-check" : "bookmark") : (saved ? "list-checks" : "list-plus")}" aria-hidden="true"></i>${iconOnly ? "" : `<span>${label}</span>`}
     </button>`;
 }
 
@@ -8252,6 +8341,7 @@ function updateFavoriteCounts() {
     navCount.textContent = String(count);
     navCount.hidden = count === 0;
   }
+  window.UniWayHome?.render();
 }
 
 function renderFavorites() {
@@ -8320,6 +8410,7 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {
   activateDetailTab("detail-overview");
   updateDetailFavoriteButton();
   updateDetailApplicationButton();
+  window.UniWayDetail?.render(item);
   updateUniWayPublicNavigation(window.location.hash);
   if (!window.UniWayNavigation.isRestoring) window.scrollTo({ top: 0, behavior: "instant" });
   initIcons();
@@ -8426,9 +8517,7 @@ function updateDetailFavoriteButton() {
   const label = state.account
     ? (saved ? "已收藏" : "收藏")
     : (saved ? "已加入比較" : "加入比較");
-  const icon = state.account
-    ? (saved ? "bookmark-check" : "bookmark")
-    : (saved ? "list-checks" : "list-plus");
+  const icon = "heart";
   button.setAttribute(
     "aria-label",
     state.account
@@ -8452,13 +8541,14 @@ function updateDetailApplicationButton() {
   button.disabled = blocked;
   button.title = blocked ? (item?.availability_note || "當期是否開放仍待確認") : "";
   const label = added
-    ? "移出清單"
+    ? "移出我的志願"
     : blocked
       ? availability.matchLabel
-      : state.account ? "加入清單" : "登入建立計畫";
-  const icon = added ? "clipboard-x" : blocked ? "badge-alert" : state.account ? "clipboard-plus" : "log-in";
+      : state.account ? "加入我的志願" : "登入建立計畫";
+  const icon = added ? "bookmark-check" : blocked ? "badge-alert" : state.account ? "bookmark" : "log-in";
   button.innerHTML = `<i data-lucide="${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span>`;
   initIcons();
+  window.UniWayDetail?.render();
 }
 
 function toggleApplication(schoolName) {
@@ -8814,6 +8904,7 @@ function renderDestinationProfile(item, profile) {
   const cityStamp = $("#school-detail-view .travel-stamp-city");
   if (cityStamp && profile.city) cityStamp.textContent = profile.city;
   $("#school-detail-primary-facts").innerHTML = renderPrimaryFacts(item, profile);
+  window.UniWayDetail?.gallery(item, profile);
   if (profile.home_university !== "淡江大學" && profile.home_university !== "國立臺灣大學" && item.partner_exchange_details && Object.keys(item.partner_exchange_details).length && window.UniWayCcuDetails) {
     const status = profile.coverage_status === "official_partial" ? "合作校生活資料部分核實" : "合作校生活資料仍待確認";
     container.innerHTML = `<div class="destination-profile-status partial"><div><strong>${escapeHtml(status)}</strong><p>${escapeHtml(profile.coverage_note || "")}</p><small>最後查核：${escapeHtml(formatDate(profile.last_checked))}</small></div></div>`
@@ -10483,7 +10574,7 @@ function renderCommunityPageContext(isUniversityBoard = false) {
           ? PUBLIC_COMMUNITY_BOARD
           : following
             ? "我的追蹤"
-            : "最新留學討論";
+            : "學長姐心得";
   }
   if (description) {
     description.textContent = isUniversityBoard
@@ -10494,8 +10585,9 @@ function renderCommunityPageContext(isUniversityBoard = false) {
           ? "跨校討論交換申請、簽證、住宿與海外生活。"
           : following
             ? "集中查看你已追蹤學校看板的最新文章。"
-            : "查看跨校申請經驗、住宿、獎學金與海外生活討論。";
+            : "每一段旅程，都有人同行。";
   }
+  window.UniWayForum?.render();
 }
 
 function renderGlobalCommunityTopics() {
@@ -12876,7 +12968,7 @@ function isUniversityBoardRoute(hash = window.location.hash) {
 }
 
 function isPublicExplorationRoute(hash = window.location.hash) {
-  return hash === "#home" || hash === "#feedback" || hash === "#partners" || hash === "#search" || /^#school=/.test(hash);
+  return hash === "#home" || hash === "#feedback" || hash === "#profile" || hash === "#partners" || hash === "#search" || /^#school=/.test(hash) || /^#guide(=|$)/.test(hash);
 }
 
 function isPersonalizedRoute(hash = window.location.hash) {
@@ -12886,7 +12978,8 @@ function isPersonalizedRoute(hash = window.location.hash) {
 
 function updateUniWayPublicNavigation(hash = window.location.hash) {
   window.UniWayMotion?.route(hash);
-  const activeRoute = isPersonalizedRoute(hash) ? "overview" : globalFeedForHash(hash)
+  // The guide belongs to 我的申請: it explains the steps the personalised pages carry out.
+  const activeRoute = isPersonalizedRoute(hash) ? "overview" : /^#guide(=|$)/.test(hash) ? "overview" : globalFeedForHash(hash)
     ? "forum"
     : (/^#school=/.test(hash) || hash === "#search" ? "partners" : hash.slice(1));
   document.querySelectorAll(".application-tools-panel a").forEach((link) => {
@@ -12899,15 +12992,14 @@ function updateUniWayPublicNavigation(hash = window.location.hash) {
     if (active) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   });
+  document.querySelectorAll("#account-button, #mobile-account-button, #global-mobile-account-button").forEach((button) => {
+    if (hash === "#profile") button.setAttribute("aria-current", "page");
+    else button.removeAttribute("aria-current");
+  });
 }
 
 function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
   let hash = window.location.hash || "#home";
-  if (hash === "#guide") {
-    // The guide is the home page now; keep links to the old address working.
-    window.UniWayNavigation.replaceState({}, "", "#home");
-    hash = "#home";
-  }
   const globalFeed = globalFeedForHash(hash);
   const isUniversityPosts = hash === "#cgu-posts" || hash === "#university-posts";
   const isPublicExploration = isPublicExplorationRoute(hash);
@@ -12973,7 +13065,28 @@ function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
     return;
   }
 
-  const sectionId = hash === "#home" ? "guide" : hash.slice(1) || "overview";
+  if (hash === "#profile") {
+    // The profile page is private: without an account the sign-in dialog opens over the home page instead.
+    // While the saved session is still being checked the page waits, and syncProfileRoute() settles it afterwards.
+    if (!state.account && state.authRestoreState !== "pending") {
+      openAuthDialog();
+      window.location.replace("#home");
+      return;
+    }
+    if (state.account) fillProfileForm();
+    showUniversityPage("profile", { resetScroll, focusHeading: resetScroll && Boolean(state.account) });
+    return;
+  }
+
+  const guideRoute = hash.match(/^#guide(?:=(.+))?$/);
+  if (guideRoute) {
+    // The article is drawn before the page is shown so the route heading exists when it is focused.
+    window.UniWayGuide?.show(guideRoute[1] ? decodeURIComponent(guideRoute[1]) : "");
+    showUniversityPage("guide", { resetScroll, focusHeading: resetScroll });
+    return;
+  }
+
+  const sectionId = hash === "#home" ? "home" : hash.slice(1) || "overview";
   showUniversityPage(UNIVERSITY_PAGE_ROUTES.has(sectionId) ? sectionId : "overview", {
     resetScroll,
     focusHeading: resetScroll,
@@ -13050,7 +13163,6 @@ function bindEvents() {
   $("#mobile-account-button")?.addEventListener("click", () => state.account ? openProfileDialog() : openAuthDialog());
   $("#global-mobile-account-button").addEventListener("click", () => state.account ? openProfileDialog() : openAuthDialog());
   document.querySelectorAll("[data-close-auth]").forEach((button) => button.addEventListener("click", closeAuthDialog));
-  document.querySelectorAll("[data-close-profile]").forEach((button) => button.addEventListener("click", closeProfileDialog));
   document.querySelectorAll("[data-close-notifications]").forEach((button) => button.addEventListener("click", closeNotificationDialog));
   $("#notification-read-all").addEventListener("click", markAllNotificationsRead);
   $("#notification-delete-all").addEventListener("click", deleteAllNotifications);
@@ -13142,7 +13254,6 @@ function bindEvents() {
     trapAccountDialogFocus(event);
     if (event.key === "Escape") {
       if (!$("#auth-dialog").hidden) closeAuthDialog();
-      if (!$("#profile-dialog").hidden) closeProfileDialog();
       if (!$("#notification-dialog").hidden) closeNotificationDialog();
     }
   });
@@ -13244,6 +13355,8 @@ function bindEvents() {
     state.country = "";
     state.college = "";
     state.degree = "";
+    state.partnerQuota = "";
+    state.partnerFit = "";
     state.partnerLimit = partnerPageSize();
     $("#partner-search").value = "";
     renderPartnerFilters();

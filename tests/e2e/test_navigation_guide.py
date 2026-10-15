@@ -21,23 +21,23 @@ def test_home_is_the_guide_and_the_forum_is_one_click_away(page, live_server):
     start(page, live_server)
     nav = page.locator(".uniway-public-nav")
     expect(nav.get_by_role("link", name="申請指南", exact=True)).to_have_count(0)
-    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#home-landing")).to_be_visible()
     expect(page.locator("#page-back")).to_be_visible()
     assert page.locator("#page-back").evaluate("button => button.closest('#main-content') !== null")
     assert page.locator("#page-back").evaluate("button => button.closest('#glass-navigation') === null")
     back = page.locator("#page-back").bounding_box()
-    guide = page.locator("#guide").bounding_box()
+    guide = page.locator("#home-landing").bounding_box()
     assert abs(back["x"] - guide["x"]) <= 1
     assert back["y"] < guide["y"]
-    expect(page.locator(".guide-stages > li")).to_have_count(4)
+    expect(page.locator(".pr-stages > li")).to_have_count(4)
     expect(page.locator("#community-hub")).to_be_hidden()
     expect(nav.locator('[data-public-route="home"]')).to_have_attribute("aria-current", "page")
     expect(page).to_have_title("首頁 | UniWay")
     nav.get_by_role("link", name="論壇", exact=True).click()
     expect(page).to_have_url(f"{live_server.base_url}/#forum")
     expect(page.locator("#community-hub")).to_be_visible()
-    expect(page.locator("#community-hub-title")).to_have_text("最新留學討論")
-    expect(page.locator("#guide")).to_be_hidden()
+    expect(page.locator("#community-hub-title")).to_have_text("學長姐心得")
+    expect(page.locator("#home-landing")).to_be_hidden()
     expect(nav.locator('[data-public-route="forum"]')).to_have_attribute("aria-current", "page")
     expect(nav.locator('[data-public-route="home"]')).not_to_have_attribute("aria-current", "page")
     expect(page).to_have_title("論壇 | UniWay")
@@ -45,16 +45,17 @@ def test_home_is_the_guide_and_the_forum_is_one_click_away(page, live_server):
     expect(nav.locator('[data-public-route="forum"]')).to_have_attribute("aria-current", "page")
     nav.get_by_role("link", name="首頁", exact=True).click()
     expect(page).to_have_url(f"{live_server.base_url}/#home")
-    expect(page.locator("#guide")).to_be_visible()
-    expect(page.locator("#guide-title")).to_be_focused()
+    expect(page.locator("#home-landing")).to_be_visible()
+    expect(page.locator("#home-landing-title")).to_be_focused()
     assert not errors
 
 
-def test_an_old_guide_link_opens_the_home_page(page, live_server):
+def test_the_guide_link_opens_the_guide_not_the_home_page(page, live_server):
     start(page, live_server, "guide")
-    expect(page).to_have_url(f"{live_server.base_url}/#home")
+    expect(page).to_have_url(f"{live_server.base_url}/#guide")
     expect(page.locator("#guide")).to_be_visible()
-    expect(page.locator("#page-back")).to_be_disabled()
+    expect(page.locator("#home-landing")).to_be_hidden()
+    expect(page).to_have_title("申請指南 | UniWay")
 
 
 def test_an_old_community_link_opens_the_forum(page, live_server):
@@ -66,14 +67,14 @@ def test_an_old_community_link_opens_the_forum(page, live_server):
 def test_guide_shared_shell_and_back_forward_without_loops(page, live_server):
     start(page, live_server)
     nav = page.locator(".uniway-public-nav")
-    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#home-landing")).to_be_visible()
     expect(page.locator("#application-center")).to_be_hidden()
-    page.locator("#guide").get_by_role("link", name="準備申請文件", exact=True).click()
+    page.locator("#home-landing").get_by_role("link", name="準備申請文件", exact=True).click()
     expect(page.locator("#application-center")).to_be_visible()
     expect(nav).to_be_visible()
     expect(page.locator(".sidebar")).to_be_hidden()
     page.locator("#page-back").click()
-    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#home-landing")).to_be_visible()
     expect(page).to_have_url(f"{live_server.base_url}/#home")
     expect(page.locator("#page-back")).to_be_disabled()
     page.go_forward()
@@ -81,7 +82,7 @@ def test_guide_shared_shell_and_back_forward_without_loops(page, live_server):
     # Reload must retain the known internal history boundary.
     page.reload()
     page.locator("#page-back").click()
-    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#home-landing")).to_be_visible()
 
 
 @pytest.mark.parametrize("route", ["budget", "application-center", "school=" + LINCOLN])
@@ -111,7 +112,7 @@ def test_every_tool_has_shared_navigation_and_return(page, live_server):
         if route != "university-posts":
             expect(page.locator(f'section[data-university-page="{route}"]')).to_be_visible()
         page.locator("#page-back").click()
-        expect(page.locator("#guide")).to_be_visible()
+        expect(page.locator("#home-landing")).to_be_visible()
     assert not errors
 
 
@@ -121,7 +122,7 @@ def test_school_return_retains_filters_scroll_and_forward(page, live_server):
     expect(page.locator("#boot-splash")).to_be_hidden()
     page.wait_for_function("() => !state.homeSchoolLoading && !state.partnerDataLoading")
     page.evaluate("() => state.periodOptionsReady")
-    trigger = page.locator('.desktop-partner-table .school-detail-trigger').first
+    trigger = page.locator('#partner-table .school-detail-trigger').first
     # Start from a real scroll position even when the compact search header fits above the fold.
     page.evaluate("scrollTo({top: 250, behavior: 'instant'})")
     trigger.scroll_into_view_if_needed()
@@ -157,7 +158,7 @@ def test_guide_responsive_menu_keyboard_and_theme(page, live_server, width):
     page.set_viewport_size({"width": width, "height": 900})
     page.emulate_media(reduced_motion="reduce")
     start(page, live_server, "home")
-    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#home-landing")).to_be_visible()
     expect(page.locator("#glass-navigation #school-switcher")).to_have_count(0)
     school_switcher = page.locator(".page-back-bar #school-switcher")
     expect(school_switcher).to_be_visible()
@@ -185,9 +186,6 @@ def test_guide_responsive_menu_keyboard_and_theme(page, live_server, width):
     expect(page.locator("#application-tools > summary")).to_be_focused()
     if page.locator("#glass-menu-close").is_visible():
         page.locator("#glass-menu-close").click()
-    page.locator(".guide-faq summary").click()
-    expect(page.locator(".guide-faq p")).to_be_visible()
-    page.locator(".guide-faq summary").click()
     artifacts = Path("output/navigation-guide")
     artifacts.mkdir(parents=True, exist_ok=True)
     page.evaluate("scrollTo({top: 0, behavior: 'instant'})")

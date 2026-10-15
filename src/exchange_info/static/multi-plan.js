@@ -145,7 +145,7 @@ window.UniWayMultiPlan = (() => {
       status.textContent=`${input.preferences.length} 個志願 · ${loadedPlan.tasks?.length || 0} 項準備工作`;
       const signature=JSON.stringify([key,state.planningAvailability,state.preparationTasks,state.applicationProgress,state.calendarEvents]);
       if (signature !== scheduleKey) { scheduleKey=signature; scheduleCalendarTaskAnalysis(); }
-      renderTasks(loadedPlan); return;
+      renderTasks(loadedPlan); window.UniWayTracker?.render(); return;
     }
     if (loadingKey === key || !state.dashboard) return;
     loadingKey=key; const sequence=++requestId;

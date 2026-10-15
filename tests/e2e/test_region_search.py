@@ -122,7 +122,7 @@ def test_the_quota_filter_says_this_period_and_a_signed_school_without_places_is
     page.locator("#availability-filter").select_option("agreement_only")
     signed = shown_total(page)
     assert signed >= 30
-    cards = page.locator("#partner-table .mobile-partner-list .partner-card")
+    cards = page.locator("#partner-table .partner-card")
     page.set_viewport_size({"width": 390, "height": 844})
     page.wait_for_timeout(200)
     first = cards.first
@@ -133,7 +133,7 @@ def test_the_quota_filter_says_this_period_and_a_signed_school_without_places_is
     expect(first.locator(".partner-availability-notice")).to_contain_text("所以現在不能申請")
     page.set_viewport_size({"width": 1280, "height": 900})
     page.wait_for_timeout(200)
-    hint = page.locator("#partner-table .desktop-partner-table .availability-hint").first
+    hint = page.locator("#partner-table .availability-hint").first
     expect(hint).to_be_visible()
     expect(hint).to_contain_text("保留合作關係參考；本期是否開放及名額尚待確認")
 
@@ -145,7 +145,7 @@ def test_the_region_filter_fits_on_a_phone_and_on_a_desktop(page, live_server):
         panel = page.locator(".filter-panel")
         box = panel.bounding_box()
         assert box["x"] >= 0 and box["x"] + box["width"] <= width + 1, (width, box)
-        labels = page.locator(".filter-panel > label")
+        labels = page.locator(".filter-panel .pr-facet-selects > label")
         assert labels.count() == 5
         for index in range(5):
             item = labels.nth(index).bounding_box()

@@ -31,7 +31,7 @@ def test_the_menu_has_a_user_reviews_entry_that_opens_the_page(page, live_server
     expect(page.locator("#feedback-title")).to_be_focused()
     expect(entry).to_have_attribute("aria-current", "page")
     expect(page).to_have_title("用戶評價 | UniWay")
-    expect(page.locator("#guide")).to_be_hidden()
+    expect(page.locator("#home-landing")).to_be_hidden()
 
 
 def test_a_message_that_is_too_short_is_not_sent(page, live_server):

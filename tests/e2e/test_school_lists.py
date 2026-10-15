@@ -91,7 +91,7 @@ def test_the_school_list_shows_a_full_page_and_the_count(page, live_server, widt
     expect(count).to_have_text(re.compile(rf"^共 \d+ 所，先顯示 {first_page} 所$"))
     total = int(re.search(r"共 (\d+) 所", count.inner_text()).group(1))
     assert total > 100
-    rows = "#partner-table .partner-table tbody tr" if width > 820 else "#partner-table .partner-card"
+    rows = "#partner-table .pr-school-card"
     expect(page.locator(rows)).to_have_count(first_page)
     page.locator("#show-more-partners").click()
     expect(count).to_have_text(f"共 {total} 所，先顯示 {first_page * 2} 所")
@@ -106,6 +106,6 @@ def test_filtering_to_a_country_shows_all_of_its_schools_and_only_those(page, li
     total = int(re.search(r"共 (\d+) 所", count.inner_text()).group(1))
     while page.locator("#show-more-partners").is_visible():
         page.locator("#show-more-partners").click()
-    countries = page.locator("#partner-table .partner-table tbody tr td:first-child").all_inner_texts()
+    countries = [text.split("・")[0] for text in page.locator("#partner-table .pr-card-place").all_inner_texts()]
     assert len(countries) == total and set(countries) == {"大陸地區"}
     expect(count).to_have_text(f"共 {total} 所")

@@ -77,7 +77,7 @@ def test_list_lazy_load_and_roundtrip_filters(page, live_server):
     page.locator('[data-partner-view="list"]').click()
     expect(page.locator("#partner-search")).to_have_value("Lincoln")
     expect(page.locator("#country-filter")).to_have_value("紐西蘭")
-    expect(page.locator("#partner-table tbody tr")).to_have_count(1)
+    expect(page.locator("#partner-table .pr-school-card")).to_have_count(1)
     assert sum("/student-dashboard?" in url for url in requests) == before
     page.go_back()
     expect(page.locator('[data-partner-view="map"]')).to_have_attribute("aria-pressed", "true")
@@ -146,7 +146,7 @@ def test_missing_coordinates_do_not_create_false_points(page, live_server):
     expect(page.locator("#partner-map-status")).to_contain_text("位置還在確認")
     assert map_data(page)["features"] == []
     page.get_by_role("button", name="返回列表", exact=True).click()
-    expect(page.locator("#partner-table tbody tr").first).to_be_visible()
+    expect(page.locator("#partner-table .pr-school-card").first).to_be_visible()
 
 
 def test_empty_catalog(page, live_server):
