@@ -30,7 +30,8 @@
     <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2" />
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
-    <link rel="stylesheet" href="/static/glass-theme.css?v=20261014-page-school-switcher-1" />
+    <link rel="stylesheet" href="/static/glass-theme.css?v=20261015-redesign-1" />
+    <link rel="stylesheet" href="/static/platform-redesign.css?v=20261015-redesign-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261008-ncu-conditions-1" />
@@ -372,32 +373,161 @@
 
         <div id="page-status" class="page-status" role="status" aria-live="polite"></div>
         <div id="dashboard-view">
-          <section id="guide" class="page-section study-guide" data-university-page="guide" aria-labelledby="guide-title" hidden>
-            <header class="guide-intro">
-              <div><span class="section-kicker">申請指南</span><h1 id="guide-title">你的交換旅程，<br>一步一步來。</h1><p>從選校到出發，找到你現在需要的下一步。</p></div>
-              <span class="uw-mascot guide-mascot" data-play data-tilt aria-hidden="true">
-                <span class="uw-mascot-shadow"></span>
-                <span class="uw-mascot-body">
-                  <span class="uw-mascot-tilt">
-                    <span class="uw-mascot-slab"></span>
-                    <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261014-runtime-loading-1" alt="" width="384" height="460" decoding="async" draggable="false" />
-                    <span class="uw-mascot-sheen"></span>
-                    <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+          <section id="home-landing" class="page-section pr-home" data-university-page="home" aria-labelledby="home-landing-title" hidden>
+            <div class="pr-home-inner">
+              <div class="pr-guide-grid" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+              <section class="pr-hero" aria-labelledby="home-landing-title">
+                <div class="pr-hero-copy">
+                  <span class="pr-pill"><b id="home-pill-count">6 所大學</b><span id="home-pill-text">已整理 1,085 間合作校資料</span></span>
+                  <h1 id="home-landing-title">你能去哪些交換學校，<br><span>一次看清楚。</span></h1>
+                  <p class="pr-hero-note"><i data-lucide="shield-check" aria-hidden="true"></i><span>瀏覽公開資料不需要登入；收藏、進度與社群功能才需要帳號。</span></p>
+                </div>
+                <div class="pr-collage">
+                  <article class="pr-map-card" aria-labelledby="home-map-card-title">
+                    <header>
+                      <div><small>合作校地圖</small><strong id="home-map-card-title">合作校分布</strong></div>
+                      <span class="pr-segmented" aria-hidden="true"><span class="on">地圖</span><span>列表</span></span>
+                    </header>
+                    <div class="pr-map-host" data-home-map="hero" role="img" aria-label="合作校分布地圖"></div>
+                  </article>
+                  <article class="pr-plan-card" aria-labelledby="home-plan-title">
+                    <header><strong id="home-plan-title">我的交換計畫</strong><span id="home-plan-badge" class="pr-badge-peach">共 4 步</span></header>
+                    <ol id="home-plan-steps" class="pr-plan-steps"></ol>
+                  </article>
+                  <span class="uw-mascot pr-collage-mascot" data-play data-tilt aria-hidden="true">
+                    <span class="uw-mascot-shadow"></span>
+                    <span class="uw-mascot-body">
+                      <span class="uw-mascot-tilt">
+                        <span class="uw-mascot-slab"></span>
+                        <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261014-runtime-loading-1" alt="" width="384" height="460" decoding="async" draggable="false" />
+                        <span class="uw-mascot-sheen"></span>
+                        <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+                      </span>
+                    </span>
                   </span>
-                </span>
-              </span>
-            </header>
-            <ol class="guide-stages">
-              <li class="guide-stage guide-stage-explore"><span class="guide-stage-number">01</span><span class="guide-stage-icon"><i data-lucide="compass" aria-hidden="true"></i></span><h2>找到想去的學校</h2><p>比較課程、語言門檻與生活費。</p><a class="guide-action" href="#partners">探索學校<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
-              <li class="guide-stage guide-stage-prepare"><span class="guide-stage-number">02</span><span class="guide-stage-icon"><i data-lucide="notebook-pen" aria-hidden="true"></i></span><h2>準備校內甄選</h2><p>確認資格、排志願，再準備文件。</p><a class="guide-action" href="#eligibility" data-requires-home-school>查看資格與志願<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
-              <li class="guide-stage guide-stage-apply"><span class="guide-stage-number">03</span><span class="guide-stage-icon"><i data-lucide="send" aria-hidden="true"></i></span><h2>完成合作校申請</h2><p>通過校內提名後，依合作校通知送件。</p><a class="guide-action" href="#application-center" data-requires-home-school>準備申請文件<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
-              <li class="guide-stage guide-stage-depart"><span class="guide-stage-number">04</span><span class="guide-stage-icon"><i data-lucide="luggage" aria-hidden="true"></i></span><h2>安排出發與生活</h2><p>錄取後確認簽證、住宿與保險。</p><a class="guide-action" href="#budget" data-requires-home-school>估算生活預算<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
-            </ol>
-            <div class="guide-bottom-row">
-              <a class="guide-plan-link" href="#overview" data-requires-home-school><span class="guide-plan-icon"><i data-lucide="route" aria-hidden="true"></i></span><span><strong>已經開始準備了？</strong><small>回到我的交換計畫</small></span><i data-lucide="arrow-right" aria-hidden="true"></i></a>
-              <details class="guide-faq"><summary>校內甄選和合作校申請有什麼不同？<i data-lucide="plus" aria-hidden="true"></i></summary><p>一般先由就讀學校甄選與提名，再向合作校申請。兩邊的文件與期限可能不同，請分別確認當期公告。</p><a href="#deadlines" data-requires-home-school>查看官方截止日<i data-lucide="arrow-right" aria-hidden="true"></i></a></details>
+                </div>
+              </section>
+
+              <section class="pr-supported" aria-label="目前支援的學校">
+                <span>目前支援</span>
+                <ul id="home-supported-list"></ul>
+              </section>
+
+              <section class="pr-section pr-features" aria-labelledby="home-features-title">
+                <div class="pr-section-head pr-section-head-split">
+                  <div><span class="pr-kicker">UniWay 能幫你做的事</span><h2 id="home-features-title">從找學校到出發，<br>每一步都有對應的工具。</h2></div>
+                  <p>公開資料不登入就能看。登入後可以收藏學校、安排時程，並保存每一份申請文件的進度。</p>
+                </div>
+                <div class="pr-bento">
+                  <article class="pr-tile pr-tile-wide">
+                    <div class="pr-tile-head">
+                      <div><span class="pr-chip pr-chip-blue"><i data-lucide="search" aria-hidden="true"></i></span><h3>學校搜尋</h3><p>比較課程、語言門檻與生活費。</p></div>
+                      <a class="pr-link" href="#partners">開始搜尋<i data-lucide="arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="pr-mini-search" aria-hidden="true">
+                      <div class="pr-mini-bar"><span class="pr-mini-input"><i data-lucide="search"></i>搜尋國家、城市或學校</span><span class="pr-mini-filter">國家<i data-lucide="chevron-down"></i></span><span class="pr-mini-filter">語言門檻<i data-lucide="chevron-down"></i></span><span class="pr-mini-filter">學期<i data-lucide="chevron-down"></i></span></div>
+                      <div class="pr-mini-row"><span class="pr-ph"></span><span><strong>東北大學</strong><small>日本・仙台</small></span><span class="pr-tag pr-tag-ok">符合資格</span></div>
+                      <div class="pr-mini-row"><span class="pr-ph"></span><span><strong>關西大學</strong><small>日本・大阪</small></span><span class="pr-tag pr-tag-warn">需補語言成績</span></div>
+                      <div class="pr-mini-row"><span class="pr-ph"></span><span><strong>誠信女子大學</strong><small>韓國・首爾</small></span><span class="pr-tag pr-tag-ok">符合資格</span></div>
+                    </div>
+                  </article>
+                  <article class="pr-tile">
+                    <div><span class="pr-chip pr-chip-lilac"><i data-lucide="list-checks" aria-hidden="true"></i></span><h3>資格與志願</h3><p>資格初判供參考，正式結果以校方認定為準。</p></div>
+                    <div class="pr-mini-checks" aria-hidden="true"><small class="pr-sample">示意</small>
+                      <div class="ok"><i data-lucide="circle-check"></i><span>在學成績門檻</span><small>符合</small></div>
+                      <div class="ok"><i data-lucide="circle-check"></i><span>語言檢定成績</span><small>符合</small></div>
+                      <div class="warn"><i data-lucide="clock-alert"></i><span>年級與學分限制</span><small>待確認</small></div>
+                    </div>
+                  </article>
+                  <article class="pr-tile">
+                    <div><span class="pr-chip pr-chip-peach"><i data-lucide="calendar-range" aria-hidden="true"></i></span><h3>申請日曆</h3><p>掌握期限，把準備任務安排在出發之前。</p></div>
+                    <div class="pr-mini-week" id="home-week" aria-hidden="true"></div>
+                    <div class="pr-mini-banner" id="home-week-banner" aria-hidden="true"><i data-lucide="clock-alert"></i><span>校內甄選截止，還有 3 天</span></div>
+                  </article>
+                  <article class="pr-tile">
+                    <div><span class="pr-chip pr-chip-cyan"><i data-lucide="scan-search" aria-hidden="true"></i></span><h3>文件檢查</h3><p>找出漏填、字數與簽名風險。</p></div>
+                    <div class="pr-mini-doc" aria-hidden="true"><small class="pr-sample">示意</small>
+                      <span class="line" style="width:62%"></span><span class="line" style="width:88%"></span>
+                      <span class="flag warn"><i data-lucide="file-pen-line"></i>簽名欄尚未填寫</span>
+                      <span class="line" style="width:76%"></span>
+                      <span class="flag amber"><i data-lucide="clock-alert"></i>讀書計畫超過字數上限</span>
+                    </div>
+                  </article>
+                  <article class="pr-tile">
+                    <div><span class="pr-chip pr-chip-amber"><i data-lucide="calculator" aria-hidden="true"></i></span><h3>交換預算</h3><p>用同一幣別估算總成本，並保留學校官方生活費來源。</p></div>
+                    <div class="pr-mini-cost" aria-hidden="true"><small class="pr-sample">示意</small>
+                      <div class="bar"><span style="flex:4" class="c1"></span><span style="flex:3" class="c2"></span><span style="flex:2" class="c3"></span><span style="flex:1.4" class="c4"></span></div>
+                      <ul><li><i class="c1"></i>住宿</li><li><i class="c2"></i>生活費</li><li><i class="c3"></i>機票</li><li><i class="c4"></i>保險與簽證</li></ul>
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <section class="pr-section pr-map-band" aria-labelledby="home-band-title">
+                <div class="pr-map-band-copy">
+                  <span class="pr-kicker">合作校地圖</span>
+                  <h2 id="home-band-title">從臺灣出發，<br><span id="home-band-total-line">看見 1,085 個選擇。</span></h2>
+                  <p>依國家、城市與學期篩選合作校，每一間都附上官方網站與資料更新時間。</p>
+                  <dl class="pr-stats">
+                    <div><dt id="home-stat-schools">6</dt><dd>所臺灣大學</dd></div>
+                    <div><dt id="home-stat-partners">1,085</dt><dd>間合作校資料</dd></div>
+                    <div><dt>逐筆</dt><dd>附官方來源</dd></div>
+                  </dl>
+                  <a class="pr-band-button" href="#partners" data-home-open-map>打開合作校地圖<i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+                </div>
+                <div class="pr-map-band-visual"><div class="pr-map-host" data-home-map="band" role="img" aria-label="從臺灣出發的合作校分布地圖"></div></div>
+              </section>
+
+              <section class="pr-section pr-journey" aria-labelledby="home-journey-title">
+                <div class="pr-section-head">
+                  <div><span class="pr-kicker">申請指南</span><h2 id="home-journey-title">你的交換旅程，<br>一步一步來。</h2><p>從選校到出發，找到你現在需要的下一步。</p></div>
+                </div>
+                <ol class="pr-stages">
+                  <li><div class="pr-stage-rail"><span class="pr-stage-no">01</span><span class="pr-stage-line"></span></div><span class="pr-chip pr-chip-blue"><i data-lucide="compass" aria-hidden="true"></i></span><h3>找到想去的學校</h3><p>比較課程、語言門檻與生活費。</p><a class="pr-link" href="#partners">探索學校<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
+                  <li><div class="pr-stage-rail"><span class="pr-stage-no">02</span><span class="pr-stage-line"></span></div><span class="pr-chip pr-chip-lilac"><i data-lucide="notebook-pen" aria-hidden="true"></i></span><h3>準備校內甄選</h3><p>確認資格、排志願，再準備文件。</p><a class="pr-link" href="#eligibility" data-requires-home-school>查看資格與志願<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
+                  <li><div class="pr-stage-rail"><span class="pr-stage-no">03</span><span class="pr-stage-line"></span></div><span class="pr-chip pr-chip-peach"><i data-lucide="send" aria-hidden="true"></i></span><h3>完成合作校申請</h3><p>通過校內提名後，依合作校通知送件。</p><a class="pr-link" href="#application-center" data-requires-home-school>準備申請文件<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
+                  <li><div class="pr-stage-rail"><span class="pr-stage-no">04</span><span class="pr-stage-line last"></span></div><span class="pr-chip pr-chip-cyan"><i data-lucide="luggage" aria-hidden="true"></i></span><h3>安排出發與生活</h3><p>錄取後確認簽證、住宿與保險。</p><a class="pr-link" href="#budget" data-requires-home-school>估算生活預算<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
+                </ol>
+              </section>
+
+              <section class="pr-section pr-forum-preview" aria-labelledby="home-forum-title">
+                <div class="pr-section-head pr-section-head-row">
+                  <div><span class="pr-kicker">論壇</span><h2 id="home-forum-title">每一段旅程，都有人同行</h2></div>
+                  <a class="pr-link pr-link-lg" href="#forum">前往論壇<i data-lucide="arrow-right" aria-hidden="true"></i></a>
+                </div>
+                <div class="pr-boards">
+                  <a class="pr-board" href="#public-board"><span class="pr-board-icon pr-chip-blue"><i data-lucide="messages-square" aria-hidden="true"></i></span><span><small>公共看板</small><strong>公共留學板</strong><span>跨校申請、簽證、住宿與海外生活。</span></span></a>
+                  <a class="pr-board" href="#university-feed" data-home-school-feed><span class="pr-board-icon pr-chip-lilac"><i data-lucide="graduation-cap" aria-hidden="true"></i></span><span><small>校級看板</small><strong data-home-school-board>長庚大學板</strong><span id="home-board-school-description">長庚學生的交換申請資訊與討論。</span></span></a>
+                  <a class="pr-board" href="#language-school-board"><span class="pr-board-icon pr-chip-peach"><i data-lucide="languages" aria-hidden="true"></i></span><span><small>公共主題板</small><strong>語言學校板</strong><span>課程與海外生活交流；不提供申請代辦。</span></span></a>
+                </div>
+              </section>
+
+              <section class="pr-section pr-cta" aria-labelledby="home-cta-title">
+                <div class="pr-cta-copy">
+                  <span class="uw-mascot pr-cta-mascot" data-play data-tilt aria-hidden="true">
+                    <span class="uw-mascot-shadow"></span>
+                    <span class="uw-mascot-body">
+                      <span class="uw-mascot-tilt">
+                        <span class="uw-mascot-slab"></span>
+                        <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261014-runtime-loading-1" alt="" width="384" height="460" loading="lazy" decoding="async" draggable="false" />
+                        <span class="uw-mascot-sheen"></span>
+                        <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+                      </span>
+                    </span>
+                  </span>
+                  <div><h2 id="home-cta-title">你目前就讀哪一所台灣大學？</h2><p>點一下你的學校，我們就會顯示你真正能申請的學校、資格與申請時程。</p></div>
+                </div>
+                <div id="home-school-buttons" class="pr-school-buttons"></div>
+              </section>
+
+              <footer class="pr-footer">
+                <span class="pr-footer-brand"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="28" height="28" loading="lazy" decoding="async" /><strong>UniWay</strong><span>探索世界 · 完成申請</span></span>
+                <span class="pr-footer-links"><a href="#feedback">用戶評價</a><a href="/privacy">隱私權政策</a><a href="/terms">使用條款</a></span>
+              </footer>
             </div>
           </section>
+
           <section id="feedback" class="page-section feedback-page" data-university-page="feedback" aria-labelledby="feedback-title" hidden>
             <header class="feedback-intro">
               <div>
@@ -1221,7 +1351,8 @@
     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
     <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
     <script src="/static/react-aria-school-picker.js?v=20261014-aria-1" defer></script>
-    <script src="/static/app.js?v=20261014-aria-picker-1" defer></script>
+    <script src="/static/app.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-home.js?v=20261015-redesign-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>
   </body>
 </html>

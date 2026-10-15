@@ -1,4 +1,4 @@
-"""Home shows the application guide; the community feed moved to a 論壇 (forum) entry in the menu."""
+"""Home is the product-story landing; the community feed lives at 論壇 (#forum) in the menu."""
 from __future__ import annotations
 
 import re
@@ -30,11 +30,12 @@ def test_every_link_to_the_all_posts_feed_goes_to_the_forum() -> None:
     assert links and all('href="#forum"' in link for link in links), links
 
 
-def test_the_home_address_shows_the_guide_and_the_forum_address_the_feed() -> None:
+def test_the_home_address_shows_the_landing_and_the_forum_address_the_feed() -> None:
     assert '"#forum": "all"' in SCRIPT and '"#home": "all"' not in SCRIPT
     assert re.search(r'function isPublicExplorationRoute\(.*?\) \{\s*return hash === "#home"', SCRIPT, re.S)
-    assert 'const sectionId = hash === "#home" ? "guide"' in SCRIPT
-    assert 'UNIVERSITY_PAGE_TITLES = {\n  guide: "首頁"' in SCRIPT
+    assert 'const sectionId = hash === "#home" ? "home"' in SCRIPT
+    assert 'UNIVERSITY_PAGE_TITLES = {\n  home: "首頁"' in SCRIPT
+    assert re.search(r'<section id="home-landing"[^>]*data-university-page="home"', HTML)
 
 
 def test_old_links_to_the_guide_and_the_community_hub_still_work() -> None:

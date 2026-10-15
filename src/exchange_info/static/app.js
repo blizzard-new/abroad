@@ -245,7 +245,7 @@ const WORKFLOW_SOURCE_LABELS = {
   community_experience: "經驗補充",
 };
 const UNIVERSITY_PAGE_ROUTES = new Set([
-  "guide",
+  "home",
   "feedback",
   "overview",
   "advisor",
@@ -264,7 +264,7 @@ const UNIVERSITY_PAGE_ROUTES = new Set([
   "search",
 ]);
 const UNIVERSITY_PAGE_TITLES = {
-  guide: "首頁",
+  home: "首頁",
   feedback: "用戶評價",
   overview: "我的申請",
   advisor: "選校規劃",
@@ -1667,6 +1667,7 @@ function updateSchoolContext() {
   });
   populateGlobalCommunitySchools();
   renderBoardFollowControls();
+  window.UniWayHome?.render();
 }
 
 async function refreshHomeUniversityData() {
@@ -3484,6 +3485,7 @@ function renderAccountState() {
   updateDetailFavoriteButton();
   updateDetailApplicationButton();
   renderAccountWorkspaceSyncStatus();
+  window.UniWayHome?.render();
   initIcons();
 }
 
@@ -3967,6 +3969,7 @@ function renderDashboard() {
   updateFavoriteCounts();
   populateGlobalCommunitySchools();
   if (calendarSyncFeatureEnabled() && state.calendarSync?.enabled) syncCalendarEvents({ quiet: true });
+  window.UniWayHome?.render();
 
   ["#partner-table", "#period-list", "#scholarship-list", "#documents-list"].forEach((selector) => {
     $(selector).setAttribute("aria-busy", "false");
@@ -8242,6 +8245,7 @@ function updateFavoriteCounts() {
     navCount.textContent = String(count);
     navCount.hidden = count === 0;
   }
+  window.UniWayHome?.render();
 }
 
 function renderFavorites() {
@@ -12963,7 +12967,7 @@ function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
     return;
   }
 
-  const sectionId = hash === "#home" ? "guide" : hash.slice(1) || "overview";
+  const sectionId = hash === "#home" ? "home" : hash.slice(1) || "overview";
   showUniversityPage(UNIVERSITY_PAGE_ROUTES.has(sectionId) ? sectionId : "overview", {
     resetScroll,
     focusHeading: resetScroll,

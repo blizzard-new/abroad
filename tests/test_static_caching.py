@@ -45,11 +45,11 @@ def test_only_successful_static_answers_get_the_header_and_nothing_else_changes(
 def test_pictures_on_pages_nobody_has_opened_yet_wait_but_the_ones_everyone_sees_first_do_not() -> None:
     html = (STATIC / "index.html").read_text(encoding="utf-8")
     tags = [line for line in html.splitlines() if 'class="uw-mascot-picture"' in line]
-    assert len(tags) == 4, "the loading screen, the home page header, the user reviews page and the advisor card"
-    loading_screen, home_header, reviews_page, advisor_card = tags
+    assert len(tags) == 5, "the loading screen, the home hero, the home closing card, the user reviews page and the advisor card"
+    loading_screen, home_hero, home_closing, reviews_page, advisor_card = tags
     assert 'loading="lazy"' not in loading_screen and 'fetchpriority="high"' in loading_screen
-    assert 'loading="lazy"' not in home_header
-    assert 'loading="lazy"' in reviews_page and 'loading="lazy"' in advisor_card
+    assert 'loading="lazy"' not in home_hero
+    assert 'loading="lazy"' in home_closing and 'loading="lazy"' in reviews_page and 'loading="lazy"' in advisor_card
 
 
 def test_the_pictures_every_visitor_downloads_first_stay_small() -> None:

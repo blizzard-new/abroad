@@ -7,9 +7,13 @@
   --uw-radius: 20px; --uw-radius-lg: 28px; --uw-shadow-soft: 0 8px 24px #42627d0c;
   --uw-shadow: 0 18px 48px #42627d18; --ink-soft: var(--uw-muted);
   --glass-surface: #ffffffb8; --glass-strong: #fffffff0; --glass-edge: #ffffffed;
-  --glass-shadow: 0 16px 40px #39546d0d, inset 0 1px 0 #ffffffc2;
+  --glass-hi: #ffffffc2; --glass-shadow: 0 16px 40px #39546d0d, inset 0 1px 0 var(--glass-hi);
   --glass-blue: #deefff; --glass-lilac: #ece6ff; --glass-peach: #ffe9df;
   --glass-coral: #be4c48; --glass-coral-strong: #a83c39;
+  /* Platform redesign tokens (platform-redesign.css). */
+  --uw-page-bg: radial-gradient(ellipse at 15% 12%, #bcebf2 0, transparent 43%), radial-gradient(ellipse at 95% 8%, #fbe3d8 0, transparent 40%), radial-gradient(ellipse at 90% 82%, #d9d2f3 0, transparent 46%), radial-gradient(ellipse at 14% 92%, #d7f1e5 0, transparent 42%), #edf3f8;
+  --uw-hairline: #e3edf2; --uw-lilac-ink: #7051a2; --uw-amber-soft: #fff4d6; --uw-amber-ink: #8a5a00;
+  --uw-ph-a: #dbe7ee; --uw-ph-b: #e8f0f4;
   --journal-sheet: var(--glass-surface); --journal-sheet-image: none;
   --journal-sheet-edge: var(--glass-edge); --journal-sheet-shadow: var(--glass-shadow);
   --journal-coral: var(--glass-coral); --journal-coral-hover: var(--glass-coral-strong);
@@ -21,9 +25,12 @@ html[data-theme="dark"] {
   --uw-blue: #80d2ed; --uw-blue-strong: #aae4f4; --uw-blue-soft: #204659;
   --uw-cyan-soft: #23493f; --uw-line: #39536c; --uw-line-strong: #52718b;
   --glass-surface: #1a2d43de; --glass-strong: #1c3048f5; --glass-edge: #829eb336;
-  --glass-shadow: 0 16px 40px #00000021, inset 0 1px 0 #bbd3e412;
+  --glass-hi: #bbd3e412; --glass-shadow: 0 16px 40px #00000021, inset 0 1px 0 var(--glass-hi);
   --glass-blue: #223e5c; --glass-lilac: #353356; --glass-peach: #4b343a;
   --glass-coral: #ffb5a6; --glass-coral-strong: #ffd0c6;
+  --uw-page-bg: radial-gradient(ellipse at 12% 10%, #1b4354 0, transparent 45%), radial-gradient(ellipse at 96% 10%, #483347 0, transparent 40%), radial-gradient(ellipse at 90% 85%, #303550 0, transparent 40%), #101c2e;
+  --uw-hairline: #2c435a; --uw-lilac-ink: #d0baff; --uw-amber-soft: #4a3b1c; --uw-amber-ink: #f5d58a;
+  --uw-ph-a: #22384e; --uw-ph-b: #1c3045;
   --journal-sheet: var(--glass-surface); --journal-sheet-image: none;
   --journal-sheet-edge: var(--glass-edge); --journal-sheet-shadow: var(--glass-shadow);
   --journal-coral: var(--glass-coral); --journal-coral-hover: var(--glass-coral-strong);
@@ -32,11 +39,11 @@ html[data-theme="dark"] {
 html { background: var(--uw-page); }
 body.unified-shell { background: transparent; color: var(--uw-text); --nav-header-height: 86px; --nav-toolbar-height: 58px; }
 body.unified-shell::before, body.unified-shell.global-home-mode[data-global-feed="all"]::before {
-  background: radial-gradient(ellipse at 15% 12%, #bcebf2 0, transparent 43%), radial-gradient(ellipse at 95% 8%, #fbe3d8 0, transparent 40%), radial-gradient(ellipse at 90% 82%, #d9d2f3 0, transparent 46%), radial-gradient(ellipse at 14% 92%, #d7f1e5 0, transparent 42%), #edf3f8;
+  background: var(--uw-page-bg);
   filter: none;
 }
 html[data-theme="dark"] body.unified-shell::before, html[data-theme="dark"] body.unified-shell.global-home-mode[data-global-feed="all"]::before {
-  background: radial-gradient(ellipse at 12% 10%, #1b4354 0, transparent 45%), radial-gradient(ellipse at 96% 10%, #483347 0, transparent 40%), radial-gradient(ellipse at 90% 85%, #303550 0, transparent 40%), #101c2e; filter: none;
+  background: var(--uw-page-bg); filter: none;
 }
 body.unified-shell.global-home-mode[data-global-feed="all"] { --journal-sheet: var(--glass-surface); --journal-sheet-image: none; --journal-sheet-edge: var(--glass-edge); --journal-sheet-shadow: var(--glass-shadow); }
 body.unified-shell .workspace, body.unified-shell.school-detail-open .workspace { background: transparent; }
