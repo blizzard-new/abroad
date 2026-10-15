@@ -16,6 +16,7 @@
   let returnFocus = null;
   let feedController;
   let draftOwner = "";
+  let autoLoads = 0;
   let observer;
   let replyTarget = "";
   let threads = new Map();
@@ -134,15 +135,21 @@
     const active = saved().has(post.id);
     return `<button type="button" class="text-action discussion-save" data-discussion-save="${escape(post.id)}" ${api.context().accountId && cloudSaved === null ? "disabled" : ""} aria-pressed="${active}" aria-label="${active ? "取消收藏" : "收藏文章"}：${escape(post.title)}"><i data-lucide="bookmark" aria-hidden="true"></i><span>${active ? "已收藏" : "收藏"}</span></button>`;
   }
+  // A post may carry a 1-5 star rating; none is shown (and none is invented) when the field is absent.
+  function stars(post) {
+    const rating = Number(post.rating);
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5) return "";
+    return `<span class="pr-stars" role="img" aria-label="${rating} 顆星">${"★".repeat(rating)}${"☆".repeat(5 - rating)}</span>`;
+  }
   function card(post) {
     const url = new URL(location.href);
     url.searchParams.set("discussion", post.id);
-    return `<article class="community-post-card discussion-summary">
-      <div class="discussion-card-byline"><span class="discussion-board-label"><i data-lucide="messages-square" aria-hidden="true"></i>${escape(post.school_name)}</span><time datetime="${escape(post.created_at)}">${escape(api.date(post.created_at))}</time></div>
+    return `<article class="community-post-card discussion-summary" data-post-type="${escape(post.post_type || "discussion")}">
+      <div class="discussion-card-byline">${stars(post)}<span class="discussion-board-label"><i data-lucide="messages-square" aria-hidden="true"></i>${escape(post.school_name)}</span><time datetime="${escape(post.created_at)}">${escape(api.date(post.created_at))}</time></div>
       <h3><a href="${escape(url.pathname + url.search + url.hash)}" data-discussion-open="${escape(post.id)}">${escape(post.title)}</a></h3>
       <p class="discussion-excerpt">${escape(post.excerpt)}</p>
       <div class="discussion-context">${meta(post).map((label) => `<span>${escape(label)}</span>`).join("")}</div>
-      <div class="discussion-card-footer"><span class="discussion-card-author"><i data-lucide="user-round" aria-hidden="true"></i>${escape(post.display_name)}</span><div><a class="text-action" href="${escape(url.pathname + url.search + url.hash)}" data-discussion-open="${escape(post.id)}"><i data-lucide="message-circle" aria-hidden="true"></i><span>${post.comment_count} 則回覆</span></a>${bookmarkButton(post)}</div></div>
+      <div class="discussion-card-footer"><span class="discussion-card-author"><span class="pr-avatar" aria-hidden="true">${escape([...String(post.display_name || "?")][0])}</span>${escape(post.display_name)}</span><div><a class="text-action" href="${escape(url.pathname + url.search + url.hash)}" data-discussion-open="${escape(post.id)}"><i data-lucide="message-circle" aria-hidden="true"></i><span>${post.comment_count} 則回覆</span></a>${bookmarkButton(post)}</div></div>
     </article>`;
   }
   function message(title, text, retry = false) {
@@ -151,8 +158,10 @@
   function renderFeed() {
     const feed = $("#global-community-feed");
     if (!feed || !current) return;
-    feed.innerHTML = current.items.map(card).join("") || api.empty(current.filters, api.context());
-    $("#discussion-feed-status").textContent = current.items.length ? `已載入 ${current.items.length} 篇文章` : "";
+    const accepts = window.UniWayForum?.accepts || (() => true);
+    const items = current.items.filter(accepts);
+    feed.innerHTML = items.map(card).join("") || (current.cursor && autoLoads < 3 ? "" : api.empty(current.filters, api.context()));
+    $("#discussion-feed-status").textContent = items.length ? `已載入 ${items.length} 篇文章` : "";
     const more = $("#discussion-feed-more");
     delete more.dataset.reset;
     more.hidden = !current.cursor;
@@ -161,6 +170,8 @@
     api.icons();
     observer?.disconnect();
     if (current.cursor && observer) observer.observe(more);
+    // The 心得/提問 switch filters pages that were fetched unfiltered, so fetch a few more when too few match.
+    if (items.length < 8 && current.cursor && autoLoads < 3) { autoLoads += 1; moreFeed(); }
   }
   async function load({ force = false } = {}) {
     if (!api) return;
@@ -173,6 +184,7 @@
     }
     const selected = filters();
     const version = ++feedVersion;
+    autoLoads = 0;
     api.syncFilters(selected);
     $("#discussion-sort").value = selected.sort;
     $("#discussion-saved-filter").setAttribute("aria-pressed", String(selected.saved));
@@ -642,6 +654,7 @@
     });
   }
   window.UniWayCommunity = { init, load, updateFilters, syncDetail, clearDraft, clearAuthenticatedState,
+    rerender: () => { autoLoads = 0; renderFeed(); },
     refresh: () => { cache.clear(); detailId = ""; load({ force: true }); },
     restorePostDraft: () => restoreDraft($("#global-community-form"), "post") };
 })();

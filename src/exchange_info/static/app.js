@@ -4194,6 +4194,7 @@ function renderPersonalPlanSnapshot() {
   renderPlanningNextAction();
   window.UniWayJourney.render();
   window.UniWayApplicationWorkspace?.render();
+  window.UniWayTracker?.render();
   initIcons();
 }
 
@@ -5361,6 +5362,7 @@ function renderCalendarInsightsSummary(events = calendarDisplayEvents()) {
 }
 
 function renderApplicationCalendar() {
+  window.UniWayTracker?.render();
   const grid = $("#application-calendar-grid");
   if (!grid || !state.dashboard) return;
   ensureApplicationCalendarWorkflows();
@@ -10527,7 +10529,7 @@ function renderCommunityPageContext(isUniversityBoard = false) {
           ? PUBLIC_COMMUNITY_BOARD
           : following
             ? "我的追蹤"
-            : "最新留學討論";
+            : "學長姐心得";
   }
   if (description) {
     description.textContent = isUniversityBoard
@@ -10538,8 +10540,9 @@ function renderCommunityPageContext(isUniversityBoard = false) {
           ? "跨校討論交換申請、簽證、住宿與海外生活。"
           : following
             ? "集中查看你已追蹤學校看板的最新文章。"
-            : "查看跨校申請經驗、住宿、獎學金與海外生活討論。";
+            : "每一段旅程，都有人同行。";
   }
+  window.UniWayForum?.render();
 }
 
 function renderGlobalCommunityTopics() {

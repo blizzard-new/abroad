@@ -32,7 +32,7 @@ def test_home_search_navigation_school_switcher_and_responsive(page, live_server
     home_url = page.url
     expect(page.locator("#travel-home")).to_have_count(0)
     expect(page.locator("#school-switcher-label")).to_have_text("長庚大學")
-    expect(page.get_by_role("heading", level=1)).to_have_text("最新留學討論")
+    expect(page.get_by_role("heading", level=1)).to_have_text("學長姐心得")
     page.locator('.uniway-public-nav a[data-public-route="partners"]').click()
     page.locator("#partner-search").fill("日本")
     expect(page.locator("#partner-table .school-detail-trigger")).to_have_text(MEIJI)

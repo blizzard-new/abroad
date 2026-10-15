@@ -36,7 +36,7 @@ def test_home_is_the_guide_and_the_forum_is_one_click_away(page, live_server):
     nav.get_by_role("link", name="論壇", exact=True).click()
     expect(page).to_have_url(f"{live_server.base_url}/#forum")
     expect(page.locator("#community-hub")).to_be_visible()
-    expect(page.locator("#community-hub-title")).to_have_text("最新留學討論")
+    expect(page.locator("#community-hub-title")).to_have_text("學長姐心得")
     expect(page.locator("#guide")).to_be_hidden()
     expect(nav.locator('[data-public-route="forum"]')).to_have_attribute("aria-current", "page")
     expect(nav.locator('[data-public-route="home"]')).not_to_have_attribute("aria-current", "page")

@@ -123,7 +123,7 @@ def test_glass_navigation_and_responsive_routes(page, live_server, width):
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     enter_public_site(page, live_server, "forum")
-    expect(page.locator("#community-hub-title")).to_have_text("最新留學討論")
+    expect(page.locator("#community-hub-title")).to_have_text("學長姐心得")
     nav = page.locator(".uniway-public-nav")
     for theme in ["light", "dark"]:
         if theme == "dark":
