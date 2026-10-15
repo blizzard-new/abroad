@@ -2491,7 +2491,7 @@
     "新分支尚未整合PR24程式／資料與10/15平台資料，未執行重建、pytest或瀏覽器驗證。",
     "原有282校其他欄位依10/11查核結果與各自來源日期保留，本次未逐一重新訪問。",
     "Library先前401且父端已停止重試；交付使用GitHub固定提交及blob識別。",
-    "筑波CoE新PDF本輪web工具不可讀，僅收到父端SHA／25頁目視查核；PR內無PDF二進位原件，未獨立驗SHA。",
+    "筑波PDF已從Library讀到指定四頁文字與metadata；執行環境失敗，原始位元SHA尚未重算，PR中未附PDF二進位原件。",
     "亞亨3個獎學金及汀肯新參考頁：父端200，本輪2個404、2個逾時；兩次取件結果均保留。"
   ],
   "format_version": 1,
@@ -33794,7 +33794,7 @@
         "source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
         "applicability": "筑波大學通用海外校CoE程序指南；未標2027/28年度、新生效日或個人校區，非臺大甄選資格／名額／期限。",
         "checked_date": "2026-10-15",
-        "status": "parent_visual_review_received_pdf_independently_unavailable",
+        "status": "Library_original_four_page_texts_read_hash_not_recomputed",
         "full_current_cycle_requirement_verified": false,
         "home_selection_rule_changed": false,
         "pdf_pages": [
@@ -33807,26 +33807,30 @@
           {
             "pdf_page": 2,
             "text_zh": "申請期間結束後才審查；收到聯絡時再告知更正，在此之前不查看或回覆chat。",
-            "original_quote": null,
-            "quote_basis": "父端逐頁視覺查核中文轉述，原件未在本任務取得。"
+            "original_quote": "AFTER",
+            "quote_basis": "本輪Library指定頁文字直接讀取；未取得原始位元或檢視頁面像素。",
+            "independently_read_from_Library": true
           },
           {
             "pdf_page": 6,
             "text_zh": "羅馬字姓名明確要求移除空格及連字號。",
-            "original_quote": null,
-            "quote_basis": "父端逐頁視覺查核中文轉述，原件未在本任務取得。"
+            "original_quote": "spaces,\nhyphens",
+            "quote_basis": "本輪Library指定頁文字直接讀取；未取得原始位元或檢視頁面像素。",
+            "independently_read_from_Library": true
           },
           {
             "pdf_page": 24,
             "text_zh": "系統標示的Statement of Financial Support不需上傳，改上傳銀行開立的Certificate of Bank Account；曾在日本就學資料須用系統指定格式。",
-            "original_quote": "Statement of Financial Support; Certificate of Bank Account",
-            "quote_basis": "父端轉交原文件名；未在本任務獨立目視。"
+            "original_quote": "Certificate of Bank Account",
+            "quote_basis": "本輪Library指定頁文字直接讀取；未取得原始位元或檢視頁面像素。",
+            "independently_read_from_Library": true
           },
           {
             "pdf_page": 25,
             "text_zh": "仍有發現錯誤時傳送chat的一般說明，與p2的受理時間存在歧義；保留提醒，不自行解釋何時會回覆。",
-            "original_quote": null,
-            "quote_basis": "父端逐頁視覺查核中文轉述，原件未在本任務取得。"
+            "original_quote": "after submission",
+            "quote_basis": "本輪Library指定頁文字直接讀取；未取得原始位元或檢視頁面像素。",
+            "independently_read_from_Library": true
           }
         ],
         "raw_original_archived_in_this_PR": false,
@@ -33838,7 +33842,47 @@
         "new_financial_proof_requirement": false,
         "chat_timing_ambiguity_preserved": true,
         "financial_support_name_not_required_upload": true,
-        "new_effective_date_confirmed": false
+        "new_effective_date_confirmed": false,
+        "raw_original_available_in_library": true,
+        "library_reference": {
+          "library_file_id": "libfile_96954a090f8481918724c70e11501a13",
+          "file_id": "file_00000000316481f5861bd82c8bfb5fa7",
+          "file_name": "7c463d5e808c02b2-a1.pdf",
+          "mime_type": "application/pdf",
+          "size_bytes": 1863560,
+          "num_pages": 25,
+          "version_id": null,
+          "library_created_at": "2026-10-15T03:09:38.681043Z",
+          "library_modified_at": "2026-10-15T03:09:38.681043Z",
+          "read_pages": [
+            2,
+            6,
+            24,
+            25
+          ],
+          "read_method": "Library_parsed_page_text",
+          "page_image_pointers_returned": true,
+          "page_pixels_visually_inspected": false,
+          "whole_document_text_read": false,
+          "raw_bytes_materialized": false,
+          "raw_SHA256_recomputed": false,
+          "expected_sha256": "14d780564775aad32463ba0fe78c386812f650fb38d94f21309c1f54eed89e78",
+          "sha256_provided_by": "parent_original_download",
+          "official_source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
+          "official_download_checked_at": "2026-10-15T02:03:05.921862Z",
+          "download_link": "https://chatgpt.com/api/library/files/libfile_96954a090f8481918724c70e11501a13/download",
+          "metadata_matches_parent_pointer": true
+        },
+        "independent_page_text_read": true,
+        "independent_page_text_read_pages": [
+          2,
+          6,
+          24,
+          25
+        ],
+        "independent_page_pixels_inspected": false,
+        "independent_full_document_read": false,
+        "independent_pdf_body_read_definition": "是否取得原始PDF位元或讀取完整文件；四頁Library抽取文字另列，不能代替位元驗證。"
       },
       {
         "record_id": "20261015-tsukuba-coe-insurance_visa",
@@ -33850,7 +33894,7 @@
         "source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
         "applicability": "筑波大學通用海外校CoE程序指南；未標2027/28年度、新生效日或個人校區，非臺大甄選資格／名額／期限。",
         "checked_date": "2026-10-15",
-        "status": "parent_visual_review_received_pdf_independently_unavailable",
+        "status": "Library_original_four_page_texts_read_hash_not_recomputed",
         "full_current_cycle_requirement_verified": false,
         "home_selection_rule_changed": false,
         "pdf_pages": [
@@ -33863,26 +33907,30 @@
           {
             "pdf_page": 2,
             "text_zh": "申請期間結束後才審查；收到聯絡時再告知更正，在此之前不查看或回覆chat。",
-            "original_quote": null,
-            "quote_basis": "父端逐頁視覺查核中文轉述，原件未在本任務取得。"
+            "original_quote": "AFTER",
+            "quote_basis": "本輪Library指定頁文字直接讀取；未取得原始位元或檢視頁面像素。",
+            "independently_read_from_Library": true
           },
           {
             "pdf_page": 6,
             "text_zh": "羅馬字姓名明確要求移除空格及連字號。",
-            "original_quote": null,
-            "quote_basis": "父端逐頁視覺查核中文轉述，原件未在本任務取得。"
+            "original_quote": "spaces,\nhyphens",
+            "quote_basis": "本輪Library指定頁文字直接讀取；未取得原始位元或檢視頁面像素。",
+            "independently_read_from_Library": true
           },
           {
             "pdf_page": 24,
             "text_zh": "系統標示的Statement of Financial Support不需上傳，改上傳銀行開立的Certificate of Bank Account；曾在日本就學資料須用系統指定格式。",
-            "original_quote": "Statement of Financial Support; Certificate of Bank Account",
-            "quote_basis": "父端轉交原文件名；未在本任務獨立目視。"
+            "original_quote": "Certificate of Bank Account",
+            "quote_basis": "本輪Library指定頁文字直接讀取；未取得原始位元或檢視頁面像素。",
+            "independently_read_from_Library": true
           },
           {
             "pdf_page": 25,
             "text_zh": "仍有發現錯誤時傳送chat的一般說明，與p2的受理時間存在歧義；保留提醒，不自行解釋何時會回覆。",
-            "original_quote": null,
-            "quote_basis": "父端逐頁視覺查核中文轉述，原件未在本任務取得。"
+            "original_quote": "after submission",
+            "quote_basis": "本輪Library指定頁文字直接讀取；未取得原始位元或檢視頁面像素。",
+            "independently_read_from_Library": true
           }
         ],
         "raw_original_archived_in_this_PR": false,
@@ -33894,7 +33942,47 @@
         "new_financial_proof_requirement": false,
         "chat_timing_ambiguity_preserved": true,
         "financial_support_name_not_required_upload": true,
-        "new_effective_date_confirmed": false
+        "new_effective_date_confirmed": false,
+        "raw_original_available_in_library": true,
+        "library_reference": {
+          "library_file_id": "libfile_96954a090f8481918724c70e11501a13",
+          "file_id": "file_00000000316481f5861bd82c8bfb5fa7",
+          "file_name": "7c463d5e808c02b2-a1.pdf",
+          "mime_type": "application/pdf",
+          "size_bytes": 1863560,
+          "num_pages": 25,
+          "version_id": null,
+          "library_created_at": "2026-10-15T03:09:38.681043Z",
+          "library_modified_at": "2026-10-15T03:09:38.681043Z",
+          "read_pages": [
+            2,
+            6,
+            24,
+            25
+          ],
+          "read_method": "Library_parsed_page_text",
+          "page_image_pointers_returned": true,
+          "page_pixels_visually_inspected": false,
+          "whole_document_text_read": false,
+          "raw_bytes_materialized": false,
+          "raw_SHA256_recomputed": false,
+          "expected_sha256": "14d780564775aad32463ba0fe78c386812f650fb38d94f21309c1f54eed89e78",
+          "sha256_provided_by": "parent_original_download",
+          "official_source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
+          "official_download_checked_at": "2026-10-15T02:03:05.921862Z",
+          "download_link": "https://chatgpt.com/api/library/files/libfile_96954a090f8481918724c70e11501a13/download",
+          "metadata_matches_parent_pointer": true
+        },
+        "independent_page_text_read": true,
+        "independent_page_text_read_pages": [
+          2,
+          6,
+          24,
+          25
+        ],
+        "independent_page_pixels_inspected": false,
+        "independent_full_document_read": false,
+        "independent_pdf_body_read_definition": "是否取得原始PDF位元或讀取完整文件；四頁Library抽取文字另列，不能代替位元驗證。"
       }
     ],
     "parent_full_comparison": {
@@ -33934,7 +34022,7 @@
     },
     "tsukuba_pdf_receipt": {
       "url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
-      "parent_checked_at": "2026-10-15T02:03:05Z",
+      "parent_checked_at": "2026-10-15T02:03:05.921862Z",
       "parent_completed_read_at": "2026-10-15T02:03:26Z",
       "parent_http_status": 200,
       "parent_reported_pages": 25,
@@ -33949,12 +34037,51 @@
         25
       ],
       "independent_attempt_date": "2026-10-15",
-      "independent_attempt_result": "web_tool_not_accessible",
+      "independent_attempt_result": "Library_four_page_texts_read_binary_hash_not_recomputed",
       "independent_pdf_bytes_received": 0,
       "independent_raw_sha_verified": false,
       "archived_binary_in_PR": false,
       "no_bypass_attempted": true,
-      "original_required_followup": "待可用環境或父端提供的已授權原件管道取得該SHA的PDF；不可將metadata或文字轉述冒充PDF原件。"
+      "original_required_followup": "Library原件已可讀且識別／頁數／大小一致；仍待可用執行環境取得位元並重算SHA，PR未附PDF二進位原件。",
+      "initial_web_attempt_result": "web_tool_not_accessible",
+      "original_available_in_library": true,
+      "library_reference": {
+        "library_file_id": "libfile_96954a090f8481918724c70e11501a13",
+        "file_id": "file_00000000316481f5861bd82c8bfb5fa7",
+        "file_name": "7c463d5e808c02b2-a1.pdf",
+        "mime_type": "application/pdf",
+        "size_bytes": 1863560,
+        "num_pages": 25,
+        "version_id": null,
+        "library_created_at": "2026-10-15T03:09:38.681043Z",
+        "library_modified_at": "2026-10-15T03:09:38.681043Z",
+        "read_pages": [
+          2,
+          6,
+          24,
+          25
+        ],
+        "read_method": "Library_parsed_page_text",
+        "page_image_pointers_returned": true,
+        "page_pixels_visually_inspected": false,
+        "whole_document_text_read": false,
+        "raw_bytes_materialized": false,
+        "raw_SHA256_recomputed": false,
+        "expected_sha256": "14d780564775aad32463ba0fe78c386812f650fb38d94f21309c1f54eed89e78",
+        "sha256_provided_by": "parent_original_download",
+        "official_source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
+        "official_download_checked_at": "2026-10-15T02:03:05.921862Z",
+        "download_link": "https://chatgpt.com/api/library/files/libfile_96954a090f8481918724c70e11501a13/download",
+        "metadata_matches_parent_pointer": true
+      },
+      "independent_page_text_read": true,
+      "independent_page_text_read_pages": [
+        2,
+        6,
+        24,
+        25
+      ],
+      "independent_page_pixels_inspected": false
     },
     "reference_link_checks": [
       {
@@ -34035,7 +34162,69 @@
     "all_current_cycle_fields_verified": false,
     "code_integrated": false,
     "production_deployed": false,
-    "compiled_at_utc": "2026-10-15 03:02:15 UTC"
+    "compiled_at_utc": "2026-10-15 03:02:15 UTC",
+    "library_followup": {
+      "checked_date": "2026-10-15",
+      "receipt": {
+        "library_file_id": "libfile_96954a090f8481918724c70e11501a13",
+        "file_id": "file_00000000316481f5861bd82c8bfb5fa7",
+        "file_name": "7c463d5e808c02b2-a1.pdf",
+        "mime_type": "application/pdf",
+        "size_bytes": 1863560,
+        "num_pages": 25,
+        "version_id": null,
+        "library_created_at": "2026-10-15T03:09:38.681043Z",
+        "library_modified_at": "2026-10-15T03:09:38.681043Z",
+        "read_pages": [
+          2,
+          6,
+          24,
+          25
+        ],
+        "read_method": "Library_parsed_page_text",
+        "page_image_pointers_returned": true,
+        "page_pixels_visually_inspected": false,
+        "whole_document_text_read": false,
+        "raw_bytes_materialized": false,
+        "raw_SHA256_recomputed": false,
+        "expected_sha256": "14d780564775aad32463ba0fe78c386812f650fb38d94f21309c1f54eed89e78",
+        "sha256_provided_by": "parent_original_download",
+        "official_source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
+        "official_download_checked_at": "2026-10-15T02:03:05.921862Z",
+        "download_link": "https://chatgpt.com/api/library/files/libfile_96954a090f8481918724c70e11501a13/download",
+        "metadata_matches_parent_pointer": true
+      },
+      "status": "Library_original_accessible_four_page_texts_read_SHA_not_recomputed"
+    }
   },
-  "supplement_compiled_at_utc": "2026-10-15 03:02:15 UTC"
+  "supplement_compiled_at_utc": "2026-10-15 03:02:15 UTC",
+  "tsukuba_library_original_reference": {
+    "library_file_id": "libfile_96954a090f8481918724c70e11501a13",
+    "file_id": "file_00000000316481f5861bd82c8bfb5fa7",
+    "file_name": "7c463d5e808c02b2-a1.pdf",
+    "mime_type": "application/pdf",
+    "size_bytes": 1863560,
+    "num_pages": 25,
+    "version_id": null,
+    "library_created_at": "2026-10-15T03:09:38.681043Z",
+    "library_modified_at": "2026-10-15T03:09:38.681043Z",
+    "read_pages": [
+      2,
+      6,
+      24,
+      25
+    ],
+    "read_method": "Library_parsed_page_text",
+    "page_image_pointers_returned": true,
+    "page_pixels_visually_inspected": false,
+    "whole_document_text_read": false,
+    "raw_bytes_materialized": false,
+    "raw_SHA256_recomputed": false,
+    "expected_sha256": "14d780564775aad32463ba0fe78c386812f650fb38d94f21309c1f54eed89e78",
+    "sha256_provided_by": "parent_original_download",
+    "official_source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
+    "official_download_checked_at": "2026-10-15T02:03:05.921862Z",
+    "download_link": "https://chatgpt.com/api/library/files/libfile_96954a090f8481918724c70e11501a13/download",
+    "metadata_matches_parent_pointer": true
+  }
 }

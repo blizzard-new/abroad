@@ -83,7 +83,7 @@
   },
   "tsukuba_pdf_receipt": {
     "url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
-    "parent_checked_at": "2026-10-15T02:03:05Z",
+    "parent_checked_at": "2026-10-15T02:03:05.921862Z",
     "parent_completed_read_at": "2026-10-15T02:03:26Z",
     "parent_http_status": 200,
     "parent_reported_pages": 25,
@@ -98,12 +98,51 @@
       25
     ],
     "independent_attempt_date": "2026-10-15",
-    "independent_attempt_result": "web_tool_not_accessible",
+    "independent_attempt_result": "Library_four_page_texts_read_binary_hash_not_recomputed",
     "independent_pdf_bytes_received": 0,
     "independent_raw_sha_verified": false,
     "archived_binary_in_PR": false,
     "no_bypass_attempted": true,
-    "original_required_followup": "待可用環境或父端提供的已授權原件管道取得該SHA的PDF；不可將metadata或文字轉述冒充PDF原件。"
+    "original_required_followup": "Library原件已可讀且識別／頁數／大小一致；仍待可用執行環境取得位元並重算SHA，PR未附PDF二進位原件。",
+    "initial_web_attempt_result": "web_tool_not_accessible",
+    "original_available_in_library": true,
+    "library_reference": {
+      "library_file_id": "libfile_96954a090f8481918724c70e11501a13",
+      "file_id": "file_00000000316481f5861bd82c8bfb5fa7",
+      "file_name": "7c463d5e808c02b2-a1.pdf",
+      "mime_type": "application/pdf",
+      "size_bytes": 1863560,
+      "num_pages": 25,
+      "version_id": null,
+      "library_created_at": "2026-10-15T03:09:38.681043Z",
+      "library_modified_at": "2026-10-15T03:09:38.681043Z",
+      "read_pages": [
+        2,
+        6,
+        24,
+        25
+      ],
+      "read_method": "Library_parsed_page_text",
+      "page_image_pointers_returned": true,
+      "page_pixels_visually_inspected": false,
+      "whole_document_text_read": false,
+      "raw_bytes_materialized": false,
+      "raw_SHA256_recomputed": false,
+      "expected_sha256": "14d780564775aad32463ba0fe78c386812f650fb38d94f21309c1f54eed89e78",
+      "sha256_provided_by": "parent_original_download",
+      "official_source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
+      "official_download_checked_at": "2026-10-15T02:03:05.921862Z",
+      "download_link": "https://chatgpt.com/api/library/files/libfile_96954a090f8481918724c70e11501a13/download",
+      "metadata_matches_parent_pointer": true
+    },
+    "independent_page_text_read": true,
+    "independent_page_text_read_pages": [
+      2,
+      6,
+      24,
+      25
+    ],
+    "independent_page_pixels_inspected": false
   },
   "reference_link_checks": [
     {
@@ -170,5 +209,38 @@
       "independent_raw_html_archived": false,
       "authoritative_withdrawal_confirmed": false
     }
-  ]
+  ],
+  "tsukuba_library_followup": {
+    "checked_date": "2026-10-15",
+    "receipt": {
+      "library_file_id": "libfile_96954a090f8481918724c70e11501a13",
+      "file_id": "file_00000000316481f5861bd82c8bfb5fa7",
+      "file_name": "7c463d5e808c02b2-a1.pdf",
+      "mime_type": "application/pdf",
+      "size_bytes": 1863560,
+      "num_pages": 25,
+      "version_id": null,
+      "library_created_at": "2026-10-15T03:09:38.681043Z",
+      "library_modified_at": "2026-10-15T03:09:38.681043Z",
+      "read_pages": [
+        2,
+        6,
+        24,
+        25
+      ],
+      "read_method": "Library_parsed_page_text",
+      "page_image_pointers_returned": true,
+      "page_pixels_visually_inspected": false,
+      "whole_document_text_read": false,
+      "raw_bytes_materialized": false,
+      "raw_SHA256_recomputed": false,
+      "expected_sha256": "14d780564775aad32463ba0fe78c386812f650fb38d94f21309c1f54eed89e78",
+      "sha256_provided_by": "parent_original_download",
+      "official_source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/coe-web-application-system-guide.pdf",
+      "official_download_checked_at": "2026-10-15T02:03:05.921862Z",
+      "download_link": "https://chatgpt.com/api/library/files/libfile_96954a090f8481918724c70e11501a13/download",
+      "metadata_matches_parent_pointer": true
+    },
+    "status": "Library_original_accessible_four_page_texts_read_SHA_not_recomputed"
+  }
 }

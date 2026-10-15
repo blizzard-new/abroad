@@ -41,6 +41,17 @@ function verifyCandidateFiles(contents, xlsxBytes, previousContents) {
   check(s.tsukuba_pdf_receipt.new_sha256 === "14d780564775aad32463ba0fe78c386812f650fb38d94f21309c1f54eed89e78"
     && s.tsukuba_pdf_receipt.independent_raw_sha_verified === false
     && s.tsukuba_pdf_receipt.archived_binary_in_PR === false, "PDF receipt versus original");
+  const library = s.tsukuba_pdf_receipt.library_reference;
+  check(s.tsukuba_pdf_receipt.original_available_in_library === true
+    && library.library_file_id === "libfile_96954a090f8481918724c70e11501a13"
+    && library.file_id === "file_00000000316481f5861bd82c8bfb5fa7"
+    && library.file_name === "7c463d5e808c02b2-a1.pdf"
+    && library.size_bytes === 1863560 && library.num_pages === 25
+    && JSON.stringify(library.read_pages) === "[2,6,24,25]"
+    && library.raw_SHA256_recomputed === false && library.raw_bytes_materialized === false
+    && library.page_pixels_visually_inspected === false, "Library identity/content versus byte verification");
+  check(ts.every(r => r.independent_page_text_read === true
+    && JSON.stringify(r.independent_page_text_read_pages) === "[2,6,24,25]"), "four Library page texts");
   check(s.parent_full_comparison.detailed_pages.identical_bytes + s.parent_full_comparison.detailed_pages.changed === 288, "parent detail count");
   const a = s.parent_full_comparison.tracked_attachments;
   check(a.identical + a.changed + a.unknown === 92 && a.unknown === 6
@@ -116,7 +127,7 @@ function verifyCandidateFiles(contents, xlsxBytes, previousContents) {
     positive:20,blank:261,zero:7,academic_year_slots:43,maximum_persons:81,supplement_records:13,
     supplement_schools:7,changed_field_pairs:10,baseline_and_reply_cells_unchanged:unchangedBaseCells,
     excel_sheets:6,zip_parts:10,all_zip_crc_passed:true,excel_formula_cells:0,
-    pdf_binary_independently_verified:false,runtime_tests_run:false};
+    Library_original_metadata_and_four_page_texts_read:true,pdf_binary_independently_verified:false,runtime_tests_run:false};
 }
 if(typeof module !== "undefined") module.exports={verifyCandidateFiles};
 if(typeof require !== "undefined" && require.main === module) {
