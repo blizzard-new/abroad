@@ -179,7 +179,8 @@ def test_departmental_reference_partners_are_explicitly_not_central_open() -> No
         "雷恩商學院 Rennes School of Business",
     }
     assert all(row.availability_status == "departmental_reference" for row in partners)
-    assert all(row.source_url.startswith("https://") for row in partners)
+    assert all(row.source_url.startswith("https://www.cgu.edu.tw/") for row in partners)
+    assert all("id2.cgu.edu.tw" not in row.source_url for row in partners)
     assert all("中央" in (row.availability_note or "") for row in partners)
     assert all("確認" in (row.availability_note or "") for row in partners)
 
@@ -311,3 +312,10 @@ def test_repurposed_teep_page_is_not_shown_as_teep_rules() -> None:
     assert "TEEP 研究實習" in titles("重要規定\nTEEP期間不得從事與實習無關之有酬勞動")
     assert "TEEP 研究實習" not in titles("住宿查詢與繳費\n短期生住宿查詢")
     assert "TEEP 注意事項" not in titles("住宿查詢與繳費\n短期生住宿查詢")
+    inbound_teep = (
+        "教育部TEEP「全球優秀青年學子來臺蹲點計畫」\n"
+        "歡迎在學外國學生或僑生透過此計畫申請來臺短期研究或實習。"
+    )
+    assert "TEEP 研究實習" not in titles(inbound_teep)
+    assert "TEEP 注意事項" not in titles(inbound_teep)
+

@@ -57,9 +57,7 @@ CGU_MANAGEMENT_2026_REFERENCE_URL = (
     "https://www.cgu.edu.tw/Uploads/upload/"
     "f99d6e28-4248-41e5-98f7-5d89d81161e9.pdf"
 )
-CGU_MANAGEMENT_RENNES_REFERENCE_URL = (
-    "https://id2.cgu.edu.tw/var/file/90/1090/img/2862/903125506.pdf"
-)
+CGU_MANAGEMENT_RENNES_REFERENCE_URL = CGU_MANAGEMENT_2026_REFERENCE_URL
 CGU_BASE_URL = "https://www.cgu.edu.tw"
 PARTNER_WEBSITE_CORRECTIONS = {
     school_identity_key("波蘭華沙醫學大學 Medical University of Warsaw"): (
@@ -142,9 +140,13 @@ def build_student_dashboard(
     workflow = _page_containing(page_map, "15680")
     short_courses = _page_containing(page_map, "15717")
     teep = _page_containing(page_map, "19081")
-    if teep is not None and "TEEP" not in teep.text:
-        # The site reused this node for other content (short-stay housing in Oct 2026).
-        # Unrelated text must not be shown as TEEP rules.
+    if teep is not None and (
+        "TEEP" not in teep.text
+        or "全球優秀青年學子來臺蹲點計畫" in teep.text
+        or "來臺短期研究或實習" in teep.text
+    ):
+        # The site reused this node for other content (short-stay housing in Oct 2026)
+        # or inbound-only TEEP recruitment for foreign students coming to Taiwan.
         teep = None
     subsidy_credit = _page_containing(page_map, "15724")
     subsidy_low_income = _page_containing(page_map, "15725")
