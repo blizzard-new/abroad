@@ -1283,7 +1283,7 @@ def test_authenticated_plan_notifications_and_progress_sync_across_devices(
     expect(page.locator("#notification-button .rail-action-label")).to_be_visible()
     expect(page.locator("#notification-button .rail-action-label")).to_have_text("通知中心")
     page.evaluate("document.activeElement?.blur()")
-    page.locator("#guide-title").hover()
+    page.locator("#home-landing-title").hover()
     expect(rail).to_have_css("width", "76px")
     Path("output/notification-center").mkdir(parents=True, exist_ok=True)
     page.screenshot(

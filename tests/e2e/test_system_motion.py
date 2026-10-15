@@ -72,15 +72,19 @@ def test_dialog_menu_details_tabs_and_mobile_layout(page, live_server, width):
     page.locator('.uniway-public-nav a[href="#forum"]').click()
     open_navigation(page)
     page.locator('.uniway-public-nav a[href="#home"]').click()
-    expect(page.locator("#guide").get_by_role("heading", level=1)).to_be_focused()
-    summary = page.locator(".guide-faq summary")
+    expect(page.locator("#home-landing").get_by_role("heading", level=1)).to_be_focused()
+    # Any <details> shares the same open/close motion; a school card's highlights are the one on a public page.
+    open_navigation(page)
+    page.locator('.uniway-public-nav a[href="#partners"]').click()
+    card = page.locator("#partner-table details.partner-card").first
+    summary = card.locator("summary")
     summary.focus()
     page.keyboard.press("Enter")
-    expect(page.locator(".guide-faq")).to_have_attribute("open", "")
-    expect(page.locator(".guide-faq p")).to_be_visible()
+    expect(card).to_have_attribute("open", "")
+    expect(card.locator(".partner-card-content")).to_be_visible()
     page.keyboard.press("Enter")
-    expect(page.locator(".guide-faq")).not_to_have_attribute("open", "")
-    page.wait_for_function("() => !document.querySelector('.guide-faq').getAnimations({subtree:true}).some(a => a.playState === 'running')")
+    expect(card).not_to_have_attribute("open", "")
+    page.wait_for_function("() => !document.querySelector('#partner-table details.partner-card').getAnimations({subtree:true}).some(a => a.playState === 'running')")
     expect(summary).to_be_focused()
     # Closing the tools menu must immediately release the page, including Escape.
     open_navigation(page)
@@ -120,10 +124,14 @@ def test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion(page
 def test_reduced_motion_live_change_and_missing_runtime_are_usable(page, live_server):
     page.add_init_script(INSTRUMENT)
     page.emulate_media(reduced_motion="reduce")
-    enter_public_site(page, live_server)
-    page.locator(".guide-faq summary").click()
+    setup_catalog(page)
+    enter_public_site(page, live_server, "partners")
+    card = page.locator("#partner-table details.partner-card").first
+    card.locator("summary").click()
     assert motions(page) == []
-    assert page.locator(".guide-faq").evaluate("el => getComputedStyle(el, '::details-content').transitionDuration") == "0s"
+    assert card.evaluate("el => getComputedStyle(el, '::details-content').transitionDuration") == "0s"
+    open_navigation(page)
+    page.locator('.uniway-public-nav a[href="#home"]').click()
     page.emulate_media(reduced_motion="no-preference")
     open_navigation(page)
     page.locator('.uniway-public-nav a[href="#forum"]').click()
@@ -141,7 +149,7 @@ def test_reduced_motion_live_change_and_missing_runtime_are_usable(page, live_se
     page.reload()
     open_navigation(page)
     page.locator('.uniway-public-nav a[href="#home"]').click()
-    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#home-landing")).to_be_visible()
     # Move out of the expanding rail before using a page control behind it.
     page.mouse.move(1000, 24)
     expect(page.locator("#glass-navigation")).to_have_css("width", "76px")

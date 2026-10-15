@@ -499,6 +499,13 @@ def enter_public_site(page: Page, live_server: LiveServer, route: str = "home") 
     page.locator("#boot-splash").wait_for(state="hidden", timeout=60_000)
 
 
+def open_partner_filters(page: Page) -> None:
+    """On a phone the filter drawer starts closed (a 篩選 pill opens it); open it before using the controls inside."""
+    drawer = page.locator("#partners details.pr-facets")
+    if drawer.get_attribute("open") is None:
+        drawer.locator(":scope > summary").click()
+
+
 def open_navigation(page: Page) -> None:
     toggle = page.locator("#glass-menu-toggle")
     if toggle.is_visible() and toggle.get_attribute("aria-expanded") == "false":

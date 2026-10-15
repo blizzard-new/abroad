@@ -6,7 +6,7 @@ from uuid import uuid4
 import pytest
 from playwright.sync_api import expect
 
-from .conftest import enter_public_site, login_through_web, open_navigation
+from .conftest import enter_public_site, login_through_web, open_navigation, open_partner_filters
 from .test_discussion_reader import seed, search
 from .test_partner_globe import INSTRUMENT, LINCOLN
 
@@ -83,6 +83,7 @@ def test_verified_catalog_search_map_and_saved_school(page, live_server, width):
     page.locator('.uniway-public-nav [data-public-route="partners"]').click()
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("Lincoln")
+    open_partner_filters(page)
     page.locator("#country-filter").select_option("紐西蘭")
     expect(page.locator("#partner-table .pr-school-card")).to_have_count(1)
     if width < 700:
@@ -141,7 +142,7 @@ def test_glass_navigation_and_responsive_routes(page, live_server, width):
             else:
                 open_navigation(page)
                 nav.locator(f'[data-public-route="{route}"]').click()
-            page_id = {"forum": "#community-hub", "public-board": "#community-hub", "home": "#guide"}.get(route, f"#{route}")
+            page_id = {"forum": "#community-hub", "public-board": "#community-hub", "home": "#home-landing"}.get(route, f"#{route}")
             expect(page.locator(page_id)).to_be_visible()
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), (width, theme, route)
             if route in ("forum", "home"):

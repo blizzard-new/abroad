@@ -302,7 +302,7 @@
     }
     // Account dialogs use the existing app surface; avoid covering them with
     // a native top-layer dialog while authentication requests are settling.
-    if (!$("#auth-dialog").hidden || !$("#profile-dialog").hidden || $("#discussion-moderation").open) return;
+    if (!$("#auth-dialog").hidden || $("#discussion-moderation").open) return;
     const permissionKey = api.context().permissionKey;
     if (id === detailId && permissionKey === detailPermissionKey && dialog.open) return;
     detailPermissionKey = permissionKey;

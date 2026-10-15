@@ -145,7 +145,7 @@ def test_the_region_filter_fits_on_a_phone_and_on_a_desktop(page, live_server):
         panel = page.locator(".filter-panel")
         box = panel.bounding_box()
         assert box["x"] >= 0 and box["x"] + box["width"] <= width + 1, (width, box)
-        labels = page.locator(".filter-panel > label")
+        labels = page.locator(".filter-panel .pr-facet-selects > label")
         assert labels.count() == 5
         for index in range(5):
             item = labels.nth(index).bounding_box()

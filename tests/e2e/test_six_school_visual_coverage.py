@@ -13,7 +13,7 @@ from playwright.sync_api import expect
 from exchange_info.api import create_app
 from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
 from scripts.audit_visual_coverage import marker_available
-from .conftest import LiveServer, open_navigation
+from .conftest import LiveServer, open_navigation, open_partner_filters
 from .test_partner_globe import INSTRUMENT
 
 ARTIFACTS = Path(os.environ.get("VISUAL_EVIDENCE_DIR", "output/six-school-visual-coverage"))
@@ -104,9 +104,11 @@ def test_real_six_school_map_home_gaps_filters_photos_and_detail(page, visual_se
         expect(page.locator("#school-detail-title")).to_have_text(selected["school_name"])
         page.go_back(wait_until="domcontentloaded")
         ready(page)
+        open_partner_filters(page)
         page.locator("#clear-partner-filters").click(no_wait_after=True)
         ready(page)
     country = snapshot["partners"][0]["country"]
+    open_partner_filters(page)
     page.locator("#country-filter").select_option(country)
     ready(page)
     filtered = assert_same_filtered_dataset(page)
@@ -115,6 +117,7 @@ def test_real_six_school_map_home_gaps_filters_photos_and_detail(page, visual_se
     page.locator('[data-partner-view="list"]').click(no_wait_after=True)
     expect(page.locator("#country-filter")).to_have_value(country)
     expect(page.locator("#partner-table")).to_be_visible()
+    open_partner_filters(page)
     page.locator("#clear-partner-filters").click(no_wait_after=True)
     photos = page.evaluate("state.dashboard.partner_universities.map(p=>({school_name:p.school_name,image_status:p.image_status,image_url:p.image_url}))")
     for status in ("verified", "needs_review", "missing"):

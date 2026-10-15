@@ -324,7 +324,6 @@ function initDiscovery() {
     if ("openLife" in d) activateDetailTab("detail-life", {focus:true});
     if (d.previewRetry) loadDiscoveryPreview(partnerByName(d.previewRetry));
     if (d.recentSchool) {
-      if (!$("#profile-dialog").hidden) closeProfileDialog();
       if (!$("#auth-dialog").hidden) closeAuthDialog();
       const item = partnerByName(d.recentSchool); if (item) openUniversityDetail(item); else announce("此校目前未列於這所母校的合作名單。", "info");
     }

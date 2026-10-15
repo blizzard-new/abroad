@@ -200,13 +200,13 @@ def test_account_save_timeout_releases_the_dialog_without_retrying(page, live_se
 
 def test_cancelling_personalized_entry_clears_the_deferred_route(page, live_server):
     enter_public_site(page, live_server)
-    page.locator('#guide .guide-action[href="#eligibility"]').click()
+    page.locator('#home-landing .pr-link[href="#eligibility"]').click()
     expect(page.locator("#school-onboarding")).to_be_visible()
     page.get_by_role("button", name="關閉學校選擇").click()
-    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#home-landing")).to_be_visible()
     expect(page.locator("#school-switcher-label")).to_have_text("選擇就讀學校")
     page.locator("#school-switcher").click()
     page.locator(f'#school-options [data-home-school="{NTPU}"]').click()
     expect(page.locator("#school-switcher-label")).to_have_text(NTPU)
-    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#home-landing")).to_be_visible()
     assert page.evaluate("location.hash") == "#home"
