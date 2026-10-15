@@ -53,7 +53,7 @@
 | `public.exchange_maint_releases` | `2` | 維護子系統發布版本紀錄（`rel_init_ntu_116_baseline`、`rel_eb82a50f3641`） | 正確 |
 | `public.exchange_maint_release_members` | `1,958` | 發布版本所包含之實體與版本映射 | 正確 |
 | `public.exchange_maint_publication_head` | `1` | 當前生效之發布指標（Singleton Head Lock） | 正確 |
-| `public.exchange_maint_change_sets` | `0` (DB) / `2` (App 記憶體預設注入) | 待審核之資料變更集（`routes.py` 原於啟動時無條件在記憶體注入 2 筆虛構臺大截止日變更集） | 已於 **PR #33** 關閉預設注入並修正展示資料與新增 DB 清理 Migration |
+| `public.exchange_maint_change_sets` | `0` (正式 DB) / `2` (App 本地 Store 空時自動產生) | 待審核之資料變更集（`routes.py` 原於本地 `store.change_sets` 為空時自動產生 2 筆展示用名額/期限變更集，且標記為 `SOURCE_CHANGE`「官方來源更新」；目前僅程式碼有此風險，正式站 DB 為 `0` 筆尚未受影響） | 已於 **PR #33** 關閉預設注入、修正展示資料並新增防護性 DB 清理 Migration |
 | 其餘 22 張 `exchange_maint_*` 表 | `0` | 包含 `change_items`、`review_decisions`、`snapshots`、`content_blobs`、`fetch_attempts`、`extraction_runs`、`evidence`、`field_assertions`、`jobs`、`reports`、`experiences` 等 | 結構與 RLS 權限完整（共 39 個 SQL Migrations 通過 `pglast` 驗證） |
 
 ### 3. 認證與儲存資料表（`auth` & `storage` Schema）
@@ -72,8 +72,8 @@
 | 模組路徑 | 適用學校 | 負責組裝之核心資料範圍 |
 |---|---|---|
 | [`src/exchange_info/university_registry.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/university_registry.py) | 全平台 6 校 (`cgu`, `ntpu`, `ntu`, `ncu`, `ccu`, `tku`) | 學校中英文名稱、官方網站 URL、所屬學院清單（`colleges`）、最低學業成績門檻（`academic_score_minimum`）、姊妹校數量提示（`partner_count_hint`）、資料覆蓋說明（`coverage_note`） |
-| [`src/exchange_info/student_view.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/student_view.py) & [`cgu_catalogue.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/cgu_catalogue.py) | 長庚大學 (`cgu`) | 長庚 115 學年度交換簡章時程、申請資格、語言門檻、獎學金、應繳文件，以及 77 筆交換與雙聯目錄（解析自 2 份官方 Google Sheets gviz JSON） |
-| [`src/exchange_info/ntpu_student_view.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/ntpu_student_view.py) | 國立臺北大學 (`ntpu`) | 北大 116 學年度第 1、2 學期甄選時程、75 分/前 50% 資格、語言門檻、獎學金，以及即時解析 116 英語組（99 校）、日語組（49 校）、中文組（21 校）與 115 歷史參考（37 校）共 206 校 PDF 表格 |
+| [`src/exchange_info/student_view.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/student_view.py) & [`cgu_catalogue.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/cgu_catalogue.py) | 長庚大學 (`cgu`) | 長庚 115 學年度交換簡章時程、申請資格、語言門檻、獎學金、應繳文件，以及 77 筆交換與雙聯目錄（75 校級開放 + 2 院級參考，解析自 2 份官方 Google Sheets gviz JSON） |
+| [`src/exchange_info/ntpu_student_view.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/ntpu_student_view.py) | 國立臺北大學 (`ntpu`) | 北大 116 學年度第 1、2 學期甄選時程（116-1 截止 `2026-10-23 17:00`）、75 分/前 50% 資格、語言門檻、獎學金，以及即時解析 116 英語組（133 校）、日語組（16 校）、中文組（21 校）（扣除英日重複之武藏野大學 1 校共 169 校當期開放）與 115 歷史參考（37 校）共 206 校 PDF 表格 |
 | [`src/exchange_info/ntu_student_view.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/ntu_student_view.py) & [`ntu_current_updates.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/ntu_current_updates.py) | 國立臺灣大學 (`ntu`) | 臺大 116-1 甄選時程（2026/11/2–11/9 16:00）、GPA 2.70 資格、語言門檻、獎學金、應繳文件及 288 所姊妹校名額與細目頁注意事項 |
 | [`src/exchange_info/ncu_student_view.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/ncu_student_view.py) & [`scripts/build_ncu_catalog.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/scripts/build_ncu_catalog.py) | 國立中央大學 (`ncu`) | 中央 116-1 申請時程（2026/11/16–12/4 12:00）、大學部 60 分/研究所 70 分資格、語言門檻、計點公式、表件條件及 214 所去重姊妹校（116-1 官方列表 215 筆 + 115 參考 216 筆） |
 | [`src/exchange_info/ccu_student_view.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/ccu_student_view.py) & [`ccu_profile.py`](file:///C:/Users/Administrator/.gemini/antigravity/scratch/abroad-pr/src/exchange_info/ccu_profile.py) | 國立中正大學 (`ccu`) | 中正 2027 春季班三梯次時程、平均 70 分且 GPA 3.0 門檻、CEFR B2 語言要求、獎學金及 104 所姊妹校（52 校當期開放、49 校歷史參考、3 校未公布） |
@@ -88,7 +88,7 @@
 | | `src/exchange_info/official_data/cgu/application_workflows.jsonl` | JSONL | `154` | `154` | 77 校 × 秋/春二梯次申請工作流 |
 | | `src/exchange_info/official_data/cgu/destination_profiles.jsonl` | JSONL | `77` | `77` | 77 校目的地生活與住宿指南 |
 | **北大 (`ntpu`)** | `src/exchange_info/official_data/ntpu/116-guidelines-zh.pdf` & `en.pdf` | PDF | `2` 份 | `2` 份 | 116 學年度中英文甄選簡章原始 PDF |
-| | `src/exchange_info/official_data/ntpu/116-{english,japanese,chinese}-partners.pdf` | PDF | `3` 份 | `3` 份 | 116 學年度英（99 校）、日（49 校）、中（21 校）姊妹校一覽表 PDF |
+| | `src/exchange_info/official_data/ntpu/116-{english,japanese,chinese}-partners.pdf` | PDF | `3` 份 | `3` 份 | 116 學年度英（133 校）、日（16 校）、中（21 校）姊妹校一覽表 PDF（扣除英日重複之武藏野大學 1 校共 169 校當期開放） |
 | | `src/exchange_info/official_data/ntpu/destination_profiles.jsonl` | JSONL | `206` | `206` | 169 校 116 當期開放 + 37 校 115 參考（PR #30 修正 22 校誤吸校名） |
 | | `src/exchange_info/official_data/ntpu/application_workflows.jsonl` | JSONL | `409` | `409` | 115 與 116 學年度申請工作流（PR #30 修正校名） |
 | | `src/exchange_info/official_data/ntpu/partner_research.jsonl` | JSONL | `206` | `206` | 206 校外校網站與查證紀錄（PR #30 修正校名） |

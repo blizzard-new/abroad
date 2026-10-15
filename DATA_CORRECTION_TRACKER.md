@@ -5,7 +5,7 @@
 
 ---
 
-## 一、已建立修正 PR 之問題總表（21 項問題群組，涵蓋 318 筆錯誤/過期紀錄）
+## 一、已建立修正 PR 之問題總表（21 項問題群組，涵蓋 324 筆錯誤/過期紀錄）
 
 | 問題代號 | 優先級 | 所屬學校 / 模組 | 問題摘要 | 影響紀錄筆數 | 官方來源網址與公告日期 | 修正狀態 | 對應 GitHub PR |
 |---|---|---|---|---:|---|---|---|
@@ -17,10 +17,10 @@
 | **`NTPU-004`** | **P1** | 國立臺北大學 (`ntpu`) | PDF 頁尾注意事項混入表格文字，導致明知大學等 **9 所姊妹校**之 `colleges` 與 `eligibility` 欄位被頁尾文字污染 | `9` 校 (`NTPU-PARTNER-*`) | `https://cms-carrier.ntpu.edu.tw/uploads/116_0924_da1dafe9d0.pdf` (2026-09-24) | 已建立 PR 待審 | [PR #30](https://github.com/blizzard-new/abroad/pull/30) |
 | **`NTPU-005`** | **P1** | 國立臺北大學 (`ntpu`) | `NTPU_EXCHANGE_GUIDELINES_URL` 仍指向 115-2 舊版簡章（`115_2_2c7cb4c171.pdf`），未更新為 116 最新簡章（`116_16e535159d.pdf`） | `1` 筆 (`RULE-NTPU-GUIDELINES-URL`) | `https://cms-carrier.ntpu.edu.tw/uploads/116_16e535159d.pdf` (2026-09-24) | 已建立 PR 待審 | [PR #30](https://github.com/blizzard-new/abroad/pull/30) |
 | **`NTPU-006`** | **P2** | 國立臺北大學 (`ntpu`) | `_NTPU_COMMON_TITLES` 缺少 116 學年度中英文簡章與三語組學校一覽表標題 | `1` 筆 (`RULE-NTPU-COMMON-TITLES`) | `https://new.ntpu.edu.tw/oia/files?tag=%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F` (2026-09-24) | 已建立 PR 待審 | [PR #30](https://github.com/blizzard-new/abroad/pull/30) |
-| **`NTPU-008`** | **P0** | 國立臺北大學 (`ntpu`) | 116-1 面試與結果公告時程僅寫「11月下旬 / 11月底前」，缺少簡章第 2 頁公告之確切日期（面試 `11/23、11/25`，結果公告 `11/27`） | `1` 筆 (`RULE-NTPU-DEADLINES`) | `https://cms-carrier.ntpu.edu.tw/uploads/116_16e535159d.pdf` (2026-09-24) | 已建立 PR 待審 | [PR #30](https://github.com/blizzard-new/abroad/pull/30) |
+| **`NTPU-008`** | **P0** | 國立臺北大學 (`ntpu`) | 116-1 申請截止時間為 `2026-10-23 17:00`（正確），惟面試時程原僅寫「11月下旬」，缺少簡章第 2 頁公告之確切面試日期（英語組 `11/23、11/25`；中日語組 `11/27`；12 月下旬公告結果） | `1` 筆 (`RULE-NTPU-DEADLINES`) | `https://cms-carrier.ntpu.edu.tw/uploads/116_16e535159d.pdf` (2026-09-24) | 已建立 PR 待審 | [PR #30](https://github.com/blizzard-new/abroad/pull/30) |
 | **`NTU-001`** | **P0** | 國立臺灣大學 (`ntu`) | 臺大國合處 `school.list` 截至 2026/10/15 已公布 **20 所姊妹校**之 116-1 確定名額（43 學年名額 / 最多 81 人次），`main` 分支仍全數標為 `尚未確定 (pending)` | `20` 校 (`NTU-PARTNER-SN*`) | `https://oia.ntu.edu.tw/outgoing/school.list` (2026-10-14 ~ 2026-10-15) | 已建立 PR 待審 | [PR #31](https://github.com/blizzard-new/abroad/pull/31) |
 | **`NTU-002`** | **P0** | 國立臺灣大學 (`ntu`) | 加拿大女王大學（`#599`）於 116-1 官網已更新為 `一學期 0 名；一學年 0 名（不開放申請）`，`main` 分支仍標為 `pending / open` | `1` 校 (`NTU-PARTNER-SN0599`) | `https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/599` (2026-10-15) | 已建立 PR 待審 | [PR #31](https://github.com/blizzard-new/abroad/pull/31) |
-| **`NTU-003`** | **P1** | 國立臺灣大學 (`ntu`) | 澳洲 **11 所合作大學**細目頁新增 Subclass 500 學生簽證審查提醒（建議提前 4 個月申請），`main` 分支尚未收錄 | `11` 校 (`NTU-PARTNER-SN*`) | `https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/9` 等 11 頁 (2026-10-14) | 已建立 PR 待審 | [PR #31](https://github.com/blizzard-new/abroad/pull/31) |
+| **`NTU-003`** | **P1** | 國立臺灣大學 (`ntu`) | 澳洲 **11 所合作大學**（Portal ID: `92, 93, 94, 95, 96, 97, 206, 210, 313, 1109, 1307`）細目頁新增 Subclass 500 學生簽證審查提醒（建議提前 4 個月申請），`main` 分支尚未收錄 | `11` 校 (`NTU-PARTNER-SN*`) | `https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/92` 等 11 頁 (2026-10-14) | 已建立 PR 待審 | [PR #31](https://github.com/blizzard-new/abroad/pull/31) |
 | **`NTU-004`** | **P1** | 國立臺灣大學 (`ntu`) | 加拿大英屬哥倫比亞大學（`#1`）細目頁上架 2027/28 最新 Fact Sheet PDF 連結 | `1` 校 (`NTU-PARTNER-SN0001`) | `https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/1` (2026-10-14) | 已建立 PR 待審 | [PR #31](https://github.com/blizzard-new/abroad/pull/31) |
 | **`NTU-005`** | **P1** | 國立臺灣大學 (`ntu`) | 美國夏威夷大學希羅分校（`#369`）官網已由「夏威夷大學大島分校」正名為「夏威夷大學希羅分校」並上架 2027–2028 要項 PDF | `1` 校 (`NTU-PARTNER-SN0369`) | `https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/369` (2026-10-15) | 已建立 PR 待審 | [PR #31](https://github.com/blizzard-new/abroad/pull/31) |
 | **`NTU-006`** | **P1** | 國立臺灣大學 (`ntu`) | 迪肯大學（`#95`）、筑波大學（`#107`）、亞琛工業大學（`#247`）、夏威夷大學馬諾阿分校（`#14`）、明斯特大學（`#1200`）、慕尼黑大學（`#391`）、伯恩大學（`#371`）等細目頁參考資訊更新 | `7` 校 (`NTU-PARTNER-SN*`) | `https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/95` 等 (2026-10-14 ~ 10-15) | 已建立 PR 待審 | [PR #31](https://github.com/blizzard-new/abroad/pull/31) |
@@ -28,17 +28,17 @@
 | **`NCU-001`** | **P0 / P1** | 國立中央大學 (`ncu`) | 中央國合處已於 **2026/10/13** 公告 `116exchangeschoollist-1013.pdf`（215 筆，較 115 舊表新增 6 校、移除 7 校、正名羅馬尼亞美利堅大學並更新 3 校限制），`main` 分支仍使用 115 舊表且寫「名額預定2026/10/12公告」 | `222` 筆 (`UNIV-NCU-PROFILE` + `221` 筆姊妹校紀錄) | `https://oia.ncu.edu.tw/var/file/26/1026/img/272/116exchangeschoollist-1013.pdf` (2026-10-13) | 已建立 PR 待審 | [PR #32](https://github.com/blizzard-new/abroad/pull/32) |
 | **`NCU-002`** | **P1** | 國立中央大學 (`ncu`) | 舊版出國申請系統 `https://abroad.oia.ncu.edu.tw/student/` 因系統改版升級返回 HTTP 404，平台未附國合處系統升級期間改採紙本與 Email 辦理之公告 | `1` 筆 (`RULE-NCU-PORTAL-UPGRADE-URL`) | `https://oia.ncu.edu.tw/p/406-1026-13073,r18.php?Lang=zh-tw` (2026-09-10) | 已建立 PR 待審 | [PR #32](https://github.com/blizzard-new/abroad/pull/32) |
 | **`NCU-003`** | **P2** | 國立中央大學 (`ncu`) | 缺少國合處 2026/10/01 公告之 116-1 出國交換申請說明會（`2026/11/10 12:00–13:30`）資訊 | `1` 筆 (`RULE-NCU-INFO-SESSION-116-1`) | `https://oia.ncu.edu.tw/p/406-1026-14170,r18.php?Lang=zh-tw` (2026-10-01) | 已建立 PR 待審 | [PR #32](https://github.com/blizzard-new/abroad/pull/32) |
-| **`MAINT-001`** | **P0 / P1** | 維護子系統 & PostgreSQL (`maintenance`) | `build_default_maintenance_router()` 預設無條件注入 `cs_ntu_116_quota_and_deadline`（虛構臺大 116-1 截止日為 `2026-11-25 17:00`，與真實截止日 `2026-11-09 16:00` 差 16 天）與 `cs_ntu_year_conflict_blocked` | `2` 筆 (`MAINT-001-CS-DEMO-DEADLINE`, `MAINT-001-CS-DEMO-CONFLICT`) | `https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/sem1-20272028ay-selection-timeline/` (2026-10-15) | 已建立 PR 待審 | [PR #33](https://github.com/blizzard-new/abroad/pull/33) |
+| **`MAINT-001`** | **P0 / P1** | 維護子系統 & PostgreSQL (`maintenance`) | `build_default_maintenance_router()` 於本地 `store.change_sets` 為空時自動產生展示用名額/期限變更集（`cs_ntu_116_quota_and_deadline` 等）並標記為 `SOURCE_CHANGE`「官方來源更新」（目前僅確認程式碼有此風險，正式站 DB `exchange_maint_change_sets` 為 `0` 筆尚未受影響；後台勿核准無原始公告支持之變更） | `2` 筆 (`MAINT-001-CS-DEMO-DEADLINE`, `MAINT-001-CS-DEMO-CONFLICT`) | `https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/sem1-20272028ay-selection-timeline/` (2026-10-15) | 已建立 PR 待審 | [PR #33](https://github.com/blizzard-new/abroad/pull/33) |
 | **`MAINT-002`** | **P1** | 維護子系統 & PostgreSQL (`maintenance`) | `load_six_school_shadow_summary()` 對 CCU 僅匯入 55 筆（應為 104 筆）、對 TKU 僅匯入 4 筆（應為 287 筆）、對 NTPU 重複匯入 409 筆（應為 206 筆）、對 CGU 匯入含 TEEP 之 154 筆 | `4` 項子系統匯入基準 (`MAINT-002-SHADOW-*`) | 各校 `official_data/` 權威基準檔 | 已建立 PR 待審 | [PR #33](https://github.com/blizzard-new/abroad/pull/33) |
 
 ---
 
-## 二、既有未合併 PR（#24、#28）處置對照說明
+## 二、既有未合併 PR（#24、#28）補充證據說明與保留建議
 
-| 既有 PR 編號 | 分支名稱 | 原始內容與缺漏分析 | 與本次新建 PR 之關係 |
+| 既有 PR 編號 | 分支名稱 | 內含之補充證據與獨立價值 | 建議處置方式 |
 |---|---|---|---|
-| **[PR #24](https://github.com/blizzard-new/abroad/pull/24)** | `data/ntu-official-update-20261014` | 僅包含 2026/10/14 公布之 8 所臺大姊妹校名額，缺少 2026/10/15 新增公布之 12 所英國/加拿大姊妹校名額、女王大學（`#599`）0 名額、夏威夷大學希羅分校（`#369`）正名與管院 116 獎學金 PDF | **[PR #31](https://github.com/blizzard-new/abroad/pull/31)** 已完整涵蓋 PR #24 之全數變更並補齊 2026/10/15 最新官網資料（建議審查合併 PR #31 後關閉 PR #24） |
-| **[PR #28](https://github.com/blizzard-new/abroad/pull/28)** | `data/ntu-official-update-20261015` | 原執行代理因環境逾時，**僅提交 `docs/ntu-official-update-20261015/` 文件，完全未修改 `src/` 或 `official_data/ntu/` 任何資料與程式碼** | **[PR #31](https://github.com/blizzard-new/abroad/pull/31)** 已實際完成所有程式碼與 `official_data/ntu/` 資料檔更新並通過 92 項自動化測試（建議審查合併 PR #31 後關閉 PR #28） |
+| **[PR #24](https://github.com/blizzard-new/abroad/pull/24)** | `data/ntu-official-update-20261014` | 包含 2026/10/14 抓取之原始網頁與附件備份壓縮檔 `sources/ntu/reviewed-source-bodies-2026-10-14.zip` 以及 `#998, #1302, #1103, #71, #72, #69` 等細目頁補充更新內容 | **請勿直接關閉 PR #24**：建議保留其原始網頁備份與細目頁補充證據，與 **[PR #31](https://github.com/blizzard-new/abroad/pull/31)** 交叉對照審查 |
+| **[PR #28](https://github.com/blizzard-new/abroad/pull/28)** | `data/ntu-official-update-20261015` | 包含 `docs/ntu-official-update-20261015/` 完整稽核報告與附件雜湊比對紀錄（含日本筑波大學 `#107` CoE Web Application System Guide PDF 更新證據） | **請勿直接關閉 PR #28**：建議保留其 `docs/ntu-official-update-20261015/` 補充查證報告，與 **[PR #31](https://github.com/blizzard-new/abroad/pull/31)** 一併對照審查 |
 
 ---
 
@@ -93,5 +93,5 @@
 | `#386` | 英國 | 謝菲爾德大學 The University of Sheffield | 尚未確定 (`pending`) | **2 學年名額（最多 4 人次）** |
 | `#549` | 英國 | 倫敦國王學院 King's College London | 尚未確定 (`pending`) | **1.5 學年名額（最多 3 人次）** |
 | `#568` | 英國 | 諾丁漢大學 University of Nottingham | 尚未確定 (`pending`) | **1 學年名額（最多 2 人次）** |
-| `#622` | 加拿大 | 坎培拉大學 University of Canberra（註：系統列表編號 622） | 尚未確定 (`pending`) | **1 學年名額（最多 2 人次）** |
+| `#622` | 加拿大 | 卡爾加里大學 University of Calgary | 尚未確定 (`pending`) | **1 學年名額（最多 2 人次）** |
 | `#599` | 加拿大 | 女王大學 Queen's University | 尚未確定 (`pending / open`) | **一學期 0 名；一學年 0 名（本學期不開放申請，`zero / closed`）** |
