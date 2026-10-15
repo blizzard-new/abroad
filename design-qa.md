@@ -29,7 +29,9 @@ Regions inspected at original resolution: the home hero collage and map card, a 
 - Deviations chosen on purpose, because the data does not exist: no monthly-cost or teaching-language facts (omitted, not invented); star ratings only when a post carries a 1–5 `rating`; the profile 語言 row is a disabled select because only Traditional Chinese exists.
 - Behaviour changes: `#guide` is now the docs-style guide instead of redirecting to `#home`; `#profile` is a page and the old modal dialog is removed on every width; theme preference gains `system`.
 - Not verified against a design: the 834 px layouts.
-- Not verified: the re-run of the full end-to-end suite after the last fixes. 279 end-to-end tests also fail on `main` without this change (NCU school data and phone navigation-drawer cases), so they could hide a problem of this change that I did not see.
+- Full end-to-end run on the final commit (`6a97d753`): 543 passed, 284 failed, 2 skipped. 278 of the failures also fail on `main` without this change, and they stop at the same test line on the same element on both sides (NCU school data and phone navigation-drawer cases). The other 6 failed only under load: they pass on `main` and pass alone on this branch.
+- Still not verified: anything those 278 tests would do after the line where they stop, on either side.
+- Non-end-to-end suite on the final commit: 2595 passed, 9 failed, and all 9 also fail on `main`.
 
 ## Open questions
 
@@ -60,7 +62,7 @@ Regions inspected at original resolution: the home hero collage and map card, a 
 - [x] Existing deep links (`#public-board`, `#board=…`, `#language-school-board`, `#following`) still open the forum.
 - [x] Static asset versions bumped together.
 - [x] Screenshots stored under `docs/platform-redesign-2026-10-15/`.
-- [ ] Full end-to-end re-run on the final commit.
+- [x] Full end-to-end re-run on the final commit (see Findings for what it does not cover).
 
 ## Follow-up polish
 
