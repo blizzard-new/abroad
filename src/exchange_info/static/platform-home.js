@@ -70,6 +70,8 @@ window.UniWayHome = (() => {
   }
 
   function renderMaps(host) {
+    // The globe behind the hero needs only the cities; the flat maps also wait for the land outline.
+    window.UniWayGlobeBackdrop?.setMarkers(partnerCities());
     if (!land) { loadLand(); return; }
     let sprite = host.querySelector("#pr-world-sprite");
     if (!sprite) {

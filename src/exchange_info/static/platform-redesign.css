@@ -66,7 +66,7 @@ body.unified-shell:has(.school-detail-view.pr-detail:not([hidden])) { --pr-page-
 body.unified-shell #dashboard-view > .pr-home { container-type: inline-size; padding-top: 0; }
 .pr-home-inner { position: relative; }
 
-.pr-hero { position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: clamp(40px, 4cqi, 64px); align-items: center; padding: clamp(16px, 2.4cqi, 36px) 0 clamp(48px, 5cqi, 80px); }
+.pr-hero { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(32px, 4cqi, 64px); align-items: start; min-height: clamp(560px, calc(100svh - 150px), 820px); padding: clamp(32px, 6svh, 88px) 0 clamp(48px, 5cqi, 80px); }
 .pr-hero-copy { min-width: 0; }
 .pr-pill { display: inline-flex; align-items: center; gap: 10px; padding: 5px 14px 5px 5px; border: 1px solid var(--glass-edge); border-radius: 999px; background: var(--glass-surface); box-shadow: 0 6px 18px #39546d10; font-size: 13px; color: var(--uw-text); white-space: nowrap; }
 .pr-pill b { padding: 3px 10px; border-radius: 999px; background: var(--uw-navy); color: var(--uw-page); font-size: 12px; font-weight: 700; }
@@ -75,17 +75,24 @@ body.unified-shell #dashboard-view > .pr-home { container-type: inline-size; pad
 .pr-hero-note { display: flex; align-items: flex-start; gap: 8px; margin: 20px 0 0; color: var(--uw-muted); font-size: 13px; line-height: 1.7; }
 .pr-hero-note .lucide { flex: 0 0 auto; width: 16px; height: 16px; margin-top: 2px; color: var(--uw-blue); }
 
-.pr-collage { position: relative; min-width: 0; height: clamp(440px, 41cqi, 640px); }
-.pr-map-card { position: absolute; right: 0; top: 3px; display: flex; flex-direction: column; width: clamp(480px, 56.1cqi, 830px); height: clamp(300px, 35cqi, 518px); border: 1px solid var(--glass-edge); border-radius: 22px; background: var(--glass-strong); box-shadow: var(--pr-shadow-collage); overflow: hidden; }
-.pr-map-card header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--uw-hairline); }
-.pr-map-card header > div { min-width: 0; }
-.pr-map-card small { display: block; color: var(--uw-muted); font-size: 11px; }
-.pr-map-card strong { color: var(--uw-navy); font-size: 15px; white-space: nowrap; }
-.pr-segmented { display: flex; padding: 3px; border-radius: 10px; background: var(--uw-surface-soft); font-size: 12px; font-weight: 700; color: var(--uw-muted); }
-.pr-segmented span { padding: 5px 10px; border-radius: 8px; }
-.pr-segmented .on { background: var(--uw-surface); color: var(--uw-blue-strong); box-shadow: 0 1px 3px #14223f14; }
-.pr-map-card .pr-map-host { flex: 1; min-height: 0; }
+/* The half globe is the hero's backdrop: only its upper half is drawn, anchored on the hero's bottom edge, and it dissolves
+   from the bottom up as the page scrolls (--globe-progress runs 0 to 1, set by platform-globe.js). */
+.pr-globe { position: absolute; z-index: -1; left: 55%; bottom: 0; width: 92cqi; margin-left: -46cqi; aspect-ratio: 1.944 / 1; pointer-events: none; --globe-progress: 0;
+  -webkit-mask-image: linear-gradient(to top, transparent calc(var(--globe-progress) * 120%), #000 calc(var(--globe-progress) * 120% + 18%));
+  mask-image: linear-gradient(to top, transparent calc(var(--globe-progress) * 120%), #000 calc(var(--globe-progress) * 120% + 18%)); }
+.pr-globe-canvas { display: block; width: 100%; height: 100%; opacity: 0; transition: opacity .7s ease; }
+.pr-globe-fallback { display: none; }
+.pr-globe[data-state="fallback"] .pr-globe-canvas { display: none; }
+.pr-globe[data-state="fallback"] .pr-globe-fallback { position: absolute; inset: 0; display: block; padding-bottom: 6%; box-sizing: border-box; }
 
+.pr-globe-caption { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; margin-top: 30px; padding: 9px 16px; border: 1px solid var(--glass-edge); border-radius: 999px; background: var(--glass-surface); box-shadow: 0 6px 18px #39546d10; color: var(--uw-text); font-size: 13px; text-decoration: none; }
+.pr-globe-caption > .lucide { flex: 0 0 auto; width: 15px; height: 15px; color: var(--glass-coral); }
+.pr-globe-caption > span { min-width: 0; overflow: hidden; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.pr-globe-caption b { display: inline-flex; align-items: center; gap: 4px; flex: 0 0 auto; color: var(--uw-blue-strong); font-weight: 700; white-space: nowrap; }
+.pr-globe-caption b .lucide { width: 14px; height: 14px; }
+.pr-globe-caption:hover { border-color: var(--uw-blue); }
+
+.pr-collage { position: relative; align-self: stretch; display: flex; flex-direction: column-reverse; align-items: flex-end; justify-content: flex-start; min-width: 0; }
 .pr-map-host { position: relative; --map-land: #d5e6ee; --map-edge: #c3d9e4; --map-tw: #a83c39; --map-dot: #167ba1; --map-halo: #167ba12e; --map-arc: #a83c3973; }
 html[data-theme="dark"] .pr-map-host, .pr-map-band .pr-map-host { --map-land: #203852; --map-edge: #2c4762; --map-tw: #ffb5a6; --map-dot: #80d2ed; --map-halo: #80d2ed33; --map-arc: #80d2ed59; }
 .pr-map-host svg:not(.pr-sprite) { display: block; width: 100%; height: 100%; }
@@ -97,7 +104,7 @@ html[data-theme="dark"] .pr-map-host, .pr-map-band .pr-map-host { --map-land: #2
 .pr-map-host .tw-ring { fill: none; stroke: var(--map-tw); stroke-width: 2; }
 .pr-map-host .tw-dot { fill: var(--map-tw); }
 
-.pr-plan-card { position: absolute; left: clamp(-190px, -12.4cqi, -90px); bottom: 0; box-sizing: border-box; width: clamp(360px, 41.5cqi, 616px); min-height: 240px; padding: 18px; border: 1px solid var(--glass-edge); border-radius: 20px; background: var(--glass-strong); box-shadow: 0 24px 60px #42627d2e; }
+.pr-plan-card { box-sizing: border-box; width: min(100%, 460px); padding: 18px; border: 1px solid var(--glass-edge); border-radius: 20px; background: var(--glass-strong); box-shadow: 0 24px 60px #42627d2e; }
 .pr-plan-card header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
 .pr-plan-card header strong { color: var(--uw-navy); font-size: 14px; }
 .pr-badge-peach { padding: 3px 9px; border-radius: var(--pr-radius-chip); background: var(--glass-peach); color: var(--glass-coral-strong); font-size: 11px; font-weight: 700; white-space: nowrap; }
@@ -111,7 +118,7 @@ html[data-theme="dark"] .pr-map-host, .pr-map-band .pr-map-host { --map-land: #2
 .pr-plan-steps .now .pr-step-ring { border: 2px solid var(--glass-coral); background: var(--uw-surface); color: var(--glass-coral); }
 .pr-plan-steps .now .pr-step-title { color: var(--uw-navy); font-weight: 700; }
 .pr-plan-steps .todo .pr-step-ring { border: 1.5px dashed var(--uw-line-strong); color: var(--uw-line-strong); }
-.pr-collage-mascot { position: absolute; right: 0; bottom: -8px; z-index: 2; --uw-mascot-size: clamp(92px, 10cqi, 170px); }
+.pr-collage-mascot { position: relative; z-index: 2; margin: 0 14px -26px 0; --uw-mascot-size: clamp(96px, 10cqi, 150px); }
 
 .pr-supported { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 32px; padding: 26px 0; }
 .pr-supported > span { flex: 0 0 auto; color: var(--uw-muted); font-size: 13px; }
@@ -290,13 +297,13 @@ html[data-theme="dark"] .pr-school-tile { background: hsl(var(--school-tint) 38%
 
 /* Below 1180px the two-column hero no longer has room for the overlapping collage. */
 @media (max-width: 1180px) {
-  .pr-hero { gap: 28px; padding-bottom: 40px; }
-  .pr-collage { display: grid; grid-template-columns: minmax(0, 1fr); height: auto; gap: 14px; max-width: 760px; }
-  .pr-map-card, .pr-plan-card { position: relative; inset: auto; width: auto; height: auto; min-height: 0; }
-  .pr-map-card { grid-column: 1; grid-row: 1; }
-  .pr-map-card .pr-map-host { flex: none; aspect-ratio: 1000 / 433; padding: 6px 10px 16px; box-sizing: border-box; }
-  .pr-plan-card { grid-column: 1; grid-row: 2; }
-  .pr-collage-mascot { position: relative; inset: auto; grid-column: 1; grid-row: 2; align-self: start; justify-self: end; z-index: 2; margin: -56px 10px 0 0; --uw-mascot-size: 92px; }
+  .pr-hero { grid-template-columns: minmax(0, 1fr); gap: 20px; min-height: 0; padding-top: 24px; padding-bottom: 40px; overflow-x: clip; }
+  .pr-hero-copy { order: 1; }
+  /* Wider than the column so the half globe stays big on a phone; the hero clips what spills over. */
+  .pr-globe { order: 2; position: relative; left: auto; bottom: auto; width: 124%; margin: 0 -12%; }
+  .pr-collage { order: 3; align-items: stretch; max-width: 760px; }
+  .pr-plan-card { width: auto; }
+  .pr-collage-mascot { align-self: flex-end; }
 }
 @media (max-width: 900px) {
   .pr-hero h1 { font-size: clamp(34px, 9.4vw, 52px); }

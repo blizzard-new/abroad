@@ -36,7 +36,7 @@ def test_home_landing_shows_the_product_story_without_login(page, live_server) -
     enter_public_site(page, live_server, "home")
     expect(page.locator("#home-landing")).to_be_visible()
     expect(page.locator("#home-landing-title")).to_contain_text("你能去哪些交換學校")
-    # The map is a static outline plus partner dots: no map engine is needed on the first screen.
+    # The flat map outline (partner dots on a static SVG) is always built; it is what shows when WebGL is unavailable.
     expect(page.locator('[data-home-map="hero"] svg')).to_have_count(1)
     # Public pages never show the forum underneath another page.
     expect(page.locator("#community-hub")).to_be_hidden()
@@ -111,6 +111,58 @@ def test_home_cards_show_the_visitors_real_schools_not_samples(browser, live_ser
         expect(page.locator("#partners")).to_be_visible()
         assert page.evaluate("new URLSearchParams(location.search).get('q')") == "日本"
         assert not errors
+    finally:
+        context.close()
+
+
+# Headless browsers draw WebGL in software, which the globe deliberately declines; this makes one pretend to have a GPU.
+PRETEND_GPU = """
+for (const proto of [WebGLRenderingContext.prototype, WebGL2RenderingContext.prototype]) {
+  const original = proto.getParameter;
+  proto.getParameter = function (name) { return name === 0x9246 ? 'ANGLE (Test GPU)' : original.call(this, name); };
+}
+"""
+
+
+@pytest.mark.parametrize("gpu", [False, True], ids=["as-is", "with-a-gpu"])
+def test_home_hero_is_a_half_globe_that_fades_away_while_scrolling(browser, live_server, gpu) -> None:
+    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    page = context.new_page()
+    if gpu:
+        page.add_init_script(PRETEND_GPU)
+    try:
+        enter_public_site(page, live_server, "home")
+        globe = page.locator("[data-home-globe]")
+        # Without WebGL, on a software renderer, or if frames come out slowly the hero keeps its flat map instead.
+        page.wait_for_function(
+            "() => ['ready', 'fallback'].includes(document.querySelector('[data-home-globe]').dataset.state)",
+            timeout=15_000,
+        )
+        if not gpu:
+            assert globe.get_attribute("data-state") in {"ready", "fallback"}
+        if globe.get_attribute("data-state") == "ready":
+            expect(globe.locator("canvas")).to_be_visible()
+            # Only the top half of the sphere is drawn: the canvas is about twice as wide as it is tall.
+            box = globe.bounding_box()
+            assert 1.7 < box["width"] / box["height"] < 2.2
+        else:
+            expect(globe.locator('[data-home-map="hero"] svg')).to_be_visible()
+        # The backdrop never takes clicks and is not read out; the caption link is the accessible way in.
+        assert globe.evaluate("el => getComputedStyle(el).pointerEvents") == "none"
+        assert globe.get_attribute("aria-hidden") == "true"
+        expect(page.locator(".pr-globe-caption")).to_contain_text("合作校")
+        assert float(globe.evaluate("el => el.style.getPropertyValue('--globe-progress') || '0'")) == 0
+
+        page.evaluate("window.scrollTo({ top: 700, behavior: 'instant' })")
+        page.wait_for_function(
+            "() => parseFloat(document.querySelector('[data-home-globe]').style.getPropertyValue('--globe-progress')) > 0.9",
+            timeout=5_000,
+        )
+        page.evaluate("window.scrollTo({ top: 0, behavior: 'instant' })")
+        page.wait_for_function(
+            "() => parseFloat(document.querySelector('[data-home-globe]').style.getPropertyValue('--globe-progress')) < 0.05",
+            timeout=5_000,
+        )
     finally:
         context.close()
 

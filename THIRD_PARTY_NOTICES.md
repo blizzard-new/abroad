@@ -19,6 +19,13 @@ The Web interface redistributes the following pinned runtime assets.
 - ROR institution identity/city metadata: CC0, https://ror.org/about/terms/ . Wikidata P625 institution coordinates: CC0, https://www.wikidata.org/wiki/Wikidata:Licensing . Each enriched record retains its ROR and Wikidata evidence URLs and retrieval timestamp. These are representative institution locations, not assigned exchange campuses.
 - Reproducible map vendor retrieval: `scripts/prepare_partner_map_assets.py`; asset SHA-256 hashes: `src/exchange_info/static/assets/partner-map/manifest.json`.
 
+## COBE 0.6.4 (home page globe)
+
+- Project: https://github.com/shuding/cobe (with its dependency Phenomenon 1.6.0, https://github.com/vaneenige/phenomenon)
+- Source: https://registry.npmjs.org/cobe/-/cobe-0.6.4.tgz
+- License: MIT (both packages)
+- Bundled into one classic script by `frontend/globe` as `src/exchange_info/static/vendor/cobe/0.6.4/cobe.min.js`; both licences are in `src/exchange_info/static/vendor/cobe/0.6.4/LICENSE.txt`. The land map COBE draws is its own embedded bitmap; no network request is made at runtime.
+
 ## Morphicons 1.7.0
 
 - Project: https://www.morphicons.com/
