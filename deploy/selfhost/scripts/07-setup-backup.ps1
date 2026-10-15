@@ -35,6 +35,7 @@ Write-Step 'Scheduled tasks'
 # Docker Desktop's engine runs inside the signed-in user's session, so these tasks run as that user (not as SYSTEM).
 $script:RunAs = '{0}\{1}' -f $env:USERDOMAIN, $env:USERNAME
 Write-Host ('  tasks will run as ' + $script:RunAs + ' while that user is signed in')
+Register-Daily 'UniWay-DailySourceCheck' 'daily-source-check.ps1' '03:00'
 Register-Daily 'UniWay-Backup' 'backup.ps1' '04:00'
 
 Get-ScheduledTask -TaskName 'UniWay-Health' -ErrorAction SilentlyContinue | Unregister-ScheduledTask -Confirm:$false
