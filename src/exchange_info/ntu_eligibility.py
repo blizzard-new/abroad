@@ -5,7 +5,7 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-from .models import HomeSelectionRules
+from .models import HomeSelectionRules, PartnerUniversity
 from .university_registry import NTU, resolve_university
 
 
@@ -33,6 +33,15 @@ def ntu_language_check(test: str | None, score: float | None) -> tuple[str, str]
 def is_ntu(school_name: str) -> bool:
     university = resolve_university(school_name)
     return university is not None and university.id == NTU.id
+
+
+def ntu_published_quota(partner: PartnerUniversity) -> bool:
+    """Known NTU selection capacity still does not establish open registration."""
+    evidence = partner.field_evidence.get("quota")
+    return bool(partner.quota_status == "published" and evidence
+                and evidence.status == "verified_current"
+                and evidence.source_url == "https://oia.ntu.edu.tw/outgoing/school.list"
+                and evidence.academic_year == "116" and evidence.application_round == "116-1")
 
 
 def ntu_academic_check(

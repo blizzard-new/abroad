@@ -76,11 +76,12 @@ def audit(root: Path = ROOT) -> tuple[list[dict], dict]:
                 urls = [home["authority_order"][0]]
                 note = "共通校內規則可用；合作校本期資格、名額與接待校条件另查。"
             elif field == "quota":
-                confirmed = available = partner["quota"] == "0 名"
-                status = "confirmed_zero_not_open" if confirmed else "pending_official_selection_list"
+                published = partner.get("quota_status") == "published" and partner.get("field_evidence", {}).get("quota", {}).get("status") == "verified_current"
+                confirmed = available = partner["quota"] == "0 名" or published
+                status = "verified_current_home_selection_quota" if published else "confirmed_zero_not_open" if confirmed else "pending_official_selection_list"
                 urls = [provenance["url"]]
                 checked = provenance["checked_at"]
-                note = "空白不補成零；內頁參考名額不作臺大本期名額。"
+                note = partner.get("availability_note") if published else "空白不補成零；內頁參考名額不作臺大本期名額。"
             elif field == "life_sources":
                 record = life.get(key, {})
                 evidence = record.get("evidence", [])

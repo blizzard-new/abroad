@@ -31,7 +31,7 @@ def classify_review_axes(row, observations, sources, decision=None, more_public_
     if row["field"] == "home_selection" and row["target_requirement_confirmed"]:
         publication = "official_NTU_shared_current_cycle_rule"
     elif row["field"] == "quota":
-        publication = "official_zero_not_open" if row["target_requirement_confirmed"] else "official_NTU_selection_cell_blank"
+        publication = "official_NTU_positive_selection_quota_published" if row.get("status") == "verified_current_home_selection_quota" else "official_zero_not_open" if row["target_requirement_confirmed"] else "official_NTU_selection_cell_blank"
     elif any(o["applicability_status"] == "explicitly_pending_announcement" for o in observations):
         publication = "official_statement_future_details_pending"
     elif any(o["applicability_status"] == "target_year_explicit" for o in observations):
@@ -119,7 +119,7 @@ def export(output=OUTPUT, access_path=None):
         issue = "target_scope_unconfirmed"
         if row["target_requirement_confirmed"]:
             issue = "asset_or_home_fact_checked_exchange_assignment_still_separate"
-        elif row["field"] == "quota":
+        elif row["field"] == "quota" and not row["target_requirement_confirmed"]:
             issue = "official_list_blank_as_of_check"
         elif "version_conflict" in periods or row["status"] == "conflict":
             issue = "version_conflict_requires_confirmation"
@@ -179,9 +179,9 @@ def export(output=OUTPUT, access_path=None):
         fixed429_final_conclusion_rows=sum(r["bounded_field_conclusion_complete"] for r in issues),
         fixed429_outcomes=dict(Counter(r["field_final_conclusion"] for r in issues if r["bounded_field_conclusion_complete"])),
         original_handoff_comparison={"original_workbook_retrieved": False, "reported_previous_denominator": 282,
-            "rebuilt_denominator": 288, "pending_selection_denominator": 282, "zero_selection_denominator": 6,
+            "rebuilt_denominator": 288, "pending_selection_denominator": sum(r["field"] == "quota" and not r["target_requirement_confirmed"] for r in records), "zero_selection_denominator": 6,
             "comparison_method": "Rebuilt using the current official portal IDs. The old workbook was not obtained; neither cell equality nor exact school membership overlap is claimed.",
-            "coverage": "All 282 currently pending schools × original ten fields are retained; 6 zero-quota schools and four extra field groups are also included."})
+            "coverage": "All original282 school IDs × original ten fields are retained. Later formally published NTU selection cells are independently marked verified; full288 rows remain available."})
     if progress:
         summary["full_body_priority_progress"] = {k: v for k, v in progress.items() if k != "fields"}
     output.mkdir(exist_ok=True, parents=True)

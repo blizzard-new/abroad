@@ -41,7 +41,10 @@ def validate(snapshot: dict, partners: list[PartnerUniversity], *, package: Path
         raise ValueError("All 288 distinct NTU school identities are required")
     if set(expected) != {r["portal_id"] for r in entries}:
         raise ValueError("Completion inventory does not match the partner catalog")
-    if sum(p.quota is None for p in partners) != 282 or sum(p.quota == "0 名" for p in partners) != 6:
+    from .ntu_current_updates import historical_selection_view
+    historical = historical_selection_view(partners)
+    historical_by_id = {p.source_url.rsplit("/", 1)[-1]: p for p in historical}
+    if sum(p.quota is None for p in historical) != 282 or sum(p.quota == "0 名" for p in historical) != 6:
         raise ValueError("Selection baseline changed; source scope must be reviewed")
     receipt = snapshot["list_receipt"]
     inventory = {r["portal_id"]: r for r in receipt["rows"]}
@@ -50,7 +53,7 @@ def validate(snapshot: dict, partners: list[PartnerUniversity], *, package: Path
         raise ValueError("A fresh all-school official list receipt is required")
     for sn, partner in expected.items():
         if (inventory[sn]["name"] != partner.school_name
-                or (inventory[sn]["quota"] or None) != partner.quota):
+                or (inventory[sn]["quota"] or None) != historical_by_id[sn].quota):
             raise ValueError("Official list identity or selection quota changed")
     reviews = snapshot["public_source_reviews"]
     for sid, source in reviews.items():
@@ -256,6 +259,9 @@ def apply_completion(bundle: Path, snapshot_path: Path = SOURCE, *, apply_assets
         locations_path.write_text("".join(json.dumps(r, ensure_ascii=False, separators=(",", ":")) + "\n" for _, r in sorted(locations.items())))
     for name, text in outputs.items():
         (bundle / name).write_text(text)
+    from .ntu_current_updates import SOURCE as CURRENT_SOURCE, apply_current_updates
+    if CURRENT_SOURCE.exists():
+        apply_current_updates(bundle)
     return {"schools": len(partners), "reviewed_observations": observation_count,
         "photo_additions": sum(bool(r.get("photo")) for r in entries.values()),
         "location_additions": sum(bool(r.get("location")) for r in entries.values()),

@@ -9,7 +9,7 @@ from typing import Iterable
 from .ai_gateway import structured_response
 from .fit_signals import course_interest_fit, school_budget_fit, teaching_language_fit
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
-from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
+from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
 from .qualification_scopes import (
     coupled_academic_scope_matches,
     college_scope_matches as _scope_matches,
@@ -78,7 +78,8 @@ def build_advisor_plan(
         for partner in dashboard.partner_universities
         if partner.availability_status == "open"
         or (dashboard.selection_rules.pending_quota_planning
-            and partner.availability_status == "agreement_only" and partner.quota is None)
+            and partner.availability_status == "agreement_only"
+            and (partner.quota is None or ntu_published_quota(partner)))
     ]
     matches = [
         _score_partner(

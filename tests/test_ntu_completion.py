@@ -104,7 +104,10 @@ def test_all_288_schools_accept_offline_reference_assets_and_guarded_workflows(t
         for partner in partners:
             reference = reviewed[partner["school_name"]]
             assert partner["country"] == reference["country"]
-            assert partner["quota"] in (None, "0 名") and partner["availability_status"] != "open"
+            assert partner["availability_status"] != "open"
+            if partner["quota"] not in (None, "0 名"):
+                assert partner["quota_status"] == "published"
+                assert partner["field_evidence"]["quota"]["status"] == "verified_current"
             application_points = partner["student_summary_zh"]["application_steps"]
             # The public overview displays ten points. Every reference must
             # remain visible there with its scope and source, including late

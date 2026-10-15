@@ -47,8 +47,8 @@ def test_all_288_summaries_reach_dashboard_and_keep_source_text(tmp_path):
             row['eligibility']=by_url[row['source_url']]['sections_by_heading']['申請資格']['text']
     assert [(p.school_name,p.country,p.eligibility,p.tuition_info) for p in partners] == [
         (p['school_name'],p['country'],p['eligibility'],p['tuition_info']) for p in old]
-    assert sum(p.quota is None for p in partners) == 282
-    assert sum(p.quota == '0 名' for p in partners) == 6
+    assert sum(p.quota is None for p in partners) == 261
+    assert sum(p.quota == '0 名' for p in partners) == 7
 
 
 def test_deadline_conflict_keeps_two_sources_without_confirmed_reminder(tmp_path):

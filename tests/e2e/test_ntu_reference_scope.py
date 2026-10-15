@@ -22,7 +22,6 @@ def test_new_reference_scope_is_readable_without_approving_home_selection(
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     enter_public_site(page, live_server, "partners")
-    open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立臺灣大學"]').click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
