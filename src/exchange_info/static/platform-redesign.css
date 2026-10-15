@@ -35,24 +35,48 @@ html[data-theme="dark"] .pr-guide, html[data-theme="dark"] .pr-tracker, html[dat
 .pr-ph { display: block; border-radius: 10px; background: repeating-linear-gradient(135deg, var(--uw-ph-a) 0 6px, var(--uw-ph-b) 6px 12px); }
 .pr-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 
+/* ---------- 0. Page frame ----------
+   A page fills the space right of the rail (112px) up to 32px from the window edge and is centred in it. glass-theme.css
+   centres pages from 1600px up, but a later rule in the same file resets the margin, so on a wide window every page
+   sat flush left. --pr-page-max is the page's own maximum width; the same value places the back / school bar, so its
+   left edge always lines up with the page. Below 901px the legacy mobile layout is untouched. */
+body.unified-shell { --pr-page-max: 1400px; }
+/* Only a page that is actually showing counts: sections keep their [hidden] state while another surface is open,
+   and ids sit in :where() so none of these outranks another. */
+body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) { --pr-page-max: 1480px; }
+body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#guide, #partners, #application-workspace[data-page="overview"]):not([hidden])) { --pr-page-max: 1320px; }
+body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#profile):not([hidden])) { --pr-page-max: 1100px; }
+body.unified-shell:is(.global-home-mode, .cgu-community-mode) { --pr-page-max: 1320px; }
+body.unified-shell:has(.school-detail-view.pr-detail:not([hidden])) { --pr-page-max: 1200px; }
+@media (min-width: 901px) {
+  body.unified-shell #dashboard-view > :is(#home-landing, #guide, #profile, #feedback, #search-panel, #application-workspace),
+  body.unified-shell #dashboard-view > #partners.pr-explore, body.unified-shell #dashboard-view > #partners.pr-explore:has([data-partner-view="list"][aria-pressed="true"]),
+  body.unified-shell #dashboard-view > #application-workspace[data-page="overview"], body.unified-shell #dashboard-view > #sources.sources-disclosure,
+  body.unified-shell .school-detail-view.pr-detail,
+  body.unified-shell #community-hub.global-community-section,
+  body.unified-shell .page-back-bar {
+    width: calc(100% - 144px);
+    max-width: var(--pr-page-max);
+    margin-left: calc(112px + max(0px, (100% - 144px - min(var(--pr-page-max), 100% - 144px)) / 2));
+    margin-right: 32px;
+  }
+}
+
 /* ---------- 1. Home ---------- */
 body.unified-shell #dashboard-view > .pr-home { container-type: inline-size; padding-top: 0; }
-.pr-home-inner { position: relative; max-width: 1240px; margin: 0 auto; }
-.pr-guide-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4, 1fr); pointer-events: none; }
-.pr-guide-grid span { border-left: 1px dashed var(--pr-ink-faint); }
-.pr-guide-grid span:last-child { border-right: 1px dashed var(--pr-ink-faint); }
+.pr-home-inner { position: relative; }
 
 .pr-hero { position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: clamp(40px, 4cqi, 64px); align-items: center; padding: clamp(16px, 2.4cqi, 36px) 0 clamp(48px, 5cqi, 80px); }
 .pr-hero-copy { min-width: 0; }
 .pr-pill { display: inline-flex; align-items: center; gap: 10px; padding: 5px 14px 5px 5px; border: 1px solid var(--glass-edge); border-radius: 999px; background: var(--glass-surface); box-shadow: 0 6px 18px #39546d10; font-size: 13px; color: var(--uw-text); white-space: nowrap; }
 .pr-pill b { padding: 3px 10px; border-radius: 999px; background: var(--uw-navy); color: var(--uw-page); font-size: 12px; font-weight: 700; }
-.pr-hero h1 { margin: 26px 0 0; color: var(--uw-navy); font-size: clamp(38px, 5.2cqi, 74px); line-height: 1.14; letter-spacing: -.035em; font-weight: 700; text-wrap: balance; }
+.pr-hero h1 { margin: 26px 0 0; color: var(--uw-navy); font-size: clamp(38px, 5.2cqi, 82px); line-height: 1.14; letter-spacing: -.035em; font-weight: 700; text-wrap: balance; }
 .pr-hero h1 span { color: var(--uw-blue-strong); }
 .pr-hero-note { display: flex; align-items: flex-start; gap: 8px; margin: 20px 0 0; color: var(--uw-muted); font-size: 13px; line-height: 1.7; }
 .pr-hero-note .lucide { flex: 0 0 auto; width: 16px; height: 16px; margin-top: 2px; color: var(--uw-blue); }
 
-.pr-collage { position: relative; min-width: 0; height: clamp(440px, 41cqi, 580px); }
-.pr-map-card { position: absolute; right: 0; top: 3px; display: flex; flex-direction: column; width: clamp(480px, 56.1cqi, 727px); height: clamp(300px, 35cqi, 453px); border: 1px solid var(--glass-edge); border-radius: 22px; background: var(--glass-strong); box-shadow: var(--pr-shadow-collage); overflow: hidden; }
+.pr-collage { position: relative; min-width: 0; height: clamp(440px, 41cqi, 640px); }
+.pr-map-card { position: absolute; right: 0; top: 3px; display: flex; flex-direction: column; width: clamp(480px, 56.1cqi, 830px); height: clamp(300px, 35cqi, 518px); border: 1px solid var(--glass-edge); border-radius: 22px; background: var(--glass-strong); box-shadow: var(--pr-shadow-collage); overflow: hidden; }
 .pr-map-card header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--uw-hairline); }
 .pr-map-card header > div { min-width: 0; }
 .pr-map-card small { display: block; color: var(--uw-muted); font-size: 11px; }
@@ -73,7 +97,7 @@ html[data-theme="dark"] .pr-map-host, .pr-map-band .pr-map-host { --map-land: #2
 .pr-map-host .tw-ring { fill: none; stroke: var(--map-tw); stroke-width: 2; }
 .pr-map-host .tw-dot { fill: var(--map-tw); }
 
-.pr-plan-card { position: absolute; left: clamp(-161px, -12.4cqi, -90px); bottom: 0; box-sizing: border-box; width: clamp(360px, 41.5cqi, 538px); min-height: 240px; padding: 18px; border: 1px solid var(--glass-edge); border-radius: 20px; background: var(--glass-strong); box-shadow: 0 24px 60px #42627d2e; }
+.pr-plan-card { position: absolute; left: clamp(-190px, -12.4cqi, -90px); bottom: 0; box-sizing: border-box; width: clamp(360px, 41.5cqi, 616px); min-height: 240px; padding: 18px; border: 1px solid var(--glass-edge); border-radius: 20px; background: var(--glass-strong); box-shadow: 0 24px 60px #42627d2e; }
 .pr-plan-card header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
 .pr-plan-card header strong { color: var(--uw-navy); font-size: 14px; }
 .pr-badge-peach { padding: 3px 9px; border-radius: var(--pr-radius-chip); background: var(--glass-peach); color: var(--glass-coral-strong); font-size: 11px; font-weight: 700; white-space: nowrap; }
@@ -87,9 +111,9 @@ html[data-theme="dark"] .pr-map-host, .pr-map-band .pr-map-host { --map-land: #2
 .pr-plan-steps .now .pr-step-ring { border: 2px solid var(--glass-coral); background: var(--uw-surface); color: var(--glass-coral); }
 .pr-plan-steps .now .pr-step-title { color: var(--uw-navy); font-weight: 700; }
 .pr-plan-steps .todo .pr-step-ring { border: 1.5px dashed var(--uw-line-strong); color: var(--uw-line-strong); }
-.pr-collage-mascot { position: absolute; right: 0; bottom: -8px; z-index: 2; --uw-mascot-size: clamp(92px, 10cqi, 150px); }
+.pr-collage-mascot { position: absolute; right: 0; bottom: -8px; z-index: 2; --uw-mascot-size: clamp(92px, 10cqi, 170px); }
 
-.pr-supported { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 32px; padding: 26px 0; border-top: 1px solid var(--pr-ink-faint); border-bottom: 1px solid var(--pr-ink-faint); }
+.pr-supported { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 32px; padding: 26px 0; }
 .pr-supported > span { flex: 0 0 auto; color: var(--uw-muted); font-size: 13px; }
 .pr-supported ul { flex: 1 1 600px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px 24px; margin: 0; padding: 0; list-style: none; }
 .pr-supported li { display: grid; gap: 2px; }
@@ -112,31 +136,63 @@ html[data-theme="dark"] .pr-map-host, .pr-map-band .pr-map-host { --map-land: #2
 .pr-tile-wide h3 { font-size: 22px; }
 .pr-tile p { margin: 0; color: var(--uw-muted); font-size: 14px; line-height: 1.7; }
 .pr-tile-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.pr-tile > [aria-hidden="true"]:last-child, .pr-tile > #home-week-banner { margin-top: auto; }
+.pr-tile-body { display: flex; flex: 1; flex-direction: column; gap: 12px; min-width: 0; }
+.pr-tile-body > .pr-link { margin-top: auto; padding-top: 4px; }
+.pr-tile-note { color: var(--uw-muted); font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+.pr-tile-fine { color: var(--uw-muted); font-size: 11px; line-height: 1.6; }
+.pr-tile-empty { display: grid; gap: 10px; justify-items: start; padding: 14px 16px; border: 1px dashed var(--uw-line-strong); border-radius: 14px; color: var(--uw-muted); font-size: 13px; line-height: 1.7; }
+.pr-tile-empty p { margin: 0; color: var(--uw-muted); font-size: 13px; }
+.pr-tile-empty .pr-link { padding: 0; border: 0; background: none; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+/* School search: a working search box and the first real schools. */
 .pr-mini-search { border: 1px solid var(--uw-hairline); border-radius: 16px; background: var(--uw-surface); overflow: hidden; }
-.pr-mini-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px; border-bottom: 1px solid var(--uw-hairline); }
-.pr-mini-input { display: flex; align-items: center; gap: 8px; flex: 1 1 200px; min-height: 38px; padding: 0 12px; border: 1px solid var(--uw-line); border-radius: 10px; background: var(--uw-surface); color: var(--uw-muted); font-size: 13px; }
-.pr-mini-input .lucide, .pr-mini-filter .lucide { width: 15px; height: 15px; }
-.pr-mini-filter { display: inline-flex; align-items: center; gap: 4px; min-height: 38px; box-sizing: border-box; padding: 0 12px; border: 1px solid var(--uw-line); border-radius: 10px; background: var(--uw-surface); color: var(--uw-text); font-size: 12px; font-weight: 600; white-space: nowrap; }
-.pr-mini-row { display: flex; align-items: center; gap: 12px; padding: 12px; border-top: 1px solid var(--uw-hairline); }
-.pr-mini-row[hidden] { display: none; }
-.pr-mini-row .pr-ph { flex: 0 0 56px; height: 42px; }
-.pr-mini-row > span:nth-child(2) { display: grid; flex: 1; min-width: 0; gap: 1px; }
-.pr-mini-row strong { overflow: hidden; color: var(--uw-navy); font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
-.pr-mini-row small { color: var(--uw-muted); font-size: 12px; }
-.pr-sample { align-self: flex-end; justify-self: end; color: var(--uw-muted); font-size: 10px; letter-spacing: .08em; opacity: .75; }
-.pr-mini-checks, .pr-mini-cost { position: relative; }
+.pr-mini-bar { display: flex; align-items: center; gap: 8px; padding: 12px; border-bottom: 1px solid var(--uw-hairline); }
+.pr-mini-input { display: flex; align-items: center; gap: 8px; flex: 1 1 auto; min-width: 0; min-height: 40px; padding: 0 12px; border: 1px solid var(--uw-line); border-radius: 10px; background: var(--uw-surface); color: var(--uw-muted); }
+.pr-mini-input:focus-within { outline: 2px solid var(--uw-blue); outline-offset: 2px; }
+.pr-mini-input .lucide { flex: 0 0 auto; width: 15px; height: 15px; }
+body.unified-shell .pr-mini-input input#home-search-input { flex: 1; min-width: 0; min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--uw-text); font: inherit; font-size: 13px; box-shadow: none; outline: 0; }
+body.unified-shell .pr-mini-go { flex: 0 0 auto; min-height: 40px; padding: 0 18px; white-space: nowrap; border: 0; border-radius: 10px; background: var(--uw-navy); color: var(--uw-page); font: inherit; font-size: 13px; font-weight: 700; box-shadow: none; cursor: pointer; }
+body.unified-shell .pr-mini-go:hover { background: var(--uw-blue-strong); }
+.pr-mini-rows { display: grid; }
+body.unified-shell a.pr-mini-row { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-top: 1px solid var(--uw-hairline); color: var(--uw-text); text-decoration: none; transition: background .15s; }
+body.unified-shell .pr-mini-rows > a.pr-mini-row:first-child { border-top: 0; }
+body.unified-shell a.pr-mini-row:hover { background: var(--uw-surface-soft); }
+.pr-mini-thumb { flex: 0 0 56px; height: 42px; border-radius: 10px; background: repeating-linear-gradient(135deg, var(--uw-ph-a) 0 6px, var(--uw-ph-b) 6px 12px) center / cover; }
+.pr-mini-thumb[style] { background-size: cover; background-position: center; }
+.pr-mini-text { display: grid; flex: 1; min-width: 0; gap: 1px; }
+.pr-mini-text strong { overflow: hidden; color: var(--uw-navy); font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.pr-mini-text small { overflow: hidden; color: var(--uw-muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.pr-mini-rows > .pr-tile-empty { margin: 12px; }
+.pr-mini-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 11px 12px; border-top: 1px solid var(--uw-hairline); background: var(--uw-surface-soft); }
+.pr-mini-foot:empty { display: none; }
+.pr-mini-label { margin-right: 4px; color: var(--uw-muted); font-size: 12px; }
+body.unified-shell .pr-mini-chip { display: inline-flex; align-items: center; gap: 5px; min-height: 0; padding: 4px 10px; border: 1px solid var(--uw-line); border-radius: 999px; background: var(--uw-surface); color: var(--uw-text); font: inherit; font-size: 12px; font-weight: 600; box-shadow: none; cursor: pointer; }
+body.unified-shell .pr-mini-chip:hover { border-color: var(--uw-blue); color: var(--uw-blue-strong); }
+.pr-mini-chip b { color: var(--uw-muted); font-weight: 700; }
+
+/* Eligibility, documents: status rows */
 .pr-mini-checks { display: grid; gap: 8px; }
-.pr-mini-cost .pr-sample { display: block; margin-bottom: 6px; text-align: right; }
-.pr-mini-doc .pr-sample { margin-bottom: -2px; }
-.pr-mini-checks > div { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 12px; color: var(--uw-text); font-size: 13px; }
-.pr-mini-checks > div > span { flex: 1; }
-.pr-mini-checks .lucide { width: 16px; height: 16px; stroke-width: 2.4; }
-.pr-mini-checks small { font-size: 11px; font-weight: 700; }
+.pr-mini-checks > * { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 12px; color: var(--uw-text); font-size: 13px; text-decoration: none; }
+.pr-mini-checks > * > span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pr-mini-checks .lucide { flex: 0 0 auto; width: 16px; height: 16px; stroke-width: 2.4; }
+.pr-mini-checks small { flex: 0 0 auto; font-size: 11px; font-weight: 700; }
 .pr-mini-checks .ok { background: var(--uw-cyan-soft); color: var(--uw-blue-strong); }
-.pr-mini-checks .ok > span { color: var(--uw-text); }
 .pr-mini-checks .warn { background: var(--glass-peach); color: var(--glass-coral-strong); }
-.pr-mini-checks .warn > span { color: var(--uw-text); }
+.pr-mini-checks .muted { background: var(--uw-surface-soft); color: var(--uw-muted); }
+.pr-mini-checks a:hover { filter: brightness(.97); }
+.pr-mini-docs { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.pr-mini-docs li { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; background: var(--uw-surface-soft); color: var(--uw-text); font-size: 13px; }
+.pr-mini-docs li > span, .pr-mini-docs li > a > span { flex: 1; min-width: 0; }
+.pr-mini-docs li > a { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; color: inherit; text-decoration: none; }
+.pr-mini-docs li:has(> a):hover { background: var(--uw-line); }
+.pr-mini-docs em { display: block; color: var(--uw-muted); font-size: 11px; font-style: normal; }
+.pr-mini-docs small { flex: 0 0 auto; color: var(--uw-muted); font-size: 11px; font-weight: 700; }
+.pr-mini-docs .lucide { flex: 0 0 auto; width: 16px; height: 16px; color: var(--uw-line-strong); }
+.pr-mini-docs .ready .lucide { color: var(--uw-blue-strong); }
+.pr-mini-docs .ready small { color: var(--uw-blue-strong); }
+.pr-mini-docs .preparing .lucide, .pr-mini-docs .preparing small { color: var(--uw-amber-ink); }
+
+/* Calendar: this week, then the next real deadlines */
 .pr-mini-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
 .pr-mini-week > div { display: grid; gap: 4px; padding: 8px 0 10px; border-radius: 10px; background: var(--uw-surface-soft); color: var(--uw-text); }
 .pr-mini-week small { font-size: 10px; opacity: .8; }
@@ -145,23 +201,32 @@ html[data-theme="dark"] .pr-map-host, .pr-map-band .pr-map-host { --map-land: #2
 .pr-mini-week .hot { background: var(--uw-navy); color: var(--uw-page); }
 .pr-mini-week .hot span { background: #ffb5a6; }
 .pr-mini-week .today span { background: var(--uw-blue); }
-.pr-mini-banner { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 12px; background: var(--glass-peach); color: var(--glass-coral-strong); font-size: 12px; font-weight: 700; }
-.pr-mini-banner[hidden] { display: none; }
-.pr-mini-banner .lucide { width: 15px; height: 15px; }
-.pr-mini-doc { display: grid; gap: 7px; padding: 14px; border: 1px solid var(--uw-hairline); border-radius: 14px; background: var(--uw-surface); }
-.pr-mini-doc .line { height: 7px; border-radius: 4px; background: var(--uw-ph-a); }
-.pr-mini-doc .flag { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 9px; font-size: 12px; font-weight: 700; }
-.pr-mini-doc .flag .lucide { width: 14px; height: 14px; }
-.pr-mini-doc .flag.warn { margin: 4px 0; background: var(--glass-peach); color: var(--glass-coral-strong); }
-.pr-mini-doc .flag.amber { margin-top: 4px; background: var(--uw-amber-soft); color: var(--uw-amber-ink); }
-.pr-mini-cost .bar { display: flex; gap: 3px; height: 14px; overflow: hidden; border-radius: 8px; }
-.pr-mini-cost .c1 { background: var(--uw-blue); }
-.pr-mini-cost .c2 { background: var(--uw-lilac-ink); }
-.pr-mini-cost .c3 { background: var(--glass-coral); }
-.pr-mini-cost .c4 { background: #e0b04a; }
-.pr-mini-cost ul { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 12px 0 0; padding: 0; color: var(--uw-muted); font-size: 12px; list-style: none; }
-.pr-mini-cost li { display: inline-flex; align-items: center; gap: 6px; }
-.pr-mini-cost li i { width: 8px; height: 8px; border-radius: 2px; }
+#home-tile-calendar { display: flex; flex: 1; flex-direction: column; gap: 14px; min-width: 0; }
+#home-tile-calendar > .pr-link { margin-top: auto; }
+.pr-mini-dates { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.pr-mini-dates li { display: flex; align-items: center; gap: 12px; }
+.pr-mini-date { display: grid; place-items: center; flex: 0 0 46px; padding: 5px 0; border-radius: 10px; background: var(--glass-peach); color: var(--glass-coral-strong); text-align: center; line-height: 1.15; }
+.pr-mini-date small { font-size: 10px; font-weight: 700; }
+.pr-mini-date strong { font-size: 17px; }
+.pr-mini-dates .pr-mini-text small b { color: var(--glass-coral-strong); font-weight: 700; }
+
+/* Budget: the student's own plan, or the school's official cost note */
+.pr-budget-total { display: grid; gap: 2px; }
+.pr-budget-total strong { color: var(--uw-navy); font-size: 26px; letter-spacing: -.02em; }
+.pr-budget-total span { color: var(--uw-muted); font-size: 12px; }
+.pr-budget-bar { display: flex; gap: 3px; height: 14px; overflow: hidden; border-radius: 8px; }
+.pr-budget-bar .c1, .pr-budget-legend .c1 { background: var(--uw-blue); }
+.pr-budget-bar .c2, .pr-budget-legend .c2 { background: var(--uw-lilac-ink); }
+.pr-budget-bar .c3, .pr-budget-legend .c3 { background: var(--glass-coral); }
+.pr-budget-bar .c4, .pr-budget-legend .c4 { background: #e0b04a; }
+.pr-budget-bar .c5, .pr-budget-legend .c5 { background: var(--uw-line-strong); }
+.pr-budget-legend { display: grid; gap: 6px; margin: 0; padding: 0; color: var(--uw-muted); font-size: 12px; list-style: none; }
+.pr-budget-legend li { display: flex; align-items: center; gap: 8px; }
+.pr-budget-legend li i { width: 8px; height: 8px; border-radius: 2px; }
+.pr-budget-legend li b { margin-left: auto; color: var(--uw-text); font-weight: 700; }
+.pr-budget-source { display: grid; gap: 8px; margin: 0; padding: 14px; border-radius: 14px; background: var(--uw-surface-soft); color: var(--uw-text); font-size: 13px; line-height: 1.7; }
+.pr-budget-source > span { display: inline-flex; align-items: center; gap: 6px; color: var(--uw-navy); font-weight: 700; }
+.pr-budget-source .lucide { width: 14px; height: 14px; color: var(--uw-blue-strong); }
 
 .pr-map-band { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); border: 1px solid transparent; border-radius: 32px; background: #0f1d30; overflow: hidden; box-shadow: 0 30px 80px #0f1d3040; }
 html[data-theme="dark"] .pr-map-band { border-color: #ffffff1a; }
@@ -242,7 +307,6 @@ html[data-theme="dark"] .pr-school-tile { background: hsl(var(--school-tint) 38%
   .pr-supported ul { flex-basis: 100%; }
 }
 @media (max-width: 600px) {
-  .pr-guide-grid span:nth-child(n+3) { display: none; }
   .pr-pill { white-space: normal; }
   .pr-footer { padding: 32px 0 40px; }
 }
@@ -252,7 +316,7 @@ html[data-theme="dark"] .pr-school-tile { background: hsl(var(--school-tint) 38%
 }
 
 /* ---------- 2. Explore schools (#partners) ---------- */
-body.unified-shell #dashboard-view > #partners.pr-explore, body.unified-shell #dashboard-view > #partners.pr-explore:has([data-partner-view="list"][aria-pressed="true"]) { container-type: inline-size; width: calc(100% - 144px); max-width: 1320px; margin-left: max(112px, calc(112px + (100% - 144px - 1320px) / 2)); }
+body.unified-shell #dashboard-view > #partners.pr-explore, body.unified-shell #dashboard-view > #partners.pr-explore:has([data-partner-view="list"][aria-pressed="true"]) { container-type: inline-size; }
 body.unified-shell #partners.pr-explore .pr-facets .filter-panel, body.unified-shell #partners.pr-explore:has([data-partner-view="list"][aria-pressed="true"]) .pr-facets .filter-panel { grid-template-columns: minmax(0, 1fr); gap: 0; align-items: stretch; }
 body.unified-shell #partners.pr-explore:has([data-partner-view="list"][aria-pressed="true"]) .journey-search-layout { grid-template-columns: 260px minmax(0, 1fr); }
 .pr-explore-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
@@ -329,7 +393,7 @@ body.unified-shell #partners.pr-explore .pr-school-card details.partner-card > s
 body.unified-shell #partners.pr-explore .pr-school-card .school-photo { display: block; position: relative; width: 100%; aspect-ratio: 4 / 3; height: auto; border-radius: 20px; overflow: hidden; background: repeating-linear-gradient(135deg, var(--uw-ph-a) 0 8px, var(--uw-ph-b) 8px 16px); }
 .pr-school-card .school-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .pr-school-card .school-photo-fallback { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: 6px; color: var(--uw-muted); font-size: 11px; background: none; }
-.pr-badge { position: absolute; left: 12px; top: 12px; max-width: calc(100% - 68px); overflow: hidden; padding: 5px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.pr-school-card .pr-badge { position: absolute; left: 12px; top: 12px; max-width: calc(100% - 68px); overflow: hidden; text-overflow: ellipsis; }
 .pr-badge-ok { background: #dbf5f2; color: #0b6486; }
 .pr-badge-warn { background: #ffe9df; color: #a83c39; }
 body.unified-shell #partners.pr-explore .pr-card-media > .favorite-toggle { position: absolute; right: 10px; top: 10px; z-index: 1; display: grid; place-items: center; width: 34px; height: 34px; min-height: 0; padding: 0; border: 0; border-radius: 50%; background: #ffffffe6; color: #14223f; box-shadow: none; }
@@ -381,8 +445,7 @@ body.unified-shell #partners.pr-explore .pr-compare-tray button:disabled { opaci
 }
 
 /* ---------- 3. School detail ---------- */
-body.unified-shell .school-detail-view.pr-detail:not([hidden]) { container-type: inline-size; display: block; width: calc(100% - 144px); max-width: 1200px; margin: 0 32px 0 112px; padding: clamp(18px, 2.4cqi, 32px) 0 96px; background: none; }
-@media (min-width: 1481px) { body.unified-shell .school-detail-view.pr-detail:not([hidden]) { margin-left: calc(112px + (100% - 144px - 1200px) / 2); } }
+body.unified-shell .school-detail-view.pr-detail:not([hidden]) { container-type: inline-size; display: block; padding: clamp(18px, 2.4cqi, 32px) 0 96px; background: none; }
 .pr-detail-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
 .pr-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; color: var(--uw-muted); font-size: 13px; min-width: 0; }
 .pr-breadcrumb a { display: inline-flex; align-items: center; gap: 6px; color: var(--uw-muted); text-decoration: none; }
@@ -493,7 +556,7 @@ body.unified-shell .pr-booking .secondary-button { min-height: 48px; margin-top:
 
 /* ---------- 4. Application guide (#guide) ---------- */
 html body.unified-shell[data-active-university-page="guide"]::before, html body.unified-shell[data-active-university-page="overview"]::before, html body.unified-shell[data-active-university-page="profile"]::before { background: var(--uw-page); }
-body.unified-shell #dashboard-view > #guide.pr-guide { container-type: inline-size; max-width: 1320px; padding-top: 12px; }
+body.unified-shell #dashboard-view > #guide.pr-guide { container-type: inline-size; padding-top: 12px; }
 .pr-guide-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr) 220px; gap: clamp(20px, 3cqi, 48px); align-items: start; }
 .pr-guide-toc { position: sticky; top: 16px; padding: 8px 0; }
 .pr-guide-search { display: flex; align-items: center; gap: 8px; width: 100%; box-sizing: border-box; padding: 9px 12px; border: 1px solid var(--uw-line); border-radius: 10px; background: var(--uw-surface); color: var(--uw-muted); font-size: 13px; cursor: text; }
@@ -600,11 +663,7 @@ body.unified-shell .pr-guide-feedback .pr-report { margin-left: auto; padding: 0
 }
 
 /* ---------- 5. My applications (#overview): flat tracker ---------- */
-body.unified-shell #dashboard-view > #application-workspace[data-page="overview"] { container-type: inline-size; max-width: 1320px; gap: 16px; }
-/* Below 900px the workspace keeps its own full-width layout; the rail offset only applies beside the rail. */
-@media (min-width: 901px) {
-  body.unified-shell #dashboard-view > #application-workspace[data-page="overview"] { margin-left: max(112px, calc(112px + (100% - 144px - 1320px) / 2)); }
-}
+body.unified-shell #dashboard-view > #application-workspace[data-page="overview"] { container-type: inline-size; gap: 16px; }
 body.unified-shell #application-workspace[data-page="overview"] > #overview:not([hidden]) { gap: 20px; }
 /* The workspace header keeps its stage tabs; the board below carries the page title. */
 body.unified-shell #application-workspace[data-page="overview"] .application-workspace-heading { padding: 10px 14px; border: 1px solid var(--uw-line); border-radius: 14px; background: var(--uw-surface); box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
@@ -712,7 +771,7 @@ button.pr-ring:focus-visible { outline: 2px solid var(--uw-blue); outline-offset
 @media (max-width: 700px) { .pr-task-chip { display: none; } .pr-kanban { grid-template-columns: minmax(0, 1fr); } .pr-tasklist-bar select { max-width: 110px; } }
 
 /* ---------- 6. Forum (#forum): stories masonry ---------- */
-body.unified-shell #community-hub#community-hub.pr-forum { container-type: inline-size; display: flex; flex-direction: column; align-items: stretch; gap: clamp(20px, 2.4cqi, 32px); max-width: 1320px; }
+body.unified-shell #community-hub#community-hub.pr-forum { container-type: inline-size; display: flex; flex-direction: column; align-items: stretch; gap: clamp(20px, 2.4cqi, 32px); }
 /* The id-doubled display above would otherwise beat the rules that hide the hub on every other page. */
 body.unified-shell:is(.public-exploration-mode, .university-board-mode:not(.cgu-community-mode)) #community-hub#community-hub.pr-forum { display: none; }
 body.unified-shell #community-hub#community-hub.pr-forum .community-feed-header { grid-area: auto; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
@@ -791,7 +850,7 @@ body.unified-shell #community-hub#community-hub.pr-forum[data-forum-mode="boards
 @media (prefers-reduced-motion: reduce) { .pr-poster-art, body.unified-shell #community-hub#community-hub.pr-forum .global-community-feed .community-post-card { transition: none; } .pr-poster:hover .pr-poster-art, body.unified-shell #community-hub#community-hub.pr-forum .global-community-feed .community-post-card:hover { transform: none; } }
 
 /* ---------- 7. Profile (#profile): settings page ---------- */
-body.unified-shell #dashboard-view > #profile.pr-profile { container-type: inline-size; max-width: 1100px; margin-inline: auto; padding-top: 12px; }
+body.unified-shell #dashboard-view > #profile.pr-profile { container-type: inline-size; padding-top: 12px; }
 .pr-profile-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(16px, 3cqi, 48px); align-items: start; padding-bottom: 72px; }
 .pr-profile-nav { position: sticky; top: 16px; padding-top: 8px; }
 .pr-profile-user { display: flex; align-items: center; gap: 10px; padding: 6px 10px 16px; }

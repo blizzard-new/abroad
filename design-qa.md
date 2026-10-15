@@ -1,3 +1,31 @@
+# Design QA: page frame and home cards (follow-up to the platform redesign)
+
+## Comparison target
+
+- Source of truth: the user's screenshots of the live site (home left-aligned on a wide window, faint vertical lines beside every home section, home cards filled with fixed samples, forum not centred), plus `design_handoff_uniway_redesign/designs/` for the cards' purpose and layout.
+- Implementation screenshots: `docs/platform-redesign-2026-10-15/home-light-1440.webp`, `home-light-1920.webp`, `home-dark-1440.webp`, `home-light-834.webp`, `home-light-393.webp`, `forum-light-1920.webp`.
+- State: Chinese UI, 長庚大學 as the home school, real catalogue data from the local dev server; a signed-in test account for the personalised cards.
+
+## What changed
+
+- **Centring.** Every page root now sits in the middle of the area between the navigation rail and the right edge, on windows wider than 900 px. The width is one custom property (`--pr-page-max`) per page type, so the page and its back bar share it. A legacy `@media (min-width: 901px)` rule in `glass-theme.css` had been overriding the older centring rule at 1600 px and wider; the new rule replaces it for the redesigned pages.
+- **Faint vertical lines.** They were the home page's `.pr-guide-grid` backdrop (dashed rules down the section edges) and the hairlines above and below the supported-schools strip. Both are removed.
+- **Home cards use real data.** The five cards (school search, eligibility, calendar, documents, budget) are filled by `platform-home.js` from the same data the rest of the app uses. Visitors see the home school's open partners, official deadlines, official document guidance and official living-cost notes. Signed-in users see their own picks, calendar and checklist when they have them, and the official data when they do not. A card with nothing to show says what is missing and offers a next step; none is an empty frame.
+- **Misc.** The email chip on the profile page no longer floats at the top-left of the window (a shared `.pr-badge` class carried the school card's absolute positioning). The search button on the home card no longer wraps at 393 px.
+
+## Findings
+
+- No P0 or P1 mismatch is known. Centring was measured on every route at 1440, 1920 and 2560 (visitor) and 1920 (signed in): left and right gaps equal within 2 px, back bars aligned with their pages, no horizontal overflow.
+- Data limit: the dev catalogue has no per-school document checklist or workflow, so the documents card falls back to official guidance and the calendar card to grouped partner deadlines. Production data with checklists will show those instead.
+- Not verified: a signed-in user who has already saved a budget plan was checked in the code path only, not in a screenshot.
+
+## Verification
+
+- New end-to-end tests in `tests/e2e/test_platform_redesign.py`: every page centred beside the rail at 1440 / 1920 / 2560, the home page without the guide lines or sample copy, and the home cards listing real partner schools (with the card search carrying its words to the explore page). The whole file passes (19 tests).
+- Contract and routing suite (frontend contract, independent page routing, loading screen, static caching, responsive CSS, UI contract and related): 129 passed.
+- 13 existing end-to-end files that touch the home page, navigation, layout, forum and feedback: 146 passed, 9 failed. Two of the nine (`test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return`, `test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history`) also fail on `main`. The other seven were this change's own: the home search field was `type="search"`, which gave the school picker tests a second `searchbox` (changed to a text field), and the rail test asserted that the expanded rail overlaps a page that now starts one pixel clear of it (it now asserts the rail is fixed, and still asserts the page does not move). All seven pass after those two edits.
+- Not run again after this change: the other roughly 100 end-to-end files and the backend suite; they do not touch these files.
+
 # Design QA: platform redesign (home, explore, school detail, guide, tracker, forum, profile)
 
 ## Comparison target

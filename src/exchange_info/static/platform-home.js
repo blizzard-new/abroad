@@ -1,6 +1,7 @@
-/* Home landing (#home): product story, supported schools, plan collage and partner map preview.
-   Every number and sample row on the page follows the loaded catalogue; app.js calls UniWayHome.render()
-   whenever the school, dashboard, account or saved schools change. */
+/* Home landing (#home): product story, supported schools, plan collage, partner map and the five tool tiles.
+   Nothing on the page is a fixed sample: every school, count, date, document and amount comes from the loaded
+   catalogue and, when someone is signed in, from their own saved data. app.js calls UniWayHome.render() whenever
+   the school, dashboard, account or saved schools change. */
 window.UniWayHome = (() => {
   "use strict";
   const LAND_URL = "/static/assets/home/world-land.json?v=20261015-redesign-1";
@@ -136,44 +137,198 @@ window.UniWayHome = (() => {
     }).join("");
   }
 
-  function renderSamples(host) {
-    const partners = state.dashboard?.school_name === state.homeSchool || !state.homeSchool ? state.dashboard?.partner_universities || [] : [];
-    const rows = host.querySelectorAll(".pr-mini-row");
-    const profile = state.eligibilityProfile;
-    rows.forEach((row, index) => {
-      const item = partners[index];
-      row.hidden = !item;
-      if (!item) return;
-      const strong = row.querySelector("strong"), small = row.querySelector("small"), tag = row.querySelector(".pr-tag");
-      strong.textContent = (item.school_name || "").replace(/\s+[A-Za-z].*$/, "") || item.school_name;
-      small.textContent = [item.country, item.location?.city].filter(Boolean).join("・");
-      let ok, label;
-      if (profile) { const match = partnerMatch(item); ok = match.tone !== "blocked"; label = match.label; }
-      else { const availability = partnerAvailabilityMeta(item); ok = !availability.blocked; label = availability.shortLabel; }
-      tag.textContent = label;
-      tag.className = `pr-tag ${ok ? "pr-tag-ok" : "pr-tag-warn"}`;
-    });
-    host.querySelector(".pr-mini-search")?.classList.toggle("is-empty", !partners.length);
+  const html = (value) => escapeHtml(String(value ?? ""));
+  const shortName = (name) => String(name || "").replace(/\s+[A-Za-z].*$/, "") || String(name || "");
+  const monthDay = (date) => `${date.getMonth() + 1}/${String(date.getDate()).padStart(2, "0")}`;
+  const icon = (name) => `<i data-lucide="${name}" aria-hidden="true"></i>`;
+
+  // Partners of the school that is open, or of the default catalogue while none is chosen.
+  function currentPartners() {
+    if (!state.dashboard) return [];
+    return !state.homeSchool || state.dashboard.school_name === state.homeSchool ? state.dashboard.partner_universities || [] : [];
   }
 
-  function renderWeek(host) {
-    const strip = host.querySelector("#home-week"), banner = host.querySelector("#home-week-banner");
+  function availabilityGroup(item) {
+    const meta = partnerAvailabilityMeta(item);
+    return meta.pending ? "pending" : meta.blocked ? "blocked" : "open";
+  }
+
+  // Schools worth showing first: open ones, then the nearest deadline, then the most places.
+  function featured(list, limit) {
+    const rank = (item) => ({ open: 0, pending: 1, blocked: 2 })[availabilityGroup(item)];
+    return [...list].sort((a, b) => rank(a) - rank(b)
+      || (partnerNextDeadline(a)?.getTime() ?? Infinity) - (partnerNextDeadline(b)?.getTime() ?? Infinity)
+      || (partnerQuotaNumber(b) ?? -1) - (partnerQuotaNumber(a) ?? -1)).slice(0, limit);
+  }
+
+  function emptyTile(message, withPicker) {
+    return `<div class="pr-tile-empty"><p>${html(message)}</p>${withPicker ? `<button type="button" class="pr-link" data-home-pick-school>選擇就讀學校${icon("arrow-right")}</button>` : ""}</div>`;
+  }
+
+  function renderSearch(host, list) {
+    const rows = host.querySelector("#home-search-rows"), foot = host.querySelector("#home-search-foot");
+    const lede = host.querySelector("#home-search-lede");
+    if (!list.length) {
+      rows.innerHTML = emptyTile(state.homeSchool ? "合作校資料載入中…" : "選擇就讀學校後，這裡會列出你能申請的合作校。", !state.homeSchool);
+      foot.innerHTML = "";
+      return;
+    }
+    const profile = state.eligibilityProfile;
+    const groups = { open: 0, pending: 0, blocked: 0 };
+    list.forEach((item) => { groups[availabilityGroup(item)] += 1; });
+    lede.textContent = `${state.homeSchool || "目前"}的 ${formatNumber(list.length)} 間合作校，${groups.open ? `${formatNumber(groups.open)} 間本期可申請` : "可依國家與學期篩選"}。`;
+    rows.innerHTML = featured(list, 3).map((item) => {
+      const meta = partnerAvailabilityMeta(item);
+      const match = profile ? partnerMatch(item) : null;
+      const ok = match ? match.tone !== "blocked" : !meta.blocked;
+      const label = match ? match.label : meta.shortLabel;
+      const image = schoolImageFor(item.school_name, item.country)?.local_path;
+      const deadline = partnerNextDeadline(item), quota = partnerQuotaNumber(item);
+      const facts = [quota ? `名額 ${quota}` : "", deadline ? `截止 ${monthDay(deadline)}` : ""].filter(Boolean).join(" · ");
+      return `<a class="pr-mini-row" href="#school=${encodeURIComponent(item.school_name)}">
+        <span class="pr-mini-thumb"${image ? ` style="background-image:url('${html(image)}')"` : ""}></span>
+        <span class="pr-mini-text"><strong>${html(shortName(item.school_name))}</strong><small>${html([item.country, item.location?.city].filter(Boolean).join("・"))}${facts ? ` · ${html(facts)}` : ""}</small></span>
+        <span class="pr-tag ${ok ? "pr-tag-ok" : "pr-tag-warn"}">${html(label)}</span></a>`;
+    }).join("");
+    const countries = new Map();
+    list.forEach((item) => { if (item.country) countries.set(item.country, (countries.get(item.country) || 0) + 1); });
+    const top = [...countries].sort((a, b) => b[1] - a[1]).slice(0, 5);
+    foot.innerHTML = `<span class="pr-mini-label">熱門國家</span>${top.map(([country, count]) => `<button type="button" class="pr-mini-chip" data-home-country="${html(country)}">${html(country)} <b>${count}</b></button>`).join("")}`;
+  }
+
+  function renderFit(host, list) {
+    const body = host.querySelector("#home-tile-fit");
+    if (!list.length) { body.innerHTML = emptyTile("選擇就讀學校後，這裡會依你的條件列出符合與待確認的學校。", !state.homeSchool); return; }
+    const profile = state.eligibilityProfile;
+    const picks = [...(state.applications || [])].map((name) => partnerByName(name)).filter(Boolean);
+    if (picks.length || profile) {
+      // Someone's own picks (or, with conditions filled in, the schools that suit them best) instead of school-wide counts.
+      const pool = (picks.length ? picks : featured(list, 4)).slice(0, 4);
+      body.innerHTML = `<small class="pr-tile-note">${picks.length ? `我的志願 · ${picks.length} 間` : "依你的條件優先看這些"}</small><div class="pr-mini-checks">${pool.map((item) => {
+        const meta = partnerAvailabilityMeta(item);
+        const match = profile ? partnerMatch(item) : null;
+        const ok = match ? match.tone !== "blocked" : !meta.blocked;
+        return `<a class="${ok ? "ok" : "warn"}" href="#school=${encodeURIComponent(item.school_name)}">${icon(ok ? "circle-check" : "clock-alert")}<span>${html(shortName(item.school_name))}</span><small>${html(match ? match.label : meta.shortLabel)}</small></a>`;
+      }).join("")}</div><a class="pr-link" href="${profile ? "#eligibility" : "#advisor"}" data-requires-home-school>${profile ? "查看完整初判" : "填寫條件，看你符合哪些"}${icon("arrow-right")}</a>`;
+      return;
+    }
+    const groups = { open: 0, pending: 0, blocked: 0 };
+    list.forEach((item) => { groups[availabilityGroup(item)] += 1; });
+    const row = (cls, glyph, label, count) => `<div class="${cls}">${icon(glyph)}<span>${label}</span><small>${formatNumber(count)} 間</small></div>`;
+    body.innerHTML = `<small class="pr-tile-note">${html(state.homeSchool || "目前")}的合作校狀態</small><div class="pr-mini-checks">${row("ok", "circle-check", "本期可申請", groups.open)}${row("warn", "clock-alert", "名額或期間待確認", groups.pending)}${row("muted", "circle-slash", "目前不開放", groups.blocked)}</div><a class="pr-link" href="#advisor" data-requires-home-school>填寫條件，看你符合哪些${icon("arrow-right")}</a>`;
+  }
+
+  function upcomingEvents() {
+    const today = localDateKey();
+    const list = [];
+    try {
+      upcomingDeadlines(40).forEach((event) => { if (event.date) list.push({ date: event.date, title: event.title, scope: event.scope || "官方期限", personal: false }); });
+    } catch (_) { /* no workflow loaded yet */ }
+    (state.calendarEvents || []).filter((event) => event.origin !== "official" && event.title && event.date >= today).forEach((event) => {
+      const date = parseLocalDate(event.date);
+      if (date) list.push({ date, title: event.title, scope: "我的行程", personal: true });
+    });
+    if (list.length < 3) {
+      // No workflow is loaded for a visitor, so fall back to the partner schools' own application deadlines.
+      const byDay = new Map();
+      currentPartners().forEach((item) => {
+        const date = partnerNextDeadline(item);
+        if (!date) return;
+        const key = localDateKey(date);
+        const entry = byDay.get(key) || { date, names: [] };
+        entry.names.push(shortName(item.school_name));
+        byDay.set(key, entry);
+      });
+      byDay.forEach(({ date, names }) => list.push({
+        date,
+        title: names.length > 1 ? `${names.length} 間合作校申請截止` : `${names[0]} 申請截止`,
+        scope: names.length > 1 ? `${names.slice(0, 2).join("、")}等` : "合作校",
+        personal: false,
+      }));
+    }
+    return list.sort((a, b) => a.date - b.date);
+  }
+
+  function renderCalendar(host) {
+    const strip = host.querySelector("#home-week"), body = host.querySelector("#home-tile-calendar");
+    const events = upcomingEvents();
     const today = new Date();
     const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - ((today.getDay() + 6) % 7), 12);
-    let deadline = null;
-    try { deadline = upcomingDeadlines(1)[0] || null; } catch (_) { deadline = null; }
-    const deadlineKey = deadline ? localDateKey(deadline.date) : "";
+    const marked = new Set(events.map((event) => localDateKey(event.date)));
+    strip.removeAttribute("aria-hidden");
+    strip.setAttribute("role", "group");
+    strip.setAttribute("aria-label", "本週");
     strip.innerHTML = ["一", "二", "三", "四", "五", "六", "日"].map((name, index) => {
       const day = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + index, 12);
       const key = localDateKey(day);
-      const cls = key === deadlineKey ? "hot" : key === localDateKey(today) ? "today" : "";
+      const cls = marked.has(key) ? "hot" : key === localDateKey(today) ? "today" : "";
       return `<div class="${cls}"><small>${name}</small><strong>${day.getDate()}</strong><span></span></div>`;
     }).join("");
-    if (deadline) {
-      const days = calendarDaysUntil(localDateKey(deadline.date));
-      banner.hidden = false;
-      banner.querySelector("span").textContent = `${truncate(deadline.title, 18)}，${days === 0 ? "就是今天" : `還有 ${days} 天`}`;
-    } else banner.hidden = true;
+    if (!events.length) {
+      body.innerHTML = emptyTile(state.homeSchool ? "目前沒有已確認的官方期限，公告更新後會出現在這裡。" : "選擇就讀學校後，這裡會列出該校的申請期限。", !state.homeSchool);
+      return;
+    }
+    body.innerHTML = `<ol class="pr-mini-dates">${events.slice(0, 3).map((event) => {
+      const days = calendarDaysUntil(localDateKey(event.date));
+      return `<li><span class="pr-mini-date"><small>${event.date.getMonth() + 1} 月</small><strong>${String(event.date.getDate()).padStart(2, "0")}</strong></span><span class="pr-mini-text"><strong>${html(truncate(event.title, 28))}</strong><small>${days === null ? "" : `<b>${days === 0 ? "就是今天" : `還有 ${days} 天`}</b> · `}${html(event.scope)}</small></span></li>`;
+    }).join("")}</ol><a class="pr-link" href="#calendar" data-requires-home-school>開啟申請日曆${icon("arrow-right")}</a>`;
+  }
+
+  function renderDocuments(host, list) {
+    const body = host.querySelector("#home-tile-documents");
+    const items = list.length ? documentChecklistItems() : [];
+    if (!items.length) {
+      const notes = (list.length && (state.dashboard.document_explanations || state.dashboard.rule_explanations)) || [];
+      if (notes.length) {
+        body.innerHTML = `<small class="pr-tile-note">${html(state.homeSchool || "")}的官方文件重點 · 共 ${notes.length} 份</small>
+          <ul class="pr-mini-docs">${notes.slice(0, 4).map((note) => `<li><a href="#documents" data-requires-home-school>${icon("file-text")}<span>${html(truncate(note.title, 26))}<em>${html(note.document_type || "官方文件")}</em></span></a></li>`).join("")}</ul>
+          <a class="pr-link" href="#document-check" data-requires-home-school>檢查我的文件${icon("arrow-right")}</a>`;
+        return;
+      }
+      body.innerHTML = emptyTile(state.homeSchool ? "這間學校的文件清單整理中，請先看官方公告。" : "選擇就讀學校後，這裡會列出該校要準備的文件。", !state.homeSchool);
+      return;
+    }
+    const ready = items.filter((item) => readinessStatus(item.id) === "ready").length;
+    const glyph = { ready: "circle-check", preparing: "clock", todo: "circle" };
+    const label = { ready: "已備妥", preparing: "準備中", todo: "待準備" };
+    body.innerHTML = `<small class="pr-tile-note">${state.account ? `${ready} / ${items.length} 已備妥` : `共 ${items.length} 份文件 · 登入後可記錄進度`}</small>
+      <ul class="pr-mini-docs">${items.slice(0, 4).map((item) => {
+        const status = readinessStatus(item.id);
+        return `<li class="${status}">${icon(glyph[status])}<span>${html(truncate(item.title, 22))}${item.conditional ? "<em>符合身分才需要</em>" : ""}</span><small>${state.account ? label[status] : "待準備"}</small></li>`;
+      }).join("")}</ul><a class="pr-link" href="#documents" data-requires-home-school>查看文件說明${icon("arrow-right")}</a>`;
+  }
+
+  function renderBudget(host, list) {
+    const body = host.querySelector("#home-tile-budget");
+    const school = state.homeSchool ? preferredBudgetSchool() : "";
+    const plan = school ? budgetPlanForSchool(school) : null;
+    if (plan) {
+      const months = plan.months || 1;
+      const parts = [["住宿", (plan.housing || 0) * months, "c1"], ["餐飲", (plan.food || 0) * months, "c2"], ["交通", (plan.transport || 0) * months, "c3"], ["其他", (plan.other || 0) * months, "c4"], ["一次性費用", plan.oneTime || 0, "c5"]].filter(([, amount]) => amount > 0);
+      const total = parts.reduce((sum, [, amount]) => sum + amount, 0);
+      const net = Math.max(0, total - (plan.scholarship || 0));
+      body.innerHTML = `<small class="pr-tile-note">${html(shortName(school))} · ${months} 個月</small><div class="pr-budget-total"><strong>${html(formatBudgetAmount(net, plan.currency))}</strong><span>扣除補助後的預估總支出</span></div>
+        ${total ? `<div class="pr-budget-bar">${parts.map(([, amount, cls]) => `<span class="${cls}" style="flex:${amount}"></span>`).join("")}</div>
+        <ul class="pr-budget-legend">${parts.map(([name, amount, cls]) => `<li><i class="${cls}"></i>${name}<b>${html(formatBudgetAmount(amount, plan.currency))}</b></li>`).join("")}</ul>` : ""}
+        <a class="pr-link" href="#budget" data-requires-home-school>調整我的預算${icon("arrow-right")}</a>`;
+      return;
+    }
+    const sample = list.map((item) => ({ item, profile: destinationProfileForSchool(item.school_name) })).find((entry) => entry.profile?.cost_summary);
+    if (!sample) { body.innerHTML = emptyTile(state.homeSchool ? "官方生活費資料整理中；你也可以直接輸入自己的估算。" : "選擇就讀學校後，這裡會顯示合作校的官方生活費資料。", !state.homeSchool); return; }
+    const { item, profile } = sample;
+    body.innerHTML = `<small class="pr-tile-note">官方生活費參考 · ${html(shortName(item.school_name))}</small>
+      <p class="pr-budget-source"><span><i data-lucide="map-pin" aria-hidden="true"></i>${html(profile.city || profile.country || item.country || "")}</span>${html(truncate(profile.cost_summary, 96))}</p>
+      <small class="pr-tile-fine">${profile.last_checked ? `最後查核 ${html(formatDate(profile.last_checked).slice(0, 10))}；` : ""}幣別依學校公告，估算前請統一換算。</small>
+      <a class="pr-link" href="#budget" data-requires-home-school>開始估算我的預算${icon("arrow-right")}</a>`;
+  }
+
+  function renderTiles(host) {
+    const list = currentPartners();
+    renderSearch(host, list);
+    renderFit(host, list);
+    renderCalendar(host);
+    renderDocuments(host, list);
+    renderBudget(host, list);
   }
 
   function render() {
@@ -183,14 +338,15 @@ window.UniWayHome = (() => {
     const key = JSON.stringify([
       state.supportedUniversities.map((item) => [item.school_name, item.partner_count]), state.homeSchool,
       state.dashboard?.school_name, state.dashboard?.partner_universities?.length, Boolean(land),
-      state.account?.application_stage || "", state.applications?.size || 0, Boolean(state.eligibilityProfile), localDateKey(),
+      state.account?.id || "", state.account?.application_stage || "", [...(state.applications || [])], Boolean(state.eligibilityProfile),
+      localDateKey(), state.calendarEvents?.length || 0, state.destinationProfiles?.length || 0, state.workflowCache?.size || 0,
+      state.documentReadiness, state.budgetPlans, state.budgetSchool || "",
     ]);
     if (key === lastKey) return;
     lastKey = key;
     renderSchools(host);
     renderPlan(host);
-    renderSamples(host);
-    renderWeek(host);
+    renderTiles(host);
     renderMaps(host);
     const schoolCard = host.querySelector("#home-board-school-description");
     if (schoolCard) schoolCard.textContent = `${activeUniversityProfile().short_name || "校內"}學生的交換申請資訊與討論。`;
@@ -200,6 +356,20 @@ window.UniWayHome = (() => {
   function schedule() {
     if (scheduled) return;
     scheduled = window.requestAnimationFrame(render);
+  }
+
+  // The same address the explore page writes for its own filters, so back and reload behave as usual.
+  function goPartners({ q = "", country = "" } = {}) {
+    const url = new URL(window.location.href);
+    url.hash = "#partners";
+    url.searchParams.set("view", "list");
+    for (const [key, value] of [["q", q], ["country", country]]) {
+      if (value) url.searchParams.set(key, value);
+      else url.searchParams.delete(key);
+    }
+    if (state.homeSchool) url.searchParams.set("home", activeHomeSchool());
+    window.UniWayNavigation.pushState({}, "", url);
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
   }
 
   function openMap(event) {
@@ -219,9 +389,19 @@ window.UniWayHome = (() => {
     const school = event.target.closest("[data-home-landing-school]");
     if (school) { chooseHomeSchool(school.dataset.homeLandingSchool); return; }
     const map = event.target.closest("[data-home-open-map]");
-    if (map) openMap(event);
+    if (map) { openMap(event); return; }
+    if (event.target.closest("[data-home-pick-school]")) { openSchoolOnboarding(); return; }
+    const country = event.target.closest("[data-home-country]");
+    if (country) goPartners({ country: country.dataset.homeCountry });
+  });
+  document.addEventListener("submit", (event) => {
+    if (event.target.id !== "home-search-form") return;
+    event.preventDefault();
+    goPartners({ q: event.target.elements.q.value.trim() });
   });
 
   loadLand();
+  // Schools, destination notes and a signed-in student's saved data arrive at different times; the render key makes this cheap.
+  window.setInterval(() => { const host = root(); if (host && !host.hidden && !document.hidden) schedule(); }, 1500);
   return { render: schedule };
 })();
