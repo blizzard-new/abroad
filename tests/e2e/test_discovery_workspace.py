@@ -113,7 +113,7 @@ def test_cloud_selection_roundtrip_home_isolation_and_logout(page, browser, live
         other.locator('[data-discovery-shelf="experiences"]').click()
         expect(other.locator("#discovery-saved-experiences")).to_contain_text("宿舍與通勤心得")
         other.locator("#account-button").click()
-        expect(other.locator("#profile-dialog [data-discovery-recents]")).to_contain_text("宿舍與通勤心得")
+        expect(other.locator("#profile [data-discovery-recents]")).to_contain_text("宿舍與通勤心得")
         other.locator("#logout-button").click()
         expect(other.locator("#account-button-label")).to_have_text("登入")
         assert other.evaluate("Object.keys(localStorage).filter(k => k.startsWith('uniway-discovery-v1:') && !k.startsWith('uniway-discovery-v1:guest:'))") == []

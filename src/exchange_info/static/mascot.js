@@ -8,7 +8,8 @@
   // The page script applies the saved theme only after it loads; do it now so a dark-mode visitor is not shown a light screen.
   try {
     const saved = window.localStorage.getItem("exchange-guide-theme") || "light";
-    if (saved !== "light") document.documentElement.dataset.theme = "dark";
+    const dark = saved === "system" ? window.matchMedia("(prefers-color-scheme: dark)").matches : saved !== "light";
+    if (dark) document.documentElement.dataset.theme = "dark";
   } catch (_) {
     /* private mode: keep the default */
   }

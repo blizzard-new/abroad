@@ -64,6 +64,7 @@ const state = {
   authSessionEpoch: 0,
   authRestoreState: "pending",
   authRestoreRequestId: 0,
+  profileFilledFor: "",
   quarantinedAccountOwnerId: "",
   authProviders: [],
   authMode: "login",
@@ -74,6 +75,7 @@ const state = {
   globalCommunityTimer: null,
   globalCommunityFeed: "all",
   theme: "light",
+  themePreference: "light",
   homeSchool: "",
   selectedHomeSchool: "長庚大學",
   chooseSchoolForAccount: false,
@@ -250,6 +252,7 @@ const WORKFLOW_SOURCE_LABELS = {
 const UNIVERSITY_PAGE_ROUTES = new Set([
   "home",
   "guide",
+  "profile",
   "feedback",
   "overview",
   "advisor",
@@ -270,6 +273,7 @@ const UNIVERSITY_PAGE_ROUTES = new Set([
 const UNIVERSITY_PAGE_TITLES = {
   home: "首頁",
   guide: "申請指南",
+  profile: "個人中心",
   feedback: "用戶評價",
   overview: "我的申請",
   advisor: "選校規劃",
@@ -903,10 +907,22 @@ function initIcons() {
   }
 }
 
-function applyTheme(theme, { persist = true } = {}) {
-  const nextTheme = theme === "light" ? "light" : "dark";
+// The saved choice is "light", "dark" or "system". "system" follows the device (prefers-color-scheme) and keeps following it
+// when it changes; state.theme and data-theme always hold the colours actually shown ("light" or "dark").
+const systemThemeQuery = typeof window.matchMedia === "function" ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+function resolveTheme(preference) {
+  if (preference === "light" || preference === "dark") return preference;
+  return systemThemeQuery?.matches ? "dark" : "light";
+}
+
+function applyTheme(preference, { persist = true } = {}) {
+  const choice = ["light", "dark", "system"].includes(preference) ? preference : "dark";
+  const nextTheme = resolveTheme(choice);
+  state.themePreference = choice;
   state.theme = nextTheme;
   document.documentElement.dataset.theme = nextTheme;
+  document.documentElement.dataset.themePreference = choice;
   document.documentElement.style.colorScheme = nextTheme;
   const meta = $("#theme-color");
   if (meta) meta.setAttribute("content", nextTheme === "dark" ? "#080a0d" : "#f5f5f7");
@@ -919,11 +935,12 @@ function applyTheme(theme, { persist = true } = {}) {
   }
   if (persist) {
     try {
-      window.localStorage.setItem("exchange-guide-theme", nextTheme);
+      window.localStorage.setItem("exchange-guide-theme", choice);
     } catch (_) {
       // Theme still works when storage is unavailable.
     }
   }
+  window.UniWayProfile?.refreshTheme();
   initIcons();
 }
 
@@ -935,6 +952,9 @@ function initializeTheme() {
     storedTheme = "";
   }
   applyTheme(storedTheme || "light", { persist: false });
+  systemThemeQuery?.addEventListener?.("change", () => {
+    if (state.themePreference === "system") applyTheme("system", { persist: false });
+  });
 }
 
 function parseStoredJson(storage, key, fallback) {
@@ -2016,12 +2036,22 @@ function closeAuthDialog() {
   state.dialogReturnFocus = null;
 }
 
+// The account's settings are a full page (#profile). Every place that used to open the old dialog still calls this.
 function openProfileDialog() {
   renderDiscoveryRecents();
   if (!state.account) {
     openAuthDialog();
     return;
   }
+  if (window.location.hash === "#profile") {
+    applyAppRoute({ loadFeed: false, resetScroll: true });
+    return;
+  }
+  window.location.hash = "#profile";
+}
+
+function fillProfileForm() {
+  renderDiscoveryRecents();
   const form = $("#profile-form");
   form.elements.display_name.value = state.account.display_name || "";
   // "Not chosen yet" shows blank. A picked school cannot be changed again for 3 days (the server enforces it too).
@@ -2032,7 +2062,7 @@ function openProfileDialog() {
   form.elements.home_university.disabled = Boolean(lockedUntil);
   $("#profile-school-note").textContent = lockedUntil
     ? `學校選定後 3 天內不能更換，${formatSchoolLock(lockedUntil)} 之後才能修改。`
-    : "選定後 3 天內不能更換，請確認後再儲存。";
+    : "學校會顯示在你的帳號與貼文上，選定後 3 天內不能更換。";
   form.elements.target_countries.value = (state.account.target_countries || []).join("、");
   form.elements.application_stage.value = state.account.application_stage || "exploring";
   const notifications = state.account.notification_preferences || {};
@@ -2043,13 +2073,19 @@ function openProfileDialog() {
   form.querySelectorAll('input[name="reminder_days"]').forEach((input) => {
     input.checked = reminderDays.has(Number(input.value));
   });
+  form.querySelector(".form-status").textContent = "";
+  state.profileFilledFor = state.account.id;
   $("#profile-email").textContent = state.account.email || "社群帳號";
   renderProfileVerificationSummary();
   renderProfileAvatar();
-  state.dialogReturnFocus = document.activeElement;
-  $("#profile-dialog").hidden = false;
-  document.body.classList.add("account-dialog-open");
-  window.setTimeout(() => form.elements.display_name.focus(), 40);
+  window.UniWayProfile?.refresh();
+}
+
+// A deep link to #profile may load before the session is known, and a sign-out can happen while the page is open.
+function syncProfileRoute() {
+  if (window.location.hash !== "#profile" || state.authRestoreState === "pending") return;
+  if (!state.account) applyAppRoute({ loadFeed: false, resetScroll: false });
+  else if (state.profileFilledFor !== state.account.id) fillProfileForm();
 }
 
 function schoolLockedUntil() {
@@ -2082,13 +2118,6 @@ function renderProfileVerificationSummary() {
     $("#profile-email-verification-status").textContent = "";
   }
   initIcons();
-}
-
-function closeProfileDialog() {
-  $("#profile-dialog").hidden = true;
-  document.body.classList.remove("account-dialog-open");
-  state.dialogReturnFocus?.focus?.();
-  state.dialogReturnFocus = null;
 }
 
 function notificationActionUrl(item) {
@@ -2313,7 +2342,7 @@ async function deleteAllNotifications() {
 
 function trapAccountDialogFocus(event) {
   if (event.key !== "Tab") return;
-  const dialog = [$("#notification-dialog"), $("#profile-dialog"), $("#auth-dialog")].find((item) => item && !item.hidden);
+  const dialog = [$("#notification-dialog"), $("#auth-dialog")].find((item) => item && !item.hidden);
   if (!dialog) return;
   const focusable = [...dialog.querySelectorAll('button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')]
     .filter((item) => !item.hidden && item.getClientRects().length > 0);
@@ -3468,6 +3497,8 @@ function renderAccountState() {
   }
   renderProfileAvatar();
   renderEntitlementStatus();
+  syncProfileRoute();
+  window.UniWayProfile?.refresh();
   renderBoardFollowControls();
   renderCalendarSync();
   renderDocumentCheckAccess();
@@ -3618,10 +3649,11 @@ function clearAuthenticatedClientState() {
   } catch (_) {
     // In-memory clearing still protects the signed-out page.
   }
-  ["#profile-dialog", "#notification-dialog"].forEach((selector) => {
-    const dialog = $(selector);
-    if (dialog) dialog.hidden = true;
-  });
+  state.profileFilledFor = "";
+  const notificationDialog = $("#notification-dialog");
+  if (notificationDialog) notificationDialog.hidden = true;
+  // The profile page only exists for a signed-in account, so signing out leaves it.
+  if (window.location.hash === "#profile") window.location.replace("#home");
   document.body.classList.remove("account-dialog-open");
   state.dialogReturnFocus = null;
   renderAccountState();
@@ -3819,7 +3851,7 @@ async function saveAccountProfile(event) {
     renderApplicationCalendar();
     await loadNotifications({ quiet: true });
     status.textContent = "已儲存";
-    window.setTimeout(closeProfileDialog, 500);
+    window.UniWayProfile?.refresh();
   } catch (error) {
     status.textContent = error.message;
   } finally {
@@ -12923,7 +12955,7 @@ function isUniversityBoardRoute(hash = window.location.hash) {
 }
 
 function isPublicExplorationRoute(hash = window.location.hash) {
-  return hash === "#home" || hash === "#feedback" || hash === "#partners" || hash === "#search" || /^#school=/.test(hash) || /^#guide(=|$)/.test(hash);
+  return hash === "#home" || hash === "#feedback" || hash === "#profile" || hash === "#partners" || hash === "#search" || /^#school=/.test(hash) || /^#guide(=|$)/.test(hash);
 }
 
 function isPersonalizedRoute(hash = window.location.hash) {
@@ -12945,6 +12977,10 @@ function updateUniWayPublicNavigation(hash = window.location.hash) {
     link.classList.toggle("active", active);
     if (active) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
+  });
+  document.querySelectorAll("#account-button, #mobile-account-button, #global-mobile-account-button").forEach((button) => {
+    if (hash === "#profile") button.setAttribute("aria-current", "page");
+    else button.removeAttribute("aria-current");
   });
 }
 
@@ -13012,6 +13048,19 @@ function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
       $("#application-form-title").textContent = "正在載入申請文件";
       $("#application-form-description").textContent = "系統正在核對這份文件的欄位、份數與送件要求。";
     }
+    return;
+  }
+
+  if (hash === "#profile") {
+    // The profile page is private: without an account the sign-in dialog opens over the home page instead.
+    // While the saved session is still being checked the page waits, and syncProfileRoute() settles it afterwards.
+    if (!state.account && state.authRestoreState !== "pending") {
+      openAuthDialog();
+      window.location.replace("#home");
+      return;
+    }
+    if (state.account) fillProfileForm();
+    showUniversityPage("profile", { resetScroll, focusHeading: resetScroll && Boolean(state.account) });
     return;
   }
 
@@ -13100,7 +13149,6 @@ function bindEvents() {
   $("#mobile-account-button")?.addEventListener("click", () => state.account ? openProfileDialog() : openAuthDialog());
   $("#global-mobile-account-button").addEventListener("click", () => state.account ? openProfileDialog() : openAuthDialog());
   document.querySelectorAll("[data-close-auth]").forEach((button) => button.addEventListener("click", closeAuthDialog));
-  document.querySelectorAll("[data-close-profile]").forEach((button) => button.addEventListener("click", closeProfileDialog));
   document.querySelectorAll("[data-close-notifications]").forEach((button) => button.addEventListener("click", closeNotificationDialog));
   $("#notification-read-all").addEventListener("click", markAllNotificationsRead);
   $("#notification-delete-all").addEventListener("click", deleteAllNotifications);
@@ -13192,7 +13240,6 @@ function bindEvents() {
     trapAccountDialogFocus(event);
     if (event.key === "Escape") {
       if (!$("#auth-dialog").hidden) closeAuthDialog();
-      if (!$("#profile-dialog").hidden) closeProfileDialog();
       if (!$("#notification-dialog").hidden) closeNotificationDialog();
     }
   });

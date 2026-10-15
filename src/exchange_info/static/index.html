@@ -234,44 +234,6 @@
       </div>
     </section>
 
-    <section id="profile-dialog" class="account-dialog" role="dialog" aria-modal="true" aria-labelledby="profile-title" hidden>
-      <button type="button" class="dialog-backdrop" data-close-profile aria-label="關閉個人設定"></button>
-      <div class="account-dialog-shell profile-dialog-shell">
-        <button type="button" class="icon-button dialog-close" data-close-profile aria-label="關閉"><i data-lucide="x" aria-hidden="true"></i></button>
-        <div class="profile-heading"><span id="profile-avatar" class="profile-avatar"><i data-lucide="user-round" aria-hidden="true"></i></span><div><span class="eyebrow">我的帳號</span><h1 id="profile-title">個人設定</h1><p id="profile-email"></p></div></div>
-        <details class="discovery-recents" data-discovery-recents hidden></details>
-        <div id="profile-entitlement-status" class="profile-entitlement-status" hidden></div>
-        <div id="profile-verification-summary" class="profile-verification-summary" aria-live="polite"></div>
-        <section id="profile-email-verification" class="profile-email-verification" hidden>
-          <p><strong>校級看板限已驗證 Email 的會員查看、發文與留言，不限同校；公共板發文或留言也需要驗證。</strong><span id="profile-email-verification-address"></span></p>
-          <button id="request-profile-email-verification" type="button" class="secondary-button"><i data-lucide="mail-check" aria-hidden="true"></i><span>寄送驗證碼</span></button>
-          <div id="profile-email-verification-step" class="email-verification-code" hidden>
-            <label><span>六位數驗證碼</span><input id="profile-email-verification-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" /></label>
-            <button id="confirm-profile-email-verification" type="button" class="secondary-button">確認</button>
-          </div>
-          <div id="profile-email-verification-status" class="form-status" role="status"></div>
-        </section>
-        <form id="profile-form" class="account-form profile-form">
-          <label><span>公開暱稱</span><input name="display_name" minlength="2" maxlength="30" required /></label>
-          <label><span>目前就讀學校</span><input name="home_university" maxlength="80" value="長庚大學" aria-describedby="profile-school-note" /><small id="profile-school-note"></small></label>
-          <label><span>目標國家</span><input name="target_countries" maxlength="160" placeholder="日本、德國、澳洲" /><small>以頓號或逗號分隔</small></label>
-          <label><span>目前階段</span><select name="application_stage"><option value="exploring">探索學校</option><option value="eligibility">確認資格</option><option value="documents">準備文件</option><option value="submitted">已送出申請</option><option value="accepted">準備出發</option><option value="abroad">正在海外</option><option value="returned">已完成交換</option></select></label>
-          <fieldset class="profile-notification-settings">
-            <legend>提醒與通知</legend>
-            <label class="consent-row"><input name="web_notifications" type="checkbox" /><span>Web 站內截止提醒</span></label>
-            <label class="consent-row"><input name="email_notifications" type="checkbox" /><span>電子郵件 截止提醒（選擇加入）</span></label>
-            <label class="consent-row"><input name="content_updates" type="checkbox" /><span>官方規定與文件更新提醒</span></label>
-            <span class="profile-setting-label">截止前提醒日</span>
-            <div class="profile-reminder-days"><label><input name="reminder_days" type="checkbox" value="30" /><span>30 天</span></label><label><input name="reminder_days" type="checkbox" value="14" /><span>14 天</span></label><label><input name="reminder_days" type="checkbox" value="7" /><span>7 天</span></label><label><input name="reminder_days" type="checkbox" value="3" /><span>3 天</span></label><label><input name="reminder_days" type="checkbox" value="1" /><span>1 天</span></label></div>
-            <small>電子郵件 預設關閉，只有勾選並儲存後才排入寄送；可隨時關閉。行動裝置推播仍保持關閉。</small>
-          </fieldset>
-          <div class="form-status" role="status"></div>
-          <button type="submit" class="primary-button full-width"><i data-lucide="save" aria-hidden="true"></i><span>儲存設定</span></button>
-        </form>
-        <div class="profile-account-actions"><button id="logout-button" type="button" class="secondary-button"><i data-lucide="log-out" aria-hidden="true"></i><span>登出</span></button><button id="delete-account-button" type="button" class="text-action danger"><i data-lucide="trash-2" aria-hidden="true"></i><span>刪除帳號</span></button></div>
-      </div>
-    </section>
-
     <dialog id="workflow-issue-report-dialog" class="application-file-consent-dialog workflow-issue-report-dialog" aria-labelledby="workflow-issue-report-title">
       <form id="workflow-issue-report-form" novalidate>
         <header>
@@ -537,6 +499,128 @@
               </aside>
               <article id="guide-article" class="pr-guide-article"><h1 id="guide-title">申請指南</h1></article>
               <aside id="guide-outline" class="pr-guide-outline" aria-label="本頁內容"></aside>
+            </div>
+          </section>
+
+          <section id="profile" class="page-section pr-profile" data-university-page="profile" aria-labelledby="profile-title" hidden>
+            <div class="pr-profile-layout">
+              <aside class="pr-profile-nav" aria-label="設定選單">
+                <div class="pr-profile-user">
+                  <span id="profile-avatar" class="profile-avatar"><i data-lucide="user-round" aria-hidden="true"></i></span>
+                  <span><strong id="profile-nav-name">我的帳號</strong><small id="profile-nav-school"></small></span>
+                </div>
+                <div class="pr-profile-nav-group" role="group" aria-labelledby="profile-nav-account">
+                  <small id="profile-nav-account">帳號</small>
+                  <button type="button" data-profile-jump="profile-section-account" aria-current="true"><i data-lucide="user-round" aria-hidden="true"></i><span>個人資料</span></button>
+                  <button type="button" data-profile-jump="profile-row-school"><i data-lucide="graduation-cap" aria-hidden="true"></i><span>就讀學校</span></button>
+                  <button type="button" data-profile-jump="profile-section-notifications"><i data-lucide="bell" aria-hidden="true"></i><span>提醒與通知</span></button>
+                </div>
+                <div class="pr-profile-nav-group" role="group" aria-labelledby="profile-nav-prefs">
+                  <small id="profile-nav-prefs">偏好</small>
+                  <button type="button" data-profile-jump="profile-section-appearance"><i data-lucide="moon" aria-hidden="true"></i><span>外觀</span></button>
+                  <button type="button" data-profile-jump="profile-section-language"><i data-lucide="languages" aria-hidden="true"></i><span>語言</span></button>
+                </div>
+                <div class="pr-profile-nav-group" role="group" aria-labelledby="profile-nav-data">
+                  <small id="profile-nav-data">資料</small>
+                  <button type="button" data-profile-jump="profile-section-data"><i data-lucide="bookmark" aria-hidden="true"></i><span>收藏與比較</span></button>
+                  <button type="button" data-profile-jump="profile-row-export"><i data-lucide="file-text" aria-hidden="true"></i><span>匯出我的資料</span></button>
+                </div>
+              </aside>
+
+              <div class="pr-profile-main">
+                <h1 id="profile-title">個人資料</h1>
+                <p class="pr-profile-lede">這些資料會用來對照合作校資格，並顯示在你的公開貼文上。</p>
+                <details class="discovery-recents" data-discovery-recents hidden></details>
+                <div id="profile-entitlement-status" class="profile-entitlement-status" hidden></div>
+                <div id="profile-verification-summary" class="profile-verification-summary" aria-live="polite"></div>
+                <section id="profile-email-verification" class="profile-email-verification" hidden>
+                  <p><strong>校級看板限已驗證 Email 的會員查看、發文與留言，不限同校；公共板發文或留言也需要驗證。</strong><span id="profile-email-verification-address"></span></p>
+                  <button id="request-profile-email-verification" type="button" class="secondary-button"><i data-lucide="mail-check" aria-hidden="true"></i><span>寄送驗證碼</span></button>
+                  <div id="profile-email-verification-step" class="email-verification-code" hidden>
+                    <label><span>六位數驗證碼</span><input id="profile-email-verification-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" /></label>
+                    <button id="confirm-profile-email-verification" type="button" class="secondary-button">確認</button>
+                  </div>
+                  <div id="profile-email-verification-status" class="form-status" role="status"></div>
+                </section>
+
+                <form id="profile-form" class="account-form profile-form">
+                  <section id="profile-section-account" class="pr-set-panel" aria-label="個人資料">
+                    <div class="pr-set-row">
+                      <div class="pr-set-label"><strong id="profile-label-name">公開暱稱</strong><small id="profile-help-name">顯示在貼文與留言上，2–30 個字。</small></div>
+                      <div class="pr-set-control"><input class="pr-field" name="display_name" minlength="2" maxlength="30" required autocomplete="nickname" aria-labelledby="profile-label-name" aria-describedby="profile-help-name" /></div>
+                    </div>
+                    <div class="pr-set-row">
+                      <div class="pr-set-label"><strong id="profile-label-email">電子郵件</strong><small id="profile-help-email">不會顯示在公開貼文中。</small></div>
+                      <div class="pr-set-control"><span class="pr-field pr-field-static" role="textbox" aria-readonly="true" aria-labelledby="profile-label-email" aria-describedby="profile-help-email"><span id="profile-email">社群帳號</span></span><span id="profile-email-chip" class="pr-badge" hidden></span></div>
+                    </div>
+                    <div id="profile-row-school" class="pr-set-row">
+                      <div class="pr-set-label"><strong id="profile-label-school">目前就讀學校</strong><small id="profile-school-note">學校會顯示在你的帳號與貼文上，選定後 3 天內不能更換。</small></div>
+                      <div class="pr-set-control"><span class="pr-field pr-field-with-icon"><input name="home_university" maxlength="80" value="長庚大學" aria-labelledby="profile-label-school" aria-describedby="profile-school-note" /><i data-lucide="shield-check" aria-hidden="true"></i></span></div>
+                    </div>
+                    <div class="pr-set-row">
+                      <div class="pr-set-label"><strong id="profile-label-countries">目標國家</strong><small id="profile-help-countries">用來排序推薦的合作校。</small></div>
+                      <div class="pr-set-control pr-set-chips" role="group" aria-labelledby="profile-label-countries" aria-describedby="profile-help-countries">
+                        <input type="hidden" name="target_countries" maxlength="160" />
+                        <span id="profile-country-chips" class="pr-chip-list"></span>
+                        <span class="pr-country-add"><input id="profile-country-input" type="text" list="profile-country-options" maxlength="20" placeholder="國家名稱" aria-label="新增目標國家" hidden autocomplete="off" /><datalist id="profile-country-options"></datalist><button id="profile-country-add" type="button" class="pr-add-chip" aria-expanded="false"><i data-lucide="plus" aria-hidden="true"></i>新增</button></span>
+                      </div>
+                    </div>
+                    <div class="pr-set-row">
+                      <div class="pr-set-label"><strong id="profile-label-stage">目前階段</strong><small id="profile-help-stage">探索學校、確認資格、準備文件、已送出申請、準備出發、正在海外、已完成交換</small></div>
+                      <div class="pr-set-control"><select class="pr-field" name="application_stage" aria-labelledby="profile-label-stage" aria-describedby="profile-help-stage"><option value="exploring">探索學校</option><option value="eligibility">確認資格</option><option value="documents">準備文件</option><option value="submitted">已送出申請</option><option value="accepted">準備出發</option><option value="abroad">正在海外</option><option value="returned">已完成交換</option></select></div>
+                    </div>
+                  </section>
+
+                  <h2 id="profile-section-notifications-title" class="pr-set-heading">提醒與通知</h2>
+                  <fieldset id="profile-section-notifications" class="pr-set-panel profile-notification-settings">
+                    <legend class="visually-hidden">提醒與通知</legend>
+                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>Web 站內截止提醒</strong><small>在 UniWay 通知中心顯示</small></span><input class="pr-switch" name="web_notifications" type="checkbox" role="switch" /></label>
+                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>電子郵件 截止提醒（選擇加入）</strong><small>寄到你驗證過的信箱</small></span><input class="pr-switch" name="email_notifications" type="checkbox" role="switch" /></label>
+                    <label class="pr-set-row pr-set-switch"><span class="pr-set-label"><strong>官方規定與文件更新提醒</strong><small>合作校或學校公告有變動時通知你</small></span><input class="pr-switch" name="content_updates" type="checkbox" role="switch" /></label>
+                    <div class="pr-set-row" role="group" aria-labelledby="profile-label-days">
+                      <div class="pr-set-label"><strong id="profile-label-days" class="profile-setting-label">截止前提醒日</strong><small>可複選</small></div>
+                      <div class="pr-set-control profile-reminder-days"><label><input name="reminder_days" type="checkbox" value="30" /><span>30 天</span></label><label><input name="reminder_days" type="checkbox" value="14" /><span>14 天</span></label><label><input name="reminder_days" type="checkbox" value="7" /><span>7 天</span></label><label><input name="reminder_days" type="checkbox" value="3" /><span>3 天</span></label><label><input name="reminder_days" type="checkbox" value="1" /><span>1 天</span></label></div>
+                    </div>
+                    <p class="pr-set-note">電子郵件 預設關閉，只有勾選並儲存後才排入寄送；可隨時關閉。行動裝置推播仍保持關閉。</p>
+                  </fieldset>
+                  <div class="pr-set-save">
+                    <div class="form-status" role="status" aria-live="polite"></div>
+                    <button type="submit" class="primary-button"><i data-lucide="save" aria-hidden="true"></i><span>儲存設定</span></button>
+                  </div>
+                </form>
+
+                <h2 id="profile-section-appearance-title" class="pr-set-heading">外觀</h2>
+                <div id="profile-section-appearance" class="pr-theme-cards" role="radiogroup" aria-labelledby="profile-section-appearance-title">
+                  <button type="button" role="radio" aria-checked="false" data-theme-choice="light"><span class="pr-theme-preview" data-preview="light"><i></i><span><b></b><em></em></span></span><strong>淺色</strong></button>
+                  <button type="button" role="radio" aria-checked="false" data-theme-choice="dark"><span class="pr-theme-preview" data-preview="dark"><i></i><span><b></b><em></em></span></span><strong>深色</strong></button>
+                  <button type="button" role="radio" aria-checked="false" data-theme-choice="system"><span class="pr-theme-preview" data-preview="system"><i></i><span><b></b><em></em></span></span><strong>跟隨系統</strong></button>
+                </div>
+
+                <h2 id="profile-section-language-title" class="pr-set-heading">語言</h2>
+                <section id="profile-section-language" class="pr-set-panel" aria-labelledby="profile-section-language-title">
+                  <div class="pr-set-row">
+                    <div class="pr-set-label"><strong id="profile-label-language">介面語言</strong><small id="profile-help-language">目前只提供繁體中文介面，其他語言完成後會開放選擇。</small></div>
+                    <div class="pr-set-control"><select class="pr-field" disabled aria-labelledby="profile-label-language" aria-describedby="profile-help-language"><option>繁體中文</option></select></div>
+                  </div>
+                </section>
+
+                <h2 id="profile-section-data-title" class="pr-set-heading">資料</h2>
+                <section id="profile-section-data" class="pr-set-panel" aria-labelledby="profile-section-data-title">
+                  <div class="pr-set-row">
+                    <div class="pr-set-label"><strong>收藏與比較</strong><small id="profile-favorites-summary">你收藏的合作校與比較清單。</small></div>
+                    <div class="pr-set-control"><a class="pr-link" href="#favorites" data-requires-home-school>前往收藏<i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
+                  </div>
+                  <div id="profile-row-export" class="pr-set-row">
+                    <div class="pr-set-label"><strong>匯出我的資料</strong><small id="profile-export-note">下載帳號資料、社群身分代號與你送出的規定回報（JSON）。</small></div>
+                    <div class="pr-set-control"><button id="profile-export-button" type="button" class="secondary-button"><i data-lucide="download" aria-hidden="true"></i><span>下載資料</span></button></div>
+                  </div>
+                </section>
+
+                <div class="pr-danger-zone profile-account-actions">
+                  <div><strong>帳號</strong><small>刪除後收藏、申請進度與貼文都會移除，無法復原。</small></div>
+                  <div class="pr-danger-actions"><button id="logout-button" type="button" class="secondary-button"><i data-lucide="arrow-left" aria-hidden="true"></i><span>登出</span></button><button id="delete-account-button" type="button" class="text-action danger"><span>刪除帳號</span></button></div>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -1445,6 +1529,7 @@
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-tracker.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-forum.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-profile.js?v=20261015-redesign-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>
   </body>
 </html>

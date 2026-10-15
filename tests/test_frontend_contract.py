@@ -1570,7 +1570,9 @@ def test_registration_uses_email_first_and_the_school_is_shown_and_locked_instea
 
     assert 'name="email_verification_token"' in html
     assert 'id="request-email-verification"' in html
-    assert 'id="profile-dialog"' in html
+    # The account settings are a full page (#profile); the old modal dialog is gone.
+    assert 'id="profile"' in html and 'data-university-page="profile"' in html
+    assert 'id="profile-dialog"' not in html
     assert 'fetchJson("/auth/email-verification/request"' in script
     assert ".profile-verification-summary" in styles
     # The student card check is gone: no upload panel, no calls to the removed endpoints.

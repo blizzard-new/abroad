@@ -471,9 +471,9 @@ def test_advisor_waits_for_login_and_clears_private_conditions_on_logout(
     assert len(advisor_requests) == 1
 
     page.locator("#account-button").click()
-    expect(page.locator("#profile-dialog")).to_be_visible()
+    expect(page.locator("#profile")).to_be_visible()
     page.locator("#logout-button").click()
-    expect(page.locator("#profile-dialog")).to_be_hidden(timeout=10_000)
+    expect(page.locator("#profile")).to_be_hidden(timeout=10_000)
     expect(page.locator("#account-button-label")).to_have_text("登入")
     expect(page.locator("#advisor-department")).to_have_value("")
     expect(page.locator("#advisor-academic-score")).to_have_value("")
@@ -2890,9 +2890,9 @@ def test_workspace_load_fallback_cannot_reapply_after_logout(
               && window.__workspaceLoadLogout.putCaptured"""
         )
         page.locator("#account-button").click()
-        expect(page.locator("#profile-dialog")).to_be_visible()
+        expect(page.locator("#profile")).to_be_visible()
         page.locator("#logout-button").click()
-        expect(page.locator("#profile-dialog")).to_be_hidden(timeout=10_000)
+        expect(page.locator("#profile")).to_be_hidden(timeout=10_000)
         expect(page.locator("#account-button-label")).to_have_text("登入")
         assert page.evaluate(
             "window.localStorage.getItem('exchange-guide-workspace-sync-v1')"
@@ -3080,9 +3080,9 @@ def test_expired_session_and_logout_clear_private_browser_state(
     )
     page.wait_for_function("() => window.__staleWorkspaceCaptured === true")
     page.locator("#account-button").click()
-    expect(page.locator("#profile-dialog")).to_be_visible()
+    expect(page.locator("#profile")).to_be_visible()
     page.locator("#logout-button").click()
-    expect(page.locator("#profile-dialog")).to_be_hidden(timeout=10_000)
+    expect(page.locator("#profile")).to_be_hidden(timeout=10_000)
     expect(page.locator("#account-button-label")).to_have_text("登入")
     assert page.evaluate(
         "window.localStorage.getItem('exchange-guide-workspace-sync-v1')"

@@ -703,6 +703,8 @@ button.pr-ring:focus-visible { outline: 2px solid var(--uw-blue); outline-offset
 
 /* ---------- 6. Forum (#forum): stories masonry ---------- */
 body.unified-shell #community-hub#community-hub.pr-forum { container-type: inline-size; display: flex; flex-direction: column; align-items: stretch; gap: clamp(20px, 2.4cqi, 32px); max-width: 1320px; }
+/* The id-doubled display above would otherwise beat the rules that hide the hub on every other page. */
+body.unified-shell:is(.public-exploration-mode, .university-board-mode:not(.cgu-community-mode)) #community-hub#community-hub.pr-forum { display: none; }
 body.unified-shell #community-hub#community-hub.pr-forum .community-feed-header { grid-area: auto; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
 body.unified-shell #community-hub#community-hub.pr-forum .community-home-heading { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 0; border: 0; background: none; box-shadow: none; }
 body.unified-shell #community-hub#community-hub.pr-forum .community-home-heading h1 { margin: 0; color: var(--uw-navy); font-size: clamp(28px, 3cqi, 42px); line-height: 1.2; letter-spacing: -.03em; font-weight: 700; }
@@ -777,3 +779,153 @@ body.unified-shell #community-hub#community-hub.pr-forum[data-forum-mode="boards
   body.unified-shell #community-hub#community-hub.pr-forum .global-community-feed .community-post-card { padding: 12px; border-radius: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { .pr-poster-art, body.unified-shell #community-hub#community-hub.pr-forum .global-community-feed .community-post-card { transition: none; } .pr-poster:hover .pr-poster-art, body.unified-shell #community-hub#community-hub.pr-forum .global-community-feed .community-post-card:hover { transform: none; } }
+
+/* ---------- 7. Profile (#profile): settings page ---------- */
+body.unified-shell #dashboard-view > #profile.pr-profile { container-type: inline-size; max-width: 1100px; margin-inline: auto; padding-top: 12px; }
+.pr-profile-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(16px, 3cqi, 48px); align-items: start; padding-bottom: 72px; }
+.pr-profile-nav { position: sticky; top: 16px; padding-top: 8px; }
+.pr-profile-user { display: flex; align-items: center; gap: 10px; padding: 6px 10px 16px; }
+body.unified-shell #profile .profile-avatar { display: grid; place-items: center; flex: 0 0 auto; width: 32px; height: 32px; border-radius: 10px; background: var(--glass-lilac); color: var(--uw-lilac-ink); font-size: 14px; font-weight: 700; overflow: hidden; }
+body.unified-shell #profile .profile-avatar .lucide { width: 16px; height: 16px; }
+.pr-profile-user > span:last-child { display: grid; min-width: 0; }
+.pr-profile-user strong { overflow: hidden; color: var(--uw-navy); font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.pr-profile-user small { overflow: hidden; color: var(--uw-muted); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.pr-profile-nav-group { display: grid; gap: 2px; margin-top: 14px; }
+.pr-profile-nav-group > small { padding: 0 10px 6px; color: var(--uw-muted); font-size: 11px; font-weight: 700; }
+body.unified-shell .pr-profile-nav button { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 0; padding: 7px 10px; border: 0; border-radius: 8px; background: transparent; color: var(--uw-text); font: inherit; font-size: 14px; font-weight: 500; text-align: left; box-shadow: none; cursor: pointer; transform: none; }
+body.unified-shell .pr-profile-nav button:hover { background: var(--uw-surface-soft); }
+body.unified-shell .pr-profile-nav button[aria-current] { background: var(--uw-surface-soft); color: var(--uw-navy); font-weight: 700; }
+.pr-profile-nav button .lucide { width: 16px; height: 16px; flex: 0 0 auto; }
+.pr-profile-main { min-width: 0; }
+body.unified-shell #profile h1 { margin: 0; color: var(--uw-navy); font-size: clamp(24px, 2.4cqi, 30px); letter-spacing: -.02em; }
+.pr-profile-lede { margin: 6px 0 0; color: var(--uw-muted); font-size: 14px; }
+body.unified-shell #profile .pr-set-heading { margin: 40px 0 0; color: var(--uw-navy); font-size: 18px; scroll-margin-top: 16px; }
+
+/* Verification and plan notes appear above the form only when they apply. */
+#profile .profile-verification-summary:empty, #profile .profile-entitlement-status[hidden] { display: none; }
+#profile .profile-verification-summary { margin-top: 18px; }
+#profile .profile-entitlement-status { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding: 10px 14px; border: 1px solid var(--uw-line); border-radius: 12px; background: var(--uw-surface); color: var(--uw-text); font-size: 13px; }
+#profile .profile-entitlement-status strong { display: block; color: var(--uw-navy); }
+#profile .profile-entitlement-status small { color: var(--uw-muted); }
+#profile .profile-entitlement-status .lucide { width: 18px; height: 18px; color: var(--uw-blue-strong); flex: 0 0 auto; }
+body.unified-shell #profile .profile-email-verification { margin-top: 12px; border-color: var(--uw-line); border-radius: 14px; background: var(--uw-surface); box-shadow: none; }
+#profile .discovery-recents { margin-top: 12px; border-radius: 14px; box-shadow: none; }
+
+/* Label + help on the left, control on the right; wraps on narrow widths. */
+body.unified-shell #profile form.profile-form { display: block; margin-top: 24px; max-width: none; }
+.pr-set-panel { display: block; margin: 0; padding: 0; min-width: 0; border: 1px solid var(--uw-line); border-radius: 14px; background: var(--uw-surface); }
+body.unified-shell #profile h2.pr-set-heading + .pr-set-panel, body.unified-shell #profile h2.pr-set-heading + .pr-theme-cards { margin-top: 12px; }
+form.profile-form > .pr-set-heading + .pr-set-panel { margin-top: 12px; }
+.pr-set-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px; padding: 16px 20px; border-top: 1px solid var(--uw-hairline); scroll-margin-top: 16px; }
+.pr-set-panel > .pr-set-row:first-child, .pr-set-panel > legend + .pr-set-row { border-top: 0; }
+.pr-set-label { flex: 1 1 220px; min-width: 0; display: block; }
+.pr-set-label strong { display: block; color: var(--uw-navy); font-size: 14px; }
+.pr-set-label small { display: block; margin-top: 2px; color: var(--uw-muted); font-size: 12px; line-height: 1.6; }
+.pr-set-control { flex: 1 1 280px; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; }
+body.unified-shell #profile .pr-field { flex: 1; display: flex; align-items: center; gap: 8px; width: 100%; min-width: 0; min-height: 38px; box-sizing: border-box; padding: 0 12px; border: 1px solid var(--uw-line); border-radius: 9px; background: var(--uw-page); color: var(--uw-navy); font: inherit; font-size: 14px; box-shadow: none; }
+body.unified-shell #profile .pr-field:is(input, select) { appearance: auto; }
+body.unified-shell #profile .pr-field:focus-visible, body.unified-shell #profile .pr-field-with-icon:focus-within { outline: 2px solid var(--uw-blue); outline-offset: 3px; }
+body.unified-shell #profile select.pr-field:disabled { opacity: 1; color: var(--uw-muted); cursor: not-allowed; }
+body.unified-shell #profile .pr-field-with-icon { padding: 0 12px 0 0; }
+body.unified-shell #profile .pr-field-with-icon input { flex: 1; min-width: 0; min-height: 36px; padding: 0 0 0 12px; border: 0; background: transparent; color: var(--uw-navy); font: inherit; font-size: 14px; box-shadow: none; outline: 0; }
+body.unified-shell #profile .pr-field-with-icon input:disabled { color: var(--uw-navy); -webkit-text-fill-color: var(--uw-navy); opacity: 1; cursor: not-allowed; }
+.pr-field-with-icon .lucide { width: 16px; height: 16px; flex: 0 0 auto; color: var(--uw-muted); }
+.pr-field-static { color: var(--uw-navy); user-select: text; }
+.pr-badge { padding: 3px 8px; border-radius: 6px; background: var(--uw-cyan-soft); color: var(--uw-blue-strong); font-size: 11px; font-weight: 700; white-space: nowrap; }
+.pr-badge.is-pending { background: var(--uw-amber-soft); color: var(--uw-amber-ink); }
+.pr-badge[hidden] { display: none; }
+
+/* Target countries: removable chips and an add button. */
+.pr-set-chips { gap: 6px; }
+.pr-chip-list { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.pr-chip-item { display: inline-flex; align-items: center; gap: 4px; padding: 5px 4px 5px 10px; border-radius: 7px; background: var(--uw-surface-soft); color: var(--uw-navy); font-size: 13px; font-weight: 600; }
+body.unified-shell #profile .pr-chip-item button { display: inline-grid; place-items: center; width: 20px; height: 20px; min-height: 0; padding: 0; border: 0; border-radius: 5px; background: transparent; color: var(--uw-muted); box-shadow: none; cursor: pointer; transform: none; }
+body.unified-shell #profile .pr-chip-item button:hover { background: var(--uw-line); color: var(--uw-navy); }
+.pr-chip-item .lucide { width: 12px; height: 12px; }
+.pr-chip-empty { color: var(--uw-muted); font-size: 13px; }
+.pr-country-add { display: inline-flex; align-items: center; gap: 6px; }
+body.unified-shell #profile .pr-country-add input { width: 130px; min-height: 32px; padding: 0 10px; border: 1px solid var(--uw-line); border-radius: 7px; background: var(--uw-page); color: var(--uw-navy); font: inherit; font-size: 13px; box-shadow: none; }
+body.unified-shell #profile .pr-country-add input[hidden] { display: none; }
+body.unified-shell #profile .pr-add-chip { display: inline-flex; align-items: center; gap: 4px; min-height: 0; padding: 4px 10px; border: 1px dashed var(--uw-line-strong); border-radius: 7px; background: transparent; color: var(--uw-muted); font: inherit; font-size: 13px; box-shadow: none; cursor: pointer; transform: none; }
+body.unified-shell #profile .pr-add-chip:hover { border-color: var(--uw-blue); color: var(--uw-blue-strong); }
+.pr-add-chip .lucide { width: 14px; height: 14px; }
+
+/* Switches (real checkboxes, so the form still submits them) */
+body.unified-shell #profile label.pr-set-switch { display: flex; align-items: center; flex-wrap: nowrap; gap: 16px; cursor: pointer; }
+body.unified-shell #profile .pr-set-switch .pr-set-label { flex: 1 1 auto; }
+body.unified-shell #profile input.pr-switch { appearance: none; -webkit-appearance: none; position: relative; flex: 0 0 40px; width: 40px; height: 24px; min-height: 0; margin: 0; padding: 0; border: 0; border-radius: 999px; background: var(--uw-line-strong); box-shadow: none; cursor: pointer; transition: background 160ms ease; }
+body.unified-shell #profile input.pr-switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px #14223f33; transition: transform 160ms ease; }
+body.unified-shell #profile input.pr-switch:checked { background: var(--uw-blue-strong); }
+body.unified-shell #profile input.pr-switch:checked::after { transform: translateX(16px); }
+body.unified-shell #profile input.pr-switch:focus-visible { outline: 2px solid var(--uw-blue); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { body.unified-shell #profile input.pr-switch, body.unified-shell #profile input.pr-switch::after { transition: none; } }
+
+/* Reminder-day chips (real checkboxes) */
+body.unified-shell #profile .profile-reminder-days { display: flex; flex: 0 1 auto; flex-wrap: wrap; justify-content: flex-start; gap: 6px; }
+body.unified-shell #profile .profile-reminder-days label { position: relative; display: inline-flex; margin: 0; padding: 0; cursor: pointer; }
+body.unified-shell #profile .profile-reminder-days input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+body.unified-shell #profile .profile-reminder-days span { padding: 6px 12px; border: 1px solid var(--uw-line); border-radius: 8px; background: transparent; color: var(--uw-muted); font-size: 13px; font-weight: 600; }
+body.unified-shell #profile .profile-reminder-days input:checked + span { border-color: var(--uw-blue); background: var(--uw-blue-soft); color: var(--uw-blue-strong); }
+body.unified-shell #profile .profile-reminder-days input:focus-visible + span { outline: 2px solid var(--uw-blue); outline-offset: 3px; }
+.pr-set-note { margin: 0; padding: 12px 20px 16px; border-top: 1px solid var(--uw-hairline); color: var(--uw-muted); font-size: 12px; line-height: 1.7; }
+.pr-set-save { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 14px; }
+.pr-set-save .form-status { margin: 0; color: var(--uw-muted); font-size: 13px; }
+.pr-set-save .primary-button { width: auto; min-height: 40px; padding: 0 18px; }
+
+/* Appearance cards */
+.pr-theme-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+body.unified-shell #profile .pr-theme-cards button { display: grid; gap: 10px; min-height: 0; padding: 10px; border: 2px solid var(--uw-line); border-radius: 14px; background: var(--uw-surface); color: var(--uw-navy); font: inherit; text-align: left; box-shadow: none; cursor: pointer; transform: none; }
+body.unified-shell #profile .pr-theme-cards button:hover { border-color: var(--uw-line-strong); }
+body.unified-shell #profile .pr-theme-cards button[aria-checked="true"] { border-color: var(--uw-blue); }
+body.unified-shell #profile .pr-theme-cards button:focus-visible { outline: 2px solid var(--uw-blue); outline-offset: 3px; }
+.pr-theme-cards strong { font-size: 13px; }
+.pr-theme-preview { display: flex; gap: 5px; height: 64px; padding: 8px; box-sizing: border-box; border-radius: 9px; }
+.pr-theme-preview > i { width: 16px; border-radius: 4px; }
+.pr-theme-preview > span { flex: 1; display: grid; gap: 5px; align-content: start; }
+.pr-theme-preview b { display: block; height: 8px; width: 70%; border-radius: 3px; }
+.pr-theme-preview em { display: block; height: 6px; width: 45%; border-radius: 3px; }
+/* The previews show fixed palettes: they describe each choice, whatever theme is on now. */
+.pr-theme-preview[data-preview="light"] { background: #edf3f8; }
+.pr-theme-preview[data-preview="light"] > i { background: #fff; }
+.pr-theme-preview[data-preview="light"] b { background: #14223f; }
+.pr-theme-preview[data-preview="light"] em { background: #b6ccd8; }
+.pr-theme-preview[data-preview="dark"] { background: #101c2e; }
+.pr-theme-preview[data-preview="dark"] > i { background: #1a2c41; }
+.pr-theme-preview[data-preview="dark"] b { background: #eff6ff; }
+.pr-theme-preview[data-preview="dark"] em { background: #52718b; }
+.pr-theme-preview[data-preview="system"] { background: linear-gradient(90deg, #edf3f8 50%, #101c2e 50%); }
+.pr-theme-preview[data-preview="system"] > i { background: #cedfe8; }
+.pr-theme-preview[data-preview="system"] b { background: #586b80; }
+.pr-theme-preview[data-preview="system"] em { background: #b6ccd8; }
+
+/* Danger zone */
+.pr-danger-zone { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 40px; padding: 18px 20px; border: 1px solid color-mix(in srgb, var(--glass-coral) 35%, transparent); border-radius: 14px; }
+body.unified-shell #profile .pr-danger-zone { background: transparent; box-shadow: none; }
+.pr-danger-zone strong { display: block; color: var(--uw-navy); font-size: 14px; }
+.pr-danger-zone small { color: var(--uw-muted); font-size: 12px; }
+.pr-danger-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+body.unified-shell #profile .pr-danger-actions .secondary-button { min-height: 0; padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; }
+body.unified-shell #profile .pr-danger-actions .text-action { min-height: 0; padding: 8px 14px; border: 0; border-radius: 10px; background: transparent; color: var(--glass-coral); font: inherit; font-size: 13px; font-weight: 700; box-shadow: none; }
+body.unified-shell #profile .pr-danger-actions .text-action:hover { background: color-mix(in srgb, var(--glass-coral) 12%, transparent); }
+.pr-danger-actions .lucide { width: 14px; height: 14px; }
+body.unified-shell #profile #profile-export-button { min-height: 0; padding: 8px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; }
+#profile #profile-export-button .lucide { width: 14px; height: 14px; }
+
+/* Tablet and phone: the menu becomes a row of scrolling pills. */
+@container (max-width: 900px) {
+  .pr-profile-layout { grid-template-columns: minmax(0, 1fr); }
+  .pr-profile-nav { position: static; display: flex; gap: 6px; padding: 0; margin-bottom: 18px; overflow-x: auto; scrollbar-width: none; }
+  .pr-profile-nav::-webkit-scrollbar { display: none; }
+  .pr-profile-user, .pr-profile-nav-group > small { display: none; }
+  .pr-profile-nav-group { display: contents; }
+  body.unified-shell .pr-profile-nav button { flex: 0 0 auto; width: auto; padding: 8px 14px; border: 1px solid var(--uw-line); border-radius: 999px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+  body.unified-shell .pr-profile-nav button .lucide { display: none; }
+  body.unified-shell .pr-profile-nav button[aria-current] { border-color: var(--uw-navy); background: var(--uw-navy); color: var(--uw-page); }
+}
+@container (max-width: 560px) {
+  .pr-set-row { padding: 14px 16px; }
+  .pr-set-control, .pr-chip-list { justify-content: flex-start; }
+  .pr-theme-cards { gap: 8px; }
+  .pr-theme-cards strong { font-size: 12px; }
+  .pr-theme-preview { height: 52px; }
+}
