@@ -15,29 +15,34 @@
     "sum_maximum_persons": 81,
     "added_academic_year_slots": 30,
     "added_maximum_persons": 55,
-    "excel_sheets": 5,
-    "excel_bytes": 5921039,
+    "excel_sheets": 6,
+    "excel_bytes": 5947710,
     "excel_formula_cells": 0,
     "excel_max_cell_characters_under_32768": true,
-    "excel_sha256": "23a31cc472da4da4e0b36bafcfc00b1e1553dd64f4e60c8d5ad57a36f33ae1c5",
-    "original_bounded_field_conclusions_preserved": 416
+    "excel_sha256": "3dcced7834920864349a36476b91762f793d2b685d92b0f6823e41db437d1077",
+    "original_bounded_field_conclusions_preserved": 416,
+    "supplement_records": 13,
+    "supplement_schools": 7,
+    "changed_field_pairs": 10,
+    "original_baseline_and_reply_cells_preserved": true,
+    "unverified_availability_promotion_negative_guard_passed": true
   },
   "xlsx_parts": {
     "[Content_Types].xml": {
-      "bytes": 1084,
-      "crc32": "d69ca36a"
+      "bytes": 1220,
+      "crc32": "86d24b29"
     },
     "_rels/.rels": {
       "bytes": 278,
       "crc32": "bef7491c"
     },
     "xl/workbook.xml": {
-      "bytes": 513,
-      "crc32": "81dea465"
+      "bytes": 569,
+      "crc32": "dce4f94d"
     },
     "xl/_rels/workbook.xml.rels": {
-      "bytes": 843,
-      "crc32": "8ac0c6e4"
+      "bytes": 984,
+      "crc32": "2d336e24"
     },
     "xl/worksheets/sheet1.xml": {
       "bytes": 3822,
@@ -48,8 +53,8 @@
       "crc32": "f1daf9fd"
     },
     "xl/worksheets/sheet3.xml": {
-      "bytes": 5727645,
-      "crc32": "495361c1"
+      "bytes": 5734239,
+      "crc32": "40634256"
     },
     "xl/worksheets/sheet4.xml": {
       "bytes": 170674,
@@ -58,6 +63,10 @@
     "xl/worksheets/sheet5.xml": {
       "bytes": 2121,
       "crc32": "d8664a3d"
+    },
+    "xl/worksheets/sheet6.xml": {
+      "bytes": 19620,
+      "crc32": "1d6ac0a6"
     }
   },
   "limits": {
@@ -67,7 +76,10 @@
     "browser_tests_run": false,
     "data_rebuild_run": false,
     "pr24_code_integrated": false,
-    "production_deployed": false
+    "production_deployed": false,
+    "tsukuba_pdf_binary_in_PR": false,
+    "tsukuba_pdf_parent_review_transferred_only": true,
+    "parent_288_page_comparison_locally_reperformed": false
   },
   "immutable_reference": {
     "main": "6c9e7a3c84f86265853e04657d4a4477116b1ada",
@@ -76,12 +88,55 @@
   },
   "environment_error": "failed to query executor configuration capabilities; exec-server connection timed out recovering environment readiness from ERS",
   "zip_validation": {
-    "local_headers": 9,
-    "crc32_all_parts": true,
-    "xml_tag_nesting_all_parts": true,
-    "central_directory_and_eocd_present": true,
-    "github_blob_matches_generated_bytes": true,
-    "blob_sha": "dd56037fa3707e4fe28ffc0705afde03785e52e4",
-    "sha256": "23a31cc472da4da4e0b36bafcfc00b1e1553dd64f4e60c8d5ad57a36f33ae1c5"
+    "school_count": 288,
+    "original_pending_schools": 282,
+    "field_rows": 2820,
+    "csv_columns": 21,
+    "positive": 20,
+    "blank": 261,
+    "zero": 7,
+    "academic_year_slots": 43,
+    "maximum_persons": 81,
+    "supplement_records": 13,
+    "supplement_schools": 7,
+    "changed_field_pairs": 10,
+    "baseline_and_reply_cells_unchanged": true,
+    "excel_sheets": 6,
+    "zip_parts": 10,
+    "all_zip_crc_passed": true,
+    "excel_formula_cells": 0,
+    "pdf_binary_independently_verified": false,
+    "runtime_tests_run": false,
+    "blob_sha": "40c4fb6c595c500788dd0aec4e956929940d8ce2",
+    "sha256": "3dcced7834920864349a36476b91762f793d2b685d92b0f6823e41db437d1077",
+    "github_blob_matches_generated_bytes": true
+  },
+  "supplement": {
+    "school_count": 288,
+    "original_pending_schools": 282,
+    "field_rows": 2820,
+    "csv_columns": 21,
+    "positive": 20,
+    "blank": 261,
+    "zero": 7,
+    "academic_year_slots": 43,
+    "maximum_persons": 81,
+    "supplement_records": 13,
+    "supplement_schools": 7,
+    "changed_field_pairs": 10,
+    "baseline_and_reply_cells_unchanged": true,
+    "excel_sheets": 6,
+    "zip_parts": 10,
+    "all_zip_crc_passed": true,
+    "excel_formula_cells": 0,
+    "pdf_binary_independently_verified": false,
+    "runtime_tests_run": false
+  },
+  "verifier": {
+    "file": "verify-candidates.js",
+    "core_executed_in_functions_exec": true,
+    "node_cli_invoked": false,
+    "node_manifest_driver_not_run": true,
+    "previous_snapshot": "36b2ea7288519d240e022fff7d749d9e4d65c6d6"
   }
 }
