@@ -238,8 +238,9 @@ def test_compact_rail_expands_with_full_labels_for_pointer_and_keyboard(page, li
     expect(rail.get_by_text("學校搜尋", exact=True)).to_be_visible()
     expect(rail.get_by_text("我的申請", exact=True)).to_be_visible()
     assert page.locator("#community-hub").bounding_box()["x"] == content_x
-    rail_box = rail.bounding_box()
-    assert rail_box["x"] + rail_box["width"] > content_x, "the expanded rail should overlay the fixed page canvas"
+    # The page is centred beside the rail, so on a wide window it can start just past the expanded rail;
+    # what matters is that the rail floats over the page instead of taking room from it.
+    assert rail.evaluate("el => getComputedStyle(el).position") == "fixed", "the expanded rail should overlay the page"
     capture(page, f"rail-overlay-expanded-{'reduced' if reduced else 'animated'}.png")
     duration = rail.evaluate("el => getComputedStyle(el).transitionDuration")
     assert (duration == "0s") == reduced

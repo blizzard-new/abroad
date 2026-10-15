@@ -36,10 +36,135 @@ def test_home_landing_shows_the_product_story_without_login(page, live_server) -
     enter_public_site(page, live_server, "home")
     expect(page.locator("#home-landing")).to_be_visible()
     expect(page.locator("#home-landing-title")).to_contain_text("你能去哪些交換學校")
-    # The map is a static outline plus partner dots: no map engine is needed on the first screen.
+    # The flat map outline (partner dots on a static SVG) is always built; it is what shows when WebGL is unavailable.
     expect(page.locator('[data-home-map="hero"] svg')).to_have_count(1)
     # Public pages never show the forum underneath another page.
     expect(page.locator("#community-hub")).to_be_hidden()
+
+
+def _gaps_beside_the_rail(page, selector: str) -> tuple[float, float]:
+    """Space between the rail-side edge of the content area and the page, and between the page and the window edge."""
+    return page.evaluate(
+        """(selector) => {
+          const box = document.querySelector(selector).getBoundingClientRect();
+          return [box.left - 112, innerWidth - 32 - box.right];
+        }""",
+        selector,
+    )
+
+
+@pytest.mark.parametrize("width", [1440, 1920, 2560])
+def test_every_page_sits_in_the_middle_of_the_area_beside_the_rail(browser, live_server, width) -> None:
+    context = browser.new_context(viewport={"width": width, "height": 900})
+    page = context.new_page()
+    try:
+        for route, selector in (
+            ("home", "#home-landing"),
+            ("partners", "#partners"),
+            ("guide", "#guide"),
+            ("forum", "#community-hub"),
+            ("feedback", "#feedback"),
+        ):
+            enter_public_site(page, live_server, route)
+            expect(page.locator(selector)).to_be_visible()
+            left, right = _gaps_beside_the_rail(page, selector)
+            assert abs(left - right) <= 2, f"#{route} is off-centre at {width}px: {left:.0f}px left, {right:.0f}px right"
+            # The back bar lines up with the page it belongs to.
+            bar = page.locator(".page-back-bar:visible")
+            if bar.count():
+                bar_left, bar_right = _gaps_beside_the_rail(page, ".page-back-bar")
+                assert abs(bar_left - left) <= 2, f"#{route} back bar does not line up with the page at {width}px"
+    finally:
+        context.close()
+
+
+def test_home_has_no_decorative_guide_lines_or_sample_cards(page, live_server) -> None:
+    enter_public_site(page, live_server, "home")
+    expect(page.locator("#home-landing")).to_be_visible()
+    assert page.locator(".pr-guide-grid").count() == 0
+    borders = page.evaluate(
+        "() => ['top', 'bottom'].map((side) => parseFloat(getComputedStyle(document.querySelector('.pr-supported'))[`border${side[0].toUpperCase()}${side.slice(1)}Width`]))"
+    )
+    assert borders == [0, 0]
+    assert "示意" not in page.locator("#home-landing").inner_text()
+
+
+def test_home_cards_show_the_visitors_real_schools_not_samples(browser, live_server) -> None:
+    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    page = context.new_page()
+    errors: list[str] = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.add_init_script("window.localStorage.setItem('exchange-guide-home-school', '長庚大學')")
+    try:
+        enter_public_site(page, live_server, "home")
+        rows = page.locator("#home-search-rows .pr-mini-row")
+        expect(rows.first).to_be_visible(timeout=30_000)
+        shown = [text.strip() for text in rows.locator("strong").all_inner_texts()]
+        partners = page.evaluate("state.dashboard.partner_universities.map((item) => item.school_name)")
+        assert shown and all(any(name in full for full in partners) for name in shown)
+        # Every card says something about the visitor's school; none is left as an empty frame.
+        for tile in ("#home-search-rows", "#home-tile-fit", "#home-tile-calendar", "#home-tile-documents", "#home-tile-budget"):
+            assert page.locator(tile).inner_text().strip(), f"{tile} is empty"
+        # Searching from the card carries the words to the explore page.
+        page.locator("#home-search-input").fill("日本")
+        page.locator("#home-search-form button[type=submit]").click()
+        expect(page.locator("#partners")).to_be_visible()
+        assert page.evaluate("new URLSearchParams(location.search).get('q')") == "日本"
+        assert not errors
+    finally:
+        context.close()
+
+
+# Headless browsers draw WebGL in software, which the globe deliberately declines; this makes one pretend to have a GPU.
+PRETEND_GPU = """
+for (const proto of [WebGLRenderingContext.prototype, WebGL2RenderingContext.prototype]) {
+  const original = proto.getParameter;
+  proto.getParameter = function (name) { return name === 0x9246 ? 'ANGLE (Test GPU)' : original.call(this, name); };
+}
+"""
+
+
+@pytest.mark.parametrize("gpu", [False, True], ids=["as-is", "with-a-gpu"])
+def test_home_hero_is_a_half_globe_that_fades_away_while_scrolling(browser, live_server, gpu) -> None:
+    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    page = context.new_page()
+    if gpu:
+        page.add_init_script(PRETEND_GPU)
+    try:
+        enter_public_site(page, live_server, "home")
+        globe = page.locator("[data-home-globe]")
+        # Without WebGL, on a software renderer, or if frames come out slowly the hero keeps its flat map instead.
+        page.wait_for_function(
+            "() => ['ready', 'fallback'].includes(document.querySelector('[data-home-globe]').dataset.state)",
+            timeout=15_000,
+        )
+        if not gpu:
+            assert globe.get_attribute("data-state") in {"ready", "fallback"}
+        if globe.get_attribute("data-state") == "ready":
+            expect(globe.locator("canvas")).to_be_visible()
+            # Only the top half of the sphere is drawn: the canvas is about twice as wide as it is tall.
+            box = globe.bounding_box()
+            assert 1.7 < box["width"] / box["height"] < 2.2
+        else:
+            expect(globe.locator('[data-home-map="hero"] svg')).to_be_visible()
+        # The backdrop never takes clicks and is not read out; the caption link is the accessible way in.
+        assert globe.evaluate("el => getComputedStyle(el).pointerEvents") == "none"
+        assert globe.get_attribute("aria-hidden") == "true"
+        expect(page.locator(".pr-globe-caption")).to_contain_text("合作校")
+        assert float(globe.evaluate("el => el.style.getPropertyValue('--globe-progress') || '0'")) == 0
+
+        page.evaluate("window.scrollTo({ top: 700, behavior: 'instant' })")
+        page.wait_for_function(
+            "() => parseFloat(document.querySelector('[data-home-globe]').style.getPropertyValue('--globe-progress')) > 0.9",
+            timeout=5_000,
+        )
+        page.evaluate("window.scrollTo({ top: 0, behavior: 'instant' })")
+        page.wait_for_function(
+            "() => parseFloat(document.querySelector('[data-home-globe]').style.getPropertyValue('--globe-progress')) < 0.05",
+            timeout=5_000,
+        )
+    finally:
+        context.close()
 
 
 def test_explore_sorts_and_compares_schools(page, live_server) -> None:
