@@ -16,7 +16,6 @@ def test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh(page
     page.on("pageerror", lambda error: errors.append(str(error)))
     page.on("request", lambda request: refreshes.append(request.url) if "/school-life-context/refresh" in request.url else None)
     enter_public_site(page, live_server, "partners")
-    open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立臺灣大學"]').click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":

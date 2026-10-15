@@ -1534,13 +1534,13 @@ def build(output):
             "original_import_base_commit": "f6ad1b8",
             "input_sha256": {
                 path.name: hashlib.sha256(path.read_bytes()).hexdigest()
-                for path in sorted(SOURCES.iterdir())
+                for path in sorted(SOURCES.iterdir(), key=lambda p: p.name.casefold())
                 if path.is_file() and path.suffix in {".json", ".gz", ".pdf", ".jpg"}
             },
             "table_year": "115",
             "completion_input_sha256": {
-                str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
-                for path in sorted(COMPLETION_SOURCES.iterdir())
+                str(path.relative_to(ROOT)).replace("/", "\\"): hashlib.sha256(path.read_bytes()).hexdigest()
+                for path in sorted(COMPLETION_SOURCES.iterdir(), key=lambda p: p.name.casefold())
                 if path.is_file() and path.suffix in {".json", ".gz", ".pdf", ".jpg"}
             },
             "home_year": "116",
@@ -1638,6 +1638,138 @@ def build(output):
     campus_locations = COMPLETION_SOURCES / "campus-locations.json"
     if campus_locations.exists():
         write_json(output / "campus-locations.json", load_json(campus_locations))
+    apply_ncu_20261013_overlay(output)
+
+
+def apply_ncu_20261013_overlay(output: Path) -> None:
+    rows_116_path = ROOT / "sources/ncu/2026-10-13/quota-116-1-rows.json"
+    if not rows_116_path.exists():
+        return
+    rows_116 = load_json(rows_116_path)
+    rows_116_by_pair = defaultdict(list)
+    for r in rows_116:
+        rows_116_by_pair[(r["name_zh"].strip(), r["name_en"].strip())].append(r)
+
+    old_banner = "116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。"
+    list_116_url = "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangeschoollist-1013.pdf"
+    upgrade_notice_url = "https://oia.ncu.edu.tw/p/406-1026-13073,r565.php?Lang=zh-tw"
+    info_session_url = "https://oia.ncu.edu.tw/p/406-1026-14170,r565.php?Lang=zh-tw"
+
+    partners_path = output / "partners.jsonl"
+    partner_lines = partners_path.read_text(encoding="utf-8").splitlines()
+    updated_partner_lines = []
+    for line in partner_lines:
+        if not line.strip():
+            continue
+        obj = json.loads(line)
+        sname = obj["school_name"]
+        matched_rows = None
+        for (zh, _en), rlist in rows_116_by_pair.items():
+            if zh and sname.startswith(zh + " "):
+                matched_rows = rlist
+                break
+        if matched_rows:
+            parts = []
+            for r in matched_rows:
+                q = r.get("quota_116") or "未列"
+                lang = r.get("language_116") or "未列（仍須符合校內正式語檢規定）"
+                note = r.get("notes_116") or "無額外備註"
+                parts.append(f"列{r['id']}（PDF第{r['page']}頁）名額：{q}、語言限制：{lang}、備註：{note}")
+            new_banner = (
+                f"【116-1最新姐妹校列表已於2026/10/13公告（{list_116_url}）】"
+                + "；".join(parts)
+                + "。（校內線上申請2026/11/16開放，外校116當期簡章與條件仍待逐項確認，不能據此直接判定當期已開放）。"
+            )
+        else:
+            new_banner = (
+                "【116-1最新姐妹校列表異動提醒（2026/10/13公告）】本項目未列入116-1最新出國交換姐妹校列表"
+                f"（{list_116_url}）；"
+                "以下保留115歷史名單與公開附件僅供規劃參考，不能據此判定當期開放。"
+            )
+        if obj.get("eligibility"):
+            obj["eligibility"] = obj["eligibility"].replace(old_banner, new_banner)
+        if obj.get("student_summary_zh") and obj["student_summary_zh"].get("eligibility_points"):
+            obj["student_summary_zh"]["eligibility_points"] = [
+                new_banner if pt == old_banner else pt
+                for pt in obj["student_summary_zh"]["eligibility_points"]
+            ]
+        text = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
+        for character in ("\u0085", "\u2028", "\u2029"):
+            text = text.replace(character, f"\\u{ord(character):04x}")
+        updated_partner_lines.append(text)
+    with partners_path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(updated_partner_lines) + "\n")
+
+    ex_info_path = output / "exchange_info.json"
+    ex_info = load_json(ex_info_path)
+    ex_info["application_period"] = [
+        "校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生截止日。",
+        "116-1交換姐妹校列表已於2026/10/13公告（共215列，含新增6校、移除7校）；116-1出國交換申請說明會訂於2026/11/10(二)10:00舉行（全程參與核發國際移動力完成證明書）。",
+        "【系統升級因應措施】因出國申請系統（https://abroad.oia.ncu.edu.tw/student/）升級維護，國際處公告改由線上Google表單（https://forms.gle/Jchneh5uLrGYQ7LT9）搭配下載列印申請表（https://reurl.cc/OQ0RMy）辦理，請依置頂公告核對。",
+    ]
+    for url in (list_116_url, upgrade_notice_url, info_session_url):
+        if url not in ex_info["source_urls"]:
+            ex_info["source_urls"].append(url)
+    ex_info["last_checked"] = "2026-10-15T05:00:00Z"
+    with ex_info_path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(ex_info, ensure_ascii=False, indent=2) + "\n")
+
+    dash_path = output / "student_dashboard.json"
+    dash = load_json(dash_path)
+    dash["last_checked"] = "2026-10-15T05:00:00Z"
+    dash["application_periods"][0]["details"] = [
+        "校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生截止日。",
+        "【系統升級因應措施】如遇原出國申請系統（https://abroad.oia.ncu.edu.tw/student/）升級維護無法連線，請依國際處置頂公告（https://oia.ncu.edu.tw/p/406-1026-13073,r565.php?Lang=zh-tw）改填線上Google表單（https://forms.gle/Jchneh5uLrGYQ7LT9）並下載列印申請表（https://reurl.cc/OQ0RMy）辦理。",
+    ]
+    dash["program_overview"][0]["details"] = [
+        "116-1甄選簡章於2026/9/5公告，AY2027–2028；116-1交換姐妹校列表已於2026/10/13正式公告（共215列，含新增哥白尼大學、薩爾茲堡大學、UC Davis自費、高知工科大學、泰國藝術大學、瑪希敦大學等6校，移除布爾諾理工大學等7校，以及羅馬尼亞Romanian-American University共214所獨立姐妹校）。",
+        "116-1出國交換申請說明會訂於2026/11/10(二)10:00舉行（報名見 https://oia.ncu.edu.tw/p/406-1026-14170,r565.php?Lang=zh-tw ，全程參與核發必繳之國際移動力完成證明書）。",
+        "216歷史表列逐列保存並標註2026/10/13最新116-1名額與異動；靜岡（116-1合併為1列1名）、南洋理工不同列項保留方案，名額不相加。",
+        "2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆。",
+    ]
+    existing_source_urls = {s["source_url"] for s in dash.get("sources", [])}
+    for title, url in (
+        ("中央116-1交換姐妹校列表（2026-10-13公告）", list_116_url),
+        ("學生出國申請系統升級因應措施公告", upgrade_notice_url),
+        ("116-1出國交換申請說明會公告（2026/11/10）", info_session_url),
+    ):
+        if url not in existing_source_urls:
+            dash["sources"].append({
+                "title": title,
+                "source_url": url,
+                "category": None,
+                "summary": None,
+            })
+    with dash_path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(dash, ensure_ascii=False, indent=2) + "\n")
+
+    comp_path = output / "catalog-completeness.json"
+    comp = load_json(comp_path)
+    comp["checked_at"] = "2026-10-15T05:00:00+00:00"
+    comp["current_list_status"] = "published_2026_10_13_pending_application_open"
+    comp["current_list_published_date"] = "2026-10-13"
+    comp["current_list_url"] = list_116_url
+    comp["current_list_sha256"] = "108bdc85e820e204c623495089f08880e1b902a4f6f7b155a2e7dab6caf569c9"
+    comp["current_list_rows"] = 215
+    comp["current_list_added_schools"] = [
+        "哥白尼大學 Nicolaus Copernicus University",
+        "薩爾茲堡大學 The University of Salzburg",
+        "加州大學戴維斯分校（自費） University of California, Davis(UC Davis)",
+        "高知工科大學 Kochi University of Technology",
+        "泰國藝術大學 Silpakorn University",
+        "瑪希敦大學 Mahidol University",
+    ]
+    comp["current_list_removed_schools"] = [
+        "布爾諾理工大學 Brno University of Technology",
+        "蘇萊曼德米雷爾大學 Suleyman Demirel University（SDU）",
+        "道格拉斯學院 Douglas College",
+        "莫瑞州立大學（自費） Murray State University",
+        "山形大學 Yamagata University",
+        "嘉泉大學 Gachon University",
+        "世宗大學 Sejong University",
+    ]
+    with comp_path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(comp, ensure_ascii=False, indent=2) + "\n")
 
 
 if __name__ == "__main__":
@@ -1646,3 +1778,4 @@ if __name__ == "__main__":
         "--output-dir", type=Path, default=ROOT / "src/exchange_info/official_data/ncu"
     )
     build(p.parse_args().output_dir)
+

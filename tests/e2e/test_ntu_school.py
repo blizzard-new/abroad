@@ -15,7 +15,6 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     enter_public_site(page, live_server, "partners")
-    open_navigation(page)
     page.locator("#school-switcher").click()
     expect(page.locator("#school-options [data-home-school]")).to_have_count(6)
     assert page.locator("#school-options [data-home-school]").evaluate_all(
@@ -55,7 +54,6 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
     page.locator("#advisor-department-text").fill("機械工程學系")
     expect(page.locator("#advisor-department-text")).to_have_value("機械工程學系")
     expect(page.locator("#advisor-academic-rule")).to_contain_text("研究生校內無成績門檻")
-    open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="長庚大學"]').click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":

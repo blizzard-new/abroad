@@ -2111,3 +2111,37 @@ def test_hokkaido_jlcsp_unrelated_courses_prohibited_only_for_that_programme(tmp
             if 'hustep-' in step['rule_id'] or 'sasrs-' in step['rule_id']:
                 assert '不得修讀與日本語／日本學無關的課程' not in step['summary']
     assert not any(s['deadline_reminder_eligible'] for s in workflow['steps'])
+
+
+def test_ncu_116_1_official_list_and_system_upgrade_notice_are_recorded():
+    import hashlib
+    from exchange_info.ncu_student_view import (
+        NCU_INFO_SESSION_116_1_URL,
+        NCU_LIST_116_URL,
+        NCU_SYSTEM_UPGRADE_NOTICE_URL,
+    )
+
+    pdf_path = ROOT / "sources/ncu/2026-10-13/116exchangeschoollist-1013.pdf"
+    rows_path = ROOT / "sources/ncu/2026-10-13/quota-116-1-rows.json"
+    assert pdf_path.exists() and rows_path.exists()
+    assert (
+        hashlib.sha256(pdf_path.read_bytes()).hexdigest()
+        == "108bdc85e820e204c623495089f08880e1b902a4f6f7b155a2e7dab6caf569c9"
+    )
+    rows_116 = json.loads(rows_path.read_text(encoding="utf-8"))
+    assert len(rows_116) == 215
+    assert any(r["name_en"] == "Romanian-American University" for r in rows_116)
+
+    comp = json.loads((BUNDLE / "catalog-completeness.json").read_text(encoding="utf-8"))
+    assert comp["current_list_status"] == "published_2026_10_13_pending_application_open"
+    assert comp["current_list_url"] == NCU_LIST_116_URL
+    assert comp["current_list_rows"] == 215
+
+    dashboard = build_ncu_student_dashboard()
+    source_urls = {s.source_url for s in dashboard.sources}
+    assert {NCU_LIST_116_URL, NCU_SYSTEM_UPGRADE_NOTICE_URL, NCU_INFO_SESSION_116_1_URL} <= source_urls
+    wsu = next(p for p in dashboard.partner_universities if "Western Sydney University" in p.school_name)
+    assert "名額：2" in wsu.eligibility
+    brno = next(p for p in dashboard.partner_universities if "Brno University" in p.school_name)
+    assert "未列入116-1最新出國交換姐妹校列表" in brno.eligibility
+

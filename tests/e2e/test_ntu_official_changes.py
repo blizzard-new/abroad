@@ -12,7 +12,6 @@ def test_current_portal_reference_is_visible_without_opening_quota(page,live_ser
     page.set_viewport_size({'width':width,'height':956})
     page.emulate_media(reduced_motion='reduce')
     enter_public_site(page,live_server,'partners')
-    open_navigation(page)
     page.locator('#school-switcher').click()
     page.locator('[data-home-school="國立臺灣大學"]').click()
     if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':

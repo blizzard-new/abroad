@@ -10,7 +10,7 @@ from .plan_defaults import suggest_effort_hours
 from .school_identity import same_school
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
-from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
+from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
 from .task_documents import document_link_for_step
 from .qualification_scopes import (
     coupled_academic_scope_matches,
@@ -393,7 +393,7 @@ def _eligibility_checks(
         checks.append(
             _check(
                 "availability",
-                "needs_confirmation" if partner.availability_status == "needs_confirmation" or ((is_ntu(request.home_school) or is_ncu(request.home_school)) and partner.quota is None) else "fail",
+                "needs_confirmation" if partner.availability_status == "needs_confirmation" or ((is_ntu(request.home_school) or is_ncu(request.home_school)) and partner.quota is None) or (is_ntu(request.home_school) and ntu_published_quota(partner)) else "fail",
                 "當期名額",
                 partner.availability_note
                 or "這筆資料目前未列入當期公開開放名單。",
