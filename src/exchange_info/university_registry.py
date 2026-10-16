@@ -169,7 +169,39 @@ FJU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU)
+SCU = UniversityProfile(
+    id="scu",
+    school_name="東吳大學",
+    short_name="東吳",
+    english_name="Soochow University",
+    aliases=(
+        "東吳大學",
+        "私立東吳大學",
+        "東吳",
+        "SCU",
+        "Soochow University",
+        "Soochow University (Taiwan)",
+    ),
+    hero_image="/static/assets/scu-campus.svg",
+    official_url="https://icae.scu.edu.tw/zh-hant/outbound-exchange/intro",
+    coverage_note="完整支援：116學年度校級赴境外（國外126校、大陸62校、英美自費研修3校，共191校）現正開放線上申請（2026/09/14–11/16 12:00截止）。",
+    support_level="full",
+    partner_count_hint=191,
+    academic_score_minimum=65,
+    student_card_signals=("東吳大學", "SOOCHOWUNIVERSITY", "SCU"),
+    # https://www-ch.scu.edu.tw/units-academic2 — checked 2026-10-16.
+    colleges=(
+        "人文社會學院",
+        "外國語文學院",
+        "理學院",
+        "法學院",
+        "商學院",
+        "巨量資料管理學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU)
 DEFAULT_UNIVERSITY = CGU
 
 

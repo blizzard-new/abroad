@@ -177,6 +177,7 @@ def _bundled_ntu_research() -> Mapping[tuple[str, str], LifeResearchSnapshot]:
     bundled_files = (
         BUNDLED_NTU_LIFE,
         Path(__file__).parent / "official_data" / "fju" / "student_life.jsonl",
+        Path(__file__).parent / "official_data" / "scu" / "student_life.jsonl",
     )
     for life_path in bundled_files:
         if life_path.exists():

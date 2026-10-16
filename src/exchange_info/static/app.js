@@ -1145,6 +1145,7 @@ async function loadSupportedUniversities() {
       },
       {id:"ncu",school_name:"國立中央大學",short_name:"中央",english_name:"National Central University",hero_image:"/static/assets/ncu-campus.svg",official_url:"https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",supported:true,partner_count:214,coverage_note:"116-1簡章已公告，名額預定2026/10/12公告；214項115目錄僅供參考。"},
       {id:"fju",school_name:"天主教輔仁大學",short_name:"輔大",aliases:["輔仁大學","輔仁","FJU","Fu Jen"],english_name:"Fu Jen Catholic University",hero_image:"/static/assets/fju-campus.svg",official_url:"https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39",supported:true,partner_count:234,coverage_note:"116-1甄選說明會已公告；234所姊妹校專頁與115名額表已完整建檔。"},
+      {id:"scu",school_name:"東吳大學",short_name:"東吳",aliases:["SCU","Soochow University","東吳"],english_name:"Soochow University",hero_image:"/static/assets/scu-campus.svg",official_url:"https://web-ch.scu.edu.tw/icae",supported:true,partner_count:191,coverage_note:"116學年度第1學期赴外研修生甄選名額表與簡章已公告（國際交流129案、兩岸交流62校）。"},
     ];
   }
   renderSchoolOptions();
@@ -1398,6 +1399,7 @@ const SCHOOL_BADGES = {
   "國立中央大學": { text: "中央", tint: 235 },
   "淡江大學": { text: "淡江", tint: 35 },
   "天主教輔仁大學": { text: "輔大", tint: 24 },
+  "東吳大學": { text: "東吳", tint: 350 },
 };
 const SCHOOL_EMBLEM_FILES = {};
 

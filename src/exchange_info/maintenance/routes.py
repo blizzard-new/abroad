@@ -767,6 +767,7 @@ def create_maintenance_router(
             <option value="ccu">國立中正大學（共 55 所姊妹校）</option>
             <option value="tku">淡江大學（共 4 所姊妹校）</option>
             <option value="fju">天主教輔仁大學（共 234 所姊妹校）</option>
+            <option value="scu">東吳大學（共 191 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -844,7 +845,8 @@ def create_maintenance_router(
     cgu: "長庚大學 (CGU)",
     ccu: "國立中正大學 (CCU)",
     tku: "淡江大學 (TKU)",
-    fju: "天主教輔仁大學 (FJU)"
+    fju: "天主教輔仁大學 (FJU)",
+    scu: "東吳大學 (SCU)"
   };
 
   const FIELD_LABELS = {

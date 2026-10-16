@@ -35,6 +35,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "ncu": ["oia.ncu.edu.tw", "ncu.edu.tw"],
     "tku": ["oieie.tku.edu.tw", "tku.edu.tw"],
     "fju": ["iscoie.fju.edu.tw", "oie.fju.edu.tw", "www.fju.edu.tw", "fju.edu.tw"],
+    "scu": ["icae.scu.edu.tw", "www.scu.edu.tw", "www-ch.scu.edu.tw", "scu.edu.tw"],
 }
 
 
@@ -603,6 +604,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["fju"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="fju", partner_rows=fju_rows, default_cycle_label="116學年度"
+        )
+
+    # 8. SCU partners.jsonl (191 partner schools)
+    scu_partners_path = official_data_root / "scu" / "partners.jsonl"
+    if scu_partners_path.exists():
+        scu_rows = []
+        for line in scu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            scu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116學年度",
+                "website": rec.get("official_website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://icae.scu.edu.tw/zh-hant/outbound-exchange/intl/2025-2026schools",
+            })
+        school_reports["scu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="scu", partner_rows=scu_rows, default_cycle_label="116學年度"
         )
 
     if store.current_release_id is None:
