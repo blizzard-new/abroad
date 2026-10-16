@@ -1144,6 +1144,7 @@ async function loadSupportedUniversities() {
         partner_count: 289, coverage_note: "116-1校級甄選、文件與補助；262項名額待公布，7項零名額。",
       },
       {id:"ncu",school_name:"國立中央大學",short_name:"中央",english_name:"National Central University",hero_image:"/static/assets/ncu-campus.svg",official_url:"https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",supported:true,partner_count:214,coverage_note:"116-1簡章已公告，名額預定2026/10/12公告；214項115目錄僅供參考。"},
+      {id:"fju",school_name:"天主教輔仁大學",short_name:"輔大",aliases:["輔仁大學","輔仁","FJU","Fu Jen"],english_name:"Fu Jen Catholic University",hero_image:"/static/assets/fju-campus.svg",official_url:"https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39",supported:true,partner_count:234,coverage_note:"116-1甄選說明會已公告；234所姊妹校專頁與115名額表已完整建檔。"},
     ];
   }
   renderSchoolOptions();
@@ -1396,6 +1397,7 @@ const SCHOOL_BADGES = {
   "國立中正大學": { text: "中正", tint: 8 },
   "國立中央大學": { text: "中央", tint: 235 },
   "淡江大學": { text: "淡江", tint: 35 },
+  "天主教輔仁大學": { text: "輔大", tint: 24 },
 };
 const SCHOOL_EMBLEM_FILES = {};
 
@@ -4291,7 +4293,7 @@ function partnerAvailabilityMeta(item) {
     if (homeSelectionRules().pending_quota_planning && /^0\s*名?$/.test(item.quota || "")) {
       return {status, shortLabel:"116-1零名額", cardLabel:"116-1零名額／本期未開放", matchLabel:"本期未開放", reason:"官方名單已更新為零名額", blocked:true};
     }
-    if (homeSelectionRules().pending_quota_planning && item.quota == null) {
+    if (homeSelectionRules().pending_quota_planning && (item.quota == null || item.quota_status === "reference_only")) {
       return {status, shortLabel:"本期名額待核實", cardLabel:"合作備查／本期名額待核實", hint:"可先加入志願規劃；能否申請須先確認本期名額與條件", matchLabel:"本期名額待確認", reason:"本期甄選名額尚未核實", blocked:false, pending:true};
     }
     return {

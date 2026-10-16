@@ -282,6 +282,12 @@ from .ntu_student_view import (
     ntu_exchange_info,
     ntu_processed_pages,
 )
+from .fju_student_view import (
+    build_fju_student_dashboard,
+    fetch_fju_partner_universities,
+    fju_exchange_info,
+    fju_processed_pages,
+)
 
 mimetypes.add_type("application/vnd.android.package-archive", ".apk")
 
@@ -414,6 +420,7 @@ from .request_origin import client_fingerprint, public_base_url
 from .university_registry import (
     CGU,
     CCU,
+    FJU,
     NTPU,
     NTU,
     NCU,
@@ -1219,6 +1226,8 @@ def create_app(
                         if university.id == NTU.id
                         else fetch_ntpu_partner_universities()
                         if university.id == NTPU.id
+                        else fetch_fju_partner_universities()
+                        if university.id == FJU.id
                         else []
                     )
         return apply_partner_research(
@@ -1266,6 +1275,8 @@ def create_app(
             return ncu_processed_pages()
         if university.id == NTU.id:
             return ntu_processed_pages()
+        if university.id == FJU.id:
+            return fju_processed_pages()
         return (
             ntpu_processed_pages()
             if university.id == NTPU.id
@@ -1288,6 +1299,8 @@ def create_app(
             return tku_exchange_info(partners_for_university(university))
         if university.id == NTU.id:
             return ntu_exchange_info(partners_for_university(university))
+        if university.id == FJU.id:
+            return fju_exchange_info(partners_for_university(university))
         return load_exchange_info(resolved_data_dir) or ExchangeInfo(school_name=CGU.school_name)
 
     dashboard_cache: dict[str, tuple[float, tuple, StudentDashboard]] = {}
@@ -1345,6 +1358,8 @@ def create_app(
             return build_tku_student_dashboard()
         if university.id == NTU.id:
             return build_ntu_student_dashboard(partner_universities=partners_for_university(university))
+        if university.id == FJU.id:
+            return build_fju_student_dashboard(partner_universities=partners_for_university(university))
         # The base dashboard parses official PDFs; partner rows are overlaid from the
         # shared source provider on every response, never retained in this cache.
         # Building this one parses a dozen official PDFs: 10 to 40 seconds on the free
@@ -3108,6 +3123,8 @@ def create_app(
         from .ncu_completion import campus_location
         is_tku = university_for(school).id == "tku"
         from .tku_assets import school_location as tku_school_location
+        is_fju = university_for(school).id == FJU.id
+        from .fju_student_view import fju_school_location
         partners = []
         for partner in dashboard.partner_universities:
             location = public_location(locations, partner.school_name, partner.country)
@@ -3117,6 +3134,8 @@ def create_app(
                 location = campus_location(partner, location, resolved_data_dir)
             elif is_tku:
                 location = tku_school_location(partner, resolved_data_dir)
+            elif is_fju:
+                location = fju_school_location(partner, location, resolved_data_dir)
             partners.append(partner.model_copy(update={"location": location}))
         return dashboard.model_copy(update={"partner_universities": partners})
 

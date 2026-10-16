@@ -34,6 +34,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "ccu": ["oia.ccu.edu.tw", "ccu.edu.tw"],
     "ncu": ["oia.ncu.edu.tw", "ncu.edu.tw"],
     "tku": ["oieie.tku.edu.tw", "tku.edu.tw"],
+    "fju": ["iscoie.fju.edu.tw", "oie.fju.edu.tw", "www.fju.edu.tw", "fju.edu.tw"],
 }
 
 
@@ -182,7 +183,7 @@ def parse_quota_contract(
 
 
 def register_six_home_universities(store: MaintenanceStore) -> dict[str, InstitutionRecord]:
-    """Register all 6 supported home universities (CGU, NTPU, NTU, CCU, NCU, TKU) and their official entry sources."""
+    """Register all supported home universities (CGU, NTPU, NTU, CCU, NCU, TKU, FJU) and their official entry sources."""
     registered: dict[str, InstitutionRecord] = {}
     for prof in SUPPORTED_UNIVERSITIES:
         inst = InstitutionRecord(
@@ -367,7 +368,7 @@ def import_legacy_partner_rows_to_shadow_store(
 
 
 def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceStore) -> dict[str, Any]:
-    """Scan the bundled official_data directories for all 6 schools and import sample/full records into the shadow store."""
+    """Scan the bundled official_data directories for all supported schools and import sample/full records into the shadow store."""
     register_six_home_universities(store)
     school_reports: dict[str, Any] = {}
 
@@ -579,6 +580,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
     if tku_by_school:
         school_reports["tku"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="tku", partner_rows=list(tku_by_school.values()), default_cycle_label="116學年度"
+        )
+
+    # 7. FJU partners.jsonl (234 partner schools)
+    fju_partners_path = official_data_root / "fju" / "partners.jsonl"
+    if fju_partners_path.exists():
+        fju_rows = []
+        for line in fju_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            fju_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116學年度",
+                "website": rec.get("official_website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "reference_only",
+                "source_url": rec.get("source_url") or "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=40",
+            })
+        school_reports["fju"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="fju", partner_rows=fju_rows, default_cycle_label="116學年度"
         )
 
     if store.current_release_id is None:

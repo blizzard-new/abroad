@@ -59,9 +59,12 @@ from .models import (
 from .application_rules import select_application_workflow
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import NTPU, NTU, NCU, require_university, resolve_university
+from .university_registry import FJU, NTPU, NTU, NCU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
+from .fju_student_view import FJU_PROCESS_URL
+
+FJU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -929,6 +932,51 @@ def _ntu_language_validation(template: ApplicationDocumentTemplate, values: dict
     return errors
 
 
+def _fju_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理輔大出國交換個人基本資料、志願學校（最多 5 校）、歷年學業成績（總平均達 70 分或系排名前 50%）及外語能力檢定資料；正式送件須完成 Google 線上報名表並將系主任與院長簽章之紙本申請表送交耕莘樓 A113 國際學生中心。",
+        "study-plan": "撰寫輔大校內甄選必繳之讀書計畫（Study Plan）與自傳（A4 雙面列印、不超過 2 頁／4 面；外語組以英文或交換國語言撰寫、日語組以日文或英文撰寫、中語組以中文撰寫）。",
+        "course-preapproval": "出國前規劃於接待姊妹校修習之科目與學分（依輔大實施辦法第 10 條，每學期至少應修習相當於輔大 2 學分以上之科目），並先與所屬系所確認學分抵免原則。",
+        "predeparture-notice": "錄取後確認繳交保證金 NT$10,000（大陸中語組免繳）、辦理接待校入學許可、學生簽證、海外醫療及意外保險與輔大在學註冊繳費。",
+        "return-report": "返國後 1 個月內應繳交 2,000 字以上之交換學習心得報告與外校正式成績單，以辦理學分抵免及無息退還保證金。",
+        "credit-transfer": "返國後檢附接待姊妹校核發之正式成績單與課程大綱，向所屬系所及教務處辦理國外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "天主教輔仁大學").replace("長庚", "輔大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "輔大校內須檢附含歷年學業總平均及系排名百分比之中文歷年成績單正本（總平均達 70 分或系排名前 50%）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（不接受 Home Edition）", "IELTS Academic", "JLPT（N1–N4）", "TOPIK", "DELF / DALF / TCF（法語）", "Goethe / TestDaF（德語）", "DELE（西語）", "TOEIC（僅供部分學校或換分參考）", "中語組免附外語檢定"]
+            field["help_text"] = "英語組基本門檻為 TOEFL iBT 79 或 IELTS 6.0；外語組語檢成績佔甄選總分 25%（依 labelID=44 換分表 40–100 分計算）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43",
+        source_checked_at=FJU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number=None,
+        official_file_name=None,
+        official_download_url=None,
+        default_copies=1,
+        signatures=["申請學生簽名", "系主任簽章", "學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=[],
+        stage={"predeparture-notice": "出國前準備", "return-report": "返國後一個月內"}.get(template.id, "校內甄選收件（A4左上角裝訂）"),
+        version="116-1準備工具-2026-10-16.1",
+        destinations=["耕莘樓 1 樓 A113 室（國際學生中心）", "學生自存備份"],
+        conditional_note="此為個人準備工具；請先完成輔大 Google 線上報名表並使用國際學生中心當期公告之正式申請表、保證書與個資同意書，依序排列於左上角裝訂（勿用資料夾）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
     if university.id == "ccu":
@@ -937,6 +985,8 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]
         return ccu_application_templates()
     if university.id == NCU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncu_template(template)) is not None]
+    if university.id == FJU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _fju_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

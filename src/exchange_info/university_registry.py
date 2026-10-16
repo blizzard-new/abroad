@@ -129,7 +129,47 @@ NCU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU)
+FJU = UniversityProfile(
+    id="fju",
+    school_name="天主教輔仁大學",
+    short_name="輔大",
+    english_name="Fu Jen Catholic University",
+    aliases=(
+        "天主教輔仁大學",
+        "輔仁大學",
+        "輔仁",
+        "輔大",
+        "FJU",
+        "Fu Jen Catholic University",
+    ),
+    hero_image="/static/assets/fju-campus.svg",
+    official_url="https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39",
+    coverage_note="完整支援：已整理116-1說明會與甄選規定、234所姊妹校專頁條件，並附115-2及115-1名額表供規劃參考（116-1名額預計11月底公告、12月收件）。",
+    support_level="full",
+    partner_count_hint=234,
+    academic_score_minimum=70,
+    student_card_signals=("天主教輔仁大學", "輔仁大學", "FUJENCATHOLICUNIVERSITY", "FJU"),
+    # https://www.fju.edu.tw/academics.jsp — checked 2026-10-16.
+    colleges=(
+        "文學院",
+        "藝術學院",
+        "傳播學院",
+        "教育與運動健康學院",
+        "醫學院",
+        "理工學院",
+        "外語學院",
+        "民生學院",
+        "法律學院",
+        "社會科學院",
+        "管理學院",
+        "織品服裝學院",
+        "全人教育課程中心",
+        "進修部",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU)
 DEFAULT_UNIVERSITY = CGU
 
 
