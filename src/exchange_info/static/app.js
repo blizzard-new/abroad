@@ -1204,7 +1204,7 @@ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {})
 
 async function loadSchoolImages() {
   try {
-    const payload = await fetchJson("/static/assets/school-images.json?v=20261011-integration-1");
+    const payload = await fetchJson("/static/assets/school-images.json?v=20261016-photos-1");
     state.schoolImages = Array.isArray(payload?.schools)
       ? payload.schools.filter((item) => item && item.school_name)
       : [];
@@ -1325,16 +1325,35 @@ function renderSchoolPhoto(item, variant = "card") {
   return `<span class="school-photo school-photo-${escapeHtml(variant)}">${fallback}${image}</span>`;
 }
 
+let destinationProfileIndexRef = null;
+let destinationProfileIndexMap = new Map();
 function destinationProfileForSchool(schoolName) {
-  return state.destinationProfiles.find(
-    (profile) => normalize(profile.school_name) === normalize(schoolName)
-  );
+  const list = state.destinationProfiles || [];
+  if (list !== destinationProfileIndexRef) {
+    destinationProfileIndexRef = list;
+    destinationProfileIndexMap = new Map();
+    for (const profile of list) {
+      const key = normalize(profile.school_name);
+      if (key && !destinationProfileIndexMap.has(key)) destinationProfileIndexMap.set(key, profile);
+    }
+  }
+  return destinationProfileIndexMap.get(normalize(schoolName));
 }
 
+let coveragePartnersIndexRef = null;
+let coveragePartnersIndexMap = new Map();
 function coverageForSchool(schoolName) {
-  return state.coverage?.partners?.find(
-    (item) => normalize(item.school_name) === normalize(schoolName)
-  );
+  const list = state.coverage?.partners || null;
+  if (!list) return undefined;
+  if (list !== coveragePartnersIndexRef) {
+    coveragePartnersIndexRef = list;
+    coveragePartnersIndexMap = new Map();
+    for (const item of list) {
+      const key = normalize(item.school_name);
+      if (key && !coveragePartnersIndexMap.has(key)) coveragePartnersIndexMap.set(key, item);
+    }
+  }
+  return coveragePartnersIndexMap.get(normalize(schoolName));
 }
 
 function renderCoverageBadges(item) {
@@ -7918,8 +7937,25 @@ function renderPartnerFilters() {
 }
 
 function partnerQuotaNumber(item) {
-  const match = String(item?.quota ?? "").match(/\d+/);
-  return match ? Number(match[0]) : null;
+  const raw = String(item?.quota ?? "").trim();
+  if (!raw) return null;
+  const clauses = raw
+    .split(/[；;|｜\n]+/)
+    .map((clause) => clause.trim())
+    .filter((clause) => clause && !/預計.*公告|待公布|待公告|待確認|尚未公告|未公告|暫不開放|不開放|無名額(?!限制)|依.*公告/.test(clause));
+  if (!clauses.length) return null;
+  const cleaned = clauses
+    .join(" ")
+    .replace(/（[^）]*學年[^）]*）|\([^)]*(?:Semester|Year|20\d{2})[^)]*\)/gi, " ")
+    .replace(/\b20\d{2}\s*[-/~～]\s*20\d{2}\b/g, " ")
+    .replace(/\b20\d{2}\s*(?:[-/.年]\s*\d{1,2}(?:\s*[-/.月]\s*\d{1,2}\s*日?)?)?\b/g, " ")
+    .replace(/\b11\d\s*[-~～]\s*[12](?:\s*學期)?/g, " ")
+    .replace(/\b11\d\s*學年(?:度)?(?:\s*第\s*[一二12]\s*(?:學期|梯次))?/g, " ");
+  if (/無名額限制|不限/.test(cleaned)) return null;
+  const match = cleaned.match(/\d+/);
+  if (!match) return null;
+  const value = Number(match[0]);
+  return Number.isFinite(value) && value > 0 && value < 100 ? value : null;
 }
 
 // The earliest upcoming date written in the partner's deadline fields; null when the text names none.
@@ -7954,17 +7990,25 @@ function partnerFitBucket(item) {
   return tone === "strong" ? "fit" : tone === "review" ? "review" : "";
 }
 
+const partnerSearchTextCache = new WeakMap();
+function partnerSearchHaystack(item) {
+  const destination = destinationProfileForSchool(item.school_name) || null;
+  const cached = partnerSearchTextCache.get(item);
+  if (cached && cached.destination === destination) return cached.text;
+  const text = normalize(
+    `${Object.values(item).join(" ")} ${item.location?.city || ""} ${JSON.stringify(item.student_summary_zh || {})} ${Object.values(destination || {}).join(" ")} ${window.UniWayRegions.searchText(item.country)}`
+  );
+  partnerSearchTextCache.set(item, { destination, text });
+  return text;
+}
+
 function filteredPartners({ ignore = "", sort = true } = {}) {
   if (!state.dashboard) return [];
   const query = normalize(state.partnerQuery);
   const partners = state.dashboard.partner_universities.filter((item) => {
-    const destination = destinationProfileForSchool(item.school_name);
-    const text = normalize(
-      `${Object.values(item).join(" ")} ${item.location?.city || ""} ${JSON.stringify(item.student_summary_zh || {})} ${Object.values(destination || {}).join(" ")} ${window.UniWayRegions.searchText(item.country)}`
-    );
     const quota = partnerQuotaNumber(item);
     return (
-      (!query || text.includes(query)) &&
+      (!query || partnerSearchHaystack(item).includes(query)) &&
       (!state.availability || (item.availability_status || "open") === state.availability) &&
       window.UniWayRegions.inRegion(item.country, state.region) &&
       (ignore === "country" || !state.country || item.country === state.country) &&
@@ -8304,10 +8348,20 @@ function renderSchoolImageCredit(item, includeNote = true) {
   return `<small class="school-image-credit">${escapeHtml(note)}${note.includes("CC BY-SA 3.0") ? ' · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">圖片授權</a>' : ""}</small>`;
 }
 
+let partnerByNameIndexRef = null;
+let partnerByNameIndexMap = new Map();
 function partnerByName(schoolName) {
-  return state.dashboard?.partner_universities.find(
-    (item) => normalize(item.school_name) === normalize(schoolName)
-  );
+  const list = state.dashboard?.partner_universities || null;
+  if (!list) return undefined;
+  if (list !== partnerByNameIndexRef) {
+    partnerByNameIndexRef = list;
+    partnerByNameIndexMap = new Map();
+    for (const item of list) {
+      const key = normalize(item.school_name);
+      if (key && !partnerByNameIndexMap.has(key)) partnerByNameIndexMap.set(key, item);
+    }
+  }
+  return partnerByNameIndexMap.get(normalize(schoolName));
 }
 
 function activeSchoolSelections() {
@@ -12846,6 +12900,15 @@ function ensureRuntimeLoadingOverlay() {
   overlay.hidden = true;
   overlay.querySelector(".boot-splash-hint")?.remove();
   overlay.querySelector(".boot-splash-hint-more")?.remove();
+  const slab = overlay.querySelector(".uw-mascot-slab");
+  if (slab && !slab.children.length) {
+    slab.dataset.built = "1";
+    for (let k = 0; k < 16; k += 1) {
+      const layer = document.createElement("i");
+      layer.style.setProperty("--k", String(k));
+      slab.append(layer);
+    }
+  }
   bootSplash.after(overlay);
   return overlay;
 }
@@ -14113,6 +14176,7 @@ function bindEvents() {
 }
 
 async function boot() {
+  ensureRuntimeLoadingOverlay();
   if (!window.location.hash || window.location.hash === "#community-hub") {
     window.UniWayNavigation.replaceState({}, "", new URLSearchParams(window.location.search).has("view") ? "#partners" : window.location.hash ? "#forum" : "#home");
   }

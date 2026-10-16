@@ -38,6 +38,7 @@
   border-radius: 50%;
   background: rgba(35, 82, 135, 0.24);
   filter: blur(5px);
+  will-change: transform, opacity;
   animation: uw-mascot-shadow 6.4s ease-in-out infinite;
 }
 
@@ -46,6 +47,7 @@
   inset: 0;
   transform-origin: 50% 94%;
   transform-style: preserve-3d;
+  will-change: transform;
   animation: uw-mascot-idle 6.4s ease-in-out infinite;
 }
 
@@ -109,6 +111,7 @@
   inset: 0;
   /* `translate` is separate from `transform`, so the looking-around animation does not wipe out the distance forward. */
   translate: 0 0 calc(var(--uw-depth) / 2 + 1px);
+  will-change: transform;
   animation: uw-mascot-look 9s ease-in-out infinite;
 }
 

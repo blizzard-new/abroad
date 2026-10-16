@@ -11,17 +11,30 @@
     "next_step", "limitation", "academic_score_rule", "requirements"]);
   const summaryFields = new Set(["study_period", "application_deadline", "eligibility_points", "application_steps", "tuition_points"]);
   const terms = /(?<![A-Za-z])(?:TOEIC|TOEFL(?:\s+(?:iBT|ITP|PBT))?|IELTS|Duolingo(?: English Test)?|DET|JLPT|TOPIK|CEFR|MCER|GPA|ECTS|SAT|GRE|GMAT|PTE|TEF|TCF|DELF|DALF|TestDaF|DSH|Cambridge English Qualification|Cambridge FCE|Linguaskill|FCE|CAE|COE|JYPE|COLABS|iBT|ITP|PBT|IBT|TOFEL|IELT|JPT|CSOM|CSE|SE-B|SE-G|SPACE|PDF|DOCX?|TXT|JPG|PNG|WebP|QS|THE|MBA|BBA|BA|MA|MSc|PhD|ESL|EAP|ASAP|UCI|NTNU|UWM|CGU|ETS|TA|AI|USD|EUR|TWD|JPY|KRW|AUD|CAD|NZD|CHF|GBP|[ABC][12]|N[1-5])(?:\b|(?=[\u4e00-\u9fff\d]))/gi;
+  const normalizedCache = new Map();
+  const needsTranslationCache = new Map();
   function normalizeTerms(value) {
-    return String(value).split(/(https?:\/\/[^\s）)<>；，。！？「」『』【】]+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,})/g)
+    const raw = String(value);
+    const cached = normalizedCache.get(raw);
+    if (cached !== undefined) return cached;
+    const result = raw.split(/(https?:\/\/[^\s）)<>；，。！？「」『』【】]+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,})/g)
       .map((part, index) => index % 2 ? part : part.replace(/多益\s*(?:TOEIC)?/gi, "TOEIC")
         .replace(/\b(toeic|ielts|toefl|jlpt|topik|cefr)\b/gi, term => term.toUpperCase())).join("");
+    if (normalizedCache.size < 8000) normalizedCache.set(raw, result);
+    return result;
   }
   function needsTranslation(value) {
-    let text = String(value).replace(/https?:\/\/[^\s）)<>]+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/g, "").replace(terms, "");
+    const raw = String(value);
+    const cached = needsTranslationCache.get(raw);
+    if (cached !== undefined) return cached;
+    let text = raw.replace(/https?:\/\/[^\s）)<>]+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/g, "").replace(terms, "");
     text = text.replace(/\b(?:[A-Za-z0-9-]+\.)+(?:edu|ac|com|org|net|cz|jp|se|pl|uk|kr|vn|ro|tr|lt|cn|fr|it|es|de|ca)(?:\.[A-Za-z]{2,})*\b/g, "")
       .replace(/\b[\w.-]+\.(?:pdf|docx?|xlsx?)\b/gi, "")
       .replace(/\b(?:iCLA|CROUS|Crous|CVEC|UNIST|MSU|KNU|ERICA|EDHEC|HSUHK|KEDGE|UNYP|VSB-TUO|BTH|KMUTT|KMITL|EIGSI|SKEMA|ESCA|UFE|VUT|BUT|PUT|WUT|UNIPO|ISIC|FAQ|LAC|Erasmus|T-money|EZL|LAN|VPN)\b/g, "");
-    if ([...text].some(char => /\p{L}/u.test(char) && !/[\p{Script=Han}\p{Script=Latin}]/u.test(char))) return true;
+    if ([...text].some(char => /\p{L}/u.test(char) && !/[\p{Script=Han}\p{Script=Latin}]/u.test(char))) {
+      if (needsTranslationCache.size < 8000) needsTranslationCache.set(raw, true);
+      return true;
+    }
     const han = (text.match(/[\u3400-\u9fff]/gu) || []).length;
     if (han >= 4) {
       text = text.replace(/\b(?:[A-ZÀ-Þ][a-zà-öø-ÿ]+(?:\s+|$)){2,}/g, "").replace(/\b[A-ZÀ-Þ][A-Za-zÀ-ÿ]*\b/g, "");
@@ -29,8 +42,9 @@
       text = text.replace(/(?<![A-Za-z])[A-Z]{2,10}(?![A-Za-z])/g, "");
     }
     text = text.replace(/\b(?:eSIM|SIM|Wi-Fi|fact\s*sheet|factsheet)\b/gi, "");
-    if (/^[\w.-]+\.(?:pdf|docx?|xlsx?)$/i.test(String(value))) return false;
-    return /[A-Za-z\u00c0-\u024f]{2,}/u.test(text);
+    const result = /^[\w.-]+\.(?:pdf|docx?|xlsx?)$/i.test(raw) ? false : /[A-Za-z\u00c0-\u024f]{2,}/u.test(text);
+    if (needsTranslationCache.size < 8000) needsTranslationCache.set(raw, result);
+    return result;
   }
   function collect(data) {
     const targets = [];
