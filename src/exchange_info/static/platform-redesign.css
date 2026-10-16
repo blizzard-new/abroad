@@ -1033,10 +1033,16 @@ body.unified-shell #profile #profile-export-button { min-height: 0; padding: 8px
 body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) .page-back-bar #school-switcher {
   width: min(420px, calc(100vw - 150px)); min-height: 68px; padding: 9px 12px 9px 10px; gap: 12px;
   border: 2px solid var(--uw-blue); border-radius: 20px;
+  position: relative;
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--uw-blue) 14%, transparent), 0 14px 34px color-mix(in srgb, var(--uw-blue) 22%, transparent);
+}
+/* The ring is a pseudo-element that only grows and fades (compositor work), not an animated shadow, which repaints every
+   frame and competes with the globe behind the page for the main thread. */
+body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) .page-back-bar #school-switcher::before {
+  content: ""; position: absolute; inset: -2px; border: 2px solid var(--uw-blue); border-radius: inherit; opacity: 0; pointer-events: none;
   animation: pr-switcher-ring 2.6s ease-out 3;
 }
-body.unified-shell[data-school-selected="false"]:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) .page-back-bar #school-switcher { animation-iteration-count: infinite; }
+body.unified-shell[data-school-selected="false"]:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) .page-back-bar #school-switcher::before { animation-iteration-count: infinite; }
 body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) .page-back-bar #school-switcher .school-switcher-icon {
   flex-basis: 48px; width: 48px; height: 48px; border-radius: 14px; background: var(--uw-blue-strong); color: var(--uw-page);
 }
@@ -1051,11 +1057,11 @@ body.unified-shell[data-school-selected="false"]:has(:where(#dashboard-view):not
   content: "請選擇"; background: var(--glass-coral); color: #fff;
 }
 @keyframes pr-switcher-ring {
-  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--uw-blue) 40%, transparent), 0 14px 34px color-mix(in srgb, var(--uw-blue) 22%, transparent); }
-  70%, 100% { box-shadow: 0 0 0 14px color-mix(in srgb, var(--uw-blue) 0%, transparent), 0 14px 34px color-mix(in srgb, var(--uw-blue) 22%, transparent); }
+  0% { opacity: .55; transform: scale(1); }
+  70%, 100% { opacity: 0; transform: scale(1.1, 1.28); }
 }
 @media (prefers-reduced-motion: reduce) {
-  body.unified-shell .page-back-bar #school-switcher { animation: none !important; }
+  body.unified-shell .page-back-bar #school-switcher::before { animation: none !important; }
 }
 @media (max-width: 900px) {
   body.unified-shell:has(:where(#dashboard-view):not([hidden]) > :where(#home-landing):not([hidden])) .page-back-bar #school-switcher { width: 100%; min-height: 62px; }

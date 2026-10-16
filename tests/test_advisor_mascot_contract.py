@@ -149,3 +149,13 @@ def test_advisor_lattice_loader_is_wired_with_orbit_configuration() -> None:
     assert "UniWayLatticeLoader" in bundle_js
     assert ".lattice-loader" in bundle_css
 
+
+
+def test_the_rebuilt_picker_bundle_is_served_under_a_new_cache_version() -> None:
+    # The bundle gained the LatticeLoader after "20261014-aria-1"; a browser that kept that copy would never show it.
+    versions = {
+        asset: re.search(rf'/static/react-aria-school-picker\.{asset}\?v=([\w.-]+)"', HTML).group(1)
+        for asset in ("js", "css")
+    }
+    assert versions["js"] == versions["css"], "the script and its stylesheet are rebuilt together"
+    assert versions["js"] != "20261014-aria-1"
