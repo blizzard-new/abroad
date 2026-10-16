@@ -10,9 +10,12 @@ import hashlib
 import gzip
 import json
 import re
+import sys
 from collections import Counter
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from exchange_info.models import (
     DestinationProfile, ExchangeInfo, PartnerResearchRecord, PartnerUniversity,

@@ -59,7 +59,7 @@ from .models import (
 from .application_rules import select_application_workflow
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import FJU, NTNU, NTPU, NTU, NCU, SCU, require_university, resolve_university
+from .university_registry import CYCU, FJU, NTNU, NTPU, NTU, NTUST, NCU, SCU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -67,6 +67,8 @@ from .fju_student_view import FJU_PROCESS_URL
 FJU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 SCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 NTNU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
+CYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
+NTUST_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1069,6 +1071,96 @@ def _ntnu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _cycu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理中原大學 115-2（2027 春季出國）出國交換研修計畫之個人資料、志願學校、歷年學業成績（GPA 3.0 以上或班級排名前 30%；建築學系為前 50%）、外語能力檢定證明與保證人同意書資訊；正式申請須檢附導師、系主任、院長核章之校內申請表送交國際暨兩岸教育處（維澈樓 704 室）。",
+        "study-plan": "撰寫中原大學出國交換研修必繳之中英文讀書計畫（含出國修課動機、擬於目標姊妹校修習之專業科目與學分規劃、研究主題及返國後學涯連結；請使用國際處規定之申請附件格式）。",
+        "course-preapproval": "出國前規劃於接待姊妹校修習之科目（依中原大學《選送學生出國研習實施辦法》規定，出國交換期間每學期至少應修習二門科目或相當於中原大學六學分之課程，並填寫學生出國修習課程申請表經系所預審）。",
+        "predeparture-notice": "通過校內甄選並獲推薦提名後，依姊妹校規定準備外校入學申請表、英文財力證明、有效護照、簽證、家長／保證人同意書及海外醫療與意外保險證明。",
+        "return-report": "交換研習期滿返國後二個月內，向國際暨兩岸教育處繳交 1,500 字以上之出國交換研修心得報告（含照片授權），並配合國際處辦理成果分享始得完成結案與獎助學金核銷。",
+        "credit-transfer": "交換期滿返國後，持接待姊妹校核發之正式成績單正本、修課大綱（Syllabus）及修課時數證明，依中原大學教務處與所屬學系規定辦理國外修習科目學分採認／抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "中原大學").replace("長庚", "中原")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "中原大學規定歷年學業總平均須達 GPA 3.0（平均 75 分）以上或班級排名前 30%（建築學系為歷年排名前 50% 且建築設計一～六均及格）；請檢附教務處核發之歷年中文與英文成績單正本（含排名百分比）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT", "IELTS Academic", "TOEIC", "JLPT（N1–N4）", "TOPIK（韓檢 2–6 級）", "DELF / DALF / TCF（法語）", "Goethe / TestDaF（德語）", "DELE（西語）", "赴大陸交換免附外語檢定"]
+            field["help_text"] = "申請國際及香港姊妹校須檢附兩年內有效之外語能力檢定證明，並符合《中原大學出國交換研修申請學校一覽表》與各校 Fact Sheet 標準；申請大陸地區姊妹校免附外語檢定。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.cycu.edu.tw/?page_id=2956&lang=zh",
+        source_checked_at=CYCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number=None,
+        official_file_name=None,
+        official_download_url="https://oia.cycu.edu.tw/?page_id=2968&lang=zh",
+        default_copies=1,
+        signatures=["申請學生簽名", "家長／保證人簽章", "導師簽章", "系主任簽章", "院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=[],
+        stage={"predeparture-notice": "外校提名與簽證保險準備", "return-report": "返國後二個月內", "credit-transfer": "返國開學後"}.get(template.id, "校內申請表件送件（維澈樓 704 室）"),
+        version="115-2準備工具-2026-10-16.1",
+        destinations=["中原大學國際暨兩岸教育處（維澈樓 704 室）", "所屬學系／學院辦公室"],
+        conditional_note="此為個人準備工具；中原大學正式出國交換申請表件請自 https://oia.cycu.edu.tw/?page_id=2968&lang=zh 下載，完成導師、系主任及院長核章後於截止日前送交國際暨兩岸教育處（維澈樓 704 室）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _ntust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺灣科技大學 115-2（2027 春季班）海外暨大陸地區交換生甄選之個人資料、志願序、歷年成績與名次證明（海外交換須全班前 70%；大陸交換須大學部平均 75 分、研究所 80 分以上）及外語檢定成績（語言能力占總成績 60%、在校成績占 20%、課外表現占 20%）。",
+        "study-plan": "撰寫臺科大出國交換甄選必繳之自傳與讀書計畫（含交換動機、擬於目標姊妹校修習之專業科目、研究計畫與課外國際交流表現；校內書面審查課外表現與讀書計畫占總分 20%）。",
+        "course-preapproval": "出國前規劃於接待姊妹校修習之科目（依臺科大《學生出國期間有關學業及學籍處理要點》規定，交換期間須維持臺科大在學學籍並依規定修課，返國後辦理學分採認抵免）。",
+        "predeparture-notice": "放榜錄取後於期限內繳交《錄取資格確認書》（或放棄聲明書），並依國際處與姊妹校規定準備外校線上申請表、英文歷年成績單、英文在學證明、英文財力證明、護照、簽證與海外醫療保險。",
+        "return-report": "交換期滿返國後 1 個月內，登入臺科大國際事務處出國交換學生心得分享系統（https://www.oia.ntust.edu.tw/p/404-1060-66857.php?Lang=zh-tw）填寫並上傳研修心得報告及照片，始得完成結案與獎學金尾款核銷。",
+        "credit-transfer": "交換期滿返國後，檢附接待姊妹校核發之正式成績單正本、課程大綱（Syllabus）及學分時數證明，依臺科大教務處與所屬系所規定辦理國外修習科目學分採認／抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺灣科技大學").replace("長庚", "臺科大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "臺科大海外交換規定歷年名次須在全班前 70% 以內（大陸地區交換為大學部歷年總平均 75 分以上、研究所 80 分以上）；在校學業成績占校內書審總分 20%。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT", "IELTS Academic", "TOEIC", "GEPT 全民英檢中級複試以上", "JLPT（N1–N2）", "TOPIK（韓檢 3–6 級）", "TestDaF / Goethe（德語 B1+）", "DELF / TCF（法語 B1+）", "DELE（西語 B1+）", "赴大陸交換免附外語檢定"]
+            field["help_text"] = "語言能力占校內甄選總分 60%（基本門檻：TOEIC 550 / TOEFL iBT 57 / IELTS 4.0 / JLPT N2 / CEFR B1；校內獎學金門檻：TOEIC 750 / TOEFL iBT 79 / IELTS 6.0 / JLPT N2；第二外語達 B1 另加總分 1 分）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://www.oia.ntust.edu.tw/var/file/60/1060/img/2289/948853506.pdf",
+        source_checked_at=NTUST_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number=None,
+        official_file_name=None,
+        official_download_url="https://www.oia.ntust.edu.tw/p/412-1060-8926.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生簽名", "指導教授簽名（研究生適用）", "系所主管核章"] if template.id == "exchange-application-data" else [],
+        stamps=[],
+        stage={"predeparture-notice": "錄取確認與外校提名送件", "return-report": "返國後一個月內", "credit-transfer": "返國開學後"}.get(template.id, "線上報名並列印申請表送交系所與國際處"),
+        version="115-2準備工具-2026-10-16.1",
+        destinations=["臺科大出國交換生報名系統", "國際事務處（國際大樓 IB-401）"],
+        conditional_note="此為個人準備工具；臺科大出國交換生甄選須先完成線上報名並列印申請表，經系所（及指導教授）核章後連同備審資料於截止日前送交國際事務處。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
     if university.id == "ccu":
@@ -1083,6 +1175,10 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _scu_template(template)) is not None]
     if university.id == NTNU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntnu_template(template)) is not None]
+    if university.id == CYCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _cycu_template(template)) is not None]
+    if university.id == NTUST.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntust_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

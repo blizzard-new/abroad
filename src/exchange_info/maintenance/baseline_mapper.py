@@ -37,6 +37,8 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "fju": ["iscoie.fju.edu.tw", "oie.fju.edu.tw", "www.fju.edu.tw", "fju.edu.tw"],
     "scu": ["icae.scu.edu.tw", "www.scu.edu.tw", "www-ch.scu.edu.tw", "scu.edu.tw"],
     "ntnu": ["bds.oia.ntnu.edu.tw", "oia.ntnu.edu.tw", "www.ntnu.edu.tw", "ntnu.edu.tw"],
+    "cycu": ["oia.cycu.edu.tw", "www.cycu.edu.tw", "cycu.edu.tw"],
+    "ntust": ["www.oia.ntust.edu.tw", "oia.ntust.edu.tw", "www.ntust.edu.tw", "ntust.edu.tw"],
 }
 
 
@@ -651,6 +653,52 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["ntnu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ntnu", partner_rows=ntnu_rows, default_cycle_label="116-1"
+        )
+
+    # 10. CYCU partners.jsonl (89 partner schools)
+    cycu_partners_path = official_data_root / "cycu" / "partners.jsonl"
+    if cycu_partners_path.exists():
+        cycu_rows = []
+        for line in cycu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            cycu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115-2",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.cycu.edu.tw/?page_id=10128&lang=zh",
+            })
+        school_reports["cycu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="cycu", partner_rows=cycu_rows, default_cycle_label="115-2"
+        )
+
+    # 11. NTUST partners.jsonl (237 partner schools)
+    ntust_partners_path = official_data_root / "ntust" / "partners.jsonl"
+    if ntust_partners_path.exists():
+        ntust_rows = []
+        for line in ntust_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            ntust_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115-2",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://www.oia.ntust.edu.tw/p/405-1060-62105,c9035.php?Lang=zh-tw",
+            })
+        school_reports["ntust"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="ntust", partner_rows=ntust_rows, default_cycle_label="115-2"
         )
 
     if store.current_release_id is None:

@@ -82,8 +82,8 @@ def test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_
             assert by_key(result)["workflow"].status == "missing"
         scores.append(result.score)
     # New schools add profiles; explicitly preserve all existing home scopes.
-    assert Counter(p.home_university for p in profiles)=={'長庚大學':77,'國立臺北大學':206,'國立臺灣大學':289,'國立中央大學':214,'國立中正大學':104,'淡江大學':287,'天主教輔仁大學':232,'東吳大學':191,'國立臺灣師範大學':236}
-    assert len(scores) == 1836 and max(scores) < 1
+    assert Counter(p.home_university for p in profiles)=={'長庚大學':77,'國立臺北大學':206,'國立臺灣大學':289,'國立中央大學':214,'國立中正大學':104,'淡江大學':287,'天主教輔仁大學':232,'東吳大學':191,'國立臺灣師範大學':236,'中原大學':89,'國立臺灣科技大學':237}
+    assert len(scores) == 2162 and max(scores) < 1
 
 
 def test_endpoint_returns_completeness_for_a_supported_partner(tmp_path):
