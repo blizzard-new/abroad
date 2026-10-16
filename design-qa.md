@@ -1,3 +1,22 @@
+# Design QA: the home globe stays on a normal machine
+
+## What went wrong
+
+The half globe on the home hero fell back to the flat SVG map on a real, working browser. The cause was my own safety net: the globe checked the average gap between its first 12 frames and gave way to the flat map above 90 ms. Those first frames fall while the page is still booting, and one long main-thread stall (the first renders of the partner list took well over a second) was enough to trip it, after which the fallback was permanent for that visit. The change was not asked for: the fallback was meant for machines that cannot draw the globe, not for a normal one having a slow start.
+
+## What changed
+
+- Draws made while the loading screen is up, and for the first 1.2 seconds after it, are no longer counted.
+- The verdict is the **median** gap over 30 draws, above 75 ms (about 13 frames a second), so a few stalls cannot decide it; only a globe that is sustainably slow gives way.
+- The reason is now on the page: `data-reason` on the globe's host (`slow:…ms`, `software:<renderer>`, `no-cobe`, `error:…`) and a console message, so a flat map can be explained in seconds.
+- The soft ring on the home school switcher is now a pseudo-element that grows and fades, instead of an animated box-shadow that repainted every frame and competed with the globe for the main thread.
+
+## Verification
+
+- New end-to-end tests with a stand-in for COBE, so the globe's real pacing and verdict code run without a GPU: a 1.4 s and a 0.9 s stall at start-up leave the globe up (this test fails on the old code: the globe stops drawing), draws that each take 140 ms give way to the flat map with a `slow:` reason, and a software renderer gives way with a `software:` reason.
+- `test_platform_redesign.py` and `test_glass_theme.py`: 45 passed. Contract / routing / caching: 85 passed.
+- Not verified: a real GPU. The stall is simulated; the cause on the reporting machine is inferred from the symptom (the globe worked there after the first release), not observed.
+
 # Design QA: workspace sub-tabs, home school switcher, supported-schools marquee, rail logo
 
 ## What the user asked for

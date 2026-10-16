@@ -182,6 +182,74 @@ def test_explore_sorts_and_compares_schools(page, live_server) -> None:
     expect(page.locator("#partner-compare-tray [data-open-compare]")).to_be_enabled()
 
 
+# A stand-in for COBE, so the globe's own pacing and its "can this machine keep up" verdict run without a real GPU.
+FAKE_COBE = """
+window.UniWayCobe = function (canvas, options) {
+  window.__globeDraws = 0;
+  return {
+    toggle() {},
+    destroy() {},
+    render() {
+      window.__globeDraws += 1;
+      options.onRender({});
+      const started = performance.now();
+      while (performance.now() - started < (window.__globeCost || 0)) { /* a draw that takes this long */ }
+    },
+  };
+};
+"""
+
+
+def _pretend_renderer(name: str) -> str:
+    return (
+        "for (const proto of [WebGLRenderingContext.prototype, WebGL2RenderingContext.prototype]) {"
+        " const original = proto.getParameter;"
+        f" proto.getParameter = function (name) {{ return name === 0x9246 ? {json.dumps(name)} : original.call(this, name); }}; }}"
+    )
+
+
+def _globe_page(browser, live_server, renderer: str, init: str = ""):
+    context = browser.new_context(viewport={"width": 1440, "height": 900})
+    page = context.new_page()
+    page.add_init_script(_pretend_renderer(renderer))
+    if init:
+        page.add_init_script(init)
+    page.route("**/static/vendor/cobe/**", lambda route: route.fulfill(body=FAKE_COBE, content_type="application/javascript"))
+    enter_public_site(page, live_server, "home")
+    return context, page
+
+
+def test_the_globe_survives_stalls_while_the_page_boots(browser, live_server) -> None:
+    # Long main-thread stalls at start-up (a page doing its first renders) must not be mistaken for a slow machine.
+    stalls = "setTimeout(() => { const t = performance.now(); while (performance.now() - t < 1400); }, 300); setTimeout(() => { const t = performance.now(); while (performance.now() - t < 900); }, 2200);"
+    context, page = _globe_page(browser, live_server, "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Direct3D11)", stalls)
+    try:
+        page.wait_for_function("() => window.__globeDraws > 90", timeout=30_000)
+        assert page.locator("[data-home-globe]").get_attribute("data-state") == "ready"
+        assert page.locator("[data-home-globe]").get_attribute("data-reason") is None
+    finally:
+        context.close()
+
+
+def test_the_globe_gives_way_to_the_flat_map_when_every_draw_is_slow(browser, live_server) -> None:
+    context, page = _globe_page(browser, live_server, "ANGLE (Intel, Intel(R) UHD Graphics Direct3D11)", "window.__globeCost = 140;")
+    try:
+        page.wait_for_function("() => document.querySelector('[data-home-globe]').dataset.state === 'fallback'", timeout=60_000)
+        assert page.locator("[data-home-globe]").get_attribute("data-reason").startswith("slow:")
+        expect(page.locator('[data-home-globe] [data-home-map="hero"] svg')).to_be_visible()
+    finally:
+        context.close()
+
+
+def test_the_globe_is_left_to_the_flat_map_on_a_software_renderer(browser, live_server) -> None:
+    context, page = _globe_page(browser, live_server, "Google SwiftShader")
+    try:
+        page.wait_for_function("() => document.querySelector('[data-home-globe]').dataset.state === 'fallback'", timeout=30_000)
+        assert page.locator("[data-home-globe]").get_attribute("data-reason").startswith("software:")
+    finally:
+        context.close()
+
+
 def test_home_supported_schools_drift_left_and_can_be_paused(browser, live_server) -> None:
     context = browser.new_context(viewport={"width": 1440, "height": 900})
     page = context.new_page()

@@ -1,7 +1,8 @@
 /* Half-globe backdrop for the first screen of #home.
    COBE (vendored, window.UniWayCobe) draws the partner cities of the chosen school as dots on a slowly turning globe whose
    lower half sits below the hero. The globe fades away as the page scrolls down. Nothing here is needed to read the page:
-   without WebGL, or if COBE fails to start, the hero keeps its flat SVG map (data-state="fallback" on the host).
+   without WebGL, on a software renderer, or on a machine that cannot keep up, the hero keeps its flat SVG map
+   (data-state="fallback" on the host, and data-reason says why, also logged to the console).
    platform-home.js calls UniWayGlobeBackdrop.setMarkers() whenever the partner list changes. */
 window.UniWayGlobeBackdrop = (() => {
   "use strict";
@@ -16,10 +17,14 @@ window.UniWayGlobeBackdrop = (() => {
   const MAX_MARKERS = 63;
   const MAX_DPR = 1.25;
   // The globe is scenery, so it draws at 30 frames a second, and it gives way to the flat map when a machine cannot keep up
-  // (no GPU, or a software renderer): the average gap between the first frames is checked against SLOW_FRAME_MS.
+  // (no GPU, or a software renderer). That is judged on a calm page: draws while the loading screen is up, and the first
+  // second after it, are not counted, because the page boots with long stalls of its own and one of them must never take
+  // the globe away; the verdict is the median gap between SAMPLE_INTERVALS draws, which is above SLOW_MEDIAN_MS only when
+  // the globe is sustainably slower than about 13 frames a second.
   const FRAME_MS = 33;
-  const SLOW_FRAME_MS = 90;
-  const SAMPLE_FRAMES = 12;
+  const SETTLE_MS = 1200;
+  const SAMPLE_INTERVALS = 30;
+  const SLOW_MEDIAN_MS = 75;
   const SOFTWARE_RENDERER = /swiftshader|llvmpipe|softpipe|software|basic render/i;
   // COBE draws its sphere with a radius of 0.4 × the canvas height × scale.
   const RADIUS_PER_HEIGHT = 0.4;
@@ -31,7 +36,8 @@ window.UniWayGlobeBackdrop = (() => {
 
   let host = null, canvas = null, globe = null, markers = [], phi = FACE_TAIWAN;
   let theme = "light", sized = "", resizeTimer = 0, scrollFrame = 0, visible = false, failed = false, last = 0;
-  let loop = 0, running = false, lastDraw = 0, sampled = 0, sampleStart = 0;
+  let loop = 0, running = false, lastDraw = 0, prevDraw = 0, settledAt = 0, judged = false, rendererName = "";
+  const intervals = [];
 
   const currentTheme = () => (document.documentElement.dataset.theme === "dark" ? "dark" : "light");
 
@@ -56,6 +62,7 @@ window.UniWayGlobeBackdrop = (() => {
       const info = gl.getExtension("WEBGL_debug_renderer_info");
       const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : "";
       gl.getExtension("WEBGL_lose_context")?.loseContext();
+      rendererName = renderer;
       hardware = !SOFTWARE_RENDERER.test(renderer);
     } catch { /* no usable WebGL */ }
     return hardware;
@@ -71,10 +78,29 @@ window.UniWayGlobeBackdrop = (() => {
     sized = "";
   }
 
-  function fallBack() {
+  function fallBack(reason) {
     failed = true;
     stop();
     host?.setAttribute("data-state", "fallback");
+    host?.setAttribute("data-reason", reason);
+    console.info(`[UniWayGlobeBackdrop] showing the flat map: ${reason}`);
+  }
+
+  const median = (list) => { const sorted = [...list].sort((a, b) => a - b); return sorted[Math.floor(sorted.length / 2)]; };
+  // Too slow only when there are enough draws to tell and half of them were later than SLOW_MEDIAN_MS.
+  const isTooSlow = (gaps) => gaps.length >= SAMPLE_INTERVALS && median(gaps) > SLOW_MEDIAN_MS;
+
+  // Called with each draw's time; decides once, after the page has settled, whether this machine keeps up.
+  function judge(now) {
+    if (document.getElementById("boot-splash")) { settledAt = 0; prevDraw = 0; return; }
+    if (!settledAt) settledAt = now + SETTLE_MS;
+    if (now < settledAt) { prevDraw = 0; return; }
+    if (prevDraw) intervals.push(now - prevDraw);
+    prevDraw = now;
+    if (intervals.length >= SAMPLE_INTERVALS) {
+      judged = true;
+      if (isTooSlow(intervals)) fallBack(`slow:${Math.round(median(intervals))}ms`);
+    }
   }
 
   function start() {
@@ -84,7 +110,8 @@ window.UniWayGlobeBackdrop = (() => {
     const key = `${width}x${height}x${window.devicePixelRatio}`;
     if (globe && key === sized) return;
     stop();
-    if (typeof window.UniWayCobe !== "function" || !hasHardwareGl()) { fallBack(); return; }
+    if (typeof window.UniWayCobe !== "function") { fallBack("no-cobe"); return; }
+    if (!hasHardwareGl()) { fallBack(`software:${rendererName.slice(0, 60) || "no-webgl"}`); return; }
     const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
     // The globe's centre sits on the bottom edge of the canvas, so only its upper half is drawn.
     const radius = Math.min(width * 0.49, height / 1.05);
@@ -128,8 +155,8 @@ window.UniWayGlobeBackdrop = (() => {
           frame.markers = markerList();
         },
       });
-    } catch {
-      fallBack();
+    } catch (error) {
+      fallBack(`error:${String(error?.message || error).slice(0, 60)}`);
       return;
     }
     // COBE starts its own animation loop; this file paces the frames itself, so that one is switched off.
@@ -138,7 +165,7 @@ window.UniWayGlobeBackdrop = (() => {
     host.setAttribute("data-state", "ready");
     canvas.style.opacity = "1";
     last = 0;
-    sampled = 0;
+    prevDraw = 0;
     // A still frame is enough for people who asked for less motion.
     globe.render();
     applyRunState();
@@ -148,11 +175,9 @@ window.UniWayGlobeBackdrop = (() => {
     loop = 0;
     if (!running || !globe) return;
     if (now - lastDraw >= FRAME_MS - 2) {
-      if (sampled < SAMPLE_FRAMES) {
-        // The first frame after a pause is not a fair sample.
-        if (sampled === 0) sampleStart = now;
-        else if (sampled === SAMPLE_FRAMES - 1 && (now - sampleStart) / (SAMPLE_FRAMES - 1) > SLOW_FRAME_MS) { fallBack(); return; }
-        sampled += 1;
+      if (!judged) {
+        judge(now);
+        if (!globe) return;
       }
       lastDraw = now;
       globe.render();
@@ -170,7 +195,8 @@ window.UniWayGlobeBackdrop = (() => {
     loop = 0;
     if (running) {
       last = 0;
-      sampled = 0;
+      // The gap across a pause is not a draw time.
+      prevDraw = 0;
       loop = window.requestAnimationFrame(tick);
     }
   }
@@ -230,5 +256,5 @@ window.UniWayGlobeBackdrop = (() => {
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
   else init();
-  return { setMarkers };
+  return { setMarkers, isTooSlow };
 })();
