@@ -308,7 +308,8 @@ def main():
     if COMPLETION_SOURCE.exists():
         apply_completion(OUTPUT)
     counts = json.loads((OUTPUT / "catalog-completeness.json").read_text(encoding="utf-8"))
-    print(f"NTU: {len(partner_rows)} partners, {len(workflows)} workflows, {len(destinations)} destinations; {counts['quota_pending_count']} pending / {counts['zero_quota_count']} zero / {counts.get('published_positive_quota_count', 0)} published quotas")
+    n_total = counts["partner_count"]
+    print(f"NTU: {n_total} partners, {n_total} workflows, {n_total} destinations; {counts['quota_pending_count']} pending / {counts['zero_quota_count']} zero / {counts.get('published_positive_quota_count', 0)} published quotas")
 
 
 if __name__ == "__main__":

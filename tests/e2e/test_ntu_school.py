@@ -24,7 +24,7 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
     expect(page.locator("#school-switcher-label")).to_have_text("國立臺灣大學")
-    wait_until(page, "state.dashboard?.school_name === '國立臺灣大學' && state.dashboard.partner_universities.length === 288")
+    wait_until(page, "state.dashboard?.school_name === '國立臺灣大學' && state.dashboard.partner_universities.length === 289")
     page.evaluate("location.hash='#partners'")
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("蒙大拿州立大學")

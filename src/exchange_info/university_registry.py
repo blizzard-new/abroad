@@ -101,9 +101,9 @@ NTU = UniversityProfile(
     aliases=("國立臺灣大學", "國立台灣大學", "臺灣大學", "台灣大學", "臺大", "台大", "NTU", "National Taiwan University"),
     hero_image="/static/assets/ntu-campus.svg",
     official_url="https://studyabroad.ntu.edu.tw/",
-    coverage_note="已整理116-1校級甄選、文件、補助與288個合作項目；合作校本期名額與未核實條件標示待確認。",
+    coverage_note="已整理116-1校級甄選、文件、補助與289個合作項目；合作校本期名額與未核實條件標示待確認。",
     support_level="basic",
-    partner_count_hint=288,
+    partner_count_hint=289,
     # NTU uses undergraduate GPA OR class rank, with no home GPA gate for graduates.
     academic_score_minimum=None,
     student_card_signals=("國立臺灣大學", "國立台灣大學", "NATIONALTAIWANUNIVERSITY", "NTU"),

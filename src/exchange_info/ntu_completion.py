@@ -35,15 +35,15 @@ def read_rows(path: Path) -> list[dict]:
 def validate(snapshot: dict, partners: list[PartnerUniversity], *, package: Path = PACKAGE) -> None:
     if snapshot.get("format_version") != 1 or snapshot.get("all_current_cycle_fields_verified") is not False:
         raise ValueError("Unsupported completion snapshot or invalid finality claim")
-    expected = {p.source_url.rsplit("/", 1)[-1]: p for p in partners}
+    from .ntu_current_updates import historical_selection_view
+    historical = historical_selection_view(partners)
+    expected = {p.source_url.rsplit("/", 1)[-1]: p for p in historical}
     entries = snapshot["schools"]
     if len(expected) != 288 or len(entries) != 288 or len({r["portal_id"] for r in entries}) != 288:
         raise ValueError("All 288 distinct NTU school identities are required")
     if set(expected) != {r["portal_id"] for r in entries}:
         raise ValueError("Completion inventory does not match the partner catalog")
-    from .ntu_current_updates import historical_selection_view
-    historical = historical_selection_view(partners)
-    historical_by_id = {p.source_url.rsplit("/", 1)[-1]: p for p in historical}
+    historical_by_id = expected
     if sum(p.quota is None for p in historical) != 282 or sum(p.quota == "0 名" for p in historical) != 6:
         raise ValueError("Selection baseline changed; source scope must be reviewed")
     receipt = snapshot["list_receipt"]
@@ -160,7 +160,11 @@ def apply_completion(bundle: Path, snapshot_path: Path = SOURCE, *, apply_assets
     updated = []
     observation_count = 0
     for partner in partners:
-        entry = entries[partner.source_url.rsplit("/", 1)[-1]]
+        pid = partner.source_url.rsplit("/", 1)[-1]
+        if pid not in entries:
+            updated.append(partner)
+            continue
+        entry = entries[pid]
         observations = entry.get("observations", [])
         conclusions = entry.get("field_review_conclusions", [])
         if conclusions:
@@ -262,7 +266,7 @@ def apply_completion(bundle: Path, snapshot_path: Path = SOURCE, *, apply_assets
     from .ntu_current_updates import SOURCE as CURRENT_SOURCE, apply_current_updates
     if CURRENT_SOURCE.exists():
         apply_current_updates(bundle)
-    return {"schools": len(partners), "reviewed_observations": observation_count,
+    return {"schools": len(entries), "reviewed_observations": observation_count,
         "photo_additions": sum(bool(r.get("photo")) for r in entries.values()),
         "location_additions": sum(bool(r.get("location")) for r in entries.values()),
         "fully_verified_current_cycle_schools": 0}

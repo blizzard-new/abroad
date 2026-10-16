@@ -87,9 +87,9 @@ def export(output=OUTPUT, access_path=None):
     robots = {urlsplit(r["url"]).netloc: r for r in access["robots_receipts"]}
     issues = []
     for row in records:
-        school = schools[row["portal_id"]]
+        school = schools.get(row["portal_id"], {"observations": []})
         observations = [r for r in school["observations"] if r["field"] == row["field"]]
-        query = attempts[row["portal_id"]]
+        query = attempts.get(row["portal_id"], {"sources": []})
         if row["field"] == "photos" and not row["reference_present"]:
             rejected = [r for r in snapshot.get("photo_rejections", []) if r["school_name"] == row["school_name"]]
             if rejected:
@@ -179,9 +179,9 @@ def export(output=OUTPUT, access_path=None):
         fixed429_final_conclusion_rows=sum(r["bounded_field_conclusion_complete"] for r in issues),
         fixed429_outcomes=dict(Counter(r["field_final_conclusion"] for r in issues if r["bounded_field_conclusion_complete"])),
         original_handoff_comparison={"original_workbook_retrieved": False, "reported_previous_denominator": 282,
-            "rebuilt_denominator": 288, "pending_selection_denominator": sum(r["field"] == "quota" and not r["target_requirement_confirmed"] for r in records), "zero_selection_denominator": 6,
+            "rebuilt_denominator": 289, "pending_selection_denominator": sum(r["field"] == "quota" and not r["target_requirement_confirmed"] for r in records), "zero_selection_denominator": 6,
             "comparison_method": "Rebuilt using the current official portal IDs. The old workbook was not obtained; neither cell equality nor exact school membership overlap is claimed.",
-            "coverage": "All original282 school IDs × original ten fields are retained. Later formally published NTU selection cells are independently marked verified; full288 rows remain available."})
+            "coverage": "All original282 school IDs × original ten fields are retained. Later formally published NTU selection cells are independently marked verified; full289 rows remain available."})
     if progress:
         summary["full_body_priority_progress"] = {k: v for k, v in progress.items() if k != "fields"}
     output.mkdir(exist_ok=True, parents=True)

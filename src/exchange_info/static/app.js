@@ -1141,7 +1141,7 @@ async function loadSupportedUniversities() {
         aliases: ["台大", "台灣大學", "國立台灣大學"],
         english_name: "National Taiwan University", hero_image: "/static/assets/ntu-campus.svg",
         official_url: "https://studyabroad.ntu.edu.tw/", supported: true,
-        partner_count: 288, coverage_note: "116-1校級甄選、文件與補助；282項名額待公布，6項零名額。",
+        partner_count: 289, coverage_note: "116-1校級甄選、文件與補助；262項名額待公布，7項零名額。",
       },
       {id:"ncu",school_name:"國立中央大學",short_name:"中央",english_name:"National Central University",hero_image:"/static/assets/ncu-campus.svg",official_url:"https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",supported:true,partner_count:214,coverage_note:"116-1簡章已公告，名額預定2026/10/12公告；214項115目錄僅供參考。"},
     ];

@@ -28,13 +28,16 @@ def packet(group='中語組', international='否', **language):
 def test_all_288_summaries_reach_dashboard_and_keep_source_text(tmp_path):
     partners = fetch_ntu_partner_universities()
     dashboard = TestClient(create_app(tmp_path)).get('/student-dashboard', params={'school': 'NTU'}).json()
-    assert len(dashboard['partner_universities']) == 288
+    assert len(dashboard['partner_universities']) == 289
     for raw, payload in zip(partners, dashboard['partner_universities']):
         summary = payload['student_summary_zh']
         for key in ('eligibility_points', 'application_steps', 'tuition_points'):
             assert summary[key] and '116-1' in summary[key][0]
             assert raw.source_url in '\n'.join(summary[key])
-        assert '本校' in '\n'.join(summary['eligibility_points'])
+        if raw.eligibility:
+            assert '本校' in '\n'.join(summary['eligibility_points'])
+        else:
+            assert '尚未取得資格文字' in '\n'.join(summary['eligibility_points'])
         assert summary['translated_from_english'] is False
     # Existing accurate portal extraction must survive the supplemental review.
     snapshot=json.loads(gzip.decompress((ROOT/'sources/ntu/2026-10-08-import.json.gz').read_bytes()))
@@ -45,9 +48,16 @@ def test_all_288_summaries_reach_dashboard_and_keep_source_text(tmp_path):
     for row in old:
         if row['source_url'] in by_url:
             row['eligibility']=by_url[row['source_url']]['sections_by_heading']['申請資格']['text']
+    current=json.loads((ROOT/'sources/ntu/2026-10-14-official-update.json').read_text())
+    uw_url=f"https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/{current['uw_update']['portal_id']}"
+    for row in old:
+        if row['source_url']==uw_url:
+            row['eligibility']=current['uw_update']['portal_eligibility_after']
+    for np in current.get('new_partners',[]):
+        old.append({'school_name':np['school_name'],'country':np['country'],'eligibility':np['eligibility_text'],'tuition_info':np['tuition_text']})
     assert [(p.school_name,p.country,p.eligibility,p.tuition_info) for p in partners] == [
         (p['school_name'],p['country'],p['eligibility'],p['tuition_info']) for p in old]
-    assert sum(p.quota is None for p in partners) == 261
+    assert sum(p.quota is None for p in partners) == 262
     assert sum(p.quota == '0 名' for p in partners) == 7
 
 

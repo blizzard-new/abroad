@@ -30,8 +30,8 @@ def test_all_eight_capacities_are_source_backed_without_opening_registration(tmp
     source = load_update()
     assert {q["portal_id"]: (q["quota_academic_years"], q["maximum_persons"]) for q in source["quota_updates"]} == EXPECTED
     partners = fetch_ntu_partner_universities()
-    assert len(partners) == 288
-    assert sum(p.quota is None for p in partners) == 261
+    assert len(partners) == 289
+    assert sum(p.quota is None for p in partners) == 262
     assert sum(p.quota == "0 名" for p in partners) == 7
     assert all(p.availability_status != "open" for p in partners)
     selected = {p.source_url.rsplit("/", 1)[-1]: p for p in partners if p.quota_status == "published"}
@@ -92,7 +92,55 @@ def test_ubc_new_document_resolves_year_without_rewriting_historical_fee_discove
     assert "2026-11-09" in partner.application_deadline
 
 
-@pytest.mark.parametrize("failure", ["amount", "maximum", "open", "legal", "inventory", "archive_hash", "year"])
+def test_glasgow_uw_and_paris_saclay_20261016_updates_preserve_scope_and_conflict(tmp_path):
+    source = load_update()
+    partners_by_id = {p.source_url.rsplit("/", 1)[-1]: p for p in fetch_ntu_partner_universities()}
+    client = TestClient(create_app(tmp_path))
+
+    # 1. University of Glasgow (sn/1308): added to list, formal selection quota still blank
+    glasgow = partners_by_id["1308"]
+    assert glasgow.school_name == "格拉斯哥大學"
+    assert glasgow.country == "英國"
+    assert glasgow.website == "https://www.gla.ac.uk/"
+    assert glasgow.quota is None
+    assert glasgow.quota_status == "not_published"
+    assert glasgow.availability_status == "agreement_only"
+    assert "此校開放予第二次出國交換之同學選填" in glasgow.eligibility
+    assert "交換學校一覽表所列之語言能力" in glasgow.application_info
+    glasgow_wf = client.get("/application-workflow", params={"home_school": "NTU", "school": "格拉斯哥大學", "academic_year": "116"}).json()
+    assert glasgow_wf["published_at"] is None
+    assert all(not step["deadline_reminder_eligible"] for step in glasgow_wf["steps"])
+
+    # 2. University of Washington (sn/7): 2027-2028 Fact Sheet & updated portal eligibility
+    uw = partners_by_id["7"]
+    assert uw.quota is None
+    assert "TOEFL iBT 5.0 (不接受 Home Edition) 或 TOEFL iBT 92 (不接受 Home Edition) 或 IELTS 7.0" in uw.eligibility
+    uw_details = uw.partner_exchange_details
+    assert all(d.status == "reference_only" for d in uw_details.values())
+    assert all(d.evidence[0].academic_year == "2027/2028" for d in uw_details.values())
+    assert all(s in uw_details["language"].value for s in ["TOEFL iBT 5.0", "92", "IELTS 7.0", "Duolingo", "110", "131"])
+    assert all(s in uw_details["deadlines"].value for s in ["3月15日", "4月1日", "8月15日", "9月1日", "10月15日", "11月1日", "非臺大校內報名期限"])
+    assert "2027-2028-University-of-Washington-Fact-Sheet_public.pdf" in uw.application_info
+    assert "2026-11-09" in uw.application_deadline
+
+    # 3. Université Paris-Saclay (sn/104): Inbound Information Session 11/22 vs 11/12 conflict preserved
+    saclay = partners_by_id["104"]
+    assert saclay.quota is None
+    assert "2026-11-22" in saclay.application_info and "2026-11-12" in saclay.application_info
+    assert "不認定為確定活動日期或申請期限" in saclay.application_info
+    ledger = {r["portal_id"]: r for r in json.loads((BUNDLE / "verification_status.json").read_text())}
+    conflict = ledger["104"]["current_official_updates"]["event_date_conflict"]
+    assert conflict["status"] == "conflict"
+    assert conflict["confirmed_event_date"] is None
+    assert conflict["treated_as_application_deadline"] is False
+    assert conflict["reminder_eligible"] is False
+    assert {c["date"] for c in conflict["candidates"]} == {"2026-11-22", "2026-11-12"}
+    deadlines = client.get("/deadlines", params={"school": "NTU"}).json()
+    assert "2026-11-22" not in str(deadlines)
+    assert all(k not in str(deadlines) for k in ["巴黎薩克雷", "sn/104", "upsaclay"])
+
+
+@pytest.mark.parametrize("failure", ["amount", "maximum", "open", "legal", "inventory", "archive_hash", "year", "paris_conflict"])
 def test_changed_or_unscoped_source_fails_before_writing(tmp_path, failure):
     data = json.loads(SOURCE.read_text())
     if failure == "amount": data["quota_updates"][0]["quota_academic_years"] = 99
@@ -101,6 +149,8 @@ def test_changed_or_unscoped_source_fails_before_writing(tmp_path, failure):
     elif failure == "legal": data["visa_reminders"][0]["legal_rule_independently_verified"] = True
     elif failure == "inventory": data["list_receipt"]["rows"][0]["quota"] = "1 名"
     elif failure == "archive_hash": next(iter(data["source_manifest"].values()))["sha256"] = "0" * 64
+    elif failure == "paris_conflict":
+        next(r for r in data["reference_updates"] if r["portal_id"] == "104")["event_date_conflict"]["confirmed_event_date"] = "2026-11-22"
     else: data["source_academic_year"] = "2028/2029"
     path = tmp_path / "changed.json"
     path.write_text(json.dumps(data))
@@ -115,12 +165,12 @@ def test_changed_or_unscoped_source_fails_before_writing(tmp_path, failure):
 def test_published_capacity_has_its_own_matrix_state_and_unchanged_full_cycle_guard():
     records, summary = audit()
     quota = [r for r in records if r["field"] == "quota"]
-    assert len(records) == 4032
+    assert len(records) == 4046
     published = [r for r in quota if r["status"] == "verified_current_home_selection_quota"]
     assert {r["portal_id"] for r in published} == set(EXPECTED)
     assert all(r["target_requirement_confirmed"] for r in published)
     assert all(classify_review_axes(r, [], [])["publication_status"] == "official_NTU_positive_selection_quota_published" for r in published)
-    assert sum(r["status"] == "pending_official_selection_list" for r in quota) == 261
+    assert sum(r["status"] == "pending_official_selection_list" for r in quota) == 262
     completeness = json.loads((BUNDLE / "catalog-completeness.json").read_text())
     assert completeness["fully_verified_current_cycle_count"] == 0
     assert completeness["confirmed_open_count"] == 0

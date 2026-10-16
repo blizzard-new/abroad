@@ -119,7 +119,7 @@ def test_options_on_the_partner_count_for_course_and_language():
 def test_bundled_destination_profiles_yield_honest_budget_results():
     profiles = storage.load_destination_profiles()
     assert Counter(p.home_university for p in profiles) == {
-        "長庚大學": 77, "國立臺北大學": 206, "國立臺灣大學": 288,
+        "長庚大學": 77, "國立臺北大學": 206, "國立臺灣大學": 289,
         "國立中央大學": 214, "國立中正大學": 104, "淡江大學": 287,
     }
     statuses = {}

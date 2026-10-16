@@ -760,7 +760,7 @@ def create_maintenance_router(
         <div style="margin-bottom:14px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
           <label><strong>選擇要查看的母校：</strong></label>
           <select id="s4-home">
-            <option value="ntu">國立臺灣大學（共 288 所姊妹校）</option>
+            <option value="ntu">國立臺灣大學（共 289 所姊妹校）</option>
             <option value="ntpu">國立臺北大學（共 409 所姊妹校）</option>
             <option value="ncu">國立中央大學（共 214 所姊妹校）</option>
             <option value="cgu">長庚大學（共 154 所姊妹校）</option>

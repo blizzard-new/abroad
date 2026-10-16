@@ -517,7 +517,7 @@ def test_first_visit_school_choice_is_a_single_click_on_the_school_and_still_ski
     assert "75 間合作校" in html
     assert "partner_count: 75" in script
     assert "partner_count: 206" in script
-    assert "partner_count: 288" in script
+    assert "partner_count: 289" in script
     assert "browseWithoutSchoolSelection" in script
 
 
