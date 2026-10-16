@@ -201,7 +201,46 @@ SCU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU)
+NTNU = UniversityProfile(
+    id="ntnu",
+    school_name="國立臺灣師範大學",
+    short_name="臺師大",
+    english_name="National Taiwan Normal University",
+    aliases=(
+        "國立臺灣師範大學",
+        "國立台灣師範大學",
+        "臺灣師範大學",
+        "台灣師範大學",
+        "臺師大",
+        "台師大",
+        "師大",
+        "NTNU",
+        "National Taiwan Normal University",
+    ),
+    hero_image="/static/assets/ntnu-campus.svg",
+    official_url="https://bds.oia.ntnu.edu.tw/bds/web/OUT",
+    coverage_note="完整支援：116-1（2027春季出國）甄選簡章與236所合作校名額表已公告（線上申請 2026/11/01–11/15），並整合174校歷屆交換心得與四語組條件。",
+    support_level="full",
+    partner_count_hint=236,
+    academic_score_minimum=60,
+    student_card_signals=("國立臺灣師範大學", "國立台灣師範大學", "NATIONALTAIWANNORMALUNIVERSITY", "NTNU"),
+    # https://bds.oia.ntnu.edu.tw/api/v1/ss/col — checked 2026-10-16.
+    colleges=(
+        "教育學院",
+        "文學院",
+        "理學院",
+        "藝術學院",
+        "科技與工程學院",
+        "運動與休閒學院",
+        "國際與社會科學學院",
+        "音樂學院",
+        "管理學院",
+        "跨域科技產業創新研究學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU)
 DEFAULT_UNIVERSITY = CGU
 
 

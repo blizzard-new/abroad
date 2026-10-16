@@ -36,6 +36,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "tku": ["oieie.tku.edu.tw", "tku.edu.tw"],
     "fju": ["iscoie.fju.edu.tw", "oie.fju.edu.tw", "www.fju.edu.tw", "fju.edu.tw"],
     "scu": ["icae.scu.edu.tw", "www.scu.edu.tw", "www-ch.scu.edu.tw", "scu.edu.tw"],
+    "ntnu": ["bds.oia.ntnu.edu.tw", "oia.ntnu.edu.tw", "www.ntnu.edu.tw", "ntnu.edu.tw"],
 }
 
 
@@ -627,6 +628,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["scu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="scu", partner_rows=scu_rows, default_cycle_label="116學年度"
+        )
+
+    # 9. NTNU partners.jsonl (236 partner schools)
+    ntnu_partners_path = official_data_root / "ntnu" / "partners.jsonl"
+    if ntnu_partners_path.exists():
+        ntnu_rows = []
+        for line in ntnu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            ntnu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116-1",
+                "website": rec.get("official_website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://bds.oia.ntnu.edu.tw/bds/web/OUT-QUOTALIST",
+            })
+        school_reports["ntnu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="ntnu", partner_rows=ntnu_rows, default_cycle_label="116-1"
         )
 
     if store.current_release_id is None:
