@@ -1,3 +1,24 @@
+# Design QA: workspace sub-tabs, home school switcher, supported-schools marquee, rail logo
+
+## What the user asked for
+
+Four fixes from the live site: the second row of tabs under 我的申請 is easy to miss; the rail logo is not centred; on the home page only, the school switcher should be hard to miss; and the 目前支援 list on home should have a clearer label and scroll left, coming back in from the right, because more schools are coming.
+
+## What changed
+
+- **我的申請 sub-pages.** The row under 選校與確認 / 準備與時程 / 文件與送件 is now a tinted, bordered track of its own with a notch pointing up at the active stage, a label ("選校與確認的 3 個頁面"), numbered pills (1 條件與推薦, 2 候選與比較 …) and a white raised pill for the current page. Same links, same `href`s. On a phone the label takes its own line and the pills share the rows below. Dark theme has its own colours. Evidence: `application-workspace-subtabs-light-1440.webp`, `application-workspace-subtabs-prep-light-1440.webp`.
+- **Rail logo.** The collapsed wordmark is zero wide but still took its 10px flex gap, so the mark sat 5px left of the rail's centre line (centre 49 against 54). The gap is now 0 when collapsed; the expanded rail is unchanged. Measured: mark and nav icons share one centre.
+- **Home school switcher.** On the home page only: 68px high, 2px brand outline with a soft halo, a filled 48px icon tile, an 18px school name and a button-like chip at the end ("切換", or a coral "請選擇" while no school is chosen). It rings softly three times on arrival and keeps ringing until a school is chosen; no ring under `prefers-reduced-motion`. Other pages keep the quiet pill.
+- **目前支援.** A label pill ("目前支援 · 6 所大學" with a check badge) and a row that always drifts left at about 38 px a second and re-enters from the right, faded at both ends. Copies of the row (hidden from assistive technology) fill the width so the loop has no gap, so it keeps working as schools are added. Hover pauses it, and a pause button (WCAG 2.2.2) is always shown. With `prefers-reduced-motion` nothing moves and the row wraps so every school stays in view. The row is only rewritten when a school or its count changes, because rewriting restarts the drift.
+- **Cache versions.** `application-workspace.css`, `platform-redesign.css`, `platform-home.js`, `glass-theme.css` are re-versioned.
+
+## Verification
+
+- New end-to-end tests in `tests/e2e/test_platform_redesign.py`: the marquee moves, stops when paused and carries on (and its copies are `aria-hidden`); it stands still for reduced motion with all six schools in view; the home switcher is at least 64px high against at most 58px on the explore page and says 請選擇 with no school; the logo, the rail and the nav icons share one centre line; the sub-page row has its label, numbers, border and the right links on `#advisor` (3 pages) and `#overview` (5 pages).
+- The 18 end-to-end files around home, navigation, the workspace, layout, forum, feedback, school lists and discovery: 206 passed, 4 failed. Three of the four also fail on `main` (`test_navigation_guide::test_every_tool_has_shared_navigation_and_return`, `test_system_motion::test_all_routes_share_motion_and_back_retains_working_history`, `test_tku_acceptance::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[390]`). The fourth, `test_loading_screen::test_it_shows_the_mascot_while_the_page_waits_and_goes_when_the_page_is_ready`, failed under four-way load and passes alone.
+- Contract / routing / caching / discovery tests: 94 passed.
+- Not verified: how the marquee feels on a real phone (scroll jank, battery); the screenshots are from a headless browser. Not run: the other roughly 100 end-to-end files and the backend suite.
+
 # Design QA: page frame and home cards (follow-up to the platform redesign)
 
 ## Comparison target

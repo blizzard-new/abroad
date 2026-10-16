@@ -33,7 +33,7 @@ window.UniWayApplicationWorkspace = (() => {
     root.innerHTML = `<header class="application-workspace-heading glass-panel">
       <div class="application-workspace-context"><div><span class="section-kicker">我的申請</span><strong>從選校到送件，接著完成下一步</strong></div><p id="application-workspace-context" aria-live="polite"></p></div>
       <nav id="application-journey-steps" class="application-workspace-stages" aria-label="申請工作區階段">${groups.map(group=>`<a href="${group.href}" data-workspace-stage="${group.id}" data-requires-home-school><i data-lucide="${group.icon}" aria-hidden="true"></i><span>${group.label}</span></a>`).join("")}</nav>
-      <nav id="application-workspace-tools" class="application-workspace-tools" aria-label="本階段操作"></nav>
+      <nav id="application-workspace-tools" class="application-workspace-tools" aria-label="本階段的頁面"></nav>
     </header>`;
     context = root.querySelector("#application-workspace-context");
     navigation = root.querySelector("#application-workspace-tools");
@@ -78,7 +78,12 @@ window.UniWayApplicationWorkspace = (() => {
     if (navigation.dataset.route !== key) {
       navigation.dataset.route = key;
       const links = activePage === "application-form" ? [["application-center", "返回文件清單與列印包"]] : group.links;
-      navigation.innerHTML = links.map(([id,label])=>`<a href="#${id}" data-requires-home-school${id === activePage ? ' aria-current="page"' : ""}>${label}</a>`).join("");
+      // A second row of its own, labelled and numbered, so it reads as the pages inside the stage above and not as loose text.
+      const sequence = activePage !== "application-form" && links.length > 1;
+      navigation.dataset.sequence = sequence ? "true" : "false";
+      navigation.innerHTML = (sequence ? `<span class="application-workspace-tools-label" aria-hidden="true"><i data-lucide="corner-down-right" aria-hidden="true"></i>${group.label}的 ${links.length} 個頁面</span>` : "")
+        + links.map(([id,label],index)=>`<a href="#${id}" data-requires-home-school${id === activePage ? ' aria-current="page"' : ""}>${sequence ? `<span class="application-workspace-tool-no" aria-hidden="true">${index + 1}</span>` : ""}${label}</a>`).join("");
+      if (typeof initIcons === "function") initIcons();
     }
     const legacy = document.querySelector("#planning-deadline-settings");
     const journey = document.querySelector("#journey-workspace");
