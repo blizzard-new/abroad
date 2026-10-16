@@ -59,12 +59,13 @@ from .models import (
 from .application_rules import select_application_workflow
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import FJU, NTPU, NTU, NCU, require_university, resolve_university
+from .university_registry import FJU, NTPU, NTU, NCU, SCU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
 
 FJU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
+SCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -977,6 +978,51 @@ def _fju_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _scu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理東吳大學 116 學年度校級赴外／赴陸交換及自費研修之個人基本資料、志願序（最多 6 個志願，含學校與學期）、累計班排名／歷年平均成績及外語檢定資料；正式申請須於 2026/11/16 中午 12:00 前登入 https://api.sys.scu.edu.tw/exchange/Login.aspx 完成線上填報與 PDF 上傳（免交紙本）。",
+        "study-plan": "撰寫東吳校內甄選必繳之自傳或履歷（約 2,000 字）與一校一份之交換研修動機及讀書計畫（各約 2,000 字以內；赴外交換須同時填寫中文 Form A 與外文 Form B 並依志願序將所有中文表格排在前、外文在後合併為單一 PDF；赴陸交換使用中文表格）。",
+        "course-preapproval": "出國前規劃於接待協議校修習之科目（依東吳《學生出境期間有關學業及學籍處理辦法》，於境外每學期至少應修習 1 門課程；歐洲 2 個 ECTS 約等於東吳 1 學分），並先與所屬學系確認抵免原則。",
+        "predeparture-notice": "獲推薦名單公告後 1 週內繳交家長親筆簽名之「東吳大學學生赴協議學校交換研習確認書」與保證金 NT$5,000，並辦理外校入學申請、學生簽證、海外保險與東吳日間部全額學雜費註冊。",
+        "return-report": "交換結束返臺後 1 個月內應繳交 1,500–2,000 字之交換研習心得報告並分享經驗，且於開學 1 週內完成學分抵免（或申請不抵免學分）程序，始得無息退還保證金 NT$5,000。",
+        "credit-transfer": "交換結束返臺後，至遲應於開學 1 週內檢附外校成績單與課程大綱完成抵免簽核手續（無須抵免學分者亦須辦理「申請不抵免學分」簽核）。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "東吳大學").replace("長庚", "東吳")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "東吳大學部累計班排名須達前 85% 以內（學業採計：歷年平均×45%＋(1－累計班排名百分比)×100×55%）；碩博班入學後總平均須達 80 分以上；操行須達 80 分以上。舊生由國際處統一向電算中心查核，免自行上傳成績單。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT / ITP", "IELTS Academic", "JLPT（N1–N3，2024/01/31後核發）", "TOEIC（不接受校園考）", "TOPIK（韓檢）", "DELF / DALF / TCF（法語）", "Goethe / TestDaF（德語）", "DELE（西語）", "赴大陸交換免附外語檢定"]
+            field["help_text"] = "赴外交換須符合《116學年度校級赴外交換學校一覽表》目標學校任一語檢門檻（英歐語須為 2025/01/31 後核發、JLPT 為 2024/01/31 後核發，不接受多益校園考）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply",
+        source_checked_at=SCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number=None,
+        official_file_name=None,
+        official_download_url=None,
+        default_copies=1,
+        signatures=["家長／監護人簽名", "申請學生簽名"] if template.id == "predeparture-notice" else [],
+        stamps=[],
+        stage={"predeparture-notice": "錄取確認（1週內繳交確認書與保證金）", "return-report": "返臺後一個月內", "credit-transfer": "返臺開學一週內"}.get(template.id, "線上申請系統 PDF 上傳（免交紙本）"),
+        version="116準備工具-2026-10-16.1",
+        destinations=["東吳赴外交換線上申請系統（https://api.sys.scu.edu.tw/exchange/Login.aspx）", "國際與兩岸事務中心（雙溪 A313 / 城中 2110）"],
+        conditional_note="此為個人準備工具；東吳校內甄選採全線上申請（免交紙本），各類文件請合併為單一 PDF 檔（上限 5MB，檔名僅限中英數字符號）上傳至 https://api.sys.scu.edu.tw/exchange/Login.aspx 。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
     if university.id == "ccu":
@@ -987,6 +1033,8 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncu_template(template)) is not None]
     if university.id == FJU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _fju_template(template)) is not None]
+    if university.id == SCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _scu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
