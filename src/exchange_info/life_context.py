@@ -130,9 +130,35 @@ def reference_record(partner: PartnerUniversity) -> dict:
     return next((row for row in records if row["identity"].casefold() == name and row["country"] == country), {})
 
 
+@lru_cache(maxsize=1)
+def _bundled_ntnu_student_experiences() -> dict[str, tuple[StudentExperienceSource, ...]]:
+    exp_path = Path(__file__).parent / "official_data" / "ntnu" / "student_experiences.jsonl"
+    by_key: dict[str, list[StudentExperienceSource]] = {}
+    if exp_path.exists():
+        with exp_path.open(encoding="utf-8") as handle:
+            for line in handle:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = StudentExperienceSource.model_validate_json(line)
+                    by_key.setdefault(school_identity_key(row.school_name), []).append(row)
+                except ValueError:
+                    continue
+    return {k: tuple(v) for k, v in by_key.items()}
+
+
 def reference_student_sources(partner: PartnerUniversity) -> list[StudentExperienceSource]:
-    return [StudentExperienceSource.model_validate({**row, "school_name": partner.school_name, "country": partner.country})
-            for row in reference_record(partner).get("student_sources", [])]
+    base = [
+        StudentExperienceSource.model_validate({**row, "school_name": partner.school_name, "country": partner.country})
+        for row in reference_record(partner).get("student_sources", [])
+    ]
+    seen_urls = {row.source_url for row in base}
+    for row in _bundled_ntnu_student_experiences().get(school_identity_key(partner.school_name), ()):
+        if row.source_url not in seen_urls:
+            seen_urls.add(row.source_url)
+            base.append(row.model_copy(update={"school_name": partner.school_name, "country": partner.country}))
+    return base
 
 
 def _cache_path(partner: PartnerUniversity, data_dir: Path) -> Path:
@@ -192,6 +218,7 @@ def _bundled_extra_research() -> Mapping[tuple[str, str], LifeResearchSnapshot]:
     bundled_files = (
         Path(__file__).parent / "official_data" / "fju" / "student_life.jsonl",
         Path(__file__).parent / "official_data" / "scu" / "student_life.jsonl",
+        Path(__file__).parent / "official_data" / "ntnu" / "student_life.jsonl",
     )
     for life_path in bundled_files:
         if life_path.exists():

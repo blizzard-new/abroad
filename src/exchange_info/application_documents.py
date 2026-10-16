@@ -59,13 +59,14 @@ from .models import (
 from .application_rules import select_application_workflow
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import FJU, NTPU, NTU, NCU, SCU, require_university, resolve_university
+from .university_registry import FJU, NTNU, NTPU, NTU, NCU, SCU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
 
 FJU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 SCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
+NTNU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1023,6 +1024,51 @@ def _scu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ntnu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺灣師範大學 116-1（2027 春季出國）校級赴外交換生甄選之個人資料、志願序（四語組擇一組別報名，最多選填 10 個志願）、歷年成績與全英語授課（EMI）修課紀錄、語言檢定及報名費 NT$500 繳費收據；正式申請須於 2026/11/01–11/15 23:59:59 前登入 https://bds.oia.ntnu.edu.tw/bds/OE 完成線上填報與上傳（免繳紙本）。",
+        "study-plan": "撰寫臺師大校級赴外交換必繳之自傳及讀書計畫（中英文皆可，字數限 500–5,000 字，占甄選總成績 20%；內容應包含交換動機、擬於第一志願姊妹校修習之課程規劃、研究主題及返國後學術連結）。",
+        "course-preapproval": "出國前規劃於接待姊妹校修習之科目（依臺師大簡章規定，赴外交換每學期至少須修習 2 門課程或 6 學分，歐洲 2 ECTS 折算臺師大 1 學分；赴大陸地區修習之學分不得採認或抵免師資培育職前教育專業課程學分）。",
+        "predeparture-notice": "分發錄取後於系統完成線上確認（第 1 次分發 2026/12/11、第 2 次分發 12/15–12/18），並依姊妹校申請截止日準備外校入學申請文件、財力證明、護照、簽證與海外醫療及意外保險（確認錄取後無不可抗力放棄者須繳納 NT$5,000 行政手續費且在學期間不得再報名校級交換）。",
+        "return-report": "交換期滿返國後 1 個月內於國際事務處系統上傳赴外交換學生返國心得報告及照片，並配合國際處經驗分享活動（若領取校內或教育部學海飛颺／惜珠獎助學金，須完成返國報告及核銷始撥付尾款）。",
+        "credit-transfer": "交換期滿返國後，檢附接待姊妹校核發之正式成績單正本、修課大綱（Syllabus）及修課時數證明，依教務處與所屬系所規定辦理國外修習科目學分採認／抵免（大陸地區學分不得抵免師培專業課程）。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺灣師範大學").replace("長庚", "臺師大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "臺師大校級甄選「在校學業及相關表現」占 30%（含全英語授課 EMI 課程修習表現 5%：修滿 5 門以上得滿分 5%）；請準備教務處核發之最新歷年中文或英文成績單及名次證明。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（不採計 MyBest Scores）", "IELTS Academic", "JLPT（N1–N3）", "TOPIK（韓檢 2–6 級）", "TOEIC（僅部分學校採認）", "GEPT 全民英檢中高級以上", "DELF / DALF / TCF（法語）", "Goethe / TestDaF（德語）", "DELE（西語）", "中文組免附外語檢定"]
+            field["help_text"] = "分「英歐語組、日語組、韓語組、中文組」四組擇一報名（語言能力占總成績 30%），須符合目標姊妹校於《116-1 赴外交換學校一覽表》所列標準，且不採計 TOEFL MyBest Scores 拼分成績。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://bds.oia.ntnu.edu.tw/api/v1/pt/dl?f=/pt/contents/2014100104/doc_OE116-1%20SPRING2027-1013.pdf",
+        source_checked_at=NTNU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number=None,
+        official_file_name=None,
+        official_download_url=None,
+        default_copies=1,
+        signatures=["申請學生簽名", "系所主管核章（线上列印申請表後簽核上傳）"] if template.id == "exchange-application-data" else [],
+        stamps=[],
+        stage={"predeparture-notice": "分發確認與外校提名送件", "return-report": "返國後一個月內", "credit-transfer": "返國開學後"}.get(template.id, "赴外交換生線上申請系統上傳（免交紙本）"),
+        version="116-1準備工具-2026-10-16.1",
+        destinations=["臺師大赴外交換生線上申請系統（https://bds.oia.ntnu.edu.tw/bds/OE）", "國際事務處學術合作組"],
+        conditional_note="此為個人準備工具；臺師大校級赴外交換甄選採全線上申請（免繳紙本），請於 2026/11/01–11/15 23:59:59 前於 https://bds.oia.ntnu.edu.tw/bds/OE 填寫並列印申請表經系所核章後連同各項證明與 NT$500 繳費收據掃描上傳。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
     if university.id == "ccu":
@@ -1035,6 +1081,8 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _fju_template(template)) is not None]
     if university.id == SCU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _scu_template(template)) is not None]
+    if university.id == NTNU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntnu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

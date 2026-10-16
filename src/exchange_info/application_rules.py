@@ -10,6 +10,7 @@ from .plan_defaults import suggest_effort_hours
 from .school_identity import same_school
 from .fju_eligibility import fju_academic_check, fju_degree_check, fju_language_check, is_fju
 from .scu_eligibility import is_scu, scu_academic_check, scu_degree_check, scu_language_check
+from .ntnu_eligibility import is_ntnu, ntnu_academic_check, ntnu_degree_check, ntnu_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -478,6 +479,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與學籍",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_ntnu(request.home_school):
+        deg_status, deg_detail = ntnu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學學期資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -546,6 +552,12 @@ def _eligibility_checks(
             "academic_score", status, "校內成績門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_ntnu(request.home_school):
+        status, detail = ntnu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "校內學業與 EMI 修課表現", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -597,6 +609,9 @@ def _eligibility_checks(
     if is_scu(request.home_school):
         home_status, home_detail = scu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "東吳語檢資格與採認", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_ntnu(request.home_school):
+        home_status, home_detail = ntnu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "臺師大四語組資格與採認", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",
