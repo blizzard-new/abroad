@@ -150,6 +150,9 @@ CYCU_FALLBACK_WEBSITES = {
     "Bina Nusantara University": "https://binus.ac.id/",
     "Atma Jaya Catholic University of Indonesia": "https://www.atmajaya.ac.id/",
     "Mapua University": "https://www.mapua.edu.ph/",
+    "University of Fukui": "https://www.u-fukui.ac.jp/eng/",
+    "Kanazawa University": "https://www.kanazawa-u.ac.jp/e/",
+    "Jeonbuk National University": "https://www.jbnu.ac.kr/eng/",
 }
 
 
@@ -255,6 +258,12 @@ def main() -> None:
     def match_factsheet(zh_name: str, en_name: str, kind: str) -> str | None:
         z_clean = loose_zh(zh_name).replace("北京清華大學", "清華大學").replace("大連理工大學", "大連理工")
         e_clean = en_name.lower().split("(")[0].strip()
+        special_fs_tokens = {
+            "溫德斯海姆應用科技大學": "溫德斯海姆",
+            "建國大學": "binus",
+            "貝特拉基督教大學": "petra",
+        }
+        alt_token = special_fs_tokens.get(z_clean, "")
         if kind.startswith("mainland"):
             for item in ml_2027s + ml_2026f:
                 if item["type"] == "folder" and (z_clean in item["path"] or (z_clean[:3] in item["path"] and len(z_clean) >= 4)):
@@ -262,11 +271,21 @@ def main() -> None:
             return "https://drive.google.com/drive/folders/16uhH7kptMe3E1Lf_BaEBdPRO2HJ0xX6R"
         # First look for a specific PDF/file in brochures_intl
         for item in brochures_intl:
-            if item["type"] == "file" and (z_clean in item["path"] or (e_clean and len(e_clean) >= 6 and e_clean[:10] in item["path"].lower())):
-                if any(k in item["title"].lower() for k in ["fact", "info", "guide", "brochure", "sheet", "outline"]):
+            path_low = item["path"].lower()
+            if item["type"] == "file" and (
+                z_clean in item["path"]
+                or (alt_token and alt_token.lower() in path_low)
+                or (e_clean and len(e_clean) >= 6 and e_clean[:10] in path_low)
+            ):
+                if any(k in item["title"].lower() for k in ["fact", "info", "guide", "brochure", "sheet", "outline", "empower"]):
                     return item["url"]
         for item in brochures_intl:
-            if item["type"] == "folder" and item["path"].count("/") >= 2 and (z_clean in item["path"] or (e_clean and len(e_clean) >= 6 and e_clean[:10] in item["path"].lower())):
+            path_low = item["path"].lower()
+            if item["type"] == "folder" and item["path"].count("/") >= 2 and (
+                z_clean in item["path"]
+                or (alt_token and alt_token.lower() in path_low)
+                or (e_clean and len(e_clean) >= 6 and e_clean[:10] in path_low)
+            ):
                 return item["url"]
         return "https://drive.google.com/drive/folders/1_I-Gxmmym43zHXDw-MPzlX7OSYAj6nW6"
 
@@ -281,6 +300,10 @@ def main() -> None:
             short_tokens.extend(["溪口", "Chico"])
         elif z_clean == "夏威夷大學希羅校區":
             short_tokens.extend(["希羅", "夏威夷", "Hilo"])
+        elif z_clean == "威斯康辛大學密爾瓦基分校":
+            short_tokens.extend(["威斯康辛", "密爾瓦基"])
+        elif z_clean == "蒙彼利埃高等商學院":
+            short_tokens.append("蒙彼利埃")
         elif z_clean == "SKEMA商學院":
             short_tokens.append("SKEMA")
         elif z_clean == "阿天瑪加雅印度尼西亞天主教大學":
