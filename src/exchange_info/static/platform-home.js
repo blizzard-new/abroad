@@ -92,6 +92,38 @@ window.UniWayHome = (() => {
     return entry?.partner_count || 0;
   }
 
+  // The supported schools always drift to the left and come back in from the right, so the row keeps working as schools are
+  // added; copies of the row (hidden from assistive technology) fill the width and make the loop seamless.
+  const MARQUEE_PX_PER_SECOND = 38;
+  let marqueeWidth = 0;
+  function layoutMarquee(host) {
+    const box = host.querySelector("#home-supported-marquee"), track = host.querySelector("#home-supported-list");
+    const toggle = host.querySelector("#home-supported-toggle");
+    if (!box || !track) return;
+    track.querySelectorAll("[data-marquee-copy]").forEach((item) => item.remove());
+    track.classList.remove("is-moving");
+    toggle.hidden = true;
+    const available = box.clientWidth;
+    if (!available || !track.children.length) return;
+    marqueeWidth = available;
+    const natural = track.scrollWidth;
+    if (!natural) return;
+    const originals = [...track.children];
+    // One more copy than the row is wide, so the gap never shows while one set slides out and the next slides in.
+    for (let copy = 0; copy < Math.ceil(available / natural) + 1; copy += 1) {
+      originals.forEach((item) => {
+        const clone = item.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        clone.dataset.marqueeCopy = "";
+        track.append(clone);
+      });
+    }
+    track.style.setProperty("--pr-marquee-shift", `${-natural}px`);
+    track.style.setProperty("--pr-marquee-duration", `${Math.max(12, Math.round(natural / MARQUEE_PX_PER_SECOND))}s`);
+    track.classList.add("is-moving");
+    toggle.hidden = false;
+  }
+
   function renderSchools(host) {
     const schools = state.supportedUniversities || [];
     const total = schools.reduce((sum, item) => sum + (item.partner_count || 0), 0);
@@ -102,8 +134,15 @@ window.UniWayHome = (() => {
     set("#home-stat-schools", count);
     set("#home-stat-partners", total ? formatNumber(total) : "—");
     set("#home-band-total-line", total ? `看見 ${formatNumber(total)} 個選擇。` : "看見更多選擇。");
+    set("#home-supported-count", `${count} 所大學`);
     const list = host.querySelector("#home-supported-list");
-    list.innerHTML = schools.map((item) => `<li><strong>${escapeHtml(item.school_name)}</strong><span>${item.partner_count ? `${formatNumber(item.partner_count)} 間合作校` : "資料建置中"}</span></li>`).join("");
+    // Rewriting the row restarts the drift, so it is only rewritten when a school or its count actually changed.
+    const signature = JSON.stringify(schools.map((item) => [item.school_name, item.partner_count || 0]));
+    if (list.dataset.signature !== signature) {
+      list.dataset.signature = signature;
+      list.innerHTML = schools.map((item) => `<li><strong>${escapeHtml(item.school_name)}</strong><span>${item.partner_count ? `${formatNumber(item.partner_count)} 間合作校` : "資料建置中"}</span></li>`).join("");
+      layoutMarquee(host);
+    }
     const buttons = host.querySelector("#home-school-buttons");
     buttons.innerHTML = schools.map((item) => {
       const badge = schoolBadge(item);
@@ -388,6 +427,16 @@ window.UniWayHome = (() => {
   document.addEventListener("click", (event) => {
     const host = root();
     if (!host || !host.contains(event.target)) return;
+    const toggle = event.target.closest("#home-supported-toggle");
+    if (toggle) {
+      const paused = toggle.getAttribute("aria-pressed") !== "true";
+      toggle.setAttribute("aria-pressed", String(paused));
+      toggle.setAttribute("aria-label", paused ? "繼續學校名單捲動" : "暫停學校名單捲動");
+      host.querySelector("#home-supported-list").classList.toggle("is-paused", paused);
+      toggle.innerHTML = `<i data-lucide="${paused ? "play" : "pause"}" aria-hidden="true"></i>`;
+      initIcons();
+      return;
+    }
     const school = event.target.closest("[data-home-landing-school]");
     if (school) { chooseHomeSchool(school.dataset.homeLandingSchool); return; }
     const map = event.target.closest("[data-home-open-map]");
@@ -401,6 +450,17 @@ window.UniWayHome = (() => {
     event.preventDefault();
     goPartners({ q: event.target.elements.q.value.trim() });
   });
+
+  // Re-measure when the row changes width (a window resize, or the page being shown after it was hidden).
+  const marqueeBox = document.querySelector("#home-supported-marquee");
+  if (marqueeBox && "ResizeObserver" in window) {
+    let resizeTimer = 0;
+    new ResizeObserver(() => {
+      if (!marqueeBox.clientWidth || Math.abs(marqueeBox.clientWidth - marqueeWidth) < 2) return;
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => layoutMarquee(root()), 150);
+    }).observe(marqueeBox);
+  }
 
   loadLand();
   // Schools, destination notes and a signed-in student's saved data arrive at different times; the render key makes this cheap.

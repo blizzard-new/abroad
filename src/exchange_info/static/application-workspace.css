@@ -29,9 +29,20 @@ body.unified-shell #application-workspace > [data-university-page] { width:100%;
 .application-workspace-stages a { display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; border:1px solid #d4e3ed; border-radius:12px; color:var(--muted,#62788c); background:#ffffff80; font-size:14px; text-decoration:none; }
 .application-workspace-stages svg { width:18px; height:18px; flex:none; }
 .application-workspace-stages [aria-current] { background:#dff3f8; border-color:#84bfd3; color:#006b91; font-weight:700; }
-.application-workspace-tools { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.application-workspace-tools { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:12px; }
 .application-workspace-tools a { padding:9px 12px; border-radius:9px; font-size:13px; color:var(--muted,#62788c); text-decoration:none; }
 .application-workspace-tools [aria-current] { background:#ffffffb8; color:#006b91; font-weight:700; }
+/* The pages inside the chosen stage: a tinted track under the stage buttons, with a notch from the active one. */
+.application-workspace-stages [aria-current] { position:relative; }
+.application-workspace-stages [aria-current]::after { content:""; position:absolute; left:50%; bottom:-9px; width:12px; height:12px; box-sizing:border-box; transform:translateX(-50%) rotate(45deg); border:solid #84bfd3; border-width:0 1px 1px 0; background:#dff3f8; border-bottom-right-radius:3px; z-index:1; }
+#application-workspace .application-workspace-tools[data-sequence="true"] { gap:4px; margin-top:18px; padding:5px; border:1px solid #c5dce8; border-radius:14px; background:#e8f3f8; }
+#application-workspace .application-workspace-tools-label { display:inline-flex; align-items:center; gap:6px; padding:0 12px 0 10px; color:#006b91; font-size:12px; font-weight:700; white-space:nowrap; }
+#application-workspace .application-workspace-tools-label .lucide { width:15px; height:15px; }
+#application-workspace .application-workspace-tools[data-sequence="true"] a { display:inline-flex; align-items:center; gap:8px; padding:9px 14px; border:1px solid transparent; border-radius:10px; color:#3d5a6c; font-size:14px; font-weight:600; }
+#application-workspace .application-workspace-tools[data-sequence="true"] a:hover { background:#ffffff99; color:#0f2c3d; }
+#application-workspace .application-workspace-tools[data-sequence="true"] [aria-current] { border-color:#9fcadb; background:#fff; color:#006b91; font-weight:700; box-shadow:0 2px 8px #1b6a8a24; }
+.application-workspace-tool-no { display:inline-grid; place-items:center; flex:none; width:20px; height:20px; border-radius:50%; background:#c9e1ec; color:#3d5a6c; font-size:11px; font-weight:700; }
+[aria-current] > .application-workspace-tool-no { background:#006b91; color:#fff; }
 .application-workspace-heading a:hover { background:#ffffffcf; }
 .application-workspace-heading a:focus-visible { outline:2px solid #0784ad; outline-offset:3px; }
 #application-workspace[data-page=calendar] .application-workspace-heading { padding:16px 20px 10px; }
@@ -52,6 +63,14 @@ body.unified-shell #application-workspace > [data-university-page] { width:100%;
 #advisor-form[data-mode=eligibility] #advisor-submit { min-height:46px; }
 [data-theme=dark] .application-workspace-stages a { background:#233548; border-color:#425569; }
 [data-theme=dark] .application-workspace-stages [aria-current], [data-theme=dark] .application-workspace-tools [aria-current] { background:#234757; color:#b0eafa; }
+[data-theme=dark] .application-workspace-stages [aria-current]::after { background:#234757; border-color:#4d8aa3; }
+[data-theme=dark] #application-workspace .application-workspace-tools[data-sequence="true"] { border-color:#35505f; background:#1a2c39; }
+[data-theme=dark] #application-workspace .application-workspace-tools-label { color:#8fd5ec; }
+[data-theme=dark] #application-workspace .application-workspace-tools[data-sequence="true"] a { color:#b8cbd6; }
+[data-theme=dark] #application-workspace .application-workspace-tools[data-sequence="true"] a:hover { background:#ffffff14; color:#fff; }
+[data-theme=dark] #application-workspace .application-workspace-tools[data-sequence="true"] [aria-current] { border-color:#4d8aa3; background:#234757; color:#b0eafa; box-shadow:none; }
+[data-theme=dark] .application-workspace-tool-no { background:#35505f; color:#d3e4ec; }
+[data-theme=dark] [aria-current] > .application-workspace-tool-no { background:#8fd5ec; color:#0f2c3d; }
 [data-theme=dark] .application-workspace-heading a:hover { background:#294454; }
 @media (min-width:1600px) {
   body.unified-shell #dashboard-view > #application-workspace { margin-left:calc(112px + (100% - 1544px) / 2); }
@@ -67,6 +86,10 @@ body.unified-shell #application-workspace > [data-university-page] { width:100%;
   .application-workspace-stages { gap:6px; }
   .application-workspace-stages a { flex-direction:column; font-size:12px; padding:10px 4px; }
   .application-workspace-tools a { padding:9px; font-size:12px; }
+  /* On a phone the label takes its own line and the pages share the rows below it. */
+  #application-workspace .application-workspace-tools[data-sequence="true"] { margin-top:16px; }
+  #application-workspace .application-workspace-tools-label { flex:1 0 100%; padding:4px 6px 2px; }
+  #application-workspace .application-workspace-tools[data-sequence="true"] a { flex:1 1 auto; justify-content:center; padding:9px 10px; font-size:13px; }
   #application-period-fields { grid-template-columns:minmax(0,1fr); }
   #application-workspace[data-page=calendar] .application-workspace-heading { padding:12px; }
   body.unified-shell #dashboard-view > #application-workspace[data-page=calendar] { padding-top:12px; gap:10px; }

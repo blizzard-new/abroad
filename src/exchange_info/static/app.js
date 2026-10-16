@@ -7968,7 +7968,7 @@ function filteredPartners({ ignore = "", sort = true } = {}) {
       (!state.degree || academicScopeNeedsConfirmation(item, "degree_levels") || degreeMatches(item.degree_levels, state.degree) !== false) &&
       (ignore === "quota" || !state.partnerQuota || (state.partnerQuota === "2plus" ? (quota ?? 0) >= 2 : quota === 1)) &&
       (ignore === "fit" || !state.partnerFit || partnerFitBucket(item) === state.partnerFit) &&
-      coupledAcademicScopeMatches(item, state.college, state.degree) !== false && discoveryCriteriaMatch(item)
+      coupledAcademicScopeMatches(item, state.college, state.degree) !== false && (ignore === "criteria" || discoveryCriteriaMatch(item))
     );
   });
   if (!sort) return partners;
@@ -7976,10 +7976,34 @@ function filteredPartners({ ignore = "", sort = true } = {}) {
     partners.sort((left, right) => (partnerNextDeadline(left)?.getTime() ?? Infinity) - (partnerNextDeadline(right)?.getTime() ?? Infinity));
   } else if (state.partnerSort === "quota") {
     partners.sort((left, right) => (partnerQuotaNumber(right) ?? -1) - (partnerQuotaNumber(left) ?? -1));
-  } else if (state.eligibilityProfile) {
-    partners.sort((left, right) => partnerMatch(right).score - partnerMatch(left).score);
+  } else {
+    // Schools whose published conditions fit what was picked above (a term, a language test ...) come first, then the
+    // ones the data cannot settle; the order within each group is the student's own fit, when there is one.
+    const byCriteria = UniWayDiscovery.hasCriteria(discoveryCriteria)
+      ? new Map(partners.map((item) => [item, partnerCriteriaRank(item)])) : null;
+    if (byCriteria || state.eligibilityProfile) {
+      partners.sort((left, right) => (byCriteria ? byCriteria.get(left) - byCriteria.get(right) : 0)
+        || (state.eligibilityProfile ? partnerMatch(right).score - partnerMatch(left).score : 0));
+    }
   }
   return partners;
+}
+
+// 0 fits what was picked, 1 the data does not say, 2 does not fit.
+function partnerCriteriaRank(item) {
+  const result = UniWayDiscovery.assess(item, discoveryCriteria);
+  return result.matched ? 0 : result.status === "mismatch" ? 2 : 1;
+}
+
+// What the picked conditions did to the list, so a pick that cannot narrow it says so instead of looking broken.
+function partnerCriteriaNote() {
+  if (!UniWayDiscovery.hasCriteria(discoveryCriteria)) return "";
+  const all = filteredPartners({ ignore: "criteria", sort: false });
+  const shown = all.filter(discoveryCriteriaMatch);
+  const fits = shown.filter((item) => partnerCriteriaRank(item) === 0).length;
+  const hidden = all.length - shown.length;
+  const parts = [fits ? `${fits} 所已知符合` : "", hidden ? `${hidden} 所不符已隱藏` : ""].filter(Boolean);
+  return parts.length ? parts.join("、") : "學校資料大多未列這項條件，暫時無法縮小範圍";
 }
 
 function academicScopeNeedsConfirmation(item, key) {
@@ -8051,7 +8075,8 @@ function renderPartnerCount(total, shown) {
   if (catalogueSourceUnavailable()) { $("#partner-result-count").textContent = "來源暫不可用"; return; }
   const line = $("#partner-result-count");
   if (!line) return;
-  line.textContent = !total ? "" : shown < total ? `共 ${total} 所，先顯示 ${shown} 所` : `共 ${total} 所`;
+  const note = total ? partnerCriteriaNote() : "";
+  line.textContent = (!total ? "" : shown < total ? `共 ${total} 所，先顯示 ${shown} 所` : `共 ${total} 所`) + (note ? `（${note}）` : "");
 }
 
 function renderPartnerTable() {

@@ -25,8 +25,10 @@ window.UniWayExplore = (() => {
       if (official) deadline = `${shortDate(official.date)} ${official.scope}`;
       else if (partner) deadline = `${shortDate(partner)} 合作校申請`;
     } catch (_) { /* the tab then says the deadline follows the official notice */ }
+    const picked = UniWayDiscovery.hasCriteria(discoveryCriteria);
+    const fits = picked ? list.filter((item) => UniWayDiscovery.assess(item, discoveryCriteria).matched).length : 0;
     return {
-      match: profile ? `${fit} 間符合資格` : "填寫條件後排序",
+      match: picked ? `${fits} 間符合所選條件` : profile ? `${fit} 間符合資格` : "填寫條件後排序",
       deadline,
       quota: quotas.length ? `最多 ${Math.max(...quotas)} 名` : "依官方公告",
     };
@@ -77,7 +79,12 @@ window.UniWayExplore = (() => {
     if (state.availability) labels.push(host_text("#availability-filter", state.availability));
     if (state.partnerQuota) labels.push(state.partnerQuota === "2plus" ? "名額 2 名以上" : "名額 1 名");
     if (state.partnerFit) labels.push(state.partnerFit === "fit" ? "符合資格" : "仍須確認");
-    if (UniWayDiscovery.hasCriteria(discoveryCriteria)) labels.push("我的條件");
+    const picked = discoveryCriteria;
+    if (UniWayDiscovery.hasCriteria(picked)) {
+      if (picked.term) labels.push(`出發學期：${host_text("#partner-term-tile", picked.term)}`);
+      if (picked.test) labels.push(`語言檢定：${host_text("#partner-test-tile", picked.test)}`);
+      if (picked.score || picked.grade || picked.degree) labels.push("我的條件");
+    }
     return labels;
   }
   function host_text(selector, value) {

@@ -31,10 +31,10 @@
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
     <link rel="stylesheet" href="/static/glass-theme.css?v=20261015-redesign-1" />
-    <link rel="stylesheet" href="/static/platform-redesign.css?v=20261016-globe-1" />
+    <link rel="stylesheet" href="/static/platform-redesign.css?v=20261016-marquee-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
-    <link rel="stylesheet" href="/static/application-workspace.css?v=20261008-ncu-conditions-1" />
+    <link rel="stylesheet" href="/static/application-workspace.css?v=20261016-subtabs-1" />
     <link rel="stylesheet" href="/static/document-workbench.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/destination-tips.css?v=20261004-tips-2" />
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
@@ -369,8 +369,11 @@
               </section>
 
               <section class="pr-supported" aria-label="目前支援的學校">
-                <span>目前支援</span>
-                <ul id="home-supported-list"></ul>
+                <div class="pr-supported-label"><i data-lucide="badge-check" aria-hidden="true"></i><span><b>目前支援</b><small id="home-supported-count">6 所大學</small></span></div>
+                <div id="home-supported-marquee" class="pr-marquee">
+                  <ul id="home-supported-list" class="pr-marquee-track"></ul>
+                </div>
+                <button id="home-supported-toggle" type="button" class="pr-marquee-toggle" aria-pressed="false" aria-label="暫停學校名單捲動" hidden><i data-lucide="pause" aria-hidden="true"></i></button>
               </section>
 
               <section class="pr-section pr-features" aria-labelledby="home-features-title">
@@ -1483,11 +1486,11 @@
     <dialog id="discussion-moderation" aria-labelledby="discussion-moderation-title"><header class="discussion-reader-header"><h2 id="discussion-moderation-title">討論管理</h2><button id="discussion-moderation-close" type="button" class="secondary-button">返回討論</button></header><div class="discussion-article"><label>內容狀態<select id="discussion-moderation-filter"><option value="pending">待審核</option><option value="approved">已公開</option><option value="hidden">已隱藏</option></select></label><div id="discussion-moderation-body"></div></div></dialog>
     <script src="/static/public-content-zh.js?v=20261007-requests-1" defer></script>
     <script src="/static/regions.js?v=20261008-ntu-review-2" defer></script>
-    <script src="/static/discovery-core.js?v=20261011-ncu-integration-2" defer></script>
+    <script src="/static/discovery-core.js?v=20261016-filters-1" defer></script>
     <script src="/static/discovery-ui.js?v=20261015-redesign-1" defer></script>
     <script src="/static/navigation.js?v=20261013-expanding-rail-1" defer></script>
     <script src="/static/motion.js?v=20261014-aria-picker-1" defer></script>
-    <script src="/static/community-reader.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/community-reader.js?v=20261016-filters-1" defer></script>
     <script src="/static/community-moderation.js?v=20260930-discussion-2b" defer></script>
     <script src="/static/academic-units.js?v=20261001-departments-1" defer></script>
     <script src="/static/ccu-academic-units.js?v=20261008-ccu-filter-23" defer></script>
@@ -1507,11 +1510,11 @@
     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
     <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
     <script src="/static/react-aria-school-picker.js?v=20261014-aria-1" defer></script>
-    <script src="/static/app.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/app.js?v=20261016-filters-1" defer></script>
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261016-globe-4" defer></script>
-    <script src="/static/platform-home.js?v=20261016-globe-1" defer></script>
-    <script src="/static/platform-explore.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-home.js?v=20261016-marquee-3" defer></script>
+    <script src="/static/platform-explore.js?v=20261016-filters-1" defer></script>
     <script src="/static/platform-detail.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-tracker.js?v=20261015-redesign-1" defer></script>

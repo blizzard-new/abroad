@@ -46,6 +46,22 @@
     jlpt: /(?:JLPT|日檢|日語能力|日本語能力)[^。;；\n]{0,20}?N\s*([1-5])/ig,
     topik: /TOPIK\s*(?:第|level)?\s*([1-6])/ig,
   };
+  // How each test is written in the schools' own conditions, so a test can be recognised without a score.
+  const testNames = {
+    ielts: /IELTS/i,
+    toefl: /TOEFL|托福/i,
+    toeic: /TOEIC|多益/i,
+    duolingo: /Duolingo/i,
+    jlpt: /JLPT|日檢|日語能力|日本語能力/i,
+    topik: /TOPIK|韓檢|韓語能力/i,
+  };
+  const testLabels = { ielts: "IELTS", toefl: "TOEFL iBT", toeic: "TOEIC", duolingo: "Duolingo", jlpt: "日檢 JLPT", topik: "韓檢 TOPIK" };
+  // Only words that name a season count. "Semester 1" or 第一學期 can start in February or September depending on the
+  // hemisphere, so they say nothing about whether a school takes students in the fall or the spring.
+  const seasons = {
+    spring: /春季|下學期|\bspring\b|summer\s*sem|夏季學期/i,
+    fall: /秋季|上學期|\bfall\b|\bautumn\b|winter\s*sem|冬季學期/i,
+  };
   function assessOption(item, c) {
     const outcomes = [], reasons = [];
     const put = (status, reason) => { outcomes.push(status); reasons.push(reason); };
@@ -57,7 +73,14 @@
       const unique = [...new Set(values)];
       const exams = [...new Set((raw.match(/IELTS|TOEFL|TOEIC|Duolingo|JLPT|TOPIK|日檢/ig) || []).map(s => s.toUpperCase()))];
       const combinedExams = exams.length > 1 && !/或|\bor\b/i.test(raw);
-      if (score == null || !pattern) put("unknown", "語言成績未填完整");
+      if (c.test && pattern && score == null) {
+        // A test chosen without a score: is it one the school lists at all?
+        const listed = Object.keys(testNames).filter(key => testNames[key].test(raw));
+        const equivalent = /或同等|同等|等同|相當|equivalent|或其他|or other|CEFR/i.test(raw);
+        if (listed.includes(c.test)) put("match", `條件列有 ${testLabels[c.test]}`);
+        else if (listed.length && !equivalent) put("mismatch", `語言條件只列 ${listed.map(key => testLabels[key]).join("、")}，未列 ${testLabels[c.test]}`);
+        else put("unknown", listed.length ? "可能接受同等成績，請向學校確認" : "資料未列語言檢定");
+      } else if (score == null || !pattern) put("unknown", "語言成績未填完整");
       else if (!unique.length) put("unknown", "此檢定門檻待確認");
       else if (unique.length > 1 || ambiguous || combinedExams || /TOEFL\s*(?:ITP|PBT)/i.test(raw) && c.test === "toefl") put("unknown", "語言條件依方案或單科而異");
       else {
@@ -85,10 +108,13 @@
       }
     }
     if (c.term) {
-      const term = item.study_period || "";
-      const spring = /春季|下學期|spring/i.test(term), fall = /秋季|上學期|fall|autumn/i.test(term);
-      if (!spring && !fall) put("unknown", "開放交換學期待確認");
-      else put((c.term === "spring" ? spring : fall) ? "match" : "mismatch", term);
+      // study_period only says how long (1 學期 / 1 學年); the intakes are named in the application schedule.
+      const term = [item.study_period, item.application_deadline, item.student_summary_zh?.application_deadline].filter(Boolean).join(" ");
+      const spring = seasons.spring.test(term), fall = seasons.fall.test(term);
+      const name = c.term === "spring" ? "春季／下學期" : "秋季／上學期";
+      if (!spring && !fall) put("unknown", "資料未列開放交換的學期");
+      else if (c.term === "spring" ? spring : fall) put("match", `${name}有開放${spring && fall ? "（春秋兩學期）" : ""}`);
+      else put("mismatch", `只列 ${c.term === "spring" ? "秋季／上學期" : "春季／下學期"}，未列${name}`);
     }
     const status = outcomes.includes("mismatch") ? "mismatch" : outcomes.includes("unknown") || !outcomes.length ? "unknown" : "match";
     return { status, reasons, label: { match: "已知門檻符合", unknown: "條件待確認", mismatch: "有條件未符" }[status] };
@@ -97,8 +123,10 @@
     if (!hasCriteria(c)) return { status: "none", reasons: [], label: "" };
     const options = item.program_options?.length ? item.program_options.map(o => assessOption({ ...item, ...o, student_summary_zh: o.student_summary_zh || {} }, c)) : [assessOption(item, c)];
     let result = options.find(o => o.status === "match") || options.find(o => o.status === "unknown") || options[0];
-    if (item.availability_status && item.availability_status !== "open" && result.status === "match") result = { ...result, status: "unknown", label: "條件待確認", reasons: [...result.reasons, "本期開放狀態待確認"] };
-    return result;
+    // matched stays true when only the school's open status is unconfirmed, so a list can still put those schools first.
+    const matched = result.status === "match";
+    if (item.availability_status && item.availability_status !== "open" && matched) result = { ...result, status: "unknown", label: "條件待確認", reasons: [...result.reasons, "本期開放狀態待確認"] };
+    return { ...result, matched };
   }
   const api = { THEMES, empty, sanitize, sourceKey, sourceSnapshot, safeUrl, hasCriteria, assess };
   root.UniWayDiscovery = api;
