@@ -181,6 +181,59 @@ def test_explore_sorts_and_compares_schools(page, live_server) -> None:
     expect(page.locator("#partner-compare-tray [data-open-compare]")).to_be_enabled()
 
 
+def _card_names(page) -> list[str]:
+    return page.evaluate("() => [...document.querySelectorAll('#partner-table .pr-school-card')].map((card) => card.dataset.schoolCard)")
+
+
+def test_explore_language_and_term_dropdowns_change_the_school_list(page, live_server) -> None:
+    enter_public_site(page, live_server, "partners")
+    expect(page.locator("#partner-table .pr-school-card").first).to_be_visible(timeout=30_000)
+    # Three schools that say something about tests and intakes, the rest say nothing.
+    names = page.evaluate(
+        """() => {
+          const list = state.dashboard.partner_universities;
+          list[0].eligibility = 'IELTS 6.0 overall';
+          list[0].application_deadline = '秋季班：4月30日 春季班：10月30日';
+          list[1].eligibility = 'JLPT N2';
+          list[1].application_deadline = '春季班：10月30日';
+          list[2].eligibility = 'TOEIC 700 或 TOEFL iBT 79';
+          list[2].application_deadline = '秋季班：4月30日';
+          renderPartnerTable();
+          return list.slice(0, 3).map((item) => item.school_name);
+        }"""
+    )
+    total = page.evaluate("state.dashboard.partner_universities.length")
+    count = page.locator("#partner-result-count")
+    expect(count).to_contain_text(f"共 {total} 所")
+
+    # A test alone, with no score: schools that list only other tests drop out, and the one that lists it comes first.
+    page.locator("#partner-test-tile").select_option("jlpt")
+    expect(count).to_contain_text(f"共 {total - 2} 所")
+    expect(count).to_contain_text("2 所不符已隱藏")
+    assert _card_names(page)[0] == names[1]
+    assert names[0] not in _card_names(page) and names[2] not in _card_names(page)
+    expect(page.locator("#partner-applied")).to_contain_text("語言檢定：日檢 JLPT")
+    expect(page.locator('[data-partner-sort="match"] span')).to_contain_text("1 間符合所選條件")
+
+    page.locator("#partner-test-tile").select_option("ielts")
+    expect(count).to_contain_text(f"共 {total - 2} 所")
+    assert _card_names(page)[0] == names[0]
+    assert names[1] not in _card_names(page)
+
+    # A term: the schools whose schedule names only the other season drop out.
+    page.locator("#partner-test-tile").select_option("")
+    page.locator("#partner-term-tile").select_option("fall")
+    expect(count).to_contain_text(f"共 {total - 1} 所")
+    assert names[1] not in _card_names(page)
+    assert _card_names(page)[:2] == [names[0], names[2]]
+    expect(page.locator("#partner-applied")).to_contain_text("出發學期：秋季／上學期")
+
+    # Clearing both brings every school back.
+    page.locator("#partner-term-tile").select_option("")
+    expect(count).not_to_contain_text("已隱藏")
+    expect(count).to_contain_text(f"共 {total} 所")
+
+
 def test_guide_has_a_table_of_contents_and_deep_links(page, live_server) -> None:
     enter_public_site(page, live_server, "guide")
     expect(page.locator("#guide-toc a").first).to_be_visible()
