@@ -45,16 +45,40 @@ def location_key(school_name: str, country: str | None) -> tuple[str, str]:
     return school_identity_key(school_name), (country or "").strip()
 
 
+def _location_file_signature(path: Path) -> tuple[int, int] | None:
+    try:
+        stat = path.stat()
+    except OSError:
+        return None
+    return (stat.st_mtime_ns, stat.st_size)
+
+
+@lru_cache(maxsize=8)
+def _cached_university_locations(
+    catalog_path: Path,
+    catalog_sig: tuple[int, int] | None,
+    local_path: Path,
+    local_sig: tuple[int, int] | None,
+) -> VisualRecordIndex:
+    records: dict[tuple[str, str], UniversityLocation] = {}
+    for path in (catalog_path, local_path):
+        records.update(_read_location_file(path))
+    return VisualRecordIndex(records)
+
+
 def load_university_locations(data_dir: Path) -> dict[tuple[str, str], UniversityLocation]:
     """Use the tracked baseline plus operator-reviewed local overrides.
 
     A malformed row cannot make unrelated schools disappear. Invalid local rows
     are fail-closed for their own identity, including a previously verified row.
     """
-    records: dict[tuple[str, str], UniversityLocation] = {}
-    for path in (LOCATION_CATALOG, Path(data_dir) / "processed" / "university_locations.jsonl"):
-        records.update(_read_location_file(path))
-    return VisualRecordIndex(records)
+    local_path = Path(data_dir) / "processed" / "university_locations.jsonl"
+    return _cached_university_locations(
+        LOCATION_CATALOG,
+        _location_file_signature(LOCATION_CATALOG),
+        local_path,
+        _location_file_signature(local_path),
+    )
 
 
 def _read_location_file(path: Path) -> dict:

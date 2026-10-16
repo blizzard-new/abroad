@@ -174,8 +174,22 @@ class _LifeSnapshotIndex(Mapping):
 @lru_cache(maxsize=1)
 def _bundled_ntu_research() -> Mapping[tuple[str, str], LifeResearchSnapshot]:
     records = {}
+    if BUNDLED_NTU_LIFE.exists():
+        with BUNDLED_NTU_LIFE.open(encoding="utf-8") as handle:
+            for line in handle:
+                try:
+                    row = reviewed_life_snapshot(LifeResearchSnapshot.model_validate_json(line))
+                    if row.extraction_version == EXTRACTION_VERSION:
+                        records[(school_identity_key(row.school_name), row.country or "")] = row.model_dump_json().encode("utf-8")
+                except ValueError:
+                    continue
+    return _LifeSnapshotIndex(records)
+
+
+@lru_cache(maxsize=1)
+def _bundled_extra_research() -> Mapping[tuple[str, str], LifeResearchSnapshot]:
+    records = {}
     bundled_files = (
-        BUNDLED_NTU_LIFE,
         Path(__file__).parent / "official_data" / "fju" / "student_life.jsonl",
         Path(__file__).parent / "official_data" / "scu" / "student_life.jsonl",
     )
@@ -210,6 +224,8 @@ def read_research(partner: PartnerUniversity, data_dir: Path) -> LifeResearchSna
     # not grant home-school eligibility, quotas or guaranteed accommodation.
     if bundled := _bundled_ntu_research().get(_identity(partner)):
         return bundled
+    if extra := _bundled_extra_research().get(_identity(partner)):
+        return extra
     return empty_cache or LifeResearchSnapshot(school_name=partner.school_name, country=partner.country)
 
 

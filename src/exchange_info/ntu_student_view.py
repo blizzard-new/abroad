@@ -14,24 +14,42 @@ NTU_OFFICIAL_DATA_DIR = Path(__file__).resolve().parent / "official_data" / "ntu
 NTU_GUIDELINES_URL = "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/07/116-1-Selection-Guidelines_CH.pdf"
 
 
+from functools import lru_cache
+from .storage import file_signature
+
+
 def _payload(filename: str):
     return json.loads((NTU_OFFICIAL_DATA_DIR / filename).read_text(encoding="utf-8"))
 
 
+@lru_cache(maxsize=2)
+def _cached_ntu_partners(path: Path, sig: tuple[int, int] | None) -> tuple[PartnerUniversity, ...]:
+    return tuple(
+        with_ntu_partner_summary(PartnerUniversity.model_validate_json(line))
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    )
+
+
 def fetch_ntu_partner_universities() -> list[PartnerUniversity]:
     """Use the reviewed source snapshot offline, keeping unpublished quotas pending."""
-    return [
-        with_ntu_partner_summary(PartnerUniversity.model_validate_json(line))
-        for line in (NTU_OFFICIAL_DATA_DIR / "partners.jsonl").read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    ]
+    path = NTU_OFFICIAL_DATA_DIR / "partners.jsonl"
+    return list(_cached_ntu_partners(path, file_signature(path)))
+
+
+@lru_cache(maxsize=2)
+def _cached_ntu_dashboard_shell(path: Path, sig: tuple[int, int] | None) -> StudentDashboard:
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    raw["partner_universities"] = []
+    return StudentDashboard.model_validate(raw)
 
 
 def build_ntu_student_dashboard(
     *, partner_universities: list[PartnerUniversity] | None = None,
     reference_time: datetime | None = None,
 ) -> StudentDashboard:
-    dashboard = StudentDashboard.model_validate(_payload("student_dashboard.json"))
+    path = NTU_OFFICIAL_DATA_DIR / "student_dashboard.json"
+    dashboard = _cached_ntu_dashboard_shell(path, file_signature(path))
     now = reference_time or datetime.now(timezone.utc)
     periods = []
     for period in dashboard.application_periods:
@@ -55,10 +73,22 @@ def build_ntu_student_dashboard(
     })
 
 
+@lru_cache(maxsize=2)
+def _cached_ntu_exchange_info(path: Path, sig: tuple[int, int] | None) -> ExchangeInfo:
+    return ExchangeInfo.model_validate(json.loads(path.read_text(encoding="utf-8")))
+
+
 def ntu_exchange_info(partners: list[PartnerUniversity] | None = None) -> ExchangeInfo:
-    info = ExchangeInfo.model_validate(_payload("exchange_info.json"))
+    path = NTU_OFFICIAL_DATA_DIR / "exchange_info.json"
+    info = _cached_ntu_exchange_info(path, file_signature(path))
     return info.model_copy(update={"partner_universities": [p.school_name for p in (partners if partners is not None else fetch_ntu_partner_universities())]})
 
 
+@lru_cache(maxsize=2)
+def _cached_ntu_pages(path: Path, sig: tuple[int, int] | None) -> tuple[ProcessedPage, ...]:
+    return tuple(ProcessedPage.model_validate_json(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip())
+
+
 def ntu_processed_pages() -> list[ProcessedPage]:
-    return [ProcessedPage.model_validate_json(line) for line in (NTU_OFFICIAL_DATA_DIR / "pages.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    path = NTU_OFFICIAL_DATA_DIR / "pages.jsonl"
+    return list(_cached_ntu_pages(path, file_signature(path)))

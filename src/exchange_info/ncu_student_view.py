@@ -4,6 +4,7 @@ import gzip
 import threading
 from datetime import datetime, timezone
 from collections import OrderedDict
+from functools import lru_cache
 from pathlib import Path
 from .models import (
     ApplicationPeriodStatus,
@@ -12,6 +13,7 @@ from .models import (
     ProcessedPage,
     StudentDashboard,
 )
+from .storage import file_signature
 from .student_view import _application_period_status
 from .json_stream import json_array_items as _json_array_items
 
@@ -88,17 +90,31 @@ def _payload(filename):
     return json.loads((NCU_OFFICIAL_DATA_DIR / filename).read_text(encoding="utf-8"))
 
 
+@lru_cache(maxsize=2)
+def _cached_ncu_partners(path: Path, sig: tuple[int, int] | None) -> tuple[PartnerUniversity, ...]:
+    with path.open(encoding="utf-8") as handle:
+        return tuple(PartnerUniversity.model_validate_json(line) for line in handle if line.strip())
+
+
 def fetch_ncu_partner_universities() -> list[PartnerUniversity]:
     # Stream the reviewed JSONL; read_text().splitlines() retains two copies of
     # the whole Unicode source while the validated models are being built.
-    with (NCU_OFFICIAL_DATA_DIR / "partners.jsonl").open(encoding="utf-8") as handle:
-        return [PartnerUniversity.model_validate_json(line) for line in handle if line.strip()]
+    path = NCU_OFFICIAL_DATA_DIR / "partners.jsonl"
+    return list(_cached_ncu_partners(path, file_signature(path)))
+
+
+@lru_cache(maxsize=2)
+def _cached_ncu_dashboard_shell(path: Path, sig: tuple[int, int] | None) -> StudentDashboard:
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    raw["partner_universities"] = []
+    return StudentDashboard.model_validate(raw)
 
 
 def build_ncu_student_dashboard(
     *, partner_universities=None, reference_time=None
 ) -> StudentDashboard:
-    dashboard = StudentDashboard.model_validate(_payload("student_dashboard.json"))
+    path = NCU_OFFICIAL_DATA_DIR / "student_dashboard.json"
+    dashboard = _cached_ncu_dashboard_shell(path, file_signature(path))
     now = reference_time or datetime.now(timezone.utc)
     periods = []
     for period in dashboard.application_periods:
@@ -127,8 +143,14 @@ def build_ncu_student_dashboard(
     )
 
 
+@lru_cache(maxsize=2)
+def _cached_ncu_exchange_info(path: Path, sig: tuple[int, int] | None) -> ExchangeInfo:
+    return ExchangeInfo.model_validate(json.loads(path.read_text(encoding="utf-8")))
+
+
 def ncu_exchange_info(partners=None) -> ExchangeInfo:
-    return ExchangeInfo.model_validate(_payload("exchange_info.json")).model_copy(
+    path = NCU_OFFICIAL_DATA_DIR / "exchange_info.json"
+    return _cached_ncu_exchange_info(path, file_signature(path)).model_copy(
         update={
             "partner_universities": [
                 p.school_name
@@ -142,9 +164,15 @@ def ncu_exchange_info(partners=None) -> ExchangeInfo:
     )
 
 
+@lru_cache(maxsize=2)
+def _cached_ncu_pages(path: Path, sig: tuple[int, int] | None) -> tuple[ProcessedPage, ...]:
+    with path.open(encoding="utf-8") as handle:
+        return tuple(ProcessedPage.model_validate_json(line) for line in handle if line.strip())
+
+
 def ncu_processed_pages() -> list[ProcessedPage]:
-    with (NCU_OFFICIAL_DATA_DIR / "pages.jsonl").open(encoding="utf-8") as handle:
-        return [ProcessedPage.model_validate_json(line) for line in handle if line.strip()]
+    path = NCU_OFFICIAL_DATA_DIR / "pages.jsonl"
+    return list(_cached_ncu_pages(path, file_signature(path)))
 
 
 def ncu_field_audit(school_name: str) -> dict | None:

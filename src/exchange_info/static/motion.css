@@ -75,9 +75,9 @@
 @keyframes uw-loading { 0%, 100% { opacity: .55; } 50% { opacity: .9; } }
 
 /* Stop decorative CSS work off-tab; WAAPI work is canceled by motion.js. */
-.uw-motion-ready[data-motion-suspended] *,
-.uw-motion-ready[data-motion-suspended] *::before,
-.uw-motion-ready[data-motion-suspended] *::after { animation-play-state: paused !important; }
+.uw-motion-ready[data-motion-suspended] :not(.boot-splash):not(.boot-splash *),
+.uw-motion-ready[data-motion-suspended] :not(.boot-splash):not(.boot-splash *)::before,
+.uw-motion-ready[data-motion-suspended] :not(.boot-splash):not(.boot-splash *)::after { animation-play-state: paused !important; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }

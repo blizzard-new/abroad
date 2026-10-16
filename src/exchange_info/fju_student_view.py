@@ -18,13 +18,30 @@ FJU_PROCESS_URL = "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39"
 FJU_PARTNER_LIST_URL = "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=40"
 
 
+from functools import lru_cache
+from .storage import file_signature
+
+
 def _payload(filename: str):
     return json.loads((FJU_OFFICIAL_DATA_DIR / filename).read_text(encoding="utf-8"))
 
 
+@lru_cache(maxsize=2)
+def _cached_fju_partners(path: Path, sig: tuple[int, int] | None) -> tuple[PartnerUniversity, ...]:
+    with path.open(encoding="utf-8") as handle:
+        return tuple(PartnerUniversity.model_validate_json(line) for line in handle if line.strip())
+
+
 def fetch_fju_partner_universities() -> list[PartnerUniversity]:
-    with (FJU_OFFICIAL_DATA_DIR / "partners.jsonl").open(encoding="utf-8") as handle:
-        return [PartnerUniversity.model_validate_json(line) for line in handle if line.strip()]
+    path = FJU_OFFICIAL_DATA_DIR / "partners.jsonl"
+    return list(_cached_fju_partners(path, file_signature(path)))
+
+
+@lru_cache(maxsize=2)
+def _cached_fju_dashboard_shell(path: Path, sig: tuple[int, int] | None) -> StudentDashboard:
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    raw["partner_universities"] = []
+    return StudentDashboard.model_validate(raw)
 
 
 def build_fju_student_dashboard(
@@ -32,7 +49,8 @@ def build_fju_student_dashboard(
     partner_universities: list[PartnerUniversity] | None = None,
     reference_time: datetime | None = None,
 ) -> StudentDashboard:
-    dashboard = StudentDashboard.model_validate(_payload("student_dashboard.json"))
+    path = FJU_OFFICIAL_DATA_DIR / "student_dashboard.json"
+    dashboard = _cached_fju_dashboard_shell(path, file_signature(path))
     now = reference_time or datetime.now(timezone.utc)
     periods = []
     for period in dashboard.application_periods:
@@ -67,15 +85,27 @@ def build_fju_student_dashboard(
     )
 
 
+@lru_cache(maxsize=2)
+def _cached_fju_exchange_info(path: Path, sig: tuple[int, int] | None) -> ExchangeInfo:
+    return ExchangeInfo.model_validate(json.loads(path.read_text(encoding="utf-8")))
+
+
 def fju_exchange_info(partners: list[PartnerUniversity] | None = None) -> ExchangeInfo:
-    info = ExchangeInfo.model_validate(_payload("exchange_info.json"))
+    path = FJU_OFFICIAL_DATA_DIR / "exchange_info.json"
+    info = _cached_fju_exchange_info(path, file_signature(path))
     resolved = partners if partners is not None else fetch_fju_partner_universities()
     return info.model_copy(update={"partner_universities": [p.school_name for p in resolved]})
 
 
+@lru_cache(maxsize=2)
+def _cached_fju_pages(path: Path, sig: tuple[int, int] | None) -> tuple[ProcessedPage, ...]:
+    with path.open(encoding="utf-8") as handle:
+        return tuple(ProcessedPage.model_validate_json(line) for line in handle if line.strip())
+
+
 def fju_processed_pages() -> list[ProcessedPage]:
-    with (FJU_OFFICIAL_DATA_DIR / "pages.jsonl").open(encoding="utf-8") as handle:
-        return [ProcessedPage.model_validate_json(line) for line in handle if line.strip()]
+    path = FJU_OFFICIAL_DATA_DIR / "pages.jsonl"
+    return list(_cached_fju_pages(path, file_signature(path)))
 
 
 def fju_school_location(partner: PartnerUniversity, fallback, data_dir: Path | None = None):

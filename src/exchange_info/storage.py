@@ -734,33 +734,16 @@ def upsert_collection_audit(
     return ordered
 
 
-@_locked_governance_io
-def load_destination_profiles(
-    data_dir: Path = DEFAULT_DATA_DIR,
-    *,
-    include_bundled_baseline: bool | None = None,
-    home_university: str | None = None,
-) -> list[DestinationProfile]:
-    local = _scope_legacy_destination_profiles(
-        read_jsonl(
-            data_paths(data_dir)["destination_profiles"],
-            DestinationProfile,
-        ),
-        data_dir,
-    )
-    home_key = school_identity_key(home_university) if home_university else None
-    if home_key:
-        local = [row for row in local if not row.home_university
-                 or school_identity_key(row.home_university) == home_key]
-    include_bundled = (
-        _include_bundled_defaults(data_dir)
-        if include_bundled_baseline is None
-        else include_bundled_baseline
-    )
-    if not include_bundled:
-        return local
-    bundled = [
-        row.model_copy(update={"home_university": bundle_home})
+_DEFAULT_READ_JSONL = read_jsonl
+_destination_profiles_cache_lock = threading.Lock()
+_destination_profiles_cache: dict[tuple, list[DestinationProfile]] = {}
+_partner_research_cache_lock = threading.Lock()
+_partner_research_cache: dict[tuple, list[PartnerResearchRecord]] = {}
+
+
+def _bundled_destination_entries(home_key: str | None) -> tuple[tuple[Path, str], ...]:
+    return tuple(
+        (directory / "destination_profiles.jsonl", bundle_home)
         for directory, bundle_home in (
             (BUNDLED_NTPU_DIR, NTPU.school_name),
             (BUNDLED_TKU_DIR, TKU.school_name),
@@ -772,12 +755,66 @@ def load_destination_profiles(
             (BUNDLED_SCU_DIR, SCU.school_name),
         )
         if home_key is None or school_identity_key(bundle_home) == home_key
+    )
+
+
+@_locked_governance_io
+def load_destination_profiles(
+    data_dir: Path = DEFAULT_DATA_DIR,
+    *,
+    include_bundled_baseline: bool | None = None,
+    home_university: str | None = None,
+) -> list[DestinationProfile]:
+    paths = data_paths(data_dir)
+    home_key = school_identity_key(home_university) if home_university else None
+    include_bundled = (
+        _include_bundled_defaults(data_dir)
+        if include_bundled_baseline is None
+        else include_bundled_baseline
+    )
+    entries = _bundled_destination_entries(home_key) if include_bundled else ()
+    use_cache = read_jsonl is _DEFAULT_READ_JSONL
+    cache_key = (
+        str(paths["destination_profiles"]),
+        _file_signature(paths["destination_profiles"]),
+        _file_signature(paths["raw_pages"]),
+        _file_signature(paths["processed_pages"]),
+        include_bundled,
+        home_key,
+        tuple((str(p), _file_signature(p)) for p, _ in entries),
+    ) if use_cache else None
+    if cache_key is not None:
+        with _destination_profiles_cache_lock:
+            cached = _destination_profiles_cache.get(cache_key)
+        if cached is not None:
+            return [row.model_copy(deep=True) for row in cached]
+
+    local = _scope_legacy_destination_profiles(
+        read_jsonl(
+            paths["destination_profiles"],
+            DestinationProfile,
+        ),
+        data_dir,
+    )
+    if home_key:
+        local = [row for row in local if not row.home_university
+                 or school_identity_key(row.home_university) == home_key]
+    if not include_bundled:
+        if cache_key is not None:
+            with _destination_profiles_cache_lock:
+                if len(_destination_profiles_cache) >= 24:
+                    _destination_profiles_cache.pop(next(iter(_destination_profiles_cache)))
+                _destination_profiles_cache[cache_key] = local
+        return [row.model_copy(deep=True) for row in local] if cache_key is not None else local
+    bundled = [
+        row.model_copy(update={"home_university": bundle_home})
+        for path, bundle_home in entries
         for row in read_jsonl(
-            directory / "destination_profiles.jsonl",
+            path,
             DestinationProfile,
         )
     ]
-    return [
+    result = [
         _with_explicit_destination_gaps(row)
         for row in _merge_rows(
             bundled,
@@ -785,6 +822,13 @@ def load_destination_profiles(
             key=_destination_profile_key,
         )
     ]
+    if cache_key is not None:
+        with _destination_profiles_cache_lock:
+            if len(_destination_profiles_cache) >= 24:
+                _destination_profiles_cache.pop(next(iter(_destination_profiles_cache)))
+            _destination_profiles_cache[cache_key] = result
+        return [row.model_copy(deep=True) for row in result]
+    return result
 
 
 def load_partner_research(
@@ -792,22 +836,43 @@ def load_partner_research(
     *,
     include_bundled_baseline: bool | None = None,
 ) -> list[PartnerResearchRecord]:
-    local = read_jsonl(
-        data_paths(data_dir)["partner_research"], PartnerResearchRecord
-    )
+    local_path = data_paths(data_dir)["partner_research"]
     include_bundled = (
         _include_bundled_defaults(data_dir)
         if include_bundled_baseline is None
         else include_bundled_baseline
     )
+    bundled_paths = tuple(
+        directory / "partner_research.jsonl"
+        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR)
+    ) if include_bundled else ()
+    use_cache = read_jsonl is _DEFAULT_READ_JSONL
+    cache_key = (
+        str(local_path),
+        _file_signature(local_path),
+        include_bundled,
+        tuple((str(p), _file_signature(p)) for p in bundled_paths),
+    ) if use_cache else None
+    if cache_key is not None:
+        with _partner_research_cache_lock:
+            cached = _partner_research_cache.get(cache_key)
+        if cached is not None:
+            return list(cached)
+
+    local = read_jsonl(local_path, PartnerResearchRecord)
     if not include_bundled:
-        return local
+        if cache_key is not None:
+            with _partner_research_cache_lock:
+                if len(_partner_research_cache) >= 16:
+                    _partner_research_cache.pop(next(iter(_partner_research_cache)))
+                _partner_research_cache[cache_key] = local
+        return list(local)
     bundled = [
         row
-        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR)
-        for row in read_jsonl(directory / "partner_research.jsonl", PartnerResearchRecord)
+        for path in bundled_paths
+        for row in read_jsonl(path, PartnerResearchRecord)
     ]
-    return _merge_rows(
+    result = _merge_rows(
         bundled,
         local,
         key=lambda row: (
@@ -815,6 +880,12 @@ def load_partner_research(
             school_identity_key(row.school_name),
         ),
     )
+    if cache_key is not None:
+        with _partner_research_cache_lock:
+            if len(_partner_research_cache) >= 16:
+                _partner_research_cache.pop(next(iter(_partner_research_cache)))
+            _partner_research_cache[cache_key] = result
+    return list(result)
 
 
 def save_partner_research(

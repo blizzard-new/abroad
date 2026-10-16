@@ -468,19 +468,29 @@ CGU_COMMUNITY_BOARD = "長庚大學"
 HOME_UNIVERSITY_BOARDS = {item.school_name for item in SUPPORTED_UNIVERSITIES}
 
 
+_school_image_manifest_cache: tuple[tuple[str, tuple[int, int] | None] | None, dict[tuple[str, str], dict[str, object]]] = (None, {})
+
+
 def _load_school_image_manifest() -> dict[tuple[str, str], dict[str, object]]:
+    global _school_image_manifest_cache
     from .school_identity import VisualRecordIndex
-    if not SCHOOL_IMAGE_MANIFEST.exists():
+    sig = file_signature(SCHOOL_IMAGE_MANIFEST)
+    if sig is None:
         return {}
+    key = (str(SCHOOL_IMAGE_MANIFEST), sig)
+    if _school_image_manifest_cache[0] == key and _school_image_manifest_cache[1]:
+        return _school_image_manifest_cache[1]
     try:
         payload = json.loads(SCHOOL_IMAGE_MANIFEST.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return {}
-    return VisualRecordIndex({
+    index = VisualRecordIndex({
         (school_identity_key(str(item.get("school_name", ""))), str(item.get("country") or "")): item
         for item in payload.get("schools", [])
         if isinstance(item, dict) and item.get("school_name")
     })
+    _school_image_manifest_cache = (key, index)
+    return index
 
 
 def _attach_school_images(
