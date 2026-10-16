@@ -447,7 +447,7 @@ def create_maintenance_router(
 
     @router.get("/maintenance-preview")
     def maintenance_preview_ui() -> Response:
-        """Human-friendly Traditional Chinese Maintenance Workbench covering all 6 Admin Screens."""
+        """Interactive Staging Preview UI covering all 6 Spec Section 13.1 Admin Screens + Public Release-Pinned Explorer."""
         html = """<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -766,6 +766,7 @@ def create_maintenance_router(
             <option value="cgu">長庚大學（共 154 所姊妹校）</option>
             <option value="ccu">國立中正大學（共 55 所姊妹校）</option>
             <option value="tku">淡江大學（共 4 所姊妹校）</option>
+            <option value="fju">天主教輔仁大學（共 234 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -842,7 +843,8 @@ def create_maintenance_router(
     ncu: "國立中央大學 (NCU)",
     cgu: "長庚大學 (CGU)",
     ccu: "國立中正大學 (CCU)",
-    tku: "淡江大學 (TKU)"
+    tku: "淡江大學 (TKU)",
+    fju: "天主教輔仁大學 (FJU)"
   };
 
   const FIELD_LABELS = {

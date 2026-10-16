@@ -51,7 +51,7 @@ from .models import (
 )
 from .settings import DEFAULT_DATA_DIR
 from .school_identity import school_identity_key
-from .university_registry import CCU, CGU, NTPU, NTU, NCU, TKU
+from .university_registry import CCU, CGU, FJU, NTPU, NTU, NCU, TKU
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
 
@@ -64,6 +64,7 @@ BUNDLED_CGU_DIR = PACKAGE_DIR / "official_data" / "cgu"
 BUNDLED_CCU_DIR = PACKAGE_DIR / "official_data" / "ccu"
 BUNDLED_NTU_DIR = PACKAGE_DIR / "official_data" / "ntu"
 BUNDLED_NCU_DIR = PACKAGE_DIR / "official_data" / "ncu"
+BUNDLED_FJU_DIR = PACKAGE_DIR / "official_data" / "fju"
 
 _STORAGE_LOCKS_GUARD = threading.Lock()
 _STORAGE_LOCKS: dict[str, threading.RLock] = {}
@@ -582,7 +583,7 @@ def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWork
 
 
 def _bundled_workflow_paths() -> tuple[Path, ...]:
-    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR))
+    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR, BUNDLED_FJU_DIR))
 
 
 def _bundled_workflow_signature() -> tuple:
@@ -766,6 +767,7 @@ def load_destination_profiles(
             (BUNDLED_NTU_DIR, NTU.school_name),
             (BUNDLED_CCU_DIR, CCU.school_name),
             (BUNDLED_NCU_DIR, NCU.school_name),
+            (BUNDLED_FJU_DIR, FJU.school_name),
         )
         if home_key is None or school_identity_key(bundle_home) == home_key
         for row in read_jsonl(
@@ -800,7 +802,7 @@ def load_partner_research(
         return local
     bundled = [
         row
-        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR)
+        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_FJU_DIR)
         for row in read_jsonl(directory / "partner_research.jsonl", PartnerResearchRecord)
     ]
     return _merge_rows(

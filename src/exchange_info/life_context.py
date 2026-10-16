@@ -174,15 +174,20 @@ class _LifeSnapshotIndex(Mapping):
 @lru_cache(maxsize=1)
 def _bundled_ntu_research() -> Mapping[tuple[str, str], LifeResearchSnapshot]:
     records = {}
-    if BUNDLED_NTU_LIFE.exists():
-        with BUNDLED_NTU_LIFE.open(encoding="utf-8") as handle:
-            for line in handle:
-                try:
-                    row = reviewed_life_snapshot(LifeResearchSnapshot.model_validate_json(line))
-                    if row.extraction_version == EXTRACTION_VERSION:
-                        records[(school_identity_key(row.school_name), row.country or "")] = row.model_dump_json().encode("utf-8")
-                except ValueError:
-                    continue
+    bundled_files = (
+        BUNDLED_NTU_LIFE,
+        Path(__file__).parent / "official_data" / "fju" / "student_life.jsonl",
+    )
+    for life_path in bundled_files:
+        if life_path.exists():
+            with life_path.open(encoding="utf-8") as handle:
+                for line in handle:
+                    try:
+                        row = reviewed_life_snapshot(LifeResearchSnapshot.model_validate_json(line))
+                        if row.extraction_version == EXTRACTION_VERSION:
+                            records.setdefault((school_identity_key(row.school_name), row.country or ""), row.model_dump_json().encode("utf-8"))
+                    except ValueError:
+                        continue
     return _LifeSnapshotIndex(records)
 
 
