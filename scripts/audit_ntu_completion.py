@@ -51,7 +51,7 @@ def audit(root: Path = ROOT) -> tuple[list[dict], dict]:
     provenance = json.loads((ntu / "list_verification.json").read_text())
     home = json.loads((ntu / "home_rules.json").read_text())
     identifiers = [p["source_url"].rsplit("/", 1)[-1] for p in partners]
-    if len(partners) != 288 or len(set(identifiers)) != 288 or set(identifiers) != set(ledger):
+    if len(partners) != 289 or len(set(identifiers)) != 289 or set(identifiers) != set(ledger):
         raise ValueError("NTU denominator or school join changed; inspect before continuing")
     result = []
     for partner in partners:

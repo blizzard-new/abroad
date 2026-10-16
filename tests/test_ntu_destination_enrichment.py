@@ -161,7 +161,7 @@ def test_ntu_public_api_serves_photos_locations_and_life_without_network(tmp_pat
         response = client.get("/student-dashboard", params={"school": "NTU"})
         assert response.status_code == 200
         partners = response.json()["partner_universities"]
-        assert len(partners) == 288
+        assert len(partners) == 289
         assert sum(p["image_status"] == "verified" for p in partners) == 285
         completion = json.loads(Path("sources/ntu/completion-2026-10-11.json").read_text())
         reviewed = {(r["school_name"], r["country"]): r["photo"] for r in completion["schools"] if r.get("photo")}

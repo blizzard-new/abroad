@@ -20,7 +20,7 @@ def test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh(page
     page.locator('[data-home-school="國立臺灣大學"]').click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
-    wait_until(page, "state.dashboard?.school_name === '國立臺灣大學' && state.dashboard.partner_universities.length === 288")
+    wait_until(page, "state.dashboard?.school_name === '國立臺灣大學' && state.dashboard.partner_universities.length === 289")
     assert page.evaluate("state.dashboard.partner_universities.filter(p => p.location?.geocode_status === 'verified').length") == 285
     assert page.evaluate("state.dashboard.partner_universities.filter(p => p.image_status === 'verified').length") == 285
     # Exercise the actual globe with local vendor/data assets.

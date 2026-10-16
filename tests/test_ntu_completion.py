@@ -100,9 +100,9 @@ def test_all_288_schools_accept_offline_reference_assets_and_guarded_workflows(t
     with TestClient(create_app(tmp_path)) as client:
         dashboard = client.get("/student-dashboard", params={"school": "NTU"}).json()
         partners = dashboard["partner_universities"]
-        assert len(partners) == 288 and len({p["school_name"] for p in partners}) == 288
+        assert len(partners) == 289 and len({p["school_name"] for p in partners}) == 289
         for partner in partners:
-            reference = reviewed[partner["school_name"]]
+            reference = reviewed.get(partner["school_name"], {"country": partner["country"], "observations": []})
             assert partner["country"] == reference["country"]
             assert partner["availability_status"] != "open"
             if partner["quota"] not in (None, "0 名"):

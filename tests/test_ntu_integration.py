@@ -59,16 +59,16 @@ def test_ntu_gpa_or_rank_and_graduate_exception(degree, gpa, rank, status):
 
 def test_bundle_does_not_promote_contract_or_historical_quotas(tmp_path):
     partners = fetch_ntu_partner_universities()
-    assert len(partners) == 288
-    assert len({partner.source_url for partner in partners}) == 288
-    assert len({school_identity_key(partner.school_name) for partner in partners}) == 288
-    assert sum(partner.quota is None for partner in partners) == 261
+    assert len(partners) == 289
+    assert len({partner.source_url for partner in partners}) == 289
+    assert len({school_identity_key(partner.school_name) for partner in partners}) == 289
+    assert sum(partner.quota is None for partner in partners) == 262
     assert sum(partner.quota == "0 名" for partner in partners) == 7
     assert all(partner.availability_status != "open" for partner in partners)
     assert all(not partner.study_period or "名" not in partner.study_period for partner in partners)
     workflows = [row for row in storage.load_bundled_application_workflows() if row.home_university == NTU.school_name]
     destinations = [row for row in storage.load_destination_profiles(tmp_path, include_bundled_baseline=True) if row.home_university == NTU.school_name]
-    assert len(workflows) == len(destinations) == 288
+    assert len(workflows) == len(destinations) == 289
     assert all(row.applicability_status == "needs_confirmation" and row.published_at is None for row in workflows)
     assert all(not step.deadline_reminder_eligible for row in workflows for step in row.steps)
     assert storage.load_application_workflows(tmp_path) == []
@@ -99,10 +99,10 @@ def test_ntu_catalog_api_works_offline_and_keeps_pending_visible(monkeypatch, tm
     dashboard = client.get("/student-dashboard", params={"school": "台大"})
     assert dashboard.status_code == 200
     assert dashboard.json()["school_name"] == NTU.school_name
-    assert len(dashboard.json()["partner_universities"]) == 288
+    assert len(dashboard.json()["partner_universities"]) == 289
     coverage = client.get("/coverage", params={"school": "NTU"}).json()
-    assert coverage["total_partner_schools"] == 288
-    assert coverage["workflow_school_count"] == coverage["destination_profile_count"] == 288
+    assert coverage["total_partner_schools"] == 289
+    assert coverage["workflow_school_count"] == coverage["destination_profile_count"] == 289
     assert all(row["workflow_status"] == "official_partial" for row in coverage["partners"])
     partner = dashboard.json()["partner_universities"][0]
     detail = client.get("/destination-profile", params={"school": partner["school_name"], "home_school": "NTU"})
