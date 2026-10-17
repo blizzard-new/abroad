@@ -221,6 +221,8 @@ def test_application_document_contract_keeps_official_forms_public_and_gates_gen
     assert "403" in paths["/application-center/manifest"]["post"]["responses"]
     assert "401" in paths["/application-center/pdf"]["post"]["responses"]
     assert "403" in paths["/application-center/pdf"]["post"]["responses"]
+    assert "401" in paths["/application-center/docx"]["post"]["responses"]
+    assert "403" in paths["/application-center/docx"]["post"]["responses"]
 
 
 def test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused(

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/static/design-system.css?v=20260716-platform-12" />
     <link rel="stylesheet" href="/static/platform.css?v=20261013-school-picker-1" />
     <link rel="stylesheet" href="/static/react-aria-school-picker.css?v=20261016-lattice-1" />
-    <link rel="stylesheet" href="/static/product-v2.css?v=20261015-redesign-1" />
+    <link rel="stylesheet" href="/static/product-v2.css?v=20261017-writing-guide-1" />
     <link rel="stylesheet" href="/static/icon-motion.css?v=20260820-icon-motion-1" />
     <link rel="stylesheet" href="/static/mascot.css?v=20261015-redesign-1" />
     <link rel="stylesheet" href="/static/advisor-mascot.css?v=20261015-redesign-1" />
@@ -1242,11 +1242,12 @@
 
               <aside class="application-packet-panel glass-panel" aria-labelledby="application-packet-title">
                 <div class="packet-panel-heading"><span class="packet-panel-icon"><i data-lucide="files" aria-hidden="true"></i></span><div><span class="section-kicker">整理與匯出</span><h3 id="application-packet-title">我的列印包</h3></div><span id="application-packet-total" class="packet-total">0 份</span></div>
-                <p class="packet-panel-description">選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。</p>
+                <p class="packet-panel-description">選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF，或匯出可自行編修的 Word 檔。</p>
                 <div id="application-packet-progress" class="packet-progress" role="status"></div>
                 <div id="application-packet-list" class="application-packet-list"></div>
                 <div class="packet-panel-footer"><div id="application-packet-status" class="application-packet-status" role="status"></div>
-                <button id="download-application-packet" type="button" class="primary-button full-width"><i data-lucide="file-down" aria-hidden="true"></i><span>匯出列印包 PDF</span></button></div>
+                <button id="download-application-packet" type="button" class="primary-button full-width"><i data-lucide="file-down" aria-hidden="true"></i><span>匯出列印包 PDF</span></button>
+                <button id="download-application-docx" type="button" class="secondary-button full-width"><i data-lucide="file-text" aria-hidden="true"></i><span>匯出 Word（每份文件一個檔）</span></button></div>
                 <details class="application-compact-help"><summary><span><i data-lucide="pen-line" aria-hidden="true"></i>列印提醒</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><p>親簽與核章處會保留空白。</p></details>
               </aside>
             </div>
@@ -1330,12 +1331,14 @@
               <form id="application-document-form" class="application-document-form" novalidate>
                 <div id="application-autofill-status" class="application-autofill-status" role="status" aria-live="polite" hidden></div>
                 <div id="application-draft-sync-status" class="application-draft-sync-status" role="status" aria-live="polite"></div>
+                <section id="application-writing-rules" class="application-writing-rules" aria-labelledby="application-writing-rules-title" hidden></section>
                 <div id="application-document-fields" class="application-document-fields"></div>
                 <section id="application-review-preview" class="application-review-preview" aria-labelledby="application-review-preview-title" aria-live="polite"></section>
                 <div id="application-document-form-status" class="form-status" role="status" aria-live="polite"></div>
-                <p class="application-form-status-boundary">填完並核對後可下載草稿；下載與列印不代表已送件、校方受理或錄取。</p>
+                <p class="application-form-status-boundary">填完並核對後可下載 PDF 或 Word 草稿；下載、列印與修改都不代表已送件、校方受理或錄取。</p>
                 <div class="application-document-actions">
                   <button type="submit" class="secondary-button"><i data-lucide="save" aria-hidden="true"></i><span>儲存</span></button>
+                  <button id="download-single-application-docx" type="button" class="secondary-button"><i data-lucide="file-text" aria-hidden="true"></i><span>下載 Word</span></button>
                   <button id="download-single-application-document" type="button" class="primary-button"><i data-lucide="file-down" aria-hidden="true"></i><span>下載 PDF</span></button>
                 </div>
               </form>
@@ -1517,7 +1520,7 @@
     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
     <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
     <script src="/static/react-aria-school-picker.js?v=20261016-lattice-1" defer></script>
-    <script src="/static/app.js?v=20261017-ntu-reference-1" defer></script>
+    <script src="/static/app.js?v=20261017-writing-guide-1" defer></script>
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261016-globe-5" defer></script>
     <script src="/static/platform-home.js?v=20261016-marquee-3" defer></script>

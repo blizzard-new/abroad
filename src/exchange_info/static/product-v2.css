@@ -8008,66 +8008,304 @@ h2[tabindex="-1"]:focus {
 .application-field-heading {
   display: flex;
   min-height: 44px;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  gap: 4px 10px;
 }
 
 .application-field-heading > label {
+  flex: 1 1 auto;
   color: var(--ink-soft);
   cursor: pointer;
 }
 
-.application-field-help {
-  position: relative;
-  flex: 0 0 44px;
-}
-
-.application-field-help > summary {
-  display: grid;
-  width: 44px;
-  height: 44px;
-  place-items: center;
-  border-radius: 50%;
+.application-field-counter-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 2px 8px;
   color: var(--ink-faint);
-  cursor: pointer;
-  list-style: none;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
 }
 
-.application-field-help > summary::-webkit-details-marker,
-.application-compact-help > summary::-webkit-details-marker {
-  display: none;
+.application-field-counter strong {
+  color: var(--ink-soft);
+  font-weight: 700;
 }
 
-.application-field-help > summary:hover,
-.application-field-help[open] > summary {
+.application-field-counter.is-near,
+.application-field-counter.is-near strong {
+  color: var(--amber);
+}
+
+.application-field-counter.is-full,
+.application-field-counter.is-full strong {
+  color: var(--red);
+}
+
+.application-field-counter-hint.is-met {
+  color: var(--green);
+  font-weight: 650;
+}
+
+.application-field-help {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
   color: var(--blue);
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.application-field-help:hover,
+.application-field-help[aria-expanded="true"] {
   background: var(--blue-soft);
 }
 
-.application-field-help > summary svg {
+.application-field-help svg {
   width: 18px;
   height: 18px;
 }
 
-.application-field-help > p {
-  position: absolute;
-  z-index: 8;
-  top: calc(100% + 4px);
-  right: 0;
-  width: min(280px, calc(100vw - 64px));
-  margin: 0;
-  padding: 11px 12px;
-  border: 1px solid var(--line-strong);
+.application-field-guide {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 10px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--blue) 28%, var(--line));
   border-radius: var(--radius);
   color: var(--ink-soft);
-  background: color-mix(in srgb, var(--glass-strong) 94%, white);
-  box-shadow: var(--shadow-md);
-  font-size: 13px;
-  font-weight: 520;
-  line-height: 1.55;
-  backdrop-filter: blur(20px) saturate(145%);
-  -webkit-backdrop-filter: blur(20px) saturate(145%);
+  background: color-mix(in srgb, var(--blue-soft) 70%, transparent);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.application-field-guide[hidden] {
+  display: none;
+}
+
+.application-field-guide p,
+.application-field-guide h4,
+.application-field-guide ul,
+.application-field-guide ol,
+.application-field-guide blockquote {
+  margin: 0;
+}
+
+.application-field-guide-summary {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.application-field-guide h4 {
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.application-field-guide ul,
+.application-field-guide ol {
+  padding-left: 1.3em;
+}
+
+.application-field-guide-limits {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.application-field-guide-limits > div {
+  display: grid;
+  grid-template-columns: 5.5em minmax(0, 1fr);
+  gap: 8px;
+}
+
+.application-field-guide-limits dt {
+  color: var(--ink-faint);
+  font-weight: 650;
+}
+
+.application-field-guide-limits dd {
+  margin: 0;
+}
+
+.application-field-guide-example blockquote {
+  padding: 8px 12px;
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+
+.application-field-guide-source {
+  color: var(--ink-faint);
+  font-size: 12px;
+}
+
+.application-writing-rules {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 16px 18px;
+  border: 1px solid color-mix(in srgb, var(--amber) 38%, var(--line));
+  border-radius: var(--radius);
+  color: var(--ink-soft);
+  background: var(--amber-soft);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.application-writing-rules[hidden] {
+  display: none;
+}
+
+.application-writing-rules.is-unverified {
+  border-color: color-mix(in srgb, var(--blue) 28%, var(--line));
+  background: var(--blue-soft);
+}
+
+.application-writing-rules.is-unverified .application-writing-rules-heading svg {
+  color: var(--blue);
+}
+
+.application-writing-rules.is-unverified ul {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.application-writing-rules h3,
+.application-writing-rules p,
+.application-writing-rules ul {
+  margin: 0;
+}
+
+.application-writing-rules ul {
+  padding-left: 1.3em;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.application-writing-rules-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.application-writing-rules-heading svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-top: 2px;
+  color: var(--amber);
+}
+
+.application-writing-rules-heading h3 {
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.application-writing-rules-heading p,
+.application-writing-total small {
+  color: var(--ink-faint);
+  font-size: 12px;
+}
+
+.application-writing-total {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+}
+
+.application-writing-total-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.application-writing-total-line strong {
+  color: var(--ink);
+  font-size: 22px;
+}
+
+.application-writing-bar {
+  display: block;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--line);
+}
+
+.application-writing-bar > span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ink-faint);
+  transition: width 0.2s ease;
+}
+
+.application-writing-total.is-ok .application-writing-bar > span {
+  background: var(--green);
+}
+
+.application-writing-total.is-short .application-writing-bar > span {
+  background: var(--amber);
+}
+
+.application-writing-total.is-over .application-writing-bar > span {
+  background: var(--red);
+}
+
+.application-writing-total [data-writing-message] {
+  font-weight: 650;
+}
+
+.application-writing-total.is-ok [data-writing-message] {
+  color: var(--green);
+}
+
+.application-writing-total.is-short [data-writing-message] {
+  color: var(--amber);
+}
+
+.application-writing-total.is-over [data-writing-message] {
+  color: var(--red);
+}
+
+.application-writing-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  justify-self: start;
+  color: var(--blue);
+  font-size: 12.5px;
+  font-weight: 650;
+}
+
+.application-writing-source svg {
+  width: 14px;
+  height: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .application-writing-bar > span {
+    transition: none;
+  }
 }
 
 .application-document-field.is-sensitive .application-field-heading > label::after {

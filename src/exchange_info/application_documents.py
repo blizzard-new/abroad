@@ -10,13 +10,17 @@ import os
 import re
 import shutil
 import tempfile
+import zipfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Literal
 
 from docx import Document
-from docx.shared import Inches
+from docx.enum.table import WD_ROW_HEIGHT_RULE
+from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
+from docx.shared import Inches, Mm, Pt, RGBColor
 from pypdf import PdfReader, PdfWriter
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
@@ -57,6 +61,7 @@ from .models import (
     UniversityApplicationWorkflow,
 )
 from .application_rules import select_application_workflow
+from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
 from .university_registry import CYCU, FCU, FJU, NTNU, NTPU, NTU, NTUST, NCU, SCU, YZU, require_university, resolve_university
@@ -1254,6 +1259,14 @@ def _fcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
 
 
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
+    university_id = require_university(school_name).id
+    return [
+        apply_writing_guidance(university_id, template)
+        for template in _school_templates(school_name)
+    ]
+
+
+def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
     if university.id == "ccu":
         from .ccu_application_documents import ccu_application_templates
@@ -2302,12 +2315,13 @@ def _official_template_pdf(
         return pdf_path.read_bytes()
 
 
-def generate_application_packet_pdf(
+def _downloadable_manifest(
     request: ApplicationPacketRequest,
     *,
-    raw_files_dir: Path,
     review_key: bytes | None = None,
-) -> tuple[bytes, ApplicationPacketManifest]:
+) -> ApplicationPacketManifest:
+    """Build the manifest and refuse any export the student has not finished and reviewed."""
+
     manifest = build_packet_manifest(request, review_key=review_key)
     if not manifest.items:
         raise ValueError("請至少選擇一份要產生的文件。")
@@ -2331,6 +2345,16 @@ def generate_application_packet_pdf(
             "仍有文件尚未完成目前內容的「我已核對」，或核對後資料已變更："
             + "、".join(unreviewed)
         )
+    return manifest
+
+
+def generate_application_packet_pdf(
+    request: ApplicationPacketRequest,
+    *,
+    raw_files_dir: Path,
+    review_key: bytes | None = None,
+) -> tuple[bytes, ApplicationPacketManifest]:
+    manifest = _downloadable_manifest(request, review_key=review_key)
     applicable = {template.id: template for template in templates_for_context(request.context)}
     writer = PdfWriter()
     # Keep every reader alive until write(). PdfWriter tracks cloned objects by
@@ -2364,3 +2388,240 @@ def generate_application_packet_pdf(
     output = io.BytesIO()
     writer.write(output)
     return output.getvalue(), manifest
+
+
+_DOCX_CJK_FONT = "Microsoft JhengHei"
+_DOCX_LATIN_FONT = "Calibri"
+_DOCX_MEDIA_TYPE = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+
+
+@dataclass(frozen=True)
+class ApplicationWordPacket:
+    """Editable export: one .docx for a single document, a .zip of .docx files otherwise."""
+
+    content: bytes
+    extension: Literal["docx", "zip"]
+    media_type: str
+    manifest: ApplicationPacketManifest
+    file_names: list[str]
+
+
+def _docx_run(
+    paragraph: Any,
+    text: str,
+    *,
+    bold: bool = False,
+    size: float = 10.5,
+    color: str | None = None,
+) -> Any:
+    run = paragraph.add_run(text)
+    run.bold = bold
+    run.font.size = Pt(size)
+    run.font.name = _DOCX_LATIN_FONT
+    run._element.rPr.rFonts.set(qn("w:eastAsia"), _DOCX_CJK_FONT)
+    if color:
+        run.font.color.rgb = RGBColor.from_string(color)
+    return run
+
+
+def _docx_text(paragraph: Any, text: str, **style: Any) -> None:
+    lines = str(text).splitlines() or [""]
+    for index, line in enumerate(lines):
+        run = _docx_run(paragraph, line, **style)
+        if index < len(lines) - 1:
+            run.add_break()
+
+
+def _docx_paragraph(document: Any, text: str, *, space_after: float = 4, **style: Any) -> Any:
+    paragraph = document.add_paragraph()
+    paragraph.paragraph_format.space_after = Pt(space_after)
+    _docx_text(paragraph, text, **style)
+    return paragraph
+
+
+def _docx_cell(cell: Any, text: str, **style: Any) -> None:
+    paragraph = cell.paragraphs[0]
+    paragraph.paragraph_format.space_before = Pt(3)
+    paragraph.paragraph_format.space_after = Pt(3)
+    _docx_text(paragraph, text, **style)
+
+
+def _docx_two_column_table(document: Any, left: float, right: float) -> Any:
+    table = document.add_table(rows=0, cols=2)
+    table.style = "Table Grid"
+    table.autofit = False
+    table.columns[0].width, table.columns[1].width = Mm(left), Mm(right)
+    return table
+
+
+def _docx_shade(cell: Any, fill: str) -> None:
+    shading = OxmlElement("w:shd")
+    shading.set(qn("w:val"), "clear")
+    shading.set(qn("w:color"), "auto")
+    shading.set(qn("w:fill"), fill)
+    cell._tc.get_or_add_tcPr().append(shading)
+
+
+def _new_docx(title: str) -> Any:
+    document = Document()
+    section = document.sections[0]
+    section.page_width, section.page_height = Mm(210), Mm(297)
+    section.left_margin = section.right_margin = Mm(18)
+    section.top_margin = section.bottom_margin = Mm(18)
+    normal = document.styles["Normal"]
+    normal.font.name = _DOCX_LATIN_FONT
+    normal.font.size = Pt(10.5)
+    normal.element.rPr.rFonts.set(qn("w:eastAsia"), _DOCX_CJK_FONT)
+    document.core_properties.title = title
+    document.core_properties.author = "台灣大學生交換指南"
+    document.core_properties.subject = "待學生核對、列印、簽名與送件的申請文件草稿"
+    return document
+
+
+def _generic_template_docx(
+    template: ApplicationDocumentTemplate,
+    request: ApplicationPacketRequest,
+    copies: int,
+) -> bytes:
+    answers = request.answers.get(template.id, {})
+    document = _new_docx(template.title)
+    _docx_paragraph(document, template.title, bold=True, size=20, color="17212B", space_after=2)
+    _docx_paragraph(
+        document,
+        f"預計列印 {copies} 份 · {template.paper_size}",
+        size=8.5,
+        color="3F4B57",
+        space_after=8,
+    )
+    if not template.official_layout:
+        _docx_paragraph(document, "資料整理版", bold=True, size=13, color="0A73C9", space_after=2)
+        _docx_paragraph(
+            document,
+            "此頁依公開要求整理填寫資料；若校方另提供正式表格，請將本頁內容轉入最新版正式表格。",
+            size=8.5,
+            color="3F4B57",
+            space_after=8,
+        )
+    table = _docx_two_column_table(document, 45, 125)
+    for field in template.fields:
+        value = answer_for_field(field, request.profile, answers)
+        label_cell, value_cell = table.add_row().cells
+        label_cell.width, value_cell.width = Mm(45), Mm(125)
+        _docx_shade(label_cell, "F3F7FA")
+        _docx_cell(label_cell, field.label, bold=True, size=9.5, color="263442")
+        _docx_cell(value_cell, _format_value(value))
+
+    pictures: list[tuple[str, bytes]] = []
+    pdf_attachments: list[_AttachmentPayload] = []
+    for field in _attachment_fields_in_order(template):
+        payloads, _ = _attachment_payloads(field, answer_for_field(field, request.profile, answers))
+        for payload in payloads:
+            if payload.media_type == "application/pdf":
+                pdf_attachments.append(payload)
+            else:
+                pictures.append((payload.file_name, payload.raw))
+    if pictures:
+        _docx_paragraph(document, "照片附件", bold=True, size=13, color="0A73C9", space_after=4)
+        for name, raw in pictures[:8]:
+            try:
+                document.add_picture(io.BytesIO(raw), width=Mm(70))
+            except Exception:
+                continue
+            _docx_paragraph(document, name, size=8.5, color="3F4B57", space_after=6)
+    if pdf_attachments:
+        _docx_paragraph(document, "請另行附上的 PDF 附件", bold=True, size=13, color="0A73C9", space_after=2)
+        _docx_paragraph(
+            document,
+            "Word 檔無法內嵌 PDF，列印時請依下列順序把這些檔案接在本文件後面。",
+            size=8.5,
+            color="3F4B57",
+        )
+        for index, payload in enumerate(pdf_attachments, start=1):
+            _docx_paragraph(
+                document,
+                f"{index}. {payload.field_label}：{payload.file_name}（{payload.page_count} 頁）",
+                size=9.5,
+                space_after=2,
+            )
+    if template.signatures or template.stamps:
+        _docx_paragraph(document, "列印後完成", bold=True, size=13, color="0A73C9", space_after=4)
+        actions = _docx_two_column_table(document, 65, 105)
+        for kind, labels in (("簽名", template.signatures), ("核章", template.stamps)):
+            for label in labels:
+                row = actions.add_row()
+                row.height, row.height_rule = Mm(18), WD_ROW_HEIGHT_RULE.AT_LEAST
+                row.cells[0].width, row.cells[1].width = Mm(65), Mm(105)
+                _docx_cell(row.cells[0], f"{kind}｜{label}", bold=True, size=9.5, color="263442")
+    _docx_paragraph(document, "", space_after=2)
+    _docx_paragraph(document, f"官方來源：{template.source_url}", size=8.5, color="3F4B57", space_after=2)
+    _docx_paragraph(
+        document,
+        f"範本版本：{template.version} · 最後檢查：{template.source_checked_at.astimezone().strftime('%Y/%m/%d')}",
+        size=8.5,
+        color="3F4B57",
+        space_after=2,
+    )
+    _docx_paragraph(
+        document,
+        "下載、列印或修改這份文件不代表已送件、校方受理或錄取；送件前請再核對官方來源。",
+        size=8.5,
+        color="3F4B57",
+    )
+    output = io.BytesIO()
+    document.save(output)
+    return output.getvalue()
+
+
+def _official_template_docx(
+    template: ApplicationDocumentTemplate,
+    request: ApplicationPacketRequest,
+    raw_files_dir: Path,
+) -> bytes | None:
+    if not template.official_file_name:
+        return None
+    source = raw_files_dir / template.official_file_name
+    if not source.exists():
+        return None
+    with tempfile.TemporaryDirectory(prefix="exchange-form-") as directory:
+        filled = Path(directory) / "filled.docx"
+        _fill_official_docx(template, request, source, filled)
+        return filled.read_bytes()
+
+
+def _word_file_stem(value: str) -> str:
+    return re.sub(r"[^0-9A-Za-z一-鿿_-]+", "-", value).strip("-") or "文件"
+
+
+def generate_application_packet_docx(
+    request: ApplicationPacketRequest,
+    *,
+    raw_files_dir: Path,
+    review_key: bytes | None = None,
+) -> ApplicationWordPacket:
+    """Editable Word export with the same completeness and review gates as the PDF packet."""
+
+    manifest = _downloadable_manifest(request, review_key=review_key)
+    applicable = {template.id: template for template in templates_for_context(request.context)}
+    documents: list[tuple[str, bytes]] = []
+    for index, item in enumerate(manifest.items, start=1):
+        template = applicable[item.template_id]
+        content = (
+            _official_template_docx(template, request, raw_files_dir)
+            if template.official_layout
+            else None
+        ) or _generic_template_docx(template, request, item.copies)
+        documents.append((f"{index:02d}-{_word_file_stem(item.title)}-列印{item.copies}份.docx", content))
+    if len(documents) == 1:
+        name, content = documents[0]
+        return ApplicationWordPacket(content, "docx", _DOCX_MEDIA_TYPE, manifest, [name])
+    archive = io.BytesIO()
+    with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
+        for name, content in documents:
+            bundle.writestr(name, content)
+    return ApplicationWordPacket(
+        archive.getvalue(),
+        "zip",
+        "application/zip",
+        manifest,
+        [name for name, _ in documents],
+    )

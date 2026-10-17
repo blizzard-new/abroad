@@ -1559,8 +1559,38 @@ def test_application_pages_keep_primary_actions_visible_and_move_explanations_in
     assert 'class="application-field-help"' in script
     assert '<div><dt>版本</dt>' not in script
     assert 'badge.textContent = template.official_layout ? "官方格式" : "申請整理"' in script
-    assert ".application-field-help > summary" in styles
+    assert ".application-field-help" in styles
     assert ".application-compact-help > summary" in styles
+
+
+def test_application_fields_show_live_counts_expandable_guidance_and_a_word_download() -> None:
+    html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+    script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+
+    assert 'id="application-writing-rules"' in html
+    assert "applicationFieldCounterMarkup" in script
+    assert "data-field-counter" in script
+    assert "data-field-guide-toggle" in script
+    assert 'aria-expanded="false"' in script
+    assert "toggleApplicationFieldGuide" in script
+    # Advice and school rules stay visibly separate so a suggestion is never read as a rule.
+    assert "系統欄位上限，不一定等於學校規定" in script
+    assert "不是學校規定" in script
+    assert "學校對這份文件的規定" in script
+    assert "updateApplicationWritingTotal" in script
+    assert ".application-field-counter" in styles
+    assert ".application-field-guide" in styles
+    assert ".application-writing-rules" in styles
+
+    assert 'id="download-single-application-docx"' in html
+    assert 'id="download-application-docx"' in html
+    assert 'fetch("/application-center/docx"' in script
+    assert "generateApplicationDocx" in script
+    assert "syncApplicationDownloadButtons" in script
+    # Word is an editable draft: it never becomes the PDF vault/check candidate.
+    docx_block = script.split("async function generateApplicationDocx", 1)[1].split("function preferredBudgetSchool", 1)[0]
+    assert "generatedVaultCandidate" not in docx_block
 
 
 def test_registration_uses_email_first_and_the_school_is_shown_and_locked_instead_of_verified() -> None:

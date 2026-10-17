@@ -3,7 +3,10 @@ import hashlib
 from datetime import timedelta
 from io import BytesIO
 from pathlib import Path
+from urllib.parse import unquote
+from zipfile import ZipFile
 
+from docx import Document as WordDocument
 from fastapi.testclient import TestClient
 from PIL import Image as PILImage
 from pypdf import PdfReader, PdfWriter
@@ -554,3 +557,150 @@ def test_uploaded_pdf_attachments_follow_the_manifest_order(tmp_path) -> None:
     assert response.headers["x-application-packet-attachments"] == "2"
     pages = PdfReader(BytesIO(response.content)).pages
     assert [float(page.mediabox.width) for page in pages[-2:]] == [72.0, 144.0]
+
+
+def _word_text(content: bytes) -> str:
+    document = WordDocument(BytesIO(content))
+    parts = [paragraph.text for paragraph in document.paragraphs]
+    for table in document.tables:
+        for row in table.rows:
+            parts.extend(cell.text for cell in row.cells)
+    return "\n".join(parts)
+
+
+def test_application_center_generates_an_editable_word_document(tmp_path) -> None:
+    data_dir = tmp_path / "data"
+    ensure_data_dirs(data_dir)
+    client = _authenticated_client(data_dir)
+    files_before = {path.relative_to(data_dir) for path in data_dir.rglob("*") if path.is_file()}
+
+    payload = _study_plan_payload(copies=2)
+    _review_current_content(client, payload)
+    response = client.post("/application-center/docx", json=payload)
+
+    assert response.status_code == 200
+    assert response.headers["content-type"] == (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
+    assert response.headers["cache-control"] == "private, no-store, max-age=0"
+    assert response.headers["x-application-storage"] == "request-only"
+    assert response.headers["x-application-packet-documents"] == "1"
+    assert response.headers["x-application-packet-copies"] == "2"
+    disposition = response.headers["content-disposition"]
+    assert disposition.startswith("attachment; filename=exchange-application-documents.docx;")
+    assert unquote(disposition.split("filename*=UTF-8''", 1)[1]).endswith(".docx")
+    assert response.content.startswith(b"PK")
+    text = _word_text(response.content)
+    assert "希望透過交換培養跨文化合作能力。" in text
+    assert "王小明" in text
+    assert "預計列印 2 份" in text
+    assert "不代表已送件" in text
+    assert {path.relative_to(data_dir) for path in data_dir.rglob("*") if path.is_file()} == files_before
+
+
+def test_word_export_keeps_the_same_account_completeness_and_review_gates_as_pdf(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("EXCHANGE_PRODUCT_RELEASE_MODE", "public")
+    payload = _study_plan_payload()
+    guest = TestClient(create_app(tmp_path / "guest"))
+    assert guest.post("/application-center/docx", json=payload).status_code == 401
+    free = _authenticated_client(tmp_path / "free")
+    assert free.post("/application-center/docx", json=payload).status_code == 403
+    monkeypatch.delenv("EXCHANGE_PRODUCT_RELEASE_MODE")
+
+    client = _authenticated_client(tmp_path / "subscription", product_tier=ProductAccessTier.SUBSCRIPTION)
+    unreviewed = client.post("/application-center/docx", json=payload)
+    assert unreviewed.status_code == 422
+    assert "目前內容的「我已核對」" in unreviewed.json()["detail"]
+
+    incomplete = _study_plan_payload()
+    incomplete["answers"]["study-plan"].pop("motivation")  # type: ignore[index]
+    _review_current_content(client, incomplete)
+    missing = client.post("/application-center/docx", json=incomplete)
+    assert missing.status_code == 422
+    assert "必填欄位未完成" in missing.json()["detail"]
+
+    reviewed = _study_plan_payload()
+    _review_current_content(client, reviewed)
+    reviewed["answers"]["study-plan"]["motivation"] = "核對後才修改"  # type: ignore[index]
+    assert client.post("/application-center/docx", json=reviewed).status_code == 422
+
+    empty = _study_plan_payload()
+    empty["selections"] = []
+    assert client.post("/application-center/docx", json=empty).status_code == 422
+
+
+def test_word_export_of_several_documents_is_a_zip_with_one_docx_each(tmp_path) -> None:
+    client = _authenticated_client(tmp_path / "data")
+    payload = _study_plan_payload(copies=1)
+    payload["answers"]["return-report"] = {  # type: ignore[index]
+        "overseas_institution": "Lincoln University",
+        "study_period": "2026/09-2027/01",
+        "courses_summary": "修習三門專業課程。",
+        "life_summary": "適應當地生活。",
+        "reflection": "收穫很多。",
+    }
+    payload["selections"].append(  # type: ignore[union-attr]
+        {"template_id": "return-report", "copies": 3, "reviewed_version": "2026-07-16"}
+    )
+    _review_current_content(client, payload)
+
+    response = client.post("/application-center/docx", json=payload)
+
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "application/zip"
+    assert response.headers["x-application-packet-documents"] == "2"
+    assert response.headers["x-application-packet-copies"] == "4"
+    assert "filename=exchange-application-documents.zip" in response.headers["content-disposition"]
+    with ZipFile(BytesIO(response.content)) as bundle:
+        names = bundle.namelist()
+        assert len(names) == 2
+        assert names[0].startswith("01-") and names[0].endswith("-列印1份.docx")
+        assert names[1].startswith("02-") and names[1].endswith("-列印3份.docx")
+        assert "希望透過交換培養跨文化合作能力。" in _word_text(bundle.read(names[0]))
+        assert "修習三門專業課程。" in _word_text(bundle.read(names[1]))
+
+
+def test_word_export_embeds_images_and_lists_pdf_attachments_it_cannot_embed(tmp_path) -> None:
+    client = _authenticated_client(tmp_path / "data")
+    attachment = BytesIO()
+    attachment_writer = PdfWriter()
+    attachment_writer.add_blank_page(width=72, height=72)
+    attachment_writer.write(attachment)
+    pdf_data_url = "data:application/pdf;base64," + base64.b64encode(attachment.getvalue()).decode("ascii")
+    payload = {
+        "context": {"school_name": "長庚大學", "program_type": "dual_degree", "flags": []},
+        "profile": {
+            "student_name_zh": "王小明",
+            "student_id": "B1234567",
+            "college": "管理學院",
+            "department": "資訊管理學系",
+            "degree_level": "大學部",
+        },
+        "answers": {
+            "dual-enrollment": {
+                "overseas_institution": "Partner University",
+                "dual_degree_program": "Dual Degree Program",
+                "planned_start_date": "2026-09-01",
+                "planned_end_date": "2027-06-30",
+                "admission_notice": [
+                    {"name": "admission.pdf", "type": "application/pdf", "data_url": pdf_data_url},
+                    {"name": "scan.png", "type": "image/png", "data_url": _png_data_url()},
+                ],
+            }
+        },
+        "selections": [{"template_id": "dual-enrollment", "copies": 1, "reviewed_version": "2026-07-16"}],
+    }
+    _review_current_content(client, payload)
+
+    response = client.post("/application-center/docx", json=payload)
+
+    assert response.status_code == 200
+    assert response.headers["x-application-packet-attachments"] == "2"
+    document = WordDocument(BytesIO(response.content))
+    assert len(document.inline_shapes) == 1
+    text = _word_text(response.content)
+    assert "請另行附上的 PDF 附件" in text
+    assert "admission.pdf（1 頁）" in text
