@@ -45,6 +45,7 @@ def apply_openapi_contract_metadata(schema: dict[str, Any]) -> dict[str, Any]:
         ('/calendar-sync/events', 'put'): (401, 403),
         ('/application-center/manifest', 'post'): (401, 403),
         ('/application-center/pdf', 'post'): (401, 403),
+        ('/application-center/docx', 'post'): (401, 403),
         ('/document-check', 'post'): (401, 403, 422, 503),
         ('/ai/review-document', 'post'): (401, 403, 422, 503),
         ('/ai/chat', 'post'): (503,),

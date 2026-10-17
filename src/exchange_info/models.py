@@ -170,6 +170,34 @@ class ApplicationFieldType(str, Enum):
     FILES = "files"
 
 
+class ApplicationFieldGuidance(BaseModel):
+    """Plain-language help shown beside a form field so students know what to write."""
+
+    summary: str = Field(max_length=300)
+    tips: list[str] = Field(default_factory=list, max_length=6)
+    outline: list[str] = Field(default_factory=list, max_length=6)
+    example: str | None = Field(default=None, max_length=400)
+    format_note: str | None = Field(default=None, max_length=200)
+    # System writing advice only; a school's own limit lives in ApplicationWritingRules.
+    recommended_min_chars: int | None = Field(default=None, ge=1, le=12000)
+    recommended_max_chars: int | None = Field(default=None, ge=1, le=12000)
+
+
+class ApplicationWritingRules(BaseModel):
+    """School-published length and format rules for one document, with an optional total counter."""
+
+    rules: list[str] = Field(min_length=1, max_length=8)
+    min_chars: int | None = Field(default=None, ge=1, le=100000)
+    max_chars: int | None = Field(default=None, ge=1, le=100000)
+    count_field_ids: list[str] = Field(default_factory=list, max_length=12)
+    # Set when the school's count covers more than the fields this form can total.
+    count_note: str | None = Field(default=None, max_length=200)
+    # The official document the rules were checked against.
+    evidence: str | None = Field(default=None, max_length=200)
+    # False means no published rule has been checked for this school yet.
+    verified: bool = True
+
+
 class ApplicationFormField(BaseModel):
     id: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
     label: str
@@ -186,6 +214,7 @@ class ApplicationFormField(BaseModel):
     max_length: int | None = Field(default=None, ge=1, le=12000)
     min_files: int = Field(default=0, ge=0, le=12)
     max_files: int = Field(default=6, ge=1, le=12)
+    guidance: ApplicationFieldGuidance | None = None
 
 
 class ApplicationDocumentTemplate(BaseModel):
@@ -213,6 +242,7 @@ class ApplicationDocumentTemplate(BaseModel):
     )
     print_note: str | None = Field(default=None, max_length=500)
     attachment_field_order: list[str] = Field(default_factory=list, max_length=20)
+    writing_rules: ApplicationWritingRules | None = None
     source_url: str
     source_checked_at: datetime
     version: str

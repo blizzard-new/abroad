@@ -3148,6 +3148,16 @@
           "version": {
             "title": "Version",
             "type": "string"
+          },
+          "writing_rules": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationWritingRules"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -3162,6 +3172,87 @@
           "version"
         ],
         "title": "ApplicationDocumentTemplate",
+        "type": "object"
+      },
+      "ApplicationFieldGuidance": {
+        "description": "Plain-language help shown beside a form field so students know what to write.",
+        "properties": {
+          "example": {
+            "anyOf": [
+              {
+                "maxLength": 400,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Example"
+          },
+          "format_note": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Format Note"
+          },
+          "outline": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "title": "Outline",
+            "type": "array"
+          },
+          "recommended_max_chars": {
+            "anyOf": [
+              {
+                "maximum": 12000.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recommended Max Chars"
+          },
+          "recommended_min_chars": {
+            "anyOf": [
+              {
+                "maximum": 12000.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recommended Min Chars"
+          },
+          "summary": {
+            "maxLength": 300,
+            "title": "Summary",
+            "type": "string"
+          },
+          "tips": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "title": "Tips",
+            "type": "array"
+          }
+        },
+        "required": [
+          "summary"
+        ],
+        "title": "ApplicationFieldGuidance",
         "type": "object"
       },
       "ApplicationFieldPreviewItem": {
@@ -3494,6 +3585,16 @@
           "field_type": {
             "$ref": "#/components/schemas/ApplicationFieldType",
             "default": "text"
+          },
+          "guidance": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationFieldGuidance"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "help_text": {
             "anyOf": [
@@ -7892,6 +7993,88 @@
           "change_type"
         ],
         "title": "ApplicationWorkflowValueChange",
+        "type": "object"
+      },
+      "ApplicationWritingRules": {
+        "description": "School-published length and format rules for one document, with an optional total counter.",
+        "properties": {
+          "count_field_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 12,
+            "title": "Count Field Ids",
+            "type": "array"
+          },
+          "count_note": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Count Note"
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence"
+          },
+          "max_chars": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Chars"
+          },
+          "min_chars": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Chars"
+          },
+          "rules": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Rules",
+            "type": "array"
+          },
+          "verified": {
+            "default": true,
+            "title": "Verified",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "rules"
+        ],
+        "title": "ApplicationWritingRules",
         "type": "object"
       },
       "Attachment": {
@@ -21148,6 +21331,48 @@
           }
         },
         "summary": "Application Center Catalog"
+      }
+    },
+    "/application-center/docx": {
+      "post": {
+        "operationId": "application_center_docx_application_center_docx_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationPacketRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Application Center Docx"
       }
     },
     "/application-center/manifest": {

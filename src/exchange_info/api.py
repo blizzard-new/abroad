@@ -89,6 +89,7 @@ from .application_documents import (
     all_application_templates,
     build_application_document_catalog,
     build_packet_manifest,
+    generate_application_packet_docx,
     generate_application_packet_pdf,
     templates_for_context,
 )
@@ -3617,6 +3618,50 @@ def create_app(
                 "X-Application-Packet-Copies": str(manifest.total_printed_copies),
                 "X-Application-Packet-Attachments": str(sum(len(item.attachments) for item in manifest.items)),
                 "X-Application-Packet-Pages": str(len(PdfReader(BytesIO(pdf_bytes)).pages)),
+            },
+        )
+
+    @app.post("/application-center/docx")
+    async def application_center_docx(
+        payload: ApplicationPacketRequest,
+        request: Request,
+    ) -> Response:
+        account, _ = authenticated_account(request)
+        university_for(payload.context.school_name)
+        if not product_feature_enabled(account, ProductFeature.APPLICATION_DOCUMENT_GENERATION):
+            raise HTTPException(
+                status_code=403,
+                detail="申請文件產生為進階功能，請確認方案權限。",
+            )
+        try:
+            packet = await run_in_threadpool(
+                partial(
+                    generate_application_packet_docx,
+                    payload,
+                    raw_files_dir=resolved_data_dir / "raw_files",
+                )
+            )
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
+        target = re.sub(r"[^0-9A-Za-z\u4e00-\u9fff_-]+", "-", payload.context.target_school or "交換申請")
+        if packet.extension == "docx":
+            title = re.sub(r"[^0-9A-Za-z\u4e00-\u9fff_-]+", "-", packet.manifest.items[0].title)
+            filename = f"{target}-{title}.docx"
+        else:
+            filename = f"{target}-申請文件-Word.zip"
+        encoded = quote(filename)
+        return Response(
+            content=packet.content,
+            media_type=packet.media_type,
+            headers={
+                "Content-Disposition": f"attachment; filename=exchange-application-documents.{packet.extension}; filename*=UTF-8''{encoded}",
+                "Cache-Control": "no-store",
+                "Pragma": "no-cache",
+                "X-Content-Type-Options": "nosniff",
+                "X-Application-Storage": "request-only",
+                "X-Application-Packet-Documents": str(len(packet.manifest.items)),
+                "X-Application-Packet-Copies": str(packet.manifest.total_printed_copies),
+                "X-Application-Packet-Attachments": str(sum(len(item.attachments) for item in packet.manifest.items)),
             },
         )
 

@@ -500,8 +500,7 @@ function invalidateApplicationReview(templateId, { persist = true, render = true
   if (template && state.activeApplicationTemplateId === templateId) {
     const review = document.querySelector(`[data-application-review-template="${templateId}"]`);
     if (review) review.checked = false;
-    const download = $("#download-single-application-document");
-    if (download) download.disabled = true;
+    syncApplicationDownloadButtons(false);
     const next = $("#application-document-next-step");
     if (next) next.textContent = applicationDocumentNextStep(template);
     const status = $("#application-document-form-status");
@@ -6792,7 +6791,10 @@ function renderApplicationPacket({ refreshRows = true } = {}) {
           ? `${unreviewed.length} 份尚未完成核對`
         : `可產生 ${copies} 份`;
   }
-  if (button) button.disabled = !generationEnabled || !selectedTemplates.length || Boolean(incomplete.length) || Boolean(unreviewed.length) || state.applicationLoading;
+  const exportBlocked = !generationEnabled || !selectedTemplates.length || Boolean(incomplete.length) || Boolean(unreviewed.length) || state.applicationLoading;
+  if (button) button.disabled = exportBlocked;
+  const docxButton = $("#download-application-docx");
+  if (docxButton) docxButton.disabled = exportBlocked;
   initIcons();
 }
 
@@ -6997,11 +6999,9 @@ async function refreshApplicationReviewPreview(templateId, { showLoading = true 
     renderApplicationPacket();
     updateApplicationCenterSteps();
     if (state.activeApplicationTemplateId === template.id) {
-      const download = $("#download-single-application-document");
-      if (download) {
-        download.disabled = !applicationTemplateCompletion(template).ready
-          || !applicationTemplateReviewed(template);
-      }
+      syncApplicationDownloadButtons(
+        applicationTemplateCompletion(template).ready && applicationTemplateReviewed(template),
+      );
       const next = $("#application-document-next-step");
       if (next) next.textContent = applicationDocumentNextStep(template);
     }
@@ -7043,6 +7043,155 @@ async function refreshSelectedApplicationPreviews() {
   }
 }
 
+const APPLICATION_COUNTER_NEAR_LIMIT = 0.9;
+
+function applicationNumber(value) {
+  return Number(value || 0).toLocaleString("zh-TW");
+}
+
+// Matches how the browser enforces maxlength, so "N / limit" is exact.
+function applicationFieldCharCount(value) {
+  return String(value ?? "").length;
+}
+
+// School word limits count written characters, not blanks or line breaks.
+function applicationWrittenCount(value) {
+  return Array.from(String(value ?? "").replace(/\s+/g, "")).length;
+}
+
+function applicationFieldCounterMarkup(field) {
+  if (field.field_type !== "textarea" && !field.max_length) return "";
+  const guidance = field.guidance;
+  const limit = field.max_length ? ` / ${applicationNumber(field.max_length)}` : "";
+  const range = guidance?.recommended_max_chars
+    ? `<span class="application-field-counter-hint">建議 ${applicationNumber(guidance.recommended_min_chars)}–${applicationNumber(guidance.recommended_max_chars)} 字</span>`
+    : "";
+  return `<span class="application-field-counter-group"><span class="application-field-counter" data-field-counter="${escapeHtml(field.id)}"><strong>0</strong>${limit} 字</span>${range}</span>`;
+}
+
+function applicationFieldGuideMarkup(template, field, panelId) {
+  const guidance = field.guidance;
+  const summary = guidance?.summary || field.help_text;
+  if (!summary) return "";
+  const rules = template.writing_rules;
+  const countedBySchool = rules?.count_field_ids?.includes(field.id);
+  const limits = [];
+  if (field.max_length) limits.push(["字數上限", `${applicationNumber(field.max_length)} 字（系統欄位上限，不一定等於學校規定）`]);
+  if (guidance?.recommended_max_chars) {
+    limits.push(["建議字數", `${applicationNumber(guidance.recommended_min_chars)}–${applicationNumber(guidance.recommended_max_chars)} 字（系統給的寫作參考，不是學校規定）`]);
+  }
+  if (countedBySchool) limits.push(["學校規定", "整份文件的字數限制，會和其他欄位一起合計，請看上方「學校對這份文件的規定」。"]);
+  if (guidance?.format_note) limits.push(["格式", guidance.format_note]);
+  else if (field.placeholder && /每行/.test(field.placeholder)) limits.push(["格式", field.placeholder]);
+  const list = (title, items, tag = "ul") => items?.length
+    ? `<section><h4>${title}</h4><${tag}>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</${tag}></section>`
+    : "";
+  return `<div class="application-field-guide" id="${escapeHtml(panelId)}" hidden>
+    <p class="application-field-guide-summary">${escapeHtml(summary)}</p>
+    ${limits.length ? `<dl class="application-field-guide-limits">${limits.map(([label, value]) => `<div><dt>${label}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>` : ""}
+    ${list("怎麼寫", guidance?.tips)}
+    ${list("建議架構", guidance?.outline, "ol")}
+    ${guidance?.example ? `<section class="application-field-guide-example"><h4>示範寫法（請改寫成你自己的內容）</h4><blockquote>${escapeHtml(guidance.example).replace(/\n/g, "<br />")}</blockquote></section>` : ""}
+    <p class="application-field-guide-source">學校另有字數或格式規定時，以官方簡章與承辦單位通知為準。${template.source_url ? ` <a href="${escapeHtml(template.source_url)}" target="_blank" rel="noopener noreferrer">查看官方來源</a>` : ""}</p>
+  </div>`;
+}
+
+function toggleApplicationFieldGuide(button) {
+  const panel = document.getElementById(button.getAttribute("aria-controls") || "");
+  if (!panel) return;
+  const open = button.getAttribute("aria-expanded") !== "true";
+  button.setAttribute("aria-expanded", String(open));
+  panel.hidden = !open;
+}
+
+function applicationWritingTargetLabel(rules) {
+  if (rules.min_chars && rules.max_chars) return `${applicationNumber(rules.min_chars)}–${applicationNumber(rules.max_chars)} 字`;
+  if (rules.max_chars) return `最多 ${applicationNumber(rules.max_chars)} 字`;
+  return `至少 ${applicationNumber(rules.min_chars)} 字`;
+}
+
+function renderApplicationWritingRules(template) {
+  const container = $("#application-writing-rules");
+  if (!container) return;
+  const rules = template.writing_rules;
+  container.hidden = !rules;
+  if (!rules) {
+    container.innerHTML = "";
+    return;
+  }
+  const verified = rules.verified !== false;
+  container.classList.toggle("is-unverified", !verified);
+  const hasLimit = verified && Boolean(rules.min_chars || rules.max_chars) && rules.count_field_ids?.length;
+  const subtitle = verified
+    ? `查核依據：${rules.evidence || "學校官方公告"}。欄位旁的「建議字數」只是系統給的寫作參考。`
+    : "各校的字數與格式不同，這間學校的規定我們還沒有逐項查核。";
+  container.innerHTML = `
+    <div class="application-writing-rules-heading"><i data-lucide="${verified ? "ruler" : "circle-alert"}" aria-hidden="true"></i><div><h3 id="application-writing-rules-title">${verified ? "學校對這份文件的規定" : "這間學校的字數與格式規定尚未收錄"}</h3><p>${escapeHtml(subtitle)}</p></div></div>
+    <ul>${rules.rules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join("")}</ul>
+    ${hasLimit ? `<div id="application-writing-total" class="application-writing-total" role="status">
+      <div class="application-writing-total-line"><span><strong data-writing-total>0</strong> 字</span><small>整份合計 · 規定 ${applicationWritingTargetLabel(rules)}</small></div>
+      <span class="application-writing-bar" aria-hidden="true"><span></span></span>
+      <p data-writing-message></p>
+      <small>合計不含空白與換行，僅供參考；實際計算方式以學校規定為準。${rules.count_note ? escapeHtml(rules.count_note) : ""}</small>
+    </div>` : ""}
+    ${template.source_url ? `<a class="application-writing-source" href="${escapeHtml(template.source_url)}" target="_blank" rel="noopener noreferrer">查看官方來源<i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}`;
+}
+
+function updateApplicationWritingTotal(template) {
+  const box = $("#application-writing-total");
+  const rules = template?.writing_rules;
+  const form = $("#application-document-form");
+  if (!box || !rules || !form) return;
+  const total = rules.count_field_ids.reduce((sum, id) => sum + applicationWrittenCount(form.elements[id]?.value), 0);
+  const { min_chars: min, max_chars: max } = rules;
+  let tone = "";
+  let message = "還沒開始寫；下方各欄會自動合計。";
+  if (total) {
+    if (min && total < min) {
+      tone = "is-short";
+      message = `還差 ${applicationNumber(min - total)} 字才達到最低要求。`;
+    } else if (max && total > max) {
+      tone = "is-over";
+      message = `超過上限 ${applicationNumber(total - max)} 字，請縮減。`;
+    } else {
+      tone = "is-ok";
+      message = "目前在字數規定範圍內。";
+    }
+  }
+  box.className = `application-writing-total ${tone}`;
+  box.querySelector("[data-writing-total]").textContent = applicationNumber(total);
+  box.querySelector("[data-writing-message]").textContent = message;
+  const target = max || min;
+  box.querySelector(".application-writing-bar > span").style.width = `${Math.min(100, Math.round((total / target) * 100))}%`;
+}
+
+function updateApplicationFieldCounters(template) {
+  const form = $("#application-document-form");
+  if (!form || !template) return;
+  template.fields.forEach((field) => {
+    const counter = form.querySelector(`[data-field-counter="${CSS.escape(field.id)}"]`);
+    const input = form.elements[field.id];
+    if (!counter || !input) return;
+    const count = applicationFieldCharCount(input.value);
+    const limit = field.max_length || 0;
+    counter.querySelector("strong").textContent = applicationNumber(count);
+    counter.classList.toggle("is-full", Boolean(limit) && count >= limit);
+    counter.classList.toggle("is-near", Boolean(limit) && count < limit && count >= limit * APPLICATION_COUNTER_NEAR_LIMIT);
+    const guidance = field.guidance;
+    const met = Boolean(guidance?.recommended_max_chars)
+      && count >= guidance.recommended_min_chars && count <= guidance.recommended_max_chars;
+    counter.parentElement.querySelector(".application-field-counter-hint")?.classList.toggle("is-met", met);
+  });
+  updateApplicationWritingTotal(template);
+}
+
+function syncApplicationDownloadButtons(ready) {
+  ["#download-single-application-document", "#download-single-application-docx"].forEach((selector) => {
+    const button = $(selector);
+    if (button) button.disabled = !ready;
+  });
+}
+
 function renderApplicationFormPage(template) {
   if (!applicationDocumentGenerationEnabled()) {
     window.location.hash = "#application-center";
@@ -7061,12 +7210,14 @@ function renderApplicationFormPage(template) {
     fieldTree.innerHTML = template.fields.map((field) => {
       const inputId = `application-field-${field.id.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
       const showHeading = !["checkbox", "files"].includes(field.field_type);
-      const help = field.help_text && field.field_type !== "files"
-        ? `<details class="application-field-help"><summary aria-label="${escapeHtml(field.label)}填寫提示"><i data-lucide="circle-help" aria-hidden="true"></i></summary><p>${escapeHtml(field.help_text)}</p></details>`
+      const panelId = `application-guide-${inputId.replace(/^application-field-/, "")}`;
+      const guide = showHeading ? applicationFieldGuideMarkup(template, field, panelId) : "";
+      const help = guide
+        ? `<button type="button" class="application-field-help" aria-expanded="false" aria-controls="${escapeHtml(panelId)}" aria-label="${escapeHtml(field.label)}怎麼寫" data-field-guide-toggle><i data-lucide="circle-help" aria-hidden="true"></i><span>怎麼寫</span></button>`
         : "";
       return `
         <div class="application-document-field ${["textarea", "files"].includes(field.field_type) ? "is-wide" : ""} ${field.sensitive ? "is-sensitive" : ""}">
-          ${showHeading ? `<div class="application-field-heading"><label for="${escapeHtml(inputId)}">${escapeHtml(field.label)}${applicationFieldRequired(template, field) ? " *" : ""}</label>${help}</div>` : ""}
+          ${showHeading ? `<div class="application-field-heading"><label for="${escapeHtml(inputId)}">${escapeHtml(field.label)}${applicationFieldRequired(template, field) ? " *" : ""}</label>${applicationFieldCounterMarkup(field)}${help}</div>${guide}` : ""}
           ${applicationFieldInput(template, field, inputId)}
         </div>`;
     }).join("");
@@ -7082,6 +7233,8 @@ function renderApplicationFormPage(template) {
       else if (input.value !== String(value ?? "")) input.value = String(value ?? "");
     });
   }
+  renderApplicationWritingRules(template);
+  updateApplicationFieldCounters(template);
   refreshApplicationFieldConditions(template);
   renderApplicationAutofillStatus(template);
   window.UniWayDocumentWorkbench?.open(template);
@@ -7115,8 +7268,7 @@ function renderApplicationFormPage(template) {
   source.href = template.source_url;
   const status = $("#application-document-form-status");
   status.textContent = "";
-  const download = $("#download-single-application-document");
-  if (download) download.disabled = !applicationTemplateCompletion(template).ready || !applicationTemplateReviewed(template);
+  syncApplicationDownloadButtons(applicationTemplateCompletion(template).ready && applicationTemplateReviewed(template));
   initIcons();
 }
 
@@ -7638,6 +7790,73 @@ async function generateApplicationPdf(singleTemplateId = "") {
     window.UniWayDocumentWorkbench?.renderFlow();
     renderApplicationDownloadDialog();
     announce("PDF 已下載；如要跨裝置保存，請到文件庫另外同意", "success");
+  } catch (error) {
+    if (error.staleSession) return;
+    announce(error.message, "error", true);
+  } finally {
+    if (button) {
+      button.innerHTML = original;
+      button.disabled = false;
+    }
+    renderApplicationPacket();
+    initIcons();
+  }
+}
+
+const APPLICATION_WORD_ACCEPT = "application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/zip";
+
+// Same gates as the PDF packet; the Word file is an editable draft, so it is never kept for the vault or the checker.
+async function generateApplicationDocx(singleTemplateId = "") {
+  if (!state.account) {
+    openAuthDialog();
+    return;
+  }
+  if (!applicationDocumentGenerationEnabled()) {
+    announce("目前方案未包含自動填表與申請文件套件產生。", "error", true);
+    return;
+  }
+  if (singleTemplateId && !collectApplicationDocumentForm({ invalidateReview: false })) return;
+  const payload = applicationPacketPayload(singleTemplateId);
+  if (!payload.selections.length) {
+    announce("請先選擇要匯出的文件", "error", true);
+    return;
+  }
+  const button = singleTemplateId ? $("#download-single-application-docx") : $("#download-application-docx");
+  const requestContext = captureAuthenticatedRequestContext();
+  const original = button?.innerHTML;
+  const generatedHomeSchool = state.homeSchool;
+  const generatedFingerprint = window.UniWayDocumentWorkbench.fingerprint(singleTemplateId);
+  if (button) {
+    button.disabled = true;
+    button.innerHTML = '<span class="loading-spinner" aria-hidden="true"></span><span>正在產生 Word</span>';
+  }
+  try {
+    const response = await fetch("/application-center/docx", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json", Accept: APPLICATION_WORD_ACCEPT },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      const detail = await response.json().catch(() => ({}));
+      throw new Error(detail.detail || `Word 產生失敗（${response.status}）`);
+    }
+    const blob = await response.blob();
+    assertAuthenticatedRequestCurrent(requestContext);
+    if (generatedHomeSchool !== state.homeSchool || generatedFingerprint !== window.UniWayDocumentWorkbench.fingerprint(singleTemplateId)
+      || (singleTemplateId && state.activeApplicationTemplateId !== singleTemplateId)) {
+      throw new Error("文件或申請背景已變更，請回到該文件重新核對後下載。");
+    }
+    const bundled = (response.headers.get("Content-Type") || "").includes("zip");
+    const template = applicationTemplateById(singleTemplateId);
+    const fallbackName = `${template?.short_title || state.applicationContext.target_school || "交換申請"}.${bundled ? "zip" : "docx"}`;
+    downloadApplicationBlob(blob, applicationFilenameFromDisposition(response.headers.get("Content-Disposition"), fallbackName));
+    announce(
+      bundled
+        ? "Word 檔已打包下載，每份文件一個 .docx；修改後請再核對一次內容才列印"
+        : "Word 檔已下載；修改後請再核對一次內容才列印",
+      "success",
+    );
   } catch (error) {
     if (error.staleSession) return;
     announce(error.message, "error", true);
@@ -13705,6 +13924,7 @@ function bindEvents() {
     }
   }
   $("#download-application-packet").addEventListener("click", () => generateApplicationPdf());
+  $("#download-application-docx").addEventListener("click", () => generateApplicationDocx());
   $("#application-packet-list").addEventListener("input", (event) => {
     const input = event.target.closest("[data-application-copy-template]");
     if (input) updateApplicationPacketCopies(input, { refreshRows:false });
@@ -13716,6 +13936,7 @@ function bindEvents() {
     if (state.activeApplicationTemplateId) invalidateApplicationReview(state.activeApplicationTemplateId);
     const template = applicationTemplateById(state.activeApplicationTemplateId);
     if (template) rememberApplicationField(template, input);
+    updateApplicationFieldCounters(template);
     window.UniWayDocumentWorkbench?.draftChanged(template?.id);
   });
   $("#application-document-form").addEventListener("change", (event) => {
@@ -13743,6 +13964,11 @@ function bindEvents() {
     }
   });
   $("#application-document-form").addEventListener("click", (event) => {
+    const guideToggle = event.target.closest("[data-field-guide-toggle]");
+    if (guideToggle) {
+      toggleApplicationFieldGuide(guideToggle);
+      return;
+    }
     const consent = event.target.closest("[data-application-file-consent]");
     if (consent) {
       openApplicationFileConsent(
@@ -13838,8 +14064,7 @@ function bindEvents() {
     if (progress) progress.value = applicationDocumentStatus(template.id);
     const next = $("#application-document-next-step");
     if (next) next.textContent = applicationDocumentNextStep(template);
-    const download = $("#download-single-application-document");
-    if (download) download.disabled = !applicationTemplateCompletion(template).ready || !applicationTemplateReviewed(template);
+    syncApplicationDownloadButtons(applicationTemplateCompletion(template).ready && applicationTemplateReviewed(template));
   });
   $("#application-form-print-guide").addEventListener("change", (event) => {
     const statusSelect = event.target.closest("[data-application-status-template]");
@@ -13853,6 +14078,7 @@ function bindEvents() {
     if (next) next.textContent = applicationDocumentNextStep(template);
   });
   $("#download-single-application-document").addEventListener("click", () => generateApplicationPdf(state.activeApplicationTemplateId));
+  $("#download-single-application-docx").addEventListener("click", () => generateApplicationDocx(state.activeApplicationTemplateId));
 
   $("#private-vault-form").addEventListener("submit", submitPrivateVault);
   $("#private-vault-file").addEventListener("change", (event) => {
