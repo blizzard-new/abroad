@@ -21,7 +21,10 @@
     login_or_school_confirmation: "須個別通知或校方釐清", source_technical_failure: "已查入口技術失敗，替代來源續查",
     alternative_official_sources_not_fully_checked: "官方替代來源尚待補查",
   };
-  function render(partner, escapeHtml, keys) {
+  function render(partner, escapeHtml, keys, homeSchool) {
+    const isNtu = homeSchool === "國立臺灣大學";
+    const fieldLabels = isNtu ? { ...labels, calendar: "校曆與考試", deadlines: "合作校提名與申請期限",
+      courses: "課程及學分限制", cost: "費用與生活預算", insurance_visa: "保險與簽證" } : labels;
     let assets = {};
     try { assets = JSON.parse(partner.reference_data?.ccu_campus_assets || "{}"); } catch (_) { /* Missing metadata stays absent. */ }
     const photo = assets.photo;
@@ -45,14 +48,16 @@
     if (!fields || !Object.keys(fields).length) return supplement;
     return `${supplement}<section class="partner-student-summary ccu-receiving-school-details" aria-label="合作校接收資料">
       <h3>合作校接收資料 · ${escapeHtml(partner.application_round || "")}</h3>
-      <p>以下是合作校接收交換生的規定。中正的校內資格、名額及截止須分別符合；每欄的適用年度、未核實新版及矛盾另標示。</p>
-      ${(keys || Object.keys(labels)).map(key => {
+      <p>以下是合作校接收交換生的規定。${isNtu ? "臺大" : "中正"}的校內資格、名額及截止須分別符合；每欄的適用年度、未核實新版及矛盾另標示。</p>
+      ${(keys || Object.keys(fieldLabels)).map(key => {
         const field = fields[key];
         if (!field) return "";
-        return `<details class="overview-more" data-ccu-field="${escapeHtml(key)}"><summary>${escapeHtml(labels[key])} · ${escapeHtml(statuses[field.status] || field.status)}</summary>
+        const status = isNtu && field.status === "reference_only" ? "接待校／欄位參考，尚未確認臺大本期適用" : statuses[field.status] || field.status;
+        const research = isNtu && field.research_category === "verified_supported" ? "已有原文依據，適用範圍另列" : researchLabels[field.research_category];
+        return `<details class="overview-more" data-ccu-field="${escapeHtml(key)}"><summary>${escapeHtml(fieldLabels[key])} · ${escapeHtml(status)}</summary>
           <p>${escapeHtml(field.value || field.reason)}</p>
           ${field.value ? `<p>${escapeHtml(field.reason)}</p>` : ""}
-          ${field.research_category ? `<p>查核進度：${escapeHtml(researchLabels[field.research_category])}。${escapeHtml(field.research_note || "")}</p>` : ""}
+          ${field.research_category ? `<p>查核進度：${escapeHtml(research)}。${escapeHtml(field.research_note || "")}</p>` : ""}
           ${(field.evidence || []).map(ev => {
             const pages = ev.source_pages?.length ? ` · PDF第${ev.source_pages.join("、")}頁` : " · 官方文件／網頁原文";
             const sourceUrl = ev.source_pages?.length ? `${ev.source_url.split("#")[0]}#page=${ev.source_pages[0]}` : ev.source_url;

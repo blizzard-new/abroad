@@ -72,6 +72,11 @@ window.UniWayDetail = (() => {
     document.querySelector("#booking-home-deadline").textContent = homeDate ? formatFull(homeDate) : "依官方公告";
     const next = partnerNextDeadline(item);
     document.querySelector("#booking-partner-deadline").textContent = next ? formatFull(next) : truncate(partnerDeadlineReference(item).value, 36);
+    if (activeHomeSchool() === "國立臺灣大學") {
+      const homeReference = String(item.application_deadline || "").split("；")[0];
+      document.querySelector("#booking-home-deadline").textContent = homeReference.includes("校內報名") ? homeReference : "依臺大官方公告";
+      document.querySelector("#booking-partner-deadline").textContent = "依提名通知及接待校當期規定；參考期限見下方各欄";
+    }
     const compare = document.querySelector("#detail-compare-button");
     const comparing = discoveryCompare.has(item.school_name);
     compare.dataset.schoolName = item.school_name;
