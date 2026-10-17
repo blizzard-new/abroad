@@ -339,8 +339,43 @@ YZU = UniversityProfile(
     ),
 )
 
+FCU = UniversityProfile(
+    id="fcu",
+    school_name="逢甲大學",
+    short_name="逢甲",
+    english_name="Feng Chia University",
+    aliases=(
+        "fcu",
+        "逢甲大學",
+        "私立逢甲大學",
+        "逢甲",
+        "FCU",
+        "Feng Chia University",
+    ),
+    hero_image="/static/assets/fcu-campus.svg",
+    official_url="https://oia.fcu.edu.tw/sap/introduction/",
+    coverage_note="完整支援：115-1選送（2027春季班）與115-2選送（2027秋季班）出國研修系統（oiasap）共161所合作校名額、課程目錄與95校歷屆心得／錄取紀錄已完整整合。",
+    support_level="full",
+    partner_count_hint=161,
+    academic_score_minimum=75,
+    student_card_signals=("逢甲大學", "FENGCHIAUNIVERSITY", "FCU"),
+    # https://www.fcu.edu.tw/ & https://oiasap.fcu.edu.tw/v2/details/colleges — checked 2026-10-17.
+    colleges=(
+        "工程與科學學院",
+        "商學院",
+        "人文社會學院",
+        "資訊電機學院",
+        "建設學院",
+        "金融學院",
+        "國際科技與管理學院",
+        "建築專業學院",
+        "創能學院",
+        "經營管理學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU)
 DEFAULT_UNIVERSITY = CGU
 
 

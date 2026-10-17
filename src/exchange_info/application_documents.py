@@ -59,7 +59,7 @@ from .models import (
 from .application_rules import select_application_workflow
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FJU, NTNU, NTPU, NTU, NTUST, NCU, SCU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NTNU, NTPU, NTU, NTUST, NCU, SCU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -70,6 +70,7 @@ NTNU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 CYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 NTUST_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 YZU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
+FCU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1207,6 +1208,51 @@ def _yzu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _fcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理逢甲大學選送學生出國研修申請資訊簡表（oiasap 系統線上填報，至多 5 所志願學校）、家長同意書（附件一）、研究生指導教授同意書（附件三）、生輔組核章之在校獎懲紀錄、歷年成績單（GPA 3.0 以上）與外語檢定證明。",
+        "study-plan": "撰寫逢甲大學出國研修簡章必繳之《研修計畫》（簡章附件二，中英文撰寫均可，字數至少 1,000 字，含申請動機、擬於目標姊妹校修習之科目與學分規劃及返國後學習連結）。",
+        "course-preapproval": "規劃出國研修期間之選課清單與學分抵免預審（大學部一至三年級每學期至少 12 學分、大學部四年級至少 9 學分、碩博士班至少 3 學分；獲教育部學海飛颺／惜珠獎學金者須修讀至少 4 學分本科系相關專業課程）。",
+        "predeparture-notice": "取得姊妹校正式入學許可（LOA）後 2 週內繳交保證金（獲獎助或學費互免交換生 NT$10,000、自費交換生 NT$5,000），並依國際事務處與姊妹校規定完成複審文件、宿舍申請、簽證及海外醫療及意外保險。",
+        "return-report": "交換期滿返國後 1 個月內繳交 2,000 字以上之出國研習報告書，且修課及格率達 1/2 以上、學費互免／獲獎生完成每學期 50 小時（兩學期 100 小時）志工服務後，辦理保證金無息退還。",
+        "credit-transfer": "交換期滿返國後，持接待姊妹校核發之正式成績單正本及修課大綱（Syllabus），依逢甲大學學生抵免學分辦法向所屬學系及教務處註冊課務組辦理學分抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "逢甲大學").replace("長庚", "逢甲")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "逢甲大學規定在校歷年總平均須達 GPA 3.0（含）以上（約 75 分以上），申請一學年學費互免交換者歷年系排名須達前 50%；初審時將依歷年系排名百分比自動審核「逢甲大學出國研修獎助學金」。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT", "IELTS Academic", "TOEIC", "JLPT（N1–N3）", "TOPIK（韓檢 1–6 級）", "DELF / DALF / TCF（法語）", "Goethe / TestDaF（德語）", "DELE（西語）", "赴大陸交換免附外語檢定"]
+            field["help_text"] = "申請國際及香港地區必繳（須為 2024/10/01 後考試取得並符合 oiasap 系統各校門檻）；申請大陸地區免附外語檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.fcu.edu.tw/sap/introduction/",
+        source_checked_at=FCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="附件一" if template.id == "exchange-application-data" else ("附件二" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oiasap.fcu.edu.tw/",
+        default_copies=1,
+        signatures=["申請學生簽名", "家長親筆簽名（附件一）", "指導教授親筆簽名（附件三，研究生適用）"] if template.id == "exchange-application-data" else [],
+        stamps=["學務處生活輔導組（行政二館一樓）獎懲紀錄確認章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "取得入學許可 2 週內繳交保證金與複審送件", "return-report": "返國後 1 個月內（含 50 小時志工服務）", "credit-transfer": "返國開學後"}.get(template.id, "於 oiasap 系統（https://oiasap.fcu.edu.tw/）全線上無紙化上傳"),
+        version="115-1準備工具-2026-10-17.1",
+        destinations=["逢甲大學國際事務處（行政二館 3 樓 304 室）", "逢甲大學出國研修申請系統（https://oiasap.fcu.edu.tw/）"],
+        conditional_note="此為個人準備工具；逢甲大學正式出國研修申請採全線上無紙化作業，請於申請期間登入 https://oiasap.fcu.edu.tw/ 填報並上傳家長同意書、1,000 字以上研修計畫、生輔組核章獎懲紀錄、歷年成績單及外語檢定證明。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
     if university.id == "ccu":
@@ -1227,6 +1273,8 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntust_template(template)) is not None]
     if university.id == YZU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _yzu_template(template)) is not None]
+    if university.id == FCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _fcu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
