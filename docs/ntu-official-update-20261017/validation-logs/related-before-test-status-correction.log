@@ -1,0 +1,24 @@
+CONFTEST LOADED!
+..F..................................................................... [ 88%]
+.........                                                                [100%]
+=================================== FAILURES ===================================
+____________ test_reference_capacity_cannot_replace_the_formal_list ____________
+
+    def test_reference_capacity_cannot_replace_the_formal_list():
+        current = partners()
+        assert len(current) == 289
+        assert sum(p.quota_status == "published" for p in current.values()) == 20
+        assert sum(p.quota is None for p in current.values()) == 262
+        assert sum(p.quota == "0 名" for p in current.values()) == 7
+        for pid in IDS:
+            p = current[pid]
+            assert p.quota is None and p.quota_status in (None, "not_published")
+            assert p.availability_status != "open"
+>           assert p.application_window_status == "needs_confirmation"
+E           AssertionError: assert None == 'needs_confirmation'
+E            +  where None = PartnerUniversity(program_type='校級國際交換學生', availability_status='agreement_only', availability_note='116-1本期甄選名額尚未公布，合作...保險費、往返機票費等均須自行負擔', '臺大合作校資料來源：https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/115'], translated_from_english=False)).application_window_status
+
+tests/test_ntu_oct17_updates.py:66: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_oct17_updates.py::test_reference_capacity_cannot_replace_the_formal_list
+1 failed, 80 passed in 102.05s (0:01:42)

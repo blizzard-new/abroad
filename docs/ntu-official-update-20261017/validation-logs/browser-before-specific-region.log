@@ -1,0 +1,383 @@
+CONFTEST LOADED!
+FFFFFFFF....                                                             [100%]
+=================================== FAILURES ===================================
+_ test_oct17_reference_conditions_and_years[\u91cc\u7d04\u71b1\u5167\u76e7\u5929\u4e3b\u6559\u5927\u5b78-markers0-390] _
+
+page = <Page url='http://127.0.0.1:36071/?view=list&home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8&q=%E9%87%8C%E...9%E5%A4%A7%E5%AD%B8#school=%E9%87%8C%E7%B4%84%E7%86%B1%E5%85%A7%E7%9B%A7%E5%A4%A9%E4%B8%BB%E6%95%99%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:36071', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-4/web-e2e-data0'))
+width = 390, school = '里約熱內盧天主教大學', markers = ['2027/4/15', '檔名2026', '非臺大']
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("school,markers", [
+        ("里約熱內盧天主教大學", ["2027/4/15", "檔名2026", "非臺大"]),
+        ("安地斯大學", ["2026/27", "18,400,000–27,700,000", "17,100,000–25,300,000", "不蓋過臺大B2"]),
+        ("肯特大學", ["116-1", "Autumn Term", "不證明一律禁止"]),
+        ("奧塔哥大學", ["期限前", "deadline"]),
+    ])
+    def test_oct17_reference_conditions_and_years(page, live_server, width, school, markers):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        page.locator("#school-switcher").click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+            page.locator("#glass-menu-toggle").click()
+        wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
+        page.locator('[data-partner-view="list"]').click()
+        page.locator("#partner-search").fill(school)
+        expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+        if width < 700:
+            page.locator("#partner-table .partner-card > summary").first.click()
+        page.locator("#partner-table .school-detail-trigger:visible").first.click()
+        detail = page.locator("#school-detail-view")
+        expect(detail).to_be_visible()
+        summary = detail.locator(".partner-student-summary")
+        for marker in markers:
+>           expect(summary).to_contain_text(marker)
+E           AssertionError: Locator expected to contain text '2027/4/15'
+E           Actual value: None
+E           Error: strict mode violation: locator("#school-detail-view").locator(".partner-student-summary") resolved to 2 elements:
+E               1) <section aria-label="合作校接收資料" class="partner-student-summary ccu-receiving-school-details">…</section> aka get_by_role("region", name="合作校接收資料")
+E               2) <section class="partner-student-summary" aria-labelledby="partner-student-summary-title">…</section> aka get_by_role("region", name="合作校條件")
+E
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#school-detail-view").locator(".partner-student-summary")
+
+tests/e2e/test_ntu_oct17_scope.py:40: AssertionError
+_ test_oct17_reference_conditions_and_years[\u91cc\u7d04\u71b1\u5167\u76e7\u5929\u4e3b\u6559\u5927\u5b78-markers0-1440] _
+
+page = <Page url='http://127.0.0.1:36071/?view=list&home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8&q=%E9%87%8C%E...9%E5%A4%A7%E5%AD%B8#school=%E9%87%8C%E7%B4%84%E7%86%B1%E5%85%A7%E7%9B%A7%E5%A4%A9%E4%B8%BB%E6%95%99%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:36071', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-4/web-e2e-data0'))
+width = 1440, school = '里約熱內盧天主教大學', markers = ['2027/4/15', '檔名2026', '非臺大']
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("school,markers", [
+        ("里約熱內盧天主教大學", ["2027/4/15", "檔名2026", "非臺大"]),
+        ("安地斯大學", ["2026/27", "18,400,000–27,700,000", "17,100,000–25,300,000", "不蓋過臺大B2"]),
+        ("肯特大學", ["116-1", "Autumn Term", "不證明一律禁止"]),
+        ("奧塔哥大學", ["期限前", "deadline"]),
+    ])
+    def test_oct17_reference_conditions_and_years(page, live_server, width, school, markers):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        page.locator("#school-switcher").click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+            page.locator("#glass-menu-toggle").click()
+        wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
+        page.locator('[data-partner-view="list"]').click()
+        page.locator("#partner-search").fill(school)
+        expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+        if width < 700:
+            page.locator("#partner-table .partner-card > summary").first.click()
+        page.locator("#partner-table .school-detail-trigger:visible").first.click()
+        detail = page.locator("#school-detail-view")
+        expect(detail).to_be_visible()
+        summary = detail.locator(".partner-student-summary")
+        for marker in markers:
+>           expect(summary).to_contain_text(marker)
+E           AssertionError: Locator expected to contain text '2027/4/15'
+E           Actual value: None
+E           Error: strict mode violation: locator("#school-detail-view").locator(".partner-student-summary") resolved to 2 elements:
+E               1) <section aria-label="合作校接收資料" class="partner-student-summary ccu-receiving-school-details">…</section> aka get_by_role("region", name="合作校接收資料")
+E               2) <section class="partner-student-summary" aria-labelledby="partner-student-summary-title">…</section> aka get_by_role("region", name="合作校條件")
+E
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#school-detail-view").locator(".partner-student-summary")
+
+tests/e2e/test_ntu_oct17_scope.py:40: AssertionError
+_ test_oct17_reference_conditions_and_years[\u5b89\u5730\u65af\u5927\u5b78-markers1-390] _
+
+page = <Page url='http://127.0.0.1:36071/?view=list&home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8&q=%E5%AE%89%E...0%E6%96%AF%E5%A4%A7%E5%AD%B8#school=%E5%93%A5%E5%80%AB%E6%AF%94%E4%BA%9E%E5%AE%89%E5%9C%B0%E6%96%AF%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:36071', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-4/web-e2e-data0'))
+width = 390, school = '安地斯大學'
+markers = ['2026/27', '18,400,000–27,700,000', '17,100,000–25,300,000', '不蓋過臺大B2']
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("school,markers", [
+        ("里約熱內盧天主教大學", ["2027/4/15", "檔名2026", "非臺大"]),
+        ("安地斯大學", ["2026/27", "18,400,000–27,700,000", "17,100,000–25,300,000", "不蓋過臺大B2"]),
+        ("肯特大學", ["116-1", "Autumn Term", "不證明一律禁止"]),
+        ("奧塔哥大學", ["期限前", "deadline"]),
+    ])
+    def test_oct17_reference_conditions_and_years(page, live_server, width, school, markers):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        page.locator("#school-switcher").click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+            page.locator("#glass-menu-toggle").click()
+        wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
+        page.locator('[data-partner-view="list"]').click()
+        page.locator("#partner-search").fill(school)
+        expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+        if width < 700:
+            page.locator("#partner-table .partner-card > summary").first.click()
+        page.locator("#partner-table .school-detail-trigger:visible").first.click()
+        detail = page.locator("#school-detail-view")
+        expect(detail).to_be_visible()
+        summary = detail.locator(".partner-student-summary")
+        for marker in markers:
+>           expect(summary).to_contain_text(marker)
+E           AssertionError: Locator expected to contain text '2026/27'
+E           Actual value: None
+E           Error: strict mode violation: locator("#school-detail-view").locator(".partner-student-summary") resolved to 2 elements:
+E               1) <section aria-label="合作校接收資料" class="partner-student-summary ccu-receiving-school-details">…</section> aka get_by_role("region", name="合作校接收資料")
+E               2) <section class="partner-student-summary" aria-labelledby="partner-student-summary-title">…</section> aka get_by_role("region", name="合作校條件")
+E
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#school-detail-view").locator(".partner-student-summary")
+
+tests/e2e/test_ntu_oct17_scope.py:40: AssertionError
+_ test_oct17_reference_conditions_and_years[\u5b89\u5730\u65af\u5927\u5b78-markers1-1440] _
+
+page = <Page url='http://127.0.0.1:36071/?view=list&home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8&q=%E5%AE%89%E...0%E6%96%AF%E5%A4%A7%E5%AD%B8#school=%E5%93%A5%E5%80%AB%E6%AF%94%E4%BA%9E%E5%AE%89%E5%9C%B0%E6%96%AF%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:36071', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-4/web-e2e-data0'))
+width = 1440, school = '安地斯大學'
+markers = ['2026/27', '18,400,000–27,700,000', '17,100,000–25,300,000', '不蓋過臺大B2']
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("school,markers", [
+        ("里約熱內盧天主教大學", ["2027/4/15", "檔名2026", "非臺大"]),
+        ("安地斯大學", ["2026/27", "18,400,000–27,700,000", "17,100,000–25,300,000", "不蓋過臺大B2"]),
+        ("肯特大學", ["116-1", "Autumn Term", "不證明一律禁止"]),
+        ("奧塔哥大學", ["期限前", "deadline"]),
+    ])
+    def test_oct17_reference_conditions_and_years(page, live_server, width, school, markers):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        page.locator("#school-switcher").click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+            page.locator("#glass-menu-toggle").click()
+        wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
+        page.locator('[data-partner-view="list"]').click()
+        page.locator("#partner-search").fill(school)
+        expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+        if width < 700:
+            page.locator("#partner-table .partner-card > summary").first.click()
+        page.locator("#partner-table .school-detail-trigger:visible").first.click()
+        detail = page.locator("#school-detail-view")
+        expect(detail).to_be_visible()
+        summary = detail.locator(".partner-student-summary")
+        for marker in markers:
+>           expect(summary).to_contain_text(marker)
+E           AssertionError: Locator expected to contain text '2026/27'
+E           Actual value: None
+E           Error: strict mode violation: locator("#school-detail-view").locator(".partner-student-summary") resolved to 2 elements:
+E               1) <section aria-label="合作校接收資料" class="partner-student-summary ccu-receiving-school-details">…</section> aka get_by_role("region", name="合作校接收資料")
+E               2) <section class="partner-student-summary" aria-labelledby="partner-student-summary-title">…</section> aka get_by_role("region", name="合作校條件")
+E
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#school-detail-view").locator(".partner-student-summary")
+
+tests/e2e/test_ntu_oct17_scope.py:40: AssertionError
+_ test_oct17_reference_conditions_and_years[\u80af\u7279\u5927\u5b78-markers2-390] _
+
+page = <Page url='http://127.0.0.1:36071/?view=list&home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8&q=%E8%82%AF%E7%89%B9%E5%A4%A7%E5%AD%B8#school=%E8%82%AF%E7%89%B9%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:36071', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-4/web-e2e-data0'))
+width = 390, school = '肯特大學', markers = ['116-1', 'Autumn Term', '不證明一律禁止']
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("school,markers", [
+        ("里約熱內盧天主教大學", ["2027/4/15", "檔名2026", "非臺大"]),
+        ("安地斯大學", ["2026/27", "18,400,000–27,700,000", "17,100,000–25,300,000", "不蓋過臺大B2"]),
+        ("肯特大學", ["116-1", "Autumn Term", "不證明一律禁止"]),
+        ("奧塔哥大學", ["期限前", "deadline"]),
+    ])
+    def test_oct17_reference_conditions_and_years(page, live_server, width, school, markers):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        page.locator("#school-switcher").click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+            page.locator("#glass-menu-toggle").click()
+        wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
+        page.locator('[data-partner-view="list"]').click()
+        page.locator("#partner-search").fill(school)
+        expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+        if width < 700:
+            page.locator("#partner-table .partner-card > summary").first.click()
+        page.locator("#partner-table .school-detail-trigger:visible").first.click()
+        detail = page.locator("#school-detail-view")
+        expect(detail).to_be_visible()
+        summary = detail.locator(".partner-student-summary")
+        for marker in markers:
+>           expect(summary).to_contain_text(marker)
+E           AssertionError: Locator expected to contain text '116-1'
+E           Actual value: None
+E           Error: strict mode violation: locator("#school-detail-view").locator(".partner-student-summary") resolved to 2 elements:
+E               1) <section aria-label="合作校接收資料" class="partner-student-summary ccu-receiving-school-details">…</section> aka get_by_role("region", name="合作校接收資料")
+E               2) <section class="partner-student-summary" aria-labelledby="partner-student-summary-title">…</section> aka get_by_role("region", name="合作校條件")
+E
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#school-detail-view").locator(".partner-student-summary")
+
+tests/e2e/test_ntu_oct17_scope.py:40: AssertionError
+_ test_oct17_reference_conditions_and_years[\u80af\u7279\u5927\u5b78-markers2-1440] _
+
+page = <Page url='http://127.0.0.1:36071/?view=list&home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8&q=%E8%82%AF%E7%89%B9%E5%A4%A7%E5%AD%B8#school=%E8%82%AF%E7%89%B9%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:36071', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-4/web-e2e-data0'))
+width = 1440, school = '肯特大學', markers = ['116-1', 'Autumn Term', '不證明一律禁止']
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("school,markers", [
+        ("里約熱內盧天主教大學", ["2027/4/15", "檔名2026", "非臺大"]),
+        ("安地斯大學", ["2026/27", "18,400,000–27,700,000", "17,100,000–25,300,000", "不蓋過臺大B2"]),
+        ("肯特大學", ["116-1", "Autumn Term", "不證明一律禁止"]),
+        ("奧塔哥大學", ["期限前", "deadline"]),
+    ])
+    def test_oct17_reference_conditions_and_years(page, live_server, width, school, markers):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        page.locator("#school-switcher").click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+            page.locator("#glass-menu-toggle").click()
+        wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
+        page.locator('[data-partner-view="list"]').click()
+        page.locator("#partner-search").fill(school)
+        expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+        if width < 700:
+            page.locator("#partner-table .partner-card > summary").first.click()
+        page.locator("#partner-table .school-detail-trigger:visible").first.click()
+        detail = page.locator("#school-detail-view")
+        expect(detail).to_be_visible()
+        summary = detail.locator(".partner-student-summary")
+        for marker in markers:
+>           expect(summary).to_contain_text(marker)
+E           AssertionError: Locator expected to contain text '116-1'
+E           Actual value: None
+E           Error: strict mode violation: locator("#school-detail-view").locator(".partner-student-summary") resolved to 2 elements:
+E               1) <section aria-label="合作校接收資料" class="partner-student-summary ccu-receiving-school-details">…</section> aka get_by_role("region", name="合作校接收資料")
+E               2) <section class="partner-student-summary" aria-labelledby="partner-student-summary-title">…</section> aka get_by_role("region", name="合作校條件")
+E
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#school-detail-view").locator(".partner-student-summary")
+
+tests/e2e/test_ntu_oct17_scope.py:40: AssertionError
+_ test_oct17_reference_conditions_and_years[\u5967\u5854\u54e5\u5927\u5b78-markers3-390] _
+
+page = <Page url='http://127.0.0.1:36071/?view=list&home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8&q=%E5%A5%A7%E5%A1%94%E5%93%A5%E5%A4%A7%E5%AD%B8#school=%E5%A5%A7%E5%A1%94%E5%93%A5%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:36071', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-4/web-e2e-data0'))
+width = 390, school = '奧塔哥大學', markers = ['期限前', 'deadline']
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("school,markers", [
+        ("里約熱內盧天主教大學", ["2027/4/15", "檔名2026", "非臺大"]),
+        ("安地斯大學", ["2026/27", "18,400,000–27,700,000", "17,100,000–25,300,000", "不蓋過臺大B2"]),
+        ("肯特大學", ["116-1", "Autumn Term", "不證明一律禁止"]),
+        ("奧塔哥大學", ["期限前", "deadline"]),
+    ])
+    def test_oct17_reference_conditions_and_years(page, live_server, width, school, markers):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        page.locator("#school-switcher").click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+            page.locator("#glass-menu-toggle").click()
+        wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
+        page.locator('[data-partner-view="list"]').click()
+        page.locator("#partner-search").fill(school)
+        expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+        if width < 700:
+            page.locator("#partner-table .partner-card > summary").first.click()
+        page.locator("#partner-table .school-detail-trigger:visible").first.click()
+        detail = page.locator("#school-detail-view")
+        expect(detail).to_be_visible()
+        summary = detail.locator(".partner-student-summary")
+        for marker in markers:
+>           expect(summary).to_contain_text(marker)
+E           AssertionError: Locator expected to contain text '期限前'
+E           Actual value: None
+E           Error: strict mode violation: locator("#school-detail-view").locator(".partner-student-summary") resolved to 2 elements:
+E               1) <section aria-label="合作校接收資料" class="partner-student-summary ccu-receiving-school-details">…</section> aka get_by_role("region", name="合作校接收資料")
+E               2) <section class="partner-student-summary" aria-labelledby="partner-student-summary-title">…</section> aka get_by_role("region", name="合作校條件")
+E
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#school-detail-view").locator(".partner-student-summary")
+
+tests/e2e/test_ntu_oct17_scope.py:40: AssertionError
+_ test_oct17_reference_conditions_and_years[\u5967\u5854\u54e5\u5927\u5b78-markers3-1440] _
+
+page = <Page url='http://127.0.0.1:36071/?view=list&home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8&q=%E5%A5%A7%E5%A1%94%E5%93%A5%E5%A4%A7%E5%AD%B8#school=%E5%A5%A7%E5%A1%94%E5%93%A5%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:36071', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-4/web-e2e-data0'))
+width = 1440, school = '奧塔哥大學', markers = ['期限前', 'deadline']
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("school,markers", [
+        ("里約熱內盧天主教大學", ["2027/4/15", "檔名2026", "非臺大"]),
+        ("安地斯大學", ["2026/27", "18,400,000–27,700,000", "17,100,000–25,300,000", "不蓋過臺大B2"]),
+        ("肯特大學", ["116-1", "Autumn Term", "不證明一律禁止"]),
+        ("奧塔哥大學", ["期限前", "deadline"]),
+    ])
+    def test_oct17_reference_conditions_and_years(page, live_server, width, school, markers):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        page.locator("#school-switcher").click()
+        page.locator('[data-home-school="國立臺灣大學"]').click()
+        if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+            page.locator("#glass-menu-toggle").click()
+        wait_until(page, "state.dashboard?.school_name === '國立臺灣大學'")
+        page.locator('[data-partner-view="list"]').click()
+        page.locator("#partner-search").fill(school)
+        expect(page.locator("#partner-table")).to_contain_text("本期名額待核實")
+        if width < 700:
+            page.locator("#partner-table .partner-card > summary").first.click()
+        page.locator("#partner-table .school-detail-trigger:visible").first.click()
+        detail = page.locator("#school-detail-view")
+        expect(detail).to_be_visible()
+        summary = detail.locator(".partner-student-summary")
+        for marker in markers:
+>           expect(summary).to_contain_text(marker)
+E           AssertionError: Locator expected to contain text '期限前'
+E           Actual value: None
+E           Error: strict mode violation: locator("#school-detail-view").locator(".partner-student-summary") resolved to 2 elements:
+E               1) <section aria-label="合作校接收資料" class="partner-student-summary ccu-receiving-school-details">…</section> aka get_by_role("region", name="合作校接收資料")
+E               2) <section class="partner-student-summary" aria-labelledby="partner-student-summary-title">…</section> aka get_by_role("region", name="合作校條件")
+E
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#school-detail-view").locator(".partner-student-summary")
+
+tests/e2e/test_ntu_oct17_scope.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ntu_oct17_scope.py::test_oct17_reference_conditions_and_years[\u91cc\u7d04\u71b1\u5167\u76e7\u5929\u4e3b\u6559\u5927\u5b78-markers0-390]
+FAILED tests/e2e/test_ntu_oct17_scope.py::test_oct17_reference_conditions_and_years[\u91cc\u7d04\u71b1\u5167\u76e7\u5929\u4e3b\u6559\u5927\u5b78-markers0-1440]
+FAILED tests/e2e/test_ntu_oct17_scope.py::test_oct17_reference_conditions_and_years[\u5b89\u5730\u65af\u5927\u5b78-markers1-390]
+FAILED tests/e2e/test_ntu_oct17_scope.py::test_oct17_reference_conditions_and_years[\u5b89\u5730\u65af\u5927\u5b78-markers1-1440]
+FAILED tests/e2e/test_ntu_oct17_scope.py::test_oct17_reference_conditions_and_years[\u80af\u7279\u5927\u5b78-markers2-390]
+FAILED tests/e2e/test_ntu_oct17_scope.py::test_oct17_reference_conditions_and_years[\u80af\u7279\u5927\u5b78-markers2-1440]
+FAILED tests/e2e/test_ntu_oct17_scope.py::test_oct17_reference_conditions_and_years[\u5967\u5854\u54e5\u5927\u5b78-markers3-390]
+FAILED tests/e2e/test_ntu_oct17_scope.py::test_oct17_reference_conditions_and_years[\u5967\u5854\u54e5\u5927\u5b78-markers3-1440]
+8 failed, 4 passed in 65.89s (0:01:05)

@@ -53,6 +53,11 @@ def test_all_288_summaries_reach_dashboard_and_keep_source_text(tmp_path):
     for row in old:
         if row['source_url']==uw_url:
             row['eligibility']=current['uw_update']['portal_eligibility_after']
+    october17=json.loads((ROOT/'sources/ntu/2026-10-17-official-update.json').read_text())
+    latest={s['url']:s['platform_after']['eligibility'] for s in october17['schools']}
+    for row in old:
+        if row['source_url'] in latest:
+            row['eligibility']=latest[row['source_url']]
     for np in current.get('new_partners',[]):
         old.append({'school_name':np['school_name'],'country':np['country'],'eligibility':np['eligibility_text'],'tuition_info':np['tuition_text']})
     assert [(p.school_name,p.country,p.eligibility,p.tuition_info) for p in partners] == [

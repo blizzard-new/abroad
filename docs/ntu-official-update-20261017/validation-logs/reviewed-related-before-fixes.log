@@ -1,0 +1,41 @@
+CONFTEST LOADED!
+..F..............................................................F...... [ 88%]
+.........                                                                [100%]
+=================================== FAILURES ===================================
+____________ test_reference_capacity_cannot_replace_the_formal_list ____________
+
+    def test_reference_capacity_cannot_replace_the_formal_list():
+        current = partners()
+        assert len(current) == 289
+        assert sum(p.quota_status == "published" for p in current.values()) == 20
+        assert sum(p.quota is None for p in current.values()) == 262
+        assert sum(p.quota == "0 名" for p in current.values()) == 7
+        for pid in IDS:
+            p = current[pid]
+>           assert p.quota is None and p.quota_status == "not_published"
+E           AssertionError: assert (None is None and None == 'not_published')
+E            +  where None = PartnerUniversity(program_type='校級國際交換學生', availability_status='agreement_only', availability_note='116-1本期甄選名額尚未公布，合作...險費、往返機票費等均須自行負擔。', '臺大合作校資料來源：https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/974'], translated_from_english=False)).quota
+E            +  and   None = PartnerUniversity(program_type='校級國際交換學生', availability_status='agreement_only', availability_note='116-1本期甄選名額尚未公布，合作...險費、往返機票費等均須自行負擔。', '臺大合作校資料來源：https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/974'], translated_from_english=False)).quota_status
+
+tests/test_ntu_oct17_updates.py:64: AssertionError
+__________ test_bundle_does_not_promote_contract_or_historical_quotas __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-2/test_bundle_does_not_promote_c0')
+
+    def test_bundle_does_not_promote_contract_or_historical_quotas(tmp_path):
+        partners = fetch_ntu_partner_universities()
+        assert len(partners) == 289
+        assert len({partner.source_url for partner in partners}) == 289
+        assert len({school_identity_key(partner.school_name) for partner in partners}) == 289
+        assert sum(partner.quota is None for partner in partners) == 262
+        assert sum(partner.quota == "0 名" for partner in partners) == 7
+        assert all(partner.availability_status != "open" for partner in partners)
+>       assert all(not partner.study_period or "名" not in partner.study_period for partner in partners)
+E       assert False
+E        +  where False = all(<generator object test_bundle_does_not_promote_contract_or_historical_quotas.<locals>.<genexpr> at 0x7f8b3b04f100>)
+
+tests/test_ntu_integration.py:68: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_oct17_updates.py::test_reference_capacity_cannot_replace_the_formal_list
+FAILED tests/test_ntu_integration.py::test_bundle_does_not_promote_contract_or_historical_quotas
+2 failed, 79 passed in 97.93s (0:01:37)

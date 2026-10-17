@@ -8789,9 +8789,12 @@ function renderPartnerFieldEvidence(item) {
   if (activeHomeSchool() === "淡江大學") return window.UniWayTkuDetails?.render(item, escapeHtml) || "";
   if (!item.field_evidence || !Object.keys(item.field_evidence).length) return "";
   const labels = {study_period:"交換期間", quota:"名額", eligibility:"合作校接收資格", language_requirement:"合作校語言", partner_application_prerequisite:"母校甄選／提名前提（非文件清單）", partner_documents:"合作校申請文件要求（未聲稱完整）", partner_application_deadline:"合作校申請截止", application_deadline:"中正校內截止", semester_dates:"學期日期", housing_info:"住宿資訊", tuition_info:"費用原文", course_restrictions:"課程限制", fact_sheet:"合作校簡章連結"};
+  const isNtu = activeHomeSchool() === "國立臺灣大學";
+  if (isNtu) Object.assign(labels, {language: "合作校語言（參考）", application_deadline: "臺大校內截止"});
   const statuses = {verified_current:"當期已核實",reference_only:"歷史參考",missing:"未載／未核實",needs_confirmation:"待確認",conflict:"來源矛盾，待確認",explicit_not_announced:"官方明示尚未公告"};
-  return `<details class="overview-more"><summary>當期資料與官方依據（${escapeHtml(item.application_round || "")}）</summary>
-    <p>合作校接收條件須與中正校內資格分別核對；灰字歷史資料不作當期申請依據。</p>
+  if (isNtu) statuses.reference_only = "欄位參考，本期適用待確認";
+  return `<details class="overview-more"><summary>${isNtu ? "欄位資料" : "當期資料"}與官方依據（${escapeHtml(item.application_round || (isNtu ? "本期適用待確認" : ""))}）</summary>
+    <p>${isNtu ? "合作校接收條件須與臺大校內資格分別核對；欄位原文、年份與本期適用狀態分別確認。" : "合作校接收條件須與中正校內資格分別核對；灰字歷史資料不作當期申請依據。"}</p>
     ${Object.entries(labels).map(([key,label]) => {
       const evidence = item.field_evidence[key];
       if (!evidence) return "";
@@ -8830,7 +8833,7 @@ function renderUniversityOverview(item) {
         </div>
         ${renderPartnerAvailabilityNotice(item)}
         ${renderPartnerFieldEvidence(item)}
-        ${activeHomeSchool() === "淡江大學" ? "" : window.UniWayCcuDetails?.render(item, escapeHtml) || ""}
+        ${activeHomeSchool() === "淡江大學" ? "" : window.UniWayCcuDetails?.render(item, escapeHtml, undefined, activeHomeSchool()) || ""}
         <details class="overview-more school-data-completeness"><summary>這所學校的資料完整度</summary><div id="school-data-completeness-body" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div></details>
         ${activeHomeSchool() === "國立中央大學" ? '<details id="ncu-source-audit" class="overview-more"><summary>已查來源、適用年度與未解問題</summary><div id="ncu-source-audit-body">展開讀取逐欄查核與原文頁碼。</div></details>' : ""}
         <details class="overview-more"><summary>選校參考</summary><div id="quick-decision-fit">${renderQuickDecisionFit(item)}</div></details>

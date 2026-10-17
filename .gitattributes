@@ -6,3 +6,6 @@
 Dockerfile text eol=lf
 .dockerignore text eol=lf
 deploy/selfhost/gateway/Caddyfile text eol=lf
+# Immutable HTTP archives are checked by SHA256, including their original line endings.
+sources/ntu/2026-10-17-official/*.html binary
+sources/ntu/2026-10-17-official/*.txt -text
