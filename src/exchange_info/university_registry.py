@@ -239,8 +239,77 @@ NTNU = UniversityProfile(
     ),
 )
 
+CYCU = UniversityProfile(
+    id="cycu",
+    school_name="中原大學",
+    short_name="中原",
+    english_name="Chung Yuan Christian University",
+    aliases=(
+        "cycu",
+        "中原大學",
+        "中原",
+        "CYCU",
+        "Chung Yuan Christian University",
+    ),
+    hero_image="/static/assets/cycu-campus.svg",
+    official_url="https://oia.cycu.edu.tw/?page_id=2956&lang=zh",
+    coverage_note="完整支援：115-2（2027春季出國）國際暨兩岸交換計畫與89所合作校名額、Fact Sheet及36校歷屆交換心得已完整整合。",
+    support_level="full",
+    partner_count_hint=89,
+    academic_score_minimum=75,
+    student_card_signals=("中原大學", "CHUNGYUANCHRISTIANUNIVERSITY", "CYCU"),
+    # https://www.cycu.edu.tw/ — checked 2026-10-16.
+    colleges=(
+        "理學院",
+        "工學院",
+        "商學院",
+        "法學院",
+        "設計學院",
+        "人文與教育學院",
+        "電機資訊學院",
+        "智慧運算與量子資訊學院",
+        "半導體產業學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU)
+NTUST = UniversityProfile(
+    id="ntust",
+    school_name="國立臺灣科技大學",
+    short_name="臺科大",
+    english_name="National Taiwan University of Science and Technology",
+    aliases=(
+        "ntust",
+        "國立臺灣科技大學",
+        "國立台灣科技大學",
+        "臺灣科技大學",
+        "台灣科技大學",
+        "臺科大",
+        "台科大",
+        "NTUST",
+        "Taiwan Tech",
+        "National Taiwan University of Science and Technology",
+    ),
+    hero_image="/static/assets/ntust-campus.svg",
+    official_url="https://www.oia.ntust.edu.tw/p/412-1060-8921.php?Lang=zh-tw",
+    coverage_note="完整支援：115-2（2027春季班）海外暨大陸交換生甄選簡章、237所合作校條件名額表及126校歷屆交換心得已完整整合。",
+    support_level="full",
+    partner_count_hint=237,
+    academic_score_minimum=65,
+    student_card_signals=("國立臺灣科技大學", "國立台灣科技大學", "NATIONALTAIWANUNIVERSITYOFSCIENCEANDTECHNOLOGY", "TAIWANTECH", "NTUST"),
+    # https://www.ntust.edu.tw/ — checked 2026-10-16.
+    colleges=(
+        "工程學院",
+        "電資學院",
+        "管理學院",
+        "設計學院",
+        "人文社會學院",
+        "應用科技學院",
+        "產學創新學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST)
 DEFAULT_UNIVERSITY = CGU
 
 

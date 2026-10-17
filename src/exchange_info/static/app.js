@@ -1147,6 +1147,8 @@ async function loadSupportedUniversities() {
       {id:"fju",school_name:"天主教輔仁大學",short_name:"輔大",aliases:["輔仁大學","輔仁","FJU","Fu Jen"],english_name:"Fu Jen Catholic University",hero_image:"/static/assets/fju-campus.svg",official_url:"https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39",supported:true,partner_count:234,coverage_note:"116-1甄選說明會已公告；234所姊妹校專頁與115名額表已完整建檔。"},
       {id:"scu",school_name:"東吳大學",short_name:"東吳",aliases:["SCU","Soochow University","東吳"],english_name:"Soochow University",hero_image:"/static/assets/scu-campus.svg",official_url:"https://web-ch.scu.edu.tw/icae",supported:true,partner_count:191,coverage_note:"116學年度第1學期赴外研修生甄選名額表與簡章已公告（國際交流129案、兩岸交流62校）。"},
       {id:"ntnu",school_name:"國立臺灣師範大學",short_name:"師大",aliases:["臺灣師範大學","台灣師範大學","臺師大","台師大","師範大學","NTNU","National Taiwan Normal University"],english_name:"National Taiwan Normal University",hero_image:"/static/assets/ntnu-campus.svg",official_url:"https://bds.oia.ntnu.edu.tw/bds/web/outgoing-info",supported:true,partner_count:236,coverage_note:"116-1校級赴外交換甄選簡章與236所合作校名額條件表已公告（11/01–11/15線上申請）。"},
+      {id:"cycu",school_name:"中原大學",short_name:"中原",aliases:["中原","CYCU","Chung Yuan Christian University"],english_name:"Chung Yuan Christian University",hero_image:"/static/assets/cycu-campus.svg",official_url:"https://oia.cycu.edu.tw/?page_id=2956&lang=zh",supported:true,partner_count:89,coverage_note:"115-2（2027春季出國）國際暨兩岸交換計畫與89所合作校名額、Fact Sheet及36校歷屆交換心得已完整整合。"},
+      {id:"ntust",school_name:"國立臺灣科技大學",short_name:"臺科大",aliases:["國立台灣科技大學","臺灣科技大學","台灣科技大學","臺科大","台科大","NTUST","Taiwan Tech"],english_name:"National Taiwan University of Science and Technology",hero_image:"/static/assets/ntust-campus.svg",official_url:"https://www.oia.ntust.edu.tw/p/412-1060-8921.php?Lang=zh-tw",supported:true,partner_count:237,coverage_note:"115-2（2027春季班）海外暨大陸交換生甄選簡章、237所合作校條件名額表及126校歷屆交換心得已完整整合。"},
     ];
   }
   renderSchoolOptions();
@@ -1421,6 +1423,8 @@ const SCHOOL_BADGES = {
   "天主教輔仁大學": { text: "輔大", tint: 24 },
   "東吳大學": { text: "東吳", tint: 350 },
   "國立臺灣師範大學": { text: "師大", tint: 345 },
+  "中原大學": { text: "中原", tint: 45 },
+  "國立臺灣科技大學": { text: "臺科", tint: 205 },
 };
 const SCHOOL_EMBLEM_FILES = {};
 
