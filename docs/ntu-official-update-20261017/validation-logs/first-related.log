@@ -1,0 +1,42 @@
+CONFTEST LOADED!
+..................................F.F.............                       [100%]
+=================================== FAILURES ===================================
+__________ test_bundle_does_not_promote_contract_or_historical_quotas __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-1/test_bundle_does_not_promote_c0')
+
+    def test_bundle_does_not_promote_contract_or_historical_quotas(tmp_path):
+        partners = fetch_ntu_partner_universities()
+        assert len(partners) == 289
+        assert len({partner.source_url for partner in partners}) == 289
+        assert len({school_identity_key(partner.school_name) for partner in partners}) == 289
+        assert sum(partner.quota is None for partner in partners) == 262
+        assert sum(partner.quota == "0 名" for partner in partners) == 7
+        assert all(partner.availability_status != "open" for partner in partners)
+>       assert all(not partner.study_period or "名" not in partner.study_period for partner in partners)
+E       assert False
+E        +  where False = all(<generator object test_bundle_does_not_promote_contract_or_historical_quotas.<locals>.<genexpr> at 0x7f1acad302b0>)
+
+tests/test_ntu_integration.py:68: AssertionError
+_________ test_ntu_catalog_api_works_offline_and_keeps_pending_visible _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f1acbb371d0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-1/test_ntu_catalog_api_works_off0')
+
+    def test_ntu_catalog_api_works_offline_and_keeps_pending_visible(monkeypatch, tmp_path):
+        def network_not_allowed():
+            raise AssertionError("NTU must not fetch CGU or NTPU at runtime")
+        monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(network_not_allowed))
+        monkeypatch.setattr("exchange_info.api.fetch_ntpu_partner_universities", network_not_allowed)
+        client = TestClient(create_app(tmp_path))
+>       assert [row["id"] for row in client.get("/universities").json()] == ["cgu", "ntpu", "ntu", "ccu", "ncu", "tku"]
+E       AssertionError: assert ['cgu', 'ntpu...', 'tku', ...] == ['cgu', 'ntpu... 'ncu', 'tku']
+E
+E         Left contains 3 more items, first extra item: 'fju'
+E         Use -v to get more diff
+
+tests/test_ntu_integration.py:98: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_integration.py::test_bundle_does_not_promote_contract_or_historical_quotas
+FAILED tests/test_ntu_integration.py::test_ntu_catalog_api_works_offline_and_keeps_pending_visible
+2 failed, 48 passed in 28.60s

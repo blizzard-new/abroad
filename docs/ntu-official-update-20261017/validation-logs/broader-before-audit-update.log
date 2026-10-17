@@ -1,0 +1,51 @@
+CONFTEST LOADED!
+F....................................................................... [ 47%]
+............................................................s........... [ 95%]
+.......                                                                  [100%]
+=================================== FAILURES ===================================
+_________ test_all_288_summaries_reach_dashboard_and_keep_source_text __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-6/test_all_288_summaries_reach_d0')
+
+    def test_all_288_summaries_reach_dashboard_and_keep_source_text(tmp_path):
+        partners = fetch_ntu_partner_universities()
+        dashboard = TestClient(create_app(tmp_path)).get('/student-dashboard', params={'school': 'NTU'}).json()
+        assert len(dashboard['partner_universities']) == 289
+        for raw, payload in zip(partners, dashboard['partner_universities']):
+            summary = payload['student_summary_zh']
+            for key in ('eligibility_points', 'application_steps', 'tuition_points'):
+                assert summary[key] and '116-1' in summary[key][0]
+                assert raw.source_url in '\n'.join(summary[key])
+            if raw.eligibility:
+                assert '本校' in '\n'.join(summary['eligibility_points'])
+            else:
+                assert '尚未取得資格文字' in '\n'.join(summary['eligibility_points'])
+            assert summary['translated_from_english'] is False
+        # Existing accurate portal extraction must survive the supplemental review.
+        snapshot=json.loads(gzip.decompress((ROOT/'sources/ntu/2026-10-08-import.json.gz').read_bytes()))
+        old=[json.loads(line)['partner'] for line in snapshot['files']['verification/partners-116-1-updated-candidates.jsonl'].splitlines()]
+        # A later dated portal batch changes only its verified reference text.
+        changes=json.loads((ROOT/'sources/ntu/2026-10-10-official-changes.json').read_text())
+        by_url={row['official_url']:row for row in changes['schools']}
+        for row in old:
+            if row['source_url'] in by_url:
+                row['eligibility']=by_url[row['source_url']]['sections_by_heading']['申請資格']['text']
+        current=json.loads((ROOT/'sources/ntu/2026-10-14-official-update.json').read_text())
+        uw_url=f"https://oia.ntu.edu.tw/outgoing/view/semester/1/sn/{current['uw_update']['portal_id']}"
+        for row in old:
+            if row['source_url']==uw_url:
+                row['eligibility']=current['uw_update']['portal_eligibility_after']
+        for np in current.get('new_partners',[]):
+            old.append({'school_name':np['school_name'],'country':np['country'],'eligibility':np['eligibility_text'],'tuition_info':np['tuition_text']})
+>       assert [(p.school_name,p.country,p.eligibility,p.tuition_info) for p in partners] == [
+            (p['school_name'],p['country'],p['eligibility'],p['tuition_info']) for p in old]
+E       AssertionError: assert [('聖保羅大學', '巴...均須自行負擔'), ...] == [('聖保羅大學', '巴...均須自行負擔'), ...]
+E
+E         At index 1 diff: ('里約熱內盧天主教大學', '巴西', '一般組\n本校大二以上\n(僅限大學部)\n學生。（以報名交換學生甄選時，本校教務處學籍系統上之年級為準），前述「以上」包含該年級\xa0(The term ‘at least’ includes the specified year itself.)。\nGPA 達3.00分以上。\nTOEFL iBT 79 (不接受 Home Edition) 或 IELTS 6.0，僅具備前述英文能力者，需主動確認是否具備足夠英文授課課程，減少遭到拒收之風險\xa0(Students who only hold English proficiency requirements should confirm the availability of sufficient English-taught courses to minimise the risk of rejection.)。\n或\n具葡萄牙語能力證明，CEFT B1 or above 或本校修讀葡萄牙語4個學期以上成績及格證明\xa0(or\xa0proof of having completed at least four (4) semesters of Portuguese language cour...
+E
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_ntu_audit.py:58: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_audit.py::test_all_288_summaries_reach_dashboard_and_keep_source_text
+1 failed, 149 passed, 1 skipped in 126.41s (0:02:06)

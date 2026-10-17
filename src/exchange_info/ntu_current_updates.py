@@ -528,4 +528,7 @@ def apply_current_updates(bundle: Path, path: Path = SOURCE) -> dict:
                             "pdf_pages_cited": [1, 2],
                         })
         cp_path.write_text(json.dumps(cp_list, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    from .ntu_oct17_updates import SOURCE as OCT17_SOURCE, apply_updates
+    if OCT17_SOURCE.exists():
+        apply_updates(bundle)
     return data["counts"]

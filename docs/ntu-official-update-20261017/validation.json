@@ -1,0 +1,64 @@
+{
+  "checked_at": "2026-10-17T02:41:38.927795+00:00",
+  "base_main_sha": "4ac91d3909c9edc2d3f262296d07586fd81cb9fd",
+  "source_and_api_tests": {
+    "command": ".venv/bin/python -m pytest -q -rs tests/test_ntu*.py tests/test_application_rules.py tests/test_application_documents_api.py tests/test_ccu_overseas.py::test_production_renderer_shows_years_conflicts_gaps_and_escapes_source_text tests/test_ccu_overseas.py::test_life_renderer_keeps_ccu_reference_and_missing_fields_visible",
+    "passed": 153,
+    "skipped": 1,
+    "failed": 0,
+    "skipped_reason": "existing opt-in isolated Docker PostgreSQL test; EXCHANGE_TEST_POSTGRES was not set",
+    "log": "validation-logs/tests-final.log"
+  },
+  "final_browser_tests": {
+    "command": "PLAYWRIGHT_BROWSERS_PATH=<installed-chromium> .venv/bin/python -m pytest -q tests/e2e/test_ntu_oct17_scope.py tests/e2e/test_ntu_reference_scope.py",
+    "passed": 12,
+    "failed": 0,
+    "viewport_widths": [
+      390,
+      1440
+    ],
+    "new_reference_cases": 8,
+    "existing_reference_regressions": 4,
+    "log": "validation-logs/browser-final.log"
+  },
+  "javascript_syntax": {
+    "files": [
+      "app.js",
+      "ccu-partner-details.js",
+      "platform-detail.js"
+    ],
+    "node_check_passed": true
+  },
+  "offline_rebuild": {
+    "files": 17,
+    "all_byte_identical": true,
+    "evidence": "offline-rebuild.json"
+  },
+  "artifact_validation": "artifact-validation.json",
+  "preserved_partner_rows": 263,
+  "changed_partner_rows": 26,
+  "preserved_historical_observations": 1485,
+  "formal_quota_changed": false,
+  "current_cycle_fully_verified": 0,
+  "new_skips_added": false,
+  "other_home_university_data_changed": false,
+  "deployed": false,
+  "watchdog_operations": false,
+  "database_operations": false,
+  "schedules_changed": false,
+  "library_status": "prior 401 output-upload block; no retry or fabricated file ID in this batch",
+  "log_copy_normalization": "Readable copies strip trailing whitespace only; original stdout is preserved byte-for-byte in validation-logs-original.zip.",
+  "original_log_sha256": {
+    "broader-before-audit-update.log": "a7f37c663bf4050f4bab2d8ad689f2cbd20b5c70ac4db7a43cc0bad5185d5d64",
+    "browser-before-renderer-review.log": "ebfb18ff69365ae4320f032330e3cbe59a35fab14e139e77a2fb32da32c426c7",
+    "browser-before-specific-region.log": "80ded78190d46b3427b614c231c400884c7e827da499782c1b3eab7a9db7e3f7",
+    "browser-final.log": "6cc83c64b76a31795cdaadd1581b687f7c9d416979069b92fa5834abc029ee55",
+    "first-related.log": "05303c9558fec4dc16505c3483cba50fdfa8929479faf506534f5f8a89f5cbd9",
+    "fixed-audit-and-quota.log": "5fb6e87737fa6efe3cf24895806cf8b77be365a5fca2d6fbe69d2e4ce3b82f53",
+    "main-baseline.log": "5a06d4308678e13f29506621ebd16f4ab5c75d2272ec1b00494b5de0ac72d5fa",
+    "offline-rebuild.log": "d765c446c53e34418b74d251b40ebbb3a1406b497608e8286e5f34ce87a49ccd",
+    "related-before-test-status-correction.log": "b967a88ce496efe290a09373d39f922bb4584042d9e43b3553fc406bceadb373",
+    "reviewed-related-before-fixes.log": "5775bbb98fedacf107585dff8ced5e6f9b246d45dbe6503ccc648002921bee17",
+    "tests-final.log": "238eb03c9fde60fb747c89c00ac363eb140b1e64efcd60e618998f288fc65631"
+  }
+}

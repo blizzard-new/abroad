@@ -1,0 +1,24 @@
+CONFTEST LOADED!
+....................................F.............                       [100%]
+=================================== FAILURES ===================================
+_________ test_ntu_catalog_api_works_offline_and_keeps_pending_visible _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f8250660d70>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-0/test_ntu_catalog_api_works_off0')
+
+    def test_ntu_catalog_api_works_offline_and_keeps_pending_visible(monkeypatch, tmp_path):
+        def network_not_allowed():
+            raise AssertionError("NTU must not fetch CGU or NTPU at runtime")
+        monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(network_not_allowed))
+        monkeypatch.setattr("exchange_info.api.fetch_ntpu_partner_universities", network_not_allowed)
+        client = TestClient(create_app(tmp_path))
+>       assert [row["id"] for row in client.get("/universities").json()] == ["cgu", "ntpu", "ntu", "ccu", "ncu", "tku"]
+E       AssertionError: assert ['cgu', 'ntpu...', 'tku', ...] == ['cgu', 'ntpu... 'ncu', 'tku']
+E
+E         Left contains 3 more items, first extra item: 'fju'
+E         Use -v to get more diff
+
+tests/test_ntu_integration.py:98: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_integration.py::test_ntu_catalog_api_works_offline_and_keeps_pending_visible
+1 failed, 49 passed in 27.71s
