@@ -1031,7 +1031,7 @@ def _scu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
 def _ntnu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
         "exchange-application-data": "整理國立臺灣師範大學 116-1（2027 春季出國）校級赴外交換生甄選之個人資料、志願序（四語組擇一組別報名，最多選填 10 個志願）、歷年成績與全英語授課（EMI）修課紀錄、語言檢定及報名費 NT$500 繳費收據；正式申請須於 2026/11/01–11/15 23:59:59 前登入 https://bds.oia.ntnu.edu.tw/bds/OE 完成線上填報與上傳（免繳紙本）。",
-        "study-plan": "撰寫臺師大校級赴外交換必繳之自傳及讀書計畫（中英文皆可，字數限 500–5,000 字，占甄選總成績 20%；內容應包含交換動機、擬於第一志願姊妹校修習之課程規劃、研究主題及返國後學術連結）。",
+        "study-plan": "撰寫臺師大校級赴外交換必繳之「自傳與出國學習計畫」（合併為一份文件，占甄選總成績 20%；中文或外文撰寫、格式不限，線上上傳清單規定中英文合計須介於 500–5,000 字，建議加附外文版本約 500–2,500 字；簡章申請資料欄另載「一千字以上」，兩處規定不同時可寫滿 1,000 字以上並向國際處確認）。官方未規定內容項目，簡章 FAQ 說明重點是讓審查委員瞭解你的特質、背景、赴國外的研習計畫與自我期許。",
         "course-preapproval": "出國前規劃於接待姊妹校修習之科目（依臺師大簡章規定，赴外交換每學期至少須修習 2 門課程或 6 學分，歐洲 2 ECTS 折算臺師大 1 學分；赴大陸地區修習之學分不得採認或抵免師資培育職前教育專業課程學分）。",
         "predeparture-notice": "分發錄取後於系統完成線上確認（第 1 次分發 2026/12/11、第 2 次分發 12/15–12/18），並依姊妹校申請截止日準備外校入學申請文件、財力證明、護照、簽證與海外醫療及意外保險（確認錄取後無不可抗力放棄者須繳納 NT$5,000 行政手續費且在學期間不得再報名校級交換）。",
         "return-report": "交換期滿返國後 1 個月內於國際事務處系統上傳赴外交換學生返國心得報告及照片，並配合國際處經驗分享活動（若領取校內或教育部學海飛颺／惜珠獎助學金，須完成返國報告及核銷始撥付尾款）。",
@@ -1076,10 +1076,10 @@ def _ntnu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
 def _cycu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
         "exchange-application-data": "整理中原大學 115-2（2027 春季出國）出國交換研修計畫之個人資料、志願學校、歷年學業成績（GPA 3.0 以上或班級排名前 30%；建築學系為前 50%）、外語能力檢定證明與保證人同意書資訊；正式申請須檢附導師、系主任、院長核章之校內申請表送交國際暨兩岸教育處（維澈樓 704 室）。",
-        "study-plan": "撰寫中原大學出國交換研修必繳之中英文讀書計畫（含出國修課動機、擬於目標姊妹校修習之專業科目與學分規劃、研究主題及返國後學涯連結；請使用國際處規定之申請附件格式）。",
+        "study-plan": "撰寫中原大學出國交換甄選必繳之中文及英文讀書計畫（Study Plan）與中文及英文自傳，連同個人履歷表（CV）以國際處規定格式之電子檔寄送；官方資料未規定讀書計畫的內容項目或字數。非大陸地區的校內甄選面試表現占總成績 40%，其細項中讀書計畫占 20%。",
         "course-preapproval": "出國前規劃於接待姊妹校修習之科目（依中原大學《選送學生出國研習實施辦法》規定，出國交換期間每學期至少應修習二門科目或相當於中原大學六學分之課程，並填寫學生出國修習課程申請表經系所預審）。",
         "predeparture-notice": "通過校內甄選並獲推薦提名後，依姊妹校規定準備外校入學申請表、英文財力證明、有效護照、簽證、家長／保證人同意書及海外醫療與意外保險證明。",
-        "return-report": "交換研習期滿返國後二個月內，向國際暨兩岸教育處繳交 1,500 字以上之出國交換研修心得報告（含照片授權），並配合國際處辦理成果分享始得完成結案與獎助學金核銷。",
+        "return-report": "領取《中原大學學生赴海外姊妹校交換學習助學辦法》助學金者，須於返國後二週內向國際暨兩岸教育處提交研習成果報告書辦理核銷，並出席國際處辦理之交換生說明會；官方資料未公布心得報告的字數、照片或授權格式，請依國際處通知準備。",
         "credit-transfer": "交換期滿返國後，持接待姊妹校核發之正式成績單正本、修課大綱（Syllabus）及修課時數證明，依中原大學教務處與所屬學系規定辦理國外修習科目學分採認／抵免。",
     }
     if template.id not in descriptions:
@@ -1110,7 +1110,7 @@ def _cycu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
         default_copies=1,
         signatures=["申請學生簽名", "家長／保證人簽章", "導師簽章", "系主任簽章", "院長簽章"] if template.id == "exchange-application-data" else [],
         stamps=[],
-        stage={"predeparture-notice": "外校提名與簽證保險準備", "return-report": "返國後二個月內", "credit-transfer": "返國開學後"}.get(template.id, "校內申請表件送件（維澈樓 704 室）"),
+        stage={"predeparture-notice": "外校提名與簽證保險準備", "return-report": "返國後二週內（領取助學金者）", "credit-transfer": "返國開學後"}.get(template.id, "校內申請表件送件（維澈樓 704 室）"),
         version="115-2準備工具-2026-10-16.1",
         destinations=["中原大學國際暨兩岸教育處（維澈樓 704 室）", "所屬學系／學院辦公室"],
         conditional_note="此為個人準備工具；中原大學正式出國交換申請表件請自 https://oia.cycu.edu.tw/?page_id=2968&lang=zh 下載，完成導師、系主任及院長核章後於截止日前送交國際暨兩岸教育處（維澈樓 704 室）。",
@@ -1121,7 +1121,7 @@ def _cycu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
 def _ntust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
         "exchange-application-data": "整理國立臺灣科技大學 115-2（2027 春季班）海外暨大陸地區交換生甄選之個人資料、志願序、歷年成績與名次證明（海外交換須全班前 70%；大陸交換須大學部平均 75 分、研究所 80 分以上）及外語檢定成績（語言能力占總成績 60%、在校成績占 20%、課外表現占 20%）。",
-        "study-plan": "撰寫臺科大出國交換甄選必繳之自傳與讀書計畫（含交換動機、擬於目標姊妹校修習之專業科目、研究計畫與課外國際交流表現；校內書面審查課外表現與讀書計畫占總分 20%）。",
+        "study-plan": "撰寫臺科大出國交換甄選必繳之出國學習計畫書（Study Plan）與自傳（歐美亞澳簡章：中、英文讀書計畫與中、英文自傳各一份，格式不拘、每份約 1–2 頁；計畫書可針對特定國家或學校撰寫，亦可概述目前的學習規劃及交換期間與交換後的安排）。校內總積分僅計外語檢定 60%、在校學業 20%、課外表現證明 20%，計畫書與自傳不另計分。",
         "course-preapproval": "出國前規劃於接待姊妹校修習之科目（依臺科大《學生出國期間有關學業及學籍處理要點》規定，交換期間須維持臺科大在學學籍並依規定修課，返國後辦理學分採認抵免）。",
         "predeparture-notice": "放榜錄取後於期限內繳交《錄取資格確認書》（或放棄聲明書），並依國際處與姊妹校規定準備外校線上申請表、英文歷年成績單、英文在學證明、英文財力證明、護照、簽證與海外醫療保險。",
         "return-report": "交換期滿返國後 1 個月內，登入臺科大國際事務處出國交換學生心得分享系統（https://www.oia.ntust.edu.tw/p/404-1060-66857.php?Lang=zh-tw）填寫並上傳研修心得報告及照片，始得完成結案與獎學金尾款核銷。",
@@ -1165,11 +1165,11 @@ def _ntust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
 
 def _yzu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
-        "exchange-application-data": "整理元智大學 115-2（2027 春季班）出國暨赴大陸地區交換學生申請表（CF-01-R1）之個人基本資料、志願學校（最多 5 所）、歷年學業總平均與排名百分比（GPA 2.5 或平均 65 分以上）、外語能力檢定證明（語言能力占 40%、學業成績占 30%、出國研修計畫與自傳占 30%）及保證金 NT$5,000 繳費資訊。",
-        "study-plan": "撰寫元智大學出國交換甄選必繳之《出國交換學生研修計畫書》（CF-02-R3）與中英文自傳（含出國交換動機、擬於目標姊妹校修習之專業科目與學分規劃、研究計畫及返國後學涯連結；出國研修計畫與自傳占校內書審總分 30%）。",
+        "exchange-application-data": "整理元智大學 115-2（2027 春季班）出國暨赴大陸地區交換學生志願表（CF-01-R1）與申請表（CF-02-R3）之個人基本資料、志願學校（校級至多 2 志願、管院院級至多 2 志願）、歷年學業總平均與排名百分比（GPA 2.5 或平均 65 分以上）、外語能力檢定證明（校級第一階段校內評比為系排名 50%＋英文檢定 50%）及保證金 NT$5,000 繳費資訊。",
+        "study-plan": "撰寫元智大學出國交換甄選之中英文讀書計畫（Study Plan；赴大陸交換須含 500 字以上中文讀書計畫）；說明會簡報與申請表勾選清單另列英文自傳及英文學習計畫書為複審文件，請向全球事務處確認當期要求。CF-02-R3 為《出國交換學生申請表》（須經導師／指導教授及系所主任簽章），並非研修計畫書。第一階段校內評比公式（系排名 50%＋英文檢定 50%）不含讀書計畫與自傳；官方未公布計畫內容項目與字數規定（大陸交換之 500 字除外）。",
         "course-preapproval": "出國前填寫《學生境外選課申請單》（表單編號 1-51），依元智大學《學生境外選課實施要點》規定，大學部每學期至少修習相當於元智大學 6 學分、研究生至少修習 1 門課（3 學分），並經所屬學系預審核可。",
         "predeparture-notice": "通過校內甄選放榜後繳交《錄取資格確認書》（CF-04），並依全球事務處與姊妹校規定準備外校線上申請表、英文歷年成績單、英文財力證明、有效護照、簽證與海外醫療及意外保險證明。",
-        "return-report": "交換期滿返國後二個月內，向全球事務處繳交 2,000 字以上之出國交換研修電子心得報告（含照片 4 張以上），經審核通過後始得辦理 NT$5,000 保證金退還及獎助學金尾款核銷。",
+        "return-report": "交換期滿返國後 2 週內，向全球事務處繳交 1,500 字以上之研修心得報告與 6 張照片，並完成學分抵免後，NT$5,000 保證金始全額無息退還；領取獎助學金者另須依切結書（CF-04）第十七條於回國後 14 日內繳交電子機票、來回登機證正本及對方學校學生證副本等文件（切結書第十條另規定交換期滿後兩個月內須返回元智大學，此為返校期限，並非心得報告期限）。",
         "credit-transfer": "交換期滿返國後，持接待姊妹校核發之正式成績單正本、修課大綱（Syllabus）及修課時數證明，連同原核准之《學生境外選課申請單》（表單 1-51）向教務處與所屬學系辦理國外修習科目學分採認／抵免。",
     }
     if template.id not in descriptions:
@@ -1185,22 +1185,22 @@ def _yzu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     payload = adapt(template.model_dump(mode="json"))
     for field in payload["fields"]:
         if field["id"] == "class_rank_percent":
-            field["help_text"] = "元智大學規定歷年學業總平均須達 65 分或 GPA 2.5 以上（管理學院院級為 GPA 2.75 以上），歷年學業成績占校內甄選總分 30%；請檢附教務處核發之歷年中文與英文成績單正本（含排名百分比）。"
+            field["help_text"] = "元智大學規定歷年學業總平均須達 65 分或 GPA 2.5 以上（管理學院院級為 GPA 2.75 以上）；校級第一階段校內評比以系排名占 50%；請檢附教務處核發之歷年中文與英文成績單正本（含排名百分比）。"
         if field["id"] == "language_test":
             field["options"] = ["TOEFL iBT", "IELTS Academic", "TOEIC", "JLPT（N1–N4）", "TOPIK（韓檢 1–6 級）", "DELF / DALF / TCF（法語）", "Goethe / TestDaF（德語）", "DELE（西語）", "赴大陸交換免附外語檢定"]
-            field["help_text"] = "語言能力占校內甄選總分 40%（基本門檻：TOEIC 550 / TOEFL iBT 57 / IELTS 4.5 / JLPT N4 / TOPIK 1級，且須符合各姊妹校申請門檻；管理學院院級為 TOEFL iBT 79 / IELTS 6.0 / TOEIC 750；赴大陸交換免附外語檢定）。"
+            field["help_text"] = "校級第一階段校內評比以英文檢定成績占 50%（基本門檻：TOEIC 550 / TOEFL iBT 57 / IELTS 4.5 / JLPT N4 / TOPIK 1級，且須符合各姊妹校申請門檻；管理學院院級為 TOEFL iBT 79 / IELTS 6.0 / TOEIC 750；赴大陸交換免附外語檢定）。"
     payload.update(
         description=descriptions[template.id],
         source_url="https://www.yzu.edu.tw/admin/ao/index.php/tw/2016-03-28-08-35-08/2016-05-06-03-07-02/1319-2026-09-09-02-40-50",
         source_checked_at=YZU_SOURCE_CHECKED_AT,
         official_layout=False,
-        official_form_number="CF-01-R1" if template.id == "exchange-application-data" else ("CF-02-R3" if template.id == "study-plan" else ("1-51" if template.id == "course-preapproval" else None)),
+        official_form_number="CF-01-R1" if template.id == "exchange-application-data" else ("1-51" if template.id == "course-preapproval" else None),
         official_file_name=None,
         official_download_url="https://www.yzu.edu.tw/admin/ao/index.php/tw/2016-03-28-08-35-08/2016-04-21-01-33-53",
         default_copies=1,
         signatures=["申請學生簽名", "家長／監護人簽章", "導師／指導教授簽章", "系所主管簽章"] if template.id == "exchange-application-data" else [],
         stamps=[],
-        stage={"predeparture-notice": "錄取確認（CF-04）與外校提名送件", "return-report": "返國後二個月內（辦理保證金退還）", "credit-transfer": "返國開學後"}.get(template.id, "線上填表並列印紙本送交全球事務處（七館 3 樓 R70306）"),
+        stage={"predeparture-notice": "錄取確認（CF-04）與外校提名送件", "return-report": "返國後 2 週內（辦理保證金退還）", "credit-transfer": "返國開學後"}.get(template.id, "線上填表並列印紙本送交全球事務處（七館 3 樓 R70306）"),
         version="115-2準備工具-2026-10-17.1",
         destinations=["元智大學全球事務處（七館 3 樓 R70306）", "管理學院國際事務辦公室（六館 R60404，管院院級適用）"],
         conditional_note="此為個人準備工具；元智大學正式出國交換申請表件（CF-01-R1、CF-02-R3 等）請自全球事務處表單下載區下載，完成導師及系主任核章並連同 NT$5,000 保證金繳費收據於截止日前送交全球事務處（R70306）。",
@@ -1211,7 +1211,7 @@ def _yzu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
 def _fcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
         "exchange-application-data": "整理逢甲大學選送學生出國研修申請資訊簡表（oiasap 系統線上填報，至多 5 所志願學校）、家長同意書（附件一）、研究生指導教授同意書（附件三）、生輔組核章之在校獎懲紀錄、歷年成績單（GPA 3.0 以上）與外語檢定證明。",
-        "study-plan": "撰寫逢甲大學出國研修簡章必繳之《研修計畫》（簡章附件二，中英文撰寫均可，字數至少 1,000 字，含申請動機、擬於目標姊妹校修習之科目與學分規劃及返國後學習連結）。",
+        "study-plan": "撰寫逢甲大學出國研修簡章必繳之《研修計畫》（簡章附件二，中英文撰寫均可，字數至少 1,000 字；簡章要求分段詳述個人自傳、赴國外研修之動機、出國前於本校之研修學習計畫，及赴國外大學之研修學習計畫，有多個志願學校時請分校簡述）。",
         "course-preapproval": "規劃出國研修期間之選課清單與學分抵免預審（大學部一至三年級每學期至少 12 學分、大學部四年級至少 9 學分、碩博士班至少 3 學分；獲教育部學海飛颺／惜珠獎學金者須修讀至少 4 學分本科系相關專業課程）。",
         "predeparture-notice": "取得姊妹校正式入學許可（LOA）後 2 週內繳交保證金（獲獎助或學費互免交換生 NT$10,000、自費交換生 NT$5,000），並依國際事務處與姊妹校規定完成複審文件、宿舍申請、簽證及海外醫療及意外保險。",
         "return-report": "交換期滿返國後 1 個月內繳交 2,000 字以上之出國研習報告書，且修課及格率達 1/2 以上、學費互免／獲獎生完成每學期 50 小時（兩學期 100 小時）志工服務後，辦理保證金無息退還。",
