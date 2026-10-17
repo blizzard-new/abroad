@@ -21,15 +21,15 @@ TOP = 20
 
 INTERACTIVE_EVENTS = frozenset({
     "click", "school_open", "favorite_toggle", "search", "filter_change", "view_switch", "auth_dialog_open",
-    "auth_start", "auth_success", "school_pick", "school_choose", "advisor_submit", "document_action",
-    "calendar_action", "planning_action", "community_composer_open", "community_topic", "board_follow",
-    "outbound_click", "file_download", "theme_toggle",
+    "auth_start", "auth_success", "school_pick", "school_choose", "home_school_change", "advisor_submit",
+    "document_action", "calendar_action", "planning_action", "community_composer_open", "community_topic",
+    "board_follow", "outbound_click", "file_download", "theme_toggle",
 })
 COMMIT_EVENTS = frozenset({"planning_action", "document_action", "advisor_submit", "calendar_action"})
 FEATURE_EVENTS = (
     "school_open", "favorite_toggle", "search", "filter_change", "view_switch", "advisor_submit",
     "planning_action", "document_action", "calendar_action", "outbound_click", "file_download",
-    "community_composer_open", "community_topic", "board_follow", "school_pick", "theme_toggle",
+    "community_composer_open", "community_topic", "board_follow", "school_pick", "home_school_change", "theme_toggle",
 )
 SEARCH_HOSTS = ("google.", "bing.", "yahoo.", "duckduckgo.", "baidu.", "naver.", "ecosia.", "yandex.")
 SOCIAL_HOSTS = (
@@ -187,6 +187,7 @@ def overview(sessions: Sequence[Session]) -> dict[str, Any]:
     page_views = sum(len(s.page_views) for s in sessions)
     durations = [s.duration_s for s in sessions]
     new = {s.visitor_id for s in sessions if s.new_visitor}
+    bounced = sum(s.bounced for s in sessions)
     return {
         "visitors": len(visitors),
         "sessions": len(sessions),
@@ -198,7 +199,9 @@ def overview(sessions: Sequence[Session]) -> dict[str, Any]:
         "avg_session_seconds": round(statistics.fmean(durations), 1) if durations else 0.0,
         "median_session_seconds": round(statistics.median(durations), 1) if durations else 0.0,
         "avg_engaged_seconds": round(statistics.fmean(s.engaged_ms for s in sessions) / 1000, 1) if sessions else 0.0,
-        "bounce_rate": pct(sum(s.bounced for s in sessions), len(sessions)),
+        "bounce_rate": pct(bounced, len(sessions)),
+        "engaged_session_share": pct(len(sessions) - bounced, len(sessions)),
+        "interactive_session_share": pct(sum(s.interactive for s in sessions), len(sessions)),
         "signed_in_session_share": pct(sum(s.signed_in for s in sessions), len(sessions)),
         "interactions_per_session": round(
             sum(1 for s in sessions for e in s.events if e.name in INTERACTIVE_EVENTS) / len(sessions), 2
@@ -208,7 +211,7 @@ def overview(sessions: Sequence[Session]) -> dict[str, Any]:
 
 def overview_change(current: Mapping[str, Any], previous: Mapping[str, Any]) -> dict[str, float | None]:
     keys = ("visitors", "sessions", "pageviews", "pages_per_session", "avg_session_seconds",
-            "avg_engaged_seconds", "bounce_rate")
+            "avg_engaged_seconds", "bounce_rate", "engaged_session_share", "interactive_session_share")
     return {key: change_pct(current[key], previous[key]) for key in keys}
 
 

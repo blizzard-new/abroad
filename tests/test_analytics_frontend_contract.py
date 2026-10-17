@@ -50,9 +50,15 @@ def test_app_gives_the_tracker_only_coarse_context_and_never_the_account_id():
 
 def test_navigation_debounces_scroll_history_updates_and_tracker_filters_opaque_script_errors():
     navigation = (STATIC / "navigation.js").read_text(encoding="utf-8")
+    dashboard = (STATIC / "analytics-dashboard.js").read_text(encoding="utf-8")
     assert 'window.addEventListener("scroll", saveScroll' not in navigation
     assert 'window.addEventListener("scroll", onScroll, { passive: true })' in navigation
     assert "function safeReplaceState(" in navigation and "function safePushState(" in navigation
     assert "window.setTimeout(saveScroll, 180)" in navigation
     assert "scheduleRouteChanged" in TRACKER
     assert r"/^Script error\.?$/i.test(event.message) && !source && !event.lineno" in TRACKER
+    assert 'document.getElementById("terms-consent")' in TRACKER
+    assert "a[href^='#school=']" in TRACKER
+    assert "data-pr-facet" in TRACKER
+    assert "engaged_session_share" in dashboard and "interactive_session_share" in dashboard
+

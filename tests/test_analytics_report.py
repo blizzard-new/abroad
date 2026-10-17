@@ -129,6 +129,8 @@ def test_headline_numbers_without_the_speed_only_visitors():
     assert current["median_session_seconds"] == 190.0
     assert current["avg_session_seconds"] == pytest.approx(246.25, abs=0.1)
     assert current["bounce_rate"] == 25.0, "only the 3-second Line visit counts as a bounce"
+    assert current["engaged_session_share"] == 75.0, "complement of bounce_rate (3 of 4 sessions engaged)"
+    assert current["interactive_session_share"] == 50.0, "2 of 4 sessions had explicit interactive events"
     assert current["signed_in_session_share"] == 25.0
     assert (previous["visitors"], previous["pageviews"]) == (2, 2)
     assert report["overview"]["change_pct"]["visitors"] == 50.0

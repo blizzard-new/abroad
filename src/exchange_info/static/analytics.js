@@ -192,7 +192,7 @@
   var maxScroll = 0;
   function startPage() {
     touchSession();
-    page = { route: currentRoute(), active: 0 };
+    page = { route: currentRoute(), hash: window.location.hash || "", active: 0 };
     maxScroll = 0;
     var props = routeProps();
     props.title = (document.title || "").slice(0, 100);
@@ -216,7 +216,8 @@
   }
   function routeChanged() {
     var next = currentRoute();
-    if (page && page.route === next) return;
+    var hash = window.location.hash || "";
+    if (page && page.route === next && (next !== "school" || page.hash === hash)) return;
     endPage();
     startPage();
   }
@@ -263,7 +264,8 @@
   // ---- clicks
   // Attribute values can be record ids (a post, a conversation), so only these harmless ones are kept.
   var SAFE_VALUE_KEYS = { "data-detail-target": 1, "data-community-view": 1, "data-calendar-provider": 1,
-    "data-document-type": 1, "data-partner-view": 1, "data-home-school": 1 };
+    "data-document-type": 1, "data-partner-view": 1, "data-home-school": 1, "data-home-landing-school": 1,
+    "data-partner-sort": 1 };
   var DATA_NOISE = { "data-tooltip": 1, "data-lucide": 1, "data-icon": 1, "data-school-name": 1 };
   function dataKey(el) {
     for (var i = 0; i < el.attributes.length; i += 1) {
@@ -281,15 +283,23 @@
     if (el.closest(".discovery-candidate, #favorite-list")) return "favorites";
     if (el.closest("#school-detail-view, #school-detail-content")) return "school_page";
     if (el.closest("#partner-table")) return "list";
+    if (el.closest("#home-landing")) return "home";
+    if (el.closest("#community-hub")) return "forum";
     return "other";
   }
   var SEMANTIC = [
-    [".school-detail-trigger", "school_open", function (el) { return { school: el.getAttribute("data-school-name"), surface: surface(el) }; }],
+    [".school-detail-trigger, a[href^='#school=']", "school_open", function (el) {
+      var name = el.getAttribute("data-school-name");
+      if (!name) {
+        try { name = decodeURIComponent((el.getAttribute("href") || "").replace(/^#school=/, "")); } catch (_) { name = ""; }
+      }
+      return { school: name, surface: surface(el) };
+    }],
     [".favorite-toggle", "favorite_toggle", function (el) { return { school: el.getAttribute("data-school-name"), saved: el.getAttribute("aria-pressed") !== "true", surface: surface(el) }; }],
     ["[data-partner-view]", "view_switch", function (el) { return { view: el.getAttribute("data-partner-view") }; }],
     ["[data-oauth-provider]", "auth_start", function (el) { return { provider: el.getAttribute("data-oauth-provider") }; }],
     ["[data-open-auth], #account-button, #mobile-account-button, #global-mobile-account-button", "auth_dialog_open", function () { return {}; }],
-    ["[data-home-school]", "school_pick", function (el) { return { school: el.getAttribute("data-home-school") }; }],
+    ["[data-home-school], [data-home-landing-school]", "school_pick", function (el) { return { school: el.getAttribute("data-home-school") || el.getAttribute("data-home-landing-school") }; }],
     ["#advisor-submit", "advisor_submit", function () { return {}; }],
     ["[data-generated-document-action], [data-download-application-again], [data-application-packet-template], [data-application-review-template], [data-open-application-template], [data-application-copy-template], [data-application-status-template]", "document_action", function (el) { var d = dataKey(el); return { action: d ? d.key.slice(5) : "unknown" }; }],
     ["[data-enable-calendar-sync], [data-download-calendar-event], [data-calendar-provider], [data-copy-calendar-url], [data-calendar-sync-now]", "calendar_action", function (el) { var d = dataKey(el); return { action: d ? d.key.slice(5) : "unknown" }; }],
@@ -310,10 +320,15 @@
     for (var i = 0; i < SEMANTIC.length; i += 1) {
       var hit = el.closest(SEMANTIC[i][0]);
       if (hit) {
+        if (SEMANTIC[i][1] === "auth_start") {
+          var consent = document.getElementById("terms-consent");
+          if (hit.disabled || (consent && !consent.checked)) return;
+        }
         var props = SEMANTIC[i][2](hit);
         var key = dataKey(hit);
         props.target = hit.id || (key ? key.key : hit.tagName.toLowerCase());
         track(SEMANTIC[i][1], props);
+        if (SEMANTIC[i][1] === "auth_start") flush(true);
         return;
       }
     }
@@ -371,8 +386,15 @@
   }, true);
   document.addEventListener("change", function (event) {
     var el = event.target;
-    if (!active() || !el || !/^(availability|country|college|degree)-filter$/.test(el.id || "")) return;
-    track("filter_change", { filter: el.id.replace(/-filter$/, ""), value: (el.value || "all").slice(0, 60) });
+    if (!active() || !el) return;
+    if (/^(availability|country|college|degree)-filter$/.test(el.id || "")) {
+      track("filter_change", { filter: el.id.replace(/-filter$/, ""), value: (el.value || "all").slice(0, 60) });
+      return;
+    }
+    var facet = el.getAttribute && el.getAttribute("data-pr-facet");
+    if (facet) {
+      track("filter_change", { filter: facet, value: el.checked ? String(el.getAttribute("value") || "all").slice(0, 60) : "all" });
+    }
   }, true);
 
   // ---- errors and performance
