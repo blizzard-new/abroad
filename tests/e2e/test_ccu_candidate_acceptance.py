@@ -20,6 +20,7 @@ from exchange_info.ccu_student_view import fetch_ccu_partner_universities
 from exchange_info.storage import ensure_data_dirs
 
 from .conftest import (
+    expand_details,
     LiveServer,
     _copy_public_fixture_data,
     enter_public_site,
@@ -166,6 +167,7 @@ def test_real_school_search_matching_comparison_plan_reload_and_home_isolation(p
     else:
         department.fill("法律學系")
     page.locator("#advisor-degree").select_option("碩士班")
+    expand_details(page, "#advisor-qualification-fields")
     page.locator("#advisor-academic-score").fill("85")
     page.locator("#advisor-academic-gpa").fill("3.5")
     page.locator("#advisor-language-test").select_option("ielts")
@@ -178,6 +180,7 @@ def test_real_school_search_matching_comparison_plan_reload_and_home_isolation(p
     expect(page.locator("#advisor-profile-status")).to_have_text("已保存條件")
     capture(page, "real-advisor", width)
     navigate(page, "overview")
+    expand_details(page, "#application-plan-details")
     expect(page.locator("#multi-plan-workspace")).to_be_visible()
     page.locator("#multi-plan-settings > summary").click()
     selects = page.locator("#multi-plan-preferences select")

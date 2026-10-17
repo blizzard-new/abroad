@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="/static/platform-redesign.css?v=20261017-explore-cards-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
-    <link rel="stylesheet" href="/static/application-workspace.css?v=20261016-subtabs-1" />
+    <link rel="stylesheet" href="/static/application-workspace.css?v=20261018-guidance-1" />
     <link rel="stylesheet" href="/static/document-workbench.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/destination-tips.css?v=20261004-tips-2" />
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
@@ -680,7 +680,8 @@
               <button id="feedback-again" type="button" class="secondary-button">再寫一則</button>
             </section>
           </section>
-          <section id="overview" class="overview-section visual-overview" data-university-page="overview" aria-labelledby="personal-plan-title">
+          <section id="overview" class="overview-section visual-overview" data-university-page="overview" aria-labelledby="tracker-title">
+            <div id="planning-next-action" class="planning-next-action" aria-live="polite"></div>
             <section id="my-applications" class="pr-tracker" aria-labelledby="tracker-title">
               <header class="pr-tracker-head">
                 <div class="pr-tracker-title"><h1 id="tracker-title">我的申請</h1><span class="pr-status-pill"><i aria-hidden="true"></i><span id="tracker-pill">交換申請</span></span></div>
@@ -703,12 +704,13 @@
               </div>
             </section>
 
+            <details id="application-plan-details" class="application-disclosure">
+              <summary><span><strong>目標學校與我的條件</strong><small>查看推薦、比較與調整志願</small></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
             <section class="personal-plan-board glass-panel" aria-labelledby="personal-plan-title">
               <div class="concise-heading">
                 <div><h2 id="personal-plan-title">我的交換計畫</h2></div>
                 <a href="#advisor"><span>調整我的條件</span><i data-lucide="sliders-horizontal" aria-hidden="true"></i></a>
               </div>
-              <div id="planning-next-action" class="planning-next-action" aria-live="polite"></div>
               <div id="personal-plan-snapshot" class="personal-plan-snapshot"><div class="skeleton skeleton-card"></div></div>
             </section>
 
@@ -733,6 +735,7 @@
               <p id="multi-plan-status" role="status" aria-live="polite"></p>
               <div id="multi-plan-tasks"></div>
             </section>
+            </details>
             <section id="planning-workspace" class="planning-workspace glass-panel" aria-labelledby="planning-title">
               <div class="concise-heading"><div><span class="section-kicker">選校之後，接著準備</span><h2 id="planning-title">安排我的準備時程</h2></div><a href="#calendar">查看完整日曆</a></div>
               <div id="planning-target-summary" class="planning-target-summary"></div>
@@ -749,6 +752,8 @@
               <button id="planning-update-durations" type="button" class="secondary-button" hidden>更新各項準備天數並重新預覽</button>
               <button id="planning-confirm" type="button" class="primary-button" hidden><i data-lucide="calendar-plus" aria-hidden="true"></i><span>確認加入我的時程</span></button>
             </section>
+            <details id="application-schedule-details" class="application-disclosure">
+              <summary><span><strong>進階時間安排</strong><small>需要時再設定工時、每週空檔與任務順序</small></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
             <section id="journey-workspace" class="journey-workspace glass-panel" aria-labelledby="journey-workspace-title" hidden>
               <header class="concise-heading"><div><span class="section-kicker">讓準備符合你的生活</span><h2 id="journey-workspace-title">我的準備工作台</h2></div><a href="#calendar">完整日曆<i data-lucide="arrow-right" aria-hidden="true"></i></a></header>
               <div id="journey-today" class="journey-today" aria-live="polite"></div>
@@ -768,6 +773,7 @@
               <details id="journey-task-settings" class="journey-settings"><summary>任務工時、前置關係與文件<i data-lucide="list-checks" aria-hidden="true"></i></summary><div id="journey-task-editors" class="journey-task-editors"></div></details>
               <div id="journey-schedule-result" class="journey-schedule-result" aria-live="polite"></div>
             </section>
+            </details>
             <section class="planning-documents glass-panel"><span class="planning-documents-icon"><i data-lucide="folder-check" aria-hidden="true"></i></span><div><h2>接著，準備申請文件</h2><p id="planning-document-status" aria-live="polite">目標學校會帶入文件工作區，依當期規定確認表格、簽章與份數。</p></div><a href="#application-center" class="secondary-button">開啟申請文件<i data-lucide="arrow-right" aria-hidden="true"></i></a></section>
           </section>
 
@@ -846,7 +852,7 @@
 
           <section id="advisor" class="page-section advisor-section" data-university-page="advisor" aria-labelledby="advisor-title" hidden>
             <header class="advisor-hero">
-              <div><h2 id="advisor-title">選校規劃</h2><p>填一次條件，查看推薦與缺口，再選擇目標學校安排時程。</p></div>
+              <div><span class="section-kicker">第一步 · 找到適合你的交換學校</span><h2 id="advisor-title">先從認識你開始</h2><p>先填學院與學制，就能開始探索。成績和語言檢定還沒準備好也沒關係，之後再補。</p><a class="text-action" href="#partners" data-requires-home-school>還沒有方向？先逛交換學校<i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
               <span class="advisor-hero-icon" aria-hidden="true"><i data-lucide="sparkles"></i></span>
             </header>
             <div class="advisor-layout">
@@ -856,14 +862,19 @@
                   <label><span>學院</span><select id="advisor-college" name="college"></select></label>
                   <label><span>所屬系所</span><select id="advisor-department" name="department" aria-describedby="advisor-department-note" disabled><option value="">請先選擇學院</option></select><input id="advisor-department-text" name="department" type="text" maxlength="120" placeholder="請填學籍上的系所或學位學程" aria-describedby="advisor-department-note" hidden disabled /></label>
                   <label><span>學制</span><select id="advisor-degree" name="degree_level"><option value="">尚未設定</option><option value="大學部">大學部</option><option value="碩士班">碩士班</option><option value="博士班">博士班</option><option value="研究所">研究所（尚未區分碩博士）</option></select></label>
+                  <label><span>想去的國家／地區</span><select id="advisor-country" name="preferred_country"></select></label>
+                  <label><span>預計出國學期</span><select id="advisor-target-term" name="target_term"><option value="">尚未決定</option><option value="2027-spring">2027 春季</option><option value="2027-fall">2027 秋季</option><option value="2028-spring">2028 春季</option><option value="2028-fall">2028 秋季</option></select></label>
+                </div>
+                <p class="academic-directory-note"><span id="advisor-department-note">選擇學院後顯示所屬系所。</span><a id="advisor-department-source" target="_blank" rel="noopener noreferrer" hidden>官方名單</a></p>
+                <details id="advisor-qualification-fields" class="advisor-more-fields">
+                  <summary><span><i data-lucide="graduation-cap" aria-hidden="true"></i><strong>成績與語言能力</strong><small>探索時可稍後補</small></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+                  <div class="advisor-fields">
                   <label id="advisor-percent-field"><span>學業平均</span><input id="advisor-academic-score" name="academic_score" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="例如 82" /></label>
                   <label id="advisor-gpa-field" data-ntu-academic-field hidden><span id="advisor-gpa-label">適用學年GPA（4.3制）</span><input id="advisor-academic-gpa" name="academic_gpa" type="number" min="0" max="4.3" step="0.01" inputmode="decimal" placeholder="例如 2.44；與排名擇一" disabled /></label>
                   <label data-ntu-academic-field hidden><span>適用學年班排名（前幾%）</span><input id="advisor-class-rank" name="class_rank_percent" type="number" min="0.01" max="100" step="0.01" inputmode="decimal" placeholder="例如前30%填30" disabled /></label>
                   <label><span>語言測驗</span><select id="advisor-language-test" name="language_test"><option value="">尚未考／尚未決定</option><option value="toeic">TOEIC</option><option value="ielts">IELTS Academic</option><option value="toefl">TOEFL iBT（舊制120分）</option><option value="toefl_new">TOEFL iBT（新制6分）</option><option value="duolingo">Duolingo</option><option value="other">其他</option></select></label>
                   <label><span>語言分數</span><input placeholder="尚未考可留空" id="advisor-language-score" name="language_score" type="number" min="0" step="0.5" inputmode="decimal" /></label>
                   <label data-tku-eligibility hidden><span>JLPT 級別</span><select id="advisor-jlpt-level" name="jlpt_level" disabled><option value="">尚未考／待補</option><option value="N1">N1</option><option value="N2">N2</option><option value="N3">N3</option><option value="N4">N4</option><option value="N5">N5</option></select></label>
-                  <label><span>想去的國家／地區</span><select id="advisor-country" name="preferred_country"></select></label>
-                  <label><span>預計出國學期</span><select id="advisor-target-term" name="target_term"><option value="">尚未決定</option><option value="2027-spring">2027 春季</option><option value="2027-fall">2027 秋季</option><option value="2028-spring">2028 春季</option><option value="2028-fall">2028 秋季</option></select></label>
                 </div>
                 <p id="advisor-academic-rule" class="academic-directory-note" hidden>依本校當期簡章確認成績門檻。</p>
                 <div id="tku-eligibility-check" data-tku-eligibility hidden>
@@ -871,9 +882,9 @@
                   <label><span>查核外校</span><select id="tku-eligibility-partner"><option value="seikei">成蹊大學</option><option value="ritsumeikan">立命館大學</option><option value="nagasaki">長崎外國語大學（NICS 對應待確認）</option><option value="uec">電氣通信大學（JUSST）</option></select></label>
                   <p id="tku-eligibility-result" class="academic-directory-note" aria-live="polite"></p>
                 </div>
-                <p class="academic-directory-note"><span id="advisor-department-note">選擇學院後顯示所屬系所。</span><a id="advisor-department-source" target="_blank" rel="noopener noreferrer" hidden>官方名單</a></p>
+                </details>
                 <details class="advisor-more-fields">
-                  <summary><span><i data-lucide="sliders-horizontal" aria-hidden="true"></i><strong>更多條件</strong></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+                  <summary><span><i data-lucide="sliders-horizontal" aria-hidden="true"></i><strong>更多偏好</strong><small>選填</small></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
                   <div class="advisor-fields">
                     <label><span>年級</span><select id="advisor-current-year" name="current_year"><option value="">尚未設定</option><option value="大一">大一</option><option value="大二">大二</option><option value="大三">大三</option><option value="大四">大四</option><option value="碩士班">碩士班</option><option value="博士班">博士班</option></select></label>
 
@@ -882,6 +893,12 @@
                     <label><span>想修的領域或課程</span><input id="advisor-course-interests" name="course_interests" type="text" maxlength="120" placeholder="例如：資料科學、國際法（選填）" /></label>
                     <label class="advisor-toggle"><input id="advisor-scholarship" name="needs_scholarship" type="checkbox" /><span><strong>需要補助</strong><small>一併整理補助限制</small></span></label>
                   </div>
+                <label class="advisor-question-field"><span>想問什麼？</span><textarea id="advisor-question" name="question" maxlength="500" rows="3" placeholder="例如：申請日本交換需要哪些文件？"></textarea></label>
+                <div class="advisor-question-chips" aria-label="常見問題">
+                  <button type="button" data-advisor-question="交換申請需要準備哪些文件？">必要文件</button>
+                  <button type="button" data-home-school-advisor-question data-advisor-question="長庚大學交換申請的語言門檻是什麼？">語言門檻</button>
+                  <button type="button" data-advisor-question="有哪些出國補助可以申請？">補助</button>
+                </div>
                 </details>
                 <fieldset id="application-period-fields" class="application-period-fields" disabled hidden>
                   <legend>本次申請與志願</legend>
@@ -892,12 +909,6 @@
                 <p class="application-plan-login-note"><i data-lucide="cloud" aria-hidden="true"></i><span>建立個人清單時才需要登入，之後可在不同裝置同步志願與完成狀態。</span></p>
                 <button id="clear-saved-eligibility" type="button" class="secondary-button eligibility-clear" hidden><i data-lucide="rotate-ccw" aria-hidden="true"></i><span>清除帳號的選校與資格條件</span></button>
                 </fieldset>
-                <label class="advisor-question-field"><span>想問什麼？</span><textarea id="advisor-question" name="question" maxlength="500" rows="3" placeholder="例如：申請日本交換需要哪些文件？"></textarea></label>
-                <div class="advisor-question-chips" aria-label="常見問題">
-                  <button type="button" data-advisor-question="交換申請需要準備哪些文件？">必要文件</button>
-                  <button type="button" data-home-school-advisor-question data-advisor-question="長庚大學交換申請的語言門檻是什麼？">語言門檻</button>
-                  <button type="button" data-advisor-question="有哪些出國補助可以申請？">補助</button>
-                </div>
                 <button id="advisor-submit" type="submit" class="primary-button full-width"><i data-lucide="wand-sparkles" aria-hidden="true"></i><span>登入後產生方案</span></button>
                 <small class="advisor-source-note"><i data-lucide="shield-check" aria-hidden="true"></i>僅依已查核來源作答；符合度不是錄取機率。未登入可先填寫，登入後才會送出並保存個人方案。</small>
                 <small id="advisor-index-status" class="advisor-source-note advisor-index-status" hidden></small>
@@ -938,6 +949,10 @@
                   </div>
                 </section>
                 <div id="advisor-result-content"></div>
+                <aside id="application-entry-help" class="application-entry-help" aria-labelledby="application-entry-help-title">
+                  <h3 id="application-entry-help-title">接下來，我們陪你一起完成</h3>
+                  <ul><li><i data-lucide="school" aria-hidden="true"></i><span><strong>了解學校，再決定目標</strong>比較條件、費用與申請方式，找出適合自己的選擇。</span></li><li><i data-lucide="calendar-check" aria-hidden="true"></i><span><strong>知道要準備什麼、什麼時候做</strong>核對當期資格與期限，整理成你的待辦清單。</span></li><li><i data-lucide="file-pen-line" aria-hidden="true"></i><span><strong>逐份填寫，備齊申請文件</strong>保存草稿、檢查與匯出，再依校方指定方式送件。</span></li></ul>
+                </aside>
               </div>
             </div>
           </section>
@@ -1156,7 +1171,7 @@
 
           <section id="application-center" class="page-section application-center-section" data-university-page="application-center" aria-labelledby="application-center-title" hidden>
             <header class="application-center-hero">
-              <h2 id="application-center-title">申請文件</h2>
+              <div><h2 id="application-center-title">申請文件</h2><p class="application-center-intro">先確認申請設定，再選一份本階段的文件開始填寫。可隨時保存，下次接著完成。</p></div>
               <div class="application-center-hero-actions"><a href="#document-check" class="secondary-button"><i data-lucide="scan-search" aria-hidden="true"></i><span>檢查已寫文件</span></a><div class="application-center-hero-mark" aria-hidden="true"><i data-lucide="file-check-2"></i></div></div>
             </header>
 
@@ -1513,7 +1528,7 @@
       <form method="dialog"><span class="section-kicker">更換目標前，先確認影響</span><h2 id="planning-target-change-title">改用這所學校規劃？</h2><p id="planning-target-change-summary"></p><ul id="planning-target-change-impact"></ul><footer><button id="planning-target-change-cancel" class="secondary-button" value="cancel">保留原目標</button><button class="primary-button" value="confirm">確認更換目標</button></footer></form>
     </dialog>
     <script src="/static/multi-plan.js?v=20261015-redesign-1" defer></script>
-    <script src="/static/application-workspace.js?v=20261002-flow-2" defer></script>
+    <script src="/static/application-workspace.js?v=20261018-guidance-1" defer></script>
     <script src="/static/application-journey.js?v=20261008-ncu-1" defer></script>
     <script src="/static/document-workbench.js?v=20261008-ncu-1" defer></script>
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
@@ -1529,7 +1544,7 @@
     <script src="/static/platform-explore.js?v=20261016-filters-1" defer></script>
     <script src="/static/platform-detail.js?v=20261017-ntu-reference-1" defer></script>
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
-    <script src="/static/platform-tracker.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/platform-tracker.js?v=20261018-guidance-1" defer></script>
     <script src="/static/platform-forum.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-profile.js?v=20261015-redesign-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>

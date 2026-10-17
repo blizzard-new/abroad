@@ -2,7 +2,7 @@
 import pytest
 from playwright.sync_api import expect
 
-from .conftest import enter_public_site, open_navigation
+from .conftest import enter_public_site, open_navigation, expand_details
 from .test_open_catalog import wait_until
 from .test_open_catalog import attach_session, sign_in_cookie
 from .test_web_next_phase import _wait_for_workspace
@@ -47,6 +47,7 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
     expect(page.locator("#detail-application")).to_be_visible()
     expect(page.locator("#detail-application")).to_contain_text("臺大")
     page.evaluate("location.hash='#advisor'")
+    expand_details(page, "#advisor-qualification-fields")
     expect(page.locator("#advisor-academic-score")).to_be_hidden()
     expect(page.locator("#advisor-academic-gpa")).to_be_visible()
     expect(page.locator("#advisor-class-rank")).to_be_visible()
@@ -71,10 +72,12 @@ def test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion(page,
     session = sign_in_cookie(live_server, school="國立臺灣大學")
     attach_session(page, live_server, session)
     enter_public_site(page, live_server, "advisor")
+    expand_details(page, "#advisor-qualification-fields")
     expect(page.locator("#advisor-academic-gpa")).to_be_visible()
     page.locator("#advisor-college").select_option("工學院")
     page.locator("#advisor-department-text").fill("機械工程學系")
     page.locator("#advisor-degree").select_option("大學部")
+    expand_details(page, "#advisor-qualification-fields")
     page.locator("#advisor-academic-gpa").fill("2.3")
     page.locator("#advisor-class-rank").fill("30")
     page.locator("#advisor-language-test").select_option("toefl_new")

@@ -21,7 +21,7 @@ from exchange_info.content_governance import (
 )
 from exchange_info.storage import save_application_workflow_revisions
 
-from .conftest import LiveServer, enter_public_site, login_through_web, open_navigation
+from .conftest import LiveServer, enter_public_site, login_through_web, open_navigation, expand_details
 
 
 @pytest.fixture
@@ -283,6 +283,7 @@ def test_guest_can_save_device_selections_and_plan_actions_require_login(
     page.wait_for_function("() => !state.homeSchoolLoading && !state.partnerDataLoading")
     page.evaluate("window.location.hash = '#overview'")
     page.locator('.planning-documents a').click()
+    expand_details(page, "#application-workspace-tool-menu")
     page.locator('#application-workspace-tools a[href="#documents"]').click()
     expect(page.locator("#documents")).to_be_visible()
     document_progress = page.locator(
@@ -417,10 +418,12 @@ def test_advisor_waits_for_login_and_clears_private_conditions_on_logout(
         "未登入，不會保存條件"
     )
 
-    page.locator("#advisor-form details summary").click()
+    page.get_by_text("更多偏好", exact=True).click()
+    expand_details(page, "#advisor-qualification-fields")
     page.locator("#advisor-academic-score").fill("84")
     page.locator("#advisor-language-test").select_option("ielts")
     page.locator("#advisor-language-score").fill("6.5")
+    expand_details(page, "#advisor-form > .advisor-more-fields:not(#advisor-qualification-fields)")
     page.locator("#advisor-question").fill("日本交換的申請文件怎麼準備？")
     page.locator("#advisor-submit").click()
 
@@ -1323,6 +1326,7 @@ def test_authenticated_plan_notifications_and_progress_sync_across_devices(
 
     page.evaluate("window.location.hash = '#overview'")
     page.locator('.planning-documents a').click()
+    expand_details(page, "#application-workspace-tool-menu")
     page.locator('#application-workspace-tools a[href="#documents"]').click()
     expect(page.locator("#documents")).to_be_visible()
     document_progress = page.locator(
@@ -1337,6 +1341,7 @@ def test_authenticated_plan_notifications_and_progress_sync_across_devices(
     page.evaluate("window.location.hash = '#overview'")
     expect(page.locator('#planning-document-status')).to_contain_text("準備中")
     page.locator('.planning-documents a').click()
+    expand_details(page, "#application-workspace-tool-menu")
     page.locator('#application-workspace-tools a[href="#documents"]').click()
     document_progress.select_option("ready")
     _wait_for_workspace(
@@ -1369,6 +1374,7 @@ def test_authenticated_plan_notifications_and_progress_sync_across_devices(
     _select_first_nonempty(page.locator("#advisor-degree"))
     page.locator("#eligibility-academic-year").select_option("115")
     page.locator("#eligibility-application-round").select_option("第一梯次")
+    expand_details(page, "#advisor-qualification-fields")
     page.locator("#advisor-academic-score").fill("85")
     page.locator("#advisor-language-test").select_option("ielts")
     page.locator("#advisor-language-score").fill("6.5")

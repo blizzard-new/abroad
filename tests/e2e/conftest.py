@@ -483,6 +483,13 @@ def page(browser: Browser) -> Page:
         context.close()
 
 
+def expand_details(page: Page, selector: str) -> None:
+    """Open an optional application tool using its visible disclosure control."""
+    panel = page.locator(selector)
+    if panel.get_attribute("open") is None:
+        panel.locator(":scope > summary").click()
+
+
 def enter_public_site(page: Page, live_server: LiveServer, route: str = "home") -> None:
     page.add_init_script(
         "window.sessionStorage.setItem('exchange-guide-browse-first', '1')"

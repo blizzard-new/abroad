@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 from playwright.sync_api import expect
-from .conftest import enter_public_site, open_navigation
+from .conftest import enter_public_site, open_navigation, expand_details
 from .test_open_catalog import wait_until, sign_in_cookie, attach_session
 
 CASES=[('nufs','名古屋外國語大學','名古屋外國語大學 Nagoya University of Foreign Studies','NUFS初次申請與條件附件',13),
@@ -117,6 +117,7 @@ def test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account(page,liv
     page.locator('#application-requirement-list').scroll_into_view_if_needed()
     page.screenshot(path=str(out/f'ryukoku-{width}-corrected-catalog.png'),full_page=True)
     page.evaluate("location.hash='#overview'")
+    expand_details(page, "#application-plan-details")
     expect(page.locator('#multi-plan-workspace')).to_be_visible()
     page.locator('#multi-plan-settings > summary').click()
     page.locator('#multi-plan-preferences select').nth(0).select_option(name)

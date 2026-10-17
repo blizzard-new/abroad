@@ -8,7 +8,7 @@ from playwright.sync_api import expect
 
 from exchange_info.ccu_student_view import fetch_ccu_partner_universities
 
-from .conftest import enter_public_site
+from .conftest import enter_public_site, expand_details
 from .test_open_catalog import attach_session, sign_in_cookie, wait_until
 
 HOME = "國立中正大學"
@@ -57,6 +57,7 @@ def test_actual_degree_select_and_current_year_in_both_modes(page, live_server, 
         if not extra.evaluate("node=>node.open"):
             extra.locator("> summary").click()
         page.locator("#advisor-current-year").select_option(year)
+        expand_details(page, "#advisor-qualification-fields")
         page.locator("#advisor-academic-score").fill("85")
         page.locator("#advisor-academic-gpa").fill("3.5")
         page.locator("#advisor-language-test").select_option("ielts")

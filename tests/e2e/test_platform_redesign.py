@@ -330,23 +330,20 @@ def test_rail_logo_sits_on_the_rails_centre_line(page, live_server) -> None:
     assert abs(centres[2] - centres[0]) <= 1
 
 
-def test_application_workspace_pages_read_as_a_second_row_of_their_own(page, live_server) -> None:
+def test_application_workspace_tools_are_available_on_demand(page, live_server) -> None:
     email = f"workspace-{uuid4().hex[:10]}@example.com"
     live_server.register(email)
     login_through_web(page, live_server, email)
     page.evaluate("location.hash = '#advisor'")
     tools = page.locator("#application-workspace-tools")
-    expect(tools).to_have_attribute("data-sequence", "true")
-    expect(tools.locator(".application-workspace-tools-label")).to_have_text("選校與確認的 3 個頁面")
+    expect(tools).to_be_hidden()
+    page.locator("#application-workspace-tool-menu > summary").click()
     expect(tools.locator("a")).to_have_count(3)
     expect(tools.locator("a").nth(0)).to_have_attribute("aria-current", "page")
-    assert [text.strip() for text in tools.locator(".application-workspace-tool-no").all_inner_texts()] == ["1", "2", "3"]
-    # The numbers are decoration: the links are still named by their words alone.
     expect(page.get_by_role("link", name="候選與比較", exact=True)).to_be_visible()
-    # A bordered track of its own, not loose text under the stage buttons.
-    assert page.evaluate("() => parseFloat(getComputedStyle(document.querySelector('#application-workspace-tools')).borderTopWidth)") >= 1
     page.evaluate("location.hash = '#overview'")
-    expect(tools.locator(".application-workspace-tools-label")).to_have_text("準備與時程的 5 個頁面")
+    expect(tools).to_be_hidden()
+    page.locator("#application-workspace-tool-menu > summary").click()
     expect(tools.locator("a")).to_have_count(5)
 
 
@@ -432,6 +429,14 @@ def test_tracker_lists_tasks_and_switches_views(page, live_server) -> None:
     page.evaluate("location.hash = '#overview'")
     expect(page.locator("#my-applications")).to_be_visible()
     expect(page.locator("#tracker-title")).to_have_text("我的申請")
+    expect(page.locator(".pr-views")).to_be_hidden()
+    page.locator("#tracker-add").click()
+    form = page.locator("#calendar-event-form")
+    form.locator('[name="title"]').fill("準備交換申請資料")
+    form.locator('[name="date"]').fill("2027-02-01")
+    form.locator('button[type="submit"]').click()
+    page.evaluate("location.hash = '#overview'")
+    expect(page.locator("#tracker-body")).to_contain_text("準備交換申請資料")
     for view in ("board", "timeline", "list"):
         page.locator(f'[data-tracker-view="{view}"]').click()
         expect(page.locator(f'[data-tracker-view="{view}"]')).to_have_attribute("aria-pressed", "true")

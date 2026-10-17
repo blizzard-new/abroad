@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 from playwright.sync_api import expect
 
-from .conftest import enter_public_site, open_navigation, open_partner_filters
+from .conftest import enter_public_site, open_navigation, open_partner_filters, expand_details
 from .test_open_catalog import attach_session, sign_in_cookie, wait_until
 from .test_web_next_phase import _wait_for_workspace
 
@@ -50,12 +50,14 @@ def test_tku_jlpt_comparison_persistence_and_closed_cycle(page, live_server, wid
     page.locator('#advisor-college').select_option('工學院')
     page.locator('#advisor-department').select_option('資訊工程學系')
     page.locator('#advisor-degree').select_option('大學部')
+    expand_details(page, "#advisor-qualification-fields")
     page.locator('#advisor-academic-score').fill('85')
     page.locator('#advisor-jlpt-level').select_option('N2')
     result = page.locator('#tku-eligibility-result')
     expect(result).to_have_attribute('data-language-status', 'pass')
     page.locator('#tku-eligibility-partner').select_option('ritsumeikan')
     expect(result).to_have_attribute('data-language-status', 'fail')
+    expand_details(page, "#advisor-qualification-fields")
     page.locator('#advisor-jlpt-level').select_option('N1')
     expect(result).to_have_attribute('data-language-status', 'pass')
     page.locator('#tku-eligibility-partner').select_option('uec')
@@ -159,6 +161,7 @@ def test_tku_conditions_directory_native_years_and_no_false_open_plan(page, live
     page.locator("#advisor-college").select_option("工學院")
     page.locator("#advisor-department").select_option("資訊工程學系")
     page.locator("#advisor-degree").select_option("大學部")
+    expand_details(page, "#advisor-qualification-fields")
     page.locator("#advisor-academic-score").fill("85")
     expect(page.locator("#advisor-department-source")).to_have_attribute("href", "https://www.tku.edu.tw/acad.asp")
     with page.expect_response(lambda r:r.url.endswith("/advisor/plan") and r.request.method=="POST") as result:
@@ -169,6 +172,7 @@ def test_tku_conditions_directory_native_years_and_no_false_open_plan(page, live
     saved = _wait_for_workspace(live_server, session, lambda row:
         (row["workspace"].get("selection_conditions",{}).get("profile") or {}).get("college") == "工學院", home_school=HOME)
     assert saved["workspace"]["selection_conditions"]["profile"]["academic_score"] == 85
+    expand_details(page, "#application-workspace-tool-menu")
     page.locator('#application-workspace-tools a[href="#eligibility"]').click()
     options = page.locator("#eligibility-academic-year option").evaluate_all("rows=>rows.map(row=>row.value).filter(Boolean)")
     assert "2027-2028" in options and not any(re.fullmatch(r"11\d", year) for year in options)

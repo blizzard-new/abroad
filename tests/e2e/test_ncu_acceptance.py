@@ -5,7 +5,7 @@ import pytest
 import requests
 from playwright.sync_api import expect
 
-from .conftest import enter_public_site, open_navigation
+from .conftest import enter_public_site, open_navigation, expand_details
 from .test_open_catalog import sign_in_cookie, attach_session, wait_until
 
 NCU = '國立中央大學'
@@ -32,9 +32,11 @@ def test_ncu_matching_favorites_documents_plan_reload_and_home_switch(page, live
         department = '學籍所屬系所待校方確認'
         page.locator('#advisor-department-text').fill(department)
     page.locator('#advisor-degree').select_option('大學部')
+    expand_details(page, "#advisor-qualification-fields")
     page.locator('#advisor-academic-score').fill('85')
-    page.locator('.advisor-more-fields > summary').click()
+    page.get_by_text('更多偏好', exact=True).click()
     page.locator('#advisor-current-year').select_option('大三')
+    expand_details(page, "#advisor-qualification-fields")
     page.locator('#advisor-language-test').select_option('ielts')
     page.locator('#advisor-language-score').fill('7')
     page.locator('#advisor-country').select_option('日本')

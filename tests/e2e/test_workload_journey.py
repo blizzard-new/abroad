@@ -35,6 +35,7 @@ def seed_tasks(page, live_server):
     saved.raise_for_status()
     page.reload()
     page.evaluate("location.hash='#overview'")
+    page.locator('#application-schedule-details > summary').click()
     expect(page.locator('#journey-workspace')).to_be_visible()
     expect(page.locator('[data-journey-task-row]')).to_have_count(2)
     return headers, endpoint
@@ -78,6 +79,7 @@ def test_capacity_persists_replans_and_document_action_focuses_first_gap(page, l
     assert branch['document_id'] == document_id
     page.reload()
     expect(page.locator('#journey-schedule-result')).to_contain_text('你的工作安排')
+    page.locator('#application-schedule-details > summary').click()
     page.locator('#journey-capacity-settings > summary').click()
     expect(page.locator('#journey-availability-form [name=weekly_hours]')).to_have_value('8')
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')

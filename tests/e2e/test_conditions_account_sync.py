@@ -4,7 +4,7 @@ import requests
 
 from playwright.sync_api import expect
 
-from .conftest import login_through_web
+from .conftest import login_through_web, expand_details
 from .test_web_next_phase import _wait_for_workspace, _auth_headers
 
 
@@ -21,12 +21,13 @@ def test_complete_conditions_reach_new_device_and_clear_stays_cleared(page,brows
     page.locator('#advisor-college').select_option('工學院')
     page.locator('#advisor-department').select_option('資訊工程學系')
     page.locator('#advisor-degree').select_option('大學部')
+    expand_details(page, "#advisor-qualification-fields")
     page.locator('#advisor-academic-score').fill('88.5')
     page.locator('#advisor-language-test').select_option('ielts')
     page.locator('#advisor-language-score').fill('7')
     page.locator('#advisor-country').select_option('日本')
     page.locator('#advisor-target-term').select_option('2027-spring')
-    page.locator('.advisor-more-fields > summary').click()
+    page.get_by_text('更多偏好', exact=True).click()
     page.locator('#advisor-current-year').select_option('大三')
     page.locator('#advisor-monthly-budget').fill('42000')
     page.locator('#advisor-scholarship').check()
@@ -45,7 +46,9 @@ def test_complete_conditions_reach_new_device_and_clear_stays_cleared(page,brows
             expect(second.locator(f'#advisor-{selector}')).to_have_value(value)
         expect(second.locator('#advisor-scholarship')).to_be_checked()
         # A remote update loads the saved snapshot, without overwriting the first device's draft.
+        expand_details(page, "#advisor-qualification-fields")
         page.locator('#advisor-academic-score').fill('93')
+        expand_details(second, "#advisor-qualification-fields")
         second.locator('#advisor-academic-score').fill('90')
         second.locator('#advisor-submit').click()
         _wait_for_workspace(live_server,session,lambda item:saved_profile(item).get('academic_score')==90)
@@ -99,9 +102,11 @@ def test_conflicting_submissions_keep_one_snapshot_and_tell_student(page,browser
         second.evaluate("location.hash='#advisor'")
         expect(second.locator('#advisor-language-score')).to_have_value('7')
         page.route('**/account/workspace',hold_first_write)
+        expand_details(page, "#advisor-qualification-fields")
         page.locator('#advisor-academic-score').fill('93')
         with page.expect_request(lambda request:request.url.endswith('/account/workspace') and request.method=='PUT'):
             page.locator('#advisor-submit').click()
+        expand_details(second, "#advisor-qualification-fields")
         second.locator('#advisor-language-score').fill('8')
         second.locator('#advisor-submit').click()
         expect(second.locator('#account-workspace-sync-label')).to_have_text('已同步')

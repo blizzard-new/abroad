@@ -6,7 +6,7 @@ import pytest
 import requests
 from playwright.sync_api import expect
 
-from .conftest import enter_public_site
+from .conftest import enter_public_site, expand_details
 
 
 def type_guest_draft(page, server, home):
@@ -15,9 +15,12 @@ def type_guest_draft(page, server, home):
     details = page.locator("#advisor-form details").first
     if details.get_attribute("open") is None:
         details.locator("summary").click()
+    expand_details(page, "#advisor-qualification-fields")
     page.locator("#advisor-academic-score").fill("93")
     if home == "淡江大學":
+        expand_details(page, "#advisor-qualification-fields")
         page.locator("#advisor-jlpt-level").select_option("N1")
+    expand_details(page, "#advisor-form > .advisor-more-fields:not(#advisor-qualification-fields)")
     page.locator("#advisor-question").fill("合成未保存草稿，請核對當期文件。")
     page.locator("#advisor-submit").click()
     expect(page.locator("#auth-dialog")).to_be_visible()

@@ -2,11 +2,13 @@
 import pytest
 from playwright.sync_api import expect
 
+from .conftest import expand_details
 from .test_glass_theme import verified_login
 
 
 def choose_two_schools(page, academic_year='', application_round=''):
     page.evaluate("location.hash='#overview'")
+    expand_details(page, "#application-plan-details")
     expect(page.locator('#multi-plan-workspace')).to_be_visible()
     page.locator('#multi-plan-settings > summary').click()
     page.wait_for_function("() => state.dashboard && document.querySelector('#multi-plan-preferences select').options.length > 1", timeout=30000)
