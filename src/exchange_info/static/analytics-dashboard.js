@@ -14,7 +14,7 @@
     view_switch: "切換列表／地圖", advisor_submit: "顧問分析", planning_action: "規劃操作", document_action: "文件操作",
     calendar_action: "日曆操作", outbound_click: "點外部連結", file_download: "下載檔案",
     community_composer_open: "開啟發文", community_topic: "點社群主題", board_follow: "追蹤討論板",
-    school_pick: "選擇學校", theme_toggle: "切換主題",
+    school_pick: "選擇學校", home_school_change: "切換就讀學校", theme_toggle: "切換主題",
   };
   var CHANNELS = {
     direct: "直接進站", search: "搜尋引擎", social: "社群／通訊軟體內開啟", referral: "其他網站",
@@ -146,6 +146,8 @@
       kpi("頁面瀏覽", num(o.pageviews), c.pageviews) + kpi("每次瀏覽頁數", dec(o.pages_per_session, 2), c.pages_per_session) +
       kpi("平均停留（實際操作）", seconds(o.avg_engaged_seconds), c.avg_engaged_seconds) +
       kpi("跳出率", dec(o.bounce_rate) + "%", c.bounce_rate, false) +
+      kpi("有效互動率（≥10 秒／≥2 頁／有操作）", dec(o.engaged_session_share) + "%", c.engaged_session_share) +
+      kpi("操作造訪率（曾點擊／收藏／搜尋）", dec(o.interactive_session_share) + "%", c.interactive_session_share) +
       kpi("新訪客", num(o.new_visitors)) + kpi("新帳號（伺服器紀錄）", num(report.signup.accounts_created_by_server)) + "</div>");
 
     var t = report.timeseries;
