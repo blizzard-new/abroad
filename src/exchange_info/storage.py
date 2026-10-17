@@ -51,7 +51,7 @@ from .models import (
 )
 from .settings import DEFAULT_DATA_DIR
 from .school_identity import school_identity_key
-from .university_registry import CCU, CGU, CYCU, FJU, NTNU, NTPU, NTU, NTUST, NCU, SCU, TKU
+from .university_registry import CCU, CGU, CYCU, FJU, NTNU, NTPU, NTU, NTUST, NCU, SCU, TKU, YZU
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
 
@@ -69,6 +69,7 @@ BUNDLED_SCU_DIR = PACKAGE_DIR / "official_data" / "scu"
 BUNDLED_NTNU_DIR = PACKAGE_DIR / "official_data" / "ntnu"
 BUNDLED_CYCU_DIR = PACKAGE_DIR / "official_data" / "cycu"
 BUNDLED_NTUST_DIR = PACKAGE_DIR / "official_data" / "ntust"
+BUNDLED_YZU_DIR = PACKAGE_DIR / "official_data" / "yzu"
 
 _STORAGE_LOCKS_GUARD = threading.Lock()
 _STORAGE_LOCKS: dict[str, threading.RLock] = {}
@@ -587,7 +588,7 @@ def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWork
 
 
 def _bundled_workflow_paths() -> tuple[Path, ...]:
-    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR))
+    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR))
 
 
 def _bundled_workflow_signature() -> tuple:
@@ -759,6 +760,7 @@ def _bundled_destination_entries(home_key: str | None) -> tuple[tuple[Path, str]
             (BUNDLED_NTNU_DIR, NTNU.school_name),
             (BUNDLED_CYCU_DIR, CYCU.school_name),
             (BUNDLED_NTUST_DIR, NTUST.school_name),
+            (BUNDLED_YZU_DIR, YZU.school_name),
         )
         if home_key is None or school_identity_key(bundle_home) == home_key
     )
@@ -850,7 +852,7 @@ def load_partner_research(
     )
     bundled_paths = tuple(
         directory / "partner_research.jsonl"
-        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR)
+        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR)
     ) if include_bundled else ()
     use_cache = read_jsonl is _DEFAULT_READ_JSONL
     cache_key = (

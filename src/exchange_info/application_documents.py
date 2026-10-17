@@ -59,7 +59,7 @@ from .models import (
 from .application_rules import select_application_workflow
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FJU, NTNU, NTPU, NTU, NTUST, NCU, SCU, require_university, resolve_university
+from .university_registry import CYCU, FJU, NTNU, NTPU, NTU, NTUST, NCU, SCU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -69,6 +69,7 @@ SCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 NTNU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 CYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 NTUST_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
+YZU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1161,6 +1162,51 @@ def _ntust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _yzu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理元智大學 115-2（2027 春季班）出國暨赴大陸地區交換學生申請表（CF-01-R1）之個人基本資料、志願學校（最多 5 所）、歷年學業總平均與排名百分比（GPA 2.5 或平均 65 分以上）、外語能力檢定證明（語言能力占 40%、學業成績占 30%、出國研修計畫與自傳占 30%）及保證金 NT$5,000 繳費資訊。",
+        "study-plan": "撰寫元智大學出國交換甄選必繳之《出國交換學生研修計畫書》（CF-02-R3）與中英文自傳（含出國交換動機、擬於目標姊妹校修習之專業科目與學分規劃、研究計畫及返國後學涯連結；出國研修計畫與自傳占校內書審總分 30%）。",
+        "course-preapproval": "出國前填寫《學生境外選課申請單》（表單編號 1-51），依元智大學《學生境外選課實施要點》規定，大學部每學期至少修習相當於元智大學 6 學分、研究生至少修習 1 門課（3 學分），並經所屬學系預審核可。",
+        "predeparture-notice": "通過校內甄選放榜後繳交《錄取資格確認書》（CF-04），並依全球事務處與姊妹校規定準備外校線上申請表、英文歷年成績單、英文財力證明、有效護照、簽證與海外醫療及意外保險證明。",
+        "return-report": "交換期滿返國後二個月內，向全球事務處繳交 2,000 字以上之出國交換研修電子心得報告（含照片 4 張以上），經審核通過後始得辦理 NT$5,000 保證金退還及獎助學金尾款核銷。",
+        "credit-transfer": "交換期滿返國後，持接待姊妹校核發之正式成績單正本、修課大綱（Syllabus）及修課時數證明，連同原核准之《學生境外選課申請單》（表單 1-51）向教務處與所屬學系辦理國外修習科目學分採認／抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "元智大學").replace("長庚", "元智")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "元智大學規定歷年學業總平均須達 65 分或 GPA 2.5 以上（管理學院院級為 GPA 2.75 以上），歷年學業成績占校內甄選總分 30%；請檢附教務處核發之歷年中文與英文成績單正本（含排名百分比）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT", "IELTS Academic", "TOEIC", "JLPT（N1–N4）", "TOPIK（韓檢 1–6 級）", "DELF / DALF / TCF（法語）", "Goethe / TestDaF（德語）", "DELE（西語）", "赴大陸交換免附外語檢定"]
+            field["help_text"] = "語言能力占校內甄選總分 40%（基本門檻：TOEIC 550 / TOEFL iBT 57 / IELTS 4.5 / JLPT N4 / TOPIK 1級，且須符合各姊妹校申請門檻；管理學院院級為 TOEFL iBT 79 / IELTS 6.0 / TOEIC 750；赴大陸交換免附外語檢定）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://www.yzu.edu.tw/admin/ao/index.php/tw/2016-03-28-08-35-08/2016-05-06-03-07-02/1319-2026-09-09-02-40-50",
+        source_checked_at=YZU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="CF-01-R1" if template.id == "exchange-application-data" else ("CF-02-R3" if template.id == "study-plan" else ("1-51" if template.id == "course-preapproval" else None)),
+        official_file_name=None,
+        official_download_url="https://www.yzu.edu.tw/admin/ao/index.php/tw/2016-03-28-08-35-08/2016-04-21-01-33-53",
+        default_copies=1,
+        signatures=["申請學生簽名", "家長／監護人簽章", "導師／指導教授簽章", "系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=[],
+        stage={"predeparture-notice": "錄取確認（CF-04）與外校提名送件", "return-report": "返國後二個月內（辦理保證金退還）", "credit-transfer": "返國開學後"}.get(template.id, "線上填表並列印紙本送交全球事務處（七館 3 樓 R70306）"),
+        version="115-2準備工具-2026-10-17.1",
+        destinations=["元智大學全球事務處（七館 3 樓 R70306）", "管理學院國際事務辦公室（六館 R60404，管院院級適用）"],
+        conditional_note="此為個人準備工具；元智大學正式出國交換申請表件（CF-01-R1、CF-02-R3 等）請自全球事務處表單下載區下載，完成導師及系主任核章並連同 NT$5,000 保證金繳費收據於截止日前送交全球事務處（R70306）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
     if university.id == "ccu":
@@ -1179,6 +1225,8 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _cycu_template(template)) is not None]
     if university.id == NTUST.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntust_template(template)) is not None]
+    if university.id == YZU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _yzu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

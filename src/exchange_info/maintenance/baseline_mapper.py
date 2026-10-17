@@ -39,6 +39,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "ntnu": ["bds.oia.ntnu.edu.tw", "oia.ntnu.edu.tw", "www.ntnu.edu.tw", "ntnu.edu.tw"],
     "cycu": ["oia.cycu.edu.tw", "www.cycu.edu.tw", "cycu.edu.tw"],
     "ntust": ["www.oia.ntust.edu.tw", "oia.ntust.edu.tw", "www.ntust.edu.tw", "ntust.edu.tw"],
+    "yzu": ["www.yzu.edu.tw", "cm.yzu.edu.tw", "yzu.edu.tw"],
 }
 
 
@@ -699,6 +700,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["ntust"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ntust", partner_rows=ntust_rows, default_cycle_label="115-2"
+        )
+
+    # 12. YZU partners.jsonl (90 partner schools)
+    yzu_partners_path = official_data_root / "yzu" / "partners.jsonl"
+    if yzu_partners_path.exists():
+        yzu_rows = []
+        for line in yzu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            yzu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115-2",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://www.yzu.edu.tw/admin/ao/index.php/tw/2016-03-28-08-35-08/2016-05-06-03-07-02/1319-2026-09-09-02-40-50",
+            })
+        school_reports["yzu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="yzu", partner_rows=yzu_rows, default_cycle_label="115-2"
         )
 
     if store.current_release_id is None:

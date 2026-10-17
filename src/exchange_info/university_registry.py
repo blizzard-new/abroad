@@ -308,8 +308,39 @@ NTUST = UniversityProfile(
     ),
 )
 
+YZU = UniversityProfile(
+    id="yzu",
+    school_name="元智大學",
+    short_name="元智",
+    english_name="Yuan Ze University",
+    aliases=(
+        "yzu",
+        "元智大學",
+        "私立元智大學",
+        "元智",
+        "YZU",
+        "Yuan Ze University",
+    ),
+    hero_image="/static/assets/yzu-campus.svg",
+    official_url="https://gao.yzu.edu.tw/index.php/tw/2016-03-04-08-13-53/2016-03-07-08-51-28",
+    coverage_note="完整支援：115-2（2027春季班）全球事務處校級、管理學院 OIP 院級及兩岸交換計畫共90所合作校名額、Fact Sheet與39校歷屆交換心得已完整整合。",
+    support_level="full",
+    partner_count_hint=90,
+    academic_score_minimum=70,
+    student_card_signals=("元智大學", "YUANZEUNIVERSITY", "YZU"),
+    # https://www.yzu.edu.tw/ — checked 2026-10-17.
+    colleges=(
+        "工程學院",
+        "電機通訊學院",
+        "資訊學院",
+        "管理學院",
+        "人文社會學院",
+        "醫護學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU)
 DEFAULT_UNIVERSITY = CGU
 
 
