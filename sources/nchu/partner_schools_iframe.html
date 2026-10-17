@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<script src="scripts/jquery-3.6.0.min.js"></script>
+<link href="scripts/bootstrap-4.1.3-dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="scripts/bootstrap-4.1.3-dist/js/bootstrap.min.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner Institution Listings</title>
+    <link rel="steylesheet" href="style.css">
+</head>
+<body>
+    <H1 id="txtMainTitle">Partner Institution Listings</H1>
+    <H2 id="txtFilterTitle">Filter List</H2>
+
+    <table class="GeneratedTable">
+      <tbody id="tblSelectMenus">
+        <tr>
+          <td class="TW">
+            <div id="divContinentTW">
+                <label for="sltContinent">洲別</label>
+                <select name="0" id="sltContinentTW"><option value=""></option></select>
+            </div>
+          </td>
+          <td class="EN">
+            <div id="divContinentEN">
+                <label for="sltContinent">Overseas Continent</label>
+                <select name="1" id="sltContinentEN"><option value=""></option></select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="TW">
+            <div id="divCountryTW">
+                <label for="sltCountry">國家</label>
+                <select name="2" id="sltCountryTW"><option value=""></option></select>
+            </div>
+          </td>
+          <td class="EN">
+            <div id="divCountryEN">
+                <label for="sltCountry">Overseas Country</label>
+                <select name="3" id="sltCountryEN"><option value=""></option></select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="TW">
+            <div id="divOverseasInstituionTW">
+                <label  for="sltOverseasInsitution">學校名稱</label>
+                <select name="4" id="sltOverseasInsitutionTW"><option value=""></option></select>
+            </div>
+          </td>
+          <td class="EN">
+            <div id="divOverseasInstituionEN">
+                <label for="sltOverseasInsitution">Overseas Institution</label>
+                <select name="5" id="sltOverseasInsitutionEN"><option value=""></option></select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="TW">
+            <div id="divCooperativeProgramTW">
+                <label for="sltCooperativeProgram">合作項目</label>
+                <select name="6" id="sltCooperativeProgramTW"><option value=""></option></select>
+            </div>
+          </td>
+          <td class="EN">
+            <div id="divCooperativeProgramEN">
+                <label for="sltCooperativeProgram">Cooperative Program</label>
+                <select name="7" id="sltCooperativeProgramEN"><option value=""></option></select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="TW">
+            <div id="divLocalInstitutionTW">
+                <label for="sltLocalInsitution">本校合作範圍</label>
+                <select name="8" id="sltLocalInsitutionTW"><option value=""></option></select>
+            </div>
+          </td>
+          <td class="EN">
+            <div id="divLocalInstitutionEN">
+                <label for="sltLocalInsitution">Cooperative Institution at NCHU</label>
+                <select name="9" id="sltLocalInsitutionEN"><option value=""></option></select>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="divDate">
+                <label class="EN" for="sltDate">Signing Year</label> <label class="TW" for="sltDate">簽約時間</label>
+                <select name="10" id="sltDate"><option value=""></option></select>
+            </div>
+          </td>
+          <td>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div align="center">
+      <H3 id="txtqueryStringsStatus"><div id="divQueryStringStatus"></div></H3>
+      <div align="center">
+        <input type="radio" class="radioBtnClass" id="rdoAnd" name="searchType" value="0" checked>
+        <label for="AND" id="strAnd">AND</label>
+        <input type="radio" class="radioBtnClass" id="rdoOr" name="searchType" value="1">
+        <label for="OR" id="strOr">OR</label>
+        <button type="button" name="btnLanguageTW" id="btnLanguageTW" class="btnLanguageTW">Language TW</button>
+        <button type="button" name="btnLanguageEN" id="btnLanguageEN" class="btnLanguageEN">Language EN</button>
+        <button type="button" name="btnLoad" id="btnLoad" class="btnLoad">Reset</button></div>    
+    <div id="tblList"></div>
+    <script src="index.js"></script>    
+
+</body>
+</html>
+

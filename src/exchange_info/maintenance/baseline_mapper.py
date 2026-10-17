@@ -42,6 +42,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "yzu": ["www.yzu.edu.tw", "cm.yzu.edu.tw", "yzu.edu.tw"],
     "fcu": ["oiasap.fcu.edu.tw", "oia.fcu.edu.tw", "service825.fcu.edu.tw", "www.fcu.edu.tw", "fcu.edu.tw"],
     "nsysu": ["oia.nsysu.edu.tw", "partners.oia.nsysu.edu.tw", "cm.nsysu.edu.tw", "www.nsysu.edu.tw", "nsysu.edu.tw"],
+    "nchu": ["www.oia.nchu.edu.tw", "oia.nchu.edu.tw", "oiawp.nchu.edu.tw", "iss.nchu.edu.tw", "www.nchu.edu.tw", "nchu.edu.tw"],
 }
 
 
@@ -771,6 +772,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["nsysu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="nsysu", partner_rows=nsysu_rows, default_cycle_label="116"
+        )
+
+    # 15. NCHU partners.jsonl (226 partner schools)
+    nchu_partners_path = official_data_root / "nchu" / "partners.jsonl"
+    if nchu_partners_path.exists():
+        nchu_rows = []
+        for line in nchu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            nchu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://www.oia.nchu.edu.tw/index.php/2-uncategorised/154-1-1-exchange-info",
+            })
+        school_reports["nchu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="nchu", partner_rows=nchu_rows, default_cycle_label="116"
         )
 
     if store.current_release_id is None:
