@@ -119,9 +119,22 @@ def test_glasgow_uw_and_paris_saclay_20261016_updates_preserve_scope_and_conflic
     assert all(d.status == "reference_only" for d in uw_details.values())
     assert all(d.evidence[0].academic_year == "2027/2028" for d in uw_details.values())
     assert all(s in uw_details["language"].value for s in ["TOEFL iBT 5.0", "92", "IELTS 7.0", "Duolingo", "110", "131"])
-    assert all(s in uw_details["deadlines"].value for s in ["3月15日", "4月1日", "8月15日", "9月1日", "10月15日", "11月1日", "非臺大校內報名期限"])
+    assert all(s in uw_details["deadlines"].value for s in ["3月15日", "4月1日", "8月15日", "9月1日", "10/15", "11/1", "非臺大校內報名期限"])
     assert "2027-2028-University-of-Washington-Fact-Sheet_public.pdf" in uw.application_info
     assert "2026-11-09" in uw.application_deadline
+    assert "大二以上（僅限大學部）" in uw_details["eligibility"].value
+    assert "大二至大四" not in uw.application_info
+    deadlines = uw_details["deadlines"].value
+    assert "Autumn及Winter較舊版延後，Spring提前" in deadlines
+    assert "提名截止由舊版11/1提前至10/15" in deadlines
+    assert "申請截止由舊版11/15提前至11/1" in deadlines
+    assert "（較舊版延後）" not in uw.application_info
+    for fact in source["uw_update"]["facts"]:
+        assert fact["text_zh"] in uw.application_info
+        assert fact["text_zh"] in "\n".join(uw.student_summary_zh.application_steps)
+    uw_profile = client.get("/destination-profile", params={"home_school": "NTU", "school": uw.school_name}).json()
+    guide = next(g for g in uw_profile["student_guide_sections"] if g["key"] == "ntu-current-source-update-20261014")
+    assert any("Spring提前" in point for point in guide["points"])
 
     # 3. Université Paris-Saclay (sn/104): Inbound Information Session 11/22 vs 11/12 conflict preserved
     saclay = partners_by_id["104"]

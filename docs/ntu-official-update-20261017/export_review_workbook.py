@@ -45,6 +45,8 @@ for school in data["schools"]:
                 period = school["calendar_academic_year"]
                 status = "explicit_field_period_reference_only"
         if facts:
+            if status == "not_independently_checked_this_batch":
+                content = "已讀接待校官方原件，核實範圍限以下事實及文件自身年度；不表示完整臺大116-1規則已確認。"
             content += "\n\n接待校要項：\n" + "\n".join(f["text_zh"] for f in facts)
             excerpt = " | ".join(f["source_excerpt"] for f in facts)
             location += " | " + "; ".join("PDF第%s頁" % f["page"] if f["page"] else f["section"] for f in facts)
@@ -107,6 +109,21 @@ table("10月17日_6個未知原件", ["學校", "原始URL", "父任務查核結
 table("10月17日_活動", ["學校", "活動", "開始", "結束", "時區", "地點", "官方首頁", "報名表", "截止日", "性質"],
       [[data["event"][k] for k in ("school_name", "title", "start", "end", "timezone", "location", "homepage_url", "registration_url")]
        + ["表單未見；不補造", "資訊活動；不是甄選名額、規則或申請期限"]])
+current_source = json.loads((ROOT / "sources/ntu/2026-10-14-official-update.json").read_text())
+uw = current_source["uw_update"]
+corrections = [{"portal_id": "7", "school": "華盛頓大學", "field": f["field"], "value": f["text_zh"],
+                "source_urls": [uw["source_url"], uw["portal_source_url"]], "source_pages": [f["pdf_page"]],
+                "academic_year": "2027/2028接待校文件；臺大內頁資格未標年度", "status": "reference_only",
+                "selection_rule_confirmed": False} for f in uw["facts"] if f["field"] in {"eligibility", "deadlines"}]
+rio = refs["974"]
+cover = next(f for f in rio["facts"] if f["field"] == "documents")
+corrections.append({"portal_id": "974", "school": "里約熱內盧天主教大學", "field": "documents", "value": cover["text_zh"],
+                    "source_urls": [rio["source_url"]], "source_pages": [1], "academic_year": "2027", "status": "reference_only",
+                    "selection_rule_confirmed": False})
+(OUT / "二次覆核更正.json").write_text(json.dumps({"corrections": corrections, "review_receipt": data["review_corrections_20261017"]}, ensure_ascii=False, indent=2) + "\n")
+table("10月17日_二次覆核更正", ["臺大ID", "學校", "欄位", "更正內容", "適用範圍", "官方URL", "頁碼", "本期甄選確認"],
+      [[c["portal_id"], c["school"], c["field"], c["value"], c["academic_year"], "\n".join(c["source_urls"]),
+        "、".join(map(str, c["source_pages"])), "否；維持接待校年度參考"] for c in corrections])
 table("10月17日_使用說明", ["項目", "說明"], [
     ["範圍", "本日25校×10類250列；舊282校×10類2820列原值保留於10月15日工作表，沒有全數改標今天查核。"],
     ["正式列表", "289校：20正名額、262空白、7零名額；43學年名額／最多81人次；本輪未改名額。"],

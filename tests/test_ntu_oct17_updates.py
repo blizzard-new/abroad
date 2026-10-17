@@ -40,7 +40,8 @@ def test_untouched_rows_workflows_life_and_historical_sources_are_byte_preserved
     data = load_update()
     rows = {json.loads(r)["source_url"].rsplit("/", 1)[-1]: hashlib.sha256(r.encode()).hexdigest()
             for r in (BUNDLE / "partners.jsonl").read_text().splitlines()}
-    assert len(data["protected_partner_row_sha256"]) == 263
+    assert len(data["protected_partner_row_sha256"]) == 262
+    assert data["review_corrections_20261017"]["uw_partner_before_sha256"]
     assert {pid: rows[pid] for pid in data["protected_partner_row_sha256"]} == data["protected_partner_row_sha256"]
     for name, expected in data["protected_bundle_sha256"].items():
         assert hashlib.sha256((BUNDLE / name).read_bytes()).hexdigest() == expected
@@ -97,6 +98,10 @@ def test_receiving_references_retain_original_page_quotes_and_periods():
             assert normalize(fact["source_excerpt"]) in normalize(raw)
     current = partners()
     assert "2027/4/15" in current["974"].partner_exchange_details["deadlines"].value
+    cover = current["974"].partner_exchange_details["documents"]
+    assert "已核實" in cover.value and "Fact Sheet 2027" in cover.value
+    assert cover.status == "reference_only" and cover.evidence[0].academic_year == "2027"
+    assert cover.evidence[0].source_pages == [1]
     assert current["974"].partner_exchange_details["calendar"].evidence[0].academic_year == "2027"
     assert refs["115"]["mirror_equality_basis"]
     assert current["115"].partner_exchange_details["deadlines"].evidence[0].academic_year == "2027/2028"

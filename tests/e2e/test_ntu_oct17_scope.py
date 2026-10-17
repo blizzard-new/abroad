@@ -15,6 +15,7 @@ from .test_open_catalog import wait_until
     ("安地斯大學", ["2026/27", "18,400,000–27,700,000", "17,100,000–25,300,000", "不蓋過臺大B2"]),
     ("肯特大學", ["116-1", "Autumn Term", "不證明一律禁止"]),
     ("奧塔哥大學", ["期限前", "deadline"]),
+    ("華盛頓大學", ["大二以上（僅限大學部）", "Autumn及Winter較舊版延後，Spring提前", "11/1提前至10/15", "11/15提前至11/1"]),
 ])
 def test_oct17_reference_conditions_and_years(page, live_server, width, school, markers):
     page.set_viewport_size({"width": width, "height": 956})
@@ -37,7 +38,8 @@ def test_oct17_reference_conditions_and_years(page, live_server, width, school, 
     expect(detail).to_be_visible()
     expect(page.locator("#booking-home-deadline")).to_contain_text("2026-11-09 16:00")
     expect(page.locator("#booking-partner-deadline")).not_to_contain_text("2026/11/09")
-    expect(detail).to_contain_text("欄位資料與官方依據")
+    if school != "華盛頓大學":
+        expect(detail).to_contain_text("欄位資料與官方依據")
     expect(detail).not_to_contain_text("中正校內資格")
     summary = detail.get_by_role("region", name="合作校條件", exact=True)
     for marker in markers:
@@ -46,7 +48,13 @@ def test_oct17_reference_conditions_and_years(page, live_server, width, school, 
     receiving = detail.get_by_role("region", name="合作校接收資料", exact=True)
     expect(receiving).to_contain_text("臺大的校內資格")
     expect(receiving).not_to_contain_text("中正的校內資格")
-    field = "deadlines" if "里約" in school else "cost" if "安地斯" in school else "calendar" if school == "肯特大學" else "housing"
+    if "里約" in school:
+        cover = receiving.locator('[data-ccu-field="documents"]')
+        cover.locator(":scope > summary").click()
+        expect(cover).to_contain_text("Fact Sheet 2027")
+        expect(cover).to_contain_text("PDF第1頁")
+        expect(cover).to_contain_text("不表示整校116-1已確認")
+    field = "deadlines" if "里約" in school or "華盛頓" in school else "cost" if "安地斯" in school else "calendar" if school == "肯特大學" else "housing"
     reference = receiving.locator(f'[data-ccu-field="{field}"]')
     reference.locator(":scope > summary").click()
     expect(reference.locator(":scope > p").first).to_be_visible()

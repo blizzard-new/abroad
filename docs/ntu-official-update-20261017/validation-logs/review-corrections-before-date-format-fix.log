@@ -1,0 +1,44 @@
+CONFTEST LOADED!
+.................................................F...................... [ 46%]
+.............................................................s.......... [ 93%]
+..........                                                               [100%]
+=================================== FAILURES ===================================
+_ test_glasgow_uw_and_paris_saclay_20261016_updates_preserve_scope_and_conflict _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-11/test_glasgow_uw_and_paris_sacl0')
+
+    def test_glasgow_uw_and_paris_saclay_20261016_updates_preserve_scope_and_conflict(tmp_path):
+        source = load_update()
+        partners_by_id = {p.source_url.rsplit("/", 1)[-1]: p for p in fetch_ntu_partner_universities()}
+        client = TestClient(create_app(tmp_path))
+
+        # 1. University of Glasgow (sn/1308): added to list, formal selection quota still blank
+        glasgow = partners_by_id["1308"]
+        assert glasgow.school_name == "格拉斯哥大學"
+        assert glasgow.country == "英國"
+        assert glasgow.website == "https://www.gla.ac.uk/"
+        assert glasgow.quota is None
+        assert glasgow.quota_status == "not_published"
+        assert glasgow.availability_status == "agreement_only"
+        assert "此校開放予第二次出國交換之同學選填" in glasgow.eligibility
+        assert "交換學校一覽表所列之語言能力" in glasgow.application_info
+        glasgow_wf = client.get("/application-workflow", params={"home_school": "NTU", "school": "格拉斯哥大學", "academic_year": "116"}).json()
+        assert glasgow_wf["published_at"] is None
+        assert all(not step["deadline_reminder_eligible"] for step in glasgow_wf["steps"])
+
+        # 2. University of Washington (sn/7): 2027-2028 Fact Sheet & updated portal eligibility
+        uw = partners_by_id["7"]
+        assert uw.quota is None
+        assert "TOEFL iBT 5.0 (不接受 Home Edition) 或 TOEFL iBT 92 (不接受 Home Edition) 或 IELTS 7.0" in uw.eligibility
+        uw_details = uw.partner_exchange_details
+        assert all(d.status == "reference_only" for d in uw_details.values())
+        assert all(d.evidence[0].academic_year == "2027/2028" for d in uw_details.values())
+        assert all(s in uw_details["language"].value for s in ["TOEFL iBT 5.0", "92", "IELTS 7.0", "Duolingo", "110", "131"])
+>       assert all(s in uw_details["deadlines"].value for s in ["3月15日", "4月1日", "8月15日", "9月1日", "10月15日", "11月1日", "非臺大校內報名期限"])
+E       assert False
+E        +  where False = all(<generator object test_glasgow_uw_and_paris_saclay_20261016_updates_preserve_scope_and_conflict.<locals>.<genexpr> at 0x7fba74c64040>)
+
+tests/test_ntu_current_updates.py:122: AssertionError
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_ntu_school_board_migration.py:25: opt in to isolated Docker PostgreSQL
+1 failed, 152 passed, 1 skipped in 134.98s (0:02:14)

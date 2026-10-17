@@ -7,19 +7,19 @@
     "skipped": 1,
     "failed": 0,
     "skipped_reason": "existing opt-in isolated Docker PostgreSQL test; EXCHANGE_TEST_POSTGRES was not set",
-    "log": "validation-logs/tests-final.log"
+    "log": "validation-logs/review-corrections-tests-final.log"
   },
   "final_browser_tests": {
     "command": "PLAYWRIGHT_BROWSERS_PATH=<installed-chromium> .venv/bin/python -m pytest -q tests/e2e/test_ntu_oct17_scope.py tests/e2e/test_ntu_reference_scope.py",
-    "passed": 12,
+    "passed": 14,
     "failed": 0,
     "viewport_widths": [
       390,
       1440
     ],
-    "new_reference_cases": 8,
+    "new_reference_cases": 10,
     "existing_reference_regressions": 4,
-    "log": "validation-logs/browser-final.log"
+    "log": "validation-logs/review-corrections-browser.log"
   },
   "javascript_syntax": {
     "files": [
@@ -35,8 +35,8 @@
     "evidence": "offline-rebuild.json"
   },
   "artifact_validation": "artifact-validation.json",
-  "preserved_partner_rows": 263,
-  "changed_partner_rows": 26,
+  "preserved_partner_rows": 262,
+  "changed_partner_rows": 27,
   "preserved_historical_observations": 1485,
   "formal_quota_changed": false,
   "current_cycle_fully_verified": 0,
@@ -59,6 +59,34 @@
     "offline-rebuild.log": "d765c446c53e34418b74d251b40ebbb3a1406b497608e8286e5f34ce87a49ccd",
     "related-before-test-status-correction.log": "b967a88ce496efe290a09373d39f922bb4584042d9e43b3553fc406bceadb373",
     "reviewed-related-before-fixes.log": "5775bbb98fedacf107585dff8ced5e6f9b246d45dbe6503ccc648002921bee17",
-    "tests-final.log": "238eb03c9fde60fb747c89c00ac363eb140b1e64efcd60e618998f288fc65631"
+    "tests-final.log": "238eb03c9fde60fb747c89c00ac363eb140b1e64efcd60e618998f288fc65631",
+    "review-corrections-before-date-format-fix.log": "1abe2a59a464217ba960c67485216ff070a1d7d082a0b90fcd93d44a12b68bc3",
+    "review-corrections-date-format-fixed.log": "025faefe413c1299e69fe31f058508ac71475f818beed7127f45ea2407906444",
+    "review-corrections-tests-final.log": "06799afc6055596294cd6f3105cc127ca72f4c8e3bdfee879183c3ece09fd4d4",
+    "review-corrections-browser.log": "ca58fd1bb17c48d7bd68dde21371372b8d76be184392959462c9db041cdc2024",
+    "review-corrections-rebuild.log": "d765c446c53e34418b74d251b40ebbb3a1406b497608e8286e5f34ce87a49ccd"
+  },
+  "review_corrections": {
+    "checked_at": "2026-10-17T02:58:35.616918+00:00",
+    "previous_pr_head_sha": "29e8461b1c8e69a521d34bb489ab0b418affd7ba",
+    "new_data_changes": "UW and PUC-Rio only; two partner rows relative to prior PR head",
+    "tests_passed": 153,
+    "skipped": 1,
+    "browser_tests_passed": 14,
+    "offline_rebuild_files_equal": 17,
+    "three_requested_corrections_verified": true,
+    "source14_summary_correction_explicitly_authorized": true,
+    "original_log_sha256": {
+      "review-corrections-before-date-format-fix.log": "1abe2a59a464217ba960c67485216ff070a1d7d082a0b90fcd93d44a12b68bc3",
+      "review-corrections-date-format-fixed.log": "025faefe413c1299e69fe31f058508ac71475f818beed7127f45ea2407906444",
+      "review-corrections-tests-final.log": "06799afc6055596294cd6f3105cc127ca72f4c8e3bdfee879183c3ece09fd4d4",
+      "review-corrections-browser.log": "ca58fd1bb17c48d7bd68dde21371372b8d76be184392959462c9db041cdc2024",
+      "review-corrections-rebuild.log": "d765c446c53e34418b74d251b40ebbb3a1406b497608e8286e5f34ce87a49ccd"
+    },
+    "migrations_changed": false,
+    "schedules_changed": false,
+    "permissions_changed": false,
+    "deployed": false,
+    "environment_recovery": "intermittent exec-server transport disconnect; original workspace and test job recovered without service or permission changes"
   }
 }
