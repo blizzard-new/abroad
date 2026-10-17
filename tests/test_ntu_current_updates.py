@@ -128,6 +128,12 @@ def test_glasgow_uw_and_paris_saclay_20261016_updates_preserve_scope_and_conflic
     assert "Autumn及Winter較舊版延後，Spring提前" in deadlines
     assert "提名截止由舊版11/1提前至10/15" in deadlines
     assert "申請截止由舊版11/15提前至11/1" in deadlines
+    documents = uw_details["documents"]
+    assert documents.status == "reference_only"
+    assert documents.evidence[0].source_pages == [3, 4]
+    document_facts = {f["pdf_page"]: f["text_zh"] for f in source["uw_update"]["facts"] if f["field"] == "documents"}
+    assert "前兩週" in document_facts[3] and "前兩週" not in document_facts[4]
+    assert "DS-2019" in document_facts[4]
     assert "（較舊版延後）" not in uw.application_info
     for fact in source["uw_update"]["facts"]:
         assert fact["text_zh"] in uw.application_info

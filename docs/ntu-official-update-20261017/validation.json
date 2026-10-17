@@ -64,7 +64,10 @@
     "review-corrections-date-format-fixed.log": "025faefe413c1299e69fe31f058508ac71475f818beed7127f45ea2407906444",
     "review-corrections-tests-final.log": "06799afc6055596294cd6f3105cc127ca72f4c8e3bdfee879183c3ece09fd4d4",
     "review-corrections-browser.log": "ca58fd1bb17c48d7bd68dde21371372b8d76be184392959462c9db041cdc2024",
-    "review-corrections-rebuild.log": "d765c446c53e34418b74d251b40ebbb3a1406b497608e8286e5f34ce87a49ccd"
+    "review-corrections-rebuild.log": "d765c446c53e34418b74d251b40ebbb3a1406b497608e8286e5f34ce87a49ccd",
+    "uw-citation-tests.log": "e570fb364b44cf922b4c8e5a8f6edb129bd9a904cdf007be2f555832782c45cd",
+    "uw-citation-browser.log": "b4a4e7606ec82ba87ab3d72f749667d1d2e8157ec99af27a65dbcb953487d711",
+    "uw-citation-rebuild.log": "d765c446c53e34418b74d251b40ebbb3a1406b497608e8286e5f34ce87a49ccd"
   },
   "review_corrections": {
     "checked_at": "2026-10-17T02:58:35.616918+00:00",
@@ -88,5 +91,34 @@
     "permissions_changed": false,
     "deployed": false,
     "environment_recovery": "intermittent exec-server transport disconnect; original workspace and test job recovered without service or permission changes"
+  },
+  "latest_validation": {
+    "scope": "UW documents page citation [3,4]",
+    "checked_at": "2026-10-17T03:08:29.812846+00:00",
+    "previous_pr_head_sha": "2143aefd36f16fff9979425737e01f750a25c7d6",
+    "source_and_replay_tests": {
+      "passed": 83,
+      "failed": 0,
+      "command": ".venv/bin/python -m pytest -q -rs tests/test_ntu_current_updates.py tests/test_ntu_oct17_updates.py tests/test_ntu_integration.py tests/test_ntu_completion.py tests/test_ntu_official_changes.py",
+      "log": "validation-logs/uw-citation-tests.log"
+    },
+    "UW_browser_tests": {
+      "passed": 2,
+      "deselected_unaffected_cases": 8,
+      "failed": 0,
+      "widths": [
+        390,
+        1440
+      ],
+      "command": ".venv/bin/python -m pytest -q tests/e2e/test_ntu_oct17_scope.py -k markers4",
+      "log": "validation-logs/uw-citation-browser.log"
+    },
+    "offline_rebuild_files_equal": 17,
+    "only_changed_partner_id": "7",
+    "formal_quota_changed": false,
+    "remote_CI_passed": false,
+    "remote_CI_blocker": "Web quality disabled_manually; no passing quality run",
+    "merge_performed": false,
+    "deployment_performed": false
   }
 }

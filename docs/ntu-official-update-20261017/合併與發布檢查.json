@@ -1,0 +1,120 @@
+{
+  "phase": "pre-citation-push policy baseline; latest head will be checked after push",
+  "evidence": {
+    "pr": {
+      "exit_code": 0,
+      "response": {
+        "number": 46,
+        "state": "open",
+        "draft": true,
+        "mergeable": true,
+        "mergeable_state": "clean",
+        "head_sha": "2143aefd36f16fff9979425737e01f750a25c7d6",
+        "base_sha": "4ac91d3909c9edc2d3f262296d07586fd81cb9fd",
+        "preview_merge_sha_not_actual_merge": "22ba8b63d6b5e27f154eefcf60c599d2e5547772"
+      }
+    },
+    "branch": {
+      "exit_code": 0,
+      "response": {
+        "name": "main",
+        "protected": false,
+        "sha": "4ac91d3909c9edc2d3f262296d07586fd81cb9fd",
+        "protection": {
+          "enabled": false,
+          "required_status_checks": {
+            "enforcement_level": "off",
+            "contexts": [],
+            "checks": []
+          }
+        }
+      }
+    },
+    "protection": {
+      "exit_code": 1,
+      "response": {
+        "message": "Resource not accessible by integration",
+        "documentation_url": "https://docs.github.com/rest/branches/branch-protection#get-branch-protection",
+        "status": "403"
+      }
+    },
+    "effective_rules": {
+      "exit_code": 1,
+      "response": {
+        "message": "Upgrade to GitHub Pro or make this repository public to enable this feature.",
+        "documentation_url": "https://docs.github.com/rest/repos/rules#get-rules-for-a-branch",
+        "status": "403"
+      }
+    },
+    "actions_permissions": {
+      "exit_code": 1,
+      "response": {
+        "message": "Resource not accessible by integration",
+        "documentation_url": "https://docs.github.com/rest/actions/permissions#get-github-actions-permissions-for-a-repository",
+        "status": "403"
+      }
+    },
+    "workflows": {
+      "exit_code": 0,
+      "response": {
+        "total_count": 2,
+        "workflows": [
+          {
+            "id": 374368612,
+            "node_id": "W_kwDOU62qx84WUGlk",
+            "name": "Web quality",
+            "path": ".github/workflows/quality.yml",
+            "state": "disabled_manually",
+            "created_at": "2026-10-04T04:43:19.000Z",
+            "updated_at": "2026-10-09T15:41:07.000Z",
+            "url": "https://api.github.com/repos/blizzard-new/abroad/actions/workflows/374368612",
+            "html_url": "https://github.com/blizzard-new/abroad/blob/main/.github/workflows/quality.yml",
+            "badge_url": "https://github.com/blizzard-new/abroad/workflows/Web%20quality/badge.svg"
+          },
+          {
+            "id": 374368613,
+            "node_id": "W_kwDOU62qx84WUGll",
+            "name": "Deploy to Supabase",
+            "path": ".github/workflows/supabase-deploy.yml",
+            "state": "active",
+            "created_at": "2026-10-04T04:43:19.000Z",
+            "updated_at": "2026-10-04T04:43:19.000Z",
+            "url": "https://api.github.com/repos/blizzard-new/abroad/actions/workflows/374368613",
+            "html_url": "https://github.com/blizzard-new/abroad/blob/main/.github/workflows/supabase-deploy.yml",
+            "badge_url": "https://github.com/blizzard-new/abroad/workflows/Deploy%20to%20Supabase/badge.svg"
+          }
+        ]
+      }
+    },
+    "checks": {
+      "exit_code": 0,
+      "response": {
+        "total_count": 1,
+        "checks": [
+          {
+            "name": "Supabase Preview",
+            "status": "completed",
+            "conclusion": "skipped",
+            "details_url": "https://supabase.com/dashboard/project/wozrsrnkvbokzbbitkxf/branches"
+          }
+        ]
+      }
+    },
+    "status": {
+      "exit_code": 0,
+      "response": {
+        "state": "pending",
+        "total_count": 0,
+        "statuses": []
+      }
+    }
+  },
+  "merge_performed": false,
+  "blocker": "Web quality disabled_manually; no passing quality CI evidence",
+  "settings_changed": false,
+  "deployment_performed": false,
+  "documented_release_route": "update.ps1 -> backup -SkipCloud -> ff-only fetch/merge -> 03-start.ps1 -> verify.ps1",
+  "release_limit": "03-start starts the service stack, changes database role passwords, applies migrations and creates the storage bucket; not executed under current restrictions",
+  "safe_alternative_release_route_verified": false,
+  "actual_merge_commit": null
+}

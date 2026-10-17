@@ -54,6 +54,12 @@ def test_oct17_reference_conditions_and_years(page, live_server, width, school, 
         expect(cover).to_contain_text("Fact Sheet 2027")
         expect(cover).to_contain_text("PDF第1頁")
         expect(cover).to_contain_text("不表示整校116-1已確認")
+    if school == "華盛頓大學":
+        documents = receiving.locator('[data-ccu-field="documents"]')
+        documents.locator(":scope > summary").click()
+        expect(documents).to_contain_text("申請截止前兩週")
+        expect(documents).to_contain_text("PDF第3、4頁")
+        expect(documents.locator('a[href$="#page=3"]')).to_be_visible()
     field = "deadlines" if "里約" in school or "華盛頓" in school else "cost" if "安地斯" in school else "calendar" if school == "肯特大學" else "housing"
     reference = receiving.locator(f'[data-ccu-field="{field}"]')
     reference.locator(":scope > summary").click()

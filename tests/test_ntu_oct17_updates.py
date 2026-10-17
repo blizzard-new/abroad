@@ -111,6 +111,19 @@ def test_receiving_references_retain_original_page_quotes_and_periods():
     assert "Sway" in refs["60"]["source_relation"]
 
 
+def test_uw_document_nomination_quote_is_on_page_three_before_visa_page_four():
+    current = json.loads((SOURCE.parent / "2026-10-14-official-update.json").read_text())
+    uw = current["uw_update"]
+    path = Path(current["source_manifest"][uw["source_id"]]["local_file"])
+    pdf = PdfReader(path)
+    normalize = lambda text: re.sub(r"\s+", " ", text).strip()
+    assert "two weeks prior to student’s application deadlines" in normalize(pdf.pages[2].extract_text())
+    assert "DS-2019" in pdf.pages[3].extract_text()
+    evidence = partners()["7"].partner_exchange_details["documents"].evidence[0]
+    assert evidence.source_pages == [3, 4] and evidence.status == "reference_only"
+    assert evidence.academic_year == "2027/2028"
+
+
 def test_colombia_conflict_and_conditional_housing_are_visible():
     current = partners()
     cost = current["1283"].partner_exchange_details["cost"]
