@@ -13,6 +13,7 @@ from .scu_eligibility import is_scu, scu_academic_check, scu_degree_check, scu_l
 from .ntnu_eligibility import is_ntnu, ntnu_academic_check, ntnu_degree_check, ntnu_language_check
 from .cycu_eligibility import cycu_academic_check, cycu_degree_check, cycu_language_check, is_cycu
 from .ntust_eligibility import is_ntust, ntust_academic_check, ntust_degree_check, ntust_language_check
+from .yzu_eligibility import is_yzu, yzu_academic_check, yzu_degree_check, yzu_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -131,6 +132,12 @@ def select_application_workflow(
     selected = max(
         candidates,
         key=lambda workflow: (
+            int(
+                bool(context.home_university)
+                and bool(workflow.home_university)
+                and _normalize(workflow.home_university or "")
+                == _normalize(context.home_university or "")
+            ),
             int(
                 bool(context.academic_year)
                 and bool(workflow.academic_year)
@@ -496,6 +503,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_yzu(request.home_school):
+        deg_status, deg_detail = yzu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -582,6 +594,12 @@ def _eligibility_checks(
             "academic_score", status, "校內學業名次與平均門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_yzu(request.home_school):
+        status, detail = yzu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "校內系排、GPA 與及格門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -642,6 +660,9 @@ def _eligibility_checks(
     if is_ntust(request.home_school):
         home_status, home_detail = ntust_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "臺科大語檢門檻與獎學金標準", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_yzu(request.home_school):
+        home_status, home_detail = yzu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "元智兩年內有效語檢與兩岸組資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

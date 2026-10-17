@@ -771,6 +771,7 @@ def create_maintenance_router(
             <option value="ntnu">國立臺灣師範大學（共 236 所姊妹校）</option>
             <option value="cycu">中原大學（共 89 所姊妹校）</option>
             <option value="ntust">國立臺灣科技大學（共 237 所姊妹校）</option>
+            <option value="yzu">元智大學（共 90 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -852,7 +853,8 @@ def create_maintenance_router(
     scu: "東吳大學 (SCU)",
     ntnu: "國立臺灣師範大學 (NTNU)",
     cycu: "中原大學 (CYCU)",
-    ntust: "國立臺灣科技大學 (NTUST)"
+    ntust: "國立臺灣科技大學 (NTUST)",
+    yzu: "元智大學 (YZU)"
   };
 
   const FIELD_LABELS = {
