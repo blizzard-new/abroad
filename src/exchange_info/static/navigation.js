@@ -8,14 +8,44 @@
   let restoring = false;
   let restoreFrame = 0;
   let backPending = false;
+  let scrollTimer = 0;
+  let scrollDirty = false;
 
   function stamp(data = history.state) {
     return { ...data, [key]: { ...current } };
   }
+  function safeReplaceState(data, title, url) {
+    try {
+      history.replaceState(data, title, url);
+    } catch (_) {
+      if (url) location.replace(url);
+    }
+  }
+  function safePushState(data, title, url) {
+    try {
+      history.pushState(data, title, url);
+    } catch (_) {
+      if (url) location.assign(url);
+    }
+  }
   function saveScroll() {
+    if (scrollTimer) {
+      clearTimeout(scrollTimer);
+      scrollTimer = 0;
+    }
+    if (restoring || location.href !== currentUrl) return;
+    const nextScroll = window.scrollY;
+    if (!scrollDirty && current.scroll === nextScroll) return;
+    current.scroll = nextScroll;
+    scrollDirty = false;
+    safeReplaceState(stamp(), "");
+  }
+  function onScroll() {
     if (restoring || location.href !== currentUrl) return;
     current.scroll = window.scrollY;
-    history.replaceState(stamp(), "");
+    scrollDirty = true;
+    if (scrollTimer) clearTimeout(scrollTimer);
+    scrollTimer = window.setTimeout(saveScroll, 180);
   }
   function sync() {
     const activeBack = location.hash.startsWith("#school=") ? "back-to-schools"
@@ -28,8 +58,13 @@
     document.querySelector("#application-tools")?.removeAttribute("open");
   }
   function replaceState(data, title, url) {
+    if (scrollTimer) {
+      clearTimeout(scrollTimer);
+      scrollTimer = 0;
+    }
+    scrollDirty = false;
     observe();
-    history.replaceState(stamp(data), title, url);
+    safeReplaceState(stamp(data), title, url);
     currentUrl = location.href;
     sync();
   }
@@ -37,13 +72,18 @@
     observe();
     saveScroll();
     current = { ...current, index: current.index + 1, scroll: 0 };
-    history.pushState(stamp(data), title, url);
+    safePushState(stamp(data), title, url);
     currentUrl = location.href;
     sync();
   }
   function observe() {
     const entry = history.state?.[key];
     if (location.href === currentUrl && entry?.id === current.id && entry?.index === current.index) return;
+    if (scrollTimer) {
+      clearTimeout(scrollTimer);
+      scrollTimer = 0;
+    }
+    scrollDirty = false;
     if (valid(entry) && entry.id === current.id) {
       current = entry;
       restoring = true;
@@ -58,7 +98,7 @@
       });
     } else {
       current = { ...current, index: current.index + 1, scroll: 0 };
-      history.replaceState(stamp(), "");
+      safeReplaceState(stamp(), "");
     }
     currentUrl = location.href;
     backPending = false;
@@ -78,7 +118,7 @@
   }
 
   history.scrollRestoration = "manual";
-  history.replaceState(stamp(), "");
+  safeReplaceState(stamp(), "");
   document.querySelectorAll(".route-back").forEach((button) => button.addEventListener("click", back));
   document.querySelector('.skip-link[href="#main-content"]')?.addEventListener("click", (event) => {
     event.preventDefault();
@@ -86,7 +126,8 @@
     main.setAttribute("tabindex", "-1");
     main.focus({ preventScroll: true });
   });
-  window.addEventListener("scroll", saveScroll, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
+  document.addEventListener("click", saveScroll, true);
   window.addEventListener("pagehide", saveScroll);
   window.addEventListener("popstate", observe);
   window.addEventListener("hashchange", observe);

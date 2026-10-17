@@ -237,19 +237,28 @@
     if (depth > maxScroll) maxScroll = Math.min(100, depth);
   }, { passive: true });
 
+  var routeTimer = null;
+  function scheduleRouteChanged() {
+    if (routeTimer) return;
+    routeTimer = window.setTimeout(function () {
+      routeTimer = null;
+      routeChanged();
+    }, 30);
+  }
   function patchHistory(method) {
     var original = window.history[method];
     if (typeof original !== "function") return;
     window.history[method] = function () {
+      var before = currentRoute();
       var result = original.apply(this, arguments);
-      window.setTimeout(routeChanged, 30);
+      if (currentRoute() !== before || (arguments.length >= 3 && arguments[2])) scheduleRouteChanged();
       return result;
     };
   }
   patchHistory("pushState");
   patchHistory("replaceState");
-  window.addEventListener("hashchange", function () { window.setTimeout(routeChanged, 30); });
-  window.addEventListener("popstate", function () { window.setTimeout(routeChanged, 30); });
+  window.addEventListener("hashchange", scheduleRouteChanged);
+  window.addEventListener("popstate", scheduleRouteChanged);
 
   // ---- clicks
   // Attribute values can be record ids (a post, a conversation), so only these harmless ones are kept.
@@ -370,8 +379,9 @@
   var errorCount = 0;
   window.addEventListener("error", function (event) {
     if (!active() || errorCount >= 10 || !event.message || /ResizeObserver loop/i.test(event.message)) return;
-    errorCount += 1;
     var source = String(event.filename || "").split("?")[0].split("/").pop();
+    if (/^Script error\.?$/i.test(event.message) && !source && !event.lineno) return;
+    errorCount += 1;
     track("js_error", { message: String(event.message).slice(0, 200), source: source, line: event.lineno || 0 });
   });
   window.addEventListener("unhandledrejection", function (event) {
