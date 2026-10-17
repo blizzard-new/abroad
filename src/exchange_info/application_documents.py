@@ -59,7 +59,7 @@ from .models import (
 from .application_rules import select_application_workflow
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NTNU, NTPU, NTU, NTUST, NCU, SCU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NSYSU, NTNU, NTPU, NTU, NTUST, NCU, SCU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -71,6 +71,7 @@ CYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 NTUST_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 YZU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
 FCU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
+NSYSU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1253,6 +1254,51 @@ def _fcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nsysu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立中山大學出國交換學生甄選系統（https://partners.oia.nsysu.edu.tw/exchange/login/user/）線上申請資料、志願表、中文歷年成績單（須註明歷年班排名）、合格語言檢定證明與有利審查資料（上限 10 項）。",
+        "study-plan": "撰寫國立中山大學出國交換簡章必繳之《研修計畫書》（占甄選總成績 20%；赴其他國家須含中、英文各 1 頁 A4 為限，赴日本須含中、日文各 1 頁 A4，赴中國大陸以中文 1–2 頁 A4 撰寫，詳述選課與研究規劃）。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分採認預審（每學期至少修習並通過 2 門課程，含至少 1 門專業課程；學海惜珠／乘風萬里受獎生須通過至少 3 門課程，並依 18 授課小時抵免 1 學分原則辦理）。",
+        "predeparture-notice": "於校內放榜後規定期限內登入系統點選「確認錄取」並上傳本人及家長／監護人簽署之《錄取確認書（保證人同意書）》，確認「西灣領航計畫」自動獎助資格（每月 NT$10,000–15,000），並依提名通知辦理姊妹校複審、宿舍、簽證與海外保險。",
+        "return-report": "交換期滿返國後 2 個月內繳交返國報告書（含中文 1,500–2,000 字、英文 1,000–1,500 字心得及 4 張具圖說照片；赴中國者免附英文心得）及正式成績單查驗，以領取交換學生證明書及核銷獎助學金尾款。",
+        "credit-transfer": "交換期滿返國後，持交換學校核發之正式成績單正本及修課大綱（Syllabus），依《國立中山大學處理交換學生選課及成績作業要點》（18 授課小時抵免 1 學分）向所屬系所及教務處註冊課務組辦理學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立中山大學").replace("長庚", "中山")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立中山大學出國交換書面審查採計「歷年班排名」（赴日本及其他國家占總分 30%、赴中國大陸占總分 60%，總成績未達 60 分不予錄取；碩一學生可以大學歷年成績單及班排名申請）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（60+）", "IELTS Academic（5.0+）", "TOEIC（600+）", "Cambridge PET（154+）", "Duolingo（80+）", "BESTEP 培力英檢聽讀（170+）", "JLPT 日檢（N1–N5）", "DELF / Goethe / DELE（歐語 CEFR）", "赴中國大陸交換免附語檢"]
+            field["help_text"] = "赴日本及其他國家語言能力占甄選總分 40%（須為報名截止日前 2 年內取得並符合交換校個別標準）；赴中國大陸本國籍學生免附語言檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.nsysu.edu.tw/p/412-1308-20730.php?Lang=zh-tw",
+        source_checked_at=NSYSU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="志願表" if template.id == "exchange-application-data" else ("研修計畫書" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://partners.oia.nsysu.edu.tw/exchange/login/user/",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "父親、母親或監護人親筆簽章（錄取確認書／保證人同意書）"] if template.id == "exchange-application-data" else [],
+        stamps=[],
+        stage={"predeparture-notice": "錄取公告後線上確認並上傳錄取確認書", "return-report": "返國後 2 個月內繳交雙語報告書與成績單", "credit-transfer": "返國開學後（18 授課小時抵免 1 學分）"}.get(template.id, "於出國交換學生甄選系統（https://partners.oia.nsysu.edu.tw/exchange/login/user/）全線上上傳 PDF"),
+        version="116準備工具-2026-10-18.1",
+        destinations=["國立中山大學國際事務處學生交換事務組（行政大樓 2 樓 2004 室）", "管理學院職涯發展暨國際交流辦公室（管院院級適用）"],
+        conditional_note="此為個人準備工具；國立中山大學正式出國交換申請採全線上作業，請於各線報名期間登入 https://partners.oia.nsysu.edu.tw/exchange/login/user/ 填報並上傳簽名志願表、含歷年班排名之中文歷年成績單、語檢證明、中英文研修計畫書及有利審查資料。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
     if university.id == "ccu":
@@ -1275,6 +1321,8 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _yzu_template(template)) is not None]
     if university.id == FCU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _fcu_template(template)) is not None]
+    if university.id == NSYSU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nsysu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
