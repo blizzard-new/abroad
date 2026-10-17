@@ -409,8 +409,46 @@ NSYSU = UniversityProfile(
     ),
 )
 
+NCHU = UniversityProfile(
+    id="nchu",
+    school_name="國立中興大學",
+    short_name="中興",
+    english_name="National Chung Hsing University",
+    aliases=(
+        "nchu",
+        "國立中興大學",
+        "中興大學",
+        "中興",
+        "興大",
+        "NCHU",
+        "National Chung Hsing University",
+    ),
+    hero_image="/static/assets/nchu-campus.svg",
+    official_url="https://www.oia.nchu.edu.tw/index.php/2-uncategorised/154-1-1-exchange-info",
+    coverage_note="完整支援：116學年度第1學期（秋季班）出國交換甄選簡章、226所海外及大陸交換合作校名額與Fact Sheet、希望之橋暨學海系列獎學金、548篇學長姐交換心得影音及422人次錄取榜單已完整整合。",
+    support_level="full",
+    partner_count_hint=226,
+    academic_score_minimum=60,
+    student_card_signals=("國立中興大學", "中興大學", "NATIONALCHUNGHSINGUNIVERSITY", "NCHU"),
+    # https://www.nchu.edu.tw/about-route-map/mid/85 — checked 2026-10-18.
+    colleges=(
+        "文學院",
+        "農業暨自然資源學院",
+        "理學院",
+        "工學院",
+        "生命科學院",
+        "獸醫學院",
+        "管理學院",
+        "法政學院",
+        "電機資訊學院",
+        "醫學院",
+        "創新產業暨國際學院",
+        "循環經濟研究學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU)
 DEFAULT_UNIVERSITY = CGU
 
 

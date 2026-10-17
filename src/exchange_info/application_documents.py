@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NSYSU, NTNU, NTPU, NTU, NTUST, NCU, SCU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCHU, NSYSU, NTNU, NTPU, NTU, NTUST, NCU, SCU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -77,6 +77,7 @@ NTUST_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 YZU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
 FCU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
 NSYSU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
+NCHU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1304,6 +1305,51 @@ def _nsysu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nchu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立中興大學出國計畫線上申請系統（https://oiawp.nchu.edu.tw/out-going-program-online-application/）應繳資料、交換學生申請表（海外最多 5 志願＋大陸最多 5 志願，經導師／指導教授及系主任／所長核章）、中文歷年成績單、歷年名次證明書、語檢證明、第一志願家長同意書與 2 份線上教師推薦函。",
+        "study-plan": "撰寫國立中興大學出國交換簡章必繳之《自傳及讀書計畫》（至多 A4 三面，以第一志願學校為目標撰寫，含「個人特質與經歷」及「交換計畫與未來展望」；國外組占總成績 30%、大陸組占 45%，有填海外志願須交英文版）。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分抵免預審（每學期至少應選修相當於中興大學 6 學分或修課時間 108 小時之課程；領取獎學金者須含至少 1 門與本系所專業相關之課程）。",
+        "predeparture-notice": "於兩階段志願分發放榜後完成錄取資格確認，由國際處辦理姊妹校官方提名（Nomination），並於每年 2–3 月申請教育部學海飛颺／惜珠、中興大學選送學生赴海外研修獎學金或希望之橋獎學金，抵校後填報抵達通知單。",
+        "return-report": "交換期滿返國後 2 個月內（領取獎學金者於返國後 2 週內）繳交交換學生心得報告，並於畢業前參與國際處舉辦之經驗分享活動至少 3 小時。",
+        "credit-transfer": "交換期滿返國後 1 個月內，檢具接待校正式成績單辦理學分抵免（依《國立中興大學選送學生出國交換甄選辦法》第 14 條，不論是否採認學分，皆須跑完學分抵免程序始得辦理畢業離校手續）。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立中興大學").replace("長庚", "中興")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立中興大學學士班申請人歷年在校總平均分數須達 60 分（含）以上，並須上傳歷年成績單與歷年名次證明書（國外組在校成績占 30%、大陸組占 50%；申請學海飛颺或興大海外研修獎學金者須歷年名次前 50% 或平均 80 分以上）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（72+ / 新制 4+）", "TOEFL ITP（543+）", "IELTS Academic（5.5+）", "TOEIC（785+）", "JLPT 日檢（N1–N5）", "TOPIK 韓檢（1–6 級）", "德／法／西語檢定（CEFR）", "僅申請大陸地區姊妹校免附語檢"]
+            field["help_text"] = "申請國外姊妹校外語能力占總成績 35%（須達 CEFR B2：TOEFL iBT 72 / ITP 543 / IELTS 5.5 / TOEIC 785，或非英語系國家接受之第二外語檢定）；僅申請大陸地區免附。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.nchu.edu.tw/images/File/02_Exchange_Program/5-1-1/Exchange_Program_Guidelines_for_Fall_Semester_2027_TW.pdf",
+        source_checked_at=NCHU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="交換學生申請表" if template.id == "exchange-application-data" else ("自傳及讀書計畫" if template.id == "study-plan" else None),
+        official_file_name="outgoing_form.doc" if template.id == "exchange-application-data" else None,
+        official_download_url="https://www.oia.nchu.edu.tw/images/File/02_Exchange_Program/5-1-1/outgoing_form.doc" if template.id == "exchange-application-data" else "https://oiawp.nchu.edu.tw/out-going-program-online-application/",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "導師或指導教授簽章", "系主任／所長核章", "法定代理人親筆簽名（第一志願家長同意書）"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "兩階段分發放榜確認後辦理提名與抵達通報", "return-report": "返國後 2 個月內（受獎生 2 週內）繳交心得報告", "credit-transfer": "返國後 1 個月內必辦學分抵免程序"}.get(template.id, "於出國計畫線上申請系統（https://oiawp.nchu.edu.tw/out-going-program-online-application/）上傳 JPG/PDF（單檔 2 MB 內）"),
+        version="116準備工具-2026-10-18.1",
+        destinations=["國立中興大學國際事務處學術交流組（行政大樓 3 樓）", "所屬系所辦公室（導師／指導教授與系主任／所長核章）"],
+        conditional_note="此為個人準備工具；國立中興大學正式出國交換申請須先完成《交換學生申請表》導師／指導教授與系主任／所長核章，並於截止前登入 https://oiawp.nchu.edu.tw/out-going-program-online-application/ 完成上傳及設定 2 份線上教師推薦函。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1336,6 +1382,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _fcu_template(template)) is not None]
     if university.id == NSYSU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nsysu_template(template)) is not None]
+    if university.id == NCHU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nchu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="國立中興大學中興湖與圖書館校園意象圖">
+  <defs>
+    <linearGradient id="nchu-sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b3d2e" />
+      <stop offset="55%" stop-color="#145c44" />
+      <stop offset="100%" stop-color="#2a8c68" />
+    </linearGradient>
+    <linearGradient id="nchu-lake" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f4c5c" />
+      <stop offset="50%" stop-color="#1b7a78" />
+      <stop offset="100%" stop-color="#38b29a" />
+    </linearGradient>
+    <linearGradient id="nchu-bldg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f4f1ea" />
+      <stop offset="100%" stop-color="#dcd5c7" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#nchu-sky)" />
+  <!-- Warm Taichung Sun Glow -->
+  <circle cx="640" cy="135" r="58" fill="#f6c453" opacity="0.28" />
+  <circle cx="640" cy="135" r="38" fill="#fde293" opacity="0.45" />
+  <!-- Lush Campus Trees Silhouette -->
+  <path d="M0 305 Q160 225 340 270 T690 255 L800 290 L800 350 L0 350 Z" fill="#0d3528" opacity="0.7" />
+  <!-- NCHU Library & Administration Building Silhouette -->
+  <rect x="175" y="175" width="450" height="150" rx="6" fill="url(#nchu-bldg)" />
+  <rect x="165" y="162" width="470" height="16" rx="3" fill="#8c3b2b" />
+  <rect x="335" y="138" width="130" height="187" rx="4" fill="#ffffff" opacity="0.95" />
+  <polygon points="325,140 400,104 475,140" fill="#8c3b2b" />
+  <rect x="208" y="200" width="46" height="96" rx="3" fill="#1e5641" opacity="0.82" />
+  <rect x="272" y="200" width="46" height="96" rx="3" fill="#1e5641" opacity="0.82" />
+  <rect x="362" y="165" width="76" height="132" rx="3" fill="#1b4d3e" opacity="0.88" />
+  <rect x="482" y="200" width="46" height="96" rx="3" fill="#1e5641" opacity="0.82" />
+  <rect x="546" y="200" width="46" height="96" rx="3" fill="#1e5641" opacity="0.82" />
+  <!-- Chung Hsing Lake (中興湖) -->
+  <path d="M0 326 Q200 310 400 326 T800 320 L800 450 L0 450 Z" fill="url(#nchu-lake)" />
+  <text x="400" y="392" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" letter-spacing="3">國立中興大學 NATIONAL CHUNG HSING UNIVERSITY</text>
+  <text x="400" y="422" text-anchor="middle" fill="#d8f5ec" font-family="system-ui, -apple-system, sans-serif" font-size="14" letter-spacing="1.5">國際事務處 · 出國交換學生甄選與希望之橋獎助學金</text>
+</svg>
