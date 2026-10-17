@@ -374,8 +374,43 @@ FCU = UniversityProfile(
     ),
 )
 
+NSYSU = UniversityProfile(
+    id="nsysu",
+    school_name="國立中山大學",
+    short_name="中山",
+    english_name="National Sun Yat-sen University",
+    aliases=(
+        "nsysu",
+        "國立中山大學",
+        "中山大學",
+        "中山",
+        "NSYSU",
+        "National Sun Yat-sen University",
+    ),
+    hero_image="/static/assets/nsysu-campus.svg",
+    official_url="https://oia.nsysu.edu.tw/p/412-1308-20539.php?Lang=zh-tw",
+    coverage_note="完整支援：2026–2027與2027–2028赴日本、其他國家與地區及中國大陸出國交換甄選簡章、218所合作校名額與Fact Sheet、西灣領航自動獎助及1,823篇歷屆交換心得與錄取名單已完整整合。",
+    support_level="full",
+    partner_count_hint=218,
+    academic_score_minimum=70,
+    student_card_signals=("國立中山大學", "中山大學", "NATIONALSUNYATSENUNIVERSITY", "NSYSU"),
+    # https://www.nsysu.edu.tw/p/412-1000-88.php?Lang=zh-tw — checked 2026-10-18.
+    colleges=(
+        "文學院",
+        "理學院",
+        "工學院",
+        "管理學院",
+        "海洋科學學院",
+        "社會科學院",
+        "西灣學院",
+        "醫學院",
+        "半導體及重點科技研究學院",
+        "國際金融研究學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU)
 DEFAULT_UNIVERSITY = CGU
 
 
