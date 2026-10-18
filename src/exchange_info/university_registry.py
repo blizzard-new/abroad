@@ -447,8 +447,46 @@ NCHU = UniversityProfile(
     ),
 )
 
+NTUT = UniversityProfile(
+    id="ntut",
+    school_name="國立臺北科技大學",
+    short_name="北科大",
+    english_name="National Taipei University of Technology",
+    aliases=(
+        "ntut",
+        "國立臺北科技大學",
+        "國立台北科技大學",
+        "臺北科技大學",
+        "台北科技大學",
+        "臺北科大",
+        "台北科大",
+        "北科大",
+        "北科",
+        "NTUT",
+        "Taipei Tech",
+        "National Taipei University of Technology",
+    ),
+    hero_image="/static/assets/ntut-campus.svg",
+    official_url="https://oia.ntut.edu.tw/p/412-1032-9242.php?Lang=zh-tw",
+    coverage_note="完整支援：115-1／115-2 出國交換校內甄選簡章與作業要點、206所海外及大陸港澳交換合作與雙聯學位學校、出國交換與雙聯學位暨教育部學海系列獎助學金、677篇學長姐交換心得報告與意見調查表及189人次錄取榜單已完整整合。",
+    support_level="full",
+    partner_count_hint=206,
+    academic_score_minimum=70,
+    student_card_signals=("國立臺北科技大學", "臺北科技大學", "NATIONALTAIPEIUNIVERSITYOFTECHNOLOGY", "TAIPEITECH", "NTUT"),
+    # https://www.ntut.edu.tw/p/404-1007-85216.php — checked 2026-10-18.
+    colleges=(
+        "機電學院",
+        "電資學院",
+        "工程學院",
+        "管理學院",
+        "設計學院",
+        "人文與社會科學學院",
+        "創新前瞻科技研究學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT)
 DEFAULT_UNIVERSITY = CGU
 
 

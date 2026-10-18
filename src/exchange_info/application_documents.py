@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCHU, NSYSU, NTNU, NTPU, NTU, NTUST, NCU, SCU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCHU, NSYSU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, SCU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -78,6 +78,7 @@ YZU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
 FCU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
 NSYSU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCHU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
+NTUT_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1350,6 +1351,51 @@ def _nchu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ntut_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺北科技大學出國交換學生校內甄選應繳資料、校內報名系統（https://www.cc.ntut.edu.tw/~wwwoia/outbound/index.html）自動產出之申請表（經申請人親筆簽名、導師或指導教授及系所主管核章）、中英文歷年成績單正本（含班排或系排百分比）、英語或第二外語能力檢定證明、家長同意書正本及保證金新臺幣 3,000 元收據。",
+        "study-plan": "撰寫國立臺北科技大學出國交換校內甄選必繳之《中、英文自傳及讀書計畫》（各 500–1,000 字，說明申請動機、研修課程規劃及未來職涯連結；書面資料審查占校內甄選總成績 20%）。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分抵免預審（每學期至少應選修相當於臺北科大 2 門或 6 學分以上之專業課程，出國前先與系所確認抵免原則）。",
+        "predeparture-notice": "於校內放榜後依限繳交《錄取資格確認書》，由國際事務處辦理姊妹校官方提名（Nomination），並依公告時程申請教育部學海飛颺／惜珠或臺北科大出國交換與雙聯學位獎助學金。",
+        "return-report": "交換期滿返國後 1 個月內繳交出國交換學生心得報告（約 1,500–2,000 字及照片 4 張以上）、海外研修意見調查表，並配合辦理返國保證金 3,000 元退費及學海系列經費核銷。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本及修課大綱，向所屬系所及教務處辦理國外修讀學分採認與抵免程序。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺北科技大學").replace("長庚", "臺北科大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立臺北科技大學申請人歷年學業總平均須達 70 分（含）以上，操行成績達 80 分以上，並須檢附含班排或系排百分比之中英文歷年成績單正本（在校學業成績占校內甄選總成績 40%）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（68+）", "TOEFL ITP（520+）", "IELTS Academic（5.5+）", "TOEIC（700+）", "JLPT 日檢（N1–N3）", "TOPIK 韓檢（1–6 級）", "德／法／西語檢定（CEFR B1+）", "僅申請大陸地區姊妹校免附語檢"]
+            field["help_text"] = "申請歐美大洋洲及亞洲英語組姊妹校外語能力占總成績 40%（基本門檻：TOEFL iBT 68 / ITP 520 / IELTS 5.5 / TOEIC 700，且須符合各姊妹校最新門檻）；僅申請大陸地區免附。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ntut.edu.tw/p/412-1032-9242.php?Lang=zh-tw",
+        source_checked_at=NTUT_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換學生申請表" if template.id == "exchange-application-data" else ("中英文自傳及讀書計畫" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ntut.edu.tw/p/412-1032-12316.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "導師或指導教授簽章", "系所主管核章", "家長或法定代理人親筆簽名（家長同意書）"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所核章", "出納組收訖章（保證金 3,000 元收據）"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "放榜後繳交錄取確認書並辦理提名與獎學金申請", "return-report": "返國後 1 個月內繳交心得報告與意見調查表並退還保證金", "credit-transfer": "返國開學後持姊妹校正式成績單辦理學分抵免"}.get(template.id, "於出國交換報名系統（https://www.cc.ntut.edu.tw/~wwwoia/outbound/index.html）登錄並列印紙本核章後送交國際處"),
+        version="115準備工具-2026-10-18.1",
+        destinations=["國立臺北科技大學國際事務處國際合作組（共同科館 B1）", "所屬系所辦公室（導師／指導教授與系所主管核章）"],
+        conditional_note="此為個人準備工具；國立臺北科技大學正式出國交換申請須先於線上報名系統填報志願並列印申請表，經導師／指導教授與系所主管核章，連同保證金 3,000 元收據及應繳文件正本於截止前親送國際事務處。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1384,6 +1430,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nsysu_template(template)) is not None]
     if university.id == NCHU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nchu_template(template)) is not None]
+    if university.id == NTUT.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntut_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
