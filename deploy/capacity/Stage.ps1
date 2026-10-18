@@ -87,7 +87,10 @@ $env:CAPACITY_USERS = "$Users"
 $env:CAPACITY_SECONDS = "$Seconds"
 $env:CAPACITY_THREADS = '16'
 $env:CAPACITY_CATALOGUES = '2'
-$config = (Compose config --format json) | ConvertFrom-Json
+# PowerShell 5.1 treats JSON keys case-insensitively. Both proxy spellings are
+# needed by HTTP clients; rename one only in this validation copy of the JSON.
+$configJson = (Compose config --format json) -join "`n"
+$config = $configJson.Replace('"no_proxy":','"capacity_no_proxy":') | ConvertFrom-Json
 if ($config.name -ne 'uniway-capacity') { throw 'Wrong compose project' }
 foreach ($volume in $config.volumes.PSObject.Properties) {
     if ($volume.Value.name -notlike 'uniway-capacity_*') { throw 'Refusing a shared volume' }
@@ -130,12 +133,16 @@ if ($Action -eq 'Setup') {
     Write-Host 'Isolated stack ready: http://127.0.0.1:18000. Production was not updated.'
     exit
 }
-# Test always rotates fixture sessions and recreates only the staging app with the requested workers.
+# Apply test-only resource changes before rotating fixtures and switching app workers.
+Compose up -d --wait rest gateway
 Compose up -d --no-deps --force-recreate app
 Wait-App
 Compose run --rm --no-deps seed
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $report = '/artifacts/'+$stamp+'-w'+$Workers+'-u'+$Users+'.json'
-Compose run --rm --no-deps load python /opt/capacity/load.py --users $Users --duration $Seconds --expect-workers $Workers --output $report
-Compose stats --no-stream
-Write-Host ('Report: '+$Artifacts+'\'+($report.Split('/')[-1]))
+Write-Host ('Report path: '+$Artifacts+'\'+($report.Split('/')[-1]))
+try {
+    Compose run --rm --no-deps load python /opt/capacity/load.py --users $Users --duration $Seconds --expect-workers $Workers --output $report
+} finally {
+    Compose stats --no-stream
+}

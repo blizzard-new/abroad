@@ -11,6 +11,7 @@ services:
       POSTGRES_DB: postgres
       JWT_SECRET: ${JWT_SECRET:?run deploy/capacity/Stage.ps1 -Action Setup first}
       no_proxy: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
     volumes:
     - db-data:/var/lib/postgresql/data
     shm_size: 1gb
@@ -43,6 +44,7 @@ services:
       PGRST_ADMIN_SERVER_PORT: '3001'
       PGRST_ADMIN_SERVER_HOST: localhost
       no_proxy: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
     healthcheck:
       test:
       - CMD
@@ -52,7 +54,7 @@ services:
       timeout: 5s
       retries: 20
       start_period: 10s
-    cpus: 0.5
+    cpus: ${CAPACITY_REST_CPUS:-1}
     mem_limit: 512m
   storage:
     image: supabase/storage-api:v1.60.4@sha256:c8eb9858eafec891a97c27125470aaad54703c3f4eb4d55ca7f1bf6c6411febf
@@ -80,6 +82,7 @@ services:
       REGION: local
       ENABLE_IMAGE_TRANSFORMATION: 'false'
       no_proxy: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
     volumes:
     - storage-data:/var/lib/storage
     healthcheck:
@@ -126,7 +129,8 @@ services:
       retries: 20
     environment:
       no_proxy: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
-    cpus: 0.25
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
+    cpus: ${CAPACITY_GATEWAY_CPUS:-1}
     mem_limit: 128m
   ca-export:
     image: alpine:3
@@ -145,6 +149,7 @@ services:
     - cp /data/caddy/pki/authorities/local/root.crt /out/root.crt && chmod 644 /out/root.crt
     environment:
       no_proxy: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
   app:
     build:
       context: ../..
@@ -197,6 +202,7 @@ services:
       EXCHANGE_CATALOGUE_CONCURRENCY: ${CAPACITY_CATALOGUES:-2}
       EXCHANGE_ANALYTICS: 'off'
       no_proxy: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
     cpus: 3.0
     mem_limit: 6g
   web:
@@ -215,6 +221,7 @@ services:
     - no-new-privileges:true
     environment:
       no_proxy: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
   seed:
     image: uniway-capacity-app:local
     profiles:
@@ -243,6 +250,7 @@ services:
       EXCHANGE_CATALOGUE_CONCURRENCY: ${CAPACITY_CATALOGUES:-2}
       EXCHANGE_ANALYTICS: 'off'
       no_proxy: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
     volumes:
     - ./:/opt/capacity:ro
     - ./artifacts:/artifacts
@@ -261,6 +269,7 @@ services:
     environment:
       EXCHANGE_CAPACITY_RUN_ID: ${CAPACITY_RUN_ID:?run Stage.ps1 Setup first}
       no_proxy: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1},${no_proxy:-localhost,127.0.0.1},gateway,rest,storage,db,app,web
     volumes:
     - ./load.py:/opt/capacity/load.py:ro
     - ./artifacts:/artifacts
@@ -273,7 +282,7 @@ services:
     - ${CAPACITY_USERS:-1000}
     - --duration
     - ${CAPACITY_SECONDS:-300}
-    cpus: 2.0
+    cpus: ${CAPACITY_GENERATOR_CPUS:-2}
     mem_limit: 3g
     working_dir: /artifacts
 volumes:

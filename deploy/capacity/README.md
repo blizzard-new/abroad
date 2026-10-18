@@ -1,6 +1,6 @@
 # 第二階段：隔離環境與混合操作壓測
 
-此套件用真正的 PostgreSQL／PostgREST、正式 API、加密草稿與獨立帳號，比較 1／2／4 個 workers。正式平台不會因合併本 PR 自動增加 workers。
+此套件用真正的 PostgreSQL／PostgREST、正式 API、加密草稿與獨立帳號，比較 1／2／4 個 workers。正式平台不會因合併本 PR 自動增加 workers。開發環境的短測與未達標結果見 [驗證紀錄](../../docs/self-host-capacity-validation/stage-two/README.md)；目前尚未通過 1000 人容量驗收。
 
 ## Windows 執行
 
@@ -56,7 +56,9 @@ Stop 停止測試容器，保留隔離資料與報告。正式的 `uniway` 專�
 - 獨立產生資料庫密碼、JWT、文件加密金鑰和 run ID；不讀 `deploy/selfhost/.env`。沒有 Google、寄信或 AI API 金鑰。保留正式環境的 Supabase 持久層要求，沒有登入繞過端點。
 - Seed 工具只存在測試目錄，用伺服器端 repository 建立合成帳號與標準 session。Load 容器只有測試 session，沒有 service-role／資料庫密碼。
 - 候選設定為每 worker 16 threads、2 個 catalogue slots。正式預設保留 2／1；`EXCHANGE_WORKER_THREADS`（1–128）、`EXCHANGE_CATALOGUE_CONCURRENCY`（1–16）可明確設定。
-- app 上限 3 CPU／6 GB，db 1 CPU／2 GB，generator 2 CPU／3 GB，其餘服務另設上限。測試和正式服務同機仍會共享 CPU、SSD，請在低流量時段跑；完整驗收最好在獨立測試主機使用與正式相同配置，並由另一台機器產生外網流量。
+- app 上限 3 CPU／6 GB，db 1 CPU／2 GB，gateway 1 CPU、PostgREST 1 CPU、generator 2 CPU／3 GB，其餘服務另設上限。測試和正式服務同機仍會共享 CPU、SSD，請在低流量時段跑；完整驗收最好在獨立測試主機使用與正式相同配置，並由另一台機器產生外網流量。
 - 容器記憶體合計仍須留給正式站和 Windows 足夠空間。你目前 Docker 8 CPU／23.47 GiB 可先保留設定，不需要一次配滿實體 128 GB。
+
+若測試服務接近 CPU 配額，可在 **deploy/capacity/.env** 加入 `CAPACITY_GATEWAY_CPUS=1`、`CAPACITY_REST_CPUS=1`、`CAPACITY_GENERATOR_CPUS=2` 並調整數值，Test 會套用測試配額。配額是上限而非保留核心，合計可用量仍受 Docker／WSL 與主機限制；調高單一配額不會增加實際硬體。不要把有節流的測試結果當作整台主機的極限。
 
 完整驗收時，另外觀察 `docker stats`、資料庫連線數、主機記憶體、SSD 與 Caddy 5xx，確認 1000 人持續一小時無累積退化。朋友的 50 Mbps 預留應在路由器做 QoS／流量整形；這套本機測試不會變更網路限速。
