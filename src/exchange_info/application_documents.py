@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NSYSU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, SCU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, SCU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -80,6 +80,7 @@ NSYSU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCHU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NTUT_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
+NCKU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1445,6 +1446,51 @@ def _nccu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ncku_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立成功大學校級出國與赴大陸地區交換學生甄選應繳資料：出國交換生申請檢核表（Checklist）與申請表、志願表（最多填寫 6 所志願校）、在校歷年成績單（大學部須含名次與百分比，總平均達 77 分以上或名次列全班前 50% 以內；研究所免成績門檻）、教授推薦函 2 封、自傳與讀書計畫、有效外語能力證明及保證金新臺幣 5,000 元收據，依序合併為單一 PDF 檔案上傳至成大交換生甄選系統。",
+        "study-plan": "撰寫國立成功大學校級交換甄選必繳之《自傳》與《讀書計畫》（各以一頁 A4 為限，申請外國學校請以英文撰寫、申請大陸學校請以中文撰寫；清楚說明申請動機、成大與接待校學術銜接、預計修課與研究方向及返國學習規劃）。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分採認預審（依成大簡章規定，大學部交換生每學期至少須修習 6 學分或 2 門課、研究生至少須修習 3 學分或 1 門課，返國後檢附正式成績單及授課大綱向所屬系所及教務處辦理學分抵免）。",
+        "predeparture-notice": "於甄選錄取公告後依限於線上系統完成錄取確認（逾期未確認視同放棄，保證金 5,000 元不予退還），配合國際事務處國際教育組完成姊妹校官方提名（Nomination），並辦理役男出境、護照簽證、海外醫療及意外保險與成大在學註冊選課。",
+        "return-report": "交換期滿返國後兩個月內於成大交換生線上系統上傳交換心得報告（PDF 檔）及修課成績單證明，以辦理新臺幣 5,000 元保證金無息退還及出國交換／教育部學海系列獎助學金核銷。",
+        "credit-transfer": "交換期滿返國後持交換姊妹校核發之正式成績單正本與修課大綱（Syllabus），依國立成功大學學生抵免學分辦法向所屬系所及教務處註冊組申請國外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立成功大學").replace("長庚", "成大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立成功大學校級交換：學士班前一學期止歷年學業總平均須達 77 分以上或歷年名次列全班人數前 50% 以內（須檢附含名次與百分比之中文歷年成績單）；碩、博士班無分數及排名門檻，惟須經系所主管及指導教授簽章同意。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（72+ / CEFR B2）", "IELTS Academic（5.5+ / CEFR B2）", "TOEIC 聽讀（785+）＋說寫（310+）", "GEPT 全民英檢中高級複試通過", "Cambridge Main Suite FCE（B2 First）以上", "JLPT 日語檢定（N1–N5）", "TOPIK 韓語檢定（1–6 級）", "Goethe / TestDaF（德語）", "DELF / DALF / TCF（法語）", "DELE / SIELE（西語）", "赴大陸交換免附外語檢定"]
+            field["help_text"] = "申請英語系國家或全英語授課計畫者，須具備相當於 CEFR B2（高階級）以上之英語檢定成績且符合志願校門檻（不接受托福拼分 MyBest Scores 或多益單項無口說寫作之證書替代 B2）；申請日韓德法西語組須符合各姊妹校門檻；赴大陸地區交換免附外語檢定。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw",
+        source_checked_at=NCKU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換生申請檢核表與申請表" if template.id == "exchange-application-data" else ("自傳與讀書計畫（各一頁A4）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "指導教授簽章（研究生適用）", "系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["系所辦公室戳章", "成大自動繳費機或ATM轉帳收據（保證金 5,000 元）"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取公告後於線上系統完成錄取確認並辦理姊妹校提名", "return-report": "返國後兩個月內上傳交換心得報告與成績單退還保證金", "credit-transfer": "返國開學後持姊妹校正式成績單辦理學分抵免"}.get(template.id, "於成大交換生甄選系統（https://exchange.oia.ncku.edu.tw/）完成線上填報並上傳單一合併 PDF 備審檔案"),
+        version="116-1準備工具-2026-10-18.1",
+        destinations=["國立成功大學交換生線上申請系統（https://exchange.oia.ncku.edu.tw/）", "國立成功大學國際事務處國際教育組（光復校區雲平大樓東棟 7 樓）"],
+        conditional_note="此為個人準備工具；國立成功大學校級交換甄選採線上報名與單一 PDF 檔案上傳（檔案上限 10MB），請先下載官方申請表完成系所主管（及指導教授）核章並繳交保證金 5,000 元後，依檢核表順序合併上傳至 https://exchange.oia.ncku.edu.tw/ 。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1483,6 +1529,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntut_template(template)) is not None]
     if university.id == NCCU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nccu_template(template)) is not None]
+    if university.id == NCKU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncku_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

@@ -1,0 +1,744 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>國立成功大學-國際事務管理系統</title>
+
+    <!-- ======================= CSS ========================= -->
+    <link rel="shortcut icon" href="/front/images/favicon.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="/front/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="/front/css/oia-style.css" rel="stylesheet" type="text/css" />
+    <link href="/front/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    <!--  Metronic 4.5  -->
+    <link href="/metronic4/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="/metronic4/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="/metronic4/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
+    <link href="/metronic4/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css"/>
+    <!--  Metronic 4.5  -->
+
+    <!-- ====================== Scripts ====================== -->
+    <script src="/metronic4/plugins/jquery.min.js"></script>
+    <script src="/metronic4/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--  Metronic 4.5  -->
+    <script src="/metronic4/plugins/jquery.blockui.min.js"></script>
+    <script src="/metronic4/plugins/bootbox/bootbox.min.js"></script>
+    <script src="/metronic4/plugins/bootstrap-modal/js/bootstrap-modalmanager.js"></script>
+    <script src="/metronic4/plugins/bootstrap-modal/js/bootstrap-modal.js"></script>
+    <script src="/metronic4/plugins/bootstrap-toastr/toastr.min.js"></script>
+
+    <script src="/metronic4/scripts/app.js"></script>
+    <script src="/metronic4/scripts/custom.js"></script>
+    <script src="/js/pagination.min.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            App.init();
+            Jesda.init();
+
+            
+            
+            
+            if (jQuery('bootbox')) {
+                bootbox.setDefaults({
+                    animate: false
+                });
+            }
+        });
+    </script>
+
+    <style type="text/css">
+        footer {
+            position:static;
+        }
+    </style>
+</head>
+<body role="document">
+<!--網站外框_開始-->
+    <div id="wrapper">
+
+<!--表頭_開始-->
+        <header>
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="language">
+                        <ul>
+                            <li><a class="active" onclick="switchLang('zh_TW')" >中文</a></li>
+                            <li><a class=""  onclick="switchLang('en')">EN</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="icon-bar top-bar"></span>
+                            <span class="icon-bar middle-bar"></span>
+                            <span class="icon-bar bottom-bar"></span>
+                            <span class="sr-only">Toggle navigation</span>
+                        </button>
+                        <!--<a class="navbar-brand" href="#">Brand</a> -->
+                        <div class="logo-row">
+                            <div class="brand-img">
+                                <a href="/oia/index/../" target="_self">
+                                    <img src="/front/images/logo.svg" width="80" height="80" alt="國立成功大學"/>
+                                </a>
+                            </div>
+                            <div class="brand-info">
+                                <h1>國立成功大學 國際事務處</h1>
+                                <h2>NCKU Office of International Affairs</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <!--未登入_開始-->
+                        <ul class="nav navbar-nav navbar-right">
+<!--                            <li><a href="#">招收簡章</a></li>-->
+<!--                            <li><a href="#">申請文件說明</a></li>-->
+                            <li>
+                                                                    <a href="/oia/index">合約資訊</a>
+                                                            </li>
+                                                        <li>
+                                                                    <a href="/oia/index/sso.login" style="border-right: none;">登入</a>
+                                                            </li>
+                        </ul>
+                        <!--未登入_結束-->
+                        <!--已登入_開始-->
+<!--                        <ul class="nav navbar-nav navbar-right" style="display: none;">-->
+<!--                            <li><span class="id">王小明</span></li>-->
+<!--                            <li><a href="#">登出</a></li>-->
+<!--                        </ul>-->
+                        <!--已登入_結束-->
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container-fluid -->
+
+            </nav>
+        </header>
+        <!--表頭_結束-->
+
+        
+        <!--內容外框_開始-->
+        <script src="/js/moment.min.js"></script>
+<script src="/js/vue.min.js"></script>
+<script src="/js/vuejs-datepicker.min.js"></script>
+<script src="/js/vuejs-datepicker-zh.js"></script>
+
+<!-- or use the specify version -->
+<script src="https://unpkg.com/vuejs-paginate@0.9.0"></script>
+
+<!-- amcharts map Resources -->
+<script src="/amcharts/ammap.js"></script>
+<script src="/amcharts/continentsLow.js"></script>
+<script src="/amcharts/export.min.js"></script>
+<link rel="stylesheet" href="/amcharts/export.css" type="text/css" media="all" />
+<script src="/amcharts/light.js"></script>
+
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+
+    #map {
+        /*height: 500px; width: 500px;*/
+        /*z-index: 0;*/
+    }
+    #area_2 {
+        height: 100px; width: 100px;
+        background-color: white;
+        position: relative; top: -400px; left: 550px;
+        z-index: 2;
+    }
+    #area_4 {
+        height: 100px; width: 100px;
+        background-color: white;
+        position: relative; top: -500px; left: 350px;
+        z-index: 4;
+    }
+    #area_6 {
+        height: 100px; width: 100px;
+        background-color: white;
+        position: relative; top: -400px; left: 150px;
+        z-index: 6;
+    }
+    #area_8 {
+        height: 100px; width: 100px;
+        background-color: white;
+        position: relative; top: -300px; left: 350px;
+        z-index: 8;
+    }
+    #area_10 {
+        height: 100px; width: 100px;
+        background-color: white;
+        position: relative; top: -400px; left: 550px;
+        z-index: 10;
+    }
+    #area_12 {
+        height: 100px; width: 100px;
+        background-color: white;
+        position: relative; top: -500px; left: 200px;
+        z-index: 12;
+    }
+</style>
+
+<!--內容外框_開始-->
+<div id="body_content">
+
+    <div class="container">
+        <div class="row">
+            <!-- 固定欄位寬度_開始-->
+            
+
+<div class="col-fixed">
+    <div class="menu-ver-style1">
+        <ul>
+                                                                
+            <li class="selected">
+                <a href="/oia">
+                    <i class="fa fa-pencil-square-o mr5" aria-hidden="true"></i>
+                    簽約學校機構列表                </a>
+            </li>
+                                                                
+            <li class="">
+                <a href="/oia/index/search">
+                    <i class="fa fa-search mr5" aria-hidden="true"></i>
+                    合約查詢                </a>
+            </li>
+                    </ul>
+    </div>
+</div>
+            <!-- 固定欄位寬度_結束-->
+
+            <div class="sidebar-row">
+
+                <div class="col-md-12">
+                    <div class="page-title"><h3>簽約學校機構列表</h3></div>
+                </div>
+
+                <!--地圖_開始-->
+                <div class="col-md-12">
+                    <div class="map">
+<!--                        <img src="--><!--" width="1310" height="670" class="img-responsive">-->
+                        <div id="chartdiv"></div>
+                    </div>
+                </div>
+                <!--地圖_結束-->
+
+                <!--合約統計表_開始-->
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">合約統計表</div>
+                        <div class="panel-body">
+                            <table class="table-list-style3">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>國家數</th>
+                                    <th>學校數</th>
+                                    <th>有效合約數（校／院／系所／中心／其他）</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>姊妹校</td>
+                                    <td>44</td>
+                                    <td>345</td>
+                                    <td>
+                                        617                                        ( 337                                        /
+                                        169                                        /
+                                        95                                        /
+                                        10                                        /
+                                        6                                        )
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--合約統計表_結束-->
+
+                <!--合作計畫_開始-->
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">合作計畫</div>
+                        <div class="panel-body">
+                            <table class="table-list-style3">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>國家數</th>
+                                    <th>學校數</th>
+                                    <th>有效合約數（校／院／系所／中心／其他）</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                                                    <tr>
+                                        <td>廣泛性合作</td>
+                                        <td>41</td>
+                                        <td>281</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                345
+                                            ( 189                                            /
+                                            96                                            /
+                                            48                                            /
+                                            7                                            /
+                                            5                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>交換學生</td>
+                                        <td>35</td>
+                                        <td>183</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                221
+                                            ( 135                                            /
+                                            60                                            /
+                                            26                                            /
+                                            0                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>交換學生(研究為主,非修課)</td>
+                                        <td>7</td>
+                                        <td>10</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                12
+                                            ( 2                                            /
+                                            6                                            /
+                                            4                                            /
+                                            0                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>交換教授</td>
+                                        <td>17</td>
+                                        <td>46</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                53
+                                            ( 26                                            /
+                                            17                                            /
+                                            10                                            /
+                                            0                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>雙學位(雙學士)</td>
+                                        <td>5</td>
+                                        <td>6</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                6
+                                            ( 4                                            /
+                                            1                                            /
+                                            1                                            /
+                                            0                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>雙學位(雙碩士)</td>
+                                        <td>7</td>
+                                        <td>16</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                19
+                                            ( 1                                            /
+                                            8                                            /
+                                            10                                            /
+                                            0                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>雙學位(雙博士)</td>
+                                        <td>8</td>
+                                        <td>16</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                19
+                                            ( 1                                            /
+                                            11                                            /
+                                            7                                            /
+                                            0                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>雙學位(學碩)</td>
+                                        <td>5</td>
+                                        <td>12</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                17
+                                            ( 2                                            /
+                                            2                                            /
+                                            13                                            /
+                                            0                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>雙學位(其他)</td>
+                                        <td>3</td>
+                                        <td>3</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                3
+                                            ( 0                                            /
+                                            3                                            /
+                                            0                                            /
+                                            0                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>實習</td>
+                                        <td>6</td>
+                                        <td>9</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                11
+                                            ( 6                                            /
+                                            2                                            /
+                                            3                                            /
+                                            0                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>獎學金</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                2
+                                            ( 1                                            /
+                                            0                                            /
+                                            0                                            /
+                                            1                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>華語教學合作</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                3
+                                            ( 2                                            /
+                                            0                                            /
+                                            0                                            /
+                                            1                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                    <tr>
+                                        <td>歐盟伊拉斯莫斯計畫(含師生交換)</td>
+                                        <td>3</td>
+                                        <td>5</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                5
+                                            ( 3                                            /
+                                            0                                            /
+                                            2                                            /
+                                            0                                            /
+                                            0                                            )
+                                        </td>
+                                    </tr>
+                                                                                                                                                                        <tr>
+                                        <td>其他</td>
+                                        <td>10</td>
+                                        <td>19</td>
+                                        <td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                25
+                                            ( 10                                            /
+                                            6                                            /
+                                            5                                            /
+                                            3                                            /
+                                            1                                            )
+                                        </td>
+                                    </tr>
+                                                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--合作計畫_結束-->
+
+                <!--依洲國別分類_開始-->
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">依洲國別分類</div>
+                        <div class="panel-body">
+                            <!--洲別_開始-->
+                            <div class="col-sm-12" v-for="(item, index) in area">
+                                <div class="tag-row">
+                                    <h3 @click="areaUrlLink(index)">
+                                        {{ item }} ( {{ areaContract(index) }} )
+                                    </h3>
+                                    <!--國家_開始-->
+                                    <template v-for="(item, index) in country[index]">
+                                        <a :href=urlLink(index) v-if="countryContract(index) !== 0">
+                                            {{ item }} ( {{ countryContract(index) }} )
+                                        </a>
+                                    </template>
+                                    <!--國家_結束-->
+                                </div>
+                            </div>
+                            <!--洲別_結束-->
+                        </div>
+                    </div>
+                </div>
+                <!--依洲國別分類_結束-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--內容外框_結束-->
+
+<script>
+    var app = new Vue({
+        el: '#body_content',
+        data: {
+            contract: [],
+            countAreaContract: [],
+            countCountryContract: [],
+            area: [],
+            country: [],  // 原始資料，所有國家
+            areaCountry: [],  // 根據洲別，篩選出該洲國家
+            contractLevel: [],
+            contractUnit: [],  // 畫面上的簽約單位
+            collegeTeachUnit: [],  // 院資料
+            departmentTeachUnit: [],  // 系資料
+            collegeResearchUnit: [],  // 中心資料
+            contractTypeKey: [],
+            zh: vdp_translation_zh.js,
+
+            rows: [],
+            schoolName: '',
+            all_type: [],
+            faq_type: '',
+        },
+        components: {
+            vuejsDatepicker
+        },
+        watch: {
+            areaKey: function (sn) {
+                this.changeArea(sn);
+            }
+        },
+        computed: {
+        },
+        methods: {
+            customFormatter(date) {
+                return moment(date).format('YYYY-MM-DD');
+            },
+            clickArea(sn) {  // 每次點選左方 sidebar 時，要清空下方的 select option 值
+                this.areaKey = 0;
+                this.countryKey = 0;
+                this.contractLevelKey = 0;
+                this.contractTypeKeySelected = 0;
+                this.areaKey = sn;
+                this.currPage = 1;
+            },
+            // 因為要比對 2 個陣列，才能取值，且先 find value 取 key 才能取得值
+            areaContract(sn) {
+                const tmp = Object.keys(this.countAreaContract);
+                const tmp2 = tmp.find(function(element) {
+                    return element === sn;
+                });
+                count = (tmp2 !== undefined) ? this.countAreaContract[tmp2] : 0;
+                return count;
+            },
+            // 因為要比對 2 個陣列，才能取值，且先 find value 取 key 才能取得值
+            countryContract(sn) {
+                const tmp = Object.keys(this.countCountryContract);
+                const tmp2 = tmp.find(function(element) {
+                    return element === sn;
+                });
+                count = (tmp2 !== undefined) ? this.countCountryContract[tmp2] : 0;
+                return count;
+            },
+            changeArea(sn) {
+                this.currPage = 1;
+                this.countryKey = 0;
+                this.areaCountry = [];
+                this.areaCountry = this.country.filter((item) => {
+                    return parseInt(item.area_key) === parseInt(sn);
+                });
+
+                this.areaCountry.sort(function (a, b) {
+                    return ('' + a.name_en).localeCompare(b.name_en);
+                });
+            },
+            // 動態產出實際連結，必須在這裡完成，不要在html中處理，因為無法成功
+            urlLink: function (sn) {
+                return "/oia/index/detail/sn/" + sn;
+            },
+            areaUrlLink: function (sn) {
+                location.href = "/oia/index/area.detail/sn/" + sn;
+            },
+        },
+        created: function () {
+            var self = this;
+            self.contract = null;
+            self.countAreaContract = {"10":340,"4":155,"5":12,"11":108,"1":1,"6":1};
+            self.countCountryContract = {"54":114,"220":42,"175":1,"113":11,"93":31,"5":2,"103":11,"133":44,"23":9,"1":17,"73":14,"163":24,"181":11,"39":35,"48":32,"180":2,"7":13,"36":8,"30":12,"17":14,"191":3,"168":3,"53":9,"18":5,"13":11,"182":1,"21":91,"170":12,"210":1,"196":1,"31":2,"192":1,"173":1,"61":5,"179":6,"59":1,"10":1,"83":5,"199":3,"14":2,"184":1,"190":2,"178":1,"46":2};
+            self.area = {"6":"Africa \u975e\u6d32","11":"Americas \u7f8e\u6d32","10":"Asia \u4e9e\u6d32","4":"Europe \u6b50\u6d32","5":"Oceania \u5927\u6d0b\u6d32","1":"Other \u8de8\u6d32"};
+            self.country = {"10":{"65":"\u963f\u5bcc\u6c57","82":"\u4e9e\u7f8e\u5c3c\u4e9e","86":"\u4e9e\u585e\u62dc\u7136","69":"\u5df4\u6797","20":"\u5b5f\u52a0\u62c9","67":"\u4e0d\u4e39","176":"\u6c76\u840a","183":"\u67ec\u57d4\u5be8","70":"\u8cfd\u666e\u52d2\u65af","212":"\u5317\u97d3","245":"\u6771\u5e1d\u6c76","80":"\u55ac\u6cbb\u4e9e","123":"\u9999\u6e2f","163":"\u5370\u5ea6","133":"\u5370\u5c3c","175":"\u4f0a\u6717","29":"\u4f0a\u62c9\u514b","14":"\u4ee5\u8272\u5217","54":"\u65e5\u672c","174":"\u7d04\u65e6","3":"\u54c8\u85a9\u514b","71":"\u79d1\u5a01\u7279","51":"\u5409\u723e\u5409\u65af","143":"\u5bee\u570b","72":"\u9ece\u5df4\u5ae9","185":"\u6fb3\u9580","23":"\u5927\u9678\u5730\u5340","103":"\u99ac\u4f86\u897f\u4e9e","74":"\u99ac\u723e\u5730\u592b","9":"\u8499\u53e4","167":"\u7dec\u7538","178":"\u5c3c\u6cca\u723e","62":"\u963f\u66fc","28":"\u5df4\u57fa\u65af\u5766","201":"\u5df4\u52d2\u65af\u5766","83":"\u83f2\u5f8b\u8cd3","75":"\u5361\u9054","220":"\u5357\u97d3","181":"\u571f\u8033\u5176","5":"\u4fc4\u7f85\u65af","173":"\u6c99\u70cf\u5730\u963f\u62c9\u4f2f","113":"\u65b0\u52a0\u5761","4":"\u65af\u91cc\u862d\u5361","38":"\u6558\u5229\u4e9e","1":"\u81fa\u7063","84":"\u5854\u5409\u514b","93":"\u6cf0\u570b","85":"\u571f\u5eab\u66fc","76":"\u963f\u62c9\u4f2f\u806f\u5408\u5927\u516c\u570b","81":"\u70cf\u8332\u5225\u514b","73":"\u8d8a\u5357","77":"\u8449\u9580"},"4":{"139":"\u963f\u723e\u5df4\u5c3c\u4e9e","140":"\u5b89\u9053\u723e","36":"\u5967\u5730\u5229","149":"\u767d\u4fc4\u7f85\u65af","180":"\u6bd4\u5229\u6642","152":"\u6ce2\u58eb\u5c3c\u4e9e\u8207\u8d6b\u585e\u54e5\u7dad\u7d0d","33":"\u4fdd\u52a0\u5229\u4e9e","37":"\u514b\u7f85\u57c3\u897f\u4e9e","17":"\u6377\u514b","59":"\u4e39\u9ea5","41":"\u611b\u6c99\u5c3c\u4e9e","199":"\u82ac\u862d","39":"\u6cd5\u570b","48":"\u5fb7\u570b","141":"\u5e0c\u81d8","142":"\u6559\u5ef7","192":"\u5308\u7259\u5229","144":"\u51b0\u5cf6","34":"\u611b\u723e\u862d","191":"\u7fa9\u5927\u5229","184":"\u62c9\u812b\u7dad\u4e9e","145":"\u5217\u652f\u6566\u65af\u767b","53":"\u7acb\u9676\u5b9b","188":"\u76e7\u68ee\u5821","146":"\u99ac\u723e\u4ed6","87":"\u6469\u723e\u591a\u74e6","147":"\u6469\u7d0d\u54e5","153":"\u8499\u7279\u5167\u54e5\u7f85","179":"\u8377\u862d","18":"\u632a\u5a01","7":"\u6ce2\u862d","169":"\u8461\u8404\u7259","150":"\u5317\u99ac\u5176\u9813\u5171\u548c\u570b","42":"\u7f85\u99ac\u5c3c\u4e9e","148":"\u8056\u99ac\u5229\u8afe","31":"\u65af\u6d1b\u4f10\u514b","22":"\u65af\u6d1b\u7dad\u5c3c\u4e9e","168":"\u897f\u73ed\u7259","61":"\u745e\u5178","60":"\u745e\u58eb","151":"\u585e\u723e\u7dad\u4e9e\u5171\u548c\u570b","197":"\u70cf\u514b\u862d","30":"\u82f1\u570b"},"6":{"96":"\u963f\u723e\u53ca\u5229\u4e9e","97":"\u5b89\u54e5\u62c9","98":"\u8c9d\u5357","99":"\u6ce2\u672d\u90a3","26":"\u5e03\u5409\u7d0d\u6cd5\u7d22","100":"\u84b2\u9686\u5730","102":"\u7dad\u5fb7\u89d2","101":"\u5580\u9ea5\u9686","104":"\u4e2d\u975e","105":"\u67e5\u5fb7","134":"\u525b\u679c\u6c11\u4e3b\u5171\u548c\u570b","108":"\u5409\u5e03\u5730","57":"\u57c3\u53ca","109":"\u8d64\u9053\u5e7e\u5167\u4e9e","137":"\u5384\u5229\u5782\u4e9e","110":"\u8863\u7d22\u6bd4\u4e9e","111":"\u52a0\u5f6d","198":"\u7518\u6bd4\u4e9e","112":"\u8fe6\u7d0d","114":"\u5e7e\u5167\u4e9e","115":"\u5e7e\u5167\u4e9e\u6bd4\u7d22","116":"\u8c61\u7259\u6d77\u5cb8","27":"\u80af\u4e9e","32":"\u53f2\u74e6\u5e1d\u5c3c\u738b\u570b","117":"\u8cf4\u7d22\u6258","118":"\u8cf4\u6bd4\u745e\u4e9e","119":"\u5229\u6bd4\u4e9e","171":"\u99ac\u9054\u52a0\u65af\u52a0","24":"\u99ac\u62c9\u5a01","120":"\u99ac\u5229","121":"\u8305\u5229\u5854\u5c3c\u4e9e","177":"\u6a21\u91cc\u897f\u65af","6":"\u6469\u6d1b\u54e5","122":"\u83ab\u4e09\u6bd4\u514b","136":"\u7d0d\u7c73\u6bd4\u4e9e","124":"\u5c3c\u65e5","49":"\u5948\u53ca\u5229\u4e9e","138":"\u7d22\u99ac\u5229\u862d\u5171\u548c\u570b","255":"\u525b\u679c","125":"\u76e7\u5b89\u9054","194":"\u8056\u591a\u7f8e\u666e\u6797\u897f\u6bd4","19":"\u585e\u5167\u52a0\u723e","126":"\u585e\u5e2d\u723e","127":"\u7345\u5b50\u5c71\u5171\u548c\u570b","254":"\u7d22\u99ac\u5229\u4e9e\u6c11\u4e3b\u5171\u548c\u570b","10":"\u5357\u975e","35":"\u5357\u8607\u4e39\u5171\u548c\u570b","129":"\u8607\u4e39","68":"\u5766\u5c1a\u5c3c\u4e9e","130":"\u591a\u54e5","131":"\u7a81\u5c3c\u897f\u4e9e","132":"\u70cf\u5e72\u9054","106":"\u845b\u6469\u806f\u76df","135":"\u5c1a\u6bd4\u4e9e","55":"\u8f9b\u5df4\u5a01"},"11":{"161":"\u5b89\u5730\u5361","8":"\u963f\u6839\u5ef7","155":"\u5df4\u54c8\u99ac","156":"\u5df4\u8c9d\u591a","44":"\u8c9d\u91cc\u65af","186":"\u73bb\u5229\u7dad\u4e9e","190":"\u5df4\u897f","170":"\u52a0\u62ff\u5927","16":"\u667a\u5229","12":"\u54e5\u502b\u6bd4\u4e9e","172":"\u54e5\u65af\u5927\u9ece\u52a0","157":"\u53e4\u5df4","2":"\u591a\u660e\u5c3c\u52a0","162":"\u591a\u7c73\u5c3c\u514b","43":"\u5384\u74dc\u591a","25":"\u85a9\u723e\u74e6\u591a","158":"\u683c\u745e\u90a3\u9054","40":"\u74dc\u5730\u99ac\u62c9","164":"\u84cb\u4e9e\u90a3","218":"\u6d77\u5730","193":"\u5b8f\u90fd\u62c9\u65af","159":"\u7259\u8cb7\u52a0","196":"\u58a8\u897f\u54e5","47":"\u5c3c\u52a0\u62c9\u74dc","189":"\u5df4\u62ff\u99ac","11":"\u5df4\u62c9\u572d","46":"\u79d8\u9b6f","234":"\u6ce2\u591a\u9ece\u5404","58":"\u8056\u9732\u897f\u4e9e","240":"\u8056\u6587\u68ee","165":"\u8607\u5229\u5357","160":"\u5343\u91cc\u9054","21":"\u7f8e\u570b","200":"\u70cf\u62c9\u572d","166":"\u59d4\u5167\u745e\u62c9"},"5":{"13":"\u6fb3\u5927\u5229\u4e9e","187":"\u6590\u6fdf","92":"\u99ac\u7d39\u723e\u7fa4\u5cf6\u5171\u548c\u570b","95":"\u5bc6\u514b\u7f85\u5c3c\u897f\u4e9e","66":"\u8afe\u9b6f","182":"\u7d10\u897f\u862d","228":"\u7d10\u57c3","52":"\u5e1b\u7409","89":"\u5df4\u5e03\u4e9e\u7d10\u5e7e\u5167\u4e9e","15":"\u5409\u91cc\u5df4\u65af","94":"\u85a9\u6469\u4e9e","50":"\u7d22\u7f85\u9580\u7fa4\u5cf6","238":"\u8056\u514b\u91cc\u65af\u591a\u798f","90":"\u6771\u52a0","195":"\u5410\u74e6\u9b6f","91":"\u842c\u90a3\u675c"},"1":{"210":"\u8de8\u6d32\u8de8\u570b"}};
+        }
+    });
+</script>
+
+<!-- AmCharts Map -->
+<script>
+    var map = AmCharts.makeChart( "chartdiv", {
+
+        "type": "map",
+        "theme": "light",
+
+        "dragMap": false,
+        "projection": "eckert3",
+
+        "areasSettings": {
+            "autoZoom": false,
+            "selectable" : true,
+            "rollOverOutlineColor": "#000000",
+            "selectedColor": "#000000",
+            "outlineAlpha": 0,
+            "outlineColor": "#FFFFFF",
+            "outlineThickness": 0,
+            "color": "#000000"
+        },
+
+        "dataProvider": {
+            "map": "continentsLow",
+
+            "areas": [ {
+                "id": "africa",
+                "showAsSelected" : true,
+                "url" : "/oia/index/area.detail/sn/6",
+                "title": "Africa 非洲 (5)",
+                "pattern": {
+                    "url": "/amcharts/pattern1.png",
+                    "width": 0.1,
+                    "height": 0.1,
+                    "color": "#40e0d0"
+                },
+            }, {
+                "id": "asia",
+                "showAsSelected" : true,
+                "url" : "/oia/index/area.detail/sn/10",
+                "title": "Asia 亞洲 (367)",
+                "pattern": {
+                    "url": "/amcharts/pattern2.png",
+                    "width": 0.1,
+                    "height": 0.1,
+                    "color": "#ffe36e"
+                }
+            }, {
+                "id": "australia",
+                "showAsSelected" : true,
+                "url" : "/oia/index/area.detail/sn/5",
+                "title": "Oceania 大洋洲 (14)",
+                "pattern": {
+                    "url": "/amcharts/pattern3.png",
+                    "width": 0.1,
+                    "height": 0.1,
+                    "color": "#ff99cc"
+                }
+            }, {
+                "id": "europe",
+                "showAsSelected" : true,
+                "url" : "/oia/index/area.detail/sn/4",
+                "title": "Europe 歐洲 (145)",
+                "pattern": {
+                    "url": "/amcharts/pattern4.png",
+                    "width": 0.1,
+                    "height": 0.1,
+                    "color": "#ffcc99"
+                }
+            }, {
+                "id": "north_america",
+                "showAsSelected" : true,
+                "url" : "/oia/index/area.detail/sn/11",
+                "title": "Americas 美洲 (117)",
+                "pattern": {
+                    "url": "/amcharts/pattern5.png",
+                    "width": 0.1,
+                    "height": 0.1,
+                    "color": "#87cefa"
+                }
+            }, {
+                "id": "south_america",
+                "showAsSelected" : true,
+                "url" : "/oia/index/area.detail/sn/11",
+                "title": "Americas 美洲 (117)",
+                "pattern": {
+                    "url": "/amcharts/pattern5.png",
+                    "width": 0.1,
+                    "height": 0.1,
+                    "color": "#87cefa"
+                }
+            } ]
+        },
+        "zoomControl": {
+            "panControlEnabled": false,
+            "zoomControlEnabled": false,
+            "homeButtonEnabled": false
+        },
+        "export": {
+            "enabled": false
+        }
+    } );
+</script>        <!--內容外框_結束-->
+
+        <!--置底_開始-->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-sm-5 col-12">
+                        <div class="footer-link"> <img src="/front/images/footer-logo.svg" width="160" height="46" alt=""/><span>國際事務處</span>
+                            <ul>
+                                <li><i class="fas fa-phone-alt mr10"></i>886-6-2757575</li>
+                                <li><i class="fas fa-envelope mr10"></i><a href="">em50960@email.ncku.edu.tw</a></li>
+                                <li><i class="fas fa-map-marker-alt mr10"></i>台南市東區大學路一號國立成功大學光復校區雲平大樓西棟八樓</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-7 col-12">
+                        <div class="support-browser-row">
+                            <p>建議使用Google Chrome Firefox或IE11(含)以上版本瀏覽器</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--置底_結束-->
+    </div>
+    <!--網站外框_結束-->
+</body>
+<script>
+    function switchLang(locale) {
+        $.ajax({
+            url: "/oia/index/ajax.lang/lang/" + locale,
+            dataType: "json",
+            success: function(json) {
+                if (json.success == '1') {
+                    location.reload();
+                }
+                else {
+                    bootbox.alert(json.message);
+                }
+            },
+            error: function(xhr) {
+                bootbox.alert(xhr.responseText);
+            }
+        });
+    }
+</script>
+</html>

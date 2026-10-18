@@ -524,8 +524,45 @@ NCCU = UniversityProfile(
     ),
 )
 
+NCKU = UniversityProfile(
+    id="ncku",
+    school_name="國立成功大學",
+    short_name="成大",
+    english_name="National Cheng Kung University",
+    aliases=(
+        "ncku",
+        "國立成功大學",
+        "成功大學",
+        "成大",
+        "NCKU",
+        "Cheng Kung University",
+        "National Cheng Kung University",
+    ),
+    hero_image="/static/assets/ncku-campus.svg",
+    official_url="https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw",
+    coverage_note="完整支援：116-1（2027秋季班）及115-1／115-2校級出國與赴大陸地區交換學生甄選簡章、211所合作姊妹校名額與語言門檻、6項赴外交換暨學海系列獎助學金及357篇歷屆學長姐交換心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=211,
+    academic_score_minimum=77,
+    student_card_signals=("國立成功大學", "成功大學", "NATIONALCHENGKUNGUNIVERSITY", "NCKU"),
+    # https://www.ncku.edu.tw/p/412-1000-85.php?Lang=zh-tw — checked 2026-10-18.
+    colleges=(
+        "文學院",
+        "理學院",
+        "工學院",
+        "管理學院",
+        "醫學院",
+        "社會科學院",
+        "電機資訊學院",
+        "規劃與設計學院",
+        "生物科學與科技學院",
+        "智慧半導體及永續製造學院",
+        "敏求智慧運算學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU)
 DEFAULT_UNIVERSITY = CGU
 
 
