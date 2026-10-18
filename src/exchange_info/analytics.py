@@ -509,6 +509,7 @@ class AnalyticsService:
         self._last_flush = time.monotonic()
         self._last_purge = float("-inf")  # the first collection after a restart also trims old rows
         self._flush_lock = threading.Lock()
+        self._flush_pending = threading.Lock()
 
     @classmethod
     def from_environment(cls, repository: AnalyticsRepository | None,
@@ -565,8 +566,19 @@ class AnalyticsService:
         if not self.enabled:
             return
         self.metrics.record(route, method, status, duration_ms)
-        if self.flush_seconds > 0 and time.monotonic() - self._last_flush >= self.flush_seconds:
-            threading.Thread(target=self.flush_api_metrics, daemon=True).start()
+        if (self.flush_seconds > 0 and time.monotonic() - self._last_flush >= self.flush_seconds
+                and self._flush_pending.acquire(blocking=False)):
+            try:
+                threading.Thread(target=self._flush_in_background, daemon=True).start()
+            except RuntimeError:
+                self._flush_pending.release()
+                logger.exception("analytics: could not start metrics flush")
+
+    def _flush_in_background(self) -> None:
+        try:
+            self.flush_api_metrics()
+        finally:
+            self._flush_pending.release()
 
     def flush_api_metrics(self) -> int:
         if not self.enabled:

@@ -12419,13 +12419,20 @@ class AiStatusManager {
   constructor() {
     this.state = "paused";
     this.pollInterval = null;
+    this.running = false;
+    this.inFlight = false;
+    this.intervalMs = 30000;
+    this.resumePolling = () => this.schedule(500 + Math.random() * 1500);
     this.consentGiven = false;
     this.currentFileHash = null;
   }
 
   async poll() {
+    if (!this.running || this.inFlight || document.hidden || navigator.onLine === false) return;
+    this.inFlight = true;
     try {
       const status = await fetchJson("/ai/status");
+      if (!this.running) return;
       state.aiStatus = status;
       const newState = status?.runtime_state || (status?.ai_enabled ? "ready" : "paused");
       if (newState !== this.state) {
@@ -12435,25 +12442,51 @@ class AiStatusManager {
         this.announceStateChange();
       }
     } catch (_) {
-      if (this.state !== "offline") {
+      if (this.running && this.state !== "offline") {
         this.state = "offline";
         this.render();
         this.updateDegradation();
         this.announceStateChange();
       }
+    } finally {
+      this.inFlight = false;
+      if (this.running) this.schedule();
     }
+  }
+
+  schedule(delay) {
+    clearTimeout(this.pollInterval);
+    this.pollInterval = null;
+    if (!this.running || document.hidden || navigator.onLine === false) return;
+    const interval = this.state === "paused" ? 300000 : this.state === "offline" ? 120000 : this.intervalMs;
+    this.pollInterval = setTimeout(() => this.poll(), delay ?? interval);
   }
 
   start(intervalMs = 30000) {
-    this.poll();
-    this.pollInterval = setInterval(() => this.poll(), intervalMs);
+    this.stop();
+    this.running = true;
+    this.intervalMs = intervalMs;
+    document.addEventListener("visibilitychange", this.resumePolling);
+    window.addEventListener("online", this.resumePolling);
+    window.addEventListener("offline", this.resumePolling);
+    // boot() already fetched this status; avoid a second request on every visit.
+    if (state.aiStatus) {
+      this.state = state.aiStatus.runtime_state || (state.aiStatus.ai_enabled ? "ready" : "paused");
+      this.render();
+      this.updateDegradation();
+      this.schedule();
+    } else {
+      this.poll();
+    }
   }
 
   stop() {
-    if (this.pollInterval) {
-      clearInterval(this.pollInterval);
-      this.pollInterval = null;
-    }
+    this.running = false;
+    clearTimeout(this.pollInterval);
+    this.pollInterval = null;
+    document.removeEventListener("visibilitychange", this.resumePolling);
+    window.removeEventListener("online", this.resumePolling);
+    window.removeEventListener("offline", this.resumePolling);
   }
 
   render() {

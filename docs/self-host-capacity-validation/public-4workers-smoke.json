@@ -1,0 +1,83 @@
+{
+  "profile": "public APIs only; excludes assets, login, writes, uploads and document generation",
+  "target": "http://127.0.0.1:8765",
+  "users": 10,
+  "started_users": 10,
+  "schools": [
+    "國立臺灣大學"
+  ],
+  "duration_seconds": 15.0,
+  "elapsed_seconds_including_drain": 15.01,
+  "ramp_seconds": 3.0,
+  "think_seconds": 10.0,
+  "requests": 90,
+  "requests_per_second": 6.0,
+  "errors": 0,
+  "error_rate": 0.0,
+  "response_body_bytes": 81611020,
+  "p50_ms": 10.04,
+  "p95_ms": 210.96,
+  "p99_ms": 302.75,
+  "thresholds": {
+    "p95_ms": 2000,
+    "max_error_rate": 0.01
+  },
+  "checks": {
+    "all_users_started": true,
+    "received_responses": true,
+    "error_rate": true,
+    "p95_latency": true,
+    "route_p95_latency": true
+  },
+  "passed": true,
+  "routes": {
+    "/": {
+      "requests": 10,
+      "errors": 0,
+      "statuses": {
+        "200": 10
+      },
+      "p95_ms": 18.71
+    },
+    "/universities": {
+      "requests": 10,
+      "errors": 0,
+      "statuses": {
+        "200": 10
+      },
+      "p95_ms": 31.6
+    },
+    "/ai/status": {
+      "requests": 10,
+      "errors": 0,
+      "statuses": {
+        "200": 10
+      },
+      "p95_ms": 5.65
+    },
+    "/student-dashboard": {
+      "requests": 20,
+      "errors": 0,
+      "statuses": {
+        "200": 20
+      },
+      "p95_ms": 279.64
+    },
+    "/documents": {
+      "requests": 20,
+      "errors": 0,
+      "statuses": {
+        "200": 20
+      },
+      "p95_ms": 94.57
+    },
+    "/deadlines": {
+      "requests": 20,
+      "errors": 0,
+      "statuses": {
+        "200": 20
+      },
+      "p95_ms": 9.62
+    }
+  }
+}

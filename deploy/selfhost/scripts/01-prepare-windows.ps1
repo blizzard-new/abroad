@@ -1,7 +1,8 @@
 # Step 1 (administrator): make Windows behave like a server - never sleep, open only the web ports, cap the upload speed.
-#   powershell -ExecutionPolicy Bypass -File .\01-prepare-windows.ps1 [-UploadMbps 250]
+#   powershell -ExecutionPolicy Bypass -File .\01-prepare-windows.ps1 [-UploadMbps 450]
 param(
-    [int]$UploadMbps = 250      # Jerry: "keep upload at 250, leave at least 50 for me" on a 300 Mbps line (Mbps = megabits per second)
+    [ValidateRange(1, 10000)]
+    [int]$UploadMbps = 450      # Plan for 500 Mbps, leaving 50 Mbps of headroom. Router QoS must cover the whole server.
 )
 . "$PSScriptRoot\lib.ps1"
 Assert-Admin
@@ -39,7 +40,7 @@ try {
     Write-Warn 'Check it once with a real download from outside (see the guide, section on bandwidth). If Windows ignores it, set the same cap in the router (QoS / bandwidth control) instead.'
 } catch {
     Write-Warn ('Could not create the QoS policy: ' + $_.Exception.Message)
-    Write-Warn 'Set the upload cap in the router instead (QoS / bandwidth control), 250 Mbps for this computer.'
+    Write-Warn ("Set the upload cap in the router instead (QoS / bandwidth control), {0} Mbps for this computer." -f $UploadMbps)
 }
 
 Write-Host ""
