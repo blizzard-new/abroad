@@ -1,7 +1,9 @@
 import re
+from functools import lru_cache
 from pathlib import Path
 
 import exchange_info
+from pypdf import PdfReader
 from fastapi.testclient import TestClient
 
 from exchange_info.api import create_app
@@ -122,9 +124,7 @@ def test_schools_without_a_checked_rule_are_told_so_instead_of_shown_nothing() -
             else:
                 assert not rules.verified and rules.min_chars is None and rules.max_chars is None
                 assert not rules.count_field_ids and "不是學校規定" in " ".join(rules.rules)
-    # Rules once drafted here that the stored official text does not support must stay out.
-    assert ("yzu", "return-report") not in WRITING_RULES
-    assert ("cycu", "return-report") not in WRITING_RULES
+    # A rule the stored official text does not support must stay out.
     assert ("ntust", "study-plan") not in WRITING_RULES
     assert not by_school["ntust"]["study-plan"].writing_rules.verified
     assert not by_school["cgu"]["study-plan"].writing_rules.verified
@@ -138,6 +138,43 @@ def test_writing_rules_are_attached_to_the_right_school_only() -> None:
     assert fju["return-report"].writing_rules.min_chars == 2000
     assert fju["study-plan"].writing_rules.max_chars is None  # 輔大以頁數規定，不以字數計
     assert ntpu["study-plan"].writing_rules is not fju["study-plan"].writing_rules
+
+
+REPOSITORY = Path(exchange_info.__file__).resolve().parents[2]
+
+
+@lru_cache(maxsize=None)
+def _archived_pdf_text(relative_path: str) -> str:
+    reader = PdfReader(REPOSITORY / relative_path)
+    return re.sub(r"\s+", "", "".join(page.extract_text() or "" for page in reader.pages))
+
+
+def test_yzu_return_report_rule_matches_the_stored_deposit_page_and_the_form_can_hold_the_photos() -> None:
+    rules = WRITING_RULES[("yzu", "return-report")]
+    assert rules.min_chars == 1500 and rules.max_chars is None
+    assert "2 週內" in rules.rules[0] and "6 張照片" in rules.rules[0]
+    assert "二個月" not in " ".join(rules.rules) and "2,000" not in " ".join(rules.rules)
+    assert "2 週內繳交 1,500 字以上研修心得報告與 6 張照片" in _stored_official_text("yzu")
+    template = next(t for t in all_application_templates("元智大學") if t.id == "return-report")
+    photos = next(field for field in template.fields if field.id == "activity_photos")
+    assert photos.max_files >= 6, "the school asks for 6 photos, so the form must accept 6"
+    assert template.writing_rules == rules
+
+
+def test_other_schools_photo_field_is_unchanged_by_the_yzu_photo_limit() -> None:
+    template = next(t for t in all_application_templates("中原大學") if t.id == "return-report")
+    photos = next(field for field in template.fields if field.id == "activity_photos")
+    assert photos.max_files == 4
+
+
+def test_cycu_has_no_published_word_count_and_the_two_week_deadline_is_backed_by_the_archived_regulation() -> None:
+    rules = WRITING_RULES[("cycu", "return-report")]
+    assert rules.min_chars is None and rules.max_chars is None and not rules.count_field_ids
+    assert not re.search(r"\d\s*字", " ".join(rules.rules)), "no word count may be invented for CYCU"
+    assert "沒有公布心得報告的字數" in " ".join(rules.rules)
+    regulation = _archived_pdf_text("sources/cycu/cycu_exchange_scholarship_rules_536_2.pdf")
+    assert "領取助學金之學生須於返國後二周內提交研習成果報告書" in regulation
+    assert "二週內" in rules.rules[0]
 
 
 def test_guidance_text_never_claims_to_be_an_official_rule() -> None:
