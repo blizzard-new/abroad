@@ -6,7 +6,7 @@ from uuid import uuid4
 import pytest
 from playwright.sync_api import expect
 
-from .conftest import enter_public_site, login_through_web, open_navigation, open_partner_filters
+from .conftest import enter_public_site, login_through_web, open_navigation, open_partner_filters, expand_details
 from .test_discussion_reader import seed, search
 from .test_partner_globe import INSTRUMENT, LINCOLN
 
@@ -112,6 +112,7 @@ def test_verified_catalog_search_map_and_saved_school(page, live_server, width):
     open_navigation(page)
     page.locator("#application-tools .application-nav-chevron").click()
     page.locator('.application-tools-panel a[href="#advisor"]').click()
+    expand_details(page, "#application-workspace-tool-menu")
     page.locator('#application-workspace-tools a[href="#favorites"]').click()
     expect(page.locator("#favorites")).to_contain_text(LINCOLN)
     expect(page.locator('#application-workspace-tools a[href="#favorites"]')).to_have_attribute("aria-current", "page")

@@ -6,7 +6,7 @@ import pytest
 import requests
 from playwright.sync_api import expect
 
-from .conftest import login_through_web
+from .conftest import login_through_web, expand_details
 from .test_glass_theme import capture, verified_login
 from .test_planning_workspace import create_target
 from .test_web_next_phase import _auth_headers
@@ -17,6 +17,7 @@ def test_matching_actions_are_readable_and_aligned(page, live_server, width):
     page.set_viewport_size({"width": width, "height": 956})
     page.emulate_media(reduced_motion="reduce")
     create_target(page, live_server)
+    expand_details(page, "#application-plan-details")
     page.mouse.move(width-10, 10)
     buttons = page.locator(".planning-match-actions > :is(button,a):visible").evaluate_all("""items => items.map(el => {
       const box = el.getBoundingClientRect();
@@ -55,11 +56,14 @@ def test_calendar_appears_first_and_tools_still_work(page, live_server, width):
     response = requests.patch(f"{live_server.base_url}/auth/me", headers=_auth_headers(session), json={"notification_preferences": {"web_enabled": True, "deadline_reminder_days": [0]}})
     assert response.ok, response.text
     page.reload()
+    expect(page.locator("#boot-splash")).to_be_hidden(timeout=30_000)
     page.evaluate("location.hash='#calendar'")
     expect(page.locator(".calendar-day")).to_have_count(42)
     expect(page.locator("#catalogue-source-status")).to_be_hidden()
     capture(page, f"calendar-initial-{width}.png")
-    assert page.locator(".calendar-month-panel").bounding_box()["y"] < 450
+    month = page.locator(".calendar-month-panel").bounding_box()
+    # The whole month, including its last row, must fit in the initial viewport.
+    assert month["y"] + month["height"] <= page.viewport_size["height"]
     expect(page.locator("#deadline-reminder-center")).to_be_hidden()
     page.locator("#calendar-next-month").click()
     page.locator("#calendar-today").click()
@@ -93,6 +97,7 @@ def test_department_follows_college_and_saved_profile(page, live_server, univers
     page.locator("#advisor-college").select_option(college)
     page.locator("#advisor-department").select_option(department)
     page.locator("#advisor-degree").select_option("大學部")
+    expand_details(page, "#advisor-qualification-fields")
     page.locator("#advisor-academic-score").fill("85")
     page.locator("#advisor-language-test").select_option("ielts")
     page.locator("#advisor-language-score").fill("7")

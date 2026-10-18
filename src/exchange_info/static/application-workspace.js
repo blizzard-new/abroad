@@ -5,7 +5,7 @@ window.UniWayApplicationWorkspace = (() => {
     {id:"preparation", label:"準備與時程", icon:"route", href:"#overview", pages:["overview", "calendar", "deadlines", "budget", "scholarships"], links:[["overview","我的準備"],["calendar","日曆"],["deadlines","官方期限"],["budget","預算"],["scholarships","補助"]]},
     {id:"documents", label:"文件與送件", icon:"folder-check", href:"#application-center", pages:["application-center", "application-form", "document-check", "documents", "writing-assistant"], links:[["application-center","填寫與列印"],["document-check","檢查文件"],["documents","官方說明與私人文件"]]},
   ];
-  let root, context, navigation, activePage = null;
+  let root, context, navigation, activePage = null, toolsGroup = null, validationFrame = 0;
 
   function syncConditions() {
     const form = document.querySelector("#advisor-form");
@@ -13,6 +13,8 @@ window.UniWayApplicationWorkspace = (() => {
     const parent = document.querySelector(eligibility ? "#eligibility .eligibility-layout" : "#advisor .advisor-layout");
     if (form.parentElement !== parent) parent.prepend(form);
     form.dataset.mode = eligibility ? "eligibility" : "advisor";
+    // Qualification is optional while exploring, but must be visible when checking eligibility.
+    if (eligibility) document.querySelector("#advisor-qualification-fields").open = true;
     const period = document.querySelector("#application-period-fields");
     period.hidden = !eligibility;
     period.disabled = !eligibility;
@@ -31,12 +33,24 @@ window.UniWayApplicationWorkspace = (() => {
     root.hidden = true;
     first.before(root);
     root.innerHTML = `<header class="application-workspace-heading glass-panel">
-      <div class="application-workspace-context"><div><span class="section-kicker">我的申請</span><strong>從選校到送件，接著完成下一步</strong></div><p id="application-workspace-context" aria-live="polite"></p></div>
-      <nav id="application-journey-steps" class="application-workspace-stages" aria-label="申請工作區階段">${groups.map(group=>`<a href="${group.href}" data-workspace-stage="${group.id}" data-requires-home-school><i data-lucide="${group.icon}" aria-hidden="true"></i><span>${group.label}</span></a>`).join("")}</nav>
-      <nav id="application-workspace-tools" class="application-workspace-tools" aria-label="本階段的頁面"></nav>
+      <div class="application-workspace-context"><div><span class="section-kicker">我的申請</span><strong>從找學校到備齊文件，一步一步完成</strong></div><p id="application-workspace-context" aria-live="polite"></p></div>
+      <nav id="application-journey-steps" class="application-workspace-stages" aria-label="申請工作區階段">${groups.map((group,index)=>`<a href="${group.href}" data-workspace-stage="${group.id}" data-requires-home-school><span class="application-stage-number" aria-hidden="true">${index + 1}</span><span>${group.label}</span></a>`).join("")}</nav>
+      <details id="application-workspace-tool-menu" class="application-tool-menu"><summary><span id="application-workspace-tool-label"></span><span>切換工具<i data-lucide="chevron-down" aria-hidden="true"></i></span></summary><nav id="application-workspace-tools" class="application-workspace-tools" aria-label="本階段的頁面"></nav></details>
     </header>`;
     context = root.querySelector("#application-workspace-context");
     navigation = root.querySelector("#application-workspace-tools");
+    document.querySelector("#advisor-form").addEventListener("invalid", event=>{
+      // Native validation must be able to focus invalid fields inside optional sections.
+      for (let parent = event.target.parentElement; parent; parent = parent.parentElement) {
+        if (parent.tagName === "DETAILS") parent.open = true;
+      }
+      // Chromium can try to focus before the newly opened details has a layout.
+      // Focus the first invalid field once, after layout, even if several are invalid.
+      if (!validationFrame) validationFrame = requestAnimationFrame(()=>{
+        validationFrame = 0;
+        document.querySelector("#advisor-form input:invalid, #advisor-form select:invalid, #advisor-form textarea:invalid")?.focus();
+      });
+    }, true);
     groups.flatMap(group=>group.pages).forEach(id=>{
       const page = document.querySelector(`[data-university-page="${id}"]`);
       if (page) root.append(page); // Keep the same forms, listeners and unfinished input.
@@ -78,18 +92,20 @@ window.UniWayApplicationWorkspace = (() => {
     if (navigation.dataset.route !== key) {
       navigation.dataset.route = key;
       const links = activePage === "application-form" ? [["application-center", "返回文件清單與列印包"]] : group.links;
-      // A second row of its own, labelled and numbered, so it reads as the pages inside the stage above and not as loose text.
-      const sequence = activePage !== "application-form" && links.length > 1;
-      navigation.dataset.sequence = sequence ? "true" : "false";
-      navigation.innerHTML = (sequence ? `<span class="application-workspace-tools-label" aria-hidden="true"><i data-lucide="corner-down-right" aria-hidden="true"></i>${group.label}的 ${links.length} 個頁面</span>` : "")
-        + links.map(([id,label],index)=>`<a href="#${id}" data-requires-home-school${id === activePage ? ' aria-current="page"' : ""}>${sequence ? `<span class="application-workspace-tool-no" aria-hidden="true">${index + 1}</span>` : ""}${label}</a>`).join("");
+      const menu = root.querySelector("#application-workspace-tool-menu");
+      // Keep the tools open while switching within a stage; a new stage starts simply.
+      if (toolsGroup !== group.id) menu.open = false;
+      toolsGroup = group.id;
+      root.querySelector("#application-workspace-tool-label").textContent = links.find(([id])=>id === activePage)?.[1]
+        || (activePage === "application-form" ? "填寫文件" : "寫作協助");
+      navigation.innerHTML = links.map(([id,label])=>`<a href="#${id}" data-requires-home-school${id === activePage ? ' aria-current="page"' : ""}>${label}</a>`).join("");
       if (typeof initIcons === "function") initIcons();
     }
     const legacy = document.querySelector("#planning-deadline-settings");
-    const journey = document.querySelector("#journey-workspace");
-    if (journey && !journey.hidden) {
-      if (legacy.parentElement !== journey) journey.append(legacy);
-    } else if (legacy.parentElement !== document.querySelector("#overview")) journey.before(legacy);
+    // Deadline planning remains directly reachable even with advanced workload tools closed.
+    const advanced = document.querySelector("#application-schedule-details");
+    advanced.hidden = document.querySelector("#journey-workspace").hidden;
+    if (legacy.nextElementSibling !== advanced) advanced.before(legacy);
   }
 
   function openDeadlineSettings() {

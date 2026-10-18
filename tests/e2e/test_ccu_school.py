@@ -9,7 +9,7 @@ from playwright.sync_api import expect
 
 from exchange_info.ccu_student_view import fetch_ccu_partner_universities
 
-from .conftest import enter_public_site, open_navigation
+from .conftest import enter_public_site, open_navigation, expand_details
 from .test_open_catalog import wait_until
 
 CCU = "國立中正大學"
@@ -292,6 +292,7 @@ def test_all_six_school_grade_fields_remain_isolated(page, live_server):
         page.locator(f'[data-home-school="{school}"]').click()
         wait_until(page, "state.dashboard?.school_name === " + json.dumps(school))
         page.evaluate("location.hash='#advisor'")
+        expand_details(page, "#advisor-qualification-fields")
         for selector, visible in [
             ("#advisor-academic-score", percent),
             ("#advisor-academic-gpa", gpa),

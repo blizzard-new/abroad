@@ -5,7 +5,7 @@ from playwright.sync_api import expect
 
 from exchange_info.storage import load_application_workflows, save_application_workflows
 from test_application_periods import workflow
-from .conftest import login_through_web
+from .conftest import login_through_web, expand_details
 from .test_glass_theme import capture
 
 
@@ -45,6 +45,7 @@ def test_sourced_rounds_retry_and_keep_unsent_draft(page,live_server,request,wid
     expect(page.locator('#application-period-retry')).to_be_visible()
     page.locator('#eligibility-academic-year').select_option('116')
     page.locator('#eligibility-application-round').select_option('第二梯次')
+    expand_details(page, "#advisor-qualification-fields")
     page.locator('#advisor-academic-score').fill('93')
     # Delay a real successful response; continuing to edit must not be overwritten.
     page.evaluate("""()=>{
@@ -59,6 +60,7 @@ def test_sourced_rounds_retry_and_keep_unsent_draft(page,live_server,request,wid
     page.locator('#application-period-retry').click()
     page.wait_for_function("() => typeof window.releasePeriodResponse==='function'")
     page.locator('#eligibility-academic-year').select_option('117')
+    expand_details(page, "#advisor-qualification-fields")
     page.locator('#advisor-academic-score').fill('94')
     page.evaluate('window.releasePeriodResponse()')
     expect(page.locator('#application-period-retry')).to_be_hidden()

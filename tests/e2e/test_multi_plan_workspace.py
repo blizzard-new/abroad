@@ -6,6 +6,7 @@ from exchange_info.application_rules import build_personal_application_plan
 from exchange_info.models import (ApplicationRuleScope, ApplicationStep, PartnerUniversity,
     PersonalApplicationPlanRequest, UniversityApplicationWorkflow)
 from .test_glass_theme import verified_login, capture
+from .conftest import expand_details
 from .test_web_next_phase import _auth_headers
 
 
@@ -40,6 +41,7 @@ def test_shared_progress_survives_reorder_removal_and_reload(page,live_server,wi
     errors=[]
     page.on("pageerror",lambda error:errors.append(str(error)))
     page.evaluate("location.hash='#overview'")
+    expand_details(page, "#application-plan-details")
     expect(page.locator('#multi-plan-workspace')).to_be_visible()
     page.locator('#multi-plan-settings > summary').click()
     page.wait_for_function("() => state.dashboard && document.querySelector('#multi-plan-preferences select').options.length > 1",timeout=30000)
@@ -78,6 +80,7 @@ def test_shared_progress_survives_reorder_removal_and_reload(page,live_server,wi
     assert workspace['application_schools'] == [names[1],names[0]]
     assert workspace['application_progress']['長庚大學'][task_id] is True
     page.reload()
+    expand_details(page, "#application-plan-details")
     expect(page.locator('.multi-plan-branch').first).to_contain_text(names[1])
     expect(page.locator(f'[data-multi-task="{task_id}"]')).to_be_checked()
     page.locator('#multi-plan-settings > summary').click()

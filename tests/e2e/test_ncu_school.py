@@ -3,7 +3,7 @@
 from pathlib import Path
 import pytest
 from playwright.sync_api import expect
-from .conftest import enter_public_site, open_navigation
+from .conftest import enter_public_site, open_navigation, expand_details
 from .test_open_catalog import wait_until, sign_in_cookie, attach_session
 
 
@@ -393,6 +393,7 @@ def test_ncu_grade_scale_year_exclusion_and_real_document_form(page, live_server
     live_server.verify_student(session["profile"]["id"], university="國立中央大學")
     attach_session(page, live_server, session)
     enter_public_site(page, live_server, "advisor")
+    expand_details(page, "#advisor-qualification-fields")
     expect(page.locator("#advisor-academic-score")).to_be_visible()
     expect(page.locator("#advisor-academic-rule")).to_contain_text("60分")
     expect(page.locator("#advisor-academic-rule")).to_contain_text("70分")
@@ -823,6 +824,7 @@ def test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scope
     page.screenshot(path=str(out / f"ncu-hust-deferred-health-{width}.png"))
     assert page.locator("#application-requirement-list").get_by_text("下載校方正式表格", exact=True).count() == 0
     page.evaluate("location.hash='#overview'")
+    expand_details(page, "#application-plan-details")
     expect(page.locator("#multi-plan-workspace")).to_be_visible()
     page.locator("#multi-plan-settings > summary").click()
     selects = page.locator("#multi-plan-preferences select")

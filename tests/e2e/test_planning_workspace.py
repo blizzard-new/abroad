@@ -7,6 +7,7 @@ import requests
 from playwright.sync_api import expect
 
 from exchange_info.models import ApplicationStep, UniversityApplicationWorkflow
+from .conftest import expand_details
 from .test_glass_theme import capture, verified_login
 from .test_web_next_phase import _auth_headers, _fill_required_application_fields, _wait_for_workspace
 
@@ -41,6 +42,7 @@ def create_target(page, live_server):
     college = page.locator("#advisor-college option").evaluate_all("items=>items.find(item=>item.value).value")
     page.locator("#advisor-college").select_option(college)
     page.locator("#advisor-degree").select_option("大學部")
+    expand_details(page, "#advisor-qualification-fields")
     page.locator("#advisor-academic-score").fill("85")
     page.locator("#advisor-language-test").select_option("ielts")
     page.locator("#advisor-language-score").fill("7")

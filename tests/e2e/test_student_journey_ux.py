@@ -99,6 +99,7 @@ def test_documents_show_current_phase_and_only_selected_print_items(page, live_s
 
 def test_target_change_can_be_cancelled_and_preserves_old_tasks_and_draft(page, live_server):
     _, target = create_target(page, live_server)
+    page.locator('#application-plan-details > summary').click()
     # Create in-memory fixtures only for this isolated browser/account.
     page.evaluate('''target=>{
       state.calendarEvents.push({id:'isolated-old-task',schoolName:target,title:'保留原校任務',date:'2027-01-01',origin:'personal'});
