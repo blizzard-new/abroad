@@ -132,3 +132,31 @@ def test_the_security_check_only_looks_and_the_guide_says_what_to_do_when_broken
     guide = (ROOT / "docs" / "self-host-windows-guide.md").read_text(encoding="utf-8")
     for needed in ("security-check.ps1", "如果被攻破", "撤銷 rclone 的 Drive 授權", "-PasswordNeverExpires $true", "Get-NetFirewallPortFilter"):
         assert needed in guide, needed
+
+
+def test_update_looks_before_it_backs_up_moves_nothing_before_the_backup_and_still_only_fast_forwards() -> None:
+    script = (SELFHOST / "scripts" / "update.ps1").read_text(encoding="utf-8")
+    assert "[switch]$SetAside" in script and "[switch]$CheckOnly" in script
+    assert script.index("Get-UpdateBlockers") < script.index('backup.ps1" -SkipCloud')
+    assert script.index('backup.ps1" -SkipCloud') < script.index("Move-UpdateBlockersAside")
+    assert script.index("Move-UpdateBlockersAside") < script.index("merge --ff-only")
+    # the blocked case without -SetAside must leave before the backup starts
+    stop = script.index("update.ps1 -SetAside'")
+    assert stop < script.index('backup.ps1" -SkipCloud')
+
+
+def test_the_update_checks_never_delete_or_reset_anything() -> None:
+    for name in ("update.ps1", "lib.ps1"):
+        text = (SELFHOST / "scripts" / name).read_text(encoding="utf-8")
+        for destructive in ("reset --hard", "clean -f", "clean -d", "stash drop", "checkout -f", "-Recurse -Force"):
+            assert destructive not in text, f"{name} contains {destructive}"
+    lib = (SELFHOST / "scripts" / "lib.ps1").read_text(encoding="utf-8")
+    assert lib.count("Remove-Item") == 1, "only the temporary path list may be deleted"
+    assert "Remove-Item -LiteralPath $list" in lib
+
+
+def test_the_guide_explains_the_update_checks_and_the_two_switches() -> None:
+    guide = (ROOT / "docs" / "self-host-windows-guide.md").read_text(encoding="utf-8")
+    assert "-CheckOnly" in guide and "-SetAside" in guide
+    assert "update-set-aside" in guide and "不會刪除任何東西" in guide
+
