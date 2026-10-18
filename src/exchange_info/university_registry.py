@@ -485,8 +485,47 @@ NTUT = UniversityProfile(
     ),
 )
 
+NCCU = UniversityProfile(
+    id="nccu",
+    school_name="國立政治大學",
+    short_name="政大",
+    english_name="National Chengchi University",
+    aliases=(
+        "nccu",
+        "國立政治大學",
+        "政治大學",
+        "政大",
+        "NCCU",
+        "Chengchi University",
+        "National Chengchi University",
+    ),
+    hero_image="/static/assets/nccu-campus.svg",
+    official_url="https://outbound.nccu.edu.tw/",
+    coverage_note="完整支援：115-1／115-2 校級赴國外（八大語組）及赴大陸地區交換學生甄選簡章、266所合作姊妹校名額與語言門檻、6項赴外交換暨學海系列獎助學金及589篇歷屆學長姐交換心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=266,
+    academic_score_minimum=70,
+    student_card_signals=("國立政治大學", "政治大學", "NATIONALCHENGCHIUNIVERSITY", "NCCU"),
+    # https://www.nccu.edu.tw/p/412-1000-86.php?Lang=zh-tw — checked 2026-10-18.
+    colleges=(
+        "文學院",
+        "理學院",
+        "社會科學學院",
+        "法學院",
+        "商學院",
+        "外國語文學院",
+        "傳播學院",
+        "國際事務學院",
+        "教育學院",
+        "創新國際學院",
+        "資訊學院",
+        "X實驗學院",
+        "國際金融學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU)
 DEFAULT_UNIVERSITY = CGU
 
 
