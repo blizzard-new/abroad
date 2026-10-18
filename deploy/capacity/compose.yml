@@ -252,6 +252,7 @@ services:
     - /opt/capacity/seed.py
     - --users
     - ${CAPACITY_USERS:-1000}
+    working_dir: /artifacts
   load:
     image: uniway-capacity-app:local
     profiles:
@@ -272,8 +273,9 @@ services:
     - ${CAPACITY_USERS:-1000}
     - --duration
     - ${CAPACITY_SECONDS:-300}
-    cpus: 1.0
+    cpus: 2.0
     mem_limit: 3g
+    working_dir: /artifacts
 volumes:
   gateway-data: {}
   ca-public: {}

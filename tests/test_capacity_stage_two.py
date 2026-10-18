@@ -177,3 +177,29 @@ def test_http_200_with_wrong_account_contents_fails_persistence_check():
             with pytest.raises(module.CheckFailed,match='persistence or account isolation'):
                 await load.workspace({'token':'synthetic'},'expected-marker')
     with ThreadPoolExecutor(max_workers=1) as pool: pool.submit(asyncio.run,check()).result(timeout=10)
+
+
+def test_generator_merge_uses_all_samples_and_rejects_generator_saturation(monkeypatch):
+    from types import SimpleNamespace
+    module=load_module()
+    load=module.Workload(None,{})
+    first=module.Workload(None,{})
+    first.times['GET /example']=[.01]*19
+    first.workers['1']=19
+    first.started=first.completed=first.cycles=1
+    second=module.Workload(None,{})
+    second.times['GET /example']=[10.0]
+    second.workers['1']=1
+    second.started=second.completed=second.cycles=1
+    load.merge(first.snapshot());load.merge(second.snapshot())
+    load.generators=[{'users':2,'cpu_seconds':1.0,'cpu_fraction':.1}]
+    monkeypatch.setattr(module,'generator_cpu_quota',lambda:2)
+    args=SimpleNamespace(users=2,expect_workers=1,duration=60,ramp=10,pace=10)
+    report=load.report(args,60)
+    assert report['routes']['GET /example']['requests']==20
+    assert report['routes']['GET /example']['p95_ms']==10
+    assert report['routes']['GET /example']['max_ms']==10000
+    assert report['completed']==2 and report['passed']
+    load.generators[0]['cpu_fraction']=.9
+    report=load.report(args,60)
+    assert report['generator']['saturated'] and not report['passed']

@@ -2,9 +2,12 @@
 import argparse
 import asyncio
 from collections import Counter, defaultdict
+from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures.process import BrokenProcessPool
 from datetime import datetime, timezone
 import json
 import math
+import multiprocessing
 import os
 from pathlib import Path
 import re
@@ -55,6 +58,21 @@ class Workload:
         self.completed = 0
         self.failed_requests = 0
         self.conflict_checks = {}
+        self.generators = []
+
+    def snapshot(self):
+        return {key: getattr(self, key) for key in (
+            'times', 'failures', 'statuses', 'workers', 'bytes', 'cycles',
+            'started', 'completed', 'failed_requests')}
+
+    def merge(self, snapshot):
+        # Merge samples, not percentile averages: p95 must cover all students.
+        for route, values in snapshot['times'].items():
+            self.times[route].extend(values)
+        for key in ('failures', 'statuses', 'workers'):
+            getattr(self, key).update(snapshot[key])
+        for key in ('bytes', 'cycles', 'started', 'completed', 'failed_requests'):
+            setattr(self, key, getattr(self, key) + snapshot[key])
 
     async def request(self, actor, method, path, *, expected=(200,), fresh=False, **kwargs):
         start = time.perf_counter()
@@ -141,7 +159,7 @@ class Workload:
         require((await self.request(other, 'GET', '/auth/me')).json()['id'] == other['account_id'], 'logout revoked another account')
 
     async def actor(self, actor, index, users, duration, ramp, pace, start):
-        await asyncio.sleep(index / max(1, users - 1) * ramp)
+        await asyncio.sleep(max(0, start + index / max(1, users - 1) * ramp - time.perf_counter()))
         self.started += 1
         try:
             profile = (await self.request(actor, 'GET', '/auth/me')).json()
@@ -172,9 +190,13 @@ class Workload:
                     'max_ms':round(values[-1]*1000,2)}
         routes = {k:stats(v) for k,v in self.times.items()}
         count = sum(len(v) for v in self.times.values())
+        cpu_seconds = sum(g['cpu_seconds'] for g in self.generators)
+        quota = generator_cpu_quota()
+        cpu_fraction = cpu_seconds / max(.001, elapsed * quota)
+        saturated = (cpu_fraction >= .8 or any(g['cpu_fraction'] >= .85 for g in self.generators))
         # All routes must meet the latency target; correctness is a separate mandatory gate.
-        passed = (not self.failures and self.completed == args.users and self.cycles >= args.users
-                  and len(self.workers) >= args.expect_workers
+        passed = (not self.failures and not saturated and self.completed == args.users and self.cycles >= args.users
+                  and len(self.workers) == args.expect_workers
                   and all(v['p95_ms'] <= 2000 for v in routes.values()))
         return dict(passed=passed, users=args.users, started=self.started, completed=self.completed,
                     cycles=self.cycles, elapsed_seconds=round(elapsed,2), duration_seconds=args.duration,
@@ -184,17 +206,53 @@ class Workload:
                     routes=routes, failed_http_requests=self.failed_requests,
                     http_error_rate=self.failed_requests/max(1,count), conflicts=self.conflict_checks,
                     failures=dict(self.failures), statuses=dict(self.statuses), workers=dict(self.workers),
+                    generator=dict(processes=len(self.generators), cpu_quota=quota,
+                                   cpu_fraction=round(cpu_fraction,4), saturated=saturated,
+                                   shards=self.generators),
                     scope='synthetic authenticated sessions; no external OAuth, uploads, PDFs or WAN measurement')
+
+
+def generator_cpu_quota():
+    try:
+        quota, period = Path('/sys/fs/cgroup/cpu.max').read_text().split()
+        if quota != 'max':
+            return int(quota) / int(period)
+    except (OSError, ValueError):
+        pass
+    return max(1, len(os.sched_getaffinity(0)) if hasattr(os, 'sched_getaffinity') else os.cpu_count() or 1)
+
+
+def capacity_client(args):
+    # Bound each pool independently; one large httpx pool can saturate a single
+    # Python event loop before the server is busy.
+    return httpx.AsyncClient(base_url=args.target, follow_redirects=False, trust_env=False,
+        timeout=httpx.Timeout(30, pool=60),
+        limits=httpx.Limits(max_connections=args.users_per_process+20, max_keepalive_connections=100))
+
+
+def run_shard(args, fixture, actors, offset, start):
+    async def work():
+        async with capacity_client(args) as client:
+            await verify_target(client, fixture['run_id'])
+            load = Workload(client, fixture)
+            cpu_start, wall_start = time.process_time(), time.perf_counter()
+            await asyncio.gather(*(load.actor(a, i, args.users, args.duration, args.ramp, args.pace, start)
+                                   for i, a in enumerate(actors, start=offset)))
+            cpu = time.process_time() - cpu_start
+            wall = time.perf_counter() - wall_start
+            return load.snapshot(), dict(users=len(actors), cpu_seconds=round(cpu,4),
+                                         cpu_fraction=round(cpu/max(.001,wall),4))
+    return asyncio.run(work())
 
 
 async def run(args):
     require(args.target in ('http://web:8080', 'http://127.0.0.1:18000'), 'target must be the isolated loopback/web entrance')
     require(2 <= args.users <= 2000 and args.duration > args.ramp >= 0 and args.pace >= 1, 'invalid workload settings')
+    require(1 <= args.users_per_process <= 100, 'each generator must have 1..100 students')
     fixture = json.loads(Path(args.fixtures).read_text())
     run_id = os.environ.get('EXCHANGE_CAPACITY_RUN_ID', '')
     validate_fixture(fixture, run_id, args.users)
-    async with httpx.AsyncClient(base_url=args.target, follow_redirects=False, trust_env=False,
-            timeout=httpx.Timeout(30, pool=60), limits=httpx.Limits(max_connections=args.users+20, max_keepalive_connections=100)) as client:
+    async with capacity_client(args) as client:
         await verify_target(client, run_id)
         load = Workload(client, fixture)
         start = time.perf_counter()
@@ -202,11 +260,24 @@ async def run(args):
             await load.probes(*fixture['actors'][args.users:args.users+2], args.expect_workers)
         except CheckFailed as error:
             load.failures['probe: '+str(error)] += 1
-        if not load.failures:
-            load_start = time.perf_counter()
-            await asyncio.gather(*(load.actor(a,i,args.users,args.duration,args.ramp,args.pace,load_start)
-                                   for i,a in enumerate(fixture['actors'][:args.users])))
-        report = load.report(args, time.perf_counter()-start)
+    if not load.failures:
+        processes = math.ceil(args.users / args.users_per_process)
+        load_start = time.perf_counter() + max(3, processes / 2)
+        loop = asyncio.get_running_loop()
+        # Spawn avoids inheriting open HTTP clients or an active event loop.
+        with ProcessPoolExecutor(max_workers=processes, mp_context=multiprocessing.get_context('spawn')) as pool:
+            futures = [loop.run_in_executor(pool, run_shard, args, fixture,
+                fixture['actors'][offset:min(offset+args.users_per_process,args.users)], offset, load_start)
+                for offset in range(0, args.users, args.users_per_process)]
+            try:
+                results = await asyncio.gather(*futures)
+            except (BrokenProcessPool, CheckFailed, httpx.HTTPError) as error:
+                load.failures['generator: '+type(error).__name__] += 1
+            else:
+                for snapshot, generator in results:
+                    load.merge(snapshot)
+                    load.generators.append(generator)
+    report = load.report(args, time.perf_counter()-start)
     Path(args.output).write_text(json.dumps(report, ensure_ascii=False, indent=2)+'\n')
     print(json.dumps(report, ensure_ascii=False))
     return 0 if report['passed'] else 1
@@ -218,6 +289,7 @@ if __name__ == '__main__':
     p.add_argument('--fixtures', default='/artifacts/actors.json')
     p.add_argument('--output', default='/artifacts/latest.json')
     p.add_argument('--users', type=int, default=1000)
+    p.add_argument('--users-per-process', type=int, default=100)
     p.add_argument('--expect-workers', type=int, choices=(1,2,4), default=1)
     p.add_argument('--duration', type=float, default=300)
     p.add_argument('--ramp', type=float, default=30)
