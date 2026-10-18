@@ -1192,6 +1192,9 @@ def _yzu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
         return value
     payload = adapt(template.model_dump(mode="json"))
     for field in payload["fields"]:
+        if template.id == "return-report" and field["id"] == "activity_photos":
+            field["max_files"] = 6
+            field["help_text"] = "學校要求 6 張照片；最多 6 張，產生 PDF 或 Word 時會排入報告"
         if field["id"] == "class_rank_percent":
             field["help_text"] = "元智大學規定歷年學業總平均須達 65 分或 GPA 2.5 以上（管理學院院級為 GPA 2.75 以上）；校級第一階段校內評比以系排名占 50%；請檢附教務處核發之歷年中文與英文成績單正本（含排名百分比）。"
         if field["id"] == "language_test":
