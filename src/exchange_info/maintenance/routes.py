@@ -776,6 +776,7 @@ def create_maintenance_router(
             <option value="nsysu">國立中山大學（共 218 所姊妹校）</option>
             <option value="nchu">國立中興大學（共 226 所姊妹校）</option>
             <option value="ntut">國立臺北科技大學（共 206 所姊妹校）</option>
+            <option value="nccu">國立政治大學（共 266 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -862,7 +863,8 @@ def create_maintenance_router(
     fcu: "逢甲大學 (FCU)",
     nsysu: "國立中山大學 (NSYSU)",
     nchu: "國立中興大學 (NCHU)",
-    ntut: "國立臺北科技大學 (NTUT)"
+    ntut: "國立臺北科技大學 (NTUT)",
+    nccu: "國立政治大學 (NCCU)"
   };
 
   const FIELD_LABELS = {

@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCHU, NSYSU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, SCU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NSYSU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, SCU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -79,6 +79,7 @@ FCU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
 NSYSU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCHU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NTUT_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
+NCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1396,6 +1397,51 @@ def _ntut_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nccu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立政治大學校級赴國外（八大語組）及赴大陸地區交換學生甄選應繳資料、iNCCU 線上報名表列印件（須由申請人親筆簽名，研究生另須指導教授或系所主管簽章）、語言能力檢定成績單正本及影本、英文在學證明正本、英文成績單正本（學士班另須附中文前學期全班排名百分比證明）、報名費 1,000 元收據正本及赴大陸交換家長同意書。",
+        "study-plan": "撰寫國立政治大學校級交換甄選必繳之《讀書計畫及自傳》（占校級赴國外交換甄選總成績 30%、赴大陸交換書審成績 35%；英語組以英文撰寫、非英語組以該組語言或英文撰寫，說明申請動機、預計修課與學術研究方向及返國學習連結）。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分採認預審（依《國立政治大學選送學生出國進修與交流實施辦法》規定，交換生於交換期間每學期至少須修習 1 門課且及格，返國後檢附正式成績單及授課大綱向系所及教務處辦理學分抵免）。",
+        "predeparture-notice": "於志願選填及兩階段放榜後完成錄取報到確認、繳納保證金新臺幣 5,000 元，配合國際合作事務處完成姊妹校官方提名（Nomination），並依《錄取校級赴外交換生行前須知》辦理役男出境、護照簽證、海外醫療及意外保險與政大出國選課學分登錄。",
+        "return-report": "交換期滿返國後依規定於政大國際合作事務處電子報分享個人交換經驗（約 1,500–2,000 字心得報告及照片），並檢具交換學校修習至少 1 門課及格之成績證明，辦理保證金 5,000 元無息退還及獎助學金核銷。",
+        "credit-transfer": "交換期滿返國後持交換姊妹校核發之正式成績單正本與修課大綱（Syllabus），依國立政治大學學生抵免學分辦法向所屬系所及教務處註冊組申請國外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立政治大學").replace("長庚", "政大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立政治大學校級赴國外交換：研究生前學期總平均成績須達 70 分以上，學士班依前學期全班排名百分比換算在校成績（101 減去班排百分比，占總成績 20%）；赴大陸交換在校成績占 30%，總成績須達 75 分以上。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（75+）", "IELTS Academic（6.0+）", "JLPT 日檢（N1–N4）", "Goethe / TestDaF（德語 B1–C1）", "DELF / DALF / TCF（法語 B1–C1）", "DELE / SIELE（西語 B1–B2）", "TOPIK 韓檢（1–4 級）", "TORFL 俄語 / TÖMER 土語", "TOEIC（僅布拉格經濟大學、里昂三大及部分亞洲校採認）", "赴大陸交換免附外語檢定"]
+            field["help_text"] = "政大校級赴國外交換分為八大語組（外語檢定成績占甄選總分 50%，不得跨語組選填志願），須繳交距離報名截止日兩年內有效之合格檢定正本查驗；赴大陸地區交換免附。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://outbound.nccu.edu.tw/",
+        source_checked_at=NCCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="校級交換生甄選報名表" if template.id == "exchange-application-data" else ("讀書計畫及自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://outbound.nccu.edu.tw/",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "指導教授或系所主管簽章（研究生適用）", "家長或監護人親筆簽名（大陸交換家長同意書）"] if template.id == "exchange-application-data" else [],
+        stamps=["政大出納組收訖章或自動繳費機收據（報名費 1,000 元 / 保證金 5,000 元）"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "志願分發放榜確認後繳交保證金 5,000 元與辦理提名", "return-report": "返國後繳交交換電子報心得與及格成績單退還保證金", "credit-transfer": "返國開學後持姊妹校正式成績單辦理學分抵免"}.get(template.id, "於 iNCCU 線上報名並列印紙本備審資料親送國際合作事務處（行政大樓 8 樓）"),
+        version="115準備工具-2026-10-18.1",
+        destinations=["國立政治大學國際合作事務處（行政大樓 8 樓）", "所屬系所辦公室（研究生指導教授／系所主管簽章）"],
+        conditional_note="此為個人準備工具；國立政治大學校級交換甄選須先於 iNCCU 校園資訊系統完成線上報名並列印報名表，連同語言檢定證書正本、成績單正本、讀書計畫及自傳一式三份與報名費收據於截止前親送國際合作事務處查驗。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1432,6 +1478,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nchu_template(template)) is not None]
     if university.id == NTUT.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntut_template(template)) is not None]
+    if university.id == NCCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nccu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
