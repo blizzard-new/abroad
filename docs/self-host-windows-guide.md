@@ -435,13 +435,39 @@ Get-Content (Get-ChildItem C:\uniway\logs\backup-*.log | Sort-Object LastWriteTi
 powershell -ExecutionPolicy Bypass -File .\update.ps1
 ```
 
-先自動備份 → 抓你目前分支的最新程式碼（只做快轉合併，有本機修改擋住時會停下來）→ 重建映像檔 → 套用新的資料庫 migration → 重啟 → 跑一次驗證。**出問題時退回上一版：**
+依序做：**先檢查**這個資料夾能不能更新（只看，不動任何東西）→ 自動備份 → 抓你目前分支的最新程式碼（只做快轉合併）→ 重建映像檔 → 套用新的資料庫 migration → 重啟 → 跑一次驗證。**出問題時退回上一版：**
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\update.ps1 -Rollback
 ```
 
 （只退回程式映像檔；如果那次更新改了資料庫，要用備份還原，見下一節。）
+
+#### 更新前的檢查：被擋下時怎麼辦
+
+更新只做快轉合併，所以在下列情況 git 會拒絕。`update.ps1` 現在會在**備份之前**就檢查，把原因和檔案清單列出來，這時什麼都還沒被動到：
+
+| 看到的訊息 | 意思 |
+| --- | --- |
+| `file(s) the update changes were also edited in this folder` | 這個資料夾裡有人改過檔案，而新版也改了同一個檔案 |
+| `file(s) the update adds already exist here, and git does not track them` | 有檔案不在 git 裡（例如手動複製進來的學校資料），但新版要新增同名檔案 |
+| `this folder is on branch ..., but the update is for ...` | 資料夾不在要更新的分支上 |
+| `commits that are not on origin/...` | 資料夾裡有還沒推上 GitHub 的提交 |
+| `already staged here but not committed` | 新版要新增的檔案，這裡已經 `git add` 但還沒提交 |
+
+```powershell
+# 只看看會不會被擋，什麼都不改
+powershell -ExecutionPolicy Bypass -File .\update.ps1 -CheckOnly
+
+# 先把擋路的檔案收到備份資料夾，再照常更新
+powershell -ExecutionPolicy Bypass -File .\update.ps1 -SetAside
+```
+
+`-SetAside` 只處理「改過的檔案」和「git 不認識的檔案」，而且**不會刪除任何東西**：先備份資料庫，再把你改過的版本複製、把不在 git 裡的檔案搬到 `C:\uniway\backups\update-set-aside-日期時間\`（保留原本的資料夾路徑，裡面有 `README.txt`），接著才更新。沒有擋路的本機修改會原封不動留著。想拿回某個檔案，把它複製回程式資料夾的同一個位置即可。
+
+分支不對、有未推送的提交、已 `git add` 的檔案，**不會自動處理**，只會說明怎麼辦，請照畫面上的 `fix:` 一行做，或問當初設定的人。
+
+> **建議**：把 `C:\uniway\app` 當成只讀的部署資料夾。不要在裡面改程式、複製檔案、切到別的分支測試，也不要在這裡跑目錄建置腳本；要開發或測試，另外 clone 一份。這個資料夾只做 `update.ps1`，就不會再被這些殘留檔案擋住。
 
 ### 憑證與其他自動的事
 
