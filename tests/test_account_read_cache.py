@@ -137,3 +137,39 @@ def test_the_production_factory_turns_it_on_and_the_setting_can_turn_it_off() ->
            "EXCHANGE_ACCOUNT_REPOSITORY": "supabase"}
     assert create_account_repository(Path("."), env)._read_cache_seconds == 20
     assert create_account_repository(Path("."), {**env, "EXCHANGE_ACCOUNT_READ_CACHE_SECONDS": "0"})._read_cache_seconds == 0
+
+
+def test_uncached_workers_see_another_workers_account_update_and_session_revocation(tmp_path, monkeypatch):
+    import hashlib
+    from fastapi.testclient import TestClient
+    from exchange_info.api import create_app
+
+    token = "isolated-capacity-test-session"
+    monkeypatch.setitem(globals(), "TOKEN_HASH", hashlib.sha256(token.encode()).hexdigest())
+    class SharedDatabase(_Database):
+        revoked = False
+
+        def request(self, method, url, **kwargs):
+            table = url.rsplit("/", 1)[-1]
+            if table == "exchange_account_sessions":
+                if method == "DELETE":
+                    assert kwargs["params"] == {"token_hash": f"eq.{TOKEN_HASH}"}
+                    self.revoked = True
+                    return _Response([])
+                if method == "GET" and self.revoked:
+                    return _Response([])
+            return super().request(method, url, **kwargs)
+
+    database = SharedDatabase()
+    first, second = _repository(database, 0), _repository(database, 0)
+    first_client = TestClient(create_app(tmp_path / "first", account_repository=first))
+    second_client = TestClient(create_app(tmp_path / "second", account_repository=second))
+    headers = {"Authorization": f"Bearer {token}"}
+    _sign_in_lookup(first)
+    _sign_in_lookup(second)
+    assert second_client.get("/auth/me", headers=headers).status_code == 200
+    database.display_name = "另一個程序剛剛更新"
+    assert second_client.get("/auth/me", headers=headers).json()["display_name"] == database.display_name
+    assert first_client.post("/auth/logout", headers=headers).status_code == 204
+    assert second_client.get("/auth/me", headers=headers).status_code == 401
+    assert second.find_session_by_token_hash(TOKEN_HASH) is None

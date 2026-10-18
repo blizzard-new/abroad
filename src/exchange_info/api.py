@@ -1821,15 +1821,17 @@ def create_app(
         access_token = request_token(request)
         if access_token:
             token_hash = hashlib.sha256(access_token.encode("utf-8")).hexdigest()
-            with auth_lock:
-                save_account_sessions(
-                    [
-                        row
-                        for row in load_account_sessions(resolved_data_dir)
-                        if not secrets.compare_digest(row.token_hash, token_hash)
-                    ],
-                    resolved_data_dir,
-                )
+            repository = app.state.account_repository
+            if hasattr(repository, "delete_session_by_token_hash"):
+                # Revoke through the shared repository so every worker sees logout.
+                repository.delete_session_by_token_hash(token_hash)
+            else:
+                with auth_lock:
+                    save_account_sessions(
+                        [row for row in load_account_sessions(resolved_data_dir)
+                         if not secrets.compare_digest(row.token_hash, token_hash)],
+                        resolved_data_dir,
+                    )
         response.delete_cookie(AUTH_COOKIE_NAME, path="/")
         response.status_code = 204
         return response
@@ -3335,13 +3337,28 @@ def create_app(
         except ValueError as error:
             raise HTTPException(status_code=422, detail=str(error)) from error
 
+    status_metadata: dict[str, Any] = {}
+    status_metadata_lock = threading.Lock()
+
     @app.get("/ai/status")
     @app.get("/advisor/status")
     def advisor_status() -> dict[str, object]:
         state = ai_runtime_state()
         is_paused = state == "paused"
         enabled = False if is_paused else ai_enabled()
-        index = rag_index_status(resolved_data_dir)
+        # Polling must not scan the source files for every browser. Runtime state below
+        # remains live; only source/index metadata can lag by at most five seconds.
+        with status_metadata_lock:
+            now = time.monotonic()
+            if not status_metadata or now >= status_metadata["expires_at"]:
+                metadata = {
+                    "rag_index": rag_index_status(resolved_data_dir).model_dump(mode="json"),
+                    "structured_source_count": len(load_structured_sources(resolved_data_dir)),
+                    "expires_at": now + 5.0,
+                }
+                status_metadata.update(metadata)
+            index_metadata = status_metadata["rag_index"]
+            source_count = status_metadata["structured_source_count"]
         payload: dict[str, object] = {
             "ai_enabled": enabled,
             "runtime_state": state,
@@ -3352,8 +3369,8 @@ def create_app(
             "embedding_model": None if is_paused else (ai_embedding_model() if enabled else None),
             "source_grounded_fallback": True,
             "document_upload_persisted": False,
-            "structured_source_count": len(load_structured_sources(resolved_data_dir)),
-            "rag_index": index.model_dump(mode="json"),
+            "structured_source_count": source_count,
+            "rag_index": index_metadata,
             "supabase_pgvector_configured": supabase_configured(),
         }
         if is_paused:

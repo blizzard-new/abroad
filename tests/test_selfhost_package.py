@@ -37,6 +37,7 @@ def test_the_web_service_is_told_to_use_https_for_the_database_and_to_trust_only
     assert app["EXCHANGE_SUPABASE_URL"].startswith("https://"), "the program refuses a database address that is not https"
     assert app["EXCHANGE_CLIENT_IP_HEADER"] == "X-Client-IP"
     assert app["EXCHANGE_HOSTING_PROFILE"] == "selfhost"
+    assert app["EXCHANGE_ACCOUNT_READ_CACHE_SECONDS"] == "0", "workers must not retain revoked sessions or stale workspaces"
     assert not any("DB_PASSWORD" in value or "JWT_SECRET" in value for value in map(str, app.values())), "the database password never reaches the web service"
 
 
