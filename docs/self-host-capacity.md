@@ -77,4 +77,4 @@ py -3 -m venv .venv-load
 
 本次開發測試在獨立雲端環境執行，不等於使用者的 Windows 主機。單元測試涵蓋跨 repository 的撤銷可見性、單筆登出、來源摘要快取、輪詢生命週期、統計刷新排程與壓測工具的失敗判定。既有 OAuth 跨 app instance 案例一併回歸。未連到使用者主機、未變更路由器、未對正式網站壓測，也未在本次執行完整自架 Supabase 元件的整合壓測。
 
-本次選定案例最後結果為 **210 passed**；1／4 程序的小流量 HTTP 啟動檢查與測試重現指令見 [驗證紀錄](self-host-capacity-validation/README.md)。
+本次選定案例最後結果為 **209 passed**；1／4 程序的小流量 HTTP 啟動檢查與測試重現指令見 [驗證紀錄](self-host-capacity-validation/README.md)。
