@@ -428,7 +428,7 @@ def test_tracker_lists_tasks_and_switches_views(page, live_server) -> None:
     login_through_web(page, live_server, email)
     page.evaluate("location.hash = '#overview'")
     expect(page.locator("#my-applications")).to_be_visible()
-    expect(page.locator("#tracker-title")).to_have_text("我的申請")
+    expect(page.locator("#tracker-title")).to_have_text("我的準備任務")
     expect(page.locator(".pr-views")).to_be_hidden()
     page.locator("#tracker-add").click()
     form = page.locator("#calendar-event-form")
