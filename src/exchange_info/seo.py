@@ -5,6 +5,7 @@ import hashlib
 import json
 import logging
 import os
+import re
 import sqlite3
 import threading
 from collections.abc import Callable, Mapping, Sequence
@@ -23,12 +24,14 @@ from .models import CatalogueSourceStatus, PartnerUniversity
 from .school_identity import school_identity_key
 from .seo_changes import ContentChanges
 from .seo_quality import digest, material_content
+from .seo_guides import COUNTRIES, GUIDES, country_slug
 from .university_registry import SUPPORTED_UNIVERSITIES, UniversityProfile
 
 DEFAULT_ORIGIN = "https://app.uniway-tw.com"
 HOME_TITLE = "UniWay｜交換學生申請、合作學校與選校資訊"
-HOME_DESCRIPTION = "UniWay 整理臺灣大學交換學生申請與海外合作校資訊，協助比較學校、查詢資格與名額、準備申請文件及規劃時程。公開資料免登入，申請規定以各校最新官方公告為準。"
+HOME_DESCRIPTION = "UniWay 整理全台大學交換學生申請與海外合作校資訊，協助比較學校、查詢資格與名額、準備申請文件及規劃時程。公開資料免登入，申請規定以各校最新官方公告為準。"
 NOTICE = "UniWay 是獨立資訊整理平台，並非校方。合作關係不等於當期開放申請；資格、名額、期限與文件請以母校國際處及合作校最新公告為準。"
+EDITORIAL_PATHS = ("/destinations", "/guides", "/editorial-policy", *("/destinations/" + slug for slug in COUNTRIES), *("/guides/" + slug for slug in GUIDES))
 AVAILABILITY = {
     "open": "名單列載（請另確認本期受理時窗）", "agreement_only": "合作協議參考，非本期名額",
     "departmental_reference": "院系合作參考", "not_open": "未開放", "needs_confirmation": "待確認",
@@ -150,26 +153,69 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
     html = f'''<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)}</title>
 {metadata(settings, title, description, path)}{structured_data(schema)}
-<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/static/seo.css?v=20261019-1"></head>
+<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/static/seo.css?v=20261019-2"></head>
 <body><a class="skip" href="#content">跳到內容</a><header><a class="brand" href="/">UniWay</a>
-<nav aria-label="主導覽"><a href="/schools">交換學校指南</a><a href="/#partners">開啟選校工具</a></nav></header>
+<nav aria-label="主導覽"><a href="/schools">交換學校指南</a><a href="/destinations">國家專區</a><a href="/guides">申請指南</a><a href="/#partners">開啟選校工具</a></nav></header>
 <main id="content"><nav class="breadcrumbs" aria-label="麵包屑">{navigation}</nav>{body}
 <aside class="notice">{NOTICE}</aside></main><footer><a href="/">UniWay 首頁</a>
-<a href="/schools">學校指南</a><a href="/privacy">隱私權政策</a><a href="/terms">使用條款</a></footer></body></html>'''
+<a href="/schools">學校指南</a><a href="/editorial-policy">資料編輯政策</a><a href="/privacy">隱私權政策</a><a href="/terms">使用條款</a></footer></body></html>'''
     return HTMLResponse(html, headers={"Cache-Control": "public, max-age=60"})
 
 
-def partner_details(partner: PartnerUniversity) -> str:
-    rows = [("資料狀態", AVAILABILITY[partner.availability_status]),
-            ("狀態說明", partner.availability_note),
-            ("名額狀態", {"published": "來源已列載，仍需確認適用年度", "zero": "零名額", "not_published": "未列載／待確認",
-                          "reference_only": "參考名額", "fee_paying": "自費"}.get(partner.quota_status, "待確認")),
-            ("母校受理時窗", {"open": "受理中（依來源時窗）", "closed": "已截止", "needs_confirmation": "待確認"}.get(partner.application_window_status, "待確認"))]
-    rows.extend((label, getattr(partner, field)) for field, label in FIELDS)
+def readable_text(value: str) -> str:
+    # Preserve wording and punctuation; separate existing list/sentence boundaries, not inferred facts.
+    parts = [p.strip() for p in re.split(r"\n+|(?<=；)|(?<=。)|\s+(?=\d+[.、]\s)", str(value)) if p.strip()]
+    return "".join(f'<p>{escape(part)}</p>' for part in parts)
+
+
+def definition_list(rows) -> str:
+    return '<dl>' + "".join(f'<dt>{escape(label)}</dt><dd>{readable_text(str(value))}</dd>'
+                          for label, value in rows if value) + '</dl>'
+
+
+def short_text(value: str | None, limit: int = 100) -> str:
+    text = re.sub(r"\s+", " ", value or "").strip()
+    return text if len(text) <= limit else text[:limit].rstrip() + "…"
+
+
+def quota_rows(partner: PartnerUniversity) -> list[tuple[str, str | None]]:
+    status = {"published": "來源已列載，仍需確認適用年度", "zero": "零名額", "not_published": "未列載／待確認",
+              "reference_only": "參考名額", "fee_paying": "自費"}.get(partner.quota_status, "待確認")
+    rows = [("來源適用學年度", partner.academic_year or "來源未明確標示，待確認"),
+            ("來源申請梯次", partner.application_round or "來源未明確標示，待確認"), ("當期名額確認狀態", status)]
+    # Separate only explicit source syntax; do not infer which year the leading number belongs to.
+    mixed = re.fullmatch(r"(\d+)\s+(\d{4}\s*[^。；]*暫估[^。；]*)", partner.quota or "")
+    if mixed:
+        rows += [("來源列載數字（年度與口徑待確認）", mixed[1]),
+                 ("來源中的目標梯次暫估（非核定）", mixed[2]),
+                 ("名額閱讀提醒", "上述數字的適用範圍尚未釐清，不可相加或視為目前可申請名額；請向母校確認。")]
+    else:
+        rows.append(("來源列載名額（請連同狀態閱讀）", partner.quota or "未列載／待確認"))
+    return rows
+
+
+FIELD_SECTIONS = (
+    ("申請資格與語言", ("colleges", "degree_levels", "eligibility", "language_requirement", "language_review_note", "partner_application_prerequisite")),
+    ("研修期間與申請期限", ("study_period", "application_deadline", "nomination_deadline", "partner_application_deadline", "semester_dates")),
+    ("學費與住宿", ("tuition_info", "housing_info")),
+    ("申請步驟、文件與課程限制", ("application_info", "course_restrictions")),
+)
+DETAIL_LABELS = {"application_documents": "申請文件", "required_documents": "申請文件", "application_process": "申請程序",
+                 "living_costs": "生活費", "living_cost": "生活費", "visa": "簽證", "visa_residence": "簽證與居留",
+                 "insurance": "保險", "housing": "住宿", "tuition_fees": "學費與費用", "courses": "課程", "academic_calendar": "學期日期"}
+
+
+def partner_details(partner: PartnerUniversity, section_id: str = "programme") -> str:
+    rows = [("資料狀態", AVAILABILITY[partner.availability_status]), ("狀態說明", partner.availability_note),
+            ("母校受理時窗", {"open": "受理中（依來源時窗）", "closed": "已截止"}.get(partner.application_window_status, "待確認"))]
     if partner.checked_at:
         rows.append(("資料查核時間", display_time(partner.checked_at)))
-    details = "".join(f'<dt>{escape(label)}</dt><dd>{escape(str(value))}</dd>' for label, value in rows if value)
     labels = dict(FIELDS)
+    details = definition_list(rows) + '<h3>名額與適用年度</h3>' + definition_list(quota_rows(partner))
+    for heading, fields in FIELD_SECTIONS:
+        values = [(labels[key], getattr(partner, key)) for key in fields if getattr(partner, key, None)]
+        if values:
+            details += f'<section><h3>{heading}</h3>{definition_list(values)}</section>'
     evidence = "".join(
         f'<li><strong>{escape(labels.get(key, "補充條件"))}</strong>：{EVIDENCE[item.status]}；{escape(item.note or "")} '
         f'{source_link(item.source_url, "查閱來源")} '
@@ -177,14 +223,28 @@ def partner_details(partner: PartnerUniversity) -> str:
         f'（查核：{escape(display_time(item.checked_at))}）</li>'
         for key, item in partner.field_evidence.items())
     references = "".join(f'<dt>{escape(key)}</dt><dd>{escape(value)}</dd>' for key, value in partner.reference_data.items())
-    options = "".join('<h3>' + escape(option.program_type) + '</h3><dl>' + "".join(
-        f'<dt>{escape(label)}</dt><dd>{escape(str(getattr(option, key)))}</dd>'
-        for key, label in FIELDS if getattr(option, key, None)) + '</dl>'
-        + source_link(option.source_url, "此方案來源") for option in partner.program_options)
-    return f'''<section class="programme"><h2>{escape(partner.program_type)}</h2><dl>{details}</dl>
+    options, seen = "", set()
+    for option in partner.program_options:
+        signature = digest(option.model_dump(mode="json"))
+        if signature in seen:
+            continue
+        seen.add(signature)
+        values = [(label, getattr(option, key)) for key, label in FIELDS
+                  if getattr(option, key, None) and getattr(option, key) != getattr(partner, key, None)]
+        if values or option.program_type != partner.program_type or option.source_url != partner.source_url:
+            options += '<h3>' + escape(option.program_type) + '：方案差異</h3>'
+            options += definition_list(values) if values else '<p>列載條件與上方相同，請另核對此方案來源。</p>'
+            options += source_link(option.source_url, "此方案來源")
+    additional = ""
+    for key, detail in partner.partner_exchange_details.items():
+        if not detail.value:
+            continue
+        references_html = " · ".join(source_link(ev.source_url, "官方依據") + ' ' + escape('／'.join(filter(None, [ev.academic_year, ev.application_round]))) for ev in detail.evidence)
+        additional += f'<section><h3>{escape(DETAIL_LABELS.get(key, key.replace("_", " ")))}</h3><p class="status">{EVIDENCE[detail.status]} · {escape(detail.reason)}</p>{readable_text(detail.value)}<p>{references_html}</p></section>'
+    return f'''<section class="programme" id="{section_id}"><h2>{escape(partner.program_type)}</h2>{details}
 <p>{source_link(partner.source_url, "母校合作校／名額資料來源")} · {source_link(partner.website, "合作校官方網站")}</p>
 {('<details><summary>欄位查核狀態與來源</summary><ul>' + evidence + '</ul></details>') if evidence else ''}
-{('<h3>歷史／參考資料（非本期已確認條件）</h3><dl>' + references + '</dl>') if references else ''}{options}</section>'''
+{('<h3>歷史／參考資料（非本期已確認條件）</h3><dl>' + references + '</dl>') if references else ''}{options}{additional}</section>'''
 
 
 def xml_response(root_name: str, entries: Sequence[str], lastmods: Mapping[str, str] | None = None) -> Response:
@@ -227,7 +287,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             partners, source = catalogue(u)
             if not partners:
                 raise HTTPException(503, "合作校資料暫不可用，請稍後重試。", headers={"Retry-After": "60"})
-            hashes = {settings.origin + partner_path(u, rows[0]): digest(material_content(rows))
+            hashes = {settings.origin + partner_path(u, rows[0]): digest({"layout": 2, "content": material_content(rows)})
                       for rows in group_partners(partners).values()}
             for url in hashes:
                 lastmods.pop(url, None)
@@ -254,9 +314,10 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
     def directory():
         cards = "".join(f'<li><a href="/schools/{u.id}"><strong>{escape(u.school_name)}</strong>'
                         f'<span>{escape(u.english_name)}</span></a><p>{escape(u.coverage_note)}</p></li>' for u in universities.values())
-        body = f'<p class="eyebrow">交換學生・從母校開始</p><h1>臺灣大學交換學生申請指南</h1>'
+        body = f'<p class="eyebrow">交換學生・從母校開始</p><h1>全台大學交換學生申請指南｜{len(universities)} 所母校合作學校總覽</h1>'
         body += f'<p class="lead">依就讀大學查看海外合作校、名額狀態與申請條件。目前整理 {len(universities)} 所母校的公開資訊。</p><ul class="cards">{cards}</ul>'
-        return page(settings, "交換學生申請與合作學校指南｜UniWay", HOME_DESCRIPTION, "/schools", body,
+        body += '<p><a href="/destinations">依國家比較交換選項</a> · <a href="/guides">從資格、文件與預算開始準備</a></p>'
+        return page(settings, f"全台大學交換學生申請指南｜{len(universities)} 所母校｜UniWay", HOME_DESCRIPTION, "/schools", body,
                     [("首頁", "/"), ("交換學校指南", "/schools")])
 
     @router.api_route("/schools/{home_id}", methods=["GET", "HEAD"])
@@ -272,6 +333,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         body = f'<p class="eyebrow">{escape(u.english_name)}</p><h1>{escape(u.school_name)}交換學生申請與合作學校</h1><p class="lead">{escape(u.coverage_note)}</p>'
         body += f'<p>{source_link(u.official_url, "母校國際處官方資訊")}</p><a class="button" href="{escape(application_link(u))}">開啟{escape(u.short_name)}選校與申請工具</a>'
         body += source_notice(source) + f'<h2>合作校與方案資料</h2><p>共 {len(groups)} 個合作校頁面、{len(partners)} 筆方案資料；此數量不是本期可申請名額。</p><ul class="cards">{cards}</ul>'
+        body += '<p><a href="/guides/exchange-eligibility">如何核對交換資格與語言門檻</a> · <a href="/destinations">比較目的地與生活預算</a></p>'
         return page(settings, title, description, f"/schools/{u.id}", body,
                     [("首頁", "/"), ("交換學校指南", "/schools"), (u.school_name, f"/schools/{u.id}")])
 
@@ -283,15 +345,106 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         if not rows:
             raise HTTPException(404, "找不到這所合作校")
         partner = rows[0]
-        title = f"{partner.school_name}交換資訊｜{u.school_name}｜UniWay"
-        description = f"{u.school_name}學生前往{partner.school_name}的交換與研修資料。{AVAILABILITY[partner.availability_status]}。查閱方案資格、名額、期限與官方來源；以校方最新公告為準。"
+        rows = list({digest(material_content([row])): row for row in rows}.values())
+        statuses = "、".join(dict.fromkeys(AVAILABILITY[row.availability_status] for row in rows))
+        title = f"{partner.school_name}交換申請條件與名額｜{u.school_name}｜UniWay"
+        description = f"{u.school_name}赴{partner.country or '海外'}{partner.school_name}的交換與研修資訊，{len(rows)} 筆方案。{statuses}。查看學制、語言、期限與官方來源，以校方公告為準。"
         body = f'<p class="eyebrow">{escape(u.school_name)} → {escape(partner.country or "海外合作校")}</p><h1>{escape(partner.school_name)}交換與研修資訊</h1>'
         body += f'<p class="lead">此頁適用母校：{escape(u.school_name)}。不同母校或方案的規定可能不同，請逐項確認。</p>'
         body += f'<a class="button" href="{escape(application_link(u, partner))}">在 UniWay 查看學校與規劃申請</a>' + source_notice(source)
-        body += "".join(partner_details(row) for row in rows)
+        body += '<nav class="jump-links" aria-label="本頁方案">' + ' · '.join(f'<a href="#programme-{i}">{escape(row.program_type)}</a>' for i, row in enumerate(rows, 1)) + '</nav>'
+        body += '<section class="overview"><h2>申請前快速核對</h2>' + definition_list([
+            ("母校與目的地", f"{u.school_name} → {partner.country or '國家待確認'}"),
+            ("可申請學制（各方案可能不同）", "；".join(dict.fromkeys(row.degree_levels for row in rows if row.degree_levels)) or "未列載，請查閱官方來源"),
+            ("方案資料狀態", statuses),
+            ("核對順序", "先確認母校當期甄選，再核對合作校方案；提名、錄取與名額確認是不同步驟。")]) + '</section>'
+        body += "".join(partner_details(row, f"programme-{i}") for i, row in enumerate(rows, 1))
+        slug = country_slug(partner.country)
+        body += '<section><h2>延伸比較與申請準備</h2><ul>'
+        if slug:
+            body += f'<li><a href="/destinations/{slug}">{COUNTRIES[slug]["name"]}交換選項與生活預算核對</a></li>'
+        for guide, data in GUIDES.items():
+            body += f'<li><a href="/guides/{guide}">{data["title"]}</a></li>'
+        related = [group[0] for group in group_partners(partners).values()
+                   if group[0].country == partner.country and partner_id(group[0]) != key][:6]
+        body += '</ul>'
+        if related:
+            body += f'<h3>{escape(u.short_name)}其他同國家合作校</h3><ul>' + "".join(
+                f'<li><a href="{partner_path(u, item)}">{escape(item.school_name)}的{escape(u.short_name)}適用方案</a></li>' for item in related) + '</ul>'
+        body += '</section>'
         path = partner_path(u, partner)
         return page(settings, title, description, path, body,
                     [("首頁", "/"), ("交換學校指南", "/schools"), (u.school_name, f"/schools/{u.id}"), (partner.school_name, path)])
+
+    @router.api_route("/destinations", methods=["GET", "HEAD"])
+    def destinations():
+        body = '<h1>交換學生國家專區</h1><p class="lead">先比較目的地的語言、學期與預算，再回到母校確認適用的交換方案。</p><ul class="cards">'
+        for slug, data in COUNTRIES.items():
+            body += f'<li><a href="/destinations/{slug}"><strong>{data["name"]}交換學生指南</strong></a><p>{data["intro"]}</p></li>'
+        body += '</ul><p><a href="/schools">查看全部母校及其他國家的合作校</a></p>'
+        return page(settings, "日本、韓國、德國交換學生指南｜UniWay", "比較國家、母校方案與交換生活預算，確認語言、學期、費用及官方來源。", "/destinations", body, [("首頁", "/"), ("國家專區", "/destinations")])
+
+    @router.api_route("/destinations/{slug}", methods=["GET", "HEAD"])
+    def destination(slug: str):
+        if slug not in COUNTRIES:
+            raise HTTPException(404, "找不到國家指南")
+        data = COUNTRIES[slug]
+        matches = []
+        # If any source is unavailable, return a retryable error rather than a misleading complete count.
+        for u in universities.values():
+            partners, _ = catalogue_for(u)
+            groups = [rows for rows in group_partners(partners).values() if country_slug(rows[0].country) == slug]
+            if groups:
+                matches.append((u, groups))
+        count = sum(len(groups) for _, groups in matches)
+        name = data["name"]
+        body = f'<h1>{name}交換學生：母校選項、申請條件與生活費規劃</h1><p class="lead">{data["intro"]}</p>'
+        body += f'<p>目前資料涵蓋 {len(matches)} 所母校、{count} 個母校與合作校頁面；同一海外學校可能重複出現在不同母校，這不是當期名額或錄取數。</p>'
+        for heading, text in data["checks"]:
+            body += f'<section><h2>{heading}</h2><p>{text}</p></section>'
+        body += '<h2>官方規劃參考</h2><ul>' + ''.join(f'<li>{source_link(url, label)}</li>' for label, url in data["sources"]) + '</ul>'
+        body += '<p><a href="/guides/exchange-budget">建立費用與補助清單</a> · <a href="/guides/exchange-eligibility">核對語言及資格</a></p><h2>依母校比較方案</h2>'
+        body += '<nav class="jump-links" aria-label="母校快速連結">' + ' · '.join(f'<a href="#home-{u.id}">{escape(u.short_name)}</a>' for u, _ in matches) + '</nav>'
+        for u, groups in matches:
+            body += f'<section id="home-{u.id}"><h3><a href="/schools/{u.id}">{escape(u.school_name)}</a> · {len(groups)} 個合作校頁面</h3><ul class="cards">'
+            for rows in groups:
+                row = rows[0]
+                status = "、".join(dict.fromkeys(AVAILABILITY[item.availability_status] for item in rows))
+                degrees = "；".join(dict.fromkeys(item.degree_levels for item in rows if item.degree_levels)) or "學制待確認"
+                body += f'<li><a href="{partner_path(u, row)}"><strong>{escape(row.school_name)}</strong><span>{escape(u.short_name)}適用方案</span></a><p>{escape(degrees)} · {escape(status)}</p><p>共 {len(rows)} 筆方案；資格、語言與費用請逐項查看。</p></li>'
+            body += '</ul></section>'
+        return page(settings, f"{name}交換學生申請與生活費指南｜依母校比較｜UniWay", f"整理{name}交換學生的母校合作選項、語言與課程核對、住宿生活費規劃及官方來源。各校方案與名額須依當期公告確認。", f"/destinations/{slug}", body, [("首頁", "/"), ("國家專區", "/destinations"), (name, f"/destinations/{slug}")])
+
+    @router.api_route("/guides", methods=["GET", "HEAD"])
+    def guides():
+        body = '<h1>交換學生申請指南</h1><p class="lead">從資格核對到費用與文件準備，建立自己的交換申請計畫。</p><ul class="cards">' + ''.join(
+            f'<li><a href="/guides/{slug}"><strong>{data["title"]}</strong></a><p>{data["description"]}</p></li>' for slug, data in GUIDES.items()) + '</ul>'
+        return page(settings, "交換學生資格、費用與文件指南｜UniWay", "依序準備交換學生資格、語言、預算、補助與文件，連結各母校的官方申請資訊。", "/guides", body, [("首頁", "/"), ("申請指南", "/guides")])
+
+    @router.api_route("/guides/{slug}", methods=["GET", "HEAD"])
+    def guide(slug: str):
+        if slug not in GUIDES:
+            raise HTTPException(404, "找不到申請指南")
+        data = GUIDES[slug]
+        body = f'<h1>{data["title"]}</h1><p class="lead">{data["description"]}</p><p>整理：UniWay 編輯指南。以下為一般準備方法，各校實際要求請查閱母校與合作校公告。</p>'
+        for heading, text in data["sections"]:
+            body += f'<section><h2>{heading}</h2><p>{text}</p></section>'
+        if data["sources"]:
+            body += '<h2>官方參考入口</h2><ul>' + ''.join(f'<li>{source_link(url, label)}</li>' for label, url in data["sources"]) + '</ul>'
+        body += '<h2>查閱自己母校的規定</h2><ul>' + ''.join(f'<li><a href="/schools/{u.id}">{escape(u.school_name)}交換申請與官方來源</a></li>' for u in universities.values()) + '</ul>'
+        body += '<p><a href="/destinations">比較目的地生活預算與選項</a> · <a href="/editorial-policy">資料編輯與更正政策</a></p>'
+        return page(settings, data["title"] + "｜UniWay", data["description"], f"/guides/{slug}", body, [("首頁", "/"), ("申請指南", "/guides"), (data["title"], f"/guides/{slug}")])
+
+    @router.api_route("/editorial-policy", methods=["GET", "HEAD"])
+    def editorial_policy():
+        body = '''<h1>UniWay 資料編輯與更正政策</h1><p class="lead">協助學生找到可核對的交換資訊，並清楚區分已確認條件、參考資料與未知事項。</p>
+<h2>來源與適用範圍</h2><p>母校甄選、名額與提名規定以母校國際處公告為準；合作校課程、住宿及入學程序以合作校官方資料為準；簽證以主管機關為準。每個合作校頁保留來源連結，查核欄位另列適用年度、梯次與狀態。</p>
+<h2>查核、更新與不確定性</h2><p>資料擷取時間與人工查核時間不同，近期抓取不代表名額仍開放。未知、歷史參考、來源衝突與零名額分開標示；不以合作關係推論當期名額，也不把未公告寫成免要求。</p>
+<h2>整理方法</h2><p>網站將既有資料整理為母校與合作校方案頁，合併同一方案的重複文字，保留各方案差異與來源。國家及申請指南提供一般比較方法，不取代校方個案判定；未查證的推論不寫成官方規定。</p>
+<h2>更正與學生經驗</h2><p>發現錯誤時，可透過網站的問題回報功能提供頁面網址、官方來源與適用年度，供平台核對。學生心得應標明交換時間與方案並取得作者授權；個人經驗不代表所有學生的費用、資格或錄取結果。</p>
+<h2>平台角色</h2><p>UniWay 是獨立資訊整理與申請規劃工具，並非大學或政府單位，不保證名額、錄取或補助。學校與來源連結不代表合作背書。</p>
+<p><a href="/schools">查閱母校與合作校資料</a> · <a href="/guides">閱讀申請準備指南</a></p>'''
+        return page(settings, "資料來源、編輯與更正政策｜UniWay", "了解 UniWay 如何整理官方交換資料、區分年度與查核狀態，以及處理更正和學生經驗。", "/editorial-policy", body, [("首頁", "/"), ("資料編輯政策", "/editorial-policy")])
 
     @router.api_route("/sitemap.xml", methods=["GET", "HEAD"])
     def sitemap_index():
@@ -300,7 +453,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
 
     @router.api_route("/sitemaps/pages.xml", methods=["GET", "HEAD"])
     def static_sitemap():
-        return xml_response("urlset", [settings.origin + path for path in ("/", "/schools")] +
+        return xml_response("urlset", [settings.origin + path for path in ("/", "/schools", *EDITORIAL_PATHS)] +
                             [f"{settings.origin}/schools/{u.id}" for u in universities.values()])
 
     @router.api_route("/sitemaps/{home_id}.xml", methods=["GET", "HEAD"])

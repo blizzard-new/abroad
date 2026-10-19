@@ -12,7 +12,7 @@ from fastapi.testclient import TestClient
 from exchange_info.api import create_app
 from exchange_info.cgu_catalogue import CguCatalogue
 from exchange_info.models import ExchangeFieldEvidence, PartnerUniversity
-from exchange_info.seo import SeoSettings, group_partners, partner_id, source_link
+from exchange_info.seo import EDITORIAL_PATHS, SeoSettings, group_partners, partner_id, source_link
 from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
 
 
@@ -82,13 +82,21 @@ def test_sitemap_index_and_directory_cover_all_schools(client):
     urls = locations(client.get("/sitemap.xml"))
     assert len(urls) == len(SUPPORTED_UNIVERSITIES) + 1
     roots = locations(client.get("/sitemaps/pages.xml"))
-    assert len(roots) == len(SUPPORTED_UNIVERSITIES) + 2
+    assert len(roots) == len(SUPPORTED_UNIVERSITIES) + 2 + len(EDITORIAL_PATHS)
     directory = BeautifulSoup(client.get("/schools").text, "html.parser")
     assert len(directory.select(".cards a")) == len(SUPPORTED_UNIVERSITIES)
     for path in ("/sitemap.xml", "/sitemaps/pages.xml", "/robots.txt", "/schools"):
         response = client.head(path)
         assert response.status_code == 200 and not response.content
     assert "lastmod" not in client.get("/sitemaps/ntpu.xml").text  # no invented modification dates
+
+
+def test_editorial_pages_are_indexable_through_the_real_app_middleware(client):
+    for path in EDITORIAL_PATHS:
+        response = client.get(path)
+        assert response.status_code == 200
+        assert "noindex" not in response.headers.get("X-Robots-Tag", "")
+        assert 'content="index, follow' in response.text
 
 
 def test_invalid_school_or_partner_is_a_real_noindex_404(client):

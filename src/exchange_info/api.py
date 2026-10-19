@@ -484,7 +484,7 @@ from .tku_student_view import (
 from .rag import rag_index_status, search_document_chunks, supabase_configured
 from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
-from .seo import SeoSettings, create_seo_router, homepage_html
+from .seo import EDITORIAL_PATHS, SeoSettings, create_seo_router, homepage_html
 from .seo_changes import ContentChanges
 from .university_registry import (
     CGU,
@@ -959,7 +959,7 @@ def create_app(
         try:
             if catalogue_slots is not None and (
                 request.url.path in catalogue_response_paths
-                or request.url.path.startswith(("/schools/", "/sitemaps/"))
+                or request.url.path.startswith(("/schools/", "/sitemaps/", "/destinations/"))
             ):
                 async with catalogue_slots:
                     response = await call_next(request)
@@ -971,7 +971,7 @@ def create_app(
             response.headers.setdefault(key, value)
         path = request.url.path
         if (not seo_settings.indexable or response.status_code >= 400
-                or not (path in {"/", "/schools", "/privacy", "/terms", "/robots.txt", "/sitemap.xml"}
+                or not (path in {"/", "/schools", "/privacy", "/terms", "/robots.txt", "/sitemap.xml", *EDITORIAL_PATHS}
                         or path.startswith(("/schools/", "/sitemaps/")))):
             response.headers["X-Robots-Tag"] = "noindex, nofollow"
         if path.startswith("/static/") and response.status_code == 200:
