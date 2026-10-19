@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../data/models.dart';
+import '../state/exchange_store.dart';
 import 'account_screen.dart';
 import 'application_documents_screen.dart';
 import 'community_screen.dart';
@@ -11,6 +13,101 @@ import 'deadlines_screen.dart';
 import 'global_community_screen.dart';
 import 'home_screen.dart';
 import 'schools_screen.dart';
+
+Future<void> showUniversityPickerSheet(BuildContext context) async {
+  final store = ExchangeStoreScope.of(context, listen: false);
+  final selected = await showModalBottomSheet<String>(
+    context: context,
+    showDragHandle: true,
+    isScrollControlled: true,
+    backgroundColor: Colors.white,
+    builder: (sheetContext) {
+      return SafeArea(
+        child: DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.72,
+          maxChildSize: 0.9,
+          minChildSize: 0.45,
+          builder: (_, scrollController) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '切換就讀學校（18 校）',
+                        style: Theme.of(sheetContext).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '切換後會同步載入該校交換簡章、合作校、截止日與校板動態。',
+                        style: Theme.of(sheetContext).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(height: 1),
+                Expanded(
+                  child: ListView.separated(
+                    controller: scrollController,
+                    itemCount: store.universities.length,
+                    separatorBuilder: (_, _) => const Divider(height: 1),
+                    itemBuilder: (_, itemIndex) {
+                      final university = store.universities[itemIndex];
+                      final isSelected =
+                          university.schoolName == store.selectedUniversity;
+                      return ListTile(
+                        minTileHeight: 60,
+                        leading: Icon(
+                          isSelected
+                              ? Icons.check_circle_rounded
+                              : Icons.school_outlined,
+                          color: isSelected
+                              ? ExchangeColors.teal
+                              : ExchangeColors.secondaryInk,
+                        ),
+                        title: Text(
+                          university.schoolName,
+                          style: TextStyle(
+                            fontWeight: isSelected
+                                ? FontWeight.w700
+                                : FontWeight.w500,
+                          ),
+                        ),
+                        subtitle: Text(
+                          university.partnerCount > 0
+                              ? '${university.shortName} · ${university.partnerCount} 所合作校'
+                              : university.shortName,
+                        ),
+                        trailing: isSelected
+                            ? const Text(
+                                '目前選擇',
+                                style: TextStyle(
+                                  color: ExchangeColors.teal,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )
+                            : null,
+                        onTap: () =>
+                            Navigator.of(sheetContext).pop(university.schoolName),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    },
+  );
+  if (selected != null && selected.isNotEmpty) {
+    await store.selectUniversity(selected);
+  }
+}
 
 class RootShell extends StatefulWidget {
   const RootShell({super.key});
@@ -51,6 +148,11 @@ class _RootShellState extends State<RootShell> {
 
   @override
   Widget build(BuildContext context) {
+    final store = ExchangeStoreScope.of(context);
+    final defaultBoardMeta = (label: '長庚板', title: '長庚大學板');
+    final boardNavLabel = store.selectedUniversity == defaultHomeUniversity
+        ? defaultBoardMeta.label
+        : store.activeUniversity.boardTabLabel;
     final pages = [
       GlobalCommunityScreen(
         key: globalCommunityKey,
@@ -101,7 +203,7 @@ class _RootShellState extends State<RootShell> {
               _LiquidNavItem(
                 icon: Icons.school_outlined,
                 selectedIcon: Icons.school_rounded,
-                label: '長庚板',
+                label: boardNavLabel,
                 onTap: _openCguBoard,
               ),
               _LiquidNavItem(
@@ -138,7 +240,14 @@ class _CguBoardShellState extends State<CguBoardShell> {
 
   @override
   Widget build(BuildContext context) {
-    final pageTitles = ['我的交換計畫', '找交換學校', '申請文件', '申請時程', '長庚討論板'];
+    final store = ExchangeStoreScope.of(context);
+    final pageTitles = [
+      '我的交換計畫',
+      '找交換學校',
+      '申請文件',
+      '申請時程',
+      store.activeUniversity.boardTitleLabel,
+    ];
     final pages = [
       HomeScreen(onSelectTab: select, showHeader: false),
       const SchoolsScreen(showPageHeader: false),
@@ -158,7 +267,9 @@ class _CguBoardShellState extends State<CguBoardShell> {
             SafeArea(
               bottom: false,
               child: _BoardContextBar(
+                boardTitle: '${store.activeUniversity.schoolName}板',
                 pageTitle: pageTitles[index],
+                onSwitchSchool: () => showUniversityPickerSheet(context),
                 onAccount: openAccount,
               ),
             ),
@@ -216,9 +327,16 @@ class _CguBoardShellState extends State<CguBoardShell> {
 }
 
 class _BoardContextBar extends StatelessWidget {
-  const _BoardContextBar({required this.pageTitle, required this.onAccount});
+  const _BoardContextBar({
+    required this.boardTitle,
+    required this.pageTitle,
+    required this.onSwitchSchool,
+    required this.onAccount,
+  });
 
+  final String boardTitle;
   final String pageTitle;
+  final VoidCallback onSwitchSchool;
   final VoidCallback onAccount;
 
   @override
@@ -255,24 +373,52 @@ class _BoardContextBar extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '長庚大學板',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.titleMedium,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: onSwitchSchool,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  boardTitle,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              const Icon(
+                                Icons.unfold_more_rounded,
+                                size: 18,
+                                color: ExchangeColors.secondaryInk,
+                              ),
+                            ],
+                          ),
+                          Text(
+                            pageTitle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
                       ),
-                      Text(
-                        pageTitle,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
+                    ),
                   ),
+                ),
+                IconButton(
+                  tooltip: '切換學校',
+                  onPressed: onSwitchSchool,
+                  constraints: const BoxConstraints(
+                    minWidth: 44,
+                    minHeight: 48,
+                  ),
+                  icon: const Icon(Icons.swap_horiz_rounded),
                 ),
                 IconButton(
                   tooltip: '我的帳號',

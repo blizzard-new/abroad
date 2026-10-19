@@ -32,9 +32,15 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
     super.didChangeDependencies();
     if (loaded) return;
     loaded = true;
-    final api = ExchangeStoreScope.of(context).api;
-    workflowFuture = api.workflow(widget.school.schoolName);
-    experiencesFuture = api.experiences(widget.school.schoolName);
+    final store = ExchangeStoreScope.of(context);
+    workflowFuture = store.api.workflow(
+      widget.school.schoolName,
+      homeSchool: store.selectedUniversity,
+    );
+    experiencesFuture = store.api.experiences(
+      widget.school.schoolName,
+      homeSchool: store.selectedUniversity,
+    );
   }
 
   @override
@@ -185,6 +191,7 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
       _DetailSection.overview => _OverviewSection(
         school: widget.school,
         dashboard: store.dashboard,
+        homeShortName: store.activeUniversity.shortName,
       ),
       _DetailSection.workflow => FutureBuilder<ApplicationWorkflow>(
         future: workflowFuture,
@@ -198,11 +205,15 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
               onRetry: () => setState(
                 () => workflowFuture = store.api.workflow(
                   widget.school.schoolName,
+                  homeSchool: store.selectedUniversity,
                 ),
               ),
             );
           }
-          return _WorkflowSection(workflow: snapshot.data!);
+          return _WorkflowSection(
+            workflow: snapshot.data!,
+            homeShortName: store.activeUniversity.shortName,
+          );
         },
       ),
       _DetailSection.life => FutureBuilder<ExperienceDigest>(
@@ -217,6 +228,7 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
               onRetry: () => setState(
                 () => experiencesFuture = store.api.experiences(
                   widget.school.schoolName,
+                  homeSchool: store.selectedUniversity,
                 ),
               ),
             );
@@ -236,6 +248,7 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
               onRetry: () => setState(
                 () => experiencesFuture = store.api.experiences(
                   widget.school.schoolName,
+                  homeSchool: store.selectedUniversity,
                 ),
               ),
             );
@@ -313,10 +326,15 @@ class _SectionSelectorDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class _OverviewSection extends StatelessWidget {
-  const _OverviewSection({required this.school, required this.dashboard});
+  const _OverviewSection({
+    required this.school,
+    required this.dashboard,
+    required this.homeShortName,
+  });
 
   final PartnerUniversity school;
   final StudentDashboard? dashboard;
+  final String homeShortName;
 
   @override
   Widget build(BuildContext context) {
@@ -405,7 +423,7 @@ class _OverviewSection extends StatelessWidget {
         ],
         if (dashboard?.ruleExplanations.isNotEmpty == true) ...[
           const SizedBox(height: 26),
-          const ExchangeSectionHeader(title: '長庚規定與補助要點'),
+          ExchangeSectionHeader(title: '$homeShortName規定與補助要點'),
           const SizedBox(height: 12),
           ...dashboard!.ruleExplanations
               .take(5)
@@ -417,7 +435,7 @@ class _OverviewSection extends StatelessWidget {
               ),
         ],
         const SizedBox(height: 10),
-        _SourceButtons(school: school),
+        _SourceButtons(school: school, homeShortName: homeShortName),
       ],
     );
   }
@@ -529,9 +547,10 @@ class _RuleCard extends StatelessWidget {
 }
 
 class _WorkflowSection extends StatelessWidget {
-  const _WorkflowSection({required this.workflow});
+  const _WorkflowSection({required this.workflow, required this.homeShortName});
 
   final ApplicationWorkflow workflow;
+  final String homeShortName;
 
   @override
   Widget build(BuildContext context) {
@@ -540,7 +559,7 @@ class _WorkflowSection extends StatelessWidget {
         icon: Icons.route_outlined,
         title: '流程資料仍在整理',
         message: workflow.coverageNote.isEmpty
-            ? '請先以長庚國際處與合作校公告為準。'
+            ? '請先以$homeShortName國際處與合作校公告為準。'
             : workflow.coverageNote,
       );
     }
@@ -887,9 +906,10 @@ class _StoriesSection extends StatelessWidget {
 }
 
 class _SourceButtons extends StatelessWidget {
-  const _SourceButtons({required this.school});
+  const _SourceButtons({required this.school, required this.homeShortName});
 
   final PartnerUniversity school;
+  final String homeShortName;
 
   @override
   Widget build(BuildContext context) {
@@ -897,7 +917,7 @@ class _SourceButtons extends StatelessWidget {
       if (school.imagePageUrl.isNotEmpty)
         (label: '官方圖片來源', url: school.imagePageUrl),
       if (school.sourceUrl.isNotEmpty)
-        (label: '長庚合作校資料', url: school.sourceUrl),
+        (label: '$homeShortName合作校資料', url: school.sourceUrl),
       if (school.website.isNotEmpty) (label: '合作校官方網站', url: school.website),
     ];
     return Wrap(

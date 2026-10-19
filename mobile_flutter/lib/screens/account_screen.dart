@@ -317,7 +317,9 @@ class _AccountScreenState extends State<AccountScreen> {
               children: [
                 if (mode == _AuthMode.register) ...[
                   _VerificationSuccess(
-                    message: verificationMessage ?? '長庚大學學生身分已驗證',
+                    message:
+                        verificationMessage ??
+                        '${store.selectedUniversity}學生身分已驗證',
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -485,6 +487,27 @@ class _AccountScreenState extends State<AccountScreen> {
                 decoration: const InputDecoration(
                   labelText: '目前就讀大學',
                   prefixIcon: Icon(Icons.school_outlined),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: store.universities
+                      .map(
+                        (university) => ActionChip(
+                          label: Text(university.shortName),
+                          onPressed: () {
+                            setState(() {
+                              homeUniversityController.text =
+                                  university.schoolName;
+                            });
+                          },
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
               const SizedBox(height: 12),

@@ -7,6 +7,7 @@ import '../state/exchange_store.dart';
 import 'account_screen.dart';
 import 'ai_tools_screens.dart';
 import 'feature_screens.dart';
+import 'root_shell.dart' show showUniversityPickerSheet;
 import 'student_plan_screens.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -81,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
               _FeatureGrid(
                 features: [
                   _FeatureDefinition(
-                    title: '長庚討論板',
+                    title: store.activeUniversity.boardTitleLabel,
                     detail: '匿名貼文、聊天與私訊',
                     icon: Icons.forum_outlined,
                     color: ExchangeColors.teal,
@@ -323,15 +324,38 @@ class _TopHeader extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('目前就讀學校', style: Theme.of(context).textTheme.bodySmall),
-              Text(
-                store.account?.homeUniversity ?? '未定大學',
-                style: Theme.of(context).textTheme.titleMedium,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(8),
+            onTap: () => showUniversityPickerSheet(context),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('目前就讀學校', style: Theme.of(context).textTheme.bodySmall),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          store.account?.homeUniversity ??
+                              store.selectedUniversity,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Icon(
+                        Icons.unfold_more_rounded,
+                        size: 18,
+                        color: ExchangeColors.secondaryInk,
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
         IconButton.outlined(

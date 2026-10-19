@@ -148,8 +148,9 @@ class ExchangeBudgetPlan {
 
 List<SchoolMatch> rankPartnerSchools(
   Iterable<PartnerUniversity> schools,
-  StudentPlanProfile profile,
-) {
+  StudentPlanProfile profile, {
+  double? academicScoreMinimum = 70,
+}) {
   final matches = schools.map((school) {
     var score = 0;
     final reasons = <String>[];
@@ -204,9 +205,18 @@ List<SchoolMatch> rankPartnerSchools(
       );
     }
 
-    if ((profile.academicScore ?? 0) >= 70) {
+    if (academicScoreMinimum == null) {
+      if ((profile.academicScore ?? 0) > 0) {
+        score += 8;
+        reasons.add('已填寫學業成績供合作校門檻比對');
+      }
+    } else if ((profile.academicScore ?? 0) >= academicScoreMinimum) {
       score += 8;
-      reasons.add('已達校內 70 分基本參考線');
+      reasons.add(
+        academicScoreMinimum == 70
+            ? '已達校內 70 分基本參考線'
+            : '已達校內 ${_scoreGap(academicScoreMinimum)} 基本參考線',
+      );
     } else {
       risks.add('學業成績尚未達校內基本參考線');
     }

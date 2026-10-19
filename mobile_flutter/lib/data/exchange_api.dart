@@ -222,7 +222,16 @@ class ExchangeApi {
     return AnonymousIdentity.fromJson(_decode(response));
   }
 
-  Future<StudentDashboard> dashboard({String school = '長庚大學'}) async {
+  Future<List<SupportedUniversity>> universities() async {
+    final response = await _client.get(_uri('universities'));
+    return jsonMapList(
+      _decode(response),
+    ).map(SupportedUniversity.fromJson).toList();
+  }
+
+  Future<StudentDashboard> dashboard({
+    String school = defaultHomeUniversity,
+  }) async {
     final response = await _client.get(
       _uri('student-dashboard', {'school': school}),
     );
@@ -240,15 +249,21 @@ class ExchangeApi {
     return {for (final visual in visuals) visual.schoolName: visual};
   }
 
-  Future<List<DeadlineRecord>> deadlines() async {
-    final response = await _client.get(_uri('deadlines'));
+  Future<List<DeadlineRecord>> deadlines({String? school}) async {
+    final response = await _client.get(_uri('deadlines', {'school': school}));
     final decoded = _decode(response);
     return jsonMapList(decoded).map(DeadlineRecord.fromJson).toList();
   }
 
-  Future<ApplicationWorkflow> workflow(String schoolName) async {
+  Future<ApplicationWorkflow> workflow(
+    String schoolName, {
+    String? homeSchool,
+  }) async {
     final response = await _client.get(
-      _uri('application-workflow', {'school': schoolName}),
+      _uri('application-workflow', {
+        'school': schoolName,
+        'home_school': homeSchool,
+      }),
     );
     return ApplicationWorkflow.fromJson(_decode(response));
   }
@@ -267,7 +282,7 @@ class ExchangeApi {
     AdvisorProfile? profile,
   }) async {
     final response = await _client.post(
-      _uri('ai/chat'),
+      _uri('advisor/ask'),
       headers: const {'Content-Type': 'application/json; charset=utf-8'},
       body: jsonEncode({
         'question': question,
@@ -277,19 +292,27 @@ class ExchangeApi {
     return AdvisorAnswer.fromJson(_decode(response));
   }
 
-  Future<ExperienceDigest> experiences(String schoolName) async {
+  Future<ExperienceDigest> experiences(
+    String schoolName, {
+    String? homeSchool,
+  }) async {
     final response = await _client.get(
-      _uri('student-experiences', {'school': schoolName}),
+      _uri('student-experiences', {
+        'school': schoolName,
+        'home_school': homeSchool,
+      }),
     );
     return ExperienceDigest.fromJson(_decode(response));
   }
 
   Future<List<ApplicationDocumentTemplate>> applicationTemplates({
+    String school = defaultHomeUniversity,
     required String programType,
     List<String> flags = const [],
   }) async {
     final response = await _client.get(
       _uri('application-center/templates', {
+        'school': school,
         'program_type': programType,
         'flags': flags.isEmpty ? null : flags.join(','),
       }),
@@ -458,9 +481,15 @@ class ExchangeApi {
     _decode(response);
   }
 
-  Future<List<ChatMessage>> chat(String schoolName) async {
+  Future<List<ChatMessage>> chat(
+    String schoolName, {
+    String? homeSchool,
+  }) async {
     final response = await _client.get(
-      _uri('community/chat', {'school': schoolName}),
+      _uri('community/chat', {
+        'school': schoolName,
+        'home_school': homeSchool,
+      }),
     );
     return jsonMapList(_decode(response)).map(ChatMessage.fromJson).toList();
   }
@@ -469,11 +498,17 @@ class ExchangeApi {
     required AnonymousIdentity identity,
     required String schoolName,
     required String body,
+    String? homeSchool,
   }) async {
     final response = await _client.post(
       _uri('community/chat'),
       headers: _auth(identity),
-      body: jsonEncode({'school_name': schoolName, 'body': body}),
+      body: jsonEncode({
+        'school_name': schoolName,
+        'body': body,
+        if (homeSchool != null && homeSchool.trim().isNotEmpty)
+          'home_school': homeSchool.trim(),
+      }),
     );
     _decode(response);
   }

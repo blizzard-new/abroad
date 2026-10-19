@@ -49,6 +49,10 @@ class _AdvisorScreenState extends State<AdvisorScreen> {
   }
 
   AdvisorProfile _profile() => AdvisorProfile(
+    schoolName: ExchangeStoreScope.of(
+      context,
+      listen: false,
+    ).selectedUniversity,
     college: college,
     department: departmentController.text.trim(),
     currentYear: currentYear,
@@ -88,6 +92,9 @@ class _AdvisorScreenState extends State<AdvisorScreen> {
   @override
   Widget build(BuildContext context) {
     final store = ExchangeStoreScope.of(context);
+    final colleges = store.activeUniversity.colleges.isNotEmpty
+        ? store.activeUniversity.colleges
+        : const ['工學院', '智慧運算學院', '管理學院', '醫學院'];
     final countries = {
       ...?store.dashboard?.partnerUniversities.map((school) => school.country),
     }.where((value) => value.isNotEmpty).toList()..sort();
@@ -120,8 +127,8 @@ class _AdvisorScreenState extends State<AdvisorScreen> {
                 children: [
                   _DropdownField(
                     label: '學院',
-                    value: college,
-                    options: const ['工學院', '智慧運算學院', '管理學院', '醫學院'],
+                    value: colleges.contains(college) ? college : '',
+                    options: colleges,
                     onChanged: (value) => setState(() => college = value),
                   ),
                   _DropdownField(

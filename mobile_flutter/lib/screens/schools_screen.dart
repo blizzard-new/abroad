@@ -60,7 +60,8 @@ class _SchoolsScreenState extends State<SchoolsScreen> {
           children: [
             if (widget.showPageHeader) ...[
               ExchangeSectionHeader(
-                eyebrow: store.account?.homeUniversity != null ? '${store.account!.homeUniversity}合作校' : '合作校',
+                eyebrow:
+                    '${store.account?.homeUniversity ?? store.selectedUniversity}合作校',
                 title: '找到適合你的學校',
               ),
               const SizedBox(height: 14),

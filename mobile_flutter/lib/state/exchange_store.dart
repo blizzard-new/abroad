@@ -45,6 +45,9 @@ class ExchangeStore extends ChangeNotifier {
   final CalendarSyncService calendarSync;
   final StudyPlanWidgetBridge widgetBridge;
 
+  List<SupportedUniversity> universities = defaultSupportedUniversities;
+  String selectedUniversity = defaultHomeUniversity;
+  Map<String, SchoolVisual> _schoolVisualsCache = const {};
   StudentDashboard? dashboard;
   List<DeadlineRecord> deadlines = const [];
   List<AuthProviderStatus> authProviders = const [];
@@ -78,30 +81,105 @@ class ExchangeStore extends ChangeNotifier {
   bool isGeneratingApplicationPdf = false;
   String? applicationDocumentsError;
 
+  SupportedUniversity get activeUniversity =>
+      resolveSupportedUniversity(selectedUniversity, universities);
+
+  Future<List<SupportedUniversity>> _loadUniversities() async {
+    try {
+      final loaded = await api.universities();
+      return loaded.isNotEmpty ? loaded : defaultSupportedUniversities;
+    } catch (_) {
+      return defaultSupportedUniversities;
+    }
+  }
+
+  Future<void> _loadSelectedUniversity() async {
+    final prefs = await SharedPreferences.getInstance();
+    final saved = prefs.getString('selected_university_v1');
+    final resolved = tryResolveSupportedUniversity(saved, universities);
+    if (resolved != null) {
+      selectedUniversity = resolved.schoolName;
+    }
+  }
+
   Future<void> initialize() async {
     if (isLoading) return;
     isLoading = true;
     error = null;
     notifyListeners();
     try {
+      await _loadSelectedUniversity();
       await _loadApplicationDocumentState();
+      await _restoreAccount();
+      final prefs = await SharedPreferences.getInstance();
+      if (!prefs.containsKey('selected_university_v1')) {
+        final accountUniversity = tryResolveSupportedUniversity(
+          account?.homeUniversity,
+          universities,
+        );
+        if (accountUniversity != null) {
+          selectedUniversity = accountUniversity.schoolName;
+        }
+      }
+      applicationContext = applicationContext.copyWith(
+        schoolName: selectedUniversity,
+      );
       final results = await Future.wait<dynamic>([
-        api.dashboard(),
-        api.deadlines(),
+        _loadUniversities(),
+        api.dashboard(school: selectedUniversity),
+        api.deadlines(school: selectedUniversity),
         api.authProviders(),
-        _restoreAccount(),
         _loadLocalProgress(),
         _loadSchoolVisuals(),
         _loadCalendarEvents(),
         calendarSync.initialize(),
         widgetBridge.initialize(),
       ]);
+      universities = results[0] as List<SupportedUniversity>;
+      _schoolVisualsCache = results[5] as Map<String, SchoolVisual>;
+      dashboard = (results[1] as StudentDashboard).withSchoolVisuals(
+        _schoolVisualsCache,
+        api.resolveUrl,
+      );
+      deadlines = results[2] as List<DeadlineRecord>;
+      authProviders = results[3] as List<AuthProviderStatus>;
+      await loadApplicationTemplates(notify: false);
+      await _syncStudyPlanWidget();
+    } catch (exception) {
+      error = exception.toString();
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> selectUniversity(String schoolName) async {
+    final resolved = resolveSupportedUniversity(schoolName, universities);
+    if (selectedUniversity == resolved.schoolName && dashboard != null) {
+      return;
+    }
+    selectedUniversity = resolved.schoolName;
+    applicationContext = applicationContext.copyWith(
+      schoolName: selectedUniversity,
+    );
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('selected_university_v1', selectedUniversity);
+    isLoading = true;
+    error = null;
+    notifyListeners();
+    try {
+      final results = await Future.wait<dynamic>([
+        api.dashboard(school: selectedUniversity),
+        api.deadlines(school: selectedUniversity),
+      ]);
+      if (_schoolVisualsCache.isEmpty) {
+        _schoolVisualsCache = await _loadSchoolVisuals();
+      }
       dashboard = (results[0] as StudentDashboard).withSchoolVisuals(
-        results[5] as Map<String, SchoolVisual>,
+        _schoolVisualsCache,
         api.resolveUrl,
       );
       deadlines = results[1] as List<DeadlineRecord>;
-      authProviders = results[2] as List<AuthProviderStatus>;
       await loadApplicationTemplates(notify: false);
       await _syncStudyPlanWidget();
     } catch (exception) {
@@ -175,6 +253,7 @@ class ExchangeStore extends ChangeNotifier {
   Future<StudentVerificationResult> verifyStudentCards({
     required String frontPath,
     required String backPath,
+    String? schoolName,
   }) async {
     if (isVerifyingStudent) {
       throw const ExchangeApiException('學生證正在辨識中。');
@@ -185,6 +264,9 @@ class ExchangeStore extends ChangeNotifier {
       final result = await api.verifyStudentCards(
         frontPath: frontPath,
         backPath: backPath,
+        schoolName: (schoolName == null || schoolName.trim().isEmpty)
+            ? selectedUniversity
+            : schoolName.trim(),
       );
       studentVerification = result;
       return result;
@@ -242,6 +324,14 @@ class ExchangeStore extends ChangeNotifier {
     );
     identity = null;
     await ensureIdentity();
+    final resolved = tryResolveSupportedUniversity(
+      homeUniversity,
+      universities,
+    );
+    if (resolved != null && resolved.schoolName != selectedUniversity) {
+      await selectUniversity(resolved.schoolName);
+      return;
+    }
     notifyListeners();
   }
 
@@ -426,6 +516,7 @@ class ExchangeStore extends ChangeNotifier {
     if (notify) notifyListeners();
     try {
       final loaded = await api.applicationTemplates(
+        school: selectedUniversity,
         programType: applicationContext.programType,
         flags: applicationContext.flags,
       );
@@ -450,7 +541,7 @@ class ExchangeStore extends ChangeNotifier {
   Future<void> updateApplicationContext(
     ApplicationCenterContext context,
   ) async {
-    applicationContext = context;
+    applicationContext = context.copyWith(schoolName: selectedUniversity);
     await _persistApplicationDocumentState();
     await loadApplicationTemplates();
   }
@@ -1020,7 +1111,11 @@ class ExchangeStore extends ChangeNotifier {
     final profile = planProfile;
     final schools = dashboard?.partnerUniversities;
     if (profile == null || schools == null) return const [];
-    return rankPartnerSchools(schools, profile);
+    return rankPartnerSchools(
+      schools,
+      profile,
+      academicScoreMinimum: activeUniversity.academicScoreMinimum,
+    );
   }
 
   int get documentReadyCount => documentStatuses.values
