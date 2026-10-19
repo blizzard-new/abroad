@@ -268,7 +268,12 @@ from .models import (
     VaultDocumentSummary,
     VaultDownloadGrant,
     VaultVersionSummary,
+    VerifiedWindowDeadlineCatalog,
     utc_now,
+)
+from .verified_window_deadlines import (
+    build_school_window_ics,
+    build_verified_window_deadline_catalog,
 )
 from .ntpu_student_view import (
     build_ntpu_student_dashboard,
@@ -3596,6 +3601,33 @@ def create_app(
                     )
                 )
         return records
+
+    @app.get(
+        "/verified-window-deadlines",
+        response_model=VerifiedWindowDeadlineCatalog,
+    )
+    def verified_window_deadlines(
+        school: str | None = Query(default=None),
+    ) -> VerifiedWindowDeadlineCatalog:
+        if school is not None and school.strip():
+            university = university_for(school)
+            return build_verified_window_deadline_catalog(school=university.id)
+        return build_verified_window_deadline_catalog()
+
+    @app.get("/calendar/school-window.ics", response_class=PlainTextResponse)
+    def calendar_school_window_ics(
+        school: str | None = Query(default=None),
+    ) -> PlainTextResponse:
+        university = university_for(school)
+        filename, ics_content = build_school_window_ics(university.id)
+        return PlainTextResponse(
+            ics_content,
+            media_type="text/calendar; charset=utf-8",
+            headers={
+                "Cache-Control": "public, max-age=300",
+                "Content-Disposition": f'attachment; filename="{filename}"',
+            },
+        )
 
     @app.get("/documents", response_model=list[DocumentRecord])
     def documents(

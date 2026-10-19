@@ -394,6 +394,10 @@
                 <button id="home-supported-toggle" type="button" class="pr-marquee-toggle" aria-pressed="false" aria-label="暫停學校名單捲動" hidden><i data-lucide="pause" aria-hidden="true"></i></button>
               </section>
 
+              <section id="home-verified-window" class="pr-section pr-verified-window" aria-labelledby="home-verified-window-title">
+                <div id="home-verified-window-mount" class="verified-window-shell" aria-live="polite"></div>
+              </section>
+
               <section class="pr-section pr-features" aria-labelledby="home-features-title">
                 <div class="pr-section-head pr-section-head-split">
                   <div><span class="pr-kicker">UniWay 能幫你做的事</span><h2 id="home-features-title">從找學校到出發，<br>每一步都有對應的工具。</h2></div>
@@ -1056,6 +1060,7 @@
               <div><h2 id="application-calendar-title">我的申請日曆</h2><p>掌握期限，把準備任務安排在出發之前。</p></div>
               <div id="calendar-next-summary" class="calendar-next-summary"><span class="skeleton skeleton-stat"></span></div>
             </header>
+            <div id="calendar-verified-window-hook" class="verified-window-hook-container" aria-live="polite"></div>
             <div class="calendar-action-bar" aria-label="日曆操作">
               <div class="calendar-month-controls">
                 <button id="calendar-previous-month" type="button" class="icon-button" aria-label="上一個月"><i data-lucide="chevron-left" aria-hidden="true"></i></button>
@@ -1132,6 +1137,7 @@
 
           <section id="deadlines" class="page-section standalone-route-page" data-university-page="deadlines" aria-labelledby="deadlines-title" hidden>
             <div class="section-heading compact-heading"><div><h2 id="deadlines-title">校內梯次與申請時程</h2><p>請留意日期的適用年度與申請身分。</p></div><i class="heading-icon" data-lucide="calendar-days" aria-hidden="true"></i></div>
+            <div id="deadlines-verified-window-card" class="verified-window-card-container" aria-live="polite"></div>
             <div id="period-list" class="deadline-list" aria-busy="true"><div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div></div>
           </section>
 

@@ -8030,6 +8030,18 @@
             ],
             "title": "Evidence"
           },
+          "last_checked_at": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Checked At"
+          },
           "max_chars": {
             "anyOf": [
               {
@@ -8064,6 +8076,18 @@
             "minItems": 1,
             "title": "Rules",
             "type": "array"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
           },
           "verified": {
             "default": true,
@@ -17617,6 +17641,382 @@
         "title": "VaultVersionSummary",
         "type": "object"
       },
+      "VerifiedRuleFact": {
+        "properties": {
+          "exact_deadline_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exact Deadline At"
+          },
+          "label": {
+            "maxLength": 60,
+            "minLength": 2,
+            "title": "Label",
+            "type": "string"
+          },
+          "last_checked_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Last Checked At",
+            "type": "string"
+          },
+          "max_chars": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Chars"
+          },
+          "max_pages": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Pages"
+          },
+          "min_chars": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Chars"
+          },
+          "rule_key": {
+            "enum": [
+              "online_deadline",
+              "paper_deadline",
+              "study_plan_limit"
+            ],
+            "title": "Rule Key",
+            "type": "string"
+          },
+          "source_title": {
+            "maxLength": 200,
+            "minLength": 2,
+            "title": "Source Title",
+            "type": "string"
+          },
+          "source_url": {
+            "maxLength": 2000,
+            "minLength": 12,
+            "title": "Source Url",
+            "type": "string"
+          },
+          "submission_mode": {
+            "anyOf": [
+              {
+                "enum": [
+                  "online",
+                  "paper_required",
+                  "paperless",
+                  "signed_scan_upload",
+                  "pending_notice"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Submission Mode"
+          },
+          "value_text": {
+            "maxLength": 600,
+            "minLength": 4,
+            "title": "Value Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_key",
+          "label",
+          "value_text",
+          "source_title",
+          "source_url",
+          "last_checked_at"
+        ],
+        "title": "VerifiedRuleFact",
+        "type": "object"
+      },
+      "VerifiedSchoolWindowCard": {
+        "properties": {
+          "cycle_label": {
+            "maxLength": 160,
+            "minLength": 4,
+            "title": "Cycle Label",
+            "type": "string"
+          },
+          "google_calendar_url": {
+            "maxLength": 4000,
+            "minLength": 20,
+            "title": "Google Calendar Url",
+            "type": "string"
+          },
+          "ics_download_url": {
+            "maxLength": 500,
+            "minLength": 10,
+            "title": "Ics Download Url",
+            "type": "string"
+          },
+          "in_ten_week_window": {
+            "title": "In Ten Week Window",
+            "type": "boolean"
+          },
+          "line_copy_summary": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Line Copy Summary",
+            "type": "string"
+          },
+          "line_oa_url": {
+            "maxLength": 2000,
+            "minLength": 12,
+            "title": "Line Oa Url",
+            "type": "string"
+          },
+          "online_deadline": {
+            "$ref": "#/components/schemas/VerifiedRuleFact"
+          },
+          "paper_deadline": {
+            "$ref": "#/components/schemas/VerifiedRuleFact"
+          },
+          "primary_deadline_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Deadline At"
+          },
+          "primary_deadline_date": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Deadline Date"
+          },
+          "school_id": {
+            "maxLength": 30,
+            "minLength": 2,
+            "title": "School Id",
+            "type": "string"
+          },
+          "school_name": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "School Name",
+            "type": "string"
+          },
+          "short_name": {
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Short Name",
+            "type": "string"
+          },
+          "study_plan_limit": {
+            "$ref": "#/components/schemas/VerifiedRuleFact"
+          },
+          "subtasks": {
+            "items": {
+              "$ref": "#/components/schemas/VerifiedWindowSubtask"
+            },
+            "title": "Subtasks",
+            "type": "array"
+          },
+          "window_badge": {
+            "maxLength": 60,
+            "minLength": 2,
+            "title": "Window Badge",
+            "type": "string"
+          },
+          "window_status": {
+            "enum": [
+              "open",
+              "upcoming",
+              "pending_exact_date",
+              "closed_current_round"
+            ],
+            "title": "Window Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "school_id",
+          "school_name",
+          "short_name",
+          "in_ten_week_window",
+          "window_status",
+          "window_badge",
+          "cycle_label",
+          "online_deadline",
+          "paper_deadline",
+          "study_plan_limit",
+          "ics_download_url",
+          "google_calendar_url",
+          "line_oa_url",
+          "line_copy_summary"
+        ],
+        "title": "VerifiedSchoolWindowCard",
+        "type": "object"
+      },
+      "VerifiedWindowDeadlineCatalog": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/VerifiedSchoolWindowCard"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "last_checked_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Last Checked At",
+            "type": "string"
+          },
+          "ten_week_school_count": {
+            "minimum": 0.0,
+            "title": "Ten Week School Count",
+            "type": "integer"
+          },
+          "total_supported_school_count": {
+            "minimum": 0.0,
+            "title": "Total Supported School Count",
+            "type": "integer"
+          },
+          "window_end_date": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Window End Date",
+            "type": "string"
+          },
+          "window_start_date": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Window Start Date",
+            "type": "string"
+          }
+        },
+        "required": [
+          "window_start_date",
+          "window_end_date",
+          "ten_week_school_count",
+          "total_supported_school_count",
+          "last_checked_at"
+        ],
+        "title": "VerifiedWindowDeadlineCatalog",
+        "type": "object"
+      },
+      "VerifiedWindowSubtask": {
+        "properties": {
+          "category": {
+            "default": "documents",
+            "enum": [
+              "documents",
+              "home",
+              "language",
+              "other"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "due_date": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Due Date",
+            "type": "string"
+          },
+          "google_calendar_url": {
+            "maxLength": 4000,
+            "minLength": 20,
+            "title": "Google Calendar Url",
+            "type": "string"
+          },
+          "id": {
+            "maxLength": 120,
+            "minLength": 3,
+            "title": "Id",
+            "type": "string"
+          },
+          "last_checked_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Last Checked At",
+            "type": "string"
+          },
+          "note": {
+            "maxLength": 400,
+            "minLength": 4,
+            "title": "Note",
+            "type": "string"
+          },
+          "offset_label": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Offset Label",
+            "type": "string"
+          },
+          "source_title": {
+            "maxLength": 200,
+            "minLength": 2,
+            "title": "Source Title",
+            "type": "string"
+          },
+          "source_url": {
+            "maxLength": 2000,
+            "minLength": 12,
+            "title": "Source Url",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 120,
+            "minLength": 4,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "due_date",
+          "offset_label",
+          "note",
+          "source_title",
+          "source_url",
+          "last_checked_at",
+          "google_calendar_url"
+        ],
+        "title": "VerifiedWindowSubtask",
+        "type": "object"
+      },
       "WebReleaseReadinessReport": {
         "properties": {
           "application_workflow_blocking_check_count": {
@@ -22599,6 +22999,52 @@
         "summary": "Calendar Subscription Feed"
       }
     },
+    "/calendar/school-window.ics": {
+      "get": {
+        "operationId": "calendar_school_window_ics_calendar_school_window_ics_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "school",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "School"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Calendar School Window Ics"
+      }
+    },
     "/calendar/tasks/schedule": {
       "post": {
         "operationId": "schedule_calendar_tasks_calendar_tasks_schedule_post",
@@ -25910,6 +26356,52 @@
           }
         },
         "summary": "Universities"
+      }
+    },
+    "/verified-window-deadlines": {
+      "get": {
+        "operationId": "verified_window_deadlines_verified_window_deadlines_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "school",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "School"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifiedWindowDeadlineCatalog"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Verified Window Deadlines"
       }
     }
   },

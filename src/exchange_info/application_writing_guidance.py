@@ -673,6 +673,41 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
     ),
 }
 
+SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
+    "cgu": ("https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656", "2026-10-03"),
+    "ntpu": ("https://cms-carrier.ntpu.edu.tw/uploads/116_16e535159d.pdf", "2026-10-03"),
+    "ntu": ("https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/07/116-1-Selection-Guidelines_CH.pdf", "2026-10-07"),
+    "ccu": ("https://oia.ccu.edu.tw/var/file/8/1008/attach/78/pta_54384_797227_45763.pdf", "2026-10-08"),
+    "ncu": ("https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf", "2026-10-15"),
+    "tku": ("https://oieie.tku.edu.tw/oieie/?page_id=55", "2026-10-08"),
+    "fju": ("https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43", "2026-10-16"),
+    "scu": ("https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply", "2026-10-16"),
+    "ntnu": ("https://bds.oia.ntnu.edu.tw/bds/web/outgoing-apply", "2026-10-16"),
+    "cycu": ("https://oia.cycu.edu.tw/?p=6338", "2026-10-16"),
+    "ntust": ("https://www.oia.ntust.edu.tw/var/file/60/1060/img/2204/20260317.pdf", "2026-10-16"),
+    "yzu": ("https://gao.yzu.edu.tw/index.php/tw/2016-03-04-08-13-53/2016-03-07-08-52-41", "2026-10-17"),
+    "fcu": ("https://oia.fcu.edu.tw/sap/introduction/", "2026-10-17"),
+    "nsysu": ("https://oia.nsysu.edu.tw/p/412-1308-20730.php?Lang=zh-tw", "2026-10-18"),
+    "nchu": ("https://oia.nchu.edu.tw/images/File/02_Exchange_Program/5-1-1/Exchange_Program_Guidelines_for_Fall_Semester_2027_TW.pdf", "2026-10-18"),
+    "ntut": ("https://oia.ntut.edu.tw/p/412-1032-9238.php?Lang=zh-tw", "2026-10-18"),
+    "nccu": ("https://outbound.nccu.edu.tw/media/files/f353edca-d805-48ac-a6c9-9f66cf925c9e", "2026-10-18"),
+    "ncku": ("https://oia.ncku.edu.tw/var/file/32/1032/img/107138261.pdf", "2026-10-18"),
+    "nycu": ("https://oia.nycu.edu.tw/oia/ch/app/data/doc?module=nycu0006&detailNo=1442785684455690240&type=s", "2026-10-19"),
+    "nthu": ("https://oga.site.nthu.edu.tw/var/file/524/1524/img/2027F2028Sapplicationguideline-CH.pdf", "2026-10-19"),
+    "pccu": ("https://oima.pccu.edu.tw/Upload/202607/learning_2026071112283509.pdf", "2026-10-19"),
+    "wzu": ("https://d020.wzu.edu.tw/article/529354", "2026-10-19"),
+}
+
+for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):
+    _src_meta = SCHOOL_WRITING_RULE_SOURCES.get(_uni_id)
+    if _src_meta and (_rule_entry.source_url is None or _rule_entry.last_checked_at is None):
+        WRITING_RULES[(_uni_id, _tpl_id)] = _rule_entry.model_copy(
+            update={
+                "source_url": _rule_entry.source_url or _src_meta[0],
+                "last_checked_at": _rule_entry.last_checked_at or _src_meta[1],
+            }
+        )
+
 
 def guidance_for_field(
     template_id: str,
@@ -702,5 +737,22 @@ def apply_writing_guidance(
     if template.writing_rules is None:
         template.writing_rules = WRITING_RULES.get((university_id, template.id))
         if template.writing_rules is None and template.id in _NARRATIVE_TEMPLATES:
-            template.writing_rules = _NOT_COLLECTED
+            src_meta = SCHOOL_WRITING_RULE_SOURCES.get(university_id)
+            checked_date = (
+                src_meta[1]
+                if src_meta
+                else template.source_checked_at.strftime("%Y-%m-%d")
+            )
+            source_url = (
+                src_meta[0]
+                if src_meta
+                else (template.source_url if template.source_url.startswith("https://") else None)
+            )
+            template.writing_rules = _NOT_COLLECTED.model_copy(
+                update={
+                    "source_url": source_url,
+                    "last_checked_at": checked_date,
+                }
+            )
     return template
+
