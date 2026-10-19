@@ -662,8 +662,51 @@ NTHU = UniversityProfile(
     ),
 )
 
+PCCU = UniversityProfile(
+    id="pccu",
+    school_name="中國文化大學",
+    short_name="文大",
+    english_name="Chinese Culture University",
+    aliases=(
+        "pccu",
+        "中國文化大學",
+        "文化大學",
+        "文化",
+        "文大",
+        "PCCU",
+        "Chinese Culture University",
+    ),
+    hero_image="/static/assets/pccu-campus.svg",
+    official_url="https://oima.pccu.edu.tw/exchanges.htm",
+    coverage_note="完整支援：國際暨兩岸事務處（國合組／兩岸組）及日文系、韓文系、法文組、俄文組五大管道出國交換甄選簡章、135所合作姊妹校名額與語言門檻、國際移動力獎學金暨學海系列獎助學金及超過400篇歷屆學長姐赴韓交換留學報告書已完整整合。",
+    support_level="full",
+    partner_count_hint=135,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "中國文化大學",
+        "文化大學",
+        "CHINESECULTUREUNIVERSITY",
+        "PCCU",
+    ),
+    # https://www.pccu.edu.tw/wwwJson/GetCRLvl1.json — checked 2026-10-19.
+    colleges=(
+        "文學院",
+        "國際暨外語學院",
+        "理工學院",
+        "法學院",
+        "社會科學院",
+        "環境規劃暨生物資源學院",
+        "商學院",
+        "新聞暨傳播學院",
+        "藝術學院",
+        "教育學院",
+        "體育運動健康學院",
+        "永續創新學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU)
 DEFAULT_UNIVERSITY = CGU
 
 
