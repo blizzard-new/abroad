@@ -37,11 +37,13 @@ FIELD_LABELS = {"eligibility": "申請資格／成績", "language": "語言條�
 
 
 def read(path: Path):
-    return json.loads(BUILD_INPUTS[str(path)] if str(path) in BUILD_INPUTS else path.read_text(encoding="utf-8"))
+    key = path.as_posix()
+    return json.loads(BUILD_INPUTS[key] if key in BUILD_INPUTS else path.read_text(encoding="utf-8"))
 
 
 def rows(path: Path):
-    text = BUILD_INPUTS[str(path)] if str(path) in BUILD_INPUTS else path.read_text(encoding="utf-8")
+    key = path.as_posix()
+    text = BUILD_INPUTS[key] if key in BUILD_INPUTS else path.read_text(encoding="utf-8")
     return [json.loads(line) for line in text.splitlines() if line.strip()]
 
 

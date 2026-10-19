@@ -22,7 +22,7 @@ CONTACT_ENV = "EXCHANGE_CONTACT_EMAIL"
 HOSTING_ENV = "EXCHANGE_HOSTING_PROFILE"
 # The date printed at the top of both pages. Signing in requires the visitor to have ticked this exact version, so
 # changing the pages means changing this too (a test keeps the two in step).
-TERMS_VERSION = "2026-10-08"
+TERMS_VERSION = "2026-10-19"
 PLACEHOLDER = "{{CONTACT}}"
 # Where the data lives and who touches it, as section 4 of the privacy policy says it. "render" is the hosted deployment
 # (Render + Supabase); "selfhost" is the operator's own server (deploy/selfhost). The two lists are the only difference.

@@ -118,8 +118,8 @@ def test_the_footer_button_opts_out_and_back_in(page, live_server):
 def test_the_address_bar_switch_excludes_your_own_browser(page, live_server):
     page.add_init_script(FORCE)
     page.goto(f"{live_server.base_url}/?analytics=off#partners")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_function("window.UniWayAnalytics && !window.UniWayAnalytics.enabled()")
     assert page.evaluate("window.UniWayAnalytics.enabled()") is False
     page.goto(f"{live_server.base_url}/?analytics=on#partners")
-    page.wait_for_load_state("networkidle")
+    page.wait_for_function("window.UniWayAnalytics && window.UniWayAnalytics.enabled()")
     assert page.evaluate("window.UniWayAnalytics.enabled()") is True

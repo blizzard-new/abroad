@@ -1,0 +1,66 @@
+{
+  "date_utc": "2026-10-18",
+  "base_commit": "c0e62b47",
+  "environment": "managed cloud; not the Windows production host",
+  "outer_cpu_quota": "400000/100000 (4 CPU)",
+  "outer_memory_bytes": 17179869184,
+  "docker_storage_driver": "vfs",
+  "app_image": "sha256:c8c548640555f8435f7cb40619b7be89c50383a467e5f7d98d57cb95b8af85a2",
+  "app_limits": {
+    "cpus": 3,
+    "memory": "6g",
+    "threads_per_worker": 16,
+    "catalogue_slots_per_worker": 2
+  },
+  "db_limits": {
+    "cpus": 1,
+    "memory": "2g"
+  },
+  "generator_limits": {
+    "cpus": 2,
+    "memory": "3g"
+  },
+  "database_image": "pgvector/pgvector:pg17@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d",
+  "postgrest_image": "postgrest/postgrest:v14.12@sha256:54000f24847d01a2c2302e0041cf0618b875c57fb48507d743cfa9aaa50bf43c",
+  "migrations_applied": 39,
+  "database_scope": "Reduced validation stack: real PostgreSQL + pgvector, PostgREST, internal TLS gateway, HTTP Caddy; no Storage service. Windows compose retains pinned Supabase images.",
+  "load": {
+    "duration_seconds": "60 for 100 users; 30 for higher-load diagnostics",
+    "ramp_seconds": 10,
+    "pace_seconds": 10,
+    "school": "長庚大學",
+    "fixtures": "distinct synthetic accounts and standard bearer sessions; not OAuth",
+    "processes": "one per 100 students; 10 processes for 1000"
+  },
+  "exclusions": [
+    "production host",
+    "one-hour soak",
+    "1500-user spike",
+    "Storage uploads/downloads",
+    "PDF/Word generation",
+    "external OAuth",
+    "other universities",
+    "browser assets and interaction",
+    "WAN and QoS"
+  ],
+  "cloud_runner_note": "Tool containers are reused via docker exec to avoid large VFS copies. Workload, image, mounts and CPU/memory limits match the compose profiles.",
+  "code_commits": {
+    "application": "070b2dce",
+    "generator": "87916005"
+  },
+  "initial_budget": {
+    "gateway_cpus": 0.25,
+    "postgrest_cpus": 0.5
+  },
+  "tuned_budget": {
+    "gateway_cpus": 1,
+    "postgrest_cpus": 1
+  },
+  "notes": [
+    "Only the 100-user comparisons passed. 300/500/1000 higher-load cases are diagnostics, not an accepted capacity level.",
+    "Both initial and tuned-budget profiles are retained; higher load was run on this isolated bounded cloud stack, not production.",
+    "The 32 GiB cloud filesystem uses VFS; final runs had approximately 0.8 GiB free. They are not representative of the Windows SSD or its Docker storage driver."
+  ],
+  "docker_reported_cpus": 5,
+  "docker_reported_memory_bytes": 18932219904
+}

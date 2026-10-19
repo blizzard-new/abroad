@@ -23,9 +23,12 @@ HOME_UNIVERSITY_UNSET = "尚未選擇"
 # shows which school an address is from: student, alumni and staff addresses look alike,
 # so it is never treated as proof of current enrolment.
 SCHOOL_EMAIL_DOMAINS: dict[str, tuple[str, ...]] = {
-    "cgu": ("cgu.edu.tw",),
-    "ntpu": ("ntpu.edu.tw",),
-    "ntu": ("ntu.edu.tw",),
+    "cgu": ("cgu.edu.tw", "mail.cgu.edu.tw", "gap.cgu.edu.tw"),
+    "ntpu": ("ntpu.edu.tw", "gm.ntpu.edu.tw", "mail.ntpu.edu.tw"),
+    "ntu": ("ntu.edu.tw", "g.ntu.edu.tw", "mail.ntu.edu.tw"),
+    "ccu": ("ccu.edu.tw", "alum.ccu.edu.tw", "g.ccu.edu.tw", "mail.ccu.edu.tw"),
+    "ncu": ("ncu.edu.tw", "cc.ncu.edu.tw", "g.ncu.edu.tw", "mail.ncu.edu.tw"),
+    "tku": ("tku.edu.tw", "gms.tku.edu.tw", "o365.tku.edu.tw", "mail.tku.edu.tw", "s00.tku.edu.tw"),
     "fju": ("fju.edu.tw", "mail.fju.edu.tw", "gapp.fju.edu.tw", "m365.fju.edu.tw"),
     "scu": ("scu.edu.tw", "gm.scu.edu.tw", "alumni.scu.edu.tw"),
     "ntnu": ("ntnu.edu.tw", "gapps.ntnu.edu.tw", "std.ntnu.edu.tw"),
@@ -38,6 +41,10 @@ SCHOOL_EMAIL_DOMAINS: dict[str, tuple[str, ...]] = {
     "ntut": ("ntut.edu.tw", "mail.ntut.edu.tw", "tmail.ntut.edu.tw", "ntut.org.tw"),
     "nccu": ("nccu.edu.tw", "g.nccu.edu.tw", "mail2.nccu.edu.tw"),
     "ncku": ("ncku.edu.tw", "mail.ncku.edu.tw", "gs.ncku.edu.tw", "email.ncku.edu.tw"),
+    "nycu": ("nycu.edu.tw", "c.nycu.edu.tw", "m.nycu.edu.tw", "gm.ym.edu.tw", "ym.edu.tw", "nctu.edu.tw"),
+    "nthu": ("nthu.edu.tw", "gapp.nthu.edu.tw", "m112.nthu.edu.tw", "m113.nthu.edu.tw", "m114.nthu.edu.tw", "m115.nthu.edu.tw", "oz.nthu.edu.tw"),
+    "pccu": ("pccu.edu.tw", "ulive.pccu.edu.tw", "dep.pccu.edu.tw", "g.pccu.edu.tw"),
+    "wzu": ("wzu.edu.tw", "mail.wzu.edu.tw", "gap.wzu.edu.tw"),
 }
 
 SchoolBasis = Literal["student_verified", "school_email", "self_declared"]
