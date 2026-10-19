@@ -561,8 +561,65 @@ NCKU = UniversityProfile(
     ),
 )
 
+NYCU = UniversityProfile(
+    id="nycu",
+    school_name="國立陽明交通大學",
+    short_name="陽明交大",
+    english_name="National Yang Ming Chiao Tung University",
+    aliases=(
+        "nycu",
+        "國立陽明交通大學",
+        "陽明交通大學",
+        "陽明交大",
+        "NYCU",
+        "國立交通大學",
+        "國立陽明大學",
+        "NCTU",
+        "YM",
+        "Yang Ming Chiao Tung University",
+        "National Yang Ming Chiao Tung University",
+    ),
+    hero_image="/static/assets/nycu-campus.svg",
+    official_url="https://oia.nycu.edu.tw/oia/ch/app/artwebsite/view?module=artwebsite&id=1170&serno=f2dc9dee-6110-4c93-a952-2eeef32fd49c",
+    coverage_note="完整支援：115-1／115-2校級出國交換暨116-1臺灣聯合大學系統交換計畫簡章、243所合作姊妹校（含20所拓荒者計畫重點學校）名額與門檻、6項出國交換暨學海系列獎助學金及1,899篇歷屆學長姐交換心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=243,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立陽明交通大學",
+        "陽明交通大學",
+        "陽明交大",
+        "NATIONALYANGMINGCHIAOTUNGUNIVERSITY",
+        "NYCU",
+        "NCTU",
+    ),
+    # https://www.nycu.edu.tw/nycu/ch/app/artwebsite/view?module=artwebsite&id=459&serno=750e3d3e-8ef2-4801-a100-e8733052689b — checked 2026-10-19.
+    colleges=(
+        "人文藝術與社會學院",
+        "工學院",
+        "工程生物科學學院",
+        "牙醫學院",
+        "生命科學院",
+        "生物醫學暨工程學院",
+        "光電學院",
+        "科技法律學院",
+        "客家文化學院",
+        "理學院",
+        "產學創新研究學院",
+        "國際半導體產業學院",
+        "智慧科學暨綠能學院",
+        "電機學院",
+        "資訊學院",
+        "管理學院",
+        "醫學院",
+        "藥物科學院",
+        "護理學院",
+        "博雅書苑",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU)
 DEFAULT_UNIVERSITY = CGU
 
 
