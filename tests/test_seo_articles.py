@@ -63,7 +63,7 @@ def test_article_is_complete_crawlable_and_has_consistent_metadata(client, slug)
             assert link["href"][1:] in ids
     figure = soup.select_one(".article-illustration")
     assert figure.find_previous("section") and figure.find_next("section")
-    for img in soup.select("img"):
+    for img in soup.select(".editorial img"):
         assert img["width"] == "1536" and img["height"] == "1024"
         assert img["loading"] == "lazy"
     assert figure.img["alt"] and "情境插圖" in figure.figcaption.get_text()

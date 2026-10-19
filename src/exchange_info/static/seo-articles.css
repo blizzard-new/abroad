@@ -1,62 +1,62 @@
 /* Editorial layout is loaded only for guides; all content works without JS. */
-.editorial-index, .editorial { --paper: #fffdf8; --ink: #193d3b; --muted: #536a65; --line: #d8e3da; color: var(--ink); }
+.editorial-index, .editorial { --paper: var(--uw-surface); --ink: var(--uw-text); --muted: var(--uw-muted); --line: var(--uw-line); color: var(--ink); }
 .editorial-index { padding-top: 1rem; }
 .editorial-index > h1 { max-width: 20ch; font-size: clamp(2.3rem, 5vw, 3.8rem); margin: 1rem 0 1.5rem; }
 .editorial-index > .lead { max-width: 44rem; }
 .editorial-categories { display: flex; flex-wrap: wrap; gap: .75rem; margin: 2rem 0 3rem; }
-.editorial-categories a { padding: .55rem 1rem; border: 1px solid #b9cdc4; border-radius: 2rem; text-decoration: none; background: #fff; }
-.editorial-categories a:hover { background: #e3eee6; }
+.editorial-categories a { padding: .55rem 1rem; border: 1px solid var(--uw-line); border-radius: 2rem; text-decoration: none; background: var(--glass-surface); }
+.editorial-categories a:hover { background: var(--uw-blue-soft); }
 .editorial-cards { list-style: none; padding: 0; margin: 1.5rem 0 3rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
-.editorial-card { border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; background: var(--paper); min-width: 0; }
+.editorial-card { border: 1px solid var(--line); border-radius: 24px; overflow: hidden; background: var(--glass-surface); box-shadow: var(--glass-shadow); min-width: 0; }
 .editorial-card > a { height: 100%; display: flex; flex-direction: column; color: inherit; text-decoration: none; }
 .editorial-card img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; }
 .editorial-card-copy { padding: 1.4rem; display: flex; flex-direction: column; flex: 1; gap: .9rem; }
 .editorial-card-copy strong { font-size: 1.2rem; line-height: 1.6; }
 .editorial-card-copy > span:not(.card-action) { color: var(--muted); font-size: .92rem; }
-.editorial-card-copy .card-action { color: #12665b; margin-top: auto; font-weight: 650; }
+.editorial-card-copy .card-action { color: var(--uw-blue-strong); margin-top: auto; font-weight: 650; }
 .editorial-card > a:hover strong { text-decoration: underline; text-underline-offset: .25em; }
 .editorial-card > a:focus-visible { outline-offset: -5px; }
-.article-heading { max-width: 850px; margin: 0 auto 3rem; border-bottom: 1px solid var(--line); padding-bottom: 2rem; }
-.article-heading h1 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.45; text-wrap: pretty; }
-.article-heading .lead { line-height: 1.9; color: #435f59; font-size: 1.16rem; }
+.article-heading { margin: 0 0 2rem; padding: clamp(24px, 4vw, 48px); border: 1px solid var(--glass-edge); border-radius: 28px; background: var(--glass-surface); box-shadow: var(--glass-shadow); }
+.article-heading h1 { max-width: 28em; font-size: clamp(1.75rem, 3.4vw, 2.65rem); line-height: 1.5; text-wrap: pretty; }
+.article-heading .lead { max-width: 46em; line-height: 1.9; color: var(--uw-muted); font-size: 1.16rem; }
 .article-byline { color: var(--muted); font-size: .85rem; line-height: 1.9; }
-.article-layout { display: grid; grid-template-columns: 220px minmax(0, 736px); gap: 3.5rem; justify-content: center; }
+.article-layout { display: grid; grid-template-columns: 220px minmax(0, 820px); gap: 2rem; justify-content: center; }
 .article-toc { position: sticky; top: 1rem; align-self: start; max-height: calc(100vh - 2rem); overflow: auto; }
-.article-toc details { background: #edf2eb; padding: 1.3rem; border: 1px solid var(--line); border-radius: .8rem; }
+.article-toc details { background: var(--glass-surface); padding: 1.3rem; border: 1px solid var(--line); border-radius: .8rem; }
 .article-toc summary { font-size: .96rem; }
 .article-toc ol { padding-left: 1.2rem; margin-bottom: 0; font-size: .85rem; line-height: 1.75; }
 .article-toc li { padding-left: .25rem; margin: .9rem 0; }
 .article-toc a { text-decoration: none; }
 .article-toc a:hover { text-decoration: underline; }
-.article-body { min-width: 0; font-size: 1.0625rem; line-height: 1.95; }
+.article-body { min-width: 0; padding: clamp(20px, 3vw, 40px); border: 1px solid var(--glass-edge); border-radius: 24px; background: var(--paper); box-shadow: var(--uw-shadow-soft); font-size: 1.0625rem; line-height: 1.95; }
 .article-body p { margin: 1.25rem 0; overflow-wrap: anywhere; }
 .article-body h2 { font-size: 1.6rem; line-height: 1.6; margin-top: 3.5rem; margin-bottom: 1.2rem; }
 .article-body > section { scroll-margin-top: 1.5rem; }
-.section-number { display: block; color: #77785c; font-size: .9rem; letter-spacing: .15em; font-variant-numeric: tabular-nums; margin-bottom: .4rem; }
-.article-takeaways { padding: 1.4rem 1.7rem; border-left: 4px solid #22776a; border-radius: 0 .8rem .8rem 0; background: #e8f1e8; margin-bottom: 2rem; }
+.section-number { display: block; color: var(--uw-muted); font-size: .9rem; letter-spacing: .15em; font-variant-numeric: tabular-nums; margin-bottom: .4rem; }
+.article-takeaways { padding: 1.4rem 1.7rem; border-left: 4px solid var(--uw-blue-strong); border-radius: 0 .8rem .8rem 0; background: var(--uw-blue-soft); margin-bottom: 2rem; }
 .article-takeaways .eyebrow { margin-top: 0; font-weight: 750; }
 .article-takeaways ul { margin-bottom: 0; padding-left: 1.2rem; }
 .article-takeaways li, .article-checklist li { padding-left: .3rem; margin: .6rem 0; }
 .article-checklist { padding-left: 1.3rem; }
 .article-illustration { margin: 2.5rem 0; }
-.article-illustration img { width: 100%; height: auto; display: block; border-radius: .9rem; background: #e8e7d8; }
+.article-illustration img { width: 100%; height: auto; display: block; border-radius: .9rem; background: var(--uw-surface-soft); }
 .editorial figcaption { margin-top: .75rem; font-size: .8rem; line-height: 1.75; color: var(--muted); }
 .article-table { overflow-x: auto; margin: 1.5rem 0 2rem; border: 1px solid var(--line); border-radius: .65rem; background: var(--paper); }
-.article-table:focus-visible { outline: 3px solid #aa6822; outline-offset: 3px; }
+.article-table:focus-visible { outline: 3px solid var(--uw-blue); outline-offset: 3px; }
 .article-table table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .94rem; line-height: 1.8; text-align: left; }
-.article-table caption { text-align: left; padding: 1rem; font-weight: 650; color: #264c43; background: #eff3e9; }
-.article-table th, .article-table td { padding: .9rem 1rem; border-bottom: 1px solid #e2e8de; vertical-align: top; }
-.article-table thead { background: #e6eee5; }
+.article-table caption { text-align: left; padding: 1rem; font-weight: 650; color: var(--uw-blue-strong); background: var(--uw-surface-soft); }
+.article-table th, .article-table td { padding: .9rem 1rem; border-bottom: 1px solid var(--uw-line); vertical-align: top; }
+.article-table thead { background: var(--uw-blue-soft); }
 .article-table tbody th { font-weight: 650; width: 25%; }
 .article-table tr:last-child > * { border-bottom: 0; }
-.article-diagram { margin: 2rem 0; padding: 1.5rem; background: #f4efe2; border-radius: .8rem; border: 1px solid #e2d9c5; }
+.article-diagram { margin: 2rem 0; padding: 1.5rem; background: var(--glass-peach); border-radius: .8rem; border: 1px solid var(--uw-line); }
 .article-diagram .diagram-title { margin: 0 0 1.25rem; font-weight: 750; font-size: 1.05rem; }
 .article-diagram ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; padding: 0; list-style: none; margin: 0; }
-.article-diagram li { background: var(--paper); border: 1px solid #dddcc9; border-radius: .65rem; padding: 1rem; min-width: 0; }
-.article-diagram li:nth-child(2n) { background: #e8efe3; }
+.article-diagram li { background: var(--paper); border: 1px solid var(--uw-line); border-radius: .65rem; padding: 1rem; min-width: 0; }
+.article-diagram li:nth-child(2n) { background: var(--uw-blue-soft); }
 .article-diagram strong, .article-diagram li > span { display: block; }
-.article-diagram li > span:not(.diagram-number) { font-size: .9rem; color: #4d655c; margin-top: .35rem; }
-.article-diagram .diagram-number { color: #376e59; font-size: .8rem; letter-spacing: .12em; }
+.article-diagram li > span:not(.diagram-number) { font-size: .9rem; color: var(--uw-muted); margin-top: .35rem; }
+.article-diagram .diagram-number { color: var(--uw-blue-strong); font-size: .8rem; letter-spacing: .12em; }
 .article-citation { font-size: .83rem; color: var(--muted); }
 .article-faq { padding: 1.1rem 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; }
 .article-faq summary { line-height: 1.8; padding: .25rem 0; }
@@ -65,10 +65,10 @@
 .article-sources ol { padding-left: 1.3rem; }
 .article-sources li { margin: 1.2rem 0; padding-left: .2rem; }
 .article-sources li p { margin: .4rem 0; color: var(--muted); }
-.article-next { padding: 1.6rem 1.8rem; border: 1px solid #b9d0bf; border-radius: .8rem; background: #e6efe3; margin-top: 3rem; }
+.article-next { padding: 1.6rem 1.8rem; border: 1px solid var(--uw-line); border-radius: .8rem; background: var(--uw-blue-soft); margin-top: 3rem; }
 .article-next .eyebrow { font-size: .85rem; }
 .article-next h2 { margin: .8rem 0; font-size: 1.4rem; }
-.article-button { display: inline-block; padding: .65rem 1rem; border-radius: .4rem; background: #185d50; color: white; text-decoration: none; margin: .5rem .8rem .5rem 0; font-size: .95rem; }
+.article-button { display: inline-block; padding: .65rem 1rem; border-radius: .4rem; background: var(--uw-navy); color: var(--uw-page); text-decoration: none; margin: .5rem .8rem .5rem 0; font-size: .95rem; }
 .back-top { text-align: right; font-size: .9rem; }
 .editorial > #related { border-top: 1px solid var(--line); margin-top: 3rem; padding-top: .5rem; }
 @media (max-width: 850px) {
@@ -80,10 +80,11 @@
   .editorial-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 580px) {
-  .article-heading { margin-bottom: 1.5rem; }
-  .article-heading h1 { font-size: 1.9rem; }
-  .article-heading .lead { font-size: 1.05rem; }
+  .article-heading { margin-bottom: 1.25rem; padding: 22px 20px; border-radius: 22px; }
+  .article-heading h1 { font-size: 1.65rem; }
+  .article-heading .lead { max-width: 46em; font-size: 1.05rem; }
   .article-toc ol { columns: auto; }
+  .article-body { padding: 20px 16px; font-size: 1rem; border-radius: 20px; }
   .article-body h2 { font-size: 1.4rem; margin-top: 2.7rem; }
   .article-takeaways, .article-next { padding: 1.2rem; }
   .article-diagram { padding: 1rem; }

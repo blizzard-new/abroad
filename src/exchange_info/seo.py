@@ -162,24 +162,36 @@ def source_notice(source: CatalogueSourceStatus | None) -> str:
 
 def page(settings: SeoSettings, title: str, description: str, path: str, body: str,
          breadcrumbs: list[tuple[str, str]], *, article: Article | None = None, extra_head: str = "") -> HTMLResponse:
-    navigation = " / ".join(f'<a href="{escape(p)}">{escape(name)}</a>' for name, p in breadcrumbs)
+    navigation = '<ol>' + ''.join(
+        f'<li><span aria-current="page">{escape(name)}</span></li>' if i == len(breadcrumbs) - 1
+        else f'<li><a href="{escape(p)}">{escape(name)}</a></li>'
+        for i, (name, p) in enumerate(breadcrumbs)) + '</ol>'
+    nav_links = ''.join(
+        f'<a href="{p}"' + (' aria-current="page"' if path == p or path.startswith(p + '/') else '')
+        + f'>{label}</a>'
+        for p, label in (("/guides", "交換指南"), ("/schools", "學校總覽"),
+                         ("/destinations", "國家專區"), ("/partners", "跨校大學")))
     schema = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i, "name": name, "item": settings.origin + p}
         for i, (name, p) in enumerate(breadcrumbs, 1)]}
     article_head = structured_data(article_schema(article, settings.origin)) if article else ""
     if path == "/guides" or article:
-        article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261019-1">'
+        article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261020-1">'
     if extra_head:
         article_head += extra_head
-    html = f'''<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
+    html = f'''<!doctype html><html lang="zh-Hant" data-theme="light"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)}</title>
 {metadata(settings, title, description, path, article)}{structured_data(schema)}
-<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/static/seo.css?v=20261019-2">{article_head}</head>
-<body><a class="skip" href="#content">跳到內容</a><header><a class="brand" href="/">UniWay</a>
-<nav aria-label="主導覽"><a href="/schools">交換學校指南</a><a href="/partners">跨校外國大學</a><a href="/destinations">國家專區</a><a href="/guides">申請指南</a><a href="/#partners">開啟選校工具</a></nav></header>
+<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/static/brand-tokens.css?v=20261020-1">
+<link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2">
+<link rel="stylesheet" href="/static/seo.css?v=20261020-1">{article_head}
+<script src="/static/reading-theme.js?v=20261020-1"></script></head>
+<body class="reading-shell"><a class="skip" href="#content">跳到內容</a><header class="reading-header">
+<a class="brand" href="/#home" aria-label="UniWay 首頁"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40"><strong>UniWay</strong></a>
+<nav aria-label="主導覽">{nav_links}</nav><div class="reading-actions"><button class="reading-theme-toggle" type="button" hidden aria-label="切換為深色模式">深色</button><a class="reading-planner" href="/#partners">開啟選校工具 <span aria-hidden="true">↗</span></a></div></header>
 <main id="content"><nav class="breadcrumbs" aria-label="麵包屑">{navigation}</nav>{body}
-<aside class="notice">{NOTICE}</aside></main><footer><a href="/">UniWay 首頁</a>
-<a href="/schools">學校指南</a><a href="/partners">跨校外國大學</a><a href="/editorial-policy">資料編輯政策</a><a href="/privacy">隱私權政策</a><a href="/terms">使用條款</a></footer></body></html>'''
+<aside class="notice">{NOTICE}</aside></main><footer class="reading-footer"><a href="/#home">返回 UniWay 首頁</a>
+<a href="/guides">交換指南</a><a href="/schools">學校指南</a><a href="/partners">跨校外國大學</a><a href="/editorial-policy">資料編輯政策</a><a href="/privacy">隱私權政策</a><a href="/terms">使用條款</a></footer></body></html>'''
     return HTMLResponse(html, headers={"Cache-Control": "public, max-age=60"})
 
 
