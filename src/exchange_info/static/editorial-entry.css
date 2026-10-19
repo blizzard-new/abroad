@@ -1,0 +1,23 @@
+/* Reading is part of the platform: visible entries before the footer. */
+.pr-guide-entry { display: flex; align-items: center; gap: 8px; width: fit-content; max-width: 100%; margin-top: 18px; padding: 10px 0; color: var(--uw-blue-strong); font-size: 14px; font-weight: 700; text-decoration: none; }
+.pr-guide-entry .lucide { width: 18px; height: 18px; flex-shrink: 0; }
+.pr-guide-entry:hover span { text-decoration: underline; text-underline-offset: 4px; }
+.pr-guide-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.pr-guide-card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid var(--glass-edge); border-radius: 24px; background: var(--glass-surface); box-shadow: var(--glass-shadow); color: var(--uw-text); text-decoration: none; }
+.pr-guide-card > img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.pr-guide-card > div { display: flex; flex-direction: column; flex: 1; padding: 24px; }
+.pr-guide-card h3 { color: var(--uw-navy); font-size: 21px; line-height: 1.6; margin: 12px 0 8px; }
+.pr-guide-card p { color: var(--uw-muted); font-size: 14px; line-height: 1.85; margin: 0 0 24px; }
+.pr-guide-card .pr-link { margin-top: auto; }
+.pr-guide-card:hover h3 { text-decoration: underline; text-underline-offset: 5px; }
+body.unified-shell .glass-mobile-header .mobile-guide-link { margin-left: auto; padding: 8px 10px; min-height: 44px; border: 1px solid var(--glass-edge); border-radius: 12px; background: var(--uw-blue-soft); color: var(--uw-blue-strong); font-size: 12px; font-weight: 700; white-space: nowrap; }
+@media (max-width: 700px) {
+  .pr-guide-cards { grid-template-columns: 1fr; gap: 18px; }
+  .pr-guide-card > div { padding: 20px; }
+  .pr-guide-card h3 { font-size: 20px; }
+  .pr-guide-card img { aspect-ratio: 2 / 1; }
+}
+@media (max-width: 360px) {
+  body.unified-shell .glass-mobile-header { gap: 8px; padding-inline: 8px; }
+  body.unified-shell .glass-mobile-header .mobile-guide-link { padding-inline: 8px; }
+}

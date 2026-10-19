@@ -154,8 +154,10 @@ def test_partner_status_evidence_and_untrusted_text_are_preserved(tmp_path, monk
         assert "歷史／參考資料" in soup.get_text() and "已截止" in soup.get_text()
         assert "歷史名額" in soup.get_text() and "GPA 3.0 & 以上" in soup.get_text()
         assert not soup.select('a[href^="javascript:"]')
-        assert len(soup.select("script")) == 1  # inert, escaped structured data only
-        json.loads(soup.select_one("script").string)
+        # Inline content stays inert; the only executable script is our local theme control.
+        assert [s.get("src", "").split("?")[0] for s in soup.select('script:not([type="application/ld+json"])')] == ["/static/reading-theme.js"]
+        assert len(soup.select('script:not([src])')) == 1
+        json.loads(soup.select_one('script[type="application/ld+json"]').string)
 
 
 def test_institution_identity_groups_programmes_but_keeps_countries_distinct():

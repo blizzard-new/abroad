@@ -13,12 +13,15 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from exchange_info.seo_articles import ARTICLES, render_article  # noqa: E402
+from exchange_info.seo_articles import ARTICLES, Article, render_article  # noqa: E402
 
 
 def meaningful_content(data: dict) -> dict:
     # Source rechecks alone must not refresh Google's content modification date.
-    return {k: v for k, v in data.items() if k not in {"checked", "modified"}}
+    # Git stores omitted optional fields; model_dump includes their defaults.
+    # Normalize both sides so an unchanged article is not treated as a rewrite.
+    normalized = Article.model_validate(data).model_dump(mode="json")
+    return {k: v for k, v in normalized.items() if k not in {"checked", "modified"}}
 
 
 def main() -> int:
