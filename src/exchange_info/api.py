@@ -521,6 +521,9 @@ from .tku_student_view import (
 from .rag import rag_index_status, search_document_chunks, supabase_configured
 from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
+from .seo import EDITORIAL_PATHS, SeoSettings, create_seo_router, homepage_html
+from .seo_changes import ContentChanges
+from .seo_analytics import measurement_id
 from .university_registry import (
     CGU,
     CCU,
@@ -779,6 +782,9 @@ def _browser_security_headers(
             "frame-ancestors 'none'"
         ),
     }
+    if measurement_id(env):
+        headers["Content-Security-Policy"] = headers["Content-Security-Policy"].replace(
+            "script-src 'self';", "script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com;")
     if env.get("EXCHANGE_ENVIRONMENT") == "production":
         headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return headers
@@ -999,6 +1005,7 @@ def create_app(
     app.state.feedback_service = feedback_service
     app.state.persistence_backends = PRODUCTION_PERSISTENCE_BACKENDS if is_production else backends
     catalog_request: ContextVar[Request | None] = ContextVar("catalog_request", default=None)
+    seo_settings = SeoSettings.from_environment()
 
     app.add_middleware(ApiMetricsMiddleware, service=analytics_service)
 
@@ -1763,13 +1770,23 @@ def create_app(
         return conversation
 
     def seo_catalogue(university: UniversityProfile) -> tuple[list, object]:
-        # Public pages must never inspect a signed-in visitor's private session.
+        # Public pages are identical for signed-in and anonymous visitors. In
+        # particular, never load private sessions through university_for().
         token = catalog_request.set(None)
         try:
-            return (
-                partners_for_university(university),
-                cgu_catalogue_view().source if university.id == CGU.id else None,
-            )
+            if university.id == CGU.id:
+                # Pair records and provenance from one generation even if the
+                # background source refresh finishes during this request.
+                view = cgu_catalogue_view()
+                if view.source.status == "unavailable":
+                    raise HTTPException(503, "合作校資料暫不可用，請稍後重試。", headers={"Retry-After": "60"})
+                partners = apply_partner_research(
+                    view.partners, load_partner_research(resolved_data_dir),
+                    home_university=university.school_name, copy_nested=False,
+                )
+                return partners, view.source
+            partners = partners_for_university(university)
+            return partners, None
         finally:
             catalog_request.reset(token)
 
@@ -1789,7 +1806,7 @@ def create_app(
     resolved_seo_state_dir = Path(
         seo_state_dir
         or os.environ.get("EXCHANGE_SEO_STATE_DIR")
-        or (resolved_data_dir / "seo")
+        or (resolved_data_dir / "seo-state")
     )
     app.include_router(
         create_seo_router(seo_settings, seo_catalogue, ContentChanges(resolved_seo_state_dir))
