@@ -89,7 +89,7 @@ def test_flutter_aligns_with_18_universities_and_public_api() -> None:
         encoding="utf-8"
     )
 
-    assert len(SUPPORTED_UNIVERSITIES) == 18
+    assert len(SUPPORTED_UNIVERSITIES) == 22
     for university in SUPPORTED_UNIVERSITIES:
         assert f"id: '{university.id}'" in models
         assert f"schoolName: '{university.school_name}'" in models

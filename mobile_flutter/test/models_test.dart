@@ -182,13 +182,17 @@ void main() {
     expect(profile.emailVerified, isTrue);
   });
 
-  test('supported university registry includes all 18 official schools', () {
-    expect(defaultSupportedUniversities, hasLength(18));
+  test('supported university registry includes all 22 official schools', () {
+    expect(defaultSupportedUniversities, hasLength(22));
     expect(defaultSupportedUniversities.first.schoolName, '長庚大學');
     expect(resolveSupportedUniversity('ntu').schoolName, '國立臺灣大學');
     expect(resolveSupportedUniversity('台大').shortName, '臺大');
     expect(resolveSupportedUniversity('cycu').schoolName, '中原大學');
     expect(resolveSupportedUniversity('fcu').schoolName, '逢甲大學');
+    expect(resolveSupportedUniversity('nycu').schoolName, '國立陽明交通大學');
+    expect(resolveSupportedUniversity('nthu').schoolName, '國立清華大學');
+    expect(resolveSupportedUniversity('pccu').schoolName, '中國文化大學');
+    expect(resolveSupportedUniversity('wzu').schoolName, '文藻外語大學');
     expect(resolveSupportedUniversity('長庚').boardTabLabel, '長庚板');
     expect(resolveSupportedUniversity('政大').boardTabLabel, '政大板');
     expect(tryResolveSupportedUniversity('未知大學'), isNull);
