@@ -76,3 +76,28 @@ def test_router_sitemap_changes_only_materially_changed_partner(tmp_path, monkey
         xml = client.get("/sitemaps/ntpu.xml").text
         assert xml.count("<lastmod>") == 1
         assert "GPA 3.5" in client.get(f"/schools/ntpu/partners/{partner_id(partners[0])}").text
+
+
+def test_slow_home_refresh_does_not_block_other_homes():
+    import threading
+    from concurrent.futures import ThreadPoolExecutor
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+    from exchange_info.seo import SeoSettings, create_seo_router
+    entered, release = threading.Event(), threading.Event()
+    def catalogue(home):
+        if home.id == "ntpu":
+            entered.set()
+            assert release.wait(5)
+        return [row()], None
+    app = FastAPI()
+    app.include_router(create_seo_router(SeoSettings("https://example.com", True), catalogue))
+    with TestClient(app) as client, ThreadPoolExecutor(max_workers=2) as pool:
+        slow = pool.submit(client.get, "/sitemaps/ntpu.xml")
+        try:
+            assert entered.wait(2)
+            fast = pool.submit(client.get, "/sitemaps/ntu.xml")
+            assert fast.result(timeout=2).status_code == 200
+        finally:
+            release.set()
+        assert slow.result(timeout=2).status_code == 200

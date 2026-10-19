@@ -434,16 +434,17 @@
 
   var vitals = {};
   var vitalsSent = false;
-  function observe(type, handler, options) {
-    try {
-      var observer = new PerformanceObserver(function (list) { list.getEntries().forEach(handler); });
-      observer.observe(Object.assign({ type: type, buffered: true }, options || {}));
-    } catch (_) { /* metric unsupported in this browser */ }
+  // Use Google's maintained algorithms: CLS session windows and INP interaction handling
+  // differ from a lifetime sum of shifts / the longest event duration.
+  if (active()) {
+    import("/static/vendor/web-vitals/4.2.4/web-vitals.js").then(function (library) {
+      var report = function (metric) {
+        track("web_vitals", {metric: metric.name.toLowerCase(), value: metric.value});
+        flush(document.visibilityState === "hidden");
+      };
+      library.onLCP(report); library.onINP(report); library.onCLS(report); library.onFCP(report);
+    }).catch(function () {});
   }
-  observe("largest-contentful-paint", function (entry) { vitals.lcp = entry.startTime; });
-  observe("paint", function (entry) { if (entry.name === "first-contentful-paint") vitals.fcp = entry.startTime; });
-  observe("layout-shift", function (entry) { if (!entry.hadRecentInput) vitals.cls = (vitals.cls || 0) + entry.value; });
-  observe("event", function (entry) { vitals.inp = Math.max(vitals.inp || 0, entry.duration); }, { durationThreshold: 40 });
   function sendVitals() {
     if (vitalsSent) return;
     try {

@@ -25,6 +25,7 @@ from .school_identity import school_identity_key
 from .seo_changes import ContentChanges
 from .seo_quality import digest, material_content
 from .seo_guides import COUNTRIES, GUIDES, country_slug
+from .seo_analytics import analytics_markup
 from .university_registry import SUPPORTED_UNIVERSITIES, UniversityProfile
 
 DEFAULT_ORIGIN = "https://app.uniway-tw.com"
@@ -93,7 +94,7 @@ def metadata(settings: SeoSettings, title: str, description: str, path: str) -> 
         tags.append(f'<meta name="{name}" content="{escape(value)}">')
     if path == "/" and settings.verification:
         tags.append(f'<meta name="google-site-verification" content="{escape(settings.verification)}">')
-    return "\n".join(tags)
+    return "\n".join(tags) + analytics_markup()
 
 
 def homepage_html(template: str, settings: SeoSettings) -> str:
@@ -125,7 +126,7 @@ def source_link(url: str | None, label: str) -> str:
         safe = parsed.scheme in {"https", "http"} and parsed.hostname and not parsed.username and not parsed.password
     except ValueError:
         safe = False
-    return f'<a href="{escape(url or "")}" rel="noopener noreferrer">{escape(label)}</a>' if safe else escape(label + "（連結待確認）")
+    return f'<a href="{escape(url or "")}" rel="noopener noreferrer" data-official-source>{escape(label)}</a>' if safe else escape(label + "（連結待確認）")
 
 
 def application_link(university: UniversityProfile, partner: PartnerUniversity | None = None) -> str:
@@ -262,8 +263,8 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
                       changes: ContentChanges | None = None) -> APIRouter:
     router = APIRouter(include_in_schema=False)
     universities = {item.id: item for item in SUPPORTED_UNIVERSITIES}
-    snapshots: dict[str, tuple[float, list[PartnerUniversity], CatalogueSourceStatus | None]] = {}
-    snapshot_lock = threading.Lock()
+    snapshots: dict[str, tuple[float, list[PartnerUniversity], CatalogueSourceStatus | None, dict[str, list[PartnerUniversity]]]] = {}
+    snapshot_locks = {home_id: threading.Lock() for home_id in universities}
     lastmods: dict[str, str] = {}
 
     def record_changes(hashes: dict[str, str]) -> dict[str, str]:
@@ -280,20 +281,21 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         # A crawler visiting hundreds of partner pages must not parse the same
         # source files hundreds of times. Bounded by the supported registry;
         # refresh at most once per minute, including time-sensitive window state.
-        with snapshot_lock:
+        with snapshot_locks[u.id]:
             cached = snapshots.get(u.id)
             if cached and monotonic() - cached[0] < 60:
-                return cached[1], cached[2]
+                return cached[1], cached[2], cached[3]
             partners, source = catalogue(u)
             if not partners:
                 raise HTTPException(503, "合作校資料暫不可用，請稍後重試。", headers={"Retry-After": "60"})
+            groups = group_partners(partners)
             hashes = {settings.origin + partner_path(u, rows[0]): digest({"layout": 2, "content": material_content(rows)})
-                      for rows in group_partners(partners).values()}
+                      for rows in groups.values()}
             for url in hashes:
                 lastmods.pop(url, None)
             lastmods.update(record_changes(hashes))
-            snapshots[u.id] = monotonic(), partners, source
-            return partners, source
+            snapshots[u.id] = monotonic(), partners, source, groups
+            return partners, source, groups
 
     def university(home_id: str) -> UniversityProfile:
         if home_id not in universities:
@@ -323,8 +325,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
     @router.api_route("/schools/{home_id}", methods=["GET", "HEAD"])
     def home_school(home_id: str):
         u = university(home_id)
-        partners, source = catalogue_for(u)
-        groups = group_partners(partners)
+        partners, source, groups = catalogue_for(u)
         cards = "".join(f'<li><a href="{partner_path(u, rows[0])}"><strong>{escape(rows[0].school_name)}</strong>'
                         f'<span>{escape(rows[0].country or "國家待確認")}</span></a><p>{escape("、".join(dict.fromkeys(AVAILABILITY[p.availability_status] for p in rows)))}</p></li>'
                         for rows in groups.values())
@@ -340,8 +341,8 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
     @router.api_route("/schools/{home_id}/partners/{key}", methods=["GET", "HEAD"])
     def partner_school(home_id: str, key: str):
         u = university(home_id)
-        partners, source = catalogue_for(u)
-        rows = group_partners(partners).get(key)
+        partners, source, groups = catalogue_for(u)
+        rows = groups.get(key)
         if not rows:
             raise HTTPException(404, "找不到這所合作校")
         partner = rows[0]
@@ -365,7 +366,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             body += f'<li><a href="/destinations/{slug}">{COUNTRIES[slug]["name"]}交換選項與生活預算核對</a></li>'
         for guide, data in GUIDES.items():
             body += f'<li><a href="/guides/{guide}">{data["title"]}</a></li>'
-        related = [group[0] for group in group_partners(partners).values()
+        related = [group[0] for group in groups.values()
                    if group[0].country == partner.country and partner_id(group[0]) != key][:6]
         body += '</ul>'
         if related:
@@ -392,8 +393,8 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         matches = []
         # If any source is unavailable, return a retryable error rather than a misleading complete count.
         for u in universities.values():
-            partners, _ = catalogue_for(u)
-            groups = [rows for rows in group_partners(partners).values() if country_slug(rows[0].country) == slug]
+            _, _, catalogue_groups = catalogue_for(u)
+            groups = [rows for rows in catalogue_groups.values() if country_slug(rows[0].country) == slug]
             if groups:
                 matches.append((u, groups))
         count = sum(len(groups) for _, groups in matches)
@@ -459,7 +460,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
     @router.api_route("/sitemaps/{home_id}.xml", methods=["GET", "HEAD"])
     def school_sitemap(home_id: str):
         u = university(home_id)
-        partners, _ = catalogue_for(u)
-        return xml_response("urlset", [settings.origin + partner_path(u, rows[0]) for rows in group_partners(partners).values()], lastmods)
+        _, _, groups = catalogue_for(u)
+        return xml_response("urlset", [settings.origin + partner_path(u, rows[0]) for rows in groups.values()], lastmods)
 
     return router

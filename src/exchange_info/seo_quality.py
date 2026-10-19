@@ -44,7 +44,13 @@ def digest(value) -> str:
 def material_content(rows: Sequence[PartnerUniversity]) -> list[dict]:
     values = []
     for row in rows:
-        data = row.model_dump(mode="json")
+        # Skip expensive provenance probe histories and unused assets before serialization,
+        # rather than serializing the entire source graph then discarding them.
+        data = row.model_dump(mode="json", include=set(MATERIAL_FIELDS), exclude={
+            "field_evidence": {"__all__": {"checked_at"}},
+            "partner_exchange_details": {"__all__": {"source_checks": True, "evidence": {"__all__": {"checked_at"}}}},
+            "program_options": {"__all__": {"student_summary_zh"}},
+        })
         values.append(stable_value({k: data.get(k) for k in MATERIAL_FIELDS}))
     # Source record ordering is not a substantive edit.
     return sorted(values, key=digest)
