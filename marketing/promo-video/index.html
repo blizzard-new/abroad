@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8" />
+<title>UniWay 推廣影片</title>
+<!--
+  UniWay 橫版推廣影片（1920×1080）。
+
+  這一頁就是影片本身：每一格畫面都由 render(t) 依時間 t（秒）算出來，render.mjs 逐格截圖後交給 ffmpeg 輸出 MP4。
+  直接用瀏覽器打開（需經由 http 伺服器，見 README.md）會即時播放預覽。
+
+  之後新增支援的大學，只要改下面的 SCHOOLS 與 STATS，再重新輸出即可；片尾刻意不列任何校名。
+-->
+<link rel="stylesheet" href="../../src/exchange_info/static/assets/fonts/genjyuu/GenJyuuGothic-Regular.css" />
+<link rel="stylesheet" href="../../src/exchange_info/static/assets/fonts/genjyuu/GenJyuuGothic-Medium.css" />
+<link rel="stylesheet" href="../../src/exchange_info/static/assets/fonts/genjyuu/GenJyuuGothic-Bold.css" />
+<style>
+  @font-face { font-family: "Poppins"; font-weight: 400; src: url("../../src/exchange_info/static/assets/fonts/poppins/Poppins-Regular.ttf") format("truetype"); }
+  @font-face { font-family: "Poppins"; font-weight: 500; src: url("../../src/exchange_info/static/assets/fonts/poppins/Poppins-Medium.ttf") format("truetype"); }
+  @font-face { font-family: "Poppins"; font-weight: 700; src: url("../../src/exchange_info/static/assets/fonts/poppins/Poppins-Bold.ttf") format("truetype"); }
+
+  :root {
+    --navy: #10294a;
+    --ink: #17406a;
+    --muted: #52708f;
+    --blue: #2f7de1;
+    --cyan: #3cc8e6;
+    --coral: #e2574a;
+    --peach: #ffd9c2;
+    --card: rgba(255, 255, 255, 0.86);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #0b1118; }
+  body { display: grid; place-items: center; min-height: 100vh; overflow: hidden; }
+  body.capture { display: block; min-height: 0; }
+
+  #stage {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    color: var(--navy);
+    font-family: "Poppins", "GenJyuuGothic", "Noto Sans TC", sans-serif;
+    background: #f4f8fc;
+    transform-origin: 0 0;
+  }
+
+  /* ---- background ---- */
+  .bg { position: absolute; inset: 0; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(80px); will-change: transform; }
+  .blob.b1 { width: 1100px; height: 900px; left: -260px; top: -320px; background: rgba(120, 205, 225, 0.55); }
+  .blob.b2 { width: 1000px; height: 900px; right: -300px; bottom: -380px; background: rgba(255, 205, 175, 0.55); }
+  .blob.b3 { width: 900px; height: 800px; right: 120px; top: -360px; background: rgba(196, 186, 245, 0.35); }
+  .dark { position: absolute; inset: 0; background: radial-gradient(circle at 70% 40%, #17345a, #0f1d30 70%); opacity: 0; }
+
+  .scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
+  .scene > * { position: absolute; }
+
+  /* ---- shared type ---- */
+  .kicker { display: inline-flex; align-items: center; gap: 14px; font-weight: 700; font-size: 26px; color: var(--coral); letter-spacing: 0.06em; }
+  .kicker b { display: inline-grid; place-items: center; width: 54px; height: 54px; border-radius: 16px; color: #fff; background: linear-gradient(135deg, #3c8ef0, #2bc0e4); font-size: 24px; letter-spacing: 0; box-shadow: 0 10px 24px rgba(47, 125, 225, 0.3); }
+  h1, h2 { margin: 0; font-weight: 700; line-height: 1.18; letter-spacing: 0.01em; }
+  h2 { font-size: 68px; }
+  h2 em { font-style: normal; background: linear-gradient(90deg, #2f7de1, #17b5d8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .list { margin: 0; padding: 0; list-style: none; display: grid; gap: 22px; }
+  .list li { display: flex; gap: 16px; align-items: flex-start; font-size: 30px; line-height: 1.45; color: #1f3b5c; font-weight: 500; }
+  .list li svg { flex: none; width: 36px; height: 36px; margin-top: 4px; }
+
+  /* ---- browser frame ---- */
+  .browser { left: 770px; top: 168px; width: 1080px; border-radius: 22px; overflow: hidden; background: #fff; box-shadow: 0 40px 90px rgba(16, 41, 74, 0.25), 0 0 0 1px rgba(16, 41, 74, 0.06); }
+  .browser .bar { height: 46px; display: flex; align-items: center; gap: 9px; padding: 0 18px; background: #eef3f8; border-bottom: 1px solid #dfe7ef; }
+  .browser .bar i { width: 13px; height: 13px; border-radius: 50%; background: #ff6159; }
+  .browser .bar i:nth-child(2) { background: #ffbd2e; }
+  .browser .bar i:nth-child(3) { background: #28c941; }
+  .browser .url { margin-left: 16px; flex: 1; height: 28px; border-radius: 14px; background: #fff; display: flex; align-items: center; gap: 8px; padding: 0 14px; font-size: 15px; color: #52708f; }
+  .browser .url svg { width: 14px; height: 14px; }
+  .browser .vp { position: relative; width: 1080px; height: 675px; overflow: hidden; }
+  .browser .cam { position: absolute; left: 0; top: 0; width: 1080px; height: 675px; transform-origin: 0 0; will-change: transform; }
+  .browser .cam img { width: 100%; height: 100%; display: block; }
+  .hl { position: absolute; border-radius: 14px; border: 4px solid #ff6b4a; box-shadow: 0 0 0 6px rgba(255, 107, 74, 0.22), 0 0 30px rgba(255, 107, 74, 0.45); opacity: 0; }
+
+  .float { border-radius: 18px; background: #fff; box-shadow: 0 30px 70px rgba(16, 41, 74, 0.28), 0 0 0 1px rgba(16, 41, 74, 0.06); overflow: hidden; }
+  .float img { display: block; width: 100%; }
+  .tag { position: absolute; padding: 10px 20px; border-radius: 999px; background: var(--navy); color: #fff; font-size: 22px; font-weight: 700; box-shadow: 0 14px 30px rgba(16, 41, 74, 0.3); white-space: nowrap; }
+
+  /* ---- mascot ---- */
+  #mascot { position: absolute; left: 0; top: 0; aspect-ratio: 384 / 460; z-index: 20; will-change: transform; }
+  #mascot .shadow { position: absolute; left: 14%; right: 14%; bottom: -3%; height: 7%; border-radius: 50%; background: rgba(35, 82, 135, 0.28); filter: blur(6px); }
+  #mascot .body { position: absolute; inset: 0; transform-origin: 50% 94%; }
+  #mascot .body img { width: 100%; height: 100%; display: block; }
+  #mascot .eyes { position: absolute; inset: 0; }
+  #mascot .eye { position: absolute; top: 46.83%; left: 37.011%; width: 8.538%; height: 12.351%; transform: translate(-50%, -50%) rotate(9.2deg); }
+  #mascot .eye.r { top: 48.873%; left: 61.052%; }
+  #mascot .eye::before { content: ""; position: absolute; inset: 0; border-radius: 50%; transform: scaleY(var(--open, 1)); background: radial-gradient(ellipse 34% 22% at 64% 24%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0)), #2c2c2f; box-shadow: inset -1px -2px 3px rgba(0, 0, 0, 0.35); }
+  #mascot .eye.r::before { transform: scaleY(var(--open-r, 1)); }
+  #mascot .cheek { position: absolute; top: 58%; width: 10%; height: 5%; border-radius: 50%; background: rgba(255, 140, 150, 0.55); filter: blur(2px); opacity: 0; }
+  #mascot .cheek.l { left: 24%; }
+  #mascot .cheek.r { left: 66%; }
+
+  #bubble { position: absolute; left: 0; top: 0; z-index: 21; padding: 18px 28px; border-radius: 26px; background: #fff; color: var(--navy); font-size: 30px; font-weight: 700; white-space: nowrap; box-shadow: 0 18px 44px rgba(16, 41, 74, 0.2), 0 0 0 1px rgba(16, 41, 74, 0.05); transform-origin: 0% 100%; opacity: 0; }
+  #bubble::after { content: ""; position: absolute; left: 26px; bottom: -14px; width: 28px; height: 28px; background: #fff; transform: rotate(45deg); border-radius: 0 0 6px 0; box-shadow: 6px 6px 10px rgba(16, 41, 74, 0.06); }
+
+  /* ---- S1 hook ---- */
+  .tab { left: 0; top: 0; display: flex; align-items: center; gap: 14px; padding: 18px 24px; border-radius: 16px; background: #fff; box-shadow: 0 18px 40px rgba(16, 41, 74, 0.16), 0 0 0 1px rgba(16, 41, 74, 0.05); font-size: 24px; font-weight: 500; white-space: nowrap; color: #1f3b5c; }
+  .tab .ic { width: 40px; height: 48px; border-radius: 6px; display: grid; place-items: center; color: #fff; font: 700 13px "Poppins", sans-serif; }
+  #s1 .head { left: 0; right: 0; top: 380px; text-align: center; }
+  #s1 h1 { font-size: 92px; text-shadow: 0 6px 30px rgba(244, 248, 252, 0.9); }
+  #s1 h1 .count { color: var(--coral); }
+  #s1 p { margin: 26px 0 0; font-size: 34px; color: var(--muted); font-weight: 500; }
+
+  /* ---- S2 brand ---- */
+  #s2 .brand { left: 0; right: 0; top: 260px; display: flex; justify-content: center; align-items: center; gap: 46px; }
+  #s2 .brand img { width: 250px; height: 250px; }
+  #s2 .word { font: 700 150px/1 "Poppins", sans-serif; letter-spacing: -0.02em; background: linear-gradient(100deg, #1554d8 10%, #18b6e3 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #s2 .slogan { left: 0; right: 0; top: 600px; text-align: center; font-size: 64px; font-weight: 700; }
+  #s2 .sub { left: 0; right: 0; top: 700px; text-align: center; font-size: 30px; color: var(--muted); letter-spacing: 0.32em; font-weight: 500; }
+
+  /* ---- feature scenes ---- */
+  .feature .text { left: 110px; top: 190px; width: 620px; }
+  .feature h2 { margin: 26px 0 40px; }
+
+  /* ---- S4 map ---- */
+  #s4 { color: #fff; }
+  #s4 .text { left: 120px; top: 230px; width: 640px; }
+  #s4 .text .kicker { color: #7fd6f0; }
+  #s4 h2 { margin: 26px 0 0; font-size: 76px; }
+  #s4 .stats { left: 120px; top: 640px; display: flex; gap: 70px; }
+  #s4 .stat b { display: block; font: 700 92px/1 "Poppins", "GenJyuuGothic", sans-serif; letter-spacing: -0.01em; }
+  #s4 .stat span { display: block; margin-top: 14px; font-size: 26px; color: #a9c4de; font-weight: 500; }
+  #s4 .map { left: 760px; top: 250px; width: 1090px; }
+  #s4 .map img { width: 100%; display: block; -webkit-mask-image: radial-gradient(ellipse 52% 54% at 50% 50%, #000 70%, transparent 100%); mask-image: radial-gradient(ellipse 52% 54% at 50% 50%, #000 70%, transparent 100%); }
+  #s4 .map svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+  /* ---- S9 trust ---- */
+  #s9 .head { left: 0; right: 0; top: 150px; text-align: center; }
+  #s9 h2 { font-size: 76px; }
+  #s9 .head p { margin: 22px 0 0; font-size: 32px; color: var(--muted); font-weight: 500; }
+  #s9 .src { left: 168px; top: 360px; width: 1584px; }
+  #s9 .badges { left: 0; right: 0; top: 600px; display: flex; justify-content: center; gap: 36px; }
+  .badge { display: flex; align-items: center; gap: 18px; padding: 24px 36px; border-radius: 24px; background: var(--card); box-shadow: 0 20px 44px rgba(16, 41, 74, 0.14); font-size: 32px; font-weight: 700; }
+  .badge svg { width: 46px; height: 46px; }
+  .sweep { position: absolute; top: 0; bottom: 0; width: 220px; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0)); }
+
+  /* ---- S10 schools ---- */
+  #s10 .head { left: 0; right: 0; top: 110px; text-align: center; }
+  #s10 h2 { font-size: 74px; }
+  #s10 .head p { margin: 20px 0 0; font-size: 32px; color: var(--muted); font-weight: 500; }
+  #s10 .grid { left: 150px; right: 150px; top: 340px; display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 18px; }
+  .chip { padding: 16px 28px; border-radius: 999px; background: #fff; box-shadow: 0 10px 26px rgba(16, 41, 74, 0.12); font-size: 30px; font-weight: 700; color: #1f3b5c; white-space: nowrap; }
+  .chip.more { background: linear-gradient(100deg, #2f7de1, #19b7e2); color: #fff; }
+
+  /* ---- S11 end ---- */
+  #s11 .lockup { left: 820px; top: 270px; }
+  #s11 .row { display: flex; align-items: center; gap: 30px; }
+  #s11 .row img { width: 150px; height: 150px; }
+  #s11 .row .word { font: 700 128px/1 "Poppins", sans-serif; letter-spacing: -0.02em; background: linear-gradient(100deg, #1554d8 10%, #18b6e3 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #s11 .line { margin-top: 40px; font-size: 62px; font-weight: 700; }
+  #s11 .sub { margin-top: 18px; font-size: 32px; color: var(--muted); font-weight: 500; letter-spacing: 0.06em; }
+  #s11 .cta { margin-top: 46px; display: inline-flex; align-items: center; gap: 18px; padding: 22px 40px; border-radius: 999px; background: var(--navy); color: #fff; font: 700 40px "Poppins", "GenJyuuGothic", sans-serif; box-shadow: 0 24px 50px rgba(16, 41, 74, 0.3); }
+  #s11 .cta svg { width: 40px; height: 40px; }
+  #s11 .note { margin-top: 30px; font-size: 28px; color: var(--muted); font-weight: 500; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="bg">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <div class="dark"></div>
+  </div>
+
+  <!-- S1: the problem -->
+  <section class="scene" id="s1">
+    <div class="head">
+      <h1>準備交換，資料散在 <span class="count">30</span> 個分頁？</h1>
+      <p>簡章、名額表、語檢門檻、截止日、學長姐心得……</p>
+    </div>
+  </section>
+
+  <!-- S2: brand -->
+  <section class="scene" id="s2">
+    <div class="brand"><img src="assets/uniway-logo.webp" alt="" /><span class="word">UniWay</span></div>
+    <div class="slogan">交換申請，<em style="font-style:normal;color:var(--blue)">一站搞定。</em></div>
+    <div class="sub">探索世界 · 完成申請</div>
+  </section>
+
+  <!-- S4: partner map -->
+  <section class="scene" id="s4">
+    <div class="text">
+      <span class="kicker"><b>01</b>合作校地圖</span>
+      <h2>從臺灣出發，<br />看見世界。</h2>
+    </div>
+    <div class="stats">
+      <div class="stat"><b data-count="schools">0</b><span>所大學</span></div>
+      <div class="stat"><b data-count="partners">0</b><span>筆合作校資料</span></div>
+    </div>
+    <div class="map"><img src="assets/crop-worldmap.jpg" alt="" /><svg viewBox="0 0 970 500"></svg></div>
+  </section>
+
+  <!-- S9: trust -->
+  <section class="scene" id="s9">
+    <div class="head">
+      <h2>每一筆資料，<em>都查得到出處。</em></h2>
+      <p>整理自各校官方公告，並逐筆人工核對。</p>
+    </div>
+    <div class="src float"><img src="assets/crop-sources.jpg" alt="" /><div class="sweep"></div></div>
+    <div class="badges"></div>
+  </section>
+
+  <!-- S10: universities -->
+  <section class="scene" id="s10">
+    <div class="head">
+      <h2>全台大學，<em>陸續加入中。</em></h2>
+      <p>選你的學校，就只看到你真正能申請的機會。</p>
+    </div>
+    <div class="grid"></div>
+  </section>
+
+  <!-- S11: end card (no university names on purpose: the list keeps growing) -->
+  <section class="scene" id="s11">
+    <div class="lockup">
+      <div class="row"><img src="assets/uniway-logo.webp" alt="" /><span class="word">UniWay</span></div>
+      <div class="line">你的交換旅程，從這裡出發。</div>
+      <div class="sub">探索世界 · 完成申請</div>
+      <div class="cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>app.uniway-tw.com</div>
+      <div class="note">公開資料免登入即可瀏覽　｜　更多大學持續加入中</div>
+    </div>
+  </section>
+
+  <div id="bubble"></div>
+  <div id="mascot">
+    <div class="shadow"></div>
+    <div class="body">
+      <img src="assets/suitcase.webp" alt="" />
+      <div class="eyes"><span class="eye l"></span><span class="eye r"></span></div>
+      <span class="cheek l"></span><span class="cheek r"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------------------------------------------------------------------------------------------------------------------
+// 內容設定：新增學校時只改這裡。
+// ---------------------------------------------------------------------------------------------------------------------
+const SCHOOLS = [
+  "國立臺灣大學", "國立政治大學", "國立成功大學", "國立陽明交通大學", "國立清華大學", "國立臺灣師範大學",
+  "國立中央大學", "國立中山大學", "國立中興大學", "國立中正大學", "國立臺灣科技大學", "國立臺北科技大學",
+  "國立臺北大學", "長庚大學", "天主教輔仁大學", "東吳大學", "淡江大學", "中原大學",
+  "元智大學", "逢甲大學", "中國文化大學", "文藻外語大學",
+];
+const STATS = { schools: SCHOOLS.length, partners: 4152 };
+const SITE = "app.uniway-tw.com";
+
+const FEATURES = [
+  {
+    id: "s3", num: "01", kicker: "找交換學校", start: 10.0, end: 17.0,
+    title: "你能去哪些學校，<br /><em>一次看清楚。</em>",
+    bullets: ["選好母校，只顯示你能申請的合作校", "依國家、學期、語言檢定、名額篩選", "每間學校都附官方網站與更新時間"],
+    shot: "partners.jpg", route: "#partners", focus: [215, 318, 1590, 98], zoom: 1.32, focusAt: 2.4,
+    float: { src: "crop-school-card.jpg", x: 1560, y: 520, w: 300, at: 4.2, tag: "本期開放・名額・截止日" },
+  },
+  {
+    id: "s5", num: "02", kicker: "期限與提醒", start: 22.6, end: 29.4,
+    title: "官方期限，<br /><em>一個都不漏接。</em>",
+    bullets: ["校內截止日、送件規定逐條核對", "一鍵匯入 Google／Apple 行事曆", "T-14、T-7、T-3、T-1 自動倒數提醒"],
+    shot: "deadlines-body.jpg", route: "#deadlines", focus: [220, 380, 1430, 70], zoom: 1.3, focusAt: 2.2,
+    float: { src: "crop-studyplan.jpg", x: 1350, y: 650, w: 520, at: 4.3, tag: "讀書計畫字數規定也幫你整理好" },
+  },
+  {
+    id: "s6", num: "03", kicker: "申請工作台", start: 29.0, end: 36.4,
+    title: "從選校到送件，<br /><em>一步一步來。</em>",
+    bullets: ["資格初判、志願排序一次完成", "多志願任務自動排出準備時程", "文件：填寫 → 檢查 → 下載列印"],
+    shot: "application-center.jpg", route: "#application-center", focus: [160, 740, 1420, 80], zoom: 1.3, focusAt: 2.2,
+    float: { src: "crop-plan.jpg", x: 1380, y: 640, w: 470, at: 4.3, tag: "我的交換計畫，進度一目了然" },
+  },
+  {
+    id: "s7", num: "04", kicker: "預算與補助", start: 36.0, end: 42.4,
+    title: "出發之前，<br /><em>先把錢算清楚。</em>",
+    bullets: ["用同一幣別估算交換總成本", "附學校官方生活費來源", "獎學金與補助資訊一次整理"],
+    shot: "budget.jpg", route: "#budget", focus: [1188, 680, 660, 470], zoom: 1.28, focusAt: 2.2,
+    float: { src: "crop-scholarship.jpg", x: 1080, y: 870, w: 760, at: 4.0, tag: "" },
+  },
+  {
+    id: "s8", num: "05", kicker: "學長姐心得", start: 42.0, end: 48.4,
+    title: "每一段旅程，<br /><em>都有人同行。</em>",
+    bullets: ["真實心得：住宿、簽證、課程、避雷", "公共留學板＋各校專屬看板", "有問題直接提問、追蹤討論"],
+    shot: "forum.jpg", route: "#forum", focus: [210, 385, 1600, 340], zoom: 1.14, focusAt: 2.2, float: null,
+  },
+];
+
+const BADGES = [
+  ["官方 HTTPS 來源", '<path d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/>'],
+  ["標示最後查核日", '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="m9 15 2 2 4-4"/>'],
+  ["規定更新即時提醒", '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>'],
+];
+
+const HOOK_TABS = [
+  ["PDF", "#e2574a", "116學年度交換簡章.pdf"], ["XLS", "#1f9d55", "合作校名額表_英語組.xlsx"],
+  ["PDF", "#e2574a", "語言檢定門檻_final.pdf"], ["PDF", "#e2574a", "Fact Sheet 2026-27.pdf"],
+  ["DOC", "#2f6fd6", "讀書計畫格式說明.docx"], ["WEB", "#7a5af8", "校內甄選截止日公告"],
+  ["PDF", "#e2574a", "獎學金補助辦法.pdf"], ["ZIP", "#d98a16", "學長姐返國心得.zip"],
+  ["WEB", "#7a5af8", "住宿與生活費資訊"], ["PDF", "#e2574a", "姊妹校課程清單.pdf"],
+];
+// [x, y, rotation] of each tab in the hook scene, spread around the headline.
+const TAB_SPOTS = [
+  [140, 110, -6], [760, 70, 4], [1360, 120, -3], [80, 250, 3], [1480, 250, 5],
+  [180, 720, 4], [700, 820, -4], [820, 640, -5], [1100, 910, 3], [110, 600, -3],
+];
+
+// Text the mascot says, [from, to, text].
+const LINES = [
+  [2.8, 5.0, "到底要先看哪一份……"],
+  [7.9, 10.0, "全部交給我！"],
+  [11.2, 16.6, "先選母校，只看你能申請的！"],
+  [17.8, 22.2, "全世界的合作校，都在地圖上"],
+  [23.6, 29.0, "截止日？我幫你倒數！"],
+  [30.2, 36.0, "照著做，就不會漏掉文件"],
+  [37.2, 42.0, "出發前，先算好預算"],
+  [43.2, 48.0, "學長姐的經驗，都在這裡"],
+  [49.6, 53.2, "每一筆都附上官方出處"],
+  [54.6, 58.0, "你的學校，也快來了！"],
+];
+
+// Where the mascot stands: [time, x (centre), y (feet), width]; it travels between consecutive entries.
+const MASCOT_PATH = [
+  [0.0, 1610, 1260, 230], [2.0, 1610, 1260, 230], [2.7, 1610, 1030, 230],
+  [5.2, 1610, 1030, 230], [6.2, 960, 890, 300], [7.3, 960, 890, 300], [8.0, 1640, 900, 190],
+  [10.0, 1640, 900, 190], [10.8, 215, 1030, 170],
+  [17.0, 215, 1030, 170], [17.8, 1720, 1020, 190],
+  [22.4, 1720, 1020, 190], [23.2, 215, 1030, 170],
+  [58.0, 215, 1030, 170], [59.0, 560, 900, 330],
+];
+const HOPS = [2.75, 6.25, 8.0, 10.8, 17.8, 23.2, 29.1, 36.1, 42.1, 48.3, 53.3, 59.0, 61.6, 63.0];
+const SPINS = [7.4, 62.2];
+const DURATION = 65;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------------------------------------------------
+const $ = (s, r = document) => r.querySelector(s);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const easeBack = (x) => { const c1 = 1.6, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const CHECK = '<svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="17" fill="#e3f3fb"/><path d="m11 18.5 4.5 4.5 9.5-10" fill="none" stroke="#2f7de1" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+
+// Fades a scene in over its first `fade` seconds and out over its last; returns local time.
+function sceneWindow(el, t, start, end, fade = 0.5) {
+  const visible = t >= start && t <= end;
+  el.style.visibility = visible ? "visible" : "hidden";
+  if (!visible) return -1;
+  el.style.opacity = Math.min(prog(t, start, start + fade), 1 - prog(t, end - fade, end));
+  return t - start;
+}
+
+// Slides an element up into place starting at `at` (local seconds).
+function reveal(el, lt, at, dur = 0.7, dy = 40, dx = 0) {
+  const k = easeOut(prog(lt, at, at + dur));
+  el.style.opacity = k;
+  el.style.transform = `translate(${(1 - k) * dx}px, ${(1 - k) * dy}px)`;
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Build the DOM that comes from data
+// ---------------------------------------------------------------------------------------------------------------------
+const stage = $("#stage");
+
+HOOK_TABS.forEach(([ext, color, name], i) => {
+  const el = document.createElement("div");
+  el.className = "tab";
+  el.innerHTML = `<span class="ic" style="background:${color}">${ext}</span>${name}`;
+  $("#s1").appendChild(el);
+});
+
+for (const f of FEATURES) {
+  const sec = document.createElement("section");
+  sec.className = "scene feature";
+  sec.id = f.id;
+  sec.innerHTML = `
+    <div class="text">
+      <span class="kicker"><b>${f.num}</b>${f.kicker}</span>
+      <h2>${f.title}</h2>
+      <ul class="list">${f.bullets.map((b) => `<li>${CHECK}<span>${b}</span></li>`).join("")}</ul>
+    </div>
+    <div class="browser">
+      <div class="bar"><i></i><i></i><i></i><span class="url">${LOCK}${SITE}/${f.route}</span></div>
+      <div class="vp"><div class="cam"><img src="assets/${f.shot}" alt="" /><div class="hl"></div></div></div>
+    </div>
+    ${f.float ? `<div class="float fl" style="left:${f.float.x}px;top:${f.float.y}px;width:${f.float.w}px"><img src="assets/${f.float.src}" alt="" /></div>` : ""}
+    ${f.float && f.float.tag ? `<div class="tag" style="left:${f.float.x - 40}px;top:${f.float.y - 34}px">${f.float.tag}</div>` : ""}`;
+  // Feature scenes sit under the later scenes in paint order; insert before S9 so the stacking stays tidy.
+  stage.insertBefore(sec, $("#s9"));
+  const hl = $(".hl", sec);
+  const k = 1080 / 1920;
+  const [fx, fy, fw, fh] = f.focus;
+  Object.assign(hl.style, { left: `${fx * k - 6}px`, top: `${fy * k - 6}px`, width: `${fw * k + 12}px`, height: `${fh * k + 12}px` });
+}
+// The map scene is not a numbered feature; it gets a globe instead of a number.
+$("#s4 .kicker b").innerHTML = '<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>';
+
+$("#s9 .badges").innerHTML = BADGES.map(([label, path]) =>
+  `<div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#2f7de1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>${label}</div>`).join("");
+
+$("#s10 .grid").innerHTML = SCHOOLS.map((s) => `<span class="chip">${s}</span>`).join("") + '<span class="chip more">＋ 更多大學陸續加入</span>';
+$("#s10 .head h2").innerHTML = `已支援 ${SCHOOLS.length} 所大學，<em>持續增加中。</em>`;
+
+// Arcs from Taiwan on the world map (coordinates are in the cropped map picture).
+const TW = [767, 208];
+const DESTS = [[460, 120], [125, 130], [240, 145], [805, 170], [852, 383], [720, 285], [140, 223], [520, 110]];
+const svg = $("#s4 .map svg");
+svg.innerHTML = DESTS.map(([x, y], i) => {
+  const mx = (x + TW[0]) / 2, my = Math.min(y, TW[1]) - 60 - Math.abs(x - TW[0]) * 0.18;
+  return `<path class="arc" d="M${TW[0]},${TW[1]} Q${mx},${my} ${x},${y}" fill="none" stroke="#ff9a7a" stroke-width="3" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+          <circle class="dst" cx="${x}" cy="${y}" r="9" fill="#ffd2bf" opacity="0"/>`;
+}).join("") + `<circle class="ring" cx="${TW[0]}" cy="${TW[1]}" r="12" fill="none" stroke="#ff8a6a" stroke-width="3"/>
+               <circle cx="${TW[0]}" cy="${TW[1]}" r="8" fill="#ff6b4a"/>`;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Render one frame
+// ---------------------------------------------------------------------------------------------------------------------
+function renderBackground(t) {
+  $(".blob.b1").style.transform = `translate(${Math.sin(t * 0.21) * 90}px, ${Math.cos(t * 0.17) * 60}px)`;
+  $(".blob.b2").style.transform = `translate(${Math.cos(t * 0.19) * 100}px, ${Math.sin(t * 0.23) * 70}px)`;
+  $(".blob.b3").style.transform = `translate(${Math.sin(t * 0.15 + 1) * 120}px, ${Math.cos(t * 0.2) * 50}px)`;
+  $(".dark").style.opacity = Math.min(prog(t, 16.6, 17.4), 1 - prog(t, 22.4, 23.2));
+}
+
+function renderHook(t) {
+  const sec = $("#s1");
+  const lt = sceneWindow(sec, t, 0, 6.6, 0.01);
+  if (lt < 0) return;
+  // Headline appears, and the number of open tabs ticks up.
+  reveal($(".head", sec), lt, 0.5, 0.8, 50);
+  $(".count", sec).textContent = Math.round(lerp(1, 30, easeOut(prog(lt, 0.6, 2.2))));
+  const headOut = prog(lt, 5.0, 5.5);
+  $(".head", sec).style.opacity = Math.min(easeOut(prog(lt, 0.5, 1.3)), 1 - headOut);
+
+  // Tabs pop in one by one and wobble; from 5.3 s they fly into the suitcase.
+  const target = [960, 760];
+  sec.querySelectorAll(".tab").forEach((el, i) => {
+    const [x, y, r] = TAB_SPOTS[i];
+    const pop = easeBack(prog(lt, 0.3 + i * 0.16, 0.75 + i * 0.16));
+    const wob = Math.sin(lt * 3 + i * 1.7) * 2.2 * (1 + prog(lt, 2, 4.5) * 2);
+    const fly = easeInOut(prog(lt, 5.3 + i * 0.05, 6.4 + i * 0.05));
+    const cx = lerp(x, target[0] - 150, fly), cy = lerp(y + Math.sin(lt * 1.3 + i) * 8, target[1] - 30, fly);
+    const s = lerp(pop, 0.1, fly);
+    el.style.opacity = clamp(pop * 1.4) * (1 - prog(fly, 0.85, 1));
+    el.style.transform = `translate(${cx}px, ${cy}px) rotate(${r + wob + fly * 160}deg) scale(${Math.max(s, 0)})`;
+  });
+}
+
+function renderBrand(t) {
+  const sec = $("#s2");
+  const lt = sceneWindow(sec, t, 6.4, 10.4, 0.3);
+  if (lt < 0) return;
+  const k = easeBack(prog(lt, 1.1, 1.9));
+  const brand = $(".brand", sec);
+  brand.style.opacity = clamp(prog(lt, 1.1, 1.5));
+  brand.style.transform = `scale(${lerp(0.6, 1, k)})`;
+  reveal($(".slogan", sec), lt, 1.8, 0.8, 40);
+  reveal($(".sub", sec), lt, 2.3, 0.8, 30);
+}
+
+function renderFeature(f, t) {
+  const sec = document.getElementById(f.id);
+  const lt = sceneWindow(sec, t, f.start, f.end, 0.45);
+  if (lt < 0) return;
+  const out = prog(t, f.end - 0.45, f.end);
+  const text = $(".text", sec);
+  reveal($(".kicker", text), lt, 0.15, 0.6, 30);
+  reveal($("h2", text), lt, 0.3, 0.7, 40);
+  text.querySelectorAll("li").forEach((li, i) => reveal(li, lt, 0.9 + i * 0.35, 0.6, 0, -40));
+
+  const browser = $(".browser", sec);
+  const bk = easeOut(prog(lt, 0.2, 1.1));
+  browser.style.opacity = bk;
+  browser.style.transform = `translate(${(1 - bk) * 120 + out * -60}px, 0) perspective(2400px) rotateY(${(1 - bk) * -12}deg)`;
+
+  // Camera: a slow push, then a zoom onto the feature, with a highlight around it.
+  const [fx, fy, fw, fh] = f.focus;
+  const k = 1080 / 1920;
+  const cx = (fx + fw / 2) * k, cy = (fy + fh / 2) * k;
+  const z = easeInOut(prog(lt, f.focusAt, f.focusAt + 1.2));
+  const s = lerp(1 + lt * 0.006, f.zoom, z);
+  const tx = clamp(540 - s * cx, 1080 - s * 1080, 0) * z;
+  const ty = clamp(337.5 - s * cy, 675 - s * 675, 0) * z;
+  $(".cam", sec).style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+  const hl = $(".hl", sec);
+  const hk = prog(lt, f.focusAt + 1.0, f.focusAt + 1.4);
+  hl.style.opacity = hk * (0.75 + 0.25 * Math.sin(lt * 6));
+  hl.style.borderWidth = `${4 / s}px`;
+
+  const fl = $(".fl", sec);
+  if (fl) {
+    const fk = easeBack(prog(lt, f.float.at, f.float.at + 0.7));
+    fl.style.opacity = clamp(prog(lt, f.float.at, f.float.at + 0.3));
+    fl.style.transform = `translateY(${(1 - fk) * 60 + Math.sin(lt * 1.6) * 6}px) scale(${lerp(0.85, 1, fk)})`;
+  }
+  const tag = $(".tag", sec);
+  if (tag) {
+    const tk = easeBack(prog(lt, f.float.at + 0.5, f.float.at + 1.0));
+    tag.style.opacity = clamp(prog(lt, f.float.at + 0.5, f.float.at + 0.7));
+    tag.style.transform = `scale(${tk})`;
+    tag.style.transformOrigin = "0 100%";
+  }
+}
+
+function renderMap(t) {
+  const sec = $("#s4");
+  const lt = sceneWindow(sec, t, 17.0, 22.8, 0.5);
+  if (lt < 0) return;
+  reveal($(".kicker", sec), lt, 0.3, 0.6, 30);
+  reveal($("h2", sec), lt, 0.45, 0.8, 40);
+  reveal($(".stats", sec), lt, 1.0, 0.7, 30);
+  sec.querySelectorAll("[data-count]").forEach((el) => {
+    const n = Math.round(STATS[el.dataset.count] * easeOut(prog(lt, 1.1, 3.0)));
+    el.textContent = n.toLocaleString("en-US");
+  });
+  const map = $(".map", sec);
+  const mk = easeOut(prog(lt, 0.2, 1.4));
+  map.style.opacity = mk;
+  map.style.transform = `scale(${lerp(0.92, 1.0, mk) + lt * 0.006})`;
+  sec.querySelectorAll(".arc").forEach((arc, i) => {
+    const a = easeInOut(prog(lt, 1.4 + i * 0.22, 2.3 + i * 0.22));
+    arc.setAttribute("stroke-dashoffset", 1 - a);
+    arc.setAttribute("opacity", 0.9);
+  });
+  sec.querySelectorAll(".dst").forEach((d, i) => {
+    const a = prog(lt, 2.2 + i * 0.22, 2.5 + i * 0.22);
+    d.setAttribute("opacity", a * (0.7 + 0.3 * Math.sin(lt * 5 + i)));
+    d.setAttribute("r", 6 + 6 * easeBack(a));
+  });
+  const ring = $(".ring", sec);
+  const rp = (lt * 0.9) % 1;
+  ring.setAttribute("r", 10 + rp * 34);
+  ring.setAttribute("opacity", 1 - rp);
+}
+
+function renderTrust(t) {
+  const sec = $("#s9");
+  const lt = sceneWindow(sec, t, 48.0, 53.6, 0.45);
+  if (lt < 0) return;
+  reveal($(".head h2", sec), lt, 0.2, 0.7, 40);
+  reveal($(".head p", sec), lt, 0.5, 0.7, 30);
+  const src = $(".src", sec);
+  const sk = easeOut(prog(lt, 0.8, 1.6));
+  src.style.opacity = sk;
+  src.style.transform = `translateY(${(1 - sk) * 60}px) scale(${lerp(0.96, 1, sk)})`;
+  $(".sweep", sec).style.left = `${lerp(-300, 1700, prog(lt, 1.6, 2.8))}px`;
+  sec.querySelectorAll(".badge").forEach((b, i) => {
+    const k = easeBack(prog(lt, 2.2 + i * 0.25, 2.8 + i * 0.25));
+    b.style.opacity = clamp(prog(lt, 2.2 + i * 0.25, 2.5 + i * 0.25));
+    b.style.transform = `translateY(${(1 - k) * 40}px) scale(${lerp(0.8, 1, k)})`;
+  });
+}
+
+function renderSchools(t) {
+  const sec = $("#s10");
+  const lt = sceneWindow(sec, t, 53.2, 58.4, 0.45);
+  if (lt < 0) return;
+  reveal($(".head h2", sec), lt, 0.2, 0.7, 40);
+  reveal($(".head p", sec), lt, 0.5, 0.7, 30);
+  const chips = sec.querySelectorAll(".chip");
+  chips.forEach((c, i) => {
+    const last = i === chips.length - 1;
+    const at = last ? 2.6 : 0.8 + i * 0.07;
+    const k = easeBack(prog(lt, at, at + 0.45));
+    const pulse = last ? 1 + 0.04 * Math.sin(Math.max(0, lt - 3.2) * 6) : 1;
+    c.style.opacity = clamp(prog(lt, at, at + 0.2));
+    c.style.transform = `translateY(${(1 - k) * 30}px) scale(${lerp(0.6, 1, k) * pulse})`;
+  });
+}
+
+function renderEnd(t) {
+  const sec = $("#s11");
+  const lt = sceneWindow(sec, t, 58.0, DURATION, 0.5);
+  if (lt < 0) return;
+  const lock = $(".lockup", sec);
+  const row = $(".row", lock);
+  const rk = easeBack(prog(lt, 0.7, 1.5));
+  row.style.opacity = clamp(prog(lt, 0.7, 1.0));
+  row.style.transform = `scale(${lerp(0.7, 1, rk)})`;
+  row.style.transformOrigin = "0 50%";
+  reveal($(".line", lock), lt, 1.3, 0.8, 40);
+  reveal($(".sub", lock), lt, 1.7, 0.8, 30);
+  const cta = $(".cta", lock);
+  const ck = easeBack(prog(lt, 2.2, 2.9));
+  cta.style.opacity = clamp(prog(lt, 2.2, 2.5));
+  cta.style.transform = `scale(${lerp(0.7, 1, ck) * (1 + 0.025 * Math.sin(Math.max(0, lt - 3) * 4))})`;
+  cta.style.transformOrigin = "0 50%";
+  reveal($(".note", lock), lt, 2.8, 0.8, 20);
+  // Fade out at the very end.
+  sec.style.opacity = Math.min(1, 1 - prog(t, DURATION - 0.6, DURATION));
+}
+
+function renderMascot(t) {
+  // Position along the path.
+  let p = MASCOT_PATH[0];
+  let x = p[1], y = p[2], w = p[3];
+  for (let i = 0; i < MASCOT_PATH.length - 1; i++) {
+    const a = MASCOT_PATH[i], b = MASCOT_PATH[i + 1];
+    if (t >= a[0] && t <= b[0]) {
+      const k = easeInOut(prog(t, a[0], b[0]));
+      x = lerp(a[1], b[1], k); y = lerp(a[2], b[2], k); w = lerp(a[3], b[3], k);
+      break;
+    }
+    if (t > b[0]) { x = b[1]; y = b[2]; w = b[3]; }
+  }
+  // At the very end it leaves with the end card.
+  const leave = prog(t, DURATION - 0.6, DURATION);
+
+  // Hops: squash, jump, land.
+  let hop = 0, sx = 1, sy = 1;
+  for (const h of HOPS) {
+    const k = (t - h) / 0.62;
+    if (k < -0.15 || k > 1.2) continue;
+    if (k < 0) { const q = (k + 0.15) / 0.15; sx = 1 + 0.06 * q; sy = 1 - 0.07 * q; }
+    else if (k <= 1) { hop = Math.sin(Math.PI * k); sx = 1 - 0.03 * hop; sy = 1 + 0.05 * hop; }
+    else { const q = Math.sin(Math.PI * (k - 1) / 0.2); sx = 1 + 0.05 * q; sy = 1 - 0.06 * q; }
+  }
+  let spin = 0;
+  for (const s of SPINS) spin += 360 * easeInOut(prog(t, s, s + 0.8));
+  const bob = Math.sin(t * 2.4) * 0.012;
+  const tilt = Math.sin(t * 1.3) * 3;
+  const h = w * 460 / 384;
+  const el = $("#mascot");
+  el.style.width = `${w}px`;
+  el.style.opacity = 1 - leave;
+  el.style.transform = `translate(${x - w / 2}px, ${y - h - hop * h * 0.22 - bob * h}px)`;
+  $(".body", el).style.transform = `perspective(900px) rotateY(${spin}deg) rotate(${tilt}deg) scale(${sx}, ${sy})`;
+  $(".shadow", el).style.transform = `translateY(${hop * h * 0.22 + bob * h}px) scaleX(${1 - hop * 0.35})`;
+  $(".shadow", el).style.opacity = 1 - hop * 0.45;
+
+  // Eyes: blink every ~3 s, look around, wink at the end; worried look while the tabs pile up.
+  const bt = (t + 0.7) % 3.1;
+  const blink = bt < 0.16 ? Math.abs(Math.cos((bt / 0.16) * Math.PI)) : 1;
+  const wink = 1 - 0.92 * Math.sin(Math.PI * prog(t, 61.0, 61.8));
+  el.style.setProperty("--open", Math.max(0.08, blink));
+  el.style.setProperty("--open-r", Math.max(0.08, Math.min(blink, wink)));
+  const worried = 1 - prog(t, 5.2, 5.8);
+  const lookX = t < 6 ? Math.sin(t * 4.2) * 5 * worried : Math.sin(t * 0.9) * 2.5 + (t > 10.8 && t < 58 && !(t > 17.4 && t < 22.8) ? 2.5 : -1.5);
+  const lookY = t < 6 ? -1.5 * worried : Math.sin(t * 0.7) * 1.2;
+  $(".eyes", el).style.transform = `translate(${lookX}%, ${lookY}%)`;
+  const happy = prog(t, 7.6, 8.0) * (1 - prog(t, 10.0, 10.4)) + prog(t, 59.2, 59.8);
+  el.querySelectorAll(".cheek").forEach((c) => (c.style.opacity = clamp(happy)));
+
+  // Speech bubble, placed up and to the right of the mascot.
+  const bubble = $("#bubble");
+  const line = LINES.find(([a, b]) => t >= a && t <= b);
+  if (!line) { bubble.style.opacity = 0; return; }
+  const [a, b, text] = line;
+  if (bubble.textContent !== text) bubble.textContent = text;
+  const k = easeBack(prog(t, a, a + 0.35));
+  const o = 1 - prog(t, b - 0.25, b);
+  const bw = bubble.offsetWidth;
+  let bx = x + w * 0.28, by = y - h * 1.02 - hop * h * 0.22 - 92;
+  if (bx + bw > 1880) { bx = x - w * 0.28 - bw; bubble.style.transformOrigin = "100% 100%"; }
+  else bubble.style.transformOrigin = "0% 100%";
+  bubble.classList.toggle("flip", bx < x);
+  bubble.style.opacity = clamp(prog(t, a, a + 0.15)) * o;
+  bubble.style.transform = `translate(${bx}px, ${by}px) scale(${lerp(0.4, 1, k)})`;
+}
+
+function render(t) {
+  renderBackground(t);
+  renderHook(t);
+  renderBrand(t);
+  FEATURES.forEach((f) => renderFeature(f, t));
+  renderMap(t);
+  renderTrust(t);
+  renderSchools(t);
+  renderEnd(t);
+  renderMascot(t);
+}
+window.render = render;
+window.DURATION = DURATION;
+
+// The flipped bubble keeps its tail under the mascot's side.
+const style = document.createElement("style");
+style.textContent = "#bubble.flip::after{left:auto;right:26px}";
+document.head.appendChild(style);
+
+window.ready = (async () => {
+  await Promise.all([...document.images].map((img) => img.decode().catch(() => {})));
+  // Run once through the whole timeline so every glyph is laid out and its font subset is fetched.
+  for (let t = 0; t <= DURATION; t += 0.5) render(t);
+  await document.fonts.ready;
+  render(0);
+  return true;
+})();
+
+// Live preview when opened in a browser (render.mjs adds ?capture and drives render() itself).
+if (!location.search.includes("capture")) {
+  const fit = () => { const s = Math.min(innerWidth / 1920, innerHeight / 1080); stage.style.transform = `scale(${s})`; stage.style.marginRight = `${1920 * (s - 1)}px`; stage.style.marginBottom = `${1080 * (s - 1)}px`; };
+  addEventListener("resize", fit); fit();
+  const audio = new Audio("build/music.wav");
+  window.ready.then(() => {
+    let t0 = null;
+    const tick = (now) => { if (t0 === null) t0 = now; render(((now - t0) / 1000) % DURATION); requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+    addEventListener("click", () => { audio.currentTime = 0; audio.play().catch(() => {}); t0 = null; });
+  });
+} else {
+  document.body.classList.add("capture");
+}
+</script>
+</body>
+</html>
