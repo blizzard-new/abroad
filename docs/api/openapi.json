@@ -1517,6 +1517,264 @@
         "title": "AccountSubmissionProgress",
         "type": "object"
       },
+      "AdmittedStudentConnectCreateRequest": {
+        "properties": {
+          "country": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Country",
+            "type": "string"
+          },
+          "display_alias": {
+            "maxLength": 60,
+            "minLength": 2,
+            "title": "Display Alias",
+            "type": "string"
+          },
+          "exchange_term": {
+            "default": "115-1（2026 秋季班）",
+            "maxLength": 60,
+            "minLength": 4,
+            "title": "Exchange Term",
+            "type": "string"
+          },
+          "home_school": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Home School",
+            "type": "string"
+          },
+          "institution": {
+            "maxLength": 160,
+            "minLength": 2,
+            "title": "Institution",
+            "type": "string"
+          },
+          "intro_note_zh": {
+            "maxLength": 320,
+            "minLength": 6,
+            "title": "Intro Note Zh",
+            "type": "string"
+          },
+          "looking_for_tags": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "minItems": 1,
+            "title": "Looking For Tags",
+            "type": "array"
+          },
+          "major_or_college": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Major Or College",
+            "type": "string"
+          }
+        },
+        "required": [
+          "home_school",
+          "country",
+          "institution",
+          "display_alias",
+          "major_or_college",
+          "intro_note_zh"
+        ],
+        "title": "AdmittedStudentConnectCreateRequest",
+        "type": "object"
+      },
+      "AdmittedStudentConnectHub": {
+        "properties": {
+          "admitted_count": {
+            "minimum": 0.0,
+            "title": "Admitted Count",
+            "type": "integer"
+          },
+          "banner_subtitle": {
+            "maxLength": 420,
+            "minLength": 10,
+            "title": "Banner Subtitle",
+            "type": "string"
+          },
+          "banner_title": {
+            "maxLength": 200,
+            "minLength": 6,
+            "title": "Banner Title",
+            "type": "string"
+          },
+          "canonical_connect_url": {
+            "maxLength": 360,
+            "minLength": 10,
+            "title": "Canonical Connect Url",
+            "type": "string"
+          },
+          "connections": {
+            "items": {
+              "$ref": "#/components/schemas/AdmittedStudentConnectionItem"
+            },
+            "title": "Connections",
+            "type": "array"
+          },
+          "country_slug": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Country Slug",
+            "type": "string"
+          },
+          "dcard_admission_wave_post_template": {
+            "maxLength": 3000,
+            "minLength": 20,
+            "title": "Dcard Admission Wave Post Template",
+            "type": "string"
+          },
+          "institution_slug": {
+            "maxLength": 140,
+            "minLength": 2,
+            "title": "Institution Slug",
+            "type": "string"
+          },
+          "participating_home_schools": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Participating Home Schools",
+            "type": "array"
+          },
+          "partner_name_en": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Partner Name En",
+            "type": "string"
+          },
+          "partner_name_zh": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Partner Name Zh",
+            "type": "string"
+          },
+          "privacy_safety_notice": {
+            "maxLength": 420,
+            "minLength": 10,
+            "title": "Privacy Safety Notice",
+            "type": "string"
+          }
+        },
+        "required": [
+          "country_slug",
+          "institution_slug",
+          "partner_name_zh",
+          "partner_name_en",
+          "canonical_connect_url",
+          "banner_title",
+          "banner_subtitle",
+          "privacy_safety_notice",
+          "admitted_count",
+          "dcard_admission_wave_post_template"
+        ],
+        "title": "AdmittedStudentConnectHub",
+        "type": "object"
+      },
+      "AdmittedStudentConnectionItem": {
+        "properties": {
+          "connection_id": {
+            "maxLength": 80,
+            "minLength": 4,
+            "title": "Connection Id",
+            "type": "string"
+          },
+          "country_slug": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Country Slug",
+            "type": "string"
+          },
+          "created_at": {
+            "maxLength": 40,
+            "minLength": 10,
+            "title": "Created At",
+            "type": "string"
+          },
+          "display_alias": {
+            "maxLength": 60,
+            "minLength": 2,
+            "title": "Display Alias",
+            "type": "string"
+          },
+          "exchange_term": {
+            "maxLength": 60,
+            "minLength": 4,
+            "title": "Exchange Term",
+            "type": "string"
+          },
+          "home_school_id": {
+            "maxLength": 30,
+            "minLength": 2,
+            "title": "Home School Id",
+            "type": "string"
+          },
+          "home_school_name": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Home School Name",
+            "type": "string"
+          },
+          "home_short_name": {
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Home Short Name",
+            "type": "string"
+          },
+          "institution_slug": {
+            "maxLength": 140,
+            "minLength": 2,
+            "title": "Institution Slug",
+            "type": "string"
+          },
+          "intro_note_zh": {
+            "maxLength": 320,
+            "minLength": 6,
+            "title": "Intro Note Zh",
+            "type": "string"
+          },
+          "looking_for_tags": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "minItems": 1,
+            "title": "Looking For Tags",
+            "type": "array"
+          },
+          "major_or_college": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Major Or College",
+            "type": "string"
+          },
+          "partner_name_zh": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Partner Name Zh",
+            "type": "string"
+          }
+        },
+        "required": [
+          "connection_id",
+          "home_school_id",
+          "home_school_name",
+          "home_short_name",
+          "country_slug",
+          "institution_slug",
+          "partner_name_zh",
+          "exchange_term",
+          "display_alias",
+          "major_or_college",
+          "intro_note_zh",
+          "created_at"
+        ],
+        "title": "AdmittedStudentConnectionItem",
+        "type": "object"
+      },
       "AdvisorAnswer": {
         "properties": {
           "ai_enhanced": {
@@ -10508,6 +10766,16 @@
       },
       "CrossSchoolPartnerPageData": {
         "properties": {
+          "admitted_student_connect": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdmittedStudentConnectHub"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "all_home_agreements": {
             "items": {
               "$ref": "#/components/schemas/CrossSchoolHomeAgreement"
@@ -10625,6 +10893,26 @@
             "minLength": 2,
             "title": "Selected Home Id",
             "type": "string"
+          },
+          "selected_home_network_status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SchoolStagedNetworkStatus"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "selected_home_partner_heat": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PartnerPreferenceHeatItem"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "total_supported_home_count": {
             "minimum": 1.0,
@@ -10815,6 +11103,98 @@
           "last_checked_at"
         ],
         "title": "CrossSchoolStructuredPoint",
+        "type": "object"
+      },
+      "DcardSchoolBoardLaunchDraft": {
+        "properties": {
+          "dcard_board_name": {
+            "maxLength": 120,
+            "minLength": 4,
+            "title": "Dcard Board Name",
+            "type": "string"
+          },
+          "in_next_10_weeks_window": {
+            "default": true,
+            "title": "In Next 10 Weeks Window",
+            "type": "boolean"
+          },
+          "markdown_body": {
+            "maxLength": 5000,
+            "minLength": 40,
+            "title": "Markdown Body",
+            "type": "string"
+          },
+          "partner_hub_deep_link": {
+            "maxLength": 360,
+            "minLength": 4,
+            "title": "Partner Hub Deep Link",
+            "type": "string"
+          },
+          "pitfall_hook_bullets": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "minItems": 1,
+            "title": "Pitfall Hook Bullets",
+            "type": "array"
+          },
+          "post_title": {
+            "maxLength": 220,
+            "minLength": 10,
+            "title": "Post Title",
+            "type": "string"
+          },
+          "recommended_publish_window": {
+            "maxLength": 160,
+            "minLength": 6,
+            "title": "Recommended Publish Window",
+            "type": "string"
+          },
+          "school_id": {
+            "maxLength": 24,
+            "minLength": 2,
+            "title": "School Id",
+            "type": "string"
+          },
+          "school_name": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "School Name",
+            "type": "string"
+          },
+          "short_name": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Short Name",
+            "type": "string"
+          },
+          "window_status": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Window Status",
+            "type": "string"
+          },
+          "workbench_deep_link": {
+            "maxLength": 360,
+            "minLength": 4,
+            "title": "Workbench Deep Link",
+            "type": "string"
+          }
+        },
+        "required": [
+          "school_id",
+          "school_name",
+          "short_name",
+          "dcard_board_name",
+          "window_status",
+          "recommended_publish_window",
+          "post_title",
+          "workbench_deep_link",
+          "partner_hub_deep_link",
+          "markdown_body"
+        ],
+        "title": "DcardSchoolBoardLaunchDraft",
         "type": "object"
       },
       "DeadlineRecord": {
@@ -14093,6 +14473,123 @@
         "title": "PartnerLanguageCondition",
         "type": "object"
       },
+      "PartnerPreferenceHeatItem": {
+        "properties": {
+          "anonymous_applicant_tags": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Anonymous Applicant Tags",
+            "type": "array"
+          },
+          "competition_status_label": {
+            "maxLength": 260,
+            "minLength": 6,
+            "title": "Competition Status Label",
+            "type": "string"
+          },
+          "country_name_zh": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Country Name Zh",
+            "type": "string"
+          },
+          "country_slug": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Country Slug",
+            "type": "string"
+          },
+          "first_choice_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Choice Count"
+          },
+          "heat_unlocked": {
+            "default": false,
+            "title": "Heat Unlocked",
+            "type": "boolean"
+          },
+          "institution_slug": {
+            "maxLength": 140,
+            "minLength": 2,
+            "title": "Institution Slug",
+            "type": "string"
+          },
+          "partner_name_en": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Partner Name En",
+            "type": "string"
+          },
+          "partner_name_zh": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Partner Name Zh",
+            "type": "string"
+          },
+          "partner_page_url": {
+            "maxLength": 360,
+            "minLength": 10,
+            "title": "Partner Page Url",
+            "type": "string"
+          },
+          "quota_hint": {
+            "maxLength": 300,
+            "minLength": 2,
+            "title": "Quota Hint",
+            "type": "string"
+          },
+          "second_or_third_choice_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Second Or Third Choice Count"
+          },
+          "total_interested_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total Interested Count"
+          },
+          "viral_share_text": {
+            "maxLength": 800,
+            "minLength": 10,
+            "title": "Viral Share Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "country_slug",
+          "institution_slug",
+          "partner_page_url",
+          "partner_name_zh",
+          "partner_name_en",
+          "country_name_zh",
+          "quota_hint",
+          "competition_status_label",
+          "viral_share_text"
+        ],
+        "title": "PartnerPreferenceHeatItem",
+        "type": "object"
+      },
       "PartnerProgramOption": {
         "properties": {
           "application_deadline": {
@@ -15128,6 +15625,88 @@
         "title": "PlanningWorkSession",
         "type": "object"
       },
+      "PreferenceSignalSubmitRequest": {
+        "properties": {
+          "anonymous_client_token": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Anonymous Client Token"
+          },
+          "college_or_major": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Or Major"
+          },
+          "first_choice_partner": {
+            "maxLength": 160,
+            "minLength": 2,
+            "title": "First Choice Partner",
+            "type": "string"
+          },
+          "home_school": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Home School",
+            "type": "string"
+          },
+          "language_score_tag": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language Score Tag"
+          },
+          "second_choice_partner": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Second Choice Partner"
+          },
+          "third_choice_partner": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Third Choice Partner"
+          }
+        },
+        "required": [
+          "home_school",
+          "first_choice_partner"
+        ],
+        "title": "PreferenceSignalSubmitRequest",
+        "type": "object"
+      },
       "PrivateConversation": {
         "properties": {
           "created_at": {
@@ -16139,6 +16718,131 @@
         "title": "SchoolPreference",
         "type": "object"
       },
+      "SchoolStagedNetworkStatus": {
+        "properties": {
+          "active_plan_count": {
+            "minimum": 0.0,
+            "title": "Active Plan Count",
+            "type": "integer"
+          },
+          "anti_cold_start_guarantee": {
+            "maxLength": 360,
+            "minLength": 12,
+            "title": "Anti Cold Start Guarantee",
+            "type": "string"
+          },
+          "partner_preference_heat": {
+            "items": {
+              "$ref": "#/components/schemas/PartnerPreferenceHeatItem"
+            },
+            "title": "Partner Preference Heat",
+            "type": "array"
+          },
+          "plans_needed_to_unlock": {
+            "minimum": 0.0,
+            "title": "Plans Needed To Unlock",
+            "type": "integer"
+          },
+          "preference_heat_unlocked": {
+            "default": false,
+            "title": "Preference Heat Unlocked",
+            "type": "boolean"
+          },
+          "public_status_description": {
+            "maxLength": 500,
+            "minLength": 12,
+            "title": "Public Status Description",
+            "type": "string"
+          },
+          "public_status_headline": {
+            "maxLength": 240,
+            "minLength": 6,
+            "title": "Public Status Headline",
+            "type": "string"
+          },
+          "school_id": {
+            "maxLength": 30,
+            "minLength": 2,
+            "title": "School Id",
+            "type": "string"
+          },
+          "school_name": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "School Name",
+            "type": "string"
+          },
+          "short_name": {
+            "maxLength": 30,
+            "minLength": 1,
+            "title": "Short Name",
+            "type": "string"
+          },
+          "solo_tool_pillars": {
+            "items": {
+              "$ref": "#/components/schemas/SoloToolPillar"
+            },
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Solo Tool Pillars",
+            "type": "array"
+          },
+          "stage": {
+            "enum": [
+              "solo_tools_only",
+              "preference_heat_active",
+              "viral_final_week",
+              "admission_connect_wave"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "stage_label": {
+            "maxLength": 120,
+            "minLength": 4,
+            "title": "Stage Label",
+            "type": "string"
+          },
+          "unlock_threshold_min": {
+            "default": 30,
+            "title": "Unlock Threshold Min",
+            "type": "integer"
+          },
+          "viral_last_week_share_body": {
+            "maxLength": 2400,
+            "minLength": 20,
+            "title": "Viral Last Week Share Body",
+            "type": "string"
+          },
+          "viral_last_week_share_title": {
+            "maxLength": 200,
+            "minLength": 6,
+            "title": "Viral Last Week Share Title",
+            "type": "string"
+          },
+          "viral_peak_threshold": {
+            "default": 50,
+            "title": "Viral Peak Threshold",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "school_id",
+          "school_name",
+          "short_name",
+          "stage",
+          "stage_label",
+          "active_plan_count",
+          "plans_needed_to_unlock",
+          "anti_cold_start_guarantee",
+          "public_status_headline",
+          "public_status_description",
+          "viral_last_week_share_title",
+          "viral_last_week_share_body"
+        ],
+        "title": "SchoolStagedNetworkStatus",
+        "type": "object"
+      },
       "SearchResult": {
         "properties": {
           "attachments": {
@@ -16182,6 +16886,52 @@
           "snippet"
         ],
         "title": "SearchResult",
+        "type": "object"
+      },
+      "SoloToolPillar": {
+        "properties": {
+          "action_label": {
+            "maxLength": 80,
+            "minLength": 4,
+            "title": "Action Label",
+            "type": "string"
+          },
+          "action_url": {
+            "maxLength": 360,
+            "minLength": 1,
+            "title": "Action Url",
+            "type": "string"
+          },
+          "pillar_id": {
+            "enum": [
+              "cross_school_partner_page",
+              "deadline_calendar_hook",
+              "study_plan_workbench"
+            ],
+            "title": "Pillar Id",
+            "type": "string"
+          },
+          "subtitle": {
+            "maxLength": 320,
+            "minLength": 8,
+            "title": "Subtitle",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 120,
+            "minLength": 4,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "pillar_id",
+          "title",
+          "subtitle",
+          "action_label",
+          "action_url"
+        ],
+        "title": "SoloToolPillar",
         "type": "object"
       },
       "SourceReference": {
@@ -16318,6 +17068,49 @@
           "content_hash"
         ],
         "title": "SourceSummary",
+        "type": "object"
+      },
+      "StagedNetworkEffectsCatalog": {
+        "properties": {
+          "schools": {
+            "items": {
+              "$ref": "#/components/schemas/SchoolStagedNetworkStatus"
+            },
+            "title": "Schools",
+            "type": "array"
+          },
+          "solo_stage_school_count": {
+            "minimum": 0.0,
+            "title": "Solo Stage School Count",
+            "type": "integer"
+          },
+          "total_supported_schools": {
+            "minimum": 1.0,
+            "title": "Total Supported Schools",
+            "type": "integer"
+          },
+          "unlock_threshold_min": {
+            "default": 30,
+            "title": "Unlock Threshold Min",
+            "type": "integer"
+          },
+          "unlocked_heat_school_count": {
+            "minimum": 0.0,
+            "title": "Unlocked Heat School Count",
+            "type": "integer"
+          },
+          "viral_peak_threshold": {
+            "default": 50,
+            "title": "Viral Peak Threshold",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total_supported_schools",
+          "unlocked_heat_school_count",
+          "solo_stage_school_count"
+        ],
+        "title": "StagedNetworkEffectsCatalog",
         "type": "object"
       },
       "StructuredSourceRecord": {
@@ -17068,6 +17861,479 @@
         ],
         "title": "StudentVerificationMethod",
         "type": "string"
+      },
+      "StudyPlanPartnerCourseLookup": {
+        "properties": {
+          "colleges": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Colleges"
+          },
+          "contracted_home_count": {
+            "minimum": 1.0,
+            "title": "Contracted Home Count",
+            "type": "integer"
+          },
+          "country_name_zh": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Country Name Zh",
+            "type": "string"
+          },
+          "country_slug": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Country Slug",
+            "type": "string"
+          },
+          "course_direction_points": {
+            "items": {
+              "$ref": "#/components/schemas/CrossSchoolStructuredPoint"
+            },
+            "title": "Course Direction Points",
+            "type": "array"
+          },
+          "cross_school_partner_path": {
+            "maxLength": 360,
+            "minLength": 10,
+            "title": "Cross School Partner Path",
+            "type": "string"
+          },
+          "degree_levels": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Degree Levels"
+          },
+          "institution_slug": {
+            "maxLength": 140,
+            "minLength": 2,
+            "title": "Institution Slug",
+            "type": "string"
+          },
+          "language_requirement_summary": {
+            "maxLength": 600,
+            "minLength": 2,
+            "title": "Language Requirement Summary",
+            "type": "string"
+          },
+          "living_cost_hint": {
+            "maxLength": 450,
+            "minLength": 4,
+            "title": "Living Cost Hint",
+            "type": "string"
+          },
+          "partner_school_name_en": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Partner School Name En",
+            "type": "string"
+          },
+          "partner_school_name_zh": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Partner School Name Zh",
+            "type": "string"
+          },
+          "quota_summary": {
+            "maxLength": 400,
+            "minLength": 2,
+            "title": "Quota Summary",
+            "type": "string"
+          },
+          "suggested_course_plan_lines": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "title": "Suggested Course Plan Lines",
+            "type": "array"
+          }
+        },
+        "required": [
+          "partner_school_name_zh",
+          "partner_school_name_en",
+          "country_name_zh",
+          "country_slug",
+          "institution_slug",
+          "cross_school_partner_path",
+          "contracted_home_count",
+          "quota_summary",
+          "language_requirement_summary",
+          "living_cost_hint"
+        ],
+        "title": "StudyPlanPartnerCourseLookup",
+        "type": "object"
+      },
+      "StudyPlanPitfallRule": {
+        "properties": {
+          "badge_label": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Badge Label",
+            "type": "string"
+          },
+          "detail_zh": {
+            "maxLength": 600,
+            "minLength": 8,
+            "title": "Detail Zh",
+            "type": "string"
+          },
+          "format_and_limit": {
+            "maxLength": 300,
+            "minLength": 4,
+            "title": "Format And Limit",
+            "type": "string"
+          },
+          "last_checked_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Last Checked At",
+            "type": "string"
+          },
+          "pitfall_title": {
+            "maxLength": 200,
+            "minLength": 4,
+            "title": "Pitfall Title",
+            "type": "string"
+          },
+          "rule_id": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "scoring_weight": {
+            "maxLength": 300,
+            "minLength": 4,
+            "title": "Scoring Weight",
+            "type": "string"
+          },
+          "severity": {
+            "default": "critical",
+            "enum": [
+              "critical",
+              "high",
+              "info"
+            ],
+            "title": "Severity",
+            "type": "string"
+          },
+          "source_url": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Source Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "badge_label",
+          "pitfall_title",
+          "detail_zh",
+          "scoring_weight",
+          "format_and_limit",
+          "source_url",
+          "last_checked_at"
+        ],
+        "title": "StudyPlanPitfallRule",
+        "type": "object"
+      },
+      "StudyPlanSixStepSection": {
+        "properties": {
+          "anti_cliche_warning": {
+            "maxLength": 300,
+            "minLength": 8,
+            "title": "Anti Cliche Warning",
+            "type": "string"
+          },
+          "example_zh": {
+            "maxLength": 500,
+            "minLength": 8,
+            "title": "Example Zh",
+            "type": "string"
+          },
+          "field_id": {
+            "maxLength": 60,
+            "minLength": 2,
+            "title": "Field Id",
+            "type": "string"
+          },
+          "heading": {
+            "maxLength": 120,
+            "minLength": 4,
+            "title": "Heading",
+            "type": "string"
+          },
+          "high_score_formula": {
+            "maxLength": 300,
+            "minLength": 8,
+            "title": "High Score Formula",
+            "type": "string"
+          },
+          "outline": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "title": "Outline",
+            "type": "array"
+          },
+          "recommended_max_chars": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recommended Max Chars"
+          },
+          "recommended_min_chars": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recommended Min Chars"
+          },
+          "step_number": {
+            "maximum": 6.0,
+            "minimum": 1.0,
+            "title": "Step Number",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "step_number",
+          "field_id",
+          "heading",
+          "anti_cliche_warning",
+          "high_score_formula",
+          "example_zh"
+        ],
+        "title": "StudyPlanSixStepSection",
+        "type": "object"
+      },
+      "StudyPlanWorkbenchCatalog": {
+        "properties": {
+          "active_10_week_window_count": {
+            "minimum": 1.0,
+            "title": "Active 10 Week Window Count",
+            "type": "integer"
+          },
+          "reference_date": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Reference Date",
+            "type": "string"
+          },
+          "schools": {
+            "items": {
+              "$ref": "#/components/schemas/StudyPlanWorkbenchPayload"
+            },
+            "title": "Schools",
+            "type": "array"
+          },
+          "six_step_guide": {
+            "items": {
+              "$ref": "#/components/schemas/StudyPlanSixStepSection"
+            },
+            "maxItems": 6,
+            "minItems": 6,
+            "title": "Six Step Guide",
+            "type": "array"
+          },
+          "total_supported_schools": {
+            "minimum": 1.0,
+            "title": "Total Supported Schools",
+            "type": "integer"
+          },
+          "window_end_date": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Window End Date",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reference_date",
+          "window_end_date",
+          "total_supported_schools",
+          "active_10_week_window_count"
+        ],
+        "title": "StudyPlanWorkbenchCatalog",
+        "type": "object"
+      },
+      "StudyPlanWorkbenchPayload": {
+        "properties": {
+          "dcard_launch_draft": {
+            "$ref": "#/components/schemas/DcardSchoolBoardLaunchDraft"
+          },
+          "estimated_chars_per_a4_page": {
+            "default": 900,
+            "title": "Estimated Chars Per A4 Page",
+            "type": "integer"
+          },
+          "featured_partner_lookups": {
+            "items": {
+              "$ref": "#/components/schemas/StudyPlanPartnerCourseLookup"
+            },
+            "title": "Featured Partner Lookups",
+            "type": "array"
+          },
+          "in_next_10_weeks_window": {
+            "default": true,
+            "title": "In Next 10 Weeks Window",
+            "type": "boolean"
+          },
+          "last_checked_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Last Checked At",
+            "type": "string"
+          },
+          "max_a4_pages_hint": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max A4 Pages Hint"
+          },
+          "max_chars": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Chars"
+          },
+          "min_chars": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Chars"
+          },
+          "official_study_plan_limit_text": {
+            "maxLength": 500,
+            "minLength": 4,
+            "title": "Official Study Plan Limit Text",
+            "type": "string"
+          },
+          "online_deadline_text": {
+            "maxLength": 300,
+            "minLength": 4,
+            "title": "Online Deadline Text",
+            "type": "string"
+          },
+          "paper_deadline_text": {
+            "maxLength": 300,
+            "minLength": 4,
+            "title": "Paper Deadline Text",
+            "type": "string"
+          },
+          "pitfalls": {
+            "items": {
+              "$ref": "#/components/schemas/StudyPlanPitfallRule"
+            },
+            "minItems": 1,
+            "title": "Pitfalls",
+            "type": "array"
+          },
+          "school_id": {
+            "maxLength": 24,
+            "minLength": 2,
+            "title": "School Id",
+            "type": "string"
+          },
+          "school_name": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "School Name",
+            "type": "string"
+          },
+          "scoring_weight_headline": {
+            "maxLength": 240,
+            "minLength": 4,
+            "title": "Scoring Weight Headline",
+            "type": "string"
+          },
+          "selected_partner_lookup": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StudyPlanPartnerCourseLookup"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "short_name": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Short Name",
+            "type": "string"
+          },
+          "six_step_guide": {
+            "items": {
+              "$ref": "#/components/schemas/StudyPlanSixStepSection"
+            },
+            "maxItems": 6,
+            "minItems": 6,
+            "title": "Six Step Guide",
+            "type": "array"
+          },
+          "source_url": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Source Url",
+            "type": "string"
+          },
+          "workbench_url": {
+            "maxLength": 360,
+            "minLength": 4,
+            "title": "Workbench Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "school_id",
+          "school_name",
+          "short_name",
+          "online_deadline_text",
+          "paper_deadline_text",
+          "official_study_plan_limit_text",
+          "scoring_weight_headline",
+          "dcard_launch_draft",
+          "workbench_url",
+          "source_url",
+          "last_checked_at"
+        ],
+        "title": "StudyPlanWorkbenchPayload",
+        "type": "object"
       },
       "SubmissionProgressTransitionRequest": {
         "properties": {
@@ -22489,6 +23755,109 @@
         "summary": "Application Center Pdf"
       }
     },
+    "/application-center/study-plan-workbench": {
+      "get": {
+        "operationId": "application_center_study_plan_workbench_application_center_study_plan_workbench_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "school",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "School"
+            }
+          },
+          {
+            "in": "query",
+            "name": "target_partner",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Target Partner"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyPlanWorkbenchPayload"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Application Center Study Plan Workbench"
+      }
+    },
+    "/application-center/study-plan-workbench/catalog": {
+      "get": {
+        "operationId": "application_center_study_plan_workbench_catalog_application_center_study_plan_workbench_catalog_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "only_active_10_week_window",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Only Active 10 Week Window",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyPlanWorkbenchCatalog"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Application Center Study Plan Workbench Catalog"
+      }
+    },
     "/application-center/templates": {
       "get": {
         "operationId": "application_center_templates_application_center_templates_get",
@@ -25640,6 +27009,24 @@
               ],
               "title": "Home"
             }
+          },
+          {
+            "in": "query",
+            "name": "override_plan_count",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 5000,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Override Plan Count"
+            }
           }
         ],
         "responses": {
@@ -26259,6 +27646,212 @@
           }
         },
         "summary": "Submit Experience"
+      }
+    },
+    "/network-effects/admitted-connect": {
+      "post": {
+        "operationId": "create_admitted_student_connect_network_effects_admitted_connect_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdmittedStudentConnectCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdmittedStudentConnectHub"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Admitted Student Connect"
+      }
+    },
+    "/network-effects/admitted-connect/{country}/{institution}": {
+      "get": {
+        "operationId": "get_admitted_student_connect_network_effects_admitted_connect__country___institution__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "country",
+            "required": true,
+            "schema": {
+              "title": "Country",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "institution",
+            "required": true,
+            "schema": {
+              "title": "Institution",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdmittedStudentConnectHub"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Admitted Student Connect"
+      }
+    },
+    "/network-effects/catalog": {
+      "get": {
+        "operationId": "network_effects_catalog_network_effects_catalog_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StagedNetworkEffectsCatalog"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Network Effects Catalog"
+      }
+    },
+    "/network-effects/preference-signal": {
+      "post": {
+        "operationId": "submit_preference_signal_network_effects_preference_signal_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreferenceSignalSubmitRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolStagedNetworkStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Submit Preference Signal"
+      }
+    },
+    "/network-effects/status": {
+      "get": {
+        "operationId": "network_effects_status_network_effects_status_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "school",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "School"
+            }
+          },
+          {
+            "in": "query",
+            "name": "override_plan_count",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 5000,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Override Plan Count"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolStagedNetworkStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Network Effects Status"
       }
     },
     "/offerings": {

@@ -4279,6 +4279,121 @@ class CrossSchoolConversionHooks(BaseModel):
     study_plan_action_url: str = Field(min_length=1, max_length=500)
 
 
+class SoloToolPillar(BaseModel):
+    pillar_id: Literal[
+        "cross_school_partner_page",
+        "deadline_calendar_hook",
+        "study_plan_workbench",
+    ]
+    title: str = Field(min_length=4, max_length=120)
+    subtitle: str = Field(min_length=8, max_length=320)
+    action_label: str = Field(min_length=4, max_length=80)
+    action_url: str = Field(min_length=1, max_length=360)
+
+
+class PartnerPreferenceHeatItem(BaseModel):
+    country_slug: str = Field(min_length=2, max_length=80)
+    institution_slug: str = Field(min_length=2, max_length=140)
+    partner_page_url: str = Field(min_length=10, max_length=360)
+    partner_name_zh: str = Field(min_length=1, max_length=160)
+    partner_name_en: str = Field(min_length=1, max_length=200)
+    country_name_zh: str = Field(min_length=1, max_length=60)
+    heat_unlocked: bool = False
+    total_interested_count: int | None = None
+    first_choice_count: int | None = None
+    second_or_third_choice_count: int | None = None
+    quota_hint: str = Field(min_length=2, max_length=300)
+    competition_status_label: str = Field(min_length=6, max_length=260)
+    anonymous_applicant_tags: list[str] = Field(default_factory=list, max_length=10)
+    viral_share_text: str = Field(min_length=10, max_length=800)
+
+
+class AdmittedStudentConnectionItem(BaseModel):
+    connection_id: str = Field(min_length=4, max_length=80)
+    home_school_id: str = Field(min_length=2, max_length=30)
+    home_school_name: str = Field(min_length=2, max_length=80)
+    home_short_name: str = Field(min_length=1, max_length=30)
+    country_slug: str = Field(min_length=2, max_length=80)
+    institution_slug: str = Field(min_length=2, max_length=140)
+    partner_name_zh: str = Field(min_length=1, max_length=160)
+    exchange_term: str = Field(min_length=4, max_length=60)
+    display_alias: str = Field(min_length=2, max_length=60)
+    major_or_college: str = Field(min_length=2, max_length=80)
+    looking_for_tags: list[str] = Field(default_factory=list, min_length=1, max_length=6)
+    intro_note_zh: str = Field(min_length=6, max_length=320)
+    created_at: str = Field(min_length=10, max_length=40)
+
+
+class AdmittedStudentConnectHub(BaseModel):
+    country_slug: str = Field(min_length=2, max_length=80)
+    institution_slug: str = Field(min_length=2, max_length=140)
+    partner_name_zh: str = Field(min_length=1, max_length=160)
+    partner_name_en: str = Field(min_length=1, max_length=200)
+    canonical_connect_url: str = Field(min_length=10, max_length=360)
+    banner_title: str = Field(min_length=6, max_length=200)
+    banner_subtitle: str = Field(min_length=10, max_length=420)
+    privacy_safety_notice: str = Field(min_length=10, max_length=420)
+    admitted_count: int = Field(ge=0)
+    participating_home_schools: list[str] = Field(default_factory=list)
+    connections: list[AdmittedStudentConnectionItem] = Field(default_factory=list)
+    dcard_admission_wave_post_template: str = Field(min_length=20, max_length=3000)
+
+
+class SchoolStagedNetworkStatus(BaseModel):
+    school_id: str = Field(min_length=2, max_length=30)
+    school_name: str = Field(min_length=2, max_length=80)
+    short_name: str = Field(min_length=1, max_length=30)
+    stage: Literal[
+        "solo_tools_only",
+        "preference_heat_active",
+        "viral_final_week",
+        "admission_connect_wave",
+    ]
+    stage_label: str = Field(min_length=4, max_length=120)
+    active_plan_count: int = Field(ge=0)
+    unlock_threshold_min: int = 30
+    viral_peak_threshold: int = 50
+    plans_needed_to_unlock: int = Field(ge=0)
+    preference_heat_unlocked: bool = False
+    anti_cold_start_guarantee: str = Field(min_length=12, max_length=360)
+    public_status_headline: str = Field(min_length=6, max_length=240)
+    public_status_description: str = Field(min_length=12, max_length=500)
+    solo_tool_pillars: list[SoloToolPillar] = Field(default_factory=list, min_length=3, max_length=3)
+    partner_preference_heat: list[PartnerPreferenceHeatItem] = Field(default_factory=list)
+    viral_last_week_share_title: str = Field(min_length=6, max_length=200)
+    viral_last_week_share_body: str = Field(min_length=20, max_length=2400)
+
+
+class PreferenceSignalSubmitRequest(BaseModel):
+    home_school: str = Field(min_length=2, max_length=80)
+    first_choice_partner: str = Field(min_length=2, max_length=160)
+    second_choice_partner: str | None = Field(default=None, max_length=160)
+    third_choice_partner: str | None = Field(default=None, max_length=160)
+    college_or_major: str | None = Field(default=None, max_length=80)
+    language_score_tag: str | None = Field(default=None, max_length=80)
+    anonymous_client_token: str | None = Field(default=None, max_length=120)
+
+
+class AdmittedStudentConnectCreateRequest(BaseModel):
+    home_school: str = Field(min_length=2, max_length=80)
+    country: str = Field(min_length=2, max_length=80)
+    institution: str = Field(min_length=2, max_length=160)
+    exchange_term: str = Field(default="115-1（2026 秋季班）", min_length=4, max_length=60)
+    display_alias: str = Field(min_length=2, max_length=60)
+    major_or_college: str = Field(min_length=2, max_length=80)
+    looking_for_tags: list[str] = Field(default_factory=lambda: ["合租找房", "選課討論"], min_length=1, max_length=6)
+    intro_note_zh: str = Field(min_length=6, max_length=320)
+
+
+class StagedNetworkEffectsCatalog(BaseModel):
+    unlock_threshold_min: int = 30
+    viral_peak_threshold: int = 50
+    total_supported_schools: int = Field(ge=1)
+    unlocked_heat_school_count: int = Field(ge=0)
+    solo_stage_school_count: int = Field(ge=0)
+    schools: list[SchoolStagedNetworkStatus] = Field(default_factory=list)
+
+
 class CrossSchoolPartnerPageData(BaseModel):
     country_slug: str = Field(min_length=2, max_length=80)
     country_name_zh: str = Field(min_length=1, max_length=60)
@@ -4300,6 +4415,9 @@ class CrossSchoolPartnerPageData(BaseModel):
     experience_digests: list[CrossSchoolStructuredPoint] = Field(default_factory=list)
     copyright_compliance_notice: str = Field(min_length=20, max_length=500)
     conversion_hooks: CrossSchoolConversionHooks
+    selected_home_network_status: SchoolStagedNetworkStatus | None = None
+    selected_home_partner_heat: PartnerPreferenceHeatItem | None = None
+    admitted_student_connect: AdmittedStudentConnectHub | None = None
 
 
 class CrossSchoolPartnerSummaryItem(BaseModel):
@@ -4329,5 +4447,109 @@ class CrossSchoolPartnerDirectory(BaseModel):
     items: list[CrossSchoolPartnerSummaryItem] = Field(default_factory=list)
 
 
+class StudyPlanPitfallRule(BaseModel):
+    rule_id: str = Field(min_length=2, max_length=80)
+    severity: Literal["critical", "high", "info"] = "critical"
+    badge_label: str = Field(min_length=2, max_length=80)
+    pitfall_title: str = Field(min_length=4, max_length=200)
+    detail_zh: str = Field(min_length=8, max_length=600)
+    scoring_weight: str = Field(min_length=4, max_length=300)
+    format_and_limit: str = Field(min_length=4, max_length=300)
+    source_url: str = Field(min_length=10, max_length=2000)
+    last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+
+    @field_validator("source_url")
+    @classmethod
+    def _validate_pitfall_source_url(cls, value: str) -> str:
+        value = value.strip()
+        if not value.startswith("https://"):
+            raise ValueError("StudyPlanPitfallRule.source_url must start with https://")
+        return value
+
+
+class StudyPlanSixStepSection(BaseModel):
+    step_number: int = Field(ge=1, le=6)
+    field_id: str = Field(min_length=2, max_length=60)
+    heading: str = Field(min_length=4, max_length=120)
+    recommended_min_chars: int | None = None
+    recommended_max_chars: int | None = None
+    anti_cliche_warning: str = Field(min_length=8, max_length=300)
+    high_score_formula: str = Field(min_length=8, max_length=300)
+    outline: list[str] = Field(default_factory=list, max_length=6)
+    example_zh: str = Field(min_length=8, max_length=500)
+
+
+class StudyPlanPartnerCourseLookup(BaseModel):
+    partner_school_name_zh: str = Field(min_length=1, max_length=160)
+    partner_school_name_en: str = Field(min_length=1, max_length=200)
+    country_name_zh: str = Field(min_length=1, max_length=60)
+    country_slug: str = Field(min_length=2, max_length=80)
+    institution_slug: str = Field(min_length=2, max_length=140)
+    cross_school_partner_path: str = Field(min_length=10, max_length=360)
+    contracted_home_count: int = Field(ge=1)
+    quota_summary: str = Field(min_length=2, max_length=400)
+    language_requirement_summary: str = Field(min_length=2, max_length=600)
+    degree_levels: str | None = None
+    colleges: str | None = None
+    course_direction_points: list[CrossSchoolStructuredPoint] = Field(default_factory=list)
+    living_cost_hint: str = Field(min_length=4, max_length=450)
+    suggested_course_plan_lines: list[str] = Field(default_factory=list, max_length=6)
+
+
+class DcardSchoolBoardLaunchDraft(BaseModel):
+    school_id: str = Field(min_length=2, max_length=24)
+    school_name: str = Field(min_length=2, max_length=80)
+    short_name: str = Field(min_length=2, max_length=40)
+    dcard_board_name: str = Field(min_length=4, max_length=120)
+    in_next_10_weeks_window: bool = True
+    window_status: str = Field(min_length=2, max_length=40)
+    recommended_publish_window: str = Field(min_length=6, max_length=160)
+    post_title: str = Field(min_length=10, max_length=220)
+    pitfall_hook_bullets: list[str] = Field(default_factory=list, min_length=1, max_length=6)
+    workbench_deep_link: str = Field(min_length=4, max_length=360)
+    partner_hub_deep_link: str = Field(min_length=4, max_length=360)
+    markdown_body: str = Field(min_length=40, max_length=5000)
+
+
+class StudyPlanWorkbenchPayload(BaseModel):
+    school_id: str = Field(min_length=2, max_length=24)
+    school_name: str = Field(min_length=2, max_length=80)
+    short_name: str = Field(min_length=2, max_length=40)
+    in_next_10_weeks_window: bool = True
+    online_deadline_text: str = Field(min_length=4, max_length=300)
+    paper_deadline_text: str = Field(min_length=4, max_length=300)
+    official_study_plan_limit_text: str = Field(min_length=4, max_length=500)
+    min_chars: int | None = None
+    max_chars: int | None = None
+    estimated_chars_per_a4_page: int = 900
+    max_a4_pages_hint: float | None = None
+    scoring_weight_headline: str = Field(min_length=4, max_length=240)
+    pitfalls: list[StudyPlanPitfallRule] = Field(default_factory=list, min_length=1)
+    six_step_guide: list[StudyPlanSixStepSection] = Field(default_factory=list, min_length=6, max_length=6)
+    selected_partner_lookup: StudyPlanPartnerCourseLookup | None = None
+    featured_partner_lookups: list[StudyPlanPartnerCourseLookup] = Field(default_factory=list)
+    dcard_launch_draft: DcardSchoolBoardLaunchDraft
+    workbench_url: str = Field(min_length=4, max_length=360)
+    source_url: str = Field(min_length=10, max_length=2000)
+    last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+
+    @field_validator("source_url")
+    @classmethod
+    def _validate_workbench_source_url(cls, value: str) -> str:
+        value = value.strip()
+        if not value.startswith("https://"):
+            raise ValueError("StudyPlanWorkbenchPayload.source_url must start with https://")
+        return value
+
+
+class StudyPlanWorkbenchCatalog(BaseModel):
+    reference_date: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    window_end_date: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    total_supported_schools: int = Field(ge=1)
+    active_10_week_window_count: int = Field(ge=1)
+    six_step_guide: list[StudyPlanSixStepSection] = Field(default_factory=list, min_length=6, max_length=6)
+    schools: list[StudyPlanWorkbenchPayload] = Field(default_factory=list)
+
 
 JsonDict = dict[str, Any]
+

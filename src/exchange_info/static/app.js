@@ -118,6 +118,11 @@ const state = {
   budgetSchool: "",
   pendingBudgetDraft: null,
   applicationTemplates: [],
+  studyPlanWorkbench: null,
+  studyPlanWorkbenchLoading: false,
+  studyPlanWorkbenchPartnerQuery: "",
+  studyPlanSandboxText: "",
+  studyPlanActiveStepNumber: 1,
   applicationDocumentCatalog: null,
   applicationDocumentCatalogError: "",
   applicationDocumentCatalogContextKey: "",
@@ -192,6 +197,8 @@ const state = {
   verifiedWindowCatalog: null,
   verifiedWindowSelectedSchool: "",
   verifiedWindowFilter: "10w",
+  stagedNetworkStatus: null,
+  stagedNetworkLoading: false,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -6533,6 +6540,8 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
     state.applicationDocumentCatalogError = catalogError;
     state.applicationDocumentCatalogContextKey = contextKey;
     initializeApplicationSelections();
+    loadStudyPlanWorkbench({ homeSchool: requestedSchool, targetPartner: context.target_school || state.studyPlanWorkbenchPartnerQuery });
+    loadStagedNetworkEffects({ homeSchool: requestedSchool });
     renderApplicationCenter();
     refreshSelectedApplicationPreviews();
     renderApplicationJourney();
@@ -6824,6 +6833,8 @@ function updateApplicationCenterSteps() {
 function renderApplicationCenter() {
   restoreApplicationContextForm();
   restoreApplicationProfileForm();
+  renderStudyPlanAntiPitfallHub();
+  renderStagedNetworkEffectsHub();
   renderApplicationTemplates();
   renderApplicationDocumentCatalog();
   renderApplicationGenerationGate();
@@ -7115,10 +7126,12 @@ function toggleApplicationFieldGuide(button) {
   panel.hidden = !open;
 }
 
-function applicationWritingTargetLabel(rules) {
+function applicationWritingTargetLabel(rules, workbench = state.studyPlanWorkbench) {
   if (rules.min_chars && rules.max_chars) return `${applicationNumber(rules.min_chars)}–${applicationNumber(rules.max_chars)} 字`;
   if (rules.max_chars) return `最多 ${applicationNumber(rules.max_chars)} 字`;
-  return `至少 ${applicationNumber(rules.min_chars)} 字`;
+  if (rules.min_chars) return `至少 ${applicationNumber(rules.min_chars)} 字`;
+  if (workbench?.max_a4_pages_hint) return `建議上限約 ${workbench.max_a4_pages_hint} 面 A4（約 ${applicationNumber(Math.round(workbench.max_a4_pages_hint * (workbench.estimated_chars_per_a4_page || 900)))} 字）`;
+  return workbench?.official_study_plan_limit_text || "依各校簡章頁數／格式規定";
 }
 
 function renderApplicationWritingRules(template) {
@@ -7132,20 +7145,25 @@ function renderApplicationWritingRules(template) {
   }
   const verified = rules.verified !== false;
   container.classList.toggle("is-unverified", !verified);
-  const hasLimit = verified && Boolean(rules.min_chars || rules.max_chars) && rules.count_field_ids?.length;
-  const ruleSourceUrl = safeSourceUrl(rules.source_url || template.source_url || "");
-  const ruleCheckedAt = String(rules.last_checked_at || (template.last_checked ? String(template.last_checked).slice(0, 10) : "2026-10-19"));
+  const isStudyPlan = template.id === "study-plan";
+  const hasLimit = (verified && Boolean(rules.min_chars || rules.max_chars) && rules.count_field_ids?.length) || isStudyPlan;
+  const ruleSourceUrl = safeSourceUrl(rules.source_url || state.studyPlanWorkbench?.source_url || template.source_url || "");
+  const ruleCheckedAt = String(rules.last_checked_at || state.studyPlanWorkbench?.last_checked_at || (template.last_checked ? String(template.last_checked).slice(0, 10) : "2026-10-19"));
   const subtitle = verified
     ? `查核依據：${rules.evidence || "學校官方公告"}（最後查核日期：${ruleCheckedAt}）。欄位旁的「建議字數」只是系統給的寫作參考。`
     : `各校的字數與格式不同，這間學校的規定請直接核對官方簡章（最後查核日期：${ruleCheckedAt}）。`;
+  const pitfallBadgesMarkup = isStudyPlan && state.studyPlanWorkbench?.pitfalls?.length
+    ? `<div class="writing-rules-pitfall-strip" aria-label="母校讀書計畫防雷重點">${state.studyPlanWorkbench.pitfalls.map((p) => `<span class="writing-pitfall-pill severity-${escapeHtml(p.severity)}"><strong>${escapeHtml(p.badge_label)}</strong><span>${escapeHtml(p.pitfall_title)}（${escapeHtml(p.scoring_weight)}）</span></span>`).join("")}</div>`
+    : "";
   container.innerHTML = `
     <div class="application-writing-rules-heading"><i data-lucide="${verified ? "ruler" : "circle-alert"}" aria-hidden="true"></i><div><h3 id="application-writing-rules-title">${verified ? "學校對這份文件的規定" : "這間學校的字數與格式規定尚未收錄"}</h3><p>${escapeHtml(subtitle)}</p></div></div>
+    ${pitfallBadgesMarkup}
     <ul class="application-writing-rules-list">${rules.rules.map((rule) => `<li class="application-writing-rule-row"><span class="application-writing-rule-text">${escapeHtml(rule)}</span><span class="application-writing-rule-provenance">${ruleSourceUrl ? `<a class="verified-rule-source" href="${escapeHtml(ruleSourceUrl)}" target="_blank" rel="noopener noreferrer"><i data-lucide="shield-check" aria-hidden="true"></i><span>官方 HTTPS 來源</span><i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}<span class="verified-rule-checked">最後查核：${escapeHtml(ruleCheckedAt)}</span></span></li>`).join("")}</ul>
     ${hasLimit ? `<div id="application-writing-total" class="application-writing-total" role="status">
-      <div class="application-writing-total-line"><span><strong data-writing-total>0</strong> 字</span><small>整份合計 · 規定 ${applicationWritingTargetLabel(rules)}</small></div>
+      <div class="application-writing-total-line"><span><strong data-writing-total>0</strong> 字 · <em data-writing-a4-pages>約 0.0 面 A4</em></span><small>整份合計 · 規定 ${escapeHtml(applicationWritingTargetLabel(rules))}</small></div>
       <span class="application-writing-bar" aria-hidden="true"><span></span></span>
       <p data-writing-message></p>
-      <small>合計不含空白與換行，僅供參考；實際計算方式以學校規定為準。${rules.count_note ? escapeHtml(rules.count_note) : ""}</small>
+      <small>合計不含空白與換行，A4 頁數以每頁約 900 字估算，僅供排版防超頁參考；實際計算方式以學校規定為準。${rules.count_note ? escapeHtml(rules.count_note) : ""}</small>
     </div>` : ""}
     ${ruleSourceUrl ? `<div class="application-writing-source-bar"><a class="application-writing-source" href="${escapeHtml(ruleSourceUrl)}" target="_blank" rel="noopener noreferrer"><i data-lucide="shield-check" aria-hidden="true"></i><span>官方 HTTPS 來源連結（${escapeHtml(ruleSourceUrl)}）</span><i data-lucide="external-link" aria-hidden="true"></i></a><span class="application-writing-checked-date">最後查核日期：${escapeHtml(ruleCheckedAt)}</span></div>` : ""}`;
 }
@@ -7155,27 +7173,511 @@ function updateApplicationWritingTotal(template) {
   const rules = template?.writing_rules;
   const form = $("#application-document-form");
   if (!box || !rules || !form) return;
-  const total = rules.count_field_ids.reduce((sum, id) => sum + applicationWrittenCount(form.elements[id]?.value), 0);
+  const countFieldIds = rules.count_field_ids?.length
+    ? rules.count_field_ids
+    : ["motivation", "school_reason", "learning_goals", "course_plan", "expected_outcomes", "return_plan", "english_version"];
+  const total = countFieldIds.reduce((sum, id) => sum + applicationWrittenCount(form.elements[id]?.value), 0);
+  const charsPerPage = state.studyPlanWorkbench?.estimated_chars_per_a4_page || 900;
+  const maxPagesHint = template?.id === "study-plan" ? state.studyPlanWorkbench?.max_a4_pages_hint : null;
+  const estimatedPages = (total / charsPerPage).toFixed(1);
   const { min_chars: min, max_chars: max } = rules;
+  const effectiveMax = max || (maxPagesHint ? Math.round(maxPagesHint * charsPerPage) : null);
   let tone = "";
-  let message = "還沒開始寫；下方各欄會自動合計。";
+  let message = "還沒開始寫；下方 6 段欄位會自動合計字數並換算 A4 頁數。";
   if (total) {
     if (min && total < min) {
       tone = "is-short";
-      message = `還差 ${applicationNumber(min - total)} 字才達到最低要求。`;
+      message = `還差 ${applicationNumber(min - total)} 字才達到最低要求（目前約 ${estimatedPages} 面 A4）。`;
     } else if (max && total > max) {
       tone = "is-over";
-      message = `超過上限 ${applicationNumber(total - max)} 字，請縮減。`;
+      message = `超過上限 ${applicationNumber(total - max)} 字，請縮減（目前約 ${estimatedPages} 面 A4）。`;
+    } else if (!max && maxPagesHint && total > effectiveMax) {
+      tone = "is-over";
+      message = `目前約 ${estimatedPages} 面 A4，可能超過學校 ${maxPagesHint} 面 A4 上限，建議精簡段落。`;
     } else {
       tone = "is-ok";
-      message = "目前在字數規定範圍內。";
+      message = max || min
+        ? `目前在字數規定範圍內（約 ${estimatedPages} 面 A4${maxPagesHint ? `，學校上限 ${maxPagesHint} 面 A4` : ""}）。`
+        : `目前合計 ${applicationNumber(total)} 字（約 ${estimatedPages} 面 A4${maxPagesHint ? `，學校上限 ${maxPagesHint} 面 A4` : ""}）。`;
     }
   }
   box.className = `application-writing-total ${tone}`;
   box.querySelector("[data-writing-total]").textContent = applicationNumber(total);
+  const pageNode = box.querySelector("[data-writing-a4-pages]");
+  if (pageNode) {
+    pageNode.textContent = `約 ${estimatedPages} 面 A4${maxPagesHint ? ` / 上限 ${maxPagesHint} 面` : ""}`;
+  }
   box.querySelector("[data-writing-message]").textContent = message;
-  const target = max || min;
+  const target = effectiveMax || min || 1800;
   box.querySelector(".application-writing-bar > span").style.width = `${Math.min(100, Math.round((total / target) * 100))}%`;
+}
+
+function resolveSupportedHomeSchool(raw) {
+  const q = normalize(raw);
+  if (!q) return "";
+  const match = (state.supportedUniversities || []).find((item) => (
+    normalize(item.id) === q
+    || normalize(item.school_name) === q
+    || normalize(item.short_name) === q
+    || (item.aliases || []).some((alias) => normalize(alias) === q)
+  ));
+  return match ? match.school_name : "";
+}
+
+async function loadStudyPlanWorkbench({ homeSchool = activeHomeSchool(), targetPartner = "" } = {}) {
+  const queryPartner = targetPartner || state.studyPlanWorkbenchPartnerQuery || state.applicationContext?.target_school || "";
+  state.studyPlanWorkbenchLoading = true;
+  try {
+    const params = new URLSearchParams({ school: homeSchool });
+    if (queryPartner) params.set("target_partner", queryPartner);
+    const payload = await fetchJson(`/application-center/study-plan-workbench?${params}`);
+    if (normalize(activeHomeSchool()) !== normalize(homeSchool) && normalize(payload.school_name) !== normalize(activeHomeSchool())) {
+      return payload;
+    }
+    state.studyPlanWorkbench = payload;
+    renderStudyPlanAntiPitfallHub();
+    const activeTemplate = applicationTemplateById(state.activeApplicationTemplateId);
+    if (activeTemplate && activeTemplate.id === "study-plan") {
+      renderApplicationWritingRules(activeTemplate);
+      updateApplicationFieldCounters(activeTemplate);
+      renderWorkbenchStudyPlanAssistant(activeTemplate);
+    }
+    initIcons();
+    return payload;
+  } catch (_) {
+    return null;
+  } finally {
+    state.studyPlanWorkbenchLoading = false;
+  }
+}
+
+async function loadStagedNetworkEffects({ homeSchool = activeHomeSchool() } = {}) {
+  state.stagedNetworkLoading = true;
+  try {
+    const params = new URLSearchParams({ school: homeSchool });
+    const payload = await fetchJson(`/network-effects/status?${params}`);
+    if (normalize(activeHomeSchool()) !== normalize(homeSchool) && normalize(payload.school_name) !== normalize(activeHomeSchool())) {
+      return payload;
+    }
+    state.stagedNetworkStatus = payload;
+    renderStagedNetworkEffectsHub();
+    initIcons();
+    return payload;
+  } catch (_) {
+    return null;
+  } finally {
+    state.stagedNetworkLoading = false;
+  }
+}
+
+function renderStagedNetworkEffectsHub() {
+  const container = $("#staged-network-effects-hub");
+  if (!container) return;
+  const st = state.stagedNetworkStatus;
+  if (!st) {
+    container.innerHTML = `<div class="study-plan-hub-loading"><i data-lucide="loader" aria-hidden="true"></i><span>正在核對 ${escapeHtml(activeHomeSchool())} 單人工具狀態與志願熱度解鎖進度…</span></div>`;
+    return;
+  }
+  const unlocked = Boolean(st.preference_heat_unlocked);
+  const isViral = st.stage === "viral_final_week";
+  const threshold = Number(st.unlock_threshold_min || 30);
+  const progressPct = Math.min(100, Math.round((Number(st.active_plan_count || 0) / threshold) * 100));
+  const pillarsMarkup = (st.solo_tool_pillars || []).map((p, idx) => `
+    <article class="staged-solo-pillar-card">
+      <div>
+        <span class="staged-pillar-badge">單人必備工具 ${idx + 1}</span>
+        <h4>${escapeHtml(p.title)}</h4>
+        <p>${escapeHtml(p.subtitle)}</p>
+      </div>
+      <a class="secondary-button" href="${escapeHtml(p.action_url)}">${escapeHtml(p.action_label)}</a>
+    </article>`).join("");
+
+  const heatBoardMarkup = unlocked
+    ? `
+      <div class="staged-heat-board">
+        <div class="staged-heat-board-head">
+          <div>
+            <span class="section-kicker">${isViral ? "🚀 最後一週病毒式轉發模式（滿 50 份計畫）" : "🔥 站內志願熱度已解鎖（滿 30 份計畫）"}</span>
+            <h4>${escapeHtml(st.short_name)} 本期熱門姊妹校匿名志願熱度（匿名搓湯圓）</h4>
+          </div>
+          ${st.viral_last_week_share_body ? `
+            <button type="button" class="secondary-button" data-copy-viral-share="${escapeHtml(st.viral_last_week_share_body)}">
+              <i data-lucide="share-2" aria-hidden="true"></i>
+              <span>一鍵複製 Dcard 校板／系級轉發文案</span>
+            </button>` : ""}
+        </div>
+        <div class="staged-heat-cards-grid">
+          ${(st.partner_preference_heat || []).map((item) => `
+            <article class="staged-heat-partner-card">
+              <div class="staged-heat-partner-top">
+                <span class="staged-heat-country">${escapeHtml(item.country_name_zh)}</span>
+                <span class="staged-heat-total">共 ${item.total_interested_count} 人列入志願</span>
+              </div>
+              <h5><a href="${escapeHtml(item.partner_page_url)}">${escapeHtml(item.partner_name_zh)}</a></h5>
+              <div class="staged-heat-breakdown">
+                <span>第 1 志願：<strong>${item.first_choice_count} 人</strong></span>
+                <span>第 2–3 志願：<strong>${item.second_or_third_choice_count} 人</strong></span>
+              </div>
+              <div class="staged-heat-tags">
+                ${(item.anonymous_applicant_tags || []).map((t) => `<span class="staged-heat-tag">${escapeHtml(t)}</span>`).join("")}
+              </div>
+              <div class="staged-heat-links">
+                <a href="${escapeHtml(item.partner_page_url)}#preference-heat">母校志願熱度</a>
+                <a href="${escapeHtml(item.partner_page_url)}#admitted-connect">放榜跨校認親</a>
+              </div>
+            </article>`).join("")}
+        </div>
+      </div>`
+    : `
+      <div class="staged-solo-unlock-banner">
+        <div>
+          <strong>🛡️ 防冷啟動保護啟用中：在累積滿 ${threshold} 份校內申請計畫前，不顯示「0 人填志願」等冷清數字</strong>
+          <p>就算全校只有你 1 個人進站，上方三大單人工具（跨校外國大學頁、截止日提醒、讀書計畫工作台）也能完整支援備審。目前 ${escapeHtml(st.short_name)} 已累積 <strong>${st.active_plan_count} / ${threshold}</strong> 份計畫（再 ${st.plans_needed_to_unlock} 份自動解鎖同校匿名志願熱度）！</p>
+        </div>
+        <div class="staged-solo-unlock-actions">
+          <button type="button" class="primary-button" data-submit-staged-preference-signal>
+            <i data-lucide="flame" aria-hidden="true"></i>
+            <span>匿名登記我的目標志願（推進 ${escapeHtml(st.short_name)} 解鎖進度 +1）</span>
+          </button>
+          <a class="secondary-button" href="/partners">前往 /partners 放榜跨校連線</a>
+        </div>
+      </div>`;
+
+  container.innerHTML = `
+    <div class="staged-network-header">
+      <div>
+        <div class="study-plan-anti-pitfall-badges">
+          <span class="pitfall-kicker-badge"><i data-lucide="users" aria-hidden="true"></i><span>疊加網路效應 · 單人工具 ➔ 匿名搓湯圓 ➔ 放榜跨校認親</span></span>
+          <span class="pitfall-window-badge ${unlocked ? "is-active-window" : ""}">${escapeHtml(st.stage_label)}</span>
+        </div>
+        <h3 id="staged-network-effects-title">${escapeHtml(st.public_status_headline)}</h3>
+        <p class="study-plan-anti-pitfall-subtitle">${escapeHtml(st.public_status_description)}</p>
+      </div>
+      <div class="staged-network-progress-box">
+        <span>${escapeHtml(st.short_name)} 本期申請計畫累積：<strong>${st.active_plan_count} 份</strong></span>
+        <div class="staged-progress-bar"><span style="width:${progressPct}%"></span></div>
+        <small>${unlocked ? `已突破 ${threshold} 份解鎖門檻` : `滿 ${threshold} 份解鎖同校匿名搓湯圓（目前 ${progressPct}%）`}</small>
+      </div>
+    </div>
+    <div class="staged-solo-pillars-grid">${pillarsMarkup}</div>
+    ${heatBoardMarkup}
+  `;
+  initIcons();
+}
+
+async function submitStagedNetworkPreferenceSignal() {
+  const st = state.stagedNetworkStatus;
+  const homeId = st?.school_id || activeHomeSchool();
+  const targetPartner = state.applicationContext?.target_school
+    || state.studyPlanWorkbench?.selected_partner_lookup?.partner_school_name_zh
+    || "Technical University of Munich";
+  try {
+    const updated = await fetchJson("/network-effects/preference-signal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        home_school: homeId,
+        first_choice_partner: targetPartner,
+        college_or_major: state.applicationProfile?.college || "跨領域申請者",
+        language_score_tag: "已建立讀書計畫",
+      }),
+    });
+    state.stagedNetworkStatus = updated;
+    renderStagedNetworkEffectsHub();
+    announce(
+      updated.preference_heat_unlocked
+        ? `🎉 ${updated.short_name} 已累積 ${updated.active_plan_count} 份申請計畫，正式解鎖站內志願熱度！`
+        : `已匿名計入 ${updated.short_name} 申請計畫（目前 ${updated.active_plan_count}/${updated.unlock_threshold_min} 份）`,
+      "success",
+    );
+  } catch (error) {
+    announce(error.message || "登記失敗，請稍後再試", "error");
+  }
+}
+
+function updateStudyPlanSandboxCounter() {
+  const wb = state.studyPlanWorkbench;
+  const box = $("#study-plan-sandbox-counter");
+  const textarea = $("#study-plan-sandbox-textarea");
+  if (!wb || !box || !textarea) return;
+  const text = textarea.value || "";
+  state.studyPlanSandboxText = text;
+  const count = applicationWrittenCount(text);
+  const charsPerPage = wb.estimated_chars_per_a4_page || 900;
+  const pages = (count / charsPerPage).toFixed(1);
+  const min = wb.min_chars;
+  const max = wb.max_chars || (wb.max_a4_pages_hint ? Math.round(wb.max_a4_pages_hint * charsPerPage) : null);
+  let statusText = "貼上或輸入你的讀書計畫草稿，即時換算字數與 A4 頁數";
+  let statusTone = "is-neutral";
+  if (count > 0) {
+    if (min && count < min) {
+      statusTone = "is-short";
+      statusText = `還差 ${applicationNumber(min - count)} 字達最低門檻（目前約 ${pages} 面 A4）`;
+    } else if (wb.max_chars && count > wb.max_chars) {
+      statusTone = "is-over";
+      statusText = `超過學校字數上限 ${applicationNumber(count - wb.max_chars)} 字！（目前約 ${pages} 面 A4）`;
+    } else if (wb.max_a4_pages_hint && count > wb.max_a4_pages_hint * charsPerPage) {
+      statusTone = "is-over";
+      statusText = `目前約 ${pages} 面 A4，小心超過 ${wb.short_name} ${wb.max_a4_pages_hint} 面 A4 上限！`;
+    } else {
+      statusTone = "is-ok";
+      statusText = `符合 ${wb.short_name} 篇幅範圍（目前約 ${pages} 面 A4）`;
+    }
+  }
+  box.className = `study-plan-sandbox-counter ${statusTone}`;
+  const countEl = box.querySelector("[data-sandbox-char-count]");
+  const pageEl = box.querySelector("[data-sandbox-page-count]");
+  const msgEl = box.querySelector("[data-sandbox-status-msg]");
+  if (countEl) countEl.textContent = `${applicationNumber(count)} 字`;
+  if (pageEl) pageEl.textContent = `約 ${pages} 面 A4${wb.max_a4_pages_hint ? `（上限 ${wb.max_a4_pages_hint} 面）` : ""}`;
+  if (msgEl) msgEl.textContent = statusText;
+}
+
+function renderPartnerCourseLookupCard(wb, { compact = false } = {}) {
+  const lookup = wb?.selected_partner_lookup;
+  const featured = wb?.featured_partner_lookups || [];
+  const quickButtons = featured.map((item) => {
+    const isCurrent = lookup && item.institution_slug === lookup.institution_slug;
+    return `<button type="button" class="study-plan-partner-pill ${isCurrent ? "is-active" : ""}" data-study-plan-partner-quick="${escapeHtml(item.partner_school_name_zh)}">${escapeHtml(item.country_name_zh)} · ${escapeHtml(item.partner_school_name_zh)}</button>`;
+  }).join("");
+  if (!lookup) {
+    return `<div class="study-plan-partner-lookup-card">
+      <p class="workspace-empty">正在載入跨校姊妹校開課與門檻對照…</p>
+    </div>`;
+  }
+  return `
+    <div class="study-plan-partner-lookup-card ${compact ? "is-compact" : ""}">
+      <div class="study-plan-partner-lookup-header">
+        <div>
+          <span class="section-kicker">對照 /partners 跨校姊妹校開課資訊</span>
+          <h4>${escapeHtml(lookup.country_name_zh)} · ${escapeHtml(lookup.partner_school_name_zh)} <small>${escapeHtml(lookup.partner_school_name_en)}</small></h4>
+        </div>
+        <a class="secondary-button study-plan-partner-link" href="${escapeHtml(lookup.cross_school_partner_path)}">
+          <i data-lucide="globe" aria-hidden="true"></i>
+          <span>開啟 ${escapeHtml(lookup.cross_school_partner_path.split("?")[0])} 跨校頁（全台 ${lookup.contracted_home_count} 校締約）</span>
+        </a>
+      </div>
+      <div class="study-plan-partner-search-row">
+        <div class="study-plan-partner-pills" role="group" aria-label="熱門姊妹校快速切換">${quickButtons}</div>
+        <div class="study-plan-partner-search-box">
+          <input type="search" class="study-plan-partner-search-input" placeholder="搜尋其他姊妹校（如 早稻田、慕尼黑、京都）" value="${escapeHtml(state.studyPlanWorkbenchPartnerQuery)}" aria-label="搜尋姊妹校開課資訊" />
+          <button type="button" class="secondary-button" data-search-study-plan-partner><i data-lucide="search" aria-hidden="true"></i><span>對照此校</span></button>
+        </div>
+      </div>
+      <div class="study-plan-partner-meta-grid">
+        <div><span>${escapeHtml(wb.short_name)} 當期名額與期限</span><strong>${escapeHtml(lookup.quota_summary)}</strong></div>
+        <div><span>語檢門檻參考</span><strong>${escapeHtml(lookup.language_requirement_summary)}</strong></div>
+        <div><span>跨校生活費與住宿提醒</span><strong>${escapeHtml(lookup.living_cost_hint || "請點進 /partners 跨校頁查看各校費用與住宿整理")}</strong></div>
+      </div>
+      <div class="study-plan-partner-courses">
+        <h5><i data-lucide="book-open-check" aria-hidden="true"></i><span>跨校學長姐曾提及的課程方向（結構化重點摘要＋原文連結，絕不轉載全文）</span></h5>
+        <ul>
+          ${(lookup.course_direction_points || []).map((pt) => `
+            <li>
+              <strong>${escapeHtml(pt.label)}：</strong><span>${escapeHtml(pt.value_zh)}</span>
+              <a href="${escapeHtml(pt.source_url)}" target="_blank" rel="noopener noreferrer" class="verified-rule-source"><i data-lucide="external-link" aria-hidden="true"></i><span>${escapeHtml(pt.source_title || "原文來源")}（查核：${escapeHtml(pt.last_checked_at)}）</span></a>
+            </li>`).join("")}
+        </ul>
+      </div>
+      <div class="study-plan-partner-scaffold">
+        <div>
+          <strong>可直接帶入第 4 段「預計修課與抵免規劃」的修課清單草稿：</strong>
+          <pre class="study-plan-course-lines-preview">${escapeHtml((lookup.suggested_course_plan_lines || []).join("\n"))}</pre>
+        </div>
+        <button type="button" class="primary-button" data-insert-partner-courses>
+          <i data-lucide="sparkles" aria-hidden="true"></i>
+          <span>一鍵帶入第 4 段「預計修課與抵免規劃」</span>
+        </button>
+      </div>
+    </div>`;
+}
+
+function renderStudyPlanAntiPitfallHub() {
+  const container = $("#study-plan-anti-pitfall-hub");
+  if (!container) return;
+  const wb = state.studyPlanWorkbench;
+  if (!wb) {
+    container.innerHTML = `<div class="study-plan-hub-loading"><i data-lucide="loader" aria-hidden="true"></i><span>正在載入 ${escapeHtml(activeHomeSchool())} 讀書計畫防雷規定與 6 段式文件工作台…</span></div>`;
+    return;
+  }
+  const activeStep = (wb.six_step_guide || []).find((s) => s.step_number === state.studyPlanActiveStepNumber) || wb.six_step_guide?.[0];
+  const generationEnabled = applicationDocumentGenerationEnabled();
+  container.innerHTML = `
+    <div class="study-plan-anti-pitfall-header">
+      <div>
+        <div class="study-plan-anti-pitfall-badges">
+          <span class="pitfall-kicker-badge"><i data-lucide="shield-alert" aria-hidden="true"></i><span>母校讀書計畫防雷＋文件工作台</span></span>
+          <span class="pitfall-window-badge ${wb.in_next_10_weeks_window ? "is-active-window" : ""}">${wb.in_next_10_weeks_window ? "🔥 未來 10 週申請窗口學校" : "📌 當期官方簡章已核對"}</span>
+        </div>
+        <h3 id="study-plan-anti-pitfall-title">${escapeHtml(wb.short_name)} 交換讀書計畫防雷指南 ＆ 6 段式高分工作台</h3>
+        <p class="study-plan-anti-pitfall-subtitle">先核對 <strong>${escapeHtml(wb.school_name)}</strong> 最容易踩雷的評分佔比與格式規定，再用內建<strong>字數／A4 頁數計數器</strong>、<strong>6 段式高分寫作提示</strong>與 <strong><code>/partners</code> 姊妹校開課資訊</strong>動筆。</p>
+      </div>
+      <div class="study-plan-anti-pitfall-cta">
+        <button type="button" class="primary-button" data-open-study-plan-workbench>
+          <i data-lucide="file-pen-line" aria-hidden="true"></i>
+          <span>${generationEnabled ? `開啟 ${escapeHtml(wb.short_name)} 讀書計畫工作台` : `一鍵開啟 ${escapeHtml(wb.short_name)} 讀書計畫工作台`}</span>
+        </button>
+        <a class="secondary-button" href="${escapeHtml(wb.source_url)}" target="_blank" rel="noopener noreferrer">
+          <i data-lucide="shield-check" aria-hidden="true"></i>
+          <span>官方 HTTPS 簡章來源（查核：${escapeHtml(wb.last_checked_at)}）</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="study-plan-deadline-strip">
+      <div><span>校內線上報名截止日</span><strong>${escapeHtml(wb.online_deadline_text)}</strong></div>
+      <div><span>紙本繳件／核章截止日</span><strong>${escapeHtml(wb.paper_deadline_text)}</strong></div>
+      <div><span>讀書計畫佔比與字數／頁數上限</span><strong>${escapeHtml(wb.scoring_weight_headline)}</strong></div>
+    </div>
+
+    <div class="study-plan-pitfall-cards" role="list" aria-label="${escapeHtml(wb.short_name)} 簡章防雷重點">
+      ${(wb.pitfalls || []).map((p) => `
+        <article class="study-plan-pitfall-card severity-${escapeHtml(p.severity)}" role="listitem">
+          <div class="study-plan-pitfall-card-top">
+            <span class="pitfall-severity-tag">${escapeHtml(p.badge_label)}</span>
+            <span class="pitfall-weight-tag">配重：${escapeHtml(p.scoring_weight)}</span>
+          </div>
+          <h4>${escapeHtml(p.pitfall_title)}</h4>
+          <p>${escapeHtml(p.detail_zh)}</p>
+          <div class="study-plan-pitfall-card-meta">
+            <span><strong>格式／上限：</strong>${escapeHtml(p.format_and_limit)}</span>
+            <span class="study-plan-pitfall-provenance">
+              <a href="${escapeHtml(p.source_url)}" target="_blank" rel="noopener noreferrer"><i data-lucide="shield-check" aria-hidden="true"></i><span>官方 HTTPS 來源</span><i data-lucide="external-link" aria-hidden="true"></i></a>
+              <small>最後查核：${escapeHtml(p.last_checked_at)}</small>
+            </span>
+          </div>
+        </article>`).join("")}
+    </div>
+
+    <div class="study-plan-workbench-split">
+      <div class="study-plan-six-step-panel">
+        <div class="study-plan-panel-heading">
+          <div>
+            <span class="section-kicker">內建 6 段式高分寫作提示</span>
+            <h4>拒絕罐頭文！6 段式結構化寫作公式</h4>
+          </div>
+          <small>點擊各段可切換查看「❌ 忌寫罐頭文 vs. ✅ 高分公式」</small>
+        </div>
+        <div class="study-plan-step-tabs" role="tablist" aria-label="讀書計畫 6 段式架構">
+          ${(wb.six_step_guide || []).map((step) => `
+            <button type="button" role="tab" class="study-plan-step-tab ${step.step_number === (activeStep?.step_number || 1) ? "is-active" : ""}" aria-selected="${String(step.step_number === (activeStep?.step_number || 1))}" data-study-plan-step-select="${step.step_number}" data-study-plan-field-id="${escapeHtml(step.field_id)}">
+              <span>第 ${step.step_number} 段</span>
+              <strong>${escapeHtml(step.title.replace(/^\d+\.\s*/, ""))}</strong>
+              <small>${escapeHtml(step.recommended_chars)}</small>
+            </button>`).join("")}
+        </div>
+        ${activeStep ? `
+          <div class="study-plan-step-detail">
+            <div class="study-plan-step-detail-head">
+              <strong>${escapeHtml(activeStep.title)}</strong>
+              <span>建議篇幅：${escapeHtml(activeStep.recommended_chars)}</span>
+            </div>
+            <div class="study-plan-vs-grid">
+              <div class="study-plan-vs-bad">
+                <span>❌ 審查委員最怕看到的罐頭寫法</span>
+                <p>${escapeHtml(activeStep.anti_canned_tip)}</p>
+              </div>
+              <div class="study-plan-vs-good">
+                <span>✅ 高分具體化寫作公式</span>
+                <p>${escapeHtml(activeStep.high_score_formula)}</p>
+              </div>
+            </div>
+            <p class="study-plan-partner-tie-in"><i data-lucide="link-2" aria-hidden="true"></i><span><strong>如何串聯 <code>/partners</code> 姊妹校資料：</strong>${escapeHtml(activeStep.partner_page_tie_in)}</span></p>
+          </div>` : ""}
+      </div>
+
+      <div class="study-plan-live-counter-panel">
+        <div class="study-plan-panel-heading">
+          <div>
+            <span class="section-kicker">內建 ${escapeHtml(wb.short_name)} 字數＆A4 頁數計數器</span>
+            <h4>即時字數與 A4 頁數防超頁試算</h4>
+          </div>
+          <span class="count-badge">${escapeHtml(wb.max_a4_pages_hint ? `上限 ${wb.max_a4_pages_hint} 面 A4` : wb.max_chars ? `上限 ${applicationNumber(wb.max_chars)} 字` : "即時換算")}</span>
+        </div>
+        <div id="study-plan-sandbox-counter" class="study-plan-sandbox-counter is-neutral" role="status">
+          <div class="study-plan-sandbox-metrics">
+            <strong data-sandbox-char-count>0 字</strong>
+            <span data-sandbox-page-count>約 0.0 面 A4${wb.max_a4_pages_hint ? `（上限 ${wb.max_a4_pages_hint} 面）` : ""}</span>
+          </div>
+          <p data-sandbox-status-msg>貼上或輸入你的讀書計畫草稿，即時換算字數與 A4 頁數</p>
+        </div>
+        <textarea id="study-plan-sandbox-textarea" class="study-plan-sandbox-textarea" rows="5" placeholder="在此貼上或試寫你的 ${escapeHtml(wb.short_name)} 讀書計畫草稿，立即測試是否超過 ${escapeHtml(wb.short_name)} 的字數或 A4 頁數限制…">${escapeHtml(state.studyPlanSandboxText)}</textarea>
+        <div class="study-plan-sandbox-actions">
+          <button type="button" class="primary-button" data-open-study-plan-workbench>
+            <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+            <span>進入完整 6 段式工作台（匯出 Word / PDF）</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    ${renderPartnerCourseLookupCard(wb)}
+  `;
+  updateStudyPlanSandboxCounter();
+  initIcons();
+}
+
+function renderWorkbenchStudyPlanAssistant(template) {
+  const container = $("#workbench-study-plan-assistant");
+  if (!container) return;
+  if (!template || template.id !== "study-plan" || !state.studyPlanWorkbench) {
+    container.hidden = true;
+    container.innerHTML = "";
+    return;
+  }
+  const wb = state.studyPlanWorkbench;
+  container.hidden = false;
+  container.innerHTML = `
+    <div class="workbench-assistant-box">
+      <div class="workbench-six-step-strip">
+        <div class="workbench-strip-head">
+          <strong><i data-lucide="Compass" aria-hidden="true"></i><span>6 段式高分寫作快速跳轉（點擊跳至該欄位）</span></strong>
+          <small>${escapeHtml(wb.scoring_weight_headline)}</small>
+        </div>
+        <div class="workbench-step-pills">
+          ${(wb.six_step_guide || []).map((step) => `
+            <button type="button" class="workbench-step-pill" data-workbench-jump-field="${escapeHtml(step.field_id)}" title="${escapeHtml(step.high_score_formula)}">
+              <span>${step.step_number}</span>
+              <strong>${escapeHtml(step.title.replace(/^\d+\.\s*/, ""))}</strong>
+              <small>${escapeHtml(step.recommended_chars)}</small>
+            </button>`).join("")}
+        </div>
+      </div>
+      ${renderPartnerCourseLookupCard(wb, { compact: true })}
+    </div>`;
+  initIcons();
+}
+
+function insertPartnerCoursePlanIntoStudyPlan() {
+  const wb = state.studyPlanWorkbench;
+  const lookup = wb?.selected_partner_lookup;
+  if (!lookup || !lookup.suggested_course_plan_lines?.length) return;
+  const snippet = lookup.suggested_course_plan_lines.join("\n");
+  state.applicationAnswers["study-plan"] ||= {};
+  const existing = String(state.applicationAnswers["study-plan"].course_plan || "").trim();
+  const nextValue = existing
+    ? (existing.includes(lookup.suggested_course_plan_lines[0]) ? existing : `${existing}\n${snippet}`)
+    : snippet;
+  state.applicationAnswers["study-plan"].course_plan = nextValue;
+  persistApplicationDraft();
+
+  const form = $("#application-document-form");
+  const courseInput = form?.elements?.course_plan;
+  if (courseInput) {
+    courseInput.value = nextValue;
+    const template = applicationTemplateById("study-plan");
+    if (template) {
+      rememberApplicationField(template, courseInput);
+      updateApplicationFieldCounters(template);
+    }
+    courseInput.focus();
+  }
+  const sandbox = $("#study-plan-sandbox-textarea");
+  if (sandbox && !courseInput) {
+    sandbox.value = sandbox.value ? `${sandbox.value}\n\n【預計修課與抵免規劃】\n${snippet}` : `【預計修課與抵免規劃】\n${snippet}`;
+    updateStudyPlanSandboxCounter();
+  }
+  announce(`已將 ${lookup.partner_school_name_zh} 開課方向與修課規劃帶入第 4 段「預計修課與抵免規劃」`, "success");
 }
 
 function updateApplicationFieldCounters(template) {
@@ -7247,6 +7749,7 @@ function renderApplicationFormPage(template) {
     });
   }
   renderApplicationWritingRules(template);
+  renderWorkbenchStudyPlanAssistant(template);
   updateApplicationFieldCounters(template);
   refreshApplicationFieldConditions(template);
   renderApplicationAutofillStatus(template);
@@ -13786,7 +14289,7 @@ function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
 
 function handleLocationRoute() {
   const filtersChanged = window.location.search !== partnerUrlSearch ? readPartnerUrl() : false;
-  const routeHome = new URLSearchParams(window.location.search).get("home");
+  const routeHome = resolveSupportedHomeSchool(new URLSearchParams(window.location.search).get("home") || new URLSearchParams(window.location.search).get("school")) || new URLSearchParams(window.location.search).get("home");
   if (routeHome && routeHome !== activeHomeSchool() && state.supportedUniversities.some((item) => item.school_name === routeHome)) setHomeSchool(routeHome);
   const route = window.location.hash.match(/^#school=(.+)$/);
   if (route && state.dashboard) {
@@ -14761,8 +15264,69 @@ function bindEvents() {
       copyVerifiedSchoolLineSummary(copyLineSummaryBtn.dataset.copyLineSummary);
       return;
     }
+    const openWorkbenchBtn = event.target.closest("[data-open-study-plan-workbench]");
+    if (openWorkbenchBtn) {
+      if (applicationDocumentGenerationEnabled()) {
+        window.location.hash = "#application-form=study-plan";
+      } else {
+        openAuthDialog();
+      }
+      return;
+    }
+    const stepSelectBtn = event.target.closest("[data-study-plan-step-select]");
+    if (stepSelectBtn) {
+      state.studyPlanActiveStepNumber = Number(stepSelectBtn.dataset.studyPlanStepSelect) || 1;
+      renderStudyPlanAntiPitfallHub();
+      return;
+    }
+    const jumpFieldBtn = event.target.closest("[data-workbench-jump-field]");
+    if (jumpFieldBtn?.dataset.workbenchJumpField) {
+      const fieldId = jumpFieldBtn.dataset.workbenchJumpField;
+      const inputEl = document.getElementById(`application-field-${fieldId.replace(/[^a-zA-Z0-9_-]/g, "-")}`);
+      if (inputEl) {
+        inputEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        inputEl.focus();
+      }
+      return;
+    }
+    const quickPartnerBtn = event.target.closest("[data-study-plan-partner-quick]");
+    if (quickPartnerBtn?.dataset.studyPlanPartnerQuick) {
+      state.studyPlanWorkbenchPartnerQuery = quickPartnerBtn.dataset.studyPlanPartnerQuick;
+      loadStudyPlanWorkbench({ targetPartner: state.studyPlanWorkbenchPartnerQuery });
+      return;
+    }
+    const searchPartnerBtn = event.target.closest("[data-search-study-plan-partner]");
+    if (searchPartnerBtn) {
+      const box = searchPartnerBtn.closest(".study-plan-partner-search-box");
+      const input = box?.querySelector(".study-plan-partner-search-input");
+      state.studyPlanWorkbenchPartnerQuery = (input?.value || "").trim();
+      loadStudyPlanWorkbench({ targetPartner: state.studyPlanWorkbenchPartnerQuery });
+      return;
+    }
+    const insertCoursesBtn = event.target.closest("[data-insert-partner-courses]");
+    if (insertCoursesBtn) {
+      insertPartnerCoursePlanIntoStudyPlan();
+      return;
+    }
+    const stagedSignalBtn = event.target.closest("[data-submit-staged-preference-signal]");
+    if (stagedSignalBtn) {
+      submitStagedNetworkPreferenceSignal();
+      return;
+    }
+    const copyViralBtn = event.target.closest("[data-copy-viral-share]");
+    if (copyViralBtn?.dataset.copyViralShare) {
+      navigator.clipboard?.writeText(copyViralBtn.dataset.copyViralShare).then(() => {
+        announce("已複製 Dcard 校板／系級轉發文案！", "success");
+      }).catch(() => {});
+      return;
+    }
     const trigger = event.target.closest(".school-detail-trigger");
     if (trigger?.dataset.schoolName) openUniversityDetail(partnerByName(trigger.dataset.schoolName));
+  });
+  document.body.addEventListener("input", (event) => {
+    if (event.target.id === "study-plan-sandbox-textarea") {
+      updateStudyPlanSandboxCounter();
+    }
   });
   document.body.addEventListener("change", (event) => {
     const identitySelect = event.target.closest("[data-community-identity-select]");
@@ -14829,7 +15393,7 @@ async function boot() {
     state.pendingSchoolPrompt = false;
     promptForAccountSchool();
   }
-  const sharedHome = new URLSearchParams(window.location.search).get("home");
+  const sharedHome = resolveSupportedHomeSchool(new URLSearchParams(window.location.search).get("home") || new URLSearchParams(window.location.search).get("school")) || new URLSearchParams(window.location.search).get("home");
   if (sharedHome && state.supportedUniversities.some((item) => item.school_name === sharedHome)) setHomeSchool(sharedHome, { reload: false });
   aiStatusManager.start(30000);
   await loadDashboard();

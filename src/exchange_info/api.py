@@ -271,11 +271,28 @@ from .models import (
     VerifiedWindowDeadlineCatalog,
     CrossSchoolPartnerDirectory,
     CrossSchoolPartnerPageData,
+    StudyPlanWorkbenchCatalog,
+    StudyPlanWorkbenchPayload,
+    AdmittedStudentConnectCreateRequest,
+    AdmittedStudentConnectHub,
+    PreferenceSignalSubmitRequest,
+    SchoolStagedNetworkStatus,
+    StagedNetworkEffectsCatalog,
     utc_now,
 )
 from .cross_school_partners import (
     build_cross_school_partner_directory,
     build_cross_school_partner_page_data,
+)
+from .staged_network_effects import (
+    build_school_staged_network_status,
+    build_staged_network_effects_catalog,
+    record_preference_signal,
+    register_admitted_student_connection,
+)
+from .study_plan_workbench import (
+    build_study_plan_workbench_catalog,
+    build_study_plan_workbench_payload,
 )
 from .seo import EDITORIAL_PATHS, SeoSettings, create_seo_router, homepage_html
 from .seo_changes import ContentChanges
@@ -3737,12 +3754,15 @@ def create_app(
         country: str,
         institution: str,
         home: str | None = Query(default=None),
+        override_plan_count: int | None = Query(default=None, ge=0, le=5000),
     ) -> CrossSchoolPartnerPageData:
         page_data = build_cross_school_partner_page_data(
             country=country,
             institution=institution,
             selected_home=home,
             catalogue_loader=seo_catalogue,
+            data_dir=resolved_data_dir,
+            override_plan_count=override_plan_count,
         )
         if page_data is None:
             raise HTTPException(
@@ -3750,6 +3770,95 @@ def create_app(
                 detail="找不到這所外國合作大學的跨校整理頁。",
             )
         return page_data
+
+    @app.get(
+        "/network-effects/status",
+        response_model=SchoolStagedNetworkStatus,
+    )
+    def network_effects_status(
+        school: str | None = Query(default=None),
+        override_plan_count: int | None = Query(default=None, ge=0, le=5000),
+    ) -> SchoolStagedNetworkStatus:
+        university = university_for(school)
+        return build_school_staged_network_status(
+            university,
+            data_dir=resolved_data_dir,
+            override_plan_count=override_plan_count,
+        )
+
+    @app.get(
+        "/network-effects/catalog",
+        response_model=StagedNetworkEffectsCatalog,
+    )
+    def network_effects_catalog() -> StagedNetworkEffectsCatalog:
+        return build_staged_network_effects_catalog(data_dir=resolved_data_dir)
+
+    @app.post(
+        "/network-effects/preference-signal",
+        response_model=SchoolStagedNetworkStatus,
+    )
+    def submit_preference_signal(
+        payload: PreferenceSignalSubmitRequest,
+    ) -> SchoolStagedNetworkStatus:
+        try:
+            return record_preference_signal(payload, data_dir=resolved_data_dir)
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+    @app.get(
+        "/network-effects/admitted-connect/{country}/{institution}",
+        response_model=AdmittedStudentConnectHub,
+    )
+    def get_admitted_student_connect(
+        country: str,
+        institution: str,
+    ) -> AdmittedStudentConnectHub:
+        page_data = build_cross_school_partner_page_data(
+            country=country,
+            institution=institution,
+            selected_home=None,
+            catalogue_loader=seo_catalogue,
+            data_dir=resolved_data_dir,
+        )
+        if page_data is None or page_data.admitted_student_connect is None:
+            raise HTTPException(
+                status_code=404,
+                detail="找不到這所外國合作大學的本屆錄取生跨校連線專區。",
+            )
+        return page_data.admitted_student_connect
+
+    @app.post(
+        "/network-effects/admitted-connect",
+        response_model=AdmittedStudentConnectHub,
+        status_code=201,
+    )
+    def create_admitted_student_connect(
+        payload: AdmittedStudentConnectCreateRequest,
+    ) -> AdmittedStudentConnectHub:
+        page_data = build_cross_school_partner_page_data(
+            country=payload.country,
+            institution=payload.institution,
+            selected_home=payload.home_school,
+            catalogue_loader=seo_catalogue,
+            data_dir=resolved_data_dir,
+        )
+        if page_data is None:
+            raise HTTPException(
+                status_code=404,
+                detail="找不到對應的外國合作大學，無法建立跨校錄取生連線。",
+            )
+        try:
+            return register_admitted_student_connection(
+                payload,
+                country_slug=page_data.country_slug,
+                institution_slug=page_data.institution_slug,
+                partner_name_zh=page_data.school_name_zh,
+                partner_name_en=page_data.school_name_en,
+                country_name_zh=page_data.country_name_zh,
+                data_dir=resolved_data_dir,
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
 
     @app.get("/documents", response_model=list[DocumentRecord])
     def documents(
@@ -3881,6 +3990,33 @@ def create_app(
         except ValueError as error:
             raise HTTPException(status_code=422, detail="不支援的申請計畫類型。") from error
         return templates_for_context(context)
+
+    @app.get(
+        "/application-center/study-plan-workbench",
+        response_model=StudyPlanWorkbenchPayload,
+    )
+    def application_center_study_plan_workbench(
+        school: str | None = Query(default=None),
+        target_partner: str | None = Query(default=None, max_length=200),
+    ) -> StudyPlanWorkbenchPayload:
+        university = university_for(school)
+        return build_study_plan_workbench_payload(
+            university,
+            target_partner=target_partner,
+            catalogue_loader=seo_catalogue,
+        )
+
+    @app.get(
+        "/application-center/study-plan-workbench/catalog",
+        response_model=StudyPlanWorkbenchCatalog,
+    )
+    def application_center_study_plan_workbench_catalog(
+        only_active_10_week_window: bool = Query(default=False),
+    ) -> StudyPlanWorkbenchCatalog:
+        return build_study_plan_workbench_catalog(
+            only_active_10_week_window=only_active_10_week_window,
+            catalogue_loader=seo_catalogue,
+        )
 
     @app.get(
         "/application-center/catalog",
