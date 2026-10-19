@@ -4219,4 +4219,115 @@ class VerifiedWindowDeadlineCatalog(BaseModel):
     items: list[VerifiedSchoolWindowCard] = Field(default_factory=list)
 
 
+class CrossSchoolHomeAgreement(BaseModel):
+    home_id: str = Field(min_length=2, max_length=30)
+    home_school_name: str = Field(min_length=2, max_length=80)
+    home_short_name: str = Field(min_length=1, max_length=30)
+    has_agreement: bool = True
+    partner_display_name: str | None = None
+    program_types: list[str] = Field(default_factory=list)
+    availability_status: str = Field(default="not_contracted", max_length=60)
+    availability_label: str = Field(min_length=2, max_length=120)
+    quota_summary: str = Field(min_length=2, max_length=400)
+    language_requirement_summary: str = Field(min_length=2, max_length=600)
+    eligibility_summary: str = Field(min_length=2, max_length=600)
+    degree_levels: str | None = None
+    colleges: str | None = None
+    study_period: str | None = None
+    tuition_info: str | None = None
+    housing_info: str | None = None
+    internal_online_deadline: str = Field(min_length=4, max_length=400)
+    internal_paper_deadline: str = Field(min_length=4, max_length=400)
+    study_plan_limit: str = Field(min_length=4, max_length=400)
+    deadline_source_url: str = Field(min_length=12, max_length=2000)
+    deadline_last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    partner_source_url: str | None = None
+    school_partner_seo_path: str | None = None
+
+    @field_validator("deadline_source_url")
+    @classmethod
+    def validate_deadline_https_url(cls, value: str) -> str:
+        if not value.startswith("https://"):
+            raise ValueError("deadline_source_url must use https://")
+        return value
+
+
+class CrossSchoolStructuredPoint(BaseModel):
+    category: Literal["living_cost", "housing", "courses", "experience_digest"]
+    title: str = Field(min_length=3, max_length=160)
+    summary_zh: str = Field(min_length=12, max_length=450)
+    bullets: list[str] = Field(default_factory=list, min_length=1, max_length=8)
+    origin_label: str = Field(min_length=2, max_length=80)
+    source_title: str = Field(min_length=2, max_length=200)
+    source_url: str = Field(min_length=10, max_length=2000)
+    last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+
+    @field_validator("source_url")
+    @classmethod
+    def validate_source_url_scheme(cls, value: str) -> str:
+        if not (value.startswith("https://") or value.startswith("http://")):
+            raise ValueError("source_url must use http:// or https://")
+        return value
+
+
+class CrossSchoolConversionHooks(BaseModel):
+    free_tier_note: str = Field(min_length=6, max_length=240)
+    compare_list_cta_label: str = Field(min_length=4, max_length=80)
+    study_plan_draft_cta_label: str = Field(min_length=4, max_length=80)
+    login_redirect_url: str = Field(min_length=1, max_length=500)
+    compare_action_url: str = Field(min_length=1, max_length=500)
+    study_plan_action_url: str = Field(min_length=1, max_length=500)
+
+
+class CrossSchoolPartnerPageData(BaseModel):
+    country_slug: str = Field(min_length=2, max_length=80)
+    country_name_zh: str = Field(min_length=1, max_length=60)
+    institution_slug: str = Field(min_length=2, max_length=140)
+    canonical_path: str = Field(min_length=10, max_length=300)
+    school_name_zh: str = Field(min_length=1, max_length=160)
+    school_name_en: str = Field(min_length=1, max_length=200)
+    display_title: str = Field(min_length=2, max_length=260)
+    official_website: str | None = None
+    selected_home_id: str = Field(min_length=2, max_length=30)
+    selected_home_agreement: CrossSchoolHomeAgreement
+    contracted_home_count: int = Field(ge=1)
+    total_supported_home_count: int = Field(ge=1)
+    contracted_home_schools: list[CrossSchoolHomeAgreement] = Field(default_factory=list)
+    all_home_agreements: list[CrossSchoolHomeAgreement] = Field(default_factory=list)
+    living_cost_references: list[CrossSchoolStructuredPoint] = Field(default_factory=list)
+    housing_references: list[CrossSchoolStructuredPoint] = Field(default_factory=list)
+    course_direction_references: list[CrossSchoolStructuredPoint] = Field(default_factory=list)
+    experience_digests: list[CrossSchoolStructuredPoint] = Field(default_factory=list)
+    copyright_compliance_notice: str = Field(min_length=20, max_length=500)
+    conversion_hooks: CrossSchoolConversionHooks
+
+
+class CrossSchoolPartnerSummaryItem(BaseModel):
+    country_slug: str = Field(min_length=2, max_length=80)
+    country_name_zh: str = Field(min_length=1, max_length=60)
+    institution_slug: str = Field(min_length=2, max_length=140)
+    canonical_path: str = Field(min_length=10, max_length=300)
+    school_name_zh: str = Field(min_length=1, max_length=160)
+    school_name_en: str = Field(min_length=1, max_length=200)
+    display_title: str = Field(min_length=2, max_length=260)
+    contracted_home_count: int = Field(ge=1)
+    contracted_home_short_names: list[str] = Field(default_factory=list)
+    has_living_cost_digest: bool = True
+    has_housing_digest: bool = True
+    has_course_digest: bool = True
+    experience_count: int = Field(ge=1)
+    sample_cost_hint: str = Field(min_length=4, max_length=240)
+
+
+class CrossSchoolPartnerDirectory(BaseModel):
+    total_partner_count: int = Field(ge=0)
+    multi_school_partner_count: int = Field(ge=0)
+    total_supported_home_count: int = Field(ge=1)
+    selected_country_slug: str | None = None
+    selected_country_name_zh: str | None = None
+    countries: list[dict[str, Any]] = Field(default_factory=list)
+    items: list[CrossSchoolPartnerSummaryItem] = Field(default_factory=list)
+
+
+
 JsonDict = dict[str, Any]
