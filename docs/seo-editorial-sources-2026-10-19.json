@@ -1,0 +1,114 @@
+{
+  "checked": "2026-10-19",
+  "scope": "Sources supporting initial ten editorial articles. Original guidance and hypothetical examples are labelled in article text.",
+  "sources": [
+    {
+      "id": "germany",
+      "title": "DAAD：德國留學與生活費用",
+      "url": "https://www.daad.de/en/studying-in-germany/living-in-germany/finances/",
+      "note": "頁面列生活費每月 900–1,200 歐元、學期費 70–430 歐元；財力證明 992 歐元／月明示為 2025-01-01 起資訊。申請時仍須向適用使領館確認。",
+      "checked": "2026-10-19",
+      "evidence_sha256": "e252f52bb15ec2b65ede174fa6fe7c8dfbbe45a198ff4cb8536b84e38a17575a",
+      "access": "HTTP 200; primary content read"
+    },
+    {
+      "id": "japan",
+      "title": "JASSO／Study in Japan：生活費",
+      "url": "https://www.studyinjapan.go.jp/en/life/cost-of-living/",
+      "note": "生活費數字引用 2023 年私費外國留學生生活實態調查，不含學習與研究費；不是 2026 年個人報價。",
+      "checked": "2026-10-19",
+      "evidence_sha256": "fdbad801f3a6fca4b560400a9278a4ce179839d8bade975b44c772852f4a50ef",
+      "access": "HTTP 200; primary content read"
+    },
+    {
+      "id": "japan-housing",
+      "title": "JASSO／Study in Japan：住宿",
+      "url": "https://www.studyinjapan.go.jp/en/life/accomodation/",
+      "note": "說明宿舍、民間住宅與入住費用；實際供給、租金及契約以住宿單位為準。",
+      "checked": "2026-10-19",
+      "evidence_sha256": "259436196fd94114f913bee9b0f26e877692b27b7eb2a92b7a0429a3cb55cebf",
+      "access": "HTTP 200; primary content read"
+    },
+    {
+      "id": "jasso",
+      "title": "JASSO：協定接收短期留學生支援制度",
+      "url": "https://www.jasso.go.jp/en/ryugaku/scholarship_j/ukeire.html",
+      "note": "來源頁標示截至 2024-01-31；列出每月 80,000 日圓及由日本接收學校申請等條件。本期是否適用須由兩校確認。",
+      "checked": "2026-10-19",
+      "evidence_sha256": "8255ad6e460071f20a49bd9e971da86535dfb452891a84d94d2d15564f05557a",
+      "access": "HTTP 200; primary content read"
+    },
+    {
+      "id": "korea",
+      "title": "韓國政府 Study in Korea：生活費",
+      "url": "https://www.studyinkorea.go.kr/en/life/livingExpense.do",
+      "note": "來源頁未明示這組月費用估計的統計年度；總額與分類區間不可當成同一份可直接相加的預算。",
+      "checked": "2026-10-19",
+      "evidence_sha256": "4998cc3b7cef13a877b531176d71266994635a0e4b23ce30fb8fcb35cf5d47b3",
+      "access": "HTTP 200; primary content read"
+    },
+    {
+      "id": "learning",
+      "title": "歐盟 Erasmus+：Learning Agreements",
+      "url": "https://erasmus-plus.ec.europa.eu/resources-and-tools/mobility-and-learning-agreements/learning-agreements",
+      "note": "頁面更新日期 2025-12-19。適用 Erasmus+ 的學習協議制度；其他交換方案應依兩校指定表件，不能直接套用。",
+      "checked": "2026-10-19",
+      "evidence_sha256": "934bc09348213c735c14c9ecd329c447ad0b79f528cc2dff2940d1a37f8beebe",
+      "access": "HTTP 200; primary content read"
+    },
+    {
+      "id": "moe",
+      "title": "教育部：選送學生出國研修或國外專業實習網站",
+      "url": "https://www.studyabroad.moe.gov.tw/",
+      "note": "官方計畫入口；請進入當年度學海公告，再核對母校甄選與補助規定。入口本身不證明個人已符合補助資格。",
+      "checked": "2026-10-19",
+      "evidence_sha256": "4740203416cf4c56cb04ca338cc06c2e21a017a092a9bb13596bad679cce40f8",
+      "access": "HTTP 200; navigation entry only, not substantive rule evidence"
+    },
+    {
+      "id": "moe-rules",
+      "title": "教育部：出國研修或專業實習補助要點（東吳官方公告附件）",
+      "url": "https://icae.scu.edu.tw/sites/default/files/2026-01/115%E6%95%99%E8%82%B2%E9%83%A8%E9%BC%93%E5%8B%B5%E5%9C%8B%E5%85%A7%E5%A4%A7%E5%B0%88%E6%A0%A1%E9%99%A2%E9%81%B8%E9%80%81%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B%E7%A0%94%E4%BF%AE%E6%88%96%E5%9C%8B%E5%A4%96%E5%B0%88%E6%A5%AD%E5%AF%A6%E7%BF%92%E8%A3%9C%E5%8A%A9%E8%A6%81%E9%BB%9E.pdf",
+      "note": "核對 2025-11-04 修正版本，見第 3 點申請單位、第 9 點契約、撥款與兼領規定。這是制度版本，個案仍依當期核定與行政契約確認。",
+      "checked": "2026-10-19",
+      "evidence_sha256": "ec6d5d1bee83075172903ae2968854b17a4eca9951e04065ba55f72b890626ae",
+      "access": "HTTP 200; primary content read"
+    },
+    {
+      "id": "ntu-rules",
+      "title": "臺大 116 學年度第 1 學期出國交換甄選簡章",
+      "url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/07/116-1-Selection-Guidelines_CH.pdf",
+      "note": "臺大 116-1 校級甄選簡章，本文核對 2026-10-11 保存的官方文件版本；僅適用該次甄選。送件前請重新確認線上公告與修訂，其他母校不能套用。",
+      "checked": "2026-10-19",
+      "evidence_sha256": "7461c15c808e70d29e2435a343c4fed13a8ffd5ed9841b0cbbfc221cc1c810ab",
+      "access": "Live request HTTP 503; read archived official PDF and verified SHA-256 against source manifest",
+      "archive": "sources/ntu/reviewed-source-bodies-current-2026-10-11-part-03.zip",
+      "member": "bodies/b7899011f26799f4.pdf",
+      "captured": "2026-10-11"
+    },
+    {
+      "id": "scu",
+      "title": "東吳大學：115 年度學海飛颺、學海惜珠申請公告",
+      "url": "https://icae.scu.edu.tw/zh-hant/node/4064",
+      "note": "115 年度東吳校內公告，僅作為區分計畫與校內甄選的案例；不套用其期限、金額或名額到其他學校。",
+      "checked": "2026-10-19",
+      "evidence_sha256": "d58b5cb1f8d2bd407091a620bca098024e587d46090dec46a658ac92f441b0eb",
+      "access": "HTTP 200; primary content read"
+    }
+  ],
+  "arithmetic_checks": {
+    "general_budget_jpy": 760000,
+    "general_budget_twd_at_hypothetical_0_22": 167200.0,
+    "japan_jpy": 810000,
+    "korea_krw": 7500000,
+    "germany_eur": 8200
+  },
+  "notes": [
+    "Korea official total and component ranges are not additive; no statistics year is stated for the monthly estimate.",
+    "JASSO living-cost figures explicitly attributed to 2023 survey.",
+    "JASSO subsidy source is dated 2024-01-31; availability is not promised.",
+    "DAAD financial-proof number explicitly dated 2025-01-01; not presented as guaranteed current requirement.",
+    "MOE 2025-11-04 revision read from the official SCU announcement attachment; next-cycle applicability must be checked.",
+    "No source content is represented as interviews or student testimonials."
+  ]
+}

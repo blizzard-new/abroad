@@ -43,6 +43,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 exchange_info = [
+    "editorial/*.json",
     "static/*",
     "static/assets/**/*",
     "static/vendor/**/*",
