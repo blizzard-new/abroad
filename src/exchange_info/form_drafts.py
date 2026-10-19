@@ -8,6 +8,7 @@ import json
 import os
 import secrets
 from collections.abc import Mapping
+from contextlib import nullcontext
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -51,6 +52,10 @@ class FormDraftConflictError(FormDraftError):
     def __init__(self, current: ApplicationFormDraft | None) -> None:
         super().__init__("這份表單草稿已在另一個裝置更新。")
         self.current = current
+
+
+class _RevisionConflict(FormDraftError):
+    """The database rejected an atomic compare-and-set."""
 
 
 def _b64(value: bytes) -> str:
@@ -162,6 +167,7 @@ class LocalFormDraftRepository:
 
 class SupabaseFormDraftRepository:
     backend_name = "supabase-encrypted"
+    atomic_revisions = True
 
     def __init__(self, url: str, secret_key: str) -> None:
         self.url = url.rstrip("/")
@@ -188,6 +194,8 @@ class SupabaseFormDraftRepository:
             headers=headers,
             timeout=20,
         )
+        if response.status_code == 409 and response.json().get("code") == "23505":
+            raise _RevisionConflict()
         if response.status_code >= 400:
             raise FormDraftError(
                 f"加密表單草稿資料庫操作失敗（HTTP {response.status_code}）。"
@@ -230,13 +238,23 @@ class SupabaseFormDraftRepository:
     def save_record(
         self, record: ApplicationFormDraftRecord
     ) -> ApplicationFormDraftRecord:
+        # Unique insertion protects revision zero; UPDATE ... WHERE revision = n
+        # protects subsequent edits across workers and server instances.
+        params = None if record.revision == 1 else {
+            "account_id": f"eq.{record.account_id}",
+            "home_school_key": f"eq.{record.home_school_key}",
+            "template_id": f"eq.{record.template_id}",
+            "revision": f"eq.{record.revision - 1}",
+        }
         rows = self._request(
-            "POST",
-            params={"on_conflict": "account_id,home_school_key,template_id"},
+            "POST" if record.revision == 1 else "PATCH",
+            params=params,
             json_body=record.model_dump(mode="json"),
-            prefer="resolution=merge-duplicates,return=representation",
+            prefer="return=representation",
         )
-        return ApplicationFormDraftRecord.model_validate(rows[0]) if rows else record
+        if not rows:
+            raise _RevisionConflict()
+        return ApplicationFormDraftRecord.model_validate(rows[0])
 
     def delete_record(
         self,
@@ -253,10 +271,13 @@ class SupabaseFormDraftRepository:
         }
         if revision is not None:
             params["revision"] = f"eq.{revision}"
-        self._request(
+        rows = self._request(
             "DELETE",
             params=params,
+            prefer="return=representation",
         )
+        if revision is not None and not rows:
+            raise _RevisionConflict()
 
     def purge_account(self, account_id: str) -> None:
         self._request("DELETE", params={"account_id": f"eq.{account_id}"})
@@ -326,7 +347,7 @@ class FormDraftService:
         template_id: str,
         payload: ApplicationFormDraftSave,
     ) -> ApplicationFormDraft:
-        with self._lock:
+        with nullcontext() if getattr(self.repository, "atomic_revisions", False) else self._lock:
             school_key = school_identity_key(payload.home_school)
             current_record = self.repository.find_record(account_id, school_key, template_id)
             current_revision = current_record.revision if current_record else 0
@@ -363,9 +384,13 @@ class FormDraftService:
                 updated_at=updated_at,
             )
             ciphertext = AESGCM(self.encryption_key).encrypt(nonce, plaintext, self._aad(record))
-            saved = self.repository.save_record(
-                record.model_copy(update={"ciphertext": _b64(ciphertext)})
-            )
+            try:
+                saved = self.repository.save_record(
+                    record.model_copy(update={"ciphertext": _b64(ciphertext)})
+                )
+            except _RevisionConflict as error:
+                latest = self.repository.find_record(account_id, school_key, template_id)
+                raise FormDraftConflictError(self._decode(latest) if latest else None) from error
             return self._decode(saved)
 
     def delete_draft(
@@ -376,16 +401,20 @@ class FormDraftService:
         *,
         revision: int,
     ) -> None:
-        with self._lock:
+        with nullcontext() if getattr(self.repository, "atomic_revisions", False) else self._lock:
             school_key = school_identity_key(home_school)
             current = self.repository.find_record(account_id, school_key, template_id)
             if current is None:
                 raise FormDraftNotFoundError("找不到這份表單草稿。")
             if current.revision != revision:
                 raise FormDraftConflictError(self._decode(current))
-            self.repository.delete_record(
-                account_id, school_key, template_id, revision=revision
-            )
+            try:
+                self.repository.delete_record(
+                    account_id, school_key, template_id, revision=revision
+                )
+            except _RevisionConflict as error:
+                latest = self.repository.find_record(account_id, school_key, template_id)
+                raise FormDraftConflictError(self._decode(latest) if latest else None) from error
 
     def purge_account(self, account_id: str) -> None:
         self.repository.purge_account(account_id)

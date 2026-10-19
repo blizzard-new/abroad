@@ -18,8 +18,8 @@ RUN chmod 0755 /usr/local/bin/docker-entrypoint.sh
 # The program looks for a data folder next to the installed package; production mode keeps nothing in it,
 # but the folder has to exist and be writable by the user the service runs as.
 RUN useradd --system --uid 10001 --create-home uniway \
- && mkdir -p /usr/local/lib/python3.12/data \
- && chown -R uniway:uniway /usr/local/lib/python3.12/data
+ && mkdir -p /usr/local/lib/python3.12/data /home/uniway/seo-state \
+ && chown -R uniway:uniway /usr/local/lib/python3.12/data /home/uniway/seo-state
 
 USER uniway
 WORKDIR /home/uniway

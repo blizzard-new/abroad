@@ -29,6 +29,14 @@ dl { display: grid; grid-template-columns: minmax(9rem, 1fr) 3fr; margin: 1.5rem
 dt, dd { margin: 0; padding: .8rem .5rem; border-bottom: 1px solid #e4ece8; white-space: pre-line; overflow-wrap: anywhere; }
 dt { font-weight: 650; }
 dd { color: #354f50; }
+dd p { margin: 0 0 .65rem; }
+dd p:last-child { margin-bottom: 0; }
+.overview { border-left: 4px solid #155f5b; padding: .2rem 1.2rem; background: #edf4f1; margin-top: 2rem; }
+.overview h2 { margin-top: 1rem; }
+.jump-links { display: flex; gap: .65rem; flex-wrap: wrap; padding: 1rem 0; }
+.jump-links a { padding: .2rem .35rem; }
+.status { font-size: .9rem; color: #536a6b; }
+[id] { scroll-margin-top: 1rem; }
 details { padding: 1rem; border-radius: .5rem; background: #f5f8f7; overflow-wrap: anywhere; }
 summary { cursor: pointer; font-weight: 650; }
 details li { margin: 1rem 0; }

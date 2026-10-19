@@ -125,15 +125,11 @@ def test_guest_can_read_every_board_but_unverified_email_cannot_publish(
     # Historical node ID retained; explicit 2026-10-09 policy now gates school reads.
     guest_boards = client.get("/community/boards")
     assert guest_boards.status_code == 200
+    from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
     assert {row["id"] for row in guest_boards.json()} == {
         "public-study-abroad",
         "language-school",
-        "cgu",
-        "ntpu",
-        "ntu",
-        "tku",
-        "ccu",
-        "ncu",
+        *(u.id for u in SUPPORTED_UNIVERSITIES),
     }
     assert all(row["can_read"] == (row["kind"] != "university_exchange") for row in guest_boards.json())
     assert all(row["can_post"] is False for row in guest_boards.json())

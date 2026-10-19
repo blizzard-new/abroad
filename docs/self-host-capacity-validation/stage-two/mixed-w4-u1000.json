@@ -1,0 +1,169 @@
+{
+  "passed": false,
+  "users": 1000,
+  "started": 1000,
+  "completed": 383,
+  "cycles": 627,
+  "elapsed_seconds": 52.04,
+  "duration_seconds": 30.0,
+  "ramp_seconds": 10.0,
+  "stable_target_seconds": 20.0,
+  "pace_seconds": 10,
+  "http_requests": 7051,
+  "requests_per_second": 135.49,
+  "response_bytes": 131607370,
+  "routes": {
+    "GET /account/workspace": {
+      "requests": 1259,
+      "p95_ms": 3361.64,
+      "max_ms": 7500.75
+    },
+    "PUT /account/workspace": {
+      "requests": 634,
+      "p95_ms": 3539.38,
+      "max_ms": 7354.52
+    },
+    "GET /account/application-drafts": {
+      "requests": 1258,
+      "p95_ms": 3258.17,
+      "max_ms": 7366.06
+    },
+    "PUT /account/application-drafts/guardian-consent": {
+      "requests": 630,
+      "p95_ms": 3326.54,
+      "max_ms": 6206.08
+    },
+    "POST /auth/logout": {
+      "requests": 1,
+      "p95_ms": 5.7,
+      "max_ms": 5.7
+    },
+    "GET /auth/me": {
+      "requests": 1015,
+      "p95_ms": 7076.12,
+      "max_ms": 9295.61
+    },
+    "GET /student-dashboard": {
+      "requests": 1000,
+      "p95_ms": 30071.53,
+      "max_ms": 34516.0
+    },
+    "GET /documents": {
+      "requests": 627,
+      "p95_ms": 3928.78,
+      "max_ms": 9107.45
+    },
+    "GET /deadlines": {
+      "requests": 627,
+      "p95_ms": 4380.94,
+      "max_ms": 8058.4
+    }
+  },
+  "failed_http_requests": 617,
+  "http_error_rate": 0.08750531839455396,
+  "conflicts": {
+    "workspace": [
+      {
+        "status": 200,
+        "worker": "13"
+      },
+      {
+        "status": 409,
+        "worker": "12"
+      }
+    ],
+    "draft": [
+      {
+        "status": 200,
+        "worker": "12"
+      },
+      {
+        "status": 409,
+        "worker": "11"
+      }
+    ]
+  },
+  "failures": {
+    "GET /student-dashboard: ReadTimeout": 617,
+    "actor: GET /student-dashboard": 617
+  },
+  "statuses": {
+    "GET /account/workspace 200": 1259,
+    "PUT /account/workspace 200": 631,
+    "PUT /account/workspace 409": 3,
+    "GET /account/application-drafts 200": 1258,
+    "PUT /account/application-drafts/guardian-consent 409": 1,
+    "PUT /account/application-drafts/guardian-consent 200": 629,
+    "POST /auth/logout 204": 1,
+    "GET /auth/me 401": 14,
+    "GET /auth/me 200": 1001,
+    "GET /student-dashboard 200": 383,
+    "GET /documents 200": 627,
+    "GET /deadlines 200": 627
+  },
+  "workers": {
+    "11": 1571,
+    "13": 1577,
+    "12": 1746,
+    "10": 1540
+  },
+  "generator": {
+    "processes": 10,
+    "cpu_quota": 2.0,
+    "cpu_fraction": 0.3198,
+    "saturated": false,
+    "shards": [
+      {
+        "users": 100,
+        "cpu_seconds": 7.5383,
+        "cpu_fraction": 0.1685
+      },
+      {
+        "users": 100,
+        "cpu_seconds": 6.3615,
+        "cpu_fraction": 0.14
+      },
+      {
+        "users": 100,
+        "cpu_seconds": 7.0218,
+        "cpu_fraction": 0.1625
+      },
+      {
+        "users": 100,
+        "cpu_seconds": 3.5414,
+        "cpu_fraction": 0.0798
+      },
+      {
+        "users": 100,
+        "cpu_seconds": 2.88,
+        "cpu_fraction": 0.0651
+      },
+      {
+        "users": 100,
+        "cpu_seconds": 1.3329,
+        "cpu_fraction": 0.0315
+      },
+      {
+        "users": 100,
+        "cpu_seconds": 1.3377,
+        "cpu_fraction": 0.0305
+      },
+      {
+        "users": 100,
+        "cpu_seconds": 1.3294,
+        "cpu_fraction": 0.0299
+      },
+      {
+        "users": 100,
+        "cpu_seconds": 0.9411,
+        "cpu_fraction": 0.0212
+      },
+      {
+        "users": 100,
+        "cpu_seconds": 1.001,
+        "cpu_fraction": 0.0219
+      }
+    ]
+  },
+  "scope": "synthetic authenticated sessions; no external OAuth, uploads, PDFs or WAN measurement"
+}

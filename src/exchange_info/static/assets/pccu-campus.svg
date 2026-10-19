@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="中國文化大學陽明山華岡校區大義館、大恩館與古典宮殿建築意象圖">
+  <defs>
+    <linearGradient id="pccu-sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#450a0a" />
+      <stop offset="55%" stop-color="#7f1d1d" />
+      <stop offset="100%" stop-color="#991b1b" />
+    </linearGradient>
+    <linearGradient id="pccu-hills" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#14532d" />
+      <stop offset="100%" stop-color="#052e16" />
+    </linearGradient>
+    <linearGradient id="pccu-roof" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+    <linearGradient id="pccu-plaza" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3f1111" />
+      <stop offset="50%" stop-color="#5c1919" />
+      <stop offset="100%" stop-color="#450a0a" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#pccu-sky)" />
+  <!-- Hwakang Yangmingshan Sun & Mist Glow -->
+  <circle cx="645" cy="105" r="56" fill="#fde68a" opacity="0.22" />
+  <circle cx="645" cy="105" r="34" fill="#fef3c7" opacity="0.45" />
+  <!-- Yangmingshan Mountain Ridge Silhouette -->
+  <path d="M0 320 Q200 220 400 288 T800 245 L800 332 L0 332 Z" fill="url(#pccu-hills)" opacity="0.76" />
+  <!-- Hwakang Palace-Style Campus Buildings (Da-En / Da-Yi /曉峯紀念館) -->
+  <polygon points="190,178 400,118 610,178" fill="url(#pccu-roof)" />
+  <rect x="220" y="178" width="360" height="148" rx="4" fill="#fffbeb" opacity="0.95" />
+  <rect x="252" y="202" width="38" height="124" rx="3" fill="#991b1b" opacity="0.88" />
+  <rect x="312" y="202" width="38" height="124" rx="3" fill="#991b1b" opacity="0.88" />
+  <path d="M368 326 L368 216 A32 32 0 0 1 432 216 L432 326 Z" fill="#7f1d1d" opacity="0.92" />
+  <rect x="450" y="202" width="38" height="124" rx="3" fill="#991b1b" opacity="0.88" />
+  <rect x="510" y="202" width="38" height="124" rx="3" fill="#991b1b" opacity="0.88" />
+  <!-- Baihua Pool & Hwakang Plaza Foreground -->
+  <path d="M0 326 Q240 316 440 326 T800 320 L800 450 L0 450 Z" fill="url(#pccu-plaza)" />
+  <ellipse cx="400" cy="348" rx="185" ry="8" fill="#fde68a" opacity="0.22" />
+  <text x="400" y="392" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" letter-spacing="2.2">中國文化大學 CHINESE CULTURE UNIVERSITY</text>
+  <text x="400" y="422" text-anchor="middle" fill="#fde68a" font-family="system-ui, -apple-system, sans-serif" font-size="14" letter-spacing="1.5">國際暨兩岸事務處（國合組／兩岸組）· 外語學院各系所交換留學計畫</text>
+</svg>

@@ -10,6 +10,7 @@ from fastapi.testclient import TestClient
 from exchange_info.legal_pages import TERMS_VERSION
 from exchange_info.access_control import (
     HOME_UNIVERSITY_UNSET,
+    SCHOOL_EMAIL_DOMAINS,
     catalog_home_university,
     school_basis,
     school_from_email,
@@ -17,6 +18,7 @@ from exchange_info.access_control import (
 from exchange_info.api import create_app
 from exchange_info.models import UserAccount
 from exchange_info.storage import ensure_data_dirs
+from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
 
 CGU = "長庚大學"
 NTPU = "國立臺北大學"
@@ -40,6 +42,14 @@ class _Json:
     ("s410000001@gm.ntpu.edu.tw", NTPU),
     ("s410000001@ms.ntpu.edu.tw", NTPU),
     ("teacher@ntpu.edu.tw", NTPU),
+    ("b10901001@ntu.edu.tw", "國立臺灣大學"),
+    ("b10901001@g.ntu.edu.tw", "國立臺灣大學"),
+    ("s610000001@ccu.edu.tw", "國立中正大學"),
+    ("s610000001@alum.ccu.edu.tw", "國立中正大學"),
+    ("110502001@cc.ncu.edu.tw", "國立中央大學"),
+    ("110502001@g.ncu.edu.tw", "國立中央大學"),
+    ("410000001@gms.tku.edu.tw", "淡江大學"),
+    ("410000001@o365.tku.edu.tw", "淡江大學"),
     ("a@gmail.com", None),
     ("a@evilcgu.edu.tw", None),
     ("a@cgu.edu.tw.evil.example", None),
@@ -50,6 +60,15 @@ class _Json:
 def test_only_a_real_school_domain_names_the_school(email, school):
     found = school_from_email(email)
     assert (found.school_name if found else None) == school
+
+
+def test_every_supported_university_has_registered_email_domains():
+    assert set(SCHOOL_EMAIL_DOMAINS) == {u.id for u in SUPPORTED_UNIVERSITIES}
+    for university in SUPPORTED_UNIVERSITIES:
+        domains = SCHOOL_EMAIL_DOMAINS[university.id]
+        assert domains, university.id
+        for domain in domains:
+            assert school_from_email(f"student@{domain}") == university
 
 
 def test_school_basis_separates_proof_from_inference_and_choice():
