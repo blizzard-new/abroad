@@ -268,7 +268,20 @@ from .models import (
     VaultDocumentSummary,
     VaultDownloadGrant,
     VaultVersionSummary,
+    VerifiedWindowDeadlineCatalog,
+    CrossSchoolPartnerDirectory,
+    CrossSchoolPartnerPageData,
     utc_now,
+)
+from .cross_school_partners import (
+    build_cross_school_partner_directory,
+    build_cross_school_partner_page_data,
+)
+from .seo import EDITORIAL_PATHS, SeoSettings, create_seo_router, homepage_html
+from .seo_changes import ContentChanges
+from .verified_window_deadlines import (
+    build_school_window_ics,
+    build_verified_window_deadline_catalog,
 )
 from .ntpu_student_view import (
     build_ntpu_student_dashboard,
@@ -842,6 +855,7 @@ def create_app(
     workflow_issue_report_repository: Any = None,
     analytics_repository: Any = None,
     feedback_repository: Any = None,
+    seo_state_dir: Path | None = None,
 ) -> FastAPI:
     resolved_data_dir = Path(
         data_dir or os.environ.get("EXCHANGE_INFO_DATA_DIR") or DEFAULT_DATA_DIR
@@ -857,6 +871,7 @@ def create_app(
     from .workflow_issue_reports import create_workflow_issue_report_repository
 
     is_production = os.environ.get("EXCHANGE_ENVIRONMENT") == "production"
+    seo_settings = SeoSettings.from_environment()
 
     if is_production:
         if account_repository and getattr(account_repository, "backend_name", None) != "supabase":
@@ -931,7 +946,8 @@ def create_app(
         "/application-center/templates", "/application-center/catalog", "/application-period-options",
         "/application-workflow", "/advisor/plan", "/advisor/ask",
         "/school-life-context", "/school-data-completeness", "/student-experiences",
-        "/partner-source-audit",
+        "/partner-source-audit", "/schools", "/sitemap.xml", "/destinations",
+        "/partners", "/cross-school-partners",
     }
 
     @asynccontextmanager
@@ -999,7 +1015,9 @@ def create_app(
         try:
             if catalogue_slots is not None and (
                 request.url.path in catalogue_response_paths
-                or request.url.path.startswith(("/schools/", "/sitemaps/", "/destinations/"))
+                or request.url.path.startswith(
+                    ("/schools/", "/sitemaps/", "/destinations/", "/partners/", "/cross-school-partners/")
+                )
             ):
                 async with catalogue_slots:
                     response = await call_next(request)
@@ -1010,9 +1028,14 @@ def create_app(
         for key, value in _browser_security_headers().items():
             response.headers.setdefault(key, value)
         path = request.url.path
-        if (not seo_settings.indexable or response.status_code >= 400
-                or not (path in {"/", "/schools", "/privacy", "/terms", "/robots.txt", "/sitemap.xml", *EDITORIAL_PATHS}
-                        or path.startswith(("/schools/", "/sitemaps/")))):
+        if (
+            not seo_settings.indexable
+            or response.status_code >= 400
+            or not (
+                path in {"/", "/schools", "/partners", "/privacy", "/terms", "/robots.txt", "/sitemap.xml", *EDITORIAL_PATHS}
+                or path.startswith(("/schools/", "/sitemaps/", "/partners/"))
+            )
+        ):
             response.headers["X-Robots-Tag"] = "noindex, nofollow"
         if path.startswith("/static/") and response.status_code == 200:
             response.headers.setdefault("Cache-Control", _static_cache_control(path, "v" in request.query_params))
@@ -1746,7 +1769,7 @@ def create_app(
             raise HTTPException(status_code=403, detail="你無法查看這段私訊。")
         return conversation
 
-    def seo_catalogue(university: UniversityProfile):
+    def seo_catalogue(university: UniversityProfile) -> tuple[list, object]:
         # Public pages are identical for signed-in and anonymous visitors. In
         # particular, never load private sessions through university_for().
         token = catalog_request.set(None)
@@ -1767,16 +1790,41 @@ def create_app(
         finally:
             catalog_request.reset(token)
 
-    seo_state_dir = Path(os.environ.get("EXCHANGE_SEO_STATE_DIR") or resolved_data_dir / "seo-state")
-    app.include_router(create_seo_router(seo_settings, seo_catalogue, ContentChanges(seo_state_dir)))
+    def public_partners_by_home() -> dict[str, list]:
+        token = catalog_request.set(None)
+        try:
+            result: dict[str, list] = {}
+            for university in SUPPORTED_UNIVERSITIES:
+                try:
+                    result[university.id] = list(partners_for_university(university))
+                except Exception:
+                    result[university.id] = []
+            return result
+        finally:
+            catalog_request.reset(token)
 
-    @app.head("/", include_in_schema=False)
-    @app.get("/", response_class=FileResponse)
+    resolved_seo_state_dir = Path(
+        seo_state_dir
+        or os.environ.get("EXCHANGE_SEO_STATE_DIR")
+        or (resolved_data_dir / "seo-state")
+    )
+    app.include_router(
+        create_seo_router(seo_settings, seo_catalogue, ContentChanges(resolved_seo_state_dir))
+    )
+
+    @app.get("/", response_class=HTMLResponse)
     def frontend() -> HTMLResponse:
         return HTMLResponse(
-            homepage_html((STATIC_DIR / "index.html").read_text(encoding="utf-8"), seo_settings),
+            homepage_html(
+                (STATIC_DIR / "index.html").read_text(encoding="utf-8"),
+                seo_settings,
+            ),
             headers={"Cache-Control": "no-store"},
         )
+
+    @app.head("/", include_in_schema=False)
+    def frontend_head() -> Response:
+        return Response(status_code=200, headers={"Cache-Control": "no-store"})
 
     @app.get("/favicon.ico", response_class=FileResponse, include_in_schema=False)
     def favicon() -> FileResponse:
@@ -3635,6 +3683,73 @@ def create_app(
                     )
                 )
         return records
+
+    @app.get(
+        "/verified-window-deadlines",
+        response_model=VerifiedWindowDeadlineCatalog,
+    )
+    def verified_window_deadlines(
+        school: str | None = Query(default=None),
+    ) -> VerifiedWindowDeadlineCatalog:
+        if school is not None and school.strip():
+            university = university_for(school)
+            return build_verified_window_deadline_catalog(school=university.id)
+        return build_verified_window_deadline_catalog()
+
+    @app.get("/calendar/school-window.ics", response_class=PlainTextResponse)
+    def calendar_school_window_ics(
+        school: str | None = Query(default=None),
+    ) -> PlainTextResponse:
+        university = university_for(school)
+        filename, ics_content = build_school_window_ics(university.id)
+        return PlainTextResponse(
+            ics_content,
+            media_type="text/calendar; charset=utf-8",
+            headers={
+                "Cache-Control": "public, max-age=300",
+                "Content-Disposition": f'attachment; filename="{filename}"',
+            },
+        )
+
+    @app.get(
+        "/cross-school-partners",
+        response_model=CrossSchoolPartnerDirectory,
+    )
+    def cross_school_partners_directory(
+        country: str | None = Query(default=None),
+        q: str | None = Query(default=None),
+        home: str | None = Query(default=None),
+        limit: int = Query(default=120, ge=1, le=500),
+    ) -> CrossSchoolPartnerDirectory:
+        return build_cross_school_partner_directory(
+            catalogue_loader=seo_catalogue,
+            country=country,
+            q=q,
+            home=home,
+            limit=limit,
+        )
+
+    @app.get(
+        "/cross-school-partners/{country}/{institution}",
+        response_model=CrossSchoolPartnerPageData,
+    )
+    def cross_school_partner_page(
+        country: str,
+        institution: str,
+        home: str | None = Query(default=None),
+    ) -> CrossSchoolPartnerPageData:
+        page_data = build_cross_school_partner_page_data(
+            country=country,
+            institution=institution,
+            selected_home=home,
+            catalogue_loader=seo_catalogue,
+        )
+        if page_data is None:
+            raise HTTPException(
+                status_code=404,
+                detail="找不到這所外國合作大學的跨校整理頁。",
+            )
+        return page_data
 
     @app.get("/documents", response_model=list[DocumentRecord])
     def documents(

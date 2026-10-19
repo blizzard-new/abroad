@@ -17,9 +17,16 @@ from time import monotonic
 from xml.etree.ElementTree import Element, SubElement, tostring
 from zoneinfo import ZoneInfo
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import HTMLResponse, PlainTextResponse, Response
 
+from .cross_school_partners import (
+    build_cross_school_partner_directory,
+    build_cross_school_partner_page_data,
+    render_cross_school_partner_directory_body,
+    render_cross_school_partner_page_body,
+    resolve_country_slug_and_zh,
+)
 from .models import CatalogueSourceStatus, PartnerUniversity
 from .school_identity import school_identity_key
 from .seo_changes import ContentChanges
@@ -33,7 +40,7 @@ DEFAULT_ORIGIN = "https://app.uniway-tw.com"
 HOME_TITLE = "UniWay｜交換學生申請、合作學校與選校資訊"
 HOME_DESCRIPTION = "UniWay 整理全台大學交換學生申請與海外合作校資訊，協助比較學校、查詢資格與名額、準備申請文件及規劃時程。公開資料免登入，申請規定以各校最新官方公告為準。"
 NOTICE = "UniWay 是獨立資訊整理平台，並非校方。合作關係不等於當期開放申請；資格、名額、期限與文件請以母校國際處及合作校最新公告為準。"
-EDITORIAL_PATHS = ("/destinations", "/guides", "/editorial-policy", *("/destinations/" + slug for slug in COUNTRIES), *("/guides/" + slug for slug in GUIDES))
+EDITORIAL_PATHS = ("/partners", "/destinations", "/guides", "/editorial-policy", *("/destinations/" + slug for slug in COUNTRIES), *("/guides/" + slug for slug in GUIDES))
 AVAILABILITY = {
     "open": "名單列載（請另確認本期受理時窗）", "agreement_only": "合作協議參考，非本期名額",
     "departmental_reference": "院系合作參考", "not_open": "未開放", "needs_confirmation": "待確認",
@@ -154,7 +161,7 @@ def source_notice(source: CatalogueSourceStatus | None) -> str:
 
 
 def page(settings: SeoSettings, title: str, description: str, path: str, body: str,
-         breadcrumbs: list[tuple[str, str]], *, article: Article | None = None) -> HTMLResponse:
+         breadcrumbs: list[tuple[str, str]], *, article: Article | None = None, extra_head: str = "") -> HTMLResponse:
     navigation = " / ".join(f'<a href="{escape(p)}">{escape(name)}</a>' for name, p in breadcrumbs)
     schema = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i, "name": name, "item": settings.origin + p}
@@ -162,15 +169,17 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
     article_head = structured_data(article_schema(article, settings.origin)) if article else ""
     if path == "/guides" or article:
         article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261019-1">'
+    if extra_head:
+        article_head += extra_head
     html = f'''<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)}</title>
 {metadata(settings, title, description, path, article)}{structured_data(schema)}
 <link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/static/seo.css?v=20261019-2">{article_head}</head>
 <body><a class="skip" href="#content">跳到內容</a><header><a class="brand" href="/">UniWay</a>
-<nav aria-label="主導覽"><a href="/schools">交換學校指南</a><a href="/destinations">國家專區</a><a href="/guides">申請指南</a><a href="/#partners">開啟選校工具</a></nav></header>
+<nav aria-label="主導覽"><a href="/schools">交換學校指南</a><a href="/partners">跨校外國大學</a><a href="/destinations">國家專區</a><a href="/guides">申請指南</a><a href="/#partners">開啟選校工具</a></nav></header>
 <main id="content"><nav class="breadcrumbs" aria-label="麵包屑">{navigation}</nav>{body}
 <aside class="notice">{NOTICE}</aside></main><footer><a href="/">UniWay 首頁</a>
-<a href="/schools">學校指南</a><a href="/editorial-policy">資料編輯政策</a><a href="/privacy">隱私權政策</a><a href="/terms">使用條款</a></footer></body></html>'''
+<a href="/schools">學校指南</a><a href="/partners">跨校外國大學</a><a href="/editorial-policy">資料編輯政策</a><a href="/privacy">隱私權政策</a><a href="/terms">使用條款</a></footer></body></html>'''
     return HTMLResponse(html, headers={"Cache-Control": "public, max-age=60"})
 
 
@@ -308,6 +317,10 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             snapshots[u.id] = monotonic(), partners, source, groups
             return partners, source, groups
 
+    def cached_pair_loader(u: UniversityProfile) -> tuple[list[PartnerUniversity], CatalogueSourceStatus | None]:
+        partners, source, _ = catalogue_for(u)
+        return partners, source
+
     def university(home_id: str) -> UniversityProfile:
         if home_id not in universities:
             raise HTTPException(404, "找不到這所母校")
@@ -323,13 +336,87 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             rules += "Disallow: /\n"
         return PlainTextResponse(rules, headers={"Cache-Control": "public, max-age=300"})
 
+    @router.api_route("/partners", methods=["GET", "HEAD"])
+    def partners_directory():
+        directory_data = build_cross_school_partner_directory(catalogue_loader=cached_pair_loader, limit=120)
+        body = render_cross_school_partner_directory_body(directory_data)
+        return page(
+            settings,
+            f"跨校外國合作大學總覽｜整合全台 {len(universities)} 所大學門檻與經驗摘要｜UniWay",
+            "以國家與外國機構 ID 整合全台各大學海外交換名額、語檢門檻、校內截止日、生活費、住宿與修課方向結構化摘要。",
+            "/partners",
+            body,
+            [("首頁", "/"), ("跨校外國大學", "/partners")],
+        )
+
+    @router.api_route("/partners/{country}", methods=["GET", "HEAD"])
+    def partners_by_country(country: str):
+        c_slug, _c_zh = resolve_country_slug_and_zh(country)
+        directory_data = build_cross_school_partner_directory(
+            catalogue_loader=cached_pair_loader,
+            country=c_slug,
+            limit=200,
+        )
+        if directory_data.total_partner_count == 0:
+            raise HTTPException(404, "找不到這個國家的跨校合作大學")
+        c_name = directory_data.selected_country_name_zh or country
+        canonical_country_path = f"/partners/{directory_data.selected_country_slug or c_slug}"
+        body = render_cross_school_partner_directory_body(directory_data)
+        return page(
+            settings,
+            f"{c_name}交換大學跨校門檻與經驗總覽｜UniWay",
+            f"聚合全台各大學赴{c_name}交換之合作大學清單、語檢門檻、名額與跨校生活費、住宿、課程方向結構化整理。",
+            canonical_country_path,
+            body,
+            [("首頁", "/"), ("跨校外國大學", "/partners"), (c_name, canonical_country_path)],
+        )
+
+    @router.api_route("/partners/{country}/{institution}", methods=["GET", "HEAD"])
+    def cross_school_partner_page(
+        country: str,
+        institution: str,
+        home: str | None = Query(default=None),
+    ):
+        data = build_cross_school_partner_page_data(
+            country=country,
+            institution=institution,
+            selected_home=home,
+            catalogue_loader=cached_pair_loader,
+        )
+        if data is None:
+            raise HTTPException(404, "找不到這所外國合作大學")
+        title = (
+            f"{data.display_title} 交換門檻、名額與跨校生活費指南｜"
+            f"全台 {data.contracted_home_count} 校整合｜UniWay"
+        )
+        description = (
+            f"查詢赴{data.country_name_zh}{data.display_title}交換之各母校當期名額、語檢門檻與校內截止日，"
+            f"並瀏覽全台 {data.contracted_home_count} 所締約大學聚合之生活費參考、住宿提醒與修課方向結構化摘要。"
+        )
+        body = render_cross_school_partner_page_body(data)
+        extra_script = '<script src="/static/partner-page.js?v=20261020-1" defer></script>'
+        return page(
+            settings,
+            title,
+            description,
+            data.canonical_path,
+            body,
+            [
+                ("首頁", "/"),
+                ("跨校外國大學", "/partners"),
+                (data.country_name_zh, f"/partners/{data.country_slug}"),
+                (data.school_name_zh, data.canonical_path),
+            ],
+            extra_head=extra_script,
+        )
+
     @router.api_route("/schools", methods=["GET", "HEAD"])
     def directory():
         cards = "".join(f'<li><a href="/schools/{u.id}"><strong>{escape(u.school_name)}</strong>'
                         f'<span>{escape(u.english_name)}</span></a><p>{escape(u.coverage_note)}</p></li>' for u in universities.values())
         body = f'<p class="eyebrow">交換學生・從母校開始</p><h1>全台大學交換學生申請指南｜{len(universities)} 所母校合作學校總覽</h1>'
         body += f'<p class="lead">依就讀大學查看海外合作校、名額狀態與申請條件。目前整理 {len(universities)} 所母校的公開資訊。</p><ul class="cards">{cards}</ul>'
-        body += '<p><a href="/destinations">依國家比較交換選項</a> · <a href="/guides">從資格、文件與預算開始準備</a></p>'
+        body += '<p><a href="/partners">依外國大學跨校比較門檻與經驗</a> · <a href="/destinations">依國家比較交換選項</a> · <a href="/guides">從資格、文件與預算開始準備</a></p>'
         return page(settings, f"全台大學交換學生申請指南｜{len(universities)} 所母校｜UniWay", HOME_DESCRIPTION, "/schools", body,
                     [("首頁", "/"), ("交換學校指南", "/schools")])
 
@@ -361,9 +448,11 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         statuses = "、".join(dict.fromkeys(AVAILABILITY[row.availability_status] for row in rows))
         title = f"{partner.school_name}交換申請條件與名額｜{u.school_name}｜UniWay"
         description = f"{u.school_name}赴{partner.country or '海外'}{partner.school_name}的交換與研修資訊，{len(rows)} 筆方案。{statuses}。查看學制、語言、期限與官方來源，以校方公告為準。"
+        c_slug, _ = resolve_country_slug_and_zh(partner.country)
+        cross_school_url = f"/partners/{c_slug}/{key}?home={u.id}"
         body = f'<p class="eyebrow">{escape(u.school_name)} → {escape(partner.country or "海外合作校")}</p><h1>{escape(partner.school_name)}交換與研修資訊</h1>'
         body += f'<p class="lead">此頁適用母校：{escape(u.school_name)}。不同母校或方案的規定可能不同，請逐項確認。</p>'
-        body += f'<a class="button" href="{escape(application_link(u, partner))}">在 UniWay 查看學校與規劃申請</a>' + source_notice(source)
+        body += f'<a class="button" href="{escape(application_link(u, partner))}">在 UniWay 查看學校與規劃申請</a> · <a class="button secondary" href="{escape(cross_school_url)}">查看跨校外國大學頁（全台締約校與經驗摘要）</a>' + source_notice(source)
         body += '<nav class="jump-links" aria-label="本頁方案">' + ' · '.join(f'<a href="#programme-{i}">{escape(row.program_type)}</a>' for i, row in enumerate(rows, 1)) + '</nav>'
         body += '<section class="overview"><h2>申請前快速核對</h2>' + definition_list([
             ("母校與目的地", f"{u.school_name} → {partner.country or '國家待確認'}"),
@@ -373,6 +462,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         body += "".join(partner_details(row, f"programme-{i}") for i, row in enumerate(rows, 1))
         slug = country_slug(partner.country)
         body += '<section><h2>延伸比較與申請準備</h2><ul>'
+        body += f'<li><a href="{escape(cross_school_url)}">跨校比較：{escape(partner.school_name)}全台締約大學門檻、生活費與修課方向</a></li>'
         if slug:
             body += f'<li><a href="/destinations/{slug}">{COUNTRIES[slug]["name"]}交換選項與生活預算核對</a></li>'
         for guide in ("exchange-eligibility", "exchange-application", "exchange-budget"):
@@ -466,6 +556,11 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
                             [f"{settings.origin}/schools/{u.id}" for u in universities.values()],
                             {f"{settings.origin}/guides/{slug}": article.modified.isoformat() for slug, article in ARTICLES.items()})
 
+    @router.api_route("/sitemaps/partners.xml", methods=["GET", "HEAD"])
+    def partners_sitemap():
+        directory_data = build_cross_school_partner_directory(catalogue_loader=cached_pair_loader, limit=5000)
+        return xml_response("urlset", [settings.origin + item.canonical_path for item in directory_data.items])
+
     @router.api_route("/sitemaps/{home_id}.xml", methods=["GET", "HEAD"])
     def school_sitemap(home_id: str):
         u = university(home_id)
@@ -473,3 +568,4 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         return xml_response("urlset", [settings.origin + partner_path(u, rows[0]) for rows in groups.values()], lastmods)
 
     return router
+
