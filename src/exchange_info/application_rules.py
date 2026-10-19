@@ -22,6 +22,7 @@ from .nccu_eligibility import is_nccu, nccu_academic_check, nccu_degree_check, n
 from .ncku_eligibility import is_ncku, ncku_academic_check, ncku_degree_check, ncku_language_check
 from .nycu_eligibility import is_nycu, nycu_academic_check, nycu_degree_check, nycu_language_check
 from .nthu_eligibility import is_nthu, nthu_academic_check, nthu_degree_check, nthu_language_check
+from .pccu_eligibility import is_pccu, pccu_academic_check, pccu_degree_check, pccu_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -556,6 +557,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_pccu(request.home_school):
+        deg_status, deg_detail = pccu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -696,6 +702,12 @@ def _eligibility_checks(
             "academic_score", status, "清大歷年 GPA 3.20（T分數78分）或系排前 50% 門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_pccu(request.home_school):
+        status, detail = pccu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "文大操行 80 分與各語組／姊妹校歷年總平均門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -783,6 +795,9 @@ def _eligibility_checks(
     if is_nthu(request.home_school):
         home_status, home_detail = nthu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "清大海外交換 TOEFL iBT 79 / IELTS 6.5 門檻與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_pccu(request.home_school):
+        home_status, home_detail = pccu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "文大英／日／韓／法／俄語組語檢門檻與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

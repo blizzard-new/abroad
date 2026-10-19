@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, SCU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -83,6 +83,7 @@ NCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCKU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 NTHU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
+PCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1583,6 +1584,51 @@ def _nthu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _pccu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理中國文化大學出國暨赴大陸交換生甄選應繳資料：線上系統申請表（自學生專區→校園服務→行政服務→申請出國交換填報並列印後經系所主任簽章）、家長同意書（正本，經家長或監護人親筆簽章）、歷年中文成績單正本（含班／系排名，歷年操行平均須達 80 分以上，各語組與姊妹校另設學業總平均 70／75／80 分門檻）、有效外語能力檢定證明影本（英／日／韓／法／俄語檢定；赴大陸交換免附）、讀書計畫與自傳（中、外文各乙份，各約 1,000 字）及專任教師推薦信，送交國際暨兩岸事務處（菲華樓 202 室）或各語文系辦公室。",
+        "study-plan": "撰寫中國文化大學出國交換甄選必繳之《讀書計畫（Study Plan）》與《自傳》（中、外文各乙份，以英語或交換國語言撰寫，各約 1,000 字；具體說明交換動機、選校理由、擬於姊妹校修讀之課程規劃［每學期至少須修習 6 學分或 2 門以上課程］及返國後之學習銜接）。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分採認預審（依《中國文化大學學生赴境外修讀課程實施要點》及交換簡章規定，出國交換期間須維持文大註冊在學並繳交全額學雜費，每學期於姊妹校至少須修讀 6 學分或 2 門以上課程；返國後持姊妹校正式成績單及課程大綱向所屬系所及教務處申請學分採認抵免）。",
+        "predeparture-notice": "於甄選錄取公告後依限繳交《錄取確認書》，配合國際暨兩岸事務處國際合作組（或日／韓／法／俄文系）辦理姊妹校官方提名（Nomination）與外校入學申請（Application），並視資格申請中國文化大學拓展國際視野獎學金（依地區與成績核發 NT$10,000–60,000）或教育部學海飛颺／學海惜珠獎助學金。",
+        "return-report": "交換期滿返國後 1 個月內，繳交交換學生心得報告（電子檔，含修課、生活、住宿經驗與多張具代表性之交換照片）及《交換生心得報告授權同意書》至國際暨兩岸事務處（或所屬語文系辦），經審核通過後始得辦理拓展國際視野獎學金或學海計畫核銷結案。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本、修課大綱（Syllabus）與學分證明，依《中國文化大學學生赴境外修讀課程實施要點》向所屬學系（所）及教務處教學資源中心辦理境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "中國文化大學").replace("長庚", "文大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "中國文化大學規定在學期間操行成績平均須達 80 分以上且無小過以上處分；日文系甄選要求歷年學業總平均達 75 分以上、韓文系依各姊妹校要求歷年學業總平均達 70–80 分以上（GPA 2.5–3.0+）；請檢附教務處核發之歷年中文成績單正本（含班／系排名）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（美加歐紐澳 61–80+ / 亞洲 61+）", "IELTS Academic（美加歐紐澳 5.5–6.5+）", "TOEIC 聽讀測驗（亞洲／英語學程 550–785+）", "JLPT 日語能力試驗（N1 / N2 / N3，日語組必備）", "TOPIK 韓國語文能力測驗（2–4 級，韓語組必備）", "DELF / TCF 法語檢定（B1 / B2，法語組適用）", "TORFL 俄語檢定（俄語組適用）", "赴大陸交換免附外語檢定（須符合學業與操行門檻）"]
+            field["help_text"] = "申請歐美紐澳及亞洲英語授課組須達各姊妹校 TOEFL iBT / IELTS / TOEIC 門檻；申請日本及韓國姊妹校須具備 JLPT（N1–N3）或 TOPIK（2–4 級）成績證明；申請大陸地區交換免附外語檢定。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oima.pccu.edu.tw/p/412-1008-14612.php?Lang=zh-tw",
+        source_checked_at=PCCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換生申請表與家長同意書" if template.id == "exchange-application-data" else ("中外文讀書計畫與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oima.pccu.edu.tw/var/file/8/1008/img/372/789613490.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章（家長同意書）", "所屬系所主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["系所辦公室戳章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取公告後繳交錄取確認書並辦理姊妹校提名與獎學金申請", "return-report": "返國後 1 個月內繳交交換心得報告與授權同意書", "credit-transfer": "返國開學後持姊妹校正式成績單辦理境外學分採認"}.get(template.id, "於文大校園服務行政系統完成線上填報並列印紙本經系主任核章後送交國際處（菲華樓 202 室）"),
+        version="115準備工具-2026-10-19.1",
+        destinations=["中國文化大學學生專區線上申請系統（校園服務→行政服務→申請出國交換）", "中國文化大學國際暨兩岸事務處（菲華樓 2 樓 202 室）／各語文系辦公室"],
+        conditional_note="此為個人準備工具；中國文化大學出國交換甄選須先登入學生專區完成線上申請並列印申請表，經系所主任簽章後，連同家長同意書正本、歷年成績單正本（含排名）、外語檢定證明、中外文讀書計畫與自傳及教師推薦信於截止日前送交國際暨兩岸事務處（菲華樓 202 室）或各語文系辦公室。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1627,6 +1673,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nycu_template(template)) is not None]
     if university.id == NTHU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nthu_template(template)) is not None]
+    if university.id == PCCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _pccu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
