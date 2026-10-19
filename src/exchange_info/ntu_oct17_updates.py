@@ -224,5 +224,8 @@ def apply_updates(bundle: Path, path: Path = SOURCE) -> dict:
         payload["source_update_20261017"] = {"source_snapshot": path.name, "sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "checked_at": data["checked_at"], "detail_pages": 25, "pending_warning_pages": 21, "warning_free_UK_pages": 4, "formal_quota_changed": False, "all_current_cycle_fields_verified": False}
         if filename == "catalog-completeness.json": payload["latest_official_list_checked_at"] = data["list_receipt"]["checked_at"]
         outputs[filename] = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
-    for filename, content in outputs.items(): (bundle / filename).write_text(content, encoding="utf-8")
+    for filename, content in outputs.items(): (bundle / filename).write_text(content, encoding="utf-8", newline="\n")
+    from .ntu_oct19_updates import SOURCE as OCT19_SOURCE, apply_oct19_updates
+    if OCT19_SOURCE.exists():
+        apply_oct19_updates(bundle)
     return {"updated_portals": 25, "receiving_references": len(refs), "information_sessions": 1, "formal_quota_changed": False}
