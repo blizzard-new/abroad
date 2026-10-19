@@ -779,6 +779,7 @@ def create_maintenance_router(
             <option value="nccu">國立政治大學（共 266 所姊妹校）</option>
             <option value="ncku">國立成功大學（共 211 所姊妹校）</option>
             <option value="nycu">國立陽明交通大學（共 243 所姊妹校）</option>
+            <option value="nthu">國立清華大學（共 176 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -868,7 +869,8 @@ def create_maintenance_router(
     ntut: "國立臺北科技大學 (NTUT)",
     nccu: "國立政治大學 (NCCU)",
     ncku: "國立成功大學 (NCKU)",
-    nycu: "國立陽明交通大學 (NYCU)"
+    nycu: "國立陽明交通大學 (NYCU)",
+    nthu: "國立清華大學 (NTHU)"
   };
 
   const FIELD_LABELS = {
