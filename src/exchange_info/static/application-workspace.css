@@ -14,16 +14,21 @@
 .application-disclosure > summary small { display:block; margin-top:4px; color:var(--uw-muted); font-size:12px; line-height:1.6; }
 .application-disclosure > section { margin:0 16px 16px; }
 .application-disclosure > summary:focus-visible, .application-tool-menu > summary:focus-visible { outline:2px solid var(--uw-blue-strong); outline-offset:3px; border-radius:12px; }
-#overview > .planning-next-action { margin:0; }
+/* The one next step lives in the heading, so every stage shows it in the same place. */
+body.unified-shell .application-workspace-heading .planning-next-action { margin:14px 0 0; padding:16px 18px; border-radius:16px; }
+body.unified-shell .application-workspace-heading .planning-next-action[hidden] { display:none; }
+body.unified-shell .application-workspace-heading .planning-next-action strong { font-size:17px; }
+body.unified-shell .application-workspace-heading .next-action-icon { width:44px; height:44px; border-radius:14px; }
+.next-action-buttons { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; }
+.next-action-buttons > :is(a,button) { white-space:nowrap; }
+body.unified-shell .next-action-buttons .text-action { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 4px; border:0; background:none; box-shadow:none; font-size:13px; color:var(--uw-blue-strong); }
+.next-action-buttons svg { width:16px; height:16px; }
 #my-applications[data-empty=true] :is(#tracker-stats, .pr-views, .pr-tasklist-bar, #tracker-side) { display:none; }
 #my-applications[data-empty=true] .pr-tracker-grid { grid-template-columns:minmax(0,1fr); }
-body.unified-shell #application-workspace #advisor .advisor-hero { min-height:0; padding:12px 0 4px; background:none; border:0; box-shadow:none; }
-body.unified-shell #application-workspace #advisor .advisor-hero::before, body.unified-shell #application-workspace #advisor .advisor-hero::after { display:none; }
-body.unified-shell #application-workspace #advisor .advisor-hero h2 { margin:8px 0; color:var(--uw-text); font-size:30px; text-shadow:none; }
-body.unified-shell #application-workspace #advisor .advisor-hero p { max-width:680px; color:var(--uw-muted); text-shadow:none; }
-#advisor .advisor-hero .text-action { display:inline-flex; align-items:center; gap:6px; min-height:44px; color:var(--uw-blue-strong); }
-#advisor .advisor-hero-icon { display:none; }
-#advisor .advisor-hero .section-kicker { color:var(--uw-blue-strong); }
+/* Adding a task needs an account; the empty state already offers the sign-in. */
+#my-applications[data-signed-out=true] #tracker-add { display:none; }
+/* Single-key shortcuts are for keyboards; on touch screens the hint is only noise. */
+@media (hover:none), (max-width:700px) { .pr-tracker kbd { display:none; } }
 body.unified-shell #application-workspace .advisor-layout { grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:start; }
 #advisor-form .advisor-more-fields > summary > span { flex-wrap:wrap; }
 #advisor-form .advisor-more-fields > summary small { color:var(--uw-muted); font-size:11px; font-weight:400; }
@@ -33,27 +38,25 @@ body.unified-shell #application-workspace .advisor-layout { grid-template-column
 #application-workspace #advisor-form .advisor-more-fields::details-content { transition:none; }
 #advisor-form .advisor-more-fields > :is(.advisor-question-field, .advisor-question-chips, .academic-directory-note, #tku-eligibility-check) { margin:12px 13px; }
 #advisor-form[data-mode=eligibility] #advisor-qualification-fields > summary small { display:none; }
-.application-entry-help { padding:24px; color:var(--uw-text); }
-.application-entry-help h3 { margin:0 0 22px; font-size:17px; }
-.application-entry-help ul { display:grid; gap:24px; margin:0; padding:0; list-style:none; }
-.application-entry-help li { display:flex; gap:14px; font-size:13px; line-height:1.8; color:var(--uw-muted); }
-.application-entry-help li svg { flex:none; width:22px; height:22px; margin-top:3px; color:var(--uw-blue-strong); }
-.application-entry-help strong { display:block; margin-bottom:3px; color:var(--uw-text); font-size:14px; }
-#advisor-result:has(#advisor-result-content:not(:empty)) .application-entry-help { display:none; }
 #advisor-assistant[data-state=idle] { min-height:0; padding:20px; grid-template-columns:minmax(0,1fr); box-shadow:none; }
 #advisor-assistant[data-state=idle] .advisor-mascot-stage { display:none; }
 .application-center-intro { max-width:620px; margin:8px 0 0; font-size:14px; line-height:1.8; color:var(--uw-muted); }
+/* Shared profile data needs an account; without it the settings form takes the whole row instead of leaving an empty panel. */
+#application-center .application-center-setup:not(:has(> #application-profile-panel:not([hidden]))) { grid-template-columns:minmax(0,1fr); }
 /* Keep each transparent checkbox within its visible toggle on narrow screens. */
 #application-center .application-condition-toggles label { position:relative; }
 @media (max-width:900px) {
   body.unified-shell #application-workspace .advisor-layout { grid-template-columns:minmax(0,1fr); }
 }
 @media (max-width:700px) {
-  body.unified-shell #application-workspace #advisor .advisor-hero h2 { font-size:25px; }
   .application-disclosure > summary { padding:16px; }
   .application-disclosure > section { margin-inline:10px; }
-  .application-entry-help { padding:20px 16px; }
   #application-workspace .application-center-steps strong { display:block; font-size:11px; line-height:1.5; }
+  body.unified-shell .application-workspace-heading .planning-next-action { padding:14px; gap:10px; }
+  body.unified-shell .application-workspace-heading .planning-next-action strong { font-size:16px; }
+  body.unified-shell .application-workspace-heading .next-action-icon { width:36px; height:36px; border-radius:12px; }
+  .next-action-buttons { width:100%; align-items:stretch; }
+  .next-action-buttons .text-action { justify-content:center; }
 }
 /* Published source differences remain readable inside the notification dialog. */
 .notification-changes { margin:12px 0; padding:14px; border:1px solid var(--border, #d4e2ee); border-radius:14px; background:rgba(227,243,251,.42); overflow-wrap:anywhere; }
@@ -85,6 +88,11 @@ body.unified-shell #application-workspace > [data-university-page] { width:100%;
 .application-workspace-stages a { display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; border:1px solid #d4e3ed; border-radius:12px; color:var(--muted,#62788c); background:#ffffff80; font-size:14px; text-decoration:none; }
 .application-workspace-stages svg { width:18px; height:18px; flex:none; }
 .application-workspace-stages [aria-current] { background:#dff3f8; border-color:#84bfd3; color:#006b91; font-weight:700; }
+.application-stage-copy { display:grid; gap:2px; min-width:0; text-align:left; }
+.application-stage-copy small { font-size:11.5px; font-weight:400; color:var(--uw-muted,#62788c); }
+.application-stage-number svg { width:14px; height:14px; }
+.application-workspace-stages [data-stage-status=done] .application-stage-number { background:#1f7a5c; border-color:#1f7a5c; color:#fff; }
+.application-workspace-stages [data-stage-status=next] .application-stage-number { background:#006b91; border-color:#006b91; color:#fff; }
 .application-workspace-tools { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:12px; }
 .application-workspace-tools a { padding:9px 12px; border-radius:9px; font-size:13px; color:var(--muted,#62788c); text-decoration:none; }
 .application-workspace-tools [aria-current] { background:#ffffffb8; color:#006b91; font-weight:700; }
@@ -114,6 +122,7 @@ body.unified-shell #application-workspace[data-page=calendar] .calendar-next-sum
 [data-theme=dark] .application-workspace-stages a { background:#233548; border-color:#425569; }
 [data-theme=dark] .application-workspace-stages [aria-current], [data-theme=dark] .application-workspace-tools [aria-current] { background:#234757; color:#b0eafa; }
 [data-theme=dark] .application-workspace-heading a:hover { background:#294454; }
+[data-theme=dark] .planning-deadline-settings { background:#233548; border-color:#425569; }
 @media (min-width:1600px) {
   body.unified-shell #dashboard-view > #application-workspace { margin-left:calc(112px + (100% - 1544px) / 2); }
 }
@@ -127,6 +136,8 @@ body.unified-shell #application-workspace[data-page=calendar] .calendar-next-sum
   .application-workspace-context p { max-width:none; margin-top:8px; }
   .application-workspace-stages { gap:6px; }
   .application-workspace-stages a { flex-direction:column; font-size:12px; padding:10px 4px; }
+  .application-stage-copy { text-align:center; }
+  .application-stage-copy small { display:none; }
   .application-workspace-tools a { padding:9px; font-size:12px; }
   #application-period-fields { grid-template-columns:minmax(0,1fr); }
   #application-workspace[data-page=calendar] .application-workspace-heading { padding:12px; }

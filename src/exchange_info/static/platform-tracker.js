@@ -132,6 +132,7 @@ window.UniWayTracker = (() => {
     if (!host || !state.dashboard) return;
     const all = taskRows();
     host.dataset.empty = String(all.length === 0);
+    host.dataset.signedOut = String(!state.account);
     const rows = schoolFilter ? all.filter((row) => row.school === schoolFilter) : all;
     const term = state.eligibilityProfile?.targetTerm ? targetTermLabel(state.eligibilityProfile.targetTerm) : "";
     host.querySelector("#tracker-pill").textContent = [term, activeHomeSchool()].filter(Boolean).join(" · ");

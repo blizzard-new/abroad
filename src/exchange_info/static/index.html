@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="/static/platform-redesign.css?v=20261017-explore-cards-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
-    <link rel="stylesheet" href="/static/application-workspace.css?v=20261018-guidance-1" />
+    <link rel="stylesheet" href="/static/application-workspace.css?v=20261019-guide-1" />
     <link rel="stylesheet" href="/static/document-workbench.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/destination-tips.css?v=20261004-tips-2" />
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
@@ -686,10 +686,9 @@
             </section>
           </section>
           <section id="overview" class="overview-section visual-overview" data-university-page="overview" aria-labelledby="tracker-title">
-            <div id="planning-next-action" class="planning-next-action" aria-live="polite"></div>
             <section id="my-applications" class="pr-tracker" aria-labelledby="tracker-title">
               <header class="pr-tracker-head">
-                <div class="pr-tracker-title"><h1 id="tracker-title">我的申請</h1><span class="pr-status-pill"><i aria-hidden="true"></i><span id="tracker-pill">交換申請</span></span></div>
+                <div class="pr-tracker-title"><h1 id="tracker-title">我的準備任務</h1><span class="pr-status-pill"><i aria-hidden="true"></i><span id="tracker-pill">交換申請</span></span></div>
                 <div class="pr-tracker-tools">
                   <div class="pr-views" role="group" aria-label="檢視方式">
                     <button type="button" data-tracker-view="list" aria-pressed="true"><i data-lucide="list-checks" aria-hidden="true"></i>列表</button>
@@ -856,10 +855,8 @@
           </section>
 
           <section id="advisor" class="page-section advisor-section" data-university-page="advisor" aria-labelledby="advisor-title" hidden>
-            <header class="advisor-hero">
-              <div><span class="section-kicker">第一步 · 找到適合你的交換學校</span><h2 id="advisor-title">先從認識你開始</h2><p>先填學院與學制，就能開始探索。成績和語言檢定還沒準備好也沒關係，之後再補。</p><a class="text-action" href="#partners" data-requires-home-school>還沒有方向？先逛交換學校<i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
-              <span class="advisor-hero-icon" aria-hidden="true"><i data-lucide="sparkles"></i></span>
-            </header>
+            <!-- The workspace heading above already says which step this is and what to do first. -->
+            <h2 id="advisor-title" class="visually-hidden">先從認識你開始</h2>
             <div class="advisor-layout">
               <form id="advisor-form" class="advisor-form glass-panel">
                 <div class="workspace-heading"><span><i data-lucide="sliders-horizontal" aria-hidden="true"></i><strong>我的條件</strong></span><small id="advisor-profile-status">未登入，不會保存條件</small></div>
@@ -954,10 +951,6 @@
                   </div>
                 </section>
                 <div id="advisor-result-content"></div>
-                <aside id="application-entry-help" class="application-entry-help" aria-labelledby="application-entry-help-title">
-                  <h3 id="application-entry-help-title">接下來，我們陪你一起完成</h3>
-                  <ul><li><i data-lucide="school" aria-hidden="true"></i><span><strong>了解學校，再決定目標</strong>比較條件、費用與申請方式，找出適合自己的選擇。</span></li><li><i data-lucide="calendar-check" aria-hidden="true"></i><span><strong>知道要準備什麼、什麼時候做</strong>核對當期資格與期限，整理成你的待辦清單。</span></li><li><i data-lucide="file-pen-line" aria-hidden="true"></i><span><strong>逐份填寫，備齊申請文件</strong>保存草稿、檢查與匯出，再依校方指定方式送件。</span></li></ul>
-                </aside>
               </div>
             </div>
           </section>
@@ -1533,7 +1526,7 @@
       <form method="dialog"><span class="section-kicker">更換目標前，先確認影響</span><h2 id="planning-target-change-title">改用這所學校規劃？</h2><p id="planning-target-change-summary"></p><ul id="planning-target-change-impact"></ul><footer><button id="planning-target-change-cancel" class="secondary-button" value="cancel">保留原目標</button><button class="primary-button" value="confirm">確認更換目標</button></footer></form>
     </dialog>
     <script src="/static/multi-plan.js?v=20261015-redesign-1" defer></script>
-    <script src="/static/application-workspace.js?v=20261018-guidance-1" defer></script>
+    <script src="/static/application-workspace.js?v=20261019-guide-1" defer></script>
     <script src="/static/application-journey.js?v=20261008-ncu-1" defer></script>
     <script src="/static/document-workbench.js?v=20261008-ncu-1" defer></script>
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
@@ -1542,14 +1535,14 @@
     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
     <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
     <script src="/static/react-aria-school-picker.js?v=20261016-lattice-1" defer></script>
-    <script src="/static/app.js?v=20261019-seo-1" defer></script>
+    <script src="/static/app.js?v=20261019-guide-1" defer></script>
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261016-globe-5" defer></script>
     <script src="/static/platform-home.js?v=20261016-marquee-3" defer></script>
     <script src="/static/platform-explore.js?v=20261016-filters-1" defer></script>
     <script src="/static/platform-detail.js?v=20261017-ntu-reference-1" defer></script>
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
-    <script src="/static/platform-tracker.js?v=20261018-guidance-1" defer></script>
+    <script src="/static/platform-tracker.js?v=20261019-guide-1" defer></script>
     <script src="/static/platform-forum.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-profile.js?v=20261015-redesign-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>

@@ -4161,21 +4161,26 @@ function targetRecommendation() {
   return state.advisorPlan?.recommendations?.find(item=>item.school_name === target);
 }
 
-function renderPlanningNextAction() {
-  const container = $("#planning-next-action");
-  if (!container) return;
+// The one recommended next step of "我的申請"; `stage` is the workspace stage it belongs to.
+function planningNextAction() {
   const profile = state.eligibilityProfile;
   const target = state.applicationContext.target_school;
   const recommendation = targetRecommendation();
   const tasks = state.calendarEvents.filter(event=>event.schoolName === target && String(event.id).startsWith("preparation-") && event.date >= localDateKey());
-  const ready = initialApplicationTemplates().filter(template=>applicationTemplateCompletion(template).ready && applicationTemplateReviewed(template));
-  let action = { title:"從你的條件開始", detail:"填寫你已知的資訊；尚未考語言測驗也能先探索學校。", href:"#advisor", label:"填寫條件", icon:"sliders-horizontal" };
-  if (profile && !target) action = { title:"選出想申請的學校", detail:"先看資格缺口與官方來源，再確認本次規劃目標。", href:"#advisor", label:"查看選校結果", icon:"school" };
-  else if (target && recommendation && recommendationStatus(recommendation).pending) action = { title:recommendationStatus(recommendation).blocked ? "先處理目標學校的資格限制" : "先確認目標學校的資格", detail:[...(recommendation.blocking_reasons || []), ...(recommendation.confirmation_items || [])][0] || "詳細核對科系、語言、年度與梯次，暫勿把選定目標當成資格已通過。", href:"#eligibility", label:"核對詳細資格", icon:"list-checks" };
-  else if (target && !recommendation) action = { title:"確認這所學校的當期資格", detail:"目標已保存，但目前尚無適用的資格比對。先核對詳細條件，再安排送件。", href:"#eligibility", label:"核對詳細資格", icon:"list-checks" };
-  else if (target && !tasks.length) action = { title:"為目標學校安排準備時程", detail:"依當期官方期限預覽日期；若期限未確認，會引導你查看官方來源。", label:"預覽準備時程", icon:"calendar-range", planning:true };
-  else if (target) action = { title:ready.length ? "核對官方要求與送件方式" : "開始準備這個階段的文件", detail:ready.length ? `已有 ${ready.length} 份草稿填完並核對；匯出 PDF 不代表已送件或已錄取。` : "先處理校內申請文件；錄取後與返國文件可以稍後再看。", href:"#application-center", label:"開啟申請文件", icon:"folder-check" };
-  container.innerHTML = `<span class="next-action-icon"><i data-lucide="${action.icon}" aria-hidden="true"></i></span><div><small>現在，先做這一件事</small><strong>${escapeHtml(action.title)}</strong><p>${escapeHtml(action.detail)}</p></div>${action.planning ? '<button type="button" class="primary-button" data-open-planning>預覽準備時程<i data-lucide="arrow-right" aria-hidden="true"></i></button>' : `<a class="primary-button" href="${action.href}">${action.label}<i data-lucide="arrow-right" aria-hidden="true"></i></a>`}`;
+  const templates = initialApplicationTemplates();
+  const ready = templates.filter(template=>applicationTemplateCompletion(template).ready && applicationTemplateReviewed(template));
+  let action = { stage:"selection", title:"從你的條件開始", detail:"先填學院與學制就能看推薦；成績和語言檢定還沒準備好也沒關係，之後再補。", href:"#advisor", label:"填寫條件", icon:"sliders-horizontal", focus:"#advisor-college", browse:true };
+  if (profile && !target) action = { stage:"selection", title:"選出想申請的學校", detail:"先看資格缺口與官方來源，再確認本次規劃目標。", href:"#advisor", label:"查看選校結果", icon:"school", focus:"#advisor-result" };
+  else if (target && recommendation && recommendationStatus(recommendation).pending) action = { stage:"selection", title:recommendationStatus(recommendation).blocked ? "先處理目標學校的資格限制" : "先確認目標學校的資格", detail:[...(recommendation.blocking_reasons || []), ...(recommendation.confirmation_items || [])][0] || "詳細核對科系、語言、年度與梯次，暫勿把選定目標當成資格已通過。", href:"#eligibility", label:"核對詳細資格", icon:"list-checks", focus:"#advisor-form" };
+  else if (target && !recommendation) action = { stage:"selection", title:"確認這所學校的當期資格", detail:"目標已保存，但目前尚無適用的資格比對。先核對詳細條件，再安排送件。", href:"#eligibility", label:"核對詳細資格", icon:"list-checks", focus:"#advisor-form" };
+  else if (target && !tasks.length) action = { stage:"preparation", title:"為目標學校安排準備時程", detail:"依當期官方期限預覽日期；若期限未確認，會引導你查看官方來源。", label:"預覽準備時程", icon:"calendar-range", planning:true };
+  else if (target) action = { stage:"documents", title:ready.length ? "核對官方要求與送件方式" : "開始準備這個階段的文件", detail:ready.length ? `已有 ${ready.length} 份草稿填完並核對；匯出 PDF 不代表已送件或已錄取。` : "先處理校內申請文件；錄取後與返國文件可以稍後再看。", href:"#application-center", label:"開啟申請文件", icon:"folder-check", focus:"#application-template-title" };
+  action.documentsDone = Boolean(templates.length) && ready.length === templates.length;
+  return action;
+}
+
+function renderPlanningNextAction() {
+  window.UniWayApplicationWorkspace?.render();
 }
 
 function openPlanningWorkspace() {
@@ -12496,7 +12501,8 @@ class AiStatusManager {
     chip.innerHTML = `<i data-lucide="${info.icon}" aria-hidden="true"></i><span>${info.text}</span>`;
     chip.style.setProperty("--ai-chip-color", info.color);
     chip.dataset.state = this.state;
-    chip.hidden = false;
+    // AI is paused by design at this stage; students only need to hear about it when it is in use or failing.
+    chip.hidden = this.state === "paused";
     initIcons();
   }
 
@@ -12515,7 +12521,8 @@ class AiStatusManager {
     }
     const banner = $("#ai-fallback-banner");
     if (banner) {
-      banner.hidden = isAvailable;
+      // The banner describes an outage; a planned pause is not one and changes nothing for the student.
+      banner.hidden = isAvailable || this.state === "paused";
     }
   }
 
