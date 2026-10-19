@@ -133,3 +133,42 @@ def test_fcu_study_plan_follows_the_brochure_content_list() -> None:
         assert required in brochure
         assert required in template.description
     assert "返國後學習連結" not in template.description
+
+
+def test_ntut_templates_follow_archived_step1_and_step3_pages() -> None:
+    study = _template("ntut", "study-plan")
+    report = _template("ntut", "return-report")
+    stored = _stored_text("ntut")
+    assert "1 頁 A4 內簡述申請目的與預期效益" in stored
+    assert "2,000 字以上" in stored and "3,000 字以上" in stored
+    assert "1 頁 A4 內" in study.description
+    assert "1,000–1,500 字" in study.description
+    assert "500–1,000 字" not in study.description
+    assert "2,000 字以上" in report.description and "3,000 字以上" in report.description
+    assert "5 張" in report.description
+    assert "保證金 3,000 元" not in report.description
+
+
+def test_nccu_templates_follow_archived_outbound_and_mainland_guidelines() -> None:
+    app_data = _template("nccu", "exchange-application-data")
+    study = _template("nccu", "study-plan")
+    report = _template("nccu", "return-report")
+    assert "700 元" in app_data.description
+    assert "1,000 元" not in app_data.description
+    assert "至少 500 字、以 2 頁為限" in study.description
+    assert "1,000 字以內" in study.description and "3,000 字以內" in study.description
+    assert "20%" in study.description and "35%" in study.description
+    assert "1,500–2,000 字" not in report.description
+
+
+def test_ncku_templates_follow_archived_116_1_guidelines() -> None:
+    app_data = _template("ncku", "exchange-application-data")
+    study = _template("ncku", "study-plan")
+    report = _template("ncku", "return-report")
+    assert "15 個志願" in app_data.description and "50MB" in app_data.description
+    assert "教授推薦函 2 封" not in app_data.description
+    assert "第一志願" in study.description and "25%" in study.description
+    assert "各以一頁 A4 為限" not in study.description
+    assert "8,000 元" in report.description and "2,000 元" in report.description
+    assert "5,000 元" not in report.description
+

@@ -125,9 +125,10 @@ def test_schools_without_a_checked_rule_are_told_so_instead_of_shown_nothing() -
                 assert not rules.verified and rules.min_chars is None and rules.max_chars is None
                 assert not rules.count_field_ids and "不是學校規定" in " ".join(rules.rules)
     # A rule the stored official text does not support must stay out.
-    assert ("ntust", "study-plan") not in WRITING_RULES
-    assert not by_school["ntust"]["study-plan"].writing_rules.verified
+    assert ("cgu", "study-plan") not in WRITING_RULES
+    assert ("ncu", "study-plan") not in WRITING_RULES
     assert not by_school["cgu"]["study-plan"].writing_rules.verified
+    assert not by_school["ncu"]["study-plan"].writing_rules.verified
 
 
 def test_writing_rules_are_attached_to_the_right_school_only() -> None:
@@ -175,6 +176,105 @@ def test_cycu_has_no_published_word_count_and_the_two_week_deadline_is_backed_by
     regulation = _archived_pdf_text("sources/cycu/cycu_exchange_scholarship_rules_536_2.pdf")
     assert "領取助學金之學生須於返國後二周內提交研習成果報告書" in regulation
     assert "二週內" in rules.rules[0]
+
+
+def test_nccu_writing_rules_match_archived_outbound_and_mainland_guidelines() -> None:
+    study = WRITING_RULES[("nccu", "study-plan")]
+    assert study.min_chars == 500 and study.max_chars == 3000
+    assert "至少 500 字" in study.rules[0] and "2 頁為限" in study.rules[0]
+    assert "1,000 字以內" in study.rules[1] and "3,000 字以內" in study.rules[1]
+    outbound = _archived_pdf_text("sources/nccu/outbound_115_1_guidelines.pdf")
+    mainland = _archived_pdf_text("sources/nccu/oic_mainland_guidelines_base.pdf")
+    assert "每份文件字數至少五百字，以兩頁為限" in outbound
+    assert "1000字以內" in mainland and "3000字以內" in mainland
+
+    report = WRITING_RULES[("nccu", "return-report")]
+    assert report.min_chars is None and report.max_chars is None and not report.count_field_ids
+    assert "2 個月內" in report.rules[0] and "5,000" in report.rules[0]
+    assert "沒有公布交換心得報告的字數下限" in report.rules[1]
+
+
+def test_ncku_writing_rules_match_archived_116_1_guidelines_and_scholarship_rules() -> None:
+    study = WRITING_RULES[("ncku", "study-plan")]
+    assert study.min_chars is None and study.max_chars is None and not study.count_field_ids
+    assert "第一志願" in study.rules[0] and "25%" in study.rules[0]
+    assert "50MB" in study.rules[1]
+    guidelines = _archived_pdf_text("sources/ncku/116-1-guidelines.pdf")
+    assert "第一志願" in guidelines and "25%" in guidelines and "50MB" in guidelines
+
+    report = WRITING_RULES[("ncku", "return-report")]
+    assert report.min_chars is None and report.max_chars is None and not report.count_field_ids
+    assert "2 個月內" in report.rules[0] and "Word 及 PDF" in report.rules[0]
+    assert "8,000" in report.rules[0] and "2,000" in report.rules[0]
+    assert "1 個月內" in report.rules[1]
+
+
+def test_nsysu_writing_rules_match_archived_55th_guidelines_and_bilingual_report_word_limits() -> None:
+    study = WRITING_RULES[("nsysu", "study-plan")]
+    assert study.min_chars is None and study.max_chars is None and not study.count_field_ids
+    assert "20%" in study.rules[0]
+    assert "1 頁 A4" in study.rules[1] and "1–2 頁 A4" in study.rules[1]
+    stored = _stored_official_text("nsysu")
+    regulations = _archived_pdf_text("sources/nsysu/nsysu_exchange_selection_regulations.pdf")
+    assert "1 頁 A4 為限" in stored and "1–2 頁 A4" in stored
+    assert "研修計畫書佔20%" in regulations
+
+    report = WRITING_RULES[("nsysu", "return-report")]
+    assert report.min_chars == 1500 and report.max_chars == 2000
+    assert "1,500–2,000 字" in report.rules[0] and "1,000–1,500 字" in report.rules[0]
+    assert "4 張" in report.rules[0]
+    assert "1,500–2,000 字" in stored and "1,000–1,500 字" in stored
+
+
+def test_nchu_writing_rules_match_archived_2027_fall_guidelines_and_scholarship_slides() -> None:
+    study = WRITING_RULES[("nchu", "study-plan")]
+    assert study.min_chars is None and study.max_chars is None and not study.count_field_ids
+    assert "至多 A4 大小三面" in study.rules[0] and "第一志願" in study.rules[0]
+    assert "1,000–1,500 字" in study.rules[1] and "2MB" in study.rules[1]
+    guidelines = _archived_pdf_text("sources/nchu/Exchange_Program_Guidelines_for_Fall_Semester_2027_TW.pdf")
+    slides = _archived_pdf_text("sources/nchu/115-2_Exchange_Scholarship.pdf")
+    assert "至多A4大小三面" in guidelines
+    assert "1000-1500字" in slides
+
+    report = WRITING_RULES[("nchu", "return-report")]
+    assert report.min_chars is None and report.max_chars is None and not report.count_field_ids
+    assert "2 個月內" in report.rules[0] and "3 小時" in report.rules[0]
+    assert "2 週內" in report.rules[1] and "4 張照片" in report.rules[1]
+
+
+def test_ntut_writing_rules_match_archived_step1_and_step3_html_and_photo_limit_is_5() -> None:
+    study = WRITING_RULES[("ntut", "study-plan")]
+    assert study.min_chars is None and study.max_chars is None and not study.count_field_ids
+    assert "1 頁 A4 內" in study.rules[0]
+    assert "1,000–1,500 字" in study.rules[1]
+    step1 = (REPOSITORY / "sources/ntut/step1_internal_selection.html").read_text(encoding="utf-8")
+    assert "1頁A4內簡述申請目的與預期效益" in step1
+    assert "1000-1500字" in step1
+
+    report = WRITING_RULES[("ntut", "return-report")]
+    assert report.min_chars == 2000 and report.max_chars is None
+    assert "2 週內" in report.rules[0] and "5 張" in report.rules[0]
+    assert "2,000 字以上" in report.rules[1] and "3,000 字以上" in report.rules[1]
+    step3 = (REPOSITORY / "sources/ntut/step3_pre_post_departure.html").read_text(encoding="utf-8")
+    assert "2000字以上" in step3 and "3,000字以上" in step3
+    template = next(t for t in all_application_templates("國立臺北科技大學") if t.id == "return-report")
+    photos = next(field for field in template.fields if field.id == "activity_photos")
+    assert photos.max_files >= 5, "NTUT requires 5 photos, so the form must accept at least 5"
+
+
+def test_ntust_writing_rules_match_archived_115_2_intl_and_mainland_guidelines() -> None:
+    study = WRITING_RULES[("ntust", "study-plan")]
+    assert study.min_chars is None and study.max_chars is None and not study.count_field_ids
+    assert "每份篇幅約 1–2 頁" in study.rules[0]
+    assert "60%" in study.rules[2] and "20%" in study.rules[2]
+    guidelines = _archived_pdf_text("sources/ntust/ntust_115_2_intl_guidelines_20260317.pdf")
+    assert "每份篇幅約1-2頁" in guidelines
+
+    report = WRITING_RULES[("ntust", "return-report")]
+    assert report.min_chars is None and report.max_chars is None and not report.count_field_ids
+    assert "30 天（1 個月）內" in report.rules[0]
+    assert "沒有公布研修心得報告的固定字數" in report.rules[1]
+    assert "結束交換後30天內" in guidelines and "應返校辦理報到" in guidelines
 
 
 def test_guidance_text_never_claims_to_be_an_official_rule() -> None:
