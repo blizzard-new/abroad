@@ -195,8 +195,6 @@ const state = {
   schoolContextVersion: 0,
   schoolDataRequestIds: {},
   verifiedWindowCatalog: null,
-  verifiedWindowSelectedSchool: "",
-  verifiedWindowFilter: "10w",
   stagedNetworkStatus: null,
   stagedNetworkLoading: false,
 };
@@ -1730,7 +1728,6 @@ function updateSchoolContext() {
   });
   populateGlobalCommunitySchools();
   renderBoardFollowControls();
-  if (state.homeSchool) state.verifiedWindowSelectedSchool = state.homeSchool;
   renderVerifiedWindowSections();
   window.UniWayHome?.render();
 }
@@ -11989,9 +11986,6 @@ function applicationPeriodMeta(item) {
 async function loadVerifiedWindowDeadlines() {
   try {
     state.verifiedWindowCatalog = await fetchJson("/verified-window-deadlines");
-    if (!state.verifiedWindowSelectedSchool) {
-      state.verifiedWindowSelectedSchool = state.homeSchool || "國立臺灣大學";
-    }
     renderVerifiedWindowSections();
   } catch (_) {
     // Keep existing UI working if endpoint is temporarily unavailable.
@@ -12105,7 +12099,6 @@ function renderVerifiedWindowRetentionHook(card, { compact = false } = {}) {
 function renderVerifiedWindowCard(card, { context = "home" } = {}) {
   if (!card) return "";
   const statusMeta = verifiedWindowStatusMeta(card.window_status);
-  const isCurrentHome = normalize(activeHomeSchool()) === normalize(card.school_name);
   return `
     <div class="verified-window-card" data-verified-school-card="${escapeHtml(card.school_id)}">
       <header class="verified-window-card-header">
@@ -12116,7 +12109,6 @@ function renderVerifiedWindowCard(card, { context = "home" } = {}) {
           </div>
           <h3>${escapeHtml(card.school_name)} — 校內交換申請三大核心規定與防漏支線任務</h3>
         </div>
-        ${context === "home" && !isCurrentHome ? `<button type="button" class="secondary-button verified-switch-school-btn" data-verified-switch-home="${escapeHtml(card.school_name)}"><i data-lucide="compass" aria-hidden="true"></i><span>切換全站為${escapeHtml(card.short_name)}視角</span></button>` : ""}
       </header>
       ${renderVerifiedWindowRetentionHook(card, { compact: false })}
       <div class="verified-window-rules-grid" role="list" aria-label="${escapeHtml(card.school_name)}三大已核對規定">
@@ -12158,48 +12150,6 @@ function renderVerifiedWindowCard(card, { context = "home" } = {}) {
     </div>`;
 }
 
-function renderHomeVerifiedWindowSection() {
-  const mount = $("#home-verified-window-mount");
-  if (!mount) return;
-  const catalog = state.verifiedWindowCatalog;
-  if (!catalog?.items?.length) {
-    mount.innerHTML = "";
-    return;
-  }
-  const showAll = state.verifiedWindowFilter === "all";
-  const visibleSchools = showAll
-    ? catalog.items
-    : catalog.items.filter((item) => item.in_ten_week_window);
-  const activeCard = verifiedWindowSchoolCard(state.verifiedWindowSelectedSchool || state.homeSchool || "國立臺灣大學");
-  mount.innerHTML = `
-    <div class="pr-section-head pr-section-head-split verified-window-section-head">
-      <div>
-        <span class="pr-kicker"><i data-lucide="shield-check" aria-hidden="true"></i>跨校整合 · 未來 10 週申請窗口 100% 官方來源核對</span>
-        <h2 id="home-verified-window-title">校內截止日、紙本送件與讀書計畫字數規定，<br>逐條附上官方 HTTPS 來源與最後查核日。</h2>
-      </div>
-      <div class="verified-window-summary-stats">
-        <p>針對未來 10 週（${escapeHtml(catalog.window_start_date)} 至 ${escapeHtml(catalog.window_end_date)}）開放或即將截止的 <strong>${catalog.ten_week_school_count} 所目標大學</strong>，我們逐一核對三大最容易踩雷的規定。未公告精確時段者絕不臆測 23:59。</p>
-        <div class="verified-window-filter-switch" role="group" aria-label="切換顯示範圍">
-          <button type="button" class="chip-button ${!showAll ? "active" : ""}" data-verified-window-filter="10w" aria-pressed="${!showAll}">未來 10 週窗口學校（${catalog.ten_week_school_count} 所）</button>
-          <button type="button" class="chip-button ${showAll ? "active" : ""}" data-verified-window-filter="all" aria-pressed="${showAll}">全部支援學校（${catalog.total_supported_school_count} 所）</button>
-        </div>
-      </div>
-    </div>
-    <div class="verified-window-school-strip" role="tablist" aria-label="選擇要查看截止日與規定的大學">
-      ${visibleSchools.map((item) => {
-        const selected = item.school_name === activeCard?.school_name;
-        const statusClass = item.window_status === "open" ? "is-open" : item.window_status === "upcoming" ? "is-upcoming" : item.window_status === "pending_exact_date" ? "is-pending" : "is-closed";
-        const shortDateText = item.primary_deadline_date ? item.primary_deadline_date.slice(5, 10).replace("-", "/") : item.in_ten_week_window ? "待公告日" : "已截止";
-        return `<button type="button" role="tab" class="verified-school-pill ${statusClass}${selected ? " active" : ""}" data-verified-window-school="${escapeHtml(item.school_name)}" aria-selected="${selected}">
-          <strong>${escapeHtml(item.short_name)}</strong>
-          <small>${escapeHtml(shortDateText)}</small>
-        </button>`;
-      }).join("")}
-    </div>
-    ${renderVerifiedWindowCard(activeCard, { context: "home" })}`;
-  initIcons();
-}
-
 function renderDeadlinesVerifiedWindowCard() {
   const container = $("#deadlines-verified-window-card");
   if (!container) return;
@@ -12225,7 +12175,6 @@ function renderVerifiedWindowCalendarHook() {
 }
 
 function renderVerifiedWindowSections() {
-  renderHomeVerifiedWindowSection();
   renderDeadlinesVerifiedWindowCard();
   renderVerifiedWindowCalendarHook();
 }
@@ -15235,23 +15184,6 @@ function bindEvents() {
     const favorite = event.target.closest(".favorite-toggle");
     if (favorite?.dataset.schoolName) {
       toggleFavorite(favorite.dataset.schoolName);
-      return;
-    }
-    const verifiedSchoolBtn = event.target.closest("[data-verified-window-school]");
-    if (verifiedSchoolBtn?.dataset.verifiedWindowSchool) {
-      state.verifiedWindowSelectedSchool = verifiedSchoolBtn.dataset.verifiedWindowSchool;
-      renderHomeVerifiedWindowSection();
-      return;
-    }
-    const verifiedFilterBtn = event.target.closest("[data-verified-window-filter]");
-    if (verifiedFilterBtn?.dataset.verifiedWindowFilter) {
-      state.verifiedWindowFilter = verifiedFilterBtn.dataset.verifiedWindowFilter;
-      renderHomeVerifiedWindowSection();
-      return;
-    }
-    const verifiedSwitchHomeBtn = event.target.closest("[data-verified-switch-home]");
-    if (verifiedSwitchHomeBtn?.dataset.verifiedSwitchHome) {
-      chooseHomeSchool(verifiedSwitchHomeBtn.dataset.verifiedSwitchHome);
       return;
     }
     const importSubtasksBtn = event.target.closest("[data-import-school-subtasks]");

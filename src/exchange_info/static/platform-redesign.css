@@ -1096,41 +1096,6 @@ body.unified-shell[data-school-selected="false"]:has(:where(#dashboard-view):not
 }
 
 /* ---------- Action 1: Verified 10-Week Window Deadlines & Retention Hook ---------- */
-.pr-verified-window { margin-top: 24px; }
-.verified-window-section-head { margin-bottom: 18px; }
-.verified-window-summary-stats { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
-.verified-window-filter-switch { display: flex; flex-wrap: wrap; gap: 8px; }
-.verified-window-school-strip {
-  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; padding: 6px 0;
-}
-.verified-school-pill {
-  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
-  border: 1px solid var(--uw-line); border-radius: 999px; background: var(--uw-surface);
-  color: var(--uw-navy); font: inherit; font-size: 13px; cursor: pointer;
-  transition: border-color 0.16s ease, background-color 0.16s ease, transform 0.16s ease;
-}
-.verified-school-pill strong { font-weight: 700; }
-.verified-school-pill small {
-  padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700;
-  background: color-mix(in srgb, var(--uw-blue) 12%, transparent); color: var(--uw-blue-strong);
-}
-.verified-school-pill.is-open small {
-  background: color-mix(in srgb, #14804a 15%, transparent); color: #14804a;
-}
-.verified-school-pill.is-pending small {
-  background: color-mix(in srgb, #b86b11 16%, transparent); color: #9c5708;
-}
-.verified-school-pill.is-closed small {
-  background: color-mix(in srgb, var(--uw-muted) 15%, transparent); color: var(--uw-muted);
-}
-.verified-school-pill:hover { border-color: var(--uw-blue); transform: translateY(-1px); }
-.verified-school-pill.active {
-  border-color: var(--uw-navy); background: var(--uw-navy); color: var(--uw-page);
-}
-.verified-school-pill.active small {
-  background: rgba(255, 255, 255, 0.18); color: #fff;
-}
-
 .verified-window-card {
   display: flex; flex-direction: column; gap: 18px; padding: 24px;
   border: 1px solid var(--uw-line); border-radius: 22px; background: var(--uw-surface);
