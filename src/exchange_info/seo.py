@@ -25,6 +25,7 @@ from .school_identity import school_identity_key
 from .seo_changes import ContentChanges
 from .seo_quality import digest, material_content
 from .seo_guides import COUNTRIES, GUIDES, country_slug
+from .seo_articles import ARTICLES, Article, article_schema, guide_index, render_article
 from .seo_analytics import analytics_markup
 from .university_registry import SUPPORTED_UNIVERSITIES, UniversityProfile
 
@@ -80,18 +81,25 @@ def structured_data(value: dict) -> str:
     return f'<script type="application/ld+json">{payload}</script>'
 
 
-def metadata(settings: SeoSettings, title: str, description: str, path: str) -> str:
+def metadata(settings: SeoSettings, title: str, description: str, path: str, article: Article | None = None) -> str:
     url, image = settings.origin + path, settings.origin + "/static/assets/brand/apple-touch-icon.png"
+    if article:
+        image = settings.origin + article.image_path
     tags = [f'<meta name="description" content="{escape(description)}">',
             f'<link rel="canonical" href="{escape(url)}">',
             f'<meta name="robots" content="{"index, follow, max-image-preview:large" if settings.indexable else "noindex, nofollow"}">']
-    for prop, value in (("og:type", "website"), ("og:site_name", "UniWay"), ("og:locale", "zh_TW"),
+    for prop, value in (("og:type", "article" if article else "website"), ("og:site_name", "UniWay"), ("og:locale", "zh_TW"),
                         ("og:title", title), ("og:description", description), ("og:url", url),
-                        ("og:image", image), ("og:image:alt", "UniWay 標誌")):
+                        ("og:image", image), ("og:image:alt", article.image_alt if article else "UniWay 標誌")):
         tags.append(f'<meta property="{prop}" content="{escape(value)}">')
-    for name, value in (("twitter:card", "summary"), ("twitter:title", title),
+    for name, value in (("twitter:card", "summary_large_image" if article else "summary"), ("twitter:title", title),
                         ("twitter:description", description), ("twitter:image", image)):
         tags.append(f'<meta name="{name}" content="{escape(value)}">')
+    if article:
+        for prop, value in (("article:published_time", article.published.isoformat()),
+                            ("article:modified_time", article.modified.isoformat()),
+                            ("og:image:width", "1536"), ("og:image:height", "1024")):
+            tags.append(f'<meta property="{prop}" content="{value}">')
     if path == "/" and settings.verification:
         tags.append(f'<meta name="google-site-verification" content="{escape(settings.verification)}">')
     return "\n".join(tags) + analytics_markup()
@@ -146,15 +154,18 @@ def source_notice(source: CatalogueSourceStatus | None) -> str:
 
 
 def page(settings: SeoSettings, title: str, description: str, path: str, body: str,
-         breadcrumbs: list[tuple[str, str]]) -> HTMLResponse:
+         breadcrumbs: list[tuple[str, str]], *, article: Article | None = None) -> HTMLResponse:
     navigation = " / ".join(f'<a href="{escape(p)}">{escape(name)}</a>' for name, p in breadcrumbs)
     schema = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i, "name": name, "item": settings.origin + p}
         for i, (name, p) in enumerate(breadcrumbs, 1)]}
+    article_head = structured_data(article_schema(article, settings.origin)) if article else ""
+    if path == "/guides" or article:
+        article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261019-1">'
     html = f'''<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)}</title>
-{metadata(settings, title, description, path)}{structured_data(schema)}
-<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/static/seo.css?v=20261019-2"></head>
+{metadata(settings, title, description, path, article)}{structured_data(schema)}
+<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/static/seo.css?v=20261019-2">{article_head}</head>
 <body><a class="skip" href="#content">跳到內容</a><header><a class="brand" href="/">UniWay</a>
 <nav aria-label="主導覽"><a href="/schools">交換學校指南</a><a href="/destinations">國家專區</a><a href="/guides">申請指南</a><a href="/#partners">開啟選校工具</a></nav></header>
 <main id="content"><nav class="breadcrumbs" aria-label="麵包屑">{navigation}</nav>{body}
@@ -364,7 +375,8 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         body += '<section><h2>延伸比較與申請準備</h2><ul>'
         if slug:
             body += f'<li><a href="/destinations/{slug}">{COUNTRIES[slug]["name"]}交換選項與生活預算核對</a></li>'
-        for guide, data in GUIDES.items():
+        for guide in ("exchange-eligibility", "exchange-application", "exchange-budget"):
+            data = GUIDES[guide]
             body += f'<li><a href="/guides/{guide}">{data["title"]}</a></li>'
         related = [group[0] for group in groups.values()
                    if group[0].country == partner.country and partner_id(group[0]) != key][:6]
@@ -404,7 +416,9 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         for heading, text in data["checks"]:
             body += f'<section><h2>{heading}</h2><p>{text}</p></section>'
         body += '<h2>官方規劃參考</h2><ul>' + ''.join(f'<li>{source_link(url, label)}</li>' for label, url in data["sources"]) + '</ul>'
-        body += '<p><a href="/guides/exchange-budget">建立費用與補助清單</a> · <a href="/guides/exchange-eligibility">核對語言及資格</a></p><h2>依母校比較方案</h2>'
+        body += '<p><a href="/guides/exchange-budget">建立費用與補助清單</a> · <a href="/guides/exchange-eligibility">核對語言及資格</a></p>'
+        cost_guide = {"japan": "japan-exchange-cost", "south-korea": "korea-exchange-cost", "germany": "germany-exchange-cost"}[slug]
+        body += f'<p><a href="/guides/{cost_guide}">閱讀{name}一學期生活費、住宿與預算完整指南</a></p><h2>依母校比較方案</h2>'
         body += '<nav class="jump-links" aria-label="母校快速連結">' + ' · '.join(f'<a href="#home-{u.id}">{escape(u.short_name)}</a>' for u, _ in matches) + '</nav>'
         for u, groups in matches:
             body += f'<section id="home-{u.id}"><h3><a href="/schools/{u.id}">{escape(u.school_name)}</a> · {len(groups)} 個合作校頁面</h3><ul class="cards">'
@@ -418,23 +432,16 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
 
     @router.api_route("/guides", methods=["GET", "HEAD"])
     def guides():
-        body = '<h1>交換學生申請指南</h1><p class="lead">從資格核對到費用與文件準備，建立自己的交換申請計畫。</p><ul class="cards">' + ''.join(
-            f'<li><a href="/guides/{slug}"><strong>{data["title"]}</strong></a><p>{data["description"]}</p></li>' for slug, data in GUIDES.items()) + '</ul>'
+        body = guide_index()
         return page(settings, "交換學生資格、費用與文件指南｜UniWay", "依序準備交換學生資格、語言、預算、補助與文件，連結各母校的官方申請資訊。", "/guides", body, [("首頁", "/"), ("申請指南", "/guides")])
 
     @router.api_route("/guides/{slug}", methods=["GET", "HEAD"])
     def guide(slug: str):
         if slug not in GUIDES:
             raise HTTPException(404, "找不到申請指南")
-        data = GUIDES[slug]
-        body = f'<h1>{data["title"]}</h1><p class="lead">{data["description"]}</p><p>整理：UniWay 編輯指南。以下為一般準備方法，各校實際要求請查閱母校與合作校公告。</p>'
-        for heading, text in data["sections"]:
-            body += f'<section><h2>{heading}</h2><p>{text}</p></section>'
-        if data["sources"]:
-            body += '<h2>官方參考入口</h2><ul>' + ''.join(f'<li>{source_link(url, label)}</li>' for label, url in data["sources"]) + '</ul>'
-        body += '<h2>查閱自己母校的規定</h2><ul>' + ''.join(f'<li><a href="/schools/{u.id}">{escape(u.school_name)}交換申請與官方來源</a></li>' for u in universities.values()) + '</ul>'
-        body += '<p><a href="/destinations">比較目的地生活預算與選項</a> · <a href="/editorial-policy">資料編輯與更正政策</a></p>'
-        return page(settings, data["title"] + "｜UniWay", data["description"], f"/guides/{slug}", body, [("首頁", "/"), ("申請指南", "/guides"), (data["title"], f"/guides/{slug}")])
+        article = ARTICLES[slug]
+        return page(settings, article.title + "｜UniWay", article.description, f"/guides/{slug}", render_article(article),
+                    [("首頁", "/"), ("申請指南", "/guides"), (article.title, f"/guides/{slug}")], article=article)
 
     @router.api_route("/editorial-policy", methods=["GET", "HEAD"])
     def editorial_policy():
@@ -442,6 +449,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
 <h2>來源與適用範圍</h2><p>母校甄選、名額與提名規定以母校國際處公告為準；合作校課程、住宿及入學程序以合作校官方資料為準；簽證以主管機關為準。每個合作校頁保留來源連結，查核欄位另列適用年度、梯次與狀態。</p>
 <h2>查核、更新與不確定性</h2><p>資料擷取時間與人工查核時間不同，近期抓取不代表名額仍開放。未知、歷史參考、來源衝突與零名額分開標示；不以合作關係推論當期名額，也不把未公告寫成免要求。</p>
 <h2>整理方法</h2><p>網站將既有資料整理為母校與合作校方案頁，合併同一方案的重複文字，保留各方案差異與來源。國家及申請指南提供一般比較方法，不取代校方個案判定；未查證的推論不寫成官方規定。</p>
+<h2>文章與插圖</h2><p>申請指南區分官方統計、UniWay 整理方法與假設試算，標明來源版本與適用範圍。文章以 AI 輔助起草及製作原創情境插圖；插圖不是實際校園、學生紀錄或住宿照片。文字與來源會在內容修訂時重新核對，更新日期反映實質修改，不因每日排程而刷新。</p>
 <h2>更正與學生經驗</h2><p>發現錯誤時，可透過網站的問題回報功能提供頁面網址、官方來源與適用年度，供平台核對。學生心得應標明交換時間與方案並取得作者授權；個人經驗不代表所有學生的費用、資格或錄取結果。</p>
 <h2>平台角色</h2><p>UniWay 是獨立資訊整理與申請規劃工具，並非大學或政府單位，不保證名額、錄取或補助。學校與來源連結不代表合作背書。</p>
 <p><a href="/schools">查閱母校與合作校資料</a> · <a href="/guides">閱讀申請準備指南</a></p>'''
@@ -455,7 +463,8 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
     @router.api_route("/sitemaps/pages.xml", methods=["GET", "HEAD"])
     def static_sitemap():
         return xml_response("urlset", [settings.origin + path for path in ("/", "/schools", *EDITORIAL_PATHS)] +
-                            [f"{settings.origin}/schools/{u.id}" for u in universities.values()])
+                            [f"{settings.origin}/schools/{u.id}" for u in universities.values()],
+                            {f"{settings.origin}/guides/{slug}": article.modified.isoformat() for slug, article in ARTICLES.items()})
 
     @router.api_route("/sitemaps/{home_id}.xml", methods=["GET", "HEAD"])
     def school_sitemap(home_id: str):
