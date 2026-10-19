@@ -7,7 +7,7 @@ STATIC_DIR = Path(__file__).resolve().parents[1] / "src" / "exchange_info" / "st
 def test_uniway_brand_and_public_discovery_are_present() -> None:
     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
 
-    assert "UniWay｜臺灣大學生留學與交換平台" in html
+    assert "UniWay｜交換學生申請、合作學校與選校資訊" in html
     assert 'class="uniway-header-brand"' in html
     assert 'class="uniway-public-nav"' in html
     assert 'class="uniway-global-discovery"' not in html

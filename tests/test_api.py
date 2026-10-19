@@ -74,7 +74,7 @@ def test_api_reads_processed_data_without_full_text(tmp_path, monkeypatch) -> No
     frontend = client.get("/")
     assert frontend.status_code == 200
     assert frontend.headers["cache-control"] == "no-store"
-    assert "UniWay｜臺灣大學生留學與交換平台" in frontend.text
+    assert "UniWay｜交換學生申請、合作學校與選校資訊" in frontend.text
 
     assert client.get("/health").json()["pages"] == 1
     monkeypatch.setattr('exchange_info.api.create_cgu_catalogue', fixed_cgu_catalogue(lambda: []))

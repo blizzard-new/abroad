@@ -13299,7 +13299,9 @@ function showUniversityPage(pageId, { resetScroll = true, focusHeading = true } 
 
   document.body.dataset.activeUniversityPage = activePage;
   setActiveNavigation(activePage === "search" ? "" : activePage === "application-form" ? "application-center" : activePage);
-  document.title = `${UNIVERSITY_PAGE_TITLES[activePage]} | UniWay`;
+  document.title = activePage === "home"
+    ? "UniWay｜交換學生申請、合作學校與選校資訊"
+    : `${UNIVERSITY_PAGE_TITLES[activePage]} | UniWay`;
 
   if (resetScroll) resetRouteScroll();
   if (focusHeading) {
