@@ -3,7 +3,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import os
+import sqlite3
 import threading
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
@@ -19,6 +21,8 @@ from fastapi.responses import HTMLResponse, PlainTextResponse, Response
 
 from .models import CatalogueSourceStatus, PartnerUniversity
 from .school_identity import school_identity_key
+from .seo_changes import ContentChanges
+from .seo_quality import digest, material_content
 from .university_registry import SUPPORTED_UNIVERSITIES, UniversityProfile
 
 DEFAULT_ORIGIN = "https://app.uniway-tw.com"
@@ -183,20 +187,34 @@ def partner_details(partner: PartnerUniversity) -> str:
 {('<h3>歷史／參考資料（非本期已確認條件）</h3><dl>' + references + '</dl>') if references else ''}{options}</section>'''
 
 
-def xml_response(root_name: str, entries: Sequence[str]) -> Response:
+def xml_response(root_name: str, entries: Sequence[str], lastmods: Mapping[str, str] | None = None) -> Response:
     root = Element(root_name, xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
     for location in entries:
         item = SubElement(root, "sitemap" if root_name == "sitemapindex" else "url")
         SubElement(item, "loc").text = location
+        if lastmods and location in lastmods:
+            SubElement(item, "lastmod").text = lastmods[location]
     return Response(tostring(root, encoding="utf-8", xml_declaration=True), media_type="application/xml",
                     headers={"Cache-Control": "public, max-age=300"})
 
 
-def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProfile], tuple[list[PartnerUniversity], CatalogueSourceStatus | None]]) -> APIRouter:
+def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProfile], tuple[list[PartnerUniversity], CatalogueSourceStatus | None]],
+                      changes: ContentChanges | None = None) -> APIRouter:
     router = APIRouter(include_in_schema=False)
     universities = {item.id: item for item in SUPPORTED_UNIVERSITIES}
     snapshots: dict[str, tuple[float, list[PartnerUniversity], CatalogueSourceStatus | None]] = {}
     snapshot_lock = threading.Lock()
+    lastmods: dict[str, str] = {}
+
+    def record_changes(hashes: dict[str, str]) -> dict[str, str]:
+        if changes is None:
+            return {}
+        try:
+            return changes.observe(hashes)
+        except (OSError, sqlite3.Error):
+            # A ledger failure must not break public pages or manufacture dates.
+            logging.getLogger(__name__).warning("SEO content ledger unavailable; omitting lastmod", exc_info=True)
+            return {}
 
     def catalogue_for(u: UniversityProfile):
         # A crawler visiting hundreds of partner pages must not parse the same
@@ -209,6 +227,11 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             partners, source = catalogue(u)
             if not partners:
                 raise HTTPException(503, "合作校資料暫不可用，請稍後重試。", headers={"Retry-After": "60"})
+            hashes = {settings.origin + partner_path(u, rows[0]): digest(material_content(rows))
+                      for rows in group_partners(partners).values()}
+            for url in hashes:
+                lastmods.pop(url, None)
+            lastmods.update(record_changes(hashes))
             snapshots[u.id] = monotonic(), partners, source
             return partners, source
 
@@ -284,6 +307,6 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
     def school_sitemap(home_id: str):
         u = university(home_id)
         partners, _ = catalogue_for(u)
-        return xml_response("urlset", [settings.origin + partner_path(u, rows[0]) for rows in group_partners(partners).values()])
+        return xml_response("urlset", [settings.origin + partner_path(u, rows[0]) for rows in group_partners(partners).values()], lastmods)
 
     return router

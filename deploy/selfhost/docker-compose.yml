@@ -140,6 +140,7 @@ services:
     volumes:
       - ./tools:/opt/selfhost:ro      # small checks run inside the container, where the database address works
       - ca-public:/ca-public:ro       # the gateway's public certificate, so the program trusts https://gateway
+      - seo-state:/home/uniway/seo-state
     environment:
       EXCHANGE_ENVIRONMENT: production
       EXCHANGE_ACCOUNT_REPOSITORY: supabase
@@ -160,6 +161,7 @@ services:
       EXCHANGE_EMAIL_VERIFICATION_SECRET: ${EMAIL_VERIFICATION_SECRET}
       EXCHANGE_PUBLIC_BASE_URL: https://${DOMAIN}
       EXCHANGE_SEO_INDEXABLE: ${EXCHANGE_SEO_INDEXABLE:-true}
+      EXCHANGE_SEO_STATE_DIR: /home/uniway/seo-state
       EXCHANGE_GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}
       EXCHANGE_CONTENT_ADMIN_EMAILS: ${ADMIN_EMAILS:-}
       EXCHANGE_CONTACT_EMAIL: ${CONTACT_EMAIL:-}
@@ -167,6 +169,8 @@ services:
       GOOGLE_OAUTH_CLIENT_SECRET: ${GOOGLE_OAUTH_CLIENT_SECRET:-}
 
 volumes:
+  seo-state:
+    name: uniway_seo_state
   gateway-data:
     name: uniway_gateway
   ca-public:
