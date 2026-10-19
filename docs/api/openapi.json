@@ -10817,6 +10817,98 @@
         "title": "CrossSchoolStructuredPoint",
         "type": "object"
       },
+      "DcardSchoolBoardLaunchDraft": {
+        "properties": {
+          "dcard_board_name": {
+            "maxLength": 120,
+            "minLength": 4,
+            "title": "Dcard Board Name",
+            "type": "string"
+          },
+          "in_next_10_weeks_window": {
+            "default": true,
+            "title": "In Next 10 Weeks Window",
+            "type": "boolean"
+          },
+          "markdown_body": {
+            "maxLength": 5000,
+            "minLength": 40,
+            "title": "Markdown Body",
+            "type": "string"
+          },
+          "partner_hub_deep_link": {
+            "maxLength": 360,
+            "minLength": 4,
+            "title": "Partner Hub Deep Link",
+            "type": "string"
+          },
+          "pitfall_hook_bullets": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "minItems": 1,
+            "title": "Pitfall Hook Bullets",
+            "type": "array"
+          },
+          "post_title": {
+            "maxLength": 220,
+            "minLength": 10,
+            "title": "Post Title",
+            "type": "string"
+          },
+          "recommended_publish_window": {
+            "maxLength": 160,
+            "minLength": 6,
+            "title": "Recommended Publish Window",
+            "type": "string"
+          },
+          "school_id": {
+            "maxLength": 24,
+            "minLength": 2,
+            "title": "School Id",
+            "type": "string"
+          },
+          "school_name": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "School Name",
+            "type": "string"
+          },
+          "short_name": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Short Name",
+            "type": "string"
+          },
+          "window_status": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Window Status",
+            "type": "string"
+          },
+          "workbench_deep_link": {
+            "maxLength": 360,
+            "minLength": 4,
+            "title": "Workbench Deep Link",
+            "type": "string"
+          }
+        },
+        "required": [
+          "school_id",
+          "school_name",
+          "short_name",
+          "dcard_board_name",
+          "window_status",
+          "recommended_publish_window",
+          "post_title",
+          "workbench_deep_link",
+          "partner_hub_deep_link",
+          "markdown_body"
+        ],
+        "title": "DcardSchoolBoardLaunchDraft",
+        "type": "object"
+      },
       "DeadlineRecord": {
         "properties": {
           "category": {
@@ -17069,6 +17161,479 @@
         "title": "StudentVerificationMethod",
         "type": "string"
       },
+      "StudyPlanPartnerCourseLookup": {
+        "properties": {
+          "colleges": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Colleges"
+          },
+          "contracted_home_count": {
+            "minimum": 1.0,
+            "title": "Contracted Home Count",
+            "type": "integer"
+          },
+          "country_name_zh": {
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Country Name Zh",
+            "type": "string"
+          },
+          "country_slug": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Country Slug",
+            "type": "string"
+          },
+          "course_direction_points": {
+            "items": {
+              "$ref": "#/components/schemas/CrossSchoolStructuredPoint"
+            },
+            "title": "Course Direction Points",
+            "type": "array"
+          },
+          "cross_school_partner_path": {
+            "maxLength": 360,
+            "minLength": 10,
+            "title": "Cross School Partner Path",
+            "type": "string"
+          },
+          "degree_levels": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Degree Levels"
+          },
+          "institution_slug": {
+            "maxLength": 140,
+            "minLength": 2,
+            "title": "Institution Slug",
+            "type": "string"
+          },
+          "language_requirement_summary": {
+            "maxLength": 600,
+            "minLength": 2,
+            "title": "Language Requirement Summary",
+            "type": "string"
+          },
+          "living_cost_hint": {
+            "maxLength": 450,
+            "minLength": 4,
+            "title": "Living Cost Hint",
+            "type": "string"
+          },
+          "partner_school_name_en": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Partner School Name En",
+            "type": "string"
+          },
+          "partner_school_name_zh": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Partner School Name Zh",
+            "type": "string"
+          },
+          "quota_summary": {
+            "maxLength": 400,
+            "minLength": 2,
+            "title": "Quota Summary",
+            "type": "string"
+          },
+          "suggested_course_plan_lines": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "title": "Suggested Course Plan Lines",
+            "type": "array"
+          }
+        },
+        "required": [
+          "partner_school_name_zh",
+          "partner_school_name_en",
+          "country_name_zh",
+          "country_slug",
+          "institution_slug",
+          "cross_school_partner_path",
+          "contracted_home_count",
+          "quota_summary",
+          "language_requirement_summary",
+          "living_cost_hint"
+        ],
+        "title": "StudyPlanPartnerCourseLookup",
+        "type": "object"
+      },
+      "StudyPlanPitfallRule": {
+        "properties": {
+          "badge_label": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Badge Label",
+            "type": "string"
+          },
+          "detail_zh": {
+            "maxLength": 600,
+            "minLength": 8,
+            "title": "Detail Zh",
+            "type": "string"
+          },
+          "format_and_limit": {
+            "maxLength": 300,
+            "minLength": 4,
+            "title": "Format And Limit",
+            "type": "string"
+          },
+          "last_checked_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Last Checked At",
+            "type": "string"
+          },
+          "pitfall_title": {
+            "maxLength": 200,
+            "minLength": 4,
+            "title": "Pitfall Title",
+            "type": "string"
+          },
+          "rule_id": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Rule Id",
+            "type": "string"
+          },
+          "scoring_weight": {
+            "maxLength": 300,
+            "minLength": 4,
+            "title": "Scoring Weight",
+            "type": "string"
+          },
+          "severity": {
+            "default": "critical",
+            "enum": [
+              "critical",
+              "high",
+              "info"
+            ],
+            "title": "Severity",
+            "type": "string"
+          },
+          "source_url": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Source Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rule_id",
+          "badge_label",
+          "pitfall_title",
+          "detail_zh",
+          "scoring_weight",
+          "format_and_limit",
+          "source_url",
+          "last_checked_at"
+        ],
+        "title": "StudyPlanPitfallRule",
+        "type": "object"
+      },
+      "StudyPlanSixStepSection": {
+        "properties": {
+          "anti_cliche_warning": {
+            "maxLength": 300,
+            "minLength": 8,
+            "title": "Anti Cliche Warning",
+            "type": "string"
+          },
+          "example_zh": {
+            "maxLength": 500,
+            "minLength": 8,
+            "title": "Example Zh",
+            "type": "string"
+          },
+          "field_id": {
+            "maxLength": 60,
+            "minLength": 2,
+            "title": "Field Id",
+            "type": "string"
+          },
+          "heading": {
+            "maxLength": 120,
+            "minLength": 4,
+            "title": "Heading",
+            "type": "string"
+          },
+          "high_score_formula": {
+            "maxLength": 300,
+            "minLength": 8,
+            "title": "High Score Formula",
+            "type": "string"
+          },
+          "outline": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 6,
+            "title": "Outline",
+            "type": "array"
+          },
+          "recommended_max_chars": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recommended Max Chars"
+          },
+          "recommended_min_chars": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recommended Min Chars"
+          },
+          "step_number": {
+            "maximum": 6.0,
+            "minimum": 1.0,
+            "title": "Step Number",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "step_number",
+          "field_id",
+          "heading",
+          "anti_cliche_warning",
+          "high_score_formula",
+          "example_zh"
+        ],
+        "title": "StudyPlanSixStepSection",
+        "type": "object"
+      },
+      "StudyPlanWorkbenchCatalog": {
+        "properties": {
+          "active_10_week_window_count": {
+            "minimum": 1.0,
+            "title": "Active 10 Week Window Count",
+            "type": "integer"
+          },
+          "reference_date": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Reference Date",
+            "type": "string"
+          },
+          "schools": {
+            "items": {
+              "$ref": "#/components/schemas/StudyPlanWorkbenchPayload"
+            },
+            "title": "Schools",
+            "type": "array"
+          },
+          "six_step_guide": {
+            "items": {
+              "$ref": "#/components/schemas/StudyPlanSixStepSection"
+            },
+            "maxItems": 6,
+            "minItems": 6,
+            "title": "Six Step Guide",
+            "type": "array"
+          },
+          "total_supported_schools": {
+            "minimum": 1.0,
+            "title": "Total Supported Schools",
+            "type": "integer"
+          },
+          "window_end_date": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Window End Date",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reference_date",
+          "window_end_date",
+          "total_supported_schools",
+          "active_10_week_window_count"
+        ],
+        "title": "StudyPlanWorkbenchCatalog",
+        "type": "object"
+      },
+      "StudyPlanWorkbenchPayload": {
+        "properties": {
+          "dcard_launch_draft": {
+            "$ref": "#/components/schemas/DcardSchoolBoardLaunchDraft"
+          },
+          "estimated_chars_per_a4_page": {
+            "default": 900,
+            "title": "Estimated Chars Per A4 Page",
+            "type": "integer"
+          },
+          "featured_partner_lookups": {
+            "items": {
+              "$ref": "#/components/schemas/StudyPlanPartnerCourseLookup"
+            },
+            "title": "Featured Partner Lookups",
+            "type": "array"
+          },
+          "in_next_10_weeks_window": {
+            "default": true,
+            "title": "In Next 10 Weeks Window",
+            "type": "boolean"
+          },
+          "last_checked_at": {
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Last Checked At",
+            "type": "string"
+          },
+          "max_a4_pages_hint": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max A4 Pages Hint"
+          },
+          "max_chars": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Chars"
+          },
+          "min_chars": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Chars"
+          },
+          "official_study_plan_limit_text": {
+            "maxLength": 500,
+            "minLength": 4,
+            "title": "Official Study Plan Limit Text",
+            "type": "string"
+          },
+          "online_deadline_text": {
+            "maxLength": 300,
+            "minLength": 4,
+            "title": "Online Deadline Text",
+            "type": "string"
+          },
+          "paper_deadline_text": {
+            "maxLength": 300,
+            "minLength": 4,
+            "title": "Paper Deadline Text",
+            "type": "string"
+          },
+          "pitfalls": {
+            "items": {
+              "$ref": "#/components/schemas/StudyPlanPitfallRule"
+            },
+            "minItems": 1,
+            "title": "Pitfalls",
+            "type": "array"
+          },
+          "school_id": {
+            "maxLength": 24,
+            "minLength": 2,
+            "title": "School Id",
+            "type": "string"
+          },
+          "school_name": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "School Name",
+            "type": "string"
+          },
+          "scoring_weight_headline": {
+            "maxLength": 240,
+            "minLength": 4,
+            "title": "Scoring Weight Headline",
+            "type": "string"
+          },
+          "selected_partner_lookup": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StudyPlanPartnerCourseLookup"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "short_name": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Short Name",
+            "type": "string"
+          },
+          "six_step_guide": {
+            "items": {
+              "$ref": "#/components/schemas/StudyPlanSixStepSection"
+            },
+            "maxItems": 6,
+            "minItems": 6,
+            "title": "Six Step Guide",
+            "type": "array"
+          },
+          "source_url": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Source Url",
+            "type": "string"
+          },
+          "workbench_url": {
+            "maxLength": 360,
+            "minLength": 4,
+            "title": "Workbench Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "school_id",
+          "school_name",
+          "short_name",
+          "online_deadline_text",
+          "paper_deadline_text",
+          "official_study_plan_limit_text",
+          "scoring_weight_headline",
+          "dcard_launch_draft",
+          "workbench_url",
+          "source_url",
+          "last_checked_at"
+        ],
+        "title": "StudyPlanWorkbenchPayload",
+        "type": "object"
+      },
       "SubmissionProgressTransitionRequest": {
         "properties": {
           "action": {
@@ -22487,6 +23052,109 @@
           }
         },
         "summary": "Application Center Pdf"
+      }
+    },
+    "/application-center/study-plan-workbench": {
+      "get": {
+        "operationId": "application_center_study_plan_workbench_application_center_study_plan_workbench_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "school",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "School"
+            }
+          },
+          {
+            "in": "query",
+            "name": "target_partner",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Target Partner"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyPlanWorkbenchPayload"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Application Center Study Plan Workbench"
+      }
+    },
+    "/application-center/study-plan-workbench/catalog": {
+      "get": {
+        "operationId": "application_center_study_plan_workbench_catalog_application_center_study_plan_workbench_catalog_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "only_active_10_week_window",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Only Active 10 Week Window",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyPlanWorkbenchCatalog"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Application Center Study Plan Workbench Catalog"
       }
     },
     "/application-center/templates": {

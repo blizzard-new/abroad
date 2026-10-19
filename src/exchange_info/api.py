@@ -271,11 +271,17 @@ from .models import (
     VerifiedWindowDeadlineCatalog,
     CrossSchoolPartnerDirectory,
     CrossSchoolPartnerPageData,
+    StudyPlanWorkbenchCatalog,
+    StudyPlanWorkbenchPayload,
     utc_now,
 )
 from .cross_school_partners import (
     build_cross_school_partner_directory,
     build_cross_school_partner_page_data,
+)
+from .study_plan_workbench import (
+    build_study_plan_workbench_catalog,
+    build_study_plan_workbench_payload,
 )
 from .seo import EDITORIAL_PATHS, SeoSettings, create_seo_router, homepage_html
 from .seo_changes import ContentChanges
@@ -3864,6 +3870,33 @@ def create_app(
         except ValueError as error:
             raise HTTPException(status_code=422, detail="不支援的申請計畫類型。") from error
         return templates_for_context(context)
+
+    @app.get(
+        "/application-center/study-plan-workbench",
+        response_model=StudyPlanWorkbenchPayload,
+    )
+    def application_center_study_plan_workbench(
+        school: str | None = Query(default=None),
+        target_partner: str | None = Query(default=None, max_length=200),
+    ) -> StudyPlanWorkbenchPayload:
+        university = university_for(school)
+        return build_study_plan_workbench_payload(
+            university,
+            target_partner=target_partner,
+            catalogue_loader=seo_catalogue,
+        )
+
+    @app.get(
+        "/application-center/study-plan-workbench/catalog",
+        response_model=StudyPlanWorkbenchCatalog,
+    )
+    def application_center_study_plan_workbench_catalog(
+        only_active_10_week_window: bool = Query(default=False),
+    ) -> StudyPlanWorkbenchCatalog:
+        return build_study_plan_workbench_catalog(
+            only_active_10_week_window=only_active_10_week_window,
+            catalogue_loader=seo_catalogue,
+        )
 
     @app.get(
         "/application-center/catalog",
