@@ -44,7 +44,7 @@ def test_the_header_with_the_mascot_never_overflows_or_covers_the_words(page, li
     start(page, live_server)
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     mascot = page.locator(HERO).bounding_box()
-    for selector in ("#home-landing-title", ".pr-hero-note"):
+    for selector in ("#home-landing-title", ".pr-guide-entry"):
         words = page.locator(selector).bounding_box()
         overlap_x = min(mascot["x"] + mascot["width"], words["x"] + words["width"]) - max(mascot["x"], words["x"])
         overlap_y = min(mascot["y"] + mascot["height"], words["y"] + words["height"]) - max(mascot["y"], words["y"])

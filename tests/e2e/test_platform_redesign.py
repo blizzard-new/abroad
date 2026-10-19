@@ -148,10 +148,10 @@ def test_home_hero_is_a_half_globe_that_fades_away_while_scrolling(browser, live
             assert 1.7 < box["width"] / box["height"] < 2.2
         else:
             expect(globe.locator('[data-home-map="hero"] svg')).to_be_visible()
-        # The backdrop never takes clicks and is not read out; the caption link is the accessible way in.
+        # The backdrop never takes clicks and is not read out; the map section below has the accessible link.
         assert globe.evaluate("el => getComputedStyle(el).pointerEvents") == "none"
         assert globe.get_attribute("aria-hidden") == "true"
-        expect(page.locator(".pr-globe-caption")).to_contain_text("合作校")
+        expect(page.locator(".pr-band-button[data-home-open-map]")).to_contain_text("合作校地圖")
         assert float(globe.evaluate("el => el.style.getPropertyValue('--globe-progress') || '0'")) == 0
 
         page.evaluate("window.scrollTo({ top: 700, behavior: 'instant' })")
