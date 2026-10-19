@@ -347,6 +347,7 @@ function initDiscovery() {
     if (el.dataset.compareSchool) {
       if (el.checked && discoveryCompare.size >= 3) { el.checked = false; announce("一次比較最多 3 所", "info"); return; }
       el.checked ? discoveryCompare.add(el.dataset.compareSchool) : discoveryCompare.delete(el.dataset.compareSchool);
+      if (el.checked && discoveryCompare.size >= 2) document.dispatchEvent(new CustomEvent("uniway:compare", {detail: {school_count: discoveryCompare.size}}));
       const items = state.dashboard.partner_universities.filter(p => discoveryCompare.has(p.school_name));
       $("#discovery-comparison").innerHTML = items.length ? renderComparison(items) : "";
     }

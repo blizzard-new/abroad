@@ -486,6 +486,7 @@ from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
 from .seo import EDITORIAL_PATHS, SeoSettings, create_seo_router, homepage_html
 from .seo_changes import ContentChanges
+from .seo_analytics import measurement_id
 from .university_registry import (
     CGU,
     CCU,
@@ -740,6 +741,9 @@ def _browser_security_headers(
             "frame-ancestors 'none'"
         ),
     }
+    if measurement_id(env):
+        headers["Content-Security-Policy"] = headers["Content-Security-Policy"].replace(
+            "script-src 'self';", "script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com;")
     if env.get("EXCHANGE_ENVIRONMENT") == "production":
         headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return headers

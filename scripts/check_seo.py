@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import time
+from pathlib import Path
 from datetime import datetime, timezone
 from urllib.parse import urlsplit
 from xml.etree import ElementTree
@@ -16,13 +17,16 @@ def check_site(base: str, canonical: str, *, all_pages: bool = False, delay: flo
     session = requests.Session()
     session.headers["User-Agent"] = "UniWay-SEO-Check/1.0 (operator verification)"
     count = 0
+    timings = []
 
     def fetch(path):
         nonlocal count
         if count:
             time.sleep(delay)
         count += 1
+        started = time.monotonic()
         response = session.get(base + path, timeout=30, allow_redirects=False)
+        timings.append({"path": path, "response_ms": round((time.monotonic() - started) * 1000, 1), "bytes": len(response.content)})
         if response.status_code != 200:
             raise ValueError(f"{path}: expected 200, got {response.status_code}")
         return response
@@ -66,7 +70,7 @@ def check_site(base: str, canonical: str, *, all_pages: bool = False, delay: flo
             raise ValueError(f"{path}: canonical does not match")
         if not soup.title or not soup.select_one('meta[name="description"]'):
             raise ValueError(f"{path}: title/description missing")
-        if path.startswith("/schools") and (len(soup.select("h1")) != 1 or not soup.select_one("main a")):
+        if path.startswith(("/schools", "/destinations", "/guides", "/editorial-policy")) and (len(soup.select("h1")) != 1 or not soup.select_one("main a")):
             raise ValueError(f"{path}: server-rendered content missing")
         for schema in soup.select('script[type="application/ld+json"]'):
             json.loads(schema.string)
@@ -86,7 +90,7 @@ def check_site(base: str, canonical: str, *, all_pages: bool = False, delay: flo
         print(f"Checked {child}: {len(paths)} URLs; {len(selected)} HTML pages", flush=True)
     return {"base_url": base, "canonical_origin": canonical, "sitemaps": inventory,
             "indexed_url_candidates": sum(inventory.values()), "html_pages_checked": len(sampled),
-            "all_pages": all_pages, "requests": count, "result": "passed",
+            "all_pages": all_pages, "requests": count, "result": "passed", "response_timings": timings,
             "scope": "HTTP and HTML checks; not evidence of Google indexing or rankings"}
 
 
@@ -96,6 +100,7 @@ def main():
     parser.add_argument("--canonical-origin", default="https://app.uniway-tw.com")
     parser.add_argument("--all-pages", action="store_true", help="Fetch every partner page; use on staging first")
     parser.add_argument("--delay", type=float, default=0.2, help="Seconds between requests; no parallel load")
+    parser.add_argument("--json-output", type=Path, help="Save structured deployment evidence")
     args = parser.parse_args()
     if args.delay < 0:
         parser.error("--delay cannot be negative")
@@ -104,6 +109,9 @@ def main():
     except (requests.RequestException, ValueError, ElementTree.ParseError) as error:
         parser.exit(1, f"SEO check failed: {error}\n")
     print(json.dumps(report, ensure_ascii=False, indent=2))
+    if args.json_output:
+        args.json_output.parent.mkdir(parents=True, exist_ok=True)
+        args.json_output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

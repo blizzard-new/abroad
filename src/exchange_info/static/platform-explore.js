@@ -204,6 +204,7 @@ window.UniWayExplore = (() => {
         if (discoveryCompare.size >= 3) { pick.checked = false; announce("一次比較最多 3 所", "info"); return; }
         if (!activeSchoolSelections().has(name)) toggleFavorite(name);
         discoveryCompare.add(name);
+        if (discoveryCompare.size >= 2) document.dispatchEvent(new CustomEvent("uniway:compare", {detail: {school_count: discoveryCompare.size}}));
       } else discoveryCompare.delete(name);
       renderPartnerTable();
     }

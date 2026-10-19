@@ -76,7 +76,7 @@ def test_the_stylesheet_exists_and_the_pages_load_nothing_from_other_sites():
         html = (STATIC / name).read_text(encoding="utf-8")
         assert 'href="/static/legal.css' in html
         assert "<script" not in html, "the site's content security policy allows scripts from itself only"
-        assert not re.search(r'(?:src|href)="https?://(?!developers\.google\.com/terms/)', html), name
+        assert not re.search(r'(?:src|href)="https?://(?!developers\.google\.com/terms/|policies\.google\.com/privacy")', html), name
     assert (STATIC / "legal.css").is_file()
 
 
