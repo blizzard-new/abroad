@@ -38,13 +38,18 @@ def test_the_privacy_policy_says_what_google_and_the_law_expect(client):
     for needle in ("openid", "email", "profile", "Limited Use", "api-services-user-data-policy", "Supabase", "雪梨", "Render",
                    "localStorage", "不要追蹤", "30 天", "刪除帳號", "個人資料保護法", "不會販售"):
         assert needle in text, needle
+    for domain in ("ntu.edu.tw", "nccu.edu.tw", "ncku.edu.tw", "ntnu.edu.tw", "nsysu.edu.tw", "ncu.edu.tw",
+                   "nchu.edu.tw", "ccu.edu.tw", "ntpu.edu.tw", "ntust.edu.tw", "ntut.edu.tw", "tku.edu.tw",
+                   "fju.edu.tw", "scu.edu.tw", "fcu.edu.tw", "cycu.edu.tw", "yzu.edu.tw", "cgu.edu.tw"):
+        assert domain in text, domain
     assert "不會記" in text and "IP 位址" in text, "what the anonymous statistics leave out is stated"
     assert "不保存原始 IP" in text, "the sign-in limiter stores only a hash"
 
 
 def test_the_terms_say_the_data_is_not_official_and_the_service_is_not_an_agency(client):
     text = client.get("/terms").text
-    for needle in ("逐筆人工核對", "最新公告為準", "不提供留學代辦服務", "沒有隸屬關係", "目前所有功能都免費", "中華民國"):
+    for needle in ("逐筆人工核對", "最新公告為準", "不提供留學代辦服務", "沒有隸屬關係", "目前所有功能都免費", "中華民國",
+                   "歡迎發表的內容", "嚴格禁止的內容", "檢舉後的處理方式與處置流程", "邀請制私訊"):
         assert needle in text, needle
 
 
