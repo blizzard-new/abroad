@@ -91,3 +91,57 @@ footer { font-size: .9rem; border-top: 1px solid #dce6e3; }
 .cs-agreement-table tr.is-selected-home { background: #f2f9f7; }
 @media (max-width: 580px) { main { padding: 1.5rem 1rem 3rem; } header, footer { padding: 1rem; gap: 1rem; } dl { grid-template-columns: 1fr; } dt { border-bottom: 0; padding-bottom: 0; } dd { padding-top: .3rem; } .programme, .cs-layer { padding: 1rem; } }
 
+/* Action 4: Staged Network Effects & Admitted Student Connect */
+.cs-network-effects-card { margin-top: 1.35rem; padding: 1.35rem; border-radius: .85rem; border: 1px solid #cde0da; background: #f8fbfa; }
+.cs-network-effects-card.cs-solo-mode { border-left: 4px solid #0d9488; background: linear-gradient(135deg, #f4fbf9 0%, #ffffff 100%); }
+.cs-network-effects-card.cs-unlocked-mode { border-left: 4px solid #d97706; background: linear-gradient(135deg, #fffcf5 0%, #f4fbf9 100%); }
+.cs-network-effects-card.cs-viral-mode { border-left: 4px solid #dc2626; background: linear-gradient(135deg, #fff5f5 0%, #fffcf5 100%); }
+.cs-network-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+.cs-network-head h3 { margin: .35rem 0 .25rem; font-size: 1.15rem; }
+.cs-network-badge { display: inline-block; padding: .2rem .65rem; border-radius: 999px; font-size: .8rem; font-weight: 700; background: #e6f4f1; color: #0f5c56; }
+.cs-unlocked-badge { background: #fef3c7; color: #92400e; }
+.cs-viral-badge { background: #fee2e2; color: #991b1b; }
+.cs-network-progress-pill { background: #fff; border: 1px solid #d5e4df; border-radius: .6rem; padding: .5rem .85rem; text-align: right; min-width: 190px; }
+.cs-network-progress-pill span { display: block; font-size: .85rem; font-weight: 700; color: #155f5b; }
+.cs-network-progress-pill small { font-size: .78rem; color: #526c6d; }
+.cs-progress-track { height: 7px; border-radius: 999px; background: #e2ece9; overflow: hidden; margin-top: .35rem; }
+.cs-progress-fill { height: 100%; background: linear-gradient(90deg, #155f5b, #c17827); border-radius: 999px; }
+.cs-network-summary { margin: .65rem 0 .9rem; font-size: .93rem; color: #2b494b; }
+.cs-solo-pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: .85rem; margin-bottom: 1rem; }
+.cs-solo-pillar-card { background: #fff; border: 1px solid #d8e7e2; border-radius: .7rem; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; }
+.cs-pillar-num { font-size: .76rem; font-weight: 700; color: #0f766e; background: #e6f6f4; padding: .15rem .5rem; border-radius: .35rem; align-self: flex-start; }
+.cs-solo-pillar-card h4 { margin: .45rem 0 .35rem; font-size: 1rem; }
+.cs-solo-pillar-card p { margin: 0 0 .75rem; font-size: .88rem; color: #435e5f; }
+.cs-heat-metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: .8rem; margin: .85rem 0; }
+.cs-heat-metric-box { background: #fff; border: 1px solid #dfece8; border-radius: .65rem; padding: .85rem 1rem; }
+.cs-heat-metric-label { display: block; font-size: .8rem; color: #526c6d; }
+.cs-heat-metric-value { display: block; font-size: 1.35rem; font-weight: 800; color: #155f5b; margin: .15rem 0; }
+.cs-heat-metric-box small { font-size: .78rem; color: #536a6b; }
+.cs-heat-tags-row, .cs-admitted-school-pills { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; margin: .75rem 0; font-size: .86rem; }
+.cs-heat-tag, .cs-admitted-school-pill, .cs-admitted-Looking-tag { background: #eef6f4; border: 1px solid #c7dfd9; color: #164e4b; padding: .18rem .6rem; border-radius: 999px; font-size: .8rem; }
+.cs-viral-share-strip { display: flex; justify-content: space-between; align-items: center; gap: .85rem; flex-wrap: wrap; background: #fff8eb; border: 1px solid #f5d08b; border-radius: .65rem; padding: .85rem 1rem; margin: .85rem 0; }
+.cs-viral-share-copy p { margin: .25rem 0 0; font-size: .88rem; color: #5c4316; }
+.cs-preference-signal-box { margin-top: .9rem; padding-top: .9rem; border-top: 1px dashed #cbe0da; }
+.cs-preference-signal-head p { margin: .2rem 0 .65rem; font-size: .86rem; color: #476465; }
+.cs-preference-signal-controls, .cs-admitted-form-row { display: flex; flex-wrap: wrap; gap: .65rem; align-items: flex-end; margin-bottom: .6rem; }
+.cs-preference-signal-controls label, .cs-admitted-form-row label { display: flex; flex-direction: column; gap: .25rem; font-size: .82rem; font-weight: 600; color: #26484a; flex: 1; min-width: 180px; }
+.cs-preference-signal-controls input, .cs-preference-signal-controls select, .cs-admitted-form-row input, .cs-admitted-form-row select { padding: .48rem .7rem; border: 1px solid #bdd3cd; border-radius: .45rem; font-size: .9rem; background: #fff; }
+.cs-network-feedback { margin: .45rem 0 0; font-size: .86rem; font-weight: 600; color: #0f766e; }
+.cs-network-feedback.is-error { color: #b91c1c; }
+.cs-admitted-connect-subblock { background: linear-gradient(180deg, #fffdf9 0%, #f7fbfa 100%); border: 1px solid #d5e4df; border-top: 3px solid #155f5b; border-radius: .85rem; padding: 1.35rem; }
+.cs-admitted-connect-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+.cs-admitted-count-pill { background: #155f5b; color: #fff; padding: .35rem .8rem; border-radius: 999px; font-size: .85rem; }
+.cs-admitted-safety-banner { background: #eef6f4; border-left: 3px solid #155f5b; padding: .6rem .9rem; font-size: .85rem; color: #1f4849; margin: .75rem 0; border-radius: .35rem; }
+.cs-admitted-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: .9rem; margin: 1rem 0; }
+.cs-admitted-card { background: #fff; border: 1px solid #d6e5e0; border-radius: .7rem; padding: 1rem; }
+.cs-admitted-card-top { display: flex; justify-content: space-between; gap: .4rem; flex-wrap: wrap; font-size: .78rem; margin-bottom: .4rem; }
+.cs-admitted-term-badge { color: #526c6d; background: #f0f5f3; padding: .12rem .5rem; border-radius: .3rem; }
+.cs-admitted-card h4 { margin: .25rem 0 .4rem; font-size: 1rem; }
+.cs-admitted-card p { margin: 0 0 .65rem; font-size: .9rem; color: #2b494b; }
+.cs-admitted-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .5rem; }
+.cs-admitted-hint { display: block; color: #526c6d; font-size: .78rem; border-top: 1px dashed #e2ece9; padding-top: .45rem; }
+.cs-admitted-register-details { background: #fff; border: 1px solid #cfe1dc; border-radius: .65rem; margin-top: 1rem; }
+.cs-admitted-register-form { margin-top: .8rem; }
+.cs-admitted-topics-fieldset { border: 1px solid #d8e6e2; border-radius: .5rem; padding: .6rem .85rem; margin-bottom: .75rem; display: flex; gap: .85rem; flex-wrap: wrap; font-size: .85rem; }
+.cs-admitted-dcard-strip { display: flex; justify-content: space-between; align-items: center; gap: .8rem; flex-wrap: wrap; margin-top: 1rem; padding: .85rem 1rem; background: #f2f8f6; border: 1px solid #cce0da; border-radius: .65rem; font-size: .88rem; }
+

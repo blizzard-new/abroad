@@ -27,6 +27,7 @@ import unicodedata
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from html import escape
+from pathlib import Path
 from typing import Any
 from urllib.parse import quote, unquote, urlencode
 
@@ -43,6 +44,12 @@ from .models import (
     PartnerUniversity,
 )
 from .school_identity import school_identity_key
+from .staged_network_effects import (
+    build_admitted_student_connect_hub,
+    build_partner_specific_preference_heat,
+    render_admitted_student_connect_lower_html,
+    render_partner_network_effects_upper_html,
+)
 from .university_registry import SUPPORTED_UNIVERSITIES, UniversityProfile, resolve_university
 from .verified_window_deadlines import get_verified_school_window_card
 
@@ -1016,6 +1023,8 @@ def build_cross_school_partner_page_data(
     institution: str,
     selected_home: str | None,
     catalogue_loader: Callable[[UniversityProfile], tuple[list[PartnerUniversity], CatalogueSourceStatus | None]],
+    data_dir: Path | None = None,
+    override_plan_count: int | None = None,
 ) -> CrossSchoolPartnerPageData | None:
     """Resolve (country, institution) across all supported universities and return the 2-layer page payload."""
     entities, alias_lookup = build_cross_school_entity_index(catalogue_loader)
@@ -1091,6 +1100,27 @@ def build_cross_school_partner_page_data(
         study_plan_action_url=f"/?{draft_query}#documents",
     )
 
+    network_status, partner_heat = build_partner_specific_preference_heat(
+        home_school=selected_uni,
+        country_slug=entity.country_slug,
+        institution_slug=entity.institution_slug,
+        partner_name_zh=entity.school_name_zh,
+        partner_name_en=entity.school_name_en,
+        country_name_zh=entity.country_name_zh,
+        quota_hint=selected_agreement.quota_summary,
+        data_dir=data_dir,
+        override_plan_count=override_plan_count,
+    )
+    admitted_connect = build_admitted_student_connect_hub(
+        country_slug=entity.country_slug,
+        institution_slug=entity.institution_slug,
+        partner_name_zh=entity.school_name_zh,
+        partner_name_en=entity.school_name_en,
+        country_name_zh=entity.country_name_zh,
+        contracted_short_names=[a.home_short_name for a in contracted_agreements],
+        data_dir=data_dir,
+    )
+
     return CrossSchoolPartnerPageData(
         country_slug=entity.country_slug,
         country_name_zh=entity.country_name_zh,
@@ -1112,6 +1142,9 @@ def build_cross_school_partner_page_data(
         experience_digests=exp_digests,
         copyright_compliance_notice=COPYRIGHT_COMPLIANCE_NOTICE,
         conversion_hooks=conversion_hooks,
+        selected_home_network_status=network_status,
+        selected_home_partner_heat=partner_heat,
+        admitted_student_connect=admitted_connect,
     )
 
 
@@ -1335,6 +1368,45 @@ def render_cross_school_partner_page_body(data: CrossSchoolPartnerPageData) -> s
         .replace("&", "\\u0026")
     )
 
+    network_heat_map: dict[str, Any] = {}
+    for a in data.all_home_agreements:
+        st, ht = build_partner_specific_preference_heat(
+            home_school=a.home_id,
+            country_slug=data.country_slug,
+            institution_slug=data.institution_slug,
+            partner_name_zh=data.school_name_zh,
+            partner_name_en=data.school_name_en,
+            country_name_zh=data.country_name_zh,
+            quota_hint=a.quota_summary,
+        )
+        network_heat_map[a.home_id] = {
+            "status": st.model_dump(mode="json"),
+            "heat": ht.model_dump(mode="json"),
+        }
+    network_heat_json = (
+        json.dumps(network_heat_map, ensure_ascii=False)
+        .replace("<", "\\u003c")
+        .replace(">", "\\u003e")
+        .replace("&", "\\u0026")
+    )
+
+    upper_network_html = (
+        render_partner_network_effects_upper_html(
+            data.selected_home_network_status,
+            data.selected_home_partner_heat,
+        )
+        if data.selected_home_network_status and data.selected_home_partner_heat
+        else ""
+    )
+    lower_admitted_html = (
+        render_admitted_student_connect_lower_html(
+            data.admitted_student_connect,
+            sel.home_id,
+        )
+        if data.admitted_student_connect
+        else ""
+    )
+
     website_link = (
         f' · <a href="{escape(data.official_website)}" target="_blank" rel="noopener noreferrer" data-official-source>外國大學官方網站 ↗</a>'
         if data.official_website
@@ -1441,6 +1513,7 @@ def render_cross_school_partner_page_body(data: CrossSchoolPartnerPageData) -> s
       </a>
     </div>
   </div>
+  {upper_network_html}
 </section>
 
 <section class="cs-layer cs-lower-layer" id="cross-school-intelligence-layer" aria-labelledby="lower-layer-heading">
@@ -1490,6 +1563,7 @@ def render_cross_school_partner_page_body(data: CrossSchoolPartnerPageData) -> s
       </table>
     </div>
   </section>
+  {lower_admitted_html}
 </section>
 
 <p class="cs-bottom-links">
@@ -1498,6 +1572,7 @@ def render_cross_school_partner_page_body(data: CrossSchoolPartnerPageData) -> s
   <a href="/schools">依台灣母校瀏覽交換指南</a>
 </p>
 <script type="application/json" id="cs-home-agreements-data">{agreements_json}</script>
+<script type="application/json" id="cs-home-network-heat-data">{network_heat_json}</script>
 """
 
 

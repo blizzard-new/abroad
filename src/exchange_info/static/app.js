@@ -197,6 +197,8 @@ const state = {
   verifiedWindowCatalog: null,
   verifiedWindowSelectedSchool: "",
   verifiedWindowFilter: "10w",
+  stagedNetworkStatus: null,
+  stagedNetworkLoading: false,
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -6539,6 +6541,7 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
     state.applicationDocumentCatalogContextKey = contextKey;
     initializeApplicationSelections();
     loadStudyPlanWorkbench({ homeSchool: requestedSchool, targetPartner: context.target_school || state.studyPlanWorkbenchPartnerQuery });
+    loadStagedNetworkEffects({ homeSchool: requestedSchool });
     renderApplicationCenter();
     refreshSelectedApplicationPreviews();
     renderApplicationJourney();
@@ -6831,6 +6834,7 @@ function renderApplicationCenter() {
   restoreApplicationContextForm();
   restoreApplicationProfileForm();
   renderStudyPlanAntiPitfallHub();
+  renderStagedNetworkEffectsHub();
   renderApplicationTemplates();
   renderApplicationDocumentCatalog();
   renderApplicationGenerationGate();
@@ -7244,6 +7248,150 @@ async function loadStudyPlanWorkbench({ homeSchool = activeHomeSchool(), targetP
     return null;
   } finally {
     state.studyPlanWorkbenchLoading = false;
+  }
+}
+
+async function loadStagedNetworkEffects({ homeSchool = activeHomeSchool() } = {}) {
+  state.stagedNetworkLoading = true;
+  try {
+    const params = new URLSearchParams({ school: homeSchool });
+    const payload = await fetchJson(`/network-effects/status?${params}`);
+    if (normalize(activeHomeSchool()) !== normalize(homeSchool) && normalize(payload.school_name) !== normalize(activeHomeSchool())) {
+      return payload;
+    }
+    state.stagedNetworkStatus = payload;
+    renderStagedNetworkEffectsHub();
+    initIcons();
+    return payload;
+  } catch (_) {
+    return null;
+  } finally {
+    state.stagedNetworkLoading = false;
+  }
+}
+
+function renderStagedNetworkEffectsHub() {
+  const container = $("#staged-network-effects-hub");
+  if (!container) return;
+  const st = state.stagedNetworkStatus;
+  if (!st) {
+    container.innerHTML = `<div class="study-plan-hub-loading"><i data-lucide="loader" aria-hidden="true"></i><span>正在核對 ${escapeHtml(activeHomeSchool())} 單人工具狀態與志願熱度解鎖進度…</span></div>`;
+    return;
+  }
+  const unlocked = Boolean(st.preference_heat_unlocked);
+  const isViral = st.stage === "viral_final_week";
+  const threshold = Number(st.unlock_threshold_min || 30);
+  const progressPct = Math.min(100, Math.round((Number(st.active_plan_count || 0) / threshold) * 100));
+  const pillarsMarkup = (st.solo_tool_pillars || []).map((p, idx) => `
+    <article class="staged-solo-pillar-card">
+      <div>
+        <span class="staged-pillar-badge">單人必備工具 ${idx + 1}</span>
+        <h4>${escapeHtml(p.title)}</h4>
+        <p>${escapeHtml(p.subtitle)}</p>
+      </div>
+      <a class="secondary-button" href="${escapeHtml(p.action_url)}">${escapeHtml(p.action_label)}</a>
+    </article>`).join("");
+
+  const heatBoardMarkup = unlocked
+    ? `
+      <div class="staged-heat-board">
+        <div class="staged-heat-board-head">
+          <div>
+            <span class="section-kicker">${isViral ? "🚀 最後一週病毒式轉發模式（滿 50 份計畫）" : "🔥 站內志願熱度已解鎖（滿 30 份計畫）"}</span>
+            <h4>${escapeHtml(st.short_name)} 本期熱門姊妹校匿名志願熱度（匿名搓湯圓）</h4>
+          </div>
+          ${st.viral_last_week_share_body ? `
+            <button type="button" class="secondary-button" data-copy-viral-share="${escapeHtml(st.viral_last_week_share_body)}">
+              <i data-lucide="share-2" aria-hidden="true"></i>
+              <span>一鍵複製 Dcard 校板／系級轉發文案</span>
+            </button>` : ""}
+        </div>
+        <div class="staged-heat-cards-grid">
+          ${(st.partner_preference_heat || []).map((item) => `
+            <article class="staged-heat-partner-card">
+              <div class="staged-heat-partner-top">
+                <span class="staged-heat-country">${escapeHtml(item.country_name_zh)}</span>
+                <span class="staged-heat-total">共 ${item.total_interested_count} 人列入志願</span>
+              </div>
+              <h5><a href="${escapeHtml(item.partner_page_url)}">${escapeHtml(item.partner_name_zh)}</a></h5>
+              <div class="staged-heat-breakdown">
+                <span>第 1 志願：<strong>${item.first_choice_count} 人</strong></span>
+                <span>第 2–3 志願：<strong>${item.second_or_third_choice_count} 人</strong></span>
+              </div>
+              <div class="staged-heat-tags">
+                ${(item.anonymous_applicant_tags || []).map((t) => `<span class="staged-heat-tag">${escapeHtml(t)}</span>`).join("")}
+              </div>
+              <div class="staged-heat-links">
+                <a href="${escapeHtml(item.partner_page_url)}#preference-heat">母校志願熱度</a>
+                <a href="${escapeHtml(item.partner_page_url)}#admitted-connect">放榜跨校認親</a>
+              </div>
+            </article>`).join("")}
+        </div>
+      </div>`
+    : `
+      <div class="staged-solo-unlock-banner">
+        <div>
+          <strong>🛡️ 防冷啟動保護啟用中：在累積滿 ${threshold} 份校內申請計畫前，不顯示「0 人填志願」等冷清數字</strong>
+          <p>就算全校只有你 1 個人進站，上方三大單人工具（跨校外國大學頁、截止日提醒、讀書計畫工作台）也能完整支援備審。目前 ${escapeHtml(st.short_name)} 已累積 <strong>${st.active_plan_count} / ${threshold}</strong> 份計畫（再 ${st.plans_needed_to_unlock} 份自動解鎖同校匿名志願熱度）！</p>
+        </div>
+        <div class="staged-solo-unlock-actions">
+          <button type="button" class="primary-button" data-submit-staged-preference-signal>
+            <i data-lucide="flame" aria-hidden="true"></i>
+            <span>匿名登記我的目標志願（推進 ${escapeHtml(st.short_name)} 解鎖進度 +1）</span>
+          </button>
+          <a class="secondary-button" href="/partners">前往 /partners 放榜跨校連線</a>
+        </div>
+      </div>`;
+
+  container.innerHTML = `
+    <div class="staged-network-header">
+      <div>
+        <div class="study-plan-anti-pitfall-badges">
+          <span class="pitfall-kicker-badge"><i data-lucide="users" aria-hidden="true"></i><span>疊加網路效應 · 單人工具 ➔ 匿名搓湯圓 ➔ 放榜跨校認親</span></span>
+          <span class="pitfall-window-badge ${unlocked ? "is-active-window" : ""}">${escapeHtml(st.stage_label)}</span>
+        </div>
+        <h3 id="staged-network-effects-title">${escapeHtml(st.public_status_headline)}</h3>
+        <p class="study-plan-anti-pitfall-subtitle">${escapeHtml(st.public_status_description)}</p>
+      </div>
+      <div class="staged-network-progress-box">
+        <span>${escapeHtml(st.short_name)} 本期申請計畫累積：<strong>${st.active_plan_count} 份</strong></span>
+        <div class="staged-progress-bar"><span style="width:${progressPct}%"></span></div>
+        <small>${unlocked ? `已突破 ${threshold} 份解鎖門檻` : `滿 ${threshold} 份解鎖同校匿名搓湯圓（目前 ${progressPct}%）`}</small>
+      </div>
+    </div>
+    <div class="staged-solo-pillars-grid">${pillarsMarkup}</div>
+    ${heatBoardMarkup}
+  `;
+  initIcons();
+}
+
+async function submitStagedNetworkPreferenceSignal() {
+  const st = state.stagedNetworkStatus;
+  const homeId = st?.school_id || activeHomeSchool();
+  const targetPartner = state.applicationContext?.target_school
+    || state.studyPlanWorkbench?.selected_partner_lookup?.partner_school_name_zh
+    || "Technical University of Munich";
+  try {
+    const updated = await fetchJson("/network-effects/preference-signal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        home_school: homeId,
+        first_choice_partner: targetPartner,
+        college_or_major: state.applicationProfile?.college || "跨領域申請者",
+        language_score_tag: "已建立讀書計畫",
+      }),
+    });
+    state.stagedNetworkStatus = updated;
+    renderStagedNetworkEffectsHub();
+    announce(
+      updated.preference_heat_unlocked
+        ? `🎉 ${updated.short_name} 已累積 ${updated.active_plan_count} 份申請計畫，正式解鎖站內志願熱度！`
+        : `已匿名計入 ${updated.short_name} 申請計畫（目前 ${updated.active_plan_count}/${updated.unlock_threshold_min} 份）`,
+      "success",
+    );
+  } catch (error) {
+    announce(error.message || "登記失敗，請稍後再試", "error");
   }
 }
 
@@ -15158,6 +15306,18 @@ function bindEvents() {
     const insertCoursesBtn = event.target.closest("[data-insert-partner-courses]");
     if (insertCoursesBtn) {
       insertPartnerCoursePlanIntoStudyPlan();
+      return;
+    }
+    const stagedSignalBtn = event.target.closest("[data-submit-staged-preference-signal]");
+    if (stagedSignalBtn) {
+      submitStagedNetworkPreferenceSignal();
+      return;
+    }
+    const copyViralBtn = event.target.closest("[data-copy-viral-share]");
+    if (copyViralBtn?.dataset.copyViralShare) {
+      navigator.clipboard?.writeText(copyViralBtn.dataset.copyViralShare).then(() => {
+        announce("已複製 Dcard 校板／系級轉發文案！", "success");
+      }).catch(() => {});
       return;
     }
     const trigger = event.target.closest(".school-detail-trigger");
