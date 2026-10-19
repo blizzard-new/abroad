@@ -3888,7 +3888,7 @@ def create_app(
                 "X-Application-Storage": "request-only",
                 "X-Application-Packet-Documents": str(len(packet.manifest.items)),
                 "X-Application-Packet-Copies": str(packet.manifest.total_printed_copies),
-                "X-Application-Packet-Attachments": str(sum(len(item.attachments) for item in manifest.items)),
+                "X-Application-Packet-Attachments": str(sum(len(item.attachments) for item in packet.manifest.items)),
             },
         )
 
