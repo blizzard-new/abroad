@@ -194,8 +194,17 @@ class ApplicationWritingRules(BaseModel):
     count_note: str | None = Field(default=None, max_length=200)
     # The official document the rules were checked against.
     evidence: str | None = Field(default=None, max_length=200)
+    source_url: str | None = Field(default=None, max_length=2000)
+    last_checked_at: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
     # False means no published rule has been checked for this school yet.
     verified: bool = True
+
+    @field_validator("source_url")
+    @classmethod
+    def validate_https_source_url(cls, value: str | None) -> str | None:
+        if value is not None and not value.startswith("https://"):
+            raise ValueError("source_url must use https://")
+        return value
 
 
 class ApplicationFormField(BaseModel):
@@ -4120,6 +4129,94 @@ class ExperienceSubmission(BaseModel):
     identity_mode: CommunityIdentityMode = CommunityIdentityMode.ANONYMOUS
     status: ModerationStatus = ModerationStatus.PENDING
     created_at: datetime = Field(default_factory=utc_now)
+
+
+class VerifiedRuleFact(BaseModel):
+    rule_key: Literal["online_deadline", "paper_deadline", "study_plan_limit"]
+    label: str = Field(min_length=2, max_length=60)
+    value_text: str = Field(min_length=4, max_length=600)
+    exact_deadline_at: datetime | None = None
+    submission_mode: Literal[
+        "online",
+        "paper_required",
+        "paperless",
+        "signed_scan_upload",
+        "pending_notice",
+    ] | None = None
+    min_chars: int | None = Field(default=None, ge=1, le=100000)
+    max_chars: int | None = Field(default=None, ge=1, le=100000)
+    max_pages: int | None = Field(default=None, ge=1, le=100)
+    source_title: str = Field(min_length=2, max_length=200)
+    source_url: str = Field(min_length=12, max_length=2000)
+    last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+
+    @field_validator("source_url")
+    @classmethod
+    def validate_https_url(cls, value: str) -> str:
+        if not value.startswith("https://"):
+            raise ValueError("source_url must use https://")
+        return value
+
+    @field_validator("exact_deadline_at")
+    @classmethod
+    def validate_timezone_aware(cls, value: datetime | None) -> datetime | None:
+        if value is not None and value.utcoffset() is None:
+            raise ValueError("exact_deadline_at must include a timezone")
+        return value
+
+
+class VerifiedWindowSubtask(BaseModel):
+    id: str = Field(min_length=3, max_length=120)
+    title: str = Field(min_length=4, max_length=120)
+    due_date: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    offset_label: str = Field(min_length=2, max_length=40)
+    category: Literal["documents", "home", "language", "other"] = "documents"
+    note: str = Field(min_length=4, max_length=400)
+    source_title: str = Field(min_length=2, max_length=200)
+    source_url: str = Field(min_length=12, max_length=2000)
+    last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    google_calendar_url: str = Field(min_length=20, max_length=4000)
+
+    @field_validator("source_url")
+    @classmethod
+    def validate_https_url(cls, value: str) -> str:
+        if not value.startswith("https://"):
+            raise ValueError("source_url must use https://")
+        return value
+
+
+class VerifiedSchoolWindowCard(BaseModel):
+    school_id: str = Field(min_length=2, max_length=30)
+    school_name: str = Field(min_length=2, max_length=80)
+    short_name: str = Field(min_length=1, max_length=30)
+    in_ten_week_window: bool
+    window_status: Literal[
+        "open",
+        "upcoming",
+        "pending_exact_date",
+        "closed_current_round",
+    ]
+    window_badge: str = Field(min_length=2, max_length=60)
+    cycle_label: str = Field(min_length=4, max_length=160)
+    primary_deadline_date: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
+    primary_deadline_at: datetime | None = None
+    online_deadline: VerifiedRuleFact
+    paper_deadline: VerifiedRuleFact
+    study_plan_limit: VerifiedRuleFact
+    subtasks: list[VerifiedWindowSubtask] = Field(default_factory=list)
+    ics_download_url: str = Field(min_length=10, max_length=500)
+    google_calendar_url: str = Field(min_length=20, max_length=4000)
+    line_oa_url: str = Field(min_length=12, max_length=2000)
+    line_copy_summary: str = Field(min_length=10, max_length=2000)
+
+
+class VerifiedWindowDeadlineCatalog(BaseModel):
+    window_start_date: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    window_end_date: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    ten_week_school_count: int = Field(ge=0)
+    total_supported_school_count: int = Field(ge=0)
+    last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    items: list[VerifiedSchoolWindowCard] = Field(default_factory=list)
 
 
 JsonDict = dict[str, Any]

@@ -189,6 +189,9 @@ const state = {
   homeSchoolRequestId: 0,
   schoolContextVersion: 0,
   schoolDataRequestIds: {},
+  verifiedWindowCatalog: null,
+  verifiedWindowSelectedSchool: "",
+  verifiedWindowFilter: "10w",
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -1720,6 +1723,8 @@ function updateSchoolContext() {
   });
   populateGlobalCommunitySchools();
   renderBoardFollowControls();
+  if (state.homeSchool) state.verifiedWindowSelectedSchool = state.homeSchool;
+  renderVerifiedWindowSections();
   window.UniWayHome?.render();
 }
 
@@ -5439,6 +5444,7 @@ function renderCalendarInsightsSummary(events = calendarDisplayEvents()) {
 
 function renderApplicationCalendar() {
   window.UniWayTracker?.render();
+  renderVerifiedWindowCalendarHook();
   const grid = $("#application-calendar-grid");
   if (!grid || !state.dashboard) return;
   ensureApplicationCalendarWorkflows();
@@ -7127,19 +7133,21 @@ function renderApplicationWritingRules(template) {
   const verified = rules.verified !== false;
   container.classList.toggle("is-unverified", !verified);
   const hasLimit = verified && Boolean(rules.min_chars || rules.max_chars) && rules.count_field_ids?.length;
+  const ruleSourceUrl = safeSourceUrl(rules.source_url || template.source_url || "");
+  const ruleCheckedAt = String(rules.last_checked_at || (template.last_checked ? String(template.last_checked).slice(0, 10) : "2026-10-19"));
   const subtitle = verified
-    ? `查核依據：${rules.evidence || "學校官方公告"}。欄位旁的「建議字數」只是系統給的寫作參考。`
-    : "各校的字數與格式不同，這間學校的規定我們還沒有逐項查核。";
+    ? `查核依據：${rules.evidence || "學校官方公告"}（最後查核日期：${ruleCheckedAt}）。欄位旁的「建議字數」只是系統給的寫作參考。`
+    : `各校的字數與格式不同，這間學校的規定請直接核對官方簡章（最後查核日期：${ruleCheckedAt}）。`;
   container.innerHTML = `
     <div class="application-writing-rules-heading"><i data-lucide="${verified ? "ruler" : "circle-alert"}" aria-hidden="true"></i><div><h3 id="application-writing-rules-title">${verified ? "學校對這份文件的規定" : "這間學校的字數與格式規定尚未收錄"}</h3><p>${escapeHtml(subtitle)}</p></div></div>
-    <ul>${rules.rules.map((rule) => `<li>${escapeHtml(rule)}</li>`).join("")}</ul>
+    <ul class="application-writing-rules-list">${rules.rules.map((rule) => `<li class="application-writing-rule-row"><span class="application-writing-rule-text">${escapeHtml(rule)}</span><span class="application-writing-rule-provenance">${ruleSourceUrl ? `<a class="verified-rule-source" href="${escapeHtml(ruleSourceUrl)}" target="_blank" rel="noopener noreferrer"><i data-lucide="shield-check" aria-hidden="true"></i><span>官方 HTTPS 來源</span><i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}<span class="verified-rule-checked">最後查核：${escapeHtml(ruleCheckedAt)}</span></span></li>`).join("")}</ul>
     ${hasLimit ? `<div id="application-writing-total" class="application-writing-total" role="status">
       <div class="application-writing-total-line"><span><strong data-writing-total>0</strong> 字</span><small>整份合計 · 規定 ${applicationWritingTargetLabel(rules)}</small></div>
       <span class="application-writing-bar" aria-hidden="true"><span></span></span>
       <p data-writing-message></p>
       <small>合計不含空白與換行，僅供參考；實際計算方式以學校規定為準。${rules.count_note ? escapeHtml(rules.count_note) : ""}</small>
     </div>` : ""}
-    ${template.source_url ? `<a class="application-writing-source" href="${escapeHtml(template.source_url)}" target="_blank" rel="noopener noreferrer">查看官方來源<i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}`;
+    ${ruleSourceUrl ? `<div class="application-writing-source-bar"><a class="application-writing-source" href="${escapeHtml(ruleSourceUrl)}" target="_blank" rel="noopener noreferrer"><i data-lucide="shield-check" aria-hidden="true"></i><span>官方 HTTPS 來源連結（${escapeHtml(ruleSourceUrl)}）</span><i data-lucide="external-link" aria-hidden="true"></i></a><span class="application-writing-checked-date">最後查核日期：${escapeHtml(ruleCheckedAt)}</span></div>` : ""}`;
 }
 
 function updateApplicationWritingTotal(template) {
@@ -11475,7 +11483,319 @@ function applicationPeriodMeta(item) {
   };
 }
 
+async function loadVerifiedWindowDeadlines() {
+  try {
+    state.verifiedWindowCatalog = await fetchJson("/verified-window-deadlines");
+    if (!state.verifiedWindowSelectedSchool) {
+      state.verifiedWindowSelectedSchool = state.homeSchool || "國立臺灣大學";
+    }
+    renderVerifiedWindowSections();
+  } catch (_) {
+    // Keep existing UI working if endpoint is temporarily unavailable.
+  }
+}
+
+function verifiedWindowSchoolCard(schoolName) {
+  const schools = state.verifiedWindowCatalog?.items || [];
+  if (!schools.length) return null;
+  const target = normalize(schoolName || activeHomeSchool());
+  return (
+    schools.find((item) => normalize(item.school_name) === target || normalize(item.school_id) === target || normalize(item.short_name) === target)
+    || schools.find((item) => item.in_ten_week_window)
+    || schools[0]
+  );
+}
+
+function verifiedWindowStatusMeta(status) {
+  return {
+    open: { label: "申請開放中 · 未來 10 週窗口", tone: "open", icon: "flame" },
+    upcoming: { label: "即將開放 · 未來 10 週窗口", tone: "upcoming", icon: "calendar-clock" },
+    pending_exact_date: { label: "未來 10 週窗口 · 精確日期待母校公告", tone: "pending", icon: "clock-alert" },
+    closed_current_round: { label: "本梯次已截止 · 官方查核紀錄", tone: "closed", icon: "archive" },
+  }[status] || { label: "官方來源已查核", tone: "upcoming", icon: "shield-check" };
+}
+
+function verifiedRuleStatusMeta(fact) {
+  if (fact?.submission_mode === "pending_notice") {
+    return { label: "精確日期待母校公布（不臆測 23:59）", tone: "pending" };
+  }
+  if (fact?.exact_deadline_at) {
+    return { label: "已核對精確期限", tone: "verified" };
+  }
+  return { label: "已核對官方規定", tone: "policy" };
+}
+
+function renderVerifiedRuleCard(fact, iconName) {
+  if (!fact) return "";
+  const meta = verifiedRuleStatusMeta(fact);
+  const sourceUrl = safeSourceUrl(fact.source_url);
+  const limitSummary = [
+    fact.min_chars ? `至少 ${applicationNumber(fact.min_chars)} 字` : "",
+    fact.max_chars ? `上限 ${applicationNumber(fact.max_chars)} 字` : "",
+    fact.max_pages ? `上限 ${fact.max_pages} 頁` : "",
+  ].filter(Boolean).join(" · ");
+  return `
+    <article class="verified-rule-card tone-${escapeHtml(meta.tone)}">
+      <div class="verified-rule-card-top">
+        <span class="verified-rule-label"><i data-lucide="${escapeHtml(iconName)}" aria-hidden="true"></i><strong>${escapeHtml(fact.label)}</strong></span>
+        <span class="verified-rule-badge tone-${escapeHtml(meta.tone)}">${escapeHtml(meta.label)}</span>
+      </div>
+      ${limitSummary ? `<div class="verified-rule-value">${escapeHtml(limitSummary)}</div>` : ""}
+      <p class="verified-rule-detail">${escapeHtml(fact.value_text)}</p>
+      <div class="verified-rule-provenance" aria-label="官方來源與查核日期">
+        ${sourceUrl ? `<a class="verified-rule-source" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer"><i data-lucide="shield-check" aria-hidden="true"></i><span>官方 HTTPS 來源：${escapeHtml(fact.source_title)}</span><i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}
+        <span class="verified-rule-checked"><i data-lucide="calendar-check-2" aria-hidden="true"></i><span>最後查核日期：<time datetime="${escapeHtml(fact.last_checked_at)}">${escapeHtml(fact.last_checked_at)}</time></span></span>
+      </div>
+    </article>`;
+}
+
+function importedVerifiedSubtaskCount(card) {
+  if (!card) return 0;
+  const prefix = `verified-window-${card.school_id}-`;
+  return (state.calendarEvents || []).filter((event) => String(event.id || "").startsWith(prefix)).length;
+}
+
+function renderVerifiedWindowRetentionHook(card, { compact = false } = {}) {
+  if (!card) return "";
+  const datedSubtasks = (card.subtasks || []).filter((item) => item.due_date);
+  const importedCount = importedVerifiedSubtaskCount(card);
+  const countdownText = card.primary_deadline_date
+    ? calendarCountdownLabel(card.primary_deadline_date)
+    : card.window_badge || "待母校公布精確日";
+  return `
+    <div class="verified-window-retention-hook${compact ? " is-compact" : ""}" role="region" aria-label="${escapeHtml(card.school_name)}防漏提醒匯入工具">
+      <div class="verified-hook-copy-block">
+        <div class="verified-hook-kicker">
+          <span class="verified-hook-pill"><i data-lucide="bell-ring" aria-hidden="true"></i>零失誤期限提醒</span>
+          <span class="verified-hook-countdown">${escapeHtml(countdownText)}</span>
+        </div>
+        <h4>進站第一步：一鍵把「${escapeHtml(card.short_name)}截止日＋${card.subtasks.length} 項支線任務」匯入行事曆或 LINE</h4>
+        <p>不必先註冊登入。匯入後自動建立 T-14、T-7、T-3、T-1 與截止當日提醒，每一筆日曆事件均附官方 HTTPS 來源連結與最後查核日期（${escapeHtml(card.online_deadline.last_checked_at)}）。</p>
+      </div>
+      <div class="verified-hook-actions">
+        <a class="primary-button verified-hook-btn" href="${escapeHtml(card.ics_download_url)}" download="${escapeHtml(card.school_id)}-exchange-deadlines.ics">
+          <i data-lucide="calendar-plus" aria-hidden="true"></i>
+          <span>一鍵匯入 Apple / Google 行事曆（.ics 含支線任務）</span>
+        </a>
+        ${card.google_calendar_url ? `<a class="secondary-button verified-hook-btn" href="${escapeHtml(card.google_calendar_url)}" target="_blank" rel="noopener noreferrer">
+          <i data-lucide="calendar-check-2" aria-hidden="true"></i>
+          <span>加入 Google 行事曆（主截止日）</span>
+          <i data-lucide="external-link" aria-hidden="true"></i>
+        </a>` : ""}
+        ${datedSubtasks.length ? `<button type="button" class="secondary-button verified-hook-btn${importedCount ? " is-imported" : ""}" data-import-school-subtasks="${escapeHtml(card.school_name)}">
+          <i data-lucide="${importedCount ? "check-check" : "calendar-range"}" aria-hidden="true"></i>
+          <span>${importedCount ? `已同步至站內日曆（${importedCount} 項）` : `一鍵同步 ${datedSubtasks.length} 項支線任務至站內日曆`}</span>
+        </button>` : ""}
+        <a class="secondary-button verified-hook-btn is-line" href="${escapeHtml(card.line_oa_url)}" target="_blank" rel="noopener noreferrer">
+          <i data-lucide="message-circle-heart" aria-hidden="true"></i>
+          <span>加入 LINE OA 接收倒數推播</span>
+          <i data-lucide="external-link" aria-hidden="true"></i>
+        </a>
+        <button type="button" class="text-action verified-hook-copy-btn" data-copy-line-summary="${escapeHtml(card.school_name)}">
+          <i data-lucide="copy" aria-hidden="true"></i>
+          <span>複製 LINE 倒數提醒摘要</span>
+        </button>
+      </div>
+    </div>`;
+}
+
+function renderVerifiedWindowCard(card, { context = "home" } = {}) {
+  if (!card) return "";
+  const statusMeta = verifiedWindowStatusMeta(card.window_status);
+  const isCurrentHome = normalize(activeHomeSchool()) === normalize(card.school_name);
+  return `
+    <div class="verified-window-card" data-verified-school-card="${escapeHtml(card.school_id)}">
+      <header class="verified-window-card-header">
+        <div class="verified-window-card-title-group">
+          <div class="verified-window-badges">
+            <span class="verified-window-status-pill tone-${escapeHtml(statusMeta.tone)}"><i data-lucide="${escapeHtml(statusMeta.icon)}" aria-hidden="true"></i>${escapeHtml(card.window_badge || statusMeta.label)}</span>
+            <span class="verified-window-term-pill">${escapeHtml(card.cycle_label)}</span>
+          </div>
+          <h3>${escapeHtml(card.school_name)} — 校內交換申請三大核心規定與防漏支線任務</h3>
+        </div>
+        ${context === "home" && !isCurrentHome ? `<button type="button" class="secondary-button verified-switch-school-btn" data-verified-switch-home="${escapeHtml(card.school_name)}"><i data-lucide="compass" aria-hidden="true"></i><span>切換全站為${escapeHtml(card.short_name)}視角</span></button>` : ""}
+      </header>
+      ${renderVerifiedWindowRetentionHook(card, { compact: false })}
+      <div class="verified-window-rules-grid" role="list" aria-label="${escapeHtml(card.school_name)}三大已核對規定">
+        ${renderVerifiedRuleCard(card.online_deadline, "laptop")}
+        ${renderVerifiedRuleCard(card.paper_deadline, "file-stack")}
+        ${renderVerifiedRuleCard(card.study_plan_limit, "file-pen-line")}
+      </div>
+      <details class="verified-subtasks-panel" ${context === "home" || context === "deadlines" ? "open" : ""}>
+        <summary>
+          <span>
+            <i data-lucide="list-todo" aria-hidden="true"></i>
+            <strong>${escapeHtml(card.short_name)}申請支線任務與倒數檢查點（共 ${card.subtasks.length} 項）</strong>
+            <small>每一條支線任務旁邊均強制顯示官方 HTTPS 來源連結與最後查核日期</small>
+          </span>
+          <i data-lucide="chevron-down" aria-hidden="true"></i>
+        </summary>
+        <ol class="verified-subtasks-list">
+          ${(card.subtasks || []).map((task) => {
+            const taskSourceUrl = safeSourceUrl(task.source_url);
+            const dateBadge = `${task.due_date} · ${task.offset_label}`;
+            return `
+              <li class="verified-subtask-item">
+                <div class="verified-subtask-main">
+                  <div class="verified-subtask-meta">
+                    <span class="verified-subtask-date">${escapeHtml(dateBadge)}</span>
+                    ${task.google_calendar_url ? `<a class="text-action" href="${escapeHtml(task.google_calendar_url)}" target="_blank" rel="noopener noreferrer"><i data-lucide="calendar-plus" aria-hidden="true"></i><span>加入 Google 日曆</span></a>` : ""}
+                  </div>
+                  <strong>${escapeHtml(task.title)}</strong>
+                  <p>${escapeHtml(task.note)}</p>
+                </div>
+                <div class="verified-rule-provenance">
+                  ${taskSourceUrl ? `<a class="verified-rule-source" href="${escapeHtml(taskSourceUrl)}" target="_blank" rel="noopener noreferrer"><i data-lucide="shield-check" aria-hidden="true"></i><span>官方 HTTPS 來源：${escapeHtml(task.source_title)}</span><i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}
+                  <span class="verified-rule-checked"><i data-lucide="calendar-check-2" aria-hidden="true"></i><span>最後查核日期：<time datetime="${escapeHtml(task.last_checked_at)}">${escapeHtml(task.last_checked_at)}</time></span></span>
+                </div>
+              </li>`;
+          }).join("")}
+        </ol>
+      </details>
+    </div>`;
+}
+
+function renderHomeVerifiedWindowSection() {
+  const mount = $("#home-verified-window-mount");
+  if (!mount) return;
+  const catalog = state.verifiedWindowCatalog;
+  if (!catalog?.items?.length) {
+    mount.innerHTML = "";
+    return;
+  }
+  const showAll = state.verifiedWindowFilter === "all";
+  const visibleSchools = showAll
+    ? catalog.items
+    : catalog.items.filter((item) => item.in_ten_week_window);
+  const activeCard = verifiedWindowSchoolCard(state.verifiedWindowSelectedSchool || state.homeSchool || "國立臺灣大學");
+  mount.innerHTML = `
+    <div class="pr-section-head pr-section-head-split verified-window-section-head">
+      <div>
+        <span class="pr-kicker"><i data-lucide="shield-check" aria-hidden="true"></i>跨校整合 · 未來 10 週申請窗口 100% 官方來源核對</span>
+        <h2 id="home-verified-window-title">校內截止日、紙本送件與讀書計畫字數規定，<br>逐條附上官方 HTTPS 來源與最後查核日。</h2>
+      </div>
+      <div class="verified-window-summary-stats">
+        <p>針對未來 10 週（${escapeHtml(catalog.window_start_date)} 至 ${escapeHtml(catalog.window_end_date)}）開放或即將截止的 <strong>${catalog.ten_week_school_count} 所目標大學</strong>，我們逐一核對三大最容易踩雷的規定。未公告精確時段者絕不臆測 23:59。</p>
+        <div class="verified-window-filter-switch" role="group" aria-label="切換顯示範圍">
+          <button type="button" class="chip-button ${!showAll ? "active" : ""}" data-verified-window-filter="10w" aria-pressed="${!showAll}">未來 10 週窗口學校（${catalog.ten_week_school_count} 所）</button>
+          <button type="button" class="chip-button ${showAll ? "active" : ""}" data-verified-window-filter="all" aria-pressed="${showAll}">全部支援學校（${catalog.total_supported_school_count} 所）</button>
+        </div>
+      </div>
+    </div>
+    <div class="verified-window-school-strip" role="tablist" aria-label="選擇要查看截止日與規定的大學">
+      ${visibleSchools.map((item) => {
+        const selected = item.school_name === activeCard?.school_name;
+        const statusClass = item.window_status === "open" ? "is-open" : item.window_status === "upcoming" ? "is-upcoming" : item.window_status === "pending_exact_date" ? "is-pending" : "is-closed";
+        const shortDateText = item.primary_deadline_date ? item.primary_deadline_date.slice(5, 10).replace("-", "/") : item.in_ten_week_window ? "待公告日" : "已截止";
+        return `<button type="button" role="tab" class="verified-school-pill ${statusClass}${selected ? " active" : ""}" data-verified-window-school="${escapeHtml(item.school_name)}" aria-selected="${selected}">
+          <strong>${escapeHtml(item.short_name)}</strong>
+          <small>${escapeHtml(shortDateText)}</small>
+        </button>`;
+      }).join("")}
+    </div>
+    ${renderVerifiedWindowCard(activeCard, { context: "home" })}`;
+  initIcons();
+}
+
+function renderDeadlinesVerifiedWindowCard() {
+  const container = $("#deadlines-verified-window-card");
+  if (!container) return;
+  const card = verifiedWindowSchoolCard(activeHomeSchool());
+  if (!card) {
+    container.innerHTML = "";
+    return;
+  }
+  container.innerHTML = renderVerifiedWindowCard(card, { context: "deadlines" });
+  initIcons();
+}
+
+function renderVerifiedWindowCalendarHook() {
+  const container = $("#calendar-verified-window-hook");
+  if (!container) return;
+  const card = verifiedWindowSchoolCard(activeHomeSchool());
+  if (!card) {
+    container.innerHTML = "";
+    return;
+  }
+  container.innerHTML = renderVerifiedWindowRetentionHook(card, { compact: true });
+  initIcons();
+}
+
+function renderVerifiedWindowSections() {
+  renderHomeVerifiedWindowSection();
+  renderDeadlinesVerifiedWindowCard();
+  renderVerifiedWindowCalendarHook();
+}
+
+function importVerifiedSchoolSubtasksToCalendar(schoolName) {
+  const card = verifiedWindowSchoolCard(schoolName);
+  if (!card) return;
+  const datedSubtasks = (card.subtasks || []).filter((item) => item.due_date && parseLocalDate(item.due_date));
+  if (!datedSubtasks.length) {
+    announce(`${card.school_name} 目前僅公告申請月份窗口，待官方公布精確日期後即可匯入日曆。`, "info", true);
+    return;
+  }
+  let added = 0;
+  datedSubtasks.forEach((task) => {
+    const id = `verified-window-${card.school_id}-${task.id}`;
+    const existing = state.calendarEvents.find((item) => item.id === id);
+    const note = `${task.note}｜官方 HTTPS 來源：${task.source_url}（最後查核：${task.last_checked_at}）`;
+    const reminderDays = task.offset_label.includes("截止當日") ? 7 : 3;
+    if (existing) {
+      existing.title = `【${card.short_name}】${task.title}`;
+      existing.date = task.due_date;
+      existing.note = note;
+      existing.sourceUrl = task.source_url;
+    } else {
+      state.calendarEvents.push({
+        id,
+        title: `【${card.short_name}】${task.title}`,
+        date: task.due_date,
+        category: task.category || "home",
+        reminderDays,
+        preparationDays: 7,
+        effortHours: null,
+        status: "todo",
+        note,
+        sourceUrl: task.source_url,
+        schoolName: card.school_name,
+        origin: "personal",
+      });
+      added += 1;
+    }
+  });
+  const firstUpcoming = datedSubtasks.find((item) => item.due_date >= localDateKey()) || datedSubtasks[0];
+  if (firstUpcoming?.due_date) {
+    state.calendarSelectedDate = firstUpcoming.due_date;
+    state.calendarAgendaMode = "upcoming";
+    const parsed = parseLocalDate(firstUpcoming.due_date);
+    if (parsed) state.calendarMonth = new Date(parsed.getFullYear(), parsed.getMonth(), 1);
+  }
+  persistCalendarEvents();
+  renderApplicationCalendar();
+  renderVerifiedWindowSections();
+  announce(
+    added
+      ? `已將 ${card.school_name} 的 ${datedSubtasks.length} 項截止日與支線任務同步至站內申請日曆！`
+      : `已更新 ${card.school_name} 在站內申請日曆中的 ${datedSubtasks.length} 項支線任務！`,
+    "success",
+    true,
+  );
+}
+
+async function copyVerifiedSchoolLineSummary(schoolName) {
+  const card = verifiedWindowSchoolCard(schoolName);
+  if (!card?.line_copy_summary) return;
+  try {
+    await navigator.clipboard.writeText(card.line_copy_summary);
+    announce(`已複製 ${card.short_name} 截止日與官方來源摘要，可直接貼到 LINE Keep 或傳給自己！`, "success", true);
+  } catch (_) {
+    window.prompt("複製這段官方核對截止日摘要至 LINE：", card.line_copy_summary);
+  }
+}
+
 function renderDeadlines() {
+  renderDeadlinesVerifiedWindowCard();
   const periods = state.dashboard.application_periods || [];
   if (!periods.length) {
     renderEmpty("#period-list", "目前沒有可顯示的時程", "請查看官方公告或稍後重新整理。");
@@ -14414,6 +14734,33 @@ function bindEvents() {
       toggleFavorite(favorite.dataset.schoolName);
       return;
     }
+    const verifiedSchoolBtn = event.target.closest("[data-verified-window-school]");
+    if (verifiedSchoolBtn?.dataset.verifiedWindowSchool) {
+      state.verifiedWindowSelectedSchool = verifiedSchoolBtn.dataset.verifiedWindowSchool;
+      renderHomeVerifiedWindowSection();
+      return;
+    }
+    const verifiedFilterBtn = event.target.closest("[data-verified-window-filter]");
+    if (verifiedFilterBtn?.dataset.verifiedWindowFilter) {
+      state.verifiedWindowFilter = verifiedFilterBtn.dataset.verifiedWindowFilter;
+      renderHomeVerifiedWindowSection();
+      return;
+    }
+    const verifiedSwitchHomeBtn = event.target.closest("[data-verified-switch-home]");
+    if (verifiedSwitchHomeBtn?.dataset.verifiedSwitchHome) {
+      chooseHomeSchool(verifiedSwitchHomeBtn.dataset.verifiedSwitchHome);
+      return;
+    }
+    const importSubtasksBtn = event.target.closest("[data-import-school-subtasks]");
+    if (importSubtasksBtn?.dataset.importSchoolSubtasks) {
+      importVerifiedSchoolSubtasksToCalendar(importSubtasksBtn.dataset.importSchoolSubtasks);
+      return;
+    }
+    const copyLineSummaryBtn = event.target.closest("[data-copy-line-summary]");
+    if (copyLineSummaryBtn?.dataset.copyLineSummary) {
+      copyVerifiedSchoolLineSummary(copyLineSummaryBtn.dataset.copyLineSummary);
+      return;
+    }
     const trigger = event.target.closest(".school-detail-trigger");
     if (trigger?.dataset.schoolName) openUniversityDetail(partnerByName(trigger.dataset.schoolName));
   });
@@ -14477,7 +14824,7 @@ async function boot() {
   renderGlobalCommunityTopics();
   renderGlobalCommunityIdentitySelector();
   initIcons();
-  await Promise.all([loadSupportedUniversities(), loadAuthProviders(), restoreAccount(), loadSchoolImages(), loadAdvisorStatus()]);
+  await Promise.all([loadSupportedUniversities(), loadVerifiedWindowDeadlines(), loadAuthProviders(), restoreAccount(), loadSchoolImages(), loadAdvisorStatus()]);
   if (state.pendingSchoolPrompt) {
     state.pendingSchoolPrompt = false;
     promptForAccountSchool();
