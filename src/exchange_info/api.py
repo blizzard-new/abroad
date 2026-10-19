@@ -911,6 +911,14 @@ def create_app(
                 raise RuntimeError(f"正式環境禁止使用本機持久層：{name}={actual}（需要 {expected}）")
 
     warm_up: list = []  # filled once the catalogue loaders below exist
+    def capacity_setting(name: str, default: int, maximum: int) -> int:
+        raw = os.environ.get(name, str(default))
+        if not raw.isdecimal() or not 1 <= int(raw) <= maximum:
+            raise RuntimeError(f"{name} must be an integer from 1 to {maximum}")
+        return int(raw)
+
+    worker_threads = capacity_setting("EXCHANGE_WORKER_THREADS", 2, 128)
+    catalogue_concurrency = capacity_setting("EXCHANGE_CATALOGUE_CONCURRENCY", 1, 16)
     catalogue_slots: asyncio.Semaphore | None = None
     catalogue_response_paths = {
         "/student-dashboard", "/coverage", "/destination-profiles", "/destination-profile",
@@ -924,13 +932,13 @@ def create_app(
     async def lifespan(_app: FastAPI):
         nonlocal catalogue_slots
         # Large source graphs leave allocator arenas in each worker thread.
-        # Bound both threads and concurrent catalogue expansion on the 512 MiB
-        # host; requests wait asynchronously without dropping any source fields.
+        # Defaults protect the 512 MiB host. Self-hosted operators can compare
+        # larger bounds on staging; waiting catalogue requests remain asynchronous.
         from anyio.to_thread import current_default_thread_limiter
         thread_limiter = current_default_thread_limiter()
         previous_thread_tokens = thread_limiter.total_tokens
-        thread_limiter.total_tokens = min(previous_thread_tokens, 2)
-        catalogue_slots = asyncio.Semaphore(1)
+        thread_limiter.total_tokens = worker_threads
+        catalogue_slots = asyncio.Semaphore(catalogue_concurrency)
         warming_task = None
         if warm_up and os.environ.get("EXCHANGE_WARM_CACHES", "").strip().lower() in {"1", "on", "true", "yes"}:
             warming_task = asyncio.create_task(warm_up[0](), name="warm-caches")
@@ -1293,8 +1301,13 @@ def create_app(
         request = catalog_request.get()
         account = None
         if request is not None:
+            # A named public catalogue is identical for guests and signed-in
+            # visitors. Only resolving the account's default school needs a DB
+            # lookup. Keep authenticated requests private in browser/proxy caches.
+            if request_token(request):
+                request.state.catalog_access_checked = True
             account = getattr(request.state, "catalog_account", None)
-            if account is None and request_token(request):
+            if school is None and account is None and request_token(request):
                 try:
                     account, _ = authenticated_account(request)
                 except HTTPException as exc:

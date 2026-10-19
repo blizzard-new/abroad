@@ -151,6 +151,8 @@ services:
       EXCHANGE_WARM_CACHES: "1"
       # Reads stay fresh across app workers; the database is on this host.
       EXCHANGE_ACCOUNT_READ_CACHE_SECONDS: "0"
+      EXCHANGE_WORKER_THREADS: "${APP_THREADS:-2}"
+      EXCHANGE_CATALOGUE_CONCURRENCY: "${APP_CATALOGUE_CONCURRENCY:-1}"
       EXCHANGE_HOSTING_PROFILE: selfhost
       EXCHANGE_SUPABASE_URL: https://gateway
       INTERNAL_CA_FILE: /ca-public/root.crt

@@ -193,3 +193,16 @@ def test_a_school_byline_still_needs_a_verified_student(catalog):
     assert picked.status_code == 403, picked.text
     assert catalog.post("/community/posts", json=payload, headers=declared).status_code == 201
     assert catalog.post("/community/posts", json={**payload, "identity_mode": "verified_school"}, headers=verified).status_code == 201
+
+
+def test_explicit_public_catalogue_does_not_load_private_account(catalog, monkeypatch):
+    def unexpected_lookup(*args, **kwargs):
+        raise AssertionError('An explicitly selected public school must not query private account state')
+    monkeypatch.setattr(catalog.app.state.account_repository, 'find_session_by_token_hash', unexpected_lookup)
+    response = catalog.get('/student-dashboard', params={'school': CGU}, headers=auth('ntpu-student'))
+    assert response.status_code == 200
+    assert response.json()['school_name'] == CGU
+    assert 'no-store' in response.headers['cache-control']
+    assert 'Authorization' in response.headers['vary']
+    # A revoked token may still read the same public data, as an unauthenticated visitor can.
+    assert catalog.get('/student-dashboard', params={'school': CGU}, headers=auth('revoked')).status_code == 200

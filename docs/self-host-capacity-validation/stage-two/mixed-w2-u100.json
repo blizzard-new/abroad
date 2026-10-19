@@ -1,0 +1,119 @@
+{
+  "passed": true,
+  "users": 100,
+  "started": 100,
+  "completed": 100,
+  "cycles": 598,
+  "elapsed_seconds": 63.47,
+  "duration_seconds": 60.0,
+  "ramp_seconds": 10.0,
+  "stable_target_seconds": 50.0,
+  "pace_seconds": 10,
+  "http_requests": 5004,
+  "requests_per_second": 78.84,
+  "response_bytes": 35952342,
+  "routes": {
+    "GET /account/workspace": {
+      "requests": 1200,
+      "p95_ms": 29.89,
+      "max_ms": 171.12
+    },
+    "PUT /account/workspace": {
+      "requests": 603,
+      "p95_ms": 43.45,
+      "max_ms": 131.09
+    },
+    "GET /account/application-drafts": {
+      "requests": 1200,
+      "p95_ms": 38.83,
+      "max_ms": 130.72
+    },
+    "PUT /account/application-drafts/guardian-consent": {
+      "requests": 601,
+      "p95_ms": 48.02,
+      "max_ms": 182.14
+    },
+    "POST /auth/logout": {
+      "requests": 1,
+      "p95_ms": 7.63,
+      "max_ms": 7.63
+    },
+    "GET /auth/me": {
+      "requests": 103,
+      "p95_ms": 82.56,
+      "max_ms": 222.46
+    },
+    "GET /student-dashboard": {
+      "requests": 100,
+      "p95_ms": 78.19,
+      "max_ms": 116.05
+    },
+    "GET /documents": {
+      "requests": 598,
+      "p95_ms": 32.04,
+      "max_ms": 311.52
+    },
+    "GET /deadlines": {
+      "requests": 598,
+      "p95_ms": 9.9,
+      "max_ms": 46.1
+    }
+  },
+  "failed_http_requests": 0,
+  "http_error_rate": 0.0,
+  "conflicts": {
+    "workspace": [
+      {
+        "status": 200,
+        "worker": "10"
+      },
+      {
+        "status": 409,
+        "worker": "11"
+      }
+    ],
+    "draft": [
+      {
+        "status": 200,
+        "worker": "10"
+      },
+      {
+        "status": 409,
+        "worker": "11"
+      }
+    ]
+  },
+  "failures": {},
+  "statuses": {
+    "GET /account/workspace 200": 1200,
+    "PUT /account/workspace 200": 601,
+    "PUT /account/workspace 409": 2,
+    "GET /account/application-drafts 200": 1200,
+    "PUT /account/application-drafts/guardian-consent 200": 600,
+    "PUT /account/application-drafts/guardian-consent 409": 1,
+    "POST /auth/logout 204": 1,
+    "GET /auth/me 401": 2,
+    "GET /auth/me 200": 101,
+    "GET /student-dashboard 200": 100,
+    "GET /documents 200": 598,
+    "GET /deadlines 200": 598
+  },
+  "workers": {
+    "10": 2686,
+    "11": 2318
+  },
+  "generator": {
+    "processes": 1,
+    "cpu_quota": 2.0,
+    "cpu_fraction": 0.0775,
+    "saturated": false,
+    "shards": [
+      {
+        "users": 100,
+        "cpu_seconds": 9.8391,
+        "cpu_fraction": 0.158
+      }
+    ]
+  },
+  "scope": "synthetic authenticated sessions; no external OAuth, uploads, PDFs or WAN measurement"
+}
