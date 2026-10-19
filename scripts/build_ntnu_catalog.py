@@ -147,13 +147,49 @@ def archive_official_sources() -> dict:
                 "title": title,
                 "sha256": sha256_file(dst),
                 "bytes": dst.stat().st_size,
-                "fetched_at": "2026-10-16T13:55:00Z",
+                "fetched_at": "2026-10-19T09:15:00Z" if dst.name == "quotalist_1161.json" else "2026-10-16T13:55:00Z",
             })
     return {
         "school_id": "ntnu",
         "school_name": "國立臺灣師範大學",
-        "generated_at": "2026-10-16T14:00:00Z",
-        "active_cycle_note": "116-1 校級赴外交換甄選簡章已於 2026/10/13 公告（線上申請：2026/11/01–11/15 23:59:59，補件截止：11/16，說明會：11/03，第一次分發公告：12/11，第二次分發與最終榜單：12/15–12/21）；同時收錄全校 236 所交換合作大學（285 項校級、院級、系所級交換計畫）之 116-1 當期公告名額與 115 學年度歷年申請條件。",
+        "generated_at": "2026-10-19T09:20:00Z",
+        "active_cycle_note": "116-1 校級赴外交換甄選簡章已於 2026/10/13 公告（線上申請：2026/11/01–11/15 23:59:59，補件截止：11/16，說明會：11/03，第一次分發公告：12/11，第二次分發與最終榜單：12/15–12/21）；同時收錄全校 236 所交換合作大學（285 項校級、院級、系所級交換計畫）之 116-1 當期公告名額與 115 學年度歷年申請條件。2026/10/19 上午查核更新 116-1 校級交換 3 項變更（符茲堡大學、哈勒姆斯塔德大學、德州大學奧斯汀校區），其餘 282 條與昨日一致；名額公布不代表已開放報名，海外附件尚未全查。",
+        "source_update_20261019": {
+            "checked_at": "2026-10-19T09:15:00+08:00",
+            "source_url": "https://bds.oia.ntnu.edu.tw/bds/web/outgoing-quotalist",
+            "api_url": "https://bds.oia.ntnu.edu.tw/api/v1/oe/requirementHistory?term=1161",
+            "total_contract_entries": 285,
+            "changed_contract_entries": 3,
+            "unchanged_contract_entries": 282,
+            "quota_published_implies_application_open": False,
+            "overseas_attachments_fully_audited": False,
+            "changes": [
+                {
+                    "school_no": "DE-009-UW",
+                    "school_name": "符茲堡大學 Julius-Maximilians-Universität Würzburg",
+                    "contract_level": "校級",
+                    "previous_116_1_quota": "5",
+                    "updated_116_1_quota": "3",
+                    "summary": "116-1 校級名額 5→3（另院級・管理學院 2 名，合計 5 名），新增 GPA 2.3 與英／德語修課條件（德語授課課程須具德語檢定 B1 / 建議 CEFR B2；英語授課課程部分系所要求 TOEFL iBT 60 / IELTS 6.0 / CEFR B2；醫牙藥學系受限）。",
+                },
+                {
+                    "school_no": "SE-003-HH",
+                    "school_name": "哈勒姆斯塔德大學 Halmstad University",
+                    "contract_level": "校級",
+                    "previous_116_1_quota": "--",
+                    "updated_116_1_quota": "2",
+                    "summary": "116-1 校級名額 待確認→2 名；GPA 3.22，TOEFL iBT 90（寫作 20）或 IELTS 6.5（聽5.5/說5.5/讀5.5/寫5.5）。",
+                },
+                {
+                    "school_no": "US-047-UTEXAS",
+                    "school_name": "德州大學奧斯汀校區 The University of Texas at Austin",
+                    "contract_level": "校級",
+                    "previous_116_1_quota": "--",
+                    "updated_116_1_quota": "2",
+                    "summary": "116-1 校級名額 待確認→2 名；TOEFL iBT 79 / IELTS 6.5，交換期限限一學期，碩博士生僅可修習學士班課程，部分院系不開放（Dell Medical School、Option III Programs、School of Information (iSchool)）。",
+                },
+            ],
+        },
         "sources": provenance_items,
     }
 
@@ -509,6 +545,12 @@ def main() -> None:
                     if all(x["url"] != dl_url for x in exp_links):
                         exp_links.append({"title": title_str, "url": dl_url, "term": term_label})
 
+        oct19_partner_notes = {
+            "DE-009-UW": "2026/10/19 116-1 校級交換更新：校級名額由 5 調整為 3 名（另院級・管理學院 2 名，合計 5 名），新增 GPA 2.3 與英／德語修課條件；名額公布不代表已開放報名（11/01–11/15 開放線上報名），海外附件尚未全查。",
+            "SE-003-HH": "2026/10/19 116-1 校級交換更新：校級名額由待確認更新為 2 名，新增 GPA 3.22 及 TOEFL iBT 90（寫作 20）或 IELTS 6.5（聽5.5/說5.5/讀5.5/寫5.5）；名額公布不代表已開放報名（11/01–11/15 開放線上報名），海外附件尚未全查。",
+            "US-047-UTEXAS": "2026/10/19 116-1 校級交換更新：校級名額由待確認更新為 2 名，新增 TOEFL iBT 79 / IELTS 6.5、交換期限限一學期、碩博士生僅可修習學士班課程及部分院系不開放（Dell Medical School、Option III Programs、School of Information (iSchool)）；名額公布不代表已開放報名（11/01–11/15 開放線上報名），海外附件尚未全查。",
+        }
+
         notes_lines = [
             f"【學校代碼與合約層級】{sch_no}｜{'、'.join(levels)}（{'、'.join(organizers)}・{lang_group}）",
             f"【當期與歷年名額】{quota_str}",
@@ -516,6 +558,8 @@ def main() -> None:
             f"【外語檢定門檻】{lang_req_str}",
             f"【學業成績門檻】{gpa_req_str}",
         ]
+        if sch_no in oct19_partner_notes:
+            notes_lines.append(f"【2026-10-19 116-1 校級名額與條件更新】{oct19_partner_notes[sch_no]}")
         if coordinators:
             notes_lines.append(f"【國際處／院系所承辦人】{'；'.join(coordinators)}")
         if remarks:
@@ -537,7 +581,10 @@ def main() -> None:
             "quota": quota_str,
             "quota_status": quota_status,
             "availability_status": "open",
-            "availability_note": f"國立臺灣師範大學 116-1 赴外交換甄選簡章已公告（線上申請：2026/11/01–11/15）；{quota_str}。",
+            "availability_note": (
+                f"國立臺灣師範大學 116-1 赴外交換甄選簡章已公告（線上申請：2026/11/01–11/15，名額公布不代表已開放報名）；{quota_str}。"
+                + (f" {oct19_partner_notes[sch_no]}" if sch_no in oct19_partner_notes else "")
+            ),
             "academic_year": "116",
             "application_round": "116-1（2026年11月甄選／2027年赴外）",
             "application_window_status": "open",
@@ -1595,8 +1642,9 @@ def main() -> None:
         "verified_locations": len(partners),
         "verified_official_websites": sum(1 for p in partners if p.get("official_website")),
         "verified_campus_images": len(partners),
-        "active_term": "116-1 校級赴外交換甄選簡章已於 2026/10/13 公告（線上報名：2026/11/01–11/15 23:59:59，補件截止：11/16，說明會：11/03，第一次分發：12/11，最終榜單：12/19–12/21）。",
-        "verified_at": "2026-10-16",
+        "active_term": "116-1 校級赴外交換甄選簡章已於 2026/10/13 公告（線上報名：2026/11/01–11/15 23:59:59，補件截止：11/16，說明會：11/03，第一次分發：12/11，最終榜單：12/19–12/21）；2026/10/19 核實更新 116-1 校級交換 3 項變更（符茲堡、Halmstad、UT Austin），其餘 282 條不變，名額公布不代表已開放報名，海外附件尚未全查。",
+        "verified_at": "2026-10-19",
+        "source_update_20261019": provenance["source_update_20261019"],
     }
     (OFFICIAL_NTNU_DIR / "catalog-completeness.json").write_text(
         json.dumps(completeness, ensure_ascii=False, indent=2) + "\n",
@@ -1607,8 +1655,9 @@ def main() -> None:
             "school_id": "ntnu",
             "school_name": "國立臺灣師範大學",
             "status": "official_verified",
-            "checked_at": "2026-10-16T14:00:00Z",
+            "checked_at": "2026-10-19T09:15:00+08:00",
             "counts": completeness,
+            "source_update_20261019": provenance["source_update_20261019"],
         }, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )

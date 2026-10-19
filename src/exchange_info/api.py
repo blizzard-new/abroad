@@ -484,9 +484,6 @@ from .tku_student_view import (
 from .rag import rag_index_status, search_document_chunks, supabase_configured
 from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
-from .seo import EDITORIAL_PATHS, SeoSettings, create_seo_router, homepage_html
-from .seo_changes import ContentChanges
-from .seo_analytics import measurement_id
 from .university_registry import (
     CGU,
     CCU,
@@ -741,9 +738,6 @@ def _browser_security_headers(
             "frame-ancestors 'none'"
         ),
     }
-    if measurement_id(env):
-        headers["Content-Security-Policy"] = headers["Content-Security-Policy"].replace(
-            "script-src 'self';", "script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com;")
     if env.get("EXCHANGE_ENVIRONMENT") == "production":
         headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return headers
@@ -953,7 +947,6 @@ def create_app(
     app.state.feedback_service = feedback_service
     app.state.persistence_backends = PRODUCTION_PERSISTENCE_BACKENDS if is_production else backends
     catalog_request: ContextVar[Request | None] = ContextVar("catalog_request", default=None)
-    seo_settings = SeoSettings.from_environment()
 
     app.add_middleware(ApiMetricsMiddleware, service=analytics_service)
 
@@ -961,10 +954,7 @@ def create_app(
     async def add_security_headers(request: Request, call_next):
         context_token = catalog_request.set(request)
         try:
-            if catalogue_slots is not None and (
-                request.url.path in catalogue_response_paths
-                or request.url.path.startswith(("/schools/", "/sitemaps/", "/destinations/"))
-            ):
+            if catalogue_slots is not None and request.url.path in catalogue_response_paths:
                 async with catalogue_slots:
                     response = await call_next(request)
             else:
@@ -974,10 +964,6 @@ def create_app(
         for key, value in _browser_security_headers().items():
             response.headers.setdefault(key, value)
         path = request.url.path
-        if (not seo_settings.indexable or response.status_code >= 400
-                or not (path in {"/", "/schools", "/privacy", "/terms", "/robots.txt", "/sitemap.xml", *EDITORIAL_PATHS}
-                        or path.startswith(("/schools/", "/sitemaps/")))):
-            response.headers["X-Robots-Tag"] = "noindex, nofollow"
         if path.startswith("/static/") and response.status_code == 200:
             response.headers.setdefault("Cache-Control", _static_cache_control(path, "v" in request.query_params))
         if (
@@ -1673,35 +1659,10 @@ def create_app(
             raise HTTPException(status_code=403, detail="你無法查看這段私訊。")
         return conversation
 
-    def seo_catalogue(university: UniversityProfile):
-        # Public pages are identical for signed-in and anonymous visitors. In
-        # particular, never load private sessions through university_for().
-        token = catalog_request.set(None)
-        try:
-            if university.id == CGU.id:
-                # Pair records and provenance from one generation even if the
-                # background source refresh finishes during this request.
-                view = cgu_catalogue_view()
-                if view.source.status == "unavailable":
-                    raise HTTPException(503, "合作校資料暫不可用，請稍後重試。", headers={"Retry-After": "60"})
-                partners = apply_partner_research(
-                    view.partners, load_partner_research(resolved_data_dir),
-                    home_university=university.school_name, copy_nested=False,
-                )
-                return partners, view.source
-            partners = partners_for_university(university)
-            return partners, None
-        finally:
-            catalog_request.reset(token)
-
-    seo_state_dir = Path(os.environ.get("EXCHANGE_SEO_STATE_DIR") or resolved_data_dir / "seo-state")
-    app.include_router(create_seo_router(seo_settings, seo_catalogue, ContentChanges(seo_state_dir)))
-
-    @app.head("/", include_in_schema=False)
     @app.get("/", response_class=FileResponse)
-    def frontend() -> HTMLResponse:
-        return HTMLResponse(
-            homepage_html((STATIC_DIR / "index.html").read_text(encoding="utf-8"), seo_settings),
+    def frontend() -> FileResponse:
+        return FileResponse(
+            STATIC_DIR / "index.html",
             headers={"Cache-Control": "no-store"},
         )
 
@@ -3532,6 +3493,8 @@ def create_app(
         records: list[DeadlineRecord] = []
         triggers = FIELD_TRIGGERS["application_period"]
         for page in pages:
+            if "非交換申請期限" in page.title or "不是交換申請期限變更" in page.text:
+                continue
             snippets = _deadline_snippets(page.text, triggers)
             if page.category == PageCategory.DEADLINE or snippets:
                 records.append(

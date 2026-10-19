@@ -128,8 +128,27 @@ def archive_official_sources() -> dict:
     return {
         "school_id": "scu",
         "school_name": "東吳大學",
-        "generated_at": "2026-10-16T06:35:00Z",
-        "active_cycle_note": "116學年度校級赴境外（含赴國外、大陸、港澳地區）交換暨自費研修計畫於 2026/09/14 至 2026/11/16 中午 12:00 開放線上申請（https://api.sys.scu.edu.tw/exchange/Login.aspx），涵蓋 116-1（2027秋季班）及 116-2（2028春季班），預計於 2026 年 12 月底前公告甄選結果。完整收錄 126 所赴外（含港澳）交換校、62 所赴陸交換校及 3 所英美自費研修校共 191 所合作校當期名額與條件。",
+        "generated_at": "2026-10-19T09:30:00Z",
+        "active_cycle_note": "116學年度校級赴境外（含赴國外、大陸、港澳地區）交換暨自費研修計畫於 2026/09/14 至 2026/11/16 中午 12:00 開放線上申請（https://api.sys.scu.edu.tw/exchange/Login.aspx），涵蓋 116-1（2027秋季班）及 116-2（2028春季班），預計於 2026 年 12 月底前公告甄選結果。完整收錄 126 所赴外（含港澳）交換校、62 所赴陸交換校及 3 所英美自費研修校共 191 所合作校當期名額與條件。2026/10/19 基準更正：昨日讀到赴陸頁之 115 學年度舊快取，今日直接核實官方現行內容（https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/apply）為 116 學年度（適用 2027 秋／2028 春，11/16 中午截止、12 月底公布結果），並已讀取 62 校名單及申請表；不能斷言今日才更新，赴國外合作表已比對範圍未變。",
+        "baseline_correction_20261019": {
+            "checked_at": "2026-10-19T09:30:00+08:00",
+            "source_url": "https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/apply",
+            "partner_list_url": "https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/list",
+            "partner_list_pdf_url": "https://icae.scu.edu.tw/sites/default/files/2026-09/%E6%9D%B1%E5%90%B3%E5%A4%A7%E5%AD%B8116%E5%AD%B8%E5%B9%B4%E5%BA%A6%E6%A0%A1%E7%B4%9A%E8%B5%B4%E9%99%B8%E4%BA%A4%E6%8F%9B%E5%AD%B8%E6%A0%A1%E4%B8%80%E8%A6%BD%E8%A1%A8_1150915.pdf",
+            "application_form_docx_url": "https://icae.scu.edu.tw/sites/default/files/2026-09/%E8%B5%B4%E5%A4%A7%E9%99%B8%E5%8D%94%E8%AD%B0%E5%AD%B8%E6%A0%A1%E4%BA%A4%E6%8F%9B%E5%8B%95%E6%A9%9F%E5%8F%8A%E8%AE%80%E6%9B%B8%E8%A8%88%E7%95%AB.docx",
+            "application_form_odt_url": "https://icae.scu.edu.tw/sites/default/files/2026-09/%E8%B5%B4%E5%A4%A7%E9%99%B8%E5%8D%94%E8%AD%B0%E5%AD%B8%E6%A0%A1%E4%BA%A4%E6%8F%9B%E5%8B%95%E6%A9%9F%E5%8F%8A%E8%AE%80%E6%9B%B8%E8%A8%88%E7%95%AB.odt",
+            "verified_academic_year": "116",
+            "applicable_semesters": [
+                "2027秋季班（116-1：2027年9月–2028年1月）",
+                "2028春季班（116-2：2028年2月–2028年7月）",
+            ],
+            "application_deadline_at": "2026-11-16T12:00:00+08:00",
+            "result_announcement_period": "2026年12月底前",
+            "mainland_partner_count": 62,
+            "asserted_updated_today": False,
+            "overseas_partner_table_changed_in_checked_scope": False,
+            "summary": "昨日讀到的是赴陸頁的 115 年度舊快取；今日直接核實官方現行內容為 116 年度（適用 2027 秋／2028 春，11/16 中午截止、12 月底公布結果），並已讀取 62 校名單及申請表。不能斷言今日才更新；赴國外合作表已比對範圍未變。",
+        },
         "sources": provenance_items,
     }
 
@@ -746,8 +765,8 @@ def main():
                     "responsible_unit": "東吳大學國際與兩岸學術交流事務處（線上申請系統）",
                     "deadline_at": "2026-11-16T12:00:00+08:00",
                     "deadline_status": "verified_exact",
-                    "deadline_source_url": "https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply",
-                    "deadline_checked_at": "2026-10-16T06:35:00Z",
+                    "deadline_source_url": "https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply" if kind != "china_exchange" else "https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/apply",
+                    "deadline_checked_at": "2026-10-19T09:30:00Z" if kind == "china_exchange" else "2026-10-16T06:35:00Z",
                     "deadline_reminder_eligible": True,
                     "summary": "2026/09/14 至 2026/11/16 中午 12:00 前於線上系統完成志願選填與 PDF 備審上傳，無需繳交紙本或簽核單。",
                     "details": [
@@ -757,12 +776,12 @@ def main():
                     "document_requirements": [
                         {
                             "name": "自傳或履歷 1 份（約 2,000 字，PDF 檔）",
-                            "source_urls": ["https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply"],
+                            "source_urls": ["https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply" if kind != "china_exchange" else "https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/apply"],
                         },
                         {
-                            "name": "交換研修動機及讀書計畫（一校一份，每份約 2,000 字以內；海外組須合併中文 Form A 與外文 Form B 且中文排序在前）",
-                            "official_form_url": "https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply" if kind != "china_exchange" else "https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/apply",
-                            "source_urls": ["https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply"],
+                            "name": "交換研修動機及讀書計畫（一校一份，每份約 2,000 字以內；海外組須合併中文 Form A 與外文 Form B 且中文排序在前；赴陸組使用「赴大陸協議學校交換動機及讀書計畫」表格）",
+                            "official_form_url": "https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply" if kind != "china_exchange" else "https://icae.scu.edu.tw/sites/default/files/2026-09/%E8%B5%B4%E5%A4%A7%E9%99%B8%E5%8D%94%E8%AD%B0%E5%AD%B8%E6%A0%A1%E4%BA%A4%E6%8F%9B%E5%8B%95%E6%A9%9F%E5%8F%8A%E8%AE%80%E6%9B%B8%E8%A8%88%E7%95%AB.docx",
+                            "source_urls": ["https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply"] if kind != "china_exchange" else ["https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/apply"],
                         },
                         {
                             "name": "外語檢定成績證明 PDF（英歐語組須為 2025/01/31 後核發、JLPT 須為 2024/01/31 後核發；不接受多益校園考）",
@@ -1572,6 +1591,42 @@ def main():
             "crawled_at": "2026-10-16T06:20:00Z",
             "content_hash": hashlib.sha256("\n".join(exchange_info_payload["scholarship_info"]).encode("utf-8")).hexdigest(),
         },
+        {
+            "title": "東吳大學：116學年度校級赴大陸交換學生甄選申請說明（2026-10-19 基準更正核實）",
+            "source_url": "https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/apply",
+            "published_at": "2026-09-12T00:00:00Z",
+            "text": (
+                "東吳大學 116 學年度校級赴大陸交換學生甄選申請說明（適用 2027 秋季班 116-1：2027年9月–2028年1月／2028 春季班 116-2：2028年2月–7月）：\n"
+                "1. 申請期間：2026年9月14日至2026年11月16日（星期一）中午12:00止，於東吳大學赴外交換線上申請系統（https://api.sys.scu.edu.tw/exchange/Login.aspx）填報並上傳 PDF 備審資料，預計於 2026 年 12 月底前通知甄選結果。\n"
+                "2. 申請資格：具東吳大學正式學籍之全日制大學部、碩士班、博士班在學學生（不開放進修學士班、碩士在職專班及大學部延修第二年；部分學校可接收應屆畢業生或延畢生，詳見 62 所赴陸交換學校一覽表）。大學部累計班排名前 85% 以內、碩博班入學後總平均 80 分以上、操行 80 分以上且無校規懲處紀錄。\n"
+                "3. 應繳文件：線上申請表（至多 6 個志願）、自傳或履歷（約 2,000 字 PDF）、赴大陸協議學校交換動機及讀書計畫（一校一份，約 2,000 字以內，合併為 1 份 PDF）、其他有利審查文件（選繳，如推薦函至多 2 封）。\n"
+                "4. 查核基準說明（2026-10-19）：昨日查核誤讀赴陸頁之 115 學年度舊快取；今日直接核實官方現行內容為 116 學年度（適用 2027 秋／2028 春，11/16 中午截止、12 月底公布結果），並已讀取 62 校名單及申請表。此為基準更正，不能斷言今日才更新；赴國外合作表已比對範圍未變。"
+            ),
+            "summary": "116學年度校級赴大陸交換學生甄選（適用2027秋／2028春），2026/09/14–11/16中午12:00截止、12月底前公布結果，涵蓋62所大陸協議校及申請表。此為更正昨日115年度舊快取之基準核實，不能斷言今日才更新。",
+            "category": "exchange_application",
+            "attachments": [
+                {
+                    "url": "https://icae.scu.edu.tw/sites/default/files/2026-09/%E8%B5%B4%E5%A4%A7%E9%99%B8%E5%8D%94%E8%AD%B0%E5%AD%B8%E6%A0%A1%E4%BA%A4%E6%8F%9B%E5%8B%95%E6%A9%9F%E5%8F%8A%E8%AE%80%E6%9B%B8%E8%A8%88%E7%95%AB.docx",
+                    "filename": "赴大陸協議學校交換動機及讀書計畫.docx",
+                    "local_path": None,
+                    "content_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                },
+                {
+                    "url": "https://icae.scu.edu.tw/sites/default/files/2026-09/%E8%B5%B4%E5%A4%A7%E9%99%B8%E5%8D%94%E8%AD%B0%E5%AD%B8%E6%A0%A1%E4%BA%A4%E6%8F%9B%E5%8B%95%E6%A9%9F%E5%8F%8A%E8%AE%80%E6%9B%B8%E8%A8%88%E7%95%AB.odt",
+                    "filename": "赴大陸協議學校交換動機及讀書計畫.odt",
+                    "local_path": None,
+                    "content_type": "application/vnd.oasis.opendocument.text",
+                },
+                {
+                    "url": "https://icae.scu.edu.tw/sites/default/files/2026-09/%E6%9D%B1%E5%90%B3%E5%A4%A7%E5%AD%B8116%E5%AD%B8%E5%B9%B4%E5%BA%A6%E6%A0%A1%E7%B4%9A%E8%B5%B4%E9%99%B8%E4%BA%A4%E6%8F%9B%E5%AD%B8%E6%A0%A1%E4%B8%80%E8%A6%BD%E8%A1%A8_1150915.pdf",
+                    "filename": "東吳大學116學年度校級赴陸交換學校一覽表_1150915.pdf",
+                    "local_path": None,
+                    "content_type": "application/pdf",
+                },
+            ],
+            "crawled_at": "2026-10-19T09:30:00Z",
+            "content_hash": hashlib.sha256("scu-china-apply-116-baseline-20261019".encode("utf-8")).hexdigest(),
+        },
     ]
     (OFFICIAL_SCU_DIR / "pages.jsonl").write_text(
         "\n".join(json.dumps(p, ensure_ascii=False) for p in pages_records) + "\n",
@@ -1590,7 +1645,7 @@ def main():
             "mainland_graduate": {"gpa": 0.40, "study_plan_and_autobio": 0.50, "other_documents": 0.10},
         },
         "source_urls": scu_source_urls,
-        "verified_at": "2026-10-16",
+        "verified_at": "2026-10-19",
     }
     (OFFICIAL_SCU_DIR / "home_rules.json").write_text(
         json.dumps(home_rules, ensure_ascii=False, indent=2) + "\n",
@@ -1615,8 +1670,9 @@ def main():
         "verified_locations": len(partners),
         "verified_official_websites": sum(1 for p in partners if p.get("official_website")),
         "verified_campus_images": len(new_images),
-        "active_term": "116學年度校級赴境外（國外／大陸／港澳）交換暨自費研修計畫現正開放線上申請（2026/09/14–2026/11/16 12:00），涵蓋 116-1（2027秋季班）與 116-2（2028春季班），預計 2026 年 12 月底前公告甄選結果。",
-        "verified_at": "2026-10-16",
+        "active_term": "116學年度校級赴境外（國外／大陸／港澳）交換暨自費研修計畫現正開放線上申請（2026/09/14–2026/11/16 12:00），涵蓋 116-1（2027秋季班）與 116-2（2028春季班），預計 2026 年 12 月底前公告甄選結果。2026/10/19 更正赴陸頁昨日 115 舊快取基準，核實官方現行內容為 116 學年度（62 校名單及申請表已讀；不能斷言今日才更新，赴國外合作表已比對範圍未變）。",
+        "verified_at": "2026-10-19",
+        "baseline_correction_20261019": provenance["baseline_correction_20261019"],
     }
     (OFFICIAL_SCU_DIR / "catalog-completeness.json").write_text(
         json.dumps(completeness, ensure_ascii=False, indent=2) + "\n",
@@ -1627,8 +1683,9 @@ def main():
             "school_id": "scu",
             "school_name": "東吳大學",
             "status": "official_verified",
-            "checked_at": "2026-10-16T06:35:00Z",
+            "checked_at": "2026-10-19T09:30:00+08:00",
             "counts": completeness,
+            "baseline_correction_20261019": provenance["baseline_correction_20261019"],
         }, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
