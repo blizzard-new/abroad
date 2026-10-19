@@ -37,3 +37,20 @@ def test_catalogue_navigation_without_javascript(browser, live_server, width, tm
         expect(page.get_by_role("heading", level=1)).to_contain_text("長庚大學")
     finally:
         context.close()
+
+
+@pytest.mark.parametrize("width", [390, 1280])
+def test_editorial_navigation_and_country_comparison_without_javascript(browser, live_server, width):
+    context = browser.new_context(java_script_enabled=False, viewport={"width": width, "height": 900})
+    try:
+        page = context.new_page()
+        for path in ("/guides/exchange-budget", "/destinations/japan", "/editorial-policy"):
+            response = page.goto(live_server.base_url + path)
+            assert response.status == 200
+            expect(page.get_by_role("heading", level=1)).to_be_visible()
+            assert page.locator('nav[aria-label="主導覽"] a[href="/guides"]').count() == 1
+            assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
+        page.goto(live_server.base_url + "/schools")
+        expect(page.get_by_role("heading", level=1)).to_contain_text("全台大學")
+    finally:
+        context.close()
