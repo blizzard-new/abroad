@@ -618,8 +618,52 @@ NYCU = UniversityProfile(
     ),
 )
 
+NTHU = UniversityProfile(
+    id="nthu",
+    school_name="國立清華大學",
+    short_name="清大",
+    english_name="National Tsing Hua University",
+    aliases=(
+        "nthu",
+        "國立清華大學",
+        "清華大學",
+        "清大",
+        "NTHU",
+        "Tsing Hua University",
+        "National Tsing Hua University",
+    ),
+    hero_image="/static/assets/nthu-campus.svg",
+    official_url="https://oga.site.nthu.edu.tw/p/412-1524-18680.php?Lang=zh-tw",
+    coverage_note="完整支援：2027秋／2028春校級海外及赴陸港澳出國交換暨116-1台灣聯合大學系統交換計畫簡章、176所合作姊妹校（含A/B/C/D第一志願熱門程度分級）名額與門檻、5項出國交換暨學海系列獎助學金及328篇歷屆學長姐返國成果報告書已完整整合。",
+    support_level="full",
+    partner_count_hint=176,
+    academic_score_minimum=78,
+    student_card_signals=(
+        "國立清華大學",
+        "清華大學",
+        "NATIONALTSINGHUAUNIVERSITY",
+        "NTHU",
+    ),
+    # https://www.nthu.edu.tw/units/education — checked 2026-10-19.
+    colleges=(
+        "理學院",
+        "工學院",
+        "原子科學院",
+        "人文社會學院",
+        "生命科學暨醫學院",
+        "電機資訊學院",
+        "科技管理學院",
+        "竹師教育學院",
+        "藝術學院",
+        "台北政經學院",
+        "永續學院",
+        "半導體研究學院",
+        "清華學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU)
 DEFAULT_UNIVERSITY = CGU
 
 

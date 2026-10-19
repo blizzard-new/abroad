@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, SCU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, SCU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -82,6 +82,7 @@ NTUT_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCKU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
+NTHU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1537,6 +1538,51 @@ def _nycu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nthu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立清華大學校級赴海外及陸港澳交換學生甄選應繳資料：線上申請表（於 https://oga-exchange.vm.nthu.edu.tw/ 填報至多 15 所志願校後匯出 PDF，經導師／指導教授及系所主管核章）、英文歷年成績單（大學部須含累計系排名百分比，須達 GPA 3.20 以上或系排前 50%）、有效外語能力證明（海外交換必備 TOEFL iBT 79+ 或 IELTS 6.5+ 或申請學校要求之同等語言檢定，且成績須於 2 年有效期內）、學習計畫書（Study Plan，中英文撰寫）、自傳（中英文撰寫）、推薦信 2 封及其他有助審查之佐證資料，按順序合併為單一 PDF 檔上傳。",
+        "study-plan": "撰寫國立清華大學赴外交換甄選必繳之《學習計畫書（Study Plan）》與《自傳》（以中文及英文撰寫，具體說明交換動機、前五志願姊妹校之選校理由、擬修習專業課程清單與清大畢業學分銜接規劃、跨文化研究或學術交流目標，以及返國後之學習與經驗分享規劃）。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分抵免預審（依國立清華大學出國期間有關學業及學籍處理要點，出國交換期間每學期至少須修習相當於清大 6 學分或至少 2 門課程，返國後持姊妹校正式成績單及課程大綱向系所及教務處註冊組申請學分抵免）。",
+        "predeparture-notice": "於初審甄選結果公告後，依限於線上系統確認錄取資格並繳交計畫行政費新臺幣 2,000 元（一經繳交概不退費，經濟不利生檢附證明免繳）及保證金新臺幣 5,000 元（履行交換義務並繳交心得報告後無息退還），配合全球事務處全球移動力組完成姊妹校官方提名（Nomination），並視資格申請清大出國交換獎學金、教育部學海飛颺／學海惜珠或竹竹苗區圓夢獎助金。",
+        "return-report": "交換期滿返國後 1 個月內，於全球事務處線上系統上傳交換學生心得報告（至少 2,000 字，含修課經驗、住宿生活、簽證與花費建議及至少 4 張具代表性之交換照片）並填寫問卷，經審核通過後始得辦理新臺幣 5,000 元保證金無息退還及領取後半額度獎學金。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本、修課大綱（Syllabus）與授課時數證明，依《國立清華大學出國期間有關學業及學籍處理要點》向所屬系所、院及教務處註冊組辦理國外修習科目學分抵免採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立清華大學").replace("長庚", "清大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立清華大學赴外交換學業成績門檻為「歷年累計 GPA 達 3.20 以上（T 分數 78 分）」或「歷年累計學業成績系排名百分比在前 50% 以內」；大學部申請人須檢附載明累計系排名百分比之英文歷年成績單。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（清大基本門檻 79+，不接受 MyBest Scores / Home Edition）", "IELTS Academic（清大基本門檻 6.5+，不接受 One Skill Retake）", "JLPT 日語檢定（N1 / N2，限申請日語授課組別）", "TOPIK 韓語檢定（3–6 級，限申請韓語授課組別）", "Goethe / TestDaF（德語 B1/B2+，限申請德語授課組別）", "DELF / DALF / TCF（法語 B1/B2+，限申請法語授課組別）", "DELE / SIELE（西語 B1/B2+，限申請西語授課組別）", "赴大陸交換免附外語檢定（港澳及海外交換必繳）"]
+            field["help_text"] = "申請清大海外交換者，須檢附報名截止日前 2 年內有效之 TOEFL iBT 79 分以上或 IELTS Academic 6.5 以上（或欲申請姊妹校要求之日／韓／德／法／西語檢定）成績單；申請大陸地區交換免附外語檢定。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oga.site.nthu.edu.tw/p/412-1524-21359.php?Lang=zh-tw",
+        source_checked_at=NTHU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換學生線上申請表" if template.id == "exchange-application-data" else ("中英文學習計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oga.site.nthu.edu.tw/p/406-1524-294575,r8946.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "導師或指導教授簽章", "系所（學位學程）主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["系所辦公室戳章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "初審放榜後線上確認錄取並繳交 2,000 元行政費與 5,000 元保證金", "return-report": "返國後 1 個月內上傳交換心得報告（2,000 字以上）退還保證金", "credit-transfer": "返國開學後持姊妹校正式成績單辦理學分抵免"}.get(template.id, "於清大全球處出國交換線上申請系統（https://oga-exchange.vm.nthu.edu.tw/）填報至多 15 個志願並合併單一 PDF 上傳"),
+        version="115準備工具-2026-10-19.1",
+        destinations=["國立清華大學出國交換生線上申請系統（https://oga-exchange.vm.nthu.edu.tw/）", "國立清華大學全球事務處全球移動力組（旺宏館 2 樓 246 室）"],
+        conditional_note="此為個人準備工具；國立清華大學校級出國交換甄選採全線上填報與單一 PDF 檔案上傳，請先於線上系統填報至多 15 個志願並匯出申請表完成導師／指導教授及系所主管核章後，依檢核順序連同英文歷年成績單（含系排名）、2 年內有效外語檢定、中英文學習計畫書、中英文自傳及 2 封推薦信合併上傳至 https://oga-exchange.vm.nthu.edu.tw/ 。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1579,6 +1625,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncku_template(template)) is not None]
     if university.id == NYCU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nycu_template(template)) is not None]
+    if university.id == NTHU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nthu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

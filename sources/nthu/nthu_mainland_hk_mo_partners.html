@@ -1,0 +1,582 @@
+<div class="usermodoutter"><style>
+iframe {
+    width: 100%;
+    min-height: 40vw;
+}
+blockquote, table, td {
+    padding: 0;
+    //margin: 0;
+    border-left: none;
+}
+.boxSD .d-item > .mbox {
+    margin-bottom: 0;
+    box-shadow: none;
+    border-bottom: #888 1px dotted;
+}
+
+.tab-content > .tab-pane {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+div.mouter {
+    padding: 0;
+    margin-top: 1em;
+}
+
+div.mouter section.mb {
+    padding-top: 0;
+}
+
+.row.listBS {
+    padding: 0 10px;
+}
+
+.membtitle, .membtitle a {
+    color: white;
+}
+
+.boxSD:first-child .d-item > .mbox {
+    background: #864983;
+    border-bottom: none;
+    padding: 0;
+}
+
+.nav-tabs > li {
+    margin-right: 15px;
+}
+.nav-tabs > li > a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    padding: 0px 15px;
+    line-height: 40px;
+    font-size: 16px;
+    border-radius: 50px;
+    font-weight: bold;
+    color: #864983;
+    border: 1px solid #864983;
+    transition: all .3s;
+}
+.nav-tabs > li.active > a, .nav-tabs > li:hover> a, .nav-tabs > li.active:hover > a, nav-tabs > li.active:focus > a, , nav-tabs > li.active > a:focus {
+    background: #864983;
+    color: #fff;
+    border: 1px solid #864983;
+}
+
+a, a:focus, a:hover, li, li:focus, li.active {
+    text-decoration: none;
+    outline: none;
+}
+ul {
+    list-style-type:none;
+}
+
+.mdetail li > a:hover, membtitle li > a:hover {
+    text-decoration: underline;
+}
+.nav-tabs > li {
+    margin-bottom: 10px;
+}
+.intitle2 {
+color: #000;
+    font-size: 25px;
+    width: 100%;
+    border-bottom: #aaa 1px dashed;
+    padding-bottom: 10px;
+}
+
+.gray_table {
+    margin: 10px 0;
+}
+.gray_table th {
+    font-size: 13px;
+    padding: 10px;
+    background: #DADADA;
+    border: #fff 2px solid;
+}
+.gray_table td {
+    // font-size: 13px;
+    padding: 10px;
+    background: #eeeeee;
+    border: #fff 2px solid;
+}
+table {
+border-collapse: collapse;
+    border-spacing: 0;
+}
+tr > td:nth-child(6) span, tr > td:nth-child(6) > div {
+  word-break: break-all;
+}
+tbody {
+  display: inherit;
+}
+
+</style>
+<div class="module module-um ">
+   <div class="mouter">
+	<header class="mt ">
+	 
+	<h2 class="mt-title">陸港澳姊妹校資訊(代)</h2>
+</header>
+
+	<section class="mb">
+		<div class="minner">
+			<div class="meditor">
+			<script>
+  const area_list = {
+    "1": "大陸",
+    "2": "香港",
+    "3": "澳門"
+  }
+  const degree_list = {
+    "1": "學士班",
+    "2": "碩士班",
+    "3": "博士班"
+  }
+  function conditionSearch() {
+    let school_name = document.getElementById("school_name").value;
+    let area = document.getElementById("area").value ? area_list[document.getElementById("area").value] : "";
+    let degree = document.getElementById("degree").value ? degree_list[document.getElementById("degree").value] : "";
+
+    const all_contracts = document.querySelectorAll("tbody#mdr-visiting > tr");
+    for (let i = 1; i < all_contracts.length; i+=1) {
+      const contract = all_contracts[i];
+      const sn = contract.querySelector("td:nth-child(2)")
+      const ar = contract.querySelector("td:nth-child(1)")
+      const dg = contract.querySelector("td:nth-child(3)")
+
+      const is_sn = sn ? !school_name || sn.textContent.includes(school_name) : false
+      const is_ar = ar ? !area || ar.textContent.includes(area) : false
+      const is_dg = dg ? !degree || dg.textContent.includes(degree) : false
+      if (is_sn && is_ar && is_dg) {
+        contract.classList.remove("non-display")
+      } else {
+        contract.classList.add("non-display")
+      }
+    }
+  }
+</script>
+<div id="search_box">
+<div class="n_3boxin_gr" id="filter">
+<div class="whole_field">
+<div class="form-group"><label class="col-md-3 control-label text-right">學校名稱：</label> <input class="form-control" id="school_name" name="school_name" type="text" value="" /></div>
+</div>
+
+<div class="whole_field">
+<div class="form-group form-inline"><label class="col-md-3 control-label text-right">國家/地區 ：</label> <select class="form-control" id="area"><option value="">國家/地區</option><option value="1">大陸</option><option value="2">香港</option><option value="3">澳門</option> </select></div>
+</div>
+
+<div class="whole_field">
+<div class="form-group"><label class="col-md-3 control-label text-right">開放學位別：</label> <select class="form-control" id="degree"><option value="">所有學位</option><option value="1">學士班</option><option value="2">碩士班</option><option value="3">博士班</option> </select></div>
+</div>
+<button class="btn_style2" onclick="conditionSearch()" type="button">搜尋</button></div>
+
+<table border="1" cellpadding="8px" cellspacing="0" dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
+	<colgroup>
+		<col />
+		<col />
+		<col />
+		<col />
+		<col />
+		<col />
+	</colgroup>
+	<tbody id="mdr-visiting">
+		<tr>
+			<th data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;國家/地區&quot;}" style="width: 100px;"><span style="font-size:1.125em;">國家/地區</span></th>
+			<th data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;姊妹校名稱&quot;}" style="width: 180px;"><span style="font-size:1.125em;">姊妹校名稱</span></th>
+			<th data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;開放學位別&quot;}" style="width: 200px;"><span style="font-size:1.125em;">開放學位別</span></th>
+			<th data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;秋季班名額&quot;}" style="width: 120px;"><span style="font-size:1.125em;">秋季班名額</span></th>
+			<th data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;春季班名額&quot;}" style="width: 110px;"><span style="font-size:1.125em;">春季班名額</span></th>
+			<th data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;說明\n (實際接收情形以姊妹校當學期規範為準)&quot;}"><span style="font-size:1.125em;">說明<br />
+			(請留意提名名額和相關限制條件及是否執行交換計畫以姊妹校當學期最新通知為準)</span></th>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;大陸&quot;}"><span style="font-size:1.125em;">大陸</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;上海大學&quot;}"><span style="font-size:1.125em;">上海大學</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班, 碩士班, 博士班&quot;}"><span style="font-size:1.125em;">學士班, 碩士班, 博士班</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;2&quot;}"><span style="font-size:1.125em;">2</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;2&quot;}"><span style="font-size:1.125em;">2</span></td>
+			<td><span style="font-size:1.125em;">僅接收台灣學生</span></td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;大陸&quot;}"><span style="font-size:1.125em;">大陸</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;上海交通大學&quot;}">
+			<p><span style="font-size:1.125em;">上海交通大學</span></p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班, 碩士班, 博士班&quot;}">
+			<p><span style="font-size:1.125em;">學士班, 碩士班, 博士班</span></p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;5&quot;}">5</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;5&quot;}"><span style="font-size:1em;">5</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;原則僅收港澳台生&quot;}">
+			<p><span style="font-size:1.125em;">僅接收港、澳、台籍學生</span></p>
+
+			<p>2026秋季接收情形:</p>
+
+			<p><meta charset="utf-8" /></p>
+
+			<p>1. 由於安泰經濟管理學院的接收能力有限，每個學期到該學院交換的學生(校際)數量不多於3名。</p>
+
+			<p>2. 接收交換生的<a href="/var/file/524/1524/img/4415/160679998.pdf"><span style="color:#2980b9;">學院與專業列表</span></a></p>
+			</td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;大陸&quot;}"><span style="font-size:1.125em;">大陸</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;天津大學&quot;}">
+			<p><span style="font-size:1.125em;">天津大學</span></p>
+
+			<p>Tianjin University</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班, 碩士班, 博士班&quot;}">
+			<p><span style="font-size:1.125em;">學士班, 碩士班, 博士班</span></p>
+
+			<p>BA, MA, PhD</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;2&quot;}"><span style="font-size:1.125em;">2</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;2&quot;}"><span style="font-size:1.125em;">2</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;不接收陸生申請&quot;}">
+			<p><span style="font-size:1.125em;"><span style="font-family:Arial,Helvetica,sans-serif;">自<span lang="EN-US">2025</span>秋季起不限制國籍，中國籍與外國籍學生也可報名；外國籍學生須進入國際教育學院就讀。</span></span></p>
+
+			<p><span style="font-size:1.125em;">No nationality restriction&nbsp;from 2025 Fall. Foreign student&nbsp;must enroll in the School of International Education.</span></p>
+			</td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;大陸&quot;}"><span style="font-size:1.125em;">大陸</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;北京大學&quot;}"><span style="font-size:1.125em;">北京大學</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班, 碩士班, 博士班&quot;}"><span style="font-size:1.125em;">學士班, 碩士班, 博士班</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;5&quot;}"><span style="font-size:1.125em;">5</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;5&quot;}"><span style="font-size:1.125em;">5</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;接收台灣學生(不得有不及格科目)，交流結束後須繳交心得於北大。&quot;}">
+			<p><span style="font-size:1.125em;">僅接收台灣學生，不得有不及格科目，交流結束後須繳交心得於北大。</span></p>
+
+			<p><span style="font-size:1.125em;"><span style="font-family:Calibri,sans-serif"><span style="font-family:&quot;新細明體&quot;,serif">暫不接受交換至軟件與微電子學院; 不接受至深圳校區交換。</span></span></span></p>
+
+			<p><span style="font-size:1.125em;">學士班課程參考<strong> <a href="https://dean.pku.edu.cn/service/web/courseSearch.php">https://dean.pku.edu.cn/service/web/courseSearch.php</a></strong></span></p>
+
+			<p><span style="font-size:1.125em;"><span style="font-family:&quot;Times New Roman&quot;,serif"><span style="font-family:&quot;新細明體&quot;,serif">本科生一學期至少選修四門課，可以跨院系選課，但專業課要在跨院系選課階段選；研究生一學期至少選4學分課程或兩門課，原則上可以跨院系選課，但需來校後到相應院系諮詢。</span></span></span></p>
+
+			<p align="left" style="text-align:left"><span style="font-size:1.125em;"><span style="font-family:&quot;Times New Roman&quot;,serif"><span style="font-family:&quot;新細明體&quot;,serif">電子學院、智慧學院、積體電路學院以及電腦學院均只接收研究生，且上課在昌平新校區。</span></span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;大陸&quot;}"><span style="font-size:1.125em;">大陸</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;北京清華大學&quot;}"><span style="font-size:1.125em;">北京清華大學</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班, 碩士班, 博士班&quot;}"><span style="font-size:1.125em;">學士班, 碩士班, 博士班</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;2&quot;}"><span style="font-size:1.125em;">2</span></td>
+			<td data-sheets-value="{&quot;1&quot;:3,&quot;3&quot;:0}">
+			<p><span style="font-size:1.125em;">2</span></p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;僅接收台灣學生(有不及格科目不受理)\n大四畢業班的課程設置和其他年級不一致，暫不接受交換生申請。在選擇交換專業方面，MBA專案、蘇世民學者專案暫無法接受交換生申請。\n研究生申請須找指導教授同意指導。\n&quot;}">
+			<p><u><strong>提名同學須繳交近期體檢報告並依指定日期完成其他文件上傳，無法完成者將不受理提名申請，請務必留意。</strong></u></p>
+
+			<p><u><strong>所有申請工作均採取線上方式完成，申請人需根據線上申請的提示完成個人資訊填寫及申請 資料上傳兩部分的工作，主體內容包括個人資訊填寫，提交成績單、導師推薦信、體檢、保險證明、個人照片等。申請期間申請人需密切關注申請回饋及進展，並及時按具體回饋對部分申請 內容進行調整等，否則將可能耽擱整體申請，甚至影響申請結果。</strong></u></p>
+
+			<p><span style="font-size:1.125em;">僅接收台灣學生(有不及格科目不受理)，<u><strong>以大學部學生申請為優先</strong></u>。<br />
+			大四畢業班的課程設置和其他年級不一致，暫不接受交換生申請。在選擇交換專業方面，MBA專案、蘇世民學者專案暫無法接受交換生申請。<br />
+			研究生申請須找指導教授同意指導。</span></p>
+			</td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;大陸&quot;}"><span style="font-size:1.125em;">大陸</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;北京清華大學&quot;}">復旦大學</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班, 碩士班, 博士班&quot;}"><span style="font-size:1.125em;">學士班, 碩士班, 博士班</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;2&quot;}">5</td>
+			<td data-sheets-value="{&quot;1&quot;:3,&quot;3&quot;:0}">5</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;僅接收台灣學生(有不及格科目不受理)\n大四畢業班的課程設置和其他年級不一致，暫不接受交換生申請。在選擇交換專業方面，MBA專案、蘇世民學者專案暫無法接受交換生申請。\n研究生申請須找指導教授同意指導。\n&quot;}">
+			<p><span style="font-size:1.125em;">僅接收港、澳、台籍學生，畢業班的學生不列入優先選送名單。</span></p>
+
+			<p>復旦大學校園地圖（http://map.fudan.edu.cn/）&nbsp;</p>
+
+			<p>復旦大學招生網（https://www.fudan.edu.cn/489/list.htm）&nbsp;</p>
+
+			<p>復旦大學教務處網站（http://www.jwc.fudan.edu.cn）&nbsp;</p>
+
+			<p>復旦大學研究生院網站（https://gs.fudan.edu.cn/）</p>
+
+			<p>2026秋季接收情形:</p>
+
+			<p><span style="font-size:1em;"><span style="font-family:Calibri,sans-serif"><span style="font-family:&quot;新細明體&quot;,serif">（</span><span lang="EN-US" style="font-family:TimesNewRomanPSMT">1</span><span style="font-family:&quot;新細明體&quot;,serif">）經濟學院、管理學院、國際金融學院因培養體系不同，故不接收研究生交換，其他學院下屬各專業，若名稱前標記有&ldquo;專業學位&rdquo;的專業則不開放，未有標記的則可選；</span><span lang="EN-US" style="font-family:FangSong"></span></span></span></p>
+
+			<p><span style="font-size:1em;"><span style="font-family:Calibri,sans-serif"><span style="font-family:&quot;新細明體&quot;,serif">（</span><span lang="EN-US" style="font-family:TimesNewRomanPSMT">2</span><span style="font-family:&quot;新細明體&quot;,serif">）外國語言文學學院各專業由於大四授課較少，故不接收畢業班</span><span lang="EN-US" style="font-family:FangSong"></span></span></span><span style="font-size:1em;"><span style="font-family:Calibri,sans-serif"><span style="font-family:&quot;新細明體&quot;,serif">學生交流；</span><span lang="EN-US" style="font-family:FangSong"></span></span></span></p>
+
+			<p><span style="font-size:1em;"><span style="font-family:Calibri,sans-serif"><span style="font-family:&quot;新細明體&quot;,serif">（</span><span lang="EN-US" style="font-family:TimesNewRomanPSMT">3</span><span style="font-family:&quot;新細明體&quot;,serif">）中文系要求交換生成績單無不合格成績；</span><span lang="EN-US" style="font-family:FangSong"></span></span></span></p>
+
+			<p><span style="font-size:1em;"><span style="font-family:Calibri,sans-serif"><span style="font-family:&quot;新細明體&quot;,serif">（</span><span lang="EN-US" style="font-family:TimesNewRomanPSMT">4</span><span style="font-family:&quot;新細明體&quot;,serif">）管理學院接收本科交換生的成績要求為</span><span lang="EN-US" style="font-family:TimesNewRomanPSMT">80 </span><span style="font-family:&quot;新細明體&quot;,serif">分以上（百分制）；</span><span lang="EN-US" style="font-family:FangSong"></span></span></span></p>
+
+			<p><span style="font-size:1em;"><span style="font-family:Calibri,sans-serif"><span style="font-family:&quot;新細明體&quot;,serif">（</span><span lang="EN-US" style="font-family:TimesNewRomanPSMT">5</span><span style="font-family:&quot;新細明體&quot;,serif">）國際金融學院每學期至多可接收</span><span lang="EN-US" style="font-family:TimesNewRomanPSMT">5</span><span style="font-family:&quot;新細明體&quot;,serif">名本科交換生；</span><span lang="EN-US" style="font-family:FangSong"></span></span></span></p>
+
+			<p><span style="font-size:1em;"><span style="font-family:Calibri,sans-serif"><span style="font-family:&quot;新細明體&quot;,serif">（</span><span lang="EN-US" style="font-family:TimesNewRomanPSMT">6</span><span style="font-family:&quot;新細明體&quot;,serif">）醫學院交換生僅限選課，不可參加實習。</span><span lang="EN-US"></span></span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;大陸&quot;}"><span style="font-size:1.125em;">大陸</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;吉林大學&quot;}"><span style="font-size:1.125em;">吉林大學</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班, 碩士班, 博士班&quot;}"><span style="font-size:1.125em;">學士班, 碩士班, 博士班</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;5&quot;}"><span style="font-size:1.125em;">5</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;5&quot;}"><span style="font-size:1.125em;">5</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;可接收陸港澳台學生，不收外籍生&quot;}"><span style="font-size:1.125em;">僅接收港、澳、台籍學生</span></td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;大陸&quot;}"><span style="font-size:1.125em;">大陸</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;東南大學&quot;}"><span style="font-size:1.125em;">東南大學</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班, 碩士班, 博士班&quot;}"><span style="font-size:1.125em;">學士班, 碩士班, 博士班</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;3&quot;}"><span style="font-size:1.125em;">3</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;3&quot;}"><span style="font-size:1.125em;">3</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot; 原則上不接收非港、澳、台籍交換生，不接收本科畢業年級學生。&quot;}"><span style="font-size:1.125em;">僅接收港、澳、台籍學生，不接收本科畢業年級學生。</span></td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;大陸&quot;}">
+			<p><span style="font-size:1.125em;">大陸</span></p>
+
+			<p>China</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;寧波諾丁漢大學&quot;}">
+			<p><span style="font-size:1.125em;">寧波諾丁漢大學</span></p>
+
+			<p>University of Nottingham Ningbo China</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班, 碩士班, 博士班&quot;}">
+			<p><span style="font-size:1.125em;">學士班, 碩士班, 博士班</span></p>
+
+			<p>BA, MA, PhD</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;1&quot;}"><span style="font-size:1.125em;">1</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;1&quot;}"><span style="font-size:1.125em;">1</span></td>
+			<td>
+			<p><span style="font-size:12pt"><span style="font-family:Calibri,sans-serif">Applicants from non-English speaking countries must submit evidence of English language proficiency at the time of application.</span></span></p>
+
+			<p><span style="font-size:12pt"><span style="font-family:Calibri,sans-serif">English Requirement:</span></span></p>
+
+			<ul>
+				<li><span style="font-size:12pt"><span style="font-family:Calibri,sans-serif">IELTS 6.5 with the writing band no less than 6.0 or</span></span></li>
+				<li value="14"><span style="font-size:12pt"><span style="font-family:Calibri,sans-serif">TOEFL (paper based) 575 + TWE no less than 4.5 or</span></span></li>
+				<li value="14"><span style="font-size:12pt"><span style="font-family:Calibri,sans-serif">TOEFL (computer based) 232 + TWE no less than 4.5 or</span></span></li>
+				<li value="14"><span style="font-size:12pt"><span style="font-family:Calibri,sans-serif">TOEFL (IBT) 88 (minimum 19 in any element) or</span></span></li>
+				<li value="14"><span style="font-size:12pt"><span style="font-family:Calibri,sans-serif">have passed 60 ECTS (European Credits) in English-taught courses</span></span></li>
+				<li value="14"><span style="font-size:12pt"><span style="font-family:Calibri,sans-serif">English proficiency letter issued by home institution.</span></span></li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;大陸&quot;}"><span style="font-size:1.125em;">大陸</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;蘭州大學&quot;}">
+			<p><span style="font-family:Arial,Helvetica,sans-serif;"><span style="font-size:1.125em;">浙江大學</span></span></p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班, 碩士班, 博士班&quot;}"><span style="font-size:1.125em;"><span style="font-family:Arial,Helvetica,sans-serif;">學士班, 碩士班, 博士班</span></span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;5&quot;}">5</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;5&quot;}">5</td>
+			<td>
+			<p><span style="font-size:1.125em;">僅接收台灣學生</span></p>
+
+			<p><span style="font-size:1.125em;"><span style="font-family:新細明體,serif"><strong><span style="font-family:&quot;新細明體&quot;,serif">學士學生：</span></strong><span style="font-family:新細明體,serif">工業設計、建築學、城鄉規劃、美術學（<span lang="EN-US"><span style="font-family:&quot;Courier New&quot;">2018</span></span>年起為<span lang="EN-US"><span style="font-family:&quot;Courier New&quot;">&ldquo;</span></span>中國畫<span lang="EN-US"><span style="font-family:&quot;Courier New&quot;">&rdquo;</span></span>與<span lang="EN-US"><span style="font-family:&quot;Courier New&quot;">&ldquo;</span></span>書法學<span lang="EN-US"><span style="font-family:&quot;Courier New&quot;">&rdquo;</span></span>輪流招生）、體育類相關專業，以及醫學院和竺可楨學院<strong>暫不接受</strong>本科交換生申請。</span><strong><span style="font-family:&quot;新細明體&quot;,serif"></span></strong><span lang="EN-US"><span style="font-family:&quot;Courier New&quot;"></span></span></span></span></p>
+
+			<ol>
+				<li><span style="font-size:1.125em;"><span style="font-family:新細明體,serif">院系信息：本科生可通過網頁<u><span lang="EN-US"><span style="font-family:&quot;Courier New&quot;">(<a href="https://www.zju.edu.cn/xywxw/list.htm" style="color:blue; text-decoration:underline">https://www.zju.edu.cn/xywxw/list.htm</a>)</span></span></u>查詢學院（系）和專業情況。</span></span></li>
+				<li><span style="font-size:1.125em;"><span style="font-family:新細明體,serif">本科生赴浙大交換期間應處於大二或大三階段，可參加專案為學期課程交流專案，畢業論文（設計）專案暫不開放。<span lang="EN-US"><span style="font-family:&quot;Courier New&quot;"></span></span></span></span></li>
+			</ol>
+
+			<p><span style="font-size:1.125em;"><span style="font-family:新細明體,serif">&nbsp;</span><span style="font-family:新細明體,serif"><strong><span style="font-family:&quot;新細明體&quot;,serif">研究生：</span></strong><span style="font-family:新細明體,serif">醫學院、管理學院<strong>暫不接受</strong>研究生交換生申請。</span><strong><span style="font-family:&quot;新細明體&quot;,serif"></span></strong><span lang="EN-US"><span style="font-family:&quot;Courier New&quot;"></span></span></span></span></p>
+
+			<p><span style="font-size:1.125em;"><span style="font-family:新細明體,serif">研究生可登陸浙江大學研究生院招生網<u><span lang="EN-US"><span style="font-family:&quot;Courier New&quot;">(</span></span></u><span lang="EN-US"><span style="font-family:&quot;Courier New&quot;"><a href="http://www.grs.zju.edu.cn/yjszs/main.htm" style="color:blue; text-decoration:underline">www.grs.zju.edu.cn/yjszs/main.htm</a><u>)</u></span></span>查詢研究生招生目錄，確定對應年級專業是否招收研究生。研究生設課程網<span lang="EN-US"><span style="font-family:&quot;Courier New&quot;">(<a href="https://yjsy.zju.edu.cn/open/kkqkcx" style="color:blue; text-decoration:underline">https://yjsy.zju.edu.cn/open/kkqkcx</a>)</span></span></span></span><span style="font-size:12pt"><span style="font-family:新細明體,serif"></span></span></p>
+
+			<p><span style="font-size:1.125em;"><span style="font-family:Calibri,sans-serif"><span style="font-family:&quot;新細明體&quot;,serif">原則上學生不在該校修讀體育課程。</span></span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;香港&quot;}">
+			<p><span style="font-size:1.125em;">香港</span></p>
+
+			<p>Hong Kong</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;香港大學&quot;}">
+			<p><span style="font-size:1.125em;">香港大學</span></p>
+
+			<p>The University of Hong Kong</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班&quot;}">
+			<p><span style="font-size:1.125em;">學士班</span></p>
+
+			<p>BA</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;3&quot;}"><span style="font-size:1.125em;">3</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;3&quot;}"><span style="font-size:1.125em;">3</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;An overall band of 6.5 in IELTS Academic Module (within 2 years after the test date)\nA score of 93 in the TOEFL internet-based test, or 583 in the paper-based test (prior to July 2017) or an overall score of 70 in the revised TOEFL Paper-delivered Test (October 2017 onwards) (within 2 years after the test date)\n\nProgrammes / courses offered by the following Faculties are NOT opened to exchange students:\n Faculty of Dentistry\n Li Ka Shing Faculty of Medicine\n BSc (Exercise and Health) Programme\n Most final year project courses provided by all faculties&quot;}">
+			<p><span style="font-size:1.125em;">1. An overall band of 6.5 in IELTS Academic Module (within 2 years after the test date)<br />
+			A score of 93 in the TOEFL internet-based test, or 583 in the paper-based test (prior to July 2017) or an overall score of 70 in the revised TOEFL Paper-delivered Test (October 2017 onwards) (within 2 years after the test date).<br />
+			2. Programmes / courses offered by the following Faculties are NOT opened to exchange students:</span></p>
+
+			<ul>
+				<li>Faculty of Dentistry</li>
+				<li><span style="font-size:1.125em;">Li Ka Shing Faculty of Medicine</span></li>
+				<li><span style="font-size:1.125em;">BSc (Exercise and Health) Programme</span></li>
+				<li><span style="font-size:1.125em;">Most final year project courses provided by all faculties</span></li>
+			</ul>
+
+			<p><strong>*Facts from 2026 Fall:</strong></p>
+
+			<ul>
+				<li>
+				<p>University Housing Availability:&nbsp;Due to a significant increase in demand, we are unable to guarantee university housing to all incoming exchange students. This shortage is particularly acute during&nbsp;Semester 1 (September &ndash; December).</p>
+
+				<ul>
+					<li>
+					<p>Recommendation:&nbsp;Housing pressure is&nbsp;greatly reduced&nbsp;during&nbsp;Semester 2 (January &ndash; May),&nbsp;and we recommend trying to redirect some students to come during this period if possible.</p>
+					</li>
+				</ul>
+				</li>
+				<li>
+				<p>Faculty of Business and Economics (FBE) Course Enrolment:&nbsp;Courses offered by FBE have become increasingly competitive.&nbsp;</p>
+				</li>
+				<li>
+				<ul>
+					<li>No Guarantees:&nbsp;Enrolment in any specific FBE course cannot be guaranteed.</li>
+					<li>Course Load:&nbsp;It is unlikely that students will be able to take a full course load focused entirely on a single discipline within this Faculty.</li>
+					<li>
+					<p>Academic Flexibility &amp; Alternative Options:&nbsp;We strongly encourage students to be flexible with their course planning and to have backup plans ready. Furthermore, we highly recommend that students&nbsp;consider applying to other faculties&nbsp;where possible.</p>
+					</li>
+				</ul>
+				</li>
+			</ul>
+
+			<ul>
+				<li>
+				<p><a href="https://commoncore.hku.hk/" rel="noreferrer" target="_blank">Common Core</a>&nbsp;(CC) Courses:&nbsp;We&nbsp;highly recommend that exchange students consider enrolling in&nbsp;CC courses. These interdisciplinary courses cover a wide range of global and local topics. Students may take up to two&nbsp;CC courses&nbsp;from a selective menu, with each course chosen from a different Area of Inquiry: &#39;Scientific and Technological Literacy&#39;, &#39;Humanities&#39;, &#39;Global Issues&#39; and &#39;China: Culture, State and Society&#39;.&nbsp;They are an excellent way for students to earn credits while exploring subjects outside their primary major, and they often provide more flexible enrolment opportunities.</p>
+				</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;香港&quot;}">
+			<p><span style="font-size:1.125em;">香港</span></p>
+
+			<p>Hong Kong</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;香港科技大學&quot;}">
+			<p><span style="font-size:1.125em;">香港理工大學</span></p>
+
+			<p>Hong Kong Polytechnic University</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;學士班&quot;}">
+			<p><span style="font-size:1.125em;">學士班</span></p>
+
+			<p>BA</p>
+			</td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;3&quot;}"><span style="font-size: 14.625px;">4</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;3&quot;}"><span style="font-size: 14.625px;">4</span></td>
+			<td data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;僅接收工學院、原科院及電資院的大學部。\n※需備英文資格證明TOEFL(ITP 550、CBT 213、iBT 80)或IELTS 6.5以上&quot;}">
+			<p><span style="font-size:1.125em;">For&nbsp;<b>School of Design</b>&nbsp;nominees: Students applying for an exchange at School of Design are required to submit the followings for School&#39;s review.</span></p>
+
+			<p><span style="font-size:1.125em;">(1) portfolio (2) transcript (3) letter of motivation</span></p>
+
+			<p><span style="font-size:1.125em;"><b>Visit our pages for more details on PolyU Exchange:</b></span></p>
+
+			<p><span style="font-size:1.125em;">Incoming Student Exchange</span></p>
+
+			<p><a href="https://www.polyu.edu.hk/geo/exchange-and-study-abroad/incoming-students/incoming-exchange/" rel="noreferrer" target="_blank">https://www.polyu.edu.hk/geo/exchange-and-study-abroad/incoming-students/incoming-exchange/</a></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<p>
+<style type="text/css">#search_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  }
+  #filter {
+  width: 600px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  }
+  .whole_field {
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #eee;
+  border-radius: 10px 0 0 10px;
+  width: calc(100% - 20px);
+  }
+  
+  button {
+  margin: 20px 0;
+  align-self: flex-end;
+  width: fit-content;
+  padding: 10px 20px;
+  border: none;
+  font-weight: 800;
+  }
+  
+  .form-group {
+  display: flex;
+  flex-direction: row;
+  }
+  .form-control {
+  border: none;
+  flex-grow: 1;
+  }
+  
+  .control-label {
+  font-weight: 800;
+  }
+  
+  .non-display {
+  display: none;
+  }
+table{
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  overflow: hidden;
+}
+
+table th {
+  font-weight: 800;
+  background: #8a97a0;
+  color: #FFF;
+}
+  
+table td{
+  border-top: 1px solid #ECF0F1;
+  padding: 10px;
+  border-left: 1px solid #ECF0F1;
+  border-right: 1px solid #ECF0F1;
+}
+  
+table tr:nth-of-type(even) td {
+  background-color: #EEF1FF;
+}
+    
+table .total td{
+  text-align: right;
+  font-weight: 700;
+}
+</style>
+</p>
+
+<table border="1" cellpadding="0" cellspacing="0" dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
+	<colgroup>
+		<col width="100" />
+		<col width="100" />
+		<col width="100" />
+		<col width="100" />
+		<col width="100" />
+		<col width="100" />
+		<col width="100" />
+		<col width="100" />
+	</colgroup>
+</table>
+</div>
+ 
+			</div>
+		</div>
+	</section>
+	</div>
+</div>
+
+</div>
+<!-- generated at Wed Oct 14 2026 13:15:44 -->
