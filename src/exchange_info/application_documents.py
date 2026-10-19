@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -84,6 +84,7 @@ NCKU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 NTHU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 PCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
+WZU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1629,6 +1630,51 @@ def _pccu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _wzu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理文藻外語大學出國交換生甄選應繳資料：校務資訊系統線上申請表（至校務資訊系統→申請→國際合作交流申請→出國交換生甄選申請作業填報列印，貼妥半年內 2 吋照片並經系［所、中心］主任核章、雙主修／輔系核章及家長簽名同意）、中文歷年成績單正本（含排名與歷年操行成績總平均，一般組學業總平均須達 70 分、語言學習組須達 65 分，操行皆須達 80 分以上）、英文歷年成績單正本（百分制含排名）、英語及第二外語檢定證明影本、中英文研修計畫書（各 500–1,000 字）及 SOSA 多國語言志工團／社團／競賽獲獎證明，於截止日 15:00 前送交行政大樓 2 樓國合處國際交流組。",
+        "study-plan": "撰寫文藻外語大學出國交換甄選必繳之《中文研修計畫書》及《英文（或報考語組外文）研修計畫書》（電腦打字 A4 各 500–1,000 字，佔第二階段面試讀書計畫評分 15%；具體說明出國交換動機、擬於姊妹校修讀之課程規劃［每學期至少須修讀 2 門課或 4 學分，或至少 1 門該國語言課］及返國後學習銜接）。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分抵免預審（依《文藻外語大學學生出國交換實施辦法》第五條及簡章規定，出國交換期間須維持文藻在學並繳交全額學雜費［延畢生亦同］，每學期於姊妹校至少須修讀 2 門課或 4 學分，或至少 1 門該國語言課程；返國後持姊妹校正式成績單及修課大綱向所屬系［所、中心］及教務處註冊組申請學分抵免）。",
+        "predeparture-notice": "於第三階段現場撕榜（一招）或志願分發（二招）獲得錄取後，依限繳交《出國交換生錄取資格確認書》與《家長同意書》，配合國合處國際交流組辦理姊妹校官方提名（Nomination）與外校入學申請，並視資格申請文藻出國交換獎助學金（五專／四技／碩士 1 萬、二技及五專直升四技最高 5 萬）、教育部學海飛颺／學海惜珠（文藻另提撥 20% 配合款）或日本 JASSO／姊妹校／UMAP／ACUCA 獎學金。",
+        "return-report": "抵達姊妹校後 2 週內繳交《抵達國外姊妹校通報單》；交換期滿返國後 1 個月內，繳交《出國交換學生返國報告書》（電子檔與照片，供國合處「各校交換申請資訊」Google Drive 雲端硬碟及出國研修心得相簿傳承）及姊妹校正式成績單至國合處國際交流組，完成學分抵免與獎學金核銷結案。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本、修課大綱（Syllabus）與學分證明，依《文藻外語大學學生出國交換實施辦法》及學分抵免規定向所屬系（所、中心）及教務處註冊組辦理境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "文藻外語大學").replace("長庚", "文藻")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "文藻外語大學規定歷年操行成績總平均須達 80 分（含）以上且無小過以上懲處；一般組歷年學業總平均須達 70 分（含）以上、語言學習組須達 65 分（含）以上（認列至個位數，不四捨五入；教育部學海飛颺／惜珠須達 75 分以上）；請同時檢附中文歷年成績單正本（含排名與操行）及英文歷年成績單正本（百分制含排名）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（英語組 60–88+）", "IELTS Academic（英語組 5.0–6.5+）", "TOEIC 聽讀測驗（英語組／東南亞組 550–800+）", "JLPT 日語能力試驗（N1 / N2 / N3 / N4，日語組必備）", "DELF / TCF 法語檢定（A2 / B1 / B2，法語組必備）", "TestDaF / Goethe 德語檢定（B1 / B2，德語組必備）", "DELE / SIELE 西語檢定（A2 / B1 / B2，西語組必備）", "TOPIK 韓語檢定（2–4 級）／東南亞語檢定／大陸免附外語檢定"]
+            field["help_text"] = "第一階段書審（50%）同時採計「英語能力檢定（10%）」與「第二外語能力檢定（10%）」，請檢附符合報考語組（英、日、法、德、西、華語暨東南亞語組）及志願姊妹校規定之有效語檢證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://d020.wzu.edu.tw/article/492285",
+        source_checked_at=WZU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換生甄選申請表與家長同意書" if template.id == "exchange-application-data" else ("中外文研修計畫書（各500–1,000字）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://d020.wzu.edu.tw/category/152182",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名同意", "所屬系（所、中心）主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所、中心）辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "撕榜／分發後繳交錄取資格確認書並辦理姊妹校提名與獎助學金申請", "return-report": "抵達 2 週內繳交通報單，返國後 1 個月內繳交返國報告書與照片", "credit-transfer": "返國後持姊妹校正式成績單辦理境外學分抵免"}.get(template.id, "於文藻校務資訊系統完成線上報名並列印紙本經系主任及家長簽章後送交國合處國際交流組（行政大樓 2 樓）"),
+        version="115準備工具-2026-10-19.1",
+        destinations=["文藻外語大學校務資訊系統（申請→國際合作交流申請→出國交換生甄選申請作業）", "文藻外語大學國際暨兩岸合作處國際交流組（行政大樓 2 樓）"],
+        conditional_note="此為個人準備工具；文藻外語大學出國交換甄選須先登入校務資訊系統完成線上報名並列印申請表，貼妥 2 吋照片並經系（所、中心）主任及家長簽章後，連同中英文歷年成績單正本（百分制含排名）、英語及第二外語檢定證明、中英文研修計畫書（各 500–1,000 字）及 SOSA 志工團加分證明於截止日 15:00 前送交行政大樓 2 樓國合處國際交流組（若同時報考兩個以上語組，每語組須各繳乙份）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1675,6 +1721,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nthu_template(template)) is not None]
     if university.id == PCCU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _pccu_template(template)) is not None]
+    if university.id == WZU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _wzu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

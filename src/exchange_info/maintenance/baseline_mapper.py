@@ -49,6 +49,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "nycu": ["oia.nycu.edu.tw", "www.nycu.edu.tw", "nycu.edu.tw"],
     "nthu": ["oga.site.nthu.edu.tw", "oga-exchange.vm.nthu.edu.tw", "www.nthu.edu.tw", "nthu.edu.tw"],
     "pccu": ["oima.pccu.edu.tw", "japanese.pccu.edu.tw", "kor.pccu.edu.tw", "french.pccu.edu.tw", "crgarl.pccu.edu.tw", "mccd.pccu.edu.tw", "www.pccu.edu.tw", "pccu.edu.tw"],
+    "wzu": ["c015.wzu.edu.tw", "d020.wzu.edu.tw", "www.wzu.edu.tw", "wzu.edu.tw"],
 }
 
 
@@ -939,6 +940,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["pccu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="pccu", partner_rows=pccu_rows, default_cycle_label="115-2"
+        )
+
+    # 22. WZU partners.jsonl (147 partner schools)
+    wzu_partners_path = official_data_root / "wzu" / "partners.jsonl"
+    if wzu_partners_path.exists():
+        wzu_rows = []
+        for line in wzu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            wzu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115-2",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://c015.wzu.edu.tw/category/140196",
+            })
+        school_reports["wzu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="wzu", partner_rows=wzu_rows, default_cycle_label="115-2"
         )
 
     if store.current_release_id is None:
