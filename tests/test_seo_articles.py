@@ -137,3 +137,29 @@ def test_country_pages_point_to_specific_cost_guides(client):
     for country, slug in (("japan", "japan-exchange-cost"), ("south-korea", "korea-exchange-cost"), ("germany", "germany-exchange-cost")):
         soup = BeautifulSoup(client.get("/destinations/" + country).text, "html.parser")
         assert soup.select_one(f'a[href="/guides/{slug}"]')
+
+
+def test_home_to_articles_and_assets_through_the_production_app(tmp_path, monkeypatch):
+    # Exercise create_app, not just an isolated router: a merge can leave all
+    # article files intact while accidentally removing the router registration.
+    from exchange_info.api import create_app
+
+    monkeypatch.setenv("EXCHANGE_SEO_INDEXABLE", "true")
+    monkeypatch.setenv("EXCHANGE_PUBLIC_BASE_URL", "https://app.uniway-tw.com")
+    with TestClient(create_app(tmp_path)) as browser:
+        home = BeautifulSoup(browser.get("/").text, "html.parser")
+        entry = home.select_one('a[href="/guides"]')
+        assert entry is not None
+        response = browser.get(entry["href"])
+        assert response.status_code == 200
+        index = BeautifulSoup(response.text, "html.parser")
+        paths = {link["href"] for link in index.select(".editorial-card > a")}
+        assert paths == {"/guides/" + slug for slug in ARTICLES}
+        for path in paths:
+            response = browser.get(path)
+            assert response.status_code == 200
+            assert "noindex" not in response.headers.get("X-Robots-Tag", "")
+            page = BeautifulSoup(response.text, "html.parser")
+            assert page.select_one('link[rel="canonical"]')["href"] == "https://app.uniway-tw.com" + path
+            assert browser.get(page.select_one(".article-illustration img")["src"]).status_code == 200
+        assert browser.get("/static/seo-articles.css").status_code == 200
