@@ -492,6 +492,7 @@ class _ApplicationSetupScreenState extends State<ApplicationSetupScreen> {
     setState(() => saving = true);
     await store.updateApplicationContext(
       ApplicationCenterContext(
+        schoolName: store.selectedUniversity,
         targetSchool: targetSchool,
         targetCountry: school?.country ?? '',
         programType: programType,

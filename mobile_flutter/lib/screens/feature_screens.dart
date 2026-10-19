@@ -166,9 +166,11 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
     final recommendations = store.rankedSchoolMatches;
     final matched = recommendations.where((item) => item.score >= 50).length;
 
+    final academicMinimum = store.activeUniversity.academicScoreMinimum ?? 70;
     setState(() {
       result = _EligibilityResult(
-        academicPass: academicScore >= 70,
+        academicPass: academicScore >= academicMinimum,
+        academicMinimum: academicMinimum,
         languagePass: languagePass,
         languageNeedsReview: minimum == null,
         matchedSchools: matched,
@@ -183,14 +185,13 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
     final store = ExchangeStoreScope.of(context);
     final partners =
         store.dashboard?.partnerUniversities ?? const <PartnerUniversity>[];
-    final colleges =
-        partners
-            .expand((school) => school.colleges.split(RegExp(r'[/、,，；;]')))
-            .map((value) => value.trim())
-            .where((value) => value.isNotEmpty && !value.contains('全校'))
-            .toSet()
-            .toList()
-          ..sort();
+    final colleges = {
+      ...store.activeUniversity.colleges,
+      ...partners
+          .expand((school) => school.colleges.split(RegExp(r'[/、,，；;]')))
+          .map((value) => value.trim())
+          .where((value) => value.isNotEmpty && !value.contains('全校')),
+    }.toList()..sort();
     final countries = partners.map((school) => school.country).toSet().toList()
       ..sort();
     final currentYear = DateTime.now().year;
@@ -208,7 +209,7 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
           child: Column(
             children: [
               DropdownButtonFormField<String>(
-                initialValue: college.isEmpty ? null : college,
+                initialValue: colleges.contains(college) ? college : null,
                 decoration: const InputDecoration(labelText: '所屬學院'),
                 items: colleges
                     .map(
@@ -330,7 +331,7 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
         ],
         const SizedBox(height: 12),
         Text(
-          '初判只協助縮小範圍，正式資格仍以長庚大學與合作校最新公告為準。',
+          '初判只協助縮小範圍，正式資格仍以${store.selectedUniversity}與合作校最新公告為準。',
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
@@ -710,6 +711,7 @@ class _FavoriteSchoolCard extends StatelessWidget {
 class _EligibilityResult {
   const _EligibilityResult({
     required this.academicPass,
+    required this.academicMinimum,
     required this.languagePass,
     required this.languageNeedsReview,
     required this.matchedSchools,
@@ -718,6 +720,7 @@ class _EligibilityResult {
   });
 
   final bool academicPass;
+  final double academicMinimum;
   final bool languagePass;
   final bool languageNeedsReview;
   final int matchedSchools;
@@ -733,6 +736,9 @@ class _EligibilityResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ready = result.academicPass && result.languagePass;
+    final minLabel = result.academicMinimum <= 4.5
+        ? 'GPA ${result.academicMinimum}'
+        : '${result.academicMinimum.toInt()} 分';
     return GlassCard(
       tint: ready ? ExchangeColors.tealSoft : ExchangeColors.amberSoft,
       child: Column(
@@ -755,7 +761,9 @@ class _EligibilityResultCard extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           BulletPoint(
-            result.academicPass ? '平均成績已達 70 分基本門檻。' : '平均成績尚未達 70 分基本門檻。',
+            result.academicPass
+                ? '平均成績已達 $minLabel基本門檻。'
+                : '平均成績尚未達 $minLabel基本門檻。',
           ),
           BulletPoint(
             result.languageNeedsReview

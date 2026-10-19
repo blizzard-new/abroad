@@ -87,7 +87,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
       }
       final schoolName = switch (feed) {
         CommunityFeed.publicBoard => publicCommunityBoard,
-        CommunityFeed.cguBoard => cguCommunityBoard,
+        CommunityFeed.cguBoard => store.selectedUniversity,
         _ => null,
       };
       var data = await store.api.posts(
@@ -137,11 +137,12 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
 
   Future<void> _openSchoolCommunity() async {
     if (!mounted) return;
+    final store = ExchangeStoreScope.of(context, listen: false);
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => ExchangePageBackground(
           child: Scaffold(
-            body: const CommunityScreen(initialSchool: cguCommunityBoard),
+            body: CommunityScreen(initialSchool: store.selectedUniversity),
           ),
         ),
       ),
@@ -160,18 +161,25 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
     await _showPostComposer(store);
   }
 
-  Future<void> _toggleCguFollow() async {
+  Future<void> _toggleBoardFollow([String? boardName]) async {
     final store = ExchangeStoreScope.of(context);
     if (store.account == null) {
       await _requireAccount();
       if (!mounted || store.account == null) return;
     }
     try {
-      await store.toggleBoardFollow(cguCommunityBoard);
+      await store.toggleBoardFollow(boardName ?? store.selectedUniversity);
       if (mounted && feed == CommunityFeed.following) await _loadPosts();
     } catch (exception) {
       if (mounted) _notice(context, exception.toString());
     }
+  }
+
+  Future<void> _openUniversityBoard(String schoolName) async {
+    final store = ExchangeStoreScope.of(context, listen: false);
+    await store.selectUniversity(schoolName);
+    if (!mounted) return;
+    widget.onOpenCguBoard();
   }
 
   @override
@@ -193,15 +201,16 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
             _FeedSelector(
               selected: feed,
               includeCgu: widget.includeCguFeed,
+              boardTabLabel: store.activeUniversity.boardTabLabel,
               onSelected: selectFeed,
             ),
             const SizedBox(height: 14),
             _BoardRail(
-              followingCgu: store.followsBoard(cguCommunityBoard),
+              store: store,
               updatingFollow: store.isUpdatingBoardFollow,
               onOpenPublic: () => selectFeed(CommunityFeed.publicBoard),
-              onOpenCgu: widget.onOpenCguBoard,
-              onFollowCgu: _toggleCguFollow,
+              onOpenUniversity: _openUniversityBoard,
+              onFollowBoard: _toggleBoardFollow,
             ),
             const SizedBox(height: 18),
             SizedBox(
@@ -253,7 +262,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
               children: [
                 Expanded(
                   child: Text(
-                    _feedTitle(feed),
+                    _feedTitle(feed, store.activeUniversity.schoolName),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
@@ -261,7 +270,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
                   TextButton.icon(
                     onPressed: _openSchoolCommunity,
                     icon: const Icon(Icons.forum_outlined),
-                    label: const Text('長庚聊天室'),
+                    label: Text('${store.activeUniversity.shortName}聊天室'),
                   ),
               ],
             ),
@@ -270,7 +279,10 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
               _FollowingGate(onSignIn: _requireAccount)
             else if (feed == CommunityFeed.following &&
                 store.account!.followedBoards.isEmpty)
-              _FollowingEmpty(onFollow: _toggleCguFollow)
+              _FollowingEmpty(
+                schoolName: store.activeUniversity.schoolName,
+                onFollow: () => _toggleBoardFollow(store.selectedUniversity),
+              )
             else if (loading)
               const LoadingCards(count: 3)
             else if (error != null)
@@ -309,7 +321,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
     var postType = 'discussion';
     var selectedTopic = 'application';
     var schoolName = feed == CommunityFeed.cguBoard
-        ? cguCommunityBoard
+        ? store.selectedUniversity
         : publicCommunityBoard;
     var stage = store.account?.applicationStage ?? 'exploring';
     String? formError;
@@ -319,7 +331,11 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
       showDragHandle: true,
       builder: (sheetContext) => StatefulBuilder(
         builder: (context, setSheetState) {
-          const schools = [publicCommunityBoard, cguCommunityBoard];
+          final schools = <String>{
+            publicCommunityBoard,
+            store.selectedUniversity,
+            ...store.universities.map((item) => item.schoolName),
+          }.toList();
           return SafeArea(
             top: false,
             child: SingleChildScrollView(
@@ -684,11 +700,13 @@ class _FeedSelector extends StatelessWidget {
   const _FeedSelector({
     required this.selected,
     required this.includeCgu,
+    required this.boardTabLabel,
     required this.onSelected,
   });
 
   final CommunityFeed selected;
   final bool includeCgu;
+  final String boardTabLabel;
   final ValueChanged<CommunityFeed> onSelected;
 
   static const _baseItems = [
@@ -699,7 +717,8 @@ class _FeedSelector extends StatelessWidget {
 
   List<(CommunityFeed, IconData, String)> get items => [
     ..._baseItems,
-    if (includeCgu) (CommunityFeed.cguBoard, Icons.school_outlined, '長庚板'),
+    if (includeCgu)
+      (CommunityFeed.cguBoard, Icons.school_outlined, boardTabLabel),
   ];
 
   @override
@@ -726,21 +745,26 @@ class _FeedSelector extends StatelessWidget {
 
 class _BoardRail extends StatelessWidget {
   const _BoardRail({
-    required this.followingCgu,
+    required this.store,
     required this.updatingFollow,
     required this.onOpenPublic,
-    required this.onOpenCgu,
-    required this.onFollowCgu,
+    required this.onOpenUniversity,
+    required this.onFollowBoard,
   });
 
-  final bool followingCgu;
+  final ExchangeStore store;
   final bool updatingFollow;
   final VoidCallback onOpenPublic;
-  final VoidCallback onOpenCgu;
-  final VoidCallback onFollowCgu;
+  final ValueChanged<String> onOpenUniversity;
+  final ValueChanged<String> onFollowBoard;
 
   @override
   Widget build(BuildContext context) {
+    final activeSchool = store.activeUniversity;
+    final otherUniversities = store.universities
+        .where((item) => item.schoolName != activeSchool.schoolName)
+        .toList();
+    final orderedUniversities = [activeSchool, ...otherUniversities];
     return SizedBox(
       height: 180,
       child: ListView(
@@ -752,16 +776,20 @@ class _BoardRail extends StatelessWidget {
             description: '跨校申請、簽證與海外生活',
             onOpen: onOpenPublic,
           ),
-          const SizedBox(width: 12),
-          _BoardCard(
-            asset: 'assets/images/cgu-campus.jpg',
-            title: '長庚大學板',
-            description: '申請資訊、合作校與同學討論',
-            following: followingCgu,
-            updatingFollow: updatingFollow,
-            onFollow: onFollowCgu,
-            onOpen: onOpenCgu,
-          ),
+          for (final university in orderedUniversities) ...[
+            const SizedBox(width: 12),
+            _BoardCard(
+              asset: 'assets/images/cgu-campus.jpg',
+              title: '${university.schoolName}板',
+              description: university.partnerCount > 0
+                  ? '申請資訊、${university.partnerCount} 所合作校與同學討論'
+                  : '申請資訊、合作校與同學討論',
+              following: store.followsBoard(university.schoolName),
+              updatingFollow: updatingFollow,
+              onFollow: () => onFollowBoard(university.schoolName),
+              onOpen: () => onOpenUniversity(university.schoolName),
+            ),
+          ],
         ],
       ),
     );
@@ -903,8 +931,12 @@ class _FollowingGate extends StatelessWidget {
 }
 
 class _FollowingEmpty extends StatelessWidget {
-  const _FollowingEmpty({required this.onFollow});
+  const _FollowingEmpty({
+    required this.schoolName,
+    required this.onFollow,
+  });
 
+  final String schoolName;
   final VoidCallback onFollow;
 
   @override
@@ -919,7 +951,7 @@ class _FollowingEmpty extends StatelessWidget {
           OutlinedButton.icon(
             onPressed: onFollow,
             icon: const Icon(Icons.add_rounded),
-            label: const Text('追蹤長庚大學板'),
+            label: Text('追蹤${schoolName}板'),
           ),
         ],
       ),
@@ -1119,11 +1151,11 @@ String _shortTime(String value) {
   return '${date.month}/${date.day} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
 }
 
-String _feedTitle(CommunityFeed feed) => switch (feed) {
+String _feedTitle(CommunityFeed feed, String schoolName) => switch (feed) {
   CommunityFeed.all => '最新貼文',
   CommunityFeed.following => '我的追蹤',
   CommunityFeed.publicBoard => '公共留學板',
-  CommunityFeed.cguBoard => '長庚大學板貼文',
+  CommunityFeed.cguBoard => '${schoolName}板貼文',
 };
 
 String _displayBoardName(String value) =>

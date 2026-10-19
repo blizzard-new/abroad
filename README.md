@@ -62,7 +62,8 @@ data/
   processed/user_accounts.jsonl
   processed/account_sessions.jsonl
 tests/
-ios/ExchangeGuide/       # 原生 SwiftUI iOS App 與 XcodeGen 專案設定
+mobile_flutter/          # 統一 iOS / Android 跨平台 Flutter App（對齊 18 所支援大學與公開 API）
+archive/legacy_native/   # 封存之早期單校 SwiftUI (ios/ExchangeGuide) 與 Kotlin Compose (android/ExchangeGuideAndroid) 原型
 docs/design/
   apple-design-system.md # Web/iOS 共用設計 token、46 個元件與無障礙規格
 ```
@@ -281,23 +282,21 @@ uvicorn exchange_info.api:app --reload
 
 開發環境的 callback URL 分別是 `http://127.0.0.1:8000/auth/oauth/google/callback` 與 `http://127.0.0.1:8000/auth/oauth/facebook/callback`。正式部署必須改用 HTTPS 並設定 `EXCHANGE_ENVIRONMENT=production`；production 會無條件強制登入與 OAuth flow Cookie 使用 `Secure`，即使 `EXCHANGE_AUTH_SECURE_COOKIE` 缺漏或設為 false 也不降級。development／preview 若在 HTTPS 下驗證 Cookie，可設定 `EXCHANGE_AUTH_SECURE_COOKIE=true`，亦接受 `1`、`yes`、`on`。Apple 登入會等 App 上架需要時再接 Apple Developer 設定。
 
-## 啟動原生 iOS App
+## 啟動行動端 Flutter App（iOS ／ Android 共用工程線）
 
-iOS 端使用 SwiftUI，最低支援 iOS 17。請在安裝 Xcode 26 與 XcodeGen 的 macOS 執行：
+行動端已統一收斂至 [`mobile_flutter/`](mobile_flutter/README.md)，同時支援 Android 與 iOS，並與後端 `GET /universities` 的 18 所台灣大學註冊表、公開交換看板、申請文件工作台、合作校詳情、申請流程與社群 API 對齊。
 
-```bash
-cd ios/ExchangeGuide
-xcodegen generate
-open ExchangeGuide.xcodeproj
+早期獨立的單校 SwiftUI 與 Kotlin Compose 原生雛形已封存至 [`archive/legacy_native/`](archive/legacy_native/README.md)（`archive/legacy_native/ios/ExchangeGuide` 與 `archive/legacy_native/android/ExchangeGuideAndroid`），僅保留作為歷史遷移參照，不再作為現行開發目錄。
+
+在啟動本機 FastAPI（`http://127.0.0.1:8000`）後，可於 `mobile_flutter/` 執行：
+
+```powershell
+cd mobile_flutter
+flutter test
+flutter run --dart-define=API_BASE_URL=http://10.0.2.2:8000/
 ```
 
-iOS Simulator 預設讀取 `http://127.0.0.1:8000`。實機測試時，在 Xcode Scheme 的 Launch Environment Variables 設定 `EXCHANGE_API_BASE_URL` 為執行 FastAPI 的 Mac 區網網址；正式上架必須改用 HTTPS。App 已實作淺色玻璃感首頁、圓形資料圖、找學校、學校限制、詳細流程、具體生活情報、公開學生心得、匿名社群、截止日、補助文件摘要與資格初判，並依裝置寬度在 iPhone Tab Bar 與 iPad Sidebar 間切換。iOS 26 使用原生 Liquid Glass；iOS 17-25 使用系統材質 fallback。
-
-## 啟動原生 Android App
-
-Android 端使用 Kotlin、Jetpack Compose 與 Material 3。用 Android Studio 開啟 `android/ExchangeGuideAndroid`，啟動本機 FastAPI 後即可執行 `app`。Android 模擬器預設透過 `http://10.0.2.2:8000` 連線到後端；實機測試需將 `app/build.gradle.kts` 的 `API_BASE_URL` 改為同一個 Wi-Fi 內的電腦 IP，正式版本則必須使用 HTTPS。
-
-Android App 保留 iOS 版的核心資訊與社群流程，並依平台改用手機 Bottom Navigation、平板 Navigation Rail、淺色磨砂卡片與 48dp 最小觸控區。完整執行與建置說明位於 `android/ExchangeGuideAndroid/README.md`。
+完整行動端建置、桌面小工具與 18 校切換說明位於 [`mobile_flutter/README.md`](mobile_flutter/README.md)。
 
 API:
 

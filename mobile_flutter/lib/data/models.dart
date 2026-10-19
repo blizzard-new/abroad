@@ -27,6 +27,639 @@ String textValue(dynamic value, [String fallback = '']) {
 int intValue(dynamic value, [int fallback = 0]) =>
     value is int ? value : int.tryParse(value?.toString() ?? '') ?? fallback;
 
+const defaultHomeUniversity = '長庚大學';
+
+class SupportedUniversity {
+  const SupportedUniversity({
+    required this.id,
+    required this.schoolName,
+    required this.shortName,
+    required this.englishName,
+    required this.officialUrl,
+    this.supportLevel = 'live',
+    this.partnerCount = 0,
+    this.coverageNote = '',
+    this.academicScoreMinimum,
+    this.colleges = const [],
+    this.aliases = const [],
+  });
+
+  factory SupportedUniversity.fromJson(dynamic value) {
+    final json = jsonMap(value);
+    final rawId = textValue(json['id']);
+    final rawSchoolName = textValue(json['school_name']);
+    final fallback = tryResolveSupportedUniversity(
+      rawId.isNotEmpty ? rawId : rawSchoolName,
+    );
+    final rawMin = json['academic_score_minimum'];
+    final parsedMin = rawMin is num
+        ? rawMin.toDouble()
+        : double.tryParse(textValue(rawMin));
+    final parsedColleges = stringList(json['colleges']);
+    final resolvedSchoolName = rawSchoolName.isEmpty
+        ? (fallback?.schoolName ?? defaultHomeUniversity)
+        : rawSchoolName;
+    return SupportedUniversity(
+      id: rawId.isEmpty ? (fallback?.id ?? resolvedSchoolName) : rawId,
+      schoolName: resolvedSchoolName,
+      shortName: textValue(json['short_name']).isEmpty
+          ? (fallback?.shortName ?? resolvedSchoolName)
+          : textValue(json['short_name']),
+      englishName: textValue(json['english_name']).isEmpty
+          ? (fallback?.englishName ?? '')
+          : textValue(json['english_name']),
+      officialUrl: textValue(json['official_url']).isEmpty
+          ? (fallback?.officialUrl ?? '')
+          : textValue(json['official_url']),
+      supportLevel: textValue(json['support_level']).isEmpty
+          ? (fallback?.supportLevel ?? 'live')
+          : textValue(json['support_level']),
+      partnerCount: intValue(json['partner_count']) > 0
+          ? intValue(json['partner_count'])
+          : (fallback?.partnerCount ?? 0),
+      coverageNote: textValue(json['coverage_note']).isEmpty
+          ? (fallback?.coverageNote ?? '')
+          : textValue(json['coverage_note']),
+      academicScoreMinimum: parsedMin ?? fallback?.academicScoreMinimum,
+      colleges: parsedColleges.isNotEmpty
+          ? parsedColleges
+          : (fallback?.colleges ?? const []),
+      aliases: fallback?.aliases ?? const [],
+    );
+  }
+
+  final String id;
+  final String schoolName;
+  final String shortName;
+  final String englishName;
+  final String officialUrl;
+  final String supportLevel;
+  final int partnerCount;
+  final String coverageNote;
+  final double? academicScoreMinimum;
+  final List<String> colleges;
+  final List<String> aliases;
+
+  String get _compactName =>
+      shortName.endsWith('大學') && shortName.length > 2
+      ? shortName.substring(0, shortName.length - 2)
+      : shortName;
+
+  String get boardTabLabel => shortName == '長庚' ? '長庚板' : '${_compactName}板';
+
+  String get boardTitleLabel =>
+      shortName == '長庚' ? '長庚討論板' : '${_compactName}討論板';
+}
+
+const List<SupportedUniversity> defaultSupportedUniversities = [
+  SupportedUniversity(
+    id: 'cgu',
+    schoolName: '長庚大學',
+    shortName: '長庚',
+    englishName: 'Chang Gung University',
+    officialUrl: 'https://www.cgu.edu.tw/oia-ch',
+    supportLevel: 'full',
+    partnerCount: 75,
+    coverageNote: '完整支援試點：已整理長庚大學交換、補助、文件與合作校申請流程。',
+    academicScoreMinimum: 70.0,
+    colleges: ['醫學院', '工學院', '管理學院', '智慧運算學院'],
+    aliases: ['長庚大學', '長庚', 'CGU', 'Chang Gung University'],
+  ),
+  SupportedUniversity(
+    id: 'ntpu',
+    schoolName: '國立臺北大學',
+    shortName: '臺北大學',
+    englishName: 'National Taipei University',
+    officialUrl: 'https://new.ntpu.edu.tw/oia',
+    supportLevel: 'full',
+    partnerCount: 169,
+    coverageNote: '完整支援試點：已套用交換申請流程與 116 學年度三語組官方名額表。',
+    academicScoreMinimum: 75.0,
+    colleges: [
+      '法律學院',
+      '商學院',
+      '公共事務學院',
+      '社會科學學院',
+      '人文學院',
+      '電機資訊學院',
+      '永續創新國際學院',
+    ],
+    aliases: [
+      '國立臺北大學',
+      '臺北大學',
+      '台北大學',
+      '北大',
+      'NTPU',
+      'National Taipei University',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'ntu',
+    schoolName: '國立臺灣大學',
+    shortName: '臺大',
+    englishName: 'National Taiwan University',
+    officialUrl: 'https://studyabroad.ntu.edu.tw/',
+    supportLevel: 'basic',
+    partnerCount: 289,
+    coverageNote: '已整理116-1校級甄選、文件、補助與289個合作項目；合作校本期名額與未核實條件標示待確認。',
+    colleges: [
+      '文學院',
+      '理學院',
+      '社會科學院',
+      '醫學院',
+      '工學院',
+      '生物資源暨農學院',
+      '管理學院',
+      '公共衛生學院',
+      '電機資訊學院',
+      '法律學院',
+      '生命科學院',
+      '國際政經學院',
+    ],
+    aliases: [
+      '國立臺灣大學',
+      '國立台灣大學',
+      '臺灣大學',
+      '台灣大學',
+      '臺大',
+      '台大',
+      'NTU',
+      'National Taiwan University',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'ccu',
+    schoolName: '國立中正大學',
+    shortName: '中正大學',
+    englishName: 'National Chung Cheng University',
+    officialUrl: 'https://oia.ccu.edu.tw/',
+    supportLevel: 'basic',
+    partnerCount: 52,
+    coverageNote: '已核對2027春季校級薦外交換；灰字參考與空白名額分開，三梯次校內收件已截止。',
+    academicScoreMinimum: 70.0,
+    colleges: ['文學院', '理學院', '社會科學院', '工學院', '管理學院', '法學院', '教育學院'],
+    aliases: [
+      '國立中正大學',
+      '中正大學',
+      '中正',
+      'CCU',
+      'National Chung Cheng University',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'ncu',
+    schoolName: '國立中央大學',
+    shortName: '中央',
+    englishName: 'National Central University',
+    officialUrl: 'https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw',
+    supportLevel: 'basic',
+    partnerCount: 214,
+    coverageNote:
+        '116學年度第一梯次簡章與2026/10/13最新交換姐妹校列表已公告（11/16開放線上申請）；外校當期條件逐項待核對。',
+    colleges: [
+      '文學院',
+      '理學院',
+      '工學院',
+      '管理學院',
+      '資訊電機學院',
+      '地球科學學院',
+      '客家學院',
+      '生醫理工學院',
+      '永續與綠能科技研究學院',
+      '松濤全人學院',
+    ],
+    aliases: [
+      '國立中央大學',
+      '中央大學',
+      '中央',
+      '中大',
+      'NCU',
+      'National Central University',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'tku',
+    schoolName: '淡江大學',
+    shortName: '淡江',
+    englishName: 'Tamkang University',
+    officialUrl: 'https://oieie.tku.edu.tw/',
+    supportLevel: 'basic',
+    partnerCount: 287,
+    coverageNote:
+        '部分支援：287校全量名錄／甄選機構聯集；2027–2028日語二甄4校7名已截止。新增第一梯25校50歷史名額，其他協議及一般原文列參考；新版、校區、期限與照片授權缺口逐校保存。',
+    academicScoreMinimum: 75.0,
+    colleges: [
+      '文學院',
+      '理學院',
+      '工學院',
+      '商管學院',
+      '外國語文學院',
+      '國際事務學院',
+      '教育學院',
+      'AI創智學院',
+      '精準健康學院',
+    ],
+    aliases: ['淡江大學', '淡江', '淡大', 'TKU', 'Tamkang University'],
+  ),
+  SupportedUniversity(
+    id: 'fju',
+    schoolName: '天主教輔仁大學',
+    shortName: '輔大',
+    englishName: 'Fu Jen Catholic University',
+    officialUrl: 'https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39',
+    supportLevel: 'full',
+    partnerCount: 234,
+    coverageNote:
+        '完整支援：已整理116-1說明會與甄選規定、234所姊妹校專頁條件，並附115-2及115-1名額表供規劃參考（116-1名額預計11月底公告、12月收件）。',
+    academicScoreMinimum: 70.0,
+    colleges: [
+      '文學院',
+      '藝術學院',
+      '傳播學院',
+      '教育與運動健康學院',
+      '醫學院',
+      '理工學院',
+      '外語學院',
+      '民生學院',
+      '法律學院',
+      '社會科學院',
+      '管理學院',
+      '織品服裝學院',
+      '全人教育課程中心',
+      '進修部',
+    ],
+    aliases: [
+      '天主教輔仁大學',
+      '輔仁大學',
+      '輔仁',
+      '輔大',
+      'FJU',
+      'Fu Jen Catholic University',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'scu',
+    schoolName: '東吳大學',
+    shortName: '東吳',
+    englishName: 'Soochow University',
+    officialUrl: 'https://icae.scu.edu.tw/zh-hant/outbound-exchange/intro',
+    supportLevel: 'full',
+    partnerCount: 191,
+    coverageNote:
+        '完整支援：116學年度校級赴境外（國外126校、大陸62校、英美自費研修3校，共191校）現正開放線上申請（2026/09/14–11/16 12:00截止）。',
+    academicScoreMinimum: 65.0,
+    colleges: ['人文社會學院', '外國語文學院', '理學院', '法學院', '商學院', '巨量資料管理學院'],
+    aliases: [
+      '東吳大學',
+      '私立東吳大學',
+      '東吳',
+      'SCU',
+      'Soochow University',
+      'Soochow University (Taiwan)',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'ntnu',
+    schoolName: '國立臺灣師範大學',
+    shortName: '臺師大',
+    englishName: 'National Taiwan Normal University',
+    officialUrl: 'https://bds.oia.ntnu.edu.tw/bds/web/OUT',
+    supportLevel: 'full',
+    partnerCount: 236,
+    coverageNote:
+        '完整支援：116-1（2027春季出國）甄選簡章與236所合作校名額表已公告（線上申請 2026/11/01–11/15），並整合174校歷屆交換心得與四語組條件。',
+    academicScoreMinimum: 60.0,
+    colleges: [
+      '教育學院',
+      '文學院',
+      '理學院',
+      '藝術學院',
+      '科技與工程學院',
+      '運動與休閒學院',
+      '國際與社會科學學院',
+      '音樂學院',
+      '管理學院',
+      '跨域科技產業創新研究學院',
+    ],
+    aliases: [
+      '國立臺灣師範大學',
+      '國立台灣師範大學',
+      '臺灣師範大學',
+      '台灣師範大學',
+      '臺師大',
+      '台師大',
+      '師大',
+      'NTNU',
+      'National Taiwan Normal University',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'cycu',
+    schoolName: '中原大學',
+    shortName: '中原',
+    englishName: 'Chung Yuan Christian University',
+    officialUrl: 'https://oia.cycu.edu.tw/?page_id=2956&lang=zh',
+    supportLevel: 'full',
+    partnerCount: 89,
+    coverageNote: '完整支援：115-2（2027春季出國）國際暨兩岸交換計畫與89所合作校名額、Fact Sheet及36校歷屆交換心得已完整整合。',
+    academicScoreMinimum: 75.0,
+    colleges: [
+      '理學院',
+      '工學院',
+      '商學院',
+      '法學院',
+      '設計學院',
+      '人文與教育學院',
+      '電機資訊學院',
+      '智慧運算與量子資訊學院',
+      '半導體產業學院',
+    ],
+    aliases: ['cycu', '中原大學', '中原', 'CYCU', 'Chung Yuan Christian University'],
+  ),
+  SupportedUniversity(
+    id: 'ntust',
+    schoolName: '國立臺灣科技大學',
+    shortName: '臺科大',
+    englishName: 'National Taiwan University of Science and Technology',
+    officialUrl: 'https://www.oia.ntust.edu.tw/p/412-1060-8921.php?Lang=zh-tw',
+    supportLevel: 'full',
+    partnerCount: 237,
+    coverageNote: '完整支援：115-2（2027春季班）海外暨大陸交換生甄選簡章、237所合作校條件名額表及126校歷屆交換心得已完整整合。',
+    academicScoreMinimum: 65.0,
+    colleges: [
+      '工程學院',
+      '電資學院',
+      '管理學院',
+      '設計學院',
+      '人文社會學院',
+      '應用科技學院',
+      '產學創新學院',
+    ],
+    aliases: [
+      'ntust',
+      '國立臺灣科技大學',
+      '國立台灣科技大學',
+      '臺灣科技大學',
+      '台灣科技大學',
+      '臺科大',
+      '台科大',
+      'NTUST',
+      'Taiwan Tech',
+      'National Taiwan University of Science and Technology',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'yzu',
+    schoolName: '元智大學',
+    shortName: '元智',
+    englishName: 'Yuan Ze University',
+    officialUrl:
+        'https://gao.yzu.edu.tw/index.php/tw/2016-03-04-08-13-53/2016-03-07-08-51-28',
+    supportLevel: 'full',
+    partnerCount: 90,
+    coverageNote:
+        '完整支援：115-2（2027春季班）全球事務處校級、管理學院 OIP 院級及兩岸交換計畫共90所合作校名額、Fact Sheet與39校歷屆交換心得已完整整合。',
+    academicScoreMinimum: 70.0,
+    colleges: ['工程學院', '電機通訊學院', '資訊學院', '管理學院', '人文社會學院', '醫護學院'],
+    aliases: ['yzu', '元智大學', '私立元智大學', '元智', 'YZU', 'Yuan Ze University'],
+  ),
+  SupportedUniversity(
+    id: 'fcu',
+    schoolName: '逢甲大學',
+    shortName: '逢甲',
+    englishName: 'Feng Chia University',
+    officialUrl: 'https://oia.fcu.edu.tw/sap/introduction/',
+    supportLevel: 'full',
+    partnerCount: 161,
+    coverageNote:
+        '完整支援：115-1選送（2027春季班）與115-2選送（2027秋季班）出國研修系統（oiasap）共161所合作校名額、課程目錄與95校歷屆心得／錄取紀錄已完整整合。',
+    academicScoreMinimum: 75.0,
+    colleges: [
+      '工程與科學學院',
+      '商學院',
+      '人文社會學院',
+      '資訊電機學院',
+      '建設學院',
+      '金融學院',
+      '國際科技與管理學院',
+      '建築專業學院',
+      '創能學院',
+      '經營管理學院',
+    ],
+    aliases: ['fcu', '逢甲大學', '私立逢甲大學', '逢甲', 'FCU', 'Feng Chia University'],
+  ),
+  SupportedUniversity(
+    id: 'nsysu',
+    schoolName: '國立中山大學',
+    shortName: '中山',
+    englishName: 'National Sun Yat-sen University',
+    officialUrl: 'https://oia.nsysu.edu.tw/p/412-1308-20539.php?Lang=zh-tw',
+    supportLevel: 'full',
+    partnerCount: 218,
+    coverageNote:
+        '完整支援：2026–2027與2027–2028赴日本、其他國家與地區及中國大陸出國交換甄選簡章、218所合作校名額與Fact Sheet、西灣領航自動獎助及1,823篇歷屆交換心得與錄取名單已完整整合。',
+    academicScoreMinimum: 70.0,
+    colleges: [
+      '文學院',
+      '理學院',
+      '工學院',
+      '管理學院',
+      '海洋科學學院',
+      '社會科學院',
+      '西灣學院',
+      '醫學院',
+      '半導體及重點科技研究學院',
+      '國際金融研究學院',
+    ],
+    aliases: [
+      'nsysu',
+      '國立中山大學',
+      '中山大學',
+      '中山',
+      'NSYSU',
+      'National Sun Yat-sen University',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'nchu',
+    schoolName: '國立中興大學',
+    shortName: '中興',
+    englishName: 'National Chung Hsing University',
+    officialUrl:
+        'https://www.oia.nchu.edu.tw/index.php/2-uncategorised/154-1-1-exchange-info',
+    supportLevel: 'full',
+    partnerCount: 226,
+    coverageNote:
+        '完整支援：116學年度第1學期（秋季班）出國交換甄選簡章、226所海外及大陸交換合作校名額與Fact Sheet、希望之橋暨學海系列獎學金、548篇學長姐交換心得影音及422人次錄取榜單已完整整合。',
+    academicScoreMinimum: 60.0,
+    colleges: [
+      '文學院',
+      '農業暨自然資源學院',
+      '理學院',
+      '工學院',
+      '生命科學院',
+      '獸醫學院',
+      '管理學院',
+      '法政學院',
+      '電機資訊學院',
+      '醫學院',
+      '創新產業暨國際學院',
+      '循環經濟研究學院',
+    ],
+    aliases: [
+      'nchu',
+      '國立中興大學',
+      '中興大學',
+      '中興',
+      '興大',
+      'NCHU',
+      'National Chung Hsing University',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'ntut',
+    schoolName: '國立臺北科技大學',
+    shortName: '北科大',
+    englishName: 'National Taipei University of Technology',
+    officialUrl: 'https://oia.ntut.edu.tw/p/412-1032-9242.php?Lang=zh-tw',
+    supportLevel: 'full',
+    partnerCount: 206,
+    coverageNote:
+        '完整支援：115-1／115-2 出國交換校內甄選簡章與作業要點、206所海外及大陸港澳交換合作與雙聯學位學校、出國交換與雙聯學位暨教育部學海系列獎助學金、677篇學長姐交換心得報告與意見調查表及189人次錄取榜單已完整整合。',
+    academicScoreMinimum: 70.0,
+    colleges: [
+      '機電學院',
+      '電資學院',
+      '工程學院',
+      '管理學院',
+      '設計學院',
+      '人文與社會科學學院',
+      '創新前瞻科技研究學院',
+    ],
+    aliases: [
+      'ntut',
+      '國立臺北科技大學',
+      '國立台北科技大學',
+      '臺北科技大學',
+      '台北科技大學',
+      '臺北科大',
+      '台北科大',
+      '北科大',
+      '北科',
+      'NTUT',
+      'Taipei Tech',
+      'National Taipei University of Technology',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'nccu',
+    schoolName: '國立政治大學',
+    shortName: '政大',
+    englishName: 'National Chengchi University',
+    officialUrl: 'https://outbound.nccu.edu.tw/',
+    supportLevel: 'full',
+    partnerCount: 266,
+    coverageNote:
+        '完整支援：115-1／115-2 校級赴國外（八大語組）及赴大陸地區交換學生甄選簡章、266所合作姊妹校名額與語言門檻、6項赴外交換暨學海系列獎助學金及589篇歷屆學長姐交換心得報告已完整整合。',
+    academicScoreMinimum: 70.0,
+    colleges: [
+      '文學院',
+      '理學院',
+      '社會科學學院',
+      '法學院',
+      '商學院',
+      '外國語文學院',
+      '傳播學院',
+      '國際事務學院',
+      '教育學院',
+      '創新國際學院',
+      '資訊學院',
+      'X實驗學院',
+      '國際金融學院',
+    ],
+    aliases: [
+      'nccu',
+      '國立政治大學',
+      '政治大學',
+      '政大',
+      'NCCU',
+      'Chengchi University',
+      'National Chengchi University',
+    ],
+  ),
+  SupportedUniversity(
+    id: 'ncku',
+    schoolName: '國立成功大學',
+    shortName: '成大',
+    englishName: 'National Cheng Kung University',
+    officialUrl: 'https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw',
+    supportLevel: 'full',
+    partnerCount: 211,
+    coverageNote:
+        '完整支援：116-1（2027秋季班）及115-1／115-2校級出國與赴大陸地區交換學生甄選簡章、211所合作姊妹校名額與語言門檻、6項赴外交換暨學海系列獎助學金及357篇歷屆學長姐交換心得報告已完整整合。',
+    academicScoreMinimum: 77.0,
+    colleges: [
+      '文學院',
+      '理學院',
+      '工學院',
+      '管理學院',
+      '醫學院',
+      '社會科學院',
+      '電機資訊學院',
+      '規劃與設計學院',
+      '生物科學與科技學院',
+      '智慧半導體及永續製造學院',
+      '敏求智慧運算學院',
+    ],
+    aliases: [
+      'ncku',
+      '國立成功大學',
+      '成功大學',
+      '成大',
+      'NCKU',
+      'Cheng Kung University',
+      'National Cheng Kung University',
+    ],
+  ),
+];
+
+SupportedUniversity? tryResolveSupportedUniversity(
+  String? value, [
+  Iterable<SupportedUniversity> candidates = defaultSupportedUniversities,
+]) {
+  final raw = value?.trim() ?? '';
+  if (raw.isEmpty) return null;
+  final normalized = raw.toLowerCase();
+  for (final item in candidates) {
+    if (item.id.toLowerCase() == normalized ||
+        item.schoolName.toLowerCase() == normalized ||
+        item.shortName.toLowerCase() == normalized ||
+        item.englishName.toLowerCase() == normalized ||
+        item.aliases.any((alias) => alias.toLowerCase() == normalized)) {
+      return item;
+    }
+  }
+  for (final item in defaultSupportedUniversities) {
+    if (item.id.toLowerCase() == normalized ||
+        item.schoolName.toLowerCase() == normalized ||
+        item.shortName.toLowerCase() == normalized ||
+        item.englishName.toLowerCase() == normalized ||
+        item.aliases.any((alias) => alias.toLowerCase() == normalized)) {
+      return item;
+    }
+  }
+  return null;
+}
+
+SupportedUniversity resolveSupportedUniversity(
+  String? value, [
+  Iterable<SupportedUniversity> candidates = defaultSupportedUniversities,
+]) =>
+    tryResolveSupportedUniversity(value, candidates) ??
+    (candidates.isNotEmpty
+        ? candidates.first
+        : defaultSupportedUniversities.first);
+
 class AuthProviderStatus {
   const AuthProviderStatus({
     required this.provider,
@@ -461,6 +1094,10 @@ class StudentDashboard {
     required this.ruleExplanations,
     required this.partnerUniversities,
     required this.sources,
+    this.shortName = '',
+    this.supportLevel = 'live',
+    this.coverageNote = '',
+    this.officialNotice = '',
   });
 
   factory StudentDashboard.fromJson(dynamic value) {
@@ -471,8 +1108,14 @@ class StudentDashboard {
       ...jsonMapList(json['rule_explanations']),
       ...jsonMapList(json['document_explanations']),
     ];
+    final schoolName = textValue(json['school_name'], defaultHomeUniversity);
+    final resolved = resolveSupportedUniversity(schoolName);
     return StudentDashboard(
-      schoolName: textValue(json['school_name'], '長庚大學'),
+      schoolName: schoolName,
+      shortName: textValue(json['short_name'], resolved.shortName),
+      supportLevel: textValue(json['support_level'], resolved.supportLevel),
+      coverageNote: textValue(json['coverage_note'], resolved.coverageNote),
+      officialNotice: textValue(json['official_notice']),
       lastChecked: textValue(json['last_checked']),
       applicationPeriods: items('application_periods'),
       programOverview: items('program_overview'),
@@ -491,6 +1134,10 @@ class StudentDashboard {
   }
 
   final String schoolName;
+  final String shortName;
+  final String supportLevel;
+  final String coverageNote;
+  final String officialNotice;
   final String lastChecked;
   final List<StudentInfoItem> applicationPeriods;
   final List<StudentInfoItem> programOverview;
@@ -508,6 +1155,10 @@ class StudentDashboard {
   ) {
     return StudentDashboard(
       schoolName: schoolName,
+      shortName: shortName,
+      supportLevel: supportLevel,
+      coverageNote: coverageNote,
+      officialNotice: officialNotice,
       lastChecked: lastChecked,
       applicationPeriods: applicationPeriods,
       programOverview: programOverview,

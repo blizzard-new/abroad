@@ -41,9 +41,22 @@ class _CommunityScreenState extends State<CommunityScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    final store = ExchangeStoreScope.of(context);
+    if (widget.lockedToInitialSchool) {
+      final targetSchool =
+          (widget.initialSchool == null ||
+              widget.initialSchool == defaultHomeUniversity)
+          ? store.selectedUniversity
+          : widget.initialSchool!;
+      if (!initialized || schoolName != targetSchool) {
+        initialized = true;
+        schoolName = targetSchool;
+        Future<void>.microtask(_loadAll);
+      }
+      return;
+    }
     if (initialized) return;
     initialized = true;
-    final store = ExchangeStoreScope.of(context);
     schoolName =
         widget.initialSchool ??
         (store.dashboard?.partnerUniversities.isNotEmpty == true
@@ -71,7 +84,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
           : await store.ensureIdentity();
       final results = await Future.wait<dynamic>([
         store.api.posts(schoolName: schoolName!),
-        store.api.chat(schoolName!),
+        store.api.chat(schoolName!, homeSchool: store.selectedUniversity),
         if (session != null) store.api.conversations(session),
       ]);
       if (!mounted) return;
@@ -712,10 +725,15 @@ class _ChatPanel extends StatelessWidget {
                   final body = controller.text.trim();
                   if (body.isEmpty) return;
                   try {
-                    await ExchangeStoreScope.of(context).api.publishChat(
+                    final store = ExchangeStoreScope.of(
+                      context,
+                      listen: false,
+                    );
+                    await store.api.publishChat(
                       identity: identity,
                       schoolName: schoolName,
                       body: body,
+                      homeSchool: store.selectedUniversity,
                     );
                     controller.clear();
                     await onRefresh();

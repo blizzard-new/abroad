@@ -1,16 +1,22 @@
 from pathlib import Path
 
+from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_legacy_native_apps_are_preserved_as_migration_references() -> None:
-    ios_root = ROOT / "ios/ExchangeGuide/ExchangeGuide"
+    archive_root = ROOT / "archive/legacy_native"
+    ios_root = archive_root / "ios/ExchangeGuide/ExchangeGuide"
     android_root = (
-        ROOT
+        archive_root
         / "android/ExchangeGuideAndroid/app/src/main/java/tw/edu/cgu/exchangeguide"
     )
 
+    assert not (ROOT / "ios/ExchangeGuide").exists()
+    assert not (ROOT / "android/ExchangeGuideAndroid").exists()
+    assert (archive_root / "README.md").exists()
     assert (ios_root / "App/ExchangeGuideApp.swift").exists()
     assert (ios_root / "Features/Community/ExchangeCommunityView.swift").exists()
     assert (android_root / "MainActivity.kt").exists()
@@ -68,3 +74,42 @@ def test_flutter_is_the_shared_android_ios_app() -> None:
         "report",
     ):
         assert marker in community
+
+
+def test_flutter_aligns_with_18_universities_and_public_api() -> None:
+    flutter_root = ROOT / "mobile_flutter"
+    models = (flutter_root / "lib/data/models.dart").read_text(encoding="utf-8")
+    api = (flutter_root / "lib/data/exchange_api.dart").read_text(
+        encoding="utf-8"
+    )
+    store = (flutter_root / "lib/state/exchange_store.dart").read_text(
+        encoding="utf-8"
+    )
+    root_shell = (flutter_root / "lib/screens/root_shell.dart").read_text(
+        encoding="utf-8"
+    )
+
+    assert len(SUPPORTED_UNIVERSITIES) == 18
+    for university in SUPPORTED_UNIVERSITIES:
+        assert f"id: '{university.id}'" in models
+        assert f"schoolName: '{university.school_name}'" in models
+        assert f"shortName: '{university.short_name}'" in models
+        assert f"'{university.official_url}'" in models
+
+    for endpoint in (
+        "_uri('universities')",
+        "_uri('student-dashboard'",
+        "_uri('deadlines'",
+        "'application-workflow'",
+        "'student-experiences'",
+        "'application-center/templates'",
+        "_uri('advisor/plan')",
+        "_uri('advisor/ask')",
+        "_uri('community/posts'",
+        "_uri('community/chat'",
+    ):
+        assert endpoint in api
+
+    assert "selectUniversity" in store
+    assert "selectedUniversity" in store
+    assert "showUniversityPickerSheet" in root_shell
