@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import time
+from datetime import datetime, timezone
 from urllib.parse import urlsplit
 from xml.etree import ElementTree
 
@@ -41,6 +42,15 @@ def check_site(base: str, canonical: str, *, all_pages: bool = False, delay: flo
         urls = [node.text for node in root.findall(".//{*}loc")]
         if not urls or len(urls) != len(set(urls)):
             raise ValueError(f"{path}: empty sitemap or duplicate URLs")
+        for node in root.findall(".//{*}lastmod"):
+            try:
+                stamp = datetime.fromisoformat((node.text or "").replace("Z", "+00:00"))
+                if stamp.tzinfo is None:
+                    stamp = stamp.replace(tzinfo=timezone.utc)
+                if stamp > datetime.now(timezone.utc):
+                    raise ValueError("future lastmod")
+            except ValueError as error:
+                raise ValueError(f"{path}: invalid lastmod {node.text!r}") from error
         return [path_for(url) for url in urls]
 
     def html(path):

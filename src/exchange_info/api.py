@@ -485,6 +485,7 @@ from .rag import rag_index_status, search_document_chunks, supabase_configured
 from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
 from .seo import SeoSettings, create_seo_router, homepage_html
+from .seo_changes import ContentChanges
 from .university_registry import (
     CGU,
     CCU,
@@ -1689,7 +1690,8 @@ def create_app(
         finally:
             catalog_request.reset(token)
 
-    app.include_router(create_seo_router(seo_settings, seo_catalogue))
+    seo_state_dir = Path(os.environ.get("EXCHANGE_SEO_STATE_DIR") or resolved_data_dir / "seo-state")
+    app.include_router(create_seo_router(seo_settings, seo_catalogue, ContentChanges(seo_state_dir)))
 
     @app.head("/", include_in_schema=False)
     @app.get("/", response_class=FileResponse)
