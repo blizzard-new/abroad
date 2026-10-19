@@ -46,6 +46,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "ntut": ["oia.ntut.edu.tw", "www.cc.ntut.edu.tw", "www.ntut.edu.tw", "ntut.edu.tw"],
     "nccu": ["outbound.nccu.edu.tw", "oic.nccu.edu.tw", "www.nccu.edu.tw", "nccu.edu.tw"],
     "ncku": ["oia.ncku.edu.tw", "exchange.oia.ncku.edu.tw", "management.oia.ncku.edu.tw", "www.ncku.edu.tw", "ncku.edu.tw"],
+    "nycu": ["oia.nycu.edu.tw", "www.nycu.edu.tw", "nycu.edu.tw"],
 }
 
 
@@ -867,6 +868,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["ncku"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ncku", partner_rows=ncku_rows, default_cycle_label="116-1"
+        )
+
+    # 19. NYCU partners.jsonl (243 partner schools)
+    nycu_partners_path = official_data_root / "nycu" / "partners.jsonl"
+    if nycu_partners_path.exists():
+        nycu_rows = []
+        for line in nycu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            nycu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115-2",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.nycu.edu.tw/oia/ch/app/data/list?module=nycu0012&id=792",
+            })
+        school_reports["nycu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="nycu", partner_rows=nycu_rows, default_cycle_label="115-2"
         )
 
     if store.current_release_id is None:

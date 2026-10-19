@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, SCU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, SCU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -81,6 +81,7 @@ NCHU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NTUT_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCKU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
+NYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1491,6 +1492,51 @@ def _ncku_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nycu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立陽明交通大學校級出國交換學生甄選應繳資料：《學生出國交換申請簽核表》（於 https://oia-sys.nycu.edu.tw/outgoing 填報至多 5 所志願校後下載列印，經本人、家長／監護人、導師／指導教授、系所主任及學院院長五級核章）、英文歷年成績單（大學部須含累計班排或系排百分比，研究所須含累計 GPA）、有效外語能力證明（申請國外及港澳地區強制必繳；使用 TOEIC 者須同時包含聽力、閱讀、口說與寫作四項測驗）、自傳、讀書計畫及其他表現證明。",
+        "study-plan": "撰寫國立陽明交通大學出國交換甄選必繳之《自傳》與《讀書計畫》（國外及港澳地區：大學部自傳占 10%、讀書計畫占 15%，研究所自傳占 20%、讀書計畫占 25%；大陸地區：大學部自傳占 15%、讀書計畫占 20%，研究所自傳占 25%、讀書計畫占 30%；且書審總分相同時，「讀書計畫」為僅次於志願序之第二優先參酌項目）。",
+        "course-preapproval": "規劃出國交換期間之專業課程修習清單與學分抵免預審（依陽明交大簡章規定，交換期間須選修 0 學分《海外學期交換》課程，大學部學生每學期至少須修習 3 門專業課程、研究所學生每學期至少須修習 2 門專業課程，且「所有修習課程皆須及格」，若有任一門修課不及格將全額沒收新臺幣 10,000 元保證金）。",
+        "predeparture-notice": "於初審放榜後依限於線上申請系統完成錄取確認並匯款繳交保證金新臺幣 10,000 元（低收、中低收及特殊境遇家庭免繳），配合國際事務處完成姐妹校官方提名（Nomination），並於期限內申請 A 類優秀學生出國交換獎學金（5萬–36萬元，含 20 所拓荒者計畫重點學校優先高額補助）、B 類獎學金、學海飛颺／惜珠或經濟不利學生短期出國獎助金（最高 10 萬元）。",
+        "return-report": "履行陽明交大交換生兩階段報告義務：（1）期中報告：於姐妹校開學後 2 個月內繳交（春季班 4/30 前、秋季班 10/31 前）；（2）期末報告與照片：於交換結束後 1 個月內繳交（春季班 7/31 前、秋季班 1/31 前，附 3–5 張交換生活照片）並檢附全數及格之國外成績單，始得辦理新臺幣 10,000 元保證金無息退還及獎學金核銷。",
+        "credit-transfer": "交換期滿返國後持姐妹校核發之正式成績單正本與修課大綱（Syllabus），依國立陽明交通大學學生抵免學分辦法向所屬系所及教務處註冊組申請國外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立陽明交通大學").replace("長庚", "陽明交大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國立陽明交通大學出國交換書面審查總分須達 60 分以上（在校成績占 30%–60%）；大學部須檢附含累計班排或系排百分比之英文歷年成績單（申請 A 類優秀學生出國交換獎學金者，大學部須排名前 50%［亞洲］或前 20%［非亞洲］，研究所須歷年 GPA 3.7 以上）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（A類獎學金83+ / B類87+）", "IELTS Academic（A類獎學金6.0+ / B類6.5+）", "TOEIC 聽讀＋口說與寫作四項測驗（獎學金 L400/R385/S150/W150）", "GEPT 全民英檢複試通過（獎學金中高級）", "JLPT 日語檢定（N1–N5）", "TOPIK 韓語檢定（1–6 級）", "Goethe / TestDaF（德語）", "DELF / DALF / TCF（法語）", "DELE / SIELE（西語）", "赴大陸交換免附外語檢定"]
+            field["help_text"] = "申請國外及港澳地區交換者，不論該姐妹校是否設分數門檻皆強制必繳外語檢定證明！若使用 TOEIC 申請交換或獎學金，成績單必須同時包含「聽力、閱讀、口說與寫作」四項測驗。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.nycu.edu.tw/oia/ch/app/artwebsite/view?module=artwebsite&id=279&serno=7a94f43d-a0ac-435e-9c2c-f99573ff26ba",
+        source_checked_at=NYCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="學生出國交換申請簽核表" if template.id == "exchange-application-data" else ("自傳與讀書計畫" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.nycu.edu.tw/oia/ch/app/data/doc?module=nycu0006&detailNo=1501852894419226624&type=s",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人簽章", "導師或指導教授簽章", "系所（專班／學位學程）主任簽章", "學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["系所辦公室戳章", "學院辦公室戳章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "初審放榜後線上確認錄取並繳交 10,000 元保證金與申請獎學金", "return-report": "期中（4/30 或 10/31）與期末（7/31 或 1/31）兩階段報告上傳退還保證金", "credit-transfer": "返國開學後持姐妹校正式成績單辦理學分抵免"}.get(template.id, "於陽明交大出國交換申請系統（https://oia-sys.nycu.edu.tw/outgoing）完成線上填報並上傳五級核章簽核表與書審文件"),
+        version="116準備工具-2026-10-19.1",
+        destinations=["國立陽明交通大學出國交換學生申請系統（https://oia-sys.nycu.edu.tw/outgoing）", "國立陽明交通大學國際事務處（光復校區浩然圖書資訊中心 8 樓／陽明校區行政大樓 2 樓）"],
+        conditional_note="此為個人準備工具；國立陽明交通大學校級出國交換甄選採線上系統填報與上傳，請先自系統列印《學生出國交換申請簽核表》完成本人、家長、導師／指導教授、系所主任及學院院長五級核章後，於截止前連同英文成績單、外語證明（TOEIC 須含聽讀說寫）、自傳與讀書計畫上傳至 https://oia-sys.nycu.edu.tw/outgoing 。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1531,6 +1577,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nccu_template(template)) is not None]
     if university.id == NCKU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncku_template(template)) is not None]
+    if university.id == NYCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nycu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
