@@ -38,7 +38,7 @@ EXCHANGE_INFO_DATA_DIR=/tmp/uniway-seo-local EXCHANGE_SEO_INDEXABLE=true \
 
 ## 尚需外部驗收
 
-- PR 的遠端完整 CI 結果以 GitHub 當前狀態為準。
+- GitHub 的 `Web quality` workflow 目前停用。PR 建立後沒有 Actions 執行紀錄，手動 dispatch 回 HTTP 422：`Cannot trigger a 'workflow_dispatch' on a disabled workflow`。因此遠端完整 CI 未執行；本次沒有變更既有停用設定。本地 93 項測試的結果不等於遠端完整 CI 通過。
 - Windows 自架正式站合併／部署後，再跑正式網域 HTTP 驗收與登入／選校煙霧測試。
 - 使用者已確認 Search Console 完成網站驗證；sitemap 提交與網址審查尚未執行，因本環境沒有該登入工作階段／API 或 Windows 主機連線。
 - 搜尋收錄、曝光與排名需持續觀察，不能算入本次程式驗收。
