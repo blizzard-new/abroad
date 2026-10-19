@@ -1358,12 +1358,12 @@ def _nchu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
 
 def _ntut_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
-        "exchange-application-data": "整理國立臺北科技大學出國交換學生校內甄選應繳資料、校內報名系統（https://www.cc.ntut.edu.tw/~wwwoia/outbound/index.html）自動產出之申請表（經申請人親筆簽名、導師或指導教授及系所主管核章）、中英文歷年成績單正本（含班排或系排百分比）、英語或第二外語能力檢定證明、家長同意書正本及保證金新臺幣 3,000 元收據。",
-        "study-plan": "撰寫國立臺北科技大學出國交換校內甄選必繳之《中、英文自傳及讀書計畫》（各 500–1,000 字，說明申請動機、研修課程規劃及未來職涯連結；書面資料審查占校內甄選總成績 20%）。",
-        "course-preapproval": "規劃出國交換期間之修課清單與學分抵免預審（每學期至少應選修相當於臺北科大 2 門或 6 學分以上之專業課程，出國前先與系所確認抵免原則）。",
-        "predeparture-notice": "於校內放榜後依限繳交《錄取資格確認書》，由國際事務處辦理姊妹校官方提名（Nomination），並依公告時程申請教育部學海飛颺／惜珠或臺北科大出國交換與雙聯學位獎助學金。",
-        "return-report": "交換期滿返國後 1 個月內繳交出國交換學生心得報告（約 1,500–2,000 字及照片 4 張以上）、海外研修意見調查表，並配合辦理返國保證金 3,000 元退費及學海系列經費核銷。",
-        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本及修課大綱，向所屬系所及教務處辦理國外修讀學分採認與抵免程序。",
+        "exchange-application-data": "整理國立臺北科技大學出國交換學生校內甄選應繳資料：校內線上申請系統（https://www.cc.ntut.edu.tw/~wwwoia/outbound/index.html）自動產出之申請表（須經系主任核章）、家長同意書、全學年中文歷年成績單（須含班排及系排）、研修計畫（1 頁 A4 內）、外語能力證明（申請大陸地區免繳，惟加附仍列入計分；未達托福 iBT 57 分或同等標準須加附選課清單）及其他優異表現證明（上限 5 項）。",
+        "study-plan": "撰寫國立臺北科技大學出國交換校內甄選必繳之《研修計畫》（格式不拘，於 1 頁 A4 內簡述申請目的與預期效益，無需針對特定學校撰寫，前往非大陸地區者建議以英文撰寫；另申請教育部學海惜珠者須加附中文 1–2 頁「赴國外研修動機及企圖心、前瞻性」與中文 1,000–1,500 字「赴國外研修計劃書」）。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分抵免預審（外語能力未達 TOEFL iBT 57 分或同等標準者於校內甄選須加附選課清單；交換期間至少須選修 1 門所屬領域相關專業科目並及格，返國後依教務處規定辦理學分抵免）。",
+        "predeparture-notice": "於校內甄選結果公告後依限繳交《錄取資格確認書》，由國際事務處辦理姊妹校官方提名（Nomination），並依《學生出國研修獎學金發放辦法》於每年 1–2 月申請教育部學海飛颺／惜珠或臺北科大出國研修獎學金，於出國前 2 週填寫領款收據及切結書。",
+        "return-report": "交換期滿返國後 2 週內（《學生出國研修獎學金發放辦法》第六條另載返國後 1 個月內／同一會計年度內）繳交心得報告及調查表（一般生及校內獎學金生 2,000 字以上、教育部學海飛颺／惜珠及臺奧受獎生 3,000 字以上）與研修照片圖檔 5 張（須含本人與國外友人活動或校門、校徽合影，勿提供風景照），並攜帶核章程序單至國際處完成返國註冊程序及獎學金第二期款核銷。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本及修課大綱，連同《交換學生返國註冊程序單》向所屬系所及教務處辦理國外修讀學分採認與抵免程序。",
     }
     if template.id not in descriptions:
         return None
@@ -1377,37 +1377,40 @@ def _ntut_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
         return value
     payload = adapt(template.model_dump(mode="json"))
     for field in payload["fields"]:
+        if template.id == "return-report" and field["id"] == "activity_photos":
+            field["max_files"] = 5
+            field["help_text"] = "學校要求提供研修照片圖檔 5 張（須為本人與國外友人活動或與校門、校徽等合影，勿提供風景照）；最多 5 張，產生 PDF 或 Word 時會排入報告"
         if field["id"] == "class_rank_percent":
-            field["help_text"] = "國立臺北科技大學申請人歷年學業總平均須達 70 分（含）以上，操行成績達 80 分以上，並須檢附含班排或系排百分比之中英文歷年成績單正本（在校學業成績占校內甄選總成績 40%）。"
+            field["help_text"] = "國立臺北科技大學校內甄選須繳交全學年中文歷年成績單（須含班排及系排）；申請教育部學海飛颺者歷年成績須達全班前 30% 或具優異事蹟，申請臺北科大出國研修獎學金者須達全班前 50%。"
         if field["id"] == "language_test":
-            field["options"] = ["TOEFL iBT（68+）", "TOEFL ITP（520+）", "IELTS Academic（5.5+）", "TOEIC（700+）", "JLPT 日檢（N1–N3）", "TOPIK 韓檢（1–6 級）", "德／法／西語檢定（CEFR B1+）", "僅申請大陸地區姊妹校免附語檢"]
-            field["help_text"] = "申請歐美大洋洲及亞洲英語組姊妹校外語能力占總成績 40%（基本門檻：TOEFL iBT 68 / ITP 520 / IELTS 5.5 / TOEIC 700，且須符合各姊妹校最新門檻）；僅申請大陸地區免附。"
+            field["options"] = ["TOEFL iBT（79+ 學海飛颺／57+ 臺北科大獎學金）", "IELTS Academic（6.0+ 學海飛颺／4.0+）", "TOEIC（750+）", "JLPT 日檢（N1–N2）", "TOPIK 韓檢", "德／法／西語檢定（CEFR B2 / B1+）", "僅申請大陸地區姊妹校免附語檢（加附仍列入計分）"]
+            field["help_text"] = "申請非大陸地區姊妹校須檢附有效外語能力證明（未達 TOEFL iBT 57 分或同等標準者須加附擬選讀學校之選課清單；申請學海飛颺須達 CEFR B2 如 TOEFL iBT 79 / IELTS 6.0，申請校內獎學金須達 TOEFL iBT 57 / IELTS 4.0 / TOEIC 750）；申請大陸地區免繳（加附仍列入計分）。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://oia.ntut.edu.tw/p/412-1032-9242.php?Lang=zh-tw",
+        source_url="https://oia.ntut.edu.tw/p/412-1032-12316.php?Lang=zh-tw",
         source_checked_at=NTUT_SOURCE_CHECKED_AT,
         official_layout=False,
-        official_form_number="出國交換學生申請表" if template.id == "exchange-application-data" else ("中英文自傳及讀書計畫" if template.id == "study-plan" else None),
+        official_form_number="出國交換學生申請表" if template.id == "exchange-application-data" else ("研修計畫（1頁A4內）" if template.id == "study-plan" else None),
         official_file_name=None,
-        official_download_url="https://oia.ntut.edu.tw/p/412-1032-12316.php?Lang=zh-tw",
+        official_download_url="https://oia.ntut.edu.tw/p/412-1032-12319.php?Lang=zh-tw",
         default_copies=1,
-        signatures=["申請學生親筆簽名", "導師或指導教授簽章", "系所主管核章", "家長或法定代理人親筆簽名（家長同意書）"] if template.id == "exchange-application-data" else [],
-        stamps=["所屬系所核章", "出納組收訖章（保證金 3,000 元收據）"] if template.id == "exchange-application-data" else [],
-        stage={"predeparture-notice": "放榜後繳交錄取確認書並辦理提名與獎學金申請", "return-report": "返國後 1 個月內繳交心得報告與意見調查表並退還保證金", "credit-transfer": "返國開學後持姊妹校正式成績單辦理學分抵免"}.get(template.id, "於出國交換報名系統（https://www.cc.ntut.edu.tw/~wwwoia/outbound/index.html）登錄並列印紙本核章後送交國際處"),
-        version="115準備工具-2026-10-18.1",
-        destinations=["國立臺北科技大學國際事務處國際合作組（共同科館 B1）", "所屬系所辦公室（導師／指導教授與系所主管核章）"],
-        conditional_note="此為個人準備工具；國立臺北科技大學正式出國交換申請須先於線上報名系統填報志願並列印申請表，經導師／指導教授與系所主管核章，連同保證金 3,000 元收據及應繳文件正本於截止前親送國際事務處。",
+        signatures=["申請學生親筆簽名", "系主任核章", "家長或法定代理人親筆簽名（家長同意書）"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "放榜後繳交錄取確認書並辦理提名與獎學金申請", "return-report": "返國後 2 週內（獎學金辦法另載 1 個月內）繳交心得報告與 5 張照片", "credit-transfer": "返國開學後持姊妹校正式成績單與返國註冊程序單辦理學分抵免"}.get(template.id, "於出國交換報名系統（https://www.cc.ntut.edu.tw/~wwwoia/outbound/index.html）登錄並列印紙本核章後送交國際處"),
+        version="115準備工具-2026-10-19.1",
+        destinations=["國立臺北科技大學國際事務處國際合作組（共同科館 B1）", "所屬系所辦公室（系主任核章）"],
+        conditional_note="此為個人準備工具；國立臺北科技大學正式出國交換申請須先於線上報名系統填報志願並列印申請表，經系主任核章，連同家長同意書、全學年中文成績單、1 頁 A4 研修計畫及語檢證明於截止前送交國際事務處。",
     )
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
 def _nccu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
-        "exchange-application-data": "整理國立政治大學校級赴國外（八大語組）及赴大陸地區交換學生甄選應繳資料、iNCCU 線上報名表列印件（須由申請人親筆簽名，研究生另須指導教授或系所主管簽章）、語言能力檢定成績單正本及影本、英文在學證明正本、英文成績單正本（學士班另須附中文前學期全班排名百分比證明）、報名費 1,000 元收據正本及赴大陸交換家長同意書。",
-        "study-plan": "撰寫國立政治大學校級交換甄選必繳之《讀書計畫及自傳》（占校級赴國外交換甄選總成績 30%、赴大陸交換書審成績 35%；英語組以英文撰寫、非英語組以該組語言或英文撰寫，說明申請動機、預計修課與學術研究方向及返國學習連結）。",
-        "course-preapproval": "規劃出國交換期間之修課清單與學分採認預審（依《國立政治大學選送學生出國進修與交流實施辦法》規定，交換生於交換期間每學期至少須修習 1 門課且及格，返國後檢附正式成績單及授課大綱向系所及教務處辦理學分抵免）。",
-        "predeparture-notice": "於志願選填及兩階段放榜後完成錄取報到確認、繳納保證金新臺幣 5,000 元，配合國際合作事務處完成姊妹校官方提名（Nomination），並依《錄取校級赴外交換生行前須知》辦理役男出境、護照簽證、海外醫療及意外保險與政大出國選課學分登錄。",
-        "return-report": "交換期滿返國後依規定於政大國際合作事務處電子報分享個人交換經驗（約 1,500–2,000 字心得報告及照片），並檢具交換學校修習至少 1 門課及格之成績證明，辦理保證金 5,000 元無息退還及獎助學金核銷。",
+        "exchange-application-data": "整理國立政治大學校級赴國外（八大語組）及赴大陸地區交換學生甄選應繳資料：iNCCU 線上報名表、語言能力檢定成績單正本（驗畢退還）及影本、英文在學證明正本、英文成績單正本（學士班另須附中文前學期全班排名百分比證明；赴大陸交換繳交中文成績單與排名證明）、交換計畫書與履歷表（含簡歷及自傳）、報名費新臺幣 700 元收據正本及家長（監護人）同意書。",
+        "study-plan": "撰寫國立政治大學校級交換甄選必繳之《交換計畫書》與《履歷表（含簡歷及自傳）》（校級國際薦外交換：須分為 2 份文件撰寫，合計占甄選總成績 20%，限電腦繕打、A4 直式橫書，每份各至少 500 字、以 2 頁為限，超出 2 頁不予計分，皆以報考語組之語言撰寫；赴大陸交換：個人自傳 1,000 字以內、研究／學習計畫 3,000 字以內，超過字數恕不受理，書面審查占總成績 35%）。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分採認預審（依《國立政治大學選送學生出國進修與交流實施辦法》及簡章規定，交換生於交換期間每學期至少須修習該校 1 門科目且成績及格；大陸交換大學部須修習 2 門以上、研究所至少 1 門，返國後檢附正式成績單及授課大綱辦理學分採認）。",
+        "predeparture-notice": "於志願選填及放榜後完成錄取報到確認、繳納保證金新臺幣 5,000 元，配合國際合作事務處完成姊妹校官方提名（Nomination），並依《錄取校級赴外交換生行前須知》辦理役男出境、護照簽證、海外醫療及意外保險與政大註冊選課。",
+        "return-report": "交換期滿返國後 2 個月內依規定格式繳交交換學生心得報告電子檔至國際合作事務處（outbound@nccu.edu.tw；官方未公布固定字數下限），並於返國 2 年內完成國際活動義工服務至少 1 次（大陸交換為參與至少 2 項兩岸交流活動），檢具交換學校修課及格證明辦理保證金 5,000 元無息退還。",
         "credit-transfer": "交換期滿返國後持交換姊妹校核發之正式成績單正本與修課大綱（Syllabus），依國立政治大學學生抵免學分辦法向所屬系所及教務處註冊組申請國外修習科目學分採認。",
     }
     if template.id not in descriptions:
@@ -1423,36 +1426,36 @@ def _nccu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     payload = adapt(template.model_dump(mode="json"))
     for field in payload["fields"]:
         if field["id"] == "class_rank_percent":
-            field["help_text"] = "國立政治大學校級赴國外交換：研究生前學期總平均成績須達 70 分以上，學士班依前學期全班排名百分比換算在校成績（101 減去班排百分比，占總成績 20%）；赴大陸交換在校成績占 30%，總成績須達 75 分以上。"
+            field["help_text"] = "國立政治大學校級赴國外交換：研究生前學期總平均成績須達 70 分以上或 GPA 2.44 以上，學士班依前學期全班排名百分比換算在校成績（101 減去班排百分比，占總成績 20%）；赴大陸交換在校成績占 30%。"
         if field["id"] == "language_test":
             field["options"] = ["TOEFL iBT（75+）", "IELTS Academic（6.0+）", "JLPT 日檢（N1–N4）", "Goethe / TestDaF（德語 B1–C1）", "DELF / DALF / TCF（法語 B1–C1）", "DELE / SIELE（西語 B1–B2）", "TOPIK 韓檢（1–4 級）", "TORFL 俄語 / TÖMER 土語", "TOEIC（僅布拉格經濟大學、里昂三大及部分亞洲校採認）", "赴大陸交換免附外語檢定"]
-            field["help_text"] = "政大校級赴國外交換分為八大語組（外語檢定成績占甄選總分 50%，不得跨語組選填志願），須繳交距離報名截止日兩年內有效之合格檢定正本查驗；赴大陸地區交換免附。"
+            field["help_text"] = "政大校級赴國外交換分為八大語組（語言能力檢定成績占甄選總分 30%、口試占 30%、交換計畫書及履歷表占 20%、在校成績占 20%，不得跨語組選填志願），須繳交距離報名截止日兩年內有效之合格檢定正本查驗；赴大陸地區交換免附。"
     payload.update(
         description=descriptions[template.id],
         source_url="https://outbound.nccu.edu.tw/",
         source_checked_at=NCCU_SOURCE_CHECKED_AT,
         official_layout=False,
-        official_form_number="校級交換生甄選報名表" if template.id == "exchange-application-data" else ("讀書計畫及自傳" if template.id == "study-plan" else None),
+        official_form_number="校級交換生甄選報名表" if template.id == "exchange-application-data" else ("交換計畫書與履歷表" if template.id == "study-plan" else None),
         official_file_name=None,
         official_download_url="https://outbound.nccu.edu.tw/",
         default_copies=1,
-        signatures=["申請學生親筆簽名", "指導教授或系所主管簽章（研究生適用）", "家長或監護人親筆簽名（大陸交換家長同意書）"] if template.id == "exchange-application-data" else [],
-        stamps=["政大出納組收訖章或自動繳費機收據（報名費 1,000 元 / 保證金 5,000 元）"] if template.id == "exchange-application-data" else [],
-        stage={"predeparture-notice": "志願分發放榜確認後繳交保證金 5,000 元與辦理提名", "return-report": "返國後繳交交換電子報心得與及格成績單退還保證金", "credit-transfer": "返國開學後持姊妹校正式成績單辦理學分抵免"}.get(template.id, "於 iNCCU 線上報名並列印紙本備審資料親送國際合作事務處（行政大樓 8 樓）"),
-        version="115準備工具-2026-10-18.1",
-        destinations=["國立政治大學國際合作事務處（行政大樓 8 樓）", "所屬系所辦公室（研究生指導教授／系所主管簽章）"],
-        conditional_note="此為個人準備工具；國立政治大學校級交換甄選須先於 iNCCU 校園資訊系統完成線上報名並列印報名表，連同語言檢定證書正本、成績單正本、讀書計畫及自傳一式三份與報名費收據於截止前親送國際合作事務處查驗。",
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽名（家長／監護人同意書）"] if template.id == "exchange-application-data" else [],
+        stamps=["政大出納組收訖章或自動繳費機收據（報名費 700 元 / 保證金 5,000 元）"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "志願分發放榜確認後繳交保證金 5,000 元與辦理提名", "return-report": "返國後 2 個月內繳交交換心得報告電子檔並完成義工服務退還保證金", "credit-transfer": "返國開學後持姊妹校正式成績單辦理學分抵免"}.get(template.id, "於 iNCCU 線上報名並上傳／繳交備審資料至國際合作事務處（行政大樓 8 樓）"),
+        version="115準備工具-2026-10-19.1",
+        destinations=["國立政治大學國際合作事務處（行政大樓 8 樓）", "所屬系所辦公室"],
+        conditional_note="此為個人準備工具；國立政治大學校級交換甄選須先於 iNCCU 校園資訊系統完成線上報名，依當期簡章規定上傳交換計畫書及履歷表（各至少 500 字、2 頁為限），並於截止前完成報名費 700 元繳納與語言檢定正本查驗。",
     )
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
 def _ncku_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
-        "exchange-application-data": "整理國立成功大學校級出國與赴大陸地區交換學生甄選應繳資料：出國交換生申請檢核表（Checklist）與申請表、志願表（最多填寫 6 所志願校）、在校歷年成績單（大學部須含名次與百分比，總平均達 77 分以上或名次列全班前 50% 以內；研究所免成績門檻）、教授推薦函 2 封、自傳與讀書計畫、有效外語能力證明及保證金新臺幣 5,000 元收據，依序合併為單一 PDF 檔案上傳至成大交換生甄選系統。",
-        "study-plan": "撰寫國立成功大學校級交換甄選必繳之《自傳》與《讀書計畫》（各以一頁 A4 為限，申請外國學校請以英文撰寫、申請大陸學校請以中文撰寫；清楚說明申請動機、成大與接待校學術銜接、預計修課與研究方向及返國學習規劃）。",
-        "course-preapproval": "規劃出國交換期間之修課清單與學分採認預審（依成大簡章規定，大學部交換生每學期至少須修習 6 學分或 2 門課、研究生至少須修習 3 學分或 1 門課，返國後檢附正式成績單及授課大綱向所屬系所及教務處辦理學分抵免）。",
-        "predeparture-notice": "於甄選錄取公告後依限於線上系統完成錄取確認（逾期未確認視同放棄，保證金 5,000 元不予退還），配合國際事務處國際教育組完成姊妹校官方提名（Nomination），並辦理役男出境、護照簽證、海外醫療及意外保險與成大在學註冊選課。",
-        "return-report": "交換期滿返國後兩個月內於成大交換生線上系統上傳交換心得報告（PDF 檔）及修課成績單證明，以辦理新臺幣 5,000 元保證金無息退還及出國交換／教育部學海系列獎助學金核銷。",
+        "exchange-application-data": "整理國立成功大學校級薦外交換學生甄選應繳資料：核章申請表（須經系所單位主管核章）、線上志願表（最多選填 15 個志願）、歷年成績單（大學部須附歷年名次證明，總平均達 77 分以上或名次列全班前 50% 以內）、有效外語能力成績證明（前往中國學校交換者仍須提出本校要求之外語能力成績證明）、第一志願之中文及英文讀書或研究計畫、中文及英文自傳（含學、經歷）與優秀表現證明，依序合併為單一 PDF 檔案（上限 50MB）上傳至成大交換生報名系統。",
+        "study-plan": "撰寫國立成功大學校級薦外交換甄選必繳之《中文及英文讀書或研究計畫》（占校內甄選總成績 25%）與《中文及英文自傳（含學、經歷）》（與其餘表現合計占總成績 25%）；須就所選填志願學校之「第一志願」分別擬訂中、英文版本，官方簡章未規定固定字數或頁數上限。",
+        "course-preapproval": "規劃出國交換期間之修課清單與學分採認預審（依成大簡章規定，交換生於交換期間每學期至少須選修並通過 3 門學分課程，返國後檢附正式成績單及授課大綱向所屬系所及教務處辦理學分抵免）。",
+        "predeparture-notice": "於甄選錄取公告後依限完成網路意願確認、繳交紙本家長同意書及繳納保證金新臺幣 8,000 元（低收／中低收入戶為 2,000 元；逾期未確認或確認後無故放棄者不退還），並配合國際事務處國際教育組完成姊妹校官方提名（Nomination）、簽證、海外保險與成大在學註冊選課。",
+        "return-report": "交換期滿返國後兩個月內依規定格式完成交換生心得報告（繳交可編輯之 Word 及 PDF 檔各乙份；官方簡章未公布固定字數下限），連同交換校成績單及返國問卷調查寄至國際處業務承辦人信箱，經認定完成交換生義務後始得辦理保證金 8,000 元（低收／中低收入戶 2,000 元）退還；領取跨國雙向研修獎助學金者須於赴外研修結束之日起 1 個月內繳交出國報告書。",
         "credit-transfer": "交換期滿返國後持交換姊妹校核發之正式成績單正本與修課大綱（Syllabus），依國立成功大學學生抵免學分辦法向所屬系所及教務處註冊組申請國外修習科目學分採認。",
     }
     if template.id not in descriptions:
@@ -1468,25 +1471,25 @@ def _ncku_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     payload = adapt(template.model_dump(mode="json"))
     for field in payload["fields"]:
         if field["id"] == "class_rank_percent":
-            field["help_text"] = "國立成功大學校級交換：學士班前一學期止歷年學業總平均須達 77 分以上或歷年名次列全班人數前 50% 以內（須檢附含名次與百分比之中文歷年成績單）；碩、博士班無分數及排名門檻，惟須經系所主管及指導教授簽章同意。"
+            field["help_text"] = "國立成功大學校級交換：學士班前一學期止歷年學業總平均須達 77 分以上或歷年名次列全班人數前 50% 以內（須檢附歷年成績單及歷年名次證明，在校學業成績占校內甄選總成績 50%）；碩、博士班無最低平均或排名門檻，惟須檢附大學及研究所歷年成績單並經系所主管核章。"
         if field["id"] == "language_test":
-            field["options"] = ["TOEFL iBT（72+ / CEFR B2）", "IELTS Academic（5.5+ / CEFR B2）", "TOEIC 聽讀（785+）＋說寫（310+）", "GEPT 全民英檢中高級複試通過", "Cambridge Main Suite FCE（B2 First）以上", "JLPT 日語檢定（N1–N5）", "TOPIK 韓語檢定（1–6 級）", "Goethe / TestDaF（德語）", "DELF / DALF / TCF（法語）", "DELE / SIELE（西語）", "赴大陸交換免附外語檢定"]
-            field["help_text"] = "申請英語系國家或全英語授課計畫者，須具備相當於 CEFR B2（高階級）以上之英語檢定成績且符合志願校門檻（不接受托福拼分 MyBest Scores 或多益單項無口說寫作之證書替代 B2）；申請日韓德法西語組須符合各姊妹校門檻；赴大陸地區交換免附外語檢定。"
+            field["options"] = ["TOEFL iBT（72+ / CEFR B2）", "TOEFL ITP（543+ / CEFR B2）", "IELTS Academic（5.5+ / CEFR B2）", "TOEIC 聽讀（785+）＋說寫（口說 160+、寫作 150+）", "GEPT 全民英檢中高級複試通過", "Cambridge Main Suite FCE（B2 First）以上", "JLPT 日語檢定（N1–N3）", "TOPIK 韓語檢定", "Goethe / TestDaF（德語 B1+）", "DELF / DALF / TCF（法語 B1+）", "DELE / SIELE（西語 B1+）"]
+            field["help_text"] = "申請英語系及非英語系國家（日韓德法西語組除外）須具備相當於 CEFR B2（高階級）以上之英語檢定成績且符合志願校門檻（不接受托福拼分 MyBest Scores，多益須同時具備聽讀 785 及說寫達標證明）；申請日韓德法西語組須符合各組或志願校門檻；欲前往中國學校交換者仍須提出本校要求之外語能力成績證明。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw",
+        source_url="https://oia.ncku.edu.tw/var/file/32/1032/img/3271/424584871.pdf",
         source_checked_at=NCKU_SOURCE_CHECKED_AT,
         official_layout=False,
-        official_form_number="出國交換生申請檢核表與申請表" if template.id == "exchange-application-data" else ("自傳與讀書計畫（各一頁A4）" if template.id == "study-plan" else None),
+        official_form_number="出國交換生申請表" if template.id == "exchange-application-data" else ("第一志願中英文自傳與讀書或研究計畫" if template.id == "study-plan" else None),
         official_file_name=None,
         official_download_url="https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw",
         default_copies=1,
-        signatures=["申請學生親筆簽名", "指導教授簽章（研究生適用）", "系所主管簽章"] if template.id == "exchange-application-data" else [],
-        stamps=["系所辦公室戳章", "成大自動繳費機或ATM轉帳收據（保證金 5,000 元）"] if template.id == "exchange-application-data" else [],
-        stage={"predeparture-notice": "錄取公告後於線上系統完成錄取確認並辦理姊妹校提名", "return-report": "返國後兩個月內上傳交換心得報告與成績單退還保證金", "credit-transfer": "返國開學後持姊妹校正式成績單辦理學分抵免"}.get(template.id, "於成大交換生甄選系統（https://exchange.oia.ncku.edu.tw/）完成線上填報並上傳單一合併 PDF 備審檔案"),
-        version="116-1準備工具-2026-10-18.1",
-        destinations=["國立成功大學交換生線上申請系統（https://exchange.oia.ncku.edu.tw/）", "國立成功大學國際事務處國際教育組（光復校區雲平大樓東棟 7 樓）"],
-        conditional_note="此為個人準備工具；國立成功大學校級交換甄選採線上報名與單一 PDF 檔案上傳（檔案上限 10MB），請先下載官方申請表完成系所主管（及指導教授）核章並繳交保證金 5,000 元後，依檢核表順序合併上傳至 https://exchange.oia.ncku.edu.tw/ 。",
+        signatures=["申請學生親筆簽名", "系所單位主管簽章", "家長或監護人親筆簽名（錄取後繳交家長同意書）"] if template.id == "exchange-application-data" else [],
+        stamps=["系所單位主管核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取公告後完成網路意願確認、繳交家長同意書與保證金 8,000 元", "return-report": "返國後兩個月內繳交交換心得報告 Word/PDF 檔與成績單退還保證金", "credit-transfer": "返國開學後持姊妹校正式成績單辦理學分抵免"}.get(template.id, "於成大赴外交換生報名系統完成線上填報並將第 1–6 項申請文件依序合併為單一 PDF 檔（上限 50MB）上傳"),
+        version="116-1準備工具-2026-10-19.1",
+        destinations=["國立成功大學赴外交換生線上報名系統", "國立成功大學國際事務處國際教育組（光復校區雲平大樓東棟 7 樓）"],
+        conditional_note="此為個人準備工具；國立成功大學校級交換甄選採線上報名與單一 PDF 檔案上傳（檔案上限 50MB），請先於線上系統填寫並列印申請表完成系所單位主管核章，連同第一志願中英文讀書或研究計畫、中英文自傳、成績單與外語檢定證明依序合併上傳；錄取後另依限繳交家長同意書及保證金 8,000 元（低收／中低收入戶 2,000 元）。",
     )
     return ApplicationDocumentTemplate.model_validate(payload)
 
