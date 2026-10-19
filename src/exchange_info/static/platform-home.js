@@ -87,11 +87,6 @@ window.UniWayHome = (() => {
     });
   }
 
-  function schoolCountFor(name) {
-    const entry = state.supportedUniversities.find((item) => item.school_name === name);
-    return entry?.partner_count || 0;
-  }
-
   // The supported schools always drift to the left and come back in from the right, so the row keeps working as schools are
   // added; copies of the row (hidden from assistive technology) fill the width and make the loop seamless.
   const MARQUEE_PX_PER_SECOND = 38;
@@ -129,8 +124,6 @@ window.UniWayHome = (() => {
     const total = schools.reduce((sum, item) => sum + (item.partner_count || 0), 0);
     const count = String(schools.length || 6);
     const set = (selector, text) => { const node = host.querySelector(selector); if (node && node.textContent !== text) node.textContent = text; };
-    set("#home-pill-count", `${count} 所大學`);
-    set("#home-pill-text", total ? `已整理 ${formatNumber(total)} 間合作校資料` : "合作校資料整理中");
     set("#home-stat-schools", count);
     set("#home-stat-partners", total ? formatNumber(total) : "—");
     set("#home-band-total-line", total ? `看見 ${formatNumber(total)} 個選擇。` : "看見更多選擇。");
@@ -162,12 +155,7 @@ window.UniWayHome = (() => {
   }
 
   function renderPlan(host) {
-    const school = state.homeSchool;
     const done = completedSteps();
-    const loaded = state.dashboard?.school_name === school ? state.dashboard.partner_universities.length : 0;
-    const partnerCount = loaded || schoolCountFor(school);
-    const title = host.querySelector("#home-map-card-title");
-    title.textContent = school ? `${school}${partnerCount ? ` · ${formatNumber(partnerCount)} 間合作校` : ""}` : "合作校分布";
     const badge = host.querySelector("#home-plan-badge");
     badge.textContent = done < 0 ? "共 4 步" : done >= STAGES.length ? "已完成 4 步" : `第 ${done + 1} 步 / 共 4 步`;
     host.querySelector("#home-plan-steps").innerHTML = STAGES.map((stage, index) => {
