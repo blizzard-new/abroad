@@ -66,7 +66,11 @@ def test_article_is_complete_crawlable_and_has_consistent_metadata(client, slug)
     for img in soup.select(".editorial img"):
         assert img["width"] == "1536" and img["height"] == "1024"
         assert img["loading"] == "lazy"
-    assert figure.img["alt"] and "情境插圖" in figure.figcaption.get_text()
+    assert figure.img["alt"] == a.image_alt
+    assert a.image_caption and a.image_caption in figure.figcaption.get_text()
+    assert a.image_credit and a.image_credit.photographer in figure.figcaption.get_text()
+    assert figure.figcaption.a["href"] == a.image_credit.source_url
+    assert "AI 輔助製作" not in figure.figcaption.get_text()
     assert len(soup.select("#related .editorial-card")) >= 2
 
 
@@ -109,6 +113,10 @@ def test_untrusted_article_text_is_escaped_and_source_urls_are_validated():
     for bad_url in ("javascript:alert(1)", "https://user:secret@example.com/"):
         data = a.model_dump()
         data["sources"][0]["url"] = bad_url
+        with pytest.raises(ValidationError):
+            Article.model_validate(data)
+        data = a.model_dump()
+        data["image_credit"]["source_url"] = bad_url
         with pytest.raises(ValidationError):
             Article.model_validate(data)
 

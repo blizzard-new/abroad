@@ -30,6 +30,16 @@ class Source(EditorialModel):
         return value
 
 
+class ImageCredit(EditorialModel):
+    photographer: str
+    source_url: str
+
+    @field_validator("source_url")
+    @classmethod
+    def public_https_url(cls, value: str) -> str:
+        return Source.official_url(value)
+
+
 class Table(EditorialModel):
     caption: str
     headers: list[str] = Field(min_length=2, max_length=5)
@@ -68,6 +78,9 @@ class Article(EditorialModel):
     checked: date
     image: str = Field(pattern=r"^[a-z-]+$")
     image_alt: str
+    # Defaults also let the release gate normalize historical article JSON.
+    image_caption: str = ""
+    image_credit: ImageCredit | None = None
     summary: list[str] = Field(min_length=3, max_length=4)
     intro: list[str] = Field(min_length=1)
     sections: list[Section] = Field(min_length=4)
@@ -187,7 +200,11 @@ def render_article(article: Article) -> str:
             body += '<p class="article-citation">本節來源：' + '、'.join(f'<a href="#source-{ref}">{escape(next(s.title for s in a.sources if s.id == ref))}</a>' for ref in section.refs) + '</p>'
         body += '</section>'
         if index == 1:
-            body += f'<figure class="article-illustration"><img src="{a.image_path}" alt="{escape(a.image_alt)}" width="1536" height="1024" loading="lazy" decoding="async"><figcaption>UniWay 原創情境插圖（AI 輔助製作），非實際校園、房型或學生紀錄。</figcaption></figure>'
+            caption = escape(a.image_caption)
+            if a.image_credit:
+                credit = a.image_credit
+                caption += f' 攝影：<a href="{escape(credit.source_url)}" rel="noopener noreferrer">{escape(credit.photographer)} / Pexels</a>。'
+            body += f'<figure class="article-illustration"><img src="{a.image_path}" alt="{escape(a.image_alt)}" width="1536" height="1024" loading="lazy" decoding="async"><figcaption>{caption}</figcaption></figure>'
     body += '<section id="faq"><h2>你可能還想知道</h2>'
     body += ''.join(f'<details class="article-faq"><summary>{escape(q)}</summary><p>{escape(answer)}</p></details>' for q, answer in a.faq) + '</section>'
     body += '<section class="article-sources" id="sources"><h2>官方來源與適用範圍</h2><p>數字、制度與申請條件請連同來源日期閱讀。本文的方法、表格與試算由 UniWay 整理；各校個案依當期公告認定。</p><ol>'
