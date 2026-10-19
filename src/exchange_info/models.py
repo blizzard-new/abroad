@@ -4329,5 +4329,108 @@ class CrossSchoolPartnerDirectory(BaseModel):
     items: list[CrossSchoolPartnerSummaryItem] = Field(default_factory=list)
 
 
+class StudyPlanPitfallRule(BaseModel):
+    rule_id: str = Field(min_length=2, max_length=80)
+    severity: Literal["critical", "high", "info"] = "critical"
+    badge_label: str = Field(min_length=2, max_length=80)
+    pitfall_title: str = Field(min_length=4, max_length=200)
+    detail_zh: str = Field(min_length=8, max_length=600)
+    scoring_weight: str = Field(min_length=4, max_length=300)
+    format_and_limit: str = Field(min_length=4, max_length=300)
+    source_url: str = Field(min_length=10, max_length=2000)
+    last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+
+    @field_validator("source_url")
+    @classmethod
+    def _validate_pitfall_source_url(cls, value: str) -> str:
+        value = value.strip()
+        if not value.startswith("https://"):
+            raise ValueError("StudyPlanPitfallRule.source_url must start with https://")
+        return value
+
+
+class StudyPlanSixStepSection(BaseModel):
+    step_number: int = Field(ge=1, le=6)
+    field_id: str = Field(min_length=2, max_length=60)
+    heading: str = Field(min_length=4, max_length=120)
+    recommended_min_chars: int | None = None
+    recommended_max_chars: int | None = None
+    anti_cliche_warning: str = Field(min_length=8, max_length=300)
+    high_score_formula: str = Field(min_length=8, max_length=300)
+    outline: list[str] = Field(default_factory=list, max_length=6)
+    example_zh: str = Field(min_length=8, max_length=500)
+
+
+class StudyPlanPartnerCourseLookup(BaseModel):
+    partner_school_name_zh: str = Field(min_length=1, max_length=160)
+    partner_school_name_en: str = Field(min_length=1, max_length=200)
+    country_name_zh: str = Field(min_length=1, max_length=60)
+    country_slug: str = Field(min_length=2, max_length=80)
+    institution_slug: str = Field(min_length=2, max_length=140)
+    cross_school_partner_path: str = Field(min_length=10, max_length=360)
+    contracted_home_count: int = Field(ge=1)
+    quota_summary: str = Field(min_length=2, max_length=400)
+    language_requirement_summary: str = Field(min_length=2, max_length=600)
+    degree_levels: str | None = None
+    colleges: str | None = None
+    course_direction_points: list[CrossSchoolStructuredPoint] = Field(default_factory=list)
+    living_cost_hint: str = Field(min_length=4, max_length=450)
+    suggested_course_plan_lines: list[str] = Field(default_factory=list, max_length=6)
+
+
+class DcardSchoolBoardLaunchDraft(BaseModel):
+    school_id: str = Field(min_length=2, max_length=24)
+    school_name: str = Field(min_length=2, max_length=80)
+    short_name: str = Field(min_length=2, max_length=40)
+    dcard_board_name: str = Field(min_length=4, max_length=120)
+    in_next_10_weeks_window: bool = True
+    window_status: str = Field(min_length=2, max_length=40)
+    recommended_publish_window: str = Field(min_length=6, max_length=160)
+    post_title: str = Field(min_length=10, max_length=220)
+    pitfall_hook_bullets: list[str] = Field(default_factory=list, min_length=1, max_length=6)
+    workbench_deep_link: str = Field(min_length=4, max_length=360)
+    partner_hub_deep_link: str = Field(min_length=4, max_length=360)
+    markdown_body: str = Field(min_length=40, max_length=5000)
+
+
+class StudyPlanWorkbenchPayload(BaseModel):
+    school_id: str = Field(min_length=2, max_length=24)
+    school_name: str = Field(min_length=2, max_length=80)
+    short_name: str = Field(min_length=2, max_length=40)
+    in_next_10_weeks_window: bool = True
+    online_deadline_text: str = Field(min_length=4, max_length=300)
+    paper_deadline_text: str = Field(min_length=4, max_length=300)
+    official_study_plan_limit_text: str = Field(min_length=4, max_length=500)
+    min_chars: int | None = None
+    max_chars: int | None = None
+    estimated_chars_per_a4_page: int = 900
+    max_a4_pages_hint: float | None = None
+    scoring_weight_headline: str = Field(min_length=4, max_length=240)
+    pitfalls: list[StudyPlanPitfallRule] = Field(default_factory=list, min_length=1)
+    six_step_guide: list[StudyPlanSixStepSection] = Field(default_factory=list, min_length=6, max_length=6)
+    selected_partner_lookup: StudyPlanPartnerCourseLookup | None = None
+    featured_partner_lookups: list[StudyPlanPartnerCourseLookup] = Field(default_factory=list)
+    dcard_launch_draft: DcardSchoolBoardLaunchDraft
+    workbench_url: str = Field(min_length=4, max_length=360)
+    source_url: str = Field(min_length=10, max_length=2000)
+    last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+
+    @field_validator("source_url")
+    @classmethod
+    def _validate_workbench_source_url(cls, value: str) -> str:
+        value = value.strip()
+        if not value.startswith("https://"):
+            raise ValueError("StudyPlanWorkbenchPayload.source_url must start with https://")
+        return value
+
+
+class StudyPlanWorkbenchCatalog(BaseModel):
+    reference_date: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    window_end_date: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    total_supported_schools: int = Field(ge=1)
+    active_10_week_window_count: int = Field(ge=1)
+    six_step_guide: list[StudyPlanSixStepSection] = Field(default_factory=list, min_length=6, max_length=6)
+    schools: list[StudyPlanWorkbenchPayload] = Field(default_factory=list)
+
 
 JsonDict = dict[str, Any]
