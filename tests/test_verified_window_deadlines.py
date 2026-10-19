@@ -136,8 +136,8 @@ def test_frontend_mounts_verified_window_and_provenance_hooks() -> None:
     app_js = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
     redesign_css = (STATIC_DIR / "platform-redesign.css").read_text(encoding="utf-8")
 
-    assert 'id="home-verified-window"' in index_html
-    assert 'id="home-verified-window-mount"' in index_html
+    assert "home-verified-window" not in index_html
+    assert "renderHomeVerifiedWindowSection" not in app_js
     assert 'id="calendar-verified-window-hook"' in index_html
     assert 'id="deadlines-verified-window-card"' in index_html
 
