@@ -928,7 +928,7 @@ class TestMaintenanceMvpAcceptance(unittest.TestCase):
         official_data_root = Path(__file__).resolve().parents[1] / "src" / "exchange_info" / "official_data"
         shadow_store = MaintenanceStore(self.tmp_path / "shadow_six")
         summary = load_six_school_shadow_summary(official_data_root, shadow_store)
-        self.assertEqual(set(summary.keys()), {"ntu", "ncu", "cgu", "ntpu", "ccu", "tku", "fju", "scu", "ntnu", "cycu", "ntust", "yzu", "fcu", "nsysu", "nchu", "ntut", "nccu", "ncku", "nycu", "nthu", "pccu"})
+        self.assertEqual(set(summary.keys()), {"ntu", "ncu", "cgu", "ntpu", "ccu", "tku", "fju", "scu", "ntnu", "cycu", "ntust", "yzu", "fcu", "nsysu", "nchu", "ntut", "nccu", "ncku", "nycu", "nthu", "pccu", "wzu"})
         self.assertEqual(summary["ntu"]["imported_offerings"], 289)
         self.assertEqual(summary["ntu"]["not_stated_quotas"], 262)
         self.assertEqual(summary["ntu"]["zero_quotas"], 7)
@@ -951,6 +951,7 @@ class TestMaintenanceMvpAcceptance(unittest.TestCase):
         self.assertEqual(summary["nycu"]["imported_offerings"], 243)
         self.assertEqual(summary["nthu"]["imported_offerings"], 176)
         self.assertEqual(summary["pccu"]["imported_offerings"], 135)
+        self.assertEqual(summary["wzu"]["imported_offerings"], 147)
 
         from exchange_info.maintenance.routes import build_default_maintenance_router
         _, prod_store = build_default_maintenance_router(self.tmp_path / "prod_maint")

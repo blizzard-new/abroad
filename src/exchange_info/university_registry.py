@@ -705,8 +705,45 @@ PCCU = UniversityProfile(
     ),
 )
 
+WZU = UniversityProfile(
+    id="wzu",
+    school_name="文藻外語大學",
+    short_name="文藻",
+    english_name="Wenzao Ursuline University of Languages",
+    aliases=(
+        "wzu",
+        "文藻外語大學",
+        "文藻外語學院",
+        "文藻外大",
+        "文藻",
+        "WZU",
+        "Wenzao Ursuline University of Languages",
+        "Wenzao",
+    ),
+    hero_image="/static/assets/wzu-campus.svg",
+    official_url="https://d020.wzu.edu.tw/article/492285",
+    coverage_note="完整支援：國際暨兩岸合作處（國際交流組）115-1／115-2 一招及二招「一般組（70分）」與「語言學習組（65分）」六大語組（英、日、法、德、西、華語暨東南亞語組）及 UMAP／ACUCA 跨國聯盟交換簡章、147所全球合作姊妹校名額與語檢門檻、出國交換獎助學金暨超過100所姊妹校學長姐經驗分享雲端檔案已完整整合。",
+    support_level="full",
+    partner_count_hint=147,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "文藻外語大學",
+        "文藻",
+        "WENZAOURSULINEUNIVERSITYOFLANGUAGES",
+        "WZU",
+    ),
+    # https://www.wzu.edu.tw/ — checked 2026-10-19.
+    colleges=(
+        "國際文教暨涉外事務學院",
+        "歐亞語文學院",
+        "新媒體暨管理學院",
+        "華語學院",
+        "吳甦樂人文學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU)
 DEFAULT_UNIVERSITY = CGU
 
 
