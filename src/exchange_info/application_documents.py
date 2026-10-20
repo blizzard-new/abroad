@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NCUE, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -88,6 +88,7 @@ WZU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 NKUST_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 YUNTECH_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 NTOU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
+NCUE_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1816,6 +1817,51 @@ def _ntou_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ncue_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立彰化師範大學出國交換學生暨學海飛颺／惜珠獎學金甄選應繳資料：1. 出國交換學生申請表（國外姊妹校至多填報 10 個志願、大陸地區姊妹校至多填報 3 個志願；須經家長或監護人簽章、導師或指導教授簽章及系所主管核章）與申請資料確認單、2. 中文歷年成績單正本（含學業總平均與班級排名百分比；操行成績平均須達 80 分以上且無小過以上處分，學海飛颺申請者學業總平均須達 80 分以上或班排前 30%）及英文歷年成績單正本、3. 符合報考語組及姊妹校門檻之有效外語檢定成績單影本（大陸地區免附）、4. 中文自傳（800 字以內）與中文讀書計畫（1,500 字以內）及外文自傳與讀書計畫（各 2 頁為限）、5. 師長推薦信 1 封（中英文皆可）、6. 有效護照基本資料頁影本與其他優秀表現證明；於截止日 15:00 前送交進德校區行政大樓 2 樓國際暨兩岸事務處。",
+        "study-plan": "撰寫國立彰化師範大學交換生甄選必繳之《中文自傳》（800 字以內）與《中文讀書計畫》（1,500 字以內），並檢附英文（或留學國語言）自傳與讀書計畫（各以 2 頁為限；大陸地區交換生繳交中文自傳與讀書計畫合計 2,500 字以內）。書面資料審查佔校內初審總成績 35%，請具體說明出國動機、擬於志願姊妹校修習之專業領域課程（每學期至少須修讀 1 門課或進行論文研究）及返國後學分抵免與職涯銜接規劃。",
+        "course-preapproval": "規劃赴境外姊妹校交換期間之修課清單與學分抵免預審（依《國立彰化師範大學學生出國交換學習實施要點》及《辦理學生抵免學分辦法》規定，出國交換期間須完成彰師大註冊並繳交全額學雜費，每學期於姊妹校至少須修習 1 門課程或進行論文研究；返國後持姊妹校正式成績單與課程大綱向系所及教務處註冊組申請學分採認）。",
+        "predeparture-notice": "於國際暨兩岸事務處公告正備取名單後，依限繳交《錄取資格確認書》、《家長同意書》及新臺幣 3,000 元保證金（無正當理由放棄者沒收），配合國際合作組辦理姊妹校官方提名（Nomination）與外校入學申請；出國前須完成役男出境核准、購買涵蓋全期之海外醫療及意外保險、填寫出國程序單，並完成《教育部學海飛颺／惜珠》或《彰師大出國交換學生獎學金》行政契約簽署。",
+        "return-report": "交換期滿返國抵臺（以桃園機場入境日計）後 2 週（14 日）內，須向國際暨兩岸事務處繳交 2,500 字以內之《交換學生返國心得報告》（含 5–6 張研修與生活照片，同時提供 Word 檔與 PDF 檔）及回國程序單，並檢附姊妹校正式成績單、護照出入境章影本、登機證正本與電子機票收據，辦理新臺幣 3,000 元保證金無息退還與獎學金尾款核銷（學海受獎生另須義務協助國際處推動國際化業務 8 小時及參加經驗分享會）。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本與修課大綱（Syllabus），依《國立彰化師範大學學生出國交換學習實施要點》及《辦理學生抵免學分辦法》向所屬系（所）及教務處註冊組辦理境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立彰化師範大學").replace("長庚", "彰師大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "彰師大《學生出國交換學習實施要點》規定在學期間操行成績平均須達 80 分以上且無小過以上處分（歷年學業成績佔校內初審 20%）；申請教育部《學海飛颺》獎學金者，歷年學業總平均須達 80 分以上或班級排名前 30%。請檢附含排名百分比之中英文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 聽讀測驗（英語組校內基準 550+；歐美紐澳多要求 B2=785+）", "TOEFL iBT（英語組校內基準 61+；歐美名校 72–80+）", "IELTS 學術組（英語組校內基準 5.0+；歐美名校 5.5–6.5+）", "GEPT 全民英檢（中高級初試以上）", "JLPT 日語能力試驗（日語組基準 N3+；明治／愛知／廣島／千葉／鳴門 N1–N2+）", "TOPIK 韓語能力測驗（韓語組基準 2 級以上；首爾市立／中央／釜山 3–4 級）", "Goethe / TestDaF 德語（B1–B2+）或 DELF 法語／DELE 西語（A2–B2+）", "大陸地區姊妹校（免附外語能力檢定證明）"]
+            field["help_text"] = "依彰師大 116 學年度交換簡章規定，報考國外非大陸姊妹校須具備至少 CEFR B1（TOEIC 550 / TOEFL iBT 61 / IELTS 5.0 / GEPT 中高級初試 / JLPT N3 / TOPIK 2 級）或各姊妹校指定之更高外語門檻（外語能力佔校內初審 20%）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oicaweb.ncue.edu.tw/p/406-1019-28981,r174.php?Lang=zh-tw",
+        source_checked_at=NCUE_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換學生申請表、申請資料確認單與家長同意書" if template.id == "exchange-application-data" else ("中英文自傳（800字內）與讀書計畫（1,500字內）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oicaweb.ncue.edu.tw/var/file/19/1019/img/542278849.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後繳交確認書、家長同意書及 $3,000 保證金並辦理提名與獎學金簽約", "return-report": "返國抵臺後 14 日內繳交 2,500 字內心得報告（Word+PDF）與核銷單據退還保證金", "credit-transfer": "返國後持姊妹校正式成績單辦理境外學分採認"}.get(template.id, "備齊紙本申請表與附件（經家長、導師／指導教授及系所主管簽章）於截止日 15:00 前送交進德校區行政大樓 2 樓國際暨兩岸事務處"),
+        version="116準備工具-2026-10-20.1",
+        destinations=["國立彰化師範大學國際暨兩岸事務處（進德校區行政大樓 2 樓）"],
+        conditional_note="此為個人準備工具；彰師大出國交換甄選須於截止日（大陸春季班 115/10/27 15:00、國外非大陸 116 學年 116/01/13 15:00）前，將經家長、導師（或指導教授）及系所主管核章之申請表、申請資料確認單、中英文歷年成績單正本（含排名）、外語檢定證明、中英文自傳與讀書計畫及推薦信送交進德校區行政大樓 2 樓國際暨兩岸事務處（欲申請教育部學海飛颺／惜珠獎學金者須於校內收件截止日前一併繳交申請資料）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1870,6 +1916,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _yuntech_template(template)) is not None]
     if university.id == NTOU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntou_template(template)) is not None]
+    if university.id == NCUE.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncue_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

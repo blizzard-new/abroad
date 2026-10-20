@@ -867,8 +867,48 @@ NTOU = UniversityProfile(
     ),
 )
 
+NCUE = UniversityProfile(
+    id="ncue",
+    school_name="國立彰化師範大學",
+    short_name="彰師大",
+    english_name="National Changhua University of Education",
+    aliases=(
+        "ncue",
+        "國立彰化師範大學",
+        "彰化師範大學",
+        "彰化師大",
+        "彰師大",
+        "彰師",
+        "NCUE",
+        "National Changhua University of Education",
+    ),
+    hero_image="/static/assets/ncue-campus.svg",
+    official_url="https://oicaweb.ncue.edu.tw/p/412-1002-1171.php?Lang=zh-tw",
+    coverage_note="完整支援：國際暨兩岸事務處 116學年度（2027秋季、2028春季）赴國外非大陸姊妹校交換研修暨教育部學海飛颺／惜珠甄選簡章、2027年春季班（115-2學期）及 115-1 赴大陸及港澳地區姊妹校交換計畫、跨國雙聯學制與全球共 108 所合作姊妹校（中國大陸、美國、印尼、德國、日本、韓國、法國、泰國、英國、捷克、西班牙、馬來西亞、加拿大、澳洲、土耳其、香港、烏拉圭、俄羅斯、羅馬尼亞、瑞士、蒙古、阿拉伯聯合大公國、越南等 23 個國家與地區）名額與語檢門檻、教育部學海系列獎補助暨 409 篇學長姐返國交換心得已完整整合。",
+    support_level="full",
+    partner_count_hint=108,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立彰化師範大學",
+        "彰化師範大學",
+        "彰師大",
+        "NATIONALCHANGHUAUNIVERSITYOFEDUCATION",
+        "NCUE",
+    ),
+    # https://www.ncue.edu.tw/p/412-1000-867.php?Lang=zh-tw — checked 2026-10-20.
+    colleges=(
+        "教育學院",
+        "理學院",
+        "工學院",
+        "管理學院",
+        "社會科學暨體育學院",
+        "文學院",
+        "技術及職業教育學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE)
 DEFAULT_UNIVERSITY = CGU
 
 

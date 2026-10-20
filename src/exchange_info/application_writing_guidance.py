@@ -736,6 +736,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="學校規定的是整份赴外研修心得報告（1,500–2,000 字，含照片 4 張以上）；這裡只合計下方各欄。",
     ),
+    ("ncue", "study-plan"): _rules(
+        (
+            "彰師大國際處規定須同時繳交《中文自傳》（800 字以內）與《中文讀書計畫》（1,500 字以內），並另附英文（或留學國語言）自傳與讀書計畫各以 2 頁為限；大陸地區交換生須繳交中文自傳與讀書計畫（合計 2,500 字以內）。",
+            "書面資料審查佔校內初審總成績 35%，請具體說明出國動機、擬於志願姊妹校修習之專業領域課程（出國期間每學期至少須修習 1 門課或進行論文研究）、語言能力準備及返國後學分抵免與職涯銜接規劃；若同時申請教育部《學海飛颺／惜珠》獎學金，須於校內收件截止日（116/1/13）前同步繳交學海計畫申請資料。",
+        ),
+        evidence="國立彰化師範大學116學年度赴國外姊妹校交換學生甄選簡章、2027年春季班赴大陸地區姊妹校交換計畫甄選簡章與自傳及讀書計畫格式",
+        minimum=800,
+        maximum=2300,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="彰師大規定中文自傳 800 字以內、中文讀書計畫 1,500 字以內（合計上限 2,300 字）；這裡合計下方各欄字數供參考。",
+    ),
+    ("ncue", "return-report"): _rules(
+        (
+            "交換研修結束返國抵臺（以桃園機場入境日計）後 2 週（14 日）內，須向國際暨兩岸事務處繳交 2,500 字以內之《交換學生返國心得報告》（含 5–6 張研修與生活照片，同時提供 Word 檔與 PDF 檔）及回國程序單，始得退還新臺幣 3,000 元保證金。",
+            "獲教育部《學海飛颺／學海惜珠》或《彰師大出國交換學生獎學金》補助者，須同時檢附登機證正本、電子機票收據、護照出入境章影本及姊妹校正式成績單辦理經費核銷，且學海受獎生須義務協助國際處推動國際化業務 8 小時及參加經驗分享會。",
+        ),
+        evidence="國立彰化師範大學學生出國交換學習實施要點、出國交換學生獎學金設置辦法與116學年度交換甄選簡章",
+        minimum=1000,
+        maximum=2500,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="學校規定的是整份交換學生返國心得報告（2,500 字以內，含 5–6 張照片）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -764,6 +786,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "nkust": ("https://oia.nkust.edu.tw/p/412-1030-5591.php?Lang=zh-tw", "2026-10-20"),
     "yuntech": ("https://tdx.yuntech.edu.tw/images/International_Exchange_Students/Outgoing/Non_mainland_China_area/%E5%9C%8B%E7%AB%8B%E9%9B%B2%E6%9E%97%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8%E5%9C%8B%E9%9A%9B%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E5%AF%A6%E6%96%BD%E8%A6%81%E9%BB%9E20250422.pdf", "2026-10-20"),
     "ntou": ("https://oia.ntou.edu.tw/var/file/22/1022/img/1029/779655790.pdf", "2026-10-20"),
+    "ncue": ("https://oicaweb.ncue.edu.tw/var/file/19/1019/img/542278849.pdf", "2026-10-20"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

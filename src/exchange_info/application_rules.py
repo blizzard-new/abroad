@@ -27,6 +27,7 @@ from .wzu_eligibility import is_wzu, wzu_academic_check, wzu_degree_check, wzu_l
 from .nkust_eligibility import is_nkust, nkust_academic_check, nkust_degree_check, nkust_language_check
 from .yuntech_eligibility import is_yuntech, yuntech_academic_check, yuntech_degree_check, yuntech_language_check
 from .ntou_eligibility import is_ntou, ntou_academic_check, ntou_degree_check, ntou_language_check
+from .ncue_eligibility import is_ncue, ncue_academic_check, ncue_degree_check, ncue_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -586,6 +587,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_ncue(request.home_school):
+        deg_status, deg_detail = ncue_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -756,6 +762,12 @@ def _eligibility_checks(
             "academic_score", status, "海大前一學期成績及格（學士60／碩博70分）與姊妹校 GPA 門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_ncue(request.home_school):
+        status, detail = ncue_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "彰師大操行80分、學海飛颺平均80分（或班排前30%）與姊妹校門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -858,6 +870,9 @@ def _eligibility_checks(
     if is_ntou(request.home_school):
         home_status, home_detail = ntou_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "海大附表一外語能力最低門檻（TOEFL 60／IELTS 5.0／TOEIC 600／JLPT N3／TOPIK 3）與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_ncue(request.home_school):
+        home_status, home_detail = ncue_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "彰師大國外交換 CEFR B1 外語門檻（TOEIC 550／TOEFL 61／IELTS 5.0／JLPT N3／TOPIK 2）與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",
