@@ -674,6 +674,68 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="學校規定的是整份交換研修心得報告（約 1,000 字）；這裡只合計下方各欄。",
     ),
+    ("nkust", "study-plan"): _rules(
+        (
+            "須繳交中文與英文（或研修國語言）自傳及讀書計畫各乙份（約 1,000 字），具體說明申請動機、第一志願姊妹校專業領域契合度、擬修習之課程清單與返國後學習銜接。",
+            "依高科大甄選比序規定，第一志願專業領域契合度佔總分 50%（無外語要求之大陸姊妹校佔 60%），請務必詳述個人主修背景與目標姊妹校系所課程之關聯。",
+        ),
+        evidence="國立高雄科技大學 115 學年度選送學生赴境外大學研修甄選簡章（報名應繳文件與甄選比序規定）",
+        minimum=1000,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="建議中英文自傳及讀書計畫合計達 1,000 字以上；這裡合計下方各欄字數供參考。",
+    ),
+    ("nkust", "return-report"): _rules(
+        (
+            "返國後 1 個月內，須向國際事務處國際關係組繳交約 1,500–2,000 字之赴境外大學研修心得報告（含修課、住宿、生活適應與文化交流照片）並完成教育部學海計畫或校內獎助學金線上報告上傳。",
+            "領取教育部學海飛颺／惜珠或高科大高教深耕境外研修獎助學金者，須同時檢附電子機票、登機證正本、護照出入境章影本及姊妹校正式成績單辦理核銷結案。",
+        ),
+        evidence="國立高雄科技大學選送學生出國研修辦法與獎助學生赴境外大學校院研修要點（返國核銷與義務）",
+        minimum=1500,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="學校規定的是整份境外大學研修心得報告（建議 1,500 字以上）；這裡只合計下方各欄。",
+    ),
+    ("yuntech", "study-plan"): _rules(
+        (
+            "須繳交中文與英文自傳及出國讀書計畫各乙份（約 1,000 字），具體說明申請動機、擬修讀之專業課程清單、語言學習目標與返國後學分抵免及職涯發展規劃。",
+            "若同時申請《王秋雄榮譽博士補助德日美交流或進修獎助金》，讀書計畫中須明確規劃大學部每學期至少修習 3 門或 6–9 學分（18 ECTS）且成績達 B 以上、研究所每學期至少修習 2 門或 4–8 學分（12 ECTS）及格。",
+        ),
+        evidence="國立雲林科技大學國際交換學生實施要點、非大陸地區交換學生評分標準表與王秋雄榮譽博士獎助金實施要點",
+        minimum=1000,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="建議中英文自傳及出國讀書計畫合計達 1,000 字以上；這裡合計下方各欄字數供參考。",
+    ),
+    ("yuntech", "return-report"): _rules(
+        (
+            "交換期滿返國後，須向國際事務處繳交出國交換學生心得報告（約 1,500–2,000 字，含修課、住宿、生活開銷與文化交流照片）及問卷，以辦理 NT$3,000 保證金無息退還與獎助學金尾款核銷。",
+            "領取《王秋雄榮譽博士德日美獎助金》、《教育部學海飛颺／惜珠》或《雲科大出國交流補助》者，須同時檢附姊妹校正式成績單、護照出入境章影本、登機證存根及電子機票收據。",
+        ),
+        evidence="國立雲林科技大學國際交換學生實施要點與學生出國交流或進修補助要點（返國義務與保證金退還規定）",
+        minimum=1500,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="學校規定的是整份出國交換研修心得報告（建議 1,500 字以上）；這裡只合計下方各欄。",
+    ),
+    ("ntou", "study-plan"): _rules(
+        (
+            "海大國際事務處規定《中文自傳》與《外國留學研修計畫書》各約 1,000–1,500 字，須詳述個人學習背景、赴外動機、擬於志願姊妹校修習之專業課程（每學期至少應修習相當於海大 6 學分以上課程或進行論文研究）與返國學分採認規劃。",
+            "欲申請教育部《學海飛颺》或《海大校內赴姊妹校交換獎補助》者，報名時必須一併填繳《經費分析表》（附件五），未繳交者視同放棄申請校內一切獎學金；全套文件須以 A4 單面列印（不裝訂，置於透明 L 型資料夾）並先轉為單一 PDF 寄至 `marberthsu@email.ntou.edu.tw`。",
+        ),
+        evidence="國立臺灣海洋大學 2027 年春/秋季赴姊妹校交換生計畫甄選簡章、自傳範例、外國留學研修計畫書範例與經費分析表範例",
+        minimum=1000,
+        maximum=3000,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="海大規定自傳與外國留學研修計畫書各約 1,000–1,500 字；這裡合計下方各欄字數供參考。",
+    ),
+    ("ntou", "return-report"): _rules(
+        (
+            "交換期滿返國後 1 個月內，須依《返國核銷檢核表》向國際事務處繳交 1,500–2,000 字《赴外研修心得報告》（含至少 4 張在國外研修與生活照片）及完成線上電子問卷。",
+            "領取《教育部學海飛颺／惜珠》或《海大校內赴姊妹校交換獎補助》者，須同時檢附登機證正本、電子機票收據、護照出入境章影本及姊妹校正式成績單辦理核銷；逾期未完成核銷者將追回全額獎補助款。",
+        ),
+        evidence="國立臺灣海洋大學學生赴國外研修施行細則、學海系列計畫補助施行細則與返國核銷檢核表",
+        minimum=1500,
+        maximum=2000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="學校規定的是整份赴外研修心得報告（1,500–2,000 字，含照片 4 張以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -699,6 +761,9 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "nthu": ("https://oga.site.nthu.edu.tw/var/file/524/1524/img/2027F2028Sapplicationguideline-CH.pdf", "2026-10-19"),
     "pccu": ("https://oima.pccu.edu.tw/Upload/202607/learning_2026071112283509.pdf", "2026-10-19"),
     "wzu": ("https://d020.wzu.edu.tw/article/529354", "2026-10-19"),
+    "nkust": ("https://oia.nkust.edu.tw/p/412-1030-5591.php?Lang=zh-tw", "2026-10-20"),
+    "yuntech": ("https://tdx.yuntech.edu.tw/images/International_Exchange_Students/Outgoing/Non_mainland_China_area/%E5%9C%8B%E7%AB%8B%E9%9B%B2%E6%9E%97%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8%E5%9C%8B%E9%9A%9B%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E5%AF%A6%E6%96%BD%E8%A6%81%E9%BB%9E20250422.pdf", "2026-10-20"),
+    "ntou": ("https://oia.ntou.edu.tw/var/file/22/1022/img/1029/779655790.pdf", "2026-10-20"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

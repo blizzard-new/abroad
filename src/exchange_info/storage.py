@@ -51,7 +51,7 @@ from .models import (
 )
 from .settings import DEFAULT_DATA_DIR
 from .school_identity import school_identity_key
-from .university_registry import CCU, CGU, CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TKU, WZU, YZU
+from .university_registry import CCU, CGU, CYCU, FCU, FJU, NCCU, NCHU, NCKU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TKU, WZU, YUNTECH, YZU
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
 
@@ -80,6 +80,9 @@ BUNDLED_NYCU_DIR = PACKAGE_DIR / "official_data" / "nycu"
 BUNDLED_NTHU_DIR = PACKAGE_DIR / "official_data" / "nthu"
 BUNDLED_PCCU_DIR = PACKAGE_DIR / "official_data" / "pccu"
 BUNDLED_WZU_DIR = PACKAGE_DIR / "official_data" / "wzu"
+BUNDLED_NKUST_DIR = PACKAGE_DIR / "official_data" / "nkust"
+BUNDLED_YUNTECH_DIR = PACKAGE_DIR / "official_data" / "yuntech"
+BUNDLED_NTOU_DIR = PACKAGE_DIR / "official_data" / "ntou"
 
 _STORAGE_LOCKS_GUARD = threading.Lock()
 _STORAGE_LOCKS: dict[str, threading.RLock] = {}
@@ -598,7 +601,7 @@ def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWork
 
 
 def _bundled_workflow_paths() -> tuple[Path, ...]:
-    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR, BUNDLED_FCU_DIR, BUNDLED_NSYSU_DIR, BUNDLED_NCHU_DIR, BUNDLED_NTUT_DIR, BUNDLED_NCCU_DIR, BUNDLED_NCKU_DIR, BUNDLED_NYCU_DIR, BUNDLED_NTHU_DIR, BUNDLED_PCCU_DIR, BUNDLED_WZU_DIR))
+    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR, BUNDLED_FCU_DIR, BUNDLED_NSYSU_DIR, BUNDLED_NCHU_DIR, BUNDLED_NTUT_DIR, BUNDLED_NCCU_DIR, BUNDLED_NCKU_DIR, BUNDLED_NYCU_DIR, BUNDLED_NTHU_DIR, BUNDLED_PCCU_DIR, BUNDLED_WZU_DIR, BUNDLED_NKUST_DIR, BUNDLED_YUNTECH_DIR, BUNDLED_NTOU_DIR))
 
 
 def _bundled_workflow_signature() -> tuple:
@@ -781,6 +784,9 @@ def _bundled_destination_entries(home_key: str | None) -> tuple[tuple[Path, str]
             (BUNDLED_NTHU_DIR, NTHU.school_name),
             (BUNDLED_PCCU_DIR, PCCU.school_name),
             (BUNDLED_WZU_DIR, WZU.school_name),
+            (BUNDLED_NKUST_DIR, NKUST.school_name),
+            (BUNDLED_YUNTECH_DIR, YUNTECH.school_name),
+            (BUNDLED_NTOU_DIR, NTOU.school_name),
         )
         if home_key is None or school_identity_key(bundle_home) == home_key
     )
@@ -830,7 +836,7 @@ def load_destination_profiles(
     if not include_bundled:
         if cache_key is not None:
             with _destination_profiles_cache_lock:
-                if len(_destination_profiles_cache) >= 24:
+                if len(_destination_profiles_cache) >= 32:
                     _destination_profiles_cache.pop(next(iter(_destination_profiles_cache)))
                 _destination_profiles_cache[cache_key] = local
         return [row.model_copy(deep=True) for row in local] if cache_key is not None else local
@@ -852,7 +858,7 @@ def load_destination_profiles(
     ]
     if cache_key is not None:
         with _destination_profiles_cache_lock:
-            if len(_destination_profiles_cache) >= 24:
+            if len(_destination_profiles_cache) >= 32:
                 _destination_profiles_cache.pop(next(iter(_destination_profiles_cache)))
             _destination_profiles_cache[cache_key] = result
         return [row.model_copy(deep=True) for row in result]
@@ -872,7 +878,7 @@ def load_partner_research(
     )
     bundled_paths = tuple(
         directory / "partner_research.jsonl"
-        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR, BUNDLED_FCU_DIR, BUNDLED_NSYSU_DIR, BUNDLED_NCHU_DIR, BUNDLED_NTUT_DIR, BUNDLED_NCCU_DIR, BUNDLED_NCKU_DIR, BUNDLED_NYCU_DIR, BUNDLED_NTHU_DIR, BUNDLED_PCCU_DIR, BUNDLED_WZU_DIR)
+        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR, BUNDLED_FCU_DIR, BUNDLED_NSYSU_DIR, BUNDLED_NCHU_DIR, BUNDLED_NTUT_DIR, BUNDLED_NCCU_DIR, BUNDLED_NCKU_DIR, BUNDLED_NYCU_DIR, BUNDLED_NTHU_DIR, BUNDLED_PCCU_DIR, BUNDLED_WZU_DIR, BUNDLED_NKUST_DIR, BUNDLED_YUNTECH_DIR, BUNDLED_NTOU_DIR)
     ) if include_bundled else ()
     use_cache = read_jsonl is _DEFAULT_READ_JSONL
     cache_key = (
