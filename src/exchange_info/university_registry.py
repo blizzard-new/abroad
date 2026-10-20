@@ -945,8 +945,53 @@ NKNU = UniversityProfile(
     ),
 )
 
+TMU = UniversityProfile(
+    id="tmu",
+    school_name="臺北醫學大學",
+    short_name="北醫大",
+    english_name="Taipei Medical University",
+    aliases=(
+        "tmu",
+        "臺北醫學大學",
+        "台北醫學大學",
+        "北醫大",
+        "北醫",
+        "臺北醫大",
+        "台北醫大",
+        "TMU",
+        "Taipei Medical University",
+    ),
+    hero_image="/static/assets/tmu-campus.svg",
+    official_url="https://oge.tmu.edu.tw/zh-hant/%e5%ad%b8%e7%94%9f%e4%ba%a4%e6%b5%81/tmu-student-outbound-exchange/",
+    coverage_note="完整支援：國際事務處國際盟校組 2026（民國115）年教育部學海飛颺／學海惜珠／學海築夢／新南向學海築夢計畫（第一梯次 1/16、第二梯次 9/7 截止）、校內《境外研修暨見實習獎勵辦法》獎學金（每年 1/15、5/15 兩梯次截止）、7 大學院 32 個跨國雙聯學位學制（涵蓋美、加、法、義、丹、日、澳、印尼等 18 所名校）與全球共 201 所合作盟校及教學醫院（含 34 所當期開放交換、見實習及雙聯學位校與 167 所正式締約盟校，橫跨歐、美、亞、大洋、非 37 個國家與地區）語檢門檻、學分抵免規定暨 55 篇歷屆學長姐海外交流與臨床見實習心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=201,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "臺北醫學大學",
+        "台北醫學大學",
+        "北醫大",
+        "TAIPEIMEDICALUNIVERSITY",
+        "TMU",
+    ),
+    # https://www.tmu.edu.tw/ — checked 2026-10-20.
+    colleges=(
+        "醫學院",
+        "口腔醫學院",
+        "藥學院",
+        "護理學院",
+        "公共衛生學院",
+        "醫學科技學院",
+        "人文暨社會科學院",
+        "管理學院",
+        "醫學工程學院",
+        "營養學院",
+        "跨領域學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU)
 DEFAULT_UNIVERSITY = CGU
 
 

@@ -780,6 +780,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="高師大規定返國後 1 個月內須繳交 3,000 字以上之出國研修心得報告（含照片 4 張以上）；這裡只合計下方各欄。",
     ),
+    ("tmu", "study-plan"): _rules(
+        (
+            "北醫大國際事務處及各學院甄選規定須繳交《出國研修計畫書》與《自傳》，具體說明申請動機、擬於目標盟校修習之專業課程或臨床見實習／實驗室研究規劃、外語能力準備及返國後學分抵免與職涯發展。",
+            "出國前須依《臺北醫學大學學生境外修讀課程實施辦法》由所屬系所將《學生境外研修簽報表》送教務處備查（雙聯學位前 1 個月、修習學分或研究見實習前 3 個工作日）；境外修習學分以授課滿 18 小時計 1 學分，實驗、見實習以 36–54 小時計 1 學分。",
+        ),
+        evidence="臺北醫學大學教育部115年度學海飛颺、學海惜珠甄選簡章、境外研修暨見實習獎勵辦法與學生境外修讀課程實施辦法",
+        minimum=800,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="北醫大規定須繳交出國研修計畫書與自傳；這裡合計下方各欄字數供參考。",
+    ),
+    ("tmu", "return-report"): _rules(
+        (
+            "教育部學海四項計畫（飛颺／惜珠／築夢／新南向築夢）受獎生須於返國後 14 日內登入教育部學海計畫資訊網填寫問卷，並上傳 1,000 字以內之中／英文成果報告書（含研修生活照片 4 張以上）。",
+            "獲教育部學海計畫或《臺北醫學大學境外研修暨見實習獎勵辦法》補助者，須於返國後 1 個月內檢附成果報告書、來回電子機票收據、登機證正本、護照出入境章影本及盟校正式成績單（或見實習證明）向國際事務處辦理核銷結案，並配合參加成果發表或經驗分享會。",
+        ),
+        evidence="臺北醫學大學教育部115年度學海計畫甄選簡章與境外研修暨見實習獎勵辦法",
+        minimum=500,
+        maximum=1000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="北醫大學海簡章規定於返國 14 日內上傳 1,000 字以內之中／英文成果報告書（含照片 4 張以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -810,6 +832,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "ntou": ("https://oia.ntou.edu.tw/var/file/22/1022/img/1029/779655790.pdf", "2026-10-20"),
     "ncue": ("https://oicaweb.ncue.edu.tw/var/file/19/1019/img/542278849.pdf", "2026-10-20"),
     "nknu": ("https://oia.nknu.edu.tw/tw/ugC_Rule.asp", "2026-10-20"),
+    "tmu": ("https://oge.tmu.edu.tw/tmu-goes-international/grants-overview/", "2026-10-20"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):
