@@ -54,3 +54,18 @@ def test_uniway_theme_supports_light_dark_mobile_and_reduced_motion() -> None:
     assert "@media (prefers-reduced-motion: reduce)" in styles
     assert ".public-exploration-mode .global-community-section" in styles
     assert "--uw-blue: #1769df" in styles
+
+
+def test_homepage_official_instagram_and_threads_links_are_present() -> None:
+    html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+    redesign_css = (STATIC_DIR / "platform-redesign.css").read_text(encoding="utf-8")
+
+    assert 'class="pr-hero-socials"' in html
+    assert 'class="pr-social-banner"' in html
+    assert 'class="pr-footer-socials"' in html
+    assert html.count('href="https://www.instagram.com/uniway.tw/"') >= 3
+    assert html.count('href="https://www.threads.com/@uniway.tw"') >= 3
+    assert ".pr-social-banner" in redesign_css
+    assert ".pr-social-card" in redesign_css
+    assert ".pr-footer-socials" in redesign_css
+

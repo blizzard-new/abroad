@@ -11,6 +11,9 @@ def test_home_keeps_its_search_title_after_javascript_boots(page, live_server):
     enter_public_site(page, live_server, "home")
     expect(page).to_have_title("UniWay｜交換學生申請、合作學校與選校資訊")
     expect(page.locator('.pr-footer-links a[href="/schools"]')).to_be_visible()
+    for container in (".pr-hero-socials", ".pr-social-banner", ".pr-footer-socials"):
+        expect(page.locator(f'{container} a[href="https://www.instagram.com/uniway.tw/"]')).to_be_visible()
+        expect(page.locator(f'{container} a[href="https://www.threads.com/@uniway.tw"]')).to_be_visible()
 
 
 @pytest.mark.parametrize("width", [390, 1280])
