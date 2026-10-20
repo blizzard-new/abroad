@@ -15,9 +15,17 @@
 | exchange-credit-transfer | What evidence and approvals do I prepare for recognition? | New |
 | exchange-housing-checklist | How do I compare housing and document move-in/out? | New |
 
+## 每日批次規則（2026-10-20 更新）
+
+- 從 2026-10-21 起，每天 08:00（Asia/Taipei，含週末）啟動一批，完成兩篇完整繁體中文 SEO 圖文文章，並將當日兩篇一起放入一個新的待審 PR。這取代每週一三篇的舊規則。
+- 候選池為下方原有 12 個交換準備題目及 8 個 AI／英文／考試題目，共 20 個候選方向；它們不是 20 個必須各自新增網址的頁面。按資料可核對程度、搜尋意圖及既有內容選出兩個互異問題，不固定每日類別配額。
+- 先查 main、所有相關待審 PR 與已完成紀錄；每天用新分支及新 PR，重試同一天批次時沿用該批分支／PR，避免重複。既有指南重疊時優先更新，另選可獨立成立的候選問題補足兩篇，避免換標題或年份重複產文。
+- 在選題紀錄中標記批次日期、題目、slug、狀態及對應 PR；待審內容也視為已選題。若候選已耗盡、來源不足或沒有可合理獨立成文的題目，回報具體狀況，不捏造資料或以重複薄內容湊數。
+- 排程時間是開始執行時間，PR 在文章、圖片與必要驗證完成後建立；不自動合併或部署。
+
 ## Candidate intentions for later batches
 
-Prioritize three distinct questions after checking existing/open PR content and current official sources. These are candidates, not prewritten or scheduled-to-publish pages. Update an existing guide if a topic is too close to it.
+Prioritize two distinct questions after checking existing/open PR content and current official sources. These are candidates, not prewritten or scheduled-to-publish pages. Update an existing guide if a topic is too close to it.
 
 - Choosing between one semester and one academic year: calendar, graduation and cost tradeoffs.
 - Comparing exchange versus visiting/self-funded study: agreement, fees and admissions distinctions.
@@ -51,8 +59,8 @@ Do not launch near-duplicate country articles that repeat the three cost guides.
 
 ### 選題與製作原則
 
-- 保留原有交換準備候選清單，將上述方向納入同一候選池；先從 AI 申請文件、自然寫作 Prompt、AI 英文學習評估首輪題目，再安排托福與多益，不硬性固定每週的類別配額。
-- 每批仍選三個有獨立搜尋意圖的問題；檢查 main、現有文章與待審 PR。更新既有指南不能被當作新的近似頁，依原批次規則另選獨立題目補足。
+- 保留原有交換準備候選清單，將上述方向納入同一候選池；先從 AI 申請文件、自然寫作 Prompt、AI 英文學習評估首輪題目，再安排托福與多益，不硬性固定每日的類別配額。
+- 每批選兩個有獨立搜尋意圖的問題；檢查 main、現有文章與待審 PR。更新既有指南不能被當作新的近似頁，依原批次規則另選獨立題目補足。
 - 每篇 AI 教學應提供實際任務、可複製且有填寫欄位的 Prompt、具體輸入／輸出或修改前後範例、操作步驟與人工檢查表。示範人物與經歷明示為假設，不捏造申請者成果。
 - 「好看」同時指內容清楚與版面易讀；分開說明模型協助內容整理與最終文件排版，保留校方規定格式與真實申請資料。
 - 申請文件以本人真實經歷為基礎，依目的校當期規定確認 AI 使用與揭露要求；不宣稱所有學校一律接受或禁止。
