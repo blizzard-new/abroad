@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="國立臺灣海洋大學濱海校區、基隆嶼與海洋領航校園意象圖">
+  <defs>
+    <linearGradient id="ntou-sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#082f49" />
+      <stop offset="55%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+    <linearGradient id="ntou-sea" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#082f49" />
+    </linearGradient>
+    <linearGradient id="ntou-wave" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#ntou-sky)" />
+  <!-- Keelung Sunrise & Maritime Beacon Glow -->
+  <circle cx="645" cy="94" r="54" fill="#fde68a" opacity="0.24" />
+  <circle cx="645" cy="94" r="32" fill="#fef3c7" opacity="0.52" />
+  <!-- Distant Keelung Islet (基隆嶼) Silhouette on Horizon -->
+  <path d="M540 248 Q618 176 668 206 L706 248 Z" fill="#0c4a6e" opacity="0.82" />
+  <!-- NTOU Administration Building & Maritime Lighthouse Tower -->
+  <rect x="190" y="168" width="320" height="148" rx="5" fill="#f8fafc" opacity="0.96" />
+  <rect x="318" y="120" width="64" height="196" rx="4" fill="#ffffff" />
+  <polygon points="310,120 350,86 390,120" fill="#0284c7" />
+  <circle cx="350" cy="148" r="14" fill="#0369a1" />
+  <circle cx="350" cy="148" r="8" fill="#fef08a" />
+  <!-- Academic Windows -->
+  <rect x="212" y="190" width="38" height="96" rx="3" fill="#0284c7" opacity="0.88" />
+  <rect x="262" y="190" width="38" height="96" rx="3" fill="#0284c7" opacity="0.88" />
+  <rect x="400" y="190" width="38" height="96" rx="3" fill="#0284c7" opacity="0.88" />
+  <rect x="450" y="190" width="38" height="96" rx="3" fill="#0284c7" opacity="0.88" />
+  <!-- Foreground Ocean Waves & Harbor Plaza -->
+  <path d="M0 302 Q180 282 380 302 T800 294 L800 450 L0 450 Z" fill="url(#ntou-sea)" />
+  <path d="M0 326 Q220 310 420 328 T800 318 L800 334 Q580 344 380 332 T0 338 Z" fill="url(#ntou-wave)" opacity="0.45" />
+  <text x="400" y="390" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="18.5" font-weight="700" letter-spacing="1.2">國立臺灣海洋大學 NATIONAL TAIWAN OCEAN UNIVERSITY</text>
+  <text x="400" y="420" text-anchor="middle" fill="#bae6fd" font-family="system-ui, -apple-system, sans-serif" font-size="14" letter-spacing="1.4">國際事務處（國際合作組）· 赴國外與大陸地區姊妹校交換生計畫、雙聯學位與學海獎補助</text>
+</svg>

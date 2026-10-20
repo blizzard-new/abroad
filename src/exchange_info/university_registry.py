@@ -742,8 +742,133 @@ WZU = UniversityProfile(
     ),
 )
 
+NKUST = UniversityProfile(
+    id="nkust",
+    school_name="國立高雄科技大學",
+    short_name="高科大",
+    english_name="National Kaohsiung University of Science and Technology",
+    aliases=(
+        "nkust",
+        "國立高雄科技大學",
+        "高雄科技大學",
+        "高科大",
+        "NKUST",
+        "National Kaohsiung University of Science and Technology",
+    ),
+    hero_image="/static/assets/nkust-campus.svg",
+    official_url="https://oia.nkust.edu.tw/p/412-1030-5591.php?Lang=zh-tw",
+    coverage_note="完整支援：國際事務處（國際關係組）115 學年度第一學期與第二學期選送學生赴境外大學研修（交換學生）甄選簡章、校級與院級雙軌共 107 所境外合作大學（日本、韓國、德國、法國、奧地利、瑞士、西班牙、英國、美國、泰國、馬來西亞、菲律賓、印尼、印度、越南及中國大陸）名額與 CEFR 外語檢定門檻、教育部學海飛颺／惜珠與高科大高教深耕境外研修獎助學金暨學長姐研修心得分享已完整整合。",
+    support_level="full",
+    partner_count_hint=107,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立高雄科技大學",
+        "高雄科技大學",
+        "高科大",
+        "NATIONALKAOHSIUNGUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "NKUST",
+    ),
+    # https://www.nkust.edu.tw/p/412-1000-1495.php?Lang=zh-tw — checked 2026-10-20.
+    colleges=(
+        "工學院",
+        "智慧機電學院",
+        "電機與資訊學院",
+        "海事學院",
+        "水圈學院",
+        "商業智慧學院",
+        "管理學院",
+        "海洋商務學院",
+        "財務金融學院",
+        "創新設計學院",
+        "外語學院",
+        "共同教育學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU)
+YUNTECH = UniversityProfile(
+    id="yuntech",
+    school_name="國立雲林科技大學",
+    short_name="雲科大",
+    english_name="National Yunlin University of Science and Technology",
+    aliases=(
+        "yuntech",
+        "nyust",
+        "國立雲林科技大學",
+        "雲林科技大學",
+        "雲科大",
+        "YunTech",
+        "YUNTECH",
+        "NYUST",
+        "National Yunlin University of Science and Technology",
+    ),
+    hero_image="/static/assets/yuntech-campus.svg",
+    official_url="https://tdx.yuntech.edu.tw/",
+    coverage_note="完整支援：國際事務處（出國交換生申請系統 115-2／115-1／114-2／114-1、雙聯學位與銜接學位專區）共 112 所全球合作大學（中國大陸、日本、德國、印度、韓國、印尼、越南、美國、法國、澳洲、英國、荷蘭、比利時、西班牙、立陶宛、希臘、斯洛維尼亞、捷克、土耳其、馬來西亞、菲律賓、蒙古及澳門）名額與語檢門檻、王秋雄榮譽博士德日美獎助金（每學期 10 萬–18 萬）、教育部學海飛颺／惜珠與校內出國交流補助（亞洲 11 萬／非亞洲 15 萬）暨 118 篇學長姐返國研修心得已完整整合。",
+    support_level="full",
+    partner_count_hint=112,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立雲林科技大學",
+        "雲林科技大學",
+        "雲科大",
+        "NATIONALYUNLINUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "YUNTECH",
+        "NYUST",
+    ),
+    # https://www.yuntech.edu.tw/ — checked 2026-10-20.
+    colleges=(
+        "工程學院",
+        "管理學院",
+        "設計學院",
+        "人文與科學學院",
+        "未來學院",
+    ),
+)
+
+NTOU = UniversityProfile(
+    id="ntou",
+    school_name="國立臺灣海洋大學",
+    short_name="海大",
+    english_name="National Taiwan Ocean University",
+    aliases=(
+        "ntou",
+        "國立臺灣海洋大學",
+        "國立台灣海洋大學",
+        "臺灣海洋大學",
+        "台灣海洋大學",
+        "海洋大學",
+        "海大",
+        "NTOU",
+        "National Taiwan Ocean University",
+    ),
+    hero_image="/static/assets/ntou-campus.svg",
+    official_url="https://oia.ntou.edu.tw/p/412-1022-6958.php?Lang=zh-tw",
+    coverage_note="完整支援：國際事務處（國際合作組）2027年春/秋季學期赴國外姊妹校交換生計畫暨學海飛颺甄選簡章、115學年度第2學期赴大陸地區姊妹校交換計畫、雙聯學位一覽表與全球共 123 所合作姊妹校（日本、中國大陸、菲律賓、越南、印尼、美國、韓國、泰國、印度、馬來西亞、德國、法國、俄羅斯、波蘭、英國、瑞士、澳洲、加拿大等 22 個國家與地區）名額與語檢門檻、校內赴姊妹校交換獎補助（機票＋學費最高8萬＋生活費）與教育部學海系列獎學金暨 439 篇學長姐返國研修心得已完整整合。",
+    support_level="full",
+    partner_count_hint=123,
+    academic_score_minimum=60,
+    student_card_signals=(
+        "國立臺灣海洋大學",
+        "臺灣海洋大學",
+        "海大",
+        "NATIONALTAIWANOCEANUNIVERSITY",
+        "NTOU",
+    ),
+    # https://www.ntou.edu.tw/academics — checked 2026-10-20.
+    colleges=(
+        "海運暨管理學院",
+        "生命科學院",
+        "海洋科學與資源學院",
+        "工學院",
+        "電機資訊學院",
+        "人文社會科學院",
+        "海洋法律與政策學院",
+        "國際學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU)
 DEFAULT_UNIVERSITY = CGU
 
 
