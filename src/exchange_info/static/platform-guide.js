@@ -15,7 +15,9 @@ window.UniWayGuide = (() => {
       callout: { title: "不登入也能開始", text: "瀏覽公開資料不需要登入；收藏、進度與社群功能才需要帳號。" },
       sections: [
         { h: "1. 先選你的就讀學校", p: ["點畫面左上的「切換就讀學校」，選你目前就讀的臺灣大學。UniWay 會依這所學校顯示合作校、資格規則與申請時程。", "學校會顯示在你的帳號與貼文上，選定後 3 天內不能更換。"] },
-        { h: "2. 照階段往下走", steps: ["找學校：在「找交換學校」比較國家、語言門檻與名額。", "準備校內甄選：用「資格與志願」對照你的成績與語言檢定，再排志願。", "完成合作校申請：在「申請文件」整理文件，並用「申請日曆」追蹤期限。", "安排出發：用「交換預算」估算費用，再確認簽證、住宿與保險。"] },
+        { h: "2. 照階段往下走", steps: ["找學校：在「找交換學校」比較國家、語言門檻與名額。", "準備校內甄選：用「資格與志願」對照你的成績與語言檢定，再排志願。", "完成合作校申請：在「申請文件」整理文件，並用「申請日曆」追蹤期限。", "安排出發：用「交換預算」估算費用，再確認簽證、住宿與保險。"],
+          // Shown as the four-card deck (stage-deck.js); each entry is the tool that stage opens, in the same order as steps.
+          deck: [["找交換學校", "#partners"], ["資格與志願", "#eligibility"], ["申請文件", "#application-center"], ["交換預算", "#budget"]] },
         { h: "3. 資料與判斷", p: ["資格初判供參考，正式結果以校方認定為準。每筆合作校資料都附官方來源，送件前請再核對當期公告。"] },
       ],
       links: [["找交換學校", "#partners"], ["資格與志願", "#eligibility"]],
@@ -154,11 +156,29 @@ window.UniWayGuide = (() => {
     }).join("")}</div>`;
   }
 
+  // The stages as a row of cards: one is open at a time and the open one moves on every few seconds until the reader
+  // pauses it or picks a card (stage-deck.js). The card text is the section's own steps, so search still finds it.
+  function deckHtml(section) {
+    const cards = section.steps.map((step, i) => {
+      const [title, ...rest] = step.split("：");
+      const [label, href] = section.deck[i];
+      const gate = href !== "#partners" && href !== "#guide" ? " data-requires-home-school" : "";
+      return `<li class="pr-deck-card" data-deck-card${i === 0 ? " data-active" : ""}>
+        <h3><button type="button" class="pr-deck-head" aria-expanded="${i === 0}" aria-controls="guide-deck-${i}"><span class="pr-deck-no" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span><span class="pr-deck-title">${html(title)}</span></button></h3>
+        <div id="guide-deck-${i}" class="pr-deck-body" role="region" aria-label="${html(title)}"><div><p>${html(rest.join("："))}</p><a class="pr-link" href="${href}"${gate}>開啟「${html(label)}」<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></div></div>
+        <span class="pr-deck-progress" aria-hidden="true"></span></li>`;
+    });
+    return `<div class="pr-deck" data-stage-deck role="group" aria-label="申請四階段">
+      <div class="pr-deck-bar"><button type="button" class="pr-deck-pause" data-deck-pause aria-pressed="false" hidden>暫停自動播放</button></div>
+      <ol class="pr-deck-cards">${cards.join("")}</ol></div>`;
+  }
+
   function sectionHtml(section, index, article) {
     const id = `guide-s${index + 1}`;
     const body = [];
     (section.p || []).forEach((text) => body.push(`<p>${html(text)}</p>`));
-    if (section.steps) body.push(`<ol class="pr-steps">${section.steps.map((text) => `<li>${html(text)}</li>`).join("")}</ol>`);
+    if (section.deck) body.push(deckHtml(section));
+    else if (section.steps) body.push(`<ol class="pr-steps">${section.steps.map((text) => `<li>${html(text)}</li>`).join("")}</ol>`);
     if (section.list) body.push(`<ul class="pr-bullets">${section.list.map((text) => `<li>${html(text)}</li>`).join("")}</ul>`);
     if (section.checklist) body.push(`<div data-guide-checklist>${checklistHtml()}</div>`);
     if (section.table) {
@@ -223,6 +243,7 @@ window.UniWayGuide = (() => {
     document.title = `${article.title}｜申請指南 | UniWay`;
     initIcons();
     watchOutline();
+    window.UniWayStageDeck?.init(root());
   }
 
   function watchOutline() {

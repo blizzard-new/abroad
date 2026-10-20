@@ -1,0 +1,47 @@
+/* The four-stage deck in the application guide: a column of cards on phones, a row where the open card is wider on
+   wider screens. stage-deck.js opens one card at a time and can move it on every 8 s. */
+.pr-deck { --deck-interval: 8s; --deck-speed: 300ms; margin: 1.25rem 0 1.75rem; }
+.pr-deck-bar { display: flex; justify-content: flex-end; margin-bottom: .5rem; }
+.pr-deck-pause { min-height: 0; padding: 6px 14px; border: 1px solid var(--uw-line); border-radius: 999px; background: var(--glass-surface, var(--uw-surface)); box-shadow: none; color: var(--uw-text); font: inherit; font-size: .82rem; cursor: pointer; }
+.pr-deck-pause:hover { background: var(--uw-blue-soft); }
+.pr-deck-pause[hidden] { display: none; }
+
+.pr-deck-cards { display: flex; flex-direction: column; gap: .6rem; margin: 0; padding: 0; list-style: none; }
+.pr-deck-card { position: relative; overflow: hidden; border: 1px solid var(--glass-edge, var(--uw-line)); border-radius: 18px; background: var(--glass-surface, var(--uw-surface)); box-shadow: var(--glass-shadow, none); }
+.pr-deck-card:nth-child(1) { background: color-mix(in srgb, var(--glass-blue, #deefff) 60%, var(--glass-surface, #fff)); }
+.pr-deck-card:nth-child(2) { background: color-mix(in srgb, var(--glass-lilac, #ece6ff) 60%, var(--glass-surface, #fff)); }
+.pr-deck-card:nth-child(3) { background: color-mix(in srgb, var(--glass-peach, #ffe9df) 60%, var(--glass-surface, #fff)); }
+.pr-deck-card:nth-child(4) { background: color-mix(in srgb, var(--uw-cyan-soft, #dbf5f2) 60%, var(--glass-surface, #fff)); }
+.pr-deck-card h3 { margin: 0; font-size: inherit; line-height: inherit; }
+.pr-deck-head { display: flex; align-items: center; gap: .75rem; box-sizing: border-box; width: 100%; min-height: 48px; padding: 14px 16px; border: 0; border-radius: 0; background: transparent; box-shadow: none; color: var(--uw-text); font: inherit; font-weight: 700; text-align: left; cursor: pointer; }
+.pr-deck-head:focus-visible { outline: 3px solid var(--uw-blue); outline-offset: -3px; }
+.pr-deck-no { color: var(--uw-blue-strong); font-size: .8rem; letter-spacing: .14em; font-variant-numeric: tabular-nums; }
+.pr-deck-body { display: grid; grid-template-rows: 0fr; visibility: hidden; opacity: 0; }
+.pr-deck-body > div { min-height: 0; overflow: hidden; padding: 0 16px; }
+.pr-deck-body p { margin: 0 0 .75rem; color: var(--uw-muted); line-height: 1.8; }
+.pr-deck-body .pr-link { display: inline-flex; margin-bottom: 16px; }
+[data-active] > .pr-deck-body { grid-template-rows: 1fr; visibility: visible; opacity: 1; }
+
+/* Time left before the open card moves on; it only runs while the deck is playing. */
+.pr-deck-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--uw-blue-strong); transform: scaleX(0); transform-origin: left; }
+@keyframes pr-deck-fill { to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: no-preference) {
+  .pr-deck.is-playing [data-active] > .pr-deck-progress { animation: pr-deck-fill var(--deck-interval) linear forwards; }
+  .pr-deck-body { transition: grid-template-rows var(--deck-speed) var(--uw-motion-ease, cubic-bezier(.2, .75, .25, 1)), opacity 160ms ease, visibility 0s linear var(--deck-speed); }
+  [data-active] > .pr-deck-body { transition-delay: 0s, 80ms, 0s; }
+}
+
+@media (min-width: 48rem) {
+  .pr-deck-cards { flex-direction: row; height: 15rem; }
+  .pr-deck-card { display: flex; flex-direction: column; flex: 1 1 0; min-width: 0; }
+  [data-active].pr-deck-card { flex-grow: 3.4; }
+  .pr-deck-head { flex-direction: column; align-items: flex-start; gap: .35rem; }
+  /* The text keeps the open width while the card grows, so it does not re-wrap mid-animation. */
+  .pr-deck-body { flex: 1; min-width: 15rem; grid-template-rows: 1fr; }
+  .pr-deck-body > div { overflow: auto; }
+}
+@media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
+  .pr-deck-card { transition: flex-grow var(--deck-speed) var(--uw-motion-ease, cubic-bezier(.2, .75, .25, 1)); }
+}
+
+@media print { .pr-deck-pause, .pr-deck-progress { display: none; } .pr-deck-cards { flex-direction: column; height: auto; } .pr-deck-body { visibility: visible; opacity: 1; grid-template-rows: 1fr; } }
