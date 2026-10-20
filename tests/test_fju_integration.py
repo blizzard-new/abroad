@@ -139,7 +139,7 @@ def test_fju_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     import json
 
     provenance = json.loads((BUNDLE / "import_provenance.json").read_text(encoding="utf-8"))
-    assert len(provenance["sources"]) == 13
+    assert len(provenance["sources"]) == 18
     for src in provenance["sources"]:
         path = ROOT / src["file"]
         assert path.is_file(), f"Missing archived source: {src['file']}"

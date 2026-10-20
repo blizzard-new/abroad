@@ -7,6 +7,12 @@ from datetime import datetime, timezone
 from .models import (ApplicationPeriodItem, ExchangeInfo, PartnerStudentSummary, PartnerUniversity,
                      ProcessedPage, SourceReference, StudentDashboard, StudentInfoItem)
 from .tku_data import BUNDLE, CHECKED_AT, HOME, load_tku_records, load_tku_rounds, load_tku_sources
+from .tku_oct20_updates import (
+    tku_oct20_processed_pages,
+    tku_oct20_program_overview_item,
+    tku_oct20_scholarship_item,
+    tku_oct20_sources,
+)
 
 
 def _source(source_id: str, summary: str | None = None) -> SourceReference:
@@ -112,7 +118,8 @@ def build_tku_student_dashboard(*, partner_universities=None, reference_time: da
             "最新校級日語二甄4校合計7名，已截止；只有已獲推薦者可依外校期限續辦。",
             "英歐及中文組2027–2028新版尚未核實，不能稱官方明示尚未公告。124筆115舊期計畫另存參考資料。",
             "大三出國由外語學院六系、國企、資工、觀光、政經等系辦理，與國際處互惠交換的學費及流程不同；不納入校級交換名單。",
-        ], source=_source("jp-revision-attachment-1", "PDF p.17 Q&A3區分大三出國與國際處交換；並核對首頁、公告索引及赴外頁。"))],
+        ], source=_source("jp-revision-attachment-1", "PDF p.17 Q&A3區分大三出國與國際處交換；並核對首頁、公告索引及赴外頁。")),
+        tku_oct20_program_overview_item()],
         eligibility=[StudentInfoItem(title="日語第二次甄選資格與矛盾", details=[
             "正文限在學大三及研究所一、二年級；須系所院初選推薦。研究所一新生附大學四年成績單。",
             "正文要求在校學業總平均75；附錄Q&A另有系前40%替代條件，先標待確認，不能自行採較寬條件。",
@@ -150,9 +157,10 @@ def build_tku_student_dashboard(*, partner_universities=None, reference_time: da
             "互惠交換學費0；活动費半年JPY50,000／一年53,100含指定A/B保險；行政費15,000／20,000含福岡接送，國民健康保險約2,000/月另付。",
             "Ampelos雙人21,000／單人42,000每月，入寮費20,000／30,000；餐費30,000/月且至6月底早餐晚餐必訂。房型偏好不保證，住房申請確切截止仍未載。",
             "上述費率不能套到其他長崎計畫；是否適用淡江本輪及研究生仍待確認。",
-        ],source=_source("nagasaki-nics-2027","2027春NICS：費用、住宿、保險及餐費段；2026-10-08核對。"))],
+        ],source=_source("nagasaki-nics-2027","2027春NICS：費用、住宿、保險及餐費段；2026-10-08核對。")),
+        tku_oct20_scholarship_item()],
         partner_universities=partner_universities if partner_universities is not None else fetch_tku_partner_universities(reference_time=now),
-        sources=[_source(s) for s in ["jp-revision","jp-revision-attachment-1","jp-revision-attachment-2","ritsumeikan-2027-guide","seikei-2027-sheet","nagasaki-nics-2027","nagasaki-partners","nagasaki-form-a-online","nagasaki-pledge","uec-application-recheck","uec-costs","tku-news-recheck","tku-outbound-recheck"]] + _notice_audit_sources())
+        sources=[_source(s) for s in ["jp-revision","jp-revision-attachment-1","jp-revision-attachment-2","ritsumeikan-2027-guide","seikei-2027-sheet","nagasaki-nics-2027","nagasaki-partners","nagasaki-form-a-online","nagasaki-pledge","uec-application-recheck","uec-costs","tku-news-recheck","tku-outbound-recheck"]] + _notice_audit_sources() + tku_oct20_sources())
 
 
 def tku_exchange_info(partners=None) -> ExchangeInfo:
@@ -188,6 +196,7 @@ def tku_processed_pages() -> list[ProcessedPage]:
             text=f"{audit['scope']}\n{audit['finding']}\n以下僅公告發現資料，舊期及結果公告不是本期申請文件：\n{titles}",
             summary=f"公開REST完整{audit['rest_total']}筆／{audit['rest_pages']}頁；查核2026-10-08；狀態{audit['finding_status']}，不能推定官方尚未公告。",
             category='exchange_application',crawled_at=CHECKED_AT,content_hash=row['sha256']))
+    result.extend(tku_oct20_processed_pages())
     return result
 
 

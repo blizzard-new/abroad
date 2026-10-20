@@ -410,10 +410,13 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
     ),
     ("fju", "study-plan"): _rules(
         (
-            "讀書計畫（Study Plan）及自傳：A4 雙面列印，不超過 2 頁（4 面）。",
-            "外語組以英文或交換國語言撰寫；日語組以日文或英文撰寫；中語組以中文撰寫。",
+            "116-1（2027秋季班）書審資料：中文讀書計畫（只需繳交一份中文版，不需繳交英文版，至少 500 字，格式不拘，兩頁為限）與中文簡歷（就學、工作及社團經驗，格式不拘，兩頁為限），合併為單一 PDF 電子檔（勿超過 20MB）上傳至線上申請系統。",
+            "舊版一般規定（labelID=43）：讀書計畫（Study Plan）及自傳 A4 雙面列印，不超過 2 頁（4 面）。",
         ),
-        evidence="輔仁大學：申請應備文件規範",
+        evidence="輔仁大學 116-1（2027秋季班）赴姊妹校交換學生申請公告（newsID=1062）與申請應備文件規範",
+        minimum=500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="學校規定的是整份中文讀書計畫（至少 500 字，兩頁為限）；這裡只合計下方各欄。",
     ),
     ("fju", "return-report"): _rules(
         ("返國後 1 個月內繳交 2,000 字以上的交換心得報告與成績單。",),
@@ -680,7 +683,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "ccu": ("https://oia.ccu.edu.tw/var/file/8/1008/attach/78/pta_54384_797227_45763.pdf", "2026-10-08"),
     "ncu": ("https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf", "2026-10-15"),
     "tku": ("https://oieie.tku.edu.tw/oieie/?page_id=55", "2026-10-08"),
-    "fju": ("https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43", "2026-10-16"),
+    "fju": ("https://iscoie.fju.edu.tw/newsDetail.jsp?newsID=1062&newsClassID=14", "2026-10-20"),
     "scu": ("https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply", "2026-10-16"),
     "ntnu": ("https://bds.oia.ntnu.edu.tw/bds/web/outgoing-apply", "2026-10-16"),
     "cycu": ("https://oia.cycu.edu.tw/?p=6338", "2026-10-16"),
