@@ -176,7 +176,7 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
         for i, (name, p) in enumerate(breadcrumbs, 1)]}
     article_head = structured_data(article_schema(article, settings.origin)) if article else ""
     if path == "/guides" or article:
-        article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261020-1">'
+        article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261020-stage-1">'
     if extra_head:
         article_head += extra_head
     html = f'''<!doctype html><html lang="zh-Hant" data-theme="light"><head><meta charset="utf-8">
@@ -535,7 +535,8 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
     @router.api_route("/guides", methods=["GET", "HEAD"])
     def guides():
         body = guide_index()
-        return page(settings, "交換學生資格、費用與文件指南｜UniWay", "依序準備交換學生資格、語言、預算、補助與文件，連結各母校的官方申請資訊。", "/guides", body, [("首頁", "/"), ("申請指南", "/guides")])
+        return page(settings, "交換學生資格、費用與文件指南｜UniWay", "依序準備交換學生資格、語言、預算、補助與文件，連結各母校的官方申請資訊。", "/guides", body, [("首頁", "/"), ("申請指南", "/guides")],
+                    extra_head='<script src="/static/stage-scroll.js?v=20261020-stage-1" defer></script>')
 
     @router.api_route("/guides/{slug}", methods=["GET", "HEAD"])
     def guide(slug: str):

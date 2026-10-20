@@ -145,16 +145,33 @@ def article_card(article: Article) -> str:
 <span class="card-action">閱讀指南 <span aria-hidden="true">↗</span></span></span></a></li>'''
 
 
+# The four stages of the guide index, in reading order. The one-line notes only describe what the stage's guides
+# cover; every fact stays in the articles and their sources.
+STAGE_NOTES = {
+    "申請準備": "先分清校內甄選、母校提名與合作校申請，再確認資格、寫好讀書計畫。",
+    "費用與補助": "把學費、生活費、押金與補助拆開估算，找出真正要準備的金額與申請管道。",
+    "目的地生活": "依國家看生活費、住宿與初期支出；數字連同官方來源與日期一起讀。",
+    "修課與住宿": "出發前確認學分怎麼採認，以及宿舍與住宿怎麼申請。",
+}
+
+
 def guide_index() -> str:
     body = '''<div class="editorial-index"><p class="eyebrow">UNIWAY / EXCHANGE JOURNAL</p>
 <h1>交換學生指南：<br>把想交換，變成準備好。</h1><p class="lead">從第一份資格清單，到抵達宿舍的那一天。用有來源的資訊，做適合自己的決定。</p>
 <nav class="editorial-categories" aria-label="文章分類">'''
-    categories = ("申請準備", "費用與補助", "目的地生活", "修課與住宿")
-    body += "".join(f'<a href="#category-{i}">{category}</a>' for i, category in enumerate(categories)) + '</nav>'
-    for i, category in enumerate(categories):
-        body += f'<section id="category-{i}"><h2>{category}</h2><ul class="editorial-cards">'
-        body += "".join(article_card(a) for a in ARTICLES.values() if a.category == category) + '</ul></section>'
-    return body + '</div>'
+    stages = [(category, [a for a in ARTICLES.values() if a.category == category]) for category in STAGE_NOTES]
+    stages = [(category, articles) for category, articles in stages if articles]
+    body += "".join(f'<a href="#category-{i}">{category}</a>' for i, (category, _) in enumerate(stages)) + '</nav>'
+    # Every stage is plain stacked content. stage-scroll.js only adds a sticky card panel on wide screens, so each
+    # card appears exactly once and the page reads the same without JavaScript.
+    body += f'<div class="stage-scroll" data-stage-scroll style="--stage-count:{len(stages)}">'
+    for i, (category, articles) in enumerate(stages):
+        body += f'''<section class="stage-block" data-stage-block aria-labelledby="category-{i}-title">
+<div class="stage-copy" id="category-{i}" data-stage-copy style="--stage-row:{i + 1}">
+<p class="stage-no" aria-hidden="true">{i + 1:02d}</p><h2 id="category-{i}-title">{escape(category)}</h2>
+<div class="stage-detail"><div><p class="stage-desc">{escape(STAGE_NOTES[category])}</p><p class="stage-count">{len(articles)} 篇指南</p></div></div></div>
+<div class="stage-cards" data-stage-cards><ul class="editorial-cards">{"".join(article_card(a) for a in articles)}</ul></div></section>'''
+    return body + '</div></div>'
 
 
 def article_schema(article: Article, origin: str) -> dict:
