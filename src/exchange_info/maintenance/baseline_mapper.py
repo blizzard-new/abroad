@@ -58,6 +58,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "tmu": ["oge.tmu.edu.tw", "aca.tmu.edu.tw", "www.tmu.edu.tw", "tmu.edu.tw"],
     "csmu": ["oia.csmu.edu.tw", "www.csmu.edu.tw", "csmu.edu.tw"],
     "cmu": ["cmucia.cmu.edu.tw", "www.cmu.edu.tw", "cmupt.cmu.edu.tw", "med.cmu.edu.tw", "chmed.cmu.edu.tw", "cmunur.cmu.edu.tw", "cmu.edu.tw"],
+    "kmu": ["cia.kmu.edu.tw", "www.kmu.edu.tw", "cmed.kmu.edu.tw", "dent.kmu.edu.tw", "pharm.kmu.edu.tw", "nursing.kmu.edu.tw", "chs.kmu.edu.tw", "cls.kmu.edu.tw", "chss.kmu.edu.tw", "kmu.edu.tw"],
 }
 
 
@@ -1155,6 +1156,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["cmu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="cmu", partner_rows=cmu_rows, default_cycle_label="116"
+        )
+
+    # 31. KMU partners.jsonl (188 partner schools)
+    kmu_partners_path = official_data_root / "kmu" / "partners.jsonl"
+    if kmu_partners_path.exists():
+        kmu_rows = []
+        for line in kmu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            kmu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://cia.kmu.edu.tw/index.php/zh-tw/%E5%A7%8A%E5%A6%B9%E6%A0%A1%E5%90%88%E7%B4%84/%E5%90%88%E7%B4%84%E6%A0%A1%E6%9F%A5%E8%A9%A2",
+            })
+        school_reports["kmu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="kmu", partner_rows=kmu_rows, default_cycle_label="116"
         )
 
     if store.current_release_id is None:

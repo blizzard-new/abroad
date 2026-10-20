@@ -846,6 +846,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="中國醫規定返國後須繳交 1,000–2,000 字之成果報告與出國交換／實習經驗分享（含照片 4 張以上）；這裡只合計下方各欄。",
     ),
+    ("kmu", "study-plan"): _rules(
+        (
+            "高雄醫學大學國際事務處與各學院（醫、牙、藥、護、健科、生科、人社）甄選規定須繳交《出國研修讀書／實習計畫書》與《中英文自傳／CV》，具體說明申請動機、擬於目標姊妹校修習之專業領域課程或附設醫院海外臨床見實習／實驗室研究規劃、外語能力準備及返國後學分抵免與職涯發展。",
+            "依《高雄醫學大學學生出國期間有關學業及學籍處理要點》與《辦理跨國雙聯學制實施辦法》規定，修讀跨國雙聯學位者於兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月，且於兩校修習學分數合計須超過畢業應修總學分數三分之一；出國期間須維持高醫大在學註冊。",
+        ),
+        evidence="高雄醫學大學選送學生出國研修辦法、辦理跨國雙聯學制實施辦法、醫學院國際交換生甄選簡章與教育部學海計畫甄選公告",
+        minimum=800,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="高醫大規定須繳交出國研修讀書／實習計畫書與中英文自傳；這裡合計下方各欄字數供參考。",
+    ),
+    ("kmu", "return-report"): _rules(
+        (
+            "教育部學海四項計畫（飛颺／惜珠／築夢／新南向築夢）受獎生須於返國後 14 日內登入教育部學海計畫資訊網填寫問卷，並上傳 1,000–2,000 字之中／英文成果報告書（含研修與臨床見實習照片 4 張以上）。",
+            "獲教育部學海計畫或《高雄醫學大學學生國際移動力獎助金辦法》補助者，須於返國後 1 個月內檢附出國研修／見實習成果報告（提供國際事務處與各學院刊登於《學生國際交流經驗分享》專區）、來回電子機票收據、登機證正本、護照出入境章影本及姊妹校正式成績單（或臨床見實習評估表／結業證書）向國際事務處辦理核銷結案，並配合參加國際移動力經驗分享會。",
+        ),
+        evidence="高雄醫學大學選送學生出國研修辦法、學生國際移動力獎助金辦法與教育部學海計畫甄選公告",
+        minimum=1000,
+        maximum=2000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="高醫大規定返國後須繳交 1,000–2,000 字之成果報告與學生國際交流經驗分享（含照片 4 張以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -879,6 +901,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "tmu": ("https://oge.tmu.edu.tw/tmu-goes-international/grants-overview/", "2026-10-20"),
     "csmu": ("https://oia.csmu.edu.tw/p/412-1017-105.php?Lang=zh-tw", "2026-10-21"),
     "cmu": ("https://cmucia.cmu.edu.tw/page/about_3", "2026-10-21"),
+    "kmu": ("https://cia.kmu.edu.tw/index.php/zh-tw/%E5%AD%B8%E7%94%9F%E4%BA%A4%E6%B5%81/%E9%AB%98%E9%86%AB%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B", "2026-10-21"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

@@ -32,6 +32,7 @@ from .nknu_eligibility import is_nknu, nknu_academic_check, nknu_degree_check, n
 from .tmu_eligibility import is_tmu, tmu_academic_check, tmu_degree_check, tmu_language_check
 from .csmu_eligibility import csmu_academic_check, csmu_degree_check, csmu_language_check, is_csmu
 from .cmu_eligibility import cmu_academic_check, cmu_degree_check, cmu_language_check, is_cmu
+from .kmu_eligibility import is_kmu, kmu_academic_check, kmu_degree_check, kmu_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -616,6 +617,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_kmu(request.home_school):
+        deg_status, deg_detail = kmu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -816,6 +822,12 @@ def _eligibility_checks(
             "academic_score", status, "中國醫藥大學歷年平均80分（GPA 3.0／A-）或班排前20%（學海飛颺前50%）與操行80分門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_kmu(request.home_school):
+        status, detail = kmu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "高雄醫學大學歷年平均70分（GPA 2.44）或班排前50%（學海飛颺GPA 3.0或前50%）與操行80分門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -933,6 +945,9 @@ def _eligibility_checks(
     if is_cmu(request.home_school):
         home_status, home_detail = cmu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "中國醫藥大學外語基準（TOEFL 57／IELTS 4.0／TOEIC 550）、雙聯（IELTS 6.5／TOEFL 79+）與日韓語檢（JLPT N2–N3／TOPIK 2–3）標準", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_kmu(request.home_school):
+        home_status, home_detail = kmu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "高雄醫學大學英語組基準（TOEFL 69／IELTS 6.0／TOEIC 650／全民英檢中高級初試）與日語組基準（JLPT N4+）標準", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

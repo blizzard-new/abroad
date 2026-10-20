@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -93,6 +93,7 @@ NKNU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 TMU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 CSMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 CMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
+KMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2046,6 +2047,51 @@ def _cmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _kmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理高雄醫學大學選送學生出國研修、海外見實習暨教育部學海四項計畫（學海飛颺／惜珠／築夢／新南向築夢）、校內《學生國際移動力獎助金辦法》與各學院交換／雙聯學位（如杜肯大學藥學雙聯）甄選應繳資料：1. 國際事務處／各學院國際交換生或學海計畫申請表（須經導師或指導教授、所屬系所主管及學院院長初審核章；醫學院另須填具選填志願表與資料繳交檢核表）、2. 中英文歷年成績單正本（含學業總平均、GPA 與班級排名；依《選送學生出國研修辦法》第三條，須於高醫大就讀一學期以上且歷年學業總平均達 70 分［GPA 2.44］或班級排名前 50%，操行成績平均達 80 分以上且無懲處紀錄；申請學海飛颺者須達班排前 50% 或 GPA 3.0 以上，醫學院交換甄選佔總成績 40%）、3. 有效外語能力檢定證明影本（英語組須具 TOEFL iBT 69 / IELTS 6.0 / TOEIC 650 / 全民英檢中高級初試以上，日語組須具 JLPT N4 以上；醫學院日語組加分採計 N1–N5，歐美名校如賓州大學／哈佛／牛津／UCLA／杜肯雙聯須達 TOEFL iBT 80–100 或 IELTS 6.5–7.0）、4. 中英文自傳、個人履歷表（CV）與出國研修讀書／見實習計畫書（含申請動機、擬於目標姊妹校修習之專業領域課程或附設醫院海外臨床見實習／實驗室研究規劃）、5. 師長推薦信與家長同意書；經各系所與學院初審推薦排序後，於截止日前送交勵學大樓 3 樓國際事務處。",
+        "study-plan": "撰寫高雄醫學大學出國交換、海外臨床見實習（醫學系 Clerkship、牙醫系、藥學系 APPE、護理系、物理治療、職能治療、呼吸治療、醫技、醫社、心理等）、海外實驗室研究或跨國雙聯學位（如美國杜肯大學 Duquesne University 藥學雙聯）必繳之《出國研修讀書／實習計畫書》與《中英文個人自傳／CV》。請具體說明赴外動機、擬於目標姊妹校修習之專業課程或臨床見實習科別／實驗室研究內容、外語能力準備，以及返國後學分抵免（依《高雄醫學大學學生出國期間有關學業及學籍處理要點》與《辦理跨國雙聯學制實施辦法》，兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月，且於兩校修習學分數合計須超過畢業應修總學分數三分之一）與醫藥健康專業職涯規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀課程、跨國雙聯學位或海外臨床見實習之選課預審與教務核備（依《高雄醫學大學學生出國期間有關學業及學籍處理要點》與《辦理跨國雙聯學制實施辦法》規定，出國前須由所屬系所及教務處確認擬修習科目或臨床見實習學分與返國抵免對照；出國研修期間必須維持高雄醫學大學在學註冊，休學期間修習之學分不予採認；大陸地區醫事人員高等學校學歷依教育部規定不予採認醫事國考資格）。",
+        "predeparture-notice": "於國際事務處或各學院公告錄取及獎學金核定名單後，配合國際事務處完成國外姊妹校提名（Nomination）、免疫接種與健康檢查證明（Immunization Record，歐美日醫牙藥護臨床見實習必備）及入學／見實習許可（Offer / Invitation Letter）取得；出國前須簽署《教育部學海計畫行政契約書》或《高醫大國際移動力獎助金切結書》、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療、意外及臨床實習責任保險（Malpractice Insurance），並確認已完成高雄醫學大學當學期註冊。",
+        "return-report": "境外交換或見實習期滿返國後，教育部學海計畫受獎生須於返國 14 日內登入教育部學海計畫資訊網填報問卷並上傳 1,000–2,000 字中／英文成果報告書（含研修與臨床見實習照片 4 張以上），並於返國後 1 個月內檢附來回電子機票收據、登機證正本、護照出入境章影本、姊妹校正式成績單（或臨床見實習評估表／結業證書）及出國研修成果報告（提供國際事務處刊登於《學生國際交流經驗分享》專區），向國際事務處辦理獎補助款核銷結案及參加國際移動力成果分享會。",
+        "credit-transfer": "境外交換或見實習期滿返國後持國外姊妹校核發之正式成績單正本（或臨床見實習評估表／修業完成證明）與課程大綱（Syllabus），依《高雄醫學大學學生出國期間有關學業及學籍處理要點》、《辦理跨國雙聯學制實施辦法》及《學生抵免學分辦法》向所屬系（所）、學院及教務處註冊課務組申請境外修習科目與實習學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "高雄醫學大學").replace("長庚", "高醫大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "高雄醫學大學《選送學生出國研修辦法》第三條與《教育部學海計畫甄選簡章》規定：須於高醫大就讀一學期以上，歷年學業總平均達 70 分（GPA 2.44）或班級排名前 50%（申請教育部學海飛颺者須達班級排名前 50% 或 GPA 3.0 以上），且操行成績平均達 80 分以上、在學期間無懲處紀錄。請檢附含 GPA 與班級排名百分比之中英文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（高醫大英語組基準 69+／歐美臨床見實習及雙聯 79–100+）", "IELTS 學術組（高醫大英語組基準 6.0+／歐美名校及雙聯 6.5–7.0+）", "TOEIC 聽讀測驗（高醫大英語組基準 650+／校內獎助 CEFR B2=785+）", "GEPT 全民英檢（中高級初試以上）", "JLPT 日語能力試驗（高醫大日語組基準 N4+；醫學院加分採計 N1–N5；東大／東北／慶應／長崎／昭和 N2–N3+）", "其他歐洲／東南亞外語檢定（依學海新南向築夢或姊妹校規定）", "大陸與香港姊妹校（香港大學／香港中文大學須英語證明；大陸姊妹校免外語檢定，大陸醫事學歷不予採認考照）"]
+            field["help_text"] = "依高雄醫學大學《選送學生出國研修辦法》、《學生國際移動力獎助金辦法》與各學院交換甄選簡章規定：申請英語組須具 TOEFL iBT 69、IELTS 6.0、TOEIC 650 或全民英檢中高級初試以上，申請日語組須具 JLPT N4 以上（醫學院日語組加分採計 N1–N5，部分日本姊妹校要求 N2–N3）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://cia.kmu.edu.tw/index.php/zh-tw/%E5%AD%B8%E7%94%9F%E4%BA%A4%E6%B5%81/%E9%AB%98%E9%86%AB%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B",
+        source_checked_at=KMU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換／海外見實習／學海計畫申請表" if template.id == "exchange-application-data" else ("出國研修讀書／實習計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://cia.kmu.edu.tw/index.php/zh-tw/%E5%AD%B8%E7%94%9F%E4%BA%A4%E6%B5%81/%E9%AB%98%E9%86%AB%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後辦理選課預審、姊妹校提名、免疫體檢與責任保險及學海或校內獎助簽約", "return-report": "返國 14 日內上傳學海成果報告並於 1 個月內繳交交換／見實習成果報告與核銷單據", "credit-transfer": "返國後持姊妹校正式成績單或見實習評估表辦理境外學分採認"}.get(template.id, "備齊申請表與附件（經家長、導師／指導教授、系所主管及院長簽章）於截止日前送交所屬學院及勵學大樓 3 樓國際事務處"),
+        version="115準備工具-2026-10-21.1",
+        destinations=["高雄醫學大學所屬系所與學院辦公室（初審推薦）", "高雄醫學大學國際事務處（高雄市三民區十全一路100號勵學大樓3樓）"],
+        conditional_note="此為個人準備工具；高雄醫學大學教育部學海四項計畫（每年 12 月至翌年 2 月收件）、校內《學生國際移動力獎助金辦法》、各學院海外交換與臨床見實習（如醫學院每年 9–10 月甄選）及跨國雙聯學位須先經系所與學院核章，出國期間須維持高醫大在學註冊，且修讀雙聯學位者於兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2110,6 +2156,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _csmu_template(template)) is not None]
     if university.id == CMU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _cmu_template(template)) is not None]
+    if university.id == KMU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _kmu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

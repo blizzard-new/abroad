@@ -1067,8 +1067,48 @@ CMU = UniversityProfile(
     ),
 )
 
+KMU = UniversityProfile(
+    id="kmu",
+    school_name="高雄醫學大學",
+    short_name="高醫大",
+    english_name="Kaohsiung Medical University",
+    aliases=(
+        "kmu",
+        "高雄醫學大學",
+        "高醫大",
+        "高醫",
+        "高雄醫大",
+        "KMU",
+        "Kaohsiung Medical University",
+    ),
+    hero_image="/static/assets/kmu-campus.svg",
+    official_url="https://ciae2.kmu.edu.tw/index.php/zh-tw",
+    coverage_note="完整支援：國際事務處與 7 大學院 115–116 學年度（2026–2028）醫學院 2027 海外臨床見實習（21 校 64+ 名：美國哈佛醫學院 6 名［免見習費與申請費＋KMU-Harvard Foundation USD 500＋北美校友會 NT$15,000］、希望之城 4 名、羅格斯 2 名、梅哈里 2 名、夏威夷大學 1 名、德國科隆大學 4 名、澳洲邦德大學 4 名、日本京都大學 2 名、慶應義塾大學 3 名、東京醫科大學 2 名［免學費＋免費住宿］、神戶大學 3 名、德島 3 名、信州 2 名、愛媛 4 名、藤田醫大 2 名、韓國首爾大學 2 名、亞洲大學 4 名、香港大學 4 名、新加坡國立大學 4 名、南洋理工大學 4 名、泰國宋卡王子大學 4 名）、校級赴日本順天堂大學長期交換生計畫（JLCSP / LAP 免學費）、10 校跨國雙聯學位（瑞典烏普薩拉大學每年 6 名免學費、匈牙利賽蓋德大學每年 3 名免學費＋免費住宿、日本熊本大學 2026/09 新簽醫學博士雙聯、美國加州大學爾灣分校 UCI、City of Hope、法國艾克斯-馬賽大學、澳洲格里菲斯大學、泰國朱拉隆功大學藥學雙聯博士每年 2 名免學費、瑪希朵大學、清邁大學）、口腔醫學院／藥學院／護理學院／健康科學院（含瑞典卡羅林斯卡醫學院 KI 3 名、美國南加大 USC 6 名、約翰霍普金斯醫院 4 名、新加坡陳篤生醫院 6 名）／人社院海外見實習、115 年度博士生千里馬出國研究計畫（最高補助 NT$50萬）、國際處出國研習補助（歐美非機票最高 NT$5萬＋月領 NT$2.5萬）與全球共 188 所合作姊妹校及教學醫院（含 56 所當期開放交換、雙聯与臨床見實習重點機構及 132 所正式締約姊妹校，橫跨 30 個國家與地區）語檢門檻暨 56 篇歷屆師生海外研修心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=188,
+    academic_score_minimum=60,
+    student_card_signals=(
+        "高雄醫學大學",
+        "高醫大",
+        "高醫",
+        "高雄醫大",
+        "KAOHSIUNGMEDICALUNIVERSITY",
+        "KMU",
+    ),
+    # https://www.kmu.edu.tw/ — checked 2026-10-21.
+    colleges=(
+        "醫學院",
+        "口腔醫學院",
+        "藥學院",
+        "護理學院",
+        "健康科學院",
+        "生命科學院",
+        "人文社會科學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU)
 DEFAULT_UNIVERSITY = CGU
 
 
