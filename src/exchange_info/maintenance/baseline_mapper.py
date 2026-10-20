@@ -57,6 +57,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "nknu": ["oia.nknu.edu.tw", "c.nknu.edu.tw", "w3.nknu.edu.tw", "www.nknu.edu.tw", "nknu.edu.tw"],
     "tmu": ["oge.tmu.edu.tw", "aca.tmu.edu.tw", "www.tmu.edu.tw", "tmu.edu.tw"],
     "csmu": ["oia.csmu.edu.tw", "www.csmu.edu.tw", "csmu.edu.tw"],
+    "cmu": ["cmucia.cmu.edu.tw", "www.cmu.edu.tw", "cmupt.cmu.edu.tw", "med.cmu.edu.tw", "chmed.cmu.edu.tw", "cmunur.cmu.edu.tw", "cmu.edu.tw"],
 }
 
 
@@ -1131,6 +1132,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["csmu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="csmu", partner_rows=csmu_rows, default_cycle_label="116"
+        )
+
+    # 30. CMU partners.jsonl (174 partner schools)
+    cmu_partners_path = official_data_root / "cmu" / "partners.jsonl"
+    if cmu_partners_path.exists():
+        cmu_rows = []
+        for line in cmu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            cmu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://cmucia.cmu.edu.tw/a_partner.php",
+            })
+        school_reports["cmu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="cmu", partner_rows=cmu_rows, default_cycle_label="116"
         )
 
     if store.current_release_id is None:

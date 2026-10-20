@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CSMU, CYCU, FCU, FJU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -92,6 +92,7 @@ NCUE_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 NKNU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 TMU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 CSMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
+CMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2000,6 +2001,51 @@ def _csmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _cmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理中國醫藥大學選送學生出國研修、跨國雙聯學位（Queen's University Belfast 4+1、KGI、Georgia State University、University of Texas Health Science Center at Houston 等 7 校 11 學程）暨教育部學海四項計畫（學海飛颺／惜珠／築夢／新南向築夢）及校內《獎勵學生出國研習及開拓國際視野辦法》甄選應繳資料：1. 出國交換／雙聯學位／學海計畫申請表（須經導師或指導教授、所屬系所主管及學院院長初審核章）、2. 歷年成績單正本（含學業總平均、GPA 與班級／系所排名；依《選送學生出國研修辦法》第四條，須於中國醫藥大學就讀滿一學年以上、歷年學業總平均達 80 分［GPA 3.0／A-］以上或名列全班前 20%，且前一學期操行成績達 80 分以上；學海飛颺須名列全班前 50%）、3. 有效外語能力檢定證明影本（校內最低基準為 TOEFL iBT 57 / ITP 500、IELTS 4.0、TOEIC 550 或 GEPT 中級複試；雙聯學位如英國貝爾法斯特女王大學須達 IELTS 6.5、日本姊妹校須達 JLPT N2–N3、韓國姊妹校須達 TOPIK 2–3 級或英語檢定）、4. 中英文自傳與出國研修讀書計畫書（含申請動機、擬於目標盟校修習之專業領域課程或海外臨床見實習／實驗室研究規劃）、5. 師長推薦信與家長同意書；經各系所與學院初審推薦排序後，於截止日前送交水湳校區卓越大樓國際事務處。",
+        "study-plan": "撰寫中國醫藥大學出國交換、跨國雙聯學位（英國 Queen's University Belfast 藥學／生技 4+1、美國 Keck Graduate Institute 藥學／生醫、Georgia State University 物理治療／運醫、UTHealth Houston 公共衛生、法國圖盧茲大學等）、海外研究或醫牙中醫藥護物治臨床見實習必繳之《出國研修讀書計畫書》與《個人自傳》。請具體說明赴外動機、擬於目標盟校修習之專業課程或臨床見實習／實驗室研究內容、外語能力準備，以及返國後學分抵免（依《中國醫藥大學與境外大學校院辦理跨國雙聯學制實施辦法》，兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月，且於兩校修習學分數合計須超過畢業應修總學分數三分之一）與醫藥生技專業職涯規劃。",
+        "course-preapproval": "辦理赴境外大學校院修讀課程、跨國雙聯學位或海外臨床見實習之選課預審與教務核備（依《中國醫藥大學學生出國期間有關學業及學籍處理要點》與《辦理跨國雙聯學制實施辦法》規定，出國前須由所屬系所及教務處確認擬修習科目與返國學分抵免對照；出國研修期間必須維持中國醫藥大學在學註冊，休學期間修習之學分不予採認；大陸地區醫事人員高等學校學歷依教育部規定不予採認醫事國考資格）。",
+        "predeparture-notice": "於國際事務處或各學院公告錄取及獎學金核定名單後，配合國際事務處完成國外盟校提名（Nomination）與入學許可（Offer / Invitation Letter）取得；出國前須簽署《教育部學海計畫行政契約書》或《校內出國研習補助切結書》、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療及意外保險，並確認已完成中國醫藥大學當學期註冊。",
+        "return-report": "境外研修期滿返國後，教育部學海計畫受獎生須於返國 14 日內登入教育部學海計畫資訊網填報問卷並上傳 1,000–2,000 字中／英文成果報告書（含研修與生活照片 4 張以上），並於返國後 1 個月內檢附來回電子機票收據、登機證正本、護照出入境章影本、盟校正式成績單（或臨床見實習證明）及出國研修成果報告（提供國際事務處刊登於《出國交換／實習成果報告》專區），向國際事務處辦理獎補助款核銷結案及參加國際移動力成果分享會。",
+        "credit-transfer": "境外研修期滿返國後持國外盟校核發之正式成績單正本（或修業完成證明）與課程大綱（Syllabus），依《中國醫藥大學學生出國期間有關學業及學籍處理要點》、《辦理跨國雙聯學制實施辦法》及《學生抵免學分辦法》向所屬系（所）、學院及教務處註冊課務組申請境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "中國醫藥大學").replace("長庚", "中國醫")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "中國醫藥大學《選送學生出國研修辦法》第四條與《教育部學海飛颺及學海惜珠甄選簡章》規定：須於中國醫就讀滿一學年以上，歷年學業總平均達 80 分（GPA 3.0／A-）以上或名列全班前 20%（學海飛颺須名列全班前 50%），且前一學期操行成績達 80 分以上。請檢附含 GPA 與排名百分比之歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（中國醫基準 57+／學海飛颺及歐美雙聯 79–90+）", "TOEFL ITP（中國醫基準 500+）", "IELTS 學術組（中國醫基準 4.0+／學海飛颺 5.5–6.0+／QUB 雙聯 6.5+）", "TOEIC 聽讀測驗（中國醫基準 550+／校內獎補助 B2=785+）", "GEPT 全民英檢（中級複試 B1／中高級複試 B2 以上）", "JLPT 日語能力試驗（東京科學大學／京都／東北／北海道／長崎／日本藥科／新瀉醫療福祉 N2–N3+）", "TOPIK 韓語能力測驗（首爾大學／延世／高麗／成均館／慶熙／漢陽／中央／釜山 2–4 級或英語檢定）", "大陸與港澳姊妹校（免外語檢定；依各專案簡章辦理，大陸醫事學歷不予採認考照）"]
+            field["help_text"] = "依中國醫藥大學《選送學生出國研修辦法》第四條與《獎勵學生出國研習及開拓國際視野辦法》規定：申請非華語區盟校交換、雙聯或學海計畫須檢附兩年內有效外語能力證明（校內基準 TOEFL iBT 57 / ITP 500、IELTS 4.0、TOEIC 550 或 GEPT 中級複試；雙聯學位與歐美名校須達 IELTS 6.0–6.5 或 TOEFL iBT 79–90+）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://cmucia.cmu.edu.tw/page/about_3",
+        source_checked_at=CMU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換／雙聯學位／學海計畫申請表" if template.id == "exchange-application-data" else ("出國研修讀書計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://cmucia.cmu.edu.tw/news/51",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後辦理選課預審、盟校提名及學海或校內出國研習獎補助簽約", "return-report": "返國 14 日內上傳學海成果報告並於 1 個月內繳交交換／實習成果報告與核銷單據", "credit-transfer": "返國後持盟校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "備齊申請表與附件（經家長、導師／指導教授、系所主管及院長簽章）於截止日前送交水湳校區卓越大樓國際事務處"),
+        version="115準備工具-2026-10-21.1",
+        destinations=["中國醫藥大學所屬系所與學院辦公室（初審推薦）", "中國醫藥大學國際事務處（臺中市北屯區經貿路一段100號水湳校區卓越大樓）"],
+        conditional_note="此為個人準備工具；中國醫藥大學教育部學海四項計畫（每年 12 月至翌年 2 月收件）、跨國雙聯學位（7 校 11 學程）與校級交換／臨床見實習甄選須先經系所與學院核章，出國期間須維持中國醫藥大學在學註冊，且修讀雙聯學位者於兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2062,6 +2108,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _tmu_template(template)) is not None]
     if university.id == CSMU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _csmu_template(template)) is not None]
+    if university.id == CMU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _cmu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

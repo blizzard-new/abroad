@@ -1025,8 +1025,50 @@ CSMU = UniversityProfile(
     ),
 )
 
+CMU = UniversityProfile(
+    id="cmu",
+    school_name="中國醫藥大學",
+    short_name="中醫大",
+    english_name="China Medical University",
+    aliases=(
+        "cmu",
+        "中國醫藥大學",
+        "中醫大",
+        "中國醫大",
+        "中國醫",
+        "CMU",
+        "China Medical University",
+    ),
+    hero_image="/static/assets/cmu-campus.svg",
+    official_url="https://cmucia.cmu.edu.tw/",
+    coverage_note="完整支援：國際事務處與 9 大學院 115–116 學年度（2026–2028）校級赴日本北海道大學（每年 5 名免學費＋中醫大補助來回經濟艙機票與每月 NT$5,000 生活費）、日本北見工業大學（每年 3 名免學費＋機票與每月 NT$5,000 生活費）、香港教育大學（每年 4 名免學費）交換生計畫、7 校 11 個跨國雙聯學位暨專案獎助學金（澳洲紐卡索大學護理博士最高補助 NT$50萬、美國南加州大學 USC 藥學系 MS 與凱克醫學院 MD/MPH 雙聯最高補助 NT$45萬、美國杜蘭大學 MD/MPH 雙聯最高補助 NT$40萬、美國喬治亞州立大學雙聯最高補助 NT$35萬、美國南卡羅萊納大學 3+2 學碩與 MD/MPH 雙聯及澳洲格里菲斯大學全球公衛碩士雙聯最高補助 NT$30萬、美國南達科塔州立大學營養學系 2+2 雙學士補助 2 年中醫大全額學雜費）、健康照護學院物理治療學系 115-1 海外臨床專業實習（新加坡中央醫院 4 名、神戶中央市民醫院 2 名、關西電力醫院 2 名、順天堂醫院 2 名，2027/01/10–01/30 實習）與全球共 174 所合作姊妹校及教學醫院（含 38 所當期開放交換、雙聯、海外臨床見實習與學海築夢重點機構及 136 所正式締約姊妹校，橫跨 31 個國家與地區）語檢門檻、學業 A-（GPA 3.0／80 分）與操行 80 分規定暨 27 篇歷屆師生海外研修心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=174,
+    academic_score_minimum=80,
+    student_card_signals=(
+        "中國醫藥大學",
+        "中醫大",
+        "中國醫大",
+        "中國醫",
+        "CHINAMEDICALUNIVERSITY",
+        "CMU",
+    ),
+    # https://www.cmu.edu.tw/academic.php — checked 2026-10-21.
+    colleges=(
+        "醫學院",
+        "中醫學院",
+        "藥學院",
+        "公共衛生學院",
+        "健康照護學院",
+        "生命科學院",
+        "牙醫學院",
+        "醫學工程學院",
+        "人文與科技學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU)
 DEFAULT_UNIVERSITY = CGU
 
 

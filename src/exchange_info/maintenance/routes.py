@@ -789,6 +789,7 @@ def create_maintenance_router(
             <option value="nknu">國立高雄師範大學（共 143 所姊妹校）</option>
             <option value="tmu">臺北醫學大學（共 201 所姊妹校）</option>
             <option value="csmu">中山醫學大學（共 124 所姊妹校）</option>
+            <option value="cmu">中國醫藥大學（共 174 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -888,7 +889,8 @@ def create_maintenance_router(
     ncue: "國立彰化師範大學 (NCUE)",
     nknu: "國立高雄師範大學 (NKNU)",
     tmu: "臺北醫學大學 (TMU)",
-    csmu: "中山醫學大學 (CSMU)"
+    csmu: "中山醫學大學 (CSMU)",
+    cmu: "中國醫藥大學 (CMU)"
   };
 
   const FIELD_LABELS = {
