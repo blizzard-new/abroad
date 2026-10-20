@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NKUST, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -85,6 +85,7 @@ NYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 NTHU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 PCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 WZU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
+NKUST_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1678,6 +1679,51 @@ def _wzu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nkust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立高雄科技大學選送學生赴境外大學研修（交換學生）甄選應繳資料：交換生線上申請表（完成線上申請後列印紙本，經家長簽章及系所主任／院長核章）、《115 學年度申請交換學校志願表》（最多選填 3 個志願且須排定優先順序）、中英文歷年成績單正本（含學業總平均、班級排名百分比與操行成績；操行成績須達 75 分以上，學海飛颺建議學業總平均達 75 分或班排前 30%）、中英文在學證明、符合姊妹校門檻之有效外語能力檢定證明影本及護照與學生證影本，裝訂成冊送交國際事務處國際關係組（建工校區行政大樓 3 樓）。",
+        "study-plan": "撰寫國立高雄科技大學交換學生甄選必繳之《中英文自傳及讀書計畫》（電腦打字 A4，含出國交換動機、第一志願姊妹校專業領域契合度說明［佔甄選比序 50%，大陸地區免語檢學校佔 60%］、擬於境外研修之課程規劃及返國後學習與職涯發展計畫）。",
+        "course-preapproval": "規劃赴境外大學研修期間之修課清單與學分抵免預審（依《國立高雄科技大學選送學生出國研修辦法》及教務處學分抵免規定，出國交換期間須保有高科大在學學籍並依規定註冊繳費；返國後持姊妹校正式成績單及修課大綱向所屬系所及教務處申請學分採認）。",
+        "predeparture-notice": "於國際事務處公告交換生錄取名單後，依限完成錄取資格確認，配合國際關係組辦理姊妹校官方提名（Nomination）與外校入學申請，並於出國前完成役男出境核准、海外醫療及意外保險投保及教育部《學海飛颺／學海惜珠》或高科大《獎助學生赴境外大學校院研修要點》（亞洲 6 萬、非亞洲 8 萬、雙聯 12 萬）獎助學金契約簽署。",
+        "return-report": "交換期滿返國後 1 個月內，繳交《赴境外大學研修心得報告》（約 1,500–2,000 字，含修課、住宿、生活花費與文化交流照片）、教育部學海計畫線上系統心得上傳、返國核銷單據（電子機票、登機證正本、護照出入境章影本）及姊妹校正式成績單至國際事務處國際關係組辦理結案。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本、修課大綱（Syllabus）與學分證明，依《國立高雄科技大學選送學生出國研修辦法》及學生抵免學分辦法向所屬系所及教務處辦理境外修習科目學分抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立高雄科技大學").replace("長庚", "高科大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "高科大規定申請學生在當前學制須有一學期以上成績且操行成績至少達 75 分；申請教育部《學海飛颺》者建議歷年學業總平均達 75 分以上或班級排名前 30%（比序時在校歷年成績佔 20%）。請檢附中英文歷年成績單正本（含排名百分比）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 聽讀測驗（CEFR B1=550+ / B2=785+ / C1=945+）", "TOEFL iBT（CEFR B1=42+ / B2=72+ / C1=95+）", "IELTS Academic（CEFR B1=4.0+ / B2=5.5+ / C1=7.0+）", "JLPT 日語能力試驗（N1 / N2 / N3 / N4，日本姊妹校必備）", "TOPIK 韓語能力測驗（2–4 級，韓國姊妹校必備）", "Goethe / TestDaF / ÖSD 德語檢定（B1 / B2，德奧瑞姊妹校適用）", "DELF / TCF 法語檢定或 DELE 西語檢定（B1 / B2）", "大陸地區姊妹校（無外語檢定門檻要求）"]
+            field["help_text"] = "依高科大語教學院《外語檢測 CEFR 對照表》採認；甄選比序時外語檢定成績佔 30%（CEFR C1=100 分、B2=90 分、B1=80 分、A2 以下=70 分），且申請人數超過名額時以語檢達第一志願門檻者優先分發。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.nkust.edu.tw/p/412-1030-5591.php?Lang=zh-tw",
+        source_checked_at=NKUST_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="115學年度申請交換學校志願表與線上申請表" if template.id == "exchange-application-data" else ("中英文自傳及讀書計畫" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.nkust.edu.tw/p/412-1030-5591.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人簽章同意", "系所主任及學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所及學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取公告後辦理資格確認、姊妹校提名及學海／高科大研修獎助學金簽約", "return-report": "返國後 1 個月內繳交研修心得報告与核銷單據辦理結案", "credit-transfer": "返國後持姊妹校正式成績單辦理境外學分抵免"}.get(template.id, "完成線上申請並列印紙本經家長及系所／學院核章後送交國際事務處國際關係組（建工校區行政大樓 3 樓）"),
+        version="115準備工具-2026-10-20.1",
+        destinations=["國立高雄科技大學交換生線上申請系統", "國立高雄科技大學國際事務處國際關係組（建工校區行政大樓 3 樓）"],
+        conditional_note="此為個人準備工具；高科大選送學生赴境外大學研修甄選須先完成線上報名並列印申請表，經家長簽章及系所主任／院長核章後，連同《申請交換學校志願表》（最多 3 志願）、中英文歷年成績單正本（含排名及操行 75 分以上證明）、中英文在學證明、中英文自傳及讀書計畫與符合姊妹校規定之有效外語檢定證明送交建工校區行政大樓 3 樓國際事務處國際關係組。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1726,6 +1772,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _pccu_template(template)) is not None]
     if university.id == WZU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _wzu_template(template)) is not None]
+    if university.id == NKUST.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nkust_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

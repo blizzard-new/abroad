@@ -674,6 +674,26 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="學校規定的是整份交換研修心得報告（約 1,000 字）；這裡只合計下方各欄。",
     ),
+    ("nkust", "study-plan"): _rules(
+        (
+            "須繳交中文與英文（或研修國語言）自傳及讀書計畫各乙份（約 1,000 字），具體說明申請動機、第一志願姊妹校專業領域契合度、擬修習之課程清單與返國後學習銜接。",
+            "依高科大甄選比序規定，第一志願專業領域契合度佔總分 50%（無外語要求之大陸姊妹校佔 60%），請務必詳述個人主修背景與目標姊妹校系所課程之關聯。",
+        ),
+        evidence="國立高雄科技大學 115 學年度選送學生赴境外大學研修甄選簡章（報名應繳文件與甄選比序規定）",
+        minimum=1000,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="建議中英文自傳及讀書計畫合計達 1,000 字以上；這裡合計下方各欄字數供參考。",
+    ),
+    ("nkust", "return-report"): _rules(
+        (
+            "返國後 1 個月內，須向國際事務處國際關係組繳交約 1,500–2,000 字之赴境外大學研修心得報告（含修課、住宿、生活適應與文化交流照片）並完成教育部學海計畫或校內獎助學金線上報告上傳。",
+            "領取教育部學海飛颺／惜珠或高科大高教深耕境外研修獎助學金者，須同時檢附電子機票、登機證正本、護照出入境章影本及姊妹校正式成績單辦理核銷結案。",
+        ),
+        evidence="國立高雄科技大學選送學生出國研修辦法與獎助學生赴境外大學校院研修要點（返國核銷與義務）",
+        minimum=1500,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="學校規定的是整份境外大學研修心得報告（建議 1,500 字以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -699,6 +719,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "nthu": ("https://oga.site.nthu.edu.tw/var/file/524/1524/img/2027F2028Sapplicationguideline-CH.pdf", "2026-10-19"),
     "pccu": ("https://oima.pccu.edu.tw/Upload/202607/learning_2026071112283509.pdf", "2026-10-19"),
     "wzu": ("https://d020.wzu.edu.tw/article/529354", "2026-10-19"),
+    "nkust": ("https://oia.nkust.edu.tw/p/412-1030-5591.php?Lang=zh-tw", "2026-10-20"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

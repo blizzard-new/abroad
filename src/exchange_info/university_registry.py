@@ -742,8 +742,51 @@ WZU = UniversityProfile(
     ),
 )
 
+NKUST = UniversityProfile(
+    id="nkust",
+    school_name="國立高雄科技大學",
+    short_name="高科大",
+    english_name="National Kaohsiung University of Science and Technology",
+    aliases=(
+        "nkust",
+        "國立高雄科技大學",
+        "高雄科技大學",
+        "高科大",
+        "NKUST",
+        "National Kaohsiung University of Science and Technology",
+    ),
+    hero_image="/static/assets/nkust-campus.svg",
+    official_url="https://oia.nkust.edu.tw/p/412-1030-5591.php?Lang=zh-tw",
+    coverage_note="完整支援：國際事務處（國際關係組）115 學年度第一學期與第二學期選送學生赴境外大學研修（交換學生）甄選簡章、校級與院級雙軌共 107 所境外合作大學（日本、韓國、德國、法國、奧地利、瑞士、西班牙、英國、美國、泰國、馬來西亞、菲律賓、印尼、印度、越南及中國大陸）名額與 CEFR 外語檢定門檻、教育部學海飛颺／惜珠與高科大高教深耕境外研修獎助學金暨學長姐研修心得分享已完整整合。",
+    support_level="full",
+    partner_count_hint=107,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立高雄科技大學",
+        "高雄科技大學",
+        "高科大",
+        "NATIONALKAOHSIUNGUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "NKUST",
+    ),
+    # https://www.nkust.edu.tw/p/412-1000-1495.php?Lang=zh-tw — checked 2026-10-20.
+    colleges=(
+        "工學院",
+        "智慧機電學院",
+        "電機與資訊學院",
+        "海事學院",
+        "水圈學院",
+        "商業智慧學院",
+        "管理學院",
+        "海洋商務學院",
+        "財務金融學院",
+        "創新設計學院",
+        "外語學院",
+        "共同教育學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST)
 DEFAULT_UNIVERSITY = CGU
 
 
