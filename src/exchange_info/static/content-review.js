@@ -1,7 +1,7 @@
 "use strict";
 
 const initialQueryParams = new URLSearchParams(window.location.search);
-const destinationReviewHomeUniversities = ["長庚大學", "國立臺北大學", "淡江大學", "天主教輔仁大學", "東吳大學", "國立臺灣師範大學", "中原大學", "國立臺灣科技大學", "元智大學", "逢甲大學", "國立中山大學", "國立中興大學", "國立臺北科技大學", "國立政治大學", "國立成功大學", "國立陽明交通大學", "國立清華大學", "中國文化大學", "文藻外語大學", "國立高雄科技大學", "國立雲林科技大學", "國立臺灣海洋大學", "國立彰化師範大學"];
+const destinationReviewHomeUniversities = ["長庚大學", "國立臺北大學", "淡江大學", "天主教輔仁大學", "東吳大學", "國立臺灣師範大學", "中原大學", "國立臺灣科技大學", "元智大學", "逢甲大學", "國立中山大學", "國立中興大學", "國立臺北科技大學", "國立政治大學", "國立成功大學", "國立陽明交通大學", "國立清華大學", "中國文化大學", "文藻外語大學", "國立高雄科技大學", "國立雲林科技大學", "國立臺灣海洋大學", "國立彰化師範大學", "國立高雄師範大學"];
 const requestedDestinationReviewHome = initialQueryParams.get("destination_home") || "";
 const destinationReviewDraftStoragePrefix = "exchange.destination-review-draft.v1";
 const workflowReviewDraftStoragePrefix = "exchange.workflow-review-draft.v1";

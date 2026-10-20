@@ -758,6 +758,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="學校規定的是整份交換學生返國心得報告（2,500 字以內，含 5–6 張照片）；這裡只合計下方各欄。",
     ),
+    ("nknu", "study-plan"): _rules(
+        (
+            "高師大國際事務處規定須繳交《出國研究計畫書》與《自傳》（A4 兩頁為限），若申請非大陸地區之國外姊妹校，須使用英文或該國語言撰寫（例如赴日本姊妹校可使用日文或英文，赴歐美姊妹校使用英文）。",
+            "書面資料審查佔校內初審總成績 35%，請具體說明出國動機、擬於志願姊妹校修習之專業領域課程、語言能力準備及返國後學分抵免與職涯銜接規劃；若同時申請教育部《學海飛颺／惜珠》獎學金，請一併強化國際學術交流效益。",
+        ),
+        evidence="國立高雄師範大學選送學生出國研修實施要點、出國研修獎助學金甄選簡章與出國交換申請表件",
+        minimum=800,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="高師大規定自傳以 A4 兩頁為限，非大陸地區之出國研究計畫書與自傳須以英文或該國語言撰寫；這裡合計下方各欄字數供參考。",
+    ),
+    ("nknu", "return-report"): _rules(
+        (
+            "交換研修結束返國後 1 個月內，須向國際事務處繳交 3,000 字以上之《出國研修心得報告》電子檔（含研修生活照片 4 張以上），並上傳至教育部學海計畫資訊網（學海受獎生適用），始得退還新臺幣 5,000 元保證金及核撥獎助學金尾款。",
+            "獲教育部《學海飛颺／學海惜珠》或《高師大學生出國研修獎助學金》補助者，須同時檢附登機證正本、電子機票收據、護照出入境章影本及姊妹校正式成績單辦理經費核銷，並有義務配合國際事務處參加出國研修經驗分享會。",
+        ),
+        evidence="國立高雄師範大學選送學生出國研修實施要點與學生出國研修獎助學金支給要點",
+        minimum=3000,
+        maximum=5000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="高師大規定返國後 1 個月內須繳交 3,000 字以上之出國研修心得報告（含照片 4 張以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -787,6 +809,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "yuntech": ("https://tdx.yuntech.edu.tw/images/International_Exchange_Students/Outgoing/Non_mainland_China_area/%E5%9C%8B%E7%AB%8B%E9%9B%B2%E6%9E%97%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8%E5%9C%8B%E9%9A%9B%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E5%AF%A6%E6%96%BD%E8%A6%81%E9%BB%9E20250422.pdf", "2026-10-20"),
     "ntou": ("https://oia.ntou.edu.tw/var/file/22/1022/img/1029/779655790.pdf", "2026-10-20"),
     "ncue": ("https://oicaweb.ncue.edu.tw/var/file/19/1019/img/542278849.pdf", "2026-10-20"),
+    "nknu": ("https://oia.nknu.edu.tw/tw/ugC_Rule.asp", "2026-10-20"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

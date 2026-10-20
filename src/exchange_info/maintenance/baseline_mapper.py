@@ -54,6 +54,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "yuntech": ["tdx.yuntech.edu.tw", "admissions-oia.yuntech.edu.tw", "www.yuntech.edu.tw", "yuntech.edu.tw"],
     "ntou": ["oia.ntou.edu.tw", "www.ntou.edu.tw", "ntou.edu.tw"],
     "ncue": ["oicaweb.ncue.edu.tw", "www.ncue.edu.tw", "ncue.edu.tw"],
+    "nknu": ["oia.nknu.edu.tw", "c.nknu.edu.tw", "w3.nknu.edu.tw", "www.nknu.edu.tw", "nknu.edu.tw"],
 }
 
 
@@ -1059,6 +1060,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["ncue"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ncue", partner_rows=ncue_rows, default_cycle_label="116"
+        )
+
+    # 27. NKNU partners.jsonl (143 partner schools)
+    nknu_partners_path = official_data_root / "nknu" / "partners.jsonl"
+    if nknu_partners_path.exists():
+        nknu_rows = []
+        for line in nknu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            nknu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.nknu.edu.tw/tw/ugC_Out.asp",
+            })
+        school_reports["nknu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="nknu", partner_rows=nknu_rows, default_cycle_label="115"
         )
 
     if store.current_release_id is None:

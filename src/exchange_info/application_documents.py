@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NCUE, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -89,6 +89,7 @@ NKUST_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 YUNTECH_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 NTOU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 NCUE_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
+NKNU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1862,6 +1863,51 @@ def _ncue_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nknu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立高雄師範大學選送學生出國研修暨學海飛颺／惜珠獎助學金甄選應繳資料：1. 出國交換／出國研修獎助學金申請表（須經指導教授或導師、系所主管及院長簽章推薦）、2. 家長或監護人同意書、3. 歷年成績單正本（含學業總平均、GPA 與班級排名；非大陸地區須附英文成績單，大陸地區附中文成績單；學士班須達 GPA 2.44／70 分以上且班排前 50%，碩博士班須達 GPA 3.38／80 分以上，操行 80 分以上且無記過處分）、4. 兩年內有效之外語能力檢定證明影本（大陸地區免附；申請校內獎助須達 CEFR B1／B2）、5. 出國研究計畫書與自傳（A4 兩頁為限；非大陸地區須以英文或該國語言撰寫）、6. 教師推薦信 2 封（非大陸地區須為英文或該國語言）；經系所及學院初審核章後，於截止日前送交和平校區行政大樓 6 樓國際事務處。",
+        "study-plan": "撰寫國立高雄師範大學出國交換甄選必繳之《出國研究計畫書》與《自傳》（A4 兩頁為限），若申請非大陸地區之國外姊妹校，須使用英文或該國語言撰寫（大陸地區使用中文撰寫）。書面資料審查佔校內甄選總成績 35%，請具體說明出國動機、擬於志願姊妹校修習之專業領域課程、語言能力準備及返國後學分抵免與職涯銜接規劃。",
+        "course-preapproval": "規劃赴境外姊妹校交換期間之修課清單與學分抵免預審（依《國立高雄師範大學學生出國期間有關學業及學籍處理要點》規定，出國交換期間須辦理高師大註冊並繳交全額學雜費；返國後持姊妹校正式成績單與課程大綱向系所及教務處申請境外修習科目學分採認）。",
+        "predeparture-notice": "於國際事務處公告甄選錄取名單後，依限繳交《錄取資格確認書》及新臺幣 5,000 元保證金（無正當理由放棄者沒收，全額撥入校務基金），配合國際事務處辦理姊妹校官方提名（Nomination）與外校入學申請；出國前須完成役男出境核准、購買涵蓋全期之海外醫療及意外保險、填寫出國報告單，並完成《教育部學海飛颺／惜珠》或《高師大學生出國研修獎助學金》行政契約簽署。",
+        "return-report": "交換期滿返國後 1 個月內，須向國際事務處繳交 3,000 字以上之《出國研修心得報告》電子檔（含研修生活照片 4 張以上），並檢附姊妹校正式成績單、護照出入境章影本、登機證正本與電子機票收據，辦理新臺幣 5,000 元保證金無息退還與獎助學金尾款核銷（受獎生並有義務配合參加出國研修經驗分享會）。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本與修課大綱（Syllabus），依《國立高雄師範大學學生出國期間有關學業及學籍處理要點》及《學生抵免學分辦法》向所屬系（所）及教務處辦理境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立高雄師範大學").replace("長庚", "高師大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "高師大《選送學生出國研修實施要點》規定：學士班歷年學業總平均須達 GPA 2.44（百分制 70 分）以上且班級排名前 50%，碩博士班歷年學業總平均須達 GPA 3.38（百分制 80 分）以上，操行 80 分以上且無記過處分（學業成績佔校內甄選 20%）。請檢附含 GPA 與排名之歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 聽讀測驗（校內獎助亞洲 B1=550+／歐美紐澳 B2=785+）", "TOEFL iBT（校內獎助 B1=42+／歐美紐澳 B2=72+；雪梨／維多利亞 79–85+）", "IELTS 學術組（校內獎助 B1=4.0+／歐美紐澳 B2=5.5+；雪梨／維多利亞 6.0–6.5+）", "GEPT 全民英檢（中級複試 B1／中高級複試 B2 以上）", "JLPT 日語能力試驗（日本姊妹校 N3–N2+；大阪教育／法政／中央／三重 N2+）", "TOPIK 韓語能力測驗（韓國姊妹校 2–3 級以上；梨花／漢陽／韓國外大 3–4 級）", "Goethe / TestDaF 德語（B1–B2+）或 DELF 法語／DELE 西語（B1–B2+）", "大陸地區姊妹校（免附外語能力檢定證明）"]
+            field["help_text"] = "依高師大《選送學生出國研修實施要點》與《學生出國研修獎助學金支給要點》規定，報考國外非大陸姊妹校須具備兩年內有效外語檢定證明（外語能力佔校內甄選 20%），申請校內出國研修獎助學金者須達 CEFR B1（亞洲地區）或 CEFR B2（歐美紐澳地區）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.nknu.edu.tw/tw/ugC_Rule.asp",
+        source_checked_at=NKNU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換／出國研修獎助學金申請表與家長同意書" if template.id == "exchange-application-data" else ("出國研究計畫書與自傳（A4兩頁為限）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.nknu.edu.tw/tw/ugC_Application.asp",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後繳交確認書及 $5,000 保證金並辦理提名與獎助學金簽約", "return-report": "返國後 1 個月內繳交 3,000 字以上心得報告與核銷單據退還保證金", "credit-transfer": "返國後持姊妹校正式成績單辦理境外學分採認"}.get(template.id, "備齊紙本申請表與附件（經家長、導師／指導教授、系所主管及院長簽章）於截止日前送交和平校區行政大樓 6 樓國際事務處"),
+        version="115準備工具-2026-10-20.1",
+        destinations=["國立高雄師範大學國際事務處（和平校區行政大樓 6 樓）"],
+        conditional_note="此為個人準備工具；高師大出國交換暨學海飛颺／惜珠獎助學金甄選須於截止日（秋季班每年 2 月底、春季班每年 9 月中旬至 10 月中旬）前，將經家長、導師（或指導教授）、系所主管及院長核章之申請表、歷年成績單正本（含 GPA 與班級排名）、有效外語檢定證明、出國研究計畫書與自傳（A4 兩頁內）及 2 封推薦信送交和平校區行政大樓 6 樓國際事務處。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1918,6 +1964,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntou_template(template)) is not None]
     if university.id == NCUE.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncue_template(template)) is not None]
+    if university.id == NKNU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nknu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

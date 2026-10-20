@@ -907,8 +907,46 @@ NCUE = UniversityProfile(
     ),
 )
 
+NKNU = UniversityProfile(
+    id="nknu",
+    school_name="國立高雄師範大學",
+    short_name="高師大",
+    english_name="National Kaohsiung Normal University",
+    aliases=(
+        "nknu",
+        "國立高雄師範大學",
+        "高雄師範大學",
+        "高雄師大",
+        "高師大",
+        "高師",
+        "NKNU",
+        "National Kaohsiung Normal University",
+    ),
+    hero_image="/static/assets/nknu-campus.svg",
+    official_url="https://oia.nknu.edu.tw/exchange-programs.php",
+    coverage_note="完整支援：國際事務處赴外交換研修暨教育部學海飛颺／惜珠計畫甄選（每年 11/11–12/31 線上申請）、大陸地區（含港澳地區）姊妹校交換計畫（2027春季班及2026秋季班）、境外大學跨校雙聯學制與全球共 143 所合作姊妹校（含 36 所當期開放交換及雙聯名額校、107 所正式締約姊妹校，橫跨美、德、法、捷、瑞、奧、英、西、波、匈、俄、斯、巴、澳、日、韓、泰、菲、越、印、馬、印度、蒙、大陸及港澳等 26 個國家與地區）名額與語檢門檻、出國選修課程與學分抵免規定暨 16 篇學長姐返國交換心得已完整整合。",
+    support_level="full",
+    partner_count_hint=143,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立高雄師範大學",
+        "高雄師範大學",
+        "高師大",
+        "NATIONALKAOHSIUNGNORMALUNIVERSITY",
+        "NKNU",
+    ),
+    # https://w3.nknu.edu.tw/ — checked 2026-10-20.
+    colleges=(
+        "教育學院",
+        "文學院",
+        "理學院",
+        "科技學院",
+        "藝術學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU)
 DEFAULT_UNIVERSITY = CGU
 
 
