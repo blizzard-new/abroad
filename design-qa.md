@@ -1,3 +1,23 @@
+# Design QA: guide stages scroll with their cards, and the forum shows approved stories
+
+## What the user asked for
+
+Two of the Calendly-style patterns reviewed for UniWay: a sticky scroll accordion for the reading pages, and a testimonial strip rebuilt as 學長姐心得 cards. Constraints from the product: no animation library, nothing that delays content, the strip must use only content its author agreed to publish, and it must not auto-play.
+
+## What changed
+
+- **Guide index (`/guides`).** The four categories are now four stages. On windows 1024 px and wider the stage list scrolls in the left column, the stage crossing the middle of the viewport is the current one (an `IntersectionObserver` band, no scroll handler) and its explanation opens, while that stage's cards sit in a sticky right column and cross-fade (240 ms, 8 px, the shared motion tokens). Clicking a stage, or keyboard focus landing on another stage's cards, brings that stage to the middle. Cards of other stages are only faded out, never removed from the tab order. Phones, narrow windows, print and no-JavaScript render the same markup as plain stacked sections; every card is in the page once (the existing test that counts cards still holds). Reduced motion removes the transitions and the smooth scroll.
+- **Forum 心得 view.** A "學長姐投稿精選" strip above the boards. It reads the new `GET /experience-stories`, which returns only submissions a moderator approved (a submission cannot be created without `consent_to_publish`), newest first, with no author or account identifier; an anonymous author is always shown as 匿名投稿者, even if a name was stored. The strip is a native scroll-snap list with arrow buttons, a counter and a "read more" toggle for clamped summaries. It never moves by itself, hides its arrows when everything fits, and is absent when there is nothing approved. Quick clicks on an arrow add up instead of restarting from the middle of the glide.
+- **Contract.** `docs/api/openapi.json` is regenerated and `OPENAPI_CONTRACT_VERSION` is now `2026-10-20.1`; the change is one new read-only route and one response model.
+
+## Verification
+
+- New: `tests/e2e/test_guide_stage_scroll.py` (8), `tests/e2e/test_story_carousel.py` (8), `tests/test_experience_stories_api.py` (13). The e2e files passed three runs in a row. Breaking the observer band on purpose makes three of the stage tests fail.
+- Existing SEO, community API, OpenAPI contract, frontend contract and static caching tests pass; the two discussion e2e files pass (10).
+- Measured on a real page: the sticky panel stays 28–40 px from the top of the viewport while the stage list scrolls past; at 390 px and with JavaScript off all panels have opacity 1 and `position: static`, with no horizontal overflow; light and dark themes were checked by screenshot.
+- Not clean, and not from this change: a wider e2e batch (forum, motion, navigation, responsive, glass theme) has 10 failures that fail the same way on an untouched `main` in this environment (`test_navigation_guide` ×2, `test_system_motion` ×1, `test_responsive_layout` ×5, `test_glass_theme` ×2). One more discussion test timed out once under that 20-minute load and passes alone and with its file.
+- Not verified: how the strip feels on a real phone (swipe, momentum); the screenshots are from a headless browser. Production has no approved submissions yet, so the strip stays hidden there until moderators approve some.
+
 # Design QA: the home globe stays on a normal machine
 
 ## What went wrong
