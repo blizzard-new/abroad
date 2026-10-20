@@ -51,6 +51,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "pccu": ["oima.pccu.edu.tw", "japanese.pccu.edu.tw", "kor.pccu.edu.tw", "french.pccu.edu.tw", "crgarl.pccu.edu.tw", "mccd.pccu.edu.tw", "www.pccu.edu.tw", "pccu.edu.tw"],
     "wzu": ["c015.wzu.edu.tw", "d020.wzu.edu.tw", "www.wzu.edu.tw", "wzu.edu.tw"],
     "nkust": ["oia.nkust.edu.tw", "flec.nkust.edu.tw", "www.nkust.edu.tw", "nkust.edu.tw"],
+    "yuntech": ["tdx.yuntech.edu.tw", "admissions-oia.yuntech.edu.tw", "www.yuntech.edu.tw", "yuntech.edu.tw"],
 }
 
 
@@ -987,6 +988,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["nkust"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="nkust", partner_rows=nkust_rows, default_cycle_label="115"
+        )
+
+    # 24. YunTech partners.jsonl (112 partner schools)
+    yuntech_partners_path = official_data_root / "yuntech" / "partners.jsonl"
+    if yuntech_partners_path.exists():
+        yuntech_rows = []
+        for line in yuntech_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            yuntech_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://admissions-oia.yuntech.edu.tw/oe/index/intro/puid/115-2/lang/zh_TW",
+            })
+        school_reports["yuntech"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="yuntech", partner_rows=yuntech_rows, default_cycle_label="115-2"
         )
 
     if store.current_release_id is None:

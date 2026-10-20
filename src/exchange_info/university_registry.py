@@ -785,8 +785,48 @@ NKUST = UniversityProfile(
     ),
 )
 
+YUNTECH = UniversityProfile(
+    id="yuntech",
+    school_name="國立雲林科技大學",
+    short_name="雲科大",
+    english_name="National Yunlin University of Science and Technology",
+    aliases=(
+        "yuntech",
+        "nyust",
+        "國立雲林科技大學",
+        "雲林科技大學",
+        "雲科大",
+        "YunTech",
+        "YUNTECH",
+        "NYUST",
+        "National Yunlin University of Science and Technology",
+    ),
+    hero_image="/static/assets/yuntech-campus.svg",
+    official_url="https://tdx.yuntech.edu.tw/",
+    coverage_note="完整支援：國際事務處（出國交換生申請系統 115-2／115-1／114-2／114-1、雙聯學位與銜接學位專區）共 112 所全球合作大學（中國大陸、日本、德國、印度、韓國、印尼、越南、美國、法國、澳洲、英國、荷蘭、比利時、西班牙、立陶宛、希臘、斯洛維尼亞、捷克、土耳其、馬來西亞、菲律賓、蒙古及澳門）名額與語檢門檻、王秋雄榮譽博士德日美獎助金（每學期 10 萬–18 萬）、教育部學海飛颺／惜珠與校內出國交流補助（亞洲 11 萬／非亞洲 15 萬）暨 118 篇學長姐返國研修心得已完整整合。",
+    support_level="full",
+    partner_count_hint=112,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立雲林科技大學",
+        "雲林科技大學",
+        "雲科大",
+        "NATIONALYUNLINUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "YUNTECH",
+        "NYUST",
+    ),
+    # https://www.yuntech.edu.tw/ — checked 2026-10-20.
+    colleges=(
+        "工程學院",
+        "管理學院",
+        "設計學院",
+        "人文與科學學院",
+        "未來學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH)
 DEFAULT_UNIVERSITY = CGU
 
 

@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NKUST, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NKUST, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -86,6 +86,7 @@ NTHU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 PCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 WZU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 NKUST_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
+YUNTECH_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1724,6 +1725,51 @@ def _nkust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _yuntech_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立雲林科技大學國際交換學生甄選應繳資料：於「雲科大出國交換生系統（admissions-oia.yuntech.edu.tw/oe）」完成線上報名與志願填報後列印申請表，經指導教授（研究生）、系所主任及學院院長核章，併同中英文歷年成績單正本（含歷年平均及班級排名比率，須達 75 分或班排前 50%、操行達 80 分以上）、有效外語能力檢定證明影本（英語授課校須達 TOEIC 650 或同等標準，東南亞與大陸地區除外）、中英文讀書計畫及自傳、其他優秀表現證明（國際／國內／校內會議或競賽、證照、社團幹部，佔總分 20%）與師長推薦函（至多 3 封），於截止日前送交國際事務處。",
+        "study-plan": "撰寫國立雲林科技大學交換學生甄選必繳之《中英文自傳與出國讀書計畫》（電腦打字 A4，詳述申請動機、擬於姊妹校修習之專業領域課程、語言學習目標與返國學分抵免規劃；若同時申請《王秋雄榮譽博士補助德日美交流或進修獎助金》，須規劃大學部每學期至少修習 3 門或 18 ECTS 且成績達 B 以上、研究所至少 2 門或 12 ECTS 及格）。",
+        "course-preapproval": "規劃赴境外締約姊妹校交換期間之修課清單與學分抵免預審（依《國立雲林科技大學國際交換學生實施要點》第7點及第9點規定，出國交換期間仍須辦理本校註冊並繳交學雜費；返國後持姊妹校正式成績單與課程大綱依本校學則辦理學分抵免）。",
+        "predeparture-notice": "於國際事務處公告交換生錄取名單後，依限繳交《錄取資格確認書》、《家長同意書》及新臺幣 3,000 元保證金，配合國際事務處辦理姊妹校官方提名（Nomination）與入學申請，並於出國前 1 個月完成役男出境緩徵核准、購買足夠之海外醫療及意外保險，及申辦《王秋雄榮譽博士德日美獎助金》、《教育部學海飛颺／惜珠》或《雲科大出國交流或進修補助》。",
+        "return-report": "交換期滿返國後，依規定繳交《交換學生心得報告》（約 1,500–2,000 字，含修課、住宿、生活花費與文化交流照片）、問卷、電子機票與登機證存根、護照出入境章影本及姊妹校正式成績單至國際事務處，辦理獎助學金尾款核銷與新臺幣 3,000 元保證金無息退還。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本與修課大綱（Syllabus），依《國立雲林科技大學國際交換學生實施要點》第9點及本校學則向所屬系（所）及教務處辦理境外修習科目學分抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立雲林科技大學").replace("長庚", "雲科大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "雲科大《國際交換學生實施要點》規定申請學生歷年學業成績須達 75 分（含）以上或班級排名前 50%，且操行成績達 80 分（含）以上；非大陸地區甄選『學業成績及班級排名比率』佔總分 40%（大學部平均成績 20%＋班排比率 20%；研究所平均成績 40%）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 聽讀測驗（英語授課基準 650+；評分 B1=550+［20分］/ B2=785+［30分］/ C1=945+［40分］）", "TOEFL iBT（評分 B1=42+［20分］/ B2=72+［30分］/ C1=95+［40分］）", "TOEFL ITP（評分 B1=460+［20分］/ B2=543+［30分］/ C1=627+［40分］）", "IELTS Academic（評分 B1=4.0–5.0［20分］/ B2=5.5–6.5［30分］/ C1=7.0–8.0［40分］）", "JLPT 日語能力試驗（N1=40分 / N2=30分 / N3=20分 / N4=10分 / N5=5分）", "TOPIK 韓語能力測驗（2–6 級，韓國姊妹校適用）", "德語 / 法語 / 西語檢定（CEFR B1 / B2，歐洲姊妹校適用）", "大陸地區或東南亞地區姊妹校（免校內 TOEIC 650 底線限制）"]
+            field["help_text"] = "依雲科大《非大陸地區交換學生評分標準表》採認；語言能力證明佔甄選總分 40%（C1=40分、B2=30分、B1=20分、A2=10分、A1=5分），申請英語授課交換學校應達 TOEIC 650 或同等標準（大陸及東南亞地區不在此限）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://admissions-oia.yuntech.edu.tw/oe/index/index/puid/115-2/lang/zh_TW",
+        source_checked_at=YUNTECH_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換生系統線上申請表與評分標準表附件" if template.id == "exchange-application-data" else ("中英文讀書計畫及自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://admissions-oia.yuntech.edu.tw/oe/index/index/puid/115-2/lang/zh_TW",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "指導教授簽章（研究生）", "系所主管及學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所及學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取公告後繳交確認書、家長同意書及 $3,000 保證金並辦理提名與獎助金申請", "return-report": "返國後繳交交換心得報告、問卷與核銷單據辦理結案及保證金退還", "credit-transfer": "返國後持姊妹校正式成績單辦理境外學分抵免"}.get(template.id, "完成出國交換生系統線上報名並列印申請表經系所及學院核章後送交國際事務處"),
+        version="115準備工具-2026-10-20.1",
+        destinations=["國立雲林科技大學出國交換生系統（admissions-oia.yuntech.edu.tw/oe）", "國立雲林科技大學國際事務處（雲林縣斗六市大學路三段123號）"],
+        conditional_note="此為個人準備工具；雲科大出國交換甄選須先於線上系統（admissions-oia.yuntech.edu.tw/oe）完成報名並列印申請表，經指導教授（研究生）、系所主任及院長核章後，連同中英文歷年成績單（含班排比率及操行 80 分以上證明）、有效語檢證明、中英文讀書計畫與自傳、優秀表現證明（最高 20 分）及推薦函（至多 3 封）送交國際事務處。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1774,6 +1820,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _wzu_template(template)) is not None]
     if university.id == NKUST.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nkust_template(template)) is not None]
+    if university.id == YUNTECH.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _yuntech_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

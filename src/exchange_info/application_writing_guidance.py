@@ -694,6 +694,26 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="學校規定的是整份境外大學研修心得報告（建議 1,500 字以上）；這裡只合計下方各欄。",
     ),
+    ("yuntech", "study-plan"): _rules(
+        (
+            "須繳交中文與英文自傳及出國讀書計畫各乙份（約 1,000 字），具體說明申請動機、擬修讀之專業課程清單、語言學習目標與返國後學分抵免及職涯發展規劃。",
+            "若同時申請《王秋雄榮譽博士補助德日美交流或進修獎助金》，讀書計畫中須明確規劃大學部每學期至少修習 3 門或 6–9 學分（18 ECTS）且成績達 B 以上、研究所每學期至少修習 2 門或 4–8 學分（12 ECTS）及格。",
+        ),
+        evidence="國立雲林科技大學國際交換學生實施要點、非大陸地區交換學生評分標準表與王秋雄榮譽博士獎助金實施要點",
+        minimum=1000,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="建議中英文自傳及出國讀書計畫合計達 1,000 字以上；這裡合計下方各欄字數供參考。",
+    ),
+    ("yuntech", "return-report"): _rules(
+        (
+            "交換期滿返國後，須向國際事務處繳交出國交換學生心得報告（約 1,500–2,000 字，含修課、住宿、生活開銷與文化交流照片）及問卷，以辦理 NT$3,000 保證金無息退還與獎助學金尾款核銷。",
+            "領取《王秋雄榮譽博士德日美獎助金》、《教育部學海飛颺／惜珠》或《雲科大出國交流補助》者，須同時檢附姊妹校正式成績單、護照出入境章影本、登機證存根及電子機票收據。",
+        ),
+        evidence="國立雲林科技大學國際交換學生實施要點與學生出國交流或進修補助要點（返國義務與保證金退還規定）",
+        minimum=1500,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="學校規定的是整份出國交換研修心得報告（建議 1,500 字以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -720,6 +740,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "pccu": ("https://oima.pccu.edu.tw/Upload/202607/learning_2026071112283509.pdf", "2026-10-19"),
     "wzu": ("https://d020.wzu.edu.tw/article/529354", "2026-10-19"),
     "nkust": ("https://oia.nkust.edu.tw/p/412-1030-5591.php?Lang=zh-tw", "2026-10-20"),
+    "yuntech": ("https://tdx.yuntech.edu.tw/images/International_Exchange_Students/Outgoing/Non_mainland_China_area/%E5%9C%8B%E7%AB%8B%E9%9B%B2%E6%9E%97%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8%E5%9C%8B%E9%9A%9B%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E5%AF%A6%E6%96%BD%E8%A6%81%E9%BB%9E20250422.pdf", "2026-10-20"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):
