@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NKUST, NSYSU, NTHU, NTNU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -87,6 +87,7 @@ PCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 WZU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 NKUST_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 YUNTECH_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
+NTOU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1770,6 +1771,51 @@ def _yuntech_template(template: ApplicationDocumentTemplate) -> ApplicationDocum
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ntou_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺灣海洋大學赴姊妹校交換生計畫甄選應繳資料：1. 出國交換學生申請表（至多選填 5 個志願，一校限填一項計畫或系所；大學部須經系所主管與學院核章，碩博士生須經指導教授、系所主管與學院核章）及申請文件檢核表、2. 中文歷年成績單正本（須有申請之前一學期成績及排名，大學部 60 分、研究所 70 分及格以上）、3. 英文歷年成績單正本、4. 留學國語文能力證明影本（大陆地區免附）、5. 中文自傳（1,000–1,500 字）、6. 外國留學研修計畫書（1,000–1,500 字）、7. 經費分析表（申請學海飛颺或校內交換獎補助者必繳，未繳交者視同放棄申請校內一切獎學金）、8. 個人資料使用同意書；先轉為單一 PDF 寄至 `marberthsu@email.ntou.edu.tw`，並預約時間將 A4 單面不裝訂 L 型資料夾紙本親送至行政大樓 3 樓國際合作組。",
+        "study-plan": "撰寫國立臺灣海洋大學交換生甄選必繳之《中文自傳》（1,000–1,500 字）與《外國留學研修計畫書》（1,000–1,500 字，佔國外姊妹校「書面及面試表現」40% 或大陸地區姊妹校「研修計畫及其他輔助文件」55%；具體說明赴外交換動機、擬於姊妹校修習之專業課程［每學期至少應修習相當於海大 6 學分以上課程或進行論文研究］、預估留學經費分析與返國學分採認規劃）。",
+        "course-preapproval": "規劃赴境外姊妹校研修期間之修課清單與學分採認預審（依《國立臺灣海洋大學學生赴國外研修要點》第3點及《施行細則》第6點規定，申請期間與赴國外研修期間皆應為海大註冊在學生，每學期於國外大學至少應修習相當於海大 6 學分［含］以上之課程或進行論文研究；返國後持姊妹校正式成績單與課程大綱辦理學分採認）。",
+        "predeparture-notice": "於國際事務處公告交換生錄取名單後，依限繳交《申請入學同意聲明書》，配合國際合作組辦理姊妹校官方提名（Nomination）與外校入學申請；出國前須依《出國前檢核表》繳交國外大學入學許可影本、切結書、家長同意書、海外醫療及意外保險保單影本（役男另辦緩徵出境），並確認《教育部學海飛颺／惜珠》或《海大校內赴姊妹校交換獎補助》核定資格。",
+        "return-report": "交換期滿返國後 1 個月內，依《返國核銷檢核表》繳交 1,500–2,000 字《赴外研修心得報告》（含至少 4 張在國外研修與生活照片）、完成線上電子問卷，並檢附登機證正本、電子機票收據、護照出入境章影本及姊妹校正式成績單至國際事務處，辦理獎補助款核銷與學分採認（逾期未繳交者將追回全額補助款）。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本與修課大綱（Syllabus），依《國立臺灣海洋大學學生赴國外研修要點》及境外研修學分採認規定向所屬系（所）及教務處辦理學分抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺灣海洋大學").replace("長庚", "海大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "海大《學生赴國外研修施行細則》第2點規定申請之前一學期學業平均須達及格以上（大學部 60 分、研究所 70 分），且須檢附含申請前一學期成績及排名之中文歷年成績單與英文歷年成績單正本（國外姊妹校甄選在校成績佔 30%，大陸地區姊妹校佔 45%）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（海大基準 60+；美加歐名校 72–90+）", "IELTS 學術組（海大基準 5.0+；美加歐名校 5.5–6.5+）", "TOEIC 聽讀測驗（海大基準 600+；神戶／芝浦／長崎 730–785+）", "GEPT 全民英檢（高級複試以上）", "JLPT 日語能力試驗（海大基準 N3+；北海道SAS／神奈川／高知／九州／琉球 N2+）", "TOPIK 韓語能力測驗（海大基準 3 級以上）", "DELF 法文（B1–B2+）／ZDaF 德文（初級–B2+）／DELE 西文（初級+）", "大陸地區姊妹校（依規定得免提送外國語言能力證明）"]
+            field["help_text"] = "依海大《學生赴國外研修要點》附件一「留學國語文能力證明」標準表採認；國外姊妹校甄選外語能力佔總分 30%（同分時優先比序外語能力），且須同時符合志願交換學校訂定之語言門檻。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ntou.edu.tw/p/412-1022-10817.php?Lang=zh-tw",
+        source_checked_at=NTOU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換學生申請表、申請文件檢核表與經費分析表" if template.id == "exchange-application-data" else ("中文自傳與外國留學研修計畫書（各1,000–1,500字）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ntou.edu.tw/var/file/22/1022/img/1029/892749589.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "指導教授簽章（碩博士生）", "系所主管及學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所及學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後繳交入學同意聲明書與出國前檢核表並辦理提名及獎補助確認", "return-report": "返國後 1 個月內繳交 1,500–2,000 字心得報告、問卷與核銷單據", "credit-transfer": "返國後持姊妹校正式成績單辦理境外學分採認"}.get(template.id, "先將全套文件轉為單一 PDF 寄至 marberthsu@email.ntou.edu.tw，再預約時間親送 A4 單面不裝訂 L 型資料夾紙本至行政大樓 3 樓國際處"),
+        version="115準備工具-2026-10-20.1",
+        destinations=["國立臺灣海洋大學國際事務處承辦人信箱（marberthsu@email.ntou.edu.tw）", "國立臺灣海洋大學國際事務處國際合作組（基隆市中正區北寧路2號行政大樓 3 樓）"],
+        conditional_note="此為個人準備工具；海大出國交換甄選須先完成系所與學院核章（研究生另須指導教授核章），於截止日前將全套文件合併為單一 PDF 寄至 `marberthsu@email.ntou.edu.tw`，並預約時間將 A4 單面列印（不裝訂、置於透明 L 型資料夾）紙本親自送交行政大樓 3 樓國際合作組（申請獎學金者必須一併繳交《經費分析表》，未繳者視同放棄申請校內一切獎學金）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1822,6 +1868,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nkust_template(template)) is not None]
     if university.id == YUNTECH.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _yuntech_template(template)) is not None]
+    if university.id == NTOU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntou_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

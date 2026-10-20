@@ -714,6 +714,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="學校規定的是整份出國交換研修心得報告（建議 1,500 字以上）；這裡只合計下方各欄。",
     ),
+    ("ntou", "study-plan"): _rules(
+        (
+            "海大國際事務處規定《中文自傳》與《外國留學研修計畫書》各約 1,000–1,500 字，須詳述個人學習背景、赴外動機、擬於志願姊妹校修習之專業課程（每學期至少應修習相當於海大 6 學分以上課程或進行論文研究）與返國學分採認規劃。",
+            "欲申請教育部《學海飛颺》或《海大校內赴姊妹校交換獎補助》者，報名時必須一併填繳《經費分析表》（附件五），未繳交者視同放棄申請校內一切獎學金；全套文件須以 A4 單面列印（不裝訂，置於透明 L 型資料夾）並先轉為單一 PDF 寄至 `marberthsu@email.ntou.edu.tw`。",
+        ),
+        evidence="國立臺灣海洋大學 2027 年春/秋季赴姊妹校交換生計畫甄選簡章、自傳範例、外國留學研修計畫書範例與經費分析表範例",
+        minimum=1000,
+        maximum=3000,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="海大規定自傳與外國留學研修計畫書各約 1,000–1,500 字；這裡合計下方各欄字數供參考。",
+    ),
+    ("ntou", "return-report"): _rules(
+        (
+            "交換期滿返國後 1 個月內，須依《返國核銷檢核表》向國際事務處繳交 1,500–2,000 字《赴外研修心得報告》（含至少 4 張在國外研修與生活照片）及完成線上電子問卷。",
+            "領取《教育部學海飛颺／惜珠》或《海大校內赴姊妹校交換獎補助》者，須同時檢附登機證正本、電子機票收據、護照出入境章影本及姊妹校正式成績單辦理核銷；逾期未完成核銷者將追回全額獎補助款。",
+        ),
+        evidence="國立臺灣海洋大學學生赴國外研修施行細則、學海系列計畫補助施行細則與返國核銷檢核表",
+        minimum=1500,
+        maximum=2000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="學校規定的是整份赴外研修心得報告（1,500–2,000 字，含照片 4 張以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -741,6 +763,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "wzu": ("https://d020.wzu.edu.tw/article/529354", "2026-10-19"),
     "nkust": ("https://oia.nkust.edu.tw/p/412-1030-5591.php?Lang=zh-tw", "2026-10-20"),
     "yuntech": ("https://tdx.yuntech.edu.tw/images/International_Exchange_Students/Outgoing/Non_mainland_China_area/%E5%9C%8B%E7%AB%8B%E9%9B%B2%E6%9E%97%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8%E5%9C%8B%E9%9A%9B%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E5%AF%A6%E6%96%BD%E8%A6%81%E9%BB%9E20250422.pdf", "2026-10-20"),
+    "ntou": ("https://oia.ntou.edu.tw/var/file/22/1022/img/1029/779655790.pdf", "2026-10-20"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

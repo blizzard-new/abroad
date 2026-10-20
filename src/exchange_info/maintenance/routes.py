@@ -784,6 +784,7 @@ def create_maintenance_router(
             <option value="wzu">文藻外語大學（共 147 所姊妹校）</option>
             <option value="nkust">國立高雄科技大學（共 107 所姊妹校）</option>
             <option value="yuntech">國立雲林科技大學（共 112 所姊妹校）</option>
+            <option value="ntou">國立臺灣海洋大學（共 123 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -878,7 +879,8 @@ def create_maintenance_router(
     pccu: "中國文化大學 (PCCU)",
     wzu: "文藻外語大學 (WZU)",
     nkust: "國立高雄科技大學 (NKUST)",
-    yuntech: "國立雲林科技大學 (YunTech)"
+    yuntech: "國立雲林科技大學 (YunTech)",
+    ntou: "國立臺灣海洋大學 (NTOU)"
   };
 
   const FIELD_LABELS = {

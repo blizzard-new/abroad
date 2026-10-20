@@ -825,8 +825,50 @@ YUNTECH = UniversityProfile(
     ),
 )
 
+NTOU = UniversityProfile(
+    id="ntou",
+    school_name="國立臺灣海洋大學",
+    short_name="海大",
+    english_name="National Taiwan Ocean University",
+    aliases=(
+        "ntou",
+        "國立臺灣海洋大學",
+        "國立台灣海洋大學",
+        "臺灣海洋大學",
+        "台灣海洋大學",
+        "海洋大學",
+        "海大",
+        "NTOU",
+        "National Taiwan Ocean University",
+    ),
+    hero_image="/static/assets/ntou-campus.svg",
+    official_url="https://oia.ntou.edu.tw/p/412-1022-6958.php?Lang=zh-tw",
+    coverage_note="完整支援：國際事務處（國際合作組）2027年春/秋季學期赴國外姊妹校交換生計畫暨學海飛颺甄選簡章、115學年度第2學期赴大陸地區姊妹校交換計畫、雙聯學位一覽表與全球共 123 所合作姊妹校（日本、中國大陸、菲律賓、越南、印尼、美國、韓國、泰國、印度、馬來西亞、德國、法國、俄羅斯、波蘭、英國、瑞士、澳洲、加拿大等 22 個國家與地區）名額與語檢門檻、校內赴姊妹校交換獎補助（機票＋學費最高8萬＋生活費）與教育部學海系列獎學金暨 439 篇學長姐返國研修心得已完整整合。",
+    support_level="full",
+    partner_count_hint=123,
+    academic_score_minimum=60,
+    student_card_signals=(
+        "國立臺灣海洋大學",
+        "臺灣海洋大學",
+        "海大",
+        "NATIONALTAIWANOCEANUNIVERSITY",
+        "NTOU",
+    ),
+    # https://www.ntou.edu.tw/academics — checked 2026-10-20.
+    colleges=(
+        "海運暨管理學院",
+        "生命科學院",
+        "海洋科學與資源學院",
+        "工學院",
+        "電機資訊學院",
+        "人文社會科學院",
+        "海洋法律與政策學院",
+        "國際學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU)
 DEFAULT_UNIVERSITY = CGU
 
 
