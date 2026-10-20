@@ -1,0 +1,240 @@
+{
+  "checked": "2026-10-20",
+  "batch": "manual-five-2026-10-20",
+  "selection_basis": "User-approved candidate pool and editorial judgment; no Search Console, volume or rank data provided",
+  "sources": [
+    {
+      "key": "openai-prompt",
+      "requested_url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "resolved_url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "status": 200,
+      "sha256": "f2341d028b651c16c1033ff907fd56d5155ecdf00ed5949712de46b24f3deb37",
+      "text_length": 1918,
+      "title": "Prompt engineering best practices for ChatGPT | OpenAI Help Center",
+      "checked": "2026-10-20",
+      "access": "HTTP 200; relevant primary content read, not just a live URL",
+      "claims": [
+        {
+          "article": "ai-self-introduction",
+          "source_id": "openai",
+          "scope": "2026-10-20 核對。官方一般原則包含清楚任務、背景、語氣與迭代修改；本文素材表、Prompt 與人物例句由 UniWay 設計，非官方申請範本。"
+        },
+        {
+          "article": "natural-writing-prompts",
+          "source_id": "openai",
+          "scope": "2026-10-20 核對。核對明確背景、語氣與迭代修改的一般原則；本文三輪 Prompt 與對照例句由 UniWay 撰寫，並非官方對自然文風的保證。"
+        }
+      ],
+      "version": "Live page as retrieved on 2026-10-20; snapshot fingerprint recorded"
+    },
+    {
+      "key": "claude-prompt",
+      "requested_url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct",
+      "resolved_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#be-clear-and-direct",
+      "status": 200,
+      "sha256": "cf4f5f652441ed321cc5521402f919ec605411ee3d4355259fa64bb30c4df543",
+      "text_length": 55749,
+      "title": "Prompting best practices - Claude Platform Docs",
+      "checked": "2026-10-20",
+      "access": "HTTP 200; relevant primary content read, not just a live URL",
+      "claims": [
+        {
+          "article": "ai-self-introduction",
+          "source_id": "claude",
+          "scope": "2026-10-20 核對。核對官方開發文件的 Be clear and direct 段落；屬一般提示方法，不證明 Claude、ChatGPT、Gemini 在本題的比較效果。"
+        }
+      ],
+      "version": "Live page as retrieved on 2026-10-20; snapshot fingerprint recorded"
+    },
+    {
+      "key": "unc-concise",
+      "requested_url": "https://writingcenter.unc.edu/tips-and-tools/conciseness-handout/",
+      "resolved_url": "https://writingcenter.unc.edu/tips-and-tools/conciseness-handout/",
+      "status": 200,
+      "sha256": "ff7e61aaf17e1fc37da9e2b7bbe4a808314a8171f0519369345d188162d306b5",
+      "text_length": 9940,
+      "title": "Writing Concisely – The Writing Center",
+      "checked": "2026-10-20",
+      "access": "HTTP 200; relevant primary content read, not just a live URL",
+      "claims": [
+        {
+          "article": "natural-writing-prompts",
+          "source_id": "unc",
+          "scope": "2026-10-20 核對。核對辨識冗詞、重複與不必要修飾的一般寫作原則；本文中文示例為原創，不是原文翻譯或 AI 偵測方法。"
+        }
+      ],
+      "version": "Live page as retrieved on 2026-10-20; snapshot fingerprint recorded"
+    },
+    {
+      "key": "british-levels",
+      "requested_url": "https://learnenglish.britishcouncil.org/english-levels",
+      "resolved_url": "https://learnenglish.britishcouncil.org/level",
+      "status": 200,
+      "sha256": "5341b36bbdb993be12e57cfb525923328ad9b2e14b8a3fc0ed3a3d46bd91783b",
+      "text_length": 1947,
+      "title": "Level test | LearnEnglish",
+      "checked": "2026-10-20",
+      "access": "HTTP 200; relevant primary content read, not just a live URL",
+      "claims": [
+        {
+          "article": "ai-english-learning",
+          "source_id": "levels",
+          "scope": "2026-10-20 核對。核對資源依 CEFR 程度整理、線上測驗提供概略程度指引；不是正式交換資格證明。"
+        }
+      ],
+      "version": "Live page as retrieved on 2026-10-20; snapshot fingerprint recorded"
+    },
+    {
+      "key": "british-skills",
+      "requested_url": "https://learnenglish.britishcouncil.org/skills",
+      "resolved_url": "https://learnenglish.britishcouncil.org/free-resources",
+      "status": 200,
+      "sha256": "65a21ee003c21bc9480ae1718f6a7584473daa5b20ee41f7d5806d1d1ed91fa7",
+      "text_length": 5842,
+      "title": "Free resources | LearnEnglish",
+      "checked": "2026-10-20",
+      "access": "HTTP 200; relevant primary content read, not just a live URL",
+      "claims": [
+        {
+          "article": "ai-english-learning",
+          "source_id": "skills",
+          "scope": "2026-10-20 核對。核對聽說讀寫、文法與字彙篩選入口。本文 30 分鐘分配與 Prompt 是 UniWay 原創安排，非官方課程。"
+        }
+      ],
+      "version": "Live page as retrieved on 2026-10-20; snapshot fingerprint recorded"
+    },
+    {
+      "key": "british-ai",
+      "requested_url": "https://www.britishcouncil.org/research-insight/human-centred-ai-lessons-english-learning-assessment",
+      "resolved_url": "https://www.britishcouncil.org/research-insight/human-centred-ai-lessons-english-learning-assessment",
+      "status": 200,
+      "sha256": "8a1a3b8416332a8cc31c1dd4fe3fc10a37744cfd55a19e74d891cc4a514b12f7",
+      "text_length": 2983,
+      "title": "Human-centred AI: lessons for English learning and assessment | British Council",
+      "checked": "2026-10-20",
+      "access": "HTTP 200; relevant primary content read, not just a live URL",
+      "claims": [
+        {
+          "article": "ai-english-learning",
+          "source_id": "british-ai",
+          "scope": "2026-10-20 核對。2025 年 3 月立場文章，核對以學習需求、教學目的與教育者角色為重點；不作為本文練習法的提分成效證據。"
+        }
+      ],
+      "version": "March 2025 position paper; landing-page statement of principles read"
+    },
+    {
+      "key": "utrecht-application",
+      "requested_url": "https://www.uu.nl/en/education/exchange-students/application",
+      "resolved_url": "https://www.uu.nl/en/education/exchange-students/application",
+      "status": 200,
+      "sha256": "d035f73a4111e76c7235b0675c5d5c869d6827b9080e6124bcf56b3934540efc",
+      "text_length": 1040,
+      "checked": "2026-10-20",
+      "title": "Application - Exchange students - Utrecht University",
+      "access": "HTTP 200; relevant primary content read, not just a live URL",
+      "claims": [
+        {
+          "article": "exchange-semester-or-year",
+          "source_id": "utrecht-apply",
+          "scope": "2026-10-20 核對。頁面說明可透過交換協議研修一或兩學期；只作該校入口案例，不推論所有科系、母校協議或名額相同。"
+        }
+      ],
+      "version": "Live page as retrieved on 2026-10-20; snapshot fingerprint recorded"
+    },
+    {
+      "key": "utrecht-calendar",
+      "requested_url": "https://www.uu.nl/en/education/exchange-students/academics/academic-calendar",
+      "resolved_url": "https://www.uu.nl/en/education/exchange-students/academics/academic-calendar",
+      "status": 200,
+      "sha256": "f96af685a6591d7f1387a5cf0b394a3526702a69568b2b2ac2972b8b792d9c35",
+      "text_length": 1283,
+      "checked": "2026-10-20",
+      "title": "Academic calendar - Exchange students - Utrecht University",
+      "access": "HTTP 200; relevant primary content read, not just a live URL",
+      "claims": [
+        {
+          "article": "exchange-semester-or-year",
+          "source_id": "utrecht-calendar",
+          "scope": "2026-10-20 核對。核對 2026–2027 版本的教學區段起訖與學院／University College 例外提醒。一般區段日期不能替代本人課程及補考安排。"
+        }
+      ],
+      "version": "2026-2027 academic-calendar section; faculty and University College exceptions retained"
+    },
+    {
+      "key": "oxford-choosing",
+      "requested_url": "https://www.ox.ac.uk/admissions/graduate/application-guide/references/choosing-a-referee",
+      "resolved_url": "https://www.ox.ac.uk/admissions/graduate/application-guide/references/choosing-a-referee",
+      "status": 200,
+      "sha256": "2ada7e15adc0c00a600d103daa0fd76a734094117a53131876c8f878d799aca3",
+      "text_length": 8506,
+      "checked": "2026-10-20",
+      "title": "Choosing a referee | Oxford University",
+      "access": "HTTP 200; relevant primary content read, not just a live URL",
+      "claims": [
+        {
+          "article": "exchange-recommendation-letter",
+          "source_id": "oxford-choosing",
+          "scope": "2026-10-20 核對。研究所申請指南，核對了解申請者的推薦人、先聯絡與提供背景的建議；不把牛津的份數或推薦人資格當作交換生通則。"
+        }
+      ],
+      "version": "Live graduate-application guidance; not an exchange-programme rule"
+    },
+    {
+      "key": "oxford-referee",
+      "requested_url": "https://www.ox.ac.uk/admissions/graduate/application-guide/references/information-for-referees",
+      "resolved_url": "https://www.ox.ac.uk/admissions/graduate/application-guide/references/information-for-referees",
+      "status": 200,
+      "sha256": "3985b0fc21734bcb9164641742d9d329a9f60620868658184395c03b2853ae26",
+      "text_length": 8233,
+      "checked": "2026-10-20",
+      "title": "Information for referees | Oxford University",
+      "access": "HTTP 200; relevant primary content read, not just a live URL",
+      "claims": [
+        {
+          "article": "exchange-recommendation-letter",
+          "source_id": "oxford-referee",
+          "scope": "2026-10-20 核對。核對履歷背景與推薦人本人提交的該校制度示例。本文資料包、中文信件與時間安排為 UniWay 原創建議，非牛津官方範本。"
+        }
+      ],
+      "version": "Live graduate-application guidance; not an exchange-programme rule"
+    }
+  ],
+  "examples": {
+    "ai": "Prompts, fictional people, translations, rewrites and grammar examples are editor-authored teaching examples, not actual multi-provider experiments, testimonials or official scores",
+    "budget": "All NTD amounts and 5/10-month durations are explicitly hypothetical; no country cost or visa-proof claim",
+    "official_rules": "Utrecht period/calendar facts are scoped to the cited pages; Oxford reference process is scoped to graduate admissions"
+  },
+  "arithmetic_checks": {
+    "daily_minutes": [
+      5,
+      8,
+      10,
+      5,
+      2
+    ],
+    "daily_total": 30,
+    "one_minute_seconds": [
+      10,
+      25,
+      20,
+      5
+    ],
+    "three_minute_seconds": [
+      20,
+      60,
+      70,
+      30
+    ],
+    "short_expense_ntd": 185000,
+    "long_expense_ntd": 325000,
+    "expense_difference_ntd": 140000,
+    "short_reserved_ntd": 235000,
+    "long_reserved_ntd": 375000
+  },
+  "access_limitations": [
+    "Direct executor requests to NTU application/FAQ pages returned HTTP 503. These were not used as factual sources for these five articles.",
+    "Initial Gemini help URL redirected to regional availability documentation and was not used as prompting evidence.",
+    "Claude source redirected to its consolidated official best-practices page; the final URL and specific section are recorded.",
+    "No claims about paid tool features, model rankings, admissions success or guaranteed test-score improvement are made."
+  ]
+}

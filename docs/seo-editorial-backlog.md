@@ -1,5 +1,19 @@
 # Editorial intentions and next topics
 
+## 2026-10-20 手動追加五篇（待審）
+
+本批依使用者「現在做五篇並開新 PR」指示執行，不改動每日 08:00 兩篇的排程。選題依使用者候選池及編輯判斷，未使用搜尋量或排名資料。下列題目已完成於分支 `codex/seo-five-guides-20261020`；後續排程也要先查待審 PR，避免重複選題。
+
+| 候選方向 | 本批 slug | 狀態 |
+| --- | --- | --- |
+| AI 中英文自我介紹 | `ai-self-introduction` | 完成，待審 |
+| 自然寫作 Prompt | `natural-writing-prompts` | 完成，待審 |
+| AI 英文學習 | `ai-english-learning` | 完成，待審 |
+| 一學期或一學年 | `exchange-semester-or-year` | 完成，待審 |
+| 推薦信邀請與資料準備 | `exchange-recommendation-letter` | 完成，待審 |
+
+來源、圖片與驗證見 [本批驗收紀錄](seo-editorial-five-validation-2026-10-20.md)。每日排程與全部 20 個候選的整理由 [PR #92](https://github.com/blizzard-new/abroad/pull/92) 維護；本批只記錄已處理的五個方向，不重建或覆蓋其規劃。
+
 ## Initial batch: ten complete articles
 
 | URL slug | Student question | Action |
