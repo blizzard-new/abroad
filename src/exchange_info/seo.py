@@ -176,7 +176,7 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
         for i, (name, p) in enumerate(breadcrumbs, 1)]}
     article_head = structured_data(article_schema(article, settings.origin)) if article else ""
     if path == "/guides" or article:
-        article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261020-stage-1">'
+        article_head += '<link rel="stylesheet" href="/static/seo-articles.css?v=20261020-stage-2">'
     if extra_head:
         article_head += extra_head
     html = f'''<!doctype html><html lang="zh-Hant" data-theme="light"><head><meta charset="utf-8">

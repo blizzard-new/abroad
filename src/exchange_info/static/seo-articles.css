@@ -103,7 +103,7 @@
 }
 
 /* Guide index stages. Stacked by default (no JavaScript, phones, print); stage-scroll.js marks the wide layout ready. */
-.stage-scroll { margin: 0 0 2rem; }
+.stage-scroll { --stage-speed: 140ms; margin: 0 0 2rem; }
 .stage-block { margin: 0 0 1rem; }
 .stage-copy { margin: 0 0 .5rem; }
 .stage-no { margin: 0 0 .3rem; color: var(--uw-blue-strong); font-size: .85rem; font-weight: 750; letter-spacing: .14em; font-variant-numeric: tabular-nums; }
@@ -150,15 +150,19 @@
 }
 
 @media (min-width: 64rem) and (prefers-reduced-motion: no-preference) {
-  [data-stage-scroll="ready"] .stage-copy { transition: border-color var(--uw-motion-standard, 240ms) ease; }
-  [data-stage-scroll="ready"] .stage-copy h2, [data-stage-scroll="ready"] .stage-no { transition: color var(--uw-motion-standard, 240ms) ease; }
-  [data-stage-scroll="ready"] .stage-detail { transition: grid-template-rows var(--uw-motion-standard, 240ms) var(--uw-motion-ease, cubic-bezier(.2, .75, .25, 1)); }
+  /* Switching stays quick: the incoming stage fades in over --stage-speed, the outgoing cards clear faster. */
+  [data-stage-scroll="ready"] .stage-copy { transition: border-color var(--stage-speed) ease; }
+  [data-stage-scroll="ready"] .stage-copy h2, [data-stage-scroll="ready"] .stage-no { transition: color var(--stage-speed) ease; }
+  [data-stage-scroll="ready"] .stage-detail { transition: grid-template-rows var(--stage-speed) var(--uw-motion-ease, cubic-bezier(.2, .75, .25, 1)); }
   [data-stage-scroll="ready"] .stage-cards {
-    translate: 0 8px;
-    transition: opacity var(--uw-motion-standard, 240ms) var(--uw-motion-ease, cubic-bezier(.2, .75, .25, 1)),
-      translate var(--uw-motion-standard, 240ms) var(--uw-motion-out, cubic-bezier(.16, 1, .3, 1));
+    translate: 0 4px;
+    transition: opacity calc(var(--stage-speed) * .65) ease-out, translate calc(var(--stage-speed) * .65) ease-out;
   }
-  [data-stage-scroll="ready"] [data-active] .stage-cards { translate: 0 0; }
+  [data-stage-scroll="ready"] [data-active] .stage-cards {
+    translate: 0 0;
+    transition: opacity var(--stage-speed) var(--uw-motion-ease, cubic-bezier(.2, .75, .25, 1)),
+      translate var(--stage-speed) var(--uw-motion-out, cubic-bezier(.16, 1, .3, 1));
+  }
 }
 
 @media print {
