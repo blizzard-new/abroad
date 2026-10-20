@@ -412,6 +412,10 @@ class AccountRepository(Protocol):
 
     def find_session_by_token_hash(self, token_hash: str) -> AccountSessionRecord | None: ...
 
+    def authenticate_by_token_hash(
+        self, token_hash: str
+    ) -> tuple[UserAccount, AccountSessionRecord] | None: ...
+
     def save_session(self, session: AccountSessionRecord) -> AccountSessionRecord: ...
 
     def delete_session_by_token_hash(self, token_hash: str) -> None: ...
@@ -501,6 +505,15 @@ class JsonlAccountRepository:
             ),
             None,
         )
+
+    def authenticate_by_token_hash(
+        self, token_hash: str
+    ) -> tuple[UserAccount, AccountSessionRecord] | None:
+        session = self.find_session_by_token_hash(token_hash)
+        if session is None or session.expires_at <= utc_now():
+            return None
+        account = self.find_account_by_id(session.account_id)
+        return (account, session) if account is not None else None
 
     @staticmethod
     def _preserve_committed_auth_fields(
@@ -1592,7 +1605,12 @@ class SupabaseAccountRepository:
             },
         )
 
-    def _hydrate_account(self, row: Mapping[str, Any]) -> UserAccount:
+    def _hydrate_account(
+        self,
+        row: Mapping[str, Any],
+        *,
+        workspace_rows: list[Mapping[str, Any]] | None = None,
+    ) -> UserAccount:
         profile = dict(row.get("profile") or {})
         profile["id"] = row.get("id")
         profile["email"] = row.get("email")
@@ -1601,7 +1619,11 @@ class SupabaseAccountRepository:
         if row.get("updated_at") is not None:
             profile["updated_at"] = row["updated_at"]
         profile["application_workspaces"] = []
-        for workspace_row in self._workspace_rows(str(row["id"])):
+        for workspace_row in (
+            self._workspace_rows(str(row["id"]))
+            if workspace_rows is None
+            else workspace_rows
+        ):
             workspace = workspace_row.get("workspace")
             if not isinstance(workspace, dict):
                 continue
@@ -2167,6 +2189,33 @@ class SupabaseAccountRepository:
             return AccountSessionRecord.model_validate(rows[0]) if rows else None
 
         return self._remembered("session", token_hash, load)
+
+    def authenticate_by_token_hash(
+        self, token_hash: str
+    ) -> tuple[UserAccount, AccountSessionRecord] | None:
+        """Authenticate and hydrate the account in one PostgREST round trip."""
+
+        payload = self._rpc(
+            "exchange_authenticate_account",
+            {"p_token_hash": token_hash},
+        )
+        if payload.get("status") != "valid":
+            return None
+        account_row = payload.get("account")
+        session_row = payload.get("session")
+        if not isinstance(account_row, dict) or not isinstance(session_row, dict):
+            raise AccountRepositoryError("Supabase 回傳了無效的登入帳號快照。")
+        workspace_rows = account_row.get("workspaces")
+        if not isinstance(workspace_rows, list):
+            raise AccountRepositoryError("Supabase 回傳了無效的工作區快照。")
+        account = self._hydrate_account(
+            account_row,
+            workspace_rows=workspace_rows,
+        )
+        session = AccountSessionRecord.model_validate(session_row)
+        if account.id != session.account_id:
+            raise AccountRepositoryError("Supabase 回傳了不一致的登入帳號快照。")
+        return account, session
 
     def save_session(self, session: AccountSessionRecord) -> AccountSessionRecord:
         self._request(

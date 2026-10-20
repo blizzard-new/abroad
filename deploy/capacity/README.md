@@ -2,6 +2,8 @@
 
 此套件用真正的 PostgreSQL／PostgREST、正式 API、加密草稿與獨立帳號，比較 1／2／4 個 workers。正式平台不會因合併本 PR 自動增加 workers。開發環境的短測與未達標結果見 [驗證紀錄](../../docs/self-host-capacity-validation/stage-two/README.md)；目前尚未通過 1000 人容量驗收。
 
+每次拉取包含新 migration 的版本後先重新執行 `-Action Setup`，確認 `20261020150000_capacity_auth_read.sql` 已套用，再執行 Test。此 RPC 將 session、帳號與工作區驗證合併成一次資料庫往返；若只重建 app 而沒有更新 staging 資料庫，新的登入路徑不會存在。
+
 ## Windows 執行
 
 先取得此 PR 的程式，在專案根目錄執行。需要 Docker Desktop 的 Linux containers、Docker Compose v2.24+、Windows PowerShell 5.1；不需另裝 Python。首次建置含校方文件，預留 **至少 30 GB 可用 Docker 磁碟**。

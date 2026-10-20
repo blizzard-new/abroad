@@ -1,0 +1,30 @@
+{
+  "measured_at": "2026-10-20",
+  "base_revision": "11476ab8",
+  "environment": {
+    "kind": "development cloud loopback",
+    "cpu_quota": 4,
+    "memory_limit_gib": 16,
+    "app_workers": 1,
+    "database": "not used by this public-read measurement"
+  },
+  "dashboard": {
+    "school": "長庚大學",
+    "uncompressed_bytes": 355383,
+    "compressed_bytes": 40370,
+    "cold_build_seconds": 21.132731,
+    "cached_response_seconds": 0.018854
+  },
+  "warm_dashboard_burst": {
+    "users": 1000,
+    "ramp_seconds": 10,
+    "requests_per_user": 1,
+    "failures": 0,
+    "elapsed_seconds": 10.157,
+    "p50_ms": 3.73,
+    "p95_ms": 34.6,
+    "p99_ms": 250.71,
+    "max_ms": 332.8
+  },
+  "scope": "Warm public student-dashboard entrance only. This is not the authenticated mixed-write, WAN, browser-asset, document-generation, or one-hour 1000-user acceptance test."
+}

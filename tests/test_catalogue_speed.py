@@ -43,6 +43,42 @@ def test_the_cgu_dashboard_is_built_once_for_everyone_within_the_window(counted)
     assert calls["dashboard"] == 1
 
 
+def test_dashboard_reuses_serialized_gzip_and_supports_revalidation(counted, monkeypatch) -> None:
+    data_dir, calls = counted
+    attachments = []
+    original = api._attach_school_images
+
+    def attach(*args, **kwargs):
+        attachments.append(1)
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(api, "_attach_school_images", attach)
+    client = TestClient(api.create_app(data_dir))
+    first = client.get(
+        "/student-dashboard",
+        params={"school": CGU},
+        headers={"Accept-Encoding": "gzip"},
+    )
+    second = client.get(
+        "/student-dashboard",
+        params={"school": CGU},
+        headers={"Accept-Encoding": "gzip"},
+    )
+    unchanged = client.get(
+        "/student-dashboard",
+        params={"school": CGU},
+        headers={"If-None-Match": first.headers["etag"]},
+    )
+
+    assert first.status_code == second.status_code == 200
+    assert first.json() == second.json()
+    assert first.headers["content-encoding"] == "gzip"
+    assert first.headers["cache-control"].startswith("public, max-age=30")
+    assert unchanged.status_code == 304 and not unchanged.content
+    assert attachments == [1]
+    assert calls["dashboard"] == 1
+
+
 def _wait_for_refresh() -> None:
     for thread in [t for t in threading.enumerate() if t.name == "dashboard-refresh"]:
         thread.join(timeout=30)
@@ -158,7 +194,7 @@ def test_active_warmup_keeps_health_responsive(counted, monkeypatch):
         try:
             assert entered.wait(5)
             assert client.get("/health").status_code == 200
-            assert calls["dashboard"] == 0
+            assert calls["dashboard"] == 1, "the promoted dashboard warms before slower translation caches"
         finally:
             release.set()
         _wait_for_warm_up(client)

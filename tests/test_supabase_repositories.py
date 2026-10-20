@@ -81,11 +81,59 @@ def test_jsonl_repository_remains_an_explicit_local_fallback(tmp_path) -> None:
     assert repository.find_account_by_id(account.id) == account
     assert repository.find_account_by_email("missing@example.com") is None
     assert repository.find_session_by_token_hash("token-hash") == session
+    assert repository.authenticate_by_token_hash("token-hash") == (account, session)
     assert repository.purge_expired_sessions(utc_now()) == 0
 
     repository.delete_account(account.id)
     assert repository.find_account_by_id(account.id) is None
     assert repository.find_session_by_token_hash("token-hash") is None
+
+
+def test_supabase_authentication_is_one_consistent_rpc_snapshot() -> None:
+    workspace = _workspace().model_copy(update={"revision": 7})
+    account = UserAccount(display_name="容量測試")
+    session = AccountSessionRecord(
+        account_id=account.id,
+        token_hash="a" * 64,
+        expires_at=utc_now() + timedelta(days=1),
+    )
+    fake = _FakeSession([
+        {
+            "status": "valid",
+            "session": session.model_dump(mode="json"),
+            "account": {
+                "id": account.id,
+                "email": account.email,
+                "profile": account.model_dump(
+                    mode="json",
+                    exclude={"application_workspaces", "community_suspended_until"},
+                ),
+                "community_suspended_until": None,
+                "created_at": account.created_at.isoformat(),
+                "updated_at": account.updated_at.isoformat(),
+                "workspaces": [{
+                    "workspace": workspace.model_dump(mode="json"),
+                    "revision": workspace.revision,
+                }],
+            },
+        }
+    ])
+    repository = SupabaseAccountRepository(
+        "https://project.supabase.co",
+        "sb_secret_test-only",
+        request_session=fake,
+    )
+
+    authenticated = repository.authenticate_by_token_hash("a" * 64)
+
+    assert authenticated is not None
+    restored, restored_session = authenticated
+    assert restored_session == session
+    assert restored.application_workspaces == [workspace]
+    assert len(fake.calls) == 1
+    assert fake.calls[0]["method"] == "POST"
+    assert fake.calls[0]["url"].endswith("/rpc/exchange_authenticate_account")
+    assert fake.calls[0]["json"] == {"p_token_hash": "a" * 64}
 
 
 def test_repository_factory_fails_closed_in_production_without_supabase(tmp_path) -> None:

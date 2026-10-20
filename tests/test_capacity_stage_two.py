@@ -161,6 +161,19 @@ def test_capacity_stack_cannot_share_production_volumes_ports_or_privileged_load
     assert b'lib.ps1' not in script and b'04-apply-migrations.ps1' not in script
 
 
+def test_capacity_authentication_rpc_is_indexed_current_and_service_only():
+    root = Path(__file__).resolve().parents[1]
+    sql = (root / 'supabase/migrations/20261020150000_capacity_auth_read.sql').read_text().lower()
+    assert 'exchange_authenticate_account' in sql
+    assert 'session.token_hash = p_token_hash' in sql
+    assert 'session.expires_at > statement_timestamp()' in sql
+    assert 'join public.exchange_accounts account on account.id = session.account_id' in sql
+    assert 'from public.exchange_account_workspaces workspace' in sql
+    assert "set search_path = ''" in sql
+    assert 'from public, anon, authenticated' in sql
+    assert 'to service_role' in sql
+
+
 def test_http_200_with_wrong_account_contents_fails_persistence_check():
     module=load_module()
     reads=0

@@ -53,11 +53,14 @@ function Assert-Db {
 }
 function Wait-App {
     $deadline = (Get-Date).AddMinutes(5)
+    $readyWorkers = @{}
     do {
         try {
-            $identity = Invoke-RestMethod 'http://127.0.0.1:18000/capacity/identity' -TimeoutSec 5
-            if ($identity.run_id -eq $env:CAPACITY_RUN_ID) { return }
-            throw 'Capacity identity mismatch'
+            $identity = Invoke-RestMethod 'http://127.0.0.1:18000/capacity/identity' -Headers @{'X-Capacity-New-Connection'='1'} -TimeoutSec 5
+            if ($identity.run_id -ne $env:CAPACITY_RUN_ID) { throw 'Capacity identity mismatch' }
+            if ($identity.dashboard_ready) { $readyWorkers["$($identity.pid)"] = $true }
+            if ($readyWorkers.Count -ge $Workers) { return }
+            throw 'Capacity dashboard is still warming'
         } catch { if ((Get-Date) -gt $deadline) { throw }; Start-Sleep -Seconds 2 }
     } while ($true)
 }
