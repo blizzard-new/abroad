@@ -1695,6 +1695,9 @@ def main():
         encoding="utf-8",
     )
 
+    from exchange_info.fju_oct20_updates import apply_fju_oct20_updates
+
+    apply_fju_oct20_updates(OFFICIAL_FJU_DIR)
     print(f"Successfully built FJU catalog: {len(partners)} partners, {len(workflows)} workflows, {len(destinations)} destinations, {len(research_records)} research records, {len(new_locations)} locations, {added_imgs} new school-images aliases added (total FJU verified images: {len(new_images)}).")
 
 

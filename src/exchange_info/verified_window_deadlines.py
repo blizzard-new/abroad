@@ -28,7 +28,7 @@ from .university_registry import SUPPORTED_UNIVERSITIES, require_university
 TAIPEI_TZ = timezone(timedelta(hours=8))
 WINDOW_START_DATE = "2026-10-19"
 WINDOW_END_DATE = "2026-12-31"
-CATALOG_LAST_CHECKED_AT = "2026-10-19"
+CATALOG_LAST_CHECKED_AT = "2026-10-20"
 DEFAULT_LINE_OA_ID = "@uniway"
 
 
@@ -903,40 +903,41 @@ _RAW_SPECS: list[dict[str, Any]] = [
     {
         "school_id": "fju",
         "in_ten_week_window": True,
-        "window_status": "pending_exact_date",
-        "window_badge": "10 週窗口預告（12 月收件・待 11 月底公告確切日）",
-        "cycle_label": "116-1（2027 秋季班）校級赴外交換學生甄選（11 月底公告名額、12 月線上填表與紙本收件）",
-        "primary_deadline_date": "2026-12-18",
-        "primary_deadline_at": None,
-        "anchor_date": date(2026, 12, 18),
+        "window_status": "upcoming",
+        "window_badge": "10 週窗口即將開放 · 11/01–12/24 16:30（限校內網路）",
+        "cycle_label": "116-1（2027 秋季班）校級赴姊妹校交換學生申請（系統開放及紙本收件 11/01–12/24 16:30；名額於 11 月陸續更新）",
+        "primary_deadline_date": "2026-12-24",
+        "primary_deadline_at": _dt(2026, 12, 24, 16, 30),
+        "anchor_date": date(2026, 12, 24),
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline",
             label="校內線上報名截止日",
-            value_text="官網預告 11 月底公告 116-1 姊妹校名額，並於 2026 年 12 月開放線上填寫申請表（確切截止日期與時刻待 11 月底當期簡章公告，絕不自行推定為 23:59）",
-            exact_deadline_at=None,
-            submission_mode="pending_notice",
-            source_title="天主教輔仁大學國際及兩岸教育處—出國交換申請流程與時程",
-            source_url="https://iscoie.fju.edu.tw/generalServices.jsp?labelID=42",
-            last_checked_at="2026-10-16",
+            value_text="2026/11/01 至 2026/12/24（四）16:30 止（雖公告標題寫即日起，正文載明系統開放及收件為 11/1–12/24 16:30；線上系統 http://outgoing.oie.fju.edu.tw/ 限校內網路使用，名額及開放學校將於 11 月陸續更新，不能當成最終版）",
+            exact_deadline_at=_dt(2026, 12, 24, 16, 30),
+            submission_mode="online",
+            source_title="天主教輔仁大學 116 學年度第 1 學期（2027 秋季班）赴姊妹校交換學生申請公告（newsID=1062）",
+            source_url="https://iscoie.fju.edu.tw/newsDetail.jsp?newsID=1062&newsClassID=14",
+            last_checked_at="2026-10-20",
         ),
         "paper_deadline": VerifiedRuleFact(
             rule_key="paper_deadline",
             label="紙本繳件截止日／送件規定",
-            value_text="線上填表後須列印紙本，連同應備文件（A4 左上角裝訂）於 2026 年 12 月公告截止日 16:30 前送交國際及兩岸教育處耕莘樓 A113 室（確切收件截止日待 11 月底公告確認）",
-            exact_deadline_at=None,
-            submission_mode="pending_notice",
-            source_title="天主教輔仁大學國際及兩岸教育處—校內甄選應備文件清單",
-            source_url="https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43",
-            last_checked_at="2026-10-16",
+            value_text="紙本僅須繳交「赴姐妹校交換生申請表（A4 雙面列印、電腦打字輸入）」，完成家長簽章與系所／院／雙主修輔系學程核章後，於 2026/11/01 至 2026/12/24（四）16:30 前送交耕莘樓 A113 室（其餘書審、成績單、語測證明均上傳 PDF 電子檔）",
+            exact_deadline_at=_dt(2026, 12, 24, 16, 30),
+            submission_mode="paper_required",
+            source_title="天主教輔仁大學 116 學年度第 1 學期（2027 秋季班）赴姊妹校交換學生申請公告与申請表（newsID=1062、file=1345）",
+            source_url="https://iscoie.fju.edu.tw/newsDetail.jsp?newsID=1062&newsClassID=14",
+            last_checked_at="2026-10-20",
         ),
         "study_plan_limit": VerifiedRuleFact(
             rule_key="study_plan_limit",
             label="讀書計畫字數／頁數上限",
-            value_text="讀書計畫（Study Plan）及自傳：A4 雙面列印，不超過 2 頁（4 面）；外語組以英文或交換國語言撰寫、日語組以日文或英文撰寫、中語組以中文撰寫（返國後 1 個月內繳交 2,000 字以上心得報告）",
+            value_text="116-1 書審資料（合併單一 PDF <=20MB 上傳）：中文讀書計畫（只需繳交一份中文版、不需繳交英文版，至少 500 字，格式不拘，兩頁為限）與中文簡歷（兩頁為限）；返國後 1 個月內繳交 2,000 字以上心得報告",
+            min_chars=500,
             max_pages=2,
-            source_title="天主教輔仁大學國際及兩岸教育處—校內甄選應備文件規範",
-            source_url="https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43",
-            last_checked_at="2026-10-16",
+            source_title="天主教輔仁大學 116 學年度第 1 學期（2027 秋季班）赴姊妹校交換學生申請公告（newsID=1062）",
+            source_url="https://iscoie.fju.edu.tw/newsDetail.jsp?newsID=1062&newsClassID=14",
+            last_checked_at="2026-10-20",
         ),
     },
     {
@@ -1104,6 +1105,26 @@ _RAW_SPECS: list[dict[str, Any]] = [
             source_url="https://oieie.tku.edu.tw/oieie/?tkuisotope=%e6%aa%a2%e9%80%812027-2028%e5%b9%b4%e8%b5%b4%e6%97%a5%e6%9c%ac%e5%a7%8a%e5%a6%b9%e6%a0%a1%e6%97%a5%e8%aa%9e%e7%b5%84-%e4%ba%a4%e6%8f%9b%e7%94%9f%e7%ac%ac%e4%ba%8c%e6%ac%a1%e8%81%af%e5%90%88",
             last_checked_at="2026-10-08",
         ),
+        "extra_milestones": [
+            (
+                "tku-subtask-jtea-2027-1",
+                "[淡江獎學金] 2027 第一期日本台灣交流協會短期留學生獎學金校內收件截止（限符合特定條件赴日交換生）",
+                "2026-10-30",
+                "獎學金校內截止",
+                "other",
+                "每月 8 萬日圓；限具台灣籍、日本相關研究、評價係數 2.30 以上且於 2027 年 4–8 月開始交換者（非所有赴日交換生皆適用），送國際處 T1006 室",
+                "https://oieie.tku.edu.tw/",
+            ),
+            (
+                "tku-subtask-info-session-2027-2028",
+                "[淡江交換] 2027–2028 赴姊妹校交換生聯合甄選說明會報名截止（17:00；11/06 18:00–19:30 舉辦）",
+                "2026-11-05",
+                "說明會報名截止",
+                "home",
+                "2027–2028 交換甄選說明會於 2026/11/06 18:00–19:30 在驚聲國際會議廳舉行，11/05 17:00 報名截止（非交換申請截止）",
+                "https://enroll.tku.edu.tw/course.aspx?cid=auix1106",
+            ),
+        ],
     },
     {
         "school_id": "ntust",

@@ -209,6 +209,11 @@ def apply_oct19_updates(bundle: Path, path: Path = SOURCE) -> dict:
             if b"\r\n" in raw_bytes:
                 item.write_bytes(raw_bytes.replace(b"\r\n", b"\n"))
 
+    from .ntu_oct20_updates import SOURCE as OCT20_SOURCE, apply_oct20_updates
+
+    if OCT20_SOURCE.exists():
+        apply_oct20_updates(bundle)
+
     return {
         "scholarship_briefing_sessions": 1,
         "treated_as_application_deadline": False,
