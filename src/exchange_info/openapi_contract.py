@@ -7,7 +7,7 @@ from typing import Any
 from fastapi import FastAPI
 
 
-OPENAPI_CONTRACT_VERSION = "2026-10-13.1"
+OPENAPI_CONTRACT_VERSION = "2026-10-20.1"
 
 _CONTRACT_BOUNDARIES = {
     "public_read_without_login": True,

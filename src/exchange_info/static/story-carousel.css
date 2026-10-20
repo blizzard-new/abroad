@@ -1,0 +1,39 @@
+/* Approved student write-ups on the forum (心得 view). A native scroll-snap strip: swipe, wheel and arrow keys work
+   without script; story-carousel.js only adds the arrow buttons, the counter and the "read more" toggle. */
+.pr-stories { margin: 0 0 28px; }
+.pr-stories-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--uw-line); }
+.pr-stories-head > div:first-child { display: grid; gap: 2px; min-width: 0; }
+.pr-stories-head strong { color: var(--uw-muted); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+.pr-stories-head small { color: var(--uw-muted); font-size: 12px; }
+.pr-stories-controls { display: flex; align-items: center; gap: 8px; flex: none; }
+.pr-stories-controls > span { min-width: 4.5em; text-align: right; color: var(--uw-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.pr-stories-controls button { display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid var(--uw-line); border-radius: 50%; background: var(--glass-surface, var(--uw-surface)); color: var(--uw-text); cursor: pointer; }
+.pr-stories-controls button[hidden] { display: none; }
+.pr-stories-controls button:disabled { opacity: .4; cursor: default; }
+.pr-stories-controls button:not(:disabled):hover { background: var(--uw-blue-soft); }
+.pr-stories-controls button svg { width: 18px; height: 18px; }
+
+.pr-story-track { position: relative; display: flex; gap: 16px; margin: 0; padding: 4px 2px 14px; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 2px; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.pr-story-track:focus-visible { outline: 3px solid var(--uw-blue); outline-offset: 2px; border-radius: 12px; }
+.pr-story { flex: 0 0 min(23rem, 86%); display: flex; scroll-snap-align: start; }
+.pr-story > article { display: flex; flex-direction: column; gap: 10px; width: 100%; padding: 20px 22px; border: 1px solid var(--glass-edge, var(--uw-line)); border-radius: 20px; background: var(--glass-surface, var(--uw-surface)); box-shadow: var(--glass-shadow, var(--uw-shadow-soft)); color: var(--uw-text); }
+.pr-story-school { display: grid; gap: 2px; margin: 0; font-size: 12px; color: var(--uw-muted); }
+.pr-story-school a { color: var(--uw-blue-strong); font-size: 13px; font-weight: 700; text-decoration: none; }
+.pr-story-school a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.pr-story h3 { margin: 0; font-size: 1.05rem; line-height: 1.55; }
+.pr-story-summary { margin: 0; color: var(--uw-muted); font-size: .92rem; line-height: 1.8; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; overflow: hidden; }
+.pr-story-summary.is-open { display: block; -webkit-line-clamp: unset; overflow: visible; }
+.pr-story .pr-story-more { align-self: flex-start; min-height: 0; padding: 4px 0; border: 0; border-radius: 6px; background: transparent; box-shadow: none; color: var(--uw-blue-strong); font: inherit; font-size: .88rem; font-weight: 650; cursor: pointer; }
+.pr-story-more:hover { text-decoration: underline; text-underline-offset: .2em; }
+.pr-story-themes { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.pr-story-themes li { padding: 3px 10px; border-radius: 999px; background: var(--uw-blue-soft); color: var(--uw-blue-strong); font-size: 12px; }
+.pr-story-by { display: grid; gap: 1px; margin: auto 0 0; padding-top: 6px; font-size: 13px; }
+.pr-story-by small { color: var(--uw-muted); font-size: 12px; }
+.pr-story-source { display: inline-flex; align-items: center; gap: 4px; align-self: flex-start; color: var(--uw-blue-strong); font-size: .88rem; font-weight: 650; text-decoration: none; }
+.pr-story-source:hover { text-decoration: underline; text-underline-offset: .2em; }
+.pr-story-source svg { width: 14px; height: 14px; }
+
+@media (min-width: 64rem) { .pr-story { flex-basis: calc((100% - 32px) / 3); } }
+@media (max-width: 40rem) { .pr-stories-head { align-items: flex-start; } .pr-stories-controls > span { min-width: 0; } }
+@media (prefers-reduced-motion: no-preference) { .pr-story-track { scroll-behavior: smooth; } }
+@media print { .pr-stories { display: none; } }

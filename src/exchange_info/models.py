@@ -4131,6 +4131,41 @@ class ExperienceSubmission(BaseModel):
     created_at: datetime = Field(default_factory=utc_now)
 
 
+class PublicExperienceStory(BaseModel):
+    """The public face of an approved ``ExperienceSubmission``.
+
+    Submissions cannot be created without ``consent_to_publish``, and only moderator-approved ones reach this model.
+    It carries no account or author identifier, and the name shown follows the identity mode the author chose.
+    """
+
+    id: str
+    school_name: str
+    home_university: str
+    title: str
+    summary: str
+    exchange_year: str
+    themes: list[str] = Field(default_factory=list)
+    display_name: str
+    source_url: str | None = None
+
+    @classmethod
+    def from_submission(cls, submission: ExperienceSubmission) -> "PublicExperienceStory":
+        real_name = submission.identity_mode == CommunityIdentityMode.REAL_NAME
+        source = (submission.source_url or "").strip()
+        return cls(
+            id=submission.id,
+            school_name=submission.school_name,
+            home_university=submission.home_university,
+            title=submission.title,
+            summary=submission.summary,
+            exchange_year=submission.exchange_year,
+            themes=list(submission.themes),
+            # An anonymous author stays anonymous even if a display name was sent with the submission.
+            display_name=submission.display_name if real_name else "匿名投稿者",
+            source_url=source if source.lower().startswith(("https://", "http://")) else None,
+        )
+
+
 class VerifiedRuleFact(BaseModel):
     rule_key: Literal["online_deadline", "paper_deadline", "study_plan_limit"]
     label: str = Field(min_length=2, max_length=60)

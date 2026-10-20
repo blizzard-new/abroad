@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2" />
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
+    <link rel="stylesheet" href="/static/story-carousel.css?v=20261020-stories-1" />
     <link rel="stylesheet" href="/static/glass-theme.css?v=20261020-brand-1" />
     <link rel="stylesheet" href="/static/platform-redesign.css?v=20261020-official-socials-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
@@ -877,6 +878,17 @@
               <div class="pr-posters-head"><strong>本學期最多人寫心得的學校</strong><a href="#partners">更多</a></div>
               <div id="forum-poster-row" class="pr-poster-row"></div>
             </section>
+            <section id="forum-stories" class="pr-stories" aria-roledescription="carousel" aria-labelledby="forum-stories-title" hidden>
+              <div class="pr-stories-head">
+                <div><strong id="forum-stories-title">學長姐投稿精選</strong><small>作者同意公開、經審核的心得摘要</small></div>
+                <div class="pr-stories-controls">
+                  <span id="forum-stories-count"></span>
+                  <button type="button" data-stories-step="-1" aria-label="上一則投稿" disabled><i data-lucide="arrow-left" aria-hidden="true"></i></button>
+                  <button type="button" data-stories-step="1" aria-label="下一則投稿"><i data-lucide="arrow-right" aria-hidden="true"></i></button>
+                </div>
+              </div>
+              <ol id="forum-story-track" class="pr-story-track" tabindex="0" aria-label="投稿心得，可左右捲動"></ol>
+            </section>
             <section class="featured-board-grid" aria-label="留學看板">
               <article class="featured-board-card public-board-card">
                 <span class="board-avatar board-avatar-public" aria-hidden="true"><i data-lucide="messages-square"></i></span>
@@ -1621,7 +1633,8 @@
     <script src="/static/platform-detail.js?v=20261017-ntu-reference-1" defer></script>
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-tracker.js?v=20261019-guide-1" defer></script>
-    <script src="/static/platform-forum.js?v=20261015-redesign-1" defer></script>
+    <script src="/static/story-carousel.js?v=20261020-stories-1" defer></script>
+    <script src="/static/platform-forum.js?v=20261020-stories-1" defer></script>
     <script src="/static/platform-profile.js?v=20261015-redesign-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>
   </body>

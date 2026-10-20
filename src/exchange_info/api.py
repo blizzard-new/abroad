@@ -242,6 +242,7 @@ from .models import (
     ExperienceSubmission,
     ExperienceSubmissionCreate,
     ModerationStatus,
+    PublicExperienceStory,
     CoverageSummary,
     PartnerCoverage,
     PageCategory,
@@ -5403,6 +5404,23 @@ def create_app(
         )
         with community_lock:
             return append_experience_submission(submission, resolved_data_dir)
+
+    @app.get("/experience-stories", response_model=list[PublicExperienceStory])
+    def experience_stories(
+        response: Response,
+        school: str | None = Query(default=None, min_length=2, max_length=200),
+        limit: int = Query(default=12, ge=1, le=24),
+    ) -> list[PublicExperienceStory]:
+        """Approved write-ups whose authors agreed to publish a summary, newest first."""
+        # A hidden story must stop appearing at once, so nothing here is cached.
+        response.headers["Cache-Control"] = "no-store"
+        wanted = normalize_school(school) if school else None
+        rows = [
+            row for row in comm_repo.list_experience_submissions()
+            if row.status == ModerationStatus.APPROVED and (wanted is None or normalize_school(row.school_name) == wanted)
+        ]
+        rows.sort(key=lambda row: row.created_at, reverse=True)
+        return [PublicExperienceStory.from_submission(row) for row in rows[:limit]]
 
     @app.get("/search", response_model=list[SearchResult])
     def search(

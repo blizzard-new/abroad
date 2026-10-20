@@ -1,4 +1,5 @@
-/* Forum (#forum): the 心得 / 提問 / 看板 switch and the poster row of schools with the most student stories.
+/* Forum (#forum): the 心得 / 提問 / 看板 switch, the poster row of schools with the most student stories and the
+   strip of approved write-ups (story-carousel.js).
    The feed itself is rendered by community-reader.js, which asks UniWayForum.accepts(post) for each item. */
 window.UniWayForum = (() => {
   "use strict";
@@ -44,6 +45,7 @@ window.UniWayForum = (() => {
     if (!host) return;
     applyMode(host);
     renderPosters(host);
+    window.UniWayStories?.render();
   }
 
   document.addEventListener("click", (event) => {

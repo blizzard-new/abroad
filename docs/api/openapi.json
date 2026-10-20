@@ -16044,6 +16044,68 @@
         "title": "PublicCommunityResourceType",
         "type": "string"
       },
+      "PublicExperienceStory": {
+        "description": "The public face of an approved ``ExperienceSubmission``.\n\nSubmissions cannot be created without ``consent_to_publish``, and only moderator-approved ones reach this model.\nIt carries no account or author identifier, and the name shown follows the identity mode the author chose.",
+        "properties": {
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "exchange_year": {
+            "title": "Exchange Year",
+            "type": "string"
+          },
+          "home_university": {
+            "title": "Home University",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "school_name": {
+            "title": "School Name",
+            "type": "string"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "themes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Themes",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "school_name",
+          "home_university",
+          "title",
+          "summary",
+          "exchange_year",
+          "display_name"
+        ],
+        "title": "PublicExperienceStory",
+        "type": "object"
+      },
       "PublicReportSubmitRequest": {
         "additionalProperties": false,
         "properties": {
@@ -27525,6 +27587,71 @@
         "summary": "Experience Digest"
       }
     },
+    "/experience-stories": {
+      "get": {
+        "description": "Approved write-ups whose authors agreed to publish a summary, newest first.",
+        "operationId": "experience_stories_experience_stories_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "school",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "School"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 12,
+              "maximum": 24,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PublicExperienceStory"
+                  },
+                  "title": "Response Experience Stories Experience Stories Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Experience Stories"
+      }
+    },
     "/experience-submissions": {
       "post": {
         "description": "Submit student experience into pending moderation queue; blocks privilege escalation and isolates PII (Spec 11.3, 12, T19, T20).",
@@ -28787,7 +28914,7 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-13.1",
+  "x-contract-version": "2026-10-20.1",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",
