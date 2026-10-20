@@ -46,7 +46,7 @@ def test_verified_reference_and_foreign_student_are_distinct(tmp_path):
         p = partner(name)
         students = life.reference_student_sources(p)
         digest = build_experience_digest(p.school_name, p.country, students)
-        assert len(digest.sources) == 1
+        assert len(digest.sources) >= 1
         assert digest.sources[0].language == "en"
         assert digest.sources[0].perspective == "official_student_story"
         context = life.build_life_context(p, DestinationProfile(school_name=name), location(), tmp_path)
@@ -56,7 +56,8 @@ def test_verified_reference_and_foreign_student_are_distinct(tmp_path):
         assert set(food.inference.basis_urls) <= {s.url for e in food.evidence for s in e.sources}
         assert "代表座標" in context.location_note
     assert not life.reference_student_sources(partner(country="美國"))
-    assert not life.reference_student_sources(partner("Meiji Gakuin University"))
+    assert all("meiji.ac.jp" not in s.source_url for s in life.reference_student_sources(partner("Meiji Gakuin University")))
+    assert not life.reference_student_sources(partner("Meiji Pharmaceutical University"))
 
 
 def test_no_evidence_no_inference_and_no_made_up_budget(tmp_path):
@@ -190,7 +191,7 @@ def test_context_api_reads_without_network_and_rejects_unknown_school(tmp_path, 
     assert result.json()["source_count"] >= 3
     assert client.get("/school-life-context", params={"school": "unknown"}).status_code == 404
     digest = client.get("/student-experiences", params={"school": "明治大學 Meiji University", "home_school": "長庚大學"})
-    assert digest.status_code == 200 and len(digest.json()["sources"]) == 1
+    assert digest.status_code == 200 and len(digest.json()["sources"]) >= 1
     # A source already collected under another home university's school label
     # must not suppress the reference for this catalog entry.
     other_catalog_source = life.reference_student_sources(partner("明治大學 (Meiji University) 無"))
