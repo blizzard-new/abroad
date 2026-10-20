@@ -1,0 +1,34 @@
+
+<div class="share-type">
+	
+   	<a href="http://line.naver.jp/R/msg/text/?%23%23%23LINKNAME%23%23%23 %23%23%23LINKURL%23%23%23" title="line" class="st_line">
+    	<span><img src="/images/stsns/line.png"  border="0" align="absmiddle" width="20" alt="Line" /></span>
+      </a>
+   
+   	<a href="http://www.facebook.com/sharer.php?u=%23%23%23LINKURL%23%23%23&t=%23%23%23LINKNAME%23%23%23" title="facebook" class="st_facebook">
+    	<span><img src="/images/stsns/facebook.png"  border="0" align="absmiddle" width="20" alt="Facebook" /></span>
+      </a>
+   
+   	<a href="http://twitter.com/home?status=%23%23%23LINKNAME%23%23%23 %23%23%23LINKURL%23%23%23" title="twitter" class="st_twitter">
+    	<span><img src="/images/stsns/twitter.png"  border="0" align="absmiddle" width="20" alt="twitter" /></span>
+      </a>
+   
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	var changeTime = typeof $("#changeTime")!='undefined'? $("#changeTime").val():0;	
+   $('.share-type').find("a").each(function(i){
+      if((document.location.href).indexOf("Lang=")>0){
+         $(this).prop("href",$(this).prop("href").replace(/%23%23%23LINKURL%23%23%23/g,encodeURIComponent(document.location.href+"&ct="+changeTime)).replace(/%23%23%23LINKNAME%23%23%23/g,encodeURIComponent(document.title)));
+      }else{
+         if((document.location.href).indexOf("?")>0)
+            $(this).prop("href",$(this).prop("href").replace(/%23%23%23LINKURL%23%23%23/g,encodeURIComponent(document.location.href+"&Lang="+"&ct="+changeTime)).replace(/%23%23%23LINKNAME%23%23%23/g,encodeURIComponent(document.title)));
+         else
+            $(this).prop("href",$(this).prop("href").replace(/%23%23%23LINKURL%23%23%23/g,encodeURIComponent(document.location.href+"?Lang="+"&ct="+changeTime)).replace(/%23%23%23LINKNAME%23%23%23/g,encodeURIComponent(document.title)));
+      }
+   });
+});
+</script>
+<noscript>本功能需使用支援JavaScript之瀏覽器才能正常操作</noscript>
+
+<!-- generated at Thu Sep 24 2026 22:19:31 -->

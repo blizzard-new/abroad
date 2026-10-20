@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CSMU, CYCU, FCU, FJU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -91,6 +91,7 @@ NTOU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 NCUE_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 NKNU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 TMU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
+CSMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1954,6 +1955,51 @@ def _tmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _csmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理中山醫學大學選送學生出國研修、跨國雙聯學位暨教育部學海四項計畫（學海飛颺／惜珠／築夢／新南向築夢）及校內《獎勵學生出國研修辦法》甄選應繳資料：1. 出國交換／雙聯學位／學海計畫申請表（須經導師或指導教授、所屬系所主管及學院院長初審核章）、2. 歷年成績單正本（含學業總平均、GPA 與班級／系所排名；學海飛颺及惜珠須於中山醫就讀一學期以上且歷年成績達系所前 40% 或班級前 30%［研究所免附排名］、操行成績 80 分以上；跨國雙聯學位及校級交換須達各專案規定 GPA，如奧克蘭大學生醫雙聯 GPA 3.2、安德魯大學 3.5+0.5+1 MBA GPA 2.50–2.75）、3. 有效外語能力檢定證明影本（例如奧克蘭大學生醫 4+1/4+2 雙聯 TOEFL iBT 79 / IELTS 6.5 / Duolingo 105、安德魯大學 MBA TOEFL iBT 80 / IELTS 6.5、日本姊妹校 JLPT N2–N3、韓國姊妹校 TOPIK 2–3 級或英語檢定證明）、4. 出國讀書計畫書與中英文自傳（含申請動機、擬於目標姊妹校修習之專業領域課程或臨床見實習／實驗室研究規劃）、5. 師長推薦信與家長同意書；經各系所與學院初審推薦後，於截止日前送交正心樓國際事務處。",
+        "study-plan": "撰寫中山醫學大學出國交換、跨國雙聯（奧克蘭大學生醫系 4+1/4+2、安德魯大學 3.5+0.5+1 MBA、杜肯大學碩士銜接、德島文理大學 4+2 藥學雙聯）、海外研究（UCSD 暑期研究獎學金）或臨床見實習必繳之《出國讀書計畫書》與《個人自傳》。請具體說明赴外動機、擬於目標姊妹校修習之專業課程或臨床見實習／實驗室研究內容、外語能力準備，以及返國後學分抵免（依《中山醫學大學辦理學生境外學習及跨校修讀雙聯學位實施辦法》，兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月，且於單一學校修習學分數不得低於畢業應修總學分數三分之一）與醫療健康專業職涯規劃。",
+        "course-preapproval": "辦理赴境外大學校院修讀課程、跨國雙聯或臨床見實習之選課預審與教務核備（依《中山醫學大學辦理學生境外學習及跨校修讀雙聯學位實施辦法》與《學生抵免學分辦法》規定，出國前須由所屬系所及教務處確認擬修習科目與返國學分抵免對照；出國期間必須辦理中山醫學大學註冊並保有在學學籍；大陸地區醫事人員高等學校學分依教育部規定不予採認醫事國考資格）。",
+        "predeparture-notice": "於國際事務處或學院公告錄取及獎學金核定名單後，配合國際事務處完成國外姊妹校提名（Nomination）與入學許可（Offer / Invitation Letter）取得；出國前須簽署《教育部學海計畫行政契約書》或《校內出國研修補助切結書》、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療及意外保險，並確認已完成中山醫當學期註冊。",
+        "return-report": "境外研修期滿返國後，教育部學海計畫受獎生須於返國 14 日內登入教育部學海計畫資訊網填報問卷並上傳 1,000–2,000 字中／英文成果報告書（含研修與生活照片 4 張以上），並於返國後 1 個月內檢附來回電子機票收據、登機證正本、護照出入境章影本、姊妹校正式成績單（或見實習證明）及出國交換心得報告（提供國際事務處刊登於《出國交換學生經驗分享》專區），向國際事務處辦理獎補助款核銷結案及參加成果分享會。",
+        "credit-transfer": "境外研修期滿返國後持國外姊妹校核發之正式成績單正本（或修業完成證明）與課程大綱（Syllabus），依《中山醫學大學辦理學生境外學習及跨校修讀雙聯學位實施辦法》及《學生抵免學分辦法》向所屬系（所）、學院及教務處註冊課務組申請境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "中山醫學大學").replace("長庚", "中山醫")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "中山醫《教育部學海飛颺及學海惜珠甄選規定》與《獎勵學生出國研修辦法》：須於中山醫就讀一學期以上，歷年成績達系所前 40% 或班級前 30%（研究所免附排名），且操行成績達 80 分以上；申請奧克蘭大學生醫系 4+1/4+2 雙聯須達 GPA 3.2（約 80 分）、安德魯大學 3.5+0.5+1 MBA 須達 GPA 2.50–2.75。請檢附含 GPA 與排名之歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（奧克蘭大學雙聯 79+／安德魯大學 MBA 80+／學海飛颺 72–79+）", "IELTS 學術組（奧克蘭大學／安德魯大學雙聯 6.5+／學海飛颺 5.5+）", "Duolingo English Test（奧克蘭大學生醫雙聯 105+）", "TOEIC 聽讀測驗（校內出國研修補助 CEFR B1=550+／B2=785+）", "GEPT 全民英檢（中級複試 B1／中高級複試 B2 以上）", "JLPT 日語能力試驗（東京醫科齒科／東北／長崎／高崎健康福祉／目白／德島文理 N2–N3+）", "TOPIK 韓語能力測驗（高麗／嘉泉／乙支／水原 2–3 級以上或英語檢定）", "大陸與澳門姊妹校（免外語檢定；依各專案簡章辦理，大陸醫事學歷不予採認考照）"]
+            field["help_text"] = "依中山醫《辦理學生境外學習及跨校修讀雙聯學位實施辦法》、《獎勵學生出國研修辦法》與各專案簡章規定：申請非華語區姊妹校交換、雙聯或學海計畫須檢附有效外語能力證明（如奧克蘭雙聯 TOEFL 79 / IELTS 6.5 / Duolingo 105、安德魯 MBA TOEFL 80 / IELTS 6.5、日本姊妹校 JLPT N2–N3）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.csmu.edu.tw/p/412-1017-105.php?Lang=zh-tw",
+        source_checked_at=CSMU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換／雙聯學位／學海計畫申請表" if template.id == "exchange-application-data" else ("出國讀書計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.csmu.edu.tw/p/412-1017-6339.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後辦理選課預審、姊妹校提名及學海或校內獎補助簽約", "return-report": "返國 14 日內上傳學海成果報告並於 1 個月內繳交交換經驗分享報告與核銷單據", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "備齊申請表與附件（經家長、導師／指導教授、系所主管及院長簽章）於截止日前送交正心樓國際事務處"),
+        version="115準備工具-2026-10-21.1",
+        destinations=["中山醫學大學所屬系所與學院辦公室（初審推薦）", "中山醫學大學國際事務處（臺中市南區建國北路一段110號正心樓）"],
+        conditional_note="此為個人準備工具；中山醫教育部學海四項計畫（每年 2–3 月收件）、跨國雙聯學位（奧克蘭大學生醫系 4+1/4+2、安德魯大學 3.5+0.5+1 MBA、杜肯大學、德島文理大學 4+2）與校級交換／臨床見實習甄選須先經系所與學院核章，出國期間須維持中山醫在學註冊，且於單一學校修習學分數不得低於畢業應修總學分數三分之一。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2014,6 +2060,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nknu_template(template)) is not None]
     if university.id == TMU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _tmu_template(template)) is not None]
+    if university.id == CSMU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _csmu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

@@ -802,6 +802,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="北醫大學海簡章規定於返國 14 日內上傳 1,000 字以內之中／英文成果報告書（含照片 4 張以上）；這裡只合計下方各欄。",
     ),
+    ("csmu", "study-plan"): _rules(
+        (
+            "中山醫學大學國際事務處與各學院甄選規定須繳交《出國讀書計畫書》與《自傳》，具體說明申請動機、擬於目標姊妹校修習之專業領域課程或臨床見實習／實驗室研究規劃、外語能力準備及返國後學分抵免與職涯發展。",
+            "依《中山醫學大學辦理學生境外學習及跨校修讀雙聯學位實施辦法》規定，修讀跨國雙聯學位者於兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月，且於單一學校修習學分數不得低於畢業應修總學分數三分之一；出國期間須維持中山醫在學註冊。",
+        ),
+        evidence="中山醫學大學辦理學生境外學習及跨校修讀雙聯學位實施辦法、獎勵學生出國研修辦法與教育部學海計畫甄選公告",
+        minimum=800,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="中山醫規定須繳交出國讀書計畫書與自傳；這裡合計下方各欄字數供參考。",
+    ),
+    ("csmu", "return-report"): _rules(
+        (
+            "教育部學海四項計畫（飛颺／惜珠／築夢／新南向築夢）受獎生須於返國後 14 日內登入教育部學海計畫資訊網填寫問卷，並上傳 1,000–2,000 字之中／英文成果報告書（含研修生活照片 4 張以上）。",
+            "獲教育部學海計畫或《中山醫學大學獎勵學生出國研修辦法》補助者，須於返國後 1 個月內檢附出國交換心得報告（提供國際事務處刊登於《出國交換學生經驗分享》專區）、來回電子機票收據、登機證正本、護照出入境章影本及姊妹校正式成績單（或見實習證明）向國際事務處辦理核銷結案，並配合參加經驗分享會。",
+        ),
+        evidence="中山醫學大學獎勵學生出國研修辦法、教育部學海計畫甄選公告與出國交換學生經驗分享專區",
+        minimum=1000,
+        maximum=2000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="中山醫規定返國後須繳交 1,000–2,000 字之成果報告與出國交換學生經驗分享（含照片 4 張以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -833,6 +855,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "ncue": ("https://oicaweb.ncue.edu.tw/var/file/19/1019/img/542278849.pdf", "2026-10-20"),
     "nknu": ("https://oia.nknu.edu.tw/tw/ugC_Rule.asp", "2026-10-20"),
     "tmu": ("https://oge.tmu.edu.tw/tmu-goes-international/grants-overview/", "2026-10-20"),
+    "csmu": ("https://oia.csmu.edu.tw/p/412-1017-105.php?Lang=zh-tw", "2026-10-21"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

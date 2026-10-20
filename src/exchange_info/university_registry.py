@@ -990,8 +990,43 @@ TMU = UniversityProfile(
     ),
 )
 
+CSMU = UniversityProfile(
+    id="csmu",
+    school_name="中山醫學大學",
+    short_name="中山醫",
+    english_name="Chung Shan Medical University",
+    aliases=(
+        "csmu",
+        "中山醫學大學",
+        "中山醫大",
+        "中山醫",
+        "CSMU",
+        "Chung Shan Medical University",
+    ),
+    hero_image="/static/assets/csmu-campus.svg",
+    official_url="https://oia.csmu.edu.tw/?Lang=zh-tw",
+    coverage_note="完整支援：國際事務處 116 學年度（2027–2028）赴美國聖馬丁大學（每學期 3 名免學費）、美國密西根州奧克蘭大學（每年 15 名 ASAP 交換暨生物學 4+1/4+2 學碩連讀）、日本德島文理大學（每學期 2 名免學費＋PP 升學研究所計畫 1 名免學費）甄選（2026/10/22 截止）、教育部 116 年度學海飛颺／惜珠獎學金（2027/01/06 截止，每人補助 5萬–30萬元）、2027春季美國路易斯安那州立大學醫學中心（LSUHSC）研究獎學金（每月 USD 2,500）、跨國雙聯學位（安德魯大學、杜肯大學）與全球共 124 所合作姊妹校及教學醫院（含 49 所當期開放交換、雙聯、研究及臨床見實習重點機構與 75 所正式締約姊妹校，橫跨 26 個國家與地區）語檢門檻、書審配分（40%/35%/20%/5%）暨 31 篇歷屆學長姐與師長海外研修心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=124,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "中山醫學大學",
+        "中山醫大",
+        "中山醫",
+        "CHUNGSHANMEDICALUNIVERSITY",
+        "CSMU",
+    ),
+    # https://www.csmu.edu.tw/ — checked 2026-10-21.
+    colleges=(
+        "醫學院",
+        "口腔醫學院",
+        "醫學科技學院",
+        "健康管理學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU)
 DEFAULT_UNIVERSITY = CGU
 
 
