@@ -2,6 +2,12 @@
 
 2026-10-18。交付隔離混合讀寫工具與跨 worker 草稿版本保護，**沒有通過 1000 人容量驗收**。100 人情境在 1／2／4 workers 都通過；較高負載出現長延遲及逾時，不能只看 HTTP 200 或已啟動的使用者數。
 
+## 2026-10-20 容量熱點修正
+
+1000 人失敗集中在 `/student-dashboard`：原本每位訪客都會複製完整合作校資料、補圖片與座標，再重做 Pydantic JSON 序列化。現在每個 worker 會依學校、公開網址、資料檔簽章與 30 秒時間窗共用已序列化的 JSON／gzip；同一波首次請求只建立一次，並提供 ETag。登入驗證則由單一 service-role RPC 同時驗證未到期 session 並取得帳號／工作區快照，取代每個私人 API 的三次 PostgREST 往返；登出仍直接刪除共用資料庫 session，沒有加入跨 worker 不一致的驗證快取。
+
+在相同開發雲端以 1 worker、loopback、已暖機長庚 dashboard 執行 1000 人於 10 秒內各載入一次，結果為 **0 失敗、p95 34.60 ms、p99 250.71 ms**；單次傳輸由未壓縮 355,383 bytes 降為 gzip 40,370 bytes。完整機器可讀結果見 [`capacity-read-path-2026-10-20.json`](../capacity-read-path-2026-10-20.json)。這只證明原本逾時的公開入口熱點已移除，**不能取代 4 workers、真實 PostgreSQL／PostgREST、混合讀寫一小時的 1000 人驗收**。套用新 migration 後仍須重跑下方完整案例。
+
 ## 環境與方法
 
 測試在開發用雲端環境執行，工具所在 shell 的 CPU quota 為 4 CPU、記憶體上限 16 GiB；Docker daemon 回報 5 CPU／約 17.63 GiB，實際服務另受各自配額限制。這不是使用者的 i9-12900K／128 GB Windows 主機。app 上限 3 CPU／6 GB、每 worker 16 threads、2 個 catalogue slots；流量產生端上限 2 CPU／3 GB。完整設定見 [environment.json](environment.json)。

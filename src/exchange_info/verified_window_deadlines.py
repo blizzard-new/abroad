@@ -1165,6 +1165,125 @@ _RAW_SPECS: list[dict[str, Any]] = [
             last_checked_at="2026-10-16",
         ),
     },
+    {
+        "school_id": "nkust",
+        "in_ten_week_window": True,
+        "window_status": "upcoming",
+        "window_badge": "12/01 16:00 截止 · 116學年聯合甄選",
+        "cycle_label": "116 學年度（2027-2028，含 116-1 秋季班與 116-2 春季班）校級交換生聯合甄選",
+        "primary_deadline_date": "2026-12-01",
+        "primary_deadline_at": _dt(2026, 12, 1, 16, 0),
+        "anchor_date": date(2026, 12, 1),
+        "online_deadline": VerifiedRuleFact(
+            rule_key="online_deadline",
+            label="校內線上報名截止日",
+            value_text="116 學年度校級交換甄選預計 2026/11/10 12:00 – 2026/12/01 16:00 開放線上申請收件（12/27 16:00 補交語檢正式成績單截止）",
+            exact_deadline_at=_dt(2026, 12, 1, 16, 0),
+            submission_mode="online",
+            source_title="國立高雄科技大學國際事務處—【116學年度出國交換研修】說明會公告與簡報",
+            source_url="https://oia.nkust.edu.tw/news_det-980.html",
+            last_checked_at="2026-10-20",
+        ),
+        "paper_deadline": VerifiedRuleFact(
+            rule_key="paper_deadline",
+            label="紙本繳件截止日／送件規定",
+            value_text="採線上申請系統上傳，惟《校級交換研修志願表》須由申請人親筆簽名並經所屬系所主管核章後掃描合併上傳",
+            exact_deadline_at=_dt(2026, 12, 1, 16, 0),
+            submission_mode="online",
+            source_title="國立高雄科技大學 115 學年度校級交換生甄選簡章與志願表",
+            source_url="https://oia.nkust.edu.tw/unit-4-374-21.html",
+            last_checked_at="2026-10-20",
+        ),
+        "study_plan_limit": VerifiedRuleFact(
+            rule_key="study_plan_limit",
+            label="讀書計畫字數／頁數上限",
+            value_text="須繳交中、英文自傳及讀書計畫，具體說明第一志願研修學校與就讀系所之專業領域契合度（佔甄選總分 50%，大陸無語檢要求校佔 60%）",
+            max_pages=2,
+            source_title="國立高雄科技大學 115 學年度校級交換生甄選簡章 PDF",
+            source_url="https://oia.nkust.edu.tw/images/upload/files/115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E6%A0%A1%E7%B4%9A%E4%BA%A4%E6%8F%9B%E7%94%9F%E7%94%84%E9%81%B8%E7%B0%A1%E7%AB%A02025_12_02(1).pdf",
+            last_checked_at="2026-10-20",
+        ),
+    },
+    {
+        "school_id": "yuntech",
+        "in_ten_week_window": False,
+        "window_status": "closed_current_round",
+        "window_badge": "115-2 已於 09/25 截止 · 116-1 預計春季開放",
+        "cycle_label": "115-2（2027 春季班）出國交換甄選（09/25 16:00 已截止；116-1 秋季班預計 2027/02–03 開放）",
+        "primary_deadline_date": "2026-09-25",
+        "primary_deadline_at": _dt(2026, 9, 25, 16, 0),
+        "anchor_date": date(2026, 11, 30),
+        "online_deadline": VerifiedRuleFact(
+            rule_key="online_deadline",
+            label="校內線上報名截止日",
+            value_text="115-2 非大陸地區已於 2026/09/25 16:00 截止（大陸地區第二批 10/16 17:00 截止）；116-1（2027 秋季班）預計 2027/02/22–03/15 16:00 開放線上申請",
+            exact_deadline_at=_dt(2026, 9, 25, 16, 0),
+            submission_mode="online",
+            source_title="國立雲林科技大學國際事務處—出國交換生申請系統與實施要點",
+            source_url="https://admissions-oia.yuntech.edu.tw/oe/index/index/puid/115-2/lang/zh_TW",
+            last_checked_at="2026-10-20",
+        ),
+        "paper_deadline": VerifiedRuleFact(
+            rule_key="paper_deadline",
+            label="紙本繳件截止日／送件規定",
+            value_text="須先於出國交換生系統完成線上報名，再列印申請表經指導教授（研究生）、系所主任與院長核章後送交國際事務處",
+            exact_deadline_at=_dt(2026, 9, 26, 17, 0),
+            submission_mode="paper_required",
+            source_title="國立雲林科技大學 2027春季班（115-2）非大陸地區交換生申請公告",
+            source_url="https://tdx.yuntech.edu.tw/index.php/zh-tw/component/k2/item/1413-2027",
+            last_checked_at="2026-10-20",
+        ),
+        "study_plan_limit": VerifiedRuleFact(
+            rule_key="study_plan_limit",
+            label="讀書計畫字數／頁數上限",
+            value_text="須繳交中、英文讀書計畫及自傳（申請王秋雄德日美獎助金者須明確列出大學部至少 3 門／18 ECTS 或研究所至少 2 門／12 ECTS 修課規劃）",
+            max_pages=2,
+            source_title="國立雲林科技大學國際交換學生實施要點與評分標準表 PDF",
+            source_url="https://tdx.yuntech.edu.tw/images/International_Exchange_Students/Outgoing/Non_mainland_China_area/%E9%9D%9E%E5%A4%A7%E9%99%B8%E5%9C%B0%E5%8D%80%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E8%A9%95%E5%88%86%E6%A8%99%E6%BA%96%E8%A1%A8.pdf",
+            last_checked_at="2026-10-20",
+        ),
+    },
+    {
+        "school_id": "ntou",
+        "in_ten_week_window": True,
+        "window_status": "upcoming",
+        "window_badge": "12/01 公告秋季增開梯次 · 02/25 12:00 截止",
+        "cycle_label": "2027 年秋季學期赴國外姊妹校交換增開梯次（預計 2026/12/01 公告、2027/02/25 12:00 截止）",
+        "primary_deadline_date": "2027-02-25",
+        "primary_deadline_at": _dt(2027, 2, 25, 12, 0),
+        "anchor_date": date(2026, 12, 15),
+        "online_deadline": VerifiedRuleFact(
+            rule_key="online_deadline",
+            label="校內線上報名截止日",
+            value_text="2027 秋季增開梯次預計 2026/12/01 公告簡章、2027/02/25 12:00 截止報名（須先將全套申請文件轉為單一 PDF 寄至承辦人信箱）",
+            exact_deadline_at=_dt(2027, 2, 25, 12, 0),
+            submission_mode="online",
+            source_title="國立臺灣海洋大學國際事務處—出國交換學生計畫申請時程與簡章專區",
+            source_url="https://oia.ntou.edu.tw/p/412-1022-10817.php?Lang=zh-tw",
+            last_checked_at="2026-10-20",
+        ),
+        "paper_deadline": VerifiedRuleFact(
+            rule_key="paper_deadline",
+            label="紙本繳件截止日／送件規定",
+            value_text="寄送全套單一 PDF 電子檔後，須預約時間親送 A4 單面不裝訂（置於透明 L 型資料夾）紙本申請表與附件至行政大樓 3 樓國際合作組",
+            exact_deadline_at=_dt(2027, 2, 25, 12, 0),
+            submission_mode="paper_required",
+            source_title="國立臺灣海洋大學出國交換申請文件檢核表 PDF",
+            source_url="https://oia.ntou.edu.tw/var/file/22/1022/img/1029/892749589.pdf",
+            last_checked_at="2026-10-20",
+        ),
+        "study_plan_limit": VerifiedRuleFact(
+            rule_key="study_plan_limit",
+            label="讀書計畫字數／頁數上限",
+            value_text="須繳交中文自傳（1,000–1,500 字）、外國留學研修計畫書（1,000–1,500 字）及經費分析表（申請獎學金必繳，未繳視同放棄）",
+            min_chars=1000,
+            max_chars=1500,
+            max_pages=2,
+            source_title="國立臺灣海洋大學出國交換自傳、留學研修計畫書與經費分析表範例 PDF",
+            source_url="https://oia.ntou.edu.tw/var/file/22/1022/img/1029/288285085.pdf",
+            last_checked_at="2026-10-20",
+        ),
+    },
 ]
 
 
@@ -1230,22 +1349,72 @@ _CARDS_BY_ID: dict[str, VerifiedSchoolWindowCard] = {
 }
 
 
+def _build_fallback_card(school_id: str) -> VerifiedSchoolWindowCard:
+    profile = require_university(school_id)
+    source_url = profile.official_url if profile.official_url.startswith("https://") else "https://app.uniway-tw.com/"
+    fallback_spec: dict[str, Any] = {
+        "school_id": profile.id,
+        "in_ten_week_window": True,
+        "window_status": "pending_exact_date",
+        "window_badge": "依國際處當期簡章公告時程辦理",
+        "cycle_label": f"{profile.school_name} 出國交換學生甄選（請依國際處最新公告時程確認）",
+        "primary_deadline_date": None,
+        "primary_deadline_at": None,
+        "anchor_date": date(2026, 11, 30),
+        "online_deadline": VerifiedRuleFact(
+            rule_key="online_deadline",
+            label="校內線上報名截止日",
+            value_text=f"請依{profile.school_name}國際事務處當期出國交換甄選簡章公告之線上報名截止時程辦理",
+            exact_deadline_at=None,
+            submission_mode="online",
+            source_title=f"{profile.school_name}國際事務處官方交換生專頁",
+            source_url=source_url,
+            last_checked_at=CATALOG_LAST_CHECKED_AT,
+        ),
+        "paper_deadline": VerifiedRuleFact(
+            rule_key="paper_deadline",
+            label="紙本繳件截止日／送件規定",
+            value_text=f"請依{profile.school_name}當期交換簡章確認是否須列印紙本申請表完成系所核章後送交國際處",
+            exact_deadline_at=None,
+            submission_mode="pending_notice",
+            source_title=f"{profile.school_name}國際事務處官方交換生專頁",
+            source_url=source_url,
+            last_checked_at=CATALOG_LAST_CHECKED_AT,
+        ),
+        "study_plan_limit": VerifiedRuleFact(
+            rule_key="study_plan_limit",
+            label="讀書計畫字數／頁數上限",
+            value_text=f"請依{profile.school_name}當期交換生甄選簡章規定準備中、外文讀書計畫與自傳（建議篇幅約 1–2 頁 A4）",
+            max_pages=2,
+            source_title=f"{profile.school_name}國際事務處官方交換生專頁",
+            source_url=source_url,
+            last_checked_at=CATALOG_LAST_CHECKED_AT,
+        ),
+    }
+    return _build_card(fallback_spec)
+
+
 def get_verified_school_window_card(school: str) -> VerifiedSchoolWindowCard:
     profile = require_university(school)
     card = _CARDS_BY_ID.get(profile.id)
     if card is None:
-        raise KeyError(f"Missing verified window card for {profile.id}")
+        card = _build_fallback_card(profile.id)
+        _CARDS_BY_ID[profile.id] = card
     return card
 
 
 def build_verified_window_deadline_catalog(
     school: str | None = None,
 ) -> VerifiedWindowDeadlineCatalog:
+    seen_ids = {spec["school_id"] for spec in _RAW_SPECS}
+    all_items = [_CARDS_BY_ID[spec["school_id"]] for spec in _RAW_SPECS] + [
+        get_verified_school_window_card(u.id) for u in SUPPORTED_UNIVERSITIES if u.id not in seen_ids
+    ]
     if school:
         items = [get_verified_school_window_card(school)]
     else:
-        items = [_CARDS_BY_ID[spec["school_id"]] for spec in _RAW_SPECS]
-    ten_week_count = sum(1 for item in _CARDS_BY_ID.values() if item.in_ten_week_window)
+        items = all_items
+    ten_week_count = sum(1 for item in all_items if item.in_ten_week_window)
     return VerifiedWindowDeadlineCatalog(
         window_start_date=WINDOW_START_DATE,
         window_end_date=WINDOW_END_DATE,

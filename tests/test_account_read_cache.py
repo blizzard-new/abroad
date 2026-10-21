@@ -35,6 +35,20 @@ class _Database:
         table = url.rsplit("/", 1)[-1]
         self.calls.append((method, table))
         now = utc_now().isoformat()
+        if table == "exchange_authenticate_account" and method == "POST":
+            return _Response({
+                "status": "valid",
+                "session": {
+                    "id": "s1", "account_id": "acc-1", "token_hash": TOKEN_HASH,
+                    "expires_at": (utc_now() + timedelta(days=1)).isoformat(), "created_at": now,
+                },
+                "account": {
+                    "id": "acc-1", "email": "a@example.com", "created_at": now, "updated_at": now,
+                    "community_suspended_until": None,
+                    "profile": {"display_name": self.display_name, "email_verified": True},
+                    "workspaces": [],
+                },
+            })
         if table == "exchange_account_sessions" and method == "GET":
             return _Response([{"id": "s1", "account_id": "acc-1", "token_hash": TOKEN_HASH,
                                "expires_at": (utc_now() + timedelta(days=1)).isoformat(), "created_at": now}])
@@ -151,6 +165,8 @@ def test_uncached_workers_see_another_workers_account_update_and_session_revocat
 
         def request(self, method, url, **kwargs):
             table = url.rsplit("/", 1)[-1]
+            if table == "exchange_authenticate_account" and self.revoked:
+                return _Response({"status": "invalid"})
             if table == "exchange_account_sessions":
                 if method == "DELETE":
                     assert kwargs["params"] == {"token_hash": f"eq.{TOKEN_HASH}"}

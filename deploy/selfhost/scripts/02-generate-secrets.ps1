@@ -36,7 +36,9 @@ if ($ContactEmail) { $e['CONTACT_EMAIL'] = $ContactEmail } elseif (-not $e.Conta
 if ($AdminEmails)  { $e['ADMIN_EMAILS']  = $AdminEmails }  elseif (-not $e.Contains('ADMIN_EMAILS'))  { $e['ADMIN_EMAILS'] = '' }
 if (-not $e.Contains('GOOGLE_OAUTH_CLIENT_ID'))     { $e['GOOGLE_OAUTH_CLIENT_ID'] = '' }
 if (-not $e.Contains('GOOGLE_OAUTH_CLIENT_SECRET')) { $e['GOOGLE_OAUTH_CLIENT_SECRET'] = '' }
-if (-not $e.Contains('APP_WORKERS')) { $e['APP_WORKERS'] = '1' }
+if (-not $e.Contains('APP_WORKERS')) { $e['APP_WORKERS'] = '4' }
+if (-not $e.Contains('APP_THREADS')) { $e['APP_THREADS'] = '16' }
+if (-not $e.Contains('APP_CATALOGUE_CONCURRENCY')) { $e['APP_CATALOGUE_CONCURRENCY'] = '2' }
 
 if ($UseExistingKeys) {
     # Saved form drafts and uploaded documents are encrypted with this key. If the old server already holds some,
