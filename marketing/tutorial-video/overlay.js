@@ -59,8 +59,12 @@
     }
     return false;
   };
+  const pinned = (el) => {
+    for (let node = el; node; node = node.parentElement) if (/fixed|sticky/.test(getComputedStyle(node).position)) return true;
+    return false;
+  };
   Element.prototype.scrollIntoView = function (options) {
-    if (!smooth(options) || ownScroller(this) || getComputedStyle(this).position === "fixed") return intoView.call(this, options);
+    if (!smooth(options) || ownScroller(this) || pinned(this)) return intoView.call(this, options);
     const box = this.getBoundingClientRect();
     const margin = parseFloat(getComputedStyle(this).scrollMarginTop) || 0;
     const block = options.block || "start";

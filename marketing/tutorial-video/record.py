@@ -40,6 +40,9 @@ SCALE = 1.2  # 1600x900 CSS pixels -> 1920x1080 frames, the same zoom as the pro
 FPS = 30
 OUTPUT = "uniway-tutorial-school-search.mp4"
 SLOW = 1  # set from --slow in main(); every wait below is multiplied by it
+# An element in a fixed or sticky bar (the left menu, the compare tray) is always on screen; never scroll for it.
+PINNED = """el => { for (let n = el; n; n = n.parentElement) if (/fixed|sticky/.test(getComputedStyle(n).position)) return true;
+    return false; }"""
 
 
 async def pause(seconds: float) -> None:
@@ -103,8 +106,14 @@ class Tape:
             {"format": "jpeg", "quality": 92, "maxWidth": 1920, "maxHeight": 1080, "everyNthFrame": 1},
         )
 
+    async def _ack(self, session_id: int) -> None:
+        try:
+            await self.cdp.send("Page.screencastFrameAck", {"sessionId": session_id})
+        except Exception:
+            pass  # a frame that arrives while the browser closes
+
     def _frame(self, params: dict) -> None:
-        asyncio.ensure_future(self.cdp.send("Page.screencastFrameAck", {"sessionId": params["sessionId"]}))
+        asyncio.ensure_future(self._ack(params["sessionId"]))
         if not self.on:
             return
         name = f"{len(self.frames):06d}.jpg"
@@ -178,6 +187,11 @@ class Guide:
         box = await target.bounding_box()
         if box and 70 <= box["y"] and box["y"] + box["height"] <= VIEWPORT["height"] - 150:
             return
+        if await target.evaluate(PINNED):
+            return
+        await self.scroll_to(target, block)
+
+    async def scroll_to(self, target: Locator, block: str = "start") -> None:
         await target.evaluate("(el, block) => el.scrollIntoView({ behavior: 'smooth', block })", block)
         await self.settle_scroll()
 
@@ -558,9 +572,10 @@ async def storyboard(g: Guide, page: Page) -> None:
     await g.caption(9, "並排比較", "語言門檻、費用、名額、研修期間與申請時程<em>並排列出</em>，差在哪裡一眼就看到。", "top")
     await g.hold(3.6)
     await g.still("comparison")
-    await g.scroll_top()
+    await page.evaluate("window.scrollTo({ top: scrollY + document.querySelector('#favorites-title').getBoundingClientRect().top - 110, behavior: 'smooth' })")
+    await g.settle_scroll()
     await g.caption(9, "我的選校", "收藏的學校都在<em>「我的選校」</em>；登入後會<em>同步到你的帳號</em>，換手機也看得到。")
-    await g.point((900, 420), seconds=0.8)
+    await g.point((900, 360), seconds=0.8)
     await g.hold(3.4)
     await g.still("favorites")
     await g.hide_caption()
@@ -590,7 +605,7 @@ def encode(timeline: dict, frames_dir: Path, out: Path, music: Path | None) -> N
         command += ["-i", str(music)]
     command += [
         "-vf", f"fps={FPS},scale=1920:1080:flags=lanczos,format=yuv420p",
-        "-c:v", "libx264", "-preset", "slow", "-crf", "20", "-profile:v", "high", "-tune", "animation",
+        "-c:v", "libx264", "-preset", "slow", "-crf", "22", "-profile:v", "high", "-tune", "animation",
     ]
     if music:
         command += ["-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-shortest"]
