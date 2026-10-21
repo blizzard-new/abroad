@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .school_identity import school_program_identity_key
 
 import argparse
 import sys
@@ -718,7 +719,7 @@ def cmd_research_partners(args: argparse.Namespace) -> int:
         return 0
 
     existing_destinations = {
-        normalize_school(row.school_name): row
+        school_program_identity_key(row.school_name): row
         for row in load_destination_profiles(args.data_dir)
         if normalize_school(row.home_university or CGU.school_name) == home_key
     }
@@ -867,7 +868,7 @@ def cmd_research_partners(args: argparse.Namespace) -> int:
                 partner,
                 home_university=home.school_name,
             )
-            previous = existing_destinations.get(normalize_school(partner.school_name))
+            previous = existing_destinations.get(school_program_identity_key(partner.school_name))
             if previous and _destination_quality(previous.coverage_status) > _destination_quality(
                 profile.coverage_status
             ):
@@ -875,7 +876,7 @@ def cmd_research_partners(args: argparse.Namespace) -> int:
                 note = "A previously verified destination profile was retained."
             else:
                 upsert_destination_profile(profile, args.data_dir)
-                existing_destinations[normalize_school(partner.school_name)] = profile
+                existing_destinations[school_program_identity_key(partner.school_name)] = profile
                 note = profile.coverage_note
             upsert_collection_audit(
                 CollectionAudit(

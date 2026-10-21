@@ -246,7 +246,8 @@ def test_tku_oct20_info_session_and_jtea_scholarship_updates() -> None:
 def test_fju_oct20_116_1_announcement_and_idempotency(tmp_path: Path) -> None:
     payload = validate_fju_oct20_update_snapshot()
     assert payload["title_says_immediate_open"] is True
-    assert payload["actual_system_and_submission_opens_at"] == "2026-11-01T00:00:00+08:00"
+    assert payload["actual_system_and_submission_opens_at"] is None
+    assert payload["actual_system_and_submission_opens_on"] == "2026-11-01"
     assert payload["actual_system_and_submission_deadline_at"] == "2026-12-24T16:30:00+08:00"
     assert payload["online_system_campus_network_only"] is True
     assert payload["final_partner_list_and_quotas_confirmed"] is False
@@ -256,7 +257,7 @@ def test_fju_oct20_116_1_announcement_and_idempotency(tmp_path: Path) -> None:
         p for p in dashboard.application_periods if p.academic_year == "116" and "說明會" not in (p.application_round or "")
     )
     assert round_116.date_status == "verified_exact"
-    assert round_116.opens_at.isoformat() == "2026-11-01T00:00:00+08:00"
+    assert round_116.opens_at is None
     assert round_116.deadline_at.isoformat() == "2026-12-24T16:30:00+08:00"
     assert round_116.source.source_url == NEWS_1062_URL
     assert any(ONLINE_PORTAL_URL in d for d in round_116.details)
@@ -273,7 +274,7 @@ def test_fju_oct20_116_1_announcement_and_idempotency(tmp_path: Path) -> None:
 
     # Partners remain reference_only / agreement_only because Nov list is non-final
     partners = fetch_fju_partner_universities()
-    assert len(partners) == 234
+    assert len(partners) == 237
     assert all(p.quota_status == "reference_only" for p in partners)
     assert all(p.availability_status == "agreement_only" for p in partners)
     assert all("2026/11/01 至 2026/12/24 16:30" in (p.application_deadline or "") for p in partners)

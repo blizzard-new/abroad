@@ -44,7 +44,25 @@ def test_untouched_rows_workflows_life_and_historical_sources_are_byte_preserved
     assert data["review_corrections_20261017"]["uw_partner_before_sha256"]
     assert {pid: rows[pid] for pid in data["protected_partner_row_sha256"]} == data["protected_partner_row_sha256"]
     for name, expected in data["protected_bundle_sha256"].items():
-        assert hashlib.sha256((BUNDLE / name).read_bytes()).hexdigest() == expected
+        content = (BUNDLE / name).read_bytes()
+        if name == "student_life.jsonl":
+            # Round 23 later corrected USP. Restore only its pinned old values
+            # in memory, then retain the full historical-file checksum check.
+            from exchange_info.usp_source_review import load_manifest, pointer_parent
+            scope = next(r for r in load_manifest(Path(__file__).resolve().parents[1])["rows"] if r["home_id"] == "ntu")
+            life_rows = [json.loads(line) for line in content.splitlines()]
+            for row in life_rows:
+                if row["school_name"] != scope["school_name"]:
+                    continue
+                for patch in scope["patches"]:
+                    parent, key = pointer_parent(row, patch["pointer"])
+                    parent[key] = patch["expected_values"][0]
+                archive = row.get("reference_data", {})
+                archive.pop("source_review_round23", None)
+                if not archive:
+                    row.pop("reference_data", None)
+            content = ("\n".join(json.dumps(r, ensure_ascii=False, separators=(",", ":")) for r in life_rows) + "\n").encode()
+        assert hashlib.sha256(content).hexdigest() == expected
     for name, key in [("2026-10-14-official-update.json", "prior_current_source_sha256"),
                       ("completion-2026-10-11.json", "legacy_completion_source_sha256")]:
         assert hashlib.sha256((SOURCE.parent / name).read_bytes()).hexdigest() == data[key]

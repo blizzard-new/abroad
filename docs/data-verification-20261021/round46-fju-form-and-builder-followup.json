@@ -1,0 +1,96 @@
+{
+  "recorded_at": "2026-10-21T04:42:58.111712+00:00",
+  "form_source": {
+    "url_id": "6a3bc538432479294c04b5ede747251135060440b46642f5c9e5c0b4d125734f",
+    "url": "https://iscoie.fju.edu.tw/DownloadNewsFileServlet?file=1345",
+    "started_at": "2026-10-21T04:22:19.328865+00:00",
+    "review_status": "pending_review",
+    "transport": "urllib3_tls_with_public_ip_pinning",
+    "status_code": 200,
+    "final_url": "https://iscoie.fju.edu.tw/DownloadNewsFileServlet?file=1345",
+    "content_type": "application/pdf",
+    "redirect_chain": [],
+    "bytes": 2313253,
+    "sha256": "7ac7dd64601c6bda346c56bab29dde1656f2e94a848199b454d3b9acc0add83b",
+    "transport_result": "retrieved",
+    "pages": 2,
+    "extraction": "pdf_text_requires_layout_review",
+    "text_sha256": "6a848120ee996870da15bc6a852292ff21cf5dd9af89b8ffa47d1dcfeaaadb79",
+    "text_characters": 1992,
+    "completed_at": "2026-10-21T04:22:21.625815+00:00"
+  },
+  "pages_text_and_visual_reviewed": [
+    1,
+    2
+  ],
+  "form_observations": [
+    {
+      "page": 1,
+      "fact": "116-1/2027秋季表；電腦繕打並雙面列印；英文姓名與護照拼音一致；可用電子證件照彩色列印。"
+    },
+    {
+      "page": 1,
+      "fact": "日語組待1月中email通知志願；非日語組最多5志願，可選2027秋一學期或2027秋+2028春一學年，個別方案期間仍受校表限制。"
+    },
+    {
+      "page": 1,
+      "fact": "英語成績須在2024/12/24之後考取；已報名2026第二回JLPT者，可於2027/01/31前補網路查詢成績證明，不是該日只能收正式紙本證書。"
+    },
+    {
+      "page": 2,
+      "fact": "三項PDF各不超過20MB；中文簡歷至多2頁、中文計畫至少500字至多2頁與其他證明合併；中文歷年成績單含班排名；語檢證明。"
+    },
+    {
+      "page": 2,
+      "fact": "115學年度第二學期及交換期間須保有學籍；未休學或畢業。抵免依系所規定，不保證學分或如期畢業。"
+    },
+    {
+      "page": 2,
+      "fact": "本人及監護人親筆簽名蓋章；系所秘書、主任／所長、院長核章。大五以上因雙主修、輔系、學程延畢者，適用單位秘書及主任同意欄另填。"
+    },
+    {
+      "page": 2,
+      "fact": "12/24週四16:30前交國際學生中心；表單本身沒有A113房號。"
+    }
+  ],
+  "unresolved_product_fields": [
+    "結構化紙本申請表signatures欄缺系所秘書及適用雙主修／輔系／學程秘書；須依適用條件補齊，勿把所有選修單位一概列為必簽。",
+    "檢查公開摘要是否把2027/01/31可補網路查詢成績寫成必須補正式證書。",
+    "檢查115-2及交換期間均須在學的資格條件是否在所有相關顯示與評估路徑一致。"
+  ],
+  "isolated_overlay_probe": {
+    "path": "output\\data-verification-20261021\\round46-builder-overlay-probe",
+    "before": {
+      "opening": null,
+      "deadline": "2026-12-24T16:30:00+08:00",
+      "submission_title": "完成交換生系統填報、上傳電子文件並繳交雙面紙本申請表",
+      "submission_summary": "116-1 收件及系統開放為2026/11/01至12/24 16:30；紙本只繳雙面申請表，其餘資料上傳交換生申請系統，各檔不超過20MB。",
+      "signatures": [
+        "學生本人",
+        "家長／監護人",
+        "系所主任",
+        "院長",
+        "雙主修／輔系系所主任（如適用）"
+      ]
+    },
+    "after": {
+      "opening": "2026-11-01T00:00:00+08:00",
+      "deadline": "2026-12-24T16:30:00+08:00",
+      "submission_title": "於校內網路完成線上系統申請並繳交核章紙本申請表至耕莘樓 A113",
+      "submission_summary": "116-1 系統開放及收件為 2026/11/01 至 2026/12/24 16:30（限校內網路 http://outgoing.oie.fju.edu.tw/）；紙本僅須繳交雙面列印核章之交換生申請表至耕莘樓 A113 室。",
+      "signatures": [
+        "學生本人",
+        "家長／監護人",
+        "系所主任",
+        "院長",
+        "雙主修／輔系系所主任（如適用）"
+      ]
+    },
+    "result": "Confirmed: old Oct20 overlay reintroduces unsupported exact opening hour and A113 wording in copied bundle.",
+    "production_bundle_modified_by_probe": false,
+    "full_builder_run": false,
+    "next_action": "Make the old overlay preserve later mother-rule corrections, or add a pinned post-overlay mother/form correction; test complete FJU build in an isolated output."
+  },
+  "whole_records_verified": 0,
+  "whole_schools_verified": 0
+}

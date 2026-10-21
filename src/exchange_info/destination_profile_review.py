@@ -30,7 +30,7 @@ from .models import (
     DestinationProfileReviewSubmitRequest,
     utc_now,
 )
-from .school_identity import school_identity_key
+from .school_identity import school_identity_key, school_program_identity_key
 from .settings import DEFAULT_DATA_DIR
 from .storage import data_paths, read_jsonl, storage_path_lock, write_jsonl
 from .governance_commands import atomic_destination_command, local_store_command_lock
@@ -473,7 +473,7 @@ def create_destination_profile_review_store(
 def _profile_identity_key(home_university: str, school_name: str) -> str:
     return (
         f"{school_identity_key(home_university)}::"
-        f"{school_identity_key(school_name)}"
+        f"{school_program_identity_key(school_name)}"
     )
 
 
@@ -1508,8 +1508,8 @@ def record_destination_profile_review(
         (
             item
             for item in queue.items
-            if school_identity_key(item.school_name)
-            == school_identity_key(request.school_name)
+            if school_program_identity_key(item.school_name)
+            == school_program_identity_key(request.school_name)
         ),
         None,
     )
@@ -1647,8 +1647,8 @@ def promote_destination_profile(
         (
             item
             for item in queue.items
-            if school_identity_key(item.school_name)
-            == school_identity_key(request.school_name)
+            if school_program_identity_key(item.school_name)
+            == school_program_identity_key(request.school_name)
         ),
         None,
     )

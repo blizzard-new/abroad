@@ -313,13 +313,10 @@ def parse_intl_126_schools() -> list[dict]:
         elig_all_str = "；".join(elig_zh_lines if elig_zh_lines else elig_lines)
         lang_str = " / ".join(lang_lines) if lang_lines else "依接待校英語或當地語言檢定規定"
 
-        # Degree level detection
-        if "僅收學士" in elig_all_str or ("學士班學生" in elig_all_str and "研究生" not in elig_all_str):
-            degree_levels = "大學部（學士班）"
-        elif "學士、碩士" in elig_all_str and "博士" not in elig_all_str:
-            degree_levels = "大學部、碩士班"
-        else:
-            degree_levels = "大學部、碩士班、博士班"
+        # Course access and admission degree are different. Unknown wording
+        # must be reviewed instead of silently admitting every degree level.
+        from exchange_info.scu_degree_source_review import degree_scope
+        degree_levels = degree_scope(elig_lines[0])
 
         # GPA detection
         gpa_str = "大學部累計班排名前 85% 以內；碩博班歷年總平均 80 分以上；操行 80 分以上且無校規懲處紀錄"
@@ -732,11 +729,12 @@ def main():
                     "title": "確認東吳校內學業／操行門檻與各協議校外語檢定資格",
                     "responsible_party": "學生",
                     "responsible_unit": "東吳大學國際與兩岸學術交流事務處（國際與兩岸事務中心）",
-                    "deadline_at": "2026-10-16T19:00:00+08:00",
-                    "deadline_status": "verified_exact",
+                    "deadline_at": None,
+                    "deadline_status": "not_applicable",
+                    "timing": "申請前核對資格；2026/10/16 18:00–19:00是線上說明會，不是申請或資格確認截止。",
                     "deadline_source_url": "https://icae.scu.edu.tw/zh-hant/outbound-exchange/intro",
                     "deadline_checked_at": "2026-10-16T06:35:00Z",
-                    "deadline_reminder_eligible": True,
+                    "deadline_reminder_eligible": False,
                     "summary": f"大學部累計班排名前 85% 以內、碩博班總平均 80 分以上、操行 80 分以上且無校規懲處紀錄；{item['eligibility_detail']}",
                     "details": [
                         f"學業與操行門檻：{item['gpa_requirement']}",
@@ -779,7 +777,7 @@ def main():
                             "source_urls": ["https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply" if kind != "china_exchange" else "https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/apply"],
                         },
                         {
-                            "name": "交換研修動機及讀書計畫（一校一份，每份約 2,000 字以內；海外組須合併中文 Form A 與外文 Form B 且中文排序在前；赴陸組使用「赴大陸協議學校交換動機及讀書計畫」表格）",
+                            "name": "交換研修動機及讀書計畫（一校一份，赴外交換每份約 2,000 字（非上限）；海外組須合併中文 Form A 與外文 Form B 且中文排序在前；赴陸組使用「赴大陸協議學校交換動機及讀書計畫」表格）",
                             "official_form_url": "https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply" if kind != "china_exchange" else "https://icae.scu.edu.tw/sites/default/files/2026-09/%E8%B5%B4%E5%A4%A7%E9%99%B8%E5%8D%94%E8%AD%B0%E5%AD%B8%E6%A0%A1%E4%BA%A4%E6%8F%9B%E5%8B%95%E6%A9%9F%E5%8F%8A%E8%AE%80%E6%9B%B8%E8%A8%88%E7%95%AB.docx",
                             "source_urls": ["https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply"] if kind != "china_exchange" else ["https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/apply"],
                         },
@@ -1204,7 +1202,7 @@ def main():
         "required_documents": [
             "線上申請表與志願序（登入 https://api.sys.scu.edu.tw/exchange/Login.aspx 填報，至多 6 個志願，免交紙本）",
             "自傳或履歷 1 份（約 2,000 字，合併為單一 PDF 檔上傳，上限 5MB；外籍生可以英文撰打）",
-            "交換研修動機及讀書計畫（一校一份，各約 2,000 字以內：赴外交換須同時撰寫中文 Form A 及外文 Form B，依志願序將所有中文表格排在前、外文表格在後合併為 1 份 PDF；赴陸交換使用中文表格）",
+            "交換研修動機及讀書計畫（一校一份，各約 2,000 字（赴外規格，非上限）：赴外交換須同時撰寫中文 Form A 及外文 Form B，依志願序將所有中文表格排在前、外文表格在後合併為 1 份 PDF；赴陸交換使用中文表格）",
             "外語檢定成績證明 PDF（赴外交換及自費研修必繳，2025/01/31 後核發、JLPT 為 2024/01/31 後核發；赴陸交換免附）",
             "其他有利審查文件 PDF（選繳，佔總分 10%：未彌封推薦函至多 2 封、5 年內檢定或證照、近 3 年競賽獎狀／課外活動／幹部／實習官方證明）",
             "學籍、歷年成績單與獎懲紀錄免自行上傳（由國際處統一委託電算中心與德育中心查核；惟大一新生、碩博一新生或轉學生無東吳前一學年成績者，須另行電郵提交前校歷年成績單含總平均及累計班排名）",
@@ -1228,7 +1226,7 @@ def main():
     student_dashboard_payload = {
         "school_name": "東吳大學",
         "last_checked": "2026-10-16T06:35:00Z",
-        "academic_score_minimum": 65.0,
+        "academic_score_minimum": None,
         "academic_score_rule": "東吳校級赴外／赴陸交換：大學部累計班排名須達前 85% 以內（學業採計：歷年平均×45%＋(1－班排百分比)×100×55%）；碩博班入學後成績總平均須達 80 分以上；操行成績須達 80 分以上且無校規懲處紀錄。",
         "academic_gpa_minimum": None,
         "maximum_preferences": 6,
@@ -1248,11 +1246,7 @@ def main():
             "excluded_undergraduate_years": [],
             "language_certificate_required": False,
         },
-        "language_score_minimums": {
-            "toefl": 60.0,
-            "ielts": 5.5,
-            "toeic": 650.0,
-        },
+        "language_score_minimums": {},
         "application_periods": [
             {
                 "title": "東吳大學 116 學年度校級赴境外（國外／大陸／港澳）交換暨自費研修線上申請",
@@ -1272,7 +1266,7 @@ def main():
                 "academic_year": "116",
                 "application_round": "116學年度（含116-1秋季班及116-2春季班）",
                 "audience": "all_students",
-                "opens_at": "2026-09-14T09:00:00+08:00",
+                "opens_at": None,
                 "deadline_at": "2026-11-16T12:00:00+08:00",
                 "date_status": "verified_exact",
                 "status": "open",
@@ -1324,12 +1318,12 @@ def main():
                 "program_types": ["exchange"],
                 "academic_year": "116",
                 "application_round": "116學年度結果公告",
-                "audience": "all_students",
-                "opens_at": "2026-12-20T09:00:00+08:00",
-                "deadline_at": "2026-12-31T17:00:00+08:00",
+                "audience": "applicants",
+                "opens_at": None,
+                "deadline_at": None,
                 "date_status": "reference_only",
-                "status": "upcoming",
-                "status_note": "預計於 2026 年 12 月底前公告甄選結果。",
+                "status": "reference_only",
+                "status_note": "官方僅預計2026年12月底前公告，未列精確日期或時刻；確認書與保證金期限依錄取通知。",
                 "deadline_note": "錄取後須繳交確認書及保證金 NT$5,000。",
                 "reminder_eligible": False,
                 "checked_at": "2026-10-16T06:35:00Z",
@@ -1390,7 +1384,7 @@ def main():
                 "title": "東吳線上申請系統應備 PDF 文件清單（免交紙本）",
                 "details": [
                     "1. 自傳或履歷 1 份（約 2,000 字，無既定格式，外籍生可以英文撰打，存為 PDF 檔）。",
-                    "2. 交換研修動機及讀書計畫（一校一份，各約 2,000 字以內：赴外交換須下載填寫中文 Form A 與外文 Form B，依志願序將所有中文資料排在前、外文資料在後合併為單一 PDF 檔；赴陸交換使用中文表格）。",
+                    "2. 交換研修動機及讀書計畫（一校一份，各約 2,000 字（赴外規格，非上限）：赴外交換須下載填寫中文 Form A 與外文 Form B，依志願序將所有中文資料排在前、外文資料在後合併為單一 PDF 檔；赴陸交換使用中文表格）。",
                     "3. 外語檢定成績證明 PDF（赴外交換及自費研修必繳；尚未取得正式成績單者可先上傳簽名之網路成績查詢截圖，後續補正正式成績單影本；赴陸交換免附）。",
                     "4. 其他有利審查文件 PDF（選繳，佔 10%：未彌封推薦函至多 2 封、5 年內檢定或證照、近 3 年競賽獎狀／課外活動／幹部／實習官方證明）。",
                     "5. 成績單與在學證明：舊生無須自行上傳（由國際處統一委託電算中心與德育中心查核）；僅新生或轉學生無東吳前一學年成績者須電郵提交前校歷年成績單（含總平均及累計班排名）。每類檔案上限 5MB，檔名僅限中英數字符號。",
@@ -1690,6 +1684,16 @@ def main():
         encoding="utf-8",
     )
 
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "scu", round_id=22)
+    from exchange_info.host_source_review_round25 import apply_host_source_review
+    apply_host_source_review(REPO_ROOT, "scu")
+    from exchange_info.scu_table_source_review import apply_scu_table_source_review
+    apply_scu_table_source_review(REPO_ROOT)
+    from exchange_info.scu_degree_source_review import apply_scu_degree_source_review
+    apply_scu_degree_source_review(REPO_ROOT)
+    from exchange_info.scu_template_source_review import apply_scu_template_source_review
+    apply_scu_template_source_review(REPO_ROOT)
     print(
         f"Successfully built SCU catalog: {len(partners)} partners, {len(workflows)} workflows, "
         f"{len(destinations)} destinations, {len(research_records)} research records, "

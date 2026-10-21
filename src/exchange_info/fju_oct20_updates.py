@@ -21,7 +21,7 @@ Key verified rules & epistemic boundaries:
 3. Paper vs. Electronic Documents:
    - `A.紙本文件`: Only the double-sided typed application form (`赴姐妹校交換生申請表`, `file=1345`)
      with parent signature + seal and department/college/double-major/minor stamps, submitted to
-     耕莘樓 A113 室 by 2026/12/24 16:30.
+     國際學生中心 by 2026/12/24 16:30.
    - `B.電子文件` (each PDF <= 20MB, uploaded to `http://outgoing.oie.fju.edu.tw/`):
      1. 書審資料 PDF: Chinese resume (max 2 pages), Chinese study plan (Chinese only, no English version required, >= 500 characters, max 2 pages), other achievements / low-income proof.
      2. Official Chinese transcript PDF (including class rank through 114-2).
@@ -32,8 +32,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 from typing import Any
+
+from .fju_form_review import ENROLLMENT, JLPT, PAPER, current_home_submission_step
 
 from .models import (
     ExchangeInfo,
@@ -48,10 +51,15 @@ FJU_BUNDLE = ROOT / "src" / "exchange_info" / "official_data" / "fju"
 UPDATE_JSON_PATH = ROOT / "sources" / "fju" / "2026-10-20-official-update.json"
 
 NEWS_1062_URL = "https://iscoie.fju.edu.tw/newsDetail.jsp?newsID=1062&newsClassID=14"
-SLIDES_1344_URL = "https://iscoie.fju.edu.tw/teachingServices.jsp?file=1344"
-FORM_1345_URL = "https://iscoie.fju.edu.tw/teachingServices.jsp?file=1345"
-NON_JP_1346_URL = "https://iscoie.fju.edu.tw/teachingServices.jsp?file=1346"
-JP_1347_URL = "https://iscoie.fju.edu.tw/teachingServices.jsp?file=1347"
+SLIDES_1344_URL = "https://iscoie.fju.edu.tw/DownloadNewsFileServlet?file=1344"
+FORM_1345_URL = "https://iscoie.fju.edu.tw/DownloadNewsFileServlet?file=1345"
+NON_JP_1346_URL = "https://iscoie.fju.edu.tw/DownloadNewsFileServlet?file=1346"
+JP_1347_URL = "https://iscoie.fju.edu.tw/DownloadNewsFileServlet?file=1347"
+ATTACHMENT_URL_REPAIRS = {
+    f"https://iscoie.fju.edu.tw/teachingServices.jsp?file={number}":
+    f"https://iscoie.fju.edu.tw/DownloadNewsFileServlet?file={number}"
+    for number in range(1344, 1348)
+}
 ONLINE_PORTAL_URL = "http://outgoing.oie.fju.edu.tw/"
 CHECKED_AT_ISO = "2026-10-20T02:27:00Z"
 CHECKED_DATE = "2026-10-20"
@@ -83,7 +91,55 @@ def load_fju_oct20_update_payload(update_json_path: Path = UPDATE_JSON_PATH) -> 
         raise ValueError("FJU M365-protected individual school Fact Sheets were not audited")
     if payload.get("online_system_campus_network_only") is not True:
         raise ValueError("FJU online application system must record campus network IP restriction")
+    # The archived snapshot recorded a generic HTML route for these attachments.
+    # The news page's real links return byte-identical PDFs (round46 receipts).
+    # Keep the archive itself immutable and repair only the loaded public URLs.
+    for source in payload["source_manifest"].values():
+        source["source_url"] = ATTACHMENT_URL_REPAIRS.get(source["source_url"], source["source_url"])
+    # The saved snapshot's midnight and room number were unsupported in the
+    # announcement/form. Preserve that archive but do not publish those guesses.
+    payload["actual_system_and_submission_opens_at"] = None
+    payload["actual_system_and_submission_opens_on"] = "2026-11-01"
+    payload["paper_submission_office"] = "國際學生中心（繳件地點依承辦通知）"
+    payload["paper_required_documents"] = [PAPER]
     return payload
+
+
+def repair_fju_attachment_links(bundle: Path = FJU_BUNDLE) -> int:
+    """Repair the four news attachment URLs without rerunning content overlays.
+
+    The immutable round46 link manifest records each originally observed value
+    and the matching PDF hashes. Historical reference_data remains untouched.
+    """
+    changed = 0
+
+    def repair(value: Any) -> Any:
+        nonlocal changed
+        if isinstance(value, dict):
+            return {key: child if key == "reference_data" else repair(child)
+                    for key, child in value.items()}
+        if isinstance(value, list):
+            return [repair(child) for child in value]
+        if isinstance(value, str):
+            updated = value
+            for old, new in ATTACHMENT_URL_REPAIRS.items():
+                updated = re.sub(re.escape(old) + r"(?!\d)", lambda _: new, updated)
+            changed += updated != value
+            return updated
+        return value
+
+    for filename in ("documents.json", "exchange_info.json", "home_rules.json",
+                     "import_provenance.json", "pages.jsonl", "student_dashboard.json"):
+        path = bundle / filename
+        rows = ([json.loads(line) for line in path.read_text(encoding="utf8").splitlines() if line.strip()]
+                if path.suffix == ".jsonl" else json.loads(path.read_text(encoding="utf8")))
+        updated = repair(rows)
+        if updated != rows:
+            if path.suffix == ".jsonl":
+                _write_jsonl(path, updated)
+            else:
+                _write_json(path, updated)
+    return changed
 
 
 def validate_fju_oct20_update_snapshot(update_json_path: Path = UPDATE_JSON_PATH) -> dict[str, Any]:
@@ -105,6 +161,26 @@ def validate_fju_oct20_update_snapshot(update_json_path: Path = UPDATE_JSON_PATH
 
 def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = UPDATE_JSON_PATH) -> dict[str, Any]:
     payload = validate_fju_oct20_update_snapshot(update_json_path)
+    info_existing = json.loads((bundle / "exchange_info.json").read_text(encoding="utf8"))
+    # This is a historical import step, not an authoritative replacement for
+    # later field reviews. Fresh builds apply it before the reviewed overlays.
+    reviewed = False
+    for filename in ("partners.jsonl", "application_workflows.jsonl", "destination_profiles.jsonl"):
+        for line in (bundle / filename).read_text(encoding="utf8").splitlines():
+            if line.strip():
+                references = json.loads(line).get("reference_data") or {}
+                if any(key.startswith("source_review_round") for key in references):
+                    reviewed = True
+                    break
+        if reviewed:
+            break
+    if reviewed and NEWS_1062_URL in info_existing.get("source_urls", []):
+        return {
+            "school_id": "fju", "skipped_legacy_snapshot": True,
+            "sources_count": len(json.loads((bundle / "import_provenance.json").read_text(encoding="utf8"))["sources"]),
+            "partners_count": sum(bool(line.strip()) for line in (bundle / "partners.jsonl").read_text(encoding="utf8").splitlines()),
+            "workflows_count": sum(bool(line.strip()) for line in (bundle / "application_workflows.jsonl").read_text(encoding="utf8").splitlines()),
+        }
     manifest = payload["source_manifest"]
 
     # 1. Update import_provenance.json
@@ -127,7 +203,7 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
     prov["active_cycle_note"] = (
         "116學年度第1學期（2027秋季班）赴姊妹校交換學生申請公告（newsID=1062）已於 2026-10-20 發布，"
         "雖標題寫即日起，正文載明線上申請系統（http://outgoing.oie.fju.edu.tw/，限校內網路連線）"
-        "開放及紙本申請表收件期間為 2026/11/01 至 2026/12/24 16:30（送耕莘樓 A113 室）。"
+        "開放及紙本申請表收件期間為 2026/11/01 至 2026/12/24 16:30（送國際學生中心）。"
         "名額及開放學校將於 11 月陸續由姊妹校提供並更新，目前公告附表（file=1346 非日語組、file=1347 日語組）"
         "標示為「通常名額（參考用）」，不能當成最終版；需 M365 登入之個別學校資料尚未查核。"
     )
@@ -136,6 +212,7 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
         "announcement_url": NEWS_1062_URL,
         "title_says_immediate_open": True,
         "actual_opens_at": payload["actual_system_and_submission_opens_at"],
+        "actual_opens_on": "2026-11-01",
         "actual_deadline_at": payload["actual_system_and_submission_deadline_at"],
         "online_system_url": ONLINE_PORTAL_URL,
         "online_system_campus_network_only": True,
@@ -150,7 +227,7 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
     oct20_period_line = (
         "116學年度第1學期（2027秋季班）赴姊妹校交換學生申請公告（2026-10-20 發布，newsID=1062）："
         "標題雖寫即日起，正文載明線上申請系統（http://outgoing.oie.fju.edu.tw/，限校內網路使用）"
-        "開放及紙本收件時間為 2026/11/01 至 2026/12/24 16:30（紙本送耕莘樓 A113 室）；"
+        "開放及紙本收件時間為 2026/11/01 至 2026/12/24 16:30（紙本送國際學生中心）；"
         "名額及開放學校將於 11 月陸續更新，附表（file=1346、file=1347）為通常名額參考用，非最終版。"
     )
     info["application_period"] = [
@@ -176,15 +253,19 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
         *[l for l in info["language_requirement"] if "2024/12/24" not in l],
     ]
     info["required_documents"] = [
-        "【A.紙本文件（唯一紙本）】天主教輔仁大學赴姐妹校交換生申請表（file=1345，A4 雙面列印、電腦打字輸入；須家長簽名＋蓋章，並經系/所秘書、主任、院長及雙主修／輔系／學程辦公室秘書、主任核可蓋章，2026/12/24 16:30 前送交耕莘樓 A113 室）",
+        "【A.紙本文件（唯一紙本）】天主教輔仁大學赴姐妹校交換生申請表（file=1345，A4 雙面列印、電腦打字輸入；須家長簽名＋蓋章，並經系/所秘書、主任、院長及雙主修／輔系／學程辦公室秘書、主任核可蓋章，2026/12/24 16:30 前送交國際學生中心）",
         "【B.電子文件 1（上傳至 http://outgoing.oie.fju.edu.tw/，單檔勿超過 20MB）】書審資料合併單一 PDF：含中文簡歷（就學、工作及社團經驗，格式不拘，兩頁為限）、中文讀書計畫（只需繳交一份中文版、不需繳交英文版，至少 500 字，格式不拘，兩頁為限）、其他校內/外表現證明及清寒證明（無則免附）",
         "【B.電子文件 2】本校中文歷年成績單 PDF 電子檔（須含截至 114 學年度第 2 學期之歷年班級排名；碩一/博一須另附大學/碩士歷年成績單，轉學生須另附原就讀學校歷年成績單）",
-        "【B.電子文件 3】語測證明 PDF 電子檔（英檢須為 2024/12/24 後考取；日檢可先交網路成績並於 2027/01/31 前補齊正式證明）",
+        "【B.電子文件 3】語測證明 PDF 電子檔（英檢須為 2024/12/24 後考取；日檢可先交網路成績可於 2027/01/31 前補網路查詢成績證明）",
     ]
     for url in (NEWS_1062_URL, SLIDES_1344_URL, FORM_1345_URL, NON_JP_1346_URL, JP_1347_URL):
         if url not in info["source_urls"]:
             info["source_urls"].append(url)
     info["last_checked"] = CHECKED_AT_ISO
+    info["required_documents"][0] = PAPER
+    info["required_documents"][3] = "語測證明PDF：英檢須為2024/12/24之後考取。" + JLPT
+    if ENROLLMENT not in info["eligibility"]:
+        info["eligibility"].append(ENROLLMENT)
     ExchangeInfo.model_validate(info)
     _write_json(info_path, info)
 
@@ -203,7 +284,7 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
             period["details"] = [
                 "2026-10-20 官方公告（newsID=1062）：雖然公告標題寫「即日起開始收件至12月24日16:30止!」，正文載明線上申請系統開放及收件時間為 2026/11/01 至 2026/12/24 16:30。",
                 "線上申請系統（http://outgoing.oie.fju.edu.tw/）有鎖校外 IP 連線，限校內網路使用；個別上傳 PDF 電子檔（書審資料、中文歷年成績單、語測證明）勿超過 20MB。",
-                "紙本文件僅須繳交「赴姐妹校交換生申請表（A4 雙面列印、電腦打字輸入）」，完成家長簽章與系所／院／雙主修輔系學程核章後，於 2026/12/24 16:30 前送交耕莘樓 A113 室。",
+                "紙本文件僅須繳交「赴姐妹校交換生申請表（A4 雙面列印、電腦打字輸入）」，完成家長簽章與系所／院／雙主修輔系學程核章後，於 2026/12/24 16:30 前送交國際學生中心。",
                 "名額及開放學校將於 11 月陸續由姊妹校提供並更新，目前附表（file=1346 非日語組、file=1347 日語組）標示為「通常名額 (參考用)」，不能當成最終版；需 M365 登入之個別學校資料未查。",
             ]
             period["source"] = {
@@ -212,7 +293,7 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
                 "category": "deadline",
                 "summary": "系統開放及收件為 2026/11/01～12/24 16:30（限校內網路）；學校及名額於 11 月陸續更新，不能當成最終版。",
             }
-            period["opens_at"] = "2026-11-01T00:00:00+08:00"
+            period["opens_at"] = None  # The announcement gives a date, not an opening hour.
             period["deadline_at"] = "2026-12-24T16:30:00+08:00"
             period["date_status"] = "verified_exact"
             period["status"] = "upcoming"
@@ -220,7 +301,7 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
                 "標題雖寫即日起，正文載明系統開放及收件為 2026/11/01～12/24 16:30（限校內網路）；"
                 "學校與名額於 11 月陸續更新，目前名單不能當成最終版。"
             )
-            period["deadline_note"] = "線上系統限校內網路（http://outgoing.oie.fju.edu.tw/）；紙本申請表送交耕莘樓 A113 室。"
+            period["deadline_note"] = "線上系統限校內網路（http://outgoing.oie.fju.edu.tw/）；紙本申請表送交國際學生中心。"
             period["reminder_eligible"] = True
             period["checked_at"] = CHECKED_AT_ISO
 
@@ -244,7 +325,7 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
         {
             "title": "輔大 116-1（2027秋季班）紙本與電子上傳應備文件規範（newsID=1062、file=1345）",
             "details": [
-                "A. 紙本文件（唯一須交紙本）：赴姐妹校交換生申請表（file=1345，A4 雙面列印，請以電腦打字輸入），須家長簽名＋蓋章，並經系/所秘書、主任、院長及雙主修、輔系、學程辦公室秘書、主任核可蓋章，送至耕莘樓 A113 室。",
+                "A. 紙本文件（唯一須交紙本）：赴姐妹校交換生申請表（file=1345，A4 雙面列印，請以電腦打字輸入），須家長簽名＋蓋章，並經系/所秘書、主任、院長及雙主修、輔系、學程辦公室秘書、主任核可蓋章，送至國際學生中心。",
                 "B-1. 電子上傳—書審資料（合併為同一個 PDF 電子檔，勿超過 20MB）：含中文簡歷（就學、工作及社團經驗，格式不拘，兩頁為限）、中文讀書計畫（只需繳交一份中文版，不需繳交英文版，至少 500 字，格式不拘，兩頁為限）、其他校內/外表現證明及清寒證明（無則免附）。",
                 "B-2. 電子上傳—中文歷年成績單 PDF（須含截至 114-2 之歷年班級排名；碩一/博一另附大學/碩士歷年成績單，轉學生另附原校歷年成績單）。",
                 "B-3. 電子上傳—語測證明 PDF：英語成績須為 2024/12/24 以後考取（TOEFL iBT 舊制 79 / 新制 4.0、IELTS 學術組 6.5、TOEIC 750）；日語檢定可先交網路成績，待 2027/01/31 前補齊成績證明後，於 1 月中旬以 Email 通知選填志願序（日語組申請時不用先選填志願；非日語組至多選填 5 所）。",
@@ -295,6 +376,12 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
                     "summary": "2026-10-20 查核；116-1（2027秋季班）官方公告與附件（名單與名額於 11 月陸續更新，非最終版）。",
                 }
             )
+    dash["required_documents"][0]["details"][0] = PAPER
+    dash["required_documents"][0]["details"][3] = "語測證明PDF：英檢須為2024/12/24之後考取。" + JLPT
+    dash["document_explanations"][0]["key_points"] = [PAPER, ENROLLMENT, JLPT]
+    if not any(item.get("title") == "116-1申請表學籍要求" for item in dash["eligibility"]):
+        dash["eligibility"].append({"title": "116-1申請表學籍要求", "details": [ENROLLMENT],
+            "source": {"title": "116-1申請表第2頁", "source_url": FORM_1345_URL, "category": "exchange_application"}})
     StudentDashboard.model_validate(dash)
     _write_json(dash_path, dash)
 
@@ -397,7 +484,7 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
     ]
     new_deadline_str = (
         "116-1（2027秋季班）線上系統開放與紙本收件：2026/11/01 至 2026/12/24 16:30"
-        "（標題雖寫即日起，正文載明為 11/1–12/24 16:30，線上系統限校內網路，紙本送耕莘樓 A113 室；"
+        "（標題雖寫即日起，正文載明為 11/1–12/24 16:30，線上系統限校內網路，紙本送國際學生中心；"
         "學校及名額將於 11 月陸續更新，不能當成最終版）。"
     )
     for p in partners:
@@ -423,16 +510,7 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
             "名額及開放學校將於 11 月陸續更新，附表（file=1346、file=1347）不能當成最終版。"
         )
         if len(wf.get("steps", [])) >= 2:
-            step2 = wf["steps"][1]
-            step2["title"] = "於校內網路完成線上系統申請並繳交核章紙本申請表至耕莘樓 A113"
-            step2["deadline_at"] = "2026-12-24T16:30:00+08:00"
-            step2["deadline_status"] = "verified_exact"
-            step2["deadline_source_url"] = NEWS_1062_URL
-            step2["deadline_checked_at"] = CHECKED_AT_ISO
-            step2["summary"] = (
-                "116-1 系統開放及收件為 2026/11/01 至 2026/12/24 16:30（限校內網路 http://outgoing.oie.fju.edu.tw/）；"
-                "紙本僅須繳交雙面列印核章之交換生申請表至耕莘樓 A113 室。"
-            )
+            wf["steps"][1] = current_home_submission_step(wf["steps"][1].get("rule_id"))
         UniversityApplicationWorkflow.model_validate(wf)
     _write_jsonl(wf_path, workflows)
 

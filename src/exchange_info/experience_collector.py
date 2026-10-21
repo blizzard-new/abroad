@@ -625,6 +625,9 @@ def _stored_source_is_allowed(
     source: StudentExperienceSource,
     partner: PartnerUniversity,
 ) -> bool:
+    # Admission and award lists are program evidence, not student testimony.
+    if source.perspective == "official_program_record":
+        return False
     if not _source_content_is_usable(source):
         return False
     parsed = urlparse(source.source_url)

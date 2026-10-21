@@ -31,7 +31,7 @@ def test_verified_window_catalog_covers_all_supported_universities_and_10_week_w
 
     active_window_cards = [card for card in catalog.items if card.in_ten_week_window]
     assert catalog.ten_week_school_count == len(active_window_cards)
-    assert catalog.ten_week_school_count == 19
+    assert catalog.ten_week_school_count == 18
 
 
 def test_every_verified_rule_and_subtask_has_https_source_and_last_checked_date() -> None:
@@ -50,7 +50,13 @@ def test_every_verified_rule_and_subtask_has_https_source_and_last_checked_date(
             assert fact.source_title.strip(), where
             assert "全台第一" not in fact.value_text, where
 
-        assert len(card.subtasks) >= 4, card.school_id
+        if card.primary_deadline_date:
+            assert len(card.subtasks) >= 4, card.school_id
+        else:
+            # Missing evidence must stay visible, without fabricated tasks.
+            assert not card.subtasks, card.school_id
+            assert card.ics_download_url is None
+            assert card.google_calendar_url is None
         for subtask in card.subtasks:
             where = f"{card.school_id}.subtask.{subtask.id}"
             assert str(subtask.source_url).startswith("https://"), where
@@ -63,7 +69,7 @@ def test_no_fabricated_2359_deadlines_for_schools_without_official_2359_time() -
     catalog = build_verified_window_deadline_catalog()
     by_id = {card.school_id: card for card in catalog.items}
 
-    for pending_id in ("wzu", "cgu", "fcu"):
+    for pending_id in ("cgu", "fcu", "nsysu", "ntut"):
         card = by_id[pending_id]
         assert card.primary_deadline_at is None, f"{pending_id} must not fabricate exact timestamp"
         assert card.online_deadline.exact_deadline_at is None, f"{pending_id} must not fabricate 23:59"
@@ -75,9 +81,7 @@ def test_no_fabricated_2359_deadlines_for_schools_without_official_2359_time() -
         ("nthu", 16),
         ("nycu", 16),
         ("ncku", 16),
-        ("nsysu", 17),
         ("ntpu", 17),
-        ("ntut", 17),
         ("ncu", 12),
         ("scu", 12),
         ("nchu", 12),

@@ -1,0 +1,59 @@
+{
+  "reviewed_at": "2026-10-21T02:57:27.516793+00:00",
+  "source_review": "round43-ncku-partner-table-review.json",
+  "whole_schools_verified": 0,
+  "reason": "Synchronize counts with reviewed records; old verification labels do not prove school-wide verification.",
+  "rows": [
+    {
+      "file": "src/exchange_info/official_data/ncku/catalog-completeness.json",
+      "patches": [
+        {
+          "pointer": "/open_partners",
+          "expected_value": 97,
+          "value": 0
+        },
+        {
+          "pointer": "/active_term",
+          "expected_value": "116學年度第1學期校級薦外交換學生計畫甄選（對應 2027 秋季班／2027–2028 學年出國交換）於 2026/10/30 至 11/19 16:00 開放線上申請（共開放 97 所簽約學校），12/19 公告錄取結果、12/26 正取確認、2027/01/05–01/11 繳交保證金。",
+          "value": "116-1成大一覽表列97所合作校，名額與表列條件已核對；校內申請時窗、接待校當期規定與其餘114筆資料仍待查核。"
+        },
+        {
+          "pointer": "/verified_at",
+          "expected_value": "2026-10-18",
+          "value": null
+        }
+      ]
+    },
+    {
+      "file": "src/exchange_info/official_data/ncku/verification_status.json",
+      "patches": [
+        {
+          "pointer": "/counts/open_partners",
+          "expected_value": 97,
+          "value": 0
+        },
+        {
+          "pointer": "/counts/active_term",
+          "expected_value": "116學年度第1學期校級薦外交換學生計畫甄選（對應 2027 秋季班／2027–2028 學年出國交換）於 2026/10/30 至 11/19 16:00 開放線上申請（共開放 97 所簽約學校），12/19 公告錄取結果、12/26 正取確認、2027/01/05–01/11 繳交保證金。",
+          "value": "116-1成大一覽表列97所合作校，名額與表列條件已核對；校內申請時窗、接待校當期規定與其餘114筆資料仍待查核。"
+        },
+        {
+          "pointer": "/counts/verified_at",
+          "expected_value": "2026-10-18",
+          "value": null
+        },
+        {
+          "pointer": "/status",
+          "expected_value": "official_verified",
+          "value": "official_partial"
+        },
+        {
+          "pointer": "/checked_at",
+          "expected_value": "2026-10-18T08:00:00Z",
+          "value": "2026-10-21T02:57:27.516793+00:00"
+        }
+      ]
+    }
+  ],
+  "patch_count": 8
+}

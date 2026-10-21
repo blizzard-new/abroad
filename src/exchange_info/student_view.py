@@ -179,6 +179,7 @@ def build_student_dashboard(
     return StudentDashboard(
         school_name="長庚大學",
         last_checked=_last_checked(pages, exchange_info),
+        maximum_preferences=2,
         academic_score_minimum=70,
         academic_score_rule="學業平均 70 分以上，並依各合作校及計畫規定個別核對。",
         language_score_minimums={

@@ -504,7 +504,7 @@ def _calendar_feed_content(
 
 
 from .settings import DEFAULT_DATA_DIR
-from .school_identity import school_identity_key
+from .school_identity import school_identity_key, school_program_identity_key
 from .storage import (
     append_anonymous_identity,
     append_community_answer,
@@ -1966,7 +1966,7 @@ def create_app(
         school: str,
         home_school: str | None = None,
     ) -> tuple[UniversityProfile, object]:
-        normalized = normalize_school(school)
+        normalized = school_program_identity_key(school)
         scoped_university = university_for(home_school)
         # Without a named home school, a direct link may belong to any supported catalogue;
         # the visitor's own school is searched first.
@@ -1983,7 +1983,7 @@ def create_app(
                 unavailable = error
                 continue
             for partner in partners:
-                if normalize_school(partner.school_name) == normalized:
+                if school_program_identity_key(partner.school_name) == normalized:
                     return university, partner
         if unavailable:
             raise unavailable
@@ -3543,12 +3543,12 @@ def create_app(
         for source in experiences:
             experience_map.setdefault(normalize_school(source.school_name), []).append(source)
         workflow_map = {
-            normalize_school(workflow.school_name): workflow for workflow in workflows
+            school_program_identity_key(workflow.school_name): workflow for workflow in workflows
         }
         destination_map = {
             (
                 normalize_school(profile.home_university or CGU.school_name),
-                normalize_school(profile.school_name),
+                school_program_identity_key(profile.school_name),
             ): profile
             for profile in destination_profiles
         }
@@ -3559,7 +3559,7 @@ def create_app(
             and normalize_school(audit.home_university or CGU.school_name) == home_key
         }
         destination_audit_map = {
-            normalize_school(audit.school_name): audit
+            school_program_identity_key(audit.school_name): audit
             for audit in audits
             if audit.collector == "destinations"
             and normalize_school(audit.home_university or CGU.school_name) == home_key
@@ -3578,6 +3578,7 @@ def create_app(
             ntnu_bundled_exps = _bundled_ntnu_student_experiences()
         for partner in partners:
             normalized = normalize_school(partner.school_name)
+            program_key = school_program_identity_key(partner.school_name)
             visual = school_images.get((partner.school_name, partner.country or ""))
             if university.id == CCU.id and "ccu_completion" in partner.reference_data:
                 from .ccu_campus_assets import reviewed_image_coverage
@@ -3594,10 +3595,10 @@ def create_app(
                 for b_exp in ntnu_bundled_exps.get((school_identity_key(partner.school_name), partner.country or ""), ()):
                     if all(x.source_url != b_exp.source_url for x in partner_experiences):
                         partner_experiences.append(b_exp)
-            workflow = workflow_map.get(normalized)
-            destination = destination_map.get((home_key, normalized))
+            workflow = workflow_map.get(program_key)
+            destination = destination_map.get((home_key, program_key))
             experience_audit = experience_audit_map.get(normalized)
-            destination_audit = destination_audit_map.get(normalized)
+            destination_audit = destination_audit_map.get(program_key)
             website_research = research_map.get(normalized)
             experience_status = (
                 experience_audit.status
@@ -4525,9 +4526,9 @@ def create_app(
             None,
         )
         if matched_workflow is None:
-            norm_name = normalize_school(payload.school_name)
+            norm_name = school_program_identity_key(payload.school_name)
             matched_workflow = next(
-                (w for w in workflows if normalize_school(w.school_name) == norm_name),
+                (w for w in workflows if school_program_identity_key(w.school_name) == norm_name),
                 None,
             )
         if matched_workflow is None:
@@ -4652,24 +4653,16 @@ def create_app(
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> DestinationProfile:
-        partner = partner_for_school(school, home_school)
-        normalized = normalize_school(partner.school_name)
-        canonical_home = university_for(home_school).school_name if home_school else None
-        target_home = normalize_school(canonical_home) if canonical_home else None
+        university, partner = partner_context_for_school(school, home_school)
+        normalized = school_program_identity_key(partner.school_name)
+        canonical_home = university.school_name
+        target_home = normalize_school(canonical_home)
         profiles = published_destination_profiles(canonical_home)
-        if target_home:
-            for profile in profiles:
-                if (
-                    normalize_school(profile.school_name) == normalized
-                    and normalize_school(profile.home_university or "") == target_home
-                ):
-                    return complete_destination_profile(profile, resolved_data_dir)
         for profile in profiles:
-            if normalize_school(profile.school_name) == normalized:
-                if target_home:
-                    if profile.home_university:
-                        continue
-                    return complete_destination_profile(profile.model_copy(update={"home_university": canonical_home}), resolved_data_dir)
+            if (
+                school_program_identity_key(profile.school_name) == normalized
+                and normalize_school(profile.home_university or "") == target_home
+            ):
                 return complete_destination_profile(profile, resolved_data_dir)
         return DestinationProfile(
             home_university=canonical_home,
@@ -4883,10 +4876,10 @@ def create_app(
         ),
     ) -> list[DestinationProfile]:
         university = university_for(home_school)
-        names = {school_identity_key(p.school_name) for p in partners_for_university(university)}
+        names = {school_program_identity_key(p.school_name) for p in partners_for_university(university)}
         locations = load_university_locations(resolved_data_dir)
         profiles = [complete_destination_profile(row, resolved_data_dir, locations=locations) for row in published_destination_profiles(university.school_name)
-                    if school_identity_key(row.school_name) in names
+                    if school_program_identity_key(row.school_name) in names
                     and (not row.home_university or normalize_school(row.home_university) == normalize_school(university.school_name))]
         if not compact:
             return profiles
@@ -4923,13 +4916,13 @@ def create_app(
                     partner = partner.model_copy(
                         update={"website": research.official_website}
                     )
-            profile = collect_destination_profile(partner)
+            profile = collect_destination_profile(partner, home_university=university.school_name)
             existing = next(
                 (
                     row
-                    for row in load_destination_profiles(resolved_data_dir)
-                    if normalize_school(row.school_name)
-                    == normalize_school(partner.school_name)
+                    for row in load_destination_profiles(resolved_data_dir, home_university=university.school_name)
+                    if school_program_identity_key(row.school_name)
+                    == school_program_identity_key(partner.school_name)
                 ),
                 None,
             )

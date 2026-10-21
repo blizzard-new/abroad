@@ -1430,30 +1430,24 @@ def main() -> None:
     student_dashboard_payload = {
         "school_name": "國立政治大學",
         "last_checked": CHECKED_AT,
-        "academic_score_minimum": 70.0,
+        "academic_score_minimum": None,
         "academic_score_rule": "國際交換：在校成績占甄試總分 20%（學士班依教務處「成績排名證明書」之班排名百分比換算為 101 - 班排% 分；碩博士班依「學生學業成績總表」累計平均成績計分，未達 70 分者得 0 分且不予推薦）。大陸交換：學業平均成績占 30%（大學部採計〔學期平均×45% + (1-班排%)×100×55%〕×30%，研究生採計學期平均×30%），且口試（35%）、學業（30%）與書審（35%）三項總成績須達 75 分以上始予錄取。",
-        "academic_gpa_minimum": 2.7,
+        "academic_gpa_minimum": None,
         "maximum_preferences": 15,
         "selection_rules": {
-            "academic_policy": "gpa_or_rank",
+            "academic_policy": "percentage",
             "academic_reference_year": "116",
-            "undergraduate_gpa_minimum": 2.5,
-            "undergraduate_rank_maximum": 100.0,
+            "undergraduate_gpa_minimum": None,
+            "undergraduate_rank_maximum": None,
             "graduate_academic_exempt": False,
             "exclude_in_service": False,
             "pending_quota_planning": False,
-            "partner_requirements_need_confirmation": False,
-            "degree_score_minimums": {
-                "undergraduate": 60.0,
-                "graduate": 70.0,
-            },
+            "partner_requirements_need_confirmation": True,
+            "degree_score_minimums": {},
             "excluded_undergraduate_years": [],
             "language_certificate_required": True,
         },
-        "language_score_minimums": {
-            "toefl": 42.0,
-            "ielts": 4.0,
-        },
+        "language_score_minimums": {},
         "application_periods": [
             {
                 "title": "國立政治大學 115學年度第1學期校級國際薦外交換計畫甄試（對應 116-1／116-2 出國交換：語檢上傳 10/05–11/02、口試 10/31、志願選填 11/10–12/08）",
@@ -1994,6 +1988,10 @@ def main() -> None:
         json.dumps(provenance_payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "nccu", round_id=20)
+    review_generated_content(REPO_ROOT, "nccu", round_id=21)
 
     print(
         f"Successfully built NCCU catalog: {len(partners)} partners ({open_partner_count} open, "

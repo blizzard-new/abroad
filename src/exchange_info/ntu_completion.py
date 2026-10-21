@@ -266,6 +266,8 @@ def apply_completion(bundle: Path, snapshot_path: Path = SOURCE, *, apply_assets
     from .ntu_current_updates import SOURCE as CURRENT_SOURCE, apply_current_updates
     if CURRENT_SOURCE.exists():
         apply_current_updates(bundle)
+    from .usp_source_review import apply_usp_source_review
+    apply_usp_source_review(ROOT, "ntu", bundle=bundle, rebuild=True)
     return {"schools": len(entries), "reviewed_observations": observation_count,
         "photo_additions": sum(bool(r.get("photo")) for r in entries.values()),
         "location_additions": sum(bool(r.get("location")) for r in entries.values()),

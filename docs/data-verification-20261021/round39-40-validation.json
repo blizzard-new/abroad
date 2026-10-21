@@ -1,0 +1,36 @@
+{
+  "recorded_at": "2026-10-21T02:11:51.097903+00:00",
+  "tests": [
+    "tests/test_ntnu_quota_review.py",
+    "tests/test_ntnu_program_year_review.py",
+    "tests/test_ntnu_integration.py",
+    "tests/test_application_rules.py",
+    "tests/test_advisor.py",
+    "tests/test_seo.py",
+    "tests/test_cross_school_source_provenance.py",
+    "tests/test_cross_school_partners.py"
+  ],
+  "result": "93 passed",
+  "duration_seconds": 64.64,
+  "javascript_syntax": "node --check src/exchange_info/static/app.js passed",
+  "diff_check": "git -c core.whitespace=cr-at-eol diff --check passed",
+  "render_check": {
+    "course_points": 7,
+    "critical_restrictions_present_in_rendered_html": true,
+    "browser_visual_review": false
+  },
+  "code_sha256": {
+    "src/exchange_info/models.py": "55732523f08612c75024827c05601ae415abd5057c29ee3de71f124d69234087",
+    "src/exchange_info/ntnu_quota_review.py": "1a71636ec4efa398071cba7ee1018bad70316535a7791762df478a05f92f59ca",
+    "src/exchange_info/ntnu_student_view.py": "b0ae72758fe7411ef8e000821ee692a6189a1cc917d7f2c705375370bc908a95",
+    "src/exchange_info/application_rules.py": "e0445c0124d38868bb002f52fd4267cfaff768aced43fef26b854a8fe1a05c93",
+    "src/exchange_info/advisor.py": "21f84aa2f130a4a185be798f4a21353eab000ee022a303efd67eaf22ef1f9e52",
+    "src/exchange_info/seo.py": "e5393116f1c777c68d44850c71b11b79dbe3eb140dd3a4ad5ab9fc069110fd0c",
+    "src/exchange_info/static/app.js": "b64bba07fcc89f256693b203df14b9d457ce0ffa553e58ff2da23b3cd4d58d1d",
+    "src/exchange_info/cross_school_partners.py": "01b412af862fad63c33d0b3ce6ccf918658fb361a4c361a6d88a1cbc7dc88333"
+  },
+  "limitations": [
+    "Tests establish implementation behavior and source binding, not full factual verification.",
+    "Full NTNU catalog builder was not run; the value-guarded replay hook was tested."
+  ]
+}

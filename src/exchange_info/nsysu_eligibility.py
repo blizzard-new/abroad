@@ -10,12 +10,13 @@ NSYSU_APPLY_PORTAL_URL = "https://partners.oia.nsysu.edu.tw/exchange/login/user/
 NSYSU_FACTSHEET_URL = "https://oia.nsysu.edu.tw/p/412-1308-20623.php?Lang=zh-tw"
 NSYSU_EXPERIENCE_URL = "https://oia.nsysu.edu.tw/p/412-1308-20732.php?Lang=zh-tw"
 NSYSU_SCHOLARSHIP_URL = "https://oia.nsysu.edu.tw/p/412-1308-20733.php?Lang=zh-tw"
-NSYSU_REGULATIONS_PDF_URL = "https://oia.nsysu.edu.tw/var/file/308/1308/img/4554/874755230.pdf"
+NSYSU_REGULATIONS_PDF_URL = "https://oia.nsysu.edu.tw/static/file/308/1308/img/4144/874755230.pdf"
 
 NSYSU_ENGLISH_MINIMUMS: dict[str, tuple[str, float]] = {
     "toefl": ("TOEFL iBT", 60.0),
     "ielts": ("IELTS Academic", 5.0),
     "toeic": ("TOEIC", 600.0),
+    "duolingo": ("Duolingo", 80.0),
 }
 
 
@@ -75,51 +76,9 @@ def nsysu_academic_check(
     academic_gpa: float | None = None,
     class_rank_percent: float | None = None,
 ) -> tuple[str, str]:
-    if (
-        academic_score is None
-        and academic_gpa is None
-        and class_rank_percent is None
-    ):
-        return (
-            "needs_confirmation",
-            "尚未填寫歷年學業成績（GPA / 平均分數）或歷年班排名；中山大學出國交換甄選以本校正式歷年成績單之「歷年班排名」進行學業評分（日本及其他國家占總成績 30%、中國大陸占 60%，總成績未達 60 分不予錄取），且多數姊妹校要求 GPA 2.5–3.0（約 70–75 分）以上。",
-        )
-
-    details: list[str] = []
-    score_ok = False
-    gpa_ok = False
-    rank_ok = False
-
-    if academic_score is not None:
-        details.append(f"歷年平均 {academic_score:g} 分")
-        if academic_score >= 70.0:
-            score_ok = True
-    if academic_gpa is not None:
-        details.append(f"GPA {academic_gpa:g}")
-        if academic_gpa >= 2.5:
-            gpa_ok = True
-    if class_rank_percent is not None:
-        details.append(f"歷年班排名前 {class_rank_percent:g}%")
-        if class_rank_percent <= 75.0:
-            rank_ok = True
-
-    summary = "、".join(details)
-    if academic_gpa is not None:
-        passed = gpa_ok
-    elif academic_score is not None:
-        passed = score_ok
-    else:
-        passed = rank_ok
-
-    if not passed:
-        return (
-            "fail",
-            f"已填報 {summary}，低於中山大學多數交換姊妹校常見學業基準（GPA 2.5 或平均 70 分以上），且校內甄選以歷年班排名換算學業成績（總成績未達 60 分不予錄取）。",
-        )
-    return (
-        "pass",
-        f"已填報 {summary}；符合中山大學出國交換常見學業基準（校內甄選依歷年班排名占總分 30%［日本及其他國家］或 60%［中國大陸］，總分達 60 分以上始得錄取），請同時對照各交換校個別 GPA 規定（部分歐美亞名校要求 GPA 3.0 / 4.0 以上）。",
-    )
+    if class_rank_percent is None or not 0 < class_rank_percent <= 100:
+        return "needs_confirmation", "甄選要點採正式成績單的歷年班排名評分；須提供班排名，不能以平均70、GPA 2.5或排名前75%作共通錄取門檻。"
+    return "pass", f"已填報歷年班排名前{class_rank_percent:g}%，可供校內學業項目評分；未設排名前75%的共通門檻。總分須達60且須通過分發，合作校學業資格仍須另核。"
 
 
 def nsysu_language_check(
@@ -148,7 +107,7 @@ def nsysu_language_check(
             f"{label} {language_score:g} {'符合' if passed else '未達'}國立中山大學出國交換甄選英語最低門檻 {minimum:g}。{warning}",
         )
     if test == "jlpt":
-        if partner_country and partner_country != "日本":
+        if partner_country != "日本":
             return (
                 "needs_confirmation",
                 f"已填寫 JLPT N{int(language_score)}；申請非日本地區交換計畫須提供有效英語檢定證明（TOEFL iBT 60 / IELTS 5.0 / TOEIC 600 / Duolingo 80 / BESTEP 170 以上）。",
@@ -159,11 +118,8 @@ def nsysu_language_check(
             f"JLPT N{int(language_score)} {'符合' if passed else '未達'}國立中山大學赴日本交換甄選校內最低日檢門檻（N5 含以上；惟東京大學、早稻田、東北、立命館、法政、同志社、九州、北海道、大阪等校日語授課組多要求 JLPT N1 或 N2，請務必對照目標學校規定）。",
         )
     if test == "topik":
-        passed = 2.0 <= language_score <= 6.0
-        return (
-            "pass" if passed else "fail",
-            f"TOPIK {int(language_score)} 級 {'符合' if passed else '未達'}韓國姊妹校韓語授課組常見門檻（惟申請中山大學「其他國家與地區」甄選仍須同時檢附 TOEFL iBT 60 / IELTS 5.0 / TOEIC 600 等校內規定之基本英語檢定證明）。",
-        )
+        return "needs_confirmation", "TOPIK不能替代『其他國家與地區』甄選要求的英語證明；仍須檢附要點列明的任一英檢，並另核合作校韓語條件。"
+
     return (
         "needs_confirmation",
         f"已填寫 {language_test} {language_score:g}；請核對國立中山大學出國交換甄選簡章（Duolingo 最低 80、Cambridge PET 最低 154、BESTEP 聽讀最低 170）及各交換校個別語言檢定門檻。",

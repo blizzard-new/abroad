@@ -4659,6 +4659,7 @@
               "availability",
               "college",
               "degree_level",
+              "partner_degree_level",
               "academic_score",
               "academic_gpa",
               "home_year",
@@ -10605,7 +10606,7 @@
           },
           "language_requirement_summary": {
             "maxLength": 600,
-            "minLength": 2,
+            "minLength": 1,
             "title": "Language Requirement Summary",
             "type": "string"
           },
@@ -10640,7 +10641,7 @@
           },
           "quota_summary": {
             "maxLength": 400,
-            "minLength": 2,
+            "minLength": 1,
             "title": "Quota Summary",
             "type": "string"
           },
@@ -10977,7 +10978,7 @@
             "type": "string"
           },
           "experience_count": {
-            "minimum": 1.0,
+            "minimum": 0.0,
             "title": "Experience Count",
             "type": "integer"
           },
@@ -11058,15 +11059,41 @@
             "type": "string"
           },
           "last_checked_at": {
-            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-            "title": "Last Checked At",
-            "type": "string"
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Checked At"
           },
           "origin_label": {
             "maxLength": 80,
             "minLength": 2,
             "title": "Origin Label",
             "type": "string"
+          },
+          "related_sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceReference"
+            },
+            "title": "Related Sources",
+            "type": "array"
+          },
+          "source_published_at": {
+            "anyOf": [
+              {
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Published At"
           },
           "source_title": {
             "maxLength": 200,
@@ -11091,6 +11118,17 @@
             "minLength": 3,
             "title": "Title",
             "type": "string"
+          },
+          "verification_status": {
+            "default": "pending_review",
+            "enum": [
+              "pending_review",
+              "reference_only",
+              "verified_reference",
+              "verified_current"
+            ],
+            "title": "Verification Status",
+            "type": "string"
           }
         },
         "required": [
@@ -11099,8 +11137,7 @@
           "summary_zh",
           "origin_label",
           "source_title",
-          "source_url",
-          "last_checked_at"
+          "source_url"
         ],
         "title": "CrossSchoolStructuredPoint",
         "type": "object"
@@ -11360,6 +11397,16 @@
               }
             ],
             "title": "City"
+          },
+          "cost_evidence": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExchangeFieldEvidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "cost_summary": {
             "anyOf": [
@@ -13819,7 +13866,8 @@
             "default": "percentage",
             "enum": [
               "percentage",
-              "gpa_or_rank"
+              "gpa_or_rank",
+              "score_or_rank"
             ],
             "title": "Academic Policy",
             "type": "string"
@@ -14826,6 +14874,7 @@
               {
                 "enum": [
                   "open",
+                  "upcoming",
                   "closed",
                   "needs_confirmation"
                 ],
@@ -17347,9 +17396,16 @@
             "title": "Last Checked"
           },
           "maximum_preferences": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "default": 5,
-            "title": "Maximum Preferences",
-            "type": "integer"
+            "title": "Maximum Preferences"
           },
           "partner_universities": {
             "items": {
@@ -19636,6 +19692,18 @@
             "minLength": 4,
             "title": "Value Text",
             "type": "string"
+          },
+          "verification_status": {
+            "default": "legacy_review",
+            "enum": [
+              "legacy_review",
+              "verified_current",
+              "verified_reference",
+              "needs_confirmation",
+              "source_unavailable"
+            ],
+            "title": "Verification Status",
+            "type": "string"
           }
         },
         "required": [
@@ -19658,16 +19726,30 @@
             "type": "string"
           },
           "google_calendar_url": {
-            "maxLength": 4000,
-            "minLength": 20,
-            "title": "Google Calendar Url",
-            "type": "string"
+            "anyOf": [
+              {
+                "maxLength": 4000,
+                "minLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Google Calendar Url"
           },
           "ics_download_url": {
-            "maxLength": 500,
-            "minLength": 10,
-            "title": "Ics Download Url",
-            "type": "string"
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "minLength": 10,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ics Download Url"
           },
           "in_ten_week_window": {
             "title": "In Ten Week Window",
@@ -19771,8 +19853,6 @@
           "online_deadline",
           "paper_deadline",
           "study_plan_limit",
-          "ics_download_url",
-          "google_calendar_url",
           "line_oa_url",
           "line_copy_summary"
         ],

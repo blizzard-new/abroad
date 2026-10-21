@@ -293,7 +293,7 @@ def main() -> None:
       program_type = "校級交換暨銜接學位計畫"
     elif "橋樑學位" in tracks_str or "銜接學位" in tracks_str:
       program_type = "國際銜接／橋樑學位計畫"
-    elif "大陸地區" in tracks_str:
+    elif country == "中國大陸":
       program_type = "大陸地區校級交換學生計畫"
     else:
       program_type = "校級交換學生計畫"
@@ -336,9 +336,9 @@ def main() -> None:
           else "非大陸地區締約合作姊妹校（依國際處當期甄選系統公告名額辦理）"
       )
       app_deadline_str = (
-          "【2027春季班（115-2）赴非大陸地區交換甄選】2026/09/07 09:00 – 2026/09/25 16:00 線上申請、2026/09/26 17:00 紙本送達國際處、2026/10/19 公告錄取名單（共錄取 25 名）、2026/10/22 12:00 錄取生繳交確認書與 $3,000 保證金截止；【2026秋季班（115-1）】2026/02/23 – 03/13 線上申請、04/01 公告錄取（共錄取 38 名）；【2027秋季班（116-1）預告】預計 2027年2月中旬至3月中旬開放線上申請"
+          '115-2（2027春季）非大陸地區一般交換：官方系統日程為2026/07/27 08:00開始、2026/09/24 12:00截止。申請表與已彌封推薦信同樣須於9月24日中午12:00前送至國際園地；逾時不受理。 此為母校一般甄選期限，不能證明本校當期名額或專案期限；116-1時程尚未核實。'
       )
-      deadline_iso = "2026-09-25T16:00:00+08:00"
+      deadline_iso = '2026-09-24T12:00:00+08:00'
       win_status = "closed"
 
     study_period_str = "1 學期或 1 學年（依《國立雲林科技大學國際交換學生實施要點》第8點：交換期間以一學期或一學年為限）"
@@ -565,14 +565,12 @@ def main() -> None:
             round_label,
             "115-2",
             "115-1",
-            "116-1",
-            "116-2",
             "2027春季班",
             "2026秋季班",
         ],
-        "applicability_status": "verified",
+        "applicability_status": "needs_confirmation",
         "applicability_note": (
-            "國立雲林科技大學由國際事務處（國際合作組／國際學術交流組）統籌辦理全校非大陸地區與大陸地區交換學生、雙聯學位及銜接學位甄選，每學期初（2–3 月辦理次學年秋季班、9 月辦理次年春季班）開放線上與紙本收件，並搭配王秋雄榮譽博士德日美獎助金、教育部學海飛颺／惜珠與校內出國交流補助。"
+            "此流程仍待逐項核實；115-2一般甄選日期不可套用於115-1、116學年度、雙聯或銜接專案。"
         ),
         "review_status": "published",
         "published_at": CHECKED_AT,
@@ -585,9 +583,9 @@ def main() -> None:
                 "responsible_party": "學生",
                 "responsible_unit": "國立雲林科技大學國際事務處（斗六校區行政大樓）",
                 "deadline_at": deadline_iso,
-                "deadline_status": "verified_exact" if avail_status == "open" else "reference_only",
-                "deadline_source_url": source_url,
-                "deadline_checked_at": CHECKED_AT,
+                "deadline_status": "reference_only",
+                "deadline_source_url": YUNTECH_OE_PORTAL_URL if country != "中國大陸" else source_url,
+                "deadline_checked_at": "2026-10-20T17:43:24.500812+00:00" if country != "中國大陸" else CHECKED_AT,
                 "deadline_reminder_eligible": False,
                 "summary": (
                     f"確認符合《國立雲林科技大學國際交換學生實施要點》第2點規定（研究所在學學生或入學一學期以上之大學部在學學生，學業成績達 75 分［含］以上或班級排名前 50%，且操行成績達 80 分［含］以上），並備妥符合 {zh_name} 及校內規定之外語能力證明。"
@@ -600,8 +598,8 @@ def main() -> None:
                 "scope": {
                     "home_universities": ["國立雲林科技大學"],
                     "partner_universities": [full_name],
-                    "academic_years": ["115", "116"],
-                    "application_rounds": [round_label, "115-2", "115-1", "116-1", "116-2"],
+                    "academic_years": ["115"],
+                    "application_rounds": [round_label, "115-2", "115-1"],
                 },
                 "source_urls": [
                     source_url,
@@ -619,9 +617,9 @@ def main() -> None:
                 "responsible_party": "學生與所屬系（所）及學院辦公室",
                 "responsible_unit": "國立雲林科技大學各系所及學院／國際事務處",
                 "deadline_at": deadline_iso,
-                "deadline_status": "verified_exact" if avail_status == "open" else "reference_only",
-                "deadline_source_url": source_url,
-                "deadline_checked_at": CHECKED_AT,
+                "deadline_status": "reference_only",
+                "deadline_source_url": YUNTECH_OE_PORTAL_URL if country != "中國大陸" else source_url,
+                "deadline_checked_at": "2026-10-20T17:43:24.500812+00:00" if country != "中國大陸" else CHECKED_AT,
                 "deadline_reminder_eligible": False,
                 "summary": (
                     "於甄選線上申請期間至「雲科大出國交換生系統（admissions-oia.yuntech.edu.tw/oe）」完成線上報名及志願選填，列印申請表經指導教授（研究生）、系所主任與院長核章後，併同歷年成績單（含班排）、有效語檢證明、中英文自傳與讀書計畫、優秀表現證明及推薦函於紙本收件截止日前送達國際事務處。"
@@ -651,8 +649,8 @@ def main() -> None:
                 ],
                 "scope": {
                     "home_universities": ["國立雲林科技大學"],
-                    "academic_years": ["115", "116"],
-                    "application_rounds": [round_label, "115-2", "115-1", "116-1", "116-2"],
+                    "academic_years": ["115"],
+                    "application_rounds": [round_label, "115-2", "115-1"],
                 },
                 "source_urls": [
                     YUNTECH_OE_PORTAL_URL,
@@ -670,8 +668,8 @@ def main() -> None:
                 "title": "國際處量化評分審查（學業與班排 40%＋語檢 40%＋優秀表現 20%）、放榜確認與繳交 NT$3,000 保證金",
                 "responsible_party": "學生與國際事務處甄選委員會",
                 "responsible_unit": "國立雲林科技大學國際事務處",
-                "deadline_at": "2026-10-22T12:00:00+08:00",
-                "deadline_status": "verified_exact",
+                "deadline_at": None,
+                "deadline_status": "needs_confirmation",
                 "deadline_source_url": YUNTECH_ROSTER_2027S_URL,
                 "deadline_checked_at": CHECKED_AT,
                 "deadline_reminder_eligible": False,
@@ -684,8 +682,8 @@ def main() -> None:
                 ],
                 "scope": {
                     "home_universities": ["國立雲林科技大學"],
-                    "academic_years": ["115", "116"],
-                    "application_rounds": [round_label, "115-2", "115-1", "116-1", "116-2"],
+                    "academic_years": ["115"],
+                    "application_rounds": [round_label, "115-2", "115-1"],
                 },
                 "source_urls": [
                     YUNTECH_ROSTER_2027S_URL,
@@ -713,8 +711,8 @@ def main() -> None:
                 "scope": {
                     "home_universities": ["國立雲林科技大學"],
                     "partner_universities": [full_name],
-                    "academic_years": ["115", "116"],
-                    "application_rounds": [round_label, "115-2", "115-1", "116-1", "116-2"],
+                    "academic_years": ["115"],
+                    "application_rounds": [round_label, "115-2", "115-1"],
                 },
                 "source_urls": (
                     [source_url, YUNTECH_OE_INTRO_115_2_URL]
@@ -738,8 +736,8 @@ def main() -> None:
                 "details": tuition_points_list,
                 "scope": {
                     "home_universities": ["國立雲林科技大學"],
-                    "academic_years": ["115", "116"],
-                    "application_rounds": [round_label, "115-2", "115-1", "116-1", "116-2"],
+                    "academic_years": ["115"],
+                    "application_rounds": [round_label, "115-2", "115-1"],
                 },
                 "source_urls": [
                     YUNTECH_EXCHANGE_GUIDELINES_URL,
@@ -1213,10 +1211,10 @@ def main() -> None:
       ],
       "academic_year": [
           (
-              "115（115學年度第 2 學期［2027春季班］非大陸地區交換生甄選於 2026/09/07 – 09/25 線上收件、2026/10/19 公告錄取 25 名、10/22 完成確認與 $3,000 保證金繳交；2027春季班大陸地區交換生甄選於 2026/09/01 – 10/16 受理申請；115學年度第 1 學期［2026秋季班］非大陸地區共錄取 38 名；本平台共完整收錄 112 所雲科大交換與雙聯／銜接合作學校，含 45 所當期開放名額校及 67 所歷屆締約合作校）"
+              '115學年度第2學期（2027春季）：非大陸地區一般交換申請於2026/09/24 12:00截止，其他計畫需另查各自公告。'
           ),
           (
-              "116（116學年度第 1 學期［2027秋季班］非大陸及大陸地區交換生甄選預計於 2026年12月舉辦說明會、2027年2月中旬至3月中旬開放線上與紙本申請、2027年4月初公告錄取名單）"
+              '116學年度第1學期（2027秋季）：本平台尚未核實正式申請時程。'
           ),
       ],
       "semester": [
@@ -1226,13 +1224,13 @@ def main() -> None:
       ],
       "application_period": [
           (
-              "【2027春季班（115學年度第 2 學期，115-2）非大陸地區交換學生甄選時程】線上申請系統開放：2026/09/07 09:00 – 2026/09/25 16:00；紙本申請資料經系所及學院核章送達國際事務處截止：2026/09/26 17:00；甄選說明會：2026/09/16 12:15–13:00；錄取名單公告：2026/10/19（共錄取 25 名正取生）；正取生繳交《錄取資格確認書》、《家長同意書》及新臺幣 3,000 元保證金截止：2026/10/22 12:00；2027春季班王秋雄榮譽博士德日美獎助金申請截止：2026/09/26。"
+              '115-2（2027春季）非大陸地區一般交換：官方系統日程為2026/07/27 08:00開始、2026/09/24 12:00截止。申請表與已彌封推薦信同樣須於9月24日中午12:00前送至國際園地；逾時不受理。 錄取名單、人數、確認與獎學金期限需另查正式公告。'
           ),
           (
               "【2027春季班（115學年度第 2 學期，115-2）大陸地區交換學生甄選時程】校內申請收件期間：2026/09/01 – 2026/10/16 17:00（依大陸姊妹校提名期限分兩批截止：第一批北京科技大學、中南大學、福州大學等為 2026/09/25；第二批北京師範大學、同濟大學、山東大學、吉林大學、四川大學、重慶大學、東南大學、南京大學等為 2026/10/16）。"
           ),
           (
-              "【2026秋季班（115學年度第 1 學期，115-1）交換甄選與 2027秋季班（116-1）預告】2026秋季班（115-1）非大陸地區交換於 2026/02/23 – 03/13 線上申請、03/16 紙本截止、04/01 公告錄取名單（共錄取 38 名），並於 2026/07/20 公告教育部學海飛颺（12 名）與王秋雄榮譽博士獎助金（19 名）獲獎名單；2027秋季班（116-1）預計於 2027年2月中旬至3月中旬開放申請。"
+              '【2026秋季班（115學年度第 1 學期，115-1）交換甄選與 2027秋季班（116-1）預告】2026秋季班（115-1）非大陸地區交換於 2026/02/23 – 03/13 線上申請、03/16 紙本截止、04/01 公告錄取名單（共錄取 38 名），並於 2026/07/20 公告教育部學海飛颺（12 名）與王秋雄榮譽博士獎助金（19 名）獲獎名單；116-1正式申請時程尚未核實。'
           ),
       ],
       "eligibility": [
@@ -1319,70 +1317,47 @@ def main() -> None:
           "toeic": 650.0,
       },
       "application_periods": [
-          {
-              "title": (
-                  "國立雲林科技大學 116 學年度第 1 學期（2027秋季班，116-1）出國交換學生甄選預告（預計 2027/02–03 開放線上與紙本收件、2027/04 公告錄取名單）"
-              ),
-              "details": [
-                  (
-                      "依雲科大國際事務處每學期甄選時程慣例，2027秋季班（116-1，2027年8/9月出國）非大陸地區及大陸地區交換生甄選預計於 2026年12月舉辦說明會，並於 2027年2月中旬至3月中旬開放「出國交換生系統（admissions-oia.yuntech.edu.tw/oe）」線上申請與紙本收件。"
-                  ),
-                  (
-                      "有意申請 2027秋季班交換及《王秋雄榮譽博士德日美獎助金》、《教育部學海飛颺／惜珠》或《雲科大出國交流補助》之同學，請提前備妥有效期限內之外語檢定成績單（英語授課校 TOEIC 650 以上、歐美名校 B2 以上或日語 JLPT N1–N3）與歷年成績單。"
-                  ),
-              ],
-              "source": {
-                  "title": "國立雲林科技大學國際事務處—出國交換生申請系統與實施要點",
-                  "source_url": YUNTECH_OE_PORTAL_URL,
-                  "category": "exchange_application",
-                  "summary": "雲科大出國交換生申請系統、申請資格、評分標準與學期甄選時程說明。",
-              },
-              "scope": "home_application",
-              "program_types": ["exchange"],
-              "academic_year": "116",
-              "application_round": "116學年度第1學期（2027秋季班）出國交換學生甄選",
-              "audience": "all_students",
-              "opens_at": "2027-02-22T09:00:00+08:00",
-              "deadline_at": "2027-03-15T16:00:00+08:00",
-              "date_status": "verified_exact",
-              "status": "upcoming",
-              "status_note": "2027春季班（115-2）甄選已於 2026/10/19 放榜；下一梯次 2027秋季班（116-1）預計於 2027年2月下旬至3月中旬開放線上與紙本報名。",
-              "deadline_note": "請於線上系統截止前完成志願填報，並列印紙本申請表經系所主任及院長核章後連同備審資料送達國際事務處。",
-              "reminder_eligible": True,
-              "checked_at": CHECKED_AT,
-          },
-          {
-              "title": (
-                  "國立雲林科技大學 115 學年度第 2 學期（2027春季班，115-2）非大陸地區及大陸地區交換學生甄選（9/7–9/25 線上收件、10/19 公告錄取 25 名、10/22 確認截止）"
-              ),
-              "details": [
-                  (
-                      "2027春季班（115-2）非大陸地區交換學生甄選已於 2026/09/07 09:00 – 2026/09/25 16:00 完成線上申請收件（09/26 17:00 紙本截止），並於 2026/10/19 正式公告錄取名單（共錄取 25 名正取生赴日本、德國、韓國、美國、法國、荷蘭、比利時、立陶宛、捷克等國姊妹校）；正取生於 2026/10/22 12:00 前繳交錄取資格確認書、家長同意書及 NT$3,000 保證金。"
-                  ),
-                  (
-                      "2027春季班（115-2）大陸地區交換學生甄選於 2026/09/01 – 2026/10/16 17:00 受理申請（第一批 9/25 截止、第二批 10/16 截止），開放北京師範、同濟、南京、東南、山東、吉大、川大、重大等 24 所大陸重點高校交換名額。"
-                  ),
-              ],
-              "source": {
-                  "title": "國立雲林科技大學 2027春季班（115-2）出國交換生申請公告與錄取名單",
-                  "source_url": YUNTECH_ROSTER_2027S_URL,
-                  "category": "exchange_application",
-                  "summary": "雲科大 2027春季班（115-2）非大陸地區與大陸地區交換甄選時程、說明會簡報與錄取名單公告。",
-              },
-              "scope": "home_application",
-              "program_types": ["exchange"],
-              "academic_year": "115",
-              "application_round": "115學年度第2學期（2027春季班）出國交換學生甄選",
-              "audience": "all_students",
-              "opens_at": "2026-09-07T09:00:00+08:00",
-              "deadline_at": "2026-09-25T16:00:00+08:00",
-              "date_status": "verified_exact",
-              "status": "closed",
-              "status_note": "2027春季班（115-2）非大陸地區與大陸地區校內收件已截止，並已於 2026/10/19 公告錄取名單，目前正辦理正取確認與姊妹校官方提名。",
-              "deadline_note": "正取生須於 2026/10/22 中午 12:00 前完成確認書與 NT$3,000 保證金繳交。",
-              "reminder_eligible": False,
-              "checked_at": CHECKED_AT,
-          },
+          {'title': '國立雲林科技大學116-1出國交換甄選：申請時程待核實',
+           'details': ['目前所附系統頁為115-2（2027春季）申請資訊，不能作為116-1（2027秋季）確切時程的證據。',
+                       '116-1正式收件日期與文件請以國際處當期公告為準；本平台尚未核實，不建立精確日期提醒。'],
+           'source': {'title': '國立雲林科技大學國際事務處—出國交換生申請系統與實施要點',
+                      'source_url': 'https://admissions-oia.yuntech.edu.tw/oe/index/index/puid/115-2/lang/zh_TW',
+                      'category': 'exchange_application',
+                      'summary': '查核限制：此來源目前不足以支持本梯次確切時程，需另查當期正式公告。'},
+           'scope': 'home_application',
+           'program_types': ['exchange'],
+           'academic_year': '116',
+           'application_round': '116學年度第1學期（2027秋季班）出國交換學生甄選',
+           'audience': 'all_students',
+           'opens_at': None,
+           'deadline_at': None,
+           'date_status': 'needs_confirmation',
+           'status': 'needs_confirmation',
+           'status_note': '本梯次確切時程尚未核實，請以母校當期官方公告為準。',
+           'deadline_note': '未核實的預估日期不能用作申請截止日或提醒。',
+           'reminder_eligible': False,
+           'checked_at': '2026-10-20T17:44:49Z'},
+          {'title': '雲科大115-2（2027春季）非大陸地區交換：線上及紙本9月24日中午截止',
+           'details': ['115-2（2027春季）非大陸地區一般交換：官方系統日程為2026/07/27 08:00開始、2026/09/24 '
+                       '12:00截止。申請表與已彌封推薦信同樣須於9月24日中午12:00前送至國際園地；逾時不受理。',
+                       '系統列示放榜日為2026/10/20 17:00；這是日程資訊，不能據此確認實際錄取名單、人數或錄取確認期限。大陸地區、雙聯及銜接專案需另查其公告。'],
+           'source': {'title': '雲科大115-2非大陸地區出國交換申請系統',
+                      'source_url': 'https://admissions-oia.yuntech.edu.tw/oe/index/index/puid/115-2/lang/zh_TW',
+                      'category': 'exchange_application',
+                      'summary': '官方首頁公告第1、3點及日程提醒：線上與紙本於2026/09/24 12:00截止。'},
+           'scope': 'home_application',
+           'program_types': ['exchange'],
+           'academic_year': '115',
+           'application_round': '115學年度第2學期（2027春季班）非大陸地區交換學生甄選',
+           'audience': 'all_students',
+           'opens_at': '2026-07-27T08:00:00+08:00',
+           'deadline_at': '2026-09-24T12:00:00+08:00',
+           'date_status': 'verified_exact',
+           'status': 'closed',
+           'status_note': '115-2非大陸地區一般交換線上及紙本收件已截止；其他梯次及專案另行核實。',
+           'deadline_note': '線上登錄與紙本送件均於2026/09/24 12:00截止；下一梯次及錄取確認期限尚未核實。',
+           'reminder_eligible': False,
+           'checked_at': '2026-10-20T17:43:24.500812+00:00'},
       ],
       "program_overview": [
           {
@@ -1935,6 +1910,10 @@ def main() -> None:
   prov_text = json.dumps(provenance_payload, ensure_ascii=False, indent=2) + "\n"
   (OFFICIAL_YUNTECH_DIR / "import_provenance.json").write_text(prov_text, encoding="utf-8")
   (OFFICIAL_YUNTECH_DIR / "import-provenance.json").write_text(prov_text, encoding="utf-8")
+
+  from exchange_info.yuntech_source_review import review_bundle
+  reviewed_counts = review_bundle(REPO_ROOT)
+  open_partner_count = reviewed_counts.get("open", 0)
 
   print(
       f"Successfully built YunTech catalog: {len(partners)} partners"

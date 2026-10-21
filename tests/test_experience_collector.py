@@ -1531,3 +1531,29 @@ def test_destination_profile_api_never_shares_research_between_home_schools(
     assert cgu["home_university"] == "長庚大學"
     assert ntpu["city"] == "NTPU scoped"
     assert ntpu["home_university"] == "國立臺北大學"
+
+
+def test_program_lists_never_enter_experience_counts_or_refresh_results() -> None:
+    student = _source()
+    # A descriptive title and full_text flag must not override its actual source role.
+    record = student.model_copy(update={
+        "source_url": "https://example.edu/lincoln-exchange-list",
+        "perspective": "official_program_record",
+        "content_status": "full_text",
+    })
+    digest = build_experience_digest(student.school_name, student.country, [record, student])
+    assert digest.total_sources == 1
+    assert digest.sources == [student]
+    merged = merge_refreshed_student_experiences(_partner(), [record], [record])
+    assert merged == []
+
+
+def test_candidate_index_remains_a_link_without_student_claims() -> None:
+    index = _source().model_copy(update={
+        "perspective": "official_directory", "content_status": "metadata_only",
+        "themes": [], "theme_summaries": {}, "theme_summaries_zh": {},
+        "summary": "原有心得候選連結，尚待核對原文。",
+    })
+    digest = build_experience_digest(index.school_name, index.country, [index])
+    assert digest.total_sources == 1
+    assert not digest.highlights and not digest.common_strengths

@@ -18,6 +18,7 @@ from uuid import uuid4
 from pydantic import BaseModel, Field
 
 from .experience_collector import school_search_name
+from .life_claim_review import withdrawn_life_claim, unreviewed_profile_claim
 from .life_sources import fetch_public_bytes, public_https_url, read_life_page
 from .models import DestinationProfile, PartnerUniversity, StudentExperienceSource
 from .public_translation import cached_translation, needs_translation, translate_public_excerpts
@@ -168,18 +169,26 @@ def _cache_path(partner: PartnerUniversity, data_dir: Path) -> Path:
 
 
 def reviewed_life_snapshot(snapshot: LifeResearchSnapshot) -> LifeResearchSnapshot:
-    """Error-page navigation is not student-life evidence, even with HTTP 200."""
+    """Exclude error chrome and exact generated claims already withdrawn by review."""
     evidence = [row for row in snapshot.evidence if not any(
         re.search(r"^(?:404|403|not found)\b", source.title.strip(), re.I)
         or re.search(r"/(?:error/)?404(?:[/.]|$)", urlsplit(source.url).path)
         for source in row.sources
     )]
-    if len(evidence) == len(snapshot.evidence):
+    notes = list(snapshot.notes)
+    if len(evidence) != len(snapshot.evidence):
+        notes.append("已排除錯誤頁的導覽文字；相關生活資料待補查。")
+    filtered = [row for row in evidence if not withdrawn_life_claim(
+        snapshot.school_name, snapshot.country, row)]
+    generated_removed = len(filtered) != len(evidence)
+    if generated_removed:
+        notes.append("已排除先前撤下的範本、導覽文字或有誤舊摘錄；相關生活資料仍待逐校核對。")
+    if len(filtered) == len(snapshot.evidence):
         return snapshot
     return snapshot.model_copy(update={
-        "evidence": evidence,
-        "status": "partial" if evidence else "unavailable",
-        "notes": [*snapshot.notes, "已排除錯誤頁的導覽文字；相關生活資料待補查。"],
+        "evidence": filtered,
+        "status": "partial" if filtered or generated_removed else "unavailable",
+        "notes": notes,
     })
 
 
@@ -257,7 +266,7 @@ def read_research(partner: PartnerUniversity, data_dir: Path) -> LifeResearchSna
         raw = json.loads(path.read_text(encoding="utf-8"))
         if raw.get("extraction_version") != EXTRACTION_VERSION:
             raw = {}
-        snapshot = LifeResearchSnapshot.model_validate(raw)
+        snapshot = reviewed_life_snapshot(LifeResearchSnapshot.model_validate(raw))
         if snapshot.country == partner.country and school_identity_key(snapshot.school_name) == _identity(partner)[0]:
             if snapshot.evidence:
                 return snapshot
@@ -337,6 +346,8 @@ def _profile_evidence(profile: DestinationProfile) -> list[LifeEvidence]:
     for theme, field in (("housing", "housing_summary"), ("cost", "cost_summary"),
                          ("transport", "transport_summary"), ("social", "campus_life_summary")):
         value = getattr(profile, field)
+        if unreviewed_profile_claim(profile, field, value):
+            continue
         if value and not re.search(r"未公開|尚未|不足|待查|待確認|無法.*核對", value):
             addition = school_field_addition(profile, field)
             field_sources = ([LifeSource(title=s["title_zh"], url=s["url"]) for s in addition["sources"]]
@@ -385,7 +396,9 @@ def _localize_evidence(rows: list[LifeEvidence], data_dir: Path, *, generate: bo
 def build_life_context(partner: PartnerUniversity, profile: DestinationProfile, location: UniversityLocation, data_dir: Path) -> SchoolLifeContext:
     snapshot = _for_location(read_research(partner, data_dir), location)
     curated = [LifeEvidence.model_validate(row) for row in reference_record(partner).get("evidence", [])]
-    all_rows = _localize_evidence([*curated, *snapshot.evidence, *_profile_evidence(profile)], data_dir)
+    candidates = [*curated, *snapshot.evidence, *_profile_evidence(profile)]
+    all_rows = _localize_evidence([row for row in candidates if not withdrawn_life_claim(
+        partner.school_name, partner.country, row)], data_dir)
     categories = []
     for theme in THEMES:
         seen = set()

@@ -1,6 +1,7 @@
 """Detail reads preserve reviewed content, provenance checks and caller isolation."""
 import json
 import os
+import shutil
 
 import pytest
 
@@ -14,7 +15,10 @@ def reviewed_bundle(tmp_path, monkeypatch):
     rows = json.loads((original / 'overseas-reviewed-fields.json').read_text())
     for path in original.iterdir():
         if path.name != 'overseas-reviewed-fields.json':
-            (tmp_path / path.name).symlink_to(path, target_is_directory=path.is_dir())
+            if path.is_dir():
+                shutil.copytree(path, tmp_path / path.name)
+            else:
+                shutil.copy2(path, tmp_path / path.name)
     matrix = tmp_path / 'overseas-reviewed-fields.json'
     matrix.write_text(json.dumps(rows, ensure_ascii=False))
     monkeypatch.setattr(ccu, 'BUNDLE', tmp_path)
