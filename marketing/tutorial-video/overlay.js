@@ -1,6 +1,80 @@
 // Drawn on top of the real site while the tutorial is recorded (record.py adds it to every page): the mouse pointer,
 // a ripple on each click, a ring around what the caption talks about, the caption itself and the title cards.
 // None of it takes clicks, so the site underneath behaves exactly as it does for a visitor.
+//
+// The recording runs in slow motion (window.__TUT_SLOW, set by record.py) so that a software-rendered browser still
+// paints enough frames; the video is sped back up afterwards. Here the page's clock slows by that factor: timers,
+// requestAnimationFrame and performance.now (record.py slows CSS animations through the DevTools protocol).
+(() => {
+  const slow = window.__TUT_SLOW || 1;
+  if (slow === 1 || window.__tutWarp) return;
+  window.__tutWarp = true;
+  const realNow = performance.now.bind(performance);
+  const origin = realNow();
+  const warp = (t) => origin + (t - origin) / slow;
+  performance.now = () => warp(realNow());
+  const raf = window.requestAnimationFrame.bind(window);
+  window.requestAnimationFrame = (callback) => raf((t) => callback(warp(t)));
+  const timeout = window.setTimeout.bind(window);
+  const interval = window.setInterval.bind(window);
+  window.setTimeout = (fn, ms = 0, ...rest) => timeout(fn, ms * slow, ...rest);
+  window.setInterval = (fn, ms = 0, ...rest) => interval(fn, ms * slow, ...rest);
+})();
+
+// The browser's own smooth scrolling would not slow down with the clock above, so the page scrolls with a tween.
+(() => {
+  if (window.__tutScroll) return;
+  window.__tutScroll = true;
+  const jump = window.scrollTo.bind(window);
+  const glide = (top) => {
+    const from = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const to = Math.max(0, Math.min(max, top));
+    const distance = to - from;
+    if (Math.abs(distance) < 1) return;
+    const duration = Math.min(1100, 380 + Math.abs(distance) * 0.5);
+    const start = performance.now();
+    const step = () => {
+      const p = Math.min(1, (performance.now() - start) / duration);
+      const e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      jump({ top: from + distance * e, behavior: "instant" });
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const smooth = (options) => options && typeof options === "object" && options.behavior === "smooth";
+  window.scrollTo = function (a, b) {
+    if (smooth(a) && a.top !== undefined) return glide(a.top);
+    return jump(a, b);
+  };
+  window.scrollBy = function (a, b) {
+    if (smooth(a)) return glide(window.scrollY + (a.top || 0));
+    return typeof a === "object" ? jump({ ...a, top: window.scrollY + (a.top || 0), left: window.scrollX + (a.left || 0) }) : jump(window.scrollX + a, window.scrollY + b);
+  };
+  const intoView = Element.prototype.scrollIntoView;
+  const ownScroller = (el) => {
+    for (let node = el.parentElement; node && node !== document.body && node !== document.documentElement; node = node.parentElement) {
+      const style = getComputedStyle(node);
+      if (/(auto|scroll)/.test(style.overflowY) && node.scrollHeight > node.clientHeight + 1) return true;
+    }
+    return false;
+  };
+  Element.prototype.scrollIntoView = function (options) {
+    if (!smooth(options) || ownScroller(this) || getComputedStyle(this).position === "fixed") return intoView.call(this, options);
+    const box = this.getBoundingClientRect();
+    const margin = parseFloat(getComputedStyle(this).scrollMarginTop) || 0;
+    const block = options.block || "start";
+    let top = window.scrollY + box.top - margin;
+    if (block === "center") top = window.scrollY + box.top + box.height / 2 - window.innerHeight / 2;
+    else if (block === "end") top = window.scrollY + box.bottom - window.innerHeight;
+    else if (block === "nearest") {
+      if (box.top >= 0 && box.bottom <= window.innerHeight) return;
+      top = box.top < 0 ? window.scrollY + box.top - margin : window.scrollY + box.bottom - window.innerHeight;
+    }
+    glide(top);
+  };
+})();
+
 (() => {
   if (window.__tut) return;
   const css = `

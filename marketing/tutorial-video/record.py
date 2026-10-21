@@ -7,9 +7,14 @@ A real Chromium drives the real site, step by step, at the speed a person would;
 frame it paints. overlay.js draws the pointer, the click ripples, the captions and the title cards on top of the page.
 music.py then writes the soundtrack (soft music plus a tick on every click) and ffmpeg puts it all into one MP4.
 
+Without a GPU, Chromium paints a 1080p page about 8 times a second. So the whole session runs in slow motion (--slow,
+4 times slower by default): the pointer, the pauses, the page's timers and its CSS animations all slow down together,
+and the video is sped back up, which leaves about 30 painted frames for every second of video.
+
     --stills           only save a PNG at the end of each step (quick layout check, no video)
     --keep-frames      keep build/frames/ after encoding
     --no-music         video without sound
+    --slow N           slow-motion factor while recording (1 = real time)
 """
 
 from __future__ import annotations
@@ -34,7 +39,17 @@ VIEWPORT = {"width": 1600, "height": 900}
 SCALE = 1.2  # 1600x900 CSS pixels -> 1920x1080 frames, the same zoom as the promo video's screenshots
 FPS = 30
 OUTPUT = "uniway-tutorial-school-search.mp4"
-TOTAL_STEPS = 9
+SLOW = 1  # set from --slow in main(); every wait below is multiplied by it
+
+
+async def pause(seconds: float) -> None:
+    """Wait this long on the video's clock."""
+    await asyncio.sleep(seconds * SLOW)
+
+
+def ms(seconds: float) -> float:
+    """A Playwright timeout of this many seconds on the video's clock."""
+    return seconds * 1000 * SLOW
 
 # Google's own account picker is not part of UniWay and is not shown (demo_server.py answers for Google). In its
 # place the recording shows this card for a few seconds; it says plainly that the step is skipped.
@@ -110,7 +125,7 @@ class Tape:
         self.fast.append([started, time.time(), factor])
 
     def timeline(self) -> dict:
-        """Frame and click times on the finished video's clock (sped-up stretches squeezed, starting at 0)."""
+        """Frame and click times on the finished video's clock (slow motion undone, sped-up stretches squeezed)."""
         start = self.frames[0][0]
 
         def out(t: float) -> float:
@@ -118,7 +133,7 @@ class Tape:
             for t0, t1, factor in self.fast:
                 overlap = max(0.0, min(t, t1) - t0)
                 shift += overlap * (1 - 1 / factor)
-            return t - start - shift
+            return (t - start - shift) / SLOW
 
         frames = [(out(t), name) for t, name in self.frames]
         return {
@@ -139,10 +154,7 @@ class Guide:
         self.shot = 0
 
     async def hold(self, seconds: float) -> None:
-        if self.stills is None:
-            await asyncio.sleep(seconds)
-        else:
-            await asyncio.sleep(min(seconds, 0.6))
+        await pause(seconds if self.stills is None else min(seconds, 0.6))
 
     async def still(self, label: str) -> None:
         if self.stills is not None:
@@ -162,7 +174,7 @@ class Guide:
         await self.page.evaluate("window.__tut.clearRing()")
 
     async def into_view(self, target: Locator, block: str = "center") -> None:
-        await target.wait_for(state="visible", timeout=30000)
+        await target.wait_for(state="visible", timeout=ms(30))
         box = await target.bounding_box()
         if box and 70 <= box["y"] and box["y"] + box["height"] <= VIEWPORT["height"] - 150:
             return
@@ -180,12 +192,12 @@ class Guide:
     async def settle_scroll(self) -> None:
         last = None
         for _ in range(40):
-            await asyncio.sleep(0.1)
+            await pause(0.1)
             now = await self.page.evaluate("[scrollX, scrollY]")
             if now == last:
                 break
             last = now
-        await asyncio.sleep(0.15)
+        await pause(0.15)
 
     async def point(self, target: Locator | tuple[float, float], seconds: float | None = None, at=(0.5, 0.5)) -> None:
         if isinstance(target, tuple):
@@ -195,54 +207,57 @@ class Guide:
             box = await target.bounding_box()
             x, y = box["x"] + box["width"] * at[0], box["y"] + box["height"] * at[1]
         distance = math.hypot(x - self.x, y - self.y)
-        seconds = seconds or min(1.1, 0.4 + distance / 1500)
-        steps = max(8, int(seconds * 60))
+        seconds = (seconds or min(1.1, 0.4 + distance / 1500)) * SLOW
         x0, y0 = self.x, self.y
-        # A slight arc, like a hand moving a mouse.
+        # A slight arc, like a hand moving a mouse. Progress follows the clock, however long each move takes.
         bend = min(60.0, distance * 0.08)
         nx, ny = (-(y - y0) / distance, (x - x0) / distance) if distance else (0, 0)
-        for i in range(1, steps + 1):
-            p = i / steps
+        clock = asyncio.get_running_loop().time
+        started = clock()
+        while True:
+            p = min(1.0, (clock() - started) / seconds)
             e = p * p * (3 - 2 * p)
             arc = math.sin(math.pi * e) * bend
             await self.page.mouse.move(x0 + (x - x0) * e + nx * arc, y0 + (y - y0) * e + ny * arc)
-            await asyncio.sleep(seconds / steps)
+            if p >= 1:
+                break
+            await asyncio.sleep(1 / 60)
         self.x, self.y = x, y
 
     async def click(self, target: Locator, at=(0.5, 0.5)) -> None:
         await self.point(target, at=at)
-        await asyncio.sleep(0.18)
+        await pause(0.18)
         if self.tape:
             self.tape.click()
         await self.page.mouse.down()
-        await asyncio.sleep(0.09)
+        await pause(0.09)
         await self.page.mouse.up()
-        await asyncio.sleep(0.25)
+        await pause(0.25)
 
     async def pretend_click(self, target: Locator) -> None:
         """A click the viewer sees, on a control whose browser pop-up a recording cannot show (a <select>)."""
         await self.point(target)
-        await asyncio.sleep(0.18)
+        await pause(0.18)
         if self.tape:
             self.tape.click()
         await self.page.evaluate("([x, y]) => window.__tut.ripple(x, y)", [self.x, self.y])
-        await asyncio.sleep(0.35)
+        await pause(0.35)
 
     async def choose(self, target: Locator, value: str) -> None:
         await self.pretend_click(target)
         await target.select_option(value)
-        await asyncio.sleep(0.5)
+        await pause(0.5)
 
     async def type(self, target: Locator, text: str, delay: float = 0.16) -> None:
         await self.click(target)
         for ch in text:
             await self.page.keyboard.type(ch)
-            await asyncio.sleep(delay)
+            await pause(delay)
 
     async def wait_ready(self) -> None:
-        await self.page.wait_for_selector("#boot-splash", state="detached", timeout=120000)
-        await self.page.wait_for_function("() => window.__tut && document.querySelector('#tut-layer')", timeout=30000)
-        await asyncio.sleep(0.6)
+        await self.page.wait_for_selector("#boot-splash", state="detached", timeout=ms(120))
+        await self.page.wait_for_function("() => window.__tut && document.querySelector('#tut-layer')", timeout=ms(30))
+        await pause(0.6)
 
 
 async def oauth_start(route: Route) -> None:
@@ -267,7 +282,7 @@ async def storyboard(g: Guide, page: Page) -> None:
         <img class="mark" src="/static/assets/brand/uniway-mark.webp" alt="">
         <span class="eyebrow">UniWay 使用教學</span>
         <h1>登入與學校搜尋</h1>
-        <p>3 分鐘學會找交換學校、篩選條件、收藏與比較</p>
+        <p>一次學會找交換學校、篩選條件、收藏與比較</p>
         <div class="route"><span>登入</span><i>→</i><span>學校搜尋</span><i>→</i><span>篩選與排序</span><i>→</i><span>我的選校</span></div>
         <span class="mascot"><img src="/static/assets/mascot/suitcase.webp" alt=""><i></i><i></i></span>`)""")
     await page.evaluate("window.__tut.cursor(false)")
@@ -296,13 +311,13 @@ async def storyboard(g: Guide, page: Page) -> None:
     await g.still("sign-in-dialog")
     await g.clear_ring()
     await g.click(pt("[data-oauth-provider=google]"))
-    await page.wait_for_url(lambda url: "/auth/oauth/google/start" in url, timeout=30000)
-    await page.wait_for_url(lambda url: url.endswith("#auth=success"), timeout=30000)
+    await page.wait_for_url(lambda url: "/auth/oauth/google/start" in url, timeout=ms(30))
+    await page.wait_for_url(lambda url: url.endswith("#auth=success"), timeout=ms(30))
     fast = tape.speed_from() if tape else 0
-    await page.wait_for_url(lambda url: "home=" in url and url.endswith("#home"), timeout=60000)
+    await page.wait_for_url(lambda url: "home=" in url and url.endswith("#home"), timeout=ms(60))
     await g.wait_ready()
     if tape:
-        tape.speed_up(fast, 4)
+        tape.speed_up(fast, 2)
     await g.hold(0.6)
     await g.caption(1, "登入完成", "左下角出現你的名字，上方的<em>就讀學校自動帶入「長庚大學」</em>。之後看到的合作校都以長庚為準。")
     await g.ring(".home-school-switcher, #school-switcher, .school-switcher")
@@ -323,7 +338,7 @@ async def storyboard(g: Guide, page: Page) -> None:
     await g.click(pt("#glass-navigation a[href='#partners']"))
     await g.clear_ring()
     await g.point((900, 520), seconds=0.7)
-    await page.wait_for_selector("#partner-table .pr-card, #partner-table article", timeout=30000)
+    await page.wait_for_selector("#partner-table .pr-card, #partner-table article", timeout=ms(30))
     await g.hold(1.2)
     await g.caption(2, "長庚大學的全部合作學校", "上方顯示<em>共 77 所</em>，先列出 30 所；捲到最下面按「顯示更多學校」可以看其餘的。", "top")
     await g.ring("#partner-result-count")
@@ -356,9 +371,9 @@ async def storyboard(g: Guide, page: Page) -> None:
     await g.clear_ring()
     await g.click(pt("#partner-search"))
     await page.keyboard.press("Control+A")
-    await asyncio.sleep(0.3)
+    await pause(0.3)
     await page.keyboard.press("Backspace")
-    await asyncio.sleep(0.4)
+    await pause(0.4)
     await g.click(pt("#partner-search-submit"))
     await g.hold(1.0)
     await g.scroll_top()
@@ -369,10 +384,10 @@ async def storyboard(g: Guide, page: Page) -> None:
     await g.hold(1.8)
     await g.click(pt("[data-partner-view=map]"))
     await g.clear_ring()
-    await page.wait_for_selector("#partner-map-panel:not([hidden])", timeout=30000)
+    await page.wait_for_selector("#partner-map-panel:not([hidden])", timeout=ms(30))
     await g.hold(1.0)
     await g.into_view(pt("#partner-map-panel"), block="start")
-    await page.wait_for_function("() => !document.querySelector('#partner-map-status') || document.querySelector('#partner-map-status').hidden || !document.querySelector('#partner-map-status').textContent.includes('載入中')", timeout=30000)
+    await page.wait_for_function("() => !document.querySelector('#partner-map-status') || document.querySelector('#partner-map-status').hidden || !document.querySelector('#partner-map-status').textContent.includes('載入中')", timeout=ms(30))
     await g.hold(1.0)
     await g.caption(4, "在地圖上找學校", "點地圖上的學校可以預覽；也能用下方<em>「定位學校」</em>直接跳到某一所。", "top")
     await g.point(pt("#partner-globe"), seconds=0.9)
@@ -491,7 +506,7 @@ async def storyboard(g: Guide, page: Page) -> None:
     await g.hold(1.4)
     await g.click(first)
     await g.clear_ring()
-    await page.wait_for_function("() => location.hash.startsWith('#school=')", timeout=30000)
+    await page.wait_for_function("() => location.hash.startsWith('#school=')", timeout=ms(30))
     await g.hold(2.2)
     await g.still("detail")
     await g.point((820, 600), seconds=0.6)
@@ -506,7 +521,7 @@ async def storyboard(g: Guide, page: Page) -> None:
     await g.hold(1.0)
     await g.click(back)
     await g.clear_ring()
-    await page.wait_for_function("() => location.hash.startsWith('#partners')", timeout=30000)
+    await page.wait_for_function("() => location.hash.startsWith('#partners')", timeout=ms(30))
     await g.hold(1.2)
     await g.scroll_top()
     await g.caption(8, "最近看過", "看過的學校會記在<em>「最近看過」</em>，點開就能快速回去。")
@@ -538,7 +553,7 @@ async def storyboard(g: Guide, page: Page) -> None:
     await g.still("compare-tray")
     await g.click(pt("#partner-compare-tray [data-open-compare]"))
     await g.clear_ring()
-    await page.wait_for_function("() => location.hash.startsWith('#favorites')", timeout=30000)
+    await page.wait_for_function("() => location.hash.startsWith('#favorites')", timeout=ms(30))
     await g.hold(2.4)
     await g.caption(9, "並排比較", "語言門檻、費用、名額、研修期間與申請時程<em>並排列出</em>，差在哪裡一眼就看到。", "top")
     await g.hold(3.6)
@@ -597,7 +612,10 @@ async def main() -> None:
     parser.add_argument("--stills", action="store_true")
     parser.add_argument("--keep-frames", action="store_true")
     parser.add_argument("--no-music", action="store_true")
+    parser.add_argument("--slow", type=float, default=4.0)
     args = parser.parse_args()
+    global SLOW
+    SLOW = 1.0 if args.stills else max(1.0, args.slow)
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     stills = out / "stills" if args.stills else None
@@ -610,19 +628,25 @@ async def main() -> None:
         context = await browser.new_context(
             viewport=VIEWPORT, device_scale_factor=SCALE, locale="zh-TW", timezone_id="Asia/Taipei", color_scheme="light"
         )
+        await context.add_init_script(script=f"window.__TUT_SLOW = {SLOW};")
         await context.add_init_script(path=str(HERE / "overlay.js"))
         await context.route("**/auth/oauth/google/start*", oauth_start)
         page = await context.new_page()
+        page.set_default_timeout(ms(30))
         page.on("pageerror", lambda error: print("page error:", error, file=sys.stderr))
-        await page.goto(f"{args.base}/", wait_until="load", timeout=120000)
+        cdp = await context.new_cdp_session(page)
+        # CSS animations and transitions slow down with the page's clock (overlay.js); the rate survives navigation.
+        await cdp.send("Animation.enable")
+        await cdp.send("Animation.setPlaybackRate", {"playbackRate": 1 / SLOW})
+        await page.goto(f"{args.base}/", wait_until="load", timeout=ms(120))
         guide = Guide(page, None, stills)
         await guide.wait_ready()
-        await asyncio.sleep(1.5)  # let the home page finish its entrance before the first frame
+        await pause(1.5)  # let the home page finish its entrance before the first frame
         await page.mouse.move(guide.x, guide.y)
 
         tape = None
         if not stills:
-            tape = Tape(await context.new_cdp_session(page), out / "frames")
+            tape = Tape(cdp, out / "frames")
             guide.tape = tape
             await tape.start()
         try:

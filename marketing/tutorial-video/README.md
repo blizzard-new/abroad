@@ -29,7 +29,7 @@
 - 帳號、收藏與條件寫進一次性的暫存資料夾，不會動到 `data/`。
 - 不連 Google：取 token 與讀個人資料這兩個呼叫，直接回一位假的學生（示範同學，已驗證的 @cgu.edu.tw 信箱）。UniWay 自己這一側的流程全部照跑：條款勾選檢查、state cookie、callback、依信箱網域帶入學校。
 
-Google 自己的帳號選擇畫面不屬於 UniWay，影片裡不模仿它，改用一張說明卡（「接下來會開啟 Google 登入……教學影片略過 Google 的帳號選擇畫面」）帶過；登入後頁面重新載入的幾秒以 4 倍速播放。
+Google 自己的帳號選擇畫面不屬於 UniWay，影片裡不模仿它，改用一張說明卡（「接下來會開啟 Google 登入……教學影片略過 Google 的帳號選擇畫面」）帶過；登入後頁面重新載入的那幾秒以 2 倍速播放。
 
 ## 重新錄製
 
@@ -37,9 +37,11 @@ Google 自己的帳號選擇畫面不屬於 UniWay，影片裡不模仿它，改
 
 ```bash
 .venv/bin/python marketing/tutorial-video/demo_server.py &     # 正式網站，port 8771，資料放暫存資料夾
-.venv/bin/python marketing/tutorial-video/record.py            # 約 4 分鐘：實際操作一遍，再輸出 build/uniway-tutorial-school-search.mp4
+.venv/bin/python marketing/tutorial-video/record.py            # 約 20 分鐘：慢動作操作一遍，再輸出 build/uniway-tutorial-school-search.mp4
 .venv/bin/python marketing/tutorial-video/record.py --stills   # 只在每一步結束存一張 PNG（build/stills/），快速檢查版面
 ```
+
+沒有 GPU 的環境裡，Chromium 每秒只畫得出 8 張左右 1080p 畫面，直接錄會一格一格的。所以整段操作以 4 倍慢動作進行（`--slow 4`）：滑鼠、停留、網頁的計時器與 CSS 動畫一起放慢，最後再加速回正常速度，每秒影片約有 30 張實際畫面。有 GPU 的電腦可以用 `--slow 1` 直接即時錄。
 
 每次重錄前請重開 `demo_server.py`（或給新的 `--data-dir`），讓示範帳號從空白開始；不然上一次的收藏與條件會留在帳號裡。
 
@@ -51,7 +53,7 @@ Google 自己的帳號選擇畫面不屬於 UniWay，影片裡不模仿它，改
 |------|------|
 | `demo_server.py` | 錄影用的網站：正式程式＋暫存資料＋代替 Google 回應 |
 | `record.py` | 分鏡腳本：每一步的滑鼠移動、點擊、字幕與停留秒數；Chromium screencast 收畫格，ffmpeg 合成 |
-| `overlay.js` | 疊在網站上的滑鼠游標、點擊波紋、框選提示、字幕與片頭片尾卡；不攔截任何點擊 |
+| `overlay.js` | 疊在網站上的滑鼠游標、點擊波紋、框選提示、字幕與片頭片尾卡（不攔截任何點擊），以及慢動作用的網頁時鐘與平滑捲動 |
 | `music.py` | 合成配樂與點擊音效（依 `build/timeline.json` 的長度與點擊時間），沒有版權問題 |
 
 ## 之後要更新
