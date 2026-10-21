@@ -133,7 +133,7 @@ def reference_record(partner: PartnerUniversity) -> dict:
 @lru_cache(maxsize=1)
 def _bundled_ntnu_student_experiences() -> dict[tuple[str, str], tuple[StudentExperienceSource, ...]]:
     by_key: dict[tuple[str, str], list[StudentExperienceSource]] = {}
-    for school_code in ("ntnu", "cycu", "ntust", "yzu", "fcu", "nsysu", "nchu", "ntut", "nccu", "ncku", "nycu", "nthu", "pccu", "wzu", "nkust", "yuntech", "ntou", "ncue", "nknu", "tmu", "csmu", "cmu", "kmu"):
+    for school_code in ("ntnu", "cycu", "ntust", "yzu", "fcu", "nsysu", "nchu", "ntut", "nccu", "ncku", "nycu", "nthu", "pccu", "wzu", "nkust", "yuntech", "ntou", "ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu"):
         exp_path = Path(__file__).parent / "official_data" / school_code / "student_experiences.jsonl"
         if exp_path.exists():
             with exp_path.open(encoding="utf-8") as handle:

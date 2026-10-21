@@ -868,6 +868,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="高醫大規定返國後須繳交 1,000–2,000 字之成果報告與學生國際交流經驗分享（含照片 4 張以上）；這裡只合計下方各欄。",
     ),
+    ("mcu", "study-plan"): _rules(
+        (
+            "銘傳大學國際教育交流處與大陸教育交流處規定須繳交《出國讀書計畫書》與《中英文自傳》（書審讀書計畫佔校內甄選總成績 20%），具體說明申請動機、擬於目標姊妹校修習之專業領域課程、外語能力準備及返國後學分抵免與職涯規劃。",
+            "依《銘傳大學辦理學生出國研修實施細則》與《與境外大學校院辦理跨國雙聯學制實施辦法》規定，出國交換期間須維持銘傳在學註冊，每學期至少應修習相當於銘傳 6 學分或 2 門以上課程（注意大陸地區深圳大學非教育部認可名冊，所修學分不得抵免銘傳畢業學分）。",
+        ),
+        evidence="銘傳大學辦理學生出國研修實施細則、與境外大學校院辦理跨國雙聯學制實施辦法、出國研習申請要點與教育部學海計畫甄選公告",
+        minimum=800,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="銘傳規定須繳交出國讀書計畫書與中英文自傳；這裡合計下方各欄字數供參考。",
+    ),
+    ("mcu", "return-report"): _rules(
+        (
+            "教育部學海計畫（學海飛颺／學海惜珠）受獎生須於返國後 14 日內登入教育部學海計畫資訊網填寫問卷，並上傳 1,000–2,000 字之中／英文成果報告書（含研修與生活照片 4 張以上）。",
+            "所有銘傳赴外交換生及獲《銘傳大學甄選交換生獎助辦法》或大陸交換獎助者，須於返國後 2 週至 1 個月內繳交 1,500–2,000 字以上之《出國研習／交換學生心得報告書》（提供國際教育交流處刊登於《心得分享》專區）、來回電子機票收據、登機證正本、護照出入境章影本及姊妹校正式成績單辦理獎助學金核銷與保證金退還。",
+        ),
+        evidence="銘傳大學辦理學生出國研修實施細則、甄選交換生獎助辦法與教育部學海計畫甄選公告",
+        minimum=1500,
+        maximum=2500,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="銘傳規定返國後須繳交 1,500–2,000 字以上之出國研習心得報告（含照片 4–6 張以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -902,6 +924,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "csmu": ("https://oia.csmu.edu.tw/p/412-1017-105.php?Lang=zh-tw", "2026-10-21"),
     "cmu": ("https://cmucia.cmu.edu.tw/page/about_3", "2026-10-21"),
     "kmu": ("https://cia.kmu.edu.tw/index.php/zh-tw/%E5%AD%B8%E7%94%9F%E4%BA%A4%E6%B5%81/%E9%AB%98%E9%86%AB%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B", "2026-10-21"),
+    "mcu": ("https://iee.mcu.edu.tw/zh-hant/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/", "2026-10-21"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

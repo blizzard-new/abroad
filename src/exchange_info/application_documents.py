@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -94,6 +94,7 @@ TMU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 CSMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 CMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 KMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
+MCU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2092,6 +2093,51 @@ def _kmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _mcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理銘傳大學選送學生出國研修（交換生／跨國雙聯學位）、大陸知名高校（985／211／省部共建）交換暨教育部學海計畫（學海飛颺／惜珠）及校內《甄選交換生獎助辦法》應繳資料：1. 出國研習線上申請表（於國教處線上表單完成填報後列印紙本，須經家長或監護人簽章同意，並送交系所主任核章推薦；每人最多可選填 5 所交換志願學校）、2. 中英文歷年成績單正本（含學業總平均、GPA 與班級排名；依《銘傳大學辦理學生出國研修實施細則》第三條，須於銘傳就讀滿一學期以上且歷年學業總平均達 70 分以上、操行成績平均達 80 分以上且無小過以上處分；申請教育部學海飛颺者須達歷年學業總平均 80 分以上或班排前 20%）、3. 兩年內有效之外語能力檢定證明影本（英語組基準為 TOEFL iBT 61 / IELTS 5.5 / TOEIC 550，歐美名校及雙聯學位須達 TOEFL iBT 79–80 / IELTS 6.0–6.5；日語組基準為 JLPT N2–N3；韓語組基準為 TOPIK 2–3 級或英語檢定；大陸高校交換免附外語檢定）、4. 中英文自傳與出國讀書計畫書（含申請動機、擬於目標姊妹校修習之專業領域課程及返國學分抵免與職涯規劃）、5. 師長推薦信與家長同意書；於截止日（秋季班 3 月中旬、春季班 9 月下旬）前送交台北校區 B 棟 2 樓或桃園校區 Q 棟 1 樓國際教育交流處。",
+        "study-plan": "撰寫銘傳大學出國交換（歐美亞澳 65 所當期開放交換校及 42 所大陸 985／211 高校）與跨國雙聯學位（美國賽基諾州立大學／北阿拉巴馬大學／德州大學聖安東尼奧分校／紐約市立大學約翰杰刑事司法學院／林肯紀念大學、英國西英格蘭大學／諾桑比亞大學／艾塞克斯大學／巴斯思巴大學、日本產業能率大學等 10 校 14 學程）必繳之《出國讀書計畫書》與《中英文個人自傳》。請具體說明赴外動機、擬於目標姊妹校修習之專業課程、外語能力準備，以及返國後學分抵免（依《銘傳大學辦理學生出國研修實施細則》規定，出國期間須維持銘傳在學註冊，每學期至少修習相當於銘傳 6 學分或 2 門以上課程；深圳大學學分不得抵免）與國際職涯規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《銘傳大學辦理學生出國研修實施細則》與《與境外大學校院辦理跨國雙聯學制實施辦法》規定，出國前須由所屬系所及教務處確認擬修習科目與返國學分抵免對照；出國研修期間必須辦理銘傳大學註冊並繳交全額學雜費［雙聯學位依兩校協議繳交］，且每學期至少應修習相當於銘傳 6 學分或 2 門以上課程；注意大陸地區深圳大學非教育部認可名冊，所修學分不得抵免銘傳畢業學分）。",
+        "predeparture-notice": "於國際教育交流處公告甄選錄取名單（面試佔 50%、在校成績 30%、書審讀書計畫 20%）後，依限繳交《錄取資格確認書》、《家長同意書》及保證金，配合國際教育交流處或大陸教育交流處完成姊妹校官方提名（Nomination）與入學許可（Offer Letter）取得；出國前須參加行前說明會、簽署《教育部學海計畫行政契約書》或《銘傳大學交換生獎助切結書》、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療及意外保險，並確認已完成銘傳當學期註冊繳費。",
+        "return-report": "境外交換或雙聯研修期滿返國後 2 週至 1 個月內，須向國際教育交流處（或大陸教育交流處）繳交 1,500–2,000 字以上之《出國研習／交換學生心得報告書》電子檔與紙本（含研修與生活照片 4–6 張以上，提供刊登於國教處《心得分享》專區），教育部學海受獎生另須於返國 14 日內登入學海計畫資訊網上傳成果報告與問卷，並檢附來回電子機票收據、登機證正本、護照出入境章影本及姊妹校正式成績單辦理獎助學金核銷與保證金退還。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後持國外姊妹校核發之正式成績單正本與課程大綱（Syllabus），依《銘傳大學辦理學生出國研修實施細則》、《與境外大學校院辦理跨國雙聯學制實施辦法》及《學生抵免學分辦法》向所屬系（所）、學院及教務處註冊組申請境外修習科目學分採認（深圳大學學分不予採認）。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "銘傳大學").replace("長庚", "銘傳")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "銘傳大學《辦理學生出國研修實施細則》第三條與《教育部學海飛颺甄選簡章》規定：須於銘傳就讀滿一學期以上，歷年學業總平均達 70 分以上、操行成績平均達 80 分以上且無小過以上處分（在校學業成績佔甄選總分 30%）；申請教育部學海飛颺獎學金者，歷年學業總平均須達 80 分以上或班級排名前 20%。請檢附含 GPA 與班級排名之中英文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（銘傳英語組基準 61+／歐美名校及雙聯 79–80+）", "IELTS 學術組（銘傳英語組基準 5.5+／歐美名校及雙聯 6.0–6.5+）", "TOEIC 聽讀測驗（銘傳英語組基準 550+／部分歐亞姊妹校採計 600–785+）", "JLPT 日語能力試驗（銘傳日語組基準 N2–N3+；早稻田／明治／法政／中央／金澤／產能大雙聯 N1–N2+）", "TOPIK 韓語能力測驗（韓國姊妹校 2–4 級或英語檢定證明）", "歐洲語言檢定（德語 Goethe B1–B2／法語 DELF B1–B2，或修讀英語授課學程）", "大陸地區 985／211 高校交換（免外語檢定，依在學成績、讀書計畫與面試甄選）"]
+            field["help_text"] = "依銘傳大學《辦理學生出國研修實施細則》與《2027-2028 交換學校資料庫一覽表》規定：申請英語組須具 TOEFL iBT 61、IELTS 5.5 或 TOEIC 550 以上（歐美名校與雙聯學位多要求 TOEFL iBT 79–80 或 IELTS 6.0–6.5），日語組須具 JLPT N2 或 N3 以上，韓語組須具 TOPIK 2–3 級或英語檢定。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://iee.mcu.edu.tw/zh-hant/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/",
+        source_checked_at=MCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國研習交換生／雙聯學位／學海計畫申請表" if template.id == "exchange-application-data" else ("出國讀書計畫書與中英文自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://iee.mcu.edu.tw/wp-content/uploads/sites/11/2026/02/MCU_Exchange_University_Database_Template_2027-2028.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後繳交確認書、家長同意書與保證金並辦理姊妹校提名及學海／校內獎助簽約", "return-report": "返國 14 日內上傳學海報告並於 1 個月內繳交交換心得報告與核銷單據", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "完成線上申請並列印紙本（經家長及系所主管簽章）於截止日前送交台北校區 B 棟 2 樓或桃園校區 Q 棟 1 樓國際教育交流處"),
+        version="116準備工具-2026-10-21.1",
+        destinations=["銘傳大學國際教育交流處（台北校區 B 棟 2 樓／桃園校區 Q 棟 1 樓）", "銘傳大學大陸教育交流處（台北校區 H 棟 3 樓，大陸高校交換）"],
+        conditional_note="此為個人準備工具；銘傳大學出國交換（秋季班每年 3 月中旬截止、春季班每年 9 月下旬截止，最多選填 5 所志願）、大陸知名高校交換與跨國雙聯學位須先完成線上填報並列印紙本經家長及系所主管簽章，出國期間須維持銘傳在學註冊且每學期至少修讀相當於銘傳 6 學分或 2 門以上課程（深圳大學學分不得抵免）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2158,6 +2204,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _cmu_template(template)) is not None]
     if university.id == KMU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _kmu_template(template)) is not None]
+    if university.id == MCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _mcu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
