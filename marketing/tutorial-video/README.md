@@ -2,7 +2,7 @@
 
 | 成品 | 規格 |
 |------|------|
-| [`build/uniway-tutorial-school-search.mp4`](build/uniway-tutorial-school-search.mp4) | 1920×1080、30 fps，輕配樂＋點擊音效 |
+| [`build/uniway-tutorial-school-search.mp4`](build/uniway-tutorial-school-search.mp4)（封面 [`build/poster.jpg`](build/poster.jpg)） | 1920×1080、30 fps、3 分 33 秒，輕配樂＋點擊音效 |
 
 從首頁登入開始，進入「學校搜尋」，把頁面上每個功能都操作一次。示範帳號是「示範同學」（@cgu.edu.tw），就讀學校自動帶入**長庚大學**（77 所合作校）。畫面都是真的網站，由瀏覽器實際點擊錄下來，不是截圖拼貼。
 
