@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CYCU, FCU, FJU, NCCU, NCHU, NCKU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -88,6 +88,12 @@ WZU_SOURCE_CHECKED_AT = datetime(2026, 10, 19, tzinfo=timezone.utc)
 NKUST_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 YUNTECH_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
 NTOU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
+NCUE_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
+NKNU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
+TMU_SOURCE_CHECKED_AT = datetime(2026, 10, 20, tzinfo=timezone.utc)
+CSMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
+CMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
+KMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -1816,6 +1822,276 @@ def _ntou_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ncue_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立彰化師範大學出國交換學生暨學海飛颺／惜珠獎學金甄選應繳資料：1. 出國交換學生申請表（國外姊妹校至多填報 10 個志願、大陸地區姊妹校至多填報 3 個志願；須經家長或監護人簽章、導師或指導教授簽章及系所主管核章）與申請資料確認單、2. 中文歷年成績單正本（含學業總平均與班級排名百分比；操行成績平均須達 80 分以上且無小過以上處分，學海飛颺申請者學業總平均須達 80 分以上或班排前 30%）及英文歷年成績單正本、3. 符合報考語組及姊妹校門檻之有效外語檢定成績單影本（大陸地區免附）、4. 中文自傳（800 字以內）與中文讀書計畫（1,500 字以內）及外文自傳與讀書計畫（各 2 頁為限）、5. 師長推薦信 1 封（中英文皆可）、6. 有效護照基本資料頁影本與其他優秀表現證明；於截止日 15:00 前送交進德校區行政大樓 2 樓國際暨兩岸事務處。",
+        "study-plan": "撰寫國立彰化師範大學交換生甄選必繳之《中文自傳》（800 字以內）與《中文讀書計畫》（1,500 字以內），並檢附英文（或留學國語言）自傳與讀書計畫（各以 2 頁為限；大陸地區交換生繳交中文自傳與讀書計畫合計 2,500 字以內）。書面資料審查佔校內初審總成績 35%，請具體說明出國動機、擬於志願姊妹校修習之專業領域課程（每學期至少須修讀 1 門課或進行論文研究）及返國後學分抵免與職涯銜接規劃。",
+        "course-preapproval": "規劃赴境外姊妹校交換期間之修課清單與學分抵免預審（依《國立彰化師範大學學生出國交換學習實施要點》及《辦理學生抵免學分辦法》規定，出國交換期間須完成彰師大註冊並繳交全額學雜費，每學期於姊妹校至少須修習 1 門課程或進行論文研究；返國後持姊妹校正式成績單與課程大綱向系所及教務處註冊組申請學分採認）。",
+        "predeparture-notice": "於國際暨兩岸事務處公告正備取名單後，依限繳交《錄取資格確認書》、《家長同意書》及新臺幣 3,000 元保證金（無正當理由放棄者沒收），配合國際合作組辦理姊妹校官方提名（Nomination）與外校入學申請；出國前須完成役男出境核准、購買涵蓋全期之海外醫療及意外保險、填寫出國程序單，並完成《教育部學海飛颺／惜珠》或《彰師大出國交換學生獎學金》行政契約簽署。",
+        "return-report": "交換期滿返國抵臺（以桃園機場入境日計）後 2 週（14 日）內，須向國際暨兩岸事務處繳交 2,500 字以內之《交換學生返國心得報告》（含 5–6 張研修與生活照片，同時提供 Word 檔與 PDF 檔）及回國程序單，並檢附姊妹校正式成績單、護照出入境章影本、登機證正本與電子機票收據，辦理新臺幣 3,000 元保證金無息退還與獎學金尾款核銷（學海受獎生另須義務協助國際處推動國際化業務 8 小時及參加經驗分享會）。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本與修課大綱（Syllabus），依《國立彰化師範大學學生出國交換學習實施要點》及《辦理學生抵免學分辦法》向所屬系（所）及教務處註冊組辦理境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立彰化師範大學").replace("長庚", "彰師大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "彰師大《學生出國交換學習實施要點》規定在學期間操行成績平均須達 80 分以上且無小過以上處分（歷年學業成績佔校內初審 20%）；申請教育部《學海飛颺》獎學金者，歷年學業總平均須達 80 分以上或班級排名前 30%。請檢附含排名百分比之中英文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 聽讀測驗（英語組校內基準 550+；歐美紐澳多要求 B2=785+）", "TOEFL iBT（英語組校內基準 61+；歐美名校 72–80+）", "IELTS 學術組（英語組校內基準 5.0+；歐美名校 5.5–6.5+）", "GEPT 全民英檢（中高級初試以上）", "JLPT 日語能力試驗（日語組基準 N3+；明治／愛知／廣島／千葉／鳴門 N1–N2+）", "TOPIK 韓語能力測驗（韓語組基準 2 級以上；首爾市立／中央／釜山 3–4 級）", "Goethe / TestDaF 德語（B1–B2+）或 DELF 法語／DELE 西語（A2–B2+）", "大陸地區姊妹校（免附外語能力檢定證明）"]
+            field["help_text"] = "依彰師大 116 學年度交換簡章規定，報考國外非大陸姊妹校須具備至少 CEFR B1（TOEIC 550 / TOEFL iBT 61 / IELTS 5.0 / GEPT 中高級初試 / JLPT N3 / TOPIK 2 級）或各姊妹校指定之更高外語門檻（外語能力佔校內初審 20%）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oicaweb.ncue.edu.tw/p/406-1019-28981,r174.php?Lang=zh-tw",
+        source_checked_at=NCUE_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換學生申請表、申請資料確認單與家長同意書" if template.id == "exchange-application-data" else ("中英文自傳（800字內）與讀書計畫（1,500字內）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oicaweb.ncue.edu.tw/var/file/19/1019/img/542278849.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後繳交確認書、家長同意書及 $3,000 保證金並辦理提名與獎學金簽約", "return-report": "返國抵臺後 14 日內繳交 2,500 字內心得報告（Word+PDF）與核銷單據退還保證金", "credit-transfer": "返國後持姊妹校正式成績單辦理境外學分採認"}.get(template.id, "備齊紙本申請表與附件（經家長、導師／指導教授及系所主管簽章）於截止日 15:00 前送交進德校區行政大樓 2 樓國際暨兩岸事務處"),
+        version="116準備工具-2026-10-20.1",
+        destinations=["國立彰化師範大學國際暨兩岸事務處（進德校區行政大樓 2 樓）"],
+        conditional_note="此為個人準備工具；彰師大出國交換甄選須於截止日（大陸春季班 115/10/27 15:00、國外非大陸 116 學年 116/01/13 15:00）前，將經家長、導師（或指導教授）及系所主管核章之申請表、申請資料確認單、中英文歷年成績單正本（含排名）、外語檢定證明、中英文自傳與讀書計畫及推薦信送交進德校區行政大樓 2 樓國際暨兩岸事務處（欲申請教育部學海飛颺／惜珠獎學金者須於校內收件截止日前一併繳交申請資料）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _nknu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立高雄師範大學選送學生出國研修暨學海飛颺／惜珠獎助學金甄選應繳資料：1. 出國交換／出國研修獎助學金申請表（須經指導教授或導師、系所主管及院長簽章推薦）、2. 家長或監護人同意書、3. 歷年成績單正本（含學業總平均、GPA 與班級排名；非大陸地區須附英文成績單，大陸地區附中文成績單；學士班須達 GPA 2.44／70 分以上且班排前 50%，碩博士班須達 GPA 3.38／80 分以上，操行 80 分以上且無記過處分）、4. 兩年內有效之外語能力檢定證明影本（大陸地區免附；申請校內獎助須達 CEFR B1／B2）、5. 出國研究計畫書與自傳（A4 兩頁為限；非大陸地區須以英文或該國語言撰寫）、6. 教師推薦信 2 封（非大陸地區須為英文或該國語言）；經系所及學院初審核章後，於截止日前送交和平校區行政大樓 6 樓國際事務處。",
+        "study-plan": "撰寫國立高雄師範大學出國交換甄選必繳之《出國研究計畫書》與《自傳》（A4 兩頁為限），若申請非大陸地區之國外姊妹校，須使用英文或該國語言撰寫（大陸地區使用中文撰寫）。書面資料審查佔校內甄選總成績 35%，請具體說明出國動機、擬於志願姊妹校修習之專業領域課程、語言能力準備及返國後學分抵免與職涯銜接規劃。",
+        "course-preapproval": "規劃赴境外姊妹校交換期間之修課清單與學分抵免預審（依《國立高雄師範大學學生出國期間有關學業及學籍處理要點》規定，出國交換期間須辦理高師大註冊並繳交全額學雜費；返國後持姊妹校正式成績單與課程大綱向系所及教務處申請境外修習科目學分採認）。",
+        "predeparture-notice": "於國際事務處公告甄選錄取名單後，依限繳交《錄取資格確認書》及新臺幣 5,000 元保證金（無正當理由放棄者沒收，全額撥入校務基金），配合國際事務處辦理姊妹校官方提名（Nomination）與外校入學申請；出國前須完成役男出境核准、購買涵蓋全期之海外醫療及意外保險、填寫出國報告單，並完成《教育部學海飛颺／惜珠》或《高師大學生出國研修獎助學金》行政契約簽署。",
+        "return-report": "交換期滿返國後 1 個月內，須向國際事務處繳交 3,000 字以上之《出國研修心得報告》電子檔（含研修生活照片 4 張以上），並檢附姊妹校正式成績單、護照出入境章影本、登機證正本與電子機票收據，辦理新臺幣 5,000 元保證金無息退還與獎助學金尾款核銷（受獎生並有義務配合參加出國研修經驗分享會）。",
+        "credit-transfer": "交換期滿返國後持姊妹校核發之正式成績單正本與修課大綱（Syllabus），依《國立高雄師範大學學生出國期間有關學業及學籍處理要點》及《學生抵免學分辦法》向所屬系（所）及教務處辦理境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立高雄師範大學").replace("長庚", "高師大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "高師大《選送學生出國研修實施要點》規定：學士班歷年學業總平均須達 GPA 2.44（百分制 70 分）以上且班級排名前 50%，碩博士班歷年學業總平均須達 GPA 3.38（百分制 80 分）以上，操行 80 分以上且無記過處分（學業成績佔校內甄選 20%）。請檢附含 GPA 與排名之歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 聽讀測驗（校內獎助亞洲 B1=550+／歐美紐澳 B2=785+）", "TOEFL iBT（校內獎助 B1=42+／歐美紐澳 B2=72+；雪梨／維多利亞 79–85+）", "IELTS 學術組（校內獎助 B1=4.0+／歐美紐澳 B2=5.5+；雪梨／維多利亞 6.0–6.5+）", "GEPT 全民英檢（中級複試 B1／中高級複試 B2 以上）", "JLPT 日語能力試驗（日本姊妹校 N3–N2+；大阪教育／法政／中央／三重 N2+）", "TOPIK 韓語能力測驗（韓國姊妹校 2–3 級以上；梨花／漢陽／韓國外大 3–4 級）", "Goethe / TestDaF 德語（B1–B2+）或 DELF 法語／DELE 西語（B1–B2+）", "大陸地區姊妹校（免附外語能力檢定證明）"]
+            field["help_text"] = "依高師大《選送學生出國研修實施要點》與《學生出國研修獎助學金支給要點》規定，報考國外非大陸姊妹校須具備兩年內有效外語檢定證明（外語能力佔校內甄選 20%），申請校內出國研修獎助學金者須達 CEFR B1（亞洲地區）或 CEFR B2（歐美紐澳地區）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.nknu.edu.tw/tw/ugC_Rule.asp",
+        source_checked_at=NKNU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換／出國研修獎助學金申請表與家長同意書" if template.id == "exchange-application-data" else ("出國研究計畫書與自傳（A4兩頁為限）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.nknu.edu.tw/tw/ugC_Application.asp",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後繳交確認書及 $5,000 保證金並辦理提名與獎助學金簽約", "return-report": "返國後 1 個月內繳交 3,000 字以上心得報告與核銷單據退還保證金", "credit-transfer": "返國後持姊妹校正式成績單辦理境外學分採認"}.get(template.id, "備齊紙本申請表與附件（經家長、導師／指導教授、系所主管及院長簽章）於截止日前送交和平校區行政大樓 6 樓國際事務處"),
+        version="115準備工具-2026-10-20.1",
+        destinations=["國立高雄師範大學國際事務處（和平校區行政大樓 6 樓）"],
+        conditional_note="此為個人準備工具；高師大出國交換暨學海飛颺／惜珠獎助學金甄選須於截止日（秋季班每年 2 月底、春季班每年 9 月中旬至 10 月中旬）前，將經家長、導師（或指導教授）、系所主管及院長核章之申請表、歷年成績單正本（含 GPA 與班級排名）、有效外語檢定證明、出國研究計畫書與自傳（A4 兩頁內）及 2 封推薦信送交和平校區行政大樓 6 樓國際事務處。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _tmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理臺北醫學大學選送學生出國研修暨學海四項計畫（飛颺／惜珠／築夢／新南向築夢）及校內《境外研修暨見實習獎勵辦法》甄選應繳資料：1. 出國研修／境外研修獎補助申請表（須經指導教授或導師、系所主管及學院院長初審核章）、2. 歷年成績單正本（含學業總平均、GPA 與班／系排名；學海飛颺及惜珠須於北醫大就讀一學期以上且歷年成績達每系所排名前 40% 或每班排名前 30%［研究所免附排名］、操行成績 80 分以上；跨國雙聯學位須達 GPA 3.0／約 75 分以上）、3. 有效外語能力檢定證明影本（學海飛颺／惜珠英語系國家須達 TOEFL iBT 79 或 IELTS 5.5，非英語系國家須達 TOEFL iBT 75 或 IELTS 5.0，日語須達 JLPT N2；校內境外研修獎學金須達 CEFR B2［TOEFL iBT 72 / IELTS 5.5 / TOEIC 785］）、4. 出國研修計畫書與自傳（含動機、擬修習專業課程或臨床見實習與實驗室研究規劃）、5. 國外盟校入學許可或邀請函（Offer / Invitation Letter）、6. 師長推薦信與家長同意書；經各學院初審推薦排序後，於截止日前送交醫學綜合大樓後棟 4 樓國際事務處。",
+        "study-plan": "撰寫臺北醫學大學出國交換、跨國雙聯、海外研究或臨床見實習必繳之《出國研修計畫書》與《個人自傳》。請具體說明赴外動機、擬於目標盟校修習之專業領域課程或臨床見實習／實驗室研究內容、外語能力準備，以及返國後學分抵免（授課滿 18 小時計 1 學分、實驗或見實習 36–54 小時計 1 學分）與醫學／生醫專業職涯銜接規劃。",
+        "course-preapproval": "辦理赴境外大學校院修讀課程或見實習之《學生境外研修簽報表》教務備查與學分採認預審（依《臺北醫學大學學生境外修讀課程實施辦法》規定，修讀雙聯學位須於研修前 1 個月、修習學分或研究見實習須於研修前 3 個工作日由所屬系所檢具簽報表與雙方合作協議送教務處備查；境外研修期間必須辦理北醫大註冊，休學期間修習之學分不予採計；大陸地區醫事人員高等學校學分不予採認）。",
+        "predeparture-notice": "於國際事務處或學院公告錄取及獎學金核定名單後，配合國際事務處完成國外盟校提名（Nomination）與外校入學許可取得；出國前須完成所屬系所《學生境外研修簽報表》送教務處備查、簽署《教育部學海計畫行政契約書》或《校內境外研修獎學金切結書》、購買涵蓋境外全期之海外醫療及意外保險（役男另辦緩徵出境），並確認已完成北醫大當學期註冊。",
+        "return-report": "境外研修期滿返國後，學海計畫受獎生須於返國 14 日內登入教育部學海計畫資訊網填報問卷並上傳 1,000 字以內中／英文成果報告書（含研修照片 4 張以上），並於返國後 1 個月內檢附來回電子機票收據、登機證正本、護照出入境章影本、盟校正式成績單（或見實習證明）及成果報告書，向國際事務處辦理獎補助款核銷結案與參加經驗分享會。",
+        "credit-transfer": "境外研修期滿返國後持國外盟校核發之正式成績單正本（或修業完成證明）與課程大綱（Syllabus），依《臺北醫學大學學生境外修讀課程實施辦法》及《學生抵免學分要點》（授課 18 小時計 1 學分，實驗、見實習 36–54 小時計 1 學分）向所屬系（所）、學院及教務處註冊組申請境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "臺北醫學大學").replace("長庚", "北醫大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "北醫大《教育部學海飛颺及學海惜珠甄選簡章》規定：須於北醫大就讀一學期以上，歷年成績達每系所排名前 40% 或每班排名前 30%（研究所免附排名），且操行成績達 80 分以上；申請跨國雙聯學位者歷年 GPA 須達 3.0（約 75 分）以上。請檢附含 GPA 與排名之歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（學海英語系國家 79+／非英語系 75+；校內獎學金 B2=72+；CWRU／OSU／USC 80–100+）", "IELTS 學術組（學海英語系國家 5.5+／非英語系 5.0+；校內獎學金 B2=5.5+；Kings／Dundee／Salford 6.0–6.5+）", "TOEIC 聽讀測驗（校內境外研修獎學金 CEFR B2=785+）", "GEPT 全民英檢（中高級複試 B2 以上）", "JLPT 日語能力試驗（學海日本盟校 N2+；東北／北海道／東京理科／九州 N2+）", "其他歐洲／東南亞外語檢定（依學海新南向築夢或盟校規定）", "大陸地區交流（大陸醫事人員高等學校學分不予採認，且不得涉及醫學人才培養）"]
+            field["help_text"] = "依北醫大《教育部學海飛颺／惜珠甄選簡章》與《境外研修暨見實習獎勵辦法》規定：學海飛颺／惜珠英語系國家須達 TOEFL iBT 79 或 IELTS 5.5、非英語系國家須達 TOEFL iBT 75 或 IELTS 5.0、日語須達 JLPT N2；申請校內境外研修獎學金須達 CEFR B2（TOEFL iBT 72 / IELTS 5.5 / TOEIC 785）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oge.tmu.edu.tw/tmu-goes-international/grants-overview/",
+        source_checked_at=TMU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國研修／境外研修獎補助申請表與學生境外研修簽報表" if template.id == "exchange-application-data" else ("出國研修計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oge.tmu.edu.tw/wp-content/uploads/2025/11/%E6%95%99%E8%82%B2%E9%83%A8115%E5%B9%B4%E5%BA%A6%E9%81%B8%E9%80%81%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B%E7%A0%94%E4%BF%AE%E8%A8%88%E7%95%AB%EF%BC%9A%E5%AD%B8%E6%B5%B7%E9%A3%9B%E9%A3%9B%E3%80%81%E5%AD%B8%E6%B5%B7%E6%83%9C%E7%8F%A0%E7%94%84%E9%81%B8%E7%B0%A1%E7%AB%A0.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "指導教授或導師簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後辦理系所《學生境外研修簽報表》教務處備查、盟校提名及獎學金簽約", "return-report": "返國 14 日內上傳學海 1,000 字內成果報告（含照片 4 張以上）並於 1 個月內完成核銷", "credit-transfer": "返國後持盟校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "先向所屬學院提交申請表件初審排序，再由學院於截止日（1月15日／5月15日／9月7日）前彙送醫學綜合大樓後棟 4 樓國際事務處"),
+        version="115準備工具-2026-10-20.1",
+        destinations=["臺北醫學大學所屬學院辦公室（初審推薦）", "臺北醫學大學國際事務處全球合作組（信義校區醫學綜合大樓後棟 4 樓）"],
+        conditional_note="此為個人準備工具；北醫大教育部學海四項計畫（每年 12 月各學院收件、1 月 15 日國際處截止；第二次徵求 8 月各學院收件、9 月初截止）與校內《境外研修暨見實習獎勵辦法》（每年 1 月 15 日及 5 月 15 日截止）須先經系所與學院初審核章，出國前並須依《學生境外修讀課程實施辦法》由系所將《學生境外研修簽報表》送教務處備查（雙聯前 1 個月、修習學分或見實習前 3 個工作日）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _csmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理中山醫學大學選送學生出國研修、跨國雙聯學位暨教育部學海四項計畫（學海飛颺／惜珠／築夢／新南向築夢）及校內《獎勵學生出國研修辦法》甄選應繳資料：1. 出國交換／雙聯學位／學海計畫申請表（須經導師或指導教授、所屬系所主管及學院院長初審核章）、2. 歷年成績單正本（含學業總平均、GPA 與班級／系所排名；學海飛颺及惜珠須於中山醫就讀一學期以上且歷年成績達系所前 40% 或班級前 30%［研究所免附排名］、操行成績 80 分以上；跨國雙聯學位及校級交換須達各專案規定 GPA，如奧克蘭大學生醫雙聯 GPA 3.2、安德魯大學 3.5+0.5+1 MBA GPA 2.50–2.75）、3. 有效外語能力檢定證明影本（例如奧克蘭大學生醫 4+1/4+2 雙聯 TOEFL iBT 79 / IELTS 6.5 / Duolingo 105、安德魯大學 MBA TOEFL iBT 80 / IELTS 6.5、日本姊妹校 JLPT N2–N3、韓國姊妹校 TOPIK 2–3 級或英語檢定證明）、4. 出國讀書計畫書與中英文自傳（含申請動機、擬於目標姊妹校修習之專業領域課程或臨床見實習／實驗室研究規劃）、5. 師長推薦信與家長同意書；經各系所與學院初審推薦後，於截止日前送交正心樓國際事務處。",
+        "study-plan": "撰寫中山醫學大學出國交換、跨國雙聯（奧克蘭大學生醫系 4+1/4+2、安德魯大學 3.5+0.5+1 MBA、杜肯大學碩士銜接、德島文理大學 4+2 藥學雙聯）、海外研究（UCSD 暑期研究獎學金）或臨床見實習必繳之《出國讀書計畫書》與《個人自傳》。請具體說明赴外動機、擬於目標姊妹校修習之專業課程或臨床見實習／實驗室研究內容、外語能力準備，以及返國後學分抵免（依《中山醫學大學辦理學生境外學習及跨校修讀雙聯學位實施辦法》，兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月，且於單一學校修習學分數不得低於畢業應修總學分數三分之一）與醫療健康專業職涯規劃。",
+        "course-preapproval": "辦理赴境外大學校院修讀課程、跨國雙聯或臨床見實習之選課預審與教務核備（依《中山醫學大學辦理學生境外學習及跨校修讀雙聯學位實施辦法》與《學生抵免學分辦法》規定，出國前須由所屬系所及教務處確認擬修習科目與返國學分抵免對照；出國期間必須辦理中山醫學大學註冊並保有在學學籍；大陸地區醫事人員高等學校學分依教育部規定不予採認醫事國考資格）。",
+        "predeparture-notice": "於國際事務處或學院公告錄取及獎學金核定名單後，配合國際事務處完成國外姊妹校提名（Nomination）與入學許可（Offer / Invitation Letter）取得；出國前須簽署《教育部學海計畫行政契約書》或《校內出國研修補助切結書》、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療及意外保險，並確認已完成中山醫當學期註冊。",
+        "return-report": "境外研修期滿返國後，教育部學海計畫受獎生須於返國 14 日內登入教育部學海計畫資訊網填報問卷並上傳 1,000–2,000 字中／英文成果報告書（含研修與生活照片 4 張以上），並於返國後 1 個月內檢附來回電子機票收據、登機證正本、護照出入境章影本、姊妹校正式成績單（或見實習證明）及出國交換心得報告（提供國際事務處刊登於《出國交換學生經驗分享》專區），向國際事務處辦理獎補助款核銷結案及參加成果分享會。",
+        "credit-transfer": "境外研修期滿返國後持國外姊妹校核發之正式成績單正本（或修業完成證明）與課程大綱（Syllabus），依《中山醫學大學辦理學生境外學習及跨校修讀雙聯學位實施辦法》及《學生抵免學分辦法》向所屬系（所）、學院及教務處註冊課務組申請境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "中山醫學大學").replace("長庚", "中山醫")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "中山醫《教育部學海飛颺及學海惜珠甄選規定》與《獎勵學生出國研修辦法》：須於中山醫就讀一學期以上，歷年成績達系所前 40% 或班級前 30%（研究所免附排名），且操行成績達 80 分以上；申請奧克蘭大學生醫系 4+1/4+2 雙聯須達 GPA 3.2（約 80 分）、安德魯大學 3.5+0.5+1 MBA 須達 GPA 2.50–2.75。請檢附含 GPA 與排名之歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（奧克蘭大學雙聯 79+／安德魯大學 MBA 80+／學海飛颺 72–79+）", "IELTS 學術組（奧克蘭大學／安德魯大學雙聯 6.5+／學海飛颺 5.5+）", "Duolingo English Test（奧克蘭大學生醫雙聯 105+）", "TOEIC 聽讀測驗（校內出國研修補助 CEFR B1=550+／B2=785+）", "GEPT 全民英檢（中級複試 B1／中高級複試 B2 以上）", "JLPT 日語能力試驗（東京醫科齒科／東北／長崎／高崎健康福祉／目白／德島文理 N2–N3+）", "TOPIK 韓語能力測驗（高麗／嘉泉／乙支／水原 2–3 級以上或英語檢定）", "大陸與澳門姊妹校（免外語檢定；依各專案簡章辦理，大陸醫事學歷不予採認考照）"]
+            field["help_text"] = "依中山醫《辦理學生境外學習及跨校修讀雙聯學位實施辦法》、《獎勵學生出國研修辦法》與各專案簡章規定：申請非華語區姊妹校交換、雙聯或學海計畫須檢附有效外語能力證明（如奧克蘭雙聯 TOEFL 79 / IELTS 6.5 / Duolingo 105、安德魯 MBA TOEFL 80 / IELTS 6.5、日本姊妹校 JLPT N2–N3）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.csmu.edu.tw/p/412-1017-105.php?Lang=zh-tw",
+        source_checked_at=CSMU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換／雙聯學位／學海計畫申請表" if template.id == "exchange-application-data" else ("出國讀書計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.csmu.edu.tw/p/412-1017-6339.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後辦理選課預審、姊妹校提名及學海或校內獎補助簽約", "return-report": "返國 14 日內上傳學海成果報告並於 1 個月內繳交交換經驗分享報告與核銷單據", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "備齊申請表與附件（經家長、導師／指導教授、系所主管及院長簽章）於截止日前送交正心樓國際事務處"),
+        version="115準備工具-2026-10-21.1",
+        destinations=["中山醫學大學所屬系所與學院辦公室（初審推薦）", "中山醫學大學國際事務處（臺中市南區建國北路一段110號正心樓）"],
+        conditional_note="此為個人準備工具；中山醫教育部學海四項計畫（每年 2–3 月收件）、跨國雙聯學位（奧克蘭大學生醫系 4+1/4+2、安德魯大學 3.5+0.5+1 MBA、杜肯大學、德島文理大學 4+2）與校級交換／臨床見實習甄選須先經系所與學院核章，出國期間須維持中山醫在學註冊，且於單一學校修習學分數不得低於畢業應修總學分數三分之一。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _cmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理中國醫藥大學選送學生出國研修、跨國雙聯學位（Queen's University Belfast 4+1、KGI、Georgia State University、University of Texas Health Science Center at Houston 等 7 校 11 學程）暨教育部學海四項計畫（學海飛颺／惜珠／築夢／新南向築夢）及校內《獎勵學生出國研習及開拓國際視野辦法》甄選應繳資料：1. 出國交換／雙聯學位／學海計畫申請表（須經導師或指導教授、所屬系所主管及學院院長初審核章）、2. 歷年成績單正本（含學業總平均、GPA 與班級／系所排名；依《選送學生出國研修辦法》第四條，須於中國醫藥大學就讀滿一學年以上、歷年學業總平均達 80 分［GPA 3.0／A-］以上或名列全班前 20%，且前一學期操行成績達 80 分以上；學海飛颺須名列全班前 50%）、3. 有效外語能力檢定證明影本（校內最低基準為 TOEFL iBT 57 / ITP 500、IELTS 4.0、TOEIC 550 或 GEPT 中級複試；雙聯學位如英國貝爾法斯特女王大學須達 IELTS 6.5、日本姊妹校須達 JLPT N2–N3、韓國姊妹校須達 TOPIK 2–3 級或英語檢定）、4. 中英文自傳與出國研修讀書計畫書（含申請動機、擬於目標盟校修習之專業領域課程或海外臨床見實習／實驗室研究規劃）、5. 師長推薦信與家長同意書；經各系所與學院初審推薦排序後，於截止日前送交水湳校區卓越大樓國際事務處。",
+        "study-plan": "撰寫中國醫藥大學出國交換、跨國雙聯學位（英國 Queen's University Belfast 藥學／生技 4+1、美國 Keck Graduate Institute 藥學／生醫、Georgia State University 物理治療／運醫、UTHealth Houston 公共衛生、法國圖盧茲大學等）、海外研究或醫牙中醫藥護物治臨床見實習必繳之《出國研修讀書計畫書》與《個人自傳》。請具體說明赴外動機、擬於目標盟校修習之專業課程或臨床見實習／實驗室研究內容、外語能力準備，以及返國後學分抵免（依《中國醫藥大學與境外大學校院辦理跨國雙聯學制實施辦法》，兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月，且於兩校修習學分數合計須超過畢業應修總學分數三分之一）與醫藥生技專業職涯規劃。",
+        "course-preapproval": "辦理赴境外大學校院修讀課程、跨國雙聯學位或海外臨床見實習之選課預審與教務核備（依《中國醫藥大學學生出國期間有關學業及學籍處理要點》與《辦理跨國雙聯學制實施辦法》規定，出國前須由所屬系所及教務處確認擬修習科目與返國學分抵免對照；出國研修期間必須維持中國醫藥大學在學註冊，休學期間修習之學分不予採認；大陸地區醫事人員高等學校學歷依教育部規定不予採認醫事國考資格）。",
+        "predeparture-notice": "於國際事務處或各學院公告錄取及獎學金核定名單後，配合國際事務處完成國外盟校提名（Nomination）與入學許可（Offer / Invitation Letter）取得；出國前須簽署《教育部學海計畫行政契約書》或《校內出國研習補助切結書》、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療及意外保險，並確認已完成中國醫藥大學當學期註冊。",
+        "return-report": "境外研修期滿返國後，教育部學海計畫受獎生須於返國 14 日內登入教育部學海計畫資訊網填報問卷並上傳 1,000–2,000 字中／英文成果報告書（含研修與生活照片 4 張以上），並於返國後 1 個月內檢附來回電子機票收據、登機證正本、護照出入境章影本、盟校正式成績單（或臨床見實習證明）及出國研修成果報告（提供國際事務處刊登於《出國交換／實習成果報告》專區），向國際事務處辦理獎補助款核銷結案及參加國際移動力成果分享會。",
+        "credit-transfer": "境外研修期滿返國後持國外盟校核發之正式成績單正本（或修業完成證明）與課程大綱（Syllabus），依《中國醫藥大學學生出國期間有關學業及學籍處理要點》、《辦理跨國雙聯學制實施辦法》及《學生抵免學分辦法》向所屬系（所）、學院及教務處註冊課務組申請境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "中國醫藥大學").replace("長庚", "中國醫")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "中國醫藥大學《選送學生出國研修辦法》第四條與《教育部學海飛颺及學海惜珠甄選簡章》規定：須於中國醫就讀滿一學年以上，歷年學業總平均達 80 分（GPA 3.0／A-）以上或名列全班前 20%（學海飛颺須名列全班前 50%），且前一學期操行成績達 80 分以上。請檢附含 GPA 與排名百分比之歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（中國醫基準 57+／學海飛颺及歐美雙聯 79–90+）", "TOEFL ITP（中國醫基準 500+）", "IELTS 學術組（中國醫基準 4.0+／學海飛颺 5.5–6.0+／QUB 雙聯 6.5+）", "TOEIC 聽讀測驗（中國醫基準 550+／校內獎補助 B2=785+）", "GEPT 全民英檢（中級複試 B1／中高級複試 B2 以上）", "JLPT 日語能力試驗（東京科學大學／京都／東北／北海道／長崎／日本藥科／新瀉醫療福祉 N2–N3+）", "TOPIK 韓語能力測驗（首爾大學／延世／高麗／成均館／慶熙／漢陽／中央／釜山 2–4 級或英語檢定）", "大陸與港澳姊妹校（免外語檢定；依各專案簡章辦理，大陸醫事學歷不予採認考照）"]
+            field["help_text"] = "依中國醫藥大學《選送學生出國研修辦法》第四條與《獎勵學生出國研習及開拓國際視野辦法》規定：申請非華語區盟校交換、雙聯或學海計畫須檢附兩年內有效外語能力證明（校內基準 TOEFL iBT 57 / ITP 500、IELTS 4.0、TOEIC 550 或 GEPT 中級複試；雙聯學位與歐美名校須達 IELTS 6.0–6.5 或 TOEFL iBT 79–90+）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://cmucia.cmu.edu.tw/page/about_3",
+        source_checked_at=CMU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換／雙聯學位／學海計畫申請表" if template.id == "exchange-application-data" else ("出國研修讀書計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://cmucia.cmu.edu.tw/news/51",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後辦理選課預審、盟校提名及學海或校內出國研習獎補助簽約", "return-report": "返國 14 日內上傳學海成果報告並於 1 個月內繳交交換／實習成果報告與核銷單據", "credit-transfer": "返國後持盟校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "備齊申請表與附件（經家長、導師／指導教授、系所主管及院長簽章）於截止日前送交水湳校區卓越大樓國際事務處"),
+        version="115準備工具-2026-10-21.1",
+        destinations=["中國醫藥大學所屬系所與學院辦公室（初審推薦）", "中國醫藥大學國際事務處（臺中市北屯區經貿路一段100號水湳校區卓越大樓）"],
+        conditional_note="此為個人準備工具；中國醫藥大學教育部學海四項計畫（每年 12 月至翌年 2 月收件）、跨國雙聯學位（7 校 11 學程）與校級交換／臨床見實習甄選須先經系所與學院核章，出國期間須維持中國醫藥大學在學註冊，且修讀雙聯學位者於兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def _kmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理高雄醫學大學選送學生出國研修、海外見實習暨教育部學海四項計畫（學海飛颺／惜珠／築夢／新南向築夢）、校內《學生國際移動力獎助金辦法》與各學院交換／雙聯學位（如杜肯大學藥學雙聯）甄選應繳資料：1. 國際事務處／各學院國際交換生或學海計畫申請表（須經導師或指導教授、所屬系所主管及學院院長初審核章；醫學院另須填具選填志願表與資料繳交檢核表）、2. 中英文歷年成績單正本（含學業總平均、GPA 與班級排名；依《選送學生出國研修辦法》第三條，須於高醫大就讀一學期以上且歷年學業總平均達 70 分［GPA 2.44］或班級排名前 50%，操行成績平均達 80 分以上且無懲處紀錄；申請學海飛颺者須達班排前 50% 或 GPA 3.0 以上，醫學院交換甄選佔總成績 40%）、3. 有效外語能力檢定證明影本（英語組須具 TOEFL iBT 69 / IELTS 6.0 / TOEIC 650 / 全民英檢中高級初試以上，日語組須具 JLPT N4 以上；醫學院日語組加分採計 N1–N5，歐美名校如賓州大學／哈佛／牛津／UCLA／杜肯雙聯須達 TOEFL iBT 80–100 或 IELTS 6.5–7.0）、4. 中英文自傳、個人履歷表（CV）與出國研修讀書／見實習計畫書（含申請動機、擬於目標姊妹校修習之專業領域課程或附設醫院海外臨床見實習／實驗室研究規劃）、5. 師長推薦信與家長同意書；經各系所與學院初審推薦排序後，於截止日前送交勵學大樓 3 樓國際事務處。",
+        "study-plan": "撰寫高雄醫學大學出國交換、海外臨床見實習（醫學系 Clerkship、牙醫系、藥學系 APPE、護理系、物理治療、職能治療、呼吸治療、醫技、醫社、心理等）、海外實驗室研究或跨國雙聯學位（如美國杜肯大學 Duquesne University 藥學雙聯）必繳之《出國研修讀書／實習計畫書》與《中英文個人自傳／CV》。請具體說明赴外動機、擬於目標姊妹校修習之專業課程或臨床見實習科別／實驗室研究內容、外語能力準備，以及返國後學分抵免（依《高雄醫學大學學生出國期間有關學業及學籍處理要點》與《辦理跨國雙聯學制實施辦法》，兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月，且於兩校修習學分數合計須超過畢業應修總學分數三分之一）與醫藥健康專業職涯規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀課程、跨國雙聯學位或海外臨床見實習之選課預審與教務核備（依《高雄醫學大學學生出國期間有關學業及學籍處理要點》與《辦理跨國雙聯學制實施辦法》規定，出國前須由所屬系所及教務處確認擬修習科目或臨床見實習學分與返國抵免對照；出國研修期間必須維持高雄醫學大學在學註冊，休學期間修習之學分不予採認；大陸地區醫事人員高等學校學歷依教育部規定不予採認醫事國考資格）。",
+        "predeparture-notice": "於國際事務處或各學院公告錄取及獎學金核定名單後，配合國際事務處完成國外姊妹校提名（Nomination）、免疫接種與健康檢查證明（Immunization Record，歐美日醫牙藥護臨床見實習必備）及入學／見實習許可（Offer / Invitation Letter）取得；出國前須簽署《教育部學海計畫行政契約書》或《高醫大國際移動力獎助金切結書》、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療、意外及臨床實習責任保險（Malpractice Insurance），並確認已完成高雄醫學大學當學期註冊。",
+        "return-report": "境外交換或見實習期滿返國後，教育部學海計畫受獎生須於返國 14 日內登入教育部學海計畫資訊網填報問卷並上傳 1,000–2,000 字中／英文成果報告書（含研修與臨床見實習照片 4 張以上），並於返國後 1 個月內檢附來回電子機票收據、登機證正本、護照出入境章影本、姊妹校正式成績單（或臨床見實習評估表／結業證書）及出國研修成果報告（提供國際事務處刊登於《學生國際交流經驗分享》專區），向國際事務處辦理獎補助款核銷結案及參加國際移動力成果分享會。",
+        "credit-transfer": "境外交換或見實習期滿返國後持國外姊妹校核發之正式成績單正本（或臨床見實習評估表／修業完成證明）與課程大綱（Syllabus），依《高雄醫學大學學生出國期間有關學業及學籍處理要點》、《辦理跨國雙聯學制實施辦法》及《學生抵免學分辦法》向所屬系（所）、學院及教務處註冊課務組申請境外修習科目與實習學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "高雄醫學大學").replace("長庚", "高醫大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "高雄醫學大學《選送學生出國研修辦法》第三條與《教育部學海計畫甄選簡章》規定：須於高醫大就讀一學期以上，歷年學業總平均達 70 分（GPA 2.44）或班級排名前 50%（申請教育部學海飛颺者須達班級排名前 50% 或 GPA 3.0 以上），且操行成績平均達 80 分以上、在學期間無懲處紀錄。請檢附含 GPA 與班級排名百分比之中英文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（高醫大英語組基準 69+／歐美臨床見實習及雙聯 79–100+）", "IELTS 學術組（高醫大英語組基準 6.0+／歐美名校及雙聯 6.5–7.0+）", "TOEIC 聽讀測驗（高醫大英語組基準 650+／校內獎助 CEFR B2=785+）", "GEPT 全民英檢（中高級初試以上）", "JLPT 日語能力試驗（高醫大日語組基準 N4+；醫學院加分採計 N1–N5；東大／東北／慶應／長崎／昭和 N2–N3+）", "其他歐洲／東南亞外語檢定（依學海新南向築夢或姊妹校規定）", "大陸與香港姊妹校（香港大學／香港中文大學須英語證明；大陸姊妹校免外語檢定，大陸醫事學歷不予採認考照）"]
+            field["help_text"] = "依高雄醫學大學《選送學生出國研修辦法》、《學生國際移動力獎助金辦法》與各學院交換甄選簡章規定：申請英語組須具 TOEFL iBT 69、IELTS 6.0、TOEIC 650 或全民英檢中高級初試以上，申請日語組須具 JLPT N4 以上（醫學院日語組加分採計 N1–N5，部分日本姊妹校要求 N2–N3）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://cia.kmu.edu.tw/index.php/zh-tw/%E5%AD%B8%E7%94%9F%E4%BA%A4%E6%B5%81/%E9%AB%98%E9%86%AB%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B",
+        source_checked_at=KMU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換／海外見實習／學海計畫申請表" if template.id == "exchange-application-data" else ("出國研修讀書／實習計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://cia.kmu.edu.tw/index.php/zh-tw/%E5%AD%B8%E7%94%9F%E4%BA%A4%E6%B5%81/%E9%AB%98%E9%86%AB%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後辦理選課預審、姊妹校提名、免疫體檢與責任保險及學海或校內獎助簽約", "return-report": "返國 14 日內上傳學海成果報告並於 1 個月內繳交交換／見實習成果報告與核銷單據", "credit-transfer": "返國後持姊妹校正式成績單或見實習評估表辦理境外學分採認"}.get(template.id, "備齊申請表與附件（經家長、導師／指導教授、系所主管及院長簽章）於截止日前送交所屬學院及勵學大樓 3 樓國際事務處"),
+        version="115準備工具-2026-10-21.1",
+        destinations=["高雄醫學大學所屬系所與學院辦公室（初審推薦）", "高雄醫學大學國際事務處（高雄市三民區十全一路100號勵學大樓3樓）"],
+        conditional_note="此為個人準備工具；高雄醫學大學教育部學海四項計畫（每年 12 月至翌年 2 月收件）、校內《學生國際移動力獎助金辦法》、各學院海外交換與臨床見實習（如醫學院每年 9–10 月甄選）及跨國雙聯學位須先經系所與學院核章，出國期間須維持高醫大在學註冊，且修讀雙聯學位者於兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -1870,6 +2146,18 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _yuntech_template(template)) is not None]
     if university.id == NTOU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntou_template(template)) is not None]
+    if university.id == NCUE.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncue_template(template)) is not None]
+    if university.id == NKNU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nknu_template(template)) is not None]
+    if university.id == TMU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _tmu_template(template)) is not None]
+    if university.id == CSMU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _csmu_template(template)) is not None]
+    if university.id == CMU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _cmu_template(template)) is not None]
+    if university.id == KMU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _kmu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

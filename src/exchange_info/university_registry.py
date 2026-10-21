@@ -867,8 +867,248 @@ NTOU = UniversityProfile(
     ),
 )
 
+NCUE = UniversityProfile(
+    id="ncue",
+    school_name="國立彰化師範大學",
+    short_name="彰師大",
+    english_name="National Changhua University of Education",
+    aliases=(
+        "ncue",
+        "國立彰化師範大學",
+        "彰化師範大學",
+        "彰化師大",
+        "彰師大",
+        "彰師",
+        "NCUE",
+        "National Changhua University of Education",
+    ),
+    hero_image="/static/assets/ncue-campus.svg",
+    official_url="https://oicaweb.ncue.edu.tw/p/412-1002-1171.php?Lang=zh-tw",
+    coverage_note="完整支援：國際暨兩岸事務處 116學年度（2027秋季、2028春季）赴國外非大陸姊妹校交換研修暨教育部學海飛颺／惜珠甄選簡章、2027年春季班（115-2學期）及 115-1 赴大陸及港澳地區姊妹校交換計畫、跨國雙聯學制與全球共 108 所合作姊妹校（中國大陸、美國、印尼、德國、日本、韓國、法國、泰國、英國、捷克、西班牙、馬來西亞、加拿大、澳洲、土耳其、香港、烏拉圭、俄羅斯、羅馬尼亞、瑞士、蒙古、阿拉伯聯合大公國、越南等 23 個國家與地區）名額與語檢門檻、教育部學海系列獎補助暨 409 篇學長姐返國交換心得已完整整合。",
+    support_level="full",
+    partner_count_hint=108,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立彰化師範大學",
+        "彰化師範大學",
+        "彰師大",
+        "NATIONALCHANGHUAUNIVERSITYOFEDUCATION",
+        "NCUE",
+    ),
+    # https://www.ncue.edu.tw/p/412-1000-867.php?Lang=zh-tw — checked 2026-10-20.
+    colleges=(
+        "教育學院",
+        "理學院",
+        "工學院",
+        "管理學院",
+        "社會科學暨體育學院",
+        "文學院",
+        "技術及職業教育學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU)
+NKNU = UniversityProfile(
+    id="nknu",
+    school_name="國立高雄師範大學",
+    short_name="高師大",
+    english_name="National Kaohsiung Normal University",
+    aliases=(
+        "nknu",
+        "國立高雄師範大學",
+        "高雄師範大學",
+        "高雄師大",
+        "高師大",
+        "高師",
+        "NKNU",
+        "National Kaohsiung Normal University",
+    ),
+    hero_image="/static/assets/nknu-campus.svg",
+    official_url="https://oia.nknu.edu.tw/exchange-programs.php",
+    coverage_note="完整支援：國際事務處赴外交換研修暨教育部學海飛颺／惜珠計畫甄選（每年 11/11–12/31 線上申請）、大陸地區（含港澳地區）姊妹校交換計畫（2027春季班及2026秋季班）、境外大學跨校雙聯學制與全球共 143 所合作姊妹校（含 36 所當期開放交換及雙聯名額校、107 所正式締約姊妹校，橫跨美、德、法、捷、瑞、奧、英、西、波、匈、俄、斯、巴、澳、日、韓、泰、菲、越、印、馬、印度、蒙、大陸及港澳等 26 個國家與地區）名額與語檢門檻、出國選修課程與學分抵免規定暨 16 篇學長姐返國交換心得已完整整合。",
+    support_level="full",
+    partner_count_hint=143,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立高雄師範大學",
+        "高雄師範大學",
+        "高師大",
+        "NATIONALKAOHSIUNGNORMALUNIVERSITY",
+        "NKNU",
+    ),
+    # https://w3.nknu.edu.tw/ — checked 2026-10-20.
+    colleges=(
+        "教育學院",
+        "文學院",
+        "理學院",
+        "科技學院",
+        "藝術學院",
+    ),
+)
+
+TMU = UniversityProfile(
+    id="tmu",
+    school_name="臺北醫學大學",
+    short_name="北醫大",
+    english_name="Taipei Medical University",
+    aliases=(
+        "tmu",
+        "臺北醫學大學",
+        "台北醫學大學",
+        "北醫大",
+        "北醫",
+        "臺北醫大",
+        "台北醫大",
+        "TMU",
+        "Taipei Medical University",
+    ),
+    hero_image="/static/assets/tmu-campus.svg",
+    official_url="https://oge.tmu.edu.tw/zh-hant/%e5%ad%b8%e7%94%9f%e4%ba%a4%e6%b5%81/tmu-student-outbound-exchange/",
+    coverage_note="完整支援：國際事務處國際盟校組 2026（民國115）年教育部學海飛颺／學海惜珠／學海築夢／新南向學海築夢計畫（第一梯次 1/16、第二梯次 9/7 截止）、校內《境外研修暨見實習獎勵辦法》獎學金（每年 1/15、5/15 兩梯次截止）、7 大學院 32 個跨國雙聯學位學制（涵蓋美、加、法、義、丹、日、澳、印尼等 18 所名校）與全球共 201 所合作盟校及教學醫院（含 34 所當期開放交換、見實習及雙聯學位校與 167 所正式締約盟校，橫跨歐、美、亞、大洋、非 37 個國家與地區）語檢門檻、學分抵免規定暨 55 篇歷屆學長姐海外交流與臨床見實習心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=201,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "臺北醫學大學",
+        "台北醫學大學",
+        "北醫大",
+        "TAIPEIMEDICALUNIVERSITY",
+        "TMU",
+    ),
+    # https://www.tmu.edu.tw/ — checked 2026-10-20.
+    colleges=(
+        "醫學院",
+        "口腔醫學院",
+        "藥學院",
+        "護理學院",
+        "公共衛生學院",
+        "醫學科技學院",
+        "人文暨社會科學院",
+        "管理學院",
+        "醫學工程學院",
+        "營養學院",
+        "跨領域學院",
+    ),
+)
+
+CSMU = UniversityProfile(
+    id="csmu",
+    school_name="中山醫學大學",
+    short_name="中山醫",
+    english_name="Chung Shan Medical University",
+    aliases=(
+        "csmu",
+        "中山醫學大學",
+        "中山醫大",
+        "中山醫",
+        "CSMU",
+        "Chung Shan Medical University",
+    ),
+    hero_image="/static/assets/csmu-campus.svg",
+    official_url="https://oia.csmu.edu.tw/?Lang=zh-tw",
+    coverage_note="完整支援：國際事務處 116 學年度（2027–2028）赴美國聖馬丁大學（每學期 3 名免學費）、美國密西根州奧克蘭大學（每年 15 名 ASAP 交換暨生物學 4+1/4+2 學碩連讀）、日本德島文理大學（每學期 2 名免學費＋PP 升學研究所計畫 1 名免學費）甄選（2026/10/22 截止）、教育部 116 年度學海飛颺／惜珠獎學金（2027/01/06 截止，每人補助 5萬–30萬元）、2027春季美國路易斯安那州立大學醫學中心（LSUHSC）研究獎學金（每月 USD 2,500）、跨國雙聯學位（安德魯大學、杜肯大學）與全球共 124 所合作姊妹校及教學醫院（含 49 所當期開放交換、雙聯、研究及臨床見實習重點機構與 75 所正式締約姊妹校，橫跨 26 個國家與地區）語檢門檻、書審配分（40%/35%/20%/5%）暨 31 篇歷屆學長姐與師長海外研修心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=124,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "中山醫學大學",
+        "中山醫大",
+        "中山醫",
+        "CHUNGSHANMEDICALUNIVERSITY",
+        "CSMU",
+    ),
+    # https://www.csmu.edu.tw/ — checked 2026-10-21.
+    colleges=(
+        "醫學院",
+        "口腔醫學院",
+        "醫學科技學院",
+        "健康管理學院",
+    ),
+)
+
+CMU = UniversityProfile(
+    id="cmu",
+    school_name="中國醫藥大學",
+    short_name="中醫大",
+    english_name="China Medical University",
+    aliases=(
+        "cmu",
+        "中國醫藥大學",
+        "中醫大",
+        "中國醫大",
+        "中國醫",
+        "CMU",
+        "China Medical University",
+    ),
+    hero_image="/static/assets/cmu-campus.svg",
+    official_url="https://cmucia.cmu.edu.tw/",
+    coverage_note="完整支援：國際事務處與 9 大學院 115–116 學年度（2026–2028）校級赴日本北海道大學（每年 5 名免學費＋中醫大補助來回經濟艙機票與每月 NT$5,000 生活費）、日本北見工業大學（每年 3 名免學費＋機票與每月 NT$5,000 生活費）、香港教育大學（每年 4 名免學費）交換生計畫、7 校 11 個跨國雙聯學位暨專案獎助學金（澳洲紐卡索大學護理博士最高補助 NT$50萬、美國南加州大學 USC 藥學系 MS 與凱克醫學院 MD/MPH 雙聯最高補助 NT$45萬、美國杜蘭大學 MD/MPH 雙聯最高補助 NT$40萬、美國喬治亞州立大學雙聯最高補助 NT$35萬、美國南卡羅萊納大學 3+2 學碩與 MD/MPH 雙聯及澳洲格里菲斯大學全球公衛碩士雙聯最高補助 NT$30萬、美國南達科塔州立大學營養學系 2+2 雙學士補助 2 年中醫大全額學雜費）、健康照護學院物理治療學系 115-1 海外臨床專業實習（新加坡中央醫院 4 名、神戶中央市民醫院 2 名、關西電力醫院 2 名、順天堂醫院 2 名，2027/01/10–01/30 實習）與全球共 174 所合作姊妹校及教學醫院（含 38 所當期開放交換、雙聯、海外臨床見實習與學海築夢重點機構及 136 所正式締約姊妹校，橫跨 31 個國家與地區）語檢門檻、學業 A-（GPA 3.0／80 分）與操行 80 分規定暨 27 篇歷屆師生海外研修心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=174,
+    academic_score_minimum=80,
+    student_card_signals=(
+        "中國醫藥大學",
+        "中醫大",
+        "中國醫大",
+        "中國醫",
+        "CHINAMEDICALUNIVERSITY",
+        "CMU",
+    ),
+    # https://www.cmu.edu.tw/academic.php — checked 2026-10-21.
+    colleges=(
+        "醫學院",
+        "中醫學院",
+        "藥學院",
+        "公共衛生學院",
+        "健康照護學院",
+        "生命科學院",
+        "牙醫學院",
+        "醫學工程學院",
+        "人文與科技學院",
+    ),
+)
+
+KMU = UniversityProfile(
+    id="kmu",
+    school_name="高雄醫學大學",
+    short_name="高醫大",
+    english_name="Kaohsiung Medical University",
+    aliases=(
+        "kmu",
+        "高雄醫學大學",
+        "高醫大",
+        "高醫",
+        "高雄醫大",
+        "KMU",
+        "Kaohsiung Medical University",
+    ),
+    hero_image="/static/assets/kmu-campus.svg",
+    official_url="https://ciae2.kmu.edu.tw/index.php/zh-tw",
+    coverage_note="完整支援：國際事務處與 7 大學院 115–116 學年度（2026–2028）醫學院 2027 海外臨床見實習（21 校 64+ 名：美國哈佛醫學院 6 名［免見習費與申請費＋KMU-Harvard Foundation USD 500＋北美校友會 NT$15,000］、希望之城 4 名、羅格斯 2 名、梅哈里 2 名、夏威夷大學 1 名、德國科隆大學 4 名、澳洲邦德大學 4 名、日本京都大學 2 名、慶應義塾大學 3 名、東京醫科大學 2 名［免學費＋免費住宿］、神戶大學 3 名、德島 3 名、信州 2 名、愛媛 4 名、藤田醫大 2 名、韓國首爾大學 2 名、亞洲大學 4 名、香港大學 4 名、新加坡國立大學 4 名、南洋理工大學 4 名、泰國宋卡王子大學 4 名）、校級赴日本順天堂大學長期交換生計畫（JLCSP / LAP 免學費）、10 校跨國雙聯學位（瑞典烏普薩拉大學每年 6 名免學費、匈牙利賽蓋德大學每年 3 名免學費＋免費住宿、日本熊本大學 2026/09 新簽醫學博士雙聯、美國加州大學爾灣分校 UCI、City of Hope、法國艾克斯-馬賽大學、澳洲格里菲斯大學、泰國朱拉隆功大學藥學雙聯博士每年 2 名免學費、瑪希朵大學、清邁大學）、口腔醫學院／藥學院／護理學院／健康科學院（含瑞典卡羅林斯卡醫學院 KI 3 名、美國南加大 USC 6 名、約翰霍普金斯醫院 4 名、新加坡陳篤生醫院 6 名）／人社院海外見實習、115 年度博士生千里馬出國研究計畫（最高補助 NT$50萬）、國際處出國研習補助（歐美非機票最高 NT$5萬＋月領 NT$2.5萬）與全球共 188 所合作姊妹校及教學醫院（含 56 所當期開放交換、雙聯与臨床見實習重點機構及 132 所正式締約姊妹校，橫跨 30 個國家與地區）語檢門檻暨 56 篇歷屆師生海外研修心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=188,
+    academic_score_minimum=60,
+    student_card_signals=(
+        "高雄醫學大學",
+        "高醫大",
+        "高醫",
+        "高雄醫大",
+        "KAOHSIUNGMEDICALUNIVERSITY",
+        "KMU",
+    ),
+    # https://www.kmu.edu.tw/ — checked 2026-10-21.
+    colleges=(
+        "醫學院",
+        "口腔醫學院",
+        "藥學院",
+        "護理學院",
+        "健康科學院",
+        "生命科學院",
+        "人文社會科學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU)
 DEFAULT_UNIVERSITY = CGU
 
 

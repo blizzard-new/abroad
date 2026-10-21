@@ -1376,7 +1376,7 @@ def _build_fallback_card(school_id: str) -> VerifiedSchoolWindowCard:
             label="紙本繳件截止日／送件規定",
             value_text=f"請依{profile.school_name}當期交換簡章確認是否須列印紙本申請表完成系所核章後送交國際處",
             exact_deadline_at=None,
-            submission_mode="both",
+            submission_mode="pending_notice",
             source_title=f"{profile.school_name}國際事務處官方交換生專頁",
             source_url=source_url,
             last_checked_at=CATALOG_LAST_CHECKED_AT,
