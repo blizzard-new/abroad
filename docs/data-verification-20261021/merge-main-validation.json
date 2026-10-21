@@ -1,0 +1,99 @@
+{
+  "recorded_at": "2026-10-21T08:03:39.342767+00:00",
+  "purpose": "Resolve PR #112 merge conflicts and summarize existing work; no new factual source audit.",
+  "pr_url": "https://github.com/blizzard-new/abroad/pull/112",
+  "previous_head": "b124c26c84664566fa91afb314accd5d3e8a1b91",
+  "merged_main": "c98c0c3bf56b18865f6afb584921492cb3a6148a",
+  "conflict_files": [
+    "src/exchange_info/application_writing_guidance.py",
+    "src/exchange_info/models.py",
+    "src/exchange_info/storage.py",
+    "src/exchange_info/verified_window_deadlines.py",
+    "tests/test_school_completeness.py",
+    "tests/test_verified_window_deadlines.py"
+  ],
+  "preservation": {
+    "original_home_schools": 25,
+    "original_scope_profiles": 4588,
+    "merged_home_schools": 31,
+    "merged_profiles": 5526,
+    "fju_profiles": 237,
+    "new_main_schools": [
+      "ncue",
+      "nknu",
+      "tmu",
+      "csmu",
+      "cmu",
+      "kmu"
+    ],
+    "existing_pinned_evidence_and_reviewed_school_bundles_changed": false,
+    "shared_university_locations": "Retained main byte-for-byte",
+    "test_generated_cache": "Restored tracked CGU source cache to the staged version after tests"
+  },
+  "validation": {
+    "pytest": {
+      "passed": 214,
+      "failed": 0,
+      "seconds": 207.68,
+      "exit_code": 0,
+      "files": [
+        "tests/test_verified_window_deadlines.py",
+        "tests/test_cross_school_partners.py",
+        "tests/test_school_completeness.py",
+        "tests/test_program_profile_identity.py",
+        "tests/test_application_rules.py",
+        "tests/test_study_plan_workbench.py",
+        "tests/test_ncue_integration.py",
+        "tests/test_nknu_integration.py",
+        "tests/test_tmu_integration.py",
+        "tests/test_csmu_integration.py",
+        "tests/test_cmu_integration.py",
+        "tests/test_kmu_integration.py",
+        "tests/test_visual_coverage.py",
+        "tests/test_fju_nonjp_review.py",
+        "tests/test_fju_briefing_review.py",
+        "tests/test_fju_form_review.py",
+        "tests/test_fju_route_review.py",
+        "tests/test_fju_integration.py",
+        "tests/test_qualification_scope_consistency.py"
+      ]
+    },
+    "python_ast_files_changed_vs_main": 193,
+    "python_ast_errors": 0,
+    "openapi_check_exit_code": 0,
+    "node_syntax_checks": [
+      "src/exchange_info/static/app.js",
+      "src/exchange_info/static/home-motion.js"
+    ],
+    "node_program_identity_test_exit_code": 0,
+    "diff_check_vs_main_exit_code": 0,
+    "unresolved_paths": 0
+  },
+  "initial_runs": [
+    {
+      "passed": 138,
+      "failed": 3,
+      "seconds": 187.11,
+      "issues": [
+        "main cross-school test fixture missing required program_type",
+        "original profile-count test did not account for main additions",
+        "TMU coverage expectation was 201, while both main and merged indexes return 200 due to conflicting UBC photo records"
+      ]
+    },
+    {
+      "passed": 104,
+      "failed": 1,
+      "seconds": 44.64,
+      "issues": [
+        "visual alias index treated absent evidence as equal evidence; fixed to require provenance before considering equivalent records"
+      ]
+    }
+  ],
+  "limits": [
+    "Targeted integration tests, not the entire CI suite",
+    "No additional university or host fact verification",
+    "No production database audit, complete browser acceptance, merge to main, or deployment",
+    "TMU photo provenance conflict remains unresolved; no image records altered",
+    "Whole-record and whole-school complete factual verification remain zero"
+  ]
+}

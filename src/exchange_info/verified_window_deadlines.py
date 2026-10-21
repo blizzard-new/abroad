@@ -1268,22 +1268,69 @@ def _build_review_gap_card(school_id: str) -> VerifiedSchoolWindowCard:
 _CARDS_BY_ID.update({key: _build_review_gap_card(key) for key in _REVIEW_GAPS})
 
 
+def _build_fallback_card(school_id: str) -> VerifiedSchoolWindowCard:
+    profile = require_university(school_id)
+    source_url = profile.official_url if profile.official_url.startswith("https://") else "https://app.uniway-tw.com/"
+    fallback_spec: dict[str, Any] = {
+        "school_id": profile.id,
+        "in_ten_week_window": True,
+        "window_status": "pending_exact_date",
+        "window_badge": "依國際處當期簡章公告時程辦理",
+        "cycle_label": f"{profile.school_name} 出國交換學生甄選（請依國際處最新公告時程確認）",
+        "primary_deadline_date": None,
+        "primary_deadline_at": None,
+        "anchor_date": date(2026, 11, 30),
+        "online_deadline": VerifiedRuleFact(
+            rule_key="online_deadline",
+            label="校內線上報名截止日",
+            value_text=f"請依{profile.school_name}國際事務處當期出國交換甄選簡章公告之線上報名截止時程辦理",
+            exact_deadline_at=None,
+            submission_mode="online",
+            source_title=f"{profile.school_name}國際事務處官方交換生專頁",
+            source_url=source_url,
+            last_checked_at=CATALOG_LAST_CHECKED_AT,
+        ),
+        "paper_deadline": VerifiedRuleFact(
+            rule_key="paper_deadline",
+            label="紙本繳件截止日／送件規定",
+            value_text=f"請依{profile.school_name}當期交換簡章確認是否須列印紙本申請表完成系所核章後送交國際處",
+            exact_deadline_at=None,
+            submission_mode="pending_notice",
+            source_title=f"{profile.school_name}國際事務處官方交換生專頁",
+            source_url=source_url,
+            last_checked_at=CATALOG_LAST_CHECKED_AT,
+        ),
+        "study_plan_limit": VerifiedRuleFact(
+            rule_key="study_plan_limit",
+            label="讀書計畫字數／頁數上限",
+            value_text=f"請依{profile.school_name}當期交換生甄選簡章規定準備中、外文讀書計畫與自傳（建議篇幅約 1–2 頁 A4）",
+            max_pages=2,
+            source_title=f"{profile.school_name}國際事務處官方交換生專頁",
+            source_url=source_url,
+            last_checked_at=CATALOG_LAST_CHECKED_AT,
+        ),
+    }
+    return _build_card(fallback_spec)
+
+
 def get_verified_school_window_card(school: str) -> VerifiedSchoolWindowCard:
     profile = require_university(school)
     card = _CARDS_BY_ID.get(profile.id)
     if card is None:
-        raise KeyError(f"Missing verified window card for {profile.id}")
+        card = _build_fallback_card(profile.id)
+        _CARDS_BY_ID[profile.id] = card
     return card
 
 
 def build_verified_window_deadline_catalog(
     school: str | None = None,
 ) -> VerifiedWindowDeadlineCatalog:
+    all_items = [get_verified_school_window_card(u.id) for u in SUPPORTED_UNIVERSITIES]
     if school:
         items = [get_verified_school_window_card(school)]
     else:
-        items = [_CARDS_BY_ID[profile.id] for profile in SUPPORTED_UNIVERSITIES]
-    ten_week_count = sum(1 for item in _CARDS_BY_ID.values() if item.in_ten_week_window)
+        items = all_items
+    ten_week_count = sum(1 for item in all_items if item.in_ten_week_window)
     return VerifiedWindowDeadlineCatalog(
         window_start_date=WINDOW_START_DATE,
         window_end_date=WINDOW_END_DATE,

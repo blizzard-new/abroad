@@ -569,17 +569,38 @@ class AggregatedPartnerEntity:
         return self.school_name_zh or self.school_name_en
 
 
+_ENTITY_INDEX_CACHE: dict[
+    tuple[tuple[str, int, str, str, str], ...],
+    tuple[dict[tuple[str, str], AggregatedPartnerEntity], dict[tuple[str, str], tuple[str, str]]],
+] = {}
+
+
 def build_cross_school_entity_index(
     catalogue_loader: Callable[[UniversityProfile], tuple[list[PartnerUniversity], CatalogueSourceStatus | None]],
 ) -> tuple[dict[tuple[str, str], AggregatedPartnerEntity], dict[tuple[str, str], tuple[str, str]]]:
     """Unify partner records across all supported Taiwanese universities into shared (country_slug, institution_slug) entities."""
-    raw_records: list[tuple[UniversityProfile, PartnerUniversity, str, str]] = []
+    loaded_by_uni: list[tuple[UniversityProfile, list[PartnerUniversity]]] = []
+    signature_parts: list[tuple[str, int, str, str, str]] = []
     for uni in SUPPORTED_UNIVERSITIES:
         try:
             partners, _ = catalogue_loader(uni)
         except Exception:
             continue
-        for p in partners:
+        partner_list = list(partners) if partners else []
+        loaded_by_uni.append((uni, partner_list))
+        first_name = partner_list[0].school_name if partner_list else ""
+        last_name = partner_list[-1].school_name if partner_list else ""
+        first_status = partner_list[0].availability_status if partner_list else ""
+        signature_parts.append((uni.id, len(partner_list), first_name, last_name, first_status))
+
+    cache_key = tuple(signature_parts)
+    cached = _ENTITY_INDEX_CACHE.get(cache_key)
+    if cached is not None:
+        return cached
+
+    raw_records: list[tuple[UniversityProfile, PartnerUniversity, str, str]] = []
+    for uni, partner_list in loaded_by_uni:
+        for p in partner_list:
             c_slug, c_zh = resolve_country_slug_and_zh(p.country)
             raw_records.append((uni, p, c_slug, c_zh))
 
@@ -708,7 +729,13 @@ def build_cross_school_entity_index(
             for alias in entity.aliases:
                 alias_lookup[(c_slug, alias)] = canonical_key
 
+    if len(_ENTITY_INDEX_CACHE) >= 8:
+        _ENTITY_INDEX_CACHE.clear()
+    _ENTITY_INDEX_CACHE[cache_key] = (entities, alias_lookup)
     return entities, alias_lookup
+
+
+_PLACEHOLDER_SINGLE_VALUES = {"無", "-", "—", "–", "N/A", "NA", "n/a", "na", "none", "None"}
 
 
 def _build_home_agreement(
@@ -745,8 +772,20 @@ def _build_home_agreement(
             AVAILABILITY_LABELS.get(r.availability_status, r.availability_status) for r in rows
         )
     )
+    avail_label = "、".join(s for s in statuses if s and s.strip())
+    if len(avail_label) < 2:
+        avail_label = AVAILABILITY_LABELS["open"]
+
     quotas = list(dict.fromkeys(r.quota.strip() for r in rows if r.quota and r.quota.strip()))
-    quota_text = "；".join(quotas) if quotas else "名額未公開列載（請依母校當期簡章與選校系統確認）"
+    raw_quota = "；".join(quotas)
+    if not raw_quota or raw_quota in _PLACEHOLDER_SINGLE_VALUES:
+        quota_text = "名額未公開列載（請依母校當期簡章與選校系統確認）"
+    elif raw_quota.isdigit():
+        quota_text = f"{raw_quota} 名"
+    elif len(raw_quota) < 2:
+        quota_text = f"名額：{raw_quota}"
+    else:
+        quota_text = raw_quota
     if primary.academic_year or primary.application_round:
         round_tag = " ".join(filter(None, [primary.academic_year, primary.application_round]))
         quota_text = f"[{round_tag}] {quota_text}"
@@ -758,20 +797,24 @@ def _build_home_agreement(
             if r.language_requirement and r.language_requirement.strip()
         )
     )
-    lang_text = (
-        "；".join(lang_reqs)[:500]
-        if lang_reqs
-        else "母校公開名單未單獨列載此校語檢分數，請依母校語組通則與合作校 Fact Sheet 核對"
-    )
+    raw_lang = "；".join(lang_reqs)[:500]
+    if not raw_lang or raw_lang in _PLACEHOLDER_SINGLE_VALUES or len(raw_lang) < 2:
+        lang_text = (
+            "無特定外語檢定門檻（請依母校當期簡章與接待校規定確認）"
+            if raw_lang == "無"
+            else "母校公開名單未單獨列載此校語檢分數，請依母校語組通則與合作校 Fact Sheet 核對"
+        )
+    else:
+        lang_text = raw_lang
 
     elig_reqs = list(
         dict.fromkeys(r.eligibility.strip() for r in rows if r.eligibility and r.eligibility.strip())
     )
-    elig_text = (
-        "；".join(elig_reqs)[:500]
-        if elig_reqs
-        else "須符合母校出國交換生甄選辦法之在學年級、GPA 與學業排名門檻"
-    )
+    raw_elig = "；".join(elig_reqs)[:500]
+    if not raw_elig or raw_elig in _PLACEHOLDER_SINGLE_VALUES or len(raw_elig) < 2:
+        elig_text = "須符合母校出國交換生甄選辦法之在學年級、GPA 與學業排名門檻"
+    else:
+        elig_text = raw_elig
 
     degrees = "；".join(dict.fromkeys(r.degree_levels for r in rows if r.degree_levels)) or None
     colleges = "；".join(dict.fromkeys(r.colleges for r in rows if r.colleges)) or None
@@ -791,7 +834,7 @@ def _build_home_agreement(
         partner_display_name=primary.school_name,
         program_types=program_types,
         availability_status=primary.availability_status,
-        availability_label="、".join(statuses),
+        availability_label=avail_label[:120],
         quota_summary=quota_text[:390],
         language_requirement_summary=lang_text[:590],
         eligibility_summary=elig_text[:590],

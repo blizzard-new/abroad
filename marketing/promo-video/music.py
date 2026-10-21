@@ -4,6 +4,7 @@ Everything is synthesised here, so the soundtrack has no licensing strings attac
 changes in index.html; if the timeline there moves, move CUES / POPS below with it.
 
     python3 marketing/promo-video/music.py marketing/promo-video/build/music.wav
+    python3 marketing/promo-video/music.py marketing/promo-video/build/music-reels.wav reels
 """
 
 import sys
@@ -12,14 +13,31 @@ import wave
 import numpy as np
 
 SR = 44100
-DURATION = 65.0
 BPM = 112
 BEAT = 60 / BPM
 BAR = 4 * BEAT
-DRUMS_IN = 6.3  # the beat starts when the logo appears
-END_HIT = 58.0  # the end card
-CUES = [6.3, 10.0, 17.0, 22.6, 29.0, 36.0, 42.0, 48.0, 53.2, 58.0]  # scene changes: a soft whoosh
-POPS = [2.8, 7.9, 11.2, 17.8, 23.6, 30.2, 37.2, 43.2, 49.6, 54.6]  # the mascot starts talking: a little blip
+
+# One timing per video: index.html (landscape) and reels.html (vertical, for Instagram Reels).
+#   drums_in: the beat starts when the logo appears; end_hit: the end card;
+#   cues: scene changes (a soft whoosh); pops: the mascot starts talking (a little blip).
+PRESETS = {
+    "landscape": {
+        "duration": 65.0, "drums_in": 6.3, "end_hit": 58.0,
+        "cues": [6.3, 10.0, 17.0, 22.6, 29.0, 36.0, 42.0, 48.0, 53.2, 58.0],
+        "pops": [2.8, 7.9, 11.2, 17.8, 23.6, 30.2, 37.2, 43.2, 49.6, 54.6],
+    },
+    "reels": {
+        "duration": 36.0, "drums_in": 3.0, "end_hit": 31.0,
+        "cues": [3.0, 5.6, 11.6, 17.0, 22.5, 27.0, 31.0],
+        "pops": [0.8, 3.9, 27.8],
+    },
+}
+preset = PRESETS[sys.argv[2] if len(sys.argv) > 2 else "landscape"]
+DURATION = preset["duration"]
+DRUMS_IN = preset["drums_in"]
+END_HIT = preset["end_hit"]
+CUES = preset["cues"]
+POPS = preset["pops"]
 
 # I - V - vi - IV in C major, as MIDI notes.
 CHORDS = [[48, 55, 60, 64, 67], [43, 50, 59, 62, 67], [45, 52, 57, 60, 64], [41, 48, 57, 60, 65]]

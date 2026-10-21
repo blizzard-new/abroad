@@ -112,7 +112,12 @@ class VisualRecordIndex(dict):
                 # other provenance must agree. Conflicting evidence stays ambiguous.
                 if all(isinstance(row, dict) for row in rows):
                     evidence = [{k: v for k, v in row.items() if k != "school_name"} for row in rows]
-                    if all(row == evidence[0] for row in evidence[1:]):
+                    # Matching empty metadata (or only a shared status) is not
+                    # evidence that two translated names identify one school.
+                    has_provenance = any(evidence[0].get(field) for field in (
+                        "content_hash", "image_source_url", "source_url",
+                    ))
+                    if has_provenance and all(row == evidence[0] for row in evidence[1:]):
                         return rows[0]
                 return default
         return default

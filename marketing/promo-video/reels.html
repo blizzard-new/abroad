@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8" />
+<title>UniWay Reels 推廣影片</title>
+<!--
+  UniWay 直式推廣影片（1080×1920，Instagram Reels）。
+
+  和 index.html（橫式）同一套做法：render(t) 依時間 t（秒）畫出一格，render.mjs --video reels 逐格輸出 MP4。
+  手機畫面是網站手機版（393×852、3 倍）的整頁截圖，在手機框裡捲動。
+
+  Reels 會在畫面上方、下方與右側蓋上按鈕與說明文字，所以重要文字都放在 y 200–1450、x 60–900 之間。
+  新增學校時改 SCHOOLS／STATS 再重新輸出即可；片尾刻意不列任何校名。
+-->
+<link rel="stylesheet" href="../../src/exchange_info/static/assets/fonts/genjyuu/GenJyuuGothic-Regular.css" />
+<link rel="stylesheet" href="../../src/exchange_info/static/assets/fonts/genjyuu/GenJyuuGothic-Medium.css" />
+<link rel="stylesheet" href="../../src/exchange_info/static/assets/fonts/genjyuu/GenJyuuGothic-Bold.css" />
+<style>
+  @font-face { font-family: "Poppins"; font-weight: 400; src: url("../../src/exchange_info/static/assets/fonts/poppins/Poppins-Regular.ttf") format("truetype"); }
+  @font-face { font-family: "Poppins"; font-weight: 500; src: url("../../src/exchange_info/static/assets/fonts/poppins/Poppins-Medium.ttf") format("truetype"); }
+  @font-face { font-family: "Poppins"; font-weight: 700; src: url("../../src/exchange_info/static/assets/fonts/poppins/Poppins-Bold.ttf") format("truetype"); }
+
+  :root {
+    --navy: #10294a;
+    --muted: #52708f;
+    --blue: #2f7de1;
+    --coral: #e2574a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #0b1118; }
+  body { display: grid; place-items: center; min-height: 100vh; overflow: hidden; }
+  body.capture { display: block; min-height: 0; }
+
+  #stage {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    color: var(--navy);
+    font-family: "Poppins", "GenJyuuGothic", "Noto Sans TC", sans-serif;
+    background: #f4f8fc;
+    transform-origin: 0 0;
+  }
+
+  .bg { position: absolute; inset: 0; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(90px); }
+  .blob.b1 { width: 1000px; height: 1100px; left: -380px; top: -300px; background: rgba(120, 205, 225, 0.55); }
+  .blob.b2 { width: 1000px; height: 1100px; right: -420px; bottom: -300px; background: rgba(255, 205, 175, 0.55); }
+  .blob.b3 { width: 800px; height: 900px; right: -200px; top: 300px; background: rgba(196, 186, 245, 0.35); }
+  .dark { position: absolute; inset: 0; background: radial-gradient(circle at 50% 35%, #17345a, #0f1d30 75%); opacity: 0; }
+
+  .scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
+  .scene > * { position: absolute; }
+
+  h1, h2 { margin: 0; font-weight: 700; line-height: 1.16; letter-spacing: 0.01em; }
+  em { font-style: normal; background: linear-gradient(90deg, #2f7de1, #17b5d8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* ---- hook ---- */
+  .tab { left: 0; top: 0; display: flex; align-items: center; gap: 14px; padding: 18px 24px; border-radius: 18px; background: #fff; box-shadow: 0 18px 40px rgba(16, 41, 74, 0.16), 0 0 0 1px rgba(16, 41, 74, 0.05); font-size: 30px; font-weight: 500; white-space: nowrap; color: #1f3b5c; }
+  .tab .ic { width: 46px; height: 56px; border-radius: 7px; display: grid; place-items: center; color: #fff; font: 700 15px "Poppins", sans-serif; }
+  #hook .head { left: 40px; right: 40px; top: 560px; text-align: center; }
+  #hook h1 { font-size: 100px; text-shadow: 0 6px 30px rgba(244, 248, 252, 0.95); }
+  #hook h1 .count { color: var(--coral); }
+
+  /* ---- brand ---- */
+  #brand .logo { left: 0; right: 0; top: 290px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  #brand .logo img { width: 200px; height: 200px; }
+  .word { font: 700 150px/1 "Poppins", sans-serif; letter-spacing: -0.02em; background: linear-gradient(100deg, #1554d8 10%, #18b6e3 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #brand .slogan { left: 0; right: 0; top: 690px; text-align: center; font-size: 80px; font-weight: 700; }
+
+  /* ---- feature scenes ---- */
+  .feature .text { left: 66px; top: 200px; width: 760px; }
+  .kicker { display: inline-flex; align-items: center; gap: 16px; font-weight: 700; font-size: 34px; color: var(--coral); letter-spacing: 0.06em; }
+  .kicker b { display: inline-grid; place-items: center; width: 62px; height: 62px; border-radius: 18px; color: #fff; background: linear-gradient(135deg, #3c8ef0, #2bc0e4); font-size: 30px; letter-spacing: 0; box-shadow: 0 10px 24px rgba(47, 125, 225, 0.3); }
+  .feature h2 { margin-top: 22px; font-size: 96px; }
+
+  .phone { left: 190px; top: 640px; width: 700px; height: 1500px; padding: 20px; border-radius: 86px; background: linear-gradient(145deg, #2b3647, #121a26); box-shadow: 0 50px 110px rgba(16, 41, 74, 0.35), inset 0 0 0 3px rgba(255, 255, 255, 0.08); }
+  .phone .screen { position: relative; width: 660px; height: 1460px; border-radius: 68px; overflow: hidden; background: #f4f8fc; }
+  .phone .shot { position: absolute; left: 0; top: 0; width: 660px; will-change: transform; }
+  .phone .shot img { display: block; width: 100%; }
+  .phone .island { position: absolute; left: 50%; top: 22px; width: 190px; height: 54px; margin-left: -95px; border-radius: 30px; background: #0b0f16; z-index: 3; }
+  .tap { position: absolute; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; background: rgba(255, 255, 255, 0.55); border: 6px solid rgba(255, 107, 74, 0.9); opacity: 0; z-index: 4; }
+  .ring { position: absolute; border-radius: 22px; border: 6px solid #ff6b4a; box-shadow: 0 0 0 8px rgba(255, 107, 74, 0.2), 0 0 34px rgba(255, 107, 74, 0.45); opacity: 0; z-index: 4; }
+
+  .pill { left: 0; top: 0; display: flex; align-items: center; gap: 14px; padding: 20px 30px 20px 22px; border-radius: 999px; background: #fff; color: var(--navy); font-size: 36px; font-weight: 700; white-space: nowrap; box-shadow: 0 22px 50px rgba(16, 41, 74, 0.22), 0 0 0 1px rgba(16, 41, 74, 0.05); z-index: 5; }
+  .pill svg { width: 46px; height: 46px; flex: none; }
+
+  /* ---- stats ---- */
+  #stats { color: #fff; }
+  #stats .map { left: -60px; top: 760px; width: 1200px; opacity: 0.85; }
+  #stats .map img { width: 100%; display: block; -webkit-mask-image: radial-gradient(ellipse 50% 52% at 50% 50%, #000 65%, transparent 100%); mask-image: radial-gradient(ellipse 50% 52% at 50% 50%, #000 65%, transparent 100%); }
+  #stats .head { left: 66px; right: 66px; top: 220px; }
+  #stats h2 { font-size: 92px; }
+  #stats .grid { left: 66px; right: 140px; top: 480px; display: grid; gap: 22px; }
+  .stat { display: flex; align-items: baseline; gap: 22px; padding: 24px 40px; border-radius: 34px; background: rgba(255, 255, 255, 0.1); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12); backdrop-filter: blur(6px); }
+  .stat b { font: 700 92px/1 "Poppins", "GenJyuuGothic", sans-serif; }
+  .stat span { font-size: 40px; color: #b9d3ec; font-weight: 500; }
+  .stat.more { background: linear-gradient(100deg, #2f7de1, #19b7e2); box-shadow: 0 20px 50px rgba(25, 140, 226, 0.4); }
+  .stat.more b { font-size: 60px; }
+
+  /* ---- end card (no university names on purpose: the list keeps growing) ---- */
+  #end .lockup { left: 0; right: 0; top: 240px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  #end .row { display: flex; align-items: center; gap: 26px; }
+  #end .row img { width: 150px; height: 150px; }
+  #end .row .word { font-size: 130px; }
+  #end .line { margin-top: 44px; font-size: 80px; font-weight: 700; line-height: 1.22; }
+  #end .cta { margin-top: 44px; display: inline-flex; align-items: center; gap: 18px; padding: 26px 46px; border-radius: 999px; background: var(--navy); color: #fff; font: 700 48px "Poppins", "GenJyuuGothic", sans-serif; box-shadow: 0 24px 50px rgba(16, 41, 74, 0.3); }
+  #end .cta svg { width: 48px; height: 48px; }
+  #end .note { margin-top: 28px; font-size: 36px; color: var(--muted); font-weight: 500; }
+
+  /* ---- mascot ---- */
+  #mascot { position: absolute; left: 0; top: 0; aspect-ratio: 384 / 460; z-index: 20; }
+  #mascot .shadow { position: absolute; left: 14%; right: 14%; bottom: -3%; height: 7%; border-radius: 50%; background: rgba(35, 82, 135, 0.28); filter: blur(6px); }
+  #mascot .body { position: absolute; inset: 0; transform-origin: 50% 94%; }
+  #mascot .body img { width: 100%; height: 100%; display: block; }
+  #mascot .eyes { position: absolute; inset: 0; }
+  #mascot .eye { position: absolute; top: 46.83%; left: 37.011%; width: 8.538%; height: 12.351%; transform: translate(-50%, -50%) rotate(9.2deg); }
+  #mascot .eye.r { top: 48.873%; left: 61.052%; }
+  #mascot .eye::before { content: ""; position: absolute; inset: 0; border-radius: 50%; transform: scaleY(var(--open, 1)); background: radial-gradient(ellipse 34% 22% at 64% 24%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0)), #2c2c2f; box-shadow: inset -1px -2px 3px rgba(0, 0, 0, 0.35); }
+  #mascot .eye.r::before { transform: scaleY(var(--open-r, 1)); }
+  #mascot .cheek { position: absolute; top: 58%; width: 10%; height: 5%; border-radius: 50%; background: rgba(255, 140, 150, 0.55); filter: blur(2px); opacity: 0; }
+  #mascot .cheek.l { left: 24%; }
+  #mascot .cheek.r { left: 66%; }
+
+  #bubble { position: absolute; left: 0; top: 0; z-index: 21; padding: 22px 34px; border-radius: 30px; background: #fff; color: var(--navy); font-size: 40px; font-weight: 700; white-space: nowrap; box-shadow: 0 18px 44px rgba(16, 41, 74, 0.2), 0 0 0 1px rgba(16, 41, 74, 0.05); opacity: 0; }
+  #bubble::after { content: ""; position: absolute; left: 50%; bottom: -16px; width: 32px; height: 32px; margin-left: -16px; background: #fff; transform: rotate(45deg); border-radius: 0 0 7px 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="bg">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <div class="dark"></div>
+  </div>
+
+  <section class="scene" id="hook">
+    <div class="head"><h1>準備交換<br />還在翻 <span class="count">30</span> 個 PDF？</h1></div>
+  </section>
+
+  <section class="scene" id="brand">
+    <div class="logo"><img src="assets/uniway-logo.webp" alt="" /><span class="word">UniWay</span></div>
+    <div class="slogan">交換申請，<br /><em>一站搞定。</em></div>
+  </section>
+
+  <section class="scene" id="stats">
+    <div class="map"><img src="assets/crop-worldmap.jpg" alt="" /></div>
+    <div class="head"><h2>從臺灣出發，<br />看見世界。</h2></div>
+    <div class="grid">
+      <div class="stat"><b data-count="schools">0</b><span>所大學已支援</span></div>
+      <div class="stat"><b data-count="partners">0</b><span>筆合作校資料</span></div>
+      <div class="stat"><b>逐筆</b><span>附官方來源與查核日</span></div>
+      <div class="stat more"><b>＋ 更多大學陸續加入</b></div>
+    </div>
+  </section>
+
+  <section class="scene" id="end">
+    <div class="lockup">
+      <div class="row"><img src="assets/uniway-logo.webp" alt="" /><span class="word">UniWay</span></div>
+      <div class="line">你的交換旅程，<br /><em>從這裡出發。</em></div>
+      <div class="cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>app.uniway-tw.com</div>
+      <div class="note">公開資料免登入就能查</div>
+    </div>
+  </section>
+
+  <div id="bubble"></div>
+  <div id="mascot">
+    <div class="shadow"></div>
+    <div class="body">
+      <img src="assets/suitcase.webp" alt="" />
+      <div class="eyes"><span class="eye l"></span><span class="eye r"></span></div>
+      <span class="cheek l"></span><span class="cheek r"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------------------------------------------------------------------------------------------------------------------
+// 內容設定：新增學校時只改這裡。
+// ---------------------------------------------------------------------------------------------------------------------
+const SCHOOL_COUNT = 22;       // 首頁「N 所大學」
+const PARTNER_COUNT = 4152;    // 首頁「已整理 N 間合作校資料」
+const STATS = { schools: SCHOOL_COUNT, partners: PARTNER_COUNT };
+
+// Phone screens. Shot coordinates are pixels of the 1179-px-wide pictures in assets/mobile/.
+//   scroll: [local time, top of the visible part]; taps: [local time, x, y]; ring: [from, to, x, y, w, h].
+const FEATURES = [
+  {
+    id: "f1", num: "01", kicker: "找交換學校", start: 5.6, end: 11.8,
+    title: "能去哪些學校，<br /><em>一次看清楚。</em>",
+    shots: [
+      { src: "home.jpg", from: 0, to: 1.6, scroll: [[0, 0], [1.6, 380]] },
+      { src: "partners.jpg", from: 1.4, to: 99, scroll: [[1.4, 300], [2.2, 1100], [2.9, 1100], [4.0, 2750], [6.2, 3300]], taps: [[2.6, 590, 1684]] },
+    ],
+    pills: [[1.0, "選母校，只看你能申請的"], [2.6, "國家・學期・語檢一鍵篩選"], [4.0, "名額、截止日一眼比較"]],
+  },
+  {
+    id: "f2", num: "02", kicker: "期限與提醒", start: 11.6, end: 17.2,
+    title: "截止日，<br /><em>一個都不漏。</em>",
+    shots: [{ src: "deadlines.jpg", from: 0, to: 99, scroll: [[0, 900], [1.2, 1250], [3.4, 1250], [4.4, 4080], [5.6, 4180]], taps: [[2.2, 590, 1909]] }],
+    ring: [2.4, 3.6, 162, 1843, 855, 132],
+    pills: [[1.0, "一鍵加進 Google／Apple 行事曆"], [2.6, "T-14・T-7・T-3・T-1 倒數提醒"], [4.2, "讀書計畫字數規定也整理好"]],
+  },
+  {
+    id: "f3", num: "03", kicker: "申請工作台", start: 17.0, end: 22.7,
+    title: "從選校到送件，<br /><em>一步一步來。</em>",
+    shots: [
+      { src: "application-center.jpg", from: 0, to: 3.0, scroll: [[0, 300], [1.4, 1820], [3.0, 1900]] },
+      { src: "budget.jpg", from: 2.8, to: 99, scroll: [[2.8, 300], [4.2, 3350], [5.7, 3420]] },
+    ],
+    pills: [[1.0, "填寫・檢查・下載列印"], [2.4, "多志願自動排出準備時程"], [3.8, "同一幣別估算交換總花費"]],
+  },
+  {
+    id: "f4", num: "04", kicker: "學長姐心得", start: 22.5, end: 27.2,
+    title: "出發之前，<br /><em>先聽過來人說。</em>",
+    shots: [{ src: "forum.jpg", from: 0, to: 99, scroll: [[0, 120], [1.6, 760], [4.7, 820]] }],
+    pills: [[1.0, "真實心得：住宿・簽證・選課"], [2.4, "公共留學板＋各校看板"], [3.6, "有問題直接提問"]],
+  },
+];
+
+const HOOK_TABS = [
+  ["PDF", "#e2574a", "116學年度交換簡章.pdf"], ["XLS", "#1f9d55", "合作校名額表.xlsx"],
+  ["PDF", "#e2574a", "語言門檻_final.pdf"], ["PDF", "#e2574a", "Fact Sheet.pdf"],
+  ["DOC", "#2f6fd6", "讀書計畫格式.docx"], ["WEB", "#7a5af8", "校內甄選截止公告"],
+  ["PDF", "#e2574a", "獎學金補助辦法.pdf"], ["ZIP", "#d98a16", "學長姐心得.zip"],
+  ["WEB", "#7a5af8", "住宿與生活費"], ["PDF", "#e2574a", "姊妹校課程清單.pdf"],
+];
+// [x, y, rotation] of each tab around the headline.
+const TAB_SPOTS = [
+  [40, 200, -6], [560, 250, 5], [90, 380, 4], [620, 420, -4], [30, 880, 5],
+  [650, 900, -5], [20, 1300, -3], [700, 1320, 4], [60, 1680, 3], [620, 1720, -4],
+];
+
+const LINES = [
+  [0.8, 2.8, "到底先看哪一份……"],
+  [3.9, 5.0, "全部交給我！"],
+  [27.8, 30.6, "你的學校也快來了！"],
+];
+
+// Where the mascot stands: [time, x (centre), y (feet), width].
+const MASCOT_PATH = [
+  [0.0, 540, 2250, 300], [0.4, 540, 2250, 300], [0.9, 540, 1560, 300],
+  [2.9, 540, 1560, 300], [3.4, 540, 1640, 330], [5.0, 540, 1640, 330], [5.8, 905, 590, 200],
+  [27.0, 905, 590, 200], [27.6, 260, 1560, 220],
+  [31.0, 260, 1560, 220], [31.8, 540, 1440, 360],
+];
+const HOPS = [0.95, 3.4, 4.6, 5.8, 11.7, 17.1, 22.6, 27.6, 31.8, 33.8, 35.0];
+const SPINS = [4.1, 34.2];
+const DURATION = 36;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------------------------------------------------
+const $ = (s, r = document) => r.querySelector(s);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeOut = (x) => 1 - Math.pow(1 - x, 3);
+const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const easeBack = (x) => { const c1 = 1.6, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const CHECK = '<svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="17" fill="#e3f3fb"/><path d="m11 18.5 4.5 4.5 9.5-10" fill="none" stroke="#2f7de1" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const SCALE = 660 / 1179;  // shot pixels -> screen pixels
+
+function sceneWindow(el, t, start, end, fade = 0.35) {
+  const visible = t >= start && t <= end;
+  el.style.visibility = visible ? "visible" : "hidden";
+  if (!visible) return -1;
+  el.style.opacity = Math.min(prog(t, start, start + fade), 1 - prog(t, end - fade, end));
+  return t - start;
+}
+
+function reveal(el, lt, at, dur = 0.6, dy = 40, dx = 0) {
+  const k = easeOut(prog(lt, at, at + dur));
+  el.style.opacity = k;
+  el.style.transform = `translate(${(1 - k) * dx}px, ${(1 - k) * dy}px)`;
+}
+
+// Piecewise eased interpolation through [time, value] keys.
+function track(keys, lt) {
+  if (lt <= keys[0][0]) return keys[0][1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    const [a, va] = keys[i], [b, vb] = keys[i + 1];
+    if (lt <= b) return lerp(va, vb, easeInOut(prog(lt, a, b)));
+  }
+  return keys[keys.length - 1][1];
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Build
+// ---------------------------------------------------------------------------------------------------------------------
+const stage = $("#stage");
+
+HOOK_TABS.forEach(([ext, color, name]) => {
+  const el = document.createElement("div");
+  el.className = "tab";
+  el.innerHTML = `<span class="ic" style="background:${color}">${ext}</span>${name}`;
+  $("#hook").appendChild(el);
+});
+
+for (const f of FEATURES) {
+  const sec = document.createElement("section");
+  sec.className = "scene feature";
+  sec.id = f.id;
+  sec.innerHTML = `
+    <div class="text"><span class="kicker"><b>${f.num}</b>${f.kicker}</span><h2>${f.title}</h2></div>
+    <div class="phone"><div class="screen"><span class="island"></span>
+      ${f.shots.map((s) => `<div class="shot"><img src="assets/mobile/${s.src}" alt="" /></div>`).join("")}
+      <span class="tap"></span><span class="ring"></span>
+    </div></div>
+    ${f.pills.map(([, text]) => `<div class="pill">${CHECK}${text}</div>`).join("")}`;
+  stage.insertBefore(sec, $("#stats"));
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Render
+// ---------------------------------------------------------------------------------------------------------------------
+function renderBackground(t) {
+  $(".blob.b1").style.transform = `translate(${Math.sin(t * 0.3) * 80}px, ${Math.cos(t * 0.25) * 90}px)`;
+  $(".blob.b2").style.transform = `translate(${Math.cos(t * 0.27) * 90}px, ${Math.sin(t * 0.31) * 80}px)`;
+  $(".blob.b3").style.transform = `translate(${Math.sin(t * 0.22 + 1) * 100}px, ${Math.cos(t * 0.3) * 60}px)`;
+  $(".dark").style.opacity = Math.min(prog(t, 26.8, 27.4), 1 - prog(t, 30.8, 31.4));
+}
+
+function renderHook(t) {
+  const sec = $("#hook");
+  const lt = sceneWindow(sec, t, 0, 4.4, 0.01);
+  if (lt < 0) return;
+  const head = $(".head", sec);
+  const hk = easeBack(prog(lt, 0.1, 0.6));
+  head.style.opacity = clamp(prog(lt, 0.1, 0.35)) * (1 - prog(lt, 2.9, 3.3));
+  head.style.transform = `scale(${lerp(0.7, 1, hk)})`;
+  $(".count", sec).textContent = Math.round(lerp(1, 30, easeOut(prog(lt, 0.2, 1.4))));
+
+  const target = [540, 1380];
+  sec.querySelectorAll(".tab").forEach((el, i) => {
+    const [x, y, r] = TAB_SPOTS[i];
+    const pop = easeBack(prog(lt, 0.1 + i * 0.09, 0.45 + i * 0.09));
+    const wob = Math.sin(lt * 4 + i * 1.7) * 3 * (1 + prog(lt, 1, 2.8) * 1.5);
+    const fly = easeInOut(prog(lt, 3.0 + i * 0.04, 3.9 + i * 0.04));
+    const cx = lerp(x, target[0] - 170, fly), cy = lerp(y + Math.sin(lt * 1.6 + i) * 10, target[1], fly);
+    el.style.opacity = clamp(pop * 1.4) * (1 - prog(fly, 0.85, 1));
+    el.style.transform = `translate(${cx}px, ${cy}px) rotate(${r + wob + fly * 180}deg) scale(${Math.max(lerp(pop, 0.1, fly), 0)})`;
+  });
+}
+
+function renderBrand(t) {
+  const sec = $("#brand");
+  const lt = sceneWindow(sec, t, 3.6, 5.9, 0.25);
+  if (lt < 0) return;
+  const logo = $(".logo", sec);
+  const k = easeBack(prog(lt, 0.4, 1.0));
+  logo.style.opacity = clamp(prog(lt, 0.4, 0.7));
+  logo.style.transform = `scale(${lerp(0.6, 1, k)})`;
+  reveal($(".slogan", sec), lt, 0.8, 0.6, 50);
+}
+
+function renderFeature(f, t) {
+  const sec = document.getElementById(f.id);
+  const lt = sceneWindow(sec, t, f.start, f.end, 0.3);
+  if (lt < 0) return;
+  reveal($(".kicker", sec), lt, 0.05, 0.5, 30);
+  reveal($("h2", sec), lt, 0.15, 0.6, 40);
+
+  const phone = $(".phone", sec);
+  const pk = easeOut(prog(lt, 0.0, 0.8));
+  const out = prog(t, f.end - 0.3, f.end);
+  phone.style.opacity = pk;
+  phone.style.transform = `translateY(${(1 - pk) * 260 + out * -40}px) rotate(${(1 - pk) * 4}deg)`;
+
+  sec.querySelectorAll(".shot").forEach((el, i) => {
+    const s = f.shots[i];
+    const on = Math.min(prog(lt, s.from, s.from + 0.25), 1 - prog(lt, s.to - 0.25, s.to));
+    el.style.opacity = i === 0 && lt < s.from + 0.01 ? 1 : on;
+    el.style.transform = `translateY(${-track(s.scroll, lt) * SCALE}px)`;
+  });
+
+  // A finger tap: a ring that grows and fades where the shot is touched.
+  const tap = $(".tap", sec);
+  let tapOn = 0;
+  f.shots.forEach((s) => (s.taps || []).forEach(([at, x, y]) => {
+    const k = prog(lt, at - 0.15, at + 0.5);
+    if (k <= 0 || k >= 1) return;
+    tapOn = 1;
+    tap.style.left = `${x * SCALE}px`;
+    tap.style.top = `${(y - track(s.scroll, lt)) * SCALE}px`;
+    tap.style.opacity = k < 0.25 ? k / 0.25 : 1 - (k - 0.25) / 0.75;
+    tap.style.transform = `scale(${0.6 + k * 0.9})`;
+  }));
+  if (!tapOn) tap.style.opacity = 0;
+
+  const ring = $(".ring", sec);
+  if (f.ring) {
+    const [a, b, x, y, w, h] = f.ring;
+    const s = f.shots[0];
+    const k = Math.min(prog(lt, a, a + 0.25), 1 - prog(lt, b - 0.25, b));
+    const top = (y - track(s.scroll, lt)) * SCALE;
+    Object.assign(ring.style, { left: `${x * SCALE - 10}px`, top: `${top - 10}px`, width: `${w * SCALE + 20}px`, height: `${h * SCALE + 20}px` });
+    ring.style.opacity = k * (0.75 + 0.25 * Math.sin(lt * 9));
+  }
+
+  // Pills stack on the left over the phone, newest at the bottom.
+  sec.querySelectorAll(".pill").forEach((p, i) => {
+    const at = f.pills[i][0];
+    const k = easeBack(prog(lt, at, at + 0.45));
+    p.style.opacity = clamp(prog(lt, at, at + 0.2));
+    p.style.transform = `translate(${lerp(-80, 50, k)}px, ${1090 + i * 118}px) scale(${lerp(0.8, 1, k)})`;
+  });
+}
+
+function renderStats(t) {
+  const sec = $("#stats");
+  const lt = sceneWindow(sec, t, 27.0, 31.2, 0.35);
+  if (lt < 0) return;
+  reveal($(".head", sec), lt, 0.15, 0.6, 40);
+  const map = $(".map", sec);
+  map.style.opacity = 0.85 * easeOut(prog(lt, 0.0, 0.8));
+  map.style.transform = `scale(${1 + lt * 0.02})`;
+  sec.querySelectorAll(".stat").forEach((s, i) => {
+    const at = 0.5 + i * 0.35;
+    const k = easeBack(prog(lt, at, at + 0.45));
+    s.style.opacity = clamp(prog(lt, at, at + 0.2));
+    s.style.transform = `translateX(${(1 - k) * -120}px)`;
+  });
+  sec.querySelectorAll("[data-count]").forEach((el) => {
+    el.textContent = Math.round(STATS[el.dataset.count] * easeOut(prog(lt, 0.6, 2.0))).toLocaleString("en-US");
+  });
+}
+
+function renderEnd(t) {
+  const sec = $("#end");
+  const lt = sceneWindow(sec, t, 31.0, DURATION, 0.35);
+  if (lt < 0) return;
+  const row = $(".row", sec);
+  const rk = easeBack(prog(lt, 0.3, 0.9));
+  row.style.opacity = clamp(prog(lt, 0.3, 0.5));
+  row.style.transform = `scale(${lerp(0.6, 1, rk)})`;
+  reveal($(".line", sec), lt, 0.8, 0.6, 40);
+  const cta = $(".cta", sec);
+  const ck = easeBack(prog(lt, 1.4, 2.0));
+  cta.style.opacity = clamp(prog(lt, 1.4, 1.6));
+  cta.style.transform = `scale(${lerp(0.7, 1, ck) * (1 + 0.03 * Math.sin(Math.max(0, lt - 2) * 4))})`;
+  reveal($(".note", sec), lt, 1.9, 0.6, 20);
+  sec.style.opacity = 1 - prog(t, DURATION - 0.5, DURATION);
+}
+
+function renderMascot(t) {
+  let x = MASCOT_PATH[0][1], y = MASCOT_PATH[0][2], w = MASCOT_PATH[0][3];
+  for (let i = 0; i < MASCOT_PATH.length - 1; i++) {
+    const a = MASCOT_PATH[i], b = MASCOT_PATH[i + 1];
+    if (t >= a[0] && t <= b[0]) {
+      const k = easeInOut(prog(t, a[0], b[0]));
+      x = lerp(a[1], b[1], k); y = lerp(a[2], b[2], k); w = lerp(a[3], b[3], k);
+      break;
+    }
+    if (t > b[0]) { x = b[1]; y = b[2]; w = b[3]; }
+  }
+  let hop = 0, sx = 1, sy = 1;
+  for (const h of HOPS) {
+    const k = (t - h) / 0.55;
+    if (k < -0.15 || k > 1.2) continue;
+    if (k < 0) { const q = (k + 0.15) / 0.15; sx = 1 + 0.06 * q; sy = 1 - 0.07 * q; }
+    else if (k <= 1) { hop = Math.sin(Math.PI * k); sx = 1 - 0.03 * hop; sy = 1 + 0.05 * hop; }
+    else { const q = Math.sin(Math.PI * (k - 1) / 0.2); sx = 1 + 0.05 * q; sy = 1 - 0.06 * q; }
+  }
+  let spin = 0;
+  for (const s of SPINS) spin += 360 * easeInOut(prog(t, s, s + 0.7));
+  // Shakes with worry while the PDFs pile up.
+  const shake = t < 2.9 ? Math.sin(t * 38) * 2.5 * prog(t, 1.2, 1.6) : 0;
+  const bob = Math.sin(t * 2.4) * 0.012;
+  const tilt = Math.sin(t * 1.3) * 3 + shake;
+  const h = w * 460 / 384;
+  const el = $("#mascot");
+  el.style.width = `${w}px`;
+  el.style.opacity = 1 - prog(t, DURATION - 0.5, DURATION);
+  el.style.transform = `translate(${x - w / 2}px, ${y - h - hop * h * 0.22 - bob * h}px)`;
+  $(".body", el).style.transform = `perspective(900px) rotateY(${spin}deg) rotate(${tilt}deg) scale(${sx}, ${sy})`;
+  $(".shadow", el).style.transform = `translateY(${hop * h * 0.22 + bob * h}px) scaleX(${1 - hop * 0.35})`;
+  $(".shadow", el).style.opacity = 1 - hop * 0.45;
+
+  const bt = (t + 0.7) % 2.9;
+  const blink = bt < 0.16 ? Math.abs(Math.cos((bt / 0.16) * Math.PI)) : 1;
+  const wink = 1 - 0.92 * Math.sin(Math.PI * prog(t, 33.0, 33.7));
+  el.style.setProperty("--open", Math.max(0.08, blink));
+  el.style.setProperty("--open-r", Math.max(0.08, Math.min(blink, wink)));
+  // Looks around while worried, down at the phone during the features, at the viewer otherwise.
+  const worried = 1 - prog(t, 2.9, 3.3);
+  const atPhone = prog(t, 5.8, 6.3) * (1 - prog(t, 27.0, 27.5));
+  const lookX = t < 3.3 ? Math.sin(t * 5) * 5 * worried : lerp(Math.sin(t * 0.9) * 2, -4, atPhone);
+  const lookY = t < 3.3 ? -1.5 * worried : lerp(Math.sin(t * 0.7) * 1.2, 3, atPhone);
+  $(".eyes", el).style.transform = `translate(${lookX}%, ${lookY}%)`;
+  const happy = prog(t, 3.9, 4.3) * (1 - prog(t, 5.6, 6.0)) + prog(t, 31.8, 32.3);
+  el.querySelectorAll(".cheek").forEach((c) => (c.style.opacity = clamp(happy)));
+
+  const bubble = $("#bubble");
+  const line = LINES.find(([a, b]) => t >= a && t <= b);
+  if (!line) { bubble.style.opacity = 0; return; }
+  const [a, b, text] = line;
+  if (bubble.textContent !== text) bubble.textContent = text;
+  const k = easeBack(prog(t, a, a + 0.35));
+  const bw = bubble.offsetWidth, bh = bubble.offsetHeight;
+  const bx = clamp(x - bw / 2, 40, 1040 - bw);
+  const by = y - h - hop * h * 0.22 - bh - 34;
+  bubble.style.opacity = clamp(prog(t, a, a + 0.15)) * (1 - prog(t, b - 0.25, b));
+  bubble.style.transformOrigin = `${x - bx}px 100%`;
+  bubble.style.transform = `translate(${bx}px, ${by}px) scale(${lerp(0.4, 1, k)})`;
+}
+
+function render(t) {
+  renderBackground(t);
+  renderHook(t);
+  renderBrand(t);
+  FEATURES.forEach((f) => renderFeature(f, t));
+  renderStats(t);
+  renderEnd(t);
+  renderMascot(t);
+}
+window.render = render;
+window.DURATION = DURATION;
+
+window.ready = (async () => {
+  await Promise.all([...document.images].map((img) => img.decode().catch(() => {})));
+  for (let t = 0; t <= DURATION; t += 0.5) render(t);
+  await document.fonts.ready;
+  render(0);
+  return true;
+})();
+
+if (!location.search.includes("capture")) {
+  const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); stage.style.transform = `scale(${s})`; stage.style.marginRight = `${1080 * (s - 1)}px`; stage.style.marginBottom = `${1920 * (s - 1)}px`; };
+  addEventListener("resize", fit); fit();
+  const audio = new Audio("build/music-reels.wav");
+  window.ready.then(() => {
+    let t0 = null;
+    const tick = (now) => { if (t0 === null) t0 = now; render(((now - t0) / 1000) % DURATION); requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+    addEventListener("click", () => { audio.currentTime = 0; audio.play().catch(() => {}); t0 = null; });
+  });
+} else {
+  document.body.classList.add("capture");
+}
+</script>
+</body>
+</html>

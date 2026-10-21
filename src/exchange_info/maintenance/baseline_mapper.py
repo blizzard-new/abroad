@@ -53,6 +53,12 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "nkust": ["oia.nkust.edu.tw", "flec.nkust.edu.tw", "www.nkust.edu.tw", "nkust.edu.tw"],
     "yuntech": ["tdx.yuntech.edu.tw", "admissions-oia.yuntech.edu.tw", "www.yuntech.edu.tw", "yuntech.edu.tw"],
     "ntou": ["oia.ntou.edu.tw", "www.ntou.edu.tw", "ntou.edu.tw"],
+    "ncue": ["oicaweb.ncue.edu.tw", "www.ncue.edu.tw", "ncue.edu.tw"],
+    "nknu": ["oia.nknu.edu.tw", "c.nknu.edu.tw", "w3.nknu.edu.tw", "www.nknu.edu.tw", "nknu.edu.tw"],
+    "tmu": ["oge.tmu.edu.tw", "aca.tmu.edu.tw", "www.tmu.edu.tw", "tmu.edu.tw"],
+    "csmu": ["oia.csmu.edu.tw", "www.csmu.edu.tw", "csmu.edu.tw"],
+    "cmu": ["cmucia.cmu.edu.tw", "www.cmu.edu.tw", "cmupt.cmu.edu.tw", "med.cmu.edu.tw", "chmed.cmu.edu.tw", "cmunur.cmu.edu.tw", "cmu.edu.tw"],
+    "kmu": ["cia.kmu.edu.tw", "www.kmu.edu.tw", "cmed.kmu.edu.tw", "dent.kmu.edu.tw", "pharm.kmu.edu.tw", "nursing.kmu.edu.tw", "chs.kmu.edu.tw", "cls.kmu.edu.tw", "chss.kmu.edu.tw", "kmu.edu.tw"],
 }
 
 
@@ -1035,6 +1041,144 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["ntou"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ntou", partner_rows=ntou_rows, default_cycle_label="115-2"
+        )
+
+    # 26. NCUE partners.jsonl (108 partner schools)
+    ncue_partners_path = official_data_root / "ncue" / "partners.jsonl"
+    if ncue_partners_path.exists():
+        ncue_rows = []
+        for line in ncue_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            ncue_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oicaweb.ncue.edu.tw/p/406-1019-28981,r174.php?Lang=zh-tw",
+            })
+        school_reports["ncue"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="ncue", partner_rows=ncue_rows, default_cycle_label="116"
+        )
+
+    # 27. NKNU partners.jsonl (143 partner schools)
+    nknu_partners_path = official_data_root / "nknu" / "partners.jsonl"
+    if nknu_partners_path.exists():
+        nknu_rows = []
+        for line in nknu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            nknu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.nknu.edu.tw/tw/ugC_Out.asp",
+            })
+        school_reports["nknu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="nknu", partner_rows=nknu_rows, default_cycle_label="115"
+        )
+
+    # 28. TMU partners.jsonl (201 partner schools)
+    tmu_partners_path = official_data_root / "tmu" / "partners.jsonl"
+    if tmu_partners_path.exists():
+        tmu_rows = []
+        for line in tmu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            tmu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oge.tmu.edu.tw/global-partners/",
+            })
+        school_reports["tmu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="tmu", partner_rows=tmu_rows, default_cycle_label="115"
+        )
+
+    # 29. CSMU partners.jsonl (124 partner schools)
+    csmu_partners_path = official_data_root / "csmu" / "partners.jsonl"
+    if csmu_partners_path.exists():
+        csmu_rows = []
+        for line in csmu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            csmu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.csmu.edu.tw/p/412-1004-75.php?Lang=zh-tw",
+            })
+        school_reports["csmu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="csmu", partner_rows=csmu_rows, default_cycle_label="116"
+        )
+
+    # 30. CMU partners.jsonl (174 partner schools)
+    cmu_partners_path = official_data_root / "cmu" / "partners.jsonl"
+    if cmu_partners_path.exists():
+        cmu_rows = []
+        for line in cmu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            cmu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://cmucia.cmu.edu.tw/a_partner.php",
+            })
+        school_reports["cmu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="cmu", partner_rows=cmu_rows, default_cycle_label="116"
+        )
+
+    # 31. KMU partners.jsonl (188 partner schools)
+    kmu_partners_path = official_data_root / "kmu" / "partners.jsonl"
+    if kmu_partners_path.exists():
+        kmu_rows = []
+        for line in kmu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            kmu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://cia.kmu.edu.tw/index.php/zh-tw/%E5%A7%8A%E5%A6%B9%E6%A0%A1%E5%90%88%E7%B4%84/%E5%90%88%E7%B4%84%E6%A0%A1%E6%9F%A5%E8%A9%A2",
+            })
+        school_reports["kmu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="kmu", partner_rows=kmu_rows, default_cycle_label="116"
         )
 
     if store.current_release_id is None:

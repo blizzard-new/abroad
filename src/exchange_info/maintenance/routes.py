@@ -785,6 +785,12 @@ def create_maintenance_router(
             <option value="nkust">國立高雄科技大學（共 107 所姊妹校）</option>
             <option value="yuntech">國立雲林科技大學（共 112 所姊妹校）</option>
             <option value="ntou">國立臺灣海洋大學（共 123 所姊妹校）</option>
+            <option value="ncue">國立彰化師範大學（共 108 所姊妹校）</option>
+            <option value="nknu">國立高雄師範大學（共 143 所姊妹校）</option>
+            <option value="tmu">臺北醫學大學（共 201 所姊妹校）</option>
+            <option value="csmu">中山醫學大學（共 124 所姊妹校）</option>
+            <option value="cmu">中國醫藥大學（共 174 所姊妹校）</option>
+            <option value="kmu">高雄醫學大學（共 188 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -880,7 +886,13 @@ def create_maintenance_router(
     wzu: "文藻外語大學 (WZU)",
     nkust: "國立高雄科技大學 (NKUST)",
     yuntech: "國立雲林科技大學 (YunTech)",
-    ntou: "國立臺灣海洋大學 (NTOU)"
+    ntou: "國立臺灣海洋大學 (NTOU)",
+    ncue: "國立彰化師範大學 (NCUE)",
+    nknu: "國立高雄師範大學 (NKNU)",
+    tmu: "臺北醫學大學 (TMU)",
+    csmu: "中山醫學大學 (CSMU)",
+    cmu: "中國醫藥大學 (CMU)",
+    kmu: "高雄醫學大學 (KMU)"
   };
 
   const FIELD_LABELS = {

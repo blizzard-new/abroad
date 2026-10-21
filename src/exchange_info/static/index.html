@@ -41,7 +41,9 @@
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
     <link rel="stylesheet" href="/static/feedback.css?v=20261008-4" />
     <link rel="stylesheet" href="/static/responsive.css?v=20261007-responsive-1" />
+    <link rel="stylesheet" href="/static/mobile-reading.css?v=20261021-1" media="(max-width: 700px)" />
     <link rel="stylesheet" href="/static/editorial-entry.css?v=20261020-2" />
+    <link rel="stylesheet" href="/static/home-motion.css?v=20261020-1" />
     <noscript><style>.boot-splash { display: none !important; }</style></noscript>
   </head>
   <body class="global-home-mode unified-shell">
@@ -176,6 +178,12 @@
           <button type="button" class="school-option" data-home-school="國立高雄科技大學" role="option" aria-selected="false" style="--school-tint:218"><span class="school-emblem" aria-hidden="true">高科大</span><span class="school-option-name">國立高雄科技大學</span><span class="school-option-status">107 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
           <button type="button" class="school-option" data-home-school="國立雲林科技大學" role="option" aria-selected="false" style="--school-tint:158"><span class="school-emblem" aria-hidden="true">雲科大</span><span class="school-option-name">國立雲林科技大學</span><span class="school-option-status">112 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
           <button type="button" class="school-option" data-home-school="國立臺灣海洋大學" role="option" aria-selected="false" style="--school-tint:198"><span class="school-emblem" aria-hidden="true">海大</span><span class="school-option-name">國立臺灣海洋大學</span><span class="school-option-status">123 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="國立彰化師範大學" role="option" aria-selected="false" style="--school-tint:210"><span class="school-emblem" aria-hidden="true">彰師大</span><span class="school-option-name">國立彰化師範大學</span><span class="school-option-status">108 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="國立高雄師範大學" role="option" aria-selected="false" style="--school-tint:185"><span class="school-emblem" aria-hidden="true">高師大</span><span class="school-option-name">國立高雄師範大學</span><span class="school-option-status">143 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="臺北醫學大學" role="option" aria-selected="false" style="--school-tint:352"><span class="school-emblem" aria-hidden="true">北醫大</span><span class="school-option-name">臺北醫學大學</span><span class="school-option-status">201 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="中山醫學大學" role="option" aria-selected="false" style="--school-tint:168"><span class="school-emblem" aria-hidden="true">中山醫</span><span class="school-option-name">中山醫學大學</span><span class="school-option-status">124 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="中國醫藥大學" role="option" aria-selected="false" style="--school-tint:342"><span class="school-emblem" aria-hidden="true">中國醫</span><span class="school-option-name">中國醫藥大學</span><span class="school-option-status">174 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
+          <button type="button" class="school-option" data-home-school="高雄醫學大學" role="option" aria-selected="false" style="--school-tint:28"><span class="school-emblem" aria-hidden="true">高醫大</span><span class="school-option-name">高雄醫學大學</span><span class="school-option-status">188 間合作校</span><i class="school-option-go" data-lucide="arrow-right" aria-hidden="true"></i></button>
         </div>
         <p id="school-search-empty" class="school-search-empty" hidden>未找到這所學校；目前支援的學校請查看選單，其他台灣大學會依資料查核進度加入。</p>
 
@@ -399,6 +407,7 @@
                     </span>
                   </span>
                 </div>
+                <button class="hm-scroll-cue" type="button" data-home-discover hidden><span>往下探索你的交換旅程</span><i data-lucide="arrow-down" aria-hidden="true"></i></button>
               </section>
 
               <section class="pr-supported" aria-label="目前支援的學校">
@@ -473,9 +482,24 @@
               </section>
 
               <section class="pr-section pr-journey" aria-labelledby="home-journey-title">
-                <div class="pr-section-head pr-section-head-row">
+                <div class="hm-journey-intro">
+                <div class="pr-section-head">
                   <div><span class="pr-kicker">申請指南</span><h2 id="home-journey-title">你的交換旅程，<br>一步一步來。</h2><p>從選校到出發，找到你現在需要的下一步。</p></div>
                   <a class="pr-link pr-link-lg" href="#guide">閱讀完整指南<i data-lucide="arrow-right" aria-hidden="true"></i></a>
+                </div>
+                <div class="hm-route-card" aria-hidden="true">
+                  <div class="hm-route-card-top"><span>YOUR NEXT CHAPTER</span><span class="hm-route-index">01 / 04</span></div>
+                  <svg class="hm-route-art" viewBox="0 0 480 230" focusable="false">
+                    <circle class="hm-orbit" cx="310" cy="110" r="88"/><circle class="hm-orbit" cx="310" cy="110" r="60"/>
+                    <path class="hm-route-track" d="M50 185 C140 185 125 50 235 95 S350 185 426 48"/>
+                    <path class="hm-route-trace" pathLength="1" d="M50 185 C140 185 125 50 235 95 S350 185 426 48"/>
+                    <circle class="hm-route-origin" cx="50" cy="185" r="5"/><circle class="hm-route-destination" cx="426" cy="48" r="7"/>
+                    <g class="hm-route-plane" transform="translate(50 185)"><circle r="21"/><path d="M-10 0 10-7 3 10 0 3Z"/></g>
+                    <text x="48" y="216">從這裡開始</text><text x="375" y="24">世界等著你</text>
+                  </svg>
+                  <div class="hm-route-card-bottom"><span>交換路線</span><strong class="hm-route-title">找到想去的學校</strong></div>
+                  <div class="hm-route-meter"><span></span></div>
+                </div>
                 </div>
                 <ol class="pr-stages">
                   <li><div class="pr-stage-rail"><span class="pr-stage-no">01</span><span class="pr-stage-line"></span></div><span class="pr-chip pr-chip-blue"><i data-lucide="compass" aria-hidden="true"></i></span><h3>找到想去的學校</h3><p>比較課程、語言門檻與生活費。</p><a class="pr-link" href="#partners">探索學校<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
@@ -1620,6 +1644,7 @@
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261016-globe-5" defer></script>
     <script src="/static/platform-home.js?v=20261020-home-hero-cleanup-1" defer></script>
+    <script src="/static/home-motion.js?v=20261020-1" defer></script>
     <script src="/static/platform-explore.js?v=20261019-seo-events-1" defer></script>
     <script src="/static/platform-detail.js?v=20261017-ntu-reference-1" defer></script>
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
