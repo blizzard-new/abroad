@@ -41,7 +41,9 @@
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
     <link rel="stylesheet" href="/static/feedback.css?v=20261008-4" />
     <link rel="stylesheet" href="/static/responsive.css?v=20261007-responsive-1" />
+    <link rel="stylesheet" href="/static/mobile-reading.css?v=20261021-1" media="(max-width: 700px)" />
     <link rel="stylesheet" href="/static/editorial-entry.css?v=20261020-2" />
+    <link rel="stylesheet" href="/static/home-motion.css?v=20261020-1" />
     <noscript><style>.boot-splash { display: none !important; }</style></noscript>
   </head>
   <body class="global-home-mode unified-shell">
@@ -406,6 +408,7 @@
                     </span>
                   </span>
                 </div>
+                <button class="hm-scroll-cue" type="button" data-home-discover hidden><span>往下探索你的交換旅程</span><i data-lucide="arrow-down" aria-hidden="true"></i></button>
               </section>
 
               <section class="pr-supported" aria-label="目前支援的學校">
@@ -480,9 +483,24 @@
               </section>
 
               <section class="pr-section pr-journey" aria-labelledby="home-journey-title">
-                <div class="pr-section-head pr-section-head-row">
+                <div class="hm-journey-intro">
+                <div class="pr-section-head">
                   <div><span class="pr-kicker">申請指南</span><h2 id="home-journey-title">你的交換旅程，<br>一步一步來。</h2><p>從選校到出發，找到你現在需要的下一步。</p></div>
                   <a class="pr-link pr-link-lg" href="#guide">閱讀完整指南<i data-lucide="arrow-right" aria-hidden="true"></i></a>
+                </div>
+                <div class="hm-route-card" aria-hidden="true">
+                  <div class="hm-route-card-top"><span>YOUR NEXT CHAPTER</span><span class="hm-route-index">01 / 04</span></div>
+                  <svg class="hm-route-art" viewBox="0 0 480 230" focusable="false">
+                    <circle class="hm-orbit" cx="310" cy="110" r="88"/><circle class="hm-orbit" cx="310" cy="110" r="60"/>
+                    <path class="hm-route-track" d="M50 185 C140 185 125 50 235 95 S350 185 426 48"/>
+                    <path class="hm-route-trace" pathLength="1" d="M50 185 C140 185 125 50 235 95 S350 185 426 48"/>
+                    <circle class="hm-route-origin" cx="50" cy="185" r="5"/><circle class="hm-route-destination" cx="426" cy="48" r="7"/>
+                    <g class="hm-route-plane" transform="translate(50 185)"><circle r="21"/><path d="M-10 0 10-7 3 10 0 3Z"/></g>
+                    <text x="48" y="216">從這裡開始</text><text x="375" y="24">世界等著你</text>
+                  </svg>
+                  <div class="hm-route-card-bottom"><span>交換路線</span><strong class="hm-route-title">找到想去的學校</strong></div>
+                  <div class="hm-route-meter"><span></span></div>
+                </div>
                 </div>
                 <ol class="pr-stages">
                   <li><div class="pr-stage-rail"><span class="pr-stage-no">01</span><span class="pr-stage-line"></span></div><span class="pr-chip pr-chip-blue"><i data-lucide="compass" aria-hidden="true"></i></span><h3>找到想去的學校</h3><p>比較課程、語言門檻與生活費。</p><a class="pr-link" href="#partners">探索學校<i data-lucide="arrow-up-right" aria-hidden="true"></i></a></li>
@@ -954,7 +972,7 @@
                   <div class="advisor-fields">
                   <label id="advisor-percent-field"><span>學業平均</span><input id="advisor-academic-score" name="academic_score" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="例如 82" /></label>
                   <label id="advisor-gpa-field" data-ntu-academic-field hidden><span id="advisor-gpa-label">適用學年GPA（4.3制）</span><input id="advisor-academic-gpa" name="academic_gpa" type="number" min="0" max="4.3" step="0.01" inputmode="decimal" placeholder="例如 2.44；與排名擇一" disabled /></label>
-                  <label data-ntu-academic-field hidden><span>適用學年班排名（前幾%）</span><input id="advisor-class-rank" name="class_rank_percent" type="number" min="0.01" max="100" step="0.01" inputmode="decimal" placeholder="例如前30%填30" disabled /></label>
+                  <label data-ntu-academic-field hidden><span id="advisor-rank-label">適用學年班排名（前幾%）</span><input id="advisor-class-rank" name="class_rank_percent" type="number" min="0.01" max="100" step="0.01" inputmode="decimal" placeholder="例如前30%填30" disabled /></label>
                   <label><span>語言測驗</span><select id="advisor-language-test" name="language_test"><option value="">尚未考／尚未決定</option><option value="toeic">TOEIC</option><option value="ielts">IELTS Academic</option><option value="toefl">TOEFL iBT（舊制120分）</option><option value="toefl_new">TOEFL iBT（新制6分）</option><option value="duolingo">Duolingo</option><option value="other">其他</option></select></label>
                   <label><span>語言分數</span><input placeholder="尚未考可留空" id="advisor-language-score" name="language_score" type="number" min="0" step="0.5" inputmode="decimal" /></label>
                   <label data-tku-eligibility hidden><span>JLPT 級別</span><select id="advisor-jlpt-level" name="jlpt_level" disabled><option value="">尚未考／待補</option><option value="N1">N1</option><option value="N2">N2</option><option value="N3">N3</option><option value="N4">N4</option><option value="N5">N5</option></select></label>
@@ -1627,6 +1645,7 @@
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261016-globe-5" defer></script>
     <script src="/static/platform-home.js?v=20261020-home-hero-cleanup-1" defer></script>
+    <script src="/static/home-motion.js?v=20261020-1" defer></script>
     <script src="/static/platform-explore.js?v=20261019-seo-events-1" defer></script>
     <script src="/static/platform-detail.js?v=20261017-ntu-reference-1" defer></script>
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>

@@ -69,7 +69,7 @@ def _normal(value: object) -> str:
 
 def scope_needs_confirmation(scope: str | None) -> bool:
     return not scope or scope.strip().casefold() in {"無", "none", "n/a", "na", "--", "—", "待補"} or any(
-        term in scope.casefold() for term in ("待確認", "依當期", "依協議", "依合作", "另洽", "未提供", "不含", "除外", "excluding", "except")
+        term in scope.casefold() for term in ("待確認", "跨期資料待核對", "依當期", "依協議", "依合作", "另洽", "未提供", "不含", "除外", "excluding", "except")
     )
 
 

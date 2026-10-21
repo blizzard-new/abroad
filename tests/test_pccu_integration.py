@@ -67,49 +67,49 @@ def test_pccu_email_domains(email: str, allowed: bool) -> None:
 
 
 def test_pccu_degree_and_academic_checks() -> None:
-    assert pccu_degree_check("學士班", "大一")[0] == "fail"
-    assert pccu_degree_check("學士班", "大二")[0] == "pass"
-    assert pccu_degree_check("學士班", "大三")[0] == "pass"
-    assert pccu_degree_check("碩士班", "碩一")[0] == "pass"
-    assert pccu_degree_check("博士班", "博二")[0] == "pass"
+    assert pccu_degree_check("學士班", "大一")[0] == "needs_confirmation"
+    assert pccu_degree_check("學士班", "大二")[0] == "needs_confirmation"
+    assert pccu_degree_check("學士班", "大三")[0] == "needs_confirmation"
+    assert pccu_degree_check("碩士班", "碩一")[0] == "needs_confirmation"
+    assert pccu_degree_check("博士班", "博二")[0] == "needs_confirmation"
     assert pccu_degree_check("在職專班", "碩二")[0] == "needs_confirmation"
-    assert pccu_degree_check("學士班", "延畢")[0] == "pass"
+    assert pccu_degree_check("學士班", "延畢")[0] == "needs_confirmation"
     assert pccu_degree_check(None, None)[0] == "needs_confirmation"
 
-    assert pccu_academic_check("學士班", 75.0, 3.2, 25.0)[0] == "pass"
+    assert pccu_academic_check("學士班", 75.0, 3.2, 25.0)[0] == "needs_confirmation"
     assert pccu_academic_check("學士班", 68.0, None, None)[0] == "needs_confirmation"
-    assert pccu_academic_check("學士班", 62.0, 2.0, 65.0)[0] == "fail"
-    assert pccu_academic_check("碩士班", 82.0, 3.4, None)[0] == "pass"
+    assert pccu_academic_check("學士班", 62.0, 2.0, 65.0)[0] == "needs_confirmation"
+    assert pccu_academic_check("碩士班", 82.0, 3.4, None)[0] == "needs_confirmation"
     assert pccu_academic_check("學士班", None, None, None)[0] == "needs_confirmation"
 
 
 def test_pccu_language_checks() -> None:
-    assert pccu_language_check(None, None, partner_country="中國大陸")[0] == "pass"
+    assert pccu_language_check(None, None, partner_country="中國大陸")[0] == "needs_confirmation"
     assert (
         pccu_language_check(None, None, partner_country="美國")[0]
         == "needs_confirmation"
     )
-    assert pccu_language_check("toefl", 79.0, partner_country="美國")[0] == "pass"
-    assert pccu_language_check("toefl", 55.0, partner_country="美國")[0] == "fail"
-    assert pccu_language_check("ielts", 6.0, partner_country="英國")[0] == "pass"
-    assert pccu_language_check("ielts", 4.5, partner_country="英國")[0] == "fail"
-    assert pccu_language_check("toeic", 650.0, partner_country="美國")[0] == "pass"
-    assert pccu_language_check("toeic", 550.0, partner_country="美國")[0] == "fail"
-    assert pccu_language_check("jlpt", 2.0, partner_country="日本")[0] == "pass"
-    assert pccu_language_check("jlpt", 6.0, partner_country="日本")[0] == "fail"
-    assert pccu_language_check("topik", 3.0, partner_country="韓國")[0] == "pass"
+    assert pccu_language_check("toefl", 79.0, partner_country="美國")[0] == "needs_confirmation"
+    assert pccu_language_check("toefl", 55.0, partner_country="美國")[0] == "needs_confirmation"
+    assert pccu_language_check("ielts", 6.0, partner_country="英國")[0] == "needs_confirmation"
+    assert pccu_language_check("ielts", 4.5, partner_country="英國")[0] == "needs_confirmation"
+    assert pccu_language_check("toeic", 650.0, partner_country="美國")[0] == "needs_confirmation"
+    assert pccu_language_check("toeic", 550.0, partner_country="美國")[0] == "needs_confirmation"
+    assert pccu_language_check("jlpt", 2.0, partner_country="日本")[0] == "needs_confirmation"
+    assert pccu_language_check("jlpt", 6.0, partner_country="日本")[0] == "needs_confirmation"
+    assert pccu_language_check("topik", 3.0, partner_country="韓國")[0] == "needs_confirmation"
 
 
 def test_pccu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     partners = fetch_pccu_partner_universities()
     assert len(partners) == 135
-    assert sum(1 for p in partners if p.availability_status == "open") == 130
+    assert sum(1 for p in partners if p.availability_status == "open") == 3
     assert (
         sum(1 for p in partners if p.availability_status == "reference_only")
-        == 5
+        == 84
     )
-    assert sum(1 for p in partners if p.application_window_status == "open") == 98
-    assert sum(1 for p in partners if p.application_window_status == "closed") == 37
+    assert sum(1 for p in partners if p.application_window_status == "open") == 3
+    assert sum(1 for p in partners if p.application_window_status == "closed") == 53
     assert all(
         p.location and p.location.geocode_status == "verified" for p in partners
     )
@@ -132,7 +132,7 @@ def test_pccu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     ]
     assert len(workflows) == 135
     assert all(w.review_status == "published" for w in workflows)
-    assert all(w.applicability_status == "verified" for w in workflows)
+    assert all(w.applicability_status == "needs_confirmation" for w in workflows)
 
     destinations = [
         d
@@ -143,11 +143,8 @@ def test_pccu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     ]
     assert len(destinations) == 135
     for dest in destinations:
-        est = primary_estimate(extract_monthly_estimates(dest))
-        assert (
-            est is not None
-        ), f"Missing primary monthly cost estimate for {dest.school_name}"
-        assert est.scope == "total_living"
+        assert "逐校生活費待查" in dest.cost_summary
+        assert dest.coverage_status == "official_partial"
 
     templates = all_application_templates("pccu")
     assert len(templates) == 6
@@ -165,7 +162,7 @@ def test_pccu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
 
 def test_pccu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     partners = fetch_pccu_partner_universities()
-    sample = next(p for p in partners if p.availability_status == "open" and p.country == "美國")
+    sample = next(p for p in partners if p.availability_status == "open" and p.country == "中國大陸")
     workflows = storage.load_bundled_application_workflows()
     destinations = storage.load_destination_profiles(
         tmp_path, include_bundled_baseline=True
@@ -175,7 +172,7 @@ def test_pccu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
         ApplicationRuleContext(
             home_university=PCCU.school_name,
             partner_university=sample.school_name,
-            academic_year="116",
+            academic_year="115",
             application_round=sample.application_round,
         ),
     )
@@ -193,7 +190,7 @@ def test_pccu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     plan = build_personal_application_plan(
         PersonalApplicationPlanRequest(
             home_school=PCCU.school_name,
-            academic_year="116",
+            academic_year="115",
             application_round=sample.application_round,
             degree_level="學士班",
             current_year="大二",
@@ -211,8 +208,8 @@ def test_pccu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     )
     assert len(plan.choices) == 1
     checks = {c.code: c for c in plan.choices[0].checks}
-    assert checks["academic_score"].status == "pass"
-    assert checks["home_language_score"].status == "pass"
+    assert checks["academic_score"].status == "needs_confirmation"
+    assert checks["home_language_score"].status == "needs_confirmation"
 
     completeness = build_school_completeness(
         sample,
@@ -220,7 +217,8 @@ def test_pccu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
         wf,
         home_university=PCCU.school_name,
     )
-    assert completeness.available_count >= 8
+    assert completeness.available_count >= 1
+    assert wf.applicability_status == "needs_confirmation"
 
     client = TestClient(create_app(tmp_path))
     r_unis = client.get("/universities")

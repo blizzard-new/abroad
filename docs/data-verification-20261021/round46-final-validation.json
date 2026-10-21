@@ -1,0 +1,87 @@
+{
+  "recorded_at": "2026-10-21T04:44:55.675429+00:00",
+  "previous_turn_assessment": "Read access was reconfirmed, but did not advance field verification. Pending round46 edits were revalidated and completed in this turn.",
+  "current_turn_assessment": "progress: 902 scoped field changes, 30 PDF table rows read, 32-route gap audit, identity collision fix, 168 passing regression tests, and a confirmed isolated builder regression for follow-up.",
+  "original_scope": {
+    "mother_universities": 25,
+    "partner_plans": 4585
+  },
+  "source_table_rows": 30,
+  "existing_routes_reviewed": 29,
+  "missing_distinct_self_funded_routes": 3,
+  "source_content_patches": 876,
+  "attachment_link_patches": 26,
+  "original_field_bindings_appended": 706,
+  "unbound_original_fields": 196,
+  "runtime_profiles_before": 4583,
+  "runtime_profiles_after": 4585,
+  "runtime_workflows_after": 4533,
+  "remaining_storage_collisions": 0,
+  "replayed_changes": 0,
+  "pytest": {
+    "command": "python -m pytest -q tests/test_program_profile_identity.py tests/test_fju_route_review.py tests/test_fju_integration.py tests/test_application_rules.py tests/test_qualification_scope_consistency.py tests/test_school_content.py tests/test_school_completeness.py tests/test_tku_governance_commands.py tests/test_tku_governance_routes.py tests/test_ntu_integration.py tests/test_ntpu_support.py tests/test_fit_signals.py tests/test_vilnius_akita_review.py",
+    "passed": 168,
+    "failed": 0,
+    "duration_seconds": 139.73,
+    "exit_code": 0,
+    "log_sha256": "6d47c046fc29cfcfd7b528d1a4331f6308bae0f5d711b8c12776a225bf9c6307"
+  },
+  "node_route_lookup_test_exit_code": 0,
+  "python_syntax_files": 182,
+  "openapi_check_exit_code": 0,
+  "diff_check_exit_code": 0,
+  "ledger_validation": {
+    "validated_at": "2026-10-21T04:37:32.840845+00:00",
+    "review_decisions": 124383,
+    "bindings_by_inventory": {
+      "output/data-verification-20261021/baseline": 64455,
+      "output/data-verification-20261021/derived-baseline": 40675,
+      "output/data-verification-20261021/raw-catalog-baseline": 13199,
+      "output/data-verification-20261021/runtime-review-20261021": 6054
+    },
+    "bound_records": 17070,
+    "absent_optional_null_bindings": 867,
+    "pinned_inventory_files": 14,
+    "original_ledger_sha256": "b7f80955a390fbcf4602b3e2f13ece8933dffc8621cc56d234d597efea2e6252",
+    "errors": [],
+    "facts_verified_by_validation": 0
+  },
+  "source_transport_counts": {
+    "error": 2936,
+    "retrieved": 20028,
+    "deferred_rate_limit": 5204
+  },
+  "manifest_hashes": {
+    "docs/data-verification-20261021/round46-fju-route-source-review.json": "e710fe9d14ee07a2f596eaf51d310733e12adf95ebaff90ca40bebb549dc5d24",
+    "docs/data-verification-20261021/round46-fju-attachment-link-review.json": "8961f63e736294d385b5cb1f7f870c1790e232a9319cde1244dcb1f9b91e37b3",
+    "docs/data-verification-20261021/round46-fju-form-and-builder-followup.json": "46b3611c89467606fe08df799bd4748096c0096c4ead8bb5291210231ef65544"
+  },
+  "code_sha256": {
+    "src/exchange_info/school_identity.py": "5aa6aea43fd7d463ff67fcd79c1b8fbe2f92eb344dc23cabac7ce00b5e640616",
+    "src/exchange_info/storage.py": "9117ba068f7dd42e936180367eae1d4c52418c2b0153b734f12150513280081e",
+    "src/exchange_info/api.py": "a71572cc2b015b781b90ce75902339852c4fd1e25bad199f3f3204b2aed71aa1",
+    "src/exchange_info/cli.py": "14e6ba6cd38653d0061db0dd8991e83e2a7e4f620edfc382d2ac7897a56d631d",
+    "src/exchange_info/application_rules.py": "8b784c9fab9d7ff169ff3f57d4e6850dc04ed4c9aeba1973d77157eec29576d0",
+    "src/exchange_info/school_content.py": "340b0efe2bb9276200b9cbe69a622fca8f0bccb8412299e0f2ccbf218061406f",
+    "src/exchange_info/destination_profile_review.py": "26731d9f80e8dd4748f088faff7e22ef1a2b2147b86a12677ae723fdc1616268",
+    "src/exchange_info/fju_oct20_updates.py": "2d150b7936de905bf494caff0a1c7cf8aa90bca974304fdaf867f49b5ed9e1aa",
+    "src/exchange_info/fju_route_review.py": "86704c0234b5f019111d6e4f94eab48e35d3e7e5de8f4af203d0ca8a49bba144",
+    "scripts/build_fju_catalog.py": "30eb635d42b8cf6fa620f481cf3ff75442d33425a30edcf192d827cd8c1d5477",
+    "scripts/report_university_data_audit.py": "1515b5a28f70f160bdb1317d0629646580e65779c4f45c1fbcda4f68890c2a78",
+    "tests/test_program_profile_identity.py": "bdb2bf083d95718dc8cc9ffb7a5ef0973621c776a05c54477dca1cb8e6c7b0d2",
+    "tests/test_fju_route_review.py": "d47684a9c5326cd0b880bebe5f7e98874a745d501932fbd5d65c400d9fc34372",
+    "tests/test_fju_integration.py": "b1810690b956056e8bce22a8f24c09add006f9cba7783e057968e351c1dbfa57",
+    "tests/test_school_completeness.py": "252cf21cf35386383e298ee06839c25d072e93d9e780aec9db112e9afc420e7e",
+    "tests/js/test_program_profile_identity.cjs": "ce4253463bc42549efd7764ca36fc39be4e2e03331bf6c65218bf48343aaf8b8",
+    "docs/api/openapi.json": "85e73fd6d50d889649ef80b225ef747a36f555a1764d400a8b16d5dd03f43c6a"
+  },
+  "whole_records_verified": 0,
+  "whole_schools_verified": 0,
+  "full_builder_run": false,
+  "browser_qa": false,
+  "isolated_builder_overlay_regression_confirmed": true,
+  "builder_regression_fixed": false,
+  "remote_main_observed_read_only": "c98c0c3bf56b18865f6afb584921492cb3a6148a",
+  "remote_reconciliation_complete": false,
+  "pull_request_created": false
+}

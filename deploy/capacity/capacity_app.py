@@ -13,7 +13,8 @@ if not re.fullmatch(r"[0-9a-f]{32}", RUN_ID):
 async def capacity_identity():
     return {"run_id": RUN_ID, "purpose": "isolated-capacity-test", "pid": os.getpid(),
             "threads": int(os.environ.get("EXCHANGE_WORKER_THREADS", "2")),
-            "catalogue_slots": int(os.environ.get("EXCHANGE_CATALOGUE_CONCURRENCY", "1"))}
+            "catalogue_slots": int(os.environ.get("EXCHANGE_CATALOGUE_CONCURRENCY", "1")),
+            "dashboard_ready": "cgu" in getattr(app.state, "public_dashboard_cache_ready", set())}
 
 
 @app.middleware("http")

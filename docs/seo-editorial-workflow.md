@@ -1,6 +1,6 @@
 # UniWay editorial workflow
 
-The user requested ten complete Traditional Chinese SEO articles, then a batch of three articles every Monday with a review PR. Publishing cadence is a production workflow, not a promise of Google rankings. Do not auto-merge or deploy these batches.
+The user requested ten initial Traditional Chinese SEO articles. On 2026-10-20, the recurring workflow changed to two complete articles per day, starting at 08:00 Asia/Taipei from 2026-10-21, with one new review PR containing that day's pair. Publishing cadence is a production workflow, not a promise of Google rankings. Do not auto-merge or deploy these batches.
 
 ## Content and routes
 
@@ -21,10 +21,10 @@ All inputs are structured plain text. Do not insert raw HTML or tracking scripts
 ## Batch procedure
 
 1. Fetch `blizzard-new/abroad` main and inspect current open editorial PRs. Work on an isolated branch/worktree. Do not reset or clean unrelated user changes. If the initial editorial implementation is still unmerged, prepare the next batch on a branch based on it with an explicit PR dependency; avoid recreating the publishing system.
-2. Select three distinct useful topics, using Search Console evidence if the user has provided it; otherwise disclose that topic choice is editorial judgment. Review `docs/seo-editorial-backlog.md` and existing content first. Update the backlog to record the completed intentions.
-3. Read and record official sources, write the full articles, create inline artwork and diagrams, and check every numeric example. Keep an evidence ledger with checked date, source version, claim supported and any access limitation. A functioning URL alone is not content verification.
+2. Select two distinct useful topics from the approved 20-candidate pool (12 exchange-preparation topics plus eight AI/language/test-preparation topics), using Search Console evidence if the user has provided it; otherwise disclose that topic choice is editorial judgment. Review `docs/seo-editorial-backlog.md` and existing content first. Update the backlog to record each selected intention, Asia/Taipei batch date, slug, status and PR. Treat topics in pending PRs as selected; update overlapping existing guides rather than publishing near-duplicates, and select another independent candidate to complete the pair. If suitable candidates or verifiable sources are exhausted, report the limitation instead of inventing or padding articles.
+3. Read and record official sources, write the full articles, prepare inline photography under the current image rules and original accessible diagrams, and check every numeric example. Keep an evidence ledger with checked date, source version, claim supported and any access limitation. A functioning URL alone is not content verification.
 4. Run the checks below; inspect desktop and phone screenshots. Confirm the deployed wheel includes JSON, stylesheet and images. A failed essential check must be fixed or prominently reported before delivery, never called passing.
-5. Create one review PR containing the three articles, assets, any needed related-link updates and source/validation notes. Attach its URL to the task. Report three titles, changes, validations and any limitation. Do not merge, deploy, submit thousands of URLs to Search Console, or promise immediate indexing.
+5. Create one new review PR for each day's batch containing the two articles, assets, any needed related-link updates and source/validation notes. Use a new isolated branch for each date; retrying the same batch should reuse its existing branch/PR to avoid duplicates. Attach its URL to the task. Report two titles, changes, validations and any limitation. Do not merge, deploy, submit thousands of URLs to Search Console, or promise immediate indexing.
 
 ## Local checks
 
@@ -42,7 +42,7 @@ For a package check, build a wheel with `pip wheel --no-deps .`, inspect that `e
 
 ## Schedule and production boundary
 
-The recurring task produces three articles together on Monday morning in Asia/Taipei and creates a review PR. It does not rely on the Windows server being available to write content. GitHub access must remain connected; if a future run fails, report the actual blocker rather than claim a PR or publication succeeded.
+The existing recurring task starts at 08:00 every day, including weekends, in Asia/Taipei from 2026-10-21; it produces two complete articles together and creates one new review PR for that day's pair after validation. The start time is not a promise that the PR is ready at 08:00. This replaces the former Monday-only three-article schedule; do not create a second concurrent automation. While this workflow update is awaiting merge, the user's current daily/two-article instruction and the updated automation prompt take precedence over the old count and cadence on main. It does not rely on the Windows server being available to write content. GitHub access must remain connected; if a future run fails, report the actual blocker rather than claim a PR or publication succeeded.
 
 The production server is maintained by the user. Their original `C:\uniway\app` has unrelated local work; the previous release used a separate checkout `C:\uniway\releases\seo-bd504845`, the original `.env`, and Compose project `uniway`. After PR review/merge, deploy a verified commit using a new isolated release checkout, preserve the running image as rollback, rebuild the app, and run the existing deployment SEO smoke test. Do not overwrite the original worktree or `.env`.
 

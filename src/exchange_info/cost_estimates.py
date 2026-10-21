@@ -71,6 +71,8 @@ class MonthlyCostEstimate:
     outdated: bool
     evidence: str
     source_urls: tuple[str, ...] = field(default_factory=tuple)
+    applicability_status: str | None = None
+    applicability_note: str | None = None
 
 
 @lru_cache(maxsize=1)
@@ -97,6 +99,9 @@ def extract_monthly_estimates(profile: DestinationProfile) -> list[MonthlyCostEs
 
     text = profile.cost_summary or ""
     sources = tuple(row.source_url for row in profile.sources if row.source_url)[:4]
+    cost_evidence = profile.cost_evidence
+    if cost_evidence is not None:
+        sources = (cost_evidence.source_url,)
     results: list[MonthlyCostEstimate] = []
     for raw in _sentences(text):
         sentence = _THOUSANDS_SPACE.sub("", raw)
@@ -133,6 +138,8 @@ def extract_monthly_estimates(profile: DestinationProfile) -> list[MonthlyCostEs
                     includes=tuple(name for name, rule in _COMPONENTS.items() if rule.search(sentence)),
                     as_of_year=as_of, outdated=outdated,
                     evidence=sentence[:220], source_urls=sources,
+                    applicability_status=cost_evidence.status if cost_evidence else None,
+                    applicability_note=cost_evidence.note if cost_evidence else None,
                 )
             )
             break
@@ -143,7 +150,7 @@ def primary_estimate(estimates: list[MonthlyCostEstimate]) -> MonthlyCostEstimat
     living = [row for row in estimates if row.scope == "total_living"]
     if not living:
         return None
-    current = [row for row in living if not row.outdated]
+    current = [row for row in living if not row.outdated and row.applicability_status in (None, "verified_current")]
     return (current or living)[0]
 
 
@@ -174,6 +181,12 @@ def budget_fit(
                 "reason": "來源只列出住宿或部分項目，沒有完整的每月生活費，無法比對預算。",
             }
         return {"status": "unknown", "reason": "來源沒有可比對的每月生活費金額，請查官方費用頁。"}
+    if estimate.applicability_status not in (None, "verified_current"):
+        return {
+            "status": "unknown",
+            "reason": estimate.applicability_note or "費用來源尚未確認適用於本次交換，不能據此判定符合預算。",
+            "estimate": _public(estimate, None),
+        }
     if estimate.outdated:
         return {
             "status": "unknown",
@@ -198,9 +211,13 @@ def budget_fit(
 
 
 def _public(estimate: MonthlyCostEstimate, rate: float | None) -> dict:
-    return {
+    result = {
         "currency": estimate.currency, "low": estimate.low, "high": estimate.high,
         "includes": list(estimate.includes), "as_of_year": estimate.as_of_year,
         "evidence": estimate.evidence, "source_urls": list(estimate.source_urls),
         "twd_per_unit": rate,
     }
+    if estimate.applicability_status is not None:
+        result.update(applicability_status=estimate.applicability_status,
+                      applicability_note=estimate.applicability_note)
+    return result

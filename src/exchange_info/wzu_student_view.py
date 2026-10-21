@@ -19,7 +19,7 @@ WZU_OFFICIAL_DATA_DIR = (
     Path(__file__).resolve().parent / "official_data" / "wzu"
 )
 WZU_INTRO_URL = "https://d020.wzu.edu.tw/article/492285"
-WZU_PARTNER_LIST_URL = "https://d020.wzu.edu.tw/article/529354"
+WZU_PARTNER_LIST_URL = "https://d020.wzu.edu.tw/article/530752"
 
 
 def _payload(filename: str):

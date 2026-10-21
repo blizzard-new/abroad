@@ -1,0 +1,75 @@
+{
+  "recorded_at": "2026-10-21T04:10:05.688610+00:00",
+  "replays": {
+    "ncku": 0,
+    "ncu": 0,
+    "nsysu": 0,
+    "nthu": 0,
+    "ntnu": 0,
+    "ntu": 0,
+    "ntut": 0,
+    "nycu": 0,
+    "wzu": 0
+  },
+  "python_syntax_files": 99,
+  "fju_collision_groups": 2,
+  "manifest_hashes": {
+    "docs/data-verification-20261021/round45-vilnius-akita-review.json": "88a52974cdac2766992981d310e5662a94cdd4eff559ce054fd484b37f18810a",
+    "docs/data-verification-20261021/round45-cost-applicability-followup.json": "9fc777852937163d0c5f79f0a4261ed101932ad202abc98f4fd22b1fe63e760f"
+  },
+  "whole_records_verified": 0,
+  "whole_schools_verified": 0,
+  "full_builder_run": false,
+  "browser_qa": false,
+  "original_scope": {
+    "mother_universities": 25,
+    "partner_plans": 4585
+  },
+  "remote_main_observed_read_only": "c98c0c3bf56b18865f6afb584921492cb3a6148a",
+  "remote_reconciliation_complete": false,
+  "pull_request_created": false,
+  "validated_at": "2026-10-21T04:11:59.885442+00:00",
+  "pytest": {
+    "command": "python -m pytest -q tests/test_vilnius_akita_review.py tests/test_ntut_ips_review.py tests/test_ncku_guidelines_review.py tests/test_ncku_partner_table_review.py tests/test_ncku_integration.py tests/test_ntut_integration.py tests/test_application_rules.py tests/test_qualification_scope_consistency.py tests/test_fit_signals.py tests/test_next_phase_contract.py tests/test_tku_governance_commands.py",
+    "passed": 146,
+    "failed": 0,
+    "duration_seconds": 76.11,
+    "exit_code": 0
+  },
+  "openapi_check_exit_code": 0,
+  "diff_check_exit_code": 0,
+  "code_sha256": {
+    "src/exchange_info/vilnius_akita_review.py": "0d6ef1b0a83e29695ed5f8a7377dfab0a54d8f97d681cbaa2d7bf0d46136d2fb",
+    "src/exchange_info/cost_estimates.py": "fe8972bc3c2663d606646b0cfefab6a9f01384a75a7f86e9b0efa98ce49a9fe6",
+    "src/exchange_info/models.py": "c121ad441d1a61a4672477f123575b8d19a9c8a358614c68fc35adac990751b2",
+    "src/exchange_info/school_completeness.py": "e71a4a15a6bed93053ba47611a521f4f627a475358e839c10fc5067e90eb023c",
+    "src/exchange_info/ntut_source_review.py": "53cb6c409cd800ad3f07a3336e4046b7a7e57ef86e0f17459e6668def4464419",
+    "scripts/report_university_data_audit.py": "99eeec26cfb5a7b01bb0c381276d85d58f80502e8e3ccb2fa1273771663d8bf0",
+    "docs/api/openapi.json": "85e73fd6d50d889649ef80b225ef747a36f555a1764d400a8b16d5dd03f43c6a",
+    "scripts/build_ntu_catalog.py": "850570ae063efc69f9a0bda25481dd26601b4f78f221f7fcc02f9a0a56c75bfc",
+    "scripts/build_ncu_catalog.py": "75c5ba23674180c4013a034585ef63566e2a608341ec241c1ecf0bc99791652e",
+    "scripts/build_ntnu_catalog.py": "ab2decd6f923fb82a1d36858b02470df5bf9f3124bb63652bf1374ec14e94dd5",
+    "scripts/build_nsysu_catalog.py": "db946c3a2550f505476106b6740d2e44cf9f2275d1a67c4b61cc3fd525b1dbbc",
+    "scripts/build_ncku_catalog.py": "2469d3c8fd03e4a8f1551c345859f2ec2a2aabdebbe9bc0be6533e03579a68a4",
+    "scripts/build_nycu_catalog.py": "fdd3e5cd68fcc86c6c79b69fd7ba774c06952d9314e80f8225c8e2ba96301351",
+    "scripts/build_nthu_catalog.py": "585d508ee029fc1824a7c1c7b5afe81dba810f451866f58fbf80a33524eea059",
+    "scripts/build_wzu_catalog.py": "4ffdd440b1ada2f13a33ea42e2ef3f926c5ee59f9706896d2d95c27ec3fbef9b",
+    "tests/test_vilnius_akita_review.py": "337e4da90ab05c2c8afe7ad701dc8486b30c62082eec5bd5a80a1231f99dffc3",
+    "tests/test_ntut_ips_review.py": "f8b8255c94fbc34b28316387b5d5aae217f4febfe62bdab09b138d1cd2be2380",
+    "tests/test_ncku_guidelines_review.py": "847f35b68d5aa8a3b682310700554fc8df309f8511089121c96cc94e511b064b",
+    "tests/test_ncku_partner_table_review.py": "6b07977e7c835cf26e2d8987a373dcd2ea1db8197d76611129db65c1e78d840f",
+    "tests/test_ncku_integration.py": "31ec582cc606bcb1af253fe93051c3971b68ddfbe198d55728f52a021e154053",
+    "tests/test_ntut_integration.py": "887bcb8fa9387fa2d9617afec9301e734ecd032c126207f5d8254b8004466e1f",
+    "tests/test_application_rules.py": "070b5821998311cd893ae87c8520c32753a4e49308cff1806155c25056c97692",
+    "tests/test_qualification_scope_consistency.py": "8df72bca10c39f11e3b81062861022bcb70c6d66bfe29153e4b763407493dacf",
+    "tests/test_fit_signals.py": "9918951a808ec869eeb5908b44082ba034c468e88e103c62c70906e5e48dbacc",
+    "tests/test_next_phase_contract.py": "0d2a13233bd1a35acd94674418e8ee9f1e088c4bdc9f27db27ebdcdd0911e4e5",
+    "tests/test_tku_governance_commands.py": "5822472beeeb7c377a3f25dc59c0403e10bba77f5e3f92ba1e7a4a16ce156213"
+  },
+  "intermediate_failures_resolved": [
+    "Test matched VILNIUS TECH by an overly broad prefix; made exact identity selection.",
+    "Undated/future-intake cost treated as comparable current budget; added cost evidence and applicability checks.",
+    "Legacy six-school test rejected 19 later schools; kept original six counts and checked all 25 registered homes.",
+    "OpenAPI snapshot lagged current and earlier audited model changes; inspected schema diff and regenerated."
+  ]
+}

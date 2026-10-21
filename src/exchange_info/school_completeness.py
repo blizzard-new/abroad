@@ -129,8 +129,12 @@ def build_school_completeness(
     estimates = extract_monthly_estimates(destination)
     estimate = primary_estimate(estimates)
     cost_text = (destination.cost_summary or "").strip()
-    if estimate and not estimate.outdated:
-        items.append(_item("cost", "每月生活費", "available", "來源明列每月生活費總額，可換算比對預算。", urls))
+    if estimate and estimate.applicability_status not in (None, "verified_current"):
+        items.append(_item("cost", "每月生活費", "needs_confirmation",
+                           estimate.applicability_note or "來源尚未確認適用於本次交換，不能直接比對當期預算。",
+                           list(estimate.source_urls)))
+    elif estimate and not estimate.outdated:
+        items.append(_item("cost", "每月生活費", "available", "來源明列每月生活費總額，可換算比對預算。", list(estimate.source_urls)))
     elif estimate:
         items.append(_item("cost", "每月生活費", "needs_confirmation", "來源的金額是舊年度或歷史基準。", urls))
     elif cost_text and not _UNPUBLISHED.search(cost_text):

@@ -9,7 +9,9 @@ from .ncu_document_conditions import preparation_state_key
 
 import asyncio
 import csv
+import gzip
 from contextvars import ContextVar
+from concurrent.futures import Future
 from .access_control import (
     HOME_UNIVERSITY_UNSET,
     catalog_home_university,
@@ -544,7 +546,7 @@ def _calendar_feed_content(
 
 
 from .settings import DEFAULT_DATA_DIR
-from .school_identity import school_identity_key
+from .school_identity import school_identity_key, school_program_identity_key
 from .storage import (
     append_anonymous_identity,
     append_community_answer,
@@ -660,8 +662,26 @@ def _static_cache_control(path: str, versioned: bool) -> str:
     if path.endswith((".js", ".css", ".html", ".json", ".webmanifest")) and not versioned:
         return "no-cache"
     return "public, max-age=86400"
+
+
+def _accepts_gzip(value: str) -> bool:
+    for item in value.casefold().split(","):
+        name, *parameters = (part.strip() for part in item.split(";"))
+        if name not in {"gzip", "*"}:
+            continue
+        quality = next(
+            (part[2:].strip() for part in parameters if part.startswith("q=")),
+            "1",
+        )
+        try:
+            if float(quality) > 0:
+                return True
+        except ValueError:
+            continue
+    return False
 CACHE_WARM_UP_DELAY_SECONDS = 15.0
 DASHBOARD_CACHE_SECONDS = 600.0
+PUBLIC_DASHBOARD_RESPONSE_SECONDS = 30.0
 PASSWORD_ITERATIONS = 390_000
 EMAIL_PATTERN = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
 PUBLIC_COMMUNITY_BOARD = "公共留學板"
@@ -1027,6 +1047,14 @@ def create_app(
 
     worker_threads = capacity_setting("EXCHANGE_WORKER_THREADS", 2, 128)
     catalogue_concurrency = capacity_setting("EXCHANGE_CATALOGUE_CONCURRENCY", 1, 16)
+    try:
+        cache_warm_up_delay_seconds = float(
+            os.environ.get("EXCHANGE_WARM_CACHE_DELAY_SECONDS", CACHE_WARM_UP_DELAY_SECONDS)
+        )
+    except ValueError as error:
+        raise RuntimeError("EXCHANGE_WARM_CACHE_DELAY_SECONDS must be from 0 to 300") from error
+    if not 0 <= cache_warm_up_delay_seconds <= 300:
+        raise RuntimeError("EXCHANGE_WARM_CACHE_DELAY_SECONDS must be from 0 to 300")
     catalogue_slots: asyncio.Semaphore | None = None
     catalogue_response_paths = {
         "/student-dashboard", "/coverage", "/destination-profiles", "/destination-profile",
@@ -1218,9 +1246,18 @@ def create_app(
         if not access_token:
             raise HTTPException(status_code=401, detail="請先登入帳號。")
         token_hash = hashlib.sha256(access_token.encode("utf-8")).hexdigest()
+        repository = app.state.account_repository
+        if hasattr(repository, "authenticate_by_token_hash"):
+            authenticated = repository.authenticate_by_token_hash(token_hash)
+            if authenticated is None:
+                raise HTTPException(status_code=401, detail="登入狀態已失效，請重新登入。")
+            account, session = authenticated
+            if session.expires_at <= utc_now():
+                raise HTTPException(status_code=401, detail="登入狀態已失效，請重新登入。")
+            return account, session
         session = None
-        if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "find_session_by_token_hash"):
-            session = app.state.account_repository.find_session_by_token_hash(token_hash)
+        if hasattr(repository, "find_session_by_token_hash"):
+            session = repository.find_session_by_token_hash(token_hash)
             if session and session.expires_at <= utc_now():
                 session = None
         if session is None:
@@ -1236,8 +1273,8 @@ def create_app(
         if session is None:
             raise HTTPException(status_code=401, detail="登入狀態已失效，請重新登入。")
         account = None
-        if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "find_account_by_id"):
-            account = app.state.account_repository.find_account_by_id(session.account_id)
+        if hasattr(repository, "find_account_by_id"):
+            account = repository.find_account_by_id(session.account_id)
         if account is None:
             account = next(
                 (row for row in load_user_accounts(resolved_data_dir) if row.id == session.account_id),
@@ -1710,6 +1747,11 @@ def create_app(
     dashboard_cache_lock = threading.Lock()
     dashboard_build_lock = threading.Lock()  # one build at a time: a second visitor waits for it instead of repeating it
     dashboard_refreshing: set[str] = set()
+    dashboard_response_cache: dict[tuple, tuple[bytes, bytes, str]] = {}
+    dashboard_response_builds: dict[tuple, Future[tuple[bytes, bytes, str]]] = {}
+    dashboard_response_lock = threading.Lock()
+    dashboard_response_ready: set[str] = set()
+    app.state.public_dashboard_cache_ready = dashboard_response_ready
 
     def build_cached_dashboard(university: UniversityProfile, signature: tuple) -> StudentDashboard:
         with dashboard_build_lock:
@@ -1839,6 +1881,164 @@ def create_app(
             "catalogue_source": view.source,
         })
 
+    def render_student_dashboard(
+        university: UniversityProfile,
+        *,
+        base_url: str,
+    ) -> StudentDashboard:
+        """Build the public dashboard once before it is serialized for a traffic burst."""
+
+        dashboard = _attach_school_images(
+            dashboard_for_university(university),
+            base_url=base_url,
+        )
+        locations = load_university_locations(resolved_data_dir)
+        partners = []
+        for partner in dashboard.partner_universities:
+            location = public_location(locations, partner.school_name, partner.country)
+            if university.id == "ccu":
+                from .ccu_profile import school_location
+                location = school_location(partner, location, resolved_data_dir)
+            elif university.id == NCU.id:
+                from .ncu_completion import campus_location
+                location = campus_location(partner, location, resolved_data_dir)
+            elif university.id == "tku":
+                from .tku_assets import school_location
+                location = school_location(partner, resolved_data_dir)
+            elif university.id == FJU.id:
+                from .fju_student_view import fju_school_location
+                location = fju_school_location(partner, location, resolved_data_dir)
+            elif university.id == SCU.id:
+                from .scu_student_view import scu_school_location
+                location = scu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NTNU.id:
+                from .ntnu_student_view import ntnu_school_location
+                location = ntnu_school_location(partner, location, resolved_data_dir)
+            elif university.id == CYCU.id:
+                from .cycu_student_view import cycu_school_location
+                location = cycu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NTUST.id:
+                from .ntust_student_view import ntust_school_location
+                location = ntust_school_location(partner, location, resolved_data_dir)
+            elif university.id == YZU.id:
+                from .yzu_student_view import yzu_school_location
+                location = yzu_school_location(partner, location, resolved_data_dir)
+            elif university.id == FCU.id:
+                from .fcu_student_view import fcu_school_location
+                location = fcu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NSYSU.id:
+                from .nsysu_student_view import nsysu_school_location
+                location = nsysu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NCHU.id:
+                from .nchu_student_view import nchu_school_location
+                location = nchu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NTUT.id:
+                from .ntut_student_view import ntut_school_location
+                location = ntut_school_location(partner, location, resolved_data_dir)
+            elif university.id == NCCU.id:
+                from .nccu_student_view import nccu_school_location
+                location = nccu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NCKU.id:
+                from .ncku_student_view import ncku_school_location
+                location = ncku_school_location(partner, location, resolved_data_dir)
+            elif university.id == NYCU.id:
+                from .nycu_student_view import nycu_school_location
+                location = nycu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NTHU.id:
+                from .nthu_student_view import nthu_school_location
+                location = nthu_school_location(partner, location, resolved_data_dir)
+            elif university.id == PCCU.id:
+                from .pccu_student_view import pccu_school_location
+                location = pccu_school_location(partner, location, resolved_data_dir)
+            elif university.id == WZU.id:
+                from .wzu_student_view import wzu_school_location
+                location = wzu_school_location(partner, location, resolved_data_dir)
+            elif university.id == NKUST.id:
+                from .nkust_student_view import nkust_school_location
+                location = nkust_school_location(partner, location, resolved_data_dir)
+            elif university.id == YUNTECH.id:
+                from .yuntech_student_view import yuntech_school_location
+                location = yuntech_school_location(partner, location, resolved_data_dir)
+            elif university.id == NTOU.id:
+                from .ntou_student_view import ntou_school_location
+                location = ntou_school_location(partner, location, resolved_data_dir)
+            elif university.id == NCUE.id:
+                from .ncue_student_view import ncue_school_location
+                location = ncue_school_location(partner, location, resolved_data_dir)
+            elif university.id == NKNU.id:
+                from .nknu_student_view import nknu_school_location
+                location = nknu_school_location(partner, location, resolved_data_dir)
+            elif university.id == TMU.id:
+                from .tmu_student_view import tmu_school_location
+                location = tmu_school_location(partner, location, resolved_data_dir)
+            elif university.id == CSMU.id:
+                from .csmu_student_view import csmu_school_location
+                location = csmu_school_location(partner, location, resolved_data_dir)
+            elif university.id == CMU.id:
+                from .cmu_student_view import cmu_school_location
+                location = cmu_school_location(partner, location, resolved_data_dir)
+            elif university.id == KMU.id:
+                from .kmu_student_view import kmu_school_location
+                location = kmu_school_location(partner, location, resolved_data_dir)
+            elif university.id == MCU.id:
+                from .mcu_student_view import mcu_school_location
+                location = mcu_school_location(partner, location, resolved_data_dir)
+            partners.append(partner.model_copy(update={"location": location}))
+        return dashboard.model_copy(update={"partner_universities": partners})
+
+    def dashboard_response_signature() -> tuple:
+        paths = data_paths(resolved_data_dir)
+        lifetime = min(PUBLIC_DASHBOARD_RESPONSE_SECONDS, DASHBOARD_CACHE_SECONDS)
+        bucket = int(time.monotonic() / lifetime) if lifetime > 0 else time.monotonic()
+        return (
+            bucket,
+            file_signature(paths["processed_pages"]),
+            file_signature(paths["exchange_info"]),
+            file_signature(paths["partner_research"]),
+            file_signature(resolved_data_dir / "source_cache" / "cgu_catalogue.json"),
+            file_signature(resolved_data_dir / "processed" / "university_locations.jsonl"),
+            file_signature(SCHOOL_IMAGE_MANIFEST),
+        )
+
+    def cached_dashboard_response(
+        university: UniversityProfile,
+        *,
+        base_url: str,
+    ) -> tuple[bytes, bytes, str]:
+        key = (university.id, base_url.rstrip("/"), dashboard_response_signature())
+        with dashboard_response_lock:
+            cached = dashboard_response_cache.get(key)
+            if cached is not None:
+                return cached
+            pending = dashboard_response_builds.get(key)
+            owns_build = pending is None
+            if owns_build:
+                pending = Future()
+                dashboard_response_builds[key] = pending
+        if not owns_build:
+            return pending.result()
+        try:
+            dashboard = render_student_dashboard(university, base_url=base_url)
+            raw = dashboard.model_dump_json(by_alias=True).encode("utf-8")
+            result = (
+                raw,
+                gzip.compress(raw, compresslevel=6, mtime=0),
+                f'W/"{hashlib.sha256(raw).hexdigest()}"',
+            )
+            with dashboard_response_lock:
+                while len(dashboard_response_cache) >= 96:
+                    dashboard_response_cache.pop(next(iter(dashboard_response_cache)))
+                dashboard_response_cache[key] = result
+                dashboard_response_ready.add(university.id)
+            pending.set_result(result)
+            return result
+        except BaseException as error:
+            pending.set_exception(error)
+            raise
+        finally:
+            with dashboard_response_lock:
+                dashboard_response_builds.pop(key, None)
+
     async def warm_catalogue_caches() -> None:
         """Do the slow first-time work now, so the first visitor after a restart does not wait for it.
 
@@ -1847,7 +2047,7 @@ def create_app(
         """
         from . import public_translation
 
-        await asyncio.sleep(CACHE_WARM_UP_DELAY_SECONDS)  # let health become ready first
+        await asyncio.sleep(cache_warm_up_delay_seconds)  # let health become ready first
         steps = [
             public_translation._reference_translations,
             public_translation._bundled_machine_translations,
@@ -1855,12 +2055,26 @@ def create_app(
             public_translation._identifier_pattern,
             load_bundled_application_workflows,
         ]
+        warm_base_url = (
+            os.environ.get("EXCHANGE_PUBLIC_BASE_URL", "").strip().rstrip("/")
+            or os.environ.get("RENDER_EXTERNAL_URL", "").strip().rstrip("/")
+            or "http://localhost"
+        )
+        # The promoted landing flow opens CGU first. Make its serialized public
+        # response ready before slower translation and all-school background work.
+        steps.insert(
+            0,
+            partial(cached_dashboard_response, CGU, base_url=warm_base_url),
+        )
         for university in SUPPORTED_UNIVERSITIES:
-            steps += [
+            steps.extend([
                 partial(partners_for_university, university),
                 partial(workflows_for_university, university),
-                partial(dashboard_for_university, university),
-            ]
+            ])
+            if university.id != CGU.id:
+                steps.append(
+                    partial(cached_dashboard_response, university, base_url=warm_base_url)
+                )
         started = time.monotonic()
         for step in steps:
             try:
@@ -1878,7 +2092,7 @@ def create_app(
         school: str,
         home_school: str | None = None,
     ) -> tuple[UniversityProfile, object]:
-        normalized = normalize_school(school)
+        normalized = school_program_identity_key(school)
         scoped_university = university_for(home_school)
         # Without a named home school, a direct link may belong to any supported catalogue;
         # the visitor's own school is searched first.
@@ -1895,7 +2109,7 @@ def create_app(
                 unavailable = error
                 continue
             for partner in partners:
-                if normalize_school(partner.school_name) == normalized:
+                if school_program_identity_key(partner.school_name) == normalized:
                     return university, partner
         if unavailable:
             raise unavailable
@@ -3455,12 +3669,12 @@ def create_app(
         for source in experiences:
             experience_map.setdefault(normalize_school(source.school_name), []).append(source)
         workflow_map = {
-            normalize_school(workflow.school_name): workflow for workflow in workflows
+            school_program_identity_key(workflow.school_name): workflow for workflow in workflows
         }
         destination_map = {
             (
                 normalize_school(profile.home_university or CGU.school_name),
-                normalize_school(profile.school_name),
+                school_program_identity_key(profile.school_name),
             ): profile
             for profile in destination_profiles
         }
@@ -3471,7 +3685,7 @@ def create_app(
             and normalize_school(audit.home_university or CGU.school_name) == home_key
         }
         destination_audit_map = {
-            normalize_school(audit.school_name): audit
+            school_program_identity_key(audit.school_name): audit
             for audit in audits
             if audit.collector == "destinations"
             and normalize_school(audit.home_university or CGU.school_name) == home_key
@@ -3490,6 +3704,7 @@ def create_app(
             ntnu_bundled_exps = _bundled_ntnu_student_experiences()
         for partner in partners:
             normalized = normalize_school(partner.school_name)
+            program_key = school_program_identity_key(partner.school_name)
             visual = school_images.get((partner.school_name, partner.country or ""))
             if university.id == CCU.id and "ccu_completion" in partner.reference_data:
                 from .ccu_campus_assets import reviewed_image_coverage
@@ -3506,10 +3721,10 @@ def create_app(
                 for b_exp in ntnu_bundled_exps.get((school_identity_key(partner.school_name), partner.country or ""), ()):
                     if all(x.source_url != b_exp.source_url for x in partner_experiences):
                         partner_experiences.append(b_exp)
-            workflow = workflow_map.get(normalized)
-            destination = destination_map.get((home_key, normalized))
+            workflow = workflow_map.get(program_key)
+            destination = destination_map.get((home_key, program_key))
             experience_audit = experience_audit_map.get(normalized)
-            destination_audit = destination_audit_map.get(normalized)
+            destination_audit = destination_audit_map.get(program_key)
             website_research = research_map.get(normalized)
             experience_status = (
                 experience_audit.status
@@ -3623,133 +3838,34 @@ def create_app(
     def student_dashboard(
         request: Request,
         school: str | None = Query(default=None),
-    ) -> StudentDashboard:
-        dashboard = _attach_school_images(
-            dashboard_for_university(school),
+    ) -> Response:
+        university = university_for(school)
+        raw, compressed, etag = cached_dashboard_response(
+            university,
             base_url=public_base_url(request),
         )
-        locations = load_university_locations(resolved_data_dir)
-        from .ccu_profile import school_location
-        is_ccu = university_for(school).id == "ccu"
-        is_ncu = university_for(school).id == NCU.id
-        from .ncu_completion import campus_location
-        is_tku = university_for(school).id == "tku"
-        from .tku_assets import school_location as tku_school_location
-        is_fju = university_for(school).id == FJU.id
-        from .fju_student_view import fju_school_location
-        is_scu = university_for(school).id == SCU.id
-        from .scu_student_view import scu_school_location
-        is_ntnu = university_for(school).id == NTNU.id
-        from .ntnu_student_view import ntnu_school_location
-        is_cycu = university_for(school).id == CYCU.id
-        from .cycu_student_view import cycu_school_location
-        is_ntust = university_for(school).id == NTUST.id
-        from .ntust_student_view import ntust_school_location
-        is_yzu = university_for(school).id == YZU.id
-        from .yzu_student_view import yzu_school_location
-        is_fcu = university_for(school).id == FCU.id
-        from .fcu_student_view import fcu_school_location
-        is_nsysu = university_for(school).id == NSYSU.id
-        from .nsysu_student_view import nsysu_school_location
-        is_nchu = university_for(school).id == NCHU.id
-        from .nchu_student_view import nchu_school_location
-        is_ntut = university_for(school).id == NTUT.id
-        from .ntut_student_view import ntut_school_location
-        is_nccu = university_for(school).id == NCCU.id
-        from .nccu_student_view import nccu_school_location
-        is_ncku = university_for(school).id == NCKU.id
-        from .ncku_student_view import ncku_school_location
-        is_nycu = university_for(school).id == NYCU.id
-        from .nycu_student_view import nycu_school_location
-        is_nthu = university_for(school).id == NTHU.id
-        from .nthu_student_view import nthu_school_location
-        is_pccu = university_for(school).id == PCCU.id
-        from .pccu_student_view import pccu_school_location
-        is_wzu = university_for(school).id == WZU.id
-        from .wzu_student_view import wzu_school_location
-        is_nkust = university_for(school).id == NKUST.id
-        from .nkust_student_view import nkust_school_location
-        is_yuntech = university_for(school).id == YUNTECH.id
-        from .yuntech_student_view import yuntech_school_location
-        is_ntou = university_for(school).id == NTOU.id
-        from .ntou_student_view import ntou_school_location
-        is_ncue = university_for(school).id == NCUE.id
-        from .ncue_student_view import ncue_school_location
-        is_nknu = university_for(school).id == NKNU.id
-        from .nknu_student_view import nknu_school_location
-        is_tmu = university_for(school).id == TMU.id
-        from .tmu_student_view import tmu_school_location
-        is_csmu = university_for(school).id == CSMU.id
-        from .csmu_student_view import csmu_school_location
-        is_cmu = university_for(school).id == CMU.id
-        from .cmu_student_view import cmu_school_location
-        is_kmu = university_for(school).id == KMU.id
-        from .kmu_student_view import kmu_school_location
-        is_mcu = university_for(school).id == MCU.id
-        from .mcu_student_view import mcu_school_location
-        partners = []
-        for partner in dashboard.partner_universities:
-            location = public_location(locations, partner.school_name, partner.country)
-            if is_ccu:
-                location = school_location(partner, location, resolved_data_dir)
-            elif is_ncu:
-                location = campus_location(partner, location, resolved_data_dir)
-            elif is_tku:
-                location = tku_school_location(partner, resolved_data_dir)
-            elif is_fju:
-                location = fju_school_location(partner, location, resolved_data_dir)
-            elif is_scu:
-                location = scu_school_location(partner, location, resolved_data_dir)
-            elif is_ntnu:
-                location = ntnu_school_location(partner, location, resolved_data_dir)
-            elif is_cycu:
-                location = cycu_school_location(partner, location, resolved_data_dir)
-            elif is_ntust:
-                location = ntust_school_location(partner, location, resolved_data_dir)
-            elif is_yzu:
-                location = yzu_school_location(partner, location, resolved_data_dir)
-            elif is_fcu:
-                location = fcu_school_location(partner, location, resolved_data_dir)
-            elif is_nsysu:
-                location = nsysu_school_location(partner, location, resolved_data_dir)
-            elif is_nchu:
-                location = nchu_school_location(partner, location, resolved_data_dir)
-            elif is_ntut:
-                location = ntut_school_location(partner, location, resolved_data_dir)
-            elif is_nccu:
-                location = nccu_school_location(partner, location, resolved_data_dir)
-            elif is_ncku:
-                location = ncku_school_location(partner, location, resolved_data_dir)
-            elif is_nycu:
-                location = nycu_school_location(partner, location, resolved_data_dir)
-            elif is_nthu:
-                location = nthu_school_location(partner, location, resolved_data_dir)
-            elif is_pccu:
-                location = pccu_school_location(partner, location, resolved_data_dir)
-            elif is_wzu:
-                location = wzu_school_location(partner, location, resolved_data_dir)
-            elif is_nkust:
-                location = nkust_school_location(partner, location, resolved_data_dir)
-            elif is_yuntech:
-                location = yuntech_school_location(partner, location, resolved_data_dir)
-            elif is_ntou:
-                location = ntou_school_location(partner, location, resolved_data_dir)
-            elif is_ncue:
-                location = ncue_school_location(partner, location, resolved_data_dir)
-            elif is_nknu:
-                location = nknu_school_location(partner, location, resolved_data_dir)
-            elif is_tmu:
-                location = tmu_school_location(partner, location, resolved_data_dir)
-            elif is_csmu:
-                location = csmu_school_location(partner, location, resolved_data_dir)
-            elif is_cmu:
-                location = cmu_school_location(partner, location, resolved_data_dir)
-            elif is_kmu:
-                location = kmu_school_location(partner, location, resolved_data_dir)
-            elif is_mcu:
-                location = mcu_school_location(partner, location, resolved_data_dir)
-            partners.append(partner.model_copy(update={"location": location}))
-        return dashboard.model_copy(update={"partner_universities": partners})
+        public_catalogue = school is not None or request_token(request) is None
+        headers = {
+            "Cache-Control": (
+                f"public, max-age={int(PUBLIC_DASHBOARD_RESPONSE_SECONDS)}, stale-while-revalidate=300"
+                if public_catalogue
+                else "private, no-store, max-age=0"
+            ),
+            "ETag": etag,
+            # The unnamed route is CGU for guests but resolves an account's
+            # chosen school after sign-in. Keep those cache variants separate.
+            "Vary": (
+                "Accept-Encoding, Cookie, Authorization"
+                if school is None
+                else "Accept-Encoding"
+            ),
+        }
+        if request.headers.get("If-None-Match") == etag:
+            return Response(status_code=304, headers=headers)
+        if _accepts_gzip(request.headers.get("Accept-Encoding", "")):
+            headers["Content-Encoding"] = "gzip"
+            return Response(compressed, media_type="application/json", headers=headers)
+        return Response(raw, media_type="application/json", headers=headers)
 
     @app.post("/public-translations")
     def public_translations(payload: PublicTranslationBatch) -> dict:
@@ -4536,9 +4652,9 @@ def create_app(
             None,
         )
         if matched_workflow is None:
-            norm_name = normalize_school(payload.school_name)
+            norm_name = school_program_identity_key(payload.school_name)
             matched_workflow = next(
-                (w for w in workflows if normalize_school(w.school_name) == norm_name),
+                (w for w in workflows if school_program_identity_key(w.school_name) == norm_name),
                 None,
             )
         if matched_workflow is None:
@@ -4663,24 +4779,16 @@ def create_app(
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> DestinationProfile:
-        partner = partner_for_school(school, home_school)
-        normalized = normalize_school(partner.school_name)
-        canonical_home = university_for(home_school).school_name if home_school else None
-        target_home = normalize_school(canonical_home) if canonical_home else None
+        university, partner = partner_context_for_school(school, home_school)
+        normalized = school_program_identity_key(partner.school_name)
+        canonical_home = university.school_name
+        target_home = normalize_school(canonical_home)
         profiles = published_destination_profiles(canonical_home)
-        if target_home:
-            for profile in profiles:
-                if (
-                    normalize_school(profile.school_name) == normalized
-                    and normalize_school(profile.home_university or "") == target_home
-                ):
-                    return complete_destination_profile(profile, resolved_data_dir)
         for profile in profiles:
-            if normalize_school(profile.school_name) == normalized:
-                if target_home:
-                    if profile.home_university:
-                        continue
-                    return complete_destination_profile(profile.model_copy(update={"home_university": canonical_home}), resolved_data_dir)
+            if (
+                school_program_identity_key(profile.school_name) == normalized
+                and normalize_school(profile.home_university or "") == target_home
+            ):
                 return complete_destination_profile(profile, resolved_data_dir)
         return DestinationProfile(
             home_university=canonical_home,
@@ -4936,10 +5044,10 @@ def create_app(
         ),
     ) -> list[DestinationProfile]:
         university = university_for(home_school)
-        names = {school_identity_key(p.school_name) for p in partners_for_university(university)}
+        names = {school_program_identity_key(p.school_name) for p in partners_for_university(university)}
         locations = load_university_locations(resolved_data_dir)
         profiles = [complete_destination_profile(row, resolved_data_dir, locations=locations) for row in published_destination_profiles(university.school_name)
-                    if school_identity_key(row.school_name) in names
+                    if school_program_identity_key(row.school_name) in names
                     and (not row.home_university or normalize_school(row.home_university) == normalize_school(university.school_name))]
         if not compact:
             return profiles
@@ -4976,13 +5084,13 @@ def create_app(
                     partner = partner.model_copy(
                         update={"website": research.official_website}
                     )
-            profile = collect_destination_profile(partner)
+            profile = collect_destination_profile(partner, home_university=university.school_name)
             existing = next(
                 (
                     row
-                    for row in load_destination_profiles(resolved_data_dir)
-                    if normalize_school(row.school_name)
-                    == normalize_school(partner.school_name)
+                    for row in load_destination_profiles(resolved_data_dir, home_university=university.school_name)
+                    if school_program_identity_key(row.school_name)
+                    == school_program_identity_key(partner.school_name)
                 ),
                 None,
             )

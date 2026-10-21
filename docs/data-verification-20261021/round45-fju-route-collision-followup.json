@@ -1,0 +1,55 @@
+{
+  "observed_at": "2026-10-21T04:10:00.927993+00:00",
+  "raw_file": "src\\exchange_info\\official_data\\fju\\destination_profiles.jsonl",
+  "raw_file_sha256": "5f77d10ae553a7bc3f1a6ef4ea58f828e0524ecb725b10ae6a1b887c7febaed9",
+  "raw_profiles": 234,
+  "runtime_profiles": 232,
+  "collisions": [
+    {
+      "merge_key": [
+        "天主教輔仁大學",
+        "university of the sacred heart, tokyo"
+      ],
+      "raw_names": [
+        "聖心女子大學 University of the Sacred Heart, Tokyo",
+        "(語言密集課程)聖心女子大學 University of the Sacred Heart, Tokyo"
+      ],
+      "runtime_surviving_name": "(語言密集課程)聖心女子大學 University of the Sacred Heart, Tokyo",
+      "differing_fields": [
+        "school_name",
+        "sources"
+      ],
+      "raw_record_sha256": [
+        "90e81ea4e5e066fda05add6ff96b006e3a98882340416fb1ae9033cd71c1a826",
+        "6b338bc30f83e39c693343ecccfd1bdbc29de1a9706e9bc6e4d327cc0a831ffe"
+      ],
+      "status": "unresolved_route_identity_collision",
+      "whole_record_verified": false
+    },
+    {
+      "merge_key": [
+        "天主教輔仁大學",
+        "baiko gakuin university"
+      ],
+      "raw_names": [
+        "梅光學院大學 Baiko Gakuin University",
+        "(自費)梅光學院大學 Baiko Gakuin University"
+      ],
+      "runtime_surviving_name": "(自費)梅光學院大學 Baiko Gakuin University",
+      "differing_fields": [
+        "school_name",
+        "sources"
+      ],
+      "raw_record_sha256": [
+        "1d22e19a7f657d222dc4b71ec7cfc655d480e9b21c9f883f41993dabbe10a847",
+        "4946eafd5e2d29c2d07ea8a02bb365a017dfef23d5031285e0d8e7fe6079045f"
+      ],
+      "status": "unresolved_route_identity_collision",
+      "whole_record_verified": false
+    }
+  ],
+  "cause_evidence": "storage._destination_profile_key uses canonical school_identity_key; _merge_rows keeps only one profile per canonical home+host identity.",
+  "next_action": "Preserve distinct route identities through profile load/lookup and check all 25 mother bundles for similar collisions; do not invent separate school identities or fees.",
+  "fixed": false,
+  "host_source_verification": false
+}

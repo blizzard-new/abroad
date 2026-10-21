@@ -8,7 +8,7 @@
     course_restrictions: "課程及學分限制", housing: "住宿與床位",
     housing_deadline: "住宿申請／付款截止", costs: "住宿與生活費用",
     insurance: "保險", visa: "簽證及居留", arrival: "抵達與迎新",
-    host_tuition: "合作校學費", exchange_duration: "交換期間及延長",
+    host_tuition: "合作校學費", exchange_duration: "交換期間及延長", application_fee: "合作校申請費",
   };
   const statuses = {
     verified_current: "當期已核實", reference_only: "其他年度／梯次參考，不能作本期申請依據",
@@ -23,6 +23,8 @@
   };
   function render(partner, escapeHtml, keys, homeSchool) {
     const isNtu = homeSchool === "國立臺灣大學";
+    const homeLabel = isNtu ? "臺大" : homeSchool || "中正";
+    const isOtherHome = Boolean(homeSchool) && !["國立臺灣大學", "國立中正大學"].includes(homeSchool);
     const fieldLabels = isNtu ? { ...labels, calendar: "校曆與考試", deadlines: "合作校提名與申請期限",
       courses: "課程及學分限制", cost: "費用與生活預算", insurance_visa: "保險與簽證" } : labels;
     let assets = {};
@@ -48,12 +50,12 @@
     if (!fields || !Object.keys(fields).length) return supplement;
     return `${supplement}<section class="partner-student-summary ccu-receiving-school-details" aria-label="合作校接收資料">
       <h3>合作校接收資料 · ${escapeHtml(partner.application_round || "")}</h3>
-      <p>以下是合作校接收交換生的規定。${isNtu ? "臺大" : "中正"}的校內資格、名額及截止須分別符合；每欄的適用年度、未核實新版及矛盾另標示。</p>
+      <p>以下是合作校接收交換生的規定。${escapeHtml(homeLabel)}的校內資格、名額及截止須分別符合；每欄的適用年度、未核實新版及矛盾另標示。</p>
       ${(keys || Object.keys(fieldLabels)).map(key => {
         const field = fields[key];
         if (!field) return "";
-        const status = isNtu && field.status === "reference_only" ? "接待校／欄位參考，尚未確認臺大本期適用" : statuses[field.status] || field.status;
-        const research = isNtu && field.research_category === "verified_supported" ? "已有原文依據，適用範圍另列" : researchLabels[field.research_category];
+        const status = (isNtu || isOtherHome) && field.status === "reference_only" ? `接待校／欄位參考，尚未確認${homeLabel}本期適用` : statuses[field.status] || field.status;
+        const research = (isNtu || isOtherHome) && field.research_category === "verified_supported" ? "已有原文依據，適用範圍另列" : researchLabels[field.research_category];
         return `<details class="overview-more" data-ccu-field="${escapeHtml(key)}"><summary>${escapeHtml(fieldLabels[key])} · ${escapeHtml(status)}</summary>
           <p>${escapeHtml(field.value || field.reason)}</p>
           ${field.value ? `<p>${escapeHtml(field.reason)}</p>` : ""}

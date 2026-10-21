@@ -1,0 +1,71 @@
+{
+  "checked_at": "2026-10-21T03:35:21.980882+00:00",
+  "python_suite": {
+    "files": [
+      "test_ncku_guidelines_review.py",
+      "test_ncku_partner_table_review.py",
+      "test_ncku_integration.py",
+      "test_ntut_ips_review.py",
+      "test_application_rules.py",
+      "test_qualification_scope_consistency.py"
+    ],
+    "result": "58 passed in 15.62s"
+  },
+  "after_last_cycle_guard": {
+    "command": "python -m pytest tests/test_ncku_guidelines_review.py -q --disable-warnings",
+    "result": "17 passed in 2.79s"
+  },
+  "frontend_checks": {
+    "command": "node tests/js/test_ncku_academic_fields.cjs",
+    "result": "9 qualification cases and 13 field assertions passed",
+    "syntax": "node --check src/exchange_info/static/app.js passed",
+    "browser_rendering_verified": false
+  },
+  "syntax": {
+    "python": 166,
+    "json": 209,
+    "jsonl": 159
+  },
+  "syntax_errors": [],
+  "diff_check": "passed",
+  "main_patches": 2064,
+  "duplicate_display_patches": 582,
+  "replay_changes": 0,
+  "csv_data_rows": 97,
+  "csv_utf8_bom": true,
+  "code_sha256": {
+    "src/exchange_info/ncku_eligibility.py": "2c226dc49d01d0e897875bd6e8b227e15c57bd4ef1897d5e4b537bb36ed41578",
+    "src/exchange_info/ncku_guidelines_review.py": "cffd4b2b6b11940cbb191f02c6be7a871c9f8d2551e369db2ce173555c56bd86",
+    "src/exchange_info/ncku_student_view.py": "aab798d2e3a5567e3e0d5989db1e17eca5c22713976ef7279a09c8cca8117de8",
+    "src/exchange_info/application_rules.py": "1bf280f241331e73d4295151597a9c5e720c1ecd973158445dfdb850295f71b0",
+    "src/exchange_info/models.py": "d446ebcf332580a2dec5f36a9b53727dcb75872b724216a2e6425b47543bef6c",
+    "src/exchange_info/host_source_review_round25.py": "354a4667e31aba07eb07ef062106ae5c15edf48116c402aa6114598718137895",
+    "src/exchange_info/static/app.js": "964f59c0588add094288121f6b0c6d35b84332084da24e06f938f23293031bb0",
+    "src/exchange_info/static/index.html": "db4c9065cd7defc49f5e00b4e6819fc2670d85efd79379abb29daef6b16e872e",
+    "scripts/build_ncku_catalog.py": "1a7a5ad027450b9640a0dc0d23bb7bc04f9c5f8c9ac1dcba9a8240dac7f5eed8",
+    "scripts/report_university_data_audit.py": "3c29f78c77cb6a49b5d2af648858314ad04ef9f65ba275e8f94d8890bccaabb8",
+    "tests/test_ncku_guidelines_review.py": "cf4f3369c3e3432c7c2a9376d7cba69e8f52106b9a373263da6e61861ed07800",
+    "tests/test_ncku_partner_table_review.py": "6b07977e7c835cf26e2d8987a373dcd2ea1db8197d76611129db65c1e78d840f",
+    "tests/test_ncku_integration.py": "31ec582cc606bcb1af253fe93051c3971b68ddfbe198d55728f52a021e154053",
+    "tests/js/test_ncku_academic_fields.cjs": "3636b908f2077b18094fbddf4cd5079fccef47919a7da0efec76c55c23280717"
+  },
+  "evidence_validation": {
+    "validated_at": "2026-10-21T03:32:48.589754+00:00",
+    "review_decisions": 123544,
+    "bindings_by_inventory": {
+      "output/data-verification-20261021/baseline": 64445,
+      "output/data-verification-20261021/derived-baseline": 40675,
+      "output/data-verification-20261021/raw-catalog-baseline": 12370,
+      "output/data-verification-20261021/runtime-review-20261021": 6054
+    },
+    "bound_records": 16982,
+    "absent_optional_null_bindings": 867,
+    "pinned_inventory_files": 14,
+    "original_ledger_sha256": "b7f80955a390fbcf4602b3e2f13ece8933dffc8621cc56d234d597efea2e6252",
+    "errors": [],
+    "facts_verified_by_validation": 0
+  },
+  "whole_records_verified": 0,
+  "whole_schools_verified": 0,
+  "full_builder_run": false
+}

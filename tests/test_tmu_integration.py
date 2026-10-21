@@ -250,6 +250,11 @@ def test_tmu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 201
     assert cov["workflow_school_count"] == 201
     assert cov["destination_profile_count"] == 201
-    assert cov["image_count"] == 201
+    # Main's merged manifest has two differing UBC photo records. Preserve the
+    # existing ambiguity guard instead of treating either photo as verified.
+    assert cov["image_count"] == 200
+    assert [p["school_name"] for p in cov["partners"] if p["image_status"] != "verified"] == [
+        "英屬哥倫比亞大學 (University of British Columbia)"
+    ]
     assert cov["experience_school_count"] >= 33
     assert cov["experience_source_count"] >= 55

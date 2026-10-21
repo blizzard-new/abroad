@@ -1,0 +1,273 @@
+/* Reading and touch layouts for phones. Keep every rule inside this breakpoint:
+   wider screens retain the existing layout, including the homepage globe. */
+@media (max-width: 700px) {
+  /* Home: retain the illustrations and let the actual information wrap. */
+  #home-landing .pr-hero h1 {
+    line-height: 1.25;
+  }
+
+  #home-landing .pr-hero-socials {
+    gap: 8px;
+  }
+
+  #home-landing .pr-hero-socials-label {
+    flex-basis: 100%;
+    font-size: 13px;
+  }
+
+  #home-landing .pr-social-pill {
+    box-sizing: border-box;
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  #home-landing .pr-plan-card header strong {
+    font-size: 16px;
+  }
+
+  #home-landing .pr-plan-steps li {
+    min-height: 44px;
+    padding-block: 8px;
+  }
+
+  #home-landing .pr-step-title,
+  #home-landing .pr-mini-text strong,
+  #home-landing .pr-mini-text small {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.65;
+  }
+
+  #home-landing .pr-step-title {
+    font-size: 15px;
+  }
+
+  #home-landing .pr-plan-steps small,
+  #home-landing .pr-mini-text small,
+  #home-landing .pr-tile-fine,
+  #home-landing .pr-tile-note {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  #home-landing .pr-tile p,
+  #home-landing .pr-tile-empty,
+  #home-landing .pr-mini-checks > * {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  #home-landing .pr-mini-text strong {
+    font-size: 15px;
+  }
+
+  #home-landing :is(.pr-mini-input, .pr-mini-go, .pr-mini-chip, .pr-link, .pr-marquee-toggle) {
+    min-height: 44px;
+  }
+
+  #home-landing .pr-marquee-toggle {
+    width: 44px;
+  }
+
+  #home-landing .pr-mini-chip {
+    padding-inline: 12px;
+    font-size: 14px;
+  }
+
+  /* Search: show every sorting choice without a hidden horizontal scroll. */
+  body.unified-shell #partners.pr-explore .pr-search {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #partners .pr-search > :is(.search-field, .pr-search-button) {
+    grid-column: 1 / -1;
+  }
+
+  #partners .pr-field {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  #partners .pr-field-body small {
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+
+  #partners .pr-sort-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  #partners .pr-sort-tabs button {
+    min-width: 0;
+    min-height: 64px;
+    align-content: start;
+    padding: 10px 6px;
+  }
+
+  #partners .pr-sort-tabs :is(strong, span) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+  }
+
+  body.unified-shell #partners.pr-explore .pr-card-title .school-detail-trigger {
+    min-height: 44px;
+    white-space: normal;
+    line-height: 1.6;
+  }
+
+  #partners :is(.pr-card-place, .availability-hint, .pr-card-foot) {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  #partners .pr-tags span {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  body.unified-shell #partners.pr-explore .pr-view-toggle button,
+  #partners .pr-facets > summary,
+  #partners .pr-check,
+  #partners #clear-partner-filters {
+    min-height: 44px;
+  }
+
+  #partners .pr-check {
+    font-size: 15px;
+  }
+
+  /* Guides and school details: comfortable body text and touch targets. */
+  .pr-guide-article :is(p, .pr-steps, .pr-bullets),
+  .pr-guide-article .pr-callout p {
+    font-size: 16px;
+    line-height: 1.9;
+  }
+
+  .pr-guide-article p.pr-guide-note {
+    font-size: 14px;
+  }
+
+  .pr-guide-toc a,
+  .pr-guide-feedback button,
+  .pr-guide-tools > a,
+  .pr-guide-tools > button,
+  .detail-tabs button,
+  .pr-detail-actions .pr-text-button {
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+
+  .pr-guide-article h2 {
+    scroll-margin-top: 96px;
+  }
+
+  .pr-requirements > p,
+  .detail-primary-facts span {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  /* Application tools: use the phone's width for instructions and fields. */
+  .application-workspace-heading {
+    padding: 12px 4px 8px;
+  }
+
+  .application-workspace-context p {
+    font-size: 14px;
+  }
+
+  .application-workspace-stages {
+    margin-top: 12px;
+  }
+
+  .application-workspace-stages a {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  body.unified-shell .application-workspace-heading .planning-next-action {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 14px;
+  }
+
+  body.unified-shell .application-workspace-heading .next-action-icon {
+    display: none;
+  }
+
+  body.unified-shell .application-workspace-heading .planning-next-action p {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .application-workspace-heading .next-action-buttons {
+    gap: 6px;
+  }
+
+  .application-workspace-heading .next-action-buttons > :is(a, button) {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .application-tool-menu > summary,
+  .application-workspace-tools a {
+    font-size: 14px;
+  }
+
+  #application-workspace :is(.advisor-fields, .application-context-fields) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #application-workspace :is(.advisor-fields, .application-context-fields) label > span,
+  #application-workspace .application-disclosure > summary small,
+  #application-workspace .application-period-hint {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  #application-workspace .application-center-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  #application-workspace .application-center-steps li {
+    min-width: 0;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  #application-workspace .application-center-steps strong {
+    display: block;
+    white-space: normal;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  #application-workspace .application-center-intro {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* Community cards should be readable before opening the full story. */
+  body.unified-shell #community-hub#community-hub.pr-forum .community-post-card h3 {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  body.unified-shell #community-hub#community-hub.pr-forum .discussion-excerpt,
+  .discussion-article .discussion-body,
+  .discussion-comment p {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+}
+
+@media (max-width: 359px) {
+  /* Long native select values need their own row on the narrowest phones. */
+  body.unified-shell #partners.pr-explore .pr-search {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

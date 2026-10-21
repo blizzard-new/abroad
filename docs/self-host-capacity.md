@@ -17,6 +17,8 @@
 
 ## 2. 先保留目前 8 CPU／24 GB
 
+2026-10-20 的容量修正將這台 i9／128 GB 自架設定的新安裝預設調為 `APP_WORKERS=4`、`APP_THREADS=16`、`APP_CATALOGUE_CONCURRENCY=2`。既有 `deploy\selfhost\.env` 不會被 Git 更新覆寫；完成 staging 驗收後須手動設定這三項，再以更新流程重建 app。新 migration `20261020150000_capacity_auth_read.sql` 必須先套用，否則單次登入驗證 RPC 尚不存在。
+
 先比較 1、2、4 個網站程序，不必先調高 WSL 配額。工作程序會各自建立快取、暖機與連線；它們共用 8 CPU／24 GB，並非每程序獨占這些資源。只有觀察到 CPU 飽和、記憶體不足等證據，才調整實際瓶頸。
 
 先在**使用獨立資料庫、儲存與測試帳號的 staging 安裝**操作。可依 [自架指南](self-host-windows-guide.md) 建立在另一台電腦或獨立 VM；不要讓測試安裝讀寫正式資料。不要在同一個正式 Compose 目錄另跑 `docker compose -p` 就當作隔離：目前 Compose 的磁碟區名稱是固定的，仍可能使用正式資料。

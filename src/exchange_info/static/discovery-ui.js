@@ -76,7 +76,7 @@ function discoveryChineseSummary(source) {
   return window.UniWayChinese && !window.UniWayChinese.needsTranslation(value) ? window.UniWayChinese.normalizeTerms(value) : "";
 }
 const DISCOVERY_FILLER = /^(這個來源主要談到|這個公開來源|來源談到|\d+\s*個來源)/;
-const DISCOVERY_KIND_LABELS = { personal_story: "學生分享", review_collection: "評論彙整頁", community_thread: "社群討論串", video: "影片", directory: "學校介紹、排名或課程目錄", other: "其他來源" };
+const DISCOVERY_KIND_LABELS = { personal_story: "學生分享", review_collection: "評論彙整頁", community_thread: "社群討論串", video: "影片", directory: "學校介紹、排名或課程目錄", source_index: "心得索引／待查來源", official_record: "錄取或獎助紀錄", other: "其他來源" };
 const discoveryDigestCache = new Map();
 // A sentence that only says which topics a source mentions tells the student nothing, so it is never shown as a summary.
 function discoveryUsefulSummary(source) {

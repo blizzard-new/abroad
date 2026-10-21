@@ -5,7 +5,7 @@ import re
 from .university_registry import NCHU, resolve_university
 
 NCHU_OUTBOUND_URL = "https://www.oia.nchu.edu.tw/index.php/2-uncategorised/154-1-1-exchange-info"
-NCHU_GUIDELINES_PDF_URL = "https://oia.nchu.edu.tw/images/File/02_Exchange_Program/5-1-1/Exchange_Program_Guidelines_for_Fall_Semester_2027_TW.pdf"
+NCHU_GUIDELINES_PDF_URL = "https://www.oia.nchu.edu.tw/images/File/05_Global_Mobility/5-1-Exchange-Student-Programs/Exchange_Program_Guidelines_for_Fall_Semester_2027_TW.pdf"
 NCHU_APPLY_PORTAL_URL = "https://oiawp.nchu.edu.tw/out-going-program-online-application/"
 NCHU_PARTNERS_SHEET_URL = "https://docs.google.com/spreadsheets/d/1acE37cH-R7k88O9g-sT8wH-rX99rQT3a/edit?usp=sharing&ouid=108931068757503846261&rtpof=true&sd=true"
 NCHU_MAINLAND_PARTNERS_URL = "https://www.oia.nchu.edu.tw/index.php/zh-tw/2-uncategorised/158-1-2-exchange-china"
@@ -78,62 +78,14 @@ def nchu_academic_check(
     academic_gpa: float | None = None,
     class_rank_percent: float | None = None,
 ) -> tuple[str, str]:
-    is_grad = _is_graduate(degree_level)
-    if (
-        academic_score is None
-        and academic_gpa is None
-        and class_rank_percent is None
-    ):
-        if is_grad:
-            return (
-                "needs_confirmation",
-                "尚未填寫歷年學業成績或名次；中興大學碩、博士班學生須通過系所推薦並檢附歷年成績單（碩一、博一新生尚無本校成績者，應繳交原畢業學校歷年成績單；在校成績占國外組甄選總成績 30%、大陸組 50%）。",
-            )
-        return (
-            "needs_confirmation",
-            "尚未填寫歷年學業總平均分數或 GPA；中興大學出國交換甄選規定學士班學生歷年在校總平均分數須達 60 分（含）以上（在校成績占國外組總成績 30%、大陸組 50%；申請學海飛颺或興大海外研修獎學金者須歷年名次前 50% 或平均 80 分以上）。",
-        )
-
-    details: list[str] = []
-    score_ok = False
-    gpa_ok = False
-    rank_ok = False
-
-    if academic_score is not None:
-        details.append(f"歷年總平均 {academic_score:g} 分")
-        if academic_score >= 60.0:
-            score_ok = True
-    if academic_gpa is not None:
-        details.append(f"GPA {academic_gpa:g}")
-        if academic_gpa >= 2.0:
-            gpa_ok = True
-    if class_rank_percent is not None:
-        details.append(f"歷年名次前 {class_rank_percent:g}%")
-        if class_rank_percent <= 100.0:
-            rank_ok = True
-
-    summary = "、".join(details)
-    if academic_score is not None:
-        passed = score_ok
-    elif academic_gpa is not None:
-        passed = gpa_ok
-    else:
-        passed = rank_ok
-
-    if not passed:
-        return (
-            "fail",
-            f"已填報 {summary}，未達國立中興大學出國交換甄選學士班歷年在校總平均分數 60 分（或 GPA 2.0）之最低門檻。",
-        )
-
-    scholarship_hint = ""
-    if (academic_score is not None and academic_score >= 80.0) or (
-        class_rank_percent is not None and class_rank_percent <= 50.0
-    ):
-        scholarship_hint = "（同時符合教育部學海飛颺及中興大學選送學生赴海外研修獎學金之學業門檻：歷年名次前 50% 或平均 80 分以上）"
+    if not degree_level or _is_graduate(degree_level):
+        return "needs_confirmation", "中興本期簡章的 60 分門檻限學士班；碩博士班須檢附成績並通過系所推薦，尚須確認個別姊妹校資格。"
+    if academic_score is None:
+        return "needs_confirmation", "學士班須提供歷年在校總平均以核對 60 分門檻；GPA 或排名不能直接替代該項要求。"
+    passed = academic_score >= 60.0
     return (
-        "pass",
-        f"已填報 {summary}；符合國立中興大學出國交換甄選學業門檻（歷年總平均 60 分以上；校內評分比重：國外姊妹校組在校成績占 30%、大陸地區姊妹校組占 50%）。{scholarship_hint}請同時對照各姊妹校個別 GPA 規定（部分歐美日名校要求 GPA 3.0 / 4.0 以上）。",
+        "pass" if passed else "fail",
+        f"歷年總平均 {academic_score:g} 分{'符合' if passed else '未達'}中興學士班 60 分門檻；仍須系所推薦及符合姊妹校要求。",
     )
 
 
