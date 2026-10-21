@@ -200,3 +200,30 @@ def test_cross_school_partner_sitemap_and_json_api(monkeypatch, tmp_path) -> Non
     assert page_json["institution_slug"] == "waseda-university"
     assert page_json["selected_home_id"] == "ntnu"
     assert page_json["contracted_home_count"] >= 2
+
+    for home_id in ("nkust", "yuntech", "ntou"):
+        res = client.get(f"/cross-school-partners/japan/waseda-university?home={home_id}")
+        assert res.status_code == 200
+        assert res.json()["selected_home_id"] == home_id
+
+
+def test_build_home_agreement_normalizes_single_char_quota_and_language_fields() -> None:
+    from exchange_info.cross_school_partners import _build_home_agreement
+    from exchange_info.models import PartnerUniversity
+    from exchange_info.university_registry import NKUST
+
+    row = PartnerUniversity(
+        country="大陸地區",
+        school_name="重慶大學 (Chongqing University)",
+        quota="4",
+        language_requirement="無",
+        eligibility="無",
+        availability_status="open",
+        source_url="https://oia.nkust.edu.tw/unit-4-374-21.html",
+    )
+    agreement = _build_home_agreement(NKUST, [row])
+    assert agreement.home_id == "nkust"
+    assert len(agreement.quota_summary) >= 2
+    assert "4" in agreement.quota_summary
+    assert len(agreement.language_requirement_summary) >= 2
+    assert len(agreement.eligibility_summary) >= 2

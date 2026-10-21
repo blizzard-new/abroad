@@ -4227,10 +4227,10 @@ class CrossSchoolHomeAgreement(BaseModel):
     partner_display_name: str | None = None
     program_types: list[str] = Field(default_factory=list)
     availability_status: str = Field(default="not_contracted", max_length=60)
-    availability_label: str = Field(min_length=2, max_length=120)
-    quota_summary: str = Field(min_length=2, max_length=400)
-    language_requirement_summary: str = Field(min_length=2, max_length=600)
-    eligibility_summary: str = Field(min_length=2, max_length=600)
+    availability_label: str = Field(min_length=1, max_length=120)
+    quota_summary: str = Field(min_length=1, max_length=400)
+    language_requirement_summary: str = Field(min_length=1, max_length=600)
+    eligibility_summary: str = Field(min_length=1, max_length=600)
     degree_levels: str | None = None
     colleges: str | None = None
     study_period: str | None = None
