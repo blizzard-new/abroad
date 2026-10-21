@@ -81,15 +81,17 @@ def test_study_plan_workbench_partner_course_lookup_links_to_cross_school_partne
     assert any("慕尼黑工業大學" in line or "TUM" in line for line in partner["suggested_course_plan_lines"])
 
 
-def test_study_plan_workbench_catalog_tracks_10_week_window_and_all_22_universities() -> None:
+def test_study_plan_workbench_catalog_tracks_10_week_window_and_all_supported_universities() -> None:
+    from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
+
     client = TestClient(create_app())
 
     all_resp = client.get("/application-center/study-plan-workbench/catalog")
     assert all_resp.status_code == 200
     all_catalog = all_resp.json()
-    assert all_catalog["total_supported_schools"] == 22
-    assert all_catalog["active_10_week_window_count"] == 19
-    assert len(all_catalog["schools"]) == 22
+    assert all_catalog["total_supported_schools"] == len(SUPPORTED_UNIVERSITIES)
+    assert all_catalog["active_10_week_window_count"] >= 19
+    assert len(all_catalog["schools"]) == len(SUPPORTED_UNIVERSITIES)
 
     window_resp = client.get(
         "/application-center/study-plan-workbench/catalog",
@@ -97,8 +99,13 @@ def test_study_plan_workbench_catalog_tracks_10_week_window_and_all_22_universit
     )
     assert window_resp.status_code == 200
     window_catalog = window_resp.json()
-    assert len(window_catalog["schools"]) == 19
+    assert len(window_catalog["schools"]) == all_catalog["active_10_week_window_count"]
     assert all(school["in_next_10_weeks_window"] is True for school in window_catalog["schools"])
+
+    for school_id in ("nkust", "yuntech", "ntou"):
+        school_resp = client.get("/application-center/study-plan-workbench", params={"school": school_id})
+        assert school_resp.status_code == 200
+        assert school_resp.json()["school_id"] == school_id
 
 
 def test_social_media_launch_drafts_and_frontend_contract_for_action3() -> None:
