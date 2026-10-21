@@ -371,6 +371,10 @@ def apply_oct20_updates(bundle: Path, path: Path = SOURCE) -> dict:
                 newline="\n",
             )
 
+    from .ntu_oct21_updates import SOURCE as OCT21_SOURCE, apply_oct21_updates
+    if OCT21_SOURCE.exists():
+        apply_oct21_updates(bundle)
+
     for item in bundle.iterdir():
         if item.is_file():
             raw_bytes = item.read_bytes()

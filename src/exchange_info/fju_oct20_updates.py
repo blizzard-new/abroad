@@ -436,6 +436,10 @@ def apply_fju_oct20_updates(bundle: Path = FJU_BUNDLE, update_json_path: Path = 
         UniversityApplicationWorkflow.model_validate(wf)
     _write_jsonl(wf_path, workflows)
 
+    from .fju_oct21_updates import UPDATE_JSON_PATH as OCT21_SOURCE, apply_fju_oct21_updates
+    if OCT21_SOURCE.exists():
+        apply_fju_oct21_updates(bundle)
+
     return {
         "school_id": "fju",
         "sources_count": len(prov["sources"]),
