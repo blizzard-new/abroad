@@ -9,3 +9,13 @@ deploy/selfhost/gateway/Caddyfile text eol=lf
 # Immutable HTTP archives are checked by SHA256, including their original line endings.
 sources/ntu/2026-10-17-official/*.html binary
 sources/ntu/2026-10-17-official/*.txt -text
+# Audit manifests and reviewed source snapshots are pinned by their exact bytes.
+docs/data-verification-20261021/** -text
+sources/**/reviewed_20261021* -text
+sources/**/reviewed_1152* -text
+sources/**/reviewed_1161* -text
+sources/cycu/reviewed_20261021_tables.json -text
+sources/fcu/oiasap_programs_1151_reviewed_20261021.json -text
+sources/yzu/reviewed_20261021_tables.json -text
+# Preserve whitespace inside quoted multiline source text in the audit CSV.
+docs/data-verification-20261021/nycu-program-review.csv whitespace=-blank-at-eol

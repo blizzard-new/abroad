@@ -1329,38 +1329,26 @@ def main() -> None:
           "toeic": 600.0,
       },
       "application_periods": [
-          {
-              "title": (
-                  "國立臺灣海洋大學 2027 年秋季學期赴國外姊妹校交換增開梯次（預計 2026/12/01 公告、2027/02/25 12:00 截止）暨 2028 年春/秋季主梯次預告（2027/03/01 公告、05/07 截止）"
-              ),
-              "details": [
-                  (
-                      "依海大國際事務處《出國交換學生計畫申請時程》，每年辦理兩梯次國外姊妹校交換甄選：（1）秋季學期增開梯次：預計 2026/12/01 公告簡章、2027/02/25 12:00 截止報名、2027/03 中旬面試、2027/04 上旬公告結果；（2）春/秋季學期主梯次（含教育部學海飛颺獎學金）：預計 2027/03/01 公告簡章、2027/05/07 12:00 截止報名、2027/05 下旬面試、2027/06 中旬公告結果。"
-                  ),
-                  (
-                      "有意申請下一梯次赴國外姊妹校交換及《學海飛颺》或《海大校內交換獎補助》之同學，請提前備妥有效期限內之留學國語文能力證明（英文 TOEFL iBT 60 / IELTS 5.0 / TOEIC 600、日文 JLPT N3–N2、韓文 TOPIK 3、法文 DELF B1–B2、德文 ZDaF–B2）並維持前一學期學業成績及格以上。"
-                  ),
-              ],
-              "source": {
-                  "title": "國立臺灣海洋大學國際事務處—出國交換學生計畫申請時程與簡章專區",
-                  "source_url": NTOU_EXCHANGE_PLAN_URL,
-                  "category": "exchange_application",
-                  "summary": "海大國外姊妹校交換計畫申請資格、年度雙梯次時程、檢附文件與表單下載。",
-              },
-              "scope": "home_application",
-              "program_types": ["exchange"],
-              "academic_year": "116",
-              "application_round": "2027年秋季增開梯次暨2028年春/秋季主梯次赴姊妹校交換甄選",
-              "audience": "all_students",
-              "opens_at": "2026-12-01T09:00:00+08:00",
-              "deadline_at": "2027-02-25T12:00:00+08:00",
-              "date_status": "verified_exact",
-              "status": "upcoming",
-              "status_note": "2027年春/秋季主梯次及 115-2 大陸地區交換已截止；下一梯次 2027秋季增開梯次預計 2026/12/01 公告、2027/02/25 12:00 截止，主梯次預計 2027/03/01 公告、2027/05/07 12:00 截止。",
-              "deadline_note": "請先將全套申請文件轉為單一 PDF 寄至 `marberthsu@email.ntou.edu.tw`，並預約時間親送 A4 單面不裝訂 L 型資料夾紙本至行政大樓 3 樓國際合作組。",
-              "reminder_eligible": True,
-              "checked_at": CHECKED_AT,
-          },
+          {'title': '國立臺灣海洋大學下一梯次國外交換甄選：申請時程待核實',
+           'details': ['原附時程網址於2026-10-21查核時回傳404，無法據此確認2027秋季增開梯次或2028年度主梯次的日期。',
+                       '本平台尚未取得這些梯次的有效官方時程證據；請向國際事務處確認，不能依歷年慣例推定確切截止日。'],
+           'source': {'title': '國立臺灣海洋大學國際事務處—出國交換學生計畫申請時程與簡章專區',
+                      'source_url': 'https://oia.ntou.edu.tw/p/412-1022-10817.php?Lang=zh-tw',
+                      'category': 'exchange_application',
+                      'summary': '查核限制：此來源目前不足以支持本梯次確切時程，需另查當期正式公告。'},
+           'scope': 'home_application',
+           'program_types': ['exchange'],
+           'academic_year': '116',
+           'application_round': '2027年秋季增開梯次暨2028年春/秋季主梯次赴姊妹校交換甄選',
+           'audience': 'all_students',
+           'opens_at': None,
+           'deadline_at': None,
+           'date_status': 'needs_confirmation',
+           'status': 'needs_confirmation',
+           'status_note': '本梯次確切時程尚未核實，請以母校當期官方公告為準。',
+           'deadline_note': '未核實的預估日期不能用作申請截止日或提醒。',
+           'reminder_eligible': False,
+           'checked_at': '2026-10-20T17:44:49Z'},
           {
               "title": (
                   "國立臺灣海洋大學 2027 年春/秋季學期赴國外姊妹校交換生計畫暨學海飛颺甄選（2026/05/08 12:00 截止）與 115-2 赴大陸地區姊妹校交換甄選（2026/09/30 12:00 截止）"
@@ -1891,6 +1879,10 @@ def main() -> None:
   prov_text = json.dumps(provenance_payload, ensure_ascii=False, indent=2) + "\n"
   (OFFICIAL_NTOU_DIR / "import_provenance.json").write_text(prov_text, encoding="utf-8")
   (OFFICIAL_NTOU_DIR / "import-provenance.json").write_text(prov_text, encoding="utf-8")
+
+  from exchange_info.ntou_source_review import review_bundle
+  reviewed_counts = review_bundle(REPO_ROOT)
+  open_partner_count = reviewed_counts.get("open", 0)
 
   print(
       f"Successfully built NTOU catalog: {len(partners)} partners"

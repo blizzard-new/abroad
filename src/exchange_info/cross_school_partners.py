@@ -31,7 +31,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import quote, unquote, urlencode
 
-from .destination_tips import canonical_country, guide_for_country
+from .destination_tips import canonical_country
 from .experience_digests import _load as load_bundled_experience_digests
 from .models import (
     CatalogueSourceStatus,
@@ -42,6 +42,7 @@ from .models import (
     CrossSchoolPartnerSummaryItem,
     CrossSchoolStructuredPoint,
     PartnerUniversity,
+    SourceReference,
 )
 from .school_identity import school_identity_key
 from .staged_network_effects import (
@@ -55,7 +56,7 @@ from .verified_window_deadlines import get_verified_school_window_card
 
 COPYRIGHT_COMPLIANCE_NOTICE = (
     "【著作權與資料合規聲明】本頁所有跨校生活費、住宿、修課方向與學長姐經驗皆由 UniWay 以自有結構化方式重新整理重點摘要，"
-    "絕不轉載、不複製學長姐心得全文或各校簡章 PDF 原文；每一項摘要均附上官方或公開原文連結與查核日期，請點擊原出處閱讀完整內容。"
+    "絕不轉載、不複製學長姐心得全文或各校簡章 PDF 原文；摘要附來源連結及核對狀態；尚待核實的內容會明確標示。請點擊原出處確認完整條件與適用學期。"
 )
 
 AVAILABILITY_LABELS: dict[str, str] = {
@@ -187,34 +188,32 @@ CURATED_SPECS: tuple[CuratedInstitutionSpec, ...] = (
         ),
         living_cost_points=(
             CrossSchoolStructuredPoint(
-                category="living_cost",
-                title="慕尼黑每月生活費結構化參考（約 1,100–1,400 歐元）",
-                summary_zh="依慕尼黑工業大學（TUM）國際處與 DAAD 官方生活費指南整理，慕尼黑為德國生活成本最高城市之一，交換生每月建議準備約 1,100 至 1,400 歐元。",
-                bullets=[
-                    "每月總預算約 1,100–1,400 歐元（折合新臺幣約 38,500–49,000 元，視住宿類型浮動）。",
-                    "住宿與房租：公立學生宿舍約 400–550 歐元／月；私人合租公寓（WG）多落在 650–900 歐元／月。",
-                    "強制項目：德國 30 歲以下學生公立醫保約 120–130 歐元／月、學期雜費（Semester Fee）每學期約 85 歐元、廣播電視費（Rundfunkbeitrag）每月 18.36 歐元。",
-                ],
-                origin_label="官方費用指南結構化整理",
-                source_title="TUM Global & Alumni Office — Cost of Living in Munich",
-                source_url="https://www.international.tum.de/en/global/coming-to-tum/living-in-munich/",
-                last_checked_at="2026-10-18",
+                category='living_cost',
+                title='慕尼黑生活費：官方建議每月至少 1,200 歐元（不含休閒活動）',
+                summary_zh='TUM 交換生行前頁建議，在慕尼黑每月至少準備 1,200 歐元，包含房租但不含休閒活動。本摘要為官網一般預算參考，不是個人支出保證或其他校區的統一標準。',
+                bullets=['最低生活預算與居留財力證明是不同用途，不應把財力證明門檻當作足夠生活費；本頁不以未註明日期的匯率換算新臺幣。', '住宿費須依房源確認：交換生 Service Package 專頁列月租 400–600 歐元及可退押金 500–900 歐元；並非所有交換生都能取得該房源。', '行前總覽的公營宿舍概估為 300–400 歐元，與 Service Package 專頁的 400–600 歐元不同。兩頁適用房源未完全一致，應以實際分配與合約為準；醫保及學期費另核對身分、校區與當期公告。'],
+                origin_label='官方預算參考（校區與房源須核對）',
+                source_title='Preparing for your stay at TUM - International exchange students - TUM Global',
+                source_url='https://www.global.tum.de/en/global/exchangestudents/general-information-for-international-students/preparing-your-stay/',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[{'title': 'Accommodation service for international exchange students - TUM Global', 'source_url': 'https://www.global.tum.de/en/global/accommodation/', 'category': None, 'summary': None}],
             ),
         ),
         housing_points=(
             CrossSchoolStructuredPoint(
-                category="housing",
-                title="TUM 交換生住宿申請提醒與校區分布",
-                summary_zh="TUM 不保證所有交換生皆能分發校內宿舍，Studierendenwerk München Oberbayern 服務名額採抽籤或配額制，建議獲母校提名後立即同步啟動校外合租搜尋。",
-                bullets=[
-                    "熱門宿舍區包含 Studentenstadt Freimann 與 Olympiazentrum，通勤至市中心校區或 Garching 理工校區便利。",
-                    "由於資訊、機械、物理等學院位於 Garching 校區（U6 地鐵終點），找房時建議沿 U3／U6 地鐵線向北或市區規劃。",
-                    "防詐提醒：慕尼黑租屋市場極為競爭，切勿在未實際看房或確認房東身分前預先跨國匯出押金。",
-                ],
-                origin_label="官方住宿頁＋跨校學長姐提醒整理",
-                source_title="TUM Accommodation for Exchange Students",
-                source_url="https://www.international.tum.de/en/global/coming-to-tum/accommodation/",
-                last_checked_at="2026-10-18",
+                category='housing',
+                title='TUM 交換生住宿：依交換管道與校區申請',
+                summary_zh='TUM 本身沒有校內住宿；學生服務機構（Studierendenwerk München Oberbayern）提供的有限宿位優先保留給 TUMexchange。其他交換管道不保證有房，須按自己的計畫與校區查核。',
+                bullets=['TUMexchange 指非歐洲大學的校級協議交換，不能僅憑學院級合作判定符合。申請表 Further information 欄仍須表示接受 Service Package 的意願。', 'Erasmus+、學院及其他交換計畫也可表示興趣；有剩餘宿位才依內部程序分配。冬季自七月中、夏季自一月中通知接受或拒絕，不能把排候補當作保證。', '慕尼黑／Garching 與 Freising 的房源依就讀校區安排；Heilbronn、Straubing 應洽各校區窗口。不要把所有宿舍都當成同一校區的通勤選項。', 'Service Package 月租 400–600 歐元、可退押金 500–900 歐元。簽回住宿接受函後須在期限內支付前三個月租金與押金，才能完成保留；勿把一般防詐建議誤作官方宿舍一律不可預付。'],
+                origin_label='官方交換生住宿程序參考',
+                source_title='Accommodation service for international exchange students - TUM Global',
+                source_url='https://www.global.tum.de/en/global/accommodation/',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[],
             ),
         ),
         course_points=(
@@ -233,22 +232,7 @@ CURATED_SPECS: tuple[CuratedInstitutionSpec, ...] = (
                 last_checked_at="2026-10-18",
             ),
         ),
-        experience_points=(
-            CrossSchoolStructuredPoint(
-                category="experience_digest",
-                title="跨校赴慕尼黑工大交換重點整理：期末考一試定勝負與提早找房",
-                summary_zh="綜合全台多校理工與商管交換生公開經驗，TUM 課程學術強度高、多數專業課以期末考 100% 計分，且開學前一個月的迎新與找房期是適應關鍵。",
-                bullets=[
-                    "評分制度：德國理工課程常無平時小考或作業加分，期末筆試（Klausur）占總成績 100%，報名考試須於 TUMonline 期限內個別登記。",
-                    "生活實務：抵達慕尼黑後須先完成市政廳入籍（KVR Anmeldung）、啟動限制提領帳戶與學生醫保，建議出國前先預約辦理時段。",
-                    "社交與旅遊：可報名 TUMi（TUM International）舉辦的巴伐利亞文化體驗、新天鵝堡與阿爾卑斯山健行活動，快速結識各國交換生。",
-                ],
-                origin_label="跨校公開經驗結構化摘要",
-                source_title="TUM International (TUMi) Orientation & Exchange Guide",
-                source_url="https://www.international.tum.de/en/global/tumi/",
-                last_checked_at="2026-10-18",
-            ),
-        ),
+        experience_points=(),
     ),
     CuratedInstitutionSpec(
         country_zh="日本",
@@ -263,68 +247,128 @@ CURATED_SPECS: tuple[CuratedInstitutionSpec, ...] = (
         ),
         living_cost_points=(
             CrossSchoolStructuredPoint(
-                category="living_cost",
-                title="東京早稻田每月生活費結構化參考（約 120,000–160,000 日圓）",
-                summary_zh="依早稻田大學留學中心（CIE）與 JASSO 東京地區統計整理，赴早稻田交換每月生活費（不含來回機票）約需 120,000 至 160,000 日圓。",
-                bullets=[
-                    "每月總預算約 120,000–160,000 日圓（折合新臺幣約 26,000–35,000 元）。",
-                    "住宿費：早稻田學生寮（如 WISH）或共立合作宿舍（WID）每月約 55,000–90,000 日圓（水電與供餐方案依寮別另計）。",
-                    "日常開支：伙食費約 35,000–45,000 日圓／月、日本國民健康保險約 2,000 日圓／月、手機網路與地鐵通勤約 8,000–15,000 日圓／月。",
-                ],
-                origin_label="官方留學中心費用參考整理",
-                source_title="Waseda University Center for International Education (CIE)",
-                source_url="https://www.waseda.jp/inst/cie/en/exchange/application",
-                last_checked_at="2026-10-18",
+                category='living_cost',
+                title='早稻田 2027 交換：財力證明與生活預算分開確認',
+                summary_zh='2027 交換簡章的財力證明要求為每年超過 1,440,000 日圓，或每學期超過 720,000 日圓。這是申請證明門檻，不是實際每月生活費估算；當期生活總預算仍須按住宿與個人支出另查。',
+                bullets=['2027 春季入學的證明須於 2026/10/01 當日或之後開立；2027 秋季入學須於 2027/01/01 當日或之後開立，並透過 Speed Visa 提交。', '可用本人銀行餘額證明，或資助人的銀行餘額證明加支付費用誓約；資助人須與 Speed Visa 登記一致。必要時可合併獎學金／貸款證明，並提交所有相關文件。', '股票、ETF 等金融商品估值不一定列入餘額，簡章要求準備足額現金存款。原頁所列每月 120,000–160,000 日圓及新臺幣換算，尚未由本輪已讀來源證實，暫不作確定預算。', '交換生宿舍租金與水電等費用已另列於住宿欄；房型、一次性費用、餐費、交通與保險須分別確認，不能把部分宿舍租金當作完整生活費。'],
+                origin_label='2027 官方財力要求（生活總預算待確認）',
+                source_title='Waseda Exchange Programs 2027 Guidelines — Proof of Financial Viability',
+                source_url='https://www.waseda.jp/inst/cie/assets/uploads/2026/06/ba8ac5b2898a045bc89b972436d4b2ba.pdf',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[],
             ),
         ),
         housing_points=(
             CrossSchoolStructuredPoint(
-                category="housing",
-                title="早稻田國際學生寮（WISH／WID）與住宿申請提醒",
-                summary_zh="早稻田提供中野國際學生寮（WISH）及多處 WID 合作學生會館（含早稻田、高田馬場、所澤等），惟床位採志願抽籤，須留意申請截止日早於放榜。",
-                bullets=[
-                    "WISH（Waseda International Student House）：位於中野站附近，為 4 人一組共用客廳之單人雅房，含豐富 RA 國際交流活動。",
-                    "WID（Waseda International Dormitory）：由共立メンテナンス營運，多數提供早晚供餐方案，適合希望固定控制餐費的同學。",
-                    "申請提醒：校級交換（CIE）與院系級交換可選宿舍清單可能不同，未抽中校方宿舍者可透過早稻田 Student Housing Center 媒合民間租屋。",
-                ],
-                origin_label="官方宿舍中心與跨校經驗整理",
-                source_title="Waseda University Residence Life Center",
-                source_url="https://www.waseda.jp/inst/rlc/en/",
-                last_checked_at="2026-10-18",
+                category='housing',
+                title='早稻田交換生宿舍：三種宿舍、抽籤及當期申請',
+                summary_zh='官方交換生住宿頁列早大寮、早稻田奉仕園與西早稻田留學生寮；申請採抽籤且不保證錄取。一般學生寮介紹不能直接代替交換生的適用宿舍與申請條件。',
+                bullets=['早大寮（Sodai-ryo）北棟月租 54,000–62,000 日圓、南棟 63,000 日圓；兩者另有每月 8,000 日圓水電等費用。', '奉仕園 3 號館月租 69,000–72,000 日圓，另 9,900 日圓、實際電費及設施服務費；5 號館月租 52,000–66,000 日圓，另 13,200 日圓及設施服務費。', '西早稻田一般單人房月租 72,000 日圓、另 11,000 日圓；大單人房 85,000 日圓、另 13,000 日圓。各寮其他一次性費用與繳費方式須另查，不能視為全包價。', '目前申請頁適用 2026 秋季：日本時間 5/29 10:00 至 6/17 10:00，已截止。至少住宿一學期；只修一季課程者不適用。尚未收到交換入學許可者可先申請，最終未獲許可則取消；下一期日期仍待確認。'],
+                origin_label='官方交換生住宿參考（申請頁為 2026 秋季）',
+                source_title='Dormitories for Exchange Students  –  Student Affairs Section, Student Dormitory Desk, Waseda University',
+                source_url='https://www.waseda.jp/inst/rlc/en/student_dormitory/exchange/',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[{'title': 'Exchange Students  –  Student Affairs Section, Student Dormitory Desk, Waseda University', 'source_url': 'https://www.waseda.jp/inst/rlc/en/undergraduate/application/exchange/', 'category': None, 'summary': None}],
             ),
         ),
         course_points=(
             CrossSchoolStructuredPoint(
-                category="courses",
-                title="學長姐常修課程方向：SILS 國際教養、政經商學與 CJL 日語課",
-                summary_zh="早稻田交換分為英語授課學程與日語授課學部，並開放交換生加選日本語教育研究中心（CJL）各級別日語課程。",
-                bullets=[
-                    "英語授課方向：國際教養學部（SILS）、政治經濟學部（SPSE）、商學部與理工學部英語模組，涵蓋亞太政經、日本流行文化與國際商管。",
-                    "日語密集強化：CJL 提供 Level 1–8 綜合日語與主題日語（商務日語、漢字、發音、日本社會討論），採電腦志願抽籤選課。",
-                    "選課注意：早稻田選課採三階段電腦抽籤制（非先搶先贏），熱門課須分散風險填報，並滿足簽證要求之每週最低授課時數。",
-                ],
-                origin_label="跨校修課方向與 CIE 選課規範整理",
-                source_title="Waseda CIE Exchange Program Curriculum & CJL",
-                source_url="https://www.waseda.jp/inst/cie/en/exchange",
-                last_checked_at="2026-10-18",
+                category='courses',
+                title='早稻田 2027 選課：學部限制與日語跨修分開確認',
+                summary_zh='適用 2027 春／秋入學的校級交換一般說明；不是雙聯或所有院級協議的共同規則。選課於計畫開始後辦理，讀書計畫所列課程不代表已選上，也不保證滿足母校所需學分。',
+                bullets=['原則以錄取學部課程為主，跨學部或全校開放課程須符合個別限制；部分超額課程才採抽籤，不能概括為所有課程一律三階段抽籤。', '一般簡章強烈建議每週約 6 門課、約 10 小時；SILS、FSE、CSE 英語學部另明定每週至少 10 小時。不可把一般建議寫成全校共同硬門檻。', '全校開放課程中的 CJL 日語跨修每學期上限通常為 8 學分，SILS 為 7；JLP 日語專修另依其專章，不套這個跨修上限。', 'CJL Level Check Test 的日語分級為 1–7；日語課採日語授課，學部課程與語言課的學分及要求須分別查看。', '各學部／研究科的語檢、GPA、年級、開放科目與入學季不同；母校提名不保證能選修所有課程。以下分列 2027 英語／日語大學部、研究所及 JLP 已讀條件；各母校協議適用範圍及附連結的個別課表仍須核對。'],
+                origin_label='2027 接待校原文參考（母校方案另核對）',
+                source_title='Waseda 2027 Guidelines — Course Registration, pp.15–16',
+                source_url='https://www.waseda.jp/inst/cie/assets/uploads/2026/06/ba8ac5b2898a045bc89b972436d4b2ba.pdf',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[{'title': '2027 英語學部條件', 'source_url': 'https://www.waseda.jp/inst/cie/assets/uploads/2026/06/e4b83beb6ee3607bf5992252db1e8fae.pdf', 'category': None, 'summary': None}, {'title': '2027 JLP 日語專修條件', 'source_url': 'https://www.waseda.jp/inst/cie/assets/uploads/2026/06/b75696f8758143b83f82a77f1d5d6315.pdf', 'category': None, 'summary': None}, {'title': '2027 日語學部條件', 'source_url': 'https://www.waseda.jp/inst/cie/assets/uploads/2026/06/d52d923019011eab359629ebd4f0703e.pdf', 'category': None, 'summary': None}, {'title': '2027 英語研究所條件', 'source_url': 'https://www.waseda.jp/inst/cie/assets/uploads/2026/06/4b4370d1666c886d96b8573cebd8d1fa.pdf', 'category': None, 'summary': None}, {'title': '2027 日語研究所條件', 'source_url': 'https://www.waseda.jp/inst/cie/assets/uploads/2026/06/dc3c48dd16c2b85ac8d7a74ba31fcafe.pdf', 'category': None, 'summary': None}],
             ),
-        ),
-        experience_points=(
             CrossSchoolStructuredPoint(
-                category="experience_digest",
-                title="跨校赴早稻田交換重點整理：ICC 國際交流活動與學部門檻差異",
-                summary_zh="全台共有逾 10 所大學與早稻田締約（含校級與院級），跨校學長姐普遍推薦善用 ICC（異文化交流中心）活動融入日本學生圈，並提前核對各學部語檢分數。",
-                bullets=[
-                    "門檻差異：同一間早稻田大學，英語組通常要求 TOEFL iBT 79–90 或 IELTS 6.0–6.5，日語組多要求 JLPT N1（部分學部接受 N2），各學部規定分開計算。",
-                    "校園融入：Waseda ICC 每週舉辦語言交換午餐、地方文化參訪與企業見學，是認識日本本地生最直接的管道。",
-                    "生活實務：高田馬場至早稻田正門步行約 20 分鐘，多數同學會購買二手腳踏車或辦理都營巴士／東京メトロ通學定期券。",
-                ],
-                origin_label="跨校公開經驗結構化摘要",
-                source_title="Waseda Interdisciplinary Cultural Center (ICC)",
-                source_url="https://www.waseda.jp/inst/icc/en/",
-                last_checked_at="2026-10-18",
+                category='courses',
+                title='早稻田 2027 英語學部：依學部查核門檻',
+                summary_zh='以下是英語授課大學部的指定門檻，仍須同時符合各校提名與學部其他規定。TOEFL 新舊制按原表 2026/01/21 前後考試日期欄列示，並非平台自行換算；不套用研究所或日語學部。',
+                bullets=['SPSE 政治經濟、SSS（TAISI）社會科學、SILS 國際教養：GPA 3.0/4.0；TOEFL iBT 舊制 80／新制 4，或 IELTS 6.0；不接受 ITP 或 TOEIC L&R。', 'SOC 商學：GPA 3.0/4.0；TOEFL iBT 舊制 61／新制 3.5、ITP 500、IELTS 5.0 或 TOEIC L&R 620。須以商學課程為主，每學期至多 24 學分，英語課程數有限。', 'FSE 基幹理工、CSE 創造理工：GPA 3.0/4.0；TOEFL iBT 舊制 80／新制 4.5、IELTS 6.5 或 TOEIC L&R 730，不接受 ITP。入學時須為母校大三以上且主修相符，每學期至多 20 學分。', 'FSE 僅列數學／應用數理、資訊理工／資訊通信；CSE 僅列土木環境，機械不可申請。兩者不可跨主修或修日語學部課程；全校開放課限 GEC／CJL，畢業研究與實驗課不開放。', 'CMS 文化構想 JCulP：GPA 3.5/4.0；TOEFL iBT 舊制 95／新制 5，或 IELTS 7.0，不接受 ITP 或 TOEIC。僅九月入學；四月不開放。', 'SILS 四月入學限一學期，須修至少 8 學分中／高階 SILS 講授課，不可修入門或 Seminar；日語 6 學分是強烈建議。SSS 不可修 Seminar 或海外田野課，SPSE 也有指定必修與研討課限制。', 'GPA 不四捨五入。原表排除 TOEIC IP、IELTS General／One Skill Retake、TOEFL Home Edition／Essentials／MyBest、Duolingo 與 Cambridge；語檢豁免須另對照一般簡章及學部條件，不能只憑國籍或英語授課就判定。'],
+                origin_label='2027 接待校原文參考（母校方案另核對）',
+                source_title='Waseda AY2027 Undergraduate Schools — English based Program, pp.1–7',
+                source_url='https://www.waseda.jp/inst/cie/assets/uploads/2026/06/e4b83beb6ee3607bf5992252db1e8fae.pdf',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[],
+            ),
+            CrossSchoolStructuredPoint(
+                category='courses',
+                title='早稻田 2027 JLP：日語專修資格與學分',
+                summary_zh='JLP 是日語專修計畫，與一般學部交換生跨修 CJL 不同。大學部 GPA 為 2.5/4.0；研究生該欄標 N/A，不能據此推定母校也沒有成績要求。',
+                bullets=['入學前須有至少一學年、相當於 150 小時以上的校內／日語學校日語學習經驗；無上述機構學習經驗者，可依原文提交官方日語檢定或母校日語教師等開立的能力證明。', '完成半年計畫須 13 學分、一年須 26 學分，只計 CJL 與 GEC 的指定日本語教育科目，不是把所有外系學分都算入完成要求。', '每學期 CJL 最多 14 學分；全校開放及其他學部課程合計另限最多 4 學分、2 門課，仍有選課限制，也不保證能選滿。', '所有課程以日語授課；讀書計畫須說明學習日語的理由。選拔會看全部課程成績，不能只看日語科目；百分制約 65 分只是來源的概略參考，不取代正式 GPA 判定。'],
+                origin_label='2027 接待校原文參考（母校方案另核對）',
+                source_title='Waseda AY2027 Requirements for Japanese Language Program, p.1',
+                source_url='https://www.waseda.jp/inst/cie/assets/uploads/2026/06/b75696f8758143b83f82a77f1d5d6315.pdf',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[],
+            ),
+            CrossSchoolStructuredPoint(
+                category='courses',
+                title='早稻田 2027 日語學部：JLPT、GPA 與入學季',
+                summary_zh='這份日語授課大學部表列 12 個學部，均要求 JLPT N1。政治經濟與三個理工學部要求 GPA 3.0/4.0、不可四捨五入；其他八個學部的 GPA 欄為 No Requirements，僅代表接待學部這一欄沒有門檻，母校提名條件仍須另查。',
+                bullets=['法學部僅四月入學；教育學部僅四月入學且須交換一年，通常一年至多 40 學分，小學教育／理學科相關課程上限為 44。教育學部的研討或論文課須另獲系所許可，不能選有先修條件的課程。', '基幹、創造、先進理工須與母校主修相符，只能修錄取系所課程，不可跨系或選英語學程；畢業研究、論文、實驗室與實驗課不開放。全校開放課僅可選 GEC、CJL。', '三個日語理工學部每學期最多 20 學分、每週至少 10 小時；修季課程也須在各學期達到每週時數。先進理工的電氣・情報生命工學科不開放申請。', '日語商學部每學期最多 24 學分，可選其英語課程，TOEIC 620／舊制 TOEFL iBT 61 是建議能力。日語社會科學與文化構想亦可修各自英語課程，原表未另要求英語檢定；不代表以英語組入學的門檻相同。', '日語政治經濟可選英語課程，原表建議舊制 TOEFL iBT 80；實習、部分研討、語言及指定必修課不開放。成績單不能要求提前於春季 9/1、秋季 3/1 發出，遇週末順延至工作日。', '人間科學在所澤校區；運動科學列所澤與東伏見。這兩學部附件課表明列為舊年度參考，秋季入學請於七月、春季入學於二月向學部查詢最新課表。'],
+                origin_label='2027 接待校日語大學部條件（母校方案另核對）',
+                source_title='Waseda AY2027 Undergraduate Schools — Japanese based Program, pp.2–10',
+                source_url='https://www.waseda.jp/inst/cie/assets/uploads/2026/06/d52d923019011eab359629ebd4f0703e.pdf',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[],
+            ),
+            CrossSchoolStructuredPoint(
+                category='courses',
+                title='早稻田 2027 英語研究所：語檢與個別資格',
+                summary_zh='適用 2027 春／秋校級交換研究所。TOEFL 舊／新分數依原表 2026/01/21 前後考試日期分列，並非自行換算；原表未釐清當日邊界，當日應考者須向校方確認。所有列載研究科均不收 ITP；No Requirements 只代表該接待研究科的 GPA 欄，不能免除母校門檻。',
+                bullets=['政治學、經濟學：TOEFL iBT 舊 90／新 4.5、IELTS 6.5 或 TOEIC L&R 900；英語學位授課的母校證明信可作能力證明，使用檢定時須為正式考場測驗。申請前不必先取得指導教授同意。', '法學 LL.M.：GPA 3.0/4.0，不四捨五入；TOEFL 舊 92／新 5.0、IELTS 7.0 或 TOEIC L&R 900。至少三年法學高等教育；每年最多 40 學分，日語課程另須教師同意與 JLPT N1。', 'GSICCS 國際文化與傳播：TOEFL 舊 95／新 5.0 或 IELTS 7.0，不收 TOEIC；母校英語能力證明信不能替代檢定。交換生不安排指導教授，也不可選 Directed Research、Seminar I／II 或 Specialized 課程。', 'GSAPS 亞太研究：TOEFL 舊 86／新 4.5 或 IELTS 6.5，不收 TOEIC。WBS 商管：TOEFL 舊 92／新 4.5、IELTS 6.5 或 TOEIC L&R 900；WBS 可依原文使用母校英語學位授課證明。', 'WBS 另要求至少三年全職工作經驗，實習與兼職不計；入學前須在母校 MA／MBA 完成至少一年、兩學期。每學期上限 20 學分，不含 CJL。', 'FSE 基幹理工、CSE 創造理工、ASE 先進理工及 IPS 情報生產系統：TOEFL 舊 80／新 4.5、IELTS 6.5 或 TOEIC L&R 730；均須申請前取得指導教授同意，不能只憑語檢達標判定可申請。', '人間科學 EDICS：TOEFL 舊 80／新 4.5 或 IELTS 6.0；運動科學：TOEFL 舊 80／新 4.0 或 IELTS 6.0。兩者不收 TOEIC，均須指導教授同意；所澤／東伏見校區不能當作早稻田主校區。', '英語理工僅博士開放的領域：FSE 材料科學；CSE 建築、工業與經營系統、商業設計與管理；ASE 核能共同專攻。其餘可選領域仍依該研究科原表，不可把「理工」理解為全部系所。'],
+                origin_label='2027 接待校研究所條件（母校方案另核對）',
+                source_title='Waseda AY2027 Graduate Schools — English based Program, pp.1–14',
+                source_url='https://www.waseda.jp/inst/cie/assets/uploads/2026/06/4b4370d1666c886d96b8573cebd8d1fa.pdf',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[],
+            ),
+            CrossSchoolStructuredPoint(
+                category='courses',
+                title='早稻田 2027 日語研究所：N1 例外與研究指導',
+                summary_zh='日語研究所表列 18 個研究科，全部 GPA 欄為 No Requirements；仍須符合母校提名規定。多數要求 JLPT N1，但理工、IPS 與社會科學博士有個別規則，不能一律套 N1，也不能把沒有統一語檢門檻理解成不需日語能力。',
+                bullets=['政治學、經濟學、法學、教育、商學、GSAPS、日本語教育、會計及 WBS 要求 N1，申請前通常不必先取得教授同意；會計所另提醒不一定提供研究指導，且僅接受碩士。', '社會科學要求 JLPT N1 分數高於 100；博士無統一語檢門檻，但語言程度須經指導教授認可。申請前不要求教授同意，校方審查時洽詢教授，不能保證指定指導人。', 'FSE、CSE、ASE 與 IPS 語言欄為 No Requirements，均須先取得教授同意。環境能源、文學、人間科學與運動科學要求 N1，並須指導教授同意。', '日語 FSE 的材料科學、CSE 的建築／工業與經營系統／商業設計與管理、ASE 的核能共同專攻可申請碩士與博士，與英語管道不同。ASE 先進生命醫科學共同專攻僅博士、僅四月；先進健康科學共同專攻僅博士。', '法學日語管道不可修英語 LL.M. 課，博士除 CJL 外不辦理課程選修；日語法學每年最多 32 學分。文學研究科的全校開放課也限 CJL，不可跨其他學部／研究科。', '教育研究科高度教職實踐專攻僅春季碩士；通常每年上限 36 學分，該專攻為 39。全校開放課每學期最多 8 學分；跨所屬專攻另有 8 學分限制，必須依選課類別確認。', '日本語教育 GSJAL：指定理論研究科目每學期至多 10 學分，排除日本語教育學入門及日本語教育研究方法論；其他學部／中心合計整段交換期間最多 4 學分。規劃於 2027 開辦的登錄日本語教員養成課程，即使通過認證也不開放交換生。', '日語 WBS 同樣要求三年全職工作經驗（不含實習／兼職）、母校 MA／MBA 至少一年兩學期，每學期 20 學分不含 CJL。商學 GSC 須至少修一門該所課，每學期至多 20 學分、外所每年最多 10；會計每學期最多 24、全校開放課每年最多 10。'],
+                origin_label='2027 接待校研究所條件（母校方案另核對）',
+                source_title='Waseda AY2027 Graduate Schools — Japanese based Program, pp.1–15',
+                source_url='https://www.waseda.jp/inst/cie/assets/uploads/2026/06/dc3c48dd16c2b85ac8d7a74ba31fcafe.pdf',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[],
+            ),
+            CrossSchoolStructuredPoint(
+                category='courses',
+                title='早稻田 2027 研究所：研討課、學分與校區限制',
+                summary_zh='以下限制須和各研究科語言門檻一起閱讀。文件內部分課表連結仍是 2025／2026 年度示例；並未因此確認 2027 每門課都會開設。母校所需學分、個別課表與指導教授接收名額仍須另外核對。',
+                bullets=['政治學與經濟學的研究指導研討課原則供正式學位生；交換生若獲教師同意，只能以非正式 Moodle External User 旁聽，該研討課不列入成績報告或成績單。', 'GSAPS 的規定不同：碩士除 zemi 外至少修一門一般 GSAPS 課；博士不強制修一般講授課。每學期至多 14 學分，不含 CJL。碩博士每週必須參與指定教授的 zemi，不給學分但有成績並列成績單；缺席可得 F，不因母校沒有論文而免除。', 'GSICCS 只開放指定 Basic／Related 講授課，仍可能有不開放項目；每學期至多 14 學分、不含 CJL。全校開放課限 CJL，其他研究科另限最多 4 學分、2 門課；不保證錄取所有志願課。', '三個理工研究科限所屬專攻課程，選課需教授同意；全校開放課限 CJL，不可跨其他學部／研究科。每學期上限 20 學分，沒有最低學分但必須登記研究指導；英語管道也不保證每門課都能用英語修讀。', 'IPS 位於福岡縣北九州校區。聯繫教授時須表明是校際協議下的非學位碩／博士交換；碩士每學期原則至少 12、最多 14 學分，指定課程須教授同意，博士研究指導由所辦登記。', '人間科學英語 EDICS 可修的英語課有限，錄取後須與教授確認；改修日語課須 N1。日語運動科學跨修英語課須事先許可；這兩所修全校開放課可能需個別洽詢。環境能源的碩士跨其他研究科最多 4 學分、2 門課。', '英語研究所共同排除 TOEIC IP、IELTS General／One Skill Retake、TOEFL Home Edition／Essentials／MyBest、Duolingo 與 Cambridge。GSICCS 另不接受 TOEFL Paper Edition、IELTS Online／Indicator 等非指定考場測驗；不可把一般豁免套到明文不接受的研究科。', 'GSAPS 申請時須選擇希望指導教授；錄取後只能參加所方指派的一門 zemi，不能任意改換。課表標示的 zemi 8 學分只適用正式學位生，交換生仍為零學分；教師當期接收及完整課表須另查。'],
+                origin_label='2027 接待校研究所條件（母校方案另核對）',
+                source_title='Waseda AY2027 Graduate Requirements — program-specific course restrictions',
+                source_url='https://www.waseda.jp/inst/cie/assets/uploads/2026/06/4b4370d1666c886d96b8573cebd8d1fa.pdf',
+                last_checked_at='2026-10-21',
+                source_published_at=None,
+                verification_status='verified_reference',
+                related_sources=[{'title': '2027 日語研究所原表', 'source_url': 'https://www.waseda.jp/inst/cie/assets/uploads/2026/06/dc3c48dd16c2b85ac8d7a74ba31fcafe.pdf', 'category': None, 'summary': None}, {'title': 'GSAPS 交換生必讀說明：課程、zemi 與指導教授（13 頁）', 'source_url': 'https://waseda.app.box.com/file/2117124954762?s=hq4ze8trlsmi0056xuu1m4j4gbwlh6zj', 'category': None, 'summary': None}],
             ),
         ),
+        experience_points=(),
     ),
     CuratedInstitutionSpec(
         country_zh="德國",
@@ -851,7 +895,7 @@ def _match_bundled_digests_for_entity(entity: AggregatedPartnerEntity) -> list[C
                 origin_label=f"公開經驗結構化整理（{meta.get('platform', '公開來源')}）",
                 source_title=meta.get("title") or digest.title_zh,
                 source_url=url,
-                last_checked_at=digest.written_at,
+                source_published_at=digest.written_at,
             )
         )
     return results
@@ -887,86 +931,75 @@ def _synthesize_cross_school_intelligence(
         ),
         contracted_agreements[0].deadline_source_url if contracted_agreements else "https://studyabroad.ntu.edu.tw/",
     )
-    primary_checked_at = (
-        contracted_agreements[0].deadline_last_checked_at if contracted_agreements else "2026-10-18"
-    )
-    country_guide = guide_for_country(entity.country_name_zh)
+    # Deadline review dates do not establish a review of host-school facts.
+    related_sources = [
+        SourceReference(title=f"{a.home_short_name}交換資料（當期適用性待確認）", source_url=a.partner_source_url)
+        for a in contracted_agreements
+        if a.partner_source_url and a.partner_source_url.startswith(("https://", "http://"))
+    ]
 
-    # 1. Living Cost Reference (ensure every school has a structured, source-backed summary)
+    # A country default and an unrelated official link do not establish a
+    # university's cost of living. Keep the gap visible until it has evidence.
     if not living_points:
-        cost_hint = COUNTRY_DEFAULT_CURRENCY_HINT.get(
-            entity.country_name_zh,
-            f"赴{entity.country_name_zh}交換建議分列計算住宿、伙食、當地交通、強制醫療保險與簽證財力證明。",
-        )
+        cost_hint = "本校當期生活費金額尚未核實；請分別確認住宿、伙食、交通、保險及簽證所需費用。"
         tuition_notes = [
-            f"{a.home_short_name}：{a.tuition_info[:90]}"
+            f"{a.home_short_name}列載參考：{a.tuition_info}"
             for a in contracted_agreements
             if a.tuition_info
         ][:3]
         cost_bullets = [cost_hint]
         if tuition_notes:
-            cost_bullets.append("跨校學費協議摘要：" + "；".join(tuition_notes))
+            cost_bullets.extend(tuition_notes)
         else:
-            cost_bullets.append("校級交換生原則上繳交台灣母校學雜費、免繳合作校學費（自費研修方案除外，請依各母校簡章核對）。")
-        if country_guide:
-            for topic in country_guide.topics:
-                if topic.topic in {"payment", "health_insurance"} and topic.tips:
-                    cost_bullets.append(f"【{topic.title}】{topic.tips[0].title}：{topic.tips[0].detail[:95]}")
-                    if topic.tips[0].sources:
-                        primary_source_url = topic.tips[0].sources[0].url
-                        primary_checked_at = topic.tips[0].checked_at
-                    break
+            cost_bullets.append("尚無本方案學費規定的摘要，母校與接待校的繳費義務須分別確認。")
 
         living_points.append(
             CrossSchoolStructuredPoint(
                 category="living_cost",
                 title=f"{entity.school_name_zh}（{entity.country_name_zh}）跨校生活費與預算結構化參考",
                 summary_zh=(
-                    f"綜合{entity.country_name_zh}官方留學參考與全台 {len(contracted_agreements)} 所締約大學交換資料整理："
-                    f"{cost_hint}。實際開支視校內宿舍分配與個人消費習慣而定。"
+                    f"{entity.school_name_zh}：{cost_hint}"
+                    "以下母校資料僅作查詢線索，不能代替接待校當期費用說明。"
                 )[:430],
                 bullets=cost_bullets[:5],
-                origin_label="跨校締約資料與官方預算參考整理",
-                source_title=f"{entity.country_name_zh}交換預算與締約母校官方依據",
+                origin_label="費用待核實",
+                source_title="母校交換資料查詢入口（非生活費金額證據）",
                 source_url=primary_source_url,
-                last_checked_at=primary_checked_at,
+                verification_status="reference_only",
+                related_sources=related_sources,
             )
         )
 
     # 2. Housing Reference
     if not housing_points:
         housing_notes = [
-            f"{a.home_short_name}列載：{a.housing_info[:100]}"
+            f"{a.home_short_name}列載參考：{a.housing_info}"
             for a in contracted_agreements
             if a.housing_info
         ][:3]
-        housing_bullets: list[str] = []
+        housing_bullets: list[str] = [
+            "本校當期住宿申請資格、宿位保證、費用與截止日尚未完成核實；母校提名不能作為住宿已獲核配的證據。"
+        ]
         if housing_notes:
             housing_bullets.extend(housing_notes)
         else:
             housing_bullets.append(
-                f"多數{entity.country_name_zh}合作校於母校完成提名（Nomination）後，才會寄發宿舍申請連結或 Fact Sheet 住宿代碼。"
+                "目前沒有可對應本校的母校住宿欄紀錄；需補查接待校當期交換生住宿說明。"
             )
-        if country_guide:
-            for topic in country_guide.topics:
-                if topic.topic == "housing" and topic.tips:
-                    for tip in topic.tips[:2]:
-                        housing_bullets.append(f"【{tip.title}】{tip.detail[:110]}")
-                    break
-        housing_bullets.append("提醒：獲得母校交換提名不等於保證分發校內宿舍，請勿在收到正式住宿確認前預付不可退還的校外押金。")
         housing_points.append(
             CrossSchoolStructuredPoint(
                 category="housing",
-                title=f"{entity.school_name_zh} 宿舍與落地住宿申請重點整理",
+                title=f"{entity.school_name_zh} 住宿資料與待確認項目",
                 summary_zh=(
-                    f"彙整全台締約大學對「{entity.school_name_zh}」之住宿欄紀錄與{entity.country_name_zh}落地規範，"
-                    "請於通過母校甄選後第一時間核對當期 Fact Sheet 之宿舍申請期限。"
+                    f"{entity.school_name_zh}：以下最多列出三所母校的住宿欄原有紀錄作為查詢線索，"
+                    "尚未獨立核實接待校當期規定；不代表住宿保證或完整申請程序。"
                 )[:430],
                 bullets=housing_bullets[:5],
-                origin_label="跨校締約住宿紀錄與行前指南整理",
-                source_title=f"{entity.school_name_zh} 締約母校交換資訊與官方來源",
+                origin_label="住宿待核實",
+                source_title="母校交換資料查詢入口（非當期住宿核實證據）",
                 source_url=primary_source_url,
-                last_checked_at=primary_checked_at,
+                verification_status="reference_only",
+                related_sources=related_sources,
             )
         )
 
@@ -981,30 +1014,30 @@ def _synthesize_cross_school_intelligence(
             )
         )[:5]
         if degree_notes:
-            course_bullets.append("各母校開放申請學制：" + "、".join(degree_notes) + "。")
+            course_bullets.append("母校表列學制參考（適用學期及身分待確認）：" + "、".join(degree_notes) + "。")
         college_notes = list(
             dict.fromkeys(
-                f"{a.home_short_name}：{a.colleges[:70]}"
+                f"{a.home_short_name}：{a.colleges}"
                 for a in contracted_agreements
                 if a.colleges
             )
         )[:3]
         if college_notes:
-            course_bullets.append("學院／系所選課範圍：" + "；".join(college_notes) + "。")
+            course_bullets.append("母校表列學院／系所參考（不等於接待校當期可選課程）：" + "；".join(college_notes) + "。")
 
         # Check raw PartnerUniversity.course_restrictions across all contracting schools
         restriction_notes: list[str] = []
         for home_id, p_list in entity.home_rows.items():
             for p in p_list:
                 if p.course_restrictions and p.course_restrictions.strip():
-                    restriction_notes.append(p.course_restrictions.strip()[:110])
+                    restriction_notes.append(p.course_restrictions.strip())
         restriction_notes = list(dict.fromkeys(restriction_notes))[:2]
         if restriction_notes:
             course_bullets.extend(f"選課限制摘要：{r}" for r in restriction_notes)
 
         lang_notes = list(
             dict.fromkeys(
-                f"{a.home_short_name}（{a.language_requirement_summary[:70]}）"
+                f"{a.home_short_name}（{a.language_requirement_summary}）"
                 for a in contracted_agreements
                 if "未單獨列載" not in a.language_requirement_summary
             )
@@ -1017,45 +1050,22 @@ def _synthesize_cross_school_intelligence(
         course_points.append(
             CrossSchoolStructuredPoint(
                 category="courses",
-                title=f"{entity.school_name_zh} 跨校可修讀領域、授課語言與選課限制摘要",
+                title=f"{entity.school_name_zh} 母校表列學制、語言與選課條件參考",
                 summary_zh=(
-                    f"聚合全台 {len(contracted_agreements)} 所締約大學針對「{entity.school_name_zh}」列載之可申請學院、學制、語檢條件與選課限制，"
-                    "協助在撰寫讀書計畫前快速定位可修課方向。"
+                    f"{len(contracted_agreements)} 所母校有「{entity.school_name_zh}」相關紀錄；此處僅展示部分母校欄位，完整條件請切換上方母校查看。"
+                    "各母校規則與適用年度可能不同，尚未獨立核實接待校當期課表、授課語言及選課資格。"
                 )[:430],
                 bullets=course_bullets[:5],
-                origin_label="全台締約母校簡章與選課條件彙整",
-                source_title=f"{entity.school_name_zh} 跨校締約條件官方來源",
+                origin_label="母校表列參考，接待校待核實",
+                source_title="母校交換資料查詢入口（非當期選課核實證據）",
                 source_url=primary_source_url,
-                last_checked_at=primary_checked_at,
+                verification_status="reference_only",
+                related_sources=related_sources,
             )
         )
 
-    # 4. Cross-School Experience / Preparation Digest
-    if not exp_points:
-        contracted_names = "、".join(a.home_short_name for a in contracted_agreements[:8])
-        exp_bullets = [
-            f"全台共有 {len(contracted_agreements)} 所支援大學與「{entity.school_name_zh}」締約（含：{contracted_names}），即使單一母校歷年心得較少，亦可跨校比對各校語檢與名額條件。",
-            "讀書計畫準備建議：建議明確列出 3–5 門於該校官網查得之當學期英語或當地語授課課程名稱，並說明與母校畢業學分之銜接。",
-        ]
-        if country_guide and country_guide.topics:
-            first_topic = country_guide.topics[0]
-            if first_topic.tips:
-                exp_bullets.append(f"【{first_topic.title}提醒】{first_topic.tips[0].title}：{first_topic.tips[0].detail[:100]}")
-        exp_points.append(
-            CrossSchoolStructuredPoint(
-                category="experience_digest",
-                title=f"破除單校資訊孤島：{entity.school_name_zh} 跨校申請與行前準備重點",
-                summary_zh=(
-                    f"透過跨校聚合全台 {len(contracted_agreements)} 所締約大學之官方交換資料與{entity.country_name_zh}行前實務，"
-                    "將原本分散於各校國際處系統的門檻、名額與修課限制整合於同一頁面。"
-                )[:430],
-                bullets=exp_bullets[:5],
-                origin_label="跨校聚合情報整理",
-                source_title=f"{entity.school_name_zh} 締約母校官方交換頁面",
-                source_url=primary_source_url,
-                last_checked_at=primary_checked_at,
-            )
-        )
+    # A generated preparation checklist is not a student's experience report.
+    # Leave experience_digests empty when no matching report was found.
 
     return living_points, housing_points, course_points, exp_points
 
@@ -1274,10 +1284,7 @@ def build_cross_school_partner_directory(
         cost_hint = (
             ent.curated.living_cost_points[0].title
             if ent.curated and ent.curated.living_cost_points
-            else COUNTRY_DEFAULT_CURRENCY_HINT.get(
-                ent.country_name_zh,
-                f"聚合 {len(short_names)} 所母校締約方案與{ent.country_name_zh}費用參考",
-            )
+            else "本校當期生活費金額尚未核實"
         )
         items.append(
             CrossSchoolPartnerSummaryItem(
@@ -1290,10 +1297,12 @@ def build_cross_school_partner_directory(
                 display_title=ent.display_title,
                 contracted_home_count=len(short_names),
                 contracted_home_short_names=short_names,
-                has_living_cost_digest=True,
+                has_living_cost_digest=bool(ent.curated and ent.curated.living_cost_points),
                 has_housing_digest=True,
                 has_course_digest=True,
-                experience_count=max(1, len(ent.curated.experience_points) if ent.curated else 1),
+                experience_count=(
+                    len(ent.curated.experience_points) if ent.curated else 0
+                ) + len(_match_bundled_digests_for_entity(ent)),
                 sample_cost_hint=cost_hint[:220],
             )
         )
@@ -1321,7 +1330,7 @@ def validate_cross_school_partner_compliance(data: CrossSchoolPartnerPageData) -
         ("course_direction_references", data.course_direction_references),
         ("experience_digests", data.experience_digests),
     ):
-        if not points:
+        if not points and section_name != "experience_digests":
             problems.append(f"{section_name} must not be empty")
         for idx, pt in enumerate(points):
             where = f"{section_name}[{idx}]"
@@ -1331,8 +1340,10 @@ def validate_cross_school_partner_compliance(data: CrossSchoolPartnerPageData) -
                 problems.append(f"{where}: bullets must not be empty")
             if not pt.source_url.startswith(("https://", "http://")):
                 problems.append(f"{where}: invalid source_url {pt.source_url}")
-            if not re.match(r"^\d{4}-\d{2}-\d{2}$", pt.last_checked_at):
+            if pt.last_checked_at is not None and not re.match(r"^\d{4}-\d{2}-\d{2}$", pt.last_checked_at):
                 problems.append(f"{where}: invalid last_checked_at {pt.last_checked_at}")
+            if pt.verification_status.startswith("verified_") and pt.last_checked_at is None:
+                problems.append(f"{where}: verified content requires its own review date")
             combined = " ".join([pt.title, pt.summary_zh, *pt.bullets])
             if "全台第一" in combined:
                 problems.append(f"{where}: contains forbidden claim '全台第一'")
@@ -1342,14 +1353,31 @@ def validate_cross_school_partner_compliance(data: CrossSchoolPartnerPageData) -
 
 
 def _render_structured_points_html(points: list[CrossSchoolStructuredPoint]) -> str:
+    if not points:
+        return '<p class="cs-intel-empty">尚未收錄可對應本校的資料。</p>'
     cards: list[str] = []
     for pt in points:
         bullets_html = "".join(f"<li>{escape(b)}</li>" for b in pt.bullets)
+        if pt.verification_status.startswith("verified_") and pt.last_checked_at:
+            date_label = f"查核日期：{pt.last_checked_at}"
+        elif pt.last_checked_at:
+            date_label = f"既有整理日期：{pt.last_checked_at}（本輪待複核）"
+        else:
+            date_label = "本項內容尚待核實"
+        if pt.source_published_at:
+            date_label += f"；來源日期：{pt.source_published_at}"
+        related_html = "".join(
+            f'<li><a href="{escape(source.source_url)}" target="_blank" rel="noopener noreferrer">'
+            f'{escape(source.title)}</a></li>'
+            for source in pt.related_sources
+            if source.source_url.startswith(("https://", "http://"))
+        )
+        related_html = f'<ul class="cs-related-sources">{related_html}</ul>' if related_html else ""
         cards.append(
             f'<article class="cs-intel-card" data-category="{escape(pt.category)}">'
             f'<div class="cs-intel-header">'
             f'<span class="cs-origin-badge">{escape(pt.origin_label)}</span>'
-            f'<span class="cs-checked-badge">最後查核／整理：{escape(pt.last_checked_at)}</span>'
+            f'<span class="cs-checked-badge">{escape(date_label)}</span>'
             f"</div>"
             f"<h3>{escape(pt.title)}</h3>"
             f'<p class="cs-intel-summary">{escape(pt.summary_zh)}</p>'
@@ -1359,6 +1387,7 @@ def _render_structured_points_html(points: list[CrossSchoolStructuredPoint]) -> 
             f'<a href="{escape(pt.source_url)}" target="_blank" rel="noopener noreferrer" data-official-source>'
             f"查閱官方／公開原文連結 ↗</a>"
             f"</p>"
+            f"{related_html}"
             f"</article>"
         )
     return '<div class="cs-intel-grid">' + "".join(cards) + "</div>"

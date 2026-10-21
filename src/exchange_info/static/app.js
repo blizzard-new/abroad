@@ -747,12 +747,19 @@ function homeSelectionRules() {
 
 function homeAcademicPass(profile) {
   const rules = homeSelectionRules();
+  if (rules.academic_policy === "score_or_rank") {
+    if (rules.graduate_academic_exempt && /研究所|研究生|碩士|博士|碩一|博一/.test(profile.degree || "")) return true;
+    return /大學部|學士|大二|大三|大四/.test(profile.degree || "") && (
+      (academicMinimum() != null && profile.academicScore != null && profile.academicScore >= academicMinimum()) ||
+      (rules.undergraduate_rank_maximum != null && profile.classRankPercent > 0 && profile.classRankPercent <= rules.undergraduate_rank_maximum)
+    );
+  }
   if (rules.academic_policy === "gpa_or_rank") {
     if (rules.exclude_in_service && /在職/.test(profile.degree || "")) return false;
     if (rules.graduate_academic_exempt && /研究所|研究生|碩士|博士|碩一|博一/.test(profile.degree || "")) return true;
     return /大學部|學士|大二|大三|大四/.test(profile.degree || "") && (
-      (profile.academicGpa != null && profile.academicGpa >= rules.undergraduate_gpa_minimum) ||
-      (profile.classRankPercent > 0 && profile.classRankPercent <= rules.undergraduate_rank_maximum)
+      (rules.undergraduate_gpa_minimum != null && profile.academicGpa != null && profile.academicGpa >= rules.undergraduate_gpa_minimum) ||
+      (rules.undergraduate_rank_maximum != null && profile.classRankPercent > 0 && profile.classRankPercent <= rules.undergraduate_rank_maximum)
     );
   }
   if (Object.keys(rules.degree_score_minimums || {}).length) {
@@ -770,6 +777,7 @@ function homeAcademicPass(profile) {
 
 function renderAcademicFields() {
   const ntu = homeSelectionRules().academic_policy === "gpa_or_rank";
+  const scoreOrRank = homeSelectionRules().academic_policy === "score_or_rank";
   const ncu = activeHomeSchool() === "國立中央大學";
   for (const [selector, values] of [["#advisor-degree", ["在職碩士班"]], ["#advisor-current-year", ["大五", "大六"]]]) {
     const select = $(selector);
@@ -784,8 +792,8 @@ function renderAcademicFields() {
   $("#advisor-percent-field").hidden = ntu;
   $("#advisor-academic-score").disabled = ntu;
   document.querySelectorAll("[data-ntu-academic-field]").forEach((label) => {
-    label.hidden = !ntu;
-    label.querySelector("input").disabled = !ntu;
+    label.hidden = !(ntu || scoreOrRank);
+    label.querySelector("input").disabled = !(ntu || scoreOrRank);
   });
   const ccu = state.dashboard?.academic_gpa_minimum != null;
   const gpa = $("#advisor-academic-gpa");
@@ -794,6 +802,7 @@ function renderAcademicFields() {
   gpa.max = "4.3";
   gpa.placeholder = ccu ? "中正須至少 3.0" : "例如 2.44；與排名擇一";
   $("#advisor-gpa-label").textContent = ccu ? "歷年 GPA" : "適用學年GPA（4.3制）";
+  $("#advisor-rank-label").textContent = scoreOrRank ? "前一學期班／系排名（前幾%）" : "適用學年班排名（前幾%）";
   $("#advisor-academic-rule").hidden = !state.dashboard?.academic_score_rule;
   if (state.dashboard?.academic_score_rule) $("#advisor-academic-rule").textContent = state.dashboard.academic_score_rule;
 }
@@ -4345,6 +4354,14 @@ function partnerAvailabilityMeta(item) {
       reason: "交換合作關係備查",
       blocked: true,
     };
+  }
+  if (item?.application_window_status === "needs_confirmation") {
+    return {status:"open", shortLabel:"名額已列／申請時間待確認", cardLabel:"名額已列／申請時間待確認",
+      matchLabel:"申請時間待確認", reason:"須確認所屬校級或院系所的申請時間", hint:item.availability_note, blocked:false, pending:true};
+  }
+  if (item?.application_window_status === "upcoming") {
+    return {status:"open", shortLabel:"名額已列／申請尚未開始", cardLabel:"名額已列／申請尚未開始",
+      matchLabel:"申請尚未開始", reason:"依校內公告日期辦理", hint:item.availability_note, blocked:false, pending:true};
   }
   return {
     status: "open",
@@ -9732,7 +9749,7 @@ function renderDestinationProfile(item, profile) {
   if (profile.home_university !== "淡江大學" && profile.home_university !== "國立臺灣大學" && item.partner_exchange_details && Object.keys(item.partner_exchange_details).length && window.UniWayCcuDetails) {
     const status = profile.coverage_status === "official_partial" ? "合作校生活資料部分核實" : "合作校生活資料仍待確認";
     container.innerHTML = `<div class="destination-profile-status partial"><div><strong>${escapeHtml(status)}</strong><p>${escapeHtml(profile.coverage_note || "")}</p><small>最後查核：${escapeHtml(formatDate(profile.last_checked))}</small></div></div>`
-      + window.UniWayCcuDetails.render(item, escapeHtml, ["housing", "housing_deadline", "costs", "insurance", "visa", "arrival", "course_restrictions", "academic_calendar"]);
+      + window.UniWayCcuDetails.render(item, escapeHtml, ["housing", "housing_deadline", "costs", "insurance", "visa", "arrival", "course_restrictions", "academic_calendar"], profile.home_university);
     container.innerHTML += window.UniWayCcuDetails.renderProfileLife(profile, escapeHtml);
     initIcons();
     return;
@@ -12013,6 +12030,12 @@ function verifiedWindowStatusMeta(status) {
 }
 
 function verifiedRuleStatusMeta(fact) {
+  if (["needs_confirmation", "source_unavailable"].includes(fact?.verification_status)) {
+    return { label: "資料尚未核實", tone: "pending" };
+  }
+  if (fact?.verification_status === "legacy_review") {
+    return { label: "既有資料，待本輪複核", tone: "pending" };
+  }
   if (fact?.submission_mode === "pending_notice") {
     return { label: "精確日期待母校公布（不臆測 23:59）", tone: "pending" };
   }
@@ -12055,6 +12078,9 @@ function importedVerifiedSubtaskCount(card) {
 function renderVerifiedWindowRetentionHook(card, { compact = false } = {}) {
   if (!card) return "";
   const datedSubtasks = (card.subtasks || []).filter((item) => item.due_date);
+  if (!card.ics_download_url || !datedSubtasks.length) {
+    return `<p class="verified-rule-detail">目前沒有可核實的截止日期，尚不提供日期提醒；請查看下方來源與待確認事項。</p>`;
+  }
   const importedCount = importedVerifiedSubtaskCount(card);
   const countdownText = card.primary_deadline_date
     ? calendarCountdownLabel(card.primary_deadline_date)
@@ -12111,7 +12137,7 @@ function renderVerifiedWindowCard(card, { context = "home" } = {}) {
         </div>
       </header>
       ${renderVerifiedWindowRetentionHook(card, { compact: false })}
-      <div class="verified-window-rules-grid" role="list" aria-label="${escapeHtml(card.school_name)}三大已核對規定">
+      <div class="verified-window-rules-grid" role="list" aria-label="${escapeHtml(card.school_name)}申請規定與核實狀態">
         ${renderVerifiedRuleCard(card.online_deadline, "laptop")}
         ${renderVerifiedRuleCard(card.paper_deadline, "file-stack")}
         ${renderVerifiedRuleCard(card.study_plan_limit, "file-pen-line")}

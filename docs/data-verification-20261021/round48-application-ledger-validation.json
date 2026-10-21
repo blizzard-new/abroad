@@ -1,0 +1,3043 @@
+{
+  "recorded_at": "2026-10-21T05:25:47.372955+00:00",
+  "applied_in_first_attempt": {
+    "docs/data-verification-20261021/round48-fju-nonjp-review.json": 1577,
+    "docs/data-verification-20261021/round48-fju-briefing-review.json": 474
+  },
+  "applied_in_recovery": {
+    "docs/data-verification-20261021/round48-fju-nonjp-review.json": 0,
+    "docs/data-verification-20261021/round48-fju-briefing-review.json": 0
+  },
+  "replayed": 0,
+  "recovery_note": "First attempt applied both manifests, verified exact patch counts and unchanged out-of-scope rows/protected fields, then stopped because Windows backslashes were compared with slash-separated target paths. This recovery normalizes path strings, verifies every current value and archive, and confirms zero-change replays before appending evidence.",
+  "initial_row_preservation_assertion_passed_before_path_error": true,
+  "target_jsonl_rows": 291,
+  "preservation": {
+    "untouched_rows": 183,
+    "untouched_rows_sha256": "d817d35c71095fb37b276538e37cea49bdcb8f190ee048518db76d494752ac74",
+    "protected_fields_sha256": "2edf2245645c4fd7391b07d813a09d4865b9fc004b979ff3403d5ae801c29d58"
+  },
+  "replay_before_files": {
+    "src/exchange_info/official_data/fju/application_workflows.jsonl": "bc894ebb7b99e139b5eef66084864fa62525621b7711c9af93c50acf940223f4",
+    "src/exchange_info/official_data/fju/campus-locations.json": "88c25e6ed9f1c749fa3afed5eb50517c9ece54770f42c91d23c3f9ce50daebb4",
+    "src/exchange_info/official_data/fju/catalog-completeness.json": "bf2c9b03ac1d0e90840e03d4102c0b0ad15f73a1eaf184338d439f6ec23d0758",
+    "src/exchange_info/official_data/fju/destination_profiles.jsonl": "188dceee5a1a34a5140c686038490d382ade599f5e120b975631779dad4724f5",
+    "src/exchange_info/official_data/fju/documents.json": "ed5fc2a24078c5da355eed37817a974fedeaf835b6ea193528537bae0267bcf1",
+    "src/exchange_info/official_data/fju/exchange_info.json": "519e09ea58a492490d648df06d24592f7c486862be94764645cb7193bc37434f",
+    "src/exchange_info/official_data/fju/home_rules.json": "13302322639a8fbb9e9430ddb1d44f0e6735801baac4982899b7da8df0e8f8c0",
+    "src/exchange_info/official_data/fju/import_provenance.json": "1e4f74671ad6e2cb0ea16695bc4a263cfa9296d1ad8a9f561b1234a0ab8fed32",
+    "src/exchange_info/official_data/fju/pages.jsonl": "d0c93d46904ba83abf915f8974a1c8ece92fb7f81d4cf1d45d4d25b0e8e4e79b",
+    "src/exchange_info/official_data/fju/partners.jsonl": "5beb461e0dc87029ac1d51cf338c1f63716570c98473c054a51aaf550c401f5e",
+    "src/exchange_info/official_data/fju/partner_research.jsonl": "3ecbf2ddd6f78ba6e77747faf62ea1c36b37adb00c4eebc845a2bb3807a337ba",
+    "src/exchange_info/official_data/fju/scholarships.json": "574b5c3065f08be1e6cbe46c5d6f9289786d8466c5629f71895c3848d02cb08b",
+    "src/exchange_info/official_data/fju/student_dashboard.json": "48d3ce87b87f3170359993bcd0fe71b8ca8c6cf98fa46dcab77cd5e4edb12175",
+    "src/exchange_info/official_data/fju/student_life.jsonl": "adafb42b0b221aa1b2bae8c91e550ea8143c44c45cc2592fc7f51256c5d07889",
+    "src/exchange_info/official_data/fju/verification_status.json": "1cc5444f0b0833afe01709d0b7a4a2ec69d7ff9c56c1c7b78fccadb4cbaf310f"
+  },
+  "after_files": {
+    "src/exchange_info/official_data/fju/application_workflows.jsonl": "bc894ebb7b99e139b5eef66084864fa62525621b7711c9af93c50acf940223f4",
+    "src/exchange_info/official_data/fju/campus-locations.json": "88c25e6ed9f1c749fa3afed5eb50517c9ece54770f42c91d23c3f9ce50daebb4",
+    "src/exchange_info/official_data/fju/catalog-completeness.json": "bf2c9b03ac1d0e90840e03d4102c0b0ad15f73a1eaf184338d439f6ec23d0758",
+    "src/exchange_info/official_data/fju/destination_profiles.jsonl": "188dceee5a1a34a5140c686038490d382ade599f5e120b975631779dad4724f5",
+    "src/exchange_info/official_data/fju/documents.json": "ed5fc2a24078c5da355eed37817a974fedeaf835b6ea193528537bae0267bcf1",
+    "src/exchange_info/official_data/fju/exchange_info.json": "519e09ea58a492490d648df06d24592f7c486862be94764645cb7193bc37434f",
+    "src/exchange_info/official_data/fju/home_rules.json": "13302322639a8fbb9e9430ddb1d44f0e6735801baac4982899b7da8df0e8f8c0",
+    "src/exchange_info/official_data/fju/import_provenance.json": "1e4f74671ad6e2cb0ea16695bc4a263cfa9296d1ad8a9f561b1234a0ab8fed32",
+    "src/exchange_info/official_data/fju/pages.jsonl": "d0c93d46904ba83abf915f8974a1c8ece92fb7f81d4cf1d45d4d25b0e8e4e79b",
+    "src/exchange_info/official_data/fju/partners.jsonl": "5beb461e0dc87029ac1d51cf338c1f63716570c98473c054a51aaf550c401f5e",
+    "src/exchange_info/official_data/fju/partner_research.jsonl": "3ecbf2ddd6f78ba6e77747faf62ea1c36b37adb00c4eebc845a2bb3807a337ba",
+    "src/exchange_info/official_data/fju/scholarships.json": "574b5c3065f08be1e6cbe46c5d6f9289786d8466c5629f71895c3848d02cb08b",
+    "src/exchange_info/official_data/fju/student_dashboard.json": "48d3ce87b87f3170359993bcd0fe71b8ca8c6cf98fa46dcab77cd5e4edb12175",
+    "src/exchange_info/official_data/fju/student_life.jsonl": "adafb42b0b221aa1b2bae8c91e550ea8143c44c45cc2592fc7f51256c5d07889",
+    "src/exchange_info/official_data/fju/verification_status.json": "1cc5444f0b0833afe01709d0b7a4a2ec69d7ff9c56c1c7b78fccadb4cbaf310f"
+  },
+  "bound": 1632,
+  "appended": 1632,
+  "unbound": [
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天普大學 Temple University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天普大學 Temple University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天普大學 Temple University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天普大學 Temple University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天普大學 Temple University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天普大學 Temple University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天普大學 Temple University",
+      "pointer": "/field_evidence/gpa_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "斯克蘭頓大學 University of Scranton",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "斯克蘭頓大學 University of Scranton",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "斯克蘭頓大學 University of Scranton",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "斯克蘭頓大學 University of Scranton",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "斯克蘭頓大學 University of Scranton",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "斯克蘭頓大學 University of Scranton",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新墨西哥大學 University of New Mexico",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新墨西哥大學 University of New Mexico",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新墨西哥大學 University of New Mexico",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新墨西哥大學 University of New Mexico",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新墨西哥大學 University of New Mexico",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新墨西哥大學 University of New Mexico",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新墨西哥大學 University of New Mexico",
+      "pointer": "/field_evidence/gpa_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "聖文森學院 Saint Vincent College",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "聖文森學院 Saint Vincent College",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "聖文森學院 Saint Vincent College",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "聖文森學院 Saint Vincent College",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "聖文森學院 Saint Vincent College",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "聖文森學院 Saint Vincent College",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊比利美洲大學 Universidad Iberoamericana",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊比利美洲大學 Universidad Iberoamericana",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊比利美洲大學 Universidad Iberoamericana",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊比利美洲大學 Universidad Iberoamericana",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊比利美洲大學 Universidad Iberoamericana",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊比利美洲大學 Universidad Iberoamericana",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "蒙特雷大學 Universidad de Monterrey",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "蒙特雷大學 Universidad de Monterrey",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "蒙特雷大學 Universidad de Monterrey",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "蒙特雷大學 Universidad de Monterrey",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "蒙特雷大學 Universidad de Monterrey",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "蒙特雷大學 Universidad de Monterrey",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "安納華克墨西哥大學 Universidad Anáhuac Mexico",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "安納華克墨西哥大學 Universidad Anáhuac Mexico",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "安納華克墨西哥大學 Universidad Anáhuac Mexico",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "安納華克墨西哥大學 Universidad Anáhuac Mexico",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "安納華克墨西哥大學 Universidad Anáhuac Mexico",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "安納華克墨西哥大學 Universidad Anáhuac Mexico",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊迪斯科文大學 Edith Cowan University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊迪斯科文大學 Edith Cowan University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊迪斯科文大學 Edith Cowan University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊迪斯科文大學 Edith Cowan University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊迪斯科文大學 Edith Cowan University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "伊迪斯科文大學 Edith Cowan University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新英格蘭大學 University of New England",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新英格蘭大學 University of New England",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新英格蘭大學 University of New England",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新英格蘭大學 University of New England",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新英格蘭大學 University of New England",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "新英格蘭大學 University of New England",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿維拉天主教大學 Universidad Católica de Avila",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿維拉天主教大學 Universidad Católica de Avila",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿維拉天主教大學 Universidad Católica de Avila",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿維拉天主教大學 Universidad Católica de Avila",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿維拉天主教大學 Universidad Católica de Avila",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿維拉天主教大學 Universidad Católica de Avila",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿維拉天主教大學 Universidad Católica de Avila",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿里坎特大學 The University of Alicante",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿里坎特大學 The University of Alicante",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿里坎特大學 The University of Alicante",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿里坎特大學 The University of Alicante",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿里坎特大學 The University of Alicante",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿里坎特大學 The University of Alicante",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "阿里坎特大學 The University of Alicante",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德烏斯托大學 University of Deusto",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德烏斯托大學 University of Deusto",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德烏斯托大學 University of Deusto",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德烏斯托大學 University of Deusto",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德烏斯托大學 University of Deusto",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德烏斯托大學 University of Deusto",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德烏斯托大學 University of Deusto",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "羅馬國際研究大學 University of International Studies of Rome",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "羅馬國際研究大學 University of International Studies of Rome",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "羅馬國際研究大學 University of International Studies of Rome",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "羅馬國際研究大學 University of International Studies of Rome",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "羅馬國際研究大學 University of International Studies of Rome",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "羅馬國際研究大學 University of International Studies of Rome",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "羅馬國際研究大學 University of International Studies of Rome",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "方堤斯應用科技大學 Fontys University of Applied Sciences",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "方堤斯應用科技大學 Fontys University of Applied Sciences",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "方堤斯應用科技大學 Fontys University of Applied Sciences",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "方堤斯應用科技大學 Fontys University of Applied Sciences",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "方堤斯應用科技大學 Fontys University of Applied Sciences",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "方堤斯應用科技大學 Fontys University of Applied Sciences",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "方堤斯應用科技大學 Fontys University of Applied Sciences",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "茲林湯馬士巴塔大學 Tomas Bata University in Zlín",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "茲林湯馬士巴塔大學 Tomas Bata University in Zlín",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "茲林湯馬士巴塔大學 Tomas Bata University in Zlín",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "茲林湯馬士巴塔大學 Tomas Bata University in Zlín",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "茲林湯馬士巴塔大學 Tomas Bata University in Zlín",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "茲林湯馬士巴塔大學 Tomas Bata University in Zlín",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "盧比安那大學 University of Ljubljana",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "盧比安那大學 University of Ljubljana",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "盧比安那大學 University of Ljubljana",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "盧比安那大學 University of Ljubljana",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "盧比安那大學 University of Ljubljana",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "盧比安那大學 University of Ljubljana",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "盧比安那大學 University of Ljubljana",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "上奧科技大學 University of Applied Sciences Upper Austria",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "上奧科技大學 University of Applied Sciences Upper Austria",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "上奧科技大學 University of Applied Sciences Upper Austria",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "上奧科技大學 University of Applied Sciences Upper Austria",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "上奧科技大學 University of Applied Sciences Upper Austria",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "上奧科技大學 University of Applied Sciences Upper Austria",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "薩爾斯堡大學 Paris Lodron University of Salzburg",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "薩爾斯堡大學 Paris Lodron University of Salzburg",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "薩爾斯堡大學 Paris Lodron University of Salzburg",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "薩爾斯堡大學 Paris Lodron University of Salzburg",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "薩爾斯堡大學 Paris Lodron University of Salzburg",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "薩爾斯堡大學 Paris Lodron University of Salzburg",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "雷根斯堡大學 University of Regensburg",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "雷根斯堡大學 University of Regensburg",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "雷根斯堡大學 University of Regensburg",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "雷根斯堡大學 University of Regensburg",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "雷根斯堡大學 University of Regensburg",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "雷根斯堡大學 University of Regensburg",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "霍夫科技大學 Hof University of Applied Sciences",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "霍夫科技大學 Hof University of Applied Sciences",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "霍夫科技大學 Hof University of Applied Sciences",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "霍夫科技大學 Hof University of Applied Sciences",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "霍夫科技大學 Hof University of Applied Sciences",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "霍夫科技大學 Hof University of Applied Sciences",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "耶拿大學 The Friedrich Schiller University of Jena",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "耶拿大學 The Friedrich Schiller University of Jena",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "耶拿大學 The Friedrich Schiller University of Jena",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "耶拿大學 The Friedrich Schiller University of Jena",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "耶拿大學 The Friedrich Schiller University of Jena",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "耶拿大學 The Friedrich Schiller University of Jena",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德國天主教大學 Katholische Universität Eichstätt-Ingolstadt",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德國天主教大學 Katholische Universität Eichstätt-Ingolstadt",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德國天主教大學 Katholische Universität Eichstätt-Ingolstadt",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德國天主教大學 Katholische Universität Eichstätt-Ingolstadt",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德國天主教大學 Katholische Universität Eichstätt-Ingolstadt",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "德國天主教大學 Katholische Universität Eichstätt-Ingolstadt",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拜羅伊特大學 University of Bayreuth",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拜羅伊特大學 University of Bayreuth",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拜羅伊特大學 University of Bayreuth",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拜羅伊特大學 University of Bayreuth",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拜羅伊特大學 University of Bayreuth",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拜羅伊特大學 University of Bayreuth",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "普福爾茨海姆大學 Pforzheim University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "普福爾茨海姆大學 Pforzheim University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "普福爾茨海姆大學 Pforzheim University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "普福爾茨海姆大學 Pforzheim University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "普福爾茨海姆大學 Pforzheim University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "普福爾茨海姆大學 Pforzheim University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "普福爾茨海姆大學 Pforzheim University",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "勃艮第－第戎高等商學院 Burgundy School of Business",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "勃艮第－第戎高等商學院 Burgundy School of Business",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "勃艮第－第戎高等商學院 Burgundy School of Business",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "勃艮第－第戎高等商學院 Burgundy School of Business",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "勃艮第－第戎高等商學院 Burgundy School of Business",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "勃艮第－第戎高等商學院 Burgundy School of Business",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "土魯斯天主教大學 Institut Catholique de Toulouse",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "土魯斯天主教大學 Institut Catholique de Toulouse",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "土魯斯天主教大學 Institut Catholique de Toulouse",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "土魯斯天主教大學 Institut Catholique de Toulouse",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "土魯斯天主教大學 Institut Catholique de Toulouse",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "土魯斯天主教大學 Institut Catholique de Toulouse",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "EDHEC高等商業學院 EDHEC Business School",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "EDHEC高等商業學院 EDHEC Business School",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "EDHEC高等商業學院 EDHEC Business School",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "EDHEC高等商業學院 EDHEC Business School",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "EDHEC高等商業學院 EDHEC Business School",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "EDHEC高等商業學院 EDHEC Business School",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "EDHEC高等商業學院 EDHEC Business School",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天主教高等研究學院 ICES-The Catholic University of Vendée",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天主教高等研究學院 ICES-The Catholic University of Vendée",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天主教高等研究學院 ICES-The Catholic University of Vendée",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天主教高等研究學院 ICES-The Catholic University of Vendée",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天主教高等研究學院 ICES-The Catholic University of Vendée",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "天主教高等研究學院 ICES-The Catholic University of Vendée",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉羅謝爾大學 La Rochelle University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉羅謝爾大學 La Rochelle University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉羅謝爾大學 La Rochelle University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉羅謝爾大學 La Rochelle University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉羅謝爾大學 La Rochelle University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉羅謝爾大學 La Rochelle University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "那慕爾大學 University of Namur",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "那慕爾大學 University of Namur",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "那慕爾大學 University of Namur",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "那慕爾大學 University of Namur",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "那慕爾大學 University of Namur",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "那慕爾大學 University of Namur",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉曼大學 Universiti Tunku Abdul Rahman",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉曼大學 Universiti Tunku Abdul Rahman",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉曼大學 Universiti Tunku Abdul Rahman",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉曼大學 Universiti Tunku Abdul Rahman",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉曼大學 Universiti Tunku Abdul Rahman",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "拉曼大學 Universiti Tunku Abdul Rahman",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "亞天尼奧大學 Ateneo de Manila University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "亞天尼奧大學 Ateneo de Manila University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "亞天尼奧大學 Ateneo de Manila University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "亞天尼奧大學 Ateneo de Manila University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "亞天尼奧大學 Ateneo de Manila University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "亞天尼奧大學 Ateneo de Manila University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "南洋理工大學 Nanyang Technological University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "南洋理工大學 Nanyang Technological University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "南洋理工大學 Nanyang Technological University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "南洋理工大學 Nanyang Technological University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "南洋理工大學 Nanyang Technological University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "南洋理工大學 Nanyang Technological University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "南洋理工大學 Nanyang Technological University",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立全南大學 Chonnam National University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立全南大學 Chonnam National University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立全南大學 Chonnam National University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立全南大學 Chonnam National University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立全南大學 Chonnam National University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立全南大學 Chonnam National University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓國天主教大學 The Catholic University of Korea",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓國天主教大學 The Catholic University of Korea",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓國天主教大學 The Catholic University of Korea",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓國天主教大學 The Catholic University of Korea",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓國天主教大學 The Catholic University of Korea",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓國天主教大學 The Catholic University of Korea",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立江原大學 Kangwon National University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立江原大學 Kangwon National University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立江原大學 Kangwon National University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立江原大學 Kangwon National University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立江原大學 Kangwon National University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國立江原大學 Kangwon National University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "祥明大學 Sangmyung University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "祥明大學 Sangmyung University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "祥明大學 Sangmyung University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "祥明大學 Sangmyung University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "祥明大學 Sangmyung University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "祥明大學 Sangmyung University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "啟明大學 Keimyung University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "啟明大學 Keimyung University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "啟明大學 Keimyung University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "啟明大學 Keimyung University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "啟明大學 Keimyung University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "啟明大學 Keimyung University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "啟明大學 Keimyung University",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "中央大學 Chung-Ang University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "中央大學 Chung-Ang University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "中央大學 Chung-Ang University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "中央大學 Chung-Ang University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "中央大學 Chung-Ang University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "中央大學 Chung-Ang University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "中央大學 Chung-Ang University",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓南大學 Hannam University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓南大學 Hannam University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓南大學 Hannam University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓南大學 Hannam University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓南大學 Hannam University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "韓南大學 Hannam University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "檀國大學 Dankook University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "檀國大學 Dankook University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "檀國大學 Dankook University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "檀國大學 Dankook University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "檀國大學 Dankook University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "檀國大學 Dankook University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大邱天主教大學 Daegu Catholic University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大邱天主教大學 Daegu Catholic University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大邱天主教大學 Daegu Catholic University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大邱天主教大學 Daegu Catholic University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大邱天主教大學 Daegu Catholic University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大邱天主教大學 Daegu Catholic University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國民大學 Kookmin University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國民大學 Kookmin University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國民大學 Kookmin University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國民大學 Kookmin University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國民大學 Kookmin University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "國民大學 Kookmin University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "翰林大學 Hallym University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "翰林大學 Hallym University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "翰林大學 Hallym University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "翰林大學 Hallym University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "翰林大學 Hallym University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "翰林大學 Hallym University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "崇實大學 Soongsil University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "崇實大學 Soongsil University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "崇實大學 Soongsil University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "崇實大學 Soongsil University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "崇實大學 Soongsil University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "崇實大學 Soongsil University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "崇實大學 Soongsil University",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "仁川大學 Incheon National University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "仁川大學 Incheon National University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "仁川大學 Incheon National University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "仁川大學 Incheon National University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "仁川大學 Incheon National University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "仁川大學 Incheon National University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大阪商業大學 Osaka University of Commerce",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大阪商業大學 Osaka University of Commerce",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大阪商業大學 Osaka University of Commerce",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大阪商業大學 Osaka University of Commerce",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大阪商業大學 Osaka University of Commerce",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "大阪商業大學 Osaka University of Commerce",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "電氣通信大學 University of Electro-Communications",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "電氣通信大學 University of Electro-Communications",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "電氣通信大學 University of Electro-Communications",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "電氣通信大學 University of Electro-Communications",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "電氣通信大學 University of Electro-Communications",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "電氣通信大學 University of Electro-Communications",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "電氣通信大學 University of Electro-Communications",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港浸會大學 Hong Kong Baptist University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港浸會大學 Hong Kong Baptist University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港浸會大學 Hong Kong Baptist University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港浸會大學 Hong Kong Baptist University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港浸會大學 Hong Kong Baptist University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港浸會大學 Hong Kong Baptist University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港浸會大學 Hong Kong Baptist University",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港城市大學 City University of Hong Kong",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港城市大學 City University of Hong Kong",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港城市大學 City University of Hong Kong",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港城市大學 City University of Hong Kong",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港城市大學 City University of Hong Kong",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港城市大學 City University of Hong Kong",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "香港城市大學 City University of Hong Kong",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "同濟大學 Tongji University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "同濟大學 Tongji University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "同濟大學 Tongji University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "同濟大學 Tongji University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "同濟大學 Tongji University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "同濟大學 Tongji University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華東師範大學 East China Normal University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華東師範大學 East China Normal University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華東師範大學 East China Normal University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華東師範大學 East China Normal University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華東師範大學 East China Normal University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華東師範大學 East China Normal University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "北京師範大學 Beijing Normal University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "北京師範大學 Beijing Normal University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "北京師範大學 Beijing Normal University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "北京師範大學 Beijing Normal University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "北京師範大學 Beijing Normal University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "北京師範大學 Beijing Normal University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "武漢大學 Wuhan University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "武漢大學 Wuhan University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "武漢大學 Wuhan University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "武漢大學 Wuhan University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "武漢大學 Wuhan University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "武漢大學 Wuhan University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華中科技大學 Huazhong University of Science & Technology",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華中科技大學 Huazhong University of Science & Technology",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華中科技大學 Huazhong University of Science & Technology",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華中科技大學 Huazhong University of Science & Technology",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華中科技大學 Huazhong University of Science & Technology",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華中科技大學 Huazhong University of Science & Technology",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "華中科技大學 Huazhong University of Science & Technology",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "山東大學 Shandong University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "山東大學 Shandong University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "山東大學 Shandong University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "山東大學 Shandong University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "山東大學 Shandong University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "山東大學 Shandong University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "山東大學 Shandong University",
+      "pointer": "/field_evidence/course_restrictions",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "廈門大學 Xiamen University",
+      "pointer": "/language_review_note",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "廈門大學 Xiamen University",
+      "pointer": "/field_evidence/degree_levels",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "廈門大學 Xiamen University",
+      "pointer": "/field_evidence/study_period",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "廈門大學 Xiamen University",
+      "pointer": "/field_evidence/language_requirement",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "廈門大學 Xiamen University",
+      "pointer": "/field_evidence/quota",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/partners.jsonl",
+      "school_name": "廈門大學 Xiamen University",
+      "pointer": "/field_evidence/eligibility",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "天普大學 Temple University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "斯克蘭頓大學 University of Scranton",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "新墨西哥大學 University of New Mexico",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "聖文森學院 Saint Vincent College",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "伊比利美洲大學 Universidad Iberoamericana",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "蒙特雷大學 Universidad de Monterrey",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "安納華克墨西哥大學 Universidad Anáhuac Mexico",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "伊迪斯科文大學 Edith Cowan University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "新英格蘭大學 University of New England",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "阿維拉天主教大學 Universidad Católica de Avila",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "阿里坎特大學 The University of Alicante",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "德烏斯托大學 University of Deusto",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "羅馬國際研究大學 University of International Studies of Rome",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "方堤斯應用科技大學 Fontys University of Applied Sciences",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "茲林湯馬士巴塔大學 Tomas Bata University in Zlín",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "盧比安那大學 University of Ljubljana",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "上奧科技大學 University of Applied Sciences Upper Austria",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "薩爾斯堡大學 Paris Lodron University of Salzburg",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "雷根斯堡大學 University of Regensburg",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "霍夫科技大學 Hof University of Applied Sciences",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "耶拿大學 The Friedrich Schiller University of Jena",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "德國天主教大學 Katholische Universität Eichstätt-Ingolstadt",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "拜羅伊特大學 University of Bayreuth",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "普福爾茨海姆大學 Pforzheim University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "勃艮第－第戎高等商學院 Burgundy School of Business",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "土魯斯天主教大學 Institut Catholique de Toulouse",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "EDHEC高等商業學院 EDHEC Business School",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "天主教高等研究學院 ICES-The Catholic University of Vendée",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "拉羅謝爾大學 La Rochelle University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "那慕爾大學 University of Namur",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "拉曼大學 Universiti Tunku Abdul Rahman",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "亞天尼奧大學 Ateneo de Manila University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "南洋理工大學 Nanyang Technological University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "國立全南大學 Chonnam National University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "韓國天主教大學 The Catholic University of Korea",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "國立江原大學 Kangwon National University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "祥明大學 Sangmyung University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "啟明大學 Keimyung University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "中央大學 Chung-Ang University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "韓南大學 Hannam University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "檀國大學 Dankook University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "大邱天主教大學 Daegu Catholic University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "國民大學 Kookmin University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "翰林大學 Hallym University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "崇實大學 Soongsil University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "仁川大學 Incheon National University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "大阪商業大學 Osaka University of Commerce",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "電氣通信大學 University of Electro-Communications",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "香港浸會大學 Hong Kong Baptist University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "香港城市大學 City University of Hong Kong",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "同濟大學 Tongji University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "華東師範大學 East China Normal University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "北京師範大學 Beijing Normal University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "武漢大學 Wuhan University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "華中科技大學 Huazhong University of Science & Technology",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "山東大學 Shandong University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-nonjp-review.json",
+      "file": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "school_name": "廈門大學 Xiamen University",
+      "pointer": "/steps/0/needs_confirmation",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    },
+    {
+      "manifest": "docs/data-verification-20261021/round48-fju-briefing-review.json",
+      "file": "src/exchange_info/official_data/fju/home_rules.json",
+      "school_name": null,
+      "pointer": "/eligibility/0/details/2",
+      "reason": "No corresponding field in immutable original inventory; prior value/absence retained by review manifest, without invented null binding."
+    }
+  ],
+  "prior_ledger_parts_unchanged": {
+    "part-00001.jsonl": "436a2ae1e5d1cef45c02645e565c8f040219b9874531dd2f480d561d13394fd0",
+    "part-00002.jsonl": "1a5d85648e625aa976f7e802097d9b7588eae388e8c42a35d5c091d7c24107d3",
+    "part-00003.jsonl": "2873abc4fa738273e213e0a9a7a23cf8b5684b74aaeb545872f01b225cc5b2de",
+    "part-00004.jsonl": "33a95526adceb6c4a2776f19631e7dbb74570297337e3a8f033a140f5d4a956b",
+    "part-00005.jsonl": "d7d489765524f4cf18740e4c00207296414f63ccbd88d5bccc8f41cdb4ef9854",
+    "part-00006.jsonl": "d538e624fde00899e47ed3b6b649e62bcd0e5603c4770a289f9dc65f059a86c1",
+    "part-00007.jsonl": "7fbdf25a68cefdaae5344fdf20cd9607acf8c47e0e038f8f4151b43edf33161d",
+    "part-00008.jsonl": "fd5956089bd0410a9789666468a71adc666c75f90f5414decbf994cafaa2cf10",
+    "part-00009.jsonl": "9eb99c115aa572b1cb298b3669241009934f04d47a9fc2817663b2cdd0c79093",
+    "part-00010.jsonl": "3a61df44d07143356903fddaade8007ffc31586d0385534a2951ad84d810042e",
+    "part-00011.jsonl": "88535d83b329c3904c510d82021b2d0204192e7a43f4d642f35f692402b603e2",
+    "part-00012.jsonl": "4d436b306006e56d28024bd8f524ccb57fe9979d50b161d6ef8fe5514344b6b8",
+    "part-00013.jsonl": "f360530458df64457494de989a9efbc479156a63274dd3fc745de1afb0add061",
+    "part-00014.jsonl": "45bafe085258b614a683a59d3bbf2e7fc6667a7bcca1fd7926385d67d64559da",
+    "part-00015.jsonl": "381353d4284a52fa2f1e97c708622d0dbccae851343be9f1dae5e6d0998a3858",
+    "part-00016.jsonl": "46293db96e59be6de8ff5366c5df4d70a30eb0c3623b5c27a5ee4c4bfef98d49",
+    "part-00017.jsonl": "3ad9b587a7d63ed147e3836ae160762ae06906d39be6feeb1609cc3676913dc1",
+    "part-00018.jsonl": "dcc4c1b1b7df21a0c608c423fbdd81e9357dd6a05ce775e37d292bae82bb31f2",
+    "part-00019.jsonl": "e1a0ba9c8624af107ddb0cba51a3cca64e4923b49545b4a1602f4e506cce5386",
+    "part-00020.jsonl": "78bd5b63f1c6e3f6c4f5e437814ef180cd0bf1697fe4591d84aed5e1e2b94222",
+    "part-00021.jsonl": "7a2f3bd05ff635a8f24cb8e659ab6679c6a929668bdc3edae7a6274c4eea6c7c",
+    "part-00022.jsonl": "7ee73907af70da8f2d6df327e17ddbf049dd3e72480afb34af244bc33fe4100d",
+    "part-00023.jsonl": "05242b13931da36e32185ce8ecdebf0f85178298adbef61e79d9943133c8476d",
+    "part-00024.jsonl": "3a776ef628dfb9f289127c73a986d656eb059d38ce735685408ec65fb2c373b7",
+    "part-00025.jsonl": "a06f3db4fb6c93e2ad8154f0b1e692c3279663cde373d8dc1882877663d34b0e",
+    "part-00026.jsonl": "66afc885f20c9c751edf591e4966c9a8a93ba5dc282e306bc5b4075438b3efe0",
+    "part-00027.jsonl": "4d2e386b65e359a802e1a1a9d29190cf7579f49a58f7fdca3958886c019ef5ca",
+    "part-00028.jsonl": "4e15aa53a16129a51b0c61e819cfabeb1d0886c1d0bf64cf74833a23dd593eb5",
+    "part-00029.jsonl": "72002e4e17dbbd6c369623be85fb031aead7ebb8bfec93006674776902393563",
+    "part-00030.jsonl": "00c64255da9c28857237d5ab3953007cf1d2727ce4b6bc9867d6636f8613f0c3",
+    "part-00031.jsonl": "a53430bf22e3aee56ccb14f466e1d489f405e1663bd8da9a08ae12e3584cecbf",
+    "part-00032.jsonl": "0e7a5e76c7a60a9686d013a73d336d940f61dc1a449184531cbe83378e2ce3f8",
+    "part-00033.jsonl": "d046796c7a5837215a8edc336abb2fd454a9075981baf0d31212ccfcd8ded703",
+    "part-00034.jsonl": "9cf0db4b9d85803f3f31d6e8e1770f6e15ad867888d87106c6eca7b51c76a272",
+    "part-00035.jsonl": "d4885fe56c7306760522b3facc642e4083604dba2f82b4fbf7e596f28c1eaba3",
+    "part-00036.jsonl": "d7e71ca7d4082d2dae4fad140ea53ae91f7a04182f8664cbe32285c6983bdbc3",
+    "part-00037.jsonl": "311e2b2485bebb737b614a795fe0ce160a4e330ab080a678c0d2cae182872830",
+    "part-00038.jsonl": "be83efaf01fe08ce2cbf2d2feec794531d09fcb2e926196f98849853a3a43dd2",
+    "part-00039.jsonl": "0117b7da16a462d16dedcd467fa51c1236b13c9494acf29dd46b14f83e7e87ae",
+    "part-00040.jsonl": "c954ce409cb202457241604d1d3b7012f63aefbf30a8cab8925a8dc1e3454db1",
+    "part-00041.jsonl": "aa68a1f001905e4f9087124a5c091ceb810b8090c4cfd15d557773dff4726562",
+    "part-00042.jsonl": "6e1f5500565f621a861b3799eb51e15ba2084a8c0627cda8d03eb552b073dcb3",
+    "part-00043.jsonl": "3c40ca2be9797c1866a758ff1b30f0d2ccbfb70710ba5cc5369e2434aca499db",
+    "part-00044.jsonl": "e1cf26c20d5a6f8cd19942b0bf58222a3752f063808df1ae6f2dd51bb4718d6b",
+    "part-00045.jsonl": "27e2ae28711ccfa08e5ad2dba9daf2c9c8ae83e5a9e9c45eceb18dc852221c97",
+    "part-00046.jsonl": "e79bbc7fd9e67d518f086a9053adb0be7b95af8014eacb196234e6d26ac844e0",
+    "part-00047.jsonl": "3f64aefe763a50661c7343d2b2d8cd64287bae6469ae1870babd5896f2b6724a"
+  },
+  "whole_records_verified": 0,
+  "whole_schools_verified": 0,
+  "full_builder_run": false
+}

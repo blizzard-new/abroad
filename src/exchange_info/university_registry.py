@@ -144,9 +144,9 @@ FJU = UniversityProfile(
     ),
     hero_image="/static/assets/fju-campus.svg",
     official_url="https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39",
-    coverage_note="完整支援：已整理116-1說明會與甄選規定、234所姊妹校專頁條件，並附115-2及115-1名額表供規劃參考（116-1名額預計11月底公告、12月收件）。",
+    coverage_note="已整理116-1公告、申請表及237筆合作校／交換方案。附表名額與條件供規劃參考，當期開放及接待校要求仍須逐項確認；116-1名額預計11月底公告。",
     support_level="full",
-    partner_count_hint=234,
+    partner_count_hint=237,
     academic_score_minimum=70,
     student_card_signals=("天主教輔仁大學", "輔仁大學", "FUJENCATHOLICUNIVERSITY", "FJU"),
     # https://www.fju.edu.tw/academics.jsp — checked 2026-10-16.
@@ -187,7 +187,7 @@ SCU = UniversityProfile(
     coverage_note="完整支援：116學年度校級赴境外（國外126校、大陸62校、英美自費研修3校，共191校）現正開放線上申請（2026/09/14–11/16 12:00截止）。",
     support_level="full",
     partner_count_hint=191,
-    academic_score_minimum=65,
+    academic_score_minimum=None,
     student_card_signals=("東吳大學", "SOOCHOWUNIVERSITY", "SCU"),
     # https://www-ch.scu.edu.tw/units-academic2 — checked 2026-10-16.
     colleges=(
@@ -222,7 +222,7 @@ NTNU = UniversityProfile(
     coverage_note="完整支援：116-1（2027春季出國）甄選簡章與236所合作校名額表已公告（線上申請 2026/11/01–11/15），並整合174校歷屆交換心得與四語組條件。",
     support_level="full",
     partner_count_hint=236,
-    academic_score_minimum=60,
+    academic_score_minimum=None,
     student_card_signals=("國立臺灣師範大學", "國立台灣師範大學", "NATIONALTAIWANNORMALUNIVERSITY", "NTNU"),
     # https://bds.oia.ntnu.edu.tw/api/v1/ss/col — checked 2026-10-16.
     colleges=(
@@ -256,7 +256,7 @@ CYCU = UniversityProfile(
     coverage_note="完整支援：115-2（2027春季出國）國際暨兩岸交換計畫與89所合作校名額、Fact Sheet及36校歷屆交換心得已完整整合。",
     support_level="full",
     partner_count_hint=89,
-    academic_score_minimum=75,
+    academic_score_minimum=None,
     student_card_signals=("中原大學", "CHUNGYUANCHRISTIANUNIVERSITY", "CYCU"),
     # https://www.cycu.edu.tw/ — checked 2026-10-16.
     colleges=(
@@ -294,7 +294,7 @@ NTUST = UniversityProfile(
     coverage_note="完整支援：115-2（2027春季班）海外暨大陸交換生甄選簡章、237所合作校條件名額表及126校歷屆交換心得已完整整合。",
     support_level="full",
     partner_count_hint=237,
-    academic_score_minimum=65,
+    academic_score_minimum=None,
     student_card_signals=("國立臺灣科技大學", "國立台灣科技大學", "NATIONALTAIWANUNIVERSITYOFSCIENCEANDTECHNOLOGY", "TAIWANTECH", "NTUST"),
     # https://www.ntust.edu.tw/ — checked 2026-10-16.
     colleges=(
@@ -322,8 +322,8 @@ YZU = UniversityProfile(
         "Yuan Ze University",
     ),
     hero_image="/static/assets/yzu-campus.svg",
-    official_url="https://gao.yzu.edu.tw/index.php/tw/2016-03-04-08-13-53/2016-03-07-08-51-28",
-    coverage_note="完整支援：115-2（2027春季班）全球事務處校級、管理學院 OIP 院級及兩岸交換計畫共90所合作校名額、Fact Sheet與39校歷屆交換心得已完整整合。",
+    official_url="https://gao.yzu.edu.tw/index.php/tw/guo-ji-jiao-liu2/fu-wai-jiao-huan",
+    coverage_note="收錄90校交換參考資料；母校指定規則部分查核，個別接待校及其餘內容仍待確認。",
     support_level="full",
     partner_count_hint=90,
     academic_score_minimum=70,
@@ -357,7 +357,7 @@ FCU = UniversityProfile(
     coverage_note="完整支援：115-1選送（2027春季班）與115-2選送（2027秋季班）出國研修系統（oiasap）共161所合作校名額、課程目錄與95校歷屆心得／錄取紀錄已完整整合。",
     support_level="full",
     partner_count_hint=161,
-    academic_score_minimum=75,
+    academic_score_minimum=None,
     student_card_signals=("逢甲大學", "FENGCHIAUNIVERSITY", "FCU"),
     # https://www.fcu.edu.tw/ & https://oiasap.fcu.edu.tw/v2/details/colleges — checked 2026-10-17.
     colleges=(
@@ -392,7 +392,7 @@ NSYSU = UniversityProfile(
     coverage_note="完整支援：2026–2027與2027–2028赴日本、其他國家與地區及中國大陸出國交換甄選簡章、218所合作校名額與Fact Sheet、西灣領航自動獎助及1,823篇歷屆交換心得與錄取名單已完整整合。",
     support_level="full",
     partner_count_hint=218,
-    academic_score_minimum=70,
+    academic_score_minimum=None,
     student_card_signals=("國立中山大學", "中山大學", "NATIONALSUNYATSENUNIVERSITY", "NSYSU"),
     # https://www.nsysu.edu.tw/p/412-1000-88.php?Lang=zh-tw — checked 2026-10-18.
     colleges=(
@@ -468,10 +468,10 @@ NTUT = UniversityProfile(
     ),
     hero_image="/static/assets/ntut-campus.svg",
     official_url="https://oia.ntut.edu.tw/p/412-1032-9242.php?Lang=zh-tw",
-    coverage_note="完整支援：115-1／115-2 出國交換校內甄選簡章與作業要點、206所海外及大陸港澳交換合作與雙聯學位學校、出國交換與雙聯學位暨教育部學海系列獎助學金、677篇學長姐交換心得報告與意見調查表及189人次錄取榜單已完整整合。",
+    coverage_note="已收錄206筆合作方案；母校指定條文部分查核，逐校現行名額、資格、生活與來源仍待核對。",
     support_level="full",
     partner_count_hint=206,
-    academic_score_minimum=70,
+    academic_score_minimum=None,
     student_card_signals=("國立臺北科技大學", "臺北科技大學", "NATIONALTAIPEIUNIVERSITYOFTECHNOLOGY", "TAIPEITECH", "NTUT"),
     # https://www.ntut.edu.tw/p/404-1007-85216.php — checked 2026-10-18.
     colleges=(
@@ -504,7 +504,7 @@ NCCU = UniversityProfile(
     coverage_note="完整支援：115-1／115-2 校級赴國外（八大語組）及赴大陸地區交換學生甄選簡章、266所合作姊妹校名額與語言門檻、6項赴外交換暨學海系列獎助學金及589篇歷屆學長姐交換心得報告已完整整合。",
     support_level="full",
     partner_count_hint=266,
-    academic_score_minimum=70,
+    academic_score_minimum=None,
     student_card_signals=("國立政治大學", "政治大學", "NATIONALCHENGCHIUNIVERSITY", "NCCU"),
     # https://www.nccu.edu.tw/p/412-1000-86.php?Lang=zh-tw — checked 2026-10-18.
     colleges=(
@@ -580,11 +580,11 @@ NYCU = UniversityProfile(
         "National Yang Ming Chiao Tung University",
     ),
     hero_image="/static/assets/nycu-campus.svg",
-    official_url="https://oia.nycu.edu.tw/oia/ch/app/artwebsite/view?module=artwebsite&id=1170&serno=f2dc9dee-6110-4c93-a952-2eeef32fd49c",
-    coverage_note="完整支援：115-1／115-2校級出國交換暨116-1臺灣聯合大學系統交換計畫簡章、243所合作姊妹校（含20所拓荒者計畫重點學校）名額與門檻、6項出國交換暨學海系列獎助學金及1,899篇歷屆學長姐交換心得報告已完整整合。",
+    official_url="https://oia.nycu.edu.tw/oia/ch/app/data/list?module=nycu0006&id=286",
+    coverage_note="243筆合作資料部分查核：182筆對上115-2已截止名額表；116台聯大分案核對，個別接待校條件及全部欄位尚未核實。",
     support_level="full",
     partner_count_hint=243,
-    academic_score_minimum=70,
+    academic_score_minimum=None,
     student_card_signals=(
         "國立陽明交通大學",
         "陽明交通大學",
@@ -637,7 +637,7 @@ NTHU = UniversityProfile(
     coverage_note="完整支援：2027秋／2028春校級海外及赴陸港澳出國交換暨116-1台灣聯合大學系統交換計畫簡章、176所合作姊妹校（含A/B/C/D第一志願熱門程度分級）名額與門檻、5項出國交換暨學海系列獎助學金及328篇歷屆學長姐返國成果報告書已完整整合。",
     support_level="full",
     partner_count_hint=176,
-    academic_score_minimum=78,
+    academic_score_minimum=None,
     student_card_signals=(
         "國立清華大學",
         "清華大學",
@@ -678,10 +678,10 @@ PCCU = UniversityProfile(
     ),
     hero_image="/static/assets/pccu-campus.svg",
     official_url="https://oima.pccu.edu.tw/exchanges.htm",
-    coverage_note="完整支援：國際暨兩岸事務處（國合組／兩岸組）及日文系、韓文系、法文組、俄文組五大管道出國交換甄選簡章、135所合作姊妹校名額與語言門檻、國際移動力獎學金暨學海系列獎助學金及超過400篇歷屆學長姐赴韓交換留學報告書已完整整合。",
-    support_level="full",
+    coverage_note="已部分核對各甄選管道、國合組47筆參考名額與赴陸第二階段公告；135筆合作方案的個別接待校條件及生活資料仍待核實。",
+    support_level="basic",
     partner_count_hint=135,
-    academic_score_minimum=70,
+    academic_score_minimum=None,
     student_card_signals=(
         "中國文化大學",
         "文化大學",
@@ -721,11 +721,11 @@ WZU = UniversityProfile(
         "Wenzao",
     ),
     hero_image="/static/assets/wzu-campus.svg",
-    official_url="https://d020.wzu.edu.tw/article/492285",
-    coverage_note="完整支援：國際暨兩岸合作處（國際交流組）115-1／115-2 一招及二招「一般組（70分）」與「語言學習組（65分）」六大語組（英、日、法、德、西、華語暨東南亞語組）及 UMAP／ACUCA 跨國聯盟交換簡章、147所全球合作姊妹校名額與語檢門檻、出國交換獎助學金暨超過100所姊妹校學長姐經驗分享雲端檔案已完整整合。",
+    official_url="https://d020.wzu.edu.tw/article/530752",
+    coverage_note="115-2母校共用規則部分核對；147筆方案的當期名額、接待校資格、生活資訊及其他主張仍待逐項查證。",
     support_level="full",
     partner_count_hint=147,
-    academic_score_minimum=70,
+    academic_score_minimum=None,
     student_card_signals=(
         "文藻外語大學",
         "文藻",
@@ -756,11 +756,11 @@ NKUST = UniversityProfile(
         "National Kaohsiung University of Science and Technology",
     ),
     hero_image="/static/assets/nkust-campus.svg",
-    official_url="https://oia.nkust.edu.tw/p/412-1030-5591.php?Lang=zh-tw",
-    coverage_note="完整支援：國際事務處（國際關係組）115 學年度第一學期與第二學期選送學生赴境外大學研修（交換學生）甄選簡章、校級與院級雙軌共 107 所境外合作大學（日本、韓國、德國、法國、奧地利、瑞士、西班牙、英國、美國、泰國、馬來西亞、菲律賓、印尼、印度、越南及中國大陸）名額與 CEFR 外語檢定門檻、教育部學海飛颺／惜珠與高科大高教深耕境外研修獎助學金暨學長姐研修心得分享已完整整合。",
-    support_level="full",
+    official_url="https://oia.nkust.edu.tw/unit-4-374-21.html",
+    coverage_note="已部分核對115校級簡章及97筆歷史表對應；107筆方案的116當期接待校條件與生活資料仍待核實。",
+    support_level="basic",
     partner_count_hint=107,
-    academic_score_minimum=75,
+    academic_score_minimum=None,
     student_card_signals=(
         "國立高雄科技大學",
         "高雄科技大學",
@@ -803,10 +803,10 @@ YUNTECH = UniversityProfile(
     ),
     hero_image="/static/assets/yuntech-campus.svg",
     official_url="https://tdx.yuntech.edu.tw/",
-    coverage_note="完整支援：國際事務處（出國交換生申請系統 115-2／115-1／114-2／114-1、雙聯學位與銜接學位專區）共 112 所全球合作大學（中國大陸、日本、德國、印度、韓國、印尼、越南、美國、法國、澳洲、英國、荷蘭、比利時、西班牙、立陶宛、希臘、斯洛維尼亞、捷克、土耳其、馬來西亞、菲律賓、蒙古及澳門）名額與語檢門檻、王秋雄榮譽博士德日美獎助金（每學期 10 萬–18 萬）、教育部學海飛颺／惜珠與校內出國交流補助（亞洲 11 萬／非亞洲 15 萬）暨 118 篇學長姐返國研修心得已完整整合。",
-    support_level="full",
+    coverage_note="112筆合作紀錄；母校規則及108筆115-2校名對應部分核對，個別接待校、生活資訊與其他欄位待查，不能宣稱完整核實。",
+    support_level="basic",
     partner_count_hint=112,
-    academic_score_minimum=75,
+    academic_score_minimum=None,
     student_card_signals=(
         "國立雲林科技大學",
         "雲林科技大學",
@@ -843,10 +843,10 @@ NTOU = UniversityProfile(
     ),
     hero_image="/static/assets/ntou-campus.svg",
     official_url="https://oia.ntou.edu.tw/p/412-1022-6958.php?Lang=zh-tw",
-    coverage_note="完整支援：國際事務處（國際合作組）2027年春/秋季學期赴國外姊妹校交換生計畫暨學海飛颺甄選簡章、115學年度第2學期赴大陸地區姊妹校交換計畫、雙聯學位一覽表與全球共 123 所合作姊妹校（日本、中國大陸、菲律賓、越南、印尼、美國、韓國、泰國、印度、馬來西亞、德國、法國、俄羅斯、波蘭、英國、瑞士、澳洲、加拿大等 22 個國家與地區）名額與語檢門檻、校內赴姊妹校交換獎補助（機票＋學費最高8萬＋生活費）與教育部學海系列獎學金暨 439 篇學長姐返國研修心得已完整整合。",
-    support_level="full",
+    coverage_note="123筆合作紀錄；母校規則及45筆已截止名單中文校名部分核對，個別接待校、生活資訊與其餘欄位待查，不是完整驗證。",
+    support_level="basic",
     partner_count_hint=123,
-    academic_score_minimum=60,
+    academic_score_minimum=None,
     student_card_signals=(
         "國立臺灣海洋大學",
         "臺灣海洋大學",

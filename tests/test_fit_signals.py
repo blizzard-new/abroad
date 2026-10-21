@@ -118,10 +118,16 @@ def test_options_on_the_partner_count_for_course_and_language():
 
 def test_bundled_destination_profiles_yield_honest_budget_results():
     profiles = storage.load_destination_profiles()
-    assert Counter(p.home_university for p in profiles) == {
+    from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
+    original_six = {
         "長庚大學": 77, "國立臺北大學": 206, "國立臺灣大學": 289,
         "國立中央大學": 214, "國立中正大學": 104, "淡江大學": 287,
     }
+    # Preserve the original six fixture counts while exercising all current
+    # homes below. This is a budget test, not a proof of route completeness.
+    counts = Counter(p.home_university for p in profiles)
+    assert {home:counts[home] for home in original_six} == original_six
+    assert set(counts) == {school.school_name for school in SUPPORTED_UNIVERSITIES}
     statuses = {}
     for row in profiles:
         fit = school_budget_fit(row, 40000)

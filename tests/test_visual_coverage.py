@@ -44,6 +44,17 @@ def test_bilingual_order_and_known_country_aliases_do_not_merge_campuses_or_hong
     collision = [{"school_name":"測試大學 First University"},{"school_name":"測試大學 Second University"}]
     ambiguous = VisualRecordIndex({(school_identity_key(r["school_name"]),"日本"):r for r in collision})
     assert ambiguous.get(("測試大學", "日本")) is None
+    for row in collision:
+        row["status"] = "verified"
+    assert ambiguous.get(("測試大學", "日本")) is None
+
+    # A translated display name can share the same actual source record, but
+    # a differing asset hash must still remain ambiguous.
+    for row in collision:
+        row.update(image_source_url="https://example.edu/campus.jpg", content_hash="shared-fixture-hash")
+    assert ambiguous.get(("測試大學", "日本")) is collision[0]
+    collision[1]["content_hash"] = "different-fixture-hash"
+    assert ambiguous.get(("測試大學", "日本")) is None
 
 
 def test_photo_api_reuses_extraction_alias_without_changing_zero_or_missing_quota(tmp_path, monkeypatch):

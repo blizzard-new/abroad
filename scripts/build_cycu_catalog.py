@@ -1633,6 +1633,10 @@ def main() -> None:
         encoding="utf-8",
     )
 
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "cycu", round_id=20)
+    review_generated_content(REPO_ROOT, "cycu", round_id=21)
+
     print(
         f"Successfully built CYCU catalog: {len(partners)} partners ({open_partner_count} open), "
         f"{len(workflows)} workflows, {len(destinations)} destinations, {len(research_records)} research records, "
@@ -1642,3 +1646,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    from exchange_info.cycu_source_review import review_bundle
+    review_bundle(REPO_ROOT)

@@ -29,6 +29,8 @@ KIND_LABELS = {
     "community_thread": "社群討論串",
     "video": "影片",
     "directory": "學校介紹、排名或課程目錄",
+    "source_index": "心得索引／待查來源",
+    "official_record": "錄取或獎助紀錄",
     "other": "其他來源",
 }
 # Order matters: the first matching rule wins.
@@ -59,6 +61,10 @@ def _matches(host: str, domains: tuple[str, ...]) -> bool:
 
 def source_kind(source: StudentExperienceSource) -> str:
     """What the page is. Only a personal story reads as one student's account."""
+    if source.perspective == "official_program_record":
+        return "official_record"
+    if source.perspective == "official_directory":
+        return "source_index"
     host = _host(source.source_url)
     if source.source_type.value == "video" or _matches(host, VIDEO_HOSTS):
         return "video"
@@ -176,6 +182,8 @@ def attach_digests(sources: list[StudentExperienceSource]) -> list[StudentExperi
     """Each source with its kind and, when we wrote one, its Chinese digest. Order is kept."""
     digests = load_digests()
     return [
-        source.model_copy(update={"source_kind": source_kind(source), "digest_zh": digests.get(source.source_url)})
+        source.model_copy(update={"source_kind": source_kind(source), "digest_zh":
+            None if source.perspective in {"official_directory", "official_program_record"}
+            else digests.get(source.source_url)})
         for source in sources
     ]

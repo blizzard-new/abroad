@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from datetime import datetime
 from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
@@ -90,18 +91,20 @@ def test_ncku_language_checks() -> None:
     assert ncku_language_check("toefl", 65.0, partner_country="美國")[0] == "fail"
     assert ncku_language_check("ielts", 6.0, partner_country="英國")[0] == "pass"
     assert ncku_language_check("ielts", 5.0, partner_country="英國")[0] == "fail"
-    assert ncku_language_check("jlpt", 2.0, partner_country="日本")[0] == "pass"
-    assert ncku_language_check("jlpt", 5.0, partner_country="日本")[0] == "pass"
+    assert ncku_language_check("jlpt", 2.0, partner_country="日本")[0] == "needs_confirmation"
+    assert ncku_language_check("jlpt", 5.0, partner_country="日本")[0] == "needs_confirmation"
     assert ncku_language_check("jlpt", 6.0, partner_country="日本")[0] == "fail"
-    assert ncku_language_check("topik", 3.0, partner_country="韓國")[0] == "pass"
+    assert ncku_language_check("topik", 3.0, partner_country="韓國")[0] == "needs_confirmation"
 
 
 def test_ncku_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
-    partners = fetch_ncku_partner_universities()
+    partners = fetch_ncku_partner_universities(reference_time=datetime.fromisoformat("2026-10-21T12:00:00+08:00"))
     assert len(partners) == 211
-    assert sum(1 for p in partners if p.availability_status == "open") == 97
+    # Published mother-school quotas do not establish receiving-school eligibility.
+    assert sum(1 for p in partners if p.availability_status == "needs_confirmation") == 97
+    assert sum(1 for p in partners if p.field_evidence.get("quota") and p.field_evidence["quota"].status == "verified_current") == 97
     assert sum(1 for p in partners if p.availability_status == "agreement_only") == 114
-    assert sum(1 for p in partners if p.application_window_status == "open") == 97
+    assert sum(1 for p in partners if p.application_window_status == "upcoming") == 97
     assert sum(1 for p in partners if p.application_window_status == "closed") == 114
     assert all(p.location and p.location.geocode_status == "verified" for p in partners)
     assert all(p.image_status == "verified" and p.image_url for p in partners)
@@ -122,8 +125,8 @@ def test_ncku_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
         if w.home_university == NCKU.school_name
     ]
     assert len(workflows) == 211
-    assert all(w.review_status == "published" for w in workflows)
-    assert all(w.applicability_status == "verified" for w in workflows)
+    assert sum(w.review_status == "pending_review" for w in workflows) == 97
+    assert sum(w.applicability_status == "needs_confirmation" for w in workflows) == 97
 
     destinations = [
         d
@@ -150,7 +153,7 @@ def test_ncku_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
 
 def test_ncku_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     partners = fetch_ncku_partner_universities()
-    sample = next(p for p in partners if p.availability_status == "open")
+    sample = next(p for p in partners if "mother_table_requirements" in p.field_evidence)
     workflows = storage.load_bundled_application_workflows()
     destinations = storage.load_destination_profiles(tmp_path, include_bundled_baseline=True)
     wf = select_application_workflow(
@@ -192,6 +195,7 @@ def test_ncku_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
         academic_score_minimum=NCKU.academic_score_minimum,
     )
     assert len(plan.choices) == 1
+    assert plan.choices[0].status == "needs_confirmation"
     checks = {c.code: c for c in plan.choices[0].checks}
     assert checks["academic_score"].status == "pass"
     assert checks["home_language_score"].status == "pass"

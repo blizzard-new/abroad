@@ -67,14 +67,14 @@ def test_wzu_email_domains(email: str, allowed: bool) -> None:
 
 
 def test_wzu_degree_and_academic_checks() -> None:
-    assert wzu_degree_check("學士班", "大一")[0] == "fail"
+    assert wzu_degree_check("學士班", "大一")[0] == "needs_confirmation"
     assert wzu_degree_check("學士班", "大二")[0] == "pass"
     assert wzu_degree_check("學士班", "大三")[0] == "pass"
-    assert wzu_degree_check("二技", "三年級")[0] == "pass"
+    assert wzu_degree_check("二技", "三年級")[0] == "needs_confirmation"
     assert wzu_degree_check("五專", "專二")[0] == "fail"
     assert wzu_degree_check("五專", "專四")[0] == "pass"
-    assert wzu_degree_check("碩士班", "碩一")[0] == "pass"
-    assert wzu_degree_check("在職專班", "碩二")[0] == "needs_confirmation"
+    assert wzu_degree_check("碩士班", "碩一")[0] == "needs_confirmation"
+    assert wzu_degree_check("在職專班", "碩二")[0] == "fail"
     assert wzu_degree_check("學士班", "延畢")[0] == "pass"
     assert wzu_degree_check(None, None)[0] == "needs_confirmation"
 
@@ -88,30 +88,25 @@ def test_wzu_degree_and_academic_checks() -> None:
 
 
 def test_wzu_language_checks() -> None:
-    assert wzu_language_check(None, None, partner_country="中國大陸")[0] == "pass"
-    assert (
-        wzu_language_check(None, None, partner_country="美國")[0]
-        == "needs_confirmation"
-    )
-    assert wzu_language_check("toefl", 79.0, partner_country="美國")[0] == "pass"
-    assert wzu_language_check("toefl", 45.0, partner_country="美國")[0] == "fail"
-    assert wzu_language_check("ielts", 6.0, partner_country="英國")[0] == "pass"
-    assert wzu_language_check("ielts", 4.5, partner_country="英國")[0] == "fail"
-    assert wzu_language_check("toeic", 785.0, partner_country="美國")[0] == "pass"
-    assert wzu_language_check("toeic", 650.0, partner_country="美國")[0] == "pass"
-    assert wzu_language_check("toeic", 500.0, partner_country="美國")[0] == "fail"
-    assert wzu_language_check("jlpt", 2.0, partner_country="日本")[0] == "pass"
-    assert wzu_language_check("jlpt", 6.0, partner_country="日本")[0] == "fail"
-    assert wzu_language_check("topik", 3.0, partner_country="韓國")[0] == "pass"
+    # Initial language proofs earn points; low/missing scores do not reject an application.
+    # Nor can a mother-school score prove a host's language requirement.
+    for country, test, score in [
+        ("中國大陸", None, None), ("美國", None, None), ("美國", "toefl", 45),
+        ("美國", "toefl", 79), ("英國", "ielts", 6), ("日本", "jlpt", 2),
+        ("韓國", "topik", 3), ("美國", "toeic", 500),
+    ]:
+        status, detail = wzu_language_check(test, score, partner_country=country)
+        assert status == "needs_confirmation"
+        assert "不影響報名資格" in detail
 
 
 def test_wzu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     partners = fetch_wzu_partner_universities()
     assert len(partners) == 147
-    assert sum(1 for p in partners if p.availability_status == "open") == 119
+    assert sum(1 for p in partners if p.availability_status == "open") == 0
     assert (
         sum(1 for p in partners if p.availability_status == "reference_only")
-        == 28
+        == 128
     )
     assert sum(1 for p in partners if p.application_window_status == "closed") == 147
     assert all(
@@ -136,7 +131,7 @@ def test_wzu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     ]
     assert len(workflows) == 147
     assert all(w.review_status == "published" for w in workflows)
-    assert all(w.applicability_status == "verified" for w in workflows)
+    assert all(w.applicability_status == "needs_confirmation" for w in workflows)
 
     destinations = [
         d
@@ -147,11 +142,8 @@ def test_wzu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     ]
     assert len(destinations) == 147
     for dest in destinations:
-        est = primary_estimate(extract_monthly_estimates(dest))
-        assert (
-            est is not None
-        ), f"Missing primary monthly cost estimate for {dest.school_name}"
-        assert est.scope == "total_living"
+        assert dest.coverage_status == "official_partial"
+        assert "原國家預設估價" in dest.cost_summary
 
     templates = all_application_templates("wzu")
     assert len(templates) == 6
@@ -169,7 +161,7 @@ def test_wzu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
 
 def test_wzu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     partners = fetch_wzu_partner_universities()
-    sample = next(p for p in partners if p.availability_status == "open" and p.country == "美國")
+    sample = next(p for p in partners if p.availability_status == "reference_only" and p.country == "美國")
     workflows = storage.load_bundled_application_workflows()
     destinations = storage.load_destination_profiles(
         tmp_path, include_bundled_baseline=True
@@ -216,7 +208,7 @@ def test_wzu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert len(plan.choices) == 1
     checks = {c.code: c for c in plan.choices[0].checks}
     assert checks["academic_score"].status == "pass"
-    assert checks["home_language_score"].status == "pass"
+    assert checks["home_language_score"].status == "needs_confirmation"
 
     completeness = build_school_completeness(
         sample,
@@ -224,7 +216,7 @@ def test_wzu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
         wf,
         home_university=WZU.school_name,
     )
-    assert completeness.available_count >= 8
+    assert checks["language_score"].status == "needs_confirmation"
 
     client = TestClient(create_app(tmp_path))
     r_unis = client.get("/universities")

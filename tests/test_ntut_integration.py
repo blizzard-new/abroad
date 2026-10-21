@@ -14,7 +14,7 @@ from exchange_info.application_rules import (
     build_personal_application_plan,
     select_application_workflow,
 )
-from exchange_info.cost_estimates import extract_monthly_estimates, primary_estimate
+from exchange_info.cost_estimates import budget_fit, extract_monthly_estimates, primary_estimate
 from exchange_info.models import ApplicationRuleContext, PersonalApplicationPlanRequest
 from exchange_info.school_completeness import build_school_completeness
 from exchange_info.university_registry import NTUT, require_university
@@ -73,7 +73,7 @@ def test_ntut_degree_and_academic_checks() -> None:
     assert ntut_degree_check("學士班", "大一")[0] == "needs_confirmation"
     assert ntut_degree_check("學士班", "大二")[0] == "pass"
     assert ntut_degree_check("學士班", "大三")[0] == "pass"
-    assert ntut_degree_check("五專部", "專四")[0] == "pass"
+    assert ntut_degree_check("五專部", "專四")[0] == "needs_confirmation"
     assert ntut_degree_check("五專部", "專二")[0] == "needs_confirmation"
     assert ntut_degree_check("碩士班", "碩一")[0] == "needs_confirmation"
     assert ntut_degree_check("碩士班", "碩二")[0] == "pass"
@@ -83,33 +83,36 @@ def test_ntut_degree_and_academic_checks() -> None:
 
     assert ntut_academic_check("學士班", 80.0, 3.5, 25.0)[0] == "pass"
     assert ntut_academic_check("學士班", 70.0, None, None)[0] == "pass"
-    assert ntut_academic_check("學士班", 68.0, 2.5, 60.0)[0] == "fail"
+    assert ntut_academic_check("學士班", 68.0, 2.5, 60.0)[0] == "pass"
     assert ntut_academic_check("碩士班", 82.0, 3.6, 20.0)[0] == "pass"
-    assert ntut_academic_check("學士班", None, None, None)[0] == "needs_confirmation"
+    assert ntut_academic_check("學士班", None, None, None)[0] == "pass"
 
 
 def test_ntut_language_checks() -> None:
-    assert ntut_language_check(None, None, partner_country="中國大陸")[0] == "pass"
-    assert ntut_language_check("toefl", 79.0, partner_country="美國")[0] == "pass"
-    assert ntut_language_check("toefl", 60.0, partner_country="美國")[0] == "fail"
-    assert ntut_language_check("ielts", 5.5, partner_country="英國")[0] == "pass"
-    assert ntut_language_check("ielts", 5.0, partner_country="英國")[0] == "fail"
-    assert ntut_language_check("toeic", 700.0, partner_country="德國")[0] == "pass"
-    assert ntut_language_check("toeic", 650.0, partner_country="德國")[0] == "fail"
-    assert ntut_language_check("jlpt", 2.0, partner_country="日本")[0] == "pass"
-    assert ntut_language_check("jlpt", 3.0, partner_country="日本")[0] == "pass"
-    assert ntut_language_check("jlpt", 6.0, partner_country="日本")[0] == "fail"
-    assert ntut_language_check("topik", 3.0, partner_country="韓國")[0] == "pass"
+    assert ntut_language_check(None, None, partner_country="中國大陸")[0] == "needs_confirmation"
+    assert ntut_language_check("toefl", 79.0, partner_country="美國")[0] == "needs_confirmation"
+    assert ntut_language_check("toefl", 60.0, partner_country="美國")[0] == "needs_confirmation"
+    assert ntut_language_check("ielts", 5.5, partner_country="英國")[0] == "needs_confirmation"
+    assert ntut_language_check("ielts", 5.0, partner_country="英國")[0] == "needs_confirmation"
+    assert ntut_language_check("toeic", 700.0, partner_country="德國")[0] == "needs_confirmation"
+    assert ntut_language_check("toeic", 650.0, partner_country="德國")[0] == "needs_confirmation"
+    assert ntut_language_check("jlpt", 2.0, partner_country="日本")[0] == "needs_confirmation"
+    assert ntut_language_check("jlpt", 3.0, partner_country="日本")[0] == "needs_confirmation"
+    assert ntut_language_check("jlpt", 6.0, partner_country="日本")[0] == "needs_confirmation"
+    assert ntut_language_check("topik", 3.0, partner_country="韓國")[0] == "needs_confirmation"
 
 
 def test_ntut_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     partners = fetch_ntut_partner_universities()
     assert len(partners) == 206
-    assert sum(1 for p in partners if p.availability_status == "open") == 188
-    assert sum(1 for p in partners if p.availability_status == "agreement_only") == 18
-    assert sum(1 for p in partners if p.application_window_status == "open") == 188
-    assert sum(1 for p in partners if p.application_window_status == "closed") == 18
-    assert all(p.location and p.location.geocode_status == "verified" for p in partners)
+    assert sum(1 for p in partners if p.availability_status == "open") == 0
+    assert sum(1 for p in partners if p.availability_status == "needs_confirmation") == 204
+    assert sum(1 for p in partners if p.application_window_status == "open") == 0
+    assert sum(1 for p in partners if p.application_window_status == "closed") == 2
+    waseda = next(p for p in partners if "早稻田" in p.school_name)
+    assert waseda.location.city == "北九州市（福岡縣）"
+    assert waseda.location.geocode_status == "needs_review"
+    assert all(p.location and p.location.geocode_status == "verified" for p in partners if p is not waseda)
     assert all(p.image_status == "verified" and p.image_url for p in partners)
     assert all(p.student_summary_zh is not None for p in partners)
 
@@ -129,7 +132,7 @@ def test_ntut_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     ]
     assert len(workflows) == 206
     assert all(w.review_status == "published" for w in workflows)
-    assert all(w.applicability_status == "verified" for w in workflows)
+    assert all(w.applicability_status == "needs_confirmation" for w in workflows)
 
     destinations = [
         d
@@ -139,8 +142,13 @@ def test_ntut_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     assert len(destinations) == 206
     for dest in destinations:
         est = primary_estimate(extract_monthly_estimates(dest))
-        assert est is not None, f"Missing primary monthly cost estimate for {dest.school_name}"
-        assert est.scope == "total_living"
+        if dest.school_name == '秋田大學 Akita University':
+            assert est is not None and est.low == 80000
+            assert est.applicability_status == 'reference_only'
+            assert est.source_urls == (dest.cost_evidence.source_url,)
+            assert budget_fit([est],1000000)['status'] == 'unknown'
+        else:
+            assert est is None, f"Unverified country estimate for {dest.school_name}"
 
     templates = all_application_templates("ntut")
     assert len(templates) == 6
@@ -156,7 +164,7 @@ def test_ntut_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
 
 def test_ntut_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     partners = fetch_ntut_partner_universities()
-    sample = next(p for p in partners if p.availability_status == "open")
+    sample = next(p for p in partners if "Michigan-Dearborn" in p.school_name)
     workflows = storage.load_bundled_application_workflows()
     destinations = storage.load_destination_profiles(tmp_path, include_bundled_baseline=True)
     wf = select_application_workflow(
@@ -199,8 +207,8 @@ def test_ntut_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     )
     assert len(plan.choices) == 1
     checks = {c.code: c for c in plan.choices[0].checks}
-    assert checks["academic_score"].status == "pass"
-    assert checks["home_language_score"].status == "pass"
+    assert checks["academic_score"].status == "needs_confirmation"
+    assert checks["home_language_score"].status == "needs_confirmation"
 
     completeness = build_school_completeness(
         sample,
@@ -208,7 +216,7 @@ def test_ntut_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
         wf,
         home_university=NTUT.school_name,
     )
-    assert completeness.available_count >= 8
+    assert completeness.priority_gaps
 
     client = TestClient(create_app(tmp_path))
     r_unis = client.get("/universities")

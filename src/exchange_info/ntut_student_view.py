@@ -152,6 +152,9 @@ def ntut_school_location(
         )
         if operator is not None:
             return operator
+    # A reviewed program campus must not fall back to another campus's pin.
+    if partner.location is not None and "source_review_round42" in partner.reference_data:
+        return partner.location
     if (
         partner.location is not None
         and partner.location.geocode_status == "verified"

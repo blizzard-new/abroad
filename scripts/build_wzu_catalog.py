@@ -296,8 +296,8 @@ REGION_COST_DEFAULTS = {
 WZU_OICC_HUB_URL = "https://c015.wzu.edu.tw/"
 WZU_IED_HUB_URL = "https://d020.wzu.edu.tw/"
 WZU_OUTBOUND_GUIDE_URL = "https://d020.wzu.edu.tw/article/492285"
-WZU_R1_ANNOUNCEMENT_URL = "https://d020.wzu.edu.tw/article/529152"
-WZU_R2_ANNOUNCEMENT_URL = "https://d020.wzu.edu.tw/article/529354"
+WZU_R1_ANNOUNCEMENT_URL = "https://d020.wzu.edu.tw/article/529354"
+WZU_R2_ANNOUNCEMENT_URL = "https://d020.wzu.edu.tw/article/530752"
 WZU_R1_115_1_ANNOUNCEMENT_URL = "https://d020.wzu.edu.tw/article/524735"
 WZU_PARTNER_INFO_URL = "https://d020.wzu.edu.tw/category/154399"
 WZU_EXP_ALBUM_URL = "https://d020.wzu.edu.tw/album/list/152198"
@@ -2583,14 +2583,15 @@ def main() -> None:
       prov_text, encoding="utf-8"
   )
 
+  from exchange_info.wzu_source_review import review_bundle
+  reviewed_counts = review_bundle(REPO_ROOT)
+  from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
+  apply_vilnius_akita_review(REPO_ROOT, "wzu")
+
   print(
-      f"Successfully built WZU catalog: {len(partners)} partners"
-      f" ({open_partner_count} open, {completeness['verified_campus_images']}"
-      f" verified images, {completeness['verified_locations']} verified"
-      f" locations), {len(workflows)} workflows,"
-      f" {len(destinations)} destinations, {len(research_records)} research"
-      f" records, {exp_covered_schools} schools with experience records"
-      f" ({len(student_experience_rows)} rows)."
+      f"WZU catalog: {len(partners)} partners, {len(workflows)} workflows, "
+      f"{len(destinations)} destinations; bounded review states: {reviewed_counts}. "
+      "Individual host fields and whole records remain unverified."
   )
 
 

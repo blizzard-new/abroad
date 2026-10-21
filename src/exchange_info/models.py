@@ -677,7 +677,7 @@ class PartnerUniversity(BaseModel):
     checked_at: datetime | None = None
     source_pages: list[int] = Field(default_factory=list)
     quota_status: Literal["published", "zero", "not_published", "reference_only", "fee_paying"] | None = None
-    application_window_status: Literal["open", "closed", "needs_confirmation"] | None = None
+    application_window_status: Literal["open", "upcoming", "closed", "needs_confirmation"] | None = None
     field_evidence: dict[str, ExchangeFieldEvidence] = Field(default_factory=dict)
     reference_data: dict[str, str] = Field(default_factory=dict)
     language_requirement: str | None = None
@@ -785,6 +785,7 @@ class DestinationProfile(BaseModel):
     country: str | None = None
     city: str | None = None
     cost_summary: str | None = None
+    cost_evidence: ExchangeFieldEvidence | None = None
     housing_summary: str | None = None
     transport_summary: str | None = None
     campus_life_summary: str | None = None
@@ -797,6 +798,14 @@ class DestinationProfile(BaseModel):
     last_checked: datetime | None = None
     coverage_status: str = "not_collected"
     coverage_note: str = "尚未完成官方生活資訊查核。"
+
+    @model_serializer(mode="wrap")
+    def serialize_cost_evidence(self, handler):
+        payload = handler(self)
+        # Keep existing review hashes stable for profiles without this evidence.
+        if self.cost_evidence is None:
+            payload.pop("cost_evidence", None)
+        return payload
 
 
 class DestinationProfileReviewDecision(str, Enum):
@@ -1504,6 +1513,7 @@ class ApplicationPlanEligibilityCheck(BaseModel):
         "availability",
         "college",
         "degree_level",
+        "partner_degree_level",
         "academic_score",
         "academic_gpa",
         "home_year",
@@ -2663,7 +2673,7 @@ class ApplicationWorkflowReviewBatchRuleRow(BaseModel):
 
 
 class HomeSelectionRules(BaseModel):
-    academic_policy: Literal["percentage", "gpa_or_rank"] = "percentage"
+    academic_policy: Literal["percentage", "gpa_or_rank", "score_or_rank"] = "percentage"
     academic_reference_year: str | None = None
     undergraduate_gpa_minimum: float | None = None
     undergraduate_rank_maximum: float | None = None
@@ -2695,7 +2705,7 @@ class StudentDashboard(BaseModel):
     academic_score_minimum: float | None = None
     academic_score_rule: str | None = None
     academic_gpa_minimum: float | None = None
-    maximum_preferences: int = 5
+    maximum_preferences: int | None = 5
     selection_rules: HomeSelectionRules = Field(default_factory=HomeSelectionRules)
     language_score_minimums: dict[str, float] = Field(default_factory=dict)
     application_periods: list[ApplicationPeriodItem] = Field(default_factory=list)
@@ -4149,6 +4159,10 @@ class VerifiedRuleFact(BaseModel):
     source_title: str = Field(min_length=2, max_length=200)
     source_url: str = Field(min_length=12, max_length=2000)
     last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    verification_status: Literal[
+        "legacy_review", "verified_current", "verified_reference",
+        "needs_confirmation", "source_unavailable",
+    ] = "legacy_review"
 
     @field_validator("source_url")
     @classmethod
@@ -4204,8 +4218,8 @@ class VerifiedSchoolWindowCard(BaseModel):
     paper_deadline: VerifiedRuleFact
     study_plan_limit: VerifiedRuleFact
     subtasks: list[VerifiedWindowSubtask] = Field(default_factory=list)
-    ics_download_url: str = Field(min_length=10, max_length=500)
-    google_calendar_url: str = Field(min_length=20, max_length=4000)
+    ics_download_url: str | None = Field(default=None, min_length=10, max_length=500)
+    google_calendar_url: str | None = Field(default=None, min_length=20, max_length=4000)
     line_oa_url: str = Field(min_length=12, max_length=2000)
     line_copy_summary: str = Field(min_length=10, max_length=2000)
 
@@ -4260,7 +4274,12 @@ class CrossSchoolStructuredPoint(BaseModel):
     origin_label: str = Field(min_length=2, max_length=80)
     source_title: str = Field(min_length=2, max_length=200)
     source_url: str = Field(min_length=10, max_length=2000)
-    last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
+    last_checked_at: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
+    source_published_at: str | None = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")
+    verification_status: Literal[
+        "pending_review", "reference_only", "verified_reference", "verified_current"
+    ] = "pending_review"
+    related_sources: list[SourceReference] = Field(default_factory=list)
 
     @field_validator("source_url")
     @classmethod
@@ -4433,7 +4452,7 @@ class CrossSchoolPartnerSummaryItem(BaseModel):
     has_living_cost_digest: bool = True
     has_housing_digest: bool = True
     has_course_digest: bool = True
-    experience_count: int = Field(ge=1)
+    experience_count: int = Field(ge=0)
     sample_cost_hint: str = Field(min_length=4, max_length=240)
 
 

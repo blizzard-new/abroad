@@ -73,9 +73,9 @@ def test_fju_degree_and_academic_checks() -> None:
     assert fju_degree_check("博士班", "博一")[0] == "pass"
     assert fju_degree_check(None, None)[0] == "needs_confirmation"
 
-    # Academic check: 70 average OR top 50% class rank
+    # 116-1 notice requires undergraduate average 70; rank is not an alternative.
     assert fju_academic_check("大學部", 75.0, 3.2, None)[0] == "pass"
-    assert fju_academic_check("大學部", 68.0, 2.8, 45.0)[0] == "pass"
+    assert fju_academic_check("大學部", 68.0, 2.8, 45.0)[0] == "fail"
     assert fju_academic_check("大學部", 65.0, 2.5, 60.0)[0] == "fail"
     assert fju_academic_check("大學部", None, None, None)[0] == "needs_confirmation"
 
@@ -87,24 +87,29 @@ def test_fju_language_checks_and_internal_points() -> None:
     assert fju_language_check("ielts", 6.5, partner_country="英國")[0] == "pass"
     assert fju_language_check("toeic", 785.0, partner_country="日本")[0] == "pass"
 
-    assert fju_internal_language_points("toefl", 95.0) == 100.0
-    assert fju_internal_language_points("ielts", 6.5) == 90.0
-    assert fju_internal_language_points("toeic", 785.0) == 70.0
+    assert fju_internal_language_points("toefl", 95.0) is None
+    assert fju_internal_language_points("ielts", 6.5) == 60.0
+    assert fju_internal_language_points("toeic", 785.0) is None
 
 
 def test_fju_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     partners = fetch_fju_partner_universities()
-    assert len(partners) == 234
+    assert len(partners) == 237
     assert sum(1 for p in partners if p.country in {"中國大陸", "香港", "澳門"}) == 63
-    assert sum(1 for p in partners if p.country not in {"中國大陸", "香港", "澳門"}) == 171
+    assert sum(1 for p in partners if p.country not in {"中國大陸", "香港", "澳門"}) == 174
     assert all(p.quota_status == "reference_only" for p in partners)
     assert all(p.availability_status == "agreement_only" for p in partners)
-    assert all(p.location and p.location.geocode_status == "verified" for p in partners)
+    # Newly added reference routes retain explicit location gaps.
+    assert {p.school_name for p in partners if not p.location} == {
+        "(自費)東洋大學 Toyo University", "(自費)南山大學 Nanzan University",
+        "(自費)同志社大學 Doshisha University",
+    }
+    assert all(p.location.geocode_status == "verified" for p in partners if p.location)
     assert all(p.student_summary_zh is not None for p in partners)
 
     dashboard = build_fju_student_dashboard()
     assert dashboard.school_name == FJU.school_name
-    assert len(dashboard.partner_universities) == 234
+    assert len(dashboard.partner_universities) == 237
     assert len(dashboard.application_periods) == 3
     assert len(dashboard.document_explanations) >= 1
     assert len(dashboard.rule_explanations) >= 1
@@ -116,7 +121,7 @@ def test_fju_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
         for w in storage.load_bundled_application_workflows()
         if w.home_university == FJU.school_name
     ]
-    assert len(workflows) == 234
+    assert len(workflows) == 237
     assert all(w.review_status == "published" for w in workflows)
     assert all(w.applicability_status in {"verified", "needs_confirmation"} for w in workflows)
 
@@ -125,11 +130,26 @@ def test_fju_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
         for d in storage.load_destination_profiles(tmp_path, include_bundled_baseline=True)
         if d.home_university == FJU.school_name
     ]
-    assert len(destinations) >= 232
+    assert len(destinations) == 237
+    unconfirmed_costs = set()
     for dest in destinations:
+        if dest.cost_evidence and dest.cost_evidence.status in {"needs_confirmation", "reference_only"}:
+            from exchange_info.cost_estimates import budget_fit
+            assert budget_fit(extract_monthly_estimates(dest), 1000000)["status"] == "unknown"
+            unconfirmed_costs.add(dest.school_name)
+            continue
         est = primary_estimate(extract_monthly_estimates(dest))
         assert est is not None, f"Missing primary monthly cost estimate for {dest.school_name}"
         assert est.scope == "total_living"
+    assert unconfirmed_costs == {
+        "聖心女子大學 University of the Sacred Heart, Tokyo",
+        "(語言密集課程)聖心女子大學 University of the Sacred Heart, Tokyo",
+        "梅光學院大學 Baiko Gakuin University",
+        "(自費)梅光學院大學 Baiko Gakuin University",
+        "(自費)東洋大學 Toyo University",
+        "(自費)南山大學 Nanzan University",
+        "(自費)同志社大學 Doshisha University",
+    }
 
     templates = all_application_templates("fju")
     assert len(templates) == 6
@@ -199,20 +219,24 @@ def test_fju_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
         wf,
         home_university=FJU.school_name,
     )
-    assert completeness.available_count >= 8
+    eligibility_item = next(item for item in completeness.items if item.key == "eligibility")
+    assert eligibility_item.status == "partial"
+    assert "部分不明" in eligibility_item.note
 
     client = TestClient(create_app(tmp_path))
     r_unis = client.get("/universities")
     assert r_unis.status_code == 200
     fju_entry = next(u for u in r_unis.json() if u["id"] == "fju")
-    assert fju_entry["partner_count"] == 234
+    assert fju_entry["partner_count"] == 237
     assert len(fju_entry["colleges"]) == 14
 
     r_cov = client.get("/coverage?school=fju")
     assert r_cov.status_code == 200
     cov = r_cov.json()
-    assert cov["total_partner_schools"] == 234
-    assert cov["workflow_school_count"] == 234
-    assert cov["destination_profile_count"] == 234
-    assert cov["image_count"] == 234
+    assert cov["total_partner_schools"] == 237
+    assert cov["workflow_school_count"] == 237
+    assert cov["destination_profile_count"] == 237
+    # Coverage reuses institutional imagery across program variants. This is a
+    # display count, not evidence that the three new route campuses were reviewed.
+    assert cov["image_count"] == 237
     assert cov["official_website_count"] >= 150

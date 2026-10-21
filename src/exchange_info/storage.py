@@ -50,7 +50,7 @@ from .models import (
     VaultDocumentVersionRecord,
 )
 from .settings import DEFAULT_DATA_DIR
-from .school_identity import school_identity_key
+from .school_identity import school_identity_key, school_program_identity_key
 from .university_registry import CCU, CGU, CMU, CSMU, CYCU, FCU, FJU, KMU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TKU, TMU, WZU, YUNTECH, YZU
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
@@ -263,7 +263,7 @@ def _with_explicit_destination_gaps(profile: DestinationProfile) -> DestinationP
 def _destination_profile_key(profile: DestinationProfile) -> tuple[str, str]:
     return (
         school_identity_key(profile.home_university or CGU.school_name),
-        school_identity_key(profile.school_name),
+        school_program_identity_key(profile.school_name),
     )
 
 
@@ -287,7 +287,7 @@ def _scope_legacy_destination_profiles(
         if audit.collector != "destinations" or not audit.home_university:
             continue
         homes_by_school.setdefault(
-            school_identity_key(audit.school_name),
+            school_program_identity_key(audit.school_name),
             set(),
         ).add(audit.home_university)
 
@@ -296,7 +296,7 @@ def _scope_legacy_destination_profiles(
         if row.home_university:
             scoped.append(row)
             continue
-        homes = homes_by_school.get(school_identity_key(row.school_name), set())
+        homes = homes_by_school.get(school_program_identity_key(row.school_name), set())
         if len(homes) == 1:
             scoped.append(
                 row.model_copy(update={"home_university": next(iter(homes))})
@@ -732,14 +732,15 @@ def save_collection_audits(
 def upsert_collection_audit(
     audit: CollectionAudit, data_dir: Path = DEFAULT_DATA_DIR
 ) -> list[CollectionAudit]:
-    school_key = school_identity_key(audit.school_name)
     collector_key = audit.collector.strip().casefold()
+    identity = school_program_identity_key if collector_key == "destinations" else school_identity_key
+    school_key = identity(audit.school_name)
     home_key = school_identity_key(audit.home_university or "")
     retained = [
         row
         for row in load_collection_audits(data_dir)
         if (
-            school_identity_key(row.school_name),
+            identity(row.school_name),
             row.collector.strip().casefold(),
             school_identity_key(row.home_university or ""),
         )

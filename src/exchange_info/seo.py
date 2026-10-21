@@ -240,7 +240,7 @@ DETAIL_LABELS = {"application_documents": "申請文件", "required_documents": 
 
 def partner_details(partner: PartnerUniversity, section_id: str = "programme") -> str:
     rows = [("資料狀態", AVAILABILITY[partner.availability_status]), ("狀態說明", partner.availability_note),
-            ("母校受理時窗", {"open": "受理中（依來源時窗）", "closed": "已截止"}.get(partner.application_window_status, "待確認"))]
+            ("母校受理時窗", {"open": "受理中（依來源時窗）", "upcoming": "尚未開始受理", "closed": "已截止"}.get(partner.application_window_status, "待確認"))]
     if partner.checked_at:
         rows.append(("資料查核時間", display_time(partner.checked_at)))
     labels = dict(FIELDS)

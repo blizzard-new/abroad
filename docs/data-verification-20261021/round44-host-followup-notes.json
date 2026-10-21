@@ -1,0 +1,70 @@
+{
+  "recorded_at": "2026-10-21T03:38:39.716425+00:00",
+  "implementation_status": "New host evidence collected after round44 final validation; not yet patched into product records.",
+  "findings": [
+    {
+      "source_url": "https://www.vu.lt/en/admissions/for-exchange-and-visiting-students/how-to-apply",
+      "read_scope": "Entire how-to-apply content, excluding linked documents",
+      "supported": "Host general exchange page specifies English B2, including TOEIC Listening and Reading 785. Nomination precedes online application; academic records, signed Learning Agreement and identity document required. PhD students can select courses across cycles.",
+      "limits": "Host general acceptance does not resolve conflicting NCKU UG/MA-versus-PhD quota wording. The host TOEIC component is now known, but retain mother-table wording separately. No dated 2027-fall deadline was established. Do not apply degree-program English thresholds to exchange."
+    },
+    {
+      "source_url": "https://www.akita-u.ac.jp/honbu/global/en/abroad/inbound/summary.html",
+      "read_scope": "All program-outline, program-details and approximate schedule content, not linked brochure",
+      "supported": "AUAJ requires Japanese major and JLPT N2 and two semesters. AUGP/AUSF offer one or two semesters with JLPT N3 or TOEFL57/IELTS5.0/TOEIC LR670. AUSF JASSO eligibility list excludes Taiwan; do not promise stipend to NCKU students.",
+      "limits": "NCKU guide allows one semester; AUAJ duration is incompatible unless a specific exception is evidenced. Host page does not settle NCKU graduate eligibility conflict. No 2027-fall-specific dates established."
+    },
+    {
+      "source_url": "https://www.akita-u.ac.jp/honbu/global/en/eventa/item_pro2_18.html",
+      "read_scope": "Acceptance announcement text; linked partner list not yet downloaded/read",
+      "supported": "Host requires institution agreement plus student-exchange memorandum and receives applications via partner offices.",
+      "next_action": "Read linked English partner list and confirm NCKU entry and agreement scope."
+    },
+    {
+      "source_url": "https://www.akita-u.ac.jp/honbu/global/en/eventa/item_pro2_17.html",
+      "read_scope": "Announcement text only; attached Information file not yet read",
+      "supported": "Announcement is specifically April2027; applications through home office.",
+      "limits": "Cannot treat April2027 dates as October2027/NCKU116-1 guidance."
+    },
+    {
+      "source_url": "https://yiec.yonsei.ac.kr/yiec_en/program/overseas01.do",
+      "read_scope": "Entire ESP description and displayed partner list",
+      "supported": "Mirae page identifies that campus and a partner list marked updated2020-11-06; Taiwan entries shown are NTUST and Yuanpei, not NCKU.",
+      "limits": "Absence from this old list does not prove no current agreement. Keep NCKU Yonsei/Mirae campus identity unresolved. An unrelated ycms template partner list or 2022 scholarship notice is insufficient identity evidence."
+    }
+  ],
+  "source_receipts": [
+    {
+      "url": "https://www.vu.lt/en/admissions/for-exchange-and-visiting-students/how-to-apply",
+      "sha256": "437dfce6cd4d28a1c533bb7050adbe5cc1ad9d91753efa85f7b54b24ce493cdb",
+      "text_sha256": "53ed0effb9ba00a9a15622e50166eae1dd0e1508f14f528d76b0bb7156449f00",
+      "transport_result": "retrieved"
+    },
+    {
+      "url": "https://www.akita-u.ac.jp/honbu/global/en/abroad/inbound/summary.html",
+      "sha256": "3240c0a255cd872640ed7fb7132b61cf0c158b23a809373ffb0a06557766a111",
+      "text_sha256": "28c665f850d3c3a7a1e4cf2cd6fe89aa3ee12dda0da526c034c61243eff7068e",
+      "transport_result": "retrieved"
+    },
+    {
+      "url": "https://www.akita-u.ac.jp/honbu/global/en/eventa/item_pro2_18.html",
+      "sha256": "7f0d30eba8b4e64125dadcb6e7b5d2121e12fb2f6af1504670fdcd57b8b63958",
+      "text_sha256": "1923d61dd7bc8b1dbce30f6d6a688f0c319d4d14dc9b50cfe89e89329f4a09ac",
+      "transport_result": "retrieved"
+    },
+    {
+      "url": "https://www.akita-u.ac.jp/honbu/global/en/eventa/item_pro2_17.html",
+      "sha256": "d4f5d2e350ba0efa48996201d9dab2af255183f00a979a5caa723a4a8de2129e",
+      "text_sha256": "9e9b1b552b776dc969d58872a80ea24b19c26b3498280b58ef53e3e5570a07b7",
+      "transport_result": "retrieved"
+    },
+    {
+      "url": "https://yiec.yonsei.ac.kr/yiec_en/program/overseas01.do",
+      "sha256": "5a86f965cdb523788727eb34ccefc025433262e79715ea9605b3527533572def",
+      "text_sha256": "ac1aed531870053187a0c07b1c95d54d86b883bad46c3f7fdcd49623a5547d85",
+      "transport_result": "retrieved"
+    }
+  ],
+  "whole_records_verified": 0,
+  "whole_schools_verified": 0
+}

@@ -1,0 +1,110 @@
+{
+  "base_commit": "b662dced2607bc67c3354c95b7aaad202448bea7",
+  "files": [
+    {
+      "path": "src/exchange_info/official_data/cgu_catalogue/snapshot.json",
+      "sha256": "3b86cdf8b8c67f223e4dbb3ec9a818e4232635ce2903f49bd45f4e2f9630cede",
+      "bytes": 335322
+    },
+    {
+      "path": "src/exchange_info/official_data/cgu_catalogue/1EAOsiZkw5oWWUpAyXz-04aQWdSMR9f_c3Jup69LeiuA.gviz.json",
+      "sha256": "ddf51f4650c08257043438bb072d14a09f13b8d54a26b0fa8020565f3e6db3c0",
+      "bytes": 72081
+    },
+    {
+      "path": "src/exchange_info/official_data/cgu_catalogue/1aQiwbtrQu1QOIOkFrOYl9WkzT0mqnZqIwI9KJCXGb4E.gviz.json",
+      "sha256": "dcc3943fb94c67d94685b4309ae5093b2760c0d87ea2cac8dd83ac586c3c5252",
+      "bytes": 27493
+    },
+    {
+      "path": "src/exchange_info/official_data/tku/partners_current.jsonl",
+      "sha256": "fd0097140d2e5423f570629fc5360571820548ba2b7748224835efa94d5c3c26",
+      "bytes": 98037
+    },
+    {
+      "path": "src/exchange_info/official_data/tku/partners_reference.jsonl",
+      "sha256": "0121f3e5b6bb38b748d64a8c7c61d904ea1ac801c255e0364ba97b47b5700ab3",
+      "bytes": 1227416
+    },
+    {
+      "path": "src/exchange_info/official_data/tku/earlier_round_programmes.jsonl",
+      "sha256": "2ef32558c01ff3b1a298f7ebf76fa87d7a1b10f9d1545b7ff76a0592642ba78a",
+      "bytes": 199171
+    },
+    {
+      "path": "src/exchange_info/official_data/tku/sources.json",
+      "sha256": "9429c451cbb8abc7fa9164c9d9f704fcae992d75a5077c93d696f102b4be302b",
+      "bytes": 948356
+    },
+    {
+      "path": "src/exchange_info/official_data/tku/rounds.json",
+      "sha256": "0274a3da3202067aa5ee6fc10673ec69de01ecb0bd6f465678a14befe17988f5",
+      "bytes": 2709
+    },
+    {
+      "path": "src/exchange_info/official_data/tku/full_census_audit.json",
+      "sha256": "504ad802f0f0250e8cd5b05bc8347ba4f80ed4c6990785bed03b88ba3eff2f1d",
+      "bytes": 17240185
+    },
+    {
+      "path": "src/exchange_info/ntpu_student_view.py",
+      "sha256": "caf21a4056f3a5519a90ef4c518435a74ffcf5cdb7ecb3346a278a265241ba48",
+      "bytes": 40225
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu/115-english-partners.pdf",
+      "sha256": "533ae52a3c80e2a00bb2883aeb305fb3ea7e51a733fbf5a0cc0f233614fe0dc9",
+      "bytes": 323972
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu/115-japanese-partners.pdf",
+      "sha256": "291a30e5a0717c6d15e90582b47e912c0d2a099c580383f6e1517491a4b9551b",
+      "bytes": 110934
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu/115-chinese-partners.pdf",
+      "sha256": "d9115c76edc5829fcb18c80d20f92726c8d50735d9bd7970026378e0f65169a4",
+      "bytes": 87125
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu/116-english-partners.pdf",
+      "sha256": "ac6396b51e130f6d7ada3e0d5470de6b14759a5830a866fe24ad6c1e43da80f8",
+      "bytes": 441036
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu/116-japanese-partners.pdf",
+      "sha256": "589607821301afb53774e59918239bf127eece9ce0de3c91375db5e9b5d59296",
+      "bytes": 118469
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu/116-chinese-partners.pdf",
+      "sha256": "6108220bcc33a93af7ba8c5d966694c4a981dc06d87587a056b9488a700b3571",
+      "bytes": 83241
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu/116-guidelines-zh.pdf",
+      "sha256": "8f5162d94afe8f56b1b966cb8f5ae632880bc4661f775750f5e9dad24c85943a",
+      "bytes": 1396113
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu/116-guidelines-en.pdf",
+      "sha256": "00bbd7695230934d2870b5cdcb0ae70cdc461bf0506cd3c65d4b4e56fd77737e",
+      "bytes": 941751
+    }
+  ],
+  "scope": "Original special-format inputs for CGU, NTPU and TKU",
+  "overlaps_existing_censuses": true,
+  "facts_verified_by_extraction": 0,
+  "limitations": [
+    "PDF text alone does not verify table associations; visual and current-source comparison remain required.",
+    "These inputs overlap earlier runtime, raw and supplementary records; counts are not distinct factual claims.",
+    "This does not cover every root-level JSON, asset, UI-generated assertion or production database record."
+  ],
+  "outputs": {
+    "field-gaps.csv": "c0e4d80a0ac96637dddf6ae50008b75b650af3bc829b675316d81ba4f400a556",
+    "fields.jsonl.gz": "0ed036aebff7e19af0afb3f523c59174b77978823f9187ef541b6eeed529e3f0",
+    "inventory-summary.json": "91b99a137a4da35ba5d6d487580a1d8308e96483e94958968eac43fd1d3a33cf",
+    "records.jsonl.gz": "553cef3e0ad2aced5e4caf18b575ce31b0a7cc9155082263c58a18c997e12b43",
+    "sources.json": "3a973890e716e614d713d12ad41b52e5a7b170939f8f685de59f81e7e81e9bf7"
+  }
+}

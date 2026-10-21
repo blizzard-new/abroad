@@ -46,7 +46,9 @@ def test_cross_school_partner_data_and_copyright_compliance(monkeypatch, tmp_pat
         assert len(page.living_cost_references) >= 1
         assert len(page.housing_references) >= 1
         assert len(page.course_direction_references) >= 1
-        assert len(page.experience_digests) >= 1
+        # Some schools have no matched student report. Generated preparation
+        # advice must not satisfy the experience count.
+        assert page.experience_digests == []
 
         violations = validate_cross_school_partner_compliance(page)
         assert violations == [], f"Unexpected compliance violations for {inst_slug}: {violations}"
@@ -140,7 +142,10 @@ def test_cross_school_partner_html_two_layer_structure_and_seo(monkeypatch, tmp_
 
     # Every structured source link in lower layer uses https:// or http://
     source_links = lower.select(".cs-intel-source a[data-official-source]")
-    assert len(source_links) >= 4
+    assert len(source_links) >= 3
+    experiences = lower.find(id="cross-school-experiences")
+    assert "尚未收錄可對應本校的資料" in experiences.get_text()
+    assert experiences.select(".cs-intel-source a") == []
     for source_link in source_links:
         assert source_link["href"].startswith(("https://", "http://"))
 
@@ -215,6 +220,7 @@ def test_build_home_agreement_normalizes_single_char_quota_and_language_fields()
     row = PartnerUniversity(
         country="大陸地區",
         school_name="重慶大學 (Chongqing University)",
+        program_type="交換學生",
         quota="4",
         language_requirement="無",
         eligibility="無",

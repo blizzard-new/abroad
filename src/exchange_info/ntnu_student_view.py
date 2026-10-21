@@ -30,9 +30,10 @@ def _cached_ntnu_partners(path: Path, sig: tuple[int, int] | None) -> tuple[Part
         return tuple(PartnerUniversity.model_validate_json(line) for line in handle if line.strip())
 
 
-def fetch_ntnu_partner_universities() -> list[PartnerUniversity]:
+def fetch_ntnu_partner_universities(*, reference_time: datetime | None = None) -> list[PartnerUniversity]:
     path = NTNU_OFFICIAL_DATA_DIR / "partners.jsonl"
-    return list(_cached_ntnu_partners(path, file_signature(path)))
+    from .ntnu_quota_review import current_ntnu_application_window
+    return [current_ntnu_application_window(p, reference_time) for p in _cached_ntnu_partners(path, file_signature(path))]
 
 
 @lru_cache(maxsize=2)
@@ -77,7 +78,7 @@ def build_ntnu_student_dashboard(
             "partner_universities": (
                 list(partner_universities)
                 if partner_universities is not None
-                else fetch_ntnu_partner_universities()
+                else fetch_ntnu_partner_universities(reference_time=now)
             ),
         }
     )

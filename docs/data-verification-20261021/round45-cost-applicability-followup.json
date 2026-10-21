@@ -1,0 +1,117 @@
+{
+  "reviewed_at": "2026-10-21T04:01:48.089908+00:00",
+  "sources": {
+    "https://www.akita-u.ac.jp/honbu/global/en/eventa/img/pro20017_01_dl.pdf": {
+      "sha256": "3953df6e5f59eee43100344c9a230b81727181ea62fdb6fbadba3f4d35aea7db",
+      "scope": "April 2027 intake only.",
+      "pages_text_and_visual_reviewed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        21,
+        22,
+        23
+      ],
+      "review": "Pages 12-20 application forms not fully reviewed; do not claim all 23 pages reviewed.",
+      "retrieved_at": "2026-10-21T03:41:44.552877+00:00",
+      "text_sha256": "ebf517fcbb9fb91e4ada56bbab629db5624f1a984ef68f9f5ae4d2a32a4de752"
+    }
+  },
+  "rows": [
+    {
+      "home_id": "ntu",
+      "file": "src/exchange_info/official_data/ntu/destination_profiles.jsonl",
+      "school_name": "秋田大學",
+      "country": "日本",
+      "host": "akita",
+      "patches": [
+        {
+          "pointer": "/cost_evidence",
+          "expected_values": [],
+          "expected_missing": true,
+          "value": {
+            "source_url": "https://www.akita-u.ac.jp/honbu/global/en/eventa/img/pro20017_01_dl.pdf",
+            "source_pages": [
+              4
+            ],
+            "application_round": "April 2027 intake only",
+            "checked_at": "2026-10-21T03:55:30.199233+00:00",
+            "status": "reference_only",
+            "excerpt": "Average monthly living expenses: JPY 80,000. Budget around six months for one semester; initial costs and travel are additional.",
+            "note": "秋田2027年4月梯次的每月生活費參考，尚未確認適用於此筆母校方案及實際出國梯次；不能直接判定符合當期預算。"
+          },
+          "reason": "Structured intake applicability must reach budget comparisons; the current-year number alone is insufficient.",
+          "source_url": "https://www.akita-u.ac.jp/honbu/global/en/eventa/img/pro20017_01_dl.pdf",
+          "source_locator": "April 2027 guide p4; not autumn 2027 or spring 2028 evidence"
+        }
+      ]
+    },
+    {
+      "home_id": "ntut",
+      "file": "src/exchange_info/official_data/ntut/destination_profiles.jsonl",
+      "school_name": "秋田大學 Akita University",
+      "country": "日本",
+      "host": "akita",
+      "patches": [
+        {
+          "pointer": "/cost_evidence",
+          "expected_values": [],
+          "expected_missing": true,
+          "value": {
+            "source_url": "https://www.akita-u.ac.jp/honbu/global/en/eventa/img/pro20017_01_dl.pdf",
+            "source_pages": [
+              4
+            ],
+            "application_round": "April 2027 intake only",
+            "checked_at": "2026-10-21T03:55:30.199233+00:00",
+            "status": "reference_only",
+            "excerpt": "Average monthly living expenses: JPY 80,000. Budget around six months for one semester; initial costs and travel are additional.",
+            "note": "秋田2027年4月梯次的每月生活費參考，尚未確認適用於此筆母校方案及實際出國梯次；不能直接判定符合當期預算。"
+          },
+          "reason": "Structured intake applicability must reach budget comparisons; the current-year number alone is insufficient.",
+          "source_url": "https://www.akita-u.ac.jp/honbu/global/en/eventa/img/pro20017_01_dl.pdf",
+          "source_locator": "April 2027 guide p4; not autumn 2027 or spring 2028 evidence"
+        }
+      ]
+    },
+    {
+      "home_id": "ncku",
+      "file": "src/exchange_info/official_data/ncku/destination_profiles.jsonl",
+      "school_name": "秋田大學 Akita University",
+      "country": "日本",
+      "host": "akita",
+      "patches": [
+        {
+          "pointer": "/cost_evidence",
+          "expected_values": [],
+          "expected_missing": true,
+          "value": {
+            "source_url": "https://www.akita-u.ac.jp/honbu/global/en/eventa/img/pro20017_01_dl.pdf",
+            "source_pages": [
+              4
+            ],
+            "application_round": "April 2027 intake only",
+            "checked_at": "2026-10-21T03:55:30.199233+00:00",
+            "status": "reference_only",
+            "excerpt": "Average monthly living expenses: JPY 80,000. Budget around six months for one semester; initial costs and travel are additional.",
+            "note": "秋田2027年4月梯次的每月生活費參考，尚未確認適用於此筆母校方案及實際出國梯次；不能直接判定符合當期預算。"
+          },
+          "reason": "Structured intake applicability must reach budget comparisons; the current-year number alone is insufficient.",
+          "source_url": "https://www.akita-u.ac.jp/honbu/global/en/eventa/img/pro20017_01_dl.pdf",
+          "source_locator": "April 2027 guide p4; not autumn 2027 or spring 2028 evidence"
+        }
+      ]
+    }
+  ],
+  "whole_records_verified": 0,
+  "original_inventory_bindings": 0,
+  "binding_note": "The cost_evidence field did not exist in the original raw inventory. Its absence is archived; no invented original-null binding."
+}

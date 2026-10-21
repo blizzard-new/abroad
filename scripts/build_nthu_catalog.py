@@ -234,12 +234,12 @@ NTHU_OVERSEAS_PARTNERS_URL = "https://oga.site.nthu.edu.tw/p/404-1524-9358.php"
 NTHU_MAINLAND_PARTNERS_URL = "https://oga.site.nthu.edu.tw/p/404-1524-9359.php?Lang=zh-tw"
 NTHU_VM_PORTAL_URL = "https://oga-exchange.vm.nthu.edu.tw/outexchange/index/index/puid/11521"
 NTHU_VM_OVERVIEW_URL = "https://oga-exchange.vm.nthu.edu.tw/outexchange/overview/index/puid/11521"
-NTHU_2027_2028_GUIDELINES_ZH_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/2027F2028Sapplicationguideline-CH.pdf"
+NTHU_2027_2028_GUIDELINES_ZH_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/704171014.pdf"
 NTHU_2027_2028_GUIDELINES_EN_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/2027F2028Sapplicationguideline-EN.pdf"
 NTHU_SELECTION_REGULATIONS_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4534/525909033.pdf"
 NTHU_SCHOLARSHIP_REGULATIONS_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4534/666778079.pdf"
 NTHU_DISADVANTAGED_SCHOLARSHIP_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4534/517637953.pdf"
-NTHU_LANGUAGE_STANDARDS_ZH_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4534/153594726.pdf"
+NTHU_LANGUAGE_STANDARDS_ZH_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/NTHU_Exchange_Student_Foreign_Language_Proficiency_Standards_English.pdf"
 NTHU_LANGUAGE_STANDARDS_EN_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4534/663532775.pdf"
 NTHU_FAQ_HOT_QUESTIONS_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4535/816434517.pdf"
 NTHU_INFO_SESSION_SLIDES_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4536/647616143.pdf"
@@ -381,7 +381,7 @@ def format_gpa_req(item: dict) -> str:
             if part not in gpa_parts:
                 gpa_parts.append(part)
     base_gpa = (
-        "清大校內基本門檻：申請前兩學期學業平均成績達 GPA 3.20（約合百分制 78 分）以上，或班級排名前 50% 以上"
+        "清大校內基本門檻：申請前兩學期學業平均成績達 GPA 3.20以上，或班級排名前 50% 以上"
         "（申請出國交換生獎學金 A/B 類、清寒學生出國交流獎學金及劉維全校友獎學金須達前一學年平均 GPA 3.40 以上或全班／系前 20% 以上；教育部學海惜珠須達 GPA 3.20 以上）"
     )
     if gpa_parts:
@@ -659,7 +659,7 @@ def main() -> None:
 
         app_steps_list = [
             f"步驟一（確認在學身分、GPA 3.20／班排前 50% 與 {zh_name} 外語能力門檻）：確認為清大大學部二年級以上或碩博士班一年級以上正式學籍在學學生（不含在職專班；申請時與出國交換期間學籍學位須一致），前兩學期平均達 GPA 3.20 或班排名前 50%（陸港澳為 GPA 3.20 或班排前 30%；台灣聯大 UST 為 GPA 3.0；申請獎學金須達 GPA 3.40 或班／系排前 20%），並備妥申請截止日前 2 年內有效之語言能力證明（TOEFL iBT 79［新制 4.0］／IELTS Academic 6.0 或日語 N2、德法西語 B1、韓語 TOPIK 4 級；不接受 MyBest Scores、TOEIC、GEPT、GRE、Duolingo）。",
-            "步驟二（第一階段於線上系統完成報名並將紙本申請資料送交系所初審與學院複審）：登入「國立清華大學出國交換生甄試報名系統」（https://oga-exchange.vm.nthu.edu.tw/outexchange/index/index/puid/11521）填寫申請表（欲申請校內出國交換獎學金者須於線上系統同步勾選），列印系統產出之申請表並備妥歷年中文成績單（含前兩學期 GPA 或排名）、2 年內有效外語能力證明、中文與外文讀書計畫（含擬修課程列表）、中英文自傳、教師推薦信 2 封（中英文皆可）及助學相關證明，於截止日前繳交至所屬系所辦公室辦理「系所初審 → 學院複審 → 全球事務處決審」三階段審查。",
+            "步驟二（第一階段於線上系統完成報名並將紙本申請資料送交系所初審與學院複審）：登入「國立清華大學出國交換生甄試報名系統」（https://oga-exchange.vm.nthu.edu.tw/outexchange/index/index/puid/11521）填寫申請表（欲申請校內出國交換獎學金者須於線上系統同步勾選），列印系統產出之申請表並備妥歷年中文成績單（含前兩學期 GPA 或排名）、2 年內有效外語能力證明、本期海外交換（不含陸港澳）每志願修課計畫（可用中文）、導師或論文指導教授推薦信 1 封、身分證明及學生證正反面影本、其他有利審查資料；其他交換計畫請另依簡章確認文件，於截止日前繳交至所屬系所辦公室辦理「系所初審 → 學院複審 → 全球事務處決審」三階段審查。",
             f"步驟三（第二階段線上選填志願序［參考 A/B/C/D 熱門程度］、放榜報到與繳交 8,000 元保證金）：通過系院審查收到院排序通知後，於 11月上旬（2026/11/03–11/10 16:00）登入線上系統完成志願選填（全球處公布各姊妹校第一志願選填熱門程度 A/B/C/D 四級，若第一志願選填 A/B 級熱門校，建議第二志願以後選填 C/D 級學校以提高錄取率）。12月初通知志願分發與獎學金結果後，須於 12月11日 16:00 前繳交《交換學生同意聲明書》、《家長擔保同意書》、《獎學金切結書》及行政處理費（保證金）新臺幣 8,000 元（低收／中低收入戶免繳），由全球處向 {full_name} 辦理官方提名（Nomination）。",
             "步驟四（向姊妹校遞交入學申請、辦理簽證保險與履行修課及返國 4 項文件義務退還保證金）：獲全球處提名後依姊妹校規定準備入學申請文件（姊妹校保有最終錄取決定權）。交換期間大學部每學期／學季至少須修讀 3 門課程及格、研究生至少修讀 1 門研究所課程及格（獲獎學金者須為本科相關專業課程；陸港澳大學部至少 9 學分及格）。返國後 1 個月內須繳交返國報告單、成果報告書（交換心得）、姊妹校正式成績單及登機證（獲獎生另需提供 3 分鐘影音檔）並完成學分抵免，始得於當年度 10–11 月退還 8,000 元保證金。",
         ]
@@ -909,7 +909,7 @@ def main() -> None:
                             ],
                         },
                         {
-                            "name": "中文及外文讀書計畫（含擬於姊妹校修讀之課程規劃列表）、中英文自傳、教師推薦信 2 封（中英文皆可）及其他助學證明（低收／中低收／清寒證明）",
+                            "name": "本期海外交換（不含陸港澳）：每志願一份修課計畫（可用中文）、導師或論文指導教授推薦信 1 封、身分證明及學生證正反面影本、其他有利審查資料；其他計畫文件另依簡章確認",
                             "source_urls": [
                                 NTHU_2027_2028_GUIDELINES_ZH_URL,
                                 NTHU_SELECTION_REGULATIONS_URL,
@@ -1533,7 +1533,7 @@ def main() -> None:
         ],
         "eligibility": [
             "【在學年級與學籍規定】申請人須為國立清華大學大學部二年級（含）以上、碩士班一年級（含）以上或博士班一年級（含）以上之正式學籍在學學生（不含在職專班及在職生；陸港澳學期交換大一、碩一、博一或轉學生可提具前一學期成績證明申請）。申請時與出國交換期間之學籍學位必須一致（不得跨學制交換）。",
-            "【GPA 與班級排名門檻】（1）校級海外交換：申請前兩學期學業平均成績達 GPA 3.20（約合百分制 78 分）以上，或班級排名前 50% 以上（碩一、博一新生繳交前一學位含畢業排名成績單；南大校區百分制須依註冊組對照表換算為等級制 GPA）；（2）校級陸港澳交換：前兩學期平均達 GPA 3.20（含）以上或全班排名前 30%（含）以上；（3）台灣聯合大學系統（UST）交換：前一學年平均達 GPA 3.0（或 B）以上；（4）申請出國交換生獎學金（A/B 類）、清寒學生出國交流獎學金及劉維全校友獎學金：前一學年平均須達 GPA 3.40 以上或全班／系排名前 20% 以上（教育部學海惜珠須達 GPA 3.20 以上）。",
+            "【GPA 與班級排名門檻】（1）校級海外交換：申請前兩學期學業平均成績達 GPA 3.20以上，或班級排名前 50% 以上（碩一、博一新生繳交前一學位含畢業排名成績單；南大校區百分制須依註冊組對照表換算為等級制 GPA）；（2）校級陸港澳交換：前兩學期平均達 GPA 3.20（含）以上或全班排名前 30%（含）以上；（3）台灣聯合大學系統（UST）交換：前一學年平均達 GPA 3.0（或 B）以上；（4）申請出國交換生獎學金（A/B 類）、清寒學生出國交流獎學金及劉維全校友獎學金：前一學年平均須達 GPA 3.40 以上或全班／系排名前 20% 以上（教育部學海惜珠須達 GPA 3.20 以上）。",
             "【三階段審查、兩階段志願選填與 8,000 元保證金及修課義務】校內審查分「系所初審 → 學院複審 → 全球事務處決審」三階段，通過後依全球處通知於線上系統選填志願（姊妹校依第一志願熱門程度分為 A/B/C/D 四級）。錄取報到時須繳交行政處理費（保證金）新臺幣 8,000 元（低收／中低收入戶免繳）。交換期間大學部每學期／學季至少須修讀 3 門課程及格、研究生至少 1 門研究所課程及格（獲獎學金者須為本科相關專業課程；陸港澳大學部至少 9 學分及格），並於返國後 1 個月內繳交四項返國文件與完成學分抵免後退還保證金。",
         ],
         "language_requirement": [
@@ -1545,9 +1545,9 @@ def main() -> None:
             "1. 國立清華大學出國交換生線上系統申請表（於 https://oga-exchange.vm.nthu.edu.tw/outexchange/index/index/puid/11521 完成填報列印並由本人簽名；欲申請出國交換獎學金者須於系統同步勾選）",
             "2. 本校歷年中文成績單正本（須含前兩學期 GPA 或班級排名百分比；碩一、博一新生檢附前一學位含畢業排名之成績單；南大校區百分制成績須附註冊組等級制 GPA 換算證明）",
             "3. 申請截止日前 2 年內有效之外語能力證明影本（TOEFL iBT 79［新制 4.0］／IELTS Academic 6.0 或日語 N2、德法西語 B1、韓語 TOPIK 4 級；不接受 MyBest Scores、TOEIC、GEPT、GRE、Duolingo）",
-            "4. 中文及外文讀書計畫（Study Plan，須包含擬於姊妹校修讀之課程規劃列表）",
-            "5. 中文及外文自傳（Autobiography / CV）",
-            "6. 教師推薦信 2 封（中英文皆可，依系所規定密封或上傳）",
+            "4. 每個志願各一份修課／讀書計畫，可用中文（本期海外交換，不含陸港澳）",
+            "5. 身分證明與學生證正反面影本（外籍／僑生用護照，陸生用入臺證）",
+            "6. 導師或論文指導教授推薦信 1 封，格式不限",
             "7. 其他有利審查資料及助學相關證明（獲獎紀錄、學術發表、社團證明；申請清寒獎學金或學海惜珠者須檢附低收入戶／中低收入戶／特殊境遇家庭證明或個人與家庭逆境向上說明及國稅局全戶所得清單）",
         ],
         "scholarship_info": [
@@ -1569,8 +1569,8 @@ def main() -> None:
     student_dashboard_payload = {
         "school_name": "國立清華大學",
         "last_checked": CHECKED_AT,
-        "academic_score_minimum": 78.0,
-        "academic_score_rule": "校級海外出國交換申請前兩學期學業平均成績須達 GPA 3.20（約合百分制 78 分）以上或班級排名前 50% 以上；校級赴陸港澳學期交換須達前兩學期平均 GPA 3.20 以上或全班排名前 30% 以上；台灣聯合大學系統（UST）交換須達前一學年平均 GPA 3.0（或 B）以上。申請清大出國交換生獎學金（A/B 類）、清寒學生出國交流獎學金及劉維全校友獎學金須達前一學年平均 GPA 3.40 以上或全班／系排名前 20% 以上（教育部學海惜珠為 GPA 3.20 以上）。",
+        "academic_score_minimum": None,
+        "academic_score_rule": "校級海外出國交換申請前兩學期學業平均成績須達 GPA 3.20以上或班級排名前 50% 以上；校級赴陸港澳學期交換須達前兩學期平均 GPA 3.20 以上或全班排名前 30% 以上；台灣聯合大學系統（UST）交換須達前一學年平均 GPA 3.0（或 B）以上。申請清大出國交換生獎學金（A/B 類）、清寒學生出國交流獎學金及劉維全校友獎學金須達前一學年平均 GPA 3.40 以上或全班／系排名前 20% 以上（教育部學海惜珠為 GPA 3.20 以上）。",
         "academic_gpa_minimum": 3.2,
         "maximum_preferences": 10,
         "selection_rules": {
@@ -1582,10 +1582,7 @@ def main() -> None:
             "exclude_in_service": True,
             "pending_quota_planning": False,
             "partner_requirements_need_confirmation": False,
-            "degree_score_minimums": {
-                "undergraduate": 78.0,
-                "graduate": 78.0,
-            },
+            "degree_score_minimums": {},
             "excluded_undergraduate_years": ["大一"],
             "language_certificate_required": True,
         },
@@ -1693,7 +1690,7 @@ def main() -> None:
                 "title": "在學身分（大二／碩一／博一以上）、GPA 3.20 或班排前 50%（陸港澳前 30%、獎學金 GPA 3.40／前 20%）與三階段審查制度",
                 "details": [
                     "在學年級與學制一致性：申請人須為清大大學部二年級（含）以上、碩士班一年級（含）以上或博士班一年級（含）以上正式學籍在學學生（不含在職專班及在職生；陸港澳交換大一、碩一、博一或轉學生可提具前一學期成績證明申請）。申請時與出國交換期間之學籍學位必須一致（例如以大學部身分申請者，不得於讀研究所期間出國交換）。",
-                    "GPA 與班級排名門檻：（1）校級海外交換：申請前兩學期學業平均達 GPA 3.20（約合百分制 78 分）以上或班級排名前 50% 以上（南大校區百分制須依註冊組對照表換算為等級制 GPA）；（2）校級陸港澳交換：前兩學期平均達 GPA 3.20 以上或全班排名前 30% 以上；（3）台灣聯大（UST）交換：前一學年平均達 GPA 3.0（或 B）以上；（4）申請出國交換生獎學金（A/B 類）、清寒獎學金及劉維全校友獎學金：前一學年平均須達 GPA 3.40 以上或全班／系排名前 20% 以上（學海惜珠須達 GPA 3.20 以上）。",
+                    "GPA 與班級排名門檻：（1）校級海外交換：申請前兩學期學業平均達 GPA 3.20以上或班級排名前 50% 以上（南大校區百分制須依註冊組對照表換算為等級制 GPA）；（2）校級陸港澳交換：前兩學期平均達 GPA 3.20 以上或全班排名前 30% 以上；（3）台灣聯大（UST）交換：前一學年平均達 GPA 3.0（或 B）以上；（4）申請出國交換生獎學金（A/B 類）、清寒獎學金及劉維全校友獎學金：前一學年平均須達 GPA 3.40 以上或全班／系排名前 20% 以上（學海惜珠須達 GPA 3.20 以上）。",
                     "兩階段分發與 A/B/C/D 熱門程度策略：第一階段通過系初審、院複審、全球處決審後，第二階段於線上系統依院排序選填志願；全球處將姊妹校分為 A（競爭非常激烈）、B（競爭激烈）、C（競爭較不激烈）、D（填第一志願預估可直接分發）四級，若第一志願選填 A/B 級熱門校，建議第二志願以後改填 C/D 級學校。",
                 ],
                 "source": {
@@ -1723,7 +1720,7 @@ def main() -> None:
             {
                 "title": "線上報名系統申請表、7 項初審必繳文件、8,000 元保證金與返國後 1 個月內 4 項返國文件義務",
                 "details": [
-                    "第一階段申請應繳文件（線上填報列印後送交系所辦公室）：1. 線上系統產出之出國交換生申請表（欲申請獎學金者須於系統同步勾選）、2. 本校歷年中文成績單正本（含前兩學期 GPA 或班排名；碩博一新生附前一學位含畢業排名之成績單）、3. 申請截止日前 2 年內有效之外語能力證明影本、4. 中文及外文讀書計畫（含擬修課程列表）、5. 中文及外文自傳、6. 教師推薦信 2 封（中英文皆可）、7. 其他有利審查資料及清寒／低收／中低收助學證明。",
+                    "第一階段申請應繳文件（線上填報列印後送交系所辦公室）：1. 線上系統產出之出國交換生申請表（欲申請獎學金者須於系統同步勾選）、2. 本校歷年中文成績單正本（含前兩學期 GPA 或班排名；碩博一新生附前一學位含畢業排名之成績單）、3. 申請截止日前 2 年內有效之外語能力證明影本、4. 每志願各一份修課計畫（可用中文）、5. 身分證明與學生證正反面影本、6. 導師或論文指導教授推薦信 1 封（格式不限）、7. 其他有利審查資料。本清單適用本期海外交換（不含陸港澳）。",
                     "8,000 元保證金、最低修課及格與返國 4 項文件義務：錄取生報到時須繳交行政處理費（保證金）新臺幣 8,000 元（低收／中低收入戶免繳）。交換期間大學部每學期／學季至少須修讀 3 門課程及格、研究生至少 1 門研究所課程及格（獲獎生須為本科相關專業課程；陸港澳大學部至少 9 學分及格）；返國後 1 個月內須繳交（1）返國報告單、（2）成果報告書（交換心得）、（3）姊妹校成績單、（4）登機證（獲獎生另附 3 分鐘影音檔）並完成學分抵免，於當年度 10–11 月無息退還保證金。",
                 ],
                 "source": {
@@ -2222,6 +2219,14 @@ def main() -> None:
     (OFFICIAL_NTHU_DIR / "import-provenance.json").write_text(
         prov_text, encoding="utf-8"
     )
+
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "nthu", round_id=20)
+    review_generated_content(REPO_ROOT, "nthu", round_id=21)
+    from exchange_info.usp_source_review import apply_usp_source_review
+    apply_usp_source_review(REPO_ROOT, "nthu")
+    from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
+    apply_vilnius_akita_review(REPO_ROOT, "nthu")
 
     print(
         f"Successfully built NTHU catalog: {len(partners)} partners ({open_partner_count} open, "

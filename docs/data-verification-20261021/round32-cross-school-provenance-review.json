@@ -1,0 +1,48 @@
+{
+  "reviewed_at": "2026-10-21T00:48:58.586128+00:00",
+  "base_commit": "b662dced2607bc67c3354c95b7aaad202448bea7",
+  "inventory": "output/data-verification-20261021/runtime-review-20261021",
+  "inventory_files": [
+    {
+      "path": "output/data-verification-20261021/runtime-review-20261021/field-gaps.csv",
+      "sha256": "b7219b00b8cf9c5b24ae6cae2f47d9269f2fcf2547890c73bca00788e684ef76",
+      "bytes": 8722128
+    },
+    {
+      "path": "output/data-verification-20261021/runtime-review-20261021/fields.jsonl.gz",
+      "sha256": "37bb76330c03d45e9b83aa9dc44b0207ffeef1d592d0c32e7413c1bb9ee7bf0f",
+      "bytes": 157894090
+    },
+    {
+      "path": "output/data-verification-20261021/runtime-review-20261021/inventory-summary.json",
+      "sha256": "361a3c1fabff934e514be016dce91fd3a5f027077b36c9197ae4d3a564b7b046",
+      "bytes": 8964
+    },
+    {
+      "path": "output/data-verification-20261021/runtime-review-20261021/records.jsonl.gz",
+      "sha256": "aecaaa7126e8b9fc6dc4af68982ec620e77a7622abbfd3806ad79f551ce8da35",
+      "bytes": 37424100
+    },
+    {
+      "path": "output/data-verification-20261021/runtime-review-20261021/sources.json",
+      "sha256": "90399dd592ed8e8b073942aea775c79fad6ea0b0977de47baa4266167a83321b",
+      "bytes": 10958886
+    }
+  ],
+  "current_code_sha256": "5394b832c12b78ea35cd069b1d722096c5d53bf45a0b0c3ea0de20e471271743",
+  "cross_school_records": 2010,
+  "changed_points": {
+    "living_cost": 2007,
+    "housing": 2007,
+    "courses": 2007,
+    "experience": 22
+  },
+  "field_decisions": 6043,
+  "facts_verified_by_this_implementation_review": 0,
+  "limitations": [
+    "The original baseline could not extract these pages; bindings use the explicitly named later snapshot.",
+    "Existing curated prose is retained pending separate official-source review.",
+    "Original mother-school conditions, agreements, years and deadlines are not certified by this correction."
+  ],
+  "original_generator_sha256": "ff8cbb640ff90c60430ae259f9a5a4831d191a8fe38f20d3598af3e5ef5c837c"
+}

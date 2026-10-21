@@ -9,6 +9,7 @@ from typing import Iterable
 from .ai_gateway import structured_response
 from .fit_signals import course_interest_fit, school_budget_fit, teaching_language_fit
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
+from .ntnu_eligibility import is_ntnu
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
 from .qualification_scopes import (
     coupled_academic_scope_matches,
@@ -261,6 +262,15 @@ def _score_partner(
     blocking_reasons: list[str] = []
     confirmation_items: list[str] = []
 
+    if partner.application_window_status == "upcoming":
+        detail = "校內申請尚未開始；名額已公告不代表目前可送件。"
+        gaps.append(detail)
+        confirmation_items.append(detail)
+    elif is_ntnu(dashboard.school_name) and partner.application_window_status != "open":
+        detail = ("校級收件已截止，須確認已有申請或提名資格。" if partner.application_window_status == "closed"
+                  else "校級系統開放時間或院系所辦理期限尚待確認。")
+        gaps.append(detail)
+        confirmation_items.append(detail)
     cycle_unconfirmed = dashboard.selection_rules.partner_requirements_need_confirmation
     degree = resolved_degree_level(profile.degree_level, profile.current_year)
     coupled_scope = coupled_academic_scope_matches(partner, profile.college, degree)

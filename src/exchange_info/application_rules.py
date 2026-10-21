@@ -7,8 +7,8 @@ from collections.abc import Iterable
 
 from .application_task_identity import preparation_identity
 from .plan_defaults import suggest_effort_hours
-from .school_identity import same_school
-from .fju_eligibility import fju_academic_check, fju_degree_check, fju_language_check, is_fju
+from .school_identity import same_school_program
+from .fju_eligibility import FJU_LANG_SCORE_URL, fju_academic_check, fju_degree_check, fju_language_check, is_fju
 from .scu_eligibility import is_scu, scu_academic_check, scu_degree_check, scu_language_check
 from .ntnu_eligibility import is_ntnu, ntnu_academic_check, ntnu_degree_check, ntnu_language_check
 from .cycu_eligibility import cycu_academic_check, cycu_degree_check, cycu_language_check, is_cycu
@@ -135,7 +135,7 @@ def select_application_workflow(
             # The institution matcher tolerates trailing Chinese notes, which
             # would otherwise merge those tracks and reuse the wrong workflow.
             or (not is_ncu(context.home_university)
-                and same_school(workflow.school_name, context.partner_university or ""))
+                and same_school_program(workflow.school_name, context.partner_university or ""))
         )
         and _matches_optional_filter(
             [workflow.academic_year] if workflow.academic_year else [],
@@ -363,7 +363,7 @@ def _matches_partner(values: list[str], actual: str | None) -> bool:
     if not actual:
         return False
     return any(
-        _normalize(actual) == _normalize(value) or same_school(actual, value)
+        _normalize(actual) == _normalize(value) or same_school_program(actual, value)
         for value in values
     )
 
@@ -404,6 +404,15 @@ def _eligibility_checks(
     partner_source = partner.source_url
     from .university_registry import resolve_university
     home = resolve_university(request.home_school)
+    ncku_current_rules = False
+    ncku_cycle_note = "已核實的成大母校簡章僅適用116-1；本筆合作方案或所選年度／梯次尚未具備相符證據，不能沿用該期資格門檻。"
+    if is_ncku(request.home_school):
+        from .ncku_guidelines_review import GUIDE_URL, ncku_1161_rules_apply
+        ncku_current_rules = ncku_1161_rules_apply(partner, request.academic_year, request.application_round)
+        academic_source_url = GUIDE_URL
+        if not ncku_current_rules:
+            checks.append(_check("source_cycle", "needs_confirmation", "成大規則適用年度與梯次",
+                                 ncku_cycle_note, source_url=GUIDE_URL, contact_unit=contact_unit))
     if home and home.id == "ccu":
         from .ccu_sources import GUIDELINES_URL
         gpa = request.academic_gpa
@@ -420,6 +429,15 @@ def _eligibility_checks(
         if request.academic_year and request.academic_year != partner.academic_year or request.application_round and not request.application_round.startswith(partner.application_round or "2027春季"):
             checks.append(_check("source_cycle", "needs_confirmation", "資料適用年度與梯次",
                 "已核實資料僅適用115學年度第二學期／2027春季，所選新版尚未核實。",source_url=partner_source,contact_unit=contact_unit))
+    if partner.application_window_status == "upcoming":
+        checks.append(_check("home_deadline", "needs_confirmation", "校內申請尚未開始",
+            partner.availability_note or "已公告申請日期，但尚未開始受理；請依母校公告日期辦理。",
+            source_url=partner_source, contact_unit=contact_unit))
+    elif home and home.id == "ntnu" and partner.application_window_status != "open":
+        checks.append(_check("home_deadline", "needs_confirmation", "校內申請時窗",
+            "校級收件已截止；須確認已有申請或提名資格。" if partner.application_window_status == "closed"
+            else "校級系統開放時間或院系所辦理期限尚待確認，不能視為目前可送件。",
+            source_url=partner_source, contact_unit=contact_unit))
     if partner.availability_status != "open":
         checks.append(
             _check(
@@ -438,7 +456,7 @@ def _eligibility_checks(
                 "availability",
                 "pass",
                 "當期名額",
-                "當期名額已列；校內收件已截止。" if partner.application_window_status == "closed" else "目前列在公開可申請名單中。",
+                "當期名額已列；校內收件已截止。" if partner.application_window_status == "closed" else "當期名額已列；校內申請尚未開始。" if partner.application_window_status == "upcoming" else "目前列在公開可申請名單中。",
                 source_url=partner_source,
             )
         )
@@ -512,6 +530,16 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學學期資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+        # Passing the home enrollment rule does not establish host eligibility.
+        host_degree = resolved_degree_level(request.degree_level, request.current_year)
+        host_match = (None if not host_degree or partner_scope_needs_confirmation(partner, "degree_levels")
+                      else partner_degree_scope_matches(partner, request.college or request.department, host_degree))
+        host_status = "needs_confirmation" if host_match is None else "pass" if host_match else "fail"
+        host_detail = ("合作校本期學制範圍尚待確認；母校學籍資格通過不代表符合接待校條件。"
+                       if host_match is None else f"你的學制{'符合' if host_match else '不在'}合作校公開範圍：{partner.degree_levels}。")
+        checks.append(_check("partner_degree_level", host_status, "合作校學制",
+                             host_detail, source_url=partner_source,
+                             contact_unit=None if host_status == "pass" else contact_unit))
     elif is_cycu(request.home_school):
         deg_status, deg_detail = cycu_degree_check(request.degree_level, request.current_year)
         checks.append(_check("degree_level", deg_status, "學制與在學學期資格",
@@ -523,7 +551,7 @@ def _eligibility_checks(
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif is_yzu(request.home_school):
-        deg_status, deg_detail = yzu_degree_check(request.degree_level, request.current_year)
+        deg_status, deg_detail = yzu_degree_check(request.degree_level, request.current_year, partner_country=partner.country, program_type=partner.program_type)
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
@@ -543,20 +571,29 @@ def _eligibility_checks(
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif is_ntut(request.home_school):
-        deg_status, deg_detail = ntut_degree_check(request.degree_level, request.current_year)
+        deg_status, deg_detail = ntut_degree_check(request.degree_level, request.current_year, partner_country=partner.country, program_type=partner.program_type)
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif is_nccu(request.home_school):
-        deg_status, deg_detail = nccu_degree_check(request.degree_level, request.current_year)
+        deg_status, deg_detail = nccu_degree_check(request.degree_level, request.current_year, partner_country=partner.country)
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif is_ncku(request.home_school):
-        deg_status, deg_detail = ncku_degree_check(request.degree_level, request.current_year)
+        deg_status, deg_detail = (ncku_degree_check(request.degree_level, request.current_year)
+                                  if ncku_current_rules else ("needs_confirmation", ncku_cycle_note))
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+        host_degree = resolved_degree_level(request.degree_level, request.current_year)
+        host_match = (None if not ncku_current_rules or not host_degree or partner_scope_needs_confirmation(partner, "degree_levels")
+                      else partner_degree_scope_matches(partner, request.college or request.department, host_degree))
+        host_status = "needs_confirmation" if host_match is None else "pass" if host_match else "fail"
+        checks.append(_check("partner_degree_level", host_status, "成大表列合作校學制範圍",
+                             "合作校學制範圍有缺漏或衝突，須另行確認。" if host_match is None
+                             else f"你的學制{'符合' if host_match else '不在'}成大本期合作校表列範圍：{partner.degree_levels}；接待校當期完整條件仍須核對。",
+                             source_url=partner_source, contact_unit=None if host_status == "pass" else contact_unit))
     elif is_nycu(request.home_school):
         deg_status, deg_detail = nycu_degree_check(request.degree_level, request.current_year)
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
@@ -568,17 +605,17 @@ def _eligibility_checks(
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif is_pccu(request.home_school):
-        deg_status, deg_detail = pccu_degree_check(request.degree_level, request.current_year)
+        deg_status, deg_detail = pccu_degree_check(request.degree_level, request.current_year, program_type=partner.program_type, partner_country=partner.country)
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif is_wzu(request.home_school):
-        deg_status, deg_detail = wzu_degree_check(request.degree_level, request.current_year)
+        deg_status, deg_detail = wzu_degree_check(request.degree_level, request.current_year, program_type=partner.program_type)
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif is_nkust(request.home_school):
-        deg_status, deg_detail = nkust_degree_check(request.degree_level, request.current_year)
+        deg_status, deg_detail = nkust_degree_check(request.degree_level, request.current_year, program_type=partner.program_type, academic_year=request.academic_year)
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
@@ -703,15 +740,15 @@ def _eligibility_checks(
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_ntust(request.home_school):
-        status, detail = ntust_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        status, detail = ntust_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent, partner_country=partner.country)
         checks.append(_check(
             "academic_score", status, "校內學業名次與平均門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_yzu(request.home_school):
-        status, detail = yzu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        status, detail = yzu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent, program_type=partner.program_type)
         checks.append(_check(
-            "academic_score", status, "校內系排、GPA 與及格門檻", detail,
+            "academic_score", status, "申請管道與學業條件", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_fcu(request.home_school):
@@ -733,21 +770,22 @@ def _eligibility_checks(
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_ntut(request.home_school):
-        status, detail = ntut_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        status, detail = ntut_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent, program_type=partner.program_type)
         checks.append(_check(
-            "academic_score", status, "校內歷年總平均 70 分與甄選門檻", detail,
+            "academic_score", status, "北科校級交換與獎助成績條件", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_nccu(request.home_school):
-        status, detail = nccu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        status, detail = nccu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent, partner_country=partner.country)
         checks.append(_check(
             "academic_score", status, "政大班排換算／研究所 70 分與甄選門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_ncku(request.home_school):
-        status, detail = ncku_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        status, detail = (ncku_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+                          if ncku_current_rules else ("needs_confirmation", ncku_cycle_note))
         checks.append(_check(
-            "academic_score", status, "成大學士班總平均 77 分或前 50%／研究所指導教授同意門檻", detail,
+            "academic_score", status, "成大前一學期平均77分或班／系排名前50%（研究所無最低分數門檻）", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_nycu(request.home_school):
@@ -759,17 +797,17 @@ def _eligibility_checks(
     elif is_nthu(request.home_school):
         status, detail = nthu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
         checks.append(_check(
-            "academic_score", status, "清大歷年 GPA 3.20（T分數78分）或系排前 50% 門檻", detail,
+            "academic_score", status, "清大前一學年 GPA 3.20 或系排前 50% 門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_pccu(request.home_school):
-        status, detail = pccu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        status, detail = pccu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent, program_type=partner.program_type, partner_country=partner.country)
         checks.append(_check(
-            "academic_score", status, "文大操行 80 分與各語組／姊妹校歷年總平均門檻", detail,
+            "academic_score", status, "文大各管道與接待校學業條件", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_wzu(request.home_school):
-        status, detail = wzu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        status, detail = wzu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent, program_type=partner.program_type)
         checks.append(_check(
             "academic_score", status, "文藻歷年學業總平均整數 70 分（語言學習組 65 分）與操行 80 分門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
@@ -777,7 +815,7 @@ def _eligibility_checks(
     elif is_nkust(request.home_school):
         status, detail = nkust_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
         checks.append(_check(
-            "academic_score", status, "高科大操行 75 分與學海飛颺歷年平均 75 分（或班排前 30%）門檻", detail,
+            "academic_score", status, "高科大學業條件與接待校要求（操行及獎助另列）", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_yuntech(request.home_school):
@@ -789,7 +827,7 @@ def _eligibility_checks(
     elif is_ntou(request.home_school):
         status, detail = ntou_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
         checks.append(_check(
-            "academic_score", status, "海大前一學期成績及格（學士60／碩博70分）與姊妹校 GPA 門檻", detail,
+            "academic_score", status, "海大前一學期及格與接待校學業要求", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
     elif is_ncue(request.home_school):
@@ -875,12 +913,12 @@ def _eligibility_checks(
         checks.append(_check("home_language_score", home_status, "校內正式語檢", home_detail, source_url=academic_source_url, contact_unit=contact_unit))
     if is_fju(request.home_school):
         home_status, home_detail = fju_language_check(request.language_test, request.language_score, partner_country=partner.country)
-        checks.append(_check("home_language_score", home_status, "輔大語組門檻與換分", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+        checks.append(_check("home_language_score", home_status, "輔大語組門檻與換分", home_detail, source_url=FJU_LANG_SCORE_URL, contact_unit=None if home_status == "pass" else contact_unit))
     if is_scu(request.home_school):
         home_status, home_detail = scu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "東吳語檢資格與採認", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_ntnu(request.home_school):
-        home_status, home_detail = ntnu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        home_status, home_detail = ntnu_language_check(request.language_test, request.language_score, partner_country=partner.country, program_type=partner.program_type)
         checks.append(_check("home_language_score", home_status, "臺師大四語組資格與採認", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_cycu(request.home_school):
         home_status, home_detail = cycu_language_check(request.language_test, request.language_score, partner_country=partner.country)
@@ -893,7 +931,7 @@ def _eligibility_checks(
         checks.append(_check("home_language_score", home_status, "元智兩年內有效語檢與兩岸組資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_fcu(request.home_school):
         home_status, home_detail = fcu_language_check(request.language_test, request.language_score, partner_country=partner.country)
-        checks.append(_check("home_language_score", home_status, "逢甲有效外語檢定與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+        checks.append(_check("home_language_score", home_status, "逢甲有效外語檢定與方案適用範圍", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_nsysu(request.home_school):
         home_status, home_detail = nsysu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "中山大學三線語檢門檻與中國免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
@@ -902,13 +940,14 @@ def _eligibility_checks(
         checks.append(_check("home_language_score", home_status, "中興大學 CEFR B2 語檢門檻與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_ntut(request.home_school):
         home_status, home_detail = ntut_language_check(request.language_test, request.language_score, partner_country=partner.country)
-        checks.append(_check("home_language_score", home_status, "臺北科大語檢門檻與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+        checks.append(_check("home_language_score", home_status, "臺北科大接待校語檢條件待核對", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_nccu(request.home_school):
         home_status, home_detail = nccu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "政大八大語組語檢門檻與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_ncku(request.home_school):
-        home_status, home_detail = ncku_language_check(request.language_test, request.language_score, partner_country=partner.country)
-        checks.append(_check("home_language_score", home_status, "成大 CEFR B2 語檢門檻與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+        home_status, home_detail = (ncku_language_check(request.language_test, request.language_score, partner_country=partner.country)
+                                    if ncku_current_rules else ("needs_confirmation", ncku_cycle_note))
+        checks.append(_check("home_language_score", home_status, "成大116-1校內語檢門檻（中國交換也須語言證明）", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_nycu(request.home_school):
         home_status, home_detail = nycu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "陽明交大外語檢定必繳規定（TOEIC 須含聽讀說寫）與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
@@ -917,13 +956,13 @@ def _eligibility_checks(
         checks.append(_check("home_language_score", home_status, "清大海外交換 TOEFL iBT 79 / IELTS 6.5 門檻與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_pccu(request.home_school):
         home_status, home_detail = pccu_language_check(request.language_test, request.language_score, partner_country=partner.country)
-        checks.append(_check("home_language_score", home_status, "文大英／日／韓／法／俄語組語檢門檻與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+        checks.append(_check("home_language_score", home_status, "文大各管道與接待校語言條件", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_wzu(request.home_school):
         home_status, home_detail = wzu_language_check(request.language_test, request.language_score, partner_country=partner.country)
-        checks.append(_check("home_language_score", home_status, "文藻六大語組（英／法／德／西／日／華語暨東南亞語組）語檢門檻與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+        checks.append(_check("home_language_score", home_status, "文藻初審語檢加分與接待校語言條件", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_nkust(request.home_school):
         home_status, home_detail = nkust_language_check(request.language_test, request.language_score, partner_country=partner.country)
-        checks.append(_check("home_language_score", home_status, "高科大 CEFR 外語檢定對照分級（B1–C1）與大陸免語檢資格", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+        checks.append(_check("home_language_score", home_status, "高科大語檢證明與接待校條件", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     if is_yuntech(request.home_school):
         home_status, home_detail = yuntech_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "雲科大英語授課 TOEIC 650 基準（東南亞及大陸除外）與 40 分制語檢評分", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
@@ -1202,7 +1241,7 @@ def select_reference_workflow(
         if (
             _normalize(workflow.school_name) == partner_key
             or (not is_ncu(context.home_university)
-                and same_school(workflow.school_name, context.partner_university or ""))
+                and same_school_program(workflow.school_name, context.partner_university or ""))
         )
         and (not home_key or _normalize(workflow.home_university) == home_key)
         and workflow.steps
@@ -1320,6 +1359,11 @@ def _partner_language_threshold(
 ) -> float | None:
     from .ccu_language import assess_ccu_language, is_ccu_partner
 
+    evidence = partner.field_evidence.get("language_requirement")
+    if evidence is not None and evidence.status != "verified_current":
+        # A score in a historical or unresolved quotation is not a current
+        # eligibility threshold, even if a regex can parse a number from it.
+        return None
     if is_ccu_partner(partner):
         return assess_ccu_language(partner, language_test, degree_level).threshold
     if not language_test or language_test == "other":

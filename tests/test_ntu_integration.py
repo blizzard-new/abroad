@@ -221,7 +221,16 @@ def test_ntu_catalog_rebuilds_from_tracked_source_snapshot(tmp_path):
     bundled = root / "src/exchange_info/official_data/ntu"
     for source in bundled.iterdir():
         if source.is_file():
-            assert (tmp_path / source.name).read_bytes() == source.read_bytes(), source.name
+            rebuilt = tmp_path / source.name
+            # Model replay can reorder JSON object keys; compare the complete
+            # data, preserving array/JSONL row order, rather than serialization.
+            if source.suffix == ".json":
+                assert json.loads(rebuilt.read_text("utf8")) == json.loads(source.read_text("utf8")), source.name
+            elif source.suffix == ".jsonl":
+                assert list(map(json.loads, rebuilt.read_text("utf8").splitlines())) == list(
+                    map(json.loads, source.read_text("utf8").splitlines())), source.name
+            else:
+                assert rebuilt.read_bytes() == source.read_bytes(), source.name
     provenance = json.loads((tmp_path / "import_provenance.json").read_text())
     assert provenance["original_home_flags"]["candidate_only"] is True
     assert provenance["content_verification_status"] == "partial_current_cycle"

@@ -286,6 +286,20 @@ def load_repo_locations_and_images():
     return loc_by_en_country, loc_by_zh_country, img_by_en_country, img_by_zh_country
 
 
+def parse_listing_metadata(cells: list[str], table_index: int) -> dict[str, str]:
+    """The official directory lists contract quotas, not degree/semester codes."""
+    if table_index not in (0, 1) or len(cells) < 4:
+        raise ValueError("Unexpected FJU directory row layout; inspect the official headers")
+    cleaned = [html.unescape(str(cell)).strip() for cell in cells]
+    return {
+        "contract_quota": cleaned[2],
+        "directory_notes": "；".join(cleaned[3:]),
+        "grade_limit": "",
+        "semester_limit": "",
+        "language_required_flag": "",
+    }
+
+
 def clean_quota_cell(val: str) -> str:
     return re.sub(r"\s+", " ", (val or "").replace("\n", " ")).strip()
 
@@ -320,11 +334,11 @@ def extract_gpa_requirement(elig_text: str, q_notes: str) -> str | None:
     combined = f"{elig_text or ''} {q_notes or ''}"
     m = re.search(r"GPA\s*(?:達|需達|須達|至少|>=|≧|:|：)?\s*(\d+(?:\.\d+)?)\s*(?:/\s*4(?:\.0)?)?", combined, flags=re.I)
     if m:
-        return f"GPA {m.group(1)} 以上（且須符合輔大校內歷年學業成績總平均 70 分以上或系排名前 50%）"
+        return f"GPA {m.group(1)} 以上（且須符合輔大116-1學士班歷年學業平均70分以上規定；研究所校內成績門檻待確認）"
     m_pct = re.search(r"(?:歷年平均成績|學業總平均|平均成績).*?(\d{2})\s*分", combined)
     if m_pct:
-        return f"學業總平均 {m_pct.group(1)} 分以上（且須符合輔大校內歷年學業成績總平均 70 分以上或系排名前 50%）"
-    return "歷年學業成績總平均 70 分以上，或系排名百分比前 50%（以各校交換條件與簡章規定為準）"
+        return f"學業總平均 {m_pct.group(1)} 分以上（且須符合輔大116-1學士班歷年學業平均70分以上規定；研究所校內成績門檻待確認）"
+    return "輔大116-1學士班歷年學業平均70分以上；研究所校內成績門檻與各接待校額外條件待確認"
 
 
 def extract_language_requirement(country: str, zh_name: str, elig_text: str, q115_2: dict | None, q115_1: dict | None) -> str:
@@ -393,8 +407,31 @@ def extract_partner_links(detail: dict | None, ror_website: str | None) -> tuple
     return official_website, exchange_page, factsheet_url, course_url, housing_url
 
 
+def current_home_submission_step(rule_id: str) -> dict:
+    from exchange_info.fju_form_review import current_home_submission_step as reviewed_step
+    return reviewed_step(rule_id)
+
+
+def validate_build_inputs() -> None:
+    required = ("label_40_parsed_rows.json", "parsed_award_details.json", "ror_resolved.json",
+                "quotas_115_2.json", "quotas_115_1.json", "label_39_process.html", "label_40_partner_list.html",
+                "label_41_faq.html", "label_42_downloads.html", "label_44_lang_score.html",
+                "news_1057_116_1_info.html", "res_26_outgoing_reg.html", "res_27_scholarships.html",
+                "attachments/115_2_quotas_2027_spring.pdf", "attachments/115_1_quotas_2026_fall.pdf",
+                "attachments/115_2_exchange_notice.pdf", "attachments/reg_selection_guidelines_zh.pdf",
+                "attachments/reg_study_implementation.pdf")
+    missing = [str(SCRATCH_FJU / name) for name in required if not (SCRATCH_FJU / name).is_file()]
+    if missing:
+        raise FileNotFoundError("FJU build input files are missing; no output was modified: " + ", ".join(missing))
+    for name in required:
+        if name.endswith(".json"):
+            json.loads((SCRATCH_FJU / name).read_text(encoding="utf8"))
+
+
 def main():
-    sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    validate_build_inputs()
     OFFICIAL_FJU_DIR.mkdir(parents=True, exist_ok=True)
 
     provenance = archive_official_sources()
@@ -424,9 +461,10 @@ def main():
         raw_country = html.unescape(row["cells"][0]).strip()
         country = COUNTRY_MAP.get(raw_country, raw_country)
         full_name, zh_name, en_name, badges = parse_fju_school(row["cells"][1])
-        grade_limit_table = html.unescape(row["cells"][2]).strip() if len(row["cells"]) > 2 else ""
-        sem_limit_table = html.unescape(row["cells"][3]).strip() if len(row["cells"]) > 3 else ""
-        lang_flag_table = html.unescape(row["cells"][4]).strip() if len(row["cells"]) > 4 else ""
+        listing = parse_listing_metadata(row["cells"], row["table_index"])
+        grade_limit_table = listing["grade_limit"]
+        sem_limit_table = listing["semester_limit"]
+        lang_flag_table = listing["language_required_flag"]
 
         award_id = row.get("award_id")
         detail = award_details.get(str(award_id)) if award_id else None
@@ -513,7 +551,9 @@ def main():
         housing_detail = (fields.get("住宿資訊") or "").strip()
         other_detail = (fields.get("其他資訊") or "").strip()
 
-        quota_parts = ["116-1 名額預計 2026 年 11 月底公告"]
+        quota_parts = ["116-1 當期名額仍須核對正式公告"]
+        if listing["contract_quota"]:
+            quota_parts.append(f"合作總表簽約名額（非當期甄選名額）：{listing['contract_quota']}")
         if quota_detail:
             quota_parts.append(f"姊妹校專頁名額：{re.sub(r'\\s+', ' ', quota_detail)}")
         if q115_2 and q115_2.get("quota"):
@@ -567,7 +607,9 @@ def main():
             notes_sections.append(f"【其他資訊】{re.sub(r'\\s+', ' ', other_detail)}")
         if factsheet_url:
             notes_sections.append(f"【Fact Sheet】{factsheet_url}")
-        notes_str = "\n".join(notes_sections) if notes_sections else f"可申請對象：{grade_limit_table}｜交換期間：{sem_limit_table}｜語文能力規定：{lang_flag_table}"
+        notes_str = "\n".join(notes_sections)
+        if listing["directory_notes"]:
+            notes_str += f"\n【合作校總表備註（非學制或期間）】{listing['directory_notes']}"
 
         program_type = "交換學生（大陸及港澳地區中語組）" if row["table_index"] == 1 else "交換學生（海外地區外語組／日語組）"
         if "自費" in zh_name:
@@ -576,29 +618,18 @@ def main():
             program_type = "交換學生（日本語言密集課程）"
 
         grade_code = (grade_limit_table or "").strip()
-        degree_levels_map = {
-            "1": "大學部（大一至大二）",
-            "2": "大學部（大一至大三）",
-            "3": "大學部、碩士班",
-            "4": "碩士班、博士班",
-            "5": "大學部、碩士班、博士班",
-        }
-        degree_levels_str = degree_levels_map.get(grade_code, "大學部、碩士班、博士班")
-        colleges_str = "全校各學院"
-        study_period_str = (
-            f"交換期間：{sem_limit_table}"
-            if sem_limit_table
-            else "一學期或一學年（秋季班／春季班）"
-        )
+        degree_levels_str = "待確認：合作校總表未列學制／年級，請查當期個別學校條件"
+        colleges_str = "待確認：請查當期開放院系"
+        study_period_str = "待確認：合作校總表未提供可交換學期或期間"
         if calendar_detail:
             study_period_str = f"{study_period_str}｜學校年曆：{re.sub(r'\\s+', ' ', calendar_detail)}"
         app_deadline_str = (
             "116-1（2027秋季班）說明會：2026/10/12（外語場）、2026/10/19（中語場）；"
-            "116-1 校內甄選名額預計 2026 年 11 月底公告，12 月辦理線上填表與紙本收件（送耕莘樓 A113 室）。"
+            "116-1系統開放及收件為2026/11/01至12/24 16:30，系統限校內網路；學校及名額於11月陸續更新，參考名額不是最終版。"
         )
         app_steps_list = [
             "參加國際學生中心舉辦之赴姊妹校交換學生甄選說明會（外語場 2026/10/12、中語場 2026/10/19），並確認當期甄選名額表。",
-            "完成線上 Google 報名表單填寫並匯出回覆 PDF，備妥經系主任與院長核章之紙本申請表、中文歷年成績單（含排名百分比）、讀書計畫、語檢證明及家長同意書，親送耕莘樓 A113 室。",
+            "於校內網路開啟交換生申請系統，紙本只繳雙面申請表；書審資料、中文歷年成績單及語檢證明分成三個PDF上傳，各檔不超過20MB。紙本表須本人、家長簽章及系所／院等適用單位核章，於2026/12/24 16:30前送交國際學生中心。",
             "參加校內面試，通過甄選公告錄取後繳交確認書與保證金（海外地區 NT$10,000），由國際學生中心向姊妹校辦理官方提名（Nomination）。",
             f"依 {full_name} 提名通知與當期 Fact Sheet 完成外校線上申請、選課及宿舍申請，取得入學許可後辦理學生簽證、海外保險與輔大在學註冊繳費。",
         ]
@@ -611,7 +642,7 @@ def main():
         if tuition_detail:
             tuition_points_list.insert(0, re.sub(r"\s+", " ", tuition_detail))
         elig_points_list = [
-            f"學制與年級範圍：{degree_levels_str}（代號：{grade_code or '依簡章'}）",
+            f"學制與年級範圍：{degree_levels_str}",
             f"校內成績門檻：{gpa_req}",
             f"語文能力規定：{lang_req}",
         ]
@@ -745,15 +776,16 @@ def main():
                     "rule_id": f"fju-116-1-home-1-{idx+1:03d}",
                     "order": 1,
                     "phase": "校內申請",
-                    "title": "參加輔大 116-1 出國交換說明會並核對姊妹校甄選資格",
+                    "title": "核對輔大116-1與接待校申請資格，參考所屬組別說明會資料",
                     "responsible_party": "學生",
                     "responsible_unit": "輔大國際學生中心／所屬系所",
-                    "deadline_at": "2026-10-19T13:30:00+08:00",
-                    "deadline_status": "verified_exact",
+                    "deadline_at": None,
+                    "deadline_status": "not_applicable",
+                    "timing": "申請前核對資格；10/12及10/19是不同組別說明會日期，不是資格確認或申請截止。",
                     "deadline_source_url": "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39",
                     "deadline_checked_at": "2026-10-16T04:50:00Z",
-                    "deadline_reminder_eligible": True,
-                    "summary": f"歷年學業總平均達70分以上或系排名前50%；{eligibility_str}",
+                    "deadline_reminder_eligible": False,
+                    "summary": f"輔大116-1學士班歷年學業平均須達70分；研究所校內成績門檻待確認；{eligibility_str}",
                     "details": [
                         f"學業門檻：{gpa_req}",
                         f"語言規定：{lang_req}",
@@ -773,69 +805,7 @@ def main():
                     "checked_at": "2026-10-16T04:50:00Z",
                     "support_status": "verified",
                 },
-                {
-                    "rule_id": f"fju-116-1-home-2-{idx+1:03d}",
-                    "order": 2,
-                    "phase": "校內申請",
-                    "title": "完成 Google 線上報名表並繳交核章紙本至耕莘樓 A113",
-                    "responsible_party": "學生",
-                    "responsible_unit": "輔大國際學生中心（耕莘樓 1 樓 A113 室）",
-                    "deadline_at": "2026-12-18T16:30:00+08:00",
-                    "deadline_status": "needs_confirmation",
-                    "deadline_source_url": "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=42",
-                    "deadline_checked_at": "2026-10-16T04:50:00Z",
-                    "summary": "第一學期（秋季班）每年 12 月收件、第二學期（春季班）每年 4 月中旬收件；紙本經系主任與院長簽章後親送耕莘樓 A113。",
-                    "details": [
-                        "先完成 Google 表單線上報名並匯出回覆 PDF。",
-                        "全部紙本文件統一以 A4 規格由上而下依序排列並於左上角裝訂，請勿使用塑膠資料夾。",
-                    ],
-                    "document_requirements": [
-                        {
-                            "name": "Google 線上報名表回覆 PDF 與赴姊妹校交換學生申請表",
-                            "signatures": ["申請學生簽名", "系主任簽章", "學院院長簽章"],
-                            "official_form_url": "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43",
-                            "source_urls": ["https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43"],
-                        },
-                        {
-                            "name": "中文歷年成績單正本（含歷年總平均及系排名百分比）",
-                            "source_urls": ["https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43"],
-                        },
-                        {
-                            "name": "中英文讀書計畫（Study Plan）及自傳（A4 雙面列印，不超過 2 頁）",
-                            "source_urls": ["https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43"],
-                        },
-                        {
-                            "name": "2 年內有效之外語能力檢定證明影本",
-                            "copy_type": "copy",
-                            "conditional": row["table_index"] == 1,
-                            "condition": "外語組及日語組必繳；中語組除香港及英文授課外免附",
-                            "source_urls": ["https://iscoie.fju.edu.tw/generalServices.jsp?labelID=41"],
-                        },
-                        {
-                            "name": "家長／監護人同意書（保證書）與個人資料提供同意書",
-                            "signatures": ["學生本人親筆簽章", "家長／保證人親筆簽章"],
-                            "official_form_url": "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43",
-                            "source_urls": ["https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43"],
-                        },
-                    ],
-                    "scope": {
-                        "home_universities": ["天主教輔仁大學"],
-                        "academic_years": ["116"],
-                        "application_rounds": ["第1學期（秋季班）"],
-                    },
-                    "submission": {
-                        "method": "paper",
-                        "office": "國際及兩岸教育處國際學生中心（耕莘樓 1 樓 A113 室）",
-                        "portal_url": "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=42",
-                    },
-                    "action_url": "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=42",
-                    "source_urls": [
-                        "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=42",
-                        "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=43",
-                    ],
-                    "checked_at": "2026-10-16T04:50:00Z",
-                    "support_status": "verified",
-                },
+                current_home_submission_step(f"fju-116-1-home-2-{idx+1:03d}"),
                 {
                     "rule_id": f"fju-116-1-home-3-{idx+1:03d}",
                     "order": 3,
@@ -1215,7 +1185,7 @@ def main():
         ],
         "eligibility": [
             "具輔仁大學正式學籍之在學學生：大學部修業滿一學年以上（申請時為大一至大三，出國時須為大二以上；延畢生須符合各校年級限制）、碩士班及博士班在學學生。",
-            "歷年學業成績總平均達 70 分以上，或歷年學業成績名次在該系（班）前 50% 以內；轉學生無本校成績者須檢附原就讀學校歷年成績單，碩一及博一新生須檢附前一學位歷年成績單。",
+            "116-1學士班歷年平均70分以上、操行86分以上且無大小過等不良紀錄；研究所成績門檻待確認。轉學生申請前須已在本校就讀完一學期；碩一及博一繳交前一學制歷年成績單。",
             "甄選評分標準：外語組（歷年成績 25%、外語能力 25%、讀書計畫 25%、面試 25%）；日語組（歷年成績 30%、讀書計畫 35%、面試 35%）；中語組（歷年成績 35%、讀書計畫 35%、面試 30%）。",
             "每人最多可選填 5 所志願學校（部分語組或梯次依當期簡章規定）；曾獲錄取後無故放棄者，在學期間不得再次申請校級交換學生計畫。",
             "陸生不得申請大陸地區姊妹校；僑生及外籍生申請返回原國籍或僑居地交換須符合接待校與教育部規定。",
@@ -1256,14 +1226,14 @@ def main():
         "school_name": "天主教輔仁大學",
         "last_checked": "2026-10-16T04:50:00Z",
         "academic_score_minimum": 70.0,
-        "academic_score_rule": "輔大校級出國交換：歷年學業成績總平均達 70 分以上，或歷年學業成績系排名百分比在前 50% 以內（部分姊妹校另訂 GPA 2.5–3.5 以上門檻者從其規定）。",
+        "academic_score_rule": "輔大116-1公告要求學士班歷年平均70分以上、操行86分以上且無大小過等不良紀錄，未列班排名替代條件；研究生學業門檻及接待校額外規定須另行確認。",
         "academic_gpa_minimum": None,
         "maximum_preferences": 5,
         "selection_rules": {
             "academic_policy": "percentage",
             "academic_reference_year": "116",
             "undergraduate_gpa_minimum": None,
-            "undergraduate_rank_maximum": 50.0,
+            "undergraduate_rank_maximum": None,
             "graduate_academic_exempt": False,
             "exclude_in_service": False,
             "pending_quota_planning": True,
@@ -1274,7 +1244,7 @@ def main():
         },
         "language_score_minimums": {
             "toefl": 79.0,
-            "ielts": 6.0,
+            "ielts": 6.5,
             "toeic": 750.0,
         },
         "application_periods": [
@@ -1305,32 +1275,32 @@ def main():
                 "reminder_eligible": True,
                 "checked_at": "2026-10-16T04:50:00Z",
             },
-            {
-                "title": "輔大 116-1（2027秋季班）校內甄選線上填表與紙本收件（12月）",
-                "details": [
-                    "依輔大國際學生中心申請流程（labelID=42），第一學期（秋季班）出國交換於每年 11 月底公告當期名額表，12 月辦理線上表單填報與紙本申請文件收件。",
-                    "申請學生須先填妥線上 Google 表單並匯出回覆 PDF，連同系主任與院長核章之紙本申請表、成績單、讀書計畫、語檢證明及保證書，親送耕莘樓 1 樓 A113 室。",
-                ],
-                "source": {
-                    "title": "輔大赴姊妹校交換學生—申請流程與時程（labelID=42）",
-                    "source_url": "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=42",
-                    "category": "deadline",
-                    "summary": "第一學期（秋季班）與第二學期（春季班）年度固定甄選時程表。",
-                },
-                "scope": "home_application",
-                "program_types": ["exchange"],
-                "academic_year": "116",
-                "application_round": "116-1（2027秋季班）校內收件",
-                "audience": "all_students",
-                "opens_at": "2026-12-01T09:00:00+08:00",
-                "deadline_at": "2026-12-18T16:30:00+08:00",
-                "date_status": "needs_confirmation",
-                "status": "upcoming",
-                "status_note": "依官方 labelID=42 公告，第一學期交換於 12 月收件；確切起訖日以 11 月底最新簡章公告為準。",
-                "deadline_note": "收件地點：輔大耕莘樓 1 樓 A113 室（國際及兩岸教育處國際學生中心）。",
-                "reminder_eligible": False,
-                "checked_at": "2026-10-16T04:50:00Z",
-            },
+            {'title': '輔大 116-1（2027秋季班）校內甄選線上申請與紙本收件（11/1–12/24 16:30）',
+             'details': ['2026-10-20 官方公告（newsID=1062）：雖然公告標題寫「即日起開始收件至12月24日16:30止!」，正文載明線上申請系統開放及收件時間為 2026/11/01 至 '
+                         '2026/12/24 16:30。',
+                         '線上申請系統（http://outgoing.oie.fju.edu.tw/）有鎖校外 IP 連線，限校內網路使用；個別上傳 PDF 電子檔（書審資料、中文歷年成績單、語測證明）勿超過 '
+                         '20MB。',
+                         '紙本文件僅須繳交「赴姐妹校交換生申請表（A4 雙面列印、電腦打字輸入）」，完成家長簽章與系所／院／雙主修輔系學程核章後，於 2026/12/24 16:30 '
+                         '前送交國際學生中心（官網地址：耕莘樓1樓A117室；實際安排依承辦通知）。',
+                         '名額及開放學校將於 11 月陸續由姊妹校提供並更新，目前附表（file=1346 非日語組、file=1347 日語組）標示為「通常名額 (參考用)」，不能當成最終版；需 M365 '
+                         '登入之個別學校資料未查。'],
+             'source': {'title': '116學年度第1學期 (2027秋季班) 赴姊妹校交換學生申請公告（newsID=1062）',
+                        'source_url': 'https://iscoie.fju.edu.tw/newsDetail.jsp?newsID=1062&newsClassID=14',
+                        'category': 'deadline',
+                        'summary': '系統開放及收件為 2026/11/01～12/24 16:30（限校內網路）；學校及名額於 11 月陸續更新，不能當成最終版。'},
+             'scope': 'home_application',
+             'program_types': ['exchange'],
+             'academic_year': '116',
+             'application_round': '116-1（2027秋季班）校內收件',
+             'audience': 'all_students',
+             'opens_at': None,
+             'deadline_at': '2026-12-24T16:30:00+08:00',
+             'date_status': 'verified_exact',
+             'status': 'upcoming',
+             'status_note': '標題雖寫即日起，正文載明系統開放及收件為 2026/11/01～12/24 16:30（限校內網路）；學校與名額於 11 月陸續更新，目前名單不能當成最終版。',
+             'deadline_note': '線上系統限校內網路（http://outgoing.oie.fju.edu.tw/）；紙本申請表送交國際學生中心（官網地址：耕莘樓1樓A117室；實際安排依承辦通知）。',
+             'reminder_eligible': True,
+             'checked_at': '2026-10-20T02:27:00Z'},
             {
                 "title": "輔大 115-2（2027春季班）校內甄選收件（已截止參考）",
                 "details": [
@@ -1379,7 +1349,7 @@ def main():
                 "title": "學籍、年級與學業成績門檻",
                 "details": [
                     "具輔仁大學正式學籍之在學學生（大學部修業滿一學年以上，出國時須為大二以上；碩士班、博士班在學學生）。",
-                    "歷年學業成績總平均達 70 分以上，或歷年學業成績系排名百分比在前 50% 以內；各姊妹校若另訂更高 GPA 門檻（如 GPA 2.5、2.75 或 3.0 以上），須同時符合接待校規定。",
+                    "116-1學士班歷年學業平均須達70分，操行須達86分且無大小過等不良紀錄；公告未列班排名替代門檻，接待校另有較高要求時仍須符合。",
                     "甄選評分權重：外語組（歷年成績 25%、外語能力 25%、讀書計畫 25%、面試 25%）；日語組（歷年成績 30%、讀書計畫 35%、面試 35%）；中語組（歷年成績 35%、讀書計畫 35%、面試 30%）。",
                 ],
                 "source": {
@@ -1394,11 +1364,11 @@ def main():
             {
                 "title": "外語組、日語組與中語組語文能力規定",
                 "details": [
-                    "英語組基本門檻：TOEFL iBT 79（不接受 Home Edition 及 MyBest Scores）或 IELTS 6.0（Academic）；部分姊妹校接受 TOEIC 750–800 以上或另訂更高托福／雅思門檻，依當期名額表規定。",
+                    "116-1申請英語授課交換學校，須達TOEFL iBT 79、IELTS 6.5或TOEIC 750其中一項；如交換學校要求較高分數，須符合較高門檻。英檢成績須在申請截止日仍具兩年效期。",
                     "外語組語檢換分標準（佔總分 25%）：TOEFL iBT 61–67 / IELTS 5.0 / TOEIC 650–699 為 40 分；iBT 68–73 / IELTS 5.5 / TOEIC 700–749 為 50 分；iBT 74–78 / TOEIC 750–784 為 60 分；iBT 79–82 / IELTS 6.0 / TOEIC 785–819 為 70 分；iBT 83–87 / TOEIC 820–854 為 80 分；iBT 88–92 / IELTS 6.5 / TOEIC 855–899 為 90 分；iBT 93+ / IELTS 7.0+ / TOEIC 900+ 為 100 分。",
-                    "日語組：須檢附 JLPT N1–N4 合格證書（依各日本姊妹校要求，多數為 N2 或 N3 以上；申請全英語授課課程 ETP 則須檢附 TOEFL iBT 79 或 IELTS 6.0 以上）。",
+                    "日語組：須檢附 JLPT N1–N4 合格證書（依各日本姊妹校要求，多數為 N2 或 N3 以上；申請全英語授課課程 ETP 則須檢附 TOEFL iBT 79 或 IELTS 6.5 以上）。",
                     "韓語及歐語組：韓語組須具 TOPIK 2 級以上或英語檢定；法語（DELF B1/B2）、德語（Goethe/TestDaF B1/B2）、西語（DELE B1/B2）依接待校規定。",
-                    "中語組：大陸及澳門中文授課學校免附外語檢定；香港姊妹校（如香港浸會大學、香港城市大學、嶺南大學）須依規定檢附 TOEFL iBT 79 或 IELTS 6.0–6.5 以上證明。",
+                    "中語組：大陸及澳門中文授課學校免附外語檢定；香港姊妹校（如香港浸會大學、香港城市大學、嶺南大學）須依規定檢附 TOEFL iBT 79 或 IELTS 6.5 以上證明。",
                 ],
                 "source": {
                     "title": "輔大赴姊妹校交換學生—語文能力要求與換分表（labelID=41, labelID=44）",
@@ -1698,6 +1668,24 @@ def main():
     from exchange_info.fju_oct20_updates import apply_fju_oct20_updates
 
     apply_fju_oct20_updates(OFFICIAL_FJU_DIR)
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "fju", round_id=22)
+    from exchange_info.host_source_review_round25 import apply_host_source_review
+    apply_host_source_review(REPO_ROOT, "fju")
+    from exchange_info.fju_oct20_updates import repair_fju_attachment_links
+    repair_fju_attachment_links(OFFICIAL_FJU_DIR)
+    from exchange_info.fju_route_review import apply_fju_route_review
+    apply_fju_route_review(REPO_ROOT, bundle=OFFICIAL_FJU_DIR)
+    from exchange_info.fju_form_review import apply_fju_form_review
+    apply_fju_form_review(REPO_ROOT, bundle=OFFICIAL_FJU_DIR)
+    from exchange_info.fju_missing_routes_review import apply_fju_missing_routes
+    apply_fju_missing_routes(REPO_ROOT, bundle=OFFICIAL_FJU_DIR)
+    from exchange_info.fju_nonjp_review import apply_fju_nonjp_review
+    apply_fju_nonjp_review(REPO_ROOT, bundle=OFFICIAL_FJU_DIR)
+    from exchange_info.fju_briefing_review import apply_fju_briefing_review
+    apply_fju_briefing_review(REPO_ROOT, bundle=OFFICIAL_FJU_DIR)
+    from exchange_info.fju_process_review import apply_fju_process_review
+    apply_fju_process_review(REPO_ROOT, bundle=OFFICIAL_FJU_DIR)
     print(f"Successfully built FJU catalog: {len(partners)} partners, {len(workflows)} workflows, {len(destinations)} destinations, {len(research_records)} research records, {len(new_locations)} locations, {added_imgs} new school-images aliases added (total FJU verified images: {len(new_images)}).")
 
 
