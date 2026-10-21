@@ -19,6 +19,8 @@ ADDITIONAL_INDEXES = (
      "e6d92ef4c4aeea5941177931b5d549df2ffbce57853896c46faad2aec85beb5e"),
     (INDEX.with_name("reviewed_life_claims_round23.json"),
      "582628a877780e551808f70d5089ee93e67c406eb7b68d79da81d67addebdc27"),
+    (INDEX.with_name("reviewed_life_claims_round51.json"),
+     "d669af68b911ff5eee551bd7173057025cdbdaf1d6cfae95188361a904644269"),
 )
 
 

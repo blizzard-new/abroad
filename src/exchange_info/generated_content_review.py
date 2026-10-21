@@ -19,6 +19,8 @@ ROUND21_MANIFEST = "docs/data-verification-20261021/round21-life-provenance.json
 ROUND21_MANIFEST_SHA = "50c053d56409efa680f24e2a2153866c6bab7b979459641c89c0937907e96129"
 ROUND22_MANIFEST = "docs/data-verification-20261021/round22-life-provenance.json"
 ROUND22_MANIFEST_SHA = "9364b608728fe4a11e88b5203eb835ce44bf75139e8da518df7dce3e3e308192"
+ROUND51_MANIFEST = "docs/data-verification-20261021/round51-main6-provenance-review.json"
+ROUND51_MANIFEST_SHA = "33f4461e038b12cd5b1ec5552275bce1d7d5a5761cab2eae423a45c930575ee3"
 STORY_NOTE = "僅保留原有心得候選連結；原文尚待逐篇核對，目前沒有可核實的全文摘要。"
 PROGRAM_NOTE = "此連結來自錄取或獎助紀錄，不屬於學生生活心得；名單原文與個別紀錄仍待核對。"
 LIFE_NOTE = "原有共用範本與國家預設費用尚未逐校核對原文，暫不作生活證據；原始連結及文字留存待查。"
@@ -33,7 +35,8 @@ def load_manifest(root, *, round_id=19):
     path, expected = {19: (MANIFEST, MANIFEST_SHA),
         20: (ROUND20_MANIFEST, ROUND20_MANIFEST_SHA),
         21: (ROUND21_MANIFEST, ROUND21_MANIFEST_SHA),
-        22: (ROUND22_MANIFEST, ROUND22_MANIFEST_SHA)}[round_id]
+        22: (ROUND22_MANIFEST, ROUND22_MANIFEST_SHA),
+        51: (ROUND51_MANIFEST, ROUND51_MANIFEST_SHA)}[round_id]
     raw = (root / path).read_bytes()
     if hashlib.sha256(raw).hexdigest() != expected:
         raise ValueError("Generated-content provenance manifest hash mismatch")
@@ -85,7 +88,7 @@ def review_generated_content(root: Path, school: str, *, round_id=19):
         old = {key: row.get(key) for key in ("evidence", "status", "notes", "checked_at")}
         row.setdefault("reference_data", {}).setdefault("generated_life_before_review", old)
         note = ("原內容混有共用範本、母校專屬規則與尚待逐校核對的摘錄；暫不作跨校共用生活證據，原文及連結保留待查。"
-            if round_id in {21, 22} else LIFE_NOTE)
+            if round_id in {21, 22, 51} else LIFE_NOTE)
         row.update(evidence=[], status="partial", notes=[note], checked_at=manifest["reviewed_at"])
         counts["life_changed"] += 1
     if scope["life"]:

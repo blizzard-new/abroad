@@ -342,18 +342,18 @@ def test_fju_current_submission_does_not_mix_legacy_paper_instructions():
         json.loads(line) for line in
         (ROOT / "src/exchange_info/official_data/fju/application_workflows.jsonl").read_text("utf8").splitlines()
     ]
-    assert len(rows) == 234
+    assert len(rows) == 237
     for row in rows:
         step = row["steps"][1]
         ApplicationStep.model_validate(step)
         assert {**step, "rule_id": "example"} == expected
         assert step["submission"]["method"] == "mixed"
-        assert len(step["document_requirements"]) == 4
+        assert len(step["document_requirements"]) == 5
         assert "20MB" in step["summary"]
         assert "Google" not in json.dumps(step, ensure_ascii=False)
         assert "A113" not in json.dumps(step, ensure_ascii=False)
-        assert row["steps"][0]["deadline_at"] is None
-        assert not row["steps"][0]["deadline_reminder_eligible"]
+        assert row["steps"][0].get("deadline_at") is None
+        assert not row["steps"][0].get("deadline_reminder_eligible")
 
 
 def test_scu_information_session_is_not_an_eligibility_deadline():

@@ -111,28 +111,40 @@ def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def resolve_fju_input(name: str) -> Path:
+    candidates = (
+        SCRATCH_FJU / name,
+        SOURCES_FJU_DIR / name,
+        SOURCES_FJU_DIR / Path(name).name,
+    )
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate
+    return SCRATCH_FJU / name
+
+
 def archive_official_sources() -> dict:
     SOURCES_FJU_DIR.mkdir(parents=True, exist_ok=True)
-    att_dir = SCRATCH_FJU / "attachments"
     files_to_copy = [
-        (SCRATCH_FJU / "label_39_process.html", SOURCES_FJU_DIR / "label_39_process.html", "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39", "輔大國際學生中心—赴姊妹校交換學生申請流程與說明（labelID=39）"),
-        (SCRATCH_FJU / "label_40_partner_list.html", SOURCES_FJU_DIR / "label_40_partner_list.html", "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=40", "輔大赴姊妹校交換學生—申請資格與姊妹校一覽表（234校，labelID=40）"),
-        (SCRATCH_FJU / "label_41_faq.html", SOURCES_FJU_DIR / "label_41_faq.html", "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=41", "輔大赴姊妹校交換學生—常見問題 FAQ（labelID=41）"),
-        (SCRATCH_FJU / "label_42_downloads.html", SOURCES_FJU_DIR / "label_42_downloads.html", "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=42", "輔大赴姊妹校交換學生—表單與文件下載（labelID=42）"),
-        (SCRATCH_FJU / "label_44_lang_score.html", SOURCES_FJU_DIR / "label_44_lang_score.html", "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=44", "輔大赴姊妹校交換學生—外語能力換分標準表（labelID=44）"),
-        (SCRATCH_FJU / "news_1057_116_1_info.html", SOURCES_FJU_DIR / "news_1057_116_1_info.html", "https://iscoie.fju.edu.tw/newsDetail.jsp?newsID=1057", "116學年度第1學期（2027秋季班）赴姊妹校交換學生甄選說明會公告"),
-        (SCRATCH_FJU / "res_26_outgoing_reg.html", SOURCES_FJU_DIR / "res_26_outgoing_reg.html", "https://iscoie.fju.edu.tw/resource.jsp?labelID=26", "輔大出國交換相關法規與選課辦法專頁（labelID=26）"),
-        (SCRATCH_FJU / "res_27_scholarships.html", SOURCES_FJU_DIR / "res_27_scholarships.html", "https://iscoie.fju.edu.tw/resource.jsp?labelID=27", "輔大出國交換獎學金與學海計畫專頁（labelID=27）"),
-        (att_dir / "115_2_quotas_2027_spring.pdf", SOURCES_FJU_DIR / "115_2_quotas_2027_spring.pdf", "https://iscoie.fju.edu.tw/teachingServices.jsp?file=1247", "115-2（2027春季班）交換生甄選名額一覽表（115.04.01更新）"),
-        (att_dir / "115_1_quotas_2026_fall.pdf", SOURCES_FJU_DIR / "115_1_quotas_2026_fall.pdf", "https://iscoie.fju.edu.tw/teachingServices.jsp?file=1141", "115-1（2026秋季班）交換生甄選名額一覽表"),
-        (att_dir / "115_2_exchange_notice.pdf", SOURCES_FJU_DIR / "115_2_exchange_notice.pdf", "https://iscoie.fju.edu.tw/teachingServices.jsp?file=1246", "115學年度第2學期赴姊妹校交換學生甄選申請須知"),
-        (att_dir / "reg_selection_guidelines_zh.pdf", SOURCES_FJU_DIR / "reg_selection_guidelines_zh.pdf", "https://iscoie.fju.edu.tw/teachingServices.jsp?file=910", "天主教輔仁大學交換學生甄選作業要點"),
-        (att_dir / "reg_study_implementation.pdf", SOURCES_FJU_DIR / "reg_study_implementation.pdf", "https://iscoie.fju.edu.tw/teachingServices.jsp?file=908", "天主教輔仁大學學生赴境外大學交換學習實施辦法"),
+        (resolve_fju_input("label_39_process.html"), SOURCES_FJU_DIR / "label_39_process.html", "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=39", "輔大國際學生中心—赴姊妹校交換學生申請流程與說明（labelID=39）"),
+        (resolve_fju_input("label_40_partner_list.html"), SOURCES_FJU_DIR / "label_40_partner_list.html", "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=40", "輔大赴姊妹校交換學生—申請資格與姊妹校一覽表（234校，labelID=40）"),
+        (resolve_fju_input("label_41_faq.html"), SOURCES_FJU_DIR / "label_41_faq.html", "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=41", "輔大赴姊妹校交換學生—常見問題 FAQ（labelID=41）"),
+        (resolve_fju_input("label_42_downloads.html"), SOURCES_FJU_DIR / "label_42_downloads.html", "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=42", "輔大赴姊妹校交換學生—表單與文件下載（labelID=42）"),
+        (resolve_fju_input("label_44_lang_score.html"), SOURCES_FJU_DIR / "label_44_lang_score.html", "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=44", "輔大赴姊妹校交換學生—外語能力換分標準表（labelID=44）"),
+        (resolve_fju_input("news_1057_116_1_info.html"), SOURCES_FJU_DIR / "news_1057_116_1_info.html", "https://iscoie.fju.edu.tw/newsDetail.jsp?newsID=1057", "116學年度第1學期（2027秋季班）赴姊妹校交換學生甄選說明會公告"),
+        (resolve_fju_input("res_26_outgoing_reg.html"), SOURCES_FJU_DIR / "res_26_outgoing_reg.html", "https://iscoie.fju.edu.tw/resource.jsp?labelID=26", "輔大出國交換相關法規與選課辦法專頁（labelID=26）"),
+        (resolve_fju_input("res_27_scholarships.html"), SOURCES_FJU_DIR / "res_27_scholarships.html", "https://iscoie.fju.edu.tw/resource.jsp?labelID=27", "輔大出國交換獎學金與學海計畫專頁（labelID=27）"),
+        (resolve_fju_input("attachments/115_2_quotas_2027_spring.pdf"), SOURCES_FJU_DIR / "115_2_quotas_2027_spring.pdf", "https://iscoie.fju.edu.tw/teachingServices.jsp?file=1247", "115-2（2027春季班）交換生甄選名額一覽表（115.04.01更新）"),
+        (resolve_fju_input("attachments/115_1_quotas_2026_fall.pdf"), SOURCES_FJU_DIR / "115_1_quotas_2026_fall.pdf", "https://iscoie.fju.edu.tw/teachingServices.jsp?file=1141", "115-1（2026秋季班）交換生甄選名額一覽表"),
+        (resolve_fju_input("attachments/115_2_exchange_notice.pdf"), SOURCES_FJU_DIR / "115_2_exchange_notice.pdf", "https://iscoie.fju.edu.tw/teachingServices.jsp?file=1246", "115學年度第2學期赴姊妹校交換學生甄選申請須知"),
+        (resolve_fju_input("attachments/reg_selection_guidelines_zh.pdf"), SOURCES_FJU_DIR / "reg_selection_guidelines_zh.pdf", "https://iscoie.fju.edu.tw/teachingServices.jsp?file=910", "天主教輔仁大學交換學生甄選作業要點"),
+        (resolve_fju_input("attachments/reg_study_implementation.pdf"), SOURCES_FJU_DIR / "reg_study_implementation.pdf", "https://iscoie.fju.edu.tw/teachingServices.jsp?file=908", "天主教輔仁大學學生赴境外大學交換學習實施辦法"),
     ]
     provenance_items = []
     for src, dst, url, title in files_to_copy:
         if src.exists():
-            shutil.copy2(src, dst)
+            if src.resolve() != dst.resolve():
+                shutil.copy2(src, dst)
             provenance_items.append({
                 "file": f"sources/fju/{dst.name}",
                 "source_url": url,
@@ -305,7 +317,7 @@ def clean_quota_cell(val: str) -> str:
 
 
 def load_quota_lookup(filename: str) -> tuple[dict[str, dict], dict[str, dict]]:
-    rows = json.loads((SCRATCH_FJU / filename).read_text(encoding="utf-8"))
+    rows = json.loads(resolve_fju_input(filename).read_text(encoding="utf-8"))
     by_en = {}
     by_zh = {}
     for r in rows:
@@ -420,12 +432,12 @@ def validate_build_inputs() -> None:
                 "attachments/115_2_quotas_2027_spring.pdf", "attachments/115_1_quotas_2026_fall.pdf",
                 "attachments/115_2_exchange_notice.pdf", "attachments/reg_selection_guidelines_zh.pdf",
                 "attachments/reg_study_implementation.pdf")
-    missing = [str(SCRATCH_FJU / name) for name in required if not (SCRATCH_FJU / name).is_file()]
+    missing = [str(SCRATCH_FJU / name) for name in required if not resolve_fju_input(name).is_file()]
     if missing:
         raise FileNotFoundError("FJU build input files are missing; no output was modified: " + ", ".join(missing))
     for name in required:
         if name.endswith(".json"):
-            json.loads((SCRATCH_FJU / name).read_text(encoding="utf8"))
+            json.loads(resolve_fju_input(name).read_text(encoding="utf8"))
 
 
 def main():
@@ -440,10 +452,10 @@ def main():
         encoding="utf-8",
     )
 
-    raw_rows = json.loads((SCRATCH_FJU / "label_40_parsed_rows.json").read_text(encoding="utf-8"))
+    raw_rows = json.loads(resolve_fju_input("label_40_parsed_rows.json").read_text(encoding="utf-8"))
     fju_rows = [r for r in raw_rows if r["row_index"] > 0 and not (r["table_index"] == 1 and r["row_index"] == 1)]
-    award_details = json.loads((SCRATCH_FJU / "parsed_award_details.json").read_text(encoding="utf-8"))
-    ror_resolved = json.loads((SCRATCH_FJU / "ror_resolved.json").read_text(encoding="utf-8"))
+    award_details = json.loads(resolve_fju_input("parsed_award_details.json").read_text(encoding="utf-8"))
+    ror_resolved = json.loads(resolve_fju_input("ror_resolved.json").read_text(encoding="utf-8"))
 
     loc_by_en_country, loc_by_zh_country, img_by_en_country, img_by_zh_country = load_repo_locations_and_images()
     q115_2_en, q115_2_zh = load_quota_lookup("quotas_115_2.json")
@@ -1686,6 +1698,8 @@ def main():
     apply_fju_briefing_review(REPO_ROOT, bundle=OFFICIAL_FJU_DIR)
     from exchange_info.fju_process_review import apply_fju_process_review
     apply_fju_process_review(REPO_ROOT, bundle=OFFICIAL_FJU_DIR)
+    from exchange_info.fju_host_review import apply_fju_host_review
+    apply_fju_host_review(REPO_ROOT, bundle=OFFICIAL_FJU_DIR)
     print(f"Successfully built FJU catalog: {len(partners)} partners, {len(workflows)} workflows, {len(destinations)} destinations, {len(research_records)} research records, {len(new_locations)} locations, {added_imgs} new school-images aliases added (total FJU verified images: {len(new_images)}).")
 
 
