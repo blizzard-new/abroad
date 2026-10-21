@@ -140,7 +140,8 @@ window.UniWayMultiPlan = (() => {
       return;
     }
     if (!input.preferences.length) { status.textContent="從候選學校確認志願，這裡會整理成同一份準備清單。"; document.querySelector("#multi-plan-tasks").replaceChildren(); return; }
-    if (input.preferences.length > 5) { status.textContent="目前保留超過 5 所學校；請確認本次最多 5 個志願，原有任務與進度仍保留。"; document.querySelector("#multi-plan-tasks").replaceChildren(); return; }
+    const maxPreferences = state.dashboard?.maximum_preferences || 5;
+    if (input.preferences.length > maxPreferences) { status.textContent=`目前保留超過 ${maxPreferences} 所學校；請確認本次最多 ${maxPreferences} 個志願，原有任務與進度仍保留。`; document.querySelector("#multi-plan-tasks").replaceChildren(); return; }
     if (loadedKey === key && loadedPlan) {
       status.textContent=`${input.preferences.length} 個志願 · ${loadedPlan.tasks?.length || 0} 項準備工作`;
       const signature=JSON.stringify([key,state.planningAvailability,state.preparationTasks,state.applicationProgress,state.calendarEvents]);

@@ -1,0 +1,237 @@
+{
+  "round": 52,
+  "recorded_at": "2026-10-22T00:30:00+00:00",
+  "summary": "Round 52 gap closure: (1) NTU & multi-plan preference capacity consistency up to 30 preferences (with CGU <=2 and CCU <=3 home rules); (2) NTUST 44 Mainland China partner rows reconciled against the 22-school 115-2 table PDF (16e12225089fae278921e00a860c342b31385bce8934eb8ad512b2ee487a0ac6); (3) TKU Round 1 Japanese guide eligibility/language/department_scope surfaced in reference_partners and round42-followup-source-notes.json marked data_changed=true; (4) NCKU Vytautas Magnus University and VSB Technical University of Ostrava live official host TOEIC/language evidence attached.",
+  "ntu_preference_capacity": {
+    "PersonalApplicationPlanRequest_max_preferences": 30,
+    "ApplicationPlanPreference_max_rank": 30,
+    "AccountApplicationWorkspace_max_schools": 30,
+    "home_specific_limits": {
+      "cgu": 2,
+      "ccu": 3,
+      "ntu": 30
+    }
+  },
+  "ntust_mainland_review": {
+    "source_file": "sources/ntust/reviewed_1152_mainland_schools_20261021.pdf",
+    "source_sha256": "16e12225089fae278921e00a860c342b31385bce8934eb8ad512b2ee487a0ac6",
+    "reviewed_open_115_2_schools": 22,
+    "reviewed_total_seats_115_2": 58,
+    "unlisted_mainland_sister_schools": 22,
+    "total_mainland_rows_reconciled": 44,
+    "schools_115_2": {
+      "同濟大學": {
+        "row_no": 1,
+        "page": 1,
+        "quota": "3 名（含建築系所 1 名；115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（限大學部或碩士生；含建築系所 1 名）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班（具一學期成績）；限大學部或碩士生，不含博士班及在職專班",
+        "raw_excerpt": "1 華東地區 上海市 同濟大學 985/211 工程 3(含建築系所 1 名) 限大學部或碩士生"
+      },
+      "電子科技大學": {
+        "row_no": 2,
+        "page": 1,
+        "quota": "2 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（電資學院優先；大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；電資學院優先，不含在職專班",
+        "raw_excerpt": "2 西南地區 四川省 電子科技大學 985/211 工程 2 電資學院優先"
+      },
+      "廈門大學": {
+        "row_no": 3,
+        "page": 1,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（限大學部或碩士生）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班（具一學期成績）；限大學部或碩士生，不含博士班及在職專班",
+        "raw_excerpt": "3 華東地區 福建省 廈門大學 985/211 工程 3 限大學部或碩士生"
+      },
+      "大連理工大學": {
+        "row_no": 4,
+        "page": 1,
+        "quota": "2 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "4 東北地區 遼寧省 大連理工大學 985/211 工程 2"
+      },
+      "北京科技大學": {
+        "row_no": 5,
+        "page": 1,
+        "quota": "2 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "5 華北地區 北京市 北京科技大學 211 工程 2"
+      },
+      "北京交通大學": {
+        "row_no": 6,
+        "page": 1,
+        "quota": "2 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "6 華北地區 北京市 北京交通大學 211 工程 2"
+      },
+      "浙江大學": {
+        "row_no": 7,
+        "page": 1,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "除醫學院外開放全校申請；管理學院不收碩士生（大學部限大二及大三生；研究所）",
+        "degree_levels": "學士班限大二及大三生（具一學年成績）、碩士班（管理學院除外）及博士班（具一學期成績）；除醫學院外開放全校申請，不含在職專班",
+        "raw_excerpt": "7 華東地區 浙江省 浙江大學 985/211 工程 3 1.除醫學院外，開放全校申請 2.管院不收碩士生 3.大學部僅收大二及大三生"
+      },
+      "武漢理工大學": {
+        "row_no": 8,
+        "page": 2,
+        "quota": "2 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "8 華中地區 湖北省 武漢理工大學 211 工程 2"
+      },
+      "華中科技大學": {
+        "row_no": 9,
+        "page": 2,
+        "quota": "2 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "9 華中地區 湖北省 華中科技大學 985/211 工程 2"
+      },
+      "四川大學": {
+        "row_no": 10,
+        "page": 2,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "10 西南地區 四川省 四川大學 985/211 工程 3"
+      },
+      "重慶大學": {
+        "row_no": 11,
+        "page": 2,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "11 西南地區 重慶市 重慶大學 985/211 工程 3"
+      },
+      "蘇州大學": {
+        "row_no": 12,
+        "page": 2,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "12 華東地區 江蘇省 蘇州大學 211 工程 3"
+      },
+      "合肥工業大學": {
+        "row_no": 13,
+        "page": 2,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "13 華東地區 安徽省 合肥工業大學 211 工程 3"
+      },
+      "蘭州大學": {
+        "row_no": 14,
+        "page": 3,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "14 西北地區 甘肅省 蘭州大學 985/211 工程 3"
+      },
+      "南京大學": {
+        "row_no": 15,
+        "page": 3,
+        "quota": "2 名（115-2 大陸地區交換公告名額）",
+        "colleges": "須為相對應系所（大學部、研究所；應屆畢業生不得在下學期提出申請）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；須為相對應系所，應屆畢業生不得在下學期提出申請，不含在職專班",
+        "raw_excerpt": "15 華東地區 江蘇省 南京大學 985/211 工程 2 1. 須為相對應系所 2. 應屆畢業生不得在下學期提出申請"
+      },
+      "西安交通大學": {
+        "row_no": 16,
+        "page": 3,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所；應屆畢業生不得在下學期提出申請）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；應屆畢業生不得在下學期提出申請，不含在職專班",
+        "raw_excerpt": "16 西北地區 陝西省 西安交通大學 985/211 工程 3 應屆畢業生不得在下學期提出申請"
+      },
+      "上海大學": {
+        "row_no": 17,
+        "page": 3,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "17 華東地區 上海市 上海大學 211 工程 3"
+      },
+      "吉林大學": {
+        "row_no": 18,
+        "page": 3,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "18 東北地區 吉林省 吉林大學 985/211 工程 3"
+      },
+      "東南大學": {
+        "row_no": 19,
+        "page": 3,
+        "quota": "2 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所；不接受大四及應屆畢業生申請）",
+        "degree_levels": "學士班大二及大三（不接受大四申請）、碩士班及博士班（具一學期成績；不接受應屆畢業生申請）；不含在職專班",
+        "raw_excerpt": "19 華東地區 江蘇省 東南大學 985/211 工程 2 不接受大四及應屆畢業生申請"
+      },
+      "華中師範大學": {
+        "row_no": 20,
+        "page": 3,
+        "quota": "2 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "20 華中地區 湖北省 華中師範大學 211 工程 2"
+      },
+      "福州大學": {
+        "row_no": 21,
+        "page": 4,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所）",
+        "degree_levels": "學士班大二（含）以上（具一學年成績）、碩士班及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "21 華東地區 福建省 福州大學 211 工程 3"
+      },
+      "華東師範大學": {
+        "row_no": 22,
+        "page": 4,
+        "quota": "3 名（115-2 大陸地區交換公告名額）",
+        "colleges": "全校各學院（大學部、研究所；不接受大四及碩二生申請）",
+        "degree_levels": "學士班大二及大三（不接受大四申請）、碩士班碩一（不接受碩二生申請）及博士班（具一學期成績）；不含在職專班",
+        "raw_excerpt": "22 華東地區 上海市 華東師範大學 985/211 工程 3 不接受大四及碩二生申請"
+      }
+    }
+  },
+  "ncku_host_language_reviews": {
+    "維陶塔斯馬格努斯大學 Vytautas Magnus University": {
+      "source_url": "https://www.vdu.lt/en/international-cooperation/for-students/vmu-bilateral-exchange-studies/incoming-exchange-students/",
+      "source_sha256": "6070e1ac073303da94a83247f7daf60a7528f2eb8a406691e8f2fa7beafda7fd",
+      "checked_at": "2026-10-22T00:30:00+00:00",
+      "host_language_value": "接待校 VMU 雙邊交換生官方網頁明列：English language proficiency should be not lower than B2 level according to the European language levels (or equivalent: TOEFL - 65, TOEFL IBT - 72 (4 - on the new scale), TOEFL ITP - 543, IELTS - 5.5, TOEIC - 785, Duolingo - 100)。母校成大 116-1 一覽表第 6 頁寫作「TOEIC 讀寫785」，接待校官網原文則僅列「TOEIC - 785」作為 CEFR B2 等同分數；兩來源對 TOEIC 子項目表述不同，請同時參考母校表與接待校官網。",
+      "host_language_excerpt": "English language proficiency should be not lower than B2 level according to the European language levels (or equivalent: TOEFL - 65, TOEFL IBT - 72 (4 - on the new scale), TOEFL ITP - 543, IELTS - 5.5, TOEIC - 785, Duolingo - 100)",
+      "host_academic_value": "接待校 VMU 官方交換頁明列：candidate's GPA must be not lower than 70% of the maximum grade；申請時大學部須已完成 2 學期、研究所須已完成 1 學期；art/music 領域課程僅開放主修藝術／音樂之學生選修。",
+      "host_academic_excerpt": "candidate's GPA must be not lower than 70% of the maximum grade. during the application 2 semesters must be completed by an undergraduate student/ 1 semester - by a graduate student art/music area courses are available only to the students majoring in art/music",
+      "host_deadline_value": "接待校 VMU 雙邊交換申請截止日（非成大校內截止日）：秋季／全學年為 4 月 17 日；春季／曆年為 10 月 17 日。",
+      "host_deadline_excerpt": "Application Deadlines: April 17 For 1st semester or full academic year studies / October 17 For 2nd semester or calendar year studies"
+    },
+    "俄斯特拉發技術大學 VSB Technical University of Ostrava": {
+      "source_url": "https://www.vsb.cz/export/sites/vsb/mobility/.content/galerie-souboru/Fact_Sheet_WEB.pdf",
+      "source_sha256": "e5440f5596286f548fa4e165c033b21102d49fc0005105a4b5a7ab0e7029310c",
+      "source_pages": [
+        1,
+        2
+      ],
+      "checked_at": "2026-10-22T00:30:00+00:00",
+      "host_language_value": "接待校 VSB-TUO 官方 Fact Sheet（p. 1）明列：IELTS score 5,0; TOEFL internet-based score 62; TOEIC 785 (possibly other certificates at the level B1 – B2)。母校成大 116-1 一覽表第 3 頁寫作「TOEIC聽說讀寫 785 / TOEFL iBT 72/ IELTS 5.5」，高於接待校 Fact Sheet 的 TOEFL 62 / IELTS 5.0 且將 TOEIC 標為「聽說讀寫 785」；校內甄選須先符合成大一覽表規定，接待校複審則依 Fact Sheet 辦理。",
+      "host_language_excerpt": "Language requirements for exchange students (TOEFL score, IELTS etc.): IELTS score 5,0; TOEFL internet-based score 62; TOEIC 785 (possibly other certificates at the level B1 – B2)",
+      "host_credit_value": "接待校 VSB-TUO 官方 Fact Sheet（p. 1）規定：交換生每學期建議修習 30 ECTS，最低須修習 20 ECTS credits。",
+      "host_credit_excerpt": "How many credits exchange students need to take per semester? 30 ECTS credits recommended, 20 ECTS credits minimum",
+      "host_deadline_value": "接待校 VSB-TUO 官方 Fact Sheet（p. 2）提名與申請截止日（需簽證國家學生）：冬季學期提名 4 月 15 日、申請 4 月 30 日；夏季學期提名 10 月 15 日、申請 10 月 31 日（非成大校內甄選截止日）。",
+      "host_deadline_excerpt": "Nomination deadlines for all Exchange students: April 30 for the winter semester or the whole academic year (April 15 for students from countries with the visa requirements); November 15 for the summer semester (October 15 for students from countries with the visa requirements)"
+    }
+  },
+  "tku_round1_japanese_guide": {
+    "source_url": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/02/更新淡江大學學校財團法人淡江大學2027-2028赴日本姊妹校交換生聯合甄選作業簡章.pdf",
+    "source_sha256": "bcfa995958cbe01905a20b109bd40c5789273cced8e1125dfbef7c3293b4cac2",
+    "waseda_programme_id": "jp-2027-2028-round-1-29",
+    "surfaced_in": "exchange_info.tku_census.reference_partners PartnerProgramOption.eligibility"
+  },
+  "whole_schools_verified": 0,
+  "whole_partner_records_verified": 0
+}

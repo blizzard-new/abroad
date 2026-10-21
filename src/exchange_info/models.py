@@ -1503,7 +1503,7 @@ class ApplicationPlanEligibilityStatus(str, Enum):
 
 
 class ApplicationPlanPreference(BaseModel):
-    rank: int = Field(ge=1, le=5)
+    rank: int = Field(ge=1, le=30)
     school_name: str = Field(min_length=2, max_length=200)
     document_preparation_state: PartnerDocumentPreparationState | None = None
 
@@ -1586,7 +1586,7 @@ class PersonalApplicationPlanRequest(BaseModel):
     jlpt_level: Literal['N1', 'N2', 'N3', 'N4', 'N5'] | None = None
     academic_year: str | None = Field(default=None, max_length=20)
     application_round: str | None = Field(default=None, max_length=80)
-    preferences: list[ApplicationPlanPreference] = Field(min_length=1, max_length=5)
+    preferences: list[ApplicationPlanPreference] = Field(min_length=1, max_length=30)
 
     @model_validator(mode="after")
     def validate_unique_preferences(self) -> PersonalApplicationPlanRequest:
