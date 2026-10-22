@@ -318,6 +318,8 @@ def main():
     apply_usp_source_review(Path(__file__).resolve().parents[1], "ntu", bundle=OUTPUT, rebuild=True)
     from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
     apply_vilnius_akita_review(Path(__file__).resolve().parents[1], "ntu", bundle=OUTPUT)
+    from exchange_info.round50_followup_review import apply_round50_followup_review
+    apply_round50_followup_review(Path(__file__).resolve().parents[1], "ntu", bundle=OUTPUT)
     counts = json.loads((OUTPUT / "catalog-completeness.json").read_text(encoding="utf-8"))
     n_total = counts["partner_count"]
     print(f"NTU: {n_total} partners, {n_total} workflows, {n_total} destinations; {counts['quota_pending_count']} pending / {counts['zero_quota_count']} zero / {counts.get('published_positive_quota_count', 0)} published quotas")

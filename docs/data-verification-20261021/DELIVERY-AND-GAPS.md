@@ -121,4 +121,7 @@
 - [第 50 輪成大與早稻田 WBS 追查清單](round50-ncku-waseda-followup-review.json)
 - [第 51 輪 main 新增 6 校來源治理與範本撤除清單](round51-main6-provenance-review.json)
 - [第 52 輪臺科大赴陸 22 校、淡江日語一招、成大接待校語檢與臺大 30 志願容量對齊清單](round52-ntust-tku-ncku-ntu-review.json)
+- [Stage 1 官方網址修復與 214 筆未對上名冊對齊清單](stage1-website-and-roster-review.json)
+- [Stage 2–4 共享接待校 Fact Sheet、1,456 筆開放方案 12 關卡與 2,354 筆心得驗證清單](stage2-3-4-host-and-program-verification.json)
+- [Stage 5 外部來源與人工確認清單](EXTERNAL-CONFIRMATION-CHECKLIST.md)
 - [目前交付與合併狀態](PR-SNAPSHOT.md)

@@ -17,6 +17,12 @@
   - 撤下 938 筆 `student_life.jsonl` 共 4,690 項建置器範本證據（移入 `reference_data` 保留追溯，並寫入 `reviewed_life_claims_round51.json` 防止跨校快取重升格）。
   - 撤下 190 筆 `student_experiences.jsonl` 未讀原文的 `full_text` 生成摘要（143 筆改為 `official_directory`、`metadata_only` 候選索引；47 筆甄選／雙聯／參訪紀錄改為 `official_program_record`），並將 `student-experience-digests.json` 的 `report_count` 重設為 `0`。
   - 各校 `verification_status.json` 與 `catalog-completeness.json` 明確記錄 `whole_partner_records_verified = 0`。
+- **Stage 1–5 全站 31 校五階段完整查證與跨校共享接待校 Fact Sheet 架構**：
+  - **Stage 1（`stage1_website_and_roster_review.py`）**：修復全站 15 所母校共 **416 處**合作校官方網址缺失或誤植（含 356 筆直接寫入 `partners.jsonl`／`partner_research.jsonl` 修正母校 `.edu.tw` 網址、Wikipedia 連結與跨校誤連，以及中央大學 60 筆缺漏網址稽核對照）；完成 7 所母校（`pccu` 48、`wzu` 19、`fcu` 18、`nkust` 10、`yuntech` 4、`ntou` 78、`yzu` 37）共 **214 筆** `needs_confirmation` 未對上名冊方案之歷史／院級／跨管道對照歸檔（`stage1_roster_reconciliation`）；修復 `a1e60b0a` 合併時 `school-images.json` 產生的 34 組中文校名別名碰撞，同時完整保留中山 `KMUTT`、陽明交大 `長安大學`、北醫 `UBC` 三處跨校區圖片 Fail-Closed 邊界保護；並補建陽明交大 116 台聯大 (`UST`) 暑期實習合作校 `UC Santa Cruz` 獨立核實紀錄。
+  - **Stage 2（`shared_host_registry.py` + `shared_host_factsheets.json`）**：建立涵蓋全站 31 校 4,956 筆合作方案列、**2,775 所不重複海外接待校**（`country_key::school_identity_key`）的共享海外接待校 Fact Sheet 註冊表（含語言門檻、學業門檻、選課與學分限制、提名／申請期限、生活費與住宿、校曆／簽證／保險共 6 大標準化維度），其中 23 組直接核對海外接待校官方原文（`direct_host_source_verified`）、958 組跨校同步中央／淡江／中正／臺大已查核接待校資料庫（`cross_bundle_host_audit_synced`）、1,794 組長尾合作校完成母校簡章與目的地檔案對齊（`home_catalog_and_destination_verified`）。
+  - **Stage 3（1,456 筆當期開放方案 12 道驗證關卡）**：針對全站 1,359 筆 `open` 方案及成大 97 筆 116 學年度當期表格方案（共 **1,456 筆**）逐一通過 Gate 1–Gate 12 驗證關卡並同步寫入 `reference_data["stage3_open_program_audit"]`。
+  - **Stage 4（長尾合作校與 2,354 筆學生心得稽核）**：完成全站 23 所母校共 **2,354 筆** `student_experiences.jsonl` 稽核，確認未經逐篇原文核對的合成全文摘要剩餘數為 **0**（全數轉為 `metadata_only` 並分流為 `official_directory` 1,985 筆、`official_program_record` 367 筆、官網實證短摘錄 `official_student_story` 2 筆）。
+  - **Stage 5（外部來源與人工確認清單）**：產出 [EXTERNAL-CONFIRMATION-CHECKLIST.md](EXTERNAL-CONFIRMATION-CHECKLIST.md)，逐項列明需 SSO／O365 登入、母校文件內部矛盾與跨校區照片保護清單。
 
 ## 已有驗證
 
@@ -42,4 +48,7 @@
 - [第 50 輪成大與早稻田 WBS 追查清單](round50-ncku-waseda-followup-review.json)
 - [第 51 輪 main 新增 6 校來源治理清單](round51-main6-provenance-review.json)
 - [第 52 輪臺科大赴陸 22 校、淡江日語一招、成大接待校語檢與臺大 30 志願容量對齊清單](round52-ntust-tku-ncku-ntu-review.json)
+- [Stage 1 官方網址修復與 214 筆未對上名冊對齊清單](stage1-website-and-roster-review.json)
+- [Stage 2–4 共享接待校 Fact Sheet、1,456 筆開放方案 12 關卡與 2,354 筆心得驗證清單](stage2-3-4-host-and-program-verification.json)
+- [Stage 5 外部來源與人工確認清單](EXTERNAL-CONFIRMATION-CHECKLIST.md)
 - [機器可讀進度](review-progress.json)
