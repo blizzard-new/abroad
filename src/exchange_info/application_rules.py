@@ -199,6 +199,8 @@ def build_personal_application_plan(
     home = resolve_university(request.home_school)
     if home and home.id == "ccu" and len(request.preferences) > 3:
         raise ValueError("中正大學2027春季校級交換最多3個志願（簡章第1頁及申請表第1頁）。")
+    if home and home.id == "cgu" and len(request.preferences) > 2:
+        raise ValueError("長庚大學校級交換最多2個志願。")
     workflow_rows = list(workflows)
     contact_unit = f"{request.home_school}國際事務處／所屬系所"
     choices: list[PersonalApplicationPlanChoice] = []

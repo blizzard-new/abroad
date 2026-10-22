@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-10-21T05:44:15.723597+00:00",
+  "generated_at": "2026-10-21T15:49:15.295423+00:00",
   "inventory": "output\\data-verification-20261021\\baseline",
   "status": "in_progress",
   "partner_rows": 4585,
   "fully_fact_verified_partner_rows": 0,
   "fully_fact_verified_schools": 0,
-  "field_decisions": 129768,
+  "field_decisions": 131723,
   "source_transport_counts": {
     "error": 2936,
-    "retrieved": 20028,
+    "retrieved": 20034,
     "deferred_rate_limit": 5204
   },
   "schools": {
@@ -1069,5 +1069,85 @@
         "finding": "Housing, scholarship, credit recognition and admission are not guaranteed; host calendar, courses, current fees, rankings and living costs require their own dated sources. General regional examples are not individual host verification."
       }
     ]
+  },
+  "fju_host_and_cost_review_round49": {
+    "reviewed_at": "2026-10-21T06:00:00+00:00",
+    "patched_row_scopes": 472,
+    "patched_singletons": 3,
+    "patch_count": 1949,
+    "host_schools_reviewed": [
+      "天普大學 Temple University",
+      "蒙特雷大學 Universidad de Monterrey",
+      "普福爾茨海姆大學 Pforzheim University",
+      "香港浸會大學 Hong Kong Baptist University"
+    ],
+    "sources": {
+      "https://globalprograms.temple.edu/application-process-costs-and-aid/application-process-and-costs": {
+        "sha256": "98796beb9411c9681041e2ffded7002971073ff087c4d20db0550a0a179f2840",
+        "text_sha256": "fc68477d995b1096c2c4551cc6e761cdb3fa322a9bb65328b7ca6ad55263625b",
+        "finding": "Temple Global Programs explicitly accepts TOEIC Listening 390 and Reading 390, TOEFL iBT 79 (4.0 new scale), IELTS 6.0, TOEFL ITP 550, Duolingo 110, CEFR B2, and GPA 3.00/4.00; mother-school briefing slide 30 general rule still conflicts."
+      },
+      "https://www.udem.edu.mx/en/estudia/proceso-de-admision-tu-intercambio-en-mexico": {
+        "sha256": "8e6c08cf4dc91ea8224215b3fbaadc2efa061504560f237b61a384890ed981b0",
+        "text_sha256": "73ee924c34f22a2f1e22fea0e518ab9a9b7e8dabbb1e35b407e6085c0b0e4af8",
+        "finding": "UDEM exchange admission page specifies two-step application on studyabroad.udem.edu.mx and English proficiency B2 (IBT/PBT/IELTS/TOEIC), but does not state Spanish-taught threshold or resolve FJU PDF clipped cell."
+      },
+      "https://www.hs-pforzheim.de/en/international/studying_at_pforzheim_university/exchange_students/language_requirements": {
+        "sha256": "b11a1957b249f0dd030511622db1edbd8d694126fa34f0fa51e341819d2b4628",
+        "finding": "Host website entered temporary PHP security maintenance (live sha256 4cd580a109f2211a364867c2709696573b13d9419d3d0156be979c5d523ccb0f) and 2026/2027 FactSheet PDF (b24da0a07a03f388d068089f8b3714d3d0e677a04731102a58c28c882962272f) awaits visual page layout review; clipped German threshold stays needs_confirmation."
+      },
+      "https://intl.hkbu.edu.hk/student-exchange/incoming-students/preparing-for-your-exchange-at-hkbu/eligibility": {
+        "sha256": "0f7cdac3d1ce52f6f526c6643e8e56a2ed1872f0065d839ea45d70e772bd0899",
+        "text_sha256": "9ac35954c8b48f31516b6f82bf2162d392207a7f4dc9f13d7e882c8a3011bb78",
+        "finding": "HKBU requires 1 year university study, cumulative GPA 2.5/4.0, and TOEFL iBT 79 / PBT 550 / IELTS Academic 6.0 / home certification letter."
+      },
+      "https://intl.hkbu.edu.hk/student-exchange/incoming-students/preparing-for-your-exchange-at-hkbu/application-procedure": {
+        "sha256": "26e60be2349aa10689a94cf191107a16d290449d73a7f6731886c66f4c4da46e",
+        "text_sha256": "8fe7edaf0910e67f23e8369f42d66088222b77e2944dcfed0d3bde9ae08c5f11",
+        "finding": "HKBU application procedure covers both undergraduate and postgraduate exchange and notes Undergraduate Halls renovation closure in 2025/26; whether FJU bilateral quota admits master's students remains needs_confirmation."
+      }
+    },
+    "whole_records_verified": 0,
+    "whole_schools_verified": 0
+  },
+  "ncku_waseda_followup_review_round50": {
+    "reviewed_at": "2026-10-21T06:30:00+00:00",
+    "patched_row_scopes": 6,
+    "patch_count": 9,
+    "sources": {
+      "https://yiec.yonsei.ac.kr/yiec_en/program/overseas01.do": {
+        "sha256": "5a86f965cdb523788727eb34ccefc025433262e79715ea9605b3527533572def",
+        "text_sha256": "ac1aed531870053187a0c07b1c95d54d86b883bad46c3f7fdcd49623a5547d85",
+        "finding": "Mirae page identifies that campus and a partner list marked updated 2020-11-06; Taiwan entries shown are NTUST and Yuanpei, not NCKU. Keep NCKU Yonsei/Mirae campus identity unresolved."
+      },
+      "https://www.waseda.jp/fcom/wbs/assets/uploads/2026/07/20260710_List_Partner_Schools.pdf": {
+        "sha256": "14b452c692adee1b306bafd62cfcdae18d128a43fe5dee0c1fd73158f81bd56e",
+        "finding": "WBS July 10, 2026 departmental partner list includes NTUST School of Management, NTU College of Management and NCCU College of Commerce. Supports departmental route without resolving NTUST undergraduate year 2+ or incoming language conditions."
+      },
+      "https://oia.ncku.edu.tw/var/file/32/1032/img/535260712.pdf": {
+        "sha256": "ff3e9c46348a19feef40b2601920b91e8049f43be71e8ea437388c1a7bb977bb",
+        "finding": "NCKU 116-1 table page 10 Waseda row requires relevant subject background and prohibits cross-field applications."
+      }
+    },
+    "whole_records_verified": 0,
+    "whole_schools_verified": 0
+  },
+  "main6_provenance_and_template_review_round51": {
+    "reviewed_at": "2026-10-21T15:30:00Z",
+    "schools": [
+      "ncue",
+      "nknu",
+      "tmu",
+      "csmu",
+      "cmu",
+      "kmu"
+    ],
+    "partner_rows_bound": 938,
+    "destination_profiles_cost_bounded": 938,
+    "student_life_snapshots_reviewed": 938,
+    "student_experience_rows_reviewed": 190,
+    "whole_records_verified": 0,
+    "whole_schools_verified": 0,
+    "note": "Main's 6 newly onboarded schools (ncue, nknu, tmu, csmu, cmu, kmu) are audited for mother-school field provenance and template withdrawal without inflating the original 25-school baseline census."
   }
 }

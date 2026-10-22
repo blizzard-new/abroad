@@ -229,7 +229,6 @@ def test_build_home_agreement_normalizes_single_char_quota_and_language_fields()
     )
     agreement = _build_home_agreement(NKUST, [row])
     assert agreement.home_id == "nkust"
-    assert len(agreement.quota_summary) >= 2
-    assert "4" in agreement.quota_summary
-    assert len(agreement.language_requirement_summary) >= 2
-    assert len(agreement.eligibility_summary) >= 2
+    assert agreement.quota_summary == "4"
+    assert agreement.language_requirement_summary == "無"
+    assert agreement.eligibility_summary == "無"

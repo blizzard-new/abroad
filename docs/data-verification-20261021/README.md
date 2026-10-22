@@ -321,3 +321,11 @@ round22-life-provenance.json固定SHA9364b608728fe4a11e88b5203eb835ce44bf75139e8
 
 
 第45輪進度：[維爾紐斯與秋田查核摘要](round45-review-summary.md)、[12筆逐校表](round45-vilnius-akita-audit.csv)。9所母校／12方案共167個欄位修正，補上費用適用狀態及預算／完整度判斷；146項相關測試通過。另確認輔仁兩組方案識別碰撞尚待修正。全案未完成，最終PR尚未建立。
+
+## 第 46–52 輪：輔大方案識別／接待校與保證金統一、成大與早稻田 WBS 追查，以及 main 新增 6 校來源治理
+
+- 第 46–48 輪（詳見 [第 48 輪查核摘要](round48-review-summary.md)）：解決輔大聖心女子大學與梅光學院大學方案識別碰撞、新增東洋／南山／同志社 3 筆獨立自費方案（原 25 校合計 4,588 筆）、完成 57 列非日語組 PDF 與選派辦法／簡報規則修正。
+- 第 49 輪（詳見 [`round49-fju-host-and-cost-review.json`](round49-fju-host-and-cost-review.json)）：套用天普大學（Global Programs 接受 TOEIC L390/R390 與母校簡報泛稱區隔）、蒙特雷大學（UDEM 兩階段申請與英語 B2）、普福爾茨海姆大學（PHP 資安維護收據與 2026/2027 FactSheet PDF 雜湊）、香港浸會大學（HKBU GPA 2.5、TOEFL iBT 79／IELTS 6.0 與 2025/26 宿舍整修停用）之接待端查核結果；並將輔大 234 筆方案與母校單例檔殘留的「保證金 NT$10,000」及「返國一個月內繳交 2,000 字心得」統一改為待確認（1,949 處欄位修正），同時將 5 份探索期 JSON 補入 `sources/fju/` 使 `scripts/build_fju_catalog.py` 自包含。
+- 第 50 輪（詳見 [`round50-ncku-waseda-followup-review.json`](round50-ncku-waseda-followup-review.json)）：補齊成大 116-1 早稻田申請流程之跨領域限制、延世大學未來校區（Mirae Campus）2020/11/06 合作名單查核紀錄，以及臺科大、臺大、政大之早稻田 WBS 2026/07/10 院級合作名單來源證據（9 處欄位修正）。第 49–50 輪共新增 1,955 筆帳冊決策（`review-decisions/part-00050.jsonl`），全帳冊累計 131,723 筆，基準驗證 0 錯誤。
+- 第 51 輪（詳見 [`round51-main6-provenance-review.json`](round51-main6-provenance-review.json)）：針對 `main` 新增的彰師大 (`ncue`)、高師大 (`nknu`)、北醫 (`tmu`)、中山醫 (`csmu`)、中國醫 (`cmu`)、高醫 (`kmu`) 共 6 校 938 筆合作方案，完成母校欄位 `field_evidence` 綁定（324 筆當期開放 `verified_current`、614 筆名冊 `reference_only`）、938 筆區域預設生活費降級為 `reference_only`、撤下 4,690 項生活範本證據與 190 筆未讀原文的生成心得（143 筆改為 `official_directory` 候選索引、47 筆改為 `official_program_record` 計畫／錄取紀錄），並設定 `whole_partner_records_verified = 0`。
+- 第 52 輪（詳見 [`round52-ntust-tku-ncku-ntu-review.json`](round52-ntust-tku-ncku-ntu-review.json)）：將臺科大 44 筆大陸合作校完整對照 `reviewed_1152_mainland_schools_20261021.pdf`（22 校 58 名）修正名額、院系與年級／應屆限制，並移除未列於表內之 22 所大陸姊妹校誤標名額；於淡江參考方案完整呈現 2027–2028 日語一招 25 校語檢與各系條件（含早稻田 N1／各系 GPA 附註）並將 `round42-followup-source-notes.json` 標為 `data_changed: true`；為成大維陶塔斯馬格努斯與俄斯特拉發技術大學補入接待端官方 `TOEIC 785` 語檢／Fact Sheet 證據；對齊臺大 30 志願與多校申請規劃工具（`PersonalApplicationPlanRequest`、`ApplicationPlanPreference`、`multi-plan.js` 及 OpenAPI 契約）容量上限（同時保留長庚 2 志願、中正 3 志願上限）。

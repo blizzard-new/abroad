@@ -46,7 +46,14 @@ def test_current_mother_list_explicit_closures_are_not_open():
     assert len(closed) == 2
     assert all(p.country == "瓜地馬拉" for p in closed)
     assert all(p.reference_data for p in d.partner_universities)
-    assert all(p.field_evidence["language_requirement"].status == "needs_confirmation" for p in d.partner_universities)
+    for p in d.partner_universities:
+        status = p.field_evidence["language_requirement"].status
+        if p.school_name == "秋田大學 Akita University":
+            assert status == "conflict"
+        elif p.school_name == "維爾紐斯大學 Vilnius University":
+            assert status == "reference_only"
+        else:
+            assert status == "needs_confirmation"
 
 
 def test_preparation_tools_do_not_restore_obsolete_paper_or_score_rules():
@@ -61,10 +68,17 @@ def test_preparation_tools_do_not_restore_obsolete_paper_or_score_rules():
 
 def test_default_country_costs_do_not_become_verified_school_budgets():
     from exchange_info.models import DestinationProfile
-    from exchange_info.cost_estimates import extract_monthly_estimates, primary_estimate
+    from exchange_info.cost_estimates import budget_fit, extract_monthly_estimates, primary_estimate
     path = ROOT / "src/exchange_info/official_data/ntut/destination_profiles.jsonl"
     for line in path.read_text("utf8").splitlines():
         raw = json.loads(line)
         assert raw["reference_data"]["cost_summary"]
         dest = DestinationProfile.model_validate(raw)
-        assert primary_estimate(extract_monthly_estimates(dest)) is None
+        estimates = extract_monthly_estimates(dest)
+        est = primary_estimate(estimates)
+        if raw["school_name"] == "秋田大學 Akita University":
+            assert est is not None
+            assert est.applicability_status == "reference_only"
+            assert budget_fit(estimates, 1000000)["status"] == "unknown"
+        else:
+            assert est is None

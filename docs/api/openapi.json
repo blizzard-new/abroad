@@ -4746,7 +4746,7 @@
             ]
           },
           "rank": {
-            "maximum": 5.0,
+            "maximum": 30.0,
             "minimum": 1.0,
             "title": "Rank",
             "type": "integer"
@@ -15515,7 +15515,7 @@
             "items": {
               "$ref": "#/components/schemas/ApplicationPlanPreference"
             },
-            "maxItems": 5,
+            "maxItems": 30,
             "minItems": 1,
             "title": "Preferences",
             "type": "array"

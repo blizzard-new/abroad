@@ -6,6 +6,7 @@ import pytest
 from exchange_info.fju_nonjp_review import load_manifest, apply_fju_nonjp_review, ARCHIVE_KEY
 from exchange_info.fju_briefing_review import apply_fju_briefing_review
 from exchange_info.fju_form_review import apply_fju_form_review, ENROLLMENT
+from exchange_info.fju_host_review import load_manifest as host_manifest, apply_fju_host_review
 from exchange_info.fju_oct20_updates import apply_fju_oct20_updates
 from exchange_info.fju_student_view import fetch_fju_partner_universities
 from exchange_info.application_rules import _partner_language_threshold
@@ -19,6 +20,8 @@ def partner(prefix):
 
 def test_57_reviewed_rows_and_114_targets_preserve_every_patch_and_prior_value():
     m=load_manifest(ROOT)
+    later={(s['file'],s['school_name'],p['pointer']):p['value']
+           for s in host_manifest(ROOT)['rows'] for p in s['patches']}
     assert len(m['table_transcription'])==57 and len(m['rows'])==114
     assert {t['page'] for t in m['table_transcription']}=={1,2,3,4}
     for scope in m['rows']:
@@ -28,7 +31,9 @@ def test_57_reviewed_rows_and_114_targets_preserve_every_patch_and_prior_value()
         row=matches[0];history=row['reference_data'][ARCHIVE_KEY]
         history=json.loads(history) if isinstance(history,str) else history
         for patch in scope['patches']:
-            parent,key=pointer_parent(row,patch['pointer']);assert parent[key]==patch['value']
+            parent,key=pointer_parent(row,patch['pointer'])
+            expected=later.get((scope['file'],scope['school_name'],patch['pointer']),patch['value'])
+            assert parent[key]==expected
             assert history[patch['pointer']]['existed']!=patch['expected_missing']
             if not patch['expected_missing']:
                 assert history[patch['pointer']]['value'] in patch['expected_values']
@@ -68,5 +73,6 @@ def test_replaying_current_and_legacy_overlays_preserves_all_reviewed_bytes(tmp_
     assert apply_fju_form_review(ROOT,bundle=bundle)==0
     assert apply_fju_nonjp_review(ROOT,bundle=bundle)==0
     assert apply_fju_briefing_review(ROOT,bundle=bundle)==0
+    assert apply_fju_host_review(ROOT,bundle=bundle)==0
     assert before=={p.name:p.read_bytes() for p in bundle.iterdir() if p.is_file()}
     assert all(ENROLLMENT in p.eligibility for p in fetch_fju_partner_universities())

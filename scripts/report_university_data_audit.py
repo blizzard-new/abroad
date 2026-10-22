@@ -329,6 +329,49 @@ def report(inventory: Path, output: Path) -> dict:
             }
             review["latest_visual_review_note"] = completion["scope_note"]
             review["additional_source_followups"] = completion["followups"]
+    round49_path = output / "round49-fju-host-and-cost-review.json"
+    if round49_path.exists():
+        r49 = json.loads(round49_path.read_text("utf8"))
+        summary["fju_host_and_cost_review_round49"] = {
+            "reviewed_at": r49["reviewed_at"],
+            "patched_row_scopes": len(r49["rows"]),
+            "patched_singletons": len(r49["singletons"]),
+            "patch_count": sum(len(r["patches"]) for r in r49["rows"] + r49["singletons"]),
+            "host_schools_reviewed": [
+                "天普大學 Temple University",
+                "蒙特雷大學 Universidad de Monterrey",
+                "普福爾茨海姆大學 Pforzheim University",
+                "香港浸會大學 Hong Kong Baptist University",
+            ],
+            "sources": r49["sources"],
+            "whole_records_verified": 0,
+            "whole_schools_verified": 0,
+        }
+    round50_path = output / "round50-ncku-waseda-followup-review.json"
+    if round50_path.exists():
+        r50 = json.loads(round50_path.read_text("utf8"))
+        summary["ncku_waseda_followup_review_round50"] = {
+            "reviewed_at": r50["reviewed_at"],
+            "patched_row_scopes": len(r50["rows"]),
+            "patch_count": sum(len(r["patches"]) for r in r50["rows"]),
+            "sources": r50["sources"],
+            "whole_records_verified": 0,
+            "whole_schools_verified": 0,
+        }
+    round51_path = output / "round51-main6-provenance-review.json"
+    if round51_path.exists():
+        r51 = json.loads(round51_path.read_text("utf8"))
+        summary["main6_provenance_and_template_review_round51"] = {
+            "reviewed_at": r51["reviewed_at"],
+            "schools": list(r51["schools"].keys()),
+            "partner_rows_bound": sum(len(s["partners"]) for s in r51["schools"].values()),
+            "destination_profiles_cost_bounded": sum(len(s["destinations"]) for s in r51["schools"].values()),
+            "student_life_snapshots_reviewed": sum(len(s["life"]) for s in r51["schools"].values()),
+            "student_experience_rows_reviewed": sum(len(s["stories"]) for s in r51["schools"].values()),
+            "whole_records_verified": 0,
+            "whole_schools_verified": 0,
+            "note": "Main's 6 newly onboarded schools (ncue, nknu, tmu, csmu, cmu, kmu) are audited for mother-school field provenance and template withdrawal without inflating the original 25-school baseline census.",
+        }
     (output / "review-progress.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     return summary
 
