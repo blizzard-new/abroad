@@ -1,0 +1,230 @@
+{
+  "round": 50,
+  "reviewed_at": "2026-10-21T06:30:00+00:00",
+  "scope": "Round 50 follow-up review applying NCKU Yonsei Mirae campus identity host evidence, NCKU Waseda workflow cross-field restriction detail, and Waseda Business School (WBS) July 10, 2026 departmental partner list provenance on NTUST, NTU, and NCCU.",
+  "sources": {
+    "https://yiec.yonsei.ac.kr/yiec_en/program/overseas01.do": {
+      "sha256": "5a86f965cdb523788727eb34ccefc025433262e79715ea9605b3527533572def",
+      "text_sha256": "ac1aed531870053187a0c07b1c95d54d86b883bad46c3f7fdcd49623a5547d85",
+      "finding": "Mirae page identifies that campus and a partner list marked updated 2020-11-06; Taiwan entries shown are NTUST and Yuanpei, not NCKU. Keep NCKU Yonsei/Mirae campus identity unresolved."
+    },
+    "https://www.waseda.jp/fcom/wbs/assets/uploads/2026/07/20260710_List_Partner_Schools.pdf": {
+      "sha256": "14b452c692adee1b306bafd62cfcdae18d128a43fe5dee0c1fd73158f81bd56e",
+      "finding": "WBS July 10, 2026 departmental partner list includes NTUST School of Management, NTU College of Management and NCCU College of Commerce. Supports departmental route without resolving NTUST undergraduate year 2+ or incoming language conditions."
+    },
+    "https://oia.ncku.edu.tw/var/file/32/1032/img/535260712.pdf": {
+      "sha256": "ff3e9c46348a19feef40b2601920b91e8049f43be71e8ea437388c1a7bb977bb",
+      "finding": "NCKU 116-1 table page 10 Waseda row requires relevant subject background and prohibits cross-field applications."
+    }
+  },
+  "rows": [
+    {
+      "home_id": "ncku",
+      "file": "src/exchange_info/official_data/ncku/partners.jsonl",
+      "school_name": "延世大學（未來校區） Yonsei University Mirae Campus",
+      "country": "韓國",
+      "patches": [
+        {
+          "pointer": "/field_evidence/campus_identity",
+          "expected_missing": false,
+          "expected_values": [
+            {
+              "source_url": "https://oia.ncku.edu.tw/var/file/32/1032/img/535260712.pdf",
+              "source_pages": [
+                12
+              ],
+              "academic_year": "116",
+              "application_round": "116-1",
+              "checked_at": "2026-10-21T02:57:27.516793+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "延世大學\nYonsei University",
+              "note": "校區對應待確認：母校表僅列「延世大學 Yonsei University」，未指明未來校區；現有校名與校區定位不能由本表證實。"
+            }
+          ],
+          "value": {
+            "source_url": "https://yiec.yonsei.ac.kr/yiec_en/program/overseas01.do",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "116",
+            "application_round": "116-1",
+            "checked_at": "2026-10-21T06:30:00+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "延世大學 Yonsei University（母校116-1表第12頁）；Yonsei Mirae Campus 國際處頁面（updated 2020-11-06）臺灣合作校僅列 NTUST 與 Yuanpei University，未列 NCKU。",
+            "note": "校區對應待確認：母校116-1表僅列「延世大學 Yonsei University」且限制排除 Songdo International Campus，未指明未來校區（Mirae Campus）；接待校 Mirae 頁面舊版名單（2020-11-06更新版僅列臺科大與元培，未列成大）亦不足以反證現行合約，故維持校區定位待確認。"
+          },
+          "source_url": "https://yiec.yonsei.ac.kr/yiec_en/program/overseas01.do",
+          "reason": "補入延世大學未來校區（Mirae Campus）國際處公開合作名單查核結果與校區定位待確認原因。"
+        },
+        {
+          "pointer": "/availability_note",
+          "expected_missing": false,
+          "expected_values": [
+            "成大116-1公告名額：1名（僅限研習一學期）。此為本期母校公告，不代表個人錄取或目前仍可報名。 已核對成大116-1一覽表；接待校當期學程、語言證明效期與最終錄取資格仍須另行核實，母校提名不等於接待校錄取。 校區對應待確認：母校表僅列「延世大學 Yonsei University」，未指明未來校區；現有校名與校區定位不能由本表證實。"
+          ],
+          "value": "成大116-1公告名額：1名（僅限研習一學期）。此為本期母校公告，不代表個人錄取或目前仍可報名。 已核對成大116-1一覽表；接待校當期學程、語言證明效期與最終錄取資格仍須另行核實，母校提名不等於接待校錄取。 校區對應待確認：母校表僅列「延世大學 Yonsei University」，未指明未來校區；現有校名與校區定位不能由本表證實。 已查延世未來校區國際處公開名單（2020-11-06更新版僅列臺科大與元培，未列成大），舊名單不足以反證現行合約，校區定位仍維持待確認。",
+          "source_url": "https://yiec.yonsei.ac.kr/yiec_en/program/overseas01.do",
+          "reason": "補充延世未來校區國際處名單查核說明，維持校區定位待確認。"
+        }
+      ]
+    },
+    {
+      "home_id": "ncku",
+      "file": "src/exchange_info/official_data/ncku/application_workflows.jsonl",
+      "school_name": "延世大學（未來校區） Yonsei University Mirae Campus",
+      "country": "韓國",
+      "patches": [
+        {
+          "pointer": "/steps/3/details",
+          "expected_missing": false,
+          "expected_values": [
+            [
+              "成大116-1公告名額：1名（僅限研習一學期）。此為本期母校公告，不代表個人錄取或目前仍可報名。",
+              "申請條件全文（成大母校表）：\n限大學部及碩士班在校生\n碩士學生須於碩一下(含)後方可提出申請\n語言能力須具備TOEFL iBT 79/ IELTS 6.5或TOPIK 4級 以上\nMedicine、Dentistry、Pharmacy、Nursing、Music、MBA、 Law、Songdo International Campus courses不接受交換生申請\n主修Business者方可申請，且至多只能選修4門課程",
+              "校區對應待確認：母校表僅列「延世大學 Yonsei University」，未指明未來校區；現有校名與校區定位不能由本表證實。"
+            ]
+          ],
+          "value": [
+            "成大116-1公告名額：1名（僅限研習一學期）。此為本期母校公告，不代表個人錄取或目前仍可報名。",
+            "申請條件全文（成大母校表）：\n限大學部及碩士班在校生\n碩士學生須於碩一下(含)後方可提出申請\n語言能力須具備TOEFL iBT 79/ IELTS 6.5或TOPIK 4級 以上\nMedicine、Dentistry、Pharmacy、Nursing、Music、MBA、 Law、Songdo International Campus courses不接受交換生申請\n主修Business者方可申請，且至多只能選修4門課程",
+            "校區對應待確認：母校表僅列「延世大學 Yonsei University」，未指明未來校區；現有校名與校區定位不能由本表證實。",
+            "校區定位待確認：成大116-1一覽表僅列「延世大學 Yonsei University」（排除 Songdo International Campus），未指明未來校區；延世未來校區國際處公開合作名單（2020-11-06更新）僅列臺科大與元培，未列成大，申請前須向成大國際處確認合約校區。"
+          ],
+          "source_url": "https://yiec.yonsei.ac.kr/yiec_en/program/overseas01.do",
+          "reason": "於合作校申請步驟補充延世未來校區定位待確認說明。"
+        },
+        {
+          "pointer": "/steps/3/source_urls",
+          "expected_missing": false,
+          "expected_values": [
+            [
+              "https://oia.ncku.edu.tw/var/file/32/1032/img/107138261.pdf",
+              "https://oia.ncku.edu.tw/var/file/32/1032/img/535260712.pdf",
+              "https://oia.ncku.edu.tw/p/404-1032-228571.php?Lang=zh-tw",
+              "https://oia.ncku.edu.tw/p/406-1032-301175,r3414.php?Lang=zh-tw",
+              "https://mirae.yonsei.ac.kr/"
+            ]
+          ],
+          "value": [
+            "https://oia.ncku.edu.tw/var/file/32/1032/img/107138261.pdf",
+            "https://oia.ncku.edu.tw/var/file/32/1032/img/535260712.pdf",
+            "https://oia.ncku.edu.tw/p/404-1032-228571.php?Lang=zh-tw",
+            "https://oia.ncku.edu.tw/p/406-1032-301175,r3414.php?Lang=zh-tw",
+            "https://mirae.yonsei.ac.kr/",
+            "https://yiec.yonsei.ac.kr/yiec_en/program/overseas01.do"
+          ],
+          "source_url": "https://yiec.yonsei.ac.kr/yiec_en/program/overseas01.do",
+          "reason": "綁定延世未來校區國際處頁面來源。"
+        }
+      ]
+    },
+    {
+      "home_id": "ncku",
+      "file": "src/exchange_info/official_data/ncku/application_workflows.jsonl",
+      "school_name": "早稻田大學 Waseda University",
+      "country": "日本",
+      "patches": [
+        {
+          "pointer": "/steps/3/details",
+          "expected_missing": false,
+          "expected_values": [
+            [
+              "成大116-1公告名額：1名（僅限研習一學期）。此為本期母校公告，不代表個人錄取或目前仍可報名。",
+              "申請條件全文（成大母校表）：\n研究所或大學部在校生\n不同學程有不同入學(英語/GPA)規定，申請者需自行確認符合資格後提出申請\n須具備學程領域專業背景方可申請(不接受跨領域申請)"
+            ]
+          ],
+          "value": [
+            "成大116-1公告名額：1名（僅限研習一學期）。此為本期母校公告，不代表個人錄取或目前仍可報名。",
+            "申請條件全文（成大母校表）：\n研究所或大學部在校生\n不同學程有不同入學(英語/GPA)規定，申請者需自行確認符合資格後提出申請\n須具備學程領域專業背景方可申請(不接受跨領域申請)",
+            "成大116-1一覽表第10頁規定：早稻田大學不同學程有不同入學（英語／GPA）規定，申請者須自行確認符合資格後提出申請，且須具備學程領域專業背景（不接受跨領域申請）。"
+          ],
+          "source_url": "https://oia.ncku.edu.tw/var/file/32/1032/img/535260712.pdf",
+          "reason": "於早稻田大學合作校申請步驟明確列出不接受跨領域申請及各學程獨立英語／GPA規定。"
+        }
+      ]
+    },
+    {
+      "home_id": "ntust",
+      "file": "src/exchange_info/official_data/ntust/partners.jsonl",
+      "school_name": "早稻田大學 Waseda University",
+      "country": "日本",
+      "patches": [
+        {
+          "pointer": "/field_evidence/wbs_departmental_partner_list",
+          "expected_missing": true,
+          "expected_values": [],
+          "value": {
+            "source_url": "https://www.waseda.jp/fcom/wbs/assets/uploads/2026/07/20260710_List_Partner_Schools.pdf",
+            "source_pages": [
+              1
+            ],
+            "checked_at": "2026-10-21T06:30:00+00:00",
+            "status": "reference_only",
+            "excerpt": "Waseda Business School (WBS) Partner Schools List (As of July 10, 2026): National Taiwan University (College of Management), National Chengchi University (College of Commerce), National Taiwan University of Science and Technology (School of Management).",
+            "note": "早稻田商學研究科（WBS）2026/07/10 院級合作名單包含臺大管理學院、政大商學院、臺科大管理學院；僅佐證商管院級合作背景，不取代校級交換開放名單或解決臺科大大學部大二以上選課／語言條件。"
+          },
+          "source_url": "https://www.waseda.jp/fcom/wbs/assets/uploads/2026/07/20260710_List_Partner_Schools.pdf",
+          "reason": "記錄早稻田商學研究科（WBS）2026/07/10 院級合作校名單證據。"
+        },
+        {
+          "pointer": "/language_review_note",
+          "expected_missing": true,
+          "expected_values": [],
+          "value": "早稻田商學研究科（WBS）2026/07/10 院級合作名單列有臺科大管理學院，可佐證管院合作關係，惟不解釋本筆同時列大學部大二以上及跨院選課之條件；116-1當期開放與語檢要求仍待核對。",
+          "source_url": "https://www.waseda.jp/fcom/wbs/assets/uploads/2026/07/20260710_List_Partner_Schools.pdf",
+          "reason": "補充WBS院級名單與臺科大115-2歷史紀錄大學部／跨院選課範圍差異說明。"
+        }
+      ]
+    },
+    {
+      "home_id": "ntu",
+      "file": "src/exchange_info/official_data/ntu/partners.jsonl",
+      "school_name": "早稻田大學",
+      "country": "日本",
+      "patches": [
+        {
+          "pointer": "/field_evidence/wbs_departmental_partner_list",
+          "expected_missing": true,
+          "expected_values": [],
+          "value": {
+            "source_url": "https://www.waseda.jp/fcom/wbs/assets/uploads/2026/07/20260710_List_Partner_Schools.pdf",
+            "source_pages": [
+              1
+            ],
+            "checked_at": "2026-10-21T06:30:00+00:00",
+            "status": "reference_only",
+            "excerpt": "Waseda Business School (WBS) Partner Schools List (As of July 10, 2026): National Taiwan University (College of Management), National Chengchi University (College of Commerce), National Taiwan University of Science and Technology (School of Management).",
+            "note": "早稻田商學研究科（WBS）2026/07/10 院級合作名單包含臺大管理學院、政大商學院、臺科大管理學院；僅佐證商管院級合作背景，不取代校級交換開放名單或解決臺科大大學部大二以上選課／語言條件。"
+          },
+          "source_url": "https://www.waseda.jp/fcom/wbs/assets/uploads/2026/07/20260710_List_Partner_Schools.pdf",
+          "reason": "記錄早稻田商學研究科（WBS）2026/07/10 院級合作校名單證據。"
+        }
+      ]
+    },
+    {
+      "home_id": "nccu",
+      "file": "src/exchange_info/official_data/nccu/partners.jsonl",
+      "school_name": "早稻田大學 Waseda University",
+      "country": "日本",
+      "patches": [
+        {
+          "pointer": "/field_evidence/wbs_departmental_partner_list",
+          "expected_missing": true,
+          "expected_values": [],
+          "value": {
+            "source_url": "https://www.waseda.jp/fcom/wbs/assets/uploads/2026/07/20260710_List_Partner_Schools.pdf",
+            "source_pages": [
+              1
+            ],
+            "checked_at": "2026-10-21T06:30:00+00:00",
+            "status": "reference_only",
+            "excerpt": "Waseda Business School (WBS) Partner Schools List (As of July 10, 2026): National Taiwan University (College of Management), National Chengchi University (College of Commerce), National Taiwan University of Science and Technology (School of Management).",
+            "note": "早稻田商學研究科（WBS）2026/07/10 院級合作名單包含臺大管理學院、政大商學院、臺科大管理學院；僅佐證商管院級合作背景，不取代校級交換開放名單或解決臺科大大學部大二以上選課／語言條件。"
+          },
+          "source_url": "https://www.waseda.jp/fcom/wbs/assets/uploads/2026/07/20260710_List_Partner_Schools.pdf",
+          "reason": "記錄早稻田商學研究科（WBS）2026/07/10 院級合作校名單證據。"
+        }
+      ]
+    }
+  ]
+}

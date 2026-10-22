@@ -1,0 +1,44 @@
+{
+  "recorded_at": "2026-10-21T02:40:18.995697+00:00",
+  "source_receipts": "round41-source-receipts.jsonl",
+  "receipt_count": 26,
+  "findings": [
+    {
+      "source_url": "https://www.waseda.jp/fcom/wbs/assets/uploads/2026/07/20260710_List_Partner_Schools.pdf",
+      "source_sha256": "14b452c692adee1b306bafd62cfcdae18d128a43fe5dee0c1fd73158f81bd56e",
+      "text_reviewed_pages": [
+        1
+      ],
+      "visually_reviewed_pages": [],
+      "finding": "WBS July10,2026 departmental partner list includes NTUST School of Management, NTU College of Management and NCCU College of Commerce. This supports a departmental route; it does not resolve NTUST row listing undergraduate year2+ or its incoming language conditions.",
+      "data_changed": true
+    },
+    {
+      "source_url": "https://oia.ncku.edu.tw/var/file/32/1032/img/535260712.pdf",
+      "source_sha256": "ff3e9c46348a19feef40b2601920b91e8049f43be71e8ea437388c1a7bb977bb",
+      "text_reviewed_pages": [
+        10
+      ],
+      "visually_reviewed_pages": [],
+      "finding": "Waseda row: 116-1, one student one semester; UG/graduate; individual English/GPA requirements; relevant subject background mandatory and cross-field applications not accepted. Stored truncated eligibility omits this restriction. Need image/layout review and patch derived displays.",
+      "data_changed": true
+    },
+    {
+      "source_url": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/02/更新淡江大學學校財團法人淡江大學2027-2028赴日本姊妹校交換生聯合甄選作業簡章.pdf",
+      "source_sha256": "bcfa995958cbe01905a20b109bd40c5789273cced8e1125dfbef7c3293b4cac2",
+      "text_reviewed_pages": [
+        13
+      ],
+      "visually_reviewed_pages": [],
+      "finding": "Waseda Japanese-group row: quota2, UG/masters, N1 with department-specific caveat, GPA refer host. Heading is 2027–2028 and study period Apr2027–Mar2028; full call and home deadline not yet reviewed. Do not assume currently open.",
+      "data_changed": true
+    }
+  ],
+  "unread_or_unresolved": [
+    "NTUST shortlink AbKgyQ returns Google Drive sign-in, no factsheet read.",
+    "NSYSU and NCHU stored source URLs returned404; find live official replacements, no partnership-ending inference.",
+    "NTU,NTHU,NCCU,NYCU,PCCU,TKU directory,CYCU notice HTML acquired but detailed mother mapping not finished.",
+    "Remaining Waseda mother routes, IPS forms and G complete curriculum, all other partner records remain in scope."
+  ],
+  "whole_schools_verified": 0
+}

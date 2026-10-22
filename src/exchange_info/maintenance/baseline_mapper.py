@@ -59,6 +59,8 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "csmu": ["oia.csmu.edu.tw", "www.csmu.edu.tw", "csmu.edu.tw"],
     "cmu": ["cmucia.cmu.edu.tw", "www.cmu.edu.tw", "cmupt.cmu.edu.tw", "med.cmu.edu.tw", "chmed.cmu.edu.tw", "cmunur.cmu.edu.tw", "cmu.edu.tw"],
     "kmu": ["cia.kmu.edu.tw", "www.kmu.edu.tw", "cmed.kmu.edu.tw", "dent.kmu.edu.tw", "pharm.kmu.edu.tw", "nursing.kmu.edu.tw", "chs.kmu.edu.tw", "cls.kmu.edu.tw", "chss.kmu.edu.tw", "kmu.edu.tw"],
+    "mcu": ["iee.mcu.edu.tw", "web.mcu.edu.tw", "www.mcu.edu.tw", "mcu.edu.tw"],
+    "ntub": ["oia.ntub.edu.tw", "exchangestd.ntub.edu.tw", "www.ntub.edu.tw", "ntub.edu.tw"],
 }
 
 
@@ -1179,6 +1181,52 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["kmu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="kmu", partner_rows=kmu_rows, default_cycle_label="116"
+        )
+
+    # 32. MCU partners.jsonl (202 partner schools)
+    mcu_partners_path = official_data_root / "mcu" / "partners.jsonl"
+    if mcu_partners_path.exists():
+        mcu_rows = []
+        for line in mcu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            mcu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://iee.mcu.edu.tw/zh-hant/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e5%ad%b8%e6%a0%a1/",
+            })
+        school_reports["mcu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="mcu", partner_rows=mcu_rows, default_cycle_label="116"
+        )
+
+    # 33. NTUB partners.jsonl (93 partner schools)
+    ntub_partners_path = official_data_root / "ntub" / "partners.jsonl"
+    if ntub_partners_path.exists():
+        ntub_rows = []
+        for line in ntub_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            ntub_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.ntub.edu.tw/p/412-1006-14367.php?Lang=zh-tw",
+            })
+        school_reports["ntub"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="ntub", partner_rows=ntub_rows, default_cycle_label="116"
         )
 
     if store.current_release_id is None:

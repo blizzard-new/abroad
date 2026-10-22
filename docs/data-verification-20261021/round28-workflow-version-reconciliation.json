@@ -1,0 +1,28 @@
+{
+  "base_commit": "b662dced2607bc67c3354c95b7aaad202448bea7",
+  "resolved_records": 510,
+  "by_home": {
+    "cgu": 150,
+    "ntpu": 360
+  },
+  "resolved_field_coverage": {
+    "same_value_at_pointer": 265938
+  },
+  "combined_structural_coverage": {
+    "same_value_at_pointer": 1852690,
+    "different_value_at_pointer": 3137,
+    "absent_runtime_pointer": 31373,
+    "ambiguous_runtime_record": 0
+  },
+  "remaining_ambiguous_records": 0,
+  "facts_verified_by_reconciliation": 0,
+  "preserves_historical_versions": true,
+  "inputs": {
+    "output\\data-verification-20261021\\baseline\\records.jsonl.gz": "455c4f67ccfa70a4f469c3af9986816f5ac5904392ce51f25606c0a976465f61",
+    "output\\data-verification-20261021\\raw-catalog-baseline\\records.jsonl.gz": "971af8e3e5432c8bc1b255b319eda5c7be3ab4bc6050e9f8a023c9c5b41fb386"
+  },
+  "outputs": {
+    "output\\data-verification-20261021\\workflow-version-reconciliation\\field-coverage.jsonl.gz": "deeda01525735ffac970df371f4be8305ba7ce2a6613e026a5eca9a2bdeef02f",
+    "output\\data-verification-20261021\\workflow-version-reconciliation\\record-links.jsonl": "5d21cea2e992e9a404278ceef7f9099d8ea21ac276de2c7d4dadf34c578b05b2"
+  }
+}

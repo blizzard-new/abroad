@@ -279,7 +279,8 @@ def test_fju_oct21_partner_cleanup_and_continent_drives_and_idempotency(tmp_path
     assert len(payload["continent_google_drive_portals"]) == 5
 
     all_partners = fetch_fju_partner_universities()
-    assert len(all_partners) == 234
+    label_40_partners = [p for p in all_partners if p.source_url == PARTNER_LIST_40_URL]
+    assert len(label_40_partners) == 234
     assert sum(
         1 for p in all_partners if p.reference_data.get("label_40_status_20261021") == "retained_in_207"
     ) == 207

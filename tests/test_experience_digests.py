@@ -233,3 +233,16 @@ def test_the_experience_tab_lists_stories_first_and_files_everything_else_as_a_r
     assert 'fetchJson(`/experience-digest?source_url=' in script, "saved copies look their write-up up by address"
     collector = (Path(experience_digests.__file__).parent / "experience_collector.py").read_text(encoding="utf-8")
     assert "這個來源主要談到" in collector, "the filler template the UI hides is still the one the collector writes"
+
+
+@pytest.mark.parametrize("perspective,kind", [
+    ("official_directory", "source_index"),
+    ("official_program_record", "official_record"),
+])
+def test_source_role_is_not_upgraded_by_a_url_or_bundled_digest(bundled, perspective, kind):
+    bundled(digest_payload())
+    source = make_source(perspective=perspective)
+    assert source_kind(source) == kind
+    attached = attach_digests([source])[0]
+    assert attached.source_kind == kind
+    assert attached.digest_zh is None

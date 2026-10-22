@@ -79,7 +79,7 @@ def test_scu_degree_and_academic_checks() -> None:
     # Undergraduate: class rank top 85% or average score >= 65
     assert scu_academic_check("大學部", 80.0, 3.5, 30.0)[0] == "pass"
     assert scu_academic_check("大學部", 62.0, 2.0, 90.0)[0] == "fail"
-    assert scu_academic_check("大學部", 75.0, 3.2, None)[0] == "pass"
+    assert scu_academic_check("大學部", 75.0, 3.2, None)[0] == "needs_confirmation"
     assert scu_academic_check("大學部", None, None, None)[0] == "needs_confirmation"
 
     # Graduate: average >= 80
@@ -91,12 +91,13 @@ def test_scu_degree_and_academic_checks() -> None:
 
 
 def test_scu_language_checks() -> None:
+    # A score alone cannot establish eligibility without a partner-specific threshold.
     assert scu_language_check(None, None, partner_country="中國大陸")[0] == "pass"
-    assert scu_language_check("toefl", 80.0, partner_country="美國")[0] == "pass"
-    assert scu_language_check("toefl", 55.0, partner_country="美國")[0] == "fail"
-    assert scu_language_check("ielts", 6.0, partner_country="英國")[0] == "pass"
-    assert scu_language_check("toeic", 785.0, partner_country="韓國")[0] == "pass"
-    assert scu_language_check("jlpt", 2.0, partner_country="日本")[0] == "pass"
+    assert scu_language_check("toefl", 80.0, partner_country="美國")[0] == "needs_confirmation"
+    assert scu_language_check("toefl", 55.0, partner_country="美國")[0] == "needs_confirmation"
+    assert scu_language_check("ielts", 6.0, partner_country="英國")[0] == "needs_confirmation"
+    assert scu_language_check("toeic", 785.0, partner_country="韓國")[0] == "needs_confirmation"
+    assert scu_language_check("jlpt", 2.0, partner_country="日本")[0] == "needs_confirmation"
 
 
 def test_scu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
@@ -105,9 +106,14 @@ def test_scu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     assert sum(1 for p in partners if p.country == "中國大陸") == 62
     assert sum(1 for p in partners if p.country != "中國大陸") == 129
     assert sum(1 for p in partners if "自費研修" in p.program_type) == 3
-    assert all(p.quota_status == "published" for p in partners)
-    assert all(p.availability_status == "open" for p in partners)
-    assert all(p.application_window_status == "open" for p in partners)
+    historical_terms = [p for p in partners if any(name in p.school_name for name in ("Takushoku", "Tunku Abdul"))]
+    assert len(historical_terms) == 2
+    assert all(p.quota_status == "reference_only" and p.availability_status == "needs_confirmation"
+               and p.application_window_status == "needs_confirmation" for p in historical_terms)
+    current = [p for p in partners if p not in historical_terms]
+    assert len(current) == 189
+    assert all(p.quota_status == "published" and p.availability_status == "open"
+               and p.application_window_status == "open" for p in current)
     assert all(p.location and p.location.geocode_status == "verified" for p in partners)
     assert all(p.student_summary_zh is not None for p in partners)
 
@@ -198,7 +204,8 @@ def test_scu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert len(plan.choices) == 1
     checks = {c.code: c for c in plan.choices[0].checks}
     assert checks["academic_score"].status == "pass"
-    assert checks["home_language_score"].status == "pass"
+    # SCU publishes partner-specific requirements, not a universal English pass mark.
+    assert checks["home_language_score"].status == "needs_confirmation"
 
     completeness = build_school_completeness(
         sample,

@@ -164,6 +164,8 @@ def apply_fju_oct21_partner_view(
     }
     out: list[PartnerUniversity] = []
     for p in partners:
+        if p.source_url and p.source_url != PARTNER_LIST_40_URL:
+            continue
         norm_name = normalize_fju_school_title(p.school_name)
         if norm_name in removed_norm:
             continue
@@ -326,7 +328,9 @@ def apply_fju_oct21_updates(
         ref_data = dict(p.get("reference_data") or {})
         ref_data["continent_portal_20261021"] = continent
         ref_data["continent_google_drive_url_20261021"] = drive_by_continent[continent]
-        if removed_entry := removed_by_norm.get(norm_name):
+        if p.get("source_url") and p.get("source_url") != PARTNER_LIST_40_URL:
+            ref_data["label_40_status_20261021"] = "separate_1347_self_funded_route"
+        elif removed_entry := removed_by_norm.get(norm_name):
             removed_count += 1
             ref_data["label_40_status_20261021"] = "removed_expired_or_suspended_in_20261021_cleanup"
             ref_data["label_40_prior_contract_quota"] = removed_entry["contract_quota"]

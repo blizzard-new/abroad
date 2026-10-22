@@ -1233,7 +1233,7 @@ def main() -> None:
     student_dashboard_payload = {
         "school_name": "國立臺灣師範大學",
         "last_checked": "2026-10-16T14:00:00Z",
-        "academic_score_minimum": 60.0,
+        "academic_score_minimum": None,
         "academic_score_rule": "須於臺師大修業滿至少一學期（不含進修推廣學院、在職專班及臺獎受獎生），並符合各志願姊妹校學程之 GPA／成績標準；校內書面審查「學業及相關學術表現」佔總分 30%（其中 5% 為 EMI 全英語授課修課數，修滿 5 門得 5%）。",
         "academic_gpa_minimum": None,
         "maximum_preferences": 10,
@@ -1245,16 +1245,12 @@ def main() -> None:
             "graduate_academic_exempt": False,
             "exclude_in_service": True,
             "pending_quota_planning": False,
-            "partner_requirements_need_confirmation": False,
+            "partner_requirements_need_confirmation": True,
             "degree_score_minimums": {},
             "excluded_undergraduate_years": [],
             "language_certificate_required": False,
         },
-        "language_score_minimums": {
-            "toefl": 61.0,
-            "ielts": 5.5,
-            "toeic": 600.0,
-        },
+        "language_score_minimums": {},
         "application_periods": [
             {
                 "title": "國立臺灣師範大學 116-1 校級赴外交換甄選線上申請與補件",
@@ -1661,6 +1657,16 @@ def main() -> None:
         }, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "ntnu", round_id=20)
+    review_generated_content(REPO_ROOT, "ntnu", round_id=21)
+    from exchange_info.ntnu_program_year_review import apply_ntnu_program_year_review
+    apply_ntnu_program_year_review(REPO_ROOT)
+    from exchange_info.ntnu_quota_review import apply_ntnu_quota_review
+    apply_ntnu_quota_review(REPO_ROOT)
+    from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
+    apply_vilnius_akita_review(REPO_ROOT, "ntnu")
 
     print(
         f"Successfully built NTNU catalog: {len(partners)} partners ({uni_level_count} uni-level, {col_dept_only_count} col/dept-only, "

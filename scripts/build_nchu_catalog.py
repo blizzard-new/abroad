@@ -225,7 +225,7 @@ REGION_COST_DEFAULTS = {
 NCHU_OVERSEAS_SHEET_URL = "https://docs.google.com/spreadsheets/d/1acE37cH-R7k88O9g-sT8wH-rX99rQT3a/edit?usp=sharing&ouid=108931068757503846261&rtpof=true&sd=true"
 NCHU_MAINLAND_PAGE_URL = "https://www.oia.nchu.edu.tw/index.php/zh-tw/2-uncategorised/158-1-2-exchange-china"
 NCHU_OIA_PARTNERS_URL = "https://www.oia.nchu.edu.tw/index.php/1-1-global-partners"
-NCHU_GUIDELINES_PDF_URL = "https://oia.nchu.edu.tw/images/File/02_Exchange_Program/5-1-1/Exchange_Program_Guidelines_for_Fall_Semester_2027_TW.pdf"
+NCHU_GUIDELINES_PDF_URL = "https://www.oia.nchu.edu.tw/images/File/05_Global_Mobility/5-1-Exchange-Student-Programs/Exchange_Program_Guidelines_for_Fall_Semester_2027_TW.pdf"
 NCHU_REGULATIONS_PDF_URL = "https://www.oia.nchu.edu.tw/images/File/01_OIA_Regulations/R6_Regulations_for_nominating_NCHU_outbound_exchange_TW.pdf"
 NCHU_SCHOLARSHIP_URL = "https://www.oia.nchu.edu.tw/index.php/2-uncategorised/155-1-1-exchange-scholarship"
 NCHU_APPLY_PORTAL_URL = "https://oiawp.nchu.edu.tw/out-going-program-online-application/"
@@ -1467,17 +1467,16 @@ def main() -> None:
         "academic_gpa_minimum": None,
         "maximum_preferences": 10,
         "selection_rules": {
-            "academic_policy": "gpa_or_rank",
+            "academic_policy": "percentage",
             "academic_reference_year": "116",
             "undergraduate_gpa_minimum": None,
-            "undergraduate_rank_maximum": 100.0,
+            "undergraduate_rank_maximum": None,
             "graduate_academic_exempt": False,
             "exclude_in_service": False,
             "pending_quota_planning": False,
             "partner_requirements_need_confirmation": False,
             "degree_score_minimums": {
                 "undergraduate": 60.0,
-                "graduate": 60.0,
             },
             "excluded_undergraduate_years": [],
             "language_certificate_required": False,
@@ -2004,6 +2003,10 @@ def main() -> None:
         json.dumps(provenance_payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "nchu", round_id=20)
+    review_generated_content(REPO_ROOT, "nchu", round_id=21)
 
     print(
         f"Successfully built NCHU catalog: {len(partners)} partners ({open_partner_count} open, "

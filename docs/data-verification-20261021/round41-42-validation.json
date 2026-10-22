@@ -1,0 +1,60 @@
+{
+  "validated_at": "2026-10-21T02:42:14.624305+00:00",
+  "tests": {
+    "command": "python -X utf8 -m pytest tests/test_ntut_ips_review.py tests/test_cross_school_source_provenance.py tests/test_cross_school_partners.py tests/test_ntut_integration.py -q",
+    "passed": 29,
+    "failed": 0,
+    "duration_seconds": 35.56
+  },
+  "initial_failures": "Two fixture setup files missing and one legacy assertion requiring every location to be verified; fixtures and source-specific location expectation corrected.",
+  "code_sha256": {
+    "src/exchange_info/cross_school_partners.py": "c8138db80becd5219fca554f8fa5ac7e83e3b5e908f2c878aca42a57063c7959",
+    "src/exchange_info/ntut_ips_review.py": "712181e2f3a29e0409e213f9404f92839696511e264aadf1efcfc9c164503ff0",
+    "src/exchange_info/ntut_source_review.py": "91af872fbcd0c20ee77aab9bf031cdb0a90f06baa7d889137e1bf00fdb38af42",
+    "src/exchange_info/ntut_student_view.py": "94e108378b650000082b17eb93f24ed2a609872789a277c1389f310a9aa10a70",
+    "scripts/report_university_data_audit.py": "5a4fe0cba350f0073cffd73770bfe3d2765f78449bb70f8981974ed53c7edd18",
+    "tests/test_ntut_ips_review.py": "ae4a943aff2d39f9f859928e85a8bff13b940f531541f08206d3707c5360e264",
+    "tests/test_ntut_integration.py": "293795a11fd473646b8fd90b0cca1e61e777f21af92c1342dd1417e8dd797d26",
+    "tests/test_cross_school_source_provenance.py": "be46db6dc4b97c2b5f9392d12b26f82fca1d4c452ddde863608347517126870b"
+  },
+  "evidence_validation": {
+    "validated_at": "2026-10-21T02:40:48.200701+00:00",
+    "review_decisions": 117899,
+    "bindings_by_inventory": {
+      "output/data-verification-20261021/baseline": 64426,
+      "output/data-verification-20261021/derived-baseline": 40675,
+      "output/data-verification-20261021/raw-catalog-baseline": 6744,
+      "output/data-verification-20261021/runtime-review-20261021": 6054
+    },
+    "bound_records": 16690,
+    "absent_optional_null_bindings": 867,
+    "pinned_inventory_files": 14,
+    "original_ledger_sha256": "b7f80955a390fbcf4602b3e2f13ece8933dffc8621cc56d234d597efea2e6252",
+    "errors": [],
+    "facts_verified_by_validation": 0
+  },
+  "syntax_validation": {
+    "checked_at": "2026-10-21T02:40:46.157968+00:00",
+    "counts": {
+      ".py": 159,
+      ".json": 195,
+      ".jsonl": 152
+    },
+    "errors": [],
+    "temporary_files": []
+  },
+  "diff_check": "passed",
+  "html_render": {
+    "waseda_course_points": 7,
+    "length": 11043,
+    "gsaps_exclusion_and_zero_credit_present": true,
+    "browser_visual_qa": false
+  },
+  "primary_data_patches": 46,
+  "display_followup_patches": 8,
+  "metadata_patches": 6,
+  "source_receipts_round41": 26,
+  "full_builder_run": false,
+  "whole_schools_verified": 0,
+  "pr_created": false
+}

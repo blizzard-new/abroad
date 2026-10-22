@@ -1912,13 +1912,10 @@ def main() -> None:
         prov_text, encoding="utf-8"
     )
 
-    print(
-        f"Successfully built PCCU catalog: {len(partners)} partners ({open_partner_count} open, "
-        f"{completeness['verified_campus_images']} verified images, "
-        f"{completeness['verified_locations']} verified locations), {len(workflows)} workflows, "
-        f"{len(destinations)} destinations, {len(research_records)} research records, "
-        f"{exp_covered_schools} schools with experience records ({len(student_experience_rows)} rows)."
-    )
+    from exchange_info.pccu_source_review import review_bundle
+    reviewed_counts = review_bundle(REPO_ROOT)
+    print(f"Built PCCU partial review: {len(partners)} records; {reviewed_counts}; no whole records verified.")
+
 
 
 if __name__ == "__main__":

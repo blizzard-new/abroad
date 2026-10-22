@@ -1,13 +1,24 @@
 # Editorial intentions and next topics
 
-## 2026-10-21 每日批次：兩篇（待審）
+## 2026-10-22 每日批次：兩篇（待審）
 
-台灣日期 2026-10-21 的新批次，分支 `codex/seo-daily-20261021`、[PR #109](https://github.com/blizzard-new/abroad/pull/109) 待審。已核對最新 main 的十五篇文章、全部相關待審 PR，以及當日已建批次；本次沒有重做既有文章或其他進行中的產文。選題來自使用者確認的候選方向，依編輯判斷，沒有搜尋量或排名資料。
+台灣日期 2026-10-22，隔離分支 `codex/seo-daily-20261022`；兩篇驗收完成，一起放入新的待審 [PR #117](https://github.com/blizzard-new/abroad/pull/117)。已核對 main 的十七篇文章、當日批次與全部五個待審 PR（#111、#113、#114、#115、#116），沒有另一個當日產文批次。PR #78、#92、#109 均已合併，本批直接基於 main，無未合併的文章基礎相依。選題為使用者候選方向 20 與 6，依編輯判斷；沒有使用者提供的 Search Console、搜尋量或排名資料。
+
+| 題目 | slug | 狀態 |
+| --- | --- | --- |
+| 多益怎麼準備？TOEIC 聽讀診斷、錯題整理與四週讀書計畫 | `toeic-listening-reading-preparation` | 完成，PR #117 待審；後續批次請排除 |
+| 交換生抵達第一週要做什麼？報到、住宿、通訊與緊急聯絡清單 | `exchange-arrival-week` | 完成，PR #117 待審；後續批次請排除 |
+
+多益篇處理考試診斷與練習安排，與既有一般 AI 英文學習指南分工；抵達篇處理落地後執行、校內程序與聯絡分流，連到既有住宿、Fact Sheet 與抵免指南。沒有新增重複版本或改動既有十七篇的網址、出版日與 lastmod。[來源、圖片及驗收紀錄](seo-editorial-validation-2026-10-22.md) 隨本批保存。
+
+## 2026-10-21 每日批次：兩篇（已合併）
+
+台灣日期 2026-10-21 的批次，分支 `codex/seo-daily-20261021`、[PR #109](https://github.com/blizzard-new/abroad/pull/109) 已合併（2026-10-22 查核）。當時核對最新 main 的十五篇文章、全部相關待審 PR，以及當日已建批次；沒有重做既有文章或其他進行中的產文。選題來自使用者確認的候選方向，依編輯判斷，沒有搜尋量或排名資料。
 
 | 候選方向 | slug | 狀態 |
 | --- | --- | --- |
-| 交換生與訪問生／自費留學的差異 | `exchange-versus-visiting` | 完成，待審；後續批次請排除 |
-| 如何看懂姊妹校 Fact Sheet | `exchange-fact-sheet` | 完成，待審；後續批次請排除 |
+| 交換生與訪問生／自費留學的差異 | `exchange-versus-visiting` | 已合併至 main；後續批次請排除 |
+| 如何看懂姊妹校 Fact Sheet | `exchange-fact-sheet` | 已合併至 main；後續批次請排除 |
 
 [來源、照片與驗收紀錄](seo-editorial-validation-2026-10-21.md) 保存本批證據。依使用者最新指示，每日批次為兩篇；舊版每週三篇不適用。本批依既有 renderer/schema 新增兩個獨立問題，不依賴候選規則文件 PR #92 合併才能閱讀。
 

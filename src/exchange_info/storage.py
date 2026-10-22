@@ -50,8 +50,8 @@ from .models import (
     VaultDocumentVersionRecord,
 )
 from .settings import DEFAULT_DATA_DIR
-from .school_identity import school_identity_key
-from .university_registry import CCU, CGU, CMU, CSMU, CYCU, FCU, FJU, KMU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TKU, TMU, WZU, YUNTECH, YZU
+from .school_identity import school_identity_key, school_program_identity_key
+from .university_registry import CCU, CGU, CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TKU, TMU, WZU, YUNTECH, YZU
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
 
@@ -89,6 +89,8 @@ BUNDLED_TMU_DIR = PACKAGE_DIR / "official_data" / "tmu"
 BUNDLED_CSMU_DIR = PACKAGE_DIR / "official_data" / "csmu"
 BUNDLED_CMU_DIR = PACKAGE_DIR / "official_data" / "cmu"
 BUNDLED_KMU_DIR = PACKAGE_DIR / "official_data" / "kmu"
+BUNDLED_MCU_DIR = PACKAGE_DIR / "official_data" / "mcu"
+BUNDLED_NTUB_DIR = PACKAGE_DIR / "official_data" / "ntub"
 
 _STORAGE_LOCKS_GUARD = threading.Lock()
 _STORAGE_LOCKS: dict[str, threading.RLock] = {}
@@ -263,7 +265,7 @@ def _with_explicit_destination_gaps(profile: DestinationProfile) -> DestinationP
 def _destination_profile_key(profile: DestinationProfile) -> tuple[str, str]:
     return (
         school_identity_key(profile.home_university or CGU.school_name),
-        school_identity_key(profile.school_name),
+        school_program_identity_key(profile.school_name),
     )
 
 
@@ -287,7 +289,7 @@ def _scope_legacy_destination_profiles(
         if audit.collector != "destinations" or not audit.home_university:
             continue
         homes_by_school.setdefault(
-            school_identity_key(audit.school_name),
+            school_program_identity_key(audit.school_name),
             set(),
         ).add(audit.home_university)
 
@@ -296,7 +298,7 @@ def _scope_legacy_destination_profiles(
         if row.home_university:
             scoped.append(row)
             continue
-        homes = homes_by_school.get(school_identity_key(row.school_name), set())
+        homes = homes_by_school.get(school_program_identity_key(row.school_name), set())
         if len(homes) == 1:
             scoped.append(
                 row.model_copy(update={"home_university": next(iter(homes))})
@@ -607,7 +609,7 @@ def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWork
 
 
 def _bundled_workflow_paths() -> tuple[Path, ...]:
-    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR, BUNDLED_FCU_DIR, BUNDLED_NSYSU_DIR, BUNDLED_NCHU_DIR, BUNDLED_NTUT_DIR, BUNDLED_NCCU_DIR, BUNDLED_NCKU_DIR, BUNDLED_NYCU_DIR, BUNDLED_NTHU_DIR, BUNDLED_PCCU_DIR, BUNDLED_WZU_DIR, BUNDLED_NKUST_DIR, BUNDLED_YUNTECH_DIR, BUNDLED_NTOU_DIR, BUNDLED_NCUE_DIR, BUNDLED_NKNU_DIR, BUNDLED_TMU_DIR, BUNDLED_CSMU_DIR, BUNDLED_CMU_DIR, BUNDLED_KMU_DIR))
+    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR, BUNDLED_FCU_DIR, BUNDLED_NSYSU_DIR, BUNDLED_NCHU_DIR, BUNDLED_NTUT_DIR, BUNDLED_NCCU_DIR, BUNDLED_NCKU_DIR, BUNDLED_NYCU_DIR, BUNDLED_NTHU_DIR, BUNDLED_PCCU_DIR, BUNDLED_WZU_DIR, BUNDLED_NKUST_DIR, BUNDLED_YUNTECH_DIR, BUNDLED_NTOU_DIR, BUNDLED_NCUE_DIR, BUNDLED_NKNU_DIR, BUNDLED_TMU_DIR, BUNDLED_CSMU_DIR, BUNDLED_CMU_DIR, BUNDLED_KMU_DIR, BUNDLED_MCU_DIR, BUNDLED_NTUB_DIR))
 
 
 def _bundled_workflow_signature() -> tuple:
@@ -732,14 +734,15 @@ def save_collection_audits(
 def upsert_collection_audit(
     audit: CollectionAudit, data_dir: Path = DEFAULT_DATA_DIR
 ) -> list[CollectionAudit]:
-    school_key = school_identity_key(audit.school_name)
     collector_key = audit.collector.strip().casefold()
+    identity = school_program_identity_key if collector_key == "destinations" else school_identity_key
+    school_key = identity(audit.school_name)
     home_key = school_identity_key(audit.home_university or "")
     retained = [
         row
         for row in load_collection_audits(data_dir)
         if (
-            school_identity_key(row.school_name),
+            identity(row.school_name),
             row.collector.strip().casefold(),
             school_identity_key(row.home_university or ""),
         )
@@ -799,6 +802,8 @@ def _bundled_destination_entries(home_key: str | None) -> tuple[tuple[Path, str]
             (BUNDLED_CSMU_DIR, CSMU.school_name),
             (BUNDLED_CMU_DIR, CMU.school_name),
             (BUNDLED_KMU_DIR, KMU.school_name),
+            (BUNDLED_MCU_DIR, MCU.school_name),
+            (BUNDLED_NTUB_DIR, NTUB.school_name),
         )
         if home_key is None or school_identity_key(bundle_home) == home_key
     )
@@ -890,7 +895,7 @@ def load_partner_research(
     )
     bundled_paths = tuple(
         directory / "partner_research.jsonl"
-        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR, BUNDLED_FCU_DIR, BUNDLED_NSYSU_DIR, BUNDLED_NCHU_DIR, BUNDLED_NTUT_DIR, BUNDLED_NCCU_DIR, BUNDLED_NCKU_DIR, BUNDLED_NYCU_DIR, BUNDLED_NTHU_DIR, BUNDLED_PCCU_DIR, BUNDLED_WZU_DIR, BUNDLED_NKUST_DIR, BUNDLED_YUNTECH_DIR, BUNDLED_NTOU_DIR, BUNDLED_NCUE_DIR, BUNDLED_NKNU_DIR, BUNDLED_TMU_DIR, BUNDLED_CSMU_DIR, BUNDLED_CMU_DIR, BUNDLED_KMU_DIR)
+        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR, BUNDLED_FJU_DIR, BUNDLED_SCU_DIR, BUNDLED_NTNU_DIR, BUNDLED_CYCU_DIR, BUNDLED_NTUST_DIR, BUNDLED_YZU_DIR, BUNDLED_FCU_DIR, BUNDLED_NSYSU_DIR, BUNDLED_NCHU_DIR, BUNDLED_NTUT_DIR, BUNDLED_NCCU_DIR, BUNDLED_NCKU_DIR, BUNDLED_NYCU_DIR, BUNDLED_NTHU_DIR, BUNDLED_PCCU_DIR, BUNDLED_WZU_DIR, BUNDLED_NKUST_DIR, BUNDLED_YUNTECH_DIR, BUNDLED_NTOU_DIR, BUNDLED_NCUE_DIR, BUNDLED_NKNU_DIR, BUNDLED_TMU_DIR, BUNDLED_CSMU_DIR, BUNDLED_CMU_DIR, BUNDLED_KMU_DIR, BUNDLED_MCU_DIR, BUNDLED_NTUB_DIR)
     ) if include_bundled else ()
     use_cache = read_jsonl is _DEFAULT_READ_JSONL
     cache_key = (

@@ -1639,6 +1639,8 @@ def build(output):
     if campus_locations.exists():
         write_json(output / "campus-locations.json", load_json(campus_locations))
     apply_ncu_20261013_overlay(output)
+    from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
+    apply_vilnius_akita_review(ROOT, "ncu", bundle=output)
 
 
 def apply_ncu_20261013_overlay(output: Path) -> None:

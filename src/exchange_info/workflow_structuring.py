@@ -480,6 +480,14 @@ def _applicability_metadata(
     effective_application_rounds: list[str],
     academic_year: str | None,
 ) -> tuple[ApplicationApplicabilityStatus, str]:
+    # A deliberate review hold is not a missing metadata field. Populated source
+    # dates cannot resolve a disputed cycle or supersede the reviewer's decision.
+    if (
+        "applicability_status" in workflow.model_fields_set
+        and workflow.applicability_status
+        == ApplicationApplicabilityStatus.NEEDS_CONFIRMATION
+    ):
+        return workflow.applicability_status, workflow.applicability_note
     missing: list[str] = []
     if not academic_year:
         missing.append("適用學年度")

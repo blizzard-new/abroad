@@ -414,6 +414,27 @@ def format_program_type(item: dict) -> str:
     return f"交換學生（{'＋'.join(labels)}・繳交中山大學學雜費、免繳接待校學費）"
 
 
+def review_home_workflow_deadlines(workflow: dict) -> None:
+    """The current non-Japan source is a provisional schedule, not a final call."""
+    if workflow["country"] == "日本":
+        return
+    workflow["applicability_status"] = "needs_confirmation"
+    workflow["applicability_note"] = "2027–2028非日本時程目前依官方預告，確切申請日期、名額及文件須以各地區當期簡章確認；不得跨用日本或舊年度規定。"
+    workflow["effective_application_rounds"] = [workflow["application_round"], "116-1", "116-2"]
+    for step in workflow["steps"]:
+        step["scope"]["application_rounds"] = list(workflow["effective_application_rounds"])
+    workflow["coverage_status"] = "official_partial"
+    workflow["coverage_note"] = "已核對一般甄選要點及預告時程；個別接待校、當期文件與名額尚未完成核實。"
+    for step in workflow["steps"][:3]:
+        step["deadline_at"] = None
+        step["deadline_status"] = "needs_confirmation"
+        step["deadline_reminder_eligible"] = False
+        step["deadline_source_url"] = "https://oia.nsysu.edu.tw/p/406-1308-375774%2Cr4450.php?Lang=zh-tw"
+        step["timing"] = "依當期各地區正式簡章確認；預告日期不可當成確定申請或錄取確認期限。"
+        step["support_status"] = "needs_confirmation"
+        step["needs_confirmation"] = True
+
+
 def main() -> None:
     OFFICIAL_NSYSU_DIR.mkdir(parents=True, exist_ok=True)
     SOURCES_NSYSU_DIR.mkdir(parents=True, exist_ok=True)
@@ -1002,6 +1023,8 @@ def main() -> None:
             "coverage_status": "official_verified",
             "coverage_note": "已完整整合國立中山大學 2026–2027 及 2027–2028 學年度赴日本、其他國家與地區、中國大陸學生出國交換計畫簡章、校級與管理學院交換校資訊表、姊妹校 Fact Sheet 及西灣領航獎助學金規範。",
         })
+
+        review_home_workflow_deadlines(workflows[-1])
 
         cost_default, visa_default = REGION_COST_DEFAULTS.get(
             country,
@@ -1628,7 +1651,7 @@ def main() -> None:
     student_dashboard_payload = {
         "school_name": "國立中山大學",
         "last_checked": CHECKED_AT,
-        "academic_score_minimum": 70.0,
+        "academic_score_minimum": None,
         "academic_score_rule": "限大學部一至四年級及碩士班一至二年級在校生（不含延畢生、在職生及博士班），須具歷年學業成績班排名（日本與其他國家甄選占 30%、中國大陸甄選占 60%，總成績未達 60 分不予錄取；部分交換校要求 GPA 2.5–3.0 / 70–75 分以上）。交換期間每學期至少須修習並通過 2 門課程（含至少 1 門專業課程）。",
         "academic_gpa_minimum": None,
         "maximum_preferences": 10,
@@ -1640,11 +1663,8 @@ def main() -> None:
             "graduate_academic_exempt": False,
             "exclude_in_service": True,
             "pending_quota_planning": False,
-            "partner_requirements_need_confirmation": False,
-            "degree_score_minimums": {
-                "undergraduate": 70.0,
-                "graduate": 70.0,
-            },
+            "partner_requirements_need_confirmation": True,
+            "degree_score_minimums": {},
             "excluded_undergraduate_years": [],
             "language_certificate_required": False,
         },
@@ -1653,89 +1673,72 @@ def main() -> None:
             "ielts": 5.0,
             "toeic": 600.0,
         },
-        "application_periods": [
-            {
-                "title": "國立中山大學 2027–2028 赴【日本】學生出國交換計畫甄選（赴 115-2 春季班或 116-1 秋季班）",
-                "details": [
-                    "簡章公告：2026年7月28日；線上申請期間：2026年8月4日（二）09:00 至 2026年8月11日（二）17:00 止（補正期限至 8月13日 17:00）。",
-                    "放榜與最終錄取名單：2026年9月4日公告錄取結果、9月9日截止確認，並於 2026年9月13日公告最終錄取名單（共錄取北海道大學、東北大學、早稻田大學、慶應義塾大學等 23 校 58 名學生）。",
-                    "語言門檻：須具備 JLPT N5（含）以上合格證書，或英語達 TOEFL iBT 60 / IELTS 5.0 / TOEIC 600 / Cambridge 154 / Duolingo 80 / BESTEP 聽讀 170。",
-                ],
-                "source": {
-                    "title": "國立中山大學 2027–2028 赴【日本】學生出國交換計畫甄選簡章與最終錄取名單",
-                    "source_url": "https://oia.nsysu.edu.tw/p/406-1308-360627,r4456.php?Lang=zh-tw",
-                    "category": "deadline",
-                    "summary": "2027–2028 赴日本出國交換甄選時程、28 所開放學校資訊表與 58 名最終錄取名單。",
-                },
-                "scope": "home_application",
-                "program_types": ["exchange"],
-                "academic_year": "116",
-                "application_round": "2027-2028 赴日本交換甄選（115-2/116-1）",
-                "audience": "all_students",
-                "opens_at": "2026-08-04T09:00:00+08:00",
-                "deadline_at": "2026-08-11T17:00:00+08:00",
-                "date_status": "verified_exact",
-                "status": "closed",
-                "status_note": "2027–2028 赴日本交換甄選已於 2026/08/11 17:00 截止並於 2026/09/13 公告 23 校 58 名最終錄取名單。",
-                "deadline_note": "於國立中山大學出國交換學生甄選系統（https://partners.oia.nsysu.edu.tw/exchange/login/user/）線上申請。",
-                "reminder_eligible": False,
-                "checked_at": CHECKED_AT,
-            },
-            {
-                "title": "國立中山大學 2027–2028 赴【其他國家與地區】學生出國交換計畫（第一次甄選，赴 116-1 或 116-2）",
-                "details": [
-                    "簡章公告：2026年10月27日（二）；線上申請期間：2026年11月3日（二）09:00 至 2026年11月17日（二）17:00 止（補正期限至 11月20日 17:00）。",
-                    "錄取公告與確認：2026年12月15日（二）17:00 公告錄取結果，錄取生須於 2026年12月20日 17:00 前完成線上確認並上傳《錄取確認書（保證人同意書）》。",
-                    "第二次甄選預告（僅開放 116-2 春季班名額）：2027年2月16日公告簡章，2027年2月22日 09:00 至 3月8日 17:00 開放線上申請，2027年3月23日放榜。",
-                ],
-                "source": {
-                    "title": "國立中山大學 2027–2028 出國交換計畫簡章預定公告時程表與申請說明",
-                    "source_url": "https://oia.nsysu.edu.tw/p/412-1308-20730.php?Lang=zh-tw",
-                    "category": "exchange_application",
-                    "summary": "2027–2028 赴其他國家與地區第一次及第二次甄選完整時程與線上報名規範。",
-                },
-                "scope": "home_application",
-                "program_types": ["exchange"],
-                "academic_year": "116",
-                "application_round": "2027-2028 赴其他國家與地區第一次甄選（116-1/116-2）",
-                "audience": "all_students",
-                "opens_at": "2026-11-03T09:00:00+08:00",
-                "deadline_at": "2026-11-17T17:00:00+08:00",
-                "date_status": "verified_exact",
-                "status": "upcoming",
-                "status_note": "2027–2028 赴其他國家與地區第一次甄選將於 2026/10/27 公告簡章，並於 2026/11/03 09:00 至 11/17 17:00 開放線上申請。",
-                "deadline_note": "申請人須具備 TOEFL iBT 60 / IELTS 5.0 / TOEIC 600 / Cambridge 154 / Duolingo 80 / BESTEP 聽讀 170 以上之有效語檢證明並符合各交換校門檻。",
-                "reminder_eligible": True,
-                "checked_at": CHECKED_AT,
-            },
-            {
-                "title": "國立中山大學 2027–2028 赴【中國】學生出國交換計畫（第一次甄選，赴 116-1 或 116-2）",
-                "details": [
-                    "簡章公告：2027年1月12日（二）；線上申請期間：2027年1月15日（五）09:00 至 2027年1月26日（二）17:00 止（補正期限至 1月28日 17:00）。",
-                    "錄取公告與確認：2027年2月19日（五）17:00 公告錄取結果，錄取生須於 2027年2月23日 17:00 前完成線上確認並上傳《錄取確認書》。",
-                    "評分標準：學業成績（歷年班排名）占 60%、研修計畫書占 20%、有利審查資料占 20%，本國籍學生免附語言檢定證明。",
-                ],
-                "source": {
-                    "title": "國立中山大學 2027–2028 出國交換計畫簡章預定公告時程表與中國線簡章",
-                    "source_url": "https://oia.nsysu.edu.tw/p/412-1308-20730.php?Lang=zh-tw",
-                    "category": "exchange_application",
-                    "summary": "2027–2028 赴中國大陸交換甄選時程、評分比重與 16 所重點合作高校資訊。",
-                },
-                "scope": "home_application",
-                "program_types": ["exchange"],
-                "academic_year": "116",
-                "application_round": "2027-2028 赴中國交換甄選（116-1/116-2）",
-                "audience": "all_students",
-                "opens_at": "2027-01-15T09:00:00+08:00",
-                "deadline_at": "2027-01-26T17:00:00+08:00",
-                "date_status": "verified_exact",
-                "status": "upcoming",
-                "status_note": "2027–2028 赴中國學生出國交換甄選將於 2027/01/12 公告簡章，並於 2027/01/15 09:00 至 01/26 17:00 開放線上申請。",
-                "deadline_note": "於國立中山大學出國交換學生甄選系統（https://partners.oia.nsysu.edu.tw/exchange/login/user/）線上申請。",
-                "reminder_eligible": True,
-                "checked_at": CHECKED_AT,
-            },
-        ],
+        "application_periods": [{'title': '國立中山大學 2027–2028 赴【日本】學生出國交換計畫甄選（赴 115-2 春季班或 116-1 秋季班）',
+          'details': ['簡章公告：2026年7月28日；線上申請期間：2026年8月4日（二）09:00 至 2026年8月11日（二）17:00 止（補正期限至 8月13日 17:00）。',
+                      '放榜與最終錄取名單：2026年9月4日公告錄取結果、9月9日截止確認，並於 2026年9月13日公告最終錄取名單（共錄取北海道大學、東北大學、早稻田大學、慶應義塾大學等 23 校 58 '
+                      '名學生）。',
+                      '語言門檻：須具備 JLPT N5（含）以上合格證書，或英語達 TOEFL iBT 60 / IELTS 5.0 / TOEIC 600 / Cambridge 154 / '
+                      'Duolingo 80 / BESTEP 聽讀 170。'],
+          'source': {'title': '國立中山大學 2027–2028 赴【日本】學生出國交換計畫甄選簡章與最終錄取名單',
+                     'source_url': 'https://oia.nsysu.edu.tw/p/406-1308-360627,r4456.php?Lang=zh-tw',
+                     'category': 'deadline',
+                     'summary': '2027–2028 赴日本出國交換甄選時程、28 所開放學校資訊表與 58 名最終錄取名單。'},
+          'scope': 'home_application',
+          'program_types': ['exchange'],
+          'academic_year': '116',
+          'application_round': '2027-2028 赴日本交換甄選（115-2/116-1）',
+          'audience': 'all_students',
+          'opens_at': '2026-08-04T09:00:00+08:00',
+          'deadline_at': '2026-08-11T17:00:00+08:00',
+          'date_status': 'verified_exact',
+          'status': 'closed',
+          'status_note': '2027–2028 赴日本交換甄選已於 2026/08/11 17:00 截止並於 2026/09/13 公告 23 校 58 名最終錄取名單。',
+          'deadline_note': '於國立中山大學出國交換學生甄選系統（https://partners.oia.nsysu.edu.tw/exchange/login/user/）線上申請。',
+          'reminder_eligible': False,
+          'checked_at': '2026-10-18T00:20:00Z'},
+         {'title': '國立中山大學 2027–2028 赴【其他國家與地區】學生出國交換計畫（第一次甄選，赴 116-1 或 116-2）',
+          'details': ['簡章公告：2026年10月27日（二）；線上申請期間：2026年11月3日（二）09:00 至 2026年11月17日（二）17:00 止（補正期限至 11月20日 17:00）。',
+                      '錄取公告與確認：2026年12月15日（二）17:00 公告錄取結果，錄取生須於 2026年12月20日 17:00 前完成線上確認並上傳《錄取確認書（保證人同意書）》。',
+                      '第二次甄選預告（僅開放 116-2 春季班名額）：2027年2月16日公告簡章，2027年2月22日 09:00 至 3月8日 17:00 開放線上申請，2027年3月23日放榜。'],
+          'source': {'title': '國立中山大學 2027–2028 出國交換計畫簡章預定公告時程表與申請說明',
+                     'source_url': 'https://oia.nsysu.edu.tw/p/406-1308-375774%2Cr4450.php?Lang=zh-tw',
+                     'category': 'exchange_application',
+                     'summary': '2027–2028 赴其他國家與地區第一次及第二次甄選完整時程與線上報名規範。'},
+          'scope': 'home_application',
+          'program_types': ['exchange'],
+          'academic_year': '116',
+          'application_round': '2027-2028 赴其他國家與地區第一次甄選（116-1/116-2）',
+          'audience': 'all_students',
+          'opens_at': None,
+          'deadline_at': None,
+          'date_status': 'reference_only',
+          'status': 'reference_only',
+          'status_note': '此為官方預告，確切時程須依各地區當期甄選簡章確認；不產生正式截止提醒。',
+          'deadline_note': '申請人須具備 TOEFL iBT 60 / IELTS 5.0 / TOEIC 600 / Cambridge 154 / Duolingo 80 / BESTEP 聽讀 '
+                           '170 以上之有效語檢證明並符合各交換校門檻。',
+          'reminder_eligible': False,
+          'checked_at': '2026-10-18T00:20:00Z'},
+         {'title': '國立中山大學 2027–2028 赴【中國】學生出國交換計畫（第一次甄選，赴 116-1 或 116-2）',
+          'details': ['簡章公告：2027年1月12日（二）；線上申請期間：2027年1月15日（五）09:00 至 2027年1月26日（二）17:00 止（補正期限至 1月28日 17:00）。',
+                      '錄取公告與確認：2027年2月19日（五）17:00 公告錄取結果，錄取生須於 2027年2月23日 17:00 前完成線上確認並上傳《錄取確認書》。',
+                      '評分標準：學業成績（歷年班排名）占 60%、研修計畫書占 20%、有利審查資料占 20%，本國籍學生免附語言檢定證明。'],
+          'source': {'title': '國立中山大學 2027–2028 出國交換計畫簡章預定公告時程表與中國線簡章',
+                     'source_url': 'https://oia.nsysu.edu.tw/p/406-1308-375774%2Cr4450.php?Lang=zh-tw',
+                     'category': 'exchange_application',
+                     'summary': '2027–2028 赴中國大陸交換甄選時程、評分比重與 16 所重點合作高校資訊。'},
+          'scope': 'home_application',
+          'program_types': ['exchange'],
+          'academic_year': '116',
+          'application_round': '2027-2028 赴中國交換甄選（116-1/116-2）',
+          'audience': 'all_students',
+          'opens_at': None,
+          'deadline_at': None,
+          'date_status': 'reference_only',
+          'status': 'reference_only',
+          'status_note': '此為官方預告，確切時程須依各地區當期甄選簡章確認；不產生正式截止提醒。',
+          'deadline_note': '於國立中山大學出國交換學生甄選系統（https://partners.oia.nsysu.edu.tw/exchange/login/user/）線上申請。',
+          'reminder_eligible': False,
+          'checked_at': '2026-10-18T00:20:00Z'}],
         "program_overview": [
             {
                 "title": f"國立中山大學國際事務處暨管理學院出國交換計畫總覽（{len(partners)} 所全球交換合作大學）",
@@ -2188,6 +2191,12 @@ def main() -> None:
         json.dumps(provenance_payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "nsysu", round_id=20)
+    review_generated_content(REPO_ROOT, "nsysu", round_id=21)
+    from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
+    apply_vilnius_akita_review(REPO_ROOT, "nsysu")
 
     print(
         f"Successfully built NSYSU catalog: {len(partners)} partners ({open_partner_count} open, "

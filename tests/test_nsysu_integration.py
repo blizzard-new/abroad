@@ -77,8 +77,8 @@ def test_nsysu_degree_and_academic_checks() -> None:
     assert nsysu_degree_check(None, None)[0] == "needs_confirmation"
 
     assert nsysu_academic_check("學士班", 80.0, 3.5, 25.0)[0] == "pass"
-    assert nsysu_academic_check("學士班", 68.0, 2.2, 60.0)[0] == "fail"
-    assert nsysu_academic_check("碩士班", 65.0, 2.0, 75.0)[0] == "fail"
+    assert nsysu_academic_check("學士班", 68.0, 2.2, 60.0)[0] == "pass"
+    assert nsysu_academic_check("碩士班", 65.0, 2.0, 75.0)[0] == "pass"
     assert nsysu_academic_check("碩士班", 78.0, 3.2, 30.0)[0] == "pass"
     assert nsysu_academic_check("學士班", None, None, None)[0] == "needs_confirmation"
 
@@ -93,7 +93,7 @@ def test_nsysu_language_checks() -> None:
     assert nsysu_language_check("jlpt", 2.0, partner_country="日本")[0] == "pass"
     assert nsysu_language_check("jlpt", 5.0, partner_country="日本")[0] == "pass"
     assert nsysu_language_check("jlpt", 6.0, partner_country="日本")[0] == "fail"
-    assert nsysu_language_check("topik", 3.0, partner_country="南韓")[0] == "pass"
+    assert nsysu_language_check("topik", 3.0, partner_country="南韓")[0] == "needs_confirmation"
 
 
 def test_nsysu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
@@ -123,7 +123,8 @@ def test_nsysu_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     ]
     assert len(workflows) == 218
     assert all(w.review_status == "published" for w in workflows)
-    assert all(w.applicability_status == "verified" for w in workflows)
+    assert all(w.applicability_status == "needs_confirmation" for w in workflows if w.country != "日本")
+    assert all(not step.deadline_reminder_eligible for w in workflows if w.country != "日本" for step in w.steps[:3])
 
     destinations = [
         d
@@ -217,6 +218,15 @@ def test_nsysu_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     assert cov["total_partner_schools"] == 218
     assert cov["workflow_school_count"] == 218
     assert cov["destination_profile_count"] == 218
-    assert cov["image_count"] == 218
+    unresolved_images = {
+        row["school_name"] for row in cov["partners"]
+        if row["image_status"] != "verified"
+    }
+    # Conflicting image records under the same translated alias must remain
+    # unresolved; a populated image field alone does not establish verification.
+    assert unresolved_images == {
+        "蒙庫國王科技大學(KMUTT) King Mongkut's University of Technology Thonburi(KMUTT)"
+    }
+    assert cov["image_count"] == cov["total_partner_schools"] - len(unresolved_images)
     assert cov["official_website_count"] == 218
     assert cov["experience_school_count"] >= 150

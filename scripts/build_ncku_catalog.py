@@ -1424,7 +1424,7 @@ def main() -> None:
                 "academic_year": "116",
                 "application_round": "116學年度第1學期校級薦外交換學生計畫甄選（115年10月30日至11月19日16:00線上申請）",
                 "audience": "all_students",
-                "opens_at": "2026-10-30T09:00:00+08:00",
+                "opens_at": None,
                 "deadline_at": "2026-11-19T16:00:00+08:00",
                 "date_status": "verified_exact",
                 "status": "upcoming",
@@ -1450,11 +1450,11 @@ def main() -> None:
                 "academic_year": "116",
                 "application_round": "116學年度第2學期校級薦外交換學生計畫甄選（春季班預計 116年4–5月受理線上申請）",
                 "audience": "all_students",
-                "opens_at": "2027-04-27T09:00:00+08:00",
-                "deadline_at": "2027-05-18T16:00:00+08:00",
-                "date_status": "reference_only",
-                "status": "upcoming",
-                "status_note": "春季班校級薦外交換甄選固定於每年 4 月下旬至 5 月中旬受理線上申請。",
+                "opens_at": None,
+                "deadline_at": None,
+                "date_status": "needs_confirmation",
+                "status": "needs_confirmation",
+                "status_note": "本筆引用115-2舊簡章，只能作舊年度參考；116-2日期尚未由本輪來源確認，不能將舊年度日期直接順延。",
                 "deadline_note": "實際截止日期請依國際事務處 2027 年 4 月公告之 116-2 甄選簡章為準。",
                 "reminder_eligible": False,
                 "checked_at": CHECKED_AT,
@@ -1936,6 +1936,16 @@ def main() -> None:
         json.dumps(provenance_payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "ncku", round_id=20)
+    review_generated_content(REPO_ROOT, "ncku", round_id=21)
+    from exchange_info.ncku_partner_table_review import apply_ncku_partner_table_review
+    apply_ncku_partner_table_review(REPO_ROOT)
+    from exchange_info.ncku_guidelines_review import apply_ncku_guidelines_review
+    apply_ncku_guidelines_review(REPO_ROOT)
+    from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
+    apply_vilnius_akita_review(REPO_ROOT, "ncku")
 
     print(
         f"Successfully built NCKU catalog: {len(partners)} partners ({open_partner_count} open, "

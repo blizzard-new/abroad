@@ -1333,38 +1333,26 @@ def main() -> None:
           "toeic": 550.0,
       },
       "application_periods": [
-          {
-              "title": (
-                  "國立高雄科技大學 116 學年度（2027-2028，含 116-1 秋季班與 116-2 春季班）校級交換生聯合甄選（10/7–10/28 五校區說明會，預計 11/10–12/1 線上收件、12/27 補交語檢截止、2027/2/22 放榜）"
-              ),
-              "details": [
-                  (
-                      "116 學年度出國交換研修五校區巡迴說明會已於 2026/10/02 公告：10/07 10:30 旗津校區、10/07 13:30 第一校區、10/14 13:30 燕巢校區、10/21 13:30 楠梓校區、10/28 13:30 建工校區。"
-                  ),
-                  (
-                      "116 學年度校級交換甄選預計時程：2026/11/10 – 2026/12/01 16:00 開放線上申請收件，2026/12/27 16:00 補繳外語檢定正式成績單截止，2027/02/01–02/12 召開甄選審查會議，2027/02/22 公告分發結果，2027/02/26 錄取生上傳意願確認書與家長同意書截止，2027/07/01 公告獎補助名單。"
-                  ),
-              ],
-              "source": {
-                  "title": "國立高雄科技大學國際事務處—【116學年度出國交換研修】說明會公告與簡報",
-                  "source_url": NKUST_116_INFO_SESSION_URL,
-                  "category": "exchange_application",
-                  "summary": "高科大國際處 116 學年度（2027-2028）五校區交換說明會時程、預計申請截止日、甄選配分與獎補助規劃。",
-              },
-              "scope": "home_application",
-              "program_types": ["exchange"],
-              "academic_year": "116",
-              "application_round": "116學年度校級交換生聯合甄選（116-1秋季班／116-2春季班）",
-              "audience": "all_students",
-              "opens_at": "2026-11-10T12:00:00+08:00",
-              "deadline_at": "2026-12-01T16:00:00+08:00",
-              "date_status": "verified_exact",
-              "status": "upcoming",
-              "status_note": "五校區巡迴說明會於 2026/10/07–10/28 舉行，預計於 2026/11/10 中午 12:00 起開放線上申請至 2026/12/01 16:00 止。",
-              "deadline_note": "請於截止日前完成線上申請並上傳經系所主管核章之《校級交換研修志願表》、中文歷年成績單、語檢證明及中英文自傳與讀書計畫（正式語檢成績單最遲可於 12/27 16:00 前補交）。",
-              "reminder_eligible": True,
-              "checked_at": CHECKED_AT,
-          },
+          {'title': '國立高雄科技大學116學年度校級交換甄選：申請時程待核實',
+           'details': ['116學年度交換說明會已公告；旗津及第一校區為10/07 13:30，燕巢10/14、楠梓10/21、建工10/28均為13:30。',
+                       '說明會公告本身未列校級交換甄選的確切申請與補件日期；須另查當期甄選簡章。'],
+           'source': {'title': '國立高雄科技大學國際事務處—【116學年度出國交換研修】說明會公告與簡報',
+                      'source_url': 'https://oia.nkust.edu.tw/news_det-980.html',
+                      'category': 'exchange_application',
+                      'summary': '查核限制：此來源目前不足以支持本梯次確切時程，需另查當期正式公告。'},
+           'scope': 'home_application',
+           'program_types': ['exchange'],
+           'academic_year': '116',
+           'application_round': '116學年度校級交換生聯合甄選（116-1秋季班／116-2春季班）',
+           'audience': 'all_students',
+           'opens_at': None,
+           'deadline_at': None,
+           'date_status': 'needs_confirmation',
+           'status': 'needs_confirmation',
+           'status_note': '本梯次確切時程尚未核實，請以母校當期官方公告為準。',
+           'deadline_note': '未核實的預估日期不能用作申請截止日或提醒。',
+           'reminder_eligible': False,
+           'checked_at': '2026-10-20T17:44:49Z'},
           {
               "title": (
                   "國立高雄科技大學 115 學年度（2026-2027，含 115-1 秋季班與 115-2 春季班）校級交換生聯合甄選（2025/12/10 截止、2026/2/23 公告錄取 97 人次、6/30 公告獎補助名冊）"
@@ -1923,15 +1911,10 @@ def main() -> None:
   (OFFICIAL_NKUST_DIR / "import_provenance.json").write_text(prov_text, encoding="utf-8")
   (OFFICIAL_NKUST_DIR / "import-provenance.json").write_text(prov_text, encoding="utf-8")
 
-  print(
-      f"Successfully built NKUST catalog: {len(partners)} partners"
-      f" ({open_partner_count} open, {completeness['verified_campus_images']}"
-      f" verified images, {completeness['verified_locations']} verified"
-      f" locations), {len(workflows)} workflows,"
-      f" {len(destinations)} destinations, {len(research_records)} research"
-      f" records, {exp_covered_schools} schools with experience records"
-      f" ({len(student_experience_rows)} rows)."
-  )
+  from exchange_info.nkust_source_review import review_bundle
+  reviewed_counts = review_bundle(REPO_ROOT)
+  print(f"Built NKUST partial review: {len(partners)} records; {reviewed_counts}; no whole records verified.")
+
 
 
 if __name__ == "__main__":

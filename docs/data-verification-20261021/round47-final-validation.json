@@ -1,0 +1,107 @@
+{
+  "recorded_at": "2026-10-21T05:11:40.032002+00:00",
+  "previous_turn_assessment": "Round47 form and added-route edits were applied, but focused validation was unfinished and original-field ledger bindings had not been appended.",
+  "current_turn_assessment": "Resolved stale registry and display-count assertions; completed source bindings, original-row preservation checks, all-25 runtime census and focused regression validation.",
+  "scope": {
+    "mother_universities": 25,
+    "original_partner_plans": 4585,
+    "new_partner_plans": 3,
+    "current_partner_plans": 4588
+  },
+  "form_patches": 2591,
+  "new_data_rows": 9,
+  "original_rows_preserved_after_addition": 702,
+  "original_field_bindings": 2347,
+  "unbound_original_fields": 244,
+  "binding_recovery_note": "The first run appended bindings, then stopped at a preservation-hash serialization mismatch. The original receipt used default JSON spaces; matching that exact serialization confirms all 702 original rows unchanged. Existing decisions were compared in full before this idempotent recovery.",
+  "runtime_profiles": 4588,
+  "runtime_workflows": 4536,
+  "remaining_identity_collisions": 0,
+  "pytest": {
+    "passed": 175,
+    "failed": 0,
+    "duration_seconds": 159.41,
+    "exit_code": 0,
+    "log": "output\\data-verification-20261021\\round47-regression-tests.log",
+    "log_sha256": "88f49b2985d8a7f327aa992a24b76afd46e04b8c00c4843a763d1cf018d5d391"
+  },
+  "earlier_focused_runs": [
+    {
+      "passed": 39,
+      "failed": 1,
+      "cause": "Registry partner_count remained 234"
+    },
+    {
+      "passed": 39,
+      "failed": 1,
+      "cause": "Image coverage counts reused institutional imagery per route; expected count was stale"
+    }
+  ],
+  "python_syntax_files": 186,
+  "openapi_check_exit_code": 0,
+  "node_route_lookup_test_exit_code": 0,
+  "diff_check_exit_code": 0,
+  "ledger_validation": {
+    "validated_at": "2026-10-21T05:07:36.535227+00:00",
+    "review_decisions": 126730,
+    "bindings_by_inventory": {
+      "output/data-verification-20261021/baseline": 64462,
+      "output/data-verification-20261021/derived-baseline": 40675,
+      "output/data-verification-20261021/raw-catalog-baseline": 15539,
+      "output/data-verification-20261021/runtime-review-20261021": 6054
+    },
+    "bound_records": 17480,
+    "absent_optional_null_bindings": 867,
+    "pinned_inventory_files": 14,
+    "original_ledger_sha256": "b7f80955a390fbcf4602b3e2f13ece8933dffc8621cc56d234d597efea2e6252",
+    "errors": [],
+    "facts_verified_by_validation": 0
+  },
+  "source_transport_counts": {
+    "error": 2936,
+    "retrieved": 20028,
+    "deferred_rate_limit": 5204
+  },
+  "source_fetches_this_round": 0,
+  "source_note": "Uses previously downloaded and text/visually reviewed round46 source bytes; no new source retrieval is claimed.",
+  "source_manifest_hashes": {
+    "round47-fju-form-review.json": "64b3e5ef9cd5b9320ee0c6f84bf7847b46151fe0fbdcb1c79f4b0c4154869e0e",
+    "round47-fju-missing-routes.json": "c1875524cd56c1bf94ecf866a8105855370a09291b0edfa9d6926a63b836a3b6",
+    "round47-form-application-receipt.json": "bd1084eb582a5f00ab4471fc9264c0c59316d2b3bb81a4a9a5b0de566637a04e",
+    "round47-added-routes-application-receipt.json": "eb56a21d6fac4d0a8546f4c6ceaca166f054411e79e7b56e737f1aa74bb3dbe4",
+    "round47-form-ledger-validation.json": "08c3503400c2d9751fec698bd3961a23dec544d1afd6576f72afef0525e3d5f5",
+    "round47-current-route-census.json": "ded6551d36539ed7d019916494e4e9fbfee93d2dd2e9eb25e469b29a0b361e68"
+  },
+  "code_sha256": {
+    "src/exchange_info/fju_form_review.py": "f142fc3a64acac5421863ad8060e6ffd9f7f74f72a6f927005a2fa2eab5ca76e",
+    "src/exchange_info/fju_missing_routes_review.py": "e9d45452f046aeace868fb94251de04aeb9ce0c4908f518042a832e1247e5fdd",
+    "src/exchange_info/fju_oct20_updates.py": "472be0532295f36f79a23bb0efa38346479dc8f1108c1f397e7db8206bc968e4",
+    "src/exchange_info/university_registry.py": "46ce1c7337e0d10c3973832645643aee5d18d7d14ecfb7ba927a91a002d9a1eb",
+    "scripts/build_fju_catalog.py": "0614c7ccffcb292c92efde7c248fdc860a00ea5a55d86c7fb37ab61676c7799e",
+    "scripts/report_university_data_audit.py": "21348e0909c70e1bf6f7afae2f1f64d49609d7437b2aca65568be77ef0627d9e",
+    "tests/test_fju_form_review.py": "b2afd6661f92eb96720674452549751246762c85f75e2bdbff5ca9690c4c2959",
+    "tests/test_fju_route_review.py": "2d1ec98a6c823d7283f8cdf84f612476390a7d442f191645f091868f48dfb683",
+    "tests/test_fju_integration.py": "b28942c3760f5df56f328a52957bd77304471dcbf88a2cf34a4fd3979474f58f",
+    "tests/test_program_profile_identity.py": "ed5c4fe0ec9561b38b9309a5aee3dc0f2df282519adc1515abf4795821ac363f",
+    "tests/test_school_completeness.py": "5043cd77eee5ee44d7b3c6e6215c347a94eaa0b3ab1316247628708d07d8a851",
+    "tests/test_oct20_morning_updates.py": "b25c9c3e6ee98fa4214e270c9638d70d8313147f6cd6845e640bba81b1b1a475"
+  },
+  "legacy_overlay_byte_preservation_test_passed": true,
+  "missing_builder_inputs_preflight_test_passed": true,
+  "full_builder_run": false,
+  "browser_qa": false,
+  "production_database_audit": false,
+  "remote_reconciliation_complete": false,
+  "pull_request_created": false,
+  "whole_records_verified": 0,
+  "whole_schools_verified": 0,
+  "remaining_limitations": [
+    "Legacy FJU builder needs 18 external scratch inputs absent on this host; full build replay is untested.",
+    "Form enrollment requirements are displayed but all qualification-engine paths still need checking.",
+    "The 39-page briefing and four-page non-Japanese table have not yet been fully reviewed in this audit phase.",
+    "Mother scoring descriptions conflict and require primary-source reconciliation.",
+    "New self-funded routes lack independent host confirmation, current housing/living costs, campus and experience verification.",
+    "Coverage API counts institutional images reused per program; 237 display rows do not establish 237 route-campus image verifications.",
+    "The original 25-school exhaustive verification and final PR remain unfinished."
+  ]
+}

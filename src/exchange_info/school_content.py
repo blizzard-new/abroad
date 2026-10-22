@@ -7,7 +7,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from .models import DestinationProfile, PageCategory, SourceReference
-from .school_identity import school_identity_key
+from .school_identity import school_identity_key, school_program_identity_key
 from .university_locations import load_university_locations, public_location
 
 SUPPLEMENTS = Path(__file__).parent / "official_data" / "school_content_supplements.json"
@@ -31,14 +31,14 @@ def _supplements() -> dict:
     if not SUPPLEMENTS.exists():
         return {}
     rows = json.loads(SUPPLEMENTS.read_text(encoding="utf-8"))
-    return {(school_identity_key(r["home_university"]), school_identity_key(r["school_name"]),
+    return {(school_identity_key(r["home_university"]), school_program_identity_key(r["school_name"]),
         r["country"]): r for r in rows}
 
 
 def school_field_addition(profile: DestinationProfile, field: str) -> dict | None:
     """Attribute an applied addition to its own evidence, not other profile URLs."""
     key = (school_identity_key(profile.home_university or ""),
-        school_identity_key(profile.school_name), profile.country)
+        school_program_identity_key(profile.school_name), profile.country)
     return next((item for item in _supplements().get(key, {}).get("fields", [])
         if item.get("field") == field and getattr(profile, field, None) == item.get("summary_zh")), None)
 
@@ -53,7 +53,7 @@ def complete_destination_profile(profile: DestinationProfile, data_dir: Path, *,
         # TKU campus identity and licensed photos have their own reviewed ledger.
         return complete_profile(profile)
     key = (school_identity_key(profile.home_university or ""),
-        school_identity_key(profile.school_name), profile.country)
+        school_program_identity_key(profile.school_name), profile.country)
     supplement = _supplements().get(key, {})
     updates = {}
     additions = []

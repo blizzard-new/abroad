@@ -144,9 +144,10 @@ def reference_partners(current_partners):
         options=[]
         for programme in programmes:
             values=lambda key:programme["fields"].get(key,{}).get("value")
+            eligibility_parts=[p for p in [values("home_eligibility"),values("home_language"),values("department_scope")] if p]
             options.append(PartnerProgramOption(program_type=f"參考：{programme['academic_year']} {programme['application_round']}（已截止／不得沿用名額）",
                 degree_levels=values("degree_levels"),study_period=values("study_period"),quota=str(values("quota")) if values("quota") is not None else None,
-                eligibility=values("home_eligibility"),application_info="已結束梯次原文；不等於本期可申請。",
+                eligibility="；".join(eligibility_parts) if eligibility_parts else None,application_info="已結束梯次原文；不等於本期可申請。",
                 source_url=programme["fields"]["school_name"]["evidence"][0]["source_url"]))
         name=census_school_name(row)
         note=row["selection_note"]+" 最新日語第二梯已截止；此校沒有核實的本梯開放名額。"

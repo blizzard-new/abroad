@@ -14,6 +14,8 @@ from exchange_info.models import AdvisorProfile, PartnerUniversity, PersonalAppl
     ("Law","大學部","法律學院","大學部","college","pass"),
     ("工學院","undergraduate","工學院","研究所","degree_level","fail"),
     ("工學院","2","工學院","大學部","degree_level","needs_confirmation"),
+    ("工學院","【跨期資料待核對】115-2 歷年學士班","工學院","大學部","degree_level","needs_confirmation"),
+    ("工學院","【跨期資料待核對】115-2 歷年學士班","工學院","研究所","degree_level","needs_confirmation"),
 ])
 def test_recommendation_and_preference_check_use_same_scope_evidence(colleges,degrees,college,degree,code,expected):
     partner=PartnerUniversity(school_name="合作校",program_type="交換",colleges=colleges,

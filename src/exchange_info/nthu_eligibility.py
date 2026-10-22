@@ -9,11 +9,11 @@ NTHU_OVERSEAS_PARTNERS_URL = "https://oga.site.nthu.edu.tw/p/404-1524-9358.php"
 NTHU_MAINLAND_PARTNERS_URL = "https://oga.site.nthu.edu.tw/p/404-1524-9359.php?Lang=zh-tw"
 NTHU_VM_PORTAL_URL = "https://oga-exchange.vm.nthu.edu.tw/outexchange/index/index/puid/11521"
 NTHU_VM_OVERVIEW_URL = "https://oga-exchange.vm.nthu.edu.tw/outexchange/overview/index/puid/11521"
-NTHU_2027_2028_GUIDELINES_ZH_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/2027F2028Sapplicationguideline-CH.pdf"
+NTHU_2027_2028_GUIDELINES_ZH_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/704171014.pdf"
 NTHU_SELECTION_REGULATIONS_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4534/525909033.pdf"
 NTHU_SCHOLARSHIP_REGULATIONS_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4534/666778079.pdf"
 NTHU_DISADVANTAGED_SCHOLARSHIP_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4534/517637953.pdf"
-NTHU_LANGUAGE_STANDARDS_ZH_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4534/153594726.pdf"
+NTHU_LANGUAGE_STANDARDS_ZH_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/NTHU_Exchange_Student_Foreign_Language_Proficiency_Standards_English.pdf"
 NTHU_MAINLAND_GUIDELINES_URL = "https://oga.site.nthu.edu.tw/var/file/524/1524/img/4542/510394575.pdf"
 NTHU_UST_116_NOTICE_URL = "https://oga.site.nthu.edu.tw/p/406-1524-300405,r3318.php?Lang=zh-tw"
 NTHU_POPULARITY_SHEET_URL = "https://docs.google.com/spreadsheets/d/1G1mETD3Zt49jr0nJTK-2-3gOP8U5nJmg/edit?usp=sharing"
@@ -78,66 +78,16 @@ def nthu_academic_check(
     academic_gpa: float | None = None,
     class_rank_percent: float | None = None,
 ) -> tuple[str, str]:
-    details: list[str] = []
-    score_ok = False
-    gpa_ok = False
-    rank_ok = False
-    ust_ok = False
-
-    if academic_score is not None:
-        details.append(f"平均成績 {academic_score:g} 分")
-        if academic_score >= 78.0:
-            score_ok = True
-        elif academic_score >= 75.0:
-            ust_ok = True
-    if academic_gpa is not None:
-        details.append(f"GPA {academic_gpa:g}")
-        if academic_gpa >= 3.20:
-            gpa_ok = True
-        elif academic_gpa >= 3.00:
-            ust_ok = True
-    if class_rank_percent is not None:
-        details.append(f"班/系排名前 {class_rank_percent:g}%")
-        if class_rank_percent <= 50.0:
-            rank_ok = True
-
-    summary = "、".join(details)
-    if (
-        academic_score is None
-        and academic_gpa is None
-        and class_rank_percent is None
+    # The current overseas notice accepts GPA or rank, with no fixed percentage conversion.
+    # UST and Mainland/HK/Macao programs require their own eligibility checks.
+    rule = "清大 2027 秋／2028 春海外交換（不含陸港澳）須前一學年兩學期平均 GPA 3.20 以上或班排前 50%。"
+    if (academic_gpa is not None and academic_gpa >= 3.20) or (
+        class_rank_percent is not None and class_rank_percent <= 50.0
     ):
-        return (
-            "needs_confirmation",
-            "尚未填寫學業平均成績、GPA 或班/系排名百分比；《國立清華大學出國交換生甄選簡章》規定：校級海外交換須達申請前兩學期平均 GPA 3.20（約合百分制 78 分）以上或班排名前 50% 以上（陸港澳交換須達 GPA 3.20 或班排前 30%；台灣聯大 UST 交換須達 GPA 3.0 以上；申請 A/B 類出國交換獎學金、清寒獎學金及劉維全校友獎學金須達前一學年平均 GPA 3.40 以上或全班／系前 20% 以上）。",
-        )
-
-    if gpa_ok or score_ok or rank_ok:
-        sch_eligible = (
-            (academic_gpa is not None and academic_gpa >= 3.40)
-            or (academic_score is not None and academic_score >= 82.0)
-            or (class_rank_percent is not None and class_rank_percent <= 20.0)
-        )
-        sch_note = (
-            "同時符合清大出國交換生獎學金（A/B 類）、清寒學生出國交流獎學金及劉維全校友獎學金學業門檻（前一學年 GPA 3.40 或班／系排前 20%）"
-            if sch_eligible
-            else "若欲申請清大出國交換生獎學金（A/B 類）、清寒獎學金或劉維全校友獎學金，須達前一學年平均 GPA 3.40 以上或全班／系排名前 20% 以上（教育部學海惜珠為 GPA 3.20 以上）"
-        )
-        return (
-            "pass",
-            f"已填報 {summary}；符合國立清華大學校級海外交換學業成績基本門檻（前兩學期 GPA 3.20 或班排名前 50% 以上；請同步核對目標姊妹校是否訂有更高 GPA 門檻，且{sch_note}）。",
-        )
-
-    if ust_ok:
-        return (
-            "needs_confirmation",
-            f"已填報 {summary}；符合「台灣聯合大學系統（UST）學生出國交換計畫」門檻（前一學年平均 GPA 3.0 以上），惟若申請清大校級海外交換，須達前兩學期 GPA 3.20 以上或班級排名前 50% 以上（陸港澳交換為 GPA 3.20 或班排前 30%）。",
-        )
-
-    return (
-        "fail",
-        f"已填報 {summary}；未達國立清華大學校級海外出國交換最低成績標準（前兩學期平均 GPA 3.20［約 78 分］以上或班級排名前 50% 以上）及台灣聯大交換門檻（GPA 3.0 以上）。",
-    )
+        return "pass", rule + "已填 GPA 或排名達標；仍須確認成績期間及姊妹校更高門檻。"
+    if academic_gpa is None or class_rank_percent is None:
+        return "needs_confirmation", rule + "現有資料不足以排除另一項資格；百分制須依校方規定換算，不能直接用 78 分判定。"
+    return "fail", rule + "已填 GPA 與排名均未達上述門檻；此結果不適用其他獨立交換計畫。"
 
 
 def nthu_language_check(

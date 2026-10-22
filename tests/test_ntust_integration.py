@@ -71,21 +71,21 @@ def test_ntust_email_domains(email: str, allowed: bool) -> None:
 
 def test_ntust_degree_and_academic_checks() -> None:
     assert ntust_degree_check("學士班", "大二")[0] == "pass"
-    assert ntust_degree_check("碩士班", "碩一")[0] == "pass"
-    assert ntust_degree_check("博士班", "博一")[0] == "pass"
-    assert ntust_degree_check("學士班", "大一")[0] == "fail"
+    assert ntust_degree_check("碩士班", "碩一")[0] == "needs_confirmation"
+    assert ntust_degree_check("博士班", "博一")[0] == "needs_confirmation"
+    assert ntust_degree_check("學士班", "大一")[0] == "needs_confirmation"
     assert ntust_degree_check("在職專班", "碩一")[0] == "fail"
     assert ntust_degree_check("EMBA碩士在職專班", None)[0] == "fail"
     assert ntust_degree_check(None, None)[0] == "needs_confirmation"
 
-    assert ntust_academic_check("學士班", 80.0, 3.5, 25.0)[0] == "pass"
-    assert ntust_academic_check("學士班", 75.0, 3.0, 75.0)[0] == "fail"
-    assert ntust_academic_check("學士班", 58.0, 1.9, 50.0)[0] == "fail"
+    assert ntust_academic_check("學士班", 80.0, 3.5, 25.0)[0] == "needs_confirmation"
+    assert ntust_academic_check("學士班", 75.0, 3.0, 75.0)[0] == "needs_confirmation"
+    assert ntust_academic_check("學士班", 58.0, 1.9, 50.0)[0] == "needs_confirmation"
     assert ntust_academic_check("學士班", None, None, None)[0] == "needs_confirmation"
 
 
 def test_ntust_language_checks() -> None:
-    assert ntust_language_check(None, None, partner_country="中國大陸")[0] == "pass"
+    assert ntust_language_check(None, None, partner_country="中國大陸")[0] == "needs_confirmation"
     assert ntust_language_check("toefl", 79.0, partner_country="美國")[0] == "pass"
     assert ntust_language_check("toefl", 50.0, partner_country="美國")[0] == "fail"
     assert ntust_language_check("ielts", 6.0, partner_country="英國")[0] == "pass"
@@ -98,9 +98,9 @@ def test_ntust_language_checks() -> None:
 def test_ntust_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     partners = fetch_ntust_partner_universities()
     assert len(partners) == 237
-    assert sum(1 for p in partners if p.availability_status == "open") == 232
-    assert sum(1 for p in partners if p.availability_status == "reference_only") == 5
-    assert sum(1 for p in partners if p.application_window_status == "closed") == 5
+    assert sum(1 for p in partners if p.availability_status == "open") == 0
+    assert sum(1 for p in partners if p.availability_status == "reference_only") == 237
+    assert sum(1 for p in partners if p.application_window_status == "closed") == 237
     assert all(p.location and p.location.geocode_status == "verified" for p in partners)
     assert all(p.image_status == "verified" and p.image_url for p in partners)
     assert all(p.student_summary_zh is not None for p in partners)
@@ -121,7 +121,7 @@ def test_ntust_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
     ]
     assert len(workflows) == 237
     assert all(w.review_status == "published" for w in workflows)
-    assert all(w.applicability_status == "verified" for w in workflows)
+    assert all(w.applicability_status == "needs_confirmation" for w in workflows)
 
     destinations = [
         d
@@ -148,7 +148,7 @@ def test_ntust_bundle_and_dashboard_completeness(tmp_path: Path) -> None:
 
 def test_ntust_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     partners = fetch_ntust_partner_universities()
-    sample = next(p for p in partners if p.availability_status == "open")
+    sample = next(p for p in partners if p.country == "香港")
     workflows = storage.load_bundled_application_workflows()
     destinations = storage.load_destination_profiles(tmp_path, include_bundled_baseline=True)
     wf = select_application_workflow(
@@ -191,7 +191,7 @@ def test_ntust_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
     )
     assert len(plan.choices) == 1
     checks = {c.code: c for c in plan.choices[0].checks}
-    assert checks["academic_score"].status == "pass"
+    assert checks["academic_score"].status == "needs_confirmation"
     assert checks["home_language_score"].status == "pass"
 
     completeness = build_school_completeness(
@@ -200,7 +200,7 @@ def test_ntust_workflow_plan_and_api_endpoints(tmp_path: Path) -> None:
         wf,
         home_university=NTUST.school_name,
     )
-    assert completeness.available_count >= 8
+    assert any(item.status == "needs_confirmation" for item in completeness.items)
 
     client = TestClient(create_app(tmp_path))
     r_unis = client.get("/universities")

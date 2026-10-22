@@ -2137,6 +2137,15 @@ def main() -> None:
         prov_text, encoding="utf-8"
     )
 
+    from exchange_info.nycu_source_review import review_bundle
+    review_bundle(REPO_ROOT)
+
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "nycu", round_id=20)
+    review_generated_content(REPO_ROOT, "nycu", round_id=21)
+    from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
+    apply_vilnius_akita_review(REPO_ROOT, "nycu")
+
     print(
         f"Successfully built NYCU catalog: {len(partners)} partners ({open_partner_count} open, "
         f"{trailblazer_count} trailblazers, {completeness['verified_campus_images']} verified images, "

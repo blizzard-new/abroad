@@ -9,11 +9,8 @@ SCU_CHINA_APPLY_URL = "https://icae.scu.edu.tw/zh-hant/outbound-exchange/china/a
 SCU_REVIEW_CRITERIA_URL = "https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/requirements"
 SCU_REGULATION_URL = "https://icae.scu.edu.tw/sites/default/files/2025-09/06_%E6%9D%B1%E5%90%B3%E5%A4%A7%E5%AD%B8%E6%A0%A1%E7%B4%9A%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E8%A8%88%E7%95%AB%E5%AF%A6%E6%96%BD%E8%BE%A6%E6%B3%95_0.pdf"
 
-SCU_ENGLISH_MINIMUMS: dict[str, tuple[str, float]] = {
-    "toefl": ("TOEFL iBT", 60.0),
-    "ielts": ("IELTS Academic", 5.5),
-    "toeic": ("TOEIC", 650.0),
-}
+# The official 116 notice delegates language thresholds to each partner.
+SCU_ENGLISH_MINIMUMS: dict[str, tuple[str, float]] = {}
 
 
 def is_scu(school_name: str | None) -> bool:
@@ -107,9 +104,8 @@ def scu_academic_check(
             "尚未填寫累計班排名百分比或歷年平均成績；東吳大學部須達累計班排名前 85% 以內、碩博班須達總平均 80 分以上，且操行須達 80 分以上。",
         )
 
-    passed = academic_score >= 65.0
     return (
-        "pass" if passed else "needs_confirmation",
+        "needs_confirmation",
         f"歷年學業總平均 {academic_score:g} 分；東吳大學部主要以「累計班排名前 85% 以內」為審查門檻（公式：歷年平均×45%＋(1－累計班排名百分比)×100×55%），請一併確認累計班排名百分比與操行成績（80 分以上）。",
     )
 
@@ -131,25 +127,7 @@ def scu_language_check(
             "needs_confirmation",
             "尚未填寫外語檢定成績。申請赴外（含港澳）交換須至少符合目標協議校於《116學年度校級赴外交換學校一覽表》所列任一語檢門檻（英歐語須為 2025/01/31 後核發、JLPT 須為 2024/01/31 後核發，不接受多益校園考）。",
         )
-    if test in SCU_ENGLISH_MINIMUMS:
-        label, minimum = SCU_ENGLISH_MINIMUMS[test]
-        passed = language_score >= minimum
-        warning = (
-            "重要提醒：東吳不接受多益校園考（Institutional TOEIC）成績，且歐美及多數協議校僅採認 TOEFL iBT 或 IELTS Academic，請務必對照目標學校一覽表規定。"
-            if test == "toeic"
-            else "各協議校若有更高分數或單科門檻（如 TOEFL iBT 79–100、IELTS Academic 6.0–7.0），須依一覽表各校規定辦理。"
-        )
-        return (
-            "pass" if passed else "fail",
-            f"{label} {language_score:g} {'符合' if passed else '未達'}東吳赴外交換英語基準門檻 {minimum:g}。{warning}",
-        )
-    if test == "jlpt":
-        passed = 1.0 <= language_score <= 4.0
-        return (
-            "pass" if passed else "fail",
-            f"JLPT N{int(language_score)} {'符合' if passed else '未達'}東吳日語組協議校基準範圍（N1–N4，須為 2024/01/31 後核發；各校 N1/N2/N3 個別規定請對照一覽表）。",
-        )
     return (
         "needs_confirmation",
-        f"已填寫 {language_test} {language_score:g}；請核對《116學年度校級赴外交換學校一覽表》目標學校之語檢級數要求及發證年限（JLPT 須為 2024/01/31 後核發）。",
+        f"已填寫 {language_test} {language_score:g}；116學年度公告未列全校統一分數門檻，須逐校核對交換學校一覽表與語檢效期，不能由這個分數單獨判定通過。",
     )

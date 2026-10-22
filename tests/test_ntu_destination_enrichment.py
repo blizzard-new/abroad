@@ -138,7 +138,10 @@ def test_all_ntu_destinations_have_reviewed_or_explicitly_missing_overlays():
 def test_error_page_navigation_is_not_served_as_student_life_evidence():
     records = list(life._bundled_ntu_research().values())
     assert len(records) == 288
-    assert sum(len(row.evidence) for row in records) == 2146
+    assert sum(len(row.evidence) for row in records) == 2140
+    usp = next(row for row in records if row.school_name == "聖保羅大學")
+    assert len(usp.evidence) == 8
+    assert not any(e.text.startswith(("INCOMING", "ABOUT USP", "Staff Mobility", "ACADEMIC RECEPTION")) for e in usp.evidence)
     akita = next(row for row in records if row.school_name == "秋田大學")
     assert akita.status == "partial" and akita.evidence
     assert not any("404" in source.url for row in akita.evidence for source in row.sources)
@@ -180,5 +183,5 @@ def test_ntu_public_api_serves_photos_locations_and_life_without_network(tmp_pat
                 assert p["location"]["latitude"] is None
         context = client.get("/school-life-context", params={"school": "聖保羅大學", "home_school": "NTU"}).json()
         assert context["research_status"] == "partial" and context["source_count"] > 0
-        assert any("USP iFriends" in e["text"] for c in context["categories"] for e in c["evidence"])
+        assert any("iFriends" in e["text"] for c in context["categories"] for e in c["evidence"])
         assert any(e["translation_status"] == "translated" for c in context["categories"] for e in c["evidence"])

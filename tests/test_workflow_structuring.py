@@ -107,6 +107,24 @@ def test_legacy_workflow_is_structured_without_guessing_unknown_values() -> None
     assert "合作校提名通知" in (partner.confirmation_contact or "")
 
 
+def test_explicit_applicability_review_hold_survives_complete_source_metadata() -> None:
+    workflow = _legacy_workflow()
+    workflow = workflow.model_copy(update={
+        "academic_year": "115",
+        "application_round": "第一梯次",
+        "sources": [
+            source.model_copy(update={"effective_academic_year": "115"})
+            for source in workflow.sources
+        ],
+        "applicability_status": ApplicationApplicabilityStatus.NEEDS_CONFIRMATION,
+        "applicability_note": "來源只提供預告，正式簡章與適用對象仍待確認。",
+    })
+    for _ in range(2):
+        workflow = structure_application_workflow(workflow)
+        assert workflow.applicability_status == ApplicationApplicabilityStatus.NEEDS_CONFIRMATION
+        assert workflow.applicability_note == "來源只提供預告，正式簡章與適用對象仍待確認。"
+
+
 def test_paper_send_by_without_arrival_deadline_is_never_reminder_eligible() -> None:
     checked_at = datetime(2026, 7, 28, tzinfo=timezone.utc)
     workflow = UniversityApplicationWorkflow(

@@ -12,6 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT / "src") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "src"))
 from exchange_info.school_identity import VisualRecordIndex, school_identity_key
+from exchange_info.fcu_source_review import apply_program_review, load_reviewed_programs
 
 SOURCES_FCU_DIR = REPO_ROOT / "sources" / "fcu"
 OFFICIAL_FCU_DIR = REPO_ROOT / "src" / "exchange_info" / "official_data" / "fcu"
@@ -889,12 +890,31 @@ def extract_gpa_req(rows: list[dict], comment_str: str) -> str:
         and ((r.get("tuition_type") or {}).get("name") == "全免")
         for r in rows
     )
-    base = "逢甲大學校內門檻：在校歷年總平均 GPA 3.0（含）以上（約百分制 75 分以上）"
+    base = "逢甲大學校內門檻：在校歷年總平均 GPA 3.0（含）以上（不可用固定百分制分數替代）"
     if has_1yr_waiver:
         base += "；申請一學年學費互免交換者歷年系排名須達前 50%"
     if m:
         base += f"｜接待校門檻：Overall GPA {m.group(1)}"
     return base
+
+
+def review_home_workflow_scope(workflow: dict) -> None:
+    """115-1 is a selection round for spring 2027, not a future-round rule."""
+    workflow["applicability_status"] = "needs_confirmation"
+    workflow["coverage_status"] = "official_partial"
+    workflow["applicability_note"] = (
+        "115-1共同條文與部分方案欄位已核對，個別合作校與雙聯方案全部步驟尚未完成適用性查核；"
+        "本流程不能當作116學年度或其他梯次已核實的申請指引。"
+    )
+    workflow["effective_application_rounds"] = ["115-1"]
+    for step in workflow["steps"]:
+        step["scope"]["academic_years"] = ["115"]
+        step["scope"]["application_rounds"] = ["115-1"]
+    results = workflow["steps"][2]
+    results["deadline_at"] = None
+    results["deadline_status"] = "needs_confirmation"
+    results["deadline_reminder_eligible"] = False
+    results["timing"] = "115-1簡章預計9月下旬公告初審，並非錄取確認截止；繳件期限須依實際錄取通知。"
 
 
 def main() -> None:
@@ -1017,7 +1037,7 @@ def main() -> None:
         course_rest_str = (
             f"開放申請院系：{colleges_str}（{degree_levels_str}）。"
             + (f"研修條件與選課備註：{comment_str}。" if comment_str else "")
-            + "依逢甲大學規定，大學部一至三年級每學期至少修習 12 學分、大四至少 9 學分、碩博士班至少 3 學分（獲教育部學海獎學金者須修習至少 4 學分本科系相關專業課程）。"
+            + "依逢甲大學規定，學士班非應屆畢業學生每學期至少修習 12 學分、學士班應屆畢業學生至少 9 學分、碩博士班至少 3 學分（特殊情況經系／學程主任核可並報教務處備查者例外）（獲教育部學海獎學金者須修習至少 4 學分本科系相關專業課程）。"
         )
         housing_str = (
             f"{zh_name} 原則上協助錄取交換生申請校內學生宿舍或推薦校外合作學生公寓（宿位依各校當期供給與申請先後核配，住宿費由學生自理）。"
@@ -1026,13 +1046,13 @@ def main() -> None:
         tuition_points_list = [
             "出國研修期間須於逢甲大學完成註冊並繳交全額學雜費以保留本校在學學籍；屬「學費互免（全免）」交換計畫者免繳姊妹校學費，屬「部分減免」或「自費研修／雙聯」者依兩校協議繳納姊妹校規定費用。",
             "取得姊妹校入學許可後 2 週內須繳交保證金：獲獎助學金或學費互免交換生繳交新臺幣 10,000 元，自費交換生繳交新臺幣 5,000 元。返國後修課及格率達 1/2 以上、1 個月內繳交 2,000 字以上研習報告書，且學費互免／獲獎生完成每學期 50 小時志工服務（兩學期 100 小時）後無息退還。",
-            "境外最低修課學分規定：大學部一至三年級每學期至少修讀 12 學分、大學部四年級（應屆畢業年級）至少 9 學分、碩博士班至少 3 學分；獲教育部學海飛颺／惜珠獎學金者須修讀至少 4 學分與本科系相關之專業課程。",
+            "境外最低修課學分規定：學士班非應屆畢業學生每學期至少修讀 12 學分、學士班應屆畢業學生至少 9 學分、碩博士班至少 3 學分（特殊情況經系／學程主任核可並報教務處備查者例外）；獲教育部學海飛颺／惜珠獎學金者須修讀至少 4 學分與本科系相關之專業課程。",
         ]
 
         app_steps_list = [
             f"步驟一（確認資格與參加國際研習週說明會）：確認具逢甲大學正式在學學籍（大學部須入學滿一學期、原則上不得為延修生；研究生首學期即可申請）、在校歷年總平均 GPA 3.0（含）以上，並備妥 2024/10/01 後應試取得之外語檢定證明（大陸地區免附）。",
             f"步驟二（oiasap 線上系統填報與無紙化上傳）：於申請期限內登入逢甲大學「出國研修申請系統（https://oiasap.fcu.edu.tw/）」，擇一申請「國際地區」或「大陸地區」（至多填報 5 所志願學校），上傳 2 吋證件照、家長同意書（附件一）、1,000 字以上研修計畫（附件二）、學務處生輔組核章之獎懲紀錄、歷年成績單正本（國際地區須附英文成績單）、外語檢定證明及研究生指導教授同意書（附件三）。",
-            "步驟三（校內初審評分分發與獎助學金同步審核）：由國際事務處依在校學業成績、外語能力及研修計畫進行初審分發，並自動同步審核「逢甲大學出國研修獎助學金」（國際地區系排前 10% NT$13,000、11–20% NT$11,000、21–30% NT$9,000、研究生 85 分以上 NT$8,000；大陸地區系排前 10% NT$7,000 至研究生 NT$4,000；清寒弱勢另加發補助）。",
+            "步驟三（校內初審評分分發與獎助學金同步審核）：由國際事務處依在校學業成績、外語能力及研修計畫進行初審分發，並自動同步審核「逢甲大學出國研修獎助學金」（名額與金額依預算及審查核定，非固定排名給付；經濟弱勢可附證明供審查）。",
             f"步驟四（姊妹校提名複審、繳交保證金與行前準備）：獲本校推薦資格後，依國際事務處承辦人通知完成 {full_name} 複審申請表件與宿舍登記；取得正式入學許可（LOA）後 2 週內繳交保證金（學費互免／獲獎生 NT$10,000、自費生 NT$5,000），參加行前說明會並辦理簽證、海外醫療及意外保險與學分抵免。",
         ]
 
@@ -1307,7 +1327,7 @@ def main() -> None:
                     "deadline_reminder_eligible": False,
                     "summary": "國際事務處公告校內初審錄取分發暨「逢甲大學出國研修獎助學金」獲獎名單；取得推薦資格後由國際處承辦人向姊妹校辦理官方提名（Nomination），欲放棄者須填具《錄取資格放棄聲明書》。",
                     "details": [
-                        "逢甲大學出國研修獎助學金於初審時自動納入審核（國際地區系排前 10% NT$13,000、11–20% NT$11,000、21–30% NT$9,000、研究生平均 85 分以上 NT$8,000、清寒另加 NT$8,000；大陸地區系排前 10% NT$7,000、11–20% NT$6,000、21–30% NT$5,000、研究生平均 85 分以上 NT$4,000、清寒另加 NT$4,000）。",
+                        "逢甲出國研修獎助於線上報名後自動納入審核；實際名額與金額依當年預算、申請人數及審查核定，不是按排名保證固定金額。經濟弱勢或家庭突遭變故者可提出證明供審查。",
                         "若獲推薦後因故放棄錄取資格，須依規定提交《錄取資格放棄聲明書》；無故放棄將影響日後申請校內出國研修及獎助學金之權益。",
                     ],
                     "scope": {
@@ -1392,6 +1412,8 @@ def main() -> None:
             "coverage_note": "已完整整合逢甲大學 115-1 學年度選送學生出國研修簡章（校級合作）、oiasap 出國研修學校查詢系統 API、115-1 初審分發暨獎助名單與國際事務處獎助學金規範。",
         })
 
+        review_home_workflow_scope(workflows[-1])
+
         cost_default, visa_default = REGION_COST_DEFAULTS.get(
             country,
             (
@@ -1464,7 +1486,7 @@ def main() -> None:
                     "summary": cost_line,
                     "points": [cost_line] + tuition_points_list,
                     "source_urls": src_url_list,
-                    "caution": "可申請逢甲大學「出國研修獎助學金」（初審自動審核，國際地區 NT$8,000–21,000、大陸地區 NT$4,000–11,000）、教育部「學海飛颺／學海惜珠」（至少 NT$60,000 起）、「張保隆校長紀念獎助學金」（上限 NT$200,000）及「新生鷹揚獎助學金」（往返機票上限國際 NT$40,000／大陸 NT$20,000）。",
+                    "caution": "可申請逢甲大學「出國研修獎助學金」（報名後自動納入審核；金額與名額依當年預算及審查核定）、教育部「學海飛颺」（每人至少 NT$60,000）／「學海惜珠」（依教育部核定，須另案申請）、「張保隆校長紀念獎助學金」（上限 NT$200,000）及「新生鷹揚獎助學金」（往返機票上限國際 NT$40,000／大陸 NT$20,000）。",
                 },
                 {
                     "key": "housing",
@@ -1837,6 +1859,10 @@ def main() -> None:
     partners_jsonl_text = (
         "\n".join(json.dumps(r, ensure_ascii=False) for r in partners) + "\n"
     )
+    reviewed_programs = load_reviewed_programs(REPO_ROOT)
+    for partner in partners:
+        apply_program_review(partner, reviewed_programs)
+
     (OFFICIAL_FCU_DIR / "partners.jsonl").write_text(
         partners_jsonl_text, encoding="utf-8"
     )
@@ -1953,9 +1979,9 @@ def main() -> None:
         ],
         "eligibility": [
             "在學學籍與年級限制：提出申請及出國研修期間應為逢甲大學註冊在學學生（原則上不得為延修生；大學部復學或入學未滿 1 學期者不得申請，碩博士班研究生入學首學期即可申請）。同一學制出國交換累計不得超過 2 個學期（雙聯學制不在此限）。",
-            "學業成績門檻：在校歷年總平均 GPA 3.0（含）以上（約百分制 75 分以上）；若申請「交換一學年（學費互免）」者，歷年在校學業成績系排名須達前 50%，且須符合畢業學分修畢或實驗室合作規定。",
+            "學業成績門檻：在校歷年總平均 GPA 3.0（含）以上（不可用固定百分制分數替代）；若申請「交換一學年（學費互免）」者，歷年在校學業成績系排名須達前 50%，且須符合畢業學分修畢或實驗室合作規定。",
             "志願填報與排他規定：每位申請人於 oiasap 系統至多可選填 5 所志願學校；「國際地區」與「大陸地區」僅能擇一報名，「交換學生」與「雙聯學制」亦僅能擇一報名。",
-            "保證金、最低修課學分與返國義務：取得姊妹校入學許可後 2 週內須繳交保證金（獲獎助學金或學費互免生 NT$10,000、自費生 NT$5,000）。出國期間每學期最低修課學分為大學部一至三年級 12 學分、大四 9 學分、碩博士班 3 學分（學海受獎生須修習至少 4 學分本科系專業課程）；返國後修課及格率達 1/2 以上、1 個月內繳交 2,000 字以上研習報告書，且學費互免／獲獎生完成每學期 50 小時志工服務（兩學期 100 小時）後全額無息退還保證金。",
+            "保證金、最低修課學分與返國義務：取得姊妹校入學許可後 2 週內須繳交保證金（獲獎助學金或學費互免生 NT$10,000、自費生 NT$5,000）。出國期間每學期最低修課學分為學士班非應屆畢業學生 12 學分、學士班應屆畢業學生 9 學分、碩博士班 3 學分（特殊情況經系／學程主任核可並報教務處備查者例外）（學海受獎生須修習至少 4 學分本科系專業課程）；返國後修課及格率達 1/2 以上、1 個月內繳交 2,000 字以上研習報告書，且學費互免／獲獎生完成每學期 50 小時志工服務（兩學期 100 小時）後全額無息退還保證金。",
         ],
         "language_requirement": [
             "申請赴國際及香港地區姊妹校者，須於校內初審時上傳 2024年10月1日（含）後應試取得之有效外語能力檢定證明（TOEFL iBT、IELTS Academic、TOEIC、JLPT、TOPIK 或歐語 CEFR 檢定），且須符合各志願學校於 oiasap 系統所列之單項與總分標準。",
@@ -1973,7 +1999,7 @@ def main() -> None:
             "8. 外語檢定成績證明（申請國際地區必繳，須為 2024/10/01 後考試取得；申請大陸地區免附）及清寒弱勢證明（非必繳，具資格者可獲額外獎助）",
         ],
         "scholarship_info": [
-            "逢甲大學「出國研修獎助學金」（校內初審自動納入審核，無須額外申請）：【國際地區】大學部歷年系排前 10% 核發 NT$13,000、前 11%–20% 核發 NT$11,000、前 21%–30% 核發 NT$9,000，研究生歷年平均 85 分以上核發 NT$8,000，具清寒弱勢證明者另加發 NT$8,000；【大陸地區】大學部歷年系排前 10% 核發 NT$7,000、前 11%–20% 核發 NT$6,000、前 21%–30% 核發 NT$5,000，研究生歷年平均 85 分以上核發 NT$4,000，具清寒弱勢證明者另加發 NT$4,000。",
+            "逢甲出國研修獎助於線上報名後自動納入審核；實際名額與金額依當年預算、申請人數及審查核定，不是按排名保證固定金額。經濟弱勢或家庭突遭變故者可提出證明供審查。",
             "教育部「學海飛颺」與「學海惜珠」獎學金：補助具中華民國國籍且赴國際地區（不含大陸及港澳）修讀學分滿 1 學期或 1 學年之在學學生；學海飛颺要求大學部班排前 30% 或研究生總平均 80 分以上（每人獎助至少 NT$60,000 起），學海惜珠補助具各縣市低收／中低收／特殊境遇家庭等資格學生，且均須於國外修讀至少 4 學分本科系相關專業課程。",
             "逢甲大學「張保隆校長紀念獎助學金」：補助具中華民國國籍、大學部班排前 35% 或研究生總平均 80 分以上（清寒優先）赴國外簽約大學研修之學生，經面審核定每人上限新臺幣 200,000 元。",
             "逢甲大學「新生鷹揚獎助學金」與「陳立恆先生赴歐美攻讀博士學位獎學金」：新生鷹揚獎助學金提供在學期間乙次赴學費互免姐妹校交換往返經濟艙機票實報實核（國際地區上限 NT$40,000、大陸地區上限 NT$20,000）；陳立恆先生獎學金補助赴歐美攻讀博士學位每年 NT$500,000。",
@@ -1990,86 +2016,65 @@ def main() -> None:
     student_dashboard_payload = {
         "school_name": "逢甲大學",
         "last_checked": "2026-10-17T05:35:00Z",
-        "academic_score_minimum": 75.0,
-        "academic_score_rule": "在校歷年總平均 GPA 3.0（含）以上（約百分制 75 分以上）；申請一學年學費互免交換者歷年系排名須達前 50%。大學部須入學滿一學期以上且原則上不得為延修生，研究生首學期即可申請；出國期間每學期至少須修習大一至大三 12 學分、大四 9 學分、碩博班 3 學分。",
+        "academic_score_minimum": None,
+        "academic_score_rule": "在校歷年總平均 GPA 3.0（含）以上（不可用固定百分制分數替代）；申請一學年學費互免交換者歷年系排名須達前 50%。大學部須入學滿一學期以上且原則上不得為延修生，研究生首學期即可申請；出國期間每學期至少須修習大一至大三 12 學分、大四 9 學分、碩博班 3 學分。",
         "academic_gpa_minimum": 3.0,
         "maximum_preferences": 5,
         "selection_rules": {
             "academic_policy": "gpa_or_rank",
             "academic_reference_year": "115",
             "undergraduate_gpa_minimum": 3.0,
-            "undergraduate_rank_maximum": 50.0,
+            "undergraduate_rank_maximum": None,
             "graduate_academic_exempt": False,
-            "exclude_in_service": True,
+            "exclude_in_service": False,
             "pending_quota_planning": False,
-            "partner_requirements_need_confirmation": False,
-            "degree_score_minimums": {
-                "undergraduate": 75.0,
-                "graduate": 75.0,
-            },
+            "partner_requirements_need_confirmation": True,
+            "degree_score_minimums": {},
             "excluded_undergraduate_years": [],
             "language_certificate_required": False,
         },
-        "language_score_minimums": {
-            "toefl": 61.0,
-            "ielts": 5.5,
-            "toeic": 550.0,
-        },
-        "application_periods": [
-            {
-                "title": "逢甲大學 115-1 學年度選送學生出國研修（赴 115-2 / 2027 春季班校級交換與雙聯）",
-                "details": [
-                    "線上申請期間：2026年7月27日（一）起至2026年8月10日（一）下午 17:00 止（於 https://oiasap.fcu.edu.tw/ 採全線上無紙化上傳，至多選填 5 所志願學校）。",
-                    "初審分發暨獎助學金公告：2026年9月11日已公告初審錄取名單（國際地區 28 校 46 人、大陸地區 9 校 25 人，合計 71 人獲推薦分發及出國研修獎助學金）。",
-                    "每年 6 月中旬公告之簡章僅開放申請交換 1 學期（春季班）；欲申請交換 1 學年或秋季班者請參加每年 12 月中旬公告之甄選梯次。",
-                ],
-                "source": {
-                    "title": "逢甲大學 115-1 學年度選送學生出國研修簡章（校級合作）與初審錄取公告",
-                    "source_url": "https://oia.fcu.edu.tw/sap/introduction/",
-                    "category": "deadline",
-                    "summary": "115-1 選送學生出國研修線上報名時程、應繳文件與分發結果。",
-                },
-                "scope": "home_application",
-                "program_types": ["exchange"],
-                "academic_year": "115",
-                "application_round": "115-1 選送（2027春季班）",
-                "audience": "all_students",
-                "opens_at": "2026-07-27T09:00:00+08:00",
-                "deadline_at": "2026-08-10T17:00:00+08:00",
-                "date_status": "verified_exact",
-                "status": "closed",
-                "status_note": "115-1 選送（2027春季班出國）已於 2026/08/10 17:00 截止並於 2026/09/11 公告 71 名錄取分發暨獎助名單，現正進行姊妹校複審送件。",
-                "deadline_note": "透過逢甲大學出國研修申請系統（https://oiasap.fcu.edu.tw/）全線上無紙化上傳申請表件。",
-                "reminder_eligible": False,
-                "checked_at": "2026-10-17T05:35:00Z",
-            },
-            {
-                "title": "逢甲大學 115-1 國際研習週說明會暨 115-2 選送學生出國研修（赴 116 學年度 / 2027 秋季班）",
-                "details": [
-                    "115-1 國際研習週說明會：2026年11月16日（一）至11月20日（五）每日 12:10–13:00 假行政二館 205 視聽教室舉辦（含國際地區交換、大陸地區交換、教育部學海獎學金及雙聯學位說明會）。",
-                    "115-2 選送簡章公告與報名：每年 12 月中旬於國際事務處官網與 oiasap 系統公告簡章（申請期程約 1 至 1.5 個月），可申請赴姊妹校交換 1 學年或 1 學期。",
-                ],
-                "source": {
-                    "title": "逢甲大學國際事務處—出國研修申請資訊與 115-1 國際研習週公告",
-                    "source_url": "https://oia.fcu.edu.tw/sap/introduction/",
-                    "category": "exchange_application",
-                    "summary": "115-1 國際研習週場次與每年 12 月中旬選送簡章時程。",
-                },
-                "scope": "home_application",
-                "program_types": ["exchange"],
-                "academic_year": "115",
-                "application_round": "115-2 選送（2027秋季班）",
-                "audience": "all_students",
-                "opens_at": "2026-11-16T09:00:00+08:00",
-                "deadline_at": "2027-01-15T17:00:00+08:00",
-                "date_status": "verified_exact",
-                "status": "upcoming",
-                "status_note": "115-1 國際研習週將於 2026/11/16–11/20 在行政二館 205 視聽教室舉行，115-2 選送簡章將於 2026年12月中旬公告並開放線上申請。",
-                "deadline_note": "有意申請 116 學年度（2027 秋季班）交換 1 學年或 1 學期之同學，請於 2026/10/01 後備妥外語檢定成績並參加 11 月國際研習週說明會。",
-                "reminder_eligible": True,
-                "checked_at": "2026-10-17T05:35:00Z",
-            },
-        ],
+        "language_score_minimums": {},
+        "application_periods": [{'title': '逢甲大學 115-1 學年度選送學生出國研修（赴 115-2 / 2027 春季班校級交換與雙聯）',
+          'details': ['線上申請期間：2026年7月27日（一）起至2026年8月10日（一）下午 17:00 止（於 https://oiasap.fcu.edu.tw/ 採全線上無紙化上傳，至多選填 5 '
+                      '所志願學校）。',
+                      '初審分發暨獎助學金公告：2026年9月11日已公告初審錄取名單（國際地區 28 校 46 人、大陸地區 9 校 25 人，合計 71 人獲推薦分發及出國研修獎助學金）。',
+                      '每年 6 月中旬公告之簡章僅開放申請交換 1 學期（春季班）；欲申請交換 1 學年或秋季班者請參加每年 12 月中旬公告之甄選梯次。'],
+          'source': {'title': '逢甲大學 115-1 學年度選送學生出國研修簡章（校級合作）與初審錄取公告',
+                     'source_url': 'https://oia.fcu.edu.tw/sap/introduction/',
+                     'category': 'deadline',
+                     'summary': '115-1 選送學生出國研修線上報名時程、應繳文件與分發結果。'},
+          'scope': 'home_application',
+          'program_types': ['exchange'],
+          'academic_year': '115',
+          'application_round': '115-1 選送（2027春季班）',
+          'audience': 'all_students',
+          'opens_at': None,
+          'deadline_at': '2026-08-10T17:00:00+08:00',
+          'date_status': 'verified_exact',
+          'status': 'closed',
+          'status_note': '115-1 選送（2027春季班出國）已於 2026/08/10 17:00 截止並於 2026/09/11 公告 71 名錄取分發暨獎助名單，現正進行姊妹校複審送件。',
+          'deadline_note': '透過逢甲大學出國研修申請系統（https://oiasap.fcu.edu.tw/）全線上無紙化上傳申請表件。',
+          'reminder_eligible': False,
+          'checked_at': '2026-10-17T05:35:00Z'},
+         {'title': '逢甲下一期出國研修甄選日期待核實',
+          'details': ['一般介紹列每年6月中及12月中公告簡章，申請期間約1至1.5個月。', '下一期開放、截止及11/16–11/20說明會日期均未由本輪來源核實。'],
+          'source': {'title': '逢甲大學國際事務處—出國研修申請資訊與 115-1 國際研習週公告',
+                     'source_url': 'https://oia.fcu.edu.tw/sap/introduction/',
+                     'category': 'exchange_application',
+                     'summary': '115-1 國際研習週場次與每年 12 月中旬選送簡章時程。'},
+          'scope': 'home_application',
+          'program_types': ['exchange'],
+          'academic_year': '115',
+          'application_round': '115-2 選送（2027秋季班）',
+          'audience': 'all_students',
+          'opens_at': None,
+          'deadline_at': None,
+          'date_status': 'needs_confirmation',
+          'status': 'needs_confirmation',
+          'status_note': '官方系統目前列115-1已截止梯次；一般介紹僅列每年6月中及12月中公告簡章，下一期精確日期未由本輪來源確認。',
+          'deadline_note': '請依當期簡章確認，不能將12月中旬或1月中旬轉為精確日期。',
+          'reminder_eligible': False,
+          'checked_at': '2026-10-17T05:35:00Z'}],
         "program_overview": [
             {
                 "title": f"逢甲大學國際事務處出國研修計畫總覽（{len(partners)} 所交換與雙聯合作大學）",
@@ -2093,7 +2098,7 @@ def main() -> None:
                     "學籍與年級：提出申請及出國研修期間須為逢甲大學註冊在學學位生（原則上不得為延修生；大學部須入學或復學滿 1 學期以上，碩博士班研究生首學期即可申請）。同一學制交換累計以 2 學期為限。",
                     "學業成績門檻：在校歷年總平均 GPA 3.0（含）以上（約 75 分以上）；申請一學年學費互免交換者，歷年系排名須達前 50%。",
                     "保證金與志工義務：獲姊妹校入學許可後 2 週內，獲獎助或學費互免生須繳交保證金 NT$10,000、自費生繳交 NT$5,000；返國後修課及格率達 1/2 以上、1 個月內繳交 2,000 字研習報告書，且學費互免／獲獎生完成每學期 50 小時志工服務後無息退還。",
-                    "境外最低修課學分：大學部一至三年級每學期至少 12 學分、大學部四年級至少 9 學分、碩博士班至少 3 學分（獲教育部學海獎學金者須修讀至少 4 學分本科系必選修專業課程）。",
+                    "境外最低修課學分：學士班非應屆畢業學生每學期至少 12 學分、學士班應屆畢業學生至少 9 學分、碩博士班至少 3 學分（特殊情況經系／學程主任核可並報教務處備查者例外）（獲教育部學海獎學金者須修讀至少 4 學分本科系必選修專業課程）。",
                 ],
                 "source": {
                     "title": "逢甲大學 115-1 學年度選送學生出國研修簡章（校級合作）",
@@ -2140,7 +2145,7 @@ def main() -> None:
             {
                 "title": "逢甲大學出國研修獎助學金、教育部學海飛颺／惜珠、張保隆校長紀念獎助學金與鷹揚獎助學金",
                 "details": [
-                    "逢甲大學出國研修獎助學金（初審自動納入審核）：國際地區系排前 10% NT$13,000、11–20% NT$11,000、21–30% NT$9,000、研究生平均 85 分以上 NT$8,000（清寒另加 NT$8,000）；大陸地區系排前 10% NT$7,000、11–20% NT$6,000、21–30% NT$5,000、研究生平均 85 分以上 NT$4,000（清寒另加 NT$4,000）。",
+                    "逢甲出國研修獎助於線上報名後自動納入審核；實際名額與金額依當年預算、申請人數及審查核定，不是按排名保證固定金額。經濟弱勢或家庭突遭變故者可提出證明供審查。",
                     "教育部學海飛颺（班排前 30% 或研究生 80 分以上，每人至少 NT$60,000 起）及學海惜珠（具低收／中低收／特殊境遇家庭證明，依教育部核定補助）獎學金。",
                     "張保隆校長紀念獎助學金（班排前 35% 或研究生 80 分以上，清寒優先，每人上限 NT$200,000）及新生鷹揚獎助學金（提供乙次赴學費互免姐妹校交換往返機票實報實核，國際上限 NT$40,000／大陸上限 NT$20,000）。",
                 ],
@@ -2177,7 +2182,7 @@ def main() -> None:
                 "title": "逢甲大學選送學生出國研修作業要點：修課學分門檻、志工服務時數與獎助學金審核",
                 "summary": "規範逢甲大學交換生在校 GPA 3.0 門檻、境外最低修課學分、每學期 50 小時志工服務義務及校內獎助學金自動審核機制。",
                 "key_points": [
-                    "出國研修期間須於逢甲大學註冊並繳交全額學雜費；每學期最低修課學分為大學部一至三年級 12 學分、大學部四年級 9 學分、碩博士班 3 學分（學海受獎生須修讀至少 4 學分本科系必選修專業課程）。",
+                    "出國研修期間須於逢甲大學註冊並繳交全額學雜費；每學期最低修課學分為學士班非應屆畢業學生 12 學分、學士班應屆畢業學生 9 學分、碩博士班 3 學分（特殊情況經系／學程主任核可並報教務處備查者例外）（學海受獎生須修讀至少 4 學分本科系必選修專業課程）。",
                     "返國後修課及格率須達 1/2 以上、1 個月內提交 2,000 字以上研習報告書，且學費互免／獲獎助學生須完成每學期 50 小時（兩學期 100 小時）志工服務，始得無息退還保證金。",
                     "校內初審時自動依學業排名與身分審核「逢甲大學出國研修獎助學金」（國際地區最高 NT$21,000、大陸地區最高 NT$11,000），另可依公告申請教育部學海飛颺／惜珠與張保隆校長紀念獎助學金。",
                 ],
@@ -2394,8 +2399,11 @@ def main() -> None:
             1 for p in partners if p["country"] == "中國大陸"
         ),
         "experience_report_covered_partners": exp_covered_schools,
-        "open_partners": open_partner_count,
-        "reference_only_partners": len(partners) - open_partner_count,
+        "open_partners": sum(p["availability_status"] == "open" for p in partners),
+        "reference_only_partners": sum(p["availability_status"] == "reference_only" for p in partners),
+        "needs_confirmation_partners": sum(p["availability_status"] == "needs_confirmation" for p in partners),
+        "whole_record_verified_partners": 0,
+        "source_program_rows_matched": sum(len(p.get("program_options", [])) for p in partners),
         "verified_locations": len(partners),
         "verified_official_websites": sum(
             1 for p in partners if p.get("official_website")
@@ -2406,7 +2414,7 @@ def main() -> None:
         "workflow_count": len(workflows),
         "destination_profile_count": len(destinations),
         "student_life_count": len(life_records),
-        "active_term": "115-1選送（赴115-2/2027春季班研修，2026/07/27–08/10收件、09/11公告71名分發暨獎助名單）已辦理完畢；115-1國際研習週於2026/11/16–11/20舉行，115-2選送簡章預計2026年12月中旬公告。",
+        "active_term": "115-1赴2027春季交換已截止；下一梯正式日期待核實。",
         "verified_at": "2026-10-17",
     }
     (OFFICIAL_FCU_DIR / "catalog-completeness.json").write_text(
@@ -2418,8 +2426,10 @@ def main() -> None:
             {
                 "school_id": "fcu",
                 "school_name": "逢甲大學",
-                "status": "official_verified",
-                "checked_at": "2026-10-17T05:35:00Z",
+                "status": "partially_reviewed",
+                "checked_at": "2026-10-20T19:15:10+00:00",
+                "whole_record_verified": False,
+                "note": "已核對部分母校條文及115-1名單指定欄位；全體接待校規則與生活資訊尚未逐項核實。",
                 "counts": completeness,
             },
             ensure_ascii=False,
@@ -2430,6 +2440,11 @@ def main() -> None:
     )
 
     provenance_files = [
+        (
+            "sources/fcu/oiasap_programs_1151_reviewed_20261021.json",
+            "https://oiasap.fcu.edu.tw/v2/programs?sms=1151",
+            "2026-10-21取得的115-1方案快照；僅核對指定欄位及方案範圍，非整筆或現行接待校規則核實",
+        ),
         (
             "sources/fcu/oiasap_programs_1151.json",
             "https://oiasap.fcu.edu.tw/v2/programs?sms=1151",
@@ -2520,6 +2535,10 @@ def main() -> None:
         json.dumps(provenance_payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+    from exchange_info.generated_content_review import review_generated_content
+    review_generated_content(REPO_ROOT, "fcu", round_id=20)
+    review_generated_content(REPO_ROOT, "fcu", round_id=21)
 
     print(
         f"Successfully built FCU catalog: {len(partners)} partners ({open_partner_count} open, "

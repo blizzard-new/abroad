@@ -188,6 +188,8 @@ def main():
     dashboard = clean(read(base / "student-dashboard-candidate.json")["dashboard"])
     dashboard["partner_universities"] = []  # Loaded from the single partner bundle.
     dashboard["academic_score_minimum"] = None  # GPA/rank is not a percentage score.
+    # 116-1 guidelines, printed pp. 5 and 7: both rounds allow 30 preferences.
+    dashboard["maximum_preferences"] = 30
     dashboard["language_score_minimums"] = home_rules["language_score_minimums"]
     dashboard["selection_rules"] = home_rules["selection_rules"]
     dashboard["scholarship_info"].append(audit["scholarship_explanation"])
@@ -312,6 +314,10 @@ def main():
     from exchange_info.ntu_completion import apply_completion, SOURCE as COMPLETION_SOURCE
     if COMPLETION_SOURCE.exists():
         apply_completion(OUTPUT)
+    from exchange_info.usp_source_review import apply_usp_source_review
+    apply_usp_source_review(Path(__file__).resolve().parents[1], "ntu", bundle=OUTPUT, rebuild=True)
+    from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
+    apply_vilnius_akita_review(Path(__file__).resolve().parents[1], "ntu", bundle=OUTPUT)
     counts = json.loads((OUTPUT / "catalog-completeness.json").read_text(encoding="utf-8"))
     n_total = counts["partner_count"]
     print(f"NTU: {n_total} partners, {n_total} workflows, {n_total} destinations; {counts['quota_pending_count']} pending / {counts['zero_quota_count']} zero / {counts.get('published_positive_quota_count', 0)} published quotas")

@@ -80,7 +80,7 @@ def test_nchu_degree_and_academic_checks() -> None:
     assert nchu_academic_check("學士班", 80.0, 3.5, 25.0)[0] == "pass"
     assert nchu_academic_check("學士班", 60.0, None, None)[0] == "pass"
     assert nchu_academic_check("學士班", 58.0, 1.5, 80.0)[0] == "fail"
-    assert nchu_academic_check("碩士班", 82.0, 3.6, 20.0)[0] == "pass"
+    assert nchu_academic_check("碩士班", 82.0, 3.6, 20.0)[0] == "needs_confirmation"
     assert nchu_academic_check("學士班", None, None, None)[0] == "needs_confirmation"
 
 

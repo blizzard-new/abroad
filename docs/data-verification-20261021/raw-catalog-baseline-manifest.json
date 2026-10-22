@@ -1,0 +1,783 @@
+{
+  "base_commit": "b662dced2607bc67c3354c95b7aaad202448bea7",
+  "scope": [
+    "application_workflows.jsonl",
+    "destination_profiles.jsonl",
+    "partners.jsonl"
+  ],
+  "files": [
+    {
+      "path": "src/exchange_info/official_data/ccu/application_workflows.jsonl",
+      "sha256": "6c233412abc8587cb197be2f82ba5c8d069887ffbf41c48bbacabfd1c1fe1b33",
+      "rows": 55,
+      "coverage": {
+        "same_value_at_pointer": 45308
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ccu/destination_profiles.jsonl",
+      "sha256": "ed59dff90279e350715ad6274ecc330643eccbdce1e2f4d4e42747e7fac0939c",
+      "rows": 104,
+      "coverage": {
+        "same_value_at_pointer": 8098,
+        "different_value_at_pointer": 34
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ccu/partners.jsonl",
+      "sha256": "321e656b638bf5460b4ccd284d5c692f97e6f4244ecf82af3b0603a39e3d13f9",
+      "rows": 104,
+      "coverage": {
+        "same_value_at_pointer": 119958,
+        "different_value_at_pointer": 1220,
+        "absent_runtime_pointer": 1034
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/cgu/application_workflows.jsonl",
+      "sha256": "aba900557387d97d6928ec628542d3b5d3ffcddf436e4ee7b0a255de20d77750",
+      "rows": 154,
+      "coverage": {
+        "ambiguous_runtime_record": 81914,
+        "same_value_at_pointer": 2252
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/cgu/destination_profiles.jsonl",
+      "sha256": "508c66ce7752b71bba1b2f1819e34156459c5437a1ebad5ba95392f276da48c0",
+      "rows": 77,
+      "coverage": {
+        "same_value_at_pointer": 2421,
+        "different_value_at_pointer": 83
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/cycu/application_workflows.jsonl",
+      "sha256": "dcf9855fc1928eed06547aa02677518c6df4d86611e85849ec378f18cdd7fa50",
+      "rows": 89,
+      "coverage": {
+        "same_value_at_pointer": 15730
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/cycu/destination_profiles.jsonl",
+      "sha256": "c0ac923f8e84195b52a54d259941862d25f08c01d2347dda877aa97464b46da9",
+      "rows": 89,
+      "coverage": {
+        "same_value_at_pointer": 8557,
+        "different_value_at_pointer": 24
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/cycu/partners.jsonl",
+      "sha256": "303e85b64581566fa52e49e58aaac8952980e02af5af19f8e3aa05dbff91095b",
+      "rows": 89,
+      "coverage": {
+        "same_value_at_pointer": 4605,
+        "absent_runtime_pointer": 712
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/fcu/application_workflows.jsonl",
+      "sha256": "cd0cf46ccdb60f8b352f4230ad8b8addc94d3517b55311f04131038203185e25",
+      "rows": 161,
+      "coverage": {
+        "same_value_at_pointer": 29546
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/fcu/destination_profiles.jsonl",
+      "sha256": "7a92e7804e6b5be221ab2dda54bf0f4604da521e51a92e91c1ad5a7535412aa1",
+      "rows": 161,
+      "coverage": {
+        "same_value_at_pointer": 14753,
+        "different_value_at_pointer": 62
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/fcu/partners.jsonl",
+      "sha256": "871d7c0bcac6ffa6d95ba39114c96179d34482f47c11b7f816cf6468fb65d36a",
+      "rows": 161,
+      "coverage": {
+        "same_value_at_pointer": 8357,
+        "absent_runtime_pointer": 1288
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/fju/application_workflows.jsonl",
+      "sha256": "623a3ee8d2c07408ce5ebc4847495e36ff799dd8c9b8aeee72ba132c96c246ae",
+      "rows": 234,
+      "coverage": {
+        "same_value_at_pointer": 36018
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/fju/destination_profiles.jsonl",
+      "sha256": "5f77d10ae553a7bc3f1a6ef4ea58f828e0524ecb725b10ae6a1b887c7febaed9",
+      "rows": 234,
+      "coverage": {
+        "same_value_at_pointer": 17185,
+        "different_value_at_pointer": 104
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/fju/partners.jsonl",
+      "sha256": "27220015ff66fe576e8cb57798401dd97c4c22748da096479bbead18b7022bd9",
+      "rows": 234,
+      "coverage": {
+        "same_value_at_pointer": 10954,
+        "absent_runtime_pointer": 4947,
+        "different_value_at_pointer": 39
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nccu/application_workflows.jsonl",
+      "sha256": "452215be2d85218998eb886bf60cea51ab3a425137f9dadcb576b52dd7b97443",
+      "rows": 266,
+      "coverage": {
+        "same_value_at_pointer": 55623
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nccu/destination_profiles.jsonl",
+      "sha256": "15a6cccd5ee2e33203c037dd08f5a3ad07b1d3506893f5515e46f1a7ca1b8872",
+      "rows": 266,
+      "coverage": {
+        "same_value_at_pointer": 29144,
+        "different_value_at_pointer": 115
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nccu/partners.jsonl",
+      "sha256": "2dbd444ca598409559ade05fb78008cebcd606455d9c8f2b0d483a026d4b4154",
+      "rows": 266,
+      "coverage": {
+        "same_value_at_pointer": 13595,
+        "absent_runtime_pointer": 2128
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nchu/application_workflows.jsonl",
+      "sha256": "e75994f46368f7135dd988b32d963f446ec1b8f451f2cdfa33ed0b6fc4d1b5cc",
+      "rows": 226,
+      "coverage": {
+        "same_value_at_pointer": 45077
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nchu/destination_profiles.jsonl",
+      "sha256": "2eec014bc6415efab2af6ec7f7fabbd6650a0e6b9e4f20a67ba541888cf92170",
+      "rows": 226,
+      "coverage": {
+        "same_value_at_pointer": 22099,
+        "different_value_at_pointer": 79
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nchu/partners.jsonl",
+      "sha256": "0a174490db784f1c8f4fa364fe8dc14984822cb4c459f252d4727a34d683a9e1",
+      "rows": 226,
+      "coverage": {
+        "same_value_at_pointer": 11645,
+        "absent_runtime_pointer": 1808
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ncku/application_workflows.jsonl",
+      "sha256": "da21ee2c3796f7c69fe58c4575ece38f89d6065ea8a9813583cdd3dd8a690234",
+      "rows": 211,
+      "coverage": {
+        "same_value_at_pointer": 44313
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ncku/destination_profiles.jsonl",
+      "sha256": "2b9177a217f2dd924dda0ea677521de19ed97cf573db5078728a652fbee4803e",
+      "rows": 211,
+      "coverage": {
+        "same_value_at_pointer": 21521,
+        "different_value_at_pointer": 93
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ncku/partners.jsonl",
+      "sha256": "71a0b46f4eeaaf8f17d238937966610602d5035c112307031c81192bcf77feb9",
+      "rows": 211,
+      "coverage": {
+        "same_value_at_pointer": 10764,
+        "absent_runtime_pointer": 1688
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ncu/application_workflows.jsonl",
+      "sha256": "5e47a3e542b81b6bb5a5bda446569f4db600f8a2668e27fe7c4c052c8b1122f9",
+      "rows": 214,
+      "coverage": {
+        "same_value_at_pointer": 63216
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ncu/destination_profiles.jsonl",
+      "sha256": "241ffc7190a903f6f2e441c0f802f5398e0f4585f771d84aa53ba129931cc3a0",
+      "rows": 214,
+      "coverage": {
+        "same_value_at_pointer": 21144
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ncu/partners.jsonl",
+      "sha256": "2ab06a6565075cff16a209c6b29d38991c6361c12f1723396797676a2a8bb773",
+      "rows": 214,
+      "coverage": {
+        "same_value_at_pointer": 8436
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nkust/application_workflows.jsonl",
+      "sha256": "32926f8c0b8946dab75a31565ab8c16a08b313b49f0457e43da52a64e969544f",
+      "rows": 107,
+      "coverage": {
+        "same_value_at_pointer": 21747
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nkust/destination_profiles.jsonl",
+      "sha256": "4a14d33ec9d8586720f7819b4f72fca749913f93b5f961cb4c975c79ee8cfeb1",
+      "rows": 107,
+      "coverage": {
+        "same_value_at_pointer": 9467,
+        "different_value_at_pointer": 33
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nkust/partners.jsonl",
+      "sha256": "29104d556c6edd1b6660b0f367d78731d1606f0a56d1bde891617583e88adfbe",
+      "rows": 107,
+      "coverage": {
+        "same_value_at_pointer": 5905,
+        "absent_runtime_pointer": 856
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nsysu/application_workflows.jsonl",
+      "sha256": "875bbc2c6524fd7671e9eae5f1996fba791251d31fcd79270dd33d8d06309840",
+      "rows": 218,
+      "coverage": {
+        "same_value_at_pointer": 49408
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nsysu/destination_profiles.jsonl",
+      "sha256": "be51118c65269e1a97c9e134384fb32db0bb19c8c581ed94c3a3c63041dee020",
+      "rows": 218,
+      "coverage": {
+        "same_value_at_pointer": 21255,
+        "different_value_at_pointer": 87
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nsysu/partners.jsonl",
+      "sha256": "d05a0ff81e37c1d8fb172987465516f89006ba84cd86533a8b84fc5bc9ec3ac0",
+      "rows": 218,
+      "coverage": {
+        "same_value_at_pointer": 11286,
+        "absent_runtime_pointer": 1744
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nthu/application_workflows.jsonl",
+      "sha256": "7082e86e1a97cdd37de4bd06d7d5231581889a581e54b18cbf08af5e57bf1a91",
+      "rows": 176,
+      "coverage": {
+        "same_value_at_pointer": 35330
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nthu/destination_profiles.jsonl",
+      "sha256": "de41b1c5e367bd7d8326134055c528cdbc2b82ac15ffb9ea0cab3a7c161ff29c",
+      "rows": 176,
+      "coverage": {
+        "same_value_at_pointer": 17890,
+        "different_value_at_pointer": 87
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nthu/partners.jsonl",
+      "sha256": "a88e0389558c8a0e6dd84dc7e74ca2e3bd5546db22865b40698e39ff05ce8d3d",
+      "rows": 176,
+      "coverage": {
+        "same_value_at_pointer": 9478,
+        "absent_runtime_pointer": 1408
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntnu/application_workflows.jsonl",
+      "sha256": "8cd9e44cd13c8dffc403fac5edbcd92a6277feeb7c7f13ec7d6835f7db64526e",
+      "rows": 236,
+      "coverage": {
+        "same_value_at_pointer": 39412
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntnu/destination_profiles.jsonl",
+      "sha256": "636a59122e703802d0dcf725b8d0328fb1ee389a00f5680a955e20f09b14d56d",
+      "rows": 236,
+      "coverage": {
+        "same_value_at_pointer": 23869,
+        "different_value_at_pointer": 108
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntnu/partners.jsonl",
+      "sha256": "859d79ba36616285a54ed374ed75af3035906513a342d2e33949b15b77664559",
+      "rows": 236,
+      "coverage": {
+        "same_value_at_pointer": 12190,
+        "absent_runtime_pointer": 1888
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntou/application_workflows.jsonl",
+      "sha256": "8b36c1967fc434fcc9bc2843cf1f145cc9eddf125f1b980af3f82f2be587a206",
+      "rows": 123,
+      "coverage": {
+        "same_value_at_pointer": 24591
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntou/destination_profiles.jsonl",
+      "sha256": "b52282bf5ed8550eaea7348354f81577c0820be39802eb35cec750f72cd9250e",
+      "rows": 123,
+      "coverage": {
+        "same_value_at_pointer": 10442,
+        "different_value_at_pointer": 38
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntou/partners.jsonl",
+      "sha256": "681f51e28b5b324130b67037d823bf9de4257756c84db4ab15d010518d793682",
+      "rows": 123,
+      "coverage": {
+        "same_value_at_pointer": 6845,
+        "absent_runtime_pointer": 984
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu/application_workflows.jsonl",
+      "sha256": "d88733b64f0beaa1bafa12b9b70a826a4b76e328d05083b9b78ad00f970dfec5",
+      "rows": 409,
+      "coverage": {
+        "ambiguous_runtime_record": 184024,
+        "same_value_at_pointer": 25079
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu/destination_profiles.jsonl",
+      "sha256": "2ad2ac1af109d418d030382dbd74c865a66d1a1616ae4d753d53795e5907913a",
+      "rows": 206,
+      "coverage": {
+        "same_value_at_pointer": 21573,
+        "different_value_at_pointer": 115
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntu/application_workflows.jsonl",
+      "sha256": "feea73ea75a0c50d564fe9b2517157c41beb7ff797b9e02da96a9029b40c432f",
+      "rows": 289,
+      "coverage": {
+        "same_value_at_pointer": 67928
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntu/destination_profiles.jsonl",
+      "sha256": "9dfa5d2778073cd4a0cc3f58a5426c6c3e4f420b892e4798019d3510d6282c7b",
+      "rows": 289,
+      "coverage": {
+        "same_value_at_pointer": 14110,
+        "different_value_at_pointer": 285
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntu/partners.jsonl",
+      "sha256": "7c04e8c9c662825d656439d932db2904dedec044f337d31f8f72020bcd8d5030",
+      "rows": 289,
+      "coverage": {
+        "same_value_at_pointer": 13401
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntust/application_workflows.jsonl",
+      "sha256": "34bf443f0cf21bee72204cd1e3d022ae1bb22bf27e0f9484c4f4d24eea9de8ad",
+      "rows": 237,
+      "coverage": {
+        "same_value_at_pointer": 40469
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntust/destination_profiles.jsonl",
+      "sha256": "c5ac110067b8488b6208b45a90279cd2ea9e023f9eb7c9135bbaae0f5879d0ad",
+      "rows": 237,
+      "coverage": {
+        "same_value_at_pointer": 23753,
+        "different_value_at_pointer": 67
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntust/partners.jsonl",
+      "sha256": "d73ab9cd46ad6f2b139bc9393f0405845e0a199fd80e3e9987e61d37e62ef49b",
+      "rows": 237,
+      "coverage": {
+        "same_value_at_pointer": 12087,
+        "absent_runtime_pointer": 1896
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntut/application_workflows.jsonl",
+      "sha256": "6bba88cf8108c51bccdbcba48e048f9bca9246bf5c5ba0c0a73f4a7cb6ddf96c",
+      "rows": 206,
+      "coverage": {
+        "same_value_at_pointer": 43080
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntut/destination_profiles.jsonl",
+      "sha256": "b301c2db4f7219a33b70b5e530261c79e46be9303cffccea1c6215d7f9ea59da",
+      "rows": 206,
+      "coverage": {
+        "same_value_at_pointer": 21624,
+        "different_value_at_pointer": 74
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/ntut/partners.jsonl",
+      "sha256": "8479450e98b9ec9df58f14bc37affd4b8024468f21da4f0fc4589c942aab210c",
+      "rows": 206,
+      "coverage": {
+        "same_value_at_pointer": 10712,
+        "absent_runtime_pointer": 1648
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nycu/application_workflows.jsonl",
+      "sha256": "27d8754ac68125e28b110c3a45bfec0f7b565b5585c666337eaad29c5945187a",
+      "rows": 243,
+      "coverage": {
+        "same_value_at_pointer": 51299
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nycu/destination_profiles.jsonl",
+      "sha256": "ff41cf55d503673a5820d6a84b12fc7a1c761f3fe821c0010cb479171327fcef",
+      "rows": 243,
+      "coverage": {
+        "same_value_at_pointer": 24169,
+        "different_value_at_pointer": 97
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/nycu/partners.jsonl",
+      "sha256": "9200f25942e1dc92b983698352af7dad3dddbfe72ab47cef5554296617d0c389",
+      "rows": 243,
+      "coverage": {
+        "same_value_at_pointer": 12517,
+        "absent_runtime_pointer": 1944
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/pccu/application_workflows.jsonl",
+      "sha256": "6ffeac549b10b026ff0dc06b15be53bb3610ee7045a8b6daa5d203cf045afc3f",
+      "rows": 135,
+      "coverage": {
+        "same_value_at_pointer": 26076
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/pccu/destination_profiles.jsonl",
+      "sha256": "db19fea6ff0b0af44762008c487f0c1ff23902fa3b333ca55d473e72d41938e4",
+      "rows": 135,
+      "coverage": {
+        "same_value_at_pointer": 11210,
+        "different_value_at_pointer": 70
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/pccu/partners.jsonl",
+      "sha256": "4c774319bcaa63b04ffadaa962d2895b774652c1dd70a3af0ee267bdc40d8f5b",
+      "rows": 135,
+      "coverage": {
+        "same_value_at_pointer": 7173,
+        "absent_runtime_pointer": 1080
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/scu/application_workflows.jsonl",
+      "sha256": "3d65e67dcd7d04b3bc16b55f11ffdaf1e97c07a71c9d5886e98329c92acaa918",
+      "rows": 191,
+      "coverage": {
+        "same_value_at_pointer": 30369
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/scu/destination_profiles.jsonl",
+      "sha256": "c008f97eb501a0359a170dd33c5f19b23365a4af7741dd27d642971358670b0d",
+      "rows": 191,
+      "coverage": {
+        "same_value_at_pointer": 15189,
+        "different_value_at_pointer": 91
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/scu/partners.jsonl",
+      "sha256": "b356bbf890cbf475c1037a840f6cbf2078404b850035622059100b7fa71bf40f",
+      "rows": 191,
+      "coverage": {
+        "same_value_at_pointer": 8786,
+        "absent_runtime_pointer": 1528
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/tku/application_workflows.jsonl",
+      "sha256": "af91c72c3c60cd466470a81df5d92f05544093a93f35a8d5406c1581dd3a4c6b",
+      "rows": 4,
+      "coverage": {
+        "same_value_at_pointer": 2856
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/tku/destination_profiles.jsonl",
+      "sha256": "2a13031ce7f16979aedc9ffb18485e6493eac31a5e4e4fb0ecafcbf2b8427c91",
+      "rows": 287,
+      "coverage": {
+        "same_value_at_pointer": 17488,
+        "different_value_at_pointer": 4
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/wzu/application_workflows.jsonl",
+      "sha256": "c954fa1e0606742584541179a466cf6696d84b1175672308372ad6244bf1de3c",
+      "rows": 147,
+      "coverage": {
+        "same_value_at_pointer": 28179
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/wzu/destination_profiles.jsonl",
+      "sha256": "34b353eaf455bde2556d491ee2fd666e98f9e0a8706d858db93ac65f2e30d9df",
+      "rows": 147,
+      "coverage": {
+        "same_value_at_pointer": 12762,
+        "different_value_at_pointer": 54
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/wzu/partners.jsonl",
+      "sha256": "8d8bd6c5bda6f9eb835c8b34ff26f5f6830e0685d3ead7feb90fd0cd2987c8c9",
+      "rows": 147,
+      "coverage": {
+        "same_value_at_pointer": 8607,
+        "absent_runtime_pointer": 1176
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/yuntech/application_workflows.jsonl",
+      "sha256": "3c3a25dc518100ad95d20991eb10f3aacff58f3348d71cb444355617aec3ba41",
+      "rows": 112,
+      "coverage": {
+        "same_value_at_pointer": 22171
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/yuntech/destination_profiles.jsonl",
+      "sha256": "886981ac51166599aa841ec9e5b23b1d150c9f388b9e7093eb8d4c99b2f0a01f",
+      "rows": 112,
+      "coverage": {
+        "same_value_at_pointer": 9285,
+        "different_value_at_pointer": 35
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/yuntech/partners.jsonl",
+      "sha256": "ef3b5192939fd6fca5c0ab621553fa996d779326c8e04d0aed70d0e65bc78d67",
+      "rows": 112,
+      "coverage": {
+        "same_value_at_pointer": 6260,
+        "absent_runtime_pointer": 896
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/yzu/application_workflows.jsonl",
+      "sha256": "657e31cd544072d710792ef9a46f5d6d36c1779d7b6c6144c416503a0ca52eb1",
+      "rows": 90,
+      "coverage": {
+        "same_value_at_pointer": 15833
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/yzu/destination_profiles.jsonl",
+      "sha256": "7f3367c2f3acdd2ca3d17363761976e17e21698b6474b96e07f3e9461b3de3d4",
+      "rows": 90,
+      "coverage": {
+        "same_value_at_pointer": 8593,
+        "different_value_at_pointer": 39
+      }
+    },
+    {
+      "path": "src/exchange_info/official_data/yzu/partners.jsonl",
+      "sha256": "5d21580614a9e1d7e290afead0245a9a74b2faaf4c218d4e34aeba3cfb719639",
+      "rows": 90,
+      "coverage": {
+        "same_value_at_pointer": 4680,
+        "absent_runtime_pointer": 720
+      }
+    }
+  ],
+  "overlaps_runtime_census": true,
+  "facts_verified_by_extraction": 0,
+  "record_matches": {
+    "unique": 12623,
+    "missing": 0,
+    "ambiguous": 510
+  },
+  "structural_coverage": {
+    "same_value_at_pointer": 1586752,
+    "different_value_at_pointer": 3137,
+    "absent_runtime_pointer": 31373,
+    "ambiguous_runtime_record": 265938
+  },
+  "most_common_absent_paths": [
+    [
+      "/region",
+      3408
+    ],
+    [
+      "/gpa_requirement",
+      3408
+    ],
+    [
+      "/notes",
+      3408
+    ],
+    [
+      "/official_website",
+      3408
+    ],
+    [
+      "/factsheet_url",
+      3408
+    ],
+    [
+      "/student_summary_zh/quota",
+      3408
+    ],
+    [
+      "/student_summary_zh/colleges",
+      3408
+    ],
+    [
+      "/student_summary_zh/degree_levels",
+      3408
+    ],
+    [
+      "/grade_limit",
+      234
+    ],
+    [
+      "/semester_limit",
+      234
+    ],
+    [
+      "/language_required_flag",
+      234
+    ],
+    [
+      "/award_id",
+      234
+    ],
+    [
+      "/semester_dates",
+      234
+    ],
+    [
+      "/course_restrictions",
+      234
+    ],
+    [
+      "/housing_info",
+      234
+    ],
+    [
+      "/academic_calendar",
+      234
+    ],
+    [
+      "/registration_and_tuition",
+      234
+    ],
+    [
+      "/course_info",
+      234
+    ],
+    [
+      "/accommodation_info",
+      234
+    ],
+    [
+      "/other_info",
+      234
+    ],
+    [
+      "/badges",
+      182
+    ],
+    [
+      "/badges/*",
+      85
+    ],
+    [
+      "/partner_exchange_details/academic_calendar/source_checks/*/source_id",
+      36
+    ],
+    [
+      "/partner_exchange_details/academic_calendar/source_checks/*/source_url",
+      36
+    ],
+    [
+      "/partner_exchange_details/academic_calendar/source_checks/*/checked_at",
+      36
+    ],
+    [
+      "/partner_exchange_details/academic_calendar/source_checks/*/result",
+      36
+    ],
+    [
+      "/partner_exchange_details/academic_calendar/source_checks/*/timestamp_precision",
+      36
+    ],
+    [
+      "/partner_exchange_details/visa/source_checks/*/source_id",
+      36
+    ],
+    [
+      "/partner_exchange_details/visa/source_checks/*/source_url",
+      36
+    ],
+    [
+      "/partner_exchange_details/visa/source_checks/*/checked_at",
+      36
+    ]
+  ],
+  "remaining_inventory_gaps": [
+    "Schools without partners.jsonl use other catalog formats that still require raw reconciliation.",
+    "Other source-controlled data, UI-generated claims and production parity remain separate work.",
+    "Different or absent runtime pointers can reflect intended schema filtering or ordering; not automatically defects.",
+    "Raw snapshots overlap earlier censuses and are not additional distinct facts."
+  ],
+  "outputs": {
+    "field-gaps.csv": "c0e4d80a0ac96637dddf6ae50008b75b650af3bc829b675316d81ba4f400a556",
+    "fields.jsonl.gz": "2ebf8dbfdf5d1ff466a9716595150c0a6a00760c672d11e2c96802fbadf150dc",
+    "inventory-summary.json": "3067df780ef828e7a314f447878e753a32cfedd7f9076fd029466bb14f7e00b9",
+    "records.jsonl.gz": "971af8e3e5432c8bc1b255b319eda5c7be3ab4bc6050e9f8a023c9c5b41fb386",
+    "runtime-field-coverage.jsonl.gz": "347115ea2c2bf42d40721ab3b39e85736548f88d4e827a5220b36465dd61c1c6",
+    "sources.json": "33e8a3d677f8115feb59b0b1c0cdb1cc7f5313bc552f88ab6ca27c86fd1b7f6d"
+  }
+}

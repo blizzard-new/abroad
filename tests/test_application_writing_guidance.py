@@ -72,8 +72,8 @@ def _quoted_as_a_word_limit(text: str, limit: int) -> bool:
     return re.search(rf"(?<![\d,]){digits}(?!\d)[^。；\n]{{0,14}}字", text) is not None
 
 
-def test_every_school_rule_is_backed_by_the_official_text_stored_for_that_school() -> None:
-    """A word limit may only restate what the school's own stored page or guidelines say."""
+def test_numeric_writing_limits_name_evidence_and_match_stored_school_text() -> None:
+    """Internal consistency only; stored text and passing tests do not verify source facts."""
 
     templates = {
         (university.id, template.id): template for university, template in _all_templates()
@@ -150,15 +150,13 @@ def _archived_pdf_text(relative_path: str) -> str:
     return re.sub(r"\s+", "", "".join(page.extract_text() or "" for page in reader.pages))
 
 
-def test_yzu_return_report_rule_matches_the_stored_deposit_page_and_the_form_can_hold_the_photos() -> None:
+def test_yzu_report_does_not_invent_a_common_word_or_photo_requirement() -> None:
     rules = WRITING_RULES[("yzu", "return-report")]
-    assert rules.min_chars == 1500 and rules.max_chars is None
-    assert "2 週內" in rules.rules[0] and "6 張照片" in rules.rules[0]
-    assert "二個月" not in " ".join(rules.rules) and "2,000" not in " ".join(rules.rules)
-    assert "2 週內繳交 1,500 字以上研修心得報告與 6 張照片" in _stored_official_text("yzu")
+    assert rules.min_chars is None and rules.max_chars is None
+    text = " ".join(rules.rules)
+    assert "未核實" in text and "大陸頁另列返國報告2000字以上" in text
+    assert "返國14日" in text and "返國兩個月" in text
     template = next(t for t in all_application_templates("元智大學") if t.id == "return-report")
-    photos = next(field for field in template.fields if field.id == "activity_photos")
-    assert photos.max_files >= 6, "the school asks for 6 photos, so the form must accept 6"
     assert template.writing_rules == rules
 
 
@@ -180,7 +178,8 @@ def test_cycu_has_no_published_word_count_and_the_two_week_deadline_is_backed_by
 
 def test_nccu_writing_rules_match_archived_outbound_and_mainland_guidelines() -> None:
     study = WRITING_RULES[("nccu", "study-plan")]
-    assert study.min_chars == 500 and study.max_chars == 3000
+    assert study.min_chars is None and study.max_chars is None
+    assert "不合併" in study.count_note
     assert "至少 500 字" in study.rules[0] and "2 頁為限" in study.rules[0]
     assert "1,000 字以內" in study.rules[1] and "3,000 字以內" in study.rules[1]
     outbound = _archived_pdf_text("sources/nccu/outbound_115_1_guidelines.pdf")
@@ -305,3 +304,17 @@ def test_template_endpoint_serves_guidance_and_school_rules(tmp_path) -> None:
     assert re.search(r"[一-鿿]", motivation["guidance"]["example"])
     english = next(field for field in study_plan["fields"] if field["id"] == "english_version")
     assert english["guidance"]["recommended_max_chars"] is None
+
+
+def test_reviewed_conditional_rules_do_not_force_old_generic_limits() -> None:
+    keys = [(school, template) for school in ("pccu", "wzu", "nkust", "yuntech", "ntou", "yzu")
+        for template in ("study-plan", "return-report")]
+    for key in keys:
+        rule = WRITING_RULES[key]
+        assert rule.min_chars is None and rule.max_chars is None, key
+        assert rule.source_url and rule.last_checked_at == "2026-10-21"
+    assert "免研修計畫" in " ".join(WRITING_RULES[("nkust", "study-plan")].rules)
+    assert "合計A4五頁" in " ".join(WRITING_RULES[("wzu", "study-plan")].rules)
+    ntou = " ".join(WRITING_RULES[("ntou", "study-plan")].rules)
+    assert "可選中文或英文一種" in ntou and "未支持全部合併單一PDF" in ntou
+    assert "受獎生返國兩週" in " ".join(WRITING_RULES[("ntou", "return-report")].rules)

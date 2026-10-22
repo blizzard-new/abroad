@@ -20,6 +20,7 @@ NCKU_OFFICIAL_DATA_DIR = (
 )
 NCKU_INTRO_URL = "https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw"
 NCKU_PARTNER_LIST_URL = "https://oia.ncku.edu.tw/var/file/32/1032/img/535260712.pdf"
+NCKU_GUIDELINES_PDF_URL = "https://oia.ncku.edu.tw/var/file/32/1032/img/107138261.pdf"
 
 
 def _payload(filename: str):
@@ -40,9 +41,10 @@ def _cached_ncku_partners(
         )
 
 
-def fetch_ncku_partner_universities() -> list[PartnerUniversity]:
+def fetch_ncku_partner_universities(*, reference_time: datetime | None = None) -> list[PartnerUniversity]:
     path = NCKU_OFFICIAL_DATA_DIR / "partners.jsonl"
-    return list(_cached_ncku_partners(path, file_signature(path)))
+    from .ncku_guidelines_review import current_ncku_application_window
+    return [current_ncku_application_window(p, reference_time) for p in _cached_ncku_partners(path, file_signature(path))]
 
 
 @lru_cache(maxsize=2)
@@ -67,7 +69,11 @@ def build_ncku_student_dashboard(
         if period.deadline_at is None:
             periods.append(period)
             continue
-        if period.opens_at is not None:
+        if (period.academic_year == "116" and period.source.source_url == NCKU_GUIDELINES_PDF_URL
+                and period.deadline_at.isoformat() == "2026-11-19T16:00:00+08:00"):
+            from .ncku_guidelines_review import ncku_1161_window
+            status = ApplicationPeriodStatus(ncku_1161_window(now))
+        elif period.opens_at is not None:
             status = _application_period_status(
                 now, opens_at=period.opens_at, deadline_at=period.deadline_at
             )
@@ -81,6 +87,9 @@ def build_ncku_student_dashboard(
             period.model_copy(
                 update={
                     "status": status,
+                    "reminder_eligible": period.reminder_eligible and status in {
+                        ApplicationPeriodStatus.UPCOMING, ApplicationPeriodStatus.OPEN,
+                        ApplicationPeriodStatus.ACTION_REQUIRED},
                     "status_note": period.status_note
                     or "依國立成功大學國際事務處公告之校級薦外交換學生計畫甄選簡章日程辦理。",
                 }
@@ -92,7 +101,7 @@ def build_ncku_student_dashboard(
             "partner_universities": (
                 list(partner_universities)
                 if partner_universities is not None
-                else fetch_ncku_partner_universities()
+                else fetch_ncku_partner_universities(reference_time=now)
             ),
         }
     )
