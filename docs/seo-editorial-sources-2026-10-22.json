@@ -1,0 +1,262 @@
+{
+  "checked": "2026-10-22",
+  "timezone": "Asia/Taipei",
+  "batch": "daily-2026-10-22",
+  "base_commit": "10c95f0fa91a83d023535ea6eb743c212beed486",
+  "selection_basis": "Approved candidate directions 20 and 6; editorial judgment without user-supplied Search Console, search-volume or rank evidence",
+  "duplicate_review": {
+    "main_articles": 17,
+    "open_prs_checked": [
+      111,
+      113,
+      114,
+      115,
+      116
+    ],
+    "today_existing_batch_pr_before_work": null,
+    "exact_head_search": "head:codex/seo-daily-20261022, state all, no match before branch creation",
+    "foundation_pr_78": "merged",
+    "workflow_pr_92": "merged",
+    "previous_daily_pr_109": "merged; its two topics excluded",
+    "article_files_changed_in_existing_17": 0
+  },
+  "intent_boundaries": {
+    "toeic-listening-reading-preparation": "TOEIC L&R diagnosis, error review and time allocation; distinct from general AI English practice and admission eligibility; no school threshold copied",
+    "exchange-arrival-week": "Execution of arrival handover, school onboarding, communications and contact routing; housing comparison/contract evidence stays in existing housing guide, source-document interpretation stays in Fact Sheet guide"
+  },
+  "sources": [
+    {
+      "key": "toeic-content",
+      "requested_url": "https://www.toeic.com.tw/toeic/listening-reading/about/content/",
+      "resolved_url": "https://www.toeic.com.tw/toeic/listening-reading/about/content/",
+      "status": 200,
+      "sha256": "838b7eef723ee384c4f97d9aa24d38d5ae0f0d2e8b405563ff17b202bae4f1ca",
+      "title": "\r\n\tTOEIC Listening and Reading Test 測驗內容\r\n",
+      "text_length": 1234,
+      "checked": "2026-10-22",
+      "access": "HTTP 200; relevant primary content read in full context",
+      "version": "Live Taiwan official content page read 2026-10-22; no content revision date displayed; no new-format claim",
+      "support": [
+        {
+          "article": "toeic-listening-reading-preparation",
+          "source_id": "toeic-content",
+          "scope": "2026-10-22 實際核對當日可讀版本，頁面未明示內容修訂日期。支持 200 題、各部分題數、聽力約 45／閱讀 75 分鐘、含行政程序約 2.5 小時、分項 5–495 及總分 10–990、答錯不倒扣。本文不外推校方採認、特定數位場次操作、費用或報名期限。"
+        }
+      ],
+      "evidence_location": "測驗如何計分",
+      "evidence_quote": "範圍在10到990分之間，答錯不倒扣。"
+    },
+    {
+      "key": "toeic-samples",
+      "requested_url": "https://www.toeic.com.tw/sample-test/toeic-listening-reading/sample01.html",
+      "resolved_url": "https://www.toeic.com.tw/sample-test/toeic-listening-reading/sample01.html",
+      "status": 200,
+      "sha256": "1e475cd0d0d07d81a2933672b75239ced12fff2e9add910ca950889ff708507e",
+      "title": "TOEIC Listening and Reading Test Part1照片描述 ── 題型範例",
+      "text_length": 1335,
+      "checked": "2026-10-22",
+      "access": "HTTP 200; relevant primary content read in full context",
+      "version": "Live Taiwan Part 1 sample entrance and navigation read 2026-10-22; no year/revision date displayed",
+      "support": [
+        {
+          "article": "toeic-listening-reading-preparation",
+          "source_id": "toeic-samples",
+          "scope": "2026-10-22 核對入口、Part 1 說明及各部分導覽，未標示適用年度或修訂日期。僅引導認識題型；沒有把短樣題當完整模考，亦未轉載官方題目或音檔。"
+        }
+      ],
+      "evidence_location": "Part 1 directions",
+      "evidence_quote": "The statements will not be printed in your test book"
+    },
+    {
+      "key": "ets-prepare",
+      "requested_url": "https://www.ets.org/toeic/test-takers/prepare.html",
+      "resolved_url": "https://www.ets.org/toeic/test-takers/prepare.html",
+      "status": 200,
+      "sha256": "0de8ce9030d8f275ffe845f1d9fcc8d44d01300fc9511f2e0306cd376d857d80",
+      "title": "Preparation Materials for the TOEIC Tests",
+      "text_length": 3429,
+      "checked": "2026-10-22",
+      "access": "HTTP 200; relevant primary content read in full context",
+      "version": "Live ETS preparation index read 2026-10-22; no revision date displayed; linked PDF contents not cited",
+      "support": [
+        {
+          "article": "toeic-listening-reading-preparation",
+          "source_id": "ets-prepare",
+          "scope": "2026-10-22 核對當日頁面，未明示內容修訂日期。確認聽讀考生手冊與樣題的官方入口，以及聽讀、口說寫作與 Bridge 資源分列；本文未宣稱已閱讀所連結 PDF，也未查核商品價格或地區販售方案。"
+        }
+      ],
+      "evidence_location": "TOEIC Listening and Reading test",
+      "evidence_quote": "Examinee Handbook and Sample Tests"
+    },
+    {
+      "key": "lund-arrival",
+      "requested_url": "https://www.lunduniversity.lu.se/student-life/before-you-arrive/your-arrival-lund/arrival-day",
+      "resolved_url": "https://www.lunduniversity.lu.se/student-life/before-you-arrive/your-arrival-lund/arrival-day",
+      "status": 200,
+      "sha256": "0ded6c0ee426615a67d008228d65535e3d99871195b5c743f4276788d01f5bc3",
+      "title": "Arrival Day | Lund University",
+      "text_length": 4591,
+      "checked": "2026-10-22",
+      "access": "HTTP 200; relevant primary content read in full context",
+      "version": "Last updated 2026-09-08; mixed 2026 autumn and 2027 spring information; article cites service conditions, not reusable event dates",
+      "support": [
+        {
+          "article": "exchange-arrival-week",
+          "source_id": "lund-arrival",
+          "scope": "2026-10-22 實際讀取；頁尾更新日 2026-09-08，內文已含 2027 春季接待日與 2026 秋季資訊。僅用於指定接待日服務、已確認住宿者的鑰匙支援及逾時抵達備案案例；不轉載某期時刻表為跨學期承諾，不保證個人住宿或接送資格。"
+        }
+      ],
+      "evidence_location": "Arrival Day services",
+      "evidence_quote": "the shuttle service is only available on Arrival Day"
+    },
+    {
+      "key": "lund-orientation",
+      "requested_url": "https://www.lunduniversity.lu.se/student-life/before-you-arrive/arrival-introduction/orientation-weeks",
+      "resolved_url": "https://www.lunduniversity.lu.se/student-life/before-you-arrive/arrival-introduction/orientation-weeks",
+      "status": 200,
+      "sha256": "be8a7f499ef7b6f2687572c25b39ddf629575894e2c9d1e2be3e0a41f568d3da",
+      "title": "Orientation Weeks | Lund University",
+      "text_length": 4967,
+      "checked": "2026-10-22",
+      "access": "HTTP 200; relevant primary content read in full context",
+      "version": "Last updated 2026-09-08; 2026 autumn details and spring guidance; exact future dates not extrapolated",
+      "support": [
+        {
+          "article": "exchange-arrival-week",
+          "source_id": "lund-orientation",
+          "scope": "2026-10-22 實際讀取；頁尾更新日 2026-09-08，列有 2026 秋季與春季安排說明。支持活動分工、院系 pre-registration 及 Canvas 資訊入口；本文不複製未確認的未來活動日期、課程資格或法律要求。"
+        }
+      ],
+      "evidence_location": "Important meetings and seminars",
+      "evidence_quote": "Pre-registration day (arranged by faculties or programme coordinators)"
+    },
+    {
+      "key": "utrecht-faq",
+      "requested_url": "https://www.uu.nl/en/education/exchange-students/contact/faq",
+      "resolved_url": "https://www.uu.nl/en/education/exchange-students/contact/faq",
+      "status": 200,
+      "sha256": "5cf7e9d22f8a6757d582073651e1c8f6b7bf11abadf82fa835781eb8ed158be0",
+      "title": "Frequently Asked Questions | Utrecht University",
+      "text_length": 8524,
+      "checked": "2026-10-22",
+      "access": "HTTP 200; relevant primary content read in full context",
+      "version": "Live FAQ read 2026-10-22; no content revision date displayed; Arrival section only used",
+      "support": [
+        {
+          "article": "exchange-arrival-week",
+          "source_id": "utrecht-faq",
+          "scope": "2026-10-22 核對當日頁面，未見明示修訂日期。引用 Arrival 區塊的歡迎活動分工、正式課程登記後的 MyTimetable／SolisID 與 MyUU 入口；未將其護照、付款、簽證、學分或其他條件外推給其他學校及身分。"
+        }
+      ],
+      "evidence_location": "Where can I see my timetable?",
+      "evidence_quote": "When you are officially enrolled in your courses"
+    },
+    {
+      "key": "lund-emergency",
+      "requested_url": "https://www.lunduniversity.lu.se/current-students/if-something-happens",
+      "resolved_url": "https://www.lunduniversity.lu.se/current-students/if-something-happens",
+      "status": 200,
+      "sha256": "9b1adf7738048073375cf508526656bbc994bec46fa959ee37f56bcf2ae99d5d",
+      "title": "If something happens | Lund University",
+      "text_length": 2935,
+      "checked": "2026-10-22",
+      "access": "HTTP 200; relevant primary content read in full context",
+      "version": "Last updated 2026-10-13; live page read 2026-10-22; Sweden/Lund scope only",
+      "support": [
+        {
+          "article": "exchange-arrival-week",
+          "source_id": "lund-emergency",
+          "scope": "2026-10-22 實際核對緊急情況與校方安全聯絡分流。112 僅在本文瑞典／Lund 案例範圍說明，讀者前往其他目的地應查當地官方與校方指引；不提供個人醫療、保險理賠或法律認定。"
+        }
+      ],
+      "evidence_location": "In case of an emergency",
+      "evidence_quote": "Always contact SOS Alarm in the event of an emergency or immediate danger"
+    }
+  ],
+  "retrieval_notes": [
+    {
+      "url": "https://www.toeic.com.tw/toeic/listening-reading/prepare/",
+      "status": 404,
+      "resolution": "Unused guessed path; preparation resource claim verified instead at the official ETS prepare.html page, linked from the accessible official index. No fact depends on this 404."
+    },
+    {
+      "url": "https://www.ets.org/toeic/test-takers/about/listening-reading.html",
+      "resolved_url": "https://www.ets.org/toeic/test-takers/prepare.html",
+      "status": 200,
+      "resolution": "Redirect observed; final URL re-fetched and cited as preparation resources, not as the original about page."
+    },
+    {
+      "url": "https://www.toeic.com.tw/sample-test/toeic-listening-reading/sample01.html",
+      "resolution": "Legacy page decoded as UTF-8 per document markup before reading; raw HTTP response SHA-256 preserved in metadata."
+    }
+  ],
+  "arithmetic_checks": [
+    {
+      "label": "Listening questions",
+      "computed": 100,
+      "expected": 100,
+      "passed": true
+    },
+    {
+      "label": "Reading questions",
+      "computed": 100,
+      "expected": 100,
+      "passed": true
+    },
+    {
+      "label": "All questions",
+      "computed": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "label": "Answering minutes",
+      "computed": 120,
+      "expected": 120,
+      "passed": true
+    },
+    {
+      "label": "Minimum total",
+      "computed": 10,
+      "expected": 10,
+      "passed": true
+    },
+    {
+      "label": "Maximum total",
+      "computed": 990,
+      "expected": 990,
+      "passed": true
+    },
+    {
+      "label": "Editorial daily minutes",
+      "computed": 45,
+      "expected": 45,
+      "passed": true
+    },
+    {
+      "label": "Five study days minutes",
+      "computed": 225,
+      "expected": 225,
+      "passed": true
+    },
+    {
+      "label": "3 hours 45 minutes",
+      "computed": 225,
+      "expected": 225,
+      "passed": true
+    },
+    {
+      "label": "Weakness-adjusted daily minutes",
+      "computed": 45,
+      "expected": 45,
+      "passed": true
+    }
+  ],
+  "verification_limits": [
+    "Live sources are dated snapshots; no claims of a future exam version, test availability, fee, legal deadline, eligibility or guaranteed score.",
+    "Seven-day arrival schedule and four-week study plan are original editorial examples, not official deadlines or evidence of a particular student outcome.",
+    "AI prompt and expected reply are manually authored examples, not actual provider comparison tests or official scoring.",
+    "Emergency example is restricted to Sweden/Lund; individual medical, insurance and legal determinations are not made.",
+    "Raw pages and retrieved photographs remain in the task-local cache; the PR contains provenance fingerprints and limited evidence excerpts, not official full texts or original stock downloads."
+  ]
+}
