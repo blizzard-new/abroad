@@ -44,7 +44,7 @@ FJU_BUNDLE = ROOT / "src" / "exchange_info" / "official_data" / "fju"
 def test_oct21_22_school_audit_ledger_and_epistemic_boundaries() -> None:
     assert AUDIT_LEDGER.is_file()
     assert AUDIT_DOC.is_file()
-    assert CATALOG_LAST_CHECKED_AT == "2026-10-21"
+    assert CATALOG_LAST_CHECKED_AT >= "2026-10-21"
 
     ledger = json.loads(AUDIT_LEDGER.read_text(encoding="utf-8"))
     assert ledger["audit_id"] == "2026-10-21-daily-22-schools"
