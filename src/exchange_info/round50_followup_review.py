@@ -20,10 +20,23 @@ def load_manifest(root: Path) -> dict:
     return json.loads(raw)
 
 
-def apply_round50_followup_review(root: Path, home: str | None = None) -> int:
+def apply_round50_followup_review(
+    root: Path, home: str | None = None, *, bundle: Path | None = None
+) -> int:
     manifest = load_manifest(root)
     targets = (home,) if home is not None else HOMES
     changed = 0
     for school in targets:
-        changed += apply_review_manifest(root, school, manifest, ARCHIVE_KEY, manage_profile_context=False)
+        school_manifest = dict(manifest)
+        if bundle is not None:
+            scopes = []
+            for scope in manifest["rows"]:
+                if scope["home_id"] == school:
+                    s_copy = dict(scope)
+                    s_copy["file"] = str((bundle / Path(scope["file"]).name).resolve())
+                    scopes.append(s_copy)
+            school_manifest["rows"] = scopes
+        changed += apply_review_manifest(
+            root, school, school_manifest, ARCHIVE_KEY, manage_profile_context=False
+        )
     return changed

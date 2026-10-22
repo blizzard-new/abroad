@@ -28,7 +28,7 @@ from .university_registry import SUPPORTED_UNIVERSITIES, require_university
 TAIPEI_TZ = timezone(timedelta(hours=8))
 WINDOW_START_DATE = "2026-10-19"
 WINDOW_END_DATE = "2026-12-31"
-CATALOG_LAST_CHECKED_AT = "2026-10-21"
+CATALOG_LAST_CHECKED_AT = "2026-10-22"
 DEFAULT_LINE_OA_ID = "@uniway"
 
 
