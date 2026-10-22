@@ -1107,8 +1107,49 @@ KMU = UniversityProfile(
     ),
 )
 
+MCU = UniversityProfile(
+    id="mcu",
+    school_name="銘傳大學",
+    short_name="銘傳",
+    english_name="Ming Chuan University",
+    aliases=(
+        "mcu",
+        "銘傳大學",
+        "銘傳",
+        "北銘",
+        "桃銘",
+        "MCU",
+        "Ming Chuan University",
+    ),
+    hero_image="/static/assets/mcu-campus.svg",
+    official_url="https://iee.mcu.edu.tw/zh-hant/",
+    coverage_note="完整支援：國際教育交流處（IEE）與僑陸事務組 116 學年度（2027秋季／2028春季）海外交換學生計畫（65 所開放姊妹校，秋季班 2027/03/03、春季班 2027/09/20 截止）、10 校 14 個跨國雙學位項目（含英國艾塞克斯大學 3+1 學碩雙學位 £6,500 獎學金＋早鳥 £1,000 減免、西英格蘭大學雙學位 £2,000 獎學金、美國塞基諾州立大學 2+2 BBA 與 1+1 MBA、德州大學聖安東尼奧分校 3.5+1.5 財金學碩、紐約市立大學約翰傑伊學院 1+1 雙碩士、林肯紀念大學 2+2、法國雷恩商學院 3+1 學士與 MSc、日本產業能率大學 2+2、韓國水原大學 2+2、泰國東方大學 2+2）、2027 春季班赴大陸頂尖大學交換計畫（42 所 985／211／知名高校，第三次公告至 2026/10/23 12:00 截止）、教育部 116 學海飛颺／惜珠獎學金與全球共 202 所合作姊妹校（含 113 所當期開放申請學校及 89 所正式締約姊妹校，橫跨 23 個國家與地區）語檢門檻、保證金 NT$5,000 與家長同意書公證規定暨 126 篇歷屆學長姐返國研修心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=202,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "銘傳大學",
+        "銘傳",
+        "MINGCHUANUNIVERSITY",
+        "MCU",
+    ),
+    # https://web.mcu.edu.tw/zh-hant/academics-2/ — checked 2026-10-21.
+    colleges=(
+        "管理學院",
+        "傳播學院",
+        "法律學院",
+        "金融科技學院",
+        "電機資訊學院",
+        "設計學院",
+        "人文社會科學暨教育學院",
+        "觀光學院",
+        "健康暨醫學工程學院",
+        "國際學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU)
 DEFAULT_UNIVERSITY = CGU
 
 
