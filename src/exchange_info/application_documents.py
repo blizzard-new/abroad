@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -95,6 +95,7 @@ CSMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 CMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 KMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 MCU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
+NTUB_SOURCE_CHECKED_AT = datetime(2026, 10, 22, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2126,6 +2127,51 @@ def _mcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ntub_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺北商業大學海外及大陸地區交換學生、跨國雙聯學位暨教育部學海飛颺／惜珠與《王春滿清寒短期研修交流助學金》甄選應繳資料：1. 線上申請表與紙本核章表（於北商大交換學生管理系統 exchangestd.ntub.edu.tw 完成線上填報後列印紙本，經導師／指導教授及系所主管核章）、2. 家長或監護人切結書正本（2026 年版）、3. 出國進修計畫書（2026 年版，含自傳與讀書計畫，格式以 1,000–1,500 字為原則；書面審查佔甄選總分 60%［在校成績 15%、出國進修計畫書 15%、外語能力 30%］，面試佔 40%）、4. 歷年成績單正本（含學業總平均與歷年平均班級名次百分比；須達總平均 80 分以上或班排前 70% 以內，且前一學年每學期操行成績均達 A［80 分］以上；申請學海飛颺須達總平均 80 分或班排前 40% 以內）、5. 有效外語能力檢定證明影本（英語組姊妹校只接受 TOEFL iBT 或 IELTS，不接受多益 TOEIC！日語組要求 JLPT N2 以上，韓語組要求 TOPIK 3 級以上；大陸地區姊妹校免附外語檢定）、6. 個人優良表現證明與匯款單影本（報名費新臺幣 500 元）；於收件截止日前將紙本與電子檔送交臺北校區行政大樓 5 樓國際事務處。",
+        "study-plan": "撰寫國立臺北商業大學交換生及雙聯學位甄選必繳之《出國進修計畫書》（2026 年版官方表格，含個人自傳與讀書計畫，1,000–1,500 字；佔校內甄選總分 15%）。請具體說明赴外動機、擬於志願姊妹校修習之專業領域課程（出國期間每學期至少應修習與就讀系所相關之 2 門科目或 6 學分以上）、外語能力準備，以及返國後學分抵免與國際商管／創新設計職涯銜接規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《國立臺北商業大學學生申請交換生及雙聯學位生作業要點》規定，出國交換期間須維持北商大在學註冊並繳交全額學雜費，每學期至少應選修與就讀系所相關之 2 門科目或 6 學分以上；研究所學生交換期間以一學期為限）。",
+        "predeparture-notice": "於國際事務處公告甄選錄取名單（書面審查 60%＋中英文面試 40%，總成績未達 70 分不予錄取）後，依限繳交《錄取同意書》（2026 年版）及《赴海外交換及雙聯研修計畫行政契約書》（一式三份，領取獎助學金者適用），配合國際事務處完成姊妹校官方提名（Nomination）與外校入學申請；出國前須參加行前說明會、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療及意外保險，並確認已完成北商大當學期註冊繳費。",
+        "return-report": "境外交換或雙聯研修期滿返國後 1 個月內，須登入北商大交換學生管理系統（exchangestd.ntub.edu.tw）上傳 2,000 字以上之《交換學生返國報告書》（含研修與生活照片），教育部學海計畫受獎生另須於返國 14 日內上傳成果報告至教育部學海計畫資訊網，並檢附來回電子機票收據、登機證正本、護照出入境紀錄及姊妹校正式成績單向國際事務處辦理獎助學金核銷與返校銷假。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後持國外姊妹校核發之正式成績單正本與課程大綱（Syllabus），依《國立臺北商業大學學生申請交換生及雙聯學位生作業要點》及《學生抵免學分辦法》向所屬系（所）、學院及教務處申請境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺北商業大學").replace("長庚", "北商大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "北商大《申請資格與規定》與《交換生甄選作業辦法》規定：歷年學業總平均須達 80 分以上或歷年平均班級名次百分比在前 70% 以內，且前一學年每學期操行成績均達 A（80 分）以上（在校成績佔甄選總分 15%）；申請教育部《學海飛颺》獎助學金者，須達總平均 80 分以上或歷年平均班級名次前 40% 以內。請檢附含總平均與歷年平均班級名次百分比之中文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（英語組只接受托福或雅思！韓國天主教 65+／匹茲堡州立 68+／一般英語組 73+／荷德法澳雙聯 80+／捷克理工 87+／舊金山州立 88+／萊茵瓦爾碩士 100+）", "IELTS 學術組（英語組只接受托福或雅思！一般英語組 5.5+／匹茲堡州立及荷德法澳雙聯 6.0+／捷克理工及舊金山州立與萊茵瓦爾碩士 6.5+）", "JLPT 日語能力試驗（日語組千葉商大／小樽商大／人間環境／亞細亞 N2+；新潟大學須同時具備 N2 及 TOEFL 73 / IELTS 5.5）", "TOPIK 韓語能力測驗（韓語組慶北／光雲／全北／東亞 3 級以上，或以 TOEFL 73 / IELTS 5.5 申請英語組）", "大陸地區姊妹校（免附外語檢定證明；若有外語成績可依《外語成績積分對照表》列計 30% 書審外語積分）"]
+            field["help_text"] = "依北商大《申請資格與規定》明文規定：英語組姊妹校只接受 TOEFL iBT 或 IELTS 成績，不接受多益（TOEIC）成績！（日語組及韓語組亦同）。外語能力佔校內書面審查 30%，依《外語成績積分對照表》換算積分。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw",
+        source_checked_at=NTUB_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國進修計畫書（2026年版）、家長切結書與錄取同意書" if template.id == "exchange-application-data" else ("出國進修計畫書（2026年版，含自傳與讀書計畫）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ntub.edu.tw/p/412-1006-3153.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後繳交錄取同意書與行政契約書（一式三份）並辦理姊妹校提名", "return-report": "返國後 1 個月內上傳 2,000 字以上返國報告書並完成學海／校內助學金核銷", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "於交換生管理系統完成線上申請並將核章紙本與報名費匯款證明送交臺北校區行政大樓 5 樓國際事務處"),
+        version="116準備工具-2026-10-22.1",
+        destinations=["國立臺北商業大學國際事務處（臺北校區行政大樓 5 樓 503 室）"],
+        conditional_note="此為個人準備工具；北商大海外及大陸地區交換學生甄選每年分兩梯次（第一梯次春季班約 9–10 月、第二梯次秋季班約 2–3 月截止），須先於交換學生管理系統（exchangestd.ntub.edu.tw）完成線上填報，並將核章紙本、2026 年版出國進修計畫書、家長切結書、歷年成績單正本（含班排百分比）、有效外語檢定證明（英語組僅採認托福或雅思，不接受多益）及報名費 500 元匯款證明送交國際事務處。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2194,6 +2240,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _kmu_template(template)) is not None]
     if university.id == MCU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _mcu_template(template)) is not None]
+    if university.id == NTUB.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntub_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

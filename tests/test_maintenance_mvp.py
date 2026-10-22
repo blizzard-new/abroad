@@ -928,7 +928,7 @@ class TestMaintenanceMvpAcceptance(unittest.TestCase):
         official_data_root = Path(__file__).resolve().parents[1] / "src" / "exchange_info" / "official_data"
         shadow_store = MaintenanceStore(self.tmp_path / "shadow_six")
         summary = load_six_school_shadow_summary(official_data_root, shadow_store)
-        self.assertEqual(set(summary.keys()), {"ntu", "ncu", "cgu", "ntpu", "ccu", "tku", "fju", "scu", "ntnu", "cycu", "ntust", "yzu", "fcu", "nsysu", "nchu", "ntut", "nccu", "ncku", "nycu", "nthu", "pccu", "wzu", "nkust", "yuntech", "ntou", "ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu"})
+        self.assertEqual(set(summary.keys()), {"ntu", "ncu", "cgu", "ntpu", "ccu", "tku", "fju", "scu", "ntnu", "cycu", "ntust", "yzu", "fcu", "nsysu", "nchu", "ntut", "nccu", "ncku", "nycu", "nthu", "pccu", "wzu", "nkust", "yuntech", "ntou", "ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub"})
         self.assertEqual(summary["ntu"]["imported_offerings"], 289)
         self.assertEqual(summary["ntu"]["not_stated_quotas"], 262)
         self.assertEqual(summary["ntu"]["zero_quotas"], 7)
@@ -936,7 +936,7 @@ class TestMaintenanceMvpAcceptance(unittest.TestCase):
         self.assertEqual(summary["ntpu"]["imported_offerings"], 206)
         self.assertEqual(summary["ccu"]["imported_offerings"], 104)
         self.assertEqual(summary["tku"]["imported_offerings"], 287)
-        self.assertEqual(summary["fju"]["imported_offerings"], 234)
+        self.assertEqual(summary["fju"]["imported_offerings"], 237)
         self.assertEqual(summary["scu"]["imported_offerings"], 191)
         self.assertEqual(summary["ntnu"]["imported_offerings"], 236)
         self.assertEqual(summary["cycu"]["imported_offerings"], 89)
@@ -962,6 +962,7 @@ class TestMaintenanceMvpAcceptance(unittest.TestCase):
         self.assertEqual(summary["cmu"]["imported_offerings"], 174)
         self.assertEqual(summary["kmu"]["imported_offerings"], 188)
         self.assertEqual(summary["mcu"]["imported_offerings"], 202)
+        self.assertEqual(summary["ntub"]["imported_offerings"], 93)
 
         from exchange_info.maintenance.routes import build_default_maintenance_router
         _, prod_store = build_default_maintenance_router(self.tmp_path / "prod_maint")

@@ -1148,8 +1148,48 @@ MCU = UniversityProfile(
     ),
 )
 
+NTUB = UniversityProfile(
+    id="ntub",
+    school_name="國立臺北商業大學",
+    short_name="北商大",
+    english_name="National Taipei University of Business",
+    aliases=(
+        "ntub",
+        "國立臺北商業大學",
+        "國立台北商業大學",
+        "臺北商業大學",
+        "台北商業大學",
+        "北商大",
+        "北商",
+        "臺北商大",
+        "台北商大",
+        "NTUB",
+        "National Taipei University of Business",
+    ),
+    hero_image="/static/assets/ntub-campus.svg",
+    official_url="https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw",
+    coverage_note="完整支援：國際事務處 115–116 學年度海外及大陸地區交換學生甄選計畫（第一梯次春季班約 9–10 月、第二梯次秋季班約 2–3 月收件，115-2 甄選說明會 2026/10/14 12:15 舉辦）、11 所跨國雙聯學位項目（美國匹茲堡州立大學 3+1+1 雙學士＋MBA 與 1+1 財金雙碩士、明尼蘇達州立大學曼徹斯特分校 2+2、舊金山州立大學 3+1+1、威斯康辛大學河瀑分校 2+2、法國雷恩商學院 3+1 雙學士與 3+1.5 碩士、德國凱撒斯勞斯滕應科大雙碩士、巴登符騰堡雙元制大學雙學士、英國哈德斯菲爾德大學 3+1、瑞士 BHMS 3+1、澳洲皇家墨爾本理工大學 RMIT 2+2、雪梨科技大學 UTS 雙學士與學碩）、教育部學海飛颺／學海惜珠與《王春滿清寒短期研修交流助學金》（最高補助 NT$20萬）及全球共 93 所合作姊妹校（含 51 所當期開放申請學校與 42 所正式締約姊妹校，橫跨 18 個國家與地區）語檢門檻、書審 60%＋面試 40% 配分規定暨 295 篇歷屆學長姐返國交換心得報告已完整整合。",
+    support_level="full",
+    partner_count_hint=93,
+    academic_score_minimum=80,
+    student_card_signals=(
+        "國立臺北商業大學",
+        "臺北商業大學",
+        "北商大",
+        "NATIONALTAIPEIUNIVERSITYOFBUSINESS",
+        "NTUB",
+    ),
+    # https://www.ntub.edu.tw/p/412-1000-1129.php?Lang=zh-tw — checked 2026-10-22.
+    colleges=(
+        "財經學院",
+        "管理學院",
+        "國際行銷學院",
+        "創新設計與經營學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB)
 DEFAULT_UNIVERSITY = CGU
 
 

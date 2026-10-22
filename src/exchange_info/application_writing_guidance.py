@@ -864,6 +864,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="銘傳規定返國後須繳交 1,500–2,000 字以上之出國研習心得報告（含照片 4–6 張以上）；這裡只合計下方各欄。",
     ),
+    ("ntub", "study-plan"): _rules(
+        (
+            "國立臺北商業大學國際事務處規定須使用官方《出國進修計畫書（2026年版）》表格撰寫（含個人自傳與讀書計畫，合計約 1,000–1,500 字；出國進修計畫書佔校內甄選總成績 15%）。",
+            "依《國立臺北商業大學學生申請交換生及雙聯學位生作業要點》規定，出國交換期間須維持北商大在學註冊，每學期於姊妹校至少應選修與就讀系所相關之 2 門科目或 6 學分以上（研究所學生交換期間以一學期為限）。",
+        ),
+        evidence="國立臺北商業大學學生申請交換生及雙聯學位生作業要點、交換生甄選作業辦法與出國進修計畫書（2026年版）",
+        minimum=1000,
+        maximum=1500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="北商大規定出國進修計畫書（含自傳與讀書計畫）約 1,000–1,500 字；這裡合計下方各欄字數供參考。",
+    ),
+    ("ntub", "return-report"): _rules(
+        (
+            "教育部學海計畫（學海飛颺／學海惜珠）受獎生須於返國後 14 日內登入教育部學海計畫資訊網填寫問卷並上傳成果報告書。",
+            "所有北商大赴外及大陸地區交換生須於返國後 1 個月內登入北商大交換學生管理系統（exchangestd.ntub.edu.tw）上傳 2,000 字以上之《交換學生返國報告書》（含研修與生活照片），並檢附來回電子機票收據、登機證正本、護照出入境紀錄及姊妹校正式成績單向國際事務處辦理獎助學金核銷與返校程序。",
+        ),
+        evidence="國立臺北商業大學學生申請交換生及雙聯學位生作業要點、回國後注意事項與教育部學海飛颺／惜珠審查要點",
+        minimum=2000,
+        maximum=3500,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="北商大規定返國後 1 個月內須上傳 2,000 字以上之交換學生返國報告書（含照片）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -899,6 +921,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "cmu": ("https://cmucia.cmu.edu.tw/page/about_3", "2026-10-21"),
     "kmu": ("https://cia.kmu.edu.tw/index.php/zh-tw/%E5%AD%B8%E7%94%9F%E4%BA%A4%E6%B5%81/%E9%AB%98%E9%86%AB%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B", "2026-10-21"),
     "mcu": ("https://iee.mcu.edu.tw/zh-hant/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/", "2026-10-21"),
+    "ntub": ("https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw", "2026-10-22"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):
