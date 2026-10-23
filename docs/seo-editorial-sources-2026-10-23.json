@@ -1,0 +1,214 @@
+{
+  "checked": "2026-10-23",
+  "timezone": "Asia/Taipei",
+  "batch": "daily-2026-10-23",
+  "base_commit": "0a790fc8c0d00ca891b63419b665540dd140a87f",
+  "selection_basis": "Approved candidate directions 4 and 8; editorial judgment, no user-supplied Search Console, search volume or ranking data",
+  "duplicate_review": {
+    "main_articles": 19,
+    "open_prs_checked": [],
+    "open_pr_searches": [
+      "repository scoped state:open with empty query",
+      "repository scoped is:open"
+    ],
+    "today_existing_batch_pr_before_work": null,
+    "exact_head_search": "head:codex/seo-daily-20261023, state all; no existing result; no remote branch before creating isolated worktree",
+    "foundation_pr_78": "merged; foundation already on main",
+    "workflow_pr_92": "merged; current daily workflow on main",
+    "previous_daily_pr_117": "merged on 2026-10-22; its two topics excluded",
+    "existing_article_files_changed": 0
+  },
+  "intent_boundaries": {
+    "english-taught-exchange-courses": "Pre-selection course feasibility, subject background, trial reading and semester combination; existing eligibility page retains formal admission/language proof, Fact Sheet retains document interpretation",
+    "exchange-course-changes": "Post-selection clashes, discontinued/full courses, institution-specific change procedures, replacement options and completion tracking; existing credit-transfer page retains recognition dossier, ECTS interpretation and return documents"
+  },
+  "sources": [
+    {
+      "key": "lund-courses",
+      "requested_url": "https://www.lunduniversity.lu.se/node/545",
+      "resolved_url": "https://www.lunduniversity.lu.se/node/545",
+      "status": 200,
+      "sha256": "e38aef75205c50896b8506a2dbe8939872848f7a05db371a2bde78c72604bfd2",
+      "title": "Find exchange courses | Lund University",
+      "text_length": 5396,
+      "checked": "2026-10-23",
+      "access": "HTTP 200; primary content read with relevant surrounding context; raw response retained in task-local cache",
+      "version": "Last updated 2026-09-02; official exchange-course entrance live version read 2026-10-23",
+      "support": [
+        {
+          "article": "english-taught-exchange-courses",
+          "source_id": "lund-courses",
+          "scope": "2026-10-23 實際讀取；頁尾更新日 2026-09-02。核對院系入口、沒有統一交換課程資料庫、完整學位課程限制及找不到課時的協調人建議。不轉載課程總量、申請資格數值或特定名額為個人保證。"
+        }
+      ],
+      "evidence_location": "Course-search introduction",
+      "evidence_quote": "does not offer a central database"
+    },
+    {
+      "key": "lund-requirements",
+      "requested_url": "https://www.lunduniversity.lu.se/node/546",
+      "resolved_url": "https://www.lunduniversity.lu.se/node/546",
+      "status": 200,
+      "sha256": "67a4d50a1a96e0aa2470ab632234c03e6c891539666d4f5618c56e4521145069",
+      "title": "Admission requirements for exchange courses | Lund University",
+      "text_length": 5516,
+      "checked": "2026-10-23",
+      "access": "HTTP 200; primary content read with relevant surrounding context; raw response retained in task-local cache",
+      "version": "Last updated 2026-09-04; official requirements live version read 2026-10-23; numeric language/subject requirements not republished",
+      "support": [
+        {
+          "article": "english-taught-exchange-courses",
+          "source_id": "lund-requirements",
+          "scope": "2026-10-23 實際讀取；頁尾更新日 2026-09-04。支持協議、交換開放範圍、逐課先修及名額分開判斷，以及英語交換課程不要求瑞典語先備知識的該校案例。未引用頁內語言分數、先修數值、ECTS 時數或申請期限作現行個人規則。"
+        }
+      ],
+      "evidence_location": "Swedish language proficiency",
+      "evidence_quote": "No prior knowledge of the Swedish language is required"
+    },
+    {
+      "key": "uu-course-info",
+      "requested_url": "https://www.uu.nl/en/education/exchange-students/academics/course-information",
+      "resolved_url": "https://www.uu.nl/en/education/exchange-students/academics/course-information",
+      "status": 200,
+      "sha256": "acdf49d524a95b8937ddd1e0cd8f19f0f1098ec11cc44824e510815f5ab7c05f",
+      "title": "Course information | Utrecht University",
+      "text_length": 2327,
+      "checked": "2026-10-23",
+      "access": "HTTP 200; primary content read with relevant surrounding context; raw response retained in task-local cache",
+      "version": "Live official exchange course page read 2026-10-23; no content revision date displayed",
+      "support": [
+        {
+          "article": "english-taught-exchange-courses",
+          "source_id": "uu-course-info",
+          "scope": "2026-10-23 核對當日頁面，未見內容修訂日期。支持院系課程入口、課程層級按知識技能而非年級理解，以及 UCU／UCR 與其他學院行事曆的混排限制。其餘修課數量、早退方案、語言與名額不外推至其他方案。"
+        }
+      ],
+      "evidence_location": "Levels",
+      "evidence_quote": "not years studied"
+    },
+    {
+      "key": "uu-leg-courses",
+      "requested_url": "https://www.uu.nl/en/organisation/international-office-faculty-of-law-economics-and-governance/incoming-exchange-students/course-information",
+      "resolved_url": "https://www.uu.nl/en/organisation/international-office-faculty-of-law-economics-and-governance/incoming-exchange-students/course-information",
+      "status": 200,
+      "sha256": "3929101968cf06780bf54a79e8b02acca40b027825330b01ad35dcb777795d9f",
+      "title": "Courses | Utrecht University",
+      "text_length": 5133,
+      "checked": "2026-10-23",
+      "access": "HTTP 200; primary content read with relevant surrounding context; raw response retained in task-local cache",
+      "version": "Live official faculty page read 2026-10-23; contains specific 2026-2027 offering notes which are not reused as promises; no content revision date displayed",
+      "support": [
+        {
+          "article": "exchange-course-changes",
+          "source_id": "uu-leg-courses",
+          "scope": "2026-10-23 實際讀取；未見內容修訂日期，頁內另有 2026–2027 個別開課說明。本文只引用 timeslot／雙時段與登記後可能無法變更的程序案例，不轉載學分標準、特定學期課程供給、期限或住宿條件。"
+        }
+      ],
+      "evidence_location": "Timeslots",
+      "evidence_quote": "the course is scheduled in both timeslots"
+    },
+    {
+      "key": "lund-next",
+      "requested_url": "https://www.lunduniversity.lu.se/node/548",
+      "resolved_url": "https://www.lunduniversity.lu.se/node/548",
+      "status": 200,
+      "sha256": "9f4d123ddde3e7c448d98ff28191811eb3396e6263efa0e6dd79ca175267bf2d",
+      "title": "Next steps for accepted exchange students | Lund University",
+      "text_length": 7857,
+      "checked": "2026-10-23",
+      "access": "HTTP 200; primary content read with relevant surrounding context; raw response retained in task-local cache",
+      "version": "Last updated 2026-10-22; Starting your exchange studies section read 2026-10-23",
+      "support": [
+        {
+          "article": "exchange-course-changes",
+          "source_id": "lund-next",
+          "scope": "2026-10-23 實際讀取；頁尾更新日 2026-10-22。核對 Starting your exchange studies：沒有一般加退選期，換課需盡快與協調人討論，取決於條件與名額。不引用該頁入境、居留、保險或延長交換期限。"
+        }
+      ],
+      "evidence_location": "Starting your exchange studies",
+      "evidence_quote": "Lund University does not have an ”add/drop period”."
+    },
+    {
+      "key": "uu-faq",
+      "requested_url": "https://www.uu.nl/en/education/exchange-students/contact/faq",
+      "resolved_url": "https://www.uu.nl/en/education/exchange-students/contact/faq",
+      "status": 200,
+      "sha256": "c5418975bc9a07889e90703f67bfd09fa5fec84f2f04dcf28bcf1009d5c272da",
+      "title": "Frequently Asked Questions | Utrecht University",
+      "text_length": 8524,
+      "checked": "2026-10-23",
+      "access": "HTTP 200; primary content read with relevant surrounding context; raw response retained in task-local cache",
+      "version": "Live official FAQ read 2026-10-23; no content revision date displayed; Academics/Examination sections used",
+      "support": [
+        {
+          "article": "exchange-course-changes",
+          "source_id": "uu-faq",
+          "scope": "2026-10-23 核對當日頁面，未見內容修訂日期。支持仍有名額才可能換課、Student Desk／學院 International Office 窗口，以及未登記不能旁聽、已修課不考試的該校紀錄案例。不把其他學校的規則、最低學分或資格當成相同。"
+        }
+      ],
+      "evidence_location": "Can I change the courses after I have been enrolled?",
+      "evidence_quote": "only in the courses that still have available spots"
+    },
+    {
+      "key": "erasmus-charter",
+      "requested_url": "https://erasmus-plus.ec.europa.eu/resources-and-tools/erasmus-student-charter-0",
+      "resolved_url": "https://erasmus-plus.ec.europa.eu/resources-and-tools/erasmus-student-charter-0",
+      "status": 200,
+      "sha256": "9847ecefb5f93f1424195196d02d85c42de1b01f996b2b5282ec0e9a88791dea",
+      "title": "Erasmus+ Student Charter - Erasmus+",
+      "text_length": 13255,
+      "checked": "2026-10-23",
+      "access": "HTTP 200; primary content read with relevant surrounding context; raw response retained in task-local cache",
+      "version": "Live European Commission Erasmus+ Student Charter read 2026-10-23; no content revision date displayed; During the mobility section used",
+      "support": [
+        {
+          "article": "exchange-course-changes",
+          "source_id": "erasmus-charter",
+          "scope": "2026-10-23 實際讀取當日網頁版本，未見內容修訂日期。僅引用 During the mobility 的學習協議變更權利、兩校決定的期限與變更確認；只對適用 Erasmus+ 者說明，不引用補助、費用、保險或其他時限作普遍規則。"
+        }
+      ],
+      "evidence_location": "During the mobility period / Your entitlements",
+      "evidence_quote": "within the deadline decided by the sending and receiving institutions"
+    }
+  ],
+  "retrieval_notes": [
+    "All seven cited primary pages were successfully captured with HTTP 200 and read; no unavailable page or search snippet substitutes for a required claim.",
+    "Independent 15-second diagnostic re-requests of Lund node/545 and node/548 timed out. The original longer requests returned complete HTTP 200 captures, with byte hashes above; the same official pages were also readable through the web connector. No claim relies on a timed-out response.",
+    "Lund CMS node URLs are official stable page identifiers. Their titles, relevant text and visible update dates were checked; source captures retain the actual requested and final URLs."
+  ],
+  "arithmetic_checks": [
+    {
+      "label": "Editorial trial minutes",
+      "computed": 30,
+      "expected": 30,
+      "passed": true
+    },
+    {
+      "label": "Hypothetical equal-credit replacement ECTS",
+      "computed": 24,
+      "expected": 24,
+      "passed": true
+    },
+    {
+      "label": "Hypothetical lower-credit replacement ECTS",
+      "computed": 22,
+      "expected": 22,
+      "passed": true
+    },
+    {
+      "label": "New photo total bytes",
+      "computed": 169826,
+      "expected": 169826,
+      "passed": true
+    }
+  ],
+  "verification_limits": [
+    "No fee, scholarship amount, exam-score threshold, visa requirement or universal course-change deadline is asserted.",
+    "The 30-minute trial is an editorial study exercise, not a language test, admission decision or official placement instrument.",
+    "24/22 ECTS are explicit hypothetical bookkeeping examples, not minimum requirements, recommended loads or a conversion into Taiwan credits.",
+    "School-specific course access, level, timeslot, change and attendance rules are scoped to the cited institution/faculty and must be checked for the student’s own term/status.",
+    "Erasmus+ Student Charter discussion applies only to that programme; bilateral exchanges need their own forms and approval process.",
+    "Question templates and sample course cards are original editorial examples; no messages were sent, no student accounts or expert reviews fabricated.",
+    "The PR retains limited excerpts and provenance, not official full text or original stock-photo downloads."
+  ]
+}
