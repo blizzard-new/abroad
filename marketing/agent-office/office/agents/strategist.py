@@ -1,10 +1,12 @@
-"""企劃：每天早上讀平台數字、官方公告與上週成效，排出今天要發的內容。"""
+"""企劃：每天早上讀平台數字、官方公告、上網查到的討論與上週成效，排出今天要發的內容。"""
 
 from __future__ import annotations
 
+import json
 from datetime import date, datetime, timedelta, timezone
 
 from ..brand import PILLAR_FORMAT, Briefing, load_facts, load_news, pillar_for
+from ..llm import WriterError
 from ..models import DayPlan, PlanItem
 from .base import Agent, Persona
 
@@ -32,6 +34,8 @@ class Strategist(Agent):
         since = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat(timespec="seconds")
         recent = [d["title"] for d in self.office.store.drafts(limit=60) if d["created_at"] >= since]
         winners = self.office.staff["analyst"].winners()
+        research = self._research(Briefing(day=day, facts=facts, news=news, recent_titles=recent, winners=winners))
+        insights = json.loads(self.office.store.get("insights") or "[]")
         self.status(
             "thinking",
             f"今天有 {len(news)} 則已核實公告",
@@ -43,10 +47,26 @@ class Strategist(Agent):
                     f"{facts.partner_count:,} 筆合作校資料",
                     *[f"📮 {n.school}" for n in news[:3]],
                     *[f"🔥 {w['title'][:16]}" for w in winners[:2]],
+                    *[f"🔎 {f.topic[:16]}" for f in research[:3]],
                 ],
             },
         )
-        return Briefing(day=day, facts=facts, news=news, recent_titles=recent, winners=winners)
+        return Briefing(day=day, facts=facts, news=news, recent_titles=recent, winners=winners, research=research, insights=insights)
+
+    def _research(self, briefing: Briefing) -> list:
+        """Web research before planning, only when the research desk has a brain that can browse."""
+        writer = self.office.writer
+        if not writer.uses_model("research", need_web=True):
+            return []
+        self.status("thinking", "上網查這兩週大家在討論什麼", screen={"type": "lines", "title": "研究中", "lines": ["Dcard／PTT／Threads", "各校國際處公告"]})
+        try:
+            notes = writer.research(briefing)
+        except WriterError as error:
+            self.status("error", f"查資料沒有完成：{str(error)[:30]}")
+            return []
+        findings = [f for f in notes.findings if f.source_url.startswith(("http://", "https://"))]
+        self.status("working", f"查到 {len(findings)} 條線索", screen={"type": "lines", "title": "研究筆記", "lines": [f"🔎 {f.topic}" for f in findings[:6]]})
+        return findings
 
     def slots(self, day: date) -> list[PlanItem]:
         settings = self.office.settings

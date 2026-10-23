@@ -50,6 +50,8 @@ class Briefing:
     news: list[NewsItem] = field(default_factory=list)
     recent_titles: list[str] = field(default_factory=list)
     winners: list[dict] = field(default_factory=list)
+    research: list = field(default_factory=list)  # models.Finding from the research desk
+    insights: list[str] = field(default_factory=list)  # the analyst's notes from the last metrics run
 
 
 def load_facts(settings: Settings) -> BrandFacts:

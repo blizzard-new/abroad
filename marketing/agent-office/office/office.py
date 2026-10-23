@@ -11,11 +11,12 @@ from .agents.analyst import Analyst
 from .agents.base import Agent
 from .agents.community import Community
 from .agents.designer import Designer
-from .agents.publisher import Publisher
+from .agents.publisher import PREFLIGHT_HOLD, Publisher
 from .agents.reviewer import Reviewer
 from .agents.strategist import Strategist
 from .agents.threads_writer import ThreadsWriter
 from .agents.video_editor import VideoEditor
+from . import brains
 from .brand import Briefing, load_facts
 from .config import Settings
 from .events import EventBus
@@ -27,20 +28,40 @@ from .store import Store
 # Desk order on the floor, front row first.
 STAFF: tuple[type[Agent], ...] = (Strategist, ThreadsWriter, Designer, VideoEditor, Reviewer, Publisher, Analyst, Community)
 
+def desk_of(role: str) -> str:
+    """The desk a brain role belongs to: Ivy both researches and plans."""
+    return "strategist" if role == "research" else role
+
+
 # The human's desk. Drafts land here unless OFFICE_APPROVAL=auto.
 BOSS = {"id": "boss", "name": "你", "title": "老闆（審核）", "duty": "看審核匣：核准、退回或直接修改草稿"}
 
 
 class Office:
-    def __init__(self, settings: Settings, *, writer=None, renderer=None):
+    def __init__(self, settings: Settings, *, writer=None, renderer=None, images=None):
         self.settings = settings
         self.store = Store(settings.db_path)
         self.bus = EventBus(self.store)
-        self.writer = writer or make_writer(settings)
+        self._brain_seen: dict[str, str] = {}
+        self.writer = writer or make_writer(settings, on_brain=self._brain_used)
         self.renderer = renderer or Renderer(settings)
+        # Cover illustrations: Codex's image generation when OFFICE_IMAGES=codex.
+        self.images = images if images is not None else (brains.CodexBrain(settings) if settings.images == "codex" else None)
         self.staff: dict[str, Agent] = {cls.persona.id: cls(self) for cls in STAFF}
         self.busy = threading.Lock()
         self._facts = None
+
+    def _brain_used(self, role: str, key: str, failures: list[str]) -> None:
+        """Show on the desk which AI is thinking, and say so when a desk had to fall back to another one."""
+        if self._brain_seen.get(role) == key and not failures:
+            return
+        self._brain_seen[role] = key
+        label = brains.LABELS[key]
+        message = f"{failures[-1][:40]}，改用 {label}" if failures else f"{brains.ROLES[role]}：{label}"
+        self.bus.emit(desk_of(role), "brain", message, brain=key, label=label, role=role, fallback=bool(failures))
+
+    def brain_summary(self) -> dict[str, list[str]]:
+        return {role: [brains.LABELS[k] for k in brains.chain(self.settings, role)] for role in brains.ROLES}
 
     # ---- time ----
     def local_now(self) -> datetime:
@@ -134,6 +155,10 @@ class Office:
     def approve(self, draft_id: int, publish_now: bool = False) -> dict:
         draft = self._editable(draft_id)
         fields: dict[str, Any] = {"status": "approved", "error": None}
+        review = draft["review"] or {}
+        if any(issue.startswith(PREFLIGHT_HOLD) for issue in review.get("issues") or []):
+            # The boss has seen why the publisher held it back; approving again means send it.
+            fields["review"] = {**review, "preflight_overridden": True}
         if publish_now or not draft["scheduled_at"]:
             fields["scheduled_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
         self.store.update_draft(draft_id, **fields)
@@ -187,7 +212,11 @@ class Office:
             "timezone": str(self.settings.timezone),
             "boss": BOSS,
             "agents": [
-                {**agent.persona.to_dict(), **self.bus.agent_states.get(agent.id, {"state": "idle", "message": "待命中"})}
+                {
+                    **agent.persona.to_dict(),
+                    "brain": self._brain_seen.get(agent.id) or self.writer.primary(agent.id) if agent.id in brains.ROLES else None,
+                    **self.bus.agent_states.get(agent.id, {"state": "idle", "message": "待命中"}),
+                }
                 for agent in self.staff.values()
             ],
             "drafts": self.store.drafts(limit=80),
@@ -197,8 +226,9 @@ class Office:
             "settings": {
                 "approval": self.settings.approval,
                 "dry_run": self.settings.dry_run,
-                "writer": self.writer.mode,
-                "model": self.settings.model if self.writer.mode == "claude" else None,
+                "brains": self.brain_summary(),
+                "images": "Codex" if self.images else None,
+                "labels": brains.LABELS,
                 "daily_at": self.settings.daily_at.strftime("%H:%M"),
                 "site_url": self.settings.site_url,
                 "accounts": {

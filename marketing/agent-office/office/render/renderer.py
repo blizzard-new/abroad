@@ -59,15 +59,23 @@ class Renderer:
         mime = mimetypes.guess_type(target.name)[0] or ("font/woff2" if target.suffix == ".woff2" else "application/octet-stream")
         route.fulfill(status=200, body=target.read_bytes(), headers={"Content-Type": mime})
 
-    def carousel(self, draft: CarouselDraft, out_dir: Path, progress: Progress | None = None) -> list[Path]:
+    def _art_url(self, art: Path | None) -> str | None:
+        if not art or not art.is_file():
+            return None
+        self.roots["art"] = art.parent
+        return f"{ORIGIN}/art/{art.name}"
+
+    def carousel(self, draft: CarouselDraft, out_dir: Path, progress: Progress | None = None, art: Path | None = None) -> list[Path]:
         out_dir.mkdir(parents=True, exist_ok=True)
         files = []
+        art_url = self._art_url(art)
         with self._page(1080, 1350) as page:
             page.goto(f"{ORIGIN}/template/carousel.html", wait_until="load")
             for index, slide in enumerate(draft.slides):
                 page.evaluate(
                     "(args) => window.renderSlide(args)",
-                    {"slide": slide.model_dump(), "index": index, "total": len(draft.slides), "site": self._site(), "story": False},
+                    {"slide": slide.model_dump(), "index": index, "total": len(draft.slides), "site": self._site(), "story": False,
+                     "art": art_url if slide.kind == "cover" else None},
                 )
                 path = out_dir / f"slide-{index + 1:02d}.jpg"
                 page.locator("#slide").screenshot(path=str(path), type="jpeg", quality=92)
@@ -76,13 +84,14 @@ class Renderer:
                     progress(index + 1, len(draft.slides), path)
         return files
 
-    def story(self, cover: Slide, out_path: Path) -> Path:
+    def story(self, cover: Slide, out_path: Path, art: Path | None = None) -> Path:
         out_path.parent.mkdir(parents=True, exist_ok=True)
+        art_url = self._art_url(art)
         with self._page(1080, 1920) as page:
             page.goto(f"{ORIGIN}/template/carousel.html", wait_until="load")
             page.evaluate(
                 "(args) => window.renderSlide(args)",
-                {"slide": cover.model_dump(), "index": 0, "total": 1, "site": self._site(), "story": True},
+                {"slide": cover.model_dump(), "index": 0, "total": 1, "site": self._site(), "story": True, "art": art_url},
             )
             page.locator("#slide").screenshot(path=str(out_path), type="jpeg", quality=92)
         return out_path

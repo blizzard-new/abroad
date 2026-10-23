@@ -96,6 +96,16 @@
   .action.primary { background: linear-gradient(100deg, #2f7de1, #19b7e2); box-shadow: 0 20px 50px rgba(25, 140, 226, 0.4); }
   .wave { right: 30px; bottom: 120px; width: 300px; transform: rotate(-4deg); filter: drop-shadow(0 26px 30px rgba(0, 0, 0, 0.35)); }
 
+  /* cover illustration (from the image desk); text stays in HTML so Chinese is always crisp */
+  .art { left: 72px; right: 72px; top: 650px; bottom: 150px; border-radius: 48px; overflow: hidden; background: #e8f0f8; box-shadow: 0 30px 70px rgba(16, 41, 74, 0.18), 0 0 0 1px rgba(16, 41, 74, 0.05); }
+  .art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .with-art .cover-text { top: 200px; }
+  .with-art .mascot { right: 34px; bottom: 96px; width: 210px; }
+  .with-art .swipe { bottom: 66px; }
+  .story.with-art .cover-text { top: 300px; }
+  .story.with-art .art { top: 900px; bottom: 480px; }
+  .story.with-art .mascot { bottom: 430px; }
+
   /* story extras */
   .story .cover-text { top: 330px; }
   .story .mascot { bottom: 420px; }
@@ -138,20 +148,21 @@
     }
   }
 
-  window.renderSlide = async ({ slide, index, total, site, story }) => {
+  window.renderSlide = async ({ slide, index, total, site, story, art }) => {
     const root = document.getElementById("slide");
-    root.className = (slide.kind === "cta" ? "dark " : "") + (story ? "story" : "");
+    root.className = [slide.kind === "cta" ? "dark" : "", story ? "story" : "", art ? "with-art" : ""].join(" ").trim();
+    const artBlock = art ? `<div class="art"><img src="${esc(art)}" alt="" /></div>` : "";
     const count = `<div class="count">${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}</div>`;
     const foot = `<div class="foot"><span>${esc(site)}｜以各校官方公告為準</span>${dots(index, total)}</div>`;
     if (story) {
       root.innerHTML = `${brand}
         <div class="cover-text"><span class="kicker"><i></i>今日新貼文</span><h1>${accent(slide.title)}</h1><p>${esc(slide.body)}</p></div>
-        <img class="mascot" src="/brand/suitcase.webp" alt="" />
+        ${artBlock}<img class="mascot" src="/brand/suitcase.webp" alt="" />
         <div class="pill">${ICONS.up}到主頁看完整內容</div>`;
     } else if (slide.kind === "cover") {
       root.innerHTML = `${brand}${count}
         <div class="cover-text"><span class="kicker"><i></i>交換申請小筆記</span><h1>${accent(slide.title)}</h1><p>${esc(slide.body)}</p></div>
-        <img class="mascot" src="/brand/suitcase.webp" alt="" />
+        ${artBlock}<img class="mascot" src="/brand/suitcase.webp" alt="" />
         <div class="swipe">往左滑${ICONS.arrow}</div>`;
     } else if (slide.kind === "cta") {
       const [feature, ...rest] = String(slide.body || "").split("｜");
@@ -174,7 +185,8 @@
     const text = root.textContent + "0123456789";
     await Promise.all(["700", "500"].map((weight) => document.fonts.load(`${weight} 64px "GenJyuuGothic"`, text)));
     const heading = root.querySelector("h1, h2");
-    if (heading) fit(heading, story ? 620 : slide.kind === "point" ? 250 : 470, 64);
+    const room = art ? (story ? 380 : 240) : story ? 620 : 470;
+    if (heading) fit(heading, slide.kind === "point" ? 250 : room, 64);
     const card = root.querySelector(".card");
     if (card) fit(card, 460, 36);
     await document.fonts.ready;

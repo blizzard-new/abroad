@@ -19,6 +19,14 @@ const BOARD = {
   pending_approval: ["待審", "#ffcf5a"], needs_changes: ["需修改", "#ff8b7b"], approved: ["準時", "#8fd0ff"],
   publishing: ["登機中", "#8fd0ff"], published: ["已起飛", "#8ff0bf"], failed: ["延誤", "#ff8b7b"], rejected: ["取消", "#8d97a5"],
 };
+// Which AI a desk thinks with, printed on the monitor's chin like a brand name.
+const BRAIN = {
+  "claude-code": { label: "Claude Code", color: "#e08a5c" },
+  codex: { label: "Codex", color: "#4fd1a5" },
+  antigravity: { label: "Antigravity", color: "#6aa8ff" },
+  api: { label: "Claude API", color: "#c9a7ff" },
+  offline: { label: "離線範本", color: "#9fb0c8" },
+};
 const SKIN = ["#f1c7a5", "#e0ac83", "#c98e62", "#f5d0b5", "#d79f76", "#eab894", "#b97d55", "#f0c39f"];
 const PENDING = new Set(["pending_approval", "needs_changes"]);
 
@@ -133,7 +141,7 @@ function buildDesks(agents) {
     desk.setAttribute("aria-label", `${a.name}，${a.title}`);
     desk.innerHTML = `
       <div class="bubble"><span class="bubble-text"></span></div>
-      <div class="monitor"><div class="screen"></div></div>
+      <div class="monitor"><div class="screen"></div><span class="brain-tag"><i></i><span></span></span></div>
       <div class="table"><div class="mug"></div><div class="keyboard"></div>${DECOR[a.decor] || ""}</div>
       <div class="worker">${workerSVG(a, i)}</div>
       <div class="plate"><b>${esc(a.name)}</b><span>${esc(a.title)}</span></div>`;
@@ -152,6 +160,14 @@ function updateDesk(id) {
   const text = a.message || "待命中";
   $(".bubble-text", desk).textContent = text;
   $(".bubble", desk).title = text;
+  const brain = BRAIN[a.brain] || null;
+  const tag = $(".brain-tag", desk);
+  tag.hidden = !brain;
+  if (brain) {
+    $("span", tag).textContent = brain.label;
+    tag.style.setProperty("--bc", brain.color);
+    tag.title = `這台電腦現在用 ${brain.label}`;
+  }
   renderScreen($(".screen", desk), a.screen, id);
 }
 
@@ -474,7 +490,12 @@ function openAgent(id) {
   }
   const a = S.agents.get(id);
   const lines = S.log.filter((l) => l.agent === id).slice(-30).reverse();
+  const roles = id === "strategist" ? [["research", "查資料"], ["strategist", "企劃"]] : [[id, ""]];
+  const chains = roles
+    .filter(([role]) => S.settings.brains?.[role])
+    .map(([role, what]) => `${what ? `${what}：` : ""}${S.settings.brains[role][0]}${S.settings.brains[role].length > 1 ? `（不行時改用 ${S.settings.brains[role].slice(1).join(" → ")}）` : ""}`);
   $("#agent-card-body").innerHTML = `<h2>${esc(a.name)}｜${esc(a.title)}</h2><p class="duty">${esc(a.duty)}</p>
+    ${chains.length ? `<p class="duty">這台電腦用 ${esc(chains.join("；"))}</p>` : ""}
     <div class="big-screen"></div>
     <ol>${lines.map((l) => `<li><time>${hhmm(l.ts)}</time><span>${esc(l.text)}</span></li>`).join("") || "<li><time></time><span>今天還沒有動作</span></li>"}</ol>`;
   renderScreen($("#agent-card-body .big-screen"), a.screen, id, true);
@@ -519,6 +540,14 @@ function apply(e) {
       if (e.screen) a.screen = e.screen;
       updateDesk(e.agent);
       return 260;
+    }
+    case "brain": {
+      const a = S.agents.get(e.agent);
+      if (!a) return 0;
+      a.brain = e.brain;
+      if (e.fallback) a.message = e.message;
+      updateDesk(e.agent);
+      return e.fallback ? 600 : 120;
     }
     case "handoff":
       return queue.length > 40 ? 0 : fly(e.agent, e.to, e.message);
@@ -588,9 +617,16 @@ function renderModes() {
   const modes = [
     s.dry_run ? ["warn", "模擬發佈：不會真的送出"] : ["live", "正式發佈"],
     s.approval === "auto" ? ["live", "審稿通過就自動排程"] : ["", "每則都等你核准"],
-    s.writer === "claude" ? ["live", `AI：Claude（${s.model}）`] : ["warn", "AI：離線範本"],
+    brainMode(s),
   ];
+  if (s.images) modes.push(["live", `插圖：${s.images}`]);
   $("#modes").innerHTML = modes.map(([cls, text]) => `<span class="mode ${cls}"><i></i>${esc(text)}</span>`).join("");
+}
+
+function brainMode(s) {
+  const first = [...new Set(Object.values(s.brains || {}).map((chain) => chain[0]))];
+  if (first.length === 1 && first[0] === "離線範本") return ["warn", "AI：離線範本"];
+  return ["live", `AI：${first.filter((label) => label !== "離線範本").join("、")}`];
 }
 
 function selectTab(tab) {

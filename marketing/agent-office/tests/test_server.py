@@ -9,7 +9,7 @@ from office.server import create_app
 
 
 def client_for(tmp_path, **env):
-    settings = Settings.from_env(env={"OFFICE_HOME": str(tmp_path / "var"), "OFFICE_WRITER": "offline", "OFFICE_RENDER_MEDIA": "0", **env})
+    settings = Settings.from_env(env={"OFFICE_HOME": str(tmp_path / "var"), "OFFICE_BRAINS": "offline", "OFFICE_RENDER_MEDIA": "0", **env})
     office = Office(settings)
     return TestClient(create_app(settings, clock=False, office=office)), office
 

@@ -5,6 +5,7 @@
 ![辦公室畫面](docs/office.jpg)
 
 - 每位 agent 的螢幕顯示他現在正在做的事：Threads 小編的草稿會一個字一個字打出來、設計師的螢幕會長出輪播圖、剪輯師的螢幕有算圖進度條、發佈員的螢幕是 API 呼叫紀錄。
+- 每台螢幕下緣印著這張桌子正在用的 AI（Claude Code、Codex、Antigravity…）；某個工具沒回應、改用備援時，桌上的對話泡泡會說出來。
 - 工作交接時，會有一張紙從一張桌子飛到下一張桌子（企劃 → 寫手 → 審稿 → 你 → 發佈）。
 - 牆上的「今日發文時刻表」是機場出發看板：每則貼文是一班飛機，待審、準時、已起飛、延誤一目了然。
 - 窗外是台北的天色（跟著台北時間變化），白板上是企劃寫的今日主軸。
@@ -12,17 +13,17 @@
 
 ## 辦公室裡有誰
 
-| 座位 | 角色 | 每天做什麼 |
-|------|------|------------|
-| Ivy | 企劃總監 | 讀平台數字（目前支援幾所大學、幾筆合作校）、`sources/audit/` 最新一天的已核實官方公告、上週成效，排出今天的內容；照 3:3:3:1 輪替 IG 內容支柱 |
-| 阿脆 | Threads 小編 | 去商業化的真人口吻；第一行點名族群或痛點，用提問、二選一、清單、小編碎碎念、今日公告五種角度；主文不放網址，網址放第一則留言 |
-| Mori | IG 設計師 | 6 張 4:5 輪播圖（封面鉤子 → 重點 → 收藏／分享／連結在主頁），再做一張提醒看新貼文的限動；hashtag 最多 5 個 |
-| 阿剪 | 影片剪輯 | 30～45 秒直式腳本（前 3 秒鉤子、每個畫面都有大字幕），逐格算圖並配上合成音樂；同一支影片發 Reels 和 YouTube Shorts；週日做 2～4 分鐘橫式「本週交換情報懶人包」 |
-| Kiki | 審稿查核 | 程式規則＋AI 審稿：字數、連結位置、hashtag 數、平台數字不能誇大、沒有官方來源不能寫日期、禁用「保證錄取／官方合作」等字眼；不合格退回作者改一次 |
-| Pat | 發佈排程 | 到排定時間呼叫 Threads／Instagram／YouTube 官方 API；Threads 發完主文立刻在第一則留言補上連結 |
-| Nana | 數據分析 | 每晚抓成效，把 Threads 上互動最好的題目交給企劃重製成 IG（Threads 測試題目、IG 放大轉換的雙平台閉環） |
-| Momo | 社群互動 | 發文後 30 分鐘～3 小時去看留言、擬回覆；回覆陌生人一律等你核准 |
-| 你 | 老闆 | 在「待你審核」核准、修改、立即發佈或退回 |
+| 座位 | 角色 | 用哪個 AI（`.env.example` 的分配） | 每天做什麼 |
+|------|------|------|------------|
+| Ivy | 企劃總監 | 查資料：Antigravity；排內容：Claude Code | 先上網查這兩週學生在討論什麼（每條附來源），再讀平台數字（目前支援幾所大學、幾筆合作校）、`sources/audit/` 最新一天的已核實官方公告、上週成效，排出今天的內容；照 3:3:3:1 輪替 IG 內容支柱 |
+| 阿脆 | Threads 小編 | Claude Code | 去商業化的真人口吻；第一行點名族群或痛點，用提問、二選一、清單、小編碎碎念、今日公告五種角度；主文不放網址，網址放第一則留言 |
+| Mori | IG 設計師 | 文案：Claude Code；封面插圖：Codex | 6 張 4:5 輪播圖（封面鉤子 → 重點 → 收藏／分享／連結在主頁），封面放 Codex 畫的插圖，再做一張提醒看新貼文的限動；hashtag 最多 5 個 |
+| 阿剪 | 影片剪輯 | Claude Code | 30～45 秒直式腳本（前 3 秒鉤子、每個畫面都有大字幕），逐格算圖並配上合成音樂；同一支影片發 Reels 和 YouTube Shorts；週日做 2～4 分鐘橫式「本週交換情報懶人包」 |
+| Kiki | 審稿查核 | Codex | 程式規則＋AI 審稿：字數、連結位置、hashtag 數、平台數字不能誇大、沒有官方來源不能寫日期、禁用「保證錄取／官方合作」等字眼；不合格退回作者改一次。寫的人和審的人用不同家的 AI，比較容易抓到盲點 |
+| Pat | 發佈排程 | Antigravity | 發文前最後檢查一次（公告有沒有改、是不是跟最近重複），有疑慮就退回給你；到排定時間用程式呼叫 Threads／Instagram／YouTube 官方 API，Threads 發完主文立刻在第一則留言補上連結 |
+| Nana | 數據分析 | Antigravity | 每晚抓成效，把 Threads 上互動最好的題目交給企劃重製成 IG（Threads 測試題目、IG 放大轉換的雙平台閉環），並寫 2～4 點建議給隔天的企劃 |
+| Momo | 社群互動 | Claude Code | 發文後 30 分鐘～3 小時去看留言、擬回覆；回覆陌生人一律等你核准 |
+| 你 | 老闆 | — | 在「待你審核」核准、修改、立即發佈或退回 |
 
 ## 一天怎麼運作
 
@@ -67,12 +68,40 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 建議依序做，每一步都確認沒問題再往下：
 
 1. **離線試跑**：照上面的快速開始，看一天的草稿長什麼樣子。
-2. **接上 Claude**：在 `.env` 放 `ANTHROPIC_API_KEY`。寫稿、企劃與 AI 審稿改由 Claude 做（預設 `claude-opus-5-5`，有安全拒答時會自動改用備援模型）。
+2. **接上 AI 工具**：在跑辦公室的電腦安裝並登入 Claude Code、Codex、Antigravity（見下一節），複製 `.env.example` 成 `.env`。
 3. **接上各平台帳號**（下一節），仍保持 `OFFICE_DRY_RUN=1`，到 `var/outbox/` 看會送出的內容。
 4. **正式發佈**：改成 `OFFICE_DRY_RUN=0`，保持 `OFFICE_APPROVAL=manual`，每天花 5 分鐘審核。
 5. 跑順幾週後，想放手再改 `OFFICE_APPROVAL=auto`（審稿通過就自動排程；留言回覆仍然要你核准）。
 
 辦公室要一直開著才會自動開工與發文：放在一台不關機的電腦（例如實體辦公室裡的小主機，順便接一台電視顯示 `?tv`），或任何可以長時間跑 Python 的主機。
+
+## Claude Code、Codex、Antigravity 怎麼分工
+
+每張桌子的 AI 在 `.env` 的 `OFFICE_BRAINS` 指定，格式是「角色=工具」。`.env.example` 預設的分工：
+
+- **Claude Code**：寫文案（Threads、IG 說明欄、留言回覆）、寫影片腳本、排內容。
+- **Codex**：審稿，和畫 IG 封面插圖（`OFFICE_IMAGES=codex`）。
+- **Antigravity**：上網查資料、解讀數據、發文前最後檢查。
+
+辦公室不會打開這些工具的視窗，而是用它們的「無介面模式」從程式呼叫，用的是你已經登入的訂閱：
+
+| 工具 | 辦公室怎麼叫它 | 先做這件事 |
+|------|----------------|------------|
+| Claude Code | `claude -p --output-format json --json-schema …`，要求照固定格式回答 | 安裝後在終端機執行 `claude` 登入你的 Claude 帳號 |
+| Codex | `codex exec - --output-schema …`；畫圖時用內建的 `$imagegen` | 安裝後執行 `codex` 登入 ChatGPT 帳號 |
+| Antigravity | `agy -p "…"`，從輸出裡讀出 JSON | 安裝 Antigravity CLI 並登入；先跑 `agy --help`，參數不同就改 `OFFICE_ANTIGRAVITY_COMMAND` |
+
+幾件要知道的事：
+
+- **每次都在空資料夾裡執行**：審稿、寫稿只能讀不能寫；Codex 只在畫圖時能寫進那個暫存資料夾。工具碰不到辦公室的檔案和你的程式碼。
+- **會自動換人**：某個工具沒安裝、沒登入、額度用完或超過 `OFFICE_BRAIN_TIMEOUT` 秒沒回應，就依 `OFFICE_BRAIN_FALLBACK` 往下換（預設 Claude Code → Claude API → 離線範本），換人時桌上的泡泡會說出原因。
+- **查資料一定要能上網**：查資料這一步只會交給能上網的工具（Antigravity、Claude Code）；都不行就跳過，不會讓不能上網的 AI 憑空編。查到的東西都附來源，只當線索，審稿仍會擋下沒有官方來源的日期。
+- **發文本身是程式，不是 AI**：Antigravity 只能在發文前「擋下來給你看」，不能決定發什麼、發到哪；按下送出的永遠是固定的程式碼。被擋下的貼文會回到你的審核匣並寫明原因，你再核准一次就會直接發。
+- **Claude Code 會用你的訂閱**：辦公室呼叫 Claude Code 時會拿掉 `ANTHROPIC_API_KEY`，避免它改用 API 計費。
+- **Antigravity 的 CLI 還在變動**：有人回報從程式呼叫會卡住，所以它的每次呼叫都有逾時，逾時就換下一個工具。
+- 三家官方都建議「自動化用 API 金鑰」。用訂閱跑自己的排程沒有問題，但會吃訂閱額度；如果哪天某個工具不再允許用訂閱登入跑無介面模式，把那張桌子改成 `api` 就好。
+
+想換分工，只要改 `OFFICE_BRAINS`，例如全部交給 Claude Code：`OFFICE_BRAINS=claude-code`；只換審稿：把 `reviewer=codex` 改成 `reviewer=antigravity`。
 
 ## 接上 Threads、Instagram、YouTube
 
@@ -115,7 +144,7 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 |----------|--------------|
 | Threads 創造話題、IG 展示與轉化 | 每天 2 篇 Threads ＋ 1 則 IG；數據分析把 Threads 爆文交給企劃重製成 IG |
 | IG 內容 3:3:3:1（價值／引流／信任／品牌故事） | 企劃以 10 天為一輪：價值、信任各 3 天做輪播，引流 3 天做 Reels，1 天說品牌故事 |
-| Threads 去商業化、真人口吻 | 寫手規範與 Claude 的品牌語氣；離線範本也有小編碎碎念角度 |
+| Threads 去商業化、真人口吻 | 每個 AI 都先讀同一份品牌語氣規範；離線範本也有小編碎碎念角度 |
 | 第一行點名族群或痛點、二選一、清單 | 五種 Threads 角度輪流用 |
 | 主文不放連結，放第一則留言或主頁 | 審稿規則擋下主文網址；發佈時自動補第一則留言；IG 說明欄寫「連結在主頁」 |
 | 黃金 30 分鐘 | 社群互動在發文後 30 分鐘開始看留言、擬回覆 |
@@ -141,7 +170,7 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 
 ## 費用
 
-Claude 每天約 12～16 次呼叫（企劃、寫稿、審稿、改稿），以 `claude-opus-5-5` 估計約 1～2 美元／天，實際依內容長度與思考量而定；`OFFICE_MODEL=claude-sonnet-5-5` 約可省一半。Threads、Instagram、YouTube API 本身免費（有每日發文上限，遠高於這裡的用量）。
+用 `.env.example` 的分工時，AI 都走你既有的 Claude、ChatGPT、Google 訂閱，不另外付 API 費，但會吃各自的用量額度：每天大約 Claude Code 8～12 次、Codex 4～6 次（含 1 張圖）、Antigravity 3～8 次。只有備援換到 Claude API 時才會計費（以 `claude-opus-5-5` 估計全天約 1～2 美元，`OFFICE_MODEL=claude-sonnet-5-5` 約可省一半）。Threads、Instagram、YouTube API 本身免費（有每日發文上限，遠高於這裡的用量）。
 
 ## 設定一覽
 
@@ -154,7 +183,8 @@ Claude 每天約 12～16 次呼叫（企劃、寫稿、審稿、改稿），以 
 | `office/agents/` | 8 位 agent，一人一個檔案 |
 | `office/pipeline.py` | 一天的流程：企劃 → 產出 → 審稿 → 送審 |
 | `office/scheduler.py` | 辦公室時鐘：開工、發文、看留言、抓數據、延長權杖 |
-| `office/llm.py` | Claude 寫手（結構化輸出）與離線範本寫手 |
+| `office/brains.py` | Claude Code、Codex、Antigravity、Claude API 的呼叫方式與備援順序 |
+| `office/llm.py` | 每個角色的提示詞，以及離線範本寫手 |
 | `office/brand.py` | 品牌語氣、內容支柱、平台數字與今日公告 |
 | `office/rules.py` | 審稿規則 |
 | `office/render/` | 輪播／限動／影片的 HTML 版型、算圖與配樂 |

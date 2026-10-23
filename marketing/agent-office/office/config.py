@@ -58,9 +58,20 @@ class Settings:
     approval: str = "manual"
     # While true nothing leaves the machine: the publisher writes what it would send to var/outbox/.
     dry_run: bool = True
-    # "auto" uses Claude when credentials exist and the offline templates otherwise.
-    writer: str = "auto"
+    # Which AI each desk thinks with: "role=brain,…", or one brain for every role. Brains: claude-code, codex,
+    # antigravity, api (Claude API), offline (templates) and auto (Claude API with credentials, otherwise offline).
+    brains: str = "auto"
+    # Tried in order when a desk's own brain is missing, logged out or fails.
+    brain_fallback: tuple[str, ...] = ("api", "offline")
+    # Cover illustrations for carousels and stories: "codex" (its built-in image generation) or "none".
+    images: str = "none"
     model: str = "claude-opus-5-5"
+    claude_code_command: str = "claude"
+    claude_code_model: str = ""
+    codex_command: str = "codex"
+    codex_model: str = ""
+    antigravity_command: str = "agy -p"
+    brain_timeout: int = 600
 
     daily_at: time = time(7, 30)
     threads_slots: tuple[time, ...] = (time(12, 30), time(21, 0))
@@ -125,8 +136,16 @@ class Settings:
             site_url=(get("OFFICE_SITE_URL") or "https://app.uniway-tw.com").rstrip("/"),
             approval=(get("OFFICE_APPROVAL") or "manual").lower(),
             dry_run=_flag(get("OFFICE_DRY_RUN"), True),
-            writer=(get("OFFICE_WRITER") or "auto").lower(),
+            brains=(get("OFFICE_BRAINS") or "auto").lower(),
+            brain_fallback=tuple(b.strip().lower() for b in (get("OFFICE_BRAIN_FALLBACK") or "api,offline").split(",") if b.strip()),
+            images=(get("OFFICE_IMAGES") or "none").lower(),
             model=get("OFFICE_MODEL") or "claude-opus-5-5",
+            claude_code_command=get("OFFICE_CLAUDE_CODE_COMMAND") or "claude",
+            claude_code_model=get("OFFICE_CLAUDE_CODE_MODEL") or "",
+            codex_command=get("OFFICE_CODEX_COMMAND") or "codex",
+            codex_model=get("OFFICE_CODEX_MODEL") or "",
+            antigravity_command=get("OFFICE_ANTIGRAVITY_COMMAND") or "agy -p",
+            brain_timeout=int(get("OFFICE_BRAIN_TIMEOUT") or 600),
             daily_at=_time(get("OFFICE_DAILY_AT") or "07:30"),
             threads_slots=tuple(_time(t) for t in (get("OFFICE_THREADS_SLOTS") or "12:30,21:00").split(",") if t.strip()),
             instagram_slot=_time(get("OFFICE_INSTAGRAM_SLOT") or "19:30"),

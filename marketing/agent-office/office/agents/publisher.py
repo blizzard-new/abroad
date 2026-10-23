@@ -1,10 +1,12 @@
-"""發佈排程：到時間就呼叫 Threads／Instagram／YouTube 的官方 API 發文；模擬模式只把要送出的內容寫進 outbox。"""
+"""發佈排程：發文前由這張桌子的 AI 做最後檢查，到時間就呼叫 Threads／Instagram／YouTube 的官方 API 發文；
+模擬模式只把要送出的內容寫進 outbox。"""
 
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
+from ..llm import WriterError
 from ..platforms.base import PlatformError
 from ..platforms.media_host import MediaHost
 from ..platforms.meta import InstagramClient, ThreadsClient
@@ -13,6 +15,7 @@ from ..store import now_utc
 from .base import Agent, Persona
 
 PLATFORM_LABEL = {"threads": "Threads", "instagram": "Instagram", "youtube": "YouTube"}
+PREFLIGHT_HOLD = "發文前檢查擋下："
 
 
 class Publisher(Agent):
@@ -76,6 +79,8 @@ class Publisher(Agent):
             self.status("error", f"{label} 帳號還沒設定")
             self.office.draft_changed(draft["id"])
             return store.draft(draft["id"])
+        if not self._preflight_ok(draft):
+            return store.draft(draft["id"])
         store.update_draft(draft["id"], status="publishing")
         self.office.draft_changed(draft["id"])
         self.lines = []
@@ -97,6 +102,30 @@ class Publisher(Agent):
         self.status("done", f"{label} 發佈完成 🚀", screen={"type": "terminal", "lines": list(self.lines)})
         self.office.draft_changed(draft["id"])
         return store.draft(draft["id"])
+
+    def _preflight_ok(self, draft: dict) -> bool:
+        """This desk's brain takes a last look before a post goes out. It can only hold a post back for the boss;
+        the API calls themselves stay plain code, so an AI never decides what gets sent where."""
+        writer = self.office.writer
+        review = draft.get("review") or {}
+        if draft["format"] in {"reply", "story"} or review.get("preflight_overridden") or not writer.uses_model("publisher"):
+            return True
+        self.status("reviewing", f"發文前最後檢查：{draft['title'][:12]}")
+        since = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat(timespec="seconds")
+        recent = [d["title"] for d in self.office.store.published_since(since) if d["id"] != draft["id"]]
+        try:
+            verdict = writer.preflight(draft, recent, self.office.briefing_for_replies())
+        except WriterError as error:
+            self.log(f"發文前檢查沒有完成，照常發佈：{error}")
+            return True
+        if verdict.go:
+            return True
+        issues = list(review.get("issues") or []) + [f"{PREFLIGHT_HOLD}{verdict.reason}"]
+        self.office.store.update_draft(draft["id"], status="needs_changes", review={**review, "issues": issues})
+        self.status("waiting", f"先不發：{verdict.reason[:20]}")
+        self.handoff("boss", "發文前擋下", draft_id=draft["id"])
+        self.office.draft_changed(draft["id"])
+        return False
 
     def _send(self, draft: dict, clients: dict) -> dict:
         payload, media = draft["payload"], draft["media"] or {}

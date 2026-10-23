@@ -22,3 +22,17 @@ def test_example_env_file_parses_to_safe_defaults():
     assert values["OFFICE_DRY_RUN"] == "1"
     assert values["OFFICE_APPROVAL"] == "manual"
     assert values["OFFICE_THREADS_SLOTS"] == "12:30,21:00"
+
+
+def test_example_allocation_gives_each_desk_its_tool(tmp_path):
+    from office import brains
+    from office.config import PROJECT_DIR
+
+    values = _load_dotenv(PROJECT_DIR / ".env.example")
+    settings = Settings.from_env(env={**values, "OFFICE_HOME": str(tmp_path)})
+    first = {role: brains.chain(settings, role)[0] for role in brains.ROLES}
+    assert first["threads"] == first["video"] == first["designer"] == "claude-code"
+    assert first["reviewer"] == "codex"
+    assert first["research"] == first["publisher"] == first["analyst"] == "antigravity"
+    assert brains.chain(settings, "research")[1:] == ["claude-code", "api", "offline"]
+    assert settings.images == "codex"

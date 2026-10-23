@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import json
 from datetime import datetime, timedelta, timezone
 
+from ..llm import WriterError
 from ..platforms.base import PlatformError
 from .base import Agent, Persona
 
@@ -60,8 +62,29 @@ class Analyst(Agent):
             if metrics:
                 office.store.add_metrics(draft["id"], metrics)
                 collected += 1
+        if collected:
+            self._advise(drafts)
         self.status("done", f"更新了 {collected} 則成效", screen=self.chart())
         return collected
+
+    def _advise(self, drafts: list[dict]) -> None:
+        """Turn the week's numbers into a few notes the strategist reads tomorrow morning."""
+        writer = self.office.writer
+        if not writer.uses_model("analyst"):
+            return
+        metrics = self.office.store.latest_metrics()
+        rows = [
+            {"channel": d["channel"], "format": d["format"], "title": d["title"], "metrics": metrics[d["id"]]}
+            for d in drafts if d["id"] in metrics
+        ]
+        self.status("thinking", "解讀這週的數據…")
+        try:
+            notes = writer.insights(rows, self.office.briefing_for_replies()).notes
+        except WriterError as error:
+            self.log(f"數據解讀沒有完成：{error}")
+            return
+        self.office.store.set("insights", json.dumps(notes[:4], ensure_ascii=False))
+        self.status("working", notes[0][:24] if notes else "這週沒有特別的建議", screen={"type": "lines", "title": "給企劃的建議", "lines": notes[:4]})
 
     def winners(self, limit: int = 2) -> list[dict]:
         """Best Threads posts of the last week, for the strategist to remake on Instagram."""

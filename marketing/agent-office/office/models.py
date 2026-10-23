@@ -44,6 +44,7 @@ class CarouselDraft(BaseModel):
     slides: list[Slide]
     caption: str = Field(description="Instagram 說明欄，不含 hashtag")
     hashtags: list[str]
+    art_prompt: str = Field(default="", description="封面插圖的畫面描述（給生圖用），不要包含任何文字或字母")
 
 
 class Scene(BaseModel):
@@ -75,3 +76,22 @@ class ReplyDraft(BaseModel):
 
 class ReplyBatch(BaseModel):
     replies: list[ReplyDraft]
+
+
+class Finding(BaseModel):
+    topic: str = Field(description="學生在討論或關心的題目")
+    insight: str = Field(description="一兩句重點，只寫查得到的內容")
+    source_url: str = Field(description="可以點開核對的來源網址")
+
+
+class ResearchNotes(BaseModel):
+    findings: list[Finding]
+
+
+class Preflight(BaseModel):
+    go: bool = Field(description="可以發就 true；需要老闆再看一次就 false")
+    reason: str = Field(description="判斷理由，一句話")
+
+
+class Insights(BaseModel):
+    notes: list[str] = Field(description="給企劃的 2～4 點建議，每點一句")
