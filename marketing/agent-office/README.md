@@ -42,18 +42,35 @@
 
 時間都可以在 `.env` 改。沒核准的草稿不會發；核准時已經過了排定時間的，下一輪（30 秒內）就發。
 
-## 快速開始：不用任何帳號，先看辦公室動起來
+## 在你的電腦上跑起來
 
-需要 [uv](https://docs.astral.sh/uv/)、ffmpeg，以及 Playwright 用的 Chromium。在這個資料夾：
+Windows 和 Mac 都可以。Python 不用自己裝，uv 會自動下載。
+
+**1. 安裝工具**（裝完關掉終端機再打開，新指令才找得到）
+
+| | Windows（PowerShell） | Mac（終端機） |
+|---|---|---|
+| uv | `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 \| iex"` | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
+| ffmpeg | `winget install --id Gyan.FFmpeg -e` | `brew install ffmpeg` |
+| Git | `winget install --id Git.Git -e` | 第一次打 `git` 會提示安裝 |
+
+AI 工具照各家說明安裝，**裝好後各自在終端機執行一次並登入**：`claude`（Claude Code）、`codex`（Codex），以及 Antigravity 的 `agy`（打 `agy --help` 有反應就好）。沒裝的工具不會讓辦公室停下來，那幾張桌子會改用備援。
+
+**2. 下載並啟動**
 
 ```bash
-cd marketing/agent-office
+git clone https://github.com/blizzard-new/abroad.git
+cd abroad/marketing/agent-office
 uv sync
-uv run playwright install chromium     # 已經有 Chromium 的話可以改設 CHROMIUM_PATH
+uv run playwright install chromium     # 算圖用的瀏覽器（已經有 Chromium 的話可以改設 CHROMIUM_PATH）
+cp .env.example .env                   # Windows：copy .env.example .env
+uv run office check --ping             # 檢查工具、每張桌子的 AI 有沒有登入、社群帳號
 uv run office serve                    # 打開 http://127.0.0.1:8780
 ```
 
-按右上角「開始今天的工作」就會開工。沒有設定任何金鑰時，寫手用內建的離線範本、發佈是「模擬發佈」：該送出的 API 請求只會寫進 `var/outbox/`，不會真的發文。圖片、影片在 `var/media/`。
+按右上角「開始今天的工作」就會開工。`.env` 預設是「模擬發佈」：該送出的 API 請求只會寫進 `var/outbox/`，不會真的發文。圖片、影片在 `var/media/`。
+
+`office check` 會列出每一項的狀態（○ 好了、× 要處理、△ 提醒），× 後面會寫怎麼修。
 
 不開網頁也可以：
 
@@ -64,17 +81,21 @@ uv run office approve 3 --now # 核准 #3 並馬上發
 uv run office facts           # 看平台數字與今天可引用的官方公告
 ```
 
+**3. 讓它一直開著**：辦公室要開著才會 07:30 自動開工、到時間發文；電腦睡著就會停。
+
+- Windows：「設定 → 系統 → 電源」把睡眠改成「永不」；想開機自動啟動，用「工作排程器」建一個「登入時」執行的工作：程式填 uv 的完整路徑（在 PowerShell 打 `(Get-Command uv).Source` 查）、引數填 `run office serve`、起始位置填 `agent-office` 資料夾。
+- Mac：用 `caffeinate -i uv run office serve` 啟動，跑著的時候就不會睡著。
+- 同一個 Wi-Fi 的手機想看：`uv run office serve --host 0.0.0.0`，手機開 `http://<電腦的 IP>:8780`，並在 `.env` 設 `OFFICE_ACCESS_TOKEN`（第一次用 `?token=…` 打開）。
+
 ## 上線步驟
 
 建議依序做，每一步都確認沒問題再往下：
 
-1. **離線試跑**：照上面的快速開始，看一天的草稿長什麼樣子。
-2. **接上 AI 工具**：在跑辦公室的電腦安裝並登入 Claude Code、Codex、Antigravity（見下一節），複製 `.env.example` 成 `.env`。
-3. **接上各平台帳號**（下一節），仍保持 `OFFICE_DRY_RUN=1`，到 `var/outbox/` 看會送出的內容。
+1. **離線試跑**：照上面先跑一天，看草稿長什麼樣子。
+2. **接上 AI 工具**：登入 Claude Code、Codex、Antigravity，`uv run office check --ping` 的 AI 都是 ○。
+3. **接上社群帳號**（見「接上 Threads、Instagram、YouTube」），`uv run office check` 的帳號都是 ○，仍保持 `OFFICE_DRY_RUN=1`，到 `var/outbox/` 看會送出的內容。
 4. **正式發佈**：改成 `OFFICE_DRY_RUN=0`，保持 `OFFICE_APPROVAL=manual`，每天花 5 分鐘審核。
 5. 跑順幾週後，想放手再改 `OFFICE_APPROVAL=auto`（審稿通過就自動排程；留言回覆仍然要你核准）。
-
-辦公室要一直開著才會自動開工與發文：放在一台不關機的電腦（例如實體辦公室裡的小主機，順便接一台電視顯示 `?tv`），或任何可以長時間跑 Python 的主機。
 
 ## 跟總管聊天
 
@@ -119,37 +140,55 @@ Leo 只能做這六種事：開工、請同事重寫、加做一則、改發文�
 
 ## 接上 Threads、Instagram、YouTube
 
-複製 `.env.example` 成 `.env` 再填。所有權杖只放在 `.env` 和 `var/office.sqlite3`，兩者都不進 Git。
+### 哪張桌子用哪個帳號
+
+只有三張桌子會碰帳號，而且每個平台只連一次，三張桌子共用：
+
+| 桌子 | Threads | Instagram | YouTube |
+|------|---------|-----------|---------|
+| Pat（發佈） | 發文、第一則留言補連結 | 發輪播、Reels、限動 | 上傳 Shorts 與長影片 |
+| Momo（社群互動） | 讀留言、送出你核准的回覆 | 讀留言、送出你核准的回覆 | — |
+| Nana（數據） | 讀成效 | 讀成效 | 讀觀看數 |
+
+其他人（Leo、Ivy、阿脆、Mori、阿剪、Kiki）只做草稿，碰不到帳號，也拿不到權杖。連好之後，辦公室上方會顯示「帳號：Threads @你的帳號 · IG @… · YT 頻道名」。
+
+連帳號都用 `uv run office auth …`：它會查出權杖屬於哪個帳號，連同帳號 ID 存進 `var/office.sqlite3`（不進 Git），Meta 的權杖每週自動延長。連完跑 `uv run office check`，會實際問每個平台「這個權杖是誰的」（只讀取，不會發文）。
 
 ### Threads
 
-1. 到 [Meta for Developers](https://developers.facebook.com/) 建立 App，加入 **Threads API** 使用案例，勾選 `threads_basic`、`threads_content_publish`、`threads_read_replies`、`threads_manage_replies`、`threads_manage_insights`。
-2. 把要發文的 Threads 帳號加為這個 App 的測試人員，並在 Threads 裡接受邀請。只發自己的帳號時，用開發模式就可以，通常不用送 App 審查。
-3. 用後台的權杖產生器取得短期權杖，再換成長期權杖（約 60 天，辦公室每週自動延長）：
+1. 到 [Meta for Developers](https://developers.facebook.com/) 建立 App，使用案例選 **Access the Threads API**，勾選 `threads_basic`、`threads_content_publish`、`threads_read_replies`、`threads_manage_replies`、`threads_manage_insights`。
+2. 「應用程式角色 → 新增人員」把要發文的 Threads 帳號加為 **Threads 測試人員**，再到 Threads App 的「設定 → 帳號 → 網站權限 → 邀請」接受。只發自己的帳號時用開發模式就可以，不用送 App 審查。
+3. 把 App 設定裡的 **Threads App secret** 填進 `.env` 的 `THREADS_APP_SECRET`。
+4. 在使用案例的設定頁按 **Generate Access Token**，登入後複製權杖：
    ```bash
-   # .env 先填 THREADS_APP_SECRET
-   uv run office auth threads --short-token <短期權杖>
+   uv run office auth threads --token <剛剛複製的權杖>
    ```
-4. `THREADS_USER_ID`：用權杖呼叫 `https://graph.threads.net/v1.0/me?fields=id,username` 取得 `id`。
+   會顯示「已連上 Threads @你的帳號」。短期權杖（1 小時）會自動換成約 60 天的長期權杖。
 
 ### Instagram
 
-1. IG 帳號要是**專業帳號**（商業或創作者）。
-2. 同一個 Meta App 加入 **Instagram API with Instagram Login**，勾選 `instagram_business_basic`、`instagram_business_content_publish`、`instagram_business_manage_comments`、`instagram_business_manage_insights`，把帳號加入並產生權杖。
-3. 後台產生的若已是長期權杖，直接填 `INSTAGRAM_ACCESS_TOKEN`；若是短期權杖，用 `uv run office auth instagram --short-token …` 換。
-4. `INSTAGRAM_USER_ID`：呼叫 `https://graph.instagram.com/me?fields=user_id,username` 取得 `user_id`。
-5. **圖片和影片必須有公開網址**（Instagram 與 Threads 是從網址抓檔，不收上傳），選一種：
-   - `OFFICE_MEDIA_HOST=supabase`：在 Supabase 建一個 public bucket（預設名稱 `marketing-media`），填 `SUPABASE_URL` 與 `SUPABASE_SERVICE_ROLE_KEY`。service role key 權限很大，只能放在這台機器的 `.env`。
-   - `OFFICE_MEDIA_HOST=static`：讓這台機器的 `/media/` 對外（例如用 tunnel），填 `OFFICE_PUBLIC_BASE_URL`。這時**一定要設 `OFFICE_ACCESS_TOKEN`**，否則任何人都能打開辦公室按核准。
+1. IG 帳號要是**專業帳號**（商業或創作者），在 IG App 的「設定 → 帳號類型和工具」切換。
+2. 同一個 Meta App 再加入 Instagram 的使用案例（後台名稱類似「管理 Instagram 上的訊息和內容」），選 **API setup with Instagram login**，勾選 `instagram_business_basic`、`instagram_business_content_publish`、`instagram_business_manage_comments`、`instagram_business_manage_insights`。
+3. 在同一頁新增你的 IG 帳號並按 **Generate token**（產生權杖）；把 **Instagram App secret** 填進 `INSTAGRAM_APP_SECRET`，然後：
+   ```bash
+   uv run office auth instagram --token <產生的權杖>
+   ```
+   後台產生的已經是長期權杖，會照原樣存好。
+4. **圖片和影片必須有公開網址**（Instagram 與 Threads 是從網址抓檔，不收上傳），選一種：
+   - `OFFICE_MEDIA_HOST=supabase`（建議）：在 Supabase Storage 建一個 **public** bucket（預設名稱 `marketing-media`），填 `SUPABASE_URL` 與 `SUPABASE_SERVICE_ROLE_KEY`。service role key 權限很大，只能放在這台電腦的 `.env`。
+   - `OFFICE_MEDIA_HOST=static`：讓這台電腦的 `/media/` 對外（例如用 tunnel），填 `OFFICE_PUBLIC_BASE_URL`。這時**一定要設 `OFFICE_ACCESS_TOKEN`**，否則任何人都能打開辦公室按核准。
+
+   沒設定時 Threads 純文字照發，IG 貼文和影片會在審核匣標示發佈失敗。
 
 ### YouTube
 
-1. 在 Google Cloud 建專案，啟用 **YouTube Data API v3**。
-2. OAuth 同意畫面選「外部」，把自己加為測試使用者；**發布狀態改成「正式版」**（測試中的 App 拿到的 refresh token 7 天就失效）。
-3. 建立 OAuth 用戶端，類型選「電腦版應用程式」，把 ID 與密鑰填進 `.env`，然後：
+1. 在 [Google Cloud Console](https://console.cloud.google.com/) 建專案，啟用 **YouTube Data API v3**。
+2. OAuth 同意畫面選「外部」，把自己加為測試使用者；**發布狀態改成「正式版」**（測試中的 App 拿到的授權 7 天就失效）。
+3. 建立 OAuth 用戶端，類型選「電腦版應用程式」，把 ID 與密鑰填進 `.env` 的 `YOUTUBE_CLIENT_ID`、`YOUTUBE_CLIENT_SECRET`，然後：
    ```bash
-   uv run office auth youtube   # 依提示登入頻道，最後把 YOUTUBE_REFRESH_TOKEN 貼進 .env
+   uv run office auth youtube   # 會打開瀏覽器，登入要發影片的頻道並同意
    ```
+   Google 可能會警告「這個應用程式未經驗證」，那是你自己的 App，按「進階 → 前往」即可。完成後顯示「已連上 YouTube 頻道「…」」。
 4. Google 規定：API 專案沒通過 YouTube 稽核前，用 API 上傳的影片一律是「私人」。先設 `YOUTUBE_PRIVACY=private`，到 YouTube Studio 手動公開，或申請稽核。
 
 ## 策略對照：NotebookLM 的建議落在哪裡
@@ -203,6 +242,7 @@ Leo 只能做這六種事：開工、請同事重寫、加做一則、改發文�
 | `office/rules.py` | 審稿規則 |
 | `office/render/` | 輪播／限動／影片的 HTML 版型、算圖與配樂 |
 | `office/platforms/` | Threads、Instagram、YouTube、媒體網址 |
+| `office/accounts.py`、`office/checkup.py` | 連帳號（`office auth`）與開工前檢查（`office check`） |
 | `office/server.py`、`office/static/` | 辦公室網頁與即時事件 |
 | `tests/` | `uv run pytest`（算圖測試需要 Chromium 與 ffmpeg） |
 

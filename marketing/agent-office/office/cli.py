@@ -5,13 +5,15 @@
     uv run office list                  # what is waiting in the inbox
     uv run office approve 12 --now      # approve a draft and publish it on the next tick
     uv run office tick                  # one pass of the clock, for cron instead of `serve`
-    uv run office auth youtube          # one-time YouTube authorisation, prints a refresh token
+    uv run office check --ping          # is this computer ready: tools, each desk's AI, the social accounts
+    uv run office auth threads --token  # link an account (threads / instagram / youtube)
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import sys
 from dataclasses import asdict
 from datetime import date
 
@@ -28,6 +30,9 @@ def _office(args) -> "object":
 
 
 def main(argv: list[str] | None = None) -> int:
+    for stream in (sys.stdout, sys.stderr):  # a Windows console that cannot show a character should not crash us
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="replace")
     parser = argparse.ArgumentParser(prog="office", description="UniWay 行銷辦公室")
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -56,9 +61,12 @@ def main(argv: list[str] | None = None) -> int:
     reject.add_argument("id", type=int)
     reject.add_argument("--note", default="")
 
-    auth = sub.add_parser("auth", help="取得或延長平台授權")
+    check = sub.add_parser("check", help="檢查這台電腦：工具、每張桌子的 AI、社群帳號")
+    check.add_argument("--ping", action="store_true", help="實際問每個 AI 一句測試，確認有登入")
+
+    auth = sub.add_parser("auth", help="連上社群帳號")
     auth.add_argument("platform", choices=["youtube", "threads", "instagram"])
-    auth.add_argument("--short-token", help="Meta 開發者後台產生的短期 token（Threads／Instagram）")
+    auth.add_argument("--token", "--short-token", dest="token", help="Meta 開發者後台產生的權杖（Threads／Instagram）")
 
     args = parser.parse_args(argv)
 
@@ -84,6 +92,14 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "auth":
         return _auth(args)
+
+    if args.command == "check":
+        from . import checkup
+
+        sections = checkup.run(Settings.from_env(), ping=args.ping)
+        print("UniWay 行銷辦公室：開工前檢查")
+        print(checkup.render(sections))
+        return 1 if any(row.ok is False for _, rows in sections for row in rows) else 0
 
     office = _office(args)
     if args.command == "run":
@@ -117,37 +133,38 @@ def _print_drafts(drafts: list[dict]) -> None:
 
 
 def _auth(args) -> int:
-    from .platforms.meta import InstagramClient, ThreadsClient
+    import httpx
+
+    from . import accounts
+    from .platforms.base import PlatformError
     from .platforms.youtube import authorize
     from .store import Store
 
     settings = Settings.from_env()
-    if args.platform == "youtube":
-        if not (settings.youtube_client_id and settings.youtube_client_secret):
-            print("先在 .env 設定 YOUTUBE_CLIENT_ID 與 YOUTUBE_CLIENT_SECRET（Google Cloud 的 OAuth 用戶端，類型選「電腦版應用程式」）")
+    store = Store(settings.db_path)
+    label = accounts.LABEL[args.platform]
+    try:
+        if args.platform == "youtube":
+            if not (settings.youtube_client_id and settings.youtube_client_secret):
+                print("先在 .env 設定 YOUTUBE_CLIENT_ID 與 YOUTUBE_CLIENT_SECRET（Google Cloud 的 OAuth 用戶端，類型選「電腦版應用程式」）")
+                return 1
+            channel = accounts.link_youtube(settings, store, authorize(settings.youtube_client_id, settings.youtube_client_secret))
+            print(f"已連上 YouTube 頻道「{channel['title']}」（{accounts.DESKS['youtube']}），授權存在 var/office.sqlite3。")
+            return 0
+        if not args.token:
+            print(f"請用 --token 帶入 Meta 開發者後台產生的 {label} 權杖")
             return 1
-        token = authorize(settings.youtube_client_id, settings.youtube_client_secret)
-        print(f"\n把這行加進 .env：\nYOUTUBE_REFRESH_TOKEN={token}")
-        return 0
-    if not args.short_token:
-        print("請用 --short-token 帶入 Meta 開發者後台產生的 token")
+        account = accounts.link_meta(settings, store, args.platform, args.token)
+    except (PlatformError, httpx.HTTPError) as error:
+        print(f"{label} 連線失敗：{error}")
         return 1
-    if args.platform == "threads":
-        client, secret = ThreadsClient(settings.threads_user_id, "", dry_run=False), settings.threads_app_secret
+    print(f"已連上 {label} @{account['username']}（帳號 ID {account['id']}；{accounts.DESKS[args.platform]}）")
+    if account["exchanged"]:
+        print(f"短期權杖已換成長期權杖（約 {account['days']} 天），辦公室每週會自動延長。")
+    elif not (settings.threads_app_secret if args.platform == "threads" else settings.instagram_app_secret):
+        print(f"提醒：沒設定 {args.platform.upper()}_APP_SECRET，權杖照原樣存；如果它是 1 小時的短期權杖，設好後再跑一次。")
     else:
-        client = InstagramClient(settings.instagram_user_id, "", host=settings.instagram_graph_host, dry_run=False)
-        secret = settings.instagram_app_secret
-    if not secret:
-        print(f"先在 .env 設定 {args.platform.upper()}_APP_SECRET")
-        return 1
-    result = client.exchange_token(args.short_token, secret)
-    token = result.get("access_token")
-    if not token:
-        print(json.dumps(result, ensure_ascii=False))
-        return 1
-    Store(settings.db_path).set(f"{args.platform}_token", token)
-    days = int(result.get("expires_in", 0)) // 86400
-    print(f"已換成長期 token（約 {days} 天，辦公室每週會自動延長），存在 var/office.sqlite3。")
+        print("這已經是長期權杖（約 60 天），照原樣存好，辦公室每週會自動延長。")
     return 0
 
 

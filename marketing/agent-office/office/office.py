@@ -17,7 +17,7 @@ from .agents.reviewer import Reviewer
 from .agents.strategist import Strategist
 from .agents.threads_writer import ThreadsWriter
 from .agents.video_editor import VideoEditor
-from . import brains
+from . import accounts, brains
 from .brand import Briefing, load_facts, load_news
 from .config import Settings
 from .events import EventBus
@@ -242,8 +242,11 @@ class Office:
                 "daily_at": self.settings.daily_at.strftime("%H:%M"),
                 "site_url": self.settings.site_url,
                 "accounts": {
-                    channel: not self.staff["publisher"].missing_credentials(channel) if not self.settings.dry_run else None
-                    for channel in ("threads", "instagram", "youtube")
+                    channel: {
+                        "connected": accounts.connected(self.settings, self.store, channel),
+                        "handle": self.store.get(f"handle:{channel}") or "",
+                    }
+                    for channel in accounts.PLATFORMS
                 },
             },
         }

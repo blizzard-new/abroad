@@ -31,6 +31,7 @@ ANSWERS = {
     "Review": {"approved": True, "issues": [], "notes": ["語氣自然"]},
     "Insights": {"notes": ["痛點開頭的 Threads 互動最好"]},
     "ReplyBatch": {"replies": []},
+    "Ping": {"ok": True},
 }
 
 SCRIPT = r'''#!{python}

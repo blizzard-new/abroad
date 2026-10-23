@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timedelta, timezone
 
+from .. import accounts
 from ..llm import WriterError
 from ..platforms.base import PlatformError
 from ..platforms.media_host import MediaHost
@@ -40,27 +41,25 @@ class Publisher(Agent):
         self.status("working", line[:24], screen={"type": "terminal", "lines": list(self.lines)})
 
     def clients(self) -> dict:
-        settings, store = self.office.settings, self.office.store
+        settings = self.office.settings
         dry = settings.dry_run
+        creds = accounts.credentials(settings, self.office.store)
+        threads, instagram, youtube = creds["threads"], creds["instagram"], creds["youtube"]
         return {
-            "threads": ThreadsClient(settings.threads_user_id, store.get("threads_token") or settings.threads_token, dry_run=dry, log=self._log),
+            "threads": ThreadsClient(threads["user_id"], threads["token"], dry_run=dry, log=self._log),
             "instagram": InstagramClient(
-                settings.instagram_user_id, store.get("instagram_token") or settings.instagram_token,
-                host=settings.instagram_graph_host, dry_run=dry, log=self._log,
+                instagram["user_id"], instagram["token"], host=settings.instagram_graph_host, dry_run=dry, log=self._log,
             ),
-            "youtube": YouTubeClient(settings.youtube_client_id, settings.youtube_client_secret, settings.youtube_refresh_token, dry_run=dry, log=self._log),
+            "youtube": YouTubeClient(
+                youtube["client_id"], youtube["client_secret"], youtube["refresh_token"], dry_run=dry, log=self._log,
+            ),
             "media": MediaHost(settings, dry_run=dry, log=self._log),
         }
 
     def missing_credentials(self, channel: str) -> bool:
-        s, store = self.office.settings, self.office.store
-        if s.dry_run:
+        if self.office.settings.dry_run:
             return False
-        if channel == "threads":
-            return not (s.threads_user_id and (store.get("threads_token") or s.threads_token))
-        if channel == "instagram":
-            return not (s.instagram_user_id and (store.get("instagram_token") or s.instagram_token))
-        return not (s.youtube_client_id and s.youtube_client_secret and s.youtube_refresh_token)
+        return not accounts.connected(self.office.settings, self.office.store, channel)
 
     def publish_due(self, now: datetime | None = None) -> int:
         now = now or datetime.now(timezone.utc)

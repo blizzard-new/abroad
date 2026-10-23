@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import shlex
 import shutil
 import subprocess
@@ -172,9 +173,14 @@ class Brain:
         executable = shutil.which(self.command[0])
         if not executable:
             raise BrainError(f"找不到 {self.command[0]}，請先安裝並登入 {self.label}")
+        launch = launcher(executable)
+        args = [*self.command[1:], *args]
+        if Path(launch[0]).suffix.lower() in {".cmd", ".bat"}:
+            # cmd.exe ends a command at a line break, so a multi-line argument would be cut short.
+            args = [" ".join(arg.splitlines()) for arg in args]
         try:
             result = subprocess.run(
-                [executable, *self.command[1:], *args],
+                [*launch, *args],
                 input=stdin,
                 stdin=None if stdin is not None else subprocess.DEVNULL,
                 capture_output=True,
@@ -191,6 +197,34 @@ class Brain:
             tail = (result.stderr or "").strip().splitlines()[-1:] or [f"結束代碼 {result.returncode}"]
             raise BrainError(f"{self.label} 執行失敗：{tail[0][:200]}")
         return result.stdout
+
+
+NPM_SHIM_TARGET = re.compile(r'"%~?dp0%?\\([^"]+)"\s+%\*')
+
+
+def launcher(executable: str) -> list[str]:
+    """How to start a CLI found on PATH.
+
+    On Windows, npm installs command lines as .cmd shims, and cmd.exe mangles arguments that hold line breaks or
+    quotes (the voice guide, a JSON schema). When the shim is npm's, run the script it points to directly instead.
+    """
+    path = Path(executable)
+    if path.suffix.lower() not in {".cmd", ".bat"}:
+        return [executable]
+    try:
+        match = NPM_SHIM_TARGET.search(path.read_text(encoding="utf-8", errors="replace"))
+    except OSError:
+        return [executable]
+    if not match:
+        return [executable]
+    target = path.parent / match.group(1).replace("\\", "/")
+    if not target.is_file():
+        return [executable]
+    if target.suffix.lower() == ".exe":
+        return [str(target)]
+    bundled = path.parent / "node.exe"
+    node = str(bundled) if bundled.is_file() else shutil.which("node")
+    return [node, str(target)] if node else [executable]
 
 
 class ClaudeCodeBrain(Brain):

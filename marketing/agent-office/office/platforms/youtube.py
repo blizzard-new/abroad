@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import secrets
 import urllib.parse
+import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 
@@ -86,6 +87,19 @@ class YouTubeClient(Client):
                 self.log(f"封面沒有設定成功：{error}")
         return {"id": video_id, "url": f"https://youtu.be/{video_id}"}
 
+    def channel(self) -> dict:
+        """The channel the refresh token uploads to: {"id", "title"}."""
+        response = self.request(
+            "GET", f"{API_URL}/channels", params={"part": "snippet", "mine": "true"},
+            headers={"Authorization": f"Bearer {self._token()}"}, fake=None,
+        )
+        if self.dry_run:
+            return {"id": "", "title": ""}
+        items = response.json().get("items") or []
+        if not items:
+            raise PlatformError("這個 Google 帳號底下沒有 YouTube 頻道")
+        return {"id": items[0]["id"], "title": items[0]["snippet"]["title"]}
+
     def stats(self, video_ids: list[str]) -> dict[str, dict]:
         if not video_ids:
             return {}
@@ -115,7 +129,9 @@ def authorize(client_id: str, client_secret: str, port: int = 8765) -> str:
             "state": state,
         }
     )
-    print(f"用瀏覽器打開下面的網址，登入要發影片的 YouTube 頻道並同意授權：\n\n{AUTH_URL}?{query}\n")
+    url = f"{AUTH_URL}?{query}"
+    print(f"用瀏覽器打開下面的網址（應該已經自動打開），登入要發影片的 YouTube 頻道並同意授權：\n\n{url}\n")
+    webbrowser.open(url)
     received: dict[str, str] = {}
 
     class Handler(BaseHTTPRequestHandler):

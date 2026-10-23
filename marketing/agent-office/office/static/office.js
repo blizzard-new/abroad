@@ -666,9 +666,22 @@ function renderModes() {
     s.dry_run ? ["warn", "模擬發佈：不會真的送出"] : ["live", "正式發佈"],
     s.approval === "auto" ? ["live", "審稿通過就自動排程"] : ["", "每則都等你核准"],
     brainMode(s),
+    accountMode(s),
   ];
   if (s.images) modes.push(["live", `插圖：${s.images}`]);
   $("#modes").innerHTML = modes.map(([cls, text]) => `<span class="mode ${cls}"><i></i>${esc(text)}</span>`).join("");
+}
+
+function accountMode(s) {
+  const accounts = s.accounts || {};
+  const channels = [["threads", "Threads", "@"], ["instagram", "IG", "@"], ["youtube", "YT", ""]];
+  const parts = channels.map(([key, name, at]) => {
+    const account = accounts[key] || {};
+    if (!account.connected) return `${name} 未連`;
+    return account.handle ? `${name} ${at}${account.handle}` : `${name} 已連`;
+  });
+  const all = channels.every(([key]) => accounts[key]?.connected);
+  return [all ? "live" : s.dry_run ? "" : "warn", `帳號：${parts.join(" · ")}`];
 }
 
 function brainMode(s) {

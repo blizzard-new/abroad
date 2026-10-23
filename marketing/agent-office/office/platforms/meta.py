@@ -58,6 +58,11 @@ class ThreadsClient(Client):
     def username(self) -> str:
         return self._call("GET", self.user_id, fake={"username": ""}, fields="username").get("username", "")
 
+    def me(self) -> dict:
+        """The account this token belongs to: {"id", "username"}."""
+        data = self._call("GET", "me", fake={"id": "", "username": ""}, fields="id,username")
+        return {"id": str(data.get("id", "")), "username": data.get("username", "")}
+
     def replies(self, media_id: str) -> list[dict]:
         data = self._call("GET", f"{media_id}/replies", fake={"data": []}, fields="id,text,username,timestamp")
         return [r for r in data.get("data", []) if r.get("text")]
@@ -143,6 +148,15 @@ class InstagramClient(Client):
 
     def username(self) -> str:
         return self._call("GET", self.user_id, fake={"username": ""}, fields="username").get("username", "")
+
+    def me(self) -> dict:
+        """The professional account this token belongs to: {"id", "username"}. With Instagram Login, `user_id` is the
+        ID that publishing uses (`id` is app-scoped); through graph.facebook.com the ID has to come from .env."""
+        if self.host != "graph.instagram.com":
+            data = self._call("GET", self.user_id, fake={"id": "", "username": ""}, fields="id,username")
+            return {"id": str(data.get("id", "")), "username": data.get("username", "")}
+        data = self._call("GET", "me", fake={"user_id": "", "username": ""}, fields="user_id,username")
+        return {"id": str(data.get("user_id") or data.get("id", "")), "username": data.get("username", "")}
 
     def comments(self, media_id: str) -> list[dict]:
         data = self._call("GET", f"{media_id}/comments", fake={"data": []}, fields="id,text,username,timestamp")
