@@ -44,14 +44,13 @@
 
 ## 在你的電腦上跑起來
 
-Windows 和 Mac 都可以。Python 不用自己裝，uv 會自動下載。
+Windows 和 Mac 都可以。Python 不用自己裝，uv 會自動下載；剪影片用的 ffmpeg 也已經包在套件裡。
 
 **1. 安裝工具**（裝完關掉終端機再打開，新指令才找得到）
 
 | | Windows（PowerShell） | Mac（終端機） |
 |---|---|---|
 | uv | `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 \| iex"` | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
-| ffmpeg | `winget install --id Gyan.FFmpeg -e` | `brew install ffmpeg` |
 | Git | `winget install --id Git.Git -e` | 第一次打 `git` 會提示安裝 |
 
 AI 工具照各家說明安裝，**裝好後各自在終端機執行一次並登入**：`claude`（Claude Code）、`codex`（Codex），以及 Antigravity 的 `agy`（打 `agy --help` 有反應就好）。沒裝的工具不會讓辦公室停下來，那幾張桌子會改用備援。
@@ -244,6 +243,6 @@ Leo 只能做這六種事：開工、請同事重寫、加做一則、改發文�
 | `office/platforms/` | Threads、Instagram、YouTube、媒體網址 |
 | `office/accounts.py`、`office/checkup.py` | 連帳號（`office auth`）與開工前檢查（`office check`） |
 | `office/server.py`、`office/static/` | 辦公室網頁與即時事件 |
-| `tests/` | `uv run pytest`（算圖測試需要 Chromium 與 ffmpeg） |
+| `tests/` | `uv run pytest`（算圖測試需要 Chromium） |
 
 ![輪播圖範例](docs/carousel-sample.jpg)

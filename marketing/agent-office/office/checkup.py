@@ -18,9 +18,10 @@ from pydantic import BaseModel
 from . import accounts, brains
 from .accounts import Row
 from .config import PROJECT_DIR, Settings
+from .render.renderer import ffmpeg_exe
 from .store import Store
 
-FFMPEG_HINT = "Windows：winget install --id Gyan.FFmpeg -e；Mac：brew install ffmpeg（裝完重開終端機）"
+FFMPEG_HINT = "自己裝一個（Windows：winget install --id Gyan.FFmpeg -e；Mac：brew install ffmpeg），或用 IMAGEIO_FFMPEG_EXE 指定"
 
 
 class Ping(BaseModel):
@@ -45,8 +46,11 @@ def mode_rows(settings: Settings) -> list[Row]:
 def tool_rows(settings: Settings) -> list[Row]:
     if not settings.render_media:
         return [Row(None, "圖片影片", "OFFICE_RENDER_MEDIA=0：只寫文案，不需要 ffmpeg 和 Chromium")]
-    ffmpeg = shutil.which("ffmpeg")
-    return [Row(True, "ffmpeg", ffmpeg) if ffmpeg else Row(False, "ffmpeg", f"找不到。{FFMPEG_HINT}"), _chromium()]
+    try:
+        ffmpeg = Row(True, "ffmpeg", ffmpeg_exe())
+    except RuntimeError as error:  # imageio-ffmpeg has no build for this machine and none is on PATH
+        ffmpeg = Row(False, "ffmpeg", f"找不到：{error}。{FFMPEG_HINT}")
+    return [ffmpeg, _chromium()]
 
 
 def _chromium() -> Row:

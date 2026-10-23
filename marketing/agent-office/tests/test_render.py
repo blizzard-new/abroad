@@ -1,7 +1,7 @@
-"""Renders real media. Needs Chromium for Playwright (CHROMIUM_PATH if the bundled one is missing) and ffmpeg."""
+"""Renders real media. Needs Chromium for Playwright (CHROMIUM_PATH if the bundled one is missing)."""
 
 import os
-import shutil
+import re
 import subprocess
 from datetime import date
 
@@ -11,7 +11,7 @@ from office.brand import BrandFacts, Briefing
 from office.llm import OfflineWriter
 from office.models import PlanItem
 from office.offline_bank import TOPICS
-from office.render.renderer import Renderer
+from office.render.renderer import Renderer, ffmpeg_exe
 
 
 def chromium_available() -> bool:
@@ -26,7 +26,7 @@ def chromium_available() -> bool:
         return False
 
 
-pytestmark = pytest.mark.skipif(not (shutil.which("ffmpeg") and chromium_available()), reason="needs Chromium and ffmpeg")
+pytestmark = pytest.mark.skipif(not chromium_available(), reason="needs Chromium")
 FACTS = BrandFacts(university_count=33, partner_count=5730, universities=(), site_url="https://app.uniway-tw.com", source="test")
 
 
@@ -42,9 +42,7 @@ def test_carousel_story_and_short_video(settings, tmp_path):
     assert story.stat().st_size > 10_000
 
     result = renderer.video(writer.video(item, briefing, "short"), tmp_path / "reel.mp4", fps=2)
-    probe = subprocess.run(
-        ["ffprobe", "-v", "error", "-show_entries", "stream=codec_type,width,height", "-of", "csv=p=0", str(result["path"])],
-        capture_output=True, text=True, check=True,
-    ).stdout.split()
-    assert "video,1080,1920" in probe and any(line.startswith("audio") for line in probe)
+    # ffmpeg with only an input prints the streams it found (and exits 1 because there is no output).
+    streams = subprocess.run([ffmpeg_exe(), "-hide_banner", "-i", str(result["path"])], capture_output=True, text=True).stderr
+    assert re.search(r"Video: h264 .*1080x1920", streams) and "Audio: aac" in streams
     assert result["poster"].is_file()

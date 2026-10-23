@@ -18,6 +18,13 @@ from ..config import Settings
 from ..models import CarouselDraft, Slide, VideoScript
 from .soundtrack import soundtrack
 
+
+def ffmpeg_exe() -> str:
+    """The ffmpeg that comes with the imageio-ffmpeg package (IMAGEIO_FFMPEG_EXE points it at another one)."""
+    import imageio_ffmpeg
+
+    return imageio_ffmpeg.get_ffmpeg_exe()
+
 TEMPLATES = Path(__file__).resolve().parent
 ORIGIN = "https://render.office"
 SIZES = {"portrait": (1080, 1920), "landscape": (1920, 1080)}
@@ -122,7 +129,7 @@ class Renderer:
             total = max(1, round(duration * fps))
             ffmpeg = subprocess.Popen(
                 [
-                    "ffmpeg", "-y", "-loglevel", "error",
+                    ffmpeg_exe(), "-y", "-loglevel", "error",
                     "-f", "image2pipe", "-framerate", str(fps), "-c:v", "mjpeg", "-i", "-",
                     "-i", str(music),
                     "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-profile:v", "high",
