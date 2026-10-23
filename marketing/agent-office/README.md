@@ -1,6 +1,6 @@
 # UniWay 行銷辦公室
 
-一間「看得見」的 AI 行銷辦公室：8 位 AI agent 各坐一張桌子、各用一台電腦，每天自動企劃、寫 Threads、做 IG 輪播與限動、剪 Reels／YouTube Shorts（週日再做一支長影片）、審稿查核、排程發佈、抓成效、擬留言回覆。你坐在最後一張桌子，所有草稿像登機證一樣送到你面前，核准後才會發出去。
+一間「看得見」的 AI 行銷辦公室：8 位 AI agent 各坐一張桌子、各用一台電腦，每天自動企劃、寫 Threads、做 IG 輪播與限動、剪 Reels／YouTube Shorts（週日再做一支長影片）、審稿查核、排程發佈、抓成效、擬留言回覆。你坐在最後一張桌子，旁邊是總管 Leo（主腦，預設用 Antigravity）：你用聊天交代事情，Leo 分派給大家、做完回報。所有草稿像登機證一樣送到你面前，核准後才會發出去。
 
 ![辦公室畫面](docs/office.jpg)
 
@@ -23,13 +23,14 @@
 | Pat | 發佈排程 | Antigravity | 發文前最後檢查一次（公告有沒有改、是不是跟最近重複），有疑慮就退回給你；到排定時間用程式呼叫 Threads／Instagram／YouTube 官方 API，Threads 發完主文立刻在第一則留言補上連結 |
 | Nana | 數據分析 | Antigravity | 每晚抓成效，把 Threads 上互動最好的題目交給企劃重製成 IG（Threads 測試題目、IG 放大轉換的雙平台閉環），並寫 2～4 點建議給隔天的企劃 |
 | Momo | 社群互動 | Claude Code | 發文後 30 分鐘～3 小時去看留言、擬回覆；回覆陌生人一律等你核准 |
-| 你 | 老闆 | — | 在「待你審核」核准、修改、立即發佈或退回 |
+| Leo | 總管（主腦） | Antigravity | 你和大家之間的窗口：聽你在聊天裡交代的事、分派給對的同事、做完回報；每天開工結束會整理「哪些等你看」 |
+| 你 | 老闆 | — | 跟 Leo 聊天交代事情；在「待你審核」核准、修改、立即發佈或退回 |
 
 ## 一天怎麼運作
 
 ```
 07:30  開工：企劃讀資料、排內容 → 寫手、設計、剪輯同時產出 → 審稿 → 草稿送到你的審核匣
-       （你可以在手機上打開辦公室網頁審核）
+       → 總管 Leo 在聊天裡跟你說哪些等你看（你可以在手機上打開辦公室網頁審核、跟 Leo 說要改哪裡）
 12:30  Threads 第 1 篇（主文 → 第一則留言放連結）
 18:00  YouTube Shorts
 19:30  Instagram 輪播或 Reels，19:45 限動
@@ -75,13 +76,26 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 
 辦公室要一直開著才會自動開工與發文：放在一台不關機的電腦（例如實體辦公室裡的小主機，順便接一台電視顯示 `?tv`），或任何可以長時間跑 Python 的主機。
 
+## 跟總管聊天
+
+右側面板的第一個分頁是「總管」。直接打字，例如：
+
+- 「今天進度如何？」
+- 「開工」
+- 「#3 開頭再口語一點」→ Leo 交給寫那則的同事重寫，再經過審稿，改好放回審核匣（`#編號` 就是審核匣登機證右邊的號碼，訊息裡的編號可以點）
+- 「今天加一則 Threads 講推薦信」「今天加做一支 Reels 講交換預算」
+- 「#5 改到 20:30 發」「#2 退回，太像廣告」
+- 「明天多做獎學金的題目」→ 記給隔天早上的企劃，用過一次就清掉
+
+Leo 只能做這六種事：開工、請同事重寫、加做一則、改發文時間、退回、記給明天。**它不能核准、不能發文，也不能改帳號、金鑰或模擬模式**，就算你在聊天裡要求也一樣，那些永遠由你在審核匣自己按。Leo 用 Antigravity 思考；Antigravity 沒回應時會照備援順序換人，全部都不行時，它仍聽得懂「開工」和「進度」。
+
 ## Claude Code、Codex、Antigravity 怎麼分工
 
 每張桌子的 AI 在 `.env` 的 `OFFICE_BRAINS` 指定，格式是「角色=工具」。`.env.example` 預設的分工：
 
 - **Claude Code**：寫文案（Threads、IG 說明欄、留言回覆）、寫影片腳本、排內容。
 - **Codex**：審稿，和畫 IG 封面插圖（`OFFICE_IMAGES=codex`）。
-- **Antigravity**：上網查資料、解讀數據、發文前最後檢查。
+- **Antigravity**：主腦（總管 Leo），以及上網查資料、解讀數據、發文前最後檢查。
 
 辦公室不會打開這些工具的視窗，而是用它們的「無介面模式」從程式呼叫，用的是你已經登入的訂閱：
 
@@ -170,7 +184,7 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 
 ## 費用
 
-用 `.env.example` 的分工時，AI 都走你既有的 Claude、ChatGPT、Google 訂閱，不另外付 API 費，但會吃各自的用量額度：每天大約 Claude Code 8～12 次、Codex 4～6 次（含 1 張圖）、Antigravity 3～8 次。只有備援換到 Claude API 時才會計費（以 `claude-opus-5-5` 估計全天約 1～2 美元，`OFFICE_MODEL=claude-sonnet-5-5` 約可省一半）。Threads、Instagram、YouTube API 本身免費（有每日發文上限，遠高於這裡的用量）。
+用 `.env.example` 的分工時，AI 都走你既有的 Claude、ChatGPT、Google 訂閱，不另外付 API 費，但會吃各自的用量額度：每天大約 Claude Code 8～12 次、Codex 4～6 次（含 1 張圖）、Antigravity 3～8 次再加上你跟總管聊天的次數（每句一次）。只有備援換到 Claude API 時才會計費（以 `claude-opus-5-5` 估計全天約 1～2 美元，`OFFICE_MODEL=claude-sonnet-5-5` 約可省一半）。Threads、Instagram、YouTube API 本身免費（有每日發文上限，遠高於這裡的用量）。
 
 ## 設定一覽
 
@@ -180,7 +194,7 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 
 | 路徑 | 內容 |
 |------|------|
-| `office/agents/` | 8 位 agent，一人一個檔案 |
+| `office/agents/` | 每位 agent 一個檔案；`chief.py` 是總管 |
 | `office/pipeline.py` | 一天的流程：企劃 → 產出 → 審稿 → 送審 |
 | `office/scheduler.py` | 辦公室時鐘：開工、發文、看留言、抓數據、延長權杖 |
 | `office/brains.py` | Claude Code、Codex、Antigravity、Claude API 的呼叫方式與備援順序 |

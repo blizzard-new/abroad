@@ -40,8 +40,10 @@ LABELS = {
     "api": "Claude API",
     "offline": "離線範本",
 }
-# What each role is for, as shown in the office. A role is a desk, except Ivy, who researches and then plans.
+# What each role is for, as shown in the office. A role is a desk, except Ivy, who researches and then plans; the
+# chief is the desk you talk to, which passes your requests on to everyone else.
 ROLES = {
+    "chief": "總管",
     "research": "查資料",
     "strategist": "企劃",
     "threads": "Threads 文案",

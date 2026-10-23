@@ -69,6 +69,8 @@ def answer(tool: str, args: list[str], stdin: str) -> None:
     prompt = args[-1] if tool == "agy" else stdin
     title = title_from(args, prompt)
     data = dict(ANSWERS.get(title, {}))
+    if title == "ChiefReply":
+        data = json.loads(os.environ.get("FAKE_CHIEF") or '{"reply": "好的", "actions": []}')
     if title == "Preflight":
         hold = os.environ.get("FAKE_PREFLIGHT") == "hold"
         data = {"go": not hold, "reason": "官方公告剛改了日期" if hold else "沒問題"}

@@ -86,11 +86,26 @@
 
   <aside class="panel" aria-label="審核與紀錄">
     <div class="tabs" role="tablist">
-      <button role="tab" id="tab-inbox" aria-selected="true" aria-controls="view-inbox" data-tab="inbox">待你審核 <span class="count" id="inbox-count">0</span></button>
+      <button role="tab" id="tab-chat" aria-selected="true" aria-controls="view-chat" data-tab="chat">總管 <span class="unread" id="chat-unread" hidden></span></button>
+      <button role="tab" id="tab-inbox" aria-selected="false" aria-controls="view-inbox" data-tab="inbox">待你審核 <span class="count" id="inbox-count">0</span></button>
       <button role="tab" id="tab-schedule" aria-selected="false" aria-controls="view-schedule" data-tab="schedule">已排程</button>
       <button role="tab" id="tab-log" aria-selected="false" aria-controls="view-log" data-tab="log">工作紀錄</button>
     </div>
-    <div class="view" id="view-inbox" role="tabpanel" aria-labelledby="tab-inbox"></div>
+    <div class="view chat-view" id="view-chat" role="tabpanel" aria-labelledby="tab-chat">
+      <ol class="chat" id="chat" aria-live="polite"></ol>
+      <div class="chat-typing" id="chat-typing" hidden>Leo 正在想…</div>
+      <div class="chips" id="chat-chips">
+        <button type="button">今天進度如何？</button>
+        <button type="button">開工</button>
+        <button type="button">明天多做獎學金的題目</button>
+      </div>
+      <form class="chat-form" id="chat-form">
+        <label class="visually-hidden" for="chat-input">跟總管說</label>
+        <textarea id="chat-input" rows="2" placeholder="跟總管說，例如：#3 開頭再口語一點、今天加一則 Threads 講推薦信"></textarea>
+        <button class="btn primary" type="submit">送出</button>
+      </form>
+    </div>
+    <div class="view" id="view-inbox" role="tabpanel" aria-labelledby="tab-inbox" hidden></div>
     <div class="view" id="view-schedule" role="tabpanel" aria-labelledby="tab-schedule" hidden></div>
     <div class="view" id="view-log" role="tabpanel" aria-labelledby="tab-log" hidden><ol class="log" id="log"></ol></div>
   </aside>

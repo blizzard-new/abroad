@@ -57,6 +57,13 @@ CREATE TABLE IF NOT EXISTS metrics (
     ts TEXT NOT NULL,
     data_json TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS chat (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ts TEXT NOT NULL,
+    sender TEXT NOT NULL,
+    text TEXT NOT NULL,
+    data_json TEXT NOT NULL DEFAULT '{}'
+);
 CREATE TABLE IF NOT EXISTS kv (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL,
@@ -221,6 +228,18 @@ class Store:
 
     def events(self, limit: int = 200) -> list[dict]:
         return list(reversed(self._all("SELECT * FROM events ORDER BY id DESC LIMIT ?", (limit,))))
+
+    # ---- chat with the chief ----
+    def add_chat(self, sender: str, text: str, data: dict | None = None) -> dict:
+        ts = now_utc()
+        message_id = self._exec(
+            "INSERT INTO chat (ts, sender, text, data_json) VALUES (?, ?, ?, ?)",
+            (ts, sender, text, json.dumps(data or {}, ensure_ascii=False)),
+        ).lastrowid
+        return {"id": message_id, "ts": ts, "sender": sender, "text": text, "data": data or {}}
+
+    def chat(self, limit: int = 50) -> list[dict]:
+        return list(reversed(self._all("SELECT * FROM chat ORDER BY id DESC LIMIT ?", (limit,))))
 
     # ---- metrics ----
     def add_metrics(self, draft_id: int, data: dict) -> None:

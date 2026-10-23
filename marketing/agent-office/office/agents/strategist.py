@@ -36,6 +36,11 @@ class Strategist(Agent):
         winners = self.office.staff["analyst"].winners()
         research = self._research(Briefing(day=day, facts=facts, news=news, recent_titles=recent, winners=winners))
         insights = json.loads(self.office.store.get("insights") or "[]")
+        # What the boss asked the chief to pass on ("note_for_tomorrow"), used once.
+        notes = json.loads(self.office.store.get("boss_notes") or "[]")
+        if notes:
+            insights = [f"老闆交代：{note}" for note in notes] + insights
+            self.office.store.set("boss_notes", "[]")
         self.status(
             "thinking",
             f"今天有 {len(news)} 則已核實公告",

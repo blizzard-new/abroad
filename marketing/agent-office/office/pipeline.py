@@ -65,6 +65,7 @@ def _run(office: Office, day: date) -> int:
     pending = len([d for d in store.drafts(day=day.isoformat()) if d["status"] in {"pending_approval", "needs_changes"}])
     store.finish_run(run_id, "done" if not problems else "partial", error="\n".join(problems) or None)
     office.bus.emit("boss", "run", f"今天的草稿都交出來了，{pending} 則等你審核", run_id=run_id, state="done", pending=pending)
+    office.staff["chief"].report_day(run_id)
     for agent in staff.values():
         if agent.id in {"publisher", "analyst", "community"}:
             agent.status("idle", "等排程時間到")

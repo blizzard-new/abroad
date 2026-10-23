@@ -105,6 +105,15 @@ def create_app(settings: Settings, *, clock: bool = True, office: Office | None 
         threading.Thread(target=run_day, args=(office,), kwargs={"force": True}, daemon=True, name="office-day").start()
         return {"started": True}
 
+    @app.post("/api/chat")
+    def chat(text: str = Body(..., embed=True)):
+        """Talk to the chief. The answer arrives on the event stream, since the chief may take a while to think."""
+        text = text.strip()
+        if not text:
+            raise HTTPException(422, "要跟總管說什麼？")
+        threading.Thread(target=office.staff["chief"].handle, args=(text[:2000],), daemon=True, name="chief-chat").start()
+        return {"accepted": True}
+
     @app.post("/api/publish")
     def publish_due():
         threading.Thread(target=office.staff["publisher"].publish_due, daemon=True).start()

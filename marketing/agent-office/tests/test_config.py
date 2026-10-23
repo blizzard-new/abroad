@@ -36,3 +36,12 @@ def test_example_allocation_gives_each_desk_its_tool(tmp_path):
     assert first["research"] == first["publisher"] == first["analyst"] == "antigravity"
     assert brains.chain(settings, "research")[1:] == ["claude-code", "api", "offline"]
     assert settings.images == "codex"
+
+
+def test_antigravity_is_the_chief_in_the_example(tmp_path):
+    from office import brains
+    from office.config import PROJECT_DIR
+
+    values = _load_dotenv(PROJECT_DIR / ".env.example")
+    settings = Settings.from_env(env={**values, "OFFICE_HOME": str(tmp_path)})
+    assert brains.chain(settings, "chief")[0] == "antigravity"

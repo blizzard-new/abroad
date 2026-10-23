@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import timedelta
 from pathlib import Path
+from secrets import token_hex
 
 from ..brains import BrainError
 from ..brand import Briefing
@@ -34,7 +35,7 @@ class Designer(Agent):
         draft, review, passed = office.staff["reviewer"].review(
             "IG 輪播", draft, item, briefing, lambda d: check_carousel(d, briefing.facts, item.source_url), author=self
         )
-        folder = office.day_media_dir(briefing.day) / f"carousel-{run_id}"
+        folder = office.day_media_dir(briefing.day) / f"carousel-{run_id}-{token_hex(3)}"
         media: dict = {}
         art = self._cover_art(draft, item, folder) if office.settings.render_media else None
         if art:

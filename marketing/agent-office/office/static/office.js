@@ -30,7 +30,7 @@ const BRAIN = {
 const SKIN = ["#f1c7a5", "#e0ac83", "#c98e62", "#f5d0b5", "#d79f76", "#eab894", "#b97d55", "#f0c39f"];
 const PENDING = new Set(["pending_approval", "needs_changes"]);
 
-const S = { agents: new Map(), drafts: new Map(), settings: {}, run: null, tz: "Asia/Taipei", tab: "inbox", log: [], busy: false, typing: new Map() };
+const S = { agents: new Map(), drafts: new Map(), settings: {}, run: null, tz: "Asia/Taipei", tab: "chat", log: [], chat: [], busy: false, typing: new Map() };
 
 // ---------------------------------------------------------------- time
 const fmt = (opts) => new Intl.DateTimeFormat("zh-TW", { timeZone: S.tz, hour12: false, ...opts });
@@ -126,12 +126,14 @@ const DECOR = {
   magnifier: `<svg class="decor" viewBox="0 0 34 34"><circle cx="14" cy="14" r="8" fill="#dff1ff" stroke="#1d2433" stroke-width="3" /><path d="M20 20 L29 29" stroke="#8a5a2b" stroke-width="5" stroke-linecap="round" /></svg>`,
   rocket: `<svg class="decor" viewBox="0 0 34 34"><path d="M17 3 C23 8 24 17 21 25 H13 C10 17 11 8 17 3Z" fill="#e8edf4" /><circle cx="17" cy="13" r="3" fill="#2f7de1" /><path d="M13 21 L8 27 L13 26Z M21 21 L26 27 L21 26Z" fill="#e2574a" /><path d="M14 26 L17 32 L20 26Z" fill="#ffb347" /></svg>`,
   chart: `<svg class="decor" viewBox="0 0 34 34"><rect x="4" y="5" width="26" height="22" rx="2" fill="#fff" /><rect x="8" y="17" width="4" height="7" fill="#17b5d8" /><rect x="15" y="12" width="4" height="12" fill="#2f7de1" /><rect x="22" y="8" width="4" height="16" fill="#e2574a" /><rect x="15" y="27" width="4" height="5" fill="#9aa5b3" /></svg>`,
+  walkie: `<svg class="decor" viewBox="0 0 34 34"><rect x="10" y="9" width="14" height="23" rx="3" fill="#1d2433" /><rect x="13" y="13" width="8" height="6" rx="1" fill="#8ff0bf" /><rect x="19" y="1" width="3" height="9" rx="1.5" fill="#1d2433" /><circle cx="17" cy="25" r="2.5" fill="#56637a" /></svg>`,
   heart: `<svg class="decor" viewBox="0 0 34 34"><rect x="9" y="20" width="16" height="12" rx="2" fill="#c98e62" /><path d="M17 20 C10 14 8 9 12 6 C15 4 17 7 17 8 C17 7 19 4 22 6 C26 9 24 14 17 20Z" fill="#ff6b8a" /></svg>`,
 };
 
 function buildDesks(agents) {
   const host = $("#desks");
   host.innerHTML = "";
+  $(".boss-row .desk[data-agent='chief']")?.remove();
   agents.forEach((a, i) => {
     const desk = document.createElement("article");
     desk.className = "desk";
@@ -147,7 +149,9 @@ function buildDesks(agents) {
       <div class="plate"><b>${esc(a.name)}</b><span>${esc(a.title)}</span></div>`;
     desk.addEventListener("click", () => openAgent(a.id));
     desk.addEventListener("keydown", (e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), openAgent(a.id)));
-    host.appendChild(desk);
+    // The chief sits beside your desk: everything you ask goes through them.
+    if (a.id === "chief") $(".boss-row").prepend(desk);
+    else host.appendChild(desk);
     updateDesk(a.id);
   });
 }
@@ -472,13 +476,49 @@ function who(agentId) {
 }
 
 function logLine(e) {
-  if (e.kind === "draft") return null;
+  if (e.kind === "draft" || e.kind === "chat") return null;
   const to = e.kind === "handoff" ? ` → ${who(e.to || e.data?.to)}` : "";
   return { ts: e.ts, agent: e.agent, text: `${e.message}${to}` };
 }
 
 function renderLog() {
   $("#log").innerHTML = S.log.slice(-200).reverse().map((l) => `<li><time>${hhmm(l.ts)}</time><span class="who">${esc(who(l.agent))}</span><span>${esc(l.text)}</span></li>`).join("");
+}
+
+// ---------------------------------------------------------------- the chief's chat
+function renderChat() {
+  const host = $("#chat");
+  if (!S.chat.length) {
+    host.innerHTML = `<li class="msg chief"><p>我是總管 Leo。你直接跟我說要做什麼就好：開工、問進度、請某位同事重寫某一則（用審核匣上的 #編號）、加做一則、改發文時間，或記給明天的企劃。核准和發文還是由你自己按。</p></li>`;
+    return;
+  }
+  host.innerHTML = S.chat.map((m) => {
+    const who = m.sender === "boss" ? "boss" : "chief";
+    const body = esc(m.text).replace(/#(\d+)/g, '<button type="button" class="ref" data-draft="$1">#$1</button>');
+    return `<li class="msg ${who}"><p>${body}</p><time>${hhmm(m.ts)}</time></li>`;
+  }).join("");
+  host.lastElementChild?.scrollIntoView({ block: "end", behavior: reduceMotion ? "auto" : "smooth" });
+}
+
+async function sendChat(text) {
+  text = text.trim();
+  if (!text) return;
+  $("#chat-input").value = "";
+  try {
+    await api("/api/chat", { text });
+  } catch (err) {
+    toast(err.message);
+  }
+}
+
+function showDraft(id) {
+  const d = S.drafts.get(Number(id));
+  if (!d) return toast(`找不到 #${id}`);
+  selectTab(PENDING.has(d.status) ? "inbox" : "schedule");
+  const pass = $(`.pass[data-id="${id}"]`);
+  pass?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  pass?.classList.add("flash");
+  setTimeout(() => pass?.classList.remove("flash"), 1200);
 }
 
 // ---------------------------------------------------------------- agent card
@@ -539,8 +579,14 @@ function apply(e) {
       a.message = e.message;
       if (e.screen) a.screen = e.screen;
       updateDesk(e.agent);
+      if (e.agent === "chief") $("#chat-typing").hidden = e.state !== "thinking";
       return 260;
     }
+    case "chat":
+      S.chat.push(e.chat);
+      renderChat();
+      if (S.tab !== "chat" && e.sender === "chief") $("#chat-unread").hidden = false;
+      return 120;
     case "brain": {
       const a = S.agents.get(e.agent);
       if (!a) return 0;
@@ -602,12 +648,14 @@ async function load() {
   S.agents = new Map(state.agents.map((a) => [a.id, a]));
   S.drafts = new Map(state.drafts.map((d) => [d.id, d]));
   S.log = state.events.map(logLine).filter(Boolean);
+  S.chat = state.chat || [];
   renderModes();
   buildDesks(state.agents);
   renderWhiteboard();
   renderBoard();
   renderBoss();
   renderPanel();
+  renderChat();
   $("#run-btn").disabled = S.busy;
   return true;
 }
@@ -634,6 +682,10 @@ function selectTab(tab) {
   document.querySelectorAll(".tabs button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
   document.querySelectorAll(".view").forEach((v) => (v.hidden = v.id !== `view-${tab}`));
   if (tab === "log") renderLog();
+  if (tab === "chat") {
+    $("#chat-unread").hidden = true;
+    renderChat();
+  }
 }
 
 let toastTimer;
@@ -664,6 +716,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   setInterval(tickClock, 15000);
   document.querySelector(".tabs").addEventListener("click", (e) => e.target.closest("button[data-tab]") && selectTab(e.target.closest("button[data-tab]").dataset.tab));
   $("#view-inbox").addEventListener("click", onPassClick);
+  $("#chat-form").addEventListener("submit", (e) => (e.preventDefault(), sendChat($("#chat-input").value)));
+  $("#chat-input").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing) (e.preventDefault(), sendChat(e.target.value));
+  });
+  $("#chat-chips").addEventListener("click", (e) => e.target.closest("button") && sendChat(e.target.textContent));
+  $("#chat").addEventListener("click", (e) => e.target.closest("[data-draft]") && showDraft(e.target.closest("[data-draft]").dataset.draft));
   $("#run-btn").addEventListener("click", startDay);
   const boss = $('.desk[data-agent="boss"]');
   boss.addEventListener("click", () => openAgent("boss"));

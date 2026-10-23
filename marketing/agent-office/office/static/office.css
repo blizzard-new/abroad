@@ -104,7 +104,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
   repeating-linear-gradient(90deg, transparent 0 158px, rgba(120, 84, 44, 0.16) 158px 160px),
   repeating-linear-gradient(0deg, var(--oak) 0 38px, #d0b285 38px 40px); }
 .desks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px 26px; }
-.boss-row { display: flex; justify-content: center; margin-top: 30px; }
+.boss-row { display: flex; justify-content: center; align-items: flex-end; gap: 26px; margin-top: 30px; }
+.boss-row .desk[data-agent="chief"] { width: min(270px, 40%); }
 
 .desk { position: relative; display: grid; justify-items: center; padding-top: 56px; cursor: pointer; border-radius: 14px; }
 .desk:hover .plate { background: #fff; }
@@ -304,6 +305,30 @@ dialog .close { position: absolute; right: 10px; top: 8px; z-index: 2; width: 34
 .toast { position: fixed; left: 50%; bottom: 22px; z-index: 50; visibility: hidden; transform: translate(-50%, 140%); padding: 10px 18px; border-radius: 12px; background: var(--navy); color: #fff; font-size: 14px; box-shadow: 0 12px 30px rgba(16, 41, 74, 0.35); transition: transform 0.3s ease, visibility 0.3s; }
 .toast.show { visibility: visible; transform: translate(-50%, 0); }
 
+/* ---- the chief's chat ---- */
+.chat-view { display: flex; flex-direction: column; gap: 10px; }
+.chat-view[hidden] { display: none; }
+.chat { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.msg { max-width: 88%; }
+.msg p { margin: 0; padding: 10px 13px; border-radius: 14px; white-space: pre-wrap; font-size: 14px; line-height: 1.55; }
+.msg time { display: block; margin-top: 3px; font-size: 11px; color: var(--muted); }
+.msg.chief p { background: #fff; box-shadow: 0 1px 0 var(--line), 0 4px 12px rgba(16, 41, 74, 0.06); border-top-left-radius: 4px; }
+.msg.boss { align-self: flex-end; text-align: right; }
+.msg.boss p { background: var(--navy); color: #fff; border-top-right-radius: 4px; text-align: left; }
+.msg .ref { padding: 0 4px; border: 0; border-radius: 5px; background: #e3efff; color: #164d9e; font: inherit; font-weight: 700; }
+.msg.boss .ref { background: rgba(255, 255, 255, 0.18); color: #fff; }
+.chat-typing { font-size: 13px; color: var(--muted); }
+.chat-typing::after { content: "…"; animation: dots 1.2s steps(4) infinite; display: inline-block; width: 1.2em; overflow: hidden; vertical-align: bottom; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: #fff; font-size: 13px; color: var(--ink); }
+.chips button:hover { border-color: #b9c6d6; }
+.chat-form { position: sticky; bottom: 0; display: flex; gap: 8px; align-items: flex-end; padding-top: 6px; background: var(--panel); }
+.chat-form textarea { flex: 1; min-height: 44px; max-height: 140px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; font: inherit; font-size: 14px; resize: vertical; }
+.unread { display: inline-block; width: 8px; height: 8px; margin-left: 4px; border-radius: 50%; background: var(--coral); vertical-align: 2px; }
+.unread[hidden] { display: none; }
+.pass.flash { box-shadow: 0 0 0 3px var(--blue), 0 6px 16px rgba(16, 41, 74, 0.07); }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
 /* ---- TV mode (?tv): the office alone, for a screen on a real wall ---- */
 body.tv .panel, body.tv .run-btn { display: none; }
 body.tv .layout { grid-template-columns: 1fr; min-height: calc(100vh - 56px); }
@@ -324,6 +349,8 @@ body.tv .room { min-height: calc(100vh - 56px); }
   .floor { padding: 22px 16px 28px; }
 }
 @media (max-width: 640px) {
+  .boss-row { flex-direction: column; align-items: center; }
+  .boss-row .desk[data-agent="chief"] { width: 72%; }
   .topbar { padding: 10px 16px; gap: 10px; }
   .top-actions { margin-left: 0; width: 100%; justify-content: space-between; }
   .desks { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; }

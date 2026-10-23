@@ -95,3 +95,28 @@ class Preflight(BaseModel):
 
 class Insights(BaseModel):
     notes: list[str] = Field(description="給企劃的 2～4 點建議，每點一句")
+
+
+ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow"]
+
+
+class ChiefAction(BaseModel):
+    type: ChiefActionType = Field(
+        description=(
+            "start_day：馬上開工做今天的內容；redo：請作者依 instructions 重寫 draft_id 那則草稿；"
+            "new_post：今天加做一則（channel、format、topic、angle）；reschedule：把 draft_id 改到 time（HH:MM，台北時間）；"
+            "reject：退回 draft_id，理由寫在 instructions；note_for_tomorrow：把 instructions 記給明天的企劃"
+        )
+    )
+    draft_id: int = Field(default=0, description="草稿編號，沒有就填 0")
+    instructions: str = Field(default="", description="要交代的內容")
+    channel: Literal["threads", "instagram", ""] = ""
+    format: Literal["text", "carousel", "reel", ""] = ""
+    topic: str = ""
+    angle: Literal["pain", "choice", "list", "story", "news", ""] = ""
+    time: str = Field(default="", description="HH:MM")
+
+
+class ChiefReply(BaseModel):
+    reply: str = Field(description="用聊天的口吻回覆老闆，說明你安排了什麼、哪些事做不到")
+    actions: list[ChiefAction]

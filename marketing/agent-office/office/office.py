@@ -9,6 +9,7 @@ from typing import Any
 
 from .agents.analyst import Analyst
 from .agents.base import Agent
+from .agents.chief import Chief
 from .agents.community import Community
 from .agents.designer import Designer
 from .agents.publisher import PREFLIGHT_HOLD, Publisher
@@ -17,7 +18,7 @@ from .agents.strategist import Strategist
 from .agents.threads_writer import ThreadsWriter
 from .agents.video_editor import VideoEditor
 from . import brains
-from .brand import Briefing, load_facts
+from .brand import Briefing, load_facts, load_news
 from .config import Settings
 from .events import EventBus
 from .llm import make_writer
@@ -25,8 +26,8 @@ from .models import PlanItem
 from .render.renderer import Renderer
 from .store import Store
 
-# Desk order on the floor, front row first.
-STAFF: tuple[type[Agent], ...] = (Strategist, ThreadsWriter, Designer, VideoEditor, Reviewer, Publisher, Analyst, Community)
+# Desk order on the floor, front row first. The chief sits next to your desk, between you and the team.
+STAFF: tuple[type[Agent], ...] = (Strategist, ThreadsWriter, Designer, VideoEditor, Reviewer, Publisher, Analyst, Community, Chief)
 
 def desk_of(role: str) -> str:
     """The desk a brain role belongs to: Ivy both researches and plans."""
@@ -146,6 +147,12 @@ class Office:
         self.draft_changed(draft_id)
         return draft_id
 
+    def chat(self, sender: str, text: str, data: dict | None = None) -> dict:
+        """A line in the conversation between you ("boss") and the chief ("chief")."""
+        message = self.store.add_chat(sender, text, data)
+        self.bus.emit("chief", "chat", text, sender=sender, chat=message)
+        return message
+
     def draft_changed(self, draft_id: int) -> None:
         draft = self.store.draft(draft_id)
         if draft:
@@ -201,8 +208,10 @@ class Office:
             self._facts = load_facts(self.settings)
         return self._facts
 
-    def briefing_for_replies(self) -> Briefing:
-        return Briefing(day=self.today(), facts=self.facts())
+    def briefing_for_replies(self, with_news: bool = False) -> Briefing:
+        """A light briefing (platform numbers, optionally today's verified announcements) for work outside the
+        morning run: replies, rewrites, extra posts, pre-publish checks."""
+        return Briefing(day=self.today(), facts=self.facts(), news=load_news(self.settings) if with_news else [])
 
     def snapshot(self) -> dict:
         run = self.store.latest_run()
@@ -223,6 +232,7 @@ class Office:
             "run": run,
             "busy": self.busy.locked(),
             "events": self.store.events(limit=80),
+            "chat": self.store.chat(limit=60),
             "settings": {
                 "approval": self.settings.approval,
                 "dry_run": self.settings.dry_run,

@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
+from secrets import token_hex
 
 from ..brand import HASHTAGS, Briefing
 from ..models import CarouselDraft, PlanItem, VideoScript
@@ -28,7 +29,7 @@ class VideoEditor(Agent):
         self.status("thinking", f"寫腳本：{item.topic[:14]}")
         script = self.office.writer.video(item, briefing, "short")
         script, review, passed = self._review(script, item, briefing, "short")
-        media = self._render(script, briefing, run_id, "portrait")
+        media = self.render(script, briefing.day, "portrait")
         reel_id = self.office.queue(
             run_id, item, channel="instagram", format="reel", title=script.title,
             payload={**script.model_dump(), "caption_full": instagram_caption(script.caption, script.hashtags)},
@@ -45,7 +46,7 @@ class VideoEditor(Agent):
         self.status("thinking", "把今天的輪播改成 Shorts 腳本…")
         script = self.office.writer.video_from_carousel(carousel, item, briefing)
         script, review, passed = self._review(script, item, briefing, "short")
-        media = self._render(script, briefing, run_id, "portrait")
+        media = self.render(script, briefing.day, "portrait")
         draft_id = self.office.queue(
             run_id, item, channel="youtube", format="short", title=script.youtube_title,
             payload=_youtube_payload(script), media=media, review=review, passed=passed, slot=slot, sender=self, parent_id=parent_id,
@@ -57,7 +58,7 @@ class VideoEditor(Agent):
         self.status("thinking", "整理本週懶人包腳本…")
         script = self.office.writer.video(item, briefing, "long")
         script, review, passed = self._review(script, item, briefing, "long")
-        media = self._render(script, briefing, run_id, "landscape")
+        media = self.render(script, briefing.day, "landscape")
         draft_id = self.office.queue(
             run_id, item, channel="youtube", format="long", title=script.youtube_title,
             payload=_youtube_payload(script), media=media, review=review, passed=passed, slot=slot, sender=self,
@@ -78,12 +79,12 @@ class VideoEditor(Agent):
             "影片腳本", script, item, briefing, lambda s: check_video(s, briefing.facts, length, item.source_url), author=self
         )
 
-    def _render(self, script: VideoScript, briefing: Briefing, run_id: int, orientation: str) -> dict:
+    def render(self, script: VideoScript, day: date, orientation: str) -> dict:
         office = self.office
         if not office.settings.render_media:
             return {}
         name = "reel" if orientation == "portrait" else "long"
-        path = office.day_media_dir(briefing.day) / f"{name}-{run_id}.mp4"
+        path = office.day_media_dir(day) / f"{name}-{token_hex(4)}.mp4"
         poster_ref: dict[str, str | None] = {"poster": None}
 
         def progress(frame: int, total: int, _path) -> None:
