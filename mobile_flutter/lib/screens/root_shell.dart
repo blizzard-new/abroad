@@ -252,7 +252,7 @@ class _CguBoardShellState extends State<CguBoardShell> {
       HomeScreen(onSelectTab: select, showHeader: false),
       const SchoolsScreen(showPageHeader: false),
       const ApplicationDocumentsScreen(),
-      const DeadlinesScreen(),
+      const DeadlinesScreen(embedded: true),
       CommunityScreen(
         initialSchool: store.selectedUniversity,
         lockedToInitialSchool: true,

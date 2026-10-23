@@ -6,7 +6,7 @@ Branch: `codex/android-synced-preview`, based on `abroad/main` at
 
 ## Delivered implementation
 
-- Android 2.1.1 (15), package `tw.uniway.app`, Android API 24+, universal APK
+- Android 2.1.2 (16), package `tw.uniway.app`, Android API 24+, universal APK
   for arm64-v8a / armeabi-v7a / x86_64. Stable RSA 3072 preview certificate;
   signing passwords and keystore are outside Git. Release refuses debug signing.
 - Student journey, schools, application preparation and account navigation;
@@ -23,14 +23,20 @@ Branch: `codex/android-synced-preview`, based on `abroad/main` at
   Existing vault references are preserved; expired references are removed.
 - Android local reminders, permission/test control, notification center;
   responsive 140dp/280dp widget with cached next action, tasks and update date.
+  Standalone calendar routes include a header/back button; the next-deadline card
+  grows with the text instead of clipping on a narrow screen or larger font.
 - Optional FCM FID registration, account-guarded data-only messages, generic
   lock-screen copy, logout unregister, durable Postgres claims/retries and
   internal scheduled dispatch entrypoint. Firebase is not configured yet.
 
 ## Evidence
 
-- Flutter unit/widget tests: 84 passed, including 360px navigation at 1.4x text,
+- Flutter unit/widget tests: 85 passed, including 360px navigation at 1.4x text,
   offline restart, 409 revision races, same-field conflict and account isolation.
+- Android system-UI tap acceptance passed: background the real app, tap its local
+  notification, assert the calendar page/header, then tap an other-account payload
+  and assert no unauthorized page opens. This test initially exposed the calendar's
+  embedded-only layout and fixed-height overflow; both were corrected and rerun.
 - Android emulator integration: local notification permission, active delivery,
   scheduling, cancellation, widget storage and qualified receiver update passed.
 - Android emulator + isolated loopback Python backend: PKCE exchange, restored
@@ -74,9 +80,56 @@ configuration, manual acceptance and signing backup instructions.
 
 ## Release receipt
 
-Final APK SHA-256: `6ab35d15a686ff59470bb0285285c8dea8254b0b7d57041fce0d252536ff62ac`.
+Final APK SHA-256: `e5daf1e03daea52d0196aa18f51d17d88712a0b1b24d8c856bccf0e45941214f`.
 Certificate SHA-256: `a837f361a4dae7f1892985aeca7fb9fd8e580ac7697e2b98ae044b3d132ba2f2`.
 Release-to-release `adb install -r` succeeded with this stable certificate.
 Release UI loads the existing production school list. Home-screen widget pinning,
 signed-out content and tap back to the journey tab were manually verified.
-Resizing to the narrow layout remains a physical-device/launcher acceptance item.
+The Pixel emulator launcher was resized from 4x2 to 2x2: the signed-out title
+remains fully readable, and tapping the small widget selects the journey tab.
+Physical-device launchers and cold-process notification taps remain acceptance checks.
+During the final release screenshot check, the Windows QEMU host process crashed
+with an access violation. Its cause was not established. Restarting the same AVD
+with 2 GB RAM allowed the signed 2.1.2 APK to install, launch and display the full
+calendar route correctly; the release screenshot was inspected after recovery.
+
+## Re-running native notification tap acceptance
+
+The opt-in test uses the real app, a loopback fixture backend, and Android's own
+notification shade. It is skipped by default because it requires system-UI input.
+It never signs into a production account.
+
+1. Start `tests/fixtures/mobile_preview_server.py` with `PYTHONPATH=src`, using the
+   project Python environment. It binds to `127.0.0.1:18765` and synthetic data.
+2. Run `adb -s emulator-5554 reverse tcp:18765 tcp:18765`.
+3. From an English-path copy of `mobile_flutter`, run:
+
+   ```powershell
+   flutter test --no-pub integration_test/notification_tap_test.dart -d emulator-5554 --dart-define=NATIVE_TAP_ACCEPTANCE=true --dart-define=API_BASE_URL=http://127.0.0.1:18765/
+   ```
+
+4. Allow notifications. Wait for `SYSTEM_TAP_READY`, put the app in the background,
+   open the Android notification shade and tap `UniWay 通知已開啟`.
+5. The test asserts the real calendar page and its header are present. At the next
+   `SYSTEM_TAP_READY`, tap `UniWay 帳號隔離測試`; it must not open another account's page.
+6. Check for `All tests passed!`; marker messages alone are not a successful test.
+   Stop the fixture server, remove the reverse mapping, and reinstall the signed
+   preview APK afterward. Test builds use a different signing key and synthetic state.
+
+## Goal completion audit
+
+| Requirement | Current evidence | Remaining acceptance |
+| --- | --- | --- |
+| Installable Android APK | Signed universal APK, API 24+, emulator installation and launch | Install on the user's own phone |
+| Same account as desktop | PKCE code exchange and account identity verified against isolated backend | Jerry deploys the backend; real Google sign-in on production |
+| Shared data | REST workspace and encrypted form-draft round trips; offline/conflict/account-isolation tests | Production desktop-to-phone acceptance after deployment |
+| Notifications | Native permission, display, scheduling, cancellation and actual notification-shade taps | Firebase project/client configuration and backend credentials; real remote delivery |
+| Home-screen widget | Native cache updates, launcher pinning, 4x2 to 2x2 resize and return-to-journey tap | User's launcher/device behavior |
+| Glass interface | Rendered four-tab app, translucent floating navigation and accessibility fallback | User visual feedback |
+| No new university factual audit | No official-data changes in this delivery | None |
+
+Implementation and local acceptance have progressed; the goal is not claimed fully
+complete while production login/sync and remote delivery remain unverified. Jerry's
+remote connection is not available in this task, and the user has not yet created
+Firebase. Deployment instructions are ready; these external steps require the user
+or Jerry to provide access or perform the setup.
