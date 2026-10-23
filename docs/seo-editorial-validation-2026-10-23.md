@@ -1,6 +1,6 @@
 # 2026-10-23 每日雙篇：來源與驗收
 
-本批依 Asia/Taipei 日期與每日兩篇規則，在隔離分支 `codex/seo-daily-20261023` 完成兩篇原創繁體中文 SEO 圖文文章，集中建立一個新的待審 PR。選題來自使用者候選方向 4 與 8，依編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。
+本批依 Asia/Taipei 日期與每日兩篇規則，在隔離分支 `codex/seo-daily-20261023` 完成兩篇原創繁體中文 SEO 圖文文章，集中於新的待審 [PR #119](https://github.com/blizzard-new/abroad/pull/119)。選題來自使用者候選方向 4 與 8，依編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。
 
 基礎為最新 main `0a790fc8c0d00ca891b63419b665540dd140a87f`。已核對十九篇既有文章、選題清單與全部待審 PR；開始時兩次 repository-scoped open PR 搜尋均為空，當日分支／PR 亦不存在。PR #78、#92、#117 均已合併，無未合併文章相依。未見適用的 AGENTS.md；依編輯流程與使用者每日雙篇指示製作。原共用 checkout 保留，既有十九篇文章的內容、URL、出版日及 lastmod 均未改動。
 
@@ -69,6 +69,8 @@ uv build --wheel
 ```
 
 以上為本機驗收，無遠端 CI、正式上線、Google 收錄或排名成果的宣稱。只建立待審 PR，不合併、部署 Windows 正式伺服器、寄信或要求 Google 建立索引。
+
+任務附加限制：成功建立 PR 後已立即呼叫 `codex_app.attach_artifact`，等候 20 秒仍未回覆，無法確認任務附加是否成功；未宣稱已附加。GitHub PR 本身已成功建立，可直接透過上方連結審閱。
 
 ## 預覽
 
