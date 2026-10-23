@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8" />
+<title>UniWay 影片版型</title>
+<!--
+  Reels／YouTube Shorts（1080×1920）與 YouTube 長影片（1920×1080）共用的動態字幕版型。
+  window.setup(script, orientation) 依腳本建好每個畫面，window.render(t) 畫出第 t 秒那一格；renderer.py 逐格截圖交給 ffmpeg。
+  直式的重要文字都放在 Reels 不會蓋到的區域（上 200 px、下 470 px 以外，右側留給按鈕列）。
+-->
+<link rel="stylesheet" href="/fonts/genjyuu/GenJyuuGothic-Medium.css" />
+<link rel="stylesheet" href="/fonts/genjyuu/GenJyuuGothic-Bold.css" />
+<style>
+  @font-face { font-family: "Poppins"; font-weight: 600; src: url("/fonts/poppins/Poppins-Medium.ttf") format("truetype"); }
+  @font-face { font-family: "Poppins"; font-weight: 700; src: url("/fonts/poppins/Poppins-Bold.ttf") format("truetype"); }
+  :root { --navy: #10294a; --ink: #1f3b5c; --muted: #52708f; --blue: #2f7de1; --coral: #e2574a; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #0b1118; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Poppins", "GenJyuuGothic", "Noto Sans TC", sans-serif; color: var(--navy); background: #f4f8fc; }
+  #stage.landscape { width: 1920px; height: 1080px; }
+  .layer { position: absolute; inset: 0; }
+  #light {
+    background:
+      radial-gradient(620px 680px at var(--ax, 10%) var(--ay, 6%), rgba(120, 205, 225, 0.55), transparent 70%),
+      radial-gradient(640px 700px at var(--bx, 96%) var(--by, 94%), rgba(255, 205, 175, 0.6), transparent 70%),
+      radial-gradient(520px 560px at 92% 40%, rgba(196, 186, 245, 0.35), transparent 70%),
+      #f4f8fc;
+  }
+  #dark { background: radial-gradient(900px 900px at 80% 12%, rgba(47, 125, 225, 0.45), transparent 70%), radial-gradient(circle at 50% 38%, #17345a, #0f1d30 75%); opacity: 0; }
+
+  .scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
+  .scene.dark-text { color: #fff; }
+  /* Captions sit in a column centred above the bottom 470 px that Reels covers with its own UI. */
+  .block { position: absolute; left: 80px; width: 840px; top: 280px; height: 860px; display: flex; flex-direction: column; justify-content: center; }
+  .landscape .block { left: 140px; width: 1150px; top: 130px; height: 820px; }
+  .seg { display: block; white-space: nowrap; }
+  .seg.wrap { white-space: normal; text-wrap: balance; }
+  .kicker { display: inline-flex; align-items: center; gap: 18px; font: 700 40px "Poppins", "GenJyuuGothic", sans-serif; color: var(--coral); letter-spacing: 0.06em; }
+  .kicker b { display: inline-grid; place-items: center; width: 76px; height: 76px; border-radius: 22px; color: #fff; background: linear-gradient(135deg, #3c8ef0, #2bc0e4); font-size: 38px; letter-spacing: 0; box-shadow: 0 12px 28px rgba(47, 125, 225, 0.32); }
+  h1 { margin: 26px 0 0; font-size: 112px; line-height: 1.14; font-weight: 700; letter-spacing: 0.01em; }
+  .landscape h1 { font-size: 104px; }
+  .dark-text h1 { text-shadow: 0 8px 40px rgba(0, 0, 0, 0.35); }
+  .lines { margin-top: 48px; display: grid; gap: 22px; }
+  .line { display: inline-block; justify-self: start; padding: 16px 32px; border-radius: 26px; font-size: 72px; font-weight: 700; line-height: 1.25; background: #fff; color: var(--ink); box-shadow: 0 16px 40px rgba(16, 41, 74, 0.12); opacity: 0; }
+  .landscape .line { font-size: 60px; }
+  .line.now { background: linear-gradient(100deg, #2f7de1, #19b7e2); color: #fff; box-shadow: 0 18px 44px rgba(25, 140, 226, 0.38); }
+  .dark-text .line { background: rgba(255, 255, 255, 0.12); color: #fff; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.16); }
+  .dark-text .line.now { background: linear-gradient(100deg, #2f7de1, #19b7e2); box-shadow: 0 18px 44px rgba(25, 140, 226, 0.4); }
+  .hook h1 { font-size: 132px; }
+  .landscape .hook h1 { font-size: 120px; }
+  .stat .line { font: 700 76px/1.2 "Poppins", "GenJyuuGothic", sans-serif; padding: 22px 40px; }
+  .cta .block { text-align: center; align-items: center; left: 60px; width: 960px; }
+  .landscape .cta .block { left: 360px; width: 1200px; }
+  .cta .logo { display: inline-flex; align-items: center; gap: 24px; }
+  .cta .logo img { width: 150px; height: 150px; }
+  .cta .word { font: 700 130px/1 "Poppins", sans-serif; letter-spacing: -0.02em; background: linear-gradient(100deg, #8cc4ff, #6fe2ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .cta h1 { margin-top: 56px; }
+  .cta .lines { justify-items: center; }
+  .cta .line { justify-self: center; }
+
+  #mascot { position: absolute; width: 300px; z-index: 5; filter: drop-shadow(0 26px 30px rgba(35, 82, 135, 0.3)); transform-origin: 50% 92%; }
+  #mascot img { width: 100%; display: block; }
+  #mark { position: absolute; left: 80px; top: 210px; display: flex; align-items: center; gap: 12px; font: 700 34px "Poppins", sans-serif; z-index: 6; }
+  .landscape #mark { left: 140px; top: 70px; }
+  #mark img { width: 48px; height: 48px; }
+  #mark span { background: linear-gradient(100deg, #1554d8 10%, #18b6e3 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #bar { position: absolute; left: 80px; right: 180px; top: 170px; height: 10px; border-radius: 6px; background: rgba(16, 41, 74, 0.1); overflow: hidden; z-index: 6; }
+  .landscape #bar { left: 140px; right: 140px; top: 40px; }
+  #bar i { display: block; height: 100%; width: 0; border-radius: 6px; background: linear-gradient(90deg, #2f7de1, #17b5d8); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="layer" id="light"></div>
+  <div class="layer" id="dark"></div>
+  <div id="scenes"></div>
+  <div id="mark"><img src="/brand/uniway-logo.webp" alt="" /><span>UniWay</span></div>
+  <div id="bar"><i></i></div>
+  <div id="mascot"><img src="/brand/suitcase.webp" alt="" /></div>
+</div>
+<script>
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ease = (x) => 1 - Math.pow(1 - clamp(x), 3);
+  const pop = (x) => { x = clamp(x); return 1 + 2.2 * Math.pow(x - 1, 3) + 1.2 * Math.pow(x - 1, 2); };
+  let SCENES = [];
+  let landscape = false;
+
+  window.setup = async (script, orientation) => {
+    landscape = orientation === "landscape";
+    document.getElementById("stage").className = landscape ? "landscape" : "";
+    let start = 0;
+    let point = 0;
+    const host = document.getElementById("scenes");
+    host.innerHTML = "";
+    SCENES = script.scenes.map((scene) => {
+      const el = document.createElement("section");
+      const dark = scene.kind === "hook" || scene.kind === "stat" || scene.kind === "cta";
+      el.className = `scene ${scene.kind}${dark ? " dark-text" : ""}`;
+      const lines = scene.lines.map((line) => `<span class="line">${esc(line)}</span>`).join("");
+      if (scene.kind === "cta") {
+        el.innerHTML = `<div class="block"><div class="logo"><img src="/brand/uniway-logo.webp" alt="" /><span class="word">UniWay</span></div><h1>${esc(scene.heading)}</h1><div class="lines">${lines}</div></div>`;
+      } else if (scene.kind === "point") {
+        point += 1;
+        el.innerHTML = `<div class="block"><span class="kicker"><b>${point}</b>重點 ${String(point).padStart(2, "0")}</span><h1>${esc(scene.heading)}</h1><div class="lines">${lines}</div></div>`;
+      } else {
+        el.innerHTML = `<div class="block"><h1>${esc(scene.heading)}</h1><div class="lines">${lines}</div></div>`;
+      }
+      host.appendChild(el);
+      const h1 = el.querySelector("h1");
+      h1.innerHTML = esc(scene.heading).split(/(?<=[？！，：])/).map((part) => `<span class="seg">${part}</span>`).join("");
+      const item = { ...scene, el, start, end: start + scene.seconds, lineEls: [...el.querySelectorAll(".line")], h1: el.querySelector("h1") };
+      start += scene.seconds;
+      return item;
+    });
+    window.DURATION = start;
+    window.CUES = SCENES.slice(1).map((s) => s.start);
+    await Promise.all([...document.images].map((img) => (img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))));
+    // The CJK font is split into unicode-range subsets; load every subset this script uses before the first frame.
+    const text = host.textContent + "UniWay重點0123456789";
+    await Promise.all(["700", "500"].map((weight) => document.fonts.load(`${weight} 64px "GenJyuuGothic"`, text)));
+    // Shrink a heading until each phrase fits on one line, so titles never break mid-word.
+    SCENES.forEach((s) => {
+      const block = s.el.querySelector(".block");
+      let size = parseFloat(getComputedStyle(s.h1).fontSize);
+      const floor = s.kind === "hook" ? 96 : 76;
+      const wide = () => [...s.h1.children].some((seg) => seg.scrollWidth > block.clientWidth);
+      while (wide() && size > floor) {
+        size -= 4;
+        s.h1.style.fontSize = `${size}px`;
+      }
+      // Still too long at a readable size: let that phrase wrap onto balanced lines instead.
+      if (wide()) [...s.h1.children].forEach((seg) => seg.classList.add("wrap"));
+    });
+    window.render(0);
+    await document.fonts.ready;
+  };
+
+  window.render = (t) => {
+    const W = landscape ? 1920 : 1080;
+    const H = landscape ? 1080 : 1920;
+    const light = document.getElementById("light");
+    light.style.setProperty("--ax", `${10 + 6 * Math.sin(t * 0.35)}%`);
+    light.style.setProperty("--ay", `${6 + 5 * Math.cos(t * 0.3)}%`);
+    light.style.setProperty("--bx", `${94 - 5 * Math.sin(t * 0.28)}%`);
+    let darkness = 0;
+    let current = SCENES[0];
+    for (const s of SCENES) {
+      const u = t - s.start;
+      const d = s.seconds;
+      const fadeIn = s === SCENES[0] ? 1 : ease(u / 0.35);
+      const fadeOut = s === SCENES[SCENES.length - 1] ? 1 : 1 - ease((u - (d - 0.3)) / 0.3);
+      const alpha = u < 0 || u > d ? 0 : Math.min(fadeIn, fadeOut);
+      s.el.style.opacity = alpha;
+      s.el.style.visibility = alpha > 0 ? "visible" : "hidden";
+      if (alpha <= 0) continue;
+      current = s;
+      if (s.el.classList.contains("dark-text")) darkness = Math.max(darkness, alpha);
+      s.el.style.transform = `translateY(${(1 - ease(u / 0.5)) * 50}px)`;
+      if (s.h1) s.h1.style.transform = `scale(${s.kind === "hook" ? pop(u / 0.45) : 1})`;
+      // Lines appear one after another across the scene; the newest is highlighted.
+      const n = s.lineEls.length;
+      const first = s.kind === "hook" ? 0.45 : 0.6;
+      const gap = n > 1 ? Math.max(0.35, (d - first - 1.0) / n) : 0;
+      s.lineEls.forEach((line, k) => {
+        const appear = first + k * gap;
+        const v = ease((u - appear) / 0.3);
+        line.style.opacity = v;
+        line.style.transform = `translateX(${(1 - v) * -40}px) scale(${0.92 + 0.08 * v})`;
+        const next = k + 1 < n ? first + (k + 1) * gap : Infinity;
+        line.classList.toggle("now", s.kind !== "stat" && u >= appear && u < next);
+      });
+    }
+    document.getElementById("dark").style.opacity = darkness;
+    document.getElementById("mark").style.opacity = 1 - darkness * 0.6;
+    document.querySelector("#bar i").style.width = `${(100 * t) / (window.DURATION || 1)}%`;
+
+    // The suitcase mascot bounces along; it sits where the captions are not.
+    const m = document.getElementById("mascot");
+    const u = t - current.start;
+    const hop = Math.abs(Math.sin(t * Math.PI * 1.1)) * 18;
+    const wobble = Math.sin(t * 5.2) * (current.kind === "hook" ? 6 : 2.5);
+    const size = current.kind === "cta" || current.kind === "hook" ? 300 : 230;
+    m.style.width = `${size}px`;
+    const x = W - size - 150;
+    const y = landscape ? H - size * 1.2 - 90 : 1440 - size * 1.2;
+    m.style.left = `${x}px`;
+    m.style.top = `${y - hop}px`;
+    m.style.transform = `rotate(${wobble}deg) scale(${0.85 + 0.15 * ease(u / 0.4)})`;
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UniWay 行銷辦公室</title>
+<link rel="icon" href="/brand/uniway-logo.webp" />
+<link rel="stylesheet" href="/fonts/genjyuu/GenJyuuGothic-Medium.css" />
+<link rel="stylesheet" href="/fonts/genjyuu/GenJyuuGothic-Bold.css" />
+<link rel="stylesheet" href="/static/office.css" />
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/" aria-label="UniWay 行銷辦公室">
+    <img src="/brand/uniway-logo.webp" alt="" width="34" height="34" />
+    <span><b>UniWay</b> 行銷辦公室</span>
+  </a>
+  <div class="modes" id="modes"></div>
+  <div class="top-actions">
+    <time class="clock-text" id="clock-text" aria-label="台北時間"></time>
+    <button class="run-btn" id="run-btn" type="button">開始今天的工作</button>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="room" aria-label="辦公室">
+    <div class="wall">
+      <div class="window" id="window" aria-hidden="true">
+        <svg class="skyline" viewBox="0 0 320 120" preserveAspectRatio="xMidYMax slice">
+          <g class="far">
+            <rect x="0" y="78" width="26" height="42" /><rect x="22" y="66" width="20" height="54" /><rect x="40" y="84" width="30" height="36" />
+            <rect x="196" y="72" width="24" height="48" /><rect x="218" y="86" width="34" height="34" /><rect x="250" y="64" width="22" height="56" />
+            <rect x="270" y="80" width="50" height="40" />
+          </g>
+          <g class="near">
+            <rect x="60" y="92" width="38" height="28" /><rect x="94" y="80" width="22" height="40" /><rect x="168" y="88" width="34" height="32" />
+            <!-- Taipei 101 -->
+            <path d="M125 120V104h3V84h3V74L131 74L129 68L131 68L129 62L131 62L129 56L131 56L129 50L131 50L129 44L131 44L129 38L131 38L129 32L131 32L129 26L131 26V22H133.5V16H135.4V2H136.6V16H138.5V22H141L141 26L143 26L141 32L143 32L141 38L143 38L141 44L143 44L141 50L143 50L141 56L143 56L141 62L143 62L141 68L143 68L141 74V84h3V104h3V120Z" />
+          </g>
+        </svg>
+        <span class="mullion v"></span><span class="mullion h"></span>
+      </div>
+
+      <section class="board" aria-labelledby="board-title">
+        <h2 id="board-title">今日發文時刻表</h2>
+        <div class="board-head" aria-hidden="true"><span>時間</span><span>平台</span><span>內容</span><span>狀態</span></div>
+        <ol class="board-rows" id="board-rows"></ol>
+      </section>
+
+      <div class="wall-side">
+        <svg class="wall-clock" id="wall-clock" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="46" class="face" />
+          <g class="ticks"></g>
+          <line id="hand-h" x1="50" y1="50" x2="50" y2="28" class="hand h" />
+          <line id="hand-m" x1="50" y1="50" x2="50" y2="16" class="hand m" />
+          <circle cx="50" cy="50" r="3.5" class="pin" />
+        </svg>
+        <div class="whiteboard" aria-labelledby="wb-title">
+          <h2 id="wb-title">今日企劃</h2>
+          <p class="wb-theme" id="wb-theme">還沒開工</p>
+          <ul id="wb-notes"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="floor">
+      <div class="desks" id="desks"></div>
+      <div class="boss-row">
+        <article class="desk boss" data-agent="boss" tabindex="0" aria-label="你的位子：審核匣">
+          <div class="bubble"><span class="bubble-text" id="boss-bubble">審核匣是空的</span></div>
+          <div class="monitor"><div class="screen" id="boss-screen"></div></div>
+          <div class="table">
+            <div class="tray" id="tray" aria-hidden="true"></div>
+            <div class="keyboard"></div>
+            <img class="desk-mascot" src="/brand/suitcase.webp" alt="" />
+          </div>
+          <div class="worker empty-chair" aria-hidden="true">
+            <svg viewBox="0 0 120 112"><rect x="22" y="58" width="76" height="54" rx="18" class="chair" /><rect x="28" y="62" width="64" height="8" rx="4" class="chair-top" /></svg>
+          </div>
+          <div class="plate"><b>你</b><span>老闆｜審核與核准</span></div>
+        </article>
+      </div>
+    </div>
+    <div class="flights" id="flights" aria-hidden="true"></div>
+  </section>
+
+  <aside class="panel" aria-label="審核與紀錄">
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-inbox" aria-selected="true" aria-controls="view-inbox" data-tab="inbox">待你審核 <span class="count" id="inbox-count">0</span></button>
+      <button role="tab" id="tab-schedule" aria-selected="false" aria-controls="view-schedule" data-tab="schedule">已排程</button>
+      <button role="tab" id="tab-log" aria-selected="false" aria-controls="view-log" data-tab="log">工作紀錄</button>
+    </div>
+    <div class="view" id="view-inbox" role="tabpanel" aria-labelledby="tab-inbox"></div>
+    <div class="view" id="view-schedule" role="tabpanel" aria-labelledby="tab-schedule" hidden></div>
+    <div class="view" id="view-log" role="tabpanel" aria-labelledby="tab-log" hidden><ol class="log" id="log"></ol></div>
+  </aside>
+</main>
+
+<dialog class="agent-card" id="agent-card">
+  <form method="dialog"><button class="close" aria-label="關閉">✕</button></form>
+  <div id="agent-card-body"></div>
+</dialog>
+<dialog class="lightbox" id="lightbox">
+  <form method="dialog"><button class="close" aria-label="關閉">✕</button></form>
+  <img id="lightbox-img" alt="" />
+</dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/static/office.js"></script>
+</body>
+</html>

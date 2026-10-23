@@ -1,0 +1,67 @@
+"""企劃：每天早上讀平台數字、官方公告與上週成效，排出今天要發的內容。"""
+
+from __future__ import annotations
+
+from datetime import date, datetime, timedelta, timezone
+
+from ..brand import PILLAR_FORMAT, Briefing, load_facts, load_news, pillar_for
+from ..models import DayPlan, PlanItem
+from .base import Agent, Persona
+
+CHANNEL_LABEL = {"threads": "Threads", "instagram": "IG", "youtube": "YouTube"}
+FORMAT_LABEL = {"text": "貼文", "carousel": "輪播", "reel": "Reels", "short": "Shorts", "long": "長影片", "story": "限動"}
+
+
+class Strategist(Agent):
+    persona = Persona(
+        id="strategist",
+        name="Ivy",
+        title="企劃總監",
+        duty="讀官方公告、平台數字與上週成效，排出今天的內容與發文時間",
+        hair="bob",
+        hair_color="#2b1d16",
+        shirt="#e2574a",
+        accessory="none",
+        decor="notes",
+    )
+
+    def briefing(self, day: date) -> Briefing:
+        self.status("thinking", "翻今天的官方公告…", screen={"type": "lines", "title": "資料來源", "lines": ["讀取支援大學清單", "讀取每日公告查核帳本"]})
+        facts = load_facts(self.office.settings)
+        news = load_news(self.office.settings)
+        since = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat(timespec="seconds")
+        recent = [d["title"] for d in self.office.store.drafts(limit=60) if d["created_at"] >= since]
+        winners = self.office.staff["analyst"].winners()
+        self.status(
+            "thinking",
+            f"今天有 {len(news)} 則已核實公告",
+            screen={
+                "type": "lines",
+                "title": "今日簡報",
+                "lines": [
+                    f"支援 {facts.university_count} 所大學",
+                    f"{facts.partner_count:,} 筆合作校資料",
+                    *[f"📮 {n.school}" for n in news[:3]],
+                    *[f"🔥 {w['title'][:16]}" for w in winners[:2]],
+                ],
+            },
+        )
+        return Briefing(day=day, facts=facts, news=news, recent_titles=recent, winners=winners)
+
+    def slots(self, day: date) -> list[PlanItem]:
+        settings = self.office.settings
+        blank = dict(topic="", brief="")
+        slots = [PlanItem(channel="threads", format="text", pillar="value", angle="pain", **blank) for _ in settings.threads_slots]
+        pillar = pillar_for(day)
+        slots.append(PlanItem(channel="instagram", format=PILLAR_FORMAT[pillar], pillar=pillar, angle="list", **blank))
+        if day.weekday() == settings.long_video_weekday:
+            slots.append(PlanItem(channel="youtube", format="long", pillar="value", angle="news", **blank))
+        return slots
+
+    def plan(self, briefing: Briefing) -> DayPlan:
+        self.status("working", "排今天的內容…", screen={"type": "lines", "title": "排程中", "lines": ["Threads × IG 雙平台", "內容比例 3:3:3:1"]})
+        plan = self.office.writer.plan_day(briefing, self.slots(briefing.day))
+        lines = [f"{CHANNEL_LABEL[i.channel]} {FORMAT_LABEL.get(i.format, i.format)}｜{i.topic}" for i in plan.items]
+        self.office.bus.emit(self.id, "whiteboard", plan.theme, notes=plan.whiteboard, items=[i.model_dump() for i in plan.items])
+        self.status("done", f"今天主軸：{plan.theme}", screen={"type": "lines", "title": "今日企劃", "lines": lines})
+        return plan
