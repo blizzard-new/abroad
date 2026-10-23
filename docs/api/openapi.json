@@ -12713,6 +12713,28 @@
         "title": "DestinationTipTopic",
         "type": "object"
       },
+      "DeviceRegistration": {
+        "properties": {
+          "fid": {
+            "maxLength": 256,
+            "minLength": 10,
+            "pattern": "^[A-Za-z0-9_:\\-]+$",
+            "title": "Fid",
+            "type": "string"
+          },
+          "installation_id": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Installation Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "installation_id",
+          "fid"
+        ],
+        "title": "DeviceRegistration",
+        "type": "object"
+      },
       "DiscoveryWorkspace": {
         "additionalProperties": false,
         "properties": {
@@ -14109,6 +14131,30 @@
           "url"
         ],
         "title": "LifeSource",
+        "type": "object"
+      },
+      "MobileSessionExchange": {
+        "properties": {
+          "code": {
+            "maxLength": 128,
+            "minLength": 43,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Code",
+            "type": "string"
+          },
+          "code_verifier": {
+            "maxLength": 128,
+            "minLength": 43,
+            "pattern": "^[A-Za-z0-9._~-]+$",
+            "title": "Code Verifier",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "code_verifier"
+        ],
+        "title": "MobileSessionExchange",
         "type": "object"
       },
       "ModerationStatus": {
@@ -20373,6 +20419,69 @@
         "summary": "Save Application Form Draft"
       }
     },
+    "/account/mobile-devices": {
+      "put": {
+        "operationId": "register_account_mobile_devices_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceRegistration"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Register"
+      }
+    },
+    "/account/mobile-devices/{installation_id}": {
+      "delete": {
+        "operationId": "remove_account_mobile_devices__installation_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "installation_id",
+            "required": true,
+            "schema": {
+              "title": "Installation Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Remove"
+      }
+    },
     "/account/notifications": {
       "delete": {
         "operationId": "delete_all_account_notifications_delete",
@@ -22909,6 +23018,22 @@
         "summary": "Admin Dashboard"
       }
     },
+    "/admin/mobile-push/run-due": {
+      "post": {
+        "operationId": "dispatch_admin_mobile_push_run_due_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Dispatch"
+      }
+    },
     "/admin/notifications/run-due": {
       "post": {
         "operationId": "run_due_admin_notifications_run_due_post",
@@ -24675,6 +24800,64 @@
         "summary": "Export Auth Profile"
       }
     },
+    "/auth/mobile/config": {
+      "get": {
+        "operationId": "mobile_config_auth_mobile_config_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Mobile Config Auth Mobile Config Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Mobile Config"
+      }
+    },
+    "/auth/mobile/exchange": {
+      "post": {
+        "operationId": "exchange_auth_mobile_exchange_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MobileSessionExchange"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountSession"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Exchange"
+      }
+    },
     "/auth/oauth/{provider}/callback": {
       "get": {
         "operationId": "oauth_callback_auth_oauth__provider__callback_get",
@@ -24765,6 +24948,40 @@
             "schema": {
               "title": "Provider",
               "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "mobile_challenge",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9_-]{43}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Mobile Challenge"
+            }
+          },
+          {
+            "in": "query",
+            "name": "mobile_state",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9_-]{43}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Mobile State"
             }
           },
           {

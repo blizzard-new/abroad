@@ -65,7 +65,8 @@ void main() {
       });
 
       final prefs = await SharedPreferences.getInstance();
-      final raw = prefs.getString('application_profile_memory_v1');
+      final memoryKey = prefs.getKeys().singleWhere((key) => key.endsWith(':application_profile_memory_v1'));
+      final raw = prefs.getString(memoryKey);
       expect(raw, isNotNull);
       final saved = jsonDecode(raw!) as Map<String, dynamic>;
       expect(saved.containsKey('student_name_zh'), isTrue);

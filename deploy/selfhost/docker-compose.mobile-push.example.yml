@@ -1,0 +1,9 @@
+# Optional overlay. Set FIREBASE_SERVICE_ACCOUNT_FILE to a file OUTSIDE this repo.
+# Apply together with docker-compose.yml; repeat after ordinary app updates.
+services:
+  app:
+    environment:
+      EXCHANGE_FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID:?Set FIREBASE_PROJECT_ID}
+      GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/firebase-service-account.json
+    volumes:
+      - ${FIREBASE_SERVICE_ACCOUNT_FILE:?Set FIREBASE_SERVICE_ACCOUNT_FILE}:/run/secrets/firebase-service-account.json:ro

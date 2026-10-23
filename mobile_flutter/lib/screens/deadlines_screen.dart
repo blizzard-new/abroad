@@ -8,7 +8,8 @@ import '../core/exchange_widgets.dart';
 import '../state/exchange_store.dart';
 
 class DeadlinesScreen extends StatefulWidget {
-  const DeadlinesScreen({super.key});
+  const DeadlinesScreen({super.key, this.initialDate});
+  final DateTime? initialDate;
 
   @override
   State<DeadlinesScreen> createState() => _DeadlinesScreenState();
@@ -22,7 +23,7 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
   @override
   void initState() {
     super.initState();
-    final today = dateOnly(DateTime.now());
+    final today = dateOnly(widget.initialDate ?? DateTime.now());
     focusedMonth = DateTime(today.year, today.month);
     selectedDate = today;
   }

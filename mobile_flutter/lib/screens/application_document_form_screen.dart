@@ -160,7 +160,7 @@ class _ApplicationDocumentFormScreenState
       await ExchangeStoreScope.of(
         context,
       ).saveApplicationDocument(widget.template, _collectValues());
-      if (announce && mounted) _showMessage('已儲存');
+      if (announce && mounted) _showMessage('已暫存於本次使用；完整答案請匯出 PDF 或在網頁工作台保存。');
       return true;
     } finally {
       if (mounted) setState(() => saving = false);
@@ -200,6 +200,16 @@ class _ApplicationDocumentFormScreenState
           backgroundColor: Colors.white.withValues(alpha: .72),
           surfaceTintColor: Colors.transparent,
           title: const Text('填寫文件'),
+          actions: [
+            IconButton(
+              tooltip: '在網頁開啟雲端文件工作台',
+              icon: const Icon(Icons.cloud_outlined),
+              onPressed: () => launchUrl(
+                Uri.parse(store.api.resolveUrl('#application-center')),
+                mode: LaunchMode.externalApplication,
+              ),
+            ),
+          ],
           leading: IconButton(
             tooltip: '文件清單',
             onPressed: () => Navigator.of(context).pop(),
@@ -231,6 +241,8 @@ class _ApplicationDocumentFormScreenState
                   widget.template.title,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
+                const SizedBox(height: 8),
+                const Text('此頁完整答案只暫存在本次使用，關閉 App 後不保留。雲端草稿與私密附件請由右上角開啟網頁工作台。'),
                 if (autofillCount > 0) ...[
                   const SizedBox(height: 10),
                   Semantics(
@@ -336,7 +348,7 @@ class _ApplicationDocumentFormScreenState
                                 ),
                               )
                             : const Icon(Icons.save_outlined),
-                        label: const Text('儲存'),
+                        label: const Text('暫存'),
                       ),
                       OutlinedButton.icon(
                         onPressed: saving || store.isGeneratingApplicationPdf

@@ -95,6 +95,7 @@ class SchoolMatch {
 
 class ExchangeBudgetPlan {
   const ExchangeBudgetPlan({
+    this.currency = 'TWD',
     required this.schoolName,
     required this.months,
     required this.monthlyHousing,
@@ -107,6 +108,7 @@ class ExchangeBudgetPlan {
 
   factory ExchangeBudgetPlan.fromJson(Map<String, dynamic> json) {
     return ExchangeBudgetPlan(
+      currency: textValue(json['currency'], 'TWD'),
       schoolName: textValue(json['school_name']),
       months: int.tryParse(textValue(json['months'])) ?? 5,
       monthlyHousing: _doubleValue(json['monthly_housing']) ?? 0,
@@ -119,6 +121,7 @@ class ExchangeBudgetPlan {
   }
 
   final String schoolName;
+  final String currency;
   final int months;
   final double monthlyHousing;
   final double monthlyFood;
@@ -136,6 +139,7 @@ class ExchangeBudgetPlan {
 
   Map<String, dynamic> toJson() => {
     'school_name': schoolName,
+    'currency': currency,
     'months': months,
     'monthly_housing': monthlyHousing,
     'monthly_food': monthlyFood,
