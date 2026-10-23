@@ -6,7 +6,7 @@ Branch: `codex/android-synced-preview`, based on `abroad/main` at
 
 ## Delivered implementation
 
-- Android 2.1.0 (14), package `tw.uniway.app`, Android API 24+, universal APK
+- Android 2.1.1 (15), package `tw.uniway.app`, Android API 24+, universal APK
   for arm64-v8a / armeabi-v7a / x86_64. Stable RSA 3072 preview certificate;
   signing passwords and keystore are outside Git. Release refuses debug signing.
 - Student journey, schools, application preparation and account navigation;
@@ -17,6 +17,10 @@ Branch: `codex/android-synced-preview`, based on `abroad/main` at
   offline retry, unrelated-field merge and explicit same-field conflict choices.
 - Shared favorites, selection profile, document readiness, selections, budgets
   and saved calendar dates. Existing Web-only fields survive edits.
+- Encrypted form drafts use the existing Web draft API. Known non-sensitive scalar
+  fields survive offline restart in Android secure storage, incomplete forms can
+  be saved, and conflicts use the version actually displayed when editing began.
+  Existing vault references are preserved; expired references are removed.
 - Android local reminders, permission/test control, notification center;
   responsive 140dp/280dp widget with cached next action, tasks and update date.
 - Optional FCM FID registration, account-guarded data-only messages, generic
@@ -25,13 +29,14 @@ Branch: `codex/android-synced-preview`, based on `abroad/main` at
 
 ## Evidence
 
-- Flutter unit/widget tests: 74 passed, including 360px navigation at 1.4x text,
+- Flutter unit/widget tests: 84 passed, including 360px navigation at 1.4x text,
   offline restart, 409 revision races, same-field conflict and account isolation.
 - Android emulator integration: local notification permission, active delivery,
   scheduling, cancellation, widget storage and qualified receiver update passed.
 - Android emulator + isolated loopback Python backend: PKCE exchange, restored
   account identity, favorite write/read through REST, Web-client JPY budget and
-  document-readiness updates, preservation and logout cleanup passed.
+  document-readiness updates, Web-to-mobile-to-Web form draft edits, preservation
+  and secure draft cache deletion on logout passed.
   The fixture uses synthetic data and bypasses Google's external approval page;
   it is not evidence of production Google login or two physical devices.
 - Python authentication/workspace/notification tests: 67 distinct tests passed
@@ -54,9 +59,13 @@ Branch: `codex/android-synced-preview`, based on `abroad/main` at
   background delivery still need production configuration and user acceptance.
 - No physical phone was attached. Notification tap and widget size behavior can
   vary by launcher/device and should be checked on the user's phone.
-- Full form answers and private uploads are not synchronized by this native preview.
-  Full answers remain only in the current process; the form explains this and links
-  to the Web cloud workbench. Selected common-field memory is device-local opt-in.
+- Sensitive form fields and newly selected raw attachments remain only in the
+  current process. Explicit private-file consent, upload/download, and PDF export
+  using existing vault attachments remain in the Web workbench. Native draft saves
+  preserve existing vault references and display their filenames; native PDF export
+  requires selecting those files again. General scalar answers now synchronize.
+- Draft persistence requires pressing Save draft; unsaved typing is not autosaved.
+  Selected common-field device memory remains a separate opt-in setting.
 - Widget data is a cached snapshot refreshed when the app synchronizes, not a
   background cloud connection. iOS has not been built or tested.
 
@@ -65,7 +74,7 @@ configuration, manual acceptance and signing backup instructions.
 
 ## Release receipt
 
-Final APK SHA-256: `56ac82b46b9f275d11779dbfbb376714fb2228a1c528b6b55b916ee9979bb7ab`.
+Final APK SHA-256: `6ab35d15a686ff59470bb0285285c8dea8254b0b7d57041fce0d252536ff62ac`.
 Certificate SHA-256: `a837f361a4dae7f1892985aeca7fb9fd8e580ac7697e2b98ae044b3d132ba2f2`.
 Release-to-release `adb install -r` succeeded with this stable certificate.
 Release UI loads the existing production school list. Home-screen widget pinning,

@@ -16,6 +16,7 @@ import '../core/study_plan_widget_service.dart';
 import '../data/exchange_api.dart';
 import '../data/models.dart';
 import 'workspace_sync.dart';
+import 'application_draft_sync.dart';
 
 const _applicationProfileMemoryEnabledKey =
     'application_profile_memory_enabled_v1';
@@ -53,6 +54,67 @@ class ExchangeStore extends ChangeNotifier {
     api.baseUrl,
   );
   WorkspaceSync? workspaceSync;
+  final Map<String, ApplicationDraftSync> _draftSyncs = {};
+
+  ApplicationDraftSync? applicationDraft(String templateId) =>
+      _draftSyncs[templateId];
+
+  Future<ApplicationDraftSync?> openApplicationDraft(
+    ApplicationDocumentTemplate template,
+  ) async {
+    if (account == null || accessToken.isEmpty) return null;
+    var sync = _draftSyncs[template.id];
+    if (sync == null) {
+      sync = ApplicationDraftSync(
+        api: api,
+        accountId: account!.id,
+        accessToken: accessToken,
+        homeSchool: selectedUniversity,
+        template: template,
+      );
+      _draftSyncs[template.id] = sync;
+      final current = sync;
+      sync.addListener(() {
+        if (_disposed || _draftSyncs[template.id] != current) return;
+        _applyApplicationDraft(template, current);
+        notifyListeners();
+      });
+      await sync.restore();
+    }
+    await sync.sync();
+    return _draftSyncs[template.id] == sync ? sync : null;
+  }
+
+  void _applyApplicationDraft(
+    ApplicationDocumentTemplate template,
+    ApplicationDraftSync sync,
+  ) {
+    final draft = sync.draft;
+    final profile = jsonMap(draft['profile']);
+    final answers = jsonMap(draft['answers']);
+    final current = applicationAnswers.putIfAbsent(template.id, () => {});
+    for (final field in template.fields) {
+      if (field.sensitive || field.kind == ApplicationFieldKind.files) continue;
+      if (field.reusableProfileKey.isNotEmpty) {
+        if (profile.containsKey(field.reusableProfileKey)) {
+          applicationProfile[field.reusableProfileKey] =
+              profile[field.reusableProfileKey];
+        }
+      } else if (answers.containsKey(field.id)) {
+        current[field.id] = answers[field.id];
+      } else {
+        current.remove(field.id);
+      }
+    }
+  }
+
+  void _disposeDrafts() {
+    for (final sync in _draftSyncs.values) {
+      sync.dispose();
+    }
+    _draftSyncs.clear();
+  }
+
   late final MobileLogin mobileLogin = MobileLogin(api);
   late final MobileNotifications mobileNotifications = MobileNotifications(
     api.baseUrl,
@@ -429,6 +491,10 @@ class ExchangeStore extends ChangeNotifier {
   Future<void> _clearAccount() async {
     await remotePush.disable();
     final oldAccount = account?.id;
+    _disposeDrafts();
+    if (oldAccount != null) {
+      await ApplicationDraftSync.clearAccountCache(api.baseUrl, oldAccount);
+    }
     final oldWorkspace = workspaceSync;
     _workspaceTimer?.cancel();
     workspaceSync = null;
@@ -837,8 +903,11 @@ class ExchangeStore extends ChangeNotifier {
 
   Future<void> saveApplicationDocument(
     ApplicationDocumentTemplate template,
-    Map<String, dynamic> values,
-  ) async {
+    Map<String, dynamic> values, {
+    bool markReady = true,
+    JsonMap? draftSnapshot,
+  }) async {
+    final draftSync = _draftSyncs[template.id];
     final documentValues = <String, dynamic>{};
     for (final field in template.fields) {
       if (!values.containsKey(field.id)) continue;
@@ -855,10 +924,16 @@ class ExchangeStore extends ChangeNotifier {
         ApplicationDocumentSelectionState.initial(template.defaultCopies);
     applicationSelections[template.id] = current.copyWith(
       selected: true,
-      status: current.status == ApplicationDocumentProgress.draft
+      status: markReady && current.status == ApplicationDocumentProgress.draft
           ? ApplicationDocumentProgress.readyToPrint
           : current.status,
     );
+    // Persist safe draft values before any network call; keep raw attachments
+    // and sensitive answers in memory only.
+    await draftSync?.editFields(values, editorSnapshot: draftSnapshot);
+    if (draftSync != null && _draftSyncs[template.id] != draftSync) return;
+    await draftSync?.sync();
+    if (draftSync != null && _draftSyncs[template.id] != draftSync) return;
     await _syncSelections();
     await _persistApplicationProfileMemory();
     await _persistApplicationDocumentState();
@@ -1413,10 +1488,12 @@ class ExchangeStore extends ChangeNotifier {
     await sync.restore();
     await sync.sync();
     if (_disposed || workspaceSync != sync) return;
-    _workspaceTimer = Timer.periodic(
-      const Duration(seconds: 30),
-      (_) => unawaited(sync.sync()),
-    );
+    _workspaceTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+      unawaited(sync.sync());
+      for (final draft in _draftSyncs.values.toList()) {
+        unawaited(draft.sync());
+      }
+    });
   }
 
   late final RemotePush remotePush = RemotePush(api)
@@ -1427,6 +1504,7 @@ class ExchangeStore extends ChangeNotifier {
 
   Future<void> synchronizeWorkspace() async {
     await workspaceSync?.sync();
+    await Future.wait(_draftSyncs.values.toList().map((sync) => sync.sync()));
     if (account != null) {
       await remotePush.bind(
         accountId: account!.id,
@@ -1472,6 +1550,7 @@ class ExchangeStore extends ChangeNotifier {
   }
 
   void _resetPrivateState() {
+    _disposeDrafts();
     favorites.clear();
     completedSteps.clear();
     documentStatuses.clear();
@@ -1580,6 +1659,7 @@ class ExchangeStore extends ChangeNotifier {
     _disposed = true;
     _workspaceTimer?.cancel();
     workspaceSync?.dispose();
+    _disposeDrafts();
     super.dispose();
   }
 

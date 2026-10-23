@@ -3,6 +3,7 @@ import 'package:crypto/crypto.dart';
 import 'package:exchange_guide_flutter/core/account_session_storage.dart';
 import 'package:exchange_guide_flutter/core/mobile_login.dart';
 import 'package:exchange_guide_flutter/data/exchange_api.dart';
+import 'package:exchange_guide_flutter/data/models.dart';
 import 'package:exchange_guide_flutter/state/exchange_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -100,7 +101,64 @@ void main() {
         'JPY',
       );
       expect(updated['document_readiness']['語言能力證明'], 'ready');
+      final template = store.applicationTemplates.firstWhere(
+        (template) => template.fields.any(
+          (field) =>
+              !field.sensitive &&
+              field.reusableProfileKey.isEmpty &&
+              (field.kind == ApplicationFieldKind.text ||
+                  field.kind == ApplicationFieldKind.textarea),
+        ),
+      );
+      final field = template.fields.firstWhere(
+        (field) =>
+            !field.sensitive &&
+            field.reusableProfileKey.isEmpty &&
+            (field.kind == ApplicationFieldKind.text ||
+                field.kind == ApplicationFieldKind.textarea),
+      );
+      final existingDrafts = await web.applicationDrafts(
+        login.accessToken,
+        store.selectedUniversity,
+      );
+      final existing = existingDrafts
+          .where((draft) => draft['template_id'] == template.id)
+          .firstOrNull;
+      await web.saveApplicationDraft(login.accessToken, template.id, {
+        'home_school': store.selectedUniversity,
+        'template_version': template.version,
+        'revision': existing?['revision'] ?? 0,
+        'profile': {},
+        'answers': {field.id: '電腦開始的草稿'},
+        'attachments': {},
+      });
+      final draftSync = await store.openApplicationDraft(template);
+      expect(store.applicationValue(template, field), '電腦開始的草稿');
+      await store.saveApplicationDocument(
+        template,
+        {field.id: '手機接續的草稿'},
+        markReady: false,
+        draftSnapshot: draftSync!.editorSnapshot,
+      );
+      final webDrafts = await web.applicationDrafts(
+        login.accessToken,
+        store.selectedUniversity,
+      );
+      expect(
+        webDrafts.firstWhere(
+          (draft) => draft['template_id'] == template.id,
+        )['answers'][field.id],
+        '手機接續的草稿',
+      );
+      expect(
+        await const FlutterSecureStorage().read(key: draftSync.cacheKey),
+        isNotNull,
+      );
       await store.logout();
+      expect(
+        await const FlutterSecureStorage().read(key: draftSync.cacheKey),
+        isNull,
+      );
       expect(store.account, isNull);
       expect(store.favorites, isEmpty);
       expect(await AccountSessionStorage(base).read(), isNull);

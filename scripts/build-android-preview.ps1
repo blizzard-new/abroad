@@ -8,6 +8,9 @@ $ErrorActionPreference = 'Stop'
 $taskRepo = Split-Path -Parent $PSScriptRoot
 $taskSource = Join-Path $taskRepo 'mobile_flutter'
 $taskOutput = Join-Path $taskRepo 'output\android'
+$taskVersionLine = Select-String -LiteralPath (Join-Path $taskSource 'pubspec.yaml') -Pattern '^version: ([0-9]+\.[0-9]+\.[0-9]+)\+[0-9]+$'
+if (-not $taskVersionLine) { throw 'Expected a semantic version and build number in pubspec.yaml.' }
+$taskApkName = "UniWay-$($taskVersionLine.Matches[0].Groups[1].Value)-preview.apk"
 $taskKey = Join-Path $SigningDirectory 'uniway-preview.p12'
 $taskPasswordFile = Join-Path $SigningDirectory 'password.dpapi'
 foreach ($taskRequired in @($Flutter,$taskKey,$taskPasswordFile)) {
@@ -59,10 +62,10 @@ try {
     if ($FirebaseConfig) { $taskArgs += "--dart-define-from-file=$taskClientDefines" }
     & $Flutter @taskArgs
     if ($LASTEXITCODE -ne 0) { throw 'APK build failed.' }
-    $taskApk = Join-Path $taskOutput 'UniWay-2.1.0-preview.apk'
+    $taskApk = Join-Path $taskOutput $taskApkName
     Copy-Item -LiteralPath 'build\app\outputs\flutter-apk\app-release.apk' -Destination $taskApk
     $taskHash = (Get-FileHash -LiteralPath $taskApk -Algorithm SHA256).Hash.ToLowerInvariant()
-    "$taskHash  UniWay-2.1.0-preview.apk" | Set-Content -LiteralPath (Join-Path $taskOutput 'SHA256SUMS.txt')
+    "$taskHash  $taskApkName" | Set-Content -LiteralPath (Join-Path $taskOutput 'SHA256SUMS.txt')
     Write-Output "APK: $taskApk"
     Write-Output "SHA256: $taskHash"
 } finally {

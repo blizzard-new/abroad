@@ -203,6 +203,34 @@ class ExchangeApi {
     return AccountProfile.fromJson(_decode(response));
   }
 
+  Future<List<JsonMap>> applicationDrafts(
+    String token,
+    String homeSchool,
+  ) async {
+    final response = await _client
+        .get(
+          _uri('account/application-drafts', {'home_school': homeSchool}),
+          headers: _bearer(token),
+        )
+        .timeout(const Duration(seconds: 15));
+    return jsonMapList(jsonMap(_decode(response))['items']);
+  }
+
+  Future<JsonMap> saveApplicationDraft(
+    String token,
+    String templateId,
+    JsonMap payload,
+  ) async {
+    final response = await _client
+        .put(
+          _uri('account/application-drafts/${Uri.encodeComponent(templateId)}'),
+          headers: _bearer(token),
+          body: jsonEncode(payload),
+        )
+        .timeout(const Duration(seconds: 15));
+    return jsonMap(_decode(response));
+  }
+
   Future<JsonMap> workspace(String accessToken, String homeSchool) async {
     final response = await _client
         .get(

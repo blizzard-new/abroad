@@ -11,14 +11,19 @@ enum WorkspaceSyncStatus { loading, saved, pending, syncing, conflict, expired }
 
 JsonMap copyWorkspace(JsonMap value) => jsonMap(jsonDecode(jsonEncode(value)));
 
-bool _equal(dynamic a, dynamic b) {
+bool workspaceValuesEqual(dynamic a, dynamic b) {
   if (a is Map && b is Map) {
     return a.length == b.length &&
-        a.keys.every((key) => b.containsKey(key) && _equal(a[key], b[key]));
+        a.keys.every(
+          (key) => b.containsKey(key) && workspaceValuesEqual(a[key], b[key]),
+        );
   }
   if (a is List && b is List) {
     return a.length == b.length &&
-        List.generate(a.length, (i) => i).every((i) => _equal(a[i], b[i]));
+        List.generate(
+          a.length,
+          (i) => i,
+        ).every((i) => workspaceValuesEqual(a[i], b[i]));
   }
   return a == b;
 }
@@ -40,8 +45,8 @@ WorkspaceMerge mergeWorkspaces(
   final conflicts = <String>[];
   const absent = _Absent();
   dynamic merge(dynamic b, dynamic l, dynamic r, String path) {
-    if (_equal(l, b)) return r;
-    if (_equal(r, b) || _equal(l, r)) return l;
+    if (workspaceValuesEqual(l, b)) return r;
+    if (workspaceValuesEqual(r, b) || workspaceValuesEqual(l, r)) return l;
     if (path == 'favorite_schools' || path == 'application_schools') {
       final before = b is List ? b.toSet() : <dynamic>{};
       final here = l is List ? l.toSet() : <dynamic>{};
@@ -116,7 +121,7 @@ class WorkspaceSync extends ChangeNotifier {
   String get cacheKey =>
       'workspace_v2:${Uri.encodeComponent(api.baseUrl)}:${Uri.encodeComponent(accountId)}:${Uri.encodeComponent(homeSchool)}';
   JsonMap get workspace => copyWorkspace(_local);
-  bool get hasPendingChanges => !_equal(_base, _local);
+  bool get hasPendingChanges => !workspaceValuesEqual(_base, _local);
 
   Future<void> restore() async {
     final prefs = await SharedPreferences.getInstance();
