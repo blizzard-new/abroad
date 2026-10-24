@@ -4,7 +4,12 @@
 首次公開版本為 [2.1.2 測試版](https://github.com/blizzard-new/abroad/releases/tag/android-v2.1.2-preview)，
 發布日期為 2026-10-24；後續版本依序保留在同一頁面。
 
-目前新版：[2.1.6 APK](https://github.com/blizzard-new/abroad/releases/download/android-v2.1.6-preview/UniWay-2.1.6-preview.apk)。
+目前新版：[2.1.7 APK](https://github.com/blizzard-new/abroad/releases/download/android-v2.1.7-preview/UniWay-2.1.7-preview.apk)。
+2026-10-25（台灣時間）已發布。明亮背景、圖示化交換旅程、大照片學校卡片與四款淺色 Widget。
+匿名完整下載 79,765,116 bytes，SHA-256 與本機及 GitHub asset digest 相同；模擬器覆蓋安裝成功。
+紀錄見 `android-public-download-2.1.7-20261025.json`；設計與測試見 `mobile-daylight-ui-20261025.md`。
+
+前一版：[2.1.6 APK](https://github.com/blizzard-new/abroad/releases/download/android-v2.1.6-preview/UniWay-2.1.6-preview.apk)。
 2026-10-25（台灣時間）已發布，匿名完整下載 79,765,108 bytes，SHA-256 與本機及 GitHub asset digest 相同。
 2.1.5 已實際跳出 2.1.6 更新提醒，下載按鈕開啟正確 APK 網址；模擬器以 `adb install -r` 覆蓋更新成功。
 新功能為星空 Liquid 介面、純圖示導覽與四款桌面小工具。
@@ -29,7 +34,7 @@ GitHub 公開 repository 的 Release 與附件不需要登入。2.1.3 已於 202
 ## 新版發布方式
 
 1. 更新 `mobile_flutter/pubspec.yaml` 的版本號與 build number；Android `versionCode`
-   必須高於已發布版本。2.1.6 使用 versionCode 20；後續版本必須同時提高三段版本號與 versionCode。
+   必須高於已發布版本。2.1.7 使用 versionCode 21；後續版本必須同時提高三段版本號與 versionCode。
 2. 沿用 `tw.uniway.app` 與現有測試簽章，透過 `scripts/build-android-preview.ps1` 建置。
    私鑰及密碼只留在建置機的安全目錄，不可放到 Release 或 repository。
 3. 執行對應功能驗證，確認 APK 內部版本、簽章及 SHA-256；檔名需與內部版本相符。
