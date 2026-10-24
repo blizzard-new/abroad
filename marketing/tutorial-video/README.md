@@ -1,12 +1,15 @@
-# UniWay 教學影片：登入與學校搜尋
+# UniWay 教學影片
 
-| 成品 | 規格 |
-|------|------|
-| [`build/uniway-tutorial-school-search.mp4`](build/uniway-tutorial-school-search.mp4)（封面 [`build/poster.jpg`](build/poster.jpg)） | 1920×1080、30 fps、3 分 33 秒，輕配樂＋點擊音效 |
+依學生實際申請的順序分集，每集 3～4 分鐘。示範帳號都是「示範同學」（@cgu.edu.tw），就讀學校自動帶入**長庚大學**（77 所合作校）。畫面都是真的網站，由瀏覽器實際點擊錄下來，不是截圖拼貼。
 
-從首頁登入開始，進入「學校搜尋」，把頁面上每個功能都操作一次。示範帳號是「示範同學」（@cgu.edu.tw），就讀學校自動帶入**長庚大學**（77 所合作校）。畫面都是真的網站，由瀏覽器實際點擊錄下來，不是截圖拼貼。
+| 集數 | 主題 | 成品 | 長度 |
+|------|------|------|------|
+| 第 1 集 | 登入與學校搜尋 | [`build/uniway-tutorial-school-search.mp4`](build/uniway-tutorial-school-search.mp4)（封面 [`poster.jpg`](build/poster.jpg)） | 3 分 33 秒 |
+| 第 2 集 | 選校與確認 | [`build/uniway-tutorial-02-choose-and-confirm.mp4`](build/uniway-tutorial-02-choose-and-confirm.mp4)（封面 [`poster-02.jpg`](build/poster-02.jpg)） | 2 分 17 秒 |
 
-## 分段
+規格都是 1920×1080、30 fps，輕配樂＋點擊音效。之後預計的集數：準備與時程、申請文件、預算與補助、社群。
+
+## 第 1 集：登入與學校搜尋
 
 | 步驟 | 內容 |
 |------|------|
@@ -22,6 +25,22 @@
 | 9 比較與我的選校 | 勾「加入比較」兩所、愛心收藏一所 → 並排比較 → 我的選校 |
 | 片尾 | 開始找你的交換學校吧！app.uniway-tw.com |
 
+## 第 2 集：選校與確認
+
+接續第 1 集：一開始就已登入（錄影前先登入，不錄進影片）。
+
+| 步驟 | 內容 |
+|------|------|
+| 片頭 | 第 2 集：填寫條件 → 看推薦 → 選目標 → 核對資格與志願 |
+| 1 進入我的申請 | 左側選單點「我的申請」；申請分三步：選校與確認 → 準備與時程 → 文件與送件 |
+| 2 填寫我的條件 | 工學院、資訊工程學系、大學部、2027 秋季；成績與語言能力（學業平均 85、IELTS 6.5）；更多偏好（年級大三） |
+| 3 產生我的申請方案 | 系統資格比對（學業平均、IELTS 達基本門檻）；你的選校結果分三組與排序分數；展開「費用、語言與課程」；我的下一步 |
+| 4 選定目標學校 | 第一名按「選為目標」→ 第 1 步打勾，系統帶到第 2 步 |
+| 5 當期資格與志願 | 回到第 1 步 →「本階段其他頁面」→ 當期資格與志願；條件自動帶入；116 學年度、秋季／全學年梯次；第一、第二志願 → 核對志願並建立計畫 |
+| 6 你的申請清單 | 每個志願逐項核對（綠勾已符合、橘色待確認）；個人下一步附官方來源 |
+| 7 第 1 步完成 | 上方提示下一件事「為目標學校安排準備時程」與「預覽準備時程」按鈕 |
+| 片尾 | 第 2 集完成，下一集：準備與時程 |
+
 ## 登入那一段怎麼錄的
 
 正式網站只開放 Google 登入。錄影時 `demo_server.py` 啟動的就是正式的程式，只差兩點：
@@ -29,21 +48,23 @@
 - 帳號、收藏與條件寫進一次性的暫存資料夾，不會動到 `data/`。
 - 不連 Google：取 token 與讀個人資料這兩個呼叫，直接回一位假的學生（示範同學，已驗證的 @cgu.edu.tw 信箱）。UniWay 自己這一側的流程全部照跑：條款勾選檢查、state cookie、callback、依信箱網域帶入學校。
 
-Google 自己的帳號選擇畫面不屬於 UniWay，影片裡不模仿它，改用一張說明卡（「接下來會開啟 Google 登入……教學影片略過 Google 的帳號選擇畫面」）帶過；登入後頁面重新載入的那幾秒以 2 倍速播放。
+Google 自己的帳號選擇畫面不屬於 UniWay，影片裡不模仿它，改用一張說明卡（「接下來會開啟 Google 登入……教學影片略過 Google 的帳號選擇畫面」）帶過；登入後頁面重新載入的那幾秒以 2 倍速播放。第 2 集起在錄影前就先登入。
 
 ## 重新錄製
 
 需要專案的 Python 環境（`uv sync --frozen --extra dev`，內含 Playwright）、Chromium、ffmpeg，以及有 NumPy 的 Python 3（配樂用）。在專案根目錄：
 
 ```bash
-.venv/bin/python marketing/tutorial-video/demo_server.py &     # 正式網站，port 8771，資料放暫存資料夾
-.venv/bin/python marketing/tutorial-video/record.py            # 約 20 分鐘：慢動作操作一遍，再輸出 build/uniway-tutorial-school-search.mp4
-.venv/bin/python marketing/tutorial-video/record.py --stills   # 只在每一步結束存一張 PNG（build/stills/），快速檢查版面
+.venv/bin/python marketing/tutorial-video/demo_server.py &                 # 正式網站，port 8771，資料放暫存資料夾
+.venv/bin/python marketing/tutorial-video/record.py --episode 2            # 約 20 分鐘：慢動作操作一遍，輸出影片與封面
+.venv/bin/python marketing/tutorial-video/record.py --episode 2 --stills   # 只在每一步結束存一張 PNG（build/stills/），快速檢查版面
 ```
+
+`--episode` 不寫時錄第 1 集。
 
 沒有 GPU 的環境裡，Chromium 每秒只畫得出 8 張左右 1080p 畫面，直接錄會一格一格的。所以整段操作以 4 倍慢動作進行（`--slow 4`）：滑鼠、停留、網頁的計時器與 CSS 動畫一起放慢，最後再加速回正常速度，每秒影片約有 30 張實際畫面。有 GPU 的電腦可以用 `--slow 1` 直接即時錄。
 
-每次重錄前請重開 `demo_server.py`（或給新的 `--data-dir`），讓示範帳號從空白開始；不然上一次的收藏與條件會留在帳號裡。
+每次重錄前請重開 `demo_server.py`（或給新的 `--data-dir`），讓示範帳號從空白開始；不然上一次的收藏、條件與目標學校會留在帳號裡，畫面會跟分鏡不同。
 
 找不到 Chromium 時可以用 `CHROMIUM_PATH` 指定；配樂用的 Python 可以用 `MUSIC_PYTHON` 指定（預設 `python3`）。`--no-music` 輸出無聲版本，`--keep-frames` 保留 `build/frames/` 的原始畫格。
 
@@ -52,12 +73,13 @@ Google 自己的帳號選擇畫面不屬於 UniWay，影片裡不模仿它，改
 | 檔案 | 用途 |
 |------|------|
 | `demo_server.py` | 錄影用的網站：正式程式＋暫存資料＋代替 Google 回應 |
-| `record.py` | 分鏡腳本：每一步的滑鼠移動、點擊、字幕與停留秒數；Chromium screencast 收畫格，ffmpeg 合成 |
+| `record.py` | 各集分鏡（`episode_1()`、`episode_2()`，最下方的 `EPISODES` 列出每集的輸出檔名）：每一步的滑鼠移動、點擊、字幕與停留秒數；Chromium screencast 收畫格，ffmpeg 合成 |
 | `overlay.js` | 疊在網站上的滑鼠游標、點擊波紋、框選提示、字幕與片頭片尾卡（不攔截任何點擊），以及慢動作用的網頁時鐘與平滑捲動 |
 | `music.py` | 合成配樂與點擊音效（依 `build/timeline.json` 的長度與點擊時間），沒有版權問題 |
 
 ## 之後要更新
 
-- **改字幕或順序**：都在 `record.py` 的 `storyboard()`；字幕裡 `<em>` 會變成紅色強調字。
-- **網站改版**：選擇器寫在 `storyboard()` 裡（例如 `#partner-search`、`[data-partner-sort=deadline]`、`.pr-compare`）。先跑 `--stills` 看每一步的畫面，再錄正式版。
-- **換示範學校**：改 `demo_server.py` 的 `DEMO_USER["email"]` 網域（例如 `@gm.ntpu.edu.tw`），並同步修改字幕裡的校名與數字（77 所、法國 15 所、日本 7 所、11 間符合）。
+- **新增一集**：在 `record.py` 寫一個 `episode_N()`，加進 `EPISODES`（要不要先登入、影片與封面檔名），再把這份 README 的表格補上。
+- **改字幕或順序**：都在各集的 `episode_N()`；字幕裡 `<em>` 會變成紅色強調字。
+- **網站改版**：選擇器寫在各集分鏡裡（例如 `#partner-search`、`#advisor-college`、`#eligibility-result`）。先跑 `--stills` 看每一步的畫面，再錄正式版。
+- **換示範學校**：改 `demo_server.py` 的 `DEMO_USER["email"]` 網域（例如 `@gm.ntpu.edu.tw`），並同步修改字幕裡的校名、學院系所與數字（77 所、法國 15 所、日本 7 所、11 間符合）。

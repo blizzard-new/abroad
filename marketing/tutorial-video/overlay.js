@@ -60,7 +60,7 @@
     return false;
   };
   const pinned = (el) => {
-    for (let node = el; node; node = node.parentElement) if (/fixed|sticky/.test(getComputedStyle(node).position)) return true;
+    for (let node = el; node; node = node.parentElement) if (getComputedStyle(node).position === "fixed") return true;
     return false;
   };
   Element.prototype.scrollIntoView = function (options) {
