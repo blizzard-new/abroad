@@ -85,6 +85,13 @@ configuration, manual acceptance and signing backup instructions.
 
 ## Release receipt
 
+Public distribution is available at https://github.com/blizzard-new/abroad/releases.
+The first published prerelease is android-v2.1.2-preview, targeting the APK source
+commit 5f2a0f181322b30a1c0d1cbd5bc484a10cd313f4. Anonymous full-APK download passed
+with the expected size and SHA-256 on 2026-10-24. See android-distribution.md for
+installation/version-publishing instructions and android-public-download-20261024.json
+for the verification receipt. Publishing does not establish physical-phone acceptance.
+
 Final APK SHA-256: `e5daf1e03daea52d0196aa18f51d17d88712a0b1b24d8c856bccf0e45941214f`.
 Certificate SHA-256: `a837f361a4dae7f1892985aeca7fb9fd8e580ac7697e2b98ae044b3d132ba2f2`.
 Release-to-release `adb install -r` succeeded with this stable certificate.
