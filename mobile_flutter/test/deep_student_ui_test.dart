@@ -213,9 +213,14 @@ void main() {
       await tester.pumpAndSettle();
       expect(store.favorites, contains(school.schoolName));
       await tester.scrollUntilVisible(
-        find.widgetWithText(ChoiceChip, '流程').hitTestable(),
-        200,
+        find.widgetWithText(ChoiceChip, '流程'),
+        160,
         scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+      await Scrollable.ensureVisible(
+        tester.element(find.widgetWithText(ChoiceChip, '流程')),
+        alignment: .35,
       );
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(ChoiceChip, '流程'));
@@ -235,9 +240,14 @@ void main() {
             .jumpTo(0);
         await tester.pumpAndSettle();
         await tester.scrollUntilVisible(
-          find.widgetWithText(ChoiceChip, tab).hitTestable(),
-          200,
+          find.widgetWithText(ChoiceChip, tab),
+          160,
           scrollable: find.byType(Scrollable).first,
+        );
+        await tester.pumpAndSettle();
+        await Scrollable.ensureVisible(
+          tester.element(find.widgetWithText(ChoiceChip, tab)),
+          alignment: .35,
         );
         await tester.pumpAndSettle();
         await tester.tap(find.widgetWithText(ChoiceChip, tab));
