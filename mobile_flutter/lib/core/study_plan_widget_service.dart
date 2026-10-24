@@ -31,7 +31,7 @@ abstract interface class StudyPlanWidgetBridge {
 }
 
 class StudyPlanWidgetService implements StudyPlanWidgetBridge {
-  static const appGroupId = 'group.tw.edu.cgu.exchangeGuideFlutter';
+  static const appGroupId = 'group.tw.uniway.app';
   static const androidReceiver =
       'tw.edu.cgu.exchange_guide_flutter.StudyPlanWidgetDefinitionHomeWidgetReceiver';
 
