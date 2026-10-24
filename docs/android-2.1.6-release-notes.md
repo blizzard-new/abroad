@@ -18,8 +18,10 @@
 ## iPhone 進度
 
 iOS 程式與雲端建置流程已加入，包含四款 WidgetKit 小工具與本機通知權限流程。
+裝置版與 Simulator 版已編譯成功，並在 iPhone 模擬器啟動。
 尚無 Apple 開發者帳號及簽署設定，暫無一般 iPhone 可安裝的 IPA／TestFlight 連結。
-Simulator 與未簽署程式只供開發測試；APK 無法安裝到 iPhone。
+本頁附件 `UniWay-iOS-simulator.zip` 與 `UniWay-iOS-unsigned-app.zip` 只供開發測試，
+不能直接在 iPhone 下載安裝。Android 請選 `.apk`。
 設定說明：[iOS 建置與公開測試](https://github.com/blizzard-new/abroad/blob/codex/cosmic-widgets-ios/docs/ios-distribution.md)。
 
 Firebase 遠端推播仍待設定。本次沒有新增大學資料查核。

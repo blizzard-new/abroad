@@ -36,9 +36,18 @@ iOS 更新入口不會提供 Android APK。
 ## 雲端建置
 
 GitHub Actions 的 **iOS preview** 工作流程使用 macOS、Flutter 3.44.6、Xcode 26.3。
-選擇欲測試分支執行 `workflow_dispatch`，或在 `codex/cosmic-widgets-ios` 更新手機程式觸發。
+合併至 main 後，選擇欲測試分支執行 `workflow_dispatch`，或在 main 更新手機程式觸發。
 產物包含未簽署裝置程式、Simulator 程式、啟動畫面及 SHA-256。
 Actions 附件保留 14 天；需要長期保留的版本另放到公開 GitHub Release。
+
+2.1.6 已在 [Actions #40119011254](https://github.com/blizzard-new/abroad/actions/runs/40119011254)
+完成裝置及模擬器編譯、安裝與啟動；已檢視啟動畫面。四款 WidgetKit 已編入 extension，
+尚未逐款完成 iOS 桌面互動及實體裝置測試。
+開發測試 ZIP 與截圖放在 [2.1.6 版本頁](https://github.com/blizzard-new/abroad/releases/tag/android-v2.1.6-preview)。
+
+在 Apple Silicon Mac 的 Simulator 開啟一台 iPhone 後，解壓 `UniWay-iOS-simulator.zip`，
+可用 `xcrun simctl install booted Runner.app` 安裝，再執行 `xcrun simctl launch booted tw.uniway.app`。
+本次雲端產物以 Xcode 26.3 的 Simulator SDK 建置，建議使用同版或相容的新版本。
 
 建置分為裝置編譯、Simulator 編譯、模擬器安裝及啟動，需各步成功才能認定對應部分完成。
 目前不需要上傳任何 Apple 密碼、私鑰或憑證到 repository。

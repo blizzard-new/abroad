@@ -2,7 +2,7 @@ name: iOS preview
 
 on:
   push:
-    branches: [codex/cosmic-widgets-ios]
+    branches: [main]
     paths: [mobile_flutter/**, .github/workflows/ios-preview.yml]
   workflow_dispatch:
 
