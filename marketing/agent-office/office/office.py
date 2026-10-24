@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+import re
 import threading
 from datetime import date, datetime, time, timezone
 from pathlib import Path
@@ -34,6 +36,23 @@ def desk_of(role: str) -> str:
     return "strategist" if role == "research" else role
 
 
+# Model names the chief may set: letters, digits and the punctuation real names use ("Gemini 3.7 Flash (Low)").
+MODEL_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9 ._:/()\[\]-]{0,79}")
+# Which tools can run which family of models.
+MODEL_TOOLS = {"claude": ("claude-code", "api"), "gpt": ("codex",), "gemini": ("antigravity",)}
+
+
+def _model_family(model: str) -> str:
+    name = model.lower()
+    if any(word in name for word in ("claude", "opus", "sonnet", "haiku", "fable")):
+        return "claude"
+    if name.startswith(("gpt", "o3", "o4", "codex")):
+        return "gpt"
+    if "gemini" in name:
+        return "gemini"
+    return ""
+
+
 # The human's desk. Drafts land here unless OFFICE_APPROVAL=auto.
 BOSS = {"id": "boss", "name": "你", "title": "老闆（審核）", "duty": "看審核匣：核准、退回或直接修改草稿"}
 
@@ -44,7 +63,7 @@ class Office:
         self.store = Store(settings.db_path)
         self.bus = EventBus(self.store)
         self._brain_seen: dict[str, str] = {}
-        self.writer = writer or make_writer(settings, on_brain=self._brain_used)
+        self.writer = writer or make_writer(settings, on_brain=self._brain_used, tuning=self.tuning)
         self.renderer = renderer or Renderer(settings)
         # Cover illustrations: Codex's image generation when OFFICE_IMAGES=codex.
         self.images = images if images is not None else (brains.CodexBrain(settings) if settings.images == "codex" else None)
@@ -62,7 +81,68 @@ class Office:
         self.bus.emit(desk_of(role), "brain", message, brain=key, label=label, role=role, fallback=bool(failures))
 
     def brain_summary(self) -> dict[str, list[str]]:
-        return {role: [brains.LABELS[k] for k in brains.chain(self.settings, role)] for role in brains.ROLES}
+        def keys(role: str) -> list[str]:
+            if hasattr(self.writer, "chain"):
+                return [brain.key if brain else "offline" for brain in self.writer.chain(role)]
+            return brains.chain(self.settings, role)
+
+        return {role: [brains.LABELS[k] for k in keys(role)] for role in brains.ROLES}
+
+    # ---- which AI, model and effort each desk thinks with ----
+    def tuning(self, role: str) -> dict:
+        try:
+            value = json.loads(self.store.get(f"tuning:{role}") or "{}")
+        except json.JSONDecodeError:
+            return {}
+        return value if isinstance(value, dict) else {}
+
+    def tune(self, role: str, *, brain: str = "", model: str = "", effort: str = "") -> dict:
+        """Change one desk's AI. "default" for a field puts that field back to the .env setting."""
+        if role not in brains.ROLES:
+            raise ValueError(f"沒有「{role}」這個工作（可用：{'、'.join(brains.ROLES)}）")
+        current = self.tuning(role)
+        if brain:
+            if brain == "default":
+                current.pop("brain", None)
+            elif brain in brains.LABELS:
+                current["brain"] = brain
+            else:
+                raise ValueError(f"沒有「{brain}」這個工具（可用：{'、'.join(brains.LABELS)}）")
+        if model:
+            model = model.strip()
+            if model == "default":
+                current.pop("model", None)
+            elif not MODEL_NAME.fullmatch(model):
+                raise ValueError(f"模型名稱「{model[:40]}」看起來不對")
+            else:
+                current["model"] = model
+        if effort:
+            if effort == "default":
+                current.pop("effort", None)
+            elif effort in brains.EFFORTS:
+                current["effort"] = effort
+            else:
+                raise ValueError(f"思考強度只能是 {'、'.join(brains.EFFORTS)}")
+        tool = current.get("brain") or brains.resolve(self.settings.brains, role)
+        family = _model_family(current.get("model", ""))
+        if family and tool not in MODEL_TOOLS[family]:
+            raise ValueError(f"{current['model']} 不能在 {brains.LABELS[tool]} 上跑，要用 {'或'.join(brains.LABELS[k] for k in MODEL_TOOLS[family])}")
+        self.store.set(f"tuning:{role}", json.dumps(current, ensure_ascii=False))
+        self._brain_seen.pop(role, None)
+        key = self.writer.primary(role) if hasattr(self.writer, "primary") else tool
+        self.bus.emit(desk_of(role), "brain", f"{brains.ROLES[role]}改用 {self.describe_brain(role)}", brain=key,
+                      label=brains.LABELS[key], role=role, fallback=False)
+        return current
+
+    def describe_brain(self, role: str) -> str:
+        tune = self.tuning(role)
+        tool = tune.get("brain") or brains.resolve(self.settings.brains, role)
+        default_model = {"claude-code": self.settings.claude_code_model, "codex": self.settings.codex_model,
+                         "api": self.settings.model}.get(tool, "")
+        parts = [brains.LABELS[tool], f"模型 {tune.get('model') or default_model or '預設'}"]
+        if tool != "offline":
+            parts.append(f"思考強度 {tune.get('effort') or '預設'}")
+        return "｜".join(parts)
 
     # ---- time ----
     def local_now(self) -> datetime:
@@ -237,6 +317,7 @@ class Office:
                 "approval": self.settings.approval,
                 "dry_run": self.settings.dry_run,
                 "brains": self.brain_summary(),
+                "tuning": {role: self.describe_brain(role) for role in brains.ROLES},
                 "images": "Codex" if self.images else None,
                 "labels": brains.LABELS,
                 "daily_at": self.settings.daily_at.strftime("%H:%M"),

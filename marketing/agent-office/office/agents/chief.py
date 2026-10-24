@@ -1,6 +1,7 @@
 """總管：你和大家之間的窗口。你用聊天交代事情，總管轉成固定的幾種工作分派下去，做完再回報。
 
-總管能做的事只有六種（開工、重寫某則草稿、加做一則、改發文時間、退回、記給明天的企劃），
+總管能做的事：開工、重寫某則草稿、加做一則、改發文時間、退回、記給明天的企劃，
+以及查看和調整每位同事用的 AI（工具、模型、思考強度）。
 不能核准、不能發文、不能改帳號或模擬模式——那些永遠由你在審核匣自己按。
 """
 
@@ -12,6 +13,7 @@ import threading
 from secrets import token_hex
 from datetime import date, datetime, time, timedelta, timezone
 
+from .. import brains
 from ..llm import WriterError
 from ..models import CarouselDraft, ChiefAction, ChiefReply, PlanItem, ThreadsDraft, VideoScript
 from ..rules import check_carousel, check_threads, check_video, instagram_caption
@@ -24,7 +26,7 @@ STATUS_WORD = {
 FORMAT_WORD = {"text": "貼文", "reply": "留言回覆", "carousel": "輪播", "reel": "Reels", "story": "限動", "short": "Shorts", "long": "長影片"}
 CHANNEL_WORD = {"threads": "Threads", "instagram": "IG", "youtube": "YouTube"}
 EDITABLE = {"pending_approval", "needs_changes", "approved", "failed", "rejected"}
-MAX_ACTIONS = 5
+MAX_ACTIONS = 10
 
 
 class Chief(Agent):
@@ -86,12 +88,18 @@ class Chief(Agent):
                 f"｜{when}｜{d['title'][:40]}" + (f"｜問題：{issues[0][:40]}" if issues else "")
             )
         staff = "\n".join(f"- {a.persona.name}（{a.persona.title}）：{a.persona.duty}" for a in office.staff.values() if a.id != self.id)
+        names = {a.id: a.persona.name for a in office.staff.values()}
+        minds = "\n".join(
+            f"- role={role}（{names.get("strategist" if role == "research" else role, role)}・{label}）：{office.describe_brain(role)}"
+            for role, label in brains.ROLES.items()
+        )
         notes = json.loads(office.store.get("boss_notes") or "[]")
         return (
             f"現在（台北）：{office.local_now():%Y-%m-%d %H:%M}；{'大家正在做今天的內容' if office.busy.locked() else '目前沒有在跑的工作'}\n"
             f"今天主軸：{plan.get('theme') or '還沒排'}\n"
             f"草稿（最新在前）：\n" + ("\n".join(rows) or "（還沒有草稿）") + "\n\n"
-            f"記給明天的事：{'；'.join(notes) or '（無）'}\n\n同事：\n{staff}"
+            f"記給明天的事：{'；'.join(notes) or '（無）'}\n\n同事：\n{staff}\n\n"
+            f"每個工作現在用的 AI（role=後面是 set_brain 要填的值）：\n{minds}"
         )
 
     def history_text(self) -> str:
@@ -134,6 +142,14 @@ class Chief(Agent):
                 self.say(message)
 
         threading.Thread(target=run, daemon=True, name=f"chief-{label}").start()
+
+    def _do_set_brain(self, action: ChiefAction) -> str:
+        if not action.role:
+            raise ValueError("要說是哪一位同事的哪個工作")
+        if not (action.brain or action.model or action.effort):
+            raise ValueError("要說改成哪個工具、模型或思考強度")
+        self.office.tune(action.role, brain=action.brain, model=action.model, effort=action.effort)
+        return f"{brains.ROLES[action.role]}改用 {self.office.describe_brain(action.role)}"
 
     def _do_start_day(self, action: ChiefAction) -> str:
         from ..pipeline import run_day
