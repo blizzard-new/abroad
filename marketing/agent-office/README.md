@@ -53,7 +53,15 @@ Windows 和 Mac 都可以。Python 不用自己裝，uv 會自動下載；剪影
 | uv | `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 \| iex"` | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
 | Git | `winget install --id Git.Git -e` | 第一次打 `git` 會提示安裝 |
 
-AI 工具照各家說明安裝，**裝好後各自在終端機執行一次並登入**：`claude`（Claude Code）、`codex`（Codex），以及 Antigravity 的 `agy`（打 `agy --help` 有反應就好）。沒裝的工具不會讓辦公室停下來，那幾張桌子會改用備援。
+三個 AI 工具（**裝好後各自在新的終端機執行一次並登入**）：
+
+| | Windows（PowerShell） | Mac（終端機） | 登入 |
+|---|---|---|---|
+| Claude Code | `irm https://claude.ai/install.ps1 \| iex` | `curl -fsSL https://claude.ai/install.sh \| bash` | 執行 `claude`，登入 Claude 帳號 |
+| Codex | 先 `winget install OpenJS.NodeJS.LTS`，再 `npm.cmd install -g @openai/codex` | `npm install -g @openai/codex` | 執行 `codex`，選用 ChatGPT 登入 |
+| Antigravity | `irm https://antigravity.google/cli/install.ps1 \| iex` | `curl -fsSL https://antigravity.google/cli/install.sh \| bash` | 執行 `agy`，選 Google 登入 |
+
+裝完要**關掉終端機再開一個新的**，再重新啟動辦公室，新指令才找得到。沒裝的工具不會讓辦公室停下來，那幾張桌子會改用備援。
 
 **2. 下載並啟動**
 
@@ -84,7 +92,7 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 
 - Windows：「設定 → 系統 → 電源」把睡眠改成「永不」；想開機自動啟動，用「工作排程器」建一個「登入時」執行的工作：程式填 uv 的完整路徑（在 PowerShell 打 `(Get-Command uv).Source` 查）、引數填 `run office serve`、起始位置填 `agent-office` 資料夾。
 - Mac：用 `caffeinate -i uv run office serve` 啟動，跑著的時候就不會睡著。
-- 同一個 Wi-Fi 的手機想看：`uv run office serve --host 0.0.0.0`，手機開 `http://<電腦的 IP>:8780`，並在 `.env` 設 `OFFICE_ACCESS_TOKEN`（第一次用 `?token=…` 打開）。
+- 手機：見下面的「用手機跟 Leo 說話」。
 
 ## 上線步驟
 
@@ -108,6 +116,40 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 - 「明天多做獎學金的題目」→ 記給隔天早上的企劃，用過一次就清掉
 
 Leo 只能做這六種事：開工、請同事重寫、加做一則、改發文時間、退回、記給明天。**它不能核准、不能發文，也不能改帳號、金鑰或模擬模式**，就算你在聊天裡要求也一樣，那些永遠由你在審核匣自己按。Leo 用 Antigravity 思考；Antigravity 沒回應時會照備援順序換人，全部都不行時，它仍聽得懂「開工」和「進度」。
+
+## 用手機跟 Leo 說話、收通知
+
+辦公室接一個你自己的 Telegram 機器人：在手機上傳訊息給它，就是跟總管 Leo 說話；有事它會主動傳給你。電腦不用對外開放（機器人是電腦主動去 Telegram 拿訊息）。
+
+**設定一次（5 分鐘）**
+
+1. 手機裝 Telegram，搜尋 **@BotFather**，傳 `/newbot`，照它問的取名字（例如「UniWay 總管」）和帳號（要以 `bot` 結尾）。它會回你一串 token。
+2. 把 token 填進 `.env`：`TELEGRAM_BOT_TOKEN=123456:ABC...`
+3. 在電腦執行（先關掉正在跑的 `office serve`）：
+   ```bash
+   uv run office auth telegram
+   ```
+   它會印出一個連結，用手機打開、在 Telegram 按「開始」，就會收到「已連上」。
+4. 重新啟動 `uv run office serve`。`uv run office check` 的「手機」那一行會是 ○。
+
+**之後怎麼用**
+
+- 直接打字給機器人＝跟 Leo 說話，跟網頁的「總管」分頁一樣：「今天進度如何？」「開工」「#3 開頭再口語一點」「#5 改到 20:30 發」「明天多做獎學金的題目」。Leo 說的話（包括每天開工後的整理）都會傳到手機。
+- 你會收到的通知：
+  - 📝 **草稿等你核准**：附文案（輪播、影片附封面圖），下面有「✅ 核准」「↩️ 退回」按鈕
+  - ⚠️ **需要你看一下**：審稿沒過，或發文前檢查擋下來（可以「照樣核准」或跟 Leo 說要怎麼改）
+  - 🚀 **已發出**：附貼文連結
+  - ❌ **發佈失敗**：附原因
+- 只有你用 `office auth telegram` 連上的那個 Telegram 帳號說的話才算數，別人找到這個機器人也不會有任何回應。按鈕跟網頁上的核准一樣是你本人按的；Leo 自己仍然不能核准。
+- 辦公室要開著（`uv run office serve`）機器人才會回；電腦關機時傳的訊息，開機後會依序處理。
+
+**也想在手機上看整間辦公室（動畫、審核匣、改文案）**
+
+用 [Tailscale](https://tailscale.com/download)：電腦和手機都裝、登入同一個帳號，它們就像在同一個私人網路，不用對外開放。
+
+1. `.env` 設 `OFFICE_ACCESS_TOKEN=<自己想一串密碼>`，以及 `OFFICE_URL=http://<電腦名稱>:8780`（電腦名稱在 Tailscale App 裡看得到）。
+2. 用 `uv run office serve --host 0.0.0.0` 啟動。Windows 跳出防火牆詢問時，允許「私人網路」。
+3. 手機第一次打開 `http://<電腦名稱>:8780/?token=<那串密碼>`，之後會記住。通知裡也會附上辦公室的連結。
 
 ## Claude Code、Codex、Antigravity 怎麼分工
 
@@ -242,6 +284,7 @@ Leo 只能做這六種事：開工、請同事重寫、加做一則、改發文�
 | `office/render/` | 輪播／限動／影片的 HTML 版型、算圖與配樂 |
 | `office/platforms/` | Threads、Instagram、YouTube、媒體網址 |
 | `office/accounts.py`、`office/checkup.py` | 連帳號（`office auth`）與開工前檢查（`office check`） |
+| `office/telegram.py` | 手機：Telegram 機器人跟 Leo 對話、通知、核准按鈕 |
 | `office/server.py`、`office/static/` | 辦公室網頁與即時事件 |
 | `tests/` | `uv run pytest`（算圖測試需要 Chromium） |
 
