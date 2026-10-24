@@ -22,11 +22,12 @@ Android 與 iOS Widget 改用同一套色票，保持原有識別碼、帳號隔
 - Android 模擬器：首頁、找學校、學校詳情、申請、論壇、我的、文件表單、已存在的原生小工具；覆蓋安裝成功。
 - APK `2.1.7+21`，package `tw.uniway.app`，minSdk 24 / targetSdk 36；延續既有簽章。
 - 公開下載完整檔案及 SHA-256 核對見 [下載紀錄](android-public-download-2.1.7-20261025.json)。
+- iOS：在 [Actions #40128312769](https://github.com/blizzard-new/abroad/actions/runs/40128312769) 完成裝置版、WidgetKit extension、Simulator 編譯及模擬器安裝啟動；已檢視淺色首頁截圖。App 與 Widget 版本均為 `2.1.7+21`，產物紀錄見 [iOS 建置紀錄](ios-build-2.1.7-20261025.json)。
 
 ## 邊界
 
 APK 對應的產品程式碼為 `a4df32cf514b0702926df7fc01123d6026de44a8`，
 發布 tag 指向包含測試修正的 `b71115a975350c9836d4461dea7622ee79d72160`；兩者產品程式碼相同。
 原始碼持續於草稿 PR #131，未合併 main。未部署 Web 或後端。
-未宣稱實體 iPhone 測試或人工 TalkBack/VoiceOver 審查；iOS 雲端編譯以 Actions 結果為準。
+未宣稱實體 iPhone 測試、四款 iOS Widget 桌面互動或人工 TalkBack/VoiceOver 審查。
 無 Apple 簽署設定，因此沒有一般 iPhone 安裝包。Firebase 遠端推播設定仍未提供。

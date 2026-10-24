@@ -14,7 +14,8 @@
 [IDP Live](https://www.idp.com/idp-live-app/?lang=en) 與 [Erasmus+ App](https://hello.erasmusapp.eu/) 的學生旅程和申請規劃方式。
 
 沿用同一套正式帳號與服務。Firebase 遠端推播仍待設定；本次沒有新增大學資料查核。
-iOS 共用介面與 Widget 程式同步更新，尚無 Apple 簽署設定，沒有一般 iPhone 可直接安裝的公開版本。
+iOS 共用介面與 Widget 同步更新，裝置版、模擬器版及啟動檢查已通過 [雲端建置](https://github.com/blizzard-new/abroad/actions/runs/40128312769)。
+附件 `UniWay-iOS-unsigned-app.zip` 與 `UniWay-iOS-simulator.zip` 僅供開發使用；尚無 Apple 簽署設定，不能直接安裝到一般 iPhone。
 
 檔案大小：79,765,116 bytes。
 SHA-256：`c1edc95abe27bbf617f9cbcb167463275785562b821fcf2e71f3c276e8949767`。

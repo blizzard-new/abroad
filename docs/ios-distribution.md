@@ -23,7 +23,7 @@ GitHub 上的 `UniWay-iOS-unsigned-app.zip` 是未簽署裝置程式，`UniWay-i
 | API | `https://app.uniway-tw.com/` |
 | 登入回傳 | `tw.uniway.app://auth`，沿用後端 PKCE 流程 |
 | Widget 點擊 | `tw.uniway.app://journey` |
-| 四款 Widget | 交換總覽、星軌倒數、極光待辦、軌道進度 |
+| 四款 Widget | 交換總覽、出發倒數、準備清單、準備進度 |
 
 App 與 Widget 共用已儲存的個人計畫摘要；登入憑證只存 App 的 Keychain。
 登出會清除 Widget 的個人摘要。Widget 顯示最近更新時間，並非持續背景即時同步。
@@ -36,9 +36,14 @@ iOS 更新入口不會提供 Android APK。
 ## 雲端建置
 
 GitHub Actions 的 **iOS preview** 工作流程使用 macOS、Flutter 3.44.6、Xcode 26.3。
-合併至 main 後，選擇欲測試分支執行 `workflow_dispatch`，或在 main 更新手機程式觸發。
+手機程式或工作流程變更的 PR 會觸發編譯；main 更新相同路徑也會觸發，並保留 `workflow_dispatch` 手動入口。
 產物包含未簽署裝置程式、Simulator 程式、啟動畫面及 SHA-256。
 Actions 附件保留 14 天；需要長期保留的版本另放到公開 GitHub Release。
+
+2.1.7 明亮版已在 [Actions #40128312769](https://github.com/blizzard-new/abroad/actions/runs/40128312769)
+完成裝置版、WidgetKit extension、Simulator 編譯及模擬器安裝啟動，已檢視明亮首頁截圖。
+App 與 Widget 版本均為 `2.1.7+21`；開發 ZIP 與截圖見 [2.1.7 版本頁](https://github.com/blizzard-new/abroad/releases/tag/android-v2.1.7-preview)，
+檔案及下載驗證見 `ios-build-2.1.7-20261025.json`。這些 ZIP 仍不能直接安裝到一般 iPhone。
 
 2.1.6 已在 [Actions #40119011254](https://github.com/blizzard-new/abroad/actions/runs/40119011254)
 完成裝置及模擬器編譯、安裝與啟動；已檢視啟動畫面。四款 WidgetKit 已編入 extension，

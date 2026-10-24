@@ -61,7 +61,7 @@ Firebase 遠端推播仍待設定；本次發布未新增大學資料查核。
 - 從最新 100 筆公開 Release 挑出比目前版本高的 Android 版本，數字比較版本號；包含測試版，排除 draft、缺少 APK、不同 repository 或不符合檔名的附件。
 - tag 使用 `android-vX.Y.Z-preview`，附件命名為 `UniWay-X.Y.Z-preview.apk`；正式版可使用 `android-vX.Y.Z` / `UniWay-X.Y.Z.apk`。不可重用版本號；同一版本只發布一個 universal APK。
 - 下載按鈕開啟官方 Release 的 APK 附件；使用者下載完成後開啟檔案並確認安裝。App 不會靜默安裝，也不要求安裝套件權限。
-- 2.1.2 尚無檢查功能，必須先手動安裝一次 2.1.6（或其他 2.1.3 以上版本），之後才有自動提醒。GitHub 網路或 API 速率限制可能延遲提醒。
+- 2.1.2 尚無檢查功能，必須先手動安裝一次 2.1.7（或其他 2.1.3 以上版本），之後才有自動提醒。GitHub 網路或 API 速率限制可能延遲提醒。
 - 檢查版本不傳送 UniWay 帳號憑證、學校、收藏或任何私人資料給 GitHub。
 
 參考：[GitHub Releases](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)、
