@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../core/school_visuals.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
@@ -46,143 +45,71 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final store = ExchangeStoreScope.of(context);
-    final favorite = store.favorites.contains(widget.school.schoolName);
-    return ExchangePageBackground(
-      child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: 430,
-              pinned: true,
-              stretch: true,
-              surfaceTintColor: Colors.transparent,
-              backgroundColor: ExchangeColors.background.withValues(alpha: .9),
-              scrolledUnderElevation: 0,
-              leadingWidth: 64,
-              leading: IconButton(
-                tooltip: '返回',
-                onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.arrow_back_ios_new_rounded),
-              ),
-              actions: [
-                IconButton(
-                  tooltip: favorite ? '取消收藏' : '加入收藏',
-                  onPressed: () =>
-                      store.toggleFavorite(widget.school.schoolName),
-                  icon: Icon(
-                    favorite
-                        ? Icons.bookmark_rounded
-                        : Icons.bookmark_outline_rounded,
-                    color: favorite ? ExchangeColors.teal : ExchangeColors.ink,
-                  ),
-                ),
-                const SizedBox(width: 8),
-              ],
-              flexibleSpace: LayoutBuilder(
-                builder: (context, constraints) {
-                  final topPadding = MediaQuery.paddingOf(context).top;
-                  final collapsedHeight = kToolbarHeight + topPadding;
-                  final progress =
-                      ((constraints.maxHeight - collapsedHeight) /
-                              (430 - collapsedHeight))
-                          .clamp(0.0, 1.0);
-                  return Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      SchoolPhoto(school: widget.school),
-                      const DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Color(0x1A07131C), Color(0xC9081722)],
-                            stops: [.3, 1],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 18,
-                        right: 18,
-                        bottom: 22,
-                        child: IgnorePointer(
-                          ignoring: progress < .35,
-                          child: Opacity(
-                            opacity: progress,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(
-                                  sigmaX: 24,
-                                  sigmaY: 24,
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.all(18),
-                                  decoration: BoxDecoration(
-                                    color: const Color(
-                                      0xD9F8FAFB,
-                                    ).withValues(alpha: .82),
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color: Colors.white.withValues(alpha: .9),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${widget.school.country} · ${widget.school.programType}',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(
-                                              color: ExchangeColors.teal,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Text(
-                                        widget.school.schoolName,
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displaySmall
-                                            ?.copyWith(
-                                              fontSize: 30,
-                                              height: 1.08,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: _SectionSelectorDelegate(
-                selected: section,
-                onSelected: (value) => setState(() => section = value),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 44),
-              sliver: SliverToBoxAdapter(child: _selectedContent(store)),
-            ),
-          ],
+    final school = widget.school;
+    final favorite = store.favorites.contains(school.schoolName);
+    const sections = <_DetailSection, (IconData, String)>{
+      _DetailSection.overview: (Icons.info_outline_rounded, '重點'),
+      _DetailSection.workflow: (Icons.route_outlined, '流程'),
+      _DetailSection.life: (Icons.home_outlined, '生活'),
+      _DetailSection.stories: (Icons.menu_book_outlined, '心得'),
+      _DetailSection.community: (Icons.forum_outlined, '社群'),
+    };
+    return StudentPage(
+      title: '學校詳情',
+      bottomBar: StudentActionBar(
+        primary: FilledButton.icon(
+          onPressed: () => store.toggleFavorite(school.schoolName),
+          icon: Icon(
+            favorite ? Icons.bookmark_rounded : Icons.bookmark_outline_rounded,
+          ),
+          label: Text(favorite ? '已收藏' : '加入收藏'),
+        ),
+        secondary: OutlinedButton.icon(
+          onPressed: school.sourceUrl.isEmpty
+              ? null
+              : () => _openUrl(school.sourceUrl),
+          icon: const Icon(Icons.open_in_new_rounded),
+          label: const Text('官方來源'),
         ),
       ),
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: SizedBox(height: 180, child: SchoolPhoto(school: school)),
+        ),
+        const SizedBox(height: 24),
+        StudentHeading(school.schoolName),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 16,
+          runSpacing: 8,
+          children: [
+            StudentIconLabel(Icons.place_outlined, school.country),
+            StudentIconLabel(Icons.school_outlined, school.programType),
+          ],
+        ),
+        const SizedBox(height: 24),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: sections.entries
+                .map(
+                  (entry) => Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ChoiceChip(
+                      avatar: Icon(entry.value.$1, size: 20),
+                      label: Text(entry.value.$2),
+                      selected: section == entry.key,
+                      onSelected: (_) => setState(() => section = entry.key),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+        const SizedBox(height: 24),
+        _selectedContent(store),
+      ],
     );
   }
 
@@ -264,67 +191,6 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
   }
 }
 
-class _SectionSelectorDelegate extends SliverPersistentHeaderDelegate {
-  _SectionSelectorDelegate({required this.selected, required this.onSelected});
-
-  final _DetailSection selected;
-  final ValueChanged<_DetailSection> onSelected;
-
-  @override
-  double get minExtent => 64;
-
-  @override
-  double get maxExtent => 64;
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    const labels = {
-      _DetailSection.overview: '重點',
-      _DetailSection.workflow: '流程',
-      _DetailSection.life: '生活',
-      _DetailSection.stories: '心得',
-      _DetailSection.community: '社群',
-    };
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: ExchangeColors.background.withValues(alpha: .78),
-            border: const Border(
-              bottom: BorderSide(color: ExchangeColors.line),
-            ),
-          ),
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            children: labels.entries
-                .map(
-                  (entry) => Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: ChoiceChip(
-                      label: Text(entry.value),
-                      selected: entry.key == selected,
-                      onSelected: (_) => onSelected(entry.key),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  bool shouldRebuild(covariant _SectionSelectorDelegate oldDelegate) =>
-      oldDelegate.selected != selected;
-}
-
 class _OverviewSection extends StatelessWidget {
   const _OverviewSection({
     required this.school,
@@ -361,8 +227,8 @@ class _OverviewSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ExchangeSectionHeader(title: '申請重點'),
-        const SizedBox(height: 14),
+        const StudentSectionTitle('申請重點', icon: Icons.fact_check_outlined),
+        const SizedBox(height: 16),
         ...details.map(
           (detail) => Padding(
             padding: const EdgeInsets.only(bottom: 12),
@@ -371,7 +237,7 @@ class _OverviewSection extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ExchangeIconBadge(detail.icon),
-                  const SizedBox(width: 14),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -384,7 +250,7 @@ class _OverviewSection extends StatelessWidget {
                         Text(
                           detail.value,
                           style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(fontWeight: FontWeight.w700),
+                              ?.copyWith(fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -398,7 +264,7 @@ class _OverviewSection extends StatelessWidget {
           const SizedBox(height: 8),
           _StudentPointCard(
             icon: Icons.fact_check_outlined,
-            title: '資格與語言重點',
+            title: '資格與語言',
             points: school.eligibilityPoints,
             translated: school.studentSummaryZh.translatedFromEnglish,
           ),
@@ -407,7 +273,7 @@ class _OverviewSection extends StatelessWidget {
           const SizedBox(height: 12),
           _StudentPointCard(
             icon: Icons.route_outlined,
-            title: '合作校申請步驟',
+            title: '申請步驟',
             points: school.applicationSteps,
             translated: school.studentSummaryZh.translatedFromEnglish,
           ),
@@ -416,13 +282,13 @@ class _OverviewSection extends StatelessWidget {
           const SizedBox(height: 12),
           _StudentPointCard(
             icon: Icons.payments_outlined,
-            title: '學費與費用提醒',
+            title: '學費與費用',
             points: school.tuitionPoints,
             translated: school.studentSummaryZh.translatedFromEnglish,
           ),
         ],
         if (dashboard?.ruleExplanations.isNotEmpty == true) ...[
-          const SizedBox(height: 26),
+          const SizedBox(height: 24),
           ExchangeSectionHeader(title: '$homeShortName規定與補助要點'),
           const SizedBox(height: 12),
           ...dashboard!.ruleExplanations
@@ -434,7 +300,7 @@ class _OverviewSection extends StatelessWidget {
                 ),
               ),
         ],
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         _SourceButtons(school: school, homeShortName: homeShortName),
       ],
     );
@@ -484,13 +350,13 @@ class _StudentPointCard extends StatelessWidget {
                     '中文整理',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: ExchangeColors.teal,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           ...points.map((point) => BulletPoint(point, strong: true)),
         ],
       ),
@@ -566,7 +432,7 @@ class _WorkflowSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ExchangeSectionHeader(title: '詳細申請流程'),
+        const StudentSectionTitle('申請流程', icon: Icons.route_outlined),
         const SizedBox(height: 8),
         Text(
           '校內甄選與合作校申請是兩個階段，請依順序完成。',
@@ -574,13 +440,13 @@ class _WorkflowSection extends StatelessWidget {
             context,
           ).textTheme.bodyLarge?.copyWith(color: ExchangeColors.secondaryInk),
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 16),
         ...workflow.steps.map(
           (step) =>
               _TimelineStep(step: step, isLast: step == workflow.steps.last),
         ),
         if (workflow.disclaimer.isNotEmpty) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           GlassCard(
             tint: ExchangeColors.amberSoft.withValues(alpha: .76),
             child: Row(
@@ -629,7 +495,7 @@ class _TimelineStep extends StatelessWidget {
                     '${step.order}',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -667,16 +533,16 @@ class _TimelineStep extends StatelessWidget {
                       child: Text(step.summary),
                     ),
                     if (step.responsibleParty.isNotEmpty) ...[
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 8),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           '負責單位：${step.responsibleParty}',
-                          style: const TextStyle(fontWeight: FontWeight.w700),
+                          style: const TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
                     ],
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
                     ...step.details.map((detail) => BulletPoint(detail)),
                     ...step.requiredDocuments.map(
                       (document) => BulletPoint('文件：$document', strong: true),
@@ -711,8 +577,8 @@ class _LifeSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ExchangeSectionHeader(title: '生活情報'),
-        const SizedBox(height: 18),
+        const StudentSectionTitle('生活情報', icon: Icons.home_outlined),
+        const SizedBox(height: 16),
         if (digest.highlights.isEmpty)
           const EmptyState(
             icon: Icons.public_rounded,
@@ -773,7 +639,7 @@ class _LifeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           if (highlight.keyPoints.isNotEmpty)
             ...highlight.keyPoints.map(
               (point) => BulletPoint(point, strong: true),
@@ -825,7 +691,7 @@ class _StoriesSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ExchangeSectionHeader(title: '學生心得'),
+        const StudentSectionTitle('學生心得', icon: Icons.menu_book_outlined),
         const SizedBox(height: 8),
         Text(
           '共 ${digest.totalSources} 個來源：${digest.articleCount} 篇文章、${digest.videoCount} 支影片、${digest.communityCount} 則社群內容。',
@@ -833,7 +699,7 @@ class _StoriesSection extends StatelessWidget {
             context,
           ).textTheme.bodyLarge?.copyWith(color: ExchangeColors.secondaryInk),
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 16),
         if (digest.sources.isEmpty)
           const EmptyState(
             icon: Icons.auto_stories_outlined,
@@ -862,7 +728,7 @@ class _StoriesSection extends StatelessWidget {
                           ? ExchangeColors.coralSoft
                           : ExchangeColors.blueSoft,
                     ),
-                    const SizedBox(width: 14),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

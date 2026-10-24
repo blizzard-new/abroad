@@ -204,7 +204,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
               boardTabLabel: store.activeUniversity.boardTabLabel,
               onSelected: selectFeed,
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             _BoardRail(
               store: store,
               updatingFollow: store.isUpdatingBoardFollow,
@@ -212,7 +212,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
               onOpenUniversity: _openUniversityBoard,
               onFollowBoard: _toggleBoardFollow,
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
             SizedBox(
               height: 48,
               child: ListView.separated(
@@ -257,7 +257,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
                       ),
               ),
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
@@ -352,7 +352,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
                     '發一篇文章',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 16),
                   Row(
                     children: [
                       Expanded(
@@ -378,7 +378,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
                           },
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: DropdownButtonFormField<String>(
                           initialValue: selectedTopic,
@@ -432,7 +432,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
                           decoration: const InputDecoration(labelText: '國家'),
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: TextField(
                           controller: academicYear,
@@ -476,7 +476,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
                     ),
                   ),
                   if (formError != null) ...[
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
                     Text(
                       formError!,
                       style: const TextStyle(
@@ -559,7 +559,7 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
               maxLines: 6,
               decoration: const InputDecoration(labelText: '回覆內容'),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: FilledButton(
@@ -618,16 +618,16 @@ class GlobalCommunityScreenState extends State<GlobalCommunityScreen> {
               '邀請 ${post.displayName} 私訊',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             Text('對方接受後才能繼續傳訊。', style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             TextField(
               controller: controller,
               minLines: 3,
               maxLines: 5,
               decoration: const InputDecoration(labelText: '邀請訊息'),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: FilledButton.icon(
@@ -820,7 +820,7 @@ class _BoardCard extends StatelessWidget {
     return SizedBox(
       width: 300,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -845,7 +845,7 @@ class _BoardCard extends StatelessWidget {
                     title,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: Colors.white,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(
@@ -856,7 +856,7 @@ class _BoardCard extends StatelessWidget {
                       color: const Color(0xDDFFFFFF),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
                       if (onFollow != null) ...[
@@ -920,9 +920,9 @@ class _FollowingGate extends StatelessWidget {
       child: Column(
         children: [
           const ExchangeIconBadge(Icons.rss_feed_rounded),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Text('登入查看追蹤動態', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           FilledButton(onPressed: onSignIn, child: const Text('登入或建立帳號')),
         ],
       ),
@@ -931,10 +931,7 @@ class _FollowingGate extends StatelessWidget {
 }
 
 class _FollowingEmpty extends StatelessWidget {
-  const _FollowingEmpty({
-    required this.schoolName,
-    required this.onFollow,
-  });
+  const _FollowingEmpty({required this.schoolName, required this.onFollow});
 
   final String schoolName;
   final VoidCallback onFollow;
@@ -945,9 +942,9 @@ class _FollowingEmpty extends StatelessWidget {
       child: Column(
         children: [
           const ExchangeIconBadge(Icons.school_outlined),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Text('還沒有追蹤看板', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           OutlinedButton.icon(
             onPressed: onFollow,
             icon: const Icon(Icons.add_rounded),
@@ -993,7 +990,7 @@ class _CommunityPostCard extends StatelessWidget {
                 foregroundColor: ExchangeColors.blue,
                 child: Icon(Icons.person_outline_rounded),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1026,7 +1023,7 @@ class _CommunityPostCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           Wrap(
             spacing: 7,
             runSpacing: 7,
@@ -1037,9 +1034,9 @@ class _CommunityPostCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(post.title, style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 7),
+          const SizedBox(height: 8),
           Text(post.body),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           ExpansionTile(
             tilePadding: EdgeInsets.zero,
             childrenPadding: EdgeInsets.zero,
@@ -1096,7 +1093,7 @@ class _MetaChip extends StatelessWidget {
         text,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
           color: ExchangeColors.blue,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
@@ -1116,7 +1113,7 @@ class _EmptyCommunity extends StatelessWidget {
           const ExchangeIconBadge(Icons.forum_outlined),
           const SizedBox(height: 12),
           Text('這個主題還沒有文章', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           OutlinedButton(onPressed: onCompose, child: const Text('登入後發文')),
         ],
       ),

@@ -2,6 +2,229 @@ import 'package:flutter/material.dart';
 import 'exchange_theme.dart';
 import 'exchange_widgets.dart';
 
+/// A shared reading width and action area for every secondary destination.
+class StudentPage extends StatelessWidget {
+  const StudentPage({
+    required this.title,
+    required this.children,
+    this.onRefresh,
+    this.actions,
+    this.bottomBar,
+    this.leading,
+    this.retainChildren = false,
+    super.key,
+  });
+  final String title;
+  final List<Widget> children;
+  final Future<void> Function()? onRefresh;
+  final List<Widget>? actions;
+  final Widget? bottomBar;
+  final Widget? leading;
+  final bool retainChildren;
+
+  @override
+  Widget build(BuildContext context) {
+    final list = LayoutBuilder(
+      builder: (context, constraints) {
+        final padding = EdgeInsets.fromLTRB(
+          constraints.maxWidth > 640 ? (constraints.maxWidth - 600) / 2 : 20,
+          16,
+          constraints.maxWidth > 640 ? (constraints.maxWidth - 600) / 2 : 20,
+          32,
+        );
+        // Form validation must still see fields after scrolling to the print guide.
+        if (retainChildren) {
+          return SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: padding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: children,
+            ),
+          );
+        }
+        return ListView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: padding,
+          children: children,
+        );
+      },
+    );
+    return ExchangePageBackground(
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: MediaQuery.textScalerOf(context).scale(20) > 28
+              ? 88
+              : 60,
+          title: Text(title, maxLines: 2, overflow: TextOverflow.ellipsis),
+          leading:
+              leading ??
+              IconButton(
+                tooltip: '返回',
+                onPressed: () => Navigator.of(context).maybePop(),
+                icon: const Icon(Icons.arrow_back_rounded),
+              ),
+          actions: actions,
+        ),
+        body: SafeArea(
+          top: false,
+          child: onRefresh == null
+              ? list
+              : RefreshIndicator(onRefresh: onRefresh!, child: list),
+        ),
+        bottomNavigationBar: bottomBar,
+      ),
+    );
+  }
+}
+
+class StudentActionBar extends StatelessWidget {
+  const StudentActionBar({required this.primary, this.secondary, super.key});
+  final Widget primary;
+  final Widget? secondary;
+  @override
+  Widget build(BuildContext context) => Material(
+    color: Theme.of(context).colorScheme.surface,
+    child: SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+        child: Center(
+          heightFactor: 1,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                if (secondary == null) {
+                  return SizedBox(width: double.infinity, child: primary);
+                }
+                if (constraints.maxWidth < 320 ||
+                    MediaQuery.textScalerOf(context).scale(16) > 24) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [primary, const SizedBox(height: 8), secondary!],
+                  );
+                }
+                return Row(
+                  children: [
+                    Expanded(child: secondary!),
+                    const SizedBox(width: 12),
+                    Expanded(child: primary),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+class StudentSectionTitle extends StatelessWidget {
+  const StudentSectionTitle(
+    this.title, {
+    required this.icon,
+    this.detail,
+    super.key,
+  });
+  final String title;
+  final IconData icon;
+  final String? detail;
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(top: 8, bottom: 16),
+    child: Row(
+      children: [
+        Icon(icon, color: ExchangeColors.teal, size: 24),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: Theme.of(context).textTheme.titleMedium),
+              if (detail != null)
+                Text(detail!, style: Theme.of(context).textTheme.bodySmall),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+/// Keep important limits visible; optional detail is a labelled help action.
+class StudentNotice extends StatelessWidget {
+  const StudentNotice(
+    this.text, {
+    this.icon = Icons.info_outline_rounded,
+    this.detail,
+    this.color = ExchangeColors.teal,
+    super.key,
+  });
+  final String text;
+  final IconData icon;
+  final String? detail;
+  final Color color;
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: .06),
+      borderRadius: BorderRadius.circular(16),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, color: color, size: 20),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(text, style: Theme.of(context).textTheme.bodySmall),
+        ),
+        if (detail != null) FieldHelpButton(title: text, message: detail!),
+      ],
+    ),
+  );
+}
+
+class StudentSummaryCard extends StatelessWidget {
+  const StudentSummaryCard({
+    required this.icon,
+    required this.title,
+    this.detail,
+    super.key,
+  });
+  final IconData icon;
+  final String title;
+  final String? detail;
+  @override
+  Widget build(BuildContext context) => GlassCard(
+    tint: ExchangeColors.tealSoft,
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ExchangeIconBadge(icon, background: Colors.white),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: Theme.of(context).textTheme.titleLarge),
+              if (detail != null) ...[
+                const SizedBox(height: 8),
+                Text(detail!, style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 /// Compact, labelled controls: icons support the copy rather than replace it.
 class StudentHeading extends StatelessWidget {
   const StudentHeading(this.title, {this.subtitle, this.action, super.key});

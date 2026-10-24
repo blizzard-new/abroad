@@ -150,7 +150,7 @@ class ExchangeSectionHeader extends StatelessWidget {
                   eyebrow!,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: ExchangeColors.teal,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -264,7 +264,7 @@ class BulletPoint extends StatelessWidget {
             child: Text(
               displayText,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: strong ? FontWeight.w700 : FontWeight.w500,
+                fontWeight: strong ? FontWeight.w600 : FontWeight.w400,
               ),
             ),
           ),

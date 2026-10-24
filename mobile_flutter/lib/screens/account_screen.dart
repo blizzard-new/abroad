@@ -121,13 +121,13 @@ class _AccountScreenState extends State<AccountScreen> {
               front ? '加入學生證正面' : '加入學生證反面',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             FilledButton.icon(
               onPressed: () => Navigator.pop(sheetContext, ImageSource.camera),
               icon: const Icon(Icons.photo_camera_outlined),
               label: const Text('直接拍攝'),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             OutlinedButton.icon(
               onPressed: () => Navigator.pop(sheetContext, ImageSource.gallery),
               icon: const Icon(Icons.photo_library_outlined),
@@ -265,7 +265,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 children: [
                   Text(
                     '交換指南帳號',
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   Text('收藏、時程與留學社群都能同步'),
                 ],
@@ -287,7 +287,7 @@ class _AccountScreenState extends State<AccountScreen> {
             context,
           ).textTheme.bodyLarge?.copyWith(color: ExchangeColors.secondaryInk),
         ),
-        const SizedBox(height: 22),
+        const SizedBox(height: 24),
         SegmentedButton<_AuthMode>(
           segments: const [
             ButtonSegment(value: _AuthMode.login, label: Text('登入')),
@@ -303,7 +303,7 @@ class _AccountScreenState extends State<AccountScreen> {
             });
           },
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 16),
         if (mode == _AuthMode.register && !verified)
           _StudentVerificationCard(
             frontCard: frontCard,
@@ -458,7 +458,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -478,10 +478,10 @@ class _AccountScreenState extends State<AccountScreen> {
           ],
         ),
         if (profile.studentStatusVerified) ...[
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           _VerificationSuccess(message: '${profile.verifiedUniversity}學生身分已驗證'),
         ],
-        const SizedBox(height: 26),
+        const SizedBox(height: 24),
         GlassCard(
           padding: EdgeInsets.zero,
           child: ExpansionTile(
@@ -812,7 +812,7 @@ class _StudentVerificationCard extends StatelessWidget {
             icon: Icons.center_focus_strong_rounded,
             onTap: onPickFront,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           _StudentCardPicker(
             title: '學生證反面',
             hint: '完整拍攝，不裁切卡片邊緣',
@@ -820,7 +820,7 @@ class _StudentVerificationCard extends StatelessWidget {
             icon: Icons.credit_card_rounded,
             onTap: onPickBack,
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -835,12 +835,12 @@ class _StudentVerificationCard extends StatelessWidget {
                   size: 20,
                   color: ExchangeColors.success,
                 ),
-                SizedBox(width: 9),
+                SizedBox(width: 8),
                 Expanded(child: Text('不保存證件照片、姓名、學號或 OCR 全文；只留下已驗證、學校與時間。')),
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           CheckboxListTile(
             contentPadding: EdgeInsets.zero,
             controlAffinity: ListTileControlAffinity.leading,
@@ -971,7 +971,7 @@ class _VerificationSuccess extends StatelessWidget {
       child: Row(
         children: [
           const Icon(Icons.verified_rounded, color: ExchangeColors.success),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

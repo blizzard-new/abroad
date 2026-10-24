@@ -577,91 +577,100 @@ class _ForumPostScreenState extends State<ForumPostScreen> {
     builder: (context, _) {
       final sameSession = session == _session(widget.store);
       final canReply = sameSession && widget.board?.canComment == true;
-      return ExchangePageBackground(
-        child: Scaffold(
-          appBar: AppBar(title: const Text('討論內容')),
-          body: !sameSession
-              ? const Center(child: Text('登入狀態已改變，請返回論壇重新開啟。'))
-              : RefreshIndicator(
-                  onRefresh: _load,
-                  child: ListView(
-                    padding: const EdgeInsets.all(20),
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    children: [
-                      if (loading) const LinearProgressIndicator(),
-                      if (error != null) _ForumError(error!, _load),
-                      if (post != null) ...[
-                        GlassCard(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.board?.label ?? post!.school,
-                                style: const TextStyle(
-                                  color: ExchangeColors.teal,
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                post!.title,
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.headlineSmall,
-                              ),
-                              const SizedBox(height: 8),
-                              Text('${post!.author} · ${_date(post!.created)}'),
-                              const SizedBox(height: 20),
-                              SelectableText(post!.body),
-                              Wrap(
-                                children: [
-                                  if (post!.canDelete)
-                                    TextButton(
-                                      onPressed: _delete,
-                                      child: const Text('刪除文章'),
-                                    ),
-                                  if (widget.store.account != null)
-                                    TextButton(
-                                      onPressed: () =>
-                                          _report('post', post!.id),
-                                      child: const Text('檢舉文章'),
-                                    ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20),
+      return StudentPage(
+        title: '討論內容',
+        onRefresh: sameSession ? _load : null,
+        bottomBar: !sameSession || post == null
+            ? null
+            : StudentActionBar(
+                primary: FilledButton.icon(
+                  onPressed: canReply ? () => _reply() : null,
+                  icon: const Icon(Icons.reply_rounded),
+                  label: const Text('回覆文章'),
+                ),
+              ),
+        children: !sameSession
+            ? [
+                const StudentNotice(
+                  '登入狀態已改變，請返回論壇重新開啟。',
+                  icon: Icons.lock_outline_rounded,
+                ),
+              ]
+            : [
+                if (loading) const LinearProgressIndicator(),
+                if (error != null) _ForumError(error!, _load),
+                if (post != null) ...[
+                  GlassCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
-                          '回覆與討論',
-                          style: Theme.of(context).textTheme.titleLarge,
+                          widget.board?.label ?? post!.school,
+                          style: const TextStyle(color: ExchangeColors.teal),
                         ),
                         const SizedBox(height: 12),
-                        if (!canReply)
-                          Text(
-                            widget.board?.reason.isNotEmpty == true
-                                ? widget.board!.reason
-                                : '登入並驗證信箱後即可回覆。',
-                          ),
-                        FilledButton.icon(
-                          onPressed: canReply ? () => _reply() : null,
-                          icon: const Icon(Icons.reply),
-                          label: const Text('回覆文章'),
+                        Text(
+                          post!.title,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
-                        _ReplyList(
-                          key: ValueKey(revision),
-                          store: widget.store,
-                          postId: widget.postId,
-                          onReply: canReply ? _reply : null,
-                          onDelete: _delete,
-                          onReport: widget.store.account == null
-                              ? null
-                              : (id) => _report('comment', id),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 16,
+                          runSpacing: 8,
+                          children: [
+                            StudentIconLabel(
+                              Icons.person_outline_rounded,
+                              post!.author,
+                            ),
+                            StudentIconLabel(
+                              Icons.schedule_rounded,
+                              _date(post!.created),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        SelectableText(post!.body),
+                        Wrap(
+                          children: [
+                            if (post!.canDelete)
+                              TextButton.icon(
+                                onPressed: _delete,
+                                icon: const Icon(Icons.delete_outline_rounded),
+                                label: const Text('刪除文章'),
+                              ),
+                            if (widget.store.account != null)
+                              TextButton.icon(
+                                onPressed: () => _report('post', post!.id),
+                                icon: const Icon(Icons.flag_outlined),
+                                label: const Text('檢舉文章'),
+                              ),
+                          ],
                         ),
                       ],
-                    ],
+                    ),
                   ),
-                ),
-        ),
+                  const SizedBox(height: 20),
+                  Text('回覆與討論', style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: 12),
+                  if (!canReply)
+                    Text(
+                      widget.board?.reason.isNotEmpty == true
+                          ? widget.board!.reason
+                          : '登入並驗證信箱後即可回覆。',
+                    ),
+
+                  _ReplyList(
+                    key: ValueKey(revision),
+                    store: widget.store,
+                    postId: widget.postId,
+                    onReply: canReply ? _reply : null,
+                    onDelete: _delete,
+                    onReport: widget.store.account == null
+                        ? null
+                        : (id) => _report('comment', id),
+                  ),
+                ],
+              ],
       );
     },
   );
@@ -880,96 +889,111 @@ class _ForumComposerState extends State<ForumComposer> {
     builder: (context, _) {
       final isPost = widget.postId == null;
       final sameSession = session == _session(widget.store);
-      return ExchangePageBackground(
-        child: Scaffold(
-          appBar: AppBar(title: Text(isPost ? '發起討論' : '撰寫回覆')),
-          body: !sameSession
-              ? const Center(child: Text('登入狀態已改變，請返回論壇重新開啟。'))
-              : ListView(
-                  padding: const EdgeInsets.all(20),
+      return StudentPage(
+        title: isPost ? '發起討論' : '撰寫回覆',
+        bottomBar: !sameSession
+            ? null
+            : StudentActionBar(
+                primary: FilledButton.icon(
+                  onPressed: sending ? null : _send,
+                  icon: const Icon(Icons.send_rounded),
+                  label: Text(sending ? '送出中…' : '送出'),
+                ),
+              ),
+        children: !sameSession
+            ? [
+                const StudentNotice(
+                  '登入狀態已改變，請返回論壇重新開啟。',
+                  icon: Icons.lock_outline_rounded,
+                ),
+              ]
+            : [
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        StudentIconLabel(Icons.person_outline_rounded, '匿名發表'),
-                        SizedBox(height: 8),
-                        StudentIconLabel(
-                          Icons.shield_outlined,
-                          '勿公開電話、Email 或社群帳號',
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    if (isPost) ...[
-                      DropdownButtonFormField<String>(
-                        initialValue: board,
-                        isExpanded: true,
-                        decoration: const InputDecoration(labelText: '發文看板'),
-                        items: widget.boards
-                            .map(
-                              (b) => DropdownMenuItem(
-                                value: b.id,
-                                child: Text(
-                                  b.label,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: sending
-                            ? null
-                            : (value) => setState(() => board = value!),
-                      ),
-                      const SizedBox(height: 16),
-                      DropdownButtonFormField<String>(
-                        initialValue: topic,
-                        decoration: const InputDecoration(labelText: '討論主題'),
-                        items: forumTopics.entries
-                            .map(
-                              (e) => DropdownMenuItem(
-                                value: e.key,
-                                child: Text(e.value),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: sending
-                            ? null
-                            : (value) => setState(() => topic = value!),
-                      ),
-                      const SizedBox(height: 16),
-                      TextField(
-                        controller: title,
-                        enabled: !sending,
-                        maxLength: 120,
-                        decoration: const InputDecoration(labelText: '標題'),
-                      ),
-                    ],
-                    TextField(
-                      controller: body,
-                      enabled: !sending,
-                      minLines: 5,
-                      maxLines: 14,
-                      maxLength: isPost ? 1600 : 800,
-                      decoration: InputDecoration(
-                        labelText: isPost ? '討論內容' : '回覆內容',
-                        alignLabelWithHint: true,
-                      ),
-                    ),
-                    if (error != null)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: Text(
-                          error!,
-                          style: const TextStyle(color: ExchangeColors.danger),
-                        ),
-                      ),
-                    FilledButton(
-                      onPressed: sending ? null : _send,
-                      child: Text(sending ? '送出中…' : '送出'),
+                    StudentIconLabel(Icons.person_outline_rounded, '匿名發表'),
+                    SizedBox(height: 8),
+                    StudentIconLabel(
+                      Icons.shield_outlined,
+                      '勿公開電話、Email 或社群帳號',
                     ),
                   ],
                 ),
-        ),
+                const SizedBox(height: 20),
+                if (isPost) ...[
+                  DropdownButtonFormField<String>(
+                    initialValue: board,
+                    isExpanded: true,
+                    decoration: const InputDecoration(
+                      labelText: '發文看板',
+                      prefixIcon: Icon(Icons.forum_outlined),
+                    ),
+                    items: widget.boards
+                        .map(
+                          (b) => DropdownMenuItem(
+                            value: b.id,
+                            child: Text(
+                              b.label,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: sending
+                        ? null
+                        : (value) => setState(() => board = value!),
+                  ),
+                  const SizedBox(height: 16),
+                  DropdownButtonFormField<String>(
+                    initialValue: topic,
+                    decoration: const InputDecoration(
+                      labelText: '討論主題',
+                      prefixIcon: Icon(Icons.label_outline_rounded),
+                    ),
+                    items: forumTopics.entries
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e.key,
+                            child: Text(e.value),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: sending
+                        ? null
+                        : (value) => setState(() => topic = value!),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: title,
+                    enabled: !sending,
+                    maxLength: 120,
+                    decoration: const InputDecoration(
+                      labelText: '標題',
+                      prefixIcon: Icon(Icons.title_rounded),
+                    ),
+                  ),
+                ],
+                TextField(
+                  controller: body,
+                  enabled: !sending,
+                  minLines: 5,
+                  maxLines: 14,
+                  maxLength: isPost ? 1600 : 800,
+                  decoration: InputDecoration(
+                    labelText: isPost ? '討論內容' : '回覆內容',
+                    alignLabelWithHint: true,
+                    prefixIcon: const Icon(Icons.notes_rounded),
+                  ),
+                ),
+                if (error != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Text(
+                      error!,
+                      style: const TextStyle(color: ExchangeColors.danger),
+                    ),
+                  ),
+              ],
       );
     },
   );

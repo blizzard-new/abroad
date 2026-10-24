@@ -62,6 +62,30 @@ ThemeData buildExchangeTheme() {
       labelMedium: type(12, strong: true),
       labelSmall: type(12),
     ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: ExchangeColors.background,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      centerTitle: false,
+      titleTextStyle: type(20, strong: true),
+    ),
+    dialogTheme: DialogThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: ExchangeColors.background,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+    ),
+    expansionTileTheme: const ExpansionTileThemeData(
+      shape: Border(),
+      collapsedShape: Border(),
+      iconColor: ExchangeColors.teal,
+      textColor: ExchangeColors.ink,
+      collapsedTextColor: ExchangeColors.ink,
+    ),
     cardTheme: const CardThemeData(
       elevation: 0,
       color: Colors.transparent,
@@ -198,8 +222,8 @@ ThemeData buildExchangeTheme() {
         (states) => TextStyle(
           fontSize: 12,
           fontWeight: states.contains(WidgetState.selected)
-              ? FontWeight.w700
-              : FontWeight.w500,
+              ? FontWeight.w600
+              : FontWeight.w400,
           color: states.contains(WidgetState.selected)
               ? ExchangeColors.teal
               : ExchangeColors.secondaryInk,

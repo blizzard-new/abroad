@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
 import '../state/workspace_sync.dart';
@@ -284,9 +285,7 @@ class _ApplicationDocumentFormScreenState
         ? '登入後可同步一般欄位草稿。'
         : switch (draft.status) {
             WorkspaceSyncStatus.saved =>
-              (draft.draft['revision'] ?? 0) == 0
-                  ? '一般欄位可儲存為加密草稿。'
-                  : '上次儲存的一般欄位已與雲端同步。',
+              (draft.draft['revision'] ?? 0) == 0 ? '一般欄位可加密儲存' : '一般欄位已同步',
             WorkspaceSyncStatus.syncing ||
             WorkspaceSyncStatus.loading => '草稿同步中…',
             _ => draft.error ?? '草稿已保留在手機，等待同步。',
@@ -297,211 +296,129 @@ class _ApplicationDocumentFormScreenState
         .where((name) => name.isNotEmpty)
         .toList();
     final autofillCount = store.applicationAutofillCount(widget.template);
-    return ExchangePageBackground(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.white.withValues(alpha: .72),
-          surfaceTintColor: Colors.transparent,
-          title: const Text('填寫文件'),
-          actions: [
-            IconButton(
-              tooltip: '在網頁開啟雲端文件工作台',
-              icon: const Icon(Icons.cloud_outlined),
-              onPressed: () => launchUrl(
-                Uri.parse(store.api.resolveUrl('#application-center')),
-                mode: LaunchMode.externalApplication,
-              ),
-            ),
-          ],
-          leading: IconButton(
-            tooltip: '文件清單',
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.folder_copy_outlined),
+    return StudentPage(
+      title: '填寫文件',
+      retainChildren: true,
+      leading: IconButton(
+        tooltip: '文件清單',
+        onPressed: () => Navigator.of(context).maybePop(),
+        icon: const Icon(Icons.arrow_back_rounded),
+      ),
+      actions: [
+        IconButton(
+          tooltip: '在網頁開啟雲端文件工作台',
+          icon: const Icon(Icons.cloud_outlined),
+          onPressed: () => launchUrl(
+            Uri.parse(store.api.resolveUrl('#application-center')),
+            mode: LaunchMode.externalApplication,
           ),
         ),
-        body: AbsorbPointer(
-          absorbing: saving,
-          child: SafeArea(
-            top: false,
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(18, 18, 18, 40),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Wrap(
-                    spacing: 7,
-                    runSpacing: 6,
-                    children: [
-                      _FormBadge(label: widget.template.stage),
-                      _FormBadge(
-                        label: widget.template.officialLayout ? '官方格式' : '申請整理',
-                        color: widget.template.officialLayout
-                            ? ExchangeColors.success
-                            : ExchangeColors.blue,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    widget.template.title,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(loadError ?? draftStatus),
-                  const SizedBox(height: 6),
-                  const Text(
-                    '按「儲存草稿」可保存未填完的一般欄位。敏感欄位與新選的附件只保留於本次使用；私人文件保存與授權請由右上角開啟網頁工作台。',
-                  ),
-                  if (attachmentNames.isNotEmpty) ...[
-                    const SizedBox(height: 8),
-                    Text(
-                      '雲端已有附件：${attachmentNames.join('、')}。此處儲存會保留引用；下載 PDF 前請重新選檔，或在網頁工作台匯出。',
-                    ),
-                  ],
-                  if (autofillCount > 0) ...[
-                    const SizedBox(height: 10),
-                    Semantics(
-                      liveRegion: true,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: ExchangeColors.tealSoft.withValues(alpha: .78),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: ExchangeColors.teal.withValues(alpha: .2),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.auto_awesome_rounded,
-                              color: ExchangeColors.teal,
-                              size: 18,
-                            ),
-                            const SizedBox(width: 7),
-                            Text('已帶入 $autofillCount 欄'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 14),
-                  GlassCard(
-                    padding: EdgeInsets.zero,
-                    child: ExpansionTile(
-                      minTileHeight: 56,
-                      shape: const Border(),
-                      collapsedShape: const Border(),
-                      title: const Text('填寫說明'),
-                      childrenPadding: const EdgeInsets.fromLTRB(18, 0, 18, 16),
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(widget.template.description),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final wide = constraints.maxWidth >= 820;
-                      final form = Form(
-                        key: formKey,
-                        child: _ApplicationFields(
-                          template: widget.template,
-                          controllers: controllers,
-                          values: values,
-                          onValueChanged: (field, value) =>
-                              setState(() => values[field.id] = value),
-                          onPickDate: _pickDate,
-                          onPickFiles: _pickFiles,
-                          onRemoveFile: (field, index) {
-                            final files = List<ApplicationUpload>.from(
-                              values[field.id] as List? ?? const [],
-                            )..removeAt(index);
-                            setState(() => values[field.id] = files);
-                          },
-                        ),
-                      );
-                      final guide = _PrintGuide(
-                        template: widget.template,
-                        store: store,
-                      );
-                      if (!wide) {
-                        return Column(
-                          children: [form, const SizedBox(height: 16), guide],
-                        );
-                      }
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(flex: 2, child: form),
-                          const SizedBox(width: 16),
-                          Expanded(child: guide),
-                        ],
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 22),
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final buttons = [
-                        FilledButton.icon(
-                          onPressed: saving || loadError != null ? null : _save,
-                          icon: saving
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const Icon(Icons.save_outlined),
-                          label: const Text('儲存草稿'),
-                        ),
-                        OutlinedButton.icon(
-                          onPressed:
-                              saving ||
-                                  loadError != null ||
-                                  store.isGeneratingApplicationPdf
-                              ? null
-                              : _preview,
-                          icon: const Icon(Icons.print_outlined),
-                          label: const Text('下載 PDF'),
-                        ),
-                      ];
-                      if (constraints.maxWidth >= 520) {
-                        return Row(
-                          children: [
-                            Expanded(child: buttons[0]),
-                            const SizedBox(width: 10),
-                            Expanded(child: buttons[1]),
-                          ],
-                        );
-                      }
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          buttons[0],
-                          const SizedBox(height: 10),
-                          buttons[1],
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
+      ],
+      bottomBar: StudentActionBar(
+        primary: FilledButton.icon(
+          onPressed: saving || loadError != null ? null : _save,
+          icon: saving
+              ? const SizedBox.square(
+                  dimension: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : const Icon(Icons.save_outlined),
+          label: const Text('儲存草稿'),
+        ),
+        secondary: OutlinedButton.icon(
+          onPressed:
+              saving || loadError != null || store.isGeneratingApplicationPdf
+              ? null
+              : _preview,
+          icon: const Icon(Icons.picture_as_pdf_outlined),
+          label: const Text('下載 PDF'),
         ),
       ),
+      children: [
+        StudentHeading(widget.template.title),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 16,
+          runSpacing: 8,
+          children: [
+            StudentIconLabel(Icons.folder_outlined, widget.template.stage),
+            StudentIconLabel(
+              Icons.description_outlined,
+              widget.template.officialLayout ? '官方格式' : '申請整理',
+            ),
+            if (autofillCount > 0)
+              StudentIconLabel(
+                Icons.auto_awesome_outlined,
+                '已帶入 $autofillCount 欄',
+              ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        StudentNotice(
+          loadError ?? draftStatus,
+          icon: loadError != null
+              ? Icons.cloud_off_outlined
+              : Icons.cloud_done_outlined,
+          color: loadError != null
+              ? ExchangeColors.danger
+              : ExchangeColors.teal,
+        ),
+        const SizedBox(height: 8),
+        const StudentNotice(
+          '敏感欄位與新附件只保留於本次使用。',
+          icon: Icons.lock_outline_rounded,
+          detail: '未填完也能儲存一般欄位草稿。敏感欄位與新選的附件不會保存在手機草稿；私人文件保存與授權請由右上角開啟網頁工作台。',
+        ),
+        if (attachmentNames.isNotEmpty) ...[
+          const SizedBox(height: 8),
+          StudentNotice(
+            '雲端附件 ${attachmentNames.length} 個；匯出前請重新選檔。',
+            icon: Icons.attach_file_rounded,
+            detail: '雲端已有附件：${attachmentNames.join('、')}。儲存會保留引用，也可在網頁工作台匯出。',
+          ),
+        ],
+        if (widget.template.description.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          GlassCard(
+            padding: EdgeInsets.zero,
+            child: ExpansionTile(
+              leading: const Icon(Icons.help_outline_rounded),
+              title: const Text('填寫說明'),
+              childrenPadding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(widget.template.description),
+                ),
+              ],
+            ),
+          ),
+        ],
+        const SizedBox(height: 24),
+        AbsorbPointer(
+          absorbing: saving,
+          child: Form(
+            key: formKey,
+            child: _ApplicationFields(
+              template: widget.template,
+              controllers: controllers,
+              values: values,
+              onValueChanged: (field, value) =>
+                  setState(() => values[field.id] = value),
+              onPickDate: _pickDate,
+              onPickFiles: _pickFiles,
+              onRemoveFile: (field, index) {
+                final files = List<ApplicationUpload>.from(
+                  values[field.id] as List? ?? const [],
+                )..removeAt(index);
+                setState(() => values[field.id] = files);
+              },
+            ),
+          ),
+        ),
+        const SizedBox(height: 24),
+        _PrintGuide(template: widget.template, store: store),
+      ],
     );
   }
 }
@@ -527,35 +444,50 @@ class _ApplicationFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final twoColumns = constraints.maxWidth >= 650;
-        final columnWidth = twoColumns
-            ? (constraints.maxWidth - 12) / 2
-            : constraints.maxWidth;
-        return Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: template.fields.map((field) {
-            final wideField =
-                field.kind == ApplicationFieldKind.textarea ||
-                field.kind == ApplicationFieldKind.files ||
-                field.kind == ApplicationFieldKind.checkbox;
-            return SizedBox(
-              width: wideField ? constraints.maxWidth : columnWidth,
-              child: _ApplicationFieldInput(
-                field: field,
-                controller: controllers[field.id],
-                value: values[field.id],
-                onChanged: (value) => onValueChanged(field, value),
-                onPickDate: () => onPickDate(field),
-                onPickFiles: () => onPickFiles(field),
-                onRemoveFile: (index) => onRemoveFile(field, index),
+    final groups = <String, List<ApplicationFormField>>{
+      '填寫內容': template.fields
+          .where(
+            (f) =>
+                f.kind != ApplicationFieldKind.files &&
+                f.kind != ApplicationFieldKind.checkbox,
+          )
+          .toList(),
+      '附件': template.fields
+          .where((f) => f.kind == ApplicationFieldKind.files)
+          .toList(),
+      '確認事項': template.fields
+          .where((f) => f.kind == ApplicationFieldKind.checkbox)
+          .toList(),
+    };
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final group in groups.entries)
+          if (group.value.isNotEmpty) ...[
+            StudentSectionTitle(
+              group.key,
+              icon: group.key == '附件'
+                  ? Icons.attach_file_rounded
+                  : group.key == '確認事項'
+                  ? Icons.checklist_rounded
+                  : Icons.edit_note_rounded,
+              detail: group.key == '填寫內容' ? '＊ 必填；未填完也能儲存草稿' : null,
+            ),
+            for (final field in group.value)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: _ApplicationFieldInput(
+                  field: field,
+                  controller: controllers[field.id],
+                  value: values[field.id],
+                  onChanged: (value) => onValueChanged(field, value),
+                  onPickDate: () => onPickDate(field),
+                  onPickFiles: () => onPickFiles(field),
+                  onRemoveFile: (index) => onRemoveFile(field, index),
+                ),
               ),
-            );
-          }).toList(),
-        );
-      },
+          ],
+      ],
     );
   }
 }
@@ -591,6 +523,7 @@ class _ApplicationFieldInput extends StatelessWidget {
         isExpanded: true,
         decoration: InputDecoration(
           labelText: label,
+          prefixIcon: Icon(applicationFieldIcon(field), size: 20),
           suffixIcon: field.helpText.isEmpty
               ? null
               : FieldHelpButton(title: field.label, message: field.helpText),
@@ -649,7 +582,7 @@ class _ApplicationFieldInput extends StatelessWidget {
                   FieldHelpButton(title: field.label, message: field.helpText),
               ],
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 4),
             Text(
               'PDF、JPG、PNG · 8 MB',
               style: Theme.of(context).textTheme.bodySmall,
@@ -660,11 +593,11 @@ class _ApplicationFieldInput extends StatelessWidget {
                 '至少 $minimum 個，最多 ${field.maxFiles} 個',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: ExchangeColors.amber,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             OutlinedButton.icon(
               onPressed: onPickFiles,
               icon: const Icon(Icons.upload_file_rounded),
@@ -710,9 +643,7 @@ class _ApplicationFieldInput extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         hintText: field.placeholder.isEmpty ? null : field.placeholder,
-        prefixIcon: field.sensitive
-            ? const Icon(Icons.lock_outline_rounded, size: 20)
-            : null,
+        prefixIcon: Icon(applicationFieldIcon(field), size: 20),
         suffixIcon:
             field.kind == ApplicationFieldKind.date || field.helpText.isNotEmpty
             ? Row(
@@ -771,7 +702,7 @@ class _PrintGuide extends StatelessWidget {
             label: '下一步',
             value: _applicationDocumentNextStep(template, selection.status),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           DropdownButtonFormField<ApplicationDocumentProgress>(
             initialValue: selection.status,
             isExpanded: true,
@@ -841,34 +772,9 @@ class _GuideRow extends StatelessWidget {
             value,
             style: Theme.of(
               context,
-            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _FormBadge extends StatelessWidget {
-  const _FormBadge({required this.label, this.color = ExchangeColors.teal});
-
-  final String label;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: .1),
-        borderRadius: BorderRadius.circular(999),
-      ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: color,
-          fontWeight: FontWeight.w700,
-        ),
       ),
     );
   }
@@ -929,3 +835,17 @@ TextInputType _keyboardType(ApplicationFieldKind kind) => switch (kind) {
   ),
   _ => TextInputType.text,
 };
+
+IconData applicationFieldIcon(ApplicationFormField field) => field.sensitive
+    ? Icons.lock_outline_rounded
+    : switch (field.kind) {
+        ApplicationFieldKind.email => Icons.mail_outline_rounded,
+        ApplicationFieldKind.tel => Icons.phone_outlined,
+        ApplicationFieldKind.date => Icons.event_outlined,
+        ApplicationFieldKind.number => Icons.numbers_rounded,
+        ApplicationFieldKind.textarea => Icons.notes_rounded,
+        ApplicationFieldKind.select => Icons.list_alt_rounded,
+        ApplicationFieldKind.files => Icons.attach_file_rounded,
+        ApplicationFieldKind.checkbox => Icons.check_box_outlined,
+        ApplicationFieldKind.text => Icons.edit_outlined,
+      };

@@ -31,7 +31,7 @@ class ApplicationDocumentsScreen extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 128),
           children: [
             _ApplicationHeader(store: store),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             _ApplicationActions(store: store),
             const SizedBox(height: 24),
             ExchangeSectionHeader(
@@ -304,7 +304,7 @@ class _TemplateCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: 8),
                 Text(
                   template.shortTitle,
                   maxLines: 2,
@@ -327,7 +327,7 @@ class _TemplateCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 9),
+                    const SizedBox(width: 8),
                     Text(
                       '${completion.percent}% · ${selection.copies} 份',
                       style: Theme.of(context).textTheme.bodySmall,
@@ -337,7 +337,7 @@ class _TemplateCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: 8),
           const Icon(Icons.chevron_right_rounded),
         ],
       ),
@@ -363,7 +363,7 @@ class _MiniBadge extends StatelessWidget {
         label,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(
           color: color,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
@@ -445,11 +445,22 @@ class _ApplicationSetupScreenState extends State<ApplicationSetupScreen> {
     }
     return FeaturePageScaffold(
       title: '申請設定',
+      bottomBar: StudentActionBar(
+        primary: FilledButton.icon(
+          onPressed: saving ? null : _save,
+          icon: const Icon(Icons.check_rounded),
+          label: Text(saving ? '正在更新' : '更新文件清單'),
+        ),
+      ),
       children: [
+        const StudentSectionTitle('申請目標', icon: Icons.flag_outlined),
         DropdownButtonFormField<String>(
           initialValue: programType,
           isExpanded: true,
-          decoration: const InputDecoration(labelText: '申請類型'),
+          decoration: const InputDecoration(
+            labelText: '申請類型',
+            prefixIcon: Icon(Icons.school_outlined),
+          ),
           items: _programOptions.entries
               .map(
                 (entry) => DropdownMenuItem(
@@ -464,7 +475,10 @@ class _ApplicationSetupScreenState extends State<ApplicationSetupScreen> {
         DropdownButtonFormField<String>(
           initialValue: targetSchool,
           isExpanded: true,
-          decoration: const InputDecoration(labelText: '交換學校'),
+          decoration: const InputDecoration(
+            labelText: '交換學校',
+            prefixIcon: Icon(Icons.public_rounded),
+          ),
           items: [
             const DropdownMenuItem(value: '', child: Text('尚未決定')),
             ...schools.map(
@@ -485,13 +499,17 @@ class _ApplicationSetupScreenState extends State<ApplicationSetupScreen> {
           textInputAction: TextInputAction.next,
           decoration: const InputDecoration(
             labelText: '申請學年度',
+            prefixIcon: Icon(Icons.event_outlined),
             hintText: '例如 116',
           ),
         ),
         const SizedBox(height: 12),
         DropdownButtonFormField<String>(
           initialValue: semester,
-          decoration: const InputDecoration(labelText: '交換學期'),
+          decoration: const InputDecoration(
+            labelText: '交換學期',
+            prefixIcon: Icon(Icons.date_range_outlined),
+          ),
           items: const [
             DropdownMenuItem(value: '', child: Text('尚未決定')),
             DropdownMenuItem(value: '第一學期', child: Text('第一學期')),
@@ -500,7 +518,8 @@ class _ApplicationSetupScreenState extends State<ApplicationSetupScreen> {
           ],
           onChanged: (value) => setState(() => semester = value ?? ''),
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 24),
+        const StudentSectionTitle('適用條件', icon: Icons.checklist_rounded),
         GlassCard(
           padding: EdgeInsets.zero,
           child: Column(
@@ -532,21 +551,6 @@ class _ApplicationSetupScreenState extends State<ApplicationSetupScreen> {
               ),
             ],
           ),
-        ),
-        const SizedBox(height: 24),
-        FilledButton.icon(
-          onPressed: saving ? null : _save,
-          icon: saving
-              ? const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.white,
-                  ),
-                )
-              : const Icon(Icons.check_rounded),
-          label: Text(saving ? '正在更新' : '更新文件清單'),
         ),
       ],
     );
@@ -662,6 +666,13 @@ class _ApplicationProfileScreenState extends State<ApplicationProfileScreen> {
     final sensitiveFields = fields.where((field) => field.sensitive).toList();
     return FeaturePageScaffold(
       title: '共用資料',
+      bottomBar: StudentActionBar(
+        primary: FilledButton.icon(
+          onPressed: fields.isEmpty ? null : _save,
+          icon: const Icon(Icons.save_outlined),
+          label: const Text('儲存資料'),
+        ),
+      ),
       children: [
         GlassCard(
           padding: EdgeInsets.zero,
@@ -713,6 +724,10 @@ class _ApplicationProfileScreenState extends State<ApplicationProfileScreen> {
             key: formKey,
             child: Column(
               children: [
+                const StudentSectionTitle(
+                  '基本與聯絡資料',
+                  icon: Icons.badge_outlined,
+                ),
                 ...commonFields.map(
                   (field) => Padding(
                     padding: const EdgeInsets.only(bottom: 12),
@@ -756,12 +771,6 @@ class _ApplicationProfileScreenState extends State<ApplicationProfileScreen> {
               ],
             ),
           ),
-        const SizedBox(height: 12),
-        FilledButton.icon(
-          onPressed: fields.isEmpty ? null : _save,
-          icon: const Icon(Icons.save_outlined),
-          label: const Text('儲存資料'),
-        ),
       ],
     );
   }
@@ -789,6 +798,7 @@ class _ProfileField extends StatelessWidget {
         isExpanded: true,
         decoration: InputDecoration(
           labelText: _fieldLabel(field),
+          prefixIcon: Icon(applicationFieldIcon(field), size: 20),
           suffixIcon: field.helpText.isEmpty
               ? null
               : FieldHelpButton(title: field.label, message: field.helpText),
@@ -828,9 +838,7 @@ class _ProfileField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: _fieldLabel(field),
         hintText: field.placeholder.isEmpty ? null : field.placeholder,
-        prefixIcon: field.sensitive
-            ? const Icon(Icons.lock_outline_rounded, size: 20)
-            : null,
+        prefixIcon: Icon(applicationFieldIcon(field), size: 20),
         suffixIcon: field.helpText.isEmpty
             ? null
             : FieldHelpButton(title: field.label, message: field.helpText),
@@ -883,6 +891,24 @@ class ApplicationPacketScreen extends StatelessWidget {
     final store = ExchangeStoreScope.of(context);
     return FeaturePageScaffold(
       title: '列印包',
+      bottomBar: StudentActionBar(
+        primary: FilledButton.icon(
+          onPressed:
+              store.applicationPacketReady && !store.isGeneratingApplicationPdf
+              ? () => _preview(context, store)
+              : null,
+          icon: const Icon(Icons.picture_as_pdf_outlined),
+          label: const Text('產生整包 PDF'),
+        ),
+        secondary: OutlinedButton.icon(
+          onPressed:
+              store.applicationPacketReady && !store.isGeneratingApplicationPdf
+              ? () => _share(context, store)
+              : null,
+          icon: const Icon(Icons.ios_share_rounded),
+          label: const Text('分享 PDF'),
+        ),
+      ),
       children: [
         _PageLead(
           icon: Icons.print_outlined,
@@ -903,34 +929,7 @@ class ApplicationPacketScreen extends StatelessWidget {
               child: _PacketRow(template: template, store: store),
             ),
           ),
-        const SizedBox(height: 12),
-        FilledButton.icon(
-          onPressed:
-              store.applicationPacketReady && !store.isGeneratingApplicationPdf
-              ? () => _preview(context, store)
-              : null,
-          icon: store.isGeneratingApplicationPdf
-              ? const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.white,
-                  ),
-                )
-              : const Icon(Icons.print_rounded),
-          label: const Text('產生整包 PDF'),
-        ),
-        const SizedBox(height: 10),
-        OutlinedButton.icon(
-          onPressed:
-              store.applicationPacketReady && !store.isGeneratingApplicationPdf
-              ? () => _share(context, store)
-              : null,
-          icon: const Icon(Icons.ios_share_rounded),
-          label: const Text('分享 PDF'),
-        ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         GlassCard(
           padding: EdgeInsets.zero,
           child: ExpansionTile(
@@ -990,32 +989,30 @@ class _PacketRow extends StatelessWidget {
           ),
           if (selection.selected) ...[
             const Divider(),
-            Row(
+            Column(
               children: [
-                const SizedBox(width: 8),
-                Expanded(
-                  child: DropdownButtonFormField<ApplicationDocumentProgress>(
-                    initialValue: selection.status,
-                    isExpanded: true,
-                    decoration: const InputDecoration(labelText: '目前進度'),
-                    items: ApplicationDocumentProgress.values
-                        .map(
-                          (status) => DropdownMenuItem(
-                            value: status,
-                            child: Text(status.label),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (status) => store.updateApplicationSelection(
-                      template.id,
-                      status: status,
-                    ),
+                DropdownButtonFormField<ApplicationDocumentProgress>(
+                  initialValue: selection.status,
+                  isExpanded: true,
+                  decoration: const InputDecoration(labelText: '目前進度'),
+                  items: ApplicationDocumentProgress.values
+                      .map(
+                        (status) => DropdownMenuItem(
+                          value: status,
+                          child: Text(status.label),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (status) => store.updateApplicationSelection(
+                    template.id,
+                    status: status,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(height: 12),
                 Semantics(
                   label: '${template.shortTitle}列印份數 ${selection.copies}',
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
                         tooltip: '減少一份',
@@ -1075,7 +1072,7 @@ class _PageLead extends StatelessWidget {
       child: Row(
         children: [
           ExchangeIconBadge(icon, background: Colors.white),
-          const SizedBox(width: 14),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

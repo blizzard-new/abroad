@@ -157,7 +157,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 22),
+          const SizedBox(height: 24),
           Text('我的通知', style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 12),
           if (loading) const LinearProgressIndicator(),
