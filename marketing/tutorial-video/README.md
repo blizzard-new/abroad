@@ -5,7 +5,7 @@
 | 集數 | 主題 | 成品 | 長度 |
 |------|------|------|------|
 | 第 1 集 | 登入與學校搜尋 | [`build/uniway-tutorial-school-search.mp4`](build/uniway-tutorial-school-search.mp4)（封面 [`poster.jpg`](build/poster.jpg)） | 3 分 33 秒 |
-| 第 2 集 | 選校與確認 | [`build/uniway-tutorial-02-choose-and-confirm.mp4`](build/uniway-tutorial-02-choose-and-confirm.mp4)（封面 [`poster-02.jpg`](build/poster-02.jpg)） | 錄製中 |
+| 第 2 集 | 選校與確認 | [`build/uniway-tutorial-02-choose-and-confirm.mp4`](build/uniway-tutorial-02-choose-and-confirm.mp4)（封面 [`poster-02.jpg`](build/poster-02.jpg)） | 2 分 17 秒 |
 
 規格都是 1920×1080、30 fps，輕配樂＋點擊音效。之後預計的集數：準備與時程、申請文件、預算與補助、社群。
 
@@ -38,6 +38,7 @@
 | 4 選定目標學校 | 第一名按「選為目標」→ 第 1 步打勾，系統帶到第 2 步 |
 | 5 當期資格與志願 | 回到第 1 步 →「本階段其他頁面」→ 當期資格與志願；條件自動帶入；116 學年度、秋季／全學年梯次；第一、第二志願 → 核對志願並建立計畫 |
 | 6 你的申請清單 | 每個志願逐項核對（綠勾已符合、橘色待確認）；個人下一步附官方來源 |
+| 7 第 1 步完成 | 上方提示下一件事「為目標學校安排準備時程」與「預覽準備時程」按鈕 |
 | 片尾 | 第 2 集完成，下一集：準備與時程 |
 
 ## 登入那一段怎麼錄的
