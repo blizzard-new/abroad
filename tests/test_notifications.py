@@ -919,6 +919,11 @@ def test_notifications_migration_is_server_only() -> None:
 
 
 def _notification_api(tmp_path, monkeypatch, *, email_enabled: bool = False):
+    # Read/delete tests need a stable source generation. A background public
+    # catalogue refresh can legitimately add a new notification between reads.
+    from exchange_info.cgu_catalogue import CguCatalogue
+    catalogue_view = CguCatalogue.view
+    monkeypatch.setattr(CguCatalogue, "view", lambda self, **kwargs: catalogue_view(self, refresh=False))
     repository = JsonlAccountRepository(tmp_path / "repository")
     deadline = datetime.now(TAIPEI) + timedelta(days=7)
     account = _paper_account(

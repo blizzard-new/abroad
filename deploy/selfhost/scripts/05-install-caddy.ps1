@@ -34,6 +34,14 @@ if (-not (Test-Path $exe)) {
     Write-Ok ("installed Caddy {0}" -f $release.tag_name)
 } else { Write-Ok 'Caddy already installed' }
 
+# Check the embedded Go verifier, not just the Caddy release number.
+$buildInfo = (& $exe build-info) -join "`n"
+Assert-ExitCode 'caddy build-info'
+if ($buildInfo -notmatch '(?m)^go\s+go(\d+\.\d+\.\d+)') { throw 'Cannot verify Caddy Go version; see docs/emudhra-remediation.md.' }
+$goVersion = [version]$Matches[1]
+$patchedGo = ($goVersion -ge [version]'1.27.3') -or ($goVersion.Major -eq 1 -and $goVersion.Minor -eq 26 -and $goVersion.Build -ge 10)
+if (-not $patchedGo) { throw 'Caddy uses an unpatched Go TLS verifier. Obtain approval for a checksum-verified replacement; see docs/emudhra-remediation.md.' }
+
 Write-Step 'Writing the Caddyfile'
 $template = Get-Content -Raw -Path (Join-Path $script:DeployDir 'caddy\Caddyfile.template')
 $text = $template.Replace('__DOMAIN__', $e['DOMAIN']).Replace('__ACME_EMAIL__', $e['ACME_EMAIL'])
