@@ -167,3 +167,18 @@ def test_installed_artifacts_pass_gate():
     from exchange_info.tls_audit import audit
     report = audit()
     assert report['node_ca_count'] > 0
+
+
+@pytest.mark.parametrize(('version', 'roots'), [
+    ('24.21.0', []),
+    ('24.22.1', list(tls_trust.BLOCKED_ROOT_SHA256)),
+])
+def test_effective_playwright_node_override_is_checked(monkeypatch, version, roots):
+    from exchange_info import tls_audit
+    monkeypatch.setenv('PLAYWRIGHT_NODEJS_PATH', '/isolated/custom-node')
+    def report(command, **kwargs):
+        assert command[0] == '/isolated/custom-node'
+        return json.dumps({'version': version, 'roots': roots})
+    monkeypatch.setattr(tls_audit.subprocess, 'check_output', report)
+    with pytest.raises(ValueError, match='Playwright Node'):
+        tls_audit.audit()

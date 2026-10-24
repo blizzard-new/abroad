@@ -15,11 +15,19 @@ Official sources:
   and [restoration of unaffected roots](https://github.com/certifi/python-certifi/pull/440).
 
 The image removes only exact emSign ECC Root CA - G3 and AAA Certificate Services
-fingerprints from distro CA files, then rebuilds the hashed CA directory. AAA is
+fingerprints from distro CA files, then rebuilds the hashed CA directory before
+installing dependencies. CI bootstraps uv with pip's patched certifi-only mode
+to avoid adding the runner's potentially stale system store. AAA is
 an alternate cross-sign path, not itself a leaked key. G1/C1/C3 are not blanket-deleted.
 The installed-artifact gate checks certifi, pip's vendored bundle, Playwright's
-actual Node version/default roots, and both Linux system bundle and CApath.
+effective Node version/default roots (including PLAYWRIGHT_NODEJS_PATH overrides),
+and both Linux system bundle and CApath.
 Docker installs runtime requirements from uv.lock with artifact hashes.
+An audit of the installed lockfile (rather than a fresh dependency resolution)
+also required updating urllib3 to 2.8.0, Pillow to 13.0.0, pypdf to 6.21.2 and
+the development dependency filelock to 4.2.4. The dedicated CI job audits the
+installed environment so freezing the image cannot silently retain those known
+vulnerable versions.
 
 The SSRF adapter now delegates the TLS handshake to urllib3, retaining DNS/IP
 pinning but honoring Requests' CA selection, hostname checks and verification
@@ -43,6 +51,11 @@ is constructed and exercise all three supported parsers. Requests does not spoof
 browser TLS fingerprints, so live search providers may rate-limit differently;
 external provider acceptance remains a deployment validation item. Once upstream
 publishes verified patched wheels, re-evaluate this adapter and its tests.
+The bounded public-query check during this change returned HTTP 429 from Brave,
+500 from Yahoo and 403 from DuckDuckGo's video endpoint, yielding no results.
+Those responses prove neither search availability nor parity with the old
+transport. Do not approve production rollout until search acceptance is resolved
+in an isolated environment; do not fall back to the vulnerable primp transport.
 
 Playwright 1.64.1's installed Node must pass the gate (24.22.1 on the tested wheel).
 This does not certify browser binaries; install/validate patched browsers in an
@@ -61,7 +74,9 @@ running binary's rejection behavior are still unverified. No Windows changes are
 
 ## Review, deployment and rollback
 
-1. Review CI's TLS trust regression image logs and the Web quality checks. The
+1. Review CI's TLS trust regression image logs. The existing Web quality workflow
+   was manually disabled before this change and has not been re-enabled; the
+   complete Web/browser suite is still outstanding. The
    TLS job uses sparse source data, no secrets/production volumes, `--network none`
    for verification, and never publishes its image. It is evidence for installed
    TLS dependencies, not a full production deployment rehearsal.

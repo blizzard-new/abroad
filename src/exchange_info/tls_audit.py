@@ -6,10 +6,9 @@ import importlib.metadata as metadata
 import json
 from pathlib import Path
 import subprocess
-import sys
 
 import certifi
-import playwright
+from playwright._impl._driver import compute_driver_executable
 
 from .tls_trust import BLOCKED_ROOT_SHA256, certificate_fingerprints, validate_bundle
 
@@ -22,10 +21,11 @@ def audit(*, system: bool = False) -> dict:
     validate_bundle(certifi.where())
     import pip._vendor.certifi as pip_certifi
     validate_bundle(pip_certifi.where())
-    node = Path(playwright.__file__).parent / "driver" / ("node.exe" if sys.platform == "win32" else "node")
+    # Match Playwright's effective runtime, including PLAYWRIGHT_NODEJS_PATH.
+    node, _ = compute_driver_executable()
     code = """const tls=require('tls'),{X509Certificate}=require('crypto');
 console.log(JSON.stringify({version:process.versions.node,roots:tls.getCACertificates('default').map(p=>new X509Certificate(p).fingerprint256.replaceAll(':','').toLowerCase())}));"""
-    node_data = json.loads(subprocess.check_output([str(node), "-e", code], text=True))
+    node_data = json.loads(subprocess.check_output([str(node), "-e", code], text=True, timeout=10))
     version = tuple(map(int, node_data['version'].split('.')))
     minimum = {22: (22, 23, 4), 24: (24, 22, 1), 26: (26, 12, 1)}.get(version[0])
     if minimum is None or version < minimum or set(node_data['roots']) & BLOCKED_ROOT_SHA256:

@@ -7,8 +7,6 @@ from pathlib import Path
 import re
 import ssl
 
-import certifi
-
 # https://github.com/certifi/python-certifi/pull/437/files
 # https://bugzilla.mozilla.org/show_bug.cgi?id=2083449
 # AAA is a cross-sign trust path, not itself a compromised private key.
@@ -33,6 +31,9 @@ def validate_bundle(path: str | Path) -> str:
 
 
 def ca_bundle() -> str:
+    # Keep the fingerprint parser stdlib-only for the pre-install image gate.
+    import certifi
+
     return validate_bundle(os.environ.get("REQUESTS_CA_BUNDLE")
                            or os.environ.get("CURL_CA_BUNDLE")
                            or os.environ.get("SSL_CERT_FILE") or certifi.where())

@@ -14,6 +14,10 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /build
 COPY pyproject.toml uv.lock README.md ./
 COPY src ./src
+COPY scripts/harden_image_ca.py /build/harden_image_ca.py
+# Filter OS roots before pip can merge the system store into download trust.
+RUN PYTHONPATH=/build/src python /build/harden_image_ca.py /usr/share/ca-certificates \
+ && update-ca-certificates --fresh
 # Bootstrap using the PSF-recommended hash-pinned wheel, before any unpinned download.
 RUN python -m pip install "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70" \
  && python -m pip install uv==0.13.5 \
@@ -21,10 +25,7 @@ RUN python -m pip install "pip @ https://files.pythonhosted.org/packages/3f/06/3
  && python -m pip install --require-hashes -r /tmp/runtime-requirements.txt \
  && python -m pip install --no-deps .
 
-COPY scripts/harden_image_ca.py /build/harden_image_ca.py
-RUN python /build/harden_image_ca.py /usr/share/ca-certificates \
- && update-ca-certificates --fresh \
- && python -m exchange_info.tls_audit --system
+RUN python -m exchange_info.tls_audit --system
 
 COPY deploy/selfhost/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 0755 /usr/local/bin/docker-entrypoint.sh
