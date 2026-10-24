@@ -5,6 +5,7 @@ import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../core/school_visuals.dart';
 import '../core/student_plan.dart';
+import '../core/student_ui.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
 import 'school_detail_screen.dart';
@@ -204,13 +205,17 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
 
     return FeaturePageScaffold(
       title: '資格初判',
+      bottomBar: StudentActionBar(primary: FilledButton.icon(onPressed: () => _check(store),
+        icon: const Icon(Icons.manage_search_rounded), label: const Text('查看初判結果'))),
       children: [
         GlassCard(
           child: Column(
             children: [
+              const StudentSectionTitle('學業與語言', icon: Icons.school_outlined),
               DropdownButtonFormField<String>(
+                isExpanded: true,
                 initialValue: colleges.contains(college) ? college : null,
-                decoration: const InputDecoration(labelText: '所屬學院'),
+                decoration: const InputDecoration(labelText: '所屬學院', prefixIcon: Icon(Icons.school_outlined)),
                 items: colleges
                     .map(
                       (value) =>
@@ -221,8 +226,9 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
+                isExpanded: true,
                 initialValue: degree.isEmpty ? null : degree,
-                decoration: const InputDecoration(labelText: '目前學制'),
+                decoration: const InputDecoration(labelText: '目前學制', prefixIcon: Icon(Icons.school_outlined)),
                 items: const [
                   DropdownMenuItem(value: '大學部', child: Text('大學部')),
                   DropdownMenuItem(value: '研究所', child: Text('研究所')),
@@ -242,8 +248,9 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
+                isExpanded: true,
                 initialValue: languageTest.isEmpty ? null : languageTest,
-                decoration: const InputDecoration(labelText: '語言測驗'),
+                decoration: const InputDecoration(labelText: '語言測驗', prefixIcon: Icon(Icons.translate_rounded)),
                 items: const [
                   DropdownMenuItem(value: 'toeic', child: Text('TOEIC')),
                   DropdownMenuItem(value: 'ielts', child: Text('IELTS')),
@@ -267,9 +274,11 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
                 ),
               ),
               const SizedBox(height: 12),
+              const StudentSectionTitle('交換目標', icon: Icons.flag_outlined),
               DropdownButtonFormField<String>(
+                isExpanded: true,
                 initialValue: targetTerm.isEmpty ? null : targetTerm,
-                decoration: const InputDecoration(labelText: '預計交換學期'),
+                decoration: const InputDecoration(labelText: '預計交換學期', prefixIcon: Icon(Icons.date_range_outlined)),
                 items: targetTerms
                     .map(
                       (value) =>
@@ -280,10 +289,11 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
+                isExpanded: true,
                 initialValue: preferredCountry.isEmpty
                     ? null
                     : preferredCountry,
-                decoration: const InputDecoration(labelText: '偏好國家（選填）'),
+                decoration: const InputDecoration(labelText: '偏好國家（選填）', prefixIcon: Icon(Icons.public_rounded)),
                 items: countries
                     .map(
                       (value) =>
@@ -304,7 +314,7 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
                   prefixText: 'NT\$ ',
                 ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 8),
               CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
                 value: needsScholarship,
@@ -313,15 +323,8 @@ class _EligibilityScreenState extends State<EligibilityScreen> {
                 onChanged: (value) =>
                     setState(() => needsScholarship = value ?? false),
               ),
-              const SizedBox(height: 18),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: () => _check(store),
-                  icon: const Icon(Icons.manage_search_rounded),
-                  label: const Text('查看初判結果'),
-                ),
-              ),
+              const SizedBox(height: 16),
+
             ],
           ),
         ),
@@ -397,7 +400,7 @@ class DocumentsScreen extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text('官方文件重點', style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         if (store.isLoading && store.dashboard == null)
           const LoadingCards(count: 4)
         else if (rules.isEmpty)
@@ -453,43 +456,24 @@ class FeaturePageScaffold extends StatelessWidget {
   const FeaturePageScaffold({
     required this.title,
     required this.children,
-    super.key,
     this.onRefresh,
+    this.bottomBar,
+    this.actions,
+    super.key,
   });
-
   final String title;
   final List<Widget> children;
   final Future<void> Function()? onRefresh;
-
+  final Widget? bottomBar;
+  final List<Widget>? actions;
   @override
-  Widget build(BuildContext context) {
-    final list = ListView(
-      padding: const EdgeInsets.fromLTRB(18, 18, 18, 40),
-      children: children,
-    );
-    return ExchangePageBackground(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.white.withValues(alpha: .72),
-          surfaceTintColor: Colors.transparent,
-          title: Text(title),
-          leading: IconButton(
-            tooltip: '返回',
-            onPressed: () => Navigator.of(context).pop(),
-            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-            icon: const Icon(Icons.arrow_back_rounded),
-          ),
-        ),
-        body: SafeArea(
-          top: false,
-          child: onRefresh == null
-              ? list
-              : RefreshIndicator(onRefresh: onRefresh!, child: list),
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => StudentPage(
+    title: title,
+    onRefresh: onRefresh,
+    bottomBar: bottomBar,
+    actions: actions,
+    children: children,
+  );
 }
 
 class _DeadlineCard extends StatelessWidget {
@@ -578,7 +562,7 @@ class _StudentInfoCard extends StatelessWidget {
                   badge!,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: ExchangeColors.teal,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -660,7 +644,7 @@ class _FavoriteSchoolCard extends StatelessWidget {
       child: Row(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(16),
             child: SizedBox(
               width: 92,
               height: 82,
@@ -750,7 +734,7 @@ class _EligibilityResultCard extends StatelessWidget {
                 ready ? Icons.verified_rounded : Icons.info_outline_rounded,
                 color: ready ? ExchangeColors.success : ExchangeColors.amber,
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   ready ? '符合校內基本門檻' : '仍有條件需要確認',
@@ -759,7 +743,7 @@ class _EligibilityResultCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           BulletPoint(
             result.academicPass
                 ? '平均成績已達 $minLabel基本門檻。'
@@ -781,7 +765,7 @@ class _EligibilityResultCard extends StatelessWidget {
               (match) => _RecommendedSchoolRow(match: match),
             ),
           ],
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           FilledButton.icon(
             onPressed: () => Navigator.of(
               context,
@@ -827,7 +811,7 @@ class _DocumentStatusRow extends StatelessWidget {
                 : Icons.description_outlined,
             color: color,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(label, style: Theme.of(context).textTheme.bodyMedium),
           ),
@@ -908,7 +892,7 @@ class _RecommendedSchoolRow extends StatelessWidget {
               '${match.score}',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: ExchangeColors.teal,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w600,
               ),
             ),
             const Icon(Icons.chevron_right_rounded, size: 20),

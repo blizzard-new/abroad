@@ -61,12 +61,12 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('我的交換'), findsOneWidget);
+      expect(find.text('旅程'), findsOneWidget);
       expect(find.byTooltip('通知與提醒'), findsOneWidget);
-      await tester.tap(find.text('找學校').last);
+      await tester.tap(find.text('學校').last);
       await tester.pumpAndSettle();
-      expect(find.text('找到適合你的學校'), findsOneWidget);
-      await tester.tap(find.text('申請準備').last);
+      expect(find.text('找學校'), findsOneWidget);
+      await tester.tap(find.text('申請').last);
       await tester.pumpAndSettle();
       expect(find.text('申請文件'), findsOneWidget);
       await tester.tap(find.text('論壇').last);
@@ -75,7 +75,7 @@ void main() {
       await tester.tap(find.text('我的').last);
       await tester.pumpAndSettle();
       expect(find.textContaining('Google'), findsWidgets);
-      await tester.tap(find.text('我的交換').last);
+      await tester.tap(find.text('旅程').last);
       await tester.pumpAndSettle();
       expect(find.byTooltip('通知與提醒'), findsOneWidget);
       expect(tester.takeException(), isNull);

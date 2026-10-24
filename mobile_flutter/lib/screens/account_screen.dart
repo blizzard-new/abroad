@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
 import 'app_update_prompt.dart';
@@ -120,13 +121,13 @@ class _AccountScreenState extends State<AccountScreen> {
               front ? '加入學生證正面' : '加入學生證反面',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             FilledButton.icon(
               onPressed: () => Navigator.pop(sheetContext, ImageSource.camera),
               icon: const Icon(Icons.photo_camera_outlined),
               label: const Text('直接拍攝'),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             OutlinedButton.icon(
               onPressed: () => Navigator.pop(sheetContext, ImageSource.gallery),
               icon: const Icon(Icons.photo_library_outlined),
@@ -264,7 +265,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 children: [
                   Text(
                     '交換指南帳號',
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   Text('收藏、時程與留學社群都能同步'),
                 ],
@@ -286,7 +287,7 @@ class _AccountScreenState extends State<AccountScreen> {
             context,
           ).textTheme.bodyLarge?.copyWith(color: ExchangeColors.secondaryInk),
         ),
-        const SizedBox(height: 22),
+        const SizedBox(height: 24),
         SegmentedButton<_AuthMode>(
           segments: const [
             ButtonSegment(value: _AuthMode.login, label: Text('登入')),
@@ -302,7 +303,7 @@ class _AccountScreenState extends State<AccountScreen> {
             });
           },
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 16),
         if (mode == _AuthMode.register && !verified)
           _StudentVerificationCard(
             frontCard: frontCard,
@@ -451,11 +452,13 @@ class _AccountScreenState extends State<AccountScreen> {
               backgroundColor: ExchangeColors.blueSoft,
               foregroundColor: ExchangeColors.blue,
               child: Text(
-                profile.displayName.characters.first.toUpperCase(),
+                profile.displayName.isEmpty
+                    ? 'U'
+                    : profile.displayName.characters.first.toUpperCase(),
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -475,91 +478,81 @@ class _AccountScreenState extends State<AccountScreen> {
           ],
         ),
         if (profile.studentStatusVerified) ...[
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           _VerificationSuccess(message: '${profile.verifiedUniversity}學生身分已驗證'),
         ],
-        const SizedBox(height: 26),
-        const ExchangeSectionHeader(title: '個人設定'),
-        const SizedBox(height: 14),
+        const SizedBox(height: 24),
         GlassCard(
-          child: Column(
+          padding: EdgeInsets.zero,
+          child: ExpansionTile(
+            leading: const Icon(Icons.manage_accounts_outlined),
+            title: const Text('個人設定'),
+            childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             children: [
-              TextField(
-                controller: displayNameController,
-                decoration: const InputDecoration(
-                  labelText: '公開暱稱',
-                  prefixIcon: Icon(Icons.badge_outlined),
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: homeUniversityController,
-                decoration: const InputDecoration(
-                  labelText: '目前就讀大學',
-                  prefixIcon: Icon(Icons.school_outlined),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: store.universities
-                      .map(
-                        (university) => ActionChip(
-                          label: Text(university.shortName),
-                          onPressed: () {
-                            setState(() {
-                              homeUniversityController.text =
-                                  university.schoolName;
-                            });
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: targetCountriesController,
-                decoration: const InputDecoration(
-                  labelText: '目標國家',
-                  helperText: '例如：日本、法國、澳洲',
-                  prefixIcon: Icon(Icons.public_rounded),
-                ),
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<String>(
-                initialValue: applicationStage,
-                decoration: const InputDecoration(
-                  labelText: '目前申請階段',
-                  prefixIcon: Icon(Icons.route_outlined),
-                ),
-                items: _stageLabels.entries
-                    .map(
-                      (entry) => DropdownMenuItem(
-                        value: entry.key,
-                        child: Text(entry.value),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  if (value != null) setState(() => applicationStage = value);
-                },
-              ),
-              if (error != null) ...[
-                const SizedBox(height: 12),
-                _FormError(message: error!),
-              ],
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: () => _saveProfile(store),
-                  icon: const Icon(Icons.save_outlined),
-                  label: const Text('儲存設定'),
-                ),
+              Column(
+                children: [
+                  TextField(
+                    controller: displayNameController,
+                    decoration: const InputDecoration(
+                      labelText: '公開暱稱',
+                      prefixIcon: Icon(Icons.badge_outlined),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: homeUniversityController,
+                    readOnly: true,
+                    onTap: () => _chooseHomeUniversity(store),
+                    decoration: const InputDecoration(
+                      labelText: '就讀大學',
+                      prefixIcon: Icon(Icons.school_outlined),
+                      suffixIcon: Icon(Icons.expand_more_rounded),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: targetCountriesController,
+                    decoration: const InputDecoration(
+                      labelText: '目標國家',
+                      helperText: '例如：日本、法國、澳洲',
+                      prefixIcon: Icon(Icons.public_rounded),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  DropdownButtonFormField<String>(
+                    initialValue: applicationStage,
+                    decoration: const InputDecoration(
+                      labelText: '目前申請階段',
+                      prefixIcon: Icon(Icons.route_outlined),
+                    ),
+                    items: _stageLabels.entries
+                        .map(
+                          (entry) => DropdownMenuItem(
+                            value: entry.key,
+                            child: Text(entry.value),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() => applicationStage = value);
+                      }
+                    },
+                  ),
+                  if (error != null) ...[
+                    const SizedBox(height: 12),
+                    _FormError(message: error!),
+                  ],
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: () => _saveProfile(store),
+                      icon: const Icon(Icons.save_outlined),
+                      label: const Text('儲存設定'),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -609,6 +602,64 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
+  Future<void> _chooseHomeUniversity(ExchangeStore store) async {
+    var query = '';
+    final selected = await showModalBottomSheet<String>(
+      context: context,
+      showDragHandle: true,
+      useSafeArea: true,
+      isScrollControlled: true,
+      builder: (context) => StatefulBuilder(
+        builder: (context, update) => Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.viewInsetsOf(context).bottom,
+          ),
+          child: SizedBox(
+            height: MediaQuery.sizeOf(context).height * .6,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      labelText: '搜尋就讀大學',
+                      prefixIcon: Icon(Icons.search_rounded),
+                    ),
+                    onChanged: (value) => update(() => query = value.trim()),
+                  ),
+                ),
+                Expanded(
+                  child: ListView(
+                    children: store.universities
+                        .where(
+                          (u) =>
+                              '${u.schoolName} ${u.shortName}'.contains(query),
+                        )
+                        .map(
+                          (u) => ListTile(
+                            leading: const Icon(Icons.school_outlined),
+                            title: Text(u.schoolName),
+                            trailing:
+                                u.schoolName == homeUniversityController.text
+                                ? const Icon(Icons.check_rounded)
+                                : null,
+                            onTap: () => Navigator.pop(context, u.schoolName),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    if (selected != null && mounted) {
+      setState(() => homeUniversityController.text = selected);
+    }
+  }
+
   Future<void> _providerLogin(ExchangeStore store, String provider) async {
     if (!termsAccepted) {
       setState(() => error = '請先閱讀並同意服務條款與隱私權政策。');
@@ -629,19 +680,18 @@ class _AccountScreenState extends State<AccountScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 28),
-        const ExchangeIconBadge(Icons.flight_takeoff_rounded),
-        const SizedBox(height: 28),
-        Text(
-          '同一個你，\n同一份交換計畫。',
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(
-            fontWeight: FontWeight.w800,
-            height: 1.25,
-          ),
+        const StudentHeading('我的', subtitle: '登入，同步你的交換計畫'),
+        const SizedBox(height: 24),
+        const Wrap(
+          spacing: 24,
+          runSpacing: 12,
+          children: [
+            StudentIconLabel(Icons.bookmark_outline_rounded, '收藏'),
+            StudentIconLabel(Icons.assignment_outlined, '文件'),
+            StudentIconLabel(Icons.event_outlined, '日期'),
+          ],
         ),
-        const SizedBox(height: 16),
-        const Text('使用電腦版相同的 Google 帳號。你的收藏、文件進度與申請日期，會接著同步到這裡。'),
-        const SizedBox(height: 28),
+        const SizedBox(height: 24),
         GlassCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -683,7 +733,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               const SizedBox(height: 12),
               Text(
-                '會開啟瀏覽器完成登入，再返回 UniWay。',
+                '使用電腦版帳號，登入後自動返回。',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               if (google == null)
@@ -762,7 +812,7 @@ class _StudentVerificationCard extends StatelessWidget {
             icon: Icons.center_focus_strong_rounded,
             onTap: onPickFront,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           _StudentCardPicker(
             title: '學生證反面',
             hint: '完整拍攝，不裁切卡片邊緣',
@@ -770,7 +820,7 @@ class _StudentVerificationCard extends StatelessWidget {
             icon: Icons.credit_card_rounded,
             onTap: onPickBack,
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -785,12 +835,12 @@ class _StudentVerificationCard extends StatelessWidget {
                   size: 20,
                   color: ExchangeColors.success,
                 ),
-                SizedBox(width: 9),
+                SizedBox(width: 8),
                 Expanded(child: Text('不保存證件照片、姓名、學號或 OCR 全文；只留下已驗證、學校與時間。')),
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           CheckboxListTile(
             contentPadding: EdgeInsets.zero,
             controlAffinity: ListTileControlAffinity.leading,
@@ -921,7 +971,7 @@ class _VerificationSuccess extends StatelessWidget {
       child: Row(
         children: [
           const Icon(Icons.verified_rounded, color: ExchangeColors.success),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

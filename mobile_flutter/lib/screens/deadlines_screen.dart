@@ -5,6 +5,7 @@ import '../core/application_calendar.dart';
 import '../core/connected_calendar.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../state/exchange_store.dart';
 
 class DeadlinesScreen extends StatefulWidget {
@@ -282,7 +283,7 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
                   ),
                   const SizedBox(height: 12),
                   const _WeekdayHeader(),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 8),
                   _MonthGrid(
                     month: focusedMonth,
                     selectedDate: selectedDate,
@@ -304,10 +305,10 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
               child: FilledButton.icon(
                 onPressed: () => _addTask(store),
                 icon: const Icon(Icons.add_rounded),
-                label: const Text('新增自己的申請任務'),
+                label: const Text('新增申請任務'),
               ),
             ),
-            const SizedBox(height: 22),
+            const SizedBox(height: 24),
             _AgendaHeading(
               showUpcoming: showUpcoming,
               selectedDate: selectedDate,
@@ -343,7 +344,7 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
                   ),
                 ),
               ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -388,91 +389,13 @@ class _PlannerHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final next = events.isEmpty ? null : events.first;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: 158),
-        child: Stack(
-          alignment: Alignment.bottomLeft,
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                'assets/images/destination-europe.jpg',
-                fit: BoxFit.cover,
-              ),
-            ),
-            const Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0x5C10212E), Color(0xD9142430)],
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xC72A3540),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0x7AFFFFFF)),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.timer_outlined, color: Colors.white),
-                      const SizedBox(width: 11),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              next == null ? '尚無申請任務' : '下一個期限',
-                              style: const TextStyle(
-                                color: Color(0xCCFFFFFF),
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(
-                              next == null
-                                  ? '新增申請任務'
-                                  : countdownLabel(next.date),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            if (next != null)
-                              Text(
-                                next.title,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      if (next != null) const StudentSectionTitle('下一個期限', icon: Icons.timer_outlined),
+      StudentSummaryCard(
+      icon: Icons.event_outlined,
+      title: next == null ? '安排下一步' : countdownLabel(next.date),
+      detail: next == null ? '把確認過的日期加入日曆。' : next.title,
+    )]);
   }
 }
 
@@ -667,19 +590,19 @@ class _CalendarToolbar extends StatelessWidget {
           onPressed: onPrevious,
           icon: const Icon(Icons.chevron_left_rounded),
         ),
-        const SizedBox(width: 5),
+        const SizedBox(width: 4),
         IconButton(
           tooltip: '回到今天',
           onPressed: onToday,
           icon: const Icon(Icons.my_location_rounded),
         ),
-        const SizedBox(width: 5),
+        const SizedBox(width: 4),
         IconButton(
           tooltip: '下個月',
           onPressed: onNext,
           icon: const Icon(Icons.chevron_right_rounded),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         Expanded(
           child: Text(
             '${focusedMonth.year}年${focusedMonth.month}月',
@@ -706,7 +629,7 @@ class _WeekdayHeader extends StatelessWidget {
                 style: const TextStyle(
                   color: ExchangeColors.secondaryInk,
                   fontSize: 12,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -808,8 +731,8 @@ class _MonthGrid extends StatelessWidget {
                             ? ExchangeColors.ink
                             : ExchangeColors.secondaryInk.withValues(alpha: .5),
                         fontWeight: isToday || selected
-                            ? FontWeight.w800
-                            : FontWeight.w500,
+                            ? FontWeight.w600
+                            : FontWeight.w400,
                       ),
                     ),
                   ),
@@ -863,7 +786,7 @@ class _AgendaHeading extends StatelessWidget {
     return Row(
       children: [
         const ExchangeIconBadge(Icons.checklist_rounded),
-        const SizedBox(width: 11),
+        const SizedBox(width: 12),
         Expanded(
           child: Text(
             showUpcoming
@@ -927,7 +850,7 @@ class _AgendaCard extends StatelessWidget {
                       category.label,
                       style: TextStyle(
                         color: category.color,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w600,
                         fontSize: 12,
                       ),
                     ),
@@ -941,7 +864,7 @@ class _AgendaCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 4),
                 Text(
                   event.title,
                   style: Theme.of(context).textTheme.titleMedium,
@@ -1032,7 +955,7 @@ class _CalendarEmpty extends StatelessWidget {
             '${selectedDate.month}/${selectedDate.day} 還沒有任務',
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 4),
           const Text('可新增文件、語言考試、簽證或住宿提醒。'),
           const SizedBox(height: 12),
           OutlinedButton.icon(
@@ -1132,7 +1055,7 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
               widget.initialEvent == null ? '新增申請任務' : '編輯申請任務',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
             TextField(
               controller: titleController,
               autofocus: true,
@@ -1204,16 +1127,16 @@ class _AddTaskSheetState extends State<_AddTaskSheet> {
               ),
             ),
             if (error != null) ...[
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Text(
                 error!,
                 style: const TextStyle(
                   color: ExchangeColors.danger,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: FilledButton.icon(

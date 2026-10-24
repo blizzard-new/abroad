@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../core/application_calendar.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../core/student_plan.dart';
 import '../state/exchange_store.dart';
 import 'feature_screens.dart';
@@ -105,6 +106,15 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
     return FeaturePageScaffold(
       title: '交換預算',
+      bottomBar: schools.isEmpty
+          ? null
+          : StudentActionBar(
+              primary: FilledButton.icon(
+                onPressed: () => _save(store),
+                icon: const Icon(Icons.save_outlined),
+                label: const Text('儲存估算'),
+              ),
+            ),
       children: [
         if (schools.isEmpty)
           const EmptyState(
@@ -113,6 +123,10 @@ class _BudgetScreenState extends State<BudgetScreen> {
             message: '資料載入後即可開始估算。',
           )
         else ...[
+          const StudentSectionTitle(
+            '目的地與期間',
+            icon: Icons.flight_takeoff_rounded,
+          ),
           GlassCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +134,10 @@ class _BudgetScreenState extends State<BudgetScreen> {
                 DropdownButtonFormField<String>(
                   initialValue: selectedSchool,
                   isExpanded: true,
-                  decoration: const InputDecoration(labelText: '估算學校'),
+                  decoration: const InputDecoration(
+                    labelText: '估算學校',
+                    prefixIcon: Icon(Icons.school_outlined),
+                  ),
                   items: schools
                       .map(
                         (school) => DropdownMenuItem(
@@ -139,7 +156,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                     _loadPlan(store);
                   },
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 16),
                 _BudgetField(
                   controller: monthsController,
                   label: '研修月數',
@@ -147,6 +164,10 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
+                const StudentSectionTitle(
+                  '每月花費',
+                  icon: Icons.payments_outlined,
+                ),
                 _BudgetField(
                   controller: housingController,
                   currency: currency,
@@ -175,6 +196,10 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
+                const StudentSectionTitle(
+                  '一次支出與補助',
+                  icon: Icons.account_balance_wallet_outlined,
+                ),
                 _BudgetField(
                   controller: oneTimeController,
                   currency: currency,
@@ -188,22 +213,13 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   label: '預計補助',
                   onChanged: () => setState(() {}),
                 ),
-                const SizedBox(height: 18),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    onPressed: () => _save(store),
-                    icon: const Icon(Icons.save_outlined),
-                    label: const Text('儲存估算'),
-                  ),
-                ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           if (plan != null) _BudgetResult(plan: plan),
           if (selected != null && selected.tuitionPoints.isNotEmpty) ...[
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             GlassCard(
               padding: EdgeInsets.zero,
               child: ExpansionTile(
@@ -295,7 +311,7 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
                 '交換計畫',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: ExchangeColors.teal,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(height: 12),
@@ -313,13 +329,13 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
                           : '開啟 App 開始規劃')
                     : '${countdownLabel(event.date)} · ${event.date.month}/${event.date.day}',
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 16),
               LinearProgressIndicator(
                 value: store.planCompletionPercent / 100,
                 minHeight: 7,
                 borderRadius: BorderRadius.circular(999),
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: 8),
               Text(
                 '準備進度 ${store.planCompletionPercent}%',
                 style: Theme.of(context).textTheme.bodySmall,
@@ -339,17 +355,14 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : const Icon(Icons.add_to_home_screen_outlined),
-              label: Text(canPin ? '加入 Android 桌面' : '請從桌面小工具選單加入'),
+              label: Text(canPin ? '加入桌面' : '從桌面選單加入'),
             ),
           ),
         if (isAndroid) const SizedBox(height: 12),
         const _WidgetInstruction(
           icon: Icons.android_rounded,
           title: 'Android 桌面小工具',
-          points: [
-            '長按桌面空白處，開啟「小工具」並選擇 UniWay。',
-            '加入後可長按調整大小；寬版會顯示待辦。開啟 App 後同步最新進度。',
-          ],
+          points: ['長按桌面 → 小工具 → UniWay。', '長按調整大小；開啟 App 同步進度。'],
         ),
         const SizedBox(height: 12),
         if (!isAndroid)
@@ -386,6 +399,14 @@ class _BudgetField extends StatelessWidget {
       onChanged: (_) => onChanged(),
       decoration: InputDecoration(
         labelText: label,
+        prefixIcon: Icon(switch (label) {
+          '每月住宿' => Icons.home_outlined,
+          '每月飲食' => Icons.restaurant_outlined,
+          '每月交通' => Icons.directions_transit_outlined,
+          '研修月數' => Icons.date_range_outlined,
+          '機票、簽證與保險' => Icons.flight_outlined,
+          _ => Icons.payments_outlined,
+        }),
         prefixText: suffix == null ? '$currency ' : null,
         suffixText: suffix,
       ),
@@ -457,7 +478,7 @@ class _BudgetLine extends StatelessWidget {
           Expanded(child: Text(label)),
           Text(
             '${value < 0 ? '-' : ''}$currency ${_money(value.abs())}',
-            style: const TextStyle(fontWeight: FontWeight.w700),
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -494,7 +515,7 @@ class _WidgetInstruction extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           ...points.map(BulletPoint.new),
         ],
       ),

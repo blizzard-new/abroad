@@ -73,8 +73,8 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
                           university.schoolName,
                           style: TextStyle(
                             fontWeight: isSelected
-                                ? FontWeight.w700
-                                : FontWeight.w500,
+                                ? FontWeight.w600
+                                : FontWeight.w400,
                           ),
                         ),
                         subtitle: Text(
@@ -87,7 +87,7 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
                                 '目前選擇',
                                 style: TextStyle(
                                   color: ExchangeColors.teal,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               )
                             : null,
@@ -132,7 +132,7 @@ class _RootShellState extends State<RootShell> {
       const ForumScreen(),
       const AccountScreen(),
     ];
-    const labels = ['我的交換', '找學校', '申請準備', '論壇', '我的'];
+    const labels = ['旅程', '學校', '申請', '論壇', '我的'];
     const icons = [
       Icons.explore_outlined,
       Icons.travel_explore_rounded,
@@ -162,7 +162,7 @@ class _RootShellState extends State<RootShell> {
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(color: Colors.white),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 child: Row(
                   children: List.generate(
                     labels.length,
@@ -177,7 +177,7 @@ class _RootShellState extends State<RootShell> {
                             duration: Duration(
                               milliseconds: reduceEffects ? 0 : 180,
                             ),
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
                             decoration: BoxDecoration(
                               color: i == index
                                   ? ExchangeColors.tealSoft
@@ -199,8 +199,8 @@ class _RootShellState extends State<RootShell> {
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: i == index
-                                        ? FontWeight.w700
-                                        : FontWeight.w500,
+                                        ? FontWeight.w600
+                                        : FontWeight.w400,
                                     color: i == index
                                         ? ExchangeColors.teal
                                         : ExchangeColors.secondaryInk,
