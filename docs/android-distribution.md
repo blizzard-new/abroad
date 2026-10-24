@@ -5,9 +5,9 @@
 發布日期為 2026-10-24；後續版本依序保留在同一頁面。
 
 [2.1.3 APK](https://github.com/blizzard-new/abroad/releases/download/android-v2.1.3-preview/UniWay-2.1.3-preview.apk)。
-GitHub 公開 repository 的 Release 與附件不需要登入；本次以未登入的 HTTP client
-實際完整下載，確認 80,023,240 bytes 及 SHA-256 與本機簽署 APK 相同。
-驗證紀錄見 `android-public-download-20261024.json`。
+GitHub 公開 repository 的 Release 與附件不需要登入。2.1.3 已於 2026-10-24 發布，
+並以未登入的 HTTP client 完整下載，確認 80,384,008 bytes 及 SHA-256 與本機簽署 APK 相同。
+驗證紀錄見 `android-public-download-2.1.3-20261024.json`；2.1.2 的歷史紀錄保留於 `android-public-download-20261024.json`。
 
 使用者用 Android 手機開啟入口，下載 `.apk` 後安裝。遇到系統詢問時，允許使用中的
 瀏覽器或檔案管理員安裝 App。`Source code` 壓縮檔不是手機安裝檔；iPhone 不能安裝 APK。
