@@ -1,7 +1,8 @@
-"""Records the UniWay tutorial video: sign in from the home page, open 學校搜尋 and use everything on it.
+"""Records the UniWay tutorial videos, one episode at a time (EPISODES at the bottom lists them).
 
     .venv/bin/python marketing/tutorial-video/demo_server.py &          # the real site, on port 8771
-    .venv/bin/python marketing/tutorial-video/record.py                 # writes build/uniway-tutorial-school-search.mp4
+    .venv/bin/python marketing/tutorial-video/record.py --episode 1     # 登入與學校搜尋 → build/uniway-tutorial-school-search.mp4
+    .venv/bin/python marketing/tutorial-video/record.py --episode 2     # 選校與確認 → build/uniway-tutorial-02-choose-and-confirm.mp4
 
 A real Chromium drives the real site, step by step, at the speed a person would; Chromium's screencast keeps every
 frame it paints. overlay.js draws the pointer, the click ripples, the captions and the title cards on top of the page.
@@ -15,6 +16,7 @@ and the video is sped back up, which leaves about 30 painted frames for every se
     --keep-frames      keep build/frames/ after encoding
     --no-music         video without sound
     --slow N           slow-motion factor while recording (1 = real time)
+    --episode N        which episode to record (default 1)
 """
 
 from __future__ import annotations
@@ -38,10 +40,10 @@ HERE = Path(__file__).resolve().parent
 VIEWPORT = {"width": 1600, "height": 900}
 SCALE = 1.2  # 1600x900 CSS pixels -> 1920x1080 frames, the same zoom as the promo video's screenshots
 FPS = 30
-OUTPUT = "uniway-tutorial-school-search.mp4"
 SLOW = 1  # set from --slow in main(); every wait below is multiplied by it
-# An element in a fixed or sticky bar (the left menu, the compare tray) is always on screen; never scroll for it.
-PINNED = """el => { for (let n = el; n; n = n.parentElement) if (/fixed|sticky/.test(getComputedStyle(n).position)) return true;
+# An element in a fixed bar (the left menu, the compare tray) is always on screen; never scroll for it. (A sticky
+# panel, like the 我的條件 form, still moves with the page until it sticks, so it is scrolled to as usual.)
+PINNED = """el => { for (let n = el; n; n = n.parentElement) if (getComputedStyle(n).position === "fixed") return true;
     return false; }"""
 
 
@@ -287,7 +289,16 @@ async def oauth_start(route: Route) -> None:
     )
 
 
-async def storyboard(g: Guide, page: Page) -> None:
+async def sign_in(page: Page) -> None:
+    """Sign the demo student in before the tape starts, for episodes that begin where an earlier one ended."""
+    await page.click("#account-button")
+    await page.check("#terms-consent")
+    await page.click("[data-oauth-provider=google]")
+    await page.wait_for_url(lambda url: "home=" in url and url.endswith("#home"), timeout=ms(90))
+
+
+async def episode_1(g: Guide, page: Page) -> None:
+    """第 1 集：從首頁登入，進入學校搜尋，把頁面上的功能都用一次。"""
     tape = g.tape
     pt = page.locator
 
@@ -592,6 +603,219 @@ async def storyboard(g: Guide, page: Page) -> None:
     await g.still("end")
 
 
+async def episode_2(g: Guide, page: Page) -> None:
+    """第 2 集：選校與確認。填我的條件 → 產生申請方案 → 選目標 → 核對當期資格與志願。"""
+    pt = page.locator
+
+    # ---- title card ---------------------------------------------------------------------------------------------
+    await page.evaluate("""window.__tut.card(`
+        <img class="mark" src="/static/assets/brand/uniway-mark.webp" alt="">
+        <span class="eyebrow">UniWay 使用教學 · 第 2 集</span>
+        <h1>選校與確認</h1>
+        <p>填好條件，系統幫你排出推薦學校，再核對資格與志願</p>
+        <div class="route"><span>填寫條件</span><i>→</i><span>看推薦</span><i>→</i><span>選目標</span><i>→</i><span>核對資格與志願</span></div>
+        <span class="mascot"><img src="/static/assets/mascot/suitcase.webp" alt=""><i></i><i></i></span>`)""")
+    await page.evaluate("window.__tut.cursor(false)")
+    await g.hold(4.2)
+    await g.still("title")
+    await page.evaluate("window.__tut.hideCard(); window.__tut.cursor(true)")
+    await g.hold(0.9)
+
+    # ---- 1 my application ---------------------------------------------------------------------------------------
+    menu = "#glass-navigation a[href='#advisor'][data-public-route='overview']"
+    await g.caption(1, "進入「我的申請」", "接續第 1 集：已經登入、學校是長庚大學。把滑鼠移到左側選單，點<em>「我的申請」</em>。")
+    await g.hold(2.4)
+    await g.point(pt(menu))
+    await g.hold(1.0)
+    await g.ring(menu, pad=4)
+    await g.hold(0.8)
+    await g.click(pt(menu))
+    await g.clear_ring()
+    await g.point((900, 560), seconds=0.7)
+    await page.wait_for_function("() => location.hash === '#advisor'")
+    await page.wait_for_selector("#application-journey-steps", state="visible")
+    await g.hold(1.4)
+    await g.caption(1, "申請分成三步", "<em>選校與確認 → 準備與時程 → 文件與送件</em>。這一集完成第 1 步：填條件、挑學校、核對資格。", "top")
+    await g.ring("#application-journey-steps")
+    await g.hold(3.6)
+    await g.still("workspace")
+    await g.clear_ring()
+
+    # ---- 2 my conditions ----------------------------------------------------------------------------------------
+    await g.caption(2, "填寫我的條件", "先填<em>學院、系所、學制</em>和<em>預計出國學期</em>；想去的國家不確定可以先選「不限國家」。")
+    await g.ring("#advisor-form .advisor-fields")
+    await g.hold(1.6)
+    await g.clear_ring()
+    await g.choose(pt("#advisor-college"), "工學院")
+    await g.choose(pt("#advisor-department"), "資訊工程學系")
+    await g.choose(pt("#advisor-degree"), "大學部")
+    await g.point(pt("#advisor-country"))
+    await g.hold(0.8)
+    await g.choose(pt("#advisor-target-term"), "2027-fall")
+    await g.hold(0.6)
+    await g.caption(2, "成績與語言能力", "展開<em>「成績與語言能力」</em>，填學業平均和語言測驗分數；還沒考可以先留空，之後再補。")
+    await g.click(pt("#advisor-qualification-fields > summary"))
+    await g.hold(0.6)
+    await g.type(pt("#advisor-academic-score"), "85")
+    await g.choose(pt("#advisor-language-test"), "ielts")
+    await g.type(pt("#advisor-language-score"), "6.5")
+    await g.hold(0.8)
+    await g.still("conditions")
+    more = "#advisor-form details.advisor-more-fields:not(#advisor-qualification-fields)"
+    await g.caption(2, "更多偏好（選填）", "<em>年級、每月預算、授課語言、想修的課程、是否需要補助</em>都可以補充，推薦會更準。")
+    await g.click(pt(f"{more} > summary"))
+    await g.hold(0.6)
+    await g.choose(pt("#advisor-current-year"), "大三")
+    await g.point(pt("#advisor-monthly-budget"))
+    await g.hold(0.8)
+    await g.point(pt("label.advisor-toggle"))
+    await g.hold(1.2)
+
+    # ---- 3 the plan ---------------------------------------------------------------------------------------------
+    await g.caption(3, "產生我的申請方案", "條件填好後，按<em>「產生我的申請方案」</em>。")
+    await g.ring("#advisor-submit", pad=6)
+    await g.hold(1.2)
+    await g.click(pt("#advisor-submit"))
+    await g.clear_ring()
+    await page.wait_for_selector("#advisor-result-content .advisor-summary-card", state="visible", timeout=ms(30))
+    await g.hold(1.0)
+    await g.scroll_to(pt("#advisor-result-content .advisor-summary-card"), "center")
+    await g.caption(3, "系統資格比對", "系統拿你的條件比對學校公開的門檻：<em>學業平均、語言成績</em>有沒有達標，一目了然。", "top")
+    await g.ring("#advisor-result-content .advisor-summary-card")
+    await g.hold(3.6)
+    await g.still("plan-summary")
+    await g.clear_ring()
+    await g.scroll_to(pt("#advisor-result-content .match-group-heading").first, "start")
+    await page.evaluate("window.scrollBy({ top: -230, behavior: 'smooth' })")
+    await g.settle_scroll()
+    await g.caption(3, "你的選校結果", "推薦分成三組：<em>已知基本條件相符、先確認再決定、目前條件不符</em>；右邊的排序分數越高越符合。", "top")
+    await g.ring("#advisor-result-content .advisor-school-card")
+    await g.hold(3.4)
+    await g.still("recommendations")
+    await g.clear_ring()
+    await g.caption(3, "看看細節", "展開<em>「費用、語言與課程」</em>，可以看到這所學校的費用、授課語言與課程資訊。", "top")
+    await g.click(pt("#advisor-result-content .advisor-school-card .advisor-fit-details > summary").first)
+    await g.hold(2.8)
+    await g.click(pt("#advisor-result-content .advisor-school-card .advisor-fit-details > summary").first)
+    await g.hold(0.6)
+    await g.caption(3, "往下還有更多", "往下捲可以看到其他學校，以及<em>「我的下一步」</em>：還缺什麼條件、要先準備哪些文件。", "top")
+    await g.scroll_by(900)
+    await g.hold(1.4)
+    await g.scroll_to(pt("#advisor-result-content .advisor-task-list"), "center")
+    await g.ring("#advisor-result-content .advisor-task-list")
+    await g.hold(2.8)
+    await g.still("next-steps")
+    await g.clear_ring()
+    picks = await page.evaluate(
+        "[...document.querySelectorAll('#advisor-result-content [data-planning-target]')].slice(0, 2).map(b => b.dataset.planningTarget)"
+    )
+
+    # ---- 4 target -----------------------------------------------------------------------------------------------
+    await g.scroll_to(pt("#advisor-result-content .advisor-school-card").first, "center")
+    await g.caption(4, "選定目標學校", "最想去的那一所，按<em>「選為目標」</em>。之後的時程與文件都會以它為準。", "top")
+    target = pt("#advisor-result-content [data-planning-target]").first
+    await g.ring("#advisor-result-content .advisor-school-card .advisor-school-actions")
+    await g.hold(2.2)
+    await g.click(target)
+    await g.clear_ring()
+    await page.wait_for_function("() => location.hash === '#overview'")
+    await g.hold(1.2)
+    await g.scroll_top()
+    await g.caption(4, "第 1 步打勾了", "選好目標，系統直接帶你到<em>第 2 步「準備與時程」</em>（下一集介紹）。我們先回第 1 步，把志願也核對好。", "top")
+    await g.ring("[data-workspace-stage]", pad=6)
+    await g.hold(3.6)
+    await g.still("target-set")
+    await g.clear_ring()
+
+    # ---- 5 eligibility and preferences ----------------------------------------------------------------------------
+    await g.caption(5, "回到第 1 步", "點上方的<em>「選校與確認」</em>，再打開右下角的<em>「本階段其他頁面」</em>。", "top")
+    await g.click(pt("[data-workspace-stage]").first)
+    await page.wait_for_function("() => location.hash === '#advisor'")
+    await g.hold(1.0)
+    await g.click(pt("#application-workspace-tool-menu > summary"))
+    await g.hold(0.8)
+    await g.ring("#application-workspace-tools", pad=6)
+    await g.hold(1.6)
+    await g.caption(5, "當期資格與志願", "這一步有三頁：<em>條件與推薦、候選與比較、當期資格與志願</em>。點「當期資格與志願」。", "top")
+    await g.hold(1.6)
+    await g.click(pt("#application-workspace-tools a[href='#eligibility']"))
+    await g.clear_ring()
+    await page.wait_for_function("() => location.hash === '#eligibility'")
+    await g.hold(1.2)
+    await g.caption(5, "條件自動帶入", "剛才填的<em>我的條件</em>已經帶過來了，不用重填；推薦和資格核對共用同一份條件。")
+    await g.into_view(pt("#eligibility h2").first, "start")
+    await g.ring("#advisor-form .workspace-heading")
+    await g.hold(3.0)
+    await g.clear_ring()
+    await g.scroll_to(pt("#application-period-fields"), "center")
+    await g.caption(5, "申請學年度與梯次", "選<em>申請學年度</em>和<em>梯次</em>，要跟學校公告的一致。", "top")
+    await g.ring("#application-period-fields")
+    await g.hold(1.6)
+    await g.clear_ring()
+    await g.choose(pt("#eligibility-academic-year"), "116")
+    await g.choose(pt("#eligibility-application-round"), "秋季／全學年梯次")
+    await g.hold(0.6)
+    await g.caption(5, "排志願序", "依想去的順序選<em>第一志願、第二志願</em>……最多五所。", "top")
+    await g.choose(pt("#eligibility-preference-1"), picks[0])
+    await g.choose(pt("#eligibility-preference-2"), picks[1])
+    await g.hold(0.8)
+    await g.still("preferences")
+    await g.caption(5, "核對志願並建立計畫", "按<em>「核對志願並建立計畫」</em>，系統逐校核對資格，並整理成你的申請清單。", "top")
+    submit = pt("#eligibility button[type=submit]").first
+    await g.ring("#eligibility button[type=submit]", pad=6)
+    await g.hold(1.2)
+    await g.click(submit)
+    await g.clear_ring()
+    await page.wait_for_selector("#eligibility-result .application-plan-choice", state="visible", timeout=ms(30))
+    await g.hold(1.2)
+
+    # ---- 6 the checklist ----------------------------------------------------------------------------------------
+    await g.scroll_to(pt("#eligibility-result"), "start")
+    await page.evaluate("window.scrollBy({ top: -100, behavior: 'smooth' })")
+    await g.settle_scroll()
+    await g.caption(6, "你的申請清單", "每個志願逐項核對：<em>綠色勾</em>是已符合，<em>橘色問號</em>是要再向學校確認的地方。", "top")
+    await g.ring("#eligibility-result .application-plan-choice header")
+    await g.hold(2.0)
+    await g.ring("#eligibility-result .eligibility-checks")
+    await g.hold(3.2)
+    await g.still("checklist")
+    await g.clear_ring()
+    await g.scroll_to(pt("#eligibility-result .application-plan-checklist").first, "start")
+    await page.evaluate("window.scrollBy({ top: -110, behavior: 'smooth' })")
+    await g.settle_scroll()
+    await g.caption(6, "個人下一步", "下面列出每一步該做的事，都附<em>「查看官方來源」</em>，點了會開官方公告。", "top")
+    await g.ring("#eligibility-result .application-plan-checklist li")
+    await g.point(pt("#eligibility-result .application-plan-checklist a").first)
+    await g.hold(3.2)
+    await g.clear_ring()
+    await g.scroll_by(700)
+    await g.hold(1.6)
+
+    await g.caption(6, "核對完成！", "選校與確認到這裡就完成了。接下來可以為目標學校<em>安排準備時程</em>，下一集介紹。", "top")
+    await g.hold(3.2)
+    await g.still("done")
+    await g.hide_caption()
+    await g.hold(0.6)
+
+    # ---- end card -----------------------------------------------------------------------------------------------
+    await page.evaluate("window.__tut.cursor(false)")
+    await page.evaluate("""window.__tut.card(`
+        <span class="mascot"><img src="/static/assets/mascot/suitcase.webp" alt=""><i></i><i></i></span>
+        <span class="eyebrow">第 2 集完成</span>
+        <h1>下一集：準備與時程</h1>
+        <p>截止日、倒數提醒，一鍵匯入你的行事曆</p>
+        <div class="route"><span>app.uniway-tw.com</span></div>`)""")
+    await g.hold(4.5)
+    await g.still("end")
+
+
+# Each episode: its storyboard, whether the demo student signs in before the tape starts, and the files it writes.
+EPISODES = {
+    1: {"run": episode_1, "signed_in": False, "video": "uniway-tutorial-school-search.mp4", "poster": "poster.jpg"},
+    2: {"run": episode_2, "signed_in": True, "video": "uniway-tutorial-02-choose-and-confirm.mp4", "poster": "poster-02.jpg"},
+}
+
+
 def encode(timeline: dict, frames_dir: Path, out: Path, music: Path | None) -> None:
     listing = frames_dir / "frames.txt"
     rows = timeline["frames"]
@@ -628,7 +852,9 @@ async def main() -> None:
     parser.add_argument("--keep-frames", action="store_true")
     parser.add_argument("--no-music", action="store_true")
     parser.add_argument("--slow", type=float, default=4.0)
+    parser.add_argument("--episode", type=int, choices=sorted(EPISODES), default=1)
     args = parser.parse_args()
+    episode = EPISODES[args.episode]
     global SLOW
     SLOW = 1.0 if args.stills else max(1.0, args.slow)
     out = Path(args.out)
@@ -656,6 +882,9 @@ async def main() -> None:
         await page.goto(f"{args.base}/", wait_until="load", timeout=ms(120))
         guide = Guide(page, None, stills)
         await guide.wait_ready()
+        if episode["signed_in"]:
+            await sign_in(page)
+            await guide.wait_ready()
         await pause(1.5)  # let the home page finish its entrance before the first frame
         await page.mouse.move(guide.x, guide.y)
 
@@ -665,7 +894,7 @@ async def main() -> None:
             guide.tape = tape
             await tape.start()
         try:
-            await storyboard(guide, page)
+            await episode["run"](guide, page)
         except Exception:
             await page.screenshot(path=str(out / "failed.png"))
             raise
@@ -685,10 +914,15 @@ async def main() -> None:
         # music.py needs NumPy, which the project environment does not carry; any Python 3 that has it will do.
         python = os.environ.get("MUSIC_PYTHON", "python3")
         subprocess.run([python, str(HERE / "music.py"), str(out / "timeline.json"), str(music)], check=True)
-    encode(timeline, out / "frames", out / OUTPUT, music)
+    video = out / episode["video"]
+    encode(timeline, out / "frames", video, music)
+    subprocess.run(
+        ["ffmpeg", "-y", "-loglevel", "error", "-ss", "2.5", "-i", str(video), "-frames:v", "1", "-q:v", "3", str(out / episode["poster"])],
+        check=True,
+    )
     if not args.keep_frames:
         shutil.rmtree(out / "frames", ignore_errors=True)
-    print(f"wrote {out / OUTPUT}")
+    print(f"wrote {video}")
 
 
 if __name__ == "__main__":
