@@ -59,10 +59,15 @@ Branch: `codex/android-synced-preview`, based on `abroad/main` at
 
 ## Outstanding external acceptance
 
-- Production /auth/mobile/config returned HTTP 404 on 2026-10-24. Jerry must deploy
-  this backend before this APK can sign in and sync with the production account.
-- Real Google login, production multi-device sync and Firebase foreground/
-  background delivery still need production configuration and user acceptance.
+- Production backend deployment is now reported successful by the operator.
+  The deployment script pinned commit 5f2a0f181322b30a1c0d1cbd5bc484a10cd313f4;
+  the operator reported all smoke checks passed and all five services healthy.
+  At 2026-10-24 06:38 UTC independent external checks confirmed HTTPS /health 200,
+  /auth/mobile/config 200 with enabled=true and S256, Google provider enabled,
+  and invalid mobile exchange codes rejected with 401. See
+  android-production-deployment-20261024.json for the external receipt.
+- Real Google login and production multi-device sync still need physical-phone
+  acceptance. Firebase remains unconfigured; remote delivery is not yet verified.
 - No physical phone was attached. Notification tap and widget size behavior can
   vary by launcher/device and should be checked on the user's phone.
 - Sensitive form fields and newly selected raw attachments remain only in the
@@ -121,15 +126,14 @@ It never signs into a production account.
 | Requirement | Current evidence | Remaining acceptance |
 | --- | --- | --- |
 | Installable Android APK | Signed universal APK, API 24+, emulator installation and launch | Install on the user's own phone |
-| Same account as desktop | PKCE code exchange and account identity verified against isolated backend | Jerry deploys the backend; real Google sign-in on production |
-| Shared data | REST workspace and encrypted form-draft round trips; offline/conflict/account-isolation tests | Production desktop-to-phone acceptance after deployment |
+| Same account as desktop | Isolated PKCE/account tests; production mobile endpoints and Google provider enabled after deployment | Real Google sign-in on a physical phone |
+| Shared data | REST workspace and encrypted form-draft round trips; offline/conflict/account-isolation tests | Production desktop-to-phone acceptance |
 | Notifications | Native permission, display, scheduling, cancellation and actual notification-shade taps | Firebase project/client configuration and backend credentials; real remote delivery |
 | Home-screen widget | Native cache updates, launcher pinning, 4x2 to 2x2 resize and return-to-journey tap | User's launcher/device behavior |
 | Glass interface | Rendered four-tab app, translucent floating navigation and accessibility fallback | User visual feedback |
 | No new university factual audit | No official-data changes in this delivery | None |
 
 Implementation and local acceptance have progressed; the goal is not claimed fully
-complete while production login/sync and remote delivery remain unverified. Jerry's
-remote connection is not available in this task, and the user has not yet created
-Firebase. Deployment instructions are ready; these external steps require the user
-or Jerry to provide access or perform the setup.
+complete while real-device production login/sync and remote delivery remain
+unverified. The user executed deployment through the existing remote desktop;
+independent external endpoint checks passed. Firebase has not yet been created.

@@ -25,7 +25,19 @@ Web 工作台。手機儲存草稿會保留既有附件引用，並顯示檔名�
 Firebase 建立後要使用同一簽章重新建 APK，遠端推播才會啟用。
 2.1.2 已修正從通知開啟時程頁的標題／返回導覽與文字溢位，並實測通知欄點擊及小尺寸 Widget。
 
-## Jerry 先更新後端
+## 後端部署狀態（2026-10-24 已更新）
+
+使用者已在 Jerry 的遠端 PowerShell 執行部署腳本，回報 `VERIFY: everything passed`
+及 `ANDROID_BACKEND_DEPLOYED_OK`，五個服務均為 healthy。腳本固定部署
+`5f2a0f181322b30a1c0d1cbd5bc484a10cd313f4`，主機切至 `codex/android-synced-preview`；
+GitHub PR #121 尚未合併。這次沒有新增大學資料查核。
+
+06:38 UTC 從本機獨立連正式網址，確認 `/health` 與 `/auth/mobile/config` 均為 200，
+手機登入 enabled=true、S256，Google provider 已啟用；無效交接碼回應 401。
+現在可安裝下方 APK，以網站同一個 Google 帳號測試。真實手機登入及雙向同步仍需實機驗收，
+Firebase 遠端推播仍未設定。詳細紀錄見 `android-production-deployment-20261024.json`。
+
+## 後續部署流程參考
 
 1. 將本分支 `codex/android-synced-preview` 的變更整合到要部署的分支；本交付不會自動合併 main。
 2. 在 Jerry 的 `C:\uniway\app` 確認 Git remote 指向 `blizzard-new/abroad`，保留主機既有設定。
@@ -40,8 +52,9 @@ Firebase 建立後要使用同一簽章重新建 APK，遠端推播才會啟用�
    離線儲存未填完的草稿後重開表單，內容應保留；兩邊同改一欄應提示選擇。
    登出後再次開啟表單不應看見上一帳號的答案或附件檔名。
 
-正式站尚未更新時，手機登入會提示後端需要更新；這不能靠重新安裝 APK 解決。
-本機端沒有 Jerry 主機的執行連線，因此不把本機測試當成正式站部署驗收。
+正式站若缺少手機登入接口，App 會提示後端需要更新；這不能靠重新安裝 APK 解決。
+本次部署由使用者操作已登入的遠端桌面執行，助理準備腳本並完成外部接口驗證，
+未取得可自行執行命令的 WinRM 登入憑證。
 
 ## 建立 Firebase（可稍後完成）
 
