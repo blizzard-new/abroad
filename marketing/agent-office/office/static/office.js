@@ -749,7 +749,7 @@ function renderLog() {
 function renderChat() {
   const host = $("#chat");
   if (!S.chat.length) {
-    host.innerHTML = `<li class="msg chief"><p>我是總管 Leo。你直接跟我說要做什麼就好：開工、問進度、請某位同事重寫某一則（用審核匣上的 #編號）、加做一則、改發文時間，或記給明天的企劃。核准和發文還是由你自己按。</p></li>`;
+    host.innerHTML = `<li class="msg chief"><p>我是總管 Leo。你直接跟我說要做什麼就好：開工、問進度、請某位同事重寫某一則（用審核匣上的 #編號）、加做一則、改發文時間、記給明天的企劃，也可以換同事用的 AI，或新增一位同事交代他做事。核准和發文還是由你自己按。</p></li>`;
     return;
   }
   host.innerHTML = S.chat.map((m) => {
@@ -857,6 +857,10 @@ function apply(e) {
     }
     case "handoff":
       return queue.length > 40 ? 0 : fly(e.agent, e.to, e.message);
+    case "staff":
+      // Someone joined or left: redraw the floor with the new set of desks.
+      toast(e.message);
+      return load();
     case "draft":
       upsertDraft(e.draft);
       return 80;
