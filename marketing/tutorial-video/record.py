@@ -791,9 +791,16 @@ async def episode_2(g: Guide, page: Page) -> None:
     await g.scroll_by(700)
     await g.hold(1.6)
 
-    await g.caption(6, "核對完成！", "選校與確認到這裡就完成了。接下來可以為目標學校<em>安排準備時程</em>，下一集介紹。", "top")
-    await g.hold(3.2)
-    await g.still("done")
+    # ---- 7 on to the next step ------------------------------------------------------------------------------------
+    # The page refreshes the plan for the new year and round a moment after the checklist appears.
+    await page.wait_for_selector("#planning-next-action [data-open-planning]", timeout=ms(30))
+    await g.scroll_top()
+    await g.caption(7, "第 1 步完成！", "上方提示下一件事：<em>為目標學校安排準備時程</em>。按「預覽準備時程」就能開始，下一集介紹。", "top")
+    await g.ring("#planning-next-action")
+    await g.point(pt("#planning-next-action [data-open-planning]"))
+    await g.hold(3.4)
+    await g.still("next-action")
+    await g.clear_ring()
     await g.hide_caption()
     await g.hold(0.6)
 
