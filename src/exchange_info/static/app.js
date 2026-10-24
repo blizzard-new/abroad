@@ -7506,6 +7506,21 @@ function renderPartnerCourseLookupCard(wb, { compact = false } = {}) {
     </div>`;
 }
 
+// A writing step as the API sends it (models.StudyPlanSixStepSection): `heading` reads "第 1 段｜申請動機（…）" and the
+// suggested length is a range. The tabs already say "第 N 段", so they show only the short name.
+function studyPlanStepShortTitle(step) {
+  return String(step?.heading || "").replace(/^第\s*\d+\s*段\s*[｜|]\s*/, "").replace(/（[^）]*）\s*$/, "");
+}
+
+function studyPlanStepLength(step) {
+  const min = step?.recommended_min_chars;
+  const max = step?.recommended_max_chars;
+  if (min && max) return `${applicationNumber(min)}–${applicationNumber(max)} 字`;
+  if (min) return `${applicationNumber(min)} 字以上`;
+  if (max) return `最多 ${applicationNumber(max)} 字`;
+  return "不設建議字數";
+}
+
 function renderStudyPlanAntiPitfallHub() {
   const container = $("#study-plan-anti-pitfall-hub");
   if (!container) return;
@@ -7576,27 +7591,26 @@ function renderStudyPlanAntiPitfallHub() {
           ${(wb.six_step_guide || []).map((step) => `
             <button type="button" role="tab" class="study-plan-step-tab ${step.step_number === (activeStep?.step_number || 1) ? "is-active" : ""}" aria-selected="${String(step.step_number === (activeStep?.step_number || 1))}" data-study-plan-step-select="${step.step_number}" data-study-plan-field-id="${escapeHtml(step.field_id)}">
               <span>第 ${step.step_number} 段</span>
-              <strong>${escapeHtml(step.title.replace(/^\d+\.\s*/, ""))}</strong>
-              <small>${escapeHtml(step.recommended_chars)}</small>
+              <strong>${escapeHtml(studyPlanStepShortTitle(step))}</strong>
+              <small>${escapeHtml(studyPlanStepLength(step))}</small>
             </button>`).join("")}
         </div>
         ${activeStep ? `
           <div class="study-plan-step-detail">
             <div class="study-plan-step-detail-head">
-              <strong>${escapeHtml(activeStep.title)}</strong>
-              <span>建議篇幅：${escapeHtml(activeStep.recommended_chars)}</span>
+              <strong>${escapeHtml(activeStep.heading)}</strong>
+              <span>建議篇幅：${escapeHtml(studyPlanStepLength(activeStep))}</span>
             </div>
             <div class="study-plan-vs-grid">
               <div class="study-plan-vs-bad">
                 <span>❌ 審查委員最怕看到的罐頭寫法</span>
-                <p>${escapeHtml(activeStep.anti_canned_tip)}</p>
+                <p>${escapeHtml(activeStep.anti_cliche_warning)}</p>
               </div>
               <div class="study-plan-vs-good">
                 <span>✅ 高分具體化寫作公式</span>
                 <p>${escapeHtml(activeStep.high_score_formula)}</p>
               </div>
             </div>
-            <p class="study-plan-partner-tie-in"><i data-lucide="link-2" aria-hidden="true"></i><span><strong>如何串聯 <code>/partners</code> 姊妹校資料：</strong>${escapeHtml(activeStep.partner_page_tie_in)}</span></p>
           </div>` : ""}
       </div>
 
@@ -7652,8 +7666,8 @@ function renderWorkbenchStudyPlanAssistant(template) {
           ${(wb.six_step_guide || []).map((step) => `
             <button type="button" class="workbench-step-pill" data-workbench-jump-field="${escapeHtml(step.field_id)}" title="${escapeHtml(step.high_score_formula)}">
               <span>${step.step_number}</span>
-              <strong>${escapeHtml(step.title.replace(/^\d+\.\s*/, ""))}</strong>
-              <small>${escapeHtml(step.recommended_chars)}</small>
+              <strong>${escapeHtml(studyPlanStepShortTitle(step))}</strong>
+              <small>${escapeHtml(studyPlanStepLength(step))}</small>
             </button>`).join("")}
         </div>
       </div>
