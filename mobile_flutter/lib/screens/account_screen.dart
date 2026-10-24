@@ -10,6 +10,7 @@ import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
+import 'app_update_prompt.dart';
 
 enum _AuthMode { login, register }
 
@@ -36,6 +37,7 @@ class _AccountScreenState extends State<AccountScreen> {
   String? verificationMessage;
   bool profileInitialized = false;
   bool verificationConsent = false;
+  bool termsAccepted = false;
   XFile? frontCard;
   XFile? backCard;
 
@@ -239,12 +241,15 @@ class _AccountScreenState extends State<AccountScreen> {
       bottom: false,
       child: ListView(
         padding: const EdgeInsets.fromLTRB(20, 18, 20, 118),
-        children: [content],
+        children: [content, const SizedBox(height: 20), const AppUpdateTile()],
       ),
     );
   }
 
   Widget _buildAuth(BuildContext context, ExchangeStore store) {
+    if (!store.authProviders.any((p) => p.provider == 'email' && p.enabled)) {
+      return _buildGoogleAuth(context, store);
+    }
     final verified = store.studentVerification != null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -323,6 +328,13 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                   const SizedBox(height: 16),
                 ],
+                CheckboxListTile(
+                  value: termsAccepted,
+                  onChanged: (value) =>
+                      setState(() => termsAccepted = value ?? false),
+                  title: const Text('我同意 UniWay 服務條款與隱私權政策'),
+                  contentPadding: EdgeInsets.zero,
+                ),
                 ...store.authProviders
                     .where(
                       (provider) => const {
@@ -336,10 +348,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         padding: const EdgeInsets.only(bottom: 9),
                         child: _ProviderButton(
                           provider: provider,
-                          verificationToken: mode == _AuthMode.register
-                              ? store.studentVerification?.verificationToken
-                              : null,
-                          apiUrl: store.api.oauthStartUrl,
+                          onLogin: () =>
+                              _providerLogin(store, provider.provider),
                         ),
                       ),
                     ),
@@ -598,6 +608,100 @@ class _AccountScreenState extends State<AccountScreen> {
       ],
     );
   }
+
+  Future<void> _providerLogin(ExchangeStore store, String provider) async {
+    if (!termsAccepted) {
+      setState(() => error = '請先閱讀並同意服務條款與隱私權政策。');
+      return;
+    }
+    setState(() => error = null);
+    try {
+      await store.startMobileLogin(provider);
+    } catch (exception) {
+      if (mounted) setState(() => error = exception.toString());
+    }
+  }
+
+  Widget _buildGoogleAuth(BuildContext context, ExchangeStore store) {
+    final google = store.authProviders
+        .where((p) => p.provider == 'google' && p.enabled)
+        .firstOrNull;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 28),
+        const ExchangeIconBadge(Icons.flight_takeoff_rounded),
+        const SizedBox(height: 28),
+        Text(
+          '同一個你，\n同一份交換計畫。',
+          style: Theme.of(context).textTheme.displaySmall?.copyWith(
+            fontWeight: FontWeight.w800,
+            height: 1.25,
+          ),
+        ),
+        const SizedBox(height: 16),
+        const Text('使用電腦版相同的 Google 帳號。你的收藏、文件進度與申請日期，會接著同步到這裡。'),
+        const SizedBox(height: 28),
+        GlassCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              CheckboxListTile(
+                contentPadding: EdgeInsets.zero,
+                controlAffinity: ListTileControlAffinity.leading,
+                value: termsAccepted,
+                onChanged: (value) =>
+                    setState(() => termsAccepted = value ?? false),
+                title: const Text('我已閱讀並同意服務條款與隱私權政策'),
+              ),
+              Wrap(
+                spacing: 8,
+                children: [
+                  TextButton(
+                    onPressed: () => launchUrl(
+                      Uri.parse(store.api.resolveUrl('terms')),
+                      mode: LaunchMode.externalApplication,
+                    ),
+                    child: const Text('服務條款'),
+                  ),
+                  TextButton(
+                    onPressed: () => launchUrl(
+                      Uri.parse(store.api.resolveUrl('privacy')),
+                      mode: LaunchMode.externalApplication,
+                    ),
+                    child: const Text('隱私權政策'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              FilledButton.icon(
+                onPressed: google == null || store.isAuthenticating
+                    ? null
+                    : () => _providerLogin(store, 'google'),
+                icon: const Icon(Icons.g_mobiledata_rounded),
+                label: Text(store.isAuthenticating ? '正在登入…' : '使用 Google 繼續'),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                '會開啟瀏覽器完成登入，再返回 UniWay。',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              if (google == null)
+                TextButton(
+                  onPressed: store.refresh,
+                  child: const Text('重新取得登入方式'),
+                ),
+              if (error != null || store.mobileLoginError != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: _FormError(message: error ?? store.mobileLoginError!),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class _StudentVerificationCard extends StatelessWidget {
@@ -837,15 +941,10 @@ class _VerificationSuccess extends StatelessWidget {
 }
 
 class _ProviderButton extends StatelessWidget {
-  const _ProviderButton({
-    required this.provider,
-    required this.verificationToken,
-    required this.apiUrl,
-  });
+  const _ProviderButton({required this.provider, required this.onLogin});
 
   final AuthProviderStatus provider;
-  final String? verificationToken;
-  final Uri Function(String, {String? studentVerificationToken}) apiUrl;
+  final VoidCallback onLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -857,15 +956,7 @@ class _ProviderButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton.icon(
-        onPressed: provider.enabled
-            ? () => launchUrl(
-                apiUrl(
-                  provider.provider,
-                  studentVerificationToken: verificationToken,
-                ),
-                mode: LaunchMode.externalApplication,
-              )
-            : null,
+        onPressed: provider.enabled ? onLogin : null,
         icon: Icon(icon),
         label: Text(
           provider.enabled ? provider.label : '${provider.label} · 尚未設定',

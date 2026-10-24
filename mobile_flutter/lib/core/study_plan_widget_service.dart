@@ -9,11 +9,15 @@ class StudyPlanWidgetSnapshot {
     required this.nextTitle,
     required this.nextDateLabel,
     required this.progressLabel,
+    this.tasks = const [],
+    this.updatedLabel = '',
   });
 
   final String nextTitle;
   final String nextDateLabel;
   final String progressLabel;
+  final List<String> tasks;
+  final String updatedLabel;
 }
 
 abstract interface class StudyPlanWidgetBridge {
@@ -48,7 +52,18 @@ class StudyPlanWidgetService implements StudyPlanWidgetBridge {
         nextDateLabel: snapshot.nextDateLabel,
         progressLabel: snapshot.progressLabel,
       );
-      await StudyPlanWidgetDefinitionHomeWidget.updateWidget();
+      await HomeWidget.saveWidgetData<String>(
+        'home_widget.StudyPlanWidgetDefinition.tasks',
+        snapshot.tasks.join('\n'),
+      );
+      await HomeWidget.saveWidgetData<String>(
+        'home_widget.StudyPlanWidgetDefinition.updatedLabel',
+        snapshot.updatedLabel,
+      );
+      await HomeWidget.updateWidget(
+        qualifiedAndroidName: androidReceiver,
+        iOSName: 'StudyPlanWidgetDefinitionHomeWidget',
+      );
     });
   }
 

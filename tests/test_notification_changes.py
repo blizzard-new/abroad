@@ -36,6 +36,9 @@ def test_changes_are_owned_and_hide_unrelated_department_and_reviewer(tmp_path):
     foreign = session(repository,UserAccount(email='foreign@example.com',display_name='別的學生'),'foreign-changes')
     client = TestClient(create_app(tmp_path/'app',account_repository=repository,content_governance_store=store))
     rows = client.get('/account/notifications',headers=headers).json()['items']
+    # The inbox can also contain a catalogue status notification. This test
+    # exercises ownership and field visibility of the published rule change.
+    rows = [row for row in rows if row['kind'] == 'content_update']
     assert len(rows) == 1
     notification_id = rows[0]['id']
     endpoint=f'/account/notifications/{notification_id}/changes'
