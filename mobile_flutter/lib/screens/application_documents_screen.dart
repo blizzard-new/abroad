@@ -3,6 +3,7 @@ import 'package:printing/printing.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
 import 'ai_tools_screens.dart';
@@ -21,23 +22,21 @@ class ApplicationDocumentsScreen extends StatelessWidget {
     }
 
     return SafeArea(
-      top: false,
+      bottom: false,
       child: RefreshIndicator(
         onRefresh: store.loadApplicationTemplates,
         child: ListView(
           key: const PageStorageKey('application-documents'),
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(18, 16, 18, 118),
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 128),
           children: [
             _ApplicationHeader(store: store),
-            const SizedBox(height: 14),
-            _ApplicationJourney(store: store),
             const SizedBox(height: 14),
             _ApplicationActions(store: store),
             const SizedBox(height: 24),
             ExchangeSectionHeader(
               eyebrow: '${store.applicationTemplates.length} 份',
-              title: '文件清單',
+              title: '待辦文件',
               action: store.applicationTemplates.isEmpty
                   ? null
                   : Text(
@@ -57,7 +56,7 @@ class ApplicationDocumentsScreen extends StatelessWidget {
               const EmptyState(
                 icon: Icons.task_alt_rounded,
                 title: '目前沒有待填文件',
-                message: '調整申請類型或身分條件後，系統會重新整理清單。',
+                message: '先到「申請設定」選擇目標。',
               )
             else
               ...groups.entries.expand(
@@ -87,118 +86,23 @@ class _ApplicationHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final target = store.applicationContext.targetSchool;
-    return GlassCard(
-      tint: ExchangeColors.blueSoft,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const ExchangeIconBadge(
-            Icons.description_outlined,
-            color: ExchangeColors.blue,
-            background: Colors.white,
+    return StudentHeading(
+      '申請文件',
+      subtitle: target.isEmpty
+          ? _programLabel(store.applicationContext.programType)
+          : target,
+      action: Semantics(
+        label:
+            '已完成 ${store.applicationFormReadyCount} 份，共 ${store.applicationTemplates.length} 份',
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            color: ExchangeColors.tealSoft,
+            borderRadius: BorderRadius.circular(16),
           ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('申請文件', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 5),
-                Text(
-                  target.isEmpty
-                      ? _programLabel(store.applicationContext.programType)
-                      : target,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: .72),
-              borderRadius: BorderRadius.circular(999),
-            ),
-            child: Text(
-              '${store.initialApplicationReadyCount}/${store.initialApplicationTemplates.length}',
-              style: Theme.of(
-                context,
-              ).textTheme.labelLarge?.copyWith(color: ExchangeColors.blue),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ApplicationJourney extends StatelessWidget {
-  const _ApplicationJourney({required this.store});
-
-  final ExchangeStore store;
-
-  @override
-  Widget build(BuildContext context) {
-    final active = [
-      true,
-      store.applicationProfileCompletion.ready,
-      store.applicationFormReadyCount > 0,
-      store.applicationPacketReady,
-    ];
-    const labels = ['設定', '共用資料', '填表', '列印'];
-    const icons = [
-      Icons.tune_rounded,
-      Icons.person_outline_rounded,
-      Icons.edit_document,
-      Icons.print_outlined,
-    ];
-    return Semantics(
-      label: '申請文件完成進度',
-      child: GlassCard(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-        child: Row(
-          children: List.generate(
-            labels.length,
-            (index) => Expanded(
-              child: Column(
-                children: [
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 180),
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      color: active[index]
-                          ? ExchangeColors.teal
-                          : Colors.white.withValues(alpha: .7),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      active[index] ? Icons.check_rounded : icons[index],
-                      size: 19,
-                      color: active[index]
-                          ? Colors.white
-                          : ExchangeColors.secondaryInk,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    labels[index],
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: active[index]
-                          ? ExchangeColors.ink
-                          : ExchangeColors.secondaryInk,
-                      fontWeight: active[index]
-                          ? FontWeight.w700
-                          : FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          child: Text(
+            '${store.applicationFormReadyCount}/${store.applicationTemplates.length}',
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
       ),
@@ -255,58 +159,75 @@ class _ApplicationActions extends StatelessWidget {
         page: const WritingAssistantScreen(),
       ),
     ];
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth >= 680
-            ? (constraints.maxWidth - 20) / 3
-            : constraints.maxWidth;
-        return Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: actions
-              .map(
-                (action) => SizedBox(
-                  width: width,
-                  child: GlassCard(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 12,
-                    ),
-                    onTap: () => _open(context, action.page),
-                    child: Row(
-                      children: [
-                        ExchangeIconBadge(
-                          action.icon,
-                          color: action.color,
-                          background: action.color.withValues(alpha: .11),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
+    actions.add((
+      icon: Icons.help_outline_rounded,
+      title: '使用指南',
+      detail: '',
+      color: ExchangeColors.teal,
+      page: const SizedBox(),
+    ));
+    return GlassCard(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children: [
+          LayoutBuilder(
+            builder: (context, constraints) => Wrap(
+              spacing: 4,
+              runSpacing: 4,
+              children: actions
+                  .map(
+                    (action) => SizedBox(
+                      width: (constraints.maxWidth - 8) / 3,
+                      child: TextButton(
+                        onPressed: () {
+                          if (action.title == '使用指南') {
+                            showStudentGuide(
+                              context,
+                              title: '三步完成申請文件',
+                              steps: const [
+                                (
+                                  icon: Icons.tune_rounded,
+                                  title: '選申請目標',
+                                  detail: '先設定申請類型與學校，再填共用資料。',
+                                ),
+                                (
+                                  icon: Icons.edit_document,
+                                  title: '逐份填寫',
+                                  detail: '從下方清單開啟文件，儲存後會更新完成進度。',
+                                ),
+                                (
+                                  icon: Icons.print_outlined,
+                                  title: '檢查與列印',
+                                  detail: '確認文件內容與官方要求，再到列印包匯出。',
+                                ),
+                              ],
+                            );
+                          } else {
+                            _open(context, action.page);
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Icon(action.icon, color: action.color, size: 24),
+                              const SizedBox(height: 8),
                               Text(
                                 action.title,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Text(
-                                action.detail,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ],
                           ),
                         ),
-                        const Icon(Icons.chevron_right_rounded),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              )
-              .toList(),
-        );
-      },
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

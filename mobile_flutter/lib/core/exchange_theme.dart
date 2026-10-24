@@ -21,6 +21,13 @@ abstract final class ExchangeColors {
 }
 
 ThemeData buildExchangeTheme() {
+  TextStyle type(double size, {bool strong = false, bool secondary = false}) =>
+      TextStyle(
+        fontSize: size,
+        height: 1.4,
+        fontWeight: strong ? FontWeight.w600 : FontWeight.w400,
+        color: secondary ? ExchangeColors.secondaryInk : ExchangeColors.ink,
+      );
   final scheme = ColorScheme.fromSeed(
     seedColor: ExchangeColors.teal,
     brightness: Brightness.light,
@@ -38,51 +45,22 @@ ThemeData buildExchangeTheme() {
   );
 
   return base.copyWith(
-    textTheme: base.textTheme.copyWith(
-      displaySmall: const TextStyle(
-        fontSize: 32,
-        height: 1.15,
-        fontWeight: FontWeight.w700,
-        color: ExchangeColors.ink,
-      ),
-      headlineMedium: const TextStyle(
-        fontSize: 24,
-        height: 1.2,
-        fontWeight: FontWeight.w700,
-        color: ExchangeColors.ink,
-      ),
-      titleLarge: const TextStyle(
-        fontSize: 20,
-        height: 1.3,
-        fontWeight: FontWeight.w700,
-        color: ExchangeColors.ink,
-      ),
-      titleMedium: const TextStyle(
-        fontSize: 17,
-        height: 1.35,
-        fontWeight: FontWeight.w600,
-        color: ExchangeColors.ink,
-      ),
-      bodyLarge: const TextStyle(
-        fontSize: 16,
-        height: 1.65,
-        color: ExchangeColors.ink,
-      ),
-      bodyMedium: const TextStyle(
-        fontSize: 15,
-        height: 1.55,
-        color: ExchangeColors.ink,
-      ),
-      bodySmall: const TextStyle(
-        fontSize: 13,
-        height: 1.45,
-        color: ExchangeColors.secondaryInk,
-      ),
-      labelLarge: const TextStyle(
-        fontSize: 15,
-        height: 1.2,
-        fontWeight: FontWeight.w600,
-      ),
+    textTheme: TextTheme(
+      displayLarge: type(24, strong: true),
+      displayMedium: type(24, strong: true),
+      displaySmall: type(24, strong: true),
+      headlineLarge: type(24, strong: true),
+      headlineMedium: type(24, strong: true),
+      headlineSmall: type(24, strong: true),
+      titleLarge: type(20, strong: true),
+      titleMedium: type(16, strong: true),
+      titleSmall: type(16, strong: true),
+      bodyLarge: type(16),
+      bodyMedium: type(16),
+      bodySmall: type(12, secondary: true),
+      labelLarge: type(16, strong: true),
+      labelMedium: type(12, strong: true),
+      labelSmall: type(12),
     ),
     cardTheme: const CardThemeData(
       elevation: 0,
@@ -97,18 +75,18 @@ ThemeData buildExchangeTheme() {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: const Color(0x8FFFFFFF),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       constraints: const BoxConstraints(minHeight: 48),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         borderSide: const BorderSide(color: Color(0xD9FFFFFF)),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         borderSide: const BorderSide(color: Color(0xD9FFFFFF)),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         borderSide: const BorderSide(color: ExchangeColors.teal, width: 1.4),
       ),
     ),
@@ -140,10 +118,10 @@ ThemeData buildExchangeTheme() {
           ExchangeColors.ink.withValues(alpha: .16),
         ),
         shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
         textStyle: const WidgetStatePropertyAll(
-          TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
     ),
@@ -164,7 +142,7 @@ ThemeData buildExchangeTheme() {
         ),
         elevation: const WidgetStatePropertyAll(0),
         shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
       ),
     ),
@@ -176,7 +154,7 @@ ThemeData buildExchangeTheme() {
           ExchangeColors.teal.withValues(alpha: .08),
         ),
         shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
       ),
     ),

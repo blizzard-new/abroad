@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../core/school_visuals.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
@@ -21,6 +22,8 @@ class SchoolsScreen extends StatefulWidget {
 class _SchoolsScreenState extends State<SchoolsScreen> {
   final searchController = TextEditingController();
   String appliedStoreQuery = '';
+  String country = '';
+  bool savedOnly = false;
 
   @override
   void didChangeDependencies() {
@@ -47,7 +50,9 @@ class _SchoolsScreenState extends State<SchoolsScreen> {
         (dashboard?.partnerUniversities ?? const <PartnerUniversity>[])
             .where(
               (school) =>
-                  query.isEmpty || school.searchableText.contains(query),
+                  (query.isEmpty || school.searchableText.contains(query)) &&
+                  (country.isEmpty || school.country == country) &&
+                  (!savedOnly || store.favorites.contains(school.schoolName)),
             )
             .toList();
 
@@ -59,10 +64,34 @@ class _SchoolsScreenState extends State<SchoolsScreen> {
           padding: const EdgeInsets.fromLTRB(20, 18, 20, 110),
           children: [
             if (widget.showPageHeader) ...[
-              ExchangeSectionHeader(
-                eyebrow:
-                    '${store.account?.homeUniversity ?? store.selectedUniversity}合作校',
-                title: '找到適合你的學校',
+              StudentHeading(
+                '找學校',
+                subtitle: store.selectedUniversity,
+                action: IconButton(
+                  tooltip: '找學校指南',
+                  icon: const Icon(Icons.help_outline_rounded),
+                  onPressed: () => showStudentGuide(
+                    context,
+                    title: '找到適合的學校',
+                    steps: const [
+                      (
+                        icon: Icons.search_rounded,
+                        title: '搜尋與篩選',
+                        detail: '輸入校名或條件，選擇國家縮小範圍。',
+                      ),
+                      (
+                        icon: Icons.bookmark_outline_rounded,
+                        title: '收藏志願',
+                        detail: '點書籤留下學校；點卡片查看完整條件與官方來源。',
+                      ),
+                      (
+                        icon: Icons.verified_outlined,
+                        title: '確認當期規定',
+                        detail: '名額、資格與截止日以當期官方公告為準。',
+                      ),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(height: 14),
             ],
@@ -82,16 +111,76 @@ class _SchoolsScreenState extends State<SchoolsScreen> {
                       setState(() {});
                     },
             ),
+            const SizedBox(height: 12),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  FilterChip(
+                    avatar: Icon(
+                      savedOnly
+                          ? Icons.bookmark_rounded
+                          : Icons.bookmark_outline_rounded,
+                      size: 20,
+                    ),
+                    label: Text('收藏 ${store.favorites.length}'),
+                    selected: savedOnly,
+                    onSelected: (value) => setState(() => savedOnly = value),
+                  ),
+                  const SizedBox(width: 8),
+                  ChoiceChip(
+                    label: const Text('全部國家'),
+                    selected: country.isEmpty,
+                    onSelected: (_) => setState(() => country = ''),
+                  ),
+                  ...{
+                        for (final school
+                            in dashboard?.partnerUniversities ??
+                                <PartnerUniversity>[])
+                          school.country,
+                      }
+                      .where((c) => c.isNotEmpty)
+                      .map(
+                        (c) => Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: ChoiceChip(
+                            label: Text(c),
+                            selected: country == c,
+                            onSelected: (_) => setState(() => country = c),
+                          ),
+                        ),
+                      ),
+                ],
+              ),
+            ),
             const SizedBox(height: 20),
             if (store.isLoading && dashboard == null)
               const LoadingCards(count: 5)
             else if (store.error != null && dashboard == null)
               InlineError(message: store.error!, onRetry: store.refresh)
             else if (partners.isEmpty)
-              const EmptyState(
-                icon: Icons.search_off_rounded,
-                title: '沒有符合條件的學校',
-                message: '試著縮短關鍵字，再重新搜尋。',
+              StudentEmptyState(
+                icon: savedOnly
+                    ? Icons.bookmark_outline_rounded
+                    : Icons.search_off_rounded,
+                title: savedOnly && store.favorites.isEmpty
+                    ? '先收藏一所學校'
+                    : '沒有符合的學校',
+                detail: savedOnly && store.favorites.isEmpty
+                    ? '點學校旁的書籤，就會留在這裡。'
+                    : '換個條件再試試。',
+                action: OutlinedButton(
+                  onPressed: () {
+                    setState(() {
+                      country = '';
+                      savedOnly = false;
+                      searchController.clear();
+                      appliedStoreQuery = '';
+                    });
+                    store.setSchoolSearchQuery('');
+                  },
+                  child: const Text('查看全部學校'),
+                ),
               )
             else ...[
               Text(
@@ -127,204 +216,61 @@ class _SchoolsScreenState extends State<SchoolsScreen> {
   }
 }
 
-class _SchoolCard extends StatefulWidget {
+class _SchoolCard extends StatelessWidget {
   const _SchoolCard({required this.school, required this.store});
-
   final PartnerUniversity school;
   final ExchangeStore store;
-
-  @override
-  State<_SchoolCard> createState() => _SchoolCardState();
-}
-
-class _SchoolCardState extends State<_SchoolCard> {
-  bool expanded = false;
-
-  void _openDetail() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => SchoolDetailScreen(school: widget.school),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final school = widget.school;
-    final store = widget.store;
-    final isFavorite = store.favorites.contains(school.schoolName);
-    final summary = studentFacingText(school.mobileListSummary);
+    final saved = store.favorites.contains(school.schoolName);
     return GlassCard(
-      padding: EdgeInsets.zero,
-      child: Column(
+      padding: const EdgeInsets.all(16),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => SchoolDetailScreen(school: school)),
+      ),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(8),
-              onTap: () => setState(() => expanded = !expanded),
-              child: Semantics(
-                button: true,
-                expanded: expanded,
-                label: '${school.schoolName}詳細資訊',
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 12, 8, 12),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: SizedBox(
-                          width: 92,
-                          height: 82,
-                          child: SchoolPhoto(school: school),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: ExchangeColors.blueSoft.withValues(
-                                  alpha: .78,
-                                ),
-                                borderRadius: BorderRadius.circular(999),
-                              ),
-                              child: Text(
-                                school.country,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.bodySmall
-                                    ?.copyWith(
-                                      color: ExchangeColors.blue,
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 11,
-                                    ),
-                              ),
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              school.schoolName,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.titleMedium
-                                  ?.copyWith(fontWeight: FontWeight.w800),
-                            ),
-                            if (summary.isNotEmpty) ...[
-                              const SizedBox(height: 4),
-                              Text(
-                                summary,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                      SizedBox.square(
-                        dimension: 44,
-                        child: Center(
-                          child: AnimatedRotation(
-                            turns: expanded ? .5 : 0,
-                            duration: const Duration(milliseconds: 220),
-                            child: const Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              color: ExchangeColors.secondaryInk,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: SizedBox(
+              width: 72,
+              height: 88,
+              child: SchoolPhoto(school: school),
             ),
           ),
-          AnimatedSize(
-            duration: const Duration(milliseconds: 240),
-            curve: Curves.easeOutCubic,
-            child: expanded
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Divider(),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(14, 14, 14, 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Wrap(
-                              spacing: 7,
-                              runSpacing: 7,
-                              children: [
-                                if (school.displayStudyPeriod.isNotEmpty)
-                                  _FactChip(
-                                    icon: Icons.schedule_rounded,
-                                    text: school.displayStudyPeriod,
-                                  ),
-                                if (school.quota.isNotEmpty)
-                                  _FactChip(
-                                    icon: Icons.people_outline_rounded,
-                                    text: '名額 ${school.quota}',
-                                  ),
-                                if (school
-                                    .displayApplicationDeadline
-                                    .isNotEmpty)
-                                  const _FactChip(
-                                    icon: Icons.event_rounded,
-                                    text: '截止日已整理',
-                                  ),
-                                if (school
-                                    .studentSummaryZh
-                                    .translatedFromEnglish)
-                                  const _FactChip(
-                                    icon: Icons.translate_rounded,
-                                    text: '中文重點',
-                                  ),
-                              ],
-                            ),
-                            const SizedBox(height: 14),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: FilledButton.icon(
-                                    onPressed: _openDetail,
-                                    icon: const Icon(
-                                      Icons.arrow_forward_rounded,
-                                    ),
-                                    label: const Text('查看完整資訊'),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                IconButton.outlined(
-                                  tooltip: isFavorite ? '取消收藏' : '加入收藏',
-                                  onPressed: () =>
-                                      store.toggleFavorite(school.schoolName),
-                                  icon: Icon(
-                                    isFavorite
-                                        ? Icons.bookmark_rounded
-                                        : Icons.bookmark_outline_rounded,
-                                    color: isFavorite
-                                        ? ExchangeColors.teal
-                                        : ExchangeColors.secondaryInk,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                : const SizedBox.shrink(),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                StudentIconLabel(Icons.place_outlined, school.country),
+                const SizedBox(height: 8),
+                Text(
+                  school.schoolName,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                if (school.displayStudyPeriod.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    school.displayStudyPeriod,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ],
+            ),
+          ),
+          IconButton(
+            tooltip: saved ? '取消收藏' : '加入收藏',
+            onPressed: () => store.toggleFavorite(school.schoolName),
+            icon: Icon(
+              saved ? Icons.bookmark_rounded : Icons.bookmark_outline_rounded,
+              color: saved ? ExchangeColors.teal : ExchangeColors.secondaryInk,
+            ),
           ),
         ],
       ),
@@ -345,7 +291,7 @@ class _LiquidGlassSearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(8);
+    final radius = BorderRadius.circular(20);
     return Container(
       decoration: BoxDecoration(
         borderRadius: radius,
@@ -361,7 +307,18 @@ class _LiquidGlassSearchField extends StatelessWidget {
       child: ClipRRect(
         borderRadius: radius,
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 26, sigmaY: 26),
+          filter: ImageFilter.blur(
+            sigmaX:
+                MediaQuery.disableAnimationsOf(context) ||
+                    MediaQuery.highContrastOf(context)
+                ? 0
+                : 16,
+            sigmaY:
+                MediaQuery.disableAnimationsOf(context) ||
+                    MediaQuery.highContrastOf(context)
+                ? 0
+                : 16,
+          ),
           child: DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: radius,
@@ -381,7 +338,7 @@ class _LiquidGlassSearchField extends StatelessWidget {
               onChanged: onChanged,
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
-                hintText: '搜尋學校、國家或條件',
+                hintText: '搜尋校名或條件',
                 prefixIcon: const Icon(Icons.search_rounded),
                 suffixIcon: onClear == null
                     ? null
@@ -399,38 +356,6 @@ class _LiquidGlassSearchField extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _FactChip extends StatelessWidget {
-  const _FactChip({required this.icon, required this.text});
-
-  final IconData icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .48),
-        borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: Colors.white.withValues(alpha: .82)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16, color: ExchangeColors.teal),
-          const SizedBox(width: 6),
-          Text(
-            text,
-            style: Theme.of(
-              context,
-            ).textTheme.bodySmall?.copyWith(color: ExchangeColors.ink),
-          ),
-        ],
       ),
     );
   }

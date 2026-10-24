@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../core/app_updates.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 
 class AppUpdateScope extends InheritedNotifier<AppUpdateController> {
   const AppUpdateScope({
@@ -41,10 +42,17 @@ Future<void> showAppUpdatePrompt(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '目前版本 ${controller.version}\n新版約 ${(release.bytes / 1000000).toStringAsFixed(1)} MB',
+                  '目前 ${controller.version} · ${(release.bytes / 1000000).toStringAsFixed(1)} MB',
                 ),
                 const SizedBox(height: 14),
-                const Text('點一下下載新版 APK，下載完成後開啟檔案，依 Android 提示安裝更新。'),
+                const StudentIconLabel(Icons.download_rounded, '下載 APK'),
+                const SizedBox(height: 12),
+                const StudentIconLabel(Icons.folder_open_rounded, '開啟下載的檔案'),
+                const SizedBox(height: 12),
+                const StudentIconLabel(
+                  Icons.system_update_rounded,
+                  '依系統提示確認安裝',
+                ),
                 TextButton(
                   onPressed: () async {
                     try {
@@ -124,12 +132,12 @@ class AppUpdateTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('App 版本', style: Theme.of(context).textTheme.titleMedium),
+          Text('App 更新', style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 6),
           Text(
             controller.version.isEmpty
                 ? '啟動後自動檢查更新'
-                : '目前版本 ${controller.version}',
+                : '版本 ${controller.version}',
           ),
           const SizedBox(height: 10),
           OutlinedButton.icon(

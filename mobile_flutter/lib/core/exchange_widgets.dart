@@ -29,7 +29,7 @@ class GlassCard extends StatelessWidget {
   const GlassCard({
     required this.child,
     super.key,
-    this.padding = const EdgeInsets.all(18),
+    this.padding = const EdgeInsets.all(24),
     this.margin = EdgeInsets.zero,
     this.tint,
     this.onTap,
@@ -43,7 +43,7 @@ class GlassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(8);
+    final radius = BorderRadius.circular(24);
     final glassDecoration = BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topLeft,
@@ -100,7 +100,18 @@ class GlassCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: radius,
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+          filter: ImageFilter.blur(
+            sigmaX:
+                MediaQuery.disableAnimationsOf(context) ||
+                    MediaQuery.highContrastOf(context)
+                ? 0
+                : 16,
+            sigmaY:
+                MediaQuery.disableAnimationsOf(context) ||
+                    MediaQuery.highContrastOf(context)
+                ? 0
+                : 16,
+          ),
           child: surface,
         ),
       ),

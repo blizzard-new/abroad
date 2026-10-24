@@ -205,7 +205,7 @@ void main() {
       );
 
       expect(find.text('申請文件'), findsOneWidget);
-      expect(find.text('文件清單'), findsOneWidget);
+      expect(find.text('待辦文件'), findsOneWidget);
       expect(find.text('讀書計畫'), findsOneWidget);
       expect(find.text(template.description), findsNothing);
 
