@@ -213,11 +213,19 @@ void main() {
       await tester.pumpAndSettle();
       expect(store.favorites, contains(school.schoolName));
       await tester.scrollUntilVisible(
-        find.widgetWithText(ChoiceChip, '流程'),
+        find.widgetWithText(ChoiceChip, '流程').hitTestable(),
         200,
         scrollable: find.byType(Scrollable).first,
       );
+      await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(ChoiceChip, '流程'));
+      await tester.pumpAndSettle();
+      expect(
+        tester
+            .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, '流程'))
+            .selected,
+        isTrue,
+      );
       await tester.pumpAndSettle();
       await scrollAll(tester);
       for (final tab in ['生活', '心得', '社群']) {
@@ -227,13 +235,19 @@ void main() {
             .jumpTo(0);
         await tester.pumpAndSettle();
         await tester.scrollUntilVisible(
-          find.widgetWithText(ChoiceChip, tab),
+          find.widgetWithText(ChoiceChip, tab).hitTestable(),
           200,
           scrollable: find.byType(Scrollable).first,
         );
         await tester.pumpAndSettle();
         await tester.tap(find.widgetWithText(ChoiceChip, tab));
         await tester.pumpAndSettle();
+        expect(
+          tester
+              .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, tab))
+              .selected,
+          isTrue,
+        );
         expect(tester.takeException(), isNull, reason: tab);
         await scrollAll(tester);
       }

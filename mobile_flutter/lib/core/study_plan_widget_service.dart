@@ -11,9 +11,9 @@ enum StudyPlanWidgetStyle {
     'StudyPlanWidgetDefinitionHomeWidgetReceiver',
     'StudyPlanWidgetDefinitionHomeWidget',
   ),
-  countdown('星軌倒數', '已儲存日期的倒數', 'CountdownWidgetReceiver', 'CountdownWidget'),
-  checklist('極光待辦', '還沒完成的申請文件', 'ChecklistWidgetReceiver', 'ChecklistWidget'),
-  progress('軌道進度', '準備完成的比例', 'ProgressWidgetReceiver', 'ProgressWidget');
+  countdown('出發倒數', '已儲存日期的倒數', 'CountdownWidgetReceiver', 'CountdownWidget'),
+  checklist('準備清單', '還沒完成的申請文件', 'ChecklistWidgetReceiver', 'ChecklistWidget'),
+  progress('準備進度', '準備完成的比例', 'ProgressWidgetReceiver', 'ProgressWidget');
 
   const StudyPlanWidgetStyle(
     this.label,

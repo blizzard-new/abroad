@@ -64,15 +64,15 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/study_plan_widget_definition_home_widget" />
         </receiver>
-        <receiver android:name="tw.edu.cgu.exchange_guide_flutter.CountdownWidgetReceiver" android:label="UniWay · 星軌倒數" android:exported="true">
+        <receiver android:name="tw.edu.cgu.exchange_guide_flutter.CountdownWidgetReceiver" android:label="UniWay · 出發倒數" android:exported="true">
             <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/countdown_widget" />
         </receiver>
-        <receiver android:name="tw.edu.cgu.exchange_guide_flutter.ChecklistWidgetReceiver" android:label="UniWay · 極光待辦" android:exported="true">
+        <receiver android:name="tw.edu.cgu.exchange_guide_flutter.ChecklistWidgetReceiver" android:label="UniWay · 準備清單" android:exported="true">
             <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/checklist_widget" />
         </receiver>
-        <receiver android:name="tw.edu.cgu.exchange_guide_flutter.ProgressWidgetReceiver" android:label="UniWay · 軌道進度" android:exported="true">
+        <receiver android:name="tw.edu.cgu.exchange_guide_flutter.ProgressWidgetReceiver" android:label="UniWay · 準備進度" android:exported="true">
             <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE" /></intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/progress_widget" />
         </receiver>

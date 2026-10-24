@@ -69,7 +69,7 @@ class _NeutralSchoolPlaceholder extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF24324D), Color(0xFF161F38)],
+            colors: [ExchangeColors.tealSoft, ExchangeColors.blueSoft],
           ),
         ),
         child: Center(

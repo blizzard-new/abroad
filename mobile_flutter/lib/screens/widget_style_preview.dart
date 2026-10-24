@@ -27,9 +27,9 @@ class WidgetStylePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accent = switch (style) {
-      StudyPlanWidgetStyle.countdown => const Color(0xFFD1B7FF),
-      StudyPlanWidgetStyle.checklist => const Color(0xFF8BE8CE),
-      _ => const Color(0xFF9AC9FF),
+      StudyPlanWidgetStyle.countdown => ExchangeColors.coral,
+      StudyPlanWidgetStyle.checklist => ExchangeColors.teal,
+      _ => ExchangeColors.blue,
     };
     final now = DateTime.now();
     final days = deadline == null

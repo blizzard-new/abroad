@@ -29,10 +29,10 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
 enum class PlanStyle(val title: String, val accent: Long, val background: Int) {
-    OVERVIEW("交換總覽", 0xFF9AC9FF, R.drawable.widget_orbit_background),
-    COUNTDOWN("星軌倒數", 0xFFD1B7FF, R.drawable.widget_cosmic_background),
-    CHECKLIST("極光待辦", 0xFF8BE8CE, R.drawable.widget_aurora_background),
-    PROGRESS("軌道進度", 0xFF9AC9FF, R.drawable.widget_orbit_background)
+    OVERVIEW("交換總覽", 0xFF315DA8, R.drawable.widget_orbit_background),
+    COUNTDOWN("出發倒數", 0xFFAC4934, R.drawable.widget_cosmic_background),
+    CHECKLIST("準備清單", 0xFF006C67, R.drawable.widget_aurora_background),
+    PROGRESS("準備進度", 0xFF315DA8, R.drawable.widget_orbit_background)
 }
 
 /** All styles read the same account-scoped cache, cleared by logout. */
@@ -54,8 +54,8 @@ open class PlanGlanceWidget(private val style: PlanStyle) : GlanceAppWidget() {
         val tasks = (prefs.getString("$prefix.tasks", "") ?: "").split("\n").filter { it.isNotBlank() }
         val days = runCatching { ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.parse(prefs.getString("$prefix.deadlineIso", ""))) }.getOrNull()
         val wide = LocalSize.current.width >= 280.dp
-        val ink = ColorProvider(Color(0xFFF1F4FF))
-        val secondary = ColorProvider(Color(0xFFB7C3DB))
+        val ink = ColorProvider(Color(0xFF172D37))
+        val secondary = ColorProvider(Color(0xFF52656E))
         val accent = ColorProvider(Color(style.accent))
         val open = Intent(context, MainActivity::class.java).apply {
             action = Intent.ACTION_VIEW
@@ -64,7 +64,7 @@ open class PlanGlanceWidget(private val style: PlanStyle) : GlanceAppWidget() {
         }
         Column(modifier = GlanceModifier.fillMaxSize().background(ImageProvider(style.background))
             .padding(16.dp).clickable(actionStartActivity(open))) {
-            Text("✦ ${style.title}", maxLines = 1, style = TextStyle(color = accent, fontSize = 12.sp, fontWeight = FontWeight.Bold))
+            Text(style.title, maxLines = 1, style = TextStyle(color = accent, fontSize = 12.sp, fontWeight = FontWeight.Bold))
             Spacer(GlanceModifier.height(8.dp))
             Column(modifier = GlanceModifier.defaultWeight()) {
                 when {
@@ -105,7 +105,7 @@ open class PlanGlanceWidget(private val style: PlanStyle) : GlanceAppWidget() {
         canvas.drawCircle(96f, 96f, 82f, paint)
         paint.color = accent
         canvas.drawArc(14f, 14f, 178f, 178f, -90f, percent * 3.6f, false, paint)
-        paint.style = Paint.Style.FILL; paint.textSize = 40f; paint.textAlign = Paint.Align.CENTER; paint.color = 0xFFF1F4FF.toInt()
+        paint.style = Paint.Style.FILL; paint.textSize = 40f; paint.textAlign = Paint.Align.CENTER; paint.color = 0xFF172D37.toInt()
         canvas.drawText("$percent%", 96f, 96f - (paint.ascent() + paint.descent()) / 2, paint)
         return bitmap
     }

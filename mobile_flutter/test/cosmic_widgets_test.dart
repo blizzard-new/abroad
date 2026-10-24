@@ -23,10 +23,12 @@ void main() {
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(channel, (call) async {
             final args = call.arguments as Map?;
-            if (call.method == 'saveWidgetData')
+            if (call.method == 'saveWidgetData') {
               saved[args!['id']] = args['data'];
-            if (call.method == 'updateWidget')
+            }
+            if (call.method == 'updateWidget') {
               refreshed.add(args!['qualifiedAndroidName']);
+            }
             if (call.method == 'requestPinWidget') {
               pinned.add(args!['qualifiedAndroidName']);
               return null;
@@ -144,7 +146,7 @@ void main() {
     debugDefaultTargetPlatformOverride = null;
   });
 
-  test('cosmic text and controls meet normal-text contrast', () {
+  test('daylight text and primary controls meet normal-text contrast', () {
     for (final foreground in [
       ExchangeColors.ink,
       ExchangeColors.secondaryInk,
@@ -153,16 +155,25 @@ void main() {
       for (final background in [
         ExchangeColors.background,
         ExchangeColors.surface,
-        const Color(0xFF29344F),
-        const Color(0xFF2D4869),
+        ExchangeColors.tealSoft,
+        ExchangeColors.blueSoft,
+        ExchangeColors.surfaceMuted,
       ]) {
         expect(
-          (foreground.computeLuminance() + .05) /
-              (background.computeLuminance() + .05),
+          (background.computeLuminance() + .05) /
+              (foreground.computeLuminance() + .05),
           greaterThanOrEqualTo(4.5),
         );
       }
     }
+    for (final fill in [ExchangeColors.teal, ExchangeColors.primaryEnd]) {
+      expect(
+        (ExchangeColors.onPrimary.computeLuminance() + .05) /
+            (fill.computeLuminance() + .05),
+        greaterThanOrEqualTo(4.5),
+      );
+    }
+    expect(buildExchangeTheme().brightness, Brightness.light);
   });
 }
 

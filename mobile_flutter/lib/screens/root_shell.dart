@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
-import '../core/cosmic_surface.dart';
+import '../core/daylight_surface.dart';
 import '../state/exchange_store.dart';
 import 'account_screen.dart';
 import 'application_documents_screen.dart';
@@ -44,7 +44,7 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '切換後會同步載入該校交換簡章、合作校、截止日與校板動態。',
+                        '選擇你的學校，查看適用的交換資訊。',
                         style: Theme.of(sheetContext).textTheme.bodySmall,
                       ),
                     ],
@@ -144,7 +144,12 @@ class _RootShellState extends State<RootShell> {
     return ExchangePageBackground(
       child: Scaffold(
         extendBody: true,
-        body: IndexedStack(index: index, children: pages),
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 840),
+            child: IndexedStack(index: index, children: pages),
+          ),
+        ),
         bottomNavigationBar: SafeArea(
           top: false,
           minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),

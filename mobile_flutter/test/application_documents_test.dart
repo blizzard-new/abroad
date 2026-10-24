@@ -209,6 +209,8 @@ void main() {
       expect(find.text('讀書計畫'), findsOneWidget);
       expect(find.text(template.description), findsNothing);
 
+      await tester.ensureVisible(find.text('讀書計畫'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('讀書計畫'));
       await tester.pumpAndSettle();
 

@@ -131,17 +131,17 @@ void main() {
       );
       expect(comments.items.single.body, contains('宿舍申請'));
       final info = await PackageInfo.fromPlatform();
-      expect(info.version, '2.1.6');
+      expect(info.version, '2.1.7');
       expect(info.buildNumber, '20');
       final updates = AppUpdateController()..version = info.version;
       addTearDown(updates.dispose);
       final next = AppRelease(
-        '2.1.7',
+        '2.1.8',
         Uri.parse(
-          'https://github.com/blizzard-new/abroad/releases/download/android-v2.1.7-preview/UniWay-2.1.7-preview.apk',
+          'https://github.com/blizzard-new/abroad/releases/download/android-v2.1.8-preview/UniWay-2.1.8-preview.apk',
         ),
         Uri.parse(
-          'https://github.com/blizzard-new/abroad/releases/tag/android-v2.1.7-preview',
+          'https://github.com/blizzard-new/abroad/releases/tag/android-v2.1.8-preview',
         ),
         80000000,
       );

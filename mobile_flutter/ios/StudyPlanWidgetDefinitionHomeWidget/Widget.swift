@@ -6,24 +6,24 @@ enum UniWayWidgetStyle {
   var title: String {
     switch self {
     case .overview: return "交換總覽"
-    case .countdown: return "星軌倒數"
-    case .checklist: return "極光待辦"
-    case .progress: return "軌道進度"
+    case .countdown: return "出發倒數"
+    case .checklist: return "準備清單"
+    case .progress: return "準備進度"
     }
   }
   var symbol: String {
     switch self {
     case .overview: return "airplane.departure"
-    case .countdown: return "sparkles"
+    case .countdown: return "calendar"
     case .checklist: return "checklist"
     case .progress: return "chart.donut"
     }
   }
   var accent: Color {
     switch self {
-    case .countdown: return Color(red: 0.79, green: 0.70, blue: 1)
-    case .checklist: return Color(red: 0.43, green: 0.91, blue: 0.81)
-    default: return Color(red: 0.56, green: 0.80, blue: 1)
+    case .countdown: return Color(red: 0.67, green: 0.29, blue: 0.20)
+    case .checklist: return Color(red: 0, green: 0.42, blue: 0.40)
+    default: return Color(red: 0.19, green: 0.36, blue: 0.66)
     }
   }
 }
@@ -97,7 +97,7 @@ struct PlanWidgetView: View {
     }
     .widgetURL(URL(string: "tw.uniway.app://journey"))
     .applyContainerBackground(
-      LinearGradient(colors: [Color(red: 0.10, green: 0.13, blue: 0.26), Color(red: 0.04, green: 0.06, blue: 0.15)], startPoint: .topLeading, endPoint: .bottomTrailing))
+      LinearGradient(colors: [Color(red: 0.89, green: 0.95, blue: 0.93), Color.white], startPoint: .topLeading, endPoint: .bottomTrailing))
   }
   private var home: some View {
     VStack(alignment: .leading, spacing: 8) {
@@ -107,7 +107,7 @@ struct PlanWidgetView: View {
         HStack(alignment: .firstTextBaseline, spacing: 4) {
           Text(days < 0 ? "—" : "\(days)").font(.system(size: 40, weight: .semibold, design: .rounded)).monospacedDigit()
           Text(days < 0 ? "期限已過" : (days == 0 ? "今天" : "天後")).font(.caption)
-        }.foregroundStyle(.white)
+        }.foregroundStyle(Color(red: 0.09, green: 0.18, blue: 0.22))
         Text(entry.title).font(.caption).lineLimit(2)
       } else if style == .checklist, !entry.tasks.isEmpty {
         ForEach(Array(entry.tasks.prefix(family == .systemSmall ? 2 : 3).enumerated()), id: \.offset) { _, task in
@@ -124,12 +124,12 @@ struct PlanWidgetView: View {
         }
       } else {
         Text(entry.title).font(.headline).lineLimit(2)
-        Text(entry.dateLabel).font(.caption).foregroundStyle(.white.opacity(0.75)).lineLimit(1)
+        Text(entry.dateLabel).font(.caption).foregroundStyle(Color(red: 0.32, green: 0.40, blue: 0.43)).lineLimit(1)
       }
       Spacer(minLength: 0)
       Text(entry.updated.isEmpty ? entry.progressLabel : entry.updated).font(.caption2).foregroundStyle(style.accent).lineLimit(1)
     }
-    .foregroundStyle(.white)
+    .foregroundStyle(Color(red: 0.09, green: 0.18, blue: 0.22))
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
   }
 }
@@ -144,21 +144,21 @@ struct StudyPlanWidgetDefinitionHomeWidget: Widget {
 struct CountdownWidget: Widget {
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: "CountdownWidget", provider: PlanProvider()) { PlanWidgetView(entry: $0, style: .countdown) }
-      .configurationDisplayName("星軌倒數").description("你已儲存的下一個申請日期")
+      .configurationDisplayName("出發倒數").description("你已儲存的下一個申請日期")
       .supportedFamilies([.systemSmall, .systemMedium])
   }
 }
 struct ChecklistWidget: Widget {
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: "ChecklistWidget", provider: PlanProvider()) { PlanWidgetView(entry: $0, style: .checklist) }
-      .configurationDisplayName("極光待辦").description("尚未完成的申請文件")
+      .configurationDisplayName("準備清單").description("尚未完成的申請文件")
       .supportedFamilies([.systemSmall, .systemMedium])
   }
 }
 struct ProgressWidget: Widget {
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: "ProgressWidget", provider: PlanProvider()) { PlanWidgetView(entry: $0, style: .progress) }
-      .configurationDisplayName("軌道進度").description("交換準備完成比例")
+      .configurationDisplayName("準備進度").description("交換準備完成比例")
       .supportedFamilies([.systemSmall, .systemMedium])
   }
 }

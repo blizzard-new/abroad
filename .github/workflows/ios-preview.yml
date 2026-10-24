@@ -1,6 +1,8 @@
 name: iOS preview
 
 on:
+  pull_request:
+    paths: [mobile_flutter/**, .github/workflows/ios-preview.yml]
   push:
     branches: [main]
     paths: [mobile_flutter/**, .github/workflows/ios-preview.yml]
