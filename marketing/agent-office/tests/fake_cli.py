@@ -32,6 +32,7 @@ ANSWERS = {
     "Insights": {"notes": ["痛點開頭的 Threads 互動最好"]},
     "ReplyBatch": {"replies": []},
     "Ping": {"ok": True},
+    "Report": {"summary": "大家最近在問語言檢定的期限", "points": ["托福有效期兩年", "很多人問居家版"], "sources": ["https://www.dcard.tw/f/exchange"]},
 }
 
 SCRIPT = r'''#!{python}

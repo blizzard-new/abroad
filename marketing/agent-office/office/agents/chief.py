@@ -1,7 +1,8 @@
 """總管：你和大家之間的窗口。你用聊天交代事情，總管轉成固定的幾種工作分派下去，做完再回報。
 
 總管能做的事：開工、重寫某則草稿、加做一則、改發文時間、退回、記給明天的企劃，
-以及查看和調整每位同事用的 AI（工具、模型、思考強度）。
+查看和調整每位同事用的 AI（工具、模型、思考強度），
+以及新增同事、交代工作給新同事、請新同事離開。
 不能核准、不能發文、不能改帳號或模擬模式——那些永遠由你在審核匣自己按。
 """
 
@@ -91,7 +92,7 @@ class Chief(Agent):
         names = {a.id: a.persona.name for a in office.staff.values()}
         minds = "\n".join(
             f"- role={role}（{names.get("strategist" if role == "research" else role, role)}・{label}）：{office.describe_brain(role)}"
-            for role, label in brains.ROLES.items()
+            for role, label in office.roles().items()
         )
         notes = json.loads(office.store.get("boss_notes") or "[]")
         settings = office.settings
@@ -166,7 +167,33 @@ class Chief(Agent):
         if not (action.brain or action.model or action.effort):
             raise ValueError("要說改成哪個工具、模型或思考強度")
         self.office.tune(action.role, brain=action.brain, model=action.model, effort=action.effort)
-        return f"{brains.ROLES[action.role]}改用 {self.office.describe_brain(action.role)}"
+        return f"{self.office.roles()[action.role]}改用 {self.office.describe_brain(action.role)}"
+
+    def _do_hire(self, action: ChiefAction) -> str:
+        agent = self.office.hire(action.name, action.title, action.instructions, brain=action.brain, model=action.model, effort=action.effort)
+        return f"{agent.persona.name}（{agent.persona.title}）加入了，用 {self.office.describe_brain(agent.id)}"
+
+    def _do_dismiss(self, action: ChiefAction) -> str:
+        return f"{self.office.dismiss(action.name or action.role)}離開辦公室了"
+
+    def _do_assign(self, action: ChiefAction) -> str:
+        office = self.office
+        colleague = office.colleague(action.name or action.role)
+        request = action.instructions.strip()
+        if not request:
+            raise ValueError(f"要請 {colleague.persona.name} 做什麼？")
+        self.handoff(colleague.id, "交代工作")
+        if action.task_kind == "threads":
+            slot = self._next_slot("threads")
+
+            def work() -> str:
+                draft_id = colleague.write_threads(request, slot)
+                return f"{colleague.persona.name}寫好 Threads 了（#{draft_id}），在審核匣等你"
+
+            self._background(f"{colleague.persona.name}的草稿", work)
+            return f"已經請 {colleague.persona.name} 寫一則 Threads：「{request[:20]}」，寫好會放進審核匣"
+        self._background(f"{colleague.persona.name}的任務", lambda: colleague.report(request))
+        return f"已經交給 {colleague.persona.name}：「{request[:20]}」，做完會回報"
 
     def _do_start_day(self, action: ChiefAction) -> str:
         from ..pipeline import run_day
