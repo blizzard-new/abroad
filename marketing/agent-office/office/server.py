@@ -29,9 +29,13 @@ def create_app(settings: Settings, *, clock: bool = True, office: Office | None 
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        stop = scheduler.start(office) if clock else None
+        stops = [scheduler.start(office)] if clock else []
+        if settings.telegram_bot_token:
+            from .telegram import TelegramBridge
+
+            stops.append(TelegramBridge(office).start())
         yield
-        if stop:
+        for stop in stops:
             stop.set()
 
     app = FastAPI(title="UniWay 行銷辦公室", lifespan=lifespan)

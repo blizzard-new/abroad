@@ -64,8 +64,8 @@ def main(argv: list[str] | None = None) -> int:
     check = sub.add_parser("check", help="檢查這台電腦：工具、每張桌子的 AI、社群帳號")
     check.add_argument("--ping", action="store_true", help="實際問每個 AI 一句測試，確認有登入")
 
-    auth = sub.add_parser("auth", help="連上社群帳號")
-    auth.add_argument("platform", choices=["youtube", "threads", "instagram"])
+    auth = sub.add_parser("auth", help="連上社群帳號，或用 telegram 連上你的手機")
+    auth.add_argument("platform", choices=["youtube", "threads", "instagram", "telegram"])
     auth.add_argument("--token", "--short-token", dest="token", help="Meta 開發者後台產生的權杖（Threads／Instagram）")
 
     args = parser.parse_args(argv)
@@ -141,6 +141,8 @@ def _auth(args) -> int:
     from .store import Store
 
     settings = Settings.from_env()
+    if args.platform == "telegram":
+        return _pair_phone(settings)
     store = Store(settings.db_path)
     label = accounts.LABEL[args.platform]
     try:
@@ -166,6 +168,41 @@ def _auth(args) -> int:
     else:
         print("這已經是長期權杖（約 60 天），照原樣存好，辦公室每週會自動延長。")
     return 0
+
+
+def _pair_phone(settings: Settings) -> int:
+    import time
+
+    from .office import Office
+    from .telegram import PAIR_TTL, TelegramBridge, TelegramError
+
+    if not settings.telegram_bot_token:
+        print("先在 .env 設定 TELEGRAM_BOT_TOKEN：在 Telegram 搜尋 @BotFather，傳 /newbot 建立機器人，它會給你一串 token。")
+        return 1
+    bridge = TelegramBridge(Office(Settings.from_env(render_media=False)), spawn=lambda *_: None)
+    try:
+        name = bridge.bot_name()
+    except TelegramError as error:
+        print(f"TELEGRAM_BOT_TOKEN 不對或連不上 Telegram：{error}")
+        return 1
+    code = bridge.new_pairing_code()
+    print(f"用手機打開這個連結，在 Telegram 裡按「開始」（Start）：\n\n  https://t.me/{name}?start={code}\n")
+    print(f"（{int(PAIR_TTL.total_seconds() // 60)} 分鐘內有效）等你按…")
+    deadline = time.monotonic() + PAIR_TTL.total_seconds()
+    while time.monotonic() < deadline:
+        if not bridge.pairing_open(code):
+            who = bridge.office.store.get("handle:telegram") or "你"
+            print(f"已連上 {who} 的 Telegram。重新啟動 uv run office serve 後，直接傳訊息給 @{name} 就是跟 Leo 說話。")
+            return 0
+        try:
+            bridge.poll_once(timeout=20, pairing_only=True)
+        except TelegramError as error:
+            if error.code != 409:  # 409: `office serve` is polling and will finish the pairing itself
+                print(f"Telegram 錯誤：{error}")
+                return 1
+            time.sleep(3)
+    print("等太久了，連結已失效，請再跑一次。")
+    return 1
 
 
 if __name__ == "__main__":
