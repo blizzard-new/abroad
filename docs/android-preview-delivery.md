@@ -3,6 +3,9 @@
 The 2.1.3 implementation below was merged in PR #121. The subsequent 2.1.4 UI
 redesign and validation are documented in `android-ui-redesign-20261024.md`;
 user-facing installation instructions are in `android-2.1.4-release-notes.md`.
+Version 2.1.5 extends the same design to deep forms and detail screens; see
+`android-deep-ui-20261025.md`, `android-2.1.5-release-notes.md`, and the public
+download / in-place emulator update receipt `android-public-download-2.1.5-20261025.json`.
 
 Production API: https://app.uniway-tw.com/ (Jerry's Windows host).
 Branch: `codex/android-synced-preview`, based on `abroad/main` at

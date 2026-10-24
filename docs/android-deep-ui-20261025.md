@@ -30,6 +30,9 @@
 - Analyze 沒有 error/warning；4 個既有 unnecessary_brace_in_string_interps style info 仍保留。
 - Android 模擬器整合測試：新發文／回覆畫面操作成功，隔離後端寫入後由另一 API client 讀回相同內容；
   PackageInfo 取得 2.1.5 / 19，模擬未來 2.1.6 的更新提醒開啟正確附件 URL。沒有發布假的未來版本。
+- 最終簽署 APK 已檢視學校詳情、文件表單及捲動、共用資料及鍵盤、列印包、文件檢查、交換預算；返回與固定操作列正常。
+- 公開發布後，2.1.4 的「我的 → 檢查更新」顯示 2.1.5，下載按鈕以 Android VIEW intent 開啟正確 APK URL。
+  同一模擬器以 `adb install -r` 覆蓋為 2.1.5 / 19 後冷啟動成功；這不是實體手機系統安裝畫面的驗收。
 
 公開下載、正式簽章、實際 release 畫面與覆蓋安裝結果記於
 `android-public-download-2.1.5-20261025.json`。
