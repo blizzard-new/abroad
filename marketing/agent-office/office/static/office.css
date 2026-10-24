@@ -4,6 +4,8 @@
 
 @font-face { font-family: "Poppins"; font-weight: 500; src: url("/fonts/poppins/Poppins-Medium.ttf") format("truetype"); }
 @font-face { font-family: "Poppins"; font-weight: 700; src: url("/fonts/poppins/Poppins-Bold.ttf") format("truetype"); }
+/* Cubic 11 (俐方體11號), a Traditional Chinese pixel font; license in static/fonts/Cubic_11-OFL.txt. */
+@font-face { font-family: "Cubic 11"; src: url("/static/fonts/Cubic_11.woff2") format("woff2"); font-display: swap; }
 
 :root {
   --navy: #10294a;
@@ -24,6 +26,9 @@
   --panel: #f5f8fc;
   --line: #dbe3ee;
   --font: "Poppins", "GenJyuuGothic", "Noto Sans TC", "PingFang TC", system-ui, sans-serif;
+  --pixel: "Cubic 11", "GenJyuuGothic", "Noto Sans TC", monospace;
+  --px-line: #1b2233;
+  --px-shadow: 4px 4px 0 rgba(27, 34, 51, 0.28);
   color-scheme: light;
 }
 
@@ -333,6 +338,85 @@ dialog .close { position: absolute; right: 10px; top: 8px; z-index: 2; width: 34
 body.tv .panel, body.tv .run-btn { display: none; }
 body.tv .layout { grid-template-columns: 1fr; min-height: calc(100vh - 56px); }
 body.tv .room { min-height: calc(100vh - 56px); }
+
+
+/* ================================================================ pixel office
+   Everything in the room is drawn on a pixel grid: hard edges, 3px outlines, drop shadows without blur, and staff
+   who are 12×18 pixel sprites. Idle staff get up and wander the aisles (see the walkers in office.js). */
+.topbar, .room, .tabs, .btn, .run-btn, .chip, .count, .plate, .bubble, .toast, #agent-card-body h2 { font-family: var(--pixel); }
+.topbar { border-bottom: 4px solid var(--px-line); }
+.mode, .run-btn, .btn, .chip, .count, .chips button { border-radius: 0; }
+.run-btn { box-shadow: 0 0 0 3px var(--px-line), var(--px-shadow); }
+.run-btn:active, .btn:active { transform: translate(2px, 2px); box-shadow: none; }
+.btn { border: 0; box-shadow: 0 0 0 2px var(--px-line), 3px 3px 0 2px rgba(27, 34, 51, 0.25); }
+.btn.primary { box-shadow: 0 0 0 2px var(--px-line), 3px 3px 0 2px rgba(27, 34, 51, 0.35); }
+.room svg, .walker svg, .px { shape-rendering: crispEdges; image-rendering: pixelated; }
+
+.wall { background:
+  repeating-linear-gradient(90deg, transparent 0 46px, rgba(27, 34, 51, 0.05) 46px 48px),
+  linear-gradient(#e3ebf5, #d5e0ec); border-bottom: 0; box-shadow: inset 0 -12px 0 #9fb2c7, inset 0 -16px 0 var(--px-line); padding-bottom: 34px; }
+.window, .board, .whiteboard { border-radius: 0; }
+.window { border: 0; box-shadow: 0 0 0 6px #f3f6f9, 0 0 0 9px var(--px-line), 9px 9px 0 6px rgba(27, 34, 51, 0.2); margin: 9px; }
+.board { box-shadow: 0 0 0 4px #2a4166, 0 0 0 7px var(--px-line), 10px 10px 0 4px rgba(27, 34, 51, 0.25); margin: 7px; }
+.board h2 { font-family: var(--pixel); letter-spacing: 0.08em; }
+.flap { border-radius: 0; font-family: var(--pixel); font-weight: 400; }
+.status-word, .platform i { border-radius: 0; }
+.whiteboard { border: 0; box-shadow: 0 0 0 5px #e4e9ef, 0 0 0 8px var(--px-line), var(--px-shadow); margin: 8px; }
+.wb-theme { transform: none; }
+
+.room { isolation: isolate; } /* desk and walker layers stay inside the room, under the top bar */
+.floor { position: relative; background:
+  conic-gradient(#d6b98f 25%, #cfb085 0 50%, #d6b98f 0 75%, #cfb085 0) 0 0 / 32px 32px; }
+.bubble { border-radius: 0; box-shadow: 0 0 0 2px var(--px-line), 3px 3px 0 2px rgba(27, 34, 51, 0.18); }
+.bubble::after { width: 8px; height: 8px; bottom: -7px; margin-left: -4px; transform: none; clip-path: polygon(0 0, 100% 0, 50% 100%); background: var(--px-line); }
+.desk[data-state="idle"] .bubble { box-shadow: 0 0 0 2px #9aa8ba; }
+.monitor { border-radius: 0; box-shadow: 0 0 0 3px var(--px-line), 6px 6px 0 3px rgba(27, 34, 51, 0.25); }
+.monitor::after { clip-path: none; width: 16%; margin-left: -8%; background: #2d3646; box-shadow: 0 0 0 2px var(--px-line); }
+.screen { border-radius: 0; }
+.desk[data-state="working"] .monitor, .desk[data-state="rendering"] .monitor, .desk[data-state="reviewing"] .monitor {
+  box-shadow: 0 0 0 3px var(--px-line), 0 0 0 6px #6aa8ff, 6px 6px 0 6px rgba(27, 34, 51, 0.25); }
+.table { border-radius: 0; background: linear-gradient(#f2e3cb 0 10px, #e8d3b2 10px); box-shadow: 0 0 0 3px var(--px-line), 0 12px 0 0 #b8956a, 0 12px 0 3px var(--px-line); }
+.keyboard { border-radius: 0; box-shadow: 0 0 0 2px var(--px-line); }
+.mug { border-radius: 0; box-shadow: 0 0 0 2px var(--px-line); }
+.mug::after { border-radius: 0; }
+.plate { border-radius: 0; background: #fffdf7; box-shadow: 0 0 0 2px var(--px-line), 3px 3px 0 2px rgba(27, 34, 51, 0.2); }
+.plate::before { border-radius: 0; }
+
+/* the seated sprite: from behind, in a chair */
+.worker { width: 60px; height: 80px; margin-top: -46px; aspect-ratio: auto; }
+.worker .px { display: block; width: 60px; height: 80px; }
+.desk .seat-back { visibility: hidden; }
+.desk.away .person { visibility: hidden; }
+.desk.away .seat-back { visibility: visible; }
+.desk[data-state="working"] .person, .desk[data-state="rendering"] .person { animation: px-type 0.36s steps(1) infinite; }
+.desk[data-state="thinking"] .person { animation: px-think 2.4s steps(1) infinite; }
+.desk[data-state="reviewing"] .person { animation: px-scan 1.6s steps(1) infinite; }
+.desk[data-state="done"]:not(.away) .worker { animation: px-hop 0.6s steps(3) 1; }
+@keyframes px-type { 50% { transform: translateY(0.4px); } }
+@keyframes px-think { 50% { transform: translateX(-0.4px); } }
+@keyframes px-scan { 33% { transform: translateX(-0.4px); } 66% { transform: translateX(0.4px); } }
+@keyframes px-hop { 50% { transform: translateY(-8px); } }
+.boss .worker { width: 60px; margin-top: -40px; }
+
+/* staff walking around while they have nothing to do */
+.walkers { position: absolute; inset: 0; pointer-events: none; }
+.walker { position: absolute; left: 0; top: 0; width: 60px; height: 90px; margin: -90px 0 0 -30px; pointer-events: auto; cursor: pointer; transition-property: transform; transition-timing-function: linear; }
+.walker[hidden] { display: none; }
+.walker .px { display: block; width: 60px; height: 90px; }
+.walker.left .px { transform: scaleX(-1); }
+.walker .f1, .walker .f2 { visibility: hidden; }
+.walker.walking .f0 { visibility: hidden; }
+.walker.walking .f1 { animation: px-frame 0.44s steps(1) infinite; }
+.walker.walking .f2 { animation: px-frame 0.44s steps(1) -0.22s infinite; }
+@keyframes px-frame { 0% { visibility: visible; } 50% { visibility: hidden; } }
+.walker .tag { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); padding: 0 4px; font: 11px/16px var(--pixel); color: #fff; background: rgba(27, 34, 51, 0.78); white-space: nowrap; }
+.walker .emote { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, -4px); padding: 2px 6px; font: 12px/16px var(--pixel); color: var(--ink); background: #fff; box-shadow: 0 0 0 2px var(--px-line); white-space: nowrap; }
+.walker .emote[hidden] { display: none; }
+.prop { position: absolute; bottom: 18px; pointer-events: none; }
+.prop svg { display: block; width: 100%; height: 100%; }
+.prop.plant { left: 18px; width: 48px; height: 72px; }
+.prop.cooler { right: 22px; width: 40px; height: 80px; }
+.prop.coffee { left: 84px; width: 44px; height: 56px; }
 
 /* ---- responsive ---- */
 @media (max-width: 1280px) {

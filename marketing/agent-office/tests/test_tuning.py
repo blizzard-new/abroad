@@ -90,3 +90,9 @@ def test_the_chief_still_cannot_approve(office, monkeypatch):
     monkeypatch.setenv("FAKE_CHIEF", json.dumps({"reply": "好", "actions": [{"type": "approve", "draft_id": 1}]}))
     answer = office.staff["chief"].handle("全部核准")
     assert "approve" not in json.dumps(answer.get("data", {}))
+
+
+def test_the_chief_knows_whether_posting_is_real_and_where_that_is_set(office):
+    state = office.staff["chief"].state_text()
+    assert "模擬發佈（OFFICE_DRY_RUN=1）" in state and "OFFICE_DRY_RUN 改成 0" in state
+    assert "Threads 未連上" in state and "網頁和審核匣上沒有開關" in state
