@@ -4508,7 +4508,13 @@ function renderRecommendedMatches() {
 }
 
 function planningProfileKey() {
-  return JSON.stringify([state.account?.id, activeHomeSchool(), state.eligibilityProfile]);
+  // The account's saved copy of the conditions can come back with its fields in another order; that alone must not
+  // make the recommendation plan look out of date.
+  const profile = state.eligibilityProfile;
+  const conditions = profile && typeof profile === "object"
+    ? Object.fromEntries(Object.entries(profile).sort(([left], [right]) => left.localeCompare(right)))
+    : profile;
+  return JSON.stringify([state.account?.id, activeHomeSchool(), conditions]);
 }
 
 async function refreshPlanningRecommendations() {
@@ -13082,7 +13088,12 @@ async function checkEligibility(event) {
     window.UniWayLatticeLoader?.setState("error", result.querySelector("[data-eligibility-lattice]"));
     initIcons();
   } finally {
-    if (requestId === state.conditionsRequestId) { state.advisorLoading = false; button.disabled = false; }
+    if (requestId === state.conditionsRequestId) {
+      state.advisorLoading = false;
+      button.disabled = false;
+      // The plan refresh that the new year, round and preferences asked for was skipped while this request ran.
+      renderRecommendedMatches();
+    }
   }
 }
 
