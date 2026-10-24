@@ -110,7 +110,7 @@ class _AdvisorScreenState extends State<AdvisorScreen> {
                   dimension: 20,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
-                    color: Colors.white,
+                    color: ExchangeColors.surface,
                   ),
                 )
               : const Icon(Icons.auto_awesome_rounded),
@@ -431,7 +431,7 @@ class _DocumentCheckScreenState extends State<DocumentCheckScreen> {
                   dimension: 20,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
-                    color: Colors.white,
+                    color: ExchangeColors.surface,
                   ),
                 )
               : const Icon(Icons.fact_check_outlined),
@@ -469,7 +469,7 @@ class _DocumentCheckScreenState extends State<DocumentCheckScreen> {
                   constraints: const BoxConstraints(minHeight: 72),
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: .56),
+                    color: ExchangeColors.surfaceMuted,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: ExchangeColors.line),
                   ),
@@ -633,7 +633,7 @@ class _WritingAssistantScreenState extends State<WritingAssistantScreen> {
                   dimension: 20,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
-                    color: Colors.white,
+                    color: ExchangeColors.surface,
                   ),
                 )
               : const Icon(Icons.auto_fix_high_rounded),
@@ -907,7 +907,7 @@ class _AdvisorResultHeader extends StatelessWidget {
             trailing: Container(
               padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: .72),
+                color: ExchangeColors.surfaceMuted,
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Text(
@@ -1470,7 +1470,7 @@ class _RewriteResultCard extends StatelessWidget {
               leading: const ExchangeIconBadge(
                 Icons.warning_amber_rounded,
                 color: ExchangeColors.amber,
-                background: Colors.white,
+                background: ExchangeColors.blueSoft,
               ),
               title: const Text('送出前確認'),
               childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 14),

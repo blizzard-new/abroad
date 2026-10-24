@@ -307,9 +307,9 @@ class _Surface extends StatelessWidget {
     width: double.infinity,
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: ExchangeColors.surfaceMuted,
       borderRadius: BorderRadius.circular(26),
-      border: Border.all(color: const Color(0xFFE3ECEC)),
+      border: Border.all(color: ExchangeColors.line),
     ),
     child: child,
   );

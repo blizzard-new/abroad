@@ -326,12 +326,12 @@ class _LiquidGlassSearchField extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Colors.white.withValues(alpha: .78),
-                  const Color(0xFFE7F2F5).withValues(alpha: .48),
-                  Colors.white.withValues(alpha: .54),
+                  const Color(0xCF34415F),
+                  const Color(0xDB22314A),
+                  const Color(0xD51C2540),
                 ],
               ),
-              border: Border.all(color: Colors.white.withValues(alpha: .94)),
+              border: Border.all(color: ExchangeColors.line),
             ),
             child: TextField(
               controller: controller,

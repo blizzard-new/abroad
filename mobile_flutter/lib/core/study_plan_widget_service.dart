@@ -4,6 +4,27 @@ import 'package:home_widget/home_widget.dart';
 
 import '../src/home_widget/study_plan_widget.home_widget.dart';
 
+enum StudyPlanWidgetStyle {
+  overview(
+    '交換總覽',
+    '下一步與申請日期',
+    'StudyPlanWidgetDefinitionHomeWidgetReceiver',
+    'StudyPlanWidgetDefinitionHomeWidget',
+  ),
+  countdown('星軌倒數', '已儲存日期的倒數', 'CountdownWidgetReceiver', 'CountdownWidget'),
+  checklist('極光待辦', '還沒完成的申請文件', 'ChecklistWidgetReceiver', 'ChecklistWidget'),
+  progress('軌道進度', '準備完成的比例', 'ProgressWidgetReceiver', 'ProgressWidget');
+
+  const StudyPlanWidgetStyle(
+    this.label,
+    this.detail,
+    this.receiver,
+    this.iosKind,
+  );
+  final String label, detail, receiver, iosKind;
+  String get androidName => 'tw.edu.cgu.exchange_guide_flutter.$receiver';
+}
+
 class StudyPlanWidgetSnapshot {
   const StudyPlanWidgetSnapshot({
     required this.nextTitle,
@@ -11,6 +32,7 @@ class StudyPlanWidgetSnapshot {
     required this.progressLabel,
     this.tasks = const [],
     this.updatedLabel = '',
+    this.deadlineIso = '',
   });
 
   final String nextTitle;
@@ -18,6 +40,7 @@ class StudyPlanWidgetSnapshot {
   final String progressLabel;
   final List<String> tasks;
   final String updatedLabel;
+  final String deadlineIso;
 }
 
 abstract interface class StudyPlanWidgetBridge {
@@ -27,7 +50,9 @@ abstract interface class StudyPlanWidgetBridge {
 
   Future<bool> canRequestPin();
 
-  Future<void> requestPin();
+  Future<void> requestPin({
+    StudyPlanWidgetStyle style = StudyPlanWidgetStyle.overview,
+  });
 }
 
 class StudyPlanWidgetService implements StudyPlanWidgetBridge {
@@ -60,10 +85,18 @@ class StudyPlanWidgetService implements StudyPlanWidgetBridge {
         'home_widget.StudyPlanWidgetDefinition.updatedLabel',
         snapshot.updatedLabel,
       );
-      await HomeWidget.updateWidget(
-        qualifiedAndroidName: androidReceiver,
-        iOSName: 'StudyPlanWidgetDefinitionHomeWidget',
+      await HomeWidget.saveWidgetData<String>(
+        'home_widget.StudyPlanWidgetDefinition.deadlineIso',
+        snapshot.deadlineIso,
       );
+      for (final style in StudyPlanWidgetStyle.values) {
+        await _ignorePlatformFailure(() async {
+          await HomeWidget.updateWidget(
+            qualifiedAndroidName: style.androidName,
+            iOSName: style.iosKind,
+          );
+        });
+      }
     });
   }
 
@@ -80,9 +113,11 @@ class StudyPlanWidgetService implements StudyPlanWidgetBridge {
   }
 
   @override
-  Future<void> requestPin() async {
+  Future<void> requestPin({
+    StudyPlanWidgetStyle style = StudyPlanWidgetStyle.overview,
+  }) async {
     if (!await canRequestPin()) return;
-    await HomeWidget.requestPinWidget(qualifiedAndroidName: androidReceiver);
+    await HomeWidget.requestPinWidget(qualifiedAndroidName: style.androidName);
   }
 
   Future<void> _ignorePlatformFailure(Future<void> Function() operation) async {

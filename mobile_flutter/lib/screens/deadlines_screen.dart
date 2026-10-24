@@ -126,7 +126,7 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
       isScrollControlled: true,
       useSafeArea: true,
       showDragHandle: true,
-      backgroundColor: const Color(0xFFF8FAFB),
+      backgroundColor: ExchangeColors.surface,
       builder: (_) => _AddTaskSheet(initialDate: selectedDate),
     );
     if (event == null) return;
@@ -157,7 +157,7 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
       isScrollControlled: true,
       useSafeArea: true,
       showDragHandle: true,
-      backgroundColor: const Color(0xFFF8FAFB),
+      backgroundColor: ExchangeColors.surface,
       builder: (_) =>
           _AddTaskSheet(initialDate: event.date, initialEvent: event),
     );
@@ -372,7 +372,7 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Text('申請時程'),
-          backgroundColor: Colors.white.withValues(alpha: .72),
+          backgroundColor: ExchangeColors.surface,
           surfaceTintColor: Colors.transparent,
         ),
         body: content,
@@ -389,13 +389,18 @@ class _PlannerHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final next = events.isEmpty ? null : events.first;
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      if (next != null) const StudentSectionTitle('下一個期限', icon: Icons.timer_outlined),
-      StudentSummaryCard(
-      icon: Icons.event_outlined,
-      title: next == null ? '安排下一步' : countdownLabel(next.date),
-      detail: next == null ? '把確認過的日期加入日曆。' : next.title,
-    )]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (next != null)
+          const StudentSectionTitle('下一個期限', icon: Icons.timer_outlined),
+        StudentSummaryCard(
+          icon: Icons.event_outlined,
+          title: next == null ? '安排下一步' : countdownLabel(next.date),
+          detail: next == null ? '把確認過的日期加入日曆。' : next.title,
+        ),
+      ],
+    );
   }
 }
 
@@ -422,7 +427,7 @@ class _CalendarConnectionCard extends StatelessWidget {
     return GlassCard(
       tint: connected
           ? ExchangeColors.tealSoft.withValues(alpha: .5)
-          : Colors.white.withValues(alpha: .54),
+          : ExchangeColors.surfaceMuted,
       padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
       child: Row(
         children: [
@@ -701,12 +706,12 @@ class _MonthGrid extends StatelessWidget {
               decoration: BoxDecoration(
                 color: selected
                     ? ExchangeColors.blueSoft.withValues(alpha: .9)
-                    : Colors.white.withValues(alpha: .38),
+                    : ExchangeColors.surface,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
                   color: selected
                       ? ExchangeColors.blue.withValues(alpha: .55)
-                      : Colors.white.withValues(alpha: .72),
+                      : ExchangeColors.line,
                 ),
               ),
               child: Column(

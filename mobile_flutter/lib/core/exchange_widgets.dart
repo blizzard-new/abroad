@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'exchange_theme.dart';
+import 'cosmic_surface.dart';
 
 class ExchangePageBackground extends StatelessWidget {
   const ExchangePageBackground({required this.child, super.key});
@@ -11,17 +12,7 @@ class ExchangePageBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFFFAFBFC), Color(0xFFF1F5F6), Color(0xFFF7F4F6)],
-          stops: [0, .62, 1],
-        ),
-      ),
-      child: child,
-    );
+    return CosmicBackground(child: child);
   }
 }
 
@@ -50,19 +41,19 @@ class GlassCard extends StatelessWidget {
         end: Alignment.bottomRight,
         colors: tint == null
             ? [
-                Colors.white.withValues(alpha: .86),
-                const Color(0xFFF6F9FA).withValues(alpha: .64),
-                Colors.white.withValues(alpha: .58),
+                const Color(0xDD29344F),
+                const Color(0xD51B2741),
+                const Color(0xD9162039),
               ]
             : [
                 tint!.withValues(alpha: .82),
                 tint!.withValues(alpha: .6),
-                Colors.white.withValues(alpha: .48),
+                const Color(0xD51C2540),
               ],
         stops: const [0, .52, 1],
       ),
       borderRadius: radius,
-      border: Border.all(color: Colors.white.withValues(alpha: .94)),
+      border: Border.all(color: Colors.white.withValues(alpha: .19)),
     );
     final surface = Material(
       color: Colors.transparent,
@@ -90,7 +81,7 @@ class GlassCard extends StatelessWidget {
             offset: Offset(0, 14),
           ),
           BoxShadow(
-            color: Color(0xA6FFFFFF),
+            color: Color(0x165CC8DD),
             blurRadius: 7,
             spreadRadius: -4,
             offset: Offset(0, -2),
@@ -324,9 +315,9 @@ class LoadingCards extends StatelessWidget {
           height: index == 0 ? 132 : 104,
           margin: const EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: .62),
+            color: ExchangeColors.surface,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.white),
+            border: Border.all(color: ExchangeColors.line),
           ),
           child: const Center(
             child: SizedBox(

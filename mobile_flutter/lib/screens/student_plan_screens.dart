@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../core/application_calendar.dart';
-import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../core/student_ui.dart';
 import '../core/student_plan.dart';
+import '../core/study_plan_widget_service.dart';
+import 'widget_style_preview.dart';
 import '../state/exchange_store.dart';
 import 'feature_screens.dart';
 
@@ -264,6 +265,7 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
   bool started = false;
   bool checking = true;
   bool canPin = false;
+  StudyPlanWidgetStyle selectedStyle = StudyPlanWidgetStyle.overview;
 
   @override
   void didChangeDependencies() {
@@ -281,7 +283,7 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
   }
 
   Future<void> _pin(ExchangeStore store) async {
-    await store.requestHomeWidgetPin();
+    await store.requestHomeWidgetPin(style: selectedStyle);
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -291,86 +293,98 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final store = ExchangeStoreScope.of(context);
-    final event = store.personalCalendarEvents
+    final events = store.personalCalendarEvents.toList()
+      ..sort((a, b) => a.date.compareTo(b.date));
+    final event = events
         .where(
           (item) => !dateOnly(item.date).isBefore(dateOnly(DateTime.now())),
         )
         .firstOrNull;
     final isAndroid =
         !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
-
+    final signedIn = store.account != null;
     return FeaturePageScaffold(
       title: '桌面小工具',
-      children: [
-        GlassCard(
-          tint: ExchangeColors.blueSoft,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '交換計畫',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: ExchangeColors.teal,
-                  fontWeight: FontWeight.w600,
+      bottomBar: isAndroid
+          ? StudentActionBar(
+              primary: FilledButton.icon(
+                onPressed: checking || !canPin ? null : () => _pin(store),
+                icon: const Icon(Icons.add_to_home_screen_outlined),
+                label: Text(
+                  checking
+                      ? '準備中…'
+                      : canPin
+                      ? '加入桌面'
+                      : '從桌面選單加入',
                 ),
               ),
-              const SizedBox(height: 12),
-              Text(
-                event?.title ?? store.nextPlanAction,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                event == null
-                    ? (store.planProfile?.goalLabel.isNotEmpty == true
-                          ? store.planProfile!.goalLabel
-                          : '開啟 App 開始規劃')
-                    : '${countdownLabel(event.date)} · ${event.date.month}/${event.date.day}',
-              ),
-              const SizedBox(height: 16),
-              LinearProgressIndicator(
-                value: store.planCompletionPercent / 100,
-                minHeight: 7,
-                borderRadius: BorderRadius.circular(999),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '準備進度 ${store.planCompletionPercent}%',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          ),
+            )
+          : null,
+      children: [
+        const StudentSectionTitle(
+          '選擇樣式',
+          icon: Icons.widgets_outlined,
+          detail: '可加入多款，長按桌面調整大小',
+        ),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: StudyPlanWidgetStyle.values
+              .map(
+                (style) => ChoiceChip(
+                  avatar: Icon(WidgetStylePreview.icon(style), size: 18),
+                  label: Text(style.label),
+                  selected: selectedStyle == style,
+                  onSelected: (_) => setState(() => selectedStyle = style),
+                ),
+              )
+              .toList(),
+        ),
+        const SizedBox(height: 24),
+        WidgetStylePreview(
+          style: selectedStyle,
+          title: signedIn
+              ? (event?.title ?? store.nextPlanAction)
+              : '登入後開始交換計畫',
+          dateLabel: event == null
+              ? '儲存申請日期後顯示倒數'
+              : '${event.date.year}/${event.date.month}/${event.date.day}',
+          deadline: signedIn ? event?.date : null,
+          percent: signedIn ? store.planCompletionPercent : 0,
+          tasks: signedIn
+              ? applicationDocumentLabels
+                    .where(
+                      (label) =>
+                          store.documentStatus(label) !=
+                          DocumentPreparationStatus.ready,
+                    )
+                    .take(3)
+                    .toList()
+              : const [],
         ),
         const SizedBox(height: 16),
-        if (isAndroid)
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton.icon(
-              onPressed: checking || !canPin ? null : () => _pin(store),
-              icon: checking
-                  ? const SizedBox.square(
-                      dimension: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.add_to_home_screen_outlined),
-              label: Text(canPin ? '加入桌面' : '從桌面選單加入'),
-            ),
-          ),
-        if (isAndroid) const SizedBox(height: 12),
-        const _WidgetInstruction(
-          icon: Icons.android_rounded,
-          title: 'Android 桌面小工具',
-          points: ['長按桌面 → 小工具 → UniWay。', '長按調整大小；開啟 App 同步進度。'],
+        StudentNotice(
+          selectedStyle.detail,
+          icon: WidgetStylePreview.icon(selectedStyle),
         ),
-        const SizedBox(height: 12),
-        if (!isAndroid)
+        const SizedBox(height: 24),
+        if (isAndroid)
+          const _WidgetInstruction(
+            icon: Icons.android_rounded,
+            title: '加入手機桌面',
+            points: ['點下方按鈕，再確認加入。', '也可長按桌面 → 小工具 → UniWay。'],
+          )
+        else
           const _WidgetInstruction(
             icon: Icons.phone_iphone_rounded,
-            title: 'iPhone 桌面與鎖定畫面',
-            points: ['長按主畫面後加入「交換計畫」小工具。', 'iOS 16 以上可在鎖定畫面加入直列、圓形或矩形版本。'],
+            title: 'iPhone 加入方式',
+            points: ['長按主畫面 → 編輯 → 加入小工具 → UniWay。', '交換總覽也支援鎖定畫面的小工具。'],
           ),
+        const SizedBox(height: 16),
+        const StudentNotice(
+          '開啟 App 同步最新進度；桌面會顯示已儲存的計畫。',
+          icon: Icons.sync_rounded,
+        ),
       ],
     );
   }

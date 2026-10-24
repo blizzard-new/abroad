@@ -1,23 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'cosmic_surface.dart';
 
 abstract final class ExchangeColors {
-  static const background = Color(0xFFF5F7F8);
-  static const surface = Color(0xF2FFFFFF);
-  static const surfaceMuted = Color(0xD9FFFFFF);
-  static const ink = Color(0xFF15212C);
-  static const secondaryInk = Color(0xFF596875);
-  static const line = Color(0x1F29404F);
-  static const teal = Color(0xFF087C8C);
-  static const tealSoft = Color(0xFFD9F0F1);
-  static const blue = Color(0xFF197DB3);
-  static const blueSoft = Color(0xFFDCECF7);
-  static const coral = Color(0xFFD97761);
-  static const coralSoft = Color(0xFFF7E2DC);
-  static const amber = Color(0xFFB97822);
-  static const amberSoft = Color(0xFFF7EACF);
-  static const success = Color(0xFF24835B);
-  static const danger = Color(0xFFC44747);
+  static const background = Color(0xFF0B1228);
+  static const surface = Color(0xFF18213B);
+  static const surfaceMuted = Color(0xE61C2843);
+  static const ink = Color(0xFFF1F4FF);
+  static const secondaryInk = Color(0xFFB7C3DB);
+  static const line = Color(0x338CA1CC);
+  static const teal = Color(0xFF92E4E9);
+  static const tealSoft = Color(0xFF253F55);
+  static const blue = Color(0xFFA7C9FF);
+  static const blueSoft = Color(0xFF293758);
+  static const coral = Color(0xFFFFBDAA);
+  static const coralSoft = Color(0xFF4B3044);
+  static const amber = Color(0xFFF3D292);
+  static const amberSoft = Color(0xFF453B38);
+  static const success = Color(0xFF8AE0B8);
+  static const danger = Color(0xFFFFA9B0);
 }
 
 ThemeData buildExchangeTheme() {
@@ -30,7 +32,7 @@ ThemeData buildExchangeTheme() {
       );
   final scheme = ColorScheme.fromSeed(
     seedColor: ExchangeColors.teal,
-    brightness: Brightness.light,
+    brightness: Brightness.dark,
     primary: ExchangeColors.teal,
     surface: ExchangeColors.surface,
     onSurface: ExchangeColors.ink,
@@ -39,7 +41,7 @@ ThemeData buildExchangeTheme() {
 
   final base = ThemeData(
     useMaterial3: true,
-    brightness: Brightness.light,
+    brightness: Brightness.dark,
     colorScheme: scheme,
     scaffoldBackgroundColor: Colors.transparent,
   );
@@ -63,7 +65,8 @@ ThemeData buildExchangeTheme() {
       labelSmall: type(12),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: ExchangeColors.background,
+      backgroundColor: ExchangeColors.background.withValues(alpha: .88),
+      systemOverlayStyle: SystemUiOverlayStyle.light,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       scrolledUnderElevation: 0,
@@ -98,16 +101,16 @@ ThemeData buildExchangeTheme() {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: const Color(0x8FFFFFFF),
+      fillColor: const Color(0xBB26334F),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       constraints: const BoxConstraints(minHeight: 48),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: Color(0xD9FFFFFF)),
+        borderSide: const BorderSide(color: ExchangeColors.line),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: Color(0xD9FFFFFF)),
+        borderSide: const BorderSide(color: ExchangeColors.line),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
@@ -115,98 +118,16 @@ ThemeData buildExchangeTheme() {
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(
-      style: ButtonStyle(
-        minimumSize: const WidgetStatePropertyAll(Size(44, 48)),
-        foregroundColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.disabled)
-              ? ExchangeColors.secondaryInk
-              : Colors.white,
-        ),
-        backgroundColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.disabled)) {
-            return Colors.white.withValues(alpha: .32);
-          }
-          if (states.contains(WidgetState.pressed)) {
-            return ExchangeColors.ink.withValues(alpha: .88);
-          }
-          return ExchangeColors.ink.withValues(alpha: .94);
-        }),
-        overlayColor: WidgetStatePropertyAll(
-          Colors.white.withValues(alpha: .12),
-        ),
-        side: WidgetStatePropertyAll(
-          BorderSide(color: Colors.white.withValues(alpha: .24)),
-        ),
-        elevation: const WidgetStatePropertyAll(0),
-        shadowColor: WidgetStatePropertyAll(
-          ExchangeColors.ink.withValues(alpha: .16),
-        ),
-        shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        ),
-        textStyle: const WidgetStatePropertyAll(
-          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        ),
-      ),
+      style: _liquidStyle(primary: true),
     ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: ButtonStyle(
-        minimumSize: const WidgetStatePropertyAll(Size(44, 48)),
-        foregroundColor: const WidgetStatePropertyAll(ExchangeColors.teal),
-        backgroundColor: WidgetStateProperty.resolveWith(
-          (states) => Colors.white.withValues(
-            alpha: states.contains(WidgetState.pressed) ? .68 : .46,
-          ),
-        ),
-        overlayColor: WidgetStatePropertyAll(
-          ExchangeColors.teal.withValues(alpha: .07),
-        ),
-        side: WidgetStatePropertyAll(
-          BorderSide(color: Colors.white.withValues(alpha: .88)),
-        ),
-        elevation: const WidgetStatePropertyAll(0),
-        shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        ),
-      ),
-    ),
-    textButtonTheme: TextButtonThemeData(
-      style: ButtonStyle(
-        minimumSize: const WidgetStatePropertyAll(Size(44, 44)),
-        foregroundColor: const WidgetStatePropertyAll(ExchangeColors.teal),
-        overlayColor: WidgetStatePropertyAll(
-          ExchangeColors.teal.withValues(alpha: .08),
-        ),
-        shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        ),
-      ),
-    ),
-    iconButtonTheme: IconButtonThemeData(
-      style: ButtonStyle(
-        minimumSize: const WidgetStatePropertyAll(Size(44, 44)),
-        foregroundColor: const WidgetStatePropertyAll(
-          ExchangeColors.secondaryInk,
-        ),
-        backgroundColor: WidgetStateProperty.resolveWith(
-          (states) => Colors.white.withValues(
-            alpha: states.contains(WidgetState.pressed) ? .72 : .44,
-          ),
-        ),
-        overlayColor: WidgetStatePropertyAll(
-          ExchangeColors.teal.withValues(alpha: .08),
-        ),
-        side: WidgetStatePropertyAll(
-          BorderSide(color: Colors.white.withValues(alpha: .82)),
-        ),
-        shape: const WidgetStatePropertyAll(CircleBorder()),
-      ),
-    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(style: _liquidStyle()),
+    textButtonTheme: TextButtonThemeData(style: _liquidStyle()),
+    iconButtonTheme: IconButtonThemeData(style: _liquidStyle(round: true)),
     chipTheme: base.chipTheme.copyWith(
-      backgroundColor: Colors.white.withValues(alpha: .44),
+      backgroundColor: ExchangeColors.surfaceMuted,
       selectedColor: ExchangeColors.tealSoft.withValues(alpha: .76),
-      disabledColor: Colors.white.withValues(alpha: .24),
-      side: BorderSide(color: Colors.white.withValues(alpha: .84)),
+      disabledColor: ExchangeColors.surface,
+      side: BorderSide(color: ExchangeColors.line),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
       labelStyle: const TextStyle(
@@ -233,10 +154,44 @@ ThemeData buildExchangeTheme() {
     cupertinoOverrideTheme: const CupertinoThemeData(
       primaryColor: ExchangeColors.teal,
       scaffoldBackgroundColor: ExchangeColors.background,
-      barBackgroundColor: Color(0xE6F3F7FA),
+      barBackgroundColor: Color(0xE618213B),
       textTheme: CupertinoTextThemeData(
         textStyle: TextStyle(color: ExchangeColors.ink, fontSize: 16),
       ),
     ),
   );
 }
+
+ButtonStyle _liquidStyle({bool primary = false, bool round = false}) =>
+    ButtonStyle(
+      minimumSize: WidgetStatePropertyAll(Size(44, round ? 44 : 48)),
+      foregroundColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.disabled)
+            ? ExchangeColors.secondaryInk.withValues(alpha: .5)
+            : (primary ? ExchangeColors.ink : ExchangeColors.teal),
+      ),
+      backgroundColor: const WidgetStatePropertyAll(Colors.transparent),
+      surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
+      elevation: const WidgetStatePropertyAll(0),
+      side: const WidgetStatePropertyAll(BorderSide.none),
+      shape: WidgetStatePropertyAll(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(round ? 999 : 20),
+        ),
+      ),
+      padding: WidgetStatePropertyAll(
+        round
+            ? const EdgeInsets.all(10)
+            : const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+      textStyle: const WidgetStatePropertyAll(
+        TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+      ),
+      backgroundBuilder: (context, states, child) => LiquidControlSurface(
+        active: primary,
+        disabled: states.contains(WidgetState.disabled),
+        pressed: states.contains(WidgetState.pressed),
+        radius: round ? 999 : 20,
+        child: child ?? const SizedBox.shrink(),
+      ),
+    );

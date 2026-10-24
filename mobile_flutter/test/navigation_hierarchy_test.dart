@@ -61,21 +61,28 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('旅程'), findsOneWidget);
+      expect(find.byTooltip('旅程'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('main-navigation')),
+          matching: find.byType(Text),
+        ),
+        findsNothing,
+      );
       expect(find.byTooltip('通知與提醒'), findsOneWidget);
-      await tester.tap(find.text('學校').last);
+      await tester.tap(find.byTooltip('學校'));
       await tester.pumpAndSettle();
       expect(find.text('找學校'), findsOneWidget);
-      await tester.tap(find.text('申請').last);
+      await tester.tap(find.byTooltip('申請'));
       await tester.pumpAndSettle();
       expect(find.text('申請文件'), findsOneWidget);
-      await tester.tap(find.text('論壇').last);
+      await tester.tap(find.byTooltip('論壇'));
       await tester.pumpAndSettle();
       expect(find.text('交換生論壇'), findsOneWidget);
-      await tester.tap(find.text('我的').last);
+      await tester.tap(find.byTooltip('我的'));
       await tester.pumpAndSettle();
       expect(find.textContaining('Google'), findsWidgets);
-      await tester.tap(find.text('旅程').last);
+      await tester.tap(find.byTooltip('旅程'));
       await tester.pumpAndSettle();
       expect(find.byTooltip('通知與提醒'), findsOneWidget);
       expect(tester.takeException(), isNull);

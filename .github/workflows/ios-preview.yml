@@ -28,6 +28,7 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
       - name: Resolve dependencies
         run: |
+          sudo xcode-select -s /Applications/Xcode_26.3.app/Contents/Developer
           flutter --version
           xcodebuild -version
           flutter pub get
@@ -35,6 +36,16 @@ jobs:
         run: flutter build ios --release --no-codesign --dart-define=API_BASE_URL=https://app.uniway-tw.com/
       - name: Build iPhone simulator app
         run: flutter build ios --simulator --debug --dart-define=API_BASE_URL=https://app.uniway-tw.com/
+      - name: Launch simulator preview
+        run: |
+          mkdir -p build/preview
+          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(v["udid"] for k,vs in sorted(d["devices"].items(),reverse=True) if "iOS" in k for v in vs if "iPhone" in v["name"]))')
+          xcrun simctl boot "$DEVICE_ID"
+          xcrun simctl bootstatus "$DEVICE_ID" -b
+          xcrun simctl install "$DEVICE_ID" build/ios/iphonesimulator/Runner.app
+          xcrun simctl launch "$DEVICE_ID" tw.uniway.app
+          sleep 10
+          xcrun simctl io "$DEVICE_ID" screenshot build/preview/iPhone-start.png
       - name: Package developer previews
         run: |
           mkdir -p build/preview
