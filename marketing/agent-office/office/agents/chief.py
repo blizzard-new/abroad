@@ -13,7 +13,7 @@ import threading
 from secrets import token_hex
 from datetime import date, datetime, time, timedelta, timezone
 
-from .. import brains
+from .. import accounts, brains
 from ..llm import WriterError
 from ..models import CarouselDraft, ChiefAction, ChiefReply, PlanItem, ThreadsDraft, VideoScript
 from ..rules import check_carousel, check_threads, check_video, instagram_caption
@@ -94,7 +94,24 @@ class Chief(Agent):
             for role, label in brains.ROLES.items()
         )
         notes = json.loads(office.store.get("boss_notes") or "[]")
+        settings = office.settings
+        def account(key: str, word: str) -> str:
+            if not accounts.connected(settings, office.store, key):
+                return f"{word} 未連上"
+            handle = office.store.get(f"handle:{key}")
+            return f"{word} 已連上" + (f"（{handle}）" if handle else "")
+
+        linked = "、".join(account(key, word) for key, word in (("threads", "Threads"), ("instagram", "IG"), ("youtube", "YouTube")))
+        mode = (
+            f"發文模式：{'模擬發佈（OFFICE_DRY_RUN=1）：核准的貼文只寫進 var/outbox/，不會真的送出' if settings.dry_run else '正式發佈：核准的貼文會真的送出'}；"
+            f"{'審稿通過就自動排程（OFFICE_APPROVAL=auto）' if settings.approval == 'auto' else '每則都要老闆核准才會發'}。\n"
+            f"社群帳號：{linked}。\n"
+            "這些都寫在辦公室電腦的 .env 檔，網頁和審核匣上沒有開關。要改成正式發佈，老闆要在那台電腦打開 .env，"
+            "把 OFFICE_DRY_RUN 改成 0，存檔後重新啟動 uv run office serve，再跑 uv run office check 確認第一行是「正式發文」；"
+            "帳號用 uv run office auth threads／instagram／youtube 連上。\n"
+        )
         return (
+            mode +
             f"現在（台北）：{office.local_now():%Y-%m-%d %H:%M}；{'大家正在做今天的內容' if office.busy.locked() else '目前沒有在跑的工作'}\n"
             f"今天主軸：{plan.get('theme') or '還沒排'}\n"
             f"草稿（最新在前）：\n" + ("\n".join(rows) or "（還沒有草稿）") + "\n\n"
