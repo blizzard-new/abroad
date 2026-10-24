@@ -19,4 +19,7 @@ if [ -n "$CA" ]; then
   export REQUESTS_CA_BUNDLE=/tmp/ca-bundle.pem SSL_CERT_FILE=/tmp/ca-bundle.pem
 fi
 
+# Reject an overridden or internal bundle that restores an incident trust path.
+python -c "from exchange_info.tls_trust import ca_bundle; ca_bundle()"
+
 exec "$@"

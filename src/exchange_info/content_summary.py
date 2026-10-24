@@ -124,7 +124,7 @@ def _fetch_html_with_browser(
     try:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
-            context = browser.new_context(ignore_https_errors=True, user_agent=USER_AGENT)
+            context = browser.new_context(ignore_https_errors=False, user_agent=USER_AGENT)
             page = context.new_page()
             page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
             page.wait_for_timeout(900)

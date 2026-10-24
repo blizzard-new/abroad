@@ -8,6 +8,7 @@ import os
 import secrets
 import smtplib
 import ssl
+from .tls_trust import client_context
 from collections.abc import Mapping
 from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
@@ -124,7 +125,7 @@ class SmtpVerificationEmailSender:
             f"驗證碼將在 {expires_in_minutes} 分鐘後失效；若不是你本人操作，"
             "請忽略這封信。"
         )
-        context = ssl.create_default_context()
+        context = client_context()
         try:
             if self.tls_mode == "ssl":
                 client: smtplib.SMTP = smtplib.SMTP_SSL(

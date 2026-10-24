@@ -7,3 +7,6 @@
 !deploy/capacity/Dockerfile
 **/__pycache__
 **/*.pyc
+
+!uv.lock
+!scripts/harden_image_ca.py

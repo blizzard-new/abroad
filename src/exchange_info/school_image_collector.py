@@ -842,7 +842,7 @@ def _fetch_page_html_with_browser(
     try:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
-            context = browser.new_context(ignore_https_errors=True, user_agent=USER_AGENT)
+            context = browser.new_context(ignore_https_errors=False, user_agent=USER_AGENT)
             page = context.new_page()
             page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
             page.wait_for_timeout(1200)
@@ -864,7 +864,7 @@ def _capture_official_page_preview(
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
         context = browser.new_context(
-            ignore_https_errors=True,
+            ignore_https_errors=False,
             user_agent=USER_AGENT,
             viewport={"width": 1280, "height": 720},
         )
@@ -984,7 +984,7 @@ def _download_and_prepare_with_browser(
     timeout_ms = int(timeout_seconds * 1000)
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
-        context = browser.new_context(ignore_https_errors=True)
+        context = browser.new_context(ignore_https_errors=False)
         page = context.new_page()
         try:
             page.goto(source_page_url, wait_until="domcontentloaded", timeout=timeout_ms)
