@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../core/remote_push.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
@@ -91,7 +92,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
       onRefresh: _load,
       children: [
         if (account == null) ...[
-          const Text('登入後，這裡會顯示與你交換計畫相關的通知。'),
+          const StudentEmptyState(
+            icon: Icons.notifications_none_rounded,
+            title: '登入查看提醒',
+            detail: '申請日期與通知，集中在這裡。',
+          ),
           FilledButton(
             onPressed: () => Navigator.of(
               context,
@@ -105,15 +110,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
               children: [
                 Text('手機提醒', style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 8),
-                const Text('依你儲存的日期，在提醒日早上 9 點通知。實際時間依手機系統排程。'),
+                const StudentIconLabel(
+                  Icons.schedule_rounded,
+                  '提醒日 09:00 · 依系統排程',
+                ),
                 const SizedBox(height: 8),
                 Text(
                   !remotePushConfigured
-                      ? '規定更新的遠端推播尚未設定；日期提醒可正常使用。'
+                      ? '規定推播尚未啟用'
                       : store.remotePush.error ??
                             (store.remotePush.registered
-                                ? '已連接規定更新推播。'
-                                : '開啟提醒後，將嘗試連接規定更新推播。'),
+                                ? '規定推播已連接'
+                                : '開啟提醒以連接規定推播'),
                 ),
                 const SizedBox(height: 12),
                 SwitchListTile(
@@ -144,7 +152,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         )
                       : null,
                   icon: const Icon(Icons.notifications_active_outlined),
-                  label: const Text('傳送一則測試通知'),
+                  label: const Text('測試通知'),
                 ),
               ],
             ),
@@ -155,9 +163,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           if (loading) const LinearProgressIndicator(),
           if (error != null) InlineError(message: error!, onRetry: _load),
           if (!loading && error == null && items.isEmpty)
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: Text('目前沒有新通知。你的提醒會在這裡整理好。'),
+            const StudentEmptyState(
+              icon: Icons.notifications_none_rounded,
+              title: '目前沒有新通知',
             ),
           ...items.map(
             (item) => Card(
