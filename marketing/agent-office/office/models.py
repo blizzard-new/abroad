@@ -97,7 +97,8 @@ class Insights(BaseModel):
     notes: list[str] = Field(description="給企劃的 2～4 點建議，每點一句")
 
 
-ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow"]
+ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain"]
+DeskRole = Literal["chief", "research", "strategist", "threads", "designer", "video", "reviewer", "community", "publisher", "analyst", ""]
 
 
 class ChiefAction(BaseModel):
@@ -105,7 +106,8 @@ class ChiefAction(BaseModel):
         description=(
             "start_day：馬上開工做今天的內容；redo：請作者依 instructions 重寫 draft_id 那則草稿；"
             "new_post：今天加做一則（channel、format、topic、angle）；reschedule：把 draft_id 改到 time（HH:MM，台北時間）；"
-            "reject：退回 draft_id，理由寫在 instructions；note_for_tomorrow：把 instructions 記給明天的企劃"
+            "reject：退回 draft_id，理由寫在 instructions；note_for_tomorrow：把 instructions 記給明天的企劃；"
+            "set_brain：改某個工作（role）用的工具（brain）、模型（model）或思考強度（effort），沒要改的欄位留空，填 default 代表改回原本設定"
         )
     )
     draft_id: int = Field(default=0, description="草稿編號，沒有就填 0")
@@ -115,6 +117,10 @@ class ChiefAction(BaseModel):
     topic: str = ""
     angle: Literal["pain", "choice", "list", "story", "news", ""] = ""
     time: str = Field(default="", description="HH:MM")
+    role: DeskRole = Field(default="", description="set_brain 用：要改的工作")
+    brain: Literal["claude-code", "codex", "antigravity", "api", "offline", "default", ""] = ""
+    model: str = Field(default="", description="set_brain 用：模型名稱，例如 sonnet、opus、claude-sonnet-5-5、gpt-5.5、Gemini 3.7 Pro")
+    effort: Literal["low", "medium", "high", "xhigh", "max", "default", ""] = ""
 
 
 class ChiefReply(BaseModel):

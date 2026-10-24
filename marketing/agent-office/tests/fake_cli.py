@@ -67,7 +67,7 @@ def answer(tool: str, args: list[str], stdin: str) -> None:
         Path("art.png").write_bytes(Path(sample).read_bytes() if sample else b"\x89PNG\r\n\x1a\n" + b"0" * 64)
         print("art.png")
         return
-    prompt = args[-1] if tool == "agy" else stdin
+    prompt = args[args.index("-p") + 1] if tool == "agy" else stdin
     title = title_from(args, prompt)
     data = dict(ANSWERS.get(title, {}))
     if title == "ChiefReply":

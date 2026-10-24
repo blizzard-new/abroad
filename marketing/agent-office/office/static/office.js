@@ -533,7 +533,7 @@ function openAgent(id) {
   const roles = id === "strategist" ? [["research", "查資料"], ["strategist", "企劃"]] : [[id, ""]];
   const chains = roles
     .filter(([role]) => S.settings.brains?.[role])
-    .map(([role, what]) => `${what ? `${what}：` : ""}${S.settings.brains[role][0]}${S.settings.brains[role].length > 1 ? `（不行時改用 ${S.settings.brains[role].slice(1).join(" → ")}）` : ""}`);
+    .map(([role, what]) => `${what ? `${what}：` : ""}${S.settings.tuning?.[role] || S.settings.brains[role][0]}${S.settings.brains[role].length > 1 ? `（不行時改用 ${S.settings.brains[role].slice(1).join(" → ")}）` : ""}`);
   $("#agent-card-body").innerHTML = `<h2>${esc(a.name)}｜${esc(a.title)}</h2><p class="duty">${esc(a.duty)}</p>
     ${chains.length ? `<p class="duty">這台電腦用 ${esc(chains.join("；"))}</p>` : ""}
     <div class="big-screen"></div>
