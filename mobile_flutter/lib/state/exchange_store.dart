@@ -123,7 +123,7 @@ class ExchangeStore extends ChangeNotifier {
   int navigationTab = 0;
 
   void selectMainTab(int value) {
-    navigationTab = value.clamp(0, 3);
+    navigationTab = value.clamp(0, 4);
     notifyListeners();
   }
 
@@ -304,7 +304,12 @@ class ExchangeStore extends ChangeNotifier {
     if (account == null || accessToken.isEmpty) {
       throw const ExchangeApiException('請先登入帳號，再參與社群。');
     }
-    final created = await api.accountCommunityIdentity(accessToken);
+    final token = accessToken;
+    final accountId = account!.id;
+    final created = await api.accountCommunityIdentity(token);
+    if (_disposed || token != accessToken || accountId != account?.id) {
+      throw const ExchangeApiException('登入狀態已改變，請重新開啟論壇。');
+    }
     identity = created;
     await _saveIdentity(created);
     notifyListeners();

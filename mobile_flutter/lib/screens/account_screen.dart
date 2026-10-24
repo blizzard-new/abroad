@@ -10,6 +10,7 @@ import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
+import 'app_update_prompt.dart';
 
 enum _AuthMode { login, register }
 
@@ -240,7 +241,7 @@ class _AccountScreenState extends State<AccountScreen> {
       bottom: false,
       child: ListView(
         padding: const EdgeInsets.fromLTRB(20, 18, 20, 118),
-        children: [content],
+        children: [content, const SizedBox(height: 20), const AppUpdateTile()],
       ),
     );
   }

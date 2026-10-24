@@ -69,6 +69,9 @@ void main() {
       await tester.tap(find.text('申請準備').last);
       await tester.pumpAndSettle();
       expect(find.text('申請文件'), findsOneWidget);
+      await tester.tap(find.text('論壇').last);
+      await tester.pumpAndSettle();
+      expect(find.text('交換生論壇'), findsOneWidget);
       await tester.tap(find.text('我的').last);
       await tester.pumpAndSettle();
       expect(find.textContaining('Google'), findsWidgets);

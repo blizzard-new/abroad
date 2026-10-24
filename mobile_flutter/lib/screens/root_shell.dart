@@ -11,6 +11,7 @@ import 'community_screen.dart';
 import 'deadlines_screen.dart';
 import 'home_screen.dart';
 import 'journey_screen.dart';
+import 'forum_screen.dart';
 import 'schools_screen.dart';
 
 Future<void> showUniversityPickerSheet(BuildContext context) async {
@@ -128,13 +129,15 @@ class _RootShellState extends State<RootShell> {
       JourneyScreen(onSelectTab: store.selectMainTab),
       const SchoolsScreen(),
       const ApplicationDocumentsScreen(),
+      const ForumScreen(),
       const AccountScreen(),
     ];
-    const labels = ['我的交換', '找學校', '申請準備', '我的'];
+    const labels = ['我的交換', '找學校', '申請準備', '論壇', '我的'];
     const icons = [
       Icons.explore_outlined,
       Icons.travel_explore_rounded,
       Icons.assignment_outlined,
+      Icons.forum_outlined,
       Icons.person_outline_rounded,
     ];
     return ExchangePageBackground(

@@ -6,10 +6,10 @@ Branch: `codex/android-synced-preview`, based on `abroad/main` at
 
 ## Delivered implementation
 
-- Android 2.1.2 (16), package `tw.uniway.app`, Android API 24+, universal APK
+- Android 2.1.3 (17), package `tw.uniway.app`, Android API 24+, universal APK
   for arm64-v8a / armeabi-v7a / x86_64. Stable RSA 3072 preview certificate;
   signing passwords and keystore are outside Git. Release refuses debug signing.
-- Student journey, schools, application preparation and account navigation;
+- Student journey, schools, application preparation, forum and account navigation;
   restrained glass navigation with reduced-effects/high-contrast fallback.
 - Google browser handoff with a 2-minute single-use PKCE-bound code, same account
   repository and separate mobile session; credentials use Android secure storage.
@@ -28,11 +28,26 @@ Branch: `codex/android-synced-preview`, based on `abroad/main` at
 - Optional FCM FID registration, account-guarded data-only messages, generic
   lock-screen copy, logout unregister, durable Postgres claims/retries and
   internal scheduled dispatch entrypoint. Firebase is not configured yet.
+- Foreground release checks with a direct APK-download prompt, manual check,
+  six-hour success throttle, fifteen-minute failure backoff and 24-hour snooze.
+  Uses public GitHub Android releases, including previews; no account data is sent.
+- Native forum uses the existing board/feed/detail/comment APIs, with search,
+  cursor pagination, nested replies, anonymous account-linked writing, own-content
+  deletion and reporting. Server permissions are honored; account changes clear
+  stale feed/detail/composer state and late identity creation cannot restore logout state.
 
 ## Evidence
 
-- Flutter unit/widget tests: 85 passed, including 360px navigation at 1.4x text,
+- Flutter unit/widget tests: 96 passed, including 360px five-tab navigation at 1.4x text,
   offline restart, 409 revision races, same-field conflict and account isolation.
+- 2.1.3 Android emulator integration passed: real native forum composer and reply
+  write to an isolated backend, independent API client reads the same content,
+  PackageInfo reads 2.1.3/17, and a simulated future-version dialog passes the exact
+  APK URL to the browser launcher callback. No fake future Release was published.
+  The initial test's numeric timestamp triggered the existing contact-data guard;
+  its fixture title was corrected. Backend validation was preserved.
+- Production read-only forum smoke returned 200 for boards/feed; guests see two
+  readable public boards and have no posting permission. No production test posts.
 - Android system-UI tap acceptance passed: background the real app, tap its local
   notification, assert the calendar page/header, then tap an other-account payload
   and assert no unauthorized page opens. This test initially exposed the calendar's
@@ -56,6 +71,12 @@ Branch: `codex/android-synced-preview`, based on `abroad/main` at
 - Python dependency audit: no known vulnerabilities found at this run.
 - Signed release APK installed and launched on Android API 36.1 emulator.
   apksigner verified APK Signature Scheme v2; minSdk=24, targetSdk=36.
+- 2.1.3 release: 80,384,008 bytes; SHA-256
+  `810b17124e4788910cf6b4ef46e1a9efe24a081f6e99539ad2c3f03cd50a8f32`.
+  Installed the signed 2.1.2 APK and then `adb install -r` of 2.1.3; both succeeded.
+  Release 2.1.3 launched and its five-tab forum guest view was visually inspected.
+  The signer SHA-256 remains
+  `a837f361a4dae7f1892985aeca7fb9fd8e580ac7697e2b98ae044b3d132ba2f2`.
 
 ## Outstanding external acceptance
 

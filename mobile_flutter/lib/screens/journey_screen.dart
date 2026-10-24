@@ -109,7 +109,7 @@ class JourneyScreen extends StatelessWidget {
                     const Text('使用原本的 Google 帳號，帶上你的收藏與申請進度。'),
                     const SizedBox(height: 18),
                     FilledButton.icon(
-                      onPressed: () => onSelectTab(3),
+                      onPressed: () => onSelectTab(4),
                       icon: const Icon(Icons.arrow_forward_rounded),
                       label: const Text('登入我的交換計畫'),
                     ),

@@ -21,7 +21,7 @@ from exchange_info.models import UserAccount
 
 fixture_directory = tempfile.TemporaryDirectory(prefix='uniway-mobile-fixture-')
 app = create_app(Path(fixture_directory.name))
-account = UserAccount(display_name='Emulator Student', home_university='長庚大學')
+account = UserAccount(display_name='Emulator Student', home_university='長庚大學', email_verified=True)
 app.state.account_repository.save_account(account)
 
 

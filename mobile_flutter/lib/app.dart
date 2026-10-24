@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
+import 'core/app_updates.dart';
 import 'core/exchange_theme.dart';
+import 'screens/app_update_prompt.dart';
 import 'screens/root_shell.dart';
 import 'screens/deadlines_screen.dart';
 import 'screens/notification_screen.dart';
@@ -22,6 +25,8 @@ class _ExchangeGuideAppState extends State<ExchangeGuideApp>
   StreamSubscription<Uri>? _links;
   final navigatorKey = GlobalKey<NavigatorState>();
   late Future<void> _initialized;
+  final updates = AppUpdateController();
+  Timer? _updateTimer;
 
   @override
   void initState() {
@@ -40,12 +45,31 @@ class _ExchangeGuideAppState extends State<ExchangeGuideApp>
       }
       await store.completeMobileLogin(uri);
     });
+    _updateTimer = Timer(const Duration(seconds: 3), _checkUpdate);
+  }
+
+  Future<void> _checkUpdate() async {
+    if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) return;
+    final release = await updates.check();
+    if (!mounted || release == null || !await updates.shouldPrompt(release)) {
+      return;
+    }
+    if (!mounted ||
+        WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
+      return;
+    }
+    final context = navigatorKey.currentState?.overlay?.context;
+    if (context != null && context.mounted) {
+      await showAppUpdatePrompt(context, updates, release);
+    }
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _links?.cancel();
+    _updateTimer?.cancel();
+    updates.dispose();
     store.mobileNotifications.target.removeListener(_openNotification);
     store.dispose();
     super.dispose();
@@ -75,19 +99,23 @@ class _ExchangeGuideAppState extends State<ExchangeGuideApp>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       unawaited(store.synchronizeWorkspace());
+      unawaited(_checkUpdate());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ExchangeStoreScope(
-      store: store,
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        title: 'UniWay',
-        debugShowCheckedModeBanner: false,
-        theme: buildExchangeTheme(),
-        home: const RootShell(),
+    return AppUpdateScope(
+      controller: updates,
+      child: ExchangeStoreScope(
+        store: store,
+        child: MaterialApp(
+          navigatorKey: navigatorKey,
+          title: 'UniWay',
+          debugShowCheckedModeBanner: false,
+          theme: buildExchangeTheme(),
+          home: const RootShell(),
+        ),
       ),
     );
   }
