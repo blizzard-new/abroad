@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
-import '../data/models.dart';
 import '../state/exchange_store.dart';
 import 'account_screen.dart';
 import 'application_documents_screen.dart';
 import 'community_screen.dart';
 import 'deadlines_screen.dart';
-import 'global_community_screen.dart';
 import 'home_screen.dart';
+import 'journey_screen.dart';
+import 'forum_screen.dart';
 import 'schools_screen.dart';
 
 Future<void> showUniversityPickerSheet(BuildContext context) async {
@@ -38,7 +38,7 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '切換就讀學校（18 校）',
+                        '切換就讀學校（${store.universities.length} 校）',
                         style: Theme.of(sheetContext).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 4),
@@ -91,8 +91,9 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
                                 ),
                               )
                             : null,
-                        onTap: () =>
-                            Navigator.of(sheetContext).pop(university.schoolName),
+                        onTap: () => Navigator.of(
+                          sheetContext,
+                        ).pop(university.schoolName),
                       );
                     },
                   ),
@@ -117,102 +118,104 @@ class RootShell extends StatefulWidget {
 }
 
 class _RootShellState extends State<RootShell> {
-  final globalCommunityKey = GlobalKey<GlobalCommunityScreenState>();
-  int globalPageIndex = 0;
-  CommunityFeed globalFeed = CommunityFeed.all;
-
-  void _showGlobalFeed(CommunityFeed feed) {
-    setState(() {
-      globalPageIndex = 0;
-      globalFeed = feed;
-    });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      globalCommunityKey.currentState?.selectFeed(feed);
-    });
-  }
-
-  void _showAccount() => setState(() => globalPageIndex = 1);
-
-  void _compose() {
-    setState(() => globalPageIndex = 0);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      globalCommunityKey.currentState?.openComposer();
-    });
-  }
-
-  Future<void> _openCguBoard() async {
-    await Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => const CguBoardShell()));
-  }
-
   @override
   Widget build(BuildContext context) {
     final store = ExchangeStoreScope.of(context);
-    final defaultBoardMeta = (label: '長庚板', title: '長庚大學板');
-    final boardNavLabel = store.selectedUniversity == defaultHomeUniversity
-        ? defaultBoardMeta.label
-        : store.activeUniversity.boardTabLabel;
+    final index = store.navigationTab;
+    final reduceEffects =
+        MediaQuery.disableAnimationsOf(context) ||
+        MediaQuery.highContrastOf(context);
     final pages = [
-      GlobalCommunityScreen(
-        key: globalCommunityKey,
-        initialFeed: CommunityFeed.all,
-        includeCguFeed: false,
-        showCguChatShortcut: false,
-        onOpenCguBoard: _openCguBoard,
-        onFeedChanged: (feed) {
-          if (globalFeed != feed && mounted) setState(() => globalFeed = feed);
-        },
-      ),
+      JourneyScreen(onSelectTab: store.selectMainTab),
+      const SchoolsScreen(),
+      const ApplicationDocumentsScreen(),
+      const ForumScreen(),
       const AccountScreen(),
     ];
-    final selectedDestination = globalPageIndex == 1
-        ? 4
-        : globalFeed == CommunityFeed.following
-        ? 1
-        : 0;
-
+    const labels = ['我的交換', '找學校', '申請準備', '論壇', '我的'];
+    const icons = [
+      Icons.explore_outlined,
+      Icons.travel_explore_rounded,
+      Icons.assignment_outlined,
+      Icons.forum_outlined,
+      Icons.person_outline_rounded,
+    ];
     return ExchangePageBackground(
       child: Scaffold(
         extendBody: true,
-        body: IndexedStack(index: globalPageIndex, children: pages),
+        body: IndexedStack(index: index, children: pages),
         bottomNavigationBar: SafeArea(
           top: false,
-          minimum: const EdgeInsets.fromLTRB(10, 0, 10, 8),
-          child: _LiquidNavigationBar(
-            selectedIndex: selectedDestination,
-            items: [
-              _LiquidNavItem(
-                icon: Icons.home_outlined,
-                selectedIcon: Icons.home_rounded,
-                label: '留學首頁',
-                onTap: () => _showGlobalFeed(CommunityFeed.all),
+          minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: reduceEffects ? 0 : 18,
+                sigmaY: reduceEffects ? 0 : 18,
               ),
-              _LiquidNavItem(
-                icon: Icons.rss_feed_outlined,
-                selectedIcon: Icons.rss_feed_rounded,
-                label: '追蹤',
-                onTap: () => _showGlobalFeed(CommunityFeed.following),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(
+                    alpha: reduceEffects ? 1 : .88,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Colors.white),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                child: Row(
+                  children: List.generate(
+                    labels.length,
+                    (i) => Expanded(
+                      child: Semantics(
+                        selected: i == index,
+                        button: true,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(24),
+                          onTap: () => store.selectMainTab(i),
+                          child: AnimatedContainer(
+                            duration: Duration(
+                              milliseconds: reduceEffects ? 0 : 180,
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              color: i == index
+                                  ? ExchangeColors.tealSoft
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  icons[i],
+                                  color: i == index
+                                      ? ExchangeColors.teal
+                                      : ExchangeColors.secondaryInk,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  labels[i],
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: i == index
+                                        ? FontWeight.w700
+                                        : FontWeight.w500,
+                                    color: i == index
+                                        ? ExchangeColors.teal
+                                        : ExchangeColors.secondaryInk,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-              _LiquidNavItem(
-                icon: Icons.edit_square,
-                selectedIcon: Icons.edit_square,
-                label: '發文',
-                onTap: _compose,
-              ),
-              _LiquidNavItem(
-                icon: Icons.school_outlined,
-                selectedIcon: Icons.school_rounded,
-                label: boardNavLabel,
-                onTap: _openCguBoard,
-              ),
-              _LiquidNavItem(
-                icon: Icons.person_outline_rounded,
-                selectedIcon: Icons.person_rounded,
-                label: '我的',
-                onTap: _showAccount,
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -252,9 +255,9 @@ class _CguBoardShellState extends State<CguBoardShell> {
       HomeScreen(onSelectTab: select, showHeader: false),
       const SchoolsScreen(showPageHeader: false),
       const ApplicationDocumentsScreen(),
-      const DeadlinesScreen(),
-      const CommunityScreen(
-        initialSchool: cguCommunityBoard,
+      const DeadlinesScreen(embedded: true),
+      CommunityScreen(
+        initialSchool: store.selectedUniversity,
         lockedToInitialSchool: true,
       ),
     ];
@@ -389,7 +392,9 @@ class _BoardContextBar extends StatelessWidget {
                                   boardTitle,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium,
                                 ),
                               ),
                               const SizedBox(width: 4),

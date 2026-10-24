@@ -169,6 +169,58 @@ def test_installed_artifacts_pass_gate():
     assert report['node_ca_count'] > 0
 
 
+def test_android_google_auth_transport_keeps_internal_ca(internal_ca, monkeypatch):
+    import google.auth
+    from google.auth.credentials import AnonymousCredentials
+    from exchange_info.mobile_push import FcmSender
+    bundle, _, _, _ = internal_ca
+    monkeypatch.setenv('REQUESTS_CA_BUNDLE', str(bundle))
+    monkeypatch.setattr(google.auth, 'default', lambda **kwargs: (AnonymousCredentials(), 'isolated-project'))
+    observed = []
+    def send(adapter, request, **kwargs):
+        observed.append(kwargs['verify'])
+        response = requests.Response()
+        response.status_code = 200
+        response._content = b'{}'
+        return response
+    monkeypatch.setattr(requests.adapters.HTTPAdapter, 'send', send)
+    sender = FcmSender('isolated-project')
+    try:
+        assert sender.send('test-installation', 'test-account', 'test-notification') == 'sent'
+    finally:
+        sender.session.close()
+    assert observed == [str(bundle)]
+
+
+@pytest.mark.parametrize('status', [403, 429, 500])
+def test_search_rejection_returns_empty_without_retry_or_primp(monkeypatch, status):
+    import primp
+    from exchange_info.web_search import search_text, search_videos
+    monkeypatch.setattr(primp, 'Client', lambda *a, **k: pytest.fail('no vulnerable fallback'))
+    calls = []
+    def response(self, method, url, **kwargs):
+        calls.append(url)
+        result = requests.Response()
+        result.status_code = status
+        result._content = b'Unavailable'
+        return result
+    monkeypatch.setattr(RequestsTransport, 'request', response)
+    assert search_text('isolated query', max_results=3, timeout_seconds=1) == []
+    assert search_videos('isolated query', max_results=3, timeout_seconds=1) == []
+    assert len(calls) == 3  # Brave, Yahoo, and the initial DuckDuckGo request only.
+
+
+def test_search_uses_available_backend_after_another_rejects(monkeypatch):
+    from exchange_info.web_search import search_text
+    def response(self, method, url, **kwargs):
+        result = requests.Response()
+        result.status_code = 429 if 'brave' in url else 200
+        result._content = b'<div class="relsrch"><div class="Title"><h3>Exchange school</h3><a href="https://school.example"></a></div><div class="Text">Exchange information</div></div>'
+        return result
+    monkeypatch.setattr(RequestsTransport, 'request', response)
+    assert search_text('exchange school', max_results=3, timeout_seconds=1)[0]['href'] == 'https://school.example'
+
+
 @pytest.mark.parametrize(('version', 'roots'), [
     ('24.21.0', []),
     ('24.22.1', list(tls_trust.BLOCKED_ROOT_SHA256)),

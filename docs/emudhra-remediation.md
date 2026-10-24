@@ -96,3 +96,27 @@ running binary's rejection behavior are still unverified. No Windows changes are
    release is ready. Host Caddy/Windows changes need their own backup and rollback.
 
 No intrusion investigation or malicious-endpoint testing is part of this work.
+
+## Integration with current main
+
+The PR branch incorporates main `0324635f4e0088e8c84155f48beafeed8cd09859`,
+including Android #121 and #124. Git merged the source and lockfile without
+textual conflicts. The Android `google-auth[requests]` dependency is retained;
+mobile application, API, migration and marketing changes remain those from main.
+Offline coverage includes mobile login, device ownership, push deduplication,
+notification read/delete behavior, and the effective CA bundle passed through
+Google Auth's Requests transport. The notification API test fixture now keeps
+the catalogue generation stable, preventing an unrelated background source
+refresh from adding notifications between read/delete assertions.
+
+Mocked provider responses verify 403/429/500 return an empty result without
+retrying or using primp, and that a working Yahoo backend can supply results
+when Brave rejects a request. This validates error handling and parser contracts;
+it does not establish live provider availability. Search availability remains
+a deployment acceptance gap; no further live-provider requests were made.
+
+The integration CI also checks the current Web/Android OpenAPI snapshot and
+parses migrations without applying them. It does not deploy, run migrations,
+publish images, or update credentials. The repository's `render.yaml` still
+declares automatic deployment on main commits; that file is unchanged and the
+actual external deployment configuration has not been verified by this PR.

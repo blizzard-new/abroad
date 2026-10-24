@@ -6,11 +6,17 @@ import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/application_calendar.dart';
+import '../core/account_session_storage.dart';
+import '../core/mobile_login.dart';
+import '../core/mobile_notifications.dart';
+import '../core/remote_push.dart';
 import '../core/connected_calendar.dart';
 import '../core/student_plan.dart';
 import '../core/study_plan_widget_service.dart';
 import '../data/exchange_api.dart';
 import '../data/models.dart';
+import 'workspace_sync.dart';
+import 'application_draft_sync.dart';
 
 const _applicationProfileMemoryEnabledKey =
     'application_profile_memory_enabled_v1';
@@ -44,6 +50,88 @@ class ExchangeStore extends ChangeNotifier {
   final ExchangeApi api;
   final CalendarSyncService calendarSync;
   final StudyPlanWidgetBridge widgetBridge;
+  late final AccountSessionStorage sessionStorage = AccountSessionStorage(
+    api.baseUrl,
+  );
+  WorkspaceSync? workspaceSync;
+  final Map<String, ApplicationDraftSync> _draftSyncs = {};
+
+  ApplicationDraftSync? applicationDraft(String templateId) =>
+      _draftSyncs[templateId];
+
+  Future<ApplicationDraftSync?> openApplicationDraft(
+    ApplicationDocumentTemplate template,
+  ) async {
+    if (account == null || accessToken.isEmpty) return null;
+    var sync = _draftSyncs[template.id];
+    if (sync == null) {
+      sync = ApplicationDraftSync(
+        api: api,
+        accountId: account!.id,
+        accessToken: accessToken,
+        homeSchool: selectedUniversity,
+        template: template,
+      );
+      _draftSyncs[template.id] = sync;
+      final current = sync;
+      sync.addListener(() {
+        if (_disposed || _draftSyncs[template.id] != current) return;
+        _applyApplicationDraft(template, current);
+        notifyListeners();
+      });
+      await sync.restore();
+    }
+    await sync.sync();
+    return _draftSyncs[template.id] == sync ? sync : null;
+  }
+
+  void _applyApplicationDraft(
+    ApplicationDocumentTemplate template,
+    ApplicationDraftSync sync,
+  ) {
+    final draft = sync.draft;
+    final profile = jsonMap(draft['profile']);
+    final answers = jsonMap(draft['answers']);
+    final current = applicationAnswers.putIfAbsent(template.id, () => {});
+    for (final field in template.fields) {
+      if (field.sensitive || field.kind == ApplicationFieldKind.files) continue;
+      if (field.reusableProfileKey.isNotEmpty) {
+        if (profile.containsKey(field.reusableProfileKey)) {
+          applicationProfile[field.reusableProfileKey] =
+              profile[field.reusableProfileKey];
+        }
+      } else if (answers.containsKey(field.id)) {
+        current[field.id] = answers[field.id];
+      } else {
+        current.remove(field.id);
+      }
+    }
+  }
+
+  void _disposeDrafts() {
+    for (final sync in _draftSyncs.values) {
+      sync.dispose();
+    }
+    _draftSyncs.clear();
+  }
+
+  late final MobileLogin mobileLogin = MobileLogin(api);
+  late final MobileNotifications mobileNotifications = MobileNotifications(
+    api.baseUrl,
+  );
+  String? mobileLoginError;
+  int navigationTab = 0;
+
+  void selectMainTab(int value) {
+    navigationTab = value.clamp(0, 4);
+    notifyListeners();
+  }
+
+  Timer? _workspaceTimer;
+  bool _disposed = false;
+
+  String _localKey(String key) =>
+      'local_v2:${Uri.encodeComponent(api.baseUrl)}:${account?.id ?? 'guest'}:${Uri.encodeComponent(selectedUniversity)}:$key';
 
   List<SupportedUniversity> universities = defaultSupportedUniversities;
   String selectedUniversity = defaultHomeUniversity;
@@ -109,8 +197,11 @@ class ExchangeStore extends ChangeNotifier {
     notifyListeners();
     try {
       await _loadSelectedUniversity();
-      await _loadApplicationDocumentState();
       await _restoreAccount();
+      await mobileNotifications.initialize();
+      await mobileNotifications.bindAccount(account?.id);
+      if (account == null) await _syncStudyPlanWidget();
+      await _loadApplicationDocumentState();
       final prefs = await SharedPreferences.getInstance();
       if (!prefs.containsKey('selected_university_v1')) {
         final accountUniversity = tryResolveSupportedUniversity(
@@ -124,17 +215,23 @@ class ExchangeStore extends ChangeNotifier {
       applicationContext = applicationContext.copyWith(
         schoolName: selectedUniversity,
       );
+      await _openWorkspace();
+      // Sign-in must remain available even when a catalogue/calendar request fails.
+      authProviders = await api.authProviders().timeout(
+        const Duration(seconds: 15),
+      );
+      notifyListeners();
       final results = await Future.wait<dynamic>([
         _loadUniversities(),
         api.dashboard(school: selectedUniversity),
         api.deadlines(school: selectedUniversity),
-        api.authProviders(),
+        Future.value(authProviders),
         _loadLocalProgress(),
         _loadSchoolVisuals(),
         _loadCalendarEvents(),
         calendarSync.initialize(),
         widgetBridge.initialize(),
-      ]);
+      ]).timeout(const Duration(seconds: 30));
       universities = results[0] as List<SupportedUniversity>;
       _schoolVisualsCache = results[5] as Map<String, SchoolVisual>;
       dashboard = (results[1] as StudentDashboard).withSchoolVisuals(
@@ -143,6 +240,7 @@ class ExchangeStore extends ChangeNotifier {
       );
       deadlines = results[2] as List<DeadlineRecord>;
       authProviders = results[3] as List<AuthProviderStatus>;
+      _applyWorkspace();
       await loadApplicationTemplates(notify: false);
       await _syncStudyPlanWidget();
     } catch (exception) {
@@ -159,11 +257,16 @@ class ExchangeStore extends ChangeNotifier {
       return;
     }
     selectedUniversity = resolved.schoolName;
+    _resetPrivateState();
     applicationContext = applicationContext.copyWith(
       schoolName: selectedUniversity,
     );
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('selected_university_v1', selectedUniversity);
+    await _loadApplicationDocumentState();
+    await _loadLocalProgress();
+    await _loadCalendarEvents();
+    await _openWorkspace();
     isLoading = true;
     error = null;
     notifyListeners();
@@ -201,7 +304,12 @@ class ExchangeStore extends ChangeNotifier {
     if (account == null || accessToken.isEmpty) {
       throw const ExchangeApiException('請先登入帳號，再參與社群。');
     }
-    final created = await api.accountCommunityIdentity(accessToken);
+    final token = accessToken;
+    final accountId = account!.id;
+    final created = await api.accountCommunityIdentity(token);
+    if (_disposed || token != accessToken || accountId != account?.id) {
+      throw const ExchangeApiException('登入狀態已改變，請重新開啟論壇。');
+    }
     identity = created;
     await _saveIdentity(created);
     notifyListeners();
@@ -209,23 +317,30 @@ class ExchangeStore extends ChangeNotifier {
   }
 
   Future<void> _saveIdentity(AnonymousIdentity value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('anonymous_id', value.id);
-    await prefs.setString('anonymous_name', value.displayName);
-    await prefs.setString('anonymous_token', value.accessToken);
+    // Community credentials remain in memory; regenerate from the secure account session.
   }
 
   Future<void> _restoreAccount() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedToken = prefs.getString('account_access_token') ?? '';
+    // Legacy tokens had no server/account scope. Do not send them to a new server.
+    await _clearAccountPreferences(prefs);
+    final saved = await sessionStorage.read();
+    final savedToken = saved?['access_token']?.toString() ?? '';
     if (savedToken.isEmpty) return;
+    account = AccountProfile.fromJson(saved?['profile']);
+    accessToken = savedToken;
     try {
       account = await api.profile(savedToken);
-      accessToken = savedToken;
-      identity = await api.accountCommunityIdentity(savedToken);
-      await _saveIdentity(identity!);
+      await sessionStorage.save(savedToken, account!);
+    } on ExchangeApiException catch (exception) {
+      if (exception.statusCode == 401) {
+        await sessionStorage.clear();
+        account = null;
+        accessToken = '';
+        _resetPrivateState();
+      }
     } catch (_) {
-      await _clearAccountPreferences(prefs);
+      // A temporary offline/server failure must not log out a cached account.
     }
   }
 
@@ -285,21 +400,45 @@ class ExchangeStore extends ChangeNotifier {
     await _authenticate(() => api.login(email: email, password: password));
   }
 
+  Future<void> startMobileLogin(String provider) async {
+    mobileLoginError = null;
+    await mobileLogin.start(provider);
+  }
+
+  Future<void> completeMobileLogin(Uri uri) async {
+    try {
+      final session = await mobileLogin.complete(uri);
+      if (session != null && !_disposed) {
+        await _authenticate(() async => session);
+        await refresh();
+      }
+    } catch (exception) {
+      mobileLoginError = exception.toString();
+      if (!_disposed) notifyListeners();
+    }
+  }
+
   Future<void> _authenticate(Future<AccountSession> Function() action) async {
     if (isAuthenticating) return;
     isAuthenticating = true;
     notifyListeners();
     try {
       final session = await action();
+      _resetPrivateState();
       account = session.profile;
       accessToken = session.accessToken;
       identity = null;
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('account_access_token', session.accessToken);
+      await sessionStorage.save(session.accessToken, session.profile);
       await prefs.remove('anonymous_id');
       await prefs.remove('anonymous_name');
       await prefs.remove('anonymous_token');
-      await ensureIdentity();
+      selectedUniversity = session.profile.homeUniversity;
+      await prefs.setString('selected_university_v1', selectedUniversity);
+      await _loadApplicationDocumentState();
+      await _loadLocalProgress();
+      await _loadCalendarEvents();
+      await _openWorkspace();
     } finally {
       isAuthenticating = false;
       notifyListeners();
@@ -336,10 +475,11 @@ class ExchangeStore extends ChangeNotifier {
   }
 
   Future<void> logout() async {
+    await remotePush.disable();
     final token = accessToken;
     if (token.isNotEmpty) {
       try {
-        await api.logout(token);
+        await api.logout(token).timeout(const Duration(seconds: 8));
       } catch (_) {
         // Local sign-out still completes if the server session already expired.
       }
@@ -354,11 +494,38 @@ class ExchangeStore extends ChangeNotifier {
   }
 
   Future<void> _clearAccount() async {
+    await remotePush.disable();
+    final oldAccount = account?.id;
+    _disposeDrafts();
+    if (oldAccount != null) {
+      await ApplicationDraftSync.clearAccountCache(api.baseUrl, oldAccount);
+    }
+    final oldWorkspace = workspaceSync;
+    _workspaceTimer?.cancel();
+    workspaceSync = null;
+    oldWorkspace?.dispose();
+    await oldWorkspace?.clearCache();
+    await sessionStorage.clear();
+    await mobileLogin.clear();
+    await mobileNotifications.bindAccount(null);
     account = null;
     accessToken = '';
     identity = null;
     final prefs = await SharedPreferences.getInstance();
+    if (oldAccount != null) {
+      final origin = Uri.encodeComponent(api.baseUrl);
+      for (final key in prefs.getKeys().toList()) {
+        if (key.startsWith('local_v2:$origin:$oldAccount:') ||
+            key.startsWith(
+              'workspace_v2:$origin:${Uri.encodeComponent(oldAccount)}:',
+            )) {
+          await prefs.remove(key);
+        }
+      }
+    }
+    _resetPrivateState();
     await _clearAccountPreferences(prefs);
+    await _syncStudyPlanWidget();
     notifyListeners();
   }
 
@@ -373,16 +540,16 @@ class ExchangeStore extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     favorites
       ..clear()
-      ..addAll(prefs.getStringList('favorite_schools') ?? const []);
+      ..addAll(prefs.getStringList(_localKey('favorite_schools')) ?? const []);
     completedSteps
       ..clear()
       ..addAll(
-        (prefs.getStringList('completed_steps') ?? const [])
+        (prefs.getStringList(_localKey('completed_steps')) ?? const [])
             .map(int.tryParse)
             .whereType<int>(),
       );
 
-    final profileJson = prefs.getString('student_plan_profile_v1');
+    final profileJson = prefs.getString(_localKey('student_plan_profile_v1'));
     if (profileJson != null) {
       try {
         final decoded = jsonDecode(profileJson);
@@ -392,12 +559,12 @@ class ExchangeStore extends ChangeNotifier {
           );
         }
       } catch (_) {
-        await prefs.remove('student_plan_profile_v1');
+        await prefs.remove(_localKey('student_plan_profile_v1'));
       }
     }
 
     documentStatuses.clear();
-    final statusesJson = prefs.getString('document_statuses_v1');
+    final statusesJson = prefs.getString(_localKey('document_statuses_v1'));
     if (statusesJson != null) {
       try {
         final decoded = jsonDecode(statusesJson);
@@ -410,7 +577,7 @@ class ExchangeStore extends ChangeNotifier {
           });
         }
       } catch (_) {
-        await prefs.remove('document_statuses_v1');
+        await prefs.remove(_localKey('document_statuses_v1'));
       }
     }
     for (var index = 0; index < applicationDocumentLabels.length; index++) {
@@ -424,7 +591,7 @@ class ExchangeStore extends ChangeNotifier {
     }
 
     budgetPlans.clear();
-    final budgetJson = prefs.getString('budget_plans_v1');
+    final budgetJson = prefs.getString(_localKey('budget_plans_v1'));
     if (budgetJson != null) {
       try {
         final decoded = jsonDecode(budgetJson);
@@ -438,7 +605,7 @@ class ExchangeStore extends ChangeNotifier {
           });
         }
       } catch (_) {
-        await prefs.remove('budget_plans_v1');
+        await prefs.remove(_localKey('budget_plans_v1'));
       }
     }
   }
@@ -446,10 +613,12 @@ class ExchangeStore extends ChangeNotifier {
   Future<void> _loadApplicationDocumentState() async {
     final prefs = await SharedPreferences.getInstance();
     applicationProfileMemoryEnabled =
-        prefs.getBool(_applicationProfileMemoryEnabledKey) ?? false;
+        prefs.getBool(_localKey(_applicationProfileMemoryEnabledKey)) ?? false;
     applicationProfile.clear();
     if (applicationProfileMemoryEnabled) {
-      final profileJson = prefs.getString(_applicationProfileMemoryKey);
+      final profileJson = prefs.getString(
+        _localKey(_applicationProfileMemoryKey),
+      );
       if (profileJson != null) {
         try {
           final decoded = jsonDecode(profileJson);
@@ -461,23 +630,27 @@ class ExchangeStore extends ChangeNotifier {
             );
           }
         } catch (_) {
-          await prefs.remove(_applicationProfileMemoryKey);
+          await prefs.remove(_localKey(_applicationProfileMemoryKey));
         }
       }
     }
-    final contextJson = prefs.getString('application_center_context_v1');
+    final contextJson = prefs.getString(
+      _localKey('application_center_context_v1'),
+    );
     if (contextJson != null) {
       try {
         applicationContext = ApplicationCenterContext.fromJson(
           jsonDecode(contextJson),
         );
       } catch (_) {
-        await prefs.remove('application_center_context_v1');
+        await prefs.remove(_localKey('application_center_context_v1'));
       }
     }
 
     applicationSelections.clear();
-    final selectionsJson = prefs.getString('application_center_selections_v1');
+    final selectionsJson = prefs.getString(
+      _localKey('application_center_selections_v1'),
+    );
     if (selectionsJson != null) {
       try {
         final decoded = jsonDecode(selectionsJson);
@@ -488,7 +661,7 @@ class ExchangeStore extends ChangeNotifier {
           });
         }
       } catch (_) {
-        await prefs.remove('application_center_selections_v1');
+        await prefs.remove(_localKey('application_center_selections_v1'));
       }
     }
   }
@@ -496,11 +669,11 @@ class ExchangeStore extends ChangeNotifier {
   Future<void> _persistApplicationDocumentState() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
-      'application_center_context_v1',
+      _localKey('application_center_context_v1'),
       jsonEncode(applicationContext.toJson()),
     );
     await prefs.setString(
-      'application_center_selections_v1',
+      _localKey('application_center_selections_v1'),
       jsonEncode(
         applicationSelections.map(
           (key, value) => MapEntry(key, value.toJson()),
@@ -542,6 +715,12 @@ class ExchangeStore extends ChangeNotifier {
     ApplicationCenterContext context,
   ) async {
     applicationContext = context.copyWith(schoolName: selectedUniversity);
+    await _editWorkspace((value) {
+      value['application_context'] = {
+        ...jsonMap(value['application_context']),
+        ...applicationContext.toJson(),
+      };
+    });
     await _persistApplicationDocumentState();
     await loadApplicationTemplates();
   }
@@ -596,13 +775,13 @@ class ExchangeStore extends ChangeNotifier {
   Future<void> _persistApplicationProfileMemory() async {
     final prefs = await SharedPreferences.getInstance();
     if (!applicationProfileMemoryEnabled) {
-      await prefs.remove(_applicationProfileMemoryEnabledKey);
-      await prefs.remove(_applicationProfileMemoryKey);
+      await prefs.remove(_localKey(_applicationProfileMemoryEnabledKey));
+      await prefs.remove(_localKey(_applicationProfileMemoryKey));
       return;
     }
-    await prefs.setBool(_applicationProfileMemoryEnabledKey, true);
+    await prefs.setBool(_localKey(_applicationProfileMemoryEnabledKey), true);
     await prefs.setString(
-      _applicationProfileMemoryKey,
+      _localKey(_applicationProfileMemoryKey),
       jsonEncode(_sanitizeApplicationProfileForMemory(applicationProfile)),
     );
   }
@@ -729,8 +908,11 @@ class ExchangeStore extends ChangeNotifier {
 
   Future<void> saveApplicationDocument(
     ApplicationDocumentTemplate template,
-    Map<String, dynamic> values,
-  ) async {
+    Map<String, dynamic> values, {
+    bool markReady = true,
+    JsonMap? draftSnapshot,
+  }) async {
+    final draftSync = _draftSyncs[template.id];
     final documentValues = <String, dynamic>{};
     for (final field in template.fields) {
       if (!values.containsKey(field.id)) continue;
@@ -747,10 +929,17 @@ class ExchangeStore extends ChangeNotifier {
         ApplicationDocumentSelectionState.initial(template.defaultCopies);
     applicationSelections[template.id] = current.copyWith(
       selected: true,
-      status: current.status == ApplicationDocumentProgress.draft
+      status: markReady && current.status == ApplicationDocumentProgress.draft
           ? ApplicationDocumentProgress.readyToPrint
           : current.status,
     );
+    // Persist safe draft values before any network call; keep raw attachments
+    // and sensitive answers in memory only.
+    await draftSync?.editFields(values, editorSnapshot: draftSnapshot);
+    if (draftSync != null && _draftSyncs[template.id] != draftSync) return;
+    await draftSync?.sync();
+    if (draftSync != null && _draftSyncs[template.id] != draftSync) return;
+    await _syncSelections();
     await _persistApplicationProfileMemory();
     await _persistApplicationDocumentState();
     notifyListeners();
@@ -774,6 +963,7 @@ class ExchangeStore extends ChangeNotifier {
       copies: copies,
       status: status,
     );
+    await _syncSelections();
     await _persistApplicationDocumentState();
     notifyListeners();
   }
@@ -848,7 +1038,8 @@ class ExchangeStore extends ChangeNotifier {
   Future<void> _loadCalendarEvents() async {
     final prefs = await SharedPreferences.getInstance();
     final values =
-        prefs.getStringList('application_calendar_events') ?? const [];
+        prefs.getStringList(_localKey('application_calendar_events')) ??
+        const [];
     personalCalendarEvents
       ..clear()
       ..addAll(
@@ -982,9 +1173,24 @@ class ExchangeStore extends ChangeNotifier {
   }
 
   Future<void> _saveCalendarEvents() async {
+    final events = personalCalendarEvents.toList();
+    await _editWorkspace((value) {
+      final previous = {
+        for (final item in jsonMapList(value['deadline_events']))
+          textValue(item['id']): item,
+      };
+      value['deadline_events'] = events.map((event) {
+        final serialized = event.toJson()..remove('is_official');
+        return {
+          ...?previous[event.id],
+          ...serialized,
+          'origin': event.isOfficial ? 'official' : 'personal',
+        };
+      }).toList();
+    });
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(
-      'application_calendar_events',
+      _localKey('application_calendar_events'),
       personalCalendarEvents
           .map((event) => jsonEncode(event.toJson()))
           .toList(),
@@ -1001,8 +1207,14 @@ class ExchangeStore extends ChangeNotifier {
 
   Future<void> toggleFavorite(String schoolName) async {
     if (!favorites.add(schoolName)) favorites.remove(schoolName);
+    await _editWorkspace(
+      (value) => value['favorite_schools'] = favorites.toList()..sort(),
+    );
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('favorite_schools', favorites.toList()..sort());
+    await prefs.setStringList(
+      _localKey('favorite_schools'),
+      favorites.toList()..sort(),
+    );
     notifyListeners();
     await _syncStudyPlanWidget();
   }
@@ -1044,9 +1256,23 @@ class ExchangeStore extends ChangeNotifier {
 
   Future<void> savePlanProfile(StudentPlanProfile profile) async {
     planProfile = profile;
+    await _editWorkspace((value) {
+      final existing = jsonMap(
+        jsonMap(value['selection_conditions'])['profile'],
+      );
+      value['selection_conditions'] = {
+        'profile': {
+          ...existing,
+          ...profile.toJson(),
+          'language_test': profile.languageTest.isEmpty
+              ? null
+              : profile.languageTest,
+        },
+      };
+    });
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
-      'student_plan_profile_v1',
+      _localKey('student_plan_profile_v1'),
       jsonEncode(profile.toJson()),
     );
     notifyListeners();
@@ -1055,8 +1281,11 @@ class ExchangeStore extends ChangeNotifier {
 
   Future<void> clearPlanProfile() async {
     planProfile = null;
+    await _editWorkspace(
+      (value) => value['selection_conditions'] = {'profile': null},
+    );
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('student_plan_profile_v1');
+    await prefs.remove(_localKey('student_plan_profile_v1'));
     notifyListeners();
     await _syncStudyPlanWidget();
   }
@@ -1069,6 +1298,12 @@ class ExchangeStore extends ChangeNotifier {
     DocumentPreparationStatus status,
   ) async {
     documentStatuses[label] = status;
+    await _editWorkspace((value) {
+      value['document_readiness'] = {
+        ...jsonMap(value['document_readiness']),
+        _documentId(label): status.name,
+      };
+    });
     final index = applicationDocumentLabels.indexOf(label);
     if (index >= 0) {
       if (status == DocumentPreparationStatus.ready) {
@@ -1079,13 +1314,13 @@ class ExchangeStore extends ChangeNotifier {
     }
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
-      'document_statuses_v1',
+      _localKey('document_statuses_v1'),
       jsonEncode(
         documentStatuses.map((key, value) => MapEntry(key, value.name)),
       ),
     );
     await prefs.setStringList(
-      'completed_steps',
+      _localKey('completed_steps'),
       completedSteps.map((value) => value.toString()).toList(),
     );
     notifyListeners();
@@ -1094,9 +1329,25 @@ class ExchangeStore extends ChangeNotifier {
 
   Future<void> saveBudgetPlan(ExchangeBudgetPlan plan) async {
     budgetPlans[plan.schoolName] = plan;
+    await _editWorkspace((value) {
+      final budgets = jsonMap(value['budget_plans']);
+      budgets[plan.schoolName] = {
+        ...jsonMap(budgets[plan.schoolName]),
+        'currency': plan.currency,
+        'months': plan.months,
+        'housing': plan.monthlyHousing,
+        'food': plan.monthlyFood,
+        'transport': plan.monthlyTransport,
+        'other': plan.monthlyOther,
+        'one_time': plan.oneTimeCosts,
+        'scholarship': plan.scholarship,
+        'saved_at': DateTime.now().toUtc().toIso8601String(),
+      };
+      value['budget_plans'] = budgets;
+    });
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(
-      'budget_plans_v1',
+      _localKey('budget_plans_v1'),
       jsonEncode(
         budgetPlans.map((key, value) => MapEntry(key, value.toJson())),
       ),
@@ -1118,8 +1369,10 @@ class ExchangeStore extends ChangeNotifier {
     );
   }
 
-  int get documentReadyCount => documentStatuses.values
-      .where((status) => status == DocumentPreparationStatus.ready)
+  int get documentReadyCount => applicationDocumentLabels
+      .where(
+        (label) => documentStatus(label) == DocumentPreparationStatus.ready,
+      )
       .length;
 
   int get planCompletionPercent {
@@ -1150,7 +1403,28 @@ class ExchangeStore extends ChangeNotifier {
   Future<void> requestHomeWidgetPin() => widgetBridge.requestPin();
 
   Future<void> _syncStudyPlanWidget() async {
-    final upcoming = applicationCalendarEvents
+    if (account == null) {
+      await widgetBridge.sync(
+        const StudyPlanWidgetSnapshot(
+          nextTitle: '登入 UniWay，開始你的交換計畫',
+          nextDateLabel: '與電腦共用帳號與進度',
+          progressLabel: '尚未登入',
+        ),
+      );
+      return;
+    }
+    try {
+      await mobileNotifications.schedule(
+        account!.id,
+        selectedUniversity,
+        personalCalendarEvents,
+      );
+    } on Exception {
+      // A denied notification permission must not prevent saving the student's work.
+    }
+    final confirmedEvents = personalCalendarEvents.toList()
+      ..sort((a, b) => a.date.compareTo(b.date));
+    final upcoming = confirmedEvents
         .where(
           (event) => !dateOnly(event.date).isBefore(dateOnly(DateTime.now())),
         )
@@ -1160,12 +1434,22 @@ class ExchangeStore extends ChangeNotifier {
         ? (planProfile?.goalLabel.isNotEmpty == true
               ? planProfile!.goalLabel
               : '開啟 App 開始規劃')
-        : '${countdownLabel(upcoming.date)} · ${upcoming.date.month}/${upcoming.date.day}';
+        : '截止 ${upcoming.date.year}/${upcoming.date.month}/${upcoming.date.day}';
     await widgetBridge.sync(
       StudyPlanWidgetSnapshot(
         nextTitle: title,
         nextDateLabel: dateLabel,
         progressLabel: '準備進度 $planCompletionPercent%',
+        tasks: applicationDocumentLabels
+            .where(
+              (label) =>
+                  documentStatus(label) != DocumentPreparationStatus.ready,
+            )
+            .take(3)
+            .toList(),
+        updatedLabel: workspaceSync?.lastSyncedAt == null
+            ? '尚未同步'
+            : '更新 ${workspaceSync!.lastSyncedAt!.month}/${workspaceSync!.lastSyncedAt!.day} ${workspaceSync!.lastSyncedAt!.hour.toString().padLeft(2, '0')}:${workspaceSync!.lastSyncedAt!.minute.toString().padLeft(2, '0')}',
       ),
     );
   }
@@ -1173,6 +1457,215 @@ class ExchangeStore extends ChangeNotifier {
   void setSchoolSearchQuery(String value) {
     schoolSearchQuery = value.trim();
     notifyListeners();
+  }
+
+  // Match Web's documentChecklistItems(): IDs derive from the displayed title.
+  static String _documentId(String label) => label
+      .trim()
+      .toLowerCase()
+      .replaceAll(RegExp(r'[^a-z0-9\u4e00-\u9fff]+'), '-');
+
+  Future<void> _openWorkspace() async {
+    _workspaceTimer?.cancel();
+    workspaceSync?.dispose();
+    workspaceSync = null;
+    await mobileNotifications.bindAccount(account?.id);
+    if (account == null || accessToken.isEmpty) return;
+    await remotePush.bind(
+      accountId: account!.id,
+      token: accessToken,
+      homeSchool: selectedUniversity,
+      enabled: mobileNotifications.enabled,
+    );
+    final sync = WorkspaceSync(
+      api: api,
+      accountId: account!.id,
+      accessToken: accessToken,
+      homeSchool: selectedUniversity,
+    );
+    workspaceSync = sync;
+    sync.addListener(() {
+      if (_disposed || workspaceSync != sync) return;
+      _applyWorkspace();
+      notifyListeners();
+      unawaited(_syncStudyPlanWidget());
+    });
+    await sync.restore();
+    await sync.sync();
+    if (_disposed || workspaceSync != sync) return;
+    _workspaceTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+      unawaited(sync.sync());
+      for (final draft in _draftSyncs.values.toList()) {
+        unawaited(draft.sync());
+      }
+    });
+  }
+
+  late final RemotePush remotePush = RemotePush(api)
+    ..addListener(_remotePushChanged);
+  void _remotePushChanged() {
+    if (!_disposed) notifyListeners();
+  }
+
+  Future<void> synchronizeWorkspace() async {
+    await workspaceSync?.sync();
+    await Future.wait(_draftSyncs.values.toList().map((sync) => sync.sync()));
+    if (account != null) {
+      await remotePush.bind(
+        accountId: account!.id,
+        token: accessToken,
+        homeSchool: selectedUniversity,
+        enabled: mobileNotifications.enabled,
+      );
+    }
+  }
+
+  Future<bool> enableMobileNotifications() async {
+    if (account == null) return false;
+    await mobileNotifications.bindAccount(account!.id);
+    final enabled = await mobileNotifications.enable();
+    await remotePush.bind(
+      accountId: account!.id,
+      token: accessToken,
+      homeSchool: selectedUniversity,
+      enabled: enabled,
+    );
+    if (enabled) {
+      await mobileNotifications.schedule(
+        account!.id,
+        selectedUniversity,
+        personalCalendarEvents,
+      );
+    }
+    notifyListeners();
+    return enabled;
+  }
+
+  Future<void> disableMobileNotifications() async {
+    await remotePush.disable();
+    await mobileNotifications.disable();
+    notifyListeners();
+  }
+
+  Future<void> _editWorkspace(void Function(JsonMap value) mutate) async {
+    final sync = workspaceSync;
+    if (sync == null) return;
+    await sync.edit(mutate);
+    unawaited(sync.sync());
+  }
+
+  void _resetPrivateState() {
+    _disposeDrafts();
+    favorites.clear();
+    completedSteps.clear();
+    documentStatuses.clear();
+    budgetPlans.clear();
+    personalCalendarEvents.clear();
+    planProfile = null;
+    applicationProfile.clear();
+    applicationAnswers.clear();
+    applicationSelections.clear();
+    applicationProfileMemoryEnabled = false;
+    applicationContext = ApplicationCenterContext(
+      schoolName: selectedUniversity,
+    );
+    applicationTemplates = const [];
+    studentVerification = null;
+    applicationDocumentsError = null;
+  }
+
+  void _applyWorkspace() {
+    final sync = workspaceSync;
+    if (sync == null) return;
+    final value = sync.workspace;
+    favorites
+      ..clear()
+      ..addAll(stringList(value['favorite_schools']));
+    final conditions = jsonMap(value['selection_conditions']);
+    planProfile = conditions['profile'] is Map
+        ? StudentPlanProfile.fromJson(jsonMap(conditions['profile']))
+        : null;
+    final readiness = jsonMap(value['document_readiness']);
+    documentStatuses.clear();
+    completedSteps.clear();
+    for (final item in readiness.entries) {
+      final status = DocumentPreparationStatus.values
+          .where((v) => v.name == item.value)
+          .firstOrNull;
+      if (status != null) documentStatuses[item.key] = status;
+    }
+    for (var i = 0; i < applicationDocumentLabels.length; i++) {
+      final label = applicationDocumentLabels[i];
+      final status =
+          documentStatuses[_documentId(label)] ??
+          DocumentPreparationStatus.todo;
+      documentStatuses[label] = status;
+      if (status == DocumentPreparationStatus.ready) completedSteps.add(i);
+    }
+    applicationContext = ApplicationCenterContext.fromJson(
+      value['application_context'],
+    );
+    applicationSelections
+      ..clear()
+      ..addAll(
+        jsonMap(value['application_selections']).map(
+          (key, item) =>
+              MapEntry(key, ApplicationDocumentSelectionState.fromJson(item)),
+        ),
+      );
+    budgetPlans.clear();
+    for (final entry in jsonMap(value['budget_plans']).entries) {
+      final budget = jsonMap(entry.value);
+      budgetPlans[entry.key] = ExchangeBudgetPlan.fromJson({
+        'school_name': entry.key,
+        'currency': budget['currency'],
+        'months': budget['months'],
+        'monthly_housing': budget['housing'],
+        'monthly_food': budget['food'],
+        'monthly_transport': budget['transport'],
+        'monthly_other': budget['other'],
+        'one_time_costs': budget['one_time'],
+        'scholarship': budget['scholarship'],
+      });
+    }
+    personalCalendarEvents
+      ..clear()
+      ..addAll(
+        jsonMapList(value['deadline_events'])
+            .where((event) => parseDateKey(textValue(event['date'])) != null)
+            .map(
+              (event) => ApplicationCalendarEvent.fromJson({
+                ...event,
+                'is_official': event['origin'] == 'official',
+              }),
+            ),
+      );
+  }
+
+  Future<void> _syncSelections() async {
+    final local = Map<String, ApplicationDocumentSelectionState>.from(
+      applicationSelections,
+    );
+    await _editWorkspace((value) {
+      final selections = jsonMap(value['application_selections']);
+      for (final entry in local.entries) {
+        selections[entry.key] = {
+          ...jsonMap(selections[entry.key]),
+          ...entry.value.toJson(),
+        };
+      }
+      value['application_selections'] = selections;
+    });
+  }
+
+  @override
+  void dispose() {
+    remotePush.dispose();
+    _disposed = true;
+    _workspaceTimer?.cancel();
+    workspaceSync?.dispose();
+    _disposeDrafts();
+    super.dispose();
   }
 
   bool get hasChosenSchool => favorites.isNotEmpty;

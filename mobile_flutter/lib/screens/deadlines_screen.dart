@@ -8,7 +8,9 @@ import '../core/exchange_widgets.dart';
 import '../state/exchange_store.dart';
 
 class DeadlinesScreen extends StatefulWidget {
-  const DeadlinesScreen({super.key});
+  const DeadlinesScreen({super.key, this.initialDate, this.embedded = false});
+  final bool embedded;
+  final DateTime? initialDate;
 
   @override
   State<DeadlinesScreen> createState() => _DeadlinesScreenState();
@@ -22,7 +24,7 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
   @override
   void initState() {
     super.initState();
-    final today = dateOnly(DateTime.now());
+    final today = dateOnly(widget.initialDate ?? DateTime.now());
     focusedMonth = DateTime(today.year, today.month);
     selectedDate = today;
   }
@@ -237,12 +239,12 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
         .toList();
     final agenda = showUpcoming ? upcoming.take(6).toList() : selectedEvents;
 
-    return SafeArea(
+    final content = SafeArea(
       bottom: false,
       child: RefreshIndicator(
         onRefresh: store.refresh,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 122),
+          padding: EdgeInsets.fromLTRB(16, 14, 16, widget.embedded ? 122 : 24),
           children: [
             _PlannerHero(events: upcoming),
             const SizedBox(height: 12),
@@ -363,6 +365,18 @@ class _DeadlinesScreenState extends State<DeadlinesScreen> {
         ),
       ),
     );
+    if (widget.embedded) return content;
+    return ExchangePageBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: const Text('申請時程'),
+          backgroundColor: Colors.white.withValues(alpha: .72),
+          surfaceTintColor: Colors.transparent,
+        ),
+        body: content,
+      ),
+    );
   }
 }
 
@@ -376,21 +390,25 @@ class _PlannerHero extends StatelessWidget {
     final next = events.isEmpty ? null : events.first;
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
-      child: SizedBox(
-        height: 158,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 158),
         child: Stack(
-          fit: StackFit.expand,
+          alignment: Alignment.bottomLeft,
           children: [
-            Image.asset(
-              'assets/images/destination-europe.jpg',
-              fit: BoxFit.cover,
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/destination-europe.jpg',
+                fit: BoxFit.cover,
+              ),
             ),
-            const DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0x5C10212E), Color(0xD9142430)],
+            const Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0x5C10212E), Color(0xD9142430)],
+                  ),
                 ),
               ),
             ),

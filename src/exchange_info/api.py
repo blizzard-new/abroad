@@ -67,6 +67,7 @@ from .analytics_routes import register_analytics_routes
 from .feedback import FeedbackService, create_feedback_repository
 from .feedback_routes import register_feedback_routes
 from .notification_routes import register_notification_routes
+from .mobile_push import register_mobile_push_routes
 from .openapi_contract import install_openapi_contract
 from .workflow_review_routes import register_workflow_review_routes
 from .content_governance_routes import register_content_governance_routes
@@ -605,6 +606,7 @@ from .tku_student_view import (
 )
 from .rag import rag_index_status, search_document_chunks, supabase_configured
 from .legal_pages import TERMS_VERSION, register_legal_pages
+from .mobile_auth import mobile_handoff_url, register_mobile_auth_routes
 from .request_origin import client_fingerprint, public_base_url
 from .seo import EDITORIAL_PATHS, SeoSettings, create_seo_router, homepage_html
 from .seo_changes import ContentChanges
@@ -1315,6 +1317,7 @@ def create_app(
         catalogue_source_provider=lambda: cgu_catalogue_view().source,
     )
     register_workflow_review_routes(app, authenticated_content_admin)
+    register_mobile_push_routes(app, authenticated_account, authenticated_content_admin, resolved_data_dir)
     register_content_governance_routes(app, authenticated_content_admin,
                                       data_dir=resolved_data_dir, static_dir=STATIC_DIR)
     register_tku_eligibility_routes(app)
@@ -3343,16 +3346,22 @@ def create_app(
     def account_community_identity(request: Request) -> AnonymousIdentitySession:
         return AnonymousIdentitySession(**create_discussion_identity(request))
 
+    register_mobile_auth_routes(app, account_session)
+
     @app.get("/auth/oauth/{provider}/start", response_class=RedirectResponse)
     def oauth_start(
         provider: str,
         request: Request,
+        mobile_challenge: str | None = Query(default=None, pattern=r"^[A-Za-z0-9_-]{43}$"),
+        mobile_state: str | None = Query(default=None, pattern=r"^[A-Za-z0-9_-]{43}$"),
         terms: str | None = Query(
             default=None,
             max_length=32,
             description="The version of the terms and privacy policy the visitor ticked; sign-in does not start without it.",
         ),
     ) -> RedirectResponse:
+        if bool(mobile_challenge) != bool(mobile_state):
+            raise HTTPException(status_code=422, detail="手機登入參數不完整。")
         try:
             provider_name = AuthProvider(provider)
         except ValueError as exc:
@@ -3376,6 +3385,8 @@ def create_app(
                 kind=TransientAuthStateKind.OAUTH_LOGIN,
                 provider_id=provider_name.value,
                 session_id=flow_secret,
+                payload={"mobile_challenge": mobile_challenge, "mobile_state": mobile_state}
+                if mobile_challenge else {},
                 expires_at=now + timedelta(minutes=10),
             )
             try:
@@ -3644,7 +3655,12 @@ def create_app(
             )
             session = account_session(account)
 
-        response = RedirectResponse(url="/#auth=success", status_code=303)
+        mobile_payload = getattr(target_state, "payload", {})
+        redirect_target = "/#auth=success"
+        if mobile_payload.get("mobile_challenge") and mobile_payload.get("mobile_state"):
+            redirect_target = mobile_handoff_url(app, account.id,
+                mobile_payload["mobile_challenge"], mobile_payload["mobile_state"])
+        response = RedirectResponse(url=redirect_target, status_code=303)
         _clear_flow_cookie(response)
         set_auth_cookie(response, session)
         return response

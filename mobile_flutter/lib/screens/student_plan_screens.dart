@@ -25,6 +25,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
   final oneTimeController = TextEditingController();
   final scholarshipController = TextEditingController();
   String selectedSchool = '';
+  String currency = 'TWD';
   bool initialized = false;
 
   @override
@@ -53,6 +54,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
   void _loadPlan(ExchangeStore store) {
     final plan = store.budgetFor(selectedSchool);
+    currency = plan?.currency ?? 'TWD';
     monthsController.text = (plan?.months ?? 5).toString();
     housingController.text = _inputValue(plan?.monthlyHousing);
     foodController.text = _inputValue(plan?.monthlyFood);
@@ -65,6 +67,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
   ExchangeBudgetPlan _currentPlan() => ExchangeBudgetPlan(
     schoolName: selectedSchool,
+    currency: currency,
     months: int.tryParse(monthsController.text.trim()) ?? 5,
     monthlyHousing: _number(housingController),
     monthlyFood: _number(foodController),
@@ -146,36 +149,42 @@ class _BudgetScreenState extends State<BudgetScreen> {
                 const SizedBox(height: 12),
                 _BudgetField(
                   controller: housingController,
+                  currency: currency,
                   label: '每月住宿',
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
                 _BudgetField(
                   controller: foodController,
+                  currency: currency,
                   label: '每月飲食',
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
                 _BudgetField(
                   controller: transportController,
+                  currency: currency,
                   label: '每月交通',
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
                 _BudgetField(
                   controller: otherController,
+                  currency: currency,
                   label: '每月其他支出',
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
                 _BudgetField(
                   controller: oneTimeController,
+                  currency: currency,
                   label: '機票、簽證與保險',
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
                 _BudgetField(
                   controller: scholarshipController,
+                  currency: currency,
                   label: '預計補助',
                   onChanged: () => setState(() {}),
                 ),
@@ -266,7 +275,7 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final store = ExchangeStoreScope.of(context);
-    final event = store.applicationCalendarEvents
+    final event = store.personalCalendarEvents
         .where(
           (item) => !dateOnly(item.date).isBefore(dateOnly(DateTime.now())),
         )
@@ -275,7 +284,7 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
         !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
 
     return FeaturePageScaffold(
-      title: '桌面與鎖定畫面',
+      title: '桌面小工具',
       children: [
         GlassCard(
           tint: ExchangeColors.blueSoft,
@@ -336,18 +345,19 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
         if (isAndroid) const SizedBox(height: 12),
         const _WidgetInstruction(
           icon: Icons.android_rounded,
-          title: 'Android 桌面與鎖定畫面',
+          title: 'Android 桌面小工具',
           points: [
-            '長按桌面空白處，開啟「小工具」並選擇交換指南。',
-            '鎖定畫面是否提供小工具位置，依 Android 版本與手機品牌而定。',
+            '長按桌面空白處，開啟「小工具」並選擇 UniWay。',
+            '加入後可長按調整大小；寬版會顯示待辦。開啟 App 後同步最新進度。',
           ],
         ),
         const SizedBox(height: 12),
-        const _WidgetInstruction(
-          icon: Icons.phone_iphone_rounded,
-          title: 'iPhone 桌面與鎖定畫面',
-          points: ['長按主畫面後加入「交換計畫」小工具。', 'iOS 16 以上可在鎖定畫面加入直列、圓形或矩形版本。'],
-        ),
+        if (!isAndroid)
+          const _WidgetInstruction(
+            icon: Icons.phone_iphone_rounded,
+            title: 'iPhone 桌面與鎖定畫面',
+            points: ['長按主畫面後加入「交換計畫」小工具。', 'iOS 16 以上可在鎖定畫面加入直列、圓形或矩形版本。'],
+          ),
       ],
     );
   }
@@ -359,12 +369,14 @@ class _BudgetField extends StatelessWidget {
     required this.label,
     required this.onChanged,
     this.suffix,
+    this.currency = 'TWD',
   });
 
   final TextEditingController controller;
   final String label;
   final VoidCallback onChanged;
   final String? suffix;
+  final String currency;
 
   @override
   Widget build(BuildContext context) {
@@ -374,7 +386,7 @@ class _BudgetField extends StatelessWidget {
       onChanged: (_) => onChanged(),
       decoration: InputDecoration(
         labelText: label,
-        prefixText: suffix == null ? 'NT\$ ' : null,
+        prefixText: suffix == null ? '$currency ' : null,
         suffixText: suffix,
       ),
     );
@@ -395,17 +407,30 @@ class _BudgetResult extends StatelessWidget {
           Text('扣除預計補助後', style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 4),
           Text(
-            'NT\$ ${_money(plan.netTotal)}',
+            '${plan.currency} ${_money(plan.netTotal)}',
             style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: 16),
-          _BudgetLine(label: '每月生活', value: plan.monthlyTotal),
           _BudgetLine(
+            currency: plan.currency,
+            label: '每月生活',
+            value: plan.monthlyTotal,
+          ),
+          _BudgetLine(
+            currency: plan.currency,
             label: '${plan.months} 個月生活費',
             value: plan.monthlyTotal * plan.months,
           ),
-          _BudgetLine(label: '一次性支出', value: plan.oneTimeCosts),
-          _BudgetLine(label: '預計補助', value: -plan.scholarship),
+          _BudgetLine(
+            currency: plan.currency,
+            label: '一次性支出',
+            value: plan.oneTimeCosts,
+          ),
+          _BudgetLine(
+            currency: plan.currency,
+            label: '預計補助',
+            value: -plan.scholarship,
+          ),
         ],
       ),
     );
@@ -413,10 +438,15 @@ class _BudgetResult extends StatelessWidget {
 }
 
 class _BudgetLine extends StatelessWidget {
-  const _BudgetLine({required this.label, required this.value});
+  const _BudgetLine({
+    required this.label,
+    required this.value,
+    required this.currency,
+  });
 
   final String label;
   final double value;
+  final String currency;
 
   @override
   Widget build(BuildContext context) {
@@ -426,7 +456,7 @@ class _BudgetLine extends StatelessWidget {
         children: [
           Expanded(child: Text(label)),
           Text(
-            '${value < 0 ? '-' : ''}NT\$ ${_money(value.abs())}',
+            '${value < 0 ? '-' : ''}$currency ${_money(value.abs())}',
             style: const TextStyle(fontWeight: FontWeight.w700),
           ),
         ],

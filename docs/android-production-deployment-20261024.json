@@ -1,0 +1,61 @@
+{
+  "checked_at_utc": "2026-10-24T06:38:30.804535+00:00",
+  "service": "https://app.uniway-tw.com",
+  "deployment_script_target": "5f2a0f181322b30a1c0d1cbd5bc484a10cd313f4",
+  "operator_report": "VERIFY: everything passed; all five services healthy; ANDROID_BACKEND_DEPLOYED_OK",
+  "independent_external_checks": [
+    {
+      "path": "/health",
+      "status": 200,
+      "tls_verified": true
+    },
+    {
+      "path": "/auth/mobile/config",
+      "status": 200,
+      "tls_verified": true,
+      "body": {
+        "enabled": true,
+        "terms_version": "2026-10-19",
+        "redirect_uri": "tw.uniway.app://auth",
+        "pkce_method": "S256"
+      }
+    },
+    {
+      "path": "/auth/providers",
+      "status": 200,
+      "tls_verified": true,
+      "body": [
+        {
+          "provider": "email",
+          "enabled": false,
+          "label": "使用 Email"
+        },
+        {
+          "provider": "google",
+          "enabled": true,
+          "label": "使用 Google 繼續"
+        },
+        {
+          "provider": "facebook",
+          "enabled": false,
+          "label": "使用 Facebook 繼續"
+        },
+        {
+          "provider": "apple",
+          "enabled": false,
+          "label": "使用 Apple 繼續"
+        }
+      ]
+    },
+    {
+      "path": "/auth/mobile/exchange",
+      "invalid_code_status": 401,
+      "expected": 401
+    }
+  ],
+  "not_yet_verified": [
+    "physical Android Google login",
+    "production Web-to-phone synchronization",
+    "Firebase remote push"
+  ]
+}

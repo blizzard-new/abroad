@@ -11,6 +11,7 @@ import os
 import shutil
 import time
 from pathlib import Path
+from types import SimpleNamespace
 
 import httpx
 from pydantic import BaseModel
@@ -22,6 +23,9 @@ from .render.renderer import ffmpeg_exe
 from .store import Store
 
 FFMPEG_HINT = "自己裝一個（Windows：winget install --id Gyan.FFmpeg -e；Mac：brew install ffmpeg），或用 IMAGEIO_FFMPEG_EXE 指定"
+
+
+PING_TIMEOUT = 180  # a tool stuck on a login or trust prompt should not hold the check for the full brain timeout
 
 
 class Ping(BaseModel):
@@ -97,6 +101,7 @@ def brain_rows(settings: Settings, ping: bool = False) -> list[Row]:
             rows.append(Row(True, label, f"{where}（{duty}）"))
             continue
         started = time.monotonic()
+        brain.timeout = min(brain.timeout, PING_TIMEOUT)
         try:
             brain.ask(Ping, "連線測試：照格式回覆 ok=true，不要做任何其他事。", "", effort="low")
         except brains.BrainError as error:
@@ -106,6 +111,23 @@ def brain_rows(settings: Settings, ping: bool = False) -> list[Row]:
     return rows
 
 
+def phone_rows(settings: Settings, store: Store, http: httpx.Client | None = None) -> list[Row]:
+    if not settings.telegram_bot_token:
+        return [Row(None, "Telegram", "還沒設定：想用手機跟 Leo 說話、收通知，見 README「用手機跟 Leo 說話」")]
+    from .telegram import TelegramBridge, TelegramError
+
+    # Looking the bot up needs only the settings and the store, not a whole office.
+    bridge = TelegramBridge(SimpleNamespace(settings=settings, store=store), http=http)
+    try:
+        name = bridge.bot_name()
+    except TelegramError as error:
+        return [Row(False, "Telegram", f"TELEGRAM_BOT_TOKEN 不對或連不上：{error}")]
+    if not bridge.chat_id:
+        return [Row(False, "Telegram", f"機器人 @{name} 還沒連到你的手機：uv run office auth telegram")]
+    who = store.get("handle:telegram") or "你"
+    return [Row(True, "Telegram", f"@{name} → {who} 的手機（跟 Leo 聊天、收通知、按核准）")]
+
+
 def run(settings: Settings, *, ping: bool = False, http: httpx.Client | None = None) -> list[tuple[str, list[Row]]]:
     store = Store(settings.db_path)
     return [
@@ -113,6 +135,7 @@ def run(settings: Settings, *, ping: bool = False, http: httpx.Client | None = N
         ("圖片影片", tool_rows(settings)),
         ("每張桌子的 AI", brain_rows(settings, ping)),
         ("社群帳號（只讀取帳號資料，不會發文）", accounts.check(settings, store, http)),
+        ("手機", phone_rows(settings, store, http)),
     ]
 
 

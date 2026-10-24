@@ -9,7 +9,7 @@ from __future__ import annotations
 import asyncio
 import threading
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, Callable
 
 from .store import Store
 
@@ -22,6 +22,7 @@ class EventBus:
         self.store = store
         self._lock = threading.Lock()
         self._subscribers: list[tuple[asyncio.AbstractEventLoop, asyncio.Queue]] = []
+        self._listeners: list[Callable[[dict], None]] = []
         self.agent_states: dict[str, dict[str, Any]] = {}
 
     def subscribe(self) -> asyncio.Queue:
@@ -29,6 +30,11 @@ class EventBus:
         with self._lock:
             self._subscribers.append((asyncio.get_running_loop(), queue))
         return queue
+
+    def listen(self, callback: Callable[[dict], None]) -> None:
+        """Hand every event to `callback` on the thread that emitted it; it must return quickly."""
+        with self._lock:
+            self._listeners.append(callback)
 
     def unsubscribe(self, queue: asyncio.Queue) -> None:
         with self._lock:
@@ -48,12 +54,17 @@ class EventBus:
                     state["screen"] = data["screen"]
                 self.agent_states[agent] = state
         with self._lock:
-            subscribers = list(self._subscribers)
+            subscribers, listeners = list(self._subscribers), list(self._listeners)
         for loop, queue in subscribers:
             try:
                 loop.call_soon_threadsafe(_offer, queue, event)
             except RuntimeError:  # the subscriber's loop has closed
                 self.unsubscribe(queue)
+        for callback in listeners:
+            try:
+                callback(event)
+            except Exception:  # noqa: BLE001 - a listener must never stop an agent's work
+                pass
         return event
 
 
