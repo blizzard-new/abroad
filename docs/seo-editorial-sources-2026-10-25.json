@@ -1,0 +1,209 @@
+{
+  "checked": "2026-10-25",
+  "timezone": "Asia/Taipei",
+  "batch": "daily-2026-10-25",
+  "initial_clock_utc": "2026-10-24 23:59:31 UTC",
+  "base_commit": "252f633c4b4d859b3d7ca20df2005ec2208a8e8f",
+  "selection_basis": "Approved candidate directions 19 and 12; editorial judgment without user-supplied Search Console, search volume or ranking evidence",
+  "duplicate_review": {
+    "main_articles": 19,
+    "open_prs_checked": [
+      119,
+      122,
+      126,
+      127,
+      131
+    ],
+    "today_existing_batch_pr_before_work": null,
+    "exact_head_search": "head:codex/seo-daily-20261025, state all: no existing result; remote head absent before isolated branch creation",
+    "foundation_pr_78": "merged; on main",
+    "workflow_pr_92": "merged; daily two-article workflow on main",
+    "pending_editorial_prs": {
+      "119": [
+        "english-taught-exchange-courses",
+        "exchange-course-changes"
+      ],
+      "122": [
+        "exchange-interview-practice",
+        "exchange-housing-commute"
+      ]
+    },
+    "pending_topics_excluded": true,
+    "existing_article_files_changed": 0
+  },
+  "intent_boundaries": {
+    "toefl-ibt-preparation": "Current TOEFL iBT version, scores and task-specific preparation, distinct from general AI English learning, TOEIC L&R and formal exchange language eligibility",
+    "exchange-return-checklist": "Multi-office post-return handover, learning evidence and next-semester planning; existing credit-transfer guide retains course comparison, ECTS and recognition dossier"
+  },
+  "sources": [
+    {
+      "key": "ets-content",
+      "requested_url": "https://www.ets.org/toefl/test-takers/ibt/about/content.html",
+      "resolved_url": "https://www.ets.org/toefl/test-takers/ibt/about/content.html",
+      "status": 200,
+      "sha256": "4bd731c6838ab173ef91af839ba51811fb29cf0e64c50ef884346b917a9c749c",
+      "title": "TOEFL iBT Test Content - A Breakdown of Test Sections",
+      "text_length": 3127,
+      "checked": "2026-10-25",
+      "version": "Live current TOEFL iBT task overview read 2026-10-25; no page revision date visible; linked to 2026 specifications",
+      "support": [
+        {
+          "article": "toefl-ibt-preparation",
+          "source_id": "ets-content",
+          "scope": "2026-10-25 實際讀取當日現行內容頁，未明示修訂日。核對四科任務、適性安排可能影響時間／題數及約兩小時的預留說明。本文不將表內 base time 或題數寫成固定試卷規則，也不引用其他產品、費用或報名期限。"
+        }
+      ],
+      "evidence_location": "Task overview / timing note",
+      "evidence_quote": "test time and items may vary",
+      "access": "HTTP 200; relevant primary text and surrounding context read; raw response retained locally"
+    },
+    {
+      "key": "ets-scores",
+      "requested_url": "https://www.ets.org/toefl/test-takers/ibt/scores/understand-scores.html",
+      "resolved_url": "https://www.ets.org/toefl/test-takers/ibt/scores/understand-scores.html",
+      "status": 200,
+      "sha256": "1d0cb0c0760574de5b49dcaa669e2bc698af4d6f6c2c69f8562560dba33f7f4a",
+      "title": "TOEFL iBT Score Breakdown - What Your Scores Mean",
+      "text_length": 9131,
+      "checked": "2026-10-25",
+      "version": "Live official scores page; explicitly describes the January 21, 2026 change; no page revision date visible",
+      "support": [
+        {
+          "article": "toefl-ibt-preparation",
+          "source_id": "ets-scores",
+          "scope": "2026-10-25 核對。頁面明示 2026-01-21 起的 1–6／0.5 級距、四科平均取半級距、過渡期對照總分及機構自行訂採認要求；未明示頁面修訂日。只引用這些計分資訊，不轉載費用、出分日、效期或送分期限作個人承諾。"
+        }
+      ],
+      "evidence_location": "What Changed in January 2026",
+      "evidence_quote": "in half point increments",
+      "access": "HTTP 200; relevant primary text and surrounding context read; raw response retained locally"
+    },
+    {
+      "key": "ets-specifications",
+      "requested_url": "https://www.ets.org/content/dam/ets-org/pdfs/toefl/toefl-ibt-test-specifications-2026.pdf",
+      "resolved_url": "https://www.ets.org/pdfs/toefl/toefl-ibt-test-specifications-2026.pdf",
+      "status": 200,
+      "sha256": "72196bd328b2e2eb7e08ee031382fa174b1b80ca23b3073b9bd8743c6f39289f",
+      "pages": 18,
+      "title": "None",
+      "checked": "2026-10-25",
+      "version": "18-page PDF; cover says TOEFL iBT Test: 2026 Update, Test Blueprint and Specifications Document. PDF metadata title is None. Page 3 notes minor revisions possible before launch; no fixed counts/timings are republished",
+      "support": [
+        {
+          "article": "toefl-ibt-preparation",
+          "source_id": "ets-specifications",
+          "scope": "2026-10-25 讀取官方內容頁所連文件，PDF 共 18 頁，封面標示 2026 Update。引用 PDF 第 3 頁適性設計說明及第 4–7 頁四科任務描述。第 3 頁另註上線前規格可能微調，故本文以現行 HTML 判讀任務，不轉載該 PDF 預估題數、時長或原始點數；練習分層是編輯方法，非官方程度診斷。"
+        }
+      ],
+      "evidence_location": "PDF page 3, Blueprint Table Notes",
+      "evidence_quote": "two-stage adaptive tests",
+      "access": "HTTP 200; PDF cover, page 3 notes and pages 4-7 task tables read from text extraction; other sections not used"
+    },
+    {
+      "key": "ndhu-return",
+      "requested_url": "https://oia.ndhu.edu.tw/p/412-1027-21509.php?Lang=zh-tw",
+      "resolved_url": "https://oia.ndhu.edu.tw/p/412-1027-21509.php?Lang=zh-tw",
+      "status": 200,
+      "sha256": "9998cbdb73cb472b9817e616659f1634c6457595f23fad8356762ae76d532b74",
+      "title": "交換出返國程序  - 東華大學國際處",
+      "text_length": 1563,
+      "checked": "2026-10-25",
+      "version": "Live exchange departure/return procedure page. Lists 2026 autumn briefing updated 2026-06-05; this is not asserted to be a revision date for the full return procedure",
+      "support": [
+        {
+          "article": "exchange-return-checklist",
+          "source_id": "ndhu-return",
+          "scope": "2026-10-25 實際讀取當日頁。核對返國手續／心得、抵免與補助文件分區，以及心得建議方向。頁面列有 2026 秋季行前簡報更新於 2026-06-05，但未明示整份返國規則修訂日；不將簡報日期當作全部要求版本，也未讀取附件或表單內文。"
+        }
+      ],
+      "evidence_location": "返國及其他文件分區",
+      "evidence_quote": "繳交返國手續單及交換心得",
+      "access": "HTTP 200; relevant primary text and surrounding context read; raw response retained locally"
+    },
+    {
+      "key": "utaipei-return",
+      "requested_url": "https://international.utaipei.edu.tw/p/412-1006-7065.php?Lang=zh-tw",
+      "resolved_url": "https://international.utaipei.edu.tw/p/412-1006-7065.php?Lang=zh-tw",
+      "status": 200,
+      "sha256": "517e5d915c2e3ad57d6e089e610eda338a04c89de73f450ae820ba79e7003f3d",
+      "title": "交換申請文件",
+      "text_length": 1403,
+      "checked": "2026-10-25",
+      "version": "Live official exchange-documents page read 2026-10-25; no page revision date visible; return-document and registration/payment sections used",
+      "support": [
+        {
+          "article": "exchange-return-checklist",
+          "source_id": "utaipei-return",
+          "scope": "2026-10-25 核對當日官方頁，未見整頁修訂日期。引用返國紙本／電子資料分列、成績單未到者備注預計繳交時間，以及返校選課繳費與教務窗口。未轉載頁內期限、照片數量、獎補助或其他條件為各母校通則，個人仍依本期通知確認。"
+        }
+      ],
+      "evidence_location": "返國後須繳交文件",
+      "evidence_quote": "尚未收到成績單者請備注預計繳交時間",
+      "access": "HTTP 200; relevant primary text and surrounding context read; raw response retained locally"
+    }
+  ],
+  "retrieval_notes": [
+    {
+      "url": "https://studyabroad.ntu.edu.tw/exchange-student/after-returning-to-school/",
+      "status": 503,
+      "resolution": "Excluded entirely; no claim imported from search snippets or an unverified archive. Return procedure examples rely on the two successfully read university pages."
+    },
+    {
+      "url": "https://www.ets.org/toefl/test-takers/ibt/prepare.html",
+      "status": 200,
+      "resolution": "Read as discovery only. No claim that linked commercial services, planner downloads or every preparation item were tested or suitable for the 2026 version."
+    },
+    {
+      "url": "https://www.ets.org/toefl/institutions/ibt/score-scale-update.html",
+      "status": 200,
+      "resolution": "Relevant overview and mean/half-band examples checked as corroboration; article cites the test-taker scores page for these rules. No institutional threshold recommendation is copied."
+    }
+  ],
+  "arithmetic_checks": [
+    {
+      "label": "Hypothetical four-section average",
+      "computed": 5.25,
+      "expected": 5.25,
+      "passed": true
+    },
+    {
+      "label": "Half-band rounding matching ETS explicit example",
+      "computed": 5.5,
+      "expected": 5.5,
+      "passed": true
+    },
+    {
+      "label": "Editorial daily study minutes",
+      "computed": 60,
+      "expected": 60,
+      "passed": true
+    },
+    {
+      "label": "Five study days minutes",
+      "computed": 300,
+      "expected": 300,
+      "passed": true
+    },
+    {
+      "label": "Weekly study hours",
+      "computed": 5.0,
+      "expected": 5,
+      "passed": true
+    },
+    {
+      "label": "Two photographs bytes",
+      "computed": 224410,
+      "expected": 224410,
+      "passed": true
+    }
+  ],
+  "verification_limits": [
+    "The article applies to the updated TOEFL iBT starting January 21, 2026; no assumptions about other TOEFL products or special versions.",
+    "Official HTML controls current task overview; the linked 2026 PDF has a pre-launch revision caveat, so its estimated item counts/timings and raw point totals are not republished.",
+    "No fee, score-release date, application deadline, language threshold, scholarship amount or visa requirement is asserted.",
+    "Study times, levelled exercises and English examples are editorial methods, not ETS questions, CEFR diagnoses, score predictions or guarantees.",
+    "Return procedures are institution-specific examples. Deadlines, photo counts, attachment contents and individual benefits are not extrapolated.",
+    "No messages sent, fabricated testimonials, interviews or expert reviews.",
+    "Raw pages/PDF and stock downloads remain task-local; PR retains provenance, limited excerpts and selected reading evidence."
+  ]
+}

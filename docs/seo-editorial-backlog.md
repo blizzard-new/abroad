@@ -1,13 +1,39 @@
 # Editorial intentions and next topics
 
-## 2026-10-22 每日批次：兩篇（待審）
+## 2026-10-25 每日批次：兩篇（驗收完成，待建立 PR）
 
-台灣日期 2026-10-22，隔離分支 `codex/seo-daily-20261022`；兩篇驗收完成，一起放入新的待審 [PR #117](https://github.com/blizzard-new/abroad/pull/117)。已核對 main 的十七篇文章、當日批次與全部五個待審 PR（#111、#113、#114、#115、#116），沒有另一個當日產文批次。PR #78、#92、#109 均已合併，本批直接基於 main，無未合併的文章基礎相依。選題為使用者候選方向 20 與 6，依編輯判斷；沒有使用者提供的 Search Console、搜尋量或排名資料。
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261025`，基於 main `252f633c`。已讀 main 十九篇、所有待審 PR #119／#122／#126／#127／#131 及當日分支／PR；開始前沒有另一個 10/25 批次。PR #119、#122 的四題均視為已選並排除，本批不依賴其合併。PR #78、#92、#117 已合併。
+
+選題為使用者候選 19 與 12，依編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。
 
 | 題目 | slug | 狀態 |
 | --- | --- | --- |
-| 多益怎麼準備？TOEIC 聽讀診斷、錯題整理與四週讀書計畫 | `toeic-listening-reading-preparation` | 完成，PR #117 待審；後續批次請排除 |
-| 交換生抵達第一週要做什麼？報到、住宿、通訊與緊急聯絡清單 | `exchange-arrival-week` | 完成，PR #117 待審；後續批次請排除 |
+| 托福滿分目標怎麼準備？2026 新制題型、6 分制與練習計畫 | `toefl-ibt-preparation` | 完整文章、攝影與驗收完成；後續批次請排除 |
+| 交換返國後要做什麼？文件繳交、學習成果與下學期安排清單 | `exchange-return-checklist` | 完整文章、攝影與驗收完成；後續批次請排除 |
+
+托福篇處理新制版本與任務準備，與一般英文、多益及申請語言資格分工；返國篇處理多窗口交接、成果與下學期規劃，原有抵免指南保留課程對照與正式材料。未改動既有十九篇內容、URL、出版日與 lastmod。[來源、圖片與驗收紀錄](seo-editorial-validation-2026-10-25.md) 隨本批保存。
+
+## 2026-10-23／24 待審批次（不屬本批內容）
+
+以下於 2026-10-25 核對仍待審，不因尚未進入 main 而重做：
+
+| 日期／PR | slug | 已選方向 |
+| --- | --- | --- |
+| 10/23 [PR #119](https://github.com/blizzard-new/abroad/pull/119) | `english-taught-exchange-courses` | 英語授課課程判讀與試讀 |
+| 10/23 PR #119 | `exchange-course-changes` | 衝堂、停開與改選追蹤 |
+| 10/24 [PR #122](https://github.com/blizzard-new/abroad/pull/122) | `exchange-interview-practice` | 一般面試／AI 英文面試候選 5、18 整併 |
+| 10/24 PR #122 | `exchange-housing-commute` | 住宿通勤時間與總成本 |
+
+後續仍需先評估重疊：候選 13 優先擴充 `exchange-study-plan`；候選 11 與預算指南、候選 7 與補助指南的分工需逐次判斷。候選 15 必須有可核對的實際工具比較測試，未達此條件不得用品牌近似頁或推測成果補數。
+
+## 2026-10-22 每日批次：兩篇（已合併）
+
+台灣日期 2026-10-22，隔離分支 `codex/seo-daily-20261022`；兩篇已於 [PR #117](https://github.com/blizzard-new/abroad/pull/117) 合併。當時核對 main 的十七篇文章、當日批次與全部五個待審 PR（#111、#113、#114、#115、#116），沒有另一個當日產文批次。PR #78、#92、#109 均已合併，本批直接基於 main，無未合併的文章基礎相依。選題為使用者候選方向 20 與 6，依編輯判斷；沒有使用者提供的 Search Console、搜尋量或排名資料。
+
+| 題目 | slug | 狀態 |
+| --- | --- | --- |
+| 多益怎麼準備？TOEIC 聽讀診斷、錯題整理與四週讀書計畫 | `toeic-listening-reading-preparation` | 已合併至 main；後續批次請排除 |
+| 交換生抵達第一週要做什麼？報到、住宿、通訊與緊急聯絡清單 | `exchange-arrival-week` | 已合併至 main；後續批次請排除 |
 
 多益篇處理考試診斷與練習安排，與既有一般 AI 英文學習指南分工；抵達篇處理落地後執行、校內程序與聯絡分流，連到既有住宿、Fact Sheet 與抵免指南。沒有新增重複版本或改動既有十七篇的網址、出版日與 lastmod。[來源、圖片及驗收紀錄](seo-editorial-validation-2026-10-22.md) 隨本批保存。
 
