@@ -1,6 +1,6 @@
 # 2026-10-25 每日兩篇：來源與驗收
 
-批次日期採 Asia/Taipei。隔離分支 `codex/seo-daily-20261025` 基於最新 main `252f633c4b4d859b3d7ca20df2005ec2208a8e8f`；提交前再次 fetch，main 未變。兩篇完整文章同屬本批，PR 建立後於此記錄連結。選題依使用者候選池 19、12 及編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。
+批次日期採 Asia/Taipei。隔離分支 `codex/seo-daily-20261025` 基於最新 main `252f633c4b4d859b3d7ca20df2005ec2208a8e8f`；提交前再次 fetch，main 未變。兩篇完整文章同屬 [待審 PR #132](https://github.com/blizzard-new/abroad/pull/132)，非草稿、未合併。選題依使用者候選池 19、12 及編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。
 
 ## 選題與文章
 
@@ -63,3 +63,5 @@
 目視證據：[桌面](seo-previews-2026-10-25/desktop-1440.jpg)、[320 手機](seo-previews-2026-10-25/mobile-320.jpg)、[托福照片](seo-previews-2026-10-25/toefl-study-photo-390.jpg)、[返國照片](seo-previews-2026-10-25/exchange-return-photo-390.jpg)、[托福圖解](seo-previews-2026-10-25/toefl-ibt-preparation-diagram-390.jpg)、[返國圖解](seo-previews-2026-10-25/exchange-return-checklist-diagram-390.jpg)。原始來源回應、測試 log、完整頁面截圖與 wheel 暫存於本次工作區 `/workspace/scratch/uniway-seo-20261025/`，PR 保留可審查台帳及選定證據。
 
 本批只建立待審 PR，未自動合併、部署 Windows 正式站、寄送任何模板或要求 Google 批量建立索引。文章完成與排程執行不代表已上線或已收錄。
+
+建立 PR 後已呼叫任務的 `attach_artifact` 工具，20 秒內沒有回覆；附件狀態無法確認，未宣稱已附加成功。GitHub PR 本身已成功建立，連結如上；此工具限制不影響 PR 內的文章、來源與驗收檔。
