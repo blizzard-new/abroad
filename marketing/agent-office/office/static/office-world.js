@@ -1,7 +1,9 @@
 import * as THREE from './vendor/three.module.min.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
-import { DEPARTMENTS, departmentFor, seatLayout, daylightAt, canRest, chooseActivity, breakRoute } from './office-world-state.js';
-import { buildHeadquarters, createCoastalWater } from './office-building.js';
+import { DEPARTMENTS, departmentFor, seatLayout, daylightAt, canRest, chooseActivity, breakRoute, advanceAlongPath } from './office-world-state.js';
+import { buildHeadquarters } from './office-building.js';
+import { createCoastalWater } from './office-ocean.js';
+import { createResortSurfaces, createFoliage, createResortBeach, addBeachLounge } from './office-nature.js';
 
 // A local, procedural dollhouse: no remote assets, tracking, or model API calls.
 export function initOfficeWorld(bridge) {
@@ -9,18 +11,22 @@ export function initOfficeWorld(bridge) {
   const stage = document.querySelector('#world-stage');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.7));
+  const preferredPixelRatio = Math.min(devicePixelRatio, 1.7);
+  let pixelRatio = preferredPixelRatio, slowFrames = 0, fastFrames = 0;
+  renderer.setPixelRatio(pixelRatio);
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.autoUpdate = false;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.2;
+  renderer.toneMappingExposure = 0.96;
   host.append(renderer.domElement);
   renderer.domElement.tabIndex = 0;
   renderer.domElement.setAttribute('aria-label', '海邊 3D 公司。拖曳旋轉，滾輪縮放；也可使用上方視角按鈕及下方員工名冊。');
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2('#b3d8dd', 0.006);
+  scene.fog = new THREE.FogExp2('#91cfe6', 0.0035);
+  const surfaces = createResortSurfaces(renderer, scene);
+  const foliage = createFoliage(surfaces);
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 500);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = !reduced.matches;
@@ -41,6 +47,7 @@ export function initOfficeWorld(bridge) {
   let dayState;
   let targetView = null;
   let disposed = false;
+  let needsRender = true;
   let hidden = document.hidden;
   let lastFrame = 0;
   let animationTime = 0;
@@ -49,15 +56,10 @@ export function initOfficeWorld(bridge) {
   const staffGroup = new THREE.Group();
   scene.add(staffGroup);
   const labels = document.querySelector('#world-labels');
-  const materials = new Map();
   const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
   const sphereGeometry = new THREE.SphereGeometry(1, 12, 8);
   const cylinderGeometry = new THREE.CylinderGeometry(1, 1, 1, 10);
-  const m = (color, extras = {}) => {
-    const key = `${color}:${JSON.stringify(extras)}`;
-    if (!materials.has(key)) materials.set(key, new THREE.MeshStandardMaterial({ color, roughness: 0.78, ...extras }));
-    return materials.get(key);
-  };
+  const m = surfaces.material;
   function mesh(geometry, material, position, scale, parent = scene) {
     const obj = new THREE.Mesh(geometry, material);
     obj.position.set(...position);
@@ -84,9 +86,9 @@ export function initOfficeWorld(bridge) {
     texture.colorSpace = THREE.SRGBColorSpace;
     return texture;
   }
-  function sign(text, subtitle, p, width = 5.8, color) {
-    const texture = textTexture(text, subtitle, color);
-    const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+  function sign(text, subtitle, p, width = 5.8, color, background) {
+    const texture = textTexture(text, subtitle, color, background);
+    const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, toneMapped: false });
     const board = new THREE.Mesh(new THREE.PlaneGeometry(width, width / 4), material);
     board.position.set(...p);
     scene.add(board);
@@ -94,25 +96,15 @@ export function initOfficeWorld(bridge) {
   }
   function plant(x, z, size = 1, elevation = 0) {
     cylinder('#b98763', [x, elevation + 0.65, z], [0.36 * size, 0.7, 0.36 * size]);
-    for (let i = 0; i < 5; i++) {
-      const angle = i * 2.4;
-      const leaf = sphere(i % 2 ? '#426f5c' : '#629373', [x + Math.sin(angle) * 0.22, elevation + 1.25 + i * 0.12, z + Math.cos(angle) * 0.22], [0.25 * size, 0.65 * size, 0.16 * size]);
-      leaf.rotation.z = Math.sin(angle) * 0.55;
-    }
+    foliage.plant(x, elevation + .95, z, size * .65, scene);
   }
   function palm(x, z, size = 1) {
-    const trunk = cylinder('#9d7a51', [x, 2.9 * size, z], [0.22, 5.8 * size, 0.25]);
-    trunk.rotation.z = 0.08;
-    for (let i = 0; i < 7; i++) {
-      const a = i * Math.PI * 2 / 7;
-      const leaf = sphere(i % 2 ? '#2e7262' : '#559475', [x + Math.sin(a) * 1.2 * size, 5.8 * size, z + Math.cos(a) * 1.2 * size], [0.55 * size, 0.16, 2.1 * size]);
-      leaf.rotation.y = a; leaf.rotation.x = 0.17;
-    }
+    foliage.palm(x, -.5, z, size, scene);
   }
 
   // A complete two-storey coastal headquarters, with a removable facade/roof.
   const sea = createCoastalWater(scene);
-  const sand = mesh(new THREE.CylinderGeometry(1, 1.05, 1, 64), m('#dccba5'), [0, -0.85, 2], [26, 0.65, 23]);
+  createResortBeach(scene, surfaces);
   box('#a69579', [0, -0.3, 0], [29, 0.8, 21.8]);
   box('#eee5d5', [0, 0.15, 0], [28.7, 0.2, 21.5]);
   // Ocean-facing terrace and pier.
@@ -130,7 +122,8 @@ export function initOfficeWorld(bridge) {
   box('#ddd4c2', [0, 0.07, 15.2], [5.2, 0.18, 0.8]);
   box('#ddd4c2', [0, -0.11, 16], [5.5, 0.18, 0.8]);
   for (const z of [17, 18.6, 20.2]) box('#e3d9c5', [0, -0.37, z], [5.5, 0.18, 1.3]);
-  const building = buildHeadquarters({ scene, box, sphere, cylinder, sign });
+  const building = buildHeadquarters({ scene, box, sphere, cylinder, sign, foliage });
+  addBeachLounge({ scene, box, cylinder, foliage });
 
   DEPARTMENTS.forEach((d, i) => {
     const y = d.elevation;
@@ -186,7 +179,7 @@ export function initOfficeWorld(bridge) {
   palm(-20, -8, 1.15); palm(20, -5, 1.05); palm(21, 10, 0.9); palm(-22, 6, 0.85);
   for (let i = 0; i < 5; i++) sphere('#a2aa95', [-21 + i * 0.85, -0.25, -14 + Math.sin(i) * 0.7], [1, 0.7, 1.3]);
 
-  const hemi = new THREE.HemisphereLight('#f5ffff', '#8d8168', 2.5); scene.add(hemi);
+  const hemi = new THREE.HemisphereLight('#c4e4f2', '#93755a', 1.3); scene.add(hemi);
   const sunLight = new THREE.DirectionalLight('#fff0cf', 3); scene.add(sunLight);
   sunLight.castShadow = true;
   sunLight.shadow.mapSize.set(2048, 2048);
@@ -307,13 +300,11 @@ export function initOfficeWorld(bridge) {
       else p.nextRest = time + 5;
     }
     if (p.mode === 'walk' || p.mode === 'return') {
-      const next = p.path[0];
-      if (next) {
-        const delta = next.clone().sub(p.person.position);
-        const distance = delta.length();
-        const speed = p.mode === 'return' && !resting ? 5 : 3.1;
-        if (distance <= dt * speed) { p.person.position.copy(next); p.path.shift(); if (p.mode === 'walk') p.trail.push(next.clone()); }
-        else { p.person.position.addScaledVector(delta.normalize(), speed * dt); p.person.rotation.y = Math.atan2(delta.x, delta.z); }
+      const speed = p.mode === 'return' && !resting ? 5 : 3.1;
+      const movement = advanceAlongPath(p.person.position, p.path, dt * speed);
+      if (p.mode === 'walk') p.trail.push(...movement.reached.map(point => point.clone()));
+      if (movement.heading !== undefined) p.person.rotation.y = movement.heading;
+      if (p.path.length) {
         p.legs.forEach((leg, i) => leg.rotation.x = Math.sin(time * 10 + i * Math.PI) * 0.4);
         p.arms.forEach((arm, i) => arm.rotation.x = -Math.sin(time * 10 + i * Math.PI) * 0.25);
       } else {
@@ -406,6 +397,7 @@ export function initOfficeWorld(bridge) {
     renderRoster(agents); updateDay();
   }
   function updateDay() {
+    needsRender = true;
     dayState = daylightAt(new Date(), timeZone);
     const { daylight, night, phase, hour } = dayState;
     document.body.dataset.worldPhase = phase;
@@ -415,12 +407,14 @@ export function initOfficeWorld(bridge) {
     document.querySelector('#world-timezone').textContent = timeZone === 'Asia/Taipei' ? '台北時間' : timeZone;
     document.querySelector('#world-weather').textContent = dayState.label;
     document.querySelector('#world-status').textContent = '即時同步';
-    const sky = new THREE.Color('#13263f').lerp(new THREE.Color('#b6dadc'), daylight);
+    const sky = new THREE.Color('#0b1c32').lerp(new THREE.Color('#91cfe6'), daylight);
     if (phase === 'dawn' || phase === 'dusk') sky.lerp(new THREE.Color('#e5b399'), Math.sin(daylight * Math.PI) * 0.6);
     scene.fog.color.copy(sky);
-    stage.style.background = `linear-gradient(${sky.getStyle()}, ${new THREE.Color('#213d50').lerp(new THREE.Color('#e2e4cf'), daylight).getStyle()})`;
-    hemi.intensity = 0.4 + daylight * 2.3;
-    sunLight.intensity = daylight * 3.2; moonLight.intensity = night * 0.5;
+    stage.style.background = `linear-gradient(${sky.getStyle()}, ${new THREE.Color('#163b4a').lerp(new THREE.Color('#d2e7da'), daylight).getStyle()})`;
+    hemi.intensity = 0.28 + daylight * 1.05;
+    scene.environmentIntensity = .06 + daylight * .49;
+    sunLight.intensity = daylight * 3.8; moonLight.intensity = night * 0.5;
+    sunLight.visible = daylight > .001; moonLight.visible = night > .001;
     sunLight.position.set(Math.cos(dayState.sunAngle) * -45, Math.max(8, Math.sin(dayState.sunAngle) * 55), -20);
     sun.visible = hour >= 5.5 && hour < 18.5;
     sun.position.set(-15 - Math.cos(dayState.sunAngle) * 20, 14 + Math.max(0, Math.sin(dayState.sunAngle)) * 6, -35);
@@ -431,9 +425,9 @@ export function initOfficeWorld(bridge) {
     renderer.shadowMap.needsUpdate = true;
     stars.material.opacity = night * 0.85;
     sea.daylight.value = daylight; sea.sky.value.copy(sky); building.setNight(night);
-    sand.material.color.copy(new THREE.Color('#82938b').lerp(new THREE.Color('#dccba5'), daylight));
+    sea.lightDirection.value.copy(daylight > .1 ? sunLight.position : moonLight.position).normalize();
     clouds.forEach(c => { c.visible = daylight > 0.12; });
-    lamps.forEach(({ glow, light, pool }) => { glow.material.emissiveIntensity = night * 3; light.intensity = night * 65; pool.material.opacity = night * 0.12; });
+    lamps.forEach(({ glow, light, pool }) => { glow.material.emissiveIntensity = night * 3; light.visible = night > .001; light.intensity = night * 65; pool.material.opacity = night * 0.12; });
     people.forEach(p => { p.deskLamp.material.emissiveIntensity = night * 3; });
   }
   function focusDepartment(id = 'all', immediate = false) {
@@ -452,6 +446,7 @@ export function initOfficeWorld(bridge) {
     if (immediate || reduced.matches) { camera.position.copy(position); controls.target.copy(target); controls.update(); targetView = null; }
   }
   function setMode(mode, resetCamera = true) {
+    needsRender = true;
     viewMode = mode; building.setMode(mode); stage.dataset.view = mode;
     document.querySelectorAll('[data-world-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.worldView === mode)));
     const interior = mode === 'interior';
@@ -476,6 +471,16 @@ export function initOfficeWorld(bridge) {
     targetView = null; const offset = camera.position.clone().sub(controls.target); offset.setLength(THREE.MathUtils.clamp(offset.length() * factor, controls.minDistance, controls.maxDistance)); camera.position.copy(controls.target).add(offset); controls.update();
   });
   controls.addEventListener('start', () => { targetView = null; });
+  controls.addEventListener('change', () => { needsRender = true; });
+  function setResolution(ratio) {
+    pixelRatio = ratio; renderer.setPixelRatio(ratio);
+    renderer.setSize(host.clientWidth, host.clientHeight); needsRender = true;
+    slowFrames = fastFrames = 0;
+  }
+  reduced.addEventListener('change', () => {
+    needsRender = true;
+    if (reduced.matches) setResolution(preferredPixelRatio);
+  });
   let down;
   renderer.domElement.addEventListener('pointerdown', e => { down = [e.clientX,e.clientY]; });
   renderer.domElement.addEventListener('pointerup', e => {
@@ -500,11 +505,13 @@ export function initOfficeWorld(bridge) {
   }
   window.addEventListener('office:sync', sync);
   window.addEventListener('office:agent', e => {
+    needsRender = true;
     const p = people.get(e.detail.id); if (p) p.agent = e.detail;
   });
   window.addEventListener('office:handoff', handoff);
   document.addEventListener('visibilitychange', () => { hidden = document.hidden; lastFrame = performance.now(); if (!hidden) updateDay(); });
   const resize = new ResizeObserver(() => {
+    needsRender = true;
     camera.aspect = host.clientWidth / Math.max(1, host.clientHeight); camera.updateProjectionMatrix();
     renderer.setSize(host.clientWidth, host.clientHeight);
   });
@@ -519,11 +526,24 @@ export function initOfficeWorld(bridge) {
   const vector = new THREE.Vector3();
   function frame(now) {
     if (disposed || hidden || now - lastFrame < (reduced.matches ? 100 : 32)) return;
+    // With reduced motion, redraw only for a camera/state/clock change. This also
+    // avoids repeatedly shading a static detailed scene on battery-powered devices.
+    if (reduced.matches && !needsRender && now - lastClock <= 15000) return;
+    needsRender = false;
     const elapsed = Math.max(0, (now - lastFrame) / 1000);
-    const dt = Math.min(0.15, elapsed); lastFrame = now; animationTime += Math.min(60, elapsed);
+    const dt = Math.min(2, elapsed); lastFrame = now; animationTime += Math.min(60, elapsed);
+    // Keep the surrounding work UI responsive on integrated/software GPUs.
+    // Only the 3D canvas adapts; text stays sharp. Still views retain full resolution.
+    if (!reduced.matches && elapsed < 3) {
+      slowFrames = elapsed > .12 ? slowFrames + 1 : 0;
+      fastFrames = elapsed < .055 ? fastFrames + 1 : 0;
+      if (slowFrames >= 3 && pixelRatio > .6) setResolution(Math.max(.6, pixelRatio * .8));
+      else if (fastFrames >= 300 && pixelRatio < preferredPixelRatio) setResolution(Math.min(preferredPixelRatio, pixelRatio + .1));
+    }
     if (now - lastClock > 15000) { updateDay(); lastClock = now; }
     if (targetView) {
-      camera.position.lerp(targetView.position, 0.1); controls.target.lerp(targetView.target, 0.1);
+      const blend = 1 - Math.exp(-elapsed * 7);
+      camera.position.lerp(targetView.position, blend); controls.target.lerp(targetView.target, blend);
       if (camera.position.distanceTo(targetView.position) < 0.03) targetView = null;
     }
     controls.update();
@@ -531,6 +551,7 @@ export function initOfficeWorld(bridge) {
     arrangeLabels();
     if (!reduced.matches) {
       sea.time.value = animationTime;
+      foliage.time.value = animationTime;
       for (let i = deliveries.length - 1; i >= 0; i--) {
         const d = deliveries[i], t = Math.min(1,(animationTime-d.start)/1.6);
         d.paper.position.copy(vector.lerpVectors(d.from,d.to,t)); d.paper.position.y += Math.sin(t*Math.PI)*3;

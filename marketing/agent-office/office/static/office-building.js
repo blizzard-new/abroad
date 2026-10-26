@@ -1,18 +1,18 @@
 // Architecture remains separate from employee/work state. All assets are procedural.
 import * as THREE from './vendor/three.module.min.js';
 
-export function buildHeadquarters({ scene, box, sphere, cylinder, sign }) {
+export function buildHeadquarters({ scene, box, sphere, cylinder, sign, foliage }) {
   const structure = new THREE.Group(), envelope = new THREE.Group(), roof = new THREE.Group();
   scene.add(structure, envelope, roof);
   const nightSurfaces = [];
   const stone = '#e9e2d4', frame = '#334e4b', timber = '#b58c60';
-  const glass = { transparent: true, opacity: 0.23, depthWrite: false, roughness: 0.1, metalness: 0.2 };
+  const glass = { transparent: true, opacity: 0.32, depthWrite: false, roughness: 0.08, metalness: 0.42, envMapIntensity: 1.25 };
   function glazing(p, s, parent = envelope) {
-    const pane = box('#a8c6bf', p, s, parent, glass); pane.castShadow = false;
+    const pane = box('#87b3ad', p, s, parent, glass); pane.castShadow = false;
     return pane;
   }
-  function plaque(text, sub, p, width, parent = structure, color = '#33534c') {
-    const board = sign(text, sub, p, width, color); parent.attach(board); return board;
+  function plaque(text, sub, p, width, parent = structure, color = '#274c3e', background) {
+    const board = sign(text, sub, p, width, color, background); parent.attach(board); return board;
   }
   function strip(p, s, parent = structure) {
     const light = box('#fff1cf', p, s, parent, { emissive: '#ffd6a0', emissiveIntensity: 0.1 });
@@ -22,8 +22,7 @@ export function buildHeadquarters({ scene, box, sphere, cylinder, sign }) {
     box('#cec6b2', [x, y + 0.22, z], [width, 0.45, 0.9], parent);
     box('#586951', [x, y + 0.46, z], [width - 0.12, 0.04, 0.75], parent);
     for (let i = 0; i < Math.ceil(width); i++) {
-      sphere(i % 2 ? '#688269' : '#3e6857', [x - width / 2 + 0.5 + i, y + 0.7, z], [0.55, 0.48, 0.46], parent);
-      cylinder('#a68a64', [x - width / 2 + 0.5 + i, y + 0.8, z], [0.025, 0.7, 0.025], parent);
+      foliage.plant(x - width / 2 + .5 + i, y + .46, z, .55, parent);
     }
   }
 
@@ -63,7 +62,7 @@ export function buildHeadquarters({ scene, box, sphere, cylinder, sign }) {
   }
   box(frame, [0, 4.2, 12], [7.5, 0.18, 3.4], envelope);
   for (let x = -3.5; x <= 3.5; x += 0.45) box(timber, [x, 4.08, 12], [0.12, 0.12, 3.3], envelope);
-  plaque('U N I W A Y', 'COASTAL HEADQUARTERS', [0, 4.96, 10.88], 6.1, envelope);
+  plaque('U N I W A Y', 'COASTAL HEADQUARTERS', [0, 4.96, 10.88], 6.1, envelope, '#f4e8c8', '#153f35');
   box('#e3dccd', [0, 0.29, 11.6], [6.7, 0.14, 2.2], structure);
   // Side glazing leaves an exit beside the staircase and shared terrace.
   glazing([14.3, 2.5, 4], [0.05, 4.2, 8.3]);
@@ -81,7 +80,28 @@ export function buildHeadquarters({ scene, box, sphere, cylinder, sign }) {
   glazing([14.3, 8, -4.6], [0.05, 4.6, 11.9]);
   // Permanent slender roof beams keep the building's outline legible in section.
   for (const x of [-14.4, 14.4]) box(frame, [x, 10.2, -4.5], [0.14, 0.18, 12.4], structure);
-  plaque('U N I W A Y', 'COASTAL HEADQUARTERS', [0, 10.5, 2.02], 8, roof);
+  box('#b39256', [0, 10.5, 1.96], [8.2, 2.2, .12], roof, { metalness: .65, roughness: .35 });
+  plaque('U N I W A Y', 'COASTAL HEADQUARTERS', [0, 10.5, 2.03], 8, roof, '#f4e8c8', '#153f35');
+
+  // Joinery, facade reveals and gutters give the building a finished exterior.
+  for (const x of [-12.4, 12.4]) {
+    for (let i = 0; i < 11; i++) box(timber, [x - 1.2 + i * .24, 2.5, 10.65], [.18, 3.95, .16], envelope);
+    box(frame, [x, .48, 10.7], [2.7, .14, .18], envelope);
+    box(frame, [x, 4.43, 10.7], [2.7, .14, .18], envelope);
+  }
+  for (const y of [5.12, 10.17]) {
+    const z = y > 6 ? 1.85 : 10.83;
+    box(frame, [0, y, z], [29.5, .08, .09], y > 6 ? roof : envelope);
+  }
+  for (const x of [-14.55, 14.55]) {
+    cylinder(frame, [x, 5.2, -10.6], [.07, 10.1, .07], structure);
+    for (const y of [1.2, 4.1, 7.4, 9.7]) box('#b39256', [x, y, -10.6], [.19, .05, .2], structure, { metalness: .6, roughness: .4 });
+  }
+  box(frame, [0, 10.65, -10.9], [30.1, .13, .22], roof);
+  for (const x of [-14, 14]) for (const z of [2, 6.2, 10.4]) {
+    box(frame, [x, 5.8, z], [.22, .07, .25], roof);
+    box(frame, [x, 6.43, z], [.04, 1.25, .04], roof);
+  }
 
   // Roof garden above the lower offices: decking, pergola, lounge and planting.
   box(stone, [0, 5.42, 6.2], [29.3, 0.36, 9.3], roof);
@@ -105,17 +125,17 @@ export function buildHeadquarters({ scene, box, sphere, cylinder, sign }) {
   cylinder('#c2ac8a', [-9, 6.2, 6.5], [1, 0.16, 1], roof);
   cylinder(frame, [-9, 5.95, 6.5], [0.12, 0.5, 0.12], roof);
   planter(9, 5.75, 9.4, 7); planter(2, 5.75, 9.4, 4); planter(12.8, 5.75, 4, 2);
-  // Two restrained trees give the terrace a garden silhouette.
+  // Smaller coconut palms continue the coastal planting onto the roof garden.
   for (const x of [2, 10]) {
     cylinder('#c6bca5', [x, 6.05, 5], [0.8, 0.65, 0.8], roof);
-    cylinder('#94795b', [x, 7.1, 5], [0.09, 2.2, 0.09], roof);
-    for (let i = 0; i < 4; i++) sphere(i % 2 ? '#58765a' : '#789173', [x + Math.sin(i * 2.4) * 0.65, 8 + i % 2 * 0.45, 5 + Math.cos(i * 2.4) * 0.6], [1.05, 0.75, 1], roof);
+    foliage.palm(x, 6.3, 5, .42, roof);
   }
   // Rooftop solar panels and a low service screen, visible on an orbit around the HQ.
   for (const x of [-9, -4.7, 4.7, 9]) for (const z of [-7, -3]) {
     box('#b7b7a8', [x, 10.84, z], [3.7, 0.16, 2.8], roof);
     const panel = box('#284858', [x, 11, z], [3.5, 0.08, 2.6], roof, { roughness: 0.24, metalness: 0.4 }); panel.rotation.x = -0.08;
     for (let i = -1; i <= 1; i++) box('#759497', [x + i * 0.86, 11.12, z], [0.025, 0.025, 2.5], roof);
+    for (let i = -1; i <= 1; i++) box('#759497', [x, 11.12 - i * .065, z + i * .8], [3.4, .02, .025], roof);
   }
   box(stone, [0, 11.1, -8.2], [3.5, 0.8, 2.7], roof);
   for (let z = -9.3; z <= -7.1; z += 0.3) box(frame, [0, 11.53, z], [3.2, 0.05, 0.07], roof);
@@ -162,14 +182,16 @@ export function buildHeadquarters({ scene, box, sphere, cylinder, sign }) {
     layer.updateMatrixWorld(true);
     const batches = new Map();
     layer.traverse(obj => {
-      if (!obj.isMesh || obj.material.transparent || obj.material.map) return;
-      const key = `${obj.geometry.uuid}:${obj.material.uuid}`;
-      if (!batches.has(key)) batches.set(key, []);
-      batches.get(key).push(obj);
+      if (!obj.isMesh || obj.material.transparent || obj.material.isMeshBasicMaterial) return;
+      if (!batches.has(obj.geometry)) batches.set(obj.geometry, new Map());
+      const materials = batches.get(obj.geometry);
+      if (!materials.has(obj.material)) materials.set(obj.material, []);
+      materials.get(obj.material).push(obj);
     });
-    for (const members of batches.values()) {
+    for (const members of [...batches.values()].flatMap(materials => [...materials.values()])) {
       if (members.length < 3) continue;
       const batch = new THREE.InstancedMesh(members[0].geometry, members[0].material, members.length);
+      batch.customDepthMaterial = members[0].customDepthMaterial;
       members.forEach((obj, i) => { batch.setMatrixAt(i, obj.matrixWorld); obj.removeFromParent(); });
       batch.castShadow = true; batch.receiveShadow = true; layer.add(batch);
     }
@@ -180,32 +202,7 @@ export function buildHeadquarters({ scene, box, sphere, cylinder, sign }) {
       nightSurfaces.forEach(material => { material.emissiveIntensity = 0.1 + amount * 2.1; });
       entryLight.intensity = amount * 75;
       gardenLight.intensity = amount * 70;
+      entryLight.visible = gardenLight.visible = amount > .001;
     },
   };
-}
-
-export function createCoastalWater(scene) {
-  const material = new THREE.ShaderMaterial({
-    toneMapped: false,
-    uniforms: { time: { value: 0 }, daylight: { value: 1 }, sky: { value: new THREE.Color('#b6dadc') } },
-    vertexShader: `varying vec3 world; void main() { vec4 p = modelMatrix * vec4(position, 1.0); world = p.xyz; gl_Position = projectionMatrix * viewMatrix * p; }`,
-    fragmentShader: `uniform float time; uniform float daylight; uniform vec3 sky; varying vec3 world;
-      void main() {
-        vec2 p = world.xz;
-        float coast = length(vec2(p.x / 26.0, (p.y - 2.0) / 23.0));
-        float shallows = exp(-max(0.0, coast - 0.95) * 2.2);
-        vec3 deep = mix(vec3(0.003,0.015,0.027), vec3(0.045,0.245,0.29), daylight);
-        vec3 near = mix(vec3(0.008,0.04,0.052), vec3(0.15,0.45,0.40), daylight);
-        float ripples = sin(p.x * 1.4 + sin(p.y * 0.3 + time * 0.26) * 2.0 + time * 0.4) * sin(p.y * 0.8 + time * 0.3);
-        float glint = pow(max(0.0, ripples), 12.0) * 0.018;
-        float foam = pow(max(0.0, sin(coast * 32.0 - time * 0.65)), 10.0) * exp(-abs(coast - 1.035) * 35.0);
-        vec3 color = mix(deep, near, shallows) + vec3(glint * (0.1 + daylight * 0.9)) + vec3(foam * (0.02 + daylight * 0.18));
-        float fog = smoothstep(65.0, 180.0, distance(cameraPosition, world));
-        gl_FragColor = vec4(mix(color, sky, fog), 1.0);
-        #include <colorspace_fragment>
-      }`,
-  });
-  const water = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), material);
-  water.rotation.x = -Math.PI / 2; water.position.y = -1.08; scene.add(water);
-  return material.uniforms;
 }

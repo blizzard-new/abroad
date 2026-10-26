@@ -41,6 +41,27 @@ export function breakRoute(seat, activity) {
   return route;
 }
 
+// Consume a distance budget across as many waypoints as it reaches. This keeps
+// walking speed constant on slower GPUs, including the closely spaced stair treads.
+export function advanceAlongPath(position, path, distance) {
+  const reached = [];
+  let heading;
+  while (path.length && distance > 0) {
+    const next = path[0], dx = next.x - position.x, dy = next.y - position.y, dz = next.z - position.z;
+    const length = Math.hypot(dx, dy, dz);
+    if (length > .00001) heading = Math.atan2(dx, dz);
+    if (length <= distance) {
+      position.x = next.x; position.y = next.y; position.z = next.z;
+      distance -= length; reached.push(path.shift());
+    } else {
+      const fraction = distance / length;
+      position.x += dx * fraction; position.y += dy * fraction; position.z += dz * fraction;
+      distance = 0;
+    }
+  }
+  return { reached, heading };
+}
+
 const clamp = n => Math.max(0, Math.min(1, n));
 const smooth = n => { const t = clamp(n); return t * t * (3 - 2 * t); };
 
