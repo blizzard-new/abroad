@@ -236,6 +236,7 @@ function buildDesks(agents) {
 
 function updateDesk(id) {
   const a = S.agents.get(id);
+  if (a) window.dispatchEvent(new CustomEvent("office:agent", { detail: a }));
   const desk = $(`.desk[data-agent="${id}"]`);
   if (!a || !desk) return;
   desk.dataset.state = a.state || "idle";
@@ -301,6 +302,7 @@ function floorMap() {
 }
 
 function setupWalkers(agents) {
+  if (document.body.classList.contains("coastal")) return;
   const layer = $("#walkers");
   for (const w of W.values()) w.token++;
   W.clear();
@@ -507,6 +509,8 @@ function typeInto(el, text, key) {
 
 // ---------------------------------------------------------------- paper flights
 async function fly(from, to, label) {
+  window.dispatchEvent(new CustomEvent("office:handoff", { detail: { from, to, label } }));
+  if (document.body.classList.contains("world-ready") && !$("#flat-office").open) return;
   const src = $(`.desk[data-agent="${from}"] .monitor`);
   const dst = $(`.desk[data-agent="${to}"] .monitor`);
   if (!src || !dst) return;
@@ -808,6 +812,7 @@ function upsertDraft(d) {
   renderBoss();
   renderBoard(d.id);
   renderPanel();
+  window.dispatchEvent(new Event("office:sync"));
 }
 
 const queue = [];
@@ -921,6 +926,8 @@ async function load() {
   renderPanel();
   renderChat();
   $("#run-btn").disabled = S.busy;
+  tickClock();
+  window.dispatchEvent(new Event("office:sync"));
   return true;
 }
 
@@ -1004,5 +1011,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   const boss = $('.desk[data-agent="boss"]');
   boss.addEventListener("click", () => openAgent("boss"));
   boss.addEventListener("keydown", (e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), openAgent("boss")));
-  if (await load()) connect();
+  if (await load()) {
+    connect();
+    const fallback = (message) => {
+      document.body.classList.remove("world-ready");
+      document.body.classList.add("world-unavailable");
+      $("#world-status").textContent = message || "這個瀏覽器無法顯示 3D，請使用下方平面工作台。";
+      $("#flat-office").open = true;
+    };
+    import("/static/office-world.js").then(module => module.initOfficeWorld({ getState: () => S, openAgent, fallback }))
+      .catch(error => { console.warn("3D office unavailable:", error); fallback(); });
+  }
 });
