@@ -93,6 +93,7 @@ class Chief(Agent):
         hires = [a for a in office.staff.values() if hasattr(a, "record")]
         daily = "\n".join(
             f"- {a.persona.name}（{a.persona.title}）：{a.record.get('daily') or '還沒有每天固定的工作'}"
+            + (f"；每天 {'、'.join(office.hire_times(a))} 做" if a.record.get("daily_kind") else "")
             + (f"；負責 {len(a.record['schools'])} 所大學" if a.record.get("schools") else "")
             for a in hires
         )
@@ -185,6 +186,16 @@ class Chief(Agent):
         shares = self.office.split_schools(action.names or ([action.name] if action.name else []))
         lines = [f"{name} 負責 {len(schools)} 所：{'、'.join(schools)}" for name, schools in shares.items()]
         return "大學分好了，從明天起每天開工時巡查：\n" + "\n".join(lines)
+
+    def _do_set_schedule(self, action: ChiefAction) -> str:
+        names = action.names or ([action.name] if action.name else [])
+        if not names:
+            raise ValueError("要設定哪幾位新同事的時間？")
+        lines = []
+        for name in names:
+            times = self.office.set_hire_times(name, action.times)
+            lines.append(f"{name} 每天 {'、'.join(times)} 做固定工作")
+        return "；".join(lines)
 
     def _do_dismiss(self, action: ChiefAction) -> str:
         return f"{self.office.dismiss(action.name or action.role)}離開辦公室了"

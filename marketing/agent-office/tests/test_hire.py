@@ -143,3 +143,30 @@ def test_a_school_round_can_start_right_away(office, monkeypatch):
     answer = office.staff["chief"].handle("請 Dora 現在先巡查一次")
     assert "現在開始巡查 33 所" in answer["text"]
     assert wait_for(lambda: any(m["text"].startswith("Dora今天巡查了") for m in office.store.chat()), seconds=20)
+
+
+def test_colleagues_can_work_at_their_own_times_several_times_a_day(office, monkeypatch):
+    from datetime import date, datetime, time, timezone
+
+    office.hire("Dora", "校園情報研究員", "巡查各大學官網")
+    office.hire("dora2", "校園情報研究員", "巡查各大學官網")
+    office.split_schools(["Dora", "dora2"])
+    chief_does(monkeypatch, {"type": "set_schedule", "names": ["Dora", "dora2"], "times": ["17:00", "10:00"]})
+    answer = office.staff["chief"].handle("Dora 和 dora2 每天早上十點和下午五點各巡查一次")
+    assert "Dora 每天 10:00、17:00 做固定工作" in answer["text"]
+    assert "每天 10:00、17:00 做" in office.staff["chief"].state_text()
+
+    day = date(2030, 1, 7)
+    at = lambda hh, mm: office.at(day, time(hh, mm)).astimezone(timezone.utc)  # noqa: E731
+    assert office.run_hire_dailies(at(9, 59)) == []
+    assert office.run_hire_dailies(at(10, 0)) == ["Dora", "dora2"]
+    assert office.run_hire_dailies(at(10, 30)) == []  # already done this morning
+    assert office.run_hire_dailies(at(17, 1)) == ["Dora", "dora2"]
+    assert office.run_hire_dailies(at(23, 0)) == []
+    # Off all next day until evening: one round on start, not two.
+    assert office.run_hire_dailies(at(10, 0).replace(day=8).replace(hour=11)) == ["Dora", "dora2"]
+    assert office.run_hire_dailies(at(10, 0).replace(day=8).replace(hour=11, minute=30)) == []
+    assert wait_for(lambda: sum("今天巡查了" in m["text"] for m in office.store.chat()) >= 6, seconds=30)
+
+    with pytest.raises(ValueError, match="看不懂"):
+        office.set_hire_times("Dora", ["25:00"])
