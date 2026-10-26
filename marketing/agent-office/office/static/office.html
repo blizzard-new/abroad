@@ -8,22 +8,50 @@
 <link rel="stylesheet" href="/fonts/genjyuu/GenJyuuGothic-Medium.css" />
 <link rel="stylesheet" href="/fonts/genjyuu/GenJyuuGothic-Bold.css" />
 <link rel="stylesheet" href="/static/office.css" />
+<link rel="stylesheet" href="/static/coastal-office.css" />
 </head>
-<body>
+<body class="coastal">
 <header class="topbar">
   <a class="brand" href="/" aria-label="UniWay 行銷辦公室">
     <img src="/brand/uniway-logo.webp" alt="" width="34" height="34" />
-    <span><b>UniWay</b> 行銷辦公室</span>
+    <span><b>UniWay</b><small>行銷辦公室 / COASTAL HQ</small></span>
   </a>
-  <div class="modes" id="modes"></div>
+
   <div class="top-actions">
     <time class="clock-text" id="clock-text" aria-label="台北時間"></time>
     <button class="run-btn" id="run-btn" type="button">開始今天的工作</button>
   </div>
 </header>
+<div class="connection-strip"><span class="connection-label">OFFICE STATUS</span><div class="modes" id="modes"></div></div>
 
 <main class="layout">
   <section class="room" aria-label="辦公室">
+    <div class="coastal-heading">
+      <div><p class="eyebrow">A LITTLE CLOSER TO THE OCEAN</p><h1>海風裡，靈感正忙。</h1><p>UniWay 海岸總部 <span>／</span> <span id="staff-total">正在連上辦公室…</span></p></div>
+      <div class="world-time-card"><span id="world-timezone">台北時間</span><time id="world-time">--:--</time><span id="world-weather">跟隨真實時間</span></div>
+    </div>
+    <nav class="department-nav" id="department-nav" aria-label="選擇部門視角">
+      <button type="button" data-world-department="all" aria-pressed="true">全公司</button>
+      <button type="button" data-world-department="research" aria-pressed="false"><i style="--dept:#71b8a2"></i>企劃研究</button>
+      <button type="button" data-world-department="design" aria-pressed="false"><i style="--dept:#e8a16c"></i>視覺設計</button>
+      <button type="button" data-world-department="video" aria-pressed="false"><i style="--dept:#a898cf"></i>影音製作</button>
+      <button type="button" data-world-department="social" aria-pressed="false"><i style="--dept:#739fca"></i>社群發佈</button>
+      <button type="button" data-world-department="quality" aria-pressed="false"><i style="--dept:#cfb96d"></i>品管數據</button>
+      <button type="button" data-world-department="management" aria-pressed="false"><i style="--dept:#8faeb2"></i>總管辦公室</button>
+    </nav>
+    <section class="world-stage" id="world-stage" aria-label="海岸公司 3D 場景">
+      <div class="world-caption"><span class="live-dot"></span><span id="world-status" role="status">正在佈置海岸辦公室…</span><span class="world-location">25° N / THE COAST</span></div>
+      <div id="world-canvas"></div><div id="world-labels"></div>
+      <p class="world-help">拖曳旋轉 · 滾輪縮放 · 點員工查看工作</p>
+      <div class="world-controls" aria-label="3D 視角控制">
+        <button type="button" id="world-reset" aria-label="回到全公司視角" title="回到全公司">⌂</button>
+        <button type="button" id="world-rotate" aria-label="旋轉視角" title="旋轉">↻</button>
+        <span></span>
+        <button type="button" id="world-out" aria-label="縮小" title="縮小">−</button>
+        <button type="button" id="world-in" aria-label="放大" title="放大">＋</button>
+      </div>
+    </section>
+    <details class="team-directory" open><summary>部門與同事 <span>點名字，看看他正在忙什麼</span></summary><div id="department-roster"></div></details>
     <div class="wall">
       <div class="window" id="window" aria-hidden="true">
         <svg class="skyline" viewBox="0 0 320 120" preserveAspectRatio="xMidYMax slice">
@@ -63,6 +91,7 @@
       </div>
     </div>
 
+    <details class="flat-office" id="flat-office" open><summary>平面工作台 <span>查看桌上螢幕與詳細工作狀態</span></summary>
     <div class="floor">
       <div class="prop plant" aria-hidden="true"><svg viewBox="0 0 12 18" class="px">
         <rect x="5" y="0" width="2" height="2" fill="#3fa66b"/><rect x="2" y="2" width="8" height="2" fill="#3fa66b"/><rect x="1" y="4" width="10" height="3" fill="#2f8f5a"/>
@@ -91,6 +120,7 @@
       <div class="walkers" id="walkers"></div>
     </div>
     <div class="flights" id="flights" aria-hidden="true"></div>
+    </details>
   </section>
 
   <aside class="panel" aria-label="審核與紀錄">
