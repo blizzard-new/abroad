@@ -141,3 +141,38 @@ body[data-world-phase="night"] .world-stage { border-color: #304d5c; }
 .world-person span { display: none; }
 .world-person:hover span, .world-person:focus-visible span, .world-person:not([data-activity="desk"]) span { display: block; }
 .world-person.crowded:not(:focus-visible):not(:hover) { opacity: 0; pointer-events: none; }
+
+/* A complete building first, a working office one click inside. */
+.coastal .room { padding-top: 30px; }
+.coastal-heading h1 { letter-spacing: 0.5px; }
+.world-view-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 18px; padding-bottom: 16px; border-bottom: 1px solid #dce4da; }
+.world-views { display: flex; gap: 5px; padding: 4px; background: #e5ebe2; border: 1px solid #dbe3d7; border-radius: 9px; }
+.world-views button { border: 0; border-radius: 6px; padding: 9px 13px; background: none; color: #78877b; font-size: 11px; white-space: nowrap; }
+.world-views button span { font-size: 15px; margin-right: 7px; vertical-align: -1px; }
+.world-views button[aria-pressed="true"] { background: #fcfcf5; color: #30564a; box-shadow: 0 1px 4px #233d2810; }
+.building-index { color: #86978a; font: 9px system-ui,sans-serif; letter-spacing: 1.3px; }
+.world-stage { height: clamp(540px, 61vw, 740px); border-color: #c3d2c7; box-shadow: 0 12px 40px -26px #2c4d472e; }
+.world-building-caption { position: absolute; left: 23px; bottom: 57px; color: #29574f; pointer-events: none; }
+.world-building-caption > span { font: 11px/1.4 system-ui,sans-serif; letter-spacing: 2.5px; }
+.world-building-caption p { font-size: 12px; margin: 6px 0 11px; }
+.world-building-caption button { pointer-events: auto; border: 1px solid #ffffffb0; background: #f7f7ecdb; color: #34584d; border-radius: 6px; font-size: 11px; padding: 8px 12px; box-shadow: 0 2px 8px #274c3610; }
+.world-building-caption button:hover { background: #fffef4; }
+.world-stage[data-view="interior"] .world-building-caption > span, .world-stage[data-view="interior"] .world-building-caption p { display: none; }
+body[data-world-phase="night"] .world-building-caption { color: #dce9df; }
+.world-unavailable .world-building-caption, .world-unavailable .world-view-bar { display: none; }
+.coastal.tv .world-stage { height: calc(100vh - 355px); }
+@media (max-width: 1100px) { .building-index { display: none; } .world-stage { height: 630px; } }
+@media (max-width: 500px) {
+  .coastal .room { padding-top: 23px; }
+  .coastal-heading h1 { font-size: 21px; letter-spacing: 0; }
+  .world-view-bar { margin-bottom: 12px; padding-bottom: 12px; }
+  .world-views { width: 100%; gap: 3px; }
+  .world-views button { flex: 1; padding: 9px 4px; font-size: 10px; }
+  .world-views button span { margin-right: 4px; font-size: 13px; }
+  .world-stage { height: 560px; }
+  .world-building-caption { left: 14px; bottom: 95px; }
+  .world-building-caption > span { font-size: 9px; letter-spacing: 1.6px; }
+  .world-building-caption p { font-size: 10px; margin: 5px 0 9px; }
+  .world-building-caption button { font-size: 10px; padding: 7px 10px; }
+  .world-location { display: none; }
+}

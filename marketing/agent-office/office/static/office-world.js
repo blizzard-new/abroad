@@ -1,6 +1,7 @@
 import * as THREE from './vendor/three.module.min.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
-import { DEPARTMENTS, departmentFor, seatLayout, daylightAt, canRest, chooseActivity } from './office-world-state.js';
+import { DEPARTMENTS, departmentFor, seatLayout, daylightAt, canRest, chooseActivity, breakRoute } from './office-world-state.js';
+import { buildHeadquarters, createCoastalWater } from './office-building.js';
 
 // A local, procedural dollhouse: no remote assets, tracking, or model API calls.
 export function initOfficeWorld(bridge) {
@@ -26,18 +27,17 @@ export function initOfficeWorld(bridge) {
   controls.dampingFactor = 0.075;
   controls.enablePan = false;
   controls.minDistance = 14;
-  controls.maxDistance = 88;
+  controls.maxDistance = 125;
   controls.minPolarAngle = 0.25;
   controls.maxPolarAngle = Math.PI * 0.47;
   const people = new Map();
   const picking = [];
   const lamps = [];
-  const windows = [];
-  const waves = [];
   const clouds = [];
   const deliveries = [];
   let timeZone = 'Asia/Taipei';
   let activeDepartment = 'all';
+  let viewMode = 'exterior';
   let dayState;
   let targetView = null;
   let disposed = false;
@@ -92,11 +92,11 @@ export function initOfficeWorld(bridge) {
     scene.add(board);
     return board;
   }
-  function plant(x, z, size = 1) {
-    cylinder('#b98763', [x, 0.65, z], [0.36 * size, 0.7, 0.36 * size]);
+  function plant(x, z, size = 1, elevation = 0) {
+    cylinder('#b98763', [x, elevation + 0.65, z], [0.36 * size, 0.7, 0.36 * size]);
     for (let i = 0; i < 5; i++) {
       const angle = i * 2.4;
-      const leaf = sphere(i % 2 ? '#426f5c' : '#629373', [x + Math.sin(angle) * 0.22, 1.25 + i * 0.12, z + Math.cos(angle) * 0.22], [0.25 * size, 0.65 * size, 0.16 * size]);
+      const leaf = sphere(i % 2 ? '#426f5c' : '#629373', [x + Math.sin(angle) * 0.22, elevation + 1.25 + i * 0.12, z + Math.cos(angle) * 0.22], [0.25 * size, 0.65 * size, 0.16 * size]);
       leaf.rotation.z = Math.sin(angle) * 0.55;
     }
   }
@@ -110,17 +110,9 @@ export function initOfficeWorld(bridge) {
     }
   }
 
-  // Ocean, sand and a raised coastal building. Front walls/roof are cut away for visibility.
-  const sea = box('#53aeb7', [0, -1.2, 0], [400, 0.15, 400], scene, { roughness: 0.36, metalness: 0.15 });
-  sea.castShadow = false;
+  // A complete two-storey coastal headquarters, with a removable facade/roof.
+  const sea = createCoastalWater(scene);
   const sand = mesh(new THREE.CylinderGeometry(1, 1.05, 1, 64), m('#dccba5'), [0, -0.85, 2], [26, 0.65, 23]);
-  for (let i = 0; i < 38; i++) {
-    const a = i * 2.399;
-    const r = 27 + (i % 5) * 8;
-    const wave = box('#c8e6dd', [Math.sin(a) * r, -1.07, Math.cos(a) * r], [2 + i % 4, 0.025, 0.1], scene, { transparent: true, opacity: 0.48 });
-    wave.castShadow = false;
-    waves.push({ mesh: wave, x: wave.position.x, z: wave.position.z, phase: a });
-  }
   box('#a69579', [0, -0.3, 0], [29, 0.8, 21.8]);
   box('#eee5d5', [0, 0.15, 0], [28.7, 0.2, 21.5]);
   // Ocean-facing terrace and pier.
@@ -132,72 +124,65 @@ export function initOfficeWorld(bridge) {
     cylinder('#72583c', [-19.5, -0.3, z], [0.12, 2, 0.12]);
     cylinder('#72583c', [-16.5, -0.3, z], [0.12, 2, 0.12]);
   }
-  for (const x of [-12.5, 0, 13.5]) { box('#cbbd9f', [x, 0.9, 14.7], [0.12, 1.3, 0.12]); }
-  box('#e7dfc8', [0.5, 1.5, 14.7], [26, 0.12, 0.12]);
-  // Low walls and framed panoramic glazing along the back.
-  box('#e9e3d6', [0, 0.85, -10.5], [29, 1.3, 0.25]);
-  box('#e9e3d6', [-14.3, 0.85, 0], [0.25, 1.3, 21]);
-  box('#304b49', [0, 4.6, -10.5], [29, 0.22, 0.26]);
-  for (let x = -14; x <= 14; x += 4.65) {
-    box('#516c68', [x, 2.8, -10.5], [0.1, 3.6, 0.16]);
-    if (x < 13) {
-      const glass = box('#accfcc', [x + 2.3, 3, -10.5], [4.5, 3.1, 0.06], scene, { transparent: true, opacity: 0.13, depthWrite: false, roughness: 0.2 });
-      glass.castShadow = false; windows.push(glass);
-    }
-  }
-  box('#304b49', [-14.3, 4.6, -5], [0.22, 0.22, 11]);
-  for (let z = -10; z <= 0; z += 5) box('#516c68', [-14.3, 2.8, z], [0.1, 3.6, 0.16]);
+  for (const x of [-12.5, -2.5, 2.5, 13.5]) { box('#cbbd9f', [x, 0.9, 14.7], [0.12, 1.3, 0.12]); }
+  box('#e7dfc8', [-7.5, 1.5, 14.7], [10, 0.12, 0.12]);
+  box('#e7dfc8', [8, 1.5, 14.7], [11, 0.12, 0.12]);
+  box('#ddd4c2', [0, 0.07, 15.2], [5.2, 0.18, 0.8]);
+  box('#ddd4c2', [0, -0.11, 16], [5.5, 0.18, 0.8]);
+  for (const z of [17, 18.6, 20.2]) box('#e3d9c5', [0, -0.37, z], [5.5, 0.18, 1.3]);
+  const building = buildHeadquarters({ scene, box, sphere, cylinder, sign });
 
   DEPARTMENTS.forEach((d, i) => {
-    box(d.color, [d.x, 0.28, d.z], [8.5, 0.05, 8.3], scene, { roughness: 1 });
-    box('#eee8dc', [d.x, 0.32, d.z - 0.15], [8.15, 0.04, 7.6]);
+    const y = d.elevation;
+    box(d.color, [d.x, y + 0.28, d.z], [8.5, 0.05, 8.3], scene, { roughness: 1 });
+    box('#eee8dc', [d.x, y + 0.32, d.z - 0.15], [8.15, 0.04, 7.6]);
     // A clear nameplate at the front of every department, readable from the default view.
-    const title = sign(d.name, d.en, [d.x, 0.4, d.z + 3.5], 6.4, d.color);
+    const title = sign(`${d.level}F / ${d.name}`, d.en, [d.x, y + 0.4, d.z + 3.5], 6.4, d.color);
     title.rotation.x = -Math.PI / 2;
-    if (i < 3) sign(d.name, d.en, [d.x, 3.3, -10.29], 6.6);
+    if (i < 3) sign(d.name, d.en, [d.x, y + 3.3, -10.29], 6.6);
     // Warm suspended fixtures that switch on at night.
-    const fixture = box('#384e49', [d.x, 4.15, d.z], [3.3, 0.13, 0.33]);
-    const glow = box('#fff1cd', [d.x, 4.24, d.z], [3.1, 0.045, 0.26], scene, { emissive: '#ffcf87', emissiveIntensity: 0 });
+    const fixture = box('#384e49', [d.x, y + 4.15, d.z], [3.3, 0.13, 0.33]);
+    const glow = box('#fff1cd', [d.x, y + 4.24, d.z], [3.1, 0.045, 0.26], scene, { emissive: '#ffcf87', emissiveIntensity: 0 });
     const light = new THREE.PointLight('#ffd99e', 0, 11, 2);
-    light.position.set(d.x, 3.7, d.z); scene.add(light);
+    light.position.set(d.x, y + 3.7, d.z); scene.add(light);
     const pool = new THREE.Mesh(new THREE.CircleGeometry(3.4, 32), new THREE.MeshBasicMaterial({ color: '#ffca78', transparent: true, opacity: 0, depthWrite: false }));
-    pool.rotation.x = -Math.PI / 2; pool.position.set(d.x, 0.35, d.z); scene.add(pool);
+    pool.rotation.x = -Math.PI / 2; pool.position.set(d.x, y + 0.35, d.z); scene.add(pool);
     lamps.push({ glow, light, fixture, pool });
   });
   // Glass partitions separate the six studios without blocking the people.
   for (const x of [-4.5, 4.5]) {
     for (const z of [-6, 5.5]) {
-      box('#d4d8cf', [x, 0.8, z], [0.16, 1, 6]);
-      const glass = box('#aaccc4', [x, 1.8, z], [0.045, 1, 6], scene, { transparent: true, opacity: 0.18, depthWrite: false });
+      const y = z < 0 ? 5.4 : 0;
+      box('#d4d8cf', [x, y + 0.8, z], [0.16, 1, 6]);
+      const glass = box('#aaccc4', [x, y + 1.8, z], [0.045, 1, 6], scene, { transparent: true, opacity: 0.18, depthWrite: false });
       glass.castShadow = false;
-      box('#688b80', [x, 2.32, z], [0.09, 0.07, 6]);
+      box('#688b80', [x, y + 2.32, z], [0.09, 0.07, 6]);
     }
   }
-  for (const x of [-11.6, -6.6, -2.6, 2.6, 6.6, 11.6]) box('#d4d8cf', [x, 0.8, -0.5], [2.8, 1, 0.15]);
+  for (const x of [-11.6, -6.6, -2.6, 2.6, 6.6, 11.6]) box('#d4d8cf', [x, 6.2, -0.5], [2.8, 1, 0.15]);
 
   // Department-specific props: samples, a photography rig, charts, and a meeting table.
-  for (let i = 0; i < 4; i++) box(['#d98972', '#dcbf67', '#80ad9b', '#8b9dcd'][i], [-2.5 + i * 1.6, 2, -9.45], [1.1, 1.5, 0.09]);
-  box('#3a464f', [11.5, 1.8, -8.4], [2.8, 2.8, 0.18]);
-  cylinder('#394750', [7, 1.35, -8.4], [0.07, 2.1, 0.07]);
+  for (let i = 0; i < 4; i++) box(['#d98972', '#dcbf67', '#80ad9b', '#8b9dcd'][i], [-2.5 + i * 1.6, 7.4, -9.45], [1.1, 1.5, 0.09]);
+  box('#3a464f', [11.5, 7.2, -8.4], [2.8, 2.8, 0.18]);
+  cylinder('#394750', [7, 6.75, -8.4], [0.07, 2.1, 0.07]);
   const ring = new THREE.Mesh(new THREE.TorusGeometry(0.55, 0.08, 8, 24), m('#fff0cb', { emissive: '#ffd8a0', emissiveIntensity: 0.6 }));
-  ring.position.set(7, 2.5, -8.4); scene.add(ring);
-  box('#434e57', [11.2, 1.7, -8], [0.6, 0.45, 0.6]);
-  cylinder('#434e57', [11.2, 0.9, -8], [0.06, 1.4, 0.06]);
+  ring.position.set(7, 7.9, -8.4); scene.add(ring);
+  box('#434e57', [11.2, 7.1, -8], [0.6, 0.45, 0.6]);
+  cylinder('#434e57', [11.2, 6.3, -8], [0.06, 1.4, 0.06]);
   for (let i = 0; i < 5; i++) box('#719e88', [-2.8 + i * 1.3, 0.8 + i * 0.16, 1], [0.5, 0.7 + i * 0.3, 0.35]);
   // Shared water station, terrace fitness mat, bench and coffee table.
-  box('#e4e7df', [16, 0.75, 2], [3, 0.4, 9]);
-  box('#e7ede8', [16, 1.15, -0.8], [0.85, 1.6, 0.8]);
-  cylinder('#8bc9da', [16, 2.25, -0.8], [0.34, 0.7, 0.34], scene, { transparent: true, opacity: 0.75 });
-  box('#365b6e', [16, 1.5, -0.35], [0.4, 0.2, 0.12]);
-  sign('補水站', 'WATER BREAK', [16, 3, -1.3], 2.2);
+  box('#ddd2bf', [16.8, 0.15, 12], [5.8, 0.25, 3.5]);
+  box('#e7ede8', [17.8, 1.15, 11.2], [0.85, 1.6, 0.8]);
+  cylinder('#8bc9da', [17.8, 2.25, 11.2], [0.34, 0.7, 0.34], scene, { transparent: true, opacity: 0.75 });
+  box('#365b6e', [17.8, 1.5, 11.65], [0.4, 0.2, 0.12]);
+  sign('補水站', 'WATER BREAK', [17.8, 3, 10.7], 2.2);
   box('#699e92', [9, 0.34, 12.5], [3.5, 0.08, 1.7]);
   sign('海風伸展區', 'BREATHE & STRETCH', [9, 0.36, 14], 3.8).rotation.x = -Math.PI / 2;
   box('#bf8a65', [-5, 0.8, 12.8], [4, 0.25, 1]);
   for (const x of [-6.5, -3.5]) box('#4c6254', [x, 0.5, 12.8], [0.15, 0.7, 0.8]);
-  cylinder('#e8d8bb', [-1, 0.85, 12.5], [0.75, 0.1, 0.75]);
-  cylinder('#5a6856', [-1, 0.5, 12.5], [0.1, 0.7, 0.1]);
-  sign('U N I W A Y', 'THE COASTAL OFFICE', [0, 1.2, 15], 7.6);
-  [[-13, -8], [-13, 9], [13, -8], [13, 9], [3.5, 9]].forEach(([x,z]) => plant(x,z));
+  cylinder('#e8d8bb', [-8.7, 0.85, 12.5], [0.75, 0.1, 0.75]);
+  cylinder('#5a6856', [-8.7, 0.5, 12.5], [0.1, 0.7, 0.1]);
+  [[-13, -8], [-13, 9], [13, -8], [13, 9], [3.5, 9]].forEach(([x,z]) => plant(x,z,1,z < 0 ? 5.4 : 0));
   palm(-20, -8, 1.15); palm(20, -5, 1.05); palm(21, 10, 0.9); palm(-22, 6, 0.85);
   for (let i = 0; i < 5; i++) sphere('#a2aa95', [-21 + i * 0.85, -0.25, -14 + Math.sin(i) * 0.7], [1, 0.7, 1.3]);
 
@@ -229,7 +214,7 @@ export function initOfficeWorld(bridge) {
   function createPerson(agent, seat, index) {
     const group = new THREE.Group(); staffGroup.add(group);
     const desk = new THREE.Group(); group.add(desk);
-    desk.position.set(seat.x, 0, seat.z);
+    desk.position.set(seat.x, seat.elevation, seat.z);
     const shirt = agent.shirt || '#678e8c';
     const skin = ['#ecc4a2', '#c78d69', '#edba94', '#d5a282'][index % 4];
     box('#c49f77', [0, 1.35, 0], [2.12, 0.15, 1.15], desk);
@@ -247,7 +232,7 @@ export function initOfficeWorld(bridge) {
     box('#496168', [0, 1.3, 1.17], [0.68, 0.8, 0.1], desk);
     cylinder('#334950', [0, 0.55, 0.9], [0.06, 0.6, 0.06], desk);
     const person = new THREE.Group(); group.add(person);
-    person.position.set(seat.x, 0.35, seat.z + 0.75);
+    person.position.set(seat.x, seat.elevation + 0.35, seat.z + 0.75);
     const torso = box(shirt, [0, 0.92, 0], [0.52, 0.7, 0.34], person);
     const head = new THREE.Group(); head.position.y = 1.5; person.add(head);
     sphere(skin, [0, 0, 0], [0.29, 0.31, 0.27], head);
@@ -290,22 +275,11 @@ export function initOfficeWorld(bridge) {
     p.head.rotation.set(0, 0, 0); p.torso.rotation.set(0, 0, 0);
     p.arms.forEach(a => a.rotation.set(0, 0, 0)); p.legs.forEach(l => l.rotation.set(0, 0, 0));
   }
-  function routeTo(p, destination) {
-    // Leave along the aisle behind the desk, then through the department doorway.
-    const d = p.seat.department;
-    const aisle = p.seat.department.z < 0 ? -0.1 : 9.9;
-    return [new THREE.Vector3(p.seat.x, 0.35, p.seat.z + 1.45),
-      new THREE.Vector3(d.x + 3.7, 0.35, p.seat.z + 1.45),
-      new THREE.Vector3(d.x + 3.7, 0.35, d.z + 3),
-      new THREE.Vector3(d.x, 0.35, d.z + 3),
-      new THREE.Vector3(d.x, 0.35, aisle), new THREE.Vector3(14.9, 0.35, aisle),
-      new THREE.Vector3(14.9, 0.35, destination.z), destination];
-  }
   function returnToDesk(p) {
     resetPose(p);
     if (p.activity === 'nap') { p.mode = 'desk'; p.activity = null; p.nextRest = animationTime + 20 + Math.random() * 30; return; }
     // Retrace the actual path, including when a task interrupts a walk halfway through.
-    p.path = (p.trail || [new THREE.Vector3(p.seat.x, 0.35, p.seat.z + 0.75)]).slice().reverse();
+    p.path = (p.trail || [new THREE.Vector3(p.seat.x, p.seat.elevation + 0.35, p.seat.z + 0.75)]).slice().reverse();
     p.mode = 'return';
   }
   function startRest(p) {
@@ -318,7 +292,7 @@ export function initOfficeWorld(bridge) {
     else {
       p.mode = 'walk';
       p.trail = [p.person.position.clone()];
-      p.path = routeTo(p, p.activity === 'water' ? new THREE.Vector3(16, 0.35, 0.5) : new THREE.Vector3(9, 0.35, 12.5));
+      p.path = breakRoute(p.seat, p.activity).map(point => new THREE.Vector3(...point));
     }
   }
   function updatePerson(p, dt, time) {
@@ -326,7 +300,7 @@ export function initOfficeWorld(bridge) {
     const resting = canRest(state) && p.agent.id !== 'boss';
     if (!resting && (p.mode === 'rest' || p.mode === 'walk')) returnToDesk(p);
     if (reduced.matches && p.mode !== 'desk') {
-      p.person.position.set(p.seat.x, 0.35, p.seat.z + 0.75); p.mode = 'desk'; p.activity = null; resetPose(p);
+      p.person.position.set(p.seat.x, p.seat.elevation + 0.35, p.seat.z + 0.75); p.mode = 'desk'; p.activity = null; resetPose(p);
     }
     if (!reduced.matches && resting && p.mode === 'desk' && time >= p.nextRest) {
       if ([...people.values()].filter(a => a.mode !== 'desk').length < 4) startRest(p);
@@ -363,12 +337,18 @@ export function initOfficeWorld(bridge) {
     p.marker.material.color.set(color);
     p.screen.material.emissiveIntensity = work ? 0.8 : 0.2 + (dayState?.night || 0) * 0.3;
     p.status.textContent = p.mode === 'return' ? (resting ? '回座位' : '收到工作 · 回座位') : p.mode !== 'desk' ? ACTIVITY[p.activity] : state === 'error' ? '需要協助' : state === 'waiting' ? '等待處理' : work ? '工作中' : p.agent.id === 'boss' ? `${pending} 則待審` : '待命中';
+    const onStairs = p.person.position.x > 15 && p.person.position.x < 17 && p.person.position.y > 0.4 && p.person.position.z >= 0.4 && p.person.position.z <= 10.5;
+    p.label.dataset.location = onStairs ? 'stairs' : p.person.position.z > 10.8 ? 'terrace' : 'office';
+    if (p.mode === 'walk') p.status.textContent = onStairs ? '下樓 · 休息一下' : p.activity === 'water' ? '前往補水站' : '前往海風伸展區';
+    if (p.mode === 'return' && onStairs) p.status.textContent = resting ? '上樓 · 回座位' : '收到工作 · 上樓';
     p.label.dataset.activity = p.mode === 'desk' ? 'desk' : p.activity || 'return';
     p.label.dataset.state = state;
+    p.label.dataset.floor = String(p.seat.department.level);
     p.label.title = `${p.agent.name}｜${p.seat.department.name}｜${p.status.textContent}\n${p.agent.message || ''}`;
     // Project real 3D anchors into the label layer; buttons remain usable with keyboard.
     const point = p.person.position.clone().add(new THREE.Vector3(0, 2.2, 0)).project(camera);
-    p.label.hidden = point.z > 1 || point.z < -1 || Math.abs(point.x) > 1.02 || Math.abs(point.y) > 1.02;
+    const outdoors = p.person.position.z > 10.8 || p.person.position.x > 14.5;
+    p.label.hidden = (viewMode !== 'interior' && !outdoors) || point.z > 1 || point.z < -1 || Math.abs(point.x) > 1.02 || Math.abs(point.y) > 1.02;
     p.labelX = (point.x * 0.5 + 0.5) * host.clientWidth;
     p.labelY = (-point.y * 0.5 + 0.5) * host.clientHeight;
     p.labelDepth = point.z;
@@ -397,7 +377,7 @@ export function initOfficeWorld(bridge) {
     DEPARTMENTS.forEach(dept => {
       const group = document.createElement('section'); group.className = 'department-roster';
       group.dataset.department = dept.id; group.style.setProperty('--dept', dept.color);
-      const title = document.createElement('h3'); title.textContent = dept.name; group.append(title);
+      const title = document.createElement('h3'); title.textContent = `0${dept.level}F / ${dept.name}`; group.append(title);
       const staff = agents.filter(a => departmentFor(a.id).id === dept.id);
       staff.forEach(a => {
         const button = document.createElement('button'); button.type = 'button'; button.dataset.person = a.id;
@@ -408,7 +388,7 @@ export function initOfficeWorld(bridge) {
       });
       roster.append(group);
     });
-    document.querySelector('#staff-total').textContent = `${agents.length - 1} 位同事 · 6 個部門`;
+    document.querySelector('#staff-total').textContent = `${agents.length - 1} 位同事 · 2 層樓 · 6 個部門`;
   }
   function sync() {
     const state = bridge.getState(); timeZone = state.tz || 'Asia/Taipei';
@@ -443,14 +423,14 @@ export function initOfficeWorld(bridge) {
     sunLight.intensity = daylight * 3.2; moonLight.intensity = night * 0.5;
     sunLight.position.set(Math.cos(dayState.sunAngle) * -45, Math.max(8, Math.sin(dayState.sunAngle) * 55), -20);
     sun.visible = hour >= 5.5 && hour < 18.5;
-    sun.position.set(-12 - Math.cos(dayState.sunAngle) * 17, 4 + Math.max(0, Math.sin(dayState.sunAngle)) * 5, -18);
+    sun.position.set(-15 - Math.cos(dayState.sunAngle) * 20, 14 + Math.max(0, Math.sin(dayState.sunAngle)) * 6, -35);
     sun.scale.setScalar(1.8);
     moon.visible = !sun.visible;
-    moon.position.set(-19 - Math.cos(dayState.moonAngle) * 8, 6 + Math.max(0, Math.sin(dayState.moonAngle)) * 4, -17);
+    moon.position.set(-23 - Math.cos(dayState.moonAngle) * 8, 16 + Math.max(0, Math.sin(dayState.moonAngle)) * 4, -32);
     moon.scale.setScalar(1.4);
     renderer.shadowMap.needsUpdate = true;
     stars.material.opacity = night * 0.85;
-    sea.material.color.copy(new THREE.Color('#163e52').lerp(new THREE.Color('#5cabb4'), daylight));
+    sea.daylight.value = daylight; sea.sky.value.copy(sky); building.setNight(night);
     sand.material.color.copy(new THREE.Color('#82938b').lerp(new THREE.Color('#dccba5'), daylight));
     clouds.forEach(c => { c.visible = daylight > 0.12; });
     lamps.forEach(({ glow, light, pool }) => { glow.material.emissiveIntensity = night * 3; light.intensity = night * 65; pool.material.opacity = night * 0.12; });
@@ -460,12 +440,31 @@ export function initOfficeWorld(bridge) {
     activeDepartment = id;
     document.querySelectorAll('[data-world-department]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.worldDepartment === id)));
     const d = DEPARTMENTS.find(d => d.id === id);
+    if (d) setMode('interior', false);
     const mobile = host.clientWidth < 600;
-    const target = d ? new THREE.Vector3(d.x, 0.5, d.z) : new THREE.Vector3(0, 0.7, 1.5);
-    const position = d ? target.clone().add(new THREE.Vector3(10, 15, 17)) : new THREE.Vector3(mobile ? 37 : 30, mobile ? 43 : 35, mobile ? 48 : 39);
+    const target = d ? new THREE.Vector3(d.x, d.elevation + 1, d.z) : new THREE.Vector3(0, 3.8, 2);
+    let position;
+    if (d) position = target.clone().add(new THREE.Vector3(10, 14, 17));
+    else if (viewMode === 'interior') position = new THREE.Vector3(...(mobile ? [48, 48, 64] : [34, 36, 43]));
+    else if (viewMode === 'terrace') { target.set(-2, 5, 7); position = new THREE.Vector3(...(mobile ? [-35, 30, 48] : [-28, 23, 36])); }
+    else position = new THREE.Vector3(...(mobile ? [61, 44, 78] : [36, 27, 44]));
     targetView = { target, position };
     if (immediate || reduced.matches) { camera.position.copy(position); controls.target.copy(target); controls.update(); targetView = null; }
   }
+  function setMode(mode, resetCamera = true) {
+    viewMode = mode; building.setMode(mode); stage.dataset.view = mode;
+    document.querySelectorAll('[data-world-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.worldView === mode)));
+    const interior = mode === 'interior';
+    document.querySelector('#world-enter').textContent = interior ? '看整棟外觀 ↗' : '走進辦公室 ↗';
+    document.querySelector('#world-view-title').textContent = { exterior: 'THE HEADQUARTERS', interior: 'INSIDE THE OFFICE', terrace: 'THE ROOFTOP GARDEN' }[mode];
+    document.querySelector('#world-view-description').textContent = { exterior: '海岸總部 · 兩層的日常', interior: '2F 創意製作 / 1F 營運管理', terrace: '屋頂花園 · 留一點空間給靈感' }[mode];
+    renderer.shadowMap.needsUpdate = true;
+    if (resetCamera) focusDepartment();
+  }
+  document.querySelector('#world-views').addEventListener('click', event => {
+    const button = event.target.closest('[data-world-view]'); if (button) setMode(button.dataset.worldView);
+  });
+  document.querySelector('#world-enter').addEventListener('click', () => setMode(viewMode === 'interior' ? 'exterior' : 'interior'));
   document.querySelector('#department-nav').addEventListener('click', e => {
     const b = e.target.closest('[data-world-department]'); if (b) focusDepartment(b.dataset.worldDepartment);
   });
@@ -484,7 +483,11 @@ export function initOfficeWorld(bridge) {
     const rect = renderer.domElement.getBoundingClientRect();
     const ray = new THREE.Raycaster();
     ray.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1, -(e.clientY-rect.top)/rect.height*2+1), camera);
-    const hit = ray.intersectObjects(picking, false)[0];
+    const visiblePeople = picking.filter(obj => {
+      const p = people.get(obj.userData.agentId);
+      return viewMode === 'interior' || p.person.position.z > 10.8 || p.person.position.x > 14.5;
+    });
+    const hit = ray.intersectObjects(visiblePeople, false)[0];
     if (hit) bridge.openAgent(hit.object.userData.agentId);
     down = null;
   });
@@ -492,8 +495,8 @@ export function initOfficeWorld(bridge) {
     if (reduced.matches || deliveries.length >= 6) return;
     const from = people.get(event.detail.from), to = people.get(event.detail.to);
     if (!from || !to) return;
-    const paper = box('#fff4c8', [from.seat.x, 2.5, from.seat.z], [0.5, 0.04, 0.7]);
-    deliveries.push({ paper, from: paper.position.clone(), to: new THREE.Vector3(to.seat.x,2.5,to.seat.z), start: animationTime });
+    const paper = box('#fff4c8', [from.seat.x, from.seat.elevation + 2.5, from.seat.z], [0.5, 0.04, 0.7]);
+    deliveries.push({ paper, from: paper.position.clone(), to: new THREE.Vector3(to.seat.x,to.seat.elevation + 2.5,to.seat.z), start: animationTime });
   }
   window.addEventListener('office:sync', sync);
   window.addEventListener('office:agent', e => {
@@ -510,7 +513,7 @@ export function initOfficeWorld(bridge) {
     e.preventDefault(); disposed = true; renderer.setAnimationLoop(null); controls.dispose(); resize.disconnect();
     bridge.fallback('3D 畫面暫時中斷，已切換平面工作台。重新整理可再試。');
   });
-  focusDepartment('all', true); sync();
+  setMode('exterior', false); focusDepartment('all', true); sync();
   document.body.classList.add('world-ready');
   document.querySelector('#flat-office').open = false;
   const vector = new THREE.Vector3();
@@ -527,7 +530,7 @@ export function initOfficeWorld(bridge) {
     people.forEach(p => updatePerson(p, dt, animationTime));
     arrangeLabels();
     if (!reduced.matches) {
-      waves.forEach(w => { w.mesh.position.x = w.x + Math.sin(animationTime * 0.35 + w.phase) * 0.6; w.mesh.material.opacity = 0.3 + Math.sin(animationTime * 0.4 + w.phase) * 0.12; });
+      sea.time.value = animationTime;
       for (let i = deliveries.length - 1; i >= 0; i--) {
         const d = deliveries[i], t = Math.min(1,(animationTime-d.start)/1.6);
         d.paper.position.copy(vector.lerpVectors(d.from,d.to,t)); d.paper.position.y += Math.sin(t*Math.PI)*3;
