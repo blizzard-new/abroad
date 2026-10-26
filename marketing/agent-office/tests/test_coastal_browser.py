@@ -71,20 +71,32 @@ def test_real_clock_departments_staff_cards_and_approval(browser, live_office):
     office, url = live_office
     page = browser.new_page(viewport={'width':1440,'height':1000}, timezone_id='America/New_York')
     errors = []; page.on('pageerror', lambda error: errors.append(str(error)))
+    page.on('console', lambda message: errors.append(message.text) if message.type == 'error' else None)
     page.clock.install(time=datetime.fromisoformat('2026-10-26T04:00:00+00:00'))
     ready(page, url)
     expect(page.locator('#world-stage')).to_have_attribute('data-phase', 'day')
+    expect(page.locator('#world-stage')).to_have_attribute('data-view', 'exterior')
     expect(page.locator('#world-stage')).to_have_attribute('data-lights', 'off')
     expect(page.locator('#world-time')).to_have_text('12:00')
     expect(page.locator('#department-roster [data-person]')).to_have_count(10)
     capture(page, 'day-desktop.png')
+    page.locator('#world-enter').click()
+    expect(page.locator('#world-stage')).to_have_attribute('data-view', 'interior')
+    expect(page.locator('.world-person[data-agent="designer"]')).to_have_attribute('data-floor', '2')
+    expect(page.locator('.world-person[data-agent="chief"]')).to_have_attribute('data-floor', '1')
+    capture(page, 'interior-desktop.png')
+    page.locator('[data-world-view="terrace"]').click()
+    expect(page.locator('#world-stage')).to_have_attribute('data-view', 'terrace')
+    capture(page, 'garden-desktop.png')
     page.locator('[data-world-department="design"]').click()
+    expect(page.locator('#world-stage')).to_have_attribute('data-view', 'interior')
     expect(page.locator('[data-world-department="design"]')).to_have_attribute('aria-pressed','true')
     page.locator('[data-person="designer"]').click()
     expect(page.locator('#agent-card')).to_be_visible()
     expect(page.locator('#agent-card-body h2')).to_contain_text('Mori')
     page.locator('#agent-card .close').click()
     page.locator('#world-reset').click()
+    page.locator('[data-world-view="exterior"]').click()
     page.clock.set_system_time(datetime.fromisoformat('2026-10-26T11:00:00+00:00'))
     page.clock.fast_forward(16000)
     expect(page.locator('#world-stage')).to_have_attribute('data-phase','night')
@@ -126,6 +138,25 @@ def test_idle_activity_is_interrupted_by_real_sse_work_event(browser, live_offic
     page.close()
 
 
+def test_upstairs_employee_uses_stairs_and_returns_when_work_arrives(browser, live_office):
+    office, url = live_office
+    office.bus.emit('strategist', 'status', '待命中', state='idle')
+    page = browser.new_page(viewport={'width':500, 'height':900})
+    page.add_init_script('Math.random = () => .4;')
+    page.clock.install(time=datetime.fromisoformat('2026-10-26T04:00:00+00:00'))
+    ready(page, url)
+    person = page.locator('.world-person[data-agent="strategist"]')
+    page.clock.fast_forward(19000)
+    expect(person).to_have_attribute('data-location', 'stairs', timeout=60000)
+    expect(person).to_contain_text('下樓')
+    office.bus.emit('strategist', 'status', '新工作，請回座位', state='working')
+    expect(person).to_have_attribute('data-state', 'working')
+    expect(person).to_have_attribute('data-activity', 'desk', timeout=60000)
+    expect(person).to_have_attribute('data-floor', '2')
+    expect(person).to_have_attribute('data-location', 'office')
+    page.close()
+
+
 def test_mobile_six_hires_reduced_motion_and_no_horizontal_overflow(browser,live_office):
     office,url=live_office
     for i in range(6): office.hire(f'研究員{i+1}','研究助理','查詢學校資料',brain='offline')
@@ -136,6 +167,8 @@ def test_mobile_six_hires_reduced_motion_and_no_horizontal_overflow(browser,live
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
     page.clock.fast_forward(60000)
     expect(page.locator('.world-person:not([data-activity="desk"])')).to_have_count(0)
+    capture(page,'mobile-exterior.png')
+    page.locator('[data-world-view="interior"]').click()
     page.locator('#world-in').click();page.locator('#world-rotate').click();page.locator('#world-reset').click()
     assert page.locator('.world-person.crowded').count() > 0  # dense staff names collapse rather than overlap
     expect(page.locator('.world-person.crowded').first).to_have_css('opacity', '0')

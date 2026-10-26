@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { daylightAt, seatLayout, DEPARTMENTS, canRest, chooseActivity } from '../office/static/office-world-state.js';
+import { daylightAt, seatLayout, DEPARTMENTS, canRest, chooseActivity, breakRoute, BREAK_SPOTS } from '../office/static/office-world-state.js';
 
 test('Taipei noon, 19:00 and midnight follow the real instant, regardless of host timezone', () => {
   const noon = daylightAt(new Date('2026-10-26T04:00:00Z'));
@@ -33,6 +33,24 @@ test('every existing employee, boss and all six hires get a distinct seat within
   assert.equal(seats.find(s => s.id === 'designer').department.id, 'design');
   assert.equal(seats.find(s => s.id === 'video').department.id, 'video');
   assert.equal(seats.find(s => s.id === 'publisher').department.id, 'social');
+  for (const id of ['strategist', 'designer', 'video', 'hire-5']) assert.equal(seats.find(s => s.id === id).elevation, 5.4);
+  for (const id of ['threads', 'analyst', 'chief', 'boss']) assert.equal(seats.find(s => s.id === id).elevation, 0);
+});
+
+test('upstairs breaks use the actual staircase; downstairs stays on the ground and both reach shared facilities', () => {
+  const seats = seatLayout(DEPARTMENTS.flatMap(d => d.roles).map(id => ({id})));
+  for (const seat of seats) for (const activity of ['water', 'exercise']) {
+    const route = breakRoute(seat, activity);
+    assert.deepEqual(route.at(-1), BREAK_SPOTS[activity]);
+    assert.equal(route[0][1], seat.elevation + 0.35);
+    assert.ok(route.every(p => p.every(Number.isFinite)));
+    if (seat.department.level === 2) {
+      const descending = route.filter((p, i) => i > 0 && p[1] < route[i - 1][1]);
+      assert.equal(descending.length, 20);
+      for (const p of descending) { assert.equal(p[0], 16); assert.ok(p[2] >= 1 && p[2] <= 10.5); }
+      for (let i = 1; i < route.length; i++) assert.ok(Math.abs(route[i][1] - route[i - 1][1]) <= .271, 'never teleport between floors');
+    } else assert.ok(route.every(p => p[1] === .35));
+  }
 });
 
 test('only idle or completed employees can rest; waiting and errors stay visible as work states', () => {
