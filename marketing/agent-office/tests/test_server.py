@@ -28,6 +28,15 @@ def test_page_state_and_approval(tmp_path):
     assert client.post("/api/drafts/9999/approve", json={}).status_code == 404
 
 
+def test_office_scripts_load_as_fresh_javascript(tmp_path):
+    # Windows' registry can map .js to text/plain, and a cached old office.js leaves the 3D office stuck loading.
+    client, _ = client_for(tmp_path)
+    for name in ("office.js", "office-world.js", "vendor/three.module.min.js"):
+        response = client.get(f"/static/{name}")
+        assert response.headers["content-type"].startswith("text/javascript")
+        assert response.headers["cache-control"] == "no-cache"
+
+
 def test_access_token_guards_everything_but_media(tmp_path):
     client, office = client_for(tmp_path, OFFICE_ACCESS_TOKEN="open-sesame")
     (office.settings.media_dir / "x.jpg").write_bytes(b"jpg")
