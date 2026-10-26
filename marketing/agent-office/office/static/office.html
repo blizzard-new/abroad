@@ -169,6 +169,26 @@
 </dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script>
+// Sent fresh with the page: if office.js never starts (an old cached copy, blocked, or broken), say why instead of loading forever.
+(() => {
+  let problem = "";
+  const say = (text) => ["#world-status", "#staff-total"].forEach((id) => { const el = document.querySelector(id); if (el) el.textContent = text; });
+  addEventListener("error", (e) => {
+    if (window.officeStarted || problem) return;
+    const file = e.target && (e.target.src || e.target.href);
+    if (e.message) problem = `程式出錯：${e.message}（${(e.filename || "").split("/").pop()}:${e.lineno || "?"}）`;
+    else if (file && /\.(js|css)/.test(file)) problem = `載入失敗：${file.split("/").pop()}`;
+    if (problem) say(`畫面程式沒有啟動，${problem}`);
+  }, true);
+  addEventListener("load", () => setTimeout(async () => {
+    if (window.officeStarted) return;
+    let type = "讀不到";
+    try { type = (await fetch("/static/office.js", { cache: "no-store" })).headers.get("content-type"); } catch (error) {}
+    say(`畫面程式沒有啟動（${problem || "office.js 沒有執行"}；office.js 類型：${type}）。請關掉 uv run office serve 重開，再按 Ctrl+F5；還是一樣就按 F12 → Console 截圖`);
+  }, 10000));
+})();
+</script>
 <script src="/static/office.js"></script>
 </body>
 </html>

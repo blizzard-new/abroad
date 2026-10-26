@@ -117,8 +117,22 @@ class InstagramClient(Client):
             time.sleep(delay)
         raise PlatformError(f"Instagram 容器 {container_id} 處理超過 {attempts * delay:.0f} 秒")
 
-    def _publish(self, container_id: str) -> dict:
-        published = self._call("POST", f"{self.user_id}/media_publish", fake={"id": self.fake_id("media")}, creation_id=container_id)
+    def _publish(self, container_id: str, attempts: int = 4, delay: float = 5.0) -> dict:
+        # Right after a container reports FINISHED, media_publish can still answer 2207006 ("media not found") for a while.
+        for attempt in range(attempts):
+            try:
+                published = self._call("POST", f"{self.user_id}/media_publish", fake={"id": self.fake_id("media")}, creation_id=container_id)
+                break
+            except PlatformError as error:
+                if "2207006" not in str(error):
+                    raise
+                if attempt == attempts - 1:
+                    raise PlatformError(
+                        f"Instagram 一直找不到素材容器 {container_id}（試了 {attempts} 次）：多半是 IG 抓不到圖片或影片網址，"
+                        f"或容器已過期。請在審核匣再按一次核准；還是失敗就確認媒體網址能在無痕視窗打開。原始訊息：{error}"
+                    ) from None
+                time.sleep(delay)
+                self._wait(container_id, attempts=10, delay=delay)
         media_id = published["id"]
         link = self._call("GET", media_id, fake={"permalink": ""}, fields="permalink")
         return {"id": media_id, "url": link.get("permalink", "")}

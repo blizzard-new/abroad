@@ -1025,6 +1025,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     $("#staff-total").textContent = "連不上辦公室：確認 uv run office serve 還開著，再按 Ctrl+F5 重新整理";
     fallback(`連不上辦公室（${String(error.message || error).slice(0, 60)}）`);
   }
+  window.officeStarted = true;
   if (loaded) {
     connect();
     // A 3D scene that never answers (a stuck module, a blocked GPU) should still leave a way to work.
