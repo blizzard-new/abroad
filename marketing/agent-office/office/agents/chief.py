@@ -192,6 +192,12 @@ class Chief(Agent):
     def _do_assign(self, action: ChiefAction) -> str:
         office = self.office
         colleague = office.colleague(action.name or action.role)
+        if action.task_kind == "schools":
+            if not colleague.record.get("schools"):
+                raise ValueError(f"{colleague.persona.name}還沒分到學校，先用 watch_schools 分配")
+            self.handoff(colleague.id, "巡查學校")
+            self._background(f"{colleague.persona.name}的巡查", colleague.check_schools)
+            return f"{colleague.persona.name}現在開始巡查 {len(colleague.record['schools'])} 所學校，查完會回報"
         request = action.instructions.strip()
         if not request:
             raise ValueError(f"要請 {colleague.persona.name} 做什麼？")

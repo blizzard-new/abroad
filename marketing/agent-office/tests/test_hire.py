@@ -133,3 +133,13 @@ def test_a_daily_assignment_is_remembered(office, monkeypatch):
     answer = office.staff["chief"].handle("請小美每天看 Dcard 交換版")
     assert "從明天起每天" in answer["text"]
     assert office.colleague("小美").record["daily"] == "看 Dcard 交換版熱門話題"
+
+
+def test_a_school_round_can_start_right_away(office, monkeypatch):
+    office.hire("Dora", "校園情報研究員", "巡查各大學官網")
+    chief_does(monkeypatch, {"type": "assign", "name": "Dora", "task_kind": "schools"})
+    assert "還沒分到學校" in office.staff["chief"].handle("請 Dora 現在先巡查一次")["text"]
+    office.split_schools(["Dora"])
+    answer = office.staff["chief"].handle("請 Dora 現在先巡查一次")
+    assert "現在開始巡查 33 所" in answer["text"]
+    assert wait_for(lambda: any(m["text"].startswith("Dora今天巡查了") for m in office.store.chat()), seconds=20)

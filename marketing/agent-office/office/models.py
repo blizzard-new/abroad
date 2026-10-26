@@ -144,7 +144,8 @@ class ChiefAction(BaseModel):
     role: str = Field(default="", description="set_brain 用：要改的工作（狀態裡 role= 後面的值）")
     name: str = Field(default="", description="hire／assign／dismiss 用：同事的名字")
     title: str = Field(default="", description="hire 用：職稱，例如 Dcard 研究員")
-    task_kind: Literal["report", "threads", ""] = Field(default="", description="assign 用：report 查資料或分析後回報；threads 寫一則 Threads 草稿")
+    task_kind: Literal["report", "threads", "schools", ""] = Field(
+        default="", description="assign 用：report 查資料或分析後回報；threads 寫一則 Threads 草稿；schools 現在就巡查一次分到的學校")
     every_day: bool = Field(default=False, description="assign 用：true 代表從明天起每天開工時都做這件事")
     names: list[str] = Field(default_factory=list, description="watch_schools 用：要分工的新同事名字，依序分前段、後段")
     brain: Literal["claude-code", "codex", "antigravity", "api", "offline", "default", ""] = ""
