@@ -1,15 +1,15 @@
 # Editorial intentions and next topics
 
-## 2026-10-26 每日批次：兩篇（驗收完成，待建立 PR）
+## 2026-10-26 每日批次：兩篇（待審）
 
-日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261026`，基於 main `252f633c`。已讀 main 十九篇、所有待審 PR #119／#122／#126／#127／#131／#132，以及當日分支／PR；開始前沒有另一個 10/26 批次。#119、#122、#132 的六題均視為已選並排除，本批不依賴其合併。基礎 #78、流程 #92 已合併。
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261026`，基於 main `252f633c`；兩篇同屬 [PR #133](https://github.com/blizzard-new/abroad/pull/133)，待審、未合併。已讀 main 十九篇、所有待審 PR #119／#122／#126／#127／#131／#132，以及當日分支／PR；開始前沒有另一個 10/26 批次。#119、#122、#132 的六題均視為已選並排除，本批不依賴其合併。基礎 #78、流程 #92 已合併。
 
 選題為使用者候選 7 與 11，依編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。
 
 | 題目 | slug | 狀態 |
 | --- | --- | --- |
-| 交換獎學金核定後要做什麼？在外義務、研修變更與證據追蹤表 | `exchange-scholarship-obligations` | 完整文章、攝影與驗收完成；後續批次請排除 |
-| 預算有限怎麼規劃交換？資金上限、三方案取捨與可行性檢查 | `exchange-limited-budget` | 完整文章、攝影與驗收完成；後續批次請排除 |
+| 交換獎學金核定後要做什麼？在外義務、研修變更與證據追蹤表 | `exchange-scholarship-obligations` | PR #133 待審，驗收完成；後續批次請排除 |
+| 預算有限怎麼規劃交換？資金上限、三方案取捨與可行性檢查 | `exchange-limited-budget` | PR #133 待審，驗收完成；後續批次請排除 |
 
 補助篇處理已核定、仍在外研修時的條件／變動／證據管理，原有 `exchange-scholarships` 保留查找、申請與初步撥款概覽；待審返國篇處理研修結束後交接。有限預算篇以固定資源與必要學習條件篩選三個方案，原有 `exchange-budget` 保留如何列帳、估總額與排付款，待審通勤篇保留路線／費用／時間比較。不是另建一份獎助申請清單、國家行情或相同預算公式頁。既有十九篇內容、URL、出版日與 lastmod 不變。[來源、圖片與驗收紀錄](seo-editorial-validation-2026-10-26.md) 隨本批保存。
 
@@ -23,11 +23,11 @@
 | 4 英語授課判讀 | `english-taught-exchange-courses` | PR #119 待審 |
 | 5、18 一般／AI 英文面試 | `exchange-interview-practice` | 整併於 PR #122 待審 |
 | 6 抵達第一週 | `exchange-arrival-week` | main 已有 |
-| 7 交換期間獎助義務 | `exchange-scholarship-obligations` | 本批已選，後續排除 |
+| 7 交換期間獎助義務 | `exchange-scholarship-obligations` | PR #133 待審，後續排除 |
 | 8 衝堂與改選 | `exchange-course-changes` | PR #119 待審 |
 | 9 Fact Sheet | `exchange-fact-sheet` | main 已有 |
 | 10 住宿通勤比較 | `exchange-housing-commute` | PR #122 待審 |
-| 11 有限預算取捨 | `exchange-limited-budget` | 本批已選，後續排除 |
+| 11 有限預算取捨 | `exchange-limited-budget` | PR #133 待審，後續排除 |
 | 12 返國交接與成果 | `exchange-return-checklist` | PR #132 待審 |
 | 13 AI 讀書計畫 | 優先擴充 `exchange-study-plan` | 尚待實作；保留原 URL，不另建近似頁 |
 | 14 AI 自介 | `ai-self-introduction` | main 已有 |

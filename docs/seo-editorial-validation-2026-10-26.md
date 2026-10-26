@@ -1,6 +1,6 @@
 # 2026-10-26 每日兩篇：來源與驗收
 
-日期採 Asia/Taipei。隔離分支 `codex/seo-daily-20261026` 基於最新 main `252f633c4b4d859b3d7ca20df2005ec2208a8e8f`；驗收後再次 fetch，main 未變。兩篇完整文章同屬本批，PR 建立後於此記錄連結。選題是使用者候選 7、11，依編輯判斷，沒有 Search Console、搜尋量或排名資料。
+日期採 Asia/Taipei。隔離分支 `codex/seo-daily-20261026` 基於最新 main `252f633c4b4d859b3d7ca20df2005ec2208a8e8f`；驗收後再次 fetch，main 未變。兩篇完整文章同屬 [待審 PR #133](https://github.com/blizzard-new/abroad/pull/133)，非草稿、未合併。選題是使用者候選 7、11，依編輯判斷，沒有 Search Console、搜尋量或排名資料。
 
 ## 文章與搜尋意圖
 
@@ -74,3 +74,5 @@
 [選題清單](seo-editorial-backlog.md) 已盤點全部二十個方向。原池剩下的候選 13 應優先擴充 `exchange-study-plan`，不能另建近似頁；候選 15 需要 Claude／ChatGPT／Gemini 同任務、可核對日期／版本／方案的實測，目前沒有這份證據。下一批若無新獨立候選或測試資料，應回報不足，不能靠重做待審題目或拆分既有文完成兩篇數量。本批兩題已選，後續排除。
 
 本次未自動合併、部署 Windows 正式伺服器、寄信或要求 Google 建立索引。待審 PR 與排程完成不代表文章已上線或被收錄。
+
+建立 PR 後已呼叫任務 `attach_artifact` 工具，20 秒內沒有回覆；附件狀態無法確認，未宣稱成功。GitHub PR 本身已成功建立，連結如上，文章與證據均在該 PR 內。
