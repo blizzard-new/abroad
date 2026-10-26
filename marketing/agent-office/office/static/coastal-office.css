@@ -176,3 +176,21 @@ body[data-world-phase="night"] .world-building-caption { color: #dce9df; }
   .world-building-caption button { font-size: 10px; padding: 7px 10px; }
   .world-location { display: none; }
 }
+
+/* Richer coastal colours and stronger text/controls against the warm shell. */
+body.coastal { --ink: #173d32; --muted: #526e60; --line: #cddace; background: #f3f2e9; }
+.coastal .room { background: #f3f2e9; }
+.coastal .topbar, .coastal .panel { background: #faf9f1; }
+.coastal-heading h1 { color: #163f33; }
+.eyebrow, .coastal-heading p:not(.eyebrow), .world-time-card { color: #526f60; }
+.department-nav button { color: #496655; border-color: #c9d5c7; }
+.department-nav button[aria-pressed="true"], .coastal .run-btn, .coastal .btn.primary { background: #174e3d; color: #fff4dc; }
+.world-views { background: #dce6d8; border-color: #cbd8c8; }
+.world-views button { color: #526f5e; }
+.world-views button[aria-pressed="true"] { background: #fffaf0; color: #174e3d; }
+.world-stage { border-color: #97b3a5; }
+.world-building-caption { color: #143f32; }
+.world-building-caption button, .world-controls { background: #fff7e7ed; border-color: #f7f2db; color: #184e3b; }
+.department-roster h3, .department-roster button span { color: #5b7362; }
+.department-roster button b { color: #173d32; }
+.coastal .board { background: #183f32; }

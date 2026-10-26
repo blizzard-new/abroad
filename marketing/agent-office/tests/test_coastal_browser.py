@@ -173,6 +173,13 @@ def test_mobile_six_hires_reduced_motion_and_no_horizontal_overflow(browser,live
     assert page.locator('.world-person.crowded').count() > 0  # dense staff names collapse rather than overlap
     expect(page.locator('.world-person.crowded').first).to_have_css('opacity', '0')
     capture(page,'mobile.png')
+    # A static reduced-motion world must still react to real work and view changes.
+    office.bus.emit('designer', 'status', '確認版面細節', state='working')
+    expect(page.locator('.world-person[data-agent="designer"]')).to_have_attribute('data-state', 'working')
+    page.emulate_media(reduced_motion='no-preference')
+    expect(page.locator('.world-person:not([data-activity="desk"])')).not_to_have_count(0, timeout=15000)
+    page.emulate_media(reduced_motion='reduce')
+    expect(page.locator('.world-person:not([data-activity="desk"])')).to_have_count(0)
     page.locator('[data-person="chief"]').click()
     expect(page.locator('#agent-card-body h2')).to_contain_text('Leo')
     page.close()

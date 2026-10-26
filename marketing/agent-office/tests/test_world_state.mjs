@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { daylightAt, seatLayout, DEPARTMENTS, canRest, chooseActivity, breakRoute, BREAK_SPOTS } from '../office/static/office-world-state.js';
+import { daylightAt, seatLayout, DEPARTMENTS, canRest, chooseActivity, breakRoute, BREAK_SPOTS, advanceAlongPath } from '../office/static/office-world-state.js';
 
 test('Taipei noon, 19:00 and midnight follow the real instant, regardless of host timezone', () => {
   const noon = daylightAt(new Date('2026-10-26T04:00:00Z'));
@@ -57,4 +57,17 @@ test('only idle or completed employees can rest; waiting and errors stay visible
   for (const state of ['idle', 'done', undefined]) assert.equal(canRest(state), true);
   for (const state of ['working', 'thinking', 'rendering', 'reviewing', 'waiting', 'error']) assert.equal(canRest(state), false);
   assert.deepEqual([0, 0.4, 0.9].map(n => chooseActivity(() => n)), ['nap', 'water', 'exercise']);
+});
+
+test('walking covers equal distance at low or high frame rates, without pausing at stair waypoints', () => {
+  const route = Array.from({length: 20}, (_, i) => ({x: 16, y: 5.75 - (i + 1) * .27, z: .5 + (i + 1) * .5}));
+  const slow = {x: 16, y: 5.75, z: .5}, fast = {...slow};
+  const slowPath = route.map(p => ({...p})), fastPath = route.map(p => ({...p}));
+  const step = advanceAlongPath(slow, slowPath, 3.1 * 2);
+  for (let i = 0; i < 60; i++) advanceAlongPath(fast, fastPath, 3.1 / 30);
+  assert.ok(step.reached.length >= 10);
+  assert.equal(slowPath.length, fastPath.length);
+  for (const axis of ['x','y','z']) assert.ok(Math.abs(slow[axis] - fast[axis]) < 1e-10);
+  advanceAlongPath(slow, slowPath, 100);
+  assert.deepEqual(slow, route.at(-1)); assert.equal(slowPath.length, 0);
 });
