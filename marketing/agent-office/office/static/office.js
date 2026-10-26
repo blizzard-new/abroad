@@ -1011,15 +1011,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   const boss = $('.desk[data-agent="boss"]');
   boss.addEventListener("click", () => openAgent("boss"));
   boss.addEventListener("keydown", (e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), openAgent("boss")));
-  if (await load()) {
+  const fallback = (message) => {
+    document.body.classList.remove("world-ready");
+    document.body.classList.add("world-unavailable");
+    $("#world-status").textContent = message || "這個瀏覽器無法顯示 3D，請使用下方平面工作台。";
+    $("#flat-office").open = true;
+  };
+  let loaded = false;
+  try {
+    loaded = await load();
+  } catch (error) {
+    console.warn("office state unavailable:", error);
+    $("#staff-total").textContent = "連不上辦公室：確認 uv run office serve 還開著，再按 Ctrl+F5 重新整理";
+    fallback(`連不上辦公室（${String(error.message || error).slice(0, 60)}）`);
+  }
+  if (loaded) {
     connect();
-    const fallback = (message) => {
-      document.body.classList.remove("world-ready");
-      document.body.classList.add("world-unavailable");
-      $("#world-status").textContent = message || "這個瀏覽器無法顯示 3D，請使用下方平面工作台。";
-      $("#flat-office").open = true;
-    };
+    // A 3D scene that never answers (a stuck module, a blocked GPU) should still leave a way to work.
+    const watchdog = setTimeout(() => fallback("3D 辦公室載入太久了：按 Ctrl+F5 重新整理，或先用下方平面工作台。"), 20000);
     import("/static/office-world.js").then(module => module.initOfficeWorld({ getState: () => S, openAgent, fallback }))
-      .catch(error => { console.warn("3D office unavailable:", error); fallback(); });
+      .catch(error => { console.warn("3D office unavailable:", error); fallback(); })
+      .finally(() => clearTimeout(watchdog));
   }
 });
