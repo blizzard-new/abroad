@@ -22,7 +22,7 @@ from .agents.strategist import Strategist
 from .agents.threads_writer import ThreadsWriter
 from .agents.video_editor import VideoEditor
 from . import accounts, brains
-from .brand import Briefing, load_facts, load_news
+from .brand import Briefing, load_facts, load_news, load_schools
 from .config import Settings
 from .events import EventBus
 from .llm import make_writer
@@ -146,6 +146,48 @@ class Office:
         self.store.set(f"tuning:{agent.id}", "{}")
         self.bus.emit("chief", "staff", f"{agent.persona.name}離開辦公室", change="dismiss", id=agent.id)
         return agent.persona.name
+
+    def update_hire(self, hire_id: str, **fields) -> None:
+        records = self.hires()
+        for record in records:
+            if record["id"] == hire_id:
+                record.update(fields)
+                self.staff[hire_id].record = record
+        self.store.set("hires", json.dumps(records, ensure_ascii=False))
+
+    def split_schools(self, names: list[str]) -> dict[str, list[str]]:
+        """Share the platform's universities among these colleagues, in registry order, for a daily round each."""
+        colleagues = [self.colleague(name) for name in names]
+        if not colleagues:
+            raise ValueError("要分給哪幾位新同事？")
+        schools = load_schools(self.settings)
+        size = -(-len(schools) // len(colleagues))
+        shares = {}
+        for i, colleague in enumerate(colleagues):
+            share = schools[i * size:(i + 1) * size]
+            self.update_hire(colleague.id, schools=[s.id for s in share], daily_kind="schools",
+                             daily=f"巡查 {len(share)} 所大學官網：交換公告、規定有沒有變，和平台資料一不一致")
+            shares[colleague.persona.name] = [s.name for s in share]
+        return shares
+
+    def run_hire_dailies(self) -> list[str]:
+        """Each new colleague's standing task, once a day; the chief passes the results to the boss."""
+        names = []
+        for agent in list(self.staff.values()):
+            if not isinstance(agent, Hire) or not agent.record.get("daily_kind"):
+                continue
+            kind, task = agent.record["daily_kind"], agent.record.get("daily", "")
+
+            def work(agent=agent, kind=kind, task=task) -> str:
+                if kind == "schools":
+                    return agent.check_schools()
+                if kind == "threads":
+                    return f"{agent.persona.name}寫好今天的 Threads 了（#{agent.write_threads(task, self.staff['chief']._next_slot('threads'))}），在審核匣等你"
+                return agent.report(task)
+
+            self.staff["chief"]._background(f"{agent.persona.name}的每日工作", work)
+            names.append(agent.persona.name)
+        return names
 
     def colleague(self, name_or_id: str) -> "Hire":
         key = name_or_id.strip()

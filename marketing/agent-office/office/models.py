@@ -96,6 +96,19 @@ class Report(BaseModel):
     sources: list[str] = Field(description="查到的來源網址；沒有就留空，不要捏造")
 
 
+class SchoolCheck(BaseModel):
+    school: str = Field(description="學校名稱，照抄清單上的名字")
+    status: Literal["no_change", "new_notice", "mismatch", "unreachable"] = Field(
+        description="no_change 沒有新公告也和平台一致；new_notice 有新的交換公告或規定；mismatch 官網和平台資料不一致；unreachable 官網打不開或找不到交換頁"
+    )
+    detail: str = Field(description="一兩句說明看到什麼；沒變化就寫已確認的頁面")
+    source_url: str = Field(description="實際看的官網頁面網址")
+
+
+class SchoolReport(BaseModel):
+    checks: list[SchoolCheck]
+
+
 class Preflight(BaseModel):
     go: bool = Field(description="可以發就 true；需要老闆再看一次就 false")
     reason: str = Field(description="判斷理由，一句話")
@@ -105,7 +118,7 @@ class Insights(BaseModel):
     notes: list[str] = Field(description="給企劃的 2～4 點建議，每點一句")
 
 
-ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain", "hire", "assign", "dismiss"]
+ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain", "hire", "assign", "dismiss", "watch_schools"]
 
 
 class ChiefAction(BaseModel):
@@ -117,7 +130,8 @@ class ChiefAction(BaseModel):
             "set_brain：改某個工作（role）用的工具（brain）、模型（model）或思考強度（effort），沒要改的欄位留空，填 default 代表改回原本設定；"
             "hire：新增一位同事（name、title、instructions 寫他負責什麼，可一起給 brain、model、effort）；"
             "assign：交代工作給新同事（name 填他的名字，instructions 寫要做什麼，task_kind 選 report 或 threads）；"
-            "dismiss：請新同事離開（name）"
+            "dismiss：請新同事離開（name）；"
+            "watch_schools：把平台支援的大學平均分給 names 裡的新同事，之後每天巡查各校官網的交換公告與規定是否有變、和平台資料是否一致"
         )
     )
     draft_id: int = Field(default=0, description="草稿編號，沒有就填 0")
@@ -131,6 +145,8 @@ class ChiefAction(BaseModel):
     name: str = Field(default="", description="hire／assign／dismiss 用：同事的名字")
     title: str = Field(default="", description="hire 用：職稱，例如 Dcard 研究員")
     task_kind: Literal["report", "threads", ""] = Field(default="", description="assign 用：report 查資料或分析後回報；threads 寫一則 Threads 草稿")
+    every_day: bool = Field(default=False, description="assign 用：true 代表從明天起每天開工時都做這件事")
+    names: list[str] = Field(default_factory=list, description="watch_schools 用：要分工的新同事名字，依序分前段、後段")
     brain: Literal["claude-code", "codex", "antigravity", "api", "offline", "default", ""] = ""
     model: str = Field(default="", description="set_brain 用：模型名稱，例如 sonnet、opus、claude-sonnet-5-5、gpt-5.5、Gemini 3.7 Pro")
     effort: Literal["low", "medium", "high", "xhigh", "max", "default", ""] = ""

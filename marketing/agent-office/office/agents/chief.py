@@ -90,6 +90,12 @@ class Chief(Agent):
             )
         staff = "\n".join(f"- {a.persona.name}（{a.persona.title}）：{a.persona.duty}" for a in office.staff.values() if a.id != self.id)
         names = {a.id: a.persona.name for a in office.staff.values()}
+        hires = [a for a in office.staff.values() if hasattr(a, "record")]
+        daily = "\n".join(
+            f"- {a.persona.name}（{a.persona.title}）：{a.record.get('daily') or '還沒有每天固定的工作'}"
+            + (f"；負責 {len(a.record['schools'])} 所大學" if a.record.get("schools") else "")
+            for a in hires
+        )
         minds = "\n".join(
             f"- role={role}（{names.get("strategist" if role == "research" else role, role)}・{label}）：{office.describe_brain(role)}"
             for role, label in office.roles().items()
@@ -117,7 +123,9 @@ class Chief(Agent):
             f"今天主軸：{plan.get('theme') or '還沒排'}\n"
             f"草稿（最新在前）：\n" + ("\n".join(rows) or "（還沒有草稿）") + "\n\n"
             f"記給明天的事：{'；'.join(notes) or '（無）'}\n\n同事：\n{staff}\n\n"
-            f"每個工作現在用的 AI（role=後面是 set_brain 要填的值）：\n{minds}"
+            f"每個工作現在用的 AI（role=後面是 set_brain 要填的值）：\n{minds}\n\n"
+            f"新同事每天固定的工作：\n{daily or '（還沒有新同事）'}\n"
+            f"平台目前支援 {office.facts().university_count} 所大學，清單在辦公室電腦上的專案裡，watch_schools 會直接讀，不用上 GitHub。"
         )
 
     def history_text(self) -> str:
@@ -173,6 +181,11 @@ class Chief(Agent):
         agent = self.office.hire(action.name, action.title, action.instructions, brain=action.brain, model=action.model, effort=action.effort)
         return f"{agent.persona.name}（{agent.persona.title}）加入了，用 {self.office.describe_brain(agent.id)}"
 
+    def _do_watch_schools(self, action: ChiefAction) -> str:
+        shares = self.office.split_schools(action.names or ([action.name] if action.name else []))
+        lines = [f"{name} 負責 {len(schools)} 所：{'、'.join(schools)}" for name, schools in shares.items()]
+        return "大學分好了，從明天起每天開工時巡查：\n" + "\n".join(lines)
+
     def _do_dismiss(self, action: ChiefAction) -> str:
         return f"{self.office.dismiss(action.name or action.role)}離開辦公室了"
 
@@ -183,6 +196,9 @@ class Chief(Agent):
         if not request:
             raise ValueError(f"要請 {colleague.persona.name} 做什麼？")
         self.handoff(colleague.id, "交代工作")
+        if action.every_day:
+            office.update_hire(colleague.id, daily=request[:300], daily_kind=action.task_kind or "report")
+            return f"{colleague.persona.name}從明天起每天開工時都會做：「{request[:24]}」"
         if action.task_kind == "threads":
             slot = self._next_slot("threads")
 
