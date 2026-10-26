@@ -38,7 +38,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "scu": ["icae.scu.edu.tw", "www.scu.edu.tw", "www-ch.scu.edu.tw", "scu.edu.tw"],
     "ntnu": ["bds.oia.ntnu.edu.tw", "oia.ntnu.edu.tw", "www.ntnu.edu.tw", "ntnu.edu.tw"],
     "cycu": ["oia.cycu.edu.tw", "www.cycu.edu.tw", "cycu.edu.tw"],
-    "ntust": ["www.oia.ntust.edu.tw", "oia.ntust.edu.tw", "www.ntust.edu.tw", "ntust.edu.tw"],
+    "ntust": ["oia.ntust.edu.tw", "www.oia.ntust.edu.tw", "www.ntust.edu.tw", "ntust.edu.tw"],
     "yzu": ["www.yzu.edu.tw", "cm.yzu.edu.tw", "yzu.edu.tw"],
     "fcu": ["oiasap.fcu.edu.tw", "oia.fcu.edu.tw", "service825.fcu.edu.tw", "www.fcu.edu.tw", "fcu.edu.tw"],
     "nsysu": ["oia.nsysu.edu.tw", "partners.oia.nsysu.edu.tw", "cm.nsysu.edu.tw", "www.nsysu.edu.tw", "nsysu.edu.tw"],
@@ -717,7 +717,7 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
                 "eligibility": rec.get("eligibility"),
                 "language_requirement": rec.get("language_requirement"),
                 "availability_status": rec.get("availability_status") or "open",
-                "source_url": rec.get("source_url") or "https://www.oia.ntust.edu.tw/p/405-1060-62105,c9035.php?Lang=zh-tw",
+                "source_url": rec.get("source_url") or "https://oia.ntust.edu.tw/p/405-1060-62105,c9035.php?Lang=zh-tw",
             })
         school_reports["ntust"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ntust", partner_rows=ntust_rows, default_cycle_label="115-2"
@@ -809,7 +809,7 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
                 "eligibility": rec.get("eligibility"),
                 "language_requirement": rec.get("language_requirement"),
                 "availability_status": rec.get("availability_status") or "open",
-                "source_url": rec.get("source_url") or "https://www.oia.nchu.edu.tw/index.php/2-uncategorised/154-1-1-exchange-info",
+                "source_url": rec.get("source_url") or "https://www.oia.nchu.edu.tw/index.php/zh/5-global-mobility-tw/5-1-exchange-student-program-tw/5-1-1-application-guildeline-tw",
             })
         school_reports["nchu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="nchu", partner_rows=nchu_rows, default_cycle_label="116"

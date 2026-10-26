@@ -23,6 +23,7 @@ NCU_GUIDELINES_URL = (
 )
 NCU_INDEX_URL = "https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw"
 NCU_LIST_116_URL = "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangeschoollist-1013.pdf"
+NCU_LIST_116_OCT22_URL = "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangeschoollist-1022.pdf"
 NCU_LIST_115_URL = "https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf"
 NCU_FORMS_URL = "https://oia.ncu.edu.tw/static/file/26/1026/img/272/forms-2022.pdf"
 NCU_SYSTEM_UPGRADE_NOTICE_URL = "https://oia.ncu.edu.tw/p/406-1026-13073,r565.php?Lang=zh-tw"

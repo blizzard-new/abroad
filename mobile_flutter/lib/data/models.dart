@@ -358,10 +358,10 @@ const List<SupportedUniversity> defaultSupportedUniversities = [
     schoolName: '中原大學',
     shortName: '中原',
     englishName: 'Chung Yuan Christian University',
-    officialUrl: 'https://oia.cycu.edu.tw/?page_id=2956&lang=zh',
+    officialUrl: 'https://oia.cycu.edu.tw/?p=6336',
     supportLevel: 'full',
     partnerCount: 89,
-    coverageNote: '完整支援：115-2（2027春季出國）國際暨兩岸交換計畫與89所合作校名額、Fact Sheet及36校歷屆交換心得已完整整合。',
+    coverageNote: '完整支援：115-2（2027春季班）赴國際姊妹校交換第二梯次遴選公告（20校共50名、GPA 3.0以上，9/24開放填表、10/7 12:00截止收紙本、10/14面試，已截止）與赴大陸地區姊妹校交換計畫共89所合作校、Fact Sheet及36校歷屆交換心得已完整整合。',
     academicScoreMinimum: 75.0,
     colleges: [
       '理學院',
@@ -381,10 +381,10 @@ const List<SupportedUniversity> defaultSupportedUniversities = [
     schoolName: '國立臺灣科技大學',
     shortName: '臺科大',
     englishName: 'National Taiwan University of Science and Technology',
-    officialUrl: 'https://www.oia.ntust.edu.tw/p/412-1060-8921.php?Lang=zh-tw',
+    officialUrl: 'https://oia.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw',
     supportLevel: 'full',
     partnerCount: 237,
-    coverageNote: '完整支援：115-2（2027春季班）海外暨大陸交換生甄選簡章、237所合作校條件名額表及126校歷屆交換心得已完整整合。',
+    coverageNote: '完整支援：116-1（2027秋季班）赴海外交換學生計畫甄選簡章（_中文_20260915.pdf，歐美亞〔不含中國大陸〕澳姐妹校，線上申請 2026/12/03 10:00–12/07 15:00）與 115-2（2027春季班）海外暨大陸參考簡章、237所合作校條件名額表及126校歷屆交換心得已完整整合。',
     academicScoreMinimum: 65.0,
     colleges: [
       '工程學院',
@@ -486,11 +486,11 @@ const List<SupportedUniversity> defaultSupportedUniversities = [
     shortName: '中興',
     englishName: 'National Chung Hsing University',
     officialUrl:
-        'https://www.oia.nchu.edu.tw/index.php/2-uncategorised/154-1-1-exchange-info',
+        'https://www.oia.nchu.edu.tw/index.php/zh/5-global-mobility-tw/5-1-exchange-student-program-tw/5-1-1-application-guildeline-tw',
     supportLevel: 'full',
     partnerCount: 226,
     coverageNote:
-        '完整支援：116學年度第1學期（秋季班）出國交換甄選簡章、226所海外及大陸交換合作校名額與Fact Sheet、希望之橋暨學海系列獎學金、548篇學長姐交換心得影音及422人次錄取榜單已完整整合。',
+        '完整支援：116學年度第1學期（Fall 2027秋季班）出國交換甄選簡章（第一步學生線上申請 2026/09/23–10/23 12:00 已截止；第二步指導教授／導師線上推薦信 10/30 12:00 截止、退補件 11/06 23:59 截止）、226所海外及大陸交換合作校名額與Fact Sheet、希望之橋暨學海系列獎學金、548篇學長姐交換心得影音及422人次錄取榜單已完整整合。',
     academicScoreMinimum: 60.0,
     colleges: [
       '文學院',

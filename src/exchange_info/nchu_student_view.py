@@ -18,7 +18,8 @@ from .student_view import _application_period_status
 NCHU_OFFICIAL_DATA_DIR = (
     Path(__file__).resolve().parent / "official_data" / "nchu"
 )
-NCHU_INTRO_URL = "https://www.oia.nchu.edu.tw/index.php/2-uncategorised/154-1-1-exchange-info"
+NCHU_INTRO_URL = "https://www.oia.nchu.edu.tw/index.php/zh/5-global-mobility-tw/5-1-exchange-student-program-tw/5-1-1-application-guildeline-tw"
+NCHU_GUIDELINE_EN_URL = "https://oia.nchu.edu.tw/index.php/5-global-mobility-en/5-1-exchange-student-program-en/5-1-1-application-guildeline-en"
 NCHU_PARTNER_LIST_URL = (
     "https://docs.google.com/spreadsheets/d/1acE37cH-R7k88O9g-sT8wH-rX99rQT3a/edit?usp=sharing&ouid=108931068757503846261&rtpof=true&sd=true"
 )
