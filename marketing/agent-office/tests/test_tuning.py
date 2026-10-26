@@ -71,6 +71,9 @@ def test_effort_alone_tunes_the_desks_own_tool(office):
 def test_models_must_run_on_a_tool_that_has_them(office):
     with pytest.raises(ValueError, match="不能在 Codex 上跑"):
         office.tune("reviewer", model="claude-sonnet-5-5")
+    office.tune("analyst", brain="antigravity", model="claude-sonnet-4-6")  # Antigravity offers some Claude models
+    with pytest.raises(ValueError, match="不能在 Codex 上跑"):
+        office.tune("reviewer", model="gemini-4-argon-high")
     with pytest.raises(ValueError, match="不能在 Claude Code 上跑"):
         office.tune("threads", model="gpt-5.5")
     with pytest.raises(ValueError):

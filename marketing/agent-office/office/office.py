@@ -40,8 +40,8 @@ def desk_of(role: str) -> str:
 
 # Model names the chief may set: letters, digits and the punctuation real names use ("Gemini 3.7 Flash (Low)").
 MODEL_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9 ._:/()\[\]-]{0,79}")
-# Which tools can run which family of models.
-MODEL_TOOLS = {"claude": ("claude-code", "api"), "gpt": ("codex",), "gemini": ("antigravity",)}
+# Which tools can run which family of models. Antigravity also offers some Claude and open GPT models (`agy models`).
+MODEL_TOOLS = {"claude": ("claude-code", "api", "antigravity"), "gpt": ("codex", "antigravity"), "gemini": ("antigravity",)}
 
 
 def _model_family(model: str) -> str:
