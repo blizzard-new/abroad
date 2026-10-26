@@ -85,6 +85,37 @@ def load_facts(settings: Settings) -> BrandFacts:
     )
 
 
+@dataclass(frozen=True)
+class School:
+    """One university the platform supports, as the platform records it: what a colleague checks against."""
+
+    id: str
+    name: str
+    official_url: str
+    note: str
+    level: str
+    partners: int
+
+
+def load_schools(settings: Settings) -> list[School]:
+    src = settings.repo_root / "src"
+    if (src / "exchange_info" / "university_registry.py").is_file():
+        added = str(src) not in sys.path
+        if added:
+            sys.path.insert(0, str(src))
+        try:
+            registry = importlib.import_module("exchange_info.university_registry")
+        finally:
+            if added:
+                sys.path.remove(str(src))
+        return [School(u.id, u.school_name, u.official_url, u.coverage_note, u.support_level, u.partner_count_hint or 0)
+                for u in registry.SUPPORTED_UNIVERSITIES]
+    response = httpx.get(f"{settings.site_url}/universities", timeout=20)
+    response.raise_for_status()
+    return [School(u.get("id") or u["short_name"], u.get("school_name") or u["short_name"], u.get("official_url", ""),
+                   u.get("coverage_note", ""), u.get("support_level", ""), u.get("partner_count") or 0) for u in response.json()]
+
+
 CONFIRMED = {"confirmed_update", "confirmed_updates"}
 
 

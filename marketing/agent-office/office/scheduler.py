@@ -23,6 +23,9 @@ def tick(office: Office, now: datetime | None = None, *, background: bool = True
             threading.Thread(target=run_day, args=(office, day), daemon=True, name="office-day").start()
         else:
             run_day(office, day)
+    if local.time() >= office.settings.daily_at and office.store.get("hire_dailies_day") != day.isoformat():
+        office.store.set("hire_dailies_day", day.isoformat())
+        done["hire_dailies"] = office.run_hire_dailies()
     if not office.busy.locked():
         done["published"] = office.staff["publisher"].publish_due(now)
     if not office.settings.dry_run:
