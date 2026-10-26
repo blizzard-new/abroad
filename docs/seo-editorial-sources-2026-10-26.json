@@ -1,0 +1,304 @@
+{
+  "checked": "2026-10-26",
+  "timezone": "Asia/Taipei",
+  "batch": "daily-2026-10-26",
+  "initial_clock_utc": "2026-10-26 00:03:10 UTC",
+  "base_commit": "252f633c4b4d859b3d7ca20df2005ec2208a8e8f",
+  "selection_basis": "Approved candidate directions 7 and 11; editorial judgment without user-provided Search Console, search-volume or ranking data",
+  "duplicate_review": {
+    "main_articles": 19,
+    "main_slugs": [
+      "ai-english-learning",
+      "ai-self-introduction",
+      "exchange-application",
+      "exchange-arrival-week",
+      "exchange-budget",
+      "exchange-credit-transfer",
+      "exchange-eligibility",
+      "exchange-fact-sheet",
+      "exchange-housing-checklist",
+      "exchange-recommendation-letter",
+      "exchange-scholarships",
+      "exchange-semester-or-year",
+      "exchange-study-plan",
+      "exchange-versus-visiting",
+      "germany-exchange-cost",
+      "japan-exchange-cost",
+      "korea-exchange-cost",
+      "natural-writing-prompts",
+      "toeic-listening-reading-preparation"
+    ],
+    "open_prs_checked": [
+      119,
+      122,
+      126,
+      127,
+      131,
+      132
+    ],
+    "foundation_pr_78": "merged; on main",
+    "workflow_pr_92": "merged; daily two-article workflow on main",
+    "today_existing_batch_pr_before_work": null,
+    "exact_head_search": "head:codex/seo-daily-20261026, all states: no result; no local or remote branch before isolated branch creation",
+    "pending_editorial_prs": {
+      "119": [
+        "english-taught-exchange-courses",
+        "exchange-course-changes"
+      ],
+      "122": [
+        "exchange-interview-practice",
+        "exchange-housing-commute"
+      ],
+      "132": [
+        "toefl-ibt-preparation",
+        "exchange-return-checklist"
+      ]
+    },
+    "pending_topics_excluded": true,
+    "existing_article_files_changed": 0
+  },
+  "intent_boundaries": {
+    "exchange-scholarship-obligations": "Post-award, in-exchange monitoring and change events: obligation cards, course/status effects, decision authority and purpose-specific evidence. Existing scholarships guide retains finding/applying and initial funding overview; pending return guide retains post-return handover.",
+    "exchange-limited-budget": "A fixed resource ceiling and minimum learning requirements: three hypothetical alternatives, exclusion of academically unsuitable options, reverse thresholds and conditional decisions. Existing budget guide retains how-much calculation, cost/cash classification and payment timing; pending commute guide retains route/cost/time comparison."
+  },
+  "sources": [
+    {
+      "key": "mcu-award",
+      "requested_url": "https://iee.mcu.edu.tw/9435/",
+      "resolved_url": "https://iee.mcu.edu.tw/9435/",
+      "status": 200,
+      "checked": "2026-10-26",
+      "sha256": "bda16ef430e2e9261e1f3a867f1e386b53b9536818d33de1f105efe48381019c",
+      "title": "教育部115學海補助計畫-學海飛颺、學海惜珠 | 國際教育交流處",
+      "text_length": 1964,
+      "version": "115 academic-year notice, explicitly covers 2026 Fall and 2027 Spring; no whole-page revision date visible. Read notice body; only 注意事項 used, no linked attachment inspected.",
+      "evidence_location": "教育部注意事項",
+      "evidence_quote": "應保有銘傳學籍",
+      "access": "HTTP 200; relevant primary text and surrounding context read; raw response retained task-locally",
+      "support": [
+        {
+          "article": "exchange-scholarship-obligations",
+          "scope": "2026-10-26 實際讀取。頁面標示 115 學年、2026 秋季／2027 春季；未明示整頁修訂日。僅引用注意事項中的本人契約、在外學籍及研修義務，不引用金額、申請期限、語言分數或通用返國天數；沒有讀取附件內文。"
+        }
+      ]
+    },
+    {
+      "key": "nsysu-faq",
+      "requested_url": "https://oia.nsysu.edu.tw/p/412-1308-20742.php?Lang=zh-tw",
+      "resolved_url": "https://oia.nsysu.edu.tw/p/412-1308-20742.php?Lang=zh-tw",
+      "status": 200,
+      "checked": "2026-10-26",
+      "sha256": "95affc881ef2f60bee8bf4b1c89b02385174eb429c914a8938fe6730190949de",
+      "title": "常見問題  - 國立中山大學 國際事務處 (NSYSU OIA)",
+      "text_length": 2146,
+      "version": "Live scholarship FAQ read 2026-10-26; no whole-page revision date visible. Read relevant application/funding-source, post-award change and supporting-document/course sections; no linked attachments inspected.",
+      "evidence_location": "審查及核定 Q5；返國及核銷 Q1、Q2",
+      "evidence_quote": "原則上經核定後不接受變更",
+      "access": "HTTP 200; relevant primary text and surrounding context read; raw response retained task-locally",
+      "support": [
+        {
+          "article": "exchange-scholarship-obligations",
+          "scope": "2026-10-26 核對當日官方 FAQ，未見整頁修訂日。讀取資金來源、核定後變更、不同計畫的修課及單據核銷分工；本文不搬用該校金額、撥款時程、課程門數或返國期限作全校通則，個人仍依本期核定。"
+        }
+      ]
+    },
+    {
+      "key": "utaipei-award",
+      "requested_url": "https://international.utaipei.edu.tw/p/406-1006-133496%2Cr670.php?Lang=zh-tw",
+      "resolved_url": "https://international.utaipei.edu.tw/p/406-1006-133496%2Cr670.php?Lang=zh-tw",
+      "status": 200,
+      "checked": "2026-10-26",
+      "sha256": "5af81635d58bd42766f3d9c52a99847097acd311748eb9b9183ed1b831791bbb",
+      "title": "【國際處公告】115年度教育部「學海飛颺」及「學海惜珠」計畫審核結果",
+      "text_length": 1658,
+      "version": "Notice body dated ROC 115-07-02 (2026-07-02); limited to that award round. Read body, not awardee lists or PDF attachments.",
+      "evidence_location": "2026-07-02 公告：後續流程、變更學校、注意事項",
+      "evidence_quote": "於校內甄選時所提之研修領域不得變更",
+      "access": "HTTP 200; relevant primary text and surrounding context read; raw response retained task-locally",
+      "support": [
+        {
+          "article": "exchange-scholarship-obligations",
+          "scope": "2026-10-26 核對，公告內日期為 115-07-02（2026-07-02）。僅作該次核定的分期履行及變更程序案例；不宣稱仍在受理、不引用獲獎名單或未讀附件，亦不將其學分換算、比例、期限或返還條件泛用於其他方案。"
+        }
+      ]
+    },
+    {
+      "key": "helsinki-orientation",
+      "requested_url": "https://studies.helsinki.fi/instructions/node/245",
+      "resolved_url": "https://studies.helsinki.fi/instructions/node/245",
+      "status": 200,
+      "checked": "2026-10-26",
+      "sha256": "fb7019d6ad248b26ea26dab5bfd106b2d77b5f2af22c517fe16b027bbbae3d7e",
+      "title": "Do you want to study abroad? Start here! | Instructions | Studies Service | University of Helsinki",
+      "text_length": 20404,
+      "version": "Live outgoing-exchange instructions read 2026-10-26; no whole-page revision date visible. Read timing/study arrangement, selection of destination and funding sections, not every linked guide.",
+      "evidence_location": "Selection of destination; Funding for exchange studies",
+      "evidence_quote": "course provision and related limitations may change annually",
+      "access": "HTTP 200; relevant primary text and surrounding context read; raw response retained task-locally",
+      "support": [
+        {
+          "article": "exchange-limited-budget",
+          "scope": "2026-10-26 實際讀取當日頁的選擇目的地、學習安排與資金段落，未見整頁修訂日。僅作該校出國交換規劃的案例：學期、課程限制與旅費、補助、生活費需一起考量；不套用其資格、申請時程、學分或補助於臺灣學生。"
+        }
+      ]
+    },
+    {
+      "key": "hanken-financing",
+      "requested_url": "https://www.hanken.fi/sv/node/33760",
+      "resolved_url": "https://www.hanken.fi/sv/node/33760",
+      "status": 200,
+      "checked": "2026-10-26",
+      "sha256": "31952cc2770efed8b59a0f9766fd9876aa9ee78df49b4bff66d5c6b6ab917287",
+      "title": "Financing and Cost of Living | Hanken",
+      "text_length": 22087,
+      "version": "Live incoming-exchange financing page read 2026-10-26; no revision date or estimate year visible. Read financing and monthly-estimate context; only general funding-planning reminders used, no rent/price/grant figures republished.",
+      "evidence_location": "Financing your exchange",
+      "evidence_quote": "sufficient funding to cover all expenses during their stay",
+      "access": "HTTP 200; relevant primary text and surrounding context read; raw response retained task-locally",
+      "support": [
+        {
+          "article": "exchange-limited-budget",
+          "scope": "2026-10-26 核對當日官方頁，未明示成本估計年度或整頁修訂日。僅引用交換生應安排整段所需資金及個人支出不同的提醒；未引用其歐元概估、租金、票價或資助敘述作個人報價／條件。本文新臺幣方案完全為編輯假設，非該校估計換算。"
+        }
+      ]
+    }
+  ],
+  "retrieval_notes": [
+    {
+      "url": "https://www.studyabroad.moe.gov.tw/new/index/faq/page/2",
+      "status": 200,
+      "resolution": "Read as discovery only. Listing exposes question titles rather than full answers; no answer/rule is inferred or cited from it."
+    }
+  ],
+  "arithmetic_checks": [
+    {
+      "label": "Spendable hypothetical ceiling",
+      "computed": 180000,
+      "expected": 180000,
+      "passed": true
+    },
+    {
+      "label": "A necessary recurring total",
+      "computed": 140000,
+      "expected": 140000,
+      "passed": true
+    },
+    {
+      "label": "A planned spending",
+      "computed": 215000,
+      "expected": 215000,
+      "passed": true
+    },
+    {
+      "label": "A funds including reserve",
+      "computed": 235000,
+      "expected": 235000,
+      "passed": true
+    },
+    {
+      "label": "A shortfall",
+      "computed": 35000,
+      "expected": 35000,
+      "passed": true
+    },
+    {
+      "label": "B necessary recurring total",
+      "computed": 115000,
+      "expected": 115000,
+      "passed": true
+    },
+    {
+      "label": "B planned spending",
+      "computed": 170000,
+      "expected": 170000,
+      "passed": true
+    },
+    {
+      "label": "B funds including reserve",
+      "computed": 190000,
+      "expected": 190000,
+      "passed": true
+    },
+    {
+      "label": "B headroom",
+      "computed": 10000,
+      "expected": 10000,
+      "passed": true
+    },
+    {
+      "label": "C necessary recurring total",
+      "computed": 100000,
+      "expected": 100000,
+      "passed": true
+    },
+    {
+      "label": "C planned spending",
+      "computed": 150000,
+      "expected": 150000,
+      "passed": true
+    },
+    {
+      "label": "C funds including reserve",
+      "computed": 170000,
+      "expected": 170000,
+      "passed": true
+    },
+    {
+      "label": "C headroom, does not establish academic feasibility",
+      "computed": 30000,
+      "expected": 30000,
+      "passed": true
+    },
+    {
+      "label": "A spending after removing optional spending",
+      "computed": 185000,
+      "expected": 185000,
+      "passed": true
+    },
+    {
+      "label": "A funds after removing optional spending",
+      "computed": 205000,
+      "expected": 205000,
+      "passed": true
+    },
+    {
+      "label": "A remaining shortfall",
+      "computed": 5000,
+      "expected": 5000,
+      "passed": true
+    },
+    {
+      "label": "A necessary monthly threshold, not a price quote",
+      "computed": 27000.0,
+      "expected": 27000,
+      "passed": true
+    },
+    {
+      "label": "B hypothetical additional necessary cost",
+      "computed": 205000,
+      "expected": 205000,
+      "passed": true
+    },
+    {
+      "label": "B resulting shortfall",
+      "computed": 5000,
+      "expected": 5000,
+      "passed": true
+    },
+    {
+      "label": "Two photographs bytes",
+      "computed": 256226,
+      "expected": 256226,
+      "passed": true
+    }
+  ],
+  "verification_limits": [
+    "School-specific award examples only; no universal amount, credit/course count, timetable, grant eligibility or refund finding.",
+    "No linked attachments, individual contracts, private award notices, awardee lists or portal accounts inspected.",
+    "Monthly self-review is editorial method, not an official reporting requirement.",
+    "All TWD budgets are original hypothetical examples, not country prices, exchange-rate conversions, statistical averages or guaranteed sufficient funds.",
+    "Five-month, TWD 200,000 ceiling and TWD 20,000 reserve are explicit adjustable assumptions; mother-school fees and Taiwan fixed expenses are separately arranged only within this hypothetical case.",
+    "No AI comparison, model test, student interview, expert review, admission guarantee or message sending is claimed.",
+    "Raw sources, photo pages and downloads remain task-local; PR retains provenance, limited excerpts and validation evidence."
+  ]
+}
