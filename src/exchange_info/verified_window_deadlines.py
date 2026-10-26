@@ -355,10 +355,10 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "anchor_date": None,
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline", label="115-2二招線上報名截止",
-            value_text="一般組及語言學習組延期至2026/10/13 23:59線上截止，兩組各用公告指定Google表單。面試及分發期間為暫訂，不能當仍可報名；116-1日期未核實。",
+            value_text="2026/10/05公告二招一般組（article/530752）及語言學習組（article/530751），報名延期至2026/10/13 23:59線上截止（已截止），名額詳附件《二招-115-2交換學生招收名額一覽表（一般組）》（持續更新），並更新匈牙利布達佩斯城市大學與韓國啟明大學資訊；116-1日期未核實。",
             exact_deadline_at=_dt(2026, 10, 13, 23, 59), submission_mode="online",
-            source_title="文藻115-2二招延期公告及簡章",
-            source_url="https://d020.wzu.edu.tw/article/530752", last_checked_at="2026-10-21",
+            source_title="文藻115-2二招公告（一般組530752／語言學習組530751）",
+            source_url="https://d020.wzu.edu.tw/article/530752", last_checked_at="2026-10-26",
             verification_status="verified_reference",
         ),
         "paper_deadline": VerifiedRuleFact(
@@ -367,14 +367,14 @@ _RAW_SPECS: list[dict[str, Any]] = [
             submission_mode="signed_scan_upload",
             source_title="文藻115-2二招簡章第2–4頁",
             source_url="https://d020.wzu.edu.tw/datas/upload/Pictures/530752-115-2交換生簡章二招.pdf",
-            last_checked_at="2026-10-21", verification_status="verified_reference",
+            last_checked_at="2026-10-26", verification_status="verified_reference",
         ),
         "study_plan_limit": VerifiedRuleFact(
             rule_key="study_plan_limit", label="履歷（含學習計畫）合計篇幅",
             value_text="履歷含自傳、學習計畫、國際活動與獲獎等內容，合計A4五頁、12號字，不含附件；非計畫單篇五頁或各1000字。英語及華語暨東南亞語組中文與英文，其他語組中文與目標語言。返國兩週內繳返國資料。",
             source_title="文藻115-2二招簡章第2–3、6頁",
             source_url="https://d020.wzu.edu.tw/datas/upload/Pictures/530752-115-2交換生簡章二招.pdf",
-            last_checked_at="2026-10-21", verification_status="verified_reference",
+            last_checked_at="2026-10-26", verification_status="verified_reference",
         ),
     },
     {
@@ -389,11 +389,11 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "deadline_event_title": "赴陸第二階段線上及紙本截止（限公告名單）",
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline", label="赴陸第二階段線上申請",
-            value_text="赴陸第二階段2026/11/03 17:00截止，須完成線上與紙本；僅限該階段名單。網頁為115-2，但附件首頁寫115-1，須向承辦確認。國合組116期限未核實，日文系115公告是2025/11/17–28。",
+            value_text="赴陸第二階段2026/11/03 17:00截止，須完成線上與紙本；僅限該階段名單（公告位於兩岸中心RPage頁mccd.pccu.edu.tw，舊版靜態頁oima.pccu.edu.tw/exchanges.htm無當期公告；國際合作組現行入口為oima.pccu.edu.tw/p/412-1008-14612.php）。網頁為115-2，但附件首頁寫115-1，須向承辦確認。國合組116期限未核實，日文系115公告是2025/11/17–28。",
             exact_deadline_at=_dt(2026, 11, 3, 17, 0), submission_mode="online",
             source_title="文化大學115-2赴陸交換第二階段公告",
             source_url="https://mccd.pccu.edu.tw/p/406-1300-148804,r2247.php?Lang=zh-tw",
-            last_checked_at="2026-10-21", verification_status="verified_current",
+            last_checked_at="2026-10-26", verification_status="verified_current",
         ),
         "paper_deadline": VerifiedRuleFact(
             rule_key="paper_deadline", label="赴陸第二階段紙本申請",
@@ -401,14 +401,14 @@ _RAW_SPECS: list[dict[str, Any]] = [
             exact_deadline_at=_dt(2026, 11, 3, 17, 0), submission_mode="paper_required",
             source_title="文化大學赴陸第二階段公告及附件",
             source_url="https://mccd.pccu.edu.tw/p/406-1300-148804,r2247.php?Lang=zh-tw",
-            last_checked_at="2026-10-21", verification_status="verified_current",
+            last_checked_at="2026-10-26", verification_status="verified_current",
         ),
         "study_plan_limit": VerifiedRuleFact(
             rule_key="study_plan_limit", label="依申請管道確認計畫格式",
             value_text="赴陸第二階段中文學習計畫300字以內；日文系115範本分動機至少200字、計畫第1–3項合計至少500字、生涯規劃至少300字；韓文系自傳動機中文或韓文，未載統一字數。不能共用1000字要求。",
             source_title="文化大學各管道計畫規定",
             source_url="https://mccd.pccu.edu.tw/p/406-1300-148804,r2247.php?Lang=zh-tw",
-            last_checked_at="2026-10-21", verification_status="verified_current",
+            last_checked_at="2026-10-26", verification_status="verified_current",
         ),
         "extra_milestones": [],
     },
@@ -677,12 +677,12 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline",
             label="校內線上報名截止日",
-            value_text="2026/10/30（五）至 2026/11/19（四）16:00 於成大薦外交換系統完成報名；第 1–6 項文件分別上傳，另上傳合併 PDF（50MB 以下）。簡章未列開放時刻或 NT$1,000 報名費",
+            value_text="2026/10/30（五）至 2026/11/19（四）16:00 於成大薦外交換系統完成報名；第 1–6 項文件分別上傳，另上傳合併 PDF（50MB 以下）。116-1 簡章公告頁（p/406-1032-306703,r3333.php）於 2026-10-16 更新，10/23 說明暨分享會（圖爾庫、因斯布魯克、東北大學經驗分享）已辦理完畢；簡章 PDF（107138261.pdf）未列開放時刻或 NT$1,000 報名費",
             exact_deadline_at=_dt(2026, 11, 19, 16, 0),
             submission_mode="online",
-            source_title="國立成功大學 116 學年第 1 學期校級薦外交換學生計畫簡章 PDF",
-            source_url="https://oia.ncku.edu.tw/var/file/32/1032/img/107138261.pdf",
-            last_checked_at="2026-10-21",
+            source_title="國立成功大學 116 學年第 1 學期校級薦外交換學生計畫簡章公告（2026-10-16 更新）與 PDF",
+            source_url="https://oia.ncku.edu.tw/p/406-1032-306703,r3333.php?Lang=zh-tw",
+            last_checked_at="2026-10-26",
             verification_status="verified_current",
         ),
         "paper_deadline": VerifiedRuleFact(
@@ -693,7 +693,7 @@ _RAW_SPECS: list[dict[str, Any]] = [
             submission_mode="signed_scan_upload",
             source_title="國立成功大學 116 學年第 1 學期校級薦外交換學生計畫簡章 PDF",
             source_url="https://oia.ncku.edu.tw/var/file/32/1032/img/107138261.pdf",
-            last_checked_at="2026-10-21",
+            last_checked_at="2026-10-26",
             verification_status="needs_confirmation",
         ),
         "study_plan_limit": VerifiedRuleFact(
@@ -702,7 +702,7 @@ _RAW_SPECS: list[dict[str, Any]] = [
             value_text="依第一志願學校擬訂中英文讀書或研究計畫，以及中英文自傳。計畫占甄選總分 25%，自傳及其他表現合計占 25%；此簡章未列固定字數或頁數上限，第 7 項合併 PDF 須在 50MB 以下",
             source_title="國立成功大學 116 學年第 1 學期校級薦外交換學生計畫簡章（申請資料與審查方式）",
             source_url="https://oia.ncku.edu.tw/var/file/32/1032/img/107138261.pdf",
-            last_checked_at="2026-10-21",
+            last_checked_at="2026-10-26",
             verification_status="verified_current",
         ),
     },
@@ -842,11 +842,11 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "anchor_date": date(2026, 12, 31),
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline", label="台聯大UST電子郵件收件截止",
-            value_text="116年度台聯大UST計畫須於2026/12/31 16:00前將完整申請PDF寄至承辦信箱ex-out@nycu.edu.tw，不接受事後補件。UST送各校薦送的01/11不是陽明交大學生期限。校級116學年度精確日程本輪未核實，不能把115學年度2025/12/01–2026/01/05順延一年。",
+            value_text="國際處2026-10-07發布「116學年度台灣聯合大學系統交換計畫第一梯次」，須於2026/12/31（週四）16:00前將完整申請PDF寄至承辦信箱ex-out@nycu.edu.tw，不接受事後補件（UST送各校薦送的01/11不是陽明交大學生期限）；2026-10-13另轉知政大辦理「2027 台灣–阿聯青年交流計畫」（補助機票與食宿）。官網列表目前尚未公布陽明交大自身116學年校級出國交換簡章（最近一則校級為115學年第二梯次，07/10已截止）。",
             exact_deadline_at=_dt(2026, 12, 31, 16, 0), submission_mode="online",
-            source_title="陽明交大116年度第一梯次臺灣聯大交換公告",
+            source_title="陽明交大116學年度台灣聯合大學系統交換計畫第一梯次公告（2026-10-07）",
             source_url="https://oia.nycu.edu.tw/oia/ch/app/data/view?module=nycu0006&id=286&serno=8ee14cf9-321b-46af-9871-9d154c9e6647",
-            last_checked_at="2026-10-21", verification_status="verified_current",
+            last_checked_at="2026-10-26", verification_status="verified_current",
         ),
         "paper_deadline": VerifiedRuleFact(
             rule_key="paper_deadline", label="UST簽名及電子送件方式",
@@ -854,14 +854,14 @@ _RAW_SPECS: list[dict[str, Any]] = [
             exact_deadline_at=_dt(2026, 12, 31, 16, 0), submission_mode="signed_scan_upload",
             source_title="陽明交大UST公告與115學年度校級簽核表（歷史參考）",
             source_url="https://oia.nycu.edu.tw/oia/ch/app/data/view?module=nycu0006&id=286&serno=8ee14cf9-321b-46af-9871-9d154c9e6647",
-            last_checked_at="2026-10-21", verification_status="verified_reference",
+            last_checked_at="2026-10-26", verification_status="verified_reference",
         ),
         "study_plan_limit": VerifiedRuleFact(
             rule_key="study_plan_limit", label="依UST／校級計畫分別準備研修計畫",
             value_text="UST使用附件研修學習計畫書，含申請動機、短期及長期計畫，欄位不足可延伸；另繳CV與一封教授英文推薦函。校級115簡章則要求中文研修計畫（含擬修課列表）與中文自傳，未列固定字數或頁數，不能改成中英文各一份。116校級新規格待確認。",
             source_title="陽明交大UST附件與115學年度校級申請簡章",
             source_url="https://oia.nycu.edu.tw/oia/ch/app/data/doc?module=nycu0006&detailNo=1442785684455690240&type=s",
-            last_checked_at="2026-10-21", verification_status="verified_reference",
+            last_checked_at="2026-10-26", verification_status="verified_reference",
         ),
     },
     {
@@ -1179,9 +1179,9 @@ _CARDS_BY_ID: dict[str, VerifiedSchoolWindowCard] = {
 # invented verified deadlines. The cited pages' scope is described per fact.
 _REVIEW_GAPS = {
     "nkust": (
-        "https://oia.nkust.edu.tw/news_det-980.html",
-        "高科大116學年度出國研修說明會公告",
-        "所附公告列出五校區說明會場次，未提供116學年度甄選正式收件截止日；平台尚未核實申請時程。",
+        "https://oia.nkust.edu.tw/unit-4-374-21.html",
+        "高科大116學年度校級出國交換甄選頁及出國研修說明會行事曆",
+        "官網交換頁（unit-4-374-21.html）已公布116學年度校級出國交換甄選時程：線上申請115/11/09 12:00開放、115/12/01 16:00截止，正式外語成績115/12/27 16:00前補交，116/02/01–02/12審查、116/02/22 16:00公告結果；官網首頁行事曆另載2026-10-28「116學年度出國研修說明會_建工校區」（news_det-980.html另載五校區場次），學海飛颺名額視當年經費而定，請以學校官方公告為準。",
         "needs_confirmation",
     ),
     "yuntech": (

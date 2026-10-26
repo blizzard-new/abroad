@@ -18,8 +18,8 @@ from .student_view import _application_period_status
 NCUE_OFFICIAL_DATA_DIR = (
     Path(__file__).resolve().parent / "official_data" / "ncue"
 )
-NCUE_INTRO_URL = "https://oicaweb.ncue.edu.tw/p/412-1002-1171.php?Lang=zh-tw"
-NCUE_PARTNER_LIST_URL = "https://oicaweb.ncue.edu.tw/p/412-1002-1220.php?Lang=zh-tw"
+NCUE_INTRO_URL = "https://oicaweb.ncue.edu.tw/p/412-1019-1171.php?Lang=zh-tw"
+NCUE_PARTNER_LIST_URL = "https://oicaweb.ncue.edu.tw/p/412-1019-1220.php?Lang=zh-tw"
 
 
 def _payload(filename: str):

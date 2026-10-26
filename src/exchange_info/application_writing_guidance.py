@@ -920,8 +920,8 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "csmu": ("https://oia.csmu.edu.tw/p/412-1017-105.php?Lang=zh-tw", "2026-10-21"),
     "cmu": ("https://cmucia.cmu.edu.tw/page/about_3", "2026-10-21"),
     "kmu": ("https://cia.kmu.edu.tw/index.php/zh-tw/%E5%AD%B8%E7%94%9F%E4%BA%A4%E6%B5%81/%E9%AB%98%E9%86%AB%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B", "2026-10-21"),
-    "mcu": ("https://iee.mcu.edu.tw/zh-hant/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/", "2026-10-21"),
-    "ntub": ("https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw", "2026-10-22"),
+    "mcu": ("https://iee.mcu.edu.tw/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/", "2026-10-26"),
+    "ntub": ("https://oia.ntub.edu.tw/p/405-1006-57507,c3152.php?Lang=zh-tw", "2026-10-26"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

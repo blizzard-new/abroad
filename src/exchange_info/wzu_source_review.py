@@ -23,7 +23,7 @@ ARCHIVE = "https://d020.wzu.edu.tw/category/147726"
 ACADEMIC = "115-2一般組歷年學業總平均須達70分，語言學習組65分；分數取整數、不四捨五入。兩組操行總平均80分且不得有小過（含）以上紀錄。GPA及排名不能代替百分制門檻，交換資格不等於獎助資格。"
 DEGREE = "申請時五專三下以上、四技及進修四技一下以上；二技本校五專直升三上以上、非直升三下以上。出訪時五專四年級、四技二年級以上；二技直升三下、非直升四上以上。研究生（不含在職專班）及轉學生須已在本校就讀滿一學期。日語組不收五專三年級（含）以下。"
 LANGUAGE = "115-2初審英語及第二外語語檢各佔10%加分，未繳正式語檢正本掃描不影響報名資格。各接待校語檢及分發時證明另查，不能以共同TOEFL／IELTS／TOEIC／JLPT分數判定所有學校通過。語言學習組仍須具目標語言基本能力。"
-PERIOD = "115-2一招2026/08/31 23:59、二招延期至2026/10/13 23:59線上截止，均已截止；一般組與語言學習組各有表單。116-1確切申請日期及時刻本輪未核實，不能按往年推算。"
+PERIOD = "115-2一招2026/08/31 23:59截止；2026-10-05公告「二招-115-2 校級國際暨兩岸交換學生」（一般組article/530752、語言學習組article/530751），報名延期至2026/10/13 23:59線上截止（已截止），名額見附件《二招-115-2交換學生招收名額一覽表（一般組）》（持續更新），並註記更新匈牙利布達佩斯城市大學與韓國啟明大學資訊。116-1確切申請日期及時刻本輪未核實，不能按往年推算。"
 ALLOCATION = "二招只可報一語組，一般組五語組不含德語，語言學習組只開法語與西語；報名時志願順序即分發依據，不另辦現場撕榜或重新選填。一招至多兩語組，語組數不等於志願校數。二招面試10/19–23、分發10/14–30均為暫訂，依各語組通知。"
 DOCS = [
     "115-2初審採Google表單上傳，非校務系統列印後15:00紙本收件：學生證正面、身分證雙面（外籍／僑／陸生護照、居留證或入臺證）、教務處用印之中文歷年成績單含排名、履歷表。",
@@ -77,7 +77,7 @@ def review_bundle(root: Path):
     d["required_documents"] = [item("115-2線上申請文件", DOCS)]
     d["scholarship_info"] = [item("115-2獎助條件", [a]) for a in AWARDS]
     d["program_overview"] = [item("文藻資料部分核對", [PERIOD, ALLOCATION,
-        "128筆既有方案對上115-2官方表校名；僅確認來源校名對應，名額、學費、語檢及其他主張仍待逐校核實。"])]
+        "128筆既有方案對上115-2官方表校名；二招一般組公告（article/530752）另註記更新匈牙利布達佩斯城市大學（CEFR B2含以上且須為含聽說讀寫四技之國際標準化測驗如TOEFL iBT 72+、IELTS 5.5+、多益四技785/160/150+，不接受GEPT/CSEPT，歷年學業平均80分）與韓國啟明大學（英語授課TOEIC 785／GEPT中高級／CSEPT 240／TOEFL iBT 72／IELTS 5.5任一；韓語授課TOPIK 4級含以上）資訊，其餘名額、學費、語檢仍待逐校核實。"])]
     d["document_explanations"] = [{"title": "115-2履歷與初審文件", "summary": DOCS[0],
         "key_points": DOCS, "source": item("二招簡章", [], GENERAL_PDF)["source"],
         "document_url": GENERAL_PDF, "document_type": "official_document", "full_text_extracted": False}]
@@ -131,15 +131,20 @@ def review_bundle(root: Path):
             ref.setdefault(key, p.get(key, ""))
         matches = snapshot["table_matches"].get(p["school_name"], [])
         lang = "語言學習組" in p["program_type"]
+        partner_extra = ""
+        if "Budapest Metropolitan University" in p["school_name"]:
+            partner_extra = " 二招一般組（article/530752）更新：須具備CEFR B2（含）以上且僅接受涵蓋聽說讀寫四項技能之國際標準化測驗（如TOEFL iBT 72+、IELTS 5.5+、多益四技785/160/150+，不接受GEPT/CSEPT）；歷年學業平均需達80分（一招原列GPA 3.5）。"
+        elif "Keimyung University" in p["school_name"]:
+            partner_extra = " 二招一般組（article/530752）更新：英語授課課程須TOEIC 785／GEPT中高級／CSEPT 240／TOEFL iBT 72／IELTS 5.5任一；韓語授課課程須TOPIK 4級（含）以上。"
         p.update(availability_status="reference_only" if matches else "needs_confirmation",
-            availability_note="115-2已截止；對上校名不代表當期有名額、接待校條件或整筆已核實。",
+            availability_note="115-2已截止；對上校名不代表當期有名額、接待校條件或整筆已核實。" + partner_extra,
             application_round="115-2歷史參考（逐校一招／二招分開）", application_window_status="closed",
             application_deadline=PERIOD, quota="逐校名額待核實；115-2表列為歷史資料，不合併一招與二招名額。",
             quota_status="not_published", eligibility=DEGREE + " " + ACADEMIC,
-            gpa_requirement=("語言學習組歷年總平均65分。" if lang else "一般組歷年總平均70分。") + "接待校較高門檻另查；無GPA／排名替代。",
-            language_requirement=LANGUAGE, tuition_info=OBLIGATIONS[0],
+            gpa_requirement=("語言學習組歷年總平均65分。" if lang else "一般組歷年總平均70分。") + "接待校較高門檻另查；無GPA／排名替代。" + partner_extra,
+            language_requirement=LANGUAGE + partner_extra, tuition_info=OBLIGATIONS[0],
             application_info="\n".join([PERIOD, ALLOCATION] + DOCS + OBLIGATIONS),
-            notes="本輪只核對指定母校條文與名單校名；學制、名額、當期語檢、校曆、住宿、圖片與心得仍待查證。")
+            notes="本輪只核對指定母校條文與名單校名；學制、名額、當期語檢、校曆、住宿、圖片與心得仍待查證。" + partner_extra)
         ref["official_1152_name_correspondence"] = json.dumps(matches, ensure_ascii=False)
         for key in ("quota", "colleges", "degree_levels", "language_requirement", "study_period"):
             p.setdefault("field_evidence", {})[key] = {"source_url": SECOND_LANG if lang else SECOND,
