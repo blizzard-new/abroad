@@ -62,7 +62,8 @@ def capture(page, name):
 
 
 def ready(page, url):
-    page.goto(url, wait_until='networkidle')
+    # The software renderer here is slow enough to trip the office's switch to the flat desks; ?3d keeps the scene up.
+    page.goto(url + ('&' if '?' in url else '?') + '3d', wait_until='networkidle')
     expect(page.locator('body')).to_have_class('coastal world-ready', timeout=30000)
     page.wait_for_timeout(500)
 

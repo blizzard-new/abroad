@@ -77,6 +77,8 @@ def main(argv: list[str] | None = None) -> int:
 
         settings = Settings.from_env()
         print(f"UniWay 行銷辦公室：http://{args.host}:{args.port}")
+        if args.host not in {"127.0.0.1", "localhost", "::1"} and not settings.access_token:
+            print("⚠️ 辦公室對其他電腦開放了，但沒有設 OFFICE_ACCESS_TOKEN：連得到的人都能按核准。請在 .env 設一串密碼後重開。")
         uvicorn.run(create_app(settings, clock=not args.no_clock), host=args.host, port=args.port, log_level="warning")
         return 0
 
