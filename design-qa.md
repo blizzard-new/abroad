@@ -1,3 +1,39 @@
+# Design QA: the application heading shows real progress and which step is on screen
+
+## What the user asked for
+
+A task-progress experience for the application pages, in the spirit of a path with a clear next step and a visible sense
+of how far along the student is, without inventing progress. The audit had found that the 我的申請 heading contradicted
+itself: a page on step 3 sat above a card saying step 1, and the heading took 356 of 900 px.
+
+## What changed
+
+Front-end only: `application-workspace.js` and `.css`, the two asset versions, tests. Evidence, numbers and before/after
+images are in `docs/ui-progress-2026-10-27/`.
+
+- The circle on a step says how far it is (done, next, not started); the card says which step the student is on
+  ("你在這裡") and flags the recommended one ("下一步"). The next-action card names both ("你在第 3 步 · 建議下一步在第 1
+  步") and steps back to a secondary button when it points to another step.
+- Steps show what has really been done, read from the same state `planningNextAction()` judges by: conditions, target and
+  eligibility comparison, scheduled preparation tasks, drafts filled and checked; the heading counts the steps marked
+  done. An account with nothing done shows the plain hints and an honest 0 of 3.
+- A step finished while the student is on the page gets one check pop and a live-region announcement; reduced motion
+  drops the movement only. A step already shown as done on this device is not celebrated again after a reload (the account
+  and plan load in pieces, and an earlier version celebrated that loading).
+- Heading height: desktop 356–366 px to 289–311 px, phone 481–531 px to 301–373 px.
+
+## Verification
+
+- New e2e tests in `tests/e2e/test_application_stage_guide.py` (10 pass with the 4 existing). Contract tests: 189 passed,
+  4 failed, the same 4 as on `main`. Application, planning, glass-theme and writing-guidance e2e files: 46 passed, 4
+  failed, the same 4 as on `main`.
+- Contrast of every new or changed string measured on real pixels, light and dark, both widths: at least 4.5:1. Tab order
+  the same as on `main`, focus rings present, no sideways scroll.
+- A calendar page regression was caught by comparing with `main` (step labels wrapped on a phone) and fixed; the calendar
+  page is now a little shorter than on `main`.
+- Not verified: a real phone, a screen reader, Safari and Firefox; the roughly 100 e2e files outside those named.
+- Found, not changed: the 申請文件 page header is nearly unreadable in dark theme on `main` too (filed separately).
+
 # Design QA: the home globe stays on a normal machine
 
 ## What went wrong
