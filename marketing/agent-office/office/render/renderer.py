@@ -91,6 +91,18 @@ class Renderer:
                     progress(index + 1, len(draft.slides), path)
         return files
 
+    def card(self, slide: Slide, out_path: Path) -> Path:
+        """One 4:5 picture in the carousel's look, e.g. the image that goes with a Threads post."""
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        with self._page(1080, 1350) as page:
+            page.goto(f"{ORIGIN}/template/carousel.html", wait_until="load")
+            page.evaluate(
+                "(args) => window.renderSlide(args)",
+                {"slide": slide.model_dump(), "index": 0, "total": 1, "site": self._site(), "story": False, "art": None},
+            )
+            page.locator("#slide").screenshot(path=str(out_path), type="jpeg", quality=92)
+        return out_path
+
     def story(self, cover: Slide, out_path: Path, art: Path | None = None) -> Path:
         out_path.parent.mkdir(parents=True, exist_ok=True)
         art_url = self._art_url(art)

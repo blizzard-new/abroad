@@ -137,7 +137,10 @@ class Publisher(Agent):
             threads: ThreadsClient = clients["threads"]
             if fmt == "reply":
                 return threads.post_text(payload["text"], reply_to_id=payload["reply_to_id"])
-            post = threads.post_text(payload["text"], topic_tag=payload.get("topic_tag", ""))
+            # Without a public media host the picture cannot reach Threads, so the post goes out as text as before.
+            attach = media.get("image") and self.office.settings.media_host != "none"
+            image = clients["media"].public_url(files(media["image"])) if attach else ""
+            post = threads.post_text(payload["text"], topic_tag=payload.get("topic_tag", ""), image_url=image)
             if payload.get("first_reply"):
                 threads.post_text(payload["first_reply"], reply_to_id=post["id"])
             return post
