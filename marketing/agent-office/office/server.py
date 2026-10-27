@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import mimetypes
 import secrets
 import threading
 from contextlib import asynccontextmanager
@@ -22,6 +23,10 @@ from .pipeline import run_day
 STATIC = Path(__file__).resolve().parent / "static"
 BRAND_FILES = {"uniway-logo.webp", "suitcase.webp"}
 
+# Windows takes these from the registry, where .js is often text/plain; browsers then refuse to load the 3D office's modules.
+for _type, _ext in (("text/javascript", ".js"), ("text/javascript", ".mjs"), ("text/css", ".css")):
+    mimetypes.add_type(_type, _ext)
+
 
 def create_app(settings: Settings, *, clock: bool = True, office: Office | None = None) -> FastAPI:
     office = office or Office(settings)
@@ -29,9 +34,13 @@ def create_app(settings: Settings, *, clock: bool = True, office: Office | None 
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        stop = scheduler.start(office) if clock else None
+        stops = [scheduler.start(office)] if clock else []
+        if settings.telegram_bot_token:
+            from .telegram import TelegramBridge
+
+            stops.append(TelegramBridge(office).start())
         yield
-        if stop:
+        for stop in stops:
             stop.set()
 
     app = FastAPI(title="UniWay 行銷辦公室", lifespan=lifespan)
@@ -39,6 +48,14 @@ def create_app(settings: Settings, *, clock: bool = True, office: Office | None 
     app.mount("/static", StaticFiles(directory=STATIC), name="static")
     if settings.fonts_dir.is_dir():
         app.mount("/fonts", StaticFiles(directory=settings.fonts_dir), name="fonts")
+
+    @app.middleware("http")
+    async def fresh_static(request: Request, call_next):
+        # After a git pull the page must not mix the new office.html with yesterday's cached scripts.
+        response = await call_next(request)
+        if request.url.path.startswith("/static/"):
+            response.headers["Cache-Control"] = "no-cache"
+        return response
 
     @app.middleware("http")
     async def require_token(request: Request, call_next):

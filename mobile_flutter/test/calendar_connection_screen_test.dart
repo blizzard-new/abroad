@@ -52,7 +52,7 @@ void main() {
 
     await tester.drag(find.byType(ListView).first, const Offset(0, -520));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('新增自己的申請任務'));
+    await tester.tap(find.widgetWithText(FilledButton, '新增申請任務'));
     await tester.pumpAndSettle();
     final titleField = find.byWidgetPredicate(
       (widget) => widget is TextField && widget.decoration?.labelText == '任務名稱',

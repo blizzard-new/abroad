@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
 import 'account_screen.dart';
@@ -116,22 +116,22 @@ class _CommunityScreenState extends State<CommunityScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!widget.embedded && !widget.lockedToInitialSchool) ...[
-          const ExchangeSectionHeader(eyebrow: '匿名交流與經驗投稿', title: '學生社群'),
+          const StudentSectionTitle('學生社群', icon: Icons.forum_outlined),
           const SizedBox(height: 8),
           Text(
-            '公開貼文與聊天室適合一起討論；私訊必須先接受邀請。',
+            '公開討論；私訊需先接受邀請。',
             style: Theme.of(
               context,
             ).textTheme.bodyLarge?.copyWith(color: ExchangeColors.secondaryInk),
           ),
           const SizedBox(height: 16),
           _SchoolSelector(value: schoolName, onChanged: _selectSchool),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
         ] else if (widget.embedded) ...[
-          const ExchangeSectionHeader(title: '學生社群'),
+          const StudentSectionTitle('學生社群', icon: Icons.forum_outlined),
           const SizedBox(height: 8),
           Text(
-            '公開內容可一起補充；私訊採邀請制，並可隨時封鎖或檢舉。',
+            '私訊需先接受邀請，可封鎖或檢舉。',
             style: Theme.of(
               context,
             ).textTheme.bodyLarge?.copyWith(color: ExchangeColors.secondaryInk),
@@ -139,12 +139,12 @@ class _CommunityScreenState extends State<CommunityScreen> {
           const SizedBox(height: 16),
         ],
         if (identity != null) _IdentityCard(identity: identity!),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         _ModeSelector(
           selected: mode,
           onSelected: (value) => setState(() => mode = value),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         if (loading)
           const LoadingCards(count: 3)
         else if (error != null)
@@ -213,17 +213,17 @@ class _AccountRequiredPanel extends StatelessWidget {
               const ExchangeIconBadge(
                 Icons.lock_person_outlined,
                 color: ExchangeColors.blue,
-                background: Colors.white70,
+                background: ExchangeColors.blueSoft,
               ),
               const SizedBox(height: 12),
               Text('登入後參與校別社群', style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: 6),
+              const SizedBox(height: 8),
               Text(
-                '目前已有 ${posts.length} 篇公開討論、${chat.length} 則聊天室訊息。登入後才能發文、聊天與使用邀請制私訊。',
+                '${posts.length} 篇討論 · ${chat.length} 則訊息\n登入後可發文、聊天與私訊。',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 16),
               FilledButton.icon(
                 onPressed: () async {
                   await Navigator.of(context).push(
@@ -236,7 +236,7 @@ class _AccountRequiredPanel extends StatelessWidget {
                   await onSignedIn();
                 },
                 icon: const Icon(Icons.login_rounded),
-                label: const Text('登入或建立帳號'),
+                label: const Text('登入參與'),
               ),
             ],
           ),
@@ -313,7 +313,7 @@ class _IdentityCard extends StatelessWidget {
           const ExchangeIconBadge(
             Icons.shield_outlined,
             color: ExchangeColors.blue,
-            background: Colors.white70,
+            background: ExchangeColors.blueSoft,
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -339,7 +339,7 @@ class _IdentityCard extends StatelessWidget {
                         '匿名 ID：${identity.id}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: ExchangeColors.ink,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -370,62 +370,28 @@ class _IdentityCard extends StatelessWidget {
 
 class _ModeSelector extends StatelessWidget {
   const _ModeSelector({required this.selected, required this.onSelected});
-
   final CommunityMode selected;
   final ValueChanged<CommunityMode> onSelected;
-
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: CupertinoSlidingSegmentedControl<CommunityMode>(
-        groupValue: selected,
-        thumbColor: Colors.white,
-        backgroundColor: const Color(0x160B2A27),
-        padding: const EdgeInsets.all(4),
-        onValueChanged: (value) {
-          if (value != null) onSelected(value);
-        },
-        children: const {
-          CommunityMode.posts: _Segment(
-            icon: Icons.dynamic_feed_outlined,
-            label: '動態貼文',
-          ),
-          CommunityMode.chat: _Segment(
-            icon: Icons.forum_outlined,
-            label: '公開聊天',
-          ),
-          CommunityMode.messages: _Segment(
-            icon: Icons.mail_outline_rounded,
-            label: '私訊',
-          ),
-        },
-      ),
-    );
-  }
-}
-
-class _Segment extends StatelessWidget {
-  const _Segment({required this.icon, required this.label});
-
-  final IconData icon;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 4),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 19),
-          const SizedBox(height: 3),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
-          ),
-        ],
-      ),
+    const modes = <CommunityMode, (IconData, String)>{
+      CommunityMode.posts: (Icons.dynamic_feed_outlined, '貼文'),
+      CommunityMode.chat: (Icons.forum_outlined, '聊天'),
+      CommunityMode.messages: (Icons.mail_outline_rounded, '私訊'),
+    };
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: modes.entries
+          .map(
+            (entry) => ChoiceChip(
+              avatar: Icon(entry.value.$1, size: 20),
+              label: Text(entry.value.$2),
+              selected: selected == entry.key,
+              onSelected: (_) => onSelected(entry.key),
+            ),
+          )
+          .toList(),
     );
   }
 }
@@ -503,7 +469,7 @@ class _PostsPanel extends StatelessWidget {
                             color: ExchangeColors.teal,
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -511,7 +477,7 @@ class _PostsPanel extends StatelessWidget {
                               Text(
                                 thread.post.displayName,
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                               Text(
@@ -562,12 +528,12 @@ class _PostsPanel extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 16),
                     Text(
                       thread.post.title,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(height: 7),
+                    const SizedBox(height: 8),
                     Text(thread.post.body),
                     const Divider(height: 24),
                     ExpansionTile(
@@ -593,8 +559,8 @@ class _PostsPanel extends StatelessWidget {
                             title: Text(
                               comment.displayName,
                               style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
                               ),
                             ),
                             subtitle: Text(comment.body),
@@ -665,7 +631,7 @@ class _ChatPanel extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: mine
                       ? ExchangeColors.teal
-                      : Colors.white.withValues(alpha: .86),
+                      : ExchangeColors.surfaceMuted,
                   borderRadius: BorderRadius.only(
                     topLeft: const Radius.circular(16),
                     topRight: const Radius.circular(16),
@@ -680,7 +646,7 @@ class _ChatPanel extends StatelessWidget {
                       message.displayName,
                       style: TextStyle(
                         fontSize: 12,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: mine
                             ? Colors.white70
                             : ExchangeColors.secondaryInk,
@@ -725,10 +691,7 @@ class _ChatPanel extends StatelessWidget {
                   final body = controller.text.trim();
                   if (body.isEmpty) return;
                   try {
-                    final store = ExchangeStoreScope.of(
-                      context,
-                      listen: false,
-                    );
+                    final store = ExchangeStoreScope.of(context, listen: false);
                     await store.api.publishChat(
                       identity: identity,
                       schoolName: schoolName,
@@ -962,7 +925,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                     child: Column(
                       children: [
                         const Text('對方邀請你開始私訊。接受後才能繼續對話。'),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 8),
                         FilledButton(
                           onPressed: () async {
                             await ExchangeStoreScope.of(
@@ -1009,7 +972,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                               decoration: BoxDecoration(
                                 color: mine
                                     ? ExchangeColors.teal
-                                    : Colors.white,
+                                    : ExchangeColors.surface,
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Text(
@@ -1181,7 +1144,7 @@ Future<void> _showCommentComposer({
             autofocus: true,
             decoration: const InputDecoration(labelText: '留言內容'),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             child: FilledButton(
@@ -1230,7 +1193,7 @@ Future<void> _showInviteComposer({
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('傳送私訊邀請', style: Theme.of(context).textTheme.headlineMedium),
-          const SizedBox(height: 6),
+          const SizedBox(height: 8),
           Text(
             '需要對方的匿名 ID；接受前只能傳送一次邀請訊息。',
             style: Theme.of(context).textTheme.bodySmall,

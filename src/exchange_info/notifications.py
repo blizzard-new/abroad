@@ -394,7 +394,7 @@ def content_update_notification(
         channels.append("web")
     if preferences.email_enabled and account.email:
         channels.append("email")
-    if not channels:
+    if not channels and not preferences.push_enabled:
         return None
     current = _aware_utc(now or utc_now())
     summary = "；".join(revision.change_summary) or "官方申請流程內容已更新。"

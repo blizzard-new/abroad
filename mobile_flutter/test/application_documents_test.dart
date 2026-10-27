@@ -164,9 +164,11 @@ void main() {
       await store.setApplicationProfileMemoryEnabled(true);
 
       final prefs = await SharedPreferences.getInstance();
+      final memoryKey = prefs.getKeys().singleWhere(
+        (key) => key.endsWith(':application_profile_memory_v1'),
+      );
       final remembered =
-          jsonDecode(prefs.getString('application_profile_memory_v1')!)
-              as Map<String, dynamic>;
+          jsonDecode(prefs.getString(memoryKey)!) as Map<String, dynamic>;
       expect(remembered['student_name_zh'], '王小明');
       expect(remembered['email'], 'student@example.com');
       expect(remembered.containsKey('id_number'), isFalse);
@@ -177,6 +179,7 @@ void main() {
       await store.clearApplicationProfileMemory();
       expect(store.applicationProfile['student_name_zh'], '王小明');
       expect(prefs.getString('application_profile_memory_v1'), isNull);
+      expect(prefs.getString(memoryKey), isNull);
     },
   );
 
@@ -202,10 +205,12 @@ void main() {
       );
 
       expect(find.text('申請文件'), findsOneWidget);
-      expect(find.text('文件清單'), findsOneWidget);
+      expect(find.text('待辦文件'), findsOneWidget);
       expect(find.text('讀書計畫'), findsOneWidget);
       expect(find.text(template.description), findsNothing);
 
+      await tester.ensureVisible(find.text('讀書計畫'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('讀書計畫'));
       await tester.pumpAndSettle();
 

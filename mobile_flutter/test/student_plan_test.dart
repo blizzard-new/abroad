@@ -68,6 +68,10 @@ void main() {
   test('文件狀態與個人計畫會同步到 Widget 摘要', () async {
     final bridge = _FakeWidgetBridge();
     final store = ExchangeStore(widgetBridge: bridge);
+    store.account = AccountProfile.fromJson({
+      'id': 'widget-owner',
+      'display_name': 'Student',
+    });
     await store.savePlanProfile(
       const StudentPlanProfile(
         college: '管理學院',
@@ -96,9 +100,13 @@ void main() {
     );
     expect(store.documentReadyCount, 1);
     expect(bridge.snapshots.last.progressLabel, '準備進度 20%');
+    await store.logout();
+    expect(bridge.snapshots.last.progressLabel, '尚未登入');
+    expect(bridge.snapshots.last.tasks, isEmpty);
+    store.dispose();
   });
 
-  test('App 使用平台系統字型，且原生 Widget 宣告桌面與鎖定畫面', () {
+  test('App 使用平台系統字型，Android Widget 支援桌面縮放', () {
     final theme = buildExchangeTheme();
     expect(theme.textTheme.bodyMedium?.fontFamily, isNull);
 
@@ -108,7 +116,8 @@ void main() {
     final iosSwift = File(
       'ios/StudyPlanWidgetDefinitionHomeWidget/Widget.swift',
     ).readAsStringSync();
-    expect(androidXml, contains('home_screen|keyguard'));
+    expect(androidXml, contains('android:widgetCategory="home_screen"'));
+    expect(androidXml, contains('android:minResizeWidth="140dp"'));
     expect(iosSwift, contains('.accessoryCircular'));
     expect(iosSwift, contains('.accessoryRectangular'));
   });
@@ -141,7 +150,9 @@ class _FakeWidgetBridge implements StudyPlanWidgetBridge {
   Future<void> initialize() async {}
 
   @override
-  Future<void> requestPin() async {}
+  Future<void> requestPin({
+    StudyPlanWidgetStyle style = StudyPlanWidgetStyle.overview,
+  }) async {}
 
   @override
   Future<void> sync(StudyPlanWidgetSnapshot snapshot) async {

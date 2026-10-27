@@ -166,7 +166,9 @@ class Brain:
     def available(self) -> bool:
         return bool(self.command) and shutil.which(self.command[0]) is not None
 
-    def ask(self, schema: type[Model], task: str, context: str, effort: str = "medium", *, web: bool = False) -> Model:
+    def ask(self, schema: type[Model], task: str, context: str, effort: str = "medium", *, web: bool = False,
+            model: str = "", explicit_effort: bool = False) -> Model:
+        """`model` and `explicit_effort` come from a desk's tuning (set by the chief); empty means the defaults."""
         raise NotImplementedError
 
     def run(self, args: list[str], *, stdin: str | None, cwd: Path, env: dict | None = None, timeout: int | None = None) -> str:
@@ -235,7 +237,7 @@ class ClaudeCodeBrain(Brain):
         super().__init__(settings)
         self.command = shlex.split(settings.claude_code_command)
 
-    def ask(self, schema, task, context, effort="medium", *, web=False):
+    def ask(self, schema, task, context, effort="medium", *, web=False, model="", explicit_effort=False):
         args = [
             "-p",
             "--output-format", "json",
@@ -245,8 +247,10 @@ class ClaudeCodeBrain(Brain):
         ]
         if web:
             args += ["--allowedTools", "WebSearch,WebFetch"]
-        if self.settings.claude_code_model:
-            args += ["--model", self.settings.claude_code_model]
+        if model or self.settings.claude_code_model:
+            args += ["--model", model or self.settings.claude_code_model]
+        if explicit_effort:  # otherwise Claude Code keeps the model's own default
+            args += ["--effort", effort]
         # An API key in the environment would make Claude Code bill the API instead of your Claude plan.
         env = {k: v for k, v in os.environ.items() if k not in {"ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN"}}
         with tempfile.TemporaryDirectory(prefix="office-claude-") as folder:
@@ -269,19 +273,19 @@ class CodexBrain(Brain):
         super().__init__(settings)
         self.command = shlex.split(settings.codex_command)
 
-    def _base_args(self, effort: str | None = None) -> list[str]:
+    def _base_args(self, effort: str | None = None, model: str = "") -> list[str]:
         args = ["--skip-git-repo-check", "--ephemeral"]
-        if self.settings.codex_model:
-            args += ["-m", self.settings.codex_model]
+        if model or self.settings.codex_model:
+            args += ["-m", model or self.settings.codex_model]
         if effort:
             args += ["-c", f'model_reasoning_effort="{effort}"']
         return args
 
-    def ask(self, schema, task, context, effort="medium", *, web=False):
+    def ask(self, schema, task, context, effort="medium", *, web=False, model="", explicit_effort=False):
         with tempfile.TemporaryDirectory(prefix="office-codex-") as folder:
             root = Path(folder)
             (root / "schema.json").write_text(json.dumps(strict_schema(schema), ensure_ascii=False), encoding="utf-8")
-            args = ["exec", "-", *self._base_args(effort), "--sandbox", "read-only", "--output-schema", "schema.json", "-o", "answer.json"]
+            args = ["exec", "-", *self._base_args(effort, model), "--sandbox", "read-only", "--output-schema", "schema.json", "-o", "answer.json"]
             stdout = self.run(args, stdin=f"{VOICE_GUIDE}\n\n{task}\n\n{context}", cwd=root)
             answer = root / "answer.json"
             text = answer.read_text(encoding="utf-8") if answer.is_file() else stdout
@@ -339,14 +343,16 @@ class AntigravityBrain(Brain):
         super().__init__(settings)
         self.command = shlex.split(settings.antigravity_command)
 
-    def ask(self, schema, task, context, effort="medium", *, web=False):
+    def ask(self, schema, task, context, effort="medium", *, web=False, model="", explicit_effort=False):
+        # Antigravity's model names carry their own thinking level, e.g. "Gemini 3.7 Flash (Low)".
         prompt = (
             f"{VOICE_GUIDE}\n\n{task}\n\n{context}\n\n"
             "最後只輸出一個符合下面 JSON Schema 的 JSON 物件，不要任何其他文字，也不要修改任何檔案：\n"
             f"{json.dumps(schema.model_json_schema(), ensure_ascii=False)}"
         )
         with tempfile.TemporaryDirectory(prefix="office-antigravity-") as folder:
-            out = self.run([prompt], stdin=None, cwd=Path(folder))
+            # The prompt stays right after `agy -p`; the model flag comes after it.
+            out = self.run([prompt, *(["--model", model] if model else [])], stdin=None, cwd=Path(folder))
         return _validate(schema, parse_json_text(out))
 
 
@@ -368,12 +374,12 @@ class ApiBrain(Brain):
             self._client = anthropic.Anthropic()
         return self._client
 
-    def ask(self, schema, task, context, effort="medium", *, web=False):
+    def ask(self, schema, task, context, effort="medium", *, web=False, model="", explicit_effort=False):
         import anthropic
 
         try:
             response = self.client.beta.messages.parse(
-                model=self.settings.model,
+                model=API_MODELS.get(model, model) or self.settings.model,
                 max_tokens=16000,
                 betas=[FALLBACK_BETA],
                 fallbacks="default",
@@ -393,6 +399,10 @@ class ApiBrain(Brain):
             raise BrainError("Claude 的回覆不完整")
         return response.parsed_output
 
+
+# Short names the chief may use for the Claude API, which needs full model IDs.
+API_MODELS = {"opus": "claude-opus-5-5", "sonnet": "claude-sonnet-5-5", "haiku": "claude-haiku-5-5", "fable": "claude-fable-5-1"}
+EFFORTS = ("low", "medium", "high", "xhigh", "max")
 
 BRAINS = {"claude-code": ClaudeCodeBrain, "codex": CodexBrain, "antigravity": AntigravityBrain, "api": ApiBrain}
 

@@ -8,8 +8,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
+import '../core/journey_illustration.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
+import 'app_update_prompt.dart';
 
 enum _AuthMode { login, register }
 
@@ -36,6 +39,7 @@ class _AccountScreenState extends State<AccountScreen> {
   String? verificationMessage;
   bool profileInitialized = false;
   bool verificationConsent = false;
+  bool termsAccepted = false;
   XFile? frontCard;
   XFile? backCard;
 
@@ -118,13 +122,13 @@ class _AccountScreenState extends State<AccountScreen> {
               front ? '加入學生證正面' : '加入學生證反面',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             FilledButton.icon(
               onPressed: () => Navigator.pop(sheetContext, ImageSource.camera),
               icon: const Icon(Icons.photo_camera_outlined),
               label: const Text('直接拍攝'),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             OutlinedButton.icon(
               onPressed: () => Navigator.pop(sheetContext, ImageSource.gallery),
               icon: const Icon(Icons.photo_library_outlined),
@@ -239,12 +243,15 @@ class _AccountScreenState extends State<AccountScreen> {
       bottom: false,
       child: ListView(
         padding: const EdgeInsets.fromLTRB(20, 18, 20, 118),
-        children: [content],
+        children: [content, const SizedBox(height: 20), const AppUpdateTile()],
       ),
     );
   }
 
   Widget _buildAuth(BuildContext context, ExchangeStore store) {
+    if (!store.authProviders.any((p) => p.provider == 'email' && p.enabled)) {
+      return _buildGoogleAuth(context, store);
+    }
     final verified = store.studentVerification != null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,7 +266,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 children: [
                   Text(
                     '交換指南帳號',
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   Text('收藏、時程與留學社群都能同步'),
                 ],
@@ -281,7 +288,7 @@ class _AccountScreenState extends State<AccountScreen> {
             context,
           ).textTheme.bodyLarge?.copyWith(color: ExchangeColors.secondaryInk),
         ),
-        const SizedBox(height: 22),
+        const SizedBox(height: 24),
         SegmentedButton<_AuthMode>(
           segments: const [
             ButtonSegment(value: _AuthMode.login, label: Text('登入')),
@@ -297,7 +304,7 @@ class _AccountScreenState extends State<AccountScreen> {
             });
           },
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 16),
         if (mode == _AuthMode.register && !verified)
           _StudentVerificationCard(
             frontCard: frontCard,
@@ -323,6 +330,13 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                   const SizedBox(height: 16),
                 ],
+                CheckboxListTile(
+                  value: termsAccepted,
+                  onChanged: (value) =>
+                      setState(() => termsAccepted = value ?? false),
+                  title: const Text('我同意 UniWay 服務條款與隱私權政策'),
+                  contentPadding: EdgeInsets.zero,
+                ),
                 ...store.authProviders
                     .where(
                       (provider) => const {
@@ -336,10 +350,8 @@ class _AccountScreenState extends State<AccountScreen> {
                         padding: const EdgeInsets.only(bottom: 9),
                         child: _ProviderButton(
                           provider: provider,
-                          verificationToken: mode == _AuthMode.register
-                              ? store.studentVerification?.verificationToken
-                              : null,
-                          apiUrl: store.api.oauthStartUrl,
+                          onLogin: () =>
+                              _providerLogin(store, provider.provider),
                         ),
                       ),
                     ),
@@ -441,11 +453,13 @@ class _AccountScreenState extends State<AccountScreen> {
               backgroundColor: ExchangeColors.blueSoft,
               foregroundColor: ExchangeColors.blue,
               child: Text(
-                profile.displayName.characters.first.toUpperCase(),
+                profile.displayName.isEmpty
+                    ? 'U'
+                    : profile.displayName.characters.first.toUpperCase(),
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
-            const SizedBox(width: 14),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -465,91 +479,81 @@ class _AccountScreenState extends State<AccountScreen> {
           ],
         ),
         if (profile.studentStatusVerified) ...[
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           _VerificationSuccess(message: '${profile.verifiedUniversity}學生身分已驗證'),
         ],
-        const SizedBox(height: 26),
-        const ExchangeSectionHeader(title: '個人設定'),
-        const SizedBox(height: 14),
+        const SizedBox(height: 24),
         GlassCard(
-          child: Column(
+          padding: EdgeInsets.zero,
+          child: ExpansionTile(
+            leading: const Icon(Icons.manage_accounts_outlined),
+            title: const Text('個人設定'),
+            childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             children: [
-              TextField(
-                controller: displayNameController,
-                decoration: const InputDecoration(
-                  labelText: '公開暱稱',
-                  prefixIcon: Icon(Icons.badge_outlined),
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: homeUniversityController,
-                decoration: const InputDecoration(
-                  labelText: '目前就讀大學',
-                  prefixIcon: Icon(Icons.school_outlined),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: store.universities
-                      .map(
-                        (university) => ActionChip(
-                          label: Text(university.shortName),
-                          onPressed: () {
-                            setState(() {
-                              homeUniversityController.text =
-                                  university.schoolName;
-                            });
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: targetCountriesController,
-                decoration: const InputDecoration(
-                  labelText: '目標國家',
-                  helperText: '例如：日本、法國、澳洲',
-                  prefixIcon: Icon(Icons.public_rounded),
-                ),
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<String>(
-                initialValue: applicationStage,
-                decoration: const InputDecoration(
-                  labelText: '目前申請階段',
-                  prefixIcon: Icon(Icons.route_outlined),
-                ),
-                items: _stageLabels.entries
-                    .map(
-                      (entry) => DropdownMenuItem(
-                        value: entry.key,
-                        child: Text(entry.value),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  if (value != null) setState(() => applicationStage = value);
-                },
-              ),
-              if (error != null) ...[
-                const SizedBox(height: 12),
-                _FormError(message: error!),
-              ],
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: () => _saveProfile(store),
-                  icon: const Icon(Icons.save_outlined),
-                  label: const Text('儲存設定'),
-                ),
+              Column(
+                children: [
+                  TextField(
+                    controller: displayNameController,
+                    decoration: const InputDecoration(
+                      labelText: '公開暱稱',
+                      prefixIcon: Icon(Icons.badge_outlined),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: homeUniversityController,
+                    readOnly: true,
+                    onTap: () => _chooseHomeUniversity(store),
+                    decoration: const InputDecoration(
+                      labelText: '就讀大學',
+                      prefixIcon: Icon(Icons.school_outlined),
+                      suffixIcon: Icon(Icons.expand_more_rounded),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: targetCountriesController,
+                    decoration: const InputDecoration(
+                      labelText: '目標國家',
+                      helperText: '例如：日本、法國、澳洲',
+                      prefixIcon: Icon(Icons.public_rounded),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  DropdownButtonFormField<String>(
+                    initialValue: applicationStage,
+                    decoration: const InputDecoration(
+                      labelText: '目前申請階段',
+                      prefixIcon: Icon(Icons.route_outlined),
+                    ),
+                    items: _stageLabels.entries
+                        .map(
+                          (entry) => DropdownMenuItem(
+                            value: entry.key,
+                            child: Text(entry.value),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() => applicationStage = value);
+                      }
+                    },
+                  ),
+                  if (error != null) ...[
+                    const SizedBox(height: 12),
+                    _FormError(message: error!),
+                  ],
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: () => _saveProfile(store),
+                      icon: const Icon(Icons.save_outlined),
+                      label: const Text('儲存設定'),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -594,6 +598,174 @@ class _AccountScreenState extends State<AccountScreen> {
           },
           icon: const Icon(Icons.delete_outline_rounded),
           label: const Text('刪除帳號'),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _chooseHomeUniversity(ExchangeStore store) async {
+    var query = '';
+    final selected = await showModalBottomSheet<String>(
+      context: context,
+      showDragHandle: true,
+      useSafeArea: true,
+      isScrollControlled: true,
+      builder: (context) => StatefulBuilder(
+        builder: (context, update) => Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.viewInsetsOf(context).bottom,
+          ),
+          child: SizedBox(
+            height: MediaQuery.sizeOf(context).height * .6,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      labelText: '搜尋就讀大學',
+                      prefixIcon: Icon(Icons.search_rounded),
+                    ),
+                    onChanged: (value) => update(() => query = value.trim()),
+                  ),
+                ),
+                Expanded(
+                  child: ListView(
+                    children: store.universities
+                        .where(
+                          (u) =>
+                              '${u.schoolName} ${u.shortName}'.contains(query),
+                        )
+                        .map(
+                          (u) => ListTile(
+                            leading: const Icon(Icons.school_outlined),
+                            title: Text(u.schoolName),
+                            trailing:
+                                u.schoolName == homeUniversityController.text
+                                ? const Icon(Icons.check_rounded)
+                                : null,
+                            onTap: () => Navigator.pop(context, u.schoolName),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    if (selected != null && mounted) {
+      setState(() => homeUniversityController.text = selected);
+    }
+  }
+
+  Future<void> _providerLogin(ExchangeStore store, String provider) async {
+    if (!termsAccepted) {
+      setState(() => error = '請先閱讀並同意服務條款與隱私權政策。');
+      return;
+    }
+    setState(() => error = null);
+    try {
+      await store.startMobileLogin(provider);
+    } catch (exception) {
+      if (mounted) setState(() => error = exception.toString());
+    }
+  }
+
+  Widget _buildGoogleAuth(BuildContext context, ExchangeStore store) {
+    final google = store.authProviders
+        .where((p) => p.provider == 'google' && p.enabled)
+        .firstOrNull;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const StudentHeading('我的', subtitle: '你的交換，隨時接著準備'),
+        const SizedBox(height: 24),
+        GlassCard(
+          tint: ExchangeColors.tealSoft,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Center(child: JourneyIllustration()),
+              const SizedBox(height: 20),
+              Text('把計畫帶著走', style: Theme.of(context).textTheme.headlineMedium),
+              const SizedBox(height: 8),
+              Text(
+                '登入同一帳號，手機與電腦同步。',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 24),
+        const Wrap(
+          spacing: 24,
+          runSpacing: 12,
+          children: [
+            StudentIconLabel(Icons.bookmark_outline_rounded, '收藏'),
+            StudentIconLabel(Icons.assignment_outlined, '文件'),
+            StudentIconLabel(Icons.event_outlined, '日期'),
+          ],
+        ),
+        const SizedBox(height: 24),
+        GlassCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              CheckboxListTile(
+                contentPadding: EdgeInsets.zero,
+                controlAffinity: ListTileControlAffinity.leading,
+                value: termsAccepted,
+                onChanged: (value) =>
+                    setState(() => termsAccepted = value ?? false),
+                title: const Text('我已閱讀並同意服務條款與隱私權政策'),
+              ),
+              Wrap(
+                spacing: 8,
+                children: [
+                  TextButton(
+                    onPressed: () => launchUrl(
+                      Uri.parse(store.api.resolveUrl('terms')),
+                      mode: LaunchMode.externalApplication,
+                    ),
+                    child: const Text('服務條款'),
+                  ),
+                  TextButton(
+                    onPressed: () => launchUrl(
+                      Uri.parse(store.api.resolveUrl('privacy')),
+                      mode: LaunchMode.externalApplication,
+                    ),
+                    child: const Text('隱私權政策'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              FilledButton.icon(
+                onPressed: google == null || store.isAuthenticating
+                    ? null
+                    : () => _providerLogin(store, 'google'),
+                icon: const Icon(Icons.g_mobiledata_rounded),
+                label: Text(store.isAuthenticating ? '正在登入…' : '使用 Google 繼續'),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                '使用電腦版帳號，登入後自動返回。',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              if (google == null)
+                TextButton(
+                  onPressed: store.refresh,
+                  child: const Text('重新取得登入方式'),
+                ),
+              if (error != null || store.mobileLoginError != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: _FormError(message: error ?? store.mobileLoginError!),
+                ),
+            ],
+          ),
         ),
       ],
     );
@@ -658,7 +830,7 @@ class _StudentVerificationCard extends StatelessWidget {
             icon: Icons.center_focus_strong_rounded,
             onTap: onPickFront,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           _StudentCardPicker(
             title: '學生證反面',
             hint: '完整拍攝，不裁切卡片邊緣',
@@ -666,7 +838,7 @@ class _StudentVerificationCard extends StatelessWidget {
             icon: Icons.credit_card_rounded,
             onTap: onPickBack,
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -681,12 +853,12 @@ class _StudentVerificationCard extends StatelessWidget {
                   size: 20,
                   color: ExchangeColors.success,
                 ),
-                SizedBox(width: 9),
+                SizedBox(width: 8),
                 Expanded(child: Text('不保存證件照片、姓名、學號或 OCR 全文；只留下已驗證、學校與時間。')),
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           CheckboxListTile(
             contentPadding: EdgeInsets.zero,
             controlAffinity: ListTileControlAffinity.leading,
@@ -817,7 +989,7 @@ class _VerificationSuccess extends StatelessWidget {
       child: Row(
         children: [
           const Icon(Icons.verified_rounded, color: ExchangeColors.success),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -837,15 +1009,10 @@ class _VerificationSuccess extends StatelessWidget {
 }
 
 class _ProviderButton extends StatelessWidget {
-  const _ProviderButton({
-    required this.provider,
-    required this.verificationToken,
-    required this.apiUrl,
-  });
+  const _ProviderButton({required this.provider, required this.onLogin});
 
   final AuthProviderStatus provider;
-  final String? verificationToken;
-  final Uri Function(String, {String? studentVerificationToken}) apiUrl;
+  final VoidCallback onLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -857,15 +1024,7 @@ class _ProviderButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: OutlinedButton.icon(
-        onPressed: provider.enabled
-            ? () => launchUrl(
-                apiUrl(
-                  provider.provider,
-                  studentVerificationToken: verificationToken,
-                ),
-                mode: LaunchMode.externalApplication,
-              )
-            : null,
+        onPressed: provider.enabled ? onLogin : null,
         icon: Icon(icon),
         label: Text(
           provider.enabled ? provider.label : '${provider.label} · 尚未設定',

@@ -416,7 +416,35 @@ def apply_oct22_updates(bundle: Path, path: Path = SOURCE) -> dict:
                 },
             }
         )
+        oct26_note = (
+            "2026/10/26 巡查更新：116-1 甄選時程頁（https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/sem1-20272028ay-selection-timeline/）"
+            "所列線上報名（115/11/3 10:00 至 11/9 16:00）、成績公布（12/2）與第一階段志願選填截止（12/7）與平台 116-1 校級甄選資料一致無衝突；"
+            "首頁新見「德國哥廷根大學交換學生計畫說明會」開放報名（https://forms.gle/aDBxaTLB2yjZt5AK8，頁面未標活動日期）；"
+            "另首頁頁尾「10/30（日）18:00 至 10/31（一）10:00 系統維護通知」（DOM id 為 #system_maintenance_20221030）經核實為 2022 年舊版遺留彈窗（2026/10/30 為週五），惟如遇該時段國際處維護仍建議避開。"
+        )
+        if overview and oct26_note not in overview[0].get("details", []):
+            overview[0]["details"].append(oct26_note)
         sd["program_overview"] = overview
+        oct26_sources = [
+            {
+                "title": "臺大 116 學年度第 1 學期出國交換學生甄選時程表",
+                "source_url": "https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/sem1-20272028ay-selection-timeline/",
+                "category": "deadline",
+                "summary": "線上報名 115/11/3 10:00 至 11/9 16:00、成績 12/2 公布、第一階段志願選填截止 12/7；首頁另公告德國哥廷根大學交換說明會報名（https://forms.gle/aDBxaTLB2yjZt5AK8）。",
+            },
+            {
+                "title": "德國哥廷根大學交換學生計畫說明會報名表單（臺大國際處首頁公告，頁面未列日期）",
+                "source_url": "https://forms.gle/aDBxaTLB2yjZt5AK8",
+                "category": "exchange_application",
+                "summary": "臺大海外教育專區首頁最新消息開放德國哥廷根大學（University of Göttingen）交換學生計畫說明會報名。",
+            },
+        ]
+        existing_sd_sources = sd.get("sources", [])
+        existing_sd_urls = {s.get("source_url") for s in existing_sd_sources}
+        for s_item in oct26_sources:
+            if s_item["source_url"] not in existing_sd_urls:
+                existing_sd_sources.append(s_item)
+        sd["sources"] = existing_sd_sources
         StudentDashboard.model_validate(sd)
         sd_path.write_text(
             json.dumps(sd, ensure_ascii=False, indent=2) + "\n",
@@ -435,8 +463,22 @@ def apply_oct22_updates(bundle: Path, path: Path = SOURCE) -> dict:
         ]
         elig_lines.append(EXCHANGE_INFO_BULLET)
         ei["eligibility"] = elig_lines
+        oct26_period_line = (
+            "2026/10/26 巡查更新：116-1 甄選時程頁（https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/sem1-20272028ay-selection-timeline/）"
+            "確認線上報名 115/11/3 10:00–11/9 16:00、成績 12/2 公布、第一階段志願選填截止 12/7；"
+            "首頁新增「德國哥廷根大學交換學生計畫說明會」報名（https://forms.gle/aDBxaTLB2yjZt5AK8，頁面未寫日期）；"
+            "首頁頁尾「10/30 18:00 至 10/31 10:00 系統維護公告」經核實為 #system_maintenance_20221030（2022 年舊版遺留彈窗，頁面未寫年份）。"
+        )
+        app_periods = [p for p in ei.get("application_period", []) if "德國哥廷根大學交換學生計畫說明會" not in p]
+        app_periods.append(oct26_period_line)
+        ei["application_period"] = app_periods
         src_urls = list(ei.get("source_urls", []))
-        for u in [LIST_URL, *detail_urls]:
+        for u in [
+            LIST_URL,
+            *detail_urls,
+            "https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/sem1-20272028ay-selection-timeline/",
+            "https://forms.gle/aDBxaTLB2yjZt5AK8",
+        ]:
             if u not in src_urls:
                 src_urls.append(u)
         ei["source_urls"] = src_urls
@@ -455,7 +497,19 @@ def apply_oct22_updates(bundle: Path, path: Path = SOURCE) -> dict:
             for line in pages_path.read_text(encoding="utf-8").splitlines()
             if line.strip()
         ]
-        kept_pages = [p for p in existing_pages if p.title != PAGE_TITLE]
+        oct26_page_title = "國立臺灣大學：116-1 甄選時程頁核對、德國哥廷根大學交換說明會與系統維護公告年份查核（2026-10-26）"
+        kept_pages = [p for p in existing_pages if p.title not in {PAGE_TITLE, oct26_page_title}]
+        if kept_pages and kept_pages[0].title == "國立臺灣大學：116-1校級出國交換":
+            p0_lines = [l for l in kept_pages[0].text.splitlines() if "德國哥廷根大學交換學生計畫說明會" not in l]
+            p0_lines.append(oct26_note)
+            p0_body = "\n".join(p0_lines)
+            kept_pages[0] = kept_pages[0].model_copy(
+                update={
+                    "text": p0_body,
+                    "summary": p0_body,
+                    "content_hash": hashlib.sha256(p0_body.encode("utf-8")).hexdigest(),
+                }
+            )
         body_text = "\n".join(card_details) + "\n詳細來源：" + "；".join(detail_urls)
         new_page = ProcessedPage(
             title=PAGE_TITLE,
@@ -469,6 +523,25 @@ def apply_oct22_updates(bundle: Path, path: Path = SOURCE) -> dict:
             content_hash=hashlib.sha256(body_text.encode("utf-8")).hexdigest(),
         )
         kept_pages.append(new_page)
+        oct26_body = (
+            "116-1 甄選時程頁（https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/sem1-20272028ay-selection-timeline/）"
+            "所列線上報名 115/11/3 10:00 到 11/9 16:00、成績 12/2 公布、第一階段志願選填截止 12/7 與平台 116-1 校級甄選資料一致無衝突。\n"
+            "首頁新公告「德國哥廷根大學交換學生計畫說明會」開放報名（https://forms.gle/aDBxaTLB2yjZt5AK8，頁面未寫日期）。\n"
+            "首頁頁尾「10/30（日）18:00 到 10/31（一）10:00 系統維護公告」未寫年份，經查 HTML 元素為 #system_maintenance_20221030，屬 2022 年舊版遺留彈窗（2026/10/30 為週五）。"
+        )
+        kept_pages.append(
+            ProcessedPage(
+                title=oct26_page_title,
+                source_url="https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/sem1-20272028ay-selection-timeline/",
+                published_at="2026-10-26T00:00:00Z",
+                text=oct26_body,
+                summary=oct26_body,
+                category="exchange_application",
+                attachments=[],
+                crawled_at="2026-10-26T00:00:00Z",
+                content_hash=hashlib.sha256(oct26_body.encode("utf-8")).hexdigest(),
+            )
+        )
         pages_path.write_text(
             "".join(p.model_dump_json() + "\n" for p in kept_pages),
             encoding="utf-8",

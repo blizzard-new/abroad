@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import 'exchange_theme.dart';
+import 'daylight_surface.dart';
 
 class ExchangePageBackground extends StatelessWidget {
   const ExchangePageBackground({required this.child, super.key});
@@ -11,17 +10,7 @@ class ExchangePageBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFFFAFBFC), Color(0xFFF1F5F6), Color(0xFFF7F4F6)],
-          stops: [0, .62, 1],
-        ),
-      ),
-      child: child,
-    );
+    return DaylightBackground(child: child);
   }
 }
 
@@ -29,7 +18,7 @@ class GlassCard extends StatelessWidget {
   const GlassCard({
     required this.child,
     super.key,
-    this.padding = const EdgeInsets.all(18),
+    this.padding = const EdgeInsets.all(24),
     this.margin = EdgeInsets.zero,
     this.tint,
     this.onTap,
@@ -43,72 +32,27 @@ class GlassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(8);
-    final glassDecoration = BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: tint == null
-            ? [
-                Colors.white.withValues(alpha: .86),
-                const Color(0xFFF6F9FA).withValues(alpha: .64),
-                Colors.white.withValues(alpha: .58),
-              ]
-            : [
-                tint!.withValues(alpha: .82),
-                tint!.withValues(alpha: .6),
-                Colors.white.withValues(alpha: .48),
-              ],
-        stops: const [0, .52, 1],
-      ),
-      borderRadius: radius,
-      border: Border.all(color: Colors.white.withValues(alpha: .94)),
-    );
-    final surface = Material(
-      color: Colors.transparent,
-      child: Ink(
-        decoration: glassDecoration,
-        child: onTap == null
-            ? Padding(padding: padding, child: child)
-            : InkWell(
-                borderRadius: radius,
-                onTap: onTap,
-                splashColor: ExchangeColors.teal.withValues(alpha: .08),
-                highlightColor: Colors.white.withValues(alpha: .12),
-                child: Padding(padding: padding, child: child),
-              ),
-      ),
-    );
-    final content = Container(
-      decoration: BoxDecoration(
-        borderRadius: radius,
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x14132231),
-            blurRadius: 30,
-            spreadRadius: -8,
-            offset: Offset(0, 14),
-          ),
-          BoxShadow(
-            color: Color(0xA6FFFFFF),
-            blurRadius: 7,
-            spreadRadius: -4,
-            offset: Offset(0, -2),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: radius,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
-          child: surface,
-        ),
-      ),
-    );
-
+    final radius = BorderRadius.circular(24);
     return Padding(
       padding: margin,
-      child: onTap == null ? content : Semantics(button: true, child: content),
+      child: Semantics(
+        button: onTap == null ? null : true,
+        child: Material(
+          color: tint ?? ExchangeColors.surface,
+          shape: RoundedRectangleBorder(
+            borderRadius: radius,
+            side: const BorderSide(color: ExchangeColors.line),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: onTap == null
+              ? Padding(padding: padding, child: child)
+              : InkWell(
+                  onTap: onTap,
+                  borderRadius: radius,
+                  child: Padding(padding: padding, child: child),
+                ),
+        ),
+      ),
     );
   }
 }
@@ -139,12 +83,12 @@ class ExchangeSectionHeader extends StatelessWidget {
                   eyebrow!,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: ExchangeColors.teal,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 4),
               ],
-              Text(title, style: Theme.of(context).textTheme.headlineMedium),
+              Text(title, style: Theme.of(context).textTheme.titleLarge),
             ],
           ),
         ),
@@ -253,7 +197,7 @@ class BulletPoint extends StatelessWidget {
             child: Text(
               displayText,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: strong ? FontWeight.w700 : FontWeight.w500,
+                fontWeight: strong ? FontWeight.w600 : FontWeight.w400,
               ),
             ),
           ),
@@ -313,9 +257,9 @@ class LoadingCards extends StatelessWidget {
           height: index == 0 ? 132 : 104,
           margin: const EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: .62),
+            color: ExchangeColors.surface,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.white),
+            border: Border.all(color: ExchangeColors.line),
           ),
           child: const Center(
             child: SizedBox(

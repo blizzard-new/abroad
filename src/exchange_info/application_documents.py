@@ -1126,7 +1126,7 @@ def _cycu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
             field["help_text"] = "申請國際及香港姊妹校須檢附兩年內有效之外語能力檢定證明，並符合《中原大學出國交換研修申請學校一覽表》與各校 Fact Sheet 標準；申請大陸地區姊妹校免附外語檢定。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://oia.cycu.edu.tw/?page_id=2956&lang=zh",
+        source_url="https://oia.cycu.edu.tw/?p=6336",
         source_checked_at=CYCU_SOURCE_CHECKED_AT,
         official_layout=False,
         official_form_number=None,
@@ -1145,11 +1145,11 @@ def _cycu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
 
 def _ntust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
-        "exchange-application-data": "整理國立臺灣科技大學 115-2（2027 春季班）海外暨大陸地區交換生甄選之個人資料、志願序、歷年成績與名次證明（海外交換須全班前 70%；大陸交換須大學部平均 75 分、研究所 80 分以上）及外語檢定成績（語言能力占總成績 60%、在校成績占 20%、課外表現占 20%）。",
+        "exchange-application-data": "整理國立臺灣科技大學 116-1（2027 秋季班）赴海外交換學生計畫甄選簡章（_中文_20260915.pdf）暨 115-2（2027 春季班）海外與大陸地區交換生甄選之個人資料、志願序、歷年成績與名次證明（海外交換須全班前 70%；大陸交換須大學部平均 75 分、研究所 80 分以上）及外語檢定成績（語言能力占總成績 60%、在校成績占 20%、課外表現占 20%）。",
         "study-plan": "撰寫臺科大出國交換甄選必繳之出國學習計畫書（Study Plan）與自傳（歐美亞澳簡章：中、英文讀書計畫與中、英文自傳各一份，格式不拘、每份約 1–2 頁；計畫書可針對特定國家或學校撰寫，亦可概述目前的學習規劃及交換期間與交換後的安排）。校內總積分僅計外語檢定 60%、在校學業 20%、課外表現證明 20%，計畫書與自傳不另計分。",
         "course-preapproval": "出國前規劃於接待姊妹校修習之科目（依臺科大《學生出國期間有關學業及學籍處理要點》規定，交換期間須維持臺科大在學學籍並依規定修課，返國後辦理學分採認抵免）。",
         "predeparture-notice": "放榜錄取後於期限內繳交《錄取資格確認書》（或放棄聲明書），並依國際處與姊妹校規定準備外校線上申請表、英文歷年成績單、英文在學證明、英文財力證明、護照、簽證與海外醫療保險。",
-        "return-report": "交換期滿返國後 1 個月內，登入臺科大國際事務處出國交換學生心得分享系統（https://www.oia.ntust.edu.tw/p/404-1060-66857.php?Lang=zh-tw）填寫並上傳研修心得報告及照片，始得完成結案與獎學金尾款核銷。",
+        "return-report": "交換期滿返國後 1 個月內，登入臺科大國際事務處出國交換學生心得分享系統（https://oia.ntust.edu.tw/p/404-1060-66857.php?Lang=zh-tw）填寫並上傳研修心得報告及照片，始得完成結案與獎學金尾款核銷。",
         "credit-transfer": "交換期滿返國後，檢附接待姊妹校核發之正式成績單正本、課程大綱（Syllabus）及學分時數證明，依臺科大教務處與所屬系所規定辦理國外修習科目學分採認／抵免。",
     }
     if template.id not in descriptions:
@@ -1171,12 +1171,12 @@ def _ntust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
             field["help_text"] = "語言能力占校內甄選總分 60%（基本門檻：TOEIC 550 / TOEFL iBT 57 / IELTS 4.0 / JLPT N2 / CEFR B1；校內獎學金門檻：TOEIC 750 / TOEFL iBT 79 / IELTS 6.0 / JLPT N2；第二外語達 B1 另加總分 1 分）。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://www.oia.ntust.edu.tw/var/file/60/1060/img/2289/948853506.pdf",
+        source_url="https://oia.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw",
         source_checked_at=NTUST_SOURCE_CHECKED_AT,
         official_layout=False,
         official_form_number=None,
         official_file_name=None,
-        official_download_url="https://www.oia.ntust.edu.tw/p/412-1060-8926.php?Lang=zh-tw",
+        official_download_url="https://oia.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw",
         default_copies=1,
         signatures=["申請學生簽名", "指導教授簽名（研究生適用）", "系所主管核章"] if template.id == "exchange-application-data" else [],
         stamps=[],
@@ -1495,7 +1495,7 @@ def _ncku_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
         official_layout=False,
         official_form_number="出國交換生申請表" if template.id == "exchange-application-data" else ("第一志願中英文自傳與讀書或研究計畫" if template.id == "study-plan" else None),
         official_file_name=None,
-        official_download_url="https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw",
+        official_download_url="https://oia.ncku.edu.tw/p/404-1032-229870.php?Lang=zh-tw",
         default_copies=1,
         signatures=["申請學生親筆簽名", "系所單位主管簽章", "家長或監護人親筆簽名（錄取後繳交家長同意書）"] if template.id == "exchange-application-data" else [],
         stamps=["系所單位主管核章"] if template.id == "exchange-application-data" else [],
@@ -2110,7 +2110,7 @@ def _mcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
             field["help_text"] = "依銘傳大學《辦理學生出國研修實施細則》與《2027-2028 交換學校資料庫一覽表》規定：申請英語組須具 TOEFL iBT 61、IELTS 5.5 或 TOEIC 550 以上（歐美名校與雙聯學位多要求 TOEFL iBT 79–80 或 IELTS 6.0–6.5），日語組須具 JLPT N2 或 N3 以上，韓語組須具 TOPIK 2–3 級或英語檢定。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://iee.mcu.edu.tw/zh-hant/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/",
+        source_url="https://iee.mcu.edu.tw/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/",
         source_checked_at=MCU_SOURCE_CHECKED_AT,
         official_layout=False,
         official_form_number="出國研習交換生／雙聯學位／學海計畫申請表" if template.id == "exchange-application-data" else ("出國讀書計畫書與中英文自傳" if template.id == "study-plan" else None),

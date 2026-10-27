@@ -38,7 +38,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "scu": ["icae.scu.edu.tw", "www.scu.edu.tw", "www-ch.scu.edu.tw", "scu.edu.tw"],
     "ntnu": ["bds.oia.ntnu.edu.tw", "oia.ntnu.edu.tw", "www.ntnu.edu.tw", "ntnu.edu.tw"],
     "cycu": ["oia.cycu.edu.tw", "www.cycu.edu.tw", "cycu.edu.tw"],
-    "ntust": ["www.oia.ntust.edu.tw", "oia.ntust.edu.tw", "www.ntust.edu.tw", "ntust.edu.tw"],
+    "ntust": ["oia.ntust.edu.tw", "www.oia.ntust.edu.tw", "www.ntust.edu.tw", "ntust.edu.tw"],
     "yzu": ["www.yzu.edu.tw", "cm.yzu.edu.tw", "yzu.edu.tw"],
     "fcu": ["oiasap.fcu.edu.tw", "oia.fcu.edu.tw", "service825.fcu.edu.tw", "www.fcu.edu.tw", "fcu.edu.tw"],
     "nsysu": ["oia.nsysu.edu.tw", "partners.oia.nsysu.edu.tw", "cm.nsysu.edu.tw", "www.nsysu.edu.tw", "nsysu.edu.tw"],
@@ -58,7 +58,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "tmu": ["oge.tmu.edu.tw", "aca.tmu.edu.tw", "www.tmu.edu.tw", "tmu.edu.tw"],
     "csmu": ["oia.csmu.edu.tw", "www.csmu.edu.tw", "csmu.edu.tw"],
     "cmu": ["cmucia.cmu.edu.tw", "www.cmu.edu.tw", "cmupt.cmu.edu.tw", "med.cmu.edu.tw", "chmed.cmu.edu.tw", "cmunur.cmu.edu.tw", "cmu.edu.tw"],
-    "kmu": ["cia.kmu.edu.tw", "www.kmu.edu.tw", "cmed.kmu.edu.tw", "dent.kmu.edu.tw", "pharm.kmu.edu.tw", "nursing.kmu.edu.tw", "chs.kmu.edu.tw", "cls.kmu.edu.tw", "chss.kmu.edu.tw", "kmu.edu.tw"],
+    "kmu": ["ciae2.kmu.edu.tw", "cia.kmu.edu.tw", "www.kmu.edu.tw", "cmed.kmu.edu.tw", "dent.kmu.edu.tw", "pharm.kmu.edu.tw", "nursing.kmu.edu.tw", "chs.kmu.edu.tw", "cls.kmu.edu.tw", "chss.kmu.edu.tw", "kmu.edu.tw"],
     "mcu": ["iee.mcu.edu.tw", "web.mcu.edu.tw", "www.mcu.edu.tw", "mcu.edu.tw"],
     "ntub": ["oia.ntub.edu.tw", "exchangestd.ntub.edu.tw", "www.ntub.edu.tw", "ntub.edu.tw"],
 }
@@ -717,7 +717,7 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
                 "eligibility": rec.get("eligibility"),
                 "language_requirement": rec.get("language_requirement"),
                 "availability_status": rec.get("availability_status") or "open",
-                "source_url": rec.get("source_url") or "https://www.oia.ntust.edu.tw/p/405-1060-62105,c9035.php?Lang=zh-tw",
+                "source_url": rec.get("source_url") or "https://oia.ntust.edu.tw/p/405-1060-62105,c9035.php?Lang=zh-tw",
             })
         school_reports["ntust"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ntust", partner_rows=ntust_rows, default_cycle_label="115-2"
@@ -809,7 +809,7 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
                 "eligibility": rec.get("eligibility"),
                 "language_requirement": rec.get("language_requirement"),
                 "availability_status": rec.get("availability_status") or "open",
-                "source_url": rec.get("source_url") or "https://www.oia.nchu.edu.tw/index.php/2-uncategorised/154-1-1-exchange-info",
+                "source_url": rec.get("source_url") or "https://www.oia.nchu.edu.tw/index.php/zh/5-global-mobility-tw/5-1-exchange-student-program-tw/5-1-1-application-guildeline-tw",
             })
         school_reports["nchu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="nchu", partner_rows=nchu_rows, default_cycle_label="116"
@@ -878,7 +878,7 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
                 "eligibility": rec.get("eligibility"),
                 "language_requirement": rec.get("language_requirement"),
                 "availability_status": rec.get("availability_status") or "open",
-                "source_url": rec.get("source_url") or "https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw",
+                "source_url": rec.get("source_url") or "https://oia.ncku.edu.tw/p/404-1032-229870.php?Lang=zh-tw",
             })
         school_reports["ncku"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ncku", partner_rows=ncku_rows, default_cycle_label="116-1"
@@ -1200,7 +1200,7 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
                 "eligibility": rec.get("eligibility"),
                 "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
                 "availability_status": rec.get("availability_status") or "open",
-                "source_url": rec.get("source_url") or "https://iee.mcu.edu.tw/zh-hant/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e5%ad%b8%e6%a0%a1/",
+                "source_url": rec.get("source_url") or "https://iee.mcu.edu.tw/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e5%ad%b8%e6%a0%a1/",
             })
         school_reports["mcu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="mcu", partner_rows=mcu_rows, default_cycle_label="116"
@@ -1223,7 +1223,7 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
                 "eligibility": rec.get("eligibility"),
                 "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
                 "availability_status": rec.get("availability_status") or "open",
-                "source_url": rec.get("source_url") or "https://oia.ntub.edu.tw/p/412-1006-14367.php?Lang=zh-tw",
+                "source_url": rec.get("source_url") or "https://oia.ntub.edu.tw/p/405-1006-57515,c3152.php?Lang=zh-tw",
             })
         school_reports["ntub"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ntub", partner_rows=ntub_rows, default_cycle_label="116"

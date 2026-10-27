@@ -32,6 +32,10 @@ ANSWERS = {
     "Insights": {"notes": ["痛點開頭的 Threads 互動最好"]},
     "ReplyBatch": {"replies": []},
     "Ping": {"ok": True},
+    "SchoolReport": {"checks": [
+        {"school": "長庚大學", "status": "new_notice", "detail": "國際處公告 116 學年度第二梯次甄選", "source_url": "https://www.cgu.edu.tw/oia-ch"},
+        {"school": "國立臺北大學", "status": "no_change", "detail": "交換頁沒有新公告", "source_url": "https://new.ntpu.edu.tw/oia"}]},
+    "Report": {"summary": "大家最近在問語言檢定的期限", "points": ["托福有效期兩年", "很多人問居家版"], "sources": ["https://www.dcard.tw/f/exchange"]},
 }
 
 SCRIPT = r'''#!{python}
@@ -67,7 +71,7 @@ def answer(tool: str, args: list[str], stdin: str) -> None:
         Path("art.png").write_bytes(Path(sample).read_bytes() if sample else b"\x89PNG\r\n\x1a\n" + b"0" * 64)
         print("art.png")
         return
-    prompt = args[-1] if tool == "agy" else stdin
+    prompt = args[args.index("-p") + 1] if tool == "agy" else stdin
     title = title_from(args, prompt)
     data = dict(ANSWERS.get(title, {}))
     if title == "ChiefReply":

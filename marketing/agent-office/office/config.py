@@ -81,6 +81,7 @@ class Settings:
     long_video_weekday: int = 6  # Sunday
     video_fps: int = 30
     render_media: bool = True
+    threads_images: bool = True
 
     threads_user_id: str = ""
     threads_token: str = ""
@@ -102,6 +103,11 @@ class Settings:
 
     # When set, the office page and API need ?token=… once (a cookie remembers it). /media stays public.
     access_token: str = ""
+
+    # Your phone line: a Telegram bot you create with @BotFather, paired with `office auth telegram`.
+    telegram_bot_token: str = ""
+    # Where your phone opens the office (for example over Tailscale); notifications link to it when set.
+    office_url: str = ""
 
     @property
     def db_path(self) -> Path:
@@ -154,6 +160,7 @@ class Settings:
             long_video_weekday=int(get("OFFICE_LONG_VIDEO_WEEKDAY") or 6),
             video_fps=int(get("OFFICE_VIDEO_FPS") or 30),
             render_media=_flag(get("OFFICE_RENDER_MEDIA"), True),
+            threads_images=_flag(get("OFFICE_THREADS_IMAGES"), True),
             threads_user_id=get("THREADS_USER_ID") or "",
             threads_token=get("THREADS_ACCESS_TOKEN") or "",
             threads_app_secret=get("THREADS_APP_SECRET") or "",
@@ -171,6 +178,8 @@ class Settings:
             supabase_service_key=get("SUPABASE_SERVICE_ROLE_KEY") or "",
             supabase_bucket=get("SUPABASE_MARKETING_BUCKET") or "marketing-media",
             access_token=get("OFFICE_ACCESS_TOKEN") or "",
+            telegram_bot_token=get("TELEGRAM_BOT_TOKEN") or "",
+            office_url=(get("OFFICE_URL") or "").rstrip("/"),
         )
         values.update(overrides)
         settings = cls(**values)

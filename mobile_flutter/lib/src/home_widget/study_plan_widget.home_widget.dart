@@ -7,7 +7,7 @@ import 'package:home_widget/home_widget.dart';
 class StudyPlanWidgetDefinitionHomeWidget {
   const StudyPlanWidgetDefinitionHomeWidget._();
 
-  static const String _$appGroupId = 'group.tw.edu.cgu.exchangeGuideFlutter';
+  static const String _$appGroupId = 'group.tw.uniway.app';
 
   static const String _$paramPrefix = 'home_widget.StudyPlanWidgetDefinition';
 

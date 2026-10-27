@@ -1,0 +1,205 @@
+{
+  "audit_id": "2026-10-26-dora2-16-schools",
+  "checked_date": "2026-10-26",
+  "timezone": "Asia/Taipei",
+  "total_schools_audited": 16,
+  "summary_counts": {
+    "new_announcements": 7,
+    "discrepancy_resolved": 2,
+    "url_or_portal_fixed": 2,
+    "no_change": 5
+  },
+  "schools": [
+    {
+      "school_id": "ncku",
+      "school_name": "國立成功大學",
+      "category": "new_announcement",
+      "official_url": "https://oia.ncku.edu.tw/p/404-1032-229870.php?Lang=zh-tw",
+      "findings": [
+        "原登記網址 https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw 回傳 HTTP 404，已全面更新為有效出國交換總覽頁 https://oia.ncku.edu.tw/p/404-1032-229870.php?Lang=zh-tw 與最新公告頁 https://oia.ncku.edu.tw/p/406-1032-306703,r3333.php?Lang=zh-tw。",
+        "國際處交換公告列表最上方為「116學年第1學期校級薦外交換學生計畫簡章」（最後更新日期 2026-10-16），內文載明 2026/10/23 舉辦說明暨分享會（由學長姐分享芬蘭圖爾庫大學、奧地利因斯布魯克大學、日本東北大學經驗，已辦理完畢）。",
+        "重新下載頁內簡章 PDF（107138261.pdf，265,707 bytes，SHA256: 0a50c29c931675a8672dfda7c4c2881253554e718f348bf9699dbc382acce9c2）與名額表 PDF（535260712.pdf，508,687 bytes），經 SHA256 比對與平台已核實之 116-1 檔案完全一致（線上申請 2026/10/30–11/19 16:00，共 97 校）。"
+      ],
+      "platform_actions": [
+        "Replaced 404 URLs (404-1032-227700.php and 406-1032-301175,r3414.php) across university_registry.py, models.dart, ncku_eligibility.py, ncku_student_view.py, application_documents.py, baseline_mapper.py, build_ncku_catalog.py, verified_window_deadlines.py, and official_data/ncku/*.json.",
+        "Recorded the 2026-10-16 announcement update and 2026/10/23 info/sharing session (Turku, Innsbruck, Tohoku) and confirmed byte-for-byte PDF identity."
+      ]
+    },
+    {
+      "school_id": "nycu",
+      "school_name": "國立陽明交通大學",
+      "category": "new_announcement",
+      "official_url": "https://oia.nycu.edu.tw/oia/ch/app/data/list?module=nycu0006&id=286",
+      "findings": [
+        "列表最新公告：2026-10-07 發布「116學年度台灣聯合大學系統交換計畫第一梯次」，申請截止日為 2026-12-31（週四）16:00（平台已收錄此截止日，並補註 2026-10-07 發布日期）。",
+        "2026-10-13 另有轉知政大辦理「2027 台灣–阿聯青年交流計畫」（補助機票與食宿）。",
+        "列表目前尚未公布陽明交大自身 116 學年校級出國交換簡章（最近一則校級為 115 學年第二梯次，07/10 已截止）。"
+      ],
+      "platform_actions": [
+        "Updated university_registry.py, models.dart, verified_window_deadlines.py, nycu_source_review.py, and official_data/nycu/* to cite the 2026-10-07 UST announcement date, the 2026-10-13 Taiwan-UAE Youth Exchange Program notice, and the fact that NYCU's own 116 school-level guidelines are not yet posted."
+      ]
+    },
+    {
+      "school_id": "wzu",
+      "school_name": "文藻外語大學",
+      "category": "new_announcement",
+      "official_url": "https://d020.wzu.edu.tw/article/530752",
+      "findings": [
+        "2026-10-05 公告「二招-115-2 校級國際暨兩岸交換學生」（一般組 article/530752、語言學習組 article/530751），報名截止延至 2026-10-13 23:59（已截止），名額見附件《二招-115-2交換學生招收名額一覽表（一般組）》（持續更新）。",
+        "頁內另註記更新兩校資訊：（1）匈牙利布達佩斯城市大學（Budapest Metropolitan University）：須具 CEFR B2 含以上且僅接受含聽說讀寫四技之國際標準化測驗（如 TOEFL iBT 72+、IELTS 5.5+、多益四技 785/160/150+，不接受 GEPT/CSEPT），歷年學業平均需達 80 分；（2）韓國啟明大學（Keimyung University）：英語授課課程須 TOEIC 785 / GEPT 中高級 / CSEPT 240 / TOEFL iBT 72 / IELTS 5.5 任一，韓語授課課程須 TOPIK 4 級含以上。"
+      ],
+      "platform_actions": [
+        "Updated university_registry.py (official_url -> https://d020.wzu.edu.tw/article/530752), models.dart, verified_window_deadlines.py, wzu_source_review.py, and official_data/wzu/* with the 2026-10-05 second-round quota attachment and the Budapest Metropolitan University & Keimyung University requirement updates."
+      ]
+    },
+    {
+      "school_id": "nkust",
+      "school_name": "國立高雄科技大學",
+      "category": "new_announcement",
+      "official_url": "https://oia.nkust.edu.tw/unit-4-374-21.html",
+      "findings": [
+        "交換頁（unit-4-374-21.html）已公布「116學年度校級出國交換甄選」時程：線上申請 115/11/9 12:00 開放、115/12/1 16:00 截止；正式外語成績 115/12/27 16:00 前繳交；116/2/1–2/12 審查、116/2/22 16:00 公告結果。",
+        "官網首頁行事曆另有 2026-10-28「116學年度出國研修說明會_建工校區」；交換頁亦載明學海飛颺名額視當年經費而定，無固定名額。"
+      ],
+      "platform_actions": [
+        "Updated university_registry.py, verified_window_deadlines.py, nkust_source_review.py, and official_data/nkust/* to incorporate the 116 school-level schedule, the 2026-10-28 Jiangong Campus info session, and the Xuehai Feiyang budget-dependent quota note."
+      ]
+    },
+    {
+      "school_id": "tmu",
+      "school_name": "臺北醫學大學",
+      "category": "discrepancy_resolved",
+      "official_url": "https://oge.tmu.edu.tw/zh-hant/%e5%ad%b8%e7%94%9f%e4%ba%a4%e6%b5%81/tmu-student-outbound-exchange/",
+      "findings": [
+        "官網《出國交換及研修指南》專頁（tmu-student-outbound-exchange）表格寫學海飛颺／惜珠與學海築夢／新南向學海築夢校內截止日均為每年 1 月 15 日（115 年度說明會簡報與二次徵求 PDF 另載第一梯次 1/16、第二梯次 9/7，均已截止）；境外研修暨見實習獎勵為 1/15、5/15 兩梯次；該頁最新消息停在 2026-08-25（AIT 留學美國教育展）。",
+        "官網自身對學海最短研修期間寫法前後不一：第 04 節表格寫飛颺／惜珠至少 3 個月（築夢 1 個月），同頁第 08 節 FAQ 卻寫飛颺 1 個月以上（築夢 3 個月以上）。",
+        "指南頁 FAQ 寫雙聯學位「超過 30 個」（雙聯專頁細目 18 校 32–33 項），而 201 所盟校名冊係出自國際處《盟校一覽》（partners-list）專頁。"
+      ],
+      "platform_actions": [
+        "Updated university_registry.py and official_data/tmu/{student_dashboard,home_rules,exchange_info,scholarships}.json to align with the 1/15 table deadline, document the internal 3-month vs 1-month table/FAQ contradiction, and cite the exact subpage sources."
+      ]
+    },
+    {
+      "school_id": "csmu",
+      "school_name": "中山醫學大學",
+      "category": "new_announcement",
+      "official_url": "https://oia.csmu.edu.tw/?Lang=zh-tw",
+      "findings": [
+        "官網首頁最新消息近期新增「2026 海外交換生研修心得分享座談會」（10 月共 6 場，開放報名中）、「教育部學海計畫說明會」與「116 年 Young 飛全球行動計畫培訓營」（首頁列表未標發布日期、截止日或名額）。",
+        "116 學年度赴美日重點交換甄選（2026/10/22 17:00 截止）已過期截止；116 年度學海飛颺／惜珠（2027/01/06 截止）持續開放。"
+      ],
+      "platform_actions": [
+        "Updated university_registry.py and official_data/csmu/{student_dashboard,home_rules,exchange_info}.json to mark the 2026/10/22 round as closed and add the 3 new homepage announcements."
+      ]
+    },
+    {
+      "school_id": "kmu",
+      "school_name": "高雄醫學大學",
+      "category": "new_announcement",
+      "official_url": "https://ciae2.kmu.edu.tw/index.php/zh-tw",
+      "findings": [
+        "國際事務處官網首頁（ciae2.kmu.edu.tw）最新消息新增 5 項公告：「116 年教育部學海計畫說明會」（未標日期）、「2027 日本台灣交流協會獎學金（短期生）」（截止 2026/11/5）、「教育部補助學生赴海外參加國際學術及技能競賽（2026 下學期）」（校內截止 2026/11/10）、「校內徵件：教育部青年百億海外圓夢基金（116 年第 2 梯次）」與「歐盟聯合碩士學位（EMJM）獎學金說明會」。",
+        "首頁未直接顯示校級交換生甄選簡章或醫學院「21 校 64+ 名臨床見實習」（後者出自醫學院國際交流專區 cmed.kmu.edu.tw）。"
+      ],
+      "platform_actions": [
+        "Updated university_registry.py, baseline_mapper.py, and official_data/kmu/{student_dashboard,home_rules,exchange_info}.json with the 5 new homepage announcements and explicit source attribution for College of Medicine clinical electives."
+      ]
+    },
+    {
+      "school_id": "mcu",
+      "school_name": "銘傳大學",
+      "category": "new_announcement",
+      "official_url": "https://iee.mcu.edu.tw/",
+      "findings": [
+        "原登記含 /zh-hant/ 之網址回傳 404，有效國際教育交流處首頁為 https://iee.mcu.edu.tw/。",
+        "首頁最新交換相關消息為「海外留學說明會」（2026-10-20 發布，分類：出國交換與留學），另有「2027 臺灣與阿拉伯聯合大公國青年交流計畫」（2026-10-14）與「2026 韓國首爾嘉泉大學冬季韓語營」（2026-10-05）。",
+        "2027 春季赴大陸頂尖大學交換第三次公告已於 2026/10/23 12:00 截止；116 學年度海外交換截止日（2027/02/24、03/03 及 08/19、09/20）出自簡章資料庫 PDF（MCU_Exchange_University_Database_Template_2027-2028.pdf）。"
+      ],
+      "platform_actions": [
+        "Replaced /zh-hant/ URLs across university_registry.py, application_documents.py, application_writing_guidance.py, baseline_mapper.py, shared_host_factsheets.json, and official_data/mcu/*; marked the 2026/10/23 mainland round closed and added the 3 homepage announcements."
+      ]
+    },
+    {
+      "school_id": "ntub",
+      "school_name": "國立臺北商業大學",
+      "category": "discrepancy_resolved",
+      "official_url": "https://oia.ntub.edu.tw/p/405-1006-57507,c3152.php?Lang=zh-tw",
+      "findings": [
+        "說明會公告（p/406-1006-120272,r1.php）：「116學年度交換生申請說明會」時間為 115/10/12（一）12:10–13:20，臺北校區圖書館 B1 國際行銷講堂、桃園校區 Google Meet，線上表單報名。",
+        "收件時間（p/405-1006-57507,c3152.php）：每年 11 月梯次 11/1–11/30 收件（遇例假日順延一天，隔年 8～9 月出發）、5 月梯次 5/1–5/31 收件（只開放二技和研究所學生優先申請 11 月梯次剩餘名額，隔年 2 月出發）。",
+        "姊妹校名額頁（p/405-1006-57515,c3152.php）：表格共列 49 筆（美國峽谷學院列兩次，實際 48 所、20 國，名額每年 11 月重新計算），連同雙聯學位（62049）5 校與海外合作學校名錄（57536）42 所締約校共 93 所。",
+        "語檢與配分：外語成績須在 2 年內有效，英語組只接受托福和雅思；配分依〈法規專區〉《交換生甄選作業辦法》（77262）為外語 60%＋學業 20%＋班排 20%。",
+        "補助頁（p/405-1006-57516,c3152.php）：放有學海飛颺（110.08.26）與學海惜珠（115.07.23）審查要點（頁面未寫金額），《王春滿清寒短期研修交流助學金》（115.05.26 修正，每人 NT$25,000）出自〈法規專區〉（937380972.pdf）。"
+      ],
+      "platform_actions": [
+        "Updated university_registry.py, ntub_eligibility.py, ntub_student_view.py, application_writing_guidance.py, baseline_mapper.py, and official_data/ntub/* to align all 5 subpage details and URLs."
+      ]
+    },
+    {
+      "school_id": "pccu",
+      "school_name": "中國文化大學",
+      "category": "url_or_portal_fixed",
+      "official_url": "https://mccd.pccu.edu.tw/p/406-1300-148804,r2247.php?Lang=zh-tw",
+      "findings": [
+        "舊版靜態頁 https://oima.pccu.edu.tw/exchanges.htm 僅有計畫介紹、姊妹校連結與歷年心得，無當期招收公告。",
+        "現行赴陸第二階段（2026/11/03 17:00 截止）公告位於兩岸中心 RPage 專頁 https://mccd.pccu.edu.tw/p/406-1300-148804,r2247.php?Lang=zh-tw，國際合作組現行入口為 https://oima.pccu.edu.tw/p/412-1008-14612.php?Lang=zh-tw。"
+      ],
+      "platform_actions": [
+        "Updated university_registry.py, models.dart, verified_window_deadlines.py, pccu_source_review.py, and official_data/pccu/* to point to the active RPage URLs and clarify the legacy static exchanges.htm page."
+      ]
+    },
+    {
+      "school_id": "ncue",
+      "school_name": "國立彰化師範大學",
+      "category": "url_or_portal_fixed",
+      "official_url": "https://oicaweb.ncue.edu.tw/p/412-1019-1171.php?Lang=zh-tw",
+      "findings": [
+        "原登記網址 https://oicaweb.ncue.edu.tw/p/412-1002-1171.php?Lang=zh-tw 因 RPage 站台代碼（-1002-）錯誤回傳 Page Not Found！",
+        "正確有效之國際暨兩岸事務處出國交換專區網址為 https://oicaweb.ncue.edu.tw/p/412-1019-1171.php?Lang=zh-tw（站台代碼 -1019-）。"
+      ],
+      "platform_actions": [
+        "Replaced broken -1002- RPage URLs with working -1019- URLs across university_registry.py, ncue_student_view.py, shared_host_factsheets.json, and official_data/ncue/*."
+      ]
+    },
+    {
+      "school_id": "nthu",
+      "school_name": "國立清華大學",
+      "category": "no_change",
+      "official_url": "https://oga.site.nthu.edu.tw/p/412-1524-18677.php?Lang=zh-tw",
+      "findings": ["2026-10-26 巡查確認無新增異動。"],
+      "platform_actions": ["Verified no change required."]
+    },
+    {
+      "school_id": "yuntech",
+      "school_name": "國立雲林科技大學",
+      "category": "no_change",
+      "official_url": "https://tdx.yuntech.edu.tw/zh-tw/international-exchange-students-tw/outgoing-tw/non-mainland-china-area-tw",
+      "findings": ["2026-10-26 巡查確認無新增異動。"],
+      "platform_actions": ["Verified no change required."]
+    },
+    {
+      "school_id": "ntou",
+      "school_name": "國立臺灣海洋大學",
+      "category": "no_change",
+      "official_url": "https://oia.ntou.edu.tw/p/412-1022-6958.php?Lang=zh-tw",
+      "findings": ["2026-10-26 巡查確認無新增異動。"],
+      "platform_actions": ["Verified no change required."]
+    },
+    {
+      "school_id": "nknu",
+      "school_name": "國立高雄師範大學",
+      "category": "no_change",
+      "official_url": "https://oia.nknu.edu.tw/tw/ugC_Out.asp",
+      "findings": ["2026-10-26 巡查確認無新增異動。"],
+      "platform_actions": ["Verified no change required."]
+    },
+    {
+      "school_id": "cmu",
+      "school_name": "中國醫藥大學",
+      "category": "no_change",
+      "official_url": "https://cmucia.cmu.edu.tw/page/about_2",
+      "findings": ["2026-10-26 巡查確認無新增異動。"],
+      "platform_actions": ["Verified no change required."]
+    }
+  ]
+}

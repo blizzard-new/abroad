@@ -158,4 +158,4 @@ def media_row(settings: Settings, http: httpx.Client | None = None) -> Row:
         if not settings.access_token:
             return Row(False, name, "辦公室對外公開時一定要設 OFFICE_ACCESS_TOKEN，不然任何人都能按核准")
         return Row(True, name, f"{settings.public_base_url}/media/")
-    return Row(None, name, "還沒設定 OFFICE_MEDIA_HOST：Threads 純文字照發，IG 貼文和影片要有它才發得出去")
+    return Row(None, name, "還沒設定 OFFICE_MEDIA_HOST：Threads 不附圖只發文字，IG 貼文和影片要有它才發得出去")

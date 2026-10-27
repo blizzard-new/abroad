@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
-import '../data/models.dart';
+import '../core/daylight_surface.dart';
 import '../state/exchange_store.dart';
 import 'account_screen.dart';
 import 'application_documents_screen.dart';
 import 'community_screen.dart';
 import 'deadlines_screen.dart';
-import 'global_community_screen.dart';
 import 'home_screen.dart';
+import 'journey_screen.dart';
+import 'forum_screen.dart';
 import 'schools_screen.dart';
 
 Future<void> showUniversityPickerSheet(BuildContext context) async {
@@ -20,7 +21,7 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
     context: context,
     showDragHandle: true,
     isScrollControlled: true,
-    backgroundColor: Colors.white,
+    backgroundColor: ExchangeColors.surface,
     builder: (sheetContext) {
       return SafeArea(
         child: DraggableScrollableSheet(
@@ -38,12 +39,12 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '切換就讀學校（18 校）',
+                        '切換就讀學校（${store.universities.length} 校）',
                         style: Theme.of(sheetContext).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '切換後會同步載入該校交換簡章、合作校、截止日與校板動態。',
+                        '選擇你的學校，查看適用的交換資訊。',
                         style: Theme.of(sheetContext).textTheme.bodySmall,
                       ),
                     ],
@@ -73,8 +74,8 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
                           university.schoolName,
                           style: TextStyle(
                             fontWeight: isSelected
-                                ? FontWeight.w700
-                                : FontWeight.w500,
+                                ? FontWeight.w600
+                                : FontWeight.w400,
                           ),
                         ),
                         subtitle: Text(
@@ -87,12 +88,13 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
                                 '目前選擇',
                                 style: TextStyle(
                                   color: ExchangeColors.teal,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               )
                             : null,
-                        onTap: () =>
-                            Navigator.of(sheetContext).pop(university.schoolName),
+                        onTap: () => Navigator.of(
+                          sheetContext,
+                        ).pop(university.schoolName),
                       );
                     },
                   ),
@@ -117,102 +119,91 @@ class RootShell extends StatefulWidget {
 }
 
 class _RootShellState extends State<RootShell> {
-  final globalCommunityKey = GlobalKey<GlobalCommunityScreenState>();
-  int globalPageIndex = 0;
-  CommunityFeed globalFeed = CommunityFeed.all;
-
-  void _showGlobalFeed(CommunityFeed feed) {
-    setState(() {
-      globalPageIndex = 0;
-      globalFeed = feed;
-    });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      globalCommunityKey.currentState?.selectFeed(feed);
-    });
-  }
-
-  void _showAccount() => setState(() => globalPageIndex = 1);
-
-  void _compose() {
-    setState(() => globalPageIndex = 0);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      globalCommunityKey.currentState?.openComposer();
-    });
-  }
-
-  Future<void> _openCguBoard() async {
-    await Navigator.of(
-      context,
-    ).push(MaterialPageRoute(builder: (_) => const CguBoardShell()));
-  }
-
   @override
   Widget build(BuildContext context) {
     final store = ExchangeStoreScope.of(context);
-    final defaultBoardMeta = (label: '長庚板', title: '長庚大學板');
-    final boardNavLabel = store.selectedUniversity == defaultHomeUniversity
-        ? defaultBoardMeta.label
-        : store.activeUniversity.boardTabLabel;
+    final index = store.navigationTab;
+    final reduceEffects =
+        MediaQuery.disableAnimationsOf(context) ||
+        MediaQuery.highContrastOf(context);
     final pages = [
-      GlobalCommunityScreen(
-        key: globalCommunityKey,
-        initialFeed: CommunityFeed.all,
-        includeCguFeed: false,
-        showCguChatShortcut: false,
-        onOpenCguBoard: _openCguBoard,
-        onFeedChanged: (feed) {
-          if (globalFeed != feed && mounted) setState(() => globalFeed = feed);
-        },
-      ),
+      JourneyScreen(onSelectTab: store.selectMainTab),
+      const SchoolsScreen(),
+      const ApplicationDocumentsScreen(),
+      const ForumScreen(),
       const AccountScreen(),
     ];
-    final selectedDestination = globalPageIndex == 1
-        ? 4
-        : globalFeed == CommunityFeed.following
-        ? 1
-        : 0;
-
+    const labels = ['旅程', '學校', '申請', '論壇', '我的'];
+    const icons = [
+      Icons.explore_outlined,
+      Icons.travel_explore_rounded,
+      Icons.assignment_outlined,
+      Icons.forum_outlined,
+      Icons.person_outline_rounded,
+    ];
     return ExchangePageBackground(
       child: Scaffold(
         extendBody: true,
-        body: IndexedStack(index: globalPageIndex, children: pages),
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 840),
+            child: IndexedStack(index: index, children: pages),
+          ),
+        ),
         bottomNavigationBar: SafeArea(
           top: false,
-          minimum: const EdgeInsets.fromLTRB(10, 0, 10, 8),
-          child: _LiquidNavigationBar(
-            selectedIndex: selectedDestination,
-            items: [
-              _LiquidNavItem(
-                icon: Icons.home_outlined,
-                selectedIcon: Icons.home_rounded,
-                label: '留學首頁',
-                onTap: () => _showGlobalFeed(CommunityFeed.all),
+          minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          child: LiquidControlSurface(
+            radius: 30,
+            child: Padding(
+              key: const ValueKey('main-navigation'),
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: List.generate(
+                  labels.length,
+                  (i) => Expanded(
+                    child: Semantics(
+                      label: labels[i],
+                      selected: i == index,
+                      button: true,
+                      child: Tooltip(
+                        message: labels[i],
+                        excludeFromSemantics: true,
+                        child: InkWell(
+                          key: ValueKey('main-tab-$i'),
+                          borderRadius: BorderRadius.circular(24),
+                          onTap: () => store.selectMainTab(i),
+                          child: AnimatedContainer(
+                            duration: Duration(
+                              milliseconds: reduceEffects ? 0 : 180,
+                            ),
+                            constraints: const BoxConstraints(minHeight: 52),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              color: i == index
+                                  ? ExchangeColors.teal.withValues(alpha: .17)
+                                  : Colors.transparent,
+                              border: Border.all(
+                                color: i == index
+                                    ? ExchangeColors.teal.withValues(alpha: .38)
+                                    : Colors.transparent,
+                              ),
+                            ),
+                            child: Icon(
+                              icons[i],
+                              size: 26,
+                              color: i == index
+                                  ? ExchangeColors.teal
+                                  : ExchangeColors.secondaryInk,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-              _LiquidNavItem(
-                icon: Icons.rss_feed_outlined,
-                selectedIcon: Icons.rss_feed_rounded,
-                label: '追蹤',
-                onTap: () => _showGlobalFeed(CommunityFeed.following),
-              ),
-              _LiquidNavItem(
-                icon: Icons.edit_square,
-                selectedIcon: Icons.edit_square,
-                label: '發文',
-                onTap: _compose,
-              ),
-              _LiquidNavItem(
-                icon: Icons.school_outlined,
-                selectedIcon: Icons.school_rounded,
-                label: boardNavLabel,
-                onTap: _openCguBoard,
-              ),
-              _LiquidNavItem(
-                icon: Icons.person_outline_rounded,
-                selectedIcon: Icons.person_rounded,
-                label: '我的',
-                onTap: _showAccount,
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -252,9 +243,9 @@ class _CguBoardShellState extends State<CguBoardShell> {
       HomeScreen(onSelectTab: select, showHeader: false),
       const SchoolsScreen(showPageHeader: false),
       const ApplicationDocumentsScreen(),
-      const DeadlinesScreen(),
-      const CommunityScreen(
-        initialSchool: cguCommunityBoard,
+      const DeadlinesScreen(embedded: true),
+      CommunityScreen(
+        initialSchool: store.selectedUniversity,
         lockedToInitialSchool: true,
       ),
     ];
@@ -389,7 +380,9 @@ class _BoardContextBar extends StatelessWidget {
                                   boardTitle,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium,
                                 ),
                               ),
                               const SizedBox(width: 4),

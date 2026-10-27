@@ -109,7 +109,8 @@ void main() {
       expect(store.favorites, contains('Lincoln University'));
 
       final prefs = await SharedPreferences.getInstance();
-      final saved = prefs.getStringList('favorite_schools');
+      final key = prefs.getKeys().singleWhere((key) => key.startsWith('local_v2:') && key.endsWith(':favorite_schools'));
+      final saved = prefs.getStringList(key);
       expect(saved, contains('Lincoln University'));
     });
 

@@ -5,10 +5,10 @@ import re
 from .university_registry import NTUB, resolve_university
 
 NTUB_OIA_HOME_URL = "https://oia.ntub.edu.tw/"
-NTUB_EXCHANGE_RULES_URL = "https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw"
-NTUB_EXCHANGE_QUOTAS_URL = "https://oia.ntub.edu.tw/p/412-1006-14367.php?Lang=zh-tw"
-NTUB_OVERSEAS_PARTNERS_URL = "https://oia.ntub.edu.tw/p/412-1006-3316.php?Lang=zh-tw"
-NTUB_SCHOLARSHIPS_URL = "https://oia.ntub.edu.tw/p/412-1006-15226.php?Lang=zh-tw"
+NTUB_EXCHANGE_RULES_URL = "https://oia.ntub.edu.tw/p/405-1006-57507,c3152.php?Lang=zh-tw"
+NTUB_EXCHANGE_QUOTAS_URL = "https://oia.ntub.edu.tw/p/405-1006-57515,c3152.php?Lang=zh-tw"
+NTUB_OVERSEAS_PARTNERS_URL = "https://oia.ntub.edu.tw/p/405-1006-57536,c3159.php?Lang=zh-tw"
+NTUB_SCHOLARSHIPS_URL = "https://oia.ntub.edu.tw/p/405-1006-57516,c3152.php?Lang=zh-tw"
 NTUB_FAQ_URL = "https://oia.ntub.edu.tw/p/412-1006-15230.php?Lang=zh-tw"
 NTUB_RETURN_URL = "https://oia.ntub.edu.tw/p/412-1006-15228.php?Lang=zh-tw"
 NTUB_EXPERIENCES_URL = "https://oia.ntub.edu.tw/p/412-1006-15229.php?Lang=zh-tw"
@@ -16,9 +16,9 @@ NTUB_EXPERIENCE_PORTAL_URL = "https://exchangestd.ntub.edu.tw/school-exchange"
 NTUB_PARTNER_PORTAL_URL = "https://exchangestd.ntub.edu.tw/school"
 NTUB_REGULATIONS_URL = "https://oia.ntub.edu.tw/p/412-1006-14345.php?Lang=zh-tw"
 NTUB_DOWNLOADS_URL = "https://oia.ntub.edu.tw/p/412-1006-3153.php?Lang=zh-tw"
-NTUB_DUAL_DEGREE_URL = "https://oia.ntub.edu.tw/p/412-1006-11974.php?Lang=zh-tw"
+NTUB_DUAL_DEGREE_URL = "https://oia.ntub.edu.tw/p/405-1006-62049,c3152.php?Lang=zh-tw"
 NTUB_INFO_SESSION_116_URL = (
-    "https://oia.ntub.edu.tw/p/406-1006-123163,r1240.php?Lang=zh-tw"
+    "https://oia.ntub.edu.tw/p/406-1006-120272,r1.php?Lang=zh-tw"
 )
 NTUB_INFO_SESSION_PPTX_URL = (
     "https://oia.ntub.edu.tw/var/file/6/1006/img/1539/337014036.pptx"

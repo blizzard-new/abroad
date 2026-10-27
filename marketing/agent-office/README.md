@@ -1,22 +1,54 @@
-# UniWay 行銷辦公室
+# UniWay 行銷辦公室・海岸總部
 
-一間「看得見」的 AI 行銷辦公室：8 位 AI agent 各坐一張桌子、各用一台電腦，每天自動企劃、寫 Threads、做 IG 輪播與限動、剪 Reels／YouTube Shorts（週日再做一支長影片）、審稿查核、排程發佈、抓成效、擬留言回覆。你坐在最後一張桌子，旁邊是總管 Leo（主腦，預設用 Antigravity）：你用聊天交代事情，Leo 分派給大家、做完回報。所有草稿像登機證一樣送到你面前，核准後才會發出去。
+一間「看得見」的 3D 海邊 AI 行銷公司：8 位執行成員與總管 Leo，依職責坐在六個部門的座位上，各用一台電腦，每天自動企劃、寫 Threads、做 IG 輪播與限動、剪 Reels／YouTube Shorts（週日再做一支長影片）、審稿查核、排程發佈、抓成效、擬留言回覆。你坐在最後一張桌子，旁邊是總管 Leo（主腦，預設用 Antigravity）：你用聊天交代事情，Leo 分派給大家、做完回報。所有草稿像登機證一樣送到你面前，核准後才會發出去。
 
-![辦公室畫面](docs/office.jpg)
+![白天的海岸總部](docs/coastal-day.png)
 
-- 每位 agent 的螢幕顯示他現在正在做的事：Threads 小編的草稿會一個字一個字打出來、設計師的螢幕會長出輪播圖、剪輯師的螢幕有算圖進度條、發佈員的螢幕是 API 呼叫紀錄。
-- 每台螢幕下緣印著這張桌子正在用的 AI（Claude Code、Codex、Antigravity…）；某個工具沒回應、改用備援時，桌上的對話泡泡會說出來。
-- 工作交接時，會有一張紙從一張桌子飛到下一張桌子（企劃 → 寫手 → 審稿 → 你 → 發佈）。
-- 牆上的「今日發文時刻表」是機場出發看板：每則貼文是一班飛機，待審、準時、已起飛、延誤一目了然。
-- 窗外是台北的天色（跟著台北時間變化），白板上是企劃寫的今日主軸。
-- 網址加上 `?tv` 是全螢幕的電視模式，可以掛在實體辦公室的牆上當看板。
+![晚上 19:00 的海岸總部](docs/coastal-night.png)
+
+[手機版預覽（含六位新增同事）](docs/coastal-mobile.png)
+
+## 3D 海岸公司
+
+辦公室是一整棟兩層樓的海岸總部：玻璃立面、公司招牌、雙扇入口、木格柵雨棚、樓板、二十階外側樓梯與屋頂花園。屋頂有太陽能板，花園有木平台、植栽、樹、沙發與棚架；公司周圍有海面、沙灘、棕櫚樹、木棧道與海景露台。
+
+海岸採熱帶度假風格：深藍外海過渡到碧綠淺灘，海面有多方向波紋、隨視角改變的天空／日月光反射、水下光紋與岸邊碎浪。沙灘沿不規則岸線緩緩沉入水中，有乾濕色差，岸上擺著帆布遮陽傘與躺椅。棕櫚樹有彎曲樹幹、樹皮生長紋、椰子、弧形葉軸與數百片細長羽葉，微風會帶動葉尖；花台也換成帶葉脈的熱帶植栽。
+
+建築以較深的木色、深綠金屬窗框和奶油色石材拉開對比。近看有木紋、石材凹凸、織物紋理、反射玻璃、立面格柵、屋簷收邊、排水管、欄杆固定座與太陽能板網格；公司招牌採深底淺字與金屬框。
+
+上方有三個導覽視角：**整棟公司**看完整建築；**剖面辦公室**收起屋頂、花園樓板與前側玻璃，直接看兩層部門；**屋頂花園**拉近露台休憩空間。也可按「走進辦公室」切換內外。選部門時會自動開剖面，鏡頭移到正確樓層。完整外觀中，室內姓名會收起；到戶外或樓梯的同事仍會顯示活動。
+
+每個部門有獨立招牌、地板配色、隔間與工作桌：
+
+| 樓層 | 部門 | 同事 | 工作區特色 |
+| --- | --- | --- | --- |
+| 2F | 企劃研究部 | Ivy、新增的自訂同事 | 研究與企劃工作桌，可容納 Ivy 加六位新同事 |
+| 2F | 視覺設計部 | Mori | 色票展示牆、設計工作桌 |
+| 2F | 影音製作部 | 阿剪 | 攝影背景、環形燈、攝影機 |
+| 1F | 社群發佈部 | 阿脆、Pat、Momo | 寫文、發佈、社群互動的三個座位 |
+| 1F | 品管數據部 | Kiki、Nana | 審稿與分析桌、數據圖表 |
+| 1F | 總管辦公室 | Leo、你 | 總管與老闆相鄰，點你的名字開審核匣 |
+
+![剖面中的兩層部門](docs/coastal-interior.png)
+
+[屋頂花園預覽](docs/coastal-garden.png)
+
+- **看公司**：拖曳旋轉、滾輪或雙指縮放，也能用畫面右下的旋轉、放大、縮小和回到全公司按鈕。上方部門按鈕會拉近該部門；員工名冊可以用鍵盤操作。
+- **看工作**：點 3D 員工、姓名標籤或名冊，開啟原本的資訊卡，查看正在使用的 AI、工作螢幕與紀錄。任務交接會有一張紙飛向接手同事。新增或移除同事時，3D 座位與名冊同步更新。
+- **真實時鐘**：依辦公室設定的 `OFFICE_TIMEZONE`（預設 `Asia/Taipei`）讀取目前時間，每 15 秒更新。05:30–07:00 晨光、07:00–17:00 白天、17:00–18:30 黃昏，18:30–05:30 月夜；晚上 19:00 一定是夜景。太陽／月亮、海色、環境光、部門燈與桌燈一起變化，入口、花園棚架、樓梯與步道也會亮燈。海面有隨光線改變的水色、細浪與岸邊白沫。這是依時鐘呈現的藝術日夜週期，不是天氣預報或每日實際日出日落計算。
+- **待命小動作**：只有 `idle`／`done` 的同事會隨機在座位打瞌睡、沿走道去飲水機裝水，或到露台伸展運動。二樓同事會從外側樓梯逐階下樓，到地面露台休息，回程沿原路上樓。同時最多四位休息，飲水區和運動區各一人；收到工作立即停止休息，走動中的同事沿原路回座位。`waiting`／`error` 保留等待處理／需要協助提醒。休息動畫只影響畫面，不會呼叫 AI 或改變後端任務狀態。
+- **手機與顯示設定**：手機上方看公司、下方聊天與審核。遠景中重疊的姓名會自動收起，點部門拉近或使用完整名冊即可查看每位同事。系統開啟「減少動態效果」時，不會隨機散步、運動或飛紙，海浪與樹葉也會定格；只在鏡頭、工作或時鐘改變時重繪。切到其他分頁會暫停場景繪製；後端排程仍照常運作。
+- **備用工作台**：原本的平面工作台收在下方，可展開看桌上螢幕；WebGL 不支援或中斷時會自動展開，聊天、審核和排程仍可操作。
+- **電視模式**：網址加 `?tv`，以全寬海岸公司展示，隱藏聊天面板。
+
+場景由本機附帶的 Three.js 0.180.0 與程式幾何模型繪製；材質、天空反射環境與植物也在本機產生，不需外部 CDN、貼圖／3D 模型下載或新增 API 金鑰。海面使用程序化反射近似，並非真實天氣、流體模擬或整棟建築的鏡面倒影。動態場景會依繪圖速度調整 3D 畫布解析度，介面文字保持清晰；減少動態效果的靜態視圖保留完整解析度。白天停用不需要的室內燈光運算；員工以距離與經過時間行走，不會因為一幀只能走一階而卡在樓梯。更新後重新啟動辦公室、重新整理網頁即可。
 
 ## 辦公室裡有誰
 
 | 座位 | 角色 | 用哪個 AI（`.env.example` 的分配） | 每天做什麼 |
 |------|------|------|------------|
 | Ivy | 企劃總監 | 查資料：Antigravity；排內容：Claude Code | 先上網查這兩週學生在討論什麼（每條附來源），再讀平台數字（目前支援幾所大學、幾筆合作校）、`sources/audit/` 最新一天的已核實官方公告、上週成效，排出今天的內容；照 3:3:3:1 輪替 IG 內容支柱 |
-| 阿脆 | Threads 小編 | Claude Code | 去商業化的真人口吻；第一行點名族群或痛點，用提問、二選一、清單、小編碎碎念、今日公告五種角度；主文不放網址，網址放第一則留言 |
+| 阿脆 | Threads 小編 | Claude Code | 去商業化的真人口吻；第一行點名族群或痛點，用提問、二選一、清單、小編碎碎念、今日公告五種角度；主文不放網址，網址放第一則留言；每篇附一張 4:5 圖卡（`OFFICE_THREADS_IMAGES=0` 可關掉） |
 | Mori | IG 設計師 | 文案：Claude Code；封面插圖：Codex | 6 張 4:5 輪播圖（封面鉤子 → 重點 → 收藏／分享／連結在主頁），封面放 Codex 畫的插圖，再做一張提醒看新貼文的限動；hashtag 最多 5 個 |
 | 阿剪 | 影片剪輯 | Claude Code | 30～45 秒直式腳本（前 3 秒鉤子、每個畫面都有大字幕），逐格算圖並配上合成音樂；同一支影片發 Reels 和 YouTube Shorts；週日做 2～4 分鐘橫式「本週交換情報懶人包」 |
 | Kiki | 審稿查核 | Codex | 程式規則＋AI 審稿：字數、連結位置、hashtag 數、平台數字不能誇大、沒有官方來源不能寫日期、禁用「保證錄取／官方合作」等字眼；不合格退回作者改一次。寫的人和審的人用不同家的 AI，比較容易抓到盲點 |
@@ -53,7 +85,15 @@ Windows 和 Mac 都可以。Python 不用自己裝，uv 會自動下載；剪影
 | uv | `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 \| iex"` | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
 | Git | `winget install --id Git.Git -e` | 第一次打 `git` 會提示安裝 |
 
-AI 工具照各家說明安裝，**裝好後各自在終端機執行一次並登入**：`claude`（Claude Code）、`codex`（Codex），以及 Antigravity 的 `agy`（打 `agy --help` 有反應就好）。沒裝的工具不會讓辦公室停下來，那幾張桌子會改用備援。
+三個 AI 工具（**裝好後各自在新的終端機執行一次並登入**）：
+
+| | Windows（PowerShell） | Mac（終端機） | 登入 |
+|---|---|---|---|
+| Claude Code | `irm https://claude.ai/install.ps1 \| iex` | `curl -fsSL https://claude.ai/install.sh \| bash` | 執行 `claude`，登入 Claude 帳號 |
+| Codex | 先 `winget install OpenJS.NodeJS.LTS`，再 `npm.cmd install -g @openai/codex` | `npm install -g @openai/codex` | 執行 `codex`，選用 ChatGPT 登入 |
+| Antigravity | `irm https://antigravity.google/cli/install.ps1 \| iex` | `curl -fsSL https://antigravity.google/cli/install.sh \| bash` | 執行 `agy`，選 Google 登入 |
+
+裝完要**關掉終端機再開一個新的**，再重新啟動辦公室，新指令才找得到。沒裝的工具不會讓辦公室停下來，那幾張桌子會改用備援。
 
 **2. 下載並啟動**
 
@@ -84,7 +124,7 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 
 - Windows：「設定 → 系統 → 電源」把睡眠改成「永不」；想開機自動啟動，用「工作排程器」建一個「登入時」執行的工作：程式填 uv 的完整路徑（在 PowerShell 打 `(Get-Command uv).Source` 查）、引數填 `run office serve`、起始位置填 `agent-office` 資料夾。
 - Mac：用 `caffeinate -i uv run office serve` 啟動，跑著的時候就不會睡著。
-- 同一個 Wi-Fi 的手機想看：`uv run office serve --host 0.0.0.0`，手機開 `http://<電腦的 IP>:8780`，並在 `.env` 設 `OFFICE_ACCESS_TOKEN`（第一次用 `?token=…` 打開）。
+- 手機：見下面的「用手機跟 Leo 說話」。
 
 ## 上線步驟
 
@@ -107,7 +147,66 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 - 「#5 改到 20:30 發」「#2 退回，太像廣告」
 - 「明天多做獎學金的題目」→ 記給隔天早上的企劃，用過一次就清掉
 
-Leo 只能做這六種事：開工、請同事重寫、加做一則、改發文時間、退回、記給明天。**它不能核准、不能發文，也不能改帳號、金鑰或模擬模式**，就算你在聊天裡要求也一樣，那些永遠由你在審核匣自己按。Leo 用 Antigravity 思考；Antigravity 沒回應時會照備援順序換人，全部都不行時，它仍聽得懂「開工」和「進度」。
+- 「大家現在用什麼模型？」「Kiki 改用 Sonnet，思考強度 high」「阿脆改用 Opus，xhigh」「Kiki 改回原本的設定」→ Leo 會換掉那位同事用的工具、模型或思考強度，桌上螢幕和同事資訊卡會顯示新的設定
+
+- 「新增一位同事叫小美，負責研究 Dcard 和 PTT 上學生在討論什麼，用 Claude Code 的 Sonnet，思考強度 high」→ 辦公室多一張桌子和一個新的像素人
+- 「請小美查這週大家在問什麼」→ 小美做完在聊天裡回報（附來源）；「請阿寫寫一則 Threads 講托福和雅思怎麼選」→ 草稿先給 Kiki 審稿，再放進審核匣等你核准
+- 「小美改用 Opus」「請小美離開」
+
+- 「新增 Dora 和 dora2 兩位校園情報研究員，把平台的大學平分給她們，每天巡查官網」→ Leo 直接讀這台電腦上專案裡的大學清單（不用上 GitHub），依順序平分；從隔天起每天開工時，兩人各自打開負責學校的官網，看有沒有新的交換公告、規定有沒有改、和平台資料是否一致，回報「🆕 新公告／⚠️ 和平台不一致／✅ 沒有變化」，每則附上看的頁面網址
+- 「請小美每天看 Dcard 交換版」→ 變成小美每天固定的工作
+- 「Dora 和 dora2 每天早上十點和下午五點各巡查一次」→ 每位新同事可以有自己的時間，一天最多 6 次；沒設定就在每天開工時做一次。辦公室關著時錯過的時間，開機後只補做一次
+
+新同事最多 6 位，關掉辦公室再打開也還在。新同事用的 AI 失敗時會依序換其他 AI，全部失敗時會照實說出每個 AI 失敗的原因。他們能做兩種事：查資料、分析、想點子後回報給你，或寫 Threads 草稿；IG 圖和影片仍由 Mori、阿剪做。原本的 9 位同事不能被請走。
+
+Leo 能做的事：開工、請同事重寫、加做一則、改發文時間、退回、記給明天、查看和調整每位同事用的 AI，以及新增同事、交代工作給新同事、請新同事離開。**它不能核准、不能發文，也不能改帳號、金鑰或模擬模式**，就算你在聊天裡要求也一樣，那些永遠由你在審核匣自己按。Leo 用 Antigravity 思考；Antigravity 沒回應時會照備援順序換人，全部都不行時，它仍聽得懂「開工」和「進度」。
+
+## 用手機跟 Leo 說話、收通知
+
+辦公室接一個你自己的 Telegram 機器人：在手機上傳訊息給它，就是跟總管 Leo 說話；有事它會主動傳給你。電腦不用對外開放（機器人是電腦主動去 Telegram 拿訊息）。
+
+**設定一次（5 分鐘）**
+
+1. 手機裝 Telegram，搜尋 **@BotFather**，傳 `/newbot`，照它問的取名字（例如「UniWay 總管」）和帳號（要以 `bot` 結尾）。它會回你一串 token。
+2. 把 token 填進 `.env`：`TELEGRAM_BOT_TOKEN=123456:ABC...`
+3. 在電腦執行（先關掉正在跑的 `office serve`）：
+   ```bash
+   uv run office auth telegram
+   ```
+   它會印出一個連結，用手機打開、在 Telegram 按「開始」，就會收到「已連上」。
+4. 重新啟動 `uv run office serve`。`uv run office check` 的「手機」那一行會是 ○。
+
+**之後怎麼用**
+
+- 直接打字給機器人＝跟 Leo 說話，跟網頁的「總管」分頁一樣：「今天進度如何？」「開工」「#3 開頭再口語一點」「#5 改到 20:30 發」「明天多做獎學金的題目」。Leo 說的話（包括每天開工後的整理）都會傳到手機。
+- 你會收到的通知：
+  - 📝 **草稿等你核准**：附文案（輪播、影片附封面圖），下面有「✅ 核准」「↩️ 退回」按鈕
+  - ⚠️ **需要你看一下**：審稿沒過，或發文前檢查擋下來（可以「照樣核准」或跟 Leo 說要怎麼改）
+  - 🚀 **已發出**：附貼文連結
+  - ❌ **發佈失敗**：附原因
+- 只有你用 `office auth telegram` 連上的那個 Telegram 帳號說的話才算數，別人找到這個機器人也不會有任何回應。按鈕跟網頁上的核准一樣是你本人按的；Leo 自己仍然不能核准。
+- 辦公室要開著（`uv run office serve`）機器人才會回；電腦關機時傳的訊息，開機後會依序處理。
+
+**也想在手機上看整間辦公室（動畫、審核匣、改文案）**
+
+用 [Tailscale](https://tailscale.com/download)：電腦和手機都裝、登入同一個帳號，它們就像在同一個私人網路，不用對外開放。
+
+1. `.env` 設 `OFFICE_ACCESS_TOKEN=<自己想一串密碼>`，以及 `OFFICE_URL=http://<電腦名稱>:8780`（電腦名稱在 Tailscale App 裡看得到）。
+2. 用 `uv run office serve --host 0.0.0.0` 啟動。Windows 跳出防火牆詢問時，允許「私人網路」。
+3. 手機第一次打開 `http://<電腦名稱>:8780/?token=<那串密碼>`，之後會記住。通知裡也會附上辦公室的連結。
+
+**給其他電腦一個公開連結（不用裝 Tailscale）**
+
+用 Cloudflare 的免費 Quick Tunnel，不用帳號、不用開防火牆：
+
+1. `.env` **一定要**設 `OFFICE_ACCESS_TOKEN=<一串很長的密碼>`，然後重開 `uv run office serve`（一樣用預設的 127.0.0.1）。沒有這串密碼，拿到連結的人都能按核准。
+2. 安裝一次：`winget install --id Cloudflare.cloudflared -e`（Mac：`brew install cloudflared`），裝完重開 PowerShell。
+3. 另開一個 PowerShell 視窗執行 `cloudflared tunnel --url http://localhost:8780`，畫面會出現 `https://xxxx.trycloudflare.com`。
+4. 其他電腦打開 `https://xxxx.trycloudflare.com/?token=<那串密碼>`，之後會記住。
+
+這個網址每次重開 cloudflared 都會換；兩個視窗（serve 和 cloudflared）都要開著，連結才打得開。
+
+**3D 太卡**：遠端桌面、沒有顯示卡或瀏覽器關掉「硬體加速」時，3D 會很吃力。辦公室偵測到畫面一直卡，會自動改用平面工作台；也可以直接開 `/?flat`。想強制開 3D 用 `/?3d`。
 
 ## Claude Code、Codex、Antigravity 怎麼分工
 
@@ -177,7 +276,7 @@ Leo 只能做這六種事：開工、請同事重寫、加做一則、改發文�
    - `OFFICE_MEDIA_HOST=supabase`（建議）：在 Supabase Storage 建一個 **public** bucket（預設名稱 `marketing-media`），填 `SUPABASE_URL` 與 `SUPABASE_SERVICE_ROLE_KEY`。service role key 權限很大，只能放在這台電腦的 `.env`。
    - `OFFICE_MEDIA_HOST=static`：讓這台電腦的 `/media/` 對外（例如用 tunnel），填 `OFFICE_PUBLIC_BASE_URL`。這時**一定要設 `OFFICE_ACCESS_TOKEN`**，否則任何人都能打開辦公室按核准。
 
-   沒設定時 Threads 純文字照發，IG 貼文和影片會在審核匣標示發佈失敗。
+   沒設定時 Threads 不附圖、只發文字，IG 貼文和影片會在審核匣標示發佈失敗。
 
 ### YouTube
 
@@ -232,7 +331,7 @@ Leo 只能做這六種事：開工、請同事重寫、加做一則、改發文�
 
 | 路徑 | 內容 |
 |------|------|
-| `office/agents/` | 每位 agent 一個檔案；`chief.py` 是總管 |
+| `office/agents/` | 每位 agent 一個檔案；`chief.py` 是總管，`hire.py` 是 Leo 新增的同事 |
 | `office/pipeline.py` | 一天的流程：企劃 → 產出 → 審稿 → 送審 |
 | `office/scheduler.py` | 辦公室時鐘：開工、發文、看留言、抓數據、延長權杖 |
 | `office/brains.py` | Claude Code、Codex、Antigravity、Claude API 的呼叫方式與備援順序 |
@@ -242,7 +341,25 @@ Leo 只能做這六種事：開工、請同事重寫、加做一則、改發文�
 | `office/render/` | 輪播／限動／影片的 HTML 版型、算圖與配樂 |
 | `office/platforms/` | Threads、Instagram、YouTube、媒體網址 |
 | `office/accounts.py`、`office/checkup.py` | 連帳號（`office auth`）與開工前檢查（`office check`） |
+| `office/telegram.py` | 手機：Telegram 機器人跟 Leo 對話、通知、核准按鈕 |
 | `office/server.py`、`office/static/` | 辦公室網頁與即時事件 |
+| `office/static/office-world.js`、`office-world-state.js` | 3D 海岸場景、部門座位、真實時鐘與待命活動 |
+| `office/static/office-building.js` | 兩層建築、可切換外牆／屋頂、樓梯與花園；重複建築細節以 instancing 合併繪製 |
+| `office/static/office-nature.js` | 本機材質、天空反射環境、棕櫚羽葉、熱帶植栽、風動、沙灘與遮陽躺椅 |
+| `office/static/office-ocean.js` | 多方向波面、Fresnel 天空／光線反射、水深色差、水下光紋與碎浪；與沙灘共用岸線定義 |
+| `office/static/vendor/` | 隨套件提供的 Three.js、OrbitControls 與 MIT 授權 |
 | `tests/` | `uv run pytest`（算圖測試需要 Chromium） |
 
 ![輪播圖範例](docs/carousel-sample.jpg)
+
+## 海岸場景驗證
+
+```bash
+node --test tests/test_world_state.mjs
+node --test tests/test_nature_geometry.mjs
+uv run pytest -q tests/test_server.py tests/test_config.py tests/test_rules.py tests/test_pipeline.py tests/test_offline_writer.py tests/test_platforms.py tests/test_tuning.py
+# 瀏覽器驗收（需可用的 Chromium；不用開真實社群帳號）
+OFFICE_BROWSER_TESTS=1 CHROMIUM_PATH=/path/to/chromium uv run pytest -q tests/test_coastal_browser.py
+```
+
+瀏覽器測試以獨立臨時資料庫、離線 AI 和關閉排程器的本機服務執行，測試台北中午／19:00、三種導覽視角、兩層部門與員工資訊卡、編輯與核准、SSE 打斷三種休息、走樓梯途中收到工作並回到二樓、六位新同事、手機、動態切換減少動態效果、靜止場景仍能接收工作事件，以及 WebGL 備援。幾何測試檢查葉片與海灘的頂點、法線、風動權重及岸線一致性。測試的草稿不會發到社群。

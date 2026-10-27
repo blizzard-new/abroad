@@ -5,12 +5,14 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
 import 'models.dart';
+import 'forum_models.dart';
 
 class ExchangeApiException implements Exception {
-  const ExchangeApiException(this.message, {this.statusCode});
+  const ExchangeApiException(this.message, {this.statusCode, this.detail});
 
   final String message;
   final int? statusCode;
+  final dynamic detail;
 
   @override
   String toString() => message;
@@ -23,12 +25,161 @@ class ExchangeApi {
         baseUrl ??
             const String.fromEnvironment(
               'API_BASE_URL',
-              defaultValue: 'http://10.0.2.2:8000/',
+              defaultValue: 'https://app.uniway-tw.com/',
             ),
       );
 
   final http.Client _client;
   final String baseUrl;
+
+  Future<List<ForumBoard>> forumBoards(String token) async {
+    final response = await _client
+        .get(
+          _uri('community/boards'),
+          headers: token.isEmpty ? null : _bearer(token),
+        )
+        .timeout(const Duration(seconds: 15));
+    return jsonMapList(_decode(response)).map(ForumBoard.fromJson).toList();
+  }
+
+  Future<ForumPage<ForumPost>> forumFeed(
+    String token, {
+    String board = '',
+    String topic = '',
+    String query = '',
+    String? cursor,
+  }) async {
+    final response = await _client
+        .get(
+          _uri('community/feed', {
+            'boards': board,
+            'topic': topic,
+            'q': query,
+            'cursor': cursor,
+            'limit': '20',
+          }),
+          headers: token.isEmpty ? null : _bearer(token),
+        )
+        .timeout(const Duration(seconds: 15));
+    final row = jsonMap(_decode(response));
+    return ForumPage(
+      jsonMapList(row['items']).map(ForumPost.fromJson).toList(),
+      row['next_cursor'] as String?,
+    );
+  }
+
+  Future<ForumPost> forumPost(String token, String id) async {
+    final response = await _client
+        .get(
+          _uri('community/posts/${Uri.encodeComponent(id)}'),
+          headers: token.isEmpty ? null : _bearer(token),
+        )
+        .timeout(const Duration(seconds: 15));
+    return ForumPost.fromJson(_decode(response));
+  }
+
+  Future<ForumPage<ForumReply>> forumReplies(
+    String token,
+    String postId, {
+    String? parentId,
+    String? cursor,
+  }) async {
+    final response = await _client
+        .get(
+          _uri('community/posts/${Uri.encodeComponent(postId)}/comments', {
+            'parent_id': parentId,
+            'cursor': cursor,
+            'limit': '20',
+          }),
+          headers: token.isEmpty ? null : _bearer(token),
+        )
+        .timeout(const Duration(seconds: 15));
+    final row = jsonMap(_decode(response));
+    return ForumPage(
+      jsonMapList(row['items']).map(ForumReply.fromJson).toList(),
+      row['next_cursor'] as String?,
+    );
+  }
+
+  Future<void> writeForum(
+    String token,
+    AnonymousIdentity identity, {
+    required String body,
+    String? postId,
+    String? parentId,
+    String? boardId,
+    String? title,
+    String topic = 'application',
+    String postType = 'discussion',
+  }) async {
+    final response = await _client
+        .post(
+          _uri(
+            postId == null
+                ? 'community/posts'
+                : 'community/posts/${Uri.encodeComponent(postId)}/comments',
+          ),
+          headers: {..._auth(identity), ..._bearer(token)},
+          body: jsonEncode({
+            'body': body,
+            'identity_mode': 'anonymous',
+            if (postId == null) ...{
+              'board_id': boardId,
+              'title': title,
+              'topic': topic,
+              'post_type': postType,
+            },
+            'parent_id': ?parentId,
+          }),
+        )
+        .timeout(const Duration(seconds: 20));
+    _decode(response);
+  }
+
+  Future<void> deleteForum(
+    String token,
+    AnonymousIdentity identity,
+    String postId, {
+    String? commentId,
+  }) async {
+    final response = await _client
+        .delete(
+          _uri(
+            'community/posts/${Uri.encodeComponent(postId)}${commentId == null ? '' : '/comments/${Uri.encodeComponent(commentId)}'}',
+          ),
+          headers: {..._auth(identity), ..._bearer(token)},
+        )
+        .timeout(const Duration(seconds: 15));
+    _decode(response);
+  }
+
+  Future<void> registerMobileDevice(
+    String token,
+    String installation,
+    String fid,
+  ) async {
+    final response = await _client
+        .put(
+          _uri('/account/mobile-devices'),
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode({'installation_id': installation, 'fid': fid}),
+        )
+        .timeout(const Duration(seconds: 15));
+    if (response.statusCode != 204) _decode(response);
+  }
+
+  Future<void> removeMobileDevice(String token, String installation) async {
+    final response = await _client
+        .delete(
+          _uri('/account/mobile-devices/$installation'),
+          headers: {'Authorization': 'Bearer $token'},
+        )
+        .timeout(const Duration(seconds: 8));
+    if (response.statusCode != 204) _decode(response);
+  }
 
   String resolveUrl(String value) {
     final uri = Uri.tryParse(value);
@@ -53,15 +204,23 @@ class ExchangeApi {
     final body = utf8.decode(response.bodyBytes);
     if (response.statusCode < 200 || response.statusCode >= 300) {
       String message = '伺服器暫時無法完成要求';
+      dynamic detail;
       try {
         final decoded = jsonDecode(body);
         if (decoded is Map && decoded['detail'] != null) {
-          message = decoded['detail'].toString();
+          detail = decoded['detail'];
+          message = detail is Map
+              ? (detail['message']?.toString() ?? '資料已在其他裝置更新，請重新同步。')
+              : detail.toString();
         }
       } catch (_) {
         if (body.trim().isNotEmpty) message = body.trim();
       }
-      throw ExchangeApiException(message, statusCode: response.statusCode);
+      throw ExchangeApiException(
+        message,
+        statusCode: response.statusCode,
+        detail: detail,
+      );
     }
     return body.trim().isEmpty ? null : jsonDecode(body);
   }
@@ -164,6 +323,96 @@ class ExchangeApi {
       headers: _bearer(accessToken),
     );
     return AccountProfile.fromJson(_decode(response));
+  }
+
+  Future<List<JsonMap>> applicationDrafts(
+    String token,
+    String homeSchool,
+  ) async {
+    final response = await _client
+        .get(
+          _uri('account/application-drafts', {'home_school': homeSchool}),
+          headers: _bearer(token),
+        )
+        .timeout(const Duration(seconds: 15));
+    return jsonMapList(jsonMap(_decode(response))['items']);
+  }
+
+  Future<JsonMap> saveApplicationDraft(
+    String token,
+    String templateId,
+    JsonMap payload,
+  ) async {
+    final response = await _client
+        .put(
+          _uri('account/application-drafts/${Uri.encodeComponent(templateId)}'),
+          headers: _bearer(token),
+          body: jsonEncode(payload),
+        )
+        .timeout(const Duration(seconds: 15));
+    return jsonMap(_decode(response));
+  }
+
+  Future<JsonMap> workspace(String accessToken, String homeSchool) async {
+    final response = await _client
+        .get(
+          _uri('account/workspace', {'home_school': homeSchool}),
+          headers: _bearer(accessToken),
+        )
+        .timeout(const Duration(seconds: 25));
+    return jsonMap(jsonMap(_decode(response))['workspace']);
+  }
+
+  Future<JsonMap> mobileAuthConfig() async {
+    final response = await _client
+        .get(_uri('auth/mobile/config'))
+        .timeout(const Duration(seconds: 20));
+    if (response.statusCode == 404) {
+      throw const ExchangeApiException('網站尚未啟用手機登入連接，請先部署手機版後端更新。');
+    }
+    return jsonMap(_decode(response));
+  }
+
+  Future<JsonMap> notifications(String token) async {
+    final response = await _client
+        .get(_uri('account/notifications'), headers: _bearer(token))
+        .timeout(const Duration(seconds: 25));
+    return jsonMap(_decode(response));
+  }
+
+  Future<void> readNotification(String token, String id) async {
+    final response = await _client
+        .patch(
+          _uri('account/notifications/${Uri.encodeComponent(id)}/read'),
+          headers: _bearer(token),
+        )
+        .timeout(const Duration(seconds: 20));
+    _decode(response);
+  }
+
+  Future<AccountSession> exchangeMobileCode(
+    String code,
+    String verifier,
+  ) async {
+    final response = await _client
+        .post(
+          _uri('auth/mobile/exchange'),
+          headers: const {'Content-Type': 'application/json'},
+          body: jsonEncode({'code': code, 'code_verifier': verifier}),
+        )
+        .timeout(const Duration(seconds: 25));
+    return AccountSession.fromJson(_decode(response));
+  }
+
+  Future<JsonMap> saveWorkspace(String accessToken, JsonMap workspace) async {
+    final response = await _client
+        .put(
+          _uri('account/workspace'),
+          headers: _bearer(accessToken),
+          body: jsonEncode(workspace),
+        )
+        .timeout(const Duration(seconds: 25));
+    return jsonMap(jsonMap(_decode(response))['workspace']);
   }
 
   Future<AccountProfile> updateProfile({
@@ -486,10 +735,7 @@ class ExchangeApi {
     String? homeSchool,
   }) async {
     final response = await _client.get(
-      _uri('community/chat', {
-        'school': schoolName,
-        'home_school': homeSchool,
-      }),
+      _uri('community/chat', {'school': schoolName, 'home_school': homeSchool}),
     );
     return jsonMapList(_decode(response)).map(ChatMessage.fromJson).toList();
   }

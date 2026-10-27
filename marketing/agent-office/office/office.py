@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import json
+import re
 import threading
+from secrets import token_hex
 from datetime import date, datetime, time, timezone
 from pathlib import Path
 from typing import Any
@@ -12,13 +15,14 @@ from .agents.base import Agent
 from .agents.chief import Chief
 from .agents.community import Community
 from .agents.designer import Designer
+from .agents.hire import Hire, look as hire_look
 from .agents.publisher import PREFLIGHT_HOLD, Publisher
 from .agents.reviewer import Reviewer
 from .agents.strategist import Strategist
 from .agents.threads_writer import ThreadsWriter
 from .agents.video_editor import VideoEditor
 from . import accounts, brains
-from .brand import Briefing, load_facts, load_news
+from .brand import Briefing, load_facts, load_news, load_schools
 from .config import Settings
 from .events import EventBus
 from .llm import make_writer
@@ -34,6 +38,27 @@ def desk_of(role: str) -> str:
     return "strategist" if role == "research" else role
 
 
+# Model names the chief may set: letters, digits and the punctuation real names use ("Gemini 3.7 Flash (Low)").
+MODEL_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9 ._:/()\[\]-]{0,79}")
+# Which tools can run which family of models. Antigravity also offers some Claude and open GPT models (`agy models`).
+MODEL_TOOLS = {"claude": ("claude-code", "api", "antigravity"), "gpt": ("codex", "antigravity"), "gemini": ("antigravity",)}
+
+
+def _model_family(model: str) -> str:
+    name = model.lower()
+    if any(word in name for word in ("claude", "opus", "sonnet", "haiku", "fable")):
+        return "claude"
+    if name.startswith(("gpt", "o3", "o4", "codex")):
+        return "gpt"
+    if "gemini" in name:
+        return "gemini"
+    return ""
+
+
+MAX_HIRES = 6
+NAME = re.compile(r"[\w\u4e00-\u9fff ]{1,12}")
+
+
 # The human's desk. Drafts land here unless OFFICE_APPROVAL=auto.
 BOSS = {"id": "boss", "name": "你", "title": "老闆（審核）", "duty": "看審核匣：核准、退回或直接修改草稿"}
 
@@ -44,11 +69,13 @@ class Office:
         self.store = Store(settings.db_path)
         self.bus = EventBus(self.store)
         self._brain_seen: dict[str, str] = {}
-        self.writer = writer or make_writer(settings, on_brain=self._brain_used)
+        self.writer = writer or make_writer(settings, on_brain=self._brain_used, tuning=self.tuning)
         self.renderer = renderer or Renderer(settings)
         # Cover illustrations: Codex's image generation when OFFICE_IMAGES=codex.
         self.images = images if images is not None else (brains.CodexBrain(settings) if settings.images == "codex" else None)
         self.staff: dict[str, Agent] = {cls.persona.id: cls(self) for cls in STAFF}
+        for record in self.hires():
+            self._seat(Hire(self, record))
         self.busy = threading.Lock()
         self._facts = None
 
@@ -58,11 +85,205 @@ class Office:
             return
         self._brain_seen[role] = key
         label = brains.LABELS[key]
-        message = f"{failures[-1][:40]}，改用 {label}" if failures else f"{brains.ROLES[role]}：{label}"
+        message = f"{failures[-1][:40]}，改用 {label}" if failures else f"{self.roles().get(role, role)}：{label}"
         self.bus.emit(desk_of(role), "brain", message, brain=key, label=label, role=role, fallback=bool(failures))
 
     def brain_summary(self) -> dict[str, list[str]]:
-        return {role: [brains.LABELS[k] for k in brains.chain(self.settings, role)] for role in brains.ROLES}
+        def keys(role: str) -> list[str]:
+            if hasattr(self.writer, "chain"):
+                return [brain.key if brain else "offline" for brain in self.writer.chain(role)]
+            return brains.chain(self.settings, role)
+
+        return {role: [brains.LABELS[k] for k in keys(role)] for role in self.roles()}
+
+    def roles(self) -> dict[str, str]:
+        """Every job that thinks with an AI: the fixed ones and each colleague the chief hired."""
+        return {**brains.ROLES, **{agent.id: agent.persona.title for agent in self.staff.values() if isinstance(agent, Hire)}}
+
+    # ---- colleagues the chief hires ----
+    def hires(self) -> list[dict]:
+        try:
+            value = json.loads(self.store.get("hires") or "[]")
+        except json.JSONDecodeError:
+            return []
+        return value if isinstance(value, list) else []
+
+    def _seat(self, agent: Agent) -> None:
+        # New desks go before the chief, who always sits beside the boss.
+        chief = self.staff.pop("chief", None)
+        self.staff[agent.id] = agent
+        if chief:
+            self.staff["chief"] = chief
+
+    def hire(self, name: str, title: str, duty: str, *, brain: str = "", model: str = "", effort: str = "") -> Agent:
+        name, title, duty = name.strip(), title.strip(), duty.strip()
+        if not name or len(name) > 12 or not NAME.fullmatch(name):
+            raise ValueError("新同事的名字要 1～12 個字，只能有中英文、數字和空格")
+        if any(agent.persona.name == name for agent in self.staff.values()):
+            raise ValueError(f"已經有同事叫 {name} 了")
+        records = self.hires()
+        if len(records) >= MAX_HIRES:
+            raise ValueError(f"辦公室最多再加 {MAX_HIRES} 位同事，請先讓一位離開")
+        record = {"id": f"hire-{token_hex(3)}", "name": name, "title": (title or "助理")[:16], "duty": (duty or "協助總管交代的工作")[:160],
+                  **hire_look(len(records) + int(self.store.get("hires_ever") or 0))}
+        agent = Hire(self, record)
+        self._seat(agent)
+        try:
+            if brain or model or effort:
+                self.tune(agent.id, brain=brain, model=model, effort=effort)
+        except ValueError:
+            self.staff.pop(agent.id)
+            raise
+        self.store.set("hires", json.dumps(records + [record], ensure_ascii=False))
+        self.store.set("hires_ever", str(int(self.store.get("hires_ever") or 0) + 1))
+        self.bus.emit(agent.id, "staff", f"{name}（{record['title']}）加入辦公室", change="hire")
+        return agent
+
+    def dismiss(self, name_or_id: str) -> str:
+        agent = self.colleague(name_or_id)
+        self.staff.pop(agent.id)
+        self.store.set("hires", json.dumps([r for r in self.hires() if r["id"] != agent.id], ensure_ascii=False))
+        self.store.set(f"tuning:{agent.id}", "{}")
+        self.bus.emit("chief", "staff", f"{agent.persona.name}離開辦公室", change="dismiss", id=agent.id)
+        return agent.persona.name
+
+    def update_hire(self, hire_id: str, **fields) -> None:
+        records = self.hires()
+        for record in records:
+            if record["id"] == hire_id:
+                record.update(fields)
+                self.staff[hire_id].record = record
+        self.store.set("hires", json.dumps(records, ensure_ascii=False))
+
+    def split_schools(self, names: list[str]) -> dict[str, list[str]]:
+        """Share the platform's universities among these colleagues, in registry order, for a daily round each."""
+        colleagues = [self.colleague(name) for name in names]
+        if not colleagues:
+            raise ValueError("要分給哪幾位新同事？")
+        schools = load_schools(self.settings)
+        size = -(-len(schools) // len(colleagues))
+        shares = {}
+        for i, colleague in enumerate(colleagues):
+            share = schools[i * size:(i + 1) * size]
+            self.update_hire(colleague.id, schools=[s.id for s in share], daily_kind="schools",
+                             daily=f"巡查 {len(share)} 所大學官網：交換公告、規定有沒有變，和平台資料一不一致")
+            shares[colleague.persona.name] = [s.name for s in share]
+        return shares
+
+    def hire_times(self, agent: "Hire") -> list[str]:
+        """When a colleague's standing task runs each day: their own times, or the office's start time."""
+        return agent.record.get("times") or [self.settings.daily_at.strftime("%H:%M")]
+
+    def run_hire_dailies(self, now: datetime | None = None) -> list[str]:
+        """Each new colleague's standing task at each of their times; the chief passes the results to the boss.
+
+        A time is done once per day. When the office was off past several times, only one round runs on start."""
+        local = (now or datetime.now(timezone.utc)).astimezone(self.settings.timezone)
+        names = []
+        for agent in list(self.staff.values()):
+            if not isinstance(agent, Hire) or not agent.record.get("daily_kind"):
+                continue
+            due = [t for t in self.hire_times(agent) if local.strftime("%H:%M") >= t]
+            if not due:
+                continue
+            slot = f"{local.date().isoformat()} {max(due)}"
+            key = f"hire_slot:{agent.id}"
+            if (self.store.get(key) or "") >= slot:
+                continue
+            self.store.set(key, slot)
+            kind, task = agent.record["daily_kind"], agent.record.get("daily", "")
+
+            def work(agent=agent, kind=kind, task=task) -> str:
+                if kind == "schools":
+                    return agent.check_schools()
+                if kind == "threads":
+                    return f"{agent.persona.name}寫好今天的 Threads 了（#{agent.write_threads(task, self.staff['chief']._next_slot('threads'))}），在審核匣等你"
+                return agent.report(task)
+
+            self.staff["chief"]._background(f"{agent.persona.name}的每日工作", work)
+            names.append(agent.persona.name)
+        return names
+
+    def set_hire_times(self, name: str, times: list[str]) -> list[str]:
+        agent = self.colleague(name)
+        cleaned = []
+        for text in times:
+            match = re.fullmatch(r"\s*(\d{1,2})[:：](\d{2})\s*", text or "")
+            if not match or int(match.group(1)) > 23 or int(match.group(2)) > 59:
+                raise ValueError(f"時間「{text}」看不懂，請用 HH:MM，例如 10:00")
+            cleaned.append(f"{int(match.group(1)):02d}:{match.group(2)}")
+        cleaned = sorted(set(cleaned))
+        if not cleaned or len(cleaned) > 6:
+            raise ValueError("每天的時間要 1～6 個")
+        self.update_hire(agent.id, times=cleaned)
+        # Times already past today count as done, so a new schedule starts from the next one.
+        self.store.set(f"hire_slot:{agent.id}", f"{self.today().isoformat()} {max([t for t in cleaned if self.local_now().strftime('%H:%M') >= t] or ['00:00'])}")
+        return cleaned
+
+    def colleague(self, name_or_id: str) -> "Hire":
+        key = name_or_id.strip()
+        for agent in self.staff.values():
+            if isinstance(agent, Hire) and key in {agent.id, agent.persona.name}:
+                return agent
+        if any(agent.persona.name == key for agent in self.staff.values()):
+            raise ValueError(f"{key} 是原本的同事，只有新加入的同事能這樣交代或請離開")
+        raise ValueError(f"辦公室裡沒有叫 {key} 的新同事")
+
+    # ---- which AI, model and effort each desk thinks with ----
+    def tuning(self, role: str) -> dict:
+        try:
+            value = json.loads(self.store.get(f"tuning:{role}") or "{}")
+        except json.JSONDecodeError:
+            return {}
+        return value if isinstance(value, dict) else {}
+
+    def tune(self, role: str, *, brain: str = "", model: str = "", effort: str = "") -> dict:
+        """Change one desk's AI. "default" for a field puts that field back to the .env setting."""
+        if role not in self.roles():
+            raise ValueError(f"沒有「{role}」這個工作（可用：{'、'.join(self.roles())}）")
+        current = self.tuning(role)
+        if brain:
+            if brain == "default":
+                current.pop("brain", None)
+            elif brain in brains.LABELS:
+                current["brain"] = brain
+            else:
+                raise ValueError(f"沒有「{brain}」這個工具（可用：{'、'.join(brains.LABELS)}）")
+        if model:
+            model = model.strip()
+            if model == "default":
+                current.pop("model", None)
+            elif not MODEL_NAME.fullmatch(model):
+                raise ValueError(f"模型名稱「{model[:40]}」看起來不對")
+            else:
+                current["model"] = model
+        if effort:
+            if effort == "default":
+                current.pop("effort", None)
+            elif effort in brains.EFFORTS:
+                current["effort"] = effort
+            else:
+                raise ValueError(f"思考強度只能是 {'、'.join(brains.EFFORTS)}")
+        tool = current.get("brain") or brains.resolve(self.settings.brains, role)
+        family = _model_family(current.get("model", ""))
+        if family and tool not in MODEL_TOOLS[family]:
+            raise ValueError(f"{current['model']} 不能在 {brains.LABELS[tool]} 上跑，要用 {'或'.join(brains.LABELS[k] for k in MODEL_TOOLS[family])}")
+        self.store.set(f"tuning:{role}", json.dumps(current, ensure_ascii=False))
+        self._brain_seen.pop(role, None)
+        key = self.writer.primary(role) if hasattr(self.writer, "primary") else tool
+        self.bus.emit(desk_of(role), "brain", f"{self.roles()[role]}改用 {self.describe_brain(role)}", brain=key,
+                      label=brains.LABELS[key], role=role, fallback=False)
+        return current
+
+    def describe_brain(self, role: str) -> str:
+        tune = self.tuning(role)
+        tool = tune.get("brain") or brains.resolve(self.settings.brains, role)
+        default_model = {"claude-code": self.settings.claude_code_model, "codex": self.settings.codex_model,
+                         "api": self.settings.model}.get(tool, "")
+        parts = [brains.LABELS[tool], f"模型 {tune.get('model') or default_model or '預設'}"]
+        if tool != "offline":
+            parts.append(f"思考強度 {tune.get('effort') or '預設'}")
+        return "｜".join(parts)
 
     # ---- time ----
     def local_now(self) -> datetime:
@@ -223,7 +444,7 @@ class Office:
             "agents": [
                 {
                     **agent.persona.to_dict(),
-                    "brain": self._brain_seen.get(agent.id) or self.writer.primary(agent.id) if agent.id in brains.ROLES else None,
+                    "brain": self._brain_seen.get(agent.id) or self.writer.primary(agent.id) if agent.id in self.roles() else None,
                     **self.bus.agent_states.get(agent.id, {"state": "idle", "message": "待命中"}),
                 }
                 for agent in self.staff.values()
@@ -237,6 +458,7 @@ class Office:
                 "approval": self.settings.approval,
                 "dry_run": self.settings.dry_run,
                 "brains": self.brain_summary(),
+                "tuning": {role: self.describe_brain(role) for role in self.roles()},
                 "images": "Codex" if self.images else None,
                 "labels": brains.LABELS,
                 "daily_at": self.settings.daily_at.strftime("%H:%M"),

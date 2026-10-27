@@ -137,3 +137,15 @@ def test_npm_shims_on_windows_run_their_script_directly(tmp_path):
     (tmp_path / "other.cmd").write_text("@echo hi\r\n")
     assert launcher(str(tmp_path / "other.cmd")) == [str(tmp_path / "other.cmd")]
     assert launcher("/usr/local/bin/claude") == ["/usr/local/bin/claude"]
+
+
+def test_check_shows_whether_the_phone_is_paired(tmp_path):
+    http, _ = mock(lambda request: httpx.Response(200, json={"ok": True, "result": {"username": "uniway_office_bot"}}))
+    s = settings(tmp_path, TELEGRAM_BOT_TOKEN="123:abc")
+    store = Store(s.db_path)
+    assert checkup.phone_rows(s, store, http)[0].ok is False
+    store.set("telegram_chat_id", "4242")
+    store.set("handle:telegram", "boss")
+    row = checkup.phone_rows(s, store, http)[0]
+    assert row.ok and "@uniway_office_bot" in row.detail and "boss" in row.detail
+    assert checkup.phone_rows(settings(tmp_path), store)[0].ok is None  # no bot set up: only a reminder

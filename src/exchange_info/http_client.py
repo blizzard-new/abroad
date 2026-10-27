@@ -9,6 +9,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.connection import HTTPConnection, HTTPSConnection
 from urllib3.connectionpool import HTTPConnectionPool, HTTPSConnectionPool
 from urllib3.poolmanager import PoolManager
+from .tls_trust import ca_bundle, validate_bundle
 
 class SSRFError(requests.RequestException):
     """Raised when a request attempts to access a non-public IP address."""
@@ -68,35 +69,10 @@ class SafeHTTPConnection(SSRFSafeguardConnectionMixin, HTTPConnection):
     pass
 
 class SafeHTTPSConnection(SSRFSafeguardConnectionMixin, HTTPSConnection):
-    def connect(self) -> None:
-        self.sock = self._new_conn()
-        # For HTTPS, SNI requires the hostname.
-        # We set `server_hostname` to self.host because self.host is the original hostname,
-        # but the socket is connected to valid_ip.
-        if hasattr(self, "proxy_is_forwarding") and self.proxy_is_forwarding:
-            # urllib3 v2 logic
-            self._connect_tls_proxy(self.host, self.sock)
-        elif not hasattr(self, "_connect_tls_proxy"):
-            self._proxy_requires_url_absolute_form = False
-        
-        server_hostname = self.host
-        if self.assert_hostname is not False:
-            server_hostname = self.assert_hostname or self.host
-
-        tls_in_tls = False
-        if hasattr(self, "_is_using_tunnel") and self._is_using_tunnel():
-            if hasattr(self, "tls_in_tls_required"):
-                tls_in_tls = self.tls_in_tls_required
-        
-        if hasattr(self.ssl_context, "wrap_socket"):
-            self.sock = self.ssl_context.wrap_socket(
-                self.sock,
-                server_hostname=server_hostname,
-            )
-        else:
-            import ssl
-            context = ssl.create_default_context()
-            self.sock = context.wrap_socket(self.sock, server_hostname=server_hostname)
+    # Keep urllib3's TLS handshake: it honors Requests' ca_certs, hostname
+    # verification, proxy handling and verification result bookkeeping. Only
+    # socket creation is overridden by the SSRF mixin above.
+    pass
 
 class SafeHTTPConnectionPool(HTTPConnectionPool):
     ConnectionCls = SafeHTTPConnection
@@ -113,6 +89,13 @@ class SafePoolManager(PoolManager):
         }
 
 class SafeHTTPAdapter(HTTPAdapter):
+    def send(self, request, **kwargs):
+        if kwargs.get("verify") is False:
+            raise ValueError("TLS verification cannot be disabled")
+        verify = kwargs.get("verify")
+        kwargs["verify"] = validate_bundle(verify) if isinstance(verify, str) else ca_bundle()
+        return super().send(request, **kwargs)
+
     def init_poolmanager(self, connections: int, maxsize: int, block: bool = False, **pool_kwargs: Any) -> None:
         self.poolmanager = SafePoolManager(
             num_pools=connections,
@@ -128,6 +111,7 @@ class _BlockHttpAdapter(HTTPAdapter):
 def get_safe_session(require_https: bool = True) -> requests.Session:
     """Return a requests.Session that protects against SSRF and enforces HTTPS."""
     session = requests.Session()
+    session.verify = ca_bundle()
     adapter = SafeHTTPAdapter()
     
     if require_https:

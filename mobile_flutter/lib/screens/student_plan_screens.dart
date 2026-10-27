@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../core/application_calendar.dart';
-import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../core/student_plan.dart';
+import '../core/study_plan_widget_service.dart';
+import 'widget_style_preview.dart';
 import '../state/exchange_store.dart';
 import 'feature_screens.dart';
 
@@ -25,6 +27,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
   final oneTimeController = TextEditingController();
   final scholarshipController = TextEditingController();
   String selectedSchool = '';
+  String currency = 'TWD';
   bool initialized = false;
 
   @override
@@ -53,6 +56,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
   void _loadPlan(ExchangeStore store) {
     final plan = store.budgetFor(selectedSchool);
+    currency = plan?.currency ?? 'TWD';
     monthsController.text = (plan?.months ?? 5).toString();
     housingController.text = _inputValue(plan?.monthlyHousing);
     foodController.text = _inputValue(plan?.monthlyFood);
@@ -65,6 +69,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
   ExchangeBudgetPlan _currentPlan() => ExchangeBudgetPlan(
     schoolName: selectedSchool,
+    currency: currency,
     months: int.tryParse(monthsController.text.trim()) ?? 5,
     monthlyHousing: _number(housingController),
     monthlyFood: _number(foodController),
@@ -102,6 +107,15 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
     return FeaturePageScaffold(
       title: '交換預算',
+      bottomBar: schools.isEmpty
+          ? null
+          : StudentActionBar(
+              primary: FilledButton.icon(
+                onPressed: () => _save(store),
+                icon: const Icon(Icons.save_outlined),
+                label: const Text('儲存估算'),
+              ),
+            ),
       children: [
         if (schools.isEmpty)
           const EmptyState(
@@ -110,6 +124,10 @@ class _BudgetScreenState extends State<BudgetScreen> {
             message: '資料載入後即可開始估算。',
           )
         else ...[
+          const StudentSectionTitle(
+            '目的地與期間',
+            icon: Icons.flight_takeoff_rounded,
+          ),
           GlassCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +135,10 @@ class _BudgetScreenState extends State<BudgetScreen> {
                 DropdownButtonFormField<String>(
                   initialValue: selectedSchool,
                   isExpanded: true,
-                  decoration: const InputDecoration(labelText: '估算學校'),
+                  decoration: const InputDecoration(
+                    labelText: '估算學校',
+                    prefixIcon: Icon(Icons.school_outlined),
+                  ),
                   items: schools
                       .map(
                         (school) => DropdownMenuItem(
@@ -136,7 +157,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
                     _loadPlan(store);
                   },
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 16),
                 _BudgetField(
                   controller: monthsController,
                   label: '研修月數',
@@ -144,57 +165,62 @@ class _BudgetScreenState extends State<BudgetScreen> {
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
+                const StudentSectionTitle(
+                  '每月花費',
+                  icon: Icons.payments_outlined,
+                ),
                 _BudgetField(
                   controller: housingController,
+                  currency: currency,
                   label: '每月住宿',
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
                 _BudgetField(
                   controller: foodController,
+                  currency: currency,
                   label: '每月飲食',
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
                 _BudgetField(
                   controller: transportController,
+                  currency: currency,
                   label: '每月交通',
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
                 _BudgetField(
                   controller: otherController,
+                  currency: currency,
                   label: '每月其他支出',
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
+                const StudentSectionTitle(
+                  '一次支出與補助',
+                  icon: Icons.account_balance_wallet_outlined,
+                ),
                 _BudgetField(
                   controller: oneTimeController,
+                  currency: currency,
                   label: '機票、簽證與保險',
                   onChanged: () => setState(() {}),
                 ),
                 const SizedBox(height: 12),
                 _BudgetField(
                   controller: scholarshipController,
+                  currency: currency,
                   label: '預計補助',
                   onChanged: () => setState(() {}),
-                ),
-                const SizedBox(height: 18),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    onPressed: () => _save(store),
-                    icon: const Icon(Icons.save_outlined),
-                    label: const Text('儲存估算'),
-                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           if (plan != null) _BudgetResult(plan: plan),
           if (selected != null && selected.tuitionPoints.isNotEmpty) ...[
-            const SizedBox(height: 14),
+            const SizedBox(height: 16),
             GlassCard(
               padding: EdgeInsets.zero,
               child: ExpansionTile(
@@ -239,6 +265,7 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
   bool started = false;
   bool checking = true;
   bool canPin = false;
+  StudyPlanWidgetStyle selectedStyle = StudyPlanWidgetStyle.overview;
 
   @override
   void didChangeDependencies() {
@@ -256,7 +283,7 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
   }
 
   Future<void> _pin(ExchangeStore store) async {
-    await store.requestHomeWidgetPin();
+    await store.requestHomeWidgetPin(style: selectedStyle);
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -266,87 +293,97 @@ class _WidgetSettingsScreenState extends State<WidgetSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final store = ExchangeStoreScope.of(context);
-    final event = store.applicationCalendarEvents
+    final events = store.personalCalendarEvents.toList()
+      ..sort((a, b) => a.date.compareTo(b.date));
+    final event = events
         .where(
           (item) => !dateOnly(item.date).isBefore(dateOnly(DateTime.now())),
         )
         .firstOrNull;
     final isAndroid =
         !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
-
+    final signedIn = store.account != null;
     return FeaturePageScaffold(
-      title: '桌面與鎖定畫面',
-      children: [
-        GlassCard(
-          tint: ExchangeColors.blueSoft,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '交換計畫',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: ExchangeColors.teal,
-                  fontWeight: FontWeight.w700,
+      title: '桌面小工具',
+      bottomBar: isAndroid
+          ? StudentActionBar(
+              primary: FilledButton.icon(
+                onPressed: checking || !canPin ? null : () => _pin(store),
+                icon: const Icon(Icons.add_to_home_screen_outlined),
+                label: Text(
+                  checking
+                      ? '準備中…'
+                      : canPin
+                      ? '加入桌面'
+                      : '從桌面選單加入',
                 ),
               ),
-              const SizedBox(height: 12),
-              Text(
-                event?.title ?? store.nextPlanAction,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                event == null
-                    ? (store.planProfile?.goalLabel.isNotEmpty == true
-                          ? store.planProfile!.goalLabel
-                          : '開啟 App 開始規劃')
-                    : '${countdownLabel(event.date)} · ${event.date.month}/${event.date.day}',
-              ),
-              const SizedBox(height: 14),
-              LinearProgressIndicator(
-                value: store.planCompletionPercent / 100,
-                minHeight: 7,
-                borderRadius: BorderRadius.circular(999),
-              ),
-              const SizedBox(height: 7),
-              Text(
-                '準備進度 ${store.planCompletionPercent}%',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          ),
+            )
+          : null,
+      children: [
+        const StudentSectionTitle(
+          '選擇樣式',
+          icon: Icons.widgets_outlined,
+          detail: '可加入多款，長按桌面調整大小',
+        ),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: StudyPlanWidgetStyle.values
+              .map(
+                (style) => ChoiceChip(
+                  avatar: Icon(WidgetStylePreview.icon(style), size: 18),
+                  label: Text(style.label),
+                  selected: selectedStyle == style,
+                  onSelected: (_) => setState(() => selectedStyle = style),
+                ),
+              )
+              .toList(),
+        ),
+        const SizedBox(height: 24),
+        WidgetStylePreview(
+          style: selectedStyle,
+          title: signedIn
+              ? (event?.title ?? store.nextPlanAction)
+              : '登入後開始交換計畫',
+          dateLabel: event == null
+              ? '儲存申請日期後顯示倒數'
+              : '${event.date.year}/${event.date.month}/${event.date.day}',
+          deadline: signedIn ? event?.date : null,
+          percent: signedIn ? store.planCompletionPercent : 0,
+          tasks: signedIn
+              ? applicationDocumentLabels
+                    .where(
+                      (label) =>
+                          store.documentStatus(label) !=
+                          DocumentPreparationStatus.ready,
+                    )
+                    .take(3)
+                    .toList()
+              : const [],
         ),
         const SizedBox(height: 16),
-        if (isAndroid)
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton.icon(
-              onPressed: checking || !canPin ? null : () => _pin(store),
-              icon: checking
-                  ? const SizedBox.square(
-                      dimension: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.add_to_home_screen_outlined),
-              label: Text(canPin ? '加入 Android 桌面' : '請從桌面小工具選單加入'),
-            ),
-          ),
-        if (isAndroid) const SizedBox(height: 12),
-        const _WidgetInstruction(
-          icon: Icons.android_rounded,
-          title: 'Android 桌面與鎖定畫面',
-          points: [
-            '長按桌面空白處，開啟「小工具」並選擇交換指南。',
-            '鎖定畫面是否提供小工具位置，依 Android 版本與手機品牌而定。',
-          ],
+        StudentNotice(
+          selectedStyle.detail,
+          icon: WidgetStylePreview.icon(selectedStyle),
         ),
-        const SizedBox(height: 12),
-        const _WidgetInstruction(
-          icon: Icons.phone_iphone_rounded,
-          title: 'iPhone 桌面與鎖定畫面',
-          points: ['長按主畫面後加入「交換計畫」小工具。', 'iOS 16 以上可在鎖定畫面加入直列、圓形或矩形版本。'],
+        const SizedBox(height: 24),
+        if (isAndroid)
+          const _WidgetInstruction(
+            icon: Icons.android_rounded,
+            title: '加入手機桌面',
+            points: ['點下方按鈕，再確認加入。', '也可長按桌面 → 小工具 → UniWay。'],
+          )
+        else
+          const _WidgetInstruction(
+            icon: Icons.phone_iphone_rounded,
+            title: 'iPhone 加入方式',
+            points: ['長按主畫面 → 編輯 → 加入小工具 → UniWay。', '交換總覽也支援鎖定畫面的小工具。'],
+          ),
+        const SizedBox(height: 16),
+        const StudentNotice(
+          '開啟 App 同步最新進度；桌面會顯示已儲存的計畫。',
+          icon: Icons.sync_rounded,
         ),
       ],
     );
@@ -359,12 +396,14 @@ class _BudgetField extends StatelessWidget {
     required this.label,
     required this.onChanged,
     this.suffix,
+    this.currency = 'TWD',
   });
 
   final TextEditingController controller;
   final String label;
   final VoidCallback onChanged;
   final String? suffix;
+  final String currency;
 
   @override
   Widget build(BuildContext context) {
@@ -374,7 +413,15 @@ class _BudgetField extends StatelessWidget {
       onChanged: (_) => onChanged(),
       decoration: InputDecoration(
         labelText: label,
-        prefixText: suffix == null ? 'NT\$ ' : null,
+        prefixIcon: Icon(switch (label) {
+          '每月住宿' => Icons.home_outlined,
+          '每月飲食' => Icons.restaurant_outlined,
+          '每月交通' => Icons.directions_transit_outlined,
+          '研修月數' => Icons.date_range_outlined,
+          '機票、簽證與保險' => Icons.flight_outlined,
+          _ => Icons.payments_outlined,
+        }),
+        prefixText: suffix == null ? '$currency ' : null,
         suffixText: suffix,
       ),
     );
@@ -395,17 +442,30 @@ class _BudgetResult extends StatelessWidget {
           Text('扣除預計補助後', style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 4),
           Text(
-            'NT\$ ${_money(plan.netTotal)}',
+            '${plan.currency} ${_money(plan.netTotal)}',
             style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: 16),
-          _BudgetLine(label: '每月生活', value: plan.monthlyTotal),
           _BudgetLine(
+            currency: plan.currency,
+            label: '每月生活',
+            value: plan.monthlyTotal,
+          ),
+          _BudgetLine(
+            currency: plan.currency,
             label: '${plan.months} 個月生活費',
             value: plan.monthlyTotal * plan.months,
           ),
-          _BudgetLine(label: '一次性支出', value: plan.oneTimeCosts),
-          _BudgetLine(label: '預計補助', value: -plan.scholarship),
+          _BudgetLine(
+            currency: plan.currency,
+            label: '一次性支出',
+            value: plan.oneTimeCosts,
+          ),
+          _BudgetLine(
+            currency: plan.currency,
+            label: '預計補助',
+            value: -plan.scholarship,
+          ),
         ],
       ),
     );
@@ -413,10 +473,15 @@ class _BudgetResult extends StatelessWidget {
 }
 
 class _BudgetLine extends StatelessWidget {
-  const _BudgetLine({required this.label, required this.value});
+  const _BudgetLine({
+    required this.label,
+    required this.value,
+    required this.currency,
+  });
 
   final String label;
   final double value;
+  final String currency;
 
   @override
   Widget build(BuildContext context) {
@@ -426,8 +491,8 @@ class _BudgetLine extends StatelessWidget {
         children: [
           Expanded(child: Text(label)),
           Text(
-            '${value < 0 ? '-' : ''}NT\$ ${_money(value.abs())}',
-            style: const TextStyle(fontWeight: FontWeight.w700),
+            '${value < 0 ? '-' : ''}$currency ${_money(value.abs())}',
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -464,7 +529,7 @@ class _WidgetInstruction extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 16),
           ...points.map(BulletPoint.new),
         ],
       ),

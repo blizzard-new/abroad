@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../core/application_calendar.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/student_ui.dart';
 import '../data/exchange_api.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
@@ -101,6 +102,21 @@ class _AdvisorScreenState extends State<AdvisorScreen> {
 
     return FeaturePageScaffold(
       title: '申請顧問',
+      bottomBar: StudentActionBar(
+        primary: FilledButton.icon(
+          onPressed: isLoading ? null : _generate,
+          icon: isLoading
+              ? const SizedBox.square(
+                  dimension: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: ExchangeColors.surface,
+                  ),
+                )
+              : const Icon(Icons.auto_awesome_rounded),
+          label: Text(isLoading ? '整理中…' : '產生申請方案'),
+        ),
+      ),
       children: [
         const _ToolHero(
           asset: 'assets/images/destination-tokyo.jpg',
@@ -109,7 +125,7 @@ class _AdvisorScreenState extends State<AdvisorScreen> {
           subtitle: '條件、選校與下一步一次整理。',
           icon: Icons.auto_awesome_rounded,
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         GlassCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -238,7 +254,7 @@ class _AdvisorScreenState extends State<AdvisorScreen> {
                   hintText: '例如：申請日本交換需要哪些文件？',
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
@@ -264,22 +280,7 @@ class _AdvisorScreenState extends State<AdvisorScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: isLoading ? null : _generate,
-                  icon: isLoading
-                      ? const SizedBox.square(
-                          dimension: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.auto_awesome_rounded),
-                  label: Text(isLoading ? '整理中…' : '產生申請方案'),
-                ),
-              ),
+
               const SizedBox(height: 8),
               Text(
                 '只依已查核來源整理；符合度不是錄取機率。',
@@ -300,13 +301,13 @@ class _AdvisorScreenState extends State<AdvisorScreen> {
             _AdvisorAnswerCard(answer: plan!.answer!),
           ],
           if (plan!.recommendations.isNotEmpty) ...[
-            const SizedBox(height: 22),
+            const SizedBox(height: 24),
             ExchangeSectionHeader(
               eyebrow: '公開條件排序',
               title: '優先候選',
               action: Text('${plan!.recommendations.length} 所'),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             ...plan!.recommendations
                 .take(showAllSchools ? plan!.recommendations.length : 5)
                 .map(
@@ -331,9 +332,9 @@ class _AdvisorScreenState extends State<AdvisorScreen> {
               ),
           ],
           if (plan!.tasks.isNotEmpty) ...[
-            const SizedBox(height: 22),
-            const ExchangeSectionHeader(eyebrow: '先做最重要的事', title: '我的下一步'),
-            const SizedBox(height: 10),
+            const SizedBox(height: 24),
+            const StudentSectionTitle('下一步', icon: Icons.checklist_rounded),
+            const SizedBox(height: 8),
             ...plan!.tasks.map(
               (task) => Padding(
                 padding: const EdgeInsets.only(bottom: 10),
@@ -422,6 +423,21 @@ class _DocumentCheckScreenState extends State<DocumentCheckScreen> {
   Widget build(BuildContext context) {
     return FeaturePageScaffold(
       title: '文件檢查',
+      bottomBar: StudentActionBar(
+        primary: FilledButton.icon(
+          onPressed: isLoading ? null : _check,
+          icon: isLoading
+              ? const SizedBox.square(
+                  dimension: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: ExchangeColors.surface,
+                  ),
+                )
+              : const Icon(Icons.fact_check_outlined),
+          label: Text(isLoading ? '檢查中…' : '開始檢查'),
+        ),
+      ),
       children: [
         const _ToolHero(
           asset: 'assets/images/destination-sydney.jpg',
@@ -430,7 +446,7 @@ class _DocumentCheckScreenState extends State<DocumentCheckScreen> {
           subtitle: '漏填、字數與簽名位置集中檢查。',
           icon: Icons.fact_check_outlined,
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         GlassCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -445,16 +461,16 @@ class _DocumentCheckScreenState extends State<DocumentCheckScreen> {
                         color: ExchangeColors.success,
                       ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 16),
               InkWell(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(16),
                 onTap: isLoading ? null : _pickFile,
                 child: Container(
                   constraints: const BoxConstraints(minHeight: 72),
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: .56),
-                    borderRadius: BorderRadius.circular(8),
+                    color: ExchangeColors.surfaceMuted,
+                    borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: ExchangeColors.line),
                   ),
                   child: Row(
@@ -477,7 +493,7 @@ class _DocumentCheckScreenState extends State<DocumentCheckScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 16),
               _TwoColumnFields(
                 children: [
                   _DropdownField(
@@ -524,22 +540,6 @@ class _DocumentCheckScreenState extends State<DocumentCheckScreen> {
                 onChanged: (value) => setState(() => useAi = value),
               ),
               const SizedBox(height: 8),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: isLoading ? null : _check,
-                  icon: isLoading
-                      ? const SizedBox.square(
-                          dimension: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.fact_check_outlined),
-                  label: Text(isLoading ? '檢查中…' : '開始檢查'),
-                ),
-              ),
             ],
           ),
         ),
@@ -625,6 +625,21 @@ class _WritingAssistantScreenState extends State<WritingAssistantScreen> {
   Widget build(BuildContext context) {
     return FeaturePageScaffold(
       title: '文件改寫',
+      bottomBar: StudentActionBar(
+        primary: FilledButton.icon(
+          onPressed: isLoading ? null : _rewrite,
+          icon: isLoading
+              ? const SizedBox.square(
+                  dimension: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: ExchangeColors.surface,
+                  ),
+                )
+              : const Icon(Icons.auto_fix_high_rounded),
+          label: Text(isLoading ? '整理中…' : '產生建議稿'),
+        ),
+      ),
       children: [
         const _ToolHero(
           asset: 'assets/images/destination-europe.jpg',
@@ -633,13 +648,13 @@ class _WritingAssistantScreenState extends State<WritingAssistantScreen> {
           subtitle: '正式化、翻譯或精簡你的原文。',
           icon: Icons.auto_fix_high_rounded,
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         GlassCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const _SectionTitle(icon: Icons.edit_note_rounded, title: '學生原文'),
-              const SizedBox(height: 14),
+              const SizedBox(height: 16),
               TextField(
                 controller: textController,
                 minLines: 7,
@@ -650,7 +665,7 @@ class _WritingAssistantScreenState extends State<WritingAssistantScreen> {
                   alignLabelWithHint: true,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               _TwoColumnFields(
                 children: [
                   _DropdownField(
@@ -709,22 +724,7 @@ class _WritingAssistantScreenState extends State<WritingAssistantScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton.icon(
-                  onPressed: isLoading ? null : _rewrite,
-                  icon: isLoading
-                      ? const SizedBox.square(
-                          dimension: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.auto_fix_high_rounded),
-                  label: Text(isLoading ? '整理中…' : '產生建議稿'),
-                ),
-              ),
+
               const SizedBox(height: 8),
               Text(
                 '不保存原文；請先移除不必要的個資。',
@@ -762,68 +762,7 @@ class _ToolHero extends StatelessWidget {
   final IconData icon;
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 184,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.asset(asset, fit: BoxFit.cover),
-            const DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0x24101D28), Color(0xD60D202B)],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Row(
-                    children: [
-                      Icon(icon, color: Colors.white, size: 18),
-                      const SizedBox(width: 7),
-                      Text(
-                        eyebrow,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Colors.white,
-                      fontSize: 30,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.white.withValues(alpha: .9),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => StudentNotice(subtitle, icon: icon);
 }
 
 class _SectionTitle extends StatelessWidget {
@@ -838,7 +777,7 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, color: ExchangeColors.teal, size: 21),
-        const SizedBox(width: 9),
+        const SizedBox(width: 8),
         Expanded(
           child: Text(title, style: Theme.of(context).textTheme.titleMedium),
         ),
@@ -968,7 +907,7 @@ class _AdvisorResultHeader extends StatelessWidget {
             trailing: Container(
               padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: .72),
+                color: ExchangeColors.surfaceMuted,
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Text(
@@ -1025,7 +964,7 @@ class _AdvisorAnswerCard extends StatelessWidget {
                 color: answer.evidenceStatus == 'grounded'
                     ? ExchangeColors.success
                     : ExchangeColors.amber,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -1097,7 +1036,7 @@ class _AdvisorSchoolCard extends StatelessWidget {
         shape: const Border(),
         collapsedShape: const Border(),
         leading: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(16),
           child: SizedBox.square(
             dimension: 64,
             child: imageUrl.isEmpty
@@ -1155,7 +1094,7 @@ class _AdvisorSchoolCard extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 '符合條件',
-                style: TextStyle(fontWeight: FontWeight.w700),
+                style: TextStyle(fontWeight: FontWeight.w600),
               ),
             ),
             const SizedBox(height: 8),
@@ -1165,7 +1104,7 @@ class _AdvisorSchoolCard extends StatelessWidget {
             const SizedBox(height: 4),
             const Align(
               alignment: Alignment.centerLeft,
-              child: Text('待確認', style: TextStyle(fontWeight: FontWeight.w700)),
+              child: Text('待確認', style: TextStyle(fontWeight: FontWeight.w600)),
             ),
             const SizedBox(height: 8),
             ...match.gaps.map(BulletPoint.new),
@@ -1311,7 +1250,7 @@ class _DocumentCheckResultCard extends StatelessWidget {
           eyebrow: result.aiEnhanced ? 'AI 深度檢查' : '系統基本檢查',
           title: '檢查結果',
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         GlassCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1337,7 +1276,7 @@ class _DocumentCheckResultCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 14),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1358,13 +1297,13 @@ class _DocumentCheckResultCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 16),
               Text(result.summary),
             ],
           ),
         ),
         if (result.issues.isNotEmpty) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           GlassCard(
             padding: EdgeInsets.zero,
             child: ExpansionTile(
@@ -1387,7 +1326,7 @@ class _DocumentCheckResultCard extends StatelessWidget {
         ],
         if (result.suggestions.isNotEmpty ||
             result.checksPassed.isNotEmpty) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           GlassCard(
             padding: EdgeInsets.zero,
             child: ExpansionTile(
@@ -1415,7 +1354,7 @@ class _DocumentCheckResultCard extends StatelessWidget {
           ),
         ],
         if (result.extractedPreview.isNotEmpty) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           GlassCard(
             padding: EdgeInsets.zero,
             child: ExpansionTile(
@@ -1429,7 +1368,7 @@ class _DocumentCheckResultCard extends StatelessWidget {
             ),
           ),
         ],
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         Text(result.privacyNote, style: Theme.of(context).textTheme.bodySmall),
       ],
     );
@@ -1454,7 +1393,7 @@ class _IssueRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(Icons.circle, size: 8, color: color),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1463,7 +1402,7 @@ class _IssueRow extends StatelessWidget {
                   issue.title,
                   style: Theme.of(
                     context,
-                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+                  ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 if (issue.detail.isNotEmpty)
                   Text(
@@ -1491,7 +1430,7 @@ class _RewriteResultCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const ExchangeSectionHeader(eyebrow: 'AI 建議稿', title: '調整結果'),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         GlassCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1519,7 +1458,7 @@ class _RewriteResultCard extends StatelessWidget {
           ),
         ),
         if (result.warnings.isNotEmpty) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           GlassCard(
             padding: EdgeInsets.zero,
             tint: ExchangeColors.amberSoft,
@@ -1531,7 +1470,7 @@ class _RewriteResultCard extends StatelessWidget {
               leading: const ExchangeIconBadge(
                 Icons.warning_amber_rounded,
                 color: ExchangeColors.amber,
-                background: Colors.white,
+                background: ExchangeColors.blueSoft,
               ),
               title: const Text('送出前確認'),
               childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 14),
@@ -1540,7 +1479,7 @@ class _RewriteResultCard extends StatelessWidget {
           ),
         ],
         if (result.changes.isNotEmpty) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           GlassCard(
             padding: EdgeInsets.zero,
             child: ExpansionTile(
@@ -1554,7 +1493,7 @@ class _RewriteResultCard extends StatelessWidget {
             ),
           ),
         ],
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         Text(result.disclaimer, style: Theme.of(context).textTheme.bodySmall),
       ],
     );

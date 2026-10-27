@@ -63,52 +63,129 @@ function buildClockTicks() {
   g.innerHTML = Array.from({ length: 12 }, (_, i) => `<line x1="50" y1="8" x2="50" y2="${i % 3 ? 12 : 15}" transform="rotate(${i * 30} 50 50)" />`).join("");
 }
 
-// ---------------------------------------------------------------- people
+// ---------------------------------------------------------------- people, drawn as 12-pixel-wide sprites
+// Letters are colours: H hair, S skin, E eyes, T shirt, X shirt shade, P trousers, B shoes, C/c chair, K headphones,
+// R beret, G glasses. Seated staff are seen from behind; walking staff face you.
+const PAL = { E: "#1d2433", P: "#2b3550", B: "#1d2433", C: "#3a4558", c: "#262e3d", K: "#1d2433", R: "#2b2f45", G: "#1d2433" };
+const BACK = [
+  "....HHHH....",
+  "..HHHHHHHH..",
+  ".HHHHHHHHHH.",
+  ".HHHHHHHHHH.",
+  "SHHHHHHHHHHS",
+  ".HHHHHHHHHH.",
+  "..HHHHHHHH..",
+  "....SSSS....",
+  "STTTTTTTTTTS",
+  "TTTTTTTTTTTT",
+  "TTTTTTTTTTTT",
+];
+const CHAIR = [
+  "............", "............", "............", "............", "............", "............", "............",
+  "............", "............", "............", "............",
+  "CCCCCCCCCCCC",
+  "CCCCCCCCCCCC",
+  ".CCCCCCCCCC.",
+  ".cc......cc.",
+  ".cc......cc.",
+];
+const CHAIR_TOP = ["............", "............", "............", "............", "............", "............",
+  "............", "............", "............", ".CCCCCCCCCC.", "CCCCCCCCCCCC"];
+const FRONT = [
+  "....HHHH....",
+  "..HHHHHHHH..",
+  ".HHHHHHHHHH.",
+  ".HHSSSSSSHH.",
+  ".HSSSSSSSSH.",
+  ".HSSESSESSH.",
+  "..SSSSSSSS..",
+  "...SSSSSS...",
+  ".....SS.....",
+  "..TTTTTTTT..",
+  ".TTTTTTTTTT.",
+  ".STTXTTXTTS.",
+  ".STTTTTTTTS.",
+  "..TTTTTTTT..",
+  "..PPPPPPPP..",
+  "..PPP..PPP..",
+  "..PPP..PPP..",
+  "..BBB..BBB..",
+];
+const STEPS = [
+  ["..PPP..PPP..", "..PPP..PPP..", "..BBB..BBB.."],
+  ["..PPP..PPP..", "..BBB..PPP..", ".......BBB.."],
+  ["..PPP..PPP..", "..PPP..BBB..", "..BBB......."],
+];
+
+function put(rows, y, line, keep = ".") {
+  // Paint one row over another; characters in `keep` leave what is underneath.
+  if (!rows[y]) return;
+  rows[y] = [...rows[y]].map((ch, x) => (line[x] && !keep.includes(line[x]) ? line[x] : ch)).join("");
+}
+
+function styleSprite(rows, p, view) {
+  const front = view === "front";
+  const hair = p.hair;
+  if (hair === "messy") put(rows, 0, "...H.HH.H...");
+  if (hair === "bun") { put(rows, 0, ".....HH.....", ""); put(rows, 1, "...HHHHHH..."); }
+  if (hair === "curly") { put(rows, 1, ".HHHHHHHHHH."); put(rows, 2, "HHHHHHHHHHHH"); if (!front) put(rows, 6, ".HHHHHHHHHH."); }
+  if (hair === "long" || hair === "bob") {
+    const end = hair === "long" ? 11 : 7;
+    for (let y = 3; y <= end; y++) put(rows, y, front ? (y < 9 ? ".H........H." : "H..........H") : "..HHHHHHHH..");
+    if (!front && hair === "long") put(rows, 8, "S.HHHHHHHH.S", "");
+  }
+  if (hair === "ponytail" && !front) { put(rows, 7, ".....HH....."); put(rows, 8, ".....HH....."); put(rows, 9, ".....HH....."); }
+  if (hair === "cap") {
+    put(rows, 0, "....XXXX....");
+    put(rows, 1, "..XXXXXXXX..");
+    put(rows, 2, front ? "XXXXXXXXXXXX" : ".XXXXXXXXXX.");
+  }
+  if (p.accessory === "headphones") { put(rows, 1, "..KKKKKKKK.."); for (const y of [3, 4, 5]) put(rows, y, "K..........K"); }
+  if (p.accessory === "beret") { put(rows, 0, "...RRRRRR..."); put(rows, 1, ".RRRRRRRRRR."); }
+  if (p.accessory === "glasses" && front) put(rows, 5, ".HGEGSSGEGH.");
+  if (p.accessory === "hoodie") put(rows, front ? 9 : 7, front ? ".XXTTTTTTXX." : "..XXXXXXXX..");
+  return rows;
+}
+
+function pixels(rows, colors) {
+  let out = "";
+  rows.forEach((row, y) => {
+    for (let x = 0; x < row.length;) {
+      const ch = row[x];
+      let w = 1;
+      while (row[x + w] === ch) w++;
+      const fill = colors[ch] || PAL[ch];
+      if (ch !== "." && fill) out += `<rect x="${x}" y="${y}" width="${w}" height="1" fill="${fill}"/>`;
+      x += w;
+    }
+  });
+  return out;
+}
+
+function colorsFor(p, index) {
+  return { H: p.hair_color, S: SKIN[index % SKIN.length], T: p.shirt, X: shade(p.shirt, -28) };
+}
+
+// Seated at the desk, seen over the shoulder; the chair stays when they get up.
 function workerSVG(p, index) {
-  const skin = SKIN[index % SKIN.length];
-  const hair = p.hair_color;
-  const shirt = p.shirt;
-  const shortHair = `<circle cx="60" cy="41" r="21.5" fill="${hair}" />`;
-  const shapes = {
-    short: shortHair,
-    messy: `${shortHair}<path d="M44 27 L48 15 L53 25 L58 12 L63 24 L68 14 L72 27Z" fill="${hair}" />`,
-    bob: `<path d="M35 61 V44 A25 25 0 0 1 85 44 V61 Z" fill="${hair}" />`,
-    bun: `${shortHair}<circle cx="60" cy="19" r="9" fill="${hair}" />`,
-    long: shortHair,
-    ponytail: `${shortHair}<rect x="55" y="57" width="10" height="5" rx="2" fill="#e2574a" />`,
-    curly: Array.from({ length: 11 }, (_, i) => {
-      const a = (Math.PI * (i - 0.5)) / 9 + Math.PI;
-      return `<circle cx="${60 + 17 * Math.cos(a)}" cy="${42 + 17 * Math.sin(a) * 1.05}" r="8" fill="${hair}" />`;
-    }).join("") + `<circle cx="60" cy="40" r="16" fill="${hair}" />`,
-    cap: `${shortHair}<path d="M37 41 A23 23 0 0 1 83 41 Z" fill="${shirt}" /><path d="M54 41 A6 5 0 0 1 66 41" fill="none" stroke="#1d2433" stroke-width="2.5" /><circle cx="60" cy="19" r="2.5" fill="#fff" />`,
-  };
-  const over = {
-    long: `<path d="M37 44 Q34 78 44 94 L76 94 Q86 78 83 44 Z" fill="${hair}" />`,
-    ponytail: `<ellipse cx="60" cy="76" rx="7.5" ry="15" fill="${hair}" />`,
-  };
-  const acc = {
-    headphones: `<path d="M36 44 A24 24 0 0 1 84 44" fill="none" stroke="#1d2433" stroke-width="4.5" /><rect x="30" y="37" width="10" height="17" rx="4" fill="#1d2433" /><rect x="80" y="37" width="10" height="17" rx="4" fill="#1d2433" />`,
-    glasses: `<path d="M37 45 L45 44 M83 45 L75 44" stroke="#1d2433" stroke-width="2" />`,
-    beret: `<ellipse cx="63" cy="23" rx="22" ry="7" fill="#2b2f45" transform="rotate(-10 63 23)" /><rect x="61" y="13" width="3" height="5" rx="1.5" fill="#2b2f45" />`,
-    hoodie: "",
-  };
-  const hood = p.accessory === "hoodie" ? `<path d="M38 72 Q60 92 82 72 Q80 63 60 63 Q40 63 38 72Z" fill="${shade(shirt, -18)}" />` : "";
-  // Elbows out, hands on the keyboard just past the ears, so both arms show around the head.
-  const arm = (side, x1, x2) =>
-    `<g class="arm ${side}"><path d="M${x1} 78 Q${x1 + (x2 > 60 ? 6 : -6)} 50 ${x2} 22" fill="none" stroke="${shade(shirt, 12)}" stroke-width="12" stroke-linecap="round" /><circle class="hand ${side}" cx="${x2}" cy="18" r="6.5" fill="${skin}" /></g>`;
-  return `<svg viewBox="0 0 120 112" aria-hidden="true">
-    ${arm("l", 28, 31)}${arm("r", 92, 89)}
-    <path d="M14 114 C14 82 30 66 60 66 C90 66 106 82 106 114Z" fill="${shirt}" />
-    ${hood}
-    <g class="head">
-      <rect x="53" y="55" width="14" height="14" rx="4" fill="${skin}" />
-      <circle cx="38.5" cy="46" r="5" fill="${skin}" /><circle cx="81.5" cy="46" r="5" fill="${skin}" />
-      <circle cx="60" cy="44" r="21" fill="${skin}" />
-      ${shapes[p.hair] || shortHair}${acc[p.accessory] || ""}
-    </g>
-    ${over[p.hair] || ""}
-    <rect x="20" y="82" width="80" height="34" rx="14" class="chair" />
-    <rect x="26" y="85" width="68" height="7" rx="3.5" class="chair-top" />
+  const colors = colorsFor(p, index);
+  return `<svg class="px" viewBox="0 0 12 16" aria-hidden="true">
+    <g class="seat-back">${pixels(CHAIR_TOP, colors)}</g>
+    <g class="person">${pixels(styleSprite([...BACK], p, "back"), colors)}</g>
+    <g class="seat">${pixels(CHAIR, colors)}</g>
+  </svg>`;
+}
+
+function chairSVG() {
+  return `<svg class="px" viewBox="0 0 12 16" aria-hidden="true">${pixels([...CHAIR_TOP, ...CHAIR.slice(11)], {})}</svg>`;
+}
+
+// Walking, facing you: f0 stands still, f1 and f2 are the two steps.
+function walkerSVG(p, index) {
+  const colors = colorsFor(p, index);
+  const frame = (legs) => pixels(styleSprite([...FRONT.slice(0, 15), ...legs], p, "front"), colors);
+  return `<svg class="px" viewBox="0 0 12 18" aria-hidden="true">
+    <g class="f0">${frame(STEPS[0])}</g><g class="f1">${frame(STEPS[1])}</g><g class="f2">${frame(STEPS[2])}</g>
   </svg>`;
 }
 
@@ -154,10 +231,12 @@ function buildDesks(agents) {
     else host.appendChild(desk);
     updateDesk(a.id);
   });
+  setupWalkers(agents);
 }
 
 function updateDesk(id) {
   const a = S.agents.get(id);
+  if (a) window.dispatchEvent(new CustomEvent("office:agent", { detail: a }));
   const desk = $(`.desk[data-agent="${id}"]`);
   if (!a || !desk) return;
   desk.dataset.state = a.state || "idle";
@@ -173,7 +252,190 @@ function updateDesk(id) {
     tag.title = `這台電腦現在用 ${brain.label}`;
   }
   renderScreen($(".screen", desk), a.screen, id);
+  syncWalker(id);
 }
+
+// ---------------------------------------------------------------- walking around
+// Staff with nothing to do get up after a few seconds and wander the aisles: they leave their chair, walk along the
+// aisle under their row, cross between desk columns, stop by the plant, the water cooler or the coffee machine, and go
+// back to their seat as soon as work arrives.
+const FREE = new Set(["idle", "done", "waiting"]);
+const SPEED = 80; // pixels per second
+const MAX_OUT = 4; // at most this many people up at once, so the office still looks like it is working
+const EMOTES = ["☕ 休息一下", "💧 喝口水", "🌿 澆個花", "🙆 伸展一下", "👀 看看大家", "💡 想點子"];
+const W = new Map();
+
+function floorBox() {
+  return $(".floor").getBoundingClientRect();
+}
+
+function rel(rect, box) {
+  return { left: rect.left - box.left, right: rect.right - box.left, top: rect.top - box.top, bottom: rect.bottom - box.top };
+}
+
+// Aisles run under each row of desks; corridors run between the columns and along both walls.
+function floorMap() {
+  const box = floorBox();
+  const desks = [...document.querySelectorAll(".floor .desk")].map((d) => ({ el: d, ...rel(d.getBoundingClientRect(), box) }));
+  const rows = [];
+  for (const d of desks.sort((a, b) => a.top - b.top)) {
+    const row = rows.find((r) => Math.abs(r.top - d.top) < 40);
+    if (row) { row.desks.push(d); row.bottom = Math.max(row.bottom, d.bottom); }
+    else rows.push({ top: d.top, bottom: d.bottom, desks: [d] });
+  }
+  rows.forEach((row, i) => {
+    const next = rows[i + 1];
+    row.aisle = next ? (row.bottom + next.top) / 2 + 8 : Math.min(box.height - 10, row.bottom + 22);
+    row.z = (i + 1) * 10 + 6;
+    row.desks.forEach((d) => { d.el.style.zIndex = String(i * 10 + 5); d.row = row; });
+  });
+  const first = rows[0]?.desks.slice().sort((a, b) => a.left - b.left) || [];
+  const corridors = [34, ...first.slice(1).map((d, i) => (first[i].right + d.left) / 2), box.width - 34];
+  const spots = [];
+  rows.forEach((row) => row.desks.forEach((d) => spots.push({ x: (d.left + d.right) / 2 + (Math.random() - 0.5) * 40, row })));
+  const last = rows[rows.length - 1];
+  for (const prop of document.querySelectorAll(".floor .prop")) {
+    const r = rel(prop.getBoundingClientRect(), box);
+    if (last) spots.push({ x: (r.left + r.right) / 2 + (r.left < box.width / 2 ? 34 : -34), row: last, prop: true });
+  }
+  return { box, rows, corridors, spots };
+}
+
+function setupWalkers(agents) {
+  if (document.body.classList.contains("coastal")) return;
+  const layer = $("#walkers");
+  for (const w of W.values()) w.token++;
+  W.clear();
+  layer.innerHTML = "";
+  agents.forEach((a, i) => {
+    const el = document.createElement("div");
+    el.className = "walker";
+    el.hidden = true;
+    el.innerHTML = `${walkerSVG(a, i)}<span class="emote" hidden></span><span class="tag">${esc(a.name)}</span>`;
+    el.title = `${a.name}｜${a.title}：有空，四處走走`;
+    el.addEventListener("click", () => openAgent(a.id));
+    layer.appendChild(el);
+    W.set(a.id, { el, token: 0, away: false, x: 0, y: 0, timer: null });
+    syncWalker(a.id);
+  });
+}
+
+function syncWalker(id) {
+  const w = W.get(id);
+  const a = S.agents.get(id);
+  if (!w || !a || reduceMotion) return;
+  if (FREE.has(a.state || "idle")) {
+    if (!w.away && !w.timer) w.timer = setTimeout(() => { w.timer = null; wander(id); }, (w.rested ? 12000 : 4000) + Math.random() * 12000);
+  } else {
+    clearTimeout(w.timer);
+    w.timer = null;
+    if (w.away) goBack(id);
+  }
+}
+
+function seatOf(id, map) {
+  const desk = map.rows.flatMap((r) => r.desks).find((d) => d.el.dataset.agent === id);
+  if (!desk) return null;
+  const chair = rel($(".worker", desk.el).getBoundingClientRect(), map.box);
+  return { x: (chair.left + chair.right) / 2, y: chair.bottom - 6, row: desk.row };
+}
+
+function place(w, x, y, z, ms) {
+  w.el.classList.toggle("left", x < w.x - 1 ? true : x > w.x + 1 ? false : w.el.classList.contains("left"));
+  w.el.style.transitionDuration = `${ms}ms`;
+  w.el.style.transform = `translate(${x}px, ${y}px)`;
+  if (z) w.el.style.zIndex = String(z);
+  w.x = x;
+  w.y = y;
+}
+
+async function walk(w, points, token) {
+  for (const [x, y, z] of points) {
+    const ms = Math.max(60, (Math.hypot(x - w.x, y - w.y) / SPEED) * 1000);
+    w.el.classList.add("walking");
+    place(w, x, y, z, ms);
+    await sleep(ms);
+    if (w.token !== token) return false;
+  }
+  w.el.classList.remove("walking");
+  return true;
+}
+
+// From one aisle to another: along the aisle to the nearest corridor, through it, then along the other aisle.
+function route(map, from, to) {
+  if (from.row === to.row) return [[to.x, to.row.aisle, to.row.z]];
+  const mid = (from.x + to.x) / 2;
+  const corridor = map.corridors.reduce((best, c) => (Math.abs(c - mid) < Math.abs(best - mid) ? c : best), map.corridors[0]);
+  const z = Math.max(from.row.z, to.row.z);
+  return [[corridor, from.row.aisle, from.row.z], [corridor, to.row.aisle, z], [to.x, to.row.aisle, to.row.z]];
+}
+
+async function wander(id) {
+  const w = W.get(id);
+  const map = floorMap();
+  const seat = seatOf(id, map);
+  if (!w || !seat || !map.rows.length) return;
+  if ([...W.values()].filter((other) => other.away).length >= MAX_OUT) return syncWalker(id); // try again later
+  const token = ++w.token;
+  const desk = $(`.desk[data-agent="${id}"]`);
+  w.away = true;
+  w.el.style.transitionDuration = "0ms";
+  place(w, seat.x, seat.y, seat.row.z, 0);
+  w.el.hidden = false;
+  desk.classList.add("away");
+  let here = { x: seat.x, row: seat.row };
+  if (!(await walk(w, [[seat.x, seat.row.aisle, seat.row.z]], token))) return;
+  // A few stops, then back to the chair for a rest before the next stroll.
+  for (let stops = 2 + Math.floor(Math.random() * 3); stops > 0 && w.token === token; stops--) {
+    const spot = map.spots[Math.floor(Math.random() * map.spots.length)];
+    if (!(await walk(w, route(map, here, spot), token))) return;
+    here = spot;
+    const emote = $(".emote", w.el);
+    if (spot.prop || Math.random() < 0.35) {
+      emote.textContent = EMOTES[Math.floor(Math.random() * EMOTES.length)];
+      emote.hidden = false;
+    }
+    await sleep(2500 + Math.random() * 4000);
+    emote.hidden = true;
+    if (w.token !== token) return;
+  }
+  await goBack(id);
+  w.rested = true;
+  syncWalker(id);
+}
+
+async function goBack(id) {
+  const w = W.get(id);
+  const map = floorMap();
+  const seat = seatOf(id, map);
+  const token = ++w.token;
+  $(".emote", w.el).hidden = true;
+  if (seat) {
+    const here = map.rows.reduce((best, r) => (Math.abs(r.aisle - w.y) < Math.abs(best.aisle - w.y) ? r : best), map.rows[0]);
+    const path = [...route(map, { x: w.x, row: here }, { x: seat.x, row: seat.row }), [seat.x, seat.y, seat.row.z]];
+    if (!(await walk(w, path.map(([x, y, z]) => [x, y, z]), token))) return;
+  }
+  w.away = false;
+  w.el.hidden = true;
+  $(`.desk[data-agent="${id}"]`)?.classList.remove("away");
+}
+
+// A resized window moves every desk, so everyone sits back down and starts over.
+let resizeTimer;
+addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    for (const [id, w] of W) {
+      w.token++;
+      w.away = false;
+      w.el.hidden = true;
+      clearTimeout(w.timer);
+      w.timer = null;
+      $(`.desk[data-agent="${id}"]`)?.classList.remove("away");
+      syncWalker(id);
+    }
+  }, 300);
+});
 
 // ---------------------------------------------------------------- monitors
 function renderScreen(el, screen, id, big = false) {
@@ -247,6 +509,8 @@ function typeInto(el, text, key) {
 
 // ---------------------------------------------------------------- paper flights
 async function fly(from, to, label) {
+  window.dispatchEvent(new CustomEvent("office:handoff", { detail: { from, to, label } }));
+  if (document.body.classList.contains("world-ready") && !$("#flat-office").open) return;
   const src = $(`.desk[data-agent="${from}"] .monitor`);
   const dst = $(`.desk[data-agent="${to}"] .monitor`);
   if (!src || !dst) return;
@@ -373,7 +637,8 @@ function previewHTML(d) {
     return `<p class="sub"><b>@${esc(p.username || "訪客")} 的留言</b>\n${esc(p.comment_text)}</p><p class="post" style="margin-top:8px">${esc(p.text)}</p>`;
   }
   if (d.channel === "threads") {
-    return `<p class="post">${esc(p.text)}</p><p class="sub"><b>第一則留言</b>\n${esc(p.first_reply)}</p><p class="sub">主題標籤：${esc(p.topic_tag)}${p.source_url ? `｜<a href="${esc(p.source_url)}" target="_blank" rel="noopener">官方來源</a>` : ""}</p>`;
+    const card = m.image ? `<div class="thumbs"><button type="button" data-zoom="${media(m.image)}"><img src="${media(m.image)}" alt="Threads 配圖" loading="lazy" /></button></div>` : "";
+    return `${card}<p class="post">${esc(p.text)}</p><p class="sub"><b>第一則留言</b>\n${esc(p.first_reply)}</p><p class="sub">主題標籤：${esc(p.topic_tag)}${p.source_url ? `｜<a href="${esc(p.source_url)}" target="_blank" rel="noopener">官方來源</a>` : ""}</p>`;
   }
   if (d.format === "carousel") {
     const thumbs = (m.images || []).map((r) => `<button type="button" data-zoom="${media(r)}"><img src="${media(r)}" alt="輪播圖" loading="lazy" /></button>`).join("");
@@ -489,7 +754,7 @@ function renderLog() {
 function renderChat() {
   const host = $("#chat");
   if (!S.chat.length) {
-    host.innerHTML = `<li class="msg chief"><p>我是總管 Leo。你直接跟我說要做什麼就好：開工、問進度、請某位同事重寫某一則（用審核匣上的 #編號）、加做一則、改發文時間，或記給明天的企劃。核准和發文還是由你自己按。</p></li>`;
+    host.innerHTML = `<li class="msg chief"><p>我是總管 Leo。你直接跟我說要做什麼就好：開工、問進度、請某位同事重寫某一則（用審核匣上的 #編號）、加做一則、改發文時間、記給明天的企劃，也可以換同事用的 AI，或新增一位同事交代他做事。核准和發文還是由你自己按。</p></li>`;
     return;
   }
   host.innerHTML = S.chat.map((m) => {
@@ -533,7 +798,7 @@ function openAgent(id) {
   const roles = id === "strategist" ? [["research", "查資料"], ["strategist", "企劃"]] : [[id, ""]];
   const chains = roles
     .filter(([role]) => S.settings.brains?.[role])
-    .map(([role, what]) => `${what ? `${what}：` : ""}${S.settings.brains[role][0]}${S.settings.brains[role].length > 1 ? `（不行時改用 ${S.settings.brains[role].slice(1).join(" → ")}）` : ""}`);
+    .map(([role, what]) => `${what ? `${what}：` : ""}${S.settings.tuning?.[role] || S.settings.brains[role][0]}${S.settings.brains[role].length > 1 ? `（不行時改用 ${S.settings.brains[role].slice(1).join(" → ")}）` : ""}`);
   $("#agent-card-body").innerHTML = `<h2>${esc(a.name)}｜${esc(a.title)}</h2><p class="duty">${esc(a.duty)}</p>
     ${chains.length ? `<p class="duty">這台電腦用 ${esc(chains.join("；"))}</p>` : ""}
     <div class="big-screen"></div>
@@ -548,6 +813,7 @@ function upsertDraft(d) {
   renderBoss();
   renderBoard(d.id);
   renderPanel();
+  window.dispatchEvent(new Event("office:sync"));
 }
 
 const queue = [];
@@ -597,6 +863,10 @@ function apply(e) {
     }
     case "handoff":
       return queue.length > 40 ? 0 : fly(e.agent, e.to, e.message);
+    case "staff":
+      // Someone joined or left: redraw the floor with the new set of desks.
+      toast(e.message);
+      return load();
     case "draft":
       upsertDraft(e.draft);
       return 80;
@@ -657,6 +927,8 @@ async function load() {
   renderPanel();
   renderChat();
   $("#run-btn").disabled = S.busy;
+  tickClock();
+  window.dispatchEvent(new Event("office:sync"));
   return true;
 }
 
@@ -736,8 +1008,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   $("#chat-chips").addEventListener("click", (e) => e.target.closest("button") && sendChat(e.target.textContent));
   $("#chat").addEventListener("click", (e) => e.target.closest("[data-draft]") && showDraft(e.target.closest("[data-draft]").dataset.draft));
   $("#run-btn").addEventListener("click", startDay);
+  $(".boss .worker").innerHTML = chairSVG();
   const boss = $('.desk[data-agent="boss"]');
   boss.addEventListener("click", () => openAgent("boss"));
   boss.addEventListener("keydown", (e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), openAgent("boss")));
-  if (await load()) connect();
+  const fallback = (message) => {
+    document.body.classList.remove("world-ready");
+    document.body.classList.add("world-unavailable");
+    $("#world-status").textContent = message || "這個瀏覽器無法顯示 3D，請使用下方平面工作台。";
+    $("#flat-office").open = true;
+  };
+  let loaded = false;
+  try {
+    loaded = await load();
+  } catch (error) {
+    console.warn("office state unavailable:", error);
+    $("#staff-total").textContent = "連不上辦公室：確認 uv run office serve 還開著，再按 Ctrl+F5 重新整理";
+    fallback(`連不上辦公室（${String(error.message || error).slice(0, 60)}）`);
+  }
+  window.officeStarted = true;
+  if (loaded) {
+    connect();
+    // A 3D scene that never answers (a stuck module, a blocked GPU) should still leave a way to work.
+    const watchdog = setTimeout(() => fallback("3D 辦公室載入太久了：按 Ctrl+F5 重新整理，或先用下方平面工作台。"), 20000);
+    if (new URLSearchParams(location.search).has("flat")) {
+      clearTimeout(watchdog);
+      fallback("已關閉 3D（網址有 ?flat），用平面工作台。");
+      return;
+    }
+    import("/static/office-world.js").then(module => module.initOfficeWorld({ getState: () => S, openAgent, fallback }))
+      .catch(error => { console.warn("3D office unavailable:", error); fallback(); })
+      .finally(() => clearTimeout(watchdog));
+  }
 });
