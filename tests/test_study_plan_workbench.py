@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import subprocess
 from pathlib import Path
 
 from fastapi.testclient import TestClient
@@ -127,3 +129,52 @@ def test_social_media_launch_drafts_and_frontend_contract_for_action3() -> None:
     assert "loadStudyPlanWorkbench" in js
     assert "data-writing-a4-pages" in js
     assert "data-insert-partner-courses" in js
+
+
+def test_study_plan_hub_and_assistant_render_the_six_steps_the_api_sends() -> None:
+    """The page renders the workbench payload as the API returns it.
+
+    The six writing steps arrive as models.StudyPlanSixStepSection (`heading`, `recommended_min_chars`,
+    `recommended_max_chars`, `anti_cliche_warning`). Reading fields the API does not send threw while rendering,
+    which left the hub on its loading text and made every later account sync report 同步失敗.
+    """
+    payload = TestClient(create_app()).get("/application-center/study-plan-workbench", params={"school": "cgu"}).json()
+    script = r"""
+    const assert = require("node:assert/strict"), fs = require("node:fs");
+    const source = fs.readFileSync(process.argv[1], "utf8");
+    const payload = JSON.parse(fs.readFileSync(0, "utf8"));
+    const take = (name) => (source.match(new RegExp("^function " + name + "\\([^]*?^}", "m")) || [""])[0];
+    const hub = { innerHTML: "" }, assistant = { innerHTML: "", hidden: true };
+    const $ = (selector) => selector === "#study-plan-anti-pitfall-hub" ? hub : assistant;
+    const state = { studyPlanWorkbench: payload, studyPlanActiveStepNumber: 1, studyPlanSandboxText: "" };
+    const activeHomeSchool = () => payload.school_name;
+    const applicationDocumentGenerationEnabled = () => true;
+    const renderPartnerCourseLookupCard = () => "";
+    const updateStudyPlanSandboxCounter = () => {};
+    const initIcons = () => {};
+    for (const name of ["escapeHtml", "applicationNumber", "studyPlanStepShortTitle", "studyPlanStepLength",
+      "renderStudyPlanAntiPitfallHub", "renderWorkbenchStudyPlanAssistant"]) eval(take(name));
+
+    renderStudyPlanAntiPitfallHub();
+    const first = payload.six_step_guide[0];
+    assert.match(hub.innerHTML, /data-study-plan-step-select="6"/);
+    assert.ok(hub.innerHTML.includes(`<strong>${escapeHtml(first.heading)}</strong>`), "the open step shows its heading");
+    assert.ok(hub.innerHTML.includes(escapeHtml(first.anti_cliche_warning)), "the open step shows its warning");
+    assert.ok(hub.innerHTML.includes(`建議篇幅：${first.recommended_min_chars}–${first.recommended_max_chars} 字`));
+    assert.ok(!hub.innerHTML.includes("undefined"));
+
+    renderWorkbenchStudyPlanAssistant({ id: "study-plan" });
+    assert.equal(assistant.hidden, false);
+    assert.equal((assistant.innerHTML.match(/data-workbench-jump-field=/g) || []).length, 6);
+    assert.ok(assistant.innerHTML.includes("<strong>申請動機</strong>"), "pills drop the 第 N 段 prefix and the note in brackets");
+    assert.ok(assistant.innerHTML.includes("不設建議字數"), "a step without a suggested length says so");
+    assert.ok(!assistant.innerHTML.includes("undefined"));
+    """
+    result = subprocess.run(
+        ["node", "-e", script, str(ROOT_DIR / "src" / "exchange_info" / "static" / "app.js")],
+        input=json.dumps(payload),
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+    )
+    assert result.returncode == 0, result.stderr
