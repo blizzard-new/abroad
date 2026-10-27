@@ -1,30 +1,56 @@
 # Editorial intentions and next topics
 
-## 2026-10-25 每日批次：兩篇（待審）
+## 2026-10-26 每日批次：兩篇（待審）
 
-日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261025`，基於 main `252f633c`；兩篇同屬 [PR #132](https://github.com/blizzard-new/abroad/pull/132)，待審、未合併。已讀 main 十九篇、所有待審 PR #119／#122／#126／#127／#131 及當日分支／PR；開始前沒有另一個 10/25 批次。PR #119、#122 的四題均視為已選並排除，本批不依賴其合併。PR #78、#92、#117 已合併。
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261026`，基於 main `252f633c`；兩篇同屬 [PR #133](https://github.com/blizzard-new/abroad/pull/133)，待審、未合併。已讀 main 十九篇、所有待審 PR #119／#122／#126／#127／#131／#132，以及當日分支／PR；開始前沒有另一個 10/26 批次。#119、#122、#132 的六題均視為已選並排除，本批不依賴其合併。基礎 #78、流程 #92 已合併。
 
-選題為使用者候選 19 與 12，依編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。
+選題為使用者候選 7 與 11，依編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。
 
 | 題目 | slug | 狀態 |
 | --- | --- | --- |
-| 托福滿分目標怎麼準備？2026 新制題型、6 分制與練習計畫 | `toefl-ibt-preparation` | PR #132 待審，驗收完成；後續批次請排除 |
-| 交換返國後要做什麼？文件繳交、學習成果與下學期安排清單 | `exchange-return-checklist` | PR #132 待審，驗收完成；後續批次請排除 |
+| 交換獎學金核定後要做什麼？在外義務、研修變更與證據追蹤表 | `exchange-scholarship-obligations` | PR #133 待審，驗收完成；後續批次請排除 |
+| 預算有限怎麼規劃交換？資金上限、三方案取捨與可行性檢查 | `exchange-limited-budget` | PR #133 待審，驗收完成；後續批次請排除 |
 
-托福篇處理新制版本與任務準備，與一般英文、多益及申請語言資格分工；返國篇處理多窗口交接、成果與下學期規劃，原有抵免指南保留課程對照與正式材料。未改動既有十九篇內容、URL、出版日與 lastmod。[來源、圖片與驗收紀錄](seo-editorial-validation-2026-10-25.md) 隨本批保存。
+補助篇處理已核定、仍在外研修時的條件／變動／證據管理，原有 `exchange-scholarships` 保留查找、申請與初步撥款概覽；待審返國篇處理研修結束後交接。有限預算篇以固定資源與必要學習條件篩選三個方案，原有 `exchange-budget` 保留如何列帳、估總額與排付款，待審通勤篇保留路線／費用／時間比較。不是另建一份獎助申請清單、國家行情或相同預算公式頁。既有十九篇內容、URL、出版日與 lastmod 不變。[來源、圖片與驗收紀錄](seo-editorial-validation-2026-10-26.md) 隨本批保存。
 
-## 2026-10-23／24 待審批次（不屬本批內容）
+### 20 個候選的覆蓋與後續限制（2026-10-26 查核）
 
-以下於 2026-10-25 核對仍待審，不因尚未進入 main 而重做：
+| 候選 | 已有／處理位置 | 狀態 |
+| --- | --- | --- |
+| 1 一學期／一學年 | `exchange-semester-or-year` | main 已有 |
+| 2 交換／訪問／自費 | `exchange-versus-visiting` | main 已有 |
+| 3 推薦信 | `exchange-recommendation-letter` | main 已有 |
+| 4 英語授課判讀 | `english-taught-exchange-courses` | PR #119 待審 |
+| 5、18 一般／AI 英文面試 | `exchange-interview-practice` | 整併於 PR #122 待審 |
+| 6 抵達第一週 | `exchange-arrival-week` | main 已有 |
+| 7 交換期間獎助義務 | `exchange-scholarship-obligations` | PR #133 待審，後續排除 |
+| 8 衝堂與改選 | `exchange-course-changes` | PR #119 待審 |
+| 9 Fact Sheet | `exchange-fact-sheet` | main 已有 |
+| 10 住宿通勤比較 | `exchange-housing-commute` | PR #122 待審 |
+| 11 有限預算取捨 | `exchange-limited-budget` | PR #133 待審，後續排除 |
+| 12 返國交接與成果 | `exchange-return-checklist` | PR #132 待審 |
+| 13 AI 讀書計畫 | 優先擴充 `exchange-study-plan` | 尚待實作；保留原 URL，不另建近似頁 |
+| 14 AI 自介 | `ai-self-introduction` | main 已有 |
+| 15 三工具比較 | 需 Claude／ChatGPT／Gemini 同任務實測及版本／方案紀錄 | 尚無可核對比較證據；不能用推測結果產文 |
+| 16 自然寫作 Prompt | `natural-writing-prompts` | main 已有 |
+| 17 AI 英文學習 | `ai-english-learning` | main 已有 |
+| 19 托福準備 | `toefl-ibt-preparation` | PR #132 待審 |
+| 20 多益聽讀 | `toeic-listening-reading-preparation` | main 已有 |
+
+本批之後，原候選池沒有另外兩個已具備條件、可直接新增網址的題目。候選 13 是既有文擴充，候選 15 必須取得可核對的實測後再評估。下一批仍先查 main／所有待審 PR 與新提供資料；若沒有新的獨立候選或比較證據，應回報候選不足，不重做本表題目或把一項擴充分拆成兩個近似頁。這是目前的編輯盤點，不是永久排除新資料或改變每日排程。
+
+## 2026-10-23／24／25 待審批次（不屬本批內容）
+
+以下於 2026-10-26 核對仍待審，不因尚未進入 main 而重做：
 
 | 日期／PR | slug | 已選方向 |
 | --- | --- | --- |
-| 10/23 [PR #119](https://github.com/blizzard-new/abroad/pull/119) | `english-taught-exchange-courses` | 英語授課課程判讀與試讀 |
-| 10/23 PR #119 | `exchange-course-changes` | 衝堂、停開與改選追蹤 |
-| 10/24 [PR #122](https://github.com/blizzard-new/abroad/pull/122) | `exchange-interview-practice` | 一般面試／AI 英文面試候選 5、18 整併 |
-| 10/24 PR #122 | `exchange-housing-commute` | 住宿通勤時間與總成本 |
-
-後續仍需先評估重疊：候選 13 優先擴充 `exchange-study-plan`；候選 11 與預算指南、候選 7 與補助指南的分工需逐次判斷。候選 15 必須有可核對的實際工具比較測試，未達此條件不得用品牌近似頁或推測成果補數。
+| 10/23 [PR #119](https://github.com/blizzard-new/abroad/pull/119) | `english-taught-exchange-courses` | 英語課程判讀 |
+| 10/23 PR #119 | `exchange-course-changes` | 衝堂／停開／改選 |
+| 10/24 [PR #122](https://github.com/blizzard-new/abroad/pull/122) | `exchange-interview-practice` | 候選 5、18 整併 |
+| 10/24 PR #122 | `exchange-housing-commute` | 住宿通勤取捨 |
+| 10/25 [PR #132](https://github.com/blizzard-new/abroad/pull/132) | `toefl-ibt-preparation` | 2026 新制托福準備 |
+| 10/25 PR #132 | `exchange-return-checklist` | 返國交接與學習成果 |
 
 ## 2026-10-22 每日批次：兩篇（已合併）
 
