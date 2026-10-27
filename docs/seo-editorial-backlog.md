@@ -1,26 +1,30 @@
 # Editorial intentions and next topics
 
-## 2026-10-24 每日批次：兩篇（待審）
+## 2026-10-25 每日批次：兩篇（待審）
 
-日期採 Asia/Taipei。開始核對時為 UTC 2026-10-23 23:56，台灣已是 2026-10-24，因此另開隔離分支 `codex/seo-daily-20261024`，不重做 10/23 批次。已讀 main 十九篇、待審 PR #119／#121 及當日分支／PR；開始前沒有另一個 10/24 批次。PR #78、#92、#117 均已合併，本批直接基於 main `ca98d5c3`；#119 的兩篇視為已選並排除，不依賴其合併。
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261025`，基於 main `252f633c`；兩篇同屬 [PR #132](https://github.com/blizzard-new/abroad/pull/132)，待審、未合併。已讀 main 十九篇、所有待審 PR #119／#122／#126／#127／#131 及當日分支／PR；開始前沒有另一個 10/25 批次。PR #119、#122 的四題均視為已選並排除，本批不依賴其合併。PR #78、#92、#117 已合併。
 
-本批兩篇驗收完成，一起放入新的待審 [PR #122](https://github.com/blizzard-new/abroad/pull/122)。依使用者候選池及編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。候選 5 與 18 整併成一篇面試問答練習，候選 10 成為另一篇獨立住房取捨問題。
+選題為使用者候選 19 與 12，依編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。
 
 | 題目 | slug | 狀態 |
 | --- | --- | --- |
-| 交換面試怎麼準備？英文追問、模擬題與 AI 練習 Prompt | `exchange-interview-practice` | 完成，PR #122 待審；面試候選 5／18 後續請整併排除 |
-| 交換住宿離學校多遠才合適？通勤時間與整期總成本比較表 | `exchange-housing-commute` | 完成，PR #122 待審；後續批次請排除 |
+| 托福滿分目標怎麼準備？2026 新制題型、6 分制與練習計畫 | `toefl-ibt-preparation` | PR #132 待審，驗收完成；後續批次請排除 |
+| 交換返國後要做什麼？文件繳交、學習成果與下學期安排清單 | `exchange-return-checklist` | PR #132 待審，驗收完成；後續批次請排除 |
 
-面試篇聚焦問答、追問、訂正與重答，既有自介指南保留自介版本及排版；通勤篇聚焦地點選擇、完整路程及費用／時間取捨，既有住宿及預算指南保留契約交接與全程資金規劃。未改動既有十九篇內容、URL、出版日與 lastmod。[來源、圖片與驗收紀錄](seo-editorial-validation-2026-10-24.md) 隨本批保存。
+托福篇處理新制版本與任務準備，與一般英文、多益及申請語言資格分工；返國篇處理多窗口交接、成果與下學期規劃，原有抵免指南保留課程對照與正式材料。未改動既有十九篇內容、URL、出版日與 lastmod。[來源、圖片與驗收紀錄](seo-editorial-validation-2026-10-25.md) 隨本批保存。
 
-## 2026-10-23 每日批次：兩篇（待審，非本批內容）
+## 2026-10-23／24 待審批次（不屬本批內容）
 
-[PR #119](https://github.com/blizzard-new/abroad/pull/119)、分支 `codex/seo-daily-20261023` 於 2026-10-24 核對仍待審。即使尚未進入 main，也視為已選題，不跨日重做。
+以下於 2026-10-25 核對仍待審，不因尚未進入 main 而重做：
 
-| 題目方向 | slug | 狀態 |
+| 日期／PR | slug | 已選方向 |
 | --- | --- | --- |
-| 英語授課課程判讀與試讀 | `english-taught-exchange-courses` | PR #119 待審 |
-| 交換課程衝堂與變更追蹤 | `exchange-course-changes` | PR #119 待審 |
+| 10/23 [PR #119](https://github.com/blizzard-new/abroad/pull/119) | `english-taught-exchange-courses` | 英語授課課程判讀與試讀 |
+| 10/23 PR #119 | `exchange-course-changes` | 衝堂、停開與改選追蹤 |
+| 10/24 [PR #122](https://github.com/blizzard-new/abroad/pull/122) | `exchange-interview-practice` | 一般面試／AI 英文面試候選 5、18 整併 |
+| 10/24 PR #122 | `exchange-housing-commute` | 住宿通勤時間與總成本 |
+
+後續仍需先評估重疊：候選 13 優先擴充 `exchange-study-plan`；候選 11 與預算指南、候選 7 與補助指南的分工需逐次判斷。候選 15 必須有可核對的實際工具比較測試，未達此條件不得用品牌近似頁或推測成果補數。
 
 ## 2026-10-22 每日批次：兩篇（已合併）
 
