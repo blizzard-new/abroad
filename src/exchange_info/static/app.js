@@ -8674,7 +8674,7 @@ function syncPartnerView() {
   if (partnerMapLoadPromise || partnerMapLoadFailed) return;
   showPartnerMapStatus("正在準備你的世界地圖", "首次載入需要一點時間。", { loading: true });
   const generation = partnerMapGeneration;
-  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261011-integration-1&attempt=${generation}`)
+  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261027-map-2&attempt=${generation}`)
     .then((module) => module.createPartnerMap({ renderPreview: renderMapPreview, onSchoolSelect: loadDiscoveryPreview, onList: () => setPartnerView("list"), onRetry: retryPartnerMap, onIcons: initIcons, freshEngine: generation > 0 }))
     .then((controller) => {
       if (generation !== partnerMapGeneration) { controller.destroy(); return; }
@@ -8912,6 +8912,8 @@ function renderPartnerTable() {
 
   if (!partners.length) {
     renderEmpty("#partner-table", catalogueSourceUnavailable() ? "合作校來源暫不可用" : "沒有符合的學校", catalogueSourceUnavailable() ? "尚無可用的歷次資料，請稍後重新讀取或前往官方來源確認。" : "調整國家、學院、學制或關鍵字後再試一次。");
+    // An empty list should say how to get schools back, not only that there are none.
+    if (!catalogueSourceUnavailable()) $("#partner-table .product-state")?.insertAdjacentHTML("beforeend", '<button type="button" class="secondary-button pr-empty-clear" data-partner-clear-all>清除所有條件</button>');
     $("#show-more-partners").hidden = true;
     if (window.location.hash === "#partners") writePartnerUrl();
     syncPartnerView();
@@ -8960,6 +8962,16 @@ function partnerCardFoot(item) {
     : `<span>截止日請依官方公告</span>`;
 }
 
+// The language requirement the detail page shows, on the card, so comparing schools does not mean opening each one.
+// Only what the catalogue already says; a school that does not say gets "依官方公告" instead of a guess.
+function partnerCardLanguage(item) {
+  const text = partnerLanguageRequirement(item);
+  const known = Boolean(text) && !/未明確標示/.test(text);
+  // Some sources open with the label the card already prints ("語文要求："); the full wording stays in the tooltip.
+  const shown = known ? text.replace(/^(?:語文|語言)(?:要求|門檻)\s*[：:]\s*/, "") : "";
+  return `<span class="pr-card-lang"><b>語言</b><span${known ? ` title="${escapeHtml(text)}"` : ""}>${known ? escapeHtml(shown) : "依官方公告"}</span></span>`;
+}
+
 function renderPartnerCard(item) {
   const availability = partnerAvailabilityMeta(item);
   const period = localizedPartnerValue(item, "study_period", "study_period");
@@ -9006,6 +9018,7 @@ function renderPartnerCard(item) {
         ${renderPartnerMatchExplanation(match)}
         ${discoveryMatchBadge(item)}
         <div class="pr-tags">${partnerCardTags(item).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
+        ${partnerCardLanguage(item)}
         <span class="pr-card-foot">${partnerCardFoot(item)}</span>
       </div>
     </article>`;
@@ -12112,7 +12125,7 @@ function renderVerifiedWindowRetentionHook(card, { compact = false } = {}) {
           <span class="verified-hook-pill"><i data-lucide="bell-ring" aria-hidden="true"></i>零失誤期限提醒</span>
           <span class="verified-hook-countdown">${escapeHtml(countdownText)}</span>
         </div>
-        <h4>進站第一步：一鍵把「${escapeHtml(card.short_name)}截止日＋${card.subtasks.length} 項支線任務」匯入行事曆或 LINE</h4>
+        <h3>進站第一步：一鍵把「${escapeHtml(card.short_name)}截止日＋${card.subtasks.length} 項支線任務」匯入行事曆或 LINE</h3>
         <p>不必先註冊登入。匯入後自動建立 T-14、T-7、T-3、T-1 與截止當日提醒，每一筆日曆事件均附官方 HTTPS 來源連結與最後查核日期（${escapeHtml(card.online_deadline.last_checked_at)}）。</p>
       </div>
       <div class="verified-hook-actions">

@@ -154,7 +154,7 @@ html[data-theme="dark"] .pr-map-host, .pr-map-band .pr-map-host { --map-land: #2
 .pr-tile-body { display: flex; flex: 1; flex-direction: column; gap: 12px; min-width: 0; }
 .pr-tile-body > .pr-link { margin-top: auto; padding-top: 4px; }
 .pr-tile-note { color: var(--uw-muted); font-size: 12px; font-weight: 700; letter-spacing: .02em; }
-.pr-tile-fine { color: var(--uw-muted); font-size: 11px; line-height: 1.6; }
+.pr-tile-fine { color: var(--uw-muted); font-size: 12px; line-height: 1.6; }
 .pr-tile-empty { display: grid; gap: 10px; justify-items: start; padding: 14px 16px; border: 1px dashed var(--uw-line-strong); border-radius: 14px; color: var(--uw-muted); font-size: 13px; line-height: 1.7; }
 .pr-tile-empty p { margin: 0; color: var(--uw-muted); font-size: 13px; }
 .pr-tile-empty .pr-link { padding: 0; border: 0; background: none; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
@@ -1143,7 +1143,7 @@ body.unified-shell[data-school-selected="false"]:has(:where(#dashboard-view):not
   border-radius: 999px; background: color-mix(in srgb, var(--glass-coral) 16%, transparent);
   color: var(--glass-coral); font-size: 12px; font-weight: 800;
 }
-.verified-hook-copy-block h4 { margin: 0; font-size: 16px; font-weight: 800; color: var(--uw-navy); }
+.verified-hook-copy-block h3 { margin: 0; font-size: 16px; font-weight: 800; color: var(--uw-navy); }
 .verified-hook-copy-block p { margin: 0; font-size: 13px; color: var(--uw-muted); line-height: 1.55; }
 .verified-hook-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .verified-hook-btn {
@@ -1252,3 +1252,86 @@ body.unified-shell[data-school-selected="false"]:has(:where(#dashboard-view):not
   .verified-window-card { padding: 18px; }
 }
 
+
+/* ==========================================================================================================
+   Search-first redesign (2026-10-27)
+   ========================================================================================================== */
+
+/* Short confirmations ("已加入選校清單") float over the page instead of sitting in the flow. In the public modes
+   uniway.css made #page-status a relative block, so each one pushed the page down and covered the heading.
+   A persistent error keeps its banner in the flow, where it cannot be missed. */
+body.unified-shell.global-home-mode #page-status:has(> .status-message:not(.error)),
+body.unified-shell.public-exploration-mode #page-status:has(> .status-message:not(.error)) {
+  position: fixed; z-index: 60; top: auto; right: auto; left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+  width: max-content; max-width: min(520px, calc(100vw - 32px));
+  transform: translateX(-50%); pointer-events: none;
+}
+body.unified-shell.global-home-mode #page-status > .status-message,
+body.unified-shell.public-exploration-mode #page-status > .status-message { pointer-events: auto; }
+/* With the compare tray showing, the confirmation sits above it instead of on top of it. */
+body.unified-shell:has(#partner-compare-tray:not([hidden])) #page-status:has(> .status-message:not(.error)) {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 96px);
+}
+
+/* Home: the search desk. It reuses the explore page's .pr-field and .pr-search-button, so the bar a student fills in on
+   the home page is the bar they find again on the search page. It is a little wider than the copy column and runs
+   into the empty upper part of the collage column; the plan card sits at the bottom of that column. */
+.pr-hero-copy { position: relative; z-index: 3; }
+.pr-desk { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr) minmax(0, .85fr) minmax(0, .95fr) auto; gap: 10px; width: min(60cqi, 840px); margin-top: clamp(20px, 3.4svh, 36px); }
+#home-landing .pr-desk .pr-field { min-height: 64px; padding: 10px 16px; border-radius: 16px; box-shadow: 0 10px 28px #42627d1f; }
+#home-landing .pr-desk .pr-field-body :is(input, select, strong) { display: block; width: 100%; min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--uw-navy); font: inherit; font-size: 15px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; box-shadow: none; }
+#home-landing .pr-desk .pr-field-body input::placeholder { color: var(--uw-muted); font-weight: 500; }
+#home-landing .pr-desk .pr-field-body select { cursor: pointer; }
+#home-landing .pr-desk .pr-field:focus-within { outline: 2px solid var(--uw-blue); outline-offset: 3px; }
+#home-landing .pr-desk .pr-field :is(input, select):focus-visible { outline: 0; }
+body.unified-shell .pr-desk-school { width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+body.unified-shell .pr-desk-school:focus-visible { outline: 2px solid var(--uw-blue); outline-offset: 3px; }
+#home-landing .pr-desk .pr-desk-school [data-empty] { color: var(--glass-coral-strong); }
+#home-landing .pr-desk .pr-field-body small { font-size: 12px; }
+.pr-desk-caret { display: inline-flex; color: var(--uw-muted); }
+.pr-desk-caret .lucide { width: 16px; height: 16px; }
+body.unified-shell #home-landing .pr-desk .pr-search-button { min-height: 64px; padding: 0 26px; border-radius: 16px; box-shadow: 0 10px 28px #a83c3938; }
+.pr-desk-live { display: flex; align-items: center; gap: 9px; min-height: 24px; margin: 16px 2px 0; color: var(--uw-text); font-size: 14px; font-weight: 600; line-height: 1.5; }
+.pr-desk-live::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--uw-blue-strong); }
+.pr-desk-live:empty { display: none; }
+.pr-desk-regions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.pr-desk-regions[hidden] { display: none; }
+.pr-desk-label { margin-right: 2px; color: var(--uw-muted); font-size: 13px; font-weight: 700; }
+body.unified-shell .pr-desk-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border: 1px solid var(--glass-edge); border-radius: 999px; background: var(--glass-strong); color: var(--uw-navy); font: inherit; font-size: 14px; font-weight: 700; box-shadow: none; cursor: pointer; }
+body.unified-shell .pr-desk-chip:hover { border-color: var(--uw-blue); color: var(--uw-blue-strong); }
+.pr-desk-chip b { color: var(--uw-muted); font-weight: 700; }
+/* The guide and the social links stay, quieter: finding a school is the first thing on the screen. */
+.pr-hero .pr-guide-entry { margin-top: 14px; }
+.pr-hero-socials { gap: 0 16px; margin-top: 2px; }
+.pr-hero .pr-social-pill { padding: 8px 2px; border-color: transparent; background: transparent; box-shadow: none; font-weight: 600; }
+.pr-hero .pr-social-pill:hover { background: transparent; transform: none; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 1180px) {
+  .pr-desk { width: 100%; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pr-desk-school { grid-column: 1 / 3; }
+  .pr-desk-dest { grid-column: 3 / 5; }
+  .pr-desk .pr-search-button { grid-column: 3 / 5; }
+}
+@media (max-width: 700px) {
+  .pr-desk { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pr-desk-school, .pr-desk-dest, .pr-desk .pr-search-button { grid-column: 1 / -1; }
+}
+
+/* Search: the card says the language requirement; an empty list says how to get schools back; on a phone the term and
+   language fields sit at the top of the 篩選 drawer (see placeTiles in platform-explore.js). */
+.pr-card-lang { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; color: var(--uw-text); font-size: 13px; line-height: 1.5; }
+.pr-card-lang b { flex: none; color: var(--uw-muted); font-weight: 700; }
+.pr-card-lang span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+body.unified-shell #partners.pr-explore .pr-empty-clear { margin-top: 14px; }
+.pr-facet-tiles { display: grid; gap: 8px; margin: 4px 0 14px; }
+.pr-facet-tiles .pr-field-icon { display: none; }
+
+/* Map view on a phone or tablet: the map comes first. Sorting means nothing on a map, and the filters and tools follow it. */
+@media (max-width: 900px) {
+  #partners.pr-explore:has([data-partner-view="map"][aria-pressed="true"]) #partner-sort-tabs { display: none; }
+  #partners.pr-explore:has([data-partner-view="map"][aria-pressed="true"]) .journey-search-layout { display: flex; flex-direction: column; }
+  #partners.pr-explore:has([data-partner-view="map"][aria-pressed="true"]) .journey-search-results { display: contents; }
+  #partners.pr-explore:has([data-partner-view="map"][aria-pressed="true"]) #partner-map-panel { order: 0; }
+  #partners.pr-explore:has([data-partner-view="map"][aria-pressed="true"]) .pr-facets { order: 1; }
+  #partners.pr-explore:has([data-partner-view="map"][aria-pressed="true"]) .journey-search-results > :not(#partner-map-panel) { order: 2; }
+}

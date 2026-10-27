@@ -11,15 +11,15 @@
     <title>UniWay｜交換學生申請、合作學校與選校資訊</title>
     <!-- seo-head -->
     <link rel="stylesheet" href="/static/styles.css?v=20261013-notification-rail-1" />
-    <link rel="stylesheet" href="/static/design-system.css?v=20260716-platform-12" />
+    <link rel="stylesheet" href="/static/design-system.css?v=20261027-contrast-1" />
     <link rel="stylesheet" href="/static/platform.css?v=20261013-school-picker-1" />
     <link rel="stylesheet" href="/static/react-aria-school-picker.css?v=20261016-lattice-1" />
     <link rel="stylesheet" href="/static/product-v2.css?v=20261017-writing-guide-1" />
     <link rel="stylesheet" href="/static/icon-motion.css?v=20260820-icon-motion-1" />
-    <link rel="stylesheet" href="/static/mascot.css?v=20261015-redesign-1" />
+    <link rel="stylesheet" href="/static/mascot.css?v=20261027-cls-1" />
     <link rel="stylesheet" href="/static/advisor-mascot.css?v=20261015-redesign-1" />
-    <link rel="stylesheet" href="/static/uniway.css?v=20260820-uniway-1" />
-    <link rel="stylesheet" href="/static/partner-map.css?v=20261011-integration-3" />
+    <link rel="stylesheet" href="/static/uniway.css?v=20261027-foundation-1" />
+    <link rel="stylesheet" href="/static/partner-map.css?v=20261027-map-2" />
     <link rel="stylesheet" href="/static/school-detail.css?v=20260924-concise-zh-1" />
     <link rel="stylesheet" href="/static/discovery.css?v=20261004-digest-1" />
     <link rel="stylesheet" href="/static/navigation.css?v=20260929-tools-headings-1" />
@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
     <link rel="stylesheet" href="/static/glass-theme.css?v=20261020-brand-1" />
-    <link rel="stylesheet" href="/static/platform-redesign.css?v=20261027-remove-home-cta-1" />
+    <link rel="stylesheet" href="/static/platform-redesign.css?v=20261027-search-first-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261024-study-plan-steps-1" />
@@ -41,7 +41,7 @@
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
     <link rel="stylesheet" href="/static/feedback.css?v=20261008-4" />
     <link rel="stylesheet" href="/static/responsive.css?v=20261007-responsive-1" />
-    <link rel="stylesheet" href="/static/mobile-reading.css?v=20261021-1" media="(max-width: 700px)" />
+    <link rel="stylesheet" href="/static/mobile-reading.css?v=20261027-search-first-1" media="(max-width: 700px)" />
     <link rel="stylesheet" href="/static/editorial-entry.css?v=20261020-2" />
     <link rel="stylesheet" href="/static/home-motion.css?v=20261020-1" />
     <noscript><style>.boot-splash { display: none !important; }</style></noscript>
@@ -379,6 +379,26 @@
                 </div>
                 <div class="pr-hero-copy">
                   <h1 id="home-landing-title">你能去哪些交換學校，<br><span>一次看清楚。</span></h1>
+                  <form id="home-desk" class="pr-desk" role="search" aria-label="找合作校" autocomplete="off" novalidate>
+                    <button type="button" id="home-desk-school" class="pr-field pr-desk-school" data-home-pick-school aria-haspopup="dialog">
+                      <span class="pr-field-icon"><i data-lucide="graduation-cap" aria-hidden="true"></i></span>
+                      <span class="pr-field-body"><small>我就讀</small><strong id="home-desk-school-name" data-empty>請選擇</strong></span>
+                      <span class="pr-desk-caret"><i data-lucide="chevron-down" aria-hidden="true"></i></span>
+                    </button>
+                    <label class="pr-field pr-desk-dest" for="home-desk-q">
+                      <span class="pr-field-icon"><i data-lucide="map-pin" aria-hidden="true"></i></span>
+                      <span class="pr-field-body"><small>想去</small><input id="home-desk-q" name="q" type="text" inputmode="search" enterkeyhint="search" autocomplete="off" maxlength="80" placeholder="國家、城市或學校" /></span>
+                    </label>
+                    <label class="pr-field" for="home-desk-term">
+                      <span class="pr-field-body"><small>出發學期</small><select id="home-desk-term" name="term"><option value="">不限</option><option value="fall">秋季／上學期</option><option value="spring">春季／下學期</option></select></span>
+                    </label>
+                    <label class="pr-field" for="home-desk-test">
+                      <span class="pr-field-body"><small>語言檢定</small><select id="home-desk-test" name="test"><option value="">不限</option><option value="ielts">IELTS</option><option value="toefl">TOEFL iBT</option><option value="toeic">TOEIC</option><option value="jlpt">日檢 JLPT</option><option value="topik">韓檢 TOPIK</option><option value="duolingo">Duolingo</option></select></span>
+                    </label>
+                    <button type="submit" class="pr-search-button"><i data-lucide="search" aria-hidden="true"></i>找學校</button>
+                  </form>
+                  <p id="home-desk-live" class="pr-desk-live" role="status" aria-live="polite"></p>
+                  <div id="home-desk-regions" class="pr-desk-regions" role="group" aria-label="熱門國家" hidden></div>
                   <a class="pr-guide-entry" href="/guides"><i data-lucide="book-open" aria-hidden="true"></i><span>第一次準備交換？先看交換指南</span><i data-lucide="arrow-right" aria-hidden="true"></i></a>
                   <div class="pr-hero-socials" aria-label="UniWay 官方社群">
                     <span class="pr-hero-socials-label">追蹤即時情報</span>
@@ -938,7 +958,7 @@
 
           <section id="advisor" class="page-section advisor-section" data-university-page="advisor" aria-labelledby="advisor-title" hidden>
             <!-- The workspace heading above already says which step this is and what to do first. -->
-            <h2 id="advisor-title" class="visually-hidden">先從認識你開始</h2>
+            <h2 id="advisor-title" role="heading" aria-level="1" class="visually-hidden">先從認識你開始</h2>
             <div class="advisor-layout">
               <form id="advisor-form" class="advisor-form glass-panel">
                 <div class="workspace-heading"><span><i data-lucide="sliders-horizontal" aria-hidden="true"></i><strong>我的條件</strong></span><small id="advisor-profile-status">未登入，不會保存條件</small></div>
@@ -1061,7 +1081,7 @@
                 <span class="pr-field-icon"><i data-lucide="languages" aria-hidden="true"></i></span>
                 <span class="pr-field-body"><small>語言檢定</small><select id="partner-test-tile" data-criteria-tile="test"><option value="">不限</option><option value="ielts">IELTS</option><option value="toefl">TOEFL iBT</option><option value="toeic">TOEIC</option><option value="jlpt">日檢 JLPT</option><option value="topik">韓檢 TOPIK</option><option value="duolingo">Duolingo</option></select></span>
               </label>
-              <button id="partner-search-submit" type="button" class="pr-search-button"><i data-lucide="search" aria-hidden="true"></i>搜尋學校</button>
+              <button id="partner-search-submit" type="button" class="pr-search-button"><i data-lucide="search" aria-hidden="true"></i><span class="pr-search-label">搜尋學校</span></button>
             </div>
             <div id="partner-sort-tabs" class="pr-sort-tabs" role="tablist" aria-label="排序方式"></div>
             <div class="journey-search-layout">
@@ -1102,12 +1122,13 @@
             <div id="partner-table" class="partner-results" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-table"></div></div>
             <button id="show-more-partners" type="button" class="secondary-button centered-button" hidden>顯示更多學校</button>
             <section id="partner-map-panel" class="partner-map-panel" aria-label="全球交換合作網絡" hidden>
-              <div class="partner-map-heading"><div><h3>全球合作學校</h3><p id="partner-map-context"></p></div></div>
+              <div class="partner-map-heading"><div><h2>全球合作學校</h2><p id="partner-map-context"></p></div></div>
               <div class="partner-map-actions">
-                <div><button id="map-motion" type="button" class="secondary-button" aria-pressed="true">動態效果：開</button><button id="map-home" type="button" class="secondary-button">★ 所屬大學</button><button id="map-global" type="button" class="secondary-button">全球視角</button></div>
+                <div><button id="map-motion" type="button" class="secondary-button" aria-pressed="true">動態效果：開</button><button id="map-home" type="button" class="secondary-button">★ 所屬大學</button><button id="map-global" type="button" class="secondary-button">全球視角</button><button id="map-gaps-open" type="button" class="secondary-button" aria-controls="partner-map-gaps" hidden></button></div>
               </div>
               <div class="partner-map-stage">
-                <div id="partner-globe" aria-label="互動地球：方向鍵平移，加減鍵縮放" aria-describedby="partner-map-help"></div>
+                <nav id="partner-map-list" class="partner-map-list" aria-label="地圖上的學校"><ul></ul></nav>
+                <div id="partner-globe" aria-label="互動地圖：方向鍵平移，加減鍵縮放" aria-describedby="partner-map-help"></div>
                 <div id="partner-map-status" class="partner-map-status" role="status" aria-live="polite"><span class="map-loading-orbit" aria-hidden="true"></span><strong>地圖載入中</strong></div>
                 <aside id="partner-map-preview" class="partner-map-preview" aria-label="學校預覽" hidden></aside>
                 <div class="partner-map-legend" aria-label="地圖圖例"><span><b class="map-legend-dot"></b>合作學校</span><span><b class="map-legend-star">★</b>所屬大學</span><span><b class="map-legend-cluster">2+</b>鄰近學校</span></div>
@@ -1121,7 +1142,7 @@
 
           <section id="favorites" class="page-section favorites-section" data-university-page="favorites" aria-labelledby="favorites-title" hidden>
             <div class="section-heading">
-              <div><h2 id="favorites-title">我的選校</h2><p id="discovery-save-note">儲存在此裝置</p></div>
+              <div><h2 id="favorites-title" role="heading" aria-level="1">我的選校</h2><p id="discovery-save-note">儲存在此裝置</p></div>
               <span class="count-badge" id="favorite-count">0 所</span>
             </div>
             <div id="favorite-list" class="favorite-list"></div>
@@ -1131,7 +1152,7 @@
 
           <section id="calendar" class="page-section application-calendar-section" data-university-page="calendar" aria-labelledby="application-calendar-title" hidden>
             <header class="calendar-header glass-panel">
-              <div><h2 id="application-calendar-title">我的申請日曆</h2><p>掌握期限，把準備任務安排在出發之前。</p></div>
+              <div><h2 id="application-calendar-title" role="heading" aria-level="1">我的申請日曆</h2><p>掌握期限，把準備任務安排在出發之前。</p></div>
               <div id="calendar-next-summary" class="calendar-next-summary"><span class="skeleton skeleton-stat"></span></div>
             </header>
             <div id="calendar-verified-window-hook" class="verified-window-hook-container" aria-live="polite"></div>
@@ -1222,7 +1243,7 @@
           </section>
 
           <section id="budget" class="page-section budget-section" data-university-page="budget" aria-labelledby="budget-title" hidden>
-            <div class="section-heading"><div><h2 id="budget-title">交換預算</h2><p>用同一幣別估算總成本，並保留學校官方生活費來源。</p></div><i class="heading-icon" data-lucide="calculator" aria-hidden="true"></i></div>
+            <div class="section-heading"><div><h2 id="budget-title" role="heading" aria-level="1">交換預算</h2><p>用同一幣別估算總成本，並保留學校官方生活費來源。</p></div><i class="heading-icon" data-lucide="calculator" aria-hidden="true"></i></div>
             <div class="budget-layout">
               <form id="budget-form" class="budget-form">
                 <label class="budget-school-field"><span>估算學校</span><select id="budget-school" name="school_name" required></select></label>
@@ -1253,7 +1274,7 @@
 
           <section id="application-center" class="page-section application-center-section" data-university-page="application-center" aria-labelledby="application-center-title" hidden>
             <header class="application-center-hero">
-              <div><h2 id="application-center-title">申請文件</h2><p class="application-center-intro">先確認申請設定，再選一份本階段的文件開始填寫。可隨時保存，下次接著完成。</p></div>
+              <div><h2 id="application-center-title" role="heading" aria-level="1">申請文件</h2><p class="application-center-intro">先確認申請設定，再選一份本階段的文件開始填寫。可隨時保存，下次接著完成。</p></div>
               <div class="application-center-hero-actions"><a href="#document-check" class="secondary-button"><i data-lucide="scan-search" aria-hidden="true"></i><span>檢查已寫文件</span></a><div class="application-center-hero-mark" aria-hidden="true"><i data-lucide="file-check-2"></i></div></div>
             </header>
 
@@ -1358,7 +1379,7 @@
 
           <section id="document-check" class="page-section document-check-section" data-university-page="document-check" aria-labelledby="document-check-title" hidden>
             <header class="document-check-hero">
-              <div><h2 id="document-check-title">文件檢查</h2><p>找出漏填、字數與簽名風險。</p></div>
+              <div><h2 id="document-check-title" role="heading" aria-level="1">文件檢查</h2><p>找出漏填、字數與簽名風險。</p></div>
               <span aria-hidden="true"><i data-lucide="scan-search"></i></span>
             </header>
             <section id="document-check-gate" class="document-check-gate glass-panel" aria-live="polite"><div class="skeleton skeleton-card"></div></section>
@@ -1489,7 +1510,7 @@
           </dialog>
 
           <section id="documents" class="page-section" data-university-page="documents" aria-labelledby="documents-title" hidden>
-            <div class="section-heading"><div><h2 id="documents-title">文件重點整理</h2></div><span class="count-badge" id="document-count">--</span></div>
+            <div class="section-heading"><div><h2 id="documents-title" role="heading" aria-level="1">文件重點整理</h2></div><span class="count-badge" id="document-count">--</span></div>
             <section id="private-vault" class="private-vault glass-panel" aria-labelledby="private-vault-title">
               <header class="private-vault-header">
                 <span class="private-vault-mark"><i data-lucide="shield-check" aria-hidden="true"></i></span>
@@ -1624,12 +1645,12 @@
     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
     <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
     <script src="/static/react-aria-school-picker.js?v=20261016-lattice-1" defer></script>
-    <script src="/static/app.js?v=20261024-study-plan-steps-1" defer></script>
+    <script src="/static/app.js?v=20261027-search-first-1" defer></script>
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261016-globe-5" defer></script>
-    <script src="/static/platform-home.js?v=20261027-remove-home-cta-1" defer></script>
+    <script src="/static/platform-home.js?v=20261027-search-first-1" defer></script>
     <script src="/static/home-motion.js?v=20261027-remove-home-cta-1" defer></script>
-    <script src="/static/platform-explore.js?v=20261019-seo-events-1" defer></script>
+    <script src="/static/platform-explore.js?v=20261027-search-first-1" defer></script>
     <script src="/static/platform-detail.js?v=20261017-ntu-reference-1" defer></script>
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-tracker.js?v=20261019-guide-1" defer></script>

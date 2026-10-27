@@ -11,7 +11,7 @@
 .partner-map-heading { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:24px 28px 18px; background:linear-gradient(110deg,#f1f8f9aa,#faf6ec88 55%,#f2edf988); border-top:3px solid #87bac3; }
 html[data-theme="dark"] .partner-map-heading { background:linear-gradient(110deg,#20414966,#34414944 55%,#39365466); border-top-color:#628f99; }
 .map-eyebrow { font-size:10px; letter-spacing:2.5px; color:var(--uw-blue-strong); font-weight:750; }
-.partner-map-heading h3 { margin:7px 0 5px; font-size:26px; color:var(--uw-navy); letter-spacing:-.5px; }
+.partner-map-heading h2 { margin:7px 0 5px; font-size:26px; color:var(--uw-navy); letter-spacing:-.5px; }
 .partner-map-heading p { margin:0; font-size:13px; color:var(--uw-muted); }
 .map-network-label { font-size:9px; letter-spacing:2px; color:var(--uw-muted); }
 .map-network-label::after { content:""; display:block; width:80px; height:4px; margin-top:12px; margin-left:auto; border-radius:5px; background:linear-gradient(90deg,#80bda7 0% 25%,#e4be82 25% 50%,#e6aba2 50% 75%,#b9a8d6 75%); }
@@ -88,7 +88,7 @@ html[data-theme="dark"] .partner-map-stage { background:radial-gradient(ellipse 
   .partner-view-switch button { flex:1; padding:9px 10px; }
   .partner-map-panel { border-radius:15px; }
   .partner-map-heading { padding:20px 18px 16px; }
-  .partner-map-heading h3 { font-size:23px; }
+  .partner-map-heading h2 { font-size:23px; }
   .partner-map-heading p { max-width:255px; font-size:12px; }
   .map-network-label { display:none; }
   .partner-map-actions { padding:8px 12px; flex-wrap:wrap; gap:3px; }
@@ -108,3 +108,17 @@ html[data-theme="dark"] .partner-map-stage { background:radial-gradient(ellipse 
   .partner-map-access label span { display:inline; margin-left:8px; }
 }
 @media (prefers-reduced-motion:reduce) { .partner-map-panel, .partner-map-preview, .map-loading-orbit, #partner-globe[data-ready="true"] .maplibregl-canvas, .map-home-marker::after { animation:none; } .map-home-marker::after { opacity:0; } .partner-view-switch button { transition:none; } }
+
+/* Beside the map on a wide screen: the schools that are on it, by country. A tap or click flies there and opens the preview. */
+.partner-map-list { display:none; }
+@media (min-width:1101px) {
+  .partner-map-list { display:block; position:absolute; z-index:2; top:0; bottom:0; left:0; width:300px; overflow-y:auto; overscroll-behavior:contain; background:var(--uw-surface); border-right:1px solid var(--uw-line); }
+  .partner-map-list ul { display:grid; gap:2px; margin:0; padding:8px; list-style:none; }
+  .partner-map-list button { display:grid; gap:2px; width:100%; min-height:44px; padding:9px 12px; border:0; border-radius:10px; background:transparent; color:var(--uw-text); font:inherit; text-align:left; cursor:pointer; box-shadow:none; }
+  .partner-map-list button:hover { background:color-mix(in srgb, var(--uw-blue) 8%, transparent); }
+  .partner-map-list button[aria-current] { background:color-mix(in srgb, var(--uw-blue) 14%, transparent); }
+  .partner-map-list strong { color:var(--uw-navy); font-size:14px; line-height:1.4; }
+  .partner-map-list small { color:var(--uw-muted); font-size:12px; }
+  #partner-map-panel #partner-globe { left:300px; }
+  .partner-map-stage .partner-map-legend { left:320px; }
+}
