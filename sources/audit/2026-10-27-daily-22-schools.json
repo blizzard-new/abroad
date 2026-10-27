@@ -1,0 +1,304 @@
+{
+  "audit_id": "2026-10-27-daily-22-schools",
+  "checked_date": "2026-10-27",
+  "total_schools_audited": 22,
+  "summary_counts": {
+    "verified_update": 0,
+    "no_change_in_checked_scope": 16,
+    "incomplete_or_baseline_only": 6
+  },
+  "baseline_retention_policy": "主要與 2026-10-26 成功內容比對；讀取失敗或未完成查核之來源均保留各自最後成功基準，不因預定日期已到、期限後頁面移除或系統錯誤而推論已發布、取消、改期或名額恢復。",
+  "highlights": [
+    {
+      "school_id": "nsysu",
+      "summary": "中山原預告今天（10/27）起公布簡章，但截至本輪約 10:04，仍未核得本期正式簡章／名額（仍連 2026/04/12 參考版本），不能因預定日期已到就說已發布，亦不推論今天稍後不會發布。"
+    },
+    {
+      "school_id": "ntust",
+      "summary": "臺科主系統（stu88/fall2027）恢復讀取，但正文與先前（10/22）成功版本相同；12/3 10:00–12/7 15:00 網申不變，正式名額、個別條件與先前語檢衝突等缺口仍在。"
+    },
+    {
+      "school_id": "ntu",
+      "summary": "臺大正式列表（oia.ntu.edu.tw/outgoing/school.list）與九個舊候選詳頁仍回傳錯誤，不等於名額恢復，正式內容保留 10/22 成功基準；既有 173 文件今日 150 有效、23 缺口，有效檔均與各自最後成功版本相同。"
+    },
+    {
+      "school_id": "fcu",
+      "summary": "逢甲日台獎學金既有今天（10/27）10:00 期限已到，公告列表移除條目、詳頁變空，不能據此說取消或改期，保留昨日成功正文並標註 10/27 10:00 期限已到。"
+    }
+  ],
+  "schools": [
+    {
+      "order": 1,
+      "school_id": "cgu",
+      "school_name": "長庚大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656"
+      ],
+      "findings": "規則、64 列校表、關閉表單、流程及已讀研修文件相同，僅點閱等變化。缺部分 FAQ／表件與海外外連。",
+      "action_taken": "維持既有查核基準，更新 verified_window_deadlines 最後查核日為 2026-10-27。"
+    },
+    {
+      "order": 2,
+      "school_id": "ntpu",
+      "school_name": "國立臺北大學",
+      "category": "incomplete_or_baseline_only",
+      "status_label": "未完成查核",
+      "checked_urls": [
+        "https://www.law.ntpu.edu.tw/news/j1p0rQCYhCHb",
+        "https://bulletin.ntpu.edu.tw/bulletin_content.php?no=20260707133939366861"
+      ],
+      "findings": "校級簡章／名額仍缺；校級預告、商院公告／時程圖重試仍失敗。法律院交換正文、表單及三 PDF 相同，10/30 11:00 截止僅適用法律院。",
+      "action_taken": "於 ntpu_student_view、verified_window_deadlines 與 university_registry 明確標示法律院 10/30 11:00 截止僅限法律院，並記錄校級預告與商院公告讀取缺口。"
+    },
+    {
+      "order": 3,
+      "school_id": "ntu",
+      "school_name": "國立臺灣大學",
+      "category": "incomplete_or_baseline_only",
+      "status_label": "未完成查核",
+      "checked_urls": [
+        "https://oia.ntu.edu.tw/outgoing/school.list",
+        "https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/"
+      ],
+      "findings": "OIA 首頁可讀，但正式中英列表及九個舊候選詳頁仍回傳錯誤，不等於名額恢復；正式內容保留 10/22 成功基準。studyabroad 三核心頁相同，11/3 10:00–11/9 16:00 報名為既有資訊。既有 173 文件中 150 有效且均同最後成功檔，23 缺口；不是今日完整 OIA 附件清單，九個候選差異仍未核實。",
+      "action_taken": "於 ntu student_dashboard、verified_window_deadlines 與 university_registry 補充 OIA 正式列表讀取異常時保留 10/22 成功基準（不等於名額恢復）及 173 追蹤檔（150 有效／23 缺口）查核紀錄。"
+    },
+    {
+      "order": 4,
+      "school_id": "ccu",
+      "school_name": "國立中正大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://oia.ccu.edu.tw/p/404-1008-93586.php?Lang=zh-tw"
+      ],
+      "findings": "2027 春公告、索引及六核心附件相同，含 121 頁校表；海外逐校外連未全核，DOC 僅比檔案位元。",
+      "action_taken": "維持既有查核基準，更新 verified_window_deadlines 最後查核日為 2026-10-27。"
+    },
+    {
+      "order": 5,
+      "school_id": "ncu",
+      "school_name": "國立中央大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangeschoollist-1022.pdf"
+      ],
+      "findings": "116 交換入口與四 PDF 相同，網申仍 11/16 09:00–12/4 12:00。新增青年圓夢成果展屬成果展示，非交換甄選變更。缺海外雲端附件。",
+      "action_taken": "於 ncu student_dashboard、exchange_info 與 verified_window_deadlines 補充青年圓夢成果展非交換甄選變更說明，並更新查核日為 2026-10-27。"
+    },
+    {
+      "order": 6,
+      "school_id": "tku",
+      "school_name": "淡江大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://oieie.tku.edu.tw/latest_news/",
+        "https://enroll.tku.edu.tw/course.aspx?cid=auix1106"
+      ],
+      "findings": "公告、說明會及日語／獎學金六 PDF 相同；11/6 說明會仍額滿可候補，不是交換名額額滿。缺本期英歐語正式名額與海外外連。",
+      "action_taken": "於 tku_university 與 verified_window_deadlines 強化標註 11/06 說明會額滿可候補非交換名額額滿，並更新查核日為 2026-10-27。"
+    },
+    {
+      "order": 7,
+      "school_id": "fju",
+      "school_name": "天主教輔仁大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://iscoie.fju.edu.tw/newsDetail.jsp?newsID=1062&newsClassID=14"
+      ],
+      "findings": "116-1 核心頁與八附件同 10/21；日語與韓／西／法／德／義路線及接待校頁同昨日。11/1–12/24 16:30 校內網申不變，缺校級正式名額表。",
+      "action_taken": "維持既有查核基準，更新 verified_window_deadlines 最後查核日為 2026-10-27。"
+    },
+    {
+      "order": 8,
+      "school_id": "scu",
+      "school_name": "東吳大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply"
+      ],
+      "findings": "四頁與九檔相同，126 海外、62 大陸、3 自費校數不變；11/16 12:00 網申截止與兩場說明會不變。缺出國系統登入頁及海外 Fact Sheet。",
+      "action_taken": "維持既有查核基準，更新 verified_window_deadlines 最後查核日為 2026-10-27。"
+    },
+    {
+      "order": 9,
+      "school_id": "ntnu",
+      "school_name": "國立臺灣師範大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://bds.oia.ntnu.edu.tw/bds/web/outgoing-quotalist"
+      ],
+      "findings": "完整 29 頁／285 條目／96 學程、六則公告、下載列表及簡章相同。院級正文仍截斷，不將院級名額併入校級。",
+      "action_taken": "於 verified_window_deadlines 與 university_registry 標註校級 29 頁／285 條目／96 學程名額表不變且院級正文截斷不併入校級。"
+    },
+    {
+      "order": 10,
+      "school_id": "cycu",
+      "school_name": "中原大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新；新增來源僅建基準",
+      "checked_urls": [
+        "https://oia.cycu.edu.tw/?p=9903",
+        "https://oia.cycu.edu.tw/?page_id=99"
+      ],
+      "findings": "115-2 第二梯次 20 校表、合作／文件頁及學海資料相同。諮詢公告索引日期由 10/22 改 10/27，但正文首次取得，僅建立基準、不能認定新服務或條件改版。缺海外外連與 O365。",
+      "action_taken": "於 cycu student_dashboard、exchange_info、verified_window_deadlines 與 university_registry 記錄諮詢公告（?page_id=99）首次建檔僅作基準、非條件改版。"
+    },
+    {
+      "order": 11,
+      "school_id": "ntust",
+      "school_name": "國立臺灣科技大學",
+      "category": "incomplete_or_baseline_only",
+      "status_label": "未完成查核",
+      "checked_urls": [
+        "https://stu88.ntust.edu.tw/outboundstudent/index/index/puid/fall2027",
+        "https://oia-r.ntust.edu.tw/p/406-1060-151616,r1.php?Lang=zh-tw"
+      ],
+      "findings": "主系統恢復讀取，正文與 10/22 最後成功內容相同；其他 46 來源含 35 國參考頁及四 PDF 同昨日。12/3 10:00–12/7 15:00 網申不變；當期正式名額、個別條件及部分附件仍缺，先前語檢衝突未解。",
+      "action_taken": "於 ntust student_dashboard、exchange_info、verified_window_deadlines 與 university_registry 記錄報名主系統（stu88/fall2027）恢復讀取且同 10/22 基準，正式名額與語檢衝突仍待確認。"
+    },
+    {
+      "order": 12,
+      "school_id": "yzu",
+      "school_name": "元智大學",
+      "category": "incomplete_or_baseline_only",
+      "status_label": "未完成查核",
+      "checked_urls": [
+        "https://gao.yzu.edu.tw/index.php/tw/int-exchange/out-student"
+      ],
+      "findings": "規範、消息及 55 頁簡報相同。正式 Google 名額表仍未讀，最後成功為 10/21，不能說今日名額無變。",
+      "action_taken": "於 yzu student_dashboard、exchange_info、verified_window_deadlines 與 university_registry 標註正式 Google 名額表讀取失敗時保留 10/21 最後成功基準，不推論今日名額無變。"
+    },
+    {
+      "order": 13,
+      "school_id": "fcu",
+      "school_name": "逢甲大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新，但有公告讀取缺口",
+      "checked_urls": [
+        "https://oiasap.fcu.edu.tw/v2/programs?sms=1151",
+        "https://oia.fcu.edu.tw/announcements-list/"
+      ],
+      "findings": "公開 148 方案／145 校完整資料、兩 PDF 及其他活動相同。日台獎學金原訂今天 10:00 截止後，首頁／索引移除條目，詳頁重讀仍空；不推論取消或改期，保留昨日成功正文並標註 10/27 10:00 期限已到。缺 O365、海外外連及部分附件。",
+      "action_taken": "於 fcu student_dashboard、verified_window_deadlines 與 university_registry 補充日台獎學金 2026/10/27 10:00 期限已到及列表移除保留基準說明（不推論取消或改期）。"
+    },
+    {
+      "order": 14,
+      "school_id": "nsysu",
+      "school_name": "國立中山大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://oia.nsysu.edu.tw/p/406-1308-384613,r4450.php?Lang=zh-tw"
+      ],
+      "findings": "雖預告 10/27 起公布新簡章，但截至 10:04 仍連去年參考文件（2026/04/12 版），尚未核得本期正式簡章／名額；亦不推論今天稍後不會發布。11/3 09:00–11/17 17:00 網申與四場說明會不變。",
+      "action_taken": "於 nsysu student_dashboard、home_rules、exchange_info、verified_window_deadlines 與 university_registry 更新 2026/10/27 10:04 查核狀態，明確標示不因預定日期已到即宣稱已發布，亦不推論今日稍後不會發布。"
+    },
+    {
+      "order": 15,
+      "school_id": "nchu",
+      "school_name": "國立中興大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://www.oia.nchu.edu.tw/index.php/tw/5-global-mobility-tw/5-1-exchange-student-program-tw/5-1-1-application-guildeline-tw"
+      ],
+      "findings": "五個核心來源與二月基準檔相同。學生網申 10/23 12:00 已截止；導師／指導教授線上推薦至 10/30 12:00、補件至 11/6 23:59 仍在進行。缺校內申請系統、223 外連與部分檔案。",
+      "action_taken": "維持既有查核基準，更新 verified_window_deadlines 最後查核日為 2026-10-27。"
+    },
+    {
+      "order": 16,
+      "school_id": "ntut",
+      "school_name": "國立臺北科技大學",
+      "category": "incomplete_or_baseline_only",
+      "status_label": "未完成查核／僅建立基準",
+      "checked_urls": [
+        "https://oia.ntut.edu.tw/p/406-1032-157886,r2255.php?Lang=zh-tw"
+      ],
+      "findings": "七個既有來源、一般規則及 115 媒合 PDF 相同，10/29 說明會不變。116 正式簡章、當期名額與收件期限仍未核得，另缺列表翻頁、Google Sheet 與外連。",
+      "action_taken": "於 ntut student_dashboard、exchange_info、verified_window_deadlines 與 university_registry 補充 10/29 說明會（r2255.php）與 116 正式簡章待核實說明。"
+    },
+    {
+      "order": 17,
+      "school_id": "nccu",
+      "school_name": "國立政治大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新；公告目錄未完成",
+      "checked_urls": [
+        "https://outbound.nccu.edu.tw/post/118"
+      ],
+      "findings": "主簡章、完整當期名額表、口試公告及兩附件相同。動態目錄及替代讀取仍失敗，不能把 10/25 的 39 筆當今天已查。10/31 口試、11/2 16:00 語檢期限不變。",
+      "action_taken": "於 nccu student_dashboard、verified_window_deadlines 與 university_registry 補充 post/118 口試公告與動態目錄保留 10/25 之 39 筆成功基準說明。"
+    },
+    {
+      "order": 18,
+      "school_id": "ncku",
+      "school_name": "國立成功大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://oia.ncku.edu.tw/p/406-1032-306703,r3333.php?Lang=zh-tw"
+      ],
+      "findings": "116-1 簡章、校級一覽表、獎助及 FAQ 相同；10/30–11/19 16:00 網申不變。缺報名系統內頁、院系交換與海外外連。",
+      "action_taken": "維持既有查核基準，更新 verified_window_deadlines 最後查核日為 2026-10-27。"
+    },
+    {
+      "order": 19,
+      "school_id": "nycu",
+      "school_name": "國立陽明交通大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://oia.nycu.edu.tw/oia/ch/app/data/view?module=nycu0006&id=286&serno=8ee14cf9-321b-46af-9871-9d154c9e6647"
+      ],
+      "findings": "116 台聯大第一梯次 12/31 16:00 截止、115 第二梯次舊簡章／名額及四頁面相同。116 校級當期簡章與名額仍未公布，缺附件、表單、入口與外連。",
+      "action_taken": "維持既有查核基準，更新 verified_window_deadlines 最後查核日為 2026-10-27。"
+    },
+    {
+      "order": 20,
+      "school_id": "nthu",
+      "school_name": "國立清華大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新；兩詳頁僅建基準",
+      "checked_urls": [
+        "https://oga.site.nthu.edu.tw/p/406-1524-314332,r8950.php?Lang=zh-tw",
+        "https://oga-exchange.vm.nthu.edu.tw/outexchange/overview/index/puid/11521"
+      ],
+      "findings": "142 條目動態表與昨日相同，昨日可讀的 140 份詳頁正文亦相同；九州大學、大阪工業大學兩份詳頁首次成功，僅建立基準、不代表新增名額。年度導航差異已核為會話差異，非條件改版；名額單位不同不可混加。",
+      "action_taken": "於 nthu student_dashboard、verified_window_deadlines 與 university_registry 補充 142 條目動態表（puid/11521）及九州大學、大阪工業大學兩份詳頁首次建立基準（非新增名額）說明。"
+    },
+    {
+      "order": 21,
+      "school_id": "pccu",
+      "school_name": "中國文化大學",
+      "category": "incomplete_or_baseline_only",
+      "status_label": "未完成查核",
+      "checked_urls": [
+        "https://mccd.pccu.edu.tw/p/16-1300-147944.php?Lang=zh-tw",
+        "https://oima.pccu.edu.tw/en/study-abroad-detail5.htm"
+      ],
+      "findings": "海外入口仍失敗；同校大陸正文及附件相同，正文 115-2／PDF 115-1 的既有矛盾未解。海外本期正式簡章與名額仍缺。",
+      "action_taken": "於 pccu student_dashboard、exchange_info、verified_window_deadlines 與 university_registry 記錄海外入口讀取失敗及大陸交換列表（16-1300-147944.php）查核結果。"
+    },
+    {
+      "order": 22,
+      "school_id": "wzu",
+      "school_name": "文藻外語大學",
+      "category": "no_change_in_checked_scope",
+      "status_label": "已查核範圍未見更新",
+      "checked_urls": [
+        "https://c015.wzu.edu.tw/article/530796",
+        "https://c015.wzu.edu.tw/article/530797"
+      ],
+      "findings": "115-2 第二梯次兩組公告、兩 PDF、兩 Excel 全表相同，僅點閱數變。缺已關閉 Google 表單及接待校外連。",
+      "action_taken": "於 wzu student_dashboard、exchange_info、verified_window_deadlines 與 university_registry 補充 c015.wzu.edu.tw/article/530796、530797 鏡像來源並更新查核日為 2026-10-27。"
+    }
+  ]
+}
