@@ -29,8 +29,9 @@ images are in `docs/ui-progress-2026-10-27/`.
   failed, the same 4 as on `main`.
 - Contrast of every new or changed string measured on real pixels, light and dark, both widths: at least 4.5:1. Tab order
   the same as on `main`, focus rings present, no sideways scroll.
-- A calendar page regression was caught by comparing with `main` (step labels wrapped on a phone) and fixed; the calendar
-  page is now a little shorter than on `main`.
+- Two regressions were caught by comparing with `main` and fixed: step labels wrapping on the calendar page on a phone, and
+  a plain hint squeezed to 58 px at 768 px by the step flags (now hidden below 900 px). The responsive audit reports the same
+  28 problems as `main`; the calendar page is a little shorter than on `main`.
 - Not verified: a real phone, a screen reader, Safari and Firefox; the roughly 100 e2e files outside those named.
 - Found, not changed: the 申請文件 page header is nearly unreadable in dark theme on `main` too (filed separately).
 

@@ -13,7 +13,8 @@ The heading of 我的申請 used one component for two things: the step the stud
 next. A page on step 3 could sit above a card that said step 1.
 
 - The circle on a step says how far it is (done, next, not started). The card says which step is on screen
-  ("你在這裡"); the recommended one is flagged "下一步" (wide screens).
+  ("你在這裡"); the recommended one is flagged "下一步" (flags show from 901px wide; below that the cards are too narrow and the
+  next-action card says the same in words).
 - The next-action card says "你在第 3 步 · 建議下一步在第 1 步「選校與確認」" when it points to another step and is then a
   secondary button; on its own step it says "第 1 步「選校與確認」· 現在先做這件事" with the primary button.
 - Steps show what has really been done, from the same state `planningNextAction()` judges by: conditions / target /
@@ -55,6 +56,13 @@ action button, 本階段其他頁面, then the page); every stop has a focus rin
   (`test_calendar_appears_first_and_tools_still_work`, `test_each_long_field_shows_a_live_count_and_opens_plain_language_guidance`,
   two sizes each) also fail on `main`, at the same assertion; the calendar one fails by a smaller margin here than on `main`
   (month top 960.6 px against 964.6 px on a phone, 678.6 against 685.0 on a desktop).
+
+- Responsive layout audit (`test_responsive_layout.py`): fails at the same 5 sizes as on `main`, and on the final state it
+  reports exactly the same 28 problems as `main` (compared line by line, none only here). Comparing them found one that
+  was this change's: at 768 px the step flag left a plain hint 58 px wide; flags are now hidden below 900 px.
+- Motion, platform redesign, planning, multi-plan, application periods, student journey and workload journey e2e files:
+  64 passed, 1 failed (`test_all_routes_share_motion_and_back_retains_working_history`, which fails on `main` the same
+  way: the rail's brand mark blocks the back button).
 
 ## Found on the way, not changed
 
