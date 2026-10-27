@@ -136,15 +136,6 @@ window.UniWayHome = (() => {
       list.innerHTML = schools.map((item) => `<li><strong>${escapeHtml(item.school_name)}</strong><span>${item.partner_count ? `${formatNumber(item.partner_count)} 間合作校` : "資料建置中"}</span></li>`).join("");
       layoutMarquee(host);
     }
-    const buttons = host.querySelector("#home-school-buttons");
-    buttons.innerHTML = schools.map((item) => {
-      const badge = schoolBadge(item);
-      const selected = item.school_name === state.homeSchool;
-      return `<button type="button" class="pr-school-button" data-home-landing-school="${escapeHtml(item.school_name)}" style="--school-tint:${badge.tint}"${selected ? ' aria-current="true"' : ""}>
-        <span class="pr-school-tile" aria-hidden="true">${escapeHtml(badge.text)}</span>
-        <span><strong>${escapeHtml(item.school_name)}</strong><small>${item.partner_count ? `${formatNumber(item.partner_count)} 間合作校` : "資料建置中"}</small></span>
-        <i data-lucide="arrow-right" aria-hidden="true"></i></button>`;
-    }).join("");
   }
 
   function completedSteps() {
@@ -425,8 +416,6 @@ window.UniWayHome = (() => {
       initIcons();
       return;
     }
-    const school = event.target.closest("[data-home-landing-school]");
-    if (school) { chooseHomeSchool(school.dataset.homeLandingSchool); return; }
     const map = event.target.closest("[data-home-open-map]");
     if (map) { openMap(event); return; }
     if (event.target.closest("[data-home-pick-school]")) { openSchoolOnboarding(); return; }
