@@ -16,7 +16,7 @@
   const index = root.querySelector(".hm-route-index");
   const title = root.querySelector(".hm-route-title");
   const revealTargets = [...root.querySelectorAll(
-    ".pr-hero-copy, .pr-plan-card, .pr-collage-mascot, .pr-supported, .pr-editorial .pr-section-head, .pr-guide-card, .pr-features .pr-section-head, .pr-tile, .pr-map-band-copy, .pr-forum-preview .pr-section-head, .pr-board, .pr-social-banner, .pr-cta-copy"
+    ".pr-hero-copy, .pr-plan-card, .pr-collage-mascot, .pr-supported, .pr-editorial .pr-section-head, .pr-guide-card, .pr-features .pr-section-head, .pr-tile, .pr-map-band-copy, .pr-forum-preview .pr-section-head, .pr-board, .pr-social-banner"
   )];
   const seen = new WeakSet();
   const animations = new Map();
