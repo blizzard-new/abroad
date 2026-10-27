@@ -1547,7 +1547,8 @@ def test_application_pages_keep_primary_actions_visible_and_move_explanations_in
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
     styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
 
-    assert '<h2 id="application-center-title">申請文件</h2>' in html
+    # The page title is the page's only level-1 heading for assistive tech (role/aria-level are added on the element).
+    assert re.search(r'<h2 id="application-center-title"[^>]*>申請文件</h2>', html)
     assert "只填一次，自動套入文件" not in html
     assert "線上完成資料、產生可列印 PDF" not in html
     assert "系統會只列出需要的文件" not in html

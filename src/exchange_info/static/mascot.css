@@ -209,13 +209,6 @@
   pointer-events: none;
 }
 
-/* While the start-up screen is up, nothing behind it takes part in layout-shift scoring. The page below is still being
-   put together then (the footer note leaves, the dashboard moves a few pixels); hidden elements are not counted, and the
-   screen's leaving state shows them again before it fades out. Without script .splash-on is never set, so nothing is hidden. */
-html.splash-on:has(body > #boot-splash:not(.is-leaving):not(.runtime-loading-splash)) body > :not(#boot-splash):not(script):not(style):not(link) {
-  visibility: hidden;
-}
-
 /* The same suitcase scene replaces transient, horizontal loading notices after start-up. */
 .splash-on .boot-splash.runtime-loading-splash {
   animation: none;

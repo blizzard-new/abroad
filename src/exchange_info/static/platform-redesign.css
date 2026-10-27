@@ -1335,3 +1335,10 @@ body.unified-shell #partners.pr-explore .pr-empty-clear { margin-top: 14px; }
   #partners.pr-explore:has([data-partner-view="map"][aria-pressed="true"]) .pr-facets { order: 1; }
   #partners.pr-explore:has([data-partner-view="map"][aria-pressed="true"]) .journey-search-results > :not(#partner-map-panel) { order: 2; }
 }
+
+/* While the start-up screen is up, nothing behind it takes part in layout-shift scoring. The page below is still being
+   put together then (the footer note leaves, the dashboard moves a few pixels); hidden elements are not counted, and the
+   screen's leaving state shows them again before it fades out. Without script .splash-on is never set, so nothing is hidden. */
+html.splash-on:has(body > #boot-splash:not(.is-leaving):not(.runtime-loading-splash)) body > :not(#boot-splash):not(script):not(style):not(link) {
+  visibility: hidden;
+}
