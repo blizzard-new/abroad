@@ -29,7 +29,7 @@ build-backend = "setuptools.build_meta"
 include = ["office*"]
 
 [tool.setuptools.package-data]
-office = ["render/*.html", "static/*", "static/fonts/*"]
+office = ["render/*.html", "static/*", "static/fonts/*", "static/vendor/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -65,6 +65,29 @@ def test_instagram_carousel_flow(tmp_path: Path):
     assert calls[-2].url.path.endswith("/7/media_publish")
 
 
+def test_instagram_story_retries_when_the_container_is_not_found_yet(monkeypatch):
+    monkeypatch.setattr("office.platforms.meta.time.sleep", lambda seconds: None)
+    answers = iter([
+        httpx.Response(400, json={"error": {"message": "The requested resource does not exist", "code": 24, "error_subcode": 2207006}}),
+        httpx.Response(200, json={"id": "story"}),
+    ])
+
+    def handler(request):
+        path = request.url.path
+        if path.endswith("/media"):
+            return httpx.Response(200, json={"id": "c1"})
+        if path.endswith("/media_publish"):
+            return next(answers)
+        if path.endswith("/story"):
+            return httpx.Response(200, json={"permalink": "https://www.instagram.com/stories/x/"})
+        return httpx.Response(200, json={"status_code": "FINISHED"})
+
+    http, calls = recorder(handler)
+    client = InstagramClient("7", "t", dry_run=False, http=http)
+    assert client.post_story("https://cdn/story.jpg")["id"] == "story"
+    assert sum(c.url.path.endswith("/media_publish") for c in calls) == 2
+
+
 def test_youtube_resumable_upload(tmp_path: Path):
     video = tmp_path / "v.mp4"
     video.write_bytes(b"0" * 10)

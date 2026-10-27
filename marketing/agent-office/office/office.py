@@ -170,12 +170,27 @@ class Office:
             shares[colleague.persona.name] = [s.name for s in share]
         return shares
 
-    def run_hire_dailies(self) -> list[str]:
-        """Each new colleague's standing task, once a day; the chief passes the results to the boss."""
+    def hire_times(self, agent: "Hire") -> list[str]:
+        """When a colleague's standing task runs each day: their own times, or the office's start time."""
+        return agent.record.get("times") or [self.settings.daily_at.strftime("%H:%M")]
+
+    def run_hire_dailies(self, now: datetime | None = None) -> list[str]:
+        """Each new colleague's standing task at each of their times; the chief passes the results to the boss.
+
+        A time is done once per day. When the office was off past several times, only one round runs on start."""
+        local = (now or datetime.now(timezone.utc)).astimezone(self.settings.timezone)
         names = []
         for agent in list(self.staff.values()):
             if not isinstance(agent, Hire) or not agent.record.get("daily_kind"):
                 continue
+            due = [t for t in self.hire_times(agent) if local.strftime("%H:%M") >= t]
+            if not due:
+                continue
+            slot = f"{local.date().isoformat()} {max(due)}"
+            key = f"hire_slot:{agent.id}"
+            if (self.store.get(key) or "") >= slot:
+                continue
+            self.store.set(key, slot)
             kind, task = agent.record["daily_kind"], agent.record.get("daily", "")
 
             def work(agent=agent, kind=kind, task=task) -> str:
@@ -188,6 +203,22 @@ class Office:
             self.staff["chief"]._background(f"{agent.persona.name}的每日工作", work)
             names.append(agent.persona.name)
         return names
+
+    def set_hire_times(self, name: str, times: list[str]) -> list[str]:
+        agent = self.colleague(name)
+        cleaned = []
+        for text in times:
+            match = re.fullmatch(r"\s*(\d{1,2})[:：](\d{2})\s*", text or "")
+            if not match or int(match.group(1)) > 23 or int(match.group(2)) > 59:
+                raise ValueError(f"時間「{text}」看不懂，請用 HH:MM，例如 10:00")
+            cleaned.append(f"{int(match.group(1)):02d}:{match.group(2)}")
+        cleaned = sorted(set(cleaned))
+        if not cleaned or len(cleaned) > 6:
+            raise ValueError("每天的時間要 1～6 個")
+        self.update_hire(agent.id, times=cleaned)
+        # Times already past today count as done, so a new schedule starts from the next one.
+        self.store.set(f"hire_slot:{agent.id}", f"{self.today().isoformat()} {max([t for t in cleaned if self.local_now().strftime('%H:%M') >= t] or ['00:00'])}")
+        return cleaned
 
     def colleague(self, name_or_id: str) -> "Hire":
         key = name_or_id.strip()
