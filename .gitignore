@@ -77,3 +77,8 @@ data/seo-state/
 deploy/selfhost/.env
 deploy/capacity/.env
 deploy/capacity/artifacts/
+
+# AI agent skills: per-developer hook wiring and the platform binary
+# (the impeccable launcher re-downloads and checksum-verifies the binary on demand)
+.claude/settings.local.json
+.claude/skills/impeccable/scripts/bin/
