@@ -1030,6 +1030,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     connect();
     // A 3D scene that never answers (a stuck module, a blocked GPU) should still leave a way to work.
     const watchdog = setTimeout(() => fallback("3D 辦公室載入太久了：按 Ctrl+F5 重新整理，或先用下方平面工作台。"), 20000);
+    if (new URLSearchParams(location.search).has("flat")) {
+      clearTimeout(watchdog);
+      fallback("已關閉 3D（網址有 ?flat），用平面工作台。");
+      return;
+    }
     import("/static/office-world.js").then(module => module.initOfficeWorld({ getState: () => S, openAgent, fallback }))
       .catch(error => { console.warn("3D office unavailable:", error); fallback(); })
       .finally(() => clearTimeout(watchdog));

@@ -47,6 +47,7 @@ export function initOfficeWorld(bridge) {
   let dayState;
   let targetView = null;
   let disposed = false;
+  const forced3d = new URLSearchParams(location.search).has('3d');
   let needsRender = true;
   let hidden = document.hidden;
   let lastFrame = 0;
@@ -534,9 +535,16 @@ export function initOfficeWorld(bridge) {
     const dt = Math.min(2, elapsed); lastFrame = now; animationTime += Math.min(60, elapsed);
     // Keep the surrounding work UI responsive on integrated/software GPUs.
     // Only the 3D canvas adapts; text stays sharp. Still views retain full resolution.
-    if (!reduced.matches && elapsed < 3) {
+    if (!reduced.matches) {
+      // Frames seconds apart count as slow too: that is how software rendering (remote desktop, no GPU) looks.
       slowFrames = elapsed > .12 ? slowFrames + 1 : 0;
       fastFrames = elapsed < .055 ? fastFrames + 1 : 0;
+      if (slowFrames >= 12 && pixelRatio <= .6 && !forced3d) {
+        // Still crawling at the lowest resolution: the 3D scene would freeze the whole page, so hand over to the flat desks.
+        disposed = true; renderer.setAnimationLoop(null); controls.dispose(); resize.disconnect();
+        bridge.fallback('這台電腦畫 3D 太吃力，已改用平面工作台（網址加 ?3d 可以強制開 3D）。');
+        return;
+      }
       if (slowFrames >= 3 && pixelRatio > .6) setResolution(Math.max(.6, pixelRatio * .8));
       else if (fastFrames >= 300 && pixelRatio < preferredPixelRatio) setResolution(Math.min(preferredPixelRatio, pixelRatio + .1));
     }

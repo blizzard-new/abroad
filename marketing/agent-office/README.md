@@ -195,6 +195,19 @@ Leo 能做的事：開工、請同事重寫、加做一則、改發文時間、�
 2. 用 `uv run office serve --host 0.0.0.0` 啟動。Windows 跳出防火牆詢問時，允許「私人網路」。
 3. 手機第一次打開 `http://<電腦名稱>:8780/?token=<那串密碼>`，之後會記住。通知裡也會附上辦公室的連結。
 
+**給其他電腦一個公開連結（不用裝 Tailscale）**
+
+用 Cloudflare 的免費 Quick Tunnel，不用帳號、不用開防火牆：
+
+1. `.env` **一定要**設 `OFFICE_ACCESS_TOKEN=<一串很長的密碼>`，然後重開 `uv run office serve`（一樣用預設的 127.0.0.1）。沒有這串密碼，拿到連結的人都能按核准。
+2. 安裝一次：`winget install --id Cloudflare.cloudflared -e`（Mac：`brew install cloudflared`），裝完重開 PowerShell。
+3. 另開一個 PowerShell 視窗執行 `cloudflared tunnel --url http://localhost:8780`，畫面會出現 `https://xxxx.trycloudflare.com`。
+4. 其他電腦打開 `https://xxxx.trycloudflare.com/?token=<那串密碼>`，之後會記住。
+
+這個網址每次重開 cloudflared 都會換；兩個視窗（serve 和 cloudflared）都要開著，連結才打得開。
+
+**3D 太卡**：遠端桌面、沒有顯示卡或瀏覽器關掉「硬體加速」時，3D 會很吃力。辦公室偵測到畫面一直卡，會自動改用平面工作台；也可以直接開 `/?flat`。想強制開 3D 用 `/?3d`。
+
 ## Claude Code、Codex、Antigravity 怎麼分工
 
 每張桌子的 AI 在 `.env` 的 `OFFICE_BRAINS` 指定，格式是「角色=工具」。`.env.example` 預設的分工：
