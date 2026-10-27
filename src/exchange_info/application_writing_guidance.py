@@ -899,7 +899,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "scu": ("https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply", "2026-10-16"),
     "ntnu": ("https://bds.oia.ntnu.edu.tw/bds/web/outgoing-apply", "2026-10-16"),
     "cycu": ("https://oia.cycu.edu.tw/?p=6338", "2026-10-16"),
-    "ntust": ("https://www.oia.ntust.edu.tw/var/file/60/1060/img/2204/20260317.pdf", "2026-10-16"),
+    "ntust": ("https://oia.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw", "2026-10-26"),
     "yzu": ("https://gao.yzu.edu.tw/index.php/tw/2016-03-04-08-13-53/2016-03-07-08-52-41", "2026-10-17"),
     "fcu": ("https://oia.fcu.edu.tw/sap/introduction/", "2026-10-17"),
     "nsysu": ("https://oia.nsysu.edu.tw/p/412-1308-20730.php?Lang=zh-tw", "2026-10-18"),

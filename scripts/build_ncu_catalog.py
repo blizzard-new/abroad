@@ -1550,11 +1550,13 @@ def build(output):
             "host_deadline_reminders": False,
         },
     )
-    (output / "source-evidence.json.gz").write_bytes(
+    gz_bytes = bytearray(
         gzip.compress(
             json.dumps(evidence + web_evidence, ensure_ascii=False).encode(), mtime=0
         )
     )
+    gz_bytes[9] = 3
+    (output / "source-evidence.json.gz").write_bytes(bytes(gz_bytes))
     write_json(
         output / "catalog-completeness.json",
         {
@@ -1641,6 +1643,12 @@ def build(output):
     apply_ncu_20261013_overlay(output)
     from exchange_info.vilnius_akita_review import apply_vilnius_akita_review
     apply_vilnius_akita_review(ROOT, "ncu", bundle=output)
+    apply_ncu_20261022_overlay(output)
+    for item in output.iterdir():
+        if item.is_file() and item.suffix in {".json", ".jsonl", ".csv"}:
+            raw_bytes = item.read_bytes()
+            if b"\r\n" in raw_bytes:
+                item.write_bytes(raw_bytes.replace(b"\r\n", b"\n"))
 
 
 def apply_ncu_20261013_overlay(output: Path) -> None:
@@ -1772,6 +1780,172 @@ def apply_ncu_20261013_overlay(output: Path) -> None:
     ]
     with comp_path.open("w", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(comp, ensure_ascii=False, indent=2) + "\n")
+
+
+def apply_ncu_20261022_overlay(output: Path) -> None:
+    rows_1022_path = ROOT / "sources/ncu/2026-10-22/quota-116-1-rows.json"
+    if not rows_1022_path.exists():
+        return
+    list_1022_url = "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangeschoollist-1022.pdf"
+    list_1013_url = "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangeschoollist-1013.pdf"
+
+    partners_path = output / "partners.jsonl"
+    partner_lines = partners_path.read_text(encoding="utf-8").splitlines()
+    updated_partner_lines = []
+    for line in partner_lines:
+        if not line.strip():
+            continue
+        obj = json.loads(line)
+        sname = obj["school_name"]
+        if "北方高等商業學院 EDHEC" in sname:
+            old_edhec = (
+                f"【116-1最新姐妹校列表已於2026/10/13公告（{list_1013_url}）】"
+                "列ncu-011（PDF第1頁）名額：4、語言限制：IELTS (min 6.0) or TOEFL (80iBt)、備註：10/1更新\n限大學部,限申請BBA Program\n適合管院同學申請 /限申請交換一學期。"
+                "（校內線上申請2026/11/16開放，外校116當期簡章與條件仍待逐項確認，不能據此直接判定當期已開放）。"
+            )
+            new_edhec = (
+                f"【116-1最新姐妹校列表異動提醒（2026/10/22版更新：{list_1022_url}）】"
+                "本項目原列於2026/10/13版第1頁（列ncu-011，名額4，限大學部BBA Program／管院同學申請），已於2026/10/22版姐妹校列表中移除；"
+                "以下保留115歷史名單與公開附件僅供規劃參考，不能據此判定當期開放。"
+            )
+            if obj.get("eligibility"):
+                if old_edhec in obj["eligibility"]:
+                    obj["eligibility"] = obj["eligibility"].replace(old_edhec, new_edhec)
+                elif new_edhec not in obj["eligibility"]:
+                    obj["eligibility"] = new_edhec + "\n" + obj["eligibility"]
+            if obj.get("student_summary_zh") and obj["student_summary_zh"].get("eligibility_points"):
+                obj["student_summary_zh"]["eligibility_points"] = [
+                    new_edhec if pt == old_edhec else pt
+                    for pt in obj["student_summary_zh"]["eligibility_points"]
+                ]
+        elif "UniLaSalle" in sname:
+            old_uni = (
+                f"【116-1最新姐妹校列表已於2026/10/13公告（{list_1013_url}）】"
+                "列ncu-017（PDF第1頁）名額：2、語言限制：English B2、備註：無額外備註。"
+                "（校內線上申請2026/11/16開放，外校116當期簡章與條件仍待逐項確認，不能據此直接判定當期已開放）。"
+            )
+            new_uni = (
+                f"【116-1最新姐妹校列表已於2026/10/22更新（{list_1022_url}）】"
+                "列ncu-016（PDF第1頁）名額：2、語言限制：B2 English、備註：無額外備註。"
+                "（校內線上申請2026/11/16開放，外校116當期簡章與條件仍待逐項確認，不能據此直接判定當期已開放）。"
+            )
+            if obj.get("eligibility"):
+                if old_uni in obj["eligibility"]:
+                    obj["eligibility"] = obj["eligibility"].replace(old_uni, new_uni)
+                elif new_uni not in obj["eligibility"]:
+                    obj["eligibility"] = new_uni + "\n" + obj["eligibility"]
+            if obj.get("student_summary_zh") and obj["student_summary_zh"].get("eligibility_points"):
+                obj["student_summary_zh"]["eligibility_points"] = [
+                    new_uni if pt == old_uni else pt
+                    for pt in obj["student_summary_zh"]["eligibility_points"]
+                ]
+        text = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
+        for character in ("\u0085", "\u2028", "\u2029"):
+            text = text.replace(character, f"\\u{ord(character):04x}")
+        updated_partner_lines.append(text)
+    with partners_path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(updated_partner_lines) + "\n")
+
+    ex_info_path = output / "exchange_info.json"
+    ex_info = load_json(ex_info_path)
+    ex_info["application_period"] = [
+        "校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間，載於2026/09/05公告之116-1簡章第2頁；官網交換頁外層未直接印出11/16字樣）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生截止日。",
+        "116-1交換姐妹校列表已更新至2026/10/22版（116exchangeschoollist-1022.pdf，共214列，較2026/10/13版215列移除法國北方高等商業學院 EDHEC BUSINESS SCHOOL 1列、微調拉薩爾博舍综合理工學院 UniLaSalle 語言欄位文字）；116-1出國交換申請說明會訂於2026/11/10(二)10:00舉行（全程參與核發國際移動力完成證明書）。",
+        "【系統升級因應措施】因出國申請系統（https://abroad.oia.ncu.edu.tw/student/）升級維護，國際處公告改由線上Google表單（https://forms.gle/Jchneh5uLrGYQ7LT9）搭配下載列印申請表（https://reurl.cc/OQ0RMy）辦理，請依置頂公告核對。",
+    ]
+    if list_1022_url not in ex_info["source_urls"]:
+        ex_info["source_urls"].insert(3, list_1022_url)
+    ex_info["last_checked"] = "2026-10-26T00:00:00Z"
+    with ex_info_path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(ex_info, ensure_ascii=False, indent=2) + "\n")
+
+    dash_path = output / "student_dashboard.json"
+    dash = load_json(dash_path)
+    dash["last_checked"] = "2026-10-26T00:00:00Z"
+    dash["application_periods"][0]["details"] = [
+        "校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間，載於2026/09/05公告之116-1簡章 116exchangenotice.pdf 第2頁；官網交換頁外層僅列簡章與列表連結、未直接印出11/16字樣）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生截止日。",
+        "【系統升級因應措施】如遇原出國申請系統（https://abroad.oia.ncu.edu.tw/student/）升級維護無法連線，請依國際處置頂公告（https://oia.ncu.edu.tw/p/406-1026-13073,r565.php?Lang=zh-tw）改填線上Google表單（https://forms.gle/Jchneh5uLrGYQ7LT9）並下載列印申請表（https://reurl.cc/OQ0RMy）辦理。",
+    ]
+    dash["program_overview"][0]["details"] = [
+        "116-1甄選簡章於2026/9/5公告（116exchangenotice.pdf，第2頁明載11/16 09:00至12/04 12:00開放線上申請），AY2027–2028；116-1交換姐妹校列表已於2026/10/22更新為116exchangeschoollist-1022.pdf（共214列，較2026/10/13版215列移除法國北方高等商業學院 EDHEC BUSINESS SCHOOL［原列管院交換4名］，並將法國拉薩爾博舍综合理工學院 UniLaSalle 語言要求由 English B2 微調為 B2 English；官網頁面註明列表將定期更新）。",
+        "116-1出國交換申請說明會訂於2026/11/10(二)10:00舉行（報名見 https://oia.ncu.edu.tw/p/406-1026-14170,r565.php?Lang=zh-tw ，全程參與核發必繳之國際移動力完成證明書）。",
+        "歷史表列逐列保存並標註2026/10/22與2026/10/13最新116-1名額與異動；靜岡（116-1合併為1列1名）、南洋理工不同列項保留方案，名額不相加。",
+        "2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆。",
+    ]
+    for s in dash.get("sources", []):
+        if s.get("source_url") == list_1013_url:
+            s["title"] = "中央116-1交換姐妹校列表（2026-10-13初版公告）"
+    if not any(s.get("source_url") == list_1022_url for s in dash.get("sources", [])):
+        dash["sources"].insert(
+            3,
+            {
+                "title": "中央116-1交換姐妹校列表（2026-10-22更新版，移除EDHEC共214列）",
+                "source_url": list_1022_url,
+                "category": "partner_school",
+                "summary": "2026-10-22更新版列表（116exchangeschoollist-1022.pdf）：較10/13版移除法國北方高等商業學院 EDHEC BUSINESS SCHOOL，共214列。",
+            },
+        )
+    with dash_path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(dash, ensure_ascii=False, indent=2) + "\n")
+
+    comp_path = output / "catalog-completeness.json"
+    comp = load_json(comp_path)
+    comp["checked_at"] = "2026-10-26T00:00:00+00:00"
+    comp["current_list_status"] = "published_2026_10_22_pending_application_open"
+    comp["current_list_published_date"] = "2026-10-22"
+    comp["current_list_url"] = list_1022_url
+    comp["current_list_sha256"] = "cb248b65a4a6533732d2afa26d83cd968df70528091646e4461869090e5299db"
+    comp["current_list_rows"] = 214
+    comp["previous_116_list_url"] = list_1013_url
+    comp["previous_116_list_sha256"] = "108bdc85e820e204c623495089f08880e1b902a4f6f7b155a2e7dab6caf569c9"
+    comp["previous_116_list_rows"] = 215
+    comp["current_list_removed_from_1013"] = [
+        "北方高等商業學院 EDHEC BUSINESS SCHOOL (院級交換，限管院學生，原列4名)"
+    ]
+    comp["current_list_modified_from_1013"] = [
+        "拉薩爾博舍综合理工學院 UniLaSalle (語言要求由 English B2 或 French B1 微調為 B2 English 或 French B1)"
+    ]
+    comp["current_list_removed_schools"] = [
+        "北方高等商業學院 EDHEC BUSINESS SCHOOL",
+        "布爾諾理工大學 Brno University of Technology",
+        "蘇萊曼德米雷爾大學 Suleyman Demirel University（SDU）",
+        "道格拉斯學院 Douglas College",
+        "莫瑞州立大學（自費） Murray State University",
+        "山形大學 Yamagata University",
+        "嘉泉大學 Gachon University",
+        "世宗大學 Sejong University",
+    ]
+    with comp_path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(comp, ensure_ascii=False, indent=2) + "\n")
+
+    pages_path = output / "pages.jsonl"
+    if pages_path.exists():
+        p_lines = [json.loads(line) for line in pages_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        oct22_title = "國立中央大學：116-1交換姐妹校列表（2026-10-22更新版，移除EDHEC共214列）"
+        p_lines = [p for p in p_lines if p.get("title") != oct22_title]
+        oct22_text = (
+            "國立中央大學116學年度第1梯次出國交換學生計畫姐妹校列表已於2026-10-22更新（檔名 116exchangeschoollist-1022.pdf，頁面註明定期更新）。\n"
+            "經與2026-10-13版（215列）逐列比對，2026-10-22版共214列：\n"
+            "1. 移除法國「北方高等商業學院 EDHEC BUSINESS SCHOOL」（原列第1頁 ncu-011，名額4、English B2或French B2、院級交換限管院學生）。\n"
+            "2. 微調法國「拉薩爾博舍综合理工學院 UniLaSalle」語言要求文字，由「English B2 或 French B1」改為「B2 English 或 French B1」（名額3、校級交換不變）。\n"
+            "3. 116-1甄選簡章仍為2026-09-05公告版本（116exchangenotice.pdf），簡章第2頁載明校內線上申請期間為2026/11/16 09:00至12/04 12:00（官網交換頁外層未直接印出11/16字樣）。"
+        )
+        p_lines.insert(
+            5,
+            {
+                "title": oct22_title,
+                "source_url": list_1022_url,
+                "published_at": "2026-10-22T00:00:00Z",
+                "text": oct22_text,
+                "summary": "2026-10-22版116-1交換姐妹校列表更新：較10/13版移除法國北方高等商業學院 EDHEC BUSINESS SCHOOL，共214列；簡章第2頁載明11/16開放線上申請。",
+                "category": "partner_school",
+                "attachments": [],
+                "crawled_at": "2026-10-26T00:00:00+00:00",
+                "content_hash": hashlib.sha256(oct22_text.encode("utf-8")).hexdigest(),
+            },
+        )
+        with pages_path.open("w", encoding="utf-8", newline="\n") as f:
+            f.write("\n".join(json.dumps(p, ensure_ascii=False) for p in p_lines) + "\n")
 
 
 if __name__ == "__main__":

@@ -16,8 +16,8 @@ from .storage import file_signature
 from .student_view import _application_period_status
 
 NTUST_OFFICIAL_DATA_DIR = Path(__file__).resolve().parent / "official_data" / "ntust"
-NTUST_INTRO_URL = "https://www.oia.ntust.edu.tw/p/412-1060-8921.php?Lang=zh-tw"
-NTUST_PARTNER_LIST_URL = "https://www.oia.ntust.edu.tw/p/405-1060-62105,c9035.php?Lang=zh-tw"
+NTUST_INTRO_URL = "https://oia.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw"
+NTUST_PARTNER_LIST_URL = "https://oia.ntust.edu.tw/p/405-1060-62105,c9035.php?Lang=zh-tw"
 
 
 def _payload(filename: str):
@@ -67,7 +67,7 @@ def build_ntust_student_dashboard(
             period.model_copy(
                 update={
                     "status": status,
-                    "status_note": period.status_note or "依國立臺灣科技大學國際事務處公告之 115-2（2027 春季班）交換生甄選時程辦理。",
+                    "status_note": period.status_note or "依國立臺灣科技大學國際事務處公告之 116-1（2027 秋季班，_中文_20260915.pdf）赴海外交換及 115-2 赴陸交換甄選時程辦理。",
                 }
             )
         )

@@ -4,7 +4,8 @@ import re
 
 from .university_registry import NCHU, resolve_university
 
-NCHU_OUTBOUND_URL = "https://www.oia.nchu.edu.tw/index.php/2-uncategorised/154-1-1-exchange-info"
+NCHU_OUTBOUND_URL = "https://www.oia.nchu.edu.tw/index.php/zh/5-global-mobility-tw/5-1-exchange-student-program-tw/5-1-1-application-guildeline-tw"
+NCHU_GUIDELINE_EN_URL = "https://oia.nchu.edu.tw/index.php/5-global-mobility-en/5-1-exchange-student-program-en/5-1-1-application-guildeline-en"
 NCHU_GUIDELINES_PDF_URL = "https://www.oia.nchu.edu.tw/images/File/05_Global_Mobility/5-1-Exchange-Student-Programs/Exchange_Program_Guidelines_for_Fall_Semester_2027_TW.pdf"
 NCHU_APPLY_PORTAL_URL = "https://oiawp.nchu.edu.tw/out-going-program-online-application/"
 NCHU_PARTNERS_SHEET_URL = "https://docs.google.com/spreadsheets/d/1acE37cH-R7k88O9g-sT8wH-rX99rQT3a/edit?usp=sharing&ouid=108931068757503846261&rtpof=true&sd=true"
