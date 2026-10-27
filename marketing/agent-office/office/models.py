@@ -120,7 +120,8 @@ class Insights(BaseModel):
     notes: list[str] = Field(description="給企劃的 2～4 點建議，每點一句")
 
 
-ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain", "hire", "assign", "dismiss", "watch_schools", "set_schedule"]
+ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain", "hire", "assign", "dismiss",
+                          "watch_schools", "set_schedule", "set_office_times", "add_routine", "remove_routine"]
 
 
 class ChiefAction(BaseModel):
@@ -134,7 +135,11 @@ class ChiefAction(BaseModel):
             "assign：交代工作給新同事（name 填他的名字，instructions 寫要做什麼，task_kind 選 report 或 threads）；"
             "dismiss：請新同事離開（name）；"
             "watch_schools：把平台支援的大學平均分給 names 裡的新同事，之後每天巡查各校官網的交換公告與規定是否有變、和平台資料是否一致；"
-            "set_schedule：設定 names 裡的新同事每天做固定工作的時間（times，HH:MM，可以多個）"
+            "set_schedule：設定 names 裡的新同事每天做固定工作的時間（times，HH:MM，可以多個）；"
+            "set_office_times：改每天的時間表，which 選 start（開工）、threads（Threads 發文，幾個時間就每天幾篇）、instagram、youtube，"
+            "times 填新時間，填 [\"default\"] 代表改回原本設定；"
+            "add_routine：新增每天固定時間做的事（times、task_kind、instructions 寫題目或工作，name 填新同事名字，原本的同事可留空）；"
+            "remove_routine：刪掉編號 routine_id 的固定排程"
         )
     )
     draft_id: int = Field(default=0, description="草稿編號，沒有就填 0")
@@ -147,11 +152,14 @@ class ChiefAction(BaseModel):
     role: str = Field(default="", description="set_brain 用：要改的工作（狀態裡 role= 後面的值）")
     name: str = Field(default="", description="hire／assign／dismiss 用：同事的名字")
     title: str = Field(default="", description="hire 用：職稱，例如 Dcard 研究員")
-    task_kind: Literal["report", "threads", "schools", ""] = Field(
-        default="", description="assign 用：report 查資料或分析後回報；threads 寫一則 Threads 草稿；schools 現在就巡查一次分到的學校")
+    task_kind: Literal["report", "threads", "schools", "carousel", "reel", ""] = Field(
+        default="", description="assign／add_routine 用：report 查資料或分析後回報；threads 寫一則 Threads 草稿；schools 巡查分到的學校；"
+                                "carousel、reel 只給 add_routine：請 Mori 做 IG 輪播、阿剪做 Reels")
     every_day: bool = Field(default=False, description="assign 用：true 代表從明天起每天開工時都做這件事")
     names: list[str] = Field(default_factory=list, description="watch_schools／set_schedule 用：新同事名字，watch_schools 依序分前段、後段")
-    times: list[str] = Field(default_factory=list, description="set_schedule 用：每天幾點做，例如 [\"10:00\", \"17:00\"]")
+    times: list[str] = Field(default_factory=list, description="set_schedule／set_office_times／add_routine 用：每天幾點，例如 [\"10:00\", \"17:00\"]")
+    which: Literal["start", "threads", "instagram", "youtube", ""] = Field(default="", description="set_office_times 用：要改哪一個時間")
+    routine_id: int = Field(default=0, description="remove_routine 用：固定排程編號（R 後面的數字）")
     brain: Literal["claude-code", "codex", "antigravity", "api", "offline", "default", ""] = ""
     model: str = Field(default="", description="set_brain 用：模型名稱，例如 sonnet、opus、claude-sonnet-5-5、gpt-5.5、Gemini 3.7 Pro")
     effort: Literal["low", "medium", "high", "xhigh", "max", "default", ""] = ""

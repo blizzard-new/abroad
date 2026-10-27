@@ -103,6 +103,10 @@ class Chief(Agent):
             for role, label in office.roles().items()
         )
         notes = json.loads(office.store.get("boss_notes") or "[]")
+        clock = office.schedule_times()
+        timetable = (f"每天開工 {clock['start'][0]}；Threads 發文 {'、'.join(clock['threads'])}（一個時間一篇）；"
+                     f"IG 發文 {clock['instagram'][0]}；YouTube 發文 {clock['youtube'][0]}")
+        routines = "\n".join(f"- {office.describe_routine(r)}" for r in office.routines())
         settings = office.settings
         def account(key: str, word: str) -> str:
             if not accounts.connected(settings, office.store, key):
@@ -126,7 +130,9 @@ class Chief(Agent):
             f"草稿（最新在前）：\n" + ("\n".join(rows) or "（還沒有草稿）") + "\n\n"
             f"記給明天的事：{'；'.join(notes) or '（無）'}\n\n同事：\n{staff}\n\n"
             f"每個工作現在用的 AI（role=後面是 set_brain 要填的值）：\n{minds}\n\n"
-            f"新同事每天固定的工作：\n{daily or '（還沒有新同事）'}\n"
+            f"新同事每天固定的工作：\n{daily or '（還沒有新同事）'}\n\n"
+            f"每天的時間表（台北，set_office_times 可改）：{timetable}\n"
+            f"固定排程（add_routine 新增、remove_routine 刪除，編號是 R 後面的數字）：\n{routines or '（還沒有）'}\n"
             f"平台目前支援 {office.facts().university_count} 所大學，清單在辦公室電腦上的專案裡，watch_schools 會直接讀，不用上 GitHub。"
         )
 
@@ -197,6 +203,23 @@ class Chief(Agent):
             times = self.office.set_hire_times(name, action.times)
             lines.append(f"{name} 每天 {'、'.join(times)} 做固定工作")
         return "；".join(lines)
+
+    def _do_set_office_times(self, action: ChiefAction) -> str:
+        from ..office import SCHEDULE
+
+        if not action.which:
+            raise ValueError("要改哪一個時間：開工、Threads、IG 還是 YouTube 發文？")
+        times = self.office.set_schedule_times(action.which, action.times)
+        extra = f"（每天 {len(times)} 篇，明天開工起生效）" if action.which == "threads" else "（明天起生效）" if action.which != "start" else ""
+        return f"每天{SCHEDULE[action.which][1]}時間改成 {'、'.join(times)}{extra}"
+
+    def _do_add_routine(self, action: ChiefAction) -> str:
+        record = self.office.add_routine(action.name, action.task_kind, action.instructions, action.times)
+        return f"排好了：{self.office.describe_routine(record)}（從下一個時間開始）"
+
+    def _do_remove_routine(self, action: ChiefAction) -> str:
+        record = self.office.remove_routine(action.routine_id)
+        return f"刪掉了：{self.office.describe_routine(record)}"
 
     def _do_dismiss(self, action: ChiefAction) -> str:
         return f"{self.office.dismiss(action.name or action.role)}離開辦公室了"
