@@ -341,6 +341,12 @@ body.unified-shell .application-workspace-heading .planning-next-action[data-sco
 [data-theme=dark] .stage-detail-value { color:#e6eef7; }
 [data-theme=dark] .stage-detail-label, [data-theme=dark] .application-progress-count { color:#a9b8c9; }
 [data-theme=dark] body.unified-shell .application-workspace-heading .planning-next-action[data-scope=elsewhere] { background:#233548; border-color:#425569; }
+/* Below 900px the cards are too narrow to share with the flags: the next-action card says it in words instead, and the hint
+   under each step keeps its width (at 768px the flag left a plain hint 58px wide). */
+@media (max-width:900px) {
+  .application-stage-flag { display:none; }
+  .application-workspace-stages a:has(.application-stage-flag:not(:empty)) { padding-right:14px; }
+}
 @media (max-width:700px) {
   /* mobile-reading.css gives this heading 4px at the sides on purpose, to use the phone's width. */
   #application-workspace .application-workspace-heading { padding:12px 4px 6px; }
