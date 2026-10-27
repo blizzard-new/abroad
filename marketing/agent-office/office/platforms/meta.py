@@ -42,8 +42,8 @@ class ThreadsClient(Client):
             time.sleep(3)
         raise PlatformError(f"Threads 容器 {container_id} 等太久還沒準備好")
 
-    def post_text(self, text: str, *, topic_tag: str = "", reply_to_id: str = "") -> dict:
-        params = {"media_type": "TEXT", "text": text}
+    def post_text(self, text: str, *, topic_tag: str = "", reply_to_id: str = "", image_url: str = "") -> dict:
+        params = {"media_type": "IMAGE", "image_url": image_url, "text": text} if image_url else {"media_type": "TEXT", "text": text}
         if topic_tag:
             params["topic_tag"] = topic_tag
         if reply_to_id:

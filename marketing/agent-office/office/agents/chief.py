@@ -19,6 +19,7 @@ from ..llm import WriterError
 from ..models import CarouselDraft, ChiefAction, ChiefReply, PlanItem, ThreadsDraft, VideoScript
 from ..rules import check_carousel, check_threads, check_video, instagram_caption
 from .base import Agent, Persona
+from .threads_writer import card_media
 
 STATUS_WORD = {
     "pending_approval": "待審", "needs_changes": "需修改", "approved": "已核准", "publishing": "發佈中",
@@ -263,7 +264,7 @@ class Chief(Agent):
         )
         author.status("working", f"總管交代：{instructions[:16]}")
         if draft["format"] == "text":
-            content = ThreadsDraft(**{k: payload[k] for k in ("text", "topic_tag", "first_reply")})
+            content = ThreadsDraft(**{k: payload[k] for k in ("text", "topic_tag", "first_reply", "card_title", "card_body") if k in payload})
             check = lambda d: check_threads(d, briefing.facts, item.source_url)  # noqa: E731
             kind = "Threads 貼文"
         elif draft["format"] == "carousel":
@@ -282,6 +283,8 @@ class Chief(Agent):
         if isinstance(content, ThreadsDraft):
             payload.update(content.model_dump())
             title = content.text.strip().splitlines()[0][:40]
+            if media.get("image") or not draft["media"]:
+                media = card_media(author, content, date.fromisoformat(draft["day"])) or media
         elif isinstance(content, CarouselDraft):
             payload.update(content.model_dump(), caption_full=instagram_caption(content.caption, content.hashtags))
             title = content.slides[0].title if content.slides else draft["title"]

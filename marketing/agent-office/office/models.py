@@ -32,6 +32,8 @@ class ThreadsDraft(BaseModel):
     text: str = Field(description="主文，不含任何網址")
     topic_tag: str = Field(description="一個主題標籤，不含 # 與句點")
     first_reply: str = Field(description="發文後自己留的第一則留言，放網址與補充")
+    card_title: str = Field(default="", description="附圖上的大標題，10～18 字，抓住主文重點，不含網址")
+    card_body: str = Field(default="", description="附圖上的一句補充，30 字以內，不含網址；可以留空")
 
 
 class Slide(BaseModel):
