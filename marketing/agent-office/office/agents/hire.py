@@ -14,6 +14,7 @@ from ..llm import WriterError
 from ..models import PlanItem, Report, SchoolCheck, ThreadsDraft
 from ..rules import check_threads
 from .base import Agent, Persona
+from .threads_writer import card_media
 
 SCHOOLS_PER_CALL = 5
 
@@ -74,7 +75,7 @@ class Hire(Agent):
         draft_id = office.queue(
             run_id, item, channel="threads", format="text", title=draft.text.strip().splitlines()[0][:40],
             payload={**draft.model_dump(), "source_url": "", "angle": item.angle, "author": self.persona.name},
-            review=review, passed=passed, slot=slot, sender=self,
+            media=card_media(self, draft, briefing.day), review=review, passed=passed, slot=slot, sender=self,
         )
         self.status("done", "這篇排進審核匣了", screen={"type": "compose", "text": draft.text, "reply": draft.first_reply})
         return draft_id

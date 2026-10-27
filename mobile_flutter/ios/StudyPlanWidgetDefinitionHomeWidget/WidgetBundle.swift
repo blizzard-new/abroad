@@ -1,4 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// Maintained natively: four independently selectable styles.
 
 import WidgetKit
 import SwiftUI
@@ -7,5 +7,8 @@ import SwiftUI
 struct StudyPlanWidgetDefinitionHomeWidgetBundle: WidgetBundle {
   var body: some Widget {
     StudyPlanWidgetDefinitionHomeWidget()
+    CountdownWidget()
+    ChecklistWidget()
+    ProgressWidget()
   }
 }

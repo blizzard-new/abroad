@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
+import '../core/daylight_surface.dart';
 import '../state/exchange_store.dart';
 import 'account_screen.dart';
 import 'application_documents_screen.dart';
@@ -20,7 +21,7 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
     context: context,
     showDragHandle: true,
     isScrollControlled: true,
-    backgroundColor: Colors.white,
+    backgroundColor: ExchangeColors.surface,
     builder: (sheetContext) {
       return SafeArea(
         child: DraggableScrollableSheet(
@@ -43,7 +44,7 @@ Future<void> showUniversityPickerSheet(BuildContext context) async {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '切換後會同步載入該校交換簡章、合作校、截止日與校板動態。',
+                        '選擇你的學校，查看適用的交換資訊。',
                         style: Theme.of(sheetContext).textTheme.bodySmall,
                       ),
                     ],
@@ -143,70 +144,57 @@ class _RootShellState extends State<RootShell> {
     return ExchangePageBackground(
       child: Scaffold(
         extendBody: true,
-        body: IndexedStack(index: index, children: pages),
+        body: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 840),
+            child: IndexedStack(index: index, children: pages),
+          ),
+        ),
         bottomNavigationBar: SafeArea(
           top: false,
           minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: reduceEffects ? 0 : 18,
-                sigmaY: reduceEffects ? 0 : 18,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(
-                    alpha: reduceEffects ? 1 : .88,
-                  ),
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: Colors.white),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: Row(
-                  children: List.generate(
-                    labels.length,
-                    (i) => Expanded(
-                      child: Semantics(
-                        selected: i == index,
-                        button: true,
+          child: LiquidControlSurface(
+            radius: 30,
+            child: Padding(
+              key: const ValueKey('main-navigation'),
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: List.generate(
+                  labels.length,
+                  (i) => Expanded(
+                    child: Semantics(
+                      label: labels[i],
+                      selected: i == index,
+                      button: true,
+                      child: Tooltip(
+                        message: labels[i],
+                        excludeFromSemantics: true,
                         child: InkWell(
+                          key: ValueKey('main-tab-$i'),
                           borderRadius: BorderRadius.circular(24),
                           onTap: () => store.selectMainTab(i),
                           child: AnimatedContainer(
                             duration: Duration(
                               milliseconds: reduceEffects ? 0 : 180,
                             ),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            constraints: const BoxConstraints(minHeight: 52),
                             decoration: BoxDecoration(
-                              color: i == index
-                                  ? ExchangeColors.tealSoft
-                                  : Colors.transparent,
                               borderRadius: BorderRadius.circular(24),
+                              color: i == index
+                                  ? ExchangeColors.teal.withValues(alpha: .17)
+                                  : Colors.transparent,
+                              border: Border.all(
+                                color: i == index
+                                    ? ExchangeColors.teal.withValues(alpha: .38)
+                                    : Colors.transparent,
+                              ),
                             ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  icons[i],
-                                  color: i == index
-                                      ? ExchangeColors.teal
-                                      : ExchangeColors.secondaryInk,
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  labels[i],
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: i == index
-                                        ? FontWeight.w600
-                                        : FontWeight.w400,
-                                    color: i == index
-                                        ? ExchangeColors.teal
-                                        : ExchangeColors.secondaryInk,
-                                  ),
-                                ),
-                              ],
+                            child: Icon(
+                              icons[i],
+                              size: 26,
+                              color: i == index
+                                  ? ExchangeColors.teal
+                                  : ExchangeColors.secondaryInk,
                             ),
                           ),
                         ),

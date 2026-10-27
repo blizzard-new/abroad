@@ -4,6 +4,7 @@ import '../core/application_calendar.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../core/student_ui.dart';
+import '../core/journey_illustration.dart';
 import '../state/exchange_store.dart';
 import '../state/workspace_sync.dart';
 import 'deadlines_screen.dart';
@@ -33,29 +34,37 @@ class JourneyScreen extends StatelessWidget {
         : store.favorites.isEmpty
         ? '收藏第一所學校'
         : '準備申請文件';
+    void continueJourney() {
+      if (account == null ||
+          (store.planProfile != null && store.favorites.isEmpty)) {
+        onSelectTab(1);
+      } else if (store.planProfile == null) {
+        _open(context, const EligibilityScreen());
+      } else {
+        onSelectTab(2);
+      }
+    }
+
     return SafeArea(
       bottom: false,
       child: RefreshIndicator(
         onRefresh: store.refresh,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 128),
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 128),
           children: [
             Row(
               children: [
                 const Icon(
-                  Icons.blur_on_rounded,
+                  Icons.explore_rounded,
                   color: ExchangeColors.teal,
-                  size: 32,
+                  size: 28,
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'UniWay',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
+                  child: Text(
+                    'UniWay',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
                 IconButton(
@@ -71,100 +80,111 @@ class JourneyScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
+            Text(
+              account == null ? '下一站，世界。' : '一步步，準備出發。',
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                fontSize: 28,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: ActionChip(
+                avatar: const Icon(Icons.school_outlined, size: 18),
+                label: Text(store.selectedUniversity),
+                tooltip: '切換就讀大學',
+                onPressed: () => showUniversityPickerSheet(context),
+              ),
+            ),
+            const SizedBox(height: 20),
             GlassCard(
               tint: ExchangeColors.tealSoft,
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Icon(
-                        Icons.flight_takeoff_rounded,
-                        color: ExchangeColors.teal,
-                      ),
-                      const SizedBox(width: 8),
                       Expanded(
-                        child: Text(
-                          account == null ? '準備出發' : '下一步',
-                          style: Theme.of(context).textTheme.bodySmall,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const StudentIconLabel(
+                              Icons.flight_takeoff_rounded,
+                              '你的交換旅程',
+                              color: ExchangeColors.teal,
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              account == null ? '從一所心動的\n學校開始' : nextTitle,
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              account == null ? '找學校・備文件・一起出發' : '今天，完成一件事就好。',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
                         ),
                       ),
+                      if (MediaQuery.sizeOf(context).width >= 360 &&
+                          MediaQuery.textScalerOf(context).scale(16) < 24) ...[
+                        const SizedBox(width: 8),
+                        const JourneyIllustration(),
+                      ],
                     ],
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    account == null ? '開始你的交換' : nextTitle,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: ActionChip(
-                      avatar: const Icon(Icons.school_outlined, size: 20),
-                      label: Text(store.selectedUniversity),
-                      tooltip: '切換就讀大學',
-                      onPressed: () => showUniversityPickerSheet(context),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 20),
                   FilledButton.icon(
-                    icon: const Icon(Icons.arrow_forward_rounded),
+                    onPressed: continueJourney,
+                    icon: Icon(
+                      account == null
+                          ? Icons.travel_explore_rounded
+                          : Icons.arrow_forward_rounded,
+                    ),
                     label: Text(account == null ? '探索學校' : '繼續準備'),
-                    onPressed: () {
-                      if (account == null ||
-                          (store.planProfile != null &&
-                              store.favorites.isEmpty)) {
-                        onSelectTab(1);
-                      } else if (store.planProfile == null) {
-                        _open(context, const EligibilityScreen());
-                      } else {
-                        onSelectTab(2);
-                      }
-                    },
                   ),
                 ],
               ),
             ),
-            if (account == null) ...[
-              const SizedBox(height: 12),
-              StudentActionRow(
-                icon: Icons.devices_rounded,
-                title: '登入同步',
-                detail: '沿用電腦版 Google 帳號',
-                onTap: () => onSelectTab(4),
-              ),
-            ] else ...[
-              const SizedBox(height: 12),
-              const WorkspaceSyncCard(),
-            ],
             const SizedBox(height: 24),
-            const StudentHeading('準備路線'),
+            StudentHeading(
+              '我的準備',
+              action: IconButton(
+                tooltip: '查看申請時程',
+                onPressed: () => _open(context, const DeadlinesScreen()),
+                icon: const Icon(Icons.calendar_month_outlined),
+              ),
+            ),
             const SizedBox(height: 12),
             GlassCard(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Column(
                 children: [
                   StudentActionRow(
-                    icon: Icons.travel_explore_rounded,
-                    title: '1  找學校',
-                    detail: '${store.favorites.length} 所收藏',
+                    icon: Icons.bookmark_border_rounded,
+                    title: '學校清單',
+                    detail: store.favorites.isEmpty
+                        ? '先收藏，再比較'
+                        : '${store.favorites.length} 所收藏',
                     onTap: () => onSelectTab(1),
                   ),
-                  const Divider(),
+                  const Divider(indent: 56),
                   StudentActionRow(
-                    icon: Icons.assignment_outlined,
-                    title: '2  備文件',
+                    icon: Icons.task_alt_rounded,
+                    title: '申請文件',
                     detail: '${store.applicationFormReadyCount} 份完成',
                     onTap: () => onSelectTab(2),
                   ),
-                  const Divider(),
+                  const Divider(indent: 56),
                   StudentActionRow(
-                    icon: Icons.event_available_outlined,
-                    title: '3  排時程',
+                    icon: Icons.event_outlined,
+                    title: next == null ? '加入下一個期限' : next.title,
                     detail: next == null
-                        ? '加入申請日期'
+                        ? '把重要日期留在這裡'
                         : '${dateKey(next.date)} · ${countdownLabel(next.date)}',
                     onTap: () => _open(context, const DeadlinesScreen()),
                   ),
@@ -172,28 +192,43 @@ class JourneyScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const StudentHeading('常用工具'),
+            const StudentHeading('出發工具箱'),
             const SizedBox(height: 12),
             StudentActionGrid([
               StudentAction(
                 Icons.account_balance_wallet_outlined,
                 '交換預算',
                 () => _open(context, const BudgetScreen()),
+                color: ExchangeColors.coral,
               ),
               StudentAction(
-                Icons.notifications_none_rounded,
-                '通知提醒',
-                () => _open(context, const NotificationScreen()),
+                Icons.forum_outlined,
+                '同學論壇',
+                () => onSelectTab(3),
                 color: ExchangeColors.blue,
               ),
               StudentAction(
                 Icons.widgets_outlined,
                 '桌面小工具',
                 () => _open(context, const WidgetSettingsScreen()),
-                color: ExchangeColors.blue,
               ),
-              StudentAction(Icons.forum_outlined, '同學論壇', () => onSelectTab(3)),
+              StudentAction(
+                Icons.notifications_none_rounded,
+                '通知提醒',
+                () => _open(context, const NotificationScreen()),
+                color: ExchangeColors.amber,
+              ),
             ]),
+            const SizedBox(height: 20),
+            if (account == null)
+              StudentActionRow(
+                icon: Icons.devices_rounded,
+                title: '登入同步',
+                detail: '手機、電腦接著準備',
+                onTap: () => onSelectTab(4),
+              )
+            else
+              const WorkspaceSyncCard(),
             if (store.isLoading)
               const Padding(
                 padding: EdgeInsets.only(top: 16),
@@ -307,9 +342,9 @@ class _Surface extends StatelessWidget {
     width: double.infinity,
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: ExchangeColors.surfaceMuted,
       borderRadius: BorderRadius.circular(26),
-      border: Border.all(color: const Color(0xFFE3ECEC)),
+      border: Border.all(color: ExchangeColors.line),
     ),
     child: child,
   );

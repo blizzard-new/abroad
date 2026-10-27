@@ -160,10 +160,12 @@
         ${artBlock}<img class="mascot" src="/brand/suitcase.webp" alt="" />
         <div class="pill">${ICONS.up}到主頁看完整內容</div>`;
     } else if (slide.kind === "cover") {
-      root.innerHTML = `${brand}${count}
+      // A lone picture (the one posted with a Threads post) has nothing to swipe to.
+      const single = total === 1;
+      root.innerHTML = `${brand}${single ? "" : count}
         <div class="cover-text"><span class="kicker"><i></i>交換申請小筆記</span><h1>${accent(slide.title)}</h1><p>${esc(slide.body)}</p></div>
         ${artBlock}<img class="mascot" src="/brand/suitcase.webp" alt="" />
-        <div class="swipe">往左滑${ICONS.arrow}</div>`;
+        ${single ? `<div class="foot"><span>${esc(site)}｜以各校官方公告為準</span></div>` : `<div class="swipe">往左滑${ICONS.arrow}</div>`}`;
     } else if (slide.kind === "cta") {
       const [feature, ...rest] = String(slide.body || "").split("｜");
       root.innerHTML = `${brand}${count}

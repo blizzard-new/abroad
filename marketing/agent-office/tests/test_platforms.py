@@ -43,6 +43,21 @@ def test_threads_post_creates_container_waits_and_publishes():
     assert all(c["params"].get("access_token") == "***" for c in client.calls)
 
 
+def test_threads_post_with_a_picture_uses_an_image_container():
+    def handler(request):
+        path = request.url.path
+        if path.endswith("/threads"):
+            return httpx.Response(200, json={"id": "c1"})
+        if path.endswith("/threads_publish"):
+            return httpx.Response(200, json={"id": "m1"})
+        return httpx.Response(200, json={"status": "FINISHED", "permalink": "https://www.threads.com/@uniway/post/y"})
+
+    http, calls = recorder(handler)
+    ThreadsClient("42", "secret", dry_run=False, http=http).post_text("哈囉", image_url="https://cdn/threads.jpg")
+    assert calls[0].url.params["media_type"] == "IMAGE" and calls[0].url.params["image_url"] == "https://cdn/threads.jpg"
+    assert calls[0].url.params["text"] == "哈囉"
+
+
 def test_instagram_carousel_flow(tmp_path: Path):
     ids = iter(["k1", "k2", "parent"])
 

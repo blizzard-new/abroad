@@ -213,7 +213,7 @@ class _AccountRequiredPanel extends StatelessWidget {
               const ExchangeIconBadge(
                 Icons.lock_person_outlined,
                 color: ExchangeColors.blue,
-                background: Colors.white70,
+                background: ExchangeColors.blueSoft,
               ),
               const SizedBox(height: 12),
               Text('登入後參與校別社群', style: Theme.of(context).textTheme.titleLarge),
@@ -313,7 +313,7 @@ class _IdentityCard extends StatelessWidget {
           const ExchangeIconBadge(
             Icons.shield_outlined,
             color: ExchangeColors.blue,
-            background: Colors.white70,
+            background: ExchangeColors.blueSoft,
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -631,7 +631,7 @@ class _ChatPanel extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: mine
                       ? ExchangeColors.teal
-                      : Colors.white.withValues(alpha: .86),
+                      : ExchangeColors.surfaceMuted,
                   borderRadius: BorderRadius.only(
                     topLeft: const Radius.circular(16),
                     topRight: const Radius.circular(16),
@@ -972,7 +972,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
                               decoration: BoxDecoration(
                                 color: mine
                                     ? ExchangeColors.teal
-                                    : Colors.white,
+                                    : ExchangeColors.surface,
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Text(

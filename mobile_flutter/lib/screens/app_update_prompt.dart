@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -126,6 +127,17 @@ class AppUpdateTile extends StatelessWidget {
   const AppUpdateTile({super.key});
   @override
   Widget build(BuildContext context) {
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS) {
+      return const GlassCard(
+        child: Row(
+          children: [
+            Icon(Icons.system_update_alt_rounded),
+            SizedBox(width: 12),
+            Expanded(child: Text('iPhone 版本透過 TestFlight 或 App Store 更新。')),
+          ],
+        ),
+      );
+    }
     final controller = AppUpdateScope.maybeOf(context);
     if (controller == null) return const SizedBox.shrink();
     return GlassCard(

@@ -1,0 +1,64 @@
+name: iOS preview
+
+on:
+  pull_request:
+    paths: [mobile_flutter/**, .github/workflows/ios-preview.yml]
+  push:
+    branches: [main]
+    paths: [mobile_flutter/**, .github/workflows/ios-preview.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: mobile_flutter
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install pinned Flutter SDK
+        run: |
+          git clone --depth 1 --branch 3.44.6 https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - name: Resolve dependencies
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.3.app/Contents/Developer
+          flutter --version
+          xcodebuild -version
+          flutter pub get
+      - name: Build unsigned iPhone app with WidgetKit extension
+        run: flutter build ios --release --no-codesign --dart-define=API_BASE_URL=https://app.uniway-tw.com/
+      - name: Build iPhone simulator app
+        run: flutter build ios --simulator --debug --dart-define=API_BASE_URL=https://app.uniway-tw.com/
+      - name: Launch simulator preview
+        run: |
+          mkdir -p build/preview
+          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(v["udid"] for k,vs in sorted(d["devices"].items(),reverse=True) if "iOS" in k for v in vs if "iPhone" in v["name"]))')
+          xcrun simctl boot "$DEVICE_ID"
+          xcrun simctl bootstatus "$DEVICE_ID" -b
+          xcrun simctl install "$DEVICE_ID" build/ios/iphonesimulator/Runner.app
+          xcrun simctl launch "$DEVICE_ID" tw.uniway.app
+          sleep 10
+          xcrun simctl io "$DEVICE_ID" screenshot build/preview/iPhone-start.png
+      - name: Package developer previews
+        run: |
+          mkdir -p build/preview
+          ditto -c -k --sequesterRsrc --keepParent build/ios/iphoneos/Runner.app build/preview/UniWay-iOS-unsigned-app.zip
+          ditto -c -k --sequesterRsrc --keepParent build/ios/iphonesimulator/Runner.app build/preview/UniWay-iOS-simulator.zip
+          printf '%s\n' 'Developer previews only. The unsigned app cannot be installed by the public. A signed TestFlight build requires Apple Developer enrollment, app identifiers, profiles and App Store Connect.' > build/preview/README.txt
+          shasum -a 256 build/preview/*.zip > build/preview/SHA256SUMS.txt
+      - name: Upload developer previews
+        uses: actions/upload-artifact@v4
+        with:
+          name: uniway-ios-developer-preview
+          path: mobile_flutter/build/preview/
+          if-no-files-found: error
+          retention-days: 14
