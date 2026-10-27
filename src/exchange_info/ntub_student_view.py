@@ -18,8 +18,8 @@ from .student_view import _application_period_status
 NTUB_OFFICIAL_DATA_DIR = (
     Path(__file__).resolve().parent / "official_data" / "ntub"
 )
-NTUB_INTRO_URL = "https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw"
-NTUB_PARTNER_LIST_URL = "https://oia.ntub.edu.tw/p/412-1006-14367.php?Lang=zh-tw"
+NTUB_INTRO_URL = "https://oia.ntub.edu.tw/p/405-1006-57507,c3152.php?Lang=zh-tw"
+NTUB_PARTNER_LIST_URL = "https://oia.ntub.edu.tw/p/405-1006-57515,c3152.php?Lang=zh-tw"
 
 
 def _payload(filename: str):

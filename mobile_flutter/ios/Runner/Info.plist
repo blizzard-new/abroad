@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>交換指南</string>
+	<string>UniWay</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -16,24 +16,17 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>tw.edu.cgu.exchangeGuideFlutter</string>
+			<string>tw.uniway.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>exchangeguide</string>
+				<string>tw.uniway.app</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>交換指南</string>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>在開發測試期間連線到同一個 Wi-Fi 上的交換資訊伺服器。</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsLocalNetworking</key>
-		<true/>
-	</dict>
+	<string>UniWay</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -94,5 +87,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
+	<key>FirebaseMessagingAutoInitEnabled</key>
+	<false/>
+	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
+	<false/>
 </dict>
 </plist>

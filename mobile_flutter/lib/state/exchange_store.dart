@@ -1400,7 +1400,9 @@ class ExchangeStore extends ChangeNotifier {
 
   Future<bool> canRequestHomeWidgetPin() => widgetBridge.canRequestPin();
 
-  Future<void> requestHomeWidgetPin() => widgetBridge.requestPin();
+  Future<void> requestHomeWidgetPin({
+    StudyPlanWidgetStyle style = StudyPlanWidgetStyle.overview,
+  }) => widgetBridge.requestPin(style: style);
 
   Future<void> _syncStudyPlanWidget() async {
     if (account == null) {
@@ -1440,6 +1442,9 @@ class ExchangeStore extends ChangeNotifier {
         nextTitle: title,
         nextDateLabel: dateLabel,
         progressLabel: '準備進度 $planCompletionPercent%',
+        deadlineIso: upcoming == null
+            ? ''
+            : '${upcoming.date.year.toString().padLeft(4, '0')}-${upcoming.date.month.toString().padLeft(2, '0')}-${upcoming.date.day.toString().padLeft(2, '0')}',
         tasks: applicationDocumentLabels
             .where(
               (label) =>

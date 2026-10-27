@@ -89,3 +89,84 @@ def test_hiring_rules(office):
         office.hire(f"同事{i}", "助理", "x")
     with pytest.raises(ValueError, match="最多"):
         office.hire("第七位", "助理", "x")
+
+
+def test_a_failing_tool_falls_back_to_another_ai_and_says_why_when_none_works(office, monkeypatch):
+    office.hire("Dora", "校園情報研究員", "巡查各大學官網", brain="antigravity", model="Gemini 4 Argon", effort="high")
+    hire = office.colleague("Dora")
+    assert [b.key if b else "offline" for b in office.writer.chain(hire.id)][-1] == "offline"
+    monkeypatch.setenv("FAKE_FAIL", "agy")
+    assert "托福有效期兩年" in hire.report("查這週大家在問什麼")  # Claude Code picked it up
+    monkeypatch.setenv("PATH", "/nonexistent")
+    answer = hire.report("查這週大家在問什麼")
+    assert "沒辦法完成" in answer and "Antigravity" in answer and "沒有連上任何 AI" not in answer
+
+
+def test_schools_are_shared_out_and_checked_every_morning(office, monkeypatch):
+    from office.brand import load_schools
+    from office.scheduler import tick
+
+    office.hire("Dora", "校園情報研究員", "巡查各大學官網")
+    office.hire("dora2", "校園情報研究員", "巡查各大學官網")
+    chief_does(monkeypatch, {"type": "watch_schools", "names": ["Dora", "dora2"]})
+    answer = office.staff["chief"].handle("把大學平分給 Dora 和 dora2，每天巡查")
+    schools = load_schools(office.settings)
+    first, second = office.colleague("Dora").record["schools"], office.colleague("dora2").record["schools"]
+    assert first + second == [s.id for s in schools] and abs(len(first) - len(second)) <= 1
+    assert f"Dora 負責 {len(first)} 所" in answer["text"] and schools[0].name in answer["text"]
+    assert "巡查" in office.staff["chief"].state_text()
+
+    morning = office.at(office.today(), office.settings.daily_at)
+    with monkeypatch.context() as m:
+        m.setattr(office.store, "run_for_day", lambda day: {"id": 1})  # the day's posts are already made
+        tick(office, morning.astimezone(__import__("datetime").timezone.utc), background=False)
+    assert wait_for(lambda: sum("今天巡查了" in msg["text"] for msg in office.store.chat()) == 2, seconds=20)
+    report = next(msg["text"] for msg in office.store.chat() if msg["text"].startswith("Dora今天巡查了"))
+    assert "🆕 新公告｜長庚大學" in report and "✅ 沒有變化：國立臺北大學" in report
+    batches = [c for c in calls() if "--json-schema" in c["args"] and "SchoolReport" in c["args"][c["args"].index("--json-schema") + 1]]
+    assert len(batches) >= 2 and "官網：" in batches[0]["stdin"]
+
+
+def test_a_daily_assignment_is_remembered(office, monkeypatch):
+    office.hire("小美", "研究員", "研究 Dcard")
+    chief_does(monkeypatch, {"type": "assign", "name": "小美", "task_kind": "report", "instructions": "看 Dcard 交換版熱門話題", "every_day": True})
+    answer = office.staff["chief"].handle("請小美每天看 Dcard 交換版")
+    assert "從明天起每天" in answer["text"]
+    assert office.colleague("小美").record["daily"] == "看 Dcard 交換版熱門話題"
+
+
+def test_a_school_round_can_start_right_away(office, monkeypatch):
+    office.hire("Dora", "校園情報研究員", "巡查各大學官網")
+    chief_does(monkeypatch, {"type": "assign", "name": "Dora", "task_kind": "schools"})
+    assert "還沒分到學校" in office.staff["chief"].handle("請 Dora 現在先巡查一次")["text"]
+    office.split_schools(["Dora"])
+    answer = office.staff["chief"].handle("請 Dora 現在先巡查一次")
+    assert "現在開始巡查 33 所" in answer["text"]
+    assert wait_for(lambda: any(m["text"].startswith("Dora今天巡查了") for m in office.store.chat()), seconds=20)
+
+
+def test_colleagues_can_work_at_their_own_times_several_times_a_day(office, monkeypatch):
+    from datetime import date, datetime, time, timezone
+
+    office.hire("Dora", "校園情報研究員", "巡查各大學官網")
+    office.hire("dora2", "校園情報研究員", "巡查各大學官網")
+    office.split_schools(["Dora", "dora2"])
+    chief_does(monkeypatch, {"type": "set_schedule", "names": ["Dora", "dora2"], "times": ["17:00", "10:00"]})
+    answer = office.staff["chief"].handle("Dora 和 dora2 每天早上十點和下午五點各巡查一次")
+    assert "Dora 每天 10:00、17:00 做固定工作" in answer["text"]
+    assert "每天 10:00、17:00 做" in office.staff["chief"].state_text()
+
+    day = date(2030, 1, 7)
+    at = lambda hh, mm: office.at(day, time(hh, mm)).astimezone(timezone.utc)  # noqa: E731
+    assert office.run_hire_dailies(at(9, 59)) == []
+    assert office.run_hire_dailies(at(10, 0)) == ["Dora", "dora2"]
+    assert office.run_hire_dailies(at(10, 30)) == []  # already done this morning
+    assert office.run_hire_dailies(at(17, 1)) == ["Dora", "dora2"]
+    assert office.run_hire_dailies(at(23, 0)) == []
+    # Off all next day until evening: one round on start, not two.
+    assert office.run_hire_dailies(at(10, 0).replace(day=8).replace(hour=11)) == ["Dora", "dora2"]
+    assert office.run_hire_dailies(at(10, 0).replace(day=8).replace(hour=11, minute=30)) == []
+    assert wait_for(lambda: sum("今天巡查了" in m["text"] for m in office.store.chat()) >= 6, seconds=30)
+
+    with pytest.raises(ValueError, match="看不懂"):
+        office.set_hire_times("Dora", ["25:00"])

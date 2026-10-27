@@ -1,0 +1,223 @@
+{
+  "audit_id": "2026-10-26-daily-17-schools",
+  "checked_date": "2026-10-26",
+  "checked_window": "2026-10-26 (Asia/Taipei)",
+  "total_schools_audited": 17,
+  "epistemic_policy": "今天（10/26）巡查 17／17 所學校完成：5 校有新公告（國立臺北大學、國立臺灣大學、中原大學、國立臺灣科技大學、國立中山大學）、2 校和平台不一致已修正更新（國立中央大學 2026-10-22 姐妹校列表與國立中興大學有效官網連結／階段截止狀態）、10 校沒有變化（長庚大學、國立中正大學、淡江大學、天主教輔仁大學、東吳大學、國立臺灣師範大學、元智大學、逢甲大學、國立臺北科技大學、國立政治大學）。所有失效連結、憑證異常網址、新增簡章與修正公告、列表增刪差異、說明會時程及暫定版簡章邊界均已逐校核實並同步更新至平台。",
+  "summary_counts": {
+    "new_announcements": 5,
+    "discrepancy_resolved": 2,
+    "no_change": 10
+  },
+  "schools": [
+    {
+      "order": 1,
+      "school_id": "ntpu",
+      "school_name": "國立臺北大學",
+      "category": "new_announcement",
+      "status_label": "🆕 新公告",
+      "source_url": "https://new.ntpu.edu.tw/oia",
+      "detail_source_urls": [
+        "https://new.ntpu.edu.tw/oia/news/6ad986a07085cb4f0c818c5e",
+        "https://cms-carrier.ntpu.edu.tw/uploads/1151021_c627bfee0e.pdf",
+        "https://cms-carrier.ntpu.edu.tw/uploads/1151015_9e06704aa6.pdf",
+        "https://new.ntpu.edu.tw/oia/news/6acc5d0d7085cb4f0c818840"
+      ],
+      "summary": "國際處 2026/10/22 發布「修正公告」（https://new.ntpu.edu.tw/oia/news/6ad986a07085cb4f0c818c5e），修正《國立臺北大學辦理教育部補助大學校院設置學海飛颺及學海惜珠獎學金甄選辦法》（修正後全文 PDF https://cms-carrier.ntpu.edu.tw/uploads/1151021_c627bfee0e.pdf 、修正條文對照表 https://cms-carrier.ntpu.edu.tw/uploads/1151015_9e06704aa6.pdf）：刪除第 3 條「須未獲得交換／訪問學校獎學金」限制（開放同時領取外校獎學金者申請），並增訂第 12 條第(五)(六)款規定每學期至少修讀一門與本系所（含雙主修、輔系）專業相關課程且及格、排除暑修及純語言學習課程。另有 2026/10/12「法國巴黎計算機電子工程師學院 EFREI 交換說明會」公告（https://new.ntpu.edu.tw/oia/news/6acc5d0d7085cb4f0c818840），已於 2026/10/23（五）12:10–13:00 在三峽校區圖書館 2F 思巢舉辦完畢。",
+      "xuehai_regulation_amended_2026_10_22": true,
+      "efrei_info_session_verified": true
+    },
+    {
+      "order": 2,
+      "school_id": "ntu",
+      "school_name": "國立臺灣大學",
+      "category": "new_announcement",
+      "status_label": "🆕 新公告",
+      "source_url": "https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/sem1-20272028ay-selection-timeline/",
+      "detail_source_urls": [
+        "https://oia.ntu.edu.tw/outgoing/school.list",
+        "https://forms.gle/aDBxaTLB2yjZt5AK8"
+      ],
+      "summary": "116-1 甄選時程頁（https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/sem1-20272028ay-selection-timeline/）載明：線上報名 115/11/3 10:00 至 11/9 16:00、成績公布 12/2、第一階段志願選填截止 12/7，與平台 116-1 校級甄選資料一致無衝突。首頁新增「德國哥廷根大學交換學生計畫說明會」開放報名（報名表單 https://forms.gle/aDBxaTLB2yjZt5AK8 ，頁面未標註舉辦日期）。首頁頁尾「10/30（日）18:00 至 10/31（一）10:00 系統維護通知（學校列表、心得查詢等功能暫停）」經檢視 HTML DOM id 為 #system_maintenance_20221030（2022 年舊版遺留靜態彈窗，因 2022/10/30 為週日而 2026/10/30 為週五，頁面未寫年份，建議同學留意但勿誤判為當年度停機）。",
+      "timeline_consistent_with_platform": true,
+      "goettingen_info_session_added": true,
+      "maintenance_modal_year_verified": "2022_legacy_modal_id_system_maintenance_20221030"
+    },
+    {
+      "order": 3,
+      "school_id": "ncu",
+      "school_name": "國立中央大學",
+      "category": "discrepancy_resolved",
+      "status_label": "⚠️ 和平台不一致（已更新同步）",
+      "source_url": "https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",
+      "detail_source_urls": [
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangeschoollist-1022.pdf",
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf"
+      ],
+      "summary": "官網交換頁姐妹校列表已換成 2026-10-22 版（116exchangeschoollist-1022.pdf，頁面註明定期更新），已下載解析全部 214 列並與 2026/10/13 版（215 列）完成逐列比對：移除法國「北方高等商業學院 EDHEC BUSINESS SCHOOL」（原列第 1 頁 ncu-011，管院交換 4 名），並微調法國「拉薩爾博舍综合理工學院 UniLaSalle」語言要求文字（由 English B2 改為 B2 English）。116-1 簡章仍為 2026-09-05 公告版（116exchangenotice.pdf），簡章第 2 頁明載校內線上申請為 2026/11/16 09:00 至 12/04 12:00（官網交換頁外層僅放簡章與列表連結，未直接印出 11/16 字樣）。",
+      "list_version_before": "2026-10-13",
+      "list_version_after": "2026-10-22",
+      "rows_before": 215,
+      "rows_after": 214,
+      "removed_schools": [
+        "北方高等商業學院 EDHEC BUSINESS SCHOOL"
+      ],
+      "modified_schools": [
+        "拉薩爾博舍综合理工學院 UniLaSalle"
+      ]
+    },
+    {
+      "order": 4,
+      "school_id": "cycu",
+      "school_name": "中原大學",
+      "category": "new_announcement",
+      "status_label": "🆕 新公告",
+      "source_url": "https://oia.cycu.edu.tw/?p=9903",
+      "detail_source_urls": [
+        "https://oia.cycu.edu.tw/?p=6336"
+      ],
+      "summary": "平台原登記官網網址（?page_id=2956）回傳 404，已更新為有效出國交換專頁（https://oia.cycu.edu.tw/?p=6336）。同步補上「115-2 (2027春季班)赴國際姊妹校交換 第二梯次遴選公告」（https://oia.cycu.edu.tw/?p=9903）：開放荷、美、日、韓、印尼、菲等 6 國 20 所姊妹校共 50 名（名額得依報名人數於各校間調整），要求在校學業成績平均 GPA 3.0 以上；9/24 開放線上填表，10/7 中午 12:00 截止收紙本，10/14 面試（公告未標發布日期，申請已截止，以官方公告為準）。",
+      "broken_url_replaced": "https://oia.cycu.edu.tw/?page_id=2956&lang=zh -> https://oia.cycu.edu.tw/?p=6336",
+      "round_2_115_2_added": true,
+      "round_2_status": "closed"
+    },
+    {
+      "order": 5,
+      "school_id": "ntust",
+      "school_name": "國立臺灣科技大學",
+      "category": "new_announcement",
+      "status_label": "🆕 新公告",
+      "source_url": "https://oia.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw",
+      "detail_source_urls": [
+        "https://oia.ntust.edu.tw/p/405-1060-62105,c9035.php?Lang=zh-tw",
+        "https://oia.ntust.edu.tw/var/file/60/1060/img/2457/_中文_20260915.pdf"
+      ],
+      "summary": "移除會觸發憑證錯誤的 www.oia.ntust.edu.tw 網域並改用 oia.ntust.edu.tw 有效交換生簡章頁（https://oia.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw）。補上官網最新「116-1 赴海外交換學生計畫甄選簡章」（檔名 _中文_20260915.pdf，對象為赴歐、美、亞〔不含中國大陸〕、澳洲姐妹校之學生；網頁外層未印出申請期間、說明會日期與名額，簡章 PDF 內文載明線上申請期間為 2026/12/03 10:00 至 12/07 15:00，繳交紙本截止為 12/07 17:00，並與既有 115-2 春季班簡章並列說明）。",
+      "certificate_hostname_fixed": "www.oia.ntust.edu.tw -> oia.ntust.edu.tw",
+      "brochure_116_1_added": true
+    },
+    {
+      "order": 6,
+      "school_id": "nsysu",
+      "school_name": "國立中山大學",
+      "category": "new_announcement",
+      "status_label": "🆕 新公告",
+      "source_url": "https://oia.nsysu.edu.tw/p/405-1308-384613,c20621.php?Lang=zh-tw",
+      "detail_source_urls": [
+        "https://oia.nsysu.edu.tw/p/412-1308-20697.php?Lang=zh-tw"
+      ],
+      "summary": "補上國際處 2026/10/21 最新公告「2027-2028 其他國家與地區學生出國交換計畫－甄選時程 & 線上說明會」（https://oia.nsysu.edu.tw/p/405-1308-384613,c20621.php?Lang=zh-tw）：正式甄選簡章訂於 2026/10/27（二）起公告，申請期間為 11/3（二）9:00 至 11/17（二）17:00；線上說明會共 4 場（10/29、10/31 20:00–21:30；11/4、11/5 12:00–13:30）；學校資訊與名額依 2026/4/12 公布版本。平台同步標註目前所載 2027–2028 其他國家簡章內容在 10/27 官方正式簡章發布前屬暫定版（依 2026/4/12 預告版整理），將於 10/27 正式簡章公布後重新比對。",
+      "official_brochure_release_date": "2026-10-27",
+      "application_window": {
+        "opens_at": "2026-11-03T09:00:00+08:00",
+        "deadline_at": "2026-11-17T17:00:00+08:00"
+      },
+      "platform_data_marked_provisional_until_1027": true
+    },
+    {
+      "order": 7,
+      "school_id": "nchu",
+      "school_name": "國立中興大學",
+      "category": "discrepancy_resolved",
+      "status_label": "⚠️ 和平台不一致（已更新同步）",
+      "source_url": "https://oia.nchu.edu.tw/index.php/5-global-mobility-en/5-1-exchange-student-program-en/5-1-1-application-guildeline-en",
+      "detail_source_urls": [
+        "https://www.oia.nchu.edu.tw/index.php/zh/5-global-mobility-tw/5-1-exchange-student-program-tw/5-1-1-application-guildeline-tw"
+      ],
+      "summary": "平台原列官網網址（154-1-1-exchange-info）回傳 404，已全面替換為有效之中文申請簡章頁（5-1-1-application-guildeline-tw）與英文版 Application Guideline 頁（https://oia.nchu.edu.tw/index.php/5-global-mobility-en/5-1-exchange-student-program-en/5-1-1-application-guildeline-en）。頁面所載 Fall 2027（116 學年度第 1 學期）內容與平台一致：第一步學生線上申請（2026/9/23 至 10/23 中午 12:00）已截止；第二步教授線上推薦截止為 2026/10/30 中午 12:00；頁面未直接列出名額。",
+      "broken_url_replaced": "154-1-1-exchange-info -> 5-1-1-application-guildeline-tw / 5-1-1-application-guildeline-en",
+      "step1_student_online_status": "closed_2026_10_23_1200",
+      "step2_professor_recommendation_deadline": "2026-10-30T12:00:00+08:00"
+    },
+    {
+      "order": 8,
+      "school_id": "cgu",
+      "school_name": "長庚大學",
+      "category": "no_change",
+      "status_label": "✅ 沒有變化",
+      "source_url": "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656",
+      "summary": "10/26 巡查確認沒有變化。"
+    },
+    {
+      "order": 9,
+      "school_id": "ccu",
+      "school_name": "國立中正大學",
+      "category": "no_change",
+      "status_label": "✅ 沒有變化",
+      "source_url": "https://oia.ccu.edu.tw/p/404-1008-93586.php?Lang=zh-tw",
+      "summary": "10/26 巡查確認沒有變化。"
+    },
+    {
+      "order": 10,
+      "school_id": "tku",
+      "school_name": "淡江大學",
+      "category": "no_change",
+      "status_label": "✅ 沒有變化",
+      "source_url": "https://oieie.tku.edu.tw/",
+      "summary": "10/26 巡查確認沒有變化。"
+    },
+    {
+      "order": 11,
+      "school_id": "fju",
+      "school_name": "天主教輔仁大學",
+      "category": "no_change",
+      "status_label": "✅ 沒有變化",
+      "source_url": "https://iscoie.fju.edu.tw/generalServices.jsp?labelID=40",
+      "summary": "10/26 巡查確認沒有變化。"
+    },
+    {
+      "order": 12,
+      "school_id": "scu",
+      "school_name": "東吳大學",
+      "category": "no_change",
+      "status_label": "✅ 沒有變化",
+      "source_url": "https://icae.scu.edu.tw/zh-hant/outbound-exchange/itnl/AYapply",
+      "summary": "10/26 巡查確認沒有變化。"
+    },
+    {
+      "order": 13,
+      "school_id": "ntnu",
+      "school_name": "國立臺灣師範大學",
+      "category": "no_change",
+      "status_label": "✅ 沒有變化",
+      "source_url": "https://bds.oia.ntnu.edu.tw/bds/web/news-ex",
+      "summary": "10/26 巡查確認沒有變化。"
+    },
+    {
+      "order": 14,
+      "school_id": "yzu",
+      "school_name": "元智大學",
+      "category": "no_change",
+      "status_label": "✅ 沒有變化",
+      "source_url": "https://www.yzu.edu.tw/admin/ao/index.php/tw/2016-03-25-07-02-52/2020-02-07-06-21-51/255-1",
+      "summary": "10/26 巡查確認沒有變化。"
+    },
+    {
+      "order": 15,
+      "school_id": "fcu",
+      "school_name": "逢甲大學",
+      "category": "no_change",
+      "status_label": "✅ 沒有變化",
+      "source_url": "https://oia.fcu.edu.tw/study-abroad-desc/",
+      "summary": "10/26 巡查確認沒有變化。"
+    },
+    {
+      "order": 16,
+      "school_id": "ntut",
+      "school_name": "國立臺北科技大學",
+      "category": "no_change",
+      "status_label": "✅ 沒有變化",
+      "source_url": "https://oia.ntut.edu.tw/p/412-1032-13805.php?Lang=zh-tw",
+      "summary": "10/26 巡查確認沒有變化。"
+    },
+    {
+      "order": 17,
+      "school_id": "nccu",
+      "school_name": "國立政治大學",
+      "category": "no_change",
+      "status_label": "✅ 沒有變化",
+      "source_url": "https://oic.nccu.edu.tw/Post/15931",
+      "summary": "10/26 巡查確認沒有變化。"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import json
 from datetime import date, datetime, timezone
 
 from office.pipeline import run_day
@@ -71,3 +72,18 @@ def test_boss_can_edit_reject_and_approve(make_office):
     assert approved["status"] == "approved"
     office.staff["publisher"].publish_due()
     assert office.store.draft(first["id"])["status"] == "published"
+
+
+def test_threads_posts_carry_their_picture_when_media_has_a_public_host(make_office):
+    office = make_office(OFFICE_MEDIA_HOST="supabase", SUPABASE_URL="https://p.supabase.co")
+    image = office.settings.media_dir / "2026-10-23" / "threads-x.jpg"
+    image.parent.mkdir(parents=True, exist_ok=True)
+    image.write_bytes(b"\xff\xd8jpg")
+    run_day(office, date(2026, 10, 23))
+    draft = next(d for d in office.store.drafts() if d["channel"] == "threads")
+    office.store.update_draft(draft["id"], media={"image": office.media_ref(image)})
+    published = office.staff["publisher"].publish(office.store.draft(draft["id"]))
+    assert published["status"] == "published"
+    record = json.loads(next((office.settings.outbox_dir / "2026-10-23").glob(f"{draft['id']:05d}-threads-*.json")).read_text(encoding="utf-8"))
+    create = next(c for c in record["calls"] if c["url"].endswith("/threads"))
+    assert create["params"]["media_type"] == "IMAGE" and create["params"]["image_url"].endswith("/2026-10-23/threads-x.jpg")

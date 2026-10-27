@@ -67,7 +67,23 @@ NTPU_116_GUIDELINES_EN_URL = (
 NTPU_116_ENGLISH_PARTNERS_URL = "https://cms-carrier.ntpu.edu.tw/uploads/116_0924_da1dafe9d0.pdf"
 NTPU_116_JAPANESE_PARTNERS_URL = "https://cms-carrier.ntpu.edu.tw/uploads/116_26b28374db.pdf"
 NTPU_116_CHINESE_PARTNERS_URL = "https://cms-carrier.ntpu.edu.tw/uploads/116_6524fec218.pdf"
-NTPU_116_CHECKED_AT = datetime(2026, 10, 3, tzinfo=timezone.utc)
+NTPU_MOE_SCHOLARSHIP_AMENDMENT_URL = (
+    "https://new.ntpu.edu.tw/oia/news/6ad986a07085cb4f0c818c5e"
+)
+NTPU_MOE_SCHOLARSHIP_AMENDMENT_PDF_URL = (
+    "https://cms-carrier.ntpu.edu.tw/uploads/1151021_c627bfee0e.pdf"
+)
+NTPU_MOE_SCHOLARSHIP_DIFF_PDF_URL = (
+    "https://cms-carrier.ntpu.edu.tw/uploads/1151015_9e06704aa6.pdf"
+)
+NTPU_EFREI_INFO_SESSION_URL = (
+    "https://new.ntpu.edu.tw/oia/news/6acc5d0d7085cb4f0c818840"
+)
+NTPU_LAW_COLLEGE_EXCHANGE_URL = "https://www.law.ntpu.edu.tw/news/j1p0rQCYhCHb"
+NTPU_SCHOOL_PREVIEW_BULLETIN_URL = (
+    "https://bulletin.ntpu.edu.tw/bulletin_content.php?no=20260707133939366861"
+)
+NTPU_116_CHECKED_AT = datetime(2026, 10, 27, tzinfo=timezone.utc)
 
 
 NTPU_OFFICIAL_DATA_DIR = Path(__file__).resolve().parent / "official_data" / "ntpu"
@@ -564,17 +580,54 @@ def ntpu_document_explanations() -> list[RuleExplanation]:
         ),
         RuleExplanation(
             title="115 學年度學海飛颺／惜珠獎學金公告",
-            summary="臺北大學 115 學年度教育部學海飛颺與學海惜珠校內申請資格及送件方式。",
+            summary="臺北大學 115 學年度教育部學海飛颺與學海惜珠校內申請資格及送件方式（另請對照 2026/10/22 最新甄選辦法修正公告）。",
             key_points=[
                 "須具中華民國國籍並在臺設有戶籍，且於薦送學校就讀一學期以上。",
                 "學海惜珠另須符合弱勢資格，並達系所前 40% 或班級前 30%。",
-                "不得同時領取我國政府其他出國補助或赴外學校獎學金。",
+                "115 學年度舊版原列不得同時領取我國政府其他出國補助或赴外學校獎學金；2026/10/22 修正公告已刪除第三條「須未獲得交換／訪問學校獎學金」限制（仍不得同時領取我國政府其他出國補助）。",
                 "115 學年度本梯次已於 2026 年 3 月 6 日 17:00 截止。",
             ],
             applies_to=["學海飛颺", "學海惜珠", "赴外研修補助"],
             source=scholarship,
             document_url=NTPU_115_SCHOLARSHIP_URL,
             document_type="獎學金公告",
+            full_text_extracted=True,
+        ),
+        RuleExplanation(
+            title="2026/10/22 修正公告：國立臺北大學辦理教育部補助選送學生出國研修學海飛颺與學海惜珠甄選辦法",
+            summary="國際處於 2026/10/22 公告修正學海飛颺與學海惜珠甄選辦法第 3、6、7、12 條（115/10/15 行政會議通過、115/10/21 北大國字第 1152700297 號函發布）。",
+            key_points=[
+                "修正第三條第(三)款：刪除原「且未獲得交換／訪問學校獎學金」限制，保留「未同時獲得我國政府預算所提供各類出國獎學金（留學貸款不在此限）」。",
+                "修正第六條第(五)款、第七條第(六)款：其他有助審查文件明列含獲國外研修學校入學許可、擔任國際學伴等。",
+                "增訂第十二條第(五)款：研修課程應以攻讀學位有關之專業學分為原則；赴非英語系國家得以英語及當地國語言修習，惟不得全數修習當地國語言課程。",
+                "增訂第十二條第(六)款：國外大學校院辦理之暑修或語言課程不在本要點補助範圍內。",
+            ],
+            applies_to=["學海飛颺", "學海惜珠", "赴外研修補助", "甄選辦法修正"],
+            source=_reference(
+                "2026/10/22 學海飛颺與學海惜珠甄選辦法部分條文修正公告",
+                NTPU_MOE_SCHOLARSHIP_AMENDMENT_URL,
+                PageCategory.SCHOLARSHIP,
+            ),
+            document_url=NTPU_MOE_SCHOLARSHIP_AMENDMENT_PDF_URL,
+            document_type="法規修正公告",
+            full_text_extracted=True,
+        ),
+        RuleExplanation(
+            title="2026/10/12 公告：法國巴黎計算機電子工程師學院（EFREI）交換說明會",
+            summary="國際處於 2026/10/12 公告舉辦法國姊妹校 EFREI 交換學生計畫說明會。",
+            key_points=[
+                "說明會時間：2026/10/23（五）12:10–13:00（已舉辦）。",
+                "說明會地點：三峽校區圖書館 2 樓思巢。",
+                "由 EFREI 亞洲區國際合作負責人來校介紹學校特色、交換計畫及申請注意事項，提供免費餐盒（限額 40 名）。",
+            ],
+            applies_to=["赴外交換", "英語組", "法國交換", "EFREI"],
+            source=_reference(
+                "法國巴黎計算機電子工程師學院 EFREI 交換說明會公告",
+                NTPU_EFREI_INFO_SESSION_URL,
+                PageCategory.EXCHANGE_APPLICATION,
+            ),
+            document_url=NTPU_EFREI_INFO_SESSION_URL,
+            document_type="說明會公告",
             full_text_extracted=True,
         ),
     ]
@@ -666,6 +719,30 @@ def build_ntpu_student_dashboard(
             _item("校級赴外交換", ["保留臺北大學正式學籍，到合作校交換 1 學期或 1 學年。", "原則上繳交臺北大學學雜費並免繳合作校學費；個別協議另有規定時除外。"], guidelines),
             _item("三個語組", ["英語組、日語組、中文組擇一申請。", "每梯次最多填列 5 個志願，依總成績與志願序分發。"], guidelines),
             _item("甄選與合作校複審", ["書審 30%、研修計畫 30%、面試 40%。", "校內總分低於 70 分不予推薦。", "校內推薦不等同合作校正式錄取。"], guidelines),
+            _item(
+                "法國巴黎計算機電子工程師學院（EFREI）交換說明會（2026/10/12 公告）",
+                [
+                    "國際處於 2026/10/12 公告舉辦法國姊妹校 EFREI 交換說明會（時間：2026/10/23 12:10–13:00，地點：三峽校區圖書館 2F 思巢）。",
+                    "由 EFREI 亞洲區國際合作負責人介紹課程與交換申請要點；116 學年度英語組名額與門檻仍依官方名額表為準。",
+                ],
+                _reference(
+                    "法國巴黎計算機電子工程師學院 EFREI 交換說明會公告",
+                    NTPU_EFREI_INFO_SESSION_URL,
+                    PageCategory.EXCHANGE_APPLICATION,
+                ),
+            ),
+            _item(
+                "院級交換分流與讀取缺口說明（法律院 10/30 11:00 截止僅限法律院）",
+                [
+                    "法律學院院級交換公告（https://www.law.ntpu.edu.tw/news/j1p0rQCYhCHb ）正文、表單及三份 PDF 與既有基準一致，2026/10/30 11:00 截止僅適用法律學院學生，不可混為全校校級截止日。",
+                    "校級預告公告（https://bulletin.ntpu.edu.tw/bulletin_content.php?no=20260707133939366861 ）及商學院院級公告／時程圖於 2026/10/27 重試仍讀取失敗，保留最後成功查核基準，不推論取消或改期。",
+                ],
+                _reference(
+                    "國立臺北大學法律學院院級交換公告（僅適用法律院）",
+                    NTPU_LAW_COLLEGE_EXCHANGE_URL,
+                    PageCategory.EXCHANGE_APPLICATION,
+                ),
+            ),
         ],
         eligibility=[
             _item("學籍與年級", ["大學部及進修學士班須二年級以上。", "碩士、博士與碩士在職專班學生可申請。", "交換期間須保留學籍並依規定繳費；休學或已畢業者不具交換資格。"], guidelines),
@@ -682,12 +759,41 @@ def build_ntpu_student_dashboard(
             _item("出國前、抵達與返國", ["出國前完成出國選課行前申請表與離校程序。", "抵達合作校 1 個月內回報當地地址、電話與生活狀況。", "返國 1 個月內向國際處繳交交換心得，並向系所與註冊組申請學分採認。"], files),
         ],
         scholarship_info=[
-            _item("教育部學海飛颺／惜珠", ["115 學年度本梯次申請已於 2026 年 3 月 6 日 17:00 截止。", "學海惜珠另有弱勢資格與成績排名條件。", "不得同時領取我國政府其他出國補助或赴外學校獎學金。", "下一年度日期、名額與文件須等待國際處新公告。"], scholarship),
+            _item(
+                "2026/10/22 修正公告：學海飛颺與學海惜珠甄選辦法部分條文修正",
+                [
+                    "國際處於 2026/10/22 公告修正「國立臺北大學辦理教育部補助選送學生出國研修學海飛颺與學海惜珠甄選辦法」（115/10/15 第 86 次行政會議通過）。",
+                    "刪除第三條第(三)款「且未獲得交換／訪問學校獎學金」限制（仍不得同時獲得我國政府預算提供之各類出國獎學金）。",
+                    "修正第六條第(五)款與第七條第(六)款：其他有助審查文件明列含國外研修學校入學許可、擔任國際學伴等。",
+                    "增訂第十二條第(五)、(六)款：應以攻讀學位相關專業學分為原則，赴非英語系國家得以英語及當地國語言修習惟不得全數修習當地國語言課程；國外暑修或純語言課程不在補助範圍內。",
+                ],
+                _reference(
+                    "2026/10/22 學海飛颺與學海惜珠甄選辦法部分條文修正公告",
+                    NTPU_MOE_SCHOLARSHIP_AMENDMENT_URL,
+                    PageCategory.SCHOLARSHIP,
+                ),
+            ),
+            _item("教育部學海飛颺／惜珠（115 學年度梯次歷史參考）", ["115 學年度本梯次申請已於 2026 年 3 月 6 日 17:00 截止。", "學海惜珠另有弱勢資格與成績排名條件。", "下一年度申請日期、名額與文件須等待國際處新公告，並適用 2026/10/22 修正後甄選辦法。"], scholarship),
         ],
         document_explanations=documents,
         rule_explanations=documents,
         partner_universities=partners,
-        sources=[guidelines, files, scholarship, _reference("臺北大學姊妹校", NTPU_SISTER_SCHOOL_URL, PageCategory.PARTNER_SCHOOL)],
+        sources=[
+            guidelines,
+            files,
+            scholarship,
+            _reference(
+                "2026/10/22 學海飛颺與學海惜珠甄選辦法修正公告",
+                NTPU_MOE_SCHOLARSHIP_AMENDMENT_URL,
+                PageCategory.SCHOLARSHIP,
+            ),
+            _reference(
+                "法國巴黎計算機電子工程師學院 EFREI 交換說明會公告",
+                NTPU_EFREI_INFO_SESSION_URL,
+                PageCategory.EXCHANGE_APPLICATION,
+            ),
+            _reference("臺北大學姊妹校", NTPU_SISTER_SCHOOL_URL, PageCategory.PARTNER_SCHOOL),
+        ],
     )
 
 
@@ -698,13 +804,29 @@ def ntpu_exchange_info(partners: list[PartnerUniversity] | None = None) -> Excha
         program_type=["校級赴外交換", "英語組", "日語組", "中文組", "學海飛颺", "學海惜珠"],
         academic_year=["116學年度"],
         semester=["秋季", "春季", "一學期", "一學年"],
-        application_period=["116 學年度（秋季／全學年）：2026/10/01 至 2026/10/23 17:00", "春季：原則 4 月，確切期限依國際處當期公告"],
+        application_period=[
+            "116 學年度（秋季／全學年）：2026/10/01 至 2026/10/23 17:00（已截止）",
+            "法律學院院級交換：2026/10/30 11:00 截止（僅適用法律學院，不可混為全校截止日；校級預告與商院公告讀取失敗時保留既有基準）",
+            "法國巴黎計算機電子工程師學院（EFREI）交換說明會：2026/10/23 12:10–13:00（2026/10/12 公告）",
+            "春季：原則 4 月，確切期限依國際處當期公告",
+        ],
         eligibility=["大學部二年級以上或研究生", "前一學年平均 75 分以上；大學部亦可用班排前 50%", "須符合合作校個別規定"],
         language_requirement=["同一梯次擇一語組", "英語組與日語組須檢附有效官方語言成績", "門檻依合作校名額表"],
         required_documents=["線上申請表", "有效語言證明", "交換研修計畫書", "歷年正式成績單"],
-        scholarship_info=["教育部學海飛颺／惜珠；日期與條件依當年度公告"],
+        scholarship_info=[
+            "教育部學海飛颺／惜珠：2026/10/22 公告修正甄選辦法（刪除未獲交換校獎學金限制、增訂第12條專業學分與排除暑修／純語言課程規定）；申請日期依當年度公告"
+        ],
         partner_universities=[row.school_name for row in partner_rows],
-        source_urls=[NTPU_116_ANNOUNCEMENT_URL, NTPU_116_GUIDELINES_URL, NTPU_FILES_URL],
+        source_urls=[
+            NTPU_116_ANNOUNCEMENT_URL,
+            NTPU_116_GUIDELINES_URL,
+            NTPU_MOE_SCHOLARSHIP_AMENDMENT_URL,
+            NTPU_MOE_SCHOLARSHIP_AMENDMENT_PDF_URL,
+            NTPU_EFREI_INFO_SESSION_URL,
+            NTPU_LAW_COLLEGE_EXCHANGE_URL,
+            NTPU_SCHOOL_PREVIEW_BULLETIN_URL,
+            NTPU_FILES_URL,
+        ],
         last_checked=NTPU_116_CHECKED_AT,
     )
 
@@ -724,10 +846,22 @@ def ntpu_processed_pages() -> list[ProcessedPage]:
             "校內推薦不等同合作校錄取。獲推薦後須依期限繳交錄取確認書及家長同意書，再依合作校要求送件。出國前完成選課行前申請表與離校程序；抵達合作校一個月內回報當地聯絡資料；返國一個月內繳交交換心得，並憑正式成績單與課程大綱申請學分採認。",
         ),
         (
+            "2026/10/22 修正公告：國立臺北大學辦理教育部補助選送學生出國研修學海飛颺與學海惜珠甄選辦法",
+            NTPU_MOE_SCHOLARSHIP_AMENDMENT_URL,
+            PageCategory.SCHOLARSHIP,
+            "國際處於2026年10月22日發布修正公告（115年10月15日第86次行政會議通過、115年10月21日北大國字第1152700297號函發布），修正學海飛颺與學海惜珠甄選辦法第3、6、7、12條：刪除第三條第(三)款「且未獲得交換／訪問學校獎學金」限制（仍不得同時領取我國政府預算提供之各類出國獎學金）；第6、7條其他有助審查文件明列含獲國外研修學校入學許可、擔任國際學伴等；增訂第12條第(五)、(六)款，研修課程應以攻讀學位有關之專業學分為原則，赴非英語系國家得以英語及當地國語言修習惟不得全數修習當地國語言課程，且國外大學校院辦理之暑修或語言課程不在補助範圍內。",
+        ),
+        (
+            "法國巴黎計算機電子工程師學院 EFREI 交換說明會公告",
+            NTPU_EFREI_INFO_SESSION_URL,
+            PageCategory.EXCHANGE_APPLICATION,
+            "國際處於2026年10月12日公告：2026年10月23日（五）12:10至13:00於三峽校區圖書館2樓思巢舉辦法國巴黎計算機電子工程師學院（EFREI）交換說明會，邀請EFREI亞洲區國際合作負責人來校介紹學校特色、交換計畫與申請流程。",
+        ),
+        (
             "115 學年度學海飛颺／惜珠獎學金公告",
             NTPU_115_SCHOLARSHIP_URL,
             PageCategory.SCHOLARSHIP,
-            "115學年度學海飛颺與學海惜珠本梯次於2026年3月6日17時截止。申請人須具中華民國國籍並在臺設有戶籍，且於薦送學校就讀一學期以上。學海惜珠另有弱勢資格及系所前40%或班級前30%的成績要求。不得同時領取我國政府其他出國補助或赴外學校獎學金。",
+            "115學年度學海飛颺與學海惜珠本梯次於2026年3月6日17時截止。申請人須具中華民國國籍並在臺設有戶籍，且於薦送學校就讀一學期以上。學海惜珠另有弱勢資格及系所前40%或班級前30%的成績要求。2026/10/22修正公告已刪除未獲交換校獎學金之限制。",
         ),
     ]
     pages: list[ProcessedPage] = []

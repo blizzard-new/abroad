@@ -150,7 +150,9 @@ class _FakeWidgetBridge implements StudyPlanWidgetBridge {
   Future<void> initialize() async {}
 
   @override
-  Future<void> requestPin() async {}
+  Future<void> requestPin({
+    StudyPlanWidgetStyle style = StudyPlanWidgetStyle.overview,
+  }) async {}
 
   @override
   Future<void> sync(StudyPlanWidgetSnapshot snapshot) async {

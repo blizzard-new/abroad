@@ -19,6 +19,7 @@ from ..llm import WriterError
 from ..models import CarouselDraft, ChiefAction, ChiefReply, PlanItem, ThreadsDraft, VideoScript
 from ..rules import check_carousel, check_threads, check_video, instagram_caption
 from .base import Agent, Persona
+from .threads_writer import card_media
 
 STATUS_WORD = {
     "pending_approval": "待審", "needs_changes": "需修改", "approved": "已核准", "publishing": "發佈中",
@@ -90,11 +91,22 @@ class Chief(Agent):
             )
         staff = "\n".join(f"- {a.persona.name}（{a.persona.title}）：{a.persona.duty}" for a in office.staff.values() if a.id != self.id)
         names = {a.id: a.persona.name for a in office.staff.values()}
+        hires = [a for a in office.staff.values() if hasattr(a, "record")]
+        daily = "\n".join(
+            f"- {a.persona.name}（{a.persona.title}）：{a.record.get('daily') or '還沒有每天固定的工作'}"
+            + (f"；每天 {'、'.join(office.hire_times(a))} 做" if a.record.get("daily_kind") else "")
+            + (f"；負責 {len(a.record['schools'])} 所大學" if a.record.get("schools") else "")
+            for a in hires
+        )
         minds = "\n".join(
             f"- role={role}（{names.get("strategist" if role == "research" else role, role)}・{label}）：{office.describe_brain(role)}"
             for role, label in office.roles().items()
         )
         notes = json.loads(office.store.get("boss_notes") or "[]")
+        clock = office.schedule_times()
+        timetable = (f"每天開工 {clock['start'][0]}；Threads 發文 {'、'.join(clock['threads'])}（一個時間一篇）；"
+                     f"IG 發文 {clock['instagram'][0]}；YouTube 發文 {clock['youtube'][0]}")
+        routines = "\n".join(f"- {office.describe_routine(r)}" for r in office.routines())
         settings = office.settings
         def account(key: str, word: str) -> str:
             if not accounts.connected(settings, office.store, key):
@@ -117,7 +129,11 @@ class Chief(Agent):
             f"今天主軸：{plan.get('theme') or '還沒排'}\n"
             f"草稿（最新在前）：\n" + ("\n".join(rows) or "（還沒有草稿）") + "\n\n"
             f"記給明天的事：{'；'.join(notes) or '（無）'}\n\n同事：\n{staff}\n\n"
-            f"每個工作現在用的 AI（role=後面是 set_brain 要填的值）：\n{minds}"
+            f"每個工作現在用的 AI（role=後面是 set_brain 要填的值）：\n{minds}\n\n"
+            f"新同事每天固定的工作：\n{daily or '（還沒有新同事）'}\n\n"
+            f"每天的時間表（台北，set_office_times 可改）：{timetable}\n"
+            f"固定排程（add_routine 新增、remove_routine 刪除，編號是 R 後面的數字）：\n{routines or '（還沒有）'}\n"
+            f"平台目前支援 {office.facts().university_count} 所大學，清單在辦公室電腦上的專案裡，watch_schools 會直接讀，不用上 GitHub。"
         )
 
     def history_text(self) -> str:
@@ -173,16 +189,57 @@ class Chief(Agent):
         agent = self.office.hire(action.name, action.title, action.instructions, brain=action.brain, model=action.model, effort=action.effort)
         return f"{agent.persona.name}（{agent.persona.title}）加入了，用 {self.office.describe_brain(agent.id)}"
 
+    def _do_watch_schools(self, action: ChiefAction) -> str:
+        shares = self.office.split_schools(action.names or ([action.name] if action.name else []))
+        lines = [f"{name} 負責 {len(schools)} 所：{'、'.join(schools)}" for name, schools in shares.items()]
+        return "大學分好了，從明天起每天開工時巡查：\n" + "\n".join(lines)
+
+    def _do_set_schedule(self, action: ChiefAction) -> str:
+        names = action.names or ([action.name] if action.name else [])
+        if not names:
+            raise ValueError("要設定哪幾位新同事的時間？")
+        lines = []
+        for name in names:
+            times = self.office.set_hire_times(name, action.times)
+            lines.append(f"{name} 每天 {'、'.join(times)} 做固定工作")
+        return "；".join(lines)
+
+    def _do_set_office_times(self, action: ChiefAction) -> str:
+        from ..office import SCHEDULE
+
+        if not action.which:
+            raise ValueError("要改哪一個時間：開工、Threads、IG 還是 YouTube 發文？")
+        times = self.office.set_schedule_times(action.which, action.times)
+        extra = f"（每天 {len(times)} 篇，明天開工起生效）" if action.which == "threads" else "（明天起生效）" if action.which != "start" else ""
+        return f"每天{SCHEDULE[action.which][1]}時間改成 {'、'.join(times)}{extra}"
+
+    def _do_add_routine(self, action: ChiefAction) -> str:
+        record = self.office.add_routine(action.name, action.task_kind, action.instructions, action.times)
+        return f"排好了：{self.office.describe_routine(record)}（從下一個時間開始）"
+
+    def _do_remove_routine(self, action: ChiefAction) -> str:
+        record = self.office.remove_routine(action.routine_id)
+        return f"刪掉了：{self.office.describe_routine(record)}"
+
     def _do_dismiss(self, action: ChiefAction) -> str:
         return f"{self.office.dismiss(action.name or action.role)}離開辦公室了"
 
     def _do_assign(self, action: ChiefAction) -> str:
         office = self.office
         colleague = office.colleague(action.name or action.role)
+        if action.task_kind == "schools":
+            if not colleague.record.get("schools"):
+                raise ValueError(f"{colleague.persona.name}還沒分到學校，先用 watch_schools 分配")
+            self.handoff(colleague.id, "巡查學校")
+            self._background(f"{colleague.persona.name}的巡查", colleague.check_schools)
+            return f"{colleague.persona.name}現在開始巡查 {len(colleague.record['schools'])} 所學校，查完會回報"
         request = action.instructions.strip()
         if not request:
             raise ValueError(f"要請 {colleague.persona.name} 做什麼？")
         self.handoff(colleague.id, "交代工作")
+        if action.every_day:
+            office.update_hire(colleague.id, daily=request[:300], daily_kind=action.task_kind or "report")
+            return f"{colleague.persona.name}從明天起每天開工時都會做：「{request[:24]}」"
         if action.task_kind == "threads":
             slot = self._next_slot("threads")
 
@@ -230,7 +287,7 @@ class Chief(Agent):
         )
         author.status("working", f"總管交代：{instructions[:16]}")
         if draft["format"] == "text":
-            content = ThreadsDraft(**{k: payload[k] for k in ("text", "topic_tag", "first_reply")})
+            content = ThreadsDraft(**{k: payload[k] for k in ("text", "topic_tag", "first_reply", "card_title", "card_body") if k in payload})
             check = lambda d: check_threads(d, briefing.facts, item.source_url)  # noqa: E731
             kind = "Threads 貼文"
         elif draft["format"] == "carousel":
@@ -249,6 +306,8 @@ class Chief(Agent):
         if isinstance(content, ThreadsDraft):
             payload.update(content.model_dump())
             title = content.text.strip().splitlines()[0][:40]
+            if media.get("image") or not draft["media"]:
+                media = card_media(author, content, date.fromisoformat(draft["day"])) or media
         elif isinstance(content, CarouselDraft):
             payload.update(content.model_dump(), caption_full=instagram_caption(content.caption, content.hashtags))
             title = content.slides[0].title if content.slides else draft["title"]
