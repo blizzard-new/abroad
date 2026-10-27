@@ -1,5 +1,24 @@
 # Editorial intentions and next topics
 
+## 2026-10-27 每日批次：候選不足，未產文／未建立 PR
+
+日期採 Asia/Taipei。已 fetch 最新 main `7d7eeab8`，核對十九篇既有文、全部十個待審 PR 與 10/26 的完整候選盤點。當日分支／所有狀態 PR 查詢原無結果；本次隔離分支 `codex/seo-daily-20261027` 只保存阻塞紀錄，尚無文章，PR 為無。重試請先讀本紀錄並續用該分支，沒有完整兩篇前不要建立產文 PR。
+
+候選十八個方向已由 main 或待審文章涵蓋，待審八篇均視為已選：
+
+| 批次／PR | 已選文章 slug |
+| --- | --- |
+| 10/23 [PR #119](https://github.com/blizzard-new/abroad/pull/119) | `english-taught-exchange-courses`、`exchange-course-changes` |
+| 10/24 [PR #122](https://github.com/blizzard-new/abroad/pull/122) | `exchange-interview-practice`（候選 5、18 整併）、`exchange-housing-commute` |
+| 10/25 [PR #132](https://github.com/blizzard-new/abroad/pull/132) | `toefl-ibt-preparation`、`exchange-return-checklist` |
+| 10/26 [PR #133](https://github.com/blizzard-new/abroad/pull/133) | `exchange-scholarship-obligations`、`exchange-limited-budget` |
+
+剩餘候選 13 應擴充 `exchange-study-plan`，保留原 URL，尚未在本批實作或宣稱完成；候選 15 缺少 Claude／ChatGPT／Gemini 同任務、日期／版本／方案與輸出可核對的實測。當前瀏覽器 profile 沒有已記錄登入的網站，亦未取得新的比較紀錄，不能假稱已測或用品牌近似頁補數。新的校務資料 PR #137、#139 不等於新增兩個核准的獨立文章方向。
+
+本次依使用者「候選不足時回報，不用近似頁或薄內容湊數」規則停止於盤點。未新增文章／圖片，未更動原文章日期或 Sitemap；沒有執行文章發稿驗收、單元／瀏覽器／套件測試，也沒有 PR 可附加。排程保持原狀。選題判斷未使用 Search Console、搜尋量或排名資料。
+
+完整二十方向、PR HEAD／檔案範圍及阻塞證據見 [當日查核紀錄](seo-editorial-status-2026-10-27.md) 與 [JSON 台帳](seo-editorial-status-2026-10-27.json)。若後續有新的獨立候選或三工具實測條件，再重新評估能否完成一批兩篇；不重做以上待審內容。
+
 ## 2026-10-22 每日批次：兩篇（待審）
 
 台灣日期 2026-10-22，隔離分支 `codex/seo-daily-20261022`；兩篇驗收完成，一起放入新的待審 [PR #117](https://github.com/blizzard-new/abroad/pull/117)。已核對 main 的十七篇文章、當日批次與全部五個待審 PR（#111、#113、#114、#115、#116），沒有另一個當日產文批次。PR #78、#92、#109 均已合併，本批直接基於 main，無未合併的文章基礎相依。選題為使用者候選方向 20 與 6，依編輯判斷；沒有使用者提供的 Search Console、搜尋量或排名資料。
