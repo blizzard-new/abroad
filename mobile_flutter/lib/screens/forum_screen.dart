@@ -121,7 +121,10 @@ class _ForumFeedState extends State<_ForumFeed> {
     final canPost = boards.any((b) => b.canPost);
     final filters = [
       InputDecorator(
-        decoration: const InputDecoration(labelText: '看板'),
+        decoration: const InputDecoration(
+          labelText: '看板',
+          prefixIcon: Icon(Icons.dashboard_outlined),
+        ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
             isExpanded: true,
@@ -155,7 +158,10 @@ class _ForumFeedState extends State<_ForumFeed> {
         ),
       ),
       InputDecorator(
-        decoration: const InputDecoration(labelText: '主題'),
+        decoration: const InputDecoration(
+          labelText: '主題',
+          prefixIcon: Icon(Icons.tag_rounded),
+        ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
             isExpanded: true,
@@ -190,6 +196,7 @@ class _ForumFeedState extends State<_ForumFeed> {
               children: [
                 StudentHeading(
                   '交換生論壇',
+                  subtitle: '問問走過這條路的同學',
                   action: IconButton(
                     tooltip: '論壇指南',
                     icon: const Icon(Icons.help_outline_rounded),
@@ -226,10 +233,10 @@ class _ForumFeedState extends State<_ForumFeed> {
                         color: ExchangeColors.secondaryInk,
                       ),
                       const SizedBox(width: 8),
-                      const Expanded(child: Text('訪客瀏覽')),
+                      const Expanded(child: Text('先逛逛')),
                       TextButton(
                         onPressed: () => store.selectMainTab(4),
-                        child: const Text('登入參與討論'),
+                        child: const Text('登入交流'),
                       ),
                     ],
                   ),
@@ -251,7 +258,8 @@ class _ForumFeedState extends State<_ForumFeed> {
                   maxLength: 80,
                   textInputAction: TextInputAction.search,
                   decoration: InputDecoration(
-                    hintText: '搜尋討論',
+                    labelText: '搜尋討論',
+                    hintText: '學校、住宿、簽證…',
                     counterText: '',
                     suffixIcon: IconButton(
                       tooltip: '搜尋',
@@ -388,9 +396,8 @@ class _ForumFeedState extends State<_ForumFeed> {
             ),
           ),
           Positioned(
-            left: 20,
             right: 20,
-            bottom: 116,
+            bottom: 104,
             child: FilledButton.icon(
               onPressed: canPost ? _compose : null,
               icon: const Icon(Icons.edit_outlined),
@@ -842,6 +849,7 @@ class _ForumComposerState extends State<ForumComposer> {
   }
 
   Future<void> _send() async {
+    FocusScope.of(context).unfocus();
     final isPost = widget.postId == null;
     final text = body.text.trim();
     if ((isPost && (title.text.trim().length < 4 || board.isEmpty)) ||
@@ -894,10 +902,29 @@ class _ForumComposerState extends State<ForumComposer> {
         bottomBar: !sameSession
             ? null
             : StudentActionBar(
-                primary: FilledButton.icon(
-                  onPressed: sending ? null : _send,
-                  icon: const Icon(Icons.send_rounded),
-                  label: Text(sending ? '送出中…' : '送出'),
+                primary: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (error != null)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Semantics(
+                          liveRegion: true,
+                          child: Text(
+                            error!,
+                            style: const TextStyle(
+                              color: ExchangeColors.danger,
+                            ),
+                          ),
+                        ),
+                      ),
+                    FilledButton.icon(
+                      onPressed: sending ? null : _send,
+                      icon: const Icon(Icons.send_rounded),
+                      label: Text(sending ? '送出中…' : '送出'),
+                    ),
+                  ],
                 ),
               ),
         children: !sameSession
@@ -985,14 +1012,6 @@ class _ForumComposerState extends State<ForumComposer> {
                     prefixIcon: const Icon(Icons.notes_rounded),
                   ),
                 ),
-                if (error != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Text(
-                      error!,
-                      style: const TextStyle(color: ExchangeColors.danger),
-                    ),
-                  ),
               ],
       );
     },

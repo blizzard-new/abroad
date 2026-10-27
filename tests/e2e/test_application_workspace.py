@@ -100,3 +100,28 @@ def test_saved_conditions_keep_application_period_when_refreshing_recommendation
     page.reload()
     expect(page.locator("#eligibility-academic-year")).to_have_value("116")
     expect(page.locator("#eligibility-application-round")).to_have_value("第一梯次")
+
+
+def test_checking_preferences_keeps_the_next_step_on_preparation(page, live_server):
+    """Choosing a year, round and preferences changes the conditions; the plan must follow so that 我的申請 does not
+    fall back to 第 1 步「確認這所學校的當期資格」 right after the check."""
+    page.set_viewport_size({"width": 1754, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    _, target = create_target(page, live_server)
+    next_action = page.locator("#planning-next-action")
+    expect(next_action.locator("[data-open-planning]")).to_be_visible()
+    workspace = page.locator("#application-workspace")
+    workspace.get_by_role("link", name="選校與確認", exact=True).click()
+    workspace.locator("#application-workspace-tool-menu > summary").click()
+    workspace.get_by_role("link", name="當期資格與志願", exact=True).click()
+    department = page.locator("#advisor-department option").evaluate_all("rows=>rows.find(row=>row.value).value")
+    page.locator("#advisor-department").select_option(department)
+    page.locator("#eligibility-academic-year").select_option("116")
+    page.locator("#eligibility-application-round").select_option("第一梯次")
+    page.locator("#eligibility-preference-1").select_option(target)
+    with page.expect_response(lambda response: response.url.endswith("/advisor/plan") and response.request.method == "POST") as refreshed:
+        page.locator("#advisor-form button[type=submit]").click()
+    assert refreshed.value.ok
+    expect(page.locator("#eligibility-result")).to_contain_text(target)
+    expect(next_action.locator("[data-open-planning]")).to_be_visible()
+    expect(next_action).not_to_contain_text("確認這所學校的當期資格")

@@ -236,6 +236,7 @@ function buildDesks(agents) {
 
 function updateDesk(id) {
   const a = S.agents.get(id);
+  if (a) window.dispatchEvent(new CustomEvent("office:agent", { detail: a }));
   const desk = $(`.desk[data-agent="${id}"]`);
   if (!a || !desk) return;
   desk.dataset.state = a.state || "idle";
@@ -301,6 +302,7 @@ function floorMap() {
 }
 
 function setupWalkers(agents) {
+  if (document.body.classList.contains("coastal")) return;
   const layer = $("#walkers");
   for (const w of W.values()) w.token++;
   W.clear();
@@ -507,6 +509,8 @@ function typeInto(el, text, key) {
 
 // ---------------------------------------------------------------- paper flights
 async function fly(from, to, label) {
+  window.dispatchEvent(new CustomEvent("office:handoff", { detail: { from, to, label } }));
+  if (document.body.classList.contains("world-ready") && !$("#flat-office").open) return;
   const src = $(`.desk[data-agent="${from}"] .monitor`);
   const dst = $(`.desk[data-agent="${to}"] .monitor`);
   if (!src || !dst) return;
@@ -633,7 +637,8 @@ function previewHTML(d) {
     return `<p class="sub"><b>@${esc(p.username || "訪客")} 的留言</b>\n${esc(p.comment_text)}</p><p class="post" style="margin-top:8px">${esc(p.text)}</p>`;
   }
   if (d.channel === "threads") {
-    return `<p class="post">${esc(p.text)}</p><p class="sub"><b>第一則留言</b>\n${esc(p.first_reply)}</p><p class="sub">主題標籤：${esc(p.topic_tag)}${p.source_url ? `｜<a href="${esc(p.source_url)}" target="_blank" rel="noopener">官方來源</a>` : ""}</p>`;
+    const card = m.image ? `<div class="thumbs"><button type="button" data-zoom="${media(m.image)}"><img src="${media(m.image)}" alt="Threads 配圖" loading="lazy" /></button></div>` : "";
+    return `${card}<p class="post">${esc(p.text)}</p><p class="sub"><b>第一則留言</b>\n${esc(p.first_reply)}</p><p class="sub">主題標籤：${esc(p.topic_tag)}${p.source_url ? `｜<a href="${esc(p.source_url)}" target="_blank" rel="noopener">官方來源</a>` : ""}</p>`;
   }
   if (d.format === "carousel") {
     const thumbs = (m.images || []).map((r) => `<button type="button" data-zoom="${media(r)}"><img src="${media(r)}" alt="輪播圖" loading="lazy" /></button>`).join("");
@@ -808,6 +813,7 @@ function upsertDraft(d) {
   renderBoss();
   renderBoard(d.id);
   renderPanel();
+  window.dispatchEvent(new Event("office:sync"));
 }
 
 const queue = [];
@@ -921,6 +927,8 @@ async function load() {
   renderPanel();
   renderChat();
   $("#run-btn").disabled = S.busy;
+  tickClock();
+  window.dispatchEvent(new Event("office:sync"));
   return true;
 }
 
@@ -1004,5 +1012,32 @@ document.addEventListener("DOMContentLoaded", async () => {
   const boss = $('.desk[data-agent="boss"]');
   boss.addEventListener("click", () => openAgent("boss"));
   boss.addEventListener("keydown", (e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), openAgent("boss")));
-  if (await load()) connect();
+  const fallback = (message) => {
+    document.body.classList.remove("world-ready");
+    document.body.classList.add("world-unavailable");
+    $("#world-status").textContent = message || "這個瀏覽器無法顯示 3D，請使用下方平面工作台。";
+    $("#flat-office").open = true;
+  };
+  let loaded = false;
+  try {
+    loaded = await load();
+  } catch (error) {
+    console.warn("office state unavailable:", error);
+    $("#staff-total").textContent = "連不上辦公室：確認 uv run office serve 還開著，再按 Ctrl+F5 重新整理";
+    fallback(`連不上辦公室（${String(error.message || error).slice(0, 60)}）`);
+  }
+  window.officeStarted = true;
+  if (loaded) {
+    connect();
+    // A 3D scene that never answers (a stuck module, a blocked GPU) should still leave a way to work.
+    const watchdog = setTimeout(() => fallback("3D 辦公室載入太久了：按 Ctrl+F5 重新整理，或先用下方平面工作台。"), 20000);
+    if (new URLSearchParams(location.search).has("flat")) {
+      clearTimeout(watchdog);
+      fallback("已關閉 3D（網址有 ?flat），用平面工作台。");
+      return;
+    }
+    import("/static/office-world.js").then(module => module.initOfficeWorld({ getState: () => S, openAgent, fallback }))
+      .catch(error => { console.warn("3D office unavailable:", error); fallback(); })
+      .finally(() => clearTimeout(watchdog));
+  }
 });

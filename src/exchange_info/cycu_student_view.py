@@ -16,7 +16,8 @@ from .storage import file_signature
 from .student_view import _application_period_status
 
 CYCU_OFFICIAL_DATA_DIR = Path(__file__).resolve().parent / "official_data" / "cycu"
-CYCU_INTRO_URL = "https://oia.cycu.edu.tw/?page_id=2956&lang=zh"
+CYCU_INTRO_URL = "https://oia.cycu.edu.tw/?p=6336"
+CYCU_ROUND2_URL = "https://oia.cycu.edu.tw/?p=9903"
 CYCU_PARTNER_LIST_URL = "https://oia.cycu.edu.tw/?page_id=10128&lang=zh"
 
 

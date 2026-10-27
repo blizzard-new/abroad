@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import dataclasses
 import json
 import re
 import threading
@@ -22,7 +23,7 @@ from .agents.strategist import Strategist
 from .agents.threads_writer import ThreadsWriter
 from .agents.video_editor import VideoEditor
 from . import accounts, brains
-from .brand import Briefing, load_facts, load_news
+from .brand import Briefing, load_facts, load_news, load_schools
 from .config import Settings
 from .events import EventBus
 from .llm import make_writer
@@ -40,8 +41,8 @@ def desk_of(role: str) -> str:
 
 # Model names the chief may set: letters, digits and the punctuation real names use ("Gemini 3.7 Flash (Low)").
 MODEL_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9 ._:/()\[\]-]{0,79}")
-# Which tools can run which family of models.
-MODEL_TOOLS = {"claude": ("claude-code", "api"), "gpt": ("codex",), "gemini": ("antigravity",)}
+# Which tools can run which family of models. Antigravity also offers some Claude and open GPT models (`agy models`).
+MODEL_TOOLS = {"claude": ("claude-code", "api", "antigravity"), "gpt": ("codex", "antigravity"), "gemini": ("antigravity",)}
 
 
 def _model_family(model: str) -> str:
@@ -56,7 +57,31 @@ def _model_family(model: str) -> str:
 
 
 MAX_HIRES = 6
+MAX_ROUTINES = 12
 NAME = re.compile(r"[\w\u4e00-\u9fff ]{1,12}")
+
+
+# The office's daily clock the chief may change, and how many times each may hold.
+SCHEDULE = {"start": ("daily_at", "開工", 1), "threads": ("threads_slots", "Threads 發文", 6),
+            "instagram": ("instagram_slot", "IG 發文", 1), "youtube": ("youtube_slot", "YouTube 發文", 1)}
+# A fixed daily job: who may do it, and what it is called.
+ROUTINE_WORK = {"threads": "寫一則 Threads", "carousel": "做一則 IG 輪播", "reel": "做一支 Reels",
+                "report": "查資料回報", "schools": "巡查學校"}
+CORE_MAKERS = {"threads": "threads", "carousel": "designer", "reel": "video"}
+
+
+def parse_times(times: list[str], most: int = 6) -> list[str]:
+    """HH:MM strings from the chief, cleaned and sorted; anything unreadable is an error the boss sees."""
+    cleaned = []
+    for text in times:
+        match = re.fullmatch(r"\s*(\d{1,2})[:：](\d{2})\s*", text or "")
+        if not match or int(match.group(1)) > 23 or int(match.group(2)) > 59:
+            raise ValueError(f"時間「{text}」看不懂，請用 HH:MM，例如 10:00")
+        cleaned.append(f"{int(match.group(1)):02d}:{match.group(2)}")
+    cleaned = sorted(set(cleaned))
+    if not cleaned or len(cleaned) > most:
+        raise ValueError(f"時間要 1～{most} 個" if most > 1 else "這個時間只能設一個")
+    return cleaned
 
 
 # The human's desk. Drafts land here unless OFFICE_APPROVAL=auto.
@@ -65,8 +90,9 @@ BOSS = {"id": "boss", "name": "你", "title": "老闆（審核）", "duty": "看
 
 class Office:
     def __init__(self, settings: Settings, *, writer=None, renderer=None, images=None):
-        self.settings = settings
+        self.settings = self._env_settings = settings
         self.store = Store(settings.db_path)
+        self._apply_schedule()
         self.bus = EventBus(self.store)
         self._brain_seen: dict[str, str] = {}
         self.writer = writer or make_writer(settings, on_brain=self._brain_used, tuning=self.tuning)
@@ -146,6 +172,173 @@ class Office:
         self.store.set(f"tuning:{agent.id}", "{}")
         self.bus.emit("chief", "staff", f"{agent.persona.name}離開辦公室", change="dismiss", id=agent.id)
         return agent.persona.name
+
+    def update_hire(self, hire_id: str, **fields) -> None:
+        records = self.hires()
+        for record in records:
+            if record["id"] == hire_id:
+                record.update(fields)
+                self.staff[hire_id].record = record
+        self.store.set("hires", json.dumps(records, ensure_ascii=False))
+
+    def split_schools(self, names: list[str]) -> dict[str, list[str]]:
+        """Share the platform's universities among these colleagues, in registry order, for a daily round each."""
+        colleagues = [self.colleague(name) for name in names]
+        if not colleagues:
+            raise ValueError("要分給哪幾位新同事？")
+        schools = load_schools(self.settings)
+        size = -(-len(schools) // len(colleagues))
+        shares = {}
+        for i, colleague in enumerate(colleagues):
+            share = schools[i * size:(i + 1) * size]
+            self.update_hire(colleague.id, schools=[s.id for s in share], daily_kind="schools",
+                             daily=f"巡查 {len(share)} 所大學官網：交換公告、規定有沒有變，和平台資料一不一致")
+            shares[colleague.persona.name] = [s.name for s in share]
+        return shares
+
+    def hire_times(self, agent: "Hire") -> list[str]:
+        """When a colleague's standing task runs each day: their own times, or the office's start time."""
+        return agent.record.get("times") or [self.settings.daily_at.strftime("%H:%M")]
+
+    def run_hire_dailies(self, now: datetime | None = None) -> list[str]:
+        """Each new colleague's standing task at each of their times; the chief passes the results to the boss.
+
+        A time is done once per day. When the office was off past several times, only one round runs on start."""
+        local = (now or datetime.now(timezone.utc)).astimezone(self.settings.timezone)
+        names = []
+        for agent in list(self.staff.values()):
+            if not isinstance(agent, Hire) or not agent.record.get("daily_kind"):
+                continue
+            due = [t for t in self.hire_times(agent) if local.strftime("%H:%M") >= t]
+            if not due:
+                continue
+            slot = f"{local.date().isoformat()} {max(due)}"
+            key = f"hire_slot:{agent.id}"
+            if (self.store.get(key) or "") >= slot:
+                continue
+            self.store.set(key, slot)
+            kind, task = agent.record["daily_kind"], agent.record.get("daily", "")
+
+            def work(agent=agent, kind=kind, task=task) -> str:
+                if kind == "schools":
+                    return agent.check_schools()
+                if kind == "threads":
+                    return f"{agent.persona.name}寫好今天的 Threads 了（#{agent.write_threads(task, self.staff['chief']._next_slot('threads'))}），在審核匣等你"
+                return agent.report(task)
+
+            self.staff["chief"]._background(f"{agent.persona.name}的每日工作", work)
+            names.append(agent.persona.name)
+        return names
+
+    def set_hire_times(self, name: str, times: list[str]) -> list[str]:
+        agent = self.colleague(name)
+        cleaned = parse_times(times)
+        self.update_hire(agent.id, times=cleaned)
+        self._skip_past(f"hire_slot:{agent.id}", cleaned)
+        return cleaned
+
+    def _skip_past(self, key: str, times: list[str]) -> None:
+        """Times already past today count as done, so a new schedule starts from the next one."""
+        now = self.local_now().strftime("%H:%M")
+        self.store.set(key, f"{self.today().isoformat()} {max([t for t in times if now >= t] or ['00:00'])}")
+
+    # ---- the daily clock: start time and posting times, changed by the chief over .env ----
+    def _apply_schedule(self) -> None:
+        try:
+            saved = json.loads(self.store.get("schedule") or "{}")
+        except json.JSONDecodeError:
+            saved = {}
+        changes = {}
+        for key, (field, _, most) in SCHEDULE.items():
+            if saved.get(key):
+                moments = tuple(time.fromisoformat(t) for t in saved[key])
+                changes[field] = moments if most > 1 else moments[0]
+        self.settings = dataclasses.replace(self._env_settings, **changes)
+
+    def schedule_times(self) -> dict[str, list[str]]:
+        settings = self.settings
+        return {key: [t.strftime("%H:%M") for t in (getattr(settings, field) if most > 1 else (getattr(settings, field),))]
+                for key, (field, _, most) in SCHEDULE.items()}
+
+    def set_schedule_times(self, what: str, times: list[str]) -> list[str]:
+        """"default" puts that time back to the .env setting."""
+        if what not in SCHEDULE:
+            raise ValueError(f"可以改的時間：{'、'.join(label for _, label, _ in SCHEDULE.values())}")
+        saved = json.loads(self.store.get("schedule") or "{}")
+        if [t.strip().lower() for t in times] == ["default"]:
+            saved.pop(what, None)
+        else:
+            saved[what] = parse_times(times, SCHEDULE[what][2])
+        self.store.set("schedule", json.dumps(saved))
+        self._apply_schedule()
+        return self.schedule_times()[what]
+
+    # ---- fixed daily jobs ("every day at 15:00, a Threads post about …") ----
+    def routines(self) -> list[dict]:
+        try:
+            value = json.loads(self.store.get("routines") or "[]")
+        except json.JSONDecodeError:
+            return []
+        return value if isinstance(value, list) else []
+
+    def add_routine(self, who: str, kind: str, task: str, times: list[str]) -> dict:
+        if kind not in ROUTINE_WORK:
+            raise ValueError(f"固定排程可以做：{'、'.join(ROUTINE_WORK.values())}")
+        who = who.strip()
+        hire = next((a for a in self.staff.values() if isinstance(a, Hire) and who in {a.id, a.persona.name}), None) if who else None
+        if who and not hire and not any(a.persona.name == who for a in self.staff.values()):
+            raise ValueError(f"辦公室裡沒有叫 {who} 的同事")
+        if kind in {"report", "schools"} and not hire:
+            raise ValueError("查資料回報、巡查學校只能交給新同事；原本的同事可以固定做 Threads、IG 輪播或 Reels")
+        if kind not in {"report", "threads", "schools"} and hire:
+            raise ValueError(f"{hire.persona.name}是新同事，只能固定查資料回報、寫 Threads 或巡查學校；IG 圖和影片請交給 Mori、阿剪")
+        if not task.strip() and kind != "schools":
+            raise ValueError("每天要做什麼題目或工作？")
+        routines = self.routines()
+        if len(routines) >= MAX_ROUTINES:
+            raise ValueError(f"固定排程最多 {MAX_ROUTINES} 個，先刪掉不要的")
+        maker = hire.persona.name if hire else self.staff[CORE_MAKERS[kind]].persona.name
+        record = {"id": max([r["id"] for r in routines] or [0]) + 1, "who": maker, "hire": bool(hire), "kind": kind,
+                  "task": task.strip()[:300], "times": parse_times(times)}
+        self.store.set("routines", json.dumps(routines + [record], ensure_ascii=False))
+        self._skip_past(f"routine_slot:{record['id']}", record["times"])
+        return record
+
+    def remove_routine(self, routine_id: int) -> dict:
+        routines = self.routines()
+        found = next((r for r in routines if r["id"] == routine_id), None)
+        if not found:
+            raise ValueError(f"沒有編號 R{routine_id} 的固定排程")
+        self.store.set("routines", json.dumps([r for r in routines if r["id"] != routine_id], ensure_ascii=False))
+        return found
+
+    def describe_routine(self, record: dict) -> str:
+        task = f"：{record['task'][:40]}" if record.get("task") else ""
+        return f"R{record['id']}｜每天 {'、'.join(record['times'])}｜{record['who']}{ROUTINE_WORK[record['kind']]}{task}"
+
+    def run_routines(self, now: datetime | None = None) -> list[int]:
+        """Each fixed daily job at each of its times, once per time per day, handed out the way the chief would."""
+        from .models import ChiefAction
+
+        local = (now or datetime.now(timezone.utc)).astimezone(self.settings.timezone)
+        started = []
+        for record in self.routines():
+            due = [t for t in record["times"] if local.strftime("%H:%M") >= t]
+            slot = f"{local.date().isoformat()} {max(due)}" if due else ""
+            key = f"routine_slot:{record['id']}"
+            if not due or (self.store.get(key) or "") >= slot:
+                continue
+            self.store.set(key, slot)
+            if record["hire"]:
+                action = ChiefAction(type="assign", name=record["who"], task_kind=record["kind"], instructions=record["task"])
+            else:
+                channel = "threads" if record["kind"] == "threads" else "instagram"
+                fmt = {"threads": "text", "carousel": "carousel", "reel": "reel"}[record["kind"]]
+                action = ChiefAction(type="new_post", channel=channel, format=fmt, topic=record["task"], instructions=record["task"])
+            chief = self.staff["chief"]
+            chief.say(f"⏰ 固定排程 R{record['id']}（{max(due)}）：{chief.execute(action)}")
+            started.append(record["id"])
+        return started
 
     def colleague(self, name_or_id: str) -> "Hire":
         key = name_or_id.strip()

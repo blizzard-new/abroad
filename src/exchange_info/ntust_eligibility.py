@@ -4,11 +4,11 @@ import re
 
 from .university_registry import NTUST, resolve_university
 
-NTUST_OUTBOUND_URL = "https://www.oia.ntust.edu.tw/p/412-1060-8921.php?Lang=zh-tw"
-NTUST_APPLY_PORTAL_URL = "https://www.oia.ntust.edu.tw/p/412-1060-8926.php?Lang=zh-tw"
-NTUST_QUOTALIST_URL = "https://www.oia.ntust.edu.tw/p/405-1060-62105,c9035.php?Lang=zh-tw"
-NTUST_MAINLAND_URL = "https://www.oia.ntust.edu.tw/p/405-1060-101241,c9111.php?Lang=zh-tw"
-NTUST_REGULATION_URL = "https://www.oia.ntust.edu.tw/var/file/60/1060/img/2289/948853506.pdf"
+NTUST_OUTBOUND_URL = "https://oia.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw"
+NTUST_APPLY_PORTAL_URL = "https://oia.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw"
+NTUST_QUOTALIST_URL = "https://oia.ntust.edu.tw/p/405-1060-62105,c9035.php?Lang=zh-tw"
+NTUST_MAINLAND_URL = "https://oia.ntust.edu.tw/p/405-1060-143054,c9057.php?Lang=zh-tw"
+NTUST_REGULATION_URL = "https://oia.ntust.edu.tw/var/file/60/1060/img/2289/948853506.pdf"
 
 NTUST_ENGLISH_MINIMUMS: dict[str, tuple[str, float]] = {
     "toefl": ("TOEFL iBT", 57.0),

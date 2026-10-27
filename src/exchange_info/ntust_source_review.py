@@ -7,8 +7,8 @@ import os
 from pathlib import Path
 
 CHECKED_AT = "2026-10-20T19:45:16+00:00"
-GUIDELINES = "https://oia-r.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw"
-MAINLAND = "https://oia-r.ntust.edu.tw/p/405-1060-143054,c9057.php?Lang=zh-tw"
+GUIDELINES = "https://oia.ntust.edu.tw/p/405-1060-62102,c9056.php?Lang=zh-tw"
+MAINLAND = "https://oia.ntust.edu.tw/p/405-1060-143054,c9057.php?Lang=zh-tw"
 PORTAL = "https://stu88.ntust.edu.tw/outboundstudent/index/index/puid/fall2027"
 ACADEMIC = "116-1歐美亞澳組要求114-2學期班排名前70%，經系所審查通過者例外；不得以平均65分或GPA2.3替代。115-2大陸組要求大學部歷年總平均75分、研究所80分，該梯次已截止。"
 PERIOD = "116-1（2027秋季）歐美亞澳組於2026/12/03 10:00至12/07 15:00線上申請；各接待校當期條件於申請期間才開放，既有名單不能自動當作116-1開放名額。"

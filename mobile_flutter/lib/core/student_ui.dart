@@ -238,7 +238,7 @@ class StudentHeading extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: Theme.of(context).textTheme.headlineMedium),
+            Text(title, style: Theme.of(context).textTheme.headlineSmall),
             if (subtitle != null) ...[
               const SizedBox(height: 4),
               Text(subtitle!, style: Theme.of(context).textTheme.bodySmall),
@@ -454,7 +454,7 @@ Future<void> showStudentGuide(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(title, style: Theme.of(context).textTheme.headlineMedium),
+          Text(title, style: Theme.of(context).textTheme.headlineSmall),
           const SizedBox(height: 24),
           ...steps.indexed.map(
             (entry) => Padding(

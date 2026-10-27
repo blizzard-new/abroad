@@ -1,0 +1,224 @@
+{
+  "checked": "2026-10-24",
+  "timezone": "Asia/Taipei",
+  "batch": "daily-2026-10-24",
+  "initial_clock_utc": "2026-10-23 23:56:30 UTC",
+  "date_boundary_note": "Asia/Taipei was already 2026-10-24 despite initial UTC environment date; this is a new date batch, not a retry of 2026-10-23.",
+  "base_commit": "ca98d5c34ccd404a3bc38f2986ccb313e02c7e93",
+  "selection_basis": "Approved interview directions 5 and 18 merged into one distinct question, plus housing commute direction 10; editorial judgment without user-supplied Search Console, search volume or ranking evidence",
+  "duplicate_review": {
+    "main_articles": 19,
+    "open_prs_checked": [
+      119,
+      121
+    ],
+    "today_existing_batch_pr_before_work": null,
+    "exact_head_search": "head:codex/seo-daily-20261024, state all: no result; remote branch absent before worktree creation",
+    "foundation_pr_78": "merged; foundation on main",
+    "workflow_pr_92": "merged; daily two-article rules on main",
+    "previous_daily_pr_117": "merged; excluded",
+    "previous_daily_pr_119": "open; english-taught-exchange-courses and exchange-course-changes treated as selected and excluded; no dependency on its articles",
+    "existing_article_files_changed": 0
+  },
+  "intent_boundaries": {
+    "exchange-interview-practice": "Interview question/answer and follow-up rehearsal, evidence checking and staged AI practice; existing self-introduction article retains introductory scripts, timing variants and document layout",
+    "exchange-housing-commute": "Housing-location choice through door-to-door travel, term cost/time calculation and fallback scenarios; existing housing guide retains contracts/deposits/move-in, budget guide retains full exchange financing"
+  },
+  "sources": [
+    {
+      "key": "shu-interview",
+      "requested_url": "https://global.web.shu.edu.tw/【交換學生】2027年春季赴外交換生面試公告（2026-9-22-2026-9-24/",
+      "resolved_url": "https://global.web.shu.edu.tw/%E3%80%90%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E3%80%912027%E5%B9%B4%E6%98%A5%E5%AD%A3%E8%B5%B4%E5%A4%96%E4%BA%A4%E6%8F%9B%E7%94%9F%E9%9D%A2%E8%A9%A6%E5%85%AC%E5%91%8A%EF%BC%882026-9-22-2026-9-24/",
+      "status": 200,
+      "sha256": "05bc86e5f84a9e045fd9bf064c9455d8a736a1fe582a59de8802f951f9f6a704",
+      "title": "【交換學生】2027年春季赴外交換生面試公告（2026/9/22-2026/9/24）— 歐美組、日本組、韓國組 – 國際事務中心",
+      "text_length": 1148,
+      "checked": "2026-10-24",
+      "access": "HTTP 200; relevant primary content and surrounding context read; raw response retained in local source cache",
+      "version": "Official 2027 spring exchange interview notice describing September 2026 events; historical scheduling example only; no explicit publication/revision date visible",
+      "support": [
+        {
+          "article": "exchange-interview-practice",
+          "source_id": "shu-interview",
+          "scope": "2026-10-24 實際讀取。標題及內文為 2027 春季交換、2026 年 9 月已過的面試安排；僅用於依組別核對通知與異動的歷史案例。頁面未見明確發布／修訂日期；未讀取或轉載所連結個人名單，也不將其期限、報到制裁、形式或語言當成普遍規則。"
+        }
+      ],
+      "evidence_location": "面試組別與通知異動",
+      "evidence_quote": "因報名人數調整"
+    },
+    {
+      "key": "openai-prompt",
+      "requested_url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "resolved_url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "status": 200,
+      "sha256": "567b16c8554ff2cfd000ab5d69631c6d8240bda34af8d9cb8bacf84e8a85ee83",
+      "title": "Prompt engineering best practices for ChatGPT | OpenAI Help Center",
+      "text_length": 1916,
+      "checked": "2026-10-24",
+      "access": "HTTP 200; relevant primary content and surrounding context read; raw response retained in local source cache",
+      "version": "Live official help page read on 2026-10-24; displays Updated: 4 days ago; relative label retained, not converted into an asserted publication date",
+      "support": [
+        {
+          "article": "exchange-interview-practice",
+          "source_id": "openai-prompt",
+          "scope": "2026-10-24 核對當日官方頁；頁面顯示 Updated: 4 days ago，保留相對標示而不自行宣稱絕對發布日。引用清楚具體背景與迭代修改的一般原則；面試題、Prompt 及預期回答為 UniWay 人工示例，沒有工具版本／方案比較、語音功能或實測評分主張。"
+        }
+      ],
+      "evidence_location": "General best practices",
+      "evidence_quote": "Be clear and specific"
+    },
+    {
+      "key": "uu-campus",
+      "requested_url": "https://www.uu.nl/en/organisation/campus",
+      "resolved_url": "https://www.uu.nl/en/organisation/campus",
+      "status": 200,
+      "sha256": "7738f1a8b54638cf28ab819866584cec31c08c6b062de86ac2a3b001355da131",
+      "title": "Campus - Utrecht University",
+      "text_length": 816,
+      "checked": "2026-10-24",
+      "access": "HTTP 200; relevant primary content and surrounding context read; raw response retained in local source cache",
+      "version": "Live official campus/maps/buildings entrance read 2026-10-24; no content revision date visible",
+      "support": [
+        {
+          "article": "exchange-housing-commute",
+          "source_id": "uu-campus",
+          "scope": "2026-10-24 實際讀取當日頁面，未見內容修訂日期。核對校區地圖、建築地址與交通入口，以及分別連到不同校區地圖的結構；沒有把任一建築當成讀者確定的上課位置。"
+        }
+      ],
+      "evidence_location": "Campus navigation",
+      "evidence_quote": "Buildings"
+    },
+    {
+      "key": "uu-getting-around",
+      "requested_url": "https://www.uu.nl/en/education/welcome-to-utrecht/when-you-arrive/getting-to-and-around-utrecht",
+      "resolved_url": "https://www.uu.nl/en/education/welcome-to-utrecht/when-you-arrive/getting-to-and-around-utrecht",
+      "status": 200,
+      "sha256": "d4c0949cf3a9ed40474756598643fe4a8e9902c73a548f24787465ab7335e864",
+      "title": "Getting to and around Utrecht | Utrecht University",
+      "text_length": 3935,
+      "checked": "2026-10-24",
+      "access": "HTTP 200; relevant primary content and surrounding context read; raw response retained in local source cache",
+      "version": "Live official pre-arrival transport page read 2026-10-24; no content revision date visible; no fares/discount percentages republished",
+      "support": [
+        {
+          "article": "exchange-housing-commute",
+          "source_id": "uu-getting-around",
+          "scope": "2026-10-24 核對當日官方頁，未見內容修訂日期。引用路線查詢工具用途、地圖延誤更新限制與票券資格應另查的原則。未引用頁內折扣、會員、支付、票價或路線班次作個人現行保證。"
+        }
+      ],
+      "evidence_location": "Planning your journey",
+      "evidence_quote": "not always updated during delays"
+    },
+    {
+      "key": "lund-transport",
+      "requested_url": "https://www.luaccommodation.lu.se/node/189",
+      "resolved_url": "https://www.luaccommodation.lu.se/node/189",
+      "status": 200,
+      "sha256": "3990051d635c0ea731123ed0df32706eeb4449d36a9136c65c17c7a22961774f",
+      "title": "Transportation | LU Accommodation",
+      "text_length": 4580,
+      "checked": "2026-10-24",
+      "access": "HTTP 200; relevant primary content and surrounding context read; raw response retained in local source cache",
+      "version": "Last updated 2026-08-28; live official housing transport page read 2026-10-24",
+      "support": [
+        {
+          "article": "exchange-housing-commute",
+          "source_id": "lund-transport",
+          "scope": "2026-10-24 實際讀取；頁尾更新日 2026-08-28。支持步行／自行車／公共交通比較、票券需涵蓋全程，以及向 Skånetrafiken 查班表、票種與優惠。本文不轉載路線編號、時間、距離、折扣或價格作通勤保證。"
+        }
+      ],
+      "evidence_location": "Tickets",
+      "evidence_quote": "make sure it covers your entire journey"
+    }
+  ],
+  "retrieval_notes": [
+    {
+      "url": "https://www.asia.edu.tw/p/406-1000-3035%2Cr27.php?Lang=zh-tw",
+      "status": 503,
+      "resolution": "Not cited. The proposed report and its claims were removed entirely; no search snippet or unverified archive used to substitute. Interview procedure example uses the successfully read SHU notice."
+    },
+    {
+      "url": "https://global.web.shu.edu.tw/exchange-c1/exchange-c2/",
+      "status": 200,
+      "resolution": "Read as a discovery page; no substantive interview-format fact was taken from its links or unread attachments."
+    }
+  ],
+  "arithmetic_checks": [
+    {
+      "label": "Editorial rehearsal minutes",
+      "computed": 20,
+      "expected": 20,
+      "passed": true
+    },
+    {
+      "label": "Hypothetical A cost TWD",
+      "computed": 93800,
+      "expected": 93800,
+      "passed": true
+    },
+    {
+      "label": "Hypothetical B cost TWD",
+      "computed": 87800,
+      "expected": 87800,
+      "passed": true
+    },
+    {
+      "label": "Hypothetical B saving TWD",
+      "computed": 6000,
+      "expected": 6000,
+      "passed": true
+    },
+    {
+      "label": "A commute minutes",
+      "computed": 1440,
+      "expected": 1440,
+      "passed": true
+    },
+    {
+      "label": "B commute minutes",
+      "computed": 4320,
+      "expected": 4320,
+      "passed": true
+    },
+    {
+      "label": "A commute hours",
+      "computed": 24.0,
+      "expected": 24,
+      "passed": true
+    },
+    {
+      "label": "B commute hours",
+      "computed": 72.0,
+      "expected": 72,
+      "passed": true
+    },
+    {
+      "label": "Extra B commute hours",
+      "computed": 48,
+      "expected": 48,
+      "passed": true
+    },
+    {
+      "label": "Illustrative cost difference / extra hour",
+      "computed": 125.0,
+      "expected": 125,
+      "passed": true
+    },
+    {
+      "label": "Photograph total bytes",
+      "computed": 265246,
+      "expected": 265246,
+      "passed": true
+    }
+  ],
+  "verification_limits": [
+    "All five cited primary pages were successfully read; one unavailable proposed report is disclosed and excluded.",
+    "Mock questions, prompts and sample answers are original manual examples, not real interview questions, model test outputs, official scores or admission predictions.",
+    "English task levels are pedagogical stages, not CEFR classifications. Correction and later re-answering are provided.",
+    "No model/plan/region/voice-feature comparison is asserted; OpenAI source supports generic prompt-writing principles only.",
+    "Housing amounts are editorial assumptions in TWD, not Dutch/Swedish quotes or currency conversions. Five-month rent and sixteen attendance weeks are independent assumptions.",
+    "Time/cost ratio is a descriptive choice aid, not wages, income or a financial return.",
+    "No universal fee, deadline, language threshold, scholarship or visa condition is republished.",
+    "Raw official content and original stock downloads stay in task-local cache; PR contains provenance and limited excerpts."
+  ]
+}

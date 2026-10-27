@@ -81,6 +81,7 @@ class Settings:
     long_video_weekday: int = 6  # Sunday
     video_fps: int = 30
     render_media: bool = True
+    threads_images: bool = True
 
     threads_user_id: str = ""
     threads_token: str = ""
@@ -159,6 +160,7 @@ class Settings:
             long_video_weekday=int(get("OFFICE_LONG_VIDEO_WEEKDAY") or 6),
             video_fps=int(get("OFFICE_VIDEO_FPS") or 30),
             render_media=_flag(get("OFFICE_RENDER_MEDIA"), True),
+            threads_images=_flag(get("OFFICE_THREADS_IMAGES"), True),
             threads_user_id=get("THREADS_USER_ID") or "",
             threads_token=get("THREADS_ACCESS_TOKEN") or "",
             threads_app_secret=get("THREADS_APP_SECRET") or "",

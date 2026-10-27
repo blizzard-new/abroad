@@ -9,10 +9,14 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from ..brand import load_news, load_schools
 from ..llm import WriterError
-from ..models import PlanItem, Report, ThreadsDraft
+from ..models import PlanItem, Report, SchoolCheck, ThreadsDraft
 from ..rules import check_threads
 from .base import Agent, Persona
+from .threads_writer import card_media
+
+SCHOOLS_PER_CALL = 5
 
 # How new colleagues look: picked in turn so two hires never come out identical.
 HAIR = ("short", "bob", "curly", "ponytail", "bun", "long", "messy", "cap")
@@ -71,10 +75,54 @@ class Hire(Agent):
         draft_id = office.queue(
             run_id, item, channel="threads", format="text", title=draft.text.strip().splitlines()[0][:40],
             payload={**draft.model_dump(), "source_url": "", "angle": item.angle, "author": self.persona.name},
-            review=review, passed=passed, slot=slot, sender=self,
+            media=card_media(self, draft, briefing.day), review=review, passed=passed, slot=slot, sender=self,
         )
         self.status("done", "這篇排進審核匣了", screen={"type": "compose", "text": draft.text, "reply": draft.first_reply})
         return draft_id
 
+    def check_schools(self) -> str:
+        """The daily round of the schools assigned to this colleague, a few at a time."""
+        office = self.office
+        mine = [school for school in load_schools(office.settings) if school.id in set(self.record.get("schools") or [])]
+        if not mine:
+            return f"{self.persona.name}還沒有分到要巡查的學校"
+        news = {item.school: item for item in load_news(office.settings, limit=100)}
+        briefing = office.briefing_for_replies(with_news=True)
+        checks: list[SchoolCheck] = []
+        failures: list[str] = []
+        for start in range(0, len(mine), SCHOOLS_PER_CALL):
+            batch = mine[start:start + SCHOOLS_PER_CALL]
+            self.status("working", f"巡查 {batch[0].name} 等 {len(batch)} 所（{start + len(batch)}/{len(mine)}）",
+                        screen=_school_screen(checks, mine))
+            listing = "\n".join(
+                f"- {school.name}\n  官網：{school.official_url}\n  平台資料：{school.note}（支援程度 {school.level}，合作校約 {school.partners} 所）"
+                + (f"\n  平台最近核實的公告（{news[school.name].checked_date}）：{news[school.name].summary}" if school.name in news else "")
+                for school in batch
+            )
+            try:
+                checks += office.writer.school_check(self.id, self.who, listing, briefing).checks
+            except WriterError as error:
+                failures.append(f"{batch[0].name} 等 {len(batch)} 所沒查完：{str(error)[:120]}")
+        flagged = [c for c in checks if c.status in {"new_notice", "mismatch"}]
+        unreachable = [c for c in checks if c.status == "unreachable"]
+        calm = [c.school for c in checks if c.status == "no_change"]
+        self.status("waiting" if flagged else "done", f"巡查完 {len(checks)} 所，{len(flagged)} 所要注意", screen=_school_screen(checks, mine))
+        lines = [f"{self.persona.name}今天巡查了 {len(checks)}／{len(mine)} 所學校："]
+        label = {"new_notice": "🆕 新公告", "mismatch": "⚠️ 和平台不一致"}
+        lines += [f"{label[c.status]}｜{c.school}：{c.detail}\n  {c.source_url}" for c in flagged]
+        if unreachable:
+            lines.append("❓ 打不開或找不到交換頁：" + "、".join(c.school for c in unreachable))
+        if calm:
+            lines.append("✅ 沒有變化：" + "、".join(calm))
+        lines += [f"❌ {line}" for line in failures]
+        return "\n".join(lines)
+
     def revise_view(self, draft: ThreadsDraft) -> None:
         self.status("working", "寫草稿…", screen={"type": "compose", "text": draft.text, "reply": draft.first_reply})
+
+
+def _school_screen(checks: list[SchoolCheck], schools) -> dict:
+    done = {c.school: c.status for c in checks}
+    return {"type": "checklist", "items": [
+        {"label": school.name, "ok": None if school.name not in done else done[school.name] == "no_change"} for school in schools[:8]
+    ]}

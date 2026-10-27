@@ -18,7 +18,7 @@ from .student_view import _application_period_status
 NCKU_OFFICIAL_DATA_DIR = (
     Path(__file__).resolve().parent / "official_data" / "ncku"
 )
-NCKU_INTRO_URL = "https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw"
+NCKU_INTRO_URL = "https://oia.ncku.edu.tw/p/404-1032-229870.php?Lang=zh-tw"
 NCKU_PARTNER_LIST_URL = "https://oia.ncku.edu.tw/var/file/32/1032/img/535260712.pdf"
 NCKU_GUIDELINES_PDF_URL = "https://oia.ncku.edu.tw/var/file/32/1032/img/107138261.pdf"
 

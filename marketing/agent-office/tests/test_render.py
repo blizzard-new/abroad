@@ -41,6 +41,9 @@ def test_carousel_story_and_short_video(settings, tmp_path):
     story = renderer.story(writer.carousel(item, briefing).slides[0], tmp_path / "story.jpg")
     assert story.stat().st_size > 10_000
 
+    card = renderer.card(writer.carousel(item, briefing).slides[0], tmp_path / "threads.jpg")  # the picture for a Threads post
+    assert card.read_bytes()[:2] == b"\xff\xd8" and card.stat().st_size > 10_000
+
     result = renderer.video(writer.video(item, briefing, "short"), tmp_path / "reel.mp4", fps=2)
     # ffmpeg with only an input prints the streams it found (and exits 1 because there is no output).
     streams = subprocess.run([ffmpeg_exe(), "-hide_banner", "-i", str(result["path"])], capture_output=True, text=True).stderr

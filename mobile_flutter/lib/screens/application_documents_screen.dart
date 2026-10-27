@@ -31,19 +31,45 @@ class ApplicationDocumentsScreen extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 128),
           children: [
             _ApplicationHeader(store: store),
+            const SizedBox(height: 20),
+            GlassCard(
+              tint: ExchangeColors.blueSoft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const StudentIconLabel(
+                    Icons.checklist_rounded,
+                    '一次準備，一步完成',
+                    color: ExchangeColors.blue,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    store.applicationTemplates.isEmpty
+                        ? '先設定你的申請目標'
+                        : '${store.applicationFormReadyCount} / ${store.applicationTemplates.length} 份文件已完成',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  if (store.applicationTemplates.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    LinearProgressIndicator(
+                      value:
+                          (store.applicationFormReadyCount /
+                                  store.applicationTemplates.length)
+                              .clamp(0, 1),
+                      minHeight: 6,
+                      borderRadius: BorderRadius.circular(8),
+                      color: ExchangeColors.blue,
+                      backgroundColor: ExchangeColors.surface,
+                      semanticsLabel: '文件準備進度',
+                    ),
+                  ],
+                ],
+              ),
+            ),
             const SizedBox(height: 16),
             _ApplicationActions(store: store),
             const SizedBox(height: 24),
-            ExchangeSectionHeader(
-              eyebrow: '${store.applicationTemplates.length} 份',
-              title: '待辦文件',
-              action: store.applicationTemplates.isEmpty
-                  ? null
-                  : Text(
-                      '${store.applicationFormReadyCount} 已完成',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-            ),
+            const ExchangeSectionHeader(title: '待辦文件'),
             const SizedBox(height: 12),
             if (store.isApplicationDocumentsLoading)
               const LoadingCards(count: 3)
@@ -91,21 +117,6 @@ class _ApplicationHeader extends StatelessWidget {
       subtitle: target.isEmpty
           ? _programLabel(store.applicationContext.programType)
           : target,
-      action: Semantics(
-        label:
-            '已完成 ${store.applicationFormReadyCount} 份，共 ${store.applicationTemplates.length} 份',
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
-            color: ExchangeColors.tealSoft,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Text(
-            '${store.applicationFormReadyCount}/${store.applicationTemplates.length}',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-      ),
     );
   }
 }
@@ -177,7 +188,9 @@ class _ApplicationActions extends StatelessWidget {
               children: actions
                   .map(
                     (action) => SizedBox(
-                      width: (constraints.maxWidth - 8) / 3,
+                      width: MediaQuery.textScalerOf(context).scale(16) > 24
+                          ? (constraints.maxWidth - 4) / 2
+                          : (constraints.maxWidth - 8) / 3,
                       child: TextButton(
                         onPressed: () {
                           if (action.title == '使用指南') {
@@ -210,7 +223,11 @@ class _ApplicationActions extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Column(
                             children: [
-                              Icon(action.icon, color: action.color, size: 24),
+                              ExchangeIconBadge(
+                                action.icon,
+                                color: action.color,
+                                background: action.color.withValues(alpha: .08),
+                              ),
                               const SizedBox(height: 8),
                               Text(
                                 action.title,

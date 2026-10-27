@@ -32,6 +32,8 @@ class ThreadsDraft(BaseModel):
     text: str = Field(description="主文，不含任何網址")
     topic_tag: str = Field(description="一個主題標籤，不含 # 與句點")
     first_reply: str = Field(description="發文後自己留的第一則留言，放網址與補充")
+    card_title: str = Field(default="", description="附圖上的大標題，10～18 字，抓住主文重點，不含網址")
+    card_body: str = Field(default="", description="附圖上的一句補充，30 字以內，不含網址；可以留空")
 
 
 class Slide(BaseModel):
@@ -96,6 +98,19 @@ class Report(BaseModel):
     sources: list[str] = Field(description="查到的來源網址；沒有就留空，不要捏造")
 
 
+class SchoolCheck(BaseModel):
+    school: str = Field(description="學校名稱，照抄清單上的名字")
+    status: Literal["no_change", "new_notice", "mismatch", "unreachable"] = Field(
+        description="no_change 沒有新公告也和平台一致；new_notice 有新的交換公告或規定；mismatch 官網和平台資料不一致；unreachable 官網打不開或找不到交換頁"
+    )
+    detail: str = Field(description="一兩句說明看到什麼；沒變化就寫已確認的頁面")
+    source_url: str = Field(description="實際看的官網頁面網址")
+
+
+class SchoolReport(BaseModel):
+    checks: list[SchoolCheck]
+
+
 class Preflight(BaseModel):
     go: bool = Field(description="可以發就 true；需要老闆再看一次就 false")
     reason: str = Field(description="判斷理由，一句話")
@@ -105,7 +120,8 @@ class Insights(BaseModel):
     notes: list[str] = Field(description="給企劃的 2～4 點建議，每點一句")
 
 
-ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain", "hire", "assign", "dismiss"]
+ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain", "hire", "assign", "dismiss",
+                          "watch_schools", "set_schedule", "set_office_times", "add_routine", "remove_routine"]
 
 
 class ChiefAction(BaseModel):
@@ -117,7 +133,13 @@ class ChiefAction(BaseModel):
             "set_brain：改某個工作（role）用的工具（brain）、模型（model）或思考強度（effort），沒要改的欄位留空，填 default 代表改回原本設定；"
             "hire：新增一位同事（name、title、instructions 寫他負責什麼，可一起給 brain、model、effort）；"
             "assign：交代工作給新同事（name 填他的名字，instructions 寫要做什麼，task_kind 選 report 或 threads）；"
-            "dismiss：請新同事離開（name）"
+            "dismiss：請新同事離開（name）；"
+            "watch_schools：把平台支援的大學平均分給 names 裡的新同事，之後每天巡查各校官網的交換公告與規定是否有變、和平台資料是否一致；"
+            "set_schedule：設定 names 裡的新同事每天做固定工作的時間（times，HH:MM，可以多個）；"
+            "set_office_times：改每天的時間表，which 選 start（開工）、threads（Threads 發文，幾個時間就每天幾篇）、instagram、youtube，"
+            "times 填新時間，填 [\"default\"] 代表改回原本設定；"
+            "add_routine：新增每天固定時間做的事（times、task_kind、instructions 寫題目或工作，name 填新同事名字，原本的同事可留空）；"
+            "remove_routine：刪掉編號 routine_id 的固定排程"
         )
     )
     draft_id: int = Field(default=0, description="草稿編號，沒有就填 0")
@@ -130,7 +152,14 @@ class ChiefAction(BaseModel):
     role: str = Field(default="", description="set_brain 用：要改的工作（狀態裡 role= 後面的值）")
     name: str = Field(default="", description="hire／assign／dismiss 用：同事的名字")
     title: str = Field(default="", description="hire 用：職稱，例如 Dcard 研究員")
-    task_kind: Literal["report", "threads", ""] = Field(default="", description="assign 用：report 查資料或分析後回報；threads 寫一則 Threads 草稿")
+    task_kind: Literal["report", "threads", "schools", "carousel", "reel", ""] = Field(
+        default="", description="assign／add_routine 用：report 查資料或分析後回報；threads 寫一則 Threads 草稿；schools 巡查分到的學校；"
+                                "carousel、reel 只給 add_routine：請 Mori 做 IG 輪播、阿剪做 Reels")
+    every_day: bool = Field(default=False, description="assign 用：true 代表從明天起每天開工時都做這件事")
+    names: list[str] = Field(default_factory=list, description="watch_schools／set_schedule 用：新同事名字，watch_schools 依序分前段、後段")
+    times: list[str] = Field(default_factory=list, description="set_schedule／set_office_times／add_routine 用：每天幾點，例如 [\"10:00\", \"17:00\"]")
+    which: Literal["start", "threads", "instagram", "youtube", ""] = Field(default="", description="set_office_times 用：要改哪一個時間")
+    routine_id: int = Field(default=0, description="remove_routine 用：固定排程編號（R 後面的數字）")
     brain: Literal["claude-code", "codex", "antigravity", "api", "offline", "default", ""] = ""
     model: str = Field(default="", description="set_brain 用：模型名稱，例如 sonnet、opus、claude-sonnet-5-5、gpt-5.5、Gemini 3.7 Pro")
     effort: Literal["low", "medium", "high", "xhigh", "max", "default", ""] = ""
