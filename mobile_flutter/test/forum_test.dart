@@ -95,7 +95,7 @@ void main() {
           .onPressed,
       isNull,
     );
-    await tester.tap(find.text('登入參與討論'));
+    await tester.tap(find.text('登入交流'));
     expect(store.navigationTab, 4);
   });
   testWidgets('search ignores older responses and feed loads next cursor', (

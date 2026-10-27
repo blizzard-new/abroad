@@ -67,7 +67,7 @@ void main() {
       await tester.tap(find.text('開始吧'));
       await tester.pumpAndSettle();
       for (final tab in ['學校', '申請', '論壇', '我的', '旅程']) {
-        await tester.tap(find.text(tab).last);
+        await tester.tap(find.byTooltip(tab));
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull, reason: tab);
       }

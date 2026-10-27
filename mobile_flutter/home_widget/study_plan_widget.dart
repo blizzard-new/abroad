@@ -20,7 +20,7 @@ import 'package:home_widget_generator/home_widget_generator.dart';
     ),
   ),
   iOS: HomeWidgetIOSConfiguration(
-    groupId: 'group.tw.edu.cgu.exchangeGuideFlutter',
+    groupId: 'group.tw.uniway.app',
     supportedFamilies: [
       HWWidgetFamily.systemSmall,
       HWWidgetFamily.systemMedium,

@@ -73,12 +73,18 @@ class MobileNotifications {
       visibility: NotificationVisibility.private,
       icon: '@drawable/ic_notification',
     ),
+    iOS: DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: false,
+      presentSound: true,
+    ),
   );
 
   Future<void> initialize() async {
     if (initialized ||
         kIsWeb ||
-        defaultTargetPlatform != TargetPlatform.android) {
+        (defaultTargetPlatform != TargetPlatform.android &&
+            defaultTargetPlatform != TargetPlatform.iOS)) {
       return;
     }
     try {
@@ -92,6 +98,11 @@ class MobileNotifications {
       await plugin.initialize(
         settings: const InitializationSettings(
           android: AndroidInitializationSettings('@drawable/ic_notification'),
+          iOS: DarwinInitializationSettings(
+            requestAlertPermission: false,
+            requestBadgePermission: false,
+            requestSoundPermission: false,
+          ),
         ),
         onDidReceiveNotificationResponse: (response) =>
             target.value = MobileNotificationTarget.decode(response.payload),
@@ -136,13 +147,23 @@ class MobileNotifications {
     if (!initialized || currentAccount == null) return false;
     final expectedAccount = currentAccount;
     final generation = _generation;
-    final granted =
-        await plugin
-            .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin
-            >()
-            ?.requestNotificationsPermission() ??
-        false;
+    final granted = defaultTargetPlatform == TargetPlatform.iOS
+        ? await plugin
+                  .resolvePlatformSpecificImplementation<
+                    IOSFlutterLocalNotificationsPlugin
+                  >()
+                  ?.requestPermissions(
+                    alert: true,
+                    badge: false,
+                    sound: true,
+                  ) ??
+              false
+        : await plugin
+                  .resolvePlatformSpecificImplementation<
+                    AndroidFlutterLocalNotificationsPlugin
+                  >()
+                  ?.requestNotificationsPermission() ??
+              false;
     if (generation != _generation || currentAccount != expectedAccount) {
       return false;
     }
@@ -187,7 +208,9 @@ class MobileNotifications {
         return;
       }
       await plugin.cancelAllPendingNotifications();
-      for (final event in snapshot.take(100)) {
+      for (final event in snapshot.take(
+        defaultTargetPlatform == TargetPlatform.iOS ? 60 : 100,
+      )) {
         if (generation != _generation ||
             !enabled ||
             currentAccount != account) {

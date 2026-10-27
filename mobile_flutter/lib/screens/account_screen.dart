@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../core/student_ui.dart';
+import '../core/journey_illustration.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
 import 'app_update_prompt.dart';
@@ -680,7 +681,24 @@ class _AccountScreenState extends State<AccountScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const StudentHeading('我的', subtitle: '登入，同步你的交換計畫'),
+        const StudentHeading('我的', subtitle: '你的交換，隨時接著準備'),
+        const SizedBox(height: 24),
+        GlassCard(
+          tint: ExchangeColors.tealSoft,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Center(child: JourneyIllustration()),
+              const SizedBox(height: 20),
+              Text('把計畫帶著走', style: Theme.of(context).textTheme.headlineMedium),
+              const SizedBox(height: 8),
+              Text(
+                '登入同一帳號，手機與電腦同步。',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
         const SizedBox(height: 24),
         const Wrap(
           spacing: 24,
