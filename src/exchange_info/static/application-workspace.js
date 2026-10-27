@@ -9,7 +9,7 @@ window.UniWayApplicationWorkspace = (() => {
   const statusLabels = {done:"已完成", next:"建議下一步", todo:"尚未開始"};
   // The month view must fit the first screen, and a document being filled needs the student's full attention.
   const quietPages = ["calendar", "application-form"];
-  let root, context, navigation, next, activePage = null, toolsGroup = null, validationFrame = 0, nextKey = "";
+  let root, context, navigation, next, activePage = null, toolsGroup = null, validationFrame = 0, nextKey = "", shownStatus = null;
 
   function syncConditions() {
     const form = document.querySelector("#advisor-form");
@@ -37,8 +37,9 @@ window.UniWayApplicationWorkspace = (() => {
     root.hidden = true;
     first.before(root);
     root.innerHTML = `<header class="application-workspace-heading glass-panel">
-      <div class="application-workspace-context"><div><span class="section-kicker">我的申請 · 共 3 步</span><strong id="application-workspace-stage-summary"></strong></div><p id="application-workspace-context" aria-live="polite"></p></div>
-      <nav id="application-journey-steps" class="application-workspace-stages" aria-label="申請三步驟">${groups.map((group,index)=>`<a href="${group.href}" data-workspace-stage="${group.id}" data-stage-status="todo" data-requires-home-school aria-label="${group.label}" aria-describedby="application-stage-${group.id}-note"><span class="application-stage-number" aria-hidden="true">${index + 1}</span><span class="application-stage-copy"><span>${group.label}</span><small>${group.hint}</small></span><span id="application-stage-${group.id}-note" class="visually-hidden" data-stage-status-label>${group.hint}（${statusLabels.todo}）</span></a>`).join("")}</nav>
+      <div class="application-workspace-context"><div><strong id="application-workspace-stage-summary"></strong><p id="application-workspace-context" aria-live="polite"></p></div><span id="application-workspace-progress-count" class="application-progress-count"></span></div>
+      <span id="application-workspace-progress-live" class="visually-hidden" role="status"></span>
+      <nav id="application-journey-steps" class="application-workspace-stages" aria-label="申請三步驟">${groups.map((group,index)=>`<a href="${group.href}" data-workspace-stage="${group.id}" data-stage-status="todo" data-requires-home-school aria-label="${group.label}" aria-describedby="application-stage-${group.id}-note"><span class="application-stage-number" aria-hidden="true">${index + 1}</span><span class="application-stage-copy"><span>${group.label}</span><small>${group.hint}</small></span><span class="application-stage-flag" aria-hidden="true"></span><span id="application-stage-${group.id}-note" class="visually-hidden" data-stage-status-label>${group.hint}（${statusLabels.todo}）</span></a>`).join("")}</nav>
       <div id="planning-next-action" class="planning-next-action" aria-live="polite" hidden></div>
       <details id="application-workspace-tool-menu" class="application-tool-menu"><summary><span id="application-workspace-tool-label"></span><span>本階段其他頁面<i data-lucide="chevron-down" aria-hidden="true"></i></span></summary><nav id="application-workspace-tools" class="application-workspace-tools" aria-label="本階段的頁面"></nav></details>
     </header>`;
@@ -92,12 +93,14 @@ window.UniWayApplicationWorkspace = (() => {
     const year = state.applicationContext.academic_year || profile?.academicYear;
     const round = state.applicationContext.application_round || profile?.applicationRound;
     const target = state.applicationContext.target_school;
-    context.textContent = [activeHomeSchool(), year && `${year} 學年度`, round, target && `文件與時程目標：${target}`].filter(Boolean).join(" · ");
-    root.querySelector("#application-workspace-stage-summary").textContent = `第 ${groups.indexOf(group) + 1} 步：${group.summary}`;
+    // The school is already named by the switcher above; this line carries only what the student chose for this application.
+    context.textContent = [year && `${year} 學年度`, round, target && `文件與時程目標：${target}`].filter(Boolean).join(" · ");
+    context.hidden = !context.textContent;
+    root.querySelector("#application-workspace-stage-summary").innerHTML = `你在第 ${groups.indexOf(group) + 1} 步<span class="stage-summary-text">：${group.summary}</span>`;
     // Before the catalogue loads there is nothing to judge progress by.
     const action = state.dashboard ? planningNextAction() : null;
-    renderStages(action);
-    renderNext(action);
+    renderStages(action, group);
+    renderNext(action, group);
     root.querySelectorAll("[data-workspace-stage]").forEach(link=>{
       if (link.dataset.workspaceStage === group.id) link.setAttribute("aria-current","step");
       else link.removeAttribute("aria-current");
@@ -123,23 +126,88 @@ window.UniWayApplicationWorkspace = (() => {
     if (legacy.nextElementSibling !== advanced) advanced.before(legacy);
   }
 
-  // Steps before the recommended one are behind the student; the documents step is done once every form is ready.
-  function renderStages(action) {
+  // What has really been done, read from the same state planningNextAction() judges by. Nothing here is estimated: a
+  // student with nothing done gets no figures, only the plain hint of each step.
+  function stageFacts(action) {
+    const target = state.applicationContext.target_school;
+    const tasks = target ? state.calendarEvents.filter(event=>event.schoolName === target && String(event.id).startsWith("preparation-") && event.date >= localDateKey()).length : 0;
+    const templates = initialApplicationTemplates();
+    const ready = templates.filter(template=>applicationTemplateCompletion(template).ready && applicationTemplateReviewed(template)).length;
+    // Conditions filled, a target chosen, and the eligibility comparison no longer waiting on the student.
+    const selection = [Boolean(state.eligibilityProfile), Boolean(target), action.stage !== "selection"].filter(Boolean).length;
+    return {selection, tasks, ready, templates:templates.length};
+  }
+
+  function stageDetail(id, facts) {
+    if (facts && id === "selection" && facts.selection) return {label:"條件、目標、資格比對 ", value:`${facts.selection} / 3`};
+    if (facts && id === "preparation" && facts.tasks) return {label:"準備任務 ", value:`已排 ${facts.tasks} 項`};
+    if (facts && id === "documents" && facts.ready) return {label:"草稿已填完並核對 ", value:`${facts.ready} / ${facts.templates} 份`};
+    return null;
+  }
+
+  // Steps already shown as done on this device, per account, school and target. The account and plan arrive in pieces while the
+  // page loads, so a step can look "not done" for a moment and then done; that is loading, not something the student just did.
+  function doneMemory() {
+    const key = [state.account?.id || "guest", activeHomeSchool(), state.applicationContext.target_school || ""].join("|");
+    let all = {};
+    try { all = JSON.parse(localStorage.getItem("exchange-guide-journey-done") || "{}"); } catch (_) { /* memory only */ }
+    return {
+      known: all[key] || [],
+      save(ids) {
+        const merged = [...new Set([...(all[key] || []), ...ids])];
+        if (merged.length === (all[key] || []).length) return;
+        all[key] = merged;
+        const recent = Object.fromEntries(Object.entries(all).slice(-20));
+        try { localStorage.setItem("exchange-guide-journey-done", JSON.stringify(recent)); } catch (_) { /* memory only */ }
+      },
+    };
+  }
+
+  // Two things are shown apart: the circle says how far a step is (done, next, not started) and the card says which step
+  // the student is looking at. Steps before the recommended one are behind them; the documents step is done once every form is ready.
+  function renderStages(action, group) {
     const nextIndex = action ? groups.findIndex(item=>item.id === action.stage) : -1;
+    const facts = action ? stageFacts(action) : null;
+    const memory = action ? doneMemory() : null;
+    const statuses = [];
+    const finished = [];
     let changed = false;
     root.querySelectorAll("[data-workspace-stage]").forEach((link, index)=>{
-      const done = nextIndex > index || (groups[index].id === "documents" && action?.documentsDone);
+      const item = groups[index];
+      const done = nextIndex > index || (item.id === "documents" && action?.documentsDone);
       const status = done ? "done" : index === nextIndex ? "next" : "todo";
-      if (link.dataset.stageStatus === status) return;
-      link.dataset.stageStatus = status;
-      link.querySelector(".application-stage-number").innerHTML = done ? '<i data-lucide="check" aria-hidden="true"></i>' : String(index + 1);
-      link.querySelector("[data-stage-status-label]").textContent = `${groups[index].hint}（${statusLabels[status]}）`;
-      changed = true;
+      statuses.push(status);
+      const viewing = item.id === group.id;
+      const detail = stageDetail(item.id, facts);
+      const signature = [status, viewing, detail?.label, detail?.value].join("|");
+      if (link.dataset.stageSignature === signature) return;
+      link.dataset.stageSignature = signature;
+      const number = link.querySelector(".application-stage-number");
+      if (link.dataset.stageStatus !== status) {
+        // Only a step that finishes while the student is here gets a moment; one that was already done on arrival stays quiet.
+        number.classList.remove("is-just-done");
+        if (shownStatus && shownStatus[index] !== "done" && status === "done" && !memory.known.includes(item.id)) { number.classList.add("is-just-done"); finished.push(item); }
+        link.dataset.stageStatus = status;
+        number.innerHTML = done ? '<i data-lucide="check" aria-hidden="true"></i>' : String(index + 1);
+        changed = true;
+      }
+      const small = link.querySelector(".application-stage-copy small");
+      small.innerHTML = detail ? `<span class="stage-detail-label">${detail.label}</span><span class="stage-detail-value">${detail.value}</span>` : item.hint;
+      small.dataset.real = detail ? "true" : "";
+      link.querySelector(".application-stage-flag").textContent = [viewing && "你在這裡", status === "next" && "下一步"].filter(Boolean).join(" · ");
+      link.querySelector("[data-stage-status-label]").textContent = `${detail ? detail.label + detail.value : item.hint}（${statusLabels[status]}）`;
     });
+    if (action) {
+      const count = statuses.filter(status=>status === "done").length;
+      root.querySelector("#application-workspace-progress-count").textContent = `已完成 ${count} / ${groups.length} 步`;
+      if (finished.length) root.querySelector("#application-workspace-progress-live").textContent = finished.map(item=>`第 ${groups.indexOf(item) + 1} 步「${item.label}」已完成`).join("，");
+      shownStatus = statuses;
+      memory.save(groups.filter((item, index)=>statuses[index] === "done").map(item=>item.id));
+    }
     if (changed && typeof initIcons === "function") initIcons();
   }
 
-  function renderNext(action) {
+  function renderNext(action, group) {
     const quiet = !action || quietPages.includes(activePage);
     next.hidden = quiet;
     if (quiet) return;
@@ -147,15 +215,22 @@ window.UniWayApplicationWorkspace = (() => {
     if (key === nextKey) return;
     nextKey = key;
     const index = groups.findIndex(item=>item.id === action.stage);
+    const viewing = groups.indexOf(group);
+    // The recommended step is not always the one on screen; say which is which instead of presenting both as "step N".
+    const sameStep = index === viewing;
+    const caption = sameStep ? `第 ${index + 1} 步「${groups[index].label}」· 現在先做這件事` : `你在第 ${viewing + 1} 步 · 建議下一步在第 ${index + 1} 步「${groups[index].label}」`;
+    // The student chose to be on this step, so the pointer to another step is a quieter button than the one on its own page.
+    const tone = sameStep ? "primary-button" : "secondary-button";
+    next.dataset.scope = sameStep ? "here" : "elsewhere";
     // A link to the page the student is already on would do nothing; take them to the spot instead.
     const here = action.href === `#${activePage}` && action.focus;
     const button = action.planning
-      ? '<button type="button" class="primary-button" data-open-planning>預覽準備時程<i data-lucide="arrow-right" aria-hidden="true"></i></button>'
+      ? `<button type="button" class="${tone}" data-open-planning>預覽準備時程<i data-lucide="arrow-right" aria-hidden="true"></i></button>`
       : here
-        ? `<button type="button" class="primary-button" data-next-action-focus="${escapeHtml(action.focus)}">就在這一頁，開始<i data-lucide="arrow-down" aria-hidden="true"></i></button>`
-        : `<a class="primary-button" href="${action.href}">${escapeHtml(action.label)}<i data-lucide="arrow-right" aria-hidden="true"></i></a>`;
+        ? `<button type="button" class="${tone}" data-next-action-focus="${escapeHtml(action.focus)}">就在這一頁，開始<i data-lucide="arrow-down" aria-hidden="true"></i></button>`
+        : `<a class="${tone}" href="${action.href}">${escapeHtml(action.label)}<i data-lucide="arrow-right" aria-hidden="true"></i></a>`;
     const browse = action.browse && groups[0].pages.includes(activePage) ? '<a class="text-action" href="#partners" data-requires-home-school>還沒有方向？先逛交換學校<i data-lucide="arrow-right" aria-hidden="true"></i></a>' : "";
-    next.innerHTML = `<span class="next-action-icon"><i data-lucide="${action.icon}" aria-hidden="true"></i></span><div><small>現在，先做這一件事 · 第 ${index + 1} 步「${groups[index].label}」</small><strong>${escapeHtml(action.title)}</strong><p>${escapeHtml(action.detail)}</p></div><div class="next-action-buttons">${button}${browse}</div>`;
+    next.innerHTML = `<span class="next-action-icon"><i data-lucide="${action.icon}" aria-hidden="true"></i></span><div><strong>${escapeHtml(action.title)}</strong><p>${escapeHtml(action.detail)}</p><small class="next-action-where">${caption}</small></div><div class="next-action-buttons">${button}${browse}</div>`;
     if (typeof initIcons === "function") initIcons();
   }
 

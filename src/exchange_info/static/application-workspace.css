@@ -302,3 +302,74 @@ body.unified-shell #application-workspace[data-page=calendar] .calendar-next-sum
 .staged-heat-tags { display:flex; flex-wrap:wrap; gap:4px; }
 .staged-heat-tag { padding:2px 7px; border-radius:999px; background:#fef3c7; color:#78350f; font-size:11px; }
 .staged-heat-links { display:flex; gap:10px; font-size:12px; font-weight:600; padding-top:4px; border-top:1px dashed #fde68a; }
+
+/* Journey header (2026-10-27). The circle says how far a step is (done, next, not started); the card says which step the
+   student is looking at; the figures are real counts and appear only once there is something to count. */
+.application-workspace-heading { padding:16px 20px 8px; }
+.application-workspace-context { align-items:flex-start; }
+.application-workspace-context strong { margin-top:0; font-size:16px; line-height:1.5; }
+.application-workspace-context p { max-width:none; margin:2px 0 0; }
+.application-workspace-context p[hidden] { display:none; }
+.application-progress-count { flex:none; padding-top:2px; color:var(--uw-muted,#5b6881); font-size:13px; font-weight:600; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.application-workspace-stages { gap:10px; margin-top:12px; }
+.application-workspace-stages a { position:relative; justify-content:flex-start; gap:12px; padding:11px 14px; }
+.application-workspace-stages .application-stage-number { width:28px; height:28px; font-size:13px; }
+.application-workspace-stages .application-stage-number svg { width:16px; height:16px; }
+.application-workspace-stages [aria-current] { box-shadow:inset 0 -3px 0 #006b91; }
+.application-stage-flag { position:absolute; top:7px; right:12px; color:#006b91; font-size:12px; font-weight:600; line-height:1.4; white-space:nowrap; }
+.application-stage-flag:empty { display:none; }
+.application-workspace-stages a:has(.application-stage-flag:not(:empty)) { padding-right:112px; }
+.application-stage-copy small { font-size:12px; line-height:1.45; }
+.stage-detail-label { color:var(--uw-muted,#5b6881); }
+.stage-detail-value { color:var(--uw-text,#192740); font-weight:600; font-variant-numeric:tabular-nums; }
+/* A step that finishes while the student is here gets one small beat; it is not repeated on later visits. */
+@keyframes stage-check-pop { 0% { transform:scale(.6); opacity:.4; } 60% { transform:scale(1.18); opacity:1; } 100% { transform:scale(1); } }
+.application-stage-number.is-just-done { animation:stage-check-pop 360ms cubic-bezier(.2,.8,.2,1) both; }
+@media (prefers-reduced-motion: reduce) { .application-stage-number.is-just-done { animation:none; } }
+
+body.unified-shell .application-workspace-heading .planning-next-action { margin:12px 0 0; padding:12px 16px; gap:14px; }
+body.unified-shell .application-workspace-heading .planning-next-action strong { font-size:16px; line-height:1.5; }
+body.unified-shell .application-workspace-heading .planning-next-action p { margin:2px 0 0; line-height:1.6; }
+body.unified-shell .application-workspace-heading .planning-next-action .next-action-where { margin:6px 0 0; color:var(--uw-muted,#5b6881); font-size:12px; line-height:1.5; }
+body.unified-shell .application-workspace-heading .next-action-icon { width:40px; height:40px; border-radius:12px; }
+/* On another step than the recommended one the card is a pointer, not the main thing on the page. */
+body.unified-shell .application-workspace-heading .planning-next-action[data-scope=elsewhere] { border-color:var(--uw-line); background:var(--uw-surface); }
+body.unified-shell .application-workspace-heading .planning-next-action[data-scope=elsewhere] p { display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
+.application-tool-menu { margin-top:8px; }
+[data-theme=dark] .application-stage-flag, [data-theme=dark] .application-workspace-stages [aria-current] { color:#b0eafa; }
+[data-theme=dark] .application-workspace-stages [aria-current] { box-shadow:inset 0 -3px 0 #5cc7e6; }
+[data-theme=dark] .stage-detail-value { color:#e6eef7; }
+[data-theme=dark] .stage-detail-label, [data-theme=dark] .application-progress-count { color:#a9b8c9; }
+[data-theme=dark] body.unified-shell .application-workspace-heading .planning-next-action[data-scope=elsewhere] { background:#233548; border-color:#425569; }
+/* Below 900px the cards are too narrow to share with the flags: the next-action card says it in words instead, and the hint
+   under each step keeps its width (at 768px the flag left a plain hint 58px wide). */
+@media (max-width:900px) {
+  .application-stage-flag { display:none; }
+  .application-workspace-stages a:has(.application-stage-flag:not(:empty)) { padding-right:14px; }
+}
+@media (max-width:700px) {
+  /* mobile-reading.css gives this heading 4px at the sides on purpose, to use the phone's width. */
+  #application-workspace .application-workspace-heading { padding:12px 4px 6px; }
+  #application-workspace .application-workspace-context { display:flex; gap:12px; align-items:baseline; }
+  #application-workspace .application-workspace-context strong { font-size:15px; }
+  #application-workspace .application-workspace-context .stage-summary-text { display:none; }
+  #application-workspace .application-workspace-context p { max-width:none; margin:2px 0 0; font-size:12px; }
+  #application-workspace .application-workspace-stages { gap:6px; margin-top:8px; }
+  /* The larger circle is for wide screens; on the calendar page the phone's row of steps has no width to spare for it. */
+  #application-workspace .application-workspace-stages .application-stage-number { width:24px; height:24px; font-size:12px; }
+  #application-workspace .application-workspace-stages .application-stage-number svg { width:14px; height:14px; }
+  #application-workspace .application-workspace-stages a { padding:8px 4px; gap:4px; }
+  #application-workspace .application-workspace-stages a:has(.application-stage-flag:not(:empty)) { padding-right:4px; }
+  .application-stage-flag { display:none; }
+  /* Only a real count earns room under a step on a phone; the plain hints stay hidden as before. */
+  #application-workspace .application-stage-copy small[data-real="true"] { display:block; font-size:11px; line-height:1.35; text-wrap:balance; }
+  #application-workspace .application-stage-copy .stage-detail-label { display:none; }
+  /* The calendar page keeps its row of steps one line high so the month stays as high up as it can. */
+  #application-workspace[data-page=calendar] .application-stage-copy small[data-real="true"] { display:none; }
+  #application-workspace .application-workspace-heading .planning-next-action { padding:12px; margin-top:8px; gap:8px; }
+  #application-workspace .application-workspace-heading .planning-next-action strong { font-size:15px; }
+  #application-workspace .application-workspace-heading .planning-next-action p { font-size:13px; line-height:1.6; }
+  #application-workspace .application-workspace-heading .planning-next-action[data-scope=elsewhere] p { display:none; }
+  #application-workspace .application-workspace-heading .planning-next-action[data-scope=here] .next-action-where { display:none; }
+  #application-workspace .application-workspace-heading .planning-next-action .next-action-where { margin-top:4px; }
+}
