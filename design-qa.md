@@ -1,3 +1,41 @@
+# Design QA: search-first home, search and map
+
+## What the user asked for
+
+A full UI/UX audit of the exchange-student app, three clearly different directions for home, search and map, and an
+implementation of the chosen one without touching the database, SEO, existing routes or content. The chosen direction
+asks for conditions first (school, destination, term, language) and borrows a list-beside-map layout for the map.
+
+## What changed
+
+Front-end only, 11 files under `src/exchange_info/static`. Evidence, numbers and before/after images are in
+`docs/ui-audit-2026-10-27/`.
+
+- **Home.** A search desk in the first screen (school, destination, term, language, 找學校) built from the explore page's own
+  fields and criteria form; its live count uses the explore page's matching, so the number shown is the number the student
+  lands on. With no school chosen, 找學校 opens the school picker and keeps what was typed. Social links became quiet text links.
+- **Search.** Cards show the language requirement from the existing catalogue, or "依官方公告" when it does not say; nothing
+  is inferred. On a phone the query bar is one row and term and language moved into the 篩選 drawer (same elements and ids).
+  An empty result offers 清除所有條件.
+- **Map.** Flat projection framed Europe to Japan; on a phone the map comes first (104 px → 360 px visible); a 未定位 N 所
+  button opens the existing list of unlocated schools; on wide screens a school list sits beside the map.
+- **Foundation.** The document-check title was navy on a dark photo (1.03:1, now 15.9:1) because a later stylesheet
+  overrode the white one; muted, faint and placeholder text and the active chip reach AA; the seven tool pages expose a
+  level-1 heading through `role="heading" aria-level="1"`; the desktop layout shift of 0.97 is 0 because content behind the
+  start-up screen is hidden until it leaves; the "added to list" notice is a fixed toast again and no longer moves the page.
+
+## Verification
+
+- 1440×900 and 390×844 in headless Chromium: keyboard order and focus rings on the home desk and the search page, the
+  filter → empty → clear path, the notice, `prefers-reduced-motion` on home, search and map, heading levels. Numbers are in
+  the README next to the images.
+- Contract / routing / caching / discovery: 189 passed, 4 failed; the same 4 fail on `main`. Three tests failed because of
+  this change at first and were fixed in the code (the title assertion now allows the `role` and `aria-level` attributes).
+- End-to-end, 19 files around home, navigation, layout, search, map, picker, SEO and photos: 192 passed, 20 failed, 2 skipped.
+  The same 20 tests fail on `main`; where the runs were compared line by line the failing line and message match.
+- Not verified: a real GPU, a physical phone, a screen reader, Safari and Firefox; the roughly 100 end-to-end files outside
+  the 19; the backend suite (nothing in the backend changed). First-load weight is unchanged (250 requests on a cold visit).
+
 # Design QA: the home globe stays on a normal machine
 
 ## What went wrong

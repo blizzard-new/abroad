@@ -114,7 +114,12 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     : { sea: "#79b5d6", land: ["get", "day"], border: "#f7f3dc", label: "#324a59", halo: "#f7f4df", water: "#6aadc9", coast: "#d8efe5", grid: "#eff9ff", sky: "#edf4fa", horizon: "#b7d7e8" };
   const atmosphere = (p) => ({ "sky-color": p.sky, "horizon-color": p.horizon, "sky-horizon-blend": .8, "atmosphere-blend": ["interpolate", ["linear"], ["zoom"], 0, .65, 3, .4, 5, 0] });
   const colors = palette();
-  const globalCamera = () => ({ center: [105, 24], zoom: Math.max(.1, 1.68 + Math.log2(Math.min(canvasHost.clientWidth || 580, canvasHost.clientHeight || 580) / 580)), bearing: 0, pitch: 0 });
+  // A flat map shows the whole of Europe to Japan at once; the globe hid half of it. The zoom fits about 190° of longitude and the
+  // latitudes from southern Australia to northern Europe into the box, whichever is tighter.
+  const globalCamera = () => {
+    const width = canvasHost.clientWidth || 960, height = canvasHost.clientHeight || 600;
+    return { center: [85, 24], zoom: Math.max(.1, Math.min(Math.log2(width * .0037), Math.log2(height * .0073))), bearing: 0, pitch: 0 };
+  };
   let map;
   try {
     map = new lib.Map({
@@ -131,7 +136,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
       },
       canvasContextAttributes: { antialias: true },
       style: {
-        version: 8, projection: { type: "globe" }, sky: atmosphere(colors), glyphs: `${ASSETS}/fonts/{fontstack}/{range}.pbf`,
+        version: 8, projection: { type: "mercator" }, sky: atmosphere(colors), glyphs: `${ASSETS}/fonts/{fontstack}/{range}.pbf`,
         sources: { countries: { type: "geojson", data: countries }, labels: { type: "geojson", data: labels }, lakes: { type: "geojson", data: lakes }, rivers: { type: "geojson", data: rivers }, graticule: { type: "geojson", data: graticule() } },
         layers: [
           { id: "ocean", type: "background", paint: { "background-color": colors.sea } },
@@ -206,7 +211,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   }
 
   function closePreview({ restoreFocus = false } = {}) {
-    selectedName = ""; preview.hidden = true; select.value = "";
+    selectedName = ""; preview.hidden = true; select.value = ""; markListSelection();
     if (loaded && !disposed) ["selected-school", "selected-halo"].forEach((id) => map.setFilter(id, ["==", ["get", "name"], ""]));
     syncMotion();
     if (restoreFocus) (lastFocus?.isConnected ? lastFocus : map.getCanvas()).focus({ preventScroll: true });
@@ -225,6 +230,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     if (!item || !loaded || failed) return;
     lastFocus = document.activeElement;
     selectedName = name; select.value = name; popup.remove();
+    markListSelection();
     drawPreview(item, focus);
     onSchoolSelect(item);
     ["selected-school", "selected-halo"].forEach((id) => map.setFilter(id, ["==", ["get", "name"], name]));
@@ -319,6 +325,10 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     const gaps = $("#partner-map-gaps");
     gaps.hidden = missing.length === 0;
     gaps.querySelector("summary").textContent = `查看 ${missing.length} 所待定位學校與來源`;
+    // The list of schools without a verified position sits under the map; this button above it says so and goes there.
+    const gapsOpen = $("#map-gaps-open");
+    gapsOpen.hidden = missing.length === 0;
+    gapsOpen.textContent = `未定位 ${missing.length} 所`;
     const rows = missing.map((item) => {
       const li = document.createElement("li");
       const button = document.createElement("button"); button.type = "button";
@@ -334,8 +344,41 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
       return li;
     });
     gaps.querySelector("ul").replaceChildren(...rows);
+    renderList(located);
     applyData();
   }
+
+  // The same schools as the quick-locate menu, as a visible list beside the map on a wide screen (CSS hides it elsewhere).
+  const list = $("#partner-map-list");
+  function renderList(located) {
+    const sorted = [...located].sort((a, b) => (a.country || "").localeCompare(b.country || "", "zh-Hant") || a.school_name.localeCompare(b.school_name, "zh-Hant"));
+    const key = sorted.map((p) => p.school_name).join("|");
+    if (list.dataset.key !== key) {
+      list.dataset.key = key;
+      list.querySelector("ul").replaceChildren(...sorted.map((item) => {
+        const li = document.createElement("li"), button = document.createElement("button");
+        button.type = "button"; button.dataset.mapSchool = item.school_name;
+        const name = document.createElement("strong"); name.textContent = item.school_name;
+        const place = document.createElement("small"); place.textContent = [item.location.city, item.country].filter(Boolean).join(" · ");
+        button.append(name, place); li.append(button);
+        return li;
+      }));
+    }
+    markListSelection();
+  }
+  function markListSelection() {
+    let selected = null;
+    list.querySelectorAll("[data-map-school]").forEach((button) => {
+      const on = button.dataset.mapSchool === selectedName;
+      if (on) { button.setAttribute("aria-current", "true"); selected = button; } else button.removeAttribute("aria-current");
+    });
+    // Scroll the list itself, never the page.
+    if (selected && (selected.offsetTop < list.scrollTop || selected.offsetTop + selected.offsetHeight > list.scrollTop + list.clientHeight)) {
+      list.scrollTop = Math.max(0, selected.offsetTop - list.clientHeight / 2 + selected.offsetHeight / 2);
+    }
+  }
+  const onListClick = (event) => { const button = event.target.closest("[data-map-school]"); if (button) selectSchool(button.dataset.mapSchool, false); };
+  list.addEventListener("click", onListClick);
 
   const timer = setTimeout(() => failMap("地圖載入逾時"), 20000);
   function failMap(message) {
@@ -408,6 +451,14 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   select.addEventListener("change", onSelect);
   $("#map-global").addEventListener("click", globalView);
   $("#map-home").addEventListener("click", homeView);
+  const openGaps = () => {
+    const gaps = $("#partner-map-gaps");
+    if (gaps.hidden) return;
+    gaps.open = true;
+    gaps.scrollIntoView({ block: "center", behavior: reducedMotion.matches ? "auto" : "smooth" });
+    gaps.querySelector("summary")?.focus({ preventScroll: true });
+  };
+  $("#map-gaps-open").addEventListener("click", openGaps);
   const resize = new ResizeObserver(() => { if (visible && !disposed) map.resize(); }); resize.observe(canvasHost);
   const theme = new MutationObserver(() => {
     if (!loaded || disposed || failed) return;
@@ -432,7 +483,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
       stopMotion(); disposed = true; clearTimeout(timer); resize.disconnect(); theme.disconnect(); intersection.disconnect(); homeMarker?.remove(); popup.remove();
       motionButton.removeEventListener("click", toggleMotion); reducedMotion.removeEventListener("change", syncMotion); document.removeEventListener("visibilitychange", syncMotion);
       canvasHost.removeEventListener("mouseleave", leave); $("#partner-map-panel").removeEventListener("keydown", escape);
-      select.removeEventListener("change", onSelect); $("#map-global").removeEventListener("click", globalView); $("#map-home").removeEventListener("click", homeView);
+      select.removeEventListener("change", onSelect); $("#map-global").removeEventListener("click", globalView); $("#map-home").removeEventListener("click", homeView); $("#map-gaps-open").removeEventListener("click", openGaps); list.removeEventListener("click", onListClick);
       map.remove(); delete canvasHost.dataset.ready; preview.hidden = true;
     },
   };
