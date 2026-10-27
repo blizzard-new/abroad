@@ -79,7 +79,11 @@ NTPU_MOE_SCHOLARSHIP_DIFF_PDF_URL = (
 NTPU_EFREI_INFO_SESSION_URL = (
     "https://new.ntpu.edu.tw/oia/news/6acc5d0d7085cb4f0c818840"
 )
-NTPU_116_CHECKED_AT = datetime(2026, 10, 26, tzinfo=timezone.utc)
+NTPU_LAW_COLLEGE_EXCHANGE_URL = "https://www.law.ntpu.edu.tw/news/j1p0rQCYhCHb"
+NTPU_SCHOOL_PREVIEW_BULLETIN_URL = (
+    "https://bulletin.ntpu.edu.tw/bulletin_content.php?no=20260707133939366861"
+)
+NTPU_116_CHECKED_AT = datetime(2026, 10, 27, tzinfo=timezone.utc)
 
 
 NTPU_OFFICIAL_DATA_DIR = Path(__file__).resolve().parent / "official_data" / "ntpu"
@@ -727,6 +731,18 @@ def build_ntpu_student_dashboard(
                     PageCategory.EXCHANGE_APPLICATION,
                 ),
             ),
+            _item(
+                "院級交換分流與讀取缺口說明（法律院 10/30 11:00 截止僅限法律院）",
+                [
+                    "法律學院院級交換公告（https://www.law.ntpu.edu.tw/news/j1p0rQCYhCHb ）正文、表單及三份 PDF 與既有基準一致，2026/10/30 11:00 截止僅適用法律學院學生，不可混為全校校級截止日。",
+                    "校級預告公告（https://bulletin.ntpu.edu.tw/bulletin_content.php?no=20260707133939366861 ）及商學院院級公告／時程圖於 2026/10/27 重試仍讀取失敗，保留最後成功查核基準，不推論取消或改期。",
+                ],
+                _reference(
+                    "國立臺北大學法律學院院級交換公告（僅適用法律院）",
+                    NTPU_LAW_COLLEGE_EXCHANGE_URL,
+                    PageCategory.EXCHANGE_APPLICATION,
+                ),
+            ),
         ],
         eligibility=[
             _item("學籍與年級", ["大學部及進修學士班須二年級以上。", "碩士、博士與碩士在職專班學生可申請。", "交換期間須保留學籍並依規定繳費；休學或已畢業者不具交換資格。"], guidelines),
@@ -790,6 +806,7 @@ def ntpu_exchange_info(partners: list[PartnerUniversity] | None = None) -> Excha
         semester=["秋季", "春季", "一學期", "一學年"],
         application_period=[
             "116 學年度（秋季／全學年）：2026/10/01 至 2026/10/23 17:00（已截止）",
+            "法律學院院級交換：2026/10/30 11:00 截止（僅適用法律學院，不可混為全校截止日；校級預告與商院公告讀取失敗時保留既有基準）",
             "法國巴黎計算機電子工程師學院（EFREI）交換說明會：2026/10/23 12:10–13:00（2026/10/12 公告）",
             "春季：原則 4 月，確切期限依國際處當期公告",
         ],
@@ -806,6 +823,8 @@ def ntpu_exchange_info(partners: list[PartnerUniversity] | None = None) -> Excha
             NTPU_MOE_SCHOLARSHIP_AMENDMENT_URL,
             NTPU_MOE_SCHOLARSHIP_AMENDMENT_PDF_URL,
             NTPU_EFREI_INFO_SESSION_URL,
+            NTPU_LAW_COLLEGE_EXCHANGE_URL,
+            NTPU_SCHOOL_PREVIEW_BULLETIN_URL,
             NTPU_FILES_URL,
         ],
         last_checked=NTPU_116_CHECKED_AT,
