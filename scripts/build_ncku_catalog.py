@@ -256,9 +256,9 @@ REGION_COST_DEFAULTS = {
     ),
 }
 
-NCKU_OUTBOUND_OVERVIEW_URL = "https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw"
+NCKU_OUTBOUND_OVERVIEW_URL = "https://oia.ncku.edu.tw/p/404-1032-229870.php?Lang=zh-tw"
 NCKU_PORTAL_URL = "https://exchange.oia.ncku.edu.tw/index.php?outgoing_auth"
-NCKU_116_1_ANNOUNCEMENT_URL = "https://oia.ncku.edu.tw/p/406-1032-301175,r3414.php?Lang=zh-tw"
+NCKU_116_1_ANNOUNCEMENT_URL = "https://oia.ncku.edu.tw/p/406-1032-306703,r3333.php?Lang=zh-tw"
 NCKU_116_1_GUIDELINES_PDF_URL = "https://oia.ncku.edu.tw/var/file/32/1032/img/107138261.pdf"
 NCKU_116_1_PARTNERS_PDF_URL = "https://oia.ncku.edu.tw/var/file/32/1032/img/535260712.pdf"
 NCKU_115_2_ANNOUNCEMENT_URL = "https://oia.ncku.edu.tw/p/406-1032-292857,r3414.php?Lang=zh-tw"

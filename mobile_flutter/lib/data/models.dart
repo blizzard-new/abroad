@@ -592,11 +592,11 @@ const List<SupportedUniversity> defaultSupportedUniversities = [
     schoolName: '國立成功大學',
     shortName: '成大',
     englishName: 'National Cheng Kung University',
-    officialUrl: 'https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw',
+    officialUrl: 'https://oia.ncku.edu.tw/p/404-1032-229870.php?Lang=zh-tw',
     supportLevel: 'full',
     partnerCount: 211,
     coverageNote:
-        '完整支援：116-1（2027秋季班）及115-1／115-2校級出國與赴大陸地區交換學生甄選簡章、211所合作姊妹校名額與語言門檻、6項赴外交換暨學海系列獎助學金及357篇歷屆學長姐交換心得報告已完整整合。',
+        '已核對 116-1 簡章（107138261.pdf，2026/10/30–11/19 16:00 線上申請）與當期校級一覽表（97 筆當期開放、92 筆舊資料待重查）；赴外交換生專區已改版為 404-1032-229870.php，116-1 甄選公告（406-1032-306703,r3333.php，2026/10/16 更新）另載 2026/10/23 說明暨分享會（芬蘭圖爾庫大學、奧地利因斯布魯克大學、日本東北大學返國學長姐分享）。',
     academicScoreMinimum: 77.0,
     colleges: [
       '文學院',
@@ -627,11 +627,11 @@ const List<SupportedUniversity> defaultSupportedUniversities = [
     shortName: '陽明交大',
     englishName: 'National Yang Ming Chiao Tung University',
     officialUrl:
-        'https://oia.nycu.edu.tw/oia/ch/app/artwebsite/view?module=artwebsite&id=1170&serno=f2dc9dee-6110-4c93-a952-2eeef32fd49c',
+        'https://oia.nycu.edu.tw/oia/ch/app/data/list?module=nycu0006&id=286',
     supportLevel: 'full',
     partnerCount: 243,
     coverageNote:
-        '完整支援：115-1／115-2校級出國交換暨116-1臺灣聯合大學系統交換計畫簡章、243所合作姊妹校（含20所拓荒者計畫重點學校）名額與門檻、6項出國交換暨學海系列獎助學金及1,899篇歷屆學長姐交換心得報告已完整整合。',
+        '已核對國際處出國交換申請公告列表（module=nycu0006&id=286）：2026/10/07 公告「116年度第一梯次臺灣聯合大學系統（UST）交換學生計畫」校內收件至 2026/12/31（週四）16:00 截止（PDF 寄至 ex-out@nycu.edu.tw）；2026/10/13 轉知政大辦理「2027 臺灣與阿拉伯聯合大公國（阿聯）青年交流計畫」遴選（全額補助機票及食宿）；116 學年度校級出國交換簡章尚未公布（最新校級為 115-2，已於 2026/07/10 截止）。',
     academicScoreMinimum: 70.0,
     colleges: [
       '人文藝術與社會學院',
@@ -710,12 +710,12 @@ const List<SupportedUniversity> defaultSupportedUniversities = [
     schoolName: '中國文化大學',
     shortName: '文大',
     englishName: 'Chinese Culture University',
-    officialUrl: 'https://oima.pccu.edu.tw/exchanges.htm',
-    supportLevel: 'full',
+    officialUrl: 'https://mccd.pccu.edu.tw/p/406-1300-148804,r2247.php?Lang=zh-tw',
+    supportLevel: 'basic',
     partnerCount: 135,
     coverageNote:
-        '完整支援：國際暨兩岸事務處（國合組／兩岸組）及日文系、韓文系、法文組、俄文組五大管道出國交換甄選簡章、135所合作姊妹校名額與語言門檻、國際移動力獎學金暨學海系列獎助學金及超過400篇歷屆學長姐赴韓交換留學報告書已完整整合。',
-    academicScoreMinimum: 70.0,
+        '已部分核對各甄選管道、國合組47筆參考名額與大陸文教處2027春季班赴大陸交換生甄選第二階段公告（https://mccd.pccu.edu.tw/p/406-1300-148804,r2247.php?Lang=zh-tw ，報名至2026/11/27、面試12/02；國合部RPage入口 https://oima.pccu.edu.tw/p/412-1008-14612.php?Lang=zh-tw ）；135筆合作方案的個別接待校條件及生活資料仍待核實。',
+    academicScoreMinimum: null,
     colleges: [
       '文學院',
       '國際暨外語學院',
@@ -745,11 +745,11 @@ const List<SupportedUniversity> defaultSupportedUniversities = [
     schoolName: '文藻外語大學',
     shortName: '文藻',
     englishName: 'Wenzao Ursuline University of Languages',
-    officialUrl: 'https://d020.wzu.edu.tw/article/492285',
+    officialUrl: 'https://d020.wzu.edu.tw/article/530752',
     supportLevel: 'full',
     partnerCount: 147,
     coverageNote:
-        '完整支援：國際暨兩岸合作處（國際交流組）115-1／115-2 一招及二招「一般組（70分）」與「語言學習組（65分）」六大語組（英、日、法、德、西、華語暨東南亞語組）及 UMAP／ACUCA 跨國聯盟交換簡章、147所全球合作姊妹校名額與語檢門檻、出國交換獎助學金暨超過100所姊妹校學長姐經驗分享雲端檔案已完整整合。',
+        '已核對115-2一招與2026/10/05公告之二招簡章（一般組 article/530752、語言學習組 article/530751，報名延後至 2026/10/13 23:59 截止）及《二招-115-2交換學生招收名額一覽表（一般組）》（持續更新，含匈牙利布達佩斯城市大學與韓國啟明大學資訊更新）：128筆對上官方名單校名，個別名額、學費與語檢仍待逐校核實；147筆舊衍生卡片停用。',
     academicScoreMinimum: 70.0,
     colleges: [
       '國際文教暨涉外事務學院',

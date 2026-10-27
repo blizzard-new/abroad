@@ -1495,7 +1495,7 @@ def _ncku_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
         official_layout=False,
         official_form_number="出國交換生申請表" if template.id == "exchange-application-data" else ("第一志願中英文自傳與讀書或研究計畫" if template.id == "study-plan" else None),
         official_file_name=None,
-        official_download_url="https://oia.ncku.edu.tw/p/404-1032-227700.php?Lang=zh-tw",
+        official_download_url="https://oia.ncku.edu.tw/p/404-1032-229870.php?Lang=zh-tw",
         default_copies=1,
         signatures=["申請學生親筆簽名", "系所單位主管簽章", "家長或監護人親筆簽名（錄取後繳交家長同意書）"] if template.id == "exchange-application-data" else [],
         stamps=["系所單位主管核章"] if template.id == "exchange-application-data" else [],
@@ -2110,7 +2110,7 @@ def _mcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
             field["help_text"] = "依銘傳大學《辦理學生出國研修實施細則》與《2027-2028 交換學校資料庫一覽表》規定：申請英語組須具 TOEFL iBT 61、IELTS 5.5 或 TOEIC 550 以上（歐美名校與雙聯學位多要求 TOEFL iBT 79–80 或 IELTS 6.0–6.5），日語組須具 JLPT N2 或 N3 以上，韓語組須具 TOPIK 2–3 級或英語檢定。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://iee.mcu.edu.tw/zh-hant/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/",
+        source_url="https://iee.mcu.edu.tw/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/",
         source_checked_at=MCU_SOURCE_CHECKED_AT,
         official_layout=False,
         official_form_number="出國研習交換生／雙聯學位／學海計畫申請表" if template.id == "exchange-application-data" else ("出國讀書計畫書與中英文自傳" if template.id == "study-plan" else None),
