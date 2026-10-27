@@ -342,18 +342,24 @@ body.unified-shell .application-workspace-heading .planning-next-action[data-sco
 [data-theme=dark] .stage-detail-label, [data-theme=dark] .application-progress-count { color:#a9b8c9; }
 [data-theme=dark] body.unified-shell .application-workspace-heading .planning-next-action[data-scope=elsewhere] { background:#233548; border-color:#425569; }
 @media (max-width:700px) {
-  #application-workspace .application-workspace-heading { padding:12px 12px 6px; }
+  /* mobile-reading.css gives this heading 4px at the sides on purpose, to use the phone's width. */
+  #application-workspace .application-workspace-heading { padding:12px 4px 6px; }
   #application-workspace .application-workspace-context { display:flex; gap:12px; align-items:baseline; }
   #application-workspace .application-workspace-context strong { font-size:15px; }
   #application-workspace .application-workspace-context .stage-summary-text { display:none; }
   #application-workspace .application-workspace-context p { max-width:none; margin:2px 0 0; font-size:12px; }
-  #application-workspace .application-workspace-stages { margin-top:8px; }
+  #application-workspace .application-workspace-stages { gap:6px; margin-top:8px; }
+  /* The larger circle is for wide screens; on the calendar page the phone's row of steps has no width to spare for it. */
+  #application-workspace .application-workspace-stages .application-stage-number { width:24px; height:24px; font-size:12px; }
+  #application-workspace .application-workspace-stages .application-stage-number svg { width:14px; height:14px; }
   #application-workspace .application-workspace-stages a { padding:8px 4px; gap:4px; }
   #application-workspace .application-workspace-stages a:has(.application-stage-flag:not(:empty)) { padding-right:4px; }
   .application-stage-flag { display:none; }
   /* Only a real count earns room under a step on a phone; the plain hints stay hidden as before. */
   #application-workspace .application-stage-copy small[data-real="true"] { display:block; font-size:11px; line-height:1.35; text-wrap:balance; }
   #application-workspace .application-stage-copy .stage-detail-label { display:none; }
+  /* The calendar page keeps its row of steps one line high so the month stays as high up as it can. */
+  #application-workspace[data-page=calendar] .application-stage-copy small[data-real="true"] { display:none; }
   #application-workspace .application-workspace-heading .planning-next-action { padding:12px; margin-top:8px; gap:8px; }
   #application-workspace .application-workspace-heading .planning-next-action strong { font-size:15px; }
   #application-workspace .application-workspace-heading .planning-next-action p { font-size:13px; line-height:1.6; }
