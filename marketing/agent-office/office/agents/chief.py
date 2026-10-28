@@ -3,7 +3,7 @@
 總管能做的事：開工、重寫某則草稿、加做一則、改發文時間、退回、記給明天的企劃，
 查看和調整每位同事用的 AI（工具、模型、思考強度），
 以及新增同事、交代工作給新同事、請新同事離開。
-不能核准、不能發文、不能改帳號或模擬模式——那些永遠由你在審核匣自己按。
+不能核准、不能發文、不能開 PR 或合併、不能改帳號或模擬模式——那些永遠由你在審核匣自己按。
 """
 
 from __future__ import annotations
@@ -25,8 +25,9 @@ STATUS_WORD = {
     "pending_approval": "待審", "needs_changes": "需修改", "approved": "已核准", "publishing": "發佈中",
     "published": "已發佈", "failed": "失敗", "rejected": "已退回",
 }
-FORMAT_WORD = {"text": "貼文", "reply": "留言回覆", "carousel": "輪播", "reel": "Reels", "story": "限動", "short": "Shorts", "long": "長影片"}
-CHANNEL_WORD = {"threads": "Threads", "instagram": "IG", "youtube": "YouTube"}
+FORMAT_WORD = {"text": "貼文", "reply": "留言回覆", "carousel": "輪播", "reel": "Reels", "story": "限動", "short": "Shorts", "long": "長影片",
+               "data_update": "資料更新提案"}
+CHANNEL_WORD = {"threads": "Threads", "instagram": "IG", "youtube": "YouTube", "github": "GitHub"}
 EDITABLE = {"pending_approval", "needs_changes", "approved", "failed", "rejected"}
 MAX_ACTIONS = 10
 
@@ -124,7 +125,7 @@ class Chief(Agent):
             "帳號用 uv run office auth threads／instagram／youtube 連上。\n"
         )
         return (
-            mode +
+            mode + self.github_text() +
             f"現在（台北）：{office.local_now():%Y-%m-%d %H:%M}；{'大家正在做今天的內容' if office.busy.locked() else '目前沒有在跑的工作'}\n"
             f"今天主軸：{plan.get('theme') or '還沒排'}\n"
             f"草稿（最新在前）：\n" + ("\n".join(rows) or "（還沒有草稿）") + "\n\n"
@@ -135,6 +136,23 @@ class Chief(Agent):
             f"固定排程（add_routine 新增、remove_routine 刪除，編號是 R 後面的數字）：\n{routines or '（還沒有）'}\n"
             f"平台目前支援 {office.facts().university_count} 所大學，清單在辦公室電腦上的專案裡，watch_schools 會直接讀，不用上 GitHub。"
         )
+
+    def github_text(self) -> str:
+        """Whether approved data-update proposals can become draft pull requests, in words the chief can repeat."""
+        office, settings = self.office, self.office.settings
+        waiting = sum(d["format"] == "data_update" and d["status"] in {"pending_approval", "needs_changes"} for d in office.store.drafts(limit=100))
+        queue = f"審核匣裡有 {waiting} 份資料更新提案在等老闆核准。" if waiting else "目前沒有等核准的資料更新提案。"
+        head = (
+            "GitHub：同事巡查發現新公告或和平台不一致時，會送一份「資料更新提案」到審核匣；老闆核准後由 Pat 用固定程式開成 draft PR，"
+            "合併永遠是老闆自己在 GitHub 按，總管和同事都不能開 PR 或合併。"
+        )
+        if not accounts.connected(settings, office.store, "github"):
+            state = (f"還沒連上 GitHub，所以核准後會失敗；要在辦公室電腦執行 uv run office auth github（權杖設定見 README「資料更新提案與 draft PR」）。")
+        elif settings.github_simulated:
+            state = f"{settings.github_repo} 已連上，目前是模擬模式：核准的提案只寫進 var/outbox/，不會真的開 PR；要正式開 PR，在 .env 設 OFFICE_GITHUB_DRY_RUN=0 並重新啟動。"
+        else:
+            state = f"{settings.github_repo} 已連上，正式模式：核准的提案會真的開成 draft PR。"
+        return f"{head}{state}{queue}\n"
 
     def history_text(self) -> str:
         messages = self.office.store.chat(limit=9)[:-1]  # the newest is the message being answered
@@ -264,6 +282,8 @@ class Chief(Agent):
 
     def _do_redo(self, action: ChiefAction) -> str:
         draft = self._draft(action.draft_id)
+        if draft["format"] == "data_update":
+            raise ValueError("資料更新提案不能重寫：不要就退回，想要更新的內容就請同事再巡查一次")
         if draft["format"] in {"story", "reply"}:
             raise ValueError("限動跟著輪播封面走、留言回覆請直接在審核匣改字")
         if not action.instructions.strip():
@@ -364,6 +384,8 @@ class Chief(Agent):
 
     def _do_reschedule(self, action: ChiefAction) -> str:
         draft = self._draft(action.draft_id)
+        if draft["format"] == "data_update":
+            raise ValueError("資料更新提案沒有發佈時間，核准後馬上開 PR")
         match = re.fullmatch(r"\s*(\d{1,2})[:：](\d{2})\s*", action.time or "")
         if not match or int(match.group(1)) > 23 or int(match.group(2)) > 59:
             raise ValueError("時間請用 HH:MM，例如 20:30")

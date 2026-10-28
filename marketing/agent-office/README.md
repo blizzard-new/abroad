@@ -52,7 +52,7 @@
 | Mori | IG 設計師 | 文案：Claude Code；封面插圖：Codex | 6 張 4:5 輪播圖（封面鉤子 → 重點 → 收藏／分享／連結在主頁），封面放 Codex 畫的插圖，再做一張提醒看新貼文的限動；hashtag 最多 5 個 |
 | 阿剪 | 影片剪輯 | Claude Code | 30～45 秒直式腳本（前 3 秒鉤子、每個畫面都有大字幕），逐格算圖並配上合成音樂；同一支影片發 Reels 和 YouTube Shorts；週日做 2～4 分鐘橫式「本週交換情報懶人包」 |
 | Kiki | 審稿查核 | Codex | 程式規則＋AI 審稿：字數、連結位置、hashtag 數、平台數字不能誇大、沒有官方來源不能寫日期、禁用「保證錄取／官方合作」等字眼；不合格退回作者改一次。寫的人和審的人用不同家的 AI，比較容易抓到盲點 |
-| Pat | 發佈排程 | Antigravity | 發文前最後檢查一次（公告有沒有改、是不是跟最近重複），有疑慮就退回給你；到排定時間用程式呼叫 Threads／Instagram／YouTube 官方 API，Threads 發完主文立刻在第一則留言補上連結 |
+| Pat | 發佈排程 | Antigravity | 發文前最後檢查一次（公告有沒有改、是不是跟最近重複），有疑慮就退回給你；到排定時間用程式呼叫 Threads／Instagram／YouTube 官方 API，Threads 發完主文立刻在第一則留言補上連結；你核准的資料更新提案，也由 Pat 用程式開成 GitHub draft PR（見「資料更新提案與 draft PR」，不合併） |
 | Nana | 數據分析 | Antigravity | 每晚抓成效，把 Threads 上互動最好的題目交給企劃重製成 IG（Threads 測試題目、IG 放大轉換的雙平台閉環），並寫 2～4 點建議給隔天的企劃 |
 | Momo | 社群互動 | Claude Code | 發文後 30 分鐘～3 小時去看留言、擬回覆；回覆陌生人一律等你核准 |
 | Leo | 總管（主腦） | Antigravity | 你和大家之間的窗口：聽你在聊天裡交代的事、分派給對的同事、做完回報；每天開工結束會整理「哪些等你看」 |
@@ -153,7 +153,7 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 - 「請小美查這週大家在問什麼」→ 小美做完在聊天裡回報（附來源）；「請阿寫寫一則 Threads 講托福和雅思怎麼選」→ 草稿先給 Kiki 審稿，再放進審核匣等你核准
 - 「小美改用 Opus」「請小美離開」
 
-- 「新增 Dora 和 dora2 兩位校園情報研究員，把平台的大學平分給她們，每天巡查官網」→ Leo 直接讀這台電腦上專案裡的大學清單（不用上 GitHub），依順序平分；從隔天起每天開工時，兩人各自打開負責學校的官網，看有沒有新的交換公告、規定有沒有改、和平台資料是否一致，回報「🆕 新公告／⚠️ 和平台不一致／✅ 沒有變化」，每則附上看的頁面網址
+- 「新增 Dora 和 dora2 兩位校園情報研究員，把平台的大學平分給她們，每天巡查官網」→ Leo 直接讀這台電腦上專案裡的大學清單（不用上 GitHub），依順序平分；從隔天起每天開工時，兩人各自打開負責學校的官網，看有沒有新的交換公告、規定有沒有改、和平台資料是否一致，回報「🆕 新公告／⚠️ 和平台不一致／✅ 沒有變化」，每則附上看的頁面網址；有新公告或不一致的學校，會再整理成「資料更新提案」送進你的審核匣（見「資料更新提案與 draft PR」）
 - 「請小美每天看 Dcard 交換版」→ 變成小美每天固定的工作
 - 「Dora 和 dora2 每天早上十點和下午五點各巡查一次」→ 每位新同事可以有自己的時間，一天最多 6 次；沒設定就在每天開工時做一次。辦公室關著時錯過的時間，開機後只補做一次
 
@@ -166,7 +166,7 @@ uv run office facts           # 看平台數字與今天可引用的官方公告
 
 新同事最多 6 位，關掉辦公室再打開也還在。新同事用的 AI 失敗時會依序換其他 AI，全部失敗時會照實說出每個 AI 失敗的原因。他們能做兩種事：查資料、分析、想點子後回報給你，或寫 Threads 草稿；IG 圖和影片仍由 Mori、阿剪做。原本的 9 位同事不能被請走。
 
-Leo 能做的事：開工、請同事重寫、加做一則、改發文時間、退回、記給明天、查看和調整每位同事用的 AI，以及新增同事、交代工作給新同事、請新同事離開。**它不能核准、不能發文，也不能改帳號、金鑰或模擬模式**，就算你在聊天裡要求也一樣，那些永遠由你在審核匣自己按。Leo 用 Antigravity 思考；Antigravity 沒回應時會照備援順序換人，全部都不行時，它仍聽得懂「開工」和「進度」。
+Leo 能做的事：開工、請同事重寫、加做一則、改發文時間、退回、記給明天、查看和調整每位同事用的 AI，以及新增同事、交代工作給新同事、請新同事離開。**它不能核准、不能發文、不能開 PR 或合併，也不能改帳號、金鑰或模擬模式**，就算你在聊天裡要求也一樣，那些永遠由你在審核匣自己按。Leo 用 Antigravity 思考；Antigravity 沒回應時會照備援順序換人，全部都不行時，它仍聽得懂「開工」和「進度」。
 
 ## 用手機跟 Leo 說話、收通知
 
@@ -255,7 +255,7 @@ Leo 能做的事：開工、請同事重寫、加做一則、改發文時間、�
 | Momo（社群互動） | 讀留言、送出你核准的回覆 | 讀留言、送出你核准的回覆 | — |
 | Nana（數據） | 讀成效 | 讀成效 | 讀觀看數 |
 
-其他人（Leo、Ivy、阿脆、Mori、阿剪、Kiki）只做草稿，碰不到帳號，也拿不到權杖。連好之後，辦公室上方會顯示「帳號：Threads @你的帳號 · IG @… · YT 頻道名」。
+其他人（Leo、Ivy、阿脆、Mori、阿剪、Kiki 和新同事）只做草稿，碰不到帳號，也拿不到權杖。GitHub 權杖同樣只有 Pat 的程式碼用得到（見「資料更新提案與 draft PR」）。連好之後，辦公室上方會顯示「帳號：Threads @你的帳號 · IG @… · YT 頻道名」。
 
 連帳號都用 `uv run office auth …`：它會查出權杖屬於哪個帳號，連同帳號 ID 存進 `var/office.sqlite3`（不進 Git），Meta 的權杖每週自動延長。連完跑 `uv run office check`，會實際問每個平台「這個權杖是誰的」（只讀取，不會發文）。
 
@@ -296,6 +296,35 @@ Leo 能做的事：開工、請同事重寫、加做一則、改發文時間、�
    Google 可能會警告「這個應用程式未經驗證」，那是你自己的 App，按「進階 → 前往」即可。完成後顯示「已連上 YouTube 頻道「…」」。
 4. Google 規定：API 專案沒通過 YouTube 稽核前，用 API 上傳的影片一律是「私人」。先設 `YOUTUBE_PRIVACY=private`，到 YouTube Studio 手動公開，或申請稽核。
 
+## 資料更新提案與 draft PR
+
+Dora、小公主這類巡查同事發現「官網有新公告」或「官網和平台資料不一致」時，辦公室會自動把它整理成一份**資料更新提案**，送進你的審核匣（卡片上寫著 GitHub・資料更新提案）。你核准之後，**Pat** 用固定程式在 GitHub 開一個 **draft PR**；你自己到 GitHub 看、補上實際的資料更新、按 Merge。
+
+```
+同事巡查發現落差 → 提案進審核匣 → 你核准 → Pat 開 draft PR → CI 跑測試 → 你在 GitHub 看過、按 Merge
+```
+
+為什麼是這樣設計：同事每天讀的是各校官網，那是不可信的網頁，網頁裡的文字可能誘導 AI。所以 AI 只負責「說發現了什麼」，GitHub 這一步全是固定程式碼，AI 拿不到權杖、也碰不到 git：
+
+- **只新增一個檔案**：`sources/audit/proposals/日期-學校-編號.json`（發現、建議更新、官方來源、平台目前的紀錄）。PR 不會改動任何平台資料；合併它只是留下紀錄。真正的資料更新，由你（或在這個 PR 分支上開 Claude Code／Codex）確認官方來源後補上再合併。
+- **永遠是 draft**，分支一定是 `office/` 開頭的新分支，不會碰 `main`。程式裡沒有任何「合併、關閉、刪除、強制推送」的功能；Leo 和同事也不能開 PR。
+- **永遠等你核准**，不受 `OFFICE_APPROVAL=auto` 影響。來源網址不在該校官網網域（或沒附）的提案，會標成「需修改」，提醒你先自己點開確認。
+- 同一所學校已經有提案在審核匣、或今天同一個頁面你已經處理過，就不會再送一份。
+- 網頁來的文字進到 PR 說明前都會處理過：`@帳號` 不會通知任何人，HTML、連結語法和藏在文字裡的網址都不會變成可點的連結。
+
+**設定（一次，約 5 分鐘）**
+
+1. 到 GitHub 的 **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**。Repository access 選 **Only select repositories**，只選 `blizzard-new/abroad`；Permissions 只開 **Contents: Read and write**、**Pull requests: Read and write**（Metadata 會自動是唯讀），到期日自己決定。不要用傳統（classic）權杖，那會涵蓋你帳號的所有 repo。
+2. 在辦公室電腦執行，貼上權杖（輸入時不會顯示）：
+   ```bash
+   uv run office auth github
+   ```
+   它會問 GitHub 這是誰的權杖、能不能寫入這個 repo，沒問題才存進 `var/office.sqlite3`（不進 Git）。也可以改在 `.env` 填 `OFFICE_GITHUB_TOKEN`。`uv run office check` 的「GitHub」那一行是 ○ 就好了。
+3. **先用模擬模式試**（預設）：核准的提案只會寫進 `var/outbox/`，不會真的開 PR。看過內容 OK，再在 `.env` 設 `OFFICE_GITHUB_DRY_RUN=0` 並重新啟動；這一個開關只管 GitHub，不影響社群貼文是否模擬。
+4. 建議到 repo 的 **Settings → Branches** 為 `main` 開保護規則（要求 PR、要求 CI 通過）。權杖是最後一道防線之外的第二道：就算權杖外洩，也推不進 `main`。
+
+**日常**：審核匣的卡片按「核准並開 draft PR」，Pat 馬上開（手機 Telegram 也有同樣的按鈕）；PR 連結會出現在「已排程」分頁和 Telegram。不要的提案按「退回」。核准後失敗（例如權杖過期）會在「已排程」分頁顯示原因，修好後用 `uv run office approve <編號> --now` 再試一次；上次做到一半的分支和檔案會接著用，不會重複。
+
 ## 策略對照：NotebookLM 的建議落在哪裡
 
 | 行銷策略 | 辦公室怎麼做 |
@@ -318,6 +347,7 @@ Leo 能做的事：開工、請同事重寫、加做一則、改發文時間、�
 - **事實只來自資料**：平台數字從 `src/exchange_info/university_registry.py` 即時計算（新增學校，貼文數字自動跟上）；公告只引用 `sources/audit/` 標記為 confirmed update 且附官方網址的條目。審稿會擋下超過平台實際數字的說法，以及沒有來源的日期。
 - 審稿不過的草稿標成「需修改」，列出問題給你決定，不會自動發出。
 - 權杖、金鑰只在 `.env` 與 `var/`，紀錄裡的權杖都遮成 `***`。
+- **AI 碰不到 GitHub**：資料更新提案由程式開成 draft PR，只能新增 `sources/audit/proposals/` 下的一個 JSON 檔、只能開在 `office/` 開頭的新分支，沒有合併或刪除的功能；每一份都要你核准。
 
 ## 限制
 
@@ -346,7 +376,8 @@ Leo 能做的事：開工、請同事重寫、加做一則、改發文時間、�
 | `office/brand.py` | 品牌語氣、內容支柱、平台數字與今日公告 |
 | `office/rules.py` | 審稿規則 |
 | `office/render/` | 輪播／限動／影片的 HTML 版型、算圖與配樂 |
-| `office/platforms/` | Threads、Instagram、YouTube、媒體網址 |
+| `office/platforms/` | Threads、Instagram、YouTube、媒體網址、GitHub（只開 draft PR 的用戶端，`github.py` 裡寫死了能動的檔案與分支） |
+| `office/proposals.py` | 資料更新提案：巡查發現 → 審核匣卡片 → PR 要放的檔案與說明（含網頁文字的清理、官網網域檢查、重複檢查） |
 | `office/accounts.py`、`office/checkup.py` | 連帳號（`office auth`）與開工前檢查（`office check`） |
 | `office/telegram.py` | 手機：Telegram 機器人跟 Leo 對話、通知、核准按鈕 |
 | `office/server.py`、`office/static/` | 辦公室網頁與即時事件 |
