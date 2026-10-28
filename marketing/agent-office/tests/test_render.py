@@ -49,3 +49,33 @@ def test_carousel_story_and_short_video(settings, tmp_path):
     streams = subprocess.run([ffmpeg_exe(), "-hide_banner", "-i", str(result["path"])], capture_output=True, text=True).stderr
     assert re.search(r"Video: h264 .*1080x1920", streams) and "Audio: aac" in streams
     assert result["poster"].is_file()
+
+
+def test_the_mascot_always_has_its_eyes(settings, tmp_path):
+    """suitcase.webp is the body only (the website draws the eyes), so every use of it must carry the face."""
+    renderer = Renderer(settings)
+    briefing = Briefing(day=date(2026, 10, 23), facts=FACTS)
+    item = PlanItem(channel="instagram", format="carousel", pillar="value", angle="list", topic=TOPICS[2].title, brief=TOPICS[2].key)
+    slides = OfflineWriter().carousel(item, briefing).slides
+    with renderer._page(1080, 1920) as page:
+        page.goto("https://render.office/template/carousel.html", wait_until="load")
+        for story in (False, True):
+            for index, slide in enumerate(slides):  # the cover, the points (the mascot peeks in on every other one) and the last slide
+                page.evaluate("(args) => window.renderSlide(args)",
+                              {"slide": slide.model_dump(), "index": index, "total": len(slides), "site": "app.uniway-tw.com", "story": story and index == 0, "art": None})
+                bodies = page.locator('img[src$="suitcase.webp"]')
+                for i in range(bodies.count()):
+                    face = bodies.nth(i).locator("xpath=..")
+                    assert "mascot-face" in face.get_attribute("class"), f"slide {index + 1}: a mascot without a face"
+                    assert face.locator(".eye").count() == 2 and face.locator(".cheek").count() == 2
+                    box = face.locator(".eye").first.bounding_box()
+                    assert box and box["width"] > 5 and box["height"] > 5  # actually drawn, not collapsed
+        page.goto("https://render.office/template/video.html", wait_until="load")
+        page.evaluate("([s, o]) => window.setup(s, o)", [OfflineWriter().video(item, briefing, "short").model_dump(), "portrait"])
+        page.evaluate("(t) => window.render(t)", 1.4)
+        mascot = page.locator("#mascot .mascot-face")
+        assert mascot.count() == 1 and mascot.locator(".eye").count() == 2
+        open_eye = mascot.locator(".eye").first.bounding_box()
+        page.evaluate("(t) => window.render(t)", 2.48)  # in the middle of a blink
+        shut_eye = mascot.locator(".eye").first.evaluate("(el) => getComputedStyle(el, '::before').transform")
+        assert open_eye["height"] > 5 and shut_eye.startswith("matrix(1, 0, 0, 0.")  # the eye is squashed flat while it blinks

@@ -46,7 +46,7 @@ class CarouselDraft(BaseModel):
     slides: list[Slide]
     caption: str = Field(description="Instagram 說明欄，不含 hashtag")
     hashtags: list[str]
-    art_prompt: str = Field(default="", description="封面插圖的畫面描述（給生圖用），不要包含任何文字或字母")
+    art_prompt: str = Field(default="", description="封面插圖的畫面描述（給生圖用），不要包含任何文字或字母；有吉祥物時要寫出牠的眼睛")
 
 
 class Scene(BaseModel):
@@ -105,6 +105,9 @@ class SchoolCheck(BaseModel):
     )
     detail: str = Field(description="一兩句說明看到什麼；沒變化就寫已確認的頁面")
     source_url: str = Field(description="實際看的官網頁面網址")
+    suggested_update: str = Field(
+        default="", description="new_notice 或 mismatch 時，建議平台更新哪個欄位、改成什麼（例如「校內截止日改為 2026-11-03 17:00」）；"
+                                "只寫官網上真的看到的，不確定就留空；其他狀態留空")
 
 
 class SchoolReport(BaseModel):

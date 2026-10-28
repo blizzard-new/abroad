@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from .. import proposals
 from ..brand import load_news, load_schools
 from ..llm import WriterError
 from ..models import PlanItem, Report, SchoolCheck, ThreadsDraft
@@ -104,6 +105,11 @@ class Hire(Agent):
             except WriterError as error:
                 failures.append(f"{batch[0].name} 等 {len(batch)} 所沒查完：{str(error)[:120]}")
         flagged = [c for c in checks if c.status in {"new_notice", "mismatch"}]
+        queued, skipped = [], []
+        try:
+            queued, skipped = proposals.queue_from_checks(office, self, flagged, {school.name: school for school in mine})
+        except Exception as error:  # noqa: BLE001 - the round's report must still reach the boss
+            failures.append(f"資料更新提案沒有送審：{str(error)[:120]}")
         unreachable = [c for c in checks if c.status == "unreachable"]
         calm = [c.school for c in checks if c.status == "no_change"]
         self.status("waiting" if flagged else "done", f"巡查完 {len(checks)} 所，{len(flagged)} 所要注意", screen=_school_screen(checks, mine))
@@ -114,6 +120,9 @@ class Hire(Agent):
             lines.append("❓ 打不開或找不到交換頁：" + "、".join(c.school for c in unreachable))
         if calm:
             lines.append("✅ 沒有變化：" + "、".join(calm))
+        if queued:
+            lines.append("📮 資料更新提案已送進審核匣（你核准後，Pat 會開成 draft PR）：" + "、".join(f"#{draft_id} {name}" for draft_id, name in queued))
+        lines += [f"・{note}" for note in skipped]
         lines += [f"❌ {line}" for line in failures]
         return "\n".join(lines)
 
