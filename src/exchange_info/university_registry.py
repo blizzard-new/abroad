@@ -1266,8 +1266,47 @@ NDHU = UniversityProfile(
     ),
 )
 
+THU = UniversityProfile(
+    id="thu",
+    school_name="東海大學",
+    short_name="東海",
+    english_name="Tunghai University",
+    aliases=(
+        "thu",
+        "東海大學",
+        "東海",
+        "THU",
+        "Tunghai University",
+        "Tunghai",
+    ),
+    hero_image="/static/assets/thu-campus.svg",
+    official_url="https://oir.thu.edu.tw/front/301_ex_overview/302_Out_EX_Prog/302_1_Qualifica?lang=tw",
+    coverage_note="完整支援：已整合東海大學國際暨兩岸合作處（OIR）《2027年春學期／2026年秋學期赴全球姊妹校交換甄試簡章》、《交換甄選辦法重大更新通知（2025.11.18）》、《國際暨兩岸姊妹校名錄》、《國際合作協議資料庫》與《赴海外雙聯學位》官方資料：（1）甄試時程、分組與取消口試量化計分新制：每年春、秋兩學期初辦理校內長期交換甄試（春季班於每年 9–10 月辦理，如 2027 春學期甄試為 2026/09/07–10/05 報名、10/15 唱名選填學校、10/15–10/23 繳交推薦資格確認書與 10,000 元保證金；秋季班於每年 2–3 月辦理，如 2026 秋學期甄試為 2026/02/23–03/13 報名、03/27 唱名選校）。申請人須為修業滿一學期之在學學生（不含碩士在職專班），報名時分「全球暨港澳組（歷年 GPA 2.5 以上）」及「大陸組（歷年 GPA 2.0 以上）」兩組計分，自 2026 秋學期甄試起取消口試項目，總成績＝歷年學期班排名百分比平均 20%＋外語能力 30%（依 Level A 30% 至 Level G 4% 計分表擇最優採計，大陸組不計分）＋歷年學期 GPA 平均 15%＋學行優良表現 35%（含國際交流活動、國際接待志工、修習 EMI 課程占比達 30%/40%/50%、培力英檢 BESTEP 成績證明），完成基本勞作教育達畢業門檻者另加總分 5 分；依總分高低現場唱名當場決定選填學校。（2）合作姊妹校與雙聯學位：完整收錄 274 所全球與兩岸合作姊妹校（橫跨 31 國與地區，含 130 所當期開放申請之全球／大陸交換姊妹校與雙聯合作校、13 所美國名校跨國雙聯學位［天普、羅德島、北帕克、SUNY ESF、安得烈、艾克朗、UT Dallas、羅格斯、UIUC、南佛羅里達、密西根弗林特、聖湯瑪士、聖荷西州立］及 ACUCA／UMAP／Erasmus+ 交換專案）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》（2026/10/12–11/16）、《學海惜珠》（每年 3/10、9/15）、《高等教育深耕計畫國際移動力活動獎補助（國際移動躍升計畫）》（每年 3月、9月兩梯次）、《學生參加英語檢定考試補助辦法》（最高補助 NT$ 15,000）及 31 所合作大學共 80 篇歷屆學長姐交換與雙聯心得報告。",
+    support_level="full",
+    partner_count_hint=274,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "東海大學",
+        "TUNGHAIUNIVERSITY",
+        "TUNGHAI",
+        "THU",
+    ),
+    # https://www.thu.edu.tw/web/pages/page.php?sc=2&idm=2 — checked 2026-10-28.
+    colleges=(
+        "文學院",
+        "理學院",
+        "工學院",
+        "管理學院",
+        "社會科學院",
+        "農業暨健康學院",
+        "創意設計暨藝術學院",
+        "法律學院",
+        "國際學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU)
 DEFAULT_UNIVERSITY = CGU
 
 

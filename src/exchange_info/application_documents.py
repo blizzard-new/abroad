@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, THU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -98,6 +98,7 @@ MCU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 NTUB_SOURCE_CHECKED_AT = datetime(2026, 10, 22, tzinfo=timezone.utc)
 NCNU_SOURCE_CHECKED_AT = datetime(2026, 10, 27, tzinfo=timezone.utc)
 NDHU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
+THU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2264,6 +2265,51 @@ def _ndhu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _thu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理東海大學赴全球姊妹校交換甄試（分為「全球暨港澳組」與「大陸組」）、美國 13 校跨國雙聯學位暨教育部學海飛颺／惜珠與校內《高教深耕國際移動力活動獎補助》甄選應繳資料：1. 線上申請表與紙本送件檢核表（須經系主任或指導教授簽章；自 2026 年秋季甄試起取消口試，改依書面加權總分排序並參加「現場唱名選填學校」）、2. 家長同意書正本及報名費新臺幣 500 元繳費收據（至總務處出納組繳交，報名後概不退還）、3. 歷年成績單與歷年學期名次證明書正本（全球暨港澳組歷年 GPA 須達 2.5 以上，大陸組歷年 GPA 須達 2.0 以上；甄試成績含歷年學期班排名百分比平均 20%＋歷年學期 GPA 平均 15%）、4. 有效外語能力檢定證明（佔甄試成績 30%，採認 TOEFL ITP 430+／TOEFL iBT 42+／IELTS 5.0+／CEFR B1–C2／JLPT N5–N1／TOPIK 1–6 級；大陸組免附且外語 0%）、5. 學行優良表現佐證資料（佔甄試成績 35%，最多列計 7 項，含培力英檢 BESTEP、EMI 全英授課及格、學業優良獎、社團幹部等）與基本勞作教育完成證明（加總分 5 分）。",
+        "study-plan": "撰寫東海大學赴全球姊妹校交換甄試、雙聯學位及教育部學海飛颺／惜珠獎補助必繳之《出國學習計畫書》（約 1,000–2,000 字）。請具體說明赴外動機、擬於志願姊妹校修習之課程規劃（依《學生境外學習辦法》規定，交換期間須維持東海在學學籍並繳交東海全額學雜費，每學期於姊妹校至少須修讀 2 門課或 6 學分以上）、個人學行優良表現（EMI 修課、國際交流經驗或專業競賽成果），以及返國後學分抵免與職涯銜接規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或美國雙聯學位之選課預審與教務核備（依《東海大學學生境外學習辦法》規定，出國交換期間須辦理東海註冊並繳交東海全額學雜費［自費交換生則同時繳交東海與姊妹校學雜費］，每學期至少修讀 2 門課或 6 學分以上；同一教育階段赴境外研修期限除雙聯學位外合計以一學年為限）。",
+        "predeparture-notice": "於國際暨兩岸合作處公告甄試成績排序並完成「現場唱名選填學校」（2027 春季甄試於 2026/10/28 下午 2:00 舉行，本人或代理人須攜帶身分證或學生證正本出席，唱名三次未到視同棄權）後，繳交保證金新臺幣 10,000 元（至出納組繳交，完成交換返國繳交心得報告後無息退還；無故放棄者沒收）、配合國際處辦理姊妹校提名（Nomination）與外校入學申請，並完成行前說明會、役男緩徵出境及海外醫療保險。",
+        "return-report": "境外交換或雙聯研修期滿返國後 1 個月內，須向國際暨兩岸合作處繳交 1,000–2,000 字以上之《返國交換學生研修心得報告書》（含研修與生活照片，供刊登於國際處《心得分享》專區）、姊妹校正式成績單及出入境證明，辦理保證金新臺幣 10,000 元無息退還與教育部學海計畫／高教深耕國際移動力獎補助核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後持國外姊妹校核發之正式成績單正本與課程大綱（Syllabus），依《東海大學學生境外學習辦法》及《學生抵免學分辦法》向所屬系（所）、學院及教務處註冊課務組申請境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "東海大學").replace("長庚", "東海")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "東海《赴全球姊妹校交換甄試簡章》規定：全球暨港澳組歷年學期 GPA 須達 2.5（約 70 分）以上，大陸組歷年學期 GPA 須達 2.0 以上；甄試總分含歷年學期班排名百分比平均 20%＋歷年學期 GPA 平均 15%＋學行優良表現 35%（完成基本勞作教育另加總分 5 分）。請檢附歷年成績單與歷年學期名次證明書正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（Level A 114+ 30%／Level B 102+ 25%／Level C 95+ 20%／Level D 87+ 18%／Level E 72+ 15%／Level F 42+ 8%）", "IELTS 學術組（Level A 8.5+ 30%／Level B 7.5+ 25%／Level C 7.0+ 20%／Level D 6.5 18%／Level E 6.0 15%／Level F 5.0–5.5 8%）", "TOEFL ITP（Level B 660+ 25%／Level C 627+ 20%／Level D 585+ 18%／Level E 543+ 15%／Level F 460+ 8%／Level G 430+ 4%）", "JLPT 日語能力試驗（N1 滿分 Level A 30%／N1 合格 Level B 25%／N2 Level C 20%／N3 Level E 15%／N4 Level F 8%／N5 Level G 4%）", "TOPIK 韓語能力測驗（6級 Level A 30%／5級 Level B 25%／4級 Level D 18%／3級 Level E 15%／2級 Level F 8%／1級 Level G 4%）", "大陸組姊妹校（免附外語檢定證明；外語能力項目 30% 於大陸組一律不計分）"]
+            field["help_text"] = "依東海《赴全球姊妹校交換甄試簡章》外語能力計分表（佔甄試總分 30%，擇最優單一成績採計）：採認 TOEFL ITP、TOEFL iBT、IELTS、CEFR 歐語檢定、JLPT 及 TOPIK（培力英檢 BESTEP 可於學行優良表現加 5 分；一般交換不採計 TOEIC）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oir.thu.edu.tw/front/301_ex_overview/302_Out_EX_Prog/302_1_Qualifica?lang=tw",
+        source_checked_at=THU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="赴全球姊妹校交換甄試申請表、家長同意書與學行優良表現證明" if template.id == "exchange-application-data" else ("出國學習計畫書" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oir.thu.edu.tw/upload/ck/files/2027%E5%B9%B4%E6%98%A5%E5%AD%B8%E6%9C%9F%E6%9D%B1%E6%B5%B7%E5%A4%A7%E5%AD%B8%E8%B5%B4%E5%85%A8%E7%90%83%E5%A7%8A%E5%A6%B9%E6%A0%A1%E4%BA%A4%E6%8F%9B%E7%94%84%E8%A9%A6%E7%B0%A1%E7%AB%A01012%E6%9B%B4.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "所屬系所主任或指導教授簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "出席現場唱名選填學校並繳交保證金 $10,000 元，配合辦理姊妹校提名與入學申請", "return-report": "返國後 1 個月內繳交研修心得報告書與正式成績單辦理保證金 $10,000 元退還及獎補助核銷", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "完成線上報名並將核章紙本申請表、家長同意書、報名費 $500 收據、歷年成績單（含名次證明）與外語／學行優良證明送交國際暨兩岸合作處"),
+        version="116準備工具-2026-10-28.1",
+        destinations=["東海大學國際暨兩岸合作處境外學生事務組（臺中市西屯區臺灣大道四段 1727 號語文館 LF102）"],
+        conditional_note="此為個人準備工具；東海大學赴全球姊妹校交換甄試每年分兩梯次（春季甄試約 9–10 月報名、秋季甄試約 2–3 月報名，自 2026 秋季甄試起取消口試），須完成線上申請並將核章紙本、報名費 500 元收據、歷年成績單與名次證明（全球暨港澳組 GPA 2.5+、大陸組 GPA 2.0+）、外語檢定（30%）與學行優良表現證明（35%）送交國際暨兩岸合作處，並依時出席「現場唱名選填學校」。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2338,6 +2384,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncnu_template(template)) is not None]
     if university.id == NDHU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ndhu_template(template)) is not None]
+    if university.id == THU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _thu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

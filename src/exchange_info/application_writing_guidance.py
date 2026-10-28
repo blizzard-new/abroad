@@ -930,6 +930,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="東華規定返國後一個月內須繳交返國交換學生心得報告書（含照片），始得辦理保證金退還與獎學金核銷；這裡只合計下方各欄。",
     ),
+    ("thu", "study-plan"): _rules(
+        (
+            "出國學習計畫書為東海大學赴全球姊妹校交換甄試與雙聯學位申請應備表件，建議以中文或前往國家語文（英文、日文、韓文等）撰寫 1,000–2,000 字，供國際暨兩岸合作處初審、錄取分發後向外方姊妹校辦理提名（Nomination）及申請教育部學海飛颺／惜珠或高教深耕國際移動力獎補助使用。",
+            "內容應具體說明申請動機、個人學行優良表現（可對應甄試 35% 學行優良表現加分項目，如 EMI 全英授課修課、社團幹部、學術競賽或海外交流經驗）、擬於志願姊妹校修讀之課程規劃（每學期至少須修讀 2 門課或 6 學分以上）、學分抵免安排及返國後學術與職涯銜接規劃。",
+        ),
+        evidence="東海大學 2027 年春學期及 2026 年秋學期赴全球姊妹校交換甄試簡章、學生境外學習辦法",
+        minimum=1000,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="東海交換甄試與姊妹校提名建議出國學習計畫書約 1,000–2,000 字，清楚呈現修課（每學期至少 2 門課／6 學分）與學行優良表現；這裡只合計下方各欄。",
+    ),
+    ("thu", "return-report"): _rules(
+        (
+            "所有東海赴全球及大陸地區交換生須於返國後一個月內向國際暨兩岸合作處繳交《返國交換學生研修心得報告書》（含研修與生活照片，供刊登於國際處《心得分享》專區），並辦理保證金新臺幣 10,000 元無息退還及境外修習科目學分採認。",
+            "獲教育部學海飛颺、學海惜珠、高教深耕國際移動力獎補助或校內出國交換獎助學金者，須於返國後規定限期內上傳成果報告書，並檢附來回電子機票收據、登機證正本、護照出入境紀錄及姊妹校正式成績單辦理獎補助核銷。",
+        ),
+        evidence="東海大學赴全球姊妹校交換甄試簡章、高等教育深耕計畫國際移動力活動獎補助實施要點及學生境外學習辦法",
+        minimum=1000,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="東海規定返國後一個月內須繳交返國交換學生研修心得報告書（含照片），始得辦理保證金新臺幣 10,000 元退還與獎補助核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -968,6 +990,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "ntub": ("https://oia.ntub.edu.tw/p/405-1006-57507,c3152.php?Lang=zh-tw", "2026-10-26"),
     "ncnu": ("https://oia.ncnu.edu.tw/p/412-1017-269.php?Lang=zh-tw", "2026-10-27"),
     "ndhu": ("https://ias.ndhu.edu.tw/p/412-1006-21048.php?Lang=zh-tw", "2026-10-28"),
+    "thu": ("https://oir.thu.edu.tw/front/301_ex_overview/302_Out_EX_Prog/302_1_Qualifica?lang=tw", "2026-10-28"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):
