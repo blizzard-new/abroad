@@ -1228,8 +1228,46 @@ NCNU = UniversityProfile(
     ),
 )
 
+NDHU = UniversityProfile(
+    id="ndhu",
+    school_name="國立東華大學",
+    short_name="東華",
+    english_name="National Dong Hwa University",
+    aliases=(
+        "ndhu",
+        "國立東華大學",
+        "東華大學",
+        "東華",
+        "NDHU",
+        "National Dong Hwa University",
+    ),
+    hero_image="/static/assets/ndhu-campus.svg",
+    official_url="https://oia.ndhu.edu.tw/p/412-1027-21499.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立東華大學國際事務處「出國交換計畫（甄選簡章及說明會、出國交換補助、申請系統及交換學校一覽表、校內甄選後程序、交換出返國程序、交換心得&影片、Q&A）」、「雙聯學位（校級、院系級、新南向專班）」與「規章辦法」官方資料：（1）甄選時程與審查配分：每年分兩次辦理校內甄選——第一次甄選於秋季學期初辦理（2027年第一次甄選線上申請為 2026/08/17 17:00 至 2026/10/05 17:00，申請 115-2 春季班及 116-1 秋季班出國交換；因出國交換申請系統 ias.ndhu.edu.tw 進行 PHP 資安漏洞修補維護，校內推薦結果公告由 2026/10/27 12:00 順延至 2026/10/30 12:00）、第二次甄選於春季學期初辦理（申請同年秋季班剩餘名額）；申請人須於出國就讀時為二年級（含）以上在學學位生且前一學期或歷年 GPA 達 2.5（滿分 4.5）以上，最少選填 2 個、最多 6 個志願，以首次申請出國交換者優先分發；校內書面審查總成績＝學業表現 20%＋任務企劃書 35%＋讀書計畫 35%＋資料加分 10%，另具國際處接待義工證明加 1 分、修畢全球研究與國際事務學程加 1 分。（2）合作姊妹校、先鋒計畫與雙聯學位：完整收錄 163 所全球與大陸合作姊妹校（橫跨 22 國，含 10 校「國際移動力先鋒計畫」免學費暨高額獎學金重點校、19 校校院級雙聯學位合作校及 41 所大陸交換姊妹校）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》／《學海惜珠》、校內《國際交換學生出國計畫作業辦法》出國交換獎助學金（依當年度經費提供 1萬–15萬元不等，申請資格為歷年 GPA 達 3.3 以上且具外語檢定證明）、《學生出國選修課程實施辦法》（歐洲 ECTS × 1/2、英國 CATS × 1/4、美日陸 1:1 折算）及 92 所合作大學共 496 篇歷屆學長姐交換與海外研修心得報告。",
+    support_level="full",
+    partner_count_hint=163,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立東華大學",
+        "東華大學",
+        "NATIONALDONGHWAUNIVERSITY",
+        "NDHU",
+    ),
+    # https://www.ndhu.edu.tw/p/412-1000-10164.php?Lang=zh-tw — checked 2026-10-28.
+    colleges=(
+        "人文社會科學學院",
+        "理工學院",
+        "管理學院",
+        "花師教育學院",
+        "藝術學院",
+        "原住民民族學院",
+        "環境暨海洋學院",
+        "洄瀾學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU)
 DEFAULT_UNIVERSITY = CGU
 
 

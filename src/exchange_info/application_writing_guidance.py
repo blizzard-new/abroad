@@ -908,6 +908,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="暨大規定返國後 1 個月內須繳交 1,500–2,000 字以上之出國交換心得報告書（含照片 4 張以上）；這裡只合計下方各欄。",
     ),
+    ("ndhu", "study-plan"): _rules(
+        (
+            "讀書計畫與出國交換學習動機須於國立東華大學「赴境外交換學生線上申請系統」填寫或以 PDF 附件上傳；建議以中文或英文（或前往國家語文）撰寫 1,000–2,000 字。",
+            "內容應涵蓋個人學術背景、交換動機、擬於姊妹校修讀之課程規劃與學分抵免安排、出國期間生活與安全應變規劃，以及返國後之學術與職涯發展。",
+        ),
+        evidence="國立東華大學與境外大學學生交流甄選作業要點第四點、出國交換計畫申請簡章",
+        minimum=1000,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="東華交換甄選建議讀書計畫與學習動機合計約 1,000–2,000 字，清楚呈現修課與學分抵免規劃；這裡只合計下方各欄。",
+    ),
+    ("ndhu", "return-report"): _rules(
+        (
+            "所有東華赴境外及大陸地區交換生須於返國後一個月內向國際事務處全球移動組繳交《返國交換學生心得報告書》（含研修與生活照片，供刊登於國際處《交換生心得報告》專區），並依規定辦理保證金新台幣 2,000 元退還及學分採認。",
+            "獲校內外獎助學金（教育部學海飛颺、學海惜珠、東華鼓勵學生出國進修獎助學金或國際移動力先鋒計畫）者，須依規定於返國後期限內上傳成果報告書，並檢附來回電子機票收據、登機證正本、護照出入境紀錄及姊妹校正式成績單辦理核銷。",
+        ),
+        evidence="國立東華大學與境外大學學生交流甄選作業要點、鼓勵學生出國進修獎助學金實施要點及國際移動力先鋒計畫簡章",
+        minimum=1000,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="東華規定返國後一個月內須繳交返國交換學生心得報告書（含照片），始得辦理保證金退還與獎學金核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -945,6 +967,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "mcu": ("https://iee.mcu.edu.tw/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/", "2026-10-26"),
     "ntub": ("https://oia.ntub.edu.tw/p/405-1006-57507,c3152.php?Lang=zh-tw", "2026-10-26"),
     "ncnu": ("https://oia.ncnu.edu.tw/p/412-1017-269.php?Lang=zh-tw", "2026-10-27"),
+    "ndhu": ("https://ias.ndhu.edu.tw/p/412-1006-21048.php?Lang=zh-tw", "2026-10-28"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):
