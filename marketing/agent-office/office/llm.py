@@ -210,7 +210,7 @@ class ModelWriter:
         task = (
             "你是 Instagram 設計師兼文案。做一組 6 張的輪播圖文：第 1 張 cover、中間 point、最後一張 cta。\n"
             f"題目：{item.topic}\n內容支柱：{PILLARS[item.pillar]}\n企劃重點：{item.brief}\n官方來源：{item.source_url or '無'}\n"
-            f"hashtag 從 {' '.join(HASHTAGS)} 挑，最多 5 個。art_prompt 描述一張適合當封面的插圖（不含任何文字）。"
+            f"hashtag 從 {' '.join(HASHTAGS)} 挑，最多 5 個。art_prompt 描述一張適合當封面的插圖（不含任何文字）；畫面裡若有吉祥物（藍色小行李箱），要寫明牠有兩顆黑色橢圓眼睛和淡粉紅腮紅、沒有嘴巴。"
         )
         return self._ask("designer", CarouselDraft, task, briefing_text(briefing), lambda: self.offline.carousel(item, briefing))
 
@@ -421,7 +421,7 @@ class OfflineWriter:
         slides.append(Slide(kind="cta", title="收藏起來慢慢看", body=f"{topic.feature}｜連結在主頁"))
         bullets = "\n".join(f"✅ {title}：{detail}" for title, detail in topic.points)
         caption = f"{topic.title}\n\n{bullets}\n\n{topic.feature}，連結在主頁 👆\n💬 {topic.question}"
-        art = f"一個藍色小行李箱吉祥物，在書桌旁準備出國交換，主題是「{topic.points[0][0]}」"
+        art = f"一個藍色小行李箱吉祥物（有兩顆黑色橢圓眼睛和淡粉紅腮紅，沒有嘴巴），在書桌旁準備出國交換，主題是「{topic.points[0][0]}」"
         return CarouselDraft(slides=slides, caption=caption, hashtags=list(HASHTAGS), art_prompt=art)
 
     def video(self, item: PlanItem, briefing: Briefing, length: str) -> VideoScript:

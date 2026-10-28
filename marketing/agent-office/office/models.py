@@ -46,7 +46,7 @@ class CarouselDraft(BaseModel):
     slides: list[Slide]
     caption: str = Field(description="Instagram 說明欄，不含 hashtag")
     hashtags: list[str]
-    art_prompt: str = Field(default="", description="封面插圖的畫面描述（給生圖用），不要包含任何文字或字母")
+    art_prompt: str = Field(default="", description="封面插圖的畫面描述（給生圖用），不要包含任何文字或字母；有吉祥物時要寫出牠的眼睛")
 
 
 class Scene(BaseModel):

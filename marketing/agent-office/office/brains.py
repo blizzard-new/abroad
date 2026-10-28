@@ -28,7 +28,7 @@ from typing import TypeVar
 
 from pydantic import BaseModel, ValidationError
 
-from .brand import VOICE_GUIDE
+from .brand import MASCOT, VOICE_GUIDE
 from .config import Settings
 
 Model = TypeVar("Model", bound=BaseModel)
@@ -301,6 +301,7 @@ class CodexBrain(Brain):
         task = (
             f"$imagegen 產生一張 {size} 的直式插圖：{description}\n"
             "風格：柔和 3D 插畫、淺藍與蜜桃色、乾淨明亮，上方留白。畫面裡不能出現任何文字、字母或數字。\n"
+            f"如果畫面裡有 UniWay 的吉祥物，一定要照這個樣子畫：{MASCOT}\n"
             "完成後把圖片檔複製到目前資料夾，檔名 art.png，最後只回覆檔名。"
         )
         with tempfile.TemporaryDirectory(prefix="office-codex-art-") as folder:

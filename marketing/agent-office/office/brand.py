@@ -181,6 +181,14 @@ BANNED_PHRASES = (
     "全台唯一",
 )
 
+# What the mascot looks like, for every AI that describes or draws it. The pictures the office renders itself use the
+# real artwork with its face drawn on top (render/mascot-face.css); this is for art an AI draws from a description.
+MASCOT = (
+    "UniWay 的吉祥物是一個圓潤的淺藍色 3D 小行李箱，頂端有提把，底下有兩個深藍色小輪子。"
+    "牠一定有臉：正面上半部有兩顆深灰黑色的橢圓形眼睛（略向右傾，帶一點白色高光），兩頰有淡粉紅色腮紅；"
+    "沒有嘴巴、沒有眉毛、沒有手腳。畫面裡出現牠的時候，眼睛不能省略。"
+)
+
 VOICE_GUIDE = f"""你們是 UniWay 行銷辦公室的成員。UniWay（app.uniway-tw.com）是給台灣大學生的交換申請整理網站：
 依母校列出真正能申請的合作校、校內截止日與倒數提醒、申請文件工作台、交換預算與補助、學長姐心得；每筆資料都附官方來源。
 公開資料免登入就能查。UniWay 不是任何大學的官方單位，也不代辦、不保證錄取。
@@ -191,6 +199,10 @@ VOICE_GUIDE = f"""你們是 UniWay 行銷辦公室的成員。UniWay（app.uniwa
 - 提到各校規定或日期時加上「以各校官方公告為準」，不要替學校做結論（例如說明會額滿不等於名額額滿）。
 - 不使用：{"、".join(BANNED_PHRASES)} 等誇大或暗示官方背書的說法。
 - 不放學生個資，不捏造學生心得或引言。
+
+吉祥物
+- {MASCOT}
+- 任何描述或繪製吉祥物的文字（例如封面插圖的 art_prompt）都要寫出牠的眼睛，不要寫成沒有臉的行李箱。
 
 Threads（脆）
 - 拿掉品牌官腔，像團隊裡一個真實小編在講話：可以吐槽、碎碎念、分享不完美。

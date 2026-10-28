@@ -356,6 +356,15 @@ Dora、小公主這類巡查同事發現「官網有新公告」或「官網和�
 - 影片是動態字幕＋吉祥物動畫，沒有旁白。
 - Meta 的長期權杖約 60 天，辦公室每週自動延長；超過 60 天沒開機就要重新授權。
 
+## 吉祥物一定有眼睛
+
+`suitcase.webp` 只有吉祥物的身體，**眼睛是官網用 CSS 畫上去的**（見 `src/exchange_info/static/assets/mascot/README.md`）。所以辦公室做的圖和影片有兩種吉祥物，各用不同方式保證有臉：
+
+- **版型裡的吉祥物**（輪播、限動、Threads 配圖、Reels／Shorts）：`office/render/mascot-face.css` 用和官網、宣傳影片相同的座標，在身體上畫兩顆眼睛和淡粉紅腮紅；影片裡還會每幾秒眨一次眼。這是程式處理，不靠 AI 記得，也不用跟任何同事交代。
+- **AI 畫的封面插圖**（`OFFICE_IMAGES=codex`）：吉祥物長相寫在 `office/brand.py` 的 `MASCOT`，所有同事讀的品牌指引、Mori 寫 `art_prompt` 的說明、Codex 的生圖指令都會帶到。生圖是 AI 憑描述畫的，**不保證每次都像**，覺得不像就在審核匣退回。注意 Leo 的「重寫」只改文字，會沿用原本那張插圖，不會重畫。
+
+想改吉祥物的樣子（例如換配色、加表情）：版型改 `render/mascot-face.css`，AI 畫的改 `brand.py` 的 `MASCOT`。
+
 ## 費用
 
 用 `.env.example` 的分工時，AI 都走你既有的 Claude、ChatGPT、Google 訂閱，不另外付 API 費，但會吃各自的用量額度：每天大約 Claude Code 8～12 次、Codex 4～6 次（含 1 張圖）、Antigravity 3～8 次再加上你跟總管聊天的次數（每句一次）。只有備援換到 Claude API 時才會計費（以 `claude-opus-5-5` 估計全天約 1～2 美元，`OFFICE_MODEL=claude-sonnet-5-5` 約可省一半）。Threads、Instagram、YouTube API 本身免費（有每日發文上限，遠高於這裡的用量）。
@@ -375,7 +384,7 @@ Dora、小公主這類巡查同事發現「官網有新公告」或「官網和�
 | `office/llm.py` | 每個角色的提示詞，以及離線範本寫手 |
 | `office/brand.py` | 品牌語氣、內容支柱、平台數字與今日公告 |
 | `office/rules.py` | 審稿規則 |
-| `office/render/` | 輪播／限動／影片的 HTML 版型、算圖與配樂 |
+| `office/render/` | 輪播／限動／影片的 HTML 版型、吉祥物的臉（`mascot-face.css`）、算圖與配樂 |
 | `office/platforms/` | Threads、Instagram、YouTube、媒體網址、GitHub（只開 draft PR 的用戶端，`github.py` 裡寫死了能動的檔案與分支） |
 | `office/proposals.py` | 資料更新提案：巡查發現 → 審核匣卡片 → PR 要放的檔案與說明（含網頁文字的清理、官網網域檢查、重複檢查） |
 | `office/accounts.py`、`office/checkup.py` | 連帳號（`office auth`）與開工前檢查（`office check`） |

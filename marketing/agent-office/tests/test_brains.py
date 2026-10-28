@@ -84,7 +84,9 @@ def test_codex_answers_through_an_output_schema_file(tmp_path, fake):
 def test_codex_draws_a_cover(tmp_path, fake):
     art = CodexBrain(settings(tmp_path)).image("行李箱", tmp_path / "out" / "art.png")
     assert art.read_bytes().startswith(b"\x89PNG")
-    assert "$imagegen" in fake()[0]["stdin"]
+    prompt = fake()[0]["stdin"]
+    assert "$imagegen" in prompt
+    assert "兩顆深灰黑色的橢圓形眼睛" in prompt and "眼睛不能省略" in prompt  # the mascot is never drawn without its face
 
 
 def test_antigravity_output_is_read_leniently(tmp_path, fake):

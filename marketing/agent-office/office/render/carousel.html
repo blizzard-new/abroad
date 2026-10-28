@@ -9,6 +9,7 @@
 -->
 <link rel="stylesheet" href="/fonts/genjyuu/GenJyuuGothic-Medium.css" />
 <link rel="stylesheet" href="/fonts/genjyuu/GenJyuuGothic-Bold.css" />
+<link rel="stylesheet" href="/template/mascot-face.css" />
 <style>
   @font-face { font-family: "Poppins"; font-weight: 500; src: url("/fonts/poppins/Poppins-Medium.ttf") format("truetype"); }
   @font-face { font-family: "Poppins"; font-weight: 700; src: url("/fonts/poppins/Poppins-Bold.ttf") format("truetype"); }
@@ -148,6 +149,9 @@
     }
   }
 
+  // The mascot always comes with its face: the picture is the body only (see mascot-face.css).
+  const mascot = (cls) => `<span class="mascot-face ${cls}"><img src="/brand/suitcase.webp" alt="" /><i class="eye"></i><i class="eye r"></i><i class="cheek"></i><i class="cheek r"></i></span>`;
+
   window.renderSlide = async ({ slide, index, total, site, story, art }) => {
     const root = document.getElementById("slide");
     root.className = [slide.kind === "cta" ? "dark" : "", story ? "story" : "", art ? "with-art" : ""].join(" ").trim();
@@ -157,14 +161,14 @@
     if (story) {
       root.innerHTML = `${brand}
         <div class="cover-text"><span class="kicker"><i></i>今日新貼文</span><h1>${accent(slide.title)}</h1><p>${esc(slide.body)}</p></div>
-        ${artBlock}<img class="mascot" src="/brand/suitcase.webp" alt="" />
+        ${artBlock}${mascot("mascot")}
         <div class="pill">${ICONS.up}到主頁看完整內容</div>`;
     } else if (slide.kind === "cover") {
       // A lone picture (the one posted with a Threads post) has nothing to swipe to.
       const single = total === 1;
       root.innerHTML = `${brand}${single ? "" : count}
         <div class="cover-text"><span class="kicker"><i></i>交換申請小筆記</span><h1>${accent(slide.title)}</h1><p>${esc(slide.body)}</p></div>
-        ${artBlock}<img class="mascot" src="/brand/suitcase.webp" alt="" />
+        ${artBlock}${mascot("mascot")}
         ${single ? `<div class="foot"><span>${esc(site)}｜以各校官方公告為準</span></div>` : `<div class="swipe">往左滑${ICONS.arrow}</div>`}`;
     } else if (slide.kind === "cta") {
       const [feature, ...rest] = String(slide.body || "").split("｜");
@@ -175,12 +179,12 @@
             <div class="action">${ICONS.share}分享給也要交換的朋友</div>
             <div class="action">${ICONS.link}${esc(rest.join(" ") || "連結在主頁")}</div>
           </div></div>
-        <img class="wave" src="/brand/suitcase.webp" alt="" />${foot}`;
+        ${mascot("wave")}${foot}`;
     } else {
       const num = String(index).padStart(2, "0");
       root.innerHTML = `<div class="ghost">${num}</div>${brand}${count}
         <div class="point"><div class="num">${num}</div><h2><span class="seg">${esc(slide.title)}</span></h2><div class="card">${esc(slide.body)}</div></div>
-        ${index % 2 ? '<img class="peek" src="/brand/suitcase.webp" alt="" />' : ""}${foot}`;
+        ${index % 2 ? mascot("peek") : ""}${foot}`;
     }
     await Promise.all([...document.images].map((img) => (img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))));
     // The CJK font is split into unicode-range subsets; load the ones this slide needs before measuring.
