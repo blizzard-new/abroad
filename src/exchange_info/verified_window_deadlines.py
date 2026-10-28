@@ -355,10 +355,10 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "anchor_date": None,
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline", label="115-2二招線上報名截止",
-            value_text="2026/10/05公告二招一般組（d020 article/530752、c015 article/530796）及語言學習組（d020 article/530751、c015 article/530797），報名延期至2026/10/13 23:59線上截止（已截止），名額詳附件《二招-115-2交換學生招收名額一覽表（一般組）》（持續更新），並更新匈牙利布達佩斯城市大學與韓國啟明大學資訊；116-1日期未核實。",
+            value_text="2026/10/05公告二招一般組（530752／530796）及語言學習組（530751／530797），延至10/13 23:59截止；10/14發布二招報名成功名單（530925，非錄取結果，最終由接待校決定）；10/05另公告115年第2次學海飛颺開放系級交換生申請至11/16截止（530756）；尚無116-1一招公告。",
             exact_deadline_at=_dt(2026, 10, 13, 23, 59), submission_mode="online",
-            source_title="文藻115-2二招公告（一般組530752／530796、語言學習組530751／530797）",
-            source_url="https://d020.wzu.edu.tw/article/530752", last_checked_at="2026-10-27",
+            source_title="文藻115-2二招公告（530752／530751）、二招報名成功名單（530925）與系級學海飛颺（530756）",
+            source_url="https://d020.wzu.edu.tw/article/530752", last_checked_at="2026-10-28",
             verification_status="verified_reference",
         ),
         "paper_deadline": VerifiedRuleFact(

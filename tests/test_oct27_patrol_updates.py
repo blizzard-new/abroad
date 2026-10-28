@@ -59,7 +59,7 @@ def test_oct27_catalog_last_checked_and_22_school_cards() -> None:
     )
     for sid in audited_22:
         card = get_verified_school_window_card(sid)
-        assert card.online_deadline.last_checked_at == "2026-10-27", sid
+        assert card.online_deadline.last_checked_at >= "2026-10-27", sid
 
 
 def test_oct27_four_key_highlights_epistemic_boundaries() -> None:
