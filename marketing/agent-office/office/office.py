@@ -165,8 +165,24 @@ class Office:
         self.bus.emit(agent.id, "staff", f"{name}（{record['title']}）加入辦公室", change="hire")
         return agent
 
+    # ---- the verifier: re-reads what a patrol found before anything reaches the boss's inbox ----
+    def verifier(self) -> "Hire | None":
+        agent = self.staff.get(self.store.get("verifier") or "")
+        return agent if isinstance(agent, Hire) else None
+
+    def set_verifier(self, name: str) -> "Hire | None":
+        """Make a new colleague the one who verifies patrol findings; an empty name takes the job away."""
+        if not name.strip():
+            self.store.set("verifier", "")
+            return None
+        agent = self.colleague(name)
+        self.store.set("verifier", agent.id)
+        return agent
+
     def dismiss(self, name_or_id: str) -> str:
         agent = self.colleague(name_or_id)
+        if self.store.get("verifier") == agent.id:
+            self.store.set("verifier", "")
         self.staff.pop(agent.id)
         self.store.set("hires", json.dumps([r for r in self.hires() if r["id"] != agent.id], ensure_ascii=False))
         self.store.set(f"tuning:{agent.id}", "{}")
