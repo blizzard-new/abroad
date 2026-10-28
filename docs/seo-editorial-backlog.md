@@ -1,47 +1,57 @@
 # Editorial intentions and next topics
 
-## 2026-10-26 每日批次：兩篇（待審）
+## 2026-10-28 每日批次：候選及比較證據不足，未產文／未建立 PR
 
-日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261026`，基於 main `252f633c`；兩篇同屬 [PR #133](https://github.com/blizzard-new/abroad/pull/133)，待審、未合併。已讀 main 十九篇、所有待審 PR #119／#122／#126／#127／#131／#132，以及當日分支／PR；開始前沒有另一個 10/26 批次。#119、#122、#132 的六題均視為已選並排除，本批不依賴其合併。基礎 #78、流程 #92 已合併。
+以實際時鐘換算 Asia/Taipei，當日為 2026-10-28；UTC 初始時間為 2026-10-27 23:59:40。已 fetch 最新 main `19a198b2`，核對二十七篇文章、流程文件及當日分支／PR。GitHub 搜尋與 REST 均無待審 PR；#119、#122、#132、#133 已於 10/27 合併，不再列為待審，也不重做其八篇文章。#78、#92 已合併。
+
+原候選十八個方向現均由 main 涵蓋。候選 13 仍應擴充 `exchange-study-plan`，保留 URL；候選 15 尚缺 Claude／ChatGPT／Gemini 同任務、日期／版本／方案及輸出可核對的實測。當前瀏覽器 profile 沒有已記錄登入的網站，也沒有新的實測資料，因此不能推測比較成果或拆品牌近似頁。
+
+本日分支 `codex/seo-daily-20261028` 只保存查核文件，文章、圖片與 PR 均為無；依使用者候選不足例外，沒有完整雙篇前不開產文 PR。重試請先讀本日紀錄並續用同一分支。未更改原文日期、Sitemap、排程或部署狀態；沒有使用 Search Console、搜尋量或排名資料。
+
+詳見 [當日查核](seo-editorial-status-2026-10-28.md) 與 [二十方向及 main／PR 狀態台帳](seo-editorial-status-2026-10-28.json)。後續需補充獨立候選或可用的三工具實測條件／紀錄，才能重新評估雙篇組合。
+
+## 2026-10-26 每日批次：兩篇（已合併，10/28 查核）
+
+日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261026`，基於 main `252f633c`；兩篇同屬 [PR #133](https://github.com/blizzard-new/abroad/pull/133)，已於 10/27 合併。當時已讀 main 十九篇、所有待審 PR #119／#122／#126／#127／#131／#132，以及當日分支／PR；開始前沒有另一個 10/26 批次。#119、#122、#132 的六題均視為已選並排除，本批不依賴其合併。基礎 #78、流程 #92 已合併。
 
 選題為使用者候選 7 與 11，依編輯判斷，沒有使用者提供的 Search Console、搜尋量或排名資料。
 
 | 題目 | slug | 狀態 |
 | --- | --- | --- |
-| 交換獎學金核定後要做什麼？在外義務、研修變更與證據追蹤表 | `exchange-scholarship-obligations` | PR #133 待審，驗收完成；後續批次請排除 |
-| 預算有限怎麼規劃交換？資金上限、三方案取捨與可行性檢查 | `exchange-limited-budget` | PR #133 待審，驗收完成；後續批次請排除 |
+| 交換獎學金核定後要做什麼？在外義務、研修變更與證據追蹤表 | `exchange-scholarship-obligations` | PR #133 已合併；後續批次請排除 |
+| 預算有限怎麼規劃交換？資金上限、三方案取捨與可行性檢查 | `exchange-limited-budget` | PR #133 已合併；後續批次請排除 |
 
 補助篇處理已核定、仍在外研修時的條件／變動／證據管理，原有 `exchange-scholarships` 保留查找、申請與初步撥款概覽；待審返國篇處理研修結束後交接。有限預算篇以固定資源與必要學習條件篩選三個方案，原有 `exchange-budget` 保留如何列帳、估總額與排付款，待審通勤篇保留路線／費用／時間比較。不是另建一份獎助申請清單、國家行情或相同預算公式頁。既有十九篇內容、URL、出版日與 lastmod 不變。[來源、圖片與驗收紀錄](seo-editorial-validation-2026-10-26.md) 隨本批保存。
 
-### 20 個候選的覆蓋與後續限制（2026-10-26 查核）
+### 20 個候選的覆蓋與後續限制（2026-10-28 更新）
 
 | 候選 | 已有／處理位置 | 狀態 |
 | --- | --- | --- |
 | 1 一學期／一學年 | `exchange-semester-or-year` | main 已有 |
 | 2 交換／訪問／自費 | `exchange-versus-visiting` | main 已有 |
 | 3 推薦信 | `exchange-recommendation-letter` | main 已有 |
-| 4 英語授課判讀 | `english-taught-exchange-courses` | PR #119 待審 |
-| 5、18 一般／AI 英文面試 | `exchange-interview-practice` | 整併於 PR #122 待審 |
+| 4 英語授課判讀 | `english-taught-exchange-courses` | PR #119 已合併，main 已有 |
+| 5、18 一般／AI 英文面試 | `exchange-interview-practice` | 整併於 PR #122，已合併，main 已有 |
 | 6 抵達第一週 | `exchange-arrival-week` | main 已有 |
-| 7 交換期間獎助義務 | `exchange-scholarship-obligations` | PR #133 待審，後續排除 |
-| 8 衝堂與改選 | `exchange-course-changes` | PR #119 待審 |
+| 7 交換期間獎助義務 | `exchange-scholarship-obligations` | PR #133 已合併，main 已有 |
+| 8 衝堂與改選 | `exchange-course-changes` | PR #119 已合併，main 已有 |
 | 9 Fact Sheet | `exchange-fact-sheet` | main 已有 |
-| 10 住宿通勤比較 | `exchange-housing-commute` | PR #122 待審 |
-| 11 有限預算取捨 | `exchange-limited-budget` | PR #133 待審，後續排除 |
-| 12 返國交接與成果 | `exchange-return-checklist` | PR #132 待審 |
+| 10 住宿通勤比較 | `exchange-housing-commute` | PR #122 已合併，main 已有 |
+| 11 有限預算取捨 | `exchange-limited-budget` | PR #133 已合併，main 已有 |
+| 12 返國交接與成果 | `exchange-return-checklist` | PR #132 已合併，main 已有 |
 | 13 AI 讀書計畫 | 優先擴充 `exchange-study-plan` | 尚待實作；保留原 URL，不另建近似頁 |
 | 14 AI 自介 | `ai-self-introduction` | main 已有 |
 | 15 三工具比較 | 需 Claude／ChatGPT／Gemini 同任務實測及版本／方案紀錄 | 尚無可核對比較證據；不能用推測結果產文 |
 | 16 自然寫作 Prompt | `natural-writing-prompts` | main 已有 |
 | 17 AI 英文學習 | `ai-english-learning` | main 已有 |
-| 19 托福準備 | `toefl-ibt-preparation` | PR #132 待審 |
+| 19 托福準備 | `toefl-ibt-preparation` | PR #132 已合併，main 已有 |
 | 20 多益聽讀 | `toeic-listening-reading-preparation` | main 已有 |
 
 本批之後，原候選池沒有另外兩個已具備條件、可直接新增網址的題目。候選 13 是既有文擴充，候選 15 必須取得可核對的實測後再評估。下一批仍先查 main／所有待審 PR 與新提供資料；若沒有新的獨立候選或比較證據，應回報候選不足，不重做本表題目或把一項擴充分拆成兩個近似頁。這是目前的編輯盤點，不是永久排除新資料或改變每日排程。
 
-## 2026-10-23／24／25 待審批次（不屬本批內容）
+## 2026-10-23／24／25 批次（已合併，10/28 查核）
 
-以下於 2026-10-26 核對仍待審，不因尚未進入 main 而重做：
+以下於 2026-10-26 曾為待審，已於 10/27 合併；後續不重做：
 
 | 日期／PR | slug | 已選方向 |
 | --- | --- | --- |
