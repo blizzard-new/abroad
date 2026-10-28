@@ -75,12 +75,46 @@
   }
 
   /* Search: show every sorting choice without a hidden horizontal scroll. */
+  /* The bar keeps the search box and a search button that is only its icon; term and language moved into the drawer. */
   body.unified-shell #partners.pr-explore .pr-search {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
-  #partners .pr-search > :is(.search-field, .pr-search-button) {
-    grid-column: 1 / -1;
+  #partners .pr-search > .pr-search-button {
+    min-width: 56px;
+    padding: 0 16px;
+    gap: 0;
+  }
+
+  #partners .pr-search-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* One row with no thumbnails, so the tray leaves the cards readable. */
+  body.unified-shell #partners.pr-explore .pr-compare-tray {
+    flex-wrap: nowrap;
+    gap: 10px;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    padding: 8px 8px 8px 14px;
+  }
+
+  #partners .pr-tray-thumbs {
+    display: none;
+  }
+
+  #partners .pr-tray-text {
+    min-width: 0;
+  }
+
+  #partners .pr-tray-text span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   #partners .pr-field {
@@ -117,7 +151,7 @@
     line-height: 1.6;
   }
 
-  #partners :is(.pr-card-place, .availability-hint, .pr-card-foot) {
+  #partners :is(.pr-card-place, .availability-hint, .pr-card-foot, .pr-card-lang) {
     font-size: 14px;
     line-height: 1.75;
   }

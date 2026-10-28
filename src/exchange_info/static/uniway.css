@@ -5,7 +5,7 @@
   --uw-surface-soft: #f8faff;
   --uw-navy: #0d2250;
   --uw-text: #18243d;
-  --uw-muted: #66748e;
+  --uw-muted: #5b6881;
   --uw-blue: #1769df;
   --uw-blue-strong: #0f58c9;
   --uw-blue-soft: #eaf2ff;
@@ -152,7 +152,7 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: color-mix(in srgb, var(--uw-muted) 78%, transparent);
+  color: var(--uw-muted);
 }
 
 input:focus,
@@ -640,8 +640,8 @@ textarea:focus {
   margin-bottom: 20px;
 }
 
+/* .document-check-hero h2 is white on a photo (product-v2.css); keeping it here turned it navy on navy. */
 .section-heading h2,
-.document-check-hero h2,
 .application-form-header h2 {
   color: var(--uw-navy);
   font-size: 28px;

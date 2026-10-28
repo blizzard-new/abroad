@@ -9,7 +9,7 @@ html[data-theme="dark"] {
   --surface-selected: #102c3b;
   --ink: #f5f7fa;
   --ink-soft: #a7afbb;
-  --ink-faint: #747e8b;
+  --ink-faint: #8a94a2;
   --ink-disabled: #505965;
   --line: #242a33;
   --line-strong: #353d48;
@@ -51,7 +51,7 @@ html[data-theme="light"] {
   --surface-selected: #e6f4ff;
   --ink: #15171a;
   --ink-soft: #5c6470;
-  --ink-faint: #7c8591;
+  --ink-faint: #5f6772;
   --ink-disabled: #a7afb8;
   --line: #e0e3e8;
   --line-strong: #c9ced6;
@@ -62,7 +62,7 @@ html[data-theme="light"] {
   --brand: #007aff;
   --brand-dark: #0066cc;
   --brand-soft: rgba(0, 122, 255, 0.1);
-  --blue: #0066cc;
+  --blue: #005fbd;
   --blue-soft: rgba(0, 122, 255, 0.09);
   --amber: #c65d00;
   --amber-soft: rgba(255, 149, 0, 0.12);
@@ -600,6 +600,8 @@ html[data-theme="light"] .primary-button {
 }
 
 html[data-theme="light"] .chip-button.active {
+  border-color: var(--brand-dark);
+  background: var(--brand-dark);
   color: white;
 }
 

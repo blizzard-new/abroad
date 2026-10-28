@@ -22,13 +22,13 @@ window.UniWayExplore = (() => {
     try {
       const official = upcomingDeadlines(1)[0];
       const partner = list.map(partnerNextDeadline).filter(Boolean).sort((a, b) => a - b)[0];
-      if (official) deadline = `${shortDate(official.date)} ${official.scope}`;
-      else if (partner) deadline = `${shortDate(partner)} 合作校申請`;
+      if (official) deadline = `最近 ${shortDate(official.date)} ${official.scope}`;
+      else if (partner) deadline = `最近 ${shortDate(partner)} 合作校申請`;
     } catch (_) { /* the tab then says the deadline follows the official notice */ }
     const picked = UniWayDiscovery.hasCriteria(discoveryCriteria);
     const fits = picked ? list.filter((item) => UniWayDiscovery.assess(item, discoveryCriteria).matched).length : 0;
     return {
-      match: picked ? `${fits} 間符合所選條件` : profile ? `${fit} 間符合資格` : "填寫條件後排序",
+      match: picked ? `${fits} 間符合所選條件` : profile ? `${fit} 間符合資格` : "尚未填寫條件",
       deadline,
       quota: quotas.length ? `最多 ${Math.max(...quotas)} 名` : "依官方公告",
     };
@@ -108,6 +108,26 @@ window.UniWayExplore = (() => {
     });
   }
 
+  // On a phone the query bar keeps only the search box; the term and language fields live in the 篩選 drawer, one tap away.
+  // They are the same elements (same ids, same listeners), moved, so nothing that reads them changes.
+  function placeTiles(host) {
+    const bar = host.querySelector(".pr-search"), panel = host.querySelector(".pr-facets .filter-panel");
+    const tiles = ["#partner-term-tile", "#partner-test-tile"].map((selector) => host.querySelector(selector)?.closest(".pr-field")).filter(Boolean);
+    if (!bar || !panel || tiles.length < 2) return;
+    if (narrow.matches) {
+      let slot = panel.querySelector(".pr-facet-tiles");
+      if (!slot) {
+        slot = document.createElement("div");
+        slot.className = "pr-facet-tiles";
+        panel.querySelector(".pr-facets-head")?.after(slot);
+      }
+      if (tiles[0].parentElement !== slot) tiles.forEach((tile) => slot.append(tile));
+    } else if (tiles[0].parentElement !== bar) {
+      const submit = bar.querySelector("#partner-search-submit");
+      tiles.forEach((tile) => bar.insertBefore(tile, submit));
+    }
+  }
+
   function syncDrawer(host) {
     const drawer = host.querySelector(".journey-filter-drawer");
     if (!drawer) return;
@@ -145,6 +165,7 @@ window.UniWayExplore = (() => {
     renderSortTabs(host, list);
     renderFacets(host);
     renderSummary(host);
+    placeTiles(host);
     syncTiles(host);
     syncDrawer(host);
     renderTray(host);
@@ -164,6 +185,7 @@ window.UniWayExplore = (() => {
   document.addEventListener("click", (event) => {
     const host = root();
     if (!host || !host.contains(event.target)) return;
+    if (event.target.closest("[data-partner-clear-all]")) { document.querySelector("#clear-partner-filters")?.click(); return; }
     const tab = event.target.closest("[data-partner-sort]");
     if (tab) { state.partnerSort = tab.dataset.partnerSort; state.partnerLimit = partnerPageSize(); renderPartnerTable(); return; }
     if (event.target.closest("#partner-search-submit")) {

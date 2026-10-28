@@ -1,3 +1,77 @@
+# Design QA: search-first home, search and map
+
+## What the user asked for
+
+A full UI/UX audit of the exchange-student app, three clearly different directions for home, search and map, and an
+implementation of the chosen one without touching the database, SEO, existing routes or content. The chosen direction
+asks for conditions first (school, destination, term, language) and borrows a list-beside-map layout for the map.
+
+## What changed
+
+Front-end only, 11 files under `src/exchange_info/static`. Evidence, numbers and before/after images are in
+`docs/ui-audit-2026-10-27/`.
+
+- **Home.** A search desk in the first screen (school, destination, term, language, 找學校) built from the explore page's own
+  fields and criteria form; its live count uses the explore page's matching, so the number shown is the number the student
+  lands on. With no school chosen, 找學校 opens the school picker and keeps what was typed. Social links became quiet text links.
+- **Search.** Cards show the language requirement from the existing catalogue, or "依官方公告" when it does not say; nothing
+  is inferred. On a phone the query bar is one row and term and language moved into the 篩選 drawer (same elements and ids).
+  An empty result offers 清除所有條件.
+- **Map.** Flat projection framed Europe to Japan; on a phone the map comes first (104 px → 360 px visible); a 未定位 N 所
+  button opens the existing list of unlocated schools; on wide screens a school list sits beside the map.
+- **Foundation.** The document-check title was navy on a dark photo (1.03:1, now 15.9:1) because a later stylesheet
+  overrode the white one; muted, faint and placeholder text and the active chip reach AA; the seven tool pages expose a
+  level-1 heading through `role="heading" aria-level="1"`; the desktop layout shift of 0.97 is 0 because content behind the
+  start-up screen is hidden until it leaves; the "added to list" notice is a fixed toast again and no longer moves the page.
+
+## Verification
+
+- 1440×900 and 390×844 in headless Chromium: keyboard order and focus rings on the home desk and the search page, the
+  filter → empty → clear path, the notice, `prefers-reduced-motion` on home, search and map, heading levels. Numbers are in
+  the README next to the images.
+- Contract / routing / caching / discovery: 189 passed, 4 failed; the same 4 fail on `main`. Three tests failed because of
+  this change at first and were fixed in the code (the title assertion now allows the `role` and `aria-level` attributes).
+- End-to-end, 19 files around home, navigation, layout, search, map, picker, SEO and photos: 192 passed, 20 failed, 2 skipped.
+  The same 20 tests fail on `main`; where the runs were compared line by line the failing line and message match.
+- Not verified: a real GPU, a physical phone, a screen reader, Safari and Firefox; the roughly 100 end-to-end files outside
+  the 19; the backend suite (nothing in the backend changed). First-load weight is unchanged (250 requests on a cold visit).
+# Design QA: the application heading shows real progress and which step is on screen
+
+## What the user asked for
+
+A task-progress experience for the application pages, in the spirit of a path with a clear next step and a visible sense
+of how far along the student is, without inventing progress. The audit had found that the 我的申請 heading contradicted
+itself: a page on step 3 sat above a card saying step 1, and the heading took 356 of 900 px.
+
+## What changed
+
+Front-end only: `application-workspace.js` and `.css`, the two asset versions, tests. Evidence, numbers and before/after
+images are in `docs/ui-progress-2026-10-27/`.
+
+- The circle on a step says how far it is (done, next, not started); the card says which step the student is on
+  ("你在這裡") and flags the recommended one ("下一步"). The next-action card names both ("你在第 3 步 · 建議下一步在第 1
+  步") and steps back to a secondary button when it points to another step.
+- Steps show what has really been done, read from the same state `planningNextAction()` judges by: conditions, target and
+  eligibility comparison, scheduled preparation tasks, drafts filled and checked; the heading counts the steps marked
+  done. An account with nothing done shows the plain hints and an honest 0 of 3.
+- A step finished while the student is on the page gets one check pop and a live-region announcement; reduced motion
+  drops the movement only. A step already shown as done on this device is not celebrated again after a reload (the account
+  and plan load in pieces, and an earlier version celebrated that loading).
+- Heading height: desktop 356–366 px to 289–311 px, phone 481–531 px to 301–373 px.
+
+## Verification
+
+- New e2e tests in `tests/e2e/test_application_stage_guide.py` (10 pass with the 4 existing). Contract tests: 189 passed,
+  4 failed, the same 4 as on `main`. Application, planning, glass-theme and writing-guidance e2e files: 46 passed, 4
+  failed, the same 4 as on `main`.
+- Contrast of every new or changed string measured on real pixels, light and dark, both widths: at least 4.5:1. Tab order
+  the same as on `main`, focus rings present, no sideways scroll.
+- Two regressions were caught by comparing with `main` and fixed: step labels wrapping on the calendar page on a phone, and
+  a plain hint squeezed to 58 px at 768 px by the step flags (now hidden below 900 px). The responsive audit reports the same
+  28 problems as `main`; the calendar page is a little shorter than on `main`.
+- Not verified: a real phone, a screen reader, Safari and Firefox; the roughly 100 e2e files outside those named.
+- Found, not changed: the 申請文件 page header is nearly unreadable in dark theme on `main` too (filed separately).
+
 # Design QA: the home globe stays on a normal machine
 
 ## What went wrong
