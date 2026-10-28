@@ -114,6 +114,33 @@ class SchoolReport(BaseModel):
     checks: list[SchoolCheck]
 
 
+class FieldEdit(BaseModel):
+    target: str = Field(description="要改的地方：檔案 → 學校 id → 欄位，優先用「平台現有紀錄」裡出現的欄位名稱（例如 verified_window_deadlines.py → cgu → online_deadline.value_text）")
+    current: str = Field(description="平台現在寫的內容，照抄；平台沒有這一項就寫「沒有」")
+    proposed: str = Field(description="建議改成什麼；只寫官網上真的看到的，不要捏造日期、名額或網址")
+    basis: str = Field(description="官網依據：頁面上的原文摘錄（50 字內）或所在位置")
+
+
+class Verdict(BaseModel):
+    school: str = Field(description="學校名稱，照抄清單上的名字")
+    verdict: Literal["confirmed_update", "already_current", "not_exchange", "not_confirmed", "unreachable"] = Field(
+        description=(
+            "confirmed_update 官網確實有校級交換相關的新公告或規定異動，而且平台現有紀錄沒有反映或寫法不一致；"
+            "already_current 官網確有此事但平台已經是最新；"
+            "not_exchange 內容不屬於校級交換（例如雙聯學位、外部活動、其他校際競賽）；"
+            "not_confirmed 官網上看不到或無法證實；"
+            "unreachable 頁面打不開"
+        )
+    )
+    reason: str = Field(description="判斷理由，一兩句，寫你在官網上看到什麼")
+    source_url: str = Field(description="你實際打開核對的官網頁面網址")
+    edits: list[FieldEdit] = Field(default_factory=list, description="只有 confirmed_update 才填：要改平台哪些欄位、改成什麼；沒把握就不要寫，改判 not_confirmed")
+
+
+class VerificationReport(BaseModel):
+    verdicts: list[Verdict]
+
+
 class Preflight(BaseModel):
     go: bool = Field(description="可以發就 true；需要老闆再看一次就 false")
     reason: str = Field(description="判斷理由，一句話")
@@ -124,7 +151,7 @@ class Insights(BaseModel):
 
 
 ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain", "hire", "assign", "dismiss",
-                          "watch_schools", "set_schedule", "set_office_times", "add_routine", "remove_routine"]
+                          "watch_schools", "set_schedule", "set_office_times", "add_routine", "remove_routine", "set_verifier"]
 
 
 class ChiefAction(BaseModel):
@@ -142,7 +169,8 @@ class ChiefAction(BaseModel):
             "set_office_times：改每天的時間表，which 選 start（開工）、threads（Threads 發文，幾個時間就每天幾篇）、instagram、youtube，"
             "times 填新時間，填 [\"default\"] 代表改回原本設定；"
             "add_routine：新增每天固定時間做的事（times、task_kind、instructions 寫題目或工作，name 填新同事名字，原本的同事可留空）；"
-            "remove_routine：刪掉編號 routine_id 的固定排程"
+            "remove_routine：刪掉編號 routine_id 的固定排程；"
+            "set_verifier：指定 name 的新同事當驗證員，巡查同事發現新公告或不一致後，先交給她重新打開官網驗證，確認要更新平台的才送進審核匣；name 留空代表取消驗證員"
         )
     )
     draft_id: int = Field(default=0, description="草稿編號，沒有就填 0")
@@ -153,7 +181,7 @@ class ChiefAction(BaseModel):
     angle: Literal["pain", "choice", "list", "story", "news", ""] = ""
     time: str = Field(default="", description="HH:MM")
     role: str = Field(default="", description="set_brain 用：要改的工作（狀態裡 role= 後面的值）")
-    name: str = Field(default="", description="hire／assign／dismiss 用：同事的名字")
+    name: str = Field(default="", description="hire／assign／dismiss／set_verifier 用：同事的名字")
     title: str = Field(default="", description="hire 用：職稱，例如 Dcard 研究員")
     task_kind: Literal["report", "threads", "schools", "carousel", "reel", ""] = Field(
         default="", description="assign／add_routine 用：report 查資料或分析後回報；threads 寫一則 Threads 草稿；schools 巡查分到的學校；"

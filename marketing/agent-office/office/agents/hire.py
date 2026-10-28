@@ -10,9 +10,9 @@ from __future__ import annotations
 from datetime import datetime
 
 from .. import proposals
-from ..brand import load_news, load_schools
+from ..brand import load_news, load_schools, platform_record
 from ..llm import WriterError
-from ..models import PlanItem, Report, SchoolCheck, ThreadsDraft
+from ..models import PlanItem, Report, SchoolCheck, ThreadsDraft, Verdict
 from ..rules import check_threads
 from .base import Agent, Persona
 from .threads_writer import card_media
@@ -107,7 +107,15 @@ class Hire(Agent):
         flagged = [c for c in checks if c.status in {"new_notice", "mismatch"}]
         queued, skipped = [], []
         try:
-            queued, skipped = proposals.queue_from_checks(office, self, flagged, {school.name: school for school in mine})
+            by_name = {school.name: school for school in mine}
+            verifier = office.verifier()
+            if verifier is not None and verifier.id == self.id:  # nobody checks their own work
+                skipped.append(f"{self.persona.name}自己就是驗證員，這輪沒有二次驗證")
+                verifier = None
+            once = list({check.school: check for check in flagged}.values())  # a school repeated across batches is checked once
+            verdicts, why = (verifier.verify(self, once, by_name) if verifier is not None and once else (None, ""))
+            queued, notes = proposals.queue_from_checks(office, self, once, by_name, verifier=verifier, verdicts=verdicts, failure=why)
+            skipped += notes
         except Exception as error:  # noqa: BLE001 - the round's report must still reach the boss
             failures.append(f"資料更新提案沒有送審：{str(error)[:120]}")
         unreachable = [c for c in checks if c.status == "unreachable"]
@@ -125,6 +133,42 @@ class Hire(Agent):
         lines += [f"・{note}" for note in skipped]
         lines += [f"❌ {line}" for line in failures]
         return "\n".join(lines)
+
+    def verify(self, patroller: "Hire", flagged: list[SchoolCheck], schools: dict) -> tuple[list[Verdict], str]:
+        """Second look at what `patroller` found: re-read each official page and compare it with the platform's own record.
+
+        Returns her verdicts and, if her AI failed for some of the schools, why (those schools simply have no verdict)."""
+        office = self.office
+        patroller.handoff(self.id, "請驗證")
+        briefing = office.briefing_for_replies(with_news=True)
+        verdicts: list[Verdict] = []
+        failures: list[str] = []
+        done = 0
+        for start in range(0, len(flagged), SCHOOLS_PER_CALL):
+            batch = flagged[start:start + SCHOOLS_PER_CALL]
+            self.status("working", f"驗證 {patroller.persona.name} 的發現（{done}/{len(flagged)}）",
+                        screen={"type": "checklist", "items": [{"label": c.school, "ok": None} for c in flagged[:8]]})
+            findings = "\n\n".join(self._finding(patroller, check, schools.get(check.school), office) for check in batch)
+            try:
+                verdicts += office.writer.verify_findings(self.id, self.who, patroller.persona.name, findings, briefing).verdicts
+            except WriterError as error:
+                failures.append(str(error)[:160])
+            done += len(batch)
+        confirmed = sum(v.verdict == "confirmed_update" for v in verdicts)
+        self.status("done", f"驗證完 {len(flagged)} 項，{confirmed} 項要更新",
+                    screen={"type": "checklist", "items": [{"label": v.school, "ok": v.verdict != "confirmed_update"} for v in verdicts[:8]]})
+        self.handoff("boss", "驗證結果")
+        return verdicts, "；".join(dict.fromkeys(failures))
+
+    def _finding(self, patroller: "Hire", check: SchoolCheck, school, office) -> str:
+        label = {"new_notice": "新公告", "mismatch": "和平台不一致"}.get(check.status, check.status)
+        head = f"### {check.school}" + (f"（school_id={school.id}）" if school else "")
+        return (
+            f"{head}\n{patroller.persona.name}回報（{label}）：{check.detail}\n"
+            f"{patroller.persona.name}建議更新：{check.suggested_update or '（沒有提出）'}\n"
+            f"{patroller.persona.name}看的頁面：{check.source_url or '（沒有附）'}\n"
+            + (f"該校官網：{school.official_url}\n平台現有紀錄：\n{platform_record(office.settings, school.id)}" if school else "")
+        )
 
     def revise_view(self, draft: ThreadsDraft) -> None:
         self.status("working", "寫草稿…", screen={"type": "compose", "text": draft.text, "reply": draft.first_reply})

@@ -639,8 +639,15 @@ function previewHTML(d) {
     // The finding is text a colleague read off a web page: it is escaped like everything else, and only an http(s)
     // link becomes clickable.
     const link = (url) => (/^https?:\/\//i.test(url || "") ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(url)}</a>` : esc(url || "（沒有附）"));
-    return `<p class="post">${esc(p.detail)}</p>` +
-      (p.suggested_update ? `<p class="sub"><b>建議更新</b>\n${esc(p.suggested_update)}</p>` : `<p class="sub">巡查同事沒有提出具體欄位，請依官方來源確認要改什麼。</p>`) +
+    const verification = p.verified_by
+      ? `<p class="sub"><b>${esc(p.verified_by)} 重新打開官網驗證：需要更新平台</b>\n${esc(p.verdict_reason)}</p>`
+      : p.verification_note
+        ? `<p class="sub"><b>⚠️ 沒有完成二次驗證</b>\n${esc(p.verification_note)}</p>`
+        : `<p class="sub">沒有指定驗證員，這份只有巡查同事的說法。</p>`;
+    const edits = (p.edits || []).length
+      ? p.edits.map((e, i) => `<p class="sub"><b>修改 ${i + 1}：${esc(e.target)}</b>\n目前：${esc(e.current)}\n建議：${esc(e.proposed)}\n依據：${esc(e.basis)}</p>`).join("")
+      : p.suggested_update ? `<p class="sub"><b>${esc(p.author)} 的建議</b>\n${esc(p.suggested_update)}</p>` : `<p class="sub">沒有具體的修改清單，請依官方來源確認要改什麼。</p>`;
+    return `<p class="post">${esc(p.detail)}</p>${verification}${edits}` +
       `<p class="sub"><b>官方來源</b>\n${link(p.source_url)}</p><p class="sub"><b>平台目前的紀錄</b>\n${esc(p.platform_note)}\n${esc(p.author)} 於 ${esc(p.day)} 巡查發現</p>` +
       `<p class="sub">核准後 Pat 會開一個 draft PR（只新增一個提案檔，不改平台資料），合併由你在 GitHub 按。</p>`;
   }

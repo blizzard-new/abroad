@@ -298,8 +298,18 @@ def _decide(draft_id: int, approve_label: str) -> list[dict]:
 def _preview(draft: dict) -> str:
     payload, fmt = draft.get("payload") or {}, draft["format"]
     if fmt == "data_update":
-        suggestion = f"\n\n建議更新：{payload['suggested_update']}" if payload.get("suggested_update") else ""
-        return f"{payload.get('detail', '')}{suggestion}\n\n官方來源：{payload.get('source_url') or '（沒有附）'}\n{payload.get('author', '')} 巡查發現"
+        if payload.get("verified_by"):
+            check = f"\n\n🔎 {payload['verified_by']} 驗證：需要更新平台\n{payload.get('verdict_reason', '')}"
+        elif payload.get("verification_note"):
+            check = f"\n\n⚠️ 沒有完成二次驗證：{payload['verification_note']}"
+        else:
+            check = "\n\n（沒有指定驗證員，只有巡查同事的說法）"
+        edits = payload.get("edits") or []
+        if edits:
+            changes = "\n\n建議修改：\n" + "\n".join(f"{n}. {e.get('target', '')}\n   目前：{e.get('current', '')}\n   改成：{e.get('proposed', '')}" for n, e in enumerate(edits[:4], 1))
+        else:
+            changes = f"\n\n建議更新：{payload['suggested_update']}" if payload.get("suggested_update") else ""
+        return f"{payload.get('detail', '')}{check}{changes}\n\n官方來源：{payload.get('source_url') or '（沒有附）'}\n{payload.get('author', '')} 巡查發現"
     if fmt == "reply":
         return f"@{payload.get('username') or '訪客'}：{payload.get('comment_text', '')}\n\n→ {payload.get('text', '')}"
     if draft["channel"] == "threads":

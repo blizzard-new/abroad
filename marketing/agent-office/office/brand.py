@@ -7,11 +7,14 @@ sources/audit/, and only entries marked as confirmed updates are offered to the 
 
 from __future__ import annotations
 
+import ast
 import importlib
 import json
 import sys
 from dataclasses import dataclass, field
 from datetime import date
+from functools import lru_cache
+from pathlib import Path
 
 import httpx
 
@@ -114,6 +117,65 @@ def load_schools(settings: Settings) -> list[School]:
     response.raise_for_status()
     return [School(u.get("id") or u["short_name"], u.get("school_name") or u["short_name"], u.get("official_url", ""),
                    u.get("coverage_note", ""), u.get("support_level", ""), u.get("partner_count") or 0) for u in response.json()]
+
+
+DEADLINES_FILE = ("src", "exchange_info", "verified_window_deadlines.py")
+RULE_KEYS = ("online_deadline", "paper_deadline", "study_plan_limit")
+RULE_FIELDS = ("label", "value_text", "verification_status", "last_checked_at", "source_url")
+
+
+@lru_cache(maxsize=4)
+def _deadline_specs(path: str, mtime: float) -> dict[str, dict]:
+    """The platform's verified deadline rules per school, read from the source with `ast` and never imported: the module
+    pulls in the whole web app, and reading it as text means no repository code runs inside the office."""
+    try:
+        tree = ast.parse(Path(path).read_text(encoding="utf-8"))
+    except (OSError, SyntaxError):
+        return {}
+    specs: dict[str, dict] = {}
+    for node in ast.walk(tree):
+        value = node.value if isinstance(node, (ast.Assign, ast.AnnAssign)) else None
+        names = [t.id for t in (node.targets if isinstance(node, ast.Assign) else [node.target]) if isinstance(t, ast.Name)] \
+            if isinstance(node, (ast.Assign, ast.AnnAssign)) else []
+        if "_RAW_SPECS" not in names or not isinstance(value, ast.List):
+            continue
+        for entry in value.elts:
+            if not isinstance(entry, ast.Dict):
+                continue
+            row = {}
+            for key, item in zip(entry.keys, entry.values):
+                if not (isinstance(key, ast.Constant) and isinstance(key.value, str)):
+                    continue
+                if isinstance(item, ast.Constant) and isinstance(item.value, (str, bool, type(None))):
+                    row[key.value] = item.value
+                elif key.value in RULE_KEYS and isinstance(item, ast.Call):
+                    row[key.value] = {kw.arg: kw.value.value for kw in item.keywords
+                                      if kw.arg in RULE_FIELDS and isinstance(kw.value, ast.Constant) and isinstance(kw.value.value, str)}
+            if isinstance(row.get("school_id"), str):
+                specs[row["school_id"]] = row
+    return specs
+
+
+def platform_record(settings: Settings, school_id: str) -> str:
+    """What the platform says today about one school's deadlines and rules, as text for the colleague who verifies a finding."""
+    path = settings.repo_root.joinpath(*DEADLINES_FILE)
+    if not path.is_file():
+        return "（這台電腦上讀不到平台的已核實規則，請只依官網判斷）"
+    row = _deadline_specs(str(path), path.stat().st_mtime).get(school_id)
+    if not row:
+        return f"（平台沒有 {school_id} 的已核實截止日規則）"
+    lines = [f"來源檔 {'/'.join(DEADLINES_FILE)}，school_id={school_id}："]
+    for key in ("window_badge", "cycle_label"):
+        if row.get(key):
+            lines.append(f"- {key}：{row[key]}")
+    for key in RULE_KEYS:
+        rule = row.get(key)
+        if rule:
+            lines.append(
+                f"- {key}（{rule.get('label', '')}）：{rule.get('value_text', '')[:420]}"
+                f"｜狀態 {rule.get('verification_status', '?')}｜查核日 {rule.get('last_checked_at', '?')}｜來源 {rule.get('source_url', '?')}"
+            )
+    return "\n".join(lines)
 
 
 CONFIRMED = {"confirmed_update", "confirmed_updates"}

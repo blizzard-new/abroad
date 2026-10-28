@@ -19,6 +19,7 @@ from ..llm import WriterError
 from ..models import CarouselDraft, ChiefAction, ChiefReply, PlanItem, ThreadsDraft, VideoScript
 from ..rules import check_carousel, check_threads, check_video, instagram_caption
 from .base import Agent, Persona
+from .hire import Hire
 from .threads_writer import card_media
 
 STATUS_WORD = {
@@ -125,7 +126,7 @@ class Chief(Agent):
             "帳號用 uv run office auth threads／instagram／youtube 連上。\n"
         )
         return (
-            mode + self.github_text() +
+            mode + self.verifier_text() + self.github_text() +
             f"現在（台北）：{office.local_now():%Y-%m-%d %H:%M}；{'大家正在做今天的內容' if office.busy.locked() else '目前沒有在跑的工作'}\n"
             f"今天主軸：{plan.get('theme') or '還沒排'}\n"
             f"草稿（最新在前）：\n" + ("\n".join(rows) or "（還沒有草稿）") + "\n\n"
@@ -136,6 +137,14 @@ class Chief(Agent):
             f"固定排程（add_routine 新增、remove_routine 刪除，編號是 R 後面的數字）：\n{routines or '（還沒有）'}\n"
             f"平台目前支援 {office.facts().university_count} 所大學，清單在辦公室電腦上的專案裡，watch_schools 會直接讀，不用上 GitHub。"
         )
+
+    def verifier_text(self) -> str:
+        agent = self.office.verifier()
+        if agent is None:
+            return ("驗證員：目前沒有。巡查同事發現新公告或不一致，會直接整理成提案送進審核匣（只有巡查同事的說法）；"
+                    "老闆可以指定一位新同事當驗證員（set_verifier），之後巡查結果會先交給她重新打開官網驗證。\n")
+        return (f"驗證員：{agent.persona.name}。巡查同事發現新公告或不一致後，會先交給她重新打開官網、比對平台現有資料，"
+                "她確認要更新的才會送進審核匣（附修改清單）；她判定不相關或平台已是最新的不會送審。\n")
 
     def github_text(self) -> str:
         """Whether approved data-update proposals can become draft pull requests, in words the chief can repeat."""
@@ -211,6 +220,14 @@ class Chief(Agent):
         shares = self.office.split_schools(action.names or ([action.name] if action.name else []))
         lines = [f"{name} 負責 {len(schools)} 所：{'、'.join(schools)}" for name, schools in shares.items()]
         return "大學分好了，從明天起每天開工時巡查：\n" + "\n".join(lines)
+
+    def _do_set_verifier(self, action: ChiefAction) -> str:
+        agent = self.office.set_verifier(action.name or "")
+        if agent is None:
+            return "取消驗證員了：巡查同事發現的新公告或不一致，會直接整理成提案送進審核匣（沒有二次驗證）"
+        patrols = [a.persona.name for a in self.office.staff.values() if isinstance(a, Hire) and a.record.get("schools") and a.id != agent.id]
+        who = "、".join(patrols) or "巡查同事"
+        return f"{agent.persona.name}現在是驗證員：{who}每次發現新公告或不一致，會先交給她重新打開官網驗證，確認平台要更新的才送進審核匣（附修改清單）"
 
     def _do_set_schedule(self, action: ChiefAction) -> str:
         names = action.names or ([action.name] if action.name else [])
