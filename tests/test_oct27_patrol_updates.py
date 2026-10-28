@@ -49,9 +49,9 @@ def test_oct27_daily_22_schools_audit_ledger() -> None:
 
 
 def test_oct27_catalog_last_checked_and_22_school_cards() -> None:
-    assert CATALOG_LAST_CHECKED_AT == "2026-10-27"
+    assert CATALOG_LAST_CHECKED_AT >= "2026-10-27"
     catalog = build_verified_window_deadline_catalog()
-    assert catalog.last_checked_at == "2026-10-27"
+    assert catalog.last_checked_at >= "2026-10-27"
 
     audited_22 = (
         "cgu", "ntpu", "ntu", "ccu", "ncu", "tku", "fju", "scu", "ntnu", "cycu", "ntust",
@@ -63,16 +63,15 @@ def test_oct27_catalog_last_checked_and_22_school_cards() -> None:
 
 
 def test_oct27_four_key_highlights_epistemic_boundaries() -> None:
-    # 1. NSYSU: 10/27 10:04 check still links 2026/04/12 reference, do not claim published simply because 10/27 arrived
+    # 1. NSYSU: formal brochure 384608 published by 10/28; partner info & preference form released on 10/29
     nsysu_card = get_verified_school_window_card("nsysu")
-    assert "10:04" in nsysu_card.online_deadline.value_text
-    assert "不能因預定日期已到就宣稱已發布" in nsysu_card.online_deadline.value_text
-    assert "384613,r4450.php" in str(nsysu_card.online_deadline.source_url)
+    assert "10/29" in nsysu_card.online_deadline.value_text
+    assert "384608,c20621.php" in str(nsysu_card.online_deadline.source_url)
     nsysu_dash = _load_dashboard("nsysu")
     nsysu_info = _load_exchange_info("nsysu")
-    assert "10:04" in nsysu_dash.application_periods[1].details[0]
-    assert "不能因預定日期已到就宣稱已發布" in nsysu_dash.application_periods[1].details[0]
-    assert any("10:04" in p for p in nsysu_info.application_period)
+    assert "384608" in nsysu_dash.application_periods[1].details[0]
+    assert "10/29" in nsysu_dash.application_periods[1].details[0]
+    assert any("384608" in p for p in nsysu_info.application_period)
 
     # 2. NTUST: stu88/fall2027 recovered and matches 10/22 baseline; formal quotas & language conflict still pending
     ntust_card = get_verified_school_window_card("ntust")

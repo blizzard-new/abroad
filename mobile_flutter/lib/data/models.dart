@@ -327,7 +327,7 @@ const List<SupportedUniversity> defaultSupportedUniversities = [
     supportLevel: 'full',
     partnerCount: 236,
     coverageNote:
-        '完整支援：116-1（2027春季出國）甄選簡章與236所合作校名額表已公告（線上申請 2026/11/01–11/15），並整合174校歷屆交換心得與四語組條件。',
+        '完整支援：116-1（2027春季出國）甄選簡章與236所合作校名額表已公告（線上申請 2026/11/01–11/15，赴外交換專區入口 bds.oia.ntnu.edu.tw/bds/web/OUT），並整合174校歷屆交換心得與四語組條件。',
     academicScoreMinimum: 60.0,
     colleges: [
       '教育學院',
@@ -361,7 +361,7 @@ const List<SupportedUniversity> defaultSupportedUniversities = [
     officialUrl: 'https://oia.cycu.edu.tw/?p=6336',
     supportLevel: 'full',
     partnerCount: 89,
-    coverageNote: '完整支援：115-2（2027春季班）赴國際姊妹校交換第二梯次遴選公告（20校共50名、GPA 3.0以上，9/24開放填表、10/7 12:00截止收紙本、10/14面試，已截止）與赴大陸地區姊妹校交換計畫共89所合作校、Fact Sheet及36校歷屆交換心得已完整整合。',
+    coverageNote: '完整支援：?p=6336仍連結115-2（2027春季班）赴國際姊妹校交換第二梯次遴選公告（?p=9903，20校共50名、GPA 3.0以上，10/7 12:00已截止），公告頁?page_id=99另載2026-10-21學海計畫說明會（校內師生可自行報名，未載日期細節，尚無116-1遴選公告），連同赴大陸交換共89所合作校、Fact Sheet及36校歷屆交換心得已完整整合。',
     academicScoreMinimum: 75.0,
     colleges: [
       '理學院',
@@ -457,7 +457,7 @@ const List<SupportedUniversity> defaultSupportedUniversities = [
     supportLevel: 'full',
     partnerCount: 218,
     coverageNote:
-        '完整支援：2026–2027與2027–2028赴日本、其他國家與地區及中國大陸出國交換甄選簡章、218所合作校名額與Fact Sheet、西灣領航自動獎助及1,823篇歷屆交換心得與錄取名單已完整整合。',
+        '完整支援：2027–2028其他國家與地區出國交換甄選正式簡章（p/405-1308-384608,c20621.php，列表標2026/10/21：11/3 09:00–11/17 17:00申請、補正至11/20 17:00、結果預計2027年1月第2週公告，交換校資訊和志願表10/29公布，附件含115/10/7修正甄選要點與空白表格）與赴日本、中國大陸簡章、218所合作校Fact Sheet、西灣領航自動獎助及1,823篇歷屆交換心得已完整整合。',
     academicScoreMinimum: 70.0,
     colleges: [
       '文學院',

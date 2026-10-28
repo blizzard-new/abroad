@@ -71,12 +71,12 @@ from .fju_student_view import FJU_PROCESS_URL
 
 FJU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 SCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
-NTNU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
-CYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
+NTNU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
+CYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 NTUST_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 YZU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
 FCU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
-NSYSU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
+NSYSU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 NCHU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NTUT_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
@@ -1309,7 +1309,7 @@ def _nsysu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
             field["help_text"] = "赴日本及其他國家語言能力占甄選總分 40%（須為報名截止日前 2 年內取得並符合交換校個別標準）；赴中國大陸本國籍學生免附語言檢定證明。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://oia.nsysu.edu.tw/p/412-1308-20730.php?Lang=zh-tw",
+        source_url="https://oia.nsysu.edu.tw/p/405-1308-384608,c20621.php?Lang=zh-tw",
         source_checked_at=NSYSU_SOURCE_CHECKED_AT,
         official_layout=False,
         official_form_number="志願表" if template.id == "exchange-application-data" else ("研修計畫書" if template.id == "study-plan" else None),
@@ -1319,9 +1319,9 @@ def _nsysu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
         signatures=["申請學生親筆簽名", "父親、母親或監護人親筆簽章（錄取確認書／保證人同意書）"] if template.id == "exchange-application-data" else [],
         stamps=[],
         stage={"predeparture-notice": "錄取公告後線上確認並上傳錄取確認書", "return-report": "返國後 2 個月內繳交雙語報告書與成績單", "credit-transfer": "返國開學後（18 授課小時抵免 1 學分）"}.get(template.id, "於出國交換學生甄選系統（https://partners.oia.nsysu.edu.tw/exchange/login/user/）全線上上傳 PDF"),
-        version="116準備工具-2026-10-18.1",
+        version="116準備工具-2026-10-28.1",
         destinations=["國立中山大學國際事務處學生交換事務組（行政大樓 2 樓 2004 室）", "管理學院職涯發展暨國際交流辦公室（管院院級適用）"],
-        conditional_note="此為個人準備工具；國立中山大學正式出國交換申請採全線上作業，請於各線報名期間登入 https://partners.oia.nsysu.edu.tw/exchange/login/user/ 填報並上傳簽名志願表、含歷年班排名之中文歷年成績單、語檢證明、中英文研修計畫書及有利審查資料。",
+        conditional_note="此為個人準備工具；國立中山大學正式出國交換申請採全線上作業（2027-2028 其他國家與地區正式簡章 https://oia.nsysu.edu.tw/p/405-1308-384608,c20621.php?Lang=zh-tw ：11/3 9:00 至 11/17 17:00 開放系統申請、審核及補正至 11/20 17:00，交換校資訊和志願表 10/29 公布），請於各線報名期間登入 https://partners.oia.nsysu.edu.tw/exchange/login/user/ 填報並上傳志願表、中文歷年成績單、2025/03/01 後測驗之語檢證明、研修計畫書（113882831.doc）及有利審查資料（302391853.doc）。",
     )
     return ApplicationDocumentTemplate.model_validate(payload)
 
