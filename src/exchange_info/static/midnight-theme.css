@@ -167,3 +167,55 @@ html[data-theme="dark"] #application-path :is(button,a,input,select,textarea,[ta
 .reading-shell :is(.overview, .cs-compliance-banner, .article-takeaways, .article-next, .article-table thead) { background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge); }
 .reading-shell :is(.overview, .cs-compliance-banner, .article-takeaways, .article-next, .article-table thead) :is(h2,h3,p,a,strong,small,li) { color: #fff; }
 }
+
+/* Let the application workspace sit directly on the page canvas. */
+body.unified-shell #dashboard-view > #application-path {
+  width: calc(100% - 64px);
+  max-width: 1800px;
+  padding: 16px 0 40px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+#application-path :is(.plan-strip, .map-panel, .map-toolbar, .map-caption, .next-card, .side-note) {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+#application-path .ap-status { border-bottom: 0; }
+#application-path .app-header h1 { font-size: clamp(32px, 2.5vw, 42px); }
+#application-path .plan-strip { padding: 14px 0 20px; }
+#application-path .plan-choice label, #application-path .plan-choice small { font-size: 14px; }
+#application-path .plan-choice select { font-size: 20px; max-width: 560px; }
+#application-path .plan-progress { width: min(300px, 28%); }
+#application-path .plan-progress > div:first-child { font-size: 15px; }
+#application-path .plan-progress strong { font-size: 20px; }
+#application-path .map-layout { grid-template-columns: minmax(0, 1fr) minmax(270px, 320px); gap: clamp(24px, 3vw, 48px); }
+#application-path .map-panel { overflow: visible; min-width: 0; }
+#application-path .map-toolbar { padding: 10px 0; }
+#application-path .map-scroll { background: transparent; }
+#application-path .path-stages { max-width: 820px; }
+#application-path .map-caption { padding-inline: 0; font-size: 13px; }
+#application-path .next-card { padding: 12px 0 20px; }
+#application-path .next-card > span { font-size: 14px; }
+#application-path .next-card h2 { font-size: 26px; }
+#application-path .next-card > p:not(.kicker) { font-size: 15px; }
+#application-path .side-note { padding: 18px 0; border-top: 1px solid var(--border); }
+#application-path .side-note h3 { font-size: 15px; }
+#application-path .side-note p, #application-path .source-button { font-size: 14px; }
+html[data-theme="dark"] #application-path :is(.plan-strip, .map-panel, .map-toolbar, .map-caption, .next-card, .side-note, .map-scroll) {
+  background: transparent;
+  box-shadow: none;
+}
+@media (max-width: 800px) {
+  body.unified-shell #dashboard-view > #application-path { width: calc(100% - 32px); padding: 12px 0 32px; }
+}
+@media (max-width: 600px) {
+  body.unified-shell #dashboard-view > #application-path { width: calc(100% - 24px); }
+  #application-path .plan-progress { width: 100%; }
+  #application-path .plan-choice select { font-size: 16px; }
+  #application-path .map-layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  #application-path .next-card { padding-top: 0; }
+}
