@@ -1188,8 +1188,48 @@ NTUB = UniversityProfile(
     ),
 )
 
+NCNU = UniversityProfile(
+    id="ncnu",
+    school_name="國立暨南國際大學",
+    short_name="暨大",
+    english_name="National Chi Nan University",
+    aliases=(
+        "ncnu",
+        "國立暨南國際大學",
+        "國立暨南大學",
+        "暨南國際大學",
+        "暨南大學",
+        "暨南",
+        "暨大",
+        "NCNU",
+        "National Chi Nan University",
+    ),
+    hero_image="/static/assets/ncnu-campus.svg",
+    official_url="https://oia.ncnu.edu.tw/p/412-1017-269.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立暨南國際大學國際及兩岸事務處「海外姊妹校交換生申請流程」、「姊妹校交換生申請截止日期」、「赴大陸及港澳地區交換生」、「跨國雙聯學位」、「出國獎學金（教育部學海計畫、校內補助）」與「法規及表單下載」官方資料：（1）甄選梯次與積分制度：海外交換分秋季班（每年 2–3 月校內收件提名）與春季班（每年 9–10 月校內收件提名），大陸港澳交換分春季班（9–11 月）與秋季班（2–4 月，香港教育大學僅 4 月開放）；校內甄選依《選送學生出國研修積分計算要點》（112.06.14 修正通過，滿分 30 分）採計主要語言 10 分（B2 為 8 分、B1 為 5 分、A2 為 2 分）、次要語言 3 分、學業成績 10 分（10 × [100% − 班排%]）、院推薦排序加分 1–4 分與國際學伴／社團 3 分。（2）合作姊妹校與雙聯學位：完整收錄《姊妹校交換生資訊》總表 142 所海外開放交換校、20 所大陸港澳交換姊妹校、4 所跨國雙聯學位合作校（美國加州大學河濱分校 UCR 3+1+MS、法國雷恩商學院、加拿大紐芬蘭紀念大學、泰國農業大學）及全球締約姊妹校地圖 KML 50 所參考校，全庫共 212 所合作姊妹校（橫跨 38 國／地區）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》／《學海惜珠》、校內《選送優秀學生出國補助要點》（114.07.22 修正，歐美最高 10 萬、亞太最高 7 萬）、雙聯學位 10 萬元完業獎勵金、《國外學分換算表》（2 ECTS = 1 學分、4 CATS = 1 學分）及 29 所合作大學共 100 篇歷屆學長姐交換心得報告。",
+    support_level="full",
+    partner_count_hint=212,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立暨南國際大學",
+        "暨南國際大學",
+        "暨大",
+        "NATIONALCHINANUNIVERSITY",
+        "NCNU",
+    ),
+    # https://www.ncnu.edu.tw/p/412-1000-1228.php?Lang=zh-tw — checked 2026-10-27.
+    colleges=(
+        "人文學院",
+        "管理學院",
+        "科技學院",
+        "教育學院",
+        "水沙連學院",
+        "護理暨健康福祉學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU)
 DEFAULT_UNIVERSITY = CGU
 
 

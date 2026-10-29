@@ -886,6 +886,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="北商大規定返國後 1 個月內須繳交至少 1,000 字以上之交換生心得報告（含照片至少 4 張）；這裡只合計下方各欄。",
     ),
+    ("ncnu", "study-plan"): _rules(
+        (
+            "國立暨南國際大學國際及兩岸事務處規定須繳交中／英文《出國研修計畫書與自傳》（Study Plan & Autobiography，合計約 1,000–2,000 字；書面審查佔校內甄選總成績 50%，口試佔 50%）。",
+            "依《國立暨南國際大學選送學生出國研修辦法》規定，出國交換期間須維持暨大在學註冊，每學期於姊妹校至少應選修相當於暨大 6 學分或 2 門以上專業課程。",
+        ),
+        evidence="國立暨南國際大學選送學生出國研修辦法、115-2 出國交換學生申請簡章與教育部學海飛颺／惜珠甄選公告",
+        minimum=1000,
+        maximum=2000,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="暨大規定出國研修計畫書與自傳約 1,000–2,000 字；這裡合計下方各欄字數供參考。",
+    ),
+    ("ncnu", "return-report"): _rules(
+        (
+            "教育部學海計畫（學海飛颺／學海惜珠）受獎生須於返國後 14 日內登入教育部學海計畫資訊網填寫問卷並上傳成果報告書。",
+            "所有暨大赴外及大陸地區交換生須於返國後 1 個月內向國際及兩岸事務處繳交 1,500–2,000 字以上之《出國交換／研修心得報告書》（含研修與生活照片 4 張以上，供刊登於國際處《心得分享》專區），並檢附來回電子機票收據、登機證正本、護照出入境紀錄及姊妹校正式成績單辦理獎助學金核銷。",
+        ),
+        evidence="國立暨南國際大學選送學生出國研修辦法、學生出國研修獎助學金辦法與教育部學海飛颺／惜珠審查要點",
+        minimum=1500,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="暨大規定返國後 1 個月內須繳交 1,500–2,000 字以上之出國交換心得報告書（含照片 4 張以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -922,6 +944,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "kmu": ("https://ciae2.kmu.edu.tw/index.php/zh-tw", "2026-10-28"),
     "mcu": ("https://iee.mcu.edu.tw/%e5%87%ba%e5%9c%8b%e7%a0%94%e7%bf%92/%e7%94%b3%e8%ab%8b%e8%a6%81%e9%bb%9e/", "2026-10-26"),
     "ntub": ("https://oia.ntub.edu.tw/p/405-1006-57507,c3152.php?Lang=zh-tw", "2026-10-28"),
+    "ncnu": ("https://oia.ncnu.edu.tw/p/412-1017-269.php?Lang=zh-tw", "2026-10-27"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

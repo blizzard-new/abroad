@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -96,6 +96,7 @@ CMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 KMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 MCU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 NTUB_SOURCE_CHECKED_AT = datetime(2026, 10, 22, tzinfo=timezone.utc)
+NCNU_SOURCE_CHECKED_AT = datetime(2026, 10, 27, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2172,6 +2173,51 @@ def _ntub_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ncnu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立暨南國際大學出國交換學生、跨國雙聯學位暨教育部學海飛颺／惜珠與校內《學生出國研修獎助學金》甄選應繳資料：1. 出國交換學生申請表（經導師／指導教授及所屬系所主管核章，至多選填 3 至 5 所志願姊妹校）、2. 家長或監護人同意書正本、3. 中／英文研修計畫書與自傳（Study Plan & Autobiography，約 1,000–2,000 字；校內甄選依書面審查 50%［歷年學業成績、語言檢定、研修計畫］與口試 50% 評定）、4. 中／英文歷年成績單正本（含學業總平均或 GPA 及歷年班級名次百分比；校內交換基準為歷年平均 70 分以上或班排前 50% 且操行 80 分以上，申請教育部《學海飛颺》須達班排前 30% 或 GPA 3.0 以上）、5. 有效外語能力檢定證明影本（英語組基準為 TOEFL iBT 79／IELTS 6.0／TOEIC 750／全民英檢中高級，日語組為 JLPT N2–N3，韓語組為 TOPIK 2–4 級；大陸地區姊妹校免附外語檢定）、6. 教授推薦信及在學證明；於收件截止日前將紙本與電子檔送交行政大樓 3 樓國際及兩岸事務處國際合作組。",
+        "study-plan": "撰寫國立暨南國際大學出國交換生、雙聯學位及學海飛颺甄選必繳之《中／英文出國研修計畫書與自傳》（Study Plan & Autobiography，約 1,000–2,000 字；書面審查佔甄選總分 50%）。請具體說明赴外動機、擬於志願姊妹校修習之專業領域課程（依《選送學生出國研修辦法》規定，出國交換期間須維持暨大在學註冊，每學期於姊妹校至少應修習相當於暨大 6 學分或 2 門以上課程）、外語能力準備，以及返國後學分抵免與職涯發展規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《國立暨南國際大學選送學生出國研修辦法》規定，出國交換期間須完成暨大註冊並繳交全額學雜費，每學期至少應選修相當於暨大 6 學分或 2 門以上專業課程；雙聯學位生須依兩校雙聯協議修畢規定學分）。",
+        "predeparture-notice": "於國際及兩岸事務處公告甄選錄取名單（書面審查 50%＋口試 50%）後，依限繳交《錄取資格確認書》及《家長同意書》，配合國際合作組完成姊妹校官方提名（Nomination）與外校入學申請；出國前須參加行前說明會、完成役男緩徵出境申請、簽署《教育部學海計畫或校內出國研修獎助行政契約書》、購買涵蓋境外全期之海外醫療及意外保險，並確認已完成暨大當學期註冊繳費。",
+        "return-report": "境外交換或雙聯研修期滿返國後 1 個月內，須向國際及兩岸事務處繳交 1,500–2,000 字以上之《出國交換／研修心得報告書》（含研修與生活照片 4 張以上，供刊登於國際處《心得分享》專區），教育部學海計畫受獎生另須於返國 14 日內上傳成果報告至教育部學海計畫資訊網，並檢附來回電子機票收據、登機證正本、護照出入境紀錄及姊妹校正式成績單辦理獎助學金核銷與返校程序。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後持國外姊妹校核發之正式成績單正本與課程大綱（Syllabus），依《國立暨南國際大學選送學生出國研修辦法》及《學生抵免學分辦法》向所屬系（所）、學院及教務處申請境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立暨南國際大學").replace("長庚", "暨大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "暨大《選送學生出國研修辦法》規定：歷年學業成績總平均須達 70 分以上（或歷年班級排名百分比前 50% 以內），且操行成績平均達 80 分以上；申請教育部《學海飛颺》獎助學金者，須達歷年學業成績班排前 30% 以內（或 GPA 3.0 以上）。請檢附含總平均與歷年班級名次百分比之中／英文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（英語組一般基準 79+／部分姊妹校 61–72+／歐美雙聯 80–90+）", "IELTS 學術組（英語組一般基準 6.0+／部分姊妹校 5.5+／歐美雙聯 6.5+）", "TOEIC 多益測驗（校內英語組基準 750+ 或全民英檢中高級，惟須確認目標姊妹校是否接受 TOEIC）", "JLPT 日語能力試驗（日語組專門課程 N2+／日語研修或部分日本姊妹校 N3+）", "TOPIK 韓語能力測驗（韓語組韓國姊妹校 2–4 級以上，或以英語檢定申請英語授課課程）", "大陸地區姊妹校（免附外語檢定證明；以歷年學業成績、研修計畫與口試成績評選）"]
+            field["help_text"] = "依暨大《選送學生出國研修辦法》及《115-2 出國交換學生申請簡章》規定：英語組姊妹校一般要求 TOEFL iBT 79、IELTS 6.0、TOEIC 750 或全民英檢中高級以上（實際依各姊妹校門檻為準），日語組要求 JLPT N2 或 N3 以上，韓語組要求 TOPIK 2–4 級以上。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ncnu.edu.tw/p/412-1017-269.php?Lang=zh-tw",
+        source_checked_at=NCNU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換學生申請表、家長同意書與錄取確認書" if template.id == "exchange-application-data" else ("中／英文出國研修計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ncnu.edu.tw/p/412-1017-273.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取後繳交錄取確認書與學海／校內獎助行政契約書並辦理姊妹校提名", "return-report": "返國後 1 個月內繳交 1,500–2,000 字以上出國研修心得報告書並完成獎助核銷", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "備齊核章紙本申請表與必繳附件於截止日前送交行政大樓 3 樓國際及兩岸事務處國際合作組"),
+        version="116準備工具-2026-10-27.1",
+        destinations=["國立暨南國際大學國際及兩岸事務處國際合作組（行政大樓 3 樓）"],
+        conditional_note="此為個人準備工具；暨大出國及赴大陸地區交換學生甄選每年分兩梯次（秋季班約每年 2–3 月、春季班約每年 9–10 月截止），須檢附經家長及系所主管簽章之申請表、中英文歷年成績單正本（含班排）、中英文研修計畫與自傳及有效外語檢定證明送交國際及兩岸事務處。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2242,6 +2288,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _mcu_template(template)) is not None]
     if university.id == NTUB.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntub_template(template)) is not None]
+    if university.id == NCNU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncnu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
