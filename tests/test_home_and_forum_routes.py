@@ -14,15 +14,19 @@ def _menu_links() -> list[tuple[str, str, str]]:
     return re.findall(r'<a href="(#[^"]+)" data-public-route="([^"]+)"[^>]*>.*?<span>([^<]+)</span></a>', menu, re.S)
 
 
-def test_the_menu_reads_home_search_forum_reviews_then_my_application() -> None:
+def test_the_menu_reads_home_search_forum_my_application_then_the_guide_and_reviews_last() -> None:
     assert _menu_links() == [
         ("#home", "home", "首頁"),
         ("#partners", "partners", "學校搜尋"),
         ("#forum", "forum", "論壇"),
+        ("#my-application", "my-application", "我的申請"),
+        ("#overview", "overview", "準備與時程"),
         ("#feedback", "feedback", "用戶評價"),
-        ("#advisor", "overview", "我的申請"),
     ]
-    assert "申請指南</span></a>" not in re.search(r'<nav class="uniway-public-nav".*?</nav>', HTML, re.S).group(0)
+    menu = re.search(r'<nav class="uniway-public-nav".*?</nav>', HTML, re.S).group(0)
+    # The guide is a real page, not a hash route, so it is not in the list above; it sits just before the reviews.
+    assert re.findall(r'data-public-route="([^"]+)"', menu)[-2:] == ["guides", "feedback"]
+    assert "申請指南</span></a>" not in menu
 
 
 def test_every_link_to_the_all_posts_feed_goes_to_the_forum() -> None:

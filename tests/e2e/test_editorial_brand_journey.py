@@ -9,7 +9,6 @@ from .conftest import enter_public_site, open_navigation
 def test_platform_to_article_and_back(page, live_server, width, tmp_path):
     page.set_viewport_size({"width": width, "height": 900})
     enter_public_site(page, live_server)
-    expect(page.locator(".pr-guide-entry")).to_be_visible()
     expect(page.locator("#home-guides-title")).to_be_visible()
     assert page.locator(".pr-guide-card").count() == 3
     palette = page.evaluate("getComputedStyle(document.documentElement).getPropertyValue('--uw-navy')")

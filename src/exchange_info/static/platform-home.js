@@ -351,84 +351,6 @@ window.UniWayHome = (() => {
     renderBudget(host, list);
   }
 
-  // ---- the search desk in the hero: school, destination, term and language, with a live count ----------------------
-  const DESK_REGION_LIMIT = 5;
-  let deskTimer = 0;
-
-  function deskValues(host = root()) {
-    const form = host?.querySelector("#home-desk");
-    return form ? { q: form.elements.q.value.trim(), term: form.elements.term.value, test: form.elements.test.value } : { q: "", term: "", test: "" };
-  }
-
-  // The explore page's own rules (its text match, then the term and language criteria), so this number is the one the student lands on.
-  function deskMatches(list, { q, term, test }) {
-    const query = normalize(q);
-    const criteria = {};
-    if (term) criteria.term = term;
-    if (test) criteria.test = test;
-    return list.filter((item) => (!query || partnerSearchHaystack(item).includes(query))
-      && UniWayDiscovery.assess(item, criteria).status !== "mismatch");
-  }
-
-  function renderDeskLive(host) {
-    const live = host.querySelector("#home-desk-live");
-    if (!live) return;
-    const list = currentPartners();
-    let text;
-    if (!state.homeSchool) text = "先選擇你就讀的學校，就能看到你能申請的合作校。";
-    else if (!list.length) text = "合作校資料載入中…";
-    else {
-      const values = deskValues(host);
-      const picked = values.q || values.term || values.test;
-      const matched = picked ? deskMatches(list, values).length : list.length;
-      text = !picked ? `${state.homeSchool}：${formatNumber(list.length)} 間合作校`
-        : matched ? `${state.homeSchool}：符合目前條件的有 ${formatNumber(matched)} 間（共 ${formatNumber(list.length)} 間合作校）`
-          : "沒有符合的學校，試著放寬條件或換個關鍵字。";
-    }
-    if (live.textContent !== text) live.textContent = text;
-  }
-
-  function renderDeskRegions(host) {
-    const box = host.querySelector("#home-desk-regions");
-    if (!box) return;
-    // Before a school is chosen the list would be the default catalogue's; shortcuts into it would mislead.
-    const list = state.homeSchool ? currentPartners() : [];
-    const countries = new Map();
-    list.forEach((item) => { if (item.country) countries.set(item.country, (countries.get(item.country) || 0) + 1); });
-    const top = [...countries].sort((a, b) => b[1] - a[1]).slice(0, DESK_REGION_LIMIT);
-    const markup = top.length
-      ? `<span class="pr-desk-label">熱門國家</span>${top.map(([country, count]) => `<button type="button" class="pr-desk-chip" data-home-country="${html(country)}">${html(country)} <b>${count}</b></button>`).join("")}`
-      : "";
-    if (box.dataset.markup !== markup) { box.dataset.markup = markup; box.innerHTML = markup; }
-    box.hidden = !top.length;
-  }
-
-  function renderDesk(host) {
-    const name = host.querySelector("#home-desk-school-name");
-    if (name) {
-      const text = state.homeSchool || "請選擇";
-      if (name.textContent !== text) name.textContent = text;
-      name.toggleAttribute("data-empty", !state.homeSchool);
-    }
-    const form = host.querySelector("#home-desk");
-    // Term and language follow what the explore page holds until the student changes them here.
-    for (const field of ["term", "test"]) {
-      const select = form?.elements[field];
-      if (select && document.activeElement !== select && select.dataset.touched !== "1") select.value = discoveryCriteria?.[field] || "";
-    }
-    renderDeskLive(host);
-    renderDeskRegions(host);
-  }
-
-  // The explore page keeps term and language in its criteria form; filling that form is how its own tiles set them.
-  function applyDeskCriteria({ term, test }) {
-    const form = document.querySelector("#discovery-criteria-form");
-    if (!form) return;
-    for (const [name, value] of [["term", term], ["test", test]]) if (form.elements[name]) form.elements[name].value = value;
-    form.requestSubmit();
-    root()?.querySelectorAll("#home-desk select").forEach((select) => { select.dataset.touched = ""; });
-  }
-
   function render() {
     scheduled = 0;
     const host = root();
@@ -438,14 +360,13 @@ window.UniWayHome = (() => {
       state.dashboard?.school_name, state.dashboard?.partner_universities?.length, Boolean(land),
       state.account?.id || "", state.account?.application_stage || "", [...(state.applications || [])], Boolean(state.eligibilityProfile),
       localDateKey(), state.calendarEvents?.length || 0, state.destinationProfiles?.length || 0, state.workflowCache?.size || 0,
-      state.documentReadiness, state.budgetPlans, state.budgetSchool || "", discoveryCriteria?.term || "", discoveryCriteria?.test || "",
+      state.documentReadiness, state.budgetPlans, state.budgetSchool || "",
     ]);
     if (key === lastKey) return;
     lastKey = key;
     renderSchools(host);
     renderPlan(host);
     renderTiles(host);
-    renderDesk(host);
     renderMaps(host);
     const schoolCard = host.querySelector("#home-board-school-description");
     if (schoolCard) schoolCard.textContent = `${activeUniversityProfile().short_name || "校內"}學生的交換申請資訊與討論。`;
@@ -499,31 +420,9 @@ window.UniWayHome = (() => {
     if (map) { openMap(event); return; }
     if (event.target.closest("[data-home-pick-school]")) { openSchoolOnboarding(); return; }
     const country = event.target.closest("[data-home-country]");
-    if (country) {
-      if (country.closest("#home-desk-regions")) applyDeskCriteria(deskValues(host));
-      goPartners({ country: country.dataset.homeCountry });
-    }
-  });
-  document.addEventListener("input", (event) => {
-    if (!event.target.closest?.("#home-desk")) return;
-    window.clearTimeout(deskTimer);
-    // Typing waits for a pause so the polite live region is not read out on every key.
-    deskTimer = window.setTimeout(() => renderDeskLive(root()), event.target.matches("input") ? 300 : 0);
-  });
-  document.addEventListener("change", (event) => {
-    const select = event.target.closest?.("#home-desk select");
-    if (select) select.dataset.touched = "1";
+    if (country) goPartners({ country: country.dataset.homeCountry });
   });
   document.addEventListener("submit", (event) => {
-    if (event.target.id === "home-desk") {
-      event.preventDefault();
-      // With no school there is no catalogue of the student's own to search: ask first, and keep what was typed.
-      if (!state.homeSchool) { openSchoolOnboarding(); return; }
-      const values = deskValues();
-      applyDeskCriteria(values);
-      goPartners({ q: values.q });
-      return;
-    }
     if (event.target.id !== "home-search-form") return;
     event.preventDefault();
     goPartners({ q: event.target.elements.q.value.trim() });

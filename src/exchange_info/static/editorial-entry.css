@@ -1,7 +1,4 @@
 /* Reading is part of the platform: visible entries before the footer. */
-.pr-guide-entry { display: flex; align-items: center; gap: 8px; width: fit-content; max-width: 100%; margin-top: 18px; padding: 10px 0; color: var(--uw-blue-strong); font-size: 14px; font-weight: 700; text-decoration: none; }
-.pr-guide-entry .lucide { width: 18px; height: 18px; flex-shrink: 0; }
-.pr-guide-entry:hover span { text-decoration: underline; text-underline-offset: 4px; }
 .pr-guide-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .pr-guide-card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid var(--glass-edge); border-radius: 24px; background: var(--glass-surface); box-shadow: var(--glass-shadow); color: var(--uw-text); text-decoration: none; }
 .pr-guide-card > img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
