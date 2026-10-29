@@ -29,7 +29,7 @@
 | `static/application-path-select.js`、`static/glide-select.css` | 共用 Glide Select，維持原生表單語意 |
 | `static/application-level-tools.css`、`static/application-path-template.js` | 寬版無邊框新增視窗、關卡工具版面 |
 | `static/index.html`、`static/navigation.js`、`static/application-path.css`、`seo.py` | 網站導覽、樣式拆分、版本化資源、公開頁選單 |
-| `models.py` | 對齊規則文字的傳輸長度上限 |
+| `models.py`、`docs/api/openapi.json` | 對齊規則文字的傳輸長度上限與 API 規格快照 |
 | 相關單元／瀏覽器測試 | 新導覽、原工具功能、選單語意、保存與隔離、規則傳輸回歸 |
 
 ## 驗證
@@ -39,6 +39,7 @@
 - 主回歸命令為 `116 passed`；最後兩個新增案例連同同檔兩個既有案例重跑為 `4 passed`，合計 118 個不同案例。
 - 手動瀏覽器檢查 390px、768px、1440px；新增視窗與關卡工具沒有橫向溢出。手機選單可在 modal 上選取，表單草稿重新載入仍保留。
 - 修改的 JavaScript 通過 `node --check`，`git diff --check` 通過。
+- `scripts/export_openapi.py --check` 通過；既有 Migration 解析檢查通過，未套用或新增 Migration。
 - Python wheel 打包通過。專案的網頁使用原生 JavaScript，沒有 TypeScript 或前端 bundler，未新增框架與執行時依賴。
 - 靜態圖片測試原本仍期待已移除的首頁結尾吉祥物；改為檢查現有四張圖片，保留首屏與延後載入的斷言。
 
