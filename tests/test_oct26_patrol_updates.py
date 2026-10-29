@@ -163,7 +163,7 @@ def test_ntust_oct26_certificate_hostname_fixed_and_116_1_brochure_added() -> No
 
 def test_nsysu_oct26_timeline_info_sessions_and_provisional_notice() -> None:
     card = get_verified_school_window_card("nsysu")
-    assert "384613" in card.online_deadline.source_url
+    assert "384608" in str(card.online_deadline.source_url) or "384613" in str(card.online_deadline.source_url)
     assert "10/27" in card.online_deadline.value_text
 
     dash = _load_dashboard("nsysu")

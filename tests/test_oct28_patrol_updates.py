@@ -5,10 +5,13 @@ from pathlib import Path
 
 from exchange_info.application_documents import all_application_templates
 from exchange_info.cmu_student_view import build_cmu_student_dashboard, cmu_exchange_info
+from exchange_info.cycu_student_view import build_cycu_student_dashboard, cycu_exchange_info
 from exchange_info.kmu_student_view import build_kmu_student_dashboard, kmu_exchange_info
 from exchange_info.nknu_student_view import build_nknu_student_dashboard, nknu_exchange_info
+from exchange_info.nsysu_student_view import build_nsysu_student_dashboard, nsysu_exchange_info
+from exchange_info.ntnu_student_view import build_ntnu_student_dashboard
 from exchange_info.ntub_student_view import build_ntub_student_dashboard, ntub_exchange_info
-from exchange_info.university_registry import CMU, KMU, NKNU, NTUB, WZU
+from exchange_info.university_registry import CMU, CYCU, KMU, NKNU, NSYSU, NTNU, NTUB, WZU
 from exchange_info.verified_window_deadlines import get_verified_school_window_card
 from exchange_info.wzu_student_view import build_wzu_student_dashboard, wzu_exchange_info
 
@@ -157,3 +160,92 @@ def test_ntub_oct28_eligibility_scoring_and_departure_wording() -> None:
     templates = {t.id: t for t in all_application_templates("ntub")}
     assert templates["return-report"].writing_rules is not None
     assert templates["return-report"].writing_rules.min_chars == 1000
+
+
+def test_oct28_dora1_audit_manifest_records_all_17_schools() -> None:
+    audit_path = ROOT / "sources" / "audit" / "2026-10-28-dora1-17-schools.json"
+    assert audit_path.is_file()
+    payload = json.loads(audit_path.read_text(encoding="utf-8"))
+    assert payload["audit_date"] == "2026-10-28"
+    assert payload["patrol_agent"] == "Dora"
+    assert payload["total_schools"] == 17
+    assert payload["updated_school_count"] == 3
+    assert payload["unchanged_school_count"] == 14
+    ids = {item["school_id"] for item in payload["schools"]}
+    assert ids == {
+        "cycu",
+        "nsysu",
+        "ntnu",
+        "cgu",
+        "ntpu",
+        "ntu",
+        "ccu",
+        "ncu",
+        "tku",
+        "fju",
+        "scu",
+        "ntust",
+        "yzu",
+        "fcu",
+        "nchu",
+        "ntut",
+        "nccu",
+    }
+
+
+def test_cycu_oct28_page99_xuehai_info_session_and_p6336_consistency() -> None:
+    assert "?p=6336" in CYCU.coverage_note
+    assert "?page_id=99" in CYCU.coverage_note
+    assert "2026-10-21" in CYCU.coverage_note
+    assert "學海計畫" in CYCU.coverage_note
+    assert "116-1" in CYCU.coverage_note
+
+    card = get_verified_school_window_card("cycu")
+    assert "?p=6336" in card.online_deadline.value_text
+    assert "2026-10-21" in card.online_deadline.value_text
+    assert "學海計畫" in card.online_deadline.value_text
+    assert "116-1" in card.online_deadline.value_text
+    assert card.online_deadline.last_checked_at == "2026-10-28"
+
+    dash = build_cycu_student_dashboard()
+    info = cycu_exchange_info()
+    assert "https://oia.cycu.edu.tw/?page_id=99" in info.source_urls
+    assert any("2026-10-21" in p and "學海計畫" in p for p in info.application_period)
+    assert any(s.source_url == "https://oia.cycu.edu.tw/?page_id=99" for s in dash.sources)
+
+
+def test_nsysu_oct28_formal_brochure_384608_and_oct29_partner_release() -> None:
+    assert "尚未核得本期正式簡章與名額" not in NSYSU.coverage_note
+    assert "384608,c20621.php" in NSYSU.coverage_note
+    assert "2027 年 1 月第 2 週" in NSYSU.coverage_note
+    assert "10/29" in NSYSU.coverage_note
+    assert "115/10/07" in NSYSU.coverage_note
+
+    card = get_verified_school_window_card("nsysu")
+    assert "尚未核得本期正式簡章與名額" not in card.online_deadline.value_text
+    assert "384608,c20621.php" in str(card.online_deadline.source_url)
+    assert "2027年1月第2週" in card.online_deadline.value_text
+    assert "10/29" in card.online_deadline.value_text
+    assert "438775412.pdf" in card.online_deadline.value_text
+    assert card.online_deadline.last_checked_at == "2026-10-28"
+
+    dash = build_nsysu_student_dashboard()
+    info = nsysu_exchange_info()
+    p1_text = "\n".join(dash.application_periods[1].details)
+    assert "尚未核得本期正式簡章與名額" not in p1_text
+    assert "384608,c20621.php" in p1_text
+    assert "2027年1月第2週" in p1_text
+    assert "10/29" in p1_text
+    assert "438775412.pdf" in p1_text
+    assert "https://oia.nsysu.edu.tw/p/405-1308-384608,c20621.php?Lang=zh-tw" in info.source_urls
+
+
+def test_ntnu_oct28_bds_portal_verified_note() -> None:
+    assert "bds.oia.ntnu.edu.tw/bds/web/OUT" in NTNU.coverage_note
+    assert "outgoing-apply" in NTNU.coverage_note
+    card = get_verified_school_window_card("ntnu")
+    assert "bds.oia.ntnu.edu.tw/bds/web/OUT" in card.online_deadline.value_text
+    assert card.online_deadline.last_checked_at == "2026-10-28"
+    dash = build_ntnu_student_dashboard()
+    assert any("2026/10/28 巡查備註" in d for d in dash.program_overview[0].details)
+
