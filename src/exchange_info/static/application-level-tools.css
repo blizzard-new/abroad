@@ -1,0 +1,47 @@
+.application-tools-heading { display:flex; align-items:center; flex-wrap:wrap; gap:16px; margin:8px 0; }
+.application-tools-heading>a,.application-tools-heading nav a { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:10px 16px; border-radius:14px; text-decoration:none; }
+.application-tools-heading nav { display:flex; gap:6px; flex-wrap:wrap; }
+.application-tools-heading nav a[aria-current=page] { background:#23324a; color:white; }
+#application-path .path-level-tools { margin-top:24px; min-width:0; }
+#application-path .path-level-tools>nav { display:flex; gap:10px; flex-wrap:wrap; }
+#application-path .path-level-tools>nav [aria-current=page] { background:#23324a; color:white; }
+#application-path .path-tool-heading { display:flex; justify-content:space-between; align-items:center; gap:16px; margin:24px 0 16px; font-size:13px; color:#526074; }
+#application-path .path-tool-heading>a { flex:none; }
+#application-path #path-tool-host { min-width:0; }
+#application-path #path-tool-host [data-university-page] { margin:0; max-width:none; }
+#application-workspace .level-tool-disclosure { border:0; background:transparent; padding:0; }
+#application-workspace .level-tool-disclosure>summary { display:none; }
+#application-path .level-tool-disclosure { border:0; border-radius:18px; background:#edf0f4; padding:4px 16px; margin:14px 0; }
+#application-path .level-tool-disclosure>summary { font-weight:650; min-height:48px; }
+#application-path #path-tool-host .application-center-steps,#application-path #path-tool-host .application-center-intro { display:none; }
+#application-path .path-context-gate { display:grid; justify-items:start; gap:16px; padding:24px; border-radius:20px; background:#edf0f4; }
+#application-path .path-context-gate p { margin:0; }
+#application-path .ap-schedule-link { display:inline-flex; align-items:center; gap:8px; min-height:44px; margin-top:20px; }
+/* One generous dialog surface, no nested card or field borders. */
+html:has(#plan-dialog[open]) { overflow:hidden; }
+body.unified-shell #application-path #plan-dialog { box-sizing:border-box; width:min(900px,calc(100vw - 48px)); max-width:none; max-height:92dvh; padding:clamp(24px,4vw,48px); border:0; border-radius:30px; background:#fff; box-shadow:0 24px 90px #15223730; }
+body.unified-shell #application-path #plan-form { display:block; padding:0; margin:0; max-width:none; background:transparent; border:0; border-radius:0; box-shadow:none; }
+#application-path #plan-dialog h2 { font-size:30px; margin:0 44px 24px 0; }
+#application-path #plan-dialog label { font-size:15px; margin:18px 0 8px; }
+#application-path #plan-dialog input:not([type=checkbox]),#application-path #plan-dialog .glide-select__trigger { min-height:56px; border:0; border-radius:14px; background:#f0f2f5; box-shadow:none; color:#23324a; padding:14px 16px; font-size:16px; }
+#application-path #plan-dialog .check-row { display:flex; align-items:center; gap:12px; background:transparent; border:0; box-shadow:none; padding:14px 0; }
+#application-path #plan-dialog .small-warning { border:0; background:transparent; padding:0; }
+#application-path #plan-dialog .primary-button { min-height:56px; margin-top:24px; }
+#application-path #plan-dialog .ap-form-grid { gap:22px; }
+#application-path #plan-dialog .ap-academic-fields { margin-top:20px; padding:0; border:0; background:transparent; box-shadow:none; }
+#application-path #plan-dialog .ap-academic-fields summary { font-size:15px; gap:8px; }
+#application-path #plan-dialog .ap-academic-fields summary::after { content:'＋'; margin-left:auto; }
+#application-path #plan-dialog .ap-academic-fields[open] summary::after { content:'−'; }
+#application-path #plan-dialog .ap-school-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+#application-path #plan-dialog .close-dialog { top:18px; right:18px; }
+[data-theme=dark] body.unified-shell #application-path #plan-dialog { background:#17243a; color:#fff; }
+[data-theme=dark] #application-path #plan-dialog input:not([type=checkbox]),[data-theme=dark] #application-path #plan-dialog .glide-select__trigger { background:#293b51; color:#fff; }
+@media(max-width:600px) {
+ body.unified-shell #application-path #plan-dialog { width:calc(100vw - 16px); max-height:96dvh; padding:26px 20px; border-radius:24px; }
+ #application-path #plan-dialog h2 { font-size:26px; }
+ #application-path #plan-dialog .ap-form-grid { grid-template-columns:1fr; gap:0; }
+ #application-path #plan-dialog .ap-school-grid { grid-template-columns:1fr; gap:0; }
+ #application-path .path-tool-heading { align-items:flex-start; }
+ .application-tools-heading { gap:4px; }
+ .application-tools-heading nav a { padding:10px 12px; }
+}

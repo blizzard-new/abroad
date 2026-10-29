@@ -40,7 +40,7 @@ function message(text,action=''){
   $('#hub').hidden=true;$('#level-view').hidden=true;$('#path-message').hidden=false;$('#archive-plan').hidden=true;
   $('#path-message').innerHTML='<div class="ap-empty">'+icon('route')+'<p>'+esc(text)+'</p>'+action+'</div>';icons();
 }
-function clear(){epoch++;loading=false;saving=false;view=null;listing=null;dirty=false;activeId=null;mapPosition=null;mapPositionPlan=null;
+function clear(){window.UniWayApplicationWorkspace?.release();epoch++;loading=false;saving=false;view=null;listing=null;dirty=false;activeId=null;mapPosition=null;mapPositionPlan=null;
   if(root){$$('dialog[open]').forEach(d=>d.close());$('#level-view').replaceChildren();$('#plan-select').replaceChildren();$('#path-stages').replaceChildren();$('#overview-summary').replaceChildren();$('#overview-stages').replaceChildren();$('#plan-form').reset();['#plan-meta','#overall-caption','#overall-meter','#next-stage','#next-title','#next-prompt','#next-meter','#deadline-card','#create-target'].forEach(selector=>$(selector)?.replaceChildren());$('#toast').hidden=true;message('登入後，接著完成你的申請。','<button data-path-login class="primary-button">登入</button>');}}
 function init(){
   if(root)return;
@@ -65,6 +65,8 @@ function init(){
     if(e.target.closest('[data-path-login]'))openAuthDialog();
     if(e.target.closest('[data-path-new]'))openNew();
     if(e.target.closest('[data-path-retry]'))load(true);
+    const link=e.target.closest('#path-tool-host a[href^="#"]');
+    if(link){const url=toolHref(link.getAttribute('href').slice(1));if(url){e.preventDefault();location.hash=url;}}
   });
   document.addEventListener('click',e=>{
     if(!active||!dirty||!e.target.closest('a[href]'))return;
@@ -104,8 +106,10 @@ async function load(force=false){
 }
 function render(){
   if(!active||!view)return;
+  window.UniWayApplicationWorkspace?.release();
   $('#path-message').hidden=true;
   const id=route().get('level'), tab=route().get('view')||'map';
+  $('.ap-schedule-link').hidden=tab==='level';
   $('#hub').hidden=tab==='level';$('#level-view').hidden=tab!=='level';
   $('#sync-message').textContent=plan().archived?'已封存 · 紀錄保留':'已同步至帳號';
   $('#archive-plan').hidden=false;$('#archive-plan').textContent=plan().archived?'恢復計畫':'封存計畫';
@@ -155,6 +159,7 @@ function field(l,r){
     '<label for="level-input">'+(l.kind==='write'?'你的想法':l.kind==='file'?'文件位置／備註':'目前紀錄與下一步')+'</label><textarea id="level-input" maxlength="20000" placeholder="先記下一小段，之後還能修改。">'+esc(r.value||'')+'</textarea>';
 }
 function renderLevel(id,success=false){
+  window.UniWayApplicationWorkspace?.release();
   const l=find(id);if(!l){location.hash=href();return;}
   activeId=id;dirty=false;const r=record(id),c=plan().context;
   mapPosition=$('#map-scroll').scrollTop;mapPositionPlan=plan().id;
@@ -180,6 +185,64 @@ function renderLevel(id,success=false){
       const url=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='UniWay-研修計畫草稿.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
     };
   }
+  if(!success)renderTools(l);
+  icons();
+}
+const embeddedTools=new Set(['advisor','favorites','eligibility','application-center','document-check','documents','writing-assistant']);
+function toolHref(tool){
+  if(!active||!view||route().get('view')!=='level'||!find(route().get('level')))return null;
+  if(!embeddedTools.has(tool)&&!/^application-form=[\w%-]+$/.test(tool))return null;
+  try{decodeURIComponent(tool);}catch{return null;}
+  return href('level',route().get('level'))+'&'+new URLSearchParams({tool});
+}
+function formToolActive(){return active&&route().get('view')==='level'&&(route().get('tool')||'').startsWith('application-form=');}
+async function selectTarget(schoolName){
+  if(!toolHref('advisor')||schoolName===plan().context.target_school)return false;
+  await openNew(schoolName);
+  return true;
+}
+function toolsFor(l){
+  if(['home','term','target'].includes(l.id))return [['advisor','sliders-horizontal','條件與推薦'],['favorites','heart','收藏與比較'],['eligibility','badge-check','資格與志願']];
+  if(l.id.startsWith('check-')||(l.kind==='note'&&/資格|志願|語組/.test(l.title)))return [['eligibility','badge-check','核對資格與志願'],['advisor','sliders-horizontal','修改我的條件']];
+  const templates=(l.templates||[]).map(id=>['application-form='+encodeURIComponent(id),'file-pen-line',applicationTemplateById(id)?.name||'填寫相關表格']);
+  return [...templates,['application-center','files','填表與列印'],['document-check','scan-line','檢查文件'],['documents','folder-lock','文件庫']];
+}
+function renderTools(l){
+  const section=document.createElement('section');section.className='path-level-tools';
+  const links=toolsFor(l),tool=route().get('tool')||'';
+  section.innerHTML='<nav aria-label="這一關的工具">'+links.map(([page,i,title])=>'<a class="outline-button" href="'+toolHref(page)+'"'+(page===tool?' aria-current="page"':'')+'>'+icon(i)+esc(title)+'</a>').join('')+'<a class="quiet-button" href="#overview">'+icon('calendar-clock')+'準備與時程</a></nav><div id="path-tool-panel" hidden><header class="path-tool-heading"><span id="path-tool-scope"></span><a class="quiet-button" href="'+href('level',l.id)+'">收合工具'+icon('x')+'</a></header><div id="path-tool-host"></div></div>';
+  $('#level-view').append(section);
+  if(!toolHref(tool))return;
+  $('#path-tool-panel').hidden=false;
+  if(plan().archived){$('#path-tool-host').textContent='恢復計畫後即可使用編輯工具。';return;}
+  const sharedSelection=['advisor','favorites','eligibility'].includes(tool);
+  $('#path-tool-scope').textContent=sharedSelection?'條件與志願沿用帳號資料；這一關的完成紀錄獨立保存。':'表單沿用帳號的共用草稿；各計畫的關卡、分段寫作與文件連結分別保存。';
+  const c=plan().context;
+  const toolContext={...c,semester:({fall:'第一學期',spring:'第二學期',full_year:'一學年',undecided:''})[c.semester]};
+  const matching=['target_school','academic_year','application_round','semester','college','department','degree_level'].every(k=>(state.applicationContext[k]||'')===(toolContext[k]||''));
+  if(!sharedSelection&&!matching){
+    $('#path-tool-host').innerHTML='<div class="path-context-gate"><p>使用 '+esc(c.target_school)+' · '+esc(c.academic_year)+' · '+esc(termName(c.semester))+' 的文件規則</p><button id="path-use-context" class="primary-button">載入本計畫的文件工具</button><small>切換工具的查看目標，保留現有草稿與其他計畫進度。</small><p id="path-tool-error" role="alert"></p></div>';
+    $('#path-use-context').onclick=async()=>{
+      const captured=key(),run=epoch,url=location.hash,b=$('#path-use-context');b.disabled=true;
+      try{
+        if(!await confirmPlanningTargetChange(c.target_school)||run!==epoch||captured!==key()||location.hash!==url)return;
+        state.planningRequestId++;state.planningLoading=false;state.planningPreview=null;
+        invalidateAllApplicationReviews();
+        state.applicationContext={...state.applicationContext,school_name:c.home_school,program_type:'exchange',...Object.fromEntries(['target_school','academic_year','application_round','semester','college','department','degree_level'].map(k=>[k,toolContext[k]||'']))};
+        persistApplicationContext();restoreApplicationContextForm();
+        await loadApplicationTemplates();
+        if(run===epoch&&captured===key()&&location.hash===url)mountTool(tool);
+      }catch(e){if(run===epoch&&captured===key()&&location.hash===url)$('#path-tool-error').textContent=e.message;}
+      finally{if(b.isConnected)b.disabled=false;}
+    };
+  }else mountTool(tool);
+  queueMicrotask(()=>requestAnimationFrame(()=>{if(active&&route().get('tool')===tool)$('#path-tool-panel')?.scrollIntoView({block:'start',behavior:'instant'});}));
+}
+function mountTool(tool){
+  const host=$('#path-tool-host');if(!host)return;
+  window.UniWayApplicationWorkspace?.release();host.replaceChildren();
+  if(tool.startsWith('application-form=')&&!applicationDocumentGenerationEnabled())tool='application-center';
+  window.UniWayApplicationWorkspace?.mount(tool,host);
   icons();
 }
 async function loadFiles(){const captured=key(),id=activeId,run=epoch;try{
@@ -207,16 +270,18 @@ async function archive(){
   }catch(e){if(run===epoch&&captured===key())toast(e.message,true);}
   finally{saving=false;$('#archive-plan').disabled=false;}
 }
-async function openNew(){
+async function openNew(preferredTarget=''){
+  if(typeof preferredTarget!=='string')preferredTarget='';
   if(!state.account){openAuthDialog();return;}
   if(dirty&&!confirm('目前文字尚未保存。確定新增其他計畫？'))return;
   const captured=key();$('#create-error').hidden=true;
   try{
     const dashboard=state.dashboard?.school_name===activeHomeSchool()?state.dashboard:await fetchJson('/student-dashboard?school='+encodeURIComponent(activeHomeSchool()));
     if(captured!==key())return;
-    const old=listing?.legacy?.context||{}, profile=state.selectionConditions?.profile||{};
+    const old=preferredTarget?{...plan().context,target_school:preferredTarget}:listing?.legacy?.context||{}, profile=state.selectionConditions?.profile||{};
     $('#create-home').value=activeHomeSchool();$('#create-target').innerHTML=dashboard.partner_universities.map(p=>'<option '+(p.school_name===old.target_school?'selected':'')+'>'+esc(p.school_name)+'</option>').join('');
     for(const [id,value] of Object.entries({'create-year':old.academic_year||'','create-round':old.application_round||'','create-college':old.college||profile.college||'','create-department':old.department||profile.department||'','create-degree':old.degree_level||profile.degree_level||''}))$('#'+id).value=value;
+    if(preferredTarget){$('#create-departure').value=old.departure_year||'';$('#create-term').value=old.semester||'undecided';$('#import-existing').checked=false;}
     $('#plan-dialog').showModal();
   }catch(e){if(captured===key())toast(e.message,true);}
 }
@@ -284,5 +349,5 @@ function renderOverview(){
   icons();
 }
 
-return {init,show,refresh,clear};
+return {init,show,refresh,clear,toolHref,formToolActive,selectTarget};
 })();

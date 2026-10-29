@@ -10,7 +10,7 @@ SCRIPT = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
 
 
 def rail_entry() -> str:
-    match = re.search(r'<a [^>]*data-public-route="overview"[^>]*>', HTML)
+    match = re.search(r'<a [^>]*data-public-route="my-application"[^>]*>', HTML)
     assert match, "the left rail has no 我的申請 link"
     return match.group(0)
 
@@ -22,10 +22,13 @@ def test_the_rail_entry_opens_the_account_application_map():
     assert "我的申請" in HTML.split(entry, 1)[1].split("</a>", 1)[0]
 
 
-def test_the_dropdown_keeps_the_existing_tools_after_the_map():
-    panel = HTML.split('<nav class="application-tools-panel"', 1)[1].split("</nav>", 1)[0]
-    stages = re.findall(r'<a href="(#[a-z-]+)" data-requires-home-school>([^<]+)</a>', panel)[:4]
-    assert stages == [("#my-application", "申請地圖與進度"), ("#advisor", "選校與確認"), ("#overview", "準備與時程"), ("#application-center", "申請文件")]
+def test_the_rail_has_an_independent_schedule_entry_and_no_application_dropdown():
+    assert 'id="application-tools"' not in HTML
+    assert 'href="#overview" data-public-route="overview"' in HTML
+    assert '<h1 id="tracker-title">準備與時程</h1>' in HTML
+    # Tools remain real pages; the level can move their existing forms into its host.
+    for page in ('advisor', 'favorites', 'eligibility', 'application-center', 'application-form', 'documents'):
+        assert f'data-university-page="{page}"' in HTML
 
 
 def test_an_account_less_student_is_sent_to_the_same_page_after_choosing_a_school():
@@ -38,7 +41,8 @@ def test_the_rail_entry_stays_highlighted_on_every_application_page():
     function = SCRIPT.split("function isPersonalizedRoute", 1)[1].split("\n}\n", 1)[0]
     for route in ("#advisor", "#overview", "#application-center"):
         assert f'"{route}"' in function, route
-    assert 'isPersonalizedRoute(hash) ? "overview"' in SCRIPT, "the link keeps its identity even though it opens #advisor"
+    assert 'isPersonalizedRoute(hash) ? "my-application"' in SCRIPT
+    assert '["#overview", "#calendar", "#deadlines", "#budget", "#scholarships"].includes(hash) ? "overview"' in SCRIPT
 
 
 def test_other_deliberate_links_into_preparation_are_unchanged():

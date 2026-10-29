@@ -232,3 +232,23 @@ def test_build_home_agreement_normalizes_single_char_quota_and_language_fields()
     assert agreement.quota_summary == "4"
     assert agreement.language_requirement_summary == "無"
     assert agreement.eligibility_summary == "無"
+
+
+def test_home_agreement_preserves_long_valid_rule_text(monkeypatch) -> None:
+    """The document workbench must not reject source facts valid at their 600-character limit."""
+    from exchange_info import cross_school_partners as partners
+    from exchange_info.models import VerifiedRuleFact
+    from exchange_info.university_registry import resolve_university
+
+    card = partners.get_verified_school_window_card("cgu")
+    long_text = "隔離測試說明" * 100
+    updates = {}
+    for key in ("online_deadline", "paper_deadline", "study_plan_limit"):
+        fact = getattr(card, key).model_dump()
+        fact["value_text"] = long_text
+        updates[key] = VerifiedRuleFact.model_validate(fact)
+    monkeypatch.setattr(partners, "get_verified_school_window_card", lambda _: card.model_copy(update=updates))
+    agreement = partners._build_home_agreement(resolve_university("cgu"), None)
+    assert agreement.internal_online_deadline == long_text
+    assert agreement.internal_paper_deadline == long_text
+    assert agreement.study_plan_limit == long_text
