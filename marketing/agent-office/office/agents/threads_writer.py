@@ -3,10 +3,9 @@
 from __future__ import annotations
 
 from datetime import date
-from secrets import token_hex
 
 from ..brand import Briefing
-from ..models import PlanItem, Slide, ThreadsDraft
+from ..models import PlanItem, ThreadsDraft
 from ..rules import check_threads
 from .base import Agent, Persona
 
@@ -52,17 +51,6 @@ class ThreadsWriter(Agent):
         return {"type": "compose", "text": draft.text, "reply": draft.first_reply, "tag": draft.topic_tag}
 
 
-def card_media(agent: Agent, draft: ThreadsDraft, day: date) -> dict:
-    """The 4:5 picture posted with a Threads post. Without one (images off, or the renderer failed) it goes out as text."""
-    office = agent.office
-    if not (office.settings.render_media and office.settings.threads_images):
-        return {}
-    lines = [line.strip() for line in draft.text.splitlines() if line.strip()]
-    slide = Slide(kind="cover", title=(draft.card_title or (lines[0] if lines else ""))[:40], body=draft.card_body[:60])
-    agent.status("rendering", "做 Threads 配圖…")
-    try:
-        path = office.renderer.card(slide, office.day_media_dir(day) / f"threads-{token_hex(4)}.jpg")
-    except Exception as error:  # noqa: BLE001 - a missing browser should cost the picture, not the post
-        agent.log(f"Threads 配圖沒做成，這篇先發純文字：{error}")
-        return {}
-    return {"image": office.media_ref(path)}
+def card_media(agent: Agent, draft: ThreadsDraft, day: date, note: str = "") -> dict:
+    """The 4:5 picture posted with a Threads post. Every picture is Mori's work: whoever wrote the post hands her the request."""
+    return agent.office.staff["designer"].threads_card(agent, draft, day, note)

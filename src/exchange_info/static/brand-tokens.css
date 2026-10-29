@@ -1,17 +1,20 @@
 /* Shared UniWay palette for the platform and public reading pages. */
 :root, html[data-theme="light"] {
-  --uw-page: #eaf3f6; --uw-surface: #f9fcff; --uw-surface-soft: #eef6fa;
-  --uw-navy: #14223f; --uw-text: #24344f; --uw-muted: #586b80;
-  --uw-blue: #167ba1; --uw-blue-strong: #0b6486; --uw-blue-soft: #dff3fa;
-  --uw-cyan-soft: #dbf5f2; --uw-line: #cedfe8; --uw-line-strong: #b6ccd8;
+  --uw-page: #f3f5f8; --uw-surface: #fbfcfe; --uw-surface-soft: #edf0f4;
+  --uw-navy: #23324a; --uw-text: #23324a; --uw-muted: #586579;
+  /* Brand fills stay midnight blue in both themes; links adapt to their canvas. */
+  --uw-accent: #23324a; --uw-accent-hover: #18263b; --uw-on-accent: #fff;
+  --uw-accent-edge: #44536a; --uw-accent-wash: #edf0f4;
+  --uw-blue: var(--uw-accent); --uw-blue-strong: var(--uw-accent); --uw-blue-soft: var(--uw-accent-wash);
+  --uw-cyan-soft: var(--uw-accent-wash); --uw-line: #d8dde5; --uw-line-strong: #b9c2cf;
   --uw-radius: 20px; --uw-radius-lg: 28px; --uw-shadow-soft: 0 8px 24px #42627d0c;
   --uw-shadow: 0 18px 48px #42627d18; --ink-soft: var(--uw-muted);
   --glass-surface: #ffffffb8; --glass-strong: #fffffff0; --glass-edge: #ffffffed;
   --glass-hi: #ffffffc2; --glass-shadow: 0 16px 40px #39546d0d, inset 0 1px 0 var(--glass-hi);
-  --glass-blue: #deefff; --glass-lilac: #ece6ff; --glass-peach: #ffe9df;
+  --glass-blue: var(--uw-accent-wash); --glass-lilac: #ece6ff; --glass-peach: #ffe9df;
   --glass-coral: #be4c48; --glass-coral-strong: #a83c39;
   /* Platform redesign tokens (platform-redesign.css). */
-  --uw-page-bg: radial-gradient(ellipse at 15% 12%, #bcebf2 0, transparent 43%), radial-gradient(ellipse at 95% 8%, #fbe3d8 0, transparent 40%), radial-gradient(ellipse at 90% 82%, #d9d2f3 0, transparent 46%), radial-gradient(ellipse at 14% 92%, #d7f1e5 0, transparent 42%), #edf3f8;
+  --uw-page-bg: radial-gradient(ellipse at 15% 12%, #23324a12 0, transparent 43%), radial-gradient(ellipse at 95% 8%, #fbe3d8 0, transparent 40%), radial-gradient(ellipse at 90% 82%, #d9d2f3 0, transparent 46%), #f3f5f8;
   --uw-hairline: #e3edf2; --uw-lilac-ink: #7051a2; --uw-amber-soft: #fff4d6; --uw-amber-ink: #8a5a00;
   --uw-ph-a: #dbe7ee; --uw-ph-b: #e8f0f4;
   --journal-sheet: var(--glass-surface); --journal-sheet-image: none;
@@ -22,13 +25,14 @@
 html[data-theme="dark"] {
   --uw-page: #101c2e; --uw-surface: #1a2c41; --uw-surface-soft: #20364c;
   --uw-navy: #eff6ff; --uw-text: #e5effa; --uw-muted: #b3c5d7;
-  --uw-blue: #80d2ed; --uw-blue-strong: #aae4f4; --uw-blue-soft: #204659;
-  --uw-cyan-soft: #23493f; --uw-line: #39536c; --uw-line-strong: #52718b;
+  --uw-accent-wash: #2b394e;
+  --uw-blue: #fff; --uw-blue-strong: #fff; --uw-blue-soft: var(--uw-accent-wash);
+  --uw-cyan-soft: var(--uw-accent-wash); --uw-line: #44536a; --uw-line-strong: #6e7d91;
   --glass-surface: #1a2d43de; --glass-strong: #1c3048f5; --glass-edge: #829eb336;
   --glass-hi: #bbd3e412; --glass-shadow: 0 16px 40px #00000021, inset 0 1px 0 var(--glass-hi);
-  --glass-blue: #223e5c; --glass-lilac: #353356; --glass-peach: #4b343a;
+  --glass-blue: var(--uw-accent-wash); --glass-lilac: #353356; --glass-peach: #4b343a;
   --glass-coral: #ffb5a6; --glass-coral-strong: #ffd0c6;
-  --uw-page-bg: radial-gradient(ellipse at 12% 10%, #1b4354 0, transparent 45%), radial-gradient(ellipse at 96% 10%, #483347 0, transparent 40%), radial-gradient(ellipse at 90% 85%, #303550 0, transparent 40%), #101c2e;
+  --uw-page-bg: radial-gradient(ellipse at 12% 10%, #23324a 0, transparent 45%), radial-gradient(ellipse at 96% 10%, #483347 0, transparent 40%), #101c2e;
   --uw-hairline: #2c435a; --uw-lilac-ink: #d0baff; --uw-amber-soft: #4a3b1c; --uw-amber-ink: #f5d58a;
   --uw-ph-a: #22384e; --uw-ph-b: #1c3045;
   --journal-sheet: var(--glass-surface); --journal-sheet-image: none;

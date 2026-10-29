@@ -7,11 +7,14 @@ sources/audit/, and only entries marked as confirmed updates are offered to the 
 
 from __future__ import annotations
 
+import ast
 import importlib
 import json
 import sys
 from dataclasses import dataclass, field
 from datetime import date
+from functools import lru_cache
+from pathlib import Path
 
 import httpx
 
@@ -116,6 +119,65 @@ def load_schools(settings: Settings) -> list[School]:
                    u.get("coverage_note", ""), u.get("support_level", ""), u.get("partner_count") or 0) for u in response.json()]
 
 
+DEADLINES_FILE = ("src", "exchange_info", "verified_window_deadlines.py")
+RULE_KEYS = ("online_deadline", "paper_deadline", "study_plan_limit")
+RULE_FIELDS = ("label", "value_text", "verification_status", "last_checked_at", "source_url")
+
+
+@lru_cache(maxsize=4)
+def _deadline_specs(path: str, mtime: float) -> dict[str, dict]:
+    """The platform's verified deadline rules per school, read from the source with `ast` and never imported: the module
+    pulls in the whole web app, and reading it as text means no repository code runs inside the office."""
+    try:
+        tree = ast.parse(Path(path).read_text(encoding="utf-8"))
+    except (OSError, SyntaxError):
+        return {}
+    specs: dict[str, dict] = {}
+    for node in ast.walk(tree):
+        value = node.value if isinstance(node, (ast.Assign, ast.AnnAssign)) else None
+        names = [t.id for t in (node.targets if isinstance(node, ast.Assign) else [node.target]) if isinstance(t, ast.Name)] \
+            if isinstance(node, (ast.Assign, ast.AnnAssign)) else []
+        if "_RAW_SPECS" not in names or not isinstance(value, ast.List):
+            continue
+        for entry in value.elts:
+            if not isinstance(entry, ast.Dict):
+                continue
+            row = {}
+            for key, item in zip(entry.keys, entry.values):
+                if not (isinstance(key, ast.Constant) and isinstance(key.value, str)):
+                    continue
+                if isinstance(item, ast.Constant) and isinstance(item.value, (str, bool, type(None))):
+                    row[key.value] = item.value
+                elif key.value in RULE_KEYS and isinstance(item, ast.Call):
+                    row[key.value] = {kw.arg: kw.value.value for kw in item.keywords
+                                      if kw.arg in RULE_FIELDS and isinstance(kw.value, ast.Constant) and isinstance(kw.value.value, str)}
+            if isinstance(row.get("school_id"), str):
+                specs[row["school_id"]] = row
+    return specs
+
+
+def platform_record(settings: Settings, school_id: str) -> str:
+    """What the platform says today about one school's deadlines and rules, as text for the colleague who verifies a finding."""
+    path = settings.repo_root.joinpath(*DEADLINES_FILE)
+    if not path.is_file():
+        return "（這台電腦上讀不到平台的已核實規則，請只依官網判斷）"
+    row = _deadline_specs(str(path), path.stat().st_mtime).get(school_id)
+    if not row:
+        return f"（平台沒有 {school_id} 的已核實截止日規則）"
+    lines = [f"來源檔 {'/'.join(DEADLINES_FILE)}，school_id={school_id}："]
+    for key in ("window_badge", "cycle_label"):
+        if row.get(key):
+            lines.append(f"- {key}：{row[key]}")
+    for key in RULE_KEYS:
+        rule = row.get(key)
+        if rule:
+            lines.append(
+                f"- {key}（{rule.get('label', '')}）：{rule.get('value_text', '')[:420]}"
+                f"｜狀態 {rule.get('verification_status', '?')}｜查核日 {rule.get('last_checked_at', '?')}｜來源 {rule.get('source_url', '?')}"
+            )
+    return "\n".join(lines)
+
+
 CONFIRMED = {"confirmed_update", "confirmed_updates"}
 
 
@@ -181,6 +243,14 @@ BANNED_PHRASES = (
     "全台唯一",
 )
 
+# What the mascot looks like, for every AI that describes or draws it. The pictures the office renders itself use the
+# real artwork with its face drawn on top (render/mascot-face.css); this is for art an AI draws from a description.
+MASCOT = (
+    "UniWay 的吉祥物是一個圓潤的淺藍色 3D 小行李箱，頂端有提把，底下有兩個深藍色小輪子。"
+    "牠一定有臉：正面上半部有兩顆深灰黑色的橢圓形眼睛（略向右傾，帶一點白色高光），兩頰有淡粉紅色腮紅；"
+    "沒有嘴巴、沒有眉毛、沒有手腳。畫面裡出現牠的時候，眼睛不能省略。"
+)
+
 VOICE_GUIDE = f"""你們是 UniWay 行銷辦公室的成員。UniWay（app.uniway-tw.com）是給台灣大學生的交換申請整理網站：
 依母校列出真正能申請的合作校、校內截止日與倒數提醒、申請文件工作台、交換預算與補助、學長姐心得；每筆資料都附官方來源。
 公開資料免登入就能查。UniWay 不是任何大學的官方單位，也不代辦、不保證錄取。
@@ -191,6 +261,10 @@ VOICE_GUIDE = f"""你們是 UniWay 行銷辦公室的成員。UniWay（app.uniwa
 - 提到各校規定或日期時加上「以各校官方公告為準」，不要替學校做結論（例如說明會額滿不等於名額額滿）。
 - 不使用：{"、".join(BANNED_PHRASES)} 等誇大或暗示官方背書的說法。
 - 不放學生個資，不捏造學生心得或引言。
+
+吉祥物
+- {MASCOT}
+- 任何描述或繪製吉祥物的文字（例如封面插圖的 art_prompt）都要寫出牠的眼睛，不要寫成沒有臉的行李箱。
 
 Threads（脆）
 - 拿掉品牌官腔，像團隊裡一個真實小編在講話：可以吐槽、碎碎念、分享不完美。
@@ -212,6 +286,32 @@ Reels／YouTube Shorts
 YouTube 長影片（每週一支，橫式）
 - 2～4 分鐘的本週交換情報懶人包：開場 10 秒說明本集重點，分段講，結尾提醒訂閱與到 UniWay 查資料。
 """
+
+
+# What the visual designer (Mori) reads first, before the request of whoever needs a picture. It is the boss's own brief.
+VISUAL_BRIEF = """你是繁體中文社群資訊設計師。請將我提供的內容製作成適合手機閱讀的 IG 輪播，優先考慮資訊清楚、閱讀順序與整組一致性，不要只堆疊特效。
+
+請依序完成：
+1. 先整理逐頁大綱，每頁只傳達一個主要訊息。
+2. 提出整組共用規格：畫布、邊距、對齊線、字級層級、行距、色彩角色及頁碼位置。
+3. 輸出每頁的主標題、內文、示意圖需求與具體版面配置，不要只有「簡約、高級、有質感」這類形容詞。
+
+設計要求：
+- 主標題、次標題、正文、註解必須有明確層級。
+- 每頁最多突出 1–2 個關鍵詞，選擇放大、字重或色塊其中主要手法，不讓所有元素搶注意力。
+- 中文正文使用自然字距，按語意斷行，檢查標點避頭尾。
+- 中英混排按視覺高度、字重、基線校正，不機械地使用相同字級。
+- 文字與背景保持清楚對比，複雜圖片不要直接壓長段正文。
+- 同組資訊靠近、不同組用留白區隔，整組保持相同邊距、標題區與頁碼位置。
+- 資訊過量時刪減或拆頁，不縮成難讀的小字。
+- 優先用比較、步驟、簡單示意圖說明；沒有資訊作用的裝飾要減少。
+- 不編造數字、案例、來源或品牌承諾。
+- 中文保留可編輯文字層；圖片生成只負責插圖或背景，不負責長段排字。
+
+建議起始規格，不是參考圖量測值：
+畫布 1080 × 1350 px；左右安全邊距約 80 px；主標題 72–96 px；正文 36–44 px；正文行高約字級的 1.4–1.6 倍。依內容調整，並縮到手機顯示寬度檢查可讀性。
+
+交付前檢查：三秒內能否看懂主旨？閱讀順序是否明確？有沒有太小的字、孤立標點或擁擠區塊？各頁是否像同一套設計？"""
 
 
 def pillar_for(day: date) -> str:

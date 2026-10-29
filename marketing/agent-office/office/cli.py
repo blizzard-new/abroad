@@ -7,6 +7,7 @@
     uv run office tick                  # one pass of the clock, for cron instead of `serve`
     uv run office check --ping          # is this computer ready: tools, each desk's AI, the social accounts
     uv run office auth threads --token  # link an account (threads / instagram / youtube)
+    uv run office auth github           # link the GitHub token Pat opens draft pull requests with
 """
 
 from __future__ import annotations
@@ -64,9 +65,9 @@ def main(argv: list[str] | None = None) -> int:
     check = sub.add_parser("check", help="檢查這台電腦：工具、每張桌子的 AI、社群帳號")
     check.add_argument("--ping", action="store_true", help="實際問每個 AI 一句測試，確認有登入")
 
-    auth = sub.add_parser("auth", help="連上社群帳號，或用 telegram 連上你的手機")
-    auth.add_argument("platform", choices=["youtube", "threads", "instagram", "telegram"])
-    auth.add_argument("--token", "--short-token", dest="token", help="Meta 開發者後台產生的權杖（Threads／Instagram）")
+    auth = sub.add_parser("auth", help="連上社群帳號、GitHub，或用 telegram 連上你的手機")
+    auth.add_argument("platform", choices=["youtube", "threads", "instagram", "github", "telegram"])
+    auth.add_argument("--token", "--short-token", dest="token", help="Meta 開發者後台產生的權杖（Threads／Instagram），或 GitHub 的 fine-grained 權杖")
 
     args = parser.parse_args(argv)
 
@@ -147,6 +148,8 @@ def _auth(args) -> int:
         return _pair_phone(settings)
     store = Store(settings.db_path)
     label = accounts.LABEL[args.platform]
+    if args.platform == "github":
+        return _link_github(settings, store, args.token)
     try:
         if args.platform == "youtube":
             if not (settings.youtube_client_id and settings.youtube_client_secret):
@@ -169,6 +172,32 @@ def _auth(args) -> int:
         print(f"提醒：沒設定 {args.platform.upper()}_APP_SECRET，權杖照原樣存；如果它是 1 小時的短期權杖，設好後再跑一次。")
     else:
         print("這已經是長期權杖（約 60 天），照原樣存好，辦公室每週會自動延長。")
+    return 0
+
+
+def _link_github(settings: Settings, store, token: str | None) -> int:
+    import getpass
+
+    import httpx
+
+    from . import accounts
+    from .platforms.base import PlatformError
+
+    if not token and sys.stdin.isatty():
+        token = getpass.getpass("貼上 GitHub 權杖（輸入時不會顯示）：").strip()
+    token = token or settings.github_token
+    if not token:
+        print("請用 --token 帶入權杖，或直接執行讓它問你，或在 .env 設 OFFICE_GITHUB_TOKEN。權杖怎麼建立見 README「資料更新提案與 draft PR」。")
+        return 1
+    try:
+        found = accounts.link_github(settings, store, token)
+    except (PlatformError, httpx.HTTPError) as error:
+        print(f"GitHub 連線失敗：{error}")
+        return 1
+    print(f"已連上 GitHub：{found['repo']}（{found['login'] or '權杖'}；{accounts.DESKS['github']}）。")
+    print(f"目前是{'模擬模式：核准的提案只寫進 var/outbox/，不會真的開 PR；確認沒問題後在 .env 設 OFFICE_GITHUB_DRY_RUN=0' if settings.github_simulated else '正式模式：核准的提案會真的開成 draft PR'}。")
+    if found["classic"]:
+        print("提醒：這是傳統權杖，權限涵蓋你帳號的所有 repo。建議改建只選這個 repo 的 fine-grained 權杖（見 README），再重跑一次。")
     return 0
 
 

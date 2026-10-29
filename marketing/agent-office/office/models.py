@@ -46,7 +46,7 @@ class CarouselDraft(BaseModel):
     slides: list[Slide]
     caption: str = Field(description="Instagram 說明欄，不含 hashtag")
     hashtags: list[str]
-    art_prompt: str = Field(default="", description="封面插圖的畫面描述（給生圖用），不要包含任何文字或字母")
+    art_prompt: str = Field(default="", description="封面插圖的畫面描述（給生圖用），不要包含任何文字或字母；有吉祥物時要寫出牠的眼睛")
 
 
 class Scene(BaseModel):
@@ -105,10 +105,74 @@ class SchoolCheck(BaseModel):
     )
     detail: str = Field(description="一兩句說明看到什麼；沒變化就寫已確認的頁面")
     source_url: str = Field(description="實際看的官網頁面網址")
+    suggested_update: str = Field(
+        default="", description="new_notice 或 mismatch 時，建議平台更新哪個欄位、改成什麼（例如「校內截止日改為 2026-11-03 17:00」）；"
+                                "只寫官網上真的看到的，不確定就留空；其他狀態留空")
 
 
 class SchoolReport(BaseModel):
     checks: list[SchoolCheck]
+
+
+class FieldEdit(BaseModel):
+    target: str = Field(description="要改的地方：檔案 → 學校 id → 欄位，優先用「平台現有紀錄」裡出現的欄位名稱（例如 verified_window_deadlines.py → cgu → online_deadline.value_text）")
+    current: str = Field(description="平台現在寫的內容，照抄；平台沒有這一項就寫「沒有」")
+    proposed: str = Field(description="建議改成什麼；只寫官網上真的看到的，不要捏造日期、名額或網址")
+    basis: str = Field(description="官網依據：頁面上的原文摘錄（50 字內）或所在位置")
+
+
+class Verdict(BaseModel):
+    school: str = Field(description="學校名稱，照抄清單上的名字")
+    verdict: Literal["confirmed_update", "already_current", "not_exchange", "not_confirmed", "unreachable"] = Field(
+        description=(
+            "confirmed_update 官網確實有校級交換相關的新公告或規定異動，而且平台現有紀錄沒有反映或寫法不一致；"
+            "already_current 官網確有此事但平台已經是最新；"
+            "not_exchange 內容不屬於校級交換（例如雙聯學位、外部活動、其他校際競賽）；"
+            "not_confirmed 官網上看不到或無法證實；"
+            "unreachable 頁面打不開"
+        )
+    )
+    reason: str = Field(description="判斷理由，一兩句，寫你在官網上看到什麼")
+    source_url: str = Field(description="你實際打開核對的官網頁面網址")
+    edits: list[FieldEdit] = Field(default_factory=list, description="只有 confirmed_update 才填：要改平台哪些欄位、改成什麼；沒把握就不要寫，改判 not_confirmed")
+
+
+class VerificationReport(BaseModel):
+    verdicts: list[Verdict]
+
+
+class VisualSpec(BaseModel):
+    """The one set of rules every page of a set shares."""
+
+    margin: int = Field(default=80, description="左右安全邊距（px），60～100，整組一致")
+    title_size: int = Field(default=88, description="主標題字級（px），72～96")
+    body_size: int = Field(default=44, description="正文字級（px），36～44")
+    line_height: float = Field(default=1.5, description="正文行高，是字級的 1.4～1.6 倍")
+    accent: Literal["blue", "teal", "coral"] = Field(default="blue", description="整組的重點色：blue 藍（品牌色，預設）、teal 青綠、coral 珊瑚紅")
+    emphasis: Literal["color", "chip", "size"] = Field(default="color", description="整組唯一的主要強調手法：color 換色、chip 色塊底、size 放大")
+    page_number: Literal["top", "foot"] = Field(default="top", description="頁碼位置，整組固定：top 右上角、foot 頁尾")
+
+
+class VisualSlide(BaseModel):
+    layout: Literal["cover", "focus", "steps", "compare", "stat", "cta"] = Field(
+        description=(
+            "這一頁的版面：cover 封面（只給第一頁）、cta 結尾行動頁（只給最後一頁）；中間頁選 focus 一個重點加說明卡、"
+            "steps 2～5 個步驟、compare 兩邊比較、stat 一個大數字或關鍵詞配說明"
+        )
+    )
+    title_lines: list[str] = Field(default_factory=list, description="主標題依語意斷行（最多 3 行）；合起來必須和原本的主標題一字不差，只能決定在哪裡斷行，不能改字")
+    emphasis: list[str] = Field(default_factory=list, description="這一頁要突出的關鍵詞（最多 2 個），必須是主標題或內文裡原本就有的字")
+    items: list[str] = Field(default_factory=list, description="steps 的各步驟、compare 的兩邊、stat 的第一項是大數字或關鍵詞；每一項必須是內文裡原本就有的字，不能改寫")
+    labels: list[str] = Field(default_factory=list, description="compare 兩邊的標籤（各 6 字內），必須是標題或內文裡原本就有的字；沒有就留空")
+    picture: str = Field(default="", description="這一頁的示意圖或視覺需求，一句話（例如「兩欄比較」「三個步驟」）")
+
+
+class VisualPlan(BaseModel):
+    outline: list[str] = Field(description="逐頁大綱：每頁一句話，只說這一頁要傳達的一個主要訊息")
+    spec: VisualSpec
+    slides: list[VisualSlide] = Field(description="和提供的頁面一一對應：順序相同、頁數相同")
+    art_prompt: str = Field(default="", description="封面插圖的畫面描述（只畫插圖，不含任何文字或字母）；有吉祥物時要寫出牠的眼睛；不需要插圖就留空")
+    issues: list[str] = Field(default_factory=list, description="你發現的內容問題（例如某頁資訊太多、建議刪減或拆頁）；不要自己改字，寫在這裡給作者和老闆看")
 
 
 class Preflight(BaseModel):
@@ -121,7 +185,7 @@ class Insights(BaseModel):
 
 
 ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain", "hire", "assign", "dismiss",
-                          "watch_schools", "set_schedule", "set_office_times", "add_routine", "remove_routine"]
+                          "watch_schools", "set_schedule", "set_office_times", "add_routine", "remove_routine", "set_verifier", "redo_image"]
 
 
 class ChiefAction(BaseModel):
@@ -139,7 +203,9 @@ class ChiefAction(BaseModel):
             "set_office_times：改每天的時間表，which 選 start（開工）、threads（Threads 發文，幾個時間就每天幾篇）、instagram、youtube，"
             "times 填新時間，填 [\"default\"] 代表改回原本設定；"
             "add_routine：新增每天固定時間做的事（times、task_kind、instructions 寫題目或工作，name 填新同事名字，原本的同事可留空）；"
-            "remove_routine：刪掉編號 routine_id 的固定排程"
+            "remove_routine：刪掉編號 routine_id 的固定排程；"
+            "redo_image：請 Mori 重新做 draft_id 那則的圖（版面重新設計、封面插圖重畫），instructions 寫對圖的要求；文字不變，要改文字用 redo；"
+            "set_verifier：指定 name 的新同事當驗證員，巡查同事發現新公告或不一致後，先交給她重新打開官網驗證，確認要更新平台的才送進審核匣；name 留空代表取消驗證員"
         )
     )
     draft_id: int = Field(default=0, description="草稿編號，沒有就填 0")
@@ -150,7 +216,7 @@ class ChiefAction(BaseModel):
     angle: Literal["pain", "choice", "list", "story", "news", ""] = ""
     time: str = Field(default="", description="HH:MM")
     role: str = Field(default="", description="set_brain 用：要改的工作（狀態裡 role= 後面的值）")
-    name: str = Field(default="", description="hire／assign／dismiss 用：同事的名字")
+    name: str = Field(default="", description="hire／assign／dismiss／set_verifier 用：同事的名字")
     title: str = Field(default="", description="hire 用：職稱，例如 Dcard 研究員")
     task_kind: Literal["report", "threads", "schools", "carousel", "reel", ""] = Field(
         default="", description="assign／add_routine 用：report 查資料或分析後回報；threads 寫一則 Threads 草稿；schools 巡查分到的學校；"
