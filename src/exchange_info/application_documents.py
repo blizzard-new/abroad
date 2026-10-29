@@ -71,12 +71,12 @@ from .fju_student_view import FJU_PROCESS_URL
 
 FJU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 SCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
-NTNU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
-CYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
+NTNU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
+CYCU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 NTUST_SOURCE_CHECKED_AT = datetime(2026, 10, 16, tzinfo=timezone.utc)
 YZU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
 FCU_SOURCE_CHECKED_AT = datetime(2026, 10, 17, tzinfo=timezone.utc)
-NSYSU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
+NSYSU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 NCHU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NTUT_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
 NCCU_SOURCE_CHECKED_AT = datetime(2026, 10, 18, tzinfo=timezone.utc)
@@ -1312,7 +1312,7 @@ def _nsysu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
             field["help_text"] = "赴日本及其他國家語言能力占甄選總分 40%（須為報名截止日前 2 年內取得並符合交換校個別標準）；赴中國大陸本國籍學生免附語言檢定證明。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://oia.nsysu.edu.tw/p/412-1308-20730.php?Lang=zh-tw",
+        source_url="https://oia.nsysu.edu.tw/p/405-1308-384608,c20621.php?Lang=zh-tw",
         source_checked_at=NSYSU_SOURCE_CHECKED_AT,
         official_layout=False,
         official_form_number="志願表" if template.id == "exchange-application-data" else ("研修計畫書" if template.id == "study-plan" else None),
@@ -1322,9 +1322,9 @@ def _nsysu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
         signatures=["申請學生親筆簽名", "父親、母親或監護人親筆簽章（錄取確認書／保證人同意書）"] if template.id == "exchange-application-data" else [],
         stamps=[],
         stage={"predeparture-notice": "錄取公告後線上確認並上傳錄取確認書", "return-report": "返國後 2 個月內繳交雙語報告書與成績單", "credit-transfer": "返國開學後（18 授課小時抵免 1 學分）"}.get(template.id, "於出國交換學生甄選系統（https://partners.oia.nsysu.edu.tw/exchange/login/user/）全線上上傳 PDF"),
-        version="116準備工具-2026-10-18.1",
+        version="116準備工具-2026-10-28.1",
         destinations=["國立中山大學國際事務處學生交換事務組（行政大樓 2 樓 2004 室）", "管理學院職涯發展暨國際交流辦公室（管院院級適用）"],
-        conditional_note="此為個人準備工具；國立中山大學正式出國交換申請採全線上作業，請於各線報名期間登入 https://partners.oia.nsysu.edu.tw/exchange/login/user/ 填報並上傳簽名志願表、含歷年班排名之中文歷年成績單、語檢證明、中英文研修計畫書及有利審查資料。",
+        conditional_note="此為個人準備工具；國立中山大學正式出國交換申請採全線上作業（2027-2028 其他國家與地區正式簡章 https://oia.nsysu.edu.tw/p/405-1308-384608,c20621.php?Lang=zh-tw ：11/3 9:00 至 11/17 17:00 開放系統申請、審核及補正至 11/20 17:00，交換校資訊和志願表 10/29 公布），請於各線報名期間登入 https://partners.oia.nsysu.edu.tw/exchange/login/user/ 填報並上傳志願表、中文歷年成績單、2025/03/01 後測驗之語檢證明、研修計畫書（113882831.doc）及有利審查資料（302391853.doc）。",
     )
     return ApplicationDocumentTemplate.model_validate(payload)
 
@@ -1888,12 +1888,12 @@ def _nknu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
             field["help_text"] = "依高師大《選送學生出國研修實施要點》與《學生出國研修獎助學金支給要點》規定，報考國外非大陸姊妹校須具備兩年內有效外語檢定證明（外語能力佔校內甄選 20%），申請校內出國研修獎助學金者須達 CEFR B1（亞洲地區）或 CEFR B2（歐美紐澳地區）。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://oia.nknu.edu.tw/tw/ugC_Rule.asp",
+        source_url="https://oia.nknu.edu.tw/exchange-programs.php",
         source_checked_at=NKNU_SOURCE_CHECKED_AT,
         official_layout=False,
         official_form_number="出國交換／出國研修獎助學金申請表與家長同意書" if template.id == "exchange-application-data" else ("出國研究計畫書與自傳（A4兩頁為限）" if template.id == "study-plan" else None),
         official_file_name=None,
-        official_download_url="https://oia.nknu.edu.tw/tw/ugC_Application.asp",
+        official_download_url="https://oia.nknu.edu.tw/uploads/files/20251007113419_68e48a3b07252.doc",
         default_copies=1,
         signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
         stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
@@ -2023,12 +2023,12 @@ def _cmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
             field["help_text"] = "依中國醫藥大學《選送學生出國研修辦法》第四條與《獎勵學生出國研習及開拓國際視野辦法》規定：申請非華語區盟校交換、雙聯或學海計畫須檢附兩年內有效外語能力證明（校內基準 TOEFL iBT 57 / ITP 500、IELTS 4.0、TOEIC 550 或 GEPT 中級複試；雙聯學位與歐美名校須達 IELTS 6.0–6.5 或 TOEFL iBT 79–90+）。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://cmucia.cmu.edu.tw/page/about_3",
+        source_url="https://cmucia.cmu.edu.tw/s_exchange.html",
         source_checked_at=CMU_SOURCE_CHECKED_AT,
         official_layout=False,
         official_form_number="出國交換／雙聯學位／學海計畫申請表" if template.id == "exchange-application-data" else ("出國研修讀書計畫書與自傳" if template.id == "study-plan" else None),
         official_file_name=None,
-        official_download_url="https://cmucia.cmu.edu.tw/news/51",
+        official_download_url="https://cmucia.cmu.edu.tw/doc/exchange/exchange_attach.odt",
         default_copies=1,
         signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
         stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
@@ -2042,7 +2042,7 @@ def _cmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
 
 def _kmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
-        "exchange-application-data": "整理高雄醫學大學選送學生出國研修、海外見實習暨教育部學海四項計畫（學海飛颺／惜珠／築夢／新南向築夢）、校內《學生國際移動力獎助金辦法》與各學院交換／雙聯學位（如杜肯大學藥學雙聯）甄選應繳資料：1. 國際事務處／各學院國際交換生或學海計畫申請表（須經導師或指導教授、所屬系所主管及學院院長初審核章；醫學院另須填具選填志願表與資料繳交檢核表）、2. 中英文歷年成績單正本（含學業總平均、GPA 與班級排名；依《選送學生出國研修辦法》第三條，須於高醫大就讀一學期以上且歷年學業總平均達 70 分［GPA 2.44］或班級排名前 50%，操行成績平均達 80 分以上且無懲處紀錄；申請學海飛颺者須達班排前 50% 或 GPA 3.0 以上，醫學院交換甄選佔總成績 40%）、3. 有效外語能力檢定證明影本（英語組須具 TOEFL iBT 69 / IELTS 6.0 / TOEIC 650 / 全民英檢中高級初試以上，日語組須具 JLPT N4 以上；醫學院日語組加分採計 N1–N5，歐美名校如賓州大學／哈佛／牛津／UCLA／杜肯雙聯須達 TOEFL iBT 80–100 或 IELTS 6.5–7.0）、4. 中英文自傳、個人履歷表（CV）與出國研修讀書／見實習計畫書（含申請動機、擬於目標姊妹校修習之專業領域課程或附設醫院海外臨床見實習／實驗室研究規劃）、5. 師長推薦信與家長同意書；經各系所與學院初審推薦排序後，於截止日前送交勵學大樓 3 樓國際事務處。",
+        "exchange-application-data": "整理高雄醫學大學選送學生出國研修、海外見實習暨教育部學海四項計畫（學海飛颺／惜珠／築夢／新南向築夢）、校內《學生國際移動力獎助金辦法》與各學院交換／雙聯學位（如杜肯大學藥學雙聯）甄選應繳資料：1. 國際事務處／各學院國際交換生或學海計畫申請表（須經導師或指導教授、所屬系所主管及學院院長初審核章；醫學院另須填具選填志願表與資料繳交檢核表）、2. 中英文歷年成績單正本（含學業總平均、GPA 與班級排名；依《選送學生出國研修辦法》第三條，須於高醫大就讀一學期以上且歷年學業總平均達 70 分［GPA 2.44］或班級排名前 50%，操行成績平均達 80 分以上且無懲處紀錄；申請學海飛颺者須達班排前 50% 或 GPA 3.0 以上，醫學院交換甄選佔總成績 40%）、3. 有效外語能力檢定證明影本（英語組須具 TOEFL iBT 69 / IELTS 6.0 / TOEIC 650 / 全民英檢中高級初試以上，日語組須具 JLPT N4 以上；醫學院日語組加分採計 N1–N5，歐美名校如賓州大學／哈佛／牛津／UCLA／杜肯雙聯須達 TOEFL iBT 80–100 或 IELTS 6.5–7.0）、4. 中英文自傳、個人履歷表（CV）與出國研修讀書／見實習計畫書（含申請動機、擬於目標姊妹校修習之專業領域課程或附設醫院海外臨床見實習／實驗室研究規劃）、5. 師長推薦信與家長同意書；經各系所與學院初審推薦排序後，於截止日前送交勵學大樓 4 樓國際事務處。",
         "study-plan": "撰寫高雄醫學大學出國交換、海外臨床見實習（醫學系 Clerkship、牙醫系、藥學系 APPE、護理系、物理治療、職能治療、呼吸治療、醫技、醫社、心理等）、海外實驗室研究或跨國雙聯學位（如美國杜肯大學 Duquesne University 藥學雙聯）必繳之《出國研修讀書／實習計畫書》與《中英文個人自傳／CV》。請具體說明赴外動機、擬於目標姊妹校修習之專業課程或臨床見實習科別／實驗室研究內容、外語能力準備，以及返國後學分抵免（依《高雄醫學大學學生出國期間有關學業及學籍處理要點》與《辦理跨國雙聯學制實施辦法》，兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月，且於兩校修習學分數合計須超過畢業應修總學分數三分之一）與醫藥健康專業職涯規劃。",
         "course-preapproval": "辦理赴境外姊妹校修讀課程、跨國雙聯學位或海外臨床見實習之選課預審與教務核備（依《高雄醫學大學學生出國期間有關學業及學籍處理要點》與《辦理跨國雙聯學制實施辦法》規定，出國前須由所屬系所及教務處確認擬修習科目或臨床見實習學分與返國抵免對照；出國研修期間必須維持高雄醫學大學在學註冊，休學期間修習之學分不予採認；大陸地區醫事人員高等學校學歷依教育部規定不予採認醫事國考資格）。",
         "predeparture-notice": "於國際事務處或各學院公告錄取及獎學金核定名單後，配合國際事務處完成國外姊妹校提名（Nomination）、免疫接種與健康檢查證明（Immunization Record，歐美日醫牙藥護臨床見實習必備）及入學／見實習許可（Offer / Invitation Letter）取得；出國前須簽署《教育部學海計畫行政契約書》或《高醫大國際移動力獎助金切結書》、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療、意外及臨床實習責任保險（Malpractice Insurance），並確認已完成高雄醫學大學當學期註冊。",
@@ -2068,18 +2068,18 @@ def _kmu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
             field["help_text"] = "依高雄醫學大學《選送學生出國研修辦法》、《學生國際移動力獎助金辦法》與各學院交換甄選簡章規定：申請英語組須具 TOEFL iBT 69、IELTS 6.0、TOEIC 650 或全民英檢中高級初試以上，申請日語組須具 JLPT N4 以上（醫學院日語組加分採計 N1–N5，部分日本姊妹校要求 N2–N3）。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://cia.kmu.edu.tw/index.php/zh-tw/%E5%AD%B8%E7%94%9F%E4%BA%A4%E6%B5%81/%E9%AB%98%E9%86%AB%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B",
+        source_url="https://ciae2.kmu.edu.tw/index.php/zh-tw",
         source_checked_at=KMU_SOURCE_CHECKED_AT,
         official_layout=False,
         official_form_number="出國交換／海外見實習／學海計畫申請表" if template.id == "exchange-application-data" else ("出國研修讀書／實習計畫書與自傳" if template.id == "study-plan" else None),
         official_file_name=None,
-        official_download_url="https://cia.kmu.edu.tw/index.php/zh-tw/%E5%AD%B8%E7%94%9F%E4%BA%A4%E6%B5%81/%E9%AB%98%E9%86%AB%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B",
+        official_download_url="https://ciae2.kmu.edu.tw/index.php/zh-tw",
         default_copies=1,
         signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
         stamps=["所屬系所辦公室核章", "所屬學院辦公室核章"] if template.id == "exchange-application-data" else [],
-        stage={"predeparture-notice": "錄取後辦理選課預審、姊妹校提名、免疫體檢與責任保險及學海或校內獎助簽約", "return-report": "返國 14 日內上傳學海成果報告並於 1 個月內繳交交換／見實習成果報告與核銷單據", "credit-transfer": "返國後持姊妹校正式成績單或見實習評估表辦理境外學分採認"}.get(template.id, "備齊申請表與附件（經家長、導師／指導教授、系所主管及院長簽章）於截止日前送交所屬學院及勵學大樓 3 樓國際事務處"),
-        version="115準備工具-2026-10-21.1",
-        destinations=["高雄醫學大學所屬系所與學院辦公室（初審推薦）", "高雄醫學大學國際事務處（高雄市三民區十全一路100號勵學大樓3樓）"],
+        stage={"predeparture-notice": "錄取後辦理選課預審、姊妹校提名、免疫體檢與責任保險及學海或校內獎助簽約", "return-report": "返國 14 日內上傳學海成果報告並於 1 個月內繳交交換／見實習成果報告與核銷單據", "credit-transfer": "返國後持姊妹校正式成績單或見實習評估表辦理境外學分採認"}.get(template.id, "備齊申請表與附件（經家長、導師／指導教授、系所主管及院長簽章）於截止日前送交所屬學院及勵學大樓 4 樓國際事務處"),
+        version="115準備工具-2026-10-28.1",
+        destinations=["高雄醫學大學所屬系所與學院辦公室（初審推薦）", "高雄醫學大學國際事務處（高雄市三民區十全一路100號勵學大樓4樓）"],
         conditional_note="此為個人準備工具；高雄醫學大學教育部學海四項計畫（每年 12 月至翌年 2 月收件）、校內《學生國際移動力獎助金辦法》、各學院海外交換與臨床見實習（如醫學院每年 9–10 月甄選）及跨國雙聯學位須先經系所與學院核章，出國期間須維持高醫大在學註冊，且修讀雙聯學位者於兩校修業時間合計須達學士班至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月。",
     )
     return ApplicationDocumentTemplate.model_validate(payload)
@@ -2132,11 +2132,11 @@ def _mcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
 
 def _ntub_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
     descriptions = {
-        "exchange-application-data": "整理國立臺北商業大學海外及大陸地區交換學生、跨國雙聯學位暨教育部學海飛颺／惜珠與《王春滿清寒短期研修交流助學金》甄選應繳資料：1. 線上申請表與紙本核章表（於北商大交換學生管理系統 exchangestd.ntub.edu.tw 完成線上填報後列印紙本，經導師／指導教授及系所主管核章）、2. 家長或監護人切結書正本（2026 年版）、3. 出國進修計畫書（2026 年版，含自傳與讀書計畫，格式以 1,000–1,500 字為原則；書面審查佔甄選總分 60%［在校成績 15%、出國進修計畫書 15%、外語能力 30%］，面試佔 40%）、4. 歷年成績單正本（含學業總平均與歷年平均班級名次百分比；須達總平均 80 分以上或班排前 70% 以內，且前一學年每學期操行成績均達 A［80 分］以上；申請學海飛颺須達總平均 80 分或班排前 40% 以內）、5. 有效外語能力檢定證明影本（英語組姊妹校只接受 TOEFL iBT 或 IELTS，不接受多益 TOEIC！日語組要求 JLPT N2 以上，韓語組要求 TOPIK 3 級以上；大陸地區姊妹校免附外語檢定）、6. 個人優良表現證明與匯款單影本（報名費新臺幣 500 元）；於收件截止日前將紙本與電子檔送交臺北校區行政大樓 5 樓國際事務處。",
-        "study-plan": "撰寫國立臺北商業大學交換生及雙聯學位甄選必繳之《出國進修計畫書》（2026 年版官方表格，含個人自傳與讀書計畫，1,000–1,500 字；佔校內甄選總分 15%）。請具體說明赴外動機、擬於志願姊妹校修習之專業領域課程（出國期間每學期至少應修習與就讀系所相關之 2 門科目或 6 學分以上）、外語能力準備，以及返國後學分抵免與國際商管／創新設計職涯銜接規劃。",
+        "exchange-application-data": "整理國立臺北商業大學海外及大陸地區交換學生、跨國雙聯學位暨教育部學海飛颺／惜珠與《王春滿清寒短期研修交流助學金》甄選應繳資料：1. 線上申請表與紙本核章表（於北商大出國交換學生申請系統 https://exchange.ntub.edu.tw/ 完成線上填報後列印紙本親筆簽名，送交系科所初審）、2. 家長或監護人切結書正本（2026 年版）、3. 出國進修計畫書（2026 年版，含自傳與讀書計畫，格式以 1,000–1,500 字為原則；依《學生申請交換生及雙聯學位生作業要點》p/406-1006-91803,r134.php 附件 PDF 第七點，需繳交外語證明之海外國家按「外語成績 60%＋在校歷年學業平均成績 20%＋在校歷年平均班級名次百分比 20%」計分，免附外語證明之大陸地區按「在校歷年學業平均成績 50%＋在校歷年平均班級名次百分比 50%」計分）、4. 歷年成績單正本（含學業總平均與歷年平均班級名次百分比；申請人須為研究所、二技一年級第二學期以上、四技二年級以上或五專四年級以上在學學生，且符合「在校學業總平均 80 分以上且前一學年每學期操行成績均為 A 以上」或「歷年平均班級名次前 70% 且前一學年每學期操行成績均為 A 以上」；申請學海飛颺須達總平均 80 分或班排前 40% 以內）、5. 2 年內有效外語能力檢定證明正本（英語組姊妹校只接受 TOEFL iBT 或 IELTS，不接受多益 TOEIC！日語組要求 JLPT N2 以上，韓語組要求 TOPIK 3 級以上；大陸地區姊妹校免附外語檢定）；將平台申請結果列印親筆簽名後，連同歷年成績單及正本外語成績單繳交至所屬系所。",
+        "study-plan": "撰寫國立臺北商業大學交換生及雙聯學位甄選必繳之《出國進修計畫書》（2026 年版官方表格，含個人自傳與讀書計畫，1,000–1,500 字）。請具體說明赴外動機、擬於志願姊妹校修習之專業領域課程（出國期間每學期至少應修習與就讀系所相關之 2 門科目或 6 學分以上）、外語能力準備，以及返國後學分抵免與國際商管／創新設計職涯銜接規劃。",
         "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《國立臺北商業大學學生申請交換生及雙聯學位生作業要點》規定，出國交換期間須維持北商大在學註冊並繳交全額學雜費，每學期至少應選修與就讀系所相關之 2 門科目或 6 學分以上；研究所學生交換期間以一學期為限）。",
-        "predeparture-notice": "於國際事務處公告甄選錄取名單（書面審查 60%＋中英文面試 40%，總成績未達 70 分不予錄取）後，依限繳交《錄取同意書》（2026 年版）及《赴海外交換及雙聯研修計畫行政契約書》（一式三份，領取獎助學金者適用），配合國際事務處完成姊妹校官方提名（Nomination）與外校入學申請；出國前須參加行前說明會、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療及意外保險，並確認已完成北商大當學期註冊繳費。",
-        "return-report": "境外交換或雙聯研修期滿返國後 1 個月內，須登入北商大交換學生管理系統（exchangestd.ntub.edu.tw）上傳 2,000 字以上之《交換學生返國報告書》（含研修與生活照片），教育部學海計畫受獎生另須於返國 14 日內上傳成果報告至教育部學海計畫資訊網，並檢附來回電子機票收據、登機證正本、護照出入境紀錄及姊妹校正式成績單向國際事務處辦理獎助學金核銷與返校銷假。",
+        "predeparture-notice": "於國際事務處公告甄選錄取名單（依總積分高低及志願序分發）後，依限繳交《錄取同意書》（2026 年版）及《赴海外交換及雙聯研修計畫行政契約書》（一式三份，領取獎助學金者適用），配合國際事務處完成姊妹校官方提名（Nomination）與外校入學申請；出國前須參加行前說明會、完成役男緩徵出境申請、購買涵蓋境外全期之海外醫療及意外保險，並確認已完成北商大當學期註冊繳費。",
+        "return-report": "境外交換或雙聯研修期滿返國後 1 個月內，須填寫《返校報到單》並繳交至少 1,000 字以上之《交換生心得報告》（含至少 4 張照片，含上課照片 1 張），教育部學海計畫受獎生另須於返國 14 日內上傳成果報告至教育部學海計畫資訊網，並檢附來回電子機票收據、登機證正本、護照出入境紀錄及姊妹校正式成績單向國際事務處辦理獎助學金核銷與返校銷假。",
         "credit-transfer": "境外交換或雙聯研修期滿返國後持國外姊妹校核發之正式成績單正本與課程大綱（Syllabus），依《國立臺北商業大學學生申請交換生及雙聯學位生作業要點》及《學生抵免學分辦法》向所屬系（所）、學院及教務處申請境外修習科目學分採認。",
     }
     if template.id not in descriptions:
@@ -2152,13 +2152,13 @@ def _ntub_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     payload = adapt(template.model_dump(mode="json"))
     for field in payload["fields"]:
         if field["id"] == "class_rank_percent":
-            field["help_text"] = "北商大《申請資格與規定》與《交換生甄選作業辦法》規定：歷年學業總平均須達 80 分以上或歷年平均班級名次百分比在前 70% 以內，且前一學年每學期操行成績均達 A（80 分）以上（在校成績佔甄選總分 15%）；申請教育部《學海飛颺》獎助學金者，須達總平均 80 分以上或歷年平均班級名次前 40% 以內。請檢附含總平均與歷年平均班級名次百分比之中文歷年成績單正本。"
+            field["help_text"] = "北商大〈姊妹校交換作業辦法〉與《學生申請交換生及雙聯學位生作業要點》規定：申請人須為研究所、二技一年級第二學期以上、四技二年級以上或五專四年級以上在學學生，且符合「在校學業總平均 80 分以上且前一學年每學期操行成績均為 A 以上」或「歷年平均班級名次前 70% 且前一學年每學期操行成績均為 A 以上」（海外組甄選總積分：外語成績 60%＋歷年學業平均成績 20%＋歷年平均班級名次百分比 20%；大陸組：歷年學業平均成績 50%＋歷年平均班級名次百分比 50%）；申請教育部《學海飛颺》獎助學金者，須達總平均 80 分以上或歷年平均班級名次前 40% 以內。請檢附含總平均與歷年平均班級名次百分比之中文歷年成績單正本。"
         if field["id"] == "language_test":
-            field["options"] = ["TOEFL iBT（英語組只接受托福或雅思！韓國天主教 65+／匹茲堡州立 68+／一般英語組 73+／荷德法澳雙聯 80+／捷克理工 87+／舊金山州立 88+／萊茵瓦爾碩士 100+）", "IELTS 學術組（英語組只接受托福或雅思！一般英語組 5.5+／匹茲堡州立及荷德法澳雙聯 6.0+／捷克理工及舊金山州立與萊茵瓦爾碩士 6.5+）", "JLPT 日語能力試驗（日語組千葉商大／小樽商大／人間環境／亞細亞 N2+；新潟大學須同時具備 N2 及 TOEFL 73 / IELTS 5.5）", "TOPIK 韓語能力測驗（韓語組慶北／光雲／全北／東亞 3 級以上，或以 TOEFL 73 / IELTS 5.5 申請英語組）", "大陸地區姊妹校（免附外語檢定證明；若有外語成績可依《外語成績積分對照表》列計 30% 書審外語積分）"]
-            field["help_text"] = "依北商大《申請資格與規定》明文規定：英語組姊妹校只接受 TOEFL iBT 或 IELTS 成績，不接受多益（TOEIC）成績！（日語組及韓語組亦同）。外語能力佔校內書面審查 30%，依《外語成績積分對照表》換算積分。"
+            field["options"] = ["TOEFL iBT（英語組只接受托福或雅思！韓國天主教 65+／匹茲堡州立 68+／一般英語組 73+／荷德法澳雙聯 80+／捷克理工 87+／舊金山州立 88+／萊茵瓦爾碩士 100+）", "IELTS 學術組（英語組只接受托福或雅思！一般英語組 5.5+／匹茲堡州立及荷德法澳雙聯 6.0+／捷克理工及舊金山州立與萊茵瓦爾碩士 6.5+）", "JLPT 日語能力試驗（日語組千葉商大／小樽商大／人間環境／亞細亞 N2+；新潟大學須同時具備 N2 及 TOEFL 73 / IELTS 5.5）", "TOPIK 韓語能力測驗（韓語組慶北／光雲／全北／東亞 3 級以上，或以 TOEFL 73 / IELTS 5.5 申請英語組）", "大陸地區姊妹校（免附外語檢定證明；按歷年學業平均成績 50%＋歷年平均班級名次百分比 50% 計分）"]
+            field["help_text"] = "依北商大〈姊妹校交換作業辦法〉明文規定：2 年內有效外語成績單，英文「只」接受托福（TOEFL iBT）或雅思（IELTS）成績，不接受多益（TOEIC）成績！外語成績佔海外組甄選總積分 60%（依《外語成績積分對照表》換算，最高 60 分；大陸地區免附外語檢定，按學業平均 50%＋班排 50% 計分）。"
     payload.update(
         description=descriptions[template.id],
-        source_url="https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw",
+        source_url="https://oia.ntub.edu.tw/p/405-1006-57507,c3152.php?Lang=zh-tw",
         source_checked_at=NTUB_SOURCE_CHECKED_AT,
         official_layout=False,
         official_form_number="出國進修計畫書（2026年版）、家長切結書與錄取同意書" if template.id == "exchange-application-data" else ("出國進修計畫書（2026年版，含自傳與讀書計畫）" if template.id == "study-plan" else None),
@@ -2167,10 +2167,10 @@ def _ntub_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
         default_copies=1,
         signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系所主管簽章"] if template.id == "exchange-application-data" else [],
         stamps=["所屬系所辦公室核章"] if template.id == "exchange-application-data" else [],
-        stage={"predeparture-notice": "錄取後繳交錄取同意書與行政契約書（一式三份）並辦理姊妹校提名", "return-report": "返國後 1 個月內上傳 2,000 字以上返國報告書並完成學海／校內助學金核銷", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "於交換生管理系統完成線上申請並將核章紙本與報名費匯款證明送交臺北校區行政大樓 5 樓國際事務處"),
-        version="116準備工具-2026-10-22.1",
-        destinations=["國立臺北商業大學國際事務處（臺北校區行政大樓 5 樓 503 室）"],
-        conditional_note="此為個人準備工具；北商大海外及大陸地區交換學生甄選每年分兩梯次（第一梯次春季班約 9–10 月、第二梯次秋季班約 2–3 月截止），須先於交換學生管理系統（exchangestd.ntub.edu.tw）完成線上填報，並將核章紙本、2026 年版出國進修計畫書、家長切結書、歷年成績單正本（含班排百分比）、有效外語檢定證明（英語組僅採認托福或雅思，不接受多益）及報名費 500 元匯款證明送交國際事務處。",
+        stage={"predeparture-notice": "錄取後繳交錄取同意書與行政契約書（一式三份）並辦理姊妹校提名", "return-report": "返國後 1 個月內繳交返校報到單與至少 1,000 字以上交換生心得報告（含至少 4 張照片）並完成核銷", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "於出國交換學生申請系統（exchange.ntub.edu.tw）完成線上申請並將簽名紙本連同歷年成績單與正本外語成績單繳交至所屬系所"),
+        version="116準備工具-2026-10-28.1",
+        destinations=["國立臺北商業大學各所屬系所（初審收件）", "國立臺北商業大學國際事務處（複審）"],
+        conditional_note="此為個人準備工具；北商大海外及大陸地區交換學生甄選每年分兩梯次（每年 11/1–11/30［逢例假日順延一天，於申請之隔年度出國交換一學期或一學年］及 5/1–5/31［就 11 月申請梯次交換後剩餘名額，開放二技及研究所優先申請，於申請之隔年度第 2 學期出國交換一學期］），須先於出國交換學生申請系統（https://exchange.ntub.edu.tw/）完成線上填報，並將簽名紙本、2026 年版出國進修計畫書、家長切結書、歷年成績單正本（含班排百分比）及 2 年內有效外語檢定證明正本（英語組僅採認托福或雅思，不接受多益）繳交至所屬系所。",
     )
     return ApplicationDocumentTemplate.model_validate(payload)
 

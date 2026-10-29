@@ -21,16 +21,16 @@ NTUB_INFO_SESSION_116_URL = (
     "https://oia.ntub.edu.tw/p/406-1006-120272,r1.php?Lang=zh-tw"
 )
 NTUB_INFO_SESSION_PPTX_URL = (
-    "https://oia.ntub.edu.tw/var/file/6/1006/img/1539/337014036.pptx"
+    "https://oia.ntub.edu.tw/var/file/6/1006/img/337014036.pptx"
 )
 NTUB_LANGUAGE_SCORE_TABLE_PDF_URL = (
-    "https://oia.ntub.edu.tw/var/file/6/1006/img/1539/108293427.pdf"
+    "https://oia.ntub.edu.tw/var/file/6/1006/img/108293427.pdf"
 )
 NTUB_GUIDELINES_PDF_URL = (
-    "https://oia.ntub.edu.tw/var/file/6/1006/attach/39/pta_96764_8295994_18840.pdf"
+    "https://oia.ntub.edu.tw/p/406-1006-91803,r134.php?Lang=zh-tw"
 )
 NTUB_SELECTION_REGULATIONS_PDF_URL = (
-    "https://oia.ntub.edu.tw/var/file/6/1006/attach/49/pta_42801_9504163_01196.pdf"
+    "https://oia.ntub.edu.tw/p/406-1006-77262,r134.php?Lang=zh-tw"
 )
 NTUB_XUEHAI_FEIYANG_PDF_URL = (
     "https://oia.ntub.edu.tw/var/file/6/1006/attach/35/pta_85778_2722872_37311.pdf"
@@ -218,7 +218,7 @@ def ntub_language_check(
     return (
         "pass",
         (
-            f"申請赴{partner_country}合作姊妹校（含吉林大學、南京大學、南開大學、北京科技大學、中南財經政法大學、東北大學、西北農林科技大學、北京師範大學、蘭州大學、蘇州大學、福州大學、首都經濟貿易大學等 36 所大陸地區姊妹校）免附外語檢定證明；若有外語檢定成績仍可依《外語成績積分對照表》列計書面審查外語能力積分（30%）。"
+            f"申請赴{partner_country}合作姊妹校（含吉林大學、南京大學、南開大學、北京科技大學、中南財經政法大學、東北大學、西北農林科技大學、北京師範大學、蘭州大學、蘇州大學、福州大學、首都經濟貿易大學等 36 所大陸地區姊妹校）免附外語檢定證明；依《國立臺北商業大學學生申請交換生及雙聯學位生作業要點》第七點，無需繳交外語能力證明之大陸地區按「在校歷年學業平均成績 50%＋在校歷年平均班級名次百分比 50%」計分。"
         ),
     )
   if not test or language_score is None:
@@ -261,13 +261,13 @@ def ntub_language_check(
       return (
           "pass",
           (
-              f"TOEIC {language_score:g}：申請赴{partner_country}姊妹校免附外語檢定，且多益成績可依北商大《外語成績積分對照表》換算書面審查外語能力積分（30%，如 TOEIC 550 折算 60 分、785 折算 80 分、945 折算 95 分）。"
+              f"TOEIC {language_score:g}：申請赴{partner_country}姊妹校免附外語檢定；依《國立臺北商業大學學生申請交換生及雙聯學位生作業要點》第七點，大陸地區姊妹校按「在校歷年學業平均成績 50%＋在校歷年平均班級名次百分比 50%」計分。"
           ),
       )
     return (
         "fail",
         (
-            f"已填報 TOEIC {language_score:g}；依北商大《申請資格與規定》明文規定：「英語組姊妹校只接受托福（TOEFL iBT）或雅思（IELTS）成績，不接受多益（TOEIC）成績！（日語組及韓語組亦同）」。多益成績僅可作為大陸地區姊妹校書面審查外語積分（30%）或雙聯學位個別採認項目。"
+            f"已填報 TOEIC {language_score:g}；依北商大〈姊妹校交換作業辦法〉與《外語成績積分對照表》（108293427.pdf）明文規定：「英語組姊妹校只接受托福（TOEFL iBT）或雅思（IELTS）成績，不接受多益（TOEIC）成績！（日語組採計 JLPT N2+、韓語組採計 TOPIK 3級+ 或 TOEFL iBT / IELTS）」。"
         ),
     )
   if test == "jlpt":
