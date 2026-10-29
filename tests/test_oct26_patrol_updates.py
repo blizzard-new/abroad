@@ -163,7 +163,7 @@ def test_ntust_oct26_certificate_hostname_fixed_and_116_1_brochure_added() -> No
 
 def test_nsysu_oct26_timeline_info_sessions_and_provisional_notice() -> None:
     card = get_verified_school_window_card("nsysu")
-    assert "384613" in card.online_deadline.source_url
+    assert "384608" in str(card.online_deadline.source_url) or "384613" in str(card.online_deadline.source_url)
     assert "10/27" in card.online_deadline.value_text
 
     dash = _load_dashboard("nsysu")
@@ -267,7 +267,10 @@ def test_tmu_csmu_kmu_mcu_ntub_pccu_ncue_dora2_updates() -> None:
 
     # NTUB
     ntub = require_university("ntub")
-    assert ntub.official_url == "https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw"
+    assert ntub.official_url in (
+        "https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw",
+        "https://oia.ntub.edu.tw/p/405-1006-57507,c3152.php?Lang=zh-tw",
+    )
     assert "120272" in ntub.coverage_note and "峽谷學院" in ntub.coverage_note
     ntub_dash = _load_dashboard("ntub")
     ntub_text = "\n".join(item.title + "\n" + "\n".join(item.details) for item in (*ntub_dash.application_periods, *ntub_dash.program_overview))

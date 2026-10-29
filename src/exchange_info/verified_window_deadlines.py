@@ -28,7 +28,7 @@ from .university_registry import SUPPORTED_UNIVERSITIES, require_university
 TAIPEI_TZ = timezone(timedelta(hours=8))
 WINDOW_START_DATE = "2026-10-19"
 WINDOW_END_DATE = "2026-12-31"
-CATALOG_LAST_CHECKED_AT = "2026-10-27"
+CATALOG_LAST_CHECKED_AT = "2026-10-28"
 DEFAULT_LINE_OA_ID = "@uniway"
 
 
@@ -355,10 +355,10 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "anchor_date": None,
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline", label="115-2二招線上報名截止",
-            value_text="2026/10/05公告二招一般組（d020 article/530752、c015 article/530796）及語言學習組（d020 article/530751、c015 article/530797），報名延期至2026/10/13 23:59線上截止（已截止），名額詳附件《二招-115-2交換學生招收名額一覽表（一般組）》（持續更新），並更新匈牙利布達佩斯城市大學與韓國啟明大學資訊；116-1日期未核實。",
+            value_text="2026/10/05公告二招一般組（530752／530796）及語言學習組（530751／530797），延至10/13 23:59截止；10/14發布二招報名成功名單（530925，非錄取結果，最終由接待校決定）；10/05另公告115年第2次學海飛颺開放系級交換生申請至11/16截止（530756）；尚無116-1一招公告。",
             exact_deadline_at=_dt(2026, 10, 13, 23, 59), submission_mode="online",
-            source_title="文藻115-2二招公告（一般組530752／530796、語言學習組530751／530797）",
-            source_url="https://d020.wzu.edu.tw/article/530752", last_checked_at="2026-10-27",
+            source_title="文藻115-2二招公告（530752／530751）、二招報名成功名單（530925）與系級學海飛颺（530756）",
+            source_url="https://d020.wzu.edu.tw/article/530752", last_checked_at="2026-10-28",
             verification_status="verified_reference",
         ),
         "paper_deadline": VerifiedRuleFact(
@@ -560,12 +560,12 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline",
             label="校內線上報名截止日",
-            value_text="校級線上申請 2026/11/01 至 2026/11/15（日）23:59:59；申請文件含 NT$500 報名費繳費證明。收到缺件或審查不合格通知者，補件至 11/16（一）23:59:59，此日期不是新申請期限（校級名額表 29 頁／285 條目／96 學程與簡章不變；院級公告正文截斷，不將院級名額併入校級）",
+            value_text="校級線上申請 2026/11/01 至 2026/11/15（日）23:59:59；申請文件含 NT$500 報名費繳費證明。收到缺件或審查不合格通知者，補件至 11/16（一）23:59:59，此日期不是新申請期限（赴外交換專區入口 bds.oia.ntnu.edu.tw/bds/web/OUT 與名額表 29 頁／285 條目／96 學程及簡章不變；院級公告正文截斷，不將院級名額併入校級）",
             exact_deadline_at=_dt(2026, 11, 15, 23, 59, 59),
             submission_mode="online",
             source_title="國立臺灣師範大學 116-1 赴外交換生甄選簡章 PDF 與校級名額表（outgoing-quotalist）",
             source_url="https://bds.oia.ntnu.edu.tw/api/v1/pt/dl?f=/pt/contents/2014100104/doc_OE116-1%20SPRING2027-1013.pdf",
-            last_checked_at="2026-10-27",
+            last_checked_at="2026-10-28",
             verification_status="verified_current",
         ),
         "paper_deadline": VerifiedRuleFact(
@@ -635,34 +635,34 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "school_id": "nsysu",
         "in_ten_week_window": True,
         "window_status": "pending_exact_date",
-        "window_badge": "預告10/27起公布簡章（截至10/27 10:04尚未發布）· 11/03–11/17申請",
-        "cycle_label": "2027–2028赴其他國家與地區第一次甄選（預告10/27起公布簡章，截至2026/10/27 10:04仍連2026/04/12參考文件、尚未核得本期正式簡章／名額）",
+        "window_badge": "正式簡章已公告（交換校資訊與志願表10/29公布）· 11/03–11/17申請",
+        "cycle_label": "2027–2028赴其他國家與地區第一次甄選（正式簡章384608已公告：11/03 09:00–11/17 17:00申請、補正至11/20 17:00、結果預計2027年1月第2週公告；交換校資訊與志願表10/29公布）",
         "primary_deadline_date": None,
         "primary_deadline_at": None,
         "anchor_date": date(2026, 10, 21),
         "online_deadline": VerifiedRuleFact(
-            rule_key="online_deadline", label="預定校內申請時程",
-            value_text="2026/10/21最新公告載明：2027–2028其他國家與地區正式甄選簡章預定自2026/10/27（二）起公告，申請期間2026/11/03（二）09:00至11/17（二）17:00（預告表另列補正至11/20 17:00），學校資訊與名額依2026/04/12公布版本；4場線上說明會為10/29（四）、10/31（六）20:00–21:30及11/04（三）、11/05（四）12:00–13:30。截至2026/10/27 10:04查核時，頁面（p/406-1308-384613,r4450.php）仍連去年參考文件（2026/04/12版），尚未核得本期正式簡章與名額，不能因預定日期已到就宣稱已發布，亦不推論今天稍後不會發布。中國是2027/01/15 09:00至01/26 17:00，01/12為預定簡章公告日。原文明示確切期限以各地區正式簡章為準。",
+            rule_key="online_deadline", label="2027–2028正式簡章申請時程（名額與志願表10/29公布）",
+            value_text="國際處最新公告列表已發布正式簡章「2027-2028 其他國家與地區出國交換甄選簡章」（p/405-1308-384608,c20621.php，列表日期標2026/10/21、內頁未標日期；同日另有甄選時程&線上說明會公告384613：4場線上說明會10/29、10/31 20:00–21:30及11/04、11/05 12:00–13:30，原預告10/27起公布簡章）：系統開放申請時間為2026/11/03（二）09:00至11/17（二）17:00止，申請資料審核及補正至11/20（五）17:00止，甄選結果預計於2027年1月第2週公告；名額載明「以國際處最新簡章公告為準」，交換校資訊和志願表於10/29公布（名額待10/29公布後再核對，以各校官方公告為準）；附件為依115/10/7修正通過之《國立中山大學學生出國交換甄選要點》（438775412.pdf）與有利審查資料表、研修計畫書等空白表格。中國是2027/01/15 09:00至01/26 17:00，01/12為預定簡章公告日。",
             submission_mode="pending_notice", verification_status="verified_reference",
-            source_title="中山2027–2028其他國家與地區出國交換甄選時程＆線上說明會公告（2026/10/21發布、10/27 10:04查核）",
-            source_url="https://oia.nsysu.edu.tw/p/406-1308-384613,r4450.php?Lang=zh-tw",
-            last_checked_at="2026-10-27",
+            source_title="中山2027–2028其他國家與地區出國交換甄選簡章（384608，列表標2026/10/21）暨時程說明會公告（384613）",
+            source_url="https://oia.nsysu.edu.tw/p/405-1308-384608,c20621.php?Lang=zh-tw",
+            last_checked_at="2026-10-28",
         ),
         "paper_deadline": VerifiedRuleFact(
-            rule_key="paper_deadline", label="當期文件、紙本及費用規定待確認",
-            value_text="雖預告2026/10/27（二）起公布2027–2028其他國家與地區正式簡章，但截至2026/10/27 10:04查核時仍連2026/04/12公布之參考版本，尚未核得可支持當期申請表核章、免紙本與NT$1,000報名費的正式簡章（不因預定日期已到即宣稱已發布，亦不推論今日稍後不會發布）。舊年度曾要求最終錄取者另繳紙本正本查驗，不能概括為完全免紙本。",
-            submission_mode="pending_notice", verification_status="needs_confirmation",
-            source_title="中山2027–2028甄選時程公告（截至10/27 10:04尚未核得本期正式簡章）",
-            source_url="https://oia.nsysu.edu.tw/p/406-1308-384613,r4450.php?Lang=zh-tw",
-            last_checked_at="2026-10-27",
+            rule_key="paper_deadline", label="線上申請與空白表單上傳規定（志願表10/29公布）",
+            value_text="依2027–2028其他國家與地區出國交換甄選簡章（p/405-1308-384608,c20621.php），採線上申請系統（partners.oia.nsysu.edu.tw/exchange/login/user/）填寫及上傳：(1)個人資料（學生證免蓋註冊章）、(2)2025/03/01後測驗之英檢證明、(3)中文歷年成績單正本掃描（本校成績單無需事先加註班排名；非本校須原校加註班排名）、(4)有利審查資料表（302391853.doc，至多10項，與證明合為單一PDF）、(5)研修計畫書（113882831.doc）、(6)空白志願表（大學生／研究所，與交換校資訊於10/29公布）。錄取後須依限繳交錄取同意書或棄權聲明書。",
+            submission_mode="online", verification_status="verified_current",
+            source_title="中山2027–2028其他國家與地區出國交換甄選簡章（p/405-1308-384608,c20621.php）",
+            source_url="https://oia.nsysu.edu.tw/p/405-1308-384608,c20621.php?Lang=zh-tw",
+            last_checked_at="2026-10-28",
         ),
         "study_plan_limit": VerifiedRuleFact(
-            rule_key="study_plan_limit", label="研修計畫規格待確認",
-            value_text="甄選要點列研修計畫書為應繳文件、占總分20%，未列字數、頁數及語言上限；須核對當期簡章與表格，不能直接套用中英文各一頁或返國報告規格。",
-            verification_status="needs_confirmation",
-            source_title="中山學生出國交換甄選要點，第2頁第5、8點",
-            source_url="https://oia.nsysu.edu.tw/static/file/308/1308/img/4144/874755230.pdf",
-            last_checked_at="2026-10-21",
+            rule_key="study_plan_limit", label="研修計畫書空白表格與配分規定",
+            value_text="2027–2028正式簡章（384608）與115/10/7修正通過之《國立中山大學學生出國交換甄選要點》（438775412.pdf）列研修計畫書占總分20%，須下載空白表格（113882831.doc）填寫預計修習課程及預期效益；返國報告雙語字數屬返國義務，不計入申請篇幅。",
+            verification_status="verified_current",
+            source_title="中山2027–2028出國交換甄選簡章與115/10/7修正甄選要點（438775412.pdf）",
+            source_url="https://oia.nsysu.edu.tw/static/file/308/1308/img/4286/438775412.pdf",
+            last_checked_at="2026-10-28",
         ),
     },
     {
@@ -718,11 +718,11 @@ _RAW_SPECS: list[dict[str, Any]] = [
         "online_deadline": VerifiedRuleFact(
             rule_key="online_deadline",
             label="校內線上報名截止日",
-            value_text="大陸組依官方表中各校的「校內截止日期」辦理，日期從9/24至11/30不等且未列共同截止時刻；11/20僅為安徽大學，不是全組截止。115-2國際姊妹校第二梯次遴選公告（?p=9903，荷美日韓印尼菲20校共50名，GPA 3.0以上）CYCU表單9/24開放，表單與申請表正本於10/07中午12:00截止，面試10/14（已截止）。諮詢公告索引（?page_id=99）日期雖由10/22改為10/27，但正文為首次建立基準，不視為新服務或交換條件改版。",
+            value_text="大陸組依官方表中各校的「校內截止日期」辦理，日期從9/24至11/30不等且未列共同截止時刻；11/20僅為安徽大學，不是全組截止。出國交換頁（?p=6336，未列發布日期、名額或截止日）仍連結115-2國際姊妹校第二梯次遴選公告（?p=9903，荷美日韓印尼菲20校共50名，GPA 3.0以上，9/24開放、10/07中午12:00截止收紙本、10/14面試，與平台已截止紀錄無衝突）。公告頁（?page_id=99，諮詢公告索引正文為首次建立基準）另有一則2026-10-21學海計畫（教育部選送學生出國研修或國外專業實習補助要點）說明會公告（校內師生可自行報名，頁面未寫日期細節）；頁面上尚未看到116-1（2027秋季班）遴選公告。",
             submission_mode="online",
-            source_title="中原大學國際暨兩岸教育處—赴大陸交換（?p=6340）與115-2國際二梯公告（?p=9903）",
+            source_title="中原大學國際暨兩岸教育處—出國交換（?p=6336）、115-2二梯（?p=9903）、赴陸（?p=6340）與最新公告（?page_id=99）",
             source_url="https://oia.cycu.edu.tw/?p=6340",
-            last_checked_at="2026-10-27",
+            last_checked_at="2026-10-28",
             verification_status="verified_current",
         ),
         "paper_deadline": VerifiedRuleFact(

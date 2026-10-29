@@ -15,6 +15,10 @@ FIRST = "https://d020.wzu.edu.tw/article/529354"
 FIRST_LANG = "https://d020.wzu.edu.tw/article/529353"
 SECOND = "https://d020.wzu.edu.tw/article/530752"
 SECOND_LANG = "https://d020.wzu.edu.tw/article/530751"
+SECOND_ROSTER = "https://d020.wzu.edu.tw/article/530925"
+SECOND_ROSTER_PDF = "https://d020.wzu.edu.tw/datas/upload/Pictures/530925-115-2報名成功名單二招.pdf"
+XUEHAI_DEPT = "https://d020.wzu.edu.tw/article/530756"
+UAE_YOUTH = "https://d020.wzu.edu.tw/article/531074"
 GENERAL_PDF = "https://d020.wzu.edu.tw/datas/upload/Pictures/530752-115-2交換生簡章二招.pdf"
 LANGUAGE_PDF = "https://d020.wzu.edu.tw/datas/upload/Pictures/530751-115-2交換生簡章-語言學習組二招.pdf"
 GENERAL_FORM = "https://forms.gle/kAxtr8ojo2vRsLYu5"
@@ -23,8 +27,8 @@ ARCHIVE = "https://d020.wzu.edu.tw/category/147726"
 ACADEMIC = "115-2一般組歷年學業總平均須達70分，語言學習組65分；分數取整數、不四捨五入。兩組操行總平均80分且不得有小過（含）以上紀錄。GPA及排名不能代替百分制門檻，交換資格不等於獎助資格。"
 DEGREE = "申請時五專三下以上、四技及進修四技一下以上；二技本校五專直升三上以上、非直升三下以上。出訪時五專四年級、四技二年級以上；二技直升三下、非直升四上以上。研究生（不含在職專班）及轉學生須已在本校就讀滿一學期。日語組不收五專三年級（含）以下。"
 LANGUAGE = "115-2初審英語及第二外語語檢各佔10%加分，未繳正式語檢正本掃描不影響報名資格。各接待校語檢及分發時證明另查，不能以共同TOEFL／IELTS／TOEIC／JLPT分數判定所有學校通過。語言學習組仍須具目標語言基本能力。"
-PERIOD = "115-2一招2026/08/31 23:59截止；2026-10-05公告「二招-115-2 校級國際暨兩岸交換學生」（一般組article/530752、語言學習組article/530751），報名延期至2026/10/13 23:59線上截止（已截止），名額見附件《二招-115-2交換學生招收名額一覽表（一般組）》（持續更新），並註記更新匈牙利布達佩斯城市大學與韓國啟明大學資訊。116-1確切申請日期及時刻本輪未核實，不能按往年推算。"
-ALLOCATION = "二招只可報一語組，一般組五語組不含德語，語言學習組只開法語與西語；報名時志願順序即分發依據，不另辦現場撕榜或重新選填。一招至多兩語組，語組數不等於志願校數。二招面試10/19–23、分發10/14–30均為暫訂，依各語組通知。"
+PERIOD = "115-2一招2026/08/31 23:59截止；2026/10/05 10:07公告「二招-115-2 校級國際暨兩岸交換學生」（一般組article/530752、語言學習組article/530751），報名延長至2026/10/13 23:59線上截止（已截止），名額見附件《二招-115-2交換學生招收名額一覽表（一般組）》（持續更新），並註記更新匈牙利布達佩斯城市大學與韓國啟明大學資訊；2026/10/14發布「(二招)115-2 校級交換生報名成功名單」（article/530925，內容為報名成功名單／初步資格審核，非錄取結果，正式書審通過名單另以電郵通知，且最終由接待校決定是否錄取）；2026/10/05國合處公告「115年度第2次教育部學海飛颺獎助學金開放系級交換生申請」（article/530756，2026/11/16截止）；10/20轉知政大2027臺阿聯青年交流計畫（article/531074）。首頁尚無116-1一招公告，確切申請日期及時刻本輪未核實，不能按往年推算。"
+ALLOCATION = "二招只可報一語組，一般組五語組不含德語，語言學習組只開法語與西語；報名時志願順序即分發依據，不另辦現場撕榜或重新選填。一招至多兩語組，語組數不等於志願校數。二招面試10/19–23、分發10/14–30均為暫訂，依各語組通知；2026/10/14公告之「(二招)115-2 校級交換生報名成功名單」（article/530925）僅為初步資格審核之報名成功名單，非錄取結果，且通過校內甄選後仍由各接待校握有最終錄取決定權。"
 DOCS = [
     "115-2初審採Google表單上傳，非校務系統列印後15:00紙本收件：學生證正面、身分證雙面（外籍／僑／陸生護照、居留證或入臺證）、教務處用印之中文歷年成績單含排名、履歷表。",
     "履歷表含自傳、學習計畫、國際活動與獲獎紀錄，以上合計A4五頁、12號字為限，不含附件；非單篇計畫500–1000字或單篇五頁。英文及華語暨東南亞語組用中文及英文，其他語組中文及目標語言。",
@@ -41,7 +45,7 @@ OBLIGATIONS = [
 AWARDS = [
     "115-2簡章：五專／四技／研究所每人1萬元為原則；二技最高5萬元。校方得核發，並非錄取即保證領取。",
     "進修部以每學期實際抵免學分費三分之一為原則、總額不超過1萬元；同教育階段本校獎助一次。不能把所有五專直升四技學生自動列5萬元。",
-    "學海及日本交流協會等獎助須另查當期資格、公告與核定，不以學業75分或JLPT級數自動判定獲獎。",
+    "2026/10/05國合處公告「115年度第2次教育部學海飛颺獎助學金開放系級交換生申請至115年11月16日截止」（article/530756）：限透過「系級」交換生及雙聯學制管道於115-1或115-2出國研修一學期或一學年之學生（校級交換生已於申請校級交換時勾選申請意願，無須重複申請），須具中華民國國籍、在學滿一學期、無小過以上處分，學業總平均達前30%（研究所前50%）或80分以上（研究所85分以上），於2026/11/16前將申請表單與附件電郵至international.exchange@mail.wzu.edu.tw；學海及日本交流協會等獎助須另查當期資格、公告與核定，不以學業75分或JLPT級數自動判定獲獎（另有10/20轉知政大2027臺灣與阿拉伯聯合大公國青年交流計畫，article/531074，11/02截止，屬校外短期交流轉知）。",
     "教育部學海與其他本校／教育部／我國政府出國補助不得重複支領；UMAP與ACUCA名額、獎助及截止不由此份校級簡章推定。",
 ]
 
@@ -94,7 +98,7 @@ def review_bundle(root: Path):
             "scope": "home_application", "program_types": ["exchange"], "academic_year": "115",
             "application_round": "115-2" + label, "audience": "all_students", "opens_at": None,
             "deadline_at": deadline, "date_status": "verified_exact", "status": "closed",
-            "status_note": "本梯已截止，不能用面試或分發期間當成仍可報名。", "deadline_note": DOCS[0],
+            "status_note": "本梯已截止（2026/10/14 另發布二招報名成功名單 article/530925，內容為報名成功名單而非錄取結果，最後由接待校決定是否錄取），不能用面試或分發期間當成仍可報名。", "deadline_note": DOCS[0],
             "reminder_eligible": False, "checked_at": CHECKED_AT})
     periods.append({**item("116-1申請日期待核實", [PERIOD], ARCHIVE),
         "scope": "home_application", "program_types": ["exchange"], "academic_year": "116",
@@ -105,7 +109,7 @@ def review_bundle(root: Path):
     write_atomic(folder / "student_dashboard.json", d)
     write_atomic(folder / "home_rules.json", {"school_id": "wzu", "school_name": d["school_name"],
         "eligibility": d["eligibility"], "application_periods": periods, "selection_rules": d["selection_rules"],
-        "source_urls": [GENERAL_PDF, LANGUAGE_PDF], "verified_at": None, "checked_at": CHECKED_AT})
+        "source_urls": [GENERAL_PDF, LANGUAGE_PDF, SECOND, SECOND_ROSTER, XUEHAI_DEPT, UAE_YOUTH], "verified_at": None, "checked_at": CHECKED_AT})
     x = read("exchange_info.json")
     x.update(application_period=[PERIOD, ALLOCATION], eligibility=[ACADEMIC, DEGREE],
         language_requirement=[LANGUAGE], required_documents=DOCS, scholarship_info=AWARDS, last_checked=CHECKED_AT)
@@ -113,7 +117,7 @@ def review_bundle(root: Path):
     x = read("documents.json"); x.update(required_documents=DOCS, source_urls=[GENERAL_PDF, LANGUAGE_PDF])
     write_atomic(folder / "documents.json", x)
     x = read("scholarships.json"); x.setdefault("reference_data", x["scholarships"])
-    x.update(scholarships=d["scholarship_info"], source_urls=[GENERAL_PDF, LANGUAGE_PDF])
+    x.update(scholarships=d["scholarship_info"], source_urls=[GENERAL_PDF, LANGUAGE_PDF, XUEHAI_DEPT, UAE_YOUTH])
     write_atomic(folder / "scholarships.json", x)
     pages = rows("pages.jsonl")
     specs = [("115-2期限與分發", [PERIOD, ALLOCATION]), ("115-2共同資格", [DEGREE, ACADEMIC, LANGUAGE]),

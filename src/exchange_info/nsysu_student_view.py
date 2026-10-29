@@ -25,6 +25,9 @@ NSYSU_PARTNER_LIST_URL = (
 NSYSU_OCT21_TIMELINE_NOTICE_URL = (
     "https://oia.nsysu.edu.tw/p/405-1308-384613,c20621.php?Lang=zh-tw"
 )
+NSYSU_2027_2028_BROCHURE_URL = (
+    "https://oia.nsysu.edu.tw/p/405-1308-384608,c20621.php?Lang=zh-tw"
+)
 
 
 def _payload(filename: str):
