@@ -399,10 +399,11 @@ def apply_oct22_updates(bundle: Path, path: Path = SOURCE) -> dict:
     sd_path = bundle / "student_dashboard.json"
     if sd_path.exists():
         sd = json.loads(sd_path.read_text(encoding="utf-8"))
+        oct27_title = "116-1（2027–2028）OIA 正式列表與詳頁讀取異常保留基準說明（2026-10-27 查核）"
         overview = [
             item
             for item in sd.get("program_overview", [])
-            if item.get("title") != DASHBOARD_OVERVIEW_TITLE
+            if item.get("title") not in {DASHBOARD_OVERVIEW_TITLE, oct27_title}
         ]
         overview.append(
             {
@@ -413,6 +414,22 @@ def apply_oct22_updates(bundle: Path, path: Path = SOURCE) -> dict:
                     "source_url": LIST_URL,
                     "category": "partner_school",
                     "summary": "列表新增 5 校名額（正數名額共 39 校）、日本 38 校新增成績單提醒、北美與歐日澳紐詳頁更新；列表空白頁不當定案名額，頁內連結文件修正為 173 份（成功 95、未完成 78）。",
+                },
+            }
+        )
+        overview.append(
+            {
+                "title": oct27_title,
+                "details": [
+                    "OIA 首頁可讀，但正式中英交換列表（https://oia.ntu.edu.tw/outgoing/school.list）及 9 個舊候選詳頁於 2026/10/27 查核時仍回傳錯誤，不等於名額恢復；正式內容保留 2026/10/22 最後成功基準。",
+                    "海外教育專區（https://studyabroad.ntu.edu.tw/exchange-student/how-to-apply/）三核心頁與既有版本相同，線上報名 2026/11/03 10:00–11/09 16:00、成績 12/02 公布、一階志願 12/07 截止為既有資訊（首頁哥廷根大學交換說明會及頁尾 2022 舊版系統維護彈窗 system_maintenance_20221030 已標示）。",
+                    "既有追蹤之 173 份文件中，今日 150 份有效且均與各自最後成功版本相同、23 份缺口；此統計並非今日完整 OIA 附件清單，9 個候選差異仍未核實。",
+                ],
+                "source": {
+                    "title": "臺大 OIA 交換列表與海外教育申請核心頁（2026-10-27 查核）",
+                    "source_url": LIST_URL,
+                    "category": "partner_school",
+                    "summary": "正式列表及 9 個候選詳頁仍回傳錯誤，保留 10/22 成功基準（不等於名額恢復）；173 追蹤檔中 150 有效同舊、23 缺口。",
                 },
             }
         )
