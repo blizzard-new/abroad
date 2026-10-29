@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>國立東華大學原住民民族學院</title>
+	<meta name="description" content="國立東華大學原住民民族學院（College of Indigenous Studies, National Dong Hwa University）官方網站。" />
+	<meta name="robots" content="index,follow" />
+	<meta name="googlebot" content="index,follow" />
+</head>
+<body><!-- 院網形象頁（後台「形象頁設定」）初版，參考語傳系 lci.ndhu.edu.tw。
+     影片：https://www.youtube.com/watch?v=Avk8GhXV7Ow
+     「進入首頁」連 /app/home.php?Lang=zh-tw（再由全站 SEO 自由代碼區的程式轉到 HD 首頁 80）。 -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
+<div id="cis-intro">
+  <div class="ci-video" aria-hidden="true">
+    <iframe id="ci-yt" title="原住民民族學院宣傳影片" allow="autoplay; encrypted-media" frameborder="0"
+      src="https://www.youtube.com/embed/Avk8GhXV7Ow?autoplay=1&mute=1&loop=1&playlist=Avk8GhXV7Ow&controls=0&rel=0&playsinline=1&enablejsapi=1"></iframe>
+  </div>
+  <div class="ci-shade"></div>
+
+  <header class="ci-header">
+    <a class="ci-brand" href="/app/home.php?Lang=zh-tw" title="原住民民族學院首頁">
+      <img src="https://cis.ndhu.edu.tw/var/file/15/1015/img/4695/wix-logo.png" alt="國立東華大學原住民民族學院" />
+    </a>
+    <button type="button" id="ci-mute" class="ci-mute" aria-pressed="false">🔊 播放聲音</button>
+  </header>
+
+  <main class="ci-center">
+    <h1 class="ci-title">國立東華大學原住民民族學院</h1>
+    <p class="ci-sub">College of Indigenous Studies, National Dong Hwa University</p>
+    <nav class="ci-buttons" aria-label="進入網站">
+      <a class="ci-btn ci-btn-main" href="/app/home.php?Lang=zh-tw">進入首頁</a>
+      <a class="ci-btn" href="/app/home.php?Lang=en" lang="en">English</a>
+    </nav>
+  </main>
+
+  <footer class="ci-footer">&copy; 國立東華大學原住民民族學院</footer>
+</div>
+
+<style>
+  html, body { margin: 0 !important; padding: 0 !important; overflow: hidden !important; background: #02245B !important; }
+  #cis-intro { position: fixed; inset: 0; z-index: 999999; overflow: hidden; background: #02245B; color: #fff;
+    font-family: "Microsoft JhengHei", "微軟正黑體", "Noto Sans TC", sans-serif; }
+  /* 影片鋪滿畫面（16:9 依長邊裁切） */
+  #cis-intro .ci-video { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-width: 177.78vh; min-height: 100vh;
+    transform: translate(-50%, -50%); pointer-events: none; }
+  #cis-intro .ci-video iframe { width: 100%; height: 100%; border: 0; }
+  #cis-intro .ci-shade { position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(2,36,91,.55) 0%, rgba(2,36,91,.15) 35%, rgba(2,36,91,.25) 65%, rgba(2,36,91,.75) 100%); }
+
+  #cis-intro .ci-header { position: absolute; top: 0; left: 0; right: 0; z-index: 2; display: flex; align-items: center;
+    justify-content: space-between; gap: 16px; padding: 24px 40px; }
+  #cis-intro .ci-brand img { display: block; height: 72px; width: auto; max-width: 60vw; filter: drop-shadow(0 2px 8px rgba(0,0,0,.5)); }
+  #cis-intro .ci-mute { flex: none; background: rgba(0,0,0,.25); color: #fff; border: 1px solid rgba(255,255,255,.6); border-radius: 999px;
+    padding: 8px 18px; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; backdrop-filter: blur(4px); transition: all .3s; }
+  #cis-intro .ci-mute:hover, #cis-intro .ci-mute:focus-visible { border-color: #fff; background: rgba(255,94,20,.35); }
+  #cis-intro .ci-mute[aria-pressed="true"] { background: #FF5E14; border-color: #FF5E14; }
+
+  #cis-intro .ci-center { position: absolute; top: 50%; left: 50%; z-index: 2; transform: translate(-50%, -50%);
+    width: 92%; max-width: 960px; text-align: center; }
+  #cis-intro .ci-title { margin: 0; font-family: "Noto Serif TC", serif; font-size: clamp(26px, 4.4vw, 54px); font-weight: 700;
+    letter-spacing: .12em; line-height: 1.4; text-shadow: 0 2px 6px rgba(0,0,0,.8), 0 0 30px rgba(0,0,0,.5); }
+  #cis-intro .ci-sub { margin: 12px 0 0; font-size: clamp(13px, 1.5vw, 18px); letter-spacing: .08em; opacity: .92;
+    text-shadow: 0 1px 4px rgba(0,0,0,.9); }
+  #cis-intro .ci-buttons { margin-top: 44px; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+  #cis-intro .ci-btn { display: inline-block; min-width: 150px; padding: 13px 36px; border: 1px solid rgba(255,255,255,.7); border-radius: 4px;
+    color: #fff !important; text-decoration: none !important; font-size: 17px; font-weight: 700; letter-spacing: .15em;
+    background: rgba(0,0,0,.25); backdrop-filter: blur(4px); box-shadow: 0 4px 15px rgba(0,0,0,.3); transition: all .3s; }
+  #cis-intro .ci-btn-main { background: #FF5E14; border-color: #FF5E14; }
+  #cis-intro .ci-btn:hover, #cis-intro .ci-btn:focus-visible { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(255,94,20,.45); border-color: #FF5E14; }
+  #cis-intro .ci-btn:focus-visible, #cis-intro .ci-mute:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  #cis-intro .ci-footer { position: absolute; bottom: 22px; left: 0; right: 0; z-index: 2; text-align: center; font-size: 13px;
+    color: rgba(255,255,255,.75); letter-spacing: .06em; text-shadow: 0 1px 3px rgba(0,0,0,.8); }
+
+  @media (max-width: 600px) {
+    #cis-intro .ci-header { padding: 16px; }
+    #cis-intro .ci-brand img { height: 44px; }
+    #cis-intro .ci-mute { padding: 6px 12px; font-size: 12px; }
+    #cis-intro .ci-title { letter-spacing: .06em; }
+    #cis-intro .ci-btn { width: 72%; padding: 12px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { #cis-intro .ci-btn, #cis-intro .ci-mute { transition: none; } }
+</style>
+
+<script>
+  (function () {
+    var muted = true;
+    var btn = document.getElementById('ci-mute');
+    var yt = document.getElementById('ci-yt');
+    function cmd(func, args) {
+      yt.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: args || [] }), '*');
+    }
+    btn.addEventListener('click', function () {
+      muted = !muted;
+      if (muted) { cmd('mute'); } else { cmd('unMute'); cmd('setVolume', [100]); }
+      btn.textContent = muted ? '🔊 播放聲音' : '🔇 關閉聲音';
+      btn.setAttribute('aria-pressed', String(!muted));
+    });
+  })();
+</script></body></html>

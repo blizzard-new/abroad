@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -97,6 +97,7 @@ KMU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 MCU_SOURCE_CHECKED_AT = datetime(2026, 10, 21, tzinfo=timezone.utc)
 NTUB_SOURCE_CHECKED_AT = datetime(2026, 10, 22, tzinfo=timezone.utc)
 NCNU_SOURCE_CHECKED_AT = datetime(2026, 10, 27, tzinfo=timezone.utc)
+NDHU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2218,6 +2219,51 @@ def _ncnu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ndhu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立東華大學國際暨大陸地區出國交換學生、國際移動力先鋒計畫、跨國雙聯學位暨教育部學海飛颺／惜珠與校內《出國交換獎助學金》甄選應繳資料：1. 線上申請表（於出國交換學生申請系統 http://ias.ndhu.edu.tw/intstud/ 選填 2 至 6 個志願，首次申請者優先分發）、2. 家長或監護人同意書正本、3. 讀書計畫（Study Plan，佔書審總分 35%）與任務企劃書（Mission Proposal，佔書審總分 35%，規劃於交換期間推廣臺灣與東華或執行跨文化任務）、4. 中／英文歷年成績單正本（含 GPA，前一學期或歷年平均 GPA 須達 2.5／4.5 以上；申請校內出國交換獎助學金須歷年 GPA 達 3.3 以上）、5. 有效外語能力檢定證明影本（與學業成績合計佔書審 20%；英語組基準為 TOEFL iBT 61–80／IELTS 5.5–6.5／TOEIC 650–785，日語組為 JLPT N1–N3，韓語組為 TOPIK 2–4 級；大陸地區姊妹校免附外語檢定）、6. 其他優秀表現佐證資料（佔書審 10%；具國際處接待義工證明加總分 1 分、修畢全球研究與國際事務學程加總分 1 分）。",
+        "study-plan": "撰寫國立東華大學出國交換生、先鋒計畫、雙聯學位及出國交換獎助學金甄選必繳之《讀書計畫（Study Plan，佔書審 35%）與任務企劃書（Mission Proposal，佔書審 35%）》（兩項合計佔校內書面審查總分 70%）。讀書計畫請具體說明赴外動機、擬於志願姊妹校修習之課程（依《國際交換學生出國計畫作業辦法》規定，交換期間須維持東華在學註冊，每學期至少修讀 2 門課［含 1 門專業課程、1 門非專業課程］且成績及格）與返國學分抵免規劃；任務企劃書請說明預計於海外交換期間執行之臺灣與東華校園推廣或跨文化專題計畫。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《國立東華大學國際交換學生出國計畫作業辦法》與《學生出國選修課程實施辦法》規定，出國交換期間須完成東華註冊並繳交全額學雜費，每學期至少修讀 2 門課［含 1 門專業課程、1 門非專業課程］且及格；歐洲 ECTS 學分 × 1/2、英國 CATS 學分 × 1/4、美日陸約 1:1 折算）。",
+        "predeparture-notice": "於國際事務處公告甄選錄取名單（2027年第一次甄選於 2026/10/30 12:00 公告）後，依限於 2026/10/27～11/02 完成線上確認並繳交《家長同意書》，配合全球移動組完成姊妹校官方提名（Nomination）與外校入學申請；出國前須參加行前說明會、完成《出國程序單》、簽署《教育部學海計畫或校內出國交換獎助行政契約書》、購買涵蓋境外全期之海外醫療及意外保險（保額至少新臺幣 100 萬元以上），並確認已完成東華當學期註冊繳費。",
+        "return-report": "境外交換或雙聯研修期滿返國後 1 個月內（春季班於 3 月 31 日前、秋季班於 10 月 31 日前），須向國際事務處繳交《回國程序單》、姊妹校正式成績單、1,500–2,000 字之《出國交換學生心得報告》（含任務企劃書執行成果與照片 4 張以上）及 5 頁以上簡報或 3–5 分鐘影片，並檢附來回電子機票收據、登機證正本及護照出入境紀錄辦理獎助學金核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後 1 個月內持國外姊妹校核發之正式成績單正本與課程大綱（Syllabus），依《國立東華大學學生出國選修課程實施辦法》（歐洲 2 ECTS 折算 1 學分、英國 4 CATS 折算 1 學分、美日陸約 1:1 折算）向所屬系（所）、學院及教務處申請境外修習科目學分採認。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立東華大學").replace("長庚", "東華")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "東華《2027年第一次國際交換學生甄選簡章》與《國際交換學生出國計畫作業辦法》規定：前一學期或歷年平均 GPA 須達 2.5（滿分 4.5，約百分制 70 分）以上；申請校內出國交換獎助學金者，歷年平均 GPA 須達 3.3 以上且具外語檢定證明。請檢附含 GPA 之中／英文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（英語組一般基準 61–79+／歐美澳名校與雙聯學位 79–90+）", "IELTS 學術組（英語組一般基準 5.5–6.0+／歐美澳名校與雙聯學位 6.0–6.5+）", "TOEIC 多益測驗（校內英語組與亞洲英語授課學程基準 650–785+）", "JLPT 日語能力試驗（日語組北海道／東北／青山／立教／廣島等 N1–N2+，部分日本姊妹校接受 N3+）", "TOPIK 韓語能力測驗（韓語組中央／韓外大／首爾市立／慶北／全南等 2–4 級以上）", "大陸地區姊妹校（中文授課免附外語檢定證明；若有外語成績仍可納入書審 20% 評分）"]
+            field["help_text"] = "依東華《2027年第一次國際交換學生甄選簡章》規定：學業成績與外語能力合計佔校內書面審查 20%，申請國際交換及校內獎助學金均須檢附符合志願校門檻之有效外語能力證明（大陸交換免附）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ndhu.edu.tw/p/412-1027-21499.php?Lang=zh-tw",
+        source_checked_at=NDHU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換學生線上申請表（2–6志願）、家長同意書與出返國程序單" if template.id == "exchange-application-data" else ("讀書計畫（35%）與任務企劃書（35%）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ndhu.edu.tw/p/412-1027-21500.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "於 2026/10/27～11/02 完成線上錄取確認、簽署行政契約書與辦理出國程序單", "return-report": "返國後 1 個月內（春季班 3/31 前、秋季班 10/31 前）繳交回國程序單、1,500–2,000 字心得報告與簡報／影片", "credit-transfer": "返國後 1 個月內持姊妹校正式成績單與課程大綱辦理境外學分採認"}.get(template.id, "於出國交換申請系統 ias.ndhu.edu.tw 完成線上填報（2–6志願）並上傳書審文件"),
+        version="116準備工具-2026-10-28.1",
+        destinations=["國立東華大學國際事務處全球移動組（花蓮縣壽豐鄉大學路二段 1 號行政大樓 601 室）"],
+        conditional_note="此為個人準備工具；東華出國交換學生甄選每年分兩梯次（第一次於 8–10 月申請次年春季班及秋季班，第二次於 2–3 月申請同年秋季班剩餘名額），須於 http://ias.ndhu.edu.tw/intstud/ 選填 2–6 個志願並上傳讀書計畫（35%）、任務企劃書（35%）、歷年成績單（GPA 2.5+）與外語檢定證明。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2290,6 +2336,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntub_template(template)) is not None]
     if university.id == NCNU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncnu_template(template)) is not None]
+    if university.id == NDHU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ndhu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

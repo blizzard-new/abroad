@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="ndhuSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b3b68"/>
+      <stop offset="55%" stop-color="#236b9e"/>
+      <stop offset="100%" stop-color="#87c4e8"/>
+    </linearGradient>
+    <linearGradient id="ndhuLake" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#19668c"/>
+      <stop offset="100%" stop-color="#0f4361"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#ndhuSky)"/>
+  <!-- Central Mountain Range (Hualien) -->
+  <polygon points="0,300 130,155 270,250 420,120 570,240 710,150 800,235 800,340 0,340" fill="#1b4d3e" opacity="0.72"/>
+  <polygon points="80,310 230,180 370,275 510,165 660,260 800,190 800,340 0,340" fill="#28664f" opacity="0.88"/>
+  <!-- Dong Hwa Lake (東湖) -->
+  <rect x="0" y="335" width="800" height="165" fill="url(#ndhuLake)"/>
+  <!-- Scenic Bridge & Library Tower -->
+  <rect x="372" y="175" width="56" height="160" fill="#f3e9d2"/>
+  <polygon points="366,175 400,130 434,175" fill="#9c382b"/>
+  <rect x="250" y="245" width="300" height="90" rx="4" fill="#e8dcc4"/>
+  <polygon points="240,245 400,205 560,245" fill="#a84232"/>
+  <!-- Arched Bridge across Dong Hwa Lake -->
+  <path d="M 140 355 Q 400 315 660 355 L 660 372 Q 400 335 140 372 Z" fill="#f5efe2"/>
+  <text x="400" y="435" font-family="'Noto Sans TC', sans-serif" font-size="28" font-weight="bold" fill="#ffffff" text-anchor="middle">國立東華大學 National Dong Hwa University</text>
+  <text x="400" y="468" font-family="'Noto Sans TC', sans-serif" font-size="16" fill="#d9eefb" text-anchor="middle">花蓮壽豐・自由・創造・卓越・國際事務處全球移動組</text>
+</svg>
