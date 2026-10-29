@@ -1686,7 +1686,7 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
   if (needsRefresh && window.location.hash.startsWith("#school=")) {
     window.UniWayNavigation.replaceState({}, "", "#partners");
   }
-  if (needsRefresh && window.location.hash.startsWith("#application-form=")) {
+  if (needsRefresh && (window.location.hash.startsWith("#application-form=") || window.UniWayApplicationPath?.formToolActive())) {
     window.UniWayNavigation.replaceState({}, "", "#application-center");
     applyAppRoute({ loadFeed: false, resetScroll: false });
   }
@@ -4603,6 +4603,7 @@ async function selectPlanningTarget(schoolName) {
     announce("這所學校當期開放仍待確認，請先核對官方資料。", "error");
     return;
   }
+  if (await window.UniWayApplicationPath?.selectTarget(schoolName)) return;
   if (!await confirmPlanningTargetChange(schoolName) || state.account?.id !== owner || activeHomeSchool() !== homeSchool) return;
   if (state.applicationContext.target_school !== schoolName) {
     state.planningRequestId += 1;
@@ -4618,7 +4619,7 @@ async function selectPlanningTarget(schoolName) {
   if (state.account?.id !== owner || activeHomeSchool() !== homeSchool || state.applicationContext.target_school !== schoolName) return;
   renderPersonalPlanSnapshot();
   renderRecommendedMatches();
-  window.location.hash = "#overview";
+  if (!window.UniWayApplicationPath?.toolHref("advisor")) window.location.hash = "#overview";
   announce("已設定目標學校，請依下一步提示確認資格與安排時程。", "success");
 }
 
@@ -6042,7 +6043,7 @@ async function loadApplicationFormDrafts({ homeSchool = activeHomeSchool() } = {
     persistApplicationDraft({ syncRemote: false });
     if (state.activeApplicationTemplateId) {
       const template = applicationTemplateById(state.activeApplicationTemplateId);
-      if (template && window.location.hash.startsWith("#application-form=")) renderApplicationFormPage(template);
+      if (template && (window.location.hash.startsWith("#application-form=") || window.UniWayApplicationPath?.formToolActive())) renderApplicationFormPage(template);
     }
   } catch (error) {
     if (error.staleSession) return;
@@ -6571,7 +6572,7 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
     renderApplicationJourney();
     renderPersonalPlanSnapshot();
     const active = applicationTemplateById(state.activeApplicationTemplateId);
-    if (active && window.location.hash.startsWith("#application-form=")) {
+    if (active && (window.location.hash.startsWith("#application-form=") || window.UniWayApplicationPath?.formToolActive())) {
       if (applicationDocumentGenerationEnabled()) renderApplicationFormPage(active);
       else window.location.hash = "#application-center";
     }
@@ -14193,7 +14194,7 @@ function isPersonalizedRoute(hash = window.location.hash) {
 function updateUniWayPublicNavigation(hash = window.location.hash) {
   window.UniWayMotion?.route(hash);
   // The guide belongs to 我的申請: it explains the steps the personalised pages carry out.
-  const activeRoute = isPersonalizedRoute(hash) ? "overview" : /^#guide(=|$)/.test(hash) ? "overview" : globalFeedForHash(hash)
+  const activeRoute = ["#overview", "#calendar", "#deadlines", "#budget", "#scholarships"].includes(hash) ? "overview" : isPersonalizedRoute(hash) ? "my-application" : /^#guide(=|$)/.test(hash) ? "overview" : globalFeedForHash(hash)
     ? "forum"
     : (/^#school=/.test(hash) || hash === "#search" ? "partners" : hash.slice(1));
   document.querySelectorAll(".application-tools-panel a").forEach((link) => {
@@ -14776,7 +14777,7 @@ function bindEvents() {
       announce("目前方案未包含自動填表與申請文件套件產生。", "error", true);
       return;
     }
-    window.location.hash = `#application-form=${encodeURIComponent(button.dataset.openApplicationTemplate)}`;
+    window.location.hash = window.UniWayApplicationPath?.toolHref(`application-form=${encodeURIComponent(button.dataset.openApplicationTemplate)}`) || `#application-form=${encodeURIComponent(button.dataset.openApplicationTemplate)}`;
   });
   $("#application-generation-gate").addEventListener("click", (event) => {
     if (event.target.closest("[data-application-generation-login]")) openAuthDialog();
@@ -15275,7 +15276,7 @@ function bindEvents() {
     const openWorkbenchBtn = event.target.closest("[data-open-study-plan-workbench]");
     if (openWorkbenchBtn) {
       if (applicationDocumentGenerationEnabled()) {
-        window.location.hash = "#application-form=study-plan";
+        window.location.hash = window.UniWayApplicationPath?.toolHref("application-form=study-plan") || "#application-form=study-plan";
       } else {
         openAuthDialog();
       }

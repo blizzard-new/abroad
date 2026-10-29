@@ -4250,9 +4250,10 @@ class CrossSchoolHomeAgreement(BaseModel):
     study_period: str | None = None
     tuition_info: str | None = None
     housing_info: str | None = None
-    internal_online_deadline: str = Field(min_length=4, max_length=400)
-    internal_paper_deadline: str = Field(min_length=4, max_length=400)
-    study_plan_limit: str = Field(min_length=4, max_length=400)
+    # These values are passed through from VerifiedRuleFact; keep its full limit.
+    internal_online_deadline: str = Field(min_length=4, max_length=600)
+    internal_paper_deadline: str = Field(min_length=4, max_length=600)
+    study_plan_limit: str = Field(min_length=4, max_length=600)
     deadline_source_url: str = Field(min_length=12, max_length=2000)
     deadline_last_checked_at: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
     partner_source_url: str | None = None
@@ -4535,14 +4536,15 @@ class StudyPlanWorkbenchPayload(BaseModel):
     school_name: str = Field(min_length=2, max_length=80)
     short_name: str = Field(min_length=2, max_length=40)
     in_next_10_weeks_window: bool = True
-    online_deadline_text: str = Field(min_length=4, max_length=300)
-    paper_deadline_text: str = Field(min_length=4, max_length=300)
-    official_study_plan_limit_text: str = Field(min_length=4, max_length=500)
+    # Pass-through facts use the same bound as VerifiedRuleFact.value_text.
+    online_deadline_text: str = Field(min_length=4, max_length=600)
+    paper_deadline_text: str = Field(min_length=4, max_length=600)
+    official_study_plan_limit_text: str = Field(min_length=4, max_length=600)
     min_chars: int | None = None
     max_chars: int | None = None
     estimated_chars_per_a4_page: int = 900
     max_a4_pages_hint: float | None = None
-    scoring_weight_headline: str = Field(min_length=4, max_length=240)
+    scoring_weight_headline: str = Field(min_length=4, max_length=600)
     pitfalls: list[StudyPlanPitfallRule] = Field(default_factory=list, min_length=1)
     six_step_guide: list[StudyPlanSixStepSection] = Field(default_factory=list, min_length=6, max_length=6)
     selected_partner_lookup: StudyPlanPartnerCourseLookup | None = None

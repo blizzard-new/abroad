@@ -167,7 +167,7 @@
       toolsPanel.style.setProperty("--rail-panel-top", `${Math.max(16, Math.min(anchor.top, innerHeight - height - 16))}px`);
     } else if (toolsPanel.matches(":popover-open")) toolsPanel.hidePopover();
   }
-  new MutationObserver(syncToolsPanel).observe(tools, { subtree: true, attributes: true, attributeFilter: ["open"] });
+  if (tools) new MutationObserver(syncToolsPanel).observe(tools, { subtree: true, attributes: true, attributeFilter: ["open"] });
   mobile.addEventListener("change", syncToolsPanel);
   window.addEventListener("resize", syncToolsPanel);
   rail?.addEventListener("scroll", syncToolsPanel, { passive: true });

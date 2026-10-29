@@ -1,4 +1,4 @@
-"""One workspace retains drafts, scope and old URLs across application stages."""
+"""Legacy tool URLs retain account drafts after their entry moves into levels."""
 import pytest
 from playwright.sync_api import expect
 
@@ -16,44 +16,42 @@ def test_workspace_navigation_preserves_draft_target_and_old_routes(page, live_s
     _, target = create_target(page, live_server)
     workspace = page.locator("#application-workspace")
     expect(workspace).to_be_visible()
-    expect(workspace.locator("#application-workspace-context")).to_contain_text(target)
+    expect(page.locator("#application-target-school")).to_have_value(target)
     expect(page.locator("#overview > #planning-deadline-settings")).to_have_count(1)
     page.locator("#planning-deadline-settings > summary").click()
     expect(page.locator("#planning-schedule-form")).to_be_hidden()
-    workspace.get_by_role("link", name="選校與確認", exact=True).click()
+    page.evaluate("location.hash='#advisor'")
     expect(workspace.locator("#advisor-form")).to_be_visible()
     expand_details(page, "#advisor-form > .advisor-more-fields:not(#advisor-qualification-fields)")
     page.locator("#advisor-question").fill("保留我的問題草稿")
     question_node = page.locator("#advisor-question").evaluate("node=>{window.workspaceDraftNode=node;return true}")
     assert question_node
-    workspace.locator("#application-workspace-tool-menu > summary").click()
-    workspace.get_by_role("link", name="候選與比較", exact=True).click()
+    page.evaluate("location.hash='#favorites'")
     expect(workspace.locator("#favorites")).to_be_visible()
-    workspace.get_by_role("link", name="當期資格與志願", exact=True).click()
+    page.evaluate("location.hash='#eligibility'")
     expect(workspace.locator("#eligibility")).to_be_visible()
-    expect(page.locator("#eligibility-academic-year")).to_be_visible()
+    expect(page.locator("#eligibility-academic-year").locator("..").get_by_role("combobox")).to_be_visible()
     page.go_back()
     expect(workspace.locator("#favorites")).to_be_visible()
-    workspace.get_by_role("link", name="條件與推薦", exact=True).click()
+    page.evaluate("location.hash='#advisor'")
     expect(page.locator("#advisor-question")).to_have_value("保留我的問題草稿")
     assert page.locator("#advisor-question").evaluate("node=>node===window.workspaceDraftNode")
-    workspace.get_by_role("link", name="文件與送件", exact=True).click()
+    page.evaluate("location.hash='#application-center'")
     expect(workspace.locator("#application-center")).to_be_visible()
     expect(page.locator("#application-target-school")).to_have_value(target)
-    workspace.locator("#application-workspace-tool-menu > summary").click()
-    workspace.get_by_role("link", name="檢查文件", exact=True).click()
+    page.evaluate("location.hash='#document-check'")
     expect(workspace.locator("#document-check")).to_be_visible()
-    workspace.get_by_role("link", name="官方說明與私人文件", exact=True).click()
+    page.evaluate("location.hash='#documents'")
     expect(workspace.locator("#documents")).to_be_visible()
     # Existing links/bookmarks still select their correct panel after reload.
     page.reload()
     expect(workspace.locator("#documents")).to_be_visible()
-    expect(workspace.locator("#application-workspace-context")).to_contain_text(target)
+    expect(page.locator("#application-target-school")).to_have_value(target)
     page.evaluate("location.hash='#home'")
     expect(workspace).to_be_hidden()
     page.evaluate("location.hash='#documents'")
-    workspace.locator("#application-workspace-tool-menu > summary").click()
-    expect(workspace.get_by_role("link", name="官方說明與私人文件", exact=True)).to_have_attribute("aria-current", "page")
+    expect(workspace.locator("#documents")).to_be_visible()
+    expect(page.locator("#application-journey-steps")).to_have_count(0)
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     if width > 900:
         assert workspace.bounding_box()["x"] > page.locator("#glass-navigation").bounding_box()["x"] + page.locator("#glass-navigation").bounding_box()["width"]
@@ -67,15 +65,14 @@ def test_saved_conditions_keep_application_period_when_refreshing_recommendation
     page.emulate_media(reduced_motion="reduce")
     _, target = create_target(page, live_server)
     workspace = page.locator("#application-workspace")
-    workspace.get_by_role("link", name="選校與確認", exact=True).click()
+    page.evaluate("location.hash='#advisor'")
     page.get_by_text("更多偏好", exact=True).click()
     page.locator("#advisor-current-year").select_option("大三")
     with page.expect_response(lambda response: response.url.endswith("/advisor/plan") and response.request.method == "POST") as refreshed:
         page.locator("#advisor-submit").click()
     assert refreshed.value.ok
     expect(page.locator("#advisor-profile-status")).to_contain_text("已保存")
-    workspace.locator("#application-workspace-tool-menu > summary").click()
-    workspace.get_by_role("link", name="當期資格與志願", exact=True).click()
+    page.evaluate("location.hash='#eligibility'")
     department = page.locator("#advisor-department option").evaluate_all("rows=>rows.find(row=>row.value).value")
     page.locator("#advisor-department").select_option(department)
     page.locator("#eligibility-academic-year").select_option("116")
@@ -85,14 +82,14 @@ def test_saved_conditions_keep_application_period_when_refreshing_recommendation
         page.locator("#advisor-form button[type=submit]").click()
     assert result.value.ok
     expect(page.locator("#eligibility-result")).to_contain_text(target)
-    workspace.get_by_role("link", name="條件與推薦", exact=True).click()
+    page.evaluate("location.hash='#advisor'")
     expect(page.locator("#advisor-department")).to_have_value(department)
     expect(page.locator("#advisor-current-year")).to_have_value("大三")
     with page.expect_response(lambda response: response.url.endswith("/advisor/plan") and response.request.method == "POST") as refreshed:
         page.locator("#advisor-submit").click()
     assert refreshed.value.ok
     expect(page.locator("#advisor-profile-status")).to_contain_text("已保存")
-    workspace.get_by_role("link", name="當期資格與志願", exact=True).click()
+    page.evaluate("location.hash='#eligibility'")
     expect(page.locator("#eligibility-academic-year")).to_have_value("116")
     expect(page.locator("#eligibility-application-round")).to_have_value("第一梯次")
     expect(page.locator("#eligibility-preference-1")).to_have_value(target)
@@ -102,18 +99,12 @@ def test_saved_conditions_keep_application_period_when_refreshing_recommendation
     expect(page.locator("#eligibility-application-round")).to_have_value("第一梯次")
 
 
-def test_checking_preferences_keeps_the_next_step_on_preparation(page, live_server):
-    """Choosing a year, round and preferences changes the conditions; the plan must follow so that 我的申請 does not
-    fall back to 第 1 步「確認這所學校的當期資格」 right after the check."""
+def test_checking_preferences_preserves_the_independent_schedule_target(page, live_server):
+    """Eligibility still updates the shared schedule context after the old stepper is removed."""
     page.set_viewport_size({"width": 1754, "height": 956})
     page.emulate_media(reduced_motion="reduce")
     _, target = create_target(page, live_server)
-    next_action = page.locator("#planning-next-action")
-    expect(next_action.locator("[data-open-planning]")).to_be_visible()
-    workspace = page.locator("#application-workspace")
-    workspace.get_by_role("link", name="選校與確認", exact=True).click()
-    workspace.locator("#application-workspace-tool-menu > summary").click()
-    workspace.get_by_role("link", name="當期資格與志願", exact=True).click()
+    page.evaluate("location.hash='#eligibility'")
     department = page.locator("#advisor-department option").evaluate_all("rows=>rows.find(row=>row.value).value")
     page.locator("#advisor-department").select_option(department)
     page.locator("#eligibility-academic-year").select_option("116")
@@ -123,5 +114,7 @@ def test_checking_preferences_keeps_the_next_step_on_preparation(page, live_serv
         page.locator("#advisor-form button[type=submit]").click()
     assert refreshed.value.ok
     expect(page.locator("#eligibility-result")).to_contain_text(target)
-    expect(next_action.locator("[data-open-planning]")).to_be_visible()
-    expect(next_action).not_to_contain_text("確認這所學校的當期資格")
+    page.evaluate("location.hash='#overview'")
+    expect(page.locator("#planning-target-summary")).to_contain_text(target)
+    expect(page.locator("#application-target-school")).to_have_value(target)
+    expect(page.locator("#planning-next-action")).to_have_count(0)
