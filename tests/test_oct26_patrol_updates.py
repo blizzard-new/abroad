@@ -267,7 +267,10 @@ def test_tmu_csmu_kmu_mcu_ntub_pccu_ncue_dora2_updates() -> None:
 
     # NTUB
     ntub = require_university("ntub")
-    assert ntub.official_url == "https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw"
+    assert ntub.official_url in (
+        "https://oia.ntub.edu.tw/p/412-1006-3152.php?Lang=zh-tw",
+        "https://oia.ntub.edu.tw/p/405-1006-57507,c3152.php?Lang=zh-tw",
+    )
     assert "120272" in ntub.coverage_note and "峽谷學院" in ntub.coverage_note
     ntub_dash = _load_dashboard("ntub")
     ntub_text = "\n".join(item.title + "\n" + "\n".join(item.details) for item in (*ntub_dash.application_periods, *ntub_dash.program_overview))
