@@ -35,6 +35,9 @@ ANSWERS = {
     "SchoolReport": {"checks": [
         {"school": "長庚大學", "status": "new_notice", "detail": "國際處公告 116 學年度第二梯次甄選", "source_url": "https://www.cgu.edu.tw/oia-ch"},
         {"school": "國立臺北大學", "status": "no_change", "detail": "交換頁沒有新公告", "source_url": "https://new.ntpu.edu.tw/oia"}]},
+    "VisualPlan": {"outline": ["先看重點"], "art_prompt": "一個藍色小行李箱吉祥物，有兩顆黑色橢圓眼睛",
+                   "spec": {"margin": 64, "title_size": 80, "body_size": 40, "line_height": 1.55, "accent": "teal", "emphasis": "chip", "page_number": "foot"},
+                   "slides": [{"layout": "cover", "title_lines": ["語言檢定怎麼選"], "emphasis": ["怎麼選"], "items": [], "labels": [], "picture": ""}], "issues": []},
     "VerificationReport": {"verdicts": [
         {"school": "長庚大學", "verdict": "confirmed_update", "reason": "官網確有 116 學年度第二梯次甄選公告，平台還沒收錄", "source_url": "https://www.cgu.edu.tw/oia-ch/news/1",
          "edits": [{"target": "verified_window_deadlines.py → cgu → online_deadline.value_text", "current": "當期專屬公告尚未發布",

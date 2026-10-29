@@ -101,7 +101,7 @@ class Chief(Agent):
             for a in hires
         )
         minds = "\n".join(
-            f"- role={role}（{names.get("strategist" if role == "research" else role, role)}・{label}）：{office.describe_brain(role)}"
+            f"- role={role}（{names.get({"research": "strategist", "visual": "designer"}.get(role, role), role)}・{label}）：{office.describe_brain(role)}"
             for role, label in office.roles().items()
         )
         notes = json.loads(office.store.get("boss_notes") or "[]")
@@ -351,8 +351,11 @@ class Chief(Agent):
             if office.settings.render_media:
                 folder = office.day_media_dir(date.fromisoformat(draft["day"])) / f"carousel-{draft['id']}-{token_hex(3)}"
                 art = office.media_file(media["art"]) if media.get("art") else None
-                files = office.renderer.carousel(content, folder, art=art)
+                # The words changed, so Mori lays the pages out again; the cover illustration stays (redo_image draws a new one).
+                files, plan, art, _ = author.render_carousel(author, content, draft["title"], folder, f"文字改過了（{instructions}），請重新排版。",
+                                                             art=art, new_art=False)
                 media["images"] = [office.media_ref(p) for p in files]
+                payload["visual_plan"] = plan.model_dump()
         else:
             if draft["channel"] == "youtube":
                 payload.update(title=content.youtube_title, description=content.youtube_description, script=content.model_dump())
@@ -369,6 +372,15 @@ class Chief(Agent):
         author.handoff("boss", f"#{draft['id']} 改好了", draft_id=draft["id"])
         author.status("done", f"#{draft['id']} 改好了")
         return f"#{draft['id']} 改好了，放回審核匣" + ("" if passed else f"（審稿還有意見：{review['issues'][0][:40]}）")
+
+    def _do_redo_image(self, action: ChiefAction) -> str:
+        draft = self._draft(action.draft_id)
+        if draft["format"] not in {"carousel", "text"} or draft["channel"] not in {"instagram", "threads"}:
+            raise ValueError("只有輪播和 Threads 貼文有圖可以重做；限動跟著輪播走，影片請跟阿剪說")
+        designer = self.office.staff["designer"]
+        self.handoff("designer", "重做圖", draft_id=draft["id"])
+        self._background(f"#{draft['id']} 重做圖", lambda: designer.remake(draft, action.instructions))
+        return f"已經請 Mori 重新設計 #{draft['id']} 的圖，做好會放回審核匣"
 
     def _do_new_post(self, action: ChiefAction) -> str:
         office = self.office

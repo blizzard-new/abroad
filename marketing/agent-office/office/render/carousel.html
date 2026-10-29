@@ -6,6 +6,8 @@
 <!--
   IG 輪播（1080×1350，4:5）與限時動態（1080×1920）的版型。
   renderer.py 會呼叫 window.renderSlide({...}) 換內容，等字型載入完再截圖成 JPEG（Instagram API 只收 JPEG 圖片）。
+  版面由視覺設計師 Mori 的設計（design：整組規格 spec ＋ 這一頁的 slide）決定：邊距、字級、行距、重點色、強調手法、頁碼位置，
+  以及這一頁用 cover／focus／steps／compare／stat／cta 哪種版面。文字本身永遠是文案原文，設計只決定怎麼擺。
 -->
 <link rel="stylesheet" href="/fonts/genjyuu/GenJyuuGothic-Medium.css" />
 <link rel="stylesheet" href="/fonts/genjyuu/GenJyuuGothic-Bold.css" />
@@ -21,6 +23,9 @@
     --cyan: #17b5d8;
     --coral: #e2574a;
     --paper: #f4f8fc;
+    /* set per set of pages from the design's spec (see applySpec) */
+    --m: 80px; --title: 88px; --body: 44px; --lh: 1.5;
+    --a1: #2f7de1; --a2: #17b5d8; --atint: rgba(47, 125, 225, 0.14);
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--paper); }
@@ -47,58 +52,58 @@
       radial-gradient(circle at 50% 35%, #17345a, #0f1d30 75%);
   }
 
-  .brand { left: 72px; top: 64px; display: flex; align-items: center; gap: 16px; }
+  .brand { left: var(--m); top: 64px; display: flex; align-items: center; gap: 16px; }
   .brand img { width: 68px; height: 68px; }
   .word { font: 700 46px/1 "Poppins", sans-serif; letter-spacing: -0.02em; background: linear-gradient(100deg, #1554d8 10%, #18b6e3 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .dark .word { background: linear-gradient(100deg, #8cc4ff, #6fe2ff); -webkit-background-clip: text; background-clip: text; }
-  .count { right: 72px; top: 80px; font: 600 32px "Poppins", sans-serif; color: var(--muted); letter-spacing: 0.04em; }
+  .count { right: var(--m); top: 80px; font: 600 32px "Poppins", sans-serif; color: var(--muted); letter-spacing: 0.04em; }
   .dark .count { color: #b9d3ec; }
 
   .kicker { display: inline-flex; align-items: center; gap: 12px; padding: 14px 26px; border-radius: 999px; background: #fff; color: var(--coral); font-size: 32px; font-weight: 700; letter-spacing: 0.06em; box-shadow: 0 14px 34px rgba(16, 41, 74, 0.12); }
   .kicker i { width: 14px; height: 14px; border-radius: 50%; background: var(--coral); }
 
   h1, h2 { margin: 0; font-weight: 700; line-height: 1.18; letter-spacing: 0.01em; }
-  h1 em, h2 em { font-style: normal; background: linear-gradient(90deg, #2f7de1, #17b5d8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h1 em, h2 em { font-style: normal; background: linear-gradient(90deg, var(--a1), var(--a2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .seg { display: block; white-space: nowrap; }
   .seg.wrap { white-space: normal; }
 
   /* cover */
-  .cover-text { left: 72px; right: 72px; top: 230px; }
-  .cover-text h1 { margin-top: 40px; font-size: 104px; }
+  .cover-text { left: var(--m); right: var(--m); top: 230px; }
+  .cover-text h1 { margin-top: 40px; font-size: var(--title); }
   .cover-text p, .cta p { text-wrap: pretty; }
-  .cover-text p { margin: 36px 0 0; max-width: 760px; font-size: 42px; line-height: 1.5; color: var(--muted); font-weight: 500; }
+  .cover-text p { margin: 36px 0 0; max-width: 800px; font-size: var(--body); line-height: var(--lh); color: var(--muted); font-weight: 500; }
   .mascot { right: 40px; bottom: 70px; width: 330px; filter: drop-shadow(0 26px 30px rgba(35, 82, 135, 0.28)); transform: rotate(-6deg); }
-  .swipe { left: 72px; bottom: 90px; display: flex; align-items: center; gap: 16px; font-size: 34px; font-weight: 700; color: var(--blue); }
+  .swipe { left: var(--m); bottom: 90px; display: flex; align-items: center; gap: 16px; font-size: 34px; font-weight: 700; color: var(--a1); }
   .swipe svg { width: 54px; height: 54px; }
 
   /* point: the block is centred between the header and the footer */
-  .point { left: 72px; right: 72px; top: 170px; bottom: 190px; display: flex; flex-direction: column; justify-content: center; }
-  .num { display: grid; place-items: center; width: 150px; height: 150px; border-radius: 42px; color: #fff; font: 700 70px "Poppins", sans-serif; background: linear-gradient(135deg, #3c8ef0, #2bc0e4); box-shadow: 0 22px 44px rgba(47, 125, 225, 0.32); }
-  .point h2 { margin-top: 56px; font-size: 100px; }
-  .card { margin-top: 56px; padding: 52px 58px; border-radius: 44px; background: #fff; box-shadow: 0 30px 70px rgba(16, 41, 74, 0.12), 0 0 0 1px rgba(16, 41, 74, 0.04); font-size: 54px; line-height: 1.5; font-weight: 500; color: var(--ink); text-wrap: pretty; }
+  .point { left: var(--m); right: var(--m); top: 170px; bottom: 190px; display: flex; flex-direction: column; justify-content: center; }
+  .num { display: grid; place-items: center; width: 150px; height: 150px; border-radius: 42px; color: #fff; font: 700 70px "Poppins", sans-serif; background: linear-gradient(135deg, var(--a1), var(--a2)); box-shadow: 0 22px 44px var(--atint); }
+  .point h2 { margin-top: 56px; font-size: var(--title); }
+  .card { margin-top: 56px; padding: 52px 58px; border-radius: 44px; background: #fff; box-shadow: 0 30px 70px rgba(16, 41, 74, 0.12), 0 0 0 1px rgba(16, 41, 74, 0.04); font-size: var(--body); line-height: var(--lh); font-weight: 500; color: var(--ink); text-wrap: pretty; }
   .card::before { content: ""; display: block; width: 88px; height: 10px; margin-bottom: 30px; border-radius: 6px; background: linear-gradient(90deg, #e2574a, #ff9a7a); }
   .ghost { right: -30px; bottom: 60px; font: 700 520px/1 "Poppins", sans-serif; color: rgba(16, 41, 74, 0.045); letter-spacing: -0.04em; }
   .peek { right: 54px; bottom: 120px; width: 190px; transform: rotate(8deg); filter: drop-shadow(0 18px 20px rgba(35, 82, 135, 0.24)); }
-  .foot { left: 72px; right: 72px; bottom: 64px; display: flex; justify-content: space-between; align-items: center; font-size: 28px; color: var(--muted); font-weight: 500; }
+  .foot { left: var(--m); right: var(--m); bottom: 64px; display: flex; justify-content: space-between; align-items: center; font-size: 28px; color: var(--muted); font-weight: 500; }
   .dots { display: flex; gap: 12px; }
   .dots b { width: 16px; height: 16px; border-radius: 50%; background: rgba(16, 41, 74, 0.15); }
-  .dots b.on { width: 44px; border-radius: 10px; background: var(--blue); }
+  .dots b.on { width: 44px; border-radius: 10px; background: var(--a1); }
   .dark .foot { color: #b9d3ec; }
   .dark .dots b { background: rgba(255, 255, 255, 0.2); }
   .dark .dots b.on { background: #6fe2ff; }
 
   /* call to action */
-  .cta { left: 72px; right: 72px; top: 250px; }
-  .cta h2 { font-size: 100px; }
-  .cta p { margin: 34px 0 0; font-size: 44px; line-height: 1.5; color: #b9d3ec; font-weight: 500; max-width: 820px; }
+  .cta { left: var(--m); right: var(--m); top: 250px; }
+  .cta h2 { font-size: var(--title); }
+  .cta p { margin: 34px 0 0; font-size: var(--body); line-height: var(--lh); color: #b9d3ec; font-weight: 500; max-width: 820px; }
   .actions { display: grid; gap: 24px; margin-top: 64px; max-width: 700px; }
   .action { display: flex; align-items: center; gap: 22px; padding: 26px 34px; border-radius: 30px; background: rgba(255, 255, 255, 0.1); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.14); font-size: 40px; font-weight: 700; }
   .action svg { width: 50px; height: 50px; flex: none; }
-  .action.primary { background: linear-gradient(100deg, #2f7de1, #19b7e2); box-shadow: 0 20px 50px rgba(25, 140, 226, 0.4); }
+  .action.primary { background: linear-gradient(100deg, var(--a1), var(--a2)); box-shadow: 0 20px 50px rgba(25, 140, 226, 0.4); }
   .wave { right: 30px; bottom: 120px; width: 300px; transform: rotate(-4deg); filter: drop-shadow(0 26px 30px rgba(0, 0, 0, 0.35)); }
 
   /* cover illustration (from the image desk); text stays in HTML so Chinese is always crisp */
-  .art { left: 72px; right: 72px; top: 650px; bottom: 150px; border-radius: 48px; overflow: hidden; background: #e8f0f8; box-shadow: 0 30px 70px rgba(16, 41, 74, 0.18), 0 0 0 1px rgba(16, 41, 74, 0.05); }
+  .art { left: var(--m); right: var(--m); top: 650px; bottom: 150px; border-radius: 48px; overflow: hidden; background: #e8f0f8; box-shadow: 0 30px 70px rgba(16, 41, 74, 0.18), 0 0 0 1px rgba(16, 41, 74, 0.05); }
   .art img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .with-art .cover-text { top: 200px; }
   .with-art .mascot { right: 34px; bottom: 96px; width: 210px; }
@@ -107,11 +112,43 @@
   .story.with-art .art { top: 900px; bottom: 480px; }
   .story.with-art .mascot { bottom: 430px; }
 
+  /* the one way this set emphasises a word: colour, a tinted block, or size (design.spec.emphasis) */
+  mark.em { background: none; color: inherit; font-weight: 700; }
+  .em-color mark.em { background: linear-gradient(90deg, var(--a1), var(--a2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .em-chip mark.em { background: var(--atint); color: var(--navy); border-radius: 16px; padding: 0 14px; margin: 0 -4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .em-size mark.em { font-size: 1.22em; color: var(--a1); }
+  .dark mark.em { color: #6fe2ff; -webkit-text-fill-color: #6fe2ff; background: none; }
+
+  /* steps: 2 to 5 short steps in order */
+  .steps { margin: 52px 0 0; padding: 0; list-style: none; display: grid; gap: 22px; font-size: var(--body); }
+  .steps li { display: grid; grid-template-columns: 84px 1fr; align-items: center; gap: 30px; padding: 26px 38px 26px 28px; border-radius: 38px; background: #fff; box-shadow: 0 24px 56px rgba(16, 41, 74, 0.1), 0 0 0 1px rgba(16, 41, 74, 0.04); font-weight: 500; line-height: var(--lh); color: var(--ink); text-wrap: pretty; }
+  .steps li b { display: grid; place-items: center; width: 84px; height: 84px; border-radius: 28px; color: #fff; font: 700 44px "Poppins", sans-serif; background: linear-gradient(135deg, var(--a1), var(--a2)); box-shadow: 0 14px 30px var(--atint); }
+
+  /* compare: two sides next to each other */
+  .versus { position: relative; margin-top: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; font-size: var(--body); }
+  .versus .side { padding: 40px 38px 44px; border-radius: 42px; background: #fff; box-shadow: 0 24px 56px rgba(16, 41, 74, 0.1), 0 0 0 1px rgba(16, 41, 74, 0.04); font-weight: 500; line-height: var(--lh); color: var(--ink); text-wrap: pretty; }
+  .versus .side:first-of-type { padding-right: 58px; }
+  .versus .side + .side { padding-left: 58px; }
+  .versus .tag { display: inline-block; margin-bottom: 22px; padding: 8px 26px; border-radius: 999px; color: #fff; font: 700 0.76em "Poppins", "GenJyuuGothic", sans-serif; background: linear-gradient(100deg, var(--a1), var(--a2)); }
+  .versus .side + .side .tag { background: var(--navy); }
+  .versus .vs { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: var(--navy); color: #fff; font: 700 30px "Poppins", sans-serif; box-shadow: 0 0 0 8px var(--paper); }
+
+  /* stat: one big number or word, with the note under it */
+  .stat-hero { margin-top: 28px; font: 700 190px/1.05 "Poppins", "GenJyuuGothic", sans-serif; letter-spacing: -0.02em; white-space: nowrap; background: linear-gradient(90deg, var(--a1), var(--a2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stat-hero + .card { margin-top: 40px; }
+
+  /* the page number in the foot instead of the top right corner (design.spec.page_number) */
+  .pn-foot .count { top: auto; right: var(--m); bottom: 64px; font-size: 28px; }
+  .pn-foot .dots { display: none; }
+  .pn-foot .mascot { bottom: 140px; }
+  .pn-foot.with-art .mascot { bottom: 160px; }
+  .pn-foot .swipe { bottom: 150px; }
+
   /* story extras */
   .story .cover-text { top: 330px; }
   .story .mascot { bottom: 420px; }
   .story .swipe { bottom: 440px; }
-  .pill { left: 72px; bottom: 300px; display: inline-flex; align-items: center; gap: 16px; padding: 26px 40px; border-radius: 999px; background: var(--navy); color: #fff; font-size: 40px; font-weight: 700; box-shadow: 0 24px 50px rgba(16, 41, 74, 0.3); }
+  .pill { left: var(--m); bottom: 300px; display: inline-flex; align-items: center; gap: 16px; padding: 26px 40px; border-radius: 999px; background: var(--navy); color: #fff; font-size: 40px; font-weight: 700; box-shadow: 0 24px 50px rgba(16, 41, 74, 0.3); }
 </style>
 </head>
 <body>
@@ -125,13 +162,47 @@
     up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="44" height="44"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>',
   };
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  // Highlight the part after the first full-width punctuation, e.g. "讀書計畫寫不出來？<em>先回答這 3 題</em>".
-  const accent = (title) => {
-    const m = esc(title).match(/^(.+?[？！，：])(.+)$/);
-    return m ? `<span class="seg">${m[1]}</span><span class="seg"><em>${m[2]}</em></span>` : `<span class="seg">${esc(title)}</span>`;
-  };
   const brand = '<div class="brand"><img src="/brand/uniway-logo.webp" alt="" /><span class="word">UniWay</span></div>';
   const dots = (i, n) => `<div class="dots">${Array.from({ length: n }, (_, k) => `<b class="${k === i ? "on" : ""}"></b>`).join("")}</div>`;
+
+  // ---- the design: the set's shared spec, and this page's layout ----
+  const SPEC = { margin: 80, title_size: 88, body_size: 44, line_height: 1.5, accent: "blue", emphasis: "color", page_number: "top" };
+  const ACCENTS = { blue: ["#2f7de1", "#17b5d8", "rgba(47, 125, 225, 0.16)"], teal: ["#0f9d8a", "#22c7a9", "rgba(15, 157, 138, 0.16)"], coral: ["#e2574a", "#ff9a62", "rgba(226, 87, 74, 0.16)"] };
+  const HIGHLIGHT = /^(.+?[？！，：])(.+)$/;
+  // Without a design (nobody planned this page) it still gets the plain version of its layout.
+  const plainSlide = (slide) => {
+    const m = HIGHLIGHT.exec(slide.title);
+    const layout = slide.kind === "cover" ? "cover" : slide.kind === "cta" ? "cta" : "focus";
+    return { layout, title_lines: [slide.title], emphasis: layout !== "cta" && m && m[2].length >= 2 && m[2].length <= 14 ? [m[2]] : [], items: [], labels: [] };
+  };
+
+  function applySpec(root, spec) {
+    const [a1, a2, tint] = ACCENTS[spec.accent] || ACCENTS.blue;
+    const set = (name, value) => root.style.setProperty(name, value);
+    set("--m", `${spec.margin}px`); set("--title", `${spec.title_size}px`); set("--body", `${spec.body_size}px`); set("--lh", String(spec.line_height));
+    set("--a1", a1); set("--a2", a2); set("--atint", tint);
+  }
+
+  // Text with its emphasised words wrapped (each word once, the first place it appears); everything is escaped.
+  function marked(text, words) {
+    text = String(text ?? "");
+    const hits = [];
+    for (const word of words) {
+      const at = text.indexOf(word);
+      if (word && at >= 0 && !hits.some((h) => at < h.end && at + word.length > h.at)) hits.push({ at, end: at + word.length });
+    }
+    hits.sort((a, b) => a.at - b.at);
+    let out = "", cursor = 0;
+    for (const h of hits) {
+      out += esc(text.slice(cursor, h.at)) + `<mark class="em">${esc(text.slice(h.at, h.end))}</mark>`;
+      cursor = h.end;
+    }
+    return out + esc(text.slice(cursor));
+  }
+  const titleHTML = (lines, words) => lines.map((line) => `<span class="seg">${marked(line, words)}</span>`).join("");
+  // Words that are not in the title are marked in the text under it.
+  const wordsIn = (lines, words) => words.filter((w) => lines.some((l) => l.includes(w)));
+  const wordsNotIn = (lines, words) => words.filter((w) => !lines.some((l) => l.includes(w)));
 
   function fit(el, maxHeight, minSize) {
     let size = parseFloat(getComputedStyle(el).fontSize);
@@ -148,32 +219,48 @@
       el.style.fontSize = `${size}px`;
     }
   }
+  // A line that must stay on one row (the big number): shrink until it fits the width.
+  function fitWidth(el, minSize) {
+    let size = parseFloat(getComputedStyle(el).fontSize);
+    while (el.scrollWidth > el.clientWidth + 1 && size > minSize) {
+      size -= 6;
+      el.style.fontSize = `${size}px`;
+    }
+  }
 
   // The mascot always comes with its face: the picture is the body only (see mascot-face.css).
   const mascot = (cls) => `<span class="mascot-face ${cls}"><img src="/brand/suitcase.webp" alt="" /><i class="eye"></i><i class="eye r"></i><i class="cheek"></i><i class="cheek r"></i></span>`;
 
-  window.renderSlide = async ({ slide, index, total, site, story, art }) => {
+  window.renderSlide = async ({ slide, index, total, site, story, art, design }) => {
     const root = document.getElementById("slide");
-    root.className = [slide.kind === "cta" ? "dark" : "", story ? "story" : "", art ? "with-art" : ""].join(" ").trim();
+    const spec = { ...SPEC, ...(design?.spec || {}) };
+    const plan = { ...plainSlide(slide), ...(design?.slide || {}) };
+    const lines = plan.title_lines?.length ? plan.title_lines : [slide.title];
+    const layout = slide.kind === "cta" ? "cta" : slide.kind === "cover" ? "cover" : plan.layout;
+    const words = plan.emphasis || [];
+    root.removeAttribute("style");
+    root.className = [layout === "cta" ? "dark" : "", story ? "story" : "", art ? "with-art" : "", `em-${spec.emphasis}`, spec.page_number === "foot" ? "pn-foot" : ""].join(" ").trim();
+    applySpec(root, spec);
     const artBlock = art ? `<div class="art"><img src="${esc(art)}" alt="" /></div>` : "";
     const count = `<div class="count">${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}</div>`;
     const foot = `<div class="foot"><span>${esc(site)}｜以各校官方公告為準</span>${dots(index, total)}</div>`;
+    const sub = (text) => marked(text, wordsNotIn(lines, words));
     if (story) {
       root.innerHTML = `${brand}
-        <div class="cover-text"><span class="kicker"><i></i>今日新貼文</span><h1>${accent(slide.title)}</h1><p>${esc(slide.body)}</p></div>
+        <div class="cover-text"><span class="kicker"><i></i>今日新貼文</span><h1>${titleHTML(lines, wordsIn(lines, words))}</h1><p>${sub(slide.body)}</p></div>
         ${artBlock}${mascot("mascot")}
         <div class="pill">${ICONS.up}到主頁看完整內容</div>`;
-    } else if (slide.kind === "cover") {
+    } else if (layout === "cover") {
       // A lone picture (the one posted with a Threads post) has nothing to swipe to.
       const single = total === 1;
       root.innerHTML = `${brand}${single ? "" : count}
-        <div class="cover-text"><span class="kicker"><i></i>交換申請小筆記</span><h1>${accent(slide.title)}</h1><p>${esc(slide.body)}</p></div>
+        <div class="cover-text"><span class="kicker"><i></i>交換申請小筆記</span><h1>${titleHTML(lines, wordsIn(lines, words))}</h1><p>${sub(slide.body)}</p></div>
         ${artBlock}${mascot("mascot")}
         ${single ? `<div class="foot"><span>${esc(site)}｜以各校官方公告為準</span></div>` : `<div class="swipe">往左滑${ICONS.arrow}</div>`}`;
-    } else if (slide.kind === "cta") {
+    } else if (layout === "cta") {
       const [feature, ...rest] = String(slide.body || "").split("｜");
       root.innerHTML = `${brand}${count}
-        <div class="cta"><h2><span class="seg">${esc(slide.title)}</span></h2><p>${esc(feature)}</p>
+        <div class="cta"><h2>${titleHTML(lines, [])}</h2><p>${esc(feature)}</p>
           <div class="actions">
             <div class="action primary">${ICONS.save}收藏這篇，申請時拿出來看</div>
             <div class="action">${ICONS.share}分享給也要交換的朋友</div>
@@ -182,9 +269,21 @@
         ${mascot("wave")}${foot}`;
     } else {
       const num = String(index).padStart(2, "0");
-      root.innerHTML = `<div class="ghost">${num}</div>${brand}${count}
-        <div class="point"><div class="num">${num}</div><h2><span class="seg">${esc(slide.title)}</span></h2><div class="card">${esc(slide.body)}</div></div>
-        ${index % 2 ? mascot("peek") : ""}${foot}`;
+      const heading = `<h2>${titleHTML(lines, wordsIn(lines, words))}</h2>`;
+      let body;
+      if (layout === "steps") {
+        body = `${heading}<ol class="steps">${plan.items.map((item, i) => `<li><b>${i + 1}</b><span>${sub(item)}</span></li>`).join("")}</ol>`;
+      } else if (layout === "compare") {
+        const [a, b] = plan.labels?.length === 2 ? plan.labels : ["A", "B"];
+        const side = (tag, text) => `<div class="side"><span class="tag">${esc(tag)}</span><div>${sub(text)}</div></div>`;
+        body = `${heading}<div class="versus">${side(a, plan.items[0])}${side(b, plan.items[1])}<span class="vs">VS</span></div>`;
+      } else if (layout === "stat") {
+        body = `${heading}<div class="stat-hero">${esc(plan.items[0])}</div><div class="card">${sub(slide.body)}</div>`;
+      } else {
+        body = `<div class="num">${num}</div>${heading}<div class="card">${sub(slide.body)}</div>`;
+      }
+      root.innerHTML = `<div class="ghost">${num}</div>${brand}${count}<div class="point">${body}</div>
+        ${index % 2 && !["steps", "compare"].includes(layout) ? mascot("peek") : ""}${foot}`;
     }
     await Promise.all([...document.images].map((img) => (img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))));
     // The CJK font is split into unicode-range subsets; load the ones this slide needs before measuring.
@@ -192,9 +291,13 @@
     await Promise.all(["700", "500"].map((weight) => document.fonts.load(`${weight} 64px "GenJyuuGothic"`, text)));
     const heading = root.querySelector("h1, h2");
     const room = art ? (story ? 380 : 240) : story ? 620 : 470;
-    if (heading) fit(heading, slide.kind === "point" ? 250 : room, 64);
+    if (heading) fit(heading, layout === "cover" ? room : 118 * Math.max(2, lines.length) + 10, 64);
     const card = root.querySelector(".card");
-    if (card) fit(card, 460, 36);
+    if (card) fit(card, layout === "stat" ? 330 : 460, 36);
+    const list = root.querySelector(".steps, .versus");
+    if (list) fit(list, root.querySelector(".steps") ? 700 : 560, 30);
+    const hero = root.querySelector(".stat-hero");
+    if (hero) fitWidth(hero, 80);
     await document.fonts.ready;
   };
 </script>

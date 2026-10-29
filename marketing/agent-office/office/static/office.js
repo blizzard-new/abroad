@@ -813,7 +813,7 @@ function openAgent(id) {
   }
   const a = S.agents.get(id);
   const lines = S.log.filter((l) => l.agent === id).slice(-30).reverse();
-  const roles = id === "strategist" ? [["research", "查資料"], ["strategist", "企劃"]] : [[id, ""]];
+  const roles = id === "strategist" ? [["research", "查資料"], ["strategist", "企劃"]] : id === "designer" ? [["designer", "IG 文案"], ["visual", "做圖排版"]] : [[id, ""]];
   const chains = roles
     .filter(([role]) => S.settings.brains?.[role])
     .map(([role, what]) => `${what ? `${what}：` : ""}${S.settings.tuning?.[role] || S.settings.brains[role][0]}${S.settings.brains[role].length > 1 ? `（不行時改用 ${S.settings.brains[role].slice(1).join(" → ")}）` : ""}`);

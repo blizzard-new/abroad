@@ -35,8 +35,8 @@ from .store import Store
 STAFF: tuple[type[Agent], ...] = (Strategist, ThreadsWriter, Designer, VideoEditor, Reviewer, Publisher, Analyst, Community, Chief)
 
 def desk_of(role: str) -> str:
-    """The desk a brain role belongs to: Ivy both researches and plans."""
-    return "strategist" if role == "research" else role
+    """The desk a brain role belongs to: Ivy both researches and plans, Mori both writes the IG copy and designs the pictures."""
+    return {"research": "strategist", "visual": "designer"}.get(role, role)
 
 
 # Model names the chief may set: letters, digits and the punctuation real names use ("Gemini 3.7 Flash (Low)").
