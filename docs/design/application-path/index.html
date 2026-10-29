@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>我的申請・向上出發 | UniWay 設計預覽</title>
+<link rel="stylesheet" href="preview.css?v=21">
+<script defer src="/static/vendor/lucide/0.468.0/lucide.min.js"></script>
+<link rel="stylesheet" href="glide-select.css?v=21">
+<script defer src="glide-select.js?v=21"></script>
+<script defer src="source-data.js"></script><script defer src="levels.js?v=20"></script><script defer src="preview.js?v=21"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到內容</a>
+<aside class="site-rail" aria-label="UniWay 網站導覽">
+  <a class="brand" href="/#home" aria-label="UniWay 首頁"><img src="/static/assets/brand/uniway-mark.webp" alt="" width="42" height="42"></a>
+  <nav><a href="/#home" aria-label="首頁" title="首頁"><i data-lucide="house"></i></a><a href="/#partners" aria-label="搜尋學校" title="搜尋學校"><i data-lucide="search"></i></a><a href="/guides" aria-label="交換指南" title="交換指南"><i data-lucide="book-open"></i></a><a href="/#forum" aria-label="論壇" title="論壇"><i data-lucide="messages-square"></i></a><a href="#map" class="selected" aria-label="我的申請" aria-current="page" title="我的申請"><i data-lucide="route"></i></a></nav>
+  <span class="avatar" aria-label="預覽帳號">U</span>
+</aside>
+<div class="app-shell">
+  <div class="preview-strip"><span><i data-lucide="pencil-ruler"></i>設計預覽 V2 <span class="desktop-only">・僅保存本機示意資料</span></span><div class="preview-actions"><button id="motion-toggle" class="icon-button" aria-label="暫停動畫" aria-pressed="false" title="暫停動畫"><i data-lucide="pause"></i></button><button id="reset-demo">重設示意</button></div></div>
+  <header class="app-header"><div class="header-title"><img src="/static/assets/brand/uniway-mark.webp" alt="" width="32" height="32"><div><h1>我的申請<span>.</span></h1></div></div><div class="header-actions"><button id="mobile-nav" class="icon-button" aria-label="網站導覽"><i data-lucide="menu"></i></button><button class="outline-button" id="new-plan"><i data-lucide="plus"></i>新增計畫</button></div></header>
+  <main id="main" tabindex="-1">
+    <div id="hub">
+      <section class="plan-strip" aria-label="目前申請計畫"><div class="plan-choice"><span class="square-icon"><i data-lucide="graduation-cap"></i></span><div><label for="plan-select">交換目標</label><select id="plan-select"></select><small id="plan-meta"></small></div></div><div class="plan-progress"><div><span>個人準備</span><strong id="overall-caption"></strong></div><div id="overall-meter"></div></div></section>
+      <nav class="hub-tabs" aria-label="我的申請頁面"><a href="#map" data-tab="map"><i data-lucide="route"></i>申請地圖</a><a href="#progress" data-tab="progress"><i data-lucide="chart-no-axes-combined"></i>進度總覽</a></nav>
+      <section id="map-view" aria-label="由下往上的申請地圖">
+        <div class="map-layout">
+          <div class="map-panel">
+            <div class="map-toolbar"><div class="stage-picker"><select id="stage-select" aria-label="跳到階段"></select></div><button id="go-origin" class="quiet-button"><i data-lucide="anchor"></i>起點</button><button id="go-current" class="current-button"><i data-lucide="locate-fixed"></i>目前關卡</button></div>
+            <div class="map-scroll" id="map-scroll" tabindex="0" aria-label="申請地圖，第一關在最下方，可向上捲動"><div class="path-stages" id="path-stages"></div></div>
+            <div class="map-caption"><span><b class="dot done"></b>已完成</span><span><b class="dot active"></b>下一步</span><span><b class="dot"></b>可提前辦理</span><span><i data-lucide="arrow-up"></i>向上前進</span></div>
+          </div>
+          <aside class="next-sidebar">
+            <section class="next-card"><span id="next-stage"></span><h2 id="next-title"></h2><p id="next-prompt"></p><div id="next-meter"></div><a id="next-link" class="primary-button" href="#map">繼續這一關<i data-lucide="arrow-right"></i></a><div class="mascot-note"><div class="mascot" aria-hidden="true"><img src="/static/assets/mascot/suitcase.webp" alt=""><b class="eye left"></b><b class="eye right"></b></div></div></section>
+            <section class="side-note"><i data-lucide="calendar-search"></i><div><h3>官方日期待確認</h3><p>有確切來源，才會列入倒數。</p><a href="#level/deadline">記下要確認的事<i data-lucide="arrow-right"></i></a></div></section>
+            <button id="source-info" class="source-button"><i data-lucide="info"></i>資料與進度怎麼計算？<i data-lucide="chevron-right"></i></button>
+          </aside>
+        </div>
+      </section>
+      <section id="progress-view" hidden aria-label="進度總覽"><div class="overview-heading"><a class="outline-button" href="#map"><i data-lucide="route"></i>回到地圖</a></div><div id="overview-summary"></div><div class="overview-filter" aria-label="進度篩選"><button data-filter="all" aria-pressed="true">全部</button><button data-filter="started" aria-pressed="false">進行中</button><button data-filter="done" aria-pressed="false">已完成</button><button data-filter="todo" aria-pressed="false">尚未開始</button></div><div id="overview-stages"></div></section>
+    </div>
+    <section id="level-view" hidden aria-label="單關操作"></section>
+  </main>
+  <footer class="page-footer"><span>設計預覽：文字與檔名只保存在這台瀏覽器，不會上傳。<br>個人準備完成，不等於校方已受理或錄取。</span><label>測試情境<select id="scenario"><option value="active">正常保存</option><option value="error">保存失敗</option></select></label><a href="revision-2.md">這版改了什麼<i data-lucide="arrow-up-right"></i></a></footer>
+</div>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+<dialog id="plan-dialog" aria-labelledby="plan-title"><form id="plan-form"><button type="button" class="close-dialog icon-button" aria-label="關閉建立計畫"><i data-lucide="x"></i></button><span class="square-icon"><i data-lucide="map"></i></span><h2 id="plan-title">開始一段新旅程</h2><p>每所學校、每個學期各自保存。</p><label for="create-home">母校</label><select id="create-home"><option>國立臺北大學</option></select><label for="create-target">交換學校</label><select id="create-target"></select><label for="create-term">預計出國學期</label><select id="create-term"><option>尚未決定</option><option>上學期</option><option>下學期</option></select><p class="preview-hint">這裡建立的是獨立示意計畫，正式版仍須核對適用梯次。</p><button class="primary-button" type="submit">建立計畫<i data-lucide="arrow-right"></i></button></form></dialog>
+<dialog id="info-dialog" aria-labelledby="info-title"><button class="close-dialog icon-button" aria-label="關閉資料說明"><i data-lucide="x"></i></button><h2 id="info-title">進度是怎麼算的？</h2><p>每關只有一項小任務。「留下內容」與「自行確認」各算一步，讓準備到一半也看得見。</p><p>校方審查及提名是外部通知，不計入個人完成比例。沒有正式結果，就保持未記錄。</p><p>預覽引用既有 116 學年度資料；本期適用性與期限仍待核對。新增的小關是準備輔助，不是新增校方要求。</p><p>這版僅保存本機示意資料；還沒有取代正式網站的「我的申請」。</p><a href="phase-0-and-design.md">查看完整整合方案<i data-lucide="arrow-up-right"></i></a></dialog>
+<dialog id="nav-dialog" aria-labelledby="nav-title"><button class="close-dialog icon-button" aria-label="關閉網站導覽"><i data-lucide="x"></i></button><h2 id="nav-title">UniWay</h2><nav class="mobile-site-nav"><a href="/#home"><i data-lucide="house"></i>首頁</a><a href="/#partners"><i data-lucide="search"></i>搜尋學校</a><a href="/guides"><i data-lucide="book-open"></i>交換指南</a><a href="/#forum"><i data-lucide="messages-square"></i>論壇</a></nav></dialog>
+</body></html>

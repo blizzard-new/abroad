@@ -15302,6 +15302,170 @@
         "title": "PartnerUniversity",
         "type": "object"
       },
+      "PathArchive": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "revision": {
+            "minimum": 1.0,
+            "title": "Revision",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "revision",
+          "archived"
+        ],
+        "title": "PathArchive",
+        "type": "object"
+      },
+      "PathCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "academic_year": {
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Academic Year",
+            "type": "string"
+          },
+          "application_round": {
+            "default": "",
+            "maxLength": 80,
+            "title": "Application Round",
+            "type": "string"
+          },
+          "college": {
+            "default": "",
+            "maxLength": 120,
+            "title": "College",
+            "type": "string"
+          },
+          "degree_level": {
+            "default": "",
+            "maxLength": 80,
+            "title": "Degree Level",
+            "type": "string"
+          },
+          "department": {
+            "default": "",
+            "maxLength": 120,
+            "title": "Department",
+            "type": "string"
+          },
+          "departure_year": {
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Departure Year",
+            "type": "string"
+          },
+          "home_school": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Home School",
+            "type": "string"
+          },
+          "import_existing": {
+            "default": false,
+            "title": "Import Existing",
+            "type": "boolean"
+          },
+          "revision": {
+            "minimum": 0.0,
+            "title": "Revision",
+            "type": "integer"
+          },
+          "semester": {
+            "enum": [
+              "fall",
+              "spring",
+              "full_year",
+              "undecided"
+            ],
+            "title": "Semester",
+            "type": "string"
+          },
+          "target_school": {
+            "maxLength": 200,
+            "minLength": 2,
+            "title": "Target School",
+            "type": "string"
+          }
+        },
+        "required": [
+          "home_school",
+          "target_school",
+          "academic_year",
+          "departure_year",
+          "semester",
+          "revision"
+        ],
+        "title": "PathCreate",
+        "type": "object"
+      },
+      "PathStep": {
+        "additionalProperties": false,
+        "properties": {
+          "applicable": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicable"
+          },
+          "confirmed": {
+            "default": false,
+            "title": "Confirmed",
+            "type": "boolean"
+          },
+          "value": {
+            "default": "",
+            "maxLength": 20000,
+            "title": "Value",
+            "type": "string"
+          },
+          "version_id": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "minLength": 8,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version Id"
+          }
+        },
+        "title": "PathStep",
+        "type": "object"
+      },
+      "PathUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "revision": {
+            "minimum": 1.0,
+            "title": "Revision",
+            "type": "integer"
+          },
+          "step": {
+            "$ref": "#/components/schemas/PathStep"
+          }
+        },
+        "required": [
+          "revision",
+          "step"
+        ],
+        "title": "PathUpdate",
+        "type": "object"
+      },
       "PersonalApplicationPlanChoice": {
         "properties": {
           "checklist": {
@@ -20417,6 +20581,301 @@
           }
         },
         "summary": "Save Application Form Draft"
+      }
+    },
+    "/account/application-paths": {
+      "get": {
+        "operationId": "list_paths_account_application_paths_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "title": "Home School",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Paths"
+      },
+      "post": {
+        "operationId": "create_path_account_application_paths_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PathCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Path"
+      }
+    },
+    "/account/application-paths/{plan_id}": {
+      "get": {
+        "operationId": "get_path_account_application_paths__plan_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "title": "Home School",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Path"
+      }
+    },
+    "/account/application-paths/{plan_id}/archive": {
+      "put": {
+        "operationId": "archive_path_account_application_paths__plan_id__archive_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "title": "Home School",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PathArchive"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Archive Path"
+      }
+    },
+    "/account/application-paths/{plan_id}/steps/{step_id}": {
+      "put": {
+        "operationId": "update_step_account_application_paths__plan_id__steps__step_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "step_id",
+            "required": true,
+            "schema": {
+              "title": "Step Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "title": "Home School",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PathUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Step"
+      }
+    },
+    "/account/application-paths/{plan_id}/writing.docx": {
+      "get": {
+        "description": "Export this plan's saved writing, without overwriting legacy form drafts.",
+        "operationId": "export_writing_account_application_paths__plan_id__writing_docx_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "plan_id",
+            "required": true,
+            "schema": {
+              "title": "Plan Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "minLength": 2,
+              "title": "Home School",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Export Writing"
       }
     },
     "/account/mobile-devices": {

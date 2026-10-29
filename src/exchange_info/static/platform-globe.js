@@ -29,8 +29,8 @@ window.UniWayGlobeBackdrop = (() => {
   // COBE draws its sphere with a radius of 0.4 × the canvas height × scale.
   const RADIUS_PER_HEIGHT = 0.4;
   const PALETTE = {
-    light: { dark: 0, base: [0.9, 0.96, 0.99], glow: [1, 1, 1], marker: [0.09, 0.48, 0.63], taiwan: [0.66, 0.24, 0.22], map: 0.62, diffuse: 1.1, size: 1.4 },
-    dark: { dark: 1, base: [0.1, 0.2, 0.32], glow: [0.1, 0.28, 0.42], marker: [0.5, 0.82, 0.93], taiwan: [1, 0.71, 0.65], map: 3, diffuse: 1.2, size: 1 },
+    light: { dark: 0, base: [0.94, 0.95, 0.97], glow: [1, 1, 1], marker: [35 / 255, 50 / 255, 74 / 255], taiwan: [0.66, 0.24, 0.22], map: 0.62, diffuse: 1.1, size: 1.4 },
+    dark: { dark: 1, base: [35 / 255, 50 / 255, 74 / 255], glow: [35 / 255, 50 / 255, 74 / 255], marker: [1, 1, 1], taiwan: [1, 0.71, 0.65], map: 3, diffuse: 1.2, size: 1 },
   };
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 

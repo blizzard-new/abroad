@@ -35,6 +35,13 @@ ANSWERS = {
     "SchoolReport": {"checks": [
         {"school": "長庚大學", "status": "new_notice", "detail": "國際處公告 116 學年度第二梯次甄選", "source_url": "https://www.cgu.edu.tw/oia-ch"},
         {"school": "國立臺北大學", "status": "no_change", "detail": "交換頁沒有新公告", "source_url": "https://new.ntpu.edu.tw/oia"}]},
+    "VisualPlan": {"outline": ["先看重點"], "art_prompt": "一個藍色小行李箱吉祥物，有兩顆黑色橢圓眼睛",
+                   "spec": {"margin": 64, "title_size": 80, "body_size": 40, "line_height": 1.55, "accent": "teal", "emphasis": "chip", "page_number": "foot"},
+                   "slides": [{"layout": "cover", "title_lines": ["語言檢定怎麼選"], "emphasis": ["怎麼選"], "items": [], "labels": [], "picture": ""}], "issues": []},
+    "VerificationReport": {"verdicts": [
+        {"school": "長庚大學", "verdict": "confirmed_update", "reason": "官網確有 116 學年度第二梯次甄選公告，平台還沒收錄", "source_url": "https://www.cgu.edu.tw/oia-ch/news/1",
+         "edits": [{"target": "verified_window_deadlines.py → cgu → online_deadline.value_text", "current": "當期專屬公告尚未發布",
+                    "proposed": "第二梯次甄選，校內截止日 2026-11-03 17:00", "basis": "「116 學年度第二梯次甄選，校內截止日 11/3 17:00」"}]}]},
     "Report": {"summary": "大家最近在問語言檢定的期限", "points": ["托福有效期兩年", "很多人問居家版"], "sources": ["https://www.dcard.tw/f/exchange"]},
 }
 
@@ -76,6 +83,8 @@ def answer(tool: str, args: list[str], stdin: str) -> None:
     data = dict(ANSWERS.get(title, {}))
     if title == "ChiefReply":
         data = json.loads(os.environ.get("FAKE_CHIEF") or '{"reply": "好的", "actions": []}')
+    if title == "VerificationReport" and os.environ.get("FAKE_VERDICT"):  # e.g. not_exchange: the verifier says no
+        data["verdicts"][0].update(verdict=os.environ["FAKE_VERDICT"], edits=[], reason="這是雙聯學位說明會，不是校級交換公告")
     if title == "Preflight":
         hold = os.environ.get("FAKE_PREFLIGHT") == "hold"
         data = {"go": not hold, "reason": "官方公告剛改了日期" if hold else "沒問題"}

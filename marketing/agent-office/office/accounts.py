@@ -15,16 +15,18 @@ import httpx
 
 from .config import Settings
 from .platforms.base import PlatformError
+from .platforms.github import GitHubClient, is_classic_token
 from .platforms.meta import InstagramClient, ThreadsClient
 from .platforms.youtube import YouTubeClient
 from .store import Store
 
-PLATFORMS = ("threads", "instagram", "youtube")
-LABEL = {"threads": "Threads", "instagram": "Instagram", "youtube": "YouTube"}
+PLATFORMS = ("threads", "instagram", "youtube", "github")
+LABEL = {"threads": "Threads", "instagram": "Instagram", "youtube": "YouTube", "github": "GitHub"}
 DESKS = {
     "threads": "Pat 發文、Momo 回留言、Nana 看數據",
     "instagram": "Pat 發文、Momo 回留言、Nana 看數據",
     "youtube": "Pat 上傳影片、Nana 看數據",
+    "github": "Pat 把你核准的資料更新提案開成 draft PR，不能合併",
 }
 
 
@@ -42,6 +44,10 @@ def credentials(settings: Settings, store: Store) -> dict[str, dict[str, str]]:
             "client_id": settings.youtube_client_id,
             "client_secret": settings.youtube_client_secret,
             "refresh_token": store.get("youtube_refresh_token") or settings.youtube_refresh_token,
+        },
+        "github": {
+            "repo": settings.github_repo,
+            "token": store.get("github_token") or settings.github_token,
         },
     }
 
@@ -85,6 +91,17 @@ def link_youtube(settings: Settings, store: Store, refresh_token: str, http: htt
     store.set("youtube_refresh_token", refresh_token)
     store.set("handle:youtube", channel["title"])
     return channel
+
+
+def link_github(settings: Settings, store: Store, token: str, http: httpx.Client | None = None) -> dict:
+    """Store a GitHub token after asking GitHub whose it is and whether it can push to the office's repository."""
+    client = GitHubClient(settings.github_repo, token, base=settings.github_base, dry_run=False, http=http)
+    found = client.check()
+    if not found["can_push"]:
+        raise PlatformError(f"這個權杖不能寫入 {found['repo']}：fine-grained 權杖要選這個 repository，並給 Contents 與 Pull requests 的讀寫權限")
+    store.set("github_token", token)
+    store.set("handle:github", found["login"] or found["repo"])
+    return {**found, "classic": is_classic_token(token)}
 
 
 @dataclass
@@ -131,6 +148,24 @@ def check(settings: Settings, store: Store, http: httpx.Client | None = None) ->
             rows.append(Row(False, "YouTube", f"授權失效，重新跑 uv run office auth youtube（{str(error)[:120]}）"))
     rows.append(media_row(settings, http))
     return rows
+
+
+def github_row(settings: Settings, store: Store, http: httpx.Client | None = None) -> Row:
+    """Can the token open draft pull requests in the office's repository? Reads only; nothing is created."""
+    name = "GitHub"
+    cred = credentials(settings, store)["github"]
+    if not cred["token"]:
+        return Row(None, name, "還沒連（資料更新提案核准後開不了 PR）：uv run office auth github，見 README「資料更新提案與 draft PR」")
+    try:
+        found = GitHubClient(cred["repo"], cred["token"], base=settings.github_base, dry_run=False, http=http).check()
+    except (PlatformError, httpx.HTTPError) as error:
+        return Row(False, name, f"權杖無效、過期，或看不到 {cred['repo']}：重新跑 uv run office auth github（{str(error)[:120]}）")
+    mode = "模擬模式，只寫進 var/outbox/" if settings.github_simulated else "正式開 PR"
+    if not found["can_push"]:
+        return Row(False, name, f"權杖不能寫入 {found['repo']}：需要 Contents 與 Pull requests 的讀寫權限")
+    if is_classic_token(cred["token"]):
+        return Row(None, name, f"{found['repo']} 可用（{mode}），但這是傳統權杖，權限涵蓋你帳號所有 repo；建議換成只選這個 repo 的 fine-grained 權杖")
+    return Row(True, name, f"{found['repo']}（{found['login'] or '權杖'}；{DESKS['github']}；{mode}）")
 
 
 def media_row(settings: Settings, http: httpx.Client | None = None) -> Row:

@@ -28,6 +28,8 @@ dependencies = [
 dev = [
     "httpx>=0.27.0",
     "httpx2>=2.0.0,<3.0.0",
+    # pip-audit -> cachecontrol: CVE-2026-114613 is fixed in 1.2.3.
+    "msgpack>=1.2.3",
     "pip-audit==2.10.1",
     "pip>=26.2.2",
     "pglast==8.4",
