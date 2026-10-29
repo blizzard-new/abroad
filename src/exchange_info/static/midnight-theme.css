@@ -1,0 +1,169 @@
+/* Final colour layer for the website. Keep fills separate from readable link ink.
+   This file deliberately changes no layout, data, navigation or motion behaviour. */
+@media screen {
+body.unified-shell {
+  --brand: var(--uw-accent); --brand-dark: var(--uw-accent-hover);
+  --brand-strong: var(--uw-accent-hover); --brand-soft: var(--uw-accent-wash);
+  --blue: var(--uw-accent); --blue-soft: var(--uw-accent-wash);
+  --accent: var(--uw-blue-strong); --journal-sky: var(--uw-accent-edge);
+}
+
+/* Solid brand controls and selected navigation, including the mobile shell. */
+html body.unified-shell :is(
+  .uniway-public-nav a[aria-current="page"], .glass-navigation-rail a[aria-current="page"],
+  .glass-navigation-rail a:hover, .application-nav-group > summary:has(a[aria-current="page"]),
+  .mobile-nav a[aria-current="page"], .mobile-nav a.active, .mobile-nav button.active,
+  .glass-mobile-header .mobile-guide-link, .board-avatar-public,
+  .count-badge, .discovery-digest-badge, .pr-chip-blue, .pr-chip-cyan, .pr-chip-home,
+  .school-switcher-icon, .planning-match-icon, .packet-total, .planning-step-number,
+  .application-template-stage-heading em, .pr-toc-group a[aria-current="page"],
+  .pr-guide-feedback button[aria-pressed="true"], .document-workbench-tabs button[aria-selected="true"],
+  .application-workspace-stages [aria-current], .application-workspace-tools [aria-current],
+  .partner-view-switch button[aria-pressed="true"], .pr-mode-switch button[aria-pressed="true"],
+  .pr-view-toggle button[aria-pressed="true"], .pr-views button[aria-pressed="true"],
+  .pr-profile-nav button[aria-current], .calendar-day.is-selected,
+  .study-plan-step-tab.is-active, .study-plan-partner-pill.is-active,
+  .verified-hook-pill, .verified-window-status-pill.tone-upcoming
+) {
+  background: var(--uw-accent); color: var(--uw-on-accent);
+  border-color: var(--uw-accent-edge);
+}
+html body.unified-shell .glass-navigation-rail .uniway-public-nav a[aria-current="page"],
+html body.unified-shell .glass-navigation-rail .application-nav-group > summary:has(a[aria-current="page"]),
+html body.unified-shell .page-back-bar #school-switcher .school-switcher-icon,
+html body.unified-shell #community-hub #community-feed-tabs a[aria-current="page"],
+html body.unified-shell #community-hub#community-hub.pr-forum .community-topic-chips button[aria-pressed="true"],
+html body.unified-shell #partners.pr-explore .pr-view-toggle button[aria-pressed="true"],
+html body.unified-shell .pr-detail .detail-tabs button[aria-selected="true"] {
+  background: var(--uw-accent); color: var(--uw-on-accent); border-color: var(--uw-accent-edge);
+}
+html body.unified-shell .glass-navigation-rail .application-nav-group > summary:has(a[aria-current="page"]) a,
+html body.unified-shell :is(.application-workspace-stages [aria-current], .study-plan-step-tab.is-active) :is(small, strong, span, b),
+html body.unified-shell .application-nav-group > summary:has(a[aria-current="page"]) .application-nav-chevron {
+  color: var(--uw-on-accent); background-color: transparent;
+}
+html body.unified-shell :is(.pr-supported-label > .lucide, .pr-check input:checked + .pr-check-box, .pr-compare input:checked + .pr-compare-box) {
+  background: var(--uw-accent); color: var(--uw-on-accent); border-color: var(--uw-accent-edge);
+}
+html body.unified-shell .glass-navigation-rail .glass-rail-brand {
+  background: var(--uw-accent); color: var(--uw-on-accent); box-shadow: 0 6px 16px #23324a1f;
+}
+html body.unified-shell :is(input[type="checkbox"], input[type="radio"], progress) { accent-color: var(--uw-accent); }
+html body.unified-shell .packet-progress progress::-webkit-progress-value { background: var(--uw-accent); }
+html body.unified-shell .packet-progress progress::-moz-progress-bar { background: var(--uw-accent); }
+
+/* Information blocks formerly filled pale blue use white copy on midnight. */
+html body.unified-shell :is(.planning-next-action, .planning-target-summary, .planning-date-pair > span, .calendar-next-summary > span) {
+  background: var(--uw-accent); color: var(--uw-on-accent); border-color: var(--uw-accent-edge);
+}
+html body.unified-shell :is(.planning-next-action, .planning-target-summary, .planning-date-pair > span, .calendar-next-summary > span)
+  :is(p, small, strong, span, a.text-action, .lucide) { color: inherit; }
+html body.unified-shell .planning-next-action .next-action-icon { background: #ffffff1f; color: #fff; }
+html body.unified-shell .planning-step.is-current a { background: var(--uw-accent); color: #fff; }
+html body.unified-shell .planning-step.is-current :is(small, strong) { color: #fff; }
+html body.unified-shell .planning-step.is-current .planning-step-number { border: 1px solid #ffffff80; }
+html body.unified-shell .document-flow-state-label { color: var(--uw-blue-strong); }
+html body.unified-shell .document-flow-steps [data-flow-state="current"] { border-color: var(--uw-accent-edge); }
+html body.unified-shell .document-flow-steps button:focus-visible { outline-color: var(--uw-blue-strong); }
+
+/* Homepage route artwork and comparison tray share the same dark brand field. */
+html body.unified-shell :is(.pr-map-band, .pr-compare-tray),
+html body.unified-shell #home-landing .hm-route-card {
+  background: var(--uw-accent); color: #fff;
+}
+html body.unified-shell .pr-map-band :is(.pr-kicker, h2, p, dd),
+html body.unified-shell #home-landing :is(.hm-route-card-top, .hm-route-card-bottom > span, .hm-route-title) { color: #fff; }
+html body.unified-shell #home-landing .hm-route-art text { fill: #fff; }
+html body.unified-shell #home-landing .hm-route-origin { fill: #fff; }
+html body.unified-shell #home-landing .hm-route-plane circle { fill: #fff; stroke: #ffffff30; }
+html body.unified-shell #home-landing .hm-route-plane path { fill: var(--uw-accent); }
+html body.unified-shell #home-landing .hm-route-trace { stroke: #fff; }
+html body.unified-shell #home-landing .hm-route-meter span { background: #fff; }
+html body.unified-shell .pr-band-button { color: var(--uw-accent); }
+html body.unified-shell .pr-band-button:hover { color: #fff; background: var(--uw-accent-hover); }
+html body.unified-shell :is(.pr-mini-week .today span, .pr-budget-bar .c1, .pr-budget-legend .c1) { background: var(--uw-accent); }
+html body.unified-shell :is(.map-legend-dot,.map-legend-cluster) { background: var(--uw-accent); color: #fff; box-shadow: 0 0 0 1px var(--uw-accent); }
+html body.unified-shell .school-detail-view .school-photo-fallback { background: var(--uw-accent); color: #fff; }
+
+/* The approved application path keeps its gold completion state and animation. */
+#application-path {
+  --ink: #23324a; --blue: var(--uw-accent); --deep: var(--uw-accent-hover);
+  --pale: #edf0f4; --page: #f5f7fa;
+}
+.unified-shell #dashboard-view > #application-path { background: var(--page); }
+#application-path :is(.current-button, .square-icon, .hub-tabs > a.active, .stat-card.overall-stat,
+  .overview-filter button[aria-pressed="true"], .option-card[aria-pressed="true"]) {
+  background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge);
+}
+#application-path .stat-card.overall-stat > :is(span, strong, small) { color: #fff; }
+#application-path .overall-stat .meter { background: #ffffff30; }
+#application-path .overall-stat .meter-fill { background: #fff; }
+#application-path .overall-stat .particle::before { background: var(--uw-accent); box-shadow: 0 0 5px #23324a80; }
+#application-path .overall-stat .meter-fill::after { background: linear-gradient(105deg,transparent,#23324a66,transparent); }
+#application-path .primary-button { background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge); }
+#application-path .primary-button:hover { background: var(--uw-accent-hover); }
+#application-path :is(.kicker, .app-header h1 span, .ap-empty > svg, .stage-card header > span:last-child) { color: var(--uw-accent); }
+#application-path .meter-fill { background: var(--uw-accent); }
+#application-path .meter.gold .meter-fill { background: linear-gradient(90deg,#d9ac39,#f6d572); }
+#application-path .path-line.partial { stroke: var(--uw-accent); }
+#application-path .node.current { background: var(--uw-accent); color: #fff; box-shadow: 0 7px 0 #101c2e,0 0 0 6px #23324a20; }
+#application-path .node.started:not(.current) { background: var(--uw-accent); color: #fff; box-shadow: 0 7px 0 #101c2e; }
+#application-path .node.current .current-flag { background: var(--uw-accent); color: #fff; border-color: #fff; box-shadow: 0 3px 0 #23324a30; }
+#application-path .stage-divider .stage-wave path { fill: var(--uw-accent); }
+#application-path .stage-divider .stage-wave path:first-child { fill: var(--uw-accent-edge); }
+#application-path .stage-divider .stage-wave { filter: drop-shadow(0 4px 0 #17243a); }
+#application-path .stage-divider h3 { color: #fff; }
+#application-path .stage-divider > span, #application-path .stage-divider small {
+  background: #ffffff1f; color: #fff; box-shadow: none;
+}
+#application-path .map-scroll { background: linear-gradient(#f0f3f7,#fafbfc); scrollbar-color: #9aa6b7 transparent; }
+#application-path .glide-select { --gs-accent: #fff; --gs-surface: var(--uw-accent); --gs-highlight: #44536a; --gs-text: #fff; }
+#application-path .glide-select__trigger { background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge); box-shadow: 0 3px 0 #17243a; }
+#application-path .glide-select__pill { background: var(--uw-accent-edge); box-shadow: inset 0 0 0 1px #ffffff30; }
+#application-path .glide-select__number { color: #fff; }
+#application-path .glide-select__menu { border-color: var(--uw-accent-edge); box-shadow: 0 16px 50px #23324a29,0 3px 0 #17243a; }
+#application-path :is(button,a,input,select,textarea,[tabindex]):focus-visible { outline-color: var(--uw-accent); }
+#application-path :is(.choice-box, .example-note, .option-card:has(input:checked)) { background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge); }
+#application-path :is(.choice-box, .example-note, .option-card:has(input:checked)) :is(small,strong,svg,a) { color: inherit; }
+#application-path :is(.hint-toggle, .source-details summary, .support-card h3 svg, .support-points svg, .context-card strong, .meter-label strong) { color: var(--uw-accent); }
+#application-path .check-row input, #application-path .option-card input { accent-color: var(--uw-accent); }
+#application-path .option-card:has(input:checked) input { accent-color: #fff; }
+
+/* Dark mode changes the canvas, never the midnight fill / white label pairing. */
+html[data-theme="dark"] #application-path {
+  --ink: var(--uw-text); --muted: var(--uw-muted); --deep: #fff;
+  --page: var(--uw-page); --border: var(--uw-line);
+}
+html[data-theme="dark"] #application-path :is(.plan-strip, .map-panel, .map-toolbar,
+  .map-caption, .next-card, .side-note, .stat-card:not(.overall-stat), .stage-card,
+  .level-card, .level-actions, .support-card, .outline-button, .overview-filter button:not([aria-pressed="true"]), dialog) {
+  background: var(--uw-surface); color: var(--uw-text); border-color: var(--uw-line); box-shadow: none;
+}
+html[data-theme="dark"] #application-path .map-scroll { background: var(--uw-page); }
+html[data-theme="dark"] #application-path :is(input:not([type=checkbox]):not([type=radio]),select,textarea) {
+  background: var(--uw-surface); color: var(--uw-text); border-color: var(--uw-line);
+}
+html[data-theme="dark"] #application-path :is(.node-title,.node-caption) { background: var(--uw-page); color: var(--uw-text); }
+html[data-theme="dark"] #application-path .primary-button { box-shadow: 0 4px 0 #0b1321; }
+html[data-theme="dark"] #application-path :is(.kicker,.ap-empty>svg,.stage-card header>span:last-child,
+  .hint-toggle,.source-details summary,.support-card h3 svg,.support-points svg,.context-card strong,.meter-label strong) { color: #fff; }
+html[data-theme="dark"] #application-path :is(.ap-status,.quiet-button,.plan-choice label,.hub-tabs>a:not(.active),
+  .next-card>span,.next-card>p,.side-note p,.source-button,.meter-label,.stat-card:not(.overall-stat)>span,
+  .stat-card:not(.overall-stat)>small,.stage-card header small,.stage-level small,.row-progress,
+  .level-topline,.back-link,.level-heading p:last-child,.level-progress>div:first-child,.input-meta,
+  .level-actions>span,.support-points li,.source-details,.context-card,dialog p) { color: var(--uw-muted); }
+html[data-theme="dark"] #application-path .meter { background: #ffffff30; }
+html[data-theme="dark"] #application-path .meter:not(.gold) .meter-fill { background: #fff; }
+html[data-theme="dark"] #application-path .meter:not(.gold) .particle::before { background: var(--uw-accent); box-shadow: 0 0 5px #23324a80; }
+html[data-theme="dark"] #application-path .meter:not(.gold) .meter-fill::after { background: linear-gradient(105deg,transparent,#23324a66,transparent); }
+html[data-theme="dark"] #application-path :is(button,a,input,select,textarea,[tabindex]):focus-visible { outline-color: #fff; }
+
+/* Public HTML reading pages use the same tokens without loading the app shell. */
+.reading-shell :is(.reading-header nav a[aria-current="page"], .reading-header nav a:hover,
+  .reading-planner, .cta, .cs-upper-layer .cs-layer-step, .cs-home-pill.is-active,
+  .cs-status-pill, .cs-checked-tag, .cs-origin-badge, .cs-agreement-table th) {
+  background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge);
+}
+.reading-shell :is(.overview, .cs-compliance-banner, .article-takeaways, .article-next, .article-table thead) { background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge); }
+.reading-shell :is(.overview, .cs-compliance-banner, .article-takeaways, .article-next, .article-table thead) :is(h2,h3,p,a,strong,small,li) { color: #fff; }
+}

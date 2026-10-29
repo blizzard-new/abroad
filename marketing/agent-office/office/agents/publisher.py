@@ -1,4 +1,5 @@
 """發佈排程：發文前由這張桌子的 AI 做最後檢查，到時間就呼叫 Threads／Instagram／YouTube 的官方 API 發文；
+你核准的資料更新提案，也由這張桌子用固定程式開成 GitHub 的 draft PR（只開 draft，不合併）。
 模擬模式只把要送出的內容寫進 outbox。"""
 
 from __future__ import annotations
@@ -9,13 +10,15 @@ from datetime import datetime, timedelta, timezone
 from .. import accounts
 from ..llm import WriterError
 from ..platforms.base import PlatformError
+from ..platforms.github import GitHubClient
 from ..platforms.media_host import MediaHost
 from ..platforms.meta import InstagramClient, ThreadsClient
 from ..platforms.youtube import YouTubeClient
+from ..proposals import FORMAT as PROPOSAL_FORMAT, Proposal
 from ..store import now_utc
 from .base import Agent, Persona
 
-PLATFORM_LABEL = {"threads": "Threads", "instagram": "Instagram", "youtube": "YouTube"}
+PLATFORM_LABEL = {"threads": "Threads", "instagram": "Instagram", "youtube": "YouTube", "github": "GitHub"}
 PREFLIGHT_HOLD = "發文前檢查擋下："
 
 
@@ -24,7 +27,7 @@ class Publisher(Agent):
         id="publisher",
         name="Pat",
         title="發佈排程",
-        duty="到排定時間呼叫各平台官方 API 發文，並在 Threads 第一則留言補上連結",
+        duty="到排定時間呼叫各平台官方 API 發文，並在 Threads 第一則留言補上連結；也把你核准的資料更新提案開成 GitHub draft PR（不合併）",
         hair="cap",
         hair_color="#3b2a20",
         shirt="#6c5ce7",
@@ -54,10 +57,18 @@ class Publisher(Agent):
                 youtube["client_id"], youtube["client_secret"], youtube["refresh_token"], dry_run=dry, log=self._log,
             ),
             "media": MediaHost(settings, dry_run=dry, log=self._log),
+            "github": GitHubClient(
+                creds["github"]["repo"], creds["github"]["token"], base=settings.github_base, dry_run=settings.github_simulated, log=self._log,
+            ),
         }
 
+    def simulated(self, channel: str) -> bool:
+        """Whether this channel only records what it would send: GitHub has its own switch, the rest follow OFFICE_DRY_RUN."""
+        settings = self.office.settings
+        return settings.github_simulated if channel == "github" else settings.dry_run
+
     def missing_credentials(self, channel: str) -> bool:
-        if self.office.settings.dry_run:
+        if self.simulated(channel):
             return False
         return not accounts.connected(self.office.settings, self.office.store, channel)
 
@@ -74,7 +85,8 @@ class Publisher(Agent):
         store = self.office.store
         label = PLATFORM_LABEL[draft["channel"]]
         if self.missing_credentials(draft["channel"]):
-            store.update_draft(draft["id"], status="failed", error=f"{label} 帳號還沒設定（見 README 的帳號設定）")
+            hint = "uv run office auth github" if draft["channel"] == "github" else "見 README 的帳號設定"
+            store.update_draft(draft["id"], status="failed", error=f"{label} 帳號還沒設定（{hint}）")
             self.status("error", f"{label} 帳號還沒設定")
             self.office.draft_changed(draft["id"])
             return store.draft(draft["id"])
@@ -92,13 +104,15 @@ class Publisher(Agent):
             self.status("error", f"{label} 發佈失敗", screen={"type": "terminal", "lines": list(self.lines) + [str(error)[:80]]})
             self.office.draft_changed(draft["id"])
             return store.draft(draft["id"])
-        if self.office.settings.dry_run:
+        simulated = self.simulated(draft["channel"])
+        if simulated:
             self._write_outbox(draft, clients)
         store.update_draft(
             draft["id"], status="published", published_at=now_utc(), remote_id=result.get("id"), remote_url=result.get("url") or None,
-            note="模擬發佈（沒有真的送出）" if self.office.settings.dry_run else None, error=None,
+            note="模擬發佈（沒有真的送出）" if simulated else None, error=None,
         )
-        self.status("done", f"{label} 發佈完成 🚀", screen={"type": "terminal", "lines": list(self.lines)})
+        done = "draft PR 開好了 📮" if draft["channel"] == "github" else f"{label} 發佈完成 🚀"
+        self.status("done", done, screen={"type": "terminal", "lines": list(self.lines)})
         self.office.draft_changed(draft["id"])
         return store.draft(draft["id"])
 
@@ -107,7 +121,7 @@ class Publisher(Agent):
         the API calls themselves stay plain code, so an AI never decides what gets sent where."""
         writer = self.office.writer
         review = draft.get("review") or {}
-        if draft["format"] in {"reply", "story"} or review.get("preflight_overridden") or not writer.uses_model("publisher"):
+        if draft["format"] in {"reply", "story", PROPOSAL_FORMAT} or review.get("preflight_overridden") or not writer.uses_model("publisher"):
             return True
         self.status("reviewing", f"發文前最後檢查：{draft['title'][:12]}")
         since = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat(timespec="seconds")
@@ -133,6 +147,12 @@ class Publisher(Agent):
         if needed and not media.get(needed):
             raise ValueError("這則還沒有輸出圖片或影片（OFFICE_RENDER_MEDIA=0 時只寫文案），請重新製作後再發佈")
         files = self.office.media_file
+        if channel == "github" and fmt == PROPOSAL_FORMAT:
+            proposal = Proposal.from_payload(payload)
+            return clients["github"].open_draft_pr(
+                branch=proposal.branch, path=proposal.path, content=proposal.content(), commit_message=proposal.commit_message(),
+                title=proposal.pr_title(), body=proposal.pr_body(),
+            )
         if channel == "threads":
             threads: ThreadsClient = clients["threads"]
             if fmt == "reply":

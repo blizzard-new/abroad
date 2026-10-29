@@ -26,8 +26,9 @@ from .store import now_utc
 
 API = "https://api.telegram.org"
 PAIR_TTL = timedelta(minutes=15)
-CHANNEL = {"threads": "Threads", "instagram": "IG", "youtube": "YouTube"}
-FORMAT = {"text": "貼文", "reply": "留言回覆", "carousel": "輪播", "reel": "Reels", "story": "限動", "short": "Shorts", "long": "長影片"}
+CHANNEL = {"threads": "Threads", "instagram": "IG", "youtube": "YouTube", "github": "GitHub"}
+FORMAT = {"text": "貼文", "reply": "留言回覆", "carousel": "輪播", "reel": "Reels", "story": "限動", "short": "Shorts", "long": "長影片",
+          "data_update": "資料更新提案"}
 CAPTION_LIMIT, TEXT_LIMIT = 1024, 4096
 WELCOME = (
     "已連上 UniWay 行銷辦公室 ✅\n\n"
@@ -213,17 +214,23 @@ class TelegramBridge:
         status = draft["status"]
         label = f"#{draft['id']}｜{CHANNEL[draft['channel']]} {FORMAT.get(draft['format'], draft['format'])}"
         link = f"\n\n打開辦公室：{self.office.settings.office_url}" if self.office.settings.office_url else ""
+        proposal = draft["format"] == "data_update"
         if status == "pending_approval":
             when = f"｜{self._when(draft).strip()}" if draft.get("scheduled_at") else ""
-            text = f"📝 等你核准 {label}{when}\n{draft['title']}\n\n{_preview(draft)}"
-            return {"text": text + link, "photo": self._picture(draft), "buttons": _decide(draft["id"], "✅ 核准")}
+            text = f"{'📮 資料更新提案等你核准' if proposal else '📝 等你核准'} {label}{when}\n{draft['title']}\n\n{_preview(draft)}"
+            return {"text": text + link, "photo": self._picture(draft),
+                    "buttons": _decide(draft["id"], "✅ 核准並開 draft PR" if proposal else "✅ 核准")}
         if status == "needs_changes":
             issues = "\n".join(f"・{issue}" for issue in ((draft.get("review") or {}).get("issues") or [])[:3])
             text = (f"⚠️ 需要你看一下 {label}\n{draft['title']}\n\n{issues}\n\n"
-                    f"要重寫就跟我說「#{draft['id']} 改成…」，或照樣核准。")
-            return {"text": text + link, "buttons": _decide(draft["id"], "照樣核准")}
+                    + ("先點開官方來源確認，沒問題再核准；不要就退回。" if proposal else f"要重寫就跟我說「#{draft['id']} 改成…」，或照樣核准。"))
+            if proposal:
+                text += f"\n\n{_preview(draft)}"
+            return {"text": text + link, "buttons": _decide(draft["id"], "照樣核准並開 draft PR" if proposal else "照樣核准")}
         if status == "published":
             dry = "\n（模擬發佈，沒有真的送出）" if draft.get("note") else ""
+            if proposal:
+                return {"text": f"📮 draft PR 開好了 {label}\n{draft['title']}\n{draft.get('remote_url') or ''}{dry}\n\n合併要你自己到 GitHub 按。".rstrip()}
             return {"text": f"🚀 已發出 {label}\n{draft['title']}\n{draft.get('remote_url') or ''}{dry}".rstrip()}
         if status == "failed":
             return {"text": f"❌ 發佈失敗 {label}\n{draft['title']}\n\n{(draft.get('error') or '')[:300]}{link}"}
@@ -290,6 +297,19 @@ def _decide(draft_id: int, approve_label: str) -> list[dict]:
 
 def _preview(draft: dict) -> str:
     payload, fmt = draft.get("payload") or {}, draft["format"]
+    if fmt == "data_update":
+        if payload.get("verified_by"):
+            check = f"\n\n🔎 {payload['verified_by']} 驗證：需要更新平台\n{payload.get('verdict_reason', '')}"
+        elif payload.get("verification_note"):
+            check = f"\n\n⚠️ 沒有完成二次驗證：{payload['verification_note']}"
+        else:
+            check = "\n\n（沒有指定驗證員，只有巡查同事的說法）"
+        edits = payload.get("edits") or []
+        if edits:
+            changes = "\n\n建議修改：\n" + "\n".join(f"{n}. {e.get('target', '')}\n   目前：{e.get('current', '')}\n   改成：{e.get('proposed', '')}" for n, e in enumerate(edits[:4], 1))
+        else:
+            changes = f"\n\n建議更新：{payload['suggested_update']}" if payload.get("suggested_update") else ""
+        return f"{payload.get('detail', '')}{check}{changes}\n\n官方來源：{payload.get('source_url') or '（沒有附）'}\n{payload.get('author', '')} 巡查發現"
     if fmt == "reply":
         return f"@{payload.get('username') or '訪客'}：{payload.get('comment_text', '')}\n\n→ {payload.get('text', '')}"
     if draft["channel"] == "threads":

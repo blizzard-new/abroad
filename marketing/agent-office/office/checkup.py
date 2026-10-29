@@ -135,6 +135,7 @@ def run(settings: Settings, *, ping: bool = False, http: httpx.Client | None = N
         ("圖片影片", tool_rows(settings)),
         ("每張桌子的 AI", brain_rows(settings, ping)),
         ("社群帳號（只讀取帳號資料，不會發文）", accounts.check(settings, store, http)),
+        ("GitHub（核准的資料更新提案會開成 draft PR；只讀取，不會建立任何東西）", [accounts.github_row(settings, store, http)]),
         ("手機", phone_rows(settings, store, http)),
     ]
 

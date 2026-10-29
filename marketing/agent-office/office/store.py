@@ -216,7 +216,8 @@ class Store:
 
     def published_since(self, since_iso: str) -> list[dict]:
         return self._all(
-            "SELECT * FROM drafts WHERE status = 'published' AND published_at >= ? ORDER BY published_at", (since_iso,)
+            "SELECT * FROM drafts WHERE status = 'published' AND channel != 'github' AND published_at >= ? ORDER BY published_at",
+            (since_iso,)
         )
 
     # ---- events ----

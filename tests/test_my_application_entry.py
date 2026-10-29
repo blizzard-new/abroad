@@ -1,4 +1,4 @@
-"""「我的申請」is one door: it opens 選校與確認 first, for new and returning students alike."""
+"""The application map is the entry; existing tools remain reachable."""
 from __future__ import annotations
 
 import re
@@ -15,17 +15,17 @@ def rail_entry() -> str:
     return match.group(0)
 
 
-def test_the_rail_entry_opens_selection_and_confirmation_first():
+def test_the_rail_entry_opens_the_account_application_map():
     entry = rail_entry()
-    assert 'href="#advisor"' in entry
+    assert 'href="#my-application"' in entry
     assert "data-requires-home-school" in entry, "a student with no school is asked for one, then lands on the same page"
     assert "我的申請" in HTML.split(entry, 1)[1].split("</a>", 1)[0]
 
 
-def test_the_dropdown_still_lists_the_three_stages_selection_first():
+def test_the_dropdown_keeps_the_existing_tools_after_the_map():
     panel = HTML.split('<nav class="application-tools-panel"', 1)[1].split("</nav>", 1)[0]
-    stages = re.findall(r'<a href="(#[a-z-]+)" data-requires-home-school>([^<]+)</a>', panel)[:3]
-    assert stages == [("#advisor", "選校與確認"), ("#overview", "準備與時程"), ("#application-center", "申請文件")]
+    stages = re.findall(r'<a href="(#[a-z-]+)" data-requires-home-school>([^<]+)</a>', panel)[:4]
+    assert stages == [("#my-application", "申請地圖與進度"), ("#advisor", "選校與確認"), ("#overview", "準備與時程"), ("#application-center", "申請文件")]
 
 
 def test_an_account_less_student_is_sent_to_the_same_page_after_choosing_a_school():

@@ -2811,6 +2811,8 @@ def create_app(
         response: Response,
     ) -> ApplicationFormDraft:
         account, _ = authenticated_account(request)
+        if template_id == "uniway-application-paths-v1":
+            raise HTTPException(status_code=422, detail="此名稱保留給申請計畫服務。")
         if not hasattr(app.state, "form_draft_service"):
             raise HTTPException(status_code=503, detail="表單草稿服務未啟用。")
 
@@ -2907,6 +2909,8 @@ def create_app(
         home_school: str = Query(default="長庚大學"),
     ) -> Response:
         account, _ = authenticated_account(request)
+        if template_id == "uniway-application-paths-v1":
+            raise HTTPException(status_code=422, detail="請從申請計畫頁面封存計畫。")
         if not hasattr(app.state, "form_draft_service"):
             raise HTTPException(status_code=503, detail="表單草稿服務未啟用。")
         try:
@@ -5861,6 +5865,10 @@ def create_app(
     maint_router, maint_store = build_default_maintenance_router(resolved_data_dir)
     app.state.maintenance_store = maint_store
     app.include_router(maint_router)
+    from .application_path import register_application_path
+    register_application_path(app, authenticate=authenticated_account, university_for=university_for,
+        evaluate=evaluate_application_plan, catalog_for=application_center_catalog,
+        release_mode=configured_product_release_mode, feature_enabled=product_feature_enabled)
     return app
 
 
