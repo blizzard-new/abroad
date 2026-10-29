@@ -48,8 +48,8 @@ def test_program_annotations_remain_distinct_without_changing_institutions():
 def test_all_supported_bundles_keep_every_profile_and_raw_content():
     from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
     profiles=storage.load_destination_profiles(include_bundled_baseline=True)
-    assert len(profiles)==6470
-    added_homes = {u.school_name for u in SUPPORTED_UNIVERSITIES if u.id in {"ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub", "ncnu", "ndhu", "thu"}}
+    assert len(profiles)==6647
+    added_homes = {u.school_name for u in SUPPORTED_UNIVERSITIES if u.id in {"ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub", "ncnu", "ndhu", "thu", "shu"}}
     assert sum(p.home_university not in added_homes for p in profiles)==4588
     for home in SUPPORTED_UNIVERSITIES:
         path=ROOT/f'src/exchange_info/official_data/{home.id}/destination_profiles.jsonl'
@@ -57,7 +57,7 @@ def test_all_supported_bundles_keep_every_profile_and_raw_content():
         actual={p.school_name for p in profiles if p.home_university==home.school_name}
         assert actual==expected,home.id
     assert len([p for p in profiles if p.home_university==HOME])==237
-    assert len(apply_destination_profile_promotions(profiles,[],[]))==6470
+    assert len(apply_destination_profile_promotions(profiles,[],[]))==6647
 
 
 def test_upsert_and_collection_audit_preserve_sibling_routes_and_other_homes(tmp_path):

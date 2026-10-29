@@ -1305,8 +1305,35 @@ THU = UniversityProfile(
     ),
 )
 
+SHU = UniversityProfile(
+    id="shu",
+    school_name="世新大學",
+    short_name="世新",
+    english_name="Shih Hsin University",
+    aliases=("shu", "世新大學", "世新", "SHU", "Shih Hsin University", "Shih Hsin"),
+    hero_image="/static/assets/shu-campus.svg",
+    official_url="https://global.web.shu.edu.tw/%e5%ad%b8%e7%94%9f%e4%ba%a4%e6%b5%81-%e8%b5%b4%e5%a4%96%e7%a0%94%e4%bf%ae/",
+    coverage_note="完整支援：已整合世新大學國際暨兩岸事務處（Global Affairs Office）與兩岸事務處（OCSE）《2027春季班／2026秋季班赴外及赴陸交換甄選簡章》、《2027春季班外國姊妹校交換申請手冊》、《世新大學選送學生出國研修甄選辦法》、《學生出國選修課程實施辦法》與《雙聯學制專區》官方資料：（1）甄選時程與雙軌窗口：國際處每年辦理兩梯次赴國外（非大陸地區）交換甄選（春季班於前一年 9–10 月報名、秋季班於當年 2–3 月報名），兩岸事務處同步辦理赴大陸及港澳地區交換生甄選；申請人須為本校在學滿一學期以上之學士班及碩博士班學生，赴國外交換一般須歷年平均 75 分（GPA 3.0）或班排前 50%、赴大陸交換一般須歷年平均 70 分以上且操行 80 分以上。（2）合作姊妹校與雙聯學位：完整收錄 177 所全球與兩岸合作姊妹校（橫跨 29 國與地區，含 58 所當期開放申請之國外及大陸交換／雙聯合作校、英國蘇塞克斯大學／西英格蘭大學及美國威斯康辛大學河瀑分校等跨國雙聯學位）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、校內《選送學生出國研修獎助學金》及 49 所合作大學共 244 篇歷屆學長姐交換與雙聯心得報告。",
+    support_level="full",
+    partner_count_hint=177,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "世新大學",
+        "SHIHHSINUNIVERSITY",
+        "SHIHHSIN",
+        "SHU",
+    ),
+    # https://www.shu.edu.tw/SHU-All-Units.aspx — checked 2026-10-30.
+    colleges=(
+        "新聞傳播學院",
+        "管理學院",
+        "人文社會學院",
+        "法律學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU)
 DEFAULT_UNIVERSITY = CGU
 
 
