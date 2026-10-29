@@ -336,10 +336,16 @@ class FormDraftService:
         items = [
             self._decode(row)
             for row in self.repository.list_records(account_id, school_key)
+            if row.template_id != "uniway-application-paths-v1"
         ]
         return ApplicationFormDraftList(
             items=sorted(items, key=lambda row: row.updated_at, reverse=True)
         )
+
+    def get_internal_draft(self, account_id: str, home_school: str, template_id: str):
+        """Owner-bound read for internal namespaces; never accepts a client owner."""
+        record = self.repository.find_record(account_id, school_identity_key(home_school), template_id)
+        return self._decode(record) if record else None
 
     def save_draft(
         self,

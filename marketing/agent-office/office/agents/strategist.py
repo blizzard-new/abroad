@@ -32,7 +32,7 @@ class Strategist(Agent):
         facts = load_facts(self.office.settings)
         news = load_news(self.office.settings)
         since = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat(timespec="seconds")
-        recent = [d["title"] for d in self.office.store.drafts(limit=60) if d["created_at"] >= since]
+        recent = [d["title"] for d in self.office.store.drafts(limit=60) if d["created_at"] >= since and d["channel"] != "github"]
         winners = self.office.staff["analyst"].winners()
         research = self._research(Briefing(day=day, facts=facts, news=news, recent_titles=recent, winners=winners))
         insights = json.loads(self.office.store.get("insights") or "[]")

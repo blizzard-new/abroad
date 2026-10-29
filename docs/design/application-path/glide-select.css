@@ -1,0 +1,252 @@
+/* Adapted from React Bits Glide Select. See third-party/react-bits-LICENSE.md. */
+.glide-select {
+  --gs-accent: #f5f5f5;
+  --gs-surface: #27272a;
+  --gs-highlight: #3f3f46;
+  --gs-text: #f5f5f5;
+  --gs-radius: 10px;
+  --gs-inner-radius: 6px;
+  --gs-chip: 32px;
+  --gs-row: 30px;
+  --gs-font: 13px;
+  --gs-menu-w: 176px;
+  --gs-pop: 180ms;
+  --gs-pop-out: 120ms;
+  --gs-glide: 220ms;
+  --gs-origin: top left;
+  --gs-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  position: relative;
+  display: inline-block;
+}
+
+.glide-select[data-disabled] {
+  opacity: 0.5;
+}
+
+.glide-select__trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--gs-chip);
+  margin: 0;
+  padding: 0 8px 0 10px;
+  border: 0;
+  border-radius: var(--gs-inner-radius);
+  background: var(--gs-surface);
+  color: var(--gs-text);
+  font-family: inherit;
+  font-size: var(--gs-font);
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition:
+    background-color 100ms ease,
+    transform 160ms var(--gs-ease-out);
+}
+
+.glide-select__trigger:disabled {
+  cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .glide-select__trigger:not(:disabled):hover {
+    background: color-mix(in srgb, var(--gs-highlight) 60%, var(--gs-surface));
+  }
+}
+
+.glide-select__trigger[aria-expanded='true'] {
+  background: color-mix(in srgb, var(--gs-highlight) 60%, var(--gs-surface));
+}
+
+.glide-select__trigger:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+.glide-select__label[data-empty] {
+  opacity: 0.6;
+}
+
+.glide-select[data-swap] .glide-select__label {
+  animation: gs-swap 160ms ease;
+}
+
+@keyframes gs-swap {
+  from {
+    opacity: 0.6;
+    filter: blur(2px);
+  }
+}
+
+.glide-select__chevron {
+  display: inline-flex;
+  color: color-mix(in srgb, var(--gs-text) 55%, transparent);
+  transition: transform 200ms var(--gs-ease-out);
+}
+
+.glide-select__trigger[aria-expanded='true'] .glide-select__chevron {
+  transform: rotate(180deg);
+}
+
+.glide-select__menu {
+  position: absolute;
+  z-index: 20;
+  width: var(--gs-menu-w);
+  min-width: 100%;
+  padding: 4px;
+  border-radius: var(--gs-radius);
+  background: var(--gs-surface);
+  box-shadow: 0 4px 16px color-mix(in srgb, #000 22%, transparent);
+  transform-origin: var(--gs-origin);
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity var(--gs-pop) var(--gs-ease-out),
+    transform var(--gs-pop) var(--gs-ease-out);
+}
+
+.glide-select__menu[data-state='open'] {
+  opacity: 1;
+  transform: none;
+}
+
+.glide-select__menu[data-state='closed'] {
+  transition-duration: var(--gs-pop-out);
+  pointer-events: none;
+}
+
+.glide-select__menu[data-side='bottom'] {
+  top: calc(100% + 6px);
+}
+
+.glide-select__menu[data-side='top'] {
+  bottom: calc(100% + 6px);
+}
+
+.glide-select__menu[data-align='left'] {
+  left: 0;
+}
+
+.glide-select__menu[data-align='right'] {
+  right: 0;
+}
+
+.glide-select__list {
+  position: relative;
+  display: grid;
+  gap: 1px;
+  touch-action: none;
+}
+
+.glide-select__pill {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: var(--gs-row);
+  border-radius: var(--gs-inner-radius);
+  background: var(--gs-highlight);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--gs-glide) var(--gs-ease-out),
+    opacity 150ms ease;
+}
+
+.glide-select__option {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--gs-row);
+  padding: 0 8px 0 10px;
+  border-radius: var(--gs-inner-radius);
+  color: var(--gs-text);
+  font-size: var(--gs-font);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 150ms ease;
+}
+
+.glide-select__option[aria-selected='true'] {
+  background: color-mix(in srgb, var(--gs-highlight) 60%, transparent);
+}
+
+.glide-select__list[data-live] .glide-select__option[aria-selected='true'] {
+  background: transparent;
+}
+
+.glide-select__name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.glide-select__tag {
+  flex-shrink: 0;
+  color: color-mix(in srgb, var(--gs-text) 55%, transparent);
+  font-size: calc(var(--gs-font) - 2px);
+}
+
+.glide-select__check {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--gs-accent);
+  visibility: hidden;
+}
+
+.glide-select__check[data-on] {
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion=running]) .glide-select__menu {
+    transform: none !important;
+    transition: opacity var(--gs-pop) ease;
+  }
+
+  html:not([data-motion=running]) .glide-select__menu[data-state='closed'] {
+    transition-duration: var(--gs-pop-out);
+  }
+
+  html:not([data-motion=running]) .glide-select__pill {
+    transition: opacity 150ms ease;
+  }
+
+  html:not([data-motion=running]) .glide-select__chevron {
+    transition: none;
+  }
+
+  html:not([data-motion=running]) .glide-select__trigger {
+    transition: background-color 100ms ease;
+  }
+
+  html:not([data-motion=running]) .glide-select__trigger:not(:disabled):active {
+    transform: none;
+  }
+
+  html:not([data-motion=running]) .glide-select[data-swap] .glide-select__label {
+    animation: none;
+  }
+}
+
+/* UniWay theme and native popover adaptation; 12 rows remain touch-scrollable. */
+.glide-select{--gs-accent:#117d9d;--gs-surface:#fff;--gs-highlight:#d9eff7;--gs-text:#245f78;--gs-radius:20px;--gs-inner-radius:12px;--gs-chip:46px;--gs-row:48px;--gs-font:14px;--gs-pop:180ms;--gs-glide:220ms;flex:1;min-width:0;max-width:285px;margin-right:auto}
+.glide-select__trigger{width:100%;height:46px;border:1px solid #cfe3ed;background:#eff8fb;box-shadow:0 3px 0 #dfedf3;padding:0 12px;gap:10px;border-radius:13px;outline-offset:3px;text-align:left}
+.glide-select__label{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}.glide-select__chevron{flex:none}.glide-select__chevron svg{width:18px;height:18px}
+.glide-select__menu{position:fixed;margin:0;min-width:0;border:1px solid #cbdfe9;padding:6px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#bbd7e5 transparent;box-shadow:0 16px 50px #28526829,0 3px 0 #deebf3;touch-action:pan-y}
+.glide-select__list{gap:3px;touch-action:pan-y}.glide-select__option{gap:10px;padding:0 11px;min-height:48px}.glide-select__name{font-weight:650}.glide-select__number{font-size:11px;min-width:24px;color:#6d92a6}.glide-select__check svg{width:18px;height:18px}.glide-select__pill{background:#d9eff7;box-shadow:inset 0 0 0 1px #bcdde9}
+@media(max-width:600px){.glide-select{--gs-font:12px;max-width:none}.glide-select__trigger{padding:0 8px;gap:4px}.glide-select__menu{--gs-font:14px}.glide-select__chevron svg{width:15px;height:15px}}
+@media(prefers-reduced-motion:reduce){html:not([data-motion=running]) .glide-select *,html:not([data-motion=running]) .glide-select *::before,html:not([data-motion=running]) .glide-select *::after{animation:none!important;transition:none!important}}

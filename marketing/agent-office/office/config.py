@@ -36,7 +36,7 @@ def _time(value: str) -> time:
     return time(int(hours), int(minutes or 0))
 
 
-def _flag(value: str | None, default: bool) -> bool:
+def _flag(value: str | None, default: bool | None) -> bool | None:
     """Only an explicit yes or no changes a flag; anything unreadable keeps the (safe) default."""
     text = (value or "").strip().lower()
     if text in {"1", "true", "yes", "on"}:
@@ -101,6 +101,14 @@ class Settings:
     supabase_service_key: str = ""
     supabase_bucket: str = "marketing-media"
 
+    # GitHub: the draft pull requests Pat opens from the data updates you approve. The token lives in .env or in
+    # `office auth github`; no AI desk ever sees it, and nothing here can merge.
+    github_repo: str = "blizzard-new/abroad"
+    github_base: str = "main"
+    github_token: str = ""
+    # None: pull requests are only recorded in var/outbox/ while OFFICE_DRY_RUN is on; True or False decides it alone.
+    github_dry_run: bool | None = None
+
     # When set, the office page and API need ?token=… once (a cookie remembers it). /media stays public.
     access_token: str = ""
 
@@ -108,6 +116,10 @@ class Settings:
     telegram_bot_token: str = ""
     # Where your phone opens the office (for example over Tailscale); notifications link to it when set.
     office_url: str = ""
+
+    @property
+    def github_simulated(self) -> bool:
+        return self.dry_run if self.github_dry_run is None else self.github_dry_run
 
     @property
     def db_path(self) -> Path:
@@ -172,6 +184,10 @@ class Settings:
             youtube_client_secret=get("YOUTUBE_CLIENT_SECRET") or "",
             youtube_refresh_token=get("YOUTUBE_REFRESH_TOKEN") or "",
             youtube_privacy=get("YOUTUBE_PRIVACY") or "public",
+            github_repo=get("OFFICE_GITHUB_REPO") or "blizzard-new/abroad",
+            github_base=get("OFFICE_GITHUB_BASE") or "main",
+            github_token=get("OFFICE_GITHUB_TOKEN") or "",
+            github_dry_run=_flag(get("OFFICE_GITHUB_DRY_RUN"), None),
             media_host=(get("OFFICE_MEDIA_HOST") or "none").lower(),
             public_base_url=(get("OFFICE_PUBLIC_BASE_URL") or "").rstrip("/"),
             supabase_url=(get("SUPABASE_URL") or "").rstrip("/"),
