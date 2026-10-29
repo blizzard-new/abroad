@@ -132,7 +132,7 @@ window.UniWayExplore = (() => {
     const drawer = host.querySelector(".journey-filter-drawer");
     if (!drawer) return;
     // The panel is always open beside the cards; on a phone it opens from the 篩選 pill.
-    if (!narrow.matches) drawer.open = true;
+    if (!narrow.matches && state.partnerView !== "map") drawer.open = true;
     else if (!drawerSynced) drawer.open = false;
     drawerSynced = true;
   }

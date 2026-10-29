@@ -2,7 +2,7 @@ const state = {
   dashboard: null,
   query: "",
   partnerQuery: "",
-  partnerView: "list",
+  partnerView: "map",
   partnerDataLoading: false,
   partnerDataError: false,
   availability: "",
@@ -8574,7 +8574,7 @@ const PARTNER_QUERY_KEYS = { partnerQuery: "q", region: "region", country: "coun
 function readPartnerUrl() {
   const previousFilters = JSON.stringify(Object.keys(PARTNER_QUERY_KEYS).map((key) => state[key]));
   const query = new URLSearchParams(window.location.search);
-  state.partnerView = query.get("view") === "map" ? "map" : "list";
+  state.partnerView = query.get("view") === "list" ? "list" : "map";
   Object.entries(PARTNER_QUERY_KEYS).forEach(([key, parameter]) => { state[key] = query.get(parameter) || ""; });
   $("#partner-search").value = state.partnerQuery;
   if (state.dashboard) renderPartnerFilters();
@@ -8657,6 +8657,11 @@ function syncPartnerView() {
     return;
   }
   const isMap = state.partnerView === "map";
+  const filters = document.querySelector("#partners .journey-filter-drawer");
+  if (filters && filters.dataset.view !== state.partnerView) {
+    filters.dataset.view = state.partnerView;
+    filters.open = !isMap && !matchMedia("(max-width: 900px)").matches;
+  }
   panel.hidden = !isMap;
   $("#partner-table").hidden = isMap;
   $("#show-more-partners").hidden = isMap || filteredPartners().length <= state.partnerLimit;
@@ -8679,7 +8684,7 @@ function syncPartnerView() {
   if (partnerMapLoadPromise || partnerMapLoadFailed) return;
   showPartnerMapStatus("正在準備你的世界地圖", "首次載入需要一點時間。", { loading: true });
   const generation = partnerMapGeneration;
-  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261029-midnight-1&attempt=${generation}`)
+  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261030-space-1&attempt=${generation}`)
     .then((module) => module.createPartnerMap({ renderPreview: renderMapPreview, onSchoolSelect: loadDiscoveryPreview, onList: () => setPartnerView("list"), onRetry: retryPartnerMap, onIcons: initIcons, freshEngine: generation > 0 }))
     .then((controller) => {
       if (generation !== partnerMapGeneration) { controller.destroy(); return; }
