@@ -46,10 +46,9 @@ function init(){
   if(root)return;
   root=document.querySelector('#application-path');root.innerHTML=window.UniWayApplicationPathTemplate;
   picker=new window.UniWayGlideSelect($('#stage-select'));
-  const reduced=matchMedia('(prefers-reduced-motion: reduce)');let manual=false;
-  function motion(paused){root.dataset.motion=paused?'paused':'running';const b=$('#motion-toggle');b.setAttribute('aria-label',paused?'播放動畫':'暫停動畫');b.setAttribute('aria-pressed',paused);b.title=paused?'播放動畫':'暫停動畫';b.innerHTML=icon(paused?'play':'pause');icons();}
-  motion(reduced.matches);reduced.addEventListener('change',e=>{if(!manual)motion(e.matches);});
-  $('#motion-toggle').onclick=()=>{manual=true;motion(root.dataset.motion!=='paused');};
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  function motion(paused){root.dataset.motion=paused?'paused':'running';}
+  motion(reduced.matches);reduced.addEventListener('change',e=>motion(e.matches));
   $('#refresh-path').onclick=()=>{if(!dirty||confirm('目前文字尚未保存，重新載入會捨棄這次輸入。繼續？'))load(true);};
   $('#new-plan').onclick=openNew;
   $('#archive-plan').onclick=archive;
