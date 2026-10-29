@@ -65,6 +65,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "ndhu": ["oia.ndhu.edu.tw", "rb027.ndhu.edu.tw", "ias.ndhu.edu.tw", "aa.ndhu.edu.tw", "chass.ndhu.edu.tw", "arts.ndhu.edu.tw", "www.ndhu.edu.tw", "ndhu.edu.tw"],
     "thu": ["oir.thu.edu.tw", "www.nihongo.thu.edu.tw", "inttrade.thu.edu.tw", "ba.thu.edu.tw", "form2.thu.edu.tw", "www.thu.edu.tw", "thu.edu.tw"],
     "shu": ["global.web.shu.edu.tw", "ocse.web.shu.edu.tw", "www.shu.edu.tw", "shu.edu.tw"],
+    "pu": ["411.pu.edu.tw", "oia.pu.edu.tw", "www.pu.edu.tw", "pu.edu.tw"],
 }
 
 
@@ -1323,6 +1324,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["shu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="shu", partner_rows=shu_rows, default_cycle_label="115"
+        )
+
+    # 38. PU partners.jsonl (276 partner schools)
+    pu_partners_file = official_data_root / "pu" / "partners.jsonl"
+    if pu_partners_file.exists():
+        pu_rows = []
+        for line in pu_partners_file.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            pu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://411.pu.edu.tw/p/426-1073-4.php?Lang=zh-tw",
+            })
+        school_reports["pu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="pu", partner_rows=pu_rows, default_cycle_label="116"
         )
 
     if store.current_release_id is None:

@@ -1332,8 +1332,37 @@ SHU = UniversityProfile(
     ),
 )
 
+PU = UniversityProfile(
+    id="pu",
+    school_name="靜宜大學",
+    short_name="靜宜",
+    english_name="Providence University",
+    aliases=("pu", "靜宜大學", "靜宜", "PU", "Providence University", "Providence"),
+    hero_image="/static/assets/pu-campus.svg",
+    official_url="https://411.pu.edu.tw/p/426-1073-4.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合靜宜大學國際暨兩岸事務處（OIA）與 411 遊留學中心（出國研修組）《各洲別交換學校一覽表（15 個地區專頁）》、《跨國雙聯學制專區（16 校）》、《ISEP 國際交換學生計畫》、《五大洲締約姊妹校名錄 Excel》、《學生出國研修辦法》、《遴選交換學生作業要點》與《出國交換學生學分換算準則》官方資料：（1）三梯次校內初審、免繳雜費與強制抵免規定：每學期分三梯次辦理出國研修校內初審（春季班出國於前一年 8月／9月／10月辦理，如 115-2 為 2026/08/03–08/23、08/24–09/20、09/21–10/11，初審通過者於 10/30 前繳交《境外研修同意書》；秋季班出國於當年 2月底／3月底／4月底辦理；雙聯學制秋季班 3/31 截止；ISEP 秋季班 1 月中、春季班 7 月底截止）。大一新生可於大一下申請、大二上出國（延畢生亦得申請互惠交換），在學期間出國交換須繳交靜宜全額學費、免繳雜費；返國後次學期開學 2 個月內強制規定「至少須抵免一科（至少 1 學分）」（換算準則：美日陸 1:1、歐洲 ECTS÷2、英國 CATS÷4）。（2）合作姊妹校、ISEP 與 16 校雙聯學位：完整收錄 275 所全球與大陸合作姊妹校（橫跨 5 大洲 48 個國家與地區，含 230 所當期開放申請之交換與雙聯合作校、ISEP 全球逾 300 校互惠食宿交換，以及美、英、德、法、日、澳 16 所跨國雙聯學位合作校）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、校內《E.A.G.L.E. 築夢基金》（亞洲上限 2 萬／非亞上限 3 萬）、《學生出國研修獎助學金辦法》及 118 所合作大學共 299 篇歷屆學長姐交換與研修心得報告 PDF。",
+    support_level="full",
+    partner_count_hint=275,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "靜宜大學",
+        "PROVIDENCEUNIVERSITY",
+        "PROVIDENCE",
+        "PU",
+    ),
+    # https://www.pu.edu.tw/p/412-1000-1047.php?Lang=zh-tw — checked 2026-10-30.
+    colleges=(
+        "外語暨人文創意學院",
+        "社會科學院",
+        "理學院",
+        "管理學院",
+        "資訊學院",
+        "國際學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU)
 DEFAULT_UNIVERSITY = CGU
 
 

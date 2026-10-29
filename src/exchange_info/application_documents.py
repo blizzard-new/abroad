@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, SHU, THU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, PU, SCU, SHU, THU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -100,6 +100,7 @@ NCNU_SOURCE_CHECKED_AT = datetime(2026, 10, 27, tzinfo=timezone.utc)
 NDHU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 THU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 SHU_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
+PU_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2356,6 +2357,51 @@ def _shu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _pu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理靜宜大學（411遊留學中心）出國交換、大陸交換、ISEP 國際交換計畫、跨國雙聯學位暨教育部學海飛颺／惜珠與 411 出國留學圓夢計畫應繳資料：1. 出國交換／雙聯研修申請表（須經系所主任簽章）、2. 家長或監護人同意書正本、3. 中英文歷年成績單正本（含班／系排名百分比；赴國外交換一般須歷年平均 70 分／GPA 2.5 以上或班排前 50%，歐美／ISEP／雙聯一般須 75 分／GPA 3.0 以上，且操行 80 分以上）、4. 中英文自傳與出國研修讀書計畫書（約 1,000–1,500 字）、5. 有效外語能力檢定證明（英語組 TOEFL iBT 61–79／IELTS 5.5–6.0／TOEIC 550–750、日語組 JLPT N2–N4、韓語組 TOPIK 2–4 級、西語 DELE A2–B2、法語 DELF／德語 Goethe；大陸地區交換免附外語檢定）與師長推薦信。",
+        "study-plan": "撰寫靜宜大學赴國外及大陸姊妹校交換甄選、ISEP、雙聯學位及教育部學海飛颺／惜珠獎補助必繳之《出國研修讀書計畫書》（約 1,000–1,500 字）。請具體說明赴外動機、擬於志願姊妹校修習之專業或語言課程規劃（依靜宜大學《出國研修學生科目學分抵免辦法》規定，交換期間須維持靜宜在學註冊，交換生繳交靜宜全額學費並免繳雜費，且返國後至少須辦理抵免一科以上）、語言準備及返國後學分抵免與職涯銜接規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程、ISEP 或雙聯學位之選課預審與教務核備（依《靜宜大學與境外大學辦理雙聯學制實施辦法》及《出國研修學生科目學分抵免辦法》規定，交換生出國期間繳交靜宜全額學費並免繳雜費、雙聯生繳交靜宜全額學雜費；歐洲學分按 2 ECTS = 靜宜 1 學分、英國學分按 4 CATS = 靜宜 1 學分、美日韓及大陸按 1:1 換算，且返國後至少須抵免一科）。",
+        "predeparture-notice": "獲國際暨兩岸事務處（411遊留學中心）公告錄取後於期限內完成錄取確認，配合辦理姊妹校或 ISEP 提名（Nomination）與外校入學申請，並完成行前說明會、役男出境緩徵及海外醫療與意外保險。",
+        "return-report": "境外交換、ISEP 或雙聯研修期滿返國後 1 個月內，須向國際暨兩岸事務處（411遊留學中心）繳交 1,500–2,000 字以上之《出國交換／研修學生心得報告書》（含研修與生活照片至少 4–6 張，供刊登於 411 遊留學中心《經驗分享》專區）、姊妹校正式成績單及出入境證明，辦理教育部學海計畫／411 出國留學圓夢計畫／寰宇外語教育獎助學金核銷。",
+        "credit-transfer": "境外交換、ISEP 或雙聯研修期滿返國後次學期開學兩個月內，須持境外姊妹校核發之正式成績單正本與課程大綱（Syllabus），依《靜宜大學出國研修學生科目學分抵免辦法》向所屬系（所）、院及綜合業務處申請境外修習科目學分抵免（強制規定至少須抵免一科）。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "靜宜大學").replace("長庚", "靜宜")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "靜宜《出國研修辦法》及 411 遊留學中心甄選規定：赴國外及大陸交換歷年學業總平均一般須達 70 分（GPA 2.5）以上或班排名前 50%（歐美、ISEP 及雙聯學位一般須達 75 分／GPA 3.0 以上），且操行成績平均達 80 分以上；申請教育部學海飛颺者歷年成績須達班排名前 30%（或 GPA 3.0 以上）。請檢附含班／系排名之中英文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（一般交換 61–79+／ISEP 及雙聯 79–80+）", "IELTS 學術組（一般交換 5.5–6.0+／ISEP 及雙聯 6.0–6.5+）", "TOEIC 多益聽讀（亞洲及部分英語授課姊妹校採認 550–750+）", "JLPT 日語能力試驗（日本姊妹校要求 N1–N4，一般交換要求 N2 或 N3 以上）", "TOPIK 韓語能力測驗（韓國姊妹校韓語授課組要求 2–4 級以上）", "DELE 西語檢定／DELF 法語檢定／Goethe 德語檢定（西語、法語、德語區姊妹校採認 A2–B2）", "大陸地區姊妹校（免附外語檢定證明；以歷年學業成績、讀書計畫及面試審查）"]
+            field["help_text"] = "依靜宜 411 遊留學中心甄選規定：英語組採認 TOEFL iBT、IELTS、TOEIC 或全民英檢中高級；日語組採認 JLPT N1–N4；韓語組採認 TOPIK 2–6 級；西語組採認 DELE A2–B2；赴大陸地區交換免外語檢定。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://411.pu.edu.tw/p/426-1073-4.php?Lang=zh-tw",
+        source_checked_at=PU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="411出國研修申請表、家長同意書與自傳讀書計畫" if template.id == "exchange-application-data" else ("出國研修讀書計畫書" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://411.pu.edu.tw/var/file/73/1073/img/1593/827651153.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "所屬系所主任或指導教授簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "完成錄取確認並配合辦理姊妹校／ISEP 提名與外校入學申請", "return-report": "返國後 1 個月內繳交研修心得報告書與正式成績單辦理學海／圓夢獎助學金核銷", "credit-transfer": "返國後次學期開學兩個月內持正式成績單與課綱辦理學分抵免（至少須抵免一科）"}.get(template.id, "完成校內甄選報名並將核章紙本申請表、家長同意書、中英文歷年成績單（含排名）、自傳、讀書計畫與外語檢定證明送交國際暨兩岸事務處（411遊留學中心）"),
+        version="116準備工具-2026-10-30.1",
+        destinations=["靜宜大學國際暨兩岸事務處（411遊留學中心，臺中市沙鹿區臺灣大道七段 200 號主顧樓 111 室）"],
+        conditional_note="此為個人準備工具；靜宜大學（411遊留學中心）每學期辦理三次出國交換生甄選（春季班為前一年 8 月底、9 月底、10 月底；秋季班為當年 2 月底、3 月底、4 月底；雙聯學位秋季入學為 3 月 31 日截止），交換生出國期間繳交靜宜全額學費並免繳雜費，返國後次學期開學兩個月內強制規定至少須抵免一科。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2434,6 +2480,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _thu_template(template)) is not None]
     if university.id == SHU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _shu_template(template)) is not None]
+    if university.id == PU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _pu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
