@@ -141,6 +141,40 @@ class VerificationReport(BaseModel):
     verdicts: list[Verdict]
 
 
+class VisualSpec(BaseModel):
+    """The one set of rules every page of a set shares."""
+
+    margin: int = Field(default=80, description="左右安全邊距（px），60～100，整組一致")
+    title_size: int = Field(default=88, description="主標題字級（px），72～96")
+    body_size: int = Field(default=44, description="正文字級（px），36～44")
+    line_height: float = Field(default=1.5, description="正文行高，是字級的 1.4～1.6 倍")
+    accent: Literal["blue", "teal", "coral"] = Field(default="blue", description="整組的重點色：blue 藍（品牌色，預設）、teal 青綠、coral 珊瑚紅")
+    emphasis: Literal["color", "chip", "size"] = Field(default="color", description="整組唯一的主要強調手法：color 換色、chip 色塊底、size 放大")
+    page_number: Literal["top", "foot"] = Field(default="top", description="頁碼位置，整組固定：top 右上角、foot 頁尾")
+
+
+class VisualSlide(BaseModel):
+    layout: Literal["cover", "focus", "steps", "compare", "stat", "cta"] = Field(
+        description=(
+            "這一頁的版面：cover 封面（只給第一頁）、cta 結尾行動頁（只給最後一頁）；中間頁選 focus 一個重點加說明卡、"
+            "steps 2～5 個步驟、compare 兩邊比較、stat 一個大數字或關鍵詞配說明"
+        )
+    )
+    title_lines: list[str] = Field(default_factory=list, description="主標題依語意斷行（最多 3 行）；合起來必須和原本的主標題一字不差，只能決定在哪裡斷行，不能改字")
+    emphasis: list[str] = Field(default_factory=list, description="這一頁要突出的關鍵詞（最多 2 個），必須是主標題或內文裡原本就有的字")
+    items: list[str] = Field(default_factory=list, description="steps 的各步驟、compare 的兩邊、stat 的第一項是大數字或關鍵詞；每一項必須是內文裡原本就有的字，不能改寫")
+    labels: list[str] = Field(default_factory=list, description="compare 兩邊的標籤（各 6 字內），必須是標題或內文裡原本就有的字；沒有就留空")
+    picture: str = Field(default="", description="這一頁的示意圖或視覺需求，一句話（例如「兩欄比較」「三個步驟」）")
+
+
+class VisualPlan(BaseModel):
+    outline: list[str] = Field(description="逐頁大綱：每頁一句話，只說這一頁要傳達的一個主要訊息")
+    spec: VisualSpec
+    slides: list[VisualSlide] = Field(description="和提供的頁面一一對應：順序相同、頁數相同")
+    art_prompt: str = Field(default="", description="封面插圖的畫面描述（只畫插圖，不含任何文字或字母）；有吉祥物時要寫出牠的眼睛；不需要插圖就留空")
+    issues: list[str] = Field(default_factory=list, description="你發現的內容問題（例如某頁資訊太多、建議刪減或拆頁）；不要自己改字，寫在這裡給作者和老闆看")
+
+
 class Preflight(BaseModel):
     go: bool = Field(description="可以發就 true；需要老闆再看一次就 false")
     reason: str = Field(description="判斷理由，一句話")
@@ -151,7 +185,7 @@ class Insights(BaseModel):
 
 
 ChiefActionType = Literal["start_day", "redo", "new_post", "reschedule", "reject", "note_for_tomorrow", "set_brain", "hire", "assign", "dismiss",
-                          "watch_schools", "set_schedule", "set_office_times", "add_routine", "remove_routine", "set_verifier"]
+                          "watch_schools", "set_schedule", "set_office_times", "add_routine", "remove_routine", "set_verifier", "redo_image"]
 
 
 class ChiefAction(BaseModel):
@@ -170,6 +204,7 @@ class ChiefAction(BaseModel):
             "times 填新時間，填 [\"default\"] 代表改回原本設定；"
             "add_routine：新增每天固定時間做的事（times、task_kind、instructions 寫題目或工作，name 填新同事名字，原本的同事可留空）；"
             "remove_routine：刪掉編號 routine_id 的固定排程；"
+            "redo_image：請 Mori 重新做 draft_id 那則的圖（版面重新設計、封面插圖重畫），instructions 寫對圖的要求；文字不變，要改文字用 redo；"
             "set_verifier：指定 name 的新同事當驗證員，巡查同事發現新公告或不一致後，先交給她重新打開官網驗證，確認要更新平台的才送進審核匣；name 留空代表取消驗證員"
         )
     )

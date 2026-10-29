@@ -49,6 +49,7 @@ ROLES = {
     "strategist": "企劃",
     "threads": "Threads 文案",
     "designer": "IG 文案",
+    "visual": "做圖排版",
     "video": "影片腳本",
     "reviewer": "審稿",
     "community": "留言回覆",
@@ -68,19 +69,24 @@ def has_claude_api_credentials() -> bool:
     return (config_home / "anthropic").is_dir()
 
 
+# A role nobody configured follows another one: whoever makes the pictures thinks with the AI that writes the IG copy.
+ROLE_FALLS_BACK_TO = {"visual": "designer"}
+
+
 def resolve(spec: str, role: str) -> str:
     """Brain key for one role from OFFICE_BRAINS ("codex" or "threads=claude-code,reviewer=codex")."""
     default = "auto"
-    chosen = None
+    named: dict[str, str] = {}
     for part in (p.strip() for p in spec.split(",") if p.strip()):
         if "=" in part:
             name, _, brain = part.partition("=")
-            if name.strip() == role:
-                chosen = brain.strip()
-            elif name.strip() == "*":
+            if name.strip() == "*":
                 default = brain.strip()
+            else:
+                named[name.strip()] = brain.strip()
         else:
             default = part
+    chosen = named.get(role) or named.get(ROLE_FALLS_BACK_TO.get(role, ""))
     key = chosen or default
     if key == "auto":
         return "api" if has_claude_api_credentials() else "offline"

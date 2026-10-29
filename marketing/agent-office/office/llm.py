@@ -18,6 +18,8 @@ from .brand import (
     PILLARS,
     THREADS_ANGLES,
     TOPIC_TAG,
+    MASCOT,
+    VISUAL_BRIEF,
     Briefing,
     NewsItem,
 )
@@ -42,8 +44,10 @@ from .models import (
     Slide,
     ThreadsDraft,
     VideoScript,
+    VisualPlan,
 )
 from .offline_bank import TOPICS, Topic, topic_for
+from .visual import default_plan
 
 Model = TypeVar("Model", bound=BaseModel)
 
@@ -207,6 +211,29 @@ class ModelWriter:
         )
         return self._ask(role, SchoolReport, task, briefing_text(briefing), None, effort="high", web=True, need_web=True)
 
+    def visual_plan(self, request: str, slides: list[Slide]) -> VisualPlan:
+        """The visual designer reads the boss's design brief first, then the request of whoever needs the picture, and plans the layout."""
+        pages = "\n\n".join(f"第 {i + 1} 頁（{s.kind}）\n主標題：{s.title}\n內文：{s.body}" for i, s in enumerate(slides))
+        task = (
+            f"{VISUAL_BRIEF}\n\n"
+            "---\n"
+            "以上是你的設計準則。下面是這間辦公室的做法，請照這個格式回答（程式會照你的設計直接出圖）：\n"
+            "- 文字已經由撰稿的同事寫好，也由審稿查核過事實：你只能決定「怎麼排」，不能改字、增字或刪字。"
+            "標題斷行（title_lines）合起來必須和原本的主標題一字不差；強調的字（emphasis）、steps 的步驟、compare 的兩邊、"
+            "stat 的大數字（items）都必須是主標題或內文裡原本就有的字。資訊太多、需要刪減或拆頁時，不要自己改，寫在 issues，作者和老闆看得到。\n"
+            "- outline：每頁一句話，說這一頁只傳達的一個主要訊息。\n"
+            "- spec（整組共用）：margin 60～100、title_size 72～96、body_size 36～44、line_height 1.4～1.6；"
+            "accent 在 blue（品牌藍，預設）、teal、coral 選一個；emphasis 在 color、chip、size 選一個，整組只用這一種手法；page_number 選 top 或 foot，整組固定。\n"
+            "- slides：和下面的頁面一一對應、順序與頁數都相同。第一頁（cover）用 cover，結尾頁（cta）用 cta；中間頁選："
+            "focus 一個重點加說明卡、steps 內文是 2～5 個先後步驟、compare 內文是兩邊比較（labels 填兩邊的名稱）、stat 內文圍繞一個大數字或關鍵詞（items 只放它）。"
+            "能用比較或步驟說清楚的，就不要塞成一整段；每頁最多突出 1～2 個關鍵詞。\n"
+            "- art_prompt：封面插圖的畫面描述，只畫插圖、不含任何文字或字母；畫面若有吉祥物，照下面的描述寫。\n"
+            f"吉祥物：{MASCOT}\n\n"
+            f"需求：{request}\n\n"
+            f"提供的文案（共 {len(slides)} 頁）：\n{pages}"
+        )
+        return self._ask("visual", VisualPlan, task, "", lambda: default_plan(slides), effort="high")
+
     def verify_findings(self, role: str, who: str, patroller: str, findings: str, briefing: Briefing) -> VerificationReport:
         """A second colleague re-reads the official pages behind a patrol's findings and decides whether the platform needs updating."""
         task = (
@@ -303,6 +330,8 @@ class ModelWriter:
             "老闆要求這些時，請他在審核匣自己按，並在 reply 說明。\n"
             "- draft_id 只能用下面辦公室狀態裡真的存在的編號；不確定指哪一則就不要動作，直接在 reply 問清楚。\n"
             "- 只是問進度或問問題時，actions 留空，直接用狀態回答。\n"
+            "- 老闆說的是圖（圖片、版面、設計、配色、字太小、重點不明顯、插圖重畫）就用 redo_image 請 Mori 重新設計，instructions 照老闆的話寫；"
+            "說的是文字（文案、開頭、口氣、字句）才用 redo。兩者都要就各下一個 action。所有圖片都由 Mori 一個人做，其他同事只負責寫好文案後交給她。\n"
             "- 老闆問大家用什麼 AI，就照下面「每個工作現在用的 AI」回答；要換就用 set_brain，一個工作一個 action。"
             "Claude 的模型（opus、sonnet、haiku、fable 或 claude- 開頭）用 claude-code、api 或 antigravity；"
             "GPT 模型用 codex 或 antigravity；Gemini 模型只能用 antigravity。Antigravity 的模型名稱要照老闆給的 `agy models` 代號填"

@@ -15,7 +15,8 @@ from pathlib import Path
 from typing import Callable, Iterator
 
 from ..config import Settings
-from ..models import CarouselDraft, Slide, VideoScript
+from ..models import CarouselDraft, Slide, VideoScript, VisualPlan
+from ..visual import default_plan
 from .soundtrack import soundtrack
 
 
@@ -72,17 +73,25 @@ class Renderer:
         self.roots["art"] = art.parent
         return f"{ORIGIN}/art/{art.name}"
 
-    def carousel(self, draft: CarouselDraft, out_dir: Path, progress: Progress | None = None, art: Path | None = None) -> list[Path]:
+    @staticmethod
+    def _design(plan: VisualPlan | None, slides: list[Slide], index: int) -> dict:
+        """What the template needs for one page: the set's shared spec and this page's layout (the plain plan when nobody designed)."""
+        plan = plan or default_plan(slides)
+        return {"spec": plan.spec.model_dump(), "slide": plan.slides[index].model_dump()}
+
+    def carousel(self, draft: CarouselDraft, out_dir: Path, progress: Progress | None = None, art: Path | None = None,
+                 plan: VisualPlan | None = None) -> list[Path]:
         out_dir.mkdir(parents=True, exist_ok=True)
         files = []
         art_url = self._art_url(art)
+        plan = plan or default_plan(draft.slides)
         with self._page(1080, 1350) as page:
             page.goto(f"{ORIGIN}/template/carousel.html", wait_until="load")
             for index, slide in enumerate(draft.slides):
                 page.evaluate(
                     "(args) => window.renderSlide(args)",
                     {"slide": slide.model_dump(), "index": index, "total": len(draft.slides), "site": self._site(), "story": False,
-                     "art": art_url if slide.kind == "cover" else None},
+                     "art": art_url if slide.kind == "cover" else None, "design": self._design(plan, draft.slides, index)},
                 )
                 path = out_dir / f"slide-{index + 1:02d}.jpg"
                 page.locator("#slide").screenshot(path=str(path), type="jpeg", quality=92)
@@ -91,26 +100,28 @@ class Renderer:
                     progress(index + 1, len(draft.slides), path)
         return files
 
-    def card(self, slide: Slide, out_path: Path) -> Path:
+    def card(self, slide: Slide, out_path: Path, plan: VisualPlan | None = None) -> Path:
         """One 4:5 picture in the carousel's look, e.g. the image that goes with a Threads post."""
         out_path.parent.mkdir(parents=True, exist_ok=True)
         with self._page(1080, 1350) as page:
             page.goto(f"{ORIGIN}/template/carousel.html", wait_until="load")
             page.evaluate(
                 "(args) => window.renderSlide(args)",
-                {"slide": slide.model_dump(), "index": 0, "total": 1, "site": self._site(), "story": False, "art": None},
+                {"slide": slide.model_dump(), "index": 0, "total": 1, "site": self._site(), "story": False, "art": None,
+                 "design": self._design(plan, [slide], 0)},
             )
             page.locator("#slide").screenshot(path=str(out_path), type="jpeg", quality=92)
         return out_path
 
-    def story(self, cover: Slide, out_path: Path, art: Path | None = None) -> Path:
+    def story(self, cover: Slide, out_path: Path, art: Path | None = None, plan: VisualPlan | None = None) -> Path:
         out_path.parent.mkdir(parents=True, exist_ok=True)
         art_url = self._art_url(art)
         with self._page(1080, 1920) as page:
             page.goto(f"{ORIGIN}/template/carousel.html", wait_until="load")
             page.evaluate(
                 "(args) => window.renderSlide(args)",
-                {"slide": cover.model_dump(), "index": 0, "total": 1, "site": self._site(), "story": True, "art": art_url},
+                {"slide": cover.model_dump(), "index": 0, "total": 1, "site": self._site(), "story": True, "art": art_url,
+                 "design": self._design(plan, [cover], 0)},
             )
             page.locator("#slide").screenshot(path=str(out_path), type="jpeg", quality=92)
         return out_path
