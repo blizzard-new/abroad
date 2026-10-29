@@ -1,15 +1,6 @@
 /* Loaded only when the partner map is visible. The app owns all filter state. */
 const VENDOR = "/static/vendor/maplibre/5.24.0";
 const ASSETS = "/static/assets/partner-map";
-const LAND_COLORS = {
-  Asia: ["#add3a1", "#c8db97", "#91c9b4", "#bad8a7"],
-  Europe: ["#c2b4df", "#d4c3e4", "#b5c5e3", "#c9bee8"],
-  Africa: ["#ecd08b", "#e4ba82", "#edda9e", "#dbbc8d"],
-  "North America": ["#e9afa0", "#ebc296", "#e5b7bc", "#edc7b1"],
-  "South America": ["#99c9ad", "#b8d49b", "#91c5b8", "#b2d1ac"],
-  Oceania: ["#e9bf85", "#d3d29b", "#bbd2ac", "#e3cc9d"],
-  Antarctica: ["#ecf4f7", "#ecf4f7", "#ecf4f7", "#ecf4f7"],
-};
 const EMPTY = () => ({ type: "FeatureCollection", features: [] });
 let enginePromise;
 
@@ -99,31 +90,21 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     };
     [countries, lakes, rivers] = await Promise.all([read("countries"), read("lakes").catch(EMPTY), read("rivers").catch(EMPTY)]);
   } finally { clearTimeout(fetchTimeout); }
-  countries.features.forEach(({ properties: p }) => {
-    p.day = (LAND_COLORS[p.continent] || LAND_COLORS.Asia)[Math.abs(p.tone || 0) % 4];
-    // Keep the regional hue in dark mode, with lower luminance behind the labels.
-    p.night = "#" + p.day.slice(1).match(/../g).map((v) => Math.round(parseInt(v, 16) * .51).toString(16).padStart(2, "0")).join("");
-  });
   const labels = { type: "FeatureCollection", features: countries.features.filter((f) => f.properties.name !== "Antarctica").map((f) => ({
     type: "Feature", properties: { name: f.properties.name.normalize("NFD").replace(/[^\x20-\x7E]/g, "") },
     geometry: { type: "Point", coordinates: [f.properties.label_lon, f.properties.label_lat] },
   })) };
-  const dark = () => document.documentElement.dataset.theme === "dark";
-  const palette = () => dark()
-    ? { sea: "#23324a", land: ["get", "night"], border: "#b9c2cf", label: "#ffffff", halo: "#18263b", water: "#44536a", coast: "#b9c2cf", grid: "#ffffff", sky: "#18263b", horizon: "#44536a" }
-    : { sea: "#23324a", land: ["get", "day"], border: "#f7f3dc", label: "#23324a", halo: "#f7f4df", water: "#23324a", coast: "#d8dde5", grid: "#ffffff", sky: "#f3f5f8", horizon: "#b9c2cf" };
-  const atmosphere = (p) => ({ "sky-color": p.sky, "horizon-color": p.horizon, "sky-horizon-blend": .8, "atmosphere-blend": ["interpolate", ["linear"], ["zoom"], 0, .65, 3, .4, 5, 0] });
-  const colors = palette();
-  // A flat map shows the whole of Europe to Japan at once; the globe hid half of it. The zoom fits about 190° of longitude and the
-  // latitudes from southern Australia to northern Europe into the box, whichever is tighter.
+  // Space remains the canvas in either site theme. Globe projection keeps real
+  // school coordinates, clustering and keyboard/touch navigation on one engine.
+  const colors = { sea: "#0b3356", land: "#427c83", border: "#91c4be", label: "#f2f8ff", halo: "#14354c", water: "#0b3356", coast: "#57bbcf", grid: "#95c8eb" };
   const globalCamera = () => {
     const width = canvasHost.clientWidth || 960, height = canvasHost.clientHeight || 600;
-    return { center: [85, 24], zoom: Math.max(.1, Math.min(Math.log2(width * .0037), Math.log2(height * .0073))), bearing: 0, pitch: 0 };
+    return { center: [120, 22], zoom: Math.max(.25, Math.min(2.5, Math.log2(Math.min(width * .88, height * .88) * Math.PI / 512))), bearing: 0, pitch: 0 };
   };
   let map;
   try {
     map = new lib.Map({
-      container: canvasHost, ...globalCamera(), minZoom: .1, maxZoom: 12,
+      container: canvasHost, ...globalCamera(), minZoom: -1, maxZoom: 12,
       maxPitch: 45, attributionControl: false, renderWorldCopies: false,
       locale: {
         "Map.Title": "互動地圖", "Marker.Title": "地圖標記", "Popup.Close": "關閉預覽",
@@ -136,7 +117,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
       },
       canvasContextAttributes: { antialias: true },
       style: {
-        version: 8, projection: { type: "mercator" }, sky: atmosphere(colors), glyphs: `${ASSETS}/fonts/{fontstack}/{range}.pbf`,
+        version: 8, projection: { type: "globe" }, glyphs: `${ASSETS}/fonts/{fontstack}/{range}.pbf`,
         sources: { countries: { type: "geojson", data: countries }, labels: { type: "geojson", data: labels }, lakes: { type: "geojson", data: lakes }, rivers: { type: "geojson", data: rivers }, graticule: { type: "geojson", data: graticule() } },
         layers: [
           { id: "ocean", type: "background", paint: { "background-color": colors.sea } },
@@ -162,7 +143,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   const navigation = new lib.NavigationControl({ showCompass: true, visualizePitch: false });
   map.addControl(navigation, "top-right");
   map.addControl(new lib.AttributionControl({ compact: true, customAttribution: '<a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noreferrer">Natural Earth</a> · <a href="https://www.wikidata.org/" target="_blank" rel="noreferrer">Wikidata</a> / <a href="https://ror.org/" target="_blank" rel="noreferrer">ROR</a>' }), "bottom-right");
-  map.getCanvas().setAttribute("aria-label", "互動全球地圖。方向鍵平移，加减鍵縮放；也可用下方快速定位選單選校。");
+  map.getCanvas().setAttribute("aria-label", "互動 3D 地球。拖曳或方向鍵旋轉，滾輪或加減鍵縮放；也可用下方定位選單選校。");
   const controlLabels = { ".maplibregl-ctrl-zoom-in": "放大地圖", ".maplibregl-ctrl-zoom-out": "縮小地圖", ".maplibregl-ctrl-compass": "重設北方" };
   Object.entries(controlLabels).forEach(([selector, label]) => { canvasHost.querySelector(selector)?.setAttribute("aria-label", label); });
 
@@ -460,13 +441,6 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   };
   $("#map-gaps-open").addEventListener("click", openGaps);
   const resize = new ResizeObserver(() => { if (visible && !disposed) map.resize(); }); resize.observe(canvasHost);
-  const theme = new MutationObserver(() => {
-    if (!loaded || disposed || failed) return;
-    const p = palette(); map.setPaintProperty("ocean", "background-color", p.sea); map.setPaintProperty("land", "fill-color", p.land);
-    map.setPaintProperty("borders", "line-color", p.border); map.setPaintProperty("country-labels", "text-color", p.label); map.setPaintProperty("country-labels", "text-halo-color", p.halo);
-    map.setPaintProperty("lakes", "fill-color", p.water); map.setPaintProperty("rivers", "line-color", p.water);
-    map.setPaintProperty("coast-shelf", "line-color", p.coast); map.setPaintProperty("graticule", "line-color", p.grid); map.setSky(atmosphere(p));
-  }); theme.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   return {
     update,
     refreshPreview() {
@@ -480,7 +454,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     },
     setVisible(next) { visible = next; if (next) { map.resize(); } else { map.stop(); popup.remove(); } syncMotion(); },
     destroy() {
-      stopMotion(); disposed = true; clearTimeout(timer); resize.disconnect(); theme.disconnect(); intersection.disconnect(); homeMarker?.remove(); popup.remove();
+      stopMotion(); disposed = true; clearTimeout(timer); resize.disconnect(); intersection.disconnect(); homeMarker?.remove(); popup.remove();
       motionButton.removeEventListener("click", toggleMotion); reducedMotion.removeEventListener("change", syncMotion); document.removeEventListener("visibilitychange", syncMotion);
       canvasHost.removeEventListener("mouseleave", leave); $("#partner-map-panel").removeEventListener("keydown", escape);
       select.removeEventListener("change", onSelect); $("#map-global").removeEventListener("click", globalView); $("#map-home").removeEventListener("click", homeView); $("#map-gaps-open").removeEventListener("click", openGaps); list.removeEventListener("click", onListClick);

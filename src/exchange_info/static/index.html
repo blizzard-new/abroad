@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="/static/midnight-theme.css?v=20261030-open-path-1" />
     <link rel="stylesheet" href="/static/glide-select.css?v=20261029-level-tools-3" />
     <link rel="stylesheet" href="/static/application-level-tools.css?v=20261029-level-tools-3" />
+    <link rel="stylesheet" href="/static/partner-space.css?v=20261030-space-1" />
   </head>
   <body class="global-home-mode unified-shell">
     <noscript><section style="position:relative;z-index:100;padding:2rem;background:#fff;color:#142c35"><h1>UniWay 交換學生申請與選校資訊</h1><p>依就讀大學查詢合作校、名額狀態、申請條件與官方來源。</p><a href="/schools">瀏覽交換學校指南（不需 JavaScript）</a><p>互動選校、收藏及申請工具需要啟用 JavaScript。</p></section></noscript>
@@ -1092,12 +1093,12 @@
               </div>
               <div class="partner-map-stage">
                 <nav id="partner-map-list" class="partner-map-list" aria-label="地圖上的學校"><ul></ul></nav>
-                <div id="partner-globe" aria-label="互動地圖：方向鍵平移，加減鍵縮放" aria-describedby="partner-map-help"></div>
+                <div id="partner-globe" aria-label="互動 3D 地球：拖曳或方向鍵旋轉，滾輪或加減鍵縮放" aria-describedby="partner-map-help"></div>
                 <div id="partner-map-status" class="partner-map-status" role="status" aria-live="polite"><span class="map-loading-orbit" aria-hidden="true"></span><strong>地圖載入中</strong></div>
                 <aside id="partner-map-preview" class="partner-map-preview" aria-label="學校預覽" hidden></aside>
                 <div class="partner-map-legend" aria-label="地圖圖例"><span><b class="map-legend-dot"></b>合作學校</span><span><b class="map-legend-star">★</b>所屬大學</span><span><b class="map-legend-cluster">2+</b>鄰近學校</span></div>
               </div>
-              <div class="partner-map-footer"><p id="partner-map-help">拖曳探索 · 雙指縮放 · 點選學校查看機會</p><span id="partner-map-count" aria-live="polite"></span></div>
+              <div class="partner-map-footer"><p id="partner-map-help">拖曳旋轉地球 · 滾輪或雙指縮放 · 點選學校探索</p><span id="partner-map-count" aria-live="polite"></span></div>
               <div class="partner-map-access"><label for="map-school-select">定位學校</label><select id="map-school-select"><option value="">選擇地圖上的學校</option></select><p id="partner-map-missing"></p><p id="partner-map-home-status" aria-live="polite"></p><details id="partner-map-gaps" hidden><summary></summary><ul></ul></details></div>
             </section>
             </div>
@@ -1612,12 +1613,12 @@
     <script src="/static/application-path-select.js?v=20261029-level-tools-3" defer></script>
     <script src="/static/application-path-template.js?v=20261030-open-path-1" defer></script>
     <script src="/static/application-path.js?v=20261030-open-path-1" defer></script>
-    <script src="/static/app.js?v=20261029-level-tools-3" defer></script>
+    <script src="/static/app.js?v=20261030-space-1" defer></script>
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261029-midnight-1" defer></script>
     <script src="/static/platform-home.js?v=20261027-search-first-1" defer></script>
     <script src="/static/home-motion.js?v=20261027-remove-home-cta-1" defer></script>
-    <script src="/static/platform-explore.js?v=20261027-search-first-1" defer></script>
+    <script src="/static/platform-explore.js?v=20261030-space-1" defer></script>
     <script src="/static/platform-detail.js?v=20261017-ntu-reference-1" defer></script>
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-tracker.js?v=20261019-guide-1" defer></script>
