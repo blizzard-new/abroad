@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from urllib.parse import parse_qs, unquote, urlsplit
 from xml.etree import ElementTree
@@ -12,7 +13,11 @@ from fastapi.testclient import TestClient
 from exchange_info.api import create_app
 from exchange_info.cgu_catalogue import CguCatalogue
 from exchange_info.models import ExchangeFieldEvidence, PartnerUniversity
-from exchange_info.seo import EDITORIAL_PATHS, SeoSettings, group_partners, partner_id, source_link
+from exchange_info.seo import (
+    AI_SEARCH_CRAWLERS, AI_TRAINING_CRAWLERS, EDITORIAL_PATHS, SeoSettings, group_partners, partner_id,
+    robots_txt, source_link,
+)
+from exchange_info.seo_guides import COUNTRIES, GUIDES
 from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
 
 
@@ -45,7 +50,14 @@ def test_home_metadata_is_absolute_and_does_not_trust_request_host(client):
     assert soup.select_one('meta[name="google-site-verification"]')["content"] == "test-verification-token"
     assert soup.select_one('meta[property="og:url"]')["content"] == "https://app.uniway-tw.com/"
     assert soup.select_one('meta[name="twitter:card"]')["content"] == "summary"
-    assert json.loads(soup.select_one('script[type="application/ld+json"]').string)["@type"] == "WebSite"
+    graph = json.loads(soup.select_one('script[type="application/ld+json"]').string)["@graph"]
+    assert {node["@type"] for node in graph} == {"Organization", "WebSite"}
+    organization = next(node for node in graph if node["@type"] == "Organization")
+    website = next(node for node in graph if node["@type"] == "WebSite")
+    assert organization["@id"] == "https://app.uniway-tw.com/#organization"
+    assert organization["logo"]["url"] == "https://app.uniway-tw.com/static/assets/brand/apple-touch-icon.png"
+    assert website["publisher"] == {"@id": organization["@id"]}
+    assert all(url.startswith("https://") for url in organization["sameAs"])
     assert soup.select_one('a[href="/schools"]')
     assert "seo-head" not in response.text and "attacker.example" not in response.text
     assert client.head("/").status_code == 200
@@ -124,6 +136,59 @@ def test_robots_and_noindex_headers_keep_api_and_private_routes_out(client):
     for path in ("/auth/me", "/account/workspace", "/docs", "/static/index.html", "/universities"):
         assert "noindex" in client.get(path).headers["X-Robots-Tag"]
     assert "noindex" not in client.get("/schools").headers.get("X-Robots-Tag", "")
+
+
+def test_robots_states_a_policy_for_each_ai_crawler_and_keeps_private_paths_closed(client):
+    robots = client.get("/robots.txt").text
+    groups = [group.strip().splitlines() for group in robots.strip().split("\n\n")]
+    by_agent = {line.split(": ", 1)[1]: group for group in groups for line in group if line.startswith("User-agent: ")}
+    for bot in (*AI_SEARCH_CRAWLERS, *AI_TRAINING_CRAWLERS):
+        assert "Allow: /" in by_agent[bot] and "Disallow: /" not in by_agent[bot]
+        # A named group replaces the "*" group, so the private paths must be repeated in it.
+        assert {"Disallow: /account/", "Disallow: /auth/", "Disallow: /admin/", "Disallow: /calendar/"} <= set(by_agent[bot])
+    assert robots.rstrip().endswith("Sitemap: https://app.uniway-tw.com/sitemap.xml")
+
+
+def test_search_only_policy_closes_training_crawlers_but_not_search_crawlers():
+    robots = robots_txt(SeoSettings("https://example.com", True, ai_crawlers="search-only"))
+    groups = [group.strip().splitlines() for group in robots.strip().split("\n\n")]
+    by_agent = {line.split(": ", 1)[1]: group for group in groups for line in group if line.startswith("User-agent: ")}
+    assert all(by_agent[bot][-1] == "Disallow: /" for bot in AI_TRAINING_CRAWLERS)
+    assert all("Allow: /" in by_agent[bot] for bot in AI_SEARCH_CRAWLERS)
+    assert robots_txt(SeoSettings("https://example.com", False)) == "User-agent: *\nDisallow: /\n"
+
+
+def test_ai_crawler_policy_comes_from_environment_and_ignores_typos(caplog):
+    base = {"EXCHANGE_PUBLIC_BASE_URL": "https://example.com"}
+    assert SeoSettings.from_environment(base).ai_crawlers == "allow"
+    assert SeoSettings.from_environment({**base, "EXCHANGE_AI_CRAWLERS": " Search-Only "}).ai_crawlers == "search-only"
+    assert SeoSettings.from_environment({**base, "EXCHANGE_AI_CRAWLERS": "blokc"}).ai_crawlers == "allow"
+    assert "EXCHANGE_AI_CRAWLERS" in caplog.text
+
+
+def test_llms_txt_maps_public_pages_with_absolute_urls_and_the_availability_caveat(client):
+    response = client.get("/llms.txt")
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/plain") and "noindex" not in response.headers.get("X-Robots-Tag", "")
+    lines = response.text.splitlines()
+    assert lines[0] == "# UniWay" and lines[2].startswith("> ")
+    assert "合作關係不等於當期開放申請" in response.text
+    urls = [url for url in re.findall(r"\]\((https?://[^)]+)\)", response.text)]
+    assert urls and all(url.startswith("https://app.uniway-tw.com/") for url in urls)
+    expected = {f"https://app.uniway-tw.com/schools/{u.id}" for u in SUPPORTED_UNIVERSITIES}
+    expected |= {f"https://app.uniway-tw.com/guides/{slug}" for slug in GUIDES}
+    expected |= {f"https://app.uniway-tw.com/destinations/{slug}" for slug in COUNTRIES}
+    assert expected <= set(urls)
+    # Partner pages number in the thousands and belong in the sitemap, not here.
+    assert not any("/partners/" in url and "/schools/" in url for url in urls)
+    assert client.head("/llms.txt").status_code == 200
+
+
+def test_llms_txt_is_unavailable_on_preview_builds(tmp_path, monkeypatch):
+    monkeypatch.delenv("EXCHANGE_SEO_INDEXABLE", raising=False)
+    monkeypatch.setenv("EXCHANGE_ENVIRONMENT", "development")
+    with TestClient(create_app(tmp_path)) as preview:
+        assert preview.get("/llms.txt").status_code == 404
 
 
 def test_preview_defaults_to_noindex_without_affecting_public_content(tmp_path, monkeypatch):

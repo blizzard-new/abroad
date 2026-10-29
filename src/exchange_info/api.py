@@ -1177,7 +1177,7 @@ def create_app(
             not seo_settings.indexable
             or response.status_code >= 400
             or not (
-                path in {"/", "/schools", "/partners", "/privacy", "/terms", "/robots.txt", "/sitemap.xml", *EDITORIAL_PATHS}
+                path in {"/", "/schools", "/partners", "/privacy", "/terms", "/robots.txt", "/llms.txt", "/sitemap.xml", *EDITORIAL_PATHS}
                 or path.startswith(("/schools/", "/sitemaps/", "/partners/"))
             )
         ):

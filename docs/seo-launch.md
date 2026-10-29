@@ -58,7 +58,16 @@ python scripts/check_seo.py --base-url https://app.uniway-tw.com
 
 這會依序驗證 robots、19 個子 sitemap、所有基本頁與每所母校一個合作校頁。檢查 200、XML、canonical、可索引設定、metadata、伺服器正文及結構化資料。它不連 Google 帳號、不提交網址、不證明已收錄。以 registry 實際校數為準，不把數字硬編碼到程式。
 
+檢查另外涵蓋兩項：`/llms.txt` 回 `text/plain`、以 `# UniWay` 開頭，且每個連結都在 `/sitemaps/pages.xml` 內（`/sitemap.xml` 除外）；首頁 JSON-LD 同時含 `Organization` 與 `WebSite`。robots 只用 `User-agent: *` 群組判斷是否封鎖全站，所以 `EXCHANGE_AI_CRAWLERS=search-only` 時訓練爬蟲群組的 `Disallow: /` 不會被誤判。
+
 隔離環境的完整網址檢查可用 `--all-pages --delay 0`；正式站保持預設間隔，避免旺季造成負擔。`--base-url` 可指向本機，canonical 仍用正式站；本機僅為測試時可暫設 `EXCHANGE_SEO_INDEXABLE=true`，不要公開暴露此測試服務。
+
+## AI 搜尋：`/llms.txt` 與爬蟲政策
+
+- `/llms.txt` 由同一份校庫、指南與國家資料動態產生，列出首頁、校級目錄、各指南、各國家專區與每所母校頁，不列數千個合作校頁（那些在 sitemap）。檔頭註明合作關係不等於當期開放、擷取時間不等於查核時間，請助理原樣轉述狀態。非可索引環境（預覽、測試）回 404，不對外宣告。
+- `robots.txt` 明列 AI 搜尋與訓練爬蟲，預設全部允許、私人路徑照舊封鎖；`EXCHANGE_AI_CRAWLERS=search-only` 可只關訓練爬蟲。詳見 [claude-seo 使用手冊](claude-seo-playbook.md)。
+- 首頁結構化資料改為 `@graph`：`Organization`（含官方 Instagram、Threads 連結）與 `WebSite`（`publisher` 指向前者）；指南 `Article` 的 `publisher` 以同一個 `@id` 對應。
+- 上線後用 `/seo drift compare`（見使用手冊）確認只有這些預期差異。
 
 ## Google Search Console：已驗證後的最後一步
 
