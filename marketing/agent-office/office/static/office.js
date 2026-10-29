@@ -11,8 +11,9 @@ const CHANNEL = {
   threads: { label: "Threads", color: "#111827" },
   instagram: { label: "Instagram", color: "#d6336c" },
   youtube: { label: "YouTube", color: "#e02424" },
+  github: { label: "GitHub", color: "#6e40c9" },
 };
-const FORMAT = { text: "貼文", reply: "留言回覆", carousel: "輪播", reel: "Reels", story: "限動", short: "Shorts", long: "長影片" };
+const FORMAT = { text: "貼文", reply: "留言回覆", carousel: "輪播", reel: "Reels", story: "限動", short: "Shorts", long: "長影片", data_update: "資料更新提案" };
 const STATUS = { pending_approval: "待審核", needs_changes: "需修改", approved: "已核准", publishing: "發佈中", published: "已發佈", failed: "發佈失敗", rejected: "已退回" };
 // The departures board speaks airport.
 const BOARD = {
@@ -544,7 +545,7 @@ async function fly(from, to, label) {
 // ---------------------------------------------------------------- the boss desk, the board and the whiteboard
 function todayDrafts() {
   const day = S.run?.day;
-  return [...S.drafts.values()].filter((d) => d.day === day && d.format !== "reply").sort((x, y) => (x.scheduled_at || "").localeCompare(y.scheduled_at || "") || x.id - y.id);
+  return [...S.drafts.values()].filter((d) => d.day === day && d.format !== "reply" && d.format !== "data_update").sort((x, y) => (x.scheduled_at || "").localeCompare(y.scheduled_at || "") || x.id - y.id);
 }
 
 function renderBoard(changedId) {
@@ -609,7 +610,8 @@ function passHTML(d) {
   const review = d.review || {};
   const issues = review.issues || [];
   const future = d.scheduled_at && new Date(d.scheduled_at) > new Date();
-  const approveLabel = d.format === "reply" ? "核准並回覆" : future ? `核准，${hhmm(d.scheduled_at)} 發佈` : "核准並發佈";
+  const proposal = d.format === "data_update";
+  const approveLabel = proposal ? "核准並開 draft PR" : d.format === "reply" ? "核准並回覆" : future ? `核准，${hhmm(d.scheduled_at)} 發佈` : "核准並發佈";
   return `<article class="pass" data-id="${d.id}">
     <div class="pass-main">
       <div class="pass-head"><span class="chip"><i style="--c:${ch.color}"></i>${ch.label}</span><span>${FORMAT[d.format] || d.format}</span><span class="chip state-${d.status}">${STATUS[d.status]}</span></div>
@@ -625,7 +627,7 @@ function passHTML(d) {
         <button class="btn danger" data-act="reject" type="button">退回</button>
       </div>
     </div>
-    <div class="pass-stub"><span class="time">${d.scheduled_at ? hhmm(d.scheduled_at) : "回覆"}</span><span class="date">${mmdd(d.scheduled_at)}</span><span class="no">#${d.id}</span></div>
+    <div class="pass-stub"><span class="time">${d.scheduled_at ? hhmm(d.scheduled_at) : proposal ? "提案" : "回覆"}</span><span class="date">${mmdd(d.scheduled_at)}</span><span class="no">#${d.id}</span></div>
   </article>`;
 }
 
@@ -633,6 +635,22 @@ function previewHTML(d) {
   const p = d.payload || {};
   const m = d.media || {};
   const media = (ref) => `/media/${ref.split("/").map(encodeURIComponent).join("/")}`;
+  if (d.format === "data_update") {
+    // The finding is text a colleague read off a web page: it is escaped like everything else, and only an http(s)
+    // link becomes clickable.
+    const link = (url) => (/^https?:\/\//i.test(url || "") ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(url)}</a>` : esc(url || "（沒有附）"));
+    const verification = p.verified_by
+      ? `<p class="sub"><b>${esc(p.verified_by)} 重新打開官網驗證：需要更新平台</b>\n${esc(p.verdict_reason)}</p>`
+      : p.verification_note
+        ? `<p class="sub"><b>⚠️ 沒有完成二次驗證</b>\n${esc(p.verification_note)}</p>`
+        : `<p class="sub">沒有指定驗證員，這份只有巡查同事的說法。</p>`;
+    const edits = (p.edits || []).length
+      ? p.edits.map((e, i) => `<p class="sub"><b>修改 ${i + 1}：${esc(e.target)}</b>\n目前：${esc(e.current)}\n建議：${esc(e.proposed)}\n依據：${esc(e.basis)}</p>`).join("")
+      : p.suggested_update ? `<p class="sub"><b>${esc(p.author)} 的建議</b>\n${esc(p.suggested_update)}</p>` : `<p class="sub">沒有具體的修改清單，請依官方來源確認要改什麼。</p>`;
+    return `<p class="post">${esc(p.detail)}</p>${verification}${edits}` +
+      `<p class="sub"><b>官方來源</b>\n${link(p.source_url)}</p><p class="sub"><b>平台目前的紀錄</b>\n${esc(p.platform_note)}\n${esc(p.author)} 於 ${esc(p.day)} 巡查發現</p>` +
+      `<p class="sub">核准後 Pat 會開一個 draft PR（只新增一個提案檔，不改平台資料），合併由你在 GitHub 按。</p>`;
+  }
   if (d.format === "reply") {
     return `<p class="sub"><b>@${esc(p.username || "訪客")} 的留言</b>\n${esc(p.comment_text)}</p><p class="post" style="margin-top:8px">${esc(p.text)}</p>`;
   }
@@ -685,7 +703,7 @@ async function onPassClick(e) {
     if (btn.dataset.act === "approve" || btn.dataset.act === "now") {
       btn.disabled = true;
       upsertDraft(await api(`/api/drafts/${id}/approve`, { now: btn.dataset.act === "now" || !d.scheduled_at }));
-      toast(btn.dataset.act === "now" ? "已核准，馬上發佈" : `已核准，${hhmm(d.scheduled_at)} 發佈`);
+      toast(d.format === "data_update" ? "已核准，Pat 馬上開 draft PR" : btn.dataset.act === "now" || !d.scheduled_at ? "已核准，馬上發佈" : `已核准，${hhmm(d.scheduled_at)} 發佈`);
     } else if (btn.dataset.act === "reject") {
       const note = prompt("退回原因（可留白）", "") ;
       if (note === null) return;
@@ -729,7 +747,7 @@ function renderSchedule() {
   }
   host.innerHTML = [...groups].map(([day, list]) => `<section class="sched-group"><h3>${esc(day)}</h3>${list.map((d) => {
     const ch = CHANNEL[d.channel];
-    const link = d.remote_url ? `<a href="${esc(d.remote_url)}" target="_blank" rel="noopener">查看貼文</a>` : d.note ? `<span class="chip">${esc(d.note.slice(0, 6))}</span>` : "";
+    const link = d.remote_url ? `<a href="${esc(d.remote_url)}" target="_blank" rel="noopener">${d.channel === "github" ? "查看 draft PR" : "查看貼文"}</a>` : d.note ? `<span class="chip">${esc(d.note.slice(0, 6))}</span>` : "";
     return `<div class="sched-item"><span class="t">${d.scheduled_at ? hhmm(d.scheduled_at) : "--:--"}</span><span class="ttl"><span class="chip"><i style="--c:${ch.color}"></i>${ch.label} ${FORMAT[d.format] || ""}</span> ${esc(d.title)}</span><span class="chip state-${d.status}">${STATUS[d.status]}</span>${link ? `<span></span><span style="grid-column:2/-1;font-size:13px">${link}</span>` : ""}${d.error ? `<span class="err">${esc(d.error)}</span>` : ""}</div>`;
   }).join("")}</section>`).join("");
 }
@@ -795,7 +813,7 @@ function openAgent(id) {
   }
   const a = S.agents.get(id);
   const lines = S.log.filter((l) => l.agent === id).slice(-30).reverse();
-  const roles = id === "strategist" ? [["research", "查資料"], ["strategist", "企劃"]] : [[id, ""]];
+  const roles = id === "strategist" ? [["research", "查資料"], ["strategist", "企劃"]] : id === "designer" ? [["designer", "IG 文案"], ["visual", "做圖排版"]] : [[id, ""]];
   const chains = roles
     .filter(([role]) => S.settings.brains?.[role])
     .map(([role, what]) => `${what ? `${what}：` : ""}${S.settings.tuning?.[role] || S.settings.brains[role][0]}${S.settings.brains[role].length > 1 ? `（不行時改用 ${S.settings.brains[role].slice(1).join(" → ")}）` : ""}`);

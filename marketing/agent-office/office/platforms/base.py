@@ -12,7 +12,9 @@ SECRET_KEYS = {"access_token", "client_secret", "refresh_token", "Authorization"
 
 
 class PlatformError(RuntimeError):
-    pass
+    def __init__(self, message: str = "", status: int = 0):
+        super().__init__(message)
+        self.status = status  # the HTTP status when a platform answered with an error, otherwise 0
 
 
 def redact(params: dict[str, Any] | None) -> dict[str, Any]:
@@ -45,5 +47,5 @@ class Client:
         response = self.http.request(method, url, params=params, data=data, json=json, headers=headers, content=content)
         self.log(f"{method} {shown} → {response.status_code}")
         if response.status_code >= 400:
-            raise PlatformError(f"{self.name} {method} {shown} 失敗 {response.status_code}：{response.text[:300]}")
+            raise PlatformError(f"{self.name} {method} {shown} 失敗 {response.status_code}：{response.text[:300]}", response.status_code)
         return response

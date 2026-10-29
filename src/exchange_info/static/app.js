@@ -258,6 +258,7 @@ const WORKFLOW_SOURCE_LABELS = {
   community_experience: "經驗補充",
 };
 const UNIVERSITY_PAGE_ROUTES = new Set([
+  "my-application",
   "home",
   "guide",
   "profile",
@@ -279,6 +280,7 @@ const UNIVERSITY_PAGE_ROUTES = new Set([
   "search",
 ]);
 const UNIVERSITY_PAGE_TITLES = {
+  "my-application": "我的申請",
   home: "首頁",
   guide: "申請指南",
   profile: "個人中心",
@@ -3515,6 +3517,7 @@ async function hydrateAccountWorkspace({ homeSchool = activeHomeSchool() } = {})
 }
 
 function renderAccountState() {
+  window.UniWayApplicationPath?.refresh();
   const label = $("#account-button-label");
   const restorePending = !state.account && state.authRestoreState === "pending";
   const restoreUnavailable = !state.account && state.authRestoreState === "unavailable";
@@ -3644,6 +3647,7 @@ function clearAuthenticatedClientState() {
   state.authSessionEpoch += 1;
   state.account = null;
   state.authRestoreState = "anonymous";
+  window.UniWayApplicationPath?.clear();
   clearProtectedCatalog();
   state.quarantinedAccountOwnerId = "";
   state.guestComparisons.clear();
@@ -8674,7 +8678,7 @@ function syncPartnerView() {
   if (partnerMapLoadPromise || partnerMapLoadFailed) return;
   showPartnerMapStatus("正在準備你的世界地圖", "首次載入需要一點時間。", { loading: true });
   const generation = partnerMapGeneration;
-  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261027-map-2&attempt=${generation}`)
+  partnerMapLoadPromise = import(`/static/partner-map.js?v=20261029-midnight-1&attempt=${generation}`)
     .then((module) => module.createPartnerMap({ renderPreview: renderMapPreview, onSchoolSelect: loadDiscoveryPreview, onList: () => setPartnerView("list"), onRetry: retryPartnerMap, onIcons: initIcons, freshEngine: generation > 0 }))
     .then((controller) => {
       if (generation !== partnerMapGeneration) { controller.destroy(); return; }
@@ -14132,6 +14136,7 @@ function showUniversityPage(pageId, { resetScroll = true, focusHeading = true } 
     node.hidden = !activePage || node.dataset.universityPage !== activePage;
   });
   window.UniWayApplicationWorkspace?.show(activePage);
+  window.UniWayApplicationPath?.show(activePage);
   window.UniWayDocumentWorkbench?.route(activePage);
   syncPartnerView();
 
@@ -14166,7 +14171,8 @@ function globalFeedForHash(hash = window.location.hash) {
 }
 
 function isUniversityBoardRoute(hash = window.location.hash) {
-  return /^#board=/.test(hash)
+  return /^#my-application(?:\?|$)/.test(hash)
+    || /^#board=/.test(hash)
     || hash === "#cgu-posts"
     || hash === "#university-posts"
     || /^#school=/.test(hash)
@@ -14179,7 +14185,8 @@ function isPublicExplorationRoute(hash = window.location.hash) {
 }
 
 function isPersonalizedRoute(hash = window.location.hash) {
-  return /^#application-form=/.test(hash)
+  return /^#my-application(?:\?|$)/.test(hash)
+    || /^#application-form=/.test(hash)
     || ["#overview", "#advisor", "#favorites", "#calendar", "#deadlines", "#scholarships", "#budget", "#eligibility", "#application-center", "#document-check", "#writing-assistant", "#documents", "#university-posts", "#cgu-posts"].includes(hash);
 }
 
@@ -14250,6 +14257,11 @@ function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
     const boardName = decodeURIComponent(hash.slice("#board=".length));
     setHomeSchool(boardName);
     showUniversityPage("overview", { resetScroll, focusHeading: resetScroll });
+    return;
+  }
+
+  if (/^#my-application(?:\?|$)/.test(hash)) {
+    showUniversityPage("my-application", { resetScroll, focusHeading: resetScroll });
     return;
   }
 
@@ -15374,6 +15386,7 @@ async function boot() {
     schoolBasis: state.account?.school_basis || "",
   }));
   window.UniWayApplicationWorkspace.init();
+  window.UniWayApplicationPath?.init();
   window.UniWayDocumentWorkbench.init();
   renderAccountState();
   initDiscussionReader();

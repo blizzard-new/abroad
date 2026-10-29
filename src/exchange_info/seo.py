@@ -182,9 +182,10 @@ def page(settings: SeoSettings, title: str, description: str, path: str, body: s
     html = f'''<!doctype html><html lang="zh-Hant" data-theme="light"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)}</title>
 {metadata(settings, title, description, path, article)}{structured_data(schema)}
-<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/static/brand-tokens.css?v=20261020-1">
+<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/static/brand-tokens.css?v=20261029-midnight-1">
 <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2">
 <link rel="stylesheet" href="/static/seo.css?v=20261020-1">{article_head}
+<link rel="stylesheet" href="/static/midnight-theme.css?v=20261029-1">
 <script src="/static/reading-theme.js?v=20261020-1"></script></head>
 <body class="reading-shell"><a class="skip" href="#content">跳到內容</a><header class="reading-header">
 <a class="brand" href="/#home" aria-label="UniWay 首頁"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40"><strong>UniWay</strong></a>

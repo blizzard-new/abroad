@@ -110,8 +110,8 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   })) };
   const dark = () => document.documentElement.dataset.theme === "dark";
   const palette = () => dark()
-    ? { sea: "#183e60", land: ["get", "night"], border: "#b4cbd3", label: "#f1f6fa", halo: "#243a44", water: "#376784", coast: "#77bbcf", grid: "#9fcce3", sky: "#152b44", horizon: "#6390b2" }
-    : { sea: "#79b5d6", land: ["get", "day"], border: "#f7f3dc", label: "#324a59", halo: "#f7f4df", water: "#6aadc9", coast: "#d8efe5", grid: "#eff9ff", sky: "#edf4fa", horizon: "#b7d7e8" };
+    ? { sea: "#23324a", land: ["get", "night"], border: "#b9c2cf", label: "#ffffff", halo: "#18263b", water: "#44536a", coast: "#b9c2cf", grid: "#ffffff", sky: "#18263b", horizon: "#44536a" }
+    : { sea: "#23324a", land: ["get", "day"], border: "#f7f3dc", label: "#23324a", halo: "#f7f4df", water: "#23324a", coast: "#d8dde5", grid: "#ffffff", sky: "#f3f5f8", horizon: "#b9c2cf" };
   const atmosphere = (p) => ({ "sky-color": p.sky, "horizon-color": p.horizon, "sky-horizon-blend": .8, "atmosphere-blend": ["interpolate", ["linear"], ["zoom"], 0, .65, 3, .4, 5, 0] });
   const colors = palette();
   // A flat map shows the whole of Europe to Japan at once; the globe hid half of it. The zoom fits about 190° of longitude and the
@@ -393,10 +393,10 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     clearTimeout(timer); loaded = true;
     map.addSource("schools", { type: "geojson", data: EMPTY(), cluster: true, clusterMaxZoom: 9, clusterRadius: 42 });
     map.addLayer({ id: "cluster-halo", type: "circle", source: "schools", filter: ["has", "point_count"], paint: { "circle-color": "#ffffff", "circle-radius": ["step", ["get", "point_count"], 23, 10, 27, 50, 32], "circle-opacity": .2 } });
-    map.addLayer({ id: "clusters", type: "circle", source: "schools", filter: ["has", "point_count"], paint: { "circle-color": ["step", ["get", "point_count"], "#167e85", 10, "#326cb0", 30, "#6b5b9d"], "circle-radius": ["step", ["get", "point_count"], 17, 10, 21, 50, 26], "circle-stroke-width": 2.5, "circle-stroke-color": "#ffffff", "circle-stroke-opacity": .95 } });
+    map.addLayer({ id: "clusters", type: "circle", source: "schools", filter: ["has", "point_count"], paint: { "circle-color": "#23324a", "circle-radius": ["step", ["get", "point_count"], 17, 10, 21, 50, 26], "circle-stroke-width": 2.5, "circle-stroke-color": "#ffffff", "circle-stroke-opacity": .95 } });
     map.addLayer({ id: "cluster-count", type: "symbol", source: "schools", filter: ["has", "point_count"], layout: { "text-field": ["get", "point_count_abbreviated"], "text-font": ["Poppins Medium"], "text-size": 12, "text-allow-overlap": true }, paint: { "text-color": "#ffffff" } });
-    map.addLayer({ id: "school-points", type: "circle", source: "schools", filter: ["!", ["has", "point_count"]], paint: { "circle-color": "#197483", "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 5, 5, 8], "circle-stroke-width": 2.5, "circle-stroke-color": "#ffffff" } });
-    map.addLayer({ id: "school-hit-area", type: "circle", source: "schools", filter: ["!", ["has", "point_count"]], paint: { "circle-radius": 20, "circle-color": "#197483", "circle-opacity": 0 } });
+    map.addLayer({ id: "school-points", type: "circle", source: "schools", filter: ["!", ["has", "point_count"]], paint: { "circle-color": "#23324a", "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 5, 5, 8], "circle-stroke-width": 2.5, "circle-stroke-color": "#ffffff" } });
+    map.addLayer({ id: "school-hit-area", type: "circle", source: "schools", filter: ["!", ["has", "point_count"]], paint: { "circle-radius": 20, "circle-color": "#23324a", "circle-opacity": 0 } });
     map.addLayer({ id: "selected-halo", type: "circle", source: "schools", filter: ["==", ["get", "name"], ""], paint: { "circle-color": "#f3bd55", "circle-radius": 17, "circle-opacity": .3, "circle-stroke-width": 1, "circle-stroke-color": "#fff3cc", "circle-stroke-opacity": .8, "circle-radius-transition": { duration: 0 } } });
     map.addLayer({ id: "selected-school", type: "circle", source: "schools", filter: ["==", ["get", "name"], ""], paint: { "circle-color": "#b7802c", "circle-radius": 10, "circle-stroke-width": 3, "circle-stroke-color": "#ffffff" } });
     applyData();
