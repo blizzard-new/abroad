@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import time
 from pathlib import Path
 from datetime import datetime, timezone
@@ -72,23 +73,44 @@ def check_site(base: str, canonical: str, *, all_pages: bool = False, delay: flo
             raise ValueError(f"{path}: title/description missing")
         if path.startswith(("/schools", "/destinations", "/guides", "/editorial-policy")) and (len(soup.select("h1")) != 1 or not soup.select_one("main a")):
             raise ValueError(f"{path}: server-rendered content missing")
+        graph_types = set()
         for schema in soup.select('script[type="application/ld+json"]'):
-            json.loads(schema.string)
+            graph_types |= {node.get("@type") for node in json.loads(schema.string).get("@graph", [])}
+        if path == "/" and not {"Organization", "WebSite"} <= graph_types:
+            raise ValueError("/: Organization and WebSite structured data missing")
+
+    def llms(page_paths):
+        response = fetch("/llms.txt")
+        if not response.headers.get("content-type", "").startswith("text/plain"):
+            raise ValueError("/llms.txt: expected text/plain")
+        if not response.text.startswith("# UniWay\n"):
+            raise ValueError("/llms.txt: missing H1 title")
+        links = re.findall(r"\]\((https?://[^)\s]+)\)", response.text)
+        # Every page it advertises must be a public page the sitemap already lists.
+        unlisted = [url for url in links if url != canonical + "/sitemap.xml" and url.removeprefix(canonical) not in page_paths]
+        if not links or unlisted:
+            raise ValueError(f"/llms.txt: links outside the sitemap: {unlisted[:3]}")
+        return len(links)
 
     robots = fetch("/robots.txt").text
-    if f"Sitemap: {canonical}/sitemap.xml" not in robots or "Disallow: /\n" in robots:
+    # Only the "*" group decides whether ordinary crawlers are blocked; named AI-crawler groups may close "/" on purpose.
+    wildcard = next((g.splitlines() for g in robots.split("\n\n") if "User-agent: *" in g.splitlines()), [])
+    if f"Sitemap: {canonical}/sitemap.xml" not in robots or "Disallow: /" in wildcard:
         raise ValueError("robots.txt blocks crawling or does not advertise the canonical sitemap")
     children = sitemap("/sitemap.xml", "sitemapindex")
-    inventory, sampled = {}, []
+    inventory, sampled, page_paths = {}, [], set()
     for child in children:
         paths = sitemap(child, "urlset")
         inventory[child] = len(paths)
+        if child == "/sitemaps/pages.xml":
+            page_paths = set(paths)
         selected = paths if all_pages or child == "/sitemaps/pages.xml" else paths[:1]
         for path in selected:
             html(path)
             sampled.append(path)
         print(f"Checked {child}: {len(paths)} URLs; {len(selected)} HTML pages", flush=True)
-    return {"base_url": base, "canonical_origin": canonical, "sitemaps": inventory,
+    llms_links = llms(page_paths)
+    return {"base_url": base, "canonical_origin": canonical, "sitemaps": inventory, "llms_txt_links": llms_links,
             "indexed_url_candidates": sum(inventory.values()), "html_pages_checked": len(sampled),
             "all_pages": all_pages, "requests": count, "result": "passed", "response_timings": timings,
             "scope": "HTTP and HTML checks; not evidence of Google indexing or rankings"}
