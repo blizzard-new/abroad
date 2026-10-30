@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="nutcSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="55%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#bae6fd"/>
+    </linearGradient>
+    <linearGradient id="nutcPlaza" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="nutcBuilding" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <!-- Taichung Urban Sky -->
+  <rect width="800" height="500" fill="url(#nutcSky)"/>
+  <!-- Central Taiwan Distant Hills -->
+  <path d="M0 330 Q180 250 380 295 T720 260 L800 285 L800 370 L0 370 Z" fill="#0369a1" opacity="0.65"/>
+  <!-- NUTC Sanmin Campus Chung-Cheng & Information Buildings (三民校區中正大樓與資訊大樓意象) -->
+  <rect x="120" y="165" width="560" height="205" rx="6" fill="url(#nutcBuilding)" stroke="#0284c7" stroke-width="2"/>
+  <rect x="295" y="130" width="210" height="240" rx="6" fill="#ffffff" stroke="#1e40af" stroke-width="2"/>
+  <rect x="295" y="122" width="210" height="14" rx="2" fill="#0f766e"/>
+  <!-- Entrance Archway -->
+  <rect x="355" y="275" width="90" height="95" rx="4" fill="#1e3a8a"/>
+  <!-- Windows -->
+  <rect x="150" y="195" width="55" height="36" fill="#0284c7"/>
+  <rect x="220" y="195" width="55" height="36" fill="#0284c7"/>
+  <rect x="150" y="250" width="55" height="36" fill="#0284c7"/>
+  <rect x="220" y="250" width="55" height="36" fill="#0284c7"/>
+  <rect x="525" y="195" width="55" height="36" fill="#0284c7"/>
+  <rect x="595" y="195" width="55" height="36" fill="#0284c7"/>
+  <rect x="525" y="250" width="55" height="36" fill="#0284c7"/>
+  <rect x="595" y="250" width="55" height="36" fill="#0284c7"/>
+  <rect x="330" y="165" width="140" height="44" fill="#0f766e"/>
+  <rect x="330" y="222" width="140" height="34" fill="#1e40af"/>
+  <!-- Sanmin Road Campus Plaza -->
+  <rect x="0" y="370" width="800" height="130" fill="url(#nutcPlaza)"/>
+  <path d="M260 370 L355 370 L445 370 L540 370 L640 500 L160 500 Z" fill="#475569" opacity="0.55"/>
+  <!-- Title Banner -->
+  <text x="40" y="56" fill="#f8fafc" font-family="sans-serif" font-size="22" font-weight="700" letter-spacing="1.5">國立臺中科技大學 NATIONAL TAICHUNG UNIVERSITY OF SCIENCE AND TECHNOLOGY</text>
+  <text x="40" y="86" fill="#e0f2fe" font-family="sans-serif" font-size="15" letter-spacing="1">Sanmin · Minsheng · Ntunhs Campuses · Office of International Affairs (OIA)</text>
+</svg>

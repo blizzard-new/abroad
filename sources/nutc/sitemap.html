@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=1, minimum-scale=1.0, maximum-scale=3.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="keywords" content="請填寫網站關鍵記事，用半角逗號(,)隔開" />
+<meta name="description" content="請填寫網站簡述" />
+
+<meta content="index,follow" name="robots">
+
+<meta property="og:image"  content="/var/file/42/1042/msys_1042_8764917_02102.png" />
+
+<title>網站導覽 </title>
+
+<link rel="shortcut icon" href="/var/file/42/1042/msys_1042_8764917_02102.png" type="image/x-icon" />
+<link rel="icon" href="/var/file/42/1042/msys_1042_8764917_02102.png" type="image/x-icon" />
+<link rel="bookmark" href="/var/file/42/1042/msys_1042_8764917_02102.png" type="image/x-icon" />
+
+<link rel="apple-touch-icon-precomposed" href="/var/file/42/1042/msys_1042_8764917_02102.png">
+<link rel="apple-touch-icon" href="/var/file/42/1042/msys_1042_8764917_02102.png">
+
+<link rel="stylesheet" href="/var/file/42/1042/mobilestyle/combine-zh-tw.css?t=3f93c2483a" type="text/css" />
+<script language="javascript"><!--
+ var isHome = false 
+ --></script>
+<script language="javascript"><!--
+ var isExpanMenu = false 
+ --></script>
+<script type="text/javascript" src="/var/file/js/m_20261023.js" ></script>
+</head>
+ 
+<body class="page_mobilesitecgmap  ">
+
+<div class="wrap">
+
+
+<a href="#start-C" class="focusable" title="跳到主要內容區">跳到主要內容區</a>
+
+
+<div class="fpbgvideo"></div>
+<div class="minner">
+
+<div id="Dyn_head">
+<div class="header">
+	<div class="minner container">
+
+
+
+
+
+
+
+	
+
+
+	<div class="mlogo">
+		
+      <div class="sitename "><h1>NTCUST-國際事務處</h1></div>
+	</div>
+	
+      
+<script type="text/javascript">
+$(document).ready(function(){
+   $(".hdsearch .sch-toggle").click(function(){
+		var val = $(this).attr('aria-expanded')=="true" ? false : true;
+		$(this).attr('aria-expanded',val);
+
+      $(this).toggleClass("open");
+   });
+   $.hajaxOpenUrl('/app/index.php?Action=mobileloadmod&Type=mobileheadsch&Nbr=0','#HeadSearch_Feb708ada9adfd2bee5e36db22cf7defa');
+});
+</script>
+<div class="hdsearch">
+	
+
+	<div class="msearch " id="HeadSearch_Feb708ada9adfd2bee5e36db22cf7defa">
+	</div>
+   </div>
+
+
+   
+
+
+
+
+<div class="mnavbar mn-collapse">
+	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-toggle" aria-expanded="false">
+		<span class="glyphicons show_lines">Menu</span>
+	</button>
+	<div class="nav-toggle collapse navbar-collapse iosScrollToggle">
+		<div class="hdmenu">
+			<ul class="nav navbar-nav" id="a12ec7c331ed6e6e9e80457f5ddb24367_MenuTop">
+			
+			
+			
+         
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){
+	$(".mnavbar .navbar-toggle").click(function(){
+		$(this).toggleClass("open");
+		var ariaExpanded = $(this).attr('aria-expanded');
+		$(this).attr('aria-expanded',ariaExpanded !== 'true');
+	});
+   $('.iosScrollToggle').on('shown.bs.collapse', function () {
+		var togglePos = $(this).css('position');
+      if(togglePos !== 'static'){
+          ModalHelper.afterOpen();
+      }
+
+    });
+
+    $('.iosScrollToggle').on('hide.bs.collapse', function () {
+		var togglePos = $(this).css('position');
+      if(togglePos !== 'static'){
+			ModalHelper.beforeClose();
+      }
+
+    });
+	
+	
+	
+});
+</script>
+
+
+
+
+
+
+
+	</div>
+</div>
+<script language="javascript">
+
+	tabSwitch("a12ec7c331ed6e6e9e80457f5ddb24367_MenuTop");
+
+
+
+if(typeof(_LoginHln)=='undefined') var _LoginHln = new hashUtil();
+
+if(typeof(_LogoutHln)=='undefined') var _LogoutHln = new hashUtil();
+
+if(typeof(_HomeHln)=='undefined') var _HomeHln = new hashUtil();
+
+if(typeof(_InternalHln)=='undefined') var _InternalHln = new hashUtil();
+
+
+$(document).ready(function(){
+   if(typeof(loginStat)=='undefined') {
+   	if(popChkLogin()) loginStat="login";
+   	else loginStat="logout";
+	}
+	dealHln(isHome,loginStat,$('div.hdmenu'));
+
+	
+	
+});
+
+var firstWidth = window.innerWidth;
+function mobilehead_widthChangeCb() {
+if((firstWidth>=767 && window.innerWidth<767) || (firstWidth<767 && window.innerWidth>=767))  location.reload();
+if(window.innerWidth <767) {
+setTimeout(()=>{
+   var div = document.getElementsByClassName('mycollapse');
+   if(div=='undefined' || div.length==0) div = document.getElementsByClassName('mnavbar mn-collapse');
+   if(typeof(div)!='undefined'){
+      for (var i = 0; i < div.length; i++) {
+         var focusableElements = div[i].querySelectorAll('a[href], button, input[type="text"], select, textarea');
+         if (focusableElements.length > 0) {
+            focusableElements[focusableElements.length-1].addEventListener('keydown', function(event) {
+               if (event.key === 'Tab') {
+                  $(".hdmenu .dropdown").removeClass("open");
+                  var currentDiv = this.closest('.mycollapse') || this.closest('.mnavbar');
+                  if (currentDiv) {
+                     var button= currentDiv.getElementsByClassName('navbar-toggle');
+                     for (var j = 0; j < button.length; j++) {
+                        button[j].click();
+                     }
+                  }
+               }
+            });
+         }
+      }
+   }
+},1000);
+}else{
+	var div = document.getElementsByClassName('mycollapse');
+   if(div=='undefined' || div.length==0) div = document.getElementsByClassName('mnavbar mn-collapse');
+   div = div[0];
+	if(typeof(div)!='undefined'){
+   var focusableElements = div.querySelectorAll('a[href]');
+   focusableElements[focusableElements.length-1].addEventListener('keydown', function(event) {
+      if (event.key === 'Tab') {
+         $(".hdmenu .dropdown").removeClass("open");
+      }
+   });
+	}
+}
+}
+window.addEventListener('resize', mobilehead_widthChangeCb);
+mobilehead_widthChangeCb();
+</script>
+<noscript>本功能需使用支援JavaScript之瀏覽器才能正常操作</noscript>
+<!-- generated at Fri Oct 23 2026 23:55:01 --></div>
+
+<main id="main-content">
+<div class="main">
+<div class="minner">
+
+	
+	
+<div class="row col2 row_0">
+	<div class="mrow container">
+		
+			
+			
+			
+			
+				
+        		
+         	
+				<div class="col col_01">
+					<div class="mcol">
+					
+					</div>
+				</div> 
+			 
+		
+			
+			
+			
+			
+				
+        		
+         	
+				<div class="col col_02">
+					<div class="mcol">
+					
+						
+						
+						<div id="Dyn_2_1" class="M77  ">
+
+<div class="module module- md_style1">
+	<div class="minner">
+<header class="mt ">
+	 
+	<h2 class="mt-title">網站導覽</h2>
+</header>
+
+	<div class="md_middle">
+	<section class="mb">
+
+		
+   		<a href='http://oia.nutc.edu.tw/p/412-1042-9957.php?Lang=zh-tw' title='OIA資訊分類' >1 . OIA資訊分類</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9956.php?Lang=zh-tw' title='綜合業務' >1-1 . 綜合業務</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9300.php?Lang=zh-tw' title='國際事務委員會' >1-2 . 國際事務委員會</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-11911.php?Lang=zh-tw' title='設置要點' >1-2-1 . 設置要點</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-11912.php?Lang=zh-tw' title='會議紀錄' >1-2-2 . 會議紀錄</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9958.php?Lang=zh-tw' title='國際暨兩岸合作組' >1-3 . 國際暨兩岸合作組</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-7390.php?Lang=zh-tw' title='學海計畫資訊公告' >1-3-1 . 學海計畫資訊公告</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-10082.php?Lang=zh-tw' title='學術交流夥伴' >1-3-2 . 學術交流夥伴</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9723.php?Lang=zh-tw' title='交換留學資訊' >1-3-3 . 交換留學資訊</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-10600.php?Lang=zh-tw' title='英語/歐洲地區交流資訊' >1-3-3-1 . 英語/歐洲地區交流資訊</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9319.php?Lang=zh-tw' title='日本交換留學' >1-3-3-2 . 日本交換留學</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9320.php?Lang=zh-tw' title='韓國交換留學' >1-3-3-3 . 韓國交換留學</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9218.php?Lang=zh-tw' title='營隊專區' >1-3-4 . 營隊專區</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9727.php?Lang=zh-tw' title='冬令營' >1-3-4-1 . 冬令營</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-10088.php?Lang=zh-tw' title='夏令營' >1-3-4-2 . 夏令營</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9959.php?Lang=zh-tw' title='國際學生交流組' >1-4 . 國際學生交流組</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9963.php?Lang=zh-tw' title='Admissions 僑外生入學' >1-4-1 . Admissions 僑外生入學</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14296.php?Lang=zh-tw' title='Application Guides 僑外生單招簡章' >1-4-1-1 . Application Guides 僑外生單招簡章</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9700.php?Lang=zh-tw' title='Overseas Compatriot Students 僑生港澳生 海聯及單招公告' >1-4-1-2 . Overseas Compatriot Students 僑生港澳生 海聯及單招公告</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-10039.php?Lang=zh-tw' title='International Students 外國學生 單招及轉學公告' >1-4-1-3 . International Students 外國學生 單招及轉學公告</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14606.php?Lang=zh-tw' title='新型專班專區 INTENSE Program' >1-4-1-4 . 新型專班專區 INTENSE Program</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14287.php?Lang=zh-tw' title='僑外生法規及影音文宣' >1-4-1-5 . 僑外生法規及影音文宣</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/p/404-1042-45902.php" target="_blank"  title="NTCUST Scholarship for International Students 外國學生獎助金(另開新視窗)" >1-4-1-6 . NTCUST Scholarship for International Students 外國學生獎助金</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-10041.php?Lang=zh-tw' title='Scholarships 僑外生獎助學金' >1-4-2 . Scholarships 僑外生獎助學金</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14288.php?Lang=zh-tw' title='境外生人數統計資料' >1-4-3 . 境外生人數統計資料</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14103.php?Lang=zh-tw' title='僑外生就學報到/ARC申請/傷病醫療保險/全民健保/工作許可/i僑卡' >1-4-4 . 僑外生就學報到/ARC申請/傷病醫療保險/全民健保/工作許可/i僑卡</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-10040.php?Lang=zh-tw' title='僑外生活動/比賽/留臺座談/就業媒合/畢業後在臺實習/工作評點' >1-4-5 . 僑外生活動/比賽/留臺座談/就業媒合/畢業後在臺實習/工作評點</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9960.php?Lang=zh-tw' title='兩岸學生交流組' >1-5 . 兩岸學生交流組</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-7383.php?Lang=zh-tw' title='大陸地區交流事務' >1-5-1 . 大陸地區交流事務</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-9965.php?Lang=zh-tw' title='大陸學生招生資訊' >1-5-2 . 大陸學生招生資訊</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-10844.php?Lang=zh-tw' title='赴陸留學交換研習' >1-5-3 . 赴陸留學交換研習</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14440.php?Lang=zh-tw' title='華語教學組' >1-6 . 華語教學組</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14441.php?Lang=zh-tw' title='華語教學組公告' >1-6-1 . 華語教學組公告</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://oia.nutc.edu.tw/p/412-1042-14446.php?Lang=zh-tw" target="_blank"  title="華語教學組活動成果(另開新視窗)" >1-6-2 . 華語教學組活動成果</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://oia.nutc.edu.tw/p/404-1042-130046.php' title='學校雙語詞彙參照表' >1-7 . 學校雙語詞彙參照表</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://oia.nutc.edu.tw/p/412-1042-11759.php?Lang=zh-tw" target="_blank"  title="活動紀錄(另開新視窗)" >1-8 . 活動紀錄</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14662.php?Lang=zh-tw' title='高教深耕國際專章辦公室' >1-9 . 高教深耕國際專章辦公室</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14572.php?Lang=zh-tw' title='境外生輔導老師名單' >1-9-1 . 境外生輔導老師名單</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14451.php?Lang=zh-tw' title='校外實習資訊' >1-9-2 . 校外實習資訊</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14468.php?Lang=zh-tw' title='住宿、餐飲、服務業' >1-9-2-1 . 住宿、餐飲、服務業</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14462.php?Lang=zh-tw' title='旅遊、休閒、運動業' >1-9-2-2 . 旅遊、休閒、運動業</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14463.php?Lang=zh-tw' title='藝術、娛樂及休閒服務業' >1-9-2-3 . 藝術、娛樂及休閒服務業</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14465.php?Lang=zh-tw' title='電子資訊、軟體、半導體相關業' >1-9-2-4 . 電子資訊、軟體、半導體相關業</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14466.php?Lang=zh-tw' title='法律、會計、顧問、研發、設計業' >1-9-2-5 . 法律、會計、顧問、研發、設計業</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14467.php?Lang=zh-tw' title='教育業' >1-9-2-6 . 教育業</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14482.php?Lang=zh-tw' title='批發、零售、傳直銷業' >1-9-2-7 . 批發、零售、傳直銷業</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14461.php?Lang=zh-tw' title='其他服務業' >1-9-2-8 . 其他服務業</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='https://go.104.com.tw/zh-hant/expats/' title='104人力銀行-在臺外籍人士、僑外生及華僑找工作平台' >1-9-2-9 . 104人力銀行-在臺外籍人士、僑外生及華僑找工作平台</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://oia.nutc.edu.tw/p/412-1042-14752.php?Lang=zh-tw" target="_blank"  title="104就業徵才資訊(另開新視窗)" >1-9-2-10 . 104就業徵才資訊</a><br>
+		
+   		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='http://oia.nutc.edu.tw/p/412-1042-14626.php?Lang=zh-tw' title='國際專章活動紀錄' >1-9-3 . 國際專章活動紀錄</a><br>
+		
+   		<a href='http://oia.nutc.edu.tw/p/412-1042-10610.php?Lang=zh-tw' title='國際處管理之FB粉專' >2 . 國際處管理之FB粉專</a><br>
+		
+   		<a href='http://oia.nutc.edu.tw/p/412-1042-14718.php?Lang=zh-tw' title='【公告】文藻外語大學華語中心辦理之2026 OPI評量實務工作坊」' >3 . 【公告】文藻外語大學華語中心辦理之2026 OPI評量實務工作坊」</a><br>
+		
+
+	</section>
+		</div>
+	</div>
+<div class="module-bottom"><div class="mb_03"><div class="mb_02"><div class="mb_01">
+</div></div></div></div>
+
+</div>
+
+<!-- generated at Fri Oct 30 2026 18:54:50 --></div>
+
+					
+					</div>
+				</div> 
+			 
+		
+			
+			
+			
+			 
+		
+	</div>
+</div>
+	
+
+</div>
+</div>
+</main>
+
+
+	<style>
+	@media (min-width: 481px) {.row_0 .col_01 { width: 30%;}.row_0 .col_02 { width: 70%;}.row_0 .col_03 { width: 0%;}}
+	</style>
+
+
+<div id="Dyn_footer">
+<div class="footer">
+<div class="minner container">
+
+
+
+
+
+
+
+<div class="copyright">
+<div class="meditor">
+	<p style="text-align: center;">國立臺中科技大學國際事務處<br />
+Office of International Affairs, NTCUST<br />
+地址：404336 臺中巿北區三民路三段129號（中科大樓1樓）<br />
+Address:No. 129, Section 3, Sanmin Road, North District, Taichung City 404336, Taiwan<br />
+TEL:(04)2219-5764&emsp;FAX:(04)2219-5761&emsp;<a href="https://oia.nutc.edu.tw/p/405-1042-50250,c9956.php">E-mail: 請參照業務職掌</a>&emsp;<a alt="資訊安全與隱私權" href="/var/file/42/1042/img/610277264.pdf" title="資訊安全與隱私權">資訊安全及隱私權政策</a></p>
+	
+</div>
+</div>
+
+
+
+
+
+</div>
+</div>
+<!-- generated at Fri Oct 23 2026 11:29:03 --></div>
+
+
+</div>
+</div>
+<div class="fpbgvideo"></div>
+
+
+
+
+<div id="_pop_login" class="mpopdiv">
+<script>$(document).ready(function() {$.hajaxOpenUrl('/app/index.php?Action=mobileloadmod&Type=mobilepoplogin&Nbr=0','#_pop_login','',function(){menuDropAct();});})</script>
+</div>
+
+
+
+
+<div id="_pop_tips" class="mtips">
+	<div class="mbox">
+	</div>
+</div>
+<div id="_pop_dialog" class="mdialog">
+	<div class="minner">
+		<div class="mcont">
+		</div>
+		<footer class="mdialog-foot">
+        	<button type="submit" class="mbtn mbtn-s">OK</button>
+        	<button type="submit" class="mbtn mbtn-c">Cancel</button>
+		</footer>
+	</div>
+</div>
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+	<!-- Background of PhotoSwipe. 
+	It's a separate element, as animating opacity is faster than rgba(). -->
+	<div class="pswp__bg"></div>
+		<!-- Slides wrapper with overflow:hidden. -->
+		<div class="pswp__scroll-wrap">
+		<!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+		<!-- don't modify these 3 pswp__item elements, data is added later on. -->
+		<div class="pswp__container">
+			 <div class="pswp__item"></div>
+			 <div class="pswp__item"></div>
+			 <div class="pswp__item"></div>
+		</div>
+		<!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+		<div class="pswp__ui pswp__ui--hidden">
+			<div class="pswp__top-bar">
+				<!--  Controls are self-explanatory. Order can be changed. -->
+					<div class="pswp__counter"></div>
+					<button class="pswp__button pswp__button--close" title="Close (Esc)">Close (Esc)</button>
+					<button class="pswp__button pswp__button--share" title="Share">Share</button>
+					<button class="pswp__button pswp__button--fs" title="Toggle fullscreen">Toggle fullscreen</button>
+					<button class="pswp__button pswp__button--zoom" title="Zoom in/out">Zoom in/out</button>
+				  <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+				  <!-- element will get class pswp__preloader-active when preloader is running -->
+				  <div class="pswp__preloader">
+						<div class="pswp__preloader__icn">
+						  <div class="pswp__preloader__cut">
+							 <div class="pswp__preloader__donut"></div>
+						  </div>
+						</div>
+				  </div>
+			 </div>
+			 <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+				  <div class="pswp__share-tooltip"></div> 
+			 </div>
+			 <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">Previous (arrow left)</button>
+			 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">Next (arrow right)</button>
+			 <div class="pswp__caption">
+				  <div class="pswp__caption__center"></div>
+			 </div>
+	</div>
+</div>
+</div>
+
+
+
+<!--<script>NProgress.done();</script>-->
+<script>
+function popChkLogin(){
+	if(typeof(loginStat)=='undefined') {
+   	var chkstat=0;
+      var chkUrl='/app/index.php?Action=mobilelogin';
+      var chkData = {Op:'chklogin'};
+      var chkObj=$.hajaxReturn(chkUrl,chkData);
+   	chkstat=chkObj.stat;
+		if(chkstat) {
+			loginStat="login"; 
+			return true;
+		}else {
+			loginStat="logout"; 
+			return false;
+		}	
+	}else {
+		if(loginStat=="login") return true;
+		else return false;
+	}
+}
+
+</script>
+<!-- generated at Fri Oct 23 2026 22:52:24 --></body></html>

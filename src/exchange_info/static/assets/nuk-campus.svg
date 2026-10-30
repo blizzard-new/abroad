@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="nukSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c4a6e"/>
+      <stop offset="55%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#bae6fd"/>
+    </linearGradient>
+    <linearGradient id="brickMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#fde68a"/>
+    </linearGradient>
+    <linearGradient id="pillarAccent" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </linearGradient>
+    <linearGradient id="ecoLake" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0369a1"/>
+      <stop offset="100%" stop-color="#082f49"/>
+    </linearGradient>
+  </defs>
+  <!-- Southern Taiwan Blue Sky -->
+  <rect width="800" height="500" fill="url(#nukSky)"/>
+  <!-- Distant Foliage & Green Campus Belt -->
+  <path d="M0 330 Q180 285 380 320 T800 305 L800 365 L0 365 Z" fill="#15803d" opacity="0.8"/>
+  <!-- NUK Iconic Administration Building (行政大樓北棟與南棟雙翼穿堂意象) -->
+  <!-- North & South Wings -->
+  <rect x="85" y="160" width="245" height="205" fill="url(#brickMain)" stroke="#b45309" stroke-width="2"/>
+  <rect x="470" y="160" width="245" height="205" fill="url(#brickMain)" stroke="#b45309" stroke-width="2"/>
+  <!-- Central Skybridge & Archway -->
+  <rect x="310" y="135" width="180" height="80" fill="url(#pillarAccent)" stroke="#78350f" stroke-width="2"/>
+  <path d="M345 365 L345 255 Q400 220 455 255 L455 365 Z" fill="#0284c7" opacity="0.75"/>
+  <!-- Roof Eaves -->
+  <polygon points="70,160 345,160 330,142 85,142" fill="#92400e"/>
+  <polygon points="455,160 730,160 715,142 470,142" fill="#92400e"/>
+  <!-- Window Grids -->
+  <rect x="115" y="185" width="55" height="40" fill="#0c4a6e"/>
+  <rect x="185" y="185" width="55" height="40" fill="#0c4a6e"/>
+  <rect x="255" y="185" width="50" height="40" fill="#0c4a6e"/>
+  <rect x="115" y="245" width="55" height="40" fill="#0c4a6e"/>
+  <rect x="185" y="245" width="55" height="40" fill="#0c4a6e"/>
+  <rect x="255" y="245" width="50" height="40" fill="#0c4a6e"/>
+  <rect x="495" y="185" width="55" height="40" fill="#0c4a6e"/>
+  <rect x="565" y="185" width="55" height="40" fill="#0c4a6e"/>
+  <rect x="635" y="185" width="50" height="40" fill="#0c4a6e"/>
+  <rect x="495" y="245" width="55" height="40" fill="#0c4a6e"/>
+  <rect x="565" y="245" width="55" height="40" fill="#0c4a6e"/>
+  <rect x="635" y="245" width="50" height="40" fill="#0c4a6e"/>
+  <!-- Ecological Pond & Green Lawn -->
+  <rect x="0" y="365" width="800" height="135" fill="#166534"/>
+  <ellipse cx="400" cy="435" rx="340" ry="52" fill="url(#ecoLake)"/>
+  <!-- Title Banner -->
+  <text x="40" y="62" fill="#f8fafc" font-family="sans-serif" font-size="25" font-weight="700" letter-spacing="2">國立高雄大學 NATIONAL UNIVERSITY OF KAOHSIUNG</text>
+  <text x="40" y="92" fill="#e0f2fe" font-family="sans-serif" font-size="15" letter-spacing="1">Nanzih District, Kaohsiung · Office of International Affairs (行政大樓南棟4樓)</text>
+</svg>
