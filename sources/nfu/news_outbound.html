@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="zh_tw" class="orbit">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" media="all" href="/assets/frontend_extend-73dbe08aab5662d470c07bc59783588d1812e290bc5490dd5e98f536942b20f2.css">
+<link rel="stylesheet" media="all" href="/assets/front_end-356e454b2d19e86291266709954b9e46858a4194e92c4ce48e9d379bffb5c9c4.css">
+<meta property="og:image" content="https://oia.nfu.edu.tw/uploads/site/site_logo/684f93b3085777d5a5a33029/Group-4652.png">
+<meta property="og:image:width" content="901">
+<meta property="og:image:height" content="151">
+<meta property="og:title" content="出國計畫">
+<meta property="og:site_name" content="國立虎尾科技大學國際事務處">
+<meta property="og:url" content="/zh_tw/news/Outbound">
+  <script src="/assets/jquery-2a83d06853bd343c7bfc2e5d4539814cfa934676e2948ed348311435eca862f5.js"></script>
+<script src="/assets/jquery_prefix-5c5a0bbb9dfff7d410703a0565bc948dca28ec736d1a0e725050111c330805d3.js"></script>
+<script src="/assets/jquery_ujs_custom-a76b6cd8d652c18d24ed38d1f7a4d18f51d1f594a88a0f2ade82afec33966e2b.js"></script>
+<script src="/assets/jquery.cycle2.min-ec60b272289a05b845d7613d074237d008c08a069dc283c2e4c62dfc513242db.js"></script>
+<script src="/assets/jquery.cycle2.carousel.min-3d226d0713bcf58909be7c7e753fa1eef4409eee278299adfe70ff4ea646d65f.js"></script>
+<script src="/assets/jquery.cycle2.scrollVert.min-ce8da4c3f5e336753d998c9f02e64cc8b7e3977f5f6988133faf24a44c90b427.js"></script>
+<script src="/assets/jquery.cycle2.tile.min-83b4b0c4c2604b9c9acb20199a740f4b9e83c227ae46c1a430aa67bf97ff5457.js"></script>
+<link rel="stylesheet" media="all" href="/assets/datatables.min-7446416dca719e42fb55ff5fbf69879ccebe1ab56c6bb6833e2db781eccfddf9.css">
+<script src="/assets/datatables.min-598993c579b423583458a17773ed1e86103dc54e60eae7ab6c27b426af16df6f.js"></script>
+<meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="9MkEXrx/SsInhS1MRANQinSlrjSciAYQ1J0pSbRiannTt8el89hpK/NsHFc/UlCfuytp0BtC4KHsoEUFSXXPRg==">
+<script>
+    $.fn.dataTable.defaults.initComplete = function(settings) {
+        $(this).find('td:first-child').trigger('click');
+    };
+
+function fixLoginFormA11y() {
+// 當頁面沒有 .sign-in 則不執行
+  if ($('.sign-in').length === 0) return;
+  // === Step 1: 修正 label for="user_email" 內只有圖示沒有文字 ===
+  var $emailLabel = $('label[for="user_email"]');
+  if ($emailLabel.length) {
+    $emailLabel.find('i').attr('aria-hidden', 'true');
+    if ($emailLabel.find('.visually-hidden').length === 0) {
+      $emailLabel.append('<span class="visually-hidden">使用者帳號</span>');
+    }
+  }
+
+  // === Step 2: 修正 label for="user_password" 內只有圖示沒有文字 ===
+  var $pwLabel = $('label[for="user_password"]');
+  if ($pwLabel.length) {
+    $pwLabel.find('i').attr('aria-hidden', 'true');
+    if ($pwLabel.find('.visually-hidden').length === 0) {
+      $pwLabel.append('<span class="visually-hidden">密碼</span>');
+    }
+  }
+
+  // === Step 3: 密碼欄補上 title（placeholder 是圓點無意義）===
+  var $pwInput = $('#user_password');
+  if ($pwInput.length) {
+    if (!$pwInput.attr('title')) {
+      $pwInput.attr('title', '密碼');
+    }
+    if (!$pwInput.attr('aria-label')) {
+      $pwInput.attr('aria-label', '密碼');
+    }
+    // placeholder 換成有意義的文字
+    $pwInput.attr('placeholder', '請輸入密碼');
+  }
+
+  // === Step 4: 修正 remember_me 外層 label 包住 checkbox 又有子 label（巢狀 label 問題）===
+  // 外層 label 改為 div，避免巢狀 label
+  var $outerLabel = $('label.checkbox');
+  if ($outerLabel.length) {
+    var outerHtml = $outerLabel.html();
+    $outerLabel.replaceWith('<div class="checkbox">' + outerHtml + '</div>');
+  }
+
+  // === Step 5: 忘記密碼連結補上有意義的 title ===
+  $('a[href="#forgot_password"]').each(function () {
+    if (!$(this).attr('title')) {
+      $(this).attr('title', '忘記密碼');
+    }
+    // 確保連結文字清楚（移除 <small> 包覆不影響語意，但補 aria-label 保險）
+    if (!$(this).attr('aria-label')) {
+      $(this).attr('aria-label', '忘記密碼');
+    }
+  });
+}
+
+$(document).ready(function () {
+  setTimeout(fixLoginFormA11y, 300);
+});
+function fixLoginFormLabelA11y() {
+
+  // === 1. 確保 user_email input 的 label 關聯正確 ===
+  var $emailInput = $('#user_email');
+  var $emailLabel = $('label[for="user_email"]');
+  if ($emailInput.length && $emailLabel.length) {
+    // label 已有 visually-hidden 文字，確保 input 也有 aria-label 備援
+    if (!$emailInput.attr('aria-label')) {
+      $emailInput.attr('aria-label', '使用者帳號');
+    }
+  }
+
+  // === 2. 確保 user_password input 的 label 關聯正確 ===
+  var $pwInput = $('#user_password');
+  var $pwLabel = $('label[for="user_password"]');
+  if ($pwInput.length && $pwLabel.length) {
+    if (!$pwInput.attr('aria-label')) {
+      $pwInput.attr('aria-label', '密碼');
+    }
+  }
+
+  // === 3. 修正 remember_me：label 被包在 small 裡，移出來 ===
+  var $rememberCheckbox = $('#remember_me');
+  if ($rememberCheckbox.length) {
+    var $small = $rememberCheckbox.closest('.checkbox').find('small');
+    var $labelInSmall = $small.find('label[for="remember_me"]');
+
+    if ($labelInSmall.length && $small.length) {
+      // 把 label 從 small 裡移出來，直接放在 checkbox 旁邊
+      var labelHtml = $labelInSmall.prop('outerHTML');
+      $small.replaceWith(labelHtml);
+    }
+  }
+
+  // === 4. 確保 submit button 有可識別名稱 ===
+  $('button[type="submit"]').each(function () {
+    var $btn = $(this);
+    var btnText = $btn.text().trim();
+    if (btnText && !$btn.attr('aria-label')) {
+      $btn.attr('aria-label', btnText);
+    }
+  });
+
+  // === 5. 全站：找出所有沒有對應 label 的 input，補上 aria-label ===
+  $('input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="reset"])').each(function () {
+    var $input = $(this);
+    var inputId = $input.attr('id');
+
+    // 已有 aria-label 或 aria-labelledby 就跳過
+    if ($input.attr('aria-label') || $input.attr('aria-labelledby')) return;
+
+    // 有對應 label[for] 就跳過
+    if (inputId && $('label[for="' + inputId + '"]').length) return;
+
+    // 從 placeholder 或 title 補上 aria-label
+    var label = $input.attr('placeholder') || $input.attr('title') || '';
+    if (label) {
+      $input.attr('aria-label', label);
+    }
+  });
+}
+
+$(document).ready(function () {
+  setTimeout(fixLoginFormLabelA11y, 300);
+});
+</script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/site/favicon/684f93b3085777d5a5a33029/cropped-NFU_logo-192x192.png">
+  <title>出國計畫 | 國立虎尾科技大學國際事務處</title>
+  <link rel="stylesheet" media="all" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" media="all" href="/assets/bootstrap/bootstrap.min-c36b0860fa3ccf6a898fa1a436dc802cf6333c72dd02932473d4dd9cb6739974.css">
+  <link rel="stylesheet" media="all" href="/assets/template/template-9ce5cfdbbf7db790067cc827b0aac93809c969b6d35e0b12ff561fff97ba997d.css">
+  <link rel="stylesheet" media="all" href="/assets/template/jquery.scrolling-tabs.min-0aaa5bfc7b51e5bacb1b208e1bc8d8cf1b8daba5c234626bc7fda4be4effb5df.css">
+  <link rel="stylesheet" media="print" type="text/css" href="/assets/template/print.css">
+  <script src="/assets/plugin/modernizr-d5770395993b83f1cd01c625a62f0cc2a8f2536f7288ef3a45f2863f2e20a9c1.js"></script>
+  <script src="/assets/plugin/picturefill.min-1e1f7d4e867ad1ec3d5886ad5e69512b6692509c939a89634ffcf63ba17b6b7d.js"></script>
+  <script src="/assets/plugin/jquery.mobile.custom.min-94832de9dd3faaf354dabd20e980b49bfe549a3750d73e5855bc4104b53afe9d.js"></script>
+  <script src="/assets/bootstrap.min-18024db0d6a0bc75ca740863a3b491b7f9b9cbd080ba3ee25e22265801d0b0c9.js"></script>
+  
+  
+  <script src="/assets/plugin/jquery.cycle2.video.min-384b34504c43f5962ffa3295b0b28947fd8a4498968853be0477a5dc664bd9b9.js"></script>
+  <script src="/assets/plugin/jquery-bullseye-min-8149d6adb748bd9561e9f1fd822e59337a75d065e017c7891699d50d69414bc2.js"></script>
+  <script src="/assets/plugin/jquery.scrolling-tabs.min-2ca04680a371ceee7710b234d1e8795bf3d4247da7327300094cf74ed64829fa.js"></script>
+
+  <script src="/assets/plugin/owl.carousel.min-ec9585fb4e14679aaa65e0d62fac99d496ce23ea8052fc718d5b3fbc84525e61.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/template/owl.carousel.min.css">
+  <link rel="stylesheet" type="text/css" href="/assets/template/owl.theme.default.min.css">
+  
+  <script src="/assets/app-b47b4dfcb97d6b7afc8dd33b7a86193fdd62be25c328122a7baa222cfe54edfc.js"></script>
+  <script src="/assets/frontend-121b87925d20c2b21764d1c5053c911976bcf14ba23128fed1904f6b7a19033d.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+
+<link rel="stylesheet" media="all" href="/assets/basic/icon-25f6a89d6786b31e5805ec90e7ba18610228db5085ba6610e43f9e488a81ce60.css">
+<link rel="stylesheet" media="all" href="/assets/lib/orbit_bar/orbit-bar-f866e856ce2eeae4af8ef65e11a4902b41e62426531422b4059f24eec4576845.css">
+<script src="/assets/frontend_extend-999decf38e68d49ef81c07f7c8ed615fffdbf532aa93c37e6a6ff279894d38d2.js"></script>
+</head>
+<body class="internal-page accessibility_mode banner_height_setting_0" data-module="announcement">
+  <noscript style="color: #333333;"><p style="text-align: center;">此網頁需要支援 JavaScript 才能正確運行，請先至你的瀏覽器設定中開啟 JavaScript。</p></noscript>
+<link rel="stylesheet" media="all" href="/assets/fontawesome-6.2.1.min-8aec0118643d34254cb9f5c27b931239c9de8008c849c9800d8651a5da1abcb2.css">
+<link rel="stylesheet" media="all" href="/assets/fontawesome-6.7.2-fix.min-3fb9119cdcb8e12393eaf44554308981843df0135e5ff33f7a0716ef44de2983.css">
+<link rel="stylesheet" media="all" href="/assets/lib/jquery-ui-1.13.2/jquery-ui.min-bc39b4e583177d1bfb4d31e880558d84fd307a5b3c87a91f2fadaf0bc4f1cc96.css">
+<link rel="stylesheet" media="all" href="/assets/jquery-ui-timepicker-addon-ee91708eac547223792975e0d9a9aae62127da4b28a58d40c0634927f19665f0.css">
+  <script src="/assets/lib/jquery-ui-1.13.2/jquery-ui.min-b88d0b98b7b90a20cae0fc32eaf0845ac1ffdc0e4b3176c501e353d45c975064.js"></script>
+  <script src="/assets/jquery.ui.datepicker.monthyearpicker-6126b863aa1c4b399bf657869bbc51389d83ff5101b069ff7e1d0b02793c67e1.js"></script>
+<style type="text/css">
+  .ui-dialog {
+    z-index: 2000000000000 !important;
+  }
+  .ui-datepicker {z-index:1000000 !important}
+    @media screen and (min-width:768px){
+      html body #orbit-bar .orbit-bar-inner,html body #orbit-bar .orbit-bar-inner form,html body #orbit-bar .orbit-bar-search-sign-language{
+        background-color: #023462 !important;
+      }
+    }
+    html body #orbit-bar .orbit-bar-inner,html body #orbit-bar .orbit-bar-inner form,html body #orbit-bar .orbit-bar-search-sign-language{
+      background-color: #023462 !important;
+    }
+    html body #orbit-bar .orbit-bar-inner>ul>li:hover>span, html body #orbit-bar .orbit-bar-inner>ul>li:hover>a, html body #orbit-bar .orbit-bar-inner>ul>li:hover #language, html body #orbit-bar .orbit-bar-inner>ul>li>ul li:hover, html body #orbit-bar .orbit-bar-inner>ul>li>ul li.active,.orbit-bar-search-sign-language li:hover form,.orbit-bar-search-sign-language li:hover label
+    {
+        background-color: #023462 !important;
+        color: #FFFFFF !important;
+    }
+    html body #orbit-bar .orbit-bar-inner>ul>li span:hover,html body #orbit-bar .orbit-bar-inner>ul>li:hover>span#user, html body #orbit-bar .orbit-bar-inner>ul>li>ul li a:hover,html body #orbit-bar .orbit-bar-inner>ul>li:hover #language,html body #orbit-bar .orbit-bar-menu .showlist:hover .orbit-bar-home, html body #orbit-bar .orbit-bar-inner>ul>li:hover label
+    {
+        color: #FFFFFF !important;
+    }
+    html body #orbit-bar .orbit-bar-inner > ul > li > ul
+    {
+      background-color: #023462 !important;
+    }
+    @media screen and (max-width:767px){
+      html body #orbit-bar .orbit-bar-inner > ul
+      {
+        background-color: #023462 !important;
+      }
+      html body #orbit-bar .orbit-bar-inner form{
+        background-color: #023462 !important;
+      }
+    }
+    @media screen and (min-width:768px){
+      html body #orbit-bar .orbit-bar-search-sign-language #language, html body #orbit-bar .orbit-bar-menu .orbit-bar-home,html body #orbit-bar .orbit-bar-search-sign-language #user,html body #orbit-bar .orbit-bar-inner>ul>li>a,html body #orbit-bar .orbit-bar-inner>ul>li label {
+        color: #ffffff !important;
+      }
+    }
+    @media screen and (max-width:767px){
+      #orbit-bar .orbit-bar-title a{
+        color: #ffffff !important;
+      }
+      label[for="open-orbit-nav"]{
+        border-color: #ffffff !important;
+        color: #ffffff !important;
+      }
+    }
+    html body #orbit-bar .orbit-bar-inner > ul > li > ul a,html body #orbit-bar .orbit-bar-inner > ul > li > ul .active{
+      color: #ffffff !important;
+    }
+    html body #orbit-bar .orbit-bar-inner > ul > li > ul:before{
+      border-color: transparent transparent #ffffff transparent !important;
+    }
+    @media screen and (max-width:767px){
+      html body #orbit-bar .orbit-bar-search-sign-language #language, html body #orbit-bar .orbit-bar-menu .orbit-bar-home,html body #orbit-bar .orbit-bar-search-sign-language #user,html body #orbit-bar .orbit-bar-inner>ul>li>a,html body #orbit-bar .orbit-bar-inner>ul>li label {
+        color: #ffffff !important;
+      }
+    }
+</style>
+  <div id="orbit-bar">
+    <input type="checkbox" id="open-orbit-nav" title="orbitbar">
+    <div class="orbit-bar-inner">
+      <label for="open-orbit-nav">
+        <i class="icons-list-2"></i>
+      </label>
+      <ul class="orbit-bar-menu">
+        <li>
+          <a href="javascript:;" class="orbit-bar-logo" title="請登入以管理網站,按下開啟登入視窗">
+            <img src="/uploads/site/default_image/684f93b3085777d5a5a33029/cropped-NFU_logo-192x192.png" alt="奧博科技商標">
+            <p style="display: none;">請登入以管理網站,按下開啟登入視窗</p>
+          </a>
+        </li>
+        <li>
+          <a href="/" class="orbit-bar-home" title="首頁" tabindex="0"><i class="icons-house"></i><p>home</p></a>
+        </li>
+      </ul>
+      <h1 class="orbit-bar-title">
+        <a href="/" title="國立虎尾科技大學國際事務處">國立虎尾科技大學國際事務處</a>
+      </h1>
+      <ul class="orbit-bar-search-sign-language">
+        <li style="background-color:transparent;">
+          <form id="search" method="get" action="https://www.google.com/custom" target="_blank" style="border: 0 !important;">
+            <input type="hidden" name="client" value="pub-&amp;amp">
+            <input type="hidden" name="ie" id="ie" value="utf-8">
+            <input type="hidden" name="oe" id="oe" value="utf-8">
+            <input type="hidden" name="cof" id="cof" value="AH:center;AWFID:03de271f1940eea3;">
+            <input type="hidden" name="domains" value="oia.nfu.edu.tw">
+            <input type="hidden" name="sitesearch" value="oia.nfu.edu.tw">
+            <label style="color: inherit !important;display: none;z-index: 1;" for="q" accesskey="S" title="全站搜尋(S)">Google Search</label>
+            <input type="search" name="q" id="q" value="" placeholder="全站搜尋" x-webkit-speech="" title="search">
+          </form>
+        </li>
+        <li id="language-li" style="background-color:transparent;">
+            <a id="languagebutton" href="javascript:;" title="按下關閉語言選單"><span id="language"><i class="icons-earth orbit-bar-language-icon"></i><span class="orbit-bar-language-text">Language</span></span></a>
+            <ul>
+                  <li class="active">
+                    繁體中文
+                  </li>
+                  <li>
+                    <a href="/zh_cn/news/Outbound">
+                      简体中文
+                    </a>
+                  </li>
+                  <li>
+                    <a accesskey="e" href="/en/news/Outbound">
+                      English
+                    </a>
+                  </li>
+            </ul>
+        </li>
+        <style>
+          @media screen and (min-width:768px){
+            .orbit-bar-search-sign-language{
+              max-height:100%;
+            }
+          }
+        </style>
+      </ul>
+      <ul id="language-li-ul" class="orbit-bar-mobile-sign-language" style="background-color: #023462 !important;">
+        <li>
+            <span id="language" class="mobile-button"><i class="icons-earth orbit-bar-language-icon" style="color: #ffffff !important;"></i><span class="orbit-bar-language-text">Language</span></span>
+            <ul>
+                  <li class="active">
+                    繁體中文
+                  </li>
+                  <li>
+                    <a href="/zh_cn/news/Outbound">
+                      简体中文
+                    </a>
+                  </li>
+                  <li>
+                    <a accesskey="e" href="/en/news/Outbound">
+                      English
+                    </a>
+                  </li>
+            </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <style>
+  @media (max-width: 767px) {#orbit-bar ul.orbit-bar-search-sign-language > li + li{width:33.3333%;}}
+  </style>
+  <script type="text/javascript">
+    var lang_opentitle = '按下開啟語言選單';
+    var lang_closetitle = '按下關閉語言選單';
+    $('#languagebutton').off('click').on('click',function(){
+      if ($(this).parent().find('>ul').hasClass('show')) {
+        $(this).attr('title', lang_opentitle);
+      } else {
+        $(this).attr('title', lang_closetitle);
+      }
+    });
+    $('#languagebutton').focus(function(){
+      if ($(this).parent().find('>ul').hasClass('show')) {
+        $(this).attr('title', lang_closetitle);
+      } else {
+        $(this).attr('title', lang_opentitle);
+      }
+    });
+    /* when tab key choose close,press enter to close login window start */
+    function closelabel(e){
+      var keynum;
+      if(window.event) // IE
+      {
+        keynum = e.keyCode
+      }
+      else if(e.which) // Netscape/Firefox/Opera/chrome
+      {
+        keynum = e.which
+      }
+      if( keynum == 13 ){
+        $(".orbit-bar-logo").one("focusin",function(){
+          window.orbit_login_button.focus();
+        })
+        $("#open-orbit-login").click();
+      };
+    }
+    $('label.close').attr('onkeydown','closelabel(event)');
+    /* when tab key choose  close,press enter to close login window end   */
+    $('#loginbutton >label').off('click').on('click',function(){window.orbit_login_button = $('#loginbutton');$("#open-orbit-login").click()});
+    $('#loginbutton').off('click').on('click',function(){window.orbit_login_button = $('#loginbutton');$("#open-orbit-login").click()});
+    /* press esc to close login window start */
+    function esc_close_login_window(event){
+      var e = event;
+      var keynum;
+      if(window.event) // IE
+      {
+        keynum = e.keyCode;
+      }
+      else if(e.which) // Netscape/Firefox/Opera/chrome
+      {
+        keynum = e.which;
+      }
+      if( keynum == 27 ){
+        $(".orbit-bar-logo").one("focusin",function(){
+          window.orbit_login_button.focus();
+        })
+        $("#open-orbit-login").click();
+      };
+    }
+    /* press esc to close login window end   */
+    $("#open-orbit-login").on("change",function(){
+      if($(this).is(":checked")){
+        $(window).off('keydown', esc_close_login_window).on('keydown', esc_close_login_window);
+        $("#user_user_id").focus(); //when open login window,focus on the username
+      }else{
+        $(window).off('keydown', esc_close_login_window);
+      }
+    })
+    $(".login-body form").on("submit",function(){
+      $(this).append("<input type='hidden' name='referer_url' value='/zh_tw/news/Outbound'/>");
+    })
+    var I18n = {};
+    Object.defineProperty(I18n,"locale",{
+      value: "zh_tw"
+    });
+    Object.defineProperty(I18n,"validLocales",{
+      value: ["zh_tw","zh_cn","en"]
+    });
+  </script>
+  <style>
+    #language-li ul li a{
+      margin-left: 0;
+      position: relative;
+    }
+    @media screen and (min-width:768px){
+        .sub_orbit_bar{
+          background-color:#023462!important;
+        }
+        .orbit-bar-menu{
+          background-color:transparent!important;
+        }
+        .sub_orbit_bar_text{
+          color:#ffffff!important;
+        }
+    }
+    @media screen and (max-width:767px){
+        .sub_orbit_bar{
+          background-color:#023462!important;
+        }
+        .orbit-bar-menu{
+          background-color:#023462!important;
+        }
+        .sub_orbit_bar_text{
+          color:#ffffff!important;
+        }
+      .mobile_login_bar{
+        width: 50%!important;
+      }
+    }
+      @media screen and (max-width: 767px){
+        #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language {
+            background: #333;
+            display: block;
+            margin: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+      }
+    .orbit-bar-mobile-sign-language {
+        display: none;
+    }
+    @media screen and (max-width: 767px){
+      #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li ul.show {
+        display: block;
+      }
+      #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li > span > span {
+        display: none;
+      }
+      #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li {
+        color: #fff;
+        float: left;
+        position: relative;
+      }
+      #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li > span , #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li > label{
+        cursor: pointer;
+        display: block;
+        height: 40px;
+        line-height: 43px;
+        width: 40px;
+        text-align: center;
+        margin-bottom: 0;
+      }
+      #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li ul {
+          background: #333 none repeat scroll 0 0;
+          border-radius: 0;
+          display: none;
+          position: fixed;
+          right: 0;
+          top: 40px;
+          width: 100%;
+      }
+    }
+  </style>
+  <script>
+    function calc_orbit_bar_title_width(){
+      if($(window).outerWidth(true) <= 767){
+        $('.orbit-bar-inner > .orbit-bar-title').css({'width': '','margin': ''});
+        return;
+      }
+      var w1 = $('.orbit-bar-inner').width();
+      var w2 = $('.orbit-bar-inner>*:not(.orbit-bar-title)').map(function(i,v){
+        if ($(v).hasClass('custom_widget') && $(v).text().replace(/\s+/,'')==''){
+          $(v).css('flex','none');
+          return 0;
+        }else{
+          return $(v).css('display') == 'none' ? 0 : $(v).outerWidth(true);
+        }
+      }).toArray().reduce(function(v1,v2){return v1+v2});
+      var w3 = $('.orbit-bar-title').css('margin-left').match(/([\d\.]+)px$/);
+      w3 = w3 ? parseFloat(w3[0]) : 0;
+      var w4 = $('.orbit-bar-title').css('margin-right').match(/([\d\.]+)px$/);
+      w4 = w4 ? parseFloat(w4[0]) : 0;
+      var title_width = w1-w2-w3-w4-2;
+      $('.orbit-bar-title').width(title_width);
+      return title_width;
+    }
+    $(document).ready(function(){
+      calc_orbit_bar_title_width();
+      $(".orbit-bar-inner").css("overflow","visible");
+      if($(window).outerWidth(true) <= 767){
+        $('.orbit-bar-menu').before($('.orbit-bar-title'));
+      }else{
+        $(".orbit-bar-search-sign-language").before($('.orbit-bar-title'));
+      }
+    })
+    $(window).on("load",function(){
+      calc_orbit_bar_title_width();
+    })
+    $(window).resize(function(){
+      calc_orbit_bar_title_width();
+      if($(window).outerWidth(true) <= 767){
+        $('.orbit-bar-menu').before($('.orbit-bar-title'));
+      }else{
+        $(".orbit-bar-search-sign-language").before($('.orbit-bar-title'));
+      }
+    })
+  </script>
+
+  <div class="background" data-pp="100"></div>
+  
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="mobile-menu">
+  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#layout-navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar icon-bar-top"></span>
+        <span class="icon-bar icon-bar-middle"></span>
+        <span class="icon-bar icon-bar-bottom"></span>
+  </button>
+  <div class="cover"></div>
+</div>
+<header class="navbar layout-header no-print" role="navigation">
+
+  <div class="outdropdowns kenjohn">
+  <div class="container dropdowns">
+    <a href="#content" id="gotocenter" title="跳到主要內容" tabindex="1" class="sr-only sr-only-focusable add_default">跳到主要內容</a>
+<div class="header-nav no-print">
+    <a id="accesskey_top" accesskey="U" title="上方主選單連結區(U)" href="#U" style="color: inherit !important;display: inline-block;z-index: 1;">:::</a>
+      <a href="/zh_tw/sitemap" accesskey="W" title="網站導覽(W)" style="color: inherit !important;position: relative;margin: 0;z-index: 1;">網站導覽</a> | <blockquote>
+<img alt="這是一張圖片" src="/uploads/asset/data/691ad382085777fe627ef5fe/Frame-4647-1536x219.png" style="width: 170px;" title="這是一張圖片"> <a href="https://nfu.edu.tw/zh/" title="在本視窗開啟 虎科首頁">虎科首頁</a>
+</blockquote>
+
+<div class="movelanguage">
+<a aria-label="繁體中文" href="/?locale=zh_tw" tabindex="0" title="繁體中文">繁體中文 </a> <a aria-label="English" href="/?locale=en" tabindex="0" title="English"> English </a>
+</div>
+
+  </div>
+    <div class="navbar-header">
+        
+        <script>$(document).ready(function(){var url =$('.site-logo').eq(0).attr('src');if(url == "/assets/default-site-logo.png"){$('.navbar-brand').eq(0).remove();};if($('.navbar-brand').length == 2){$('.site-logo').css('height','auto')};$('.site-logo').eq(0).css('margin-right',0);$('.navbar-brand').css('padding-right',0)})</script>
+        <a title="主頁" class="navbar-brand" href="/"><h2 class="default_site_h1">
+<img class="site-logo" src="/uploads/site/site_logo/684f93b3085777d5a5a33029/Group-4652.png" alt="國立虎尾科技大學國際事務處的Logo"> <span style="display: none;">國立虎尾科技大學國際事務處</span>
+</h2></a>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#layout-navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar icon-bar-top"></span>
+          <span class="icon-bar icon-bar-middle"></span>
+          <span class="icon-bar icon-bar-bottom"></span>
+        </button>
+      </div>
+    <div class="collapse navbar-collapse modules-menu" id="layout-navigation">
+    
+      <ul id="main-nav" class="navbar-right navbar-nav modules-menu-level-0 nav-level-0 no-print" data-menu-level="0">
+<a id="accesskey_menu" title="上方功能選單連結區(M)" accesskey="M" href="#M" style="left: 0;color: #333333 !important;display: inline-block;z-index: 1;">:::</a><li>
+    <a href="/zh_tw/news" title="最新消息" data-menu-link="true" class="dropdown-toggle" target="_self">最新消息</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/news" title="全部" data-menu-link="true" target="_self">全部</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/news/OffCampusNews" title="校外轉知" data-menu-link="true" target="_self">校外轉知</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/news/Outbound" title="出國計畫" data-menu-link="true" target="_self">出國計畫</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/news/Internship" title="僑外生實習 " data-menu-link="true" target="_self">僑外生實習 </a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/news/InternationalTalent" title="國際攬才" data-menu-link="true" target="_self">國際攬才</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/news/LearningMandarin" title="華語學習" data-menu-link="true" target="_self">華語學習</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/news/NFUNews" title="校內公告" data-menu-link="true" target="_self">校內公告</a>
+        
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="/zh_tw/aboutoia/intro/introducation" title="關於本處" data-menu-link="true" class="dropdown-toggle" target="_self">關於本處</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/aboutoia/intro/introducation" title="本處資訊" data-menu-link="true" target="_self">本處資訊</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/aboutoia/intro/introducation" title="本處簡介" data-menu-link="true" target="_self">本處簡介</a>
+          </li>
+<li>
+            <a href="/zh_tw/aboutoia/intro/members" title="本處成員" data-menu-link="true" target="_self">本處成員</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/aboutoia/sister/asia" title="國際合作" data-menu-link="true" target="_self">國際合作</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/aboutoia/sister" title="姊妹校" data-menu-link="true" target="_self">姊妹校</a>
+          </li>
+<li>
+            <a href="/zh_tw/aboutoia/coop/guests" title="外賓來訪" data-menu-link="true" target="_self">外賓來訪</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/aboutoia/regulations" title="業務規章" data-menu-link="true" target="_self">業務規章</a>
+        
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="#" title="校內資訊" data-menu-link="true" class="dropdown-toggle" target="_self">校內資訊</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/nfu_info/adm/oaa" title="行政單位介紹" data-menu-link="true" target="_self">行政單位介紹</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/nfu_info/adm/oaa" title="教務處" data-menu-link="true" target="_self">教務處</a>
+          </li>
+<li>
+            <a href="/zh_tw/nfu_info/adm/osa" title="學務處" data-menu-link="true" target="_self">學務處</a>
+          </li>
+<li>
+            <a href="/zh_tw/nfu_info/adm/ord" title="研發處" data-menu-link="true" target="_self">研發處</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/aca/coe/" title="教學單位介紹" data-menu-link="true" target="_self">教學單位介紹</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/aca/coe/coe_intro" title="工程學院" data-menu-link="true" target="_self">工程學院</a>
+          </li>
+<li>
+            <a href="/zh_tw/aca/cece/cece_intro" title="電機資訊學院" data-menu-link="true" target="_self">電機資訊學院</a>
+          </li>
+<li>
+            <a href="/zh_tw/aca/cmgt/cmgt_intro" title="管理學院" data-menu-link="true" target="_self">管理學院</a>
+          </li>
+<li>
+            <a href="/zh_tw/aca/caas/caas_intro" title="文理學院" data-menu-link="true" target="_self">文理學院</a>
+          </li>
+<li>
+            <a href="/zh_tw/aca/cge/cge_intro" title="通識教育中心" data-menu-link="true" target="_self">通識教育中心</a>
+          </li>
+<li>
+            <a href="/zh_tw/aca/ltc/ltc_intro" title="語言教學中心" data-menu-link="true" target="_self">語言教學中心</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/nfu_info/rc" title="研究中心介紹" data-menu-link="true" target="_self">研究中心介紹</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/nfu_info/research/exa" title="研究專區" data-menu-link="true" target="_self">研究專區</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/nfu_info/research/exa" title="研究領域" data-menu-link="true" target="_self">研究領域</a>
+          </li>
+<li>
+            <a href="/zh_tw/nfu_info/research/exb" title="實驗室一覽" data-menu-link="true" target="_self">實驗室一覽</a>
+          </li>
+</ul>
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="#" title="出國計畫" data-menu-link="true" class="dropdown-toggle" target="_self">出國計畫</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/out/abroad" title="學期交換" data-menu-link="true" target="_self">學期交換</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/out/exlink/abroadlink2" title="交換學生" data-menu-link="true" target="_self">交換學生</a>
+          </li>
+<li>
+            <a href="/zh_tw/out/exlink/abroad" title="出國交換學校一覽表" data-menu-link="true" target="_self">出國交換學校一覽表</a>
+          </li>
+<li>
+            <a href="/zh_tw/out/exlink/flying" title="出國獎學金" data-menu-link="true" target="_self">出國獎學金</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/out/short/dream" title="短期實習交流" data-menu-link="true" target="_self">短期實習交流</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/out/short/dream" title="學海築夢" data-menu-link="true" target="_self">學海築夢</a>
+          </li>
+<li>
+            <a href="/zh_tw/out/short/other_plans" title="其他計畫" data-menu-link="true" target="_self">其他計畫</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/out/sharing" title="心得分享" data-menu-link="true" target="_self">心得分享</a>
+        
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="#" title="境外學生" data-menu-link="true" class="dropdown-toggle" target="_self">境外學生</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/overseas/campus/traffic" title="校園資訊" data-menu-link="true" target="_self">校園資訊</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/overseas/campus/traffic" title="交通資訊" data-menu-link="true" target="_self">交通資訊</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/campus/life" title="校園生活" data-menu-link="true" target="_self">校園生活</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/campus/fees" title="學費與生活費用" data-menu-link="true" target="_self">學費與生活費用</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/campus/dorm" title="宿舍資訊" data-menu-link="true" target="_self">宿舍資訊</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/campus/calendar" title="行事曆" data-menu-link="true" target="_self">行事曆</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/campus/bilingual" title="雙語課程" data-menu-link="true" target="_self">雙語課程</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/overseas/compatriot" title="僑生" data-menu-link="true" target="_self">僑生</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/overseas/international" title="國際學生" data-menu-link="true" target="_self">國際學生</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/overseas/teep" title="Formosa TIP (TEEP) Students" data-menu-link="true" target="_self">Formosa TIP (TEEP) Students</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/overseas/admission/brochure" title="虎科招生" data-menu-link="true" target="_self">虎科招生</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/overseas/admission/brochure" title="招生簡章" data-menu-link="true" target="_self">招生簡章</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/admission/system" title="Application System for Int’l Students" data-menu-link="true" target="_self">Application System for Int’l Students</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/admission/overseas_chinese" title="僑生(海外聯合招生委員會)" data-menu-link="true" target="_self">僑生(海外聯合招生委員會)</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/overseas/scholarship" title="獎學金" data-menu-link="true" target="_self">獎學金</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/overseas/friendly" title="NFU國際友善店家" data-menu-link="true" target="_self">NFU國際友善店家</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/overseas/friendly?q%5B1%5D=%E9%A3%9F&amp;column=1&amp;q%5B2%5D=&amp;column=2&amp;q%5B3%5D=&amp;column=3&amp;q%5B4%5D=&amp;column=4&amp;column=" title="食" data-menu-link="true" target="_self">食</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/friendly?q%5B1%5D=%E8%A1%A3&amp;column=1&amp;q%5B2%5D=&amp;column=2&amp;q%5B3%5D=&amp;column=3&amp;q%5B4%5D=&amp;column=4&amp;column=" title="衣" data-menu-link="true" target="_self">衣</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/friendly?q%5B1%5D=%E4%BD%8F&amp;column=1&amp;q%5B2%5D=&amp;column=2&amp;q%5B3%5D=&amp;column=3&amp;q%5B4%5D=&amp;column=4&amp;column=" title="住" data-menu-link="true" target="_self">住</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/friendly?q%5B1%5D=%E8%A1%8C&amp;column=1&amp;q%5B2%5D=&amp;column=2&amp;q%5B3%5D=&amp;column=3&amp;q%5B4%5D=&amp;column=4&amp;column=" title="行" data-menu-link="true" target="_self">行</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/friendly?q%5B1%5D=%E8%82%B2&amp;column=1&amp;q%5B2%5D=&amp;column=2&amp;q%5B3%5D=&amp;column=3&amp;q%5B4%5D=&amp;column=4&amp;column=" title="育" data-menu-link="true" target="_self">育</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/friendly?q%5B1%5D=%E6%A8%82&amp;column=1&amp;q%5B2%5D=&amp;column=2&amp;q%5B3%5D=&amp;column=3&amp;q%5B4%5D=&amp;column=4&amp;column=" title="樂" data-menu-link="true" target="_self">樂</a>
+          </li>
+<li>
+            <a href="/zh_tw/overseas/friendly?q%5B1%5D=%E9%86%AB%E7%99%82&amp;column=1&amp;q%5B2%5D=&amp;column=2&amp;q%5B3%5D=&amp;column=3&amp;q%5B4%5D=&amp;column=4&amp;column=" title="醫療" data-menu-link="true" target="_self">醫療</a>
+          </li>
+</ul>
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="#" title="育才資訊" data-menu-link="true" class="dropdown-toggle" target="_self">育才資訊</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/talent/internship" title="僑外生實習" data-menu-link="true" target="_self">僑外生實習</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/talent/career" title="國際攬才" data-menu-link="true" target="_self">國際攬才</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/talent/mandarin" title="華語學習" data-menu-link="true" target="_self">華語學習</a>
+        
+      </li>
+</ul>
+  </li>
+</ul>
+    </div>
+    <!-- <div class="header-buttom layout-content-box " data-pp="200"></div> -->
+   </div>
+  </div>
+</header>
+
+
+  <div class="layout-slide no-print single-child-datapp homebanner" data-pp="998"></div>
+  <section class="layout-slide no-print single-child-datapp homebanner" data-pp="300"><div class="w-ba-banner ba-banner-widget-2" data-subpart-id="69def5e50857773f11e3c0f6">
+  <div class="w-ba-banner__wrap  cycle-slideshow" data-list="images" data-level="0" data-cycle-slides=".w-ba-banner__slide" data-cycle-log="false" data-cycle-auto-height="0" data-cycle-speed="500" data-cycle-timeout="5000" data-cycle-fx="fade" data-cycle-pager=".banner_caption_69def5e50857773f11e3c0f6" data-pager-template="&lt;li&gt;&lt;button&gt;&lt;/button&gt;&lt;/li&gt;" data-pager-active-class="active-slide" data-cycle-youtube="true" data-cycle-youtube-autostart="false" data-cycle-swipe="true" data-cycle-swipe-fx="scrollHorz">
+     <div class="w-ba-banner__slide active" data-link="" data-cycle-title="Happy Eid Al-Fitr from NFU" data-cycle-desc=" 開齋節" data-overlay-template="&lt;h3&gt;Happy Eid Al-Fitr from NFU&lt;/h3&gt; 開齋節" data-bs-target="" data-category="" data-tags="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/69dc489a085777d62707118a/3.png?v=1786081647" alt="Happy Eid Al-Fitr from NFU">
+    </div>
+  
+     <div class="w-ba-banner__slide " data-link="" data-cycle-title="NFU 45TH ANNIVERSARY" data-cycle-desc="" data-overlay-template="&lt;h3&gt;NFU 45TH ANNIVERSARY&lt;/h3&gt;" data-bs-target="" data-category="" data-tags="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/69dcac47085777d6270714c8/2.png?v=1786081626" alt="NFU 45TH ANNIVERSARY">
+    </div>
+  
+     <div class="w-ba-banner__slide " data-link="" data-cycle-title="HAPPY DIWALI FROM NFU" data-cycle-desc="" data-overlay-template="&lt;h3&gt;HAPPY DIWALI FROM NFU&lt;/h3&gt;" data-bs-target="" data-category="" data-tags="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/69e04f950857779b265c106b/Oia%E5%AE%98%E7%B6%B2_%E9%A6%96%E9%A0%81%E5%9C%96%E7%89%87%E6%A0%BC%E5%BC%8F_1920600_.png?v=1786081632" alt="HAPPY DIWALI FROM NFU">
+    </div>
+  </div>
+  <ul class="w-ba-banner__pager-2 banner-pager banner_caption_69def5e50857773f11e3c0f6"></ul>
+  <ul class="controlplay" role="radiogroup" aria-label="播放控制選項">
+    <a role="radio" aria-checked="true" href="javascript:;" class="resume-slide active" title="繼續播放" aria-label="繼續播放" aria-live="assertive">
+      <i aria-hidden="true"></i>
+      <p style="display: none;">Resume</p>
+    </a>
+
+    <a role="radio" aria-checked="false" href="javascript:;" class="pause-slide" title="暫停播放" aria-label="暫停播放" aria-live="assertive">
+      <i aria-hidden="true"></i>
+      <p style="display: none;">Pause</p>
+    </a>
+  </ul>
+  <ul class="button-mid">
+    <i class="fa fa-angle-left prev-button" aria-label="Prev"></i>
+    <i class="fa fa-angle-right next-button" aria-label="Next"></i>
+  </ul>
+</div>
+<script>
+	var flag = 1;
+	$('.pause-slide').click(function(){
+		$(this).parent("ul").parent('.w-ba-banner').find(".cycle-slideshow").cycle('pause');
+	});
+	$('.resume-slide').click(function(){
+		$(this).parent("ul").parent('.w-ba-banner').find(".cycle-slideshow").cycle('resume');
+	});
+	$('.next-button').off('click').on('click',function(){
+		$(this).parent("ul").parent('.w-ba-banner').find(".cycle-slideshow").cycle("next");
+
+	})
+	$('.prev-button').off('click').on('click',function(){
+		$(this).parent("ul").parent('.w-ba-banner').find(".cycle-slideshow").cycle("prev");
+	});
+    /* 修正點：處理 Pager 無障礙朗讀文字 */
+  $('.cycle-slideshow').on('cycle-post-initialize', function(event, optionHash) {
+    var $container = $(this).closest('.w-ba-banner');
+    var $slides = $(this).find('.w-ba-banner__slide');
+    var $pagerButtons = $container.find(".banner-pager button");
+
+    $pagerButtons.each(function(index) {
+      var slideTitle = $slides.eq(index).data('cycle-title') || "";
+      var ariaLabel = "第 " + (index + 1) + " 張投影片 " + slideTitle;
+      $(this).attr({
+        "aria-label": ariaLabel,
+        "title": ariaLabel
+      });
+    });
+  });
+</script>
+</section>
+  <!-- <div class="contentwrap">
+    <div class="container ">
+        <div class="extra-box col-sm-12" data-pp="388"></div>
+    </div>
+  </div> -->
+  <div class="verticalhome">
+    <div class="layout-content">
+      <div class="layout-content-inner inner-page contentwrap3">
+        <a accesskey="C" id="content" href="#C" title="主要內容區(C)" style="color: inherit !important;position: relative;margin: 0;z-index: 1;">:::</a><div class="sitemenu">
+          <div class="sitemenu-wrap1 container" data-pp="400"></div>
+        </div>
+        <div class="breadcrumb-wrap container" data-pp="500"></div>
+        <div class="content container">
+          <div class="row">
+            <section class="page-content-box col-sm-3" data-pp="901"></section>
+            <section class="page-content-box col-sm-6" data-pp="902"></section>
+            <section class="page-content-box col-sm-3" data-pp="903"></section>
+          </div>
+        </div>
+        <div class="row  container">
+          <aside class="layout-content-box aside leftCol col-sm-3" data-pp="904"></aside>
+          <aside class="layout-content-box aside rightCol col-sm-9" data-pp="905"></aside>
+        </div>
+        <div class="row container membercontainer">
+  
+          <section class="extrabox layout-content-box left-column col-sm-9">
+            <div class="extra" data-pp="600"></div>
+            <main id="main-content" class="main-content" data-content="true">
+
+<div class="i-annc index-announcement-1">
+    <h3 class="i-annc__page-title"><span>出國計畫</span></h3>
+  <ul class="i-annc__list" data-level="0" data-list="announcements">
+    <li class="i-annc__item  row">
+    <a class="w-annc__a" href="/zh_tw/news/Outbound/-115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E7%AC%AC%E4%BA%8C%E5%AD%B8%E6%9C%9F-%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E7%94%B3%E8%AB%8B-%E5%AD%B8%E6%B5%B7%E6%83%9C%E7%8F%A0%E7%AC%AC2%E6%AC%A1%E5%BE%B5%E4%BB%B6-%E8%87%AA%E5%8D%B3%E6%97%A5%E8%B5%B7%E8%87%B3115%E5%B9%B49%E6%9C%8810%E6%97%A5%E6%AD%A2-64583857" title="「115學年度第二學期」交換學生申請(學海惜珠第2次徵件)【自即日起至115年9月10日止】">
+            <span class="i-annc__category-wrap  col-sm-2">
+          <span class="i-annc__category">校內公告</span>
+        </span>
+        <h4 class="i-annc__entry-title  col-sm-8">
+          <span class="i-annc__status-wrap" data-list="statuses" data-level="1"></span>
+          <span class="i-annc__title">「115學年度第二學期」交換學生申請(學海惜珠第2次徵件)【自即日起至115年9月10日止】</span>
+        </h4>
+        <span class="i-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+          <span class="i-annc__postdate"> 2026-07-16</span>
+        </span>
+        </a>
+    </li>
+  
+    <li class="i-annc__item  row">
+    <a class="w-annc__a" href="/zh_tw/news/Outbound/-115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E7%AC%AC%E4%BA%8C%E5%AD%B8%E6%9C%9F-%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E7%94%B3%E8%AB%8B-%E8%87%AA%E5%8D%B3%E6%97%A5%E8%B5%B7%E8%87%B3115%E5%B9%B49%E6%9C%8810%E6%97%A5%E6%AD%A2-42884964" title="「115學年度第二學期」交換學生申請【自即日起至115年9月10日止】">
+            <span class="i-annc__category-wrap  col-sm-2">
+          <span class="i-annc__category">校內公告</span>
+        </span>
+        <h4 class="i-annc__entry-title  col-sm-8">
+          <span class="i-annc__status-wrap" data-list="statuses" data-level="1"></span>
+          <span class="i-annc__title">「115學年度第二學期」交換學生申請【自即日起至115年9月10日止】</span>
+        </h4>
+        <span class="i-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+          <span class="i-annc__postdate"> 2026-06-01</span>
+        </span>
+        </a>
+    </li>
+  
+    <li class="i-annc__item  row">
+    <a class="w-annc__a" href="/zh_tw/news/Outbound/%E6%AA%A2%E9%80%81-%E6%95%99%E8%82%B2%E9%83%A8115%E5%B9%B4%E8%B5%B4%E9%9F%93%E5%9C%8B%E7%A0%94%E7%BF%92%E9%9F%93%E8%AA%9E%E6%96%87%E4%BA%A4%E6%8F%9B%E7%8D%8E%E5%AD%B8%E9%87%91%E7%94%84%E9%81%B8%E7%B0%A1%E7%AB%A0-%E6%9A%A8%E7%9B%B8%E9%97%9C%E8%A1%A8%E4%BB%B6-%E8%AB%8B%E5%90%8C%E5%AD%B8%E8%B8%B4%E8%BA%8D%E5%A0%B1%E5%90%8D-82235907" title="檢送「教育部115年赴韓國研習韓語文交換獎學金甄選簡章」暨相關表件，請同學踴躍報名">
+            <span class="i-annc__category-wrap  col-sm-2">
+          <span class="i-annc__category">校內公告</span>
+        </span>
+        <h4 class="i-annc__entry-title  col-sm-8">
+          <span class="i-annc__status-wrap" data-list="statuses" data-level="1"></span>
+          <span class="i-annc__title">檢送「教育部115年赴韓國研習韓語文交換獎學金甄選簡章」暨相關表件，請同學踴躍報名</span>
+        </h4>
+        <span class="i-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+          <span class="i-annc__postdate"> 2026-05-12</span>
+        </span>
+        </a>
+    </li>
+  
+    <li class="i-annc__item  row">
+    <a class="w-annc__a" href="/zh_tw/news/Outbound/5-13%E4%BA%A4%E6%8F%9B%E5%BF%83%E5%BE%97%E5%88%86%E4%BA%AB%E8%AC%9B%E5%BA%A7-%E8%AB%8B%E5%90%8C%E5%AD%B8%E8%B8%B4%E8%BA%8D%E5%A0%B1%E5%90%8D-96638805" title="5/13交換心得分享講座，請同學踴躍報名">
+            <span class="i-annc__category-wrap  col-sm-2">
+          <span class="i-annc__category">校內公告</span>
+        </span>
+        <h4 class="i-annc__entry-title  col-sm-8">
+          <span class="i-annc__status-wrap" data-list="statuses" data-level="1"></span>
+          <span class="i-annc__title">5/13交換心得分享講座，請同學踴躍報名</span>
+        </h4>
+        <span class="i-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+          <span class="i-annc__postdate"> 2026-04-23</span>
+        </span>
+        </a>
+    </li>
+  
+    <li class="i-annc__item  row">
+    <a class="w-annc__a" href="/zh_tw/news/Outbound/-%E5%BB%B6%E9%95%B7%E8%87%B3115%E5%B9%B45%E6%9C%8814%E6%97%A5-%E5%9C%8B%E9%9A%9B%E5%AD%B8%E8%A1%93%E6%96%87%E5%8C%96%E4%BA%A4%E6%B5%81%E6%A9%9F%E6%9C%83-%E7%BE%8E%E5%9C%8BUniversity-of-Nevada-Las-Vegas-UNLV-2026%E5%B9%B4%E5%BA%A6%E6%9A%91%E6%9C%9F%E7%A0%94%E7%BF%92%E8%A8%88%E7%95%AB-20533743" title="【延長至115年5月14日】【國際學術文化交流機會】美國University of Nevada, Las Vegas (UNLV) 2026年度暑期研習計畫">
+            <span class="i-annc__category-wrap  col-sm-2">
+          <span class="i-annc__category">校內公告</span>
+        </span>
+        <h4 class="i-annc__entry-title  col-sm-8">
+          <span class="i-annc__status-wrap" data-list="statuses" data-level="1"></span>
+          <span class="i-annc__title">【延長至115年5月14日】【國際學術文化交流機會】美國University of Nevada, Las Vegas (UNLV) 2026年度暑期研習計畫</span>
+        </h4>
+        <span class="i-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+          <span class="i-annc__postdate"> 2026-03-25</span>
+        </span>
+        </a>
+    </li>
+  </ul>
+</div>
+
+
+<script>
+$(document).ready(function () {
+$(function () {
+  function formatPostDate() {
+    $('.i-annc__postdate').each(function () {
+      const $el = $(this);
+      if ($el.find('.i-annc__postdate-year').length) return;
+
+      const dateText = $el.text().trim();
+      if (!/^\d{4}-\d{1,2}-\d{1,2}$/.test(dateText)) return;
+
+      const [y, m, d] = dateText.split('-');
+      $el.html(`
+        <span class="i-annc__postdate-year">${y}</span>
+        <span class="i-annc__postdate-md">${m.padStart(2,'0')}/${d.padStart(2,'0')}</span>
+      `);
+    });
+  }
+
+  // ⭐ 延後執行（等模板渲染）
+  setTimeout(formatPostDate, 100);
+});
+
+  formatPostDate();
+
+});
+</script>
+
+</main>
+            <div class="box-social-share no-print"></div>
+            <div class="extra sitemenu-wrap2" data-pp="700"></div>
+            <div class="extra sitemenu-wrap3" data-pp="7000"></div>
+          </section>
+          <aside class="layout-content-box aside right-column col-sm-3" data-pp="906"><div class="sitemenu-wrap sitemenu-vertical no-print" data-subpart-id="69def5e50857773f11e3c0f8">
+	
+	
+		<h3 class="sitemenu-title">
+		<span></span>
+	</h3>
+	<ul data-list="pages" class="sitemenu-list level-1 list-unstyled" data-level="0">
+		<li class="sitemenu-item level-1 " data-category="" data-tags="">
+			<a class="sitemenu-link level-1" href="/zh_tw/news" target="_self">全部</a>
+			<ul class="sitemenu-list level-2 " data-list="children" data-level="1"></ul>
+		</li>
+	
+		<li class="sitemenu-item level-1 " data-category="" data-tags="">
+			<a class="sitemenu-link level-1" href="/zh_tw/news/OffCampusNews" target="_self">校外轉知</a>
+			<ul class="sitemenu-list level-2 " data-list="children" data-level="1"></ul>
+		</li>
+	
+		<li class="sitemenu-item level-1 active" data-category="" data-tags="">
+			<a class="sitemenu-link level-1" href="/zh_tw/news/Outbound" target="_self">出國計畫</a>
+			<ul class="sitemenu-list level-2 " data-list="children" data-level="1"></ul>
+		</li>
+	
+		<li class="sitemenu-item level-1 " data-category="" data-tags="">
+			<a class="sitemenu-link level-1" href="/zh_tw/news/Internship" target="_self">僑外生實習 </a>
+			<ul class="sitemenu-list level-2 " data-list="children" data-level="1"></ul>
+		</li>
+	
+		<li class="sitemenu-item level-1 " data-category="" data-tags="">
+			<a class="sitemenu-link level-1" href="/zh_tw/news/InternationalTalent" target="_self">國際攬才</a>
+			<ul class="sitemenu-list level-2 " data-list="children" data-level="1"></ul>
+		</li>
+	
+		<li class="sitemenu-item level-1 " data-category="" data-tags="">
+			<a class="sitemenu-link level-1" href="/zh_tw/news/LearningMandarin" target="_self">華語學習</a>
+			<ul class="sitemenu-list level-2 " data-list="children" data-level="1"></ul>
+		</li>
+	
+		<li class="sitemenu-item level-1 " data-category="" data-tags="">
+			<a class="sitemenu-link level-1" href="/zh_tw/news/NFUNews" target="_self">校內公告</a>
+			<ul class="sitemenu-list level-2 " data-list="children" data-level="1"></ul>
+		</li>
+	</ul>
+</div></aside>
+
+        </div>
+        <div class="row container">
+          <section class="page-content-box " data-pp="907"><div class="widget-link widget-5" data-subpart-id="69def5e50857773f11e3c0fd">
+  <div class="widget-link__more-wrap clearfix">
+    <h2 class="widget-title">
+      <span></span>
+    </h2>
+  </div>
+  <div class="widget-link_wrapper">
+	  <div class="cycle-slideshow widget-content" style="margin: 0em 3.125em;" data-level="0" data-list="web_link" data-cycle-slides="&gt; li" data-cycle-fx="carousel" data-cycle-timeout="0" data-cycle-carousel-visible="5" data-cycle-carousel-rwd-json="{768: 1}" data-cycle-pause-on-hover="true" data-cycle-log="false" data-cycle-carousel-fluid="true">
+	    <li class="widget-link__item" data-category="" data-tags="">
+	      <div class="liWrapper">
+          <a href="https://enrollstudents.nfu.edu.tw/signup/60008/0" target="_blank" rel="noopener noreferrer" title="國際招生">
+            <img class="widget-link__img" src="/uploads/web_link/image/68b938c2085777c87bbc2a97/thumb_onlinApplicationIcon.jpg" alt="web resource image" title="web resource image"><br>
+          </a>
+	      </div>
+        <div class="widget-content-title">國際招生</div>
+	    </li>
+
+	  
+	    <li class="widget-link__item" data-category="" data-tags="">
+	      <div class="liWrapper">
+          <a href="https://www.immigration.gov.tw/" target="_blank" rel="noopener noreferrer" title="內政部移民署">
+            <img class="widget-link__img" src="/uploads/web_link/image/68b938e6085777c87bbc2a9b/thumb_NIlogo.png" alt="web resource image" title="web resource image"><br>
+          </a>
+	      </div>
+        <div class="widget-content-title">內政部移民署</div>
+	    </li>
+
+	  
+	    <li class="widget-link__item" data-category="" data-tags="">
+	      <div class="liWrapper">
+          <a href="https://www.mohw.gov.tw/mp-1.html" target="_blank" rel="noopener noreferrer" title="衛生福利部">
+            <img class="widget-link__img" src="/uploads/web_link/image/68b938f9085777c87bbc2a9f/thumb_8.png" alt="web resource image" title="web resource image"><br>
+          </a>
+	      </div>
+        <div class="widget-content-title">衛生福利部</div>
+	    </li>
+
+	  
+	    <li class="widget-link__item" data-category="" data-tags="">
+	      <div class="liWrapper">
+          <a href="https://ezwp.wda.gov.tw/wcfonline/wSite/Control?function=IndexPage" target="_blank" rel="noopener noreferrer" title="外國專業人員工作許可申請網">
+            <img class="widget-link__img" src="/uploads/web_link/image/6911ac7308577758c8fc5e02/thumb_7.png" alt="web resource image" title="web resource image"><br>
+          </a>
+	      </div>
+        <div class="widget-content-title">外國專業人員工作許可申請網</div>
+	    </li>
+
+	  
+	    <li class="widget-link__item" data-category="" data-tags="">
+	      <div class="liWrapper">
+          <a href="https://www.nfu.edu.tw/zh_tw/nfu_calendar" target="_blank" rel="noopener noreferrer" title="虎科大行事曆">
+            <img class="widget-link__img" src="/uploads/web_link/image/69dde2a0085777d6270716d1/thumb_1.png" alt="web resource image" title="web resource image"><br>
+          </a>
+	      </div>
+        <div class="widget-content-title">虎科大行事曆</div>
+	    </li>
+
+	  
+	    <li class="widget-link__item" data-category="" data-tags="">
+	      <div class="liWrapper">
+          <a href="https://www.nisa.moe.gov.tw/" target="_blank" rel="noopener noreferrer" title="大專院校境外學生輔導人員
+支援體系計畫-資訊交流平台">
+            <img class="widget-link__img" src="/uploads/web_link/image/69dde4a6085777d6270716e6/thumb_2.png" alt="web resource image" title="web resource image"><br>
+          </a>
+	      </div>
+        <div class="widget-content-title">大專院校境外學生輔導人員<br>
+支援體系計畫-資訊交流平台</div>
+	    </li>
+
+	  
+	    <li class="widget-link__item" data-category="" data-tags="">
+	      <div class="liWrapper">
+          <a href="https://www.scholarship.moe.gov.tw/" target="_blank" rel="noopener noreferrer" title="教育部公費留學與各項獎學金報名資訊網">
+            <img class="widget-link__img" src="/uploads/web_link/image/69dde4eb085777d6270716ea/thumb_3.png" alt="web resource image" title="web resource image"><br>
+          </a>
+	      </div>
+        <div class="widget-content-title">教育部公費留學與各項獎學金報名資訊網</div>
+	    </li>
+
+	  
+	    <li class="widget-link__item" data-category="" data-tags="">
+	      <div class="liWrapper">
+          <a href="https://www.wda.gov.tw/" target="_blank" rel="noopener noreferrer" title="勞動部勞動力發展署">
+            <img class="widget-link__img" src="/uploads/web_link/image/69dde522085777d6270716ee/thumb_4.png" alt="web resource image" title="web resource image"><br>
+          </a>
+	      </div>
+        <div class="widget-content-title">勞動部勞動力發展署</div>
+	    </li>
+
+	  
+	    <li class="widget-link__item" data-category="" data-tags="">
+	      <div class="liWrapper">
+          <a href="https://iyouth.youthhub.tw/index.php" target="_blank" rel="noopener noreferrer" title="青年國際圓夢">
+            <img class="widget-link__img" src="/uploads/web_link/image/69dde557085777d6270716f2/thumb_5.png" alt="web resource image" title="web resource image"><br>
+          </a>
+	      </div>
+        <div class="widget-content-title">青年國際圓夢</div>
+	    </li>
+
+	  
+	    <li class="widget-link__item" data-category="" data-tags="">
+	      <div class="liWrapper">
+          <a href="https://www.studyabroad.moe.gov.tw/new/index/portal" target="_blank" rel="noopener noreferrer" title="教育部學海計畫">
+            <img class="widget-link__img" src="/uploads/web_link/image/69dde612085777d627071700/thumb_6.png" alt="web resource image" title="web resource image"><br>
+          </a>
+	      </div>
+        <div class="widget-content-title">教育部學海計畫</div>
+	    </li>
+
+	  </div>
+	  <ul class="button-mid">
+	    <i class="fa fa-angle-left prev-button" aria-label="Prev"></i>
+	    <i class="fa fa-angle-right next-button" aria-label="Next"></i>
+	  </ul>
+	</div>
+</div>
+
+<script>
+  $('[data-subpart-id="69def5e50857773f11e3c0fd"] .next-button').click(function(){
+    $(this).parent("ul").siblings('.widget-content').cycle("next");
+  })
+  $('[data-subpart-id="69def5e50857773f11e3c0fd"] .prev-button').click(function(){
+    $(this).parent("ul").siblings('.widget-content').cycle("prev");
+  })
+</script>
+<style type="text/css">
+	.widget-link_wrapper{
+		position: relative;
+	}
+  .widget-link.widget-5 .button-mid{
+    position: absolute;
+    width: 100%;
+    height: 0;
+    top: 50%;
+  }
+  .widget-link.widget-5 .button-mid .fa{
+  	cursor: pointer;
+  }
+</style></section>
+          <section class="page-content-box col-sm-6" data-pp="908"></section>
+          <section class="page-content-box col-sm-6" data-pp="909"></section>
+          <section class="page-content-box col-sm-7" data-pp="910"></section>
+          <section class="page-content-box col-sm-5" data-pp="911"></section>
+          <section class="page-content-box col-sm-5" data-pp="912"></section>
+          <section class="page-content-box col-sm-7" data-pp="913"></section>
+        </div>
+      </div>
+
+      <div class="extra-box zero col-sm-12" data-pp="890"></div>
+
+      <div class="row zero">
+        <section class="layout-content-box zero col-sm-4" data-pp="866"></section>
+        <section class="layout-content-box zero col-sm-4" data-pp="877"></section>
+        <section class="layout-content-box zero col-sm-4" data-pp="855"></section>
+      </div>
+      <div class="layout-content-inner container inner-page">
+         <div class="extra" data-pp="800"></div>
+      </div>
+    </div>
+    <div class="row zero">
+      <section class="layout-content-box zero col-sm-6" data-pp="886"></section>
+      <section class="layout-content-box zero col-sm-6" data-pp="887"></section>
+    </div>
+  </div>
+  
+
+<footer class="layout-footer no-print">
+
+  <div class="container layout-footer-inner">
+    <a accesskey="B" href="#B" title="相關聯絡訊息(電話、地址)(B)" style="color: inherit !important;display: inline-block;z-index: 1;">:::</a><div class="row">
+      <div class="btn-fatfooter">
+      <div class="btn  close" name="展開選單/OPEN" type="button"><i class="dropdown-toggle-icon level-1 fa fa-chevron-down"></i></div>
+      </div>
+      <section class="extra-box col-sm-12" data-pp="23"></section>
+    </div>
+      <div class="layout-footer-content">
+<div class="row">
+<div class="col-sm-3">
+<img alt="虎科大國際處Logo" src="/uploads/asset/data/691acfb7085777a40e229bc3/LOGO-v3.png" style="    height: 48px;
+    width: auto;" title="虎科大國際處Logo">
+<div>
+<a href="https://www.facebook.com/nfuoia/?locale=zh_TW" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 國立虎尾科技大學國際事務處fb"><i class="fa-brands fa-facebook"></i> </a><a href="https://www.youtube.com/@nfutigertuber" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 國立虎尾科技大學國際事務處youtube"><i class="fa-brands fa-youtube"></i></a> <a href="https://www.instagram.com/nfu_oia/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 國立虎尾科技大學國際事務處ig"><i class="fa-brands fa-instagram"></i></a>
+</div>
+<span class="elementor-heading-title elementor-size-default">Copyright © 2026</span>
+</div>
+
+<div class="col-sm-3">
+<h3>聯絡我們</h3>
+
+<ul>
+	<li>
+<i class="fa-solid fa-phone"></i>05-631-5194</li>
+	<li>
+<i class="fa-solid fa-envelope"></i>oia@nfu.edu.tw</li>
+	<li>
+<i class="fa-solid fa-circle-exclamation"></i>教師資訊僅供參考，如需聯繫請逕行聯絡該系系辦或教師研究室</li>
+</ul>
+</div>
+
+<div class="col-sm-3">
+<h3>辦公時間</h3>
+
+<ul>
+	<li>週一至週五 08:30~12:00, 13:30~17:00</li>
+	<li>例假日及國定假日休息</li>
+</ul>
+</div>
+
+<div class="col-sm-3">
+<h3>地址</h3>
+
+<ul>
+	<li>
+<i class="fa-solid fa-location-dot"></i>632雲林縣虎尾鎮文化路64號 行政大樓5樓</li>
+</ul>
+</div>
+</div>
+<script style="display:none;">
+$(document).ready(function () {
+  $('.movelanguage a').each(function () {
+    const $this = $(this);
+    const text = $this.text().trim();
+    const path = window.location.pathname;
+    const currentLang = $('html').attr('lang'); // 獲取當前頁面語系
+    let newHref = '';
+
+    // --- 邏輯 A：點擊「English」按鈕時 ---
+    if (text === "English") {
+      if (path.startsWith("/zh_tw/")) {
+        newHref = path.replace("/zh_tw/", "/en/");
+      } else if (path.startsWith("/en/")) {
+        newHref = path; // 已經在英文版，保持不變或指向當前
+      } else {
+        // 首頁或無語系路徑
+        newHref = (path === "/" || path === "") ? "/?locale=en" : "/en" + path;
+      }
+    } 
+
+    // --- 邏輯 B：點擊「繁體中文」按鈕時 ---
+    else if (text === "繁體中文") {
+      if (path.startsWith("/en/")) {
+        newHref = path.replace("/en/", "/zh_tw/");
+      } else if (path.startsWith("/zh_tw/")) {
+        newHref = path; // 已經在中文版
+      } else {
+        // 首頁或無語系路徑
+        newHref = (path === "/" || path === "") ? "/?locale=zh_tw" : "/zh_tw" + path;
+      }
+    }
+
+    // 將計算好的結果寫入 href 屬性
+    if (newHref) {
+      $this.attr('href', newHref);
+    }
+  });
+});
+</script>
+</div>
+      <div class="footer-counter">
+<a href="https://ruling.digital/"><img src="/assets/ruling_logo.png" alt="奧博科技"></a>造訪人次 : 2001256</div>
+      <div class="footer-updated-date"></div>
+  </div>
+</footer>
+
+
+<script>document.addEventListener('click',function(e){var el=e.target.closest('[data-track-click-url]');if(!el){var a=e.target.closest('a');if(a){el=a.querySelector('[data-track-click-url]');}}if(!el){var s=e.target.closest('.w-ad-banner__slide');if(s&&!s.querySelector('a')&&s.getAttribute('data-link')&&!s.classList.contains('youtube')){el=s.querySelector('[data-track-click-url]');}}if(el&&navigator.sendBeacon){navigator.sendBeacon(el.getAttribute('data-track-click-url'));}});</script></body>
+</html>

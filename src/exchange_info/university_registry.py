@@ -1510,8 +1510,46 @@ NUTC = UniversityProfile(
     ),
 )
 
+NFU = UniversityProfile(
+    id="nfu",
+    school_name="國立虎尾科技大學",
+    short_name="虎科大",
+    english_name="National Formosa University",
+    aliases=(
+        "nfu",
+        "國立虎尾科技大學",
+        "虎尾科技大學",
+        "虎尾科大",
+        "虎科大",
+        "NFU",
+        "National Formosa University",
+    ),
+    hero_image="/static/assets/nfu-campus.svg",
+    official_url="https://oia.nfu.edu.tw/zh-tw/ia/out/outexchange/out-exchangeschools",
+    coverage_note="完整支援：已整合國立虎尾科技大學國際事務處（OIA）《亞洲／歐洲／美洲／大洋洲海外姊妹校名冊（152校）》、《國立虎尾科技大學海外姊妹校交換學生一覽表（115.06）》、《115學年度第2學期選送優秀學生出國研修（交換學生／學海飛颺／學海惜珠）甄選簡章》、《3+1+1雙聯學制專區》、《甄選學生赴國外研修作業要點》、《學生出國研修獎助要點》與《CEF與各項英檢對照表》官方資料：（1）兩梯次校內甄選、學業及語文門檻與每學期9學分修課規定：每年分兩梯次（春季班於前一年9月收件、秋季班於當年3–4月收件，如115-2春季班於115/09/30截止收件、115/10/14面試、115/10/16放榜；115-2學海惜珠於115/07/01截止收件）辦理校內甄選，限在學非應屆畢業生（大一至大三學士生、碩一碩士生、博一至博二博士生，不含在職專班生、大陸籍學生及外籍學生，交換期間不得辦理畢業），前學年學業總平均成績須達75分以上或班排名前50%且操行成績平均達80分以上，語文能力須達CEFR B1以上（TOEIC 550 / TOEFL iBT 42 / TOEFL ITP 457 / IELTS 4.0，或日檢N1–N4、韓檢TOPIK 3級）且面試成績須達70分以上；出國交換期間於虎科大完成註冊選課保留學籍並享姊妹校學費互免，每學期至少須選修9學分（或18 ECTS）以上專業課程，返國後一個月內繳交國外修讀學分抵免申請表及研修心得報告並配合國際處宣導活動。（2）四大洲 152 所合作姊妹校與雙聯學制：完整收錄亞洲 118 校（日本 33 校、越南 28 校、印尼 14 校、韓國 10 校、泰國 9 校、馬來西亞 7 校、印度 6 校、菲律賓 6 校、以色列 2 校、香港／土耳其／蒙古各 1 校）、歐洲 20 校（德國 7 校、法國 5 校、捷克 3 校、俄羅斯 2 校、西班牙／奧地利／羅馬尼亞各 1 校）、美洲 11 校（美國 8 校、加拿大 2 校、祕魯 1 校）與大洋洲 3 校（澳洲 3 校）共 152 所姊妹校（橫跨 28 個國家與地區，含 30 所當期開放申請之交換及美國密西根大學迪爾伯恩分校 UM-Dearborn、羅德島大學 URI 3+1+1 學碩雙聯學位與 UNLV 暑期研習合作校）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、《學海築夢／新南向學海築夢》、虎科大《學生出國研修獎助要點》校內機票與生活費獎助學金，以及 12 所合作姊妹校共 13 篇歷屆學長姐返國研修心得與分享會紀錄。",
+    support_level="full",
+    partner_count_hint=152,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立虎尾科技大學",
+        "虎尾科技大學",
+        "虎科大",
+        "NATIONALFORMOSAUNIVERSITY",
+        "NATIONAL FORMOSA UNIVERSITY",
+        "NFU",
+    ),
+    # https://www.nfu.edu.tw/zh/academic — checked 2026-10-31.
+    colleges=(
+        "工程學院",
+        "電機資訊學院",
+        "管理學院",
+        "文理學院",
+        "航空學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU)
 DEFAULT_UNIVERSITY = CGU
 
 

@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCYU, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCYU, NDHU, NFU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -105,6 +105,7 @@ USC_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 NUK_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 NCYU_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 NUTC_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
+NFU_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2586,6 +2587,51 @@ def _nutc_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nfu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立虎尾科技大學（國際事務處 OIA，第一校區行政大樓 4 樓）選送優秀學生出國研修（交換學生／學海飛颺／學海惜珠）暨 3+1+1 雙聯學制應繳 13 項自檢資料：1. 交換學生甄選報名表（電腦打字、貼妥大頭照，至多可填 3 所志願校）、2. 申請時應附表件自檢表（置於首頁）、3. 歷年成績單（中文及英文版各乙份，須含班排名）、4. 歷年獎懲紀錄證明、5. 有效期限內語言能力證明影本（CEFR B1 以上：TOEIC 550 / TOEFL iBT 42 / TOEFL ITP 457 / IELTS 4.0，或日檢 N1–N4、韓檢 TOPIK 3 級）、6. 教授推薦信（中文或英文乙封）、7. 自傳（中文及英文各乙份）、8. 讀書計畫（中文及英文各乙份，含國外修習學分規劃）、9. 個人榮譽事項或特殊表現證明、10. 家長或監護人同意書、11. 有效護照影本、12. 歷屆曾參與國際處舉辦活動證明（加分用）、13. 中華民國國籍證明（身分證正反面影本；學海惜珠另附新式戶口名簿影本與低收／中低收入戶證明）。所有文件請以燕尾夾裝訂，勿使用訂書針或特殊裝訂。",
+        "study-plan": "撰寫國立虎尾科技大學出國交換學生、3+1+1 雙聯學位及教育部學海飛颺／惜珠計畫必繳之《中文及英文讀書計畫》（各乙份）與《中文及英文自傳》（各乙份）。請具體說明留學動機、擬於姊妹校選修之專業課程（每學期至少須選修 9 學分或 18 ECTS 以上專業課程）、與虎科大課程之學分抵免對應規劃，以及海外生活適應與返國後學習規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程（每學期至少 9 學分或 18 ECTS 以上專業課程）或美國密西根大學迪爾伯恩分校（UM-Dearborn）、羅德島大學（URI）3+1+1 雙聯學位之選課與學分抵免預先規劃（出國期間須於國立虎尾科技大學完成註冊選課手續保留學籍，交換期間不得辦理畢業；返國後一個月內填寫「國立虎尾科技大學學生赴國外修讀學分抵免申請表」並檢附成績單正本送系所與教務處審核）。",
+        "predeparture-notice": "獲國際事務處公告錄取後（面試成績須達 70 分以上），須於期限內繳交《錄取資格確認書》（無故放棄者於現就讀學制期間不得再申請本項甄選），配合國際處辦理姊妹校官方提名（Nomination）與外校入學申請；出國前須參加行前說明會、簽署切結書（及學海計畫行政契約書）、辦理簽證、役男出境緩徵並自行購買海外足額醫療及意外保險。",
+        "return-report": "境外交換或雙聯研修期滿返國後一個月內，須向國際事務處繳交《國外研修心得報告》（供刊登於國際處網站及學海計畫資訊網）並配合國際處辦理國際教育宣導活動與出國研修說明會經驗分享，以完成《國立虎尾科技大學學生出國研修獎助要點》及教育部學海系列計畫獎助金核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後一個月內，須填寫「國立虎尾科技大學學生赴國外修讀學分抵免申請表」並檢附境外姊妹校核發之正式成績單正本與課程大綱，向所屬系（所）及教務處申請學分抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立虎尾科技大學").replace("長庚", "虎科大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "虎科大《甄選學生赴國外研修作業要點》規定：申請人前學年學業總平均成績須達 75 分以上或班排名前 50%，且操行成績平均達 80 分以上（無小過以上處分）。請同時檢附含班排名之「歷年成績單中文版及英文版各乙份」與「歷年獎懲紀錄證明」。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 多益聽讀（CEFR B1 門檻：總分 550 分以上；CEFR B2：總分 785 分以上）", "TOEFL iBT 網路測驗（CEFR B1 門檻：42 分以上；CEFR B2：72 分以上；美國 PSU 須 59+、UNLV 須 79+）", "TOEFL ITP 紙筆測驗（CEFR B1 門檻：457 分以上；CEFR B2：527 分以上；美國堪薩斯州大 KSU 須 550+）", "IELTS 雅思國際英語測驗（CEFR B1 門檻：4.0 以上；CEFR B2：5.5 以上；歐美大學多要求 5.5–6.5）", "JLPT 日語能力試驗（日本姊妹校依各校規定須通過 N1、N2、N3 或 N4 級以上）", "TOPIK 韓國語文能力測驗（韓國姊妹校依規定須通過 TOPIK 3 級以上或英語 CEFR B1–B2）"]
+            field["help_text"] = "依虎科大《CEF與各項英檢對照表》及《海外姊妹校交換學生一覽表（115.06）》填報有效期限內之外語能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.nfu.edu.tw/zh-tw/announcement/%E5%87%BA%E5%9C%8B%E4%BA%A4%E6%8F%9B-%E5%9C%8B%E7%AB%8B%E8%99%8E%E5%B0%BE%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E7%AC%AC2%E5%AD%B8%E6%9C%9F%E9%81%B8%E9%80%81%E5%84%AA%E7%A7%80%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B%E7%A0%94%E4%BF%AE-%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F-%E5%AD%B8%E6%B5%B7%E9%A3%9B%E9%A2%BA-%E7%94%84%E9%81%B8%E7%B0%A1%E7%AB%A0-30322703",
+        source_checked_at=NFU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="交換學生甄選報名表（含13項應附表件自檢表与家長同意書）" if template.id == "exchange-application-data" else ("中英文自傳與讀書計畫" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.nfu.edu.tw/uploads/bulletin_file/file/684fd714298f3f4a19000909/%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E7%94%84%E9%81%B8%E5%A0%B1%E5%90%8D%E8%A1%A8.odt",
+        default_copies=1,
+        signatures=["申請人親筆簽名", "家長（或監護人）親筆簽名蓋章", "導師（或指導教授）簽章", "系（所）主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所）辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "獲錄取後繳交錄取資格確認書、配合國際處辦理姊妹校提名、入學申請與切結書簽署", "return-report": "返國後一個月內繳交國外研修心得報告並配合國際處宣導活動辦理獎助金核銷", "credit-transfer": "返國後一個月內填寫赴國外修讀學分抵免申請表並持正式成績單向系所與教務處辦理學分抵免"}.get(template.id, "將13項應附表件依自檢表順序排列，以燕尾夾裝訂（勿用訂書針），送交第一校區行政大樓4樓國際事務處"),
+        version="115-2準備工具-2026-10-31.1",
+        destinations=["國立虎尾科技大學國際事務處（632301 雲林縣虎尾鎮文化路 64 號 第一校區行政大樓 4 樓）"],
+        conditional_note="此為個人準備工具；國立虎尾科技大學每年分兩梯次辦理交換學生甄選（春季班於前一年 9 月底截止收件、10 月中旬面試；秋季班於當年 3–4 月收件），至多可填 3 所志願校。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2674,6 +2720,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncyu_template(template)) is not None]
     if university.id == NUTC.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nutc_template(template)) is not None]
+    if university.id == NFU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nfu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

@@ -46,7 +46,7 @@ STAGE234_MANIFEST_PATH = Path(
 # Bundles with byte-for-byte rebuild or milestone snapshot tests on partners.jsonl
 PINNED_PARTNER_BUNDLES: frozenset[str] = frozenset({"ncu", "ntu", "tku", "ccu"})
 # Bundles added after the 31-school Stage 1-5 verification scope
-EXCLUDED_BUNDLES: frozenset[str] = frozenset({"mcu", "ntub", "ncnu", "ndhu", "thu", "shu", "pu", "usc", "nuk", "ncyu", "nutc"})
+EXCLUDED_BUNDLES: frozenset[str] = frozenset({"mcu", "ntub", "ncnu", "ndhu", "thu", "shu", "pu", "usc", "nuk", "ncyu", "nutc", "nfu"})
 
 # Direct host-source review rounds conducted across the verification campaign
 DIRECT_HOST_REVIEW_ROUNDS: dict[str, dict[str, Any]] = {

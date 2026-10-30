@@ -802,6 +802,7 @@ def create_maintenance_router(
             <option value="nuk">國立高雄大學（共 280 所姊妹校）</option>
             <option value="ncyu">國立嘉義大學（共 140 所姊妹校）</option>
             <option value="nutc">國立臺中科技大學（共 140 所姊妹校）</option>
+            <option value="nfu">國立虎尾科技大學（共 152 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -914,7 +915,8 @@ def create_maintenance_router(
     usc: "實踐大學 (USC)",
     nuk: "國立高雄大學 (NUK)",
     ncyu: "國立嘉義大學 (NCYU)",
-    nutc: "國立臺中科技大學 (NUTC)"
+    nutc: "國立臺中科技大學 (NUTC)",
+    nfu: "國立虎尾科技大學 (NFU)"
   };
 
   const FIELD_LABELS = {

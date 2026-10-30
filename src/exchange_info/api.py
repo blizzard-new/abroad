@@ -532,6 +532,12 @@ from .nutc_student_view import (
     nutc_exchange_info,
     nutc_processed_pages,
 )
+from .nfu_student_view import (
+    build_nfu_student_dashboard,
+    fetch_nfu_partner_universities,
+    nfu_exchange_info,
+    nfu_processed_pages,
+)
 
 mimetypes.add_type("application/vnd.android.package-archive", ".apk")
 
@@ -706,6 +712,7 @@ from .university_registry import (
     NUK,
     NCYU,
     NUTC,
+    NFU,
     YZU,
     SUPPORTED_UNIVERSITIES,
     UniversityProfile,
@@ -1661,6 +1668,8 @@ def create_app(
                         if university.id == NCYU.id
                         else fetch_nutc_partner_universities()
                         if university.id == NUTC.id
+                        else fetch_nfu_partner_universities()
+                        if university.id == NFU.id
                         else []
                     )
         return apply_partner_research(
@@ -1780,6 +1789,8 @@ def create_app(
             return ncyu_processed_pages()
         if university.id == NUTC.id:
             return nutc_processed_pages()
+        if university.id == NFU.id:
+            return nfu_processed_pages()
         return (
             ntpu_processed_pages()
             if university.id == NTPU.id
@@ -1874,6 +1885,8 @@ def create_app(
             return ncyu_exchange_info(partners_for_university(university))
         if university.id == NUTC.id:
             return nutc_exchange_info(partners_for_university(university))
+        if university.id == NFU.id:
+            return nfu_exchange_info(partners_for_university(university))
         return load_exchange_info(resolved_data_dir) or ExchangeInfo(school_name=CGU.school_name)
 
     dashboard_cache: dict[str, tuple[float, tuple, StudentDashboard]] = {}
@@ -2008,6 +2021,8 @@ def create_app(
             return build_ncyu_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == NUTC.id:
             return build_nutc_student_dashboard(partner_universities=partners_for_university(university))
+        if university.id == NFU.id:
+            return build_nfu_student_dashboard(partner_universities=partners_for_university(university))
         # The base dashboard parses official PDFs; partner rows are overlaid from the
         # shared source provider on every response, never retained in this cache.
         # Building this one parses a dozen official PDFs: 10 to 40 seconds on the free
@@ -2166,6 +2181,9 @@ def create_app(
             elif university.id == NUTC.id:
                 from .nutc_student_view import nutc_school_location
                 location = nutc_school_location(partner, location, resolved_data_dir)
+            elif university.id == NFU.id:
+                from .nfu_student_view import nfu_school_location
+                location = nfu_school_location(partner, location, resolved_data_dir)
             partners.append(partner.model_copy(update={"location": location}))
         return dashboard.model_copy(update={"partner_universities": partners})
 
@@ -3899,7 +3917,7 @@ def create_app(
         if university.id == "tku":
             from .tku_assets import campus_photos
             from .tku_census import school_identifier
-        if university.id in {NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id}:
+        if university.id in {NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id}:
             from .life_context import _bundled_ntnu_student_experiences
             ntnu_bundled_exps = _bundled_ntnu_student_experiences()
         for partner in partners:
@@ -3917,7 +3935,7 @@ def create_app(
                 photo=campus_photos().get(identifier) if identifier else None
                 visual={"status":"verified","checked_at":photo['checked_at']} if photo else None
             partner_experiences = list(experience_map.get(normalized, []))
-            if university.id in {NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id}:
+            if university.id in {NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id}:
                 for b_exp in ntnu_bundled_exps.get((school_identity_key(partner.school_name), partner.country or ""), ()):
                     if all(x.source_url != b_exp.source_url for x in partner_experiences):
                         partner_experiences.append(b_exp)
@@ -3931,13 +3949,13 @@ def create_app(
                 if experience_audit
                 else (
                     "completed"
-                    if university.id in {CGU.id, NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id} and partner_experiences
+                    if university.id in {CGU.id, NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id} and partner_experiences
                     else "not_collected"
                 )
             )
             visible_experiences = (
                 partner_experiences
-                if experience_audit or university.id in {CGU.id, NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id}
+                if experience_audit or university.id in {CGU.id, NTNU.id, CYCU.id, NTUST.id, YZU.id, FCU.id, NSYSU.id, NCHU.id, NTUT.id, NCCU.id, NCKU.id, NYCU.id, NTHU.id, PCCU.id, WZU.id, NKUST.id, YUNTECH.id, NTOU.id, NCUE.id, NKNU.id, TMU.id, CSMU.id, CMU.id, KMU.id, MCU.id, NTUB.id, NCNU.id, NDHU.id, THU.id, SHU.id, PU.id, USC.id, NUK.id, NCYU.id, NUTC.id, NFU.id}
                 else []
             )
             destination_status = (
@@ -5156,6 +5174,12 @@ def create_app(
         if university.id == NCYU.id:
             from .ncyu_student_view import ncyu_school_location
             location = ncyu_school_location(partner, location, resolved_data_dir)
+        if university.id == NUTC.id:
+            from .nutc_student_view import nutc_school_location
+            location = nutc_school_location(partner, location, resolved_data_dir)
+        if university.id == NFU.id:
+            from .nfu_student_view import nfu_school_location
+            location = nfu_school_location(partner, location, resolved_data_dir)
         profile = destination_profile(school, home_school)
         context = build_life_context(partner, profile, location, resolved_data_dir)
         if university.id == "ccu":
@@ -5284,6 +5308,12 @@ def create_app(
         if university.id == NCYU.id:
             from .ncyu_student_view import ncyu_school_location
             location = ncyu_school_location(partner, location, resolved_data_dir)
+        if university.id == NUTC.id:
+            from .nutc_student_view import nutc_school_location
+            location = nutc_school_location(partner, location, resolved_data_dir)
+        if university.id == NFU.id:
+            from .nfu_student_view import nfu_school_location
+            location = nfu_school_location(partner, location, resolved_data_dir)
         result = refresh_life_research(partner, location, resolved_data_dir)
         context = school_life_context(school, home_school)
         return context.model_copy(update={"research_notes": result.notes})
