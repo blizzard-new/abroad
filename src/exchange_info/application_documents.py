@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, PU, SCU, SHU, THU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -101,6 +101,7 @@ NDHU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 THU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 SHU_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 PU_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
+USC_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2402,6 +2403,51 @@ def _pu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTe
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _usc_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理實踐大學（國際暨兩岸事務處 OIA）出國交換、雙聯學制、海外自費研修、中國大陸地區交換暨教育部學海飛颺／惜珠與校內出國留學獎學金應繳資料：1. 線上申請表（於實踐大學出國交換學生報名系統 oia-exchange.vercel.app 填寫最多 3 個志願後匯出 PDF，須經家長簽章、所屬學系主任及院長或國際學程主任核章）、2. 中文歷年成績單正本（含班排百分比；歷年學業總平均須達 75 分／GPA 3.0 以上或班排名前 50%，且歷年操行平均 80 分以上）、3. 中文或外文自傳及出國研修讀書計畫書（約 1,000–1,500 字）、4. 有效外語能力檢定證明（英語組 TOEFL iBT 61–80／IELTS 5.5–6.5／TOEIC 550–785、日語組 JLPT N1–N3、韓語組 TOPIK 2–4 級；中國大陸地區交換免附外語檢定）、5. 設計學院及相關專業學系申請者另須準備個人作品集（Portfolio）。",
+        "study-plan": "撰寫實踐大學赴國外及大陸姊妹校交換甄選、雙聯學制、海外自費研修及教育部學海飛颺／惜珠獎補助必繳之《出國研修讀書計畫書》（約 1,000–1,500 字）。請具體說明赴外動機、擬於志願姊妹校修習之專業或語言課程規劃（依《實踐大學辦理學生赴境外大學研修要點》規定，交換期間須辦理實踐在學註冊並繳交全額學雜費，每學期至少應修習相當於實踐 6 學分——研究所至少 1 科 3 學分——且至少 1 門須為所屬學系專業課程）、語言準備及返國後學分抵免與職涯銜接規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程、雙聯學制或海外自費研修之選課預審與教務核備（依《實踐大學辦理學生赴境外大學研修要點》及《與境外大學辦理雙聯學制實施辦法》規定，出國前須填具《實踐大學出國研修學習協議書 Learning Agreement》及《境外研修學分認定申請表》經系主任核准；每學期至少修習相當於實踐 6 學分且含至少 1 門專業課程，學分換算：美日韓陸 1:1、歐洲 ECTS×0.5、英國 CATS×0.25）。",
+        "predeparture-notice": "獲國際暨兩岸事務處公告甄選錄取後，須於規定期限內繳交《實踐大學出國交換學生錄取確認暨家長同意切結書》（大四申請者另須簽署延畢切結書），配合辦理姊妹校提名（Nomination）與外校入學申請，並參加行前說明會、辦理役男出境緩徵及投保海外醫療與意外保險。",
+        "return-report": "境外交換、雙聯學制或海外自費研修期滿返國後 1 個月內，須依《實踐大學出國研修心得報告格式》向國際暨兩岸事務處繳交 1,500–2,000 字以上之《出國交換／雙聯研修學生心得報告書》（含研修與生活照片至少 4–6 張，供上傳至 OIA 歷屆交換學生心得分享雲端專區）、姊妹校正式成績單及出入境證明，辦理教育部學海飛颺／惜珠及校內出國留學獎學金核銷。",
+        "credit-transfer": "境外交換、雙聯學制或自費研修期滿返國後開學規定期限內，須持境外姊妹校核發之正式成績單正本、課程大綱（Syllabus）及原核准之學習協議書，填具《實踐大學學生抵免學分申請書（境外研修專用）》向所屬學系（所）、院及教務處（或高雄校區教務組）申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "實踐大學").replace("長庚", "實踐")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "實踐《辦理學生赴境外大學研修要點》及出國交換簡章規定：歷年學業總平均須達 75 分（GPA 3.0）以上或班排名前 50%，且歷年操行成績平均達 80 分以上；申請校內《出國留學獎學金》者須達 GPA 3.38 以上或班排名前 30%（加碼全額學雜費減免須達 GPA 3.75 以上或班排前 10%）；申請教育部學海飛颺者須達班排名前 30%。請檢附含班排名之中文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（一般交換 61–79+／雙聯及歐美名校 79–80+）", "IELTS 學術組（一般交換 5.5–6.0+／雙聯及歐美名校 6.0–6.5+）", "TOEIC 多益聽讀（亞洲及部分歐洲英語授課姊妹校採認 550–785+）", "JLPT 日語能力試驗（日本姊妹校要求 N1–N3，一般交換要求 N2 或 N3 以上）", "TOPIK 韓語能力測驗（韓國姊妹校韓語授課組要求 2–4 級以上）", "法語 DELF／德語 Goethe／西語 DELE（歐洲母語授課組依姊妹校要求 A2–B2）", "中國大陸地區姊妹校（免附外語檢定證明；僅限第一階段申請，以歷年成績、讀書計畫與面試審查）"]
+            field["help_text"] = "依實踐國際暨兩岸事務處（OIA）簡章及語言能力對照表：英語組採認 TOEFL iBT、IELTS、TOEIC 或全民英檢中高級；日語組採認 JLPT N1–N3；韓語組採認 TOPIK 2–6 級；赴中國大陸地區交換免外語檢定（僅於第一階段開放申請）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://uscoia.usc.edu.tw/p/412-1049-1331.php?Lang=zh-tw",
+        source_checked_at=USC_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換線上報名表與家長同意書" if template.id == "exchange-application-data" else ("出國研修讀書計畫書" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://uscoia.usc.edu.tw/var/file/49/1049/img/1593/777101909.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "所屬學系（所）主任簽章", "所屬學院院長或國際學程主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "完成錄取確認切結書繳交並配合辦理姊妹校提名與外校入學申請", "return-report": "返國後 1 個月內繳交出國研修心得報告書與正式成績單辦理學海／校內獎學金核銷", "credit-transfer": "返國後開學規定期限內持正式成績單、課綱與學習協議書辦理境外學分採認抵免"}.get(template.id, "於實踐大學出國交換學生報名系統（oia-exchange.vercel.app）完成線上填報（最多 3 個志願）並匯出申請表，經系主任與院長核章後連同備審資料上傳或送交國際暨兩岸事務處"),
+        version="115-2準備工具-2026-10-30.1",
+        destinations=["實踐大學國際暨兩岸事務處（臺北校區：臺北市中山區大直街 70 號 A 棟 4 樓；高雄校區：高雄市內門區大學路 200 號教學大樓 1 樓國際事務組）"],
+        conditional_note="此為個人準備工具；實踐大學每學期分兩階段於線上報名系統（oia-exchange.vercel.app）辦理出國交換、雙聯學制暨海外自費研修甄選（如 115-2 第一階段 2026/09/01–10/01、第二階段 2026/10/19–10/29 17:00，中國大陸地區交換僅限第一階段申請），出國期間須繳交實踐全額學雜費，每學期至少修習相當於實踐 6 學分且至少 1 門為所屬學系專業課程。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2482,6 +2528,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _shu_template(template)) is not None]
     if university.id == PU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _pu_template(template)) is not None]
+    if university.id == USC.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _usc_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

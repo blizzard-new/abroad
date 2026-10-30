@@ -40,6 +40,7 @@ from .ndhu_eligibility import is_ndhu, ndhu_academic_check, ndhu_degree_check, n
 from .thu_eligibility import is_thu, thu_academic_check, thu_degree_check, thu_language_check
 from .shu_eligibility import is_shu, shu_academic_check, shu_degree_check, shu_language_check
 from .pu_eligibility import is_pu, pu_academic_check, pu_degree_check, pu_language_check
+from .usc_eligibility import is_usc, usc_academic_check, usc_degree_check, usc_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -703,6 +704,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_usc(request.home_school):
+        deg_status, deg_detail = usc_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -952,6 +958,12 @@ def _eligibility_checks(
             "academic_score", status, "靜宜歷年學業總平均70分（GPA 2.5）或班排前50%（歐美／ISEP／雙聯75分／GPA 3.0）、操行80分與學海飛颺班排前30%門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_usc(request.home_school):
+        status, detail = usc_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "實踐歷年學業總平均75分（GPA 3.0）或班排前50%、歷年操行平均80分、出國留學獎學金（GPA 3.38／班排前30%）與學海飛颺班排前30%門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1094,6 +1106,9 @@ def _eligibility_checks(
     if is_pu(request.home_school):
         home_status, home_detail = pu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "靜宜英語組基準（TOEFL iBT 61–79／IELTS 5.5–6.0／TOEIC 550–750）、日語組（JLPT N2–N4）、韓語組（TOPIK 2–4級）、西語DELE／法語DELF／德語Goethe與大陸交換免外語檢定標準", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_usc(request.home_school):
+        home_status, home_detail = usc_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "實踐英語組基準（TOEFL iBT 61–80／IELTS 5.5–6.5／TOEIC 550–785）、日語組（JLPT N1–N3）、韓語組（TOPIK 2–4級）與大陸交換免外語檢定標準", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

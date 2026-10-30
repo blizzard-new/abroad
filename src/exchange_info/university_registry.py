@@ -1361,8 +1361,38 @@ PU = UniversityProfile(
     ),
 )
 
+USC = UniversityProfile(
+    id="usc",
+    school_name="實踐大學",
+    short_name="實踐",
+    english_name="Shih Chien University",
+    aliases=("usc", "實踐大學", "實踐", "USC", "Shih Chien University", "Shih Chien"),
+    hero_image="/static/assets/usc-campus.svg",
+    official_url="https://uscoia.usc.edu.tw/p/412-1049-1331.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合實踐大學國際暨兩岸事務處（OIA）《115學年度第2學期出國交換、雙聯學制暨海外自費研修簡章（含中國大陸地區交換）》、《交換及海外自費研修學校一覽表（125 校）》、《雙聯學制學校一覽表（20 校 28 學程）》、《實踐大學出國交換學生報名系統（oia-exchange.vercel.app）》、《辦理學生赴境外大學研修要點》、《與境外大學辦理雙聯學制實施辦法》與《出國留學獎學金辦法》官方資料：（1）兩階段校內甄選、在學學費與最低修習學分規定：每學期分兩階段於線上報名系統（oia-exchange.vercel.app）收件（春季班出國於前一年 9–10月辦理，如 115-2 第一階段 2026/09/01–10/01、第二階段 2026/10/19–10/29 17:00，陸港澳僅限第一階段；秋季班出國於當年 2–3月辦理），申請人須填寫 3 個志願並完成系主任與院長（或國際學程主任）核章。大一、大二及大三上可申請學士班交換（大四申請須簽署延畢切結書），歷年學業總平均須達 75 分以上或班排名前 50%、歷年操行平均 80 分以上；出國期間須辦理實踐大學註冊並繳交全額學雜費，每學期至少修習相當於實踐 6 學分（研究所至少 1 科 3 學分）且至少 1 門須為所屬學系專業課程（學分換算：美日韓陸 1:1、歐洲 ECTS×0.5、英國 CATS×0.25）。（2）合作姊妹校與 20 校 28 項雙聯學制：完整收錄 125 所全球與大陸合作姊妹校（橫跨 27 個國家與地區，含 101 所海外交換／雙聯／自費研修校與 24 所大陸地區交換姊妹校，以及英、美、加、澳、法、德、奧、瑞士、日、韓、馬、泰 20 所跨國雙聯學位合作大學共 28 個 3+1／2+2／1+1 雙聯學程）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、校內《出國留學獎學金》（生活費補助、最高可加碼全額學雜費減免）及 74 所合作大學共 288 篇歷屆學長姐出國交換與雙聯研修心得報告 PDF。",
+    support_level="full",
+    partner_count_hint=125,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "實踐大學",
+        "SHIHCHIENUNIVERSITY",
+        "SHIH CHIEN UNIVERSITY",
+        "USC",
+    ),
+    # https://www.usc.edu.tw/ — checked 2026-10-30 (臺北校區：民生學院、設計學院、管理學院、國際學程；高雄校區：商學與資訊學院、文化與創意學院).
+    colleges=(
+        "民生學院",
+        "設計學院",
+        "管理學院",
+        "法學院",
+        "國際學程",
+        "商學與資訊學院",
+        "文化與創意學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC)
 DEFAULT_UNIVERSITY = CGU
 
 
