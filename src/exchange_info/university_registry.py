@@ -1391,8 +1391,45 @@ USC = UniversityProfile(
     ),
 )
 
+NUK = UniversityProfile(
+    id="nuk",
+    school_name="國立高雄大學",
+    short_name="高大",
+    english_name="National University of Kaohsiung",
+    aliases=(
+        "nuk",
+        "國立高雄大學",
+        "高雄大學",
+        "高大",
+        "NUK",
+        "National University of Kaohsiung",
+    ),
+    hero_image="/static/assets/nuk-campus.svg",
+    official_url="https://dia.nuk.edu.tw/p/412-1034-4130.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立高雄大學國際事務處（DIA）《2027春季與2026秋季出國交換說明會簡報》、《出國交換名額表與申請條件一覽表》、《交換學生甄選作業要點》、《選送優秀學生出國研修之語文能力證明標準》、《33國國際姊妹校統計與名錄》、《跨國雙聯學制（8校）》與《教育部學海飛颺／惜珠獎學金語文標準》官方資料：（1）兩梯次校內甄選、百分制評分與語檢補件規定：每年分兩次辦理出國交換校內甄選（秋季班暨教育部學海飛颺／惜珠第一次申請於前一年 12 月底至 1 月初收件、2 月中旬語檢補件、3 月底前公布薦送名單；春季班於前一年 6 月底至 7 月初收件，如 115-2 為 2026/06/25–07/07、08/11–08/18 語檢補件、9 月底前公布薦送名單）。限非當學期畢業且申請／出國就讀時為大二（含）以上之高大日間學制學士班、碩士班、博士班在學學生（轉學生須於高大有 2 學期以上成績）。校內甄選依大學部「歷年班排 65%＋自傳研修計畫與有利審查資料 35%」、研究所「歷年班排 35%＋自傳研修計畫 35%＋指導教授推薦函 30%」評分，總分達 70 分（含）以上始獲考慮薦送資格（交換期限最長一年，不得申請延長）。（2）合作姊妹校與 8 校雙聯學制：完整收錄 280 所全球與大陸合作姊妹校（橫跨 33 個國家與地區，含 169 所當期開放申請之交換與雙聯合作校，以及美國密西根大學迪爾伯恩分校、美國肯恩大學、英國丹地大學、英國羅浮堡大學、英國亞伯丁大學、印尼丹戎布拉大學、蒙古新蒙古科技大學、中國福州大學共 8 所跨國雙聯學位合作校）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、JASSO／GKS 與姊妹校住宿減免及 35 所合作大學共 58 篇歷屆學長姐返國心得報告與校內薦送紀錄。",
+    support_level="full",
+    partner_count_hint=280,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立高雄大學",
+        "高雄大學",
+        "NATIONALUNIVERSITYOFKAOHSIUNG",
+        "NATIONAL UNIVERSITY OF KAOHSIUNG",
+        "NUK",
+    ),
+    # https://www.nuk.edu.tw/p/412-1000-221.php?Lang=zh-tw — checked 2026-10-30.
+    colleges=(
+        "人文社會科學院",
+        "法學院",
+        "管理學院",
+        "理學院",
+        "工學院",
+        "創新學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK)
 DEFAULT_UNIVERSITY = CGU
 
 
