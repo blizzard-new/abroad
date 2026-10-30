@@ -219,3 +219,41 @@ html[data-theme="dark"] #application-path :is(.plan-strip, .map-panel, .map-tool
   #application-path .map-layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   #application-path .next-card { padding-top: 0; }
 }
+
+/* Keep the plan and its navigation together so the map starts higher. */
+#application-path .app-header { padding-block: 12px; }
+#application-path .plan-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(140px, 180px);
+  gap: 10px 20px;
+  padding: 8px 0 16px;
+}
+#application-path .plan-choice { grid-column: 1; grid-row: 1; }
+#application-path .plan-choice > div { flex: 1; }
+#application-path .hub-tabs { grid-column: 2; grid-row: 1; padding: 0; white-space: nowrap; }
+#application-path .plan-progress { grid-column: 3; grid-row: 1; width: 100%; margin: 0; padding: 0; border: 0; }
+#application-path .map-toolbar { grid-column: 1 / -1; grid-row: 2; padding: 0; min-width: 0; }
+#application-path .map-toolbar .stage-picker { width: 200px; min-width: 0; }
+#application-path .map-toolbar > button { flex: none; white-space: nowrap; }
+@media (min-width: 901px) {
+  body.unified-shell #dashboard-view > #application-path { width: calc(100% - 144px); margin: 0 32px 0 112px; }
+}
+@media (min-width: 1944px) {
+  body.unified-shell #dashboard-view > #application-path { margin-left: calc(112px + (100% - 1944px) / 2); }
+}
+@media (min-width: 1400px) {
+  #application-path .plan-strip { grid-template-columns: minmax(0, 1fr) auto auto minmax(140px, 180px); }
+  #application-path .map-toolbar { grid-column: 3; grid-row: 1; }
+  #application-path .plan-progress { grid-column: 4; }
+  #application-path .map-scroll { height: clamp(420px, calc(100dvh - 300px), 800px); }
+}
+@media (max-width: 760px) {
+  #application-path .plan-strip { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  #application-path .plan-choice { grid-column: 1; grid-row: 1; }
+  #application-path .plan-progress { grid-column: 1; grid-row: 2; display: flex; align-items: center; gap: 14px; }
+  #application-path .plan-progress > div:first-child { min-width: 120px; margin: 0; gap: 12px; }
+  #application-path #overall-meter { flex: 1; }
+  #application-path .hub-tabs { grid-column: 1; grid-row: 3; }
+  #application-path .map-toolbar { grid-column: 1; grid-row: 4; }
+  #application-path .map-toolbar .stage-picker { flex: 1; width: auto; }
+}
