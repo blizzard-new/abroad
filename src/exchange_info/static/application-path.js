@@ -124,7 +124,7 @@ function render(){
   $('#next-meter').innerHTML=n?meter(n.progress,'下一關進度'):'';
   const due=levels().filter(l=>l.official_deadline_at&&!isDone(l)).sort((a,b)=>a.official_deadline_at.localeCompare(b.official_deadline_at))[0];
   $('#deadline-card').innerHTML=icon('calendar-search')+'<div><h3>'+(due?'官方期限':'官方日期待確認')+'</h3><p>'+esc(due?new Date(due.official_deadline_at).toLocaleDateString('zh-TW')+(new Date(due.official_deadline_at)<new Date()?' · 已過期':''):'有確切來源，才會顯示期限。')+'</p>'+(due?'<a href="'+href('level',due.id)+'">'+esc(due.title)+icon('arrow-right')+'</a>':'')+'</div>';
-  $('#map-view').hidden=tab!=='map';$('#progress-view').hidden=tab!=='progress';
+  $('#map-tools').hidden=tab!=='map';$('#map-view').hidden=tab!=='map';$('#progress-view').hidden=tab!=='progress';
   if(tab==='level'){if(!dirty||activeId!==id)renderLevel(id);}
   else if(tab==='progress'){activeId=null;renderOverview();}
   else{activeId=null;renderMap();requestAnimationFrame(()=>{if(mapPosition!==null&&mapPositionPlan===plan().id)$('#map-scroll').scrollTop=mapPosition;else scrollMap(n?.id,'instant');});}
