@@ -43,6 +43,7 @@ from .pu_eligibility import is_pu, pu_academic_check, pu_degree_check, pu_langua
 from .usc_eligibility import is_usc, usc_academic_check, usc_degree_check, usc_language_check
 from .nuk_eligibility import is_nuk, nuk_academic_check, nuk_degree_check, nuk_language_check
 from .ncyu_eligibility import is_ncyu, ncyu_academic_check, ncyu_degree_check, ncyu_language_check
+from .nutc_eligibility import is_nutc, nutc_academic_check, nutc_degree_check, nutc_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -721,6 +722,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_nutc(request.home_school):
+        deg_status, deg_detail = nutc_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -988,6 +994,12 @@ def _eligibility_checks(
             "academic_score", status, "嘉大薦外交換審查要點（全班前20%或大學部平均75分／研究生80分以上；非華語區班排40%＋語檢40%＋讀書計畫20%、華語區班排80%＋讀書計畫20%）", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_nutc(request.home_school):
+        status, detail = nutc_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "中科大交換留學暨學海計畫審查要點（國外交換各科70分以上、大陸交換歷年平均80分以上，操行平均80分以上）", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1139,6 +1151,9 @@ def _eligibility_checks(
     if is_ncyu(request.home_school):
         home_status, home_detail = ncyu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "嘉大薦外交換語檢配分標準（英語A–D級／CEFR B1–B2、日語JLPT N1–N3、韓語TOPIK 3–6級）與華語地區免附語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_nutc(request.home_school):
+        home_status, home_detail = nutc_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "中科大出國交換語檢標準（日本JLPT N2、韓國TOPIK＋TOEIC 550、英語GEPT中級或TOEFL iBT 60）與大陸港澳免附語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

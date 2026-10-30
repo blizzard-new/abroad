@@ -1467,8 +1467,51 @@ NCYU = UniversityProfile(
     ),
 )
 
+NUTC = UniversityProfile(
+    id="nutc",
+    school_name="國立臺中科技大學",
+    short_name="中科大",
+    english_name="National Taichung University of Science and Technology",
+    aliases=(
+        "nutc",
+        "國立臺中科技大學",
+        "國立台中科技大學",
+        "臺中科技大學",
+        "台中科技大學",
+        "中科大",
+        "臺中科大",
+        "台中科大",
+        "NUTC",
+        "National Taichung University of Science and Technology",
+    ),
+    hero_image="/static/assets/nutc-campus.svg",
+    official_url="https://oia.nutc.edu.tw/p/412-1026-8514.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立臺中科技大學國際事務處（OIA）《六大區域合作姊妹校名冊（140校）》、《2026/2027春秋季班日本與韓國姊妹校交換留學簡章》、《學生赴大陸地區協議學校研習申請簡章》、《114/115年度教育部選送優秀學生赴國外研修／專業實習學海系列計畫校內申請作業公告》、《學生申請教育部學海系列計畫審查要點》、《教師申請學海築夢計畫及新南向學海築夢計畫審查要點》與《高教深耕計畫國際專章補助國際交流活動要點》官方資料：（1）兩梯次出國交換甄選、五專部四五年級與學碩士班資格及返國志願服務規定：每年分春季班（前一年 9–10月收件，如 2027春季班為 2026/09/14–10/30 收件）與秋季班（當年 3–5月收件）辦理出國交換留學甄選，並於每年 1–3月初辦理教育部學海飛颺／惜珠／築夢校內甄選（115年度為 01/07 說明會、01/08–03/02 學院初審、03/04 國際處收件截止）。限已就讀本校一學期以上之日間部與進修部非應屆畢業在籍學生（學士班、碩士班及五專部四年級(含)以上，不含五專 1–3 年級生、延修生及在職專班生），國外交換各科成績須達 70 分以上且操行 80 分以上（赴大陸協議學校歷年學業總平均及操行均須達 80 分以上）；交換期間於中科大註冊繳費保留學籍並享姊妹校學費互免，赴日韓交換生於留學期間須投稿國際處粉專（1學期5篇、1學年10篇），返國後須繳交心得報告並完成國際處志願服務 20 小時。（2）六大區域 140 所合作姊妹校與英國雙聯學位：完整收錄日本 20 校、韓國 5 校、東南亞與南亞 33 校、歐美 23 校、大洋洲 4 校、大陸與澳門 55 校共 140 所合作姊妹校（橫跨 19 個國家與地區，含 39 所當期開放申請之交換與雙聯合作校，以及英國西蘇格蘭大學 UWS 1 年制榮譽學士／碩士雙聯學位與瑞士 BHMS 帶薪實習專案）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》（每人補助 5 萬至 30 萬元）、《學海惜珠》、《學海築夢／新南向學海築夢》、高教深耕國際專章、日本 JASSO 及 8 所合作大學共 31 篇歷屆學長姐返國交換心得報告。",
+    support_level="full",
+    partner_count_hint=140,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立臺中科技大學",
+        "國立台中科技大學",
+        "臺中科技大學",
+        "台中科技大學",
+        "NATIONALTAICHUNGUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "NATIONAL TAICHUNG UNIVERSITY OF SCIENCE AND TECHNOLOGY",
+        "NUTC",
+    ),
+    # https://www.nutc.edu.tw/p/412-1000-88.php — checked 2026-10-31.
+    colleges=(
+        "商學院",
+        "設計學院",
+        "資訊與流通學院",
+        "智慧產業學院",
+        "語文學院",
+        "中護健康學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC)
 DEFAULT_UNIVERSITY = CGU
 
 

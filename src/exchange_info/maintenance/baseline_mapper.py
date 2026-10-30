@@ -69,6 +69,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "usc": ["uscoia.usc.edu.tw", "oia-exchange.vercel.app", "www.usc.edu.tw", "usc.edu.tw"],
     "nuk": ["dia.nuk.edu.tw", "www.nuk.edu.tw", "nuk.edu.tw"],
     "ncyu": ["www.ncyu.edu.tw", "webhd.ncyu.edu.tw", "ncyu.edu.tw"],
+    "nutc": ["oia.nutc.edu.tw", "www.nutc.edu.tw", "nutc.edu.tw"],
 }
 
 
@@ -1419,6 +1420,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["ncyu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ncyu", partner_rows=ncyu_rows, default_cycle_label="114"
+        )
+
+    # 42. NUTC partners.jsonl (140 partner schools)
+    nutc_partners_file = official_data_root / "nutc" / "partners.jsonl"
+    if nutc_partners_file.exists():
+        nutc_rows = []
+        for line in nutc_partners_file.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            nutc_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.nutc.edu.tw/p/404-1026-73311.php",
+            })
+        school_reports["nutc"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="nutc", partner_rows=nutc_rows, default_cycle_label="115"
         )
 
     if store.current_release_id is None:

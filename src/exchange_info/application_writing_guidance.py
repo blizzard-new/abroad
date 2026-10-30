@@ -1062,6 +1062,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="嘉大規定返國後須繳交出國交換返國研修心得報告書（建議 1,500–2,000 字以上，含照片）辦理獎補助金核銷與經驗傳承；這裡只合計下方各欄。",
     ),
+    ("nutc", "study-plan"): _rules(
+        (
+            "國立臺中科技大學國際事務處出國交換留學、大陸地區協議學校研習及教育部學海飛颺／惜珠計畫甄選須繳交《中、外文自傳與讀書計畫》（建議約 1,000–1,500 字），清楚說明留學動機、擬於姊妹校修習之專業或語言課程、與中科大課程之學分抵免對應規劃，以及海外生活適應與返國後學習規劃。",
+            "申請日本姊妹校（如札幌大學、札幌市立大學、國立新潟大學、青森中央學院大學）或韓國姊妹校（全北大學、三育大學）者，除中文讀書計畫外，須依各校簡章備妥日文、韓文或英文學習計畫書（設計學部另須檢附作品集 Portfolio）。",
+        ),
+        evidence="國立臺中科技大學學生申請教育部學海系列計畫審查要點、日本與韓國姊妹校交換留學簡章及赴大陸地區協議學校研習申請表",
+        minimum=800,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="中科大交換留學與學海系列計畫讀書計畫建議約 1,000–1,500 字，具體呈現國外修課與本校科目抵免對應規劃；這裡只合計下方各欄。",
+    ),
+    ("nutc", "return-report"): _rules(
+        (
+            "所有中科大赴日本、韓國姊妹校交換生於留學期間須定期投稿至國際處官方粉絲專頁（「去日本遊學&留學-台中科大國際處」或「就去韓國留個學」，1 學期至少 5 篇、1 學年至少 10 篇）；返國後 1 個月內須繳交中文心得報告電子檔、參加交換留學分享會，並於國際事務處完成國際交流志願服務 20 小時。",
+            "獲教育部《學海飛颺》或《學海惜珠》計畫補助之選送生，須於計畫期滿返國後 2 週內至教育部學海計畫資訊網上傳問卷調查表及 1,500 字以內中文心得報告與 4 張照片，始得辦理經費核銷。",
+        ),
+        evidence="國立臺中科技大學學生申請教育部學海系列計畫審查要點及日本、韓國姊妹校交換留學申請簡章",
+        minimum=1000,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="中科大規定返國後須繳交中文心得報告（學海計畫受獎生須於返國 2 週內上傳 1,500 字以內心得報告與 4 張照片）並完成 20 小時志願服務；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1106,6 +1128,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "usc": ("https://uscoia.usc.edu.tw/p/412-1049-1331.php?Lang=zh-tw", "2026-10-30"),
     "nuk": ("https://dia.nuk.edu.tw/p/404-1034-54746.php?Lang=zh-tw", "2026-10-30"),
     "ncyu": ("https://www.ncyu.edu.tw/oia/Contents?nodeId=57878", "2026-10-30"),
+    "nutc": ("https://oia.nutc.edu.tw/p/412-1026-8451.php?Lang=zh-tw", "2026-10-31"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):
