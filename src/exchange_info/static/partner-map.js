@@ -96,7 +96,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   })) };
   // Space remains the canvas in either site theme. Globe projection keeps real
   // school coordinates, clustering and keyboard/touch navigation on one engine.
-  const colors = { sea: "#0b3356", land: "#427c83", border: "#91c4be", label: "#f2f8ff", halo: "#14354c", water: "#0b3356", coast: "#57bbcf", grid: "#95c8eb" };
+  const colors = { sea: "#0b3356", land: "#427c83", border: "#91c4be", label: "#ffffff", halo: "#14354c", water: "#0b3356", coast: "#57bbcf", grid: "#95c8eb" };
   const globalCamera = () => {
     const width = canvasHost.clientWidth || 960, height = canvasHost.clientHeight || 600;
     return { center: [120, 22], zoom: Math.max(.25, Math.min(2.5, Math.log2(Math.min(width * .88, height * .88) * Math.PI / 512))), bearing: 0, pitch: 0 };
@@ -128,7 +128,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
           { id: "lakes", type: "fill", source: "lakes", paint: { "fill-color": colors.water } },
           { id: "rivers", type: "line", source: "rivers", minzoom: 1.6, paint: { "line-color": colors.water, "line-width": ["interpolate", ["linear"], ["zoom"], 1, .4, 5, 1.1], "line-opacity": .65 } },
           { id: "borders", type: "line", source: "countries", paint: { "line-color": colors.border, "line-width": ["interpolate", ["linear"], ["zoom"], 1, .55, 5, 1.2], "line-opacity": .85 } },
-          { id: "country-labels", type: "symbol", source: "labels", minzoom: 2.2, layout: { "text-field": ["get", "name"], "text-font": ["Poppins Medium"], "text-size": 11, "text-max-width": 8 }, paint: { "text-color": colors.label, "text-halo-color": colors.halo, "text-halo-width": 1.2 } },
+          { id: "country-labels", type: "symbol", source: "labels", minzoom: 2.2, layout: { "text-field": ["get", "name"], "text-font": ["Poppins Medium"], "text-size": 14, "text-max-width": 8 }, paint: { "text-color": colors.label, "text-halo-color": colors.halo, "text-halo-width": 1.6 } },
         ],
       },
     });
@@ -139,7 +139,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
   let animationFrame = 0, lastFrame = 0, inViewport = true, motionPaused = false, hoveredCountry = "";
   const motionButton = $("#map-motion");
   const panel = $("#partner-map-panel");
-  const popup = new lib.Popup({ closeButton: false, closeOnClick: false, offset: 12, maxWidth: "240px" });
+  const popup = new lib.Popup({ closeButton: false, closeOnClick: false, offset: 12, maxWidth: "320px" });
   const navigation = new lib.NavigationControl({ showCompass: true, visualizePitch: false });
   map.addControl(navigation, "top-right");
   map.addControl(new lib.AttributionControl({ compact: true, customAttribution: '<a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noreferrer">Natural Earth</a> · <a href="https://www.wikidata.org/" target="_blank" rel="noreferrer">Wikidata</a> / <a href="https://ror.org/" target="_blank" rel="noreferrer">ROR</a>' }), "bottom-right");
@@ -375,7 +375,7 @@ export async function createPartnerMap({ renderPreview, onSchoolSelect = () => {
     map.addSource("schools", { type: "geojson", data: EMPTY(), cluster: true, clusterMaxZoom: 9, clusterRadius: 42 });
     map.addLayer({ id: "cluster-halo", type: "circle", source: "schools", filter: ["has", "point_count"], paint: { "circle-color": "#ffffff", "circle-radius": ["step", ["get", "point_count"], 23, 10, 27, 50, 32], "circle-opacity": .2 } });
     map.addLayer({ id: "clusters", type: "circle", source: "schools", filter: ["has", "point_count"], paint: { "circle-color": "#23324a", "circle-radius": ["step", ["get", "point_count"], 17, 10, 21, 50, 26], "circle-stroke-width": 2.5, "circle-stroke-color": "#ffffff", "circle-stroke-opacity": .95 } });
-    map.addLayer({ id: "cluster-count", type: "symbol", source: "schools", filter: ["has", "point_count"], layout: { "text-field": ["get", "point_count_abbreviated"], "text-font": ["Poppins Medium"], "text-size": 12, "text-allow-overlap": true }, paint: { "text-color": "#ffffff" } });
+    map.addLayer({ id: "cluster-count", type: "symbol", source: "schools", filter: ["has", "point_count"], layout: { "text-field": ["get", "point_count_abbreviated"], "text-font": ["Poppins Medium"], "text-size": 15, "text-allow-overlap": true }, paint: { "text-color": "#ffffff" } });
     map.addLayer({ id: "school-points", type: "circle", source: "schools", filter: ["!", ["has", "point_count"]], paint: { "circle-color": "#23324a", "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 5, 5, 8], "circle-stroke-width": 2.5, "circle-stroke-color": "#ffffff" } });
     map.addLayer({ id: "school-hit-area", type: "circle", source: "schools", filter: ["!", ["has", "point_count"]], paint: { "circle-radius": 20, "circle-color": "#23324a", "circle-opacity": 0 } });
     map.addLayer({ id: "selected-halo", type: "circle", source: "schools", filter: ["==", ["get", "name"], ""], paint: { "circle-color": "#f3bd55", "circle-radius": 17, "circle-opacity": .3, "circle-stroke-width": 1, "circle-stroke-color": "#fff3cc", "circle-stroke-opacity": .8, "circle-radius-transition": { duration: 0 } } });
