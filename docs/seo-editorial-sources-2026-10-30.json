@@ -1,0 +1,92 @@
+{
+  "checked": "2026-10-30",
+  "timezone": "Asia/Taipei",
+  "batch_state": "one_article_ready_second_missing_no_PR",
+  "base_commit": "1648e3e629c577b4692dff2b9fac5188a73efc69",
+  "article": "exchange-study-plan",
+  "action": "Substantive expansion of existing URL, not a new page",
+  "published_retained": "2026-10-19",
+  "previous_modified": "2026-10-20",
+  "modified": "2026-10-30",
+  "selection_basis": "Approved candidate 13; editorial judgment without user-provided Search Console, volumes or ranking evidence.",
+  "sources": [
+    {
+      "key": "scu",
+      "requested_url": "https://icae.scu.edu.tw/zh-hant/node/4064",
+      "resolved_url": "https://icae.scu.edu.tw/zh-hant/node/4064",
+      "status": 200,
+      "checked": "2026-10-30",
+      "sha256": "51cfc2c9b9f49ae0b029b485916128eae78d7c11eeab2d9b6ea52acf3d5a7967",
+      "title": "115年度教育部「學海飛颺」、「學海惜珠」計畫選送學生出國研修補助甄選開放申請 | 東吳大學國際與兩岸學術交流事務處",
+      "text_length": 1786,
+      "version": "Notice dated 2026-01-02, ROC year 115 (2026) example; read body, not attachments; no implication that applications remain open.",
+      "used_for": "2026-10-30 重讀，頁面刊載日為 2026-01-02、標示 115 年度。只引用學海惜珠將研習計畫與研修動機分列的案例；不套用期限、字數、金額或名額到其他申請，不宣稱仍開放，未讀取附件內文。",
+      "reading": "Relevant body and context read; raw response retained task-locally."
+    },
+    {
+      "key": "learning",
+      "requested_url": "https://erasmus-plus.ec.europa.eu/resources-and-tools/mobility-and-learning-agreements/learning-agreements",
+      "resolved_url": "https://erasmus-plus.ec.europa.eu/resources-and-tools/mobility-and-learning-agreements/learning-agreements",
+      "status": 200,
+      "checked": "2026-10-30",
+      "sha256": "99216ad099fc948aee29abf3468ee002c5a8c98f2ba95fa097c55cf222974f48",
+      "title": "Learning Agreements - Erasmus+",
+      "text_length": 1873,
+      "version": "Official page last updated 19 December 2025, live read 2026-10-30; Erasmus+ scope only.",
+      "used_for": "2026-10-30 重讀，頁面標示更新日 2025-12-19。核對交換前由學生及相關機構核准學習安排的說明；僅適用 Erasmus+ 制度，其他方案依兩校表件，不能直接套用。",
+      "reading": "Relevant body and context read; raw response retained task-locally."
+    },
+    {
+      "key": "openai-prompt",
+      "requested_url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "resolved_url": "https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt",
+      "status": 200,
+      "checked": "2026-10-30",
+      "sha256": "fe570e22913b5b418bd08205f9deede649710e179438bf1aff4b4fee910cf038",
+      "title": "Prompt engineering best practices for ChatGPT | OpenAI Help Center",
+      "text_length": 1817,
+      "version": "Live ChatGPT help article, read 2026-10-30; visible relative label Updated: 10 days ago, not converted to an exact date.",
+      "used_for": "2026-10-30 讀取官方說明，頁面顯示 Updated: 10 days ago，未將相對時間推算為確切修訂日。引用任務清楚、提供背景及逐輪修訂的原則；未測特定模型、方案、價格或地區可用性，本文範例為人工教學。",
+      "reading": "Relevant body and context read; raw response retained task-locally."
+    },
+    {
+      "key": "claude-prompt",
+      "requested_url": "https://support.claude.com/en/articles/7996857-my-prompt-isn-t-giving-me-a-helpful-answer",
+      "resolved_url": "https://support.claude.com/en/articles/7996857-my-prompt-isn-t-giving-me-a-helpful-answer",
+      "status": 200,
+      "checked": "2026-10-30",
+      "sha256": "3a4d1dcfec364ef35caa8007fac755b29d365917adbf16c8e6fb0197c4d3d5f8",
+      "title": "My prompt isn’t giving me a helpful answer. | Claude Help Center",
+      "text_length": 788,
+      "version": "Live Claude help article, read 2026-10-30; no exact revision date visible in extracted body.",
+      "used_for": "2026-10-30 實際讀取，未見正文確切修訂日。引用指示清楚、提供背景、拆分任務及後續回饋；未實測模型、比較品牌或保證成稿與文件匯出功能。",
+      "reading": "Relevant body and context read; raw response retained task-locally."
+    },
+    {
+      "key": "gemini-prompt",
+      "requested_url": "https://support.google.com/a/users/answer/14590328?hl=en",
+      "resolved_url": "https://support.google.com/a/users/answer/14590328?hl=en",
+      "status": 200,
+      "checked": "2026-10-30",
+      "sha256": "98302cd81fa5c54abc77f2ece0a2b4f88908ce92d0cdd583c61a7481b38a0ea2",
+      "title": "Start with a great prompt - Google Workspace Learning Center",
+      "text_length": 4757,
+      "version": "Live Google Workspace Learning Center prompt guide, read 2026-10-30; Workspace feature scope explicitly restricted to supporting organizations. Only conceptual prompting guidance used.",
+      "used_for": "2026-10-30 讀取當日 Google Workspace Learning Center 指引，未見確切修訂日。僅引用自然語言、背景與具體細節的提示原則；其 Workspace 整合須組織支援，本文沒有將整合或方案條件套用到所有 Gemini 帳號，也不提供跨工具測試結論。",
+      "reading": "Relevant body and context read; raw response retained task-locally."
+    }
+  ],
+  "examples": {
+    "same_hypothetical_input_pack": "A1 project-note classification, A2 interest in cross-cultural teamwork, A3 current course eligibility unknown",
+    "draft_and_feedback": "Author-written illustrative input, response expectations and revisions; not actual model outputs. Future actions explicitly require applicant confirmation."
+  },
+  "limits": [
+    "No three-tool comparison performed; no model version, subscription, price or regional availability findings claimed.",
+    "General text prompts only; no promise of file upload, Workspace integration, one-click layout or PDF export in any model plan.",
+    "School-specific AI acceptance not verified or generalized; each applicant must check the current institution rules.",
+    "A4 and font/spacing/margin ranges are adjustable editorial examples, not university submission requirements.",
+    "No fees, deadlines, grant amounts or language thresholds reproduced.",
+    "Direction 15 still requires verifiable same-task tests; second article is not completed, so no new PR yet."
+  ],
+  "tool_access_evidence": "seo-editorial-tool-access-2026-10-30.json"
+}
