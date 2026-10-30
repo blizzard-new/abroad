@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCYU, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -103,6 +103,7 @@ SHU_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 PU_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 USC_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 NUK_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
+NCYU_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2494,6 +2495,51 @@ def _nuk_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ncyu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立嘉義大學（國際事務處國際合作交流組 OIA）薦外交換學生甄選、跨國雙聯學位暨教育部學海飛颺／惜珠與校內《薦外姊妹校交換學生獎補助金》應繳資料：1. 國立嘉義大學薦外交換學生甄選申請表（含基本資料、最多 2 志願學校選填、進修課程規劃同意書與經費預算表；須經導師或指導教授、系所主管及學院院長核章，且進修課程需檢附該系、所務會議同意之會議紀錄）、2. 家長同意書正本（1141031更新版）、3. 歷年中文成績單與英文成績單正本（須含學期平均成績與全班排名百分比；在校成績須達全班前 20% 以內，或學期平均大學部 75 分［含］以上、研究生 80 分［含］以上；班級排名佔非華語地區 40%、華語地區 80%）、4. 讀書計畫（佔 20%，含申請動機、選課規劃、語言準備及預期效益）、5. 有效外語能力檢定證明影本（非華語地區佔 40%：英語 A級 TOEFL iBT 79–93／IELTS 6.5、B級 iBT 60–78／IELTS 6.0、C級 iBT 46–59／IELTS 5.5、D級 iBT 35–45／IELTS 5.0 或 CEFR B1 TOEIC 550+；日語 JLPT N1–N3；華語地區免附語檢）。",
+        "study-plan": "撰寫國立嘉義大學薦外交換學生甄選、跨國雙聯學位及教育部學海飛颺／惜珠與校內交換獎補助金必繳之《讀書計畫》（佔校內審查總成績 20%，建議約 1,000–1,500 字）與《進修課程規劃同意書》（若選填 2 個志願學校，需分別撰寫 2 份課程規劃與經費預算表，並檢附所屬系、所務會議同意之會議紀錄）。請具體說明赴外動機、擬於志願姊妹校修習之專業領域或語言課程、外語能力準備，以及返國後學分抵免與職涯銜接規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位之《進修課程規劃同意書》系所務會議審議與教務核備（依《國立嘉義大學薦外交換學生審查要點》及《與國外大學校院辦理跨國雙聯學制實施辦法》規定，申請時所擬進修課程需檢附該系、所務會議同意之會議紀錄；交換期間須完成嘉大註冊並繳交學雜費，保有嘉大在學學籍，不得辦理休學或畢業）。",
+        "predeparture-notice": "獲國際事務處公告甄選錄取後，配合國際合作交流組辦理姊妹校官方提名（Nomination）與外校入學申請；出國前須詳閱《國立嘉義大學海外研修手冊》與《薦外交換生手冊》、完成簽證申辦、役男出境緩徵、購買涵蓋海外全期之醫療及意外保險，並簽署《教育部學海飛颺／惜珠》或《國立嘉義大學薦外姊妹校交換學生獎補助金》契約。",
+        "return-report": "境外交換或雙聯研修期滿返國後規定期限內，須依《國立嘉義大學薦外交換生手冊》及《薦外姊妹校交換學生獎補助金發放要點》向國際事務處繳交《交換學生返國研修心得報告書》（建議 1,500–2,000 字以上，含研修與生活照片，供收錄於嘉大國際處經驗分享專區與雲端資料庫）、姊妹校正式成績單、護照出入境章影本、登機證正本與電子機票收據，辦理教育部學海計畫及校內交換獎補助金尾款核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後開學規定期限內，須持境外姊妹校核發之正式成績單正本與課程大綱（Syllabus），依先前經系、所務會議審議通過之進修課程規劃及《國立嘉義大學學生抵免學分辦法》，向所屬學系（所）、院及教務處註冊與課務組申請境外修習科目學分採認與抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立嘉義大學").replace("長庚", "嘉大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "嘉大《薦外交換學生審查要點》第二點及第五點規定：在校成績需達全班前 20% 以內，或學期平均成績大學部 75 分（含）以上、研究生 80 分（含）以上，且各科（含操行）成績須達及格標準。審查計分：非華語地區班級排名百分比佔 40%（前10%得40%、11–20%得37%、21–30%得35%），華語地區班級排名百分比佔 80%。請檢附載明班級排名百分比之中英文歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT（A級 79–93 得40%／B級 60–78 得36%／C級 46–59 得32%／D級 35–45 得24%；歐洲B1門檻57+）", "IELTS 學術組（A級 6.5 得40%／B級 6.0 得36%／C級 5.5 得32%／D級 5.0 得24%）", "TOEIC 多益聽讀（CEFR B1=550+／CEFR B2=785+）", "TOEFL ITP（CEFR B1=460+／CEFR B2=543+）", "JLPT 日語能力試驗（A級 N1 得40%／B級 N2 得36%／C級 N3 得32%／D級 N4 得24%；日本姊妹校多要求 N2–N3）", "TOPIK 韓語能力測驗（韓國姊妹校韓語授課組要求 3–4 級以上）", "法語 DELF／德語 Goethe／西語 DELE（歐洲姊妹校母語授課組要求 B1–B2）", "華語地區姊妹校（中國大陸姊妹校免附語言測驗成績；以班排 80%＋讀書計畫 20% 審查）"]
+            field["help_text"] = "依《國立嘉義大學薦外交換學生審查要點》第五點及《英語能力檢定測驗門檻對照表》：非華語地區語言能力佔審查總分 40%（分 A/B/C/D 四級給分），華語地區免附語言測驗成績。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://www.ncyu.edu.tw/oia/Contents?nodeId=57878",
+        source_checked_at=NCYU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="薦外交換學生甄選申請表（1141031更新）與家長同意書" if template.id == "exchange-application-data" else ("讀書計畫與進修課程規劃同意書" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://www.ncyu.edu.tw/Uploads/Item/03db4fa7-b9e0-445d-88bb-0d9918b55249.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師或指導教授簽章", "所屬系（所）主管簽章", "所屬學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所）及學院辦公室核章（含系、所務會議同意進修課程規劃之會議紀錄）"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "獲錄取後配合國際處辦理姊妹校提名與入學申請，完成行前手續與獎補助金簽約", "return-report": "返國後依限繳交研修心得報告書與正式成績單辦理學海／校內交換獎補助金核銷", "credit-transfer": "返國後開學規定期限內持正式成績單與課綱向系所及教務處辦理境外學分採認抵免"}.get(template.id, "備齊經系所及學院核章之申請表（含系、所務會議同意進修課程之會議紀錄）、家長同意書、中英文成績單（含班排）、讀書計畫與外語檢定證明送交國際事務處國際合作交流組（蘭潭校區行政大樓 3 樓）"),
+        version="114準備工具-2026-10-30.1",
+        destinations=["國立嘉義大學國際事務處國際合作交流組（600355 嘉義市東區學府路 300 號 蘭潭校區行政大樓 3 樓）"],
+        conditional_note="此為個人準備工具；國立嘉義大學每年分兩梯次辦理薦外交換學生甄選（秋季班出國於前一年 12 月收件、春季班出國於前一年 5–6 月收件），每人最多可選填 2 志願學校，且進修課程規劃須檢附該系、所務會議同意之會議紀錄。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2578,6 +2624,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _usc_template(template)) is not None]
     if university.id == NUK.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nuk_template(template)) is not None]
+    if university.id == NCYU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncyu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

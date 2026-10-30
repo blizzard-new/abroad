@@ -68,6 +68,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "pu": ["411.pu.edu.tw", "oia.pu.edu.tw", "www.pu.edu.tw", "pu.edu.tw"],
     "usc": ["uscoia.usc.edu.tw", "oia-exchange.vercel.app", "www.usc.edu.tw", "usc.edu.tw"],
     "nuk": ["dia.nuk.edu.tw", "www.nuk.edu.tw", "nuk.edu.tw"],
+    "ncyu": ["www.ncyu.edu.tw", "webhd.ncyu.edu.tw", "ncyu.edu.tw"],
 }
 
 
@@ -1395,6 +1396,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["nuk"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="nuk", partner_rows=nuk_rows, default_cycle_label="115-1"
+        )
+
+    # 41. NCYU partners.jsonl (140 partner schools)
+    ncyu_partners_file = official_data_root / "ncyu" / "partners.jsonl"
+    if ncyu_partners_file.exists():
+        ncyu_rows = []
+        for line in ncyu_partners_file.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            ncyu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "114",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://www.ncyu.edu.tw/oia/Contents?nodeId=58434",
+            })
+        school_reports["ncyu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="ncyu", partner_rows=ncyu_rows, default_cycle_label="114"
         )
 
     if store.current_release_id is None:

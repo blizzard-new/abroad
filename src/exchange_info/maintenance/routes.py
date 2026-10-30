@@ -800,6 +800,7 @@ def create_maintenance_router(
             <option value="pu">靜宜大學（共 276 所姊妹校）</option>
             <option value="usc">實踐大學（共 125 所姊妹校）</option>
             <option value="nuk">國立高雄大學（共 280 所姊妹校）</option>
+            <option value="ncyu">國立嘉義大學（共 140 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -910,7 +911,8 @@ def create_maintenance_router(
     shu: "世新大學 (SHU)",
     pu: "靜宜大學 (PU)",
     usc: "實踐大學 (USC)",
-    nuk: "國立高雄大學 (NUK)"
+    nuk: "國立高雄大學 (NUK)",
+    ncyu: "國立嘉義大學 (NCYU)"
   };
 
   const FIELD_LABELS = {

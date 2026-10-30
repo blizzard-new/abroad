@@ -1428,8 +1428,47 @@ NUK = UniversityProfile(
     ),
 )
 
+NCYU = UniversityProfile(
+    id="ncyu",
+    school_name="國立嘉義大學",
+    short_name="嘉大",
+    english_name="National Chiayi University",
+    aliases=(
+        "ncyu",
+        "國立嘉義大學",
+        "嘉義大學",
+        "嘉大",
+        "NCYU",
+        "National Chiayi University",
+    ),
+    hero_image="/static/assets/ncyu-campus.svg",
+    official_url="https://www.ncyu.edu.tw/oia/Contents?nodeId=57877",
+    coverage_note="完整支援：已整合國立嘉義大學國際事務處（OIA）《114學年度交換學生計畫說明會簡報（2026秋季／2027春季）》、《國立嘉義大學薦外交換學生審查要點》、《薦外姊妹校交換學生獎補助金發放要點》、《2026海外研修手冊》、《2026薦外交換生手冊》、《英語能力檢定測驗門檻對照表》、《國外締約學校一覽表（140校）》與《雙聯學位推動現況（8校13專案）》官方資料：（1）兩梯次校內甄選、量化計分與系所務會議認證規定：每年分兩梯次辦理薦外交換校內甄選（秋季班出國於前一年 12月收件、次年 2–3月公布錄取；春季班出國於前一年 5–6月收件，如 2027春季班為 2026/05/01–06/15 收件、09–10月公布錄取）。限學士班二年級以上、碩士班一年級以上、博士班一年級以上在學學生（轉學生須於嘉大修滿一學期且具成績），在校成績須達全班前 20% 以內，或學期平均大學部 75 分（含）以上、研究生 80 分（含）以上；每人至多選填 2 志願學校，進修課程規劃須檢附系、所務會議同意之會議紀錄。審查計分：非華語地區為「班級排名百分比 40%＋語言能力 40%（A級 40%、B級 36%、C級 32%、D級 24%）＋讀書計畫 20%」，華語地區免附語檢（班排 80%＋讀書計畫 20%）。（2）合作姊妹校與 8 校 13 專案雙聯學制：完整收錄 140 所全球與大陸合作姊妹校（橫跨 25 國與地區，含 48 所當期開放申請之交換與雙聯合作校，以及美國堪薩斯州立大學、楊斯鎮州立大學、斯托克頓大學、英國亞伯丁大學、日本尾道市立大學、香川大學、泰國湄州大學、印尼布勞爪哇大學共 8 所跨國雙聯學位合作校 13 個院系專案）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、校內《薦外姊妹校交換學生獎補助金》、日本 JASSO 與韓國姊妹校學宿費減免，以及 20 所合作大學共 95 篇歷屆學長姐返國交換與海外研修心得報告。",
+    support_level="full",
+    partner_count_hint=140,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立嘉義大學",
+        "嘉義大學",
+        "嘉大",
+        "NATIONALCHIAYIUNIVERSITY",
+        "NATIONAL CHIAYI UNIVERSITY",
+        "NCYU",
+    ),
+    # https://www.ncyu.edu.tw/ncyu/Subject?nodeId=834 — checked 2026-10-30.
+    colleges=(
+        "師範學院",
+        "人文藝術學院",
+        "管理學院",
+        "農學院",
+        "理工學院",
+        "生命科學院",
+        "獸醫學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU)
 DEFAULT_UNIVERSITY = CGU
 
 
