@@ -1548,8 +1548,47 @@ NFU = UniversityProfile(
     ),
 )
 
+UTAIPEI = UniversityProfile(
+    id="utaipei",
+    school_name="臺北市立大學",
+    short_name="北市大",
+    english_name="University of Taipei",
+    aliases=(
+        "utaipei",
+        "ut",
+        "臺北市立大學",
+        "台北市立大學",
+        "北市大",
+        "UTaipei",
+        "UT",
+        "University of Taipei",
+    ),
+    hero_image="/static/assets/utaipei-campus.svg",
+    official_url="https://international.utaipei.edu.tw/p/412-1006-6691.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合臺北市立大學國際事務處（OIA）全球教育交流組《海外姊妹校一覽表（226校）》、《116學年度第1學期赴外姊妹校交換學生甄選簡章（86校）》、《115學年度第2學期赴外姊妹校交換學生甄選簡章（84校）》、《境外雙聯學位專區（11校24系）》、《學生赴外研修甄選暨獎補助要點》、《學生出國選修課程實施要點》、《辦理教育部學海系列計畫審查作業要點》與《各項英檢與CEFR架構對照表》官方資料：（1）兩梯次校內甄選、A/B/C/D四類優先順序与每學期6學分修課規定：每年分兩梯次（春季班於前一年4月收件、秋季班於前一年10月收件，如116-1秋季班於2026/10/05 14:00至2026/10/30 17:00收件、2026/12/31前放榜、2027/01/29放棄截止；115-2春季班於2026/04/10至04/30收件並錄取48名）辦理甄選，限於本校就讀一學期以上之在學學士班（出國時須為大二以上）及碩博士班（非當學期畢業）學生（不含在職專班及休學生），前一學期操行成績須達80分以上且無申誡以上處分及違反性平法／重大違法紀錄（須簽署行為確認聲明書），依A類（前一學期班排前40%）、B類（專業著作／重要展演／全國或國際競賽獲獎）、C類（一般申請者）、D類（同一學制第二次申請者）四類優先順序及總成績（書審40%＋面試60%）分發（至多填5志願）；非華語國家外語能力須達CEFR B1以上（GEPT中級 / TOEIC 550 / TOEFL iBT 42［新制3分］ / TOEFL ITP 433 / IELTS 4.0 / Duolingo 60，或日檢JLPT N1–N3、韓檢TOPIK 2–4級；中國大陸免附外語檢定）；交換期間於北市大完成註冊繳費並免繳姊妹校學費，每學期至少修習相當於本校6學分課程（暑期3學分；歐洲2 ECTS折算1學分，累計上限畢業總學分1/4）。（2）全球41國／地區226所合作姊妹校與11校24系雙聯學制：完整收錄中國大陸62校、美國23校、韓國20校、日本19校、馬來西亞9校、法國9校、波蘭7校、德國6校、捷克6校、泰國5校、越南5校、印尼5校、英國4校等共226所合作大學（含92所當期開放申請之交換與雙聯合作校，以及美國SWOSU/IUP/Troy、英國University of Essex［12系所］/Trinity Laban/Nottingham、紐西蘭奧克蘭大學、泰國朱拉隆功大學、馬來西亞馬來亞大學、哈薩克Satbayev、加拿大Western共11校24個雙聯學位學程）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》（含本校最少20%配合款）、《學海惜珠》、《學海築夢／新南向學海築夢》、北市大《返國生活獎補助》（亞洲最高NT$15,000、非亞洲最高NT$30,000，依8級優先順序核給），以及66所合作大學共421篇歷年出國交換學生研修心得報告與錄取紀錄。",
+    support_level="full",
+    partner_count_hint=226,
+    academic_score_minimum=None,
+    student_card_signals=(
+        "臺北市立大學",
+        "台北市立大學",
+        "北市大",
+        "UNIVERSITYOFTAIPEI",
+        "UNIVERSITY OF TAIPEI",
+        "UTAIPEI",
+    ),
+    # https://www.utaipei.edu.tw/ — checked 2026-10-31.
+    colleges=(
+        "教育學院",
+        "人文藝術學院",
+        "理學院",
+        "體育學院",
+        "市政管理學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI)
 DEFAULT_UNIVERSITY = CGU
 
 
