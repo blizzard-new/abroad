@@ -1587,8 +1587,48 @@ UTAIPEI = UniversityProfile(
     ),
 )
 
+NCUT = UniversityProfile(
+    id="ncut",
+    school_name="國立勤益科技大學",
+    short_name="勤益科大",
+    english_name="National Chin-Yi University of Technology",
+    aliases=(
+        "ncut",
+        "國立勤益科技大學",
+        "勤益科技大學",
+        "勤益科大",
+        "國立勤益科大",
+        "勤益",
+        "NCUT",
+        "National Chin-Yi University of Technology",
+        "Chin-Yi University of Technology",
+    ),
+    hero_image="/static/assets/ncut-campus.svg",
+    official_url="https://oia.ncut.edu.tw/p/412-1030-6648.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立勤益科技大學國際事務處（OIA）國際合作組《海外姊妹校締約一覽表（134校）》、《選送學生出國交換研修申請簡章與姊妹校名額表（33校）》、《雙聯學制合作專區（日本國立東北大學、國立岩手大學、加拿大皇家大學 RRU、越南大南大學）》、《選送學生出國研修辦法》、《辦理學生抵免學分辦法》、《推動學生參與國際化多元學習補助要點》與《學海計畫暨校內出國補助 Q&A》官方資料：（1）兩梯次校內甄選、學業操行門檻與每學期修課規定：每年分兩梯次（春季班於前一年9–10月收件、秋季班於當年度2–3月收件，如115-1秋季班第一梯次於2026/03/20截止、第二梯次延長至2026/03/31 12:00截止；115-2春季班於2026/09–10月收件）辦理甄選，限於本校就讀滿一學期以上之具正式學籍在學四技、二技及碩博士班學生（不含在職專班及休學生），歷年學業成績總平均須達70分（或GPA 2.5）以上、操行成績平均達80分以上且無小過以上處分紀錄；外語能力依各姊妹校規定須達英語CEFR B1–B2（TOEIC 550–785 / TOEFL iBT 42–80 / TOEFL ITP 457–543 / IELTS 4.0–6.0 / GEPT中級以上）、日檢JLPT N1–N5或韓檢TOPIK 2–3級以上（中國大陸姊妹校免附外語檢定）；交換期間於勤益科大完成註冊繳費並免繳姊妹校學費，每學期至少修習2門或6學分專業課程。（2）全球20國／地區134所合作姊妹校與4校跨國雙聯學制：完整收錄越南28校、日本23校、中國大陸22校、印尼17校、美國9校、韓國9校、印度6校、馬來西亞5校、菲律賓4校等共134所合作大學（含33所當期開放申請之出國交換與雙聯合作校，以及日本國立東北大學材料科學雙聯博士、國立岩手大學理工學府雙聯碩士、加拿大皇家大學 RRU 2+2 雙聯學士、越南大南大學雙聯碩士）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、《學海築夢／新南向學海築夢》、勤益科大《推動學生參與國際化多元學習補助》（含生活費與來回機票補助），以及23所合作大學共41篇歷年出國交換學生研修心得報告、影片與錄取紀錄。",
+    support_level="full",
+    partner_count_hint=134,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "國立勤益科技大學",
+        "勤益科技大學",
+        "勤益科大",
+        "NATIONAL CHIN-YI UNIVERSITY OF TECHNOLOGY",
+        "CHIN-YI UNIVERSITY OF TECHNOLOGY",
+        "NCUT",
+    ),
+    # https://www.ncut.edu.tw/ — checked 2026-11-01.
+    colleges=(
+        "工程學院",
+        "電資學院",
+        "管理學院",
+        "人文創意學院",
+        "通識教育學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NCUT)
 DEFAULT_UNIVERSITY = CGU
 
 
