@@ -1587,8 +1587,51 @@ UTAIPEI = UniversityProfile(
     ),
 )
 
+NTUE = UniversityProfile(
+    id="ntue",
+    school_name="國立臺北教育大學",
+    short_name="國北教大",
+    english_name="National Taipei University of Education",
+    aliases=(
+        "ntue",
+        "國立臺北教育大學",
+        "國立台北教育大學",
+        "臺北教育大學",
+        "台北教育大學",
+        "國北教大",
+        "國北教",
+        "國北師",
+        "北教大",
+        "NTUE",
+        "National Taipei University of Education",
+    ),
+    hero_image="/static/assets/ntue-campus.svg",
+    official_url="https://oia.ntue.edu.tw/p/412-1066-2258.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立臺北教育大學研發處國際事務組（OIA）《海外姊妹校一覽表（143校）》、《115學年度赴海外姊妹校交換生甄選簡章（69校）》、《114學年度赴海外姊妹校大學交換甄選簡章》、《113學年度赴海外姊妹校大學交換甄選簡章》、《學生赴境外大學修讀雙聯學位實施要點》、《日本兵庫教育大學碩士班雙聯學位甄選簡章》、《法國社會科學高等學院（EHESS）博士雙聯學位計畫》、《學生出國選修課程實施要點》、《115年度教育部學海惜珠甄選簡章》、《應具語言能力參考標準》與《NTUE薦外交換心得專區（233篇）》官方資料：（1）七大語組甄選制度、學業及語文門檻與每學期2門課／6學分規定：每年11月公告簡章、12月收件（如115學年度於114/12/01至12/12 16:00收件並繳交報名費NT$500，115/01/06筆試40%［含英文或各語組2題申論題］、115/01/07–01/08面試60%［含書審及學業成績］，總成績未滿60分不予錄取，115/02/23前公告錄取名單、115/03/02 16:00前截止申請更改交換期間或放棄；116學年度出國交換系列說明會於2026/09/29線上及2026/11/03實體舉辦），限本校大學部二年級以上（大一及轉學生尚未有本校成績者除外）及研究所碩博士班在學學生（不含在職專班生及領有臺灣獎學金者；公費生須經師資培育處、分發縣市政府及教育部同意展延分發並暫停公費；應屆畢業生須經系所主管同意且符合延畢規定），歷年在校成績總平均須達75分（含）以上或GPA 3.0以上（學海惜珠另須班級排名前50%，成績單須註明班級排名），分為英文組、日文組、韓文組、越文組、法文組、德文組、中文組共7組（每人限擇一組報考，德瑞奧9校標註▲者由英文組及德文組共用名額）；非華語組須具備英文CEFR B1（TOEFL iBT 42–71 / IELTS 4.0–5.5 / TOEIC 550–750）、日檢JLPT N3（部分學校N2/N1，常磐大學秋季班N5）、韓檢TOPIK 2–3級、法檢DELF B1–B2、德檢TestDaF TDN3 / B1–B2或越檢IVPT A/B級；交換期間須完成國北教大註冊選課並免繳姊妹校學費（部分學校如法蘭克福大學需自付雜費、法國巴黎索邦大學需自費法語密集班、韓國部分學校需修讀韓語課程），每學期至少修習2門課或6學分且不得超過畢業學分1/3。（2）全球25國／地區143所合作姊妹校與雙聯學位：完整收錄日本29校、中國大陸20校、美國17校、越南14校、韓國10校、馬來西亞7校、德國6校、印尼6校、捷克4校、奧地利4校、法國4校、泰國4校、新加坡3校、菲律賓2校、波蘭2校、澳洲2校、瑞士2校及英國／立陶宛／西班牙／芬蘭／俄羅斯／智利／加拿大各1校共143所合作大學（含69所當期開放交換申請之姊妹校，以及日本兵庫教育大學碩士班雙聯學位、法國社會科學高等學院EHESS博士雙聯學位）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、國北教大國際交流獎助學金（依地區與期限補助NT$10,000至NT$80,000）及芝山博愛獎助學金，以及橫跨12國共233篇歷屆學長姐返國交換心得報告（102–113學年度）。",
+    support_level="full",
+    partner_count_hint=143,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立臺北教育大學",
+        "國立台北教育大學",
+        "臺北教育大學",
+        "台北教育大學",
+        "國北教大",
+        "NATIONALTAIPEIUNIVERSITYOFEDUCATION",
+        "NATIONAL TAIPEI UNIVERSITY OF EDUCATION",
+        "NTUE",
+    ),
+    # https://www.ntue.edu.tw/p/412-1000-778.php?Lang=zh-tw — checked 2026-10-31.
+    colleges=(
+        "教育學院",
+        "人文藝術學院",
+        "理學院",
+        "國際學位學程",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTUE)
 DEFAULT_UNIVERSITY = CGU
 
 

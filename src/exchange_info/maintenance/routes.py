@@ -803,6 +803,8 @@ def create_maintenance_router(
             <option value="ncyu">國立嘉義大學（共 140 所姊妹校）</option>
             <option value="nutc">國立臺中科技大學（共 140 所姊妹校）</option>
             <option value="nfu">國立虎尾科技大學（共 152 所姊妹校）</option>
+            <option value="utaipei">臺北市立大學（共 226 所姊妹校）</option>
+            <option value="ntue">國立臺北教育大學（共 143 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -917,7 +919,8 @@ def create_maintenance_router(
     ncyu: "國立嘉義大學 (NCYU)",
     nutc: "國立臺中科技大學 (NUTC)",
     nfu: "國立虎尾科技大學 (NFU)",
-    utaipei: "臺北市立大學 (UTaipei)"
+    utaipei: "臺北市立大學 (UTaipei)",
+    ntue: "國立臺北教育大學 (NTUE)"
   };
 
   const FIELD_LABELS = {
