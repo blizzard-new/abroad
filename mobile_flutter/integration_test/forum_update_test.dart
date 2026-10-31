@@ -131,7 +131,7 @@ void main() {
       );
       expect(comments.items.single.body, contains('宿舍申請'));
       final info = await PackageInfo.fromPlatform();
-      expect(info.version, '2.1.7');
+      expect(info.version, '2.1.8');
       expect(info.buildNumber, '21');
       final updates = AppUpdateController()..version = info.version;
       addTearDown(updates.dispose);

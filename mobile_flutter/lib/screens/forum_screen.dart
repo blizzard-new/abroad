@@ -344,14 +344,48 @@ class _ForumFeedState extends State<_ForumFeed> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        StudentIconLabel(
-                          Icons.forum_outlined,
-                          boards
-                                  .where((b) => b.id == post.boardId)
-                                  .firstOrNull
-                                  ?.label ??
-                              post.school,
-                          color: ExchangeColors.teal,
+                        Wrap(
+                          spacing: 10,
+                          runSpacing: 8,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            StudentIconLabel(
+                              Icons.forum_outlined,
+                              boards
+                                      .where((b) => b.id == post.boardId)
+                                      .firstOrNull
+                                      ?.label ??
+                                  post.school,
+                              color: ExchangeColors.teal,
+                            ),
+                            if (post.school.isNotEmpty &&
+                                boards.any(
+                                  (b) =>
+                                      b.id == post.boardId &&
+                                      b.label.isNotEmpty &&
+                                      b.label != post.school,
+                                ))
+                              StudentIconLabel(
+                                Icons.school_outlined,
+                                post.school,
+                              ),
+                            if (forumTopics[post.topic] case final topic?)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: ExchangeColors.tealSoft,
+                                  borderRadius: BorderRadius.circular(999),
+                                ),
+                                child: Text(
+                                  topic,
+                                  style: Theme.of(context).textTheme.labelMedium
+                                      ?.copyWith(color: ExchangeColors.teal),
+                                ),
+                              ),
+                          ],
                         ),
                         const SizedBox(height: 12),
                         Text(
@@ -375,11 +409,17 @@ class _ForumFeedState extends State<_ForumFeed> {
                             ),
                             StudentIconLabel(
                               Icons.chat_bubble_outline_rounded,
-                              '${post.comments}',
+                              '${post.comments} 則回覆',
                             ),
+                            if (_date(post.created).isNotEmpty)
+                              Text(
+                                _date(post.created),
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
                             Text(
-                              _date(post.created),
-                              style: Theme.of(context).textTheme.bodySmall,
+                              '查看討論 ›',
+                              style: Theme.of(context).textTheme.labelMedium
+                                  ?.copyWith(color: ExchangeColors.teal),
                             ),
                           ],
                         ),

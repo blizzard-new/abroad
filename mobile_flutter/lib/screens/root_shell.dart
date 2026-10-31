@@ -177,7 +177,7 @@ class _RootShellState extends State<RootShell> {
                             duration: Duration(
                               milliseconds: reduceEffects ? 0 : 180,
                             ),
-                            constraints: const BoxConstraints(minHeight: 52),
+                            constraints: const BoxConstraints(minHeight: 60),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
                               color: i == index
@@ -189,12 +189,37 @@ class _RootShellState extends State<RootShell> {
                                     : Colors.transparent,
                               ),
                             ),
-                            child: Icon(
-                              icons[i],
-                              size: 26,
-                              color: i == index
-                                  ? ExchangeColors.teal
-                                  : ExchangeColors.secondaryInk,
+                            child: ExcludeSemantics(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    icons[i],
+                                    size: 23,
+                                    color: i == index
+                                        ? ExchangeColors.teal
+                                        : ExchangeColors.secondaryInk,
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    labels[i],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      height: 1.2,
+                                      fontWeight: i == index
+                                          ? FontWeight.w700
+                                          : FontWeight.w500,
+                                      color: i == index
+                                          ? ExchangeColors.teal
+                                          : ExchangeColors.secondaryInk,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

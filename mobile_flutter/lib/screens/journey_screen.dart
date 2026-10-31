@@ -88,6 +88,11 @@ class JourneyScreen extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+            const SizedBox(height: 4),
+            Text(
+              '從選校到出發，把準備留在這裡。',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
             const SizedBox(height: 8),
             Align(
               alignment: Alignment.centerLeft,
@@ -114,7 +119,7 @@ class JourneyScreen extends StatelessWidget {
                           children: [
                             const StudentIconLabel(
                               Icons.flight_takeoff_rounded,
-                              '你的交換旅程',
+                              '你的下一步',
                               color: ExchangeColors.teal,
                             ),
                             const SizedBox(height: 12),
@@ -124,7 +129,7 @@ class JourneyScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              account == null ? '找學校・備文件・一起出發' : '今天，完成一件事就好。',
+                              account == null ? '探索適合你的交換學校' : '今天，完成一件事就好。',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],

@@ -20,6 +20,13 @@ class ApplicationDocumentsScreen extends StatelessWidget {
     for (final template in store.applicationTemplates) {
       groups.putIfAbsent(template.stage, () => []).add(template);
     }
+    final total = store.applicationTemplates.length;
+    final completed = store.applicationFormReadyCount;
+    final nextTemplate = store.applicationTemplates
+        .where(
+          (template) => !store.applicationTemplateCompletion(template).ready,
+        )
+        .firstOrNull;
 
     return SafeArea(
       bottom: false,
@@ -39,29 +46,51 @@ class ApplicationDocumentsScreen extends StatelessWidget {
                 children: [
                   const StudentIconLabel(
                     Icons.checklist_rounded,
-                    '一次準備，一步完成',
+                    '你的文件準備進度',
                     color: ExchangeColors.blue,
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    store.applicationTemplates.isEmpty
+                    store.isApplicationDocumentsLoading && total == 0
+                        ? '正在載入文件'
+                        : store.applicationDocumentsError != null && total == 0
+                        ? '目前無法載入文件'
+                        : total == 0
                         ? '先設定你的申請目標'
-                        : '${store.applicationFormReadyCount} / ${store.applicationTemplates.length} 份文件已完成',
+                        : '$completed / $total 份文件必填欄位已完成',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  if (store.applicationTemplates.isNotEmpty) ...[
+                  if (total > 0) ...[
                     const SizedBox(height: 16),
                     LinearProgressIndicator(
-                      value:
-                          (store.applicationFormReadyCount /
-                                  store.applicationTemplates.length)
-                              .clamp(0, 1),
-                      minHeight: 6,
+                      value: (completed / total).clamp(0, 1),
+                      minHeight: 8,
                       borderRadius: BorderRadius.circular(8),
                       color: ExchangeColors.blue,
                       backgroundColor: ExchangeColors.surface,
                       semanticsLabel: '文件準備進度',
                     ),
+                    const SizedBox(height: 12),
+                    Text(
+                      nextTemplate == null
+                          ? '必填欄位已完成，送件前請確認官方要求。'
+                          : '下一步：準備「${nextTemplate.shortTitle.isNotEmpty ? nextTemplate.shortTitle : nextTemplate.title}」',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    if (nextTemplate != null) ...[
+                      const SizedBox(height: 8),
+                      TextButton.icon(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => ApplicationDocumentFormScreen(
+                              template: nextTemplate,
+                            ),
+                          ),
+                        ),
+                        icon: const Icon(Icons.edit_note_rounded),
+                        label: const Text('繼續準備'),
+                      ),
+                    ],
                   ],
                 ],
               ),

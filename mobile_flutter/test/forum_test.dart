@@ -89,6 +89,9 @@ void main() {
     await tester.pumpWidget(app(store, const ForumScreen()));
     await tester.pumpAndSettle();
     expect(find.text('公共討論'), findsOneWidget);
+    expect(find.text('申請'), findsOneWidget);
+    expect(find.text('1 則回覆'), findsOneWidget);
+    expect(find.text('查看討論 ›'), findsOneWidget);
     expect(
       tester
           .widget<FilledButton>(find.widgetWithText(FilledButton, '發起討論'))

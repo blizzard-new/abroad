@@ -67,8 +67,17 @@ void main() {
           of: find.byKey(const ValueKey('main-navigation')),
           matching: find.byType(Text),
         ),
-        findsNothing,
+        findsNWidgets(5),
       );
+      for (final label in ['旅程', '學校', '申請', '論壇', '我的']) {
+        expect(
+          find.descendant(
+            of: find.byKey(const ValueKey('main-navigation')),
+            matching: find.text(label),
+          ),
+          findsOneWidget,
+        );
+      }
       expect(find.byTooltip('通知與提醒'), findsOneWidget);
       await tester.tap(find.byTooltip('學校'));
       await tester.pumpAndSettle();

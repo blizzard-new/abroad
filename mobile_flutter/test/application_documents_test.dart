@@ -206,6 +206,11 @@ void main() {
 
       expect(find.text('申請文件'), findsOneWidget);
       expect(find.text('待辦文件'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('讀書計畫'),
+        240,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('讀書計畫'), findsOneWidget);
       expect(find.text(template.description), findsNothing);
 
@@ -224,6 +229,40 @@ void main() {
       expect(find.text('資料整理列印版'), findsNothing);
     },
   );
+
+  testWidgets('document summary follows actual required-field completion', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    final store = ExchangeStore(
+      api: ExchangeApi(
+        client: MockClient((_) async => http.Response('[]', 200)),
+        baseUrl: 'https://example.test/',
+      ),
+    )..applicationTemplates = [template];
+    addTearDown(store.dispose);
+    await tester.pumpWidget(
+      ExchangeStoreScope(
+        store: store,
+        child: MaterialApp(
+          theme: buildExchangeTheme(),
+          home: const Scaffold(body: ApplicationDocumentsScreen()),
+        ),
+      ),
+    );
+    expect(find.text('0 / 1 份文件必填欄位已完成'), findsOneWidget);
+    expect(find.text('下一步：準備「讀書計畫」'), findsOneWidget);
+    expect(find.widgetWithText(TextButton, '繼續準備'), findsOneWidget);
+
+    await store.saveApplicationDocument(template, {
+      'student_name_zh': '王小明',
+      'motivation': '希望培養跨文化合作能力。',
+    });
+    await tester.pumpAndSettle();
+    expect(find.text('1 / 1 份文件必填欄位已完成'), findsOneWidget);
+    expect(find.text('必填欄位已完成，送件前請確認官方要求。'), findsOneWidget);
+    expect(find.widgetWithText(TextButton, '繼續準備'), findsNothing);
+  });
 }
 
 Map<String, dynamic> _templateJson(ApplicationDocumentTemplate template) => {
