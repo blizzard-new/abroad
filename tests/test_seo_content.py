@@ -191,3 +191,133 @@ def test_cross_school_public_pages_and_sitemap_do_not_hide_catalogue_failure(mon
             response = client.get(path)
             assert response.status_code == 503
             assert response.headers["Retry-After"] == "60"
+
+
+def test_expanded_country_slugs_eliminate_legacy_hash_countries_and_redirect_old_country_paths(monkeypatch):
+    import hashlib
+    from exchange_info import cross_school_partners, seo
+    from exchange_info.cross_school_partners import COUNTRY_SLUGS, resolve_country_slug_and_zh
+    from exchange_info.university_registry import resolve_university
+
+    expected_countries = {
+        "智利": ("chile", "智利"),
+        "以色列": ("israel", "以色列"),
+        "澳門": ("macau", "澳門"),
+        "冰島": ("iceland", "冰島"),
+        "愛沙尼亞": ("estonia", "愛沙尼亞"),
+        "阿拉伯聯合大公國": ("united-arab-emirates", "阿拉伯聯合大公國"),
+        "希臘": ("greece", "希臘"),
+        "秘魯": ("peru", "秘魯"),
+        "巴基斯坦": ("pakistan", "巴基斯坦"),
+        "烏茲別克": ("uzbekistan", "烏茲別克"),
+        "哥倫比亞": ("colombia", "哥倫比亞"),
+        "斯洛維尼亞": ("slovenia", "斯洛維尼亞"),
+        "南非": ("south-africa", "南非"),
+        "克羅埃西亞": ("croatia", "克羅埃西亞"),
+        "埃及": ("egypt", "埃及"),
+        "烏克蘭": ("ukraine", "烏克蘭"),
+        "盧森堡": ("luxembourg", "盧森堡"),
+        "俄羅斯聯邦": ("russia", "俄羅斯"),
+        "斯洛法克": ("slovakia", "斯洛伐克"),
+        "列支敦斯登": ("liechtenstein", "列支敦士登"),
+    }
+    for raw_country, expected in expected_countries.items():
+        assert resolve_country_slug_and_zh(raw_country) == expected
+        legacy_country_hash = f"inst-{hashlib.sha256(raw_country.encode('utf-8')).hexdigest()[:12]}"
+        assert resolve_country_slug_and_zh(legacy_country_hash) == expected
+
+    for zh, slug in COUNTRY_SLUGS.items():
+        assert not slug.startswith("inst-"), f"{zh} still maps to {slug}"
+
+    homes = (resolve_university("cgu"), resolve_university("ntu"))
+    monkeypatch.setattr(cross_school_partners, "SUPPORTED_UNIVERSITIES", homes)
+    monkeypatch.setattr(seo, "SUPPORTED_UNIVERSITIES", homes)
+    monkeypatch.setattr(cross_school_partners, "_ENTITY_INDEX_CACHE", {})
+
+    rows = [
+        partner(country="愛沙尼亞", school_name="塔林大學 Tallinn University"),
+        partner(country="澳門", school_name="澳門大學"),
+        partner(country="智利", school_name="智利大學 Universidad de Chile"),
+        partner(country="俄羅斯聯邦", school_name="聖彼得堡國立大學 Saint Petersburg State University"),
+        partner(country="斯洛法克", school_name="布拉提斯拉瓦經濟大學 University of Economics in Bratislava"),
+    ]
+
+    app = FastAPI()
+    app.include_router(create_seo_router(SeoSettings("https://example.com", True), lambda _: (rows, None)))
+    macau_inst_slug = f"inst-{partner_id(rows[1])[:12]}"
+    estonia_legacy_country = f"inst-{hashlib.sha256('愛沙尼亞'.encode('utf-8')).hexdigest()[:12]}"
+    macau_legacy_country = f"inst-{hashlib.sha256('澳門'.encode('utf-8')).hexdigest()[:12]}"
+
+    with TestClient(app) as client:
+        sitemap_xml = client.get("/sitemaps/partners.xml").text
+        assert "/partners/inst-" not in sitemap_xml
+        assert "https://example.com/partners/estonia/tallinn-university" in sitemap_xml
+        assert f"https://example.com/partners/macau/{macau_inst_slug}" in sitemap_xml
+        assert "https://example.com/partners/chile/universidad-de-chile" in sitemap_xml
+        assert "https://example.com/partners/russia/saint-petersburg-state-university" in sitemap_xml
+        assert "https://example.com/partners/slovakia/university-of-economics-in-bratislava" in sitemap_xml
+
+        country_redirect = client.get(f"/partners/{estonia_legacy_country}", follow_redirects=False)
+        assert country_redirect.status_code == 301
+        assert country_redirect.headers["location"] == "/partners/estonia"
+
+        inst_redirect = client.get(
+            f"/partners/{estonia_legacy_country}/tallinn-university",
+            params={"home": "cgu"},
+            follow_redirects=False,
+        )
+        assert inst_redirect.status_code == 301
+        assert inst_redirect.headers["location"] == "/partners/estonia/tallinn-university?home=cgu"
+
+        macau_redirect = client.get(
+            f"/partners/{macau_legacy_country}/{macau_inst_slug}",
+            follow_redirects=False,
+        )
+        assert macau_redirect.status_code == 301
+        assert macau_redirect.headers["location"] == f"/partners/macau/{macau_inst_slug}"
+        assert client.get(macau_redirect.headers["location"], follow_redirects=False).status_code == 200
+
+        assert client.get("/partners/inst-ffffffffffff", follow_redirects=False).status_code == 404
+        assert client.get("/partners/inst-ffffffffffff/tallinn-university", follow_redirects=False).status_code == 404
+
+
+def test_school_partner_page_links_to_canonical_cross_school_slug_and_redirects_20hex_alias(monkeypatch):
+    from exchange_info import cross_school_partners, seo
+    from exchange_info.university_registry import resolve_university
+
+    homes = (resolve_university("cgu"), resolve_university("ntu"))
+    row = partner(country="大陸地區", school_name="復旦大學 Fudan University", quota="2")
+    key_20hex = partner_id(row)
+    monkeypatch.setattr(cross_school_partners, "SUPPORTED_UNIVERSITIES", homes)
+    monkeypatch.setattr(seo, "SUPPORTED_UNIVERSITIES", homes)
+    monkeypatch.setattr(cross_school_partners, "_ENTITY_INDEX_CACHE", {})
+
+    app = FastAPI()
+    app.include_router(create_seo_router(SeoSettings("https://example.com", True), lambda _: ([row], None)))
+    with TestClient(app) as client:
+        school_page = client.get(f"/schools/cgu/partners/{key_20hex}")
+        assert school_page.status_code == 200
+        soup = BeautifulSoup(school_page.text, "html.parser")
+        cross_links = [a["href"] for a in soup.select('a[href^="/partners/"]')]
+        assert cross_links == [
+            "/partners/mainland-china/fudan-university",
+            "/partners/mainland-china/fudan-university",
+        ]
+        assert f"/partners/mainland-china/{key_20hex}" not in school_page.text
+
+        redirect_with_home = client.get(
+            f"/partners/mainland-china/{key_20hex}",
+            params={"home": "cgu"},
+            follow_redirects=False,
+        )
+        assert redirect_with_home.status_code == 301
+        assert redirect_with_home.headers["location"] == "/partners/mainland-china/fudan-university?home=cgu"
+
+        redirect_plain = client.get(
+            f"/partners/mainland-china/{key_20hex}",
+            follow_redirects=False,
+        )
+        assert redirect_plain.status_code == 301
+        assert redirect_plain.headers["location"] == "/partners/mainland-china/fudan-university"
+
+        assert client.get("/partners/mainland-china/" + ("f" * 20), follow_redirects=False).status_code == 404

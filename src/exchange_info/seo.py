@@ -26,6 +26,7 @@ from .cross_school_partners import (
     render_cross_school_partner_directory_body,
     render_cross_school_partner_page_body,
     resolve_country_slug_and_zh,
+    resolve_partner_cross_school_path,
 )
 from .models import CatalogueSourceStatus, PartnerUniversity
 from .school_identity import school_identity_key
@@ -381,6 +382,8 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             raise HTTPException(404, "找不到這個國家的跨校合作大學")
         c_name = directory_data.selected_country_name_zh or country
         canonical_country_path = f"/partners/{directory_data.selected_country_slug or c_slug}"
+        if re.fullmatch(r"inst-[0-9a-f]{12}", country) and f"/partners/{country}" != canonical_country_path:
+            return RedirectResponse(canonical_country_path, status_code=301)
         body = render_cross_school_partner_directory_body(directory_data)
         return page(
             settings,
@@ -406,7 +409,10 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         )
         if data is None:
             raise HTTPException(404, "找不到這所外國合作大學")
-        if re.fullmatch(r"inst-[0-9a-f]{12}", institution) and f"/partners/{country}/{institution}" != data.canonical_path:
+        if (
+            re.fullmatch(r"inst-[0-9a-f]{12}", country)
+            or re.fullmatch(r"inst-[0-9a-f]{12}|[0-9a-f]{20}", institution)
+        ) and f"/partners/{country}/{institution}" != data.canonical_path:
             # Keep the selected home school when a proven legacy ID moves.
             query = "?" + urlencode({"home": home}) if home else ""
             return RedirectResponse(data.canonical_path + query, status_code=301)
@@ -473,8 +479,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
         statuses = "、".join(dict.fromkeys(AVAILABILITY[row.availability_status] for row in rows))
         title = f"{partner.school_name}交換申請條件與名額｜{u.school_name}｜UniWay"
         description = f"{u.school_name}赴{partner.country or '海外'}{partner.school_name}的交換與研修資訊，{len(rows)} 筆方案。{statuses}。查看學制、語言、期限與官方來源，以校方公告為準。"
-        c_slug, _ = resolve_country_slug_and_zh(partner.country)
-        cross_school_url = f"/partners/{c_slug}/{key}?home={u.id}"
+        cross_school_url = resolve_partner_cross_school_path(partner)
         body = f'<p class="eyebrow">{escape(u.school_name)} → {escape(partner.country or "海外合作校")}</p><h1>{escape(partner.school_name)}交換與研修資訊</h1>'
         body += f'<p class="lead">此頁適用母校：{escape(u.school_name)}。不同母校或方案的規定可能不同，請逐項確認。</p>'
         body += f'<a class="button" href="{escape(application_link(u, partner))}">在 UniWay 查看學校與規劃申請</a> · <a class="button secondary" href="{escape(cross_school_url)}">查看跨校外國大學頁（全台締約校與經驗摘要）</a>' + source_notice(source)
