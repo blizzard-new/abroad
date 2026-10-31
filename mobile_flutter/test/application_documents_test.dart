@@ -205,18 +205,23 @@ void main() {
       );
 
       expect(find.text('申請文件'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('待辦文件'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('待辦文件'), findsOneWidget);
       await tester.scrollUntilVisible(
-        find.text('讀書計畫'),
+        find.text('讀書計畫').last,
         240,
         scrollable: find.byType(Scrollable).first,
       );
-      expect(find.text('讀書計畫'), findsOneWidget);
+      expect(find.text('讀書計畫'), findsWidgets);
       expect(find.text(template.description), findsNothing);
 
-      await tester.ensureVisible(find.text('讀書計畫'));
+      await tester.ensureVisible(find.text('讀書計畫').last);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('讀書計畫'));
+      await tester.tap(find.text('讀書計畫').last);
       await tester.pumpAndSettle();
 
       expect(find.text('填寫文件'), findsOneWidget);
@@ -251,8 +256,9 @@ void main() {
       ),
     );
     expect(find.text('0 / 1 份文件必填欄位已完成'), findsOneWidget);
-    expect(find.text('下一步：準備「讀書計畫」'), findsOneWidget);
-    expect(find.widgetWithText(TextButton, '繼續準備'), findsOneWidget);
+    expect(find.text('接著準備'), findsOneWidget);
+    expect(find.text('讀書計畫'), findsWidgets);
+    expect(find.widgetWithText(FilledButton, '繼續準備'), findsOneWidget);
 
     await store.saveApplicationDocument(template, {
       'student_name_zh': '王小明',
@@ -260,8 +266,9 @@ void main() {
     });
     await tester.pumpAndSettle();
     expect(find.text('1 / 1 份文件必填欄位已完成'), findsOneWidget);
-    expect(find.text('必填欄位已完成，送件前請確認官方要求。'), findsOneWidget);
-    expect(find.widgetWithText(TextButton, '繼續準備'), findsNothing);
+    expect(find.text('必填欄位已完成，請核對官方要求。'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, '繼續準備'), findsNothing);
+    expect(find.widgetWithText(FilledButton, '檢查文件'), findsOneWidget);
   });
 }
 

@@ -4,6 +4,7 @@ import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../core/student_ui.dart';
 import '../core/school_visuals.dart';
+import '../core/uniway_brand.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
 import 'school_detail_screen.dart';
@@ -77,7 +78,7 @@ class _SchoolsScreenState extends State<SchoolsScreen> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '選擇想探索的國家與收藏。',
+                          '把範圍縮小，離理想學校更近。',
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         const SizedBox(height: 20),
@@ -304,7 +305,7 @@ class _SchoolsScreenState extends State<SchoolsScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 24),
                   if (store.isLoading && dashboard == null)
                     const LoadingCards(count: 5)
                   else if (store.error != null && dashboard == null)
@@ -412,7 +413,7 @@ class _SchoolCard extends StatelessWidget {
           Stack(
             children: [
               SizedBox(
-                height: 144,
+                height: 208,
                 width: double.infinity,
                 child: SchoolPhoto(school: school),
               ),
@@ -439,19 +440,15 @@ class _SchoolCard extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StudentIconLabel(
-                  Icons.place_outlined,
-                  school.country,
-                  color: ExchangeColors.teal,
-                ),
+                UniWayPill(school.country, icon: Icons.place_outlined),
                 const SizedBox(height: 8),
                 Text(
                   school.schoolName,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 12),
                 Row(
@@ -499,6 +496,7 @@ class _LiquidGlassSearchField extends StatelessWidget {
     textInputAction: TextInputAction.search,
     decoration: InputDecoration(
       labelText: '搜尋學校',
+      floatingLabelBehavior: FloatingLabelBehavior.never,
       hintText: '校名、國家或交換條件',
       prefixIcon: const Icon(Icons.search_rounded),
       suffixIcon: onClear == null

@@ -1,8 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'exchange_theme.dart';
 
-/// A quiet canvas leaves photos, deadlines and actions in the foreground.
 class DaylightBackground extends StatelessWidget {
   const DaylightBackground({required this.child, super.key});
   final Widget child;
@@ -11,7 +9,6 @@ class DaylightBackground extends StatelessWidget {
       ColoredBox(color: ExchangeColors.background, child: child);
 }
 
-/// Glass is reserved for navigation and primary controls, with opaque fallback.
 class LiquidControlSurface extends StatelessWidget {
   const LiquidControlSurface({
     required this.child,
@@ -25,43 +22,18 @@ class LiquidControlSurface extends StatelessWidget {
   final bool active, disabled, pressed;
   final double radius;
   @override
-  Widget build(BuildContext context) {
-    final quiet =
-        MediaQuery.disableAnimationsOf(context) ||
-        MediaQuery.highContrastOf(context);
-    return ClipRRect(
+  Widget build(BuildContext context) => AnimatedContainer(
+    duration: Duration(
+      milliseconds: MediaQuery.disableAnimationsOf(context) ? 0 : 160,
+    ),
+    decoration: BoxDecoration(
+      color: disabled
+          ? ExchangeColors.surfaceMuted
+          : active
+          ? (pressed ? ExchangeColors.primaryEnd : ExchangeColors.teal)
+          : ExchangeColors.surface,
       borderRadius: BorderRadius.circular(radius),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: quiet || active ? 0 : 12,
-          sigmaY: quiet || active ? 0 : 12,
-        ),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: disabled
-                  ? [ExchangeColors.surfaceMuted, ExchangeColors.surfaceMuted]
-                  : active
-                  ? [ExchangeColors.teal, ExchangeColors.primaryEnd]
-                  : [
-                      Colors.white.withValues(alpha: quiet ? 1 : .96),
-                      Colors.white.withValues(alpha: quiet ? 1 : .9),
-                    ],
-            ),
-            border: Border.all(
-              color: pressed
-                  ? ExchangeColors.teal
-                  : active
-                  ? Colors.transparent
-                  : ExchangeColors.line,
-            ),
-          ),
-          child: child,
-        ),
-      ),
-    );
-  }
+    ),
+    child: child,
+  );
 }

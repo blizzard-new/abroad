@@ -75,7 +75,7 @@ class _SchoolDetailScreenState extends State<SchoolDetailScreen> {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(24),
-          child: SizedBox(height: 180, child: SchoolPhoto(school: school)),
+          child: SizedBox(height: 240, child: SchoolPhoto(school: school)),
         ),
         const SizedBox(height: 24),
         StudentHeading(school.schoolName),

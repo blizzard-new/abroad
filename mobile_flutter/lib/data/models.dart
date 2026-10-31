@@ -105,10 +105,10 @@ class SupportedUniversity {
       ? shortName.substring(0, shortName.length - 2)
       : shortName;
 
-  String get boardTabLabel => shortName == '長庚' ? '長庚板' : '${_compactName}板';
+  String get boardTabLabel => shortName == '長庚' ? '長庚板' : '$_compactName板';
 
   String get boardTitleLabel =>
-      shortName == '長庚' ? '長庚討論板' : '${_compactName}討論板';
+      shortName == '長庚' ? '長庚討論板' : '$_compactName討論板';
 }
 
 const List<SupportedUniversity> defaultSupportedUniversities = [

@@ -147,12 +147,18 @@ class _RootShellState extends State<RootShell> {
         body: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 840),
-            child: IndexedStack(index: index, children: pages),
+            child: IndexedStack(
+              index: index,
+              children: [
+                for (var i = 0; i < pages.length; i++)
+                  TickerMode(enabled: i == index, child: pages[i]),
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: SafeArea(
           top: false,
-          minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          minimum: const EdgeInsets.fromLTRB(20, 0, 20, 12),
           child: LiquidControlSurface(
             radius: 30,
             child: Padding(
@@ -181,13 +187,8 @@ class _RootShellState extends State<RootShell> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
                               color: i == index
-                                  ? ExchangeColors.teal.withValues(alpha: .17)
+                                  ? ExchangeColors.teal
                                   : Colors.transparent,
-                              border: Border.all(
-                                color: i == index
-                                    ? ExchangeColors.teal.withValues(alpha: .38)
-                                    : Colors.transparent,
-                              ),
                             ),
                             child: ExcludeSemantics(
                               child: Column(
@@ -198,7 +199,7 @@ class _RootShellState extends State<RootShell> {
                                     icons[i],
                                     size: 23,
                                     color: i == index
-                                        ? ExchangeColors.teal
+                                        ? Colors.white
                                         : ExchangeColors.secondaryInk,
                                   ),
                                   const SizedBox(height: 2),
@@ -208,13 +209,13 @@ class _RootShellState extends State<RootShell> {
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      fontSize: 11,
+                                      fontSize: 12,
                                       height: 1.2,
                                       fontWeight: i == index
                                           ? FontWeight.w700
                                           : FontWeight.w500,
                                       color: i == index
-                                          ? ExchangeColors.teal
+                                          ? Colors.white
                                           : ExchangeColors.secondaryInk,
                                     ),
                                   ),
