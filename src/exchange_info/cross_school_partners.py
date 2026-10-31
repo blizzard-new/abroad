@@ -577,6 +577,8 @@ _ENTITY_INDEX_CACHE: dict[
 
 def build_cross_school_entity_index(
     catalogue_loader: Callable[[UniversityProfile], tuple[list[PartnerUniversity], CatalogueSourceStatus | None]],
+    *,
+    require_complete: bool = False,
 ) -> tuple[dict[tuple[str, str], AggregatedPartnerEntity], dict[tuple[str, str], tuple[str, str]]]:
     """Unify partner records across all supported Taiwanese universities into shared (country_slug, institution_slug) entities."""
     loaded_by_uni: list[tuple[UniversityProfile, list[PartnerUniversity]]] = []
@@ -585,6 +587,8 @@ def build_cross_school_entity_index(
         try:
             partners, _ = catalogue_loader(uni)
         except Exception:
+            if require_complete:
+                raise
             continue
         partner_list = list(partners) if partners else []
         loaded_by_uni.append((uni, partner_list))
@@ -1059,23 +1063,38 @@ def build_cross_school_partner_page_data(
     catalogue_loader: Callable[[UniversityProfile], tuple[list[PartnerUniversity], CatalogueSourceStatus | None]],
     data_dir: Path | None = None,
     override_plan_count: int | None = None,
+    require_complete: bool = False,
 ) -> CrossSchoolPartnerPageData | None:
     """Resolve (country, institution) across all supported universities and return the 2-layer page payload."""
-    entities, alias_lookup = build_cross_school_entity_index(catalogue_loader)
+    entities, alias_lookup = build_cross_school_entity_index(catalogue_loader, require_complete=require_complete)
     c_slug, _c_zh = resolve_country_slug_and_zh(country)
     inst_raw = unquote(institution or "").strip()
     inst_lower = inst_raw.lower()
     inst_slugified = slugify_english_name(inst_raw)
 
     canonical_key = (
-        alias_lookup.get((c_slug, inst_lower))
+        ((c_slug, inst_lower) if (c_slug, inst_lower) in entities else None)
+        or alias_lookup.get((c_slug, inst_lower))
         or alias_lookup.get((c_slug, inst_slugified))
-        or (
-            (c_slug, inst_lower)
-            if (c_slug, inst_lower) in entities
-            else None
-        )
     )
+    legacy_id = re.fullmatch(r"inst-([0-9a-f]{12})", inst_lower)
+    if legacy_id and (c_slug, inst_lower) in entities:
+        canonical_key = (c_slug, inst_lower)
+    elif legacy_id:
+        # Older pages without an English name used the first 12 hex characters
+        # of a catalogue partner ID. Only recover an unambiguous exact prefix;
+        # never guess if the original partner disappeared or a prefix collides.
+        prefix = legacy_id.group(1)
+        candidates = {
+            key for key, entity in entities.items()
+            if key[0] == c_slug and any(
+                _legacy_partner_id(row).startswith(prefix)
+                for rows in entity.home_rows.values() for row in rows
+            )
+        }
+        if len(candidates) != 1:
+            return None
+        canonical_key = candidates.pop()
     if canonical_key is None:
         # Fallback: try matching by normalized Chinese or English name within the country
         zh_probe = _norm_zh_key(inst_raw, _c_zh)
@@ -1189,8 +1208,9 @@ def build_cross_school_partner_directory(
     q: str | None = None,
     home: str | None = None,
     limit: int = 120,
+    require_complete: bool = False,
 ) -> CrossSchoolPartnerDirectory:
-    entities, _ = build_cross_school_entity_index(catalogue_loader)
+    entities, _ = build_cross_school_entity_index(catalogue_loader, require_complete=require_complete)
     target_country_slug = None
     target_country_zh = None
     if country and country.strip():

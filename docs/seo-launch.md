@@ -14,15 +14,18 @@
 | `/schools` | 所有支援母校的公開目錄 |
 | `/schools/{home_id}` | 母校交換指南與合作校連結 |
 | `/schools/{home_id}/partners/{key}` | 該母校適用的合作校與各方案條件、資料狀態、官方來源 |
-| `/sitemap.xml` | Sitemap index，分開列出基本頁與每所母校的 sitemap |
+| `/sitemap.xml` | Sitemap index，列出基本頁、跨校合作大學與每所母校的 sitemap |
 | `/sitemaps/pages.xml` | 首頁、目錄及母校頁 |
+| `/sitemaps/partners.xml` | 跨校合作大學的正式 canonical 網址 |
 | `/sitemaps/{home_id}.xml` | 該母校的合作校網址 |
 
 所有頁面直接回傳完整 HTML，沒有爬蟲專用內容，不需要登入或 JavaScript。新頁使用既有校庫，不重新推論資格、不發布治理流程中的草稿，也不更動原有 `#school=` 分享與申請工作台。CTA 帶上原有 `?home=母校#school=合作校`，確保回到正確母校。
 
 合作校 ID 由「國家＋既有 institution identity」產生，與名額、年度、列表順序無關。同一母校下相同 institution 的不同方案在同頁逐筆展示；不同母校各有自己的頁面。**修改學校識別名稱或國家會改變網址**：未來此類資料更名須保留舊 ID 到新網址的 301 對照，不能僅換名稱後刪除舊 URL。
 
-本期、參考、協議、零名額與待確認狀態分開顯示。來源的 `checked_at` 是查核時間，不用來虛構 sitemap `lastmod`；因此目前 sitemap 不輸出 `lastmod`。CGU 擷取時間不代表本期已驗證。資料來源不可用回 503／Retry-After，未知校別與 ID 回真正 404，皆 noindex。校庫請求共用既有併發限制，並使用最多每所母校一份、有效一分鐘的公開資料快取，避免每個合作校頁面都重新解析資料。HTML 瀏覽器快取一分鐘，sitemap 五分鐘。
+舊跨校 `inst-` 雜湊網址若能從目前合作校資料唯一辨認原機構，會以 301 轉到對應的跨校正式網址，並保留 `home` 母校參數；找不到或有多個可能對象時維持 404。跨校彙整所需的校庫資料不可用時，公開頁與該 sitemap 回傳來源錯誤，不以不完整結果假裝成功。
+
+本期、參考、協議、零名額與待確認狀態分開顯示。來源的 `checked_at` 是查核時間，不用來虛構 sitemap `lastmod`；僅有可信的實質內容修改紀錄時才輸出，詳見 [品質政策](seo-quality-policy.md)。CGU 擷取時間不代表本期已驗證。資料來源不可用回 503／Retry-After，未知校別與 ID 回真正 404，皆 noindex。校庫請求共用既有併發限制，並使用最多每所母校一份、有效一分鐘的公開資料快取，避免每個合作校頁面都重新解析資料。HTML 瀏覽器快取一分鐘，sitemap 五分鐘。
 
 ## 部署設定
 
@@ -56,7 +59,7 @@
 python scripts/check_seo.py --base-url https://app.uniway-tw.com
 ```
 
-這會依序驗證 robots、19 個子 sitemap、所有基本頁與每所母校一個合作校頁。檢查 200、XML、canonical、可索引設定、metadata、伺服器正文及結構化資料。它不連 Google 帳號、不提交網址、不證明已收錄。以 registry 實際校數為準，不把數字硬編碼到程式。
+這會依序驗證 robots、主 sitemap 列出的各個子 sitemap、所有基本頁及各子 sitemap 的代表頁。檢查 200、XML、canonical、可索引設定、metadata、伺服器正文及結構化資料。它不連 Google 帳號、不提交網址、不證明已收錄。子 sitemap 數量以 registry 實際校數為準，不把數字硬編碼到程式。
 
 隔離環境的完整網址檢查可用 `--all-pages --delay 0`；正式站保持預設間隔，避免旺季造成負擔。`--base-url` 可指向本機，canonical 仍用正式站；本機僅為測試時可暫設 `EXCHANGE_SEO_INDEXABLE=true`，不要公開暴露此測試服務。
 

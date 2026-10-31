@@ -38,7 +38,7 @@ python scripts/seo_report.py --search-console artifacts/search-console.json --au
 
 Search Console 使用 Web／臺灣／final data，比較兩個完整 28 天期間；預設截止日為三天前，可用 `--end YYYY-MM-DD` 指定。Google Search Console 以太平洋時區計日，GA4 依資源時區，禁止直接用 GSC 點擊當 GA 轉換率的分母。曝光總數來自無 query 維度的總計，不從可能漏掉匿名查詢的明細加總。非品牌統計僅是回傳查詢中的已觀測數，會標明截斷與匿名查詢限制。
 
-索引樣本先覆蓋母校，再補 A／B／C，預設最多 30 個、上限 100。收集的是 Google **已儲存的索引版本**，不是即時抓取測試。報告保留 coverage、last crawl、Google/user canonical、robots、noindex 與抓取原因；A 級樣本通過率不能冒充全部高品質頁面的收錄率。會另外讀取主 sitemap 的子檔狀態，確認 19 份子 sitemap 的處理情況。
+索引樣本先覆蓋母校，再補 A／B／C，預設最多 30 個、上限 100。收集的是 Google **已儲存的索引版本**，不是即時抓取測試。報告保留 coverage、last crawl、Google/user canonical、robots、noindex 與抓取原因；A 級樣本通過率不能冒充全部高品質頁面的收錄率。會另外讀取主 sitemap 的子檔狀態，確認基本頁、跨校頁與各母校 sitemap 的處理情況；數量隨支援母校增減。
 
 每週先看「抓取錯誤與索引原因 → 已觀測查詢與頁面 → Google 流量的功能使用」，再決定補內容或調整標題。搜尋量、排名和改善幅度沒有實際資料就不推測。排程時應由主機安全提供有效短效 token；本次未存放 refresh token，也未啟用必然失敗的背景排程。
 

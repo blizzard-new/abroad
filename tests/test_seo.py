@@ -80,7 +80,8 @@ def test_every_catalogue_has_discoverable_pages_and_a_matching_sitemap(client, h
 
 def test_sitemap_index_and_directory_cover_all_schools(client):
     urls = locations(client.get("/sitemap.xml"))
-    assert len(urls) == len(SUPPORTED_UNIVERSITIES) + 1
+    assert len(urls) == len(SUPPORTED_UNIVERSITIES) + 2
+    assert "https://app.uniway-tw.com/sitemaps/partners.xml" in urls
     roots = locations(client.get("/sitemaps/pages.xml"))
     assert len(roots) == len(SUPPORTED_UNIVERSITIES) + 2 + len(EDITORIAL_PATHS)
     directory = BeautifulSoup(client.get("/schools").text, "html.parser")

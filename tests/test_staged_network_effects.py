@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
 from fastapi.testclient import TestClient
 
 from exchange_info.api import create_app
@@ -11,6 +12,7 @@ from exchange_info.staged_network_effects import (
     build_partner_specific_preference_heat,
     build_school_staged_network_status,
 )
+from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
 
 
 def test_cold_start_protection_for_2_people_never_shows_zero_applicants(tmp_path: Path) -> None:
@@ -51,6 +53,24 @@ def test_cold_start_protection_for_2_people_never_shows_zero_applicants(tmp_path
     assert heat.first_choice_count is None
     assert heat.second_or_third_choice_count is None
     assert "0 人填志願" not in heat.competition_status_label
+
+
+@pytest.mark.parametrize("quota", ["2", "名額條件" * 100])
+@pytest.mark.parametrize("plan_count", [2, 30])
+def test_partner_heat_preserves_valid_agreement_quota_bounds(tmp_path: Path, quota: str, plan_count: int) -> None:
+    _, heat = build_partner_specific_preference_heat(
+        home_school="cgu",
+        country_slug="japan",
+        institution_slug="example-university",
+        partner_name_zh="測試大學",
+        partner_name_en="Example University",
+        country_name_zh="日本",
+        quota_hint=quota,
+        data_dir=tmp_path,
+        override_plan_count=plan_count,
+    )
+    assert heat.quota_hint == quota
+    assert heat.heat_unlocked is (plan_count >= UNLOCK_THRESHOLD_MIN)
 
 
 def test_dynamic_unlock_from_solo_tools_to_preference_heat_via_api(tmp_path: Path) -> None:
@@ -121,7 +141,7 @@ def test_viral_final_week_mode_for_schools_over_50_plans(tmp_path: Path) -> None
     assert catalog["viral_peak_threshold"] == 50
     assert catalog["unlocked_heat_school_count"] >= 6
     assert catalog["solo_stage_school_count"] >= 10
-    assert len(catalog["schools"]) == 22
+    assert {school["school_id"] for school in catalog["schools"]} == {school.id for school in SUPPORTED_UNIVERSITIES}
 
 
 def test_partner_page_upper_preference_heat_and_lower_admitted_connect(tmp_path: Path) -> None:
