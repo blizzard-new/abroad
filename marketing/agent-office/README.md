@@ -217,6 +217,59 @@ Leo 能做的事：開工、請同事重寫、加做一則、改發文時間、�
 
 **3D 太卡**：遠端桌面、沒有顯示卡或瀏覽器關掉「硬體加速」時，3D 會很吃力。辦公室偵測到畫面一直卡，會自動改用平面工作台；也可以直接開 `/?flat`。想強制開 3D 用 `/?3d`。
 
+## 手機 App（Android）
+
+Telegram 以外的另一條手機線：一支裝在手機上的 App，直接連到你電腦上的辦公室，不經過 Telegram、也不經過 Google 的推播。它做的事跟 Telegram 一樣：
+
+- **跟 Leo 說話**：直接打字，跟網頁的「總管」分頁一樣（「開工」「#3 開頭再口語一點」「#5 改到 20:30 發」）；#編號可以點。
+- **審核匣**：每則草稿一張卡片（文字、圖片、影片、驗證結果），按鈕有「核准」「立即發佈」「修改文字」「請 Leo 改」「退回」；按鈕會固定在畫面下方，長草稿不用捲到底。
+- **已排程**、**動態**（同事們現在在做什麼），選單裡可以「開工」和「立刻發佈到時間的貼文」。
+- **通知**：有草稿等你核准、需要你看一下、貼文發出去或失敗、Leo 說話時，手機會跳通知；點通知直接打開那一則。在網頁或別的裝置上處理掉的草稿，通知會自己消失。
+
+**1. 下載安裝（手機）**
+
+用手機瀏覽器打開這個連結，下載後點開安裝：
+
+> https://github.com/blizzard-new/abroad/releases/download/office-app/UniWay-Office.apk
+
+第一次安裝要允許瀏覽器「安裝不明應用程式」；Google Play 保護若說「未經驗證的開發人員」，選「仍要安裝」（這個 App 沒有上架 Google Play，簽章用的是這個 repo 裡的金鑰）。之後每次這個資料夾的 App 有新版（合併進 main）都會自動更新同一個連結，重新下載安裝就會蓋過舊版，設定會保留。
+
+**2. 讓手機連得到辦公室（電腦，只做一次）**
+
+1. 產生通行碼：
+
+   ```bash
+   uv run office token
+   ```
+
+   把它印出來的 `OFFICE_ACCESS_TOKEN=…` 放進 `.env`（舊的換掉）。通行碼是這扇門唯一的鎖：至少 20 個字、只用英文字母數字，`uv run office check` 會提醒太短或有中文。
+2. 電腦和手機都裝 [Tailscale](https://tailscale.com/download)、登入同一個帳號（免費，家裡和外面都連得到，不用對外開放）。只在家裡用也可以不裝，手機和電腦接同一個 Wi-Fi 即可。
+3. 用 `0.0.0.0` 啟動辦公室，它會印出手機要填的網址（標示 Tailscale 或區網）：
+
+   ```bash
+   uv run office serve --host 0.0.0.0
+   ```
+
+   Windows 跳出防火牆詢問時，允許「私人網路」。
+4. 手機打開 App，填**辦公室網址**和**通行碼**，按「測試連線」看到 ✅ 再「儲存並開啟辦公室」。
+
+**3. 通知要能及時**
+
+App 沒有用 Google 的推播，所以是在背景每 30 秒問辦公室一次（螢幕上會有一個很小的常駐通知「UniWay 辦公室｜連線正常」，這是 Android 規定背景程式要顯示的）。手機為了省電會把背景程式停掉，所以：
+
+- 在 App 設定按「電池設定」，把「UniWay 辦公室」設成**不最佳化／不受限制**；小米、OPPO、vivo、三星等手機還要在「自動啟動」或「睡眠中的應用程式」把它排除。
+- 辦公室電腦要開著（`uv run office serve`）；電腦關機、睡眠或手機沒有網路時收不到，連得上之後會補上。
+- 手機重新開機後 App 會試著自己開始監看；有些手機會擋掉，沒有出現常駐通知就打開一次 App。第一次打開時會問通知權限，請選「允許」。
+
+**安全**
+
+- 通行碼只存在這支手機裡（App 的私有資料夾）；App 只連你填的那個網址。
+- 通行碼錯 8 次，那個網路位址會被鎖 15 分鐘（鎖住時連對的通行碼也不收），所以猜不出來；但通行碼太短還是會被猜到，請用 `uv run office token` 產生的。
+- `http://` 在 Tailscale 和家裡的網路是可以的（Tailscale 自己會加密）。要從公開網路連進來，請用 https（上面的 Cloudflare Quick Tunnel），否則 App 的設定頁會警告。
+- 這個 repo 是公開的，APK 誰都能下載，但裡面**沒有任何金鑰**，沒有你的網址和通行碼進不了你的辦公室。App 的簽章金鑰在 repo 裡（`android/app/uniway-office.keystore`，密碼 `android`），只用來讓新版能蓋過舊版；想用自己的私人金鑰，在 GitHub 的 Settings → Secrets 設 `OFFICE_KEYSTORE_BASE64`、`OFFICE_KEYSTORE_PASSWORD`、`OFFICE_KEY_ALIAS`、`OFFICE_KEY_PASSWORD`。**換金鑰後要先解除安裝舊版再裝新版**，所以要換就趁早。
+
+**自己建**：需要 JDK 17 和 Android SDK，`cd android && ./gradlew testDebugUnitTest assembleRelease`，APK 在 `app/build/outputs/apk/release/`。程式在 `android/`（網頁視窗＋背景監看＋設定頁），手機看到的頁面是辦公室自己提供的 `/m`（`office/static/m.*`），所以改版面不用重做 App。
+
 ## Claude Code、Codex、Antigravity 怎麼分工
 
 每張桌子的 AI 在 `.env` 的 `OFFICE_BRAINS` 指定，格式是「角色=工具」。`.env.example` 預設的分工：
@@ -415,7 +468,10 @@ Dora 巡查發現落差 → 驗證員（例如小公主）重新打開官網驗�
 | `office/proposals.py` | 資料更新提案：巡查發現（經驗證員確認）→ 審核匣卡片 → PR 要放的檔案與說明（含修改清單、網頁文字的清理、官網網域檢查、重複檢查） |
 | `office/accounts.py`、`office/checkup.py` | 連帳號（`office auth`）與開工前檢查（`office check`） |
 | `office/telegram.py` | 手機：Telegram 機器人跟 Leo 對話、通知、核准按鈕 |
-| `office/server.py`、`office/static/` | 辦公室網頁與即時事件 |
+| `office/server.py`、`office/static/` | 辦公室網頁與即時事件；通行碼（網址、cookie 或 `Authorization: Bearer`）與錯誤太多次的鎖定 |
+| `office/mobile.py`、`office/static/m.*` | 手機 App 用的：`/m` 手機版頁面（聊天、審核匣、已排程、動態）與通知用的 `/api/mobile/feed` |
+| `office/notices.py`、`office/netinfo.py` | 草稿在通知裡的標題與內文（Telegram 和手機 App 共用）；`office serve` 印出手機可以填的網址 |
+| `android/` | Android App（Kotlin；網頁視窗、背景監看通知、設定頁）與它的單元測試；`.github/workflows/office-android.yml` 負責建置並發佈下載連結 |
 | `office/static/office-world.js`、`office-world-state.js` | 3D 海岸場景、部門座位、真實時鐘與待命活動 |
 | `office/static/office-building.js` | 兩層建築、可切換外牆／屋頂、樓梯與花園；重複建築細節以 instancing 合併繪製 |
 | `office/static/office-nature.js` | 本機材質、天空反射環境、棕櫚羽葉、熱帶植栽、風動、沙灘與遮陽躺椅 |

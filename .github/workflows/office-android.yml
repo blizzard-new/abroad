@@ -1,0 +1,142 @@
+name: Office Android app
+
+# Builds the phone app for the marketing office (marketing/agent-office/android) and publishes it as a GitHub release,
+# so the boss can install it from a link on the phone:
+#   main  -> https://github.com/<repo>/releases/download/office-app/UniWay-Office.apk          (the real release)
+#   PR    -> https://github.com/<repo>/releases/download/office-app-preview/UniWay-Office.apk  (to try a change first)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "marketing/agent-office/android/**"
+      - ".github/workflows/office-android.yml"
+  pull_request:
+    paths:
+      - "marketing/agent-office/android/**"
+      - ".github/workflows/office-android.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: office-android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: marketing/agent-office/android
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Java
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+          cache-dependency-path: |
+            marketing/agent-office/android/**/*.gradle*
+            marketing/agent-office/android/gradle/wrapper/gradle-wrapper.properties
+
+      # Optional: a private signing key from repository secrets. Without them the build uses the key in the repository,
+      # which is fine for installing it yourself. Pick one before installing: an app signed with a different key cannot
+      # be updated over the old one (uninstall first).
+      - name: Use the private signing key, if one is configured
+        env:
+          KEYSTORE_BASE64: ${{ secrets.OFFICE_KEYSTORE_BASE64 }}
+          OFFICE_KEYSTORE_PASSWORD: ${{ secrets.OFFICE_KEYSTORE_PASSWORD }}
+          OFFICE_KEY_ALIAS: ${{ secrets.OFFICE_KEY_ALIAS }}
+          OFFICE_KEY_PASSWORD: ${{ secrets.OFFICE_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/office.keystore"
+            {
+              echo "OFFICE_KEYSTORE_FILE=$RUNNER_TEMP/office.keystore"
+              echo "OFFICE_KEYSTORE_PASSWORD=$OFFICE_KEYSTORE_PASSWORD"
+              echo "OFFICE_KEY_ALIAS=$OFFICE_KEY_ALIAS"
+              echo "OFFICE_KEY_PASSWORD=$OFFICE_KEY_PASSWORD"
+            } >> "$GITHUB_ENV"
+            echo "Signing with the private key from secrets."
+          else
+            echo "Signing with the key in the repository."
+          fi
+
+      # Maven Central answers a burst of requests with 429 now and then; a second try goes through.
+      - name: Test and build the release APK
+        run: |
+          n=0
+          until ./gradlew --no-daemon testDebugUnitTest assembleRelease \
+              -PversionCode="${{ github.run_number }}" -PversionName="1.0.${{ github.run_number }}"; do
+            n=$((n + 1))
+            if [ "$n" -ge 3 ]; then exit 1; fi
+            sleep 30
+          done
+
+      - name: Name the file and write its checksum
+        run: |
+          cp app/build/outputs/apk/release/app-release.apk UniWay-Office.apk
+          sha256sum UniWay-Office.apk | tee UniWay-Office.apk.sha256
+          "$ANDROID_HOME"/build-tools/*/apksigner verify --print-certs UniWay-Office.apk | head -3
+
+      - name: Upload the APK
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: uniway-office-apk
+          path: |
+            marketing/agent-office/android/UniWay-Office.apk
+            marketing/agent-office/android/UniWay-Office.apk.sha256
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    # The real release only from main; a pull request from this repository gets the "preview" release.
+    if: >-
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Download the APK
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: uniway-office-apk
+
+      - name: Publish the release
+        env:
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          BUILD: ${{ github.run_number }}
+          PREVIEW: ${{ github.event_name == 'pull_request' }}
+        run: |
+          if [ "$PREVIEW" = "true" ]; then
+            tag=office-app-preview
+            title="UniWay 辦公室 App（試用版，來自還沒合併的 PR）"
+            flags="--prerelease"
+          else
+            tag=office-app
+            title="UniWay 辦公室 App（Android）"
+            flags="--latest=false"
+          fi
+          notes="版本 1.0.${BUILD}（commit ${SHA:0:7}）。
+
+          **安裝**：用手機瀏覽器打開下面的 \`UniWay-Office.apk\`，下載後點開安裝。第一次要允許瀏覽器「安裝不明應用程式」；Google Play 保護若跳出「未經驗證的開發人員」，選「仍要安裝」。
+
+          打開 App 後填辦公室網址和通行碼，說明見 [README「手機 App」](https://github.com/${GH_REPO}/blob/main/marketing/agent-office/README.md)。
+
+          SHA-256：\`$(cut -d' ' -f1 UniWay-Office.apk.sha256)\`"
+          # Start from a fresh release each time, so the link always points at the newest build and the tag at its commit.
+          gh release delete "$tag" --cleanup-tag --yes 2>/dev/null || true
+          gh release create "$tag" UniWay-Office.apk UniWay-Office.apk.sha256 --title "$title" --notes "$notes" --target "$SHA" $flags
+          echo "https://github.com/${GH_REPO}/releases/download/${tag}/UniWay-Office.apk" >> "$GITHUB_STEP_SUMMARY"

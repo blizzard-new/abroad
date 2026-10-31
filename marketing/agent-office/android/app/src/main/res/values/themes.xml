@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The settings screen: plain light. -->
+    <style name="Theme.Office" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- The office window: the page has a navy title bar, so the status bar is navy with light icons. -->
+    <style name="Theme.Office.Main" parent="Theme.Office">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">#10294A</item>
+        <item name="android:navigationBarColor">#10294A</item>
+        <item name="android:windowBackground">#10294A</item>
+    </style>
+</resources>

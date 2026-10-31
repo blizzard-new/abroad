@@ -8,12 +8,14 @@
     uv run office check --ping          # is this computer ready: tools, each desk's AI, the social accounts
     uv run office auth threads --token  # link an account (threads / instagram / youtube)
     uv run office auth github           # link the GitHub token Pat opens draft pull requests with
+    uv run office token                 # make a new access password for the phone app
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import secrets
 import sys
 from dataclasses import asdict
 from datetime import date
@@ -65,6 +67,8 @@ def main(argv: list[str] | None = None) -> int:
     check = sub.add_parser("check", help="檢查這台電腦：工具、每張桌子的 AI、社群帳號")
     check.add_argument("--ping", action="store_true", help="實際問每個 AI 一句測試，確認有登入")
 
+    sub.add_parser("token", help="產生一串新的通行碼（給手機 App 用，填進 .env 的 OFFICE_ACCESS_TOKEN）")
+
     auth = sub.add_parser("auth", help="連上社群帳號、GitHub，或用 telegram 連上你的手機")
     auth.add_argument("platform", choices=["youtube", "threads", "instagram", "github", "telegram"])
     auth.add_argument("--token", "--short-token", dest="token", help="Meta 開發者後台產生的權杖（Threads／Instagram），或 GitHub 的 fine-grained 權杖")
@@ -78,9 +82,23 @@ def main(argv: list[str] | None = None) -> int:
 
         settings = Settings.from_env()
         print(f"UniWay 行銷辦公室：http://{args.host}:{args.port}")
-        if args.host not in {"127.0.0.1", "localhost", "::1"} and not settings.access_token:
-            print("⚠️ 辦公室對其他電腦開放了，但沒有設 OFFICE_ACCESS_TOKEN：連得到的人都能按核准。請在 .env 設一串密碼後重開。")
+        if args.host not in {"127.0.0.1", "localhost", "::1"}:
+            if not settings.access_token:
+                print("⚠️ 辦公室對其他電腦開放了，但沒有設 OFFICE_ACCESS_TOKEN：連得到的人都能按核准。請在 .env 設一串密碼後重開（uv run office token 可以產生）。")
+            else:
+                from .netinfo import phone_addresses
+
+                where = [(args.host, "")] if args.host not in {"0.0.0.0", "::"} else phone_addresses()
+                print("手機 App 的「辦公室網址」可以填：" + ("" if where else "（找不到這台電腦的區網或 Tailscale 位址，請看 README「手機 App」）"))
+                for address, kind in where:
+                    print(f"  http://{address}:{args.port}" + (f"　← {kind}" if kind else ""))
         uvicorn.run(create_app(settings, clock=not args.no_clock), host=args.host, port=args.port, log_level="warning")
+        return 0
+
+    if args.command == "token":
+        token = secrets.token_urlsafe(24)
+        print(f"新的通行碼：\n\n  {token}\n\n1. 把這一行放進辦公室電腦的 .env（有舊的 OFFICE_ACCESS_TOKEN 就換掉），重新啟動 uv run office serve：\n\n"
+              f"  OFFICE_ACCESS_TOKEN={token}\n\n2. 手機 App 的「通行碼」欄貼同一串。\n\n這串等於辦公室的鑰匙，只放在你的電腦和手機上，不要貼到聊天或 GitHub。")
         return 0
 
     if args.command == "facts":
