@@ -10,6 +10,7 @@ from __future__ import annotations
 import ast
 import importlib
 import json
+import re
 import sys
 from dataclasses import dataclass, field
 from datetime import date
@@ -18,6 +19,7 @@ from pathlib import Path
 
 import httpx
 
+from . import humanize
 from .config import Settings
 
 
@@ -262,6 +264,8 @@ VOICE_GUIDE = f"""你們是 UniWay 行銷辦公室的成員。UniWay（app.uniwa
 - 不使用：{"、".join(BANNED_PHRASES)} 等誇大或暗示官方背書的說法。
 - 不放學生個資，不捏造學生心得或引言。
 
+{humanize.guide()}
+
 吉祥物
 - {MASCOT}
 - 任何描述或繪製吉祥物的文字（例如封面插圖的 art_prompt）都要寫出牠的眼睛，不要寫成沒有臉的行李箱。
@@ -286,6 +290,65 @@ Reels／YouTube Shorts
 YouTube 長影片（每週一支，橫式）
 - 2～4 分鐘的本週交換情報懶人包：開場 10 秒說明本集重點，分段講，結尾提醒訂閱與到 UniWay 查資料。
 """
+
+
+# The boss's own voice notes. Everything the writers read first is the guide above; this is the part the boss writes.
+VOICE_NOTES_LIMIT = 3000
+VOICE_TEMPLATE = """<!--
+這份檔案是「老闆親自寫的語氣設定」。辦公室每位同事（阿脆、Mori、阿剪、Kiki、Leo⋯）每次寫東西前都會讀。
+只有寫在這個說明框「外面」的字會被讀進去（最多 3000 字）。存檔就生效，不用重新啟動。
+
+想到什麼寫什麼，例如：
+- 我們的口吻：像學長姐在聊天／像朋友碎碎念／偶爾自嘲
+- 自稱：小編、我們、UniWay 團隊⋯
+- 常用的詞、愛用的結尾，還有一定不要說的話
+- 貼 2～3 則你覺得「這就是我們的聲音」的舊貼文當範例（最有效）
+
+事實、禁用說法（例如保證錄取）和各平台規則，不會因為這裡寫的而放寬。
+請用 UTF-8 存檔（記事本另存新檔時，編碼選 UTF-8）。
+-->
+
+"""
+_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
+
+
+@dataclass(frozen=True)
+class VoiceNotes:
+    text: str = ""  # what the writers will read (comments removed, cut to VOICE_NOTES_LIMIT)
+    cut: int = 0  # characters left out because the notes run over the limit
+    problem: str = ""  # why the file could not be read, when it exists but is unusable
+
+
+def read_voice(path: Path) -> VoiceNotes:
+    try:
+        raw = path.read_text(encoding="utf-8-sig")
+    except FileNotFoundError:
+        return VoiceNotes()
+    except UnicodeDecodeError:
+        return VoiceNotes(problem="不是 UTF-8 編碼（記事本另存新檔時，編碼選 UTF-8）")
+    except OSError as error:
+        return VoiceNotes(problem=f"讀不到：{error.strerror or error}")
+    text = _COMMENT.sub("", raw).strip()
+    return VoiceNotes(text=text[:VOICE_NOTES_LIMIT].rstrip(), cut=max(0, len(text) - VOICE_NOTES_LIMIT))
+
+
+def write_voice_template(path: Path) -> bool:
+    """Start the boss's voice file; an existing file is never touched. True when a new one was written."""
+    if path.exists():
+        return False
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(VOICE_TEMPLATE, encoding="utf-8")
+    return True
+
+
+def voice_guide(settings: Settings | None = None) -> str:
+    """The guide every desk reads, with the boss's own voice notes (voice.md) added when there are any."""
+    notes = read_voice(settings.voice_path).text if settings is not None else ""
+    if not notes:
+        return VOICE_GUIDE
+    return (
+        f"{VOICE_GUIDE}\n老闆自己寫的語氣設定（口吻、用詞和範例以這裡為準；上面的事實、禁用說法和平台規則不能因此放寬）\n{notes}\n"
+    )
 
 
 # What the visual designer (Mori) reads first, before the request of whoever needs a picture. It is the boss's own brief.

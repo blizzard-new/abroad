@@ -10,6 +10,7 @@ from __future__ import annotations
 import re
 import unicodedata
 
+from . import humanize
 from .brand import BANNED_PHRASES, BrandFacts
 from .models import CarouselDraft, ThreadsDraft, VideoScript
 
@@ -78,7 +79,9 @@ def check_threads(draft: ThreadsDraft, facts: BrandFacts, source_url: str = "") 
         issues.append("第一則留言的連結超過 5 個")
     if facts.site_url.split("//")[-1] not in draft.first_reply:
         issues.append(f"第一則留言要放 {facts.site_url.split('//')[-1]}")
-    issues += _claims(draft.text + "\n" + draft.first_reply, facts, bool(source_url))
+    text = draft.text + "\n" + draft.first_reply
+    issues += _claims(text, facts, bool(source_url))
+    issues += humanize.check(text)
     return issues
 
 
@@ -115,6 +118,7 @@ def check_carousel(draft: CarouselDraft, facts: BrandFacts, source_url: str = ""
         issues.append("Instagram 說明欄的網址不能點，請改寫「連結在主頁」")
     text = "\n".join([draft.caption, *(f"{s.title} {s.body}" for s in draft.slides)])
     issues += _claims(text, facts, bool(source_url))
+    issues += humanize.check(text, max_dashes=humanize.PAGES_DASHES)
     return issues
 
 
@@ -146,4 +150,5 @@ def check_video(script: VideoScript, facts: BrandFacts, length: str, source_url:
         [script.caption, script.youtube_title, *(f"{s.heading} {' '.join(s.lines)}" for s in script.scenes)]
     )
     issues += _claims(text, facts, bool(source_url))
+    issues += humanize.check(text, max_dashes=humanize.PAGES_DASHES)
     return issues

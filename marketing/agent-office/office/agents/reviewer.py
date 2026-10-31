@@ -20,7 +20,7 @@ class Reviewer(Agent):
         id="reviewer",
         name="Kiki",
         title="審稿查核",
-        duty="核對平台數字、官方公告、字數與連結規則；不合格就退回重寫",
+        duty="核對平台數字、官方公告、字數與連結規則，也擋 AI 口頭禪；不合格就退回重寫",
         hair="bun",
         hair_color="#1c1c1c",
         shirt="#3f7f6e",
@@ -40,7 +40,7 @@ class Reviewer(Agent):
         writer = self.office.writer
         rounds = 0
         while True:
-            self.status("reviewing", f"檢查{kind}…", screen=_checklist([("字數與格式", None), ("事實與數字", None), ("平台規則", None)]))
+            self.status("reviewing", f"檢查{kind}…", screen=_checklist([("字數與格式", None), ("事實與數字", None), ("平台規則", None), ("像真人寫的", None)]))
             issues = check(draft)
             try:
                 verdict = writer.review(kind, draft, item, issues, briefing)
@@ -48,7 +48,7 @@ class Reviewer(Agent):
                 issues = list(dict.fromkeys(issues + list(verdict.issues)))
             except WriterError as error:
                 notes = [f"AI 審稿沒有完成（{error}），只做了規則檢查"]
-            screen = _checklist([(issue, False) for issue in issues] or [("字數與格式", True), ("事實與數字", True), ("平台規則", True)])
+            screen = _checklist([(issue, False) for issue in issues] or [("字數與格式", True), ("事實與數字", True), ("平台規則", True), ("像真人寫的", True)])
             if not issues:
                 self.status("done", f"{kind}通過 ✓", screen=screen)
                 return draft, {"issues": [], "notes": notes, "revisions": rounds}, True

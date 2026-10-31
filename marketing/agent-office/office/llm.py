@@ -60,7 +60,11 @@ def briefing_text(briefing: Briefing) -> str:
     news = "\n".join(
         f"- {item.school}（{item.checked_date} 查核）：{item.summary}\n  官方來源：{item.source_url}" for item in briefing.news
     )
-    winners = "\n".join(f"- {w['title']}（互動分數 {w['score']:.1f}）" for w in briefing.winners)
+    winners = "\n".join(
+        f"- {w['title']}（互動分數 {w['score']:.1f}"
+        + (f"，是同類貼文平常的 {w['multiple']} 倍" if w.get("multiple") is not None else "") + "）"
+        for w in briefing.winners
+    )
     recent = "\n".join(f"- {title}" for title in briefing.recent_titles[:20])
     research = "\n".join(f"- {f.topic}：{f.insight}\n  來源：{f.source_url}" for f in briefing.research)
     insights = "\n".join(f"- {note}" for note in briefing.insights)
@@ -285,7 +289,9 @@ class ModelWriter:
     def review(self, kind: str, content: BaseModel, item: PlanItem, rule_issues: list[str], briefing: Briefing) -> Review:
         task = (
             f"你是審稿與事實查核。檢查這份 {kind} 草稿是否符合品牌與平台原則、事實是否都出自簡報資料、"
-            "有沒有替學校下結論或誇大。只有真的需要修改才列 issues，文字風格偏好放 notes。\n"
+            "有沒有替學校下結論或誇大。只有真的需要修改才列 issues，文字風格偏好放 notes。"
+            "口吻像不像真人寫的（AI 口頭禪、過度工整的排比、像新聞稿的官腔）也要看；程式已經擋掉明確的口頭禪和破折號，"
+            "你看到其他明顯像 AI 的句子，列在 notes 讓作者參考。\n"
             f"企劃題目：{item.topic}\n官方來源：{item.source_url or '無'}\n"
             f"程式檢查已發現的問題：{json.dumps(rule_issues, ensure_ascii=False)}\n\n草稿：\n{_dump(content)}"
         )
@@ -364,8 +370,17 @@ class ModelWriter:
         return self._ask("chief", ChiefReply, task, "", lambda: _offline_chief(message, status))
 
     def insights(self, metrics: list[dict], briefing: Briefing) -> Insights:
-        rows = "\n".join(f"- {m['channel']}／{m['format']}｜{m['title']}｜{json.dumps(m['metrics'], ensure_ascii=False)}" for m in metrics)
-        task = "你是數據分析師。看這週每則貼文的成效，給企劃 2～4 點具體建議（哪種題目、角度、格式表現好，下週怎麼調）。\n" + rows
+        rows = "\n".join(
+            f"- {m['channel']}／{m['format']}｜{m['title']}｜{json.dumps(m['metrics'], ensure_ascii=False)}"
+            + (f"｜比同類貼文平常 {m['multiple']} 倍" if m.get("multiple") is not None else "")
+            for m in metrics
+        )
+        task = (
+            "你是數據分析師。看這週每則貼文的成效，給企劃 2～4 點具體建議（哪種題目、角度、格式表現好，下週怎麼調）。\n"
+            "「比同類貼文平常 N 倍」是這則貼文和帳號平常同類貼文（同平台、同格式）的中位數相比的倍數，1 倍是普通表現。"
+            "請以這個倍數判斷哪種題目、角度、格式真的有效，不要只看絕對數字（數字大不一定是做對了，可能只是這個平台本來就比較高）；"
+            "沒有標倍數的，是還沒有足夠的同類貼文可以比較，不要下結論。\n" + rows
+        )
         return self._ask("analyst", Insights, task, briefing_text(briefing), lambda: Insights(notes=[]))
 
 

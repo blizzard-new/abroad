@@ -270,6 +270,22 @@ App 沒有用 Google 的推播，所以是在背景每 30 秒問辦公室一次�
 
 **自己建**：需要 JDK 17 和 Android SDK，`cd android && ./gradlew testDebugUnitTest assembleRelease`，APK 在 `app/build/outputs/apk/release/`。程式在 `android/`（網頁視窗＋背景監看＋設定頁），手機看到的頁面是辦公室自己提供的 `/m`（`office/static/m.*`），所以改版面不用重做 App。
 
+## 語氣：像真人、像你們自己
+
+文字有三道關：
+
+1. **語氣檔 `var/voice.md`**：你親自寫的口吻設定，所有同事（阿脆、Mori、阿剪、Kiki、Leo⋯）每次寫東西前都會讀。`uv run office voice` 建立檔案並告訴你路徑，用記事本打開，在說明框外面寫下口吻（像學長姐？愛自嘲？）、自稱、常用的詞、不要說的話，最有效的是貼 2～3 則你覺得「這就是我們的聲音」的舊貼文當範例。最多讀 3000 字，存檔下一次寫稿就生效，不用重啟。事實、禁用說法（保證錄取等）和平台規則不會因為這份檔案放寬。`uv run office check` 會告訴你有沒有讀到、有沒有超過字數、編碼對不對（要存成 UTF-8）。
+2. **事先告訴寫手**：內建的語氣原則多了「像真人寫的」：不用 AI 口頭禪（讓我們、總而言之、值得注意的是⋯）、不用「不僅…更…」「在…的時代」這類套句、「不是…而是…」整篇最多一次、破折號最多一個（輪播與影片腳本合計兩個）。
+3. **Kiki 審稿時擋下來**：同一份清單寫成程式檢查（`office/humanize.py`），Threads、輪播、影片腳本都會查。中了就和字數超過一樣退回作者重寫一次；還是不行就連同原因放進審核匣讓你決定。這是規則比對不是 AI 偵測器：只抓幾乎不會出現在台灣大學生筆下的說法，不保證能通過任何偵測工具。想增減清單，改 `office/humanize.py` 最上面的 `STOCK_PHRASES` 和 `FRAMES`。
+
+## 成效復盤：用「比平常好多少」看
+
+絕對數字會騙人：一支 Reels 有 400 個互動可能是失敗，一則 Threads 有 40 個可能是爆款。Nana 現在把每則貼文和「同平台、同格式、最近 30 天的其他貼文」的中位數比，算出它是平常的幾倍（1 倍是普通，1.5 倍以上算有效，0.6 倍以下算沒效）。同類貼文少於 3 則時還沒有「平常」可以比，只顯示原始分數，也不下結論。
+
+- `uv run office audit` 列出最近 7 天（`--days 14` 可以改）的貼文，由高到低。剛發的貼文數字還在長，隔幾天再看比較準。
+- 問 Leo「上週什麼貼文最有效」會照這份復盤回答（最好的三則和最弱的兩則）。
+- 每晚的數據解讀（給 Ivy 的建議）和「值得重製成 Instagram 的 Threads 爆款」也改用這個倍數：沒有明顯勝過平常的貼文不會被當成爆款重製。
+
 ## Claude Code、Codex、Antigravity 怎麼分工
 
 每張桌子的 AI 在 `.env` 的 `OFFICE_BRAINS` 指定，格式是「角色=工具」。`.env.example` 預設的分工：
@@ -460,8 +476,8 @@ Dora 巡查發現落差 → 驗證員（例如小公主）重新打開官網驗�
 | `office/scheduler.py` | 辦公室時鐘：開工、發文、看留言、抓數據、延長權杖 |
 | `office/brains.py` | Claude Code、Codex、Antigravity、Claude API 的呼叫方式與備援順序 |
 | `office/llm.py` | 每個角色的提示詞，以及離線範本寫手 |
-| `office/brand.py` | 品牌語氣、內容支柱、平台數字與今日公告 |
-| `office/rules.py` | 審稿規則 |
+| `office/brand.py` | 品牌語氣（含你的 `var/voice.md`）、內容支柱、平台數字與今日公告 |
+| `office/rules.py`、`office/humanize.py` | 審稿規則；`humanize.py` 是「像不像 AI 寫的」那份清單（口頭禪、套句、破折號），同一份清單也寫進給寫手的語氣原則 |
 | `office/visual.py` | Mori 的設計（整組規格＋逐頁版面）的檢查：只能動排版、不能改字；範圍外的數字與不成立的版面自動改回安全版面 |
 | `office/render/` | 輪播／限動／影片的 HTML 版型、吉祥物的臉（`mascot-face.css`）、算圖與配樂 |
 | `office/platforms/` | Threads、Instagram、YouTube、媒體網址、GitHub（只開 draft PR 的用戶端，`github.py` 裡寫死了能動的檔案與分支） |

@@ -2,6 +2,7 @@
 
 import json
 import os
+import threading
 from datetime import date, time
 
 import pytest
@@ -244,6 +245,9 @@ def test_redo_image_gives_new_pictures_and_a_new_cover_illustration_and_keeps_th
     assert after["status"] == "pending_approval" and after["payload"]["slides"] == before["payload"]["slides"]  # back in the inbox; not one word changed
     assert any("封面標題更大" in request for request in design_requests()[-1:])  # the boss's wish reached the designer
     assert (office.settings.media_dir / after["media"]["images"][0]).is_file()
+    for thread in threading.enumerate():  # the chief's thread also redraws the story; end the test only when it is done
+        if thread.name.startswith(f"chief-#{before['id']} "):
+            thread.join(60)
     story = next(d for d in office.store.drafts() if d["format"] == "story")
     assert office.store.draft(story["id"])["status"] == "pending_approval"
 
