@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#10294a" />
+<meta name="color-scheme" content="light dark" />
+<title>UniWay 辦公室</title>
+<link rel="icon" href="/brand/uniway-logo.webp" />
+<link rel="stylesheet" href="/static/m.css" />
+</head>
+<body>
+<header class="bar">
+  <img class="avatar" src="/brand/suitcase.webp" alt="" width="40" height="40" />
+  <div class="who"><b>總管 Leo</b><small id="status">連線中…</small></div>
+  <button id="menu-btn" class="icon" type="button" aria-label="選單" aria-expanded="false" aria-controls="menu">⋮</button>
+</header>
+<div id="menu" class="menu" hidden>
+  <button type="button" data-do="run">開工：現在就做今天的內容</button>
+  <button type="button" data-do="publish">立刻發佈已到時間的貼文</button>
+  <a href="/">看辦公室全景</a>
+  <button type="button" data-do="reload">重新整理</button>
+  <button type="button" data-do="settings" id="menu-settings" hidden>App 設定（辦公室位址、通知）</button>
+</div>
+
+<main id="main">
+  <section id="view-chat" class="view" aria-label="跟 Leo 聊天">
+    <ol id="chat" class="chat" aria-live="polite"></ol>
+    <p id="typing" class="typing" hidden>Leo 正在想…</p>
+  </section>
+  <section id="view-inbox" class="view" hidden aria-label="審核匣"></section>
+  <section id="view-sched" class="view" hidden aria-label="已排程"></section>
+  <section id="view-log" class="view" hidden aria-label="動態"></section>
+</main>
+
+<form id="composer" class="composer">
+  <div id="chips" class="chips">
+    <button type="button">今天進度如何？</button>
+    <button type="button">開工</button>
+    <button type="button">有什麼要我審？</button>
+  </div>
+  <div class="row">
+    <label class="sr" for="chat-input">跟 Leo 說</label>
+    <textarea id="chat-input" rows="1" maxlength="2000" placeholder="跟 Leo 說，例如：#3 開頭再口語一點" enterkeyhint="send"></textarea>
+    <button id="send" type="submit" aria-label="送出">➤</button>
+  </div>
+</form>
+
+<nav class="tabs" aria-label="分頁">
+  <button type="button" data-tab="chat" aria-selected="true">聊天<i id="unread" hidden></i></button>
+  <button type="button" data-tab="inbox" aria-selected="false">審核匣<b id="badge" hidden>0</b></button>
+  <button type="button" data-tab="sched" aria-selected="false">已排程</button>
+  <button type="button" data-tab="log" aria-selected="false">動態</button>
+</nav>
+
+<div id="toast" class="toast" role="status" hidden></div>
+<div id="zoom" class="zoom" hidden><img alt="" /></div>
+<script src="/static/m.js" defer></script>
+</body>
+</html>

@@ -128,6 +128,21 @@ def phone_rows(settings: Settings, store: Store, http: httpx.Client | None = Non
     return [Row(True, "Telegram", f"@{name} → {who} 的手機（跟 Leo 聊天、收通知、按核准）")]
 
 
+MIN_TOKEN = 20
+
+
+def app_rows(settings: Settings) -> list[Row]:
+    """The Android app signs in with OFFICE_ACCESS_TOKEN, so that token is the only lock on a door that can approve posts."""
+    token = settings.access_token
+    if not token:
+        return [Row(None, "手機 App", "沒有設 OFFICE_ACCESS_TOKEN：辦公室只開給這台電腦。要用手機 App，先產生通行碼：uv run office token（見 README「手機 App」）")]
+    if not token.isascii() or any(c.isspace() for c in token):
+        return [Row(False, "手機 App", "OFFICE_ACCESS_TOKEN 只能用英文字母、數字和符號，不能有中文或空白：uv run office token 可以產生一串")]
+    if len(token) < MIN_TOKEN:
+        return [Row(None, "手機 App", f"通行碼只有 {len(token)} 個字，太好猜了。連到手機等於網路上有一扇能按核准的門，建議 {MIN_TOKEN} 字以上的隨機字串：uv run office token")]
+    return [Row(True, "手機 App", f"通行碼已設定（{len(token)} 字）：App 輸入辦公室網址和這串通行碼就能連")]
+
+
 def run(settings: Settings, *, ping: bool = False, http: httpx.Client | None = None) -> list[tuple[str, list[Row]]]:
     store = Store(settings.db_path)
     return [
@@ -137,6 +152,7 @@ def run(settings: Settings, *, ping: bool = False, http: httpx.Client | None = N
         ("社群帳號（只讀取帳號資料，不會發文）", accounts.check(settings, store, http)),
         ("GitHub（核准的資料更新提案會開成 draft PR；只讀取，不會建立任何東西）", [accounts.github_row(settings, store, http)]),
         ("手機", phone_rows(settings, store, http)),
+        ("手機 App（Android）", app_rows(settings)),
     ]
 
 

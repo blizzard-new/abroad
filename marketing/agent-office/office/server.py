@@ -15,8 +15,9 @@ from fastapi import Body, FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
-from . import scheduler
+from . import mobile, scheduler
 from .config import Settings
+from .mobile import FailureLimit
 from .office import Office
 from .pipeline import run_day
 
@@ -57,22 +58,43 @@ def create_app(settings: Settings, *, clock: bool = True, office: Office | None 
             response.headers["Cache-Control"] = "no-cache"
         return response
 
+    limit = FailureLimit()
+    app.state.failure_limit = limit
+
     @app.middleware("http")
     async def require_token(request: Request, call_next):
         # Media stays public (Instagram and Threads fetch it); everything else needs the token when one is set.
+        # The token comes in the address (?token=…), a cookie, or the phone app's "Authorization: Bearer …" header.
         if not access_token or request.url.path.startswith("/media/"):
             return await call_next(request)
-        given = request.query_params.get("token") or request.cookies.get("office_token") or ""
-        if not secrets.compare_digest(given, access_token):
+        who = request.client.host if request.client else ""
+        wait = limit.wait(who)
+        if wait:
+            return JSONResponse({"detail": f"錯誤太多次，請 {wait // 60 + 1} 分鐘後再試"}, status_code=429, headers={"Retry-After": str(wait)})
+        bearer = request.headers.get("authorization", "")
+        given = (bearer[7:].strip() if bearer[:7].lower() == "bearer " else "") or request.query_params.get("token") or request.cookies.get("office_token") or ""
+        if not secrets.compare_digest(given.encode(), access_token.encode()):
+            if given:
+                limit.failed(who)
             return JSONResponse({"detail": "需要辦公室通行碼（網址加上 ?token=…）"}, status_code=401)
+        limit.succeeded(who)
         response = await call_next(request)
-        if request.query_params.get("token"):
+        if request.cookies.get("office_token") != access_token:
             response.set_cookie("office_token", access_token, httponly=True, samesite="strict", max_age=30 * 86400)
         return response
 
     @app.get("/")
     def home():
         return FileResponse(STATIC / "office.html", headers={"Cache-Control": "no-cache"})
+
+    @app.get("/m")
+    def phone():
+        """The phone's version: Leo's chat and the inbox, in the Android app's window or any phone browser."""
+        return FileResponse(STATIC / "m.html", headers={"Cache-Control": "no-cache"})
+
+    @app.get("/api/mobile/feed")
+    def mobile_feed(chat_after: int | None = None):
+        return mobile.feed(office, chat_after)
 
     @app.get("/media/{ref:path}")
     def media(ref: str):

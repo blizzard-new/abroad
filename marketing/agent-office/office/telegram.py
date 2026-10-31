@@ -22,13 +22,11 @@ from typing import Any, Callable
 
 import httpx
 
+from .notices import CHANNEL, FORMAT, cut as _cut, preview_text as _preview
 from .store import now_utc
 
 API = "https://api.telegram.org"
 PAIR_TTL = timedelta(minutes=15)
-CHANNEL = {"threads": "Threads", "instagram": "IG", "youtube": "YouTube", "github": "GitHub"}
-FORMAT = {"text": "貼文", "reply": "留言回覆", "carousel": "輪播", "reel": "Reels", "story": "限動", "short": "Shorts", "long": "長影片",
-          "data_update": "資料更新提案"}
 CAPTION_LIMIT, TEXT_LIMIT = 1024, 4096
 WELCOME = (
     "已連上 UniWay 行銷辦公室 ✅\n\n"
@@ -293,32 +291,3 @@ class TelegramBridge:
 
 def _decide(draft_id: int, approve_label: str) -> list[dict]:
     return [{"text": approve_label, "callback_data": f"approve:{draft_id}"}, {"text": "↩️ 退回", "callback_data": f"reject:{draft_id}"}]
-
-
-def _preview(draft: dict) -> str:
-    payload, fmt = draft.get("payload") or {}, draft["format"]
-    if fmt == "data_update":
-        if payload.get("verified_by"):
-            check = f"\n\n🔎 {payload['verified_by']} 驗證：需要更新平台\n{payload.get('verdict_reason', '')}"
-        elif payload.get("verification_note"):
-            check = f"\n\n⚠️ 沒有完成二次驗證：{payload['verification_note']}"
-        else:
-            check = "\n\n（沒有指定驗證員，只有巡查同事的說法）"
-        edits = payload.get("edits") or []
-        if edits:
-            changes = "\n\n建議修改：\n" + "\n".join(f"{n}. {e.get('target', '')}\n   目前：{e.get('current', '')}\n   改成：{e.get('proposed', '')}" for n, e in enumerate(edits[:4], 1))
-        else:
-            changes = f"\n\n建議更新：{payload['suggested_update']}" if payload.get("suggested_update") else ""
-        return f"{payload.get('detail', '')}{check}{changes}\n\n官方來源：{payload.get('source_url') or '（沒有附）'}\n{payload.get('author', '')} 巡查發現"
-    if fmt == "reply":
-        return f"@{payload.get('username') or '訪客'}：{payload.get('comment_text', '')}\n\n→ {payload.get('text', '')}"
-    if draft["channel"] == "threads":
-        first = f"\n\n第一則留言：{payload['first_reply']}" if payload.get("first_reply") else ""
-        return f"{payload.get('text', '')}{first}"
-    if draft["channel"] == "youtube":
-        return payload.get("description", "")[:400]
-    return payload.get("caption_full") or payload.get("caption") or ""
-
-
-def _cut(text: str, limit: int) -> str:
-    return text if len(text) <= limit else text[: limit - 1] + "…"

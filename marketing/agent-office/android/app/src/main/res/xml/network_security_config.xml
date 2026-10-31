@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The office usually runs on the boss's own computer, reached over the home network or Tailscale, where http:// is
+     normal. The settings screen warns when the address is plain http to something that is not a private network. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

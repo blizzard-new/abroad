@@ -141,7 +141,8 @@ def test_a_school_round_can_start_right_away(office, monkeypatch):
     assert "還沒分到學校" in office.staff["chief"].handle("請 Dora 現在先巡查一次")["text"]
     office.split_schools(["Dora"])
     answer = office.staff["chief"].handle("請 Dora 現在先巡查一次")
-    assert "現在開始巡查 33 所" in answer["text"]
+    # Every school on the platform goes to her; the platform keeps growing, so the number is read, not written down here.
+    assert f"現在開始巡查 {len(office.colleague('Dora').record['schools'])} 所" in answer["text"]
     assert wait_for(lambda: any(m["text"].startswith("Dora今天巡查了") for m in office.store.chat()), seconds=20)
 
 
