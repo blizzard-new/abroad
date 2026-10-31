@@ -918,7 +918,8 @@ def create_maintenance_router(
     nutc: "國立臺中科技大學 (NUTC)",
     nfu: "國立虎尾科技大學 (NFU)",
     utaipei: "臺北市立大學 (UTaipei)",
-    ntcu: "國立臺中教育大學 (NTCU)"
+    ntcu: "國立臺中教育大學 (NTCU)",
+    tnua: "國立臺北藝術大學 (TNUA)"
   };
 
   const FIELD_LABELS = {

@@ -47,6 +47,7 @@ from .nutc_eligibility import is_nutc, nutc_academic_check, nutc_degree_check, n
 from .nfu_eligibility import is_nfu, nfu_academic_check, nfu_degree_check, nfu_language_check
 from .utaipei_eligibility import is_utaipei, utaipei_academic_check, utaipei_degree_check, utaipei_language_check
 from .ntcu_eligibility import is_ntcu, ntcu_academic_check, ntcu_degree_check, ntcu_language_check
+from .tnua_eligibility import is_tnua, tnua_academic_check, tnua_degree_check, tnua_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -745,6 +746,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_tnua(request.home_school):
+        deg_status, deg_detail = tnua_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -1036,6 +1042,12 @@ def _eligibility_checks(
             "academic_score", status, "中教大選送學生出國研修要點（學業成績70分／GPA 2.5以上、操行80分以上、書審40%＋面試60%）", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_tnua(request.home_school):
+        status, detail = tnua_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "北藝大選送學生出國進修與交流甄選辦法（系所初審→學院複審→國際交流事務委員會核定、作品集與學業表現）", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1199,6 +1211,9 @@ def _eligibility_checks(
     if is_ntcu(request.home_school):
         home_status, home_detail = ntcu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "中教大出國研修語檢標準（英語CEFR B1：TOEIC 550／TOEFL iBT 42／TOEFL ITP 433／IELTS 4.0；日檢JLPT N1–N3；韓檢TOPIK 2–4級）與大陸港澳免附語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_tnua(request.home_school):
+        home_status, home_detail = tnua_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "北藝大出國交換語言能力標準（校外公信力語言檢定TOEFL iBT／IELTS／TOEIC／JLPT／TOPIK／DELF／TestDaF或外語修課80分以上證明）與大陸地區免附語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

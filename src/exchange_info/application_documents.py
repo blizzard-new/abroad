@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCYU, NDHU, NFU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCYU, NDHU, NFU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -108,6 +108,7 @@ NUTC_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 NFU_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 UTAIPEI_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 NTCU_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
+TNUA_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2724,6 +2725,51 @@ def _ntcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _tnua_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺北藝術大學（國際事務處，學生活動中心 4 樓）赴外姊妹校交換學生甄選（每位學生每梯次至多可填報 2 間交換學校志願）應繳申請表件：1. 國立臺北藝術大學交換學生申請表（中、英文各乙份，貼妥兩吋照片並經系所核章）及學院彙整之《學院推薦交換學生資料表》、2. 歷年中文及英文成績單正本（含班級排名百分比）、3. 有效語言能力證明（校外公信力語言檢定或修習外語課程 2 學期以上且成績達 80 分以上證明；大陸地區免附）、4. 中文及外文出國研習計畫書、5. 本校教師英文推薦函 2 封以上、6. 個人藝術創作作品集（Portfolio）或展演影音紀錄。",
+        "study-plan": "撰寫國立臺北藝術大學赴外姊妹校交換學生甄選暨教育部學海飛颺／惜珠計畫必繳之中文及外文《出國研習計畫書（Study Plan）》。請具體說明申請動機、目標藝術姊妹校修課與創作工坊規劃（碩、博士生交換期間最低應修 6 學分並繳納最低 6 學分學分費及學雜費基數）、作品集或展演研究目標，以及返國後學分抵免與藝術職涯發展規劃。",
+        "course-preapproval": "辦理赴國外姊妹校交換或 Shared Campus 校園共享專案／UMAP 亞太大學交流會之選課通報與學分抵免規劃：交換期間須於北藝大完成註冊並繳交全額學雜費（延修生亦同），於北藝大開學第 5 週前登入藝務系統（iTNUA）填寫《選課通報表》送交系所助教，並於修課結束後 2 個月內提出《赴外交換生學分抵免申請書》。",
+        "predeparture-notice": "經系所初審、學院複審及國際交流事務委員會複審錄取後，須於出國前至少 2 個月（或收到姊妹校入學許可後 1 個月內）偕同連帶保證人完成《國立臺北藝術大學選送學生赴外交換行政契約書》簽署，辦理簽證、役男出境緩徵並投保足額海外醫療及意外險；抵達姊妹校 2 週內須回傳《赴外交換生海外聯絡資訊通報表》。",
+        "return-report": "依《國立臺北藝術大學選送學生出國進修與交流甄選辦法》及《選送學生赴外交換行政契約書》，交換生返國後 2 週（14 日）內須向國際事務處報到並繳交 1,000 字以內《出國交換報告》（含照片 4 張以上）；教育部學海受獎生須於姊妹校學期結束後 1 週內上傳報告至教育部平台並檢附機票單據（統編：99335422）辦理核銷。",
+        "credit-transfer": "國外交換修課結束後 2 個月內，須填具《國立臺北藝術大學赴外交換生學分抵免申請書》，檢附姊妹校核發之正式成績單正本及修習課程大綱，經系（所、學位學程）初審及教務處複審辦理學分抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺北藝術大學").replace("長庚", "北藝大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "北藝大規定：學士班二年級以上（不含在職專班）及碩、博士班於本校就讀一學期以上之在學學生得申請；採「系所初審 → 學院複審 → 國際交流事務委員會複審核定」三級審查，每梯次至多填報 2 校志願。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT 網路測驗（歐美及亞洲英語授課藝術院校常要求 60–90 分以上）", "IELTS 雅思國際英語測驗（英國 UAL、瑞士 ZHdK、荷蘭 HKU、香港演藝學院等常要求 5.5–6.5 以上）", "TOEIC 多益測驗／全民英檢 GEPT／修習外語課程 2 學期達 80 分以上證明（校內基本門檻採認）", "JLPT 日語能力試驗（東京藝術大學、京都市立藝術大學等建議 N2–N3 以上）", "TOPIK 韓國語文能力測驗（韓國藝術綜合學校 K-Arts、首爾藝術大學等要求 TOPIK 2–3 級以上）", "歐洲語檢 DELF / TCF 法語 B1–B2、Goethe / TestDaF 德語 B1–B2、DELE 西語 B1–B2", "大陸地區 10 所姊妹校交換（免附外語能力證明，以歷年成績、研習計畫書與作品集審查）"]
+            field["help_text"] = "依國立臺北藝術大學《116學年度姊妹校交換學生甄選簡章》及《四大洲姊妹校申請資訊表》填報有效語言能力證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.tnua.edu.tw/outgoing-application/",
+        source_checked_at=TNUA_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立臺北藝術大學交換學生申請表（中、英文）暨選送學生赴外交換行政契約書" if template.id == "exchange-application-data" else ("中文及外文出國研習計畫書（Study Plan）" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://drive.google.com/uc?export=download&id=1TLN66IZt01t0d-mkJ7eDsjCJqk_IPwlf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人（連帶保證人）親筆簽名蓋章", "系（所、學位學程）主管簽章", "學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所、學位學程）及學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "出國前至少 2 個月簽署選送學生赴外交換行政契約書，抵達姊妹校 2 週內回傳海外聯絡資訊通報表", "return-report": "返國後 2 週內向國際事務處報到並繳交 1,000 字以內出國交換報告（含照片 4 張以上）", "credit-transfer": "修課結束後 2 個月內提出赴外交換生學分抵免申請書及正式成績單辦理抵免"}.get(template.id, "先向所屬系所提出申請，經系所初審與學院複審後於 2027/02/23 前由學院彙整送交學生活動中心 4 樓國際事務處"),
+        version="116-1準備工具-2026-11-01.1",
+        destinations=["國立臺北藝術大學國際事務處（11201 臺北市北投區學園路 1 號 學生活動中心 4 樓）"],
+        conditional_note="此為個人準備工具；國立臺北藝術大學 116 學年度姊妹校交換學生甄選於 2026/09/29 公告，各學院於 2027/02/23 前彙整推薦名單送交國際事務處（每位學生每梯次至多填報 2 間志願學校）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2818,6 +2864,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _utaipei_template(template)) is not None]
     if university.id == NTCU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntcu_template(template)) is not None]
+    if university.id == TNUA.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _tnua_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

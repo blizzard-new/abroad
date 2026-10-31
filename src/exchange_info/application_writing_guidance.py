@@ -1150,6 +1150,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="中教大規定返國後規定期限內須繳交出國研修心得報告（供刊登於國研處交換生心得報告專區）並配合成果分享會，始得辦理獎助金核銷；這裡只合計下方各欄。",
     ),
+    ("tnua", "study-plan"): _rules(
+        (
+            "國立臺北藝術大學國際事務處赴外姊妹校交換學生甄選暨教育部學海飛颺／惜珠計畫必繳中文及外文《出國研習計畫書（Study Plan）》，建議合計約 1,000–2,000 字，供所屬系所初審、學院複審及國際交流事務委員會複審評量。",
+            "內容應具體說明申請赴姊妹校交換動機、擬修習之音樂／美術／戲劇／舞蹈／電影新媒體／文化資源／人文專業課程與創作工坊規劃（碩、博士生交換期間最低應修 6 學分）、個人作品集或展演計畫銜接，以及返國後學分抵免與藝術職涯發展規劃。",
+        ),
+        evidence="國立臺北藝術大學選送學生出國進修與交流甄選辦法、116學年度姊妹校交換學生甄選簡章及中英文交換學生申請表",
+        minimum=800,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="北藝大姊妹校交換學生甄選須繳交中、外文出國研習計畫書（碩博士生交換期間最低應修 6 學分），建議約 1,000–2,000 字；這裡只合計下方各欄。",
+    ),
+    ("tnua", "return-report"): _rules(
+        (
+            "依《國立臺北藝術大學選送學生出國進修與交流甄選辦法》及《選送學生赴外交換行政契約書》規定，交換生於國外姊妹校研修期滿返國後 2 週（14 日）內，須向國際事務處報到並繳交《出國交換學生研修心得報告》（簡章規定 1,000 字以內精華報告或完整研修報告，並附研修照片 4 張以上，供刊登於國際處「赴外交換生經驗分享」專區）。",
+            "獲教育部《學海飛颺》或《學海惜珠》獎學金之受獎生，須於姊妹校學期結束後 1 週內將成果報告書上傳至教育部學海計畫平台，並檢附來回電子機票、登機證存根、旅行社代收轉付收據（買受人：國立臺北藝術大學、統一編號：99335422）及領據辦理核銷。",
+        ),
+        evidence="國立臺北藝術大學選送學生赴外交換行政契約書、交換生錄取後執行手冊及學海飛颺暨學海惜珠補助甄選作業流程",
+        minimum=600,
+        maximum=2000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="北藝大規定返國後 2 週內須向國際事務處報到並繳交 1,000 字以內出國交換報告（含照片 4 張以上）；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1198,6 +1220,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "nfu": ("https://oia.nfu.edu.tw/zh-tw/announcement/%E5%87%BA%E5%9C%8B%E4%BA%A4%E6%8F%9B-%E5%9C%8B%E7%AB%8B%E8%99%8E%E5%B0%BE%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E7%AC%AC2%E5%AD%B8%E6%9C%9F%E9%81%B8%E9%80%81%E5%84%AA%E7%A7%80%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B%E7%A0%94%E4%BF%AE-%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F-%E5%AD%B8%E6%B5%B7%E9%A3%9B%E9%A2%BA-%E7%94%84%E9%81%B8%E7%B0%A1%E7%AB%A0-30322703", "2026-10-31"),
     "utaipei": ("https://intl.utaipei.edu.tw/p/412-1080-9549.php?Lang=zh-tw", "2026-10-31"),
     "ntcu": ("https://oia.ntcu.edu.tw/data/3", "2026-10-31"),
+    "tnua": ("https://oia.tnua.edu.tw/outgoing-application/", "2026-11-01"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

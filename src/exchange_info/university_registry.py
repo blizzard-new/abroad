@@ -1625,8 +1625,49 @@ NTCU = UniversityProfile(
     ),
 )
 
+TNUA = UniversityProfile(
+    id="tnua",
+    school_name="國立臺北藝術大學",
+    short_name="北藝大",
+    english_name="Taipei National University of the Arts",
+    aliases=(
+        "tnua",
+        "國立臺北藝術大學",
+        "國立台北藝術大學",
+        "臺北藝術大學",
+        "台北藝術大學",
+        "北藝大",
+        "TNUA",
+        "Taipei National University of the Arts",
+    ),
+    hero_image="/static/assets/tnua-campus.svg",
+    official_url="https://oia.tnua.edu.tw/",
+    coverage_note="完整支援：已整合國立臺北藝術大學國際事務處（OIA）《四大洲姊妹校申請資訊表（90校）》、《116學年度姊妹校交換學生甄選簡章》、《選送學生出國進修與交流甄選辦法》、《選送學生赴外交換行政契約書》、《Shared Campus 校園共享專案》、《UMAP 亞太大學交流會》、《學海飛颺暨學海惜珠補助甄選作業流程》及 106–114 學年度共 130 篇出國交換研修心得報告。",
+    support_level="full",
+    partner_count_hint=90,
+    academic_score_minimum=None,
+    student_card_signals=(
+        "國立臺北藝術大學",
+        "國立台北藝術大學",
+        "北藝大",
+        "TAIPEINATIONALUNIVERSITYOFTHEARTS",
+        "TAIPEI NATIONAL UNIVERSITY OF THE ARTS",
+        "TNUA",
+    ),
+    # https://w3.tnua.edu.tw/academics/ — checked 2026-11-01.
+    colleges=(
+        "音樂學院",
+        "美術學院",
+        "戲劇學院",
+        "舞蹈學院",
+        "電影與新媒體學院",
+        "文化資源學院",
+        "人文學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA)
 DEFAULT_UNIVERSITY = CGU
 
 
