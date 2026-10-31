@@ -18,7 +18,7 @@ from xml.etree.ElementTree import Element, SubElement, tostring
 from zoneinfo import ZoneInfo
 
 from fastapi import APIRouter, HTTPException, Query
-from fastapi.responses import HTMLResponse, PlainTextResponse, Response
+from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse, Response
 
 from .cross_school_partners import (
     build_cross_school_partner_directory,
@@ -357,7 +357,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
 
     @router.api_route("/partners", methods=["GET", "HEAD"])
     def partners_directory():
-        directory_data = build_cross_school_partner_directory(catalogue_loader=cached_pair_loader, limit=120)
+        directory_data = build_cross_school_partner_directory(catalogue_loader=cached_pair_loader, limit=120, require_complete=True)
         body = render_cross_school_partner_directory_body(directory_data)
         return page(
             settings,
@@ -375,6 +375,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             catalogue_loader=cached_pair_loader,
             country=c_slug,
             limit=200,
+            require_complete=True,
         )
         if directory_data.total_partner_count == 0:
             raise HTTPException(404, "找不到這個國家的跨校合作大學")
@@ -401,9 +402,14 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
             institution=institution,
             selected_home=home,
             catalogue_loader=cached_pair_loader,
+            require_complete=True,
         )
         if data is None:
             raise HTTPException(404, "找不到這所外國合作大學")
+        if re.fullmatch(r"inst-[0-9a-f]{12}", institution) and f"/partners/{country}/{institution}" != data.canonical_path:
+            # Keep the selected home school when a proven legacy ID moves.
+            query = "?" + urlencode({"home": home}) if home else ""
+            return RedirectResponse(data.canonical_path + query, status_code=301)
         title = (
             f"{data.display_title} 交換門檻、名額與跨校生活費指南｜"
             f"全台 {data.contracted_home_count} 校整合｜UniWay"
@@ -566,7 +572,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
 
     @router.api_route("/sitemap.xml", methods=["GET", "HEAD"])
     def sitemap_index():
-        return xml_response("sitemapindex", [settings.origin + "/sitemaps/pages.xml"] +
+        return xml_response("sitemapindex", [settings.origin + "/sitemaps/pages.xml", settings.origin + "/sitemaps/partners.xml"] +
                             [f"{settings.origin}/sitemaps/{u.id}.xml" for u in universities.values()])
 
     @router.api_route("/sitemaps/pages.xml", methods=["GET", "HEAD"])
@@ -577,7 +583,7 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
 
     @router.api_route("/sitemaps/partners.xml", methods=["GET", "HEAD"])
     def partners_sitemap():
-        directory_data = build_cross_school_partner_directory(catalogue_loader=cached_pair_loader, limit=5000)
+        directory_data = build_cross_school_partner_directory(catalogue_loader=cached_pair_loader, limit=5000, require_complete=True)
         return xml_response("urlset", [settings.origin + item.canonical_path for item in directory_data.items])
 
     @router.api_route("/sitemaps/{home_id}.xml", methods=["GET", "HEAD"])

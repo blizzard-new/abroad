@@ -4322,7 +4322,9 @@ class PartnerPreferenceHeatItem(BaseModel):
     total_interested_count: int | None = None
     first_choice_count: int | None = None
     second_or_third_choice_count: int | None = None
-    quota_hint: str = Field(min_length=2, max_length=300)
+    # This is populated from CrossSchoolHomeAgreement.quota_summary. Preserve
+    # its full range, including a single-digit quota and long source notes.
+    quota_hint: str = Field(min_length=1, max_length=400)
     competition_status_label: str = Field(min_length=6, max_length=260)
     anonymous_applicant_tags: list[str] = Field(default_factory=list, max_length=10)
     viral_share_text: str = Field(min_length=10, max_length=800)

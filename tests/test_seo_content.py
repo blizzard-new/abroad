@@ -71,3 +71,123 @@ def test_long_text_is_split_without_changing_or_executing_source_content():
     assert not soup.select("script")
     assert soup.find("p", string="第一項。") and soup.find("p", string="第二項；")
     assert "<script>alert(1)</script>" in soup.get_text()
+
+
+def test_cross_school_pages_render_short_and_long_quotas_for_all_homes(monkeypatch):
+    from exchange_info import cross_school_partners, seo
+    from exchange_info.university_registry import resolve_university
+
+    homes = (resolve_university("cgu"), resolve_university("ntu"))
+    quotas = {"cgu": "2", "ntu": "名額條件" * 97 + "名額"}
+    monkeypatch.setattr(cross_school_partners, "SUPPORTED_UNIVERSITIES", homes)
+    monkeypatch.setattr(seo, "SUPPORTED_UNIVERSITIES", homes)
+    monkeypatch.setattr(cross_school_partners, "_ENTITY_INDEX_CACHE", {})
+
+    def catalogue(home):
+        return ([partner(school_name="範例大學 Example University", quota=quotas[home.id])], None)
+
+    app = FastAPI()
+    app.include_router(create_seo_router(SeoSettings("https://example.com", True), catalogue))
+    with TestClient(app) as client:
+        for home in homes:
+            response = client.get(f"/partners/japan/example-university?home={home.id}")
+            assert response.status_code == 200
+            soup = BeautifulSoup(response.text, "html.parser")
+            assert soup.select_one("#cs-quota-summary").get_text(strip=True) == quotas[home.id]
+            assert soup.select_one('link[rel="canonical"]')["href"] == "https://example.com/partners/japan/example-university"
+            assert soup.select_one("main h1")
+
+
+def test_legacy_cross_school_id_redirects_only_to_unique_equivalent(monkeypatch):
+    from exchange_info import cross_school_partners, seo
+    from exchange_info.university_registry import resolve_university
+
+    homes = (resolve_university("cgu"), resolve_university("ntu"))
+    old = partner(school_name="測試大學", quota="2")
+    current = partner(school_name="測試大學 Example University", quota="3")
+    monkeypatch.setattr(cross_school_partners, "SUPPORTED_UNIVERSITIES", homes)
+    monkeypatch.setattr(seo, "SUPPORTED_UNIVERSITIES", homes)
+    monkeypatch.setattr(cross_school_partners, "_ENTITY_INDEX_CACHE", {})
+
+    def catalogue(home):
+        return ([old if home.id == "cgu" else current], None)
+
+    app = FastAPI()
+    app.include_router(create_seo_router(SeoSettings("https://example.com", True), catalogue))
+    old_path = f"/partners/japan/inst-{partner_id(old)[:12]}"
+    with TestClient(app) as client:
+        response = client.get(old_path, params={"home": "cgu"}, follow_redirects=False)
+        assert response.status_code == 301
+        assert response.headers["location"] == "/partners/japan/example-university?home=cgu"
+        destination = client.get(response.headers["location"])
+        soup = BeautifulSoup(destination.text, "html.parser")
+        assert destination.status_code == 200
+        assert soup.select_one("#cs-quota-summary").get_text(strip=True) == "2"
+        assert soup.select_one('link[rel="canonical"]')["href"] == "https://example.com/partners/japan/example-university"
+        assert client.get("/partners/japan/inst-ffffffffffff", follow_redirects=False).status_code == 404
+
+
+def test_ambiguous_legacy_cross_school_id_is_not_guessed(monkeypatch):
+    from exchange_info import cross_school_partners as cross
+
+    common = dict(country_slug="japan", country_name_zh="日本", school_name_zh="測試大學", school_name_en="Example University")
+    first_row, second_row = partner(school_name="First"), partner(school_name="Second")
+    first = cross.AggregatedPartnerEntity(**common, institution_slug="first", home_rows={"cgu": [first_row]})
+    second = cross.AggregatedPartnerEntity(**common, institution_slug="second", home_rows={"ntu": [second_row]})
+    monkeypatch.setattr(cross, "_legacy_partner_id", lambda row: "123456789abc" + ("0" * 8 if row.school_name == "First" else "1" * 8))
+    monkeypatch.setattr(cross, "build_cross_school_entity_index", lambda _, **_kw: ({("japan", "first"): first, ("japan", "second"): second}, {}))
+    assert cross.build_cross_school_partner_page_data(
+        country="japan", institution="inst-123456789abc", selected_home=None, catalogue_loader=lambda _: ([], None)
+    ) is None
+
+
+def test_canonical_cross_school_slug_takes_precedence_over_another_entity_alias(monkeypatch):
+    from exchange_info import cross_school_partners as cross
+    from exchange_info.university_registry import resolve_university
+
+    home = resolve_university("cgu")
+    first = cross.AggregatedPartnerEntity(
+        country_slug="japan", country_name_zh="日本", institution_slug="example",
+        school_name_zh="第一所大學", school_name_en="First University",
+        home_rows={home.id: [partner(school_name="第一所大學 First University", quota="2")]},
+    )
+    second = cross.AggregatedPartnerEntity(
+        country_slug="japan", country_name_zh="日本", institution_slug="example-2",
+        school_name_zh="第二所大學", school_name_en="Second University",
+        home_rows={home.id: [partner(school_name="第二所大學 Second University", quota="3")]},
+    )
+    monkeypatch.setattr(cross, "SUPPORTED_UNIVERSITIES", (home,))
+    monkeypatch.setattr(cross, "build_cross_school_entity_index", lambda _, **_kw: (
+        {("japan", "example"): first, ("japan", "example-2"): second},
+        {("japan", "example"): ("japan", "example-2")},
+    ))
+    page_data = cross.build_cross_school_partner_page_data(
+        country="japan", institution="example", selected_home="cgu", catalogue_loader=lambda _: ([], None)
+    )
+    assert page_data is not None
+    assert page_data.canonical_path == "/partners/japan/example"
+    assert page_data.school_name_en == "First University"
+
+
+def test_cross_school_public_pages_and_sitemap_do_not_hide_catalogue_failure(monkeypatch):
+    from fastapi import HTTPException
+    from exchange_info import cross_school_partners, seo
+    from exchange_info.university_registry import resolve_university
+
+    homes = (resolve_university("cgu"), resolve_university("ntu"))
+    monkeypatch.setattr(cross_school_partners, "SUPPORTED_UNIVERSITIES", homes)
+    monkeypatch.setattr(seo, "SUPPORTED_UNIVERSITIES", homes)
+    monkeypatch.setattr(cross_school_partners, "_ENTITY_INDEX_CACHE", {})
+
+    def catalogue(home):
+        if home.id == "ntu":
+            raise HTTPException(503, "source unavailable", headers={"Retry-After": "60"})
+        return [partner(school_name="測試大學 Example University")], None
+
+    app = FastAPI()
+    app.include_router(create_seo_router(SeoSettings("https://example.com", True), catalogue))
+    with TestClient(app) as client:
+        for path in ("/partners", "/partners/japan", "/partners/japan/example-university", "/sitemaps/partners.xml"):
+            response = client.get(path)
+            assert response.status_code == 503
+            assert response.headers["Retry-After"] == "60"
