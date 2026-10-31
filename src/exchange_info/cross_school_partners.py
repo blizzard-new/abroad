@@ -120,6 +120,57 @@ COUNTRY_SLUGS: dict[str, str] = {
     "緬甸": "myanmar",
     "摩洛哥": "morocco",
     "柬埔寨": "cambodia",
+    "智利": "chile",
+    "以色列": "israel",
+    "澳門": "macau",
+    "冰島": "iceland",
+    "愛沙尼亞": "estonia",
+    "阿拉伯聯合大公國": "united-arab-emirates",
+    "希臘": "greece",
+    "秘魯": "peru",
+    "巴基斯坦": "pakistan",
+    "烏茲別克": "uzbekistan",
+    "哥倫比亞": "colombia",
+    "斯洛維尼亞": "slovenia",
+    "多明尼加": "dominican-republic",
+    "巴拿馬": "panama",
+    "巴哈馬": "bahamas",
+    "馬拉威": "malawi",
+    "阿根廷": "argentina",
+    "瓜地馬拉": "guatemala",
+    "迦納": "ghana",
+    "阿爾巴尼亞": "albania",
+    "巴布亞紐幾內亞": "papua-new-guinea",
+    "聖克里斯多福及尼維斯": "saint-kitts-and-nevis",
+    "南非": "south-africa",
+    "索羅門群島": "solomon-islands",
+    "法屬玻里尼西亞": "french-polynesia",
+    "伊朗": "iran",
+    "埃及": "egypt",
+    "克羅埃西亞": "croatia",
+    "約旦": "jordan",
+    "科索沃": "kosovo",
+    "哥斯大黎加": "costa-rica",
+    "肯亞": "kenya",
+    "辛巴威": "zimbabwe",
+    "汶萊": "brunei",
+    "安道爾": "andorra",
+    "史瓦帝尼": "eswatini",
+    "奈及利亞": "nigeria",
+    "烏克蘭": "ukraine",
+    "列支敦士登": "liechtenstein",
+    "巴拉圭": "paraguay",
+    "摩納哥": "monaco",
+    "烏拉圭": "uruguay",
+    "阿曼": "oman",
+    "賽普勒斯": "cyprus",
+    "尼泊爾": "nepal",
+    "台灣": "taiwan",
+    "孟加拉": "bangladesh",
+    "安地卡及巴布達": "antigua-and-barbuda",
+    "斯里蘭卡": "sri-lanka",
+    "盧森堡": "luxembourg",
+    "厄瓜多": "ecuador",
 }
 
 SLUG_TO_COUNTRY_ZH: dict[str, str] = {slug: zh for zh, slug in COUNTRY_SLUGS.items()}
@@ -132,8 +183,26 @@ SLUG_TO_COUNTRY_ZH.update(
         "china": "大陸地區",
         "prc": "大陸地區",
         "czech-republic": "捷克",
+        "uae": "阿拉伯聯合大公國",
+        "macao": "澳門",
+        "俄羅斯聯邦": "俄羅斯",
+        "russian-federation": "俄羅斯",
+        "斯洛法克": "斯洛伐克",
+        "列支敦斯登": "列支敦士登",
+        "臺灣": "台灣",
     }
 )
+# Map legacy inst-<12hex> country hashes (generated when a Chinese country name lacked a slug)
+# back to their canonical Chinese country names so old URLs can 301-redirect cleanly.
+for _country_zh, _canonical_zh in (
+    *((_zh, _zh) for _zh in COUNTRY_SLUGS),
+    ("俄羅斯聯邦", "俄羅斯"),
+    ("斯洛法克", "斯洛伐克"),
+    ("列支敦斯登", "列支敦士登"),
+    ("臺灣", "台灣"),
+):
+    _legacy_country_hash = f"inst-{hashlib.sha256(_country_zh.encode('utf-8')).hexdigest()[:12]}"
+    SLUG_TO_COUNTRY_ZH.setdefault(_legacy_country_hash, _canonical_zh)
 
 COUNTRY_DEFAULT_CURRENCY_HINT: dict[str, str] = {
     "日本": "每月生活費約 100,000–150,000 日圓（含住宿、伙食與國民健康保險，依城市而異）",
@@ -527,6 +596,34 @@ def _norm_en_key(value: str, country_zh: str) -> str:
 def _legacy_partner_id(partner: PartnerUniversity) -> str:
     identity = f"{partner.country or ''}|{school_identity_key(partner.school_name)}"
     return hashlib.sha256(identity.encode()).hexdigest()[:20]
+
+
+def resolve_partner_cross_school_path(
+    partner: PartnerUniversity,
+    *,
+    home_id: str | None = None,
+) -> str:
+    """Return the canonical cross-school path (/partners/{country_slug}/{institution_slug}) for a partner row."""
+    c_slug, c_zh = resolve_country_slug_and_zh(partner.country)
+    legacy_key = _legacy_partner_id(partner)
+    if _ENTITY_INDEX_CACHE:
+        entities, alias_lookup = next(reversed(_ENTITY_INDEX_CACHE.values()))
+        canonical_key = alias_lookup.get((c_slug, legacy_key))
+        if canonical_key and canonical_key in entities:
+            base_path = entities[canonical_key].canonical_path
+            return f"{base_path}?{urlencode({'home': home_id})}" if home_id else base_path
+    curated = _match_curated_spec(c_zh, partner.school_name)
+    if curated is not None:
+        inst_slug = curated.institution_slug
+    else:
+        _zh, en = split_bilingual_school_name(partner.school_name, c_zh)
+        inst_slug = (
+            slugify_english_name(en)
+            if re.search(r"[A-Za-z]{3,}", en)
+            else f"inst-{legacy_key[:12]}"
+        )
+    base_path = f"/partners/{c_slug}/{inst_slug}"
+    return f"{base_path}?{urlencode({'home': home_id})}" if home_id else base_path
 
 
 def _match_curated_spec(country_zh: str, raw_name: str) -> CuratedInstitutionSpec | None:
@@ -1077,14 +1174,15 @@ def build_cross_school_partner_page_data(
         or alias_lookup.get((c_slug, inst_lower))
         or alias_lookup.get((c_slug, inst_slugified))
     )
-    legacy_id = re.fullmatch(r"inst-([0-9a-f]{12})", inst_lower)
+    legacy_id = re.fullmatch(r"inst-([0-9a-f]{12})|([0-9a-f]{20})", inst_lower)
     if legacy_id and (c_slug, inst_lower) in entities:
         canonical_key = (c_slug, inst_lower)
     elif legacy_id:
         # Older pages without an English name used the first 12 hex characters
-        # of a catalogue partner ID. Only recover an unambiguous exact prefix;
+        # of a catalogue partner ID, and school partner links previously used the
+        # full 20-hex partner ID. Only recover an unambiguous exact prefix;
         # never guess if the original partner disappeared or a prefix collides.
-        prefix = legacy_id.group(1)
+        prefix = legacy_id.group(1) or legacy_id.group(2)
         candidates = {
             key for key, entity in entities.items()
             if key[0] == c_slug and any(

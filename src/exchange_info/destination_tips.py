@@ -148,15 +148,16 @@ COUNTRY_ALIASES: dict[str, tuple[str, ...]] = {
     "韓國": ("南韓", "大韓民國", "South Korea", "Korea"),
     "美國": ("美利堅合眾國", "United States", "USA", "US"),
     "英國": ("聯合王國", "大不列顛", "United Kingdom", "UK"),
-    "日本": ("Japan",), "法國": ("France",), "德國": ("Germany",), "俄羅斯": ("Russia",), "越南": ("Vietnam", "Viet Nam"),
+    "日本": ("Japan",), "法國": ("France",), "德國": ("Germany",), "俄羅斯": ("俄羅斯聯邦", "Russia", "Russian Federation"), "越南": ("Vietnam", "Viet Nam"),
     "泰國": ("Thailand",), "印度": ("India",), "印尼": ("印度尼西亞", "Indonesia"), "菲律賓": ("Philippines",),
     "馬來西亞": ("Malaysia",), "新加坡": ("Singapore",), "紐西蘭": ("New Zealand",), "澳洲": ("澳大利亞", "Australia"),
     "加拿大": ("Canada",), "荷蘭": ("Netherlands",), "瑞士": ("Switzerland",), "瑞典": ("Sweden",), "西班牙": ("Spain",),
     "義大利": ("意大利", "Italy"), "奧地利": ("Austria",), "比利時": ("Belgium",), "波蘭": ("Poland",), "匈牙利": ("Hungary",),
-    "挪威": ("Norway",), "立陶宛": ("Lithuania",), "拉脫維亞": ("Latvia",), "羅馬尼亞": ("Romania",), "斯洛伐克": ("Slovakia",),
+    "挪威": ("Norway",), "立陶宛": ("Lithuania",), "拉脫維亞": ("Latvia",), "羅馬尼亞": ("Romania",), "斯洛伐克": ("斯洛法克", "Slovakia"),
     "捷克": ("捷克共和國", "Czech Republic", "Czechia"), "土耳其": ("土耳其共和國", "Türkiye", "Turkey"),
     "哈薩克": ("哈薩克斯坦", "Kazakhstan"), "孟加拉": ("孟加拉國", "Bangladesh"), "阿爾巴尼亞": ("Albania",),
     "蒙古": ("Mongolia",), "緬甸": ("Myanmar", "Burma"), "摩洛哥": ("Morocco",), "柬埔寨": ("Cambodia",), "巴西": ("Brazil",),
+    "列支敦士登": ("列支敦斯登", "Liechtenstein"), "台灣": ("臺灣", "中華民國", "Taiwan"),
 }
 _ALIAS_TO_CANONICAL = {alias.casefold(): canonical for canonical, aliases in COUNTRY_ALIASES.items() for alias in aliases}
 
