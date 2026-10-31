@@ -1128,6 +1128,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="北市大規定返國後一個月內須繳交赴境外研修心得報告（供刊登於國際處返國心得報告專區）並配合經驗分享會，始得辦理獎助金核銷；這裡只合計下方各欄。",
     ),
+    ("ntcu", "study-plan"): _rules(
+        (
+            "國立臺中教育大學國際及兩岸事務暨研究發展處選送學生出國研修、雙聯學制暨教育部學海飛颺／惜珠計畫甄選必繳《出國研修計畫書與自傳》（申請外語組姊妹校建議同時備齊中、外文版本），建議合計約 1,000–2,000 字，供國研處書面審查（占總成績 40%）與面試委員（占總成績 60%）評分。",
+            "內容應具體說明申請出國交換動機、擬於志願姊妹校選修之課程規劃（依中教大規定，出國研修期間每學期至少須選修相當於本校 6 學分或 2 門課程）、教育或專業領域學習目標，以及返國後學分抵免與未來升學就業發展規劃。",
+        ),
+        evidence="國立臺中教育大學甄選學生出國研修要點、116學年度選送學生出國研修簡章及申請繳交資料檢核表",
+        minimum=800,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="中教大選送學生出國研修甄選須繳交出國研修計畫書與自傳（含每學期至少 6 學分或 2 門課之修課規劃），建議約 1,000–2,000 字；這裡只合計下方各欄。",
+    ),
+    ("ntcu", "return-report"): _rules(
+        (
+            "依《國立臺中教育大學甄選學生出國研修要點》及《補助學生赴外國大學（機構）選修課程要點》規定，交換生於國外合作大學研修期滿返國後規定期限內，須向國際及兩岸事務暨研究發展處繳交《出國研修心得報告》（約 1,500–3,000 字並附研修活動照片，供刊登於國研處「交換生心得報告」專區），並有義務配合出席成果發表經驗分享會。",
+            "獲教育部《學海飛颺》、《學海惜珠》或中教大校內出國選修課程獎助學金之選送生，須於返國後規定期限內上傳成果報告書至教育部學海計畫資訊網及校內系統，並檢附電子機票、登機證存根、護照出入境紀錄及姊妹校正式成績單辦理經費核銷。",
+        ),
+        evidence="國立臺中教育大學甄選學生出國研修要點、補助學生赴外國大學（機構）選修課程要點及教育部學海系列計畫簡章",
+        minimum=1000,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="中教大規定返國後規定期限內須繳交出國研修心得報告（供刊登於國研處交換生心得報告專區）並配合成果分享會，始得辦理獎助金核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1175,6 +1197,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "nutc": ("https://oia.nutc.edu.tw/p/412-1026-8451.php?Lang=zh-tw", "2026-10-31"),
     "nfu": ("https://oia.nfu.edu.tw/zh-tw/announcement/%E5%87%BA%E5%9C%8B%E4%BA%A4%E6%8F%9B-%E5%9C%8B%E7%AB%8B%E8%99%8E%E5%B0%BE%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E7%AC%AC2%E5%AD%B8%E6%9C%9F%E9%81%B8%E9%80%81%E5%84%AA%E7%A7%80%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B%E7%A0%94%E4%BF%AE-%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F-%E5%AD%B8%E6%B5%B7%E9%A3%9B%E9%A2%BA-%E7%94%84%E9%81%B8%E7%B0%A1%E7%AB%A0-30322703", "2026-10-31"),
     "utaipei": ("https://intl.utaipei.edu.tw/p/412-1080-9549.php?Lang=zh-tw", "2026-10-31"),
+    "ntcu": ("https://oia.ntcu.edu.tw/data/3", "2026-10-31"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

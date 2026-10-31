@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="ntcuSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="52%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#dbeafe"/>
+    </linearGradient>
+    <linearGradient id="ntcuBrick" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9a3412"/>
+      <stop offset="100%" stop-color="#7c2d12"/>
+    </linearGradient>
+    <linearGradient id="ntcuLawn" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#15803d"/>
+      <stop offset="100%" stop-color="#14532d"/>
+    </linearGradient>
+  </defs>
+  <!-- Sky -->
+  <rect width="800" height="450" fill="url(#ntcuSky)"/>
+  <!-- Sun / Taichung warm glow -->
+  <circle cx="650" cy="95" r="46" fill="#fef08a" opacity="0.85"/>
+  <!-- Distant central mountain silhouette -->
+  <path d="M0 310 Q180 235 360 285 T800 265 L800 350 L0 350 Z" fill="#93c5fd" opacity="0.45"/>
+  <!-- Campus lawn -->
+  <rect x="0" y="330" width="800" height="120" fill="url(#ntcuLawn)"/>
+  <!-- Minsheng Road pathway -->
+  <polygon points="335,450 465,450 425,330 375,330" fill="#e5e7eb" opacity="0.9"/>
+  <!-- Left & right wings of Administration / Qiuzhen Building -->
+  <rect x="130" y="195" width="165" height="135" rx="4" fill="url(#ntcuBrick)"/>
+  <rect x="505" y="195" width="165" height="135" rx="4" fill="url(#ntcuBrick)"/>
+  <!-- Central Administration Building (行政大樓) -->
+  <rect x="275" y="150" width="250" height="180" rx="4" fill="#b45309"/>
+  <polygon points="260,150 400,92 540,150" fill="#78350f"/>
+  <!-- Classical columns & arched entrance -->
+  <rect x="305" y="175" width="16" height="155" fill="#fef3c7"/>
+  <rect x="345" y="175" width="16" height="155" fill="#fef3c7"/>
+  <rect x="439" y="175" width="16" height="155" fill="#fef3c7"/>
+  <rect x="479" y="175" width="16" height="155" fill="#fef3c7"/>
+  <path d="M372 330 L372 255 A28 28 0 0 1 428 255 L428 330 Z" fill="#1e293b"/>
+  <!-- Clock / Emblem on pediment -->
+  <circle cx="400" cy="128" r="15" fill="#fef3c7" stroke="#78350f" stroke-width="3"/>
+  <!-- Windows on wings -->
+  <g fill="#dbeafe" opacity="0.9">
+    <rect x="155" y="218" width="26" height="34" rx="2"/>
+    <rect x="198" y="218" width="26" height="34" rx="2"/>
+    <rect x="241" y="218" width="26" height="34" rx="2"/>
+    <rect x="155" y="270" width="26" height="34" rx="2"/>
+    <rect x="198" y="270" width="26" height="34" rx="2"/>
+    <rect x="241" y="270" width="26" height="34" rx="2"/>
+    <rect x="533" y="218" width="26" height="34" rx="2"/>
+    <rect x="576" y="218" width="26" height="34" rx="2"/>
+    <rect x="619" y="218" width="26" height="34" rx="2"/>
+    <rect x="533" y="270" width="26" height="34" rx="2"/>
+    <rect x="576" y="270" width="26" height="34" rx="2"/>
+    <rect x="619" y="270" width="26" height="34" rx="2"/>
+  </g>
+  <!-- Campus trees -->
+  <circle cx="95" cy="300" r="36" fill="#166534"/>
+  <rect x="90" y="325" width="10" height="22" fill="#78350f"/>
+  <circle cx="705" cy="300" r="36" fill="#166534"/>
+  <rect x="700" y="325" width="10" height="22" fill="#78350f"/>
+  <!-- Title Banner -->
+  <rect x="24" y="24" width="420" height="62" rx="10" fill="#0f172a" opacity="0.72"/>
+  <text x="42" y="52" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="bold">國立臺中教育大學 NTCU</text>
+  <text x="42" y="74" fill="#bfdbfe" font-family="sans-serif" font-size="13">National Taichung University of Education · 民生校區行政大樓</text>
+</svg>

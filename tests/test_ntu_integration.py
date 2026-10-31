@@ -140,6 +140,7 @@ def test_ntu_catalog_api_works_offline_and_keeps_pending_visible(monkeypatch, tm
         "nutc",
         "nfu",
         "utaipei",
+        "ntcu",
     ]
     dashboard = client.get("/student-dashboard", params={"school": "台大"})
     assert dashboard.status_code == 200

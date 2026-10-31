@@ -1587,8 +1587,46 @@ UTAIPEI = UniversityProfile(
     ),
 )
 
+NTCU = UniversityProfile(
+    id="ntcu",
+    school_name="國立臺中教育大學",
+    short_name="中教大",
+    english_name="National Taichung University of Education",
+    aliases=(
+        "ntcu",
+        "國立臺中教育大學",
+        "國立台中教育大學",
+        "臺中教育大學",
+        "台中教育大學",
+        "中教大",
+        "NTCU",
+        "National Taichung University of Education",
+    ),
+    hero_image="/static/assets/ntcu-campus.svg",
+    official_url="https://oia.ntcu.edu.tw/data/15",
+    coverage_note="完整支援：已整合國立臺中教育大學國際及兩岸事務暨研究發展處（OIA）《締結姐妹校名單（263校）》、《交換學校名額表》、《116學年度與115學年度第3次選送學生出國研修簡章》、《甄選學生出國研修要點》、《補助學生赴外國大學（機構）選修課程要點》、《與外國大學校院辦理雙聯學制辦法》、《教育部學海飛颺／惜珠甄選簡章》及歷年出國研修心得報告。",
+    support_level="full",
+    partner_count_hint=263,
+    academic_score_minimum=None,
+    student_card_signals=(
+        "國立臺中教育大學",
+        "國立台中教育大學",
+        "中教大",
+        "NATIONALTAICHUNGUNIVERSITYOFEDUCATION",
+        "NATIONAL TAICHUNG UNIVERSITY OF EDUCATION",
+        "NTCU",
+    ),
+    # https://www.ntcu.edu.tw/ — checked 2026-10-31.
+    colleges=(
+        "教育學院",
+        "人文學院",
+        "理學院",
+        "管理學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU)
 DEFAULT_UNIVERSITY = CGU
 
 

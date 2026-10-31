@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCYU, NDHU, NFU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCYU, NDHU, NFU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -107,6 +107,7 @@ NCYU_SOURCE_CHECKED_AT = datetime(2026, 10, 30, tzinfo=timezone.utc)
 NUTC_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 NFU_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 UTAIPEI_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
+NTCU_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2678,6 +2679,51 @@ def _utaipei_template(template: ApplicationDocumentTemplate) -> ApplicationDocum
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ntcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺中教育大學（國際及兩岸事務暨研究發展處國際交流組，民生校區行政樓 2 樓）選送學生出國研修、大陸及港澳地區交換暨教育部學海飛颺／惜珠計畫應繳申請表件：1. 申請繳交資料檢核表、2. 選送學生出國研修申請表（須經導師、系所主管及院長簽章）、3. 家長（監護人）同意書、4. 歷年中文成績單正本（含班級或系所排名）、5. 外語能力檢定證明影本（英語組 TOEFL iBT / IELTS / TOEIC、日語組 JLPT、韓語組 TOPIK；申請大陸及港澳地區免附外語檢定）、6. 出國研修計畫書與自傳、7. 有效護照影本及課外活動或競賽表現證明。",
+        "study-plan": "撰寫國立臺中教育大學選送學生出國研修、雙聯學制暨教育部學海飛颺／惜珠計畫必繳之《出國研修計畫書與自傳》。請具體說明申請動機、目標姊妹校修課規劃（依中教大規定，出國研修期間每學期至少須選修相當於本校 6 學分或 2 門課程）、教育或專業領域學習目標，以及返國後學分抵免與職涯發展銜接規劃。",
+        "course-preapproval": "辦理赴國外合作姊妹校交換或雙聯學制（美國得克薩斯州農工大學康莫斯分校 A&M-Commerce、印第安納波利斯大學 UIndy、英國倫敦大學金匠學院 Goldsmiths、紐西蘭奧克蘭大學等）之選課與學分抵免預先規劃（出國期間須於國立臺中教育大學完成註冊選課保留學籍；返國後依本校學生抵免學分辦法檢附正式成績單與課程大綱辦理學分抵免）。",
+        "predeparture-notice": "獲國際及兩岸事務暨研究發展處甄選錄取後，須於期限內確認錄取資格、配合國研處辦理姊妹校提名（Nomination）與外校入學申請；出國前須參加行前說明會、簽署行政契約書與切結書、辦理簽證、役男出境緩徵並投保足額海外醫療及意外保險。",
+        "return-report": "國外交換或雙聯研修期滿返國後規定期限內，須依《國立臺中教育大學甄選學生出國研修要點》及《補助學生赴外國大學（機構）選修課程要點》向國研處繳交《出國研修心得報告》（含研修照片，供刊登於國研處「交換生心得報告」專區與教育部學海計畫資訊網），並配合出席成果發表經驗分享會，始得完成獎助學金核銷。",
+        "credit-transfer": "國外交換或雙聯研修期滿返國後，須填具國立臺中教育大學學分抵免申請表，並檢附境外姊妹校核發之正式成績單正本及修習課程大綱，經所屬學系（所）審核通過後送教務處註冊組登錄抵免學分。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺中教育大學").replace("長庚", "中教大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "中教大規定：申請人須為於本校就讀一學期以上之在學學士班（出國時大二以上）或碩博士班學生，操行成績達 80 分以上，校內甄選採書面資料審查（40%）與面試（60%）。請檢附含班級／系所排名之歷年成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT 網路測驗（校級英語基準：CEFR B1 / 42 分以上；歐美頂尖校及雙聯須 61–85 分以上）", "IELTS 雅思國際英語測驗（校級英語基準：4.0–5.5 以上；歐美名校及雙聯須 6.0–6.5 以上）", "TOEIC 多益聽讀測驗（亞洲及部分歐洲姊妹校採認：550–785 分以上）", "JLPT 日語能力試驗（日本姊妹校依規定須通過 N1、N2 或 N3 級以上）", "TOPIK 韓國語文能力測驗（韓國姊妹校依規定須通過 TOPIK 2–4 級以上或英語組門檻）", "大陸及港澳地區姊妹校交換（免附外語能力檢定證明，以歷年成績、研修計畫書與面試評分）"]
+            field["help_text"] = "依國立臺中教育大學《交換學校名額表》及當期選送學生出國研修簡章填報有效期限內之外語能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ntcu.edu.tw/data/3",
+        source_checked_at=NTCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="選送學生出國研修申請表（含家長同意書與申請繳交資料檢核表）" if template.id == "exchange-application-data" else ("出國研修計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ntcu.edu.tw/storage/media/S3bTXueM4iWNsPOi1AOCvf58NFK9qzfTCyH4UzkR.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長（或監護人）親筆簽名蓋章", "導師（或指導教授）簽章", "系（所）主管及院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "獲錄取後確認資格、配合國研處辦理姊妹校提名、入學申請與行政契約書簽署", "return-report": "返國後規定期限內繳交出國研修心得報告並配合國研處成果分享會辦理獎助金核銷", "credit-transfer": "返國後檢附正式成績單與課程大綱向系所及教務處註冊組辦理學分抵免"}.get(template.id, "備齊申請繳交資料檢核表、申請表、家長同意書、歷年含排名成績單、研修計畫書、語檢證明送交民生校區行政樓 2 樓國研處國際交流組"),
+        version="116-1準備工具-2026-10-31.1",
+        destinations=["國立臺中教育大學國際及兩岸事務暨研究發展處國際交流組（403454 臺中市西區民生路 140 號 民生校區行政樓 2 樓）"],
+        conditional_note="此為個人準備工具；國立臺中教育大學每年分梯次辦理選送學生出國研修暨教育部學海系列計畫甄選（秋季班於前一年 12 月至次年 2 月收件、春季班於前一年 9–10 月收件）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2770,6 +2816,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nfu_template(template)) is not None]
     if university.id == UTAIPEI.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _utaipei_template(template)) is not None]
+    if university.id == NTCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntcu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
