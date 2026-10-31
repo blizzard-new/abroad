@@ -9,6 +9,8 @@
     uv run office auth threads --token  # link an account (threads / instagram / youtube)
     uv run office auth github           # link the GitHub token Pat opens draft pull requests with
     uv run office token                 # make a new access password for the phone app
+    uv run office voice                 # start (or look at) voice.md, the voice notes every colleague reads
+    uv run office audit                 # last week's posts, ranked against what each kind usually gets
 """
 
 from __future__ import annotations
@@ -67,6 +69,11 @@ def main(argv: list[str] | None = None) -> int:
     check = sub.add_parser("check", help="檢查這台電腦：工具、每張桌子的 AI、社群帳號")
     check.add_argument("--ping", action="store_true", help="實際問每個 AI 一句測試，確認有登入")
 
+    sub.add_parser("voice", help="建立／查看語氣檔 voice.md（你親自寫的口吻設定，所有同事寫稿前都會讀）")
+
+    audit = sub.add_parser("audit", help="成效復盤：最近的貼文和同平台同格式的平常表現比，誰真的有效")
+    audit.add_argument("--days", type=int, default=7, help="看最近幾天發出去的貼文（預設 7）")
+
     sub.add_parser("token", help="產生一串新的通行碼（給手機 App 用，填進 .env 的 OFFICE_ACCESS_TOKEN）")
 
     auth = sub.add_parser("auth", help="連上社群帳號、GitHub，或用 telegram 連上你的手機")
@@ -81,7 +88,9 @@ def main(argv: list[str] | None = None) -> int:
         from .server import create_app
 
         settings = Settings.from_env()
-        print(f"UniWay 行銷辦公室：http://{args.host}:{args.port}")
+        # 0.0.0.0 means "every address of this computer" for the server; a browser needs a real one.
+        here = "127.0.0.1" if args.host in {"0.0.0.0", "::"} else args.host
+        print(f"UniWay 行銷辦公室：http://{here}:{args.port}　← 這台電腦的瀏覽器開這個" + ("（第一次要加 ?token=你的通行碼）" if settings.access_token else ""))
         if args.host not in {"127.0.0.1", "localhost", "::1"}:
             if not settings.access_token:
                 print("⚠️ 辦公室對其他電腦開放了，但沒有設 OFFICE_ACCESS_TOKEN：連得到的人都能按核准。請在 .env 設一串密碼後重開（uv run office token 可以產生）。")
@@ -99,6 +108,21 @@ def main(argv: list[str] | None = None) -> int:
         token = secrets.token_urlsafe(24)
         print(f"新的通行碼：\n\n  {token}\n\n1. 把這一行放進辦公室電腦的 .env（有舊的 OFFICE_ACCESS_TOKEN 就換掉），重新啟動 uv run office serve：\n\n"
               f"  OFFICE_ACCESS_TOKEN={token}\n\n2. 手機 App 的「通行碼」欄貼同一串。\n\n這串等於辦公室的鑰匙，只放在你的電腦和手機上，不要貼到聊天或 GitHub。")
+        return 0
+
+    if args.command == "voice":
+        from .brand import VOICE_NOTES_LIMIT, read_voice, write_voice_template
+
+        path = Settings.from_env().voice_path
+        made = write_voice_template(path)
+        notes = read_voice(path)
+        print(f"語氣檔：{path}" + ("（剛建立好）" if made else ""))
+        if notes.problem:
+            print(f"× 這個檔案{notes.problem}")
+        elif not notes.text:
+            print("目前是空的：用記事本打開，在說明框外面寫下你要的口吻、常用的詞、範例貼文，存檔就生效，不用重新啟動。")
+        else:
+            print(f"目前 {len(notes.text)} 字，所有同事寫稿前都會讀。" + (f"超過 {VOICE_NOTES_LIMIT} 字，最後 {notes.cut} 字會被略過。" if notes.cut else ""))
         return 0
 
     if args.command == "facts":
@@ -136,6 +160,17 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(tick(office, background=False), ensure_ascii=False))
     elif args.command == "publish":
         print(f"發佈 {office.staff['publisher'].publish_due()} 則")
+    elif args.command == "audit":
+        from .agents.analyst import audit_lines
+
+        rows = office.staff["analyst"].audit(args.days)
+        if not rows:
+            print(f"最近 {args.days} 天沒有發出去又有數據的貼文。（模擬發佈或還沒連上帳號時不會有數據）")
+        else:
+            print(f"成效復盤：最近 {args.days} 天的貼文，和同平台同格式的平常表現比（1 倍是普通，越高越好）\n")
+            for number, line in enumerate(audit_lines(rows), 1):
+                print(f"{number:>2}. {line}")
+            print("\n剛發的貼文數字還在長，隔幾天再看比較準。")
     elif args.command == "list":
         _print_drafts(office.store.drafts(status=args.status, limit=50))
     elif args.command == "approve":

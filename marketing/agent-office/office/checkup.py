@@ -128,6 +128,19 @@ def phone_rows(settings: Settings, store: Store, http: httpx.Client | None = Non
     return [Row(True, "Telegram", f"@{name} → {who} 的手機（跟 Leo 聊天、收通知、按核准）")]
 
 
+def voice_rows(settings: Settings) -> list[Row]:
+    """voice.md is the boss's own voice notes; without it the writers use the built-in guide, which is fine."""
+    from .brand import VOICE_NOTES_LIMIT, read_voice
+
+    notes = read_voice(settings.voice_path)
+    if notes.problem:
+        return [Row(False, "語氣檔", f"{settings.voice_path} {notes.problem}")]
+    if not notes.text:
+        return [Row(None, "語氣檔", "還沒有你自己寫的語氣設定，同事用內建的口吻。想讓文字更像你們：uv run office voice")]
+    cut = f"；超過 {VOICE_NOTES_LIMIT} 字，最後 {notes.cut} 字會被略過" if notes.cut else ""
+    return [Row(True, "語氣檔", f"voice.md {len(notes.text)} 字，所有同事寫稿前都會讀{cut}")]
+
+
 MIN_TOKEN = 20
 
 
@@ -153,6 +166,7 @@ def run(settings: Settings, *, ping: bool = False, http: httpx.Client | None = N
         ("GitHub（核准的資料更新提案會開成 draft PR；只讀取，不會建立任何東西）", [accounts.github_row(settings, store, http)]),
         ("手機", phone_rows(settings, store, http)),
         ("手機 App（Android）", app_rows(settings)),
+        ("語氣", voice_rows(settings)),
     ]
 
 

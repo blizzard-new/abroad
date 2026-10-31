@@ -135,6 +135,8 @@ class Chief(Agent):
             f"新同事每天固定的工作：\n{daily or '（還沒有新同事）'}\n\n"
             f"每天的時間表（台北，set_office_times 可改）：{timetable}\n"
             f"固定排程（add_routine 新增、remove_routine 刪除，編號是 R 後面的數字）：\n{routines or '（還沒有）'}\n"
+            f"最近 7 天的成效復盤（Nana 把每則貼文和同平台同格式的平常表現比；老闆問什麼題目、哪則貼文有效時照這個回答，不要自己猜）：\n"
+            f"{office.staff['analyst'].review_text()}\n"
             f"平台目前支援 {office.facts().university_count} 所大學，清單在辦公室電腦上的專案裡，watch_schools 會直接讀，不用上 GitHub。"
         )
 

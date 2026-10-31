@@ -126,6 +126,10 @@ class Settings:
         return self.home / "office.sqlite3"
 
     @property
+    def voice_path(self) -> Path:
+        return self.home / "voice.md"
+
+    @property
     def media_dir(self) -> Path:
         return self.home / "media"
 

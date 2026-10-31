@@ -28,7 +28,7 @@ from typing import TypeVar
 
 from pydantic import BaseModel, ValidationError
 
-from .brand import MASCOT, VOICE_GUIDE
+from .brand import MASCOT, voice_guide
 from .config import Settings
 
 Model = TypeVar("Model", bound=BaseModel)
@@ -248,7 +248,7 @@ class ClaudeCodeBrain(Brain):
             "-p",
             "--output-format", "json",
             "--json-schema", json.dumps(schema.model_json_schema(), ensure_ascii=False),
-            "--system-prompt", VOICE_GUIDE,
+            "--system-prompt", voice_guide(self.settings),
             "--permission-mode", "dontAsk",
         ]
         if web:
@@ -292,7 +292,7 @@ class CodexBrain(Brain):
             root = Path(folder)
             (root / "schema.json").write_text(json.dumps(strict_schema(schema), ensure_ascii=False), encoding="utf-8")
             args = ["exec", "-", *self._base_args(effort, model), "--sandbox", "read-only", "--output-schema", "schema.json", "-o", "answer.json"]
-            stdout = self.run(args, stdin=f"{VOICE_GUIDE}\n\n{task}\n\n{context}", cwd=root)
+            stdout = self.run(args, stdin=f"{voice_guide(self.settings)}\n\n{task}\n\n{context}", cwd=root)
             answer = root / "answer.json"
             text = answer.read_text(encoding="utf-8") if answer.is_file() else stdout
         try:
@@ -353,7 +353,7 @@ class AntigravityBrain(Brain):
     def ask(self, schema, task, context, effort="medium", *, web=False, model="", explicit_effort=False):
         # Antigravity's model names carry their own thinking level, e.g. "Gemini 3.7 Flash (Low)".
         prompt = (
-            f"{VOICE_GUIDE}\n\n{task}\n\n{context}\n\n"
+            f"{voice_guide(self.settings)}\n\n{task}\n\n{context}\n\n"
             "最後只輸出一個符合下面 JSON Schema 的 JSON 物件，不要任何其他文字，也不要修改任何檔案：\n"
             f"{json.dumps(schema.model_json_schema(), ensure_ascii=False)}"
         )
@@ -391,7 +391,7 @@ class ApiBrain(Brain):
                 betas=[FALLBACK_BETA],
                 fallbacks="default",
                 # The voice guide is identical on every call, so it is cached; the day's facts go in the message.
-                system=[{"type": "text", "text": VOICE_GUIDE, "cache_control": {"type": "ephemeral"}}],
+                system=[{"type": "text", "text": voice_guide(self.settings), "cache_control": {"type": "ephemeral"}}],
                 output_config={"effort": effort},
                 output_format=schema,
                 messages=[{"role": "user", "content": f"{task}\n\n{context}"}],
