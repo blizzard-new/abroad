@@ -1,0 +1,633 @@
+{
+  "date": "2026-10-31",
+  "timezone": "Asia/Taipei",
+  "started_utc": "2026-10-31 00:02:26 UTC",
+  "branch": "codex/seo-daily-20261031",
+  "base_commit": "bd647426c727dbc0d0db562fca499d359746eb2d",
+  "status": "blocked_no_independent_article_pair_no_PR",
+  "articles_created": 0,
+  "articles_updated": 0,
+  "pr": null,
+  "selection_basis": "Editorial inventory check; no user-provided Search Console performance data. No search-volume or ranking claims.",
+  "same_day_check": {
+    "existing_branch_before_start": false,
+    "existing_pr_all_states": false
+  },
+  "open_prs": [
+    {
+      "number": 186,
+      "title": "feat(nfu): onboard National Formosa University (國立虎尾科技大學) exchange catalog",
+      "head": "feat/nfu-exchange-catalog",
+      "head_sha": "e9fb74175830284b47af76fcce574f8167659af9",
+      "changed_files_count": 919,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 185,
+      "title": "feat(nutc): onboard National Taichung University of Science and Technology (國立臺中科技大學)",
+      "head": "feat/nutc-exchange-catalog",
+      "head_sha": "ceacd3cab2690d78962327afdd9eb1889187b2d7",
+      "changed_files_count": 839,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 184,
+      "title": "資料更新提案：國立中正大學（新公告）",
+      "head": "office/2026-10-30-ccu-baf2cd25",
+      "head_sha": "6d4e10e7a8d4b805c7681b4c710d0424c3944b21",
+      "changed_files_count": 1,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 183,
+      "title": "資料更新提案：國立中山大學（和平台不一致）",
+      "head": "office/2026-10-30-nsysu-52d89630",
+      "head_sha": "871bcf7f9023ae6d0c8cb805187df506fdc170d2",
+      "changed_files_count": 1,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 182,
+      "title": "資料更新提案：長庚大學（新公告）",
+      "head": "office/2026-10-30-cgu-4904875c",
+      "head_sha": "b38cbc7e837df8758e39b93a41677c9ec0d10f6f",
+      "changed_files_count": 1,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 181,
+      "title": "資料更新提案：國立臺北商業大學（和平台不一致）",
+      "head": "office/2026-10-30-ntub-85d7695a",
+      "head_sha": "4859bda848916e1f7decef948c214f16a30fc03d",
+      "changed_files_count": 1,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 180,
+      "title": "feat(ncyu): onboard National Chiayi University (國立嘉義大學) exchange catalog and student portal",
+      "head": "feat/ncyu-exchange-catalog",
+      "head_sha": "8bb48487887fdc8bc512090ef45da901dfa5ba80",
+      "changed_files_count": 712,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 179,
+      "title": "feat(nuk): onboard National University of Kaohsiung (國立高雄大學) exchange catalog (280 partners)",
+      "head": "feat/nuk-exchange-catalog",
+      "head_sha": "62c29fb25f3534a85775600799d2ef11b1d53de4",
+      "changed_files_count": 613,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 178,
+      "title": "feat(usc): onboard Shih Chien University (實踐大學) exchange, Study Abroad, dual-degree, and experience catalog (125 partners)",
+      "head": "feat/usc-exchange-catalog",
+      "head_sha": "14413c64a117904e7e2125e30c810355740b960f",
+      "changed_files_count": 519,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 175,
+      "title": "feat(pu): onboard Providence University (靜宜大學) exchange, ISEP, dual-degree, and experience catalog (275 partners)",
+      "head": "feat/pu-exchange-catalog",
+      "head_sha": "4acf434fccd62e704cc0350d7c52391acb015174",
+      "changed_files_count": 293,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 174,
+      "title": "feat(shu): add Shih Hsin University (世新大學) exchange catalog and full platform support",
+      "head": "feat/shu-exchange-catalog",
+      "head_sha": "0d3380361693dc20c70b32664ef7b923c047d395",
+      "changed_files_count": 203,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 169,
+      "title": "test(marketing): validate assigned school counts and trigger CI on registry changes",
+      "head": "fix/marketing-school-count-20261029",
+      "head_sha": "4432c56adee4aa1a2c54dcb070a8d565742a3377",
+      "changed_files_count": 2,
+      "article_files": [],
+      "seo_files": []
+    },
+    {
+      "number": 168,
+      "title": "Add llms.txt, AI crawler robots policy and Organization schema",
+      "head": "claude/magical-hypatia-7ow9g0",
+      "head_sha": "46c7453043176cc8e20ee3be0143b1406f446929",
+      "changed_files_count": 7,
+      "article_files": [],
+      "seo_files": [
+        "docs/claude-seo-playbook.md",
+        "docs/seo-launch.md",
+        "scripts/check_seo.py",
+        "src/exchange_info/seo.py",
+        "src/exchange_info/seo_articles.py",
+        "tests/test_seo.py"
+      ]
+    }
+  ],
+  "merged_foundation_and_prior_batches": [
+    {
+      "number": 78,
+      "merged": true,
+      "merged_at": "2026-10-19T15:19:56Z",
+      "head": "codex/seo-illustrated-articles",
+      "head_sha": "4eb057514e7f39a052b042a0662b3ac93ed0c52c"
+    },
+    {
+      "number": 92,
+      "merged": true,
+      "merged_at": "2026-10-21T01:47:42Z",
+      "head": "codex/seo-ai-language-topic-backlog-20261020",
+      "head_sha": "558b1448e149c9c597e506ccc3524bca1806e812"
+    },
+    {
+      "number": 119,
+      "merged": true,
+      "merged_at": "2026-10-27T03:16:52Z",
+      "head": "codex/seo-daily-20261023",
+      "head_sha": "20a87d5c4ac5dfef91a8e617b3cc55cda3b66d08"
+    },
+    {
+      "number": 122,
+      "merged": true,
+      "merged_at": "2026-10-27T03:20:19Z",
+      "head": "codex/seo-daily-20261024",
+      "head_sha": "3520416ec5742459ee3717660573666ca0d038f2"
+    },
+    {
+      "number": 132,
+      "merged": true,
+      "merged_at": "2026-10-27T03:20:54Z",
+      "head": "codex/seo-daily-20261025",
+      "head_sha": "4a3744f826a29660b03cc7bc6c5470d829bd2fc7"
+    },
+    {
+      "number": 133,
+      "merged": true,
+      "merged_at": "2026-10-27T03:21:20Z",
+      "head": "codex/seo-daily-20261026",
+      "head_sha": "775287b75388a6fb702816f1dd80dddc6259e3de"
+    }
+  ],
+  "reserved_work": {
+    "date": "2026-10-30",
+    "branch": "codex/seo-daily-20261030",
+    "head_sha": "97de3fda2532c089efae008a8973b124ae04f86e",
+    "candidate": 13,
+    "slug": "exchange-study-plan",
+    "title": "交換學生讀書計畫怎麼寫？AI Prompt、四段架構與排版步驟",
+    "state": "completed_article_update_validated_no_PR_second_article_missing",
+    "validation_url": "https://github.com/blizzard-new/abroad/blob/codex/seo-daily-20261030/docs/seo-editorial-validation-2026-10-30.md",
+    "not_counted_as_today": true
+  },
+  "comparison_access": {
+    "candidate": 15,
+    "checked_today": "TinyFish list_profiles and current runtime readiness",
+    "profiles": [
+      {
+        "name": "Default",
+        "domain_count": 0,
+        "signed_in_sites": []
+      }
+    ],
+    "runtime": {
+      "observations_current": true,
+      "observed_spec_revision": "79",
+      "network_policy": "enforced unrestricted",
+      "secret_bindings": [],
+      "runtime_variables": [],
+      "outbound_identities": []
+    },
+    "previous_browser_check": {
+      "date": "2026-10-30",
+      "reported_final_url": "https://claude.ai/login",
+      "chat_composer_reached": false,
+      "prompt_submitted": false,
+      "evidence_url": "https://github.com/blizzard-new/abroad/blob/codex/seo-daily-20261030/docs/seo-editorial-tool-access-2026-10-30.json"
+    },
+    "fresh_chat_test_performed": false,
+    "scope": "Profile list alone cannot prove session state; no current authenticated profile or new model output established. Prior login/challenge observation is explicitly dated, not claimed as a new October 31 test."
+  },
+  "user_clarification": {
+    "requested": "Two new independent topics or actual comparison access plus another independent topic",
+    "answer_received": false,
+    "preselected_option_treated_as_approval": false
+  },
+  "checks": {
+    "docs_json_parse": "passed",
+    "git_diff_check": "passed",
+    "editorial_gate": "not_run_no_article_change",
+    "seo_unit_integration": "not_run_no_product_change",
+    "browser": "not_run_no_new_or_updated_article",
+    "wheel": "not_built_no_new_or_updated_article"
+  },
+  "constraints": {
+    "no_duplicate_or_thin_articles": true,
+    "no_PR_before_two_complete_articles": true,
+    "no_merge": true,
+    "no_deployment": true,
+    "no_third_party_email": true,
+    "no_bulk_index_requests": true
+  },
+  "main_article_count": 27,
+  "main_articles": [
+    {
+      "slug": "ai-english-learning",
+      "title": "如何用 AI 學英文？每天 30 分鐘的聽說讀寫練習與訂正 Prompt",
+      "blob": "12407ddaa9b714dbe272e996b54275723951de43",
+      "section_titles": [
+        "先確認起點：你要用英文完成哪件事？",
+        "每天 30 分鐘：先輸入，再輸出與重做",
+        "聽力與閱讀 Prompt：先不要讓 AI 把答案說完",
+        "口說與寫作 Prompt：每次只改最重要的兩件事",
+        "一週怎麼安排，才能看見實際變化？"
+      ],
+      "published": "2026-10-20",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "ai-self-introduction",
+      "title": "用 AI 寫中英文自我介紹：交換申請書、1 分鐘與 3 分鐘面試範例",
+      "blob": "abca49469b4bc07727e191323de367ebcdede8b2",
+      "section_titles": [
+        "第一步：準備能說得清楚的素材，不先追求華麗句子",
+        "第二步：先請 AI 提問，再整理一版書面自介",
+        "中英文範例：翻譯後仍要像你會說的話",
+        "1 分鐘與 3 分鐘版本：靠錄音刪減，而不是只算字數",
+        "好看的書面自介：先處理層級、留白與輸出"
+      ],
+      "published": "2026-10-20",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "english-taught-exchange-courses",
+      "title": "英語授課課程怎麼挑？當地語言不熟的交換選課檢查表",
+      "blob": "253af767c65f8ea90bd201a72080d01703f76d3b",
+      "section_titles": [
+        "先找交換課程入口，再看授課語言",
+        "看先修與層級，判斷自己是否有足夠背景",
+        "用 30 分鐘試讀，檢查自己要補哪一種能力",
+        "用整個學期的課程組合評估選校",
+        "把缺口問清楚，再列主要課與備選課"
+      ],
+      "published": "2026-10-23",
+      "modified": "2026-10-23"
+    },
+    {
+      "slug": "exchange-application",
+      "title": "交換學生申請流程：從校內甄選到錄取的文件與時間表",
+      "blob": "579ef17153c1c097f3f68605a355602f3904dfb8",
+      "section_titles": [
+        "先建立三個階段，而不是一個截止日",
+        "從截止日倒排你的個人時間表",
+        "一份文件表，解決版本與格式混亂",
+        "送出之後，確認「真的收到」",
+        "錄取後，還有四條流程要追蹤"
+      ],
+      "published": "2026-10-19",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "exchange-arrival-week",
+      "title": "交換生抵達第一週要做什麼？報到、住宿、通訊與緊急聯絡清單",
+      "blob": "dd4a157ed74d950c80bb7447692c209e8ba7872e",
+      "section_titles": [
+        "出發前，做一張能離線開啟的抵達單",
+        "抵達當天：先能安全入住，再安排其他事情",
+        "報到、迎新、選課：確認各自完成了什麼",
+        "通訊、付款與交通：測試能用，也留下備案",
+        "緊急聯絡卡：依事情分流，離線也找得到",
+        "第一週行動表：每天留下一個完成標記"
+      ],
+      "published": "2026-10-22",
+      "modified": "2026-10-22"
+    },
+    {
+      "slug": "exchange-budget",
+      "title": "交換學生一學期要多少錢？預算表、生活費與現金準備指南",
+      "blob": "ae675547961d4cd2142cfe145ebe7db4f18f7c3b",
+      "section_titles": [
+        "先問清楚：免學費涵蓋哪些費用？",
+        "用「實際停留月數」計算生活費",
+        "一學期試算：總成本與備款分開看",
+        "補助入帳前，你的帳戶撐得住嗎？",
+        "出發前做兩個壓力測試"
+      ],
+      "published": "2026-10-19",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "exchange-course-changes",
+      "title": "交換課程衝堂、停開或額滿怎麼辦？改選流程與變更紀錄表",
+      "blob": "68b8f4a580274c98aaad685f36d132bc95f63132",
+      "section_titles": [
+        "先辨識衝突，不只看課表上的上課時間",
+        "查正式改課程序，確認誰能決定",
+        "比較替代課：時段、內容與總修課量一起看",
+        "向兩校詢問時，使用同一份變更摘要",
+        "核准、課程登記與自己的紀錄要對得起來",
+        "名額不足或還沒回覆時，保留狀態並追蹤"
+      ],
+      "published": "2026-10-23",
+      "modified": "2026-10-23"
+    },
+    {
+      "slug": "exchange-credit-transfer",
+      "title": "交換學生學分抵免怎麼準備？課程預審、ECTS 與返校文件清單",
+      "blob": "41ec9414fb90bced11e8215c3139f8240fb8bc6d",
+      "section_titles": [
+        "先分清選課、取得學分與抵免",
+        "出發前，把課程表做成預審材料",
+        "看到 ECTS，先不要自行換算成臺灣學分",
+        "抵達後換課，留下更新的同意紀錄",
+        "返校前先確認成績單怎麼取得"
+      ],
+      "published": "2026-10-19",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "exchange-eligibility",
+      "title": "交換學生申請資格怎麼看？GPA、語言成績與選課限制核對表",
+      "blob": "b5aad080519f3c60d24d17406599f30925e5431b",
+      "section_titles": [
+        "用三層條件建立資格表",
+        "GPA 與排名：先看計算範圍",
+        "語言證明不只是一個總分",
+        "符合申請資格，不等於能修所有課",
+        "把結果標成三種狀態，再排志願"
+      ],
+      "published": "2026-10-19",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "exchange-fact-sheet",
+      "title": "姊妹校 Fact Sheet 怎麼看？提名、申請期限、選課與住宿核對指南",
+      "blob": "2708740f1d494d0b925c5c87bbd439cde17aa2c8",
+      "section_titles": [
+        "第一步：確認年度、學院與文件來源",
+        "第二步：提名與學生申請，是不同的人做的事",
+        "第三步：課程與學分，看限制而不只看課名",
+        "第四步：官網與 PDF 不一致，怎麼處理？",
+        "最後：做一張自己的核對表，不只是收藏 PDF"
+      ],
+      "published": "2026-10-21",
+      "modified": "2026-10-21"
+    },
+    {
+      "slug": "exchange-housing-checklist",
+      "title": "交換學生住宿怎麼選？宿舍、租屋、押金與入住檢查清單",
+      "blob": "70595d94130f97fb888bad63e54e3b1d6cd990ae",
+      "section_titles": [
+        "宿舍與租屋，先比較完整生活條件",
+        "把月租換成整段租期成本",
+        "付款前，用契約回答五個問題",
+        "入住當天，花時間把房間狀態記下來",
+        "退房與押金，提前安排而不是最後一天才問"
+      ],
+      "published": "2026-10-19",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "exchange-housing-commute",
+      "title": "交換住宿離學校多遠才合適？通勤時間與整期總成本比較表",
+      "blob": "cd5edf9313d3f84ac5c496f83526bbc121ba88b6",
+      "section_titles": [
+        "第一步：確認每天真正要去哪個建築",
+        "第二步：用完整路程測試三種上課情境",
+        "第三步：交通費先核對範圍與資格",
+        "五個月假設試算：省下的錢與增加的時間分開看",
+        "最後填一張決策卡，保留會改變選擇的條件"
+      ],
+      "published": "2026-10-24",
+      "modified": "2026-10-24"
+    },
+    {
+      "slug": "exchange-interview-practice",
+      "title": "交換面試怎麼準備？英文追問、模擬題與 AI 練習 Prompt",
+      "blob": "96fa7e2c2521a6cf9fb217491fec3753e6e37558",
+      "section_titles": [
+        "先把面試通知轉成自己的報到表",
+        "用真實經歷建立回答線索，練習接得住的證據",
+        "原創模擬題：每個主題多準備一個追問",
+        "AI 模擬 Prompt：一次一題，再根據回答追問",
+        "修改示例：讓抽象的溝通目標有具體依據",
+        "用一輪短練習驗收，再處理正式面試安排"
+      ],
+      "published": "2026-10-24",
+      "modified": "2026-10-24"
+    },
+    {
+      "slug": "exchange-limited-budget",
+      "title": "預算有限怎麼規劃交換？資金上限、三方案取捨與可行性檢查",
+      "blob": "55139f4f07ca9f76276f087c5c758f8ddc41aa69",
+      "section_titles": [
+        "先寫下兩個界線：能投入多少，以及一定要學到什麼",
+        "用同一個學習目標比較方案，不只排價格高低",
+        "缺口要倒推成條件，才知道下一步查什麼",
+        "取捨順序：先調偏好，再查方案，最後才改變決定",
+        "最後留一張決策卡：繼續查、待條件成立，或暫緩"
+      ],
+      "published": "2026-10-26",
+      "modified": "2026-10-26"
+    },
+    {
+      "slug": "exchange-recommendation-letter",
+      "title": "交換學生推薦信怎麼請老師寫？資料包、邀請信範例與進度追蹤",
+      "blob": "9e48a6c5fe950fd423e3b6bbb6de9bc21b5fab54",
+      "section_titles": [
+        "先確認：要推薦信、推薦表，還是系所簽名？",
+        "選推薦人：能說出你的具體表現，比只看頭銜有用",
+        "準備一個簡明資料包，幫老師回想你做過什麼",
+        "中文邀請信範例：先問是否方便，不預設老師答應",
+        "取得同意後：確認提交、適度提醒與保留備案"
+      ],
+      "published": "2026-10-20",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "exchange-return-checklist",
+      "title": "交換返國後要做什麼？文件繳交、學習成果與下學期安排清單",
+      "blob": "ef0873d6de09450708b2cbda663c14baec9bd77e",
+      "section_titles": [
+        "先盤點四條任務，不只記得寫心得",
+        "文件未齊時，把缺口與下一步交代清楚",
+        "學習成果怎麼整理？從做過的事與證據開始",
+        "下學期選課與畢業安排，別等所有文件到齊才開始查",
+        "最後做一次交接檢查，留下可以追蹤的資料夾"
+      ],
+      "published": "2026-10-25",
+      "modified": "2026-10-25"
+    },
+    {
+      "slug": "exchange-scholarship-obligations",
+      "title": "交換獎學金核定後要做什麼？在外義務、研修變更與證據追蹤表",
+      "blob": "e12e2d6df60d1349013d4c3962ba092147e71b84",
+      "section_titles": [
+        "第一步：把核定與契約拆成自己的義務卡",
+        "在外追蹤修課與學籍，別等期末才發現落差",
+        "研修安排有變動：先確認決定權，再改自己的計畫",
+        "保存證據要按用途，不是所有收據都用同一種方式處理",
+        "用固定回顧串起在外行動，事件發生時立即更新"
+      ],
+      "published": "2026-10-26",
+      "modified": "2026-10-26"
+    },
+    {
+      "slug": "exchange-scholarships",
+      "title": "交換學生獎學金怎麼找？學海飛颺、學海惜珠與 JASSO 申請整理",
+      "blob": "00ea02fa6dcee5ce4e42e3ae0496958e53e2f7e1",
+      "section_titles": [
+        "找補助的順序：母校、計畫、合作校",
+        "學海飛颺與學海惜珠，先分清查核方向",
+        "赴日交換的 JASSO：誰提出申請？",
+        "建立一張補助追蹤表，別只記截止日",
+        "核定之後，還要看入帳與履行義務"
+      ],
+      "published": "2026-10-19",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "exchange-semester-or-year",
+      "title": "交換一學期還是一學年？用課表、畢業安排與總預算做決定",
+      "blob": "bbe55078d3218a0435bc58e829bd221f487d5ea4",
+      "section_titles": [
+        "第一關：你真的有兩種期長可以選嗎？",
+        "第二關：把兩校行事曆放在同一條時間線",
+        "第三關：多一學期，會多完成什麼學習？",
+        "第四關：費用看整段停留，現金另外算",
+        "最後寫成一張決策卡，列出改變選擇的條件"
+      ],
+      "published": "2026-10-20",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "exchange-study-plan",
+      "title": "交換學生讀書計畫怎麼寫？四段架構、課程表與修改示例",
+      "blob": "02ecf80d9bf8d16718ec2d5afe806067d1c6b10f",
+      "section_titles": [
+        "動筆前，先做一張題目與證據表",
+        "四段架構：動機、準備、課程、成果",
+        "把空泛動機改成可驗證的計畫",
+        "課程計畫要有備案，不只是漂亮清單",
+        "送出前，做內容與格式兩輪修改"
+      ],
+      "published": "2026-10-19",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "exchange-versus-visiting",
+      "title": "交換生、訪問生與自費留學差在哪？申請身分、學費與學分一次釐清",
+      "blob": "08f28fd7d5a465059677ab216d542fd52ce4be3b",
+      "section_titles": [
+        "先問三個問題：用什麼身分、誰出錢、要取得什麼？",
+        "交換與訪問怎麼申請？先看協議，再看提名與錄取",
+        "免對方學費不等於免全部費用",
+        "同一所大學，也可能有不同選課與服務資格",
+        "把方案寫成決策卡，再決定走哪條路"
+      ],
+      "published": "2026-10-21",
+      "modified": "2026-10-21"
+    },
+    {
+      "slug": "germany-exchange-cost",
+      "title": "德國交換學生費用怎麼算？學期費、生活費與財力證明一次釐清",
+      "blob": "9c0b3c2c4cf5dffe694646534cc1003cdef2d52b",
+      "section_titles": [
+        "學費與學期費，是兩筆不同的事",
+        "每月生活費用官方區間起步，再換成個人報價",
+        "財力證明與生活預算，不要重複計算",
+        "五個月試算：學期費與押金各放哪裡？",
+        "學期與租期，是德國選校預算的另一個關鍵"
+      ],
+      "published": "2026-10-19",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "japan-exchange-cost",
+      "title": "日本交換學生生活費怎麼估？一學期預算、宿舍與初期費用",
+      "blob": "e0184a4f311cf1b381883b6521842c0f961821f9",
+      "section_titles": [
+        "官方平均生活費，應該怎麼讀？",
+        "宿舍便宜多少，先看它包含什麼",
+        "用五個月情境做一次預算演算",
+        "JASSO 補助可以先扣掉嗎？",
+        "比較日本學校時，這四欄比總金額更有用"
+      ],
+      "published": "2026-10-19",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "korea-exchange-cost",
+      "title": "韓國交換學生一學期費用：生活費、宿舍與韓元預算怎麼抓",
+      "blob": "fe9f605e0701f988689ff94fb5f7dbfb09e94346",
+      "section_titles": [
+        "官方生活費區間，不要直接拿來硬相加",
+        "宿舍費：先確認收費期間與包含內容",
+        "五個月韓元預算：一個可修改的例子",
+        "保險、通訊與交通：逐一確認適用條件",
+        "出發前，把韓元預算變成付款清單"
+      ],
+      "published": "2026-10-19",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "natural-writing-prompts",
+      "title": "如何下 Prompt 寫出沒有 AI 味的文章？真實素材、個人語氣與修改範例",
+      "blob": "cf030cb6e9018e8b8da0df8f61fd2b4aaa8e6ac2",
+      "section_titles": [
+        "先找出文章為什麼空泛，不急著換形容詞",
+        "第一輪 Prompt：交代讀者、素材、用途與界線",
+        "第二輪 Prompt：先決定論點順序，再生成草稿",
+        "前後對照：具體不是替故事加上虛構數字",
+        "第三輪 Prompt：用自己的文字當語氣參考",
+        "最後驗收：用讀者問題測試，而不是一直要求再自然一點"
+      ],
+      "published": "2026-10-20",
+      "modified": "2026-10-20"
+    },
+    {
+      "slug": "toefl-ibt-preparation",
+      "title": "托福滿分目標怎麼準備？2026 新制題型、6 分制與練習計畫",
+      "blob": "173d81b29367cf6c43c26de96bc4ee699bcc531f",
+      "section_titles": [
+        "先釐清：你說的滿分，是哪個版本的分數？",
+        "依新版四科任務準備，先確認教材是否適用",
+        "分級練習：從能完成任務，到回答更準確完整",
+        "原創修改示例：用任務要求檢查英文",
+        "讀書計畫：用可調整時段安排診斷、訂正與複習"
+      ],
+      "published": "2026-10-25",
+      "modified": "2026-10-25"
+    },
+    {
+      "slug": "toeic-listening-reading-preparation",
+      "title": "多益怎麼準備？TOEIC 聽讀診斷、錯題整理與四週讀書計畫",
+      "blob": "74dfaa383eb2d1e1127c07adaf90ca8aad0282d5",
+      "section_titles": [
+        "先核對用途、題型與作答時間",
+        "第一次診斷：把目前程度拆成可練的問題",
+        "聽力與閱讀，各用一個固定訂正流程",
+        "四週讀書計畫：把有限時間留給弱項",
+        "用 AI 協助訂正：提供證據，保留人工判斷",
+        "報名前，把學習進度接回正式需求"
+      ],
+      "published": "2026-10-22",
+      "modified": "2026-10-22"
+    }
+  ],
+  "changed_editorial_paths_since_previous_base": []
+}

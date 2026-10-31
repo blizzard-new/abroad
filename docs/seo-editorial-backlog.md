@@ -1,5 +1,39 @@
 # Editorial intentions and next topics
 
+## 2026-10-31 每日批次：候選不足，未產文／未開 PR
+
+日期採 Asia/Taipei。隔離分支 `codex/seo-daily-20261031`，基於最新 main `bd647426c727dbc0d0db562fca499d359746eb2d`。開始前查核同日分支及所有狀態 PR，沒有既有 10/31 批次；本分支僅保存盤點，沒有兩篇文章或待審 PR。選題盤點屬編輯判斷，沒有使用者提供的 Search Console 成效、搜尋量或排名資料。
+
+main 共有 27 篇，與 10/30 基準相比，文章 JSON、產文流程與候選文件均無變更。已閱讀全部 13 個待審 PR 的說明及變更檔案清單：#168、#169、#174、#175、#178、#179、#180、#181、#182、#183、#184、#185、#186；沒有新增或修改 `editorial/` 文章。#168 有 renderer／SEO 標記調整，其他為校庫、校務資料提案或測試，不將這些提案當成已查核的文章來源。PR #78、#92、#119、#122、#132、#133 均已合併；下方 10/26 的待審描述是歷史狀態。
+
+| 候選 | 已有／保留位置 | 今天的判定 |
+| --- | --- | --- |
+| 1 | `exchange-semester-or-year` | main 已完成 |
+| 2 | `exchange-versus-visiting` | main 已完成 |
+| 3 | `exchange-recommendation-letter` | main 已完成 |
+| 4 | `english-taught-exchange-courses` | main 已完成 |
+| 5、18 | `exchange-interview-practice` | main 已整併完成 |
+| 6 | `exchange-arrival-week` | main 已完成 |
+| 7 | `exchange-scholarship-obligations` | main 已完成 |
+| 8 | `exchange-course-changes` | main 已完成 |
+| 9 | `exchange-fact-sheet` | main 已完成 |
+| 10 | `exchange-housing-commute` | main 已完成 |
+| 11 | `exchange-limited-budget` | main 已完成 |
+| 12 | `exchange-return-checklist` | main 已完成 |
+| 13 | `exchange-study-plan`，10/30 分支完整 AI 教學更新 | 已選並完成驗收，未 PR；保留原批次，不跨日重做 |
+| 14 | `ai-self-introduction` | main 已完成 |
+| 15 | 三工具比較，尚無 slug | 缺可核對實測及可用登入條件，不捏造結果 |
+| 16 | `natural-writing-prompts` | main 已完成 |
+| 17 | `ai-english-learning` | main 已完成 |
+| 19 | `toefl-ibt-preparation` | main 已完成 |
+| 20 | `toeic-listening-reading-preparation` | main 已完成 |
+
+候選 13 的完整標題是〈交換學生讀書計畫怎麼寫？AI Prompt、四段架構與排版步驟〉，保存在 `codex/seo-daily-20261030` 的 `97de3fda2532c089efae008a8973b124ae04f86e`；[文章、來源與驗收紀錄](https://github.com/blizzard-new/abroad/blob/codex/seo-daily-20261030/docs/seo-editorial-validation-2026-10-30.md) 已推送，仍是 10/30 批次的 1／2，不能算作今天新完成的一篇。main 的舊版不代表該方向尚未做。
+
+今天重新查核 TinyFish Default profile 沒有已記錄的登入站點，雲端執行環境亦沒有已配置的模型憑證／身分。10/30 的 Claude 存取測試曾導向登入頁並遇到驗證挑戰；這是有日期的既有證據，未冒充今天重測。今天未登入、未送出模型測試、不解答或繞過 CAPTCHA。僅讀官方工具文件不能滿足候選 15 的實測要求。
+
+**本日 0／2，未新增或修改文章，未開 PR。** 已向使用者詢問新增兩個獨立方向，或可用的比較實測條件及另一個獨立題目，尚未收到答覆；提問的預選項不是同意。即使比較條件恢復，候選 15 仍只有一個方向，不足以單獨完成新的兩篇批次。不得拿舊題換標題、拆頁或重做 10/30 成果補數，也未更動排程。[今日盤點與限制](seo-editorial-validation-2026-10-31.md) 及[機器可讀清單](seo-editorial-inventory-2026-10-31.json) 隨分支保存。
+
 ## 2026-10-26 每日批次：兩篇（待審）
 
 日期採 Asia/Taipei，隔離分支 `codex/seo-daily-20261026`，基於 main `252f633c`；兩篇同屬 [PR #133](https://github.com/blizzard-new/abroad/pull/133)，待審、未合併。已讀 main 十九篇、所有待審 PR #119／#122／#126／#127／#131／#132，以及當日分支／PR；開始前沒有另一個 10/26 批次。#119、#122、#132 的六題均視為已選並排除，本批不依賴其合併。基礎 #78、流程 #92 已合併。
