@@ -135,15 +135,20 @@ def test_a_daily_assignment_is_remembered(office, monkeypatch):
     assert office.colleague("小美").record["daily"] == "看 Dcard 交換版熱門話題"
 
 
-def test_a_school_round_can_start_right_away(office, monkeypatch):
-    office.hire("Dora", "校園情報研究員", "巡查各大學官網")
+@pytest.mark.parametrize("names", [("Dora",), ("Dora", "dora2")], ids=["all-schools", "shared-schools"])
+def test_a_school_round_can_start_right_away(office, monkeypatch, names):
+    for name in names:
+        office.hire(name, "校園情報研究員", "巡查各大學官網")
     chief_does(monkeypatch, {"type": "assign", "name": "Dora", "task_kind": "schools"})
     assert "還沒分到學校" in office.staff["chief"].handle("請 Dora 現在先巡查一次")["text"]
-    office.split_schools(["Dora"])
+    office.split_schools(list(names))
+    assigned = office.colleague("Dora").record["schools"]
+    assert assigned
     answer = office.staff["chief"].handle("請 Dora 現在先巡查一次")
-    # Every school on the platform goes to her; the platform keeps growing, so the number is read, not written down here.
-    assert f"現在開始巡查 {len(office.colleague('Dora').record['schools'])} 所" in answer["text"]
+    assert f"Dora現在開始巡查 {len(assigned)} 所學校，查完會回報" in answer["text"]
     assert wait_for(lambda: any(m["text"].startswith("Dora今天巡查了") for m in office.store.chat()), seconds=20)
+    report = next(m["text"] for m in office.store.chat() if m["text"].startswith("Dora今天巡查了"))
+    assert f"／{len(assigned)} 所學校：" in report.splitlines()[0]
 
 
 def test_colleagues_can_work_at_their_own_times_several_times_a_day(office, monkeypatch):
