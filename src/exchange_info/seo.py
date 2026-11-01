@@ -64,11 +64,22 @@ FIELDS = (
 )
 
 
+# Crawlers that fetch pages to answer a person's question and cite the source, versus crawlers that collect
+# text to train models. Named groups in robots.txt ignore the "*" group, so each one repeats the private paths.
+AI_SEARCH_CRAWLERS = ("OAI-SearchBot", "ChatGPT-User", "PerplexityBot", "Perplexity-User", "Claude-SearchBot", "Claude-User")
+AI_TRAINING_CRAWLERS = ("GPTBot", "ClaudeBot", "Google-Extended", "Applebot-Extended", "CCBot")
+AI_CRAWLER_POLICIES = ("allow", "search-only")
+PRIVATE_PATHS = ("/account/", "/auth/", "/admin/", "/calendar/")
+ORGANIZATION_DESCRIPTION = "UniWay 是獨立的交換學生資訊整理平台，並非大學或政府單位，不保證名額、錄取或補助。"
+SOCIAL_PROFILES = ("https://www.instagram.com/uniway.tw/", "https://www.threads.com/@uniway.tw")
+
+
 @dataclass(frozen=True)
 class SeoSettings:
     origin: str
     indexable: bool
     verification: str = ""
+    ai_crawlers: str = "allow"
 
     @classmethod
     def from_environment(cls, env: Mapping[str, str] | None = None) -> "SeoSettings":
@@ -81,7 +92,12 @@ class SeoSettings:
         # Development and staging must opt in deliberately. Never trust Host or forwarded headers.
         enabled = env.get("EXCHANGE_SEO_INDEXABLE", "").strip().lower()
         indexable = enabled in {"1", "true", "yes", "on"} if enabled else env.get("EXCHANGE_ENVIRONMENT") == "production"
-        return cls(origin, indexable, env.get("EXCHANGE_GOOGLE_SITE_VERIFICATION", "").strip())
+        policy = env.get("EXCHANGE_AI_CRAWLERS", "").strip().lower() or "allow"
+        if policy not in AI_CRAWLER_POLICIES:
+            # A typo in a crawler preference must not stop the site from starting; fall back to the default.
+            logging.getLogger(__name__).warning("Ignoring unknown EXCHANGE_AI_CRAWLERS value; using 'allow'")
+            policy = "allow"
+        return cls(origin, indexable, env.get("EXCHANGE_GOOGLE_SITE_VERIFICATION", "").strip(), policy)
 
 
 def structured_data(value: dict) -> str:
@@ -113,10 +129,65 @@ def metadata(settings: SeoSettings, title: str, description: str, path: str, art
     return "\n".join(tags) + analytics_markup()
 
 
+def robots_txt(settings: SeoSettings) -> str:
+    if not settings.indexable:
+        return "User-agent: *\nDisallow: /\n"
+    private = "".join(f"Disallow: {path}\n" for path in PRIVATE_PATHS)
+    rules = "User-agent: *\n" + private
+    # Spell out the stance toward AI crawlers so it is a decision, not an accident of the "*" group.
+    rules += "\n" + "".join(f"User-agent: {bot}\n" for bot in AI_SEARCH_CRAWLERS) + "Allow: /\n" + private
+    if settings.ai_crawlers == "search-only":
+        rules += "\n" + "".join(f"User-agent: {bot}\n" for bot in AI_TRAINING_CRAWLERS) + "Disallow: /\n"
+    else:
+        rules += "\n" + "".join(f"User-agent: {bot}\n" for bot in AI_TRAINING_CRAWLERS) + "Allow: /\n" + private
+    return rules + f"\nSitemap: {settings.origin}/sitemap.xml\n"
+
+
+def organization(settings: SeoSettings) -> dict:
+    return {"@type": "Organization", "@id": settings.origin + "/#organization", "name": "UniWay",
+            "url": settings.origin + "/", "description": ORGANIZATION_DESCRIPTION,
+            "logo": {"@type": "ImageObject", "url": settings.origin + "/static/assets/brand/apple-touch-icon.png",
+                     "width": 180, "height": 180},
+            "sameAs": list(SOCIAL_PROFILES)}
+
+
 def homepage_html(template: str, settings: SeoSettings) -> str:
-    graph = {"@context": "https://schema.org", "@type": "WebSite", "name": "UniWay",
-             "url": settings.origin + "/", "description": HOME_DESCRIPTION, "inLanguage": "zh-Hant"}
+    graph = {"@context": "https://schema.org", "@graph": [
+        organization(settings),
+        {"@type": "WebSite", "@id": settings.origin + "/#website", "name": "UniWay", "url": settings.origin + "/",
+         "description": HOME_DESCRIPTION, "inLanguage": "zh-Hant", "publisher": {"@id": settings.origin + "/#organization"}}]}
     return template.replace("<!-- seo-head -->", metadata(settings, HOME_TITLE, HOME_DESCRIPTION, "/") + structured_data(graph))
+
+
+def one_line(value: str) -> str:
+    return " ".join(value.split())
+
+
+def llms_txt(settings: SeoSettings, universities: Sequence[UniversityProfile]) -> str:
+    """Plain-text map of the public pages for AI assistants; built from the same registries as the sitemap."""
+    o = settings.origin
+    lines = ["# UniWay", "",
+             f"> {ORGANIZATION_DESCRIPTION}整理全台 {len(universities)} 所大學的交換學生申請規定與海外合作校資訊，內容為繁體中文，公開頁面免登入。", "",
+             "引用本站內容時請注意：", "",
+             "- 合作關係不等於當期開放申請。每個合作校頁分開標示「名單列載」「合作協議參考」「待確認」「零名額」等狀態，請依原狀態轉述，不要推論成可申請。",
+             "- 頁面上的資料擷取時間是系統抓取時間，不代表資格、名額或期限已完成人工查核。",
+             "- 資格、名額、期限與文件請以母校國際處及合作校最新官方公告為準；各頁附官方來源連結，建議一併引用。",
+             f"- 資料來源與更正方式見 [資料編輯與更正政策]({o}/editorial-policy)。", "",
+             "## 主要頁面", "",
+             f"- [首頁]({o}/): 互動式選校與申請規劃工具",
+             f"- [學校總覽]({o}/schools): 全部支援的母校，各校頁面列出可申請的合作校與官方來源",
+             f"- [國家專區]({o}/destinations): 依目的地比較語言、學期、預算與官方規劃資料",
+             f"- [跨校外國大學]({o}/partners): 同一所外國大學在全台各校的合作與門檻整理",
+             f"- [交換指南]({o}/guides): 資格、費用、補助與文件準備的來源導向指南", "",
+             "## 交換指南", ""]
+    lines += [f"- [{one_line(a.title)}]({o}/guides/{slug}): {one_line(a.description)}" for slug, a in ARTICLES.items()]
+    lines += ["", "## 國家專區", ""]
+    lines += [f"- [{data['name']}交換學生指南]({o}/destinations/{slug})" for slug, data in COUNTRIES.items()]
+    lines += ["", "## 母校交換指南", ""]
+    lines += [f"- [{u.school_name}（{u.english_name}）]({o}/schools/{u.id})" for u in universities]
+    lines += ["", "## Optional", "",
+              f"- [Sitemap]({o}/sitemap.xml): 含各母校的合作校頁面網址，數量較多", ""]
+    return "\n".join(lines)
 
 
 def partner_id(partner: PartnerUniversity) -> str:
@@ -348,13 +419,14 @@ def create_seo_router(settings: SeoSettings, catalogue: Callable[[UniversityProf
 
     @router.api_route("/robots.txt", methods=["GET", "HEAD"])
     def robots():
-        rules = "User-agent: *\n"
-        if settings.indexable:
-            rules += "Disallow: /account/\nDisallow: /auth/\nDisallow: /admin/\nDisallow: /calendar/\n"
-            rules += f"Sitemap: {settings.origin}/sitemap.xml\n"
-        else:
-            rules += "Disallow: /\n"
-        return PlainTextResponse(rules, headers={"Cache-Control": "public, max-age=300"})
+        return PlainTextResponse(robots_txt(settings), headers={"Cache-Control": "public, max-age=300"})
+
+    @router.api_route("/llms.txt", methods=["GET", "HEAD"])
+    def llms():
+        # Staging and preview builds must not advertise themselves to assistants.
+        if not settings.indexable:
+            raise HTTPException(404, "找不到頁面")
+        return PlainTextResponse(llms_txt(settings, tuple(universities.values())), headers={"Cache-Control": "public, max-age=300"})
 
     @router.api_route("/partners", methods=["GET", "HEAD"])
     def partners_directory():

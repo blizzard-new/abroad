@@ -144,6 +144,7 @@ def build_levels(context, evaluated, catalog):
         item = level(task.id, task.title, kind, task.detail, task.phase or "申請事項")
         item.update(source_urls=task.source_urls, dependency_ids=task.dependency_ids,
                     official_deadline_at=task.official_deadline_at.isoformat() if task.official_deadline_at else None,
+                    deadline_confirmed=bool(task.official_deadline_at and task.task_origin == "official" and not task.needs_confirmation),
                     deadline_source_url=task.deadline_source_url,
                     source_signature=task.source_signature,
                     templates=task.document_link.template_ids if task.document_link else [],

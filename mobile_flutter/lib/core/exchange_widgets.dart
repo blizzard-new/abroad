@@ -39,10 +39,7 @@ class GlassCard extends StatelessWidget {
         button: onTap == null ? null : true,
         child: Material(
           color: tint ?? ExchangeColors.surface,
-          shape: RoundedRectangleBorder(
-            borderRadius: radius,
-            side: const BorderSide(color: ExchangeColors.line),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: radius),
           clipBehavior: Clip.antiAlias,
           child: onTap == null
               ? Padding(padding: padding, child: child)

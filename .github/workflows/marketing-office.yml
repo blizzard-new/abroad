@@ -4,10 +4,12 @@ on:
   push:
     paths:
       - "marketing/agent-office/**"
+      - "src/exchange_info/university_registry.py"
       - ".github/workflows/marketing-office.yml"
   pull_request:
     paths:
       - "marketing/agent-office/**"
+      - "src/exchange_info/university_registry.py"
       - ".github/workflows/marketing-office.yml"
   workflow_dispatch:
 

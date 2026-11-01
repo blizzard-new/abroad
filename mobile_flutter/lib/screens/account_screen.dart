@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../core/student_ui.dart';
-import '../core/journey_illustration.dart';
+import '../core/uniway_brand.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
 import 'app_update_prompt.dart';
@@ -258,14 +258,14 @@ class _AccountScreenState extends State<AccountScreen> {
       children: [
         const Row(
           children: [
-            ExchangeIconBadge(Icons.explore_outlined),
+            UniWayLogo(size: 48),
             SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '交換指南帳號',
+                    'UniWay 帳號',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   Text('收藏、時程與留學社群都能同步'),
@@ -681,14 +681,14 @@ class _AccountScreenState extends State<AccountScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const StudentHeading('我的', subtitle: '你的交換，隨時接著準備'),
+        const StudentHeading('我的', action: UniWayLogo()),
         const SizedBox(height: 24),
         GlassCard(
           tint: ExchangeColors.tealSoft,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Center(child: JourneyIllustration()),
+              const Center(child: UniWayMascot(size: 140)),
               const SizedBox(height: 20),
               Text('把計畫帶著走', style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 8),

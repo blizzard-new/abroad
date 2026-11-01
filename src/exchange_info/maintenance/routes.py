@@ -796,6 +796,16 @@ def create_maintenance_router(
             <option value="ncnu">國立暨南國際大學（共 212 所姊妹校）</option>
             <option value="ndhu">國立東華大學（共 163 所姊妹校）</option>
             <option value="thu">東海大學（共 274 所姊妹校）</option>
+            <option value="shu">世新大學（共 177 所姊妹校）</option>
+            <option value="pu">靜宜大學（共 276 所姊妹校）</option>
+            <option value="usc">實踐大學（共 125 所姊妹校）</option>
+            <option value="nuk">國立高雄大學（共 280 所姊妹校）</option>
+            <option value="ncyu">國立嘉義大學（共 140 所姊妹校）</option>
+            <option value="nutc">國立臺中科技大學（共 140 所姊妹校）</option>
+            <option value="nfu">國立虎尾科技大學（共 152 所姊妹校）</option>
+            <option value="utaipei">臺北市立大學（共 226 所姊妹校）</option>
+            <option value="ntue">國立臺北教育大學（共 143 所姊妹校）</option>
+            <option value="npust">國立屏東科技大學（共 309 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -902,7 +912,21 @@ def create_maintenance_router(
     ntub: "國立臺北商業大學 (NTUB)",
     ncnu: "國立暨南國際大學 (NCNU)",
     ndhu: "國立東華大學 (NDHU)",
-    thu: "東海大學 (THU)"
+    thu: "東海大學 (THU)",
+    shu: "世新大學 (SHU)",
+    pu: "靜宜大學 (PU)",
+    usc: "實踐大學 (USC)",
+    nuk: "國立高雄大學 (NUK)",
+    ncyu: "國立嘉義大學 (NCYU)",
+    nutc: "國立臺中科技大學 (NUTC)",
+    nfu: "國立虎尾科技大學 (NFU)",
+    utaipei: "臺北市立大學 (UTaipei)",
+    ntcu: "國立臺中教育大學 (NTCU)",
+    tnua: "國立臺北藝術大學 (TNUA)",
+    ntua: "國立臺灣藝術大學 (NTUA)",
+    ntue: "國立臺北教育大學 (NTUE)",
+    ncut: "國立勤益科技大學 (NCUT)",
+    npust: "國立屏東科技大學 (NPUST)"
   };
 
   const FIELD_LABELS = {

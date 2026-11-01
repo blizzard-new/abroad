@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../core/student_ui.dart';
+import '../core/uniway_brand.dart';
 import '../data/exchange_api.dart';
 import '../data/forum_models.dart';
 import '../state/exchange_store.dart';
@@ -196,7 +197,7 @@ class _ForumFeedState extends State<_ForumFeed> {
               children: [
                 StudentHeading(
                   '交換生論壇',
-                  subtitle: '問問走過這條路的同學',
+
                   action: IconButton(
                     tooltip: '論壇指南',
                     icon: const Icon(Icons.help_outline_rounded),
@@ -221,6 +222,42 @@ class _ForumFeedState extends State<_ForumFeed> {
                         ),
                       ],
                     ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                GlassCard(
+                  tint: ExchangeColors.tealSoft,
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '交換路上，一起找答案。',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              '選校・住宿・申請經驗',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: ExchangeColors.secondaryInk,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (MediaQuery.textScalerOf(context).scale(16) < 24)
+                        const Padding(
+                          padding: EdgeInsets.only(left: 12),
+                          child: UniWayMascot(size: 64),
+                        ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -344,23 +381,89 @@ class _ForumFeedState extends State<_ForumFeed> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        StudentIconLabel(
-                          Icons.forum_outlined,
-                          boards
-                                  .where((b) => b.id == post.boardId)
-                                  .firstOrNull
-                                  ?.label ??
-                              post.school,
-                          color: ExchangeColors.teal,
+                        Row(
+                          children: [
+                            Container(
+                              width: 36,
+                              height: 36,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: ExchangeColors.blueSoft,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: const Icon(
+                                Icons.person_outline_rounded,
+                                color: ExchangeColors.blue,
+                                size: 20,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                post.author,
+                                style: Theme.of(context).textTheme.labelMedium,
+                              ),
+                            ),
+                            if (_date(post.created).isNotEmpty)
+                              Text(
+                                _date(post.created),
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Wrap(
+                          spacing: 10,
+                          runSpacing: 8,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            StudentIconLabel(
+                              Icons.forum_outlined,
+                              boards
+                                      .where((b) => b.id == post.boardId)
+                                      .firstOrNull
+                                      ?.label ??
+                                  post.school,
+                              color: ExchangeColors.teal,
+                            ),
+                            if (post.school.isNotEmpty &&
+                                boards.any(
+                                  (b) =>
+                                      b.id == post.boardId &&
+                                      b.label.isNotEmpty &&
+                                      b.label != post.school,
+                                ))
+                              StudentIconLabel(
+                                Icons.school_outlined,
+                                post.school,
+                              ),
+                            if (forumTopics[post.topic] case final topic?)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: ExchangeColors.tealSoft,
+                                  borderRadius: BorderRadius.circular(999),
+                                ),
+                                child: Text(
+                                  topic,
+                                  style: Theme.of(context).textTheme.labelMedium
+                                      ?.copyWith(color: ExchangeColors.teal),
+                                ),
+                              ),
+                          ],
                         ),
                         const SizedBox(height: 12),
                         Text(
                           post.title,
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                         const SizedBox(height: 8),
                         Text(
                           post.body,
+                          style: Theme.of(context).textTheme.bodySmall,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -370,16 +473,14 @@ class _ForumFeedState extends State<_ForumFeed> {
                           runSpacing: 8,
                           children: [
                             StudentIconLabel(
-                              Icons.person_outline_rounded,
-                              post.author,
-                            ),
-                            StudentIconLabel(
                               Icons.chat_bubble_outline_rounded,
-                              '${post.comments}',
+                              '${post.comments} 則回覆',
                             ),
+
                             Text(
-                              _date(post.created),
-                              style: Theme.of(context).textTheme.bodySmall,
+                              '查看討論 ›',
+                              style: Theme.of(context).textTheme.labelMedium
+                                  ?.copyWith(color: ExchangeColors.teal),
                             ),
                           ],
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'exchange_theme.dart';
 import 'exchange_widgets.dart';
+import 'uniway_brand.dart';
 
 /// A shared reading width and action area for every secondary destination.
 class StudentPage extends StatelessWidget {
@@ -405,14 +406,7 @@ class StudentEmptyState extends StatelessWidget {
     padding: const EdgeInsets.symmetric(vertical: 32),
     child: Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(24),
-          decoration: const BoxDecoration(
-            color: ExchangeColors.tealSoft,
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, size: 32, color: ExchangeColors.teal),
-        ),
+        const UniWayMascot(size: 88),
         const SizedBox(height: 16),
         Text(
           title,

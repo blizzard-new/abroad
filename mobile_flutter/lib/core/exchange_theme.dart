@@ -4,17 +4,17 @@ import 'package:flutter/services.dart';
 import 'daylight_surface.dart';
 
 abstract final class ExchangeColors {
-  static const primaryEnd = Color(0xFF075C64);
+  static const primaryEnd = Color(0xFF17243A);
   static const onPrimary = Colors.white;
-  static const fieldBorder = Color(0xFF81938E);
-  static const background = Color(0xFFF6F8F7);
+  static const fieldBorder = Color(0xFFB8C4D6);
+  static const background = Color(0xFFF5F7FA);
   static const surface = Color(0xFFFFFFFF);
-  static const surfaceMuted = Color(0xFFEEF2F1);
-  static const ink = Color(0xFF172D37);
-  static const secondaryInk = Color(0xFF52656E);
-  static const line = Color(0xFFDCE5E3);
-  static const teal = Color(0xFF006C67);
-  static const tealSoft = Color(0xFFE2F3EE);
+  static const surfaceMuted = Color(0xFFEDF1F6);
+  static const ink = Color(0xFF1D2C43);
+  static const secondaryInk = Color(0xFF58677B);
+  static const line = Color(0xFFDEE5EF);
+  static const teal = Color(0xFF23324A);
+  static const tealSoft = Color(0xFFE9EEF5);
   static const blue = Color(0xFF315DA8);
   static const blueSoft = Color(0xFFEAF0FC);
   static const coral = Color(0xFFAC4934);
@@ -51,12 +51,12 @@ ThemeData buildExchangeTheme() {
 
   return base.copyWith(
     textTheme: TextTheme(
-      displayLarge: type(24, strong: true),
-      displayMedium: type(24, strong: true),
-      displaySmall: type(24, strong: true),
-      headlineLarge: type(24, strong: true),
-      headlineMedium: type(24, strong: true),
-      headlineSmall: type(24, strong: true),
+      displayLarge: type(32, strong: true),
+      displayMedium: type(32, strong: true),
+      displaySmall: type(32, strong: true),
+      headlineLarge: type(32, strong: true),
+      headlineMedium: type(28, strong: true),
+      headlineSmall: type(28, strong: true),
       titleLarge: type(20, strong: true),
       titleMedium: type(16, strong: true),
       titleSmall: type(16, strong: true),
@@ -104,16 +104,16 @@ ThemeData buildExchangeTheme() {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: ExchangeColors.surface,
+      fillColor: ExchangeColors.surfaceMuted,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       constraints: const BoxConstraints(minHeight: 48),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: ExchangeColors.fieldBorder),
+        borderSide: BorderSide.none,
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(color: ExchangeColors.fieldBorder),
+        borderSide: BorderSide.none,
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
@@ -141,7 +141,7 @@ ThemeData buildExchangeTheme() {
       backgroundColor: ExchangeColors.surfaceMuted,
       selectedColor: ExchangeColors.tealSoft.withValues(alpha: .76),
       disabledColor: ExchangeColors.surface,
-      side: BorderSide(color: ExchangeColors.line),
+      side: BorderSide.none,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
       labelStyle: const TextStyle(
