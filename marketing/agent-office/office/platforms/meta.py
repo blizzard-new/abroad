@@ -49,8 +49,27 @@ class ThreadsClient(Client):
         if reply_to_id:
             params["reply_to_id"] = reply_to_id
         container = self._call("POST", f"{self.user_id}/threads", fake={"id": self.fake_id("container")}, **params)
-        self._wait(container["id"])
-        published = self._call("POST", f"{self.user_id}/threads_publish", fake={"id": self.fake_id("thread")}, creation_id=container["id"])
+        return self._publish(container["id"])
+
+    def post_carousel(self, image_urls: list[str], text: str, *, topic_tag: str = "") -> dict:
+        """One post with several pictures that swipe: a container per picture, then one carousel container that holds them."""
+        if not 2 <= len(image_urls) <= 20:
+            raise PlatformError("Threads 輪播需要 2～20 張圖")
+        children = [
+            self._call("POST", f"{self.user_id}/threads", fake={"id": self.fake_id("child")}, media_type="IMAGE", image_url=url, is_carousel_item="true")["id"]
+            for url in image_urls
+        ]
+        for child in children:
+            self._wait(child)
+        params = {"media_type": "CAROUSEL", "children": ",".join(children), "text": text}
+        if topic_tag:
+            params["topic_tag"] = topic_tag
+        container = self._call("POST", f"{self.user_id}/threads", fake={"id": self.fake_id("container")}, **params)
+        return self._publish(container["id"])
+
+    def _publish(self, container_id: str) -> dict:
+        self._wait(container_id)
+        published = self._call("POST", f"{self.user_id}/threads_publish", fake={"id": self.fake_id("thread")}, creation_id=container_id)
         media_id = published["id"]
         link = self._call("GET", media_id, fake={"permalink": ""}, fields="permalink")
         return {"id": media_id, "url": link.get("permalink", "")}

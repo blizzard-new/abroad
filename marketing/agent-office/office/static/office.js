@@ -655,7 +655,9 @@ function previewHTML(d) {
     return `<p class="sub"><b>@${esc(p.username || "訪客")} 的留言</b>\n${esc(p.comment_text)}</p><p class="post" style="margin-top:8px">${esc(p.text)}</p>`;
   }
   if (d.channel === "threads") {
-    const card = m.image ? `<div class="thumbs"><button type="button" data-zoom="${media(m.image)}"><img src="${media(m.image)}" alt="Threads 配圖" loading="lazy" /></button></div>` : "";
+    // A multi-image post (format carousel) has several pictures; a plain post has one card.
+    const pictures = m.images && m.images.length ? m.images : m.image ? [m.image] : [];
+    const card = pictures.length ? `<div class="thumbs">${pictures.map((r) => `<button type="button" data-zoom="${media(r)}"><img src="${media(r)}" alt="Threads 配圖" loading="lazy" /></button>`).join("")}</div>` : "";
     return `${card}<p class="post">${esc(p.text)}</p><p class="sub"><b>第一則留言</b>\n${esc(p.first_reply)}</p><p class="sub">主題標籤：${esc(p.topic_tag)}${p.source_url ? `｜<a href="${esc(p.source_url)}" target="_blank" rel="noopener">官方來源</a>` : ""}</p>`;
   }
   if (d.format === "carousel") {

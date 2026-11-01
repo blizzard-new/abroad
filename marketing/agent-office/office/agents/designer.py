@@ -143,7 +143,10 @@ class Designer(Agent):
         day = date.fromisoformat(draft["day"])
         ask = f"老闆要重做這組圖：{note.strip() or '換一個設計'}。文字不要動，只重新設計版面（和封面插圖）。"
         if draft["format"] == "carousel":
-            content = CarouselDraft(**{k: payload[k] for k in ("slides", "caption", "hashtags") if k in payload}, art_prompt=payload.get("art_prompt", ""))
+            if draft["channel"] == "threads":  # a Threads post with several pictures: its pages are the slides, its words the caption
+                content = CarouselDraft(slides=payload["slides"], caption=payload.get("text", ""), hashtags=[], art_prompt="")
+            else:
+                content = CarouselDraft(**{k: payload[k] for k in ("slides", "caption", "hashtags") if k in payload}, art_prompt=payload.get("art_prompt", ""))
             folder = office.day_media_dir(day) / f"carousel-{draft['id']}-{token_hex(3)}"
             files, plan, art, notes = self.render_carousel(chief, content, draft["title"], folder, ask)
             media["images"] = [office.media_ref(p) for p in files]

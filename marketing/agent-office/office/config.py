@@ -46,6 +46,14 @@ def _flag(value: str | None, default: bool | None) -> bool | None:
     return default
 
 
+def _count(value: str | None, default: int) -> int:
+    """A small non-negative whole number; anything else keeps the default."""
+    try:
+        return max(0, int((value or "").strip()))
+    except ValueError:
+        return default
+
+
 @dataclass(frozen=True)
 class Settings:
     home: Path
@@ -75,6 +83,7 @@ class Settings:
 
     daily_at: time = time(7, 30)
     threads_slots: tuple[time, ...] = (time(12, 30), time(21, 0))
+    threads_albums: int = 1  # how many of the day's Threads posts (the latest ones) are multi-image posts; 0 for none
     instagram_slot: time = time(19, 30)
     youtube_slot: time = time(18, 0)
     analytics_at: time = time(23, 30)
@@ -170,6 +179,7 @@ class Settings:
             brain_timeout=int(get("OFFICE_BRAIN_TIMEOUT") or 600),
             daily_at=_time(get("OFFICE_DAILY_AT") or "07:30"),
             threads_slots=tuple(_time(t) for t in (get("OFFICE_THREADS_SLOTS") or "12:30,21:00").split(",") if t.strip()),
+            threads_albums=_count(get("OFFICE_THREADS_ALBUMS"), 1),
             instagram_slot=_time(get("OFFICE_INSTAGRAM_SLOT") or "19:30"),
             youtube_slot=_time(get("OFFICE_YOUTUBE_SLOT") or "18:00"),
             analytics_at=_time(get("OFFICE_ANALYTICS_AT") or "23:30"),

@@ -16,11 +16,11 @@ from datetime import date, datetime, time, timedelta, timezone
 
 from .. import accounts, brains
 from ..llm import WriterError
-from ..models import CarouselDraft, ChiefAction, ChiefReply, PlanItem, ThreadsDraft, VideoScript
-from ..rules import check_carousel, check_threads, check_video, instagram_caption
+from ..models import CarouselDraft, ChiefAction, ChiefReply, PlanItem, ThreadsAlbumDraft, ThreadsDraft, VideoScript
+from ..rules import check_carousel, check_threads, check_threads_album, check_video, instagram_caption
 from .base import Agent, Persona
 from .hire import Hire
-from .threads_writer import card_media
+from .threads_writer import album_media, card_media
 
 STATUS_WORD = {
     "pending_approval": "待審", "needs_changes": "需修改", "approved": "已核准", "publishing": "發佈中",
@@ -106,7 +106,10 @@ class Chief(Agent):
         )
         notes = json.loads(office.store.get("boss_notes") or "[]")
         clock = office.schedule_times()
-        timetable = (f"每天開工 {clock['start'][0]}；Threads 發文 {'、'.join(clock['threads'])}（一個時間一篇）；"
+        albums = sum(slot.channel == "threads" and slot.format == "carousel" for slot in office.staff["strategist"].slots(office.today()))
+        album_note = (f"，其中最後 {albums} 篇是帶多張圖的輪播貼文（.env 的 OFFICE_THREADS_ALBUMS 可以改成 0 不做，要多做就請我「加做一則 Threads 多圖貼文」）"
+                      if albums else "，都是一般貼文加一張圖（多圖貼文要在 .env 把 OFFICE_THREADS_ALBUMS 設成 1 以上，或請我「加做一則 Threads 多圖貼文」）")
+        timetable = (f"每天開工 {clock['start'][0]}；Threads 發文 {'、'.join(clock['threads'])}（一個時間一篇{album_note}）；"
                      f"IG 發文 {clock['instagram'][0]}；YouTube 發文 {clock['youtube'][0]}")
         routines = "\n".join(f"- {office.describe_routine(r)}" for r in office.routines())
         settings = office.settings
@@ -325,7 +328,11 @@ class Chief(Agent):
             source_url=payload.get("source_url", ""),
         )
         author.status("working", f"總管交代：{instructions[:16]}")
-        if draft["format"] == "text":
+        if draft["channel"] == "threads" and draft["format"] == "carousel":
+            content = ThreadsAlbumDraft(**{k: payload[k] for k in ("text", "topic_tag", "first_reply", "slides") if k in payload})
+            check = lambda d: check_threads_album(d, briefing.facts, item.source_url)  # noqa: E731
+            kind = "Threads 多圖貼文"
+        elif draft["format"] == "text":
             content = ThreadsDraft(**{k: payload[k] for k in ("text", "topic_tag", "first_reply", "card_title", "card_body") if k in payload})
             check = lambda d: check_threads(d, briefing.facts, item.source_url)  # noqa: E731
             kind = "Threads 貼文"
@@ -342,7 +349,17 @@ class Chief(Agent):
         author.handoff(reviewer.id, "改好的稿")
         content, review, passed = reviewer.review(kind, content, item, briefing, check, author=author)
 
-        if isinstance(content, ThreadsDraft):
+        if isinstance(content, ThreadsAlbumDraft):
+            payload.update(content.model_dump())
+            title = content.text.strip().splitlines()[0][:40]
+            if office.settings.render_media:
+                art = office.media_file(media["art"]) if media.get("art") else None
+                # The words changed, so Mori lays the pages out again; the cover illustration stays (redo_image draws a new one).
+                made, plan, _ = album_media(author, content, draft["title"], date.fromisoformat(draft["day"]), f"文字改過了（{instructions}），請重新排版。",
+                                            art=art, new_art=False)
+                media = {**media, **made}
+                payload["visual_plan"] = plan.model_dump()
+        elif isinstance(content, ThreadsDraft):
             payload.update(content.model_dump())
             title = content.text.strip().splitlines()[0][:40]
             if media.get("image") or not draft["media"]:
@@ -388,8 +405,8 @@ class Chief(Agent):
         office = self.office
         channel = action.channel or "threads"
         fmt = action.format or ("text" if channel == "threads" else "carousel")
-        if (channel, fmt) not in {("threads", "text"), ("instagram", "carousel"), ("instagram", "reel")}:
-            raise ValueError("加做只支援 Threads 貼文、IG 輪播、IG Reels")
+        if (channel, fmt) not in {("threads", "text"), ("threads", "carousel"), ("instagram", "carousel"), ("instagram", "reel")}:
+            raise ValueError("加做只支援 Threads 貼文、Threads 多圖貼文、IG 輪播、IG Reels")
         topic = (action.topic or action.instructions).strip()
         if not topic:
             raise ValueError("要加做什麼題目？")
@@ -397,12 +414,12 @@ class Chief(Agent):
                         topic=topic, brief=action.instructions or topic)
         slot = self._next_slot(channel)
         run_id = (office.store.latest_run() or {}).get("id")
-        desk = {"text": "threads", "carousel": "designer", "reel": "video"}[fmt]
+        desk = "threads" if channel == "threads" else {"carousel": "designer", "reel": "video"}[fmt]
         self.handoff(desk, "加做一則")
 
         def work() -> str:
             briefing = office.briefing_for_replies(with_news=True)
-            if fmt == "text":
+            if channel == "threads":  # a post, or a post with several pictures (the writer follows item.format)
                 draft_id = office.staff["threads"].produce(run_id, item, briefing, slot)
             elif fmt == "carousel":
                 draft_id, _ = office.staff["designer"].produce(run_id, item, briefing, slot)
