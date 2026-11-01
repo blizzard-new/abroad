@@ -85,6 +85,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
         "www.ntue.edu.tw",
         "ntue.edu.tw",
     ],
+    "ncut": ["oia.ncut.edu.tw", "www.ncut.edu.tw", "ncut.edu.tw"],
 }
 
 
@@ -1596,6 +1597,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["ntue"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ntue", partner_rows=ntue_rows, default_cycle_label="115"
+        )
+
+    # 45. NCUT partners.jsonl (134 partner schools)
+    ncut_partners_file = official_data_root / "ncut" / "partners.jsonl"
+    if ncut_partners_file.exists():
+        ncut_rows = []
+        for line in ncut_partners_file.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            ncut_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.ncut.edu.tw/p/412-1030-6648.php?Lang=zh-tw",
+            })
+        school_reports["ncut"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="ncut", partner_rows=ncut_rows, default_cycle_label="115"
         )
 
     if store.current_release_id is None:

@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCYU, NDHU, NFU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -113,6 +113,9 @@ NTUA_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 NTUE_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
+
+
+NCUT_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2872,6 +2875,51 @@ def _ntue_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ncut_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立勤益科技大學（國際事務處國際合作組，圖書資訊館 5 樓）選送學生出國交換研修、跨國雙聯學位暨教育部學海飛颺／惜珠計畫應繳申請表件：1. 出國交換研修申請表（電腦繕打、貼妥照片，經家長、導師／指導教授、系所主任及院長簽章）、2. 家長同意書（申請人與家長或監護人親筆簽名蓋章）、3. 歷年中英文成績單正本（含班級排名百分比與歷年學業總平均，須達 70 分以上）、4. 歷年操行成績證明（操行平均達 80 分以上且無小過以上處分）、5. 語言能力檢定成績單影本（英語組 TOEIC / TOEFL iBT / IELTS / GEPT、日語組 JLPT、韓語組 TOPIK；申請大陸地區姊妹校免附語檢）、6. 出國研修讀書計畫與自傳（中、外文撰寫）、7. 教師推薦信（1–2 封）、8. 有效護照影本、9. 其他有利審查資料（競賽獲獎、證照、社團幹部或學海惜珠新式戶口名簿及低收／中低收入戶證明）。",
+        "study-plan": "撰寫國立勤益科技大學選送學生出國交換研修、雙聯學位及教育部學海飛颺／惜珠計畫必繳之《出國研修讀書計畫（含自傳）》。請具體說明申請動機、擬於姊妹校修讀之課程規劃（依規定交換期間每學期至少修讀 2 門或 6 學分專業課程）、與勤益科大畢業學分抵免對應規劃，以及海外生活適應與返國後學習發展規劃。",
+        "course-preapproval": "辦理赴境外姊妹校交換或跨國雙聯學位計畫（日本國立東北大學材料科學雙聯博士、國立岩手大學理工學府雙聯碩士、加拿大皇家大學 RRU 2+2 雙聯學士、越南大南大學雙聯碩士）之選課與學分抵免預先規劃（出國期間須於國立勤益科技大學完成註冊選課保留學籍；返國後依《國立勤益科技大學辦理學生抵免學分辦法》檢附正式成績單與課程大綱向系所及教務處申請學分抵免）。",
+        "predeparture-notice": "獲國際事務處甄選錄取後，須於規定期限內確認錄取資格，配合國際處辦理姊妹校官方提名（Nomination）與外校入學申請；出國前須參加行前說明會、簽署切結書與行政契約書、辦理簽證、役男出境緩徵並投保足額海外醫療及意外保險。",
+        "return-report": "境外交換或雙聯研修期滿返國後一個月內，須依規定向國際事務處繳交《出國交換研修心得報告》（約 1,500–3,000 字並附活動照片或影音紀錄，供刊登於國際處出國交換心得分享專區與教育部學海計畫資訊網），並配合國際處出席海外留學與交換生經驗分享說明會，始得完成校內《推動學生參與國際化多元學習補助》或教育部學海系列計畫核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，須填具國立勤益科技大學學分抵免申請表，並檢附境外合作大學核發之正式成績單正本及修習課程大綱，經所屬學系（所）審核通過後送教務處註冊組登錄抵免學分。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立勤益科技大學").replace("長庚", "勤益科大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "勤益科大規定：申請人歷年學業成績總平均須達 70 分（或 GPA 2.5）以上、操行成績平均達 80 分以上且無小過以上處分；申請教育部《學海飛颺》獎助者建議班排名前 30%–50%。請檢附含班級排名百分比之歷年中英文成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 多益聽讀測驗（校內英語組 CEFR B1 基準：550 分以上；歐美韓名校及雙聯建議 650–785 分以上）", "TOEFL iBT 網路測驗（校內英語組 CEFR B1 基準：42 分以上；歐美及雙聯須 61–80 分以上）", "IELTS 雅思國際英語測驗（校內英語組 CEFR B1 基準：4.0 以上；歐美及雙聯須 5.5–6.0 以上）", "JLPT 日語能力試驗（日本姊妹校依規定須通過 N1、N2、N3 或 N4–N5 級以上）", "TOPIK 韓國語文能力測驗（韓國姊妹校依規定須通過 TOPIK 2–3 級以上或英語組門檻）", "大陸地區姊妹校交換（免附外語能力檢定證明，以歷年學業成績、讀書計畫與面試評分）"]
+            field["help_text"] = "依國立勤益科技大學《選送學生出國交換研修申請簡章》及各姊妹校申請門檻填報有效期限內之外語能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ncut.edu.tw/p/412-1030-6648.php?Lang=zh-tw",
+        source_checked_at=NCUT_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國交換研修申請表（含家長同意書與應繳文件檢核表）" if template.id == "exchange-application-data" else ("出國研修讀書計畫與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ncut.edu.tw/var/file/30/1030/img/1535/822026397.odt",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長（或監護人）親筆簽名蓋章", "導師（或指導教授）簽章", "系（所）主任簽章", "學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）及學院辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "獲錄取後確認資格、配合國際處辦理姊妹校提名、入學申請與切結書簽署", "return-report": "返國後一個月內繳交出國交換研修心得報告並配合國際處經驗分享會辦理獎助金核銷", "credit-transfer": "返國後檢附正式成績單與課程大綱向系所及教務處註冊組辦理學分抵免"}.get(template.id, "備齊校內申請表、家長同意書、歷年含排名中英文成績單、讀書計畫、語檢證明與推薦信送交圖書資訊館 5 樓國際事務處"),
+        version="115-2準備工具-2026-11-01.1",
+        destinations=["國立勤益科技大學國際事務處國際合作組（411030 臺中市太平區坪林里中山路二段 57 號 圖書資訊館 5 樓）"],
+        conditional_note="此為個人準備工具；國立勤益科技大學每年分兩梯次辦理赴境外及大陸地區交換學生甄選（春季班於前一年 9–10 月收件、秋季班於當年度 2–3 月收件）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2972,6 +3020,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntua_template(template)) is not None]
     if university.id == NTUE.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntue_template(template)) is not None]
+    if university.id == NCUT.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncut_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
