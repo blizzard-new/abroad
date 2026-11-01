@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的申請工作臺 · 設計稿</title>
+<!-- Static design proposal. Uses the site's own tokens and fonts; nothing here is wired to the app. All dates and names are made-up sample data. -->
+<link rel="stylesheet" href="../../../src/exchange_info/static/brand-tokens.css">
+<link rel="stylesheet" href="../../../src/exchange_info/static/typography.css">
+<style>
+  :root {
+    --ok: #1f7a4d; --ok-wash: #e6f3ec; --coral-wash: #f8e9e7; --focus: #3b6fd8;
+    --font: var(--uw-font-ui, "Poppins", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--uw-page, #f3f5f8); color: var(--uw-text, #23324a); font: 15px/1.6 var(--font); }
+  h1, h2, h3, h4, p, ul, ol { margin: 0; padding: 0; }
+  ul, ol { list-style: none; }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 8px; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---- spec page chrome ---- */
+  .doc { max-width: 1320px; margin: 0 auto; padding: 32px 24px 80px; }
+  .doc > header { max-width: 760px; margin-bottom: 28px; }
+  .doc > header h1 { font-size: 30px; line-height: 1.3; text-wrap: balance; }
+  .doc > header p { margin-top: 10px; color: var(--uw-muted, #586579); }
+  .sample-note { margin-top: 14px; display: inline-block; padding: 6px 12px; border-radius: 10px; background: var(--uw-amber-soft, #fff4d6); color: var(--uw-amber-ink, #8a5a00); font-size: 13px; font-weight: 600; }
+  .spec { margin-top: 44px; }
+  .spec > h2 { font-size: 20px; }
+  .spec > p { margin: 4px 0 14px; color: var(--uw-muted, #586579); max-width: 70ch; font-size: 14px; }
+  .scroll-x { overflow-x: auto; padding-bottom: 8px; }
+  .phones { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; }
+  .phones figure { margin: 0; }
+  figcaption { margin: 0 0 8px; font-size: 13px; color: var(--uw-muted, #586579); }
+
+  /* ---- shared product pieces ---- */
+  .board { background: var(--uw-surface, #fbfcfe); border: 1px solid var(--uw-line, #d8dde5); border-radius: 24px; overflow: hidden; }
+  .desktop { width: 1240px; display: grid; grid-template-columns: 76px 1fr; }
+  .phone { width: 390px; min-height: 780px; position: relative; display: flex; flex-direction: column; }
+
+  .rail { background: #fff; border-right: 1px solid var(--uw-line, #d8dde5); padding: 14px 6px; display: flex; flex-direction: column; gap: 4px; align-items: center; }
+  .rail a { width: 64px; padding: 8px 2px 6px; border-radius: 14px; text-decoration: none; text-align: center; font-size: 11px; line-height: 1.25; color: var(--uw-muted, #586579); display: grid; justify-items: center; gap: 3px; }
+  .rail a[aria-current="page"] { background: var(--uw-navy, #23324a); color: #fff; font-weight: 600; }
+  .rail svg, .ico { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+  .page { padding: 26px 32px 36px; display: grid; gap: 22px; align-content: start; }
+  .phone .page { padding: 14px 16px 96px; gap: 16px; }
+
+  .topbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .topbar h1 { font-size: 26px; line-height: 1.2; }
+  .phone .topbar h1 { font-size: 22px; }
+  .chip-select { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: 1px solid var(--uw-line-strong, #b9c2cf); background: #fff; border-radius: 999px; font-weight: 600; font-size: 14px; }
+  .saved { margin-left: auto; font-size: 13px; color: var(--uw-muted, #586579); display: inline-flex; align-items: center; gap: 6px; }
+  .saved::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+  .icon-btn { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--uw-line, #d8dde5); background: #fff; display: grid; place-items: center; }
+
+  .tabs { display: inline-flex; padding: 4px; background: var(--uw-surface-soft, #edf0f4); border-radius: 14px; gap: 2px; }
+  .tabs a { min-height: 40px; padding: 0 20px; display: grid; place-items: center; border-radius: 11px; text-decoration: none; font-weight: 600; font-size: 14px; color: var(--uw-muted, #586579); }
+  .tabs a[aria-current="page"] { background: #fff; color: var(--uw-navy, #23324a); box-shadow: 0 1px 3px #23324a24; }
+  .phone .tabs { display: grid; grid-template-columns: repeat(3, 1fr); }
+
+  /* the one bold element: the current task */
+  .focus { position: relative; overflow: hidden; background: var(--uw-navy, #23324a); color: #fff; border-radius: 28px; padding: 28px 30px 26px; display: grid; gap: 12px; align-content: start; min-height: 252px; }
+  .focus .label { font-size: 13px; color: #c9d3e3; font-weight: 600; }
+  .focus h2 { font-size: 30px; line-height: 1.3; max-width: 17em; text-wrap: balance; position: relative; }
+  .focus p { color: #dde5f1; max-width: 46ch; position: relative; }
+  .focus .meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: #c9d3e3; position: relative; }
+  .focus .meta a { color: #fff; }
+  .focus .actions { display: flex; gap: 12px; align-items: center; margin-top: 6px; position: relative; flex-wrap: wrap; }
+  .btn { white-space: nowrap; flex: none; min-height: 48px; padding: 0 22px; border-radius: 16px; border: 1px solid transparent; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+  .btn-light { background: #fff; color: var(--uw-navy, #23324a); }
+  .btn-dark { background: var(--uw-navy, #23324a); color: #fff; }
+  .btn-line { background: #fff; border-color: var(--uw-line-strong, #b9c2cf); color: var(--uw-navy, #23324a); }
+  .btn-quiet { background: transparent; color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+  .focus .route { position: absolute; right: -10px; top: 10px; width: 300px; height: 230px; opacity: .9; }
+  .phone .focus { padding: 22px 20px 20px; min-height: 0; border-radius: 24px; }
+  .phone .focus h2 { font-size: 22px; }
+  .phone .focus .route { display: none; }
+  .phone .btn-light { width: 100%; }
+
+  .panel { background: #fff; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; padding: 20px 22px; display: grid; gap: 8px; align-content: start; }
+  .panel h3 { font-size: 14px; color: var(--uw-muted, #586579); font-weight: 600; }
+  .date { font-size: 46px; line-height: 1; font-weight: 700; letter-spacing: -.02em; }
+  .phone .date { font-size: 28px; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--uw-surface-soft, #edf0f4); color: var(--uw-muted, #586579); }
+  .pill.warn { background: var(--uw-amber-soft, #fff4d6); color: var(--uw-amber-ink, #8a5a00); }
+  .pill.ok { background: var(--ok-wash); color: var(--ok); }
+  .pill.coral { background: var(--coral-wash); color: #a83c39; }
+  .hint { font-size: 13px; color: var(--uw-muted, #586579); }
+
+  /* stage track */
+  .track { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .track li { display: grid; gap: 6px; font-size: 13px; color: var(--uw-muted, #586579); }
+  .track li::before { content: ""; height: 6px; border-radius: 6px; background: var(--uw-line, #d8dde5); }
+  .track li[data-s="done"]::before { background: var(--ok); }
+  .track li[data-s="now"]::before { background: linear-gradient(90deg, var(--uw-navy, #23324a) 38%, var(--uw-line, #d8dde5) 38%); }
+  .track li[data-s="now"] { color: var(--uw-navy, #23324a); font-weight: 700; }
+  .track .n { font-weight: 400; font-size: 12px; }
+  .phone .track { grid-template-columns: repeat(6, 1fr); gap: 4px; }
+  .phone .track li { font-size: 11px; }
+  .track-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; margin-bottom: 10px; }
+  .track-head strong { font-size: 15px; }
+
+  /* workbench list */
+  .work { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 26px; align-items: start; }
+  .quick { display: flex; gap: 10px; }
+  .quick input, .dock input { min-width: 0; }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+  .quick input { flex: 1; min-height: 48px; border-radius: 14px; border: 1px solid var(--uw-line-strong, #b9c2cf); padding: 0 16px; background: #fff; }
+  .quick input::placeholder { color: #7a8699; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 6px; }
+  .filters button { min-height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--uw-line, #d8dde5); background: #fff; font-size: 13px; font-weight: 600; color: var(--uw-muted, #586579); }
+  .filters button[aria-pressed="true"] { background: var(--uw-navy, #23324a); color: #fff; border-color: var(--uw-navy, #23324a); }
+  .group > h3 { font-size: 14px; margin: 18px 0 4px; display: flex; gap: 8px; align-items: baseline; }
+  .group > h3 small { color: var(--uw-muted, #586579); font-weight: 400; }
+  .tasks li { border-bottom: 1px solid var(--uw-line, #d8dde5); }
+  .task { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; min-height: 64px; gap: 4px 6px; }
+  .task label { display: grid; place-items: center; width: 44px; height: 44px; cursor: pointer; }
+  .task input { position: absolute; opacity: 0; width: 44px; height: 44px; }
+  .task .ring { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--uw-navy, #23324a); display: grid; place-items: center; color: transparent; }
+  .task input:checked + .ring { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .task input:checked ~ * { }
+  .task input:focus-visible + .ring { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .task .t { display: grid; gap: 2px; padding: 8px 0; text-decoration: none; }
+  .task .t b { font-weight: 600; }
+  .task .m { font-size: 12.5px; color: var(--uw-muted, #586579); display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .task .due { font-size: 13px; font-weight: 600; padding-right: 4px; white-space: nowrap; }
+  .task .due.soon { color: #a83c39; }
+  .task:has(input:checked) .t b { text-decoration: line-through; color: var(--uw-muted, #586579); }
+  .more { margin-top: 10px; font-size: 14px; }
+
+  .side { display: grid; gap: 16px; }
+  .docs li { display: flex; justify-content: space-between; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--uw-hairline, #e3edf2); font-size: 14px; align-items: center; }
+  .docs li:last-child { border: 0; }
+  .meter { height: 8px; border-radius: 8px; background: var(--uw-surface-soft, #edf0f4); overflow: hidden; }
+  .meter span { display: block; height: 100%; background: var(--uw-navy, #23324a); border-radius: 8px; }
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-size: 12px; color: var(--uw-muted, #586579); margin-top: 6px; }
+  .week i { display: block; height: 38px; border-radius: 8px; background: var(--uw-surface-soft, #edf0f4); position: relative; margin-bottom: 4px; }
+  .week i::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: var(--h, 0%); background: var(--uw-navy, #23324a); border-radius: 8px; opacity: .85; }
+  .official { border-style: dashed; background: transparent; }
+
+  .boundary { font-size: 12.5px; color: var(--uw-muted, #586579); display: flex; gap: 8px; align-items: flex-start; }
+  .boundary .ico { width: 16px; height: 16px; margin-top: 3px; }
+
+  /* plan compare */
+  .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .plan-card { background: #fff; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; padding: 20px 22px; display: grid; gap: 10px; }
+  .plan-card h3 { font-size: 18px; line-height: 1.3; }
+  .plan-card .nums { display: flex; gap: 22px; flex-wrap: wrap; }
+  .plan-card .nums b { display: block; font-size: 24px; line-height: 1.1; }
+  .plan-card .nums span { font-size: 12.5px; color: var(--uw-muted, #586579); }
+  table { border-collapse: collapse; width: 100%; background: #fff; border: 1px solid var(--uw-line, #d8dde5); border-radius: 18px; overflow: hidden; font-size: 14px; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--uw-hairline, #e3edf2); vertical-align: top; }
+  th { font-weight: 600; color: var(--uw-muted, #586579); background: var(--uw-surface-soft, #edf0f4); }
+  tr:last-child td, tr:last-child th { border-bottom: 0; }
+  .shared { display: flex; gap: 10px; align-items: flex-start; background: var(--uw-surface-soft, #edf0f4); border-radius: 16px; padding: 12px 16px; font-size: 14px; }
+
+  /* phone specifics */
+  .statusbar { height: 28px; display: flex; justify-content: space-between; padding: 8px 20px 0; font-size: 12px; font-weight: 600; }
+  .strip { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: #fff; border: 1px solid var(--uw-line, #d8dde5); border-radius: 18px; }
+  .strip .date { font-size: 24px; }
+  .dock { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 16px 18px; background: linear-gradient(#f3f5f800, var(--uw-page, #f3f5f8) 38%); display: flex; gap: 10px; }
+  .dock input { flex: 1; min-height: 48px; border-radius: 16px; border: 1px solid var(--uw-line-strong, #b9c2cf); padding: 0 14px; background: #fff; }
+  .scrim { position: absolute; inset: 0; background: #23324a66; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--uw-surface, #fbfcfe); border-radius: 26px 26px 0 0; padding: 12px 18px 22px; display: grid; gap: 12px; max-height: 88%; box-shadow: 0 -12px 40px #23324a33; }
+  .grab { width: 44px; height: 5px; border-radius: 5px; background: var(--uw-line-strong, #b9c2cf); justify-self: center; }
+  .sheet h2 { font-size: 20px; line-height: 1.35; }
+  .steps li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; padding: 8px 0; font-size: 14.5px; }
+  .steps li > span { width: 24px; height: 24px; border-radius: 50%; background: var(--uw-surface-soft, #edf0f4); display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+  .alert { background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; border-radius: 14px; padding: 12px 14px; font-size: 14px; display: grid; gap: 8px; }
+  .alert b { color: #5e3d00; }
+  .preview li { display: grid; grid-template-columns: 34px 1fr; gap: 10px; padding: 12px 14px; background: #fff; border: 1px dashed var(--uw-line-strong, #b9c2cf); border-radius: 16px; }
+  .preview li + li { margin-top: 8px; }
+  .preview li > span { width: 30px; height: 30px; border-radius: 50%; background: var(--uw-surface-soft, #edf0f4); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+  .preview b { display: block; font-size: 15px; }
+  .preview small { color: var(--uw-muted, #586579); font-size: 13px; }
+  .first h2 { font-size: 26px; line-height: 1.3; text-wrap: balance; }
+
+  /* form */
+  .dialog { width: 480px; padding: 26px 26px 22px; display: grid; gap: 16px; background: #fff; border-radius: 26px; border: 1px solid var(--uw-line, #d8dde5); box-shadow: var(--uw-shadow, 0 18px 48px #42627d18); }
+  .dialog h2 { font-size: 22px; }
+  .field { display: grid; gap: 6px; }
+  .field > label, .field > .l { font-weight: 600; font-size: 14px; }
+  .field input[type=text] { min-height: 48px; border-radius: 14px; border: 1px solid var(--uw-line-strong, #b9c2cf); padding: 0 14px; background: #fff; }
+  .opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .opts label { min-height: 44px; padding: 0 16px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 14px; display: inline-flex; align-items: center; font-weight: 600; font-size: 14px; background: #fff; }
+  .opts label[data-on] { background: var(--uw-navy, #23324a); color: #fff; border-color: var(--uw-navy, #23324a); }
+  .derive { font-size: 13px; color: var(--uw-muted, #586579); }
+  .derive b { color: var(--uw-navy, #23324a); }
+  .prefill { display: flex; justify-content: space-between; gap: 12px; align-items: center; background: var(--uw-surface-soft, #edf0f4); border-radius: 14px; padding: 10px 14px; font-size: 14px; }
+
+  /* specimens */
+  .specimens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 980px; }
+  .toast { display: flex; justify-content: space-between; align-items: center; gap: 14px; background: var(--uw-navy, #23324a); color: #fff; border-radius: 16px; padding: 12px 16px; font-size: 14px; }
+  .toast button { background: transparent; border: 0; color: #fff; font-weight: 700; text-decoration: underline; min-height: 44px; padding: 0 6px; }
+  .banner { background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; border-radius: 14px; padding: 12px 16px; font-size: 14px; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-size: 14px; }
+  .legend .ring2 { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--uw-navy, #23324a); display: inline-block; vertical-align: -5px; margin-right: 6px; }
+  .legend .ring2.done { background: var(--ok); border-color: var(--ok); }
+  .legend .dash { display: inline-block; padding: 2px 10px; border: 1.5px dashed var(--uw-line-strong, #b9c2cf); border-radius: 10px; font-size: 13px; }
+  @media (prefers-reduced-motion: no-preference) { .task .ring { transition: background-color .12s, border-color .12s; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 000-6H9a3 3 0 010-6h6.5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2zM4 19V5"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+</svg>
+
+<div class="doc">
+  <header>
+    <h1>我的申請工作臺：設計稿</h1>
+    <p>把「我的申請」與「準備與時程」合成一個個人工作臺：打開就知道現在做哪一件事、離下一個期限多久、手上還有什麼待辦。沿用 UniWay 現有的深藍、字體與圓角；不加入連勝、經驗值或排行榜。</p>
+    <span class="sample-note">示意資料：學校、日期與數字都是虛構的，不是真實期限。</span>
+  </header>
+
+  <!-- ============ 1. Desktop · 今天 ============ -->
+  <section class="spec" aria-labelledby="s1">
+    <h2 id="s1">1　桌機：今天（情境 B，已有目標學校）</h2>
+    <p>焦點只有一個：現在做這件事。下面是可直接勾選、可隨手新增的待辦；右側放期限以外的輔助資訊。「重新載入」「封存計畫」「新增計畫」收進 ⋯ 選單。</p>
+    <div class="scroll-x"><div class="board desktop">
+      <nav class="rail" aria-label="主要導覽">
+        <a href="#"><svg><use href="#i-home"/></svg>首頁</a>
+        <a href="#"><svg><use href="#i-search"/></svg>找學校</a>
+        <a href="#"><svg><use href="#i-chat"/></svg>論壇</a>
+        <a href="#" aria-current="page"><svg><use href="#i-route"/></svg>我的申請</a>
+        <a href="#"><svg><use href="#i-book"/></svg>指南</a>
+      </nav>
+      <main class="page">
+        <div class="topbar">
+          <h1>我的申請</h1>
+          <button class="chip-select" aria-haspopup="listbox">林肯大學・2027 秋 <svg class="ico"><use href="#i-chev"/></svg></button>
+          <span class="saved" role="status">已儲存・剛剛</span>
+          <button class="icon-btn" aria-label="更多：新增計畫、封存計畫、重新載入"><svg class="ico"><use href="#i-more"/></svg></button>
+        </div>
+        <nav class="tabs" aria-label="我的申請檢視" style="justify-self:start">
+          <a href="#" aria-current="page">今天</a><a href="#">計畫</a><a href="#">時程</a>
+        </nav>
+
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px">
+          <section class="focus" aria-labelledby="f1">
+            <svg class="route" viewBox="0 0 300 230" aria-hidden="true" fill="none">
+              <path d="M20 215 C 90 205, 70 140, 150 130 S 250 95, 280 20" stroke="#ffffff33" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+              <circle cx="22" cy="214" r="9" fill="#1f7a4d"/><path d="M17 214l4 4 7-8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+              <circle cx="108" cy="168" r="9" fill="#1f7a4d"/><path d="M103 168l4 4 7-8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+              <circle cx="190" cy="118" r="13" fill="#fff"/><circle cx="190" cy="118" r="5" fill="#23324a"/>
+              <circle cx="250" cy="62" r="8" stroke="#ffffff66" stroke-width="2"/><circle cx="280" cy="20" r="8" stroke="#ffffff66" stroke-width="2"/>
+            </svg>
+            <span class="label">現在做這件事</span>
+            <h2 id="f1">確認長庚今年能不能申請林肯大學</h2>
+            <p>這是整份準備的第一步。對照長庚 116 學年度公告，確認名額、學院範圍與資格。</p>
+            <div class="meta"><span class="num">約 3 分鐘</span><span>依據：長庚國際事務處公告 <a href="#">查看來源</a></span></div>
+            <div class="actions"><a class="btn btn-light" href="#">開始</a><button class="btn btn-quiet" type="button">先做別的</button></div>
+          </section>
+          <aside class="panel" aria-labelledby="d1">
+            <h3 id="d1">下一個已確認的官方期限</h3>
+            <p class="date num">11/20</p>
+            <p><b>週四 23:59</b>　<span class="pill coral num">還有 19 天</span></p>
+            <p>長庚校內申請截止</p>
+            <p class="hint">來源：長庚國際事務處公告，查證於 10/21。<br>期限以學校公告為準。</p>
+            <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap"><a class="btn btn-line" href="#" style="min-height:44px">加入日曆</a><a class="btn btn-quiet" href="#" style="min-height:44px">看公告</a></div>
+          </aside>
+        </div>
+
+        <section aria-labelledby="tr1">
+          <div class="track-head"><strong id="tr1">申請階段</strong><span class="hint">個人準備進度 <b class="num">3 / 43</b> 項　<a href="#">這怎麼計算？</a>　不代表校方受理或錄取</span></div>
+          <ol class="track">
+            <li data-s="done"><span>方向</span><span class="n num">3/3</span></li>
+            <li data-s="now"><span>條件</span><span class="n num">1/8</span></li>
+            <li><span>文件</span><span class="n num">0/12</span></li>
+            <li><span>校內申請</span><span class="n num">0/8</span></li>
+            <li><span>合作校</span><span class="n num">0/5</span></li>
+            <li><span>行前與返國</span><span class="n num">0/10</span></li>
+          </ol>
+        </section>
+
+        <div class="work">
+          <section aria-labelledby="w1">
+            <h2 id="w1" style="font-size:18px;margin-bottom:10px">我的待辦</h2>
+            <form class="quick" onsubmit="return false"><input type="text" aria-label="新增待辦" placeholder="新增待辦，例如：請系主任簽名…"><button class="btn btn-dark" type="submit">加入</button></form>
+            <div class="filters" role="group" aria-label="篩選"><button aria-pressed="true">全部</button><button aria-pressed="false">林肯</button><button aria-pressed="false">文件</button><button aria-pressed="false">我加的</button></div>
+            <div class="group"><h3>今天 <small class="num">2</small></h3>
+              <ul class="tasks">
+                <li><div class="task"><label><input type="checkbox" aria-label="標記完成：確認長庚今年能不能申請林肯大學"><span class="ring"><svg class="ico" style="width:14px;height:14px;stroke-width:3"><use href="#i-check"/></svg></span></label><a class="t" href="#"><b>確認長庚今年能不能申請林肯大學</b><span class="m"><span class="pill">林肯</span><span class="num">約 3 分鐘</span></span></a><span class="due">今天</span></div></li>
+                <li><div class="task"><label><input type="checkbox" aria-label="標記完成：寫一段申請動機"><span class="ring"><svg class="ico" style="width:14px;height:14px;stroke-width:3"><use href="#i-check"/></svg></span></label><a class="t" href="#"><b>寫一段申請動機</b><span class="m"><span class="pill">林肯</span><span class="pill warn">草稿・2 小時前</span></span></a><span class="due">繼續</span></div></li>
+              </ul></div>
+            <div class="group"><h3>本週 <small class="num">3</small></h3>
+              <ul class="tasks">
+                <li><div class="task"><label><input type="checkbox" aria-label="標記完成：請系主任簽名"><span class="ring"><svg class="ico" style="width:14px;height:14px;stroke-width:3"><use href="#i-check"/></svg></span></label><a class="t" href="#"><b>請系主任簽名</b><span class="m"><span class="pill">我加的</span><span class="num">11/06 前</span></span></a><span class="due num">11/06</span></div></li>
+                <li><div class="task"><label><input type="checkbox" aria-label="標記完成：申請中文成績單正本"><span class="ring"><svg class="ico" style="width:14px;height:14px;stroke-width:3"><use href="#i-check"/></svg></span></label><a class="t" href="#"><b>申請中文成績單正本</b><span class="m"><span class="pill">林肯</span><span class="pill">文件</span><span class="num">約 10 分鐘</span></span></a><span class="due num">11/07</span></div></li>
+                <li><div class="task"><label><input type="checkbox" aria-label="標記完成：確認英文能力證明有效期"><span class="ring"><svg class="ico" style="width:14px;height:14px;stroke-width:3"><use href="#i-check"/></svg></span></label><a class="t" href="#"><b>確認英文能力證明有效期</b><span class="m"><span class="pill">林肯</span><span class="pill">文件</span></span></a><span class="due num">11/08</span></div></li>
+              </ul></div>
+            <p class="more"><a href="#">之後的 12 項</a></p>
+          </section>
+
+          <aside class="side" aria-label="輔助資訊">
+            <section class="panel" aria-labelledby="dc1"><h3 id="dc1">文件備齊度</h3>
+              <p><b class="num" style="font-size:22px">2 / 5</b> <span class="hint">份已備妥</span></p>
+              <div class="meter" role="img" aria-label="5 份文件中 2 份已備妥"><span style="width:40%"></span></div>
+              <ul class="docs">
+                <li>英文能力證明 <span class="pill ok">已備妥</span></li>
+                <li>護照影本 <span class="pill ok">已備妥</span></li>
+                <li>中文成績單正本 <span class="pill warn">待申請</span></li>
+                <li>讀書計畫 <span class="pill warn">草稿</span></li>
+                <li>家長同意書 <span class="pill">尚未開始</span></li>
+              </ul><a href="#">開啟申請文件</a></section>
+            <section class="panel" aria-labelledby="wk1"><h3 id="wk1">這週的時間</h3>
+              <p><b class="num" style="font-size:22px">3.5</b> <span class="hint">/ 6 小時（你設定的每週可投入）</span></p>
+              <div class="week" aria-hidden="true"><div><i style="--h:60%"></i>一</div><div><i></i>二</div><div><i style="--h:40%"></i>三</div><div><i></i>四</div><div><i style="--h:30%"></i>五</div><div><i style="--h:90%"></i>六</div><div><i></i>日</div></div>
+              <a href="#">調整每週時間</a></section>
+            <section class="panel official" aria-labelledby="of1"><h3 id="of1">校方通知（由你自行記錄）</h3>
+              <p class="hint">收到受理、面試或錄取通知時記在這裡。UniWay 不會核實校方結果，也不會代你送件。</p>
+              <button class="btn btn-line" type="button" style="min-height:44px;justify-self:start">記錄一則通知</button></section>
+          </aside>
+        </div>
+        <p class="boundary"><svg class="ico"><use href="#i-info"/></svg>左邊的圈圈與百分比，是你自己的準備進度；不代表校方已受理或錄取。</p>
+      </main>
+    </div></div>
+  </section>
+
+  <!-- ============ 2. Desktop · 計畫 (multi) ============ -->
+  <section class="spec" aria-labelledby="s2">
+    <h2 id="s2">2　桌機：計畫（情境 C，同時考慮兩所）</h2>
+    <p>兩份計畫並排：下個期限、進度、缺的文件、預估剩餘時間放在同一張表。兩份計畫都用得到的文件只需準備一次。</p>
+    <div class="scroll-x"><div class="board desktop">
+      <nav class="rail" aria-label="主要導覽">
+        <a href="#"><svg><use href="#i-home"/></svg>首頁</a><a href="#"><svg><use href="#i-search"/></svg>找學校</a><a href="#"><svg><use href="#i-chat"/></svg>論壇</a>
+        <a href="#" aria-current="page"><svg><use href="#i-route"/></svg>我的申請</a><a href="#"><svg><use href="#i-book"/></svg>指南</a>
+      </nav>
+      <main class="page">
+        <div class="topbar"><h1>我的申請</h1><span class="saved" role="status">已儲存・剛剛</span><button class="icon-btn" aria-label="更多"><svg class="ico"><use href="#i-more"/></svg></button></div>
+        <nav class="tabs" aria-label="我的申請檢視" style="justify-self:start"><a href="#">今天</a><a href="#" aria-current="page">計畫</a><a href="#">時程</a></nav>
+        <div class="plans">
+          <article class="plan-card"><h3>林肯大學<br><span class="hint" style="font-weight:400">2027 秋・116 學年度申請</span></h3>
+            <div class="nums"><div><b class="num">3 / 43</b><span>準備進度</span></div><div><b class="num">11/20</b><span>下個期限（還有 19 天）</span></div></div>
+            <p class="hint">目前階段：釐清申請條件</p><a class="btn btn-dark" href="#" style="justify-self:start">繼續</a></article>
+          <article class="plan-card"><h3>里昂 ECAM LaSalle<br><span class="hint" style="font-weight:400">2028 春・117 學年度申請</span></h3>
+            <div class="nums"><div><b class="num">0 / 32</b><span>準備進度</span></div><div><b>尚未公布</b><span>官方期限</span></div></div>
+            <p class="hint">目前階段：方向</p><a class="btn btn-line" href="#" style="justify-self:start">開始</a></article>
+        </div>
+        <table aria-label="兩份計畫比較">
+          <tr><th scope="col"></th><th scope="col">林肯大學　2027 秋</th><th scope="col">里昂 ECAM　2028 春</th></tr>
+          <tr><th scope="row">下個期限</th><td class="num">11/20（還有 19 天）</td><td>尚未公布，<a href="#">查看官方公告</a></td></tr>
+          <tr><th scope="row">還缺的文件</th><td class="num">3 份</td><td class="num">5 份</td></tr>
+          <tr><th scope="row">預估剩餘時間</th><td class="num">約 14 小時</td><td class="num">約 11 小時</td></tr>
+          <tr><th scope="row">下一步</th><td><a href="#">確認名額與資格</a></td><td><a href="#">選擇出國學期</a></td></tr>
+        </table>
+        <p class="shared"><svg class="ico" style="margin-top:3px"><use href="#i-info"/></svg><span><b>兩份計畫都需要 3 份文件：</b>英文能力證明、護照影本、中文成績單。備妥一次，兩邊都會顯示已備妥。</span></p>
+      </main>
+    </div></div>
+  </section>
+
+  <!-- ============ 3. Phones ============ -->
+  <section class="spec" aria-labelledby="s3">
+    <h2 id="s3">3　手機（390 寬）：今天、任務面板、第一次使用</h2>
+    <p>手機版只保留一個主要動作。新增待辦固定在底部，拇指可及；任務細節用底部面板開啟，原本的清單位置與捲動不會遺失。</p>
+    <div class="phones">
+      <figure><figcaption>今天（情境 D：用手機快速處理）</figcaption>
+        <div class="board phone">
+          <div class="statusbar" aria-hidden="true"><span>9:41</span><span>●●●</span></div>
+          <main class="page">
+            <div class="topbar"><h1>我的申請</h1><span class="saved" role="status">已儲存</span><button class="icon-btn" aria-label="更多"><svg class="ico"><use href="#i-more"/></svg></button></div>
+            <button class="chip-select" style="justify-self:start">林肯大學・2027 秋 <svg class="ico"><use href="#i-chev"/></svg></button>
+            <nav class="tabs" aria-label="我的申請檢視"><a href="#" aria-current="page">今天</a><a href="#">計畫</a><a href="#">時程</a></nav>
+            <section class="focus" aria-labelledby="pf1"><span class="label">現在做這件事</span><h2 id="pf1">確認長庚今年能不能申請林肯大學</h2><div class="meta"><span class="num">約 3 分鐘</span><a href="#">查看來源</a></div><div class="actions"><a class="btn btn-light" href="#">開始</a></div></section>
+            <div class="strip"><div><span class="hint">下一個已確認期限</span><div class="date num">11/20</div></div><span class="pill coral num">還有 19 天</span></div>
+            <div><div class="track-head" style="margin-bottom:6px"><strong style="font-size:14px">申請階段</strong><span class="hint num">3 / 43</span></div>
+              <ol class="track"><li data-s="done"><span>方向</span></li><li data-s="now"><span>條件</span></li><li><span>文件</span></li><li><span>校內</span></li><li><span>合作校</span></li><li><span>行前</span></li></ol></div>
+            <div class="group"><h3>今天 <small class="num">2</small></h3>
+              <ul class="tasks"><li><div class="task"><label><input type="checkbox" aria-label="標記完成：寫一段申請動機"><span class="ring"><svg class="ico" style="width:14px;height:14px;stroke-width:3"><use href="#i-check"/></svg></span></label><a class="t" href="#"><b>寫一段申請動機</b><span class="m"><span class="pill warn">草稿</span></span></a><span class="due">繼續</span></div></li>
+              <li><div class="task"><label><input type="checkbox" aria-label="標記完成：請系主任簽名"><span class="ring"><svg class="ico" style="width:14px;height:14px;stroke-width:3"><use href="#i-check"/></svg></span></label><a class="t" href="#"><b>請系主任簽名</b><span class="m"><span class="pill">我加的</span></span></a><span class="due num">11/06</span></div></li></ul></div>
+          </main>
+          <form class="dock" onsubmit="return false"><input type="text" aria-label="新增待辦" placeholder="新增待辦…"><button class="btn btn-dark" type="submit">加入</button></form>
+        </div></figure>
+
+      <figure><figcaption>任務面板（條件不符時，不能直接標記完成）</figcaption>
+        <div class="board phone">
+          <div class="statusbar" aria-hidden="true"><span>9:41</span><span>●●●</span></div>
+          <main class="page" aria-hidden="true">
+            <div class="topbar"><h1>我的申請</h1></div>
+            <section class="focus"><span class="label">現在做這件事</span><h2>確認長庚今年能不能申請林肯大學</h2></section>
+            <ul class="tasks"><li><div class="task"><span></span><a class="t" href="#"><b>寫一段申請動機</b></a></div></li><li><div class="task"><span></span><a class="t" href="#"><b>請系主任簽名</b></a></div></li></ul>
+          </main>
+          <div class="scrim"></div>
+          <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh1"><div class="grab"></div>
+            <p class="hint">條件・第 2 階段</p><h2 id="sh1">學院／學系範圍</h2>
+            <div class="alert"><span><b>還不能判斷：</b>你還沒填學院和學系，無法對照林肯大學接受的範圍。</span><a class="btn btn-dark" href="#" style="min-height:44px;justify-self:start">補填學院／學系</a></div>
+            <ol class="steps"><li><span>1</span><div>補填學院與學系（約 1 分鐘）</div></li><li><span>2</span><div>對照<a href="#">林肯大學可申請的學院</a></div></li><li><span>3</span><div>確認你的學院在範圍內</div></li></ol>
+            <p class="hint num" role="status">已自動儲存・10:42</p>
+            <div style="display:flex;gap:10px"><button class="btn btn-line" style="flex:1" type="button">先放著</button><button class="btn btn-line" style="flex:1" type="button" disabled aria-describedby="sh1">確認（先補填）</button></div>
+          </section>
+        </div></figure>
+
+      <figure><figcaption>第一次使用（情境 A：還沒選學校）</figcaption>
+        <div class="board phone">
+          <div class="statusbar" aria-hidden="true"><span>9:41</span><span>●●●</span></div>
+          <main class="page first">
+            <div class="topbar"><h1>我的申請</h1></div>
+            <h2>先選一所你想去的學校</h2>
+            <p class="hint">選好之後，這裡會幫你排出現在該做的事、官方期限與文件清單。</p>
+            <ul class="preview" aria-label="選好學校後會看到的內容（範例）">
+              <li><span>1</span><div><b>現在做這件事</b><small>一次只給你一件，約幾分鐘</small></div></li>
+              <li><span>2</span><div><b>已確認的官方期限</b><small>有來源才會倒數，沒有就告訴你去哪查</small></div></li>
+              <li><span>3</span><div><b>文件備齊度</b><small>還缺哪幾份，一目了然</small></div></li>
+            </ul>
+            <a class="btn btn-dark" href="#" style="width:100%">選擇交換學校</a>
+            <a class="btn btn-quiet" href="#" style="color:var(--uw-navy,#23324a);justify-self:center;min-height:44px">我已經有目標學校</a>
+          </main>
+        </div></figure>
+    </div>
+  </section>
+
+  <!-- ============ 4. Create plan ============ -->
+  <section class="spec" aria-labelledby="s4">
+    <h2 id="s4">4　建立計畫：3 個問題，年份自動換算</h2>
+    <p>現在的表單要同時填「申請學年度（民國）」和「出國年份（西元）」兩個文字欄，互換填錯也能建立成功（實測，見報告 UX-02）。新版只問「去哪、哪個學期出發」，民國學年度由系統換算並顯示出來讓你核對。</p>
+    <div class="dialog" role="dialog" aria-labelledby="dg1">
+      <h2 id="dg1">新增申請計畫</h2>
+      <div class="field"><label for="tg">目標學校</label><input id="tg" type="text" value="林肯" aria-describedby="tg-h"><span id="tg-h" class="hint">輸入校名或國家，從清單選一所。</span></div>
+      <div class="field"><span class="l" id="tm">預計出發學期</span>
+        <div class="opts" role="radiogroup" aria-labelledby="tm"><label data-on>2027 秋</label><label>2028 春</label><label>2028 秋</label><label>還沒決定</label></div>
+        <span class="derive">對應 <b>116 學年度</b>的申請，以學校公告為準。</span></div>
+      <div class="prefill"><span>學院／學系：<b>管理學院・資訊管理學系</b>（來自你的選校條件）</span><a href="#">修改</a></div>
+      <div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-line" type="button">取消</button><button class="btn btn-dark" type="button">建立計畫</button></div>
+    </div>
+  </section>
+
+  <!-- ============ 5. Specimens ============ -->
+  <section class="spec" aria-labelledby="s5">
+    <h2 id="s5">5　回饋與錯誤元件</h2>
+    <p>每一次操作都回答三件事：發生了什麼、我的內容在哪裡、下一步是什麼。刪除與封存用「撤銷」取代確認視窗。</p>
+    <div class="specimens">
+      <div><p class="hint" style="margin-bottom:6px">完成一項（顯示變化與撤銷）</p><div class="toast"><span>已完成「請系主任簽名」。準備進度 <b class="num">4 / 43</b></span><button type="button">撤銷</button></div></div>
+      <div><p class="hint" style="margin-bottom:6px">完成一個階段（只在這時慶祝一次）</p><div class="toast" style="background:var(--ok)"><span>「方向」階段 3 / 3 完成。下一步：確認申請條件</span><button type="button">繼續</button></div></div>
+      <div><p class="hint" style="margin-bottom:6px">封存計畫（取代瀏覽器確認視窗）</p><div class="toast"><span>已封存「里昂 ECAM・2028 春」。進度與文件都保留。</span><button type="button">復原</button></div></div>
+      <div><p class="hint" style="margin-bottom:6px">離線（說明內容在哪裡）</p><div class="banner" role="status"><b>目前離線。</b>你寫的內容還留在這個分頁，連線後會自動儲存。請先不要關閉分頁。<span class="num"> 重試 20 秒後</span>　<a href="#">立即重試</a></div></div>
+      <div style="grid-column:1/-1"><p class="hint" style="margin-bottom:8px">兩種「完成」，長相不同（避免把個人進度誤認成校方結果）</p>
+        <div class="legend"><span><span class="ring2 done"></span>我自己的準備進度</span><span><span class="ring2"></span>尚未完成</span><span class="dash">校方通知（自行記錄）</span><span class="hint">圓圈與進度條只代表個人準備；校方結果用虛線框、由你手動記錄。</span></div></div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
