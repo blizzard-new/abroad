@@ -1834,7 +1834,46 @@ NPUST = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST)
+NQU = UniversityProfile(
+    id="nqu",
+    school_name="國立金門大學",
+    short_name="金大",
+    english_name="National Quemoy University",
+    aliases=(
+        "nqu",
+        "國立金門大學",
+        "金門大學",
+        "金大",
+        "國立金門技術學院",
+        "金門技術學院",
+        "NQU",
+        "National Quemoy University",
+    ),
+    hero_image="/static/assets/nqu-campus.svg",
+    official_url="https://oica.nqu.edu.tw/",
+    coverage_note="完整支援：已整合國立金門大學國際暨兩岸事務處（OICA）與教務處註冊組《國際交換學校一覽表（39校）》、《大陸地區交換學校一覽表與姊妹校名冊（25校）》、《115學年度第一／二階段國際交換學生甄選簡章》、《2027春季班（115-2）赴國內及大陸地區交換學生甄選簡章》、《國立金門大學學生國際交流甄選要點》、《國立金門大學學生出國交換實施要點》、《國立金門大學科目學分抵免辦法》、《115年度教育部學海飛颺及學海惜珠計畫甄選簡章》及 31 校共 317 篇歷屆赴外與赴大陸交換學生心得報告。",
+    support_level="full",
+    partner_count_hint=64,
+    academic_score_minimum=70.0,
+    student_card_signals=(
+        "國立金門大學",
+        "金門大學",
+        "金大",
+        "NATIONALQUEMOYUNIVERSITY",
+        "NATIONAL QUEMOY UNIVERSITY",
+        "NQU",
+    ),
+    # https://www.nqu.edu.tw/ — checked 2026-11-02.
+    colleges=(
+        "人文社會學院",
+        "管理學院",
+        "理工學院",
+        "健康護理學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, NQU)
 DEFAULT_UNIVERSITY = CGU
 
 
