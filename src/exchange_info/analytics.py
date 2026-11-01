@@ -40,6 +40,7 @@ CLIENT_EVENT_NAMES = frozenset({
     "auth_dialog_open", "auth_start", "auth_success", "auth_cancel", "logout",
     "school_pick", "school_choose", "home_school_change",
     "advisor_submit", "document_action", "calendar_action", "planning_action",
+    "plan_create_result", "draft_save_result", "draft_resume_result",
     "community_composer_open", "community_topic", "board_follow", "theme_toggle",
     "web_vitals", "js_error", "unhandled_rejection", "api_error", "optout",
 })
@@ -257,6 +258,12 @@ def fit_props(props: dict[str, Any]) -> dict[str, Any]:
 
 
 def _finish_props(name: str, props: dict[str, Any]) -> dict[str, Any]:
+    if name in {"plan_create_result", "draft_save_result", "draft_resume_result"}:
+        # Outcome-only telemetry: never accept task IDs, draft text or document names.
+        return {key: value for key, value in props.items() if
+                (key == "result" and value in {"success", "failed", "restored"}) or
+                (key == "kind" and value in {"confirm", "write", "file", "assemble", "note", "notice", "submission"}) or
+                (key == "status" and type(value) is int and 0 <= value <= 599)}
     if name in {"js_error", "unhandled_rejection"} and isinstance(props.get("message"), str):
         props["message"] = re.sub(r"https?://\S+", "[url]", props["message"])[:200]
     for key in ("path", "href"):

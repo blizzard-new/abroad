@@ -386,3 +386,14 @@ def test_backend_selection_and_the_production_guard(tmp_path):
         create_analytics_repository(tmp_path, {"EXCHANGE_ANALYTICS_BACKEND": "supabase"})
     with pytest.raises(AnalyticsRepositoryError):
         create_analytics_repository(tmp_path, {"EXCHANGE_ANALYTICS_BACKEND": "mongo"})
+
+
+def test_application_outcomes_exclude_drafts_identifiers_and_arbitrary_content():
+    events, dropped = normalize([
+        {"n": name, "p": {"result": "success", "kind": "write", "status": 200,
+                            "draft": "私人內容", "plan_id": "private-plan", "file_name": "證明.pdf"}}
+        for name in ("plan_create_result", "draft_save_result", "draft_resume_result")
+    ])
+    assert dropped == 0
+    assert len(events) == 3
+    assert all(event.props == {"result": "success", "kind": "write", "status": 200} for event in events)
