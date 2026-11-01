@@ -87,6 +87,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     ],
     "ncut": ["oia.ncut.edu.tw", "www.ncut.edu.tw", "ncut.edu.tw"],
     "npust": ["oia2.npust.edu.tw", "oia.npust.edu.tw", "aa.npust.edu.tw", "www.npust.edu.tw", "npust.edu.tw", "docs.google.com"],
+    "isu": ["oica.isu.edu.tw", "www.isu.edu.tw", "www2.isu.edu.tw", "isu.edu.tw", "docs.google.com", "lookerstudio.google.com"],
 }
 
 
@@ -1644,6 +1645,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["npust"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="npust", partner_rows=npust_rows, default_cycle_label="115"
+        )
+
+    # 51. ISU partners.jsonl (181 partner schools)
+    isu_partners_path = official_data_root / "isu" / "partners.jsonl"
+    if isu_partners_path.exists():
+        isu_rows = []
+        for line in isu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            isu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oica.isu.edu.tw/page/%E5%87%BA%E5%9C%8B%E4%BA%A4%E6%8F%9B-NlHq3RuLdDcK",
+            })
+        school_reports["isu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="isu", partner_rows=isu_rows, default_cycle_label="115"
         )
 
     if store.current_release_id is None:
