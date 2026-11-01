@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="zh_tw" class="orbit">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" media="all" href="/assets/frontend_extend-5352b5a8b1c1726d74c31e074bc33fa658351b20fbd5074062524b11b39d4429.css">
+<link rel="stylesheet" media="all" href="/assets/front_end-356e454b2d19e86291266709954b9e46858a4194e92c4ce48e9d379bffb5c9c4.css">
+<meta property="og:title" content="">
+<meta property="og:site_name" content="國立虎尾科技大學">
+<meta property="og:url" content="/">
+  <script type="text/javascript">
+    if (self != top){
+        try{
+            if(self.location.origin != top.location.origin){
+                top.location=self.location;
+            }
+        }catch(e){
+            console.log("Cannot fetch location!")
+        }
+    }
+</script>
+<script src="/assets/jquery-2a83d06853bd343c7bfc2e5d4539814cfa934676e2948ed348311435eca862f5.js"></script>
+<script src="/assets/jquery_prefix-5c5a0bbb9dfff7d410703a0565bc948dca28ec736d1a0e725050111c330805d3.js"></script>
+<script src="/assets/jquery_ujs_custom-a76b6cd8d652c18d24ed38d1f7a4d18f51d1f594a88a0f2ade82afec33966e2b.js"></script>
+<script src="/assets/jquery.cycle2.min-ec60b272289a05b845d7613d074237d008c08a069dc283c2e4c62dfc513242db.js"></script>
+<script src="/assets/jquery.cycle2.carousel.min-3d226d0713bcf58909be7c7e753fa1eef4409eee278299adfe70ff4ea646d65f.js"></script>
+<script src="/assets/jquery.cycle2.scrollVert.min-ce8da4c3f5e336753d998c9f02e64cc8b7e3977f5f6988133faf24a44c90b427.js"></script>
+<script src="/assets/jquery.cycle2.tile.min-83b4b0c4c2604b9c9acb20199a740f4b9e83c227ae46c1a430aa67bf97ff5457.js"></script>
+<link rel="stylesheet" media="all" href="/assets/datatables.min-7446416dca719e42fb55ff5fbf69879ccebe1ab56c6bb6833e2db781eccfddf9.css">
+<script src="/assets/datatables.min-598993c579b423583458a17773ed1e86103dc54e60eae7ab6c27b426af16df6f.js"></script>
+<meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="fTWKHrQ4Hq3AWnfTjsxSO6ka7jR9HhK/4P1L0hNXyxcxZWZvwmkxGbXAo/CtC3q+iKDoprvR+MjJaxvu6uT3VA==">
+<script>
+    $.fn.dataTable.defaults.initComplete = function(settings) {
+        $(this).find('td:first-child').trigger('click');
+    };
+
+function fixLoginFormA11y() {
+// 當頁面沒有 .sign-in 則不執行
+  if ($('.sign-in').length === 0) return;
+  // === Step 1: 修正 label for="user_email" 內只有圖示沒有文字 ===
+  var $emailLabel = $('label[for="user_email"]');
+  if ($emailLabel.length) {
+    $emailLabel.find('i').attr('aria-hidden', 'true');
+    if ($emailLabel.find('.visually-hidden').length === 0) {
+      $emailLabel.append('<span class="visually-hidden">使用者帳號</span>');
+    }
+  }
+
+  // === Step 2: 修正 label for="user_password" 內只有圖示沒有文字 ===
+  var $pwLabel = $('label[for="user_password"]');
+  if ($pwLabel.length) {
+    $pwLabel.find('i').attr('aria-hidden', 'true');
+    if ($pwLabel.find('.visually-hidden').length === 0) {
+      $pwLabel.append('<span class="visually-hidden">密碼</span>');
+    }
+  }
+
+  // === Step 3: 密碼欄補上 title（placeholder 是圓點無意義）===
+  var $pwInput = $('#user_password');
+  if ($pwInput.length) {
+    if (!$pwInput.attr('title')) {
+      $pwInput.attr('title', '密碼');
+    }
+    if (!$pwInput.attr('aria-label')) {
+      $pwInput.attr('aria-label', '密碼');
+    }
+    // placeholder 換成有意義的文字
+    $pwInput.attr('placeholder', '請輸入密碼');
+  }
+
+  // === Step 4: 修正 remember_me 外層 label 包住 checkbox 又有子 label（巢狀 label 問題）===
+  // 外層 label 改為 div，避免巢狀 label
+  var $outerLabel = $('label.checkbox');
+  if ($outerLabel.length) {
+    var outerHtml = $outerLabel.html();
+    $outerLabel.replaceWith('<div class="checkbox">' + outerHtml + '</div>');
+  }
+
+  // === Step 5: 忘記密碼連結補上有意義的 title ===
+  $('a[href="#forgot_password"]').each(function () {
+    if (!$(this).attr('title')) {
+      $(this).attr('title', '忘記密碼');
+    }
+    // 確保連結文字清楚（移除 <small> 包覆不影響語意，但補 aria-label 保險）
+    if (!$(this).attr('aria-label')) {
+      $(this).attr('aria-label', '忘記密碼');
+    }
+  });
+}
+
+$(document).ready(function () {
+  setTimeout(fixLoginFormA11y, 300);
+});
+function fixLoginFormLabelA11y() {
+
+  // === 1. 確保 user_email input 的 label 關聯正確 ===
+  var $emailInput = $('#user_email');
+  var $emailLabel = $('label[for="user_email"]');
+  if ($emailInput.length && $emailLabel.length) {
+    // label 已有 visually-hidden 文字，確保 input 也有 aria-label 備援
+    if (!$emailInput.attr('aria-label')) {
+      $emailInput.attr('aria-label', '使用者帳號');
+    }
+  }
+
+  // === 2. 確保 user_password input 的 label 關聯正確 ===
+  var $pwInput = $('#user_password');
+  var $pwLabel = $('label[for="user_password"]');
+  if ($pwInput.length && $pwLabel.length) {
+    if (!$pwInput.attr('aria-label')) {
+      $pwInput.attr('aria-label', '密碼');
+    }
+  }
+
+  // === 3. 修正 remember_me：label 被包在 small 裡，移出來 ===
+  var $rememberCheckbox = $('#remember_me');
+  if ($rememberCheckbox.length) {
+    var $small = $rememberCheckbox.closest('.checkbox').find('small');
+    var $labelInSmall = $small.find('label[for="remember_me"]');
+
+    if ($labelInSmall.length && $small.length) {
+      // 把 label 從 small 裡移出來，直接放在 checkbox 旁邊
+      var labelHtml = $labelInSmall.prop('outerHTML');
+      $small.replaceWith(labelHtml);
+    }
+  }
+
+  // === 4. 確保 submit button 有可識別名稱 ===
+  $('button[type="submit"]').each(function () {
+    var $btn = $(this);
+    var btnText = $btn.text().trim();
+    if (btnText && !$btn.attr('aria-label')) {
+      $btn.attr('aria-label', btnText);
+    }
+  });
+
+  // === 5. 全站：找出所有沒有對應 label 的 input，補上 aria-label ===
+  $('input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="reset"])').each(function () {
+    var $input = $(this);
+    var inputId = $input.attr('id');
+
+    // 已有 aria-label 或 aria-labelledby 就跳過
+    if ($input.attr('aria-label') || $input.attr('aria-labelledby')) return;
+
+    // 有對應 label[for] 就跳過
+    if (inputId && $('label[for="' + inputId + '"]').length) return;
+
+    // 從 placeholder 或 title 補上 aria-label
+    var label = $input.attr('placeholder') || $input.attr('title') || '';
+    if (label) {
+      $input.attr('aria-label', label);
+    }
+  });
+}
+
+$(document).ready(function () {
+  setTimeout(fixLoginFormLabelA11y, 300);
+});
+</script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="shortcut icon" type="image/x-icon" href="/uploads/site/favicon/684f81520857771f6f8ac021/logo-PNG.png">
+
+<title>國立虎尾科技大學</title>
+
+<!-- ======= CSS ======= -->
+<!-- Font Awesome -->
+<link rel="stylesheet" media="all" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+
+<!-- 自訂 CSS -->
+<link rel="stylesheet" media="all" href="/assets/template/template-f7f5e3019a1e6408401d7244f196ae11dc823bcae5b38f6bba6e5b44f5d90981.css">
+<link rel="stylesheet" media="all" href="/assets/template/jquery.scrolling-tabs.min-0aaa5bfc7b51e5bacb1b208e1bc8d8cf1b8daba5c234626bc7fda4be4effb5df.css">
+
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" type="text/css" href="/assets/template/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/template/owl.theme.default.min.css">
+
+<!-- Print CSS -->
+<link rel="stylesheet" media="print" type="text/css" href="/assets/template/print.css">
+
+<!-- ======= JS (Head) ======= -->
+<script src="/assets/plugin/modernizr-d5770395993b83f1cd01c625a62f0cc2a8f2536f7288ef3a45f2863f2e20a9c1.js"></script>
+<script src="/assets/plugin/picturefill.min-1e1f7d4e867ad1ec3d5886ad5e69512b6692509c939a89634ffcf63ba17b6b7d.js"></script>
+<script src="/assets/plugin/jquery.mobile.custom.min-94832de9dd3faaf354dabd20e980b49bfe549a3750d73e5855bc4104b53afe9d.js"></script>
+
+<!-- ======= JS (Body底部建議載入) ======= -->
+<script src="/assets/plugin/bootstrap.bundle.min-d8e60468ee9260d81e3fd601702d0cd73a47d1b7b5af1a0448504b305330693a.js"></script>
+<script src="/assets/plugin/jquery.cycle2.video.min-384b34504c43f5962ffa3295b0b28947fd8a4498968853be0477a5dc664bd9b9.js"></script>
+<script src="/assets/plugin/jquery-bullseye-min-8149d6adb748bd9561e9f1fd822e59337a75d065e017c7891699d50d69414bc2.js"></script>
+<script src="/assets/plugin/jquery.scrolling-tabs.min-1f589149b3d44f638bbe2e5c886a7ac5b8132e03e1a3b3886293dd24080701f6.js"></script>
+<script src="/assets/plugin/owl.carousel.min-ec9585fb4e14679aaa65e0d62fac99d496ce23ea8052fc718d5b3fbc84525e61.js"></script>
+
+<script src="/assets/app-37603a16291f73fd3875ab8d87fd0ac22b13d3986b1c0b70d8e9b6f54c39e41c.js"></script>
+<script src="/assets/frontend-121b87925d20c2b21764d1c5053c911976bcf14ba23128fed1904f6b7a19033d.js"></script>
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<meta name="google-site-verification" content="bA6PX3MlHBwcuN3LYxol-p8byw6j51gtQZW4SQLcDNE">
+<meta name="google-site-verification" content="VmAT4GxoYuwDUHDCLChXXA_S-iB3nZKYywTsR2qKwII">
+
+<!--[if lt IE 9]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+
+
+<script src="/assets/frontend_extend-999decf38e68d49ef81c07f7c8ed615fffdbf532aa93c37e6a6ff279894d38d2.js"></script>
+</head>
+<body class="page-home accessibility_mode prohibit_proxy_feature banner_height_setting_0 no_orbit_bar" data-module="home">
+  <noscript style="color: #333333;"><p style="text-align: center;">此網頁需要支援 JavaScript 才能正確運行，請先至你的瀏覽器設定中開啟 JavaScript。</p></noscript>
+<link rel="stylesheet" media="all" href="/assets/fontawesome-6.2.1.min-8aec0118643d34254cb9f5c27b931239c9de8008c849c9800d8651a5da1abcb2.css">
+<link rel="stylesheet" media="all" href="/assets/fontawesome-6.7.2-fix.min-3fb9119cdcb8e12393eaf44554308981843df0135e5ff33f7a0716ef44de2983.css">
+<link rel="stylesheet" media="all" href="/assets/lib/jquery-ui-1.13.2/jquery-ui.min-bc39b4e583177d1bfb4d31e880558d84fd307a5b3c87a91f2fadaf0bc4f1cc96.css">
+<link rel="stylesheet" media="all" href="/assets/jquery-ui-timepicker-addon-ee91708eac547223792975e0d9a9aae62127da4b28a58d40c0634927f19665f0.css">
+  <script src="/assets/lib/jquery-ui-1.13.2/jquery-ui.min-b88d0b98b7b90a20cae0fc32eaf0845ac1ffdc0e4b3176c501e353d45c975064.js"></script>
+  <script src="/assets/jquery.ui.datepicker.monthyearpicker-6126b863aa1c4b399bf657869bbc51389d83ff5101b069ff7e1d0b02793c67e1.js"></script>
+<script type="text/javascript">
+  var I18n = {};
+  Object.defineProperty(I18n,"locale",{
+    value: "zh_tw"
+  });
+  Object.defineProperty(I18n,"validLocales",{
+    value: ["zh_tw","en"]
+  });
+</script>
+  <div class="background" data-pp="100"></div>
+  
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="mobile-menu">
+        <button type="button" class="navbar-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#layout-navigation" title="選單">
+          <div class="navbar-toggle-inner">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar icon-bar-top"></span>
+            <span class="icon-bar icon-bar-middle"></span>
+            <span class="icon-bar icon-bar-bottom"></span>
+          </div>
+        </button>
+  <div class="cover"></div>
+</div>
+<header class="navbar layout-header no-print" role="navigation">
+
+  <div class="outdropdowns kenjohn">
+  <div class="dropdowns">
+    <div class="navbar-header">
+        
+        <script>$(document).ready(function(){var url =$('.site-logo').eq(0).attr('src');if(url == "/assets/default-site-logo.png"){$('.navbar-brand').eq(0).remove();};if($('.navbar-brand').length == 2){$('.site-logo').css('height','auto')};$('.site-logo').eq(0).css('margin-right',0);$('.navbar-brand').css('padding-right',0)})</script>
+        <a title="主頁" class="navbar-brand" href="/"><h1 class="default_site_h1">
+<img class="site-logo" src="/uploads/site/site_logo/684f81520857771f6f8ac021/logo_shadw.png" alt="國立虎尾科技大學的Logo"> <span style="display: none;">國立虎尾科技大學</span>
+</h1></a>
+        <a href="#content" id="gotocenter" title="跳到主要內容" tabindex="1" class="sr-only sr-only-focusable add_default">跳到主要內容</a>
+<div class="header-nav no-print">
+          <a id="accesskey_top" accesskey="U" title="上方主選單連結區(U)" href="#U" style="color: inherit !important;display: inline-block;z-index: 1;">:::</a>
+            <a href="/zh_tw/sitemap" accesskey="W" title="網站導覽(W)" style="color: inherit !important;position: relative;margin: 0;z-index: 1;">網站導覽</a> | <div style="width: 100%;text-align: end;font-size: 0.875em; padding-right: 5.5em;">
+<a aria-label="在本視窗開啟 新生" class="widget-content-title" href="https://ntsp.nfu.edu.tw" target="_blank" rel="noopener noreferrer" title="在新視窗開啟 新生">新生</a> <a aria-label="在本視窗開啟 學生專區" class="widget-content-title" href="/zh_tw/pages/students" target="_self" title="學生專區(在本視窗開啟)">學生專區</a> <a aria-label="在本視窗開啟 教職員" class="widget-content-title" href="/zh_tw/pages/teacher" target="_self" title="教職員(在本視窗開啟)">教職員</a> <a aria-label="在本視窗開啟 校友" class="widget-content-title" href="https://alumni.nfu.edu.tw/index.php/zh/" target="_blank" rel="noopener noreferrer" title="在新視窗開啟 校友">校友</a> <a aria-label="在本視窗開啟 International Student" class="widget-content-title" href="http://oia.nfu.edu.tw/" target="_blank" rel="noopener noreferrer" title="在新視窗開啟 International Student">International Student</a>
+</div>
+ 
+
+<ul class="nav_ul">
+	<li class="rwdtxt"><a href="/zh_tw/about" title="認識虎科">認識虎科</a></li>
+	<li class="rwdtxt"><a href="/zh_tw/administration" title="行政單位">行政單位</a></li>
+	<li class="rwdtxt"><a href="/zh_tw/academics" title="教學單位">教學單位</a></li>
+	<li class="rwdtxt"><a href="https://enrollstudents.nfu.edu.tw/" target="_blank" rel="noopener noreferrer" title="招生資訊">招生資訊</a></li>
+	<li class="rwdtxt"><a href="/zh_tw/newscenter" title="新聞專區">新聞專區</a></li>
+	<li class="rwdtxt"><a href="https://www.nfu.edu.tw/zh_tw/academics/extensiveed" title="推廣教育">推廣教育</a></li>
+	<li class="rwdtxt"><a href="https://sec.nfu.edu.tw/zh_tw/DonateEducation" target="_blank" rel="noopener noreferrer" title="捐贈">捐贈</a></li>
+	<li><a aria-label="English" class="enicon lang-switch" href="/?locale=en" tabindex="0" title="English"><i class="icons-earth orbit-bar-language-icon"></i>EN</a></li>
+</ul>
+
+<div class="searchclass">
+<form action="https://www.google.com/custom" class="search-container search-box" id="search" method="get" style="border: 0 !important;" target="_blank" title="另開新視窗">
+<input name="authenticity_token" title="網內搜尋" type="hidden" value="A1o3JD6IWcHIQTtutpaGlcAyk/KlMCfcOj5c0wsTXgiGAQxOdeOXQRFmbVNfrgnyIBKBh+4BH4QRnYCPzs4Y5w=="> <input name="client" title="網內搜尋" type="hidden" value="pub-&amp;amp"> <input id="ie" name="ie" title="網內搜尋" type="hidden" value="utf-8"> <input id="oe" name="oe" title="網內搜尋" type="hidden" value="utf-8"> <input id="cof" name="cof" title="網內搜尋" type="hidden" value="AH:center;AWFID:03de271f1940eea3;"> <input name="domains" title="網內搜尋" type="hidden" value="https://www.nfu.edu.tw/"> <input name="sitesearch" title="網內搜尋" type="hidden" value="https://www.nfu.edu.tw/"> <input class="input-search" id="q" name="q" placeholder="全站搜尋" title="網內搜尋" type="search" value="" x-webkit-speech=""><button aria-label="全站搜尋" class="btn-search" role="button" title="全站搜尋" type="submit"><i aria-hidden="true" class="fas fa-search"></i><span class="sr-only">全站搜尋</span></button>
+</form>
+</div>
+
+        </div>
+        
+        
+        <button type="button" class="navbar-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#layout-navigation" title="選單">
+          <div class="navbar-toggle-inner">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar icon-bar-top"></span>
+            <span class="icon-bar icon-bar-middle"></span>
+            <span class="icon-bar icon-bar-bottom"></span>
+          </div>
+        </button>
+    </div>
+
+    <div class="collapse navbar-collapse modules-menu" id="layout-navigation">
+    
+      <ul id="main-nav" class="navbar-right navbar-nav modules-menu-level-0 nav-level-0 no-print" data-menu-level="0">
+<a id="accesskey_menu" title="上方功能選單連結區(M)" accesskey="M" href="#M" style="left: 0;color: #333333 !important;display: inline-block;z-index: 1;">:::</a><li>
+    <a href="/zh_tw/about" title="認識虎科" data-menu-link="true" class="dropdown-toggle" target="_self">認識虎科</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/about/welcome" title="校長的話" data-menu-link="true" target="_self">校長的話</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/about/history" title="校史沿革" data-menu-link="true" target="_self">校史沿革</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/about/nfuperformance" title="辦學績效" data-menu-link="true" target="_self">辦學績效</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/about/nfuperformance/nfu_plan_model" title="發展典範科技大學計畫" data-menu-link="true" target="_self">發展典範科技大學計畫</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfuperformance/nfu_plan_tech" title="教學卓越計畫" data-menu-link="true" target="_self">教學卓越計畫</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfuperformance/nfu_plan_innovation" title="中部創新自造教育基地計畫" data-menu-link="true" target="_self">中部創新自造教育基地計畫</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfuperformance/nfu_plan_doc" title="偏鄉數位應用推動計畫" data-menu-link="true" target="_self">偏鄉數位應用推動計畫</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfuperformance/nfu_plan_farmer" title="雲林縣農民大學計畫" data-menu-link="true" target="_self">雲林縣農民大學計畫</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfuperformance/nfu_plan_community" title="虎尾溪社區大學計畫" data-menu-link="true" target="_self">虎尾溪社區大學計畫</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfuperformance/nfu_plan_vendor" title="產學計畫" data-menu-link="true" target="_self">產學計畫</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfuperformance/nfu_plan_poster" title="工具機智慧製造應用計畫" data-menu-link="true" target="_self">工具機智慧製造應用計畫</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/about/nfurd" title="研究發展" data-menu-link="true" target="_self">研究發展</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/about/nfurd/research" title="研發成果" data-menu-link="true" target="_self">研發成果</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfurd/other2" title="研究中心" data-menu-link="true" target="_self">研究中心</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfurd/rirc" title="國際交流與獎助學金" data-menu-link="true" target="_self">國際交流與獎助學金</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfurd/education" title="提昇教育重要措施" data-menu-link="true" target="_self">提昇教育重要措施</a>
+          </li>
+<li>
+            <a href="/zh_tw/about/nfurd/lpt" title="中長程發展計畫" data-menu-link="true" target="_self">中長程發展計畫</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/about/video" title="校園影片" data-menu-link="true" target="_self">校園影片</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/about/gallery" title="校園相簿" data-menu-link="true" target="_self">校園相簿</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/about/nfumap" title="校園地圖" data-menu-link="true" target="_self">校園地圖</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2"><li>
+            <a href="/zh_tw/about/nfumap/accessible" title="無障礙設施所在位置" data-menu-link="true" target="_self">無障礙設施所在位置</a>
+          </li></ul>
+      </li>
+<li>
+        <a href="/zh_tw/about/formosa" title="交通資訊" data-menu-link="true" target="_self">交通資訊</a>
+        
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="/zh_tw/administration" title="行政單位" data-menu-link="true" class="dropdown-toggle" target="_self">行政單位</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/administration/geo" title="校長室" data-menu-link="true" target="_self">校長室</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/administration/ccos" title="副校長室" data-menu-link="true" target="_self">副校長室</a>
+        
+      </li>
+<li>
+        <a href="https://sec.nfu.edu.tw/" title="秘書室" data-menu-link="true" target="_blank" rel="noopener noreferrer">秘書室</a>
+        
+      </li>
+<li>
+        <a href="https://oaa.nfu.edu.tw/" title="教務處" data-menu-link="true" target="_blank" rel="noopener noreferrer">教務處</a>
+        
+      </li>
+<li>
+        <a href="https://osa.nfu.edu.tw/" title="學生事務處" data-menu-link="true" target="_blank" rel="noopener noreferrer">學生事務處</a>
+        
+      </li>
+<li>
+        <a href="https://gad.nfu.edu.tw/" title="總務處" data-menu-link="true" target="_blank" rel="noopener noreferrer">總務處</a>
+        
+      </li>
+<li>
+        <a href="https://ord.nfu.edu.tw/" title="研究發展處" data-menu-link="true" target="_blank" rel="noopener noreferrer">研究發展處</a>
+        
+      </li>
+<li>
+        <a href="https://oia.nfu.edu.tw/" title="國際事務處" data-menu-link="true" target="_blank" rel="noopener noreferrer">國際事務處</a>
+        
+      </li>
+<li>
+        <a href="https://acs.nfu.edu.tw/" title="產學合作及服務處" data-menu-link="true" target="_blank" rel="noopener noreferrer">產學合作及服務處</a>
+        
+      </li>
+<li>
+        <a href="https://ossr.nfu.edu.tw/" title="永續發展暨社會責任處" data-menu-link="true" target="_blank" rel="noopener noreferrer">永續發展暨社會責任處</a>
+        
+      </li>
+<li>
+        <a href="https://library.nfu.edu.tw/" title="圖書館" data-menu-link="true" target="_blank" rel="noopener noreferrer">圖書館</a>
+        
+      </li>
+<li>
+        <a href="https://aac.nfu.edu.tw/" title="招生事務中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">招生事務中心</a>
+        
+      </li>
+<li>
+        <a href="https://cc.nfu.edu.tw/" title="電子計算機中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">電子計算機中心</a>
+        
+      </li>
+<li>
+        <a href="https://art.nfu.edu.tw/" title="藝術中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">藝術中心</a>
+        
+      </li>
+<li>
+        <a href="https://cird.nfu.edu.tw/" title="校務發展中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">校務發展中心</a>
+        
+      </li>
+<li>
+        <a href="https://she.nfu.edu.tw/index.php?lang=cht" title="環保及安全衛生中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">環保及安全衛生中心</a>
+        
+      </li>
+<li>
+        <a href="https://ctld.nfu.edu.tw/" title="教學發展中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">教學發展中心</a>
+        
+      </li>
+<li>
+        <a href="https://smim.nfu.edu.tw/" title="智能機械與智慧製造研究中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">智能機械與智慧製造研究中心</a>
+        
+      </li>
+<li>
+        <a href="https://per.nfu.edu.tw/" title="人事室" data-menu-link="true" target="_blank" rel="noopener noreferrer">人事室</a>
+        
+      </li>
+<li>
+        <a href="https://acc.nfu.edu.tw/" title="主計室" data-menu-link="true" target="_blank" rel="noopener noreferrer">主計室</a>
+        
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="/zh_tw/academics" title="教學單位" data-menu-link="true" class="dropdown-toggle" target="_self">教學單位</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="https://ce.nfu.edu.tw/" title="工程學院" data-menu-link="true" target="_blank" rel="noopener noreferrer">工程學院</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="https://mcae.nfu.edu.tw/" title="機械與電腦輔助工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">機械與電腦輔助工程系</a>
+          </li>
+<li>
+            <a href="https://mde.nfu.edu.tw/" title="機械設計工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">機械設計工程系</a>
+          </li>
+<li>
+            <a href="https://auto.nfu.edu.tw/" title="自動化工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">自動化工程系</a>
+          </li>
+<li>
+            <a href="https://mse.nfu.edu.tw/" title="材料科學與工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">材料科學與工程系</a>
+          </li>
+<li>
+            <a href="https://ve.nfu.edu.tw/" title="車輛工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">車輛工程系</a>
+          </li>
+<li>
+            <a href="https://ce.nfu.edu.tw/zh_tw/Doctoral_degree" title="智慧產業科技研發博士學位學程" data-menu-link="true" target="_blank" rel="noopener noreferrer">智慧產業科技研發博士學位學程</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="https://cece.nfu.edu.tw/" title="電機資訊學院" data-menu-link="true" target="_blank" rel="noopener noreferrer">電機資訊學院</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="https://csie.nfu.edu.tw/" title="資訊工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">資訊工程系</a>
+          </li>
+<li>
+            <a href="http://nfuee.nfu.edu.tw/" title="電機工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">電機工程系</a>
+          </li>
+<li>
+            <a href="https://eo.nfu.edu.tw/" title="光電工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">光電工程系</a>
+          </li>
+<li>
+            <a href="https://dee.nfu.edu.tw/" title="電子工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">電子工程系</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="https://cmgt.nfu.edu.tw/" title="管理學院" data-menu-link="true" target="_blank" rel="noopener noreferrer">管理學院</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="https://iem.nfu.edu.tw/" title="工業管理系" data-menu-link="true" target="_blank" rel="noopener noreferrer">工業管理系</a>
+          </li>
+<li>
+            <a href="https://im.nfu.edu.tw/" title="資訊管理系" data-menu-link="true" target="_blank" rel="noopener noreferrer">資訊管理系</a>
+          </li>
+<li>
+            <a href="https://fin.nfu.edu.tw/" title="財務金融系" data-menu-link="true" target="_blank" rel="noopener noreferrer">財務金融系</a>
+          </li>
+<li>
+            <a href="https://ba.nfu.edu.tw/" title="企業管理系" data-menu-link="true" target="_blank" rel="noopener noreferrer">企業管理系</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="https://caas.nfu.edu.tw/" title="文理學院" data-menu-link="true" target="_blank" rel="noopener noreferrer">文理學院</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="http://afl.nfu.edu.tw/main.php" title="應用外語系" data-menu-link="true" target="_blank" rel="noopener noreferrer">應用外語系</a>
+          </li>
+<li>
+            <a href="https://esb.nfu.edu.tw/" title="環境科學與生物科技系" data-menu-link="true" target="_blank" rel="noopener noreferrer">環境科學與生物科技系</a>
+          </li>
+<li>
+            <a href="https://mmd.nfu.edu.tw/" title="多媒體設計系" data-menu-link="true" target="_blank" rel="noopener noreferrer">多媒體設計系</a>
+          </li>
+<li>
+            <a href="https://lr.nfu.edu.tw/" title="休閒遊憩系" data-menu-link="true" target="_blank" rel="noopener noreferrer">休閒遊憩系</a>
+          </li>
+<li>
+            <a href="https://agri.nfu.edu.tw/" title="農業科技系" data-menu-link="true" target="_blank" rel="noopener noreferrer">農業科技系</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="https://aero.nfu.edu.tw/" title="航空學院" data-menu-link="true" target="_blank" rel="noopener noreferrer">航空學院</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="https://pme.nfu.edu.tw/" title="動力機械工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">動力機械工程系</a>
+          </li>
+<li>
+            <a href="https://ae.nfu.edu.tw/" title="飛機工程系" data-menu-link="true" target="_blank" rel="noopener noreferrer">飛機工程系</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="https://cge.nfu.edu.tw/" title="通識教育中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">通識教育中心</a>
+        
+      </li>
+<li>
+        <a href="https://ltc.nfu.edu.tw/" title="語言教學中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">語言教學中心</a>
+        
+      </li>
+<li>
+        <a href="https://cfs.nfu.edu.tw/" title="數理教學中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">數理教學中心</a>
+        
+      </li>
+<li>
+        <a href="https://pe.nfu.edu.tw/" title="體育室" data-menu-link="true" target="_blank" rel="noopener noreferrer">體育室</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/academics/extensiveed" title="推廣教育" data-menu-link="true" target="_self">推廣教育</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="https://oaa.nfu.edu.tw/zh_tw/ext/e_news" title="進修教務組" data-menu-link="true" target="_blank" rel="noopener noreferrer">進修教務組</a>
+          </li>
+<li>
+            <a href="https://oaa.nfu.edu.tw/zh_tw/continue/c_news" title="推廣教育中心" data-menu-link="true" target="_blank" rel="noopener noreferrer">推廣教育中心</a>
+          </li>
+</ul>
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="https://enrollstudents.nfu.edu.tw/" title="招生資訊" data-menu-link="true" class="dropdown-toggle" target="_blank" rel="noopener noreferrer">招生資訊</a>
+    
+  </li>
+<li>
+    <a href="/zh_tw/newscenter" title="新聞專區" data-menu-link="true" class="dropdown-toggle" target="_self">新聞專區</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/newscenter/nfufocus" title="校園焦點" data-menu-link="true" target="_self">校園焦點</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/newscenter/nfunews" title="虎科新聞" data-menu-link="true" target="_self">虎科新聞</a>
+        
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="/zh_tw/ann/adm" title="訊息公告" data-menu-link="true" class="dropdown-toggle" target="_self">訊息公告</a>
+    <ul class="modules-menu-level-1 nav-level-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/ann/adm" title="行政公告" data-menu-link="true" target="_self">行政公告</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/ann/club" title="校園活動" data-menu-link="true" target="_self">校園活動</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/ann/art" title="其他活動" data-menu-link="true" target="_self">其他活動</a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/ann/job" title="徵才公告" data-menu-link="true" target="_self">徵才公告</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/ann/job/teacher_job" title="教師徵聘" data-menu-link="true" target="_self">教師徵聘</a>
+          </li>
+<li>
+            <a href="/zh_tw/ann/job/staff_job" title="職員徵聘" data-menu-link="true" target="_self">職員徵聘</a>
+          </li>
+<li>
+            <a href="/zh_tw/ann/job/student_work" title="工讀實習" data-menu-link="true" target="_self">工讀實習</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/ann/nfu_calendar" title="年度行事曆" data-menu-link="true" target="_self">年度行事曆</a>
+        <ul class="modules-menu-level-2 nav-level-2" data-menu-level="2">
+<li>
+            <a href="/xhr/archive/download?file=6982b41d4eae350a2fcd29b1" title="114學年度 下載" data-menu-link="true" target="_self">114學年度 下載</a>
+          </li>
+<li>
+            <a href="/uploads/archive_file_multiple/file/69e0349b4eae350a4009ba0d/115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E8%A1%8C%E4%BA%8B%E6%9B%86.pdf" title="115學年度 下載" data-menu-link="true" target="_self">115學年度 下載</a>
+          </li>
+</ul>
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="https://diac.nfu.edu.tw/" title="產學服務" data-menu-link="true" class="dropdown-toggle" target="_blank" rel="noopener noreferrer">產學服務</a>
+    
+  </li>
+<li>
+    <a href="https://library.nfu.edu.tw/" title="圖書館" data-menu-link="true" class="dropdown-toggle" target="_blank" rel="noopener noreferrer">圖書館</a>
+    
+  </li>
+</ul>
+    </div>
+   </div>
+  </div>
+</header>
+
+
+  <div class="banner-section">
+    <div class="layout-slide no-print single-child-datapp homebanner" data-pp="300">
+<div class="w-ad-banner w-ba-banner ad-banner-widget-0 ba-banner-widget-0" data-subpart-id="68d224590857779ee52c0d98">
+<div class="banner-shadow"></div>
+  <div class="banner-deco">
+    <span class="background-mask"></span>
+  </div>
+  <div class="w-ad-banner__wrap  w-ba-banner__wrap  cycle-slideshow" data-list="images" data-level="0" data-cycle-slides=".w-ba-banner__slide" data-cycle-log="false" data-overlay=".w-ad-banner__overlay_68d224590857779ee52c0d98" data-cycle-auto-height="0" data-cycle-speed="500" data-cycle-timeout="5000" data-cycle-fx="fade" data-cycle-pager=".banner_caption_68d224590857779ee52c0d98" data-pager-template="" data-pager-active-class="active-slide" data-cycle-swipe="true" data-cycle-swipe-fx="scrollHorz">
+    <div class="w-ad-banner__slide w-ba-banner__slide active" data-link="https://www.youtube.com/watch?v=6MXC_sZxBJ8" data-cycle-title="National Formosa University" data-cycle-desc="&lt;h4&gt;&lt;span style='font-family:微軟正黑體;'&gt;無人機　飛躍發展&lt;/span&gt;&lt;/h4&gt;
+" data-overlay-template="&lt;h3&gt;National Formosa University&lt;/h3&gt;&lt;p&gt;&lt;h4&gt;&lt;span style='font-family:微軟正黑體;'&gt;無人機　飛躍發展&lt;/span&gt;&lt;/h4&gt;
+&lt;/p&gt;" data-bs-target="" data-category="" data-tags="">
+       <img class="w-ad-banner__image w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/690d80420857775c35f425e3/%E7%84%A1%E4%BA%BA%E6%A9%9Fs.jpg?v=1782711968" style="cursor:pointer;" data-track-click-url="/ad_banners/track_click/690d80420857775c35f425e3" onload="var el=this;(function(){if((el.parentElement==undefined||el.parentElement.tagName!='A')&amp;&amp;$('&lt;p&gt;'+$(el).parents('.w-ba-banner__slide').eq(0).attr('data-overlay-template')+'&lt;/p&gt;').find('a').length==0){el.outerHTML=('&lt;a href=https://www.youtube.com/watch?v=6MXC_sZxBJ8 target=&gt;'+el.outerHTML+'&lt;/a&gt;');}})()" alt="National Formosa University">
+    </div>
+  
+    <div class="w-ad-banner__slide w-ba-banner__slide " data-link="/" data-cycle-title="National Formosa University" data-cycle-desc="&lt;h4&gt;&lt;span style='font-family:微軟正黑體;'&gt;講究實作　產業青睞&lt;/span&gt;&lt;/h4&gt;
+" data-overlay-template="&lt;h3&gt;National Formosa University&lt;/h3&gt;&lt;p&gt;&lt;h4&gt;&lt;span style='font-family:微軟正黑體;'&gt;講究實作　產業青睞&lt;/span&gt;&lt;/h4&gt;
+&lt;/p&gt;" data-bs-target="" data-category="" data-tags="">
+       <img class="w-ad-banner__image w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/690d850e0857775c35f425fd/%E8%AC%9B%E7%A9%B6%E5%AF%A6%E4%BD%9C_%E7%94%A2%E6%A5%AD%E9%9D%92%E7%9D%9Es.jpeg?v=1784521687" style="cursor:pointer;" data-track-click-url="/ad_banners/track_click/690d850e0857775c35f425fd" onload="var el=this;(function(){if((el.parentElement==undefined||el.parentElement.tagName!='A')&amp;&amp;$('&lt;p&gt;'+$(el).parents('.w-ba-banner__slide').eq(0).attr('data-overlay-template')+'&lt;/p&gt;').find('a').length==0){el.outerHTML=('&lt;a href=/ target=&gt;'+el.outerHTML+'&lt;/a&gt;');}})()" alt="National Formosa University">
+    </div>
+  
+    <div class="w-ad-banner__slide w-ba-banner__slide " data-link="/" data-cycle-title="National Formosa University" data-cycle-desc="&lt;h4&gt;&lt;span style='font-family:微軟正黑體;'&gt;多元文化　共構學習力&lt;/span&gt;&lt;/h4&gt;
+" data-overlay-template="&lt;h3&gt;National Formosa University&lt;/h3&gt;&lt;p&gt;&lt;h4&gt;&lt;span style='font-family:微軟正黑體;'&gt;多元文化　共構學習力&lt;/span&gt;&lt;/h4&gt;
+&lt;/p&gt;" data-bs-target="" data-category="" data-tags="">
+       <img class="w-ad-banner__image w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/69807bfc4eae351ba5e555af/%E5%A4%9A%E5%85%83%E6%96%87%E5%8C%96_%E5%85%B1%E6%A7%8B%E5%AD%B8%E7%BF%92%E5%8A%9Bs.jpeg?v=1784521692" style="cursor:pointer;" data-track-click-url="/ad_banners/track_click/69807bfc4eae351ba5e555af" onload="var el=this;(function(){if((el.parentElement==undefined||el.parentElement.tagName!='A')&amp;&amp;$('&lt;p&gt;'+$(el).parents('.w-ba-banner__slide').eq(0).attr('data-overlay-template')+'&lt;/p&gt;').find('a').length==0){el.outerHTML=('&lt;a href=/ target=&gt;'+el.outerHTML+'&lt;/a&gt;');}})()" alt="National Formosa University">
+    </div>
+  </div>
+  <div class="w-ad-banner__caption ad-overlay w-ba-banner__caption w-ad-banner__caption w-ad-banner__overlay_68d224590857779ee52c0d98"></div>
+  <div class="w-ad-banner__pager-1 w-ba-banner__caption banner-pager banner_caption_68d224590857779ee52c0d98" data-list="images" data-level="0">
+    <li data-category="" data-tags=""><button title="Slide 1" aria-label="Pager"><span style="display: none;">Slide 1</span></button></li>
+  
+    <li data-category="" data-tags=""><button title="Slide 2" aria-label="Pager"><span style="display: none;">Slide 2</span></button></li>
+  
+    <li data-category="" data-tags=""><button title="Slide 3" aria-label="Pager"><span style="display: none;">Slide 3</span></button></li>
+  </div>
+  <ul class="controlplay" role="radiogroup" aria-label="播放控制選項">
+    <a role="radio" aria-checked="true" href="javascript:;" class="resume-slide active" title="繼續播放" aria-label="繼續播放" aria-live="assertive">
+      <i aria-hidden="true"></i>
+      <p style="display: none;">Resume</p>
+    </a>
+
+    <a role="radio" aria-checked="false" href="javascript:;" class="pause-slide" title="暫停播放" aria-label="暫停播放" aria-live="assertive">
+      <i aria-hidden="true"></i>
+      <p style="display: none;">Pause</p>
+    </a>
+  </ul>
+  <ul class="button-mid">
+    <i class="fa fa-angle-left prev-button" aria-label="Prev"></i>
+    <i class="fa fa-angle-right next-button" aria-label="Next"></i>
+  </ul>
+</div>
+<script>
+  $('[data-subpart-id="68d224590857779ee52c0d98"] .pause-slide').click(function(){
+    $(this).parent("ul").parent('.w-ba-banner').find(".cycle-slideshow").cycle('pause');
+    $(this).addClass('active')
+    $(this).parents('.controlplay').eq(0).find('.resume-slide').removeClass('active')
+  });
+  $('[data-subpart-id="68d224590857779ee52c0d98"] .resume-slide').click(function(){
+    $(this).parent("ul").parent('.w-ba-banner').find(".cycle-slideshow").cycle('resume');
+    $(this).addClass('active')
+    $(this).parents('.controlplay').eq(0).find('.pause-slide').removeClass('active')
+  });
+  $('[data-subpart-id="68d224590857779ee52c0d98"] .next-button').click(function(){
+    $(this).parent("ul").parent('.w-ba-banner').find(".cycle-slideshow").cycle("next");
+
+  })
+  $('[data-subpart-id="68d224590857779ee52c0d98"] .prev-button').click(function(){
+    $(this).parent("ul").parent('.w-ba-banner').find(".cycle-slideshow").cycle("prev");
+  })
+
+
+  $(document).ready(function () {
+  setTimeout(function () {
+    var $controlplay = $('.ba-banner-widget-0 .controlplay');
+    var $caption = $('.ba-banner-widget-0 .w-ad-banner__caption');
+    
+    $caption.after($controlplay);
+  }, 500);
+$('.ba-banner-widget-0 .w-ad-banner__slide a')
+  .on('focus', function() {
+    $('.ba-banner-widget-0 img').css({
+      'height'          : 'auto',
+      'width'           : '80%',
+      'margin'          : 'auto',
+      'position'        : 'relative',
+      'display'         : 'flex',
+      'justify-content' : 'center',
+      'margin-top'      : '1em'
+    });
+  })
+  .on('blur', function() {
+    $('.ba-banner-widget-0 img').css({
+      'height'          : '',
+      'width'           : '',
+      'margin'          : '',
+      'position'        : '',
+      'display'         : '',
+      'justify-content' : '',
+      'margin-top'      : ''
+    });
+  });
+});
+</script>
+<style type="text/css">
+  .w-ba-banner .controlplay .resume-slide.active i{
+    color: #32D9C3;
+  }
+  .w-ba-banner .controlplay .pause-slide.active i{
+    color: #ff4500;
+  }
+  .w-ba-banner .controlplay{
+    width: auto;
+  }
+  .next-button,.prev-button{
+    cursor: pointer;
+  }
+    /* ✅ 焦點可見樣式 */
+  .w-ba-banner .w-ba-banner__slide a:focus,
+  .w-ba-banner .w-ba-banner__slide a:focus-visible {
+    outline: 3px solid #005fcc;
+    outline-offset: 2px;
+  }
+  .w-ba-banner .prev-button:focus,
+  .w-ba-banner .prev-button:focus-visible,
+  .w-ba-banner .next-button:focus,
+  .w-ba-banner .next-button:focus-visible {
+    outline: 3px solid #005fcc;
+    outline-offset: 2px;
+  }
+  .w-ba-banner .controlplay a:focus,
+  .w-ba-banner .controlplay a:focus-visible {
+    outline: 3px solid #005fcc;
+    outline-offset: 2px;
+  }
+  .w-ba-banner .banner-pager button:focus,
+  .w-ba-banner .banner-pager button:focus-visible {
+    outline: 3px solid #005fcc;
+    outline-offset: 2px;
+  }
+</style>
+</div>
+    <div class="downIcon">
+<div class="scroller"></div>
+<a href="#onesection" tabindex="0" title="移動到第一個區塊" aria-label="往下導覽">
+    <span class="visually-hidden">往下導覽</span></a>
+</div>
+  </div>
+  <div class="layout-content2 topcontent">
+    <div class=" single-child-datapp onesection" id="onesection" data-pp="1999"></div>
+  </div>
+  <div class="section-one" data-pp="501"><div data-subpart-id="6863d8e10857770591126e93"><img alt="這是一張圖片" src="/uploads/asset/data/6863dd420857770591126e9c/screw__2_.png" style="width: 160px; height: 160px;" title="這是一張圖片"></div></div>
+  <div class="video-banner" data-pp="301"></div>
+  <div class="verticalhome ">
+    <div class="layout-content topcontent">
+      <a id="content" accesskey="C" href="#C" title="主要內容區(C)" style="color: inherit !important;position: relative;margin: 0;z-index: 1;">:::</a>
+
+      <div class="contentwrap circlebox ">
+
+        <div class="background-ball "></div>
+        <div class="background-screw"></div>
+        <div class="background-ball2 "></div>
+        <div class="background-dotball "></div>
+        <div class="background-dotballleft "></div>
+        <div class="page-index__background-ball">
+          <div class="page-index__background-ball-img"></div>
+        </div>
+        <div class="container">
+          <section class="body-banner" data-pp="0"></section>
+          <div class="row ">
+            <section class="layout-content-box col-sm-12 " data-pp="3"></section>
+          </div>
+          <div class="row ">
+            <section class="layout-content-box col-sm-12 hide1" data-pp="4">
+        <script style="display:none">
+          $(document).ready(function(){
+            $("[data-subpart-id=\"69143b590857777243024d65\"] .w-annc__more").text("更多校園焦點");
+          })
+        </script>
+      
+        <script style="display:none">
+          $(document).ready(function(){
+            var read_more_position = 4;
+            var read_more_block = $("[data-subpart-id=\"69143b590857777243024d65\"] .w-annc__more");
+            if(read_more_position == 5){
+              read_more_block.css('display', 'none');
+            }else{
+              if(read_more_position == 1 || read_more_position == 2){
+                read_more_block.addClass("pull-left");
+              }else{
+                read_more_block.addClass("pull-right");
+              }
+              if(read_more_position == 1 || read_more_position == 3){
+                var first_element = $("[data-subpart-id=\"69143b590857777243024d65\"] > *:eq(0)");
+                var div_clearfix = $('<div class="clearfix"></div>')
+                if(first_element.height() == 0){
+                  read_more_block.appendTo(div_clearfix);
+                }else{
+                  div_clearfix = read_more_block;
+                }
+                first_element.before(div_clearfix);
+                var annc_title = $("[data-subpart-id=\"69143b590857777243024d65\"] .w-annc__widget-title").eq(0);
+                if(annc_title.length != 0){
+                  read_more_block.appendTo("[data-subpart-id=\"69143b590857777243024d65\"] .w-annc__widget-title:eq(0)");
+                }
+              }else{
+                var div_clearfix = $('<div class="clearfix"></div>');
+                read_more_block.appendTo(div_clearfix);
+                $("[data-subpart-id=\"69143b590857777243024d65\"] > *:eq(-1)").after(div_clearfix);
+              }
+            }
+          })
+        </script>
+      <div class="w-annc  widget-announcement-24" data-subpart-id="69143b590857777243024d65">
+  <div class="w-annc__more-wrap clearfix">
+    <h2 class="w-annc__widget-title">
+      <span>校園焦點</span>
+    </h2>
+    <a class="w-annc__more btn btn-primary pull-right" href="/zh_tw/newscenter/nfufocus?category%5B%5D=68db3f5f08577793ef6894d5&amp;tags%5B%5D=all">More NEWS</a>
+  </div>
+  <ul class="w-annc__list  row" data-level="0" data-list="announcements">
+    <li class="w-annc__item  col-md-4" data-category="校園焦點" data-tags="[]">
+	<a href="/zh_tw/newscenter/nfufocus/AI-%E4%BB%A3%E7%90%86%E6%99%82%E4%BB%A3-%E5%A4%A7%E5%AD%B8%E8%A6%81%E6%95%99%E5%AD%B8%E7%94%9F%E4%BB%80%E9%BA%BC-%E8%99%8E%E7%A7%91%E5%A4%A7%E6%A0%A1%E9%95%B7-%E4%B8%8D%E8%A2%ABAI%E5%8F%96%E4%BB%A3%E7%9A%84%E6%98%AF%E8%A7%A3%E6%B1%BA%E5%95%8F%E9%A1%8C%E7%9A%84%E8%83%BD%E5%8A%9B-24962283" title="AI 代理時代，大學要教學生什麼？虎科大校長：不被AI取代的是解決問題的能力" aria-label="前往校園焦點" class="widget-title-a">
+    <div class="w-annc__img-wrap bullseye">
+      <img class="w-annc__img" src="/uploads/bulletin/image/6aced11e4eae3536911ed6af/11410140845-1.jpg" alt="AI 代理時代，大學要教學生什麼？虎科大校長：不被AI取代的是解決問題的能力" title="AI 代理時代，大學要教學生什麼？虎科大校長：不被AI取代的是解決問題的能力">
+      <div class="transitionfade"></div>
+    </div>
+    <div class="w-annc__content-wrap card">
+      <div class="w-annc__meta">
+        <span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+        <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+          <i class="fa fa-calendar-o"></i>
+          <span class="w-annc__postdate"> 2026-10-14</span>
+        </span>
+        <span class="w-annc__category-wrap">
+          <i class="fa fa-tasks"></i>
+          <span class="w-annc__category">校園焦點</span>
+          </span>
+      </div>
+      <h3 class="w-annc__entry-title">
+        <span class="w-annc__title"><span style="font-family:微軟正黑體">AI 代理時代，大學要教學生什麼？虎科大校長：不被AI取代的是解決問題的能力</span></span>
+      </h3>
+      <p class="w-annc__subtitle"></p>
+    </div>
+	</a>
+    </li>
+  
+    <li class="w-annc__item  col-md-4" data-category="校園焦點" data-tags="[]">
+	<a href="/zh_tw/newscenter/nfufocus/%E8%99%8E%E7%A7%91%E5%A4%A7%E6%96%B0%E8%A8%AD%E8%88%AA%E7%A9%BA%E5%AD%B8%E9%99%A2-%E9%A3%9B%E6%A9%9F%E6%90%AC%E5%AE%B6-24383758" title="虎科大新設航空學院 飛機搬家" aria-label="前往校園焦點" class="widget-title-a">
+    <div class="w-annc__img-wrap bullseye">
+      <img class="w-annc__img" src="/uploads/bulletin/image/6aa13bec4eae358ab53ad981/11509091856.jpg" alt="虎科大新設航空學院 飛機搬家" title="虎科大新設航空學院 飛機搬家">
+      <div class="transitionfade"></div>
+    </div>
+    <div class="w-annc__content-wrap card">
+      <div class="w-annc__meta">
+        <span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+        <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+          <i class="fa fa-calendar-o"></i>
+          <span class="w-annc__postdate"> 2026-09-09</span>
+        </span>
+        <span class="w-annc__category-wrap">
+          <i class="fa fa-tasks"></i>
+          <span class="w-annc__category">校園焦點</span>
+          </span>
+      </div>
+      <h3 class="w-annc__entry-title">
+        <span class="w-annc__title"><span style="font-family:微軟正黑體">虎科大新設航空學院 飛機搬家</span></span>
+      </h3>
+      <p class="w-annc__subtitle"></p>
+    </div>
+	</a>
+    </li>
+  
+    <li class="w-annc__item  col-md-4" data-category="校園焦點" data-tags="[]">
+	<a href="/zh_tw/newscenter/nfufocus/%E8%99%8E%E7%A7%91%E5%A4%A7%E6%B0%B8%E7%BA%8C%E8%A1%8C%E5%8B%95%E7%8D%8E%E7%8D%B213%E7%8D%8E%E3%80%80%E7%8D%B2%E7%8D%8E%E6%95%B8%E5%85%A8%E5%9C%8B%E5%A4%A7%E5%B0%88%E6%A0%A1%E9%99%A2%E4%B8%89%E9%80%A3%E9%9C%B8-18014281" title="虎科大永續行動獎獲13獎　獲獎數全國大專校院三連霸" aria-label="前往校園焦點" class="widget-title-a">
+    <div class="w-annc__img-wrap bullseye">
+      <img class="w-annc__img" src="/uploads/bulletin/image/6a9176ae4eae35842b8c8d5e/IMG_6719.PNG" alt="虎科大永續行動獎獲13獎　獲獎數全國大專校院三連霸" title="虎科大永續行動獎獲13獎　獲獎數全國大專校院三連霸">
+      <div class="transitionfade"></div>
+    </div>
+    <div class="w-annc__content-wrap card">
+      <div class="w-annc__meta">
+        <span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+        <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+          <i class="fa fa-calendar-o"></i>
+          <span class="w-annc__postdate"> 2026-08-28</span>
+        </span>
+        <span class="w-annc__category-wrap">
+          <i class="fa fa-tasks"></i>
+          <span class="w-annc__category">校園焦點</span>
+          </span>
+      </div>
+      <h3 class="w-annc__entry-title">
+        <span class="w-annc__title"><strong><span style="font-family:微軟正黑體">虎科大永續行動獎獲13獎　獲獎數全國大專校院三連霸</span></strong></span>
+      </h3>
+      <p class="w-annc__subtitle"></p>
+    </div>
+	</a>
+    </li>
+  
+    <li class="w-annc__item  col-md-4" data-category="校園焦點" data-tags="[]">
+	<a href="/zh_tw/newscenter/nfufocus/%E5%9F%B9%E8%82%B2%E4%BA%BA%E6%89%8D-%E9%A9%85%E5%8B%95%E5%89%B5%E6%96%B0-%E8%99%8E%E7%A7%91%E5%A4%A7%E5%B8%83%E5%B1%80%E8%87%BA%E7%81%A3%E7%84%A1%E4%BA%BA%E6%A9%9F%E6%96%B0%E6%9C%AA%E4%BE%86-19422053" title="培育人才、驅動創新，虎科大布局臺灣無人機新未來" aria-label="前往校園焦點" class="widget-title-a">
+    <div class="w-annc__img-wrap bullseye">
+      <img class="w-annc__img" src="/uploads/bulletin/image/6a7d268b4eae35ec1c0ed1b3/115%E5%A4%A9%E4%B8%8B%E5%9F%8E%E5%B8%82%E8%AB%96%E5%A3%87-2.jpg" alt="培育人才、驅動創新，虎科大布局臺灣無人機新未來" title="培育人才、驅動創新，虎科大布局臺灣無人機新未來">
+      <div class="transitionfade"></div>
+    </div>
+    <div class="w-annc__content-wrap card">
+      <div class="w-annc__meta">
+        <span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+        <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+          <i class="fa fa-calendar-o"></i>
+          <span class="w-annc__postdate"> 2026-08-13</span>
+        </span>
+        <span class="w-annc__category-wrap">
+          <i class="fa fa-tasks"></i>
+          <span class="w-annc__category">校園焦點</span>
+          </span>
+      </div>
+      <h3 class="w-annc__entry-title">
+        <span class="w-annc__title"><span style="font-family:微軟正黑體">培育人才、驅動創新，虎科大布局臺灣無人機新未來</span></span>
+      </h3>
+      <p class="w-annc__subtitle"></p>
+    </div>
+	</a>
+    </li>
+  </ul>
+</div>
+<style type="text/css">
+	[data-subpart-id="69143b590857777243024d65"] .bullseye{
+		overflow: hidden;
+	}
+</style>
+<script>
+	function combineul_69143b590857777243024d65(){
+		var parents = $('[data-subpart-id=\"69143b590857777243024d65\"] ul.w-annc__list').parent();
+		parents.each(function(i,v){
+			for(var i=1;i<$(v).find('ul.w-annc__list').length;i++)
+				$(v).find('ul.w-annc__list').eq(0).find('>li').eq(-1).after($(v).find('ul.w-annc__list').eq(i).html());
+			var ullength = $(v).find('ul.w-annc__list').length;
+			for(var i = 1;i < ullength;i++)
+				$(v).find('ul.w-annc__list').eq(-1).remove();
+		})
+	};
+	var num;
+	var lilength = $('[data-subpart-id=\"69143b590857777243024d65\"] li.w-annc__item').length;
+	function reorganize_69143b590857777243024d65(num){
+		combineul_69143b590857777243024d65();
+		var parents = $('[data-subpart-id=\"69143b590857777243024d65\"] ul.w-annc__list').parent();
+		parents.each(function(i,v){
+			var lilength = $(v).find('li.w-annc__item').length;
+			var ul_length = Math.ceil(lilength/num);
+			for(var ii=1;ii< ul_length;ii++){
+				var clone_ul = $(v).find('ul.w-annc__list').eq(-1).clone();
+				clone_ul.empty();
+				clone_ul.removeClass("active");
+				clone_ul.css("display","");
+				$(v).find('ul.w-annc__list').eq(-1).after(clone_ul.prop("outerHTML"));
+				var lihtml="";
+				if(ii != (ul_length-1)){
+					for(var j=0;j<num;j++){
+						lihtml += $(v).find('li.w-annc__item').eq(ii*num+j).prop("outerHTML");
+					};
+				}else{
+					for(var j=0;j< lilength - num *(ul_length-1) ;j++){
+						lihtml += $(v).find('li.w-annc__item').eq(ii*num+j).prop("outerHTML");
+					};
+				};
+				$(v).find('ul.w-annc__list').eq(-1).html(lihtml);
+			}
+			if(ul_length != 1 )
+				for(var i=0;i< lilength -num ; i++)
+					$(v).find('ul.w-annc__list').eq(0).find("li.w-annc__item").eq(num).remove();
+		})
+		$('[data-subpart-id=\"69143b590857777243024d65\"] ul.w-annc__list >li').css('width','calc('+100/num+'% - '+20/20+'em)'); //20px=>li的margin
+		$('[data-subpart-id=\"69143b590857777243024d65\"] ul.w-annc__list >li').css("float","left");
+	};
+	$(window).resize(function(){
+		if($(window).width()>1024){
+			reorganize_69143b590857777243024d65(4);
+			num=3;
+		}else if($(window).width()>576){
+			reorganize_69143b590857777243024d65(4);
+			num=2;
+		}else{
+			reorganize_69143b590857777243024d65(4);
+			num=1;
+		}
+	})
+	$(document).ready(function(){
+		if($(window).width()>1024){
+			reorganize_69143b590857777243024d65(4);
+			num=3;
+		}else if($(window).width()>576){
+			reorganize_69143b590857777243024d65(4);
+			num=2;
+		}else{
+			reorganize_69143b590857777243024d65(4);
+			num=1;
+		}
+	})
+</script>
+
+      <script style="display:none">
+        $("[data-subpart-id=\"69143b590857777243024d65\"] .w-annc__more").attr("href","/zh_tw/newscenter/nfufocus?category%5B%5D=68db3f5f08577793ef6894d5&tags%5B%5D=all");
+      </script>
+      </section>
+            <section class="layout-content-box col-sm-12 hide1" data-pp="44">
+        <script style="display:none">
+          $(document).ready(function(){
+            $("[data-subpart-id=\"69043a680857779d0f9eeb9e\"] .w-annc__more").text("更多虎科新聞");
+          })
+        </script>
+      
+        <script style="display:none">
+          $(document).ready(function(){
+            var read_more_position = 4;
+            var read_more_block = $("[data-subpart-id=\"69043a680857779d0f9eeb9e\"] .w-annc__more");
+            if(read_more_position == 5){
+              read_more_block.css('display', 'none');
+            }else{
+              if(read_more_position == 1 || read_more_position == 2){
+                read_more_block.addClass("pull-left");
+              }else{
+                read_more_block.addClass("pull-right");
+              }
+              if(read_more_position == 1 || read_more_position == 3){
+                var first_element = $("[data-subpart-id=\"69043a680857779d0f9eeb9e\"] > *:eq(0)");
+                var div_clearfix = $('<div class="clearfix"></div>')
+                if(first_element.height() == 0){
+                  read_more_block.appendTo(div_clearfix);
+                }else{
+                  div_clearfix = read_more_block;
+                }
+                first_element.before(div_clearfix);
+                var annc_title = $("[data-subpart-id=\"69043a680857779d0f9eeb9e\"] .w-annc__widget-title").eq(0);
+                if(annc_title.length != 0){
+                  read_more_block.appendTo("[data-subpart-id=\"69043a680857779d0f9eeb9e\"] .w-annc__widget-title:eq(0)");
+                }
+              }else{
+                var div_clearfix = $('<div class="clearfix"></div>');
+                read_more_block.appendTo(div_clearfix);
+                $("[data-subpart-id=\"69043a680857779d0f9eeb9e\"] > *:eq(-1)").after(div_clearfix);
+              }
+            }
+          })
+        </script>
+      <div class="w-annc  widget-announcement-4" data-subpart-id="69043a680857779d0f9eeb9e">
+    <h3 class="w-annc__widget-title">
+      <span>虎科新聞</span>
+    </h3>
+  <div class="w-annc__more-wrap clearfix">
+    <a class="w-annc__more btn btn-primary pull-right" href="/zh_tw/newscenter/nfunews?category%5B%5D=68db3f8208577793ef6894d7&amp;tags%5B%5D=all">More NEWS</a>
+  </div>
+  <ul class="w-annc__list  row" data-level="0" data-list="announcements">
+    <li class="w-annc__item  col-sm-3" data-category="虎科新聞" data-tags="[]">
+    <a href="/zh_tw/newscenter/nfunews/%E8%99%8E%E7%A7%91%E5%A4%A7%E5%89%B5%E6%96%B0%E6%8A%80%E8%A1%93%E5%8D%9A%E8%A6%BD%E6%9C%834%E9%A0%85%E7%A0%94%E7%99%BC%E6%88%90%E6%9E%9C%E7%8D%B2%E8%82%AF%E5%AE%9A%E3%80%80%E6%A1%8C%E7%90%83%E5%A7%BF%E5%8B%A2%E8%BE%A8%E8%AD%98%E6%8A%80%E8%A1%93%E6%91%98%E9%89%91%E9%87%91-61195005" title="虎科大創新技術博覽會4項研發成果獲肯定　桌球姿勢辨識技術摘鉑金" aria-label="前往虎科新聞">
+	 <div class="w-annc__item_inner">
+		<div class="w-annc__img-wrap bullseye" style="position:relative">
+			<img class="w-annc__img" src="/uploads/bulletin/image/6ab49a254eae353695b9a7c6/11509231437-2.jpg" alt="">
+			<div class="transitionfade"></div>
+		</div>
+		<div class="w-annc__content-wrap">
+		<div class="w-annc__meta">
+			<span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+			<span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+			<i class="fa-regular fa-calendar"></i>
+			<span class="w-annc__postdate"> 2026-09-24</span>
+			</span>
+			<span class="w-annc__category-wrap">
+			<i class="fa-solid fa-list"></i>
+			<span class="w-annc__category">虎科新聞</span>
+			</span>
+		</div>
+		<h4 class="w-annc__entry-title">
+			<span class="w-annc__title"><span style="font-family:微軟正黑體">虎科大創新技術博覽會4項研發成果獲肯定　桌球姿勢辨識技術摘鉑金</span></span>
+		</h4>
+		<p class="w-annc__subtitle"></p>
+		</div>
+	 </div>
+	</a>
+    </li>
+  
+    <li class="w-annc__item  col-sm-3" data-category="虎科新聞" data-tags="[]">
+    <a href="/zh_tw/newscenter/nfunews/%E8%99%8E%E7%A7%91%E5%A4%A7IC%E8%A8%AD%E8%A8%88%E7%AB%B6%E8%B3%BD%E5%A5%AA5%E7%8D%8E%E3%80%80%E7%A0%94%E7%A9%B6%E6%89%80%E5%85%A8%E5%AE%A2%E6%88%B6%E8%A8%AD%E8%A8%88%E7%B5%84%E6%91%98%E7%89%B9%E5%84%AA-2939498" title="虎科大IC設計競賽奪5獎　研究所全客戶設計組摘特優" aria-label="前往虎科新聞">
+	 <div class="w-annc__item_inner">
+		<div class="w-annc__img-wrap bullseye" style="position:relative">
+			<img class="w-annc__img" src="/uploads/bulletin/image/6ab0847d4eae3536900b3eb8/11509210911-1.jpg" alt="">
+			<div class="transitionfade"></div>
+		</div>
+		<div class="w-annc__content-wrap">
+		<div class="w-annc__meta">
+			<span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+			<span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+			<i class="fa-regular fa-calendar"></i>
+			<span class="w-annc__postdate"> 2026-09-21</span>
+			</span>
+			<span class="w-annc__category-wrap">
+			<i class="fa-solid fa-list"></i>
+			<span class="w-annc__category">虎科新聞</span>
+			</span>
+		</div>
+		<h4 class="w-annc__entry-title">
+			<span class="w-annc__title"><span style="font-family:微軟正黑體">虎科大IC設計競賽奪5獎　研究所全客戶設計組摘特優</span></span>
+		</h4>
+		<p class="w-annc__subtitle"></p>
+		</div>
+	 </div>
+	</a>
+    </li>
+  
+    <li class="w-annc__item  col-sm-3" data-category="虎科新聞" data-tags="[]">
+    <a href="/zh_tw/newscenter/nfunews/%E5%8F%A4%E4%BA%BA%E4%B9%9F%E6%9C%89-%E9%9B%B2%E7%AB%AF%E6%97%85%E9%81%8A-%E8%99%8E%E7%A7%91%E5%A4%A7%E3%80%8A%E6%B8%B8%E6%96%BC%E8%97%9D%E3%80%8B%E5%B1%95%E4%B8%B2%E8%81%AF%E9%9B%B2%E6%9E%9712%E6%A0%A1-61410862" title="古人也有「雲端旅遊」？虎科大《游於藝》展串聯雲林12校" aria-label="前往虎科新聞">
+	 <div class="w-annc__item_inner">
+		<div class="w-annc__img-wrap bullseye" style="position:relative">
+			<img class="w-annc__img" src="/uploads/bulletin/image/6aa92aeb4eae358ab7b72254/3.JPG" alt="">
+			<div class="transitionfade"></div>
+		</div>
+		<div class="w-annc__content-wrap">
+		<div class="w-annc__meta">
+			<span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+			<span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+			<i class="fa-regular fa-calendar"></i>
+			<span class="w-annc__postdate"> 2026-09-15</span>
+			</span>
+			<span class="w-annc__category-wrap">
+			<i class="fa-solid fa-list"></i>
+			<span class="w-annc__category">虎科新聞</span>
+			</span>
+		</div>
+		<h4 class="w-annc__entry-title">
+			<span class="w-annc__title"><span style="font-family:微軟正黑體">古人也有「雲端旅遊」？虎科大《游於藝》展串聯雲林12校</span></span>
+		</h4>
+		<p class="w-annc__subtitle"></p>
+		</div>
+	 </div>
+	</a>
+    </li>
+  
+    <li class="w-annc__item  col-sm-3" data-category="虎科新聞" data-tags="[]">
+    <a href="/zh_tw/newscenter/nfunews/%E8%99%8E%E5%B0%BE%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8%EF%BC%8D%E5%BE%9E%E8%81%BD%E8%A6%8B%E5%88%B0%E9%96%8B%E5%8F%A3-%E8%AE%93%E6%9C%AC%E5%9C%9F%E8%AA%9E%E8%B5%B0%E9%80%B2%E5%A4%A7%E5%AD%B8%E7%94%9F%E7%94%9F%E6%B4%BB-99059082" title="虎尾科技大學－從聽見到開口，讓本土語走進大學生生活" aria-label="前往虎科新聞">
+	 <div class="w-annc__item_inner">
+		<div class="w-annc__img-wrap bullseye" style="position:relative">
+			<img class="w-annc__img" src="/uploads/bulletin/image/6aa139de4eae358ab6f02729/2-1.JPG" alt="">
+			<div class="transitionfade"></div>
+		</div>
+		<div class="w-annc__content-wrap">
+		<div class="w-annc__meta">
+			<span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+			<span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+			<i class="fa-regular fa-calendar"></i>
+			<span class="w-annc__postdate"> 2026-09-09</span>
+			</span>
+			<span class="w-annc__category-wrap">
+			<i class="fa-solid fa-list"></i>
+			<span class="w-annc__category">虎科新聞</span>
+			</span>
+		</div>
+		<h4 class="w-annc__entry-title">
+			<span class="w-annc__title">虎尾科技大學－從聽見到開口，讓本土語走進大學生生活</span>
+		</h4>
+		<p class="w-annc__subtitle"></p>
+		</div>
+	 </div>
+	</a>
+    </li>
+  </ul>
+</div>
+<style type="text/css">
+	[data-subpart-id="69043a680857779d0f9eeb9e"] .bullseye{
+		overflow: hidden;
+	}
+</style>
+<script>
+	function combineul_69043a680857779d0f9eeb9e(){
+		var parents = $('[data-subpart-id=\"69043a680857779d0f9eeb9e\"] ul.w-annc__list').parent();
+		parents.each(function(i,v){
+			for(var i=1;i<$(v).find('ul.w-annc__list').length;i++)
+				$(v).find('ul.w-annc__list').eq(0).find('>li').eq(-1).after($(v).find('ul.w-annc__list').eq(i).html());
+			var ullength = $(v).find('ul.w-annc__list').length;
+			for(var i = 1;i < ullength;i++)
+				$(v).find('ul.w-annc__list').eq(-1).remove();
+		})
+	};
+	var num;
+	var lilength = $('[data-subpart-id=\"69043a680857779d0f9eeb9e\"] li.w-annc__item').length;
+	function reorganize_69043a680857779d0f9eeb9e(num){
+		combineul_69043a680857779d0f9eeb9e();
+		var parents = $('[data-subpart-id=\"69043a680857779d0f9eeb9e\"] ul.w-annc__list').parent();
+		parents.each(function(i,v){
+			var lilength = $(v).find('li.w-annc__item').length;
+			var ul_length = Math.ceil(lilength/num);
+			for(var ii=1;ii< ul_length;ii++){
+				var clone_ul = $(v).find('ul.w-annc__list').eq(-1).clone();
+				clone_ul.empty();
+				clone_ul.removeClass("active");
+				clone_ul.css("display","");
+				$(v).find('ul.w-annc__list').eq(-1).after(clone_ul.prop("outerHTML"));
+				var lihtml="";
+				if(ii != (ul_length-1)){
+					for(var j=0;j<num;j++){
+						lihtml += $(v).find('li.w-annc__item').eq(ii*num+j).prop("outerHTML");
+					};
+				}else{
+					for(var j=0;j< lilength - num *(ul_length-1) ;j++){
+						lihtml += $(v).find('li.w-annc__item').eq(ii*num+j).prop("outerHTML");
+					};
+				};
+				$(v).find('ul.w-annc__list').eq(-1).html(lihtml);
+			}
+			if(ul_length != 1 )
+				for(var i=0;i< lilength -num ; i++)
+					$(v).find('ul.w-annc__list').eq(0).find("li.w-annc__item").eq(num).remove();
+		})
+		$('[data-subpart-id=\"69043a680857779d0f9eeb9e\"] ul.w-annc__list >li').css('width','calc('+100/num+'% - '+20/20+'em)'); //20px=>li的margin
+		$('[data-subpart-id=\"69043a680857779d0f9eeb9e\"] ul.w-annc__list >li').css("float","left");
+	};
+	$(window).resize(function(){
+		if($(window).width()>1024){
+			reorganize_69043a680857779d0f9eeb9e(4);
+			num=3;
+		}else if($(window).width()>576){
+			reorganize_69043a680857779d0f9eeb9e(2);
+			num=2;
+		}else{
+			reorganize_69043a680857779d0f9eeb9e(1);
+			num=1;
+		}
+	})
+	$(document).ready(function(){
+		if($(window).width()>1024){
+			reorganize_69043a680857779d0f9eeb9e(4);
+			num=3;
+		}else if($(window).width()>576){
+			reorganize_69043a680857779d0f9eeb9e(2);
+			num=2;
+		}else{
+			reorganize_69043a680857779d0f9eeb9e(1);
+			num=1;
+		}
+	})
+</script>
+
+      <script style="display:none">
+        $("[data-subpart-id=\"69043a680857779d0f9eeb9e\"] .w-annc__more").attr("href","/zh_tw/newscenter/nfunews?category%5B%5D=68db3f8208577793ef6894d7&tags%5B%5D=all");
+      </script>
+      </section>
+          </div>
+
+          <div class="row padding0">
+            <section class="layout-content-box col-sm-3" data-pp="66"></section>
+            <section class="layout-content-box col-sm-3" data-pp="77"></section>
+            <section class="layout-content-box col-sm-3" data-pp="6"></section>
+            <section class="layout-content-box col-sm-3" data-pp="7"></section>
+          </div>
+
+        </div>
+
+        <div class="layout-slide big-banner extra-box" data-pp="3022"></div>
+              <div class="container">
+          <section class="layout-content-box col-sm-12 hide0" data-pp="5"></section>
+          <section class="layout-content-box col-sm-12" data-pp="444"><div data-subpart-id="69156d820857773933d13d2b"><h3 class="unity-title">
+      <span>訊息公告</span>
+    </h3></div></section>
+        </div>
+
+        <div class="container">
+          <div class="row ">
+            <section class="layout-content-box col-sm-9 kenbox" data-pp="8"><div data-subpart-id="685cca12085777a0af92740a">
+<ul class="tab_nav">
+	<li class="active">行政公告</li>
+	<li>校園活動</li>
+	<li>徵才公告</li>
+	<li>其他活動</li>
+</ul>
+</div>
+        <script style="display:none">
+          $(document).ready(function(){
+            $("[data-subpart-id=\"6913fb72085777244eddbefe\"] .w-annc__more").text("更多行政公告");
+          })
+        </script>
+      <div class="w-annc  widget-announcement-11" data-subpart-id="6913fb72085777244eddbefe">
+  <h3 class="w-annc__widget-title">
+    <span></span>
+  </h3>
+  <ul class="w-annc__list" data-level="0" data-list="announcements">
+    <li class="w-annc__item  row" data-category="行政公告" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-30</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://gad.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">總務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/adm/-%E7%87%9F%E7%B9%95%E7%B5%84%E5%85%AC%E5%91%8A-115%E5%B9%B410%E6%9C%8831%E6%97%A5-%E5%85%AD-%E7%AC%AC%E4%BA%8C%E6%95%99%E5%AD%B8%E5%8D%80%E5%85%A5%E5%8F%A3%E5%B7%A6%E5%81%B4%E6%A9%9F%E8%BB%8A%E5%81%9C%E8%BB%8A%E5%A0%B4-%E5%90%AB%E9%80%9A%E9%81%93-%E5%8F%8A%E9%80%9A%E5%BE%80%E7%B6%9C%E4%BA%8C%E9%A4%A8%E9%80%9A%E9%81%93%E6%96%BD%E5%B7%A5%E4%BD%9C%E6%A5%AD-%E7%A6%81%E5%81%9C%E6%A9%9F%E8%BB%8A%E9%80%9A%E7%9F%A5-91733422_69897de64eae356cc9a50d0eh"><span style="font-family:Tahoma">【營繕組公告】115年10月31日(六) 第二教學區入口左側機車停車場(含通道)及通往綜二館通道施工作業，禁停機車通知!!</span></a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="行政公告" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-30</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://osa.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">學務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/adm/-%E4%B8%8D%E5%88%A9%E8%99%95%E5%A2%83-%E4%B8%8D%E5%88%A9%E8%99%95%E5%A2%83%E5%A4%9A%E5%85%83%E7%94%9F%E7%90%86%E7%94%A8%E5%93%81%E5%B0%88%E9%A0%85%E8%A3%9C%E5%8A%A9%E4%BD%9C%E6%A5%AD%E7%94%B3%E8%AB%8B%E9%A0%88%E7%9F%A5-%E9%99%90%E7%94%9F%E7%90%86%E5%A5%B3%E8%BA%AB%E5%88%86%E8%AD%89%E7%AC%AC2%E7%A2%BC%E7%82%BA2%E8%80%85-68440688_69bb83684eae358392c8629eh">【不利處境】不利處境多元生理用品專項補助作業申請須知(限生理女身分證第2碼為2者</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="行政公告" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-29</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://cc.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">電子計算機中心</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/adm/%E5%9B%A0%E6%87%89PHP%E9%87%8D%E5%A4%A7%E8%B3%87%E5%AE%89%E6%BC%8F%E6%B4%9E%E4%BF%AE%E8%A3%9C-%E9%83%A8%E5%88%86%E7%B3%BB%E7%B5%B1%E5%BB%B6%E5%BE%8C%E9%96%8B%E6%94%BE%E6%A0%A1%E5%A4%96%E6%9C%8D%E5%8B%99-12516434_69897f7f4eae356cc9a50dceh">因應PHP重大資安漏洞修補，部分系統延後開放校外服務</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="行政公告" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-29</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://osa.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">學務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/adm/115-10-31-%E9%80%B1%E5%85%AD-%E6%84%9B%E5%BF%83%E6%8D%90%E8%A1%80%E6%B4%BB%E5%8B%95-96711702_69bb83684eae358392c8629eh">115/10/31(週六)愛心捐血活動</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="行政公告" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-28</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://gad.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">總務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/adm/-%E7%B6%93%E7%AE%A1%E7%B5%84%E5%85%AC%E5%91%8A-%E8%B2%A1%E7%89%A9%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1115%E5%B9%B410%E6%9C%8829%E6%97%A5-%E5%9B%9B-12-00-13-00%E6%9A%AB%E5%81%9C%E6%9C%8D%E5%8B%99%E9%80%9A%E7%9F%A5-54971093_69897de64eae356cc9a50d0eh">【經管組公告】財物管理系統115年10月29日(四) 12:00-13:00暫停服務通知</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="行政公告" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-27</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://oaa.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">教務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/adm/-32014034_69897e4c4eae356ccea1a535h">【教學業務組公告】115學年度第1學期期中退選申請公告(11501 Announcement of application for mid-term withdrawal application)</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="行政公告" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-22</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://osa.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">學務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/adm/-%E5%9B%A0%E6%87%89%E8%96%94%E7%90%B5%E9%A2%B1%E9%A2%A8%E4%BE%86%E8%A5%B2%E6%8F%90%E9%86%92%E5%85%A8%E6%A0%A1%E5%AD%B8%E7%94%9F%E5%8A%A0%E5%BC%B7%E9%98%B2%E9%A2%B1%E6%BA%96%E5%82%99%E4%B8%A6%E6%B3%A8%E6%84%8F%E8%87%AA%E8%BA%AB%E5%AE%89%E5%85%A8-4070858_69bb83684eae358392c8629eh"><br>
+<strong>因應薔琵颱風來襲提醒全校學生加強防颱準備並注意自身安全</strong></a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="行政公告" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-22</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://cc.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">電子計算機中心</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/adm/%E7%82%BA%E4%BF%AE%E8%A3%9CPHP%E9%87%8D%E5%A4%A7%E8%B3%87%E5%AE%89%E6%BC%8F%E6%B4%9E-%E6%A0%A1%E5%85%A7%E6%A0%A1%E5%8B%99%E7%B3%BB%E7%B5%B1%E8%87%AA10%E6%9C%8822%E6%97%A517-00%E8%B5%B7%E5%81%9C%E6%AD%A2%E5%B0%8D%E5%A4%96%E6%9C%8D%E5%8B%99-48497301_69897f7f4eae356cc9a50dceh">為修補PHP重大資安漏洞，校內校務系統自10月22日17:00起停止對外服務</a>
+        </h4>
+    </li>
+  </ul>
+  <div class="w-annc__more-wrap clearfix">
+    <a class="w-annc__more btn btn-primary pull-right" href="/zh_tw/ann/adm?category%5B%5D=68db3e8708577793ef6894cc&amp;tags%5B%5D=all">More NEWS</a>
+  </div>
+</div>
+
+      <script style="display:none">
+        $("[data-subpart-id=\"6913fb72085777244eddbefe\"] .w-annc__more").attr("href","/zh_tw/ann/adm?category%5B%5D=68db3e8708577793ef6894cc&tags%5B%5D=all");
+      </script>
+      
+        <script style="display:none">
+          $(document).ready(function(){
+            $("[data-subpart-id=\"6913fb96085777244eddbf0b\"] .w-annc__more").text("更多→");
+          })
+        </script>
+      <div class="w-annc widget-announcement-2" data-subpart-id="6913fb96085777244eddbf0b">
+  <h2 class="w-annc__widget-title">
+    <span></span>
+  </h2>
+  <ul class="w-annc__list" data-level="0" data-list="announcements">
+    <li class="w-annc__item" data-category="校園活動" data-tags="">
+    
+      <div class="w-annc__img-wrap col-sm-3 bullseye">
+      <a href="/zh_tw/ann/club/%E8%81%96%E8%AA%95%E5%89%8D%E5%A5%8F%EF%BC%8E%E6%9D%BE%E7%BE%85%E8%8A%B1%E5%9C%88%E6%89%8B%E4%BD%9C%E5%B7%A5%E4%BD%9C%E5%9D%8A-30695905_69897f3d4eae356cc9a50dach" aria-label="前往" title="聖誕前奏．松羅花圈手作工作坊">
+        <img class="w-annc__img" src="https://art.nfu.edu.tw/uploads/bulletin/image/6ae2ce614eae3582a289c1df/thumb_16.2027%E8%8A%B1%E5%9C%88%E8%AA%B2%E7%A8%8B-01.jpg" alt="" title="">
+        </a>
+      </div>
+      <div class="w-annc__content-wrap col-sm-9">
+        <div class="w-annc__meta">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source"><a href="https://art.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">藝術中心</a></span>
+          </span>
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-29</span>
+          </span>
+          <span class="w-annc__category-wrap">
+            <span class="w-annc__category">校園活動</span>
+          </span>
+        </div>
+        <h3 class="w-annc__entry-title">
+          <span class="w-annc__title">聖誕前奏．松羅花圈手作工作坊</span>
+        </h3>
+        <p class="w-annc__subtitle"></p>
+<p>活動日期：115年11月9日(一)</p>
+      </div>
+      
+    </li>
+  
+    <li class="w-annc__item" data-category="校園活動" data-tags="">
+    
+      <div class="w-annc__img-wrap col-sm-3 bullseye">
+      <a href="/zh_tw/ann/club/-55454983_69bb836e4eae35838e92a25bh" aria-label="前往" title="【活動公告】妝點自信 讓美麗發光-親善大使體驗工作坊">
+        <img class="w-annc__img" src="https://osa.nfu.edu.tw/uploads/bulletin/image/6acf517f4eae351ecddc15af/thumb_1109%E5%A6%9D%E9%AB%AE%E8%AA%B2%E7%A8%8B1.png" alt="" title="">
+        </a>
+      </div>
+      <div class="w-annc__content-wrap col-sm-9">
+        <div class="w-annc__meta">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source"><a href="https://osa.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">學務處</a></span>
+          </span>
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-14</span>
+          </span>
+          <span class="w-annc__category-wrap">
+            <span class="w-annc__category">校園活動</span>
+          </span>
+        </div>
+        <h3 class="w-annc__entry-title">
+          <span class="w-annc__title">【活動公告】妝點自信 讓美麗發光-親善大使體驗工作坊</span>
+        </h3>
+        <p class="w-annc__subtitle"></p>
+      </div>
+      
+    </li>
+  
+    <li class="w-annc__item" data-category="校園活動" data-tags="">
+    
+      <div class="w-annc__img-wrap col-sm-3 bullseye">
+      <a href="/zh_tw/ann/club/%E6%97%A5%E6%9C%AC%E8%8C%B6%E9%81%93%E9%AB%94%E9%A9%97%E5%B7%A5%E4%BD%9C%E5%9D%8A-522157_69897f3d4eae356cc9a50dach" aria-label="前往" title="日本茶道體驗工作坊">
+        <img class="w-annc__img" src="https://art.nfu.edu.tw/uploads/bulletin/image/6acc88974eae350e8cf60d4f/thumb_%E6%97%A5%E6%9C%AC%E8%8C%B6%E9%81%93%E9%AB%94%E9%A9%97%E5%B7%A5%E4%BD%9C%E5%9D%8A.jpg" alt="日本茶道體驗工作坊" title="日本茶道體驗工作坊">
+        </a>
+      </div>
+      <div class="w-annc__content-wrap col-sm-9">
+        <div class="w-annc__meta">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source"><a href="https://art.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">藝術中心</a></span>
+          </span>
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-12</span>
+          </span>
+          <span class="w-annc__category-wrap">
+            <span class="w-annc__category">校園活動</span>
+          </span>
+        </div>
+        <h3 class="w-annc__entry-title">
+          <span class="w-annc__title">日本茶道體驗工作坊</span>
+        </h3>
+        <p class="w-annc__subtitle"></p>
+<p>活動日期：115年11月3日(二)</p>
+      </div>
+      
+    </li>
+  
+    <li class="w-annc__item" data-category="校園活動" data-tags="">
+    
+      <div class="w-annc__img-wrap col-sm-3 bullseye">
+      <a href="/zh_tw/ann/club/-34995080_69bb836e4eae35838e92a25bh" aria-label="前往" title="115學年第1學期關懷週，有愛無礙~關懷身心障礙人士系列活動&lt;br /&gt;
+&lt;br /&gt;
+115學年第1學期關懷週，有愛無礙~關懷身心障礙人士系列活動">
+        <img class="w-annc__img" src="https://osa.nfu.edu.tw/uploads/bulletin/image/6ab521264eae35ce597947ab/thumb_115-1%E7%B6%B2%E9%A0%81%E6%A9%AB%E5%BC%8F__.jpg" alt="" title="">
+        </a>
+      </div>
+      <div class="w-annc__content-wrap col-sm-9">
+        <div class="w-annc__meta">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source"><a href="https://osa.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">學務處</a></span>
+          </span>
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-09-24</span>
+          </span>
+          <span class="w-annc__category-wrap">
+            <span class="w-annc__category">校園活動</span>
+          </span>
+        </div>
+        <h3 class="w-annc__entry-title">
+          <span class="w-annc__title">115學年第1學期關懷週，有愛無礙~關懷身心障礙人士系列活動<br>
+<br>
+115學年第1學期關懷週，有愛無礙~關懷身心障礙人士系列活動</span>
+        </h3>
+        <p class="w-annc__subtitle"></p>
+      </div>
+      
+    </li>
+  
+    <li class="w-annc__item" data-category="校園活動" data-tags="">
+    
+      <div class="w-annc__img-wrap col-sm-3 bullseye">
+      <a href="/zh_tw/ann/club/-66905899_69897fd14eae356cc9a50dfch" aria-label="前往" title="115校慶運動大會健走活動報名至9/30(三)17:00截止">
+        <img class="w-annc__img" src="https://pe.nfu.edu.tw/uploads/bulletin/image/6ab4b7804eae3523b2d9cfc8/thumb_ChatGPT_Image_2026%E5%B9%B49%E6%9C%8824%E6%97%A5_%E4%B8%8B%E5%8D%8801_56_58.png" alt="" title="">
+        </a>
+      </div>
+      <div class="w-annc__content-wrap col-sm-9">
+        <div class="w-annc__meta">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source"><a href="https://pe.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">體育室</a></span>
+          </span>
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-09-24</span>
+          </span>
+          <span class="w-annc__category-wrap">
+            <span class="w-annc__category">校園活動</span>
+          </span>
+        </div>
+        <h3 class="w-annc__entry-title">
+          <span class="w-annc__title">115校慶運動大會健走活動報名至9/30(三)17:00截止</span>
+        </h3>
+        <p class="w-annc__subtitle"></p>
+      </div>
+      
+    </li>
+  
+    <li class="w-annc__item" data-category="校園活動" data-tags="">
+    
+      <div class="w-annc__img-wrap col-sm-3 bullseye">
+      <a href="/zh_tw/ann/club/-59433777_69bb836e4eae35838e92a25bh" aria-label="前往" title="【活動公告】優雅‧由你開始-親善大使體驗工作坊">
+        <img class="w-annc__img" src="https://osa.nfu.edu.tw/uploads/bulletin/image/6aa0e6504eae3520b3261dbb/thumb_messageImage_1788927513057.jpg" alt="" title="">
+        </a>
+      </div>
+      <div class="w-annc__content-wrap col-sm-9">
+        <div class="w-annc__meta">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source"><a href="https://osa.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">學務處</a></span>
+          </span>
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-09-09</span>
+          </span>
+          <span class="w-annc__category-wrap">
+            <span class="w-annc__category">校園活動</span>
+          </span>
+        </div>
+        <h3 class="w-annc__entry-title">
+          <span class="w-annc__title">【活動公告】優雅‧由你開始-親善大使體驗工作坊</span>
+        </h3>
+        <p class="w-annc__subtitle"></p>
+      </div>
+      
+    </li>
+  
+    <li class="w-annc__item" data-category="校園活動" data-tags="">
+    
+      <div class="w-annc__img-wrap col-sm-3 bullseye">
+      <a href="/zh_tw/ann/club/115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E8%97%9D%E8%A1%93%E4%B8%AD%E5%BF%83%E8%97%9D%E6%96%87%E5%B1%95%E8%A6%BD%E9%A0%90%E5%91%8A-64721965_69897f3d4eae356cc9a50dach" aria-label="前往" title="115學年度藝術中心藝文展覽預告">
+        <img class="w-annc__img" src="https://art.nfu.edu.tw/uploads/bulletin/image/6a969ccc4eae351504592c00/thumb_2026-0805-%E8%97%9D%E8%A1%93%E4%B8%AD%E5%BF%83%E5%A4%96%E7%89%86%E5%B8%86%E5%B8%83.jpg" alt="" title="">
+        </a>
+      </div>
+      <div class="w-annc__content-wrap col-sm-9">
+        <div class="w-annc__meta">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source"><a href="https://art.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">藝術中心</a></span>
+          </span>
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-09-01</span>
+          </span>
+          <span class="w-annc__category-wrap">
+            <span class="w-annc__category">校園活動</span>
+          </span>
+        </div>
+        <h3 class="w-annc__entry-title">
+          <span class="w-annc__title">115學年度藝術中心藝文展覽預告</span>
+        </h3>
+        <p class="w-annc__subtitle"></p>
+      </div>
+      
+    </li>
+  
+    <li class="w-annc__item" data-category="校園活動" data-tags="">
+    
+      <div class="w-annc__img-wrap col-sm-3 bullseye">
+      <a href="/zh_tw/ann/club/%E5%BB%A3%E9%81%94%E3%80%8A%E6%B8%B8%E6%96%BC%E8%97%9D%E3%80%8B%E5%B7%A1%E8%BF%B4%E5%B1%95%E3%80%8A%E7%AD%86%E5%A2%A8%E8%A1%8C%E6%97%85%E2%80%94%E2%80%94%E5%9C%A8%E6%9D%B1%E6%96%B9%E5%90%8D%E7%95%AB%E4%B8%AD%E6%97%85%E8%A1%8C%E3%80%8B-10501628_69897f3d4eae356cc9a50dach" aria-label="前往" title="廣達《游於藝》巡迴展《筆墨行旅——在東方名畫中旅行》">
+        <img class="w-annc__img" src="https://art.nfu.edu.tw/uploads/bulletin/image/6a83cca74eae35413bb2e3a2/thumb_%E6%9C%AA%E5%91%BD%E5%90%8D__500_x_750_%E5%83%8F%E7%B4%A0_.png" alt="廣達《游於藝》巡迴展《筆墨行旅——在東方名畫中旅行》主視覺" title="廣達《游於藝》巡迴展《筆墨行旅——在東方名畫中旅行》主視覺">
+        </a>
+      </div>
+      <div class="w-annc__content-wrap col-sm-9">
+        <div class="w-annc__meta">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source"><a href="https://art.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">藝術中心</a></span>
+          </span>
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-08-18</span>
+          </span>
+          <span class="w-annc__category-wrap">
+            <span class="w-annc__category">校園活動</span>
+          </span>
+        </div>
+        <h3 class="w-annc__entry-title">
+          <span class="w-annc__title">廣達《游於藝》巡迴展《筆墨行旅——在東方名畫中旅行》</span>
+        </h3>
+        <p class="w-annc__subtitle"></p>
+<p>2026/9/01-09/28</p>
+      </div>
+      
+    </li>
+  </ul>
+  <div class="w-annc__more-wrap clearfix">
+    <a class="w-annc__more btn btn-primary pull-right" href="/zh_tw/ann/club?category%5B%5D=68db3fb708577793ef6894db&amp;category%5B%5D=690d875b0857775c35f42610&amp;tags%5B%5D=all">More NEWS</a>
+  </div>
+</div>
+
+      <script style="display:none">
+        $("[data-subpart-id=\"6913fb96085777244eddbf0b\"] .w-annc__more").attr("href","/zh_tw/ann/club?category%5B%5D=68db3fb708577793ef6894db&category%5B%5D=690d875b0857775c35f42610&tags%5B%5D=all");
+      </script>
+      
+        <script style="display:none">
+          $(document).ready(function(){
+            $("[data-subpart-id=\"6913fbb3085777244eddbf17\"] .w-annc__more").text("更多→");
+          })
+        </script>
+      <div class="w-annc  widget-announcement-7 widget-announcement-7s" data-subpart-id="6913fbb3085777244eddbf17">
+  <h2 class="w-annc__widget-title">
+    <span></span>
+  </h2>
+  <ul class="w-annc__list" data-level="0" data-list="announcements">
+    <li class="w-annc__item  row" data-category="教師徵聘" data-tags="">
+        <span class="w-annc__category-wrap  col-sm-1">
+           
+          <span class="w-annc__category">教師徵聘</span>
+        </span>
+        <span class="col-sm-11 postdateandtitle">
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-30</span>
+          </span>
+          <h3 class="w-annc__entry-title">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-source"><a href="https://per.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">人事室</a></span>
+            </span>
+            <a class="w-annc__title" href="/zh_tw/ann/job/%E5%9C%8B%E7%AB%8B%E8%99%8E%E5%B0%BE%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8%E8%B3%87%E8%A8%8A%E5%B7%A5%E7%A8%8B%E7%B3%BB%E5%BE%B5%E8%81%98-%E5%B0%88%E4%BB%BB%E6%95%99%E5%B8%AB-2%E5%90%8D-%E7%9B%B8%E9%97%9C%E6%87%89%E5%BE%B5%E6%96%87%E4%BB%B6%E8%AB%8B%E6%96%BC116%E5%B9%B41%E6%9C%8812%E6%97%A5%E5%89%8D%E5%AF%84%E9%81%94%E8%81%AF%E7%B5%A1%E4%BA%BA-%E4%BB%A5%E9%83%B5%E6%88%B3%E7%82%BA%E6%86%91-17914502_6ad5b99d4eae35096ddd59c5h">國立虎尾科技大學資訊工程系徵聘「專任教師」2名(相關應徵文件請於116年1月12日前寄達聯絡人，以郵戳為憑)</a>
+          </h3>   
+        </span>
+
+      
+
+    </li>
+  
+    <li class="w-annc__item  row" data-category="工讀實習" data-tags="">
+        <span class="w-annc__category-wrap  col-sm-1">
+           
+          <span class="w-annc__category">工讀實習</span>
+        </span>
+        <span class="col-sm-11 postdateandtitle">
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-29</span>
+          </span>
+          <h3 class="w-annc__entry-title">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-source"><a href="https://agri.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">農業科技系</a></span>
+            </span>
+            <a class="w-annc__title" href="/zh_tw/ann/job/-53437220_6a38ef834eae350b4d3f97fah">農科系誠徵臨時工讀生1名</a>
+          </h3>   
+        </span>
+
+      
+
+    </li>
+  
+    <li class="w-annc__item  row" data-category="職員徵聘" data-tags="">
+        <span class="w-annc__category-wrap  col-sm-1">
+           
+          <span class="w-annc__category">職員徵聘</span>
+        </span>
+        <span class="col-sm-11 postdateandtitle">
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-28</span>
+          </span>
+          <h3 class="w-annc__entry-title">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-source"><a href="https://per.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">人事室</a></span>
+            </span>
+            <a class="w-annc__title" href="/zh_tw/ann/job/-77127386_69b250b14eae358392c7a2eeh">國立虎尾科技大學國際事務處學術交流組專案助理徵聘啟事 公告至115年11月13日止</a>
+          </h3>   
+        </span>
+
+      
+
+    </li>
+  
+    <li class="w-annc__item  row" data-category="職員徵聘" data-tags="">
+        <span class="w-annc__category-wrap  col-sm-1">
+           
+          <span class="w-annc__category">職員徵聘</span>
+        </span>
+        <span class="col-sm-11 postdateandtitle">
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-28</span>
+          </span>
+          <h3 class="w-annc__entry-title">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-source"><a href="https://per.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">人事室</a></span>
+            </span>
+            <a class="w-annc__title" href="/zh_tw/ann/job/-47145799_69b250b14eae358392c7a2eeh">國立虎尾科技大學學生事務處學生輔導諮商中心資源教室輔導老師(B)徵人公告 公告至115年11月11日止</a>
+          </h3>   
+        </span>
+
+      
+
+    </li>
+  
+    <li class="w-annc__item  row" data-category="職員徵聘" data-tags="">
+        <span class="w-annc__category-wrap  col-sm-1">
+           
+          <span class="w-annc__category">職員徵聘</span>
+        </span>
+        <span class="col-sm-11 postdateandtitle">
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-28</span>
+          </span>
+          <h3 class="w-annc__entry-title">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-source"><a href="https://per.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">人事室</a></span>
+            </span>
+            <a class="w-annc__title" href="/zh_tw/ann/job/-78293882_69b250b14eae358392c7a2eeh">國立虎尾科技大學學生事務處學生輔導諮商中心資源教室輔導老師(A)徵人公告 公告至115年11月11日止</a>
+          </h3>   
+        </span>
+
+      
+
+    </li>
+  
+    <li class="w-annc__item  row" data-category="教師徵聘" data-tags="">
+        <span class="w-annc__category-wrap  col-sm-1">
+           
+          <span class="w-annc__category">教師徵聘</span>
+        </span>
+        <span class="col-sm-11 postdateandtitle">
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-27</span>
+          </span>
+          <h3 class="w-annc__entry-title">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-source"><a href="https://per.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">人事室</a></span>
+            </span>
+            <a class="w-annc__title" href="/zh_tw/ann/job/%E5%9C%8B%E7%AB%8B%E8%99%8E%E5%B0%BE%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8%E8%87%AA%E5%8B%95%E5%8C%96%E5%B7%A5%E7%A8%8B%E7%B3%BB%E5%BE%B5%E8%81%98-%E5%B0%88%E4%BB%BB%E6%95%99%E5%B8%AB-1%E5%90%8D-%E7%9B%B8%E9%97%9C%E6%87%89%E5%BE%B5%E6%96%87%E4%BB%B6%E8%AB%8B%E6%96%BC115%E5%B9%B411%E6%9C%8830%E6%97%A5%E5%89%8D%E5%AF%84%E9%81%94%E8%81%AF%E7%B5%A1%E4%BA%BA-%E4%BB%A5%E9%83%B5%E6%88%B3%E7%82%BA%E6%86%91-47307317_6ad5b99d4eae35096ddd59c5h">國立虎尾科技大學自動化工程系徵聘「專任教師」1名(相關應徵文件請於115年11月30日前寄達聯絡人，以郵戳為憑)</a>
+          </h3>   
+        </span>
+
+      
+
+    </li>
+  
+    <li class="w-annc__item  row" data-category="教師徵聘" data-tags="">
+        <span class="w-annc__category-wrap  col-sm-1">
+           
+          <span class="w-annc__category">教師徵聘</span>
+        </span>
+        <span class="col-sm-11 postdateandtitle">
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-27</span>
+          </span>
+          <h3 class="w-annc__entry-title">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-source"><a href="https://ce.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">工程學院</a></span>
+            </span>
+            <a class="w-annc__title" href="/zh_tw/ann/job/-23485119_6a83f66f4eae35ec1c109198h">國立虎尾科技大學工程學院自動化工程學系兼任教師徵聘啟事</a>
+          </h3>   
+        </span>
+
+      
+
+    </li>
+  
+    <li class="w-annc__item  row" data-category="工讀實習" data-tags="">
+        <span class="w-annc__category-wrap  col-sm-1">
+           
+          <span class="w-annc__category">工讀實習</span>
+        </span>
+        <span class="col-sm-11 postdateandtitle">
+          <span class="w-annc__postdate-wrap" date-format="%Y-%m-%d">
+            <span class="w-annc__postdate"> 2026-10-27</span>
+          </span>
+          <h3 class="w-annc__entry-title">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-source"><a href="https://cc.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">電子計算機中心</a></span>
+            </span>
+            <a class="w-annc__title" href="/zh_tw/ann/job/-93321197_69897f954eae356ccea1a585h">網路組誠徵臨時工讀生</a>
+          </h3>   
+        </span>
+
+      
+
+    </li>
+  </ul>
+  <div class="w-annc__more-wrap clearfix">
+    <a class="w-annc__more btn btn-primary pull-right" href="/zh_tw/ann/job?category%5B%5D=69312762085777af673d83b1&amp;category%5B%5D=693126b9085777af673d8391&amp;category%5B%5D=68db3fdc08577793ef6894df&amp;tags%5B%5D=all">More NEWS</a>
+  </div>
+</div>
+
+      <script style="display:none">
+        $("[data-subpart-id=\"6913fbb3085777244eddbf17\"] .w-annc__more").attr("href","/zh_tw/ann/job?category%5B%5D=69312762085777af673d83b1&category%5B%5D=693126b9085777af673d8391&category%5B%5D=68db3fdc08577793ef6894df&tags%5B%5D=all");
+      </script>
+      
+        <script style="display:none">
+          $(document).ready(function(){
+            $("[data-subpart-id=\"6913fbd0085777244eddbf23\"] .w-annc__more").text("更多→");
+          })
+        </script>
+      <div class="w-annc  widget-announcement-11" data-subpart-id="6913fbd0085777244eddbf23">
+  <h3 class="w-annc__widget-title">
+    <span></span>
+  </h3>
+  <ul class="w-annc__list" data-level="0" data-list="announcements">
+    <li class="w-annc__item  row" data-category="其他活動" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-30</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://osa.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">學務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/art/-%E7%94%9F%E6%B4%BB%E7%B5%84%E5%85%AC%E5%91%8A-115%E5%AD%B8%E5%B9%B4%E7%AC%AC%E4%B8%80%E5%AD%B8%E6%9C%9F%E5%BB%96%E6%9C%89%E7%AB%A0%E5%85%88%E7%94%9F%E7%8D%8E%E5%AD%B8%E9%87%91-71872538_69bb83764eae358392c862a5h">【生活組公告】115學年第一學期廖有章先生獎學金</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="其他活動" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-30</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://ord.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">研究發展處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/art/-%E7%A0%94%E7%99%BC%E8%99%95%E8%BD%89%E7%9F%A5-%E5%9C%8B%E7%AB%8B%E6%88%90%E5%8A%9F%E5%A4%A7%E5%AD%B8%E5%AD%B8%E8%A1%93%E8%AA%A0%E4%BF%A1%E6%8E%A8%E5%8B%95%E8%BE%A6%E5%85%AC%E5%AE%A4%E8%AC%B9%E8%A8%82%E6%96%BC115%E5%B9%B411%E6%9C%8820%E6%97%A5%E8%88%89%E8%BE%A6-AI%E6%99%82%E4%BB%A3%E7%9A%84%E7%BF%BB%E8%AD%AF%E5%80%AB%E7%90%86%E8%88%87%E7%9F%A5%E8%AD%98%E8%B2%AC%E4%BB%BB-%E8%AC%9B%E5%BA%A7-%E8%AA%A0%E6%91%AF%E9%82%80%E8%AB%8B%E6%89%80%E5%B1%AC%E6%95%99%E8%81%B7%E5%93%A1%E7%94%9F%E5%A0%B1%E5%90%8D%E5%8F%83%E5%8A%A0-21980372_699ec2bd4eae352b5a0752c6h">【研發處轉知】國立成功大學學術誠信推動辦公室謹訂於115年11月20日舉辦「「AI時代的翻譯倫理與知識責任」講座，誠摯邀請所屬教職員生報名參加。</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="其他活動" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-27</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://ord.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">研究發展處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/art/-%E7%A0%94%E7%99%BC%E8%99%95%E8%BD%89%E7%9F%A5-%E7%B8%BD%E7%B5%B1%E7%A7%91%E5%AD%B8%E7%8D%8E%E5%A7%94%E5%93%A1%E6%9C%83%E8%BE%A6%E7%90%86-2027%E5%B9%B4%E7%B8%BD%E7%B5%B1%E7%A7%91%E5%AD%B8%E7%8D%8E-%E8%87%AA%E5%8D%B3%E6%97%A5%E8%B5%B7%E8%87%B3%E6%98%8E-116-%E5%B9%B42%E6%9C%8826%E6%97%A5-%E6%98%9F%E6%9C%9F%E4%BA%94-%E6%AD%A2%E5%8F%97%E7%90%86%E6%8F%90%E5%90%8D-%E7%89%B9%E9%82%80%E8%AB%8B%E5%8D%94%E5%8A%A9%E6%8F%90%E5%90%8D%E5%82%91%E5%87%BA%E7%A7%91%E6%8A%80%E4%BA%BA%E6%89%8D-36671076_699ec2bd4eae352b5a0752c6h">【研發處轉知】總統科學獎委員會辦理「2027年總統科學獎」自即日起至明(116)年2月26日(星期五)止受理提名，特邀請協助提名傑出科技人才。</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="其他活動" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-22</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://oia.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">國際事務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/art/-2513301_69e88e724eae350a47e79a5fh">【計畫徵求】國科會與法國國家癌症研究院（INCa）共同徵求2028年雙邊合作研究計畫（3–4年期）</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="其他活動" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-22</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://oia.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">國際事務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/art/-92174857_69e88e724eae350a47e79a5fh">【活動公告】中央研究院與 EMBO 合辦「Fundamentals of Communication: Pitches, Posters and Presentations」線上學術訓練工作坊，歡迎博士生及新進博士後研究學者報名參加</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="其他活動" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-22</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://oia.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">國際事務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/art/-98514721_69e88e724eae350a47e79a5fh">【計畫徵求】國科會與法國國家癌症研究院（INCa）共同徵求2028年雙邊合作研究計畫（4年期）</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="其他活動" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-16</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://oia.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">國際事務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/art/-56119321_69e88e724eae350a47e79a5fh">【計畫徵求】國科會「成功參與歐盟跨國團隊科研暨創新計畫」補助申請公告</a>
+        </h4>
+    </li>
+  
+    <li class="w-annc__item  row" data-category="其他活動" data-tags="">
+        <span class="w-annc__postdate-wrap  col-sm-2" date-format="%Y-%m-%d">
+           
+          <span class="w-annc__postdate"> 2026-10-16</span>
+        </span>
+        <h4 class="w-annc__entry-title  col-sm-10">
+          <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+            <span class="w-annc__status label status status-source">[ <a href="https://oia.nfu.edu.tw" target="_blank" rel="noopener noreferrer" class="feed-source">國際事務處</a> ]</span>
+          </span>
+          <a class="w-annc__title" href="/zh_tw/ann/art/-28380343_69e88e724eae350a47e79a5fh">【計畫徵求】國科會與斯洛伐克研究發展署（NSTC-SRDA）2027–2028年雙邊合作研究人員互訪交流PPP計畫</a>
+        </h4>
+    </li>
+  </ul>
+  <div class="w-annc__more-wrap clearfix">
+    <a class="w-annc__more btn btn-primary pull-right" href="/zh_tw/ann/art?category%5B%5D=68db3fa108577793ef6894d9&amp;category%5B%5D=690d875b0857775c35f42610&amp;tags%5B%5D=all">More NEWS</a>
+  </div>
+</div>
+
+      <script style="display:none">
+        $("[data-subpart-id=\"6913fbd0085777244eddbf23\"] .w-annc__more").attr("href","/zh_tw/ann/art?category%5B%5D=68db3fa108577793ef6894d9&category%5B%5D=690d875b0857775c35f42610&tags%5B%5D=all");
+      </script>
+      </section>
+            <section class="layout-content-box col-sm-3 rotate0" data-pp="9"></section>
+          </div>
+          <section class="body-banner" data-pp="68"><div data-subpart-id="692fb4050857774bfe184204">
+<div class="row" style="margin-top:2.5em; padding:0em;">
+<!-- 左側：快速連結 -->
+<div class="col-sm-6" style="padding: 0em;">
+<div class="section-box" style="margin: 0em 0.5em 1em 0em;">
+<div class="section-title title-blue">
+<img alt="虎科大icon" src="/uploads/asset/data/69314b750857770c68103851/nfu-logo.png" style="width: 38px; margin-left: 3px; margin-right: 3px;" title="虎科大icon">快速連結</div>
+
+<div class="row">
+<div class="col-sm-4">
+<div class="link"><a aria-label="數位學習網" href="/zh_tw/elearning" title="數位學習網(在本視窗開啟)">數位學習網</a></div>
+
+<div class="link"><a aria-label="年度行事曆" href="/zh_tw/nfu_calendar" title="年度行事曆(在本視窗開啟)">年度行事曆</a></div>
+
+<div class="link"><a aria-label="校園網路" href="/zh_tw/network" title="校園網路(在本視窗開啟)">校園網路</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 數位產學媒合平台" href="https://diac.nfu.edu.tw/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 數位產學媒合平台">數位產學媒合平台</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 農檢中心" href="https://abp.nfu.edu.tw/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 農檢中心">農檢中心</a></div>
+</div>
+
+<div class="col-sm-4">
+<div class="link"><a aria-label="學生兼任助理專區" href="/zh_tw/studwork" title="學生兼任助理專區(在本視窗開啟)">學生兼任助理專區</a></div>
+
+<div class="link"><a aria-label="學雜費專區" href="/zh_tw/tuition" title="學雜費專區(在本視窗開啟)">學雜費專區</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 獎助學金資訊" href="https://osa.nfu.edu.tw/zh_tw/life/scholarship/scholarship_news" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 獎助學金資訊">獎助學金資訊</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 雲端租屋" href="http://house.nfu.edu.tw/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 雲端租屋">雲端租屋</a></div>
+
+<div class="link"><a aria-label="展翅飛翔．圓夢助學募款網" href="/zh_tw/fundraising" title="展翅飛翔．圓夢助學募款網(在本視窗開啟)">展翅飛翔 助學募款網</a></div>
+</div>
+
+<div class="col-sm-4">
+<div class="link"><a aria-label="在新視窗開啟 學生會" href="https://www.instagram.com/nfusa_/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 學生會">學生會</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 檔案管理應用" href="https://gad.nfu.edu.tw/zh_tw/doc/documentdivisionfiling" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 檔案管理應用">檔案管理應用</a></div>
+
+<div class="link"><a aria-label="訊資訊公開系統" href="/zh_tw/public" rel="noopener noreferrer" title="在本視窗開啟 資訊公開系統">資訊公開系統</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 資安暨個資宣導專區" href="https://isec.nfu.edu.tw/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 資安暨個資宣導專區">資安暨個資宣導專區</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 智財權宣導專區" href="https://cc.nfu.edu.tw/zh_tw/services/ipguide" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 智財權宣導專區">智財權宣導專區</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- 校園安全與關懷服務 -->
+
+<div class="col-sm-3" style="padding:0em;">
+<div class="section-box" style="margin: 0em 0em 1em 0em;">
+<div class="section-title title-blue2">
+<img alt="虎科大icon" src="/uploads/asset/data/69314b750857770c68103851/nfu-logo.png" style="width: 38px; margin-left: 3px; margin-right: 3px;" title="虎科大icon">校園安全與關懷服務</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="open"><a href="javascript:void(0)" title="校安通報（急況24小時專線）">校安通報（急況24小時專線） <i class="fa-solid fa-chevron-right"></i> </a></div>
+
+<div class="fold">
+<div class="link"><a href="tel:0932969994" title="撥打校安通報專線">📞 0932-969-994 點選直接撥打</a></div>
+</div>
+
+<div class="link"><a aria-label="在新視窗開啟 學生陳述意見管道" href="https://m.nfu.edu.tw/login/login?id=reaction&amp;page=index&amp;authority=nfu" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 	學生陳述意見管道">學生陳述意見管道</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 環境與設備通報系統" href="https://nrepair.nfu.edu.tw/apply" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 青年圓夢網">環境與設備通報系統</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 輔導諮商預約系統" href="https://booking.nfu.edu.tw/adlogin" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 青年圓夢網">輔導諮商預約系統</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 性別平等教育" href="https://gec.nfu.edu.tw" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 青年圓夢網">性別平等教育</a></div>
+</div>
+</div>
+</div>
+</div>
+<!-- 右側各類資源 -->
+
+<div class="col-sm-3" style="padding:0em;">
+<div class="section-box" style="margin:0em 0em 1em 0.5em;">
+<div class="section-title title-orange">
+<img alt="虎科大icon" src="/uploads/asset/data/69314b750857770c68103851/nfu-logo.png" style="width: 38px; margin-left: 3px; margin-right: 3px;" title="虎科大icon">各類資源</div>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="link"><a aria-label="在新視窗開啟 全國大專教師人才網" href="https://www.phdmatch.org.tw/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 全國大專教師人才網">全國大專教師人才網</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 不迷小紅書/青春不迷途" href="https://eliteracy.edu.tw/Shorts/xiaohongshu.html" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 不迷小紅書/青春不迷途">不迷小紅書/青春不迷途</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 青年圓夢網" href="https://iyouth.youthhub.tw/index.php" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 青年圓夢網">青年圓夢網</a></div>
+
+<div class="open"><a aria-label="採購專區" href="javascript:void(0)" title="採購專區(在本視窗開啟)"> 採購專區 <i class="fa-solid fa-chevron-right"></i></a></div>
+
+<div class="fold">
+<div class="link"><a aria-label="在新視窗開啟 科研採購招標資訊公告" href="https://gaw.nfu.edu.tw/%E4%BA%8B%E5%8B%99%E7%B5%84/%E7%A7%91%E7%A0%94%E6%8E%A1%E8%B3%BC%E8%B3%87%E8%A8%8A/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 科研採購招標資訊公告">科研採購招標資訊公告</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 政府電子採購網" href="https://web.pcc.gov.tw/pis/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 政府電子採購">政府電子採購網</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 綠色生活資訊網" href="https://greenlifestyle.moenv.gov.tw/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 綠色生活資訊網">綠色生活資訊網</a></div>
+</div>
+
+<div class="open"><a aria-label="學生安全暨全民國防專區" href="javascript:void(0)" title="學生安全暨全民國防專區(在本視窗開啟)"> 學生安全暨全民國防專區 <i class="fa-solid fa-chevron-right"></i></a></div>
+
+<div class="fold">
+<div class="link"><a aria-label="在新視窗開啟 兵役資訊" href="https://www.mnd.gov.tw/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 兵役資訊">兵役資訊</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 全民國防教育、防治學生藥物濫用資源網" href="https://nfuosa.nfu.edu.tw/miteo/flow.html" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 全民國防教育">全民國防教育、防治學生藥物濫用資源網</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 防治學生藥物濫用資源網" href="https://enc.moe.edu.tw/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 防治學生藥物濫用資源網">防治學生藥物濫用資源網</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 防制（校園）霸凌專區" href="https://bully.moe.edu.tw/index" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 防制（校園）霸凌專區">防制（校園）霸凌專區</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 165 全民防騙網" href="https://165.npa.gov.tw/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 165全民防騙網">165 全民防騙網</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 詐騙防制專區" href="https://www.edu.tw/AF/Default.aspx" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 詐騙防制專區">詐騙防制專區</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 交通安全月" href="https://roadsafetymonth.yam.com/" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 交通安全月">交通安全月</a></div>
+
+<div class="link"><a aria-label="在新視窗開啟 全民安全指引專區" href="https://www.edu.tw/PrepareEDU/Default.aspx" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" title="另開新視窗前往 全民安全指引專區">全民安全指引專區</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<style type="text/css">/* 區塊樣式 */
+
+.link{
+    margin-left:0!important;
+}
+.section-box {
+    margin: 0.5em;
+    padding: 0 0 1.5em 0;
+    background: #ffffff;
+    border-radius: 0 0 1em 1em;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 18px;
+}
+.section-title {
+    color: #fff;
+    padding: 12px 10px;
+    border-radius: 0 0 1em 0;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.25em;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+.title-blue { background-color: #3074b0; }
+.title-orange { background-color: #bc5334; }
+.title-blue2{background-color:#5d7998;}
+/* 連結 & open */
+.link a, .open a {
+    display: flex;
+    align-items: center;
+    padding: 10px 5px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    color: #333;
+    text-decoration: none;
+    background: #f7f7f7;
+    font-size: 1.05em;
+    transition: all 0.25s ease;
+}
+
+/* hover 動畫 */
+.link a:hover, .open a:hover {
+    background: #e9f2ff;
+    color: #0a4d8c;
+    transform: translateX(5px);
+    box-shadow: rgba(0,0,0,0.15) 0px 4px 10px;
+}
+
+/* open a 箭頭 */
+.open a {
+    justify-content: flex-start;
+}
+.open a i {
+    margin-left: auto;
+    margin-right: 8px; /* 箭頭右側間距 */
+    transition: transform 0.25s ease;
+}
+.open.active a {
+    background-color: #e0a292;
+    color: #fff;
+}
+.open.active a i {
+    transform: rotate(90deg);
+}
+
+/* fold 折疊內容 */
+.fold {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease;
+}
+.fold.show {
+    max-height: 1000px; /* 初步足夠高度，可改為 JS 計算 */
+}
+
+/* RWD：手機/平板 */
+@media (max-width: 767px) {
+    .col-sm-8, .col-sm-4 , .col-sm-12{
+        float: none !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+    .section-box {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        box-sizing: border-box;
+    }
+    /* 保證 open 與 fold 填滿 col-sm-12 */
+    .col-sm-12 .open a,
+    .col-sm-12 .fold {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+</style>
+<script>
+// // 手風琴展開/收合功能
+// document.querySelectorAll('.open').forEach(open => {
+//   open.addEventListener('click', function() {
+//     const fold = this.nextElementSibling;
+
+//     // 如果當前已經展開，收合自己
+//     if (fold.classList.contains('show')) {
+//       fold.classList.remove('show');
+//       fold.style.maxHeight = "0";
+//       this.classList.remove('active');
+//     } else {
+//       // 收起其他所有 fold
+//       document.querySelectorAll('.open').forEach(otherOpen => {
+//         const otherFold = otherOpen.nextElementSibling;
+//         if (otherFold !== fold) {
+//           otherFold.classList.remove('show');
+//           otherFold.style.maxHeight = "0";
+//           otherOpen.classList.remove('active');
+//         }
+//       });
+//       // 展開當前 fold
+//       fold.classList.add('show');
+//       fold.style.maxHeight = fold.scrollHeight + "px";
+//       this.classList.add('active');
+//     }
+//   });
+// });
+
+$(function() {
+    function fixAccordionAccessibility() {
+        // 1. 初始化：確保 display 狀態穩定
+        $('.fold').css({
+            'display': 'block',
+            'overflow': 'hidden',
+            'transition': 'max-height 0.35s ease-out' // 確保動畫平滑
+        });
+
+        // 2. 使用變數防止雙重觸發
+        var isProcessing = false;
+
+        $('.open a').on('focusin click', function(e) {
+            if (isProcessing) return;
+            
+            var $thisBtn = $(this);
+            var $thisOpen = $thisBtn.closest('.open');
+            var $thisFold = $thisOpen.next('.fold');
+            var isExpanded = $thisFold.hasClass('show');
+
+            // 核心修正：如果是 click 事件，先判斷是否剛剛已經被 focus 展開了
+            if (e.type === 'click' && isExpanded) {
+                // 只有手動點擊已展開的才關閉
+                closeFold($thisOpen, $thisFold);
+                return;
+            }
+
+            if (!isExpanded) {
+                isProcessing = true;
+                openFold($thisOpen, $thisFold);
+                
+                // 延遲重設旗標，避免事件連發
+                setTimeout(function() { isProcessing = false; }, 200);
+            }
+        });
+
+        function openFold($open, $fold) {
+            // 先計算高度再賦值，避免瀏覽器跳針
+            var targetHeight = $fold[0].scrollHeight;
+            $open.addClass('active');
+            $open.find('a').attr('aria-expanded', 'true');
+            $fold.addClass('show').css('max-height', targetHeight + 'px');
+            $fold.find('a').attr('tabindex', '0');
+        }
+
+        function closeFold($open, $fold) {
+            $open.removeClass('active');
+            $open.find('a').attr('aria-expanded', 'false');
+            $fold.removeClass('show').css('max-height', '0');
+            $fold.find('a').attr('tabindex', '-1');
+        }
+    }
+
+    fixAccordionAccessibility();
+});
+$(function() {
+    function fixOpenBtnA11y() {
+        $('.open a').each(function() {
+            var $btn = $(this);
+            var $fold = $btn.closest('.open').next('.fold');
+
+            // ✅ 補上 role="button"
+            $btn.attr('role', 'button');
+
+            // ✅ 根據目前 fold 是否展開設定初始 aria-expanded
+            var isExpanded = $fold.hasClass('show');
+            $btn.attr('aria-expanded', isExpanded ? 'true' : 'false');
+        });
+
+        // ✅ 監聽點擊/focusin 事件，同步更新 aria-expanded
+        $('.open a').on('click focusin', function() {
+            var $btn = $(this);
+            var $fold = $btn.closest('.open').next('.fold');
+
+            // 使用 setTimeout 確保在 fixAccordionAccessibility 執行後再讀取狀態
+            setTimeout(function() {
+                var isExpanded = $fold.hasClass('show');
+                $btn.attr('aria-expanded', isExpanded ? 'true' : 'false');
+            }, 250);
+        });
+    }
+
+    // ✅ 延遲執行確保 fixAccordionAccessibility 已先初始化
+    setTimeout(fixOpenBtnA11y, 100);
+});
+</script>
+</div></section>
+          <div class="row">
+              <section class="layout-content-box col-sm-3" data-pp="64"></section>
+              <section class="layout-content-box col-sm-3" data-pp="65"></section>
+              <section class="layout-content-box col-sm-3" data-pp="66"></section>
+              <section class="layout-content-box col-sm-3" data-pp="67"></section>
+          </div>
+          <div class="row kenopacity">
+              <section class="box layout-content-box col-sm-6" data-pp="28"></section>
+              <section class="box layout-content-box col-sm-3" data-pp="29"></section>
+              <section class="box layout-content-box col-sm-3" data-pp="99"></section>
+          </div>
+          <div class="row kenopacity">
+              <section class="box layout-content-box col-sm-3" data-pp="60"></section>
+              <section class="box layout-content-box col-sm-3" data-pp="30"></section>
+              <section class="box layout-content-box col-sm-6" data-pp="31"></section>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="layout-slide ken-banner" data-pp="2"></div>
+      <div class="layout-slide big-banner extra-box" data-pp="302"></div>
+
+
+
+
+    </div>
+
+      <div class="contentwrap lastcontent">
+         <div class="container">
+          <div class="row ">
+            <section class="layout-content-box col-sm-12 hide3" data-pp="10"></section>
+          </div>
+         </div>
+      </div>
+  </div>
+  
+
+<footer class="layout-footer no-print">
+
+  <div class="container layout-footer-inner">
+      <a accesskey="B" href="#B" title="相關聯絡訊息(電話、地址)(B)" style="color: inherit !important;display: inline-block;z-index: 1;">:::</a><div class="layout-footer-content">
+<div style="text-align: center;">國立虎尾科技大學 National Formosa University © All RIGHTS RESERVED.  <a href="https://accessibility.moda.gov.tw/Applications/Detail?category=20260624142232" title="無障礙網站"><img alt="通過AA無障礙網頁檢測" src="/uploads/asset/data/6a6b1d094eae3563c024bc49/%E7%B6%B2%E7%AB%99%E7%84%A1%E9%9A%9C%E7%A4%99%E6%A8%99%E7%AB%A0_AA%E7%AD%89%E7%B4%9A%E5%9C%96%E7%A4%BA.png" style="border-width: 0px; border-style: solid; width: 88px; height: 31px;" title="通過AA無障礙網頁檢測"></a><br>
+<a href="https://cird.nfu.edu.tw/cird/2021-12-01-09-12-16" target="_blank" rel="noopener noreferrer" title="在新視窗開啟 校務資訊">校務資訊</a>   <i class="fa-solid fa-phone"></i> 電話：05-6315000 🖨️傳真：05-6315999 ｜統一編號：64967512｜<a href="https://www.google.com.tw/maps/place/632%E9%9B%B2%E6%9E%97%E7%B8%A3%E8%99%8E%E5%B0%BE%E9%8E%AE%E6%96%87%E5%8C%96%E8%B7%AF64%E8%99%9F%E7%AC%AC%E4%B8%80%E6%95%99%E5%AD%B8%E5%8D%80%E5%9C%8B%E7%AB%8B%E8%99%8E%E5%B0%BE%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8/@23.7031081,120.4301509,17z/data=!3m1!4b1!4m2!3m1!1s0x346eba00b4f16d5f:0x831dc70c8064aaf?hl=zh-TW" target="_blank" rel="noopener noreferrer" title="在新視窗開啟 地圖">📌</a>地址：632301 雲林縣虎尾鎮文化路64號</div>
+
+<div style="text-align: center;"><span style="text-align: center;color: #ffff00; "><a href="https://isec.nfu.edu.tw/?page_id=1326" style="color: #ffff00;">個人資料保護安全政策</a> | <a href="https://isec.nfu.edu.tw/?page_id=1353" style="color: #ffff00;">隱私權聲明</a>  | <a href="https://isec.nfu.edu.tw/?page_id=2051" style="color: #ffff00;">當事人權利行使及申訴抱怨公告</a>  |  <a href="https://isec.nfu.edu.tw/?page_id=1029" style="color: #ffff00;">資通安全管理政策</a>  | <a href="/uploads/asset/data/68e6900f085777aeb53009f3/%E5%80%8B%E8%B3%87%E6%B3%9517%E6%A2%9D%E6%87%89%E5%85%AC%E5%91%8A%E4%BA%8B%E9%A0%85%E5%85%AC%E5%91%8A%E7%89%88.pdf" style="color: #ffff00;" target="_blank" rel="noopener noreferrer" title="在新視窗開啟 個資法17條應公告事項">個資法17條應公告事項</a></span></div>
+<style type="text/css">.fa-classic, .fa-regular, .fa-solid, .far, .fas {
+    font-family: var(--fa-style-family, "FontAwesome");
+}
+.i-annc__title{
+    span{
+        font-family: "Noto Sans TC", sans-serif !important;
+        font-weight: normal !important;
+}
+}
+.index-announcement-14,.index-eventnews-13{
+    .i-annc__title{
+    span{
+        color: #333 !important;
+}
+}
+}
+
+.w-annc__title{
+        span{
+        font-family: "Noto Sans TC", sans-serif !important;
+        color: #333 !important;
+        font-weight: normal !important;
+}
+}
+
+.widget-announcement-24{
+    .w-annc__title{
+        span{
+        color: #fff !important;
+    }
+}
+}
+.widget-link.widget7 .widget-content a {
+    color: #3f3f3f;
+}
+.widget-link.widget7 .widget-content:hover a, .widget-link.widget7 .widget-content.hover-class a {
+    text-shadow: 0px 0px 9px #000000;
+}
+</style>
+<script style="display: none;">
+$(document).ready(function () {
+  $('.lang-switch').each(function () {
+
+    const path = window.location.pathname;     // 網址主路徑
+    const search = window.location.search;     // ?locale=en 這一段
+    const urlParams = new URLSearchParams(search);
+    const locale = urlParams.get('locale');    // 取得語系參數(en / zh_tw)
+    let newHref = '';
+
+    // =========================
+    // 1. 路徑型 URL （/en/... /zh_tw/...）
+    // =========================
+    if (path.startsWith("/en/")) {
+      newHref = path.replace("/en/", "/zh_tw/");
+    } else if (path.startsWith("/zh_tw/")) {
+      newHref = path.replace("/zh_tw/", "/en/");
+    }
+
+    // =========================
+    else if (path === "/") {
+
+      // 若有 locale= 參數，則切換它
+      if (locale === "en") {
+        newHref = "/?locale=zh_tw";
+      } else if (locale === "zh_tw") {
+        newHref = "/?locale=en";
+      } else {
+        // 若沒有 locale，預設中文 → 切英文
+        newHref = "/?locale=en";
+      }
+    }
+
+    // 把結果塞回 button 的 href
+    $(this).attr('href', newHref);
+  });
+});
+
+{
+  "@context": "https://schema.org",
+  "@type": "CollegeOrUniversity",
+  "name": "國立虎尾科技大學",
+  "alternateName": "National Formosa University",
+  "url": "https://www.nfu.edu.tw",
+  "logo": "https://www.nfu.edu.twimages/logo.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+886-5-6315000",
+    "contactType": "customer service",
+    "areaServed": "TW",
+    "availableLanguage": "Chinese"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "文化路64號",
+    "addressLocality": "虎尾鎮",
+    "addressRegion": "雲林縣",
+    "postalCode": "632",
+    "addressCountry": "TW"
+  }
+}
+</script>
+</div>
+      <div class="footer-updated-date"></div>
+  </div>
+</footer>
+
+
+<script>document.addEventListener('click',function(e){var el=e.target.closest('[data-track-click-url]');if(!el){var a=e.target.closest('a');if(a){el=a.querySelector('[data-track-click-url]');}}if(!el){var s=e.target.closest('.w-ad-banner__slide');if(s&&!s.querySelector('a')&&s.getAttribute('data-link')&&!s.classList.contains('youtube')){el=s.querySelector('[data-track-click-url]');}}if(el&&navigator.sendBeacon){navigator.sendBeacon(el.getAttribute('data-track-click-url'));}});</script></body>
+</html>

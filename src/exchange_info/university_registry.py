@@ -1305,8 +1305,412 @@ THU = UniversityProfile(
     ),
 )
 
+SHU = UniversityProfile(
+    id="shu",
+    school_name="世新大學",
+    short_name="世新",
+    english_name="Shih Hsin University",
+    aliases=("shu", "世新大學", "世新", "SHU", "Shih Hsin University", "Shih Hsin"),
+    hero_image="/static/assets/shu-campus.svg",
+    official_url="https://global.web.shu.edu.tw/%e5%ad%b8%e7%94%9f%e4%ba%a4%e6%b5%81-%e8%b5%b4%e5%a4%96%e7%a0%94%e4%bf%ae/",
+    coverage_note="完整支援：已整合世新大學國際暨兩岸事務處（Global Affairs Office）與兩岸事務處（OCSE）《2027春季班／2026秋季班赴外及赴陸交換甄選簡章》、《2027春季班外國姊妹校交換申請手冊》、《世新大學選送學生出國研修甄選辦法》、《學生出國選修課程實施辦法》與《雙聯學制專區》官方資料：（1）甄選時程與雙軌窗口：國際處每年辦理兩梯次赴國外（非大陸地區）交換甄選（春季班於前一年 9–10 月報名、秋季班於當年 2–3 月報名），兩岸事務處同步辦理赴大陸及港澳地區交換生甄選；申請人須為本校在學滿一學期以上之學士班及碩博士班學生，赴國外交換一般須歷年平均 75 分（GPA 3.0）或班排前 50%、赴大陸交換一般須歷年平均 70 分以上且操行 80 分以上。（2）合作姊妹校與雙聯學位：完整收錄 177 所全球與兩岸合作姊妹校（橫跨 29 國與地區，含 58 所當期開放申請之國外及大陸交換／雙聯合作校、英國蘇塞克斯大學／西英格蘭大學及美國威斯康辛大學河瀑分校等跨國雙聯學位）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、校內《選送學生出國研修獎助學金》及 49 所合作大學共 244 篇歷屆學長姐交換與雙聯心得報告。",
+    support_level="full",
+    partner_count_hint=177,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "世新大學",
+        "SHIHHSINUNIVERSITY",
+        "SHIHHSIN",
+        "SHU",
+    ),
+    # https://www.shu.edu.tw/SHU-All-Units.aspx — checked 2026-10-30.
+    colleges=(
+        "新聞傳播學院",
+        "管理學院",
+        "人文社會學院",
+        "法律學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU)
+PU = UniversityProfile(
+    id="pu",
+    school_name="靜宜大學",
+    short_name="靜宜",
+    english_name="Providence University",
+    aliases=("pu", "靜宜大學", "靜宜", "PU", "Providence University", "Providence"),
+    hero_image="/static/assets/pu-campus.svg",
+    official_url="https://411.pu.edu.tw/p/426-1073-4.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合靜宜大學國際暨兩岸事務處（OIA）與 411 遊留學中心（出國研修組）《各洲別交換學校一覽表（15 個地區專頁）》、《跨國雙聯學制專區（16 校）》、《ISEP 國際交換學生計畫》、《五大洲締約姊妹校名錄 Excel》、《學生出國研修辦法》、《遴選交換學生作業要點》與《出國交換學生學分換算準則》官方資料：（1）三梯次校內初審、免繳雜費與強制抵免規定：每學期分三梯次辦理出國研修校內初審（春季班出國於前一年 8月／9月／10月辦理，如 115-2 為 2026/08/03–08/23、08/24–09/20、09/21–10/11，初審通過者於 10/30 前繳交《境外研修同意書》；秋季班出國於當年 2月底／3月底／4月底辦理；雙聯學制秋季班 3/31 截止；ISEP 秋季班 1 月中、春季班 7 月底截止）。大一新生可於大一下申請、大二上出國（延畢生亦得申請互惠交換），在學期間出國交換須繳交靜宜全額學費、免繳雜費；返國後次學期開學 2 個月內強制規定「至少須抵免一科（至少 1 學分）」（換算準則：美日陸 1:1、歐洲 ECTS÷2、英國 CATS÷4）。（2）合作姊妹校、ISEP 與 16 校雙聯學位：完整收錄 275 所全球與大陸合作姊妹校（橫跨 5 大洲 48 個國家與地區，含 230 所當期開放申請之交換與雙聯合作校、ISEP 全球逾 300 校互惠食宿交換，以及美、英、德、法、日、澳 16 所跨國雙聯學位合作校）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、校內《E.A.G.L.E. 築夢基金》（亞洲上限 2 萬／非亞上限 3 萬）、《學生出國研修獎助學金辦法》及 118 所合作大學共 299 篇歷屆學長姐交換與研修心得報告 PDF。",
+    support_level="full",
+    partner_count_hint=275,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "靜宜大學",
+        "PROVIDENCEUNIVERSITY",
+        "PROVIDENCE",
+        "PU",
+    ),
+    # https://www.pu.edu.tw/p/412-1000-1047.php?Lang=zh-tw — checked 2026-10-30.
+    colleges=(
+        "外語暨人文創意學院",
+        "社會科學院",
+        "理學院",
+        "管理學院",
+        "資訊學院",
+        "國際學院",
+    ),
+)
+
+USC = UniversityProfile(
+    id="usc",
+    school_name="實踐大學",
+    short_name="實踐",
+    english_name="Shih Chien University",
+    aliases=("usc", "實踐大學", "實踐", "USC", "Shih Chien University", "Shih Chien"),
+    hero_image="/static/assets/usc-campus.svg",
+    official_url="https://uscoia.usc.edu.tw/p/412-1049-1331.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合實踐大學國際暨兩岸事務處（OIA）《115學年度第2學期出國交換、雙聯學制暨海外自費研修簡章（含中國大陸地區交換）》、《交換及海外自費研修學校一覽表（125 校）》、《雙聯學制學校一覽表（20 校 28 學程）》、《實踐大學出國交換學生報名系統（oia-exchange.vercel.app）》、《辦理學生赴境外大學研修要點》、《與境外大學辦理雙聯學制實施辦法》與《出國留學獎學金辦法》官方資料：（1）兩階段校內甄選、在學學費與最低修習學分規定：每學期分兩階段於線上報名系統（oia-exchange.vercel.app）收件（春季班出國於前一年 9–10月辦理，如 115-2 第一階段 2026/09/01–10/01、第二階段 2026/10/19–10/29 17:00，陸港澳僅限第一階段；秋季班出國於當年 2–3月辦理），申請人須填寫 3 個志願並完成系主任與院長（或國際學程主任）核章。大一、大二及大三上可申請學士班交換（大四申請須簽署延畢切結書），歷年學業總平均須達 75 分以上或班排名前 50%、歷年操行平均 80 分以上；出國期間須辦理實踐大學註冊並繳交全額學雜費，每學期至少修習相當於實踐 6 學分（研究所至少 1 科 3 學分）且至少 1 門須為所屬學系專業課程（學分換算：美日韓陸 1:1、歐洲 ECTS×0.5、英國 CATS×0.25）。（2）合作姊妹校與 20 校 28 項雙聯學制：完整收錄 125 所全球與大陸合作姊妹校（橫跨 27 個國家與地區，含 101 所海外交換／雙聯／自費研修校與 24 所大陸地區交換姊妹校，以及英、美、加、澳、法、德、奧、瑞士、日、韓、馬、泰 20 所跨國雙聯學位合作大學共 28 個 3+1／2+2／1+1 雙聯學程）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、校內《出國留學獎學金》（生活費補助、最高可加碼全額學雜費減免）及 74 所合作大學共 288 篇歷屆學長姐出國交換與雙聯研修心得報告 PDF。",
+    support_level="full",
+    partner_count_hint=125,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "實踐大學",
+        "SHIHCHIENUNIVERSITY",
+        "SHIH CHIEN UNIVERSITY",
+        "USC",
+    ),
+    # https://www.usc.edu.tw/ — checked 2026-10-30 (臺北校區：民生學院、設計學院、管理學院、國際學程；高雄校區：商學與資訊學院、文化與創意學院).
+    colleges=(
+        "民生學院",
+        "設計學院",
+        "管理學院",
+        "法學院",
+        "國際學程",
+        "商學與資訊學院",
+        "文化與創意學院",
+    ),
+)
+
+NUK = UniversityProfile(
+    id="nuk",
+    school_name="國立高雄大學",
+    short_name="高大",
+    english_name="National University of Kaohsiung",
+    aliases=(
+        "nuk",
+        "國立高雄大學",
+        "高雄大學",
+        "高大",
+        "NUK",
+        "National University of Kaohsiung",
+    ),
+    hero_image="/static/assets/nuk-campus.svg",
+    official_url="https://dia.nuk.edu.tw/p/412-1034-4130.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立高雄大學國際事務處（DIA）《2027春季與2026秋季出國交換說明會簡報》、《出國交換名額表與申請條件一覽表》、《交換學生甄選作業要點》、《選送優秀學生出國研修之語文能力證明標準》、《33國國際姊妹校統計與名錄》、《跨國雙聯學制（8校）》與《教育部學海飛颺／惜珠獎學金語文標準》官方資料：（1）兩梯次校內甄選、百分制評分與語檢補件規定：每年分兩次辦理出國交換校內甄選（秋季班暨教育部學海飛颺／惜珠第一次申請於前一年 12 月底至 1 月初收件、2 月中旬語檢補件、3 月底前公布薦送名單；春季班於前一年 6 月底至 7 月初收件，如 115-2 為 2026/06/25–07/07、08/11–08/18 語檢補件、9 月底前公布薦送名單）。限非當學期畢業且申請／出國就讀時為大二（含）以上之高大日間學制學士班、碩士班、博士班在學學生（轉學生須於高大有 2 學期以上成績）。校內甄選依大學部「歷年班排 65%＋自傳研修計畫與有利審查資料 35%」、研究所「歷年班排 35%＋自傳研修計畫 35%＋指導教授推薦函 30%」評分，總分達 70 分（含）以上始獲考慮薦送資格（交換期限最長一年，不得申請延長）。（2）合作姊妹校與 8 校雙聯學制：完整收錄 280 所全球與大陸合作姊妹校（橫跨 33 個國家與地區，含 169 所當期開放申請之交換與雙聯合作校，以及美國密西根大學迪爾伯恩分校、美國肯恩大學、英國丹地大學、英國羅浮堡大學、英國亞伯丁大學、印尼丹戎布拉大學、蒙古新蒙古科技大學、中國福州大學共 8 所跨國雙聯學位合作校）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、JASSO／GKS 與姊妹校住宿減免及 35 所合作大學共 58 篇歷屆學長姐返國心得報告與校內薦送紀錄。",
+    support_level="full",
+    partner_count_hint=280,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立高雄大學",
+        "高雄大學",
+        "NATIONALUNIVERSITYOFKAOHSIUNG",
+        "NATIONAL UNIVERSITY OF KAOHSIUNG",
+        "NUK",
+    ),
+    # https://www.nuk.edu.tw/p/412-1000-221.php?Lang=zh-tw — checked 2026-10-30.
+    colleges=(
+        "人文社會科學院",
+        "法學院",
+        "管理學院",
+        "理學院",
+        "工學院",
+        "創新學院",
+    ),
+)
+
+NCYU = UniversityProfile(
+    id="ncyu",
+    school_name="國立嘉義大學",
+    short_name="嘉大",
+    english_name="National Chiayi University",
+    aliases=(
+        "ncyu",
+        "國立嘉義大學",
+        "嘉義大學",
+        "嘉大",
+        "NCYU",
+        "National Chiayi University",
+    ),
+    hero_image="/static/assets/ncyu-campus.svg",
+    official_url="https://www.ncyu.edu.tw/oia/Contents?nodeId=57877",
+    coverage_note="完整支援：已整合國立嘉義大學國際事務處（OIA）《114學年度交換學生計畫說明會簡報（2026秋季／2027春季）》、《國立嘉義大學薦外交換學生審查要點》、《薦外姊妹校交換學生獎補助金發放要點》、《2026海外研修手冊》、《2026薦外交換生手冊》、《英語能力檢定測驗門檻對照表》、《國外締約學校一覽表（140校）》與《雙聯學位推動現況（8校13專案）》官方資料：（1）兩梯次校內甄選、量化計分與系所務會議認證規定：每年分兩梯次辦理薦外交換校內甄選（秋季班出國於前一年 12月收件、次年 2–3月公布錄取；春季班出國於前一年 5–6月收件，如 2027春季班為 2026/05/01–06/15 收件、09–10月公布錄取）。限學士班二年級以上、碩士班一年級以上、博士班一年級以上在學學生（轉學生須於嘉大修滿一學期且具成績），在校成績須達全班前 20% 以內，或學期平均大學部 75 分（含）以上、研究生 80 分（含）以上；每人至多選填 2 志願學校，進修課程規劃須檢附系、所務會議同意之會議紀錄。審查計分：非華語地區為「班級排名百分比 40%＋語言能力 40%（A級 40%、B級 36%、C級 32%、D級 24%）＋讀書計畫 20%」，華語地區免附語檢（班排 80%＋讀書計畫 20%）。（2）合作姊妹校與 8 校 13 專案雙聯學制：完整收錄 140 所全球與大陸合作姊妹校（橫跨 25 國與地區，含 48 所當期開放申請之交換與雙聯合作校，以及美國堪薩斯州立大學、楊斯鎮州立大學、斯托克頓大學、英國亞伯丁大學、日本尾道市立大學、香川大學、泰國湄州大學、印尼布勞爪哇大學共 8 所跨國雙聯學位合作校 13 個院系專案）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、校內《薦外姊妹校交換學生獎補助金》、日本 JASSO 與韓國姊妹校學宿費減免，以及 20 所合作大學共 95 篇歷屆學長姐返國交換與海外研修心得報告。",
+    support_level="full",
+    partner_count_hint=140,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立嘉義大學",
+        "嘉義大學",
+        "嘉大",
+        "NATIONALCHIAYIUNIVERSITY",
+        "NATIONAL CHIAYI UNIVERSITY",
+        "NCYU",
+    ),
+    # https://www.ncyu.edu.tw/ncyu/Subject?nodeId=834 — checked 2026-10-30.
+    colleges=(
+        "師範學院",
+        "人文藝術學院",
+        "管理學院",
+        "農學院",
+        "理工學院",
+        "生命科學院",
+        "獸醫學院",
+    ),
+)
+
+NUTC = UniversityProfile(
+    id="nutc",
+    school_name="國立臺中科技大學",
+    short_name="中科大",
+    english_name="National Taichung University of Science and Technology",
+    aliases=(
+        "nutc",
+        "國立臺中科技大學",
+        "國立台中科技大學",
+        "臺中科技大學",
+        "台中科技大學",
+        "中科大",
+        "臺中科大",
+        "台中科大",
+        "NUTC",
+        "National Taichung University of Science and Technology",
+    ),
+    hero_image="/static/assets/nutc-campus.svg",
+    official_url="https://oia.nutc.edu.tw/p/412-1026-8514.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立臺中科技大學國際事務處（OIA）《六大區域合作姊妹校名冊（140校）》、《2026/2027春秋季班日本與韓國姊妹校交換留學簡章》、《學生赴大陸地區協議學校研習申請簡章》、《114/115年度教育部選送優秀學生赴國外研修／專業實習學海系列計畫校內申請作業公告》、《學生申請教育部學海系列計畫審查要點》、《教師申請學海築夢計畫及新南向學海築夢計畫審查要點》與《高教深耕計畫國際專章補助國際交流活動要點》官方資料：（1）兩梯次出國交換甄選、五專部四五年級與學碩士班資格及返國志願服務規定：每年分春季班（前一年 9–10月收件，如 2027春季班為 2026/09/14–10/30 收件）與秋季班（當年 3–5月收件）辦理出國交換留學甄選，並於每年 1–3月初辦理教育部學海飛颺／惜珠／築夢校內甄選（115年度為 01/07 說明會、01/08–03/02 學院初審、03/04 國際處收件截止）。限已就讀本校一學期以上之日間部與進修部非應屆畢業在籍學生（學士班、碩士班及五專部四年級(含)以上，不含五專 1–3 年級生、延修生及在職專班生），國外交換各科成績須達 70 分以上且操行 80 分以上（赴大陸協議學校歷年學業總平均及操行均須達 80 分以上）；交換期間於中科大註冊繳費保留學籍並享姊妹校學費互免，赴日韓交換生於留學期間須投稿國際處粉專（1學期5篇、1學年10篇），返國後須繳交心得報告並完成國際處志願服務 20 小時。（2）六大區域 140 所合作姊妹校與英國雙聯學位：完整收錄日本 20 校、韓國 5 校、東南亞與南亞 33 校、歐美 23 校、大洋洲 4 校、大陸與澳門 55 校共 140 所合作姊妹校（橫跨 19 個國家與地區，含 39 所當期開放申請之交換與雙聯合作校，以及英國西蘇格蘭大學 UWS 1 年制榮譽學士／碩士雙聯學位與瑞士 BHMS 帶薪實習專案）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》（每人補助 5 萬至 30 萬元）、《學海惜珠》、《學海築夢／新南向學海築夢》、高教深耕國際專章、日本 JASSO 及 8 所合作大學共 31 篇歷屆學長姐返國交換心得報告。",
+    support_level="full",
+    partner_count_hint=140,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立臺中科技大學",
+        "國立台中科技大學",
+        "臺中科技大學",
+        "台中科技大學",
+        "NATIONALTAICHUNGUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "NATIONAL TAICHUNG UNIVERSITY OF SCIENCE AND TECHNOLOGY",
+        "NUTC",
+    ),
+    # https://www.nutc.edu.tw/p/412-1000-88.php — checked 2026-10-31.
+    colleges=(
+        "商學院",
+        "設計學院",
+        "資訊與流通學院",
+        "智慧產業學院",
+        "語文學院",
+        "中護健康學院",
+    ),
+)
+
+NFU = UniversityProfile(
+    id="nfu",
+    school_name="國立虎尾科技大學",
+    short_name="虎科大",
+    english_name="National Formosa University",
+    aliases=(
+        "nfu",
+        "國立虎尾科技大學",
+        "虎尾科技大學",
+        "虎尾科大",
+        "虎科大",
+        "NFU",
+        "National Formosa University",
+    ),
+    hero_image="/static/assets/nfu-campus.svg",
+    official_url="https://oia.nfu.edu.tw/zh-tw/ia/out/outexchange/out-exchangeschools",
+    coverage_note="完整支援：已整合國立虎尾科技大學國際事務處（OIA）《亞洲／歐洲／美洲／大洋洲海外姊妹校名冊（152校）》、《國立虎尾科技大學海外姊妹校交換學生一覽表（115.06）》、《115學年度第2學期選送優秀學生出國研修（交換學生／學海飛颺／學海惜珠）甄選簡章》、《3+1+1雙聯學制專區》、《甄選學生赴國外研修作業要點》、《學生出國研修獎助要點》與《CEF與各項英檢對照表》官方資料：（1）兩梯次校內甄選、學業及語文門檻與每學期9學分修課規定：每年分兩梯次（春季班於前一年9月收件、秋季班於當年3–4月收件，如115-2春季班於115/09/30截止收件、115/10/14面試、115/10/16放榜；115-2學海惜珠於115/07/01截止收件）辦理校內甄選，限在學非應屆畢業生（大一至大三學士生、碩一碩士生、博一至博二博士生，不含在職專班生、大陸籍學生及外籍學生，交換期間不得辦理畢業），前學年學業總平均成績須達75分以上或班排名前50%且操行成績平均達80分以上，語文能力須達CEFR B1以上（TOEIC 550 / TOEFL iBT 42 / TOEFL ITP 457 / IELTS 4.0，或日檢N1–N4、韓檢TOPIK 3級）且面試成績須達70分以上；出國交換期間於虎科大完成註冊選課保留學籍並享姊妹校學費互免，每學期至少須選修9學分（或18 ECTS）以上專業課程，返國後一個月內繳交國外修讀學分抵免申請表及研修心得報告並配合國際處宣導活動。（2）四大洲 152 所合作姊妹校與雙聯學制：完整收錄亞洲 118 校（日本 33 校、越南 28 校、印尼 14 校、韓國 10 校、泰國 9 校、馬來西亞 7 校、印度 6 校、菲律賓 6 校、以色列 2 校、香港／土耳其／蒙古各 1 校）、歐洲 20 校（德國 7 校、法國 5 校、捷克 3 校、俄羅斯 2 校、西班牙／奧地利／羅馬尼亞各 1 校）、美洲 11 校（美國 8 校、加拿大 2 校、祕魯 1 校）與大洋洲 3 校（澳洲 3 校）共 152 所姊妹校（橫跨 28 個國家與地區，含 30 所當期開放申請之交換及美國密西根大學迪爾伯恩分校 UM-Dearborn、羅德島大學 URI 3+1+1 學碩雙聯學位與 UNLV 暑期研習合作校）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》、《學海惜珠》、《學海築夢／新南向學海築夢》、虎科大《學生出國研修獎助要點》校內機票與生活費獎助學金，以及 12 所合作姊妹校共 13 篇歷屆學長姐返國研修心得與分享會紀錄。",
+    support_level="full",
+    partner_count_hint=152,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立虎尾科技大學",
+        "虎尾科技大學",
+        "虎科大",
+        "NATIONALFORMOSAUNIVERSITY",
+        "NATIONAL FORMOSA UNIVERSITY",
+        "NFU",
+    ),
+    # https://www.nfu.edu.tw/zh/academic — checked 2026-10-31.
+    colleges=(
+        "工程學院",
+        "電機資訊學院",
+        "管理學院",
+        "文理學院",
+        "航空學院",
+    ),
+)
+
+UTAIPEI = UniversityProfile(
+    id="utaipei",
+    school_name="臺北市立大學",
+    short_name="北市大",
+    english_name="University of Taipei",
+    aliases=(
+        "utaipei",
+        "ut",
+        "臺北市立大學",
+        "台北市立大學",
+        "北市大",
+        "UTaipei",
+        "UT",
+        "University of Taipei",
+    ),
+    hero_image="/static/assets/utaipei-campus.svg",
+    official_url="https://international.utaipei.edu.tw/p/412-1006-6691.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合臺北市立大學國際事務處（OIA）全球教育交流組《海外姊妹校一覽表（226校）》、《116學年度第1學期赴外姊妹校交換學生甄選簡章（86校）》、《115學年度第2學期赴外姊妹校交換學生甄選簡章（84校）》、《境外雙聯學位專區（11校24系）》、《學生赴外研修甄選暨獎補助要點》、《學生出國選修課程實施要點》、《辦理教育部學海系列計畫審查作業要點》與《各項英檢與CEFR架構對照表》官方資料：（1）兩梯次校內甄選、A/B/C/D四類優先順序与每學期6學分修課規定：每年分兩梯次（春季班於前一年4月收件、秋季班於前一年10月收件，如116-1秋季班於2026/10/05 14:00至2026/10/30 17:00收件、2026/12/31前放榜、2027/01/29放棄截止；115-2春季班於2026/04/10至04/30收件並錄取48名）辦理甄選，限於本校就讀一學期以上之在學學士班（出國時須為大二以上）及碩博士班（非當學期畢業）學生（不含在職專班及休學生），前一學期操行成績須達80分以上且無申誡以上處分及違反性平法／重大違法紀錄（須簽署行為確認聲明書），依A類（前一學期班排前40%）、B類（專業著作／重要展演／全國或國際競賽獲獎）、C類（一般申請者）、D類（同一學制第二次申請者）四類優先順序及總成績（書審40%＋面試60%）分發（至多填5志願）；非華語國家外語能力須達CEFR B1以上（GEPT中級 / TOEIC 550 / TOEFL iBT 42［新制3分］ / TOEFL ITP 433 / IELTS 4.0 / Duolingo 60，或日檢JLPT N1–N3、韓檢TOPIK 2–4級；中國大陸免附外語檢定）；交換期間於北市大完成註冊繳費並免繳姊妹校學費，每學期至少修習相當於本校6學分課程（暑期3學分；歐洲2 ECTS折算1學分，累計上限畢業總學分1/4）。（2）全球41國／地區226所合作姊妹校與11校24系雙聯學制：完整收錄中國大陸62校、美國23校、韓國20校、日本19校、馬來西亞9校、法國9校、波蘭7校、德國6校、捷克6校、泰國5校、越南5校、印尼5校、英國4校等共226所合作大學（含92所當期開放申請之交換與雙聯合作校，以及美國SWOSU/IUP/Troy、英國University of Essex［12系所］/Trinity Laban/Nottingham、紐西蘭奧克蘭大學、泰國朱拉隆功大學、馬來西亞馬來亞大學、哈薩克Satbayev、加拿大Western共11校24個雙聯學位學程）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》（含本校最少20%配合款）、《學海惜珠》、《學海築夢／新南向學海築夢》、北市大《返國生活獎補助》（亞洲最高NT$15,000、非亞洲最高NT$30,000，依8級優先順序核給），以及66所合作大學共421篇歷年出國交換學生研修心得報告與錄取紀錄。",
+    support_level="full",
+    partner_count_hint=226,
+    academic_score_minimum=None,
+    student_card_signals=(
+        "臺北市立大學",
+        "台北市立大學",
+        "北市大",
+        "UNIVERSITYOFTAIPEI",
+        "UNIVERSITY OF TAIPEI",
+        "UTAIPEI",
+    ),
+    # https://www.utaipei.edu.tw/ — checked 2026-10-31.
+    colleges=(
+        "教育學院",
+        "人文藝術學院",
+        "理學院",
+        "體育學院",
+        "市政管理學院",
+    ),
+)
+
+NTCU = UniversityProfile(
+    id="ntcu",
+    school_name="國立臺中教育大學",
+    short_name="中教大",
+    english_name="National Taichung University of Education",
+    aliases=(
+        "ntcu",
+        "國立臺中教育大學",
+        "國立台中教育大學",
+        "臺中教育大學",
+        "台中教育大學",
+        "中教大",
+        "NTCU",
+        "National Taichung University of Education",
+    ),
+    hero_image="/static/assets/ntcu-campus.svg",
+    official_url="https://oia.ntcu.edu.tw/data/15",
+    coverage_note="完整支援：已整合國立臺中教育大學國際及兩岸事務暨研究發展處（OIA）《締結姐妹校名單（263校）》、《交換學校名額表》、《116學年度與115學年度第3次選送學生出國研修簡章》、《甄選學生出國研修要點》、《補助學生赴外國大學（機構）選修課程要點》、《與外國大學校院辦理雙聯學制辦法》、《教育部學海飛颺／惜珠甄選簡章》及歷年出國研修心得報告。",
+    support_level="full",
+    partner_count_hint=263,
+    academic_score_minimum=None,
+    student_card_signals=(
+        "國立臺中教育大學",
+        "國立台中教育大學",
+        "中教大",
+        "NATIONALTAICHUNGUNIVERSITYOFEDUCATION",
+        "NATIONAL TAICHUNG UNIVERSITY OF EDUCATION",
+        "NTCU",
+    ),
+    # https://www.ntcu.edu.tw/ — checked 2026-10-31.
+    colleges=(
+        "教育學院",
+        "人文學院",
+        "理學院",
+        "管理學院",
+    ),
+)
+
+TNUA = UniversityProfile(
+    id="tnua",
+    school_name="國立臺北藝術大學",
+    short_name="北藝大",
+    english_name="Taipei National University of the Arts",
+    aliases=(
+        "tnua",
+        "國立臺北藝術大學",
+        "國立台北藝術大學",
+        "臺北藝術大學",
+        "台北藝術大學",
+        "北藝大",
+        "TNUA",
+        "Taipei National University of the Arts",
+    ),
+    hero_image="/static/assets/tnua-campus.svg",
+    official_url="https://oia.tnua.edu.tw/",
+    coverage_note="完整支援：已整合國立臺北藝術大學國際事務處（OIA）《四大洲姊妹校申請資訊表（90校）》、《116學年度姊妹校交換學生甄選簡章》、《選送學生出國進修與交流甄選辦法》、《選送學生赴外交換行政契約書》、《Shared Campus 校園共享專案》、《UMAP 亞太大學交流會》、《學海飛颺暨學海惜珠補助甄選作業流程》及 106–114 學年度共 130 篇出國交換研修心得報告。",
+    support_level="full",
+    partner_count_hint=90,
+    academic_score_minimum=None,
+    student_card_signals=(
+        "國立臺北藝術大學",
+        "國立台北藝術大學",
+        "北藝大",
+        "TAIPEINATIONALUNIVERSITYOFTHEARTS",
+        "TAIPEI NATIONAL UNIVERSITY OF THE ARTS",
+        "TNUA",
+    ),
+    # https://w3.tnua.edu.tw/academics/ — checked 2026-11-01.
+    colleges=(
+        "音樂學院",
+        "美術學院",
+        "戲劇學院",
+        "舞蹈學院",
+        "電影與新媒體學院",
+        "文化資源學院",
+        "人文學院",
+    ),
+)
+
+NTUA = UniversityProfile(
+    id="ntua",
+    school_name="國立臺灣藝術大學",
+    short_name="臺藝大",
+    english_name="National Taiwan University of Arts",
+    aliases=(
+        "ntua",
+        "國立臺灣藝術大學",
+        "國立台灣藝術大學",
+        "臺灣藝術大學",
+        "台灣藝術大學",
+        "臺藝大",
+        "台藝大",
+        "臺藝",
+        "台藝",
+        "NTUA",
+        "National Taiwan University of Arts",
+    ),
+    hero_image="/static/assets/ntua-campus.svg",
+    official_url="https://international.ntua.edu.tw/",
+    coverage_note="完整支援：已整合國立臺灣藝術大學國際事務處（OIA）《交換學校一覽表（102校）》、《116學年度第1學期交換學生計畫甄選簡章》、《國立臺灣藝術大學交換學生甄選要點》、《辦理教育部學海系列計畫補助作業要點》、《與境外大學合作辦理雙聯學制實施辦法》及 102–113 學年度共 56 校 345 篇出國交換研修心得報告。",
+    support_level="full",
+    partner_count_hint=102,
+    academic_score_minimum=80.0,
+    student_card_signals=(
+        "國立臺灣藝術大學",
+        "國立台灣藝術大學",
+        "臺藝大",
+        "台藝大",
+        "NATIONALTAIWANUNIVERSITYOFARTS",
+        "NATIONAL TAIWAN UNIVERSITY OF ARTS",
+        "NTUA",
+    ),
+    # https://www.ntua.edu.tw/ — checked 2026-11-01.
+    colleges=(
+        "美術學院",
+        "設計學院",
+        "傳播學院",
+        "表演藝術學院",
+        "人文學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA)
 DEFAULT_UNIVERSITY = CGU
 
 

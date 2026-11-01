@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="ntuaSky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="50%" stop-color="#312e81"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="ntuaGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+    <linearGradient id="ntuaBuilding" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#ntuaSky)"/>
+  <!-- Fuzhou Sky & Banqiao Hills -->
+  <circle cx="660" cy="95" r="46" fill="#fde68a" opacity="0.85"/>
+  <path d="M0 320 Q180 265 390 305 T800 285 L800 450 L0 450 Z" fill="#1e293b" opacity="0.65"/>
+  <path d="M0 355 Q260 315 520 345 T800 335 L800 450 L0 450 Z" fill="#0f172a" opacity="0.85"/>
+  <!-- NTUA Performing Arts Center & Museum of Fine Arts Silhouette -->
+  <g transform="translate(110, 155)">
+    <!-- Teaching & Research Building -->
+    <rect x="30" y="55" width="150" height="145" rx="4" fill="url(#ntuaBuilding)" opacity="0.92"/>
+    <rect x="45" y="75" width="25" height="18" fill="#312e81"/>
+    <rect x="85" y="75" width="25" height="18" fill="#312e81"/>
+    <rect x="125" y="75" width="25" height="18" fill="#312e81"/>
+    <rect x="45" y="105" width="25" height="18" fill="#312e81"/>
+    <rect x="85" y="105" width="25" height="18" fill="#312e81"/>
+    <rect x="125" y="105" width="25" height="18" fill="#312e81"/>
+    <!-- NTUA Performing Arts Hall (臺藝表演廳) -->
+    <polygon points="200,90 310,30 420,90" fill="url(#ntuaGold)"/>
+    <rect x="215" y="90" width="190" height="110" rx="4" fill="url(#ntuaBuilding)"/>
+    <rect x="240" y="115" width="30" height="85" fill="#4c1d95"/>
+    <rect x="295" y="115" width="30" height="85" fill="#4c1d95"/>
+    <rect x="350" y="115" width="30" height="85" fill="#4c1d95"/>
+    <!-- Museum of Contemporary Art / Sculpture Park -->
+    <rect x="435" y="70" width="145" height="130" rx="6" fill="url(#ntuaBuilding)" opacity="0.95"/>
+    <circle cx="508" cy="125" r="28" fill="none" stroke="#f59e0b" stroke-width="5"/>
+    <path d="M480 175 L536 175" stroke="#4c1d95" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <!-- Title Banner -->
+  <text x="400" y="405" font-family="sans-serif" font-size="22" font-weight="bold" fill="#f8fafc" text-anchor="middle" letter-spacing="2">國立臺灣藝術大學 National Taiwan University of Arts</text>
+  <text x="400" y="432" font-family="sans-serif" font-size="14" fill="#fde68a" text-anchor="middle" letter-spacing="1">追求卓越藝術・提昇專業學術・藝術與教育國際化｜板橋浮洲校園</text>
+</svg>
