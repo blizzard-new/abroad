@@ -20,6 +20,9 @@ def start(page, live_server, school, route):
     page.add_init_script(f"localStorage.setItem('exchange-guide-home-school', '{school}')")
     enter_public_site(page, live_server, route)
     page.wait_for_function("() => document.querySelector('#boot-splash') === null", timeout=60_000)
+    if route == "partners":
+        # The catalogue opens in map view; pagination belongs to the card view.
+        page.get_by_role("button", name="卡片", exact=True).click()
 
 
 def advisor_plan(page, school, **extra):

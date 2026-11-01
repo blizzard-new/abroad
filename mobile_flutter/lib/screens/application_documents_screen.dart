@@ -4,6 +4,7 @@ import 'package:printing/printing.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../core/student_ui.dart';
+import '../core/uniway_brand.dart';
 import '../data/models.dart';
 import '../state/exchange_store.dart';
 import 'ai_tools_screens.dart';
@@ -20,6 +21,13 @@ class ApplicationDocumentsScreen extends StatelessWidget {
     for (final template in store.applicationTemplates) {
       groups.putIfAbsent(template.stage, () => []).add(template);
     }
+    final total = store.applicationTemplates.length;
+    final completed = store.applicationFormReadyCount;
+    final nextTemplate = store.applicationTemplates
+        .where(
+          (template) => !store.applicationTemplateCompletion(template).ready,
+        )
+        .firstOrNull;
 
     return SafeArea(
       bottom: false,
@@ -32,39 +40,11 @@ class ApplicationDocumentsScreen extends StatelessWidget {
           children: [
             _ApplicationHeader(store: store),
             const SizedBox(height: 20),
-            GlassCard(
-              tint: ExchangeColors.blueSoft,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const StudentIconLabel(
-                    Icons.checklist_rounded,
-                    '一次準備，一步完成',
-                    color: ExchangeColors.blue,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    store.applicationTemplates.isEmpty
-                        ? '先設定你的申請目標'
-                        : '${store.applicationFormReadyCount} / ${store.applicationTemplates.length} 份文件已完成',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  if (store.applicationTemplates.isNotEmpty) ...[
-                    const SizedBox(height: 16),
-                    LinearProgressIndicator(
-                      value:
-                          (store.applicationFormReadyCount /
-                                  store.applicationTemplates.length)
-                              .clamp(0, 1),
-                      minHeight: 6,
-                      borderRadius: BorderRadius.circular(8),
-                      color: ExchangeColors.blue,
-                      backgroundColor: ExchangeColors.surface,
-                      semanticsLabel: '文件準備進度',
-                    ),
-                  ],
-                ],
-              ),
+            _PreparationOverview(
+              store: store,
+              total: total,
+              completed: completed,
+              next: nextTemplate,
             ),
             const SizedBox(height: 16),
             _ApplicationActions(store: store),
@@ -99,6 +79,157 @@ class ApplicationDocumentsScreen extends StatelessWidget {
               ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _PreparationOverview extends StatelessWidget {
+  const _PreparationOverview({
+    required this.store,
+    required this.total,
+    required this.completed,
+    this.next,
+  });
+  final ExchangeStore store;
+  final int total, completed;
+  final ApplicationDocumentTemplate? next;
+  @override
+  Widget build(BuildContext context) {
+    final progress = total == 0 ? 0.0 : (completed / total).clamp(0.0, 1.0);
+    return GlassCard(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const StudentIconLabel(
+            Icons.flight_takeoff_rounded,
+            '你的文件準備進度',
+            color: ExchangeColors.teal,
+          ),
+          const SizedBox(height: 20),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final content = Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (total > 0)
+                    Text(
+                      '${(progress * 100).round()}%',
+                      style: const TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.w600,
+                        height: 1.1,
+                        letterSpacing: -2,
+                        color: ExchangeColors.teal,
+                      ),
+                    ),
+                  const SizedBox(height: 8),
+                  Text(
+                    store.isApplicationDocumentsLoading && total == 0
+                        ? '正在載入文件'
+                        : store.applicationDocumentsError != null && total == 0
+                        ? '目前無法載入文件'
+                        : total == 0
+                        ? '從你的交換目標開始'
+                        : '離出發，又近了一步',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ],
+              );
+              if (constraints.maxWidth < 270 ||
+                  MediaQuery.textScalerOf(context).scale(16) >= 24) {
+                return content;
+              }
+              return Row(
+                children: [
+                  Expanded(child: content),
+                  const SizedBox(width: 16),
+                  const UniWayMascot(size: 84),
+                ],
+              );
+            },
+          ),
+          if (total > 0) ...[
+            const SizedBox(height: 24),
+            UniWayProgress(value: progress, label: '文件準備進度'),
+            const SizedBox(height: 12),
+            Text(
+              '$completed / $total 份文件必填欄位已完成',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: ExchangeColors.tealSoft,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    next == null
+                        ? Icons.verified_outlined
+                        : Icons.edit_note_rounded,
+                    color: ExchangeColors.teal,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          next == null ? '送件前，最後確認' : '接著準備',
+                          style: Theme.of(context).textTheme.labelMedium
+                              ?.copyWith(color: ExchangeColors.teal),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          next == null
+                              ? '必填欄位已完成，請核對官方要求。'
+                              : (next!.shortTitle.isNotEmpty
+                                    ? next!.shortTitle
+                                    : next!.title),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => next == null
+                      ? const DocumentCheckScreen()
+                      : ApplicationDocumentFormScreen(template: next!),
+                ),
+              ),
+              icon: const Icon(Icons.arrow_forward_rounded),
+              label: Text(next == null ? '檢查文件' : '繼續準備'),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              '個人準備進度，不代表校方已收件或錄取。',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ] else if (!store.isApplicationDocumentsLoading &&
+              store.applicationDocumentsError == null) ...[
+            const SizedBox(height: 20),
+            FilledButton.icon(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const ApplicationSetupScreen(),
+                ),
+              ),
+              icon: const Icon(Icons.add_rounded),
+              label: const Text('設定申請目標'),
+            ),
+          ],
+        ],
       ),
     );
   }
@@ -284,7 +415,7 @@ class _TemplateCard extends StatelessWidget {
         store.applicationSelections[template.id] ??
         ApplicationDocumentSelectionState.initial(template.defaultCopies);
     return GlassCard(
-      padding: const EdgeInsets.fromLTRB(14, 13, 10, 13),
+      padding: const EdgeInsets.fromLTRB(20, 20, 16, 20),
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => ApplicationDocumentFormScreen(template: template),

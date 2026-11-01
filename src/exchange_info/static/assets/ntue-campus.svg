@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="ntueSky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#172554"/>
+      <stop offset="55%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="ntueAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#fde047"/>
+    </linearGradient>
+    <linearGradient id="montueGlass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#ntueSky)"/>
+  <circle cx="665" cy="92" r="52" fill="#fbbf24" opacity="0.22"/>
+  <circle cx="665" cy="92" r="34" fill="#fde68a" opacity="0.38"/>
+  <!-- Global Exchange Arc (Heping East Road Campus to Partner Universities Worldwide) -->
+  <path d="M 75 312 Q 400 72 725 158" fill="none" stroke="url(#ntueAccent)" stroke-width="3" stroke-dasharray="8 6" opacity="0.88"/>
+  <polygon points="730,156 709,148 715,166" fill="#fde047"/>
+  <!-- NTUE Campus Architectural Silhouette: 國立臺北教育大學 — 行政大樓、篤行樓、至善樓與北教大美術館 TheMoNTUE -->
+  <rect x="0" y="365" width="800" height="85" fill="#0f172a"/>
+  <!-- Left Wing: 篤行樓 & 北教大美術館 (TheMoNTUE) Modern Facade -->
+  <rect x="85" y="218" width="145" height="147" rx="4" fill="#1e293b" stroke="#60a5fa" stroke-width="1.5" opacity="0.92"/>
+  <polygon points="85,218 158,188 230,218" fill="url(#montueGlass)" opacity="0.85"/>
+  <rect x="103" y="236" width="48" height="92" rx="2" fill="url(#montueGlass)" opacity="0.78"/>
+  <rect x="163" y="236" width="48" height="92" rx="2" fill="#dbeafe" opacity="0.72"/>
+  <!-- Center: 行政大樓 (Administration Building, A605 OIA) -->
+  <rect x="255" y="176" width="290" height="189" rx="6" fill="#1e3a8a" stroke="#bfdbfe" stroke-width="2"/>
+  <polygon points="240,176 400,122 560,176" fill="#d97706" opacity="0.92"/>
+  <!-- Right Wing: 至善樓 (Zhi-Shan Hall & International Lounge) -->
+  <rect x="570" y="226" width="145" height="139" rx="4" fill="#1e293b" stroke="#60a5fa" stroke-width="1.5" opacity="0.92"/>
+  <rect x="590" y="246" width="42" height="26" rx="2" fill="#dbeafe" opacity="0.8"/>
+  <rect x="648" y="246" width="42" height="26" rx="2" fill="#dbeafe" opacity="0.8"/>
+  <rect x="590" y="286" width="42" height="26" rx="2" fill="#dbeafe" opacity="0.8"/>
+  <rect x="648" y="286" width="42" height="26" rx="2" fill="#dbeafe" opacity="0.8"/>
+  <!-- Administration Building Windows & Entrance -->
+  <g fill="#dbeafe" opacity="0.88">
+    <rect x="285" y="205" width="38" height="24" rx="2"/>
+    <rect x="342" y="205" width="38" height="24" rx="2"/>
+    <rect x="420" y="205" width="38" height="24" rx="2"/>
+    <rect x="477" y="205" width="38" height="24" rx="2"/>
+    <rect x="285" y="246" width="38" height="24" rx="2"/>
+    <rect x="342" y="246" width="38" height="24" rx="2"/>
+    <rect x="420" y="246" width="38" height="24" rx="2"/>
+    <rect x="477" y="246" width="38" height="24" rx="2"/>
+    <rect x="368" y="301" width="64" height="64" rx="3" fill="#fbbf24"/>
+  </g>
+  <!-- Title Overlay -->
+  <text x="400" y="402" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="21" font-weight="700" letter-spacing="1.5">國立臺北教育大學 · National Taipei University of Education</text>
+  <text x="400" y="428" text-anchor="middle" fill="#93c5fd" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" letter-spacing="0.8">和平東路校區（行政大樓・篤行樓・至善樓・北教大美術館 TheMoNTUE）· Office of International Affairs</text>
+</svg>

@@ -4,6 +4,8 @@ from pathlib import Path
 import pytest
 from playwright.sync_api import expect
 
+from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
+
 from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import attach_session, sign_in_cookie
 
@@ -31,11 +33,20 @@ def test_search_aliases_and_keyboard_activation(page, live_server, width, query,
     expect(page.get_by_role("dialog", name="你目前就讀哪一所台灣大學？")).to_be_visible()
     expect(page.get_by_role("listbox", name="可選擇的大學")).to_be_visible()
     search.fill(query)
-    expect(page.locator("#school-options [role='option']")).to_have_count(1)
-    expect(page.locator("#school-options [role='option']")).to_contain_text(school)
+    options = page.locator("#school-options [role='option']")
+    target = page.locator(f'#school-options [data-home-school="{school}"]')
+    expect(target).to_be_visible()
+    if query == "Taipei":
+        # Several supported schools share this city name; keep them selectable.
+        for name in ("國立臺北教育大學", "國立臺北藝術大學"):
+            expect(page.locator(f'#school-options [data-home-school="{name}"]')).to_have_count(1)
+    else:
+        expect(options).to_have_count(1)
     original = page.locator("#school-switcher-label").inner_text()
-    search.press("ArrowDown")
-    expect(page.locator("#school-options [role='option']")).to_have_attribute("data-focused", "true")
+    names = options.evaluate_all("items => items.map(item => item.dataset.homeSchool)")
+    for _ in range(names.index(school) + 1):
+        search.press("ArrowDown")
+    expect(target).to_have_attribute("data-focused", "true")
     expect(page.locator("#school-switcher-label")).to_have_text(original)
     expect(search).to_be_focused()
     search.press("Enter")
@@ -87,12 +98,12 @@ def test_empty_results_can_be_cleared_and_reopening_resets_search(page, live_ser
     page.get_by_role("button", name="清除學校搜尋").click()
     expect(search).to_have_value("")
     expect(search).to_be_focused()
-    expect(page.locator("#school-options [role='option']")).to_have_count(6)
+    expect(page.locator("#school-options [role='option']")).to_have_count(len(SUPPORTED_UNIVERSITIES))
     search.fill("Taipei")
     page.get_by_role("button", name="關閉學校選擇").click()
     page.locator("#school-switcher").click()
     expect(page.get_by_role("searchbox")).to_have_value("")
-    expect(page.locator("#school-options [role='option']")).to_have_count(6)
+    expect(page.locator("#school-options [role='option']")).to_have_count(len(SUPPORTED_UNIVERSITIES))
 
 
 def test_mobile_touch_and_dark_theme_are_usable(browser, live_server):
@@ -161,7 +172,7 @@ def test_native_fallback_works_when_react_aria_cannot_load(page, live_server):
     enter_public_site(page, live_server)
     assert page.evaluate("typeof window.UniWaySchoolPicker") == "undefined"
     page.locator("#school-switcher").click()
-    page.locator("#school-search").fill("Taipei")
+    page.locator("#school-search").fill("NTPU")
     expect(page.locator("#school-options [data-home-school]")).to_have_count(1)
     page.locator(f'#school-options [data-home-school="{NTPU}"]').click()
     expect(page.locator("#school-switcher-label")).to_have_text(NTPU)

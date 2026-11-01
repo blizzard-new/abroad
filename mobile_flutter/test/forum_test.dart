@@ -89,6 +89,9 @@ void main() {
     await tester.pumpWidget(app(store, const ForumScreen()));
     await tester.pumpAndSettle();
     expect(find.text('公共討論'), findsOneWidget);
+    expect(find.text('申請'), findsOneWidget);
+    expect(find.text('1 則回覆'), findsOneWidget);
+    expect(find.text('查看討論 ›'), findsOneWidget);
     expect(
       tester
           .widget<FilledButton>(find.widgetWithText(FilledButton, '發起討論'))
@@ -131,8 +134,16 @@ void main() {
     expect(find.text('新的搜尋結果'), findsOneWidget);
     expect(find.text('過期結果'), findsNothing);
     await tester.ensureVisible(find.text('載入更多討論'));
+    await tester.drag(find.byType(ListView).first, const Offset(0, -180));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('載入更多討論'));
     await tester.pumpAndSettle();
+    expect(calls, 3);
+    await tester.scrollUntilVisible(
+      find.text('第二頁'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.text('第二頁'), findsOneWidget);
   });
   testWidgets(

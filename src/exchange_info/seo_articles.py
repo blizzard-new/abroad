@@ -164,7 +164,7 @@ def article_schema(article: Article, origin: str) -> dict:
             "mainEntityOfPage": origin + "/guides/" + article.slug,
             "image": {"@type": "ImageObject", "url": origin + article.image_path, "width": 1536, "height": 1024},
             "author": {"@type": "Organization", "name": "UniWay 編輯團隊", "url": origin + "/editorial-policy"},
-            "publisher": {"@type": "Organization", "name": "UniWay", "url": origin + "/"},
+            "publisher": {"@type": "Organization", "@id": origin + "/#organization", "name": "UniWay", "url": origin + "/"},
             "citation": [source.url for source in article.sources]}
 
 

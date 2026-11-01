@@ -16,7 +16,7 @@ dependencies = [
     "pillow>=10.4.0",
     "python-multipart>=0.0.9",
     "python-docx>=1.1.2",
-    "pypdf>=5.0.0",
+    "pypdf>=6.21.4",
     "pydantic>=2.7.0",
     "reportlab>=4.2.0",
     "requests>=2.32.0",
@@ -76,3 +76,7 @@ exchange_info = [
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+
+[tool.uv]
+# google-auth -> pyasn1-modules: require the ASN.1 parser security fixes.
+constraint-dependencies = ["pyasn1>=0.6.5"]

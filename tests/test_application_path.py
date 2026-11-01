@@ -116,6 +116,22 @@ def test_archive_keeps_data_and_blocks_accidental_writes(client):
     assert create(client, revision=2, target_school="合作學校乙").status_code == 201
 
 
+@pytest.mark.parametrize("origin,uncertain,confirmed", [
+    ("official", False, True), ("official", True, False), ("reference_year", False, False),
+])
+def test_only_confirmed_current_rules_can_drive_deadline_priority(origin, uncertain, confirmed):
+    evaluated = result()
+    task = evaluated.choices[0].checklist[0]
+    task.official_deadline_at = utc_now() + timedelta(days=3)
+    task.task_origin = origin
+    task.needs_confirmation = uncertain
+    catalog = ApplicationDocumentCatalog(context=ApplicationCenterContext(school_name=CONTEXT["home_school"]), contact_unit="國際處")
+    stages = build_levels(CONTEXT, evaluated, catalog)
+    item = next(l for s in stages for l in s['levels'] if l['id'] == task.id)
+    assert item['deadline_confirmed'] is confirmed
+    assert item['official_deadline_at'] == task.official_deadline_at.isoformat()
+
+
 def test_real_app_uses_existing_sessions_and_protects_internal_storage(tmp_path):
     account = UserAccount(display_name="隔離測試")
     token = "application-path-test-session"

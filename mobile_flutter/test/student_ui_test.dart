@@ -111,6 +111,69 @@ void main() {
     },
   );
   testWidgets(
+    'filter sheet previews, cancels, applies and resets real filters',
+    (tester) async {
+      final store = fixtureStore();
+      addTearDown(store.dispose);
+      store.favorites.add('日本測試校');
+      await tester.pumpWidget(app(store, const SchoolsScreen()));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const ValueKey('open-school-filters')));
+      await tester.pumpAndSettle();
+      final sheet = find.byKey(const ValueKey('school-filter-sheet'));
+      await tester.tap(
+        find.descendant(
+          of: sheet,
+          matching: find.widgetWithText(ChoiceChip, '德國'),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tapAt(const Offset(10, 10));
+      await tester.pumpAndSettle();
+      expect(find.text('顯示 2 間學校'), findsOneWidget);
+
+      await tester.tap(find.byKey(const ValueKey('open-school-filters')));
+      await tester.pumpAndSettle();
+      await tester.tap(
+        find.descendant(
+          of: sheet,
+          matching: find.widgetWithText(ChoiceChip, '日本'),
+        ),
+      );
+      await tester.tap(find.byType(SwitchListTile));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, '顯示 1 間學校'));
+      await tester.pumpAndSettle();
+      expect(find.text('日本測試校'), findsOneWidget);
+      expect(find.text('德國測試校'), findsNothing);
+
+      await tester.tap(find.byKey(const ValueKey('open-school-filters')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('重設'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(FilledButton, '顯示 2 間學校'));
+      await tester.pumpAndSettle();
+      expect(find.text('顯示 2 間學校'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+  testWidgets('school filter sheet remains usable with large text', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(320, 800));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final store = fixtureStore();
+    addTearDown(store.dispose);
+    await tester.pumpWidget(app(store, const SchoolsScreen(), scale: 2));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('open-school-filters')));
+    await tester.pumpAndSettle();
+    expect(find.text('篩選學校'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, '顯示 2 間學校'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+  testWidgets(
     'account university picker searches instead of rendering a chip wall',
     (tester) async {
       final store = fixtureStore()

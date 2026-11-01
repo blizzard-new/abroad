@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="tnuaSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#31102f"/>
+      <stop offset="52%" stop-color="#831843"/>
+      <stop offset="100%" stop-color="#fbcfe8"/>
+    </linearGradient>
+    <linearGradient id="tnuaBrick" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b91c1c"/>
+      <stop offset="100%" stop-color="#7f1d1d"/>
+    </linearGradient>
+    <linearGradient id="tnuaLawn" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#16a34a"/>
+      <stop offset="100%" stop-color="#14532d"/>
+    </linearGradient>
+  </defs>
+  <!-- Sky over Guandu / Tamsui River sunset -->
+  <rect width="800" height="450" fill="url(#tnuaSky)"/>
+  <!-- Sunset glow over Guandu Plain & Guanyinshan -->
+  <circle cx="640" cy="105" r="48" fill="#fde047" opacity="0.86"/>
+  <!-- Distant Guanyinshan & Datun mountain range silhouette -->
+  <path d="M0 305 Q175 215 355 275 T800 250 L800 350 L0 350 Z" fill="#f472b6" opacity="0.38"/>
+  <!-- Egret Lawn (鷺鷥草原) -->
+  <rect x="0" y="325" width="800" height="125" fill="url(#tnuaLawn)"/>
+  <!-- Terraced stone steps leading up to Concert Hall & Kuandu Museum of Fine Arts -->
+  <polygon points="315,450 485,450 435,325 365,325" fill="#e5e7eb" opacity="0.92"/>
+  <!-- Left & right red-brick wings (Kuandu Museum of Fine Arts / School of Music & Theatre) -->
+  <rect x="115" y="190" width="175" height="135" rx="4" fill="url(#tnuaBrick)"/>
+  <rect x="510" y="190" width="175" height="135" rx="4" fill="url(#tnuaBrick)"/>
+  <!-- Central TNUA Performing Arts / Administration Complex -->
+  <rect x="270" y="145" width="260" height="180" rx="4" fill="#991b1b"/>
+  <!-- Traditional curved artistic roof motif -->
+  <polygon points="250,145 400,82 550,145" fill="#450a0a"/>
+  <!-- Modernist colonnade & stage portal -->
+  <rect x="300" y="170" width="16" height="155" fill="#fef3c7"/>
+  <rect x="342" y="170" width="16" height="155" fill="#fef3c7"/>
+  <rect x="442" y="170" width="16" height="155" fill="#fef3c7"/>
+  <rect x="484" y="170" width="16" height="155" fill="#fef3c7"/>
+  <path d="M370 325 L370 248 A30 30 0 0 1 430 248 L430 325 Z" fill="#1e1b4b"/>
+  <!-- Artistic emblem on gable -->
+  <circle cx="400" cy="122" r="16" fill="#fef3c7" stroke="#450a0a" stroke-width="3"/>
+  <!-- Studio windows on wings -->
+  <g fill="#fce7f3" opacity="0.92">
+    <rect x="142" y="214" width="28" height="36" rx="2"/>
+    <rect x="188" y="214" width="28" height="36" rx="2"/>
+    <rect x="234" y="214" width="28" height="36" rx="2"/>
+    <rect x="142" y="268" width="28" height="36" rx="2"/>
+    <rect x="188" y="268" width="28" height="36" rx="2"/>
+    <rect x="234" y="268" width="28" height="36" rx="2"/>
+    <rect x="538" y="214" width="28" height="36" rx="2"/>
+    <rect x="584" y="214" width="28" height="36" rx="2"/>
+    <rect x="630" y="214" width="28" height="36" rx="2"/>
+    <rect x="538" y="268" width="28" height="36" rx="2"/>
+    <rect x="584" y="268" width="28" height="36" rx="2"/>
+    <rect x="630" y="268" width="28" height="36" rx="2"/>
+  </g>
+  <!-- Campus banyan trees -->
+  <circle cx="85" cy="298" r="38" fill="#166534"/>
+  <rect x="80" y="322" width="10" height="24" fill="#78350f"/>
+  <circle cx="715" cy="298" r="38" fill="#166534"/>
+  <rect x="710" y="322" width="10" height="24" fill="#78350f"/>
+  <!-- Title Banner -->
+  <rect x="24" y="24" width="465" height="62" rx="10" fill="#1e1b4b" opacity="0.78"/>
+  <text x="42" y="52" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="bold">國立臺北藝術大學 TNUA</text>
+  <text x="42" y="74" fill="#fbcfe8" font-family="sans-serif" font-size="13">Taipei National University of the Arts · 關渡校區鷺鷥草原與展演中心</text>
+</svg>

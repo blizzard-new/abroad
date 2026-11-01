@@ -147,12 +147,18 @@ class _RootShellState extends State<RootShell> {
         body: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 840),
-            child: IndexedStack(index: index, children: pages),
+            child: IndexedStack(
+              index: index,
+              children: [
+                for (var i = 0; i < pages.length; i++)
+                  TickerMode(enabled: i == index, child: pages[i]),
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: SafeArea(
           top: false,
-          minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          minimum: const EdgeInsets.fromLTRB(20, 0, 20, 12),
           child: LiquidControlSurface(
             radius: 30,
             child: Padding(
@@ -177,24 +183,44 @@ class _RootShellState extends State<RootShell> {
                             duration: Duration(
                               milliseconds: reduceEffects ? 0 : 180,
                             ),
-                            constraints: const BoxConstraints(minHeight: 52),
+                            constraints: const BoxConstraints(minHeight: 60),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
                               color: i == index
-                                  ? ExchangeColors.teal.withValues(alpha: .17)
-                                  : Colors.transparent,
-                              border: Border.all(
-                                color: i == index
-                                    ? ExchangeColors.teal.withValues(alpha: .38)
-                                    : Colors.transparent,
-                              ),
-                            ),
-                            child: Icon(
-                              icons[i],
-                              size: 26,
-                              color: i == index
                                   ? ExchangeColors.teal
-                                  : ExchangeColors.secondaryInk,
+                                  : Colors.transparent,
+                            ),
+                            child: ExcludeSemantics(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    icons[i],
+                                    size: 23,
+                                    color: i == index
+                                        ? Colors.white
+                                        : ExchangeColors.secondaryInk,
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    labels[i],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      height: 1.2,
+                                      fontWeight: i == index
+                                          ? FontWeight.w700
+                                          : FontWeight.w500,
+                                      color: i == index
+                                          ? Colors.white
+                                          : ExchangeColors.secondaryInk,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
