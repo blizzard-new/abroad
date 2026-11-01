@@ -805,6 +805,7 @@ def create_maintenance_router(
             <option value="nfu">國立虎尾科技大學（共 152 所姊妹校）</option>
             <option value="utaipei">臺北市立大學（共 226 所姊妹校）</option>
             <option value="ntue">國立臺北教育大學（共 143 所姊妹校）</option>
+            <option value="npust">國立屏東科技大學（共 309 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -924,7 +925,8 @@ def create_maintenance_router(
     tnua: "國立臺北藝術大學 (TNUA)",
     ntua: "國立臺灣藝術大學 (NTUA)",
     ntue: "國立臺北教育大學 (NTUE)",
-    ncut: "國立勤益科技大學 (NCUT)"
+    ncut: "國立勤益科技大學 (NCUT)",
+    npust: "國立屏東科技大學 (NPUST)"
   };
 
   const FIELD_LABELS = {
