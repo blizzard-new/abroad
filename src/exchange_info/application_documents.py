@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCYU, NDHU, NFU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCYU, NDHU, NFU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -110,6 +110,9 @@ UTAIPEI_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 NTCU_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 TNUA_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 NTUA_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
+
+
+NTUE_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2816,6 +2819,59 @@ def _ntua_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ntue_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺北教育大學（研發處國際事務組 OIA，行政大樓 5 樓 A511 室）赴海外姊妹校交換生甄選、雙聯學位暨教育部學海飛颺／惜珠計畫應繳申請表件：1. 報名表（附件一，貼妥 2 吋照片，填明報考組別［英文組／日文組／韓文組／越文組／法文組／德文組／中文組，每人限擇一組］及志願序，經系所主管核章）、2. 在學證明或學生證正反面影本、3. 歷年成績單正本（需有班級排名，歷年在校成績總平均須達 75 分［含］以上或 GPA 3.0 以上；申請學海惜珠須班級排名前 50%）、4. 自傳及交換學習計畫書（附件二，含自我介紹、報考動機、交換學習計畫及預期效益，建議約 1,000–2,000 字）、5. 語言能力證明影本（英文組 CEFR B1：TOEFL iBT 42–71 / IELTS 4.0–5.5 / TOEIC 550–750；日文組 JLPT N3 以上；韓文組 TOPIK 檢定證書；法文組 DELF B1–B2；德文組 TestDaF TDN3 / B1–B2；越文組 IVPT；中文組免附外語檢定）、6. 家長／監護人同意書（附件三）、7. 其他有利審查資料（如社團參與、國際接待志工證明、競賽獲獎、作品集；申請學海惜珠另附新式戶口名簿影本、低收／中低收入戶證明及 1,000–1,500 字赴國外研修計畫書），並至出納組繳交報名費 NT$500。",
+        "study-plan": "撰寫國立臺北教育大學赴海外姊妹校交換生甄選（附件二）、雙聯學位及教育部學海飛颺／惜珠計畫必繳之《自傳及交換學習計畫書》（學海惜珠另須撰寫 1,000–1,500 字《赴國外研修計畫書》，含個人自傳、交換理由及目標、預計修習課程及返國後展望）。請具體說明申請動機、擬於志願姊妹校修讀之課程規劃（依《國立臺北教育大學學生出國選修課程實施要點》，交換期間每學期至少應選修 2 門課或 6 學分，且不得超過畢業學分 1/3）、與國北教大課程抵免對應規劃，以及海外生活適應與返國後學習發展規劃。",
+        "course-preapproval": "辦理赴海外姊妹校交換或雙聯學位計畫（日本兵庫教育大學碩士班雙聯學位、法國社會科學高等學院 EHESS 博士雙聯學位）之選課與學分抵免預先規劃（依《國立臺北教育大學學生出國選修課程實施要點》及《學生赴境外大學修讀雙聯學位實施要點》，出國選課前應填寫選課單經系所主管核准；交換期間須於國北教大完成註冊選課並繳交全額學雜費保留學籍，每學期至少修習 2 門課或 6 學分，返國後 2 個月內檢附正式成績單與課程大綱向系所及教務處申請學分採認抵免）。",
+        "predeparture-notice": "經筆試（40%）及面試（60%，總成績須達 60 分以上）錄取公告後，須於規定期限內確認交換期間（如欲更改交換期間或放棄錄取資格，須於簡章規定期限內填妥申請書向國際事務組提出，逾期不得任意放棄），配合國際事務組辦理姊妹校官方提名（Nomination）與外校入學申請；出國前須參加行前說明會、簽署切結書及獎助學金契約、辦理簽證、役男出境緩徵並投保海外全期醫療及意外保險。",
+        "return-report": "海外交換或雙聯研修期滿返國後規定期限內，須依簡章及獎助要點向研發處國際事務組繳交《出國交換學生心得報告》（含交換學校研修與生活照片，供收錄於國北教大 OIA「NTUE薦外交換心得」雲端專區與教育部學海計畫資訊網），並配合國際事務組出席出國交換系列說明會分享經驗，始得辦理教育部學海飛颺／惜珠或校內國際交流獎助學金（及芝山博愛獎助學金）核銷。",
+        "credit-transfer": "海外交換或雙聯研修期滿返國後 2 個月內，須依《國立臺北教育大學學生出國選修課程實施要點》及《學生抵免學分辦法》檢附境外合作大學核發之正式成績單正本及修習課程大綱（Syllabus），經所屬學系（所）審核通過後送教務處註冊與課務組登錄採認學分。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺北教育大學").replace("長庚", "國北教大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "國北教大交換簡章規定：申請人歷年在校成績總平均分數須達 75 分（含）以上或 GPA 3.0 以上，且檢附之歷年成績單正本「需有班級排名」；申請教育部《學海惜珠》補助者，學業成績須為班級排名前 50% 或歷年平均達 75 分以上。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "英文組：TOEFL iBT（CEFR B1 參考標準 42–71 分；部分歐美及新加坡姊妹校要求 79–90 分以上）",
+                "英文組：IELTS 雅思（CEFR B1 參考標準 4.0–5.5；部分歐美姊妹校要求 6.0–6.5 以上）",
+                "英文組：TOEIC 多益（CEFR B1 參考標準 550–750 分；部分日韓泰越姊妹校採認）",
+                "日文組：JLPT 日語能力試驗（須具 N3［含］以上合格證書；部分日本姊妹校要求 N2/N1，常磐大學秋季班採認 N5）",
+                "韓文組：TOPIK 韓國語文能力測驗（須具 TOPIK 檢定證書，多數韓國姊妹校要求 2–3 級以上）",
+                "法文組／德文組／越文組（法檢 DELF B1–B2、德檢 TestDaF TDN3 / B1–B2、越檢 IVPT A/B 級；德瑞奧 9 校標註▲者與英文組共用名額）",
+                "中文組：中國大陸姊妹校交換（免附外語檢定，參加中文組筆試 40%＋面試 60%）",
+            ]
+            field["help_text"] = "依國立臺北教育大學《赴海外姊妹校交換生甄選簡章》及《應具語言能力參考標準》填報有效語言能力證明；每人限擇一語組報考。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.ntue.edu.tw/p/406-1066-48777,r1703.php?Lang=zh-tw",
+        source_checked_at=NTUE_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="赴海外姊妹校交換生甄選報名表（含自傳及交換學習計畫書、家長同意書）" if template.id == "exchange-application-data" else ("自傳及交換學習計畫書" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.ntue.edu.tw/var/file/66/1066/img/1531/501134263.docx",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長（或監護人）親筆簽名蓋章", "系（所）主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）辦公室核章", "出納組繳費收據核章（報名費 NT$500）"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "獲錄取公告後依限確認交換期間、配合國際事務組辦理姊妹校提名與入學申請並簽署切結書", "return-report": "返國後依限繳交出國交換心得報告（收錄於NTUE薦外交換心得專區）並出席說明會辦理獎助學金核銷", "credit-transfer": "返國後 2 個月內檢附正式成績單與課程大綱向系所及教務處辦理學分採認抵免"}.get(template.id, "備齊報名表、在學證明、歷年含班排成績單正本、自傳及交換學習計畫書、語檢證明、家長同意書及 NT$500 報名費收據，送交行政大樓 5 樓 A511 室研發處國際事務組"),
+        version="115準備工具-2026-10-31.1",
+        destinations=["國立臺北教育大學研究發展處國際事務組（106320 臺北市大安區和平東路二段 134 號 行政大樓 5 樓 A511 室）"],
+        conditional_note="此為個人準備工具；國立臺北教育大學每年 11 月公告交換生甄選簡章、12 月收件、隔年 1 月初辦理筆試（40%）及面試（60%）、2 月底前放榜（一次甄選同時選送隔學年第 1 學期秋季班及第 2 學期春季班交換生）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2914,6 +2970,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _tnua_template(template)) is not None]
     if university.id == NTUA.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntua_template(template)) is not None]
+    if university.id == NTUE.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntue_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

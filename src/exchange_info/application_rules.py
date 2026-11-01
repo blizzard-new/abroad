@@ -49,6 +49,7 @@ from .utaipei_eligibility import is_utaipei, utaipei_academic_check, utaipei_deg
 from .ntcu_eligibility import is_ntcu, ntcu_academic_check, ntcu_degree_check, ntcu_language_check
 from .tnua_eligibility import is_tnua, tnua_academic_check, tnua_degree_check, tnua_language_check
 from .ntua_eligibility import is_ntua, ntua_academic_check, ntua_degree_check, ntua_language_check
+from .ntue_eligibility import is_ntue, ntue_academic_check, ntue_degree_check, ntue_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -757,6 +758,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_ntue(request.home_school):
+        deg_status, deg_detail = ntue_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -1060,6 +1066,12 @@ def _eligibility_checks(
             "academic_score", status, "臺藝大交換學生甄選要點（歷年學業平均80分以上或班／系排名前70%、操行85分以上，在校成績占45%–55%）", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_ntue(request.home_school):
+        status, detail = ntue_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "國北教大交換生甄選規定（歷年在校成績總平均75分／GPA 3.0以上、學海惜珠班排前50%、筆試40%＋面試60%總成績60分及格）", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1229,6 +1241,9 @@ def _eligibility_checks(
     if is_ntua(request.home_school):
         home_status, home_detail = ntua_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "臺藝大出國交換語言能力標準（CEFR對照表：TOEFL iBT／IELTS／TOEIC／JLPT／TOPIK／DELF／TestDaF，占審查25%）與免語檢學校配分規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_ntue(request.home_school):
+        home_status, home_detail = ntue_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "國北教大七大語組語檢標準（英語CEFR B1：TOEFL iBT 42–71／IELTS 4.0–5.5／TOEIC 550–750；日文組JLPT N3；韓文組TOPIK；法文組DELF B1–B2；德文組TDN3／B1–B2；越文組IVPT）與中文組規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

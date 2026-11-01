@@ -75,6 +75,16 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "ntcu": ["oia.ntcu.edu.tw", "secretary.ntcu.edu.tw", "www.ntcu.edu.tw", "ntcu.edu.tw"],
     "tnua": ["oia.tnua.edu.tw", "w3.tnua.edu.tw", "www.tnua.edu.tw", "tnua.edu.tw"],
     "ntua": ["international.ntua.edu.tw", "eportal.ntua.edu.tw", "www.ntua.edu.tw", "ntua.edu.tw"],
+    "ntue": [
+        "oia.ntue.edu.tw",
+        "orad.ntue.edu.tw",
+        "instu.ntue.edu.tw",
+        "ntueinfoir.ntue.edu.tw",
+        "partnerinstitutions.ntue.edu.tw",
+        "exchange.ntue.edu.tw",
+        "www.ntue.edu.tw",
+        "ntue.edu.tw",
+    ],
 }
 
 
@@ -1563,6 +1573,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["ntua"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="ntua", partner_rows=ntua_rows, default_cycle_label="116"
+        )
+
+    # 45. NTUE partners.jsonl (143 partner schools)
+    ntue_partners_path = official_data_root / "ntue" / "partners.jsonl"
+    if ntue_partners_path.exists():
+        ntue_rows = []
+        for line in ntue_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            ntue_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://oia.ntue.edu.tw/p/412-1066-2258.php?Lang=zh-tw",
+            })
+        school_reports["ntue"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="ntue", partner_rows=ntue_rows, default_cycle_label="115"
         )
 
     if store.current_release_id is None:
