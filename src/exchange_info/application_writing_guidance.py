@@ -952,6 +952,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="東海規定返國後一個月內須繳交返國交換學生研修心得報告書（含照片），始得辦理保證金新臺幣 10,000 元退還與獎補助核銷；這裡只合計下方各欄。",
     ),
+    ("npust", "study-plan"): _rules(
+        (
+            "出國學習計畫書與自傳為國立屏東科技大學學生赴國外姊妹校交換與研習、跨國雙聯學位制及教育部學海飛颺／惜珠甄選應備書審表件（書面審查佔甄選總成績 30%、面試佔 70%），建議以中、外文撰寫約 1,000–2,500 字。",
+            "內容應具體說明申請動機、個人學業與語言準備（歷年平均 70 分以上或班排前 50%、操行 80 分以上及外語檢定證明）、擬於志願姊妹校修讀之專業課程規劃、學分抵免安排及返國後學術與職涯發展規劃。",
+        ),
+        evidence="國立屏東科技大學交換學生出國計畫實施要點、辦理雙聯學制實施要點及教育部學海飛颺計畫甄選辦法",
+        minimum=1000,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="屏科大交換甄選（書審 30%＋面試 70%）建議中、外文出國學習計畫書與自傳約 1,000–2,500 字，清楚呈現修課與語言準備；這裡只合計下方各欄。",
+    ),
+    ("npust", "return-report"): _rules(
+        (
+            "所有屏科大赴國外姊妹校交換、跨國雙聯及海外研習學生須於返國後一個月內向國際事務處繳交《赴外交換研習心得報告書》（含研習與生活照片），並配合出席國際事務處舉辦之《學生赴外交換研習經驗分享會》。",
+            "獲教育部學海飛颺、學海惜珠、學海築夢／新南向學海築夢或校內《學生赴海外研習獎補助》者，須於返國後規定限期內完成成果報告上傳，並檢附國外姊妹校正式成績單、護照出入境紀錄及登機證／電子機票收據辦理經費核銷。",
+        ),
+        evidence="國立屏東科技大學交換學生出國計畫實施要點、學生赴海外研習獎補助要點及教育部學海系列計畫甄選辦法",
+        minimum=1500,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="屏科大規定返國後一個月內須繳交赴外交換研習心得報告書（含照片）並配合經驗分享會，始得辦理獎補助核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -991,6 +1013,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "ncnu": ("https://oia.ncnu.edu.tw/p/412-1017-269.php?Lang=zh-tw", "2026-10-27"),
     "ndhu": ("https://ias.ndhu.edu.tw/p/412-1006-21048.php?Lang=zh-tw", "2026-10-28"),
     "thu": ("https://oir.thu.edu.tw/front/301_ex_overview/302_Out_EX_Prog/302_1_Qualifica?lang=tw", "2026-10-28"),
+    "npust": ("https://oia2.npust.edu.tw/zh/cooperation/%e4%ba%a4%e6%8f%9b%e5%ad%b8%e7%94%9f-2/", "2026-10-31"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

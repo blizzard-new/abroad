@@ -1305,8 +1305,46 @@ THU = UniversityProfile(
     ),
 )
 
+NPUST = UniversityProfile(
+    id="npust",
+    school_name="國立屏東科技大學",
+    short_name="屏科大",
+    english_name="National Pingtung University of Science and Technology",
+    aliases=(
+        "npust",
+        "國立屏東科技大學",
+        "屏東科技大學",
+        "屏科大",
+        "屏東科大",
+        "NPUST",
+        "National Pingtung University of Science and Technology",
+    ),
+    hero_image="/static/assets/npust-campus.svg",
+    official_url="https://oia2.npust.edu.tw/go-abroad/",
+    coverage_note="完整支援：已整合國立屏東科技大學國際事務處（OIA）《本國生出國專區》、《學生赴國外姊妹校交換與研習申請審查作業要點（114.12.18修正）》、《出國雙聯學位制名冊》、《國外姊妹校及大陸港澳合作學校一覽表》及教務處《辦理跨國雙聯學位制實施辦法（114.12.01修正）》官方資料：（1）校內甄選時程與資格：每學期初受理次學期赴外交換申請（秋季班每年 3 月底前送國際處、春季班每年 9 月底前送國際處），限大二（含）以上或碩博班在學學生（不含在職專班），操行成績平均 80 分以上、歷年學業成績平均 70 分以上或班排名前 50%，並具備相當全民英檢中級初試、TOEIC 550、TOEFL iBT 42、IELTS 4.0、JLPT N2 或姊妹校指定語檢門檻；審查採書面審查 30%（自傳、出國學習計畫、成績單及英外語證明）與面試 70%（含英外語能力、學習規劃及溝通反應）。（2）合作姊妹校與雙聯學位：完整收錄 309 所全球及兩岸港澳合作大學（橫跨 49 國與地區，含 30 所當期開放申請之出國交換與跨國雙聯學位姊妹校［日、韓、德、法、捷克、義、西、泰、馬、印尼、越、陸及美加英澳雙聯校］及 279 所簽署學術合作 MOU 之姊妹校）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／惜珠／築夢／新南向學海築夢》、《校內學生出國交換與研習獎助學金》（亞洲最高 NT$35,000、歐美澳非最高 NT$70,000）及 32 所合作大學共 37 篇歷屆學長姐赴外交換與實習心得報告。",
+    support_level="full",
+    partner_count_hint=309,
+    academic_score_minimum=70,
+    student_card_signals=(
+        "國立屏東科技大學",
+        "屏東科技大學",
+        "NATIONALPINGTUNGUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "NPUST",
+    ),
+    # https://www.npust.edu.tw/ — checked 2026-10-31.
+    colleges=(
+        "農學院",
+        "工學院",
+        "管理學院",
+        "人文暨社會科學院",
+        "國際學院",
+        "獸醫學院",
+        "達人學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, NPUST)
 DEFAULT_UNIVERSITY = CGU
 
 

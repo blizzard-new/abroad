@@ -59,6 +59,7 @@ SCHOOL_EMAIL_DOMAINS: dict[str, tuple[str, ...]] = {
     "ncnu": ("ncnu.edu.tw", "mail.ncnu.edu.tw", "smail.ncnu.edu.tw"),
     "ndhu": ("ndhu.edu.tw", "gms.ndhu.edu.tw", "mail.ndhu.edu.tw"),
     "thu": ("thu.edu.tw", "go.thu.edu.tw", "mail.thu.edu.tw"),
+    "npust": ("npust.edu.tw", "mail.npust.edu.tw", "g4e.npust.edu.tw"),
 }
 
 SchoolBasis = Literal["student_verified", "school_email", "self_declared"]

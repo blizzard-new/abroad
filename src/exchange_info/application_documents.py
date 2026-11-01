@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NDHU, NKNU, NKUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, THU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NDHU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUST, NTUT, NCU, NYCU, PCCU, SCU, THU, TMU, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -99,6 +99,7 @@ NTUB_SOURCE_CHECKED_AT = datetime(2026, 10, 22, tzinfo=timezone.utc)
 NCNU_SOURCE_CHECKED_AT = datetime(2026, 10, 27, tzinfo=timezone.utc)
 NDHU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
 THU_SOURCE_CHECKED_AT = datetime(2026, 10, 28, tzinfo=timezone.utc)
+NPUST_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2310,6 +2311,51 @@ def _thu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _npust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立屏東科技大學學生赴國外姊妹校交換與研習、跨國雙聯學位制暨教育部學海飛颺／惜珠與校內海外研習獎補助應繳資料：1. 交換學生出國計畫申請表及家長同意書（須經導師、系所主管及院長簽章，秋季班每年 3 月底前、春季班每年 9 月底前送交國際事務處）、2. 歷年中英文成績單正本（含歷年學業總平均與班級排名百分比，大學部須二年級以上、歷年學業平均達 70 分以上或班排名前 50%、操行成績平均達 80 分以上；學海飛颺申請者班排名須前 30%）、3. 有效外語能力檢定證明（全民英檢中級初試、TOEIC 550、TOEFL iBT 42、IELTS 4.5、JLPT N2 或 TOPIK 2 級以上，或符合志願姊妹校規定之語言能力門檻）、4. 中外文自傳、出國學習計畫書（含擬修讀課程對照）及專題研究／獲獎優秀事蹟證明（甄選採書面審查 30%＋面試 70%）。",
+        "study-plan": "撰寫國立屏東科技大學學生赴國外姊妹校交換、跨國雙聯學位及教育部學海飛颺／惜珠獎補助必繳之《中、外文出國學習計畫書與自傳》（建議約 1,000–2,500 字）。請具體說明赴外研修動機、擬於志願姊妹校修讀之專業課程與學分規劃（依《學生出國期間有關學業及學籍處理辦法》維持屏科大在學學籍）、個人語言準備與專業優勢，以及返國後學分抵免與職涯發展規劃。",
+        "course-preapproval": "辦理赴國外姊妹校修讀交換課程或跨國雙聯學位之選課預審與教務核備（依《國立屏東科技大學學生出國期間有關學業及學籍處理辦法》及《辦理雙聯學制實施要點》規定，交換期間須辦理屏科大註冊並繳交學雜費，跨國雙聯學制學士班累計修業至少 32 個月、碩士班至少 12 個月、博士班至少 24 個月）。",
+        "predeparture-notice": "經國際事務處初審與面試（書面 30%＋面試 70%）錄取推薦並獲國外姊妹校入學許可（Admission Letter）後，配合國際事務處完成出國交換確認、簽證申辦、役男出境核准、海外醫療及意外保險投保，並依《學生出國期間有關學業及學籍處理辦法》完成出國選課及註冊手續。",
+        "return-report": "國外交換或跨國雙聯研修期滿返國後 1 個月內，須依《交換學生出國計畫實施要點》、《學生赴海外研習獎補助要點》及教育部學海計畫規定向國際事務處繳交 1,500–3,000 字以上之《赴外交換研習心得報告書》（含研習與生活照片，並配合參加學生赴外交換研習經驗分享會）、國外姊妹校正式成績單、護照出入境紀錄及登機證正本，辦理獎補助經費核銷。",
+        "credit-transfer": "國外交換或跨國雙聯研修期滿返國後持國外姊妹校核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《國立屏東科技大學學生出國期間有關學業及學籍處理辦法》及《辦理雙聯學制實施要點》向所屬系（所）、學院及教務處註冊組申請境外修習科目學分採認抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立屏東科技大學").replace("長庚", "屏科大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "屏科大《交換學生出國計畫實施要點》規定：歷年學業成績總平均達 70 分以上或班排名前 50%，且操行平均 80 分以上（申請教育部學海飛颺者須班排名前 30%）。請檢附歷年中英文成績單正本（含班級排名）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 多益測驗（校內獎助參考 550+／姊妹校基本門檻 350–785+）", "TOEFL iBT 托福測驗（42+／學海與歐美雙聯建議 61–79+）", "IELTS 雅思學術組（4.5+／雙聯與歐美姊妹校建議 5.5–6.5+）", "GEPT 全民英檢（中級初試／複試合格以上）", "JLPT 日語能力試驗（N2 以上／部分日本姊妹校 N1–N3）", "TOPIK 韓語能力測驗（2 級以上）"]
+            field["help_text"] = "依屏科大《交換學生出國計畫實施要點》與《學生參與外語能力檢定獎勵辦法》：申請人須具備志願姊妹校規定之語言檢定成績（英語組建議達全民英檢中級、TOEIC 550、TOEFL iBT 42 或 IELTS 4.5 以上；日語組建議 JLPT N2 以上）。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia2.npust.edu.tw/zh/cooperation/%e4%ba%a4%e6%8f%9b%e5%ad%b8%e7%94%9f-2/",
+        source_checked_at=NPUST_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="交換學生出國計畫申請表與家長同意書" if template.id == "exchange-application-data" else ("出國學習計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia2.npust.edu.tw/wp-content/uploads/2025/05/04.%E5%9C%8B%E7%AB%8B%E5%B1%8F%E6%9D%B1%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8%E4%BA%A4%E6%8F%9B%E5%AD%B8%E7%94%9F%E5%87%BA%E5%9C%8B%E8%A8%88%E7%95%AB%E5%AF%A6%E6%96%BD%E8%A6%81%E9%BB%9E_1140410.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師及系所主管簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "獲姊妹校入學許可後辦理簽證、役男出境、保險及出國選課學籍手續", "return-report": "返國後 1 個月內繳交赴外交換研習心得報告書、成績單與出入境證明辦理核銷", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱向系所及教務處辦理境外學分抵免"}.get(template.id, "備齊核章紙本申請表、家長同意書、中英文成績單（含排名）、外語檢定證明及中英自傳／學習計畫書送交國際事務處（書審 30%＋面試 70%）"),
+        version="116準備工具-2026-10-31.1",
+        destinations=["國立屏東科技大學國際事務處（屏東縣內埔鄉老埤村學府路 1 號行政大樓 3 樓）"],
+        conditional_note="此為個人準備工具；國立屏東科技大學赴國外姊妹校交換甄選每學期辦理一次（秋季班約 3 月底截止、春季班約 9 月底截止），申請人須為大二以上或碩博在學學生（歷年平均 70 分以上或班排前 50%、操行 80 分以上），經書面審查（30%）與面試（70%）擇優推薦。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -2386,6 +2432,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ndhu_template(template)) is not None]
     if university.id == THU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _thu_template(template)) is not None]
+    if university.id == NPUST.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _npust_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

@@ -796,6 +796,7 @@ def create_maintenance_router(
             <option value="ncnu">國立暨南國際大學（共 212 所姊妹校）</option>
             <option value="ndhu">國立東華大學（共 163 所姊妹校）</option>
             <option value="thu">東海大學（共 274 所姊妹校）</option>
+            <option value="npust">國立屏東科技大學（共 309 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -902,7 +903,8 @@ def create_maintenance_router(
     ntub: "國立臺北商業大學 (NTUB)",
     ncnu: "國立暨南國際大學 (NCNU)",
     ndhu: "國立東華大學 (NDHU)",
-    thu: "東海大學 (THU)"
+    thu: "東海大學 (THU)",
+    npust: "國立屏東科技大學 (NPUST)"
   };
 
   const FIELD_LABELS = {
