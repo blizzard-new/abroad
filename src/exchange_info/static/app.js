@@ -285,7 +285,7 @@ const UNIVERSITY_PAGE_TITLES = {
   guide: "申請指南",
   profile: "個人中心",
   feedback: "用戶評價",
-  overview: "我的申請",
+  overview: "準備與時程",
   advisor: "選校規劃",
   partners: "找交換學校",
   favorites: "收藏與比較",
@@ -3635,7 +3635,7 @@ async function acceptAccountSession(session) {
   return hydrationResults.filter((result) => result.status === "rejected").length;
 }
 
-function clearAuthenticatedClientState() {
+function clearAuthenticatedClientState({ preservePathDrafts = false } = {}) {
   if (state.account?.id) clearDiscoveryAccountData(state.account.id);
   window.UniWayCommunity?.clearAuthenticatedState(state.account?.id || "");
   state.workflowIssueReportAbortController?.abort();
@@ -3647,7 +3647,8 @@ function clearAuthenticatedClientState() {
   state.authSessionEpoch += 1;
   state.account = null;
   state.authRestoreState = "anonymous";
-  window.UniWayApplicationPath?.clear();
+  window.UniWayApplicationPath?.clear({ preserveDrafts: preservePathDrafts });
+  window.UniWayPlanIndex?.clear();
   clearProtectedCatalog();
   state.quarantinedAccountOwnerId = "";
   state.guestComparisons.clear();
@@ -3725,9 +3726,11 @@ async function reloadPublicCatalog() {
 
 function handleExpiredAccountSession() {
   if (!state.account) return;
-  clearAuthenticatedClientState();
+  clearAuthenticatedClientState({ preservePathDrafts: true });
   openAuthDialog("login");
-  announce("登入已過期；已清除這台裝置上的私人資料，請重新登入。", "info", true);
+  announce(window.UniWayApplicationPath?.hasRecoverableDrafts()
+    ? "登入已過期。請在 15 分鐘內用原帳號重新登入，續接此分頁的申請草稿。"
+    : "登入已過期，請重新登入。已儲存的進度會保留。", "info", true);
   void Promise.allSettled([
     loadCommunityBoards(),
     loadProductEntitlements(),
@@ -9428,6 +9431,10 @@ function updateDetailApplicationButton() {
       : state.account ? "加入我的志願" : "登入建立計畫";
   const icon = added ? "bookmark-check" : blocked ? "badge-alert" : state.account ? "bookmark" : "log-in";
   button.innerHTML = `<i data-lucide="${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span>`;
+  let prepare = $("#detail-prepare-plan-button");
+  if (!prepare) { prepare = document.createElement("button"); prepare.id = "detail-prepare-plan-button"; prepare.type = "button"; prepare.className = "primary-button"; button.after(prepare); }
+  prepare.hidden = !state.account || blocked; prepare.textContent = "開始準備";
+  prepare.onclick = () => window.UniWayApplicationPath?.startTarget(state.activeSchool);
   initIcons();
   window.UniWayDetail?.render();
 }
@@ -14441,7 +14448,9 @@ function bindEvents() {
     }
     const version = consent?.dataset.termsVersion || "";
     rememberAcceptedTerms(version);
-    window.location.href = `/auth/oauth/${encodeURIComponent(button.dataset.oauthProvider)}/start?terms=${encodeURIComponent(version)}`;
+    const url = `/auth/oauth/${encodeURIComponent(button.dataset.oauthProvider)}/start?terms=${encodeURIComponent(version)}`;
+    if (window.UniWayApplicationPath?.resumeOAuth(url)) return;
+    window.location.href = url;
   }));
   $("#terms-consent")?.addEventListener("change", (event) => {
     if (event.currentTarget.checked) $("#terms-consent-hint").hidden = true;
