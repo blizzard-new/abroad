@@ -31,7 +31,7 @@ SLIDES = [
 def designed() -> VisualPlan:
     return VisualPlan(
         outline=["總預算", "機票與保險", "語言檢定", "生活費", "收藏"],
-        spec=VisualSpec(margin=64, title_size=80, body_size=40, line_height=1.55, accent="teal", emphasis="chip", page_number="foot"),
+        spec=VisualSpec(margin=64, title_size=150, body_size=40, line_height=1.55, accent="teal", emphasis="chip", page_number="foot"),
         slides=[
             VisualSlide(layout="cover", title_lines=["交換一學期要準備多少錢？", "先抓這三筆"], emphasis=["三筆"]),
             VisualSlide(layout="steps", title_lines=["出發前先抓", "機票與保險"], emphasis=["機票", "保險"], items=["機票看淡旺季，越早訂越便宜", "保險要含海外醫療", "簽證費依國家另計"]),
@@ -58,7 +58,7 @@ def test_the_plan_can_move_the_layout_but_never_change_a_word():
                 VisualSlide(layout="steps", items=["x", "y"])],  # a closing page stays a closing page
     )
     fixed, notes = visual.normalize(wrong, SLIDES)
-    assert (fixed.spec.margin, fixed.spec.title_size, fixed.spec.body_size, fixed.spec.line_height) == (100, 72, 44, 1.6)
+    assert (fixed.spec.margin, fixed.spec.title_size, fixed.spec.body_size, fixed.spec.line_height) == (100, 96, 44, 1.6)
     assert fixed.slides[0].layout == "cover" and fixed.slides[0].title_lines == [SLIDES[0].title]
     steps = fixed.slides[1]
     assert steps.layout == "steps" and steps.items == ["機票看淡旺季，越早訂越便宜", "保險要含海外醫療", "簽證費依國家另計"]  # replaced by the body's own sentences
@@ -76,7 +76,7 @@ def test_the_plan_can_move_the_layout_but_never_change_a_word():
 def test_with_no_design_the_pages_get_the_plain_layouts_and_the_starting_spec():
     plan = visual.default_plan(SLIDES)
     assert [s.layout for s in plan.slides] == ["cover", "focus", "focus", "focus", "cta"]
-    assert (plan.spec.margin, plan.spec.title_size, plan.spec.body_size, plan.spec.line_height) == (80, 88, 44, 1.5)  # the brief's own starting spec
+    assert (plan.spec.margin, plan.spec.title_size, plan.spec.body_size, plan.spec.line_height) == (80, 176, 44, 1.5)  # the brief's own starting spec
     assert plan.slides[0].emphasis == ["先抓這三筆"]  # what stood out before stays the default
 
 
@@ -116,7 +116,42 @@ def test_the_template_follows_the_design(settings):
         draw(0)
         assert page.locator("h1 .seg").count() == 2 and page.locator("h1 mark.em").inner_text() == "三筆"
         draw(4)
-        assert page.locator("#slide.dark").count() == 1 and page.locator("mark.em").count() == 0  # the closing page has nothing to emphasise
+        assert page.locator(".cta").count() == 1 and page.locator("mark.em").count() == 0  # the closing page has nothing to emphasise
+
+
+def _draw_cover(page, cover: Slide, emphasis: list[str], **extra) -> None:
+    design = {"spec": VisualSpec().model_dump(), "slide": VisualSlide(layout="cover", title_lines=[cover.title], emphasis=emphasis).model_dump()}
+    page.evaluate("(a) => window.renderSlide(a)", {"slide": cover.model_dump(), "index": 0, "total": 1, "site": "app.uniway-tw.com", "story": False, "art": None, "design": design, **extra})
+
+
+@needs_chromium
+def test_the_headline_is_giant_and_its_key_word_keeps_the_coral_block(settings):
+    """The look the boss chose: deep navy, white type far bigger than the old 96 px cap, the key word on a coral block."""
+    renderer = Renderer(settings)
+    with renderer._page(1080, 1350) as page:
+        page.goto("https://render.office/template/carousel.html", wait_until="load")
+        size = "(el) => parseFloat(getComputedStyle(el).fontSize)"
+
+        _draw_cover(page, Slide(kind="cover", title="交換一學期要準備多少錢？", body="4 個重點，申請前先收藏"), ["多少錢"])
+        assert page.locator("h1").evaluate(size) >= 140
+        segs = page.locator("h1 .seg").all_inner_texts()
+        assert "".join(segs) == "交換一學期要準備多少錢？" and len(segs) <= 3 and len(segs[-1]) >= 2  # no line of one lonely character
+        assert page.locator("h1 mark.em").inner_text() == "多少錢"
+        assert page.locator("h1 mark.em").evaluate("(el) => getComputedStyle(el).backgroundColor") == "rgb(255, 90, 74)"
+        assert page.locator("#slide").evaluate("(el) => getComputedStyle(el).color") == "rgb(255, 255, 255)"
+        assert page.locator("h1").evaluate("(el) => el.getBoundingClientRect().bottom") < 1000  # the headline leaves room for the rest of the page
+
+        # a key word longer than a line is split over the lines it needs, each piece on its own block, and nothing is lost
+        _draw_cover(page, Slide(kind="cover", title="讀書計畫寫不出來？先回答這 3 題", body="各校字數不同"), ["先回答這 3 題"])
+        assert "".join(page.locator("h1 .seg").all_inner_texts()) == "讀書計畫寫不出來？先回答這 3 題"
+        assert "".join(page.locator("h1 mark.em").all_inner_texts()).replace(" ", "") == "先回答這3題" and page.locator("h1 mark.em").count() >= 2
+        assert page.locator("h1").evaluate(size) >= 100
+
+        # inside a page the headline is smaller than the cover's but still far above the old cap
+        design = {"spec": VisualSpec().model_dump(), "slide": VisualSlide(layout="focus", title_lines=["生活費大約多少"], emphasis=["多少"]).model_dump()}
+        page.evaluate("(a) => window.renderSlide(a)", {"slide": Slide(kind="point", title="生活費大約多少", body="歐洲城市每月 3 萬元起跳").model_dump(), "index": 3, "total": 6,
+                                                       "site": "app.uniway-tw.com", "story": False, "art": None, "design": design})
+        assert 100 <= page.locator("h2").evaluate(size) <= 125
 
 
 @needs_chromium

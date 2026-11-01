@@ -16,7 +16,7 @@ import re
 
 from .models import Slide, VisualPlan, VisualSlide, VisualSpec
 
-LIMITS = {"margin": (60, 100), "title_size": (72, 96), "body_size": (36, 44), "line_height": (1.4, 1.6)}
+LIMITS = {"margin": (60, 100), "title_size": (96, 200), "body_size": (36, 44), "line_height": (1.4, 1.6)}
 POINT_LAYOUTS = ("focus", "steps", "compare", "stat")
 MAX_EMPHASIS, MAX_TITLE_LINES, MAX_STEPS = 2, 3, 5
 HIGHLIGHT = re.compile(r"^(.+?[？！，：])(.+)$")  # "讀書計畫寫不出來？先回答這 3 題": the part after the first mark stands out
