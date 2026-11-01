@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-
 import '../core/application_calendar.dart';
 import '../core/exchange_theme.dart';
 import '../core/exchange_widgets.dart';
 import '../core/student_ui.dart';
-import '../core/journey_illustration.dart';
+import '../core/uniway_brand.dart';
+import '../core/school_visuals.dart';
 import '../state/exchange_store.dart';
 import '../state/workspace_sync.dart';
 import 'deadlines_screen.dart';
 import 'feature_screens.dart';
 import 'notification_screen.dart';
 import 'root_shell.dart';
+import 'school_detail_screen.dart';
 import 'student_plan_screens.dart';
 
 class JourneyScreen extends StatelessWidget {
@@ -18,7 +19,6 @@ class JourneyScreen extends StatelessWidget {
   final ValueChanged<int> onSelectTab;
   void _open(BuildContext context, Widget page) =>
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => page));
-
   @override
   Widget build(BuildContext context) {
     final store = ExchangeStoreScope.of(context);
@@ -29,6 +29,13 @@ class JourneyScreen extends StatelessWidget {
             .toList()
           ..sort((a, b) => a.date.compareTo(b.date));
     final next = events.firstOrNull;
+    final schools = store.dashboard?.partnerUniversities ?? [];
+    final savedSchools = schools
+        .where((s) => store.favorites.contains(s.schoolName))
+        .toList();
+    final destinations = (savedSchools.isEmpty ? schools : savedSchools)
+        .take(5)
+        .toList();
     final nextTitle = store.planProfile == null
         ? '設定交換條件'
         : store.favorites.isEmpty
@@ -51,22 +58,11 @@ class JourneyScreen extends StatelessWidget {
         onRefresh: store.refresh,
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(24, 12, 24, 128),
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 112),
           children: [
             Row(
               children: [
-                const Icon(
-                  Icons.explore_rounded,
-                  color: ExchangeColors.teal,
-                  size: 28,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    'UniWay',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
+                const Expanded(child: UniWayLogo(wordmark: true)),
                 IconButton(
                   tooltip: '使用指南',
                   onPressed: () =>
@@ -81,118 +77,290 @@ class JourneyScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            Text(
-              account == null ? '下一站，世界。' : '一步步，準備出發。',
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    account == null ? '把下一站，\n變成你的日常。' : '你的交換旅程，\n正在成形。',
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      height: 1.25,
+                      letterSpacing: -.8,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             Align(
               alignment: Alignment.centerLeft,
               child: ActionChip(
-                avatar: const Icon(Icons.school_outlined, size: 18),
+                avatar: const Icon(Icons.school_outlined, size: 16),
                 label: Text(store.selectedUniversity),
                 tooltip: '切換就讀大學',
                 onPressed: () => showUniversityPickerSheet(context),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
             GlassCard(
               tint: ExchangeColors.tealSoft,
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final compact =
+                          constraints.maxWidth < 280 ||
+                          MediaQuery.textScalerOf(context).scale(16) >= 24;
+                      final content = Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const UniWayPill(
+                            '交換準備中',
+                            icon: Icons.flight_takeoff_rounded,
+                            background: Colors.white,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            account == null ? '世界很大，\n從心動開始。' : nextTitle,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.headlineMedium?.copyWith(height: 1.28),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            account == null ? '找到你的第一所交換學校' : '你的下一步',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      );
+                      return compact
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Align(
+                                  alignment: Alignment.centerRight,
+                                  child: UniWayMascot(size: 88),
+                                ),
+                                content,
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                Expanded(child: content),
+                                const SizedBox(width: 8),
+                                const UniWayMascot(size: 112),
+                              ],
+                            );
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  FilledButton(
+                    onPressed: continueJourney,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Text(account == null ? '探索學校' : '繼續準備'),
+                        ),
+                        const SizedBox(width: 12),
+                        const Icon(Icons.arrow_forward_rounded, size: 20),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            LayoutBuilder(
+              builder: (context, constraints) => Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                children: [
+                  for (final item in [
+                    (
+                      icon: Icons.bookmark_outline_rounded,
+                      count: '${store.favorites.length}',
+                      label: '收藏學校',
+                      tab: 1,
+                    ),
+                    (
+                      icon: Icons.task_alt_rounded,
+                      count: '${store.applicationFormReadyCount}',
+                      label: '完成文件',
+                      tab: 2,
+                    ),
+                  ])
+                    SizedBox(
+                      width: (constraints.maxWidth - 12) / 2,
+                      child: GlassCard(
+                        padding: const EdgeInsets.all(20),
+                        onTap: () => onSelectTab(item.tab),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const StudentIconLabel(
-                              Icons.flight_takeoff_rounded,
-                              '你的交換旅程',
+                            Icon(
+                              item.icon,
                               color: ExchangeColors.teal,
+                              size: 24,
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              account == null ? '從一所心動的\n學校開始' : nextTitle,
+                              item.count,
                               style: Theme.of(context).textTheme.headlineMedium,
                             ),
-                            const SizedBox(height: 8),
                             Text(
-                              account == null ? '找學校・備文件・一起出發' : '今天，完成一件事就好。',
+                              item.label,
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
                         ),
                       ),
-                      if (MediaQuery.sizeOf(context).width >= 360 &&
-                          MediaQuery.textScalerOf(context).scale(16) < 24) ...[
-                        const SizedBox(width: 8),
-                        const JourneyIllustration(),
-                      ],
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  FilledButton.icon(
-                    onPressed: continueJourney,
-                    icon: Icon(
-                      account == null
-                          ? Icons.travel_explore_rounded
-                          : Icons.arrow_forward_rounded,
                     ),
-                    label: Text(account == null ? '探索學校' : '繼續準備'),
-                  ),
                 ],
               ),
             ),
-            const SizedBox(height: 24),
-            StudentHeading(
-              '我的準備',
-              action: IconButton(
-                tooltip: '查看申請時程',
-                onPressed: () => _open(context, const DeadlinesScreen()),
-                icon: const Icon(Icons.calendar_month_outlined),
+            const SizedBox(height: 28),
+            ExchangeSectionHeader(
+              title: savedSchools.isEmpty ? '下一站，想去哪裡？' : '你的心動清單',
+              action: TextButton(
+                onPressed: () => onSelectTab(1),
+                child: const Text('查看全部'),
               ),
             ),
             const SizedBox(height: 12),
+            if (destinations.isNotEmpty)
+              SizedBox(
+                height:
+                    264 +
+                    (MediaQuery.textScalerOf(context).scale(16) - 16).clamp(
+                          0,
+                          30,
+                        ) *
+                        3,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: destinations.length,
+                  separatorBuilder: (_, _) => const SizedBox(width: 16),
+                  itemBuilder: (context, i) {
+                    final school = destinations[i];
+                    return SizedBox(
+                      width: 240,
+                      child: GlassCard(
+                        padding: EdgeInsets.zero,
+                        onTap: () =>
+                            _open(context, SchoolDetailScreen(school: school)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 148,
+                              width: double.infinity,
+                              child: SchoolPhoto(school: school),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    school.country,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium
+                                        ?.copyWith(color: ExchangeColors.teal),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    school.schoolName,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleMedium,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            if (destinations.isEmpty)
+              GlassCard(
+                child: StudentActionRow(
+                  icon: Icons.travel_explore_rounded,
+                  title: '尋找交換學校',
+                  detail: '依你的母校查看合作學校',
+                  onTap: () => onSelectTab(1),
+                ),
+              ),
+            const SizedBox(height: 28),
+            const ExchangeSectionHeader(title: '重要的事，幫你記著'),
+            const SizedBox(height: 12),
             GlassCard(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              child: Column(
+              padding: const EdgeInsets.all(20),
+              onTap: () => _open(context, const DeadlinesScreen()),
+              child: Row(
                 children: [
-                  StudentActionRow(
-                    icon: Icons.bookmark_border_rounded,
-                    title: '學校清單',
-                    detail: store.favorites.isEmpty
-                        ? '先收藏，再比較'
-                        : '${store.favorites.length} 所收藏',
-                    onTap: () => onSelectTab(1),
+                  Container(
+                    width: 52,
+                    height: 60,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: ExchangeColors.coralSoft,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: next == null
+                        ? const Icon(
+                            Icons.calendar_month_rounded,
+                            color: ExchangeColors.coral,
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '${next.date.month} 月',
+                                style: Theme.of(context).textTheme.labelMedium
+                                    ?.copyWith(color: ExchangeColors.coral),
+                              ),
+                              Text(
+                                '${next.date.day}',
+                                style: Theme.of(context).textTheme.titleLarge
+                                    ?.copyWith(color: ExchangeColors.coral),
+                              ),
+                            ],
+                          ),
                   ),
-                  const Divider(indent: 56),
-                  StudentActionRow(
-                    icon: Icons.task_alt_rounded,
-                    title: '申請文件',
-                    detail: '${store.applicationFormReadyCount} 份完成',
-                    onTap: () => onSelectTab(2),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          next?.title ?? '加入下一個期限',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          next == null ? '行事曆與到期提醒' : countdownLabel(next.date),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
                   ),
-                  const Divider(indent: 56),
-                  StudentActionRow(
-                    icon: Icons.event_outlined,
-                    title: next == null ? '加入下一個期限' : next.title,
-                    detail: next == null
-                        ? '把重要日期留在這裡'
-                        : '${dateKey(next.date)} · ${countdownLabel(next.date)}',
-                    onTap: () => _open(context, const DeadlinesScreen()),
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    color: ExchangeColors.secondaryInk,
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 24),
-            const StudentHeading('出發工具箱'),
+            const SizedBox(height: 28),
+            const ExchangeSectionHeader(title: '出發工具箱'),
             const SizedBox(height: 12),
             StudentActionGrid([
               StudentAction(
@@ -219,7 +387,7 @@ class JourneyScreen extends StatelessWidget {
                 color: ExchangeColors.amber,
               ),
             ]),
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
             if (account == null)
               StudentActionRow(
                 icon: Icons.devices_rounded,

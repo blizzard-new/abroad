@@ -948,7 +948,7 @@ class _FollowingEmpty extends StatelessWidget {
           OutlinedButton.icon(
             onPressed: onFollow,
             icon: const Icon(Icons.add_rounded),
-            label: Text('追蹤${schoolName}板'),
+            label: Text('追蹤$schoolName板'),
           ),
         ],
       ),
@@ -1152,7 +1152,7 @@ String _feedTitle(CommunityFeed feed, String schoolName) => switch (feed) {
   CommunityFeed.all => '最新貼文',
   CommunityFeed.following => '我的追蹤',
   CommunityFeed.publicBoard => '公共留學板',
-  CommunityFeed.cguBoard => '${schoolName}板貼文',
+  CommunityFeed.cguBoard => '$schoolName板貼文',
 };
 
 String _displayBoardName(String value) =>
