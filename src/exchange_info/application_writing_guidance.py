@@ -1260,6 +1260,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="屏科大規定返國後一個月內須繳交赴外交換研習心得報告書（含照片）並配合經驗分享會，始得辦理獎補助核銷；這裡只合計下方各欄。",
     ),
+    ("isu", "study-plan"): _rules(
+        (
+            "義守大學赴境外交換研修與雙聯學位甄選須繳交《中、外文讀書計畫與自傳》，具體規劃擬於目標姐妹校每學期修習至少 9 學分（大陸研修團至少 16 學分）之課程清單，並配合填具《學分承認表（Credit Transfer Form）》經系所預審。",
+            "建議結合義守大學智慧科技、工程、AACSB 認證商管／國際／觀光餐旅、傳播設計、醫學或醫學科技等專業背景，清楚說明申請動機、外語檢定成績（校訂英語畢業門檻 CEFR B1 / TOEIC 550 或目標校門檻）與返國後學分抵免規劃。",
+        ),
+        evidence="義守大學學生赴境外交換研修甄選辦法、學海助學金設置辦法與學文助學金設置辦法",
+        minimum=1000,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="義守大學交換與雙聯學位甄選建議中、外文讀書計畫與自傳約 1,000–2,500 字，清楚呈現修課與語言準備；這裡只合計下方各欄。",
+    ),
+    ("isu", "return-report"): _rules(
+        (
+            "所有義守大學赴境外交換研修及雙聯學位學生須於返國後二週內向國際及兩岸事務處繳交《返校手續單》、《成果心得報告（Exchange Program Report，1,500 字以上）》及《校內成果報告 PPT 簡報檔》，收錄於國際處學長姐經驗傳承專區。",
+            "獲教育部學海飛颺、學海惜珠或義守大學學海助學金、赴大陸校際交換獎學金、學文助學金者，須於返國後二週內完成成果心得報告、正式成績單與《學分抵免表》繳交並配合出席成果分享會，始得完成獎助學金核銷。",
+        ),
+        evidence="義守大學學生赴境外交換研修甄選辦法、受獎生出國前後應辦理事項及返校手續單規定",
+        minimum=1500,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="義守大學規定返國後二週內須繳交 1,500 字以上成果心得報告及 PPT 簡報檔並辦理返校手續，始得完成獎助學金核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1313,6 +1335,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "ntue": ("https://oia.ntue.edu.tw/p/406-1066-48777,r1703.php?Lang=zh-tw", "2026-10-31"),
     "ncut": ("https://oia.ncut.edu.tw/p/412-1030-6648.php?Lang=zh-tw", "2026-11-01"),
     "npust": ("https://oia2.npust.edu.tw/zh/cooperation/%e4%ba%a4%e6%8f%9b%e5%ad%b8%e7%94%9f-2/", "2026-10-31"),
+    "isu": ("https://oica.isu.edu.tw/page/%E5%87%BA%E5%9C%8B%E4%BA%A4%E6%8F%9B-NlHq3RuLdDcK", "2026-11-02"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

@@ -1834,7 +1834,50 @@ NPUST = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST)
+ISU = UniversityProfile(
+    id="isu",
+    school_name="義守大學",
+    short_name="義大",
+    english_name="I-Shou University",
+    aliases=(
+        "isu",
+        "義守大學",
+        "義大",
+        "義守",
+        "ISU",
+        "I-Shou University",
+        "IShou University",
+    ),
+    hero_image="/static/assets/isu-campus.svg",
+    official_url="https://oica.isu.edu.tw/page/%E5%87%BA%E5%9C%8B%E4%BA%A4%E6%8F%9B-NlHq3RuLdDcK",
+    coverage_note="完整支援：已整合義守大學國際及兩岸事務處（OICA）《出國交換暨雙聯學位專區》、《交換姐妹校名冊》、《雙聯學位學校列表（11 校）》、《全球與兩岸合作姐妹校名錄》、《海外交換費用參考表》、《義守大學學生赴境外交換研修甄選辦法》、《義守大學辦理教育部學海飛颺及學海惜珠計畫甄選辦法》、《義守大學學海助學金設置及甄選作業辦法》、《義守大學赴大陸校際交換獎學金辦法》與《義守大學學文助學金設置及甄選作業辦法》官方資料：（1）校內甄選時程與資格：每年 2 月開放第一梯次（秋季班出國交換一學期或一學年）及每年 8 月開放第二梯次（春季班出國交換一學期）校內甄選，限大二以上或碩一以上在學學生，出國期間維持本校學籍並繳交義守大學全額學雜費，每學期修習至少 9 學分（大陸研修團至少 16 學分），外語能力應符合交流學校規定或通過本校英語畢業資格檢定標準（CEFR B1 / TOEIC 550 / TOEFL iBT 42 / IELTS 4.0）。（2）合作姐妹校與雙聯學位：完整收錄 181 所全球及兩岸港澳有效締約姐妹校（橫跨 33 國與地區，含英、美、港、日、韓、陸 11 所跨國雙聯學位合作校）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／惜珠》（系前 40% 或班前 30%）、《義守大學學海助學金》、《赴大陸校際交換獎學金》、《義守大學學文助學金》（交流團、暑期學習團公費／部分公費與一學期大陸研修團）、《歐盟 Erasmus+ 獎學金》及 13 所合作大學共 18 篇歷屆學長姐交換心得報告与 12 份官方 Fact Sheet。",
+    support_level="full",
+    partner_count_hint=181,
+    academic_score_minimum=60,
+    student_card_signals=(
+        "義守大學",
+        "義大",
+        "ISHOUUNIVERSITY",
+        "I-SHOUUNIVERSITY",
+        "ISU",
+    ),
+    # https://www.isu.edu.tw/ — checked 2026-11-02.
+    colleges=(
+        "智慧科技學院",
+        "工學院",
+        "管理學院",
+        "傳播與設計學院",
+        "國際學院",
+        "觀光餐旅學院",
+        "醫學院",
+        "醫學科技學院",
+        "原住民族學院",
+        "通識教育中心",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, ISU)
 DEFAULT_UNIVERSITY = CGU
 
 

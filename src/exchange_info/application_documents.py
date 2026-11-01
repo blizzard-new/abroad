@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, ISU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -119,6 +119,9 @@ NCUT_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 NPUST_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
+
+
+ISU_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2968,6 +2971,58 @@ def _npust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _isu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理義守大學（國際及兩岸事務處 OICA，校本部國際學院大樓 4 樓）學生赴境外交換研修、跨國雙聯學位暨教育部學海飛颺／惜珠與校內學海／大陸交換／學文獎助學金應繳申請表件：1. 義守大學學生赴境外交換研修申請表（須經所屬學系主任及學院院長審核簽章，第一梯次秋季班每年 2 月至 3 月中旬、第二梯次春季班每年 8 月至 9 月中旬送交國際及兩岸事務處）、2. 大學或研究所歷年中英文成績單正本（含歷年學業總平均與班級或系年級排名百分比，申請教育部學海飛颺／惜珠者須操行 80 分以上無懲處且前一學期成績達系年級前 40% 或班排前 30%；申請校內學海助學金短期交流或學文助學金大陸研修團者須成績達前 50%）、3. 有效外語能力檢定證明影本（TOEFL iBT / IELTS / TOEIC / JLPT / TOPIK，如交流學校無特別規定，除中文授課學校外以通過本校英語畢業資格檢定標準 CEFR B1 / TOEIC 550 為原則）、4. 中英文自傳與讀書計畫各一份、5. 教師推薦信、6. 交換生具結書（Declaration of Indemnity，須由學生本人及家長或法定監護人親筆簽章）、7. 學分承認表（Credit Transfer Form）。",
+        "study-plan": "撰寫義守大學學生赴境外交換研修、跨國雙聯學位及教育部學海飛颺／惜珠或校內學海／學文獎助學金必繳之《中、外文讀書計畫與自傳》（建議約 1,000–2,500 字）。請具體說明申請動機、擬於目標姐妹校修習之課程與學分規劃（依《義守大學學生赴境外交換研修甄選辦法》第 7 條每學期修習課程以不低於 9 學分為原則，赴大陸結盟學校研修團每學期至少 16 學分，並維持義守大學學籍與繳交全額學雜費）、個人外語準備與專業背景優勢，以及返國後學分採認抵免與生涯發展規劃。",
+        "course-preapproval": "辦理赴境外姐妹校修讀交換課程或跨國雙聯學位（英國諾丁漢特倫特大學、美國奧克拉荷馬州立大學、南伊利諾大學卡本岱爾校區、內華達大學拉斯維加斯分校、香港理工大學、日本帝京大學、韓國又松大學 SolBridge 國際商學院、大陸四川大學、吉林大學、蘭州大學等）之選課預審與《學分承認表（Credit Transfer Form）》核備（出國前填列擬修習之國外科目名稱與學分數並經系所主管核章）。",
+        "predeparture-notice": "經國際及兩岸事務處書面審查與面試錄取並獲境外姐妹校核發入學許可（Admission Letter / COE / DS-2019 / 錄取通知書）後，配合國際處完成出國交換確認、簽署《行政契約書》與《獎學金具結書》、完成義守大學全額學雜費註冊、辦理簽證與役男緩徵出境，並自行購買涵蓋交換全期之海外醫療及意外保險；抵達接待校後立即回傳《國外抵達報告表（Arrival Report）》。",
+        "return-report": "境外交換或雙聯學位期滿返國後二週內，須依《義守大學學生赴境外交換研修甄選辦法》及《受獎生出國前後應辦理事項》向國際及兩岸事務處繳交《返校手續單（Procedures of Returning to the University）》、1,500 字以上《成果心得報告（Exchange Program Report）》及《校內成果報告 PPT 簡報檔》（收錄於國際處學長姐經驗傳承專區），並配合出席交換生經驗分享會辦理獎助學金核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後二週內，須填具義守大學《學分抵免表》並檢附出國前核准之《學分承認表》、境外合作大學核發之正式成績單正本及修習課程大綱，經所屬學系（所）及學院審核通過後送教務處註冊組登錄抵免學分。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "義守大學").replace("長庚", "義大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "義守大學規定：申請人須為大二以上或碩一以上在學學生，在校期間學業及操行成績優良（歷年平均及格 60 分以上）；申請教育部《學海飛颺／惜珠獎學金》須操行 80 分以上無懲處且前一學期學業成績於該系所該年級前 40% 或班排前 30%；申請《義守大學學海助學金（短期交流）》或《學文助學金（大陸研修團）》須成績達前 50%。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "TOEIC 多益測驗（義守大學英語畢業門檻基準：550 分［CEFR B1］以上；歐美日韓英語授課建議 650–785 分以上）",
+                "TOEFL iBT 托福測驗（校內基準 42 分以上；美國南伊利諾大學 68+、西來大學 69+、聖道大學與歐美名校 79–80+）",
+                "IELTS 雅思國際英語測驗（校內基準 4.0 以上；英國諾丁漢特倫特大學、考文垂大學及歐美雙聯要求 5.5–6.5+）",
+                "JLPT 日語能力試驗（日本 31 所姐妹校依規定要求 N2 或 N3 以上；埼玉大學、AIU、APU 等英語授課組可憑英檢申請）",
+                "TOPIK 韓國語文能力測驗（韓國 20 所姐妹校依規定要求 TOPIK 2–4 級以上，或選修英語授課學程）",
+                "中國大陸（95 校）及澳門（4 校）姐妹校交換（中文授課免附外語檢定；申請學文助學金大陸研修團者仍須通過校訂英檢與資訊能力檢測）",
+            ]
+            field["help_text"] = "依《義守大學學生赴境外交換研修甄選辦法》第 2 條第 3 款：外語能力應符合交流學校之規定；除赴以中文為主要授課語言之學校外，如交流學校無外語能力規定，應以符合本校英語能力畢業資格檢定標準（CEFR B1 / TOEIC 550）為原則。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oica.isu.edu.tw/page/%E5%87%BA%E5%9C%8B%E4%BA%A4%E6%8F%9B-NlHq3RuLdDcK",
+        source_checked_at=ISU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="義守大學學生赴境外交換研修申請表與交換生具結書" if template.id == "exchange-application-data" else ("中英文讀書計畫與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oica.isu.edu.tw/page/%E8%A1%A8%E5%96%AE%E4%B8%8B%E8%BC%89-6s203nK125P9",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或法定監護人親筆簽章", "所屬學系（所）主任及學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）辦公室及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "獲錄取後簽署行政契約書與獎學金具結書、辦理簽證與全額學雜費註冊、投保海外保險並於抵達後回傳國外抵達報告表", "return-report": "返國後二週內繳交返校手續單、1,500 字以上成果心得報告及校內成果報告 PPT 簡報檔辦理核銷", "credit-transfer": "返國後二週內持正式成績單、學分承認表與學分抵免表向系所及教務處註冊組辦理學分採認"}.get(template.id, "備齊經系所及學院核章之申請表、中英文歷年成績單、語檢證明、中英文讀書計畫与自傳、推薦信、交換生具結書及學分承認表送交國際及兩岸事務處"),
+        version="115準備工具-2026-11-02.1",
+        destinations=["義守大學國際及兩岸事務處（84001 高雄市大樹區學城路一段 1 號 國際學院大樓 4 樓 60405 室）"],
+        conditional_note="此為個人準備工具；義守大學海外交換暨雙聯學位校內甄選每年分兩梯次辦理（第一梯次每年 2 月申請次學年第 1 學期秋季班出國、第二梯次每年 8 月申請次學年第 2 學期春季班出國），申請人須為大二以上或碩一以上在學學生，交換期間維持本校學籍並繳交全額學雜費，每學期至少修習 9 學分（大陸研修團至少 16 學分）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3072,6 +3127,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncut_template(template)) is not None]
     if university.id == NPUST.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _npust_template(template)) is not None]
+    if university.id == ISU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _isu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
