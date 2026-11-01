@@ -42,6 +42,14 @@ class Slide(BaseModel):
     body: str = ""
 
 
+class ThreadsAlbumDraft(ThreadsDraft):
+    """A Threads post with several pictures that swipe like an Instagram carousel: the post's own words, and the pages."""
+
+    slides: list[Slide] = Field(
+        description="圖片頁，4～8 張：第 1 張 cover（封面，標題 14 字內）、中間 point（一張只講一件事，標題 14 字內、內文 40 字內）、最後一張 cta（內文結尾寫「｜連結在第一則留言」）"
+    )
+
+
 class CarouselDraft(BaseModel):
     slides: list[Slide]
     caption: str = Field(description="Instagram 說明欄，不含 hashtag")
@@ -192,7 +200,7 @@ class ChiefAction(BaseModel):
     type: ChiefActionType = Field(
         description=(
             "start_day：馬上開工做今天的內容；redo：請作者依 instructions 重寫 draft_id 那則草稿；"
-            "new_post：今天加做一則（channel、format、topic、angle）；reschedule：把 draft_id 改到 time（HH:MM，台北時間）；"
+            "new_post：今天加做一則（channel、format、topic、angle；Threads 多圖貼文用 channel=threads、format=carousel）；reschedule：把 draft_id 改到 time（HH:MM，台北時間）；"
             "reject：退回 draft_id，理由寫在 instructions；note_for_tomorrow：把 instructions 記給明天的企劃；"
             "set_brain：改某個工作（role）用的工具（brain）、模型（model）或思考強度（effort），沒要改的欄位留空，填 default 代表改回原本設定；"
             "hire：新增一位同事（name、title、instructions 寫他負責什麼，可一起給 brain、model、effort）；"

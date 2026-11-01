@@ -76,7 +76,15 @@ class Strategist(Agent):
     def slots(self, day: date) -> list[PlanItem]:
         settings = self.office.settings
         blank = dict(topic="", brief="")
-        slots = [PlanItem(channel="threads", format="text", pillar="value", angle="pain", **blank) for _ in settings.threads_slots]
+        # The latest Threads posts of the day are the multi-image ones (the first is often the day's news).
+        # A multi-image post needs the pictures drawn and, when it is really going out, a public address Threads can fetch them
+        # from; without those the slot stays a plain post (a single picture falls back to text the same way).
+        can_draw = settings.render_media and (settings.media_host != "none" or settings.dry_run)
+        albums = min(settings.threads_albums, len(settings.threads_slots)) if can_draw else 0
+        slots = [
+            PlanItem(channel="threads", format="carousel" if index >= len(settings.threads_slots) - albums else "text", pillar="value", angle="pain", **blank)
+            for index in range(len(settings.threads_slots))
+        ]
         pillar = pillar_for(day)
         slots.append(PlanItem(channel="instagram", format=PILLAR_FORMAT[pillar], pillar=pillar, angle="list", **blank))
         if day.weekday() == settings.long_video_weekday:

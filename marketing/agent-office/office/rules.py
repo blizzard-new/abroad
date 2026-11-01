@@ -12,7 +12,7 @@ import unicodedata
 
 from . import humanize
 from .brand import BANNED_PHRASES, BrandFacts
-from .models import CarouselDraft, ThreadsDraft, VideoScript
+from .models import CarouselDraft, Slide, ThreadsAlbumDraft, ThreadsDraft, VideoScript
 
 URL_RE = re.compile(r"https?://\S+|www\.\S+|\b[\w-]+\.(?:com|tw|net|org|io)(?:/\S*)?", re.IGNORECASE)
 HASHTAG_RE = re.compile(r"#[^\s#]+")
@@ -96,19 +96,39 @@ def instagram_caption(caption: str, hashtags: list[str]) -> str:
     return f"{caption.strip()}\n\n{tags}".strip()
 
 
-def check_carousel(draft: CarouselDraft, facts: BrandFacts, source_url: str = "") -> list[str]:
+def _slide_issues(slides: list[Slide], what: str) -> list[str]:
+    """The checks every set of pages shares, whether it is an Instagram carousel or the pictures of a Threads post."""
     issues = []
-    if not 3 <= len(draft.slides) <= 10:
-        issues.append(f"輪播 {len(draft.slides)} 張，請控制在 3～10 張")
-    if draft.slides and draft.slides[0].kind != "cover":
+    if not 3 <= len(slides) <= 10:
+        issues.append(f"{what} {len(slides)} 張，請控制在 3～10 張")
+    if slides and slides[0].kind != "cover":
         issues.append("第一張要是封面")
-    if draft.slides and draft.slides[-1].kind != "cta":
+    if slides and slides[-1].kind != "cta":
         issues.append("最後一張要是行動呼籲")
-    for index, slide in enumerate(draft.slides, 1):
+    for index, slide in enumerate(slides, 1):
         if len(slide.title) > 20:
             issues.append(f"第 {index} 張大標 {len(slide.title)} 字，請縮到 20 字內")
         if len(slide.body) > 60:
             issues.append(f"第 {index} 張內文 {len(slide.body)} 字，請縮到 60 字內")
+    return issues
+
+
+def check_threads_album(draft: ThreadsAlbumDraft, facts: BrandFacts, source_url: str = "") -> list[str]:
+    """A Threads post with pictures: the post itself follows the Threads rules, the pages follow the carousel's."""
+    issues = check_threads(draft, facts, source_url)
+    issues += _slide_issues(draft.slides, "圖片")
+    pages = "\n".join(f"{s.title} {s.body}" for s in draft.slides)
+    if "連結在主頁" in pages:
+        issues.append("Threads 的連結放在第一則留言，圖片上請改寫「連結在第一則留言」，不要寫「連結在主頁」")
+    if URL_RE.search(pages):
+        issues.append("圖片上不要放網址，連結放在第一則留言")
+    issues += _claims(pages, facts, bool(source_url))
+    issues += humanize.check(pages, max_dashes=humanize.PAGES_DASHES)
+    return issues
+
+
+def check_carousel(draft: CarouselDraft, facts: BrandFacts, source_url: str = "") -> list[str]:
+    issues = _slide_issues(draft.slides, "輪播")
     caption = instagram_caption(draft.caption, draft.hashtags)
     if len(caption) > IG_CAPTION_LIMIT:
         issues.append(f"說明欄 {len(caption)} 字，超過 {IG_CAPTION_LIMIT} 字")

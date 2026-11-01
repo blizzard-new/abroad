@@ -42,6 +42,7 @@ from .models import (
     VerificationReport,
     Scene,
     Slide,
+    ThreadsAlbumDraft,
     ThreadsDraft,
     VideoScript,
     VisualPlan,
@@ -91,7 +92,7 @@ def make_writer(settings: Settings, *, on_brain: Callable[[str, str, list[str]],
 
 
 # Who rewrites a draft the reviewer sends back.
-AUTHOR_ROLE = {ThreadsDraft: "threads", CarouselDraft: "designer", VideoScript: "video"}
+AUTHOR_ROLE = {ThreadsDraft: "threads", ThreadsAlbumDraft: "threads", CarouselDraft: "designer", VideoScript: "video"}
 
 
 class ModelWriter:
@@ -178,6 +179,7 @@ class ModelWriter:
         task = (
             "你是企劃。替今天排內容：依下面的版位順序，每個版位給一個 item（channel、format、pillar 照抄）。\n"
             f"Threads 角度可選：{json.dumps(THREADS_ANGLES, ensure_ascii=False)}；其他版位 angle 選最接近的。\n"
+            "format 是 carousel 的 Threads 版位是帶多張圖的貼文（像 IG 輪播，可以左右滑），題目要能拆成 4～8 個重點。"
             "有已核實公告時，至少一則 Threads 用 news 角度並填 source_url。有互動好的 Threads 貼文時，"
             "讓 Instagram 版位重製那個題目。用到研究員的發現時，把它的來源網址填進 source_url。題目不要和最近發過的重複。\n\n"
             f"版位：\n{skeleton}"
@@ -193,6 +195,19 @@ class ModelWriter:
             "，有官方來源時一併附上，並提醒以官方公告為準。"
         )
         return self._ask(role, ThreadsDraft, task, briefing_text(briefing), lambda: self.offline.threads(item, briefing))
+
+    def threads_album(self, item: PlanItem, briefing: Briefing, *, role: str = "threads", who: str = "Threads 小編") -> ThreadsAlbumDraft:
+        site = briefing.facts.site_url
+        task = (
+            f"你是{who}。寫一則帶多張圖的 Threads 貼文，像 Instagram 輪播一樣可以左右滑：一段主文，加 4～8 張圖片頁。角度：{THREADS_ANGLES[item.angle]}。\n"
+            f"題目：{item.topic}\n企劃重點：{item.brief}\n官方來源：{item.source_url or '無'}\n"
+            "主文是貼文本身的文字：用真人口吻、不含網址，結尾邀請大家左右滑看圖。"
+            f"topic_tag 用「{TOPIC_TAG}」或更精準的一個詞。first_reply 放 {site}，有官方來源時一併附上，並提醒以官方公告為準。\n"
+            "slides 是圖片頁：第 1 張 cover（標題 14 字內，一眼抓住人）；中間是 point，一張只講一件事（標題 14 字內、內文 40 字內）；"
+            "最後一張 cta（標題像「收藏起來慢慢看」，內文寫「一句話介紹 UniWay 的功能｜連結在第一則留言」）。"
+            "圖片上不放網址，也不要寫「連結在主頁」（連結在第一則留言）。card_title、card_body 留空。"
+        )
+        return self._ask(role, ThreadsAlbumDraft, task, briefing_text(briefing), lambda: self.offline.threads_album(item, briefing))
 
     def assignment(self, role: str, who: str, request: str, briefing: Briefing) -> Report:
         """A task the chief hands a new colleague: research, analysis or ideas, reported back as text."""
@@ -478,6 +493,12 @@ class OfflineWriter:
             text = f"{topic.hook}\n\n{bullets}\n\n{topic.question}"
         reply = f"{topic.feature}，公開資料免登入就能查 👉 {site}\n各校規定請以官方公告為準。"
         return ThreadsDraft(text=text, topic_tag=TOPIC_TAG, first_reply=reply)
+
+    def threads_album(self, item: PlanItem, briefing: Briefing) -> ThreadsAlbumDraft:
+        # The pictures come from the topic, so the post's words follow the topic too (a news item has no topic bank pages).
+        post = self.threads(item.model_copy(update={"angle": "list" if item.angle == "news" else item.angle}), briefing)
+        pages = [slide.model_copy(update={"body": slide.body.replace("連結在主頁", "連結在第一則留言")}) for slide in self.carousel(item, briefing).slides]
+        return ThreadsAlbumDraft(text=f"{post.text}\n\n左右滑看完整整理 👉", topic_tag=post.topic_tag, first_reply=post.first_reply, slides=pages)
 
     def carousel(self, item: PlanItem, briefing: Briefing) -> CarouselDraft:
         topic = self._topic(item)

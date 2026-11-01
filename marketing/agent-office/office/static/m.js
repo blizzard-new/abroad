@@ -146,7 +146,9 @@ function previewHTML(d) {
     return `<p class="sub"><b>@${esc(p.username || "訪客")} 的留言</b>\n${esc(p.comment_text)}</p><p class="post">${esc(p.text)}</p>`;
   }
   if (d.channel === "threads") {
-    const card = m.image ? `<div class="thumbs">${zoomable(m.image, "Threads 配圖")}</div>` : "";
+    // A multi-image post (format carousel) has several pictures; a plain post has one card.
+    const pictures = m.images && m.images.length ? m.images : m.image ? [m.image] : [];
+    const card = pictures.length ? `<div class="thumbs">${pictures.map((r) => zoomable(r, "Threads 配圖")).join("")}</div>` : "";
     return `${card}<p class="post">${esc(p.text)}</p><p class="sub"><b>第一則留言</b>\n${esc(p.first_reply)}</p><p class="sub">主題標籤：${esc(p.topic_tag)}${p.source_url ? `｜${safeLink(p.source_url, "官方來源")}` : ""}</p>`;
   }
   if (d.format === "carousel") {
