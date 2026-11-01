@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -119,6 +119,7 @@ NCUT_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 NPUST_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
+NQU_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2968,6 +2969,51 @@ def _npust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nqu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立金門大學（國際暨兩岸事務處 R445 及教務處註冊組）國際交換與赴大陸地區交換學生甄選應繳表件：1. 學生國際交流資料審查流程表（SOP，須先經系主任、院長、教務處註冊組及學務處生輔組核章）、2. 國際交流學生甄選報名表／赴國內及大陸地區交換學生申請表（大陸交換至多可選填 5 個志願）、3. 中文歷年成績單正本（含總平均、GPA 及班系排名百分比）與學務處獎懲紀錄證明、4. 中文自傳及讀書／學習計畫書、5. 證書日期起算 2 年內有效之語言能力檢定證明影本（國際交換必備，占書審 20%；大陸交換免附）及績優證明、6. 教師推薦信（研究生申請大陸交換須附指導教授同意函）、家長（監護人）同意書及身分證／學生證／護照影本。",
+        "study-plan": "撰寫國立金門大學國際交換與赴大陸地區交換甄選暨教育部學海飛颺／惜珠計畫必繳之《中文自傳》與《讀書／學習計畫書》（占書面審查 10%，且面試 40% 重點評核學習規劃）。請具體說明申請動機、目標姊妹校修課規劃（大陸交換每學期至少修習 2 門以上課程，北交大本專業至少 1 門、北科大至少 8 學分），以及返國後依《國立金門大學科目學分抵免辦法》（大學部上限 1/2、碩士班 1/3）之學分銜接與職涯規劃。",
+        "course-preapproval": "辦理赴境外姊妹校交換修課規劃與學分採認預審：交換期間須於金大完成註冊並繳交全額學雜費及學生平安保險費；大陸姊妹校每學期至少應修習 2 門以上課程（北京交通大學選擇交換之專業至少需選修 1 門課；北京科技大學學士班每學期至少需修滿 8 學分）；境外交換抵免學分總數最高不得超過應修畢業學分數之 1/2（碩士班不得超過 1/3）。",
+        "predeparture-notice": "經第一階段書面審查（60%）與第二階段實體面試（40%）公告錄取後，須於規定期限內（國際交換第二階段：2026/06/12 17:00 前；大陸交換春季班：2026/10/16 12:00 前）向國際暨兩岸事務處繳交《錄取資格確認書》或《放棄聲明書》，並於出國前完成姊妹校線上入學申請、簽證／臺胞證申辦、金大註冊繳費及海外醫療意外險投保。",
+        "return-report": "依國立金門大學國際交換與大陸交換甄選簡章規定，交換生於結束交換後 2 週內須回國返校報到，並於報到後 1 個月內向國際暨兩岸事務處繳交彌封正式成績單、2,000 字以上《交流心得報告》（含本人入鏡照片 5 張以上）及 3–10 分鐘心得影片（含中文字幕橫式 mp4），並參加經驗分享座談會。",
+        "credit-transfer": "境外交換修課結束返國後，須持接待姊妹校核發之彌封正式成績單正本及修習課程大綱，依《國立金門大學科目學分抵免辦法》向原屬系（所）、學院及教務處註冊組辦理科目學分抵免（抵免上限為應修畢業學分數之 1/2，碩士班為 1/3）。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立金門大學").replace("長庚", "金大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "金大規定：國際交換須於出國前修滿 4 學期（大三以上）、操行平均 80 分以上並達姊妹校 GPA 2.00–3.00 門檻；赴大陸交換須日間部修滿 1 學年（大二以上），學士班歷年總平均達 70 分以上且班、系排名百分比在 60% 以內（兩項皆需符合）。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 多益測驗（550–785+，證書須在 2 年有效期內）", "TOEFL iBT 托福測驗（61–80+，馬來亞大學／夏威夷大學／德國 THWS 等要求較高）", "IELTS 雅思國際英語測驗（5.0–6.0+，證書須在 2 年有效期內）", "JLPT 日語能力試驗（三重大學、琉球大學、新潟大學要求 N2–N3 以上）", "TOPIK 韓國語文能力測驗（建國大學、誠信女子大學、釜山外大要求 TOPIK 2–3 級或英檢）", "Duolingo English Test（東南密蘇里州立大學、夏威夷大學採認 95+）", "中國大陸 25 所姊妹校及澳門科技大學中文授課（免附外語檢定證明）"]
+            field["help_text"] = "依國立金門大學《115學年度第一／二階段國際交換簡章》規定：語言測驗占書審總成績 20%，且檢附之語言證明必須為證書日期起算 2 年內有效成績。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oica.nqu.edu.tw/p/406-1003-21011,r902.php?Lang=zh-tw",
+        source_checked_at=NQU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="國立金門大學學生國際交流資料審查流程表（SOP）暨甄選報名表" if template.id == "exchange-application-data" else ("中文自傳與讀書／學習計畫書" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oica.nqu.edu.tw/var/file/3/1003/img/624805248.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "系（所）主任簽章", "學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所）與學院核章", "教務處註冊組核章", "學務處生輔組核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取公告後限期繳交錄取資格確認書，出國前完成金大註冊繳費、簽證與海外醫療保險", "return-report": "交換結束後 2 週內返校報到，1 個月內繳交正式成績單、2,000 字心得報告（含照片 5 張以上）及 3–10 分鐘心得影片", "credit-transfer": "返國後持彌封正式成績單與課程大綱依《國立金門大學科目學分抵免辦法》辦理學分抵免"}.get(template.id, "先完成《學生國際交流資料審查流程表（SOP）》四級核章，再於截止前送交國際暨兩岸事務處（R445）或教務處註冊組（綜合大樓 3 樓）"),
+        version="115-2準備工具-2026-11-02.1",
+        destinations=["國立金門大學國際暨兩岸事務處（892009 金門縣金寧鄉大學路 1 號 綜合教學大樓 4 樓 R445）"],
+        conditional_note="此為個人準備工具；國立金門大學國際交換分兩階段辦理（第一階段 11 月收件、第二階段春季班餘額學校 2026/05/25 17:00 截止），赴大陸地區交換每學期辦理（2027 春季班為 2026/09/14–09/24 17:00 收件，至多選填 5 志願）。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3072,6 +3118,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncut_template(template)) is not None]
     if university.id == NPUST.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _npust_template(template)) is not None]
+    if university.id == NQU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nqu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

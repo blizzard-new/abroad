@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="nquSky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c4a6e"/>
+      <stop offset="55%" stop-color="#0369a1"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <linearGradient id="nquSwallowtail" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b91c1c"/>
+      <stop offset="50%" stop-color="#dc2626"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="nquGranite" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#nquSky)"/>
+  <!-- Kinmen Island Sun & Taiwu Mountain Silhouette -->
+  <circle cx="655" cy="92" r="44" fill="#fde68a" opacity="0.88"/>
+  <path d="M0 320 Q200 265 410 300 T800 280 L800 450 L0 450 Z" fill="#1e293b" opacity="0.62"/>
+  <path d="M0 355 Q260 320 530 345 T800 335 L800 450 L0 450 Z" fill="#0f172a" opacity="0.86"/>
+  <!-- NQU Minnan Swallowtail Roof & Comprehensive Teaching Building Silhouette -->
+  <g transform="translate(105, 150)">
+    <!-- Left Academic Wing -->
+    <polygon points="15,85 100,45 185,85" fill="url(#nquSwallowtail)"/>
+    <rect x="30" y="85" width="140" height="115" rx="4" fill="url(#nquGranite)" opacity="0.94"/>
+    <rect x="48" y="105" width="24" height="20" fill="#0c4a6e"/>
+    <rect x="88" y="105" width="24" height="20" fill="#0c4a6e"/>
+    <rect x="128" y="105" width="24" height="20" fill="#0c4a6e"/>
+    <rect x="48" y="138" width="24" height="20" fill="#0c4a6e"/>
+    <rect x="88" y="138" width="24" height="20" fill="#0c4a6e"/>
+    <rect x="128" y="138" width="24" height="20" fill="#0c4a6e"/>
+    <!-- Central Comprehensive Teaching Building (綜合教學大樓) with Minnan Swallowtail Ridge -->
+    <path d="M180,82 Q295,22 410,82 L395,90 L195,90 Z" fill="url(#nquSwallowtail)"/>
+    <rect x="195" y="85" width="200" height="115" rx="4" fill="url(#nquGranite)"/>
+    <rect x="220" y="110" width="32" height="90" fill="#1e3a8a"/>
+    <rect x="279" y="110" width="32" height="90" fill="#1e3a8a"/>
+    <rect x="338" y="110" width="32" height="90" fill="#1e3a8a"/>
+    <!-- Right International & Cross-Strait Hall -->
+    <polygon points="405,85 490,45 575,85" fill="url(#nquSwallowtail)"/>
+    <rect x="420" y="85" width="140" height="115" rx="4" fill="url(#nquGranite)" opacity="0.95"/>
+    <circle cx="490" cy="128" r="26" fill="none" stroke="#f59e0b" stroke-width="5"/>
+    <path d="M464 174 L516 174" stroke="#0c4a6e" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <!-- Title Banner -->
+  <text x="400" y="405" font-family="sans-serif" font-size="22" font-weight="bold" fill="#f8fafc" text-anchor="middle" letter-spacing="2">國立金門大學 National Quemoy University</text>
+  <text x="400" y="432" font-family="sans-serif" font-size="14" fill="#fde68a" text-anchor="middle" letter-spacing="1">真知力行・兼善天下｜金門大學國際暨兩岸事務處（OICA）</text>
+</svg>

@@ -52,6 +52,7 @@ from .ntua_eligibility import is_ntua, ntua_academic_check, ntua_degree_check, n
 from .ntue_eligibility import is_ntue, ntue_academic_check, ntue_degree_check, ntue_language_check
 from .ncut_eligibility import is_ncut, ncut_academic_check, ncut_degree_check, ncut_language_check
 from .npust_eligibility import is_npust, npust_academic_check, npust_degree_check, npust_language_check
+from .nqu_eligibility import is_nqu, nqu_academic_check, nqu_degree_check, nqu_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -775,6 +776,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_nqu(request.home_school):
+        deg_status, deg_detail = nqu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -1096,6 +1102,12 @@ def _eligibility_checks(
             "academic_score", status, "屏科大歷年平均 70 分（或班排前 50%）、操行 80 分與學海飛颺班排前 30% 門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_nqu(request.home_school):
+        status, detail = nqu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "金大國際交換（操行80分以上及姊妹校GPA 2.0–3.0門檻）與赴大陸交換（平均70分以上且班系排名前60%）雙軌標準", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1274,6 +1286,9 @@ def _eligibility_checks(
     if is_npust(request.home_school):
         home_status, home_detail = npust_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "屏科大外語能力檢定基準（全民英檢中級初試／TOEIC 550／TOEFL iBT 42／IELTS 4.5／JLPT N2／TOPIK 2級）與姊妹校語檢標準", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_nqu(request.home_school):
+        home_status, home_detail = nqu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "金大國際交換語言檢定標準（須為2年內有效成績，占書審20%：TOEIC 550+／TOEFL iBT 61+／IELTS 5.0+／JLPT N2–N3／TOPIK 2–3級）與大陸交換中文授課規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",
