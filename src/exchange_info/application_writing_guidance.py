@@ -1172,6 +1172,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="北藝大規定返國後 2 週內須向國際事務處報到並繳交 1,000 字以內出國交換報告（含照片 4 張以上）；這裡只合計下方各欄。",
     ),
+    ("ntua", "study-plan"): _rules(
+        (
+            "國立臺灣藝術大學國際事務處赴外交換學生計畫甄選必繳《讀書與研修計畫》及《自傳及履歷表》，簡章明定均須以「交換國語言及中文」各撰寫 1 份，字數約 1,000–2,000 字，占校內審查總成績 20%（需語檢學校）至 25%（不需語檢學校）。",
+            "內容應具體說明申請赴合作姊妹校交換動機、擬於境外修習之美術／設計／傳播／表演藝術／人文專業課程與創作工坊規劃（境外每學期應至少修習 2 門或相當於臺灣學制 6 學分以上課程，且至少 1 門為原屬系所專業課程）、個人作品集或展演研究目標，以及返國後學分抵免與職涯規劃。",
+        ),
+        evidence="國立臺灣藝術大學交換學生甄選要點、116學年度第1學期交換學生計畫甄選簡章及出國交換申請說明會簡報",
+        minimum=1000,
+        maximum=2000,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="臺藝大交換學生甄選簡章規定讀書計畫與自傳須以交換國語言及中文各撰寫 1 份，約 1,000–2,000 字；這裡只合計下方各欄。",
+    ),
+    ("ntua", "return-report"): _rules(
+        (
+            "依《國立臺灣藝術大學交換學生甄選要點》及《出國交換行前須知》規定，交換生於國外合作學校研修期滿返國後 30 日內（教育部學海系列計畫受獎生為返國後 2 週內），須完成《返校手續單》、填寫線上問卷並上傳《出國交換學生研修心得報告》（字數須達 2,000 字以上，並附研修照片 3–6 張），始得申請無息退還新臺幣 5,000 元保證金。",
+            "獲教育部《學海飛颺》或《學海惜珠》獎學金之受獎生，另須於返國後 2 週內將成果報告上傳至教育部學海計畫平台，並檢附來回電子機票、登機證存根、購票證明及出入境紀錄辦理經費核銷。",
+        ),
+        evidence="國立臺灣藝術大學交換學生甄選要點、出國交換行前須知、出國交換學生保證金退費申請表及辦理教育部學海系列計畫補助作業要點",
+        minimum=2000,
+        maximum=4000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="臺藝大規定返國後 30 日內（學海受獎生 2 週內）須繳交 2,000 字以上出國交換研修心得報告（含照片 3–6 張），始得退還 5,000 元保證金；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1221,6 +1243,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "utaipei": ("https://intl.utaipei.edu.tw/p/412-1080-9549.php?Lang=zh-tw", "2026-10-31"),
     "ntcu": ("https://oia.ntcu.edu.tw/data/3", "2026-10-31"),
     "tnua": ("https://oia.tnua.edu.tw/outgoing-application/", "2026-11-01"),
+    "ntua": ("https://international.ntua.edu.tw/#/Post/1079/46", "2026-11-01"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

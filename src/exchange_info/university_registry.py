@@ -1666,8 +1666,51 @@ TNUA = UniversityProfile(
     ),
 )
 
+NTUA = UniversityProfile(
+    id="ntua",
+    school_name="國立臺灣藝術大學",
+    short_name="臺藝大",
+    english_name="National Taiwan University of Arts",
+    aliases=(
+        "ntua",
+        "國立臺灣藝術大學",
+        "國立台灣藝術大學",
+        "臺灣藝術大學",
+        "台灣藝術大學",
+        "臺藝大",
+        "台藝大",
+        "臺藝",
+        "台藝",
+        "NTUA",
+        "National Taiwan University of Arts",
+    ),
+    hero_image="/static/assets/ntua-campus.svg",
+    official_url="https://international.ntua.edu.tw/",
+    coverage_note="完整支援：已整合國立臺灣藝術大學國際事務處（OIA）《交換學校一覽表（102校）》、《116學年度第1學期交換學生計畫甄選簡章》、《國立臺灣藝術大學交換學生甄選要點》、《辦理教育部學海系列計畫補助作業要點》、《與境外大學合作辦理雙聯學制實施辦法》及 102–113 學年度共 56 校 345 篇出國交換研修心得報告。",
+    support_level="full",
+    partner_count_hint=102,
+    academic_score_minimum=80.0,
+    student_card_signals=(
+        "國立臺灣藝術大學",
+        "國立台灣藝術大學",
+        "臺藝大",
+        "台藝大",
+        "NATIONALTAIWANUNIVERSITYOFARTS",
+        "NATIONAL TAIWAN UNIVERSITY OF ARTS",
+        "NTUA",
+    ),
+    # https://www.ntua.edu.tw/ — checked 2026-11-01.
+    colleges=(
+        "美術學院",
+        "設計學院",
+        "傳播學院",
+        "表演藝術學院",
+        "人文學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA)
 DEFAULT_UNIVERSITY = CGU
 
 
