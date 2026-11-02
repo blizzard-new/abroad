@@ -1260,6 +1260,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="屏科大規定返國後一個月內須繳交赴外交換研習心得報告書（含照片）並配合經驗分享會，始得辦理獎補助核銷；這裡只合計下方各欄。",
     ),
+    ("fgu", "study-plan"): _rules(
+        (
+            "出國／赴陸研修讀書計畫書與自傳為佛光大學學生申請海外及大陸地區姊妹校交換、跨國雙學位（美西大學、澳洲南天大學、日本龍谷大學、韓國東國大學）及教育部學海飛颺／惜珠與佛光大學海外學習獎學金之核心書審表件，建議合計撰寫約 1,000–2,000 字。",
+            "內容應具體說明申請動機、個人學業表現（大學部歷年平均 75 分以上或班排前 25%、研究所平均 85 分以上或所排前 30%）與外語準備、擬於志願姊妹校選修之課程規劃（每學期至少修習相當於佛光大學 2 學分以上課程），以及返國後學分抵免與職涯規劃。",
+        ),
+        evidence="佛光大學學生赴境外大學研修辦法、海外學習獎學金辦法、與境外大學校院辦理雙學位制實施辦法及國際暨兩岸事務處交換生甄選簡章",
+        minimum=800,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="佛光大學海外及大陸地區姊妹校交換甄選建議讀書計畫與自傳約 1,000–2,000 字，清楚呈現修課與學分抵免規劃；這裡只合計下方各欄。",
+    ),
+    ("fgu", "return-report"): _rules(
+        (
+            "依《佛光大學學生赴境外大學研修辦法》及《佛光大學海外學習獎學金辦法》規定，所有赴海外及大陸地區姊妹校交換、跨國雙學位及短期研修學生須於返國後一個月內向國際暨兩岸事務處（雲起樓 104 室）繳交《境外交換研修心得報告》（約 1,500–3,000 字並附研修與生活照片），並配合出席國際處舉辦之海外學習經驗分享會。",
+            "獲教育部《學海飛颺》、《學海惜珠》、《學海築夢》或《佛光大學海外學習獎學金》之學生，須於返國後規定期限內上傳成果報告至教育部學海計畫平台及校內系統，並檢附境外姊妹校正式成績單、護照（或台胞證）出入境紀錄及電子機票／登機證正本辦理獎助金核銷。",
+        ),
+        evidence="佛光大學學生赴境外大學研修辦法、海外學習獎學金辦法及教育部鼓勵國內大專校院選送學生出國研修或國外專業實習補助要點",
+        minimum=1000,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="佛光大學規定返國後一個月內須繳交境外交換研修心得報告（含照片）並配合經驗分享會，始得辦理海外學習獎學金及學海計畫核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1312,7 +1334,8 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "ntua": ("https://international.ntua.edu.tw/#/Post/1079/46", "2026-11-01"),
     "ntue": ("https://oia.ntue.edu.tw/p/406-1066-48777,r1703.php?Lang=zh-tw", "2026-10-31"),
     "ncut": ("https://oia.ncut.edu.tw/p/412-1030-6648.php?Lang=zh-tw", "2026-11-01"),
-    "npust": ("https://oia2.npust.edu.tw/zh/cooperation/%e4%ba%a4%e6%8f%9b%e5%ad%b8%e7%94%9f-2/", "2026-10-31"),
+    "npust": ("https://oia2.npust.edu.tw/zh/cooperation/%e4%ba%a4%e6%8f%9b%e5%ad%b8%E7%94%9f-2/", "2026-10-31"),
+    "fgu": ("https://oica.fgu.edu.tw/zh_tw/StudyAbroad/op1", "2026-11-02"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="zh_tw" class="orbit">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" media="all" href="/assets/frontend_extend-ce468bf8b09cf2f594d1a6b833a099eb1755b2fa40a63fc8802aaaf09cd66900.css">
+<link rel="stylesheet" media="all" href="/assets/front_end-356e454b2d19e86291266709954b9e46858a4194e92c4ce48e9d379bffb5c9c4.css">
+<meta property="og:title" content="">
+<meta property="og:site_name" content="佛光大學 國際暨兩岸事務處">
+<meta property="og:url" content="/">
+  <script type="text/javascript">
+    if (self != top){
+        try{
+            if(self.location.origin != top.location.origin){
+                top.location=self.location;
+            }
+        }catch(e){
+            console.log("Cannot fetch location!")
+        }
+    }
+</script>
+<script src="/assets/jquery-2a83d06853bd343c7bfc2e5d4539814cfa934676e2948ed348311435eca862f5.js"></script>
+<script src="/assets/jquery_prefix-5c5a0bbb9dfff7d410703a0565bc948dca28ec736d1a0e725050111c330805d3.js"></script>
+<script src="/assets/jquery_ujs_custom-a76b6cd8d652c18d24ed38d1f7a4d18f51d1f594a88a0f2ade82afec33966e2b.js"></script>
+<script src="/assets/jquery.cycle2.min-ec60b272289a05b845d7613d074237d008c08a069dc283c2e4c62dfc513242db.js"></script>
+<script src="/assets/jquery.cycle2.carousel.min-3d226d0713bcf58909be7c7e753fa1eef4409eee278299adfe70ff4ea646d65f.js"></script>
+<script src="/assets/jquery.cycle2.scrollVert.min-ce8da4c3f5e336753d998c9f02e64cc8b7e3977f5f6988133faf24a44c90b427.js"></script>
+<script src="/assets/jquery.cycle2.tile.min-83b4b0c4c2604b9c9acb20199a740f4b9e83c227ae46c1a430aa67bf97ff5457.js"></script>
+<link rel="stylesheet" media="all" href="/assets/datatables.min-7446416dca719e42fb55ff5fbf69879ccebe1ab56c6bb6833e2db781eccfddf9.css">
+<script src="/assets/datatables.min-598993c579b423583458a17773ed1e86103dc54e60eae7ab6c27b426af16df6f.js"></script>
+<meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="hTdTLaF1gRMmq55imSf7uIPvvNeWKrcXaw7VRSYGU57Vm97AnQ9R9AVFc+k1Ca9d2HN2vB8T0WAV2jBNjxLREw==">
+<script>
+    $.fn.dataTable.defaults.initComplete = function(settings) {
+        $(this).find('td:first-child').trigger('click');
+    };
+
+function fixLoginFormA11y() {
+// 當頁面沒有 .sign-in 則不執行
+  if ($('.sign-in').length === 0) return;
+  // === Step 1: 修正 label for="user_email" 內只有圖示沒有文字 ===
+  var $emailLabel = $('label[for="user_email"]');
+  if ($emailLabel.length) {
+    $emailLabel.find('i').attr('aria-hidden', 'true');
+    if ($emailLabel.find('.visually-hidden').length === 0) {
+      $emailLabel.append('<span class="visually-hidden">使用者帳號</span>');
+    }
+  }
+
+  // === Step 2: 修正 label for="user_password" 內只有圖示沒有文字 ===
+  var $pwLabel = $('label[for="user_password"]');
+  if ($pwLabel.length) {
+    $pwLabel.find('i').attr('aria-hidden', 'true');
+    if ($pwLabel.find('.visually-hidden').length === 0) {
+      $pwLabel.append('<span class="visually-hidden">密碼</span>');
+    }
+  }
+
+  // === Step 3: 密碼欄補上 title（placeholder 是圓點無意義）===
+  var $pwInput = $('#user_password');
+  if ($pwInput.length) {
+    if (!$pwInput.attr('title')) {
+      $pwInput.attr('title', '密碼');
+    }
+    if (!$pwInput.attr('aria-label')) {
+      $pwInput.attr('aria-label', '密碼');
+    }
+    // placeholder 換成有意義的文字
+    $pwInput.attr('placeholder', '請輸入密碼');
+  }
+
+  // === Step 4: 修正 remember_me 外層 label 包住 checkbox 又有子 label（巢狀 label 問題）===
+  // 外層 label 改為 div，避免巢狀 label
+  var $outerLabel = $('label.checkbox');
+  if ($outerLabel.length) {
+    var outerHtml = $outerLabel.html();
+    $outerLabel.replaceWith('<div class="checkbox">' + outerHtml + '</div>');
+  }
+
+  // === Step 5: 忘記密碼連結補上有意義的 title ===
+  $('a[href="#forgot_password"]').each(function () {
+    if (!$(this).attr('title')) {
+      $(this).attr('title', '忘記密碼');
+    }
+    // 確保連結文字清楚（移除 <small> 包覆不影響語意，但補 aria-label 保險）
+    if (!$(this).attr('aria-label')) {
+      $(this).attr('aria-label', '忘記密碼');
+    }
+  });
+}
+
+$(document).ready(function () {
+  setTimeout(fixLoginFormA11y, 300);
+});
+function fixLoginFormLabelA11y() {
+
+  // === 1. 確保 user_email input 的 label 關聯正確 ===
+  var $emailInput = $('#user_email');
+  var $emailLabel = $('label[for="user_email"]');
+  if ($emailInput.length && $emailLabel.length) {
+    // label 已有 visually-hidden 文字，確保 input 也有 aria-label 備援
+    if (!$emailInput.attr('aria-label')) {
+      $emailInput.attr('aria-label', '使用者帳號');
+    }
+  }
+
+  // === 2. 確保 user_password input 的 label 關聯正確 ===
+  var $pwInput = $('#user_password');
+  var $pwLabel = $('label[for="user_password"]');
+  if ($pwInput.length && $pwLabel.length) {
+    if (!$pwInput.attr('aria-label')) {
+      $pwInput.attr('aria-label', '密碼');
+    }
+  }
+
+  // === 3. 修正 remember_me：label 被包在 small 裡，移出來 ===
+  var $rememberCheckbox = $('#remember_me');
+  if ($rememberCheckbox.length) {
+    var $small = $rememberCheckbox.closest('.checkbox').find('small');
+    var $labelInSmall = $small.find('label[for="remember_me"]');
+
+    if ($labelInSmall.length && $small.length) {
+      // 把 label 從 small 裡移出來，直接放在 checkbox 旁邊
+      var labelHtml = $labelInSmall.prop('outerHTML');
+      $small.replaceWith(labelHtml);
+    }
+  }
+
+  // === 4. 確保 submit button 有可識別名稱 ===
+  $('button[type="submit"]').each(function () {
+    var $btn = $(this);
+    var btnText = $btn.text().trim();
+    if (btnText && !$btn.attr('aria-label')) {
+      $btn.attr('aria-label', btnText);
+    }
+  });
+
+  // === 5. 全站：找出所有沒有對應 label 的 input，補上 aria-label ===
+  $('input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="reset"])').each(function () {
+    var $input = $(this);
+    var inputId = $input.attr('id');
+
+    // 已有 aria-label 或 aria-labelledby 就跳過
+    if ($input.attr('aria-label') || $input.attr('aria-labelledby')) return;
+
+    // 有對應 label[for] 就跳過
+    if (inputId && $('label[for="' + inputId + '"]').length) return;
+
+    // 從 placeholder 或 title 補上 aria-label
+    var label = $input.attr('placeholder') || $input.attr('title') || '';
+    if (label) {
+      $input.attr('aria-label', label);
+    }
+  });
+}
+
+$(document).ready(function () {
+  setTimeout(fixLoginFormLabelA11y, 300);
+});
+</script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/site/favicon/59e838bb02dcf01c9f000018/189_991d5d4a_s.gif">
+  <title>佛光大學 國際暨兩岸事務處</title>
+  <link rel="stylesheet" media="all" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" media="all" href="/assets/bootstrap/bootstrap.min-f151bd29e00349ff4ee018618682b20377a72be26546bb336fac22954b2aafcb.css">
+  <link rel="stylesheet" media="all" href="/assets/template/template-51852419d171428e592ba42ca6981e5013cc97cb73a74dc1cbfe568563090337.css">
+  <link rel="stylesheet" media="all" href="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.10/css/perfect-scrollbar.min.css">
+  <link rel="stylesheet" media="print" type="text/css" href="/assets/template/print.css">
+  <script src="/assets/plugin/modernizr-d5770395993b83f1cd01c625a62f0cc2a8f2536f7288ef3a45f2863f2e20a9c1.js"></script>
+  <script src="/assets/plugin/picturefill.min-1e1f7d4e867ad1ec3d5886ad5e69512b6692509c939a89634ffcf63ba17b6b7d.js"></script>
+  <script src="/assets/plugin/jquery.mobile.custom.min-94832de9dd3faaf354dabd20e980b49bfe549a3750d73e5855bc4104b53afe9d.js"></script>
+  <script src="/assets/bootstrap.min-18024db0d6a0bc75ca740863a3b491b7f9b9cbd080ba3ee25e22265801d0b0c9.js"></script>
+  <script src="/assets/plugin/jquery.cycle2.video.min-384b34504c43f5962ffa3295b0b28947fd8a4498968853be0477a5dc664bd9b9.js"></script>
+  <script src="/assets/plugin/jquery-bullseye-min-8149d6adb748bd9561e9f1fd822e59337a75d065e017c7891699d50d69414bc2.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.10/js/min/perfect-scrollbar.jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.10/js/min/perfect-scrollbar.min.js"></script>
+  <script src="/assets/plugin/jquery.mobile.custom.min-94832de9dd3faaf354dabd20e980b49bfe549a3750d73e5855bc4104b53afe9d.js"></script>
+  <script src="/assets/app-c97c06b4886bcdb7f4709c1368c9c92436bdc17c3e28ac7a7bf80d2912c3a479.js"></script>
+  <script src="/assets/template-6c441466a0229614c163c8be80d962f98b890d68def12811dfc43b9d671562f4.js"></script>
+  <script src="/assets/frontend-121b87925d20c2b21764d1c5053c911976bcf14ba23128fed1904f6b7a19033d.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+<link rel="stylesheet" media="all" href="/assets/basic/icon-25f6a89d6786b31e5805ec90e7ba18610228db5085ba6610e43f9e488a81ce60.css">
+<link rel="stylesheet" media="all" href="/assets/lib/orbit_bar/orbit-bar-f866e856ce2eeae4af8ef65e11a4902b41e62426531422b4059f24eec4576845.css">
+<script src="/assets/frontend_extend-999decf38e68d49ef81c07f7c8ed615fffdbf532aa93c37e6a6ff279894d38d2.js"></script>
+</head>
+<body class="page-main prohibit_proxy_feature banner_height_setting_0" data-module="home">
+  <noscript style="color: #333333;"><p style="text-align: center;">此網頁需要支援 JavaScript 才能正確運行，請先至你的瀏覽器設定中開啟 JavaScript。</p></noscript>
+<link rel="stylesheet" media="all" href="/assets/fontawesome-6.2.1.min-8aec0118643d34254cb9f5c27b931239c9de8008c849c9800d8651a5da1abcb2.css">
+<link rel="stylesheet" media="all" href="/assets/fontawesome-6.7.2-fix.min-3fb9119cdcb8e12393eaf44554308981843df0135e5ff33f7a0716ef44de2983.css">
+<link rel="stylesheet" media="all" href="/assets/lib/jquery-ui-1.13.2/jquery-ui.min-bc39b4e583177d1bfb4d31e880558d84fd307a5b3c87a91f2fadaf0bc4f1cc96.css">
+<link rel="stylesheet" media="all" href="/assets/jquery-ui-timepicker-addon-ee91708eac547223792975e0d9a9aae62127da4b28a58d40c0634927f19665f0.css">
+  <script src="/assets/lib/jquery-ui-1.13.2/jquery-ui.min-b88d0b98b7b90a20cae0fc32eaf0845ac1ffdc0e4b3176c501e353d45c975064.js"></script>
+  <script src="/assets/jquery.ui.datepicker.monthyearpicker-6126b863aa1c4b399bf657869bbc51389d83ff5101b069ff7e1d0b02793c67e1.js"></script>
+<style type="text/css">
+  .ui-dialog {
+    z-index: 2000000000000 !important;
+  }
+  .ui-datepicker {z-index:1000000 !important}
+    @media screen and (min-width:768px){
+      html body #orbit-bar .orbit-bar-inner,html body #orbit-bar .orbit-bar-inner form,html body #orbit-bar .orbit-bar-search-sign-language{
+        background-color: #005480 !important;
+      }
+    }
+    html body #orbit-bar .orbit-bar-inner,html body #orbit-bar .orbit-bar-inner form,html body #orbit-bar .orbit-bar-search-sign-language{
+      background-color: #005480 !important;
+    }
+    html body #orbit-bar .orbit-bar-inner>ul>li:hover>span, html body #orbit-bar .orbit-bar-inner>ul>li:hover>a, html body #orbit-bar .orbit-bar-inner>ul>li:hover #language, html body #orbit-bar .orbit-bar-inner>ul>li>ul li:hover, html body #orbit-bar .orbit-bar-inner>ul>li>ul li.active,.orbit-bar-search-sign-language li:hover form,.orbit-bar-search-sign-language li:hover label
+    {
+        background-color: #999999 !important;
+        color: #ffffff !important;
+    }
+    html body #orbit-bar .orbit-bar-inner>ul>li span:hover,html body #orbit-bar .orbit-bar-inner>ul>li:hover>span#user, html body #orbit-bar .orbit-bar-inner>ul>li>ul li a:hover,html body #orbit-bar .orbit-bar-inner>ul>li:hover #language,html body #orbit-bar .orbit-bar-menu .showlist:hover .orbit-bar-home, html body #orbit-bar .orbit-bar-inner>ul>li:hover label
+    {
+        color: #ffffff !important;
+    }
+    html body #orbit-bar .orbit-bar-inner > ul > li > ul
+    {
+      background-color: #ffffff !important;
+    }
+    @media screen and (max-width:767px){
+      html body #orbit-bar .orbit-bar-inner > ul
+      {
+        background-color: #ffffff !important;
+      }
+      html body #orbit-bar .orbit-bar-inner form{
+        background-color: #ffffff !important;
+      }
+    }
+    @media screen and (min-width:768px){
+      html body #orbit-bar .orbit-bar-search-sign-language #language, html body #orbit-bar .orbit-bar-menu .orbit-bar-home,html body #orbit-bar .orbit-bar-search-sign-language #user,html body #orbit-bar .orbit-bar-inner>ul>li>a,html body #orbit-bar .orbit-bar-inner>ul>li label {
+        color: #ffffff !important;
+      }
+    }
+    @media screen and (max-width:767px){
+      #orbit-bar .orbit-bar-title a{
+        color: #ffffff !important;
+      }
+      label[for="open-orbit-nav"]{
+        border-color: #ffffff !important;
+        color: #ffffff !important;
+      }
+    }
+    html body #orbit-bar .orbit-bar-inner > ul > li > ul a,html body #orbit-bar .orbit-bar-inner > ul > li > ul .active{
+      color: #666666 !important;
+    }
+    html body #orbit-bar .orbit-bar-inner > ul > li > ul:before{
+      border-color: transparent transparent #666666 transparent !important;
+    }
+    @media screen and (max-width:767px){
+      html body #orbit-bar .orbit-bar-search-sign-language #language, html body #orbit-bar .orbit-bar-menu .orbit-bar-home,html body #orbit-bar .orbit-bar-search-sign-language #user,html body #orbit-bar .orbit-bar-inner>ul>li>a,html body #orbit-bar .orbit-bar-inner>ul>li label {
+        color: #666666 !important;
+      }
+    }
+</style>
+  <div id="orbit-bar">
+      <label for="open-orbit-login" style="display:none;">Open login</label>
+      <input type="checkbox" title="open login" id="open-orbit-login">
+      <label for="open-orbit-login" class="cover" title="Close login"><p style="display: none;">Close login</p></label>
+      <div class="login-window">
+        <div class="login-header">
+          <label tabindex="0" for="open-orbit-login" class="close">close</label>
+          <p>登入 佛光大學 國際暨兩岸事務處</p>
+        </div>
+        <div class="login-body">
+          <form class="container" action="/zh_tw/sessions" accept-charset="UTF-8" method="post">
+<input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="fp2N1Z6tLD+GAqas1rVRvNfiOlVRf3YavWxQ8T2G8iIuMQA4otf82KXsSyd6mwVZjH7wPthGEG3DuLX5lJJwrw==">
+            <div class="prepend input-group">
+              <span class="add input-group-addon"><i class="icon-user"></i></span>
+              <label for="user_user_id" style="display:none;">Username</label>
+              <input class="input" id="user_user_id" title="username" name="user_name" placeholder="使用者帳號" size="30" type="text">
+            </div>
+            <div class="prepend input-group">
+              <span class="add input-group-addon"><i class="icon-lock"></i></span>
+              <label for="user_password" style="display:none;">Password</label>
+              <input class="input" id="user_password" name="password" placeholder="密碼" title="password" size="30" type="password">
+            </div>
+            <div class="login-submit-wrap">
+              <div class="submit">
+                <button class="login-btn" type="submit">登入</button>
+              </div>
+                <div class="pull-right">
+                  <input type="checkbox" name="sso_login" checked id="sso_login"> <label for="sso_login"> SSO Login</label>
+                </div>
+            </div>
+            <script>
+              function forgot_password(){
+                if(document.getElementById('user_user_id').value !='')
+                  var post_data = $.post('/sessions/forgot_password',{ user_name: document.getElementById('user_user_id').value });
+                if(document.getElementById('user_user_id').value != ''){
+                  post_data.done(function(){
+                    try{
+                      if(I18n.locale == 'en')
+                        if(post_data.responseJSON['user_email'] == '')
+                          var alert_texts = 'This user_name or user_email is not registered yet!Please contact customer service to deal with this problem.';
+                        else
+                          var alert_texts = 'Please check '+post_data.responseJSON['user_email']+' to see the new password for user_name:'+post_data.responseJSON['user_name'].join(' , ');
+                      else
+                        if(post_data.responseJSON['user_email'] == '')
+                          var alert_texts = '該使用者名稱或是使用者email尚未註冊!請聯絡客服協助處理。';
+                        else
+                          var alert_texts = '請確認'+post_data.responseJSON['user_email']+'來查看使用者名稱:'+post_data.responseJSON['user_name'].join('、')+'的新密碼';
+                    }catch(e){
+                      if(I18n.locale == 'en')
+                        var alert_texts = 'Please contact customer service to deal with the problem.';
+                      else
+                        var alert_texts = '請聯絡客服協助處理。';
+                    };
+                    $('.alert-error').text(alert_texts);
+                    alert(alert_texts);
+                  });
+                }else{
+                  if(I18n.locale == 'en')
+                    var alert_texts = 'Please fill-in your user id without password, click “Forgot your password?“, and check you email for updated password.';
+                  else
+                    var alert_texts = '請輸入您的使用者帳號無需輸入密碼，點選「忘記密碼」後至您的信箱檢查密碼更新郵件！';
+                  alert(alert_texts);
+                };
+              };
+              document.addEventListener('DOMContentLoaded', function () {
+                var forgotPasswordLink = document.getElementById('forgot-password-link');
+                if (forgotPasswordLink) {
+                  forgotPasswordLink.addEventListener('click', forgot_password);
+                }
+              });
+            </script>
+            <a id="forgot-password-link" style="float: left;font-size: 0.813em;margin-left: 1em;" href="#forgot_password">忘記密碼?</a>
+            <div style="clear: both;"></div>
+</form>        </div>
+
+      </div>
+    <input type="checkbox" id="open-orbit-nav" title="orbitbar">
+    <div class="orbit-bar-inner">
+      <label for="open-orbit-nav">
+        <i class="icons-list-2"></i>
+      </label>
+      <ul class="orbit-bar-menu">
+        <li>
+          <a href="javascript:;" class="orbit-bar-logo" title="請登入以管理網站,按下開啟登入視窗">
+            <img src="/uploads/site/default_image/59e838bb02dcf01c9f000018/189_991d5d4a_s.gif" alt="奧博科技商標">
+            <p style="display: none;">請登入以管理網站,按下開啟登入視窗</p>
+          </a>
+        </li>
+        <li>
+          <a href="/" class="orbit-bar-home" title="首頁" tabindex="0"><i class="icons-house"></i><p>home</p></a>
+        </li>
+      </ul>
+      <h1 class="orbit-bar-title">
+        <a href="/" title="佛光大學 國際暨兩岸事務處">佛光大學 國際暨兩岸事務處</a>
+      </h1>
+      <ul class="orbit-bar-search-sign-language">
+        <li style="background-color:transparent;">
+          <form id="search" method="get" action="https://www.google.com/custom" target="_blank" style="border: 0 !important;">
+            <input type="hidden" name="client" value="pub-&amp;amp">
+            <input type="hidden" name="ie" id="ie" value="utf-8">
+            <input type="hidden" name="oe" id="oe" value="utf-8">
+            <input type="hidden" name="cof" id="cof" value="AH:center;AWFID:03de271f1940eea3;">
+            <input type="hidden" name="domains" value="oica.fgu.edu.tw">
+            <input type="hidden" name="sitesearch" value="oica.fgu.edu.tw">
+            <label style="display:none;" for="q" accesskey="S">Google Search</label>
+            <input type="search" name="q" id="q" value="" placeholder="全站搜尋" x-webkit-speech="" title="search">
+          </form>
+        </li>
+        <li id="language-li" style="background-color:transparent;" class="mobile_login_bar">
+            <a id="languagebutton" href="javascript:;" title="按下關閉語言選單"><span id="language"><i class="icons-earth orbit-bar-language-icon"></i><span class="orbit-bar-language-text">Language</span></span></a>
+            <ul>
+                  <li class="active">
+                    繁體中文
+                  </li>
+                  <li>
+                    <a accesskey="s" href="/?locale=zh_cn">
+                      简体中文
+                    </a>
+                  </li>
+                  <li>
+                    <a accesskey="e" href="/?locale=en">
+                      English
+                    </a>
+                  </li>
+            </ul>
+        </li>
+        <li style="margin-right:-1em;" class="mobile_login_bar">
+          <a id="loginbutton" title="按下開啟登入視窗" href="javascript:;">
+            <label for="open-orbit-login">
+              <i style="font-style: inherit;font-size: 0.8rem;width: 2.875em;text-align: right;vertical-align: middle;">登入</i>
+              <i class="icons-login" style="font-size: 1.4em;width: 1.875em;text-align: left;vertical-align: middle;"></i>
+            </label>
+          </a>
+        </li>
+        <style>
+          @media screen and (min-width:768px){
+            .orbit-bar-search-sign-language{
+              max-height:100%;
+            }
+          }
+        </style>
+      </ul>
+      <ul id="language-li-ul" class="orbit-bar-mobile-sign-language" style="background-color: #005480 !important;">
+        <li>
+            <span id="language" class="mobile-button"><i class="icons-earth orbit-bar-language-icon" style="color: #ffffff !important;"></i><span class="orbit-bar-language-text">Language</span></span>
+            <ul>
+                  <li class="active">
+                    繁體中文
+                  </li>
+                  <li>
+                    <a accesskey="s" href="/?locale=zh_cn">
+                      简体中文
+                    </a>
+                  </li>
+                  <li>
+                    <a accesskey="e" href="/?locale=en">
+                      English
+                    </a>
+                  </li>
+            </ul>
+        </li>
+        <li>
+          <label for="open-orbit-login">
+            <i class="icons-login" style="color: #ffffff !important;"></i>
+            <p style="display: none;">Open login</p>
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <style>
+  @media (max-width: 767px) {#orbit-bar ul.orbit-bar-search-sign-language > li + li{width:33.3333%;}}
+  </style>
+      <script>$('.orbit-bar-logo').off('click').on('click',function(){window.orbit_login_button = $(this);$("#open-orbit-login").click()});</script>
+  <script type="text/javascript">
+    var lang_opentitle = '按下開啟語言選單';
+    var lang_closetitle = '按下關閉語言選單';
+    $('#languagebutton').off('click').on('click',function(){
+      if ($(this).parent().find('>ul').hasClass('show')) {
+        $(this).attr('title', lang_opentitle);
+      } else {
+        $(this).attr('title', lang_closetitle);
+      }
+    });
+    $('#languagebutton').focus(function(){
+      if ($(this).parent().find('>ul').hasClass('show')) {
+        $(this).attr('title', lang_closetitle);
+      } else {
+        $(this).attr('title', lang_opentitle);
+      }
+    });
+    /* when tab key choose close,press enter to close login window start */
+    function closelabel(e){
+      var keynum;
+      if(window.event) // IE
+      {
+        keynum = e.keyCode
+      }
+      else if(e.which) // Netscape/Firefox/Opera/chrome
+      {
+        keynum = e.which
+      }
+      if( keynum == 13 ){
+        $(".orbit-bar-logo").one("focusin",function(){
+          window.orbit_login_button.focus();
+        })
+        $("#open-orbit-login").click();
+      };
+    }
+    $('label.close').attr('onkeydown','closelabel(event)');
+    /* when tab key choose  close,press enter to close login window end   */
+    $('#loginbutton >label').off('click').on('click',function(){window.orbit_login_button = $('#loginbutton');$("#open-orbit-login").click()});
+    $('#loginbutton').off('click').on('click',function(){window.orbit_login_button = $('#loginbutton');$("#open-orbit-login").click()});
+    /* press esc to close login window start */
+    function esc_close_login_window(event){
+      var e = event;
+      var keynum;
+      if(window.event) // IE
+      {
+        keynum = e.keyCode;
+      }
+      else if(e.which) // Netscape/Firefox/Opera/chrome
+      {
+        keynum = e.which;
+      }
+      if( keynum == 27 ){
+        $(".orbit-bar-logo").one("focusin",function(){
+          window.orbit_login_button.focus();
+        })
+        $("#open-orbit-login").click();
+      };
+    }
+    /* press esc to close login window end   */
+    $("#open-orbit-login").on("change",function(){
+      if($(this).is(":checked")){
+        $(window).off('keydown', esc_close_login_window).on('keydown', esc_close_login_window);
+        $("#user_user_id").focus(); //when open login window,focus on the username
+      }else{
+        $(window).off('keydown', esc_close_login_window);
+      }
+    })
+    $(".login-body form").on("submit",function(){
+      $(this).append("<input type='hidden' name='referer_url' value='/'/>");
+    })
+    var I18n = {};
+    Object.defineProperty(I18n,"locale",{
+      value: "zh_tw"
+    });
+    Object.defineProperty(I18n,"validLocales",{
+      value: ["zh_tw","zh_cn","en"]
+    });
+  </script>
+  <style>
+    #language-li ul li a{
+      margin-left: 0;
+      position: relative;
+    }
+    @media screen and (min-width:768px){
+        .sub_orbit_bar{
+          background-color:#ffffff!important;
+        }
+        .orbit-bar-menu{
+          background-color:transparent!important;
+        }
+        .sub_orbit_bar_text{
+          color:#666666!important;
+        }
+    }
+    @media screen and (max-width:767px){
+        .sub_orbit_bar{
+          background-color:#005480!important;
+        }
+        .orbit-bar-menu{
+          background-color:#005480!important;
+        }
+        .sub_orbit_bar_text{
+          color:#ffffff!important;
+        }
+      .mobile_login_bar{
+        width: 50%!important;
+      }
+    }
+      @media screen and (max-width: 767px){
+        #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language {
+            background: #333;
+            display: block;
+            margin: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+      }
+    .orbit-bar-mobile-sign-language {
+        display: none;
+    }
+    @media screen and (max-width: 767px){
+      #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li ul.show {
+        display: block;
+      }
+      #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li > span > span {
+        display: none;
+      }
+      #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li {
+        color: #fff;
+        float: left;
+        position: relative;
+      }
+      #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li > span , #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li > label{
+        cursor: pointer;
+        display: block;
+        height: 40px;
+        line-height: 43px;
+        width: 40px;
+        text-align: center;
+        margin-bottom: 0;
+      }
+      #orbit-bar .orbit-bar-inner .orbit-bar-mobile-sign-language > li ul {
+          background: #333 none repeat scroll 0 0;
+          border-radius: 0;
+          display: none;
+          position: fixed;
+          right: 0;
+          top: 40px;
+          width: 100%;
+      }
+    }
+  </style>
+  <style type="text/css">
+    .orbit-bar-inner .custom_widget{
+      flex:  1;
+    }
+  </style>
+  <script>
+    $(document).ready(function(){
+      $(".orbit-bar-inner").css("overflow","visible");
+      if($(window).outerWidth(true) <= 767){
+        $('.orbit-bar-menu').before($('.orbit-bar-title'));
+      }else{
+        $(".orbit-bar-search-sign-language").before($('.orbit-bar-title'));
+      }
+    })
+    $(window).resize(function(){
+      if($(window).outerWidth(true) <= 767){
+        $('.orbit-bar-menu').before($('.orbit-bar-title'));
+      }else{
+        $(".orbit-bar-search-sign-language").before($('.orbit-bar-title'));
+      }
+    })
+  </script>
+
+  
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+<div class="block-header" role="navigation">
+  <div class="block-title">
+    <div class="page-container clear">
+      
+      <div class="site-nav">
+        <a id="accesskey_top" accesskey="Q" href="/zh_tw/accesskey" title="Toolbar">:::</a>
+        <div style="text-align: right;">
+<a href="#">回首頁</a>|</div>
+<a href="/zh_tw/sitemap">Sitemap</a>
+      </div>
+
+      <div class="site-title">
+        <script>$(document).ready(function(){var url =$('.site-logo').eq(0).attr('src');if(url == "/assets/default-site-logo.png"){if($('.navbar-brand').length != 0){$('.navbar-brand').eq(0).remove();}else{$('.site-title >a').eq(0).remove();}};if($('.navbar-brand').length == 2 || $('.site-title >a').length == 2){$('.site-logo').css('height','auto')};$('.site-logo').eq(0).css('margin-right',0);$('.navbar-brand').css('padding-right',0)})</script><a title="主頁" class="" href="/"><h2 class="default_site_h1">
+<img class="site-logo" src="/uploads/site/site_logo/59e838bb02dcf01c9f000018/logo.png" alt="佛光大學 國際暨兩岸事務處的Logo"> <span style="display: none;">佛光大學 國際暨兩岸事務處</span>
+</h2></a>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="block-menu">
+    <div class="page-container clear">
+      <div class="site-menu" id="layout-navigation">
+        <a id="accesskey_menu" accesskey="M" href="/zh_tw/accesskey" title="Main menu">:::</a>
+        <div class="menu-toggle">
+<span>MENU</span><i class="fa fa-bars"></i>
+</div>
+        <ul class="site-menu-0" data-menu-level="0">
+<li>
+    <a href="/zh_tw/announcement" data-menu-link="true" class="dropdown-toggle" target="_self"><span>最新消息</span></a>
+    
+  </li>
+<li>
+    <a href="/zh_tw/intro1" data-menu-link="true" class="dropdown-toggle" target="_self"><span>單位簡介</span></a>
+    <ul class="site-menu-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/intro1/0" data-menu-link="true" target="_self"><span>關於我們</span></a>
+        <ul class="site-menu-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/intro1/0/2" data-menu-link="true" target="_self">關於我們</a>
+          </li>
+<li>
+            <a href="/zh_tw/intro1/0/3" data-menu-link="true" target="_self">About Us</a>
+          </li>
+<li>
+            <a href="/zh_tw/intro1/0/1" data-menu-link="true" target="_self">Versión en español de FGU OICA</a>
+          </li>
+<li>
+            <a href="/zh_tw/intro1/0/4" data-menu-link="true" target="_self">เกี่ยวกับเรา</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/intro1/intro2" data-menu-link="true" target="_self"><span>工作職掌</span></a>
+        <ul class="site-menu-2" data-menu-level="2">
+<li>
+            <a href="/zh_tw/intro1/intro2/HO" data-menu-link="true" target="_self">國際處本部</a>
+          </li>
+<li>
+            <a href="/zh_tw/intro1/intro2/ICEC" data-menu-link="true" target="_self">國際暨兩岸合作組</a>
+          </li>
+<li>
+            <a href="/zh_tw/intro1/intro2/IAC" data-menu-link="true" target="_self">國際招生組</a>
+          </li>
+<li>
+            <a href="/zh_tw/intro1/intro2/CLIC" data-menu-link="true" target="_self">華語教學中心</a>
+          </li>
+<li>
+            <a href="/zh_tw/intro1/intro2/IFG" data-menu-link="true" target="_self">國際專修部</a>
+          </li>
+</ul>
+      </li>
+<li>
+        <a href="/zh_tw/intro1/intro3" data-menu-link="true" target="_self"><span>組織架構</span></a>
+        
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="/zh_tw/admission" data-menu-link="true" class="dropdown-toggle" target="_self"><span>招生訊息 (Admission)</span></a>
+    <ul class="site-menu-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/admission/IP" data-menu-link="true" target="_self"><span>115學年度國際學程 (2026-2027 International Programs)</span></a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/admission/04" data-menu-link="true" target="_self"><span>外國學生申請入學</span></a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/admission/transfer" data-menu-link="true" target="_self"><span>外國學生轉學申請</span></a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/admission/05" data-menu-link="true" target="_self"><span>僑生及港澳生申請入學</span></a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/admission/%E9%A6%99%E6%B8%AF%E5%A2%83%E5%A4%96%E7%A2%A9%E5%A3%AB%E5%B0%88%E7%8F%AD%E7%94%B3%E8%AB%8B%E5%85%A5%E5%AD%B8" data-menu-link="true" target="_self"><span>香港境外碩士專班申請入學</span></a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/admission/INTENSEProgram" data-menu-link="true" target="_self"><span>新型專班申請入學</span></a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/admission/InternationalFoundationProgram" data-menu-link="true" target="_self"><span>國際專修部</span></a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/admission/Admissionresult" data-menu-link="true" target="_self"><span>放榜專區</span></a>
+        
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="#" data-menu-link="true" class="dropdown-toggle" target="_self"><span>交流成果</span></a>
+    <ul class="site-menu-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/exchange/exchangeStats" data-menu-link="true" target="_self"><span>交流統計</span></a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/exchange/20" data-menu-link="true" target="_self"><span>如何申請成為交換生？(他校來本校)</span></a>
+        
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="/zh_tw/archive" data-menu-link="true" class="dropdown-toggle" target="_self"><span>下載專區</span></a>
+    <ul class="site-menu-1" data-menu-level="1">
+<li>
+        <a href="/zh_tw/archive/Download_page_relative_laws" data-menu-link="true" target="_self"><span>相關法規</span></a>
+        
+      </li>
+<li>
+        <a href="/zh_tw/archive/otherform" data-menu-link="true" target="_self"><span>其他表單</span></a>
+        
+      </li>
+</ul>
+  </li>
+<li>
+    <a href="/zh_tw/link" data-menu-link="true" class="dropdown-toggle" target="_self"><span>網路資源</span></a>
+    
+  </li>
+<li>
+    <a href="/zh_tw/21" data-menu-link="true" class="dropdown-toggle" target="_self"><span>獎學金資訊</span></a>
+    
+  </li>
+<li>
+    <a href="/zh_tw/Q&amp;A_Chinese" data-menu-link="true" class="dropdown-toggle" target="_self"><span>僑生及港澳生版 FAQ</span></a>
+    
+  </li>
+</ul>
+      </div>
+    </div>
+  </div>
+  
+  
+
+  <div class="block-banner page-banner">
+  <div class="page-container clear">
+
+    <div class="site-banner">
+      <div data-pp="400"></div>
+    </div>
+
+  </div>
+  </div>
+  
+</div>
+
+
+
+
+  <div class="block-banner home-banner clear">
+  <div class="page-container clear">
+
+    <div class="site-banner">
+      <div data-pp="300"></div>
+         </div>  
+
+  </div>
+  </div>
+
+
+
+  <div class="block-main">
+    <a id="accesskey_content" accesskey="C" href="/zh_tw/accesskey" title="Content">:::</a>
+    <div class="page-container row">
+      <div data-pp="11">
+<div class="w-ba-banner ba-banner-widget-3" data-subpart-id="6937c0b7b32657b56426a824">
+  <h3 class="w-ba-banner__widget-title">
+    <span></span>
+  </h3>
+  <div class="w-ba-banner__wrap  cycle-slideshow" data-list="images" data-level="0" data-cycle-slides=".w-ba-banner__slide" data-cycle-log="false" data-cycle-auto-height="0" data-cycle-speed="500" data-cycle-timeout="5000" data-cycle-fx="fade" data-pager="#6937c0b7b32657b56426a824" data-pager-template="&lt;li&gt;&lt;a href='#'&gt;&lt;/a&gt;&lt;/li&gt;" data-pager-active-class="active-slide">
+    <div class="w-ba-banner__slide active" data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/6937c7d2b32657b56426a980/%E6%9C%AC%E6%A0%A1%E5%A4%96%E5%9C%8B%E5%AD%B8%E7%94%9F%E6%8B%9B%E7%94%9F%E4%BA%8B%E9%A0%85%E5%85%AC%E5%91%8A__3_.png?v=1774407617" alt="Banner image">
+      </a>
+    </div>
+  
+    <div class="w-ba-banner__slide " data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/6937ccd4b32657b56426a9f4/%E6%9C%AC%E6%A0%A1%E5%A4%96%E5%9C%8B%E5%AD%B8%E7%94%9F%E6%8B%9B%E7%94%9F%E4%BA%8B%E9%A0%85%E5%85%AC%E5%91%8A__5_.png?v=1774407617" alt="Banner image">
+      </a>
+    </div>
+  
+    <div class="w-ba-banner__slide " data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/69806764b326572b1ab1cd50/%E6%9C%AC%E6%A0%A1%E5%A4%96%E5%9C%8B%E5%AD%B8%E7%94%9F%E6%8B%9B%E7%94%9F%E4%BA%8B%E9%A0%85%E5%85%AC%E5%91%8A__6_.png?v=1774407617" alt="Banner image">
+      </a>
+    </div>
+  </div>
+    <ul id="6937c0b7b32657b56426a824" class="w-ba-banner__pager-3 banner-pager"></ul>
+</div>
+</div>
+
+        <div class="box-main clear col-sm-9">
+            <div data-pp="1">
+        <script style="display:none">
+          $(document).ready(function(){
+            $("[data-subpart-id=\"5a278d1702dcf03e13000046\"] .w-annc__more").text("更多→");
+          })
+        </script>
+      <div class="w-annc  widget-announcement-8" data-subpart-id="5a278d1702dcf03e13000046">
+  <h3 class="w-annc__widget-title">
+    <span>最新消息</span>
+  </h3>
+  <table class="w-annc__table  table">
+    <thead>
+      <tr>
+        <th class="w-annc__th  w-annc__th--category">類別</th>
+        <th class="w-annc__th  w-annc__th--title">標題</th>
+        <th class="w-annc__th  w-annc__th--date">張貼日期</th>
+      </tr>
+    </thead>
+    <tbody data-level="0" data-list="announcements">
+        <tr data-category="單位公告" data-tags="['5ab2fd23e718596f4e000ef8', '6731fecbb326572b9c8c95b8']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/-%E5%85%AC%E5%91%8A-115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E7%AC%AC1%E5%AD%B8%E6%9C%9F-%E6%B5%B7%E5%A4%96%E4%BA%A4%E6%8F%9B%E6%A0%A1%E5%85%A7%E7%94%84%E9%81%B8%E9%8C%84%E5%8F%96%E5%85%AC%E5%91%8A-18063077" title="【公告】115學年度第1學期 海外交換校內甄選錄取公告">【公告】115學年度第1學期 海外交換校內甄選錄取公告</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2026-10-22</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['63972e16e7185958c13b3371']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/2027%E5%B9%B4%E9%9F%93%E5%9C%8B%E9%A6%96%E7%88%BE-%E5%BB%BA%E5%9C%8B%E5%A4%A7%E5%AD%B8-%E5%86%AC%E5%AD%A3%E9%81%8A%E5%AD%B8%E5%9C%98-33477054" title="2027年韓國首爾 建國大學 冬季遊學團">2027年韓國首爾 建國大學 冬季遊學團</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2026-10-14</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['5ab2fd23e718596f4e000ef8', '66eed242b326572158e4b41e']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/115%E5%AD%B8%E5%B9%B4%E5%BA%A6%E7%AC%AC%E4%B8%80%E5%AD%B8%E6%9C%9F-%E4%BA%A4%E6%8F%9B%E7%94%9F-%E9%9B%99%E5%AD%B8%E4%BD%8D%E7%94%84%E9%81%B8%E8%AA%AA%E6%98%8E%E6%9C%83-80520322" title="115學年度第一學期 交換生/雙學位甄選說明會">115學年度第一學期 交換生/雙學位甄選說明會</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2025-09-16</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['5ab2fd23e718596f4e000ef8']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/%E6%9C%AC%E6%A0%A1%E9%9A%A8%E7%8F%AD%E9%99%84%E8%AE%80%E5%8D%94%E5%8A%A9%E9%8A%9C%E6%8E%A5%E5%AD%B8%E7%BF%92%E7%9B%B8%E9%97%9C%E8%B3%87%E8%A8%8A-49142142" title="本校隨班附讀協助銜接學習相關資訊">本校隨班附讀協助銜接學習相關資訊</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2025-06-18</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['5ab2fd23e718596f4e000ef8', '63972e8ce7185927fd3b34a0', '63972e16e7185958c13b3371', '6731fecbb326572b9c8c95b8', '66eed242b326572158e4b41e']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/%E5%AE%A3%E5%B0%8E-%E5%8B%95%E6%A4%8D%E7%89%A9%E5%85%A5%E5%A2%83%E5%8F%B0%E7%81%A3-%E8%A6%8F%E7%AF%84-3135644" title="宣導「動植物入境台灣」規範">宣導「動植物入境台灣」規範</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2025-05-27</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="[]">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/-%E6%9C%89%E9%97%9C%E5%90%84%E5%AD%B8%E7%B3%BB%E6%8B%9B%E6%94%B6%E4%BE%86%E8%87%AA%E7%89%B9%E5%AE%9A%E5%9C%8B%E5%AE%B6%E5%A4%96%E5%9C%8B%E5%AD%B8%E7%94%9F-2452436" title="【有關各學系招收來自特定國家外國學生】">【有關各學系招收來自特定國家外國學生】</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2024-09-30</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['63972e8ce7185927fd3b34a0']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/%E5%8B%9E%E5%8B%95%E9%83%A8%E4%BF%AE%E8%A8%82%E5%83%91%E5%A4%96%E7%94%9F%E7%94%B3%E8%AB%8B%E5%B7%A5%E4%BD%9C%E8%A8%B1%E5%8F%AF%E6%9C%9F%E9%96%93%E6%9C%80%E9%95%B7%E7%82%BA1%E5%B9%B4-22549626" title="勞動部修訂僑外生申請工作許可期間最長為1年">勞動部修訂僑外生申請工作許可期間最長為1年</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2024-09-10</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['63972e8ce7185927fd3b34a0']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/%E5%8B%9E%E5%8B%95%E9%83%A8%E6%96%B0%E5%A2%9E%E5%83%91%E5%A4%96%E7%94%9F%E5%BE%9E%E4%BA%8B%E6%97%85%E5%AE%BF%E6%9C%8D%E5%8B%99%E5%B7%A5%E4%BD%9C-74045342" title="勞動部新增僑外生從事旅宿服務工作">勞動部新增僑外生從事旅宿服務工作</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2024-09-10</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['5ab2fd23e718596f4e000ef8']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/-%E5%A4%96%E5%9C%8B%E5%AD%B8%E7%94%9F-%E5%83%91%E7%94%9F-%E4%B8%8D%E5%90%AB%E6%B8%AF%E6%BE%B3-%E6%87%89%E5%B1%86%E7%95%A2%E6%A5%AD%E7%94%9F-%E7%95%A2%E6%A5%AD%E5%BE%8C%E7%94%B3%E8%AB%8B%E5%B1%85%E7%95%99%E5%BB%B6%E6%9C%9F-%E7%B8%BD%E5%BB%B6%E9%95%B7%E5%B1%85%E7%95%99%E6%9C%9F%E9%96%93%E6%94%BE%E5%AF%AC%E6%9C%80%E9%95%B7%E7%82%BA2%E5%B9%B4-25190147" title="【外國學生、僑生(不含港澳)應屆畢業生】畢業後申請居留延期，總延長居留期間放寬最長為2年">【外國學生、僑生(不含港澳)應屆畢業生】畢業後申請居留延期，總延長居留期間放寬最長為2年</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2024-01-15</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="[]">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/Explanation-of-Work-Permit-Application-Validity-Period-12031427" title="Explanation of Work Permit Application Validity Period">Explanation of Work Permit Application Validity Period</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2023-10-03</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="[]">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/%E5%83%91%E5%A4%96%E7%94%9F%E5%B7%A5%E8%AE%80%E5%A0%B1%E7%A8%85%E8%88%87%E9%80%80%E7%A8%85%E4%BA%8B%E5%AE%9C-46692957" title="僑外生工讀報稅與退稅事宜">僑外生工讀報稅與退稅事宜</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2023-09-13</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['63972e8ce7185927fd3b34a0']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/%E5%85%A5%E5%A2%83%E6%99%82%E5%8B%BF%E6%94%9C%E5%B8%B6%E5%8B%95%E6%A4%8D%E7%89%A9%E6%AA%A2%E7%96%AB%E7%89%A9%E4%BB%A5%E5%85%8D%E9%81%AD%E7%BD%B0-46269252" title="入境時勿攜帶動植物檢疫物以免遭罰!">入境時勿攜帶動植物檢疫物以免遭罰!</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2023-06-09</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="[]">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/-%E5%83%91%E5%A4%96%E7%94%9F%E7%95%A2%E6%A5%AD-%E5%9C%8B%E5%85%A7%E5%A4%A7%E5%AD%B8%E6%A0%A1%E9%99%A2%E7%95%A2%E6%A5%AD%E5%83%91%E7%94%9F-%E6%B8%AF%E6%BE%B3%E5%AD%B8%E7%94%9F%E5%8F%8A%E5%A4%96%E5%9C%8B%E5%AD%B8%E7%94%9F%E7%95%A2%E6%A5%AD%E5%BE%8C%E4%B9%8B%E5%B7%A5%E4%BD%9C%E8%A9%95%E9%BB%9E%E9%85%8D%E9%A1%8D%E5%88%B6-95925247" title="【僑外生畢業】國內大學校院畢業僑生、港澳學生及外國學生畢業後之工作評點配額制">【僑外生畢業】國內大學校院畢業僑生、港澳學生及外國學生畢業後之工作評點配額制</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2019-01-08</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="[]">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-top">置頂</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/-%E6%B8%AF%E6%BE%B3%E6%87%89%E5%B1%86%E7%95%A2%E6%A5%AD%E7%94%9F-%E7%95%A2%E6%A5%AD%E5%BE%8C%E7%94%B3%E8%AB%8B%E5%B1%85%E7%95%99%E5%BB%B6%E6%9C%9F-%E7%B8%BD%E5%BB%B6%E9%95%B7%E5%B1%85%E7%95%99%E6%9C%9F%E9%96%93%E6%94%BE%E5%AF%AC%E6%9C%80%E9%95%B7%E7%82%BA1%E5%B9%B4-26319099" title="【港澳應屆畢業生】畢業後申請居留延期，總延長居留期間放寬最長為1年">【港澳應屆畢業生】畢業後申請居留延期，總延長居留期間放寬最長為1年</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2019-01-08</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['5ab2fd23e718596f4e000ef8', '66eed242b326572158e4b41e']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1">
+              <span class="w-annc__status label status status-hot">熱門</span>
+            </span>
+            <a class="w-annc__title" href="/zh_cn/announcement/%F0%9F%93%A2-%E8%B5%B4%E9%99%B8%E4%BA%A4%E6%B5%81%E6%B4%BB%E5%8B%95%E7%94%B3%E8%AB%8B%E8%88%87%E5%A0%B1%E5%82%99%E4%BA%8B%E5%AE%9C%E5%85%AC%E5%91%8A-25095459" title="📢 赴陸交流活動申請與報備事宜公告"><span style="font-family:Calibri,sans-serif"><span style='font-family:"Segoe UI Emoji",sans-serif'>📢</span> <strong><span style='font-family:"微軟正黑體",sans-serif'>赴陸交流活動申請與報備事宜公告</span></strong></span></a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2026-09-21</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="[]">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+            <a class="w-annc__title" href="/zh_cn/announcement/-%E6%95%99%E8%82%B2%E9%83%A8%E8%BE%A6%E7%90%86%E9%87%8D%E9%BB%9E%E7%94%A2%E6%A5%AD%E9%A0%98%E5%9F%9F%E6%93%B4%E5%A4%A7%E6%8B%9B%E6%94%B6%E5%83%91%E7%94%9F%E6%B8%AF%E6%BE%B3%E5%AD%B8%E7%94%9F%E5%8F%8A%E5%A4%96%E5%9C%8B%E5%AD%B8%E7%94%9F%E5%AF%A6%E6%96%BD%E8%A8%88%E7%95%AB%E4%BD%9C%E6%A5%AD%E8%A6%81%E9%BB%9E-%E7%AC%AC4%E9%BB%9E-%E7%AC%AC7%E9%BB%9E-%E7%AC%AC8%E9%BB%9E-%E6%A5%AD%E7%B6%93%E6%9C%AC%E9%83%A8%E6%96%BC%E4%B8%AD%E8%8F%AF%E6%B0%91%E5%9C%8B114%E5%B9%B411%E6%9C%8818%E6%97%A5%E4%BB%A5%E8%87%BA%E6%95%99%E9%AB%98%EF%BC%88%E4%BA%8C%EF%BC%89%E5%AD%97%E7%AC%AC1142203174A%E8%99%9F%E4%BB%A4%E4%BF%AE%E6%AD%A3%E7%99%BC%E5%B8%83-%E8%8C%B2%E6%AA%A2%E9%80%81%E7%99%BC%E5%B8%83%E4%BB%A4%E5%BD%B1%E6%9C%AC%E5%8F%8A%E8%A1%8C%E6%94%BF%E8%A6%8F%E5%89%87%E4%BF%AE%E6%AD%A3%E8%A6%8F%E5%AE%9A%E5%90%841%E4%BB%BD-%E8%AB%8B%E6%9F%A5%E7%85%A7-92122940" title="「教育部辦理重點產業領域擴大招收僑生港澳學生及外國學生實施計畫作業要點」第4點、第7點、第8點，業經本部於中華民國114年11月18日以臺教高（二）字第1142203174A號令修正發布，茲檢送發布令影本及行政規則修正規定各1份，請查照。">「教育部辦理重點產業領域擴大招收僑生港澳學生及外國學生實施計畫作業要點」第4點、第7點、第8點，業經本部於中華民國114年11月18日以臺教高（二）字第1142203174A號令修正發布，茲檢送發布令影本及行政規則修正規定各1份，請查照。</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2025-11-20</td>
+        </tr>
+    
+        <tr data-category="活動" data-tags="['5ab2fd23e718596f4e000ef8', '63972e16e7185958c13b3371']">
+          <td class="w-annc__category">活動</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+            <a class="w-annc__title" href="/zh_cn/announcement/2025%E5%B9%B4%E5%85%A8%E5%9C%8B%E5%83%91%E7%94%9F%E7%9B%83%E9%81%8B%E5%8B%95%E6%9C%83-55753820" title="2025年全國僑生盃運動會">2025年全國僑生盃運動會</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2025-09-08</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="[]">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+            <a class="w-annc__title" href="/zh_cn/announcement/%E5%A4%96%E7%B1%8D%E7%A2%A9%E5%8D%9A%E5%A3%AB%E4%BA%BA%E6%89%8D%E7%95%99%E8%87%BA%E5%B0%B1%E6%A5%AD%E5%AA%92%E5%90%88%E6%9C%83-79294471" title="外籍碩博士人才留臺就業媒合會">外籍碩博士人才留臺就業媒合會</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2025-08-16</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['66150590b32657202c770b6a', '63972e8ce7185927fd3b34a0']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+            <a class="w-annc__title" href="/zh_cn/announcement/%E8%8F%AF%E8%AA%9E%E6%96%87%E8%83%BD%E5%8A%9B%E6%B8%AC%E9%A9%97-%E6%8E%A8%E5%BB%A3%E5%9E%8B%E8%AC%9B%E5%BA%A7-%E5%8F%A3%E8%AA%9E%E6%B8%AC%E9%A9%97-%E9%96%B1%E8%AE%80%E6%B8%AC%E9%A9%97-93342747" title="華語文能力測驗「推廣型講座：口語測驗、閱讀測驗」">華語文能力測驗「推廣型講座：口語測驗、閱讀測驗」</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2025-08-14</td>
+        </tr>
+    
+        <tr data-category="單位公告" data-tags="['63972e8ce7185927fd3b34a0', '63972e16e7185958c13b3371', '6731fecbb326572b9c8c95b8']">
+          <td class="w-annc__category">單位公告</td>
+          <td class="w-annc_content">
+            <span class="w-annc__status-wrap" data-list="statuses" data-level="1"></span>
+            <a class="w-annc__title" href="/zh_cn/announcement/114%E5%B9%B4%E7%AC%AC2%E5%9B%9E-%E6%97%A5%E6%9C%AC%E7%95%99%E5%AD%B8%E8%A9%A6%E9%A9%97%EF%BC%88EJU%EF%BC%89-86794046" title="114年第2回「日本留學試驗（EJU）」">114年第2回「日本留學試驗（EJU）」</a>
+          </td>
+          <td class="w-annc__postdate" date-format="%Y-%m-%d"> 2025-07-18</td>
+        </tr>
+    </tbody>
+  </table>
+  <div class="w-annc__more-wrap clearfix">
+    <a class="w-annc__more btn btn-primary pull-right" href="/zh_cn/announcement?category%5B%5D=59e84a8602dcf01ddb00000c&amp;category%5B%5D=59e84a8602dcf01ddb00000d&amp;tags%5B%5D=all">Read more</a>
+  </div>
+</div>
+      <script style="display:none">
+        $("[data-subpart-id=\"5a278d1702dcf03e13000046\"] .w-annc__more").attr("href","/zh_cn/announcement?category%5B%5D=59e84a8602dcf01ddb00000c&category%5B%5D=59e84a8602dcf01ddb00000d&tags%5B%5D=all");
+      </script>
+      <div class="w-ba-banner ba-banner-widget-3" data-subpart-id="68354f4ab3265729c0297ae1">
+  <h3 class="w-ba-banner__widget-title">
+    <span></span>
+  </h3>
+  <div class="w-ba-banner__wrap  cycle-slideshow" data-list="images" data-level="0" data-cycle-slides=".w-ba-banner__slide" data-cycle-log="false" data-cycle-auto-height="0" data-cycle-speed="500" data-cycle-timeout="5000" data-cycle-fx="fade" data-pager="#68354f4ab3265729c0297ae1" data-pager-template="&lt;li&gt;&lt;a href='#'&gt;&lt;/a&gt;&lt;/li&gt;" data-pager-active-class="active-slide">
+    <div class="w-ba-banner__slide active" data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/683550d6b3265729c0297b09/S__7504069_0.jpg?v=1767936137" alt="Banner image">
+      </a>
+    </div>
+  
+    <div class="w-ba-banner__slide " data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/683550dfb3265729c0297b0d/S__7504063.jpg?v=1767936512" alt="Banner image">
+      </a>
+    </div>
+  
+    <div class="w-ba-banner__slide " data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/683550eab3265729c0297b11/S__7504065.jpg?v=1767936502" alt="Banner image">
+      </a>
+    </div>
+  
+    <div class="w-ba-banner__slide " data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/683550f3b3265729c0297b15/S__7504066.jpg?v=1767936200" alt="Banner image">
+      </a>
+    </div>
+  
+    <div class="w-ba-banner__slide " data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/68355107b3265729c0297b1d/S__7504067.jpg?v=1767936536" alt="Banner image">
+      </a>
+    </div>
+  
+    <div class="w-ba-banner__slide " data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/68355116b3265729c0297b23/messageImage_1767929324773.jpg?v=1767936152" alt="Banner image">
+      </a>
+    </div>
+  
+    <div class="w-ba-banner__slide " data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/68355120b3265729c0297b27/messageImage_1767929278241.jpg?v=1767936164" alt="Banner image">
+      </a>
+    </div>
+  
+    <div class="w-ba-banner__slide " data-link="" data-cycle-title="" data-cycle-desc="" data-overlay-template="&lt;h2&gt;&lt;/h2&gt;" data-target="" data-category="" data-tags="">
+      <a href="" target="">
+        <img class="w-ba-banner__image banner-responsive" src="/uploads/banner_image/file/68355187b3265729c0297b34/messageImage_1767929445574.jpg?v=1767935952" alt="Banner image">
+      </a>
+    </div>
+  </div>
+    <ul id="68354f4ab3265729c0297ae1" class="w-ba-banner__pager-3 banner-pager"></ul>
+</div>
+</div>
+        </div>
+        
+
+        <div class="box-right col-sm-3">          
+            <div data-pp="4"><div data-subpart-id="5a278f3702dcf03e1300004e">
+<h3>快速連結</h3>
+
+<ul>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><big><a href="https://academic.fgu.edu.tw/zh_tw/HOME/acaCalendar" title="在本視窗開啟 行事曆">行事曆</a></big></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><big><a href="https://www.facebook.com/fguoica/" target="_blank" rel="noopener noreferrer" title="另開新視窗Facebook">Facebook</a></big></strong></span></span></li>
+	<li><big><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="https://www.youtube.com/watch?v=obQYUlZR6yk" title="在本視窗開啟 Study in Taiwan Movie">Study in Taiwan Movie</a></strong></span></span></big></li>
+	<li>
+<span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><big><a href="https://selcourse2.fgu.edu.tw/life_edu/exam_login.aspx" title="在本視窗開啟 佛光大學國際招生">佛光大學國際招生</a></big></span></span><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"></span></span>
+</li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="https://www.youtube.com/watch?v=YOaZiAF6tYQ&amp;feature=share&amp;utm_source=EJGixIgBCJiu2KjB4oSJEQ" target="_blank" rel="noopener noreferrer" title="在新視窗開啟 緬甸僑生心得分享影片"><big>緬甸僑生心得分享影片</big></a></strong></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="https://www.youtube.com/watch?v=evf8ugk0WKk&amp;feature=share&amp;utm_source=EJGixIgBCJiu2KjB4oSJEQ" target="_blank" rel="noopener noreferrer" title="在新視窗開啟 大馬僑生心得分享影片"><big>大馬僑生心得分享影片</big></a></strong></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="https://oica.fgu.edu.tw/announcement/%E8%87%BA%E7%BE%8E%E4%BD%9B%E5%85%89%E8%A5%BF%E4%BE%86%E5%A4%A7%E5%AD%B8%E9%9B%99%E5%AD%B8%E4%BD%8D%E5%BE%AE%E9%9B%BB%E5%BD%B1-71964874" target="_blank" rel="noopener noreferrer" title="在新視窗開啟 臺美佛光西來大學雙學位微電影">雙學位微電影</a></strong></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="https://www.youtube.com/watch?v=VqHMWqQ5_do" target="_blank" rel="noopener noreferrer" title="在新視窗開啟 佛光影片簡介"><big><big>佛光影片簡介</big></big></a></strong></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><big><a href="https://fgu-stu.t-mesh.net/" title="在本視窗開啟 境外生畢業流向調查系統">境外生畢業流向調查系統</a></big></strong></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><big><a href="http://oica.fgu.edu.tw/announcement/%E8%AA%8D%E8%AD%98-2-2-Program-11047722" target="_blank" rel="noopener noreferrer" title="另開新視窗台美雙學位">台美雙學位</a></big><a href="http://oica.fgu.edu.tw/announcement/%E8%AA%8D%E8%AD%98-2-2-Program-11047722" target="_blank" rel="noopener noreferrer" title="另開新視窗計畫"><big>計畫</big></a></strong></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="https://clic.fgu.edu.tw/" target="_blank" rel="noopener noreferrer" title="另開新視窗華語教學中心"><big>華語教學中心</big></a></strong></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="/uploads/asset/data/65eebc47b3265752d6b0512c/%E4%BD%9B%E5%A4%A7%E8%8F%AF%E8%AA%9E24%E9%83%A8%E5%BD%B1%E7%89%87%E9%80%A3%E7%B5%90.pdf" target="_blank" rel="noopener noreferrer" title="另開新視窗華語教學中心"><big>華語學習資源</big></a></strong></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><big><a href="http://www.nisa.moe.gov.tw/" target="_blank" rel="noopener noreferrer" title="另開新視窗境外學生諮詢平台">境外學生諮詢平台</a></big></strong></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><big><a href="https://oica.fgu.edu.tw/announcement/%E9%99%B8%E5%83%91%E5%A4%96%E7%94%9F%E5%B1%85%E7%95%99%E8%AD%89%E7%94%B3%E8%AB%8B-99168132" target="_blank" rel="noopener noreferrer" title="另開新視窗陸僑外生居留證申請">陸僑外生居留證申請</a></big></strong></span></span></li>
+	<li><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="http://oica.fgu.edu.tw/zh_tw/announcement/%E5%83%91%E5%A4%96%E7%94%9F%E5%B7%A5%E4%BD%9C%E8%AD%89%E7%94%B3%E8%AB%8B%E7%9B%B8%E9%97%9C%E8%B3%87%E8%A8%8A-83345224" target="_blank" rel="noopener noreferrer" title="另開新視窗僑外生工作證申請相關"><big>僑外生工作證申請相關</big></a></strong></span></span></li>
+	<li><big><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="https://sitdatabase.moe.gov.tw/sitweb/Sign_CH.aspx" target="_blank" rel="noopener noreferrer" title="另開新視窗外籍畢業生流向問卷中文">外籍畢業生流向問卷中文</a></strong></span></span></big></li>
+	<li><big><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="https://sitdatabase.moe.gov.tw/sitweb/Sign_EN.aspx" target="_blank" rel="noopener noreferrer" title="另開新視窗Survey for Taiwan Alumni">Survey for Taiwan Alumni</a></strong></span></span></big></li>
+	<li><big><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="https://drive.google.com/file/d/1yeY5wXEyXiUFXzgDnHawaVfL6V1w3I8Y/view?usp=sharing" target="_blank" rel="noopener noreferrer" title="另開新視窗Contact Taiwan校友回娘家分享會">Contact Taiwan校友回娘家分享會</a></strong></span></span></big></li>
+	<li><big><span style="font-size:0.5em;"><span style="font-family:微軟正黑體;"><strong><a href="https://www.youtube.com/watch?v=rsUVY2ywyFk&amp;feature=youtu.be" target="_blank" rel="noopener noreferrer" title="另開新視窗【海華服務基金】留臺畢業同學分享 心理學系">【海華服務基金】留臺畢業同學分享 心理學系</a></strong></span></span></big></li>
+	<br>
+	 
+</ul>
+</div></div>    
+        </div>
+
+      </div>
+
+    </div>
+  
+
+  
+<div class="block-footer">
+  <div class="page-container clear">
+
+    <div class="footer-info">
+      
+      <div class="site-info">
+        <p><span style="font-size:0.875em;">本網站著作權屬於佛光大學 國際暨兩岸事務處，請詳見<a href="http://oica.fgu.edu.tw/doc/termofuse.php">使用規則</a>。</span></p>
+
+<p><span style="font-size:0.875em;">聯絡我們 Contact Us<br>
+地址：26247宜蘭縣礁溪鄉林美村林尾路160號 <br>
+<em>Address: Room 305, Yun Qi Building. No. 160, Linwei Rd., Jiaoxi Township, Yilan County 262307,Taiwan,ROC</em></span><br>
+<span style="font-size:0.875em;"><span style="font-size:0.875em;">*</span></span><span style="font-size:0.875em;">處本部/Office of International and Cross-Strait Affairs<br>
+<span style="font-size:0.875em;">  </span></span><span style="font-size:0.875em;">Tel: +886-3-9871000  Ext.12500,12501,12502        </span><span style="font-size:0.875em;">        </span><span style="font-size:0.875em;">*華語教學中心/Chinese Language Instruction Center<br>
+  Fax:+886-3-9875531                                                          Tel: +886-3-9313343  Ext.301,402,304<br>
+  Email: <a href="mailto:oica@mail.fgu.edu.tw">oica@mail.fgu.edu.tw</a>                                              Email: fguclic@gmail.com<br>
+*國際招生組/International Admission Division                   *國際專修部/International Foundation Program<br>
+ Tel: +886-3-9871000 Ext.12510,12512,12513                   Tel: +886-3-9871000  Ext.12540,12541<br>
+  Email: admission@gm.fgu.edu.tw                                       Email: <a href="mailto:oica@mail.fgu.edu.tw">oica@mail.fgu.edu.tw</a>      </span><span style="font-size:0.875em;">      </span><span style="font-size:0.875em;"><span style="font-size:0.875em;">     </span></span><br>
+<span style="font-size:0.875em;"><em>*</em></span><span style="font-size:0.875em;">國際暨兩岸合作組</span><span style="font-size:0.875em;">/International and Cross-Strait Cooperation Division</span><span style="font-size:0.875em;"><br>
+<em>  Tel: +886-3-9871000  Ext.12520,12521,12522<br>
+  Email: <a href="mailto:oica@mail.fgu.edu.tw">oica@mail.fgu.edu.tw</a>、 </em>ind999888@gmail.com</span></p>
+
+      </div>
+      <div class="site-data">
+        <a href="http://www.rulingcom.com/" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/icon-ruling.png" alt="RulingDigital">
+          <span>Powered by RulingDigital</span>
+        </a>
+        <div class="box-counter">造訪人次 : 3662321</div>  
+
+        <div class="footer-updated-date"></div>
+      </div>
+
+    </div>
+    
+  </div>
+</div>
+
+<script>document.addEventListener('click',function(e){var el=e.target.closest('[data-track-click-url]');if(!el){var a=e.target.closest('a');if(a){el=a.querySelector('[data-track-click-url]');}}if(!el){var s=e.target.closest('.w-ad-banner__slide');if(s&&!s.querySelector('a')&&s.getAttribute('data-link')&&!s.classList.contains('youtube')){el=s.querySelector('[data-track-click-url]');}}if(el&&navigator.sendBeacon){navigator.sendBeacon(el.getAttribute('data-track-click-url'));}});</script></body>
+</html>

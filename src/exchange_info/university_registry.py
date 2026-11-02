@@ -1834,7 +1834,45 @@ NPUST = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST)
+FGU = UniversityProfile(
+    id="fgu",
+    school_name="佛光大學",
+    short_name="佛大",
+    english_name="Fo Guang University",
+    aliases=(
+        "fgu",
+        "佛光大學",
+        "佛大",
+        "佛光",
+        "FGU",
+        "Fo Guang University",
+    ),
+    hero_image="/static/assets/fgu-campus.svg",
+    official_url="https://oica.fgu.edu.tw/zh_tw/exchange/20",
+    coverage_note="完整支援：已整合佛光大學國際暨兩岸事務處（OICA，雲起樓 112 室）《115學年度第一學期交換生／雙學位甄選說明會簡報》、《認識 2+2 Program（佛光山系統大學美國西來大學 University of the West 台美雙學位）》、《英國國立密德薩斯大學 Middlesex University 3+1／1+1 雙聯學位說明會簡報》、《佛光大學赴中國大陸以外國家及地區交換學生甄選辦法（A06-004）》、《佛光大學赴大陸交換學生甄選辦法（A06-005）》、《佛光大學學生參與西來大學 2+2 計畫實施辦法》、《佛光大學林陸素琦女士海外留學獎勵基金設置與管理辦法》、《佛光大學學海無涯國際交流獎助學金設置與管理辦法》、《佛光大學辦理國內外學校學生交流學習執行要點》與《歷屆海外交換及台美雙學位甄選錄取榜單與分享會簡報》官方資料：（1）兩梯次校內甄選時程、75分／全班前50%學業門檻與圖書館 EASY TEST iBT 測驗規定：每學期初（9–10月及2–3月）辦理次學期赴海外及大陸交換生暨雙聯學位校內甄選（如 115-1 甄選說明會於 2026/09/23 舉辦、申請文件繳交截止日為 2026/10/08），限具本校正式學籍之在學學生（大學部大二以上或碩博班碩一以上，大一下可報名大二交換，大一／大二可報名西來大學 2+2 雙學位），前一學期學業平均成績須達 75 分（約 GPA 3.0）以上且操行成績達 80 分以上（申請中國人民大學、南京大學、東南大學、四川大學、北京交通大學等大陸 985/211 重點名校須達全班排名前 20% 以內）；報名海外交換或雙學位者須於校內甄選前先完成圖書館線上英文模擬測驗「EASY TEST iBT 托福題型」並繳交成績單，外語能力依姊妹校規定須達英語 TOEFL iBT 61–80 / IELTS 5.5–6.5 / TOEIC 550–750、日檢 JLPT N3–N2 或韓檢 TOPIK 2–3 級（大陸姊妹校免附外語檢定）；交換期間於佛光大學完成註冊繳費並免繳姊妹校學費（日本花園大學與韓國金剛大學另提供免住宿費、美國西來大學交換生每學期最高獎助 US$3,500、2+2 雙學位生每學期最高獎助 US$7,500）。（2）全球 13 國／地區 52 所合作姊妹校與佛光山教團系統大學：完整收錄美國 3 校（西來大學、休士頓大學清湖分校、春山學院）、英國 1 校（國立密德薩斯大學）、德國 1 校（漢堡大學）、澳洲 1 校（南天大學）、紐西蘭 1 校（奧塔哥大學）、日本 2 校（龍谷大學、花園大學）、韓國 12 校（京畿大學、東國大學首爾校區、東國大學 WISE 校區、慶尚國立大學、金剛大學、東明大學、昌原國立大學、威德大學、新羅大學、中央僧伽大學、建國大學、京東大學）、泰國 2 校（正大管理學院、ม่โจ้大學 Maejo University）、馬來西亞 1 校（拉曼大學）、菲律賓 2 校（拉普拉普宿霧國際大學、光明大學）、印度 1 校（德里大學）、緬甸 1 校（龐道烏國際大學）、香港 1 校（香港教育大學）及中國大陸 23 校（中國人民大學、南京大學、北京交通大學、上海大學、四川大學、深圳大學、華中師範大學、鄭州大學、西北師範大學、陽光學院、東南大學、煙台大學、揚州大學、合肥工業大學、集美大學、廣東海洋大學、福建技術師範學院、海南大學、南京理工大學、濟南大學、陝西師範大學、雲南大學、青海民族大學）共 52 所合作大學（含 50 所當期開放申請之交換與雙聯合作校）。（3）四大獎助學金體系與學長姐經驗傳承：涵蓋教育部《學海飛颺／學海惜珠》、《林陸素琦女士海外留學獎勵基金》、《學海無涯國際交流獎助學金》與《西來大學 2+2 計畫獎學金》，以及 26 所合作大學共 30 篇歷屆交換生與雙學位生錄取榜單及分享會心得紀錄。",
+    support_level="full",
+    partner_count_hint=52,
+    academic_score_minimum=75.0,
+    student_card_signals=(
+        "佛光大學",
+        "佛大",
+        "FOGUANGUNIVERSITY",
+        "FO GUANG UNIVERSITY",
+        "FGU",
+    ),
+    # https://website.fgu.edu.tw/zh_tw/academics — checked 2026-11-02.
+    colleges=(
+        "人文學院",
+        "社會科學院",
+        "管理學院",
+        "創意與科技學院",
+        "樂活產業學院",
+        "佛教學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, FGU)
 DEFAULT_UNIVERSITY = CGU
 
 
