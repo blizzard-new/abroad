@@ -285,7 +285,7 @@ const UNIVERSITY_PAGE_TITLES = {
   guide: "申請指南",
   profile: "個人中心",
   feedback: "用戶評價",
-  overview: "準備與時程",
+  overview: "我的申請",
   advisor: "選校規劃",
   partners: "找交換學校",
   favorites: "收藏與比較",
@@ -14206,7 +14206,7 @@ function isPersonalizedRoute(hash = window.location.hash) {
 function updateUniWayPublicNavigation(hash = window.location.hash) {
   window.UniWayMotion?.route(hash);
   // The guide belongs to 我的申請: it explains the steps the personalised pages carry out.
-  const activeRoute = ["#overview", "#calendar", "#deadlines", "#budget", "#scholarships"].includes(hash) ? "overview" : isPersonalizedRoute(hash) ? "my-application" : /^#guide(=|$)/.test(hash) ? "overview" : globalFeedForHash(hash)
+  const activeRoute = ["#calendar", "#deadlines", "#budget", "#scholarships"].includes(hash) ? "my-application" : isPersonalizedRoute(hash) ? "my-application" : /^#guide(=|$)/.test(hash) ? "my-application" : globalFeedForHash(hash)
     ? "forum"
     : (/^#school=/.test(hash) || hash === "#search" ? "partners" : hash.slice(1));
   document.querySelectorAll(".application-tools-panel a").forEach((link) => {
@@ -14227,6 +14227,11 @@ function updateUniWayPublicNavigation(hash = window.location.hash) {
 
 function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
   let hash = window.location.hash || "#home";
+  if (hash === "#overview") {
+    // 準備與時程 is the 時程 tab of 我的申請; old links keep working.
+    window.history.replaceState(window.history.state, "", "#my-application?view=schedule");
+    hash = "#my-application?view=schedule";
+  }
   const globalFeed = globalFeedForHash(hash);
   const isUniversityPosts = hash === "#cgu-posts" || hash === "#university-posts";
   const isPublicExploration = isPublicExplorationRoute(hash);

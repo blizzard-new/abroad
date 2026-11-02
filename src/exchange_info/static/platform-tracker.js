@@ -23,11 +23,14 @@ window.UniWayTracker = (() => {
     const rows = [];
     let plan = [];
     try { plan = window.UniWayMultiPlan?.workRows?.() || []; } catch (_) { plan = []; }
+    let path = [];
+    try { path = window.UniWayApplicationPath?.workbenchRows?.() || []; } catch (_) { path = []; }
+    path.forEach((row) => rows.push(row));
     plan.forEach((task) => rows.push({ key: task.id, title: task.title, status: ["todo", "preparing", "ready"].includes(task.status) ? task.status : "todo", school: task.schoolName || "", date: task.date || "", plan: true }));
     (state.calendarEvents || []).filter((event) => event.origin !== "official" && event.title && parseLocalDate(event.date)).forEach((event) => {
       rows.push({ key: `event-${event.id || `${event.title}-${event.date}`}`, title: event.title, status: "todo", school: event.schoolName || "", date: event.date, plan: false });
     });
-    rows.sort((a, b) => (a.date || "9999").localeCompare(b.date || "9999") || a.title.localeCompare(b.title, "zh-Hant"));
+    rows.sort((a, b) => (a.date || "9999").localeCompare(b.date || "9999") || ((a.order ?? 1e9) - (b.order ?? 1e9)) || a.title.localeCompare(b.title, "zh-Hant"));
     rows.forEach((row, index) => { row.number = `UW-${pad(index + 1)}`; });
     return rows;
   }
@@ -54,7 +57,7 @@ window.UniWayTracker = (() => {
     return `<li class="pr-task ${row.status}" data-tracker-row>
       <span class="pr-prio ${level.tone}" title="${level.label}"><i data-lucide="${level.icon}" aria-hidden="true"></i><span class="visually-hidden">${level.label}</span></span>
       <code>${row.number}</code>${ring}
-      <span class="pr-task-title">${escapeHtml(row.title)}</span>
+      ${row.href ? `<a class="pr-task-title" href="${escapeHtml(row.href)}">${escapeHtml(row.title)}</a>` : `<span class="pr-task-title">${escapeHtml(row.title)}</span>`}
       ${row.school ? `<span class="pr-task-chip">${escapeHtml(shortName(row.school))}</span>` : ""}${dueHtml(row)}</li>`;
   }
 
@@ -88,7 +91,11 @@ window.UniWayTracker = (() => {
   }
 
   function statsHtml(rows) {
-    const done = rows.filter((row) => row.status === "ready").length;
+    // Tasks of the open plan are capped in the list, so their counts come from the plan itself.
+    const own = rows.filter((row) => !row.href);
+    const planTotals = window.UniWayApplicationPath?.workbenchTotals?.() || { done: 0, total: 0 };
+    const done = own.filter((row) => row.status === "ready").length + planTotals.done;
+    const totalTasks = own.length + planTotals.total;
     let next = null;
     try { next = upcomingDeadlines(1)[0] || null; } catch (_) { next = null; }
     const days = next ? calendarDaysUntil(localDateKey(next.date)) : null;
@@ -96,7 +103,7 @@ window.UniWayTracker = (() => {
     const missing = docs.filter((item) => readinessStatus(item.id) !== "ready").length;
     const picks = state.applications.size;
     const cells = [
-      { label: "已完成任務", value: rows.length ? `${done} / ${rows.length}` : "—", pct: rows.length ? done / rows.length : 0, tone: "navy" },
+      { label: "已完成任務", value: totalTasks ? `${done} / ${totalTasks}` : "—", pct: totalTasks ? done / totalTasks : 0, tone: "navy" },
       { label: "下一個截止", value: next ? `${shortDate(localDateKey(next.date))} ${truncate(next.scope || next.title, 8)}` : "—", pct: days === null ? 0 : Math.max(0.08, 1 - Math.min(days, 60) / 60), tone: "coral" },
       { label: "我的志願", value: picks ? `${picks} 間` : "—", pct: Math.min(1, picks / 5), tone: "blue" },
       { label: "待補文件", value: docs.length ? `${missing} 份` : "—", pct: docs.length ? missing / docs.length : 0, tone: "amber" },
@@ -157,12 +164,25 @@ window.UniWayTracker = (() => {
   function schedule() { if (!scheduled) scheduled = window.requestAnimationFrame(render); }
 
   function addTask() {
-    window.addEventListener("hashchange", () => window.requestAnimationFrame(() => {
-      const panel = document.querySelector("#calendar-quick-add");
-      if (panel) { panel.open = true; panel.querySelector("input, select")?.focus(); }
-    }), { once: true });
-    window.location.hash = "#calendar";
+    const form = root()?.querySelector("[data-tracker-quick]");
+    if (!form) return;
+    form.hidden = false;
+    form.elements.date.value = form.elements.date.value || localDateKey();
+    form.elements.title.focus();
   }
+
+  document.addEventListener("submit", (event) => {
+    const form = event.target.closest?.("[data-tracker-quick]");
+    if (!form) return;
+    event.preventDefault();
+    if (addCalendarEvent(form)) {
+      form.reset();
+      form.hidden = true;
+      render();
+      announce("已加入待辦。", "info");
+    }
+  });
+
 
   document.addEventListener("click", (event) => {
     const host = root();

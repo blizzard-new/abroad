@@ -88,3 +88,102 @@
 #application-path .level-card .choice-box { background: #fff; color: var(--uw-text, #23324a); border: 1px solid var(--uw-line, #d8dde5); box-shadow: none; }
 #application-path .level-card .choice-box svg, #application-path .level-card .choice-box i { color: var(--uw-muted, #586579); }
 #application-path .level-card .level-actions { padding-inline: 22px; }
+
+/* ===== 我的申請 workbench: header menu, tabs, plans, schedule, forms ===== */
+#application-path .header-actions { display: flex; align-items: center; }
+#application-path .ap-menu { position: relative; }
+#application-path .ap-menu summary { list-style: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--uw-line, #d8dde5); background: #fff; color: var(--uw-text, #23324a); cursor: pointer; }
+#application-path .ap-menu summary::-webkit-details-marker { display: none; }
+#application-path .ap-menu[open] summary { background: var(--uw-accent-wash, #edf0f4); }
+#application-path .ap-menu-list { position: absolute; right: 0; top: 52px; z-index: 30; display: grid; min-width: 180px; padding: 6px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 16px; background: #fff; box-shadow: var(--uw-shadow, 0 18px 48px #42627d18); }
+#application-path .ap-menu-list button { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 12px; border: 0; border-radius: 10px; background: none; color: var(--uw-text, #23324a); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+#application-path .ap-menu-list button:hover { background: var(--uw-accent-wash, #edf0f4); }
+#application-path .ap-menu-list button[hidden] { display: none; }
+#application-path .hub-tabs a { white-space: nowrap; }
+#application-path #subview-back { margin: 4px 0 0; }
+
+/* toast with an action */
+#application-path #toast { display: flex; align-items: center; gap: 14px; max-width: min(92vw, 520px); font-size: 14px; background: var(--uw-navy, #23324a); color: #fff; border: 0; bottom: 64px; z-index: 80; text-align: left; }
+#application-path #toast.error { background: #7e2b29; color: #fff; }
+#application-path #toast[hidden] { display: none; }
+#application-path .toast-action { min-height: 44px; padding: 0 8px; border: 0; background: none; color: #fff; font: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; flex: none; }
+
+/* create plan */
+#application-path .ap-semester { margin: 12px 0; padding: 0; border: 0; }
+#application-path .ap-semester legend { padding: 0; font-weight: 600; margin-bottom: 8px; }
+#application-path .ap-semester-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+#application-path .ap-semester-option { position: relative; display: flex; align-items: center; min-height: 48px; padding: 0 14px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 14px; background: #fff; font-weight: 600; font-size: 14px; cursor: pointer; }
+#application-path .ap-semester-option input { position: absolute; opacity: 0; inset: 0; }
+#application-path .ap-semester-option:has(input:checked) { background: var(--uw-navy, #23324a); color: #fff; border-color: var(--uw-navy, #23324a); }
+#application-path .ap-semester-option:has(input:focus-visible) { outline: 3px solid #3b6fd8; outline-offset: 2px; }
+
+/* 計畫 */
+#application-path .plans { display: grid; gap: 18px; margin-top: 18px; }
+#application-path .plan-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+#application-path .plan-card { display: grid; gap: 10px; align-content: start; padding: 20px 22px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; background: #fff; }
+#application-path .plan-card.current { border-color: var(--uw-navy, #23324a); }
+#application-path .plan-card h3 { margin: 0; font-size: 18px; line-height: 1.3; }
+#application-path .plan-nums { display: flex; gap: 24px; flex-wrap: wrap; margin: 0; }
+#application-path .plan-nums div { display: grid; gap: 2px; }
+#application-path .plan-nums dt { font-size: 12.5px; color: var(--uw-muted, #586579); }
+#application-path .plan-nums dd { margin: 0; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+#application-path .today-primary.dark { background: var(--uw-navy, #23324a); color: #fff; justify-self: start; }
+#application-path .today-primary.dark:hover { background: var(--uw-accent-hover, #18263b); }
+#application-path .plan-compare { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--uw-line, #d8dde5); border-radius: 18px; overflow: hidden; font-size: 14px; }
+#application-path .plan-compare th, #application-path .plan-compare td { padding: 12px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--uw-hairline, #e3edf2); }
+#application-path .plan-compare thead th, #application-path .plan-compare tbody th { background: var(--uw-surface-soft, #edf0f4); color: var(--uw-muted, #586579); font-weight: 600; }
+#application-path .plan-compare td { font-variant-numeric: tabular-nums; }
+#application-path .plan-shared { display: flex; gap: 10px; align-items: flex-start; margin: 0; padding: 12px 16px; border-radius: 16px; background: var(--uw-surface-soft, #edf0f4); font-size: 14px; }
+#application-path .plan-links { display: flex; flex-wrap: wrap; gap: 4px 22px; align-items: center; }
+#application-path .plan-archived { font-size: 14px; }
+#application-path .plan-archived ul { margin: 6px 0 0; padding: 0; list-style: none; }
+#application-path .plan-archived li { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 44px; border-bottom: 1px solid var(--uw-line, #d8dde5); }
+#application-path #plans-legacy { margin-top: 18px; }
+
+/* 時程 */
+#application-path .sched-deadlines { margin: 18px 0; padding: 20px 22px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; background: #fff; }
+#application-path .sched-deadlines ol { margin: 0; padding: 0; list-style: none; }
+#application-path .sched-deadlines li { border-bottom: 1px solid var(--uw-line, #d8dde5); }
+#application-path .sched-deadlines li:last-child { border: 0; }
+#application-path .sched-deadlines li a { display: flex; align-items: center; gap: 14px; min-height: 64px; color: inherit; text-decoration: none; }
+#application-path .sched-date { display: grid; justify-items: center; width: 56px; flex: none; }
+#application-path .sched-date b { font-size: 20px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+#application-path .sched-date small { color: var(--uw-muted, #586579); }
+#application-path #schedule-legacy .in-workbench { padding: 0; margin: 0; background: none; box-shadow: none; border: 0; display: grid; gap: 16px; }
+#application-path #schedule-legacy .pr-tracker-head h2 { margin: 0; font-size: 18px; }
+#application-path #schedule-legacy .pr-task-title { color: inherit; text-decoration: none; }
+#application-path #schedule-legacy a.pr-task-title:hover { text-decoration: underline; }
+#application-path #schedule-legacy .pr-quick { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+#application-path #schedule-legacy .pr-quick[hidden] { display: none; }
+#application-path #schedule-legacy .pr-quick input[name=title] { flex: 1 1 220px; min-width: 0; min-height: 44px; padding: 0 14px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 12px; }
+#application-path #schedule-legacy .pr-quick input[type=date] { min-height: 44px; padding: 0 10px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 12px; }
+#application-path #schedule-legacy .pr-tracker-title kbd, #application-path #schedule-legacy #tracker-add kbd { display: none; }
+@media (hover: none) { #application-path #tracker-add kbd { display: none; } }
+
+/* 今天: personal tasks + quick add */
+#application-path .today-own { margin-top: 22px; }
+#application-path .today-own h3 { margin: 0 0 4px; font-size: 15px; }
+#application-path .today-own ul { margin: 0; padding: 0; list-style: none; }
+#application-path .today-own li { display: flex; justify-content: space-between; gap: 12px; min-height: 44px; align-items: center; border-bottom: 1px solid var(--uw-line, #d8dde5); }
+#application-path .today-own small { color: var(--uw-muted, #586579); font-variant-numeric: tabular-nums; }
+#application-path .today-quick { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+#application-path .today-quick input[name=title] { flex: 1 1 200px; min-width: 0; min-height: 48px; padding: 0 14px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 14px; background: #fff; }
+#application-path .today-quick input[type=date] { min-height: 48px; padding: 0 10px; border: 1px solid var(--uw-line-strong, #b9c2cf); border-radius: 14px; background: #fff; }
+#application-path .today-add { min-height: 48px; padding: 0 20px; border: 0; border-radius: 14px; background: var(--uw-navy, #23324a); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+@media (max-width: 760px) { #application-path .ap-semester-options { grid-template-columns: 1fr; } }
+
+/* the old 接下來 card belongs to the checklist and map only */
+#application-path #hub[data-tab="today"] > .next-sidebar, #application-path #hub[data-tab="plans"] > .next-sidebar, #application-path #hub[data-tab="schedule"] > .next-sidebar,
+#application-path #hub[data-tab="plans"] > .preparation-boundary, #application-path #hub[data-tab="schedule"] > .preparation-boundary { display: none; }
+#application-path .sched-context { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 18px 0 0; padding: 14px 18px; border-radius: 16px; background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; }
+#application-path .sched-context p { margin: 0; }
+
+/* Primary navigation keeps its names when the rail is collapsed: icon above a short label (icon-only nav is hard to read). */
+@media (min-width: 901px) {
+  html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] { flex-direction: column; justify-content: center; width: 60px; height: 58px; padding: 6px 2px; gap: 3px; }
+  html body.unified-shell .glass-navigation-rail:not(:hover):not(:focus-within) .uniway-public-nav a[data-public-route] > span { inline-size: auto !important; max-inline-size: 58px; opacity: 1 !important; visibility: visible !important; transform: none !important; overflow: visible !important; font-size: 10.5px; line-height: 1.15; text-align: center; }
+}
+
+/* Older blocks moved into 時程 keep their own button sizes; wrap long labels instead of overflowing on phones. */
+#application-path #schedule-legacy :is(.primary-button, .secondary-button, .outline-button) { padding-inline: 12px; font-size: 13px; gap: 6px; }
+#application-path #schedule-legacy .planning-match-actions > :is(button, a) { min-width: 0; white-space: normal; overflow-wrap: anywhere; line-height: 1.3; }

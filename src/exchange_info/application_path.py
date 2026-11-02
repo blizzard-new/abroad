@@ -14,7 +14,7 @@ from typing import Literal
 
 from fastapi import HTTPException, Query, Request
 from fastapi.responses import Response
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import field_validator, BaseModel, ConfigDict, Field
 
 from .form_drafts import FormDraftConflictError, FormDraftError
 from .document_vault import VaultError
@@ -45,6 +45,20 @@ class PathContext(BaseModel):
     college: str = Field(default="", max_length=120)
     department: str = Field(default="", max_length=120)
     degree_level: str = Field(default="", max_length=80)
+
+    @field_validator("academic_year")
+    @classmethod
+    def _academic_year_is_roc(cls, value: str) -> str:
+        if value.isdigit() and int(value) >= 1900:
+            raise ValueError("申請學年度請填民國年，例如 116。")
+        return value
+
+    @field_validator("departure_year")
+    @classmethod
+    def _departure_year_is_gregorian(cls, value: str) -> str:
+        if value.isdigit() and int(value) < 1900:
+            raise ValueError("出國年份請填西元年，例如 2027。")
+        return value
 
 
 class PathCreate(PathContext):

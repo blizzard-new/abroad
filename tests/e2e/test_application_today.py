@@ -38,7 +38,7 @@ def test_today_is_the_default_view_and_leads_with_one_task(page, live_server, wi
     # no confirmed deadline in the test data: say so, never guess a date
     expect(today.locator('.today-panel').first).to_contain_text('目前沒有已確認的期限')
     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
-    for text in ('今天', '準備清單', '申請路徑'):
+    for text in ('今天', '計畫', '時程'):
         expect(page.locator('.hub-tabs').get_by_text(text, exact=True)).to_be_visible()
     first_tab = page.locator('.hub-tabs a').first
     expect(first_tab).to_have_attribute('data-tab', 'today')

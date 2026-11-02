@@ -111,10 +111,13 @@ def test_phone_and_tablet_keep_action_deadline_and_large_text(page, live_server)
 def test_existing_plan_visible_in_scheduling_without_creating_duplicate_preference(page, live_server):
     _, result, url = plan(page, live_server)
     page.evaluate('location.hash="#overview"')
-    expect(page.locator('#application-plan-index')).to_contain_text('林肯大學')
+    # 準備與時程 is the 時程 tab now and lists this plan's tasks; 計畫 keeps the plan itself.
+    expect(page.locator('#schedule-view [data-tracker-row]').first).to_contain_text('林肯大學')
     expect(page.locator('#tracker-body')).not_to_contain_text('還沒有志願')
-    page.locator('#application-plan-index a').first.click()
-    expect(page.locator('#progress-view')).to_be_visible()
+    page.locator('.hub-tabs [data-tab=plans]').click()
+    expect(page.locator('.plan-card')).to_contain_text('林肯大學')
+    page.locator('.plan-card a').first.click()
+    expect(page.locator('#today-view')).to_be_visible()
     assert result['plan']['id'] in page.url
 
 
@@ -201,9 +204,7 @@ def test_school_detail_starts_plan_directly_and_repeat_creation_is_idempotent(pa
     page.locator('#detail-prepare-plan-button').click()
     expect(page.locator('#plan-dialog')).to_be_visible()
     expect(page.locator('#create-target')).to_have_value('林肯大學 Lincoln University')
-    page.locator('#create-year').fill('116')
-    page.locator('#create-departure').fill('2027')
-    page.locator('#create-term').select_option('fall')
+    page.locator('#create-semesters input[value^="fall:"]').first.check()
     page.get_by_role('button', name='建立計畫', exact=True).dblclick()
     expect(page.locator('#today-view')).to_be_visible()  # a new plan lands on 今天
     first_plan = page.locator('#plan-select').input_value()

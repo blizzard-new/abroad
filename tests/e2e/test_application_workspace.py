@@ -15,7 +15,7 @@ def test_workspace_navigation_preserves_draft_target_and_old_routes(page, live_s
     page.on("pageerror", lambda error: errors.append(str(error)))
     _, target = create_target(page, live_server)
     workspace = page.locator("#application-workspace")
-    expect(workspace).to_be_visible()
+    expect(page.locator("#schedule-view")).to_be_visible()  # selecting a target opens the 時程 tab
     expect(page.locator("#application-target-school")).to_have_value(target)
     expect(page.locator("#overview > #planning-deadline-settings")).to_have_count(1)
     page.locator("#planning-deadline-settings > summary").click()

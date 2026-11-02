@@ -2,7 +2,7 @@
 window.UniWayApplicationWorkspace = (() => {
   const selection = ['advisor', 'favorites', 'eligibility'];
   const documents = ['application-center', 'application-form', 'document-check', 'documents', 'writing-assistant'];
-  const schedule = [['overview','準備與時程'], ['calendar','日曆'], ['deadlines','官方期限'], ['budget','預算'], ['scholarships','補助']];
+  const schedule = [['overview','時程'], ['calendar','日曆'], ['deadlines','官方期限'], ['budget','預算'], ['scholarships','補助']];
   let root, activePage, mounted = null, validationFrame = 0;
   function syncConditions() {
     const form = document.querySelector('#advisor-form');
@@ -23,7 +23,7 @@ window.UniWayApplicationWorkspace = (() => {
     if (!first || root) return;
     root = document.createElement('section'); root.id = 'application-workspace'; root.hidden = true;
     first.before(root);
-    root.innerHTML = '<header class="application-tools-heading"><a href="#my-application"><i data-lucide="route" aria-hidden="true"></i>我的申請</a><nav aria-label="準備與時程工具"></nav></header>';
+    root.innerHTML = '<header class="application-tools-heading"><a href="#my-application"><i data-lucide="route" aria-hidden="true"></i>我的申請</a><nav aria-label="我的申請工具"></nav></header>';
     [...selection, ...documents, ...schedule.map(x=>x[0])].forEach(id => {
       const page = document.querySelector(`[data-university-page="${id}"]`);
       if (page) root.append(page);
