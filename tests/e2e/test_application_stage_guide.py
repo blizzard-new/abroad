@@ -10,11 +10,13 @@ def test_legacy_tool_routes_have_no_duplicate_stage_guide(page, live_server, wid
     for route in ('advisor','eligibility','application-center','overview','calendar'):
         page.goto(f'{live_server.base_url}/#{route}')
         page.wait_for_load_state('networkidle')
-        expect(page.locator(f'[data-university-page="{route}"]')).to_be_visible()
+        # 準備與時程 is the 時程 tab of 我的申請 now; its old address redirects there.
+        shown = '#schedule-view' if route == 'overview' else f'[data-university-page="{route}"]'
+        expect(page.locator(shown)).to_be_visible()
         expect(page.locator('#application-journey-steps, #planning-next-action, #application-workspace-tool-menu')).to_have_count(0)
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
     page.locator('.application-tools-heading a[href="#overview"]').click()
-    expect(page.locator('#tracker-title')).to_have_text('準備與時程')
+    expect(page.locator('#tracker-title')).to_have_text('待辦與期限')
 
 
 def test_glide_select_keeps_keyboard_selection_and_dependent_options(page, live_server):

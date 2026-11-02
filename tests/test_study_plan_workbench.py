@@ -178,3 +178,12 @@ def test_study_plan_hub_and_assistant_render_the_six_steps_the_api_sends() -> No
         encoding="utf-8",
     )
     assert result.returncode == 0, result.stderr
+
+
+def test_one_character_source_values_do_not_break_the_partner_lookup() -> None:
+    from exchange_info.study_plan_workbench import _at_least_two
+
+    assert _at_least_two("2", "名額 ") == "名額 2"
+    assert _at_least_two("無", "語言要求：") == "語言要求：無"
+    assert _at_least_two("每校 2 名", "名額 ") == "每校 2 名"
+    assert len(_at_least_two("", "名額 ")) >= 2

@@ -51,6 +51,7 @@
     <link rel="stylesheet" href="/static/application-level-tools.css?v=20261029-level-tools-3" />
     <link rel="stylesheet" href="/static/partner-space.css?v=20261030-readable-2" />
     <link rel="stylesheet" href="/static/ux-task-first.css?v=20261101-1" />
+    <link rel="stylesheet" href="/static/application-today.css?v=20261102-8" />
   </head>
   <body class="global-home-mode unified-shell">
     <noscript><section style="position:relative;z-index:100;padding:2rem;background:#fff;color:#142c35"><h1>UniWay 交換學生申請與選校資訊</h1><p>依就讀大學查詢合作校、名額狀態、申請條件與官方來源。</p><a href="/schools">瀏覽交換學校指南（不需 JavaScript）</a><p>互動選校、收藏及申請工具需要啟用 JavaScript。</p></section></noscript>
@@ -84,7 +85,6 @@
             <a href="#partners" data-public-route="partners"><i data-lucide="search" aria-hidden="true"></i><span>學校搜尋</span></a>
             <a href="#forum" data-public-route="forum"><i data-lucide="messages-square" aria-hidden="true"></i><span>論壇</span></a>
             <a href="#my-application" data-public-route="my-application" data-requires-home-school><i data-lucide="route" aria-hidden="true"></i><span>我的申請</span></a>
-            <a href="#overview" data-public-route="overview" data-requires-home-school><i data-lucide="calendar-clock" aria-hidden="true"></i><span>準備與時程</span></a>
             <a href="/guides" data-public-route="guides" aria-label="交換指南"><i data-lucide="book-open" aria-hidden="true"></i><span>交換指南</span></a>
             <a href="#feedback" data-public-route="feedback"><i data-lucide="message-square-heart" aria-hidden="true"></i><span>用戶評價</span></a>
           </nav>
@@ -781,6 +781,7 @@
                   <button id="tracker-add" type="button" class="pr-navy-button"><i data-lucide="plus" aria-hidden="true"></i>新增任務<kbd aria-hidden="true">C</kbd></button>
                 </div>
               </header>
+              <form class="pr-quick" data-tracker-quick hidden><input name="title" maxlength="80" required aria-label="待辦名稱" placeholder="新增待辦，例如：請系主任簽名…"><input name="date" type="date" required aria-label="日期"><input type="hidden" name="category" value="other"><button type="submit" class="pr-navy-button">加入</button><span class="form-status" role="status"></span></form>
               <section id="tracker-stats" class="pr-stats-strip" aria-label="進度摘要"></section>
               <div class="pr-tracker-grid">
                 <div id="tracker-main" class="pr-tasklist">
@@ -1617,7 +1618,7 @@
       <form method="dialog"><span class="section-kicker">更換目標前，先確認影響</span><h2 id="planning-target-change-title">改用這所學校規劃？</h2><p id="planning-target-change-summary"></p><ul id="planning-target-change-impact"></ul><footer><button id="planning-target-change-cancel" class="secondary-button" value="cancel">保留原目標</button><button class="primary-button" value="confirm">確認更換目標</button></footer></form>
     </dialog>
     <script src="/static/multi-plan.js?v=20261015-redesign-1" defer></script>
-    <script src="/static/application-workspace.js?v=20261029-level-tools-3" defer></script>
+    <script src="/static/application-workspace.js?v=20261102-wb1" defer></script>
     <script src="/static/application-journey.js?v=20261008-ncu-1" defer></script>
     <script src="/static/document-workbench.js?v=20261008-ncu-1" defer></script>
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
@@ -1626,11 +1627,11 @@
     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
     <script src="/static/tku-partner-details.js?v=20261011-milestone4-1" defer></script>
     <script src="/static/react-aria-school-picker.js?v=20261016-lattice-1" defer></script>
-    <script src="/static/application-plan-index.js?v=20261101-1" defer></script>
+    <script src="/static/application-plan-index.js?v=20261102-wb1" defer></script>
     <script src="/static/application-path-select.js?v=20261029-level-tools-3" defer></script>
-    <script src="/static/application-path-template.js?v=20261101-1" defer></script>
-    <script src="/static/application-path.js?v=20261101-1" defer></script>
-    <script src="/static/app.js?v=20261101-ux-1" defer></script>
+    <script src="/static/application-path-template.js?v=20261102-3" defer></script>
+    <script src="/static/application-path.js?v=20261102-8" defer></script>
+    <script src="/static/app.js?v=20261102-wb2" defer></script>
     <script src="/static/vendor/cobe/0.6.4/cobe.min.js" defer></script>
     <script src="/static/platform-globe.js?v=20261029-midnight-1" defer></script>
     <script src="/static/platform-home.js?v=20261027-search-first-1" defer></script>
@@ -1638,7 +1639,7 @@
     <script src="/static/platform-explore.js?v=20261030-space-1" defer></script>
     <script src="/static/platform-detail.js?v=20261017-ntu-reference-1" defer></script>
     <script src="/static/platform-guide.js?v=20261015-redesign-1" defer></script>
-    <script src="/static/platform-tracker.js?v=20261101-ux-1" defer></script>
+    <script src="/static/platform-tracker.js?v=20261102-wb2" defer></script>
     <script src="/static/platform-forum.js?v=20261015-redesign-1" defer></script>
     <script src="/static/platform-profile.js?v=20261015-redesign-1" defer></script>
     <script src="/static/tku-campus-assets.js?v=20261011-reviewed-1" defer></script>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UniWay 我的申請 — User Flow Report</title>
+<style>
+  :root{--ink:#23324a;--muted:#586579;--line:#d8dde5;--accent:#23324a;--ok:#1f7a4d;--warn:#8a5a00;--bad:#a83c39;--bg:#f3f5f8;--card:#fbfcfe}
+  *{box-sizing:border-box;margin:0}
+  body{font:16px/1.6 "Poppins","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:var(--ink);background:var(--bg);padding:48px 24px;max-width:920px;margin:0 auto}
+  h1{font-size:28px;letter-spacing:-.01em}
+  h2{font-size:20px;margin:48px 0 8px;padding-top:24px;border-top:1px solid var(--line)}
+  h3{font-size:15px;color:var(--muted);margin:28px 0 12px}
+  .meta{color:var(--muted);font-size:14px;margin:6px 0 4px}
+  .skills{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 0}
+  .chip{font-size:13px;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+  .flow{list-style:none;padding:0;margin:16px 0}
+  .flow>li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;position:relative}
+  .flow>li+li{margin-top:34px}
+  .flow>li+li::before{content:"";position:absolute;top:-27px;left:32px;width:2px;height:20px;background:var(--accent)}
+  .flow>li+li::after{content:"";position:absolute;top:-12px;left:28px;border:5px solid transparent;border-top-color:var(--accent)}
+  .step-n{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;padding:1px 9px;margin-right:8px;vertical-align:1px}
+  .step-t{font-weight:650}
+  .step-d{color:var(--muted);font-size:14px;margin-top:6px}
+  .cta{font-size:13px;margin-top:8px}
+  .cta b{color:var(--ok)}
+  .branch{font-size:13px;margin-top:8px;padding:8px 12px;background:#edf0f4;border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+  table{border-collapse:collapse;width:100%;font-size:14px;background:var(--card)}
+  th,td{text-align:left;padding:9px 12px;border:1px solid var(--line);vertical-align:top}
+  th{background:var(--bg);font-size:13px;color:var(--muted)}
+  .pass{color:var(--ok);font-weight:650}.warn{color:var(--warn);font-weight:650}.fail{color:var(--bad);font-weight:650}
+  .overflow{overflow-x:auto}
+  footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  @media print{body{background:#fff;padding:0}.flow>li{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<h1>UniWay 我的申請 — User Flow Report</h1>
+<p class="meta">2026-11-01 · 規劃「我的申請」與「準備與時程」合併後的三條主要流程，並用各 skill 的 anti-pattern 表檢查<strong>目前實作</strong>（verdict 針對現況，不是新設計）</p>
+<div class="skills">
+  <span class="chip">flow-onboarding</span><span class="chip">flow-empty-states</span><span class="chip">flow-forms</span><span class="chip">flow-navigation</span><span class="chip">flow-errors</span>
+</div>
+
+<h2>Summary</h2>
+<p>新版把兩個入口合成一個工作臺，預設畫面只回答「現在做哪一件事」。建立計畫縮成三個問題；每個完成動作都能撤銷；斷線與續接說清楚內容在哪裡。檢查現況後，主要落差在清單過長（FAIL）、導覽圖示沒有文字（FAIL）、原始錯誤訊息（FAIL）與年份輸入（FAIL）。畫面見 <a href="mockups/my-application.html">設計稿</a>，問題編號見 <a href="README.md">報告</a>。</p>
+
+<!-- ══ FLOW 1 ══ -->
+<h2>Flow: 第一次使用 → 第一個任務</h2>
+<p class="meta">Pattern source: flow-onboarding、flow-empty-states、flow-forms · Entry point: 側欄「我的申請」（已登入、已選就讀學校）</p>
+
+<h3>Steps</h3>
+<ol class="flow">
+  <li>
+    <span class="step-n">1</span><span class="step-t">空白狀態（第一次使用）</span>
+    <p class="step-d">標題「先選一所你想去的學校」，下方預覽選好之後會看到的三件事：現在做這件事、已確認的官方期限、文件備齊度。預覽項目是範例樣式，不可點。</p>
+    <p class="cta">Primary action: <b>選擇交換學校</b> → 就地開啟學校選擇（不換頁）</p>
+    <div class="branch">若學生已有目標 → 「我已經有目標學校」直接進入步驟 2 並略過推薦</div>
+  </li>
+  <li>
+    <span class="step-n">2</span><span class="step-t">新增申請計畫（3 個問題）</span>
+    <p class="step-d">目標學校（可搜尋）、預計出發學期（最近 4 個學期＋還沒決定）、學院／學系（從選校條件帶入，可修改）。系統換算並顯示對應的民國學年度。</p>
+    <p class="cta">Primary action: <b>建立計畫</b> → 今天</p>
+    <div class="branch">若年份組合不合理 → 欄位旁說明並不送出（後端同樣驗證）</div>
+  </li>
+  <li>
+    <span class="step-n">3</span><span class="step-t">今天：現在做這件事</span>
+    <p class="step-d">一張深藍卡片：任務名稱、為什麼是這件、預估時間、來源。其餘資訊（期限、階段、待辦）在下方，不搶焦點。</p>
+    <p class="cta">Primary action: <b>開始</b> → 任務面板</p>
+  </li>
+  <li>
+    <span class="step-n">4</span><span class="step-t">任務面板</span>
+    <p class="step-d">說明、依據、輸入；自動儲存狀態；條件不符時只顯示「補填」，不顯示「確認」。</p>
+    <p class="cta">Primary action: <b>完成這項</b> → 回到今天，顯示進度變化與「撤銷」</p>
+    <div class="branch">若資料不足或條件不符 → 補填學院／學系、或前往官方公告</div>
+  </li>
+</ol>
+
+<h3>Screen inventory</h3>
+<div class="overflow"><table>
+  <tr><th>Screen</th><th>Purpose</th><th>Primary action</th><th>States (empty/loading/error)</th></tr>
+  <tr><td>空白狀態</td><td>說明價值、帶到選學校</td><td>選擇交換學校</td><td>載入：骨架畫面；錯誤：說明原因＋重試</td></tr>
+  <tr><td>新增計畫</td><td>收集 3 個必要資訊</td><td>建立計畫</td><td>驗證錯誤在欄位旁；送出中按鈕顯示處理中；失敗保留已填內容</td></tr>
+  <tr><td>今天</td><td>現在做哪一件事</td><td>開始</td><td>無待辦：「今天沒有要做的事」＋下一個期限；載入：骨架；錯誤：保留舊資料並標示過期</td></tr>
+  <tr><td>任務面板</td><td>完成單一任務</td><td>完成這項／補填</td><td>離線、衝突、封存中皆有說明</td></tr>
+</table></div>
+
+<h3>Anti-pattern audit（目前實作）</h3>
+<div class="overflow"><table>
+  <tr><th>Check</th><th>Verdict</th><th>Note</th></tr>
+  <tr><td>flow-onboarding：Landing on an empty workspace</td><td class="warn">WARN</td><td>有 CTA，但沒說選了之後會得到什麼（觀察 obs-01）</td></tr>
+  <tr><td>flow-onboarding：Checklist with 10+ items</td><td class="fail">FAIL</td><td>43 項計入進度、「釐清申請條件」一組 8 項全部攤開（UX-07）</td></tr>
+  <tr><td>flow-onboarding：Celebrating trivial steps</td><td class="warn">WARN</td><td>每個任務完成都出現金色徽章畫面；建議只在階段完成時慶祝</td></tr>
+  <tr><td>flow-onboarding：Onboarding restarts on second device</td><td class="pass">PASS</td><td>計畫與進度存在伺服器帳號</td></tr>
+  <tr><td>flow-forms：Strict / free-text input where a choice exists</td><td class="fail">FAIL</td><td>民國學年度與西元出國年是自由文字，互換仍成功（UX-02）</td></tr>
+  <tr><td>flow-forms：Asking for data you don't use</td><td class="warn">WARN</td><td>「申請梯次」沒有說明是什麼；學籍資料可由選校條件帶入</td></tr>
+  <tr><td>flow-forms：Dropdown for 2–4 options</td><td class="warn">WARN</td><td>出國學期（4 個選項）用下拉選單</td></tr>
+  <tr><td>flow-forms：Placeholder-only labels</td><td class="pass">PASS</td><td>欄位都有固定標籤</td></tr>
+  <tr><td>flow-empty-states：Blank screen while loading</td><td class="warn">WARN</td><td>載入時是一行文字「正在載入你的申請進度…」，沒有骨架畫面</td></tr>
+  <tr><td>flow-empty-states：Same visual for empty and failed fetch</td><td class="pass">PASS</td><td>錯誤狀態有說明與「重新載入」</td></tr>
+</table></div>
+
+<!-- ══ FLOW 2 ══ -->
+<h2>Flow: 每日使用（工作臺）</h2>
+<p class="meta">Pattern source: flow-navigation · Entry point: 側欄「我的申請」；舊網址 <code>#my-application</code>、<code>#overview</code> 都導到這裡</p>
+
+<h3>Steps</h3>
+<ol class="flow">
+  <li>
+    <span class="step-n">1</span><span class="step-t">打開「我的申請 · 今天」</span>
+    <p class="step-d">看到現在做這件事、下一個已確認的官方期限、階段進度、今天與本週的待辦。計畫選單、儲存狀態、⋯ 選單在頁首一列。</p>
+    <p class="cta">Primary action: <b>開始</b> → 任務面板</p>
+    <div class="branch">若沒有已確認期限 → 卡片說明「尚未公布」，提供「查看官方公告」與「我查到了」</div>
+  </li>
+  <li>
+    <span class="step-n">2</span><span class="step-t">處理待辦</span>
+    <p class="step-d">勾選完成（保留 6 秒撤銷）；底部輸入框就地新增待辦；篩選：全部／某校／文件／我加的。</p>
+    <p class="cta">Primary action: <b>加入</b> → 待辦出現在清單，不離開頁面</p>
+  </li>
+  <li>
+    <span class="step-n">3</span><span class="step-t">切換檢視</span>
+    <p class="step-d">「計畫」並排比較多份計畫；「時程」看期限與每週時間。檢視切換是區段控制，網址記得目前檢視。</p>
+    <p class="cta">Primary action: <b>計畫／時程</b> → 對應檢視，可用瀏覽器上一頁回來</p>
+  </li>
+</ol>
+
+<h3>Screen inventory</h3>
+<div class="overflow"><table>
+  <tr><th>Screen</th><th>Purpose</th><th>Primary action</th><th>States (empty/loading/error)</th></tr>
+  <tr><td>今天</td><td>每天打開就知道要做什麼</td><td>開始</td><td>骨架／無待辦／離線橫幅</td></tr>
+  <tr><td>計畫</td><td>多份計畫並排比較</td><td>繼續（該計畫）</td><td>只有一份時顯示該計畫階段與完整清單</td></tr>
+  <tr><td>時程</td><td>期限與每週時間</td><td>調整每週時間</td><td>沒有期限時說明並給來源</td></tr>
+</table></div>
+
+<h3>Anti-pattern audit（目前實作）</h3>
+<div class="overflow"><table>
+  <tr><th>Check</th><th>Verdict</th><th>Note</th></tr>
+  <tr><td>flow-navigation：Icon-only nav without labels</td><td class="fail">FAIL</td><td>桌機側欄 7 個圖示沒有文字，靠 tooltip（obs-01；是否影響辨識待驗證 H2）</td></tr>
+  <tr><td>flow-navigation：Nav label ≠ page title</td><td class="warn">WARN</td><td>「準備與時程」頁內標題是「我的申請計畫」與「準備與時程」；日曆頁標題是「我的申請日曆」</td></tr>
+  <tr><td>flow-navigation：Four visible layers of nav chrome</td><td class="warn">WARN</td><td>側欄＋「準備與時程」的 6 個頁籤＋頁內檢視切換＋計畫選單</td></tr>
+  <tr><td>flow-navigation：Vague labels</td><td class="warn">WARN</td><td>同一類事 6 種名稱（UX-10）</td></tr>
+  <tr><td>flow-navigation：SPA navigation without URL updates</td><td class="pass">PASS</td><td>計畫與關卡都在網址參數（<code>?plan=&amp;level=</code>）</td></tr>
+  <tr><td>flow-navigation：Custom back disagreeing with history</td><td class="pass">PASS</td><td>實測：任務頁按上一頁回到清單</td></tr>
+  <tr><td>flow-navigation：Login redirect dropping the deep link</td><td class="warn">WARN</td><td>未驗證（待測）</td></tr>
+</table></div>
+
+<!-- ══ FLOW 3 ══ -->
+<h2>Flow: 中途離開、斷線與復原</h2>
+<p class="meta">Pattern source: flow-errors、flow-forms（儲存與續接） · Entry point: 任何輸入中的任務</p>
+
+<h3>Steps</h3>
+<ol class="flow">
+  <li>
+    <span class="step-n">1</span><span class="step-t">輸入中</span>
+    <p class="step-d">自動儲存；狀態文字固定在輸入框旁：「已自動儲存・10:42」。</p>
+    <p class="cta">Primary action: <b>繼續輸入</b> → 0.9 秒後自動儲存</p>
+  </li>
+  <li>
+    <span class="step-n">2</span><span class="step-t">斷線</span>
+    <p class="step-d">頁面上方出現黃色橫幅：「目前離線。你寫的內容還留在這個分頁，連線後會自動儲存。請先不要關閉分頁。」顯示下一次重試倒數與「立即重試」。</p>
+    <p class="cta">Primary action: <b>立即重試</b> → 成功後橫幅換成「已儲存」，之後消失</p>
+    <div class="branch">若關閉分頁 → 瀏覽器離開警告；內容會遺失（待產品決定是否改存本機，UX-19）</div>
+  </li>
+  <li>
+    <span class="step-n">3</span><span class="step-t">回來續接</span>
+    <p class="step-d">「今天」顯示「接著做：寫一段申請動機（草稿・2 小時前）」。登入過期時，原帳號重新登入後回到原內容（沿用現有機制）。</p>
+    <p class="cta">Primary action: <b>接著做</b> → 任務面板</p>
+  </li>
+  <li>
+    <span class="step-n">4</span><span class="step-t">誤操作後復原</span>
+    <p class="step-d">勾選完成、封存計畫都在提示條提供「撤銷／復原」，取代瀏覽器確認視窗。</p>
+    <p class="cta">Primary action: <b>撤銷</b> → 進度與狀態還原</p>
+  </li>
+</ol>
+
+<h3>Screen inventory</h3>
+<div class="overflow"><table>
+  <tr><th>Screen</th><th>Purpose</th><th>Primary action</th><th>States (empty/loading/error)</th></tr>
+  <tr><td>離線橫幅</td><td>說明內容在哪裡、何時重試</td><td>立即重試</td><td>重試中／成功／仍失敗（顯示中文原因）</td></tr>
+  <tr><td>撤銷提示條</td><td>可復原的操作回饋</td><td>撤銷／復原</td><td>6 秒後消失；鍵盤可操作；封存另有永久入口（⋯ 選單）</td></tr>
+</table></div>
+
+<h3>Anti-pattern audit（目前實作）</h3>
+<div class="overflow"><table>
+  <tr><th>Check</th><th>Verdict</th><th>Note</th></tr>
+  <tr><td>flow-errors：Raw exception / status shown</td><td class="fail">FAIL</td><td>離線時顯示「Failed to fetch」（obs-10；UX-08）</td></tr>
+  <tr><td>flow-errors：Form cleared on error</td><td class="pass">PASS</td><td>輸入保留；恢復連線後自動儲存成功</td></tr>
+  <tr><td>flow-errors：Confirm dialog on destructive action</td><td class="warn">WARN</td><td>封存使用瀏覽器 <code>confirm()</code>，沒有復原（UX-09）</td></tr>
+  <tr><td>flow-errors：Undo toast absent</td><td class="fail">FAIL</td><td>完成與封存都無法撤銷（UX-12）</td></tr>
+  <tr><td>flow-errors：Queued offline writes lost on tab close</td><td class="warn">WARN</td><td>未同步內容只在分頁記憶體；有離開警告（UX-19）</td></tr>
+  <tr><td>flow-errors：Sync conflicts silently overwritten</td><td class="pass">PASS</td><td>衝突時並排比對再儲存</td></tr>
+  <tr><td>flow-errors：Session expired loses work</td><td class="pass">PASS</td><td>登入過期後原帳號重新登入可續接草稿（既有 e2e 涵蓋，本次未重跑）</td></tr>
+</table></div>
+
+<h2>Open questions &amp; parked items</h2>
+<ul>
+  <li>未同步內容要不要改存本機？需要你決定隱私取捨（UX-19）。</li>
+  <li>登入後是否回到原本要去的頁面（深連結）尚未實測。</li>
+  <li>兩份計畫的「共用文件只備妥一次」需要資料模型支援，階段 2 評估。</li>
+  <li>校方通知只做手動記錄；不接任何校方系統。</li>
+</ul>
+
+<footer>Generated with <a href="https://github.com/jpoindexter/ux-flow-skills">ux-flow-skills</a> · verdict 針對 2026-11-01 的本機隔離環境觀察與原始碼，未包含真人測試與正式站數據。</footer>
+
+</body>
+</html>

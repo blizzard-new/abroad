@@ -682,6 +682,12 @@ SCHOOL_PITFALL_SPECS: dict[str, dict[str, object]] = {
 }
 
 
+
+def _at_least_two(text: str, prefix: str) -> str:
+    """Source values such as a quota of "4" or a requirement of "無" are real, but this model needs two characters."""
+    text = (text or "").strip()
+    return text if len(text) >= 2 else f"{prefix}{text}" if text else f"{prefix}未列載"
+
 def _build_partner_lookup_from_cross_school(
     home_id: str,
     country: str,
@@ -723,8 +729,8 @@ def _build_partner_lookup_from_cross_school(
         institution_slug=page_data.institution_slug,
         cross_school_partner_path=f"{page_data.canonical_path}?home={home_id}",
         contracted_home_count=page_data.contracted_home_count,
-        quota_summary=agr.quota_summary,
-        language_requirement_summary=agr.language_requirement_summary,
+        quota_summary=_at_least_two(agr.quota_summary, "名額 "),
+        language_requirement_summary=_at_least_two(agr.language_requirement_summary, "語言要求："),
         degree_levels=agr.degree_levels,
         colleges=agr.colleges,
         course_direction_points=page_data.course_direction_references,
