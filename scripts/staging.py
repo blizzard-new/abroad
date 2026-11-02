@@ -75,6 +75,9 @@ def preflight() -> None:
         fail("找不到 git。請安裝 Git for Windows（https://git-scm.com/download/win）後重開命令提示字元。")
     if not (REPO / ".git").exists():
         fail(f"{REPO} 不是 git 專案資料夾。請在 clone 下來的專案裡執行。")
+    if (REPO / "deploy" / "selfhost" / ".env").exists():
+        fail(f"{REPO} 看起來是正式站（有 deploy\\selfhost\\.env）。測試版會切換這個資料夾的版本，可能影響正式站更新。\n"
+             "請另外 clone 一份專用的測試資料夾，不要在正式站的資料夾執行。步驟見 docs/staging-local-test.md。")
     if not RUNNER.exists():
         fail(f"找不到 {RUNNER}。請先切到有這個檔案的分支：git fetch origin claude/funny-dirac-43frw3 然後 git checkout claude/funny-dirac-43frw3")
 

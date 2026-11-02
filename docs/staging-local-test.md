@@ -4,24 +4,38 @@
 
 ## 需要什麼
 
-- Python 3.11 以上、Git。
-- 已經 clone 這個專案（這個專案的 `src` 資料夾有 3 GB 以上，**測試版不會再複製一份**，所以不需要額外的硬碟空間，也不會等很久）。
-- 第一次啟動會建立虛擬環境並安裝套件，約 3–10 分鐘，畫面會一直捲動，這是正常的；之後很快。
+- **Python 3.11 以上（要真的安裝）。** Windows 10／11 內建的 `python` 只是通往 Microsoft Store 的捷徑，沒有真正的 Python，輸入後可能沒有任何反應。
+- Git（Git for Windows）。
+- **一份專用的專案資料夾。不要用正式站的 `C:\uniway\app`。** 測試版會更動所在資料夾的檔案，放在正式站的資料夾可能影響正式站更新；啟動器偵測到 `deploy\selfhost\.env` 會直接拒絕執行。
 
-## 第一次使用
+## 第一次使用（Windows PowerShell）
 
-在**命令提示字元（cmd）或 PowerShell**，進到專案資料夾。測試版的程式現在放在 PR 的分支上，所以要先切過去：
+### 1. 安裝 Python
 
-```bat
-cd 你的專案資料夾
-git fetch origin claude/funny-dirac-43frw3
-git checkout claude/funny-dirac-43frw3
-git pull
+1. 打開 <https://www.python.org/downloads/windows/>，下載 Python 3.12 的 Windows installer。
+2. 安裝第一個畫面，**勾選「Add python.exe to PATH」**，並保留「py launcher」，再按 Install Now。
+3. **關掉所有 PowerShell 視窗，重新開一個**，輸入下面這行，應該看到 `Python 3.12.x`：
+
+```powershell
+py -3 --version
 ```
 
-然後啟動（Windows 建議用 `py -3`；如果提示找不到 `py`，改用 `python`）：
+### 2. 另外下載一份測試用的專案
 
-```bat
+專案很大（約 4 GB），下載會花一些時間。請放在**和正式站不同的資料夾**：
+
+```powershell
+mkdir C:\uniway-test
+cd C:\uniway-test
+git clone --depth 1 -c core.autocrlf=false --branch claude/funny-dirac-43frw3 https://github.com/blizzard-new/abroad.git app
+cd app
+```
+
+如果跳出 GitHub 登入視窗，請用你的帳號登入。
+
+### 3. 啟動
+
+```powershell
 py -3 scripts\staging.py up
 ```
 
@@ -32,13 +46,24 @@ py -3 scripts\staging.py up
 網址      http://127.0.0.1:8800
 ```
 
-網頁底部會有紅色的「測試版」標籤。**如果啟動後畫面完全沒有任何文字，請把你的 `py -3 --version`、`git --version`、`dir scripts\staging.py` 的輸出貼給我。** 新版啟動器一開始就會印出進度，不會再沉默。
+網頁底部會有紅色的「測試版」標籤。第一次會安裝套件，約 3–10 分鐘，畫面一直捲動是正常的。
+
+### 之後要看新的版本
+
+在 `C:\uniway-test\app` 裡，先按 `Ctrl+C` 停止，然後：
+
+```powershell
+git pull
+py -3 scripts\staging.py up
+```
+
+**如果輸入後完全沒有文字：** 先確認 PowerShell 目前的位置在 `C:\uniway-test\app`（提示符號會顯示路徑），再把 `py -3 --version` 與 `git --version` 的輸出貼給我。
 
 ## 常用指令
 
 | 想做什麼 | 指令 |
 | --- | --- |
-| 看目前資料夾裡的程式（最快，沒有任何 git 動作） | `py -3 scripts\staging.py up` |
+| 看目前資料夾裡的程式（最快，沒有任何 git 動作；更新請先 `git pull`） | `py -3 scripts\staging.py up` |
 | 看某個 PR 的最新內容 | `py -3 scripts\staging.py up --pr 211` |
 | 看某個分支 | `py -3 scripts\staging.py up --branch claude/funny-dirac-43frw3` |
 | 看目前的正式版程式碼 | `py -3 scripts\staging.py up --ref origin/main` |
@@ -94,7 +119,10 @@ py -3 scripts\staging.py up
 | 狀況 | 處理 |
 | --- | --- |
 | `埠 8800 已被使用` | 加上 `--port 8801` |
-| `找不到 scripts\staging_runner.py` | 還沒切到有這個檔案的分支，照「第一次使用」的 git 指令執行 |
+| `找不到 scripts\staging_runner.py` | 還沒切到有這個檔案的分支：`git fetch origin claude/funny-dirac-43frw3` 然後 `git checkout claude/funny-dirac-43frw3` |
+| `看起來是正式站` | 你在正式站的資料夾。請照「第一次使用」另外 clone 一份 |
+| `py` 找不到 | Python 沒有安裝，或安裝時沒有保留 py launcher；重裝並重開 PowerShell |
+| `not a git repository` | PowerShell 的位置不是專案資料夾；用 `cd` 進到 `C:\uniway-test\app` |
 | `找不到 git` | 安裝 Git for Windows 後重開命令提示字元 |
 | 套件安裝失敗 | 確認 Python 版本 ≥ 3.11；刪掉 `.staging\venv`（`clean`）後重跑；把最後幾行貼給我 |
 | 想從頭來 | `reset`；或 `clean` 刪掉全部 |
