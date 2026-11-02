@@ -1793,7 +1793,12 @@ async function fetchJson(url, options = {}) {
     });
   } catch (error) {
     assertAuthenticatedRequestCurrent(requestContext);
-    throw error;
+    if (error?.name === "AbortError") throw error;
+    // The browser's own text ("Failed to fetch") means nothing to a student; say what happened.
+    const offline = new Error(navigator.onLine === false ? "目前沒有網路連線。" : "目前連不上伺服器。");
+    offline.status = 0;
+    offline.cause = error;
+    throw offline;
   }
   const data = response.status === 204 ? null : await response.json().catch(() => ({}));
   assertAuthenticatedRequestCurrent(requestContext);

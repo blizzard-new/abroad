@@ -147,6 +147,21 @@ def test_a_personal_task_can_be_added_without_leaving_the_page(page, live_server
     expect(page.locator('#schedule-view')).to_contain_text('請系主任簽名')
 
 
+def test_offline_save_says_so_in_plain_language_and_keeps_the_text(page, live_server):
+    verified_login(page, live_server)
+    plan = make_plan(page, live_server)
+    open_view(page, live_server, plan, 'level', level='motivation')
+    expect(page.locator('#level-input')).to_be_visible()
+    page.context.set_offline(True)
+    page.locator('#level-input').fill('我想去紐西蘭是因為…')
+    expect(page.locator('#save-note')).to_have_text('尚未儲存，請重試', timeout=8000)
+    expect(page.locator('#level-error')).to_contain_text('沒有網路連線')
+    assert 'Failed to fetch' not in page.locator('#level-view').inner_text()
+    expect(page.locator('#level-input')).to_have_value('我想去紐西蘭是因為…')
+    page.context.set_offline(False)
+    expect(page.locator('#save-note')).to_have_text('已儲存', timeout=15000)
+
+
 @pytest.mark.parametrize('view', ['today', 'plans', 'schedule'])
 def test_phone_layout_has_no_horizontal_scroll(page, live_server, view):
     page.set_viewport_size({'width': 390, 'height': 844})

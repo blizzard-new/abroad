@@ -19,7 +19,11 @@
 | UX-12 完成回饋太小 | 完成一項後顯示「準備進度 n / 總數」並可「撤銷」；完成畫面也顯示進度 | 完成 |
 | UX-14 新增待辦會離開頁面 | 「今天」與「時程」都能就地新增待辦 | 完成 |
 | 情境 C 多計畫比較 | 新「計畫」分頁：每份計畫一張卡，並排比較下個期限、進度、缺的文件、目前階段、下一步；列出每份計畫都需要的同名文件 | 完成 |
-| UX-15、16、17、18 | 一般使用者不再送出管理頁請求以外的錯誤說明未改；`kbd` 在觸控裝置隱藏；`transition: all` 與手機截斷未處理 | 部分（見下） |
+| UX-08 網路失敗顯示英文原始訊息 | 網路錯誤改顯示「目前沒有網路連線。」或「目前連不上伺服器。」，輸入的文字保留，連線後自動儲存 | 完成（有自動測試） |
+| UX-16 觸控裝置顯示快速鍵標籤 | 觸控裝置隱藏 `kbd` 標籤 | 完成 |
+| UX-15 一般使用者每次載入多一個 403 | 沒處理 | **未做** |
+| UX-17 `transition: all` | 沒處理 | **未做** |
+| UX-18 手機上計畫選單被截斷 | 沒處理 | **未做** |
 | UX-13 樣式分叉 | 新介面用 `application-today.css`（只用 `--uw-*` 變數）；舊的 `application-path.css` 沒有整併 | **未做**：舊樣式仍在，需要另外安排 |
 | UX-19 斷線內容只留在分頁記憶體 | 依你的決定維持現狀 | 未改（維持） |
 
@@ -30,7 +34,7 @@
 `application-path.js`、`application-path-template.js`、`application-today.css`（新）、`platform-tracker.js`、`application-workspace.js`、`application-plan-index.js`、`app.js`、`index.html`；後端 `application_path.py`、`study_plan_workbench.py`。
 
 ## 測試
-- 新增：`tests/e2e/test_application_today.py`（4）、`tests/e2e/test_application_workbench.py`（11）、`tests/test_application_path.py`（1）、`tests/test_study_plan_workbench.py`（1）、`tests/test_staging_runner.py`（8）。
+- 新增：`tests/e2e/test_application_today.py`（4）、`tests/e2e/test_application_workbench.py`（12）、`tests/test_application_path.py`（1）、`tests/test_study_plan_workbench.py`（1）、`tests/test_staging_runner.py`（8）。
 - 因為設計刻意改變而更新的既有測試：`test_application_task_ux.py`（2）、`test_application_stage_guide.py`（1）、`test_my_application_entry.py`（2）、`test_application_workspace.py`（1）。
 - 在原本程式上就失敗的既有測試（這次沒有動）：`test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work`、`test_multi_plan_workspace.py::test_shared_progress_survives_reorder_removal_and_reload`、`test_application_guidance.py`（5）、`test_navigation_guide.py`（5）等共 14 項。
 - 有一項（`test_workspace_navigation_preserves_draft_target_and_old_routes[390]`）在整批一起跑時偶發失敗，單獨重跑通過，原因是頁面載入時機。
