@@ -1,6 +1,6 @@
 # 2026-11-02 SEO 雙篇驗收
 
-日期採 Asia/Taipei。隔離分支 `codex/seo-daily-20261102`，基於 main `8a3efc91e92f61629322c7db229f42c5db1d4438`；兩篇完整圖文與必要驗收完成，同屬本日一個待審 PR（建立後補連結）。沒有合併或部署。
+日期採 Asia/Taipei。隔離分支 `codex/seo-daily-20261102`，基於 main `8a3efc91e92f61629322c7db229f42c5db1d4438`；兩篇完整圖文與必要驗收完成，同屬本日唯一 [PR #213](https://github.com/blizzard-new/abroad/pull/213)，目前待審。沒有合併或部署。
 
 ## 兩個獨立問題與內容分工
 

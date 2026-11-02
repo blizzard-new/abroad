@@ -1,13 +1,13 @@
 # Editorial intentions and next topics
 
-## 2026-11-02 每日批次：托福／多益任務練習兩篇（驗收完成，待建 PR）
+## 2026-11-02 每日批次：托福／多益任務練習兩篇（PR #213 待審）
 
 日期採 Asia/Taipei；隔離分支 `codex/seo-daily-20261102`，基於 main `8a3efc91e92f61629322c7db229f42c5db1d4438`。開始前沒有同日分支／PR；核對 main 27 篇、未完成的 10/30 分支，以及全部待審 PR #209–#212 的說明與完整變更檔案清單，沒有另一個產文批次或文章改動。基礎 #78、流程 #92 均已合併；SEO renderer PR #168 也已合併，本批直接沿用 main。
 
 | 候選方向／獨立問題 | slug | 狀態／PR |
 | --- | --- | --- |
-| 19 托福：Listen and Repeat 怎麼練？聽後重述、錄音訂正與分級練習 | `toefl-listen-and-repeat` | 完整文章、來源與驗收完成；本批待建 PR，後續不得重做 |
-| 20 多益：Part 7 雙篇、三篇閱讀怎麼練？跨篇證據與原創題組解析 | `toeic-part-seven-multiple-passages` | 完整文章、來源與驗收完成；與上篇同屬本批 PR，後續不得重做 |
+| 19 托福：Listen and Repeat 怎麼練？聽後重述、錄音訂正與分級練習 | `toefl-listen-and-repeat` | [PR #213](https://github.com/blizzard-new/abroad/pull/213) 待審，完整文章、來源與驗收完成；後續不得重做 |
+| 20 多益：Part 7 雙篇、三篇閱讀怎麼練？跨篇證據與原創題組解析 | `toeic-part-seven-multiple-passages` | 同一個 PR #213 待審，完整文章、來源與驗收完成；後續不得重做 |
 
 本次依原候選 19、20 評估兩個具獨立搜尋意圖的實作問題，沒有新增候選方向；選題是編輯判斷，沒有使用者 Search Console、搜尋量或排名資料。重讀既有兩篇總覽全文後，修正先前將「方向已覆蓋」一概視為「無法再寫獨立問題」的過窄判斷。方向數量不是新增網址的配額，也不能無限拆頁；仍須逐題判斷新增價值與內容重疊。
 
@@ -15,7 +15,7 @@
 
 候選 13 的 `exchange-study-plan` 更新仍保留在 `codex/seo-daily-20261030`、`97de3fda`，未納入本批或重做；候選 15 沒有實測資料，未製造三工具比較。後續延伸其他子問題時，須重新閱讀既有全文與待審內容，不能將本次評估視為任意拆分的通行規則。
 
-兩篇各有官方一手來源、原創 HTML 步驟圖、已重查授權的真實攝影、FAQ、相關文章與母校／目的地／選校工具連結。135 項 SEO 測試、39 項 E2E、兩篇各三種寬度且無 JavaScript 的閱讀檢查，以及 wheel 中 29 JSON／27 WebP／CSS／renderer 共 59 檔逐位元核對均通過；詳見[驗收與來源紀錄](seo-editorial-validation-2026-11-02.md)。待建立本批唯一 PR，未合併或部署。
+兩篇各有官方一手來源、原創 HTML 步驟圖、已重查授權的真實攝影、FAQ、相關文章與母校／目的地／選校工具連結。135 項 SEO 測試、39 項 E2E、兩篇各三種寬度且無 JavaScript 的閱讀檢查，以及 wheel 中 29 JSON／27 WebP／CSS／renderer 共 59 檔逐位元核對均通過；詳見[驗收與來源紀錄](seo-editorial-validation-2026-11-02.md)。本批唯一 PR #213 待審，未合併或部署。
 
 ## 2026-10-26 每日批次：兩篇（待審）
 
