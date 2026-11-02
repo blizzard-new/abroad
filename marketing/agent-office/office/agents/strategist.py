@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from datetime import date, datetime, timedelta, timezone
 
+from .. import autodm
 from ..brand import PILLAR_FORMAT, Briefing, load_facts, load_news, pillar_for
 from ..llm import WriterError
 from ..models import DayPlan, PlanItem
@@ -56,7 +57,8 @@ class Strategist(Agent):
                 ],
             },
         )
-        return Briefing(day=day, facts=facts, news=news, recent_titles=recent, winners=winners, research=research, insights=insights)
+        return Briefing(day=day, facts=facts, news=news, recent_titles=recent, winners=winners, research=research, insights=insights,
+                        dm_hooks=autodm.hooks(self.office.store))
 
     def _research(self, briefing: Briefing) -> list:
         """Web research before planning, only when the research desk has a brain that can browse."""

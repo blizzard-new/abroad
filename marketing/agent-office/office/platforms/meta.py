@@ -195,6 +195,27 @@ class InstagramClient(Client):
         data = self._call("GET", f"{media_id}/comments", fake={"data": []}, fields="id,text,username,timestamp")
         return [c for c in data.get("data", []) if c.get("text")]
 
+    def recent_comments(self, media_id: str, limit: int = 50) -> list[dict]:
+        """The newest comments on a post (newest first), with who wrote them and when: what the keyword rules read."""
+        data = self._call("GET", f"{media_id}/comments", fake={"data": []}, fields="id,text,username,timestamp", limit=limit)
+        return [c for c in data.get("data", []) if c.get("text")]
+
+    def private_reply(self, comment_id: str, text: str) -> dict:
+        """Answer a comment with a private message. Meta allows one per comment, within 7 days, up to 1000 bytes; the commenter
+        does not have to follow us. Needs the instagram_business_manage_messages permission."""
+        fake = {"recipient_id": self.fake_id("user"), "message_id": self.fake_id("dm")}
+        response = self.request(
+            "POST", f"{self.base}/{self.user_id}/messages", params={"access_token": self.token},
+            json={"recipient": {"comment_id": comment_id}, "message": {"text": text}}, fake=fake,
+        )
+        data = fake if self.dry_run else response.json()
+        return {"id": data.get("message_id", ""), "recipient": data.get("recipient_id", "")}
+
+    def can_message(self) -> bool:
+        """Read-only: does this token reach the messaging side at all? (An error is raised when the permission is missing.)"""
+        self._call("GET", f"{self.user_id}/conversations", fake={"data": []}, platform="instagram", limit=1)
+        return True
+
     def reply_comment(self, comment_id: str, message: str) -> dict:
         data = self._call("POST", f"{comment_id}/replies", fake={"id": self.fake_id("reply")}, message=message)
         return {"id": data["id"], "url": ""}

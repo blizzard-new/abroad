@@ -33,6 +33,7 @@ def tick(office: Office, now: datetime | None = None, *, background: bool = True
         done["published"] = office.staff["publisher"].publish_due(now)
     if not office.settings.dry_run:
         done["replies"] = office.staff["community"].check(now)
+        done["dm"] = office.staff["community"].auto_dm(now)
         if local.time() >= office.settings.analytics_at and office.store.get("analytics_day") != day.isoformat():
             office.store.set("analytics_day", day.isoformat())
             done["metrics"] = office.staff["analyst"].collect()
