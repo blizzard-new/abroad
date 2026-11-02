@@ -48,7 +48,7 @@ from .models import (
     VisualPlan,
 )
 from .offline_bank import TOPICS, Topic, topic_for
-from .visual import default_plan
+from .visual import LIMITS, default_plan
 
 Model = TypeVar("Model", bound=BaseModel)
 
@@ -78,6 +78,12 @@ def briefing_text(briefing: Briefing) -> str:
         f"數據分析的建議：\n{insights or '（無）'}\n\n"
         f"最近已經發過的題目（避免重複）：\n{recent or '（無）'}"
     )
+
+
+def _range(name: str) -> str:
+    """A spec limit as the designer is told it: the same numbers the checks in visual.py enforce."""
+    low, high = LIMITS[name]
+    return f"{low}～{high}"
 
 
 def _dump(model: BaseModel) -> str:
@@ -238,11 +244,12 @@ class ModelWriter:
             "---\n"
             "以上是你的設計準則。下面是這間辦公室的做法，請照這個格式回答（程式會照你的設計直接出圖）：\n"
             "- 文字已經由撰稿的同事寫好，也由審稿查核過事實：你只能決定「怎麼排」，不能改字、增字或刪字。"
-            "標題斷行（title_lines）合起來必須和原本的主標題一字不差；強調的字（emphasis）、steps 的步驟、compare 的兩邊、"
+            "標題斷行（title_lines）合起來必須和原本的主標題一字不差，每行約 4～6 個字、最多三行，讓重點詞獨佔一行；強調的字（emphasis）、steps 的步驟、compare 的兩邊、"
             "stat 的大數字（items）都必須是主標題或內文裡原本就有的字。資訊太多、需要刪減或拆頁時，不要自己改，寫在 issues，作者和老闆看得到。\n"
             "- outline：每頁一句話，說這一頁只傳達的一個主要訊息。\n"
-            "- spec（整組共用）：margin 60～100、title_size 72～96、body_size 36～44、line_height 1.4～1.6；"
-            "accent 在 blue（品牌藍，預設）、teal、coral 選一個；emphasis 在 color、chip、size 選一個，整組只用這一種手法；page_number 選 top 或 foot，整組固定。\n"
+            f"- spec（整組共用）：margin {_range('margin')}、title_size {_range('title_size')}、body_size {_range('body_size')}、line_height {_range('line_height')}；"
+            "title_size 是封面主標題的字級，建議 170～190，內頁標題程式會自動用它的 0.7 倍：這間辦公室的風格已經定案，是深藍底、超大的白色粗體標題，所以不要選小字；"
+            "accent 在 blue（品牌藍，預設）、teal、coral 選一個；emphasis 固定填 chip（重點詞用珊瑚紅色塊，風格已定案，填別的程式也會改成 chip）；page_number 選 top 或 foot，整組固定。\n"
             "- slides：和下面的頁面一一對應、順序與頁數都相同。第一頁（cover）用 cover，結尾頁（cta）用 cta；中間頁選："
             "focus 一個重點加說明卡、steps 內文是 2～5 個先後步驟、compare 內文是兩邊比較（labels 填兩邊的名稱）、stat 內文圍繞一個大數字或關鍵詞（items 只放它）。"
             "能用比較或步驟說清楚的，就不要塞成一整段；每頁最多突出 1～2 個關鍵詞。\n"

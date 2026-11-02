@@ -31,7 +31,7 @@ SLIDES = [
 def designed() -> VisualPlan:
     return VisualPlan(
         outline=["總預算", "機票與保險", "語言檢定", "生活費", "收藏"],
-        spec=VisualSpec(margin=64, title_size=150, body_size=40, line_height=1.55, accent="teal", emphasis="chip", page_number="foot"),
+        spec=VisualSpec(margin=64, title_size=170, body_size=40, line_height=1.55, accent="teal", emphasis="chip", page_number="foot"),
         slides=[
             VisualSlide(layout="cover", title_lines=["交換一學期要準備多少錢？", "先抓這三筆"], emphasis=["三筆"]),
             VisualSlide(layout="steps", title_lines=["出發前先抓", "機票與保險"], emphasis=["機票", "保險"], items=["機票看淡旺季，越早訂越便宜", "保險要含海外醫療", "簽證費依國家另計"]),
@@ -58,7 +58,7 @@ def test_the_plan_can_move_the_layout_but_never_change_a_word():
                 VisualSlide(layout="steps", items=["x", "y"])],  # a closing page stays a closing page
     )
     fixed, notes = visual.normalize(wrong, SLIDES)
-    assert (fixed.spec.margin, fixed.spec.title_size, fixed.spec.body_size, fixed.spec.line_height) == (100, 96, 44, 1.6)
+    assert (fixed.spec.margin, fixed.spec.title_size, fixed.spec.body_size, fixed.spec.line_height) == (100, visual.LIMITS["title_size"][0], 44, 1.6)
     assert fixed.slides[0].layout == "cover" and fixed.slides[0].title_lines == [SLIDES[0].title]
     steps = fixed.slides[1]
     assert steps.layout == "steps" and steps.items == ["機票看淡旺季，越早訂越便宜", "保險要含海外醫療", "簽證費依國家另計"]  # replaced by the body's own sentences
@@ -88,6 +88,30 @@ def test_the_visual_role_follows_the_ig_copy_desk_unless_it_is_set_on_its_own():
     assert desk_of("visual") == "designer" and "visual" in brains.ROLES
 
 
+def test_small_type_is_lifted_to_the_floor_and_the_key_word_is_always_the_coral_block():
+    """What the real designer (an AI) asks for must not be able to bring back the small, pale look."""
+    ask = VisualPlan(outline=[], spec=VisualSpec(title_size=88, emphasis="color"), art_prompt="",
+                     slides=[VisualSlide(layout="cover", title_lines=[SLIDES[0].title]) for _ in SLIDES])
+    plan, notes = visual.normalize(ask, SLIDES)
+    assert plan.spec.title_size == visual.LIMITS["title_size"][0] >= 160 and plan.spec.emphasis == "chip"
+    assert any("title_size" in n for n in notes) and any("珊瑚紅色塊" in n for n in notes)
+    assert visual.default_plan(SLIDES).spec.emphasis == "chip" and visual.default_plan(SLIDES).spec.title_size >= 150
+
+
+def test_the_designer_is_told_the_same_numbers_the_checks_enforce(studio):
+    """The prompt once still said "title_size 72～96" after the limits had moved, so the real designer kept choosing small type."""
+    office = studio()
+    office.writer.visual_plan("請設計", SLIDES)
+    prompt = design_requests()[-1]
+    low, high = visual.LIMITS["title_size"]
+    assert f"title_size {low}～{high}" in prompt and "72～96" not in prompt and "emphasis 固定填 chip" in prompt
+    for name, (lo, hi) in visual.LIMITS.items():
+        assert f"{name} {lo}～{hi}" in prompt
+        field = VisualSpec.model_fields.get(name)
+        if name == "title_size":
+            assert f"{lo}～{hi}" in field.description  # the schema the AI also reads
+
+
 # ---- the template draws her design ----
 @needs_chromium
 def test_the_template_follows_the_design(settings):
@@ -114,7 +138,10 @@ def test_the_template_follows_the_design(settings):
         draw(3)
         assert page.locator(".stat-hero").inner_text() == "3 萬" and page.locator(".card").count() == 1
         draw(0)
-        assert page.locator("h1 .seg").count() == 2 and page.locator("h1 mark.em").inner_text() == "三筆"
+        # her first line, "交換一學期要準備多少錢？", is too long for the page at this size: it is broken again, the type stays big
+        assert "".join(page.locator("h1 .seg").all_inner_texts()).replace(" ", "") == "交換一學期要準備多少錢？先抓這三筆"
+        # (17 characters in three lines: a little under the 170 she asked for, nowhere near the old 96)
+        assert page.locator("h1 mark.em").inner_text() == "三筆" and page.locator("h1").evaluate("(el) => parseFloat(getComputedStyle(el).fontSize)") >= 150
         draw(4)
         assert page.locator(".cta").count() == 1 and page.locator("mark.em").count() == 0  # the closing page has nothing to emphasise
 
@@ -133,7 +160,7 @@ def test_the_headline_is_giant_and_its_key_word_keeps_the_coral_block(settings):
         size = "(el) => parseFloat(getComputedStyle(el).fontSize)"
 
         _draw_cover(page, Slide(kind="cover", title="交換一學期要準備多少錢？", body="4 個重點，申請前先收藏"), ["多少錢"])
-        assert page.locator("h1").evaluate(size) >= 140
+        assert page.locator("h1").evaluate(size) >= 160
         segs = page.locator("h1 .seg").all_inner_texts()
         assert "".join(segs) == "交換一學期要準備多少錢？" and len(segs) <= 3 and len(segs[-1]) >= 2  # no line of one lonely character
         assert page.locator("h1 mark.em").inner_text() == "多少錢"
