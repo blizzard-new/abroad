@@ -863,15 +863,15 @@
             "title": "Id",
             "type": "string"
           },
+          "is_content_admin": {
+            "default": false,
+            "title": "Is Content Admin",
+            "type": "boolean"
+          },
           "is_platform_admin": {
             "default": false,
             "title": "Is Platform Admin",
             "type": "boolean"
-          },
-          "is_content_admin": {
-            "type": "boolean",
-            "title": "Is Content Admin",
-            "default": false
           },
           "notification_preferences": {
             "$ref": "#/components/schemas/AccountNotificationPreferences"
