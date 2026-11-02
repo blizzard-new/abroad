@@ -68,8 +68,8 @@ class StagingStrip:
             "z-index:2147483647;max-width:96vw;background:#be4c48;color:#fff;font:600 12px/1.2 system-ui,'Noto Sans TC',sans-serif;"
             'padding:6px 14px;border-radius:10px 10px 0 0;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'
             f"測試版・{text}・虛構資料</div>"
-            '<details id="uw-staging-accounts" style="position:fixed;left:8px;bottom:34px;z-index:2147483646;'
-            "font:600 12px/1.3 system-ui,'Noto Sans TC',sans-serif;max-width:220px\">"
+            '<details id="uw-staging-accounts" style="position:fixed;right:8px;bottom:34px;z-index:2147483646;'
+            "font:600 12px/1.3 system-ui,'Noto Sans TC',sans-serif;max-width:220px;text-align:right\">"
             '<summary style="cursor:pointer;display:inline-block;padding:6px 10px;border-radius:8px;background:#23324a;color:#fff">測試帳號</summary>'
             f'<div style="margin-top:4px;background:#ffffffee;border:1px solid #b9c2cf;border-radius:10px;padding:6px">{accounts}'
             f'<a href="/__staging/logout" style="{link}">登出</a></div></details>'
@@ -246,7 +246,7 @@ def main() -> None:
     if removed:
         print(f"已移除這個終端機裡的正式環境變數：{', '.join(removed)}")
     print(f"\n超級帳號一鍵登入（所有功能都開）：\n  {base_url}/__staging/login?as=super")
-    print(f"\n測試帳號  密碼都是 {PASSWORD}（網頁左下角「測試帳號」也能一鍵切換）")
+    print(f"\n測試帳號  密碼都是 {PASSWORD}（網頁右下角「測試帳號」也能一鍵切換）")
     for email, label in accounts:
         print(f"  {email:28s} {label}")
     print("按 Ctrl+C 停止。\n", flush=True)
