@@ -23,6 +23,7 @@ import hashlib
 import json
 import os
 import shutil
+import signal
 import subprocess
 import sys
 import time
@@ -161,8 +162,13 @@ def start(label: str, port: int) -> subprocess.Popen:
     return subprocess.Popen([str(VENV_PYTHON), str(RUNNER), "--data-dir", str(DATA), "--port", str(port), "--label", label], cwd=REPO, env=env)
 
 
+def _stop_requested(*_: object) -> None:
+    raise KeyboardInterrupt
+
+
 def up(args: argparse.Namespace) -> None:
     preflight()
+    signal.signal(signal.SIGTERM, _stop_requested)  # a closed terminal or `kill` should also switch back to your branch
     switching = wants_switch(args)
     watching = args.watch and switching and not args.here
     sha, label = "", "目前資料夾的程式碼"
