@@ -1260,6 +1260,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="屏科大規定返國後一個月內須繳交赴外交換研習心得報告書（含照片）並配合經驗分享會，始得辦理獎補助核銷；這裡只合計下方各欄。",
     ),
+    ("nkuht", "study-plan"): _rules(
+        (
+            "中英文研修計畫書（讀書計畫）及中英文自傳履歷表為國立高雄餐旅大學學生申請免學費交換生、自費交換生、1+1 雙聯碩士學位及《教育部學海飛颺／學海惜珠》、《高餐大遠航圓夢助學金》必備審查文件（建議約 1,000–2,500 字）。",
+            "內容應具體說明申請動機、個人學業與專業實務表現（歷年學業總平均達 75 分以上或班排前 20%–30%、操行無小過以上處分）、外語檢定準備（TOEIC / TOEFL iBT / IELTS / GEPT / JLPT / TOPIK）、擬於海外合作餐旅大學修讀之課程或實習規劃，以及返國後學分抵免與國際餐旅職涯發展目標。",
+        ),
+        evidence="國立高雄餐旅大學辦理學生海外實習及留學補充規定、115年度教育部學海飛颺及學海惜珠計畫甄選簡章及遠航圓夢助學金實施辦法",
+        minimum=1000,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="高餐大海外留學交換與學海飛颺／遠航圓夢助學金申請須附中英文自傳與出國研修計畫書，建議 1,000–2,500 字；這裡只合計下方各欄。",
+    ),
+    ("nkuht", "return-report"): _rules(
+        (
+            "所有高餐大赴海外姊妹校交換研修及雙聯學位學生於研修期滿返國後，須依《辦理學生海外實習及留學補充規定》於開學一週內繳交至少 2,000 字之《海外研修心得報告》（含海外學習與生活照片，檔案須小於 10MB）。",
+            "獲教育部《學海飛颺／學海惜珠》或《高餐大遠航圓夢助學金》補助者，須於返國後兩週內上傳心得報告至教育部學海計畫資訊網及高餐大國際事務處海外交流學習分享專區，並配合出席海外留學說明會經驗分享，始得辦理獎助學金尾款核銷。",
+        ),
+        evidence="國立高雄餐旅大學辦理學生海外實習及留學補充規定、115年度教育部學海飛颺及學海惜珠計畫甄選簡章及遠航圓夢助學金實施辦法",
+        minimum=2000,
+        maximum=4000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="高餐大規定返國後開學一週內（學海及遠航圓夢受獎生返國兩週內）須繳交至少 2,000 字海外研修心得報告並配合經驗分享，始得辦理核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1313,6 +1335,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "ntue": ("https://oia.ntue.edu.tw/p/406-1066-48777,r1703.php?Lang=zh-tw", "2026-10-31"),
     "ncut": ("https://oia.ncut.edu.tw/p/412-1030-6648.php?Lang=zh-tw", "2026-11-01"),
     "npust": ("https://oia2.npust.edu.tw/zh/cooperation/%e4%ba%a4%e6%8f%9b%e5%ad%b8%e7%94%9f-2/", "2026-10-31"),
+    "nkuht": ("https://iao.nkuht.edu.tw/p/412-1005-857.php?Lang=zh-tw", "2026-11-02"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):

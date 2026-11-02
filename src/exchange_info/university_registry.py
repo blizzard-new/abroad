@@ -1833,8 +1833,44 @@ NPUST = UniversityProfile(
     ),
 )
 
+NKUHT = UniversityProfile(
+    id="nkuht",
+    school_name="國立高雄餐旅大學",
+    short_name="高餐大",
+    english_name="National Kaohsiung University of Hospitality and Tourism",
+    aliases=(
+        "nkuht",
+        "國立高雄餐旅大學",
+        "高雄餐旅大學",
+        "高餐大",
+        "高餐",
+        "NKUHT",
+        "National Kaohsiung University of Hospitality and Tourism",
+    ),
+    hero_image="/static/assets/nkuht-campus.svg",
+    official_url="https://iao.nkuht.edu.tw/p/412-1005-857.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立高雄餐旅大學國際事務處（OIA）《海外留學交換平台（2027-28 交換學生與雙聯學位簡章）》、《辦理學生海外實習及留學補充規定（113.06.05修正）》、《115年度教育部學海飛颺及學海惜珠計畫甄選簡章》及《遠航圓夢助學金實施辦法》官方資料：（1）校內甄選時程與資格：免學費交換生為三年級出國交換一學年、自費交換生及 1+1 雙聯碩士為三年級或研究所出國一學年，115-1 起跑（2026/09/17 留學說明會、2026/10–12 校內報名收件、2027/02–03 國際處公告錄取名單與姊妹校提名），歷年操行成績須無小過以上紀錄、學業成績總平均達 75 分以上（或班排名前 20%–30%），並具備多益、托福、雅思、全民英檢、日檢 JLPT N2–N3 或韓檢 TOPIK 等語檢證明。（2）合作姊妹校與雙聯學位：完整收錄 40 所海外餐旅觀光名校（橫跨 15 國，含 31 所 2027-28 開放申請之免學費交換、自費交換與瑞士 SHMS／César Ritz、英國 UCB、美國天普大學及南卡羅來納大學 1+1 雙聯碩士合作校，以及 9 所重點海外合作大學）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／學海惜珠》（歐洲最高補助 NT$120,000、美加最高 NT$150,000）、《高餐大遠航圓夢助學金》（最高 NT$200,000）及 17 所合作大學共 19 篇歷屆學長姐赴外交換與雙聯實習心得報告。",
+    support_level="full",
+    partner_count_hint=40,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立高雄餐旅大學",
+        "高雄餐旅大學",
+        "NATIONALKAOHSIUNGUNIVERSITYOFHOSPITALITYANDTOURISM",
+        "NKUHT",
+    ),
+    # https://www.nkuht.edu.tw/p/412-1000-322.php?Lang=zh-tw — checked 2026-11-02.
+    colleges=(
+        "餐旅學院",
+        "觀光學院",
+        "廚藝學院",
+        "國際學院",
+        "全人教育學院",
+    ),
+)
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, NKUHT)
 DEFAULT_UNIVERSITY = CGU
 
 
