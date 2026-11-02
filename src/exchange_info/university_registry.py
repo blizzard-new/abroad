@@ -1834,7 +1834,48 @@ NPUST = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST)
+TNNUA = UniversityProfile(
+    id="tnnua",
+    school_name="國立臺南藝術大學",
+    short_name="南藝大",
+    english_name="Tainan National University of the Arts",
+    aliases=(
+        "tnnua",
+        "國立臺南藝術大學",
+        "國立台南藝術大學",
+        "臺南藝術大學",
+        "台南藝術大學",
+        "南藝大",
+        "南藝",
+        "TNNUA",
+        "Tainan National University of the Arts",
+    ),
+    hero_image="/static/assets/tnnua-campus.svg",
+    official_url="https://oia.tnnua.edu.tw/p/412-1007-1052.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合國立臺南藝術大學國際事務處（OIA）《海外姊妹校締約一覽表（63校）》、《115學年度第一學期赴國外及大陸地區姊妹校交換生甄選公告》、《國立臺南藝術大學選送學生出國研修與交流甄選辦法（113.06.03修正）》、《學生修讀國外與港澳地區雙聯學位實施辦法（112.01.03修正）》、《辦理教育部學海飛颺、學海惜珠及學海築夢補助作業要點》、《選送學生赴國外研修獎助學金審查原則》與《海外研修暨學海築夢經驗分享（38篇）》官方資料：（1）兩階段校內甄選、系所書審與外語口試門檻：每年分兩學期（秋季班於前一年9–10月、春季班於當年度2–4月，如115-1秋季班於2025/09/17公告、10/14截止收件、10/29面試，115-2春季班於2026/02/13啟動春季提名）辦理甄選，限本校日間學制大學部二年級以上、七年一貫制學士班五年級以上及碩博士班就讀一學期以上之在學學生（不含碩士班在職專班、休學生及外籍學位生）；第一階段「系所書面初審」（占50%，含歷年成績與研修計畫30%、專業作品與成就20%）須經系所會議通過且初審成績達40分（滿分50分）以上始得進入複審，第二階段「校內口試複審」（占50%，含面試表現30%、語言能力含1–2分鐘擬赴國家語言自我介紹20%），兩階段總成績須達80分（含）以上始得錄取；外語能力依《外國語文能力對照表》建議達英語 TOEFL iBT 79 / IELTS 6.0、日檢 JLPT N2、韓檢 TOPIK 3級、法語 DELF/TCF B1、德語 B1 / TestDaF TDN3 或西語 DELE B1 以上（中國大陸姊妹校免附外語檢定）；交換期間須完成南藝大註冊繳費並免繳姊妹校學費，每學期至少修習1門專業課程。（2）全球21國／地區63所合作姊妹校與跨國雙聯學位：完整收錄中國大陸25校、美國6校、日本4校、印尼4校、韓國3校、法國3校、奧地利2校、捷克2校、新加坡2校、泰國2校及德、義、西、瑞士、波蘭、愛沙尼亞、保加利亞、澳洲、越南、哈薩克各1校共63所合作藝術與綜合大學（含29所開放學期交換與雙聯學位之姊妹校，以及美國舊金山藝術學院 SFAI 雙聯學位與《學生修讀國外與港澳地區雙聯學位實施辦法》）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺》（學業總平均80分／GPA 3.0以上）、《學海惜珠》、《學海築夢／新南向學海築夢》及南藝大《選送學生赴國外研修獎助學金審查原則》，以及18所合作大學與海外博物館／古物修復機構共38篇歷屆學長姐出國交換與學海築夢實習心得報告。",
+    support_level="full",
+    partner_count_hint=63,
+    academic_score_minimum=80.0,
+    student_card_signals=(
+        "國立臺南藝術大學",
+        "國立台南藝術大學",
+        "南藝大",
+        "TAINAN NATIONAL UNIVERSITY OF THE ARTS",
+        "TAINANNATIONALUNIVERSITYOFTHEARTS",
+        "TNNUA",
+    ),
+    # https://www.tnnua.edu.tw/p/412-1000-91.php?Lang=zh-tw — checked 2026-11-03.
+    colleges=(
+        "音樂學院",
+        "視覺藝術學院",
+        "音像藝術學院",
+        "文博學院",
+        "跨域創生學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, TNNUA)
 DEFAULT_UNIVERSITY = CGU
 
 

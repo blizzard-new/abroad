@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TNNUA, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -119,6 +119,9 @@ NCUT_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 NPUST_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
+
+
+TNNUA_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2968,6 +2971,51 @@ def _npust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _tnnua_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立臺南藝術大學國際事務處（海外教育組分機 1902）選送學生出國研修與交流、跨國雙聯學位暨教育部學海飛颺／惜珠／築夢計畫應繳申請表件：1. 出國研修申請表及系所推薦考評表（須先經第一階段系所會議書面初審［占總成績 50%，含歷年成績與研修計畫 30%、專業作品與成就 20%，初審須達 40 分／50 分以上］，並由導師或指導教授、系所主任簽章）、2. 歷年中文及英文成績單正本（含歷年學業總平均與班級排名百分比，學海飛颺申請者歷年學業總平均須達 80 分或 GPA 3.0 以上）、3. 有效外語能力檢定證明影本（對照《外國語文能力對照表》：英語 TOEFL iBT 79 / IELTS 6.0、日檢 JLPT N2、韓檢 TOPIK 3 級、法語 DELF B1、德語 B1 / TDN3、西語 DELE B1；大陸地區姊妹校免附語檢）、4. 中文及外文出國研修計畫書與自傳、5. 個人藝術創作作品集（Portfolio）或音樂演奏（唱）影音檔及專業表現證明、6. 家長（監護人）同意書、7. 有效護照影本及在學證明。",
+        "study-plan": "撰寫國立臺南藝術大學選送學生出國研修與交流、雙聯學位及教育部學海飛颺／惜珠計畫必繳之《中、外文出國研修計畫書與自傳》（建議約 1,500–3,000 字）。請具體說明赴姊妹校交換或雙聯研修動機、擬於姊妹校修讀之藝術／音樂／音像／文博專業課程與工作坊規劃（依規定交換期間每學期至少修習 1 門專業課程）、個人創作或展演實績，以及第二階段校內口試複審（含 1–2 分鐘擬赴國家語言自我介紹）與返國後畢業展演／學分抵免規劃。",
+        "course-preapproval": "辦理赴國外及大陸港澳姊妹校交換或跨國雙聯學位（如美國舊金山藝術學院 SFAI 雙聯學位）之選課與學分抵免預先規劃（出國期間須於國立臺南藝術大學完成註冊繳費保留學籍，且每學期至少修習 1 門專業課程；返國後依《選送學生出國研修與交流甄選辦法》及《學生修讀國外與港澳地區雙聯學位實施辦法》檢附正式成績單、修業證明與課程大綱向系所及教務處申請學分採認抵免）。",
+        "predeparture-notice": "經第一階段系所書面初審（50%）及第二階段國際事務處校內口試複審（50%，兩階段總成績達 80 分以上）錄取推薦後，須簽署《國立臺南藝術大學選送學生出國研修行政契約書》及家長同意書，配合國際事務處辦理姊妹校提名（Nomination）與作品集／入學申請；獲姊妹校入學許可後辦理簽證、役男出境緩徵並投保足額海外醫療及意外保險。",
+        "return-report": "境外交換、雙聯或學海築夢海外專業實習期滿返國後，須依《選送學生出國研修與交流甄選辦法》及《辦理教育部學海飛颺、學海惜珠及學海築夢補助作業要點》於規定期限內向國際事務處繳交《出國研修／實習心得報告》（含研修成果與活動照片，供刊登於國際處經驗分享專區與教育部學海計畫資訊網）、登機證正本、護照出入境紀錄及姊妹校正式成績單，並配合出席國際處經驗分享座談會，始得完成獎助學金經費核銷。",
+        "credit-transfer": "境外交換或雙聯研修期滿返國後，須填具國立臺南藝術大學學分抵免申請表，並檢附境外姊妹校核發之正式成績單正本及修習課程大綱（Syllabus）或作品成果證明，經所屬學系（所）審核通過後送教務處登錄抵免學分。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺南藝術大學").replace("長庚", "南藝大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "南藝大規定：第一階段系所書面初審（占 50%，含歷年成績與研修計畫 30%、專業作品與成就 20%）須經系所會議通過且達 40 分以上，兩階段總成績須達 80 分以上；申請教育部《學海飛颺》或校內出國研修獎助學金者，歷年學業總平均須達 80 分（或 GPA 3.0）以上。請檢附含班級排名百分比之歷年中英文成績單正本。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT 托福網路測驗（校內《外國語文能力對照表》英語基準：79 分以上 / CBT 213 / ITP 550）", "IELTS 雅思國際英語測驗（校內英語基準：6.0 以上；部分歐洲與東南亞藝術院校接受 CEFR B1 5.0–5.5 以上）", "JLPT 日語能力試驗（校內日語基準及日本廣島市立大學、女子美術大學、京都市立藝術大學、沖繩縣立藝術大學：N2 以上）", "TOPIK 韓國語文能力測驗（校內韓語基準及國立韓國傳統文化大學：TOPIK 3 級以上）", "歐洲語文檢定（法語 DELF/TCF B1、德語 Goethe B1 / TestDaF TDN3、西語 DELE B1 或 FLPT 150 口試 S-2 以上）", "大陸地區姊妹校交換（免附外語能力檢定證明，以歷年成績、研修計畫、專業作品集與口試評分）"]
+            field["help_text"] = "依國立臺南藝術大學《選送學生出國研修與交流甄選辦法》附表《外國語文能力對照表》及各姊妹校申請門檻填報有效外語檢定證明；第二階段校內口試複審須進行 1–2 分鐘擬赴國家語言自我介紹。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://oia.tnnua.edu.tw/p/412-1007-1052.php?Lang=zh-tw",
+        source_checked_at=TNNUA_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="出國研修申請表暨系所初審考評表（含行政契約書與家長同意書）" if template.id == "exchange-application-data" else ("中外文出國研修計畫書與專業作品集說明" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://oia.tnnua.edu.tw/p/412-1007-1090.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長（或監護人）親筆簽名蓋章", "導師（或指導教授）簽章", "系（所）主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系（所）會議初審核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "獲錄取後簽署選送學生出國研修行政契約書、配合國際處辦理姊妹校提名與作品集送審", "return-report": "返國後依限繳交出國研修／實習心得報告並出席經驗分享會辦理獎助學金核銷", "credit-transfer": "返國後檢附正式成績單、修業證明與課程大綱向系所及教務處辦理學分抵免"}.get(template.id, "先送所屬系所完成第一階段書面初審（須經系所會議通過且達 40/50 分以上），再由系所彙送國際事務處參加第二階段校內口試複審"),
+        version="115-2準備工具-2026-11-03.1",
+        destinations=["國立臺南藝術大學國際事務處海外教育組（720005 臺南市官田區大崎里大崎 66 號，分機 1902）"],
+        conditional_note="此為個人準備工具；國立臺南藝術大學每學期辦理赴國外及大陸地區姊妹校交換學生甄選（秋季班於前一年 9–10 月、春季班於當年度 2–4 月），採第一階段系所書面初審（50%）與第二階段校內口試複審（50%，含 1–2 分鐘擬赴國家語言自我介紹），總成績須達 80 分以上。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3072,6 +3120,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncut_template(template)) is not None]
     if university.id == NPUST.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _npust_template(template)) is not None]
+    if university.id == TNNUA.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _tnnua_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()
