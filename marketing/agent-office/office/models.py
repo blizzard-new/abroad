@@ -153,11 +153,11 @@ class VisualSpec(BaseModel):
     """The one set of rules every page of a set shares."""
 
     margin: int = Field(default=80, description="左右安全邊距（px），60～100，整組一致")
-    title_size: int = Field(default=176, description="封面主標題字級（px），96～200，建議 150～190；內頁標題自動用它的 0.7 倍")
+    title_size: int = Field(default=176, description="封面主標題字級（px），160～200，建議 170～190；內頁標題自動用它的 0.7 倍")
     body_size: int = Field(default=44, description="正文字級（px），36～44")
     line_height: float = Field(default=1.5, description="正文行高，是字級的 1.4～1.6 倍")
     accent: Literal["blue", "teal", "coral"] = Field(default="blue", description="整組的重點色：blue 藍（品牌色，預設）、teal 青綠、coral 珊瑚紅")
-    emphasis: Literal["color", "chip", "size"] = Field(default="chip", description="整組唯一的主要強調手法：chip 珊瑚紅色塊白字（預設，品牌定案的風格）、color 換成亮青色、size 放大")
+    emphasis: Literal["color", "chip", "size"] = Field(default="chip", description="整組唯一的強調手法，固定填 chip：重點詞用珊瑚紅色塊白字（品牌定案的風格，填別的程式也會改成 chip）")
     page_number: Literal["top", "foot"] = Field(default="top", description="頁碼位置，整組固定：top 右上角、foot 頁尾")
 
 

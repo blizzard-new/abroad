@@ -16,7 +16,9 @@ import re
 
 from .models import Slide, VisualPlan, VisualSlide, VisualSpec
 
-LIMITS = {"margin": (60, 100), "title_size": (96, 200), "body_size": (36, 44), "line_height": (1.4, 1.6)}
+# The cover headline is the picture, so it has a floor: a plan that asks for small type is brought up to it.
+LIMITS = {"margin": (60, 100), "title_size": (160, 200), "body_size": (36, 44), "line_height": (1.4, 1.6)}
+EMPHASIS = "chip"  # the key word always sits on a coral block (the boss's chosen look)
 POINT_LAYOUTS = ("focus", "steps", "compare", "stat")
 MAX_EMPHASIS, MAX_TITLE_LINES, MAX_STEPS = 2, 3, 5
 HIGHLIGHT = re.compile(r"^(.+?[？！，：])(.+)$")  # "讀書計畫寫不出來？先回答這 3 題": the part after the first mark stands out
@@ -59,6 +61,9 @@ def clamp_spec(spec: VisualSpec) -> tuple[VisualSpec, list[str]]:
         values[name] = round(clamped, 2) if name == "line_height" else int(clamped)
         if values[name] != given:
             notes.append(f"{name} 超出允許範圍（{low}～{high}），改成 {values[name]}")
+    if spec.emphasis != EMPHASIS:
+        values["emphasis"] = EMPHASIS
+        notes.append("重點詞統一用珊瑚紅色塊，已改成 chip")
     return spec.model_copy(update=values), notes
 
 

@@ -242,10 +242,13 @@
     };
     perLine = Math.max(3, perLine);
     const lines = pack(perLine);
-    const even = Math.max(3, Math.ceil(total / lines.length));
-    if (even < perLine) {
-      const evened = pack(even);
-      if (evened.length === lines.length) return evened;
+    // Full lines read best; only when the last line would be left with a character or two are the lines made about even.
+    if (lines.length > 1 && [...lines[lines.length - 1]].length <= 2) {
+      const even = Math.max(3, Math.ceil(total / lines.length));
+      if (even < perLine) {
+        const evened = pack(even);
+        if (evened.length === lines.length) return evened;
+      }
     }
     return lines;
   }
@@ -258,13 +261,20 @@
     // A short headline that fits on one line a little smaller reads better as one line than as a line and a stray character.
     const oneLine = Math.floor(width / [...text].length);
     if (lines.length === 1 && maxLines > 1 && oneLine >= size * 0.9 && oneLine < size) size = oneLine;
+    let designed = lines.length > 1;  // the designer's own breaks, kept while they fit
     for (;;) {
       el.style.fontSize = `${size}px`;
-      const use = lines.length > 1 ? lines : autoLines(text, Math.floor(width / size), words);
+      const perLine = Math.floor(width / size);
+      // Her own breaks while they fit; when a line is too long only that line is split again, so where she parted the phrases stays.
+      const use = lines.length === 1 ? autoLines(text, perLine, words) : designed ? lines : lines.flatMap((line) => autoLines(line, perLine, words));
       el.innerHTML = titleHTML(use, words);
       const wide = [...el.querySelectorAll(".seg")].some((seg) => seg.scrollWidth > width + 1);
       const limit = typeof room === "function" ? room(size) : room;
-      if ((!wide && use.length <= maxLines && el.scrollHeight <= limit) || size <= min) break;
+      const fits = !wide && use.length <= maxLines && el.scrollHeight <= limit;
+      if (fits || size <= min) break;
+      // Lines that are too long at this size (a designer's "交換一學期要準備" on one row) are broken again by the template at the
+      // same size before the type is made any smaller.
+      if (designed) { designed = false; continue; }
       size -= 4;
     }
   }
