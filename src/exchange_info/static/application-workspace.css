@@ -220,7 +220,7 @@ body.unified-shell #application-workspace[data-page=calendar] .calendar-next-sum
 .study-plan-panel-heading { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:8px; }
 .study-plan-panel-heading h4 { margin:2px 0 0; font-size:16px; color:#0f172a; }
 .study-plan-step-tabs { display:grid; grid-template-columns:repeat(auto-fit, minmax(125px, 1fr)); gap:8px; }
-.study-plan-step-tab { display:grid; gap:2px; text-align:left; padding:8px 10px; border-radius:10px; border:1px solid #cbd5e1; background:#f8fafc; cursor:pointer; transition:all 0.15s ease; }
+.study-plan-step-tab { display:grid; gap:2px; text-align:left; padding:8px 10px; border-radius:10px; border:1px solid #cbd5e1; background:#f8fafc; cursor:pointer; transition:background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease; }
 .study-plan-step-tab.is-active { border-color:#0f766e; background:#f0fdfa; box-shadow:0 0 0 2px rgba(15,118,110,0.12); }
 .study-plan-step-tab span { font-size:11px; font-weight:700; color:#0f766e; }
 .study-plan-step-tab strong { font-size:13px; color:#0f172a; }

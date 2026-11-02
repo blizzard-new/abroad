@@ -21,10 +21,10 @@
 | 情境 C 多計畫比較 | 新「計畫」分頁：每份計畫一張卡，並排比較下個期限、進度、缺的文件、目前階段、下一步；列出每份計畫都需要的同名文件 | 完成 |
 | UX-08 網路失敗顯示英文原始訊息 | 網路錯誤改顯示「目前沒有網路連線。」或「目前連不上伺服器。」，輸入的文字保留，連線後自動儲存 | 完成（有自動測試） |
 | UX-16 觸控裝置顯示快速鍵標籤 | 觸控裝置隱藏 `kbd` 標籤 | 完成 |
-| UX-15 一般使用者每次載入多一個 403 | 沒處理 | **未做** |
-| UX-17 `transition: all` | 沒處理 | **未做** |
-| UX-18 手機上計畫選單被截斷 | 沒處理 | **未做** |
-| UX-13 樣式分叉 | 新介面用 `application-today.css`（只用 `--uw-*` 變數）；舊的 `application-path.css` 沒有整併 | **未做**：舊樣式仍在，需要另外安排 |
+| UX-15 一般使用者每次載入多一個 403 | 帳號資料新增 `is_content_admin`（平台管理員或在 `EXCHANGE_CONTENT_ADMIN_EMAILS` 名單內），頁面只有管理員才查詢管理頁；一般學生不再送出這個請求。凍結的 OpenAPI 快照因此多一個選用的布林欄位（只新增、不影響舊版 App） | 完成（有自動測試） |
+| UX-17 `transition: all` | 改成只列出實際會變的屬性 | 完成 |
+| UX-18 手機上計畫名稱被截斷 | 計畫選單與任務頁頂端只顯示中文校名（例如「林肯大學」，不含英文），名稱不再換三行 | 完成（有自動測試） |
+| UX-13 樣式分叉 | `application-path.css`：238 個寫死色碼改用共用的 `--uw-*` 變數（只剩白色、慶祝用的金色與 4 個狀態色變數），字型改用品牌字型；原本放在 `midnight-theme.css` 的 44 行重新上色規則併回這個檔案，位置與順序不變；用 18 張前後截圖比對，除了確認框（刻意改成一般文字框）之外沒有差異。**仍留著兩個小的覆蓋檔**（`ux-task-first.css`、`application-level-tools.css`）：它們混有版面與字級規則，合併會改變套用順序，沒有逐條驗證前不動 | 大部分完成（兩個覆蓋檔未併入） |
 | UX-19 斷線內容只留在分頁記憶體 | 依你的決定維持現狀 | 未改（維持） |
 
 ### 順手修掉的既有錯誤
@@ -34,13 +34,13 @@
 `application-path.js`、`application-path-template.js`、`application-today.css`（新）、`platform-tracker.js`、`application-workspace.js`、`application-plan-index.js`、`app.js`、`index.html`；後端 `application_path.py`、`study_plan_workbench.py`。
 
 ## 測試
-- 新增：`tests/e2e/test_application_today.py`（4）、`tests/e2e/test_application_workbench.py`（12）、`tests/test_application_path.py`（1）、`tests/test_study_plan_workbench.py`（1）、`tests/test_staging_runner.py`（8）。
+- 新增：`tests/e2e/test_application_today.py`（4）、`tests/e2e/test_application_workbench.py`（14）、`tests/test_application_path.py`（1）、`tests/test_study_plan_workbench.py`（1）、`tests/test_staging_runner.py`（8）、`tests/test_content_admin_profile.py`（4）。
 - 因為設計刻意改變而更新的既有測試：`test_application_task_ux.py`（2）、`test_application_stage_guide.py`（1）、`test_my_application_entry.py`（2）、`test_application_workspace.py`（1）。
 - 在原本程式上就失敗的既有測試（這次沒有動）：`test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work`、`test_multi_plan_workspace.py::test_shared_progress_survives_reorder_removal_and_reload`、`test_application_guidance.py`（5）、`test_navigation_guide.py`（5）等共 14 項。
 - 有一項（`test_workspace_navigation_preserves_draft_target_and_old_routes[390]`）在整批一起跑時偶發失敗，單獨重跑通過，原因是頁面載入時機。
 
 ## 還沒做 / 需要你決定
 1. 「條件檢查」的「已看過」是否繼續計入「準備進度 n / 43」（目前維持計入）。
-2. UX-13 樣式整併。
+2. 樣式：`ux-task-first.css`、`application-level-tools.css` 兩個覆蓋檔尚未併入 `application-path.css`（見 UX-13）。
 3. 「時程」裡的排程預覽與「進階時間安排」是舊工具重新排列，不是重寫；如果要更像專業工作臺，下一步是重做這兩塊。
 4. 沒有真人使用者測試；沒有在 Windows 與實機手機驗證。

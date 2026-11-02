@@ -868,6 +868,11 @@
             "title": "Is Platform Admin",
             "type": "boolean"
           },
+          "is_content_admin": {
+            "type": "boolean",
+            "title": "Is Content Admin",
+            "default": false
+          },
           "notification_preferences": {
             "$ref": "#/components/schemas/AccountNotificationPreferences"
           },

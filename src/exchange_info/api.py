@@ -929,12 +929,21 @@ def _verify_password(password: str, encoded: str | None) -> bool:
         return False
 
 
+def _is_content_admin_account(account: UserAccount) -> bool:
+    """Platform admins and the e-mail addresses listed in EXCHANGE_CONTENT_ADMIN_EMAILS may use the moderation tools."""
+    if is_platform_admin(account):
+        return True
+    listed = {item.strip().lower() for item in os.environ.get("EXCHANGE_CONTENT_ADMIN_EMAILS", "").split(",") if item.strip()}
+    return bool(account.email and account.email.strip().lower() in listed)
+
+
 def _account_profile(account: UserAccount) -> AccountProfile:
     providers = [link.provider for link in account.provider_links]
     if account.password_hash and AuthProvider.EMAIL not in providers:
         providers.insert(0, AuthProvider.EMAIL)
     return AccountProfile(
         is_platform_admin=is_platform_admin(account),
+        is_content_admin=_is_content_admin_account(account),
         catalog_home_university=catalog_home_university(account),
         school_basis=school_basis(account),
         id=account.id,
@@ -1415,16 +1424,8 @@ def create_app(
             raise HTTPException(status_code=401, detail="找不到這個帳號。")
         return account, session
 
-    def content_admin_emails() -> set[str]:
-        raw = os.environ.get("EXCHANGE_CONTENT_ADMIN_EMAILS", "")
-        return {item.strip().lower() for item in raw.split(",") if item.strip()}
-
     def is_content_admin(account: UserAccount) -> bool:
-        if is_platform_admin(account):
-            return True
-        if not account.email:
-            return False
-        return account.email.strip().lower() in content_admin_emails()
+        return _is_content_admin_account(account)
 
     def authenticated_content_admin(request: Request) -> tuple[UserAccount, AccountSessionRecord]:
         account, session = authenticated_account(request)

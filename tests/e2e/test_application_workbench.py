@@ -162,6 +162,31 @@ def test_offline_save_says_so_in_plain_language_and_keeps_the_text(page, live_se
     expect(page.locator('#save-note')).to_have_text('已儲存', timeout=15000)
 
 
+def test_students_do_not_trigger_the_admin_endpoint_403(page, live_server):
+    seen = []
+    page.on('response', lambda r: seen.append((r.status, r.url)) if '/admin/' in r.url else None)
+    verified_login(page, live_server)
+    plan = make_plan(page, live_server)
+    open_view(page, live_server, plan)
+    expect(page.locator('#today-view')).to_be_visible()
+    page.wait_for_timeout(800)
+    assert seen == [], seen
+
+
+def test_phone_shows_short_school_names(page, live_server):
+    page.set_viewport_size({'width': 390, 'height': 844})
+    verified_login(page, live_server)
+    plan = make_plan(page, live_server)
+    open_view(page, live_server, plan)
+    expect(page.locator('#today-view')).to_be_visible()
+    label = page.locator('#plan-select option:checked').inner_text()
+    assert 'Lincoln' not in label and label.startswith('林肯大學'), label
+    open_view(page, live_server, plan, 'level', level='check-availability')
+    name = page.locator('.level-plan-name')
+    expect(name).to_have_text(re.compile('^林肯大學 · '))
+    assert name.evaluate('e => e.getBoundingClientRect().height') < 30
+
+
 @pytest.mark.parametrize('view', ['today', 'plans', 'schedule'])
 def test_phone_layout_has_no_horizontal_scroll(page, live_server, view):
     page.set_viewport_size({'width': 390, 'height': 844})

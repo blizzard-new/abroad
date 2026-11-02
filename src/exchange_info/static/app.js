@@ -11611,7 +11611,7 @@ function initDiscussionReader() {
     submitReply: (form) => handleCommunityFormSubmit(form, submitPostCommentForm, "回覆已發布。"),
   });
   window.UniWayModeration.init({ fetch: fetchJson, escape: escapeHtml, announce,
-    accountId: () => state.account?.id || "", refreshed: () => window.UniWayCommunity.refresh() });
+    accountId: () => state.account?.id || "", isContentAdmin: () => Boolean(state.account?.is_content_admin), refreshed: () => window.UniWayCommunity.refresh() });
 }
 
 function openGlobalCommunityComposer() {

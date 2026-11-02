@@ -85,50 +85,6 @@ html body.unified-shell :is(.pr-mini-week .today span, .pr-budget-bar .c1, .pr-b
 html body.unified-shell :is(.map-legend-dot,.map-legend-cluster) { background: var(--uw-accent); color: #fff; box-shadow: 0 0 0 1px var(--uw-accent); }
 html body.unified-shell .school-detail-view .school-photo-fallback { background: var(--uw-accent); color: #fff; }
 
-/* The approved application path keeps its gold completion state and animation. */
-#application-path {
-  --ink: #23324a; --blue: var(--uw-accent); --deep: var(--uw-accent-hover);
-  --pale: #edf0f4; --page: #f5f7fa;
-}
-.unified-shell #dashboard-view > #application-path { background: var(--page); }
-#application-path :is(.current-button, .square-icon, .hub-tabs > a.active, .stat-card.overall-stat,
-  .overview-filter button[aria-pressed="true"], .option-card[aria-pressed="true"]) {
-  background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge);
-}
-#application-path .stat-card.overall-stat > :is(span, strong, small) { color: #fff; }
-#application-path .overall-stat .meter { background: #ffffff30; }
-#application-path .overall-stat .meter-fill { background: #fff; }
-#application-path .overall-stat .particle::before { background: var(--uw-accent); box-shadow: 0 0 5px #23324a80; }
-#application-path .overall-stat .meter-fill::after { background: linear-gradient(105deg,transparent,#23324a66,transparent); }
-#application-path .primary-button { background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge); }
-#application-path .primary-button:hover { background: var(--uw-accent-hover); }
-#application-path :is(.kicker, .app-header h1 span, .ap-empty > svg, .stage-card header > span:last-child) { color: var(--uw-accent); }
-#application-path .meter-fill { background: var(--uw-accent); }
-#application-path .meter.gold .meter-fill { background: linear-gradient(90deg,#d9ac39,#f6d572); }
-#application-path .path-line.partial { stroke: var(--uw-accent); }
-#application-path .node.current { background: var(--uw-accent); color: #fff; box-shadow: 0 7px 0 #101c2e,0 0 0 6px #23324a20; }
-#application-path .node.started:not(.current) { background: var(--uw-accent); color: #fff; box-shadow: 0 7px 0 #101c2e; }
-#application-path .node.current .current-flag { background: var(--uw-accent); color: #fff; border-color: #fff; box-shadow: 0 3px 0 #23324a30; }
-#application-path .stage-divider .stage-wave path { fill: var(--uw-accent); }
-#application-path .stage-divider .stage-wave path:first-child { fill: var(--uw-accent-edge); }
-#application-path .stage-divider .stage-wave { filter: drop-shadow(0 4px 0 #17243a); }
-#application-path .stage-divider h3 { color: #fff; }
-#application-path .stage-divider > span, #application-path .stage-divider small {
-  background: #ffffff1f; color: #fff; box-shadow: none;
-}
-#application-path .map-scroll { background: linear-gradient(#f0f3f7,#fafbfc); scrollbar-color: #9aa6b7 transparent; }
-#application-path .glide-select { --gs-accent: #fff; --gs-surface: var(--uw-accent); --gs-highlight: #44536a; --gs-text: #fff; }
-#application-path .glide-select__trigger { background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge); box-shadow: 0 3px 0 #17243a; }
-#application-path .glide-select__pill { background: var(--uw-accent-edge); box-shadow: inset 0 0 0 1px #ffffff30; }
-#application-path .glide-select__number { color: #fff; }
-#application-path .glide-select__menu { border-color: var(--uw-accent-edge); box-shadow: 0 16px 50px #23324a29,0 3px 0 #17243a; }
-#application-path :is(button,a,input,select,textarea,[tabindex]):focus-visible { outline-color: var(--uw-accent); }
-#application-path :is(.choice-box, .example-note, .option-card:has(input:checked)) { background: var(--uw-accent); color: #fff; border-color: var(--uw-accent-edge); }
-#application-path :is(.choice-box, .example-note, .option-card:has(input:checked)) :is(small,strong,svg,a) { color: inherit; }
-#application-path :is(.hint-toggle, .source-details summary, .support-card h3 svg, .support-points svg, .context-card strong, .meter-label strong) { color: var(--uw-accent); }
-#application-path .check-row input, #application-path .option-card input { accent-color: var(--uw-accent); }
-#application-path .option-card:has(input:checked) input { accent-color: #fff; }
-
 /* Dark mode changes the canvas, never the midnight fill / white label pairing. */
 html[data-theme="dark"] #application-path {
   --ink: var(--uw-text); --muted: var(--uw-muted); --deep: #fff;
