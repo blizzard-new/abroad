@@ -59,9 +59,10 @@ class CarouselDraft(BaseModel):
 
 class Scene(BaseModel):
     kind: Literal["hook", "point", "stat", "cta"]
-    heading: str = Field(description="畫面大標，12 字內")
+    heading: str = Field(description="畫面大標，12 字內。字會放很大，可以用換行（\\n）分行，每行 4～6 個字、最多三行，讓重點詞獨佔一行")
     lines: list[str] = Field(description="依序出現的字幕，每行 12 字內")
     seconds: float
+    emphasis: list[str] = Field(default_factory=list, description="畫面大標裡最重要的 1 個詞（必須是 heading 裡原本的字），會放在珊瑚紅色塊上；沒有就留空")
 
 
 class VideoScript(BaseModel):

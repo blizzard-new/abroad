@@ -291,7 +291,8 @@ class ModelWriter:
         else:
             shape = "橫式長影片腳本，總長 120～240 秒：hook 約 8 秒，6～10 個 point 各 12～20 秒，一個 stat，cta 約 10 秒。"
         task = (
-            f"你是影片剪輯師。寫{shape}\n每個 scene 的 lines 是依序出現的大字幕。\n"
+            f"你是影片剪輯師。寫{shape}\n每個 scene 的 lines 是依序出現的大字幕。"
+            "heading 是畫面大標，字會放得很大：用換行（\\n）分成每行 4～6 個字、最多三行；emphasis 填 heading 裡最重要的一個詞（原文裡的字），它會放在珊瑚紅色塊上。\n"
             f"題目：{item.topic}\n內容支柱：{PILLARS[item.pillar]}\n企劃重點：{item.brief}\n官方來源：{item.source_url or '無'}\n"
             f"hashtag 從 {' '.join(HASHTAGS)} 挑，最多 5 個。"
             + (" youtube_title 結尾加 #Shorts。" if length == "short" else "")
@@ -302,7 +303,8 @@ class ModelWriter:
     def video_from_carousel(self, carousel: CarouselDraft, item: PlanItem, briefing: Briefing) -> VideoScript:
         task = (
             "你是影片剪輯師。把今天的 Instagram 輪播改寫成 30～40 秒的 YouTube Shorts 腳本："
-            "封面變 hook（約 3 秒），每張重點變一個 point，加一個 stat，最後 cta。youtube_title 結尾加 #Shorts。\n"
+            "封面變 hook（約 3 秒），每張重點變一個 point，加一個 stat，最後 cta。youtube_title 結尾加 #Shorts。"
+            "heading 是畫面大標，字會放得很大：用換行（\\n）分成每行 4～6 個字、最多三行；emphasis 填 heading 裡最重要的一個詞（原文裡的字），它會放在珊瑚紅色塊上。\n"
             f"輪播內容：\n{_dump(carousel)}"
         )
         return self._ask("video", VideoScript, task, briefing_text(briefing),
