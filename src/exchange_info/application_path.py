@@ -116,6 +116,7 @@ def build_levels(context, evaluated, catalog):
     for check in choice.checks:
         item = level("check-" + check.code, check.title, "confirm", check.detail, "釐清申請條件")
         item.update(source_urls=[check.source_url] if check.source_url else [],
+                    check_status=check.status,
                     warning={"pass":"規則比對通過，仍以校方審核為準。", "fail":"目前條件不符合此項規則；個人確認不會改變資格判斷。", "needs_confirmation":"資料或個人條件待確認。"}[check.status])
         levels.append(item)
     documents = [d for d in catalog.items if not d.applicability or d.applicability.status not in {"not_applicable", "deferred"}]

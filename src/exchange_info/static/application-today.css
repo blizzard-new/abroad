@@ -1,0 +1,90 @@
+/* 我的申請 · 今天. One strong element (the task to do now); everything else is flat and quiet.
+   Uses the shared --uw-* tokens only. Loaded after the older application-path layers so it wins by order, not by !important. */
+
+#application-path #hub[data-tab="today"] > .next-sidebar,
+#application-path #hub[data-tab="today"] > .preparation-boundary { display: none; }
+
+#application-path .today { display: grid; gap: 22px; margin-top: 18px; color: var(--uw-text, #23324a); }
+#application-path .today h2, #application-path .today h3 { margin: 0; line-height: 1.3; }
+
+/* focus + deadline */
+#application-path .today-top { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: stretch; }
+#application-path .today-focus { position: relative; overflow: hidden; display: grid; gap: 12px; align-content: start; min-height: 232px; padding: 28px 30px 26px; border-radius: 28px; background: var(--uw-navy, #23324a); color: #fff; }
+#application-path .today-focus::after { content: ""; position: absolute; right: -40px; top: -30px; width: 260px; height: 260px; border-radius: 50%; border: 2px dashed #ffffff26; pointer-events: none; }
+#application-path .today-label { font-size: 13px; font-weight: 600; color: #c9d3e3; }
+#application-path .today-focus h2 { max-width: 18em; font-size: 28px; text-wrap: balance; color: #fff; }
+#application-path .today-focus p { max-width: 48ch; margin: 0; color: #dde5f1; }
+#application-path .today-focus .today-why { font-size: 13px; color: #c9d3e3; }
+#application-path .today-meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: #c9d3e3; }
+#application-path .today-meta a { color: #fff; text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; gap: 4px; }
+#application-path .today-actions { margin-top: 6px; }
+#application-path .today-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 24px; border-radius: 16px; background: #fff; color: var(--uw-navy, #23324a); font-weight: 700; text-decoration: none; }
+#application-path .today-primary:hover { background: #edf0f4; }
+
+#application-path .today-panel { display: grid; gap: 8px; align-content: start; padding: 20px 22px; border: 1px solid var(--uw-line, #d8dde5); border-radius: 22px; background: #fff; }
+#application-path .today-panel h3 { font-size: 14px; font-weight: 600; color: var(--uw-muted, #586579); }
+#application-path .today-panel p { margin: 0; }
+#application-path .today-date { font-size: 44px; line-height: 1.05; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+#application-path .today-empty { font-weight: 600; }
+#application-path .today-hint { font-size: 13px; color: var(--uw-muted, #586579); }
+#application-path .today-pill { display: inline-block; margin-left: 6px; padding: 1px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--uw-accent-wash, #edf0f4); color: var(--uw-muted, #586579); }
+#application-path .today-pill.soon { background: #f8e9e7; color: #a83c39; }
+#application-path .today-pill.late { background: #f8e9e7; color: #a83c39; }
+#application-path .today-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; color: var(--uw-navy, #23324a); text-decoration: underline; text-underline-offset: 4px; width: fit-content; }
+#application-path .today-text { min-height: 44px; padding: 0 4px; border: 0; background: none; font: inherit; font-weight: 600; color: var(--uw-navy, #23324a); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+
+/* stages */
+#application-path .today-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 12px; }
+#application-path .today-head h2 { font-size: 16px; }
+#application-path .today-head p { margin: 0; font-size: 14px; color: var(--uw-muted, #586579); }
+#application-path .today-head b { color: var(--uw-text, #23324a); font-variant-numeric: tabular-nums; }
+#application-path .today-track { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; }
+#application-path .today-track li { flex: 1; height: 8px; border-radius: 8px; background: var(--uw-line, #d8dde5); }
+#application-path .today-track li[data-s="done"] { background: #1f7a4d; }
+#application-path .today-track li[data-s="now"] { background: var(--uw-navy, #23324a); }
+#application-path .today-stage-now { margin: 10px 0 0; font-size: 14px; color: var(--uw-muted, #586579); }
+#application-path .today-stage-now b { color: var(--uw-text, #23324a); }
+
+/* queue + checks */
+#application-path .today-bottom { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
+#application-path .today-queue h2 { font-size: 18px; margin-bottom: 4px; }
+#application-path .today-queue ul { margin: 0; padding: 0; list-style: none; }
+#application-path .today-queue li { border-bottom: 1px solid var(--uw-line, #d8dde5); }
+#application-path .today-queue li a { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 8px 4px; color: inherit; text-decoration: none; }
+#application-path .today-queue li a:hover { background: #ffffff99; }
+#application-path .today-row { display: grid; gap: 2px; flex: 1; min-width: 0; }
+#application-path .today-row b { font-weight: 600; }
+#application-path .today-row small { font-size: 12.5px; color: var(--uw-muted, #586579); }
+#application-path .today-tag { flex: none; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--uw-amber-soft, #fff4d6); color: var(--uw-amber-ink, #8a5a00); }
+#application-path .today-queue li svg, #application-path .today-queue li i { flex: none; color: var(--uw-muted, #586579); }
+#application-path .today-counts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
+#application-path .today-counts li { display: grid; gap: 2px; justify-items: center; padding: 10px 4px; border-radius: 14px; background: var(--uw-surface-soft, #edf0f4); font-size: 12.5px; color: var(--uw-muted, #586579); }
+#application-path .today-counts b { font-size: 24px; line-height: 1.1; color: var(--uw-text, #23324a); font-variant-numeric: tabular-nums; }
+#application-path .today-counts .pass b { color: #1f7a4d; }
+#application-path .today-counts .fail b { color: #a83c39; }
+#application-path .today-counts .needs b { color: var(--uw-amber-ink, #8a5a00); }
+#application-path .today-boundary { display: flex; gap: 8px; align-items: flex-start; margin: 0; font-size: 12.5px; color: var(--uw-muted, #586579); }
+#application-path .today-boundary svg, #application-path .today-boundary i { width: 16px; height: 16px; margin-top: 3px; flex: none; }
+
+/* task page: rule status first (replaces the collapsed note) and calmer spacing */
+#application-path .check-status { display: flex; gap: 10px; align-items: baseline; margin: 0 0 14px; padding: 12px 14px; border-radius: 14px; font-size: 14px; line-height: 1.55; background: var(--uw-surface-soft, #edf0f4); }
+#application-path .check-status b { flex: none; padding: 1px 10px; border-radius: 999px; font-size: 12.5px; background: #fff; }
+#application-path .check-status.pass { background: #e6f3ec; color: #14573a; }
+#application-path .check-status.fail { background: #f8e9e7; color: #7e2b29; }
+#application-path .check-status.needs { background: var(--uw-amber-soft, #fff4d6); color: #5e3d00; }
+#application-path .level-card .level-progress { padding: 16px 22px 0; }
+
+@media (max-width: 760px) {
+  #application-path .today { gap: 16px; }
+  #application-path .today-top, #application-path .today-bottom { grid-template-columns: 1fr; }
+  #application-path .today-focus { min-height: 0; padding: 22px 20px 20px; border-radius: 24px; }
+  #application-path .today-focus h2 { font-size: 22px; }
+  #application-path .today-primary { width: 100%; }
+  #application-path .today-date { font-size: 32px; }
+}
+
+/* tabs: 今天 first; rule text is a statement, not a button; footer inset like the rest of the card */
+#application-path .hub-tabs [data-tab="today"] { order: -1; }
+#application-path .level-card .choice-box { background: #fff; color: var(--uw-text, #23324a); border: 1px solid var(--uw-line, #d8dde5); box-shadow: none; }
+#application-path .level-card .choice-box svg, #application-path .level-card .choice-box i { color: var(--uw-muted, #586579); }
+#application-path .level-card .level-actions { padding-inline: 22px; }

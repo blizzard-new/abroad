@@ -205,7 +205,7 @@ def test_school_detail_starts_plan_directly_and_repeat_creation_is_idempotent(pa
     page.locator('#create-departure').fill('2027')
     page.locator('#create-term').select_option('fall')
     page.get_by_role('button', name='建立計畫', exact=True).dblclick()
-    expect(page.locator('#progress-view')).to_be_visible()
+    expect(page.locator('#today-view')).to_be_visible()  # a new plan lands on 今天
     first_plan = page.locator('#plan-select').input_value()
     page.evaluate('UniWayApplicationPath.startTarget("林肯大學 Lincoln University")')
     expect(page.locator('#plan-dialog')).to_be_hidden()

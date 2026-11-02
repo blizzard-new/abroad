@@ -144,7 +144,7 @@ function init(){
   $('#source-info').onclick=()=>$('#info-dialog').showModal();
   $$('.close-dialog').forEach(b=>b.onclick=()=>b.closest('dialog').close());
   $('#plan-form').onsubmit=create;
-  $('#plan-select').onchange=e=>{location.hash='#my-application?'+new URLSearchParams({plan:e.target.value,view:'progress'});};
+  $('#plan-select').onchange=e=>{location.hash='#my-application?'+new URLSearchParams({plan:e.target.value,view:'today'});};
   $('#stage-select').onchange=e=>scrollMap(stages()[Number(e.target.value)]?.levels[0]?.id);
   $('#go-origin').onclick=()=>{scrollMap(null);$('#stage-select').value='0';picker.sync();};
   $('#go-current').onclick=()=>{const n=next();if(n)location.hash=href('level',n.id);};
@@ -153,6 +153,7 @@ function init(){
     if(e.target.closest('[data-path-login]'))openAuthDialog();
     if(e.target.closest('[data-path-new]'))openNew();
     if(e.target.closest('[data-path-retry]'))load(true);
+    if(e.target.closest('[data-open-info]'))$('#info-dialog').showModal();
     const link=e.target.closest('#path-tool-host a[href^="#"]');
     if(link){const url=toolHref(link.getAttribute('href').slice(1));if(url){e.preventDefault();location.hash=url;}}
   });
@@ -193,7 +194,7 @@ function render(){
   if(!active||!view)return;
   window.UniWayApplicationWorkspace?.release();
   $('#path-message').hidden=true;
-  const id=route().get('level'), tab=route().get('view')||'progress';
+  const id=route().get('level'), tab=route().get('view')||'today';
   $('.ap-schedule-link').hidden=tab==='level';
   $('#hub').hidden=tab==='level';$('#level-view').hidden=tab!=='level';
   $('#sync-message').textContent=plan().archived?'已封存 · 紀錄保留':'已同步至帳號';
@@ -210,8 +211,9 @@ function render(){
   $('#next-meter').replaceChildren();
   const due=levels().filter(l=>confirmedDeadline(l)&&!l.external&&status(l)!=='skipped'&&!isDone(l)).sort((a,b)=>a.official_deadline_at.localeCompare(b.official_deadline_at))[0];
   $('#deadline-card').innerHTML=icon('calendar-search')+'<div><h3>'+(due?'官方期限':'官方日期待確認')+'</h3><p>'+esc(due?new Date(due.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})+'（臺灣時間）'+(new Date(due.official_deadline_at)<new Date()?' · 已過期':''):'請核對當期官方公告。')+'</p>'+(due?'<a href="'+href('level',due.id)+'">'+esc(due.title)+icon('arrow-right')+'</a>':'')+'</div>';
-  $('#map-tools').hidden=tab!=='map';$('#map-view').hidden=tab!=='map';$('#progress-view').hidden=tab!=='progress';
+  $('#hub').dataset.tab=tab;$('#today-view').hidden=tab!=='today';$('#map-tools').hidden=tab!=='map';$('#map-view').hidden=tab!=='map';$('#progress-view').hidden=tab!=='progress';
   if(tab==='level'){if(!dirty||activeId!==id)renderLevel(id);}
+  else if(tab==='today'){activeId=null;renderToday();}
   else if(tab==='progress'){activeId=null;renderOverview();}
   else{activeId=null;renderMap();requestAnimationFrame(()=>{if(mapPosition!==null&&mapPositionPlan===plan().id)$('#map-scroll').scrollTop=mapPosition;else scrollMap(n?.id,'instant');});}
   icons();
@@ -261,8 +263,13 @@ async function save(complete=false,{quiet=false}={}){
     }return false;
   }finally{if(run===epoch){saving=false;$$('#save-draft,#level-form button[type=submit],#conflict-reload').forEach(b=>b.disabled=plan().archived);}}
 }
+const CHECK_TEXT={pass:['符合','pass','規則比對通過，仍以校方審核為準。'],
+  fail:['不符合','fail','目前條件不符合這項規則。你仍可以記下「已看過」，但這不會改變資格判斷。'],
+  needs_confirmation:['待確認','needs','系統還無法判斷。先補齊你的條件，或向承辦單位確認。']};
+const CHECK_STANDARD=new Set(['規則比對通過，仍以校方審核為準。','目前條件不符合此項規則；個人確認不會改變資格判斷。','資料或個人條件待確認。']);
+function checkStatus(l){const c=CHECK_TEXT[l.check_status];return c?'<p class="check-status '+c[1]+'" role="status"><b>'+c[0]+'</b>'+esc(c[2])+'</p>':'';}
 function field(l,r){
-  if(l.kind==='confirm')return '<div class="choice-box">'+icon(l.icon)+'<strong>'+esc(l.prompt)+'</strong></div>';
+  if(l.kind==='confirm')return checkStatus(l)+'<div class="choice-box">'+icon(l.icon)+'<strong>'+esc(l.prompt)+'</strong></div>';
   if(l.kind==='assemble')return '<div class="document-preview">'+levels().filter(x=>x.kind==='write').map(x=>'<section><h3>'+esc(x.title)+'</h3><p>'+esc(record(x.id).value||'尚未填寫')+'</p><a href="'+href('level',x.id)+'">編輯這一段</a></section>').join('')+'</div><button type="button" id="download-writing" class="outline-button">'+icon('download')+'下載文字草稿</button><a class="outline-button" href="'+pathUrl()+'/writing.docx'+query()+'">'+icon('file-down')+'下載 Word 草稿</a>';
   return (l.conditional?'<label for="file-applicable">這份條件式文件適用於你嗎？</label><select id="file-applicable"><option value="">待確認（暫不計入進度）</option><option value="yes" '+(r.applicable===true?'selected':'')+'>適用</option><option value="no" '+(r.applicable===false?'selected':'')+'>不適用</option></select>':'')+(l.external?'<div class="external-notice">學生自行記錄，不代表校方確認。</div>':'')+
     (l.kind==='submission'?'<p class="small-warning">請在官方系統送件；UniWay 不代送申請。</p>':'')+
@@ -277,7 +284,7 @@ function renderLevel(id,success=false){
   const dependencies=missing(l);
   $('#level-view').innerHTML='<div class="level-topline"><a class="back-link" href="'+href()+'">'+icon('arrow-left')+'回到準備清單</a><span>'+esc(c.target_school+' · '+c.departure_year+' '+termName(c.semester))+'</span></div><div class="level-layout"><div class="level-card"><div class="level-heading"><span class="square-icon">'+icon(l.icon)+'</span><div><p class="eyebrow">'+esc(l.stageTitle)+'</p><h2 id="level-title" tabindex="-1">'+esc(l.title)+'</h2></div></div><div class="level-progress"><div><span>準備狀態</span><strong>'+(isDone(l)?'已完成':hasContent(l)?'進行中':'尚未開始')+'</strong></div>'+meter(l.progress,l.title+'進度',{big:true,gold:isDone(l)})+'</div>'+
     (success?'<div class="success-state" tabindex="-1" role="status"><div class="success-emblem">'+icon('check')+'</div><h3>'+esc(successLabel(l))+'</h3><p>已同步至這份申請計畫</p><a class="primary-button" href="'+(next()?href('level',next().id):href('progress'))+'">'+(next()?'下一項準備':'查看總覽')+icon('arrow-right')+'</a><button id="edit-level" class="quiet-button">回頭查看／修改</button></div>':
-    '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning?'<details class="ap-warning"><summary>需要確認的事項</summary><p>'+esc(l.warning)+'</p></details>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+(l.kind==='submission'?'<label class="check-row confirmation"><input type="checkbox" id="self-confirm" '+(r.confirmed?'checked':'')+'><span>'+(l.kind==='submission'?'我已自行送件，這是個人紀錄':'我已確認這一小步準備好了')+'</span></label>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+(dirty?'已恢復未儲存內容':isDone(l)?'已完成 · 已儲存':'輸入後自動儲存')+'</span><button type="button" id="save-draft" class="outline-button">儲存草稿</button><button type="submit" class="primary-button" '+(plan().archived?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button></footer></form>')+'</div><aside class="level-support"><section class="support-card"><details class="source-details"><summary>完整規則與官方來源'+icon('chevron-down')+'</summary><p>'+esc(l.prompt)+'</p>'+urls(l).map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(i?'相關官方文件':'官方來源')+icon('arrow-up-right')+'</a>').join('')+'</details>'+(l.official_deadline_at?'<p class="ap-deadline">'+(confirmedDeadline(l)?'官方期限：':'參考日期（待核對）：')+esc(new Date(l.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))+'（臺灣時間）'+(new Date(l.official_deadline_at)<new Date()?'（已過期）':'')+'</p>':'')+(l.action_url&&/^https?:\/\//i.test(l.action_url)?'<a class="outline-button" href="'+esc(l.action_url)+'" target="_blank" rel="noopener noreferrer">開啟官方表格'+icon('external-link')+'</a>':'')+(l.kind==='submission'&&urls(l).length?'<a class="outline-button" href="'+esc(urls(l)[0])+'" target="_blank" rel="noopener noreferrer">校方公告與入口'+icon('external-link')+'</a>':'')+'</section><div class="context-card"><strong>'+esc(c.home_school)+'</strong>'+esc(c.academic_year)+' 學年度 · '+esc(c.application_round||'梯次待確認')+'<br>個人準備 ≠ 校方受理或錄取</div></aside></div>';
+    '<form id="level-form"><div class="level-body">'+(l.kind==='confirm'?'':'<p class="task-question">'+esc(l.prompt)+'</p>')+(l.warning&&!(l.check_status&&CHECK_STANDARD.has(l.warning))?'<details class="ap-warning"><summary>需要確認的事項</summary><p>'+esc(l.warning)+'</p></details>':'')+field(l,r)+(dependencies.length?'<div class="small-warning">先完成以下前置事項：'+dependencies.map(k=>'<a href="'+href('level',k)+'">'+esc(find(k)?.title||'前置資料尚未取得')+'</a>').join('')+'</div>':'')+(l.kind==='submission'?'<label class="check-row confirmation"><input type="checkbox" id="self-confirm" '+(r.confirmed?'checked':'')+'><span>'+(l.kind==='submission'?'我已自行送件，這是個人紀錄':'我已確認這一小步準備好了')+'</span></label>':'')+'<p id="level-error" class="error-box" role="alert" hidden></p><button type="button" id="conflict-reload" class="outline-button" hidden>保留輸入並載入最新進度</button></div><footer class="level-actions"><span id="save-note" role="status">'+(dirty?'已恢復未儲存內容':isDone(l)?'已完成 · 已儲存':'輸入後自動儲存')+'</span><button type="button" id="save-draft" class="outline-button">儲存草稿</button><button type="submit" class="primary-button" '+(plan().archived?'disabled':'')+'>'+esc(completeLabel(l))+icon('check')+'</button></footer></form>')+'</div><aside class="level-support"><section class="support-card"><details class="source-details"><summary>完整規則與官方來源'+icon('chevron-down')+'</summary><p>'+esc(l.prompt)+'</p>'+urls(l).map((u,i)=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(i?'相關官方文件':'官方來源')+icon('arrow-up-right')+'</a>').join('')+'</details>'+(l.official_deadline_at?'<p class="ap-deadline">'+(confirmedDeadline(l)?'官方期限：':'參考日期（待核對）：')+esc(new Date(l.official_deadline_at).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}))+'（臺灣時間）'+(new Date(l.official_deadline_at)<new Date()?'（已過期）':'')+'</p>':'')+(l.action_url&&/^https?:\/\//i.test(l.action_url)?'<a class="outline-button" href="'+esc(l.action_url)+'" target="_blank" rel="noopener noreferrer">開啟官方表格'+icon('external-link')+'</a>':'')+(l.kind==='submission'&&urls(l).length?'<a class="outline-button" href="'+esc(urls(l)[0])+'" target="_blank" rel="noopener noreferrer">校方公告與入口'+icon('external-link')+'</a>':'')+'</section><div class="context-card"><strong>'+esc(c.home_school)+'</strong>'+esc(c.academic_year)+' 學年度 · '+esc(c.application_round||'梯次待確認')+'<br>個人準備 ≠ 校方受理或錄取</div></aside></div>';
   if(success)$('#edit-level').onclick=()=>renderLevel(id);
   else{
     $('#level-form').oninput=edit;
@@ -416,7 +423,7 @@ async function create(e){
   e.preventDefault();if(creating)return;creating=true;const captured=key(),run=epoch,button=$('#plan-form button[type=submit]');button.disabled=true;
   const payload={revision:listing?.revision||0,home_school:activeHomeSchool(),target_school:$('#create-target').value,academic_year:$('#create-year').value,application_round:$('#create-round').value,departure_year:$('#create-departure').value,semester:$('#create-term').value,college:$('#create-college').value,department:$('#create-department').value,degree_level:$('#create-degree').value,import_existing:$('#import-existing').checked};
   try{const saved=await fetchJson('/account/application-paths',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(captured!==key()||run!==epoch)return;
-    track('plan_create_result',{result:'success'});$('#plan-dialog').close();view=null;location.hash='#my-application?'+new URLSearchParams({plan:saved.plan.id,view:'progress'});load();
+    track('plan_create_result',{result:'success'});$('#plan-dialog').close();view=null;location.hash='#my-application?'+new URLSearchParams({plan:saved.plan.id,view:'today'});load();
   }catch(error){track('plan_create_result',{result:'failed',status:error.status||0});if(captured===key()){$('#create-error').textContent=error.message;$('#create-error').hidden=false;}}
   finally{creating=false;button.disabled=false;}
 }
@@ -458,6 +465,45 @@ function scrollMap(id,behavior='smooth'){
   const a=node.getBoundingClientRect(),b=box.getBoundingClientRect();
   box.scrollTo({top:box.scrollTop+a.top-b.top-box.clientHeight*.48+50,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':behavior});
 }
+// 今天: one task to do now, the next confirmed deadline, where the student is, and what comes next.
+// It reads the same plan as the checklist and the map; nothing here is stored separately.
+const KIND_LABEL={confirm:'條件確認',write:'寫作',file:'文件',note:'事項',submission:'送件',assemble:'整理',notice:'通知'};
+function stageGroups(){
+  const groups=[];
+  for(const s of stages()){const last=groups[groups.length-1];if(last&&last.title===s.title)last.levels.push(...s.levels);else groups.push({title:s.title,levels:[...s.levels]});}
+  return groups.map(g=>({...g,...totals(g.levels)})).filter(g=>g.count>0);
+}
+function deadlineHtml(due,source){
+  if(!due)return '<h3>下一個已確認的官方期限</h3><p class="today-empty">目前沒有已確認的期限。</p><p class="today-hint">UniWay 只倒數有官方來源、已確認的日期，不會猜。</p>'+(source?'<a class="today-link" href="'+esc(source)+'" target="_blank" rel="noopener noreferrer">查看官方公告'+icon('arrow-up-right')+'</a>':'');
+  const d=new Date(due.official_deadline_at),tz={timeZone:'Asia/Taipei'},past=d<new Date(),left=Math.ceil((d-Date.now())/86400000);
+  return '<h3>下一個已確認的官方期限</h3><p class="today-date">'+d.toLocaleDateString('zh-TW',{...tz,month:'numeric',day:'numeric'})+'</p><p><b>'+d.toLocaleDateString('zh-TW',{...tz,weekday:'short'})+' '+d.toLocaleTimeString('zh-TW',{...tz,hour:'2-digit',minute:'2-digit',hour12:false})+'</b> <span class="today-pill '+(past?'late':left<=14?'soon':'')+'">'+(past?'已過期':left<=0?'今天截止':'還有 '+left+' 天')+'</span></p><p>'+esc(due.title)+'</p><a class="today-link" href="'+href('level',due.id)+'">前往這一項'+icon('arrow-right')+'</a>';
+}
+function renderToday(){
+  const n=next(),t=totals(),all=levels(),groups=stageGroups();
+  let current=groups.findIndex(g=>g.levels.some(l=>l.id===n?.id));
+  if(current<0)current=Math.max(0,groups.findIndex(g=>g.done<g.count));
+  const g=groups[current],resume=n&&(status(n)==='started'||drafts.has(draftKey(n.id)));
+  const due=all.filter(l=>confirmedDeadline(l)&&!l.external&&status(l)!=='skipped'&&!isDone(l)).sort((a,b)=>a.official_deadline_at.localeCompare(b.official_deadline_at))[0];
+  const source=urls(n||{})[0]||all.flatMap(urls)[0];
+  const queue=all.filter(l=>l.id!==n?.id&&!l.external&&!setup(l)&&!assistance(l)&&status(l)!=='skipped'&&!isDone(l)&&!missing(l).length).slice(0,5);
+  const checks=all.filter(l=>l.check_status),counts={pass:0,fail:0,needs_confirmation:0};
+  checks.forEach(l=>counts[l.check_status]++);
+  const open=checks.find(l=>l.check_status!=='pass');
+  const tag=l=>drafts.has(draftKey(l.id))?'草稿未儲存':status(l)==='started'?'進行中':l.conditional&&record(l.id).applicable==null?'待確認適用性':'';
+  $('#today-view').innerHTML='<div class="today">'+
+    '<div class="today-top"><section class="today-focus" aria-labelledby="today-focus-title"><span class="today-label">'+(n?'現在做這件事':'目前進度')+'</span><h2 id="today-focus-title">'+esc(n?n.title:'已完成已知的準備事項')+'</h2>'+(n&&n.prompt?'<p>'+esc(n.prompt.length>110?n.prompt.slice(0,110)+'…':n.prompt)+'</p>':'')+'<p class="today-why">'+esc(nextReason(n))+'</p>'+
+      (n?'<div class="today-meta"><span>'+esc(KIND_LABEL[n.kind]||'事項')+'</span><span>'+esc(n.stageTitle)+'</span>'+(urls(n)[0]?'<a href="'+esc(urls(n)[0])+'" target="_blank" rel="noopener noreferrer">官方來源'+icon('arrow-up-right')+'</a>':'')+'</div>':'')+
+      '<div class="today-actions"><a class="today-primary" href="'+(n?href('level',n.id):href('progress'))+'">'+(n?(resume?'繼續填寫':'開始'):'查看清單')+icon('arrow-right')+'</a></div></section>'+
+      '<aside class="today-panel" aria-label="期限">'+deadlineHtml(due,source)+'</aside></div>'+
+    '<section class="today-stages" aria-labelledby="today-stages-title"><div class="today-head"><h2 id="today-stages-title">申請階段</h2><p>個人準備進度 <b>'+t.done+' / '+t.count+'</b> 項 <button type="button" class="today-text" data-open-info>這怎麼計算？</button></p></div>'+
+      '<ol class="today-track" aria-label="各階段進度">'+groups.map((x,i)=>'<li data-s="'+(x.done===x.count?'done':i===current?'now':'todo')+'"><span class="visually-hidden">'+esc(x.title)+'：'+x.done+' / '+x.count+'</span></li>').join('')+'</ol>'+
+      (g?'<p class="today-stage-now">目前階段：<b>'+esc(g.title)+'</b>（'+g.done+' / '+g.count+'）· 第 '+(current+1)+' / '+groups.length+' 階段</p>':'')+'</section>'+
+    '<div class="today-bottom"><section class="today-queue" aria-labelledby="today-queue-title"><h2 id="today-queue-title">接下來</h2>'+
+      (queue.length?'<ul>'+queue.map(l=>'<li><a href="'+href('level',l.id)+'"><span class="today-row"><b>'+esc(l.title)+'</b><small>'+esc(l.stageTitle)+' · '+esc(KIND_LABEL[l.kind]||'事項')+'</small></span>'+(tag(l)?'<span class="today-tag">'+tag(l)+'</span>':'')+icon('chevron-right')+'</a></li>').join('')+'</ul>':'<p class="today-empty">沒有其他可以現在開始的項目。</p>')+
+      '<a class="today-link" href="'+href('progress')+'">查看全部準備清單'+icon('arrow-right')+'</a></section>'+
+      (checks.length?'<aside class="today-panel" aria-labelledby="today-checks-title"><h3 id="today-checks-title">資格條件檢查</h3><ul class="today-counts"><li class="pass"><b>'+counts.pass+'</b>符合</li><li class="fail"><b>'+counts.fail+'</b>不符合</li><li class="needs"><b>'+counts.needs_confirmation+'</b>待確認</li></ul><p class="today-hint">依已查核的規則比對，仍以校方審核為準。</p>'+(open?'<a class="today-link" href="'+href('level',open.id)+'">查看需要處理的條件'+icon('arrow-right')+'</a>':'')+'</aside>':'')+'</div>'+
+    '<p class="today-boundary">'+icon('info')+'圓圈與進度只代表你自己的準備，不代表校方受理或錄取。</p></div>';
+}
 function renderOverview(){
   const t=totals();
   $('#overview-summary').innerHTML='<h2>準備清單</h2><p>'+t.done+' / '+t.count+' 項已完成'+(t.pending?' · '+t.pending+' 項待確認適用性':'')+'</p>';
@@ -490,7 +536,7 @@ function maybeOpenTarget(){
 function startTarget(schoolName){
   if(!state.account){openAuthDialog();return;}
   const existing=(window.UniWayPlanIndex?.current()?.items||[]).find(p=>!p.archived&&p.context.target_school===schoolName);
-  location.hash='#my-application?'+new URLSearchParams(existing?{plan:existing.id,view:'progress'}:{target:schoolName});
+  location.hash='#my-application?'+new URLSearchParams(existing?{plan:existing.id,view:'today'}:{target:schoolName});
 }
 
 return {init,show,refresh,clear,toolHref,formToolActive,selectTarget,startTarget,resumeOAuth,hasRecoverableDrafts:()=>drafts.size>0};

@@ -247,3 +247,10 @@ def test_failed_persistence_does_not_report_completion(client, monkeypatch):
     loaded = client.get(f'/account/application-paths/{p["plan"]["id"]}', params={"home_school":CONTEXT["home_school"]}, headers={"Authorization":"alice"}).json()
     assert loaded["plan"]["steps"] == {}
     assert loaded["progress"]["value"] == 0
+
+
+def test_rule_check_levels_expose_the_status_the_student_must_see(client):
+    plan = create(client).json()
+    levels = {l["id"]: l for s in plan["stages"] for l in s["levels"]}
+    assert levels["check-college"]["check_status"] == "needs_confirmation"
+    assert all("check_status" not in l for key, l in levels.items() if not key.startswith("check-"))
