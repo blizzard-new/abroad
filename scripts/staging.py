@@ -174,7 +174,7 @@ def up(args: argparse.Namespace) -> None:
     signal.signal(signal.SIGTERM, _stop_requested)  # a closed terminal or `kill` should also switch back to your branch
     switching = wants_switch(args)
     watching = args.watch and switching and not args.here
-    sha, label = "", "目前資料夾的程式碼"
+    sha, label = "", "目前資料夾 " + (git("branch", "--show-current", capture=True, check=False) or "detached") + "@" + git("rev-parse", "--short", "HEAD", capture=True, check=False)
     try:
         say("\n[1/3] 準備程式碼")
         if switching:
