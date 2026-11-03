@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import AU, CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -119,6 +119,9 @@ NCUT_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 NPUST_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
+
+
+AU_SOURCE_CHECKED_AT = datetime(2026, 11, 3, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2968,6 +2971,58 @@ def _npust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _au_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理真理大學（國際事務中心 CIA，新北市淡水區真理街 32 號）學生赴國外／日本姐妹校交換、跨國雙聯學制暨教育部學海飛颺／惜珠與校內出國獎助學金應繳申請表件：1. 真理大學交換學生出國計畫申請表（須經導師及所屬學系主任簽章，報名時繳交 NT$3,000 行政處理費，依公告時程送交國際事務中心）、2. 大學或研究所歷年成績單正本（含學期排名與全班人數百分比，申請校級交換須前一學期成績全班前 50% 為原則且操行 80 分以上；申請教育部學海飛颺／惜珠須歷年平均 75 分以上或班排前 30%）、3. 有效外語能力檢定證明影本（日本交換組須三年內 JLPT N2 以上［日本多摩大學可憑 JLPT N2 或 TOEIC 600］；澳洲麥覺理大學 IELTS 6.5；英國密德薩斯與西英格蘭雙聯 IELTS 6.0–6.5；教育部學海飛颺／惜珠須兩年內通過 TOEIC 750 / TOEFL iBT 57 / IELTS 5.0 / JLPT N2 / TOPIK 2級）、4. 讀書計畫及自傳（日本交換組須以日文撰寫；歐美韓及其他地區依簡章以中／英／韓文撰寫）、5. 教師推薦信、6. 家長或監護人同意書。",
+        "study-plan": "撰寫真理大學交換學生出國甄選、雙聯學制及教育部學海飛颺／惜珠必繳之《讀書計畫與自傳》（建議約 1,000–2,500 字；日本交換組須以日文撰寫）。請具體說明申請動機、擬於目標姐妹校修習之課程與學分規劃（依《國外／日本姐妹校交換學生實施計畫》每學期修習課程不得低於 9 學分，交換期間仍需繳交真理大學全額學雜費）、個人外語準備與專業背景優勢，以及返國後學分採認抵免與生涯發展規劃。",
+        "course-preapproval": "辦理赴國外／日本姐妹校修讀交換課程或跨國雙聯學制（英國密德薩斯大學 3+1／1+1／4+1、英國西英格蘭大學 UWE Bristol 3+1／4+1／3+15 個月、西班牙赫羅納大學附設桑特波爾廚藝觀光學院 EUHT StPOL 1+1 碩士雙聯）之選課預審與《學生出境修習學分申請及採認規劃》：整理擬修讀之姐妹校課程名稱、學分數與課程大綱（Syllabus），依《真理大學學生出境修習學分實施辦法》與《真理大學與境外大學辦理雙聯學制實施辦法》會請所屬學系及教務處確認返國學分抵免對應。",
+        "credit-transfer": "返國後持國外姐妹校核發之正式成績單正本、修習課程大綱與出境修習學分採認表，依《真理大學學生出境修習學分實施辦法》與《真理大學與境外大學辦理雙聯學制實施辦法》向所屬學系及教務處辦理境外修習學分採認與抵免。",
+        "predeparture-notice": "真理大學錄取生獲國外姐妹校入學許可（Admission / CoE / 在留資格認定證明書）後之行前檢核：繳交家長同意書與行政契約書、辦理真理大學當學期註冊繳費（交換期間仍需繳交本校全額學雜費且每學期至少修習 9 學分）、辦理護照簽證與役男出境核准、投保海外醫療及意外保險，並出席國際事務中心行前說明會。",
+        "return-report": "真理大學交換學生及教育部學海系列／本校出國獎學金受獎生返國後應繳之《返國交換心得報告書》與《核銷文件》：依《真理大學交換學生出國獎學金辦法（P-01-510）》及《出國交換獎學金核銷注意事項》規定，受獎生須於返國後依限繳交返國心得報告（含照片）、國外姐妹校正式成績單、護照出入境紀錄及機票登機證正本，並配合國際事務中心成果分享始得完成獎助學金核銷。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "真理大學").replace("長庚", "真理")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "真理大學規定：申請人須為就讀滿一學年以上之大學部與研究所在學學生（大二、碩二以上），前一學期學業成績全班前 50% 為原則且操行 80 分以上；申請教育部《學海飛颺／惜珠計畫》須歷年平均達 75 分以上或班排前 30%；申請英國密德薩斯大學雙聯須 CGPA 2.5 以上。"
+        if field["id"] == "language_test":
+            field["options"] = [
+                "JLPT 日語能力試驗（日本 10 所交換姐妹校規定三年內通過 JLPT N2 以上；日本多摩大學可憑 N2 或 TOEIC 600 申請）",
+                "TOEIC 多益測驗（日本多摩大學基準 600 分；教育部學海飛颺／惜珠英語組基準 New TOEIC 750 分）",
+                "IELTS 雅思國際英語測驗（教育部學海飛颺／惜珠 5.0；英國密德薩斯與西英格蘭 3+1 學士雙聯 6.0、碩士雙聯 6.5；澳洲麥覺理大學 6.5［單科 6.0］）",
+                "TOEFL iBT 托福測驗（教育部學海飛颺／惜珠 57 分；美國明州西南州立大學 61 分；歐美交換建議 79 分以上）",
+                "TOPIK 韓國語文能力測驗（教育部學海飛颺／惜珠韓語組 TOPIK 2 級以上；韓國 11 所交換姐妹校建議 TOPIK 2–4 級或選修英語授課課程）",
+                "中國大陸（4 校）及澳門（澳門城市大學中文班）姐妹校交換（中文授課免附外語檢定）",
+            ]
+            field["help_text"] = "依《真理大學交換學生出國甄選辦法》第 5 條與各計畫簡章：日本交換組要求三年內通過 JLPT N2 以上（多摩大學可憑 TOEIC 600）；教育部學海飛颺／惜珠要求兩年內通過英語（TOEIC 750 / iBT 57 / IELTS 5.0 / GEPT 中高級初試）、日語（JLPT N2）或韓語（TOPIK 2 級）檢定。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://cia.au.edu.tw/p/403-1022-109353.php?Lang=zh-tw",
+        source_checked_at=AU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="真理大學交換學生出國計畫申請表與家長同意書" if template.id == "exchange-application-data" else ("讀書計畫與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://cia.au.edu.tw/p/403-1022-111632.php?Lang=zh-tw",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師及學系主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬學系辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "獲國外姐妹校入學許可後繳交家長同意書、辦理簽證與全額學雜費註冊、投保海外保險並出席行前說明會", "return-report": "返國後依限繳交返國交換心得報告書、正式成績單、護照出入境紀錄及登機證正本辦理獎學金核銷", "credit-transfer": "返國後持姐妹校正式成績單與課程大綱向所屬學系及教務處辦理境外修習學分採認"}.get(template.id, "備齊經導師及系主任簽章之申請表、歷年成績單（含排名）、外語檢定證明、讀書計畫與自傳、推薦信及 NT$3,000 行政處理費送交國際事務中心"),
+        version="115準備工具-2026-11-03.1",
+        destinations=["真理大學國際事務中心（25103 新北市淡水區真理街 32 號）"],
+        conditional_note="此為個人準備工具；真理大學國外／日本姐妹校交換與雙聯學制甄選每學期辦理（申請人須就讀滿一學年以上、前一學期學業成績全班前 50% 且操行 80 分以上，報名繳交 NT$3,000 行政處理費），交換期間仍需繳交真理大學全額學雜費且每學期至少修習 9 學分。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3072,6 +3127,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncut_template(template)) is not None]
     if university.id == NPUST.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _npust_template(template)) is not None]
+    if university.id == AU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _au_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

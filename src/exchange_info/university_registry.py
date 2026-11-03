@@ -1834,7 +1834,45 @@ NPUST = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST)
+AU = UniversityProfile(
+    id="au",
+    school_name="真理大學",
+    short_name="真理",
+    english_name="Aletheia University",
+    aliases=(
+        "au",
+        "真理大學",
+        "真理",
+        "真大",
+        "AU",
+        "Aletheia University",
+        "Oxford College Tamsui",
+    ),
+    hero_image="/static/assets/au-campus.svg",
+    official_url="https://cia.au.edu.tw/p/403-1022-109353.php?Lang=zh-tw",
+    coverage_note="完整支援：已整合真理大學國際事務中心（CIA）《交換計畫專區》、《雙聯學制專區》、《短期研修專區》、《姐妹校一覽》、《法規與獎學金辦法》與《學海計畫專區》官方資料：（1）校內甄選時程與資格：依《真理大學交換學生出國甄選辦法（教-P-806）》、《2027春季／2026秋季國外姐妹校交換學生實施計畫》與《2026~2027日本姐妹校交換生實施計畫》，限就讀滿一學年以上之大學部與研究所在學學生（大二、碩二以上），前一學期學業成績全班前 50% 為原則且操行 80 分以上，報名繳交 NT$3,000 行政處理費，交換期間繳交真理大學全額學雜費且每學期修習至少 9 學分；日本交換組要求三年內通過 JLPT N2 以上（日本多摩大學可憑 JLPT N2 或 TOEIC 600 申請）。（2）合作姐妹校與雙聯學位：完整收錄 80 所全球及兩岸港澳有效締約姐妹校（橫跨 14 國與地區，含 31 所當期開放申請之出國交換與雙聯學位合作校，涵蓋英國密德薩斯大學、英國西英格蘭大學 UWE Bristol 及西班牙赫羅納大學觀光學院 EUHT StPOL 雙聯學制）。（3）獎助學金與返國心得：涵蓋教育部《學海飛颺／惜珠／築夢／新南向學海築夢》、《真理大學交換學生出國獎學金辦法（P-01-510）》、《外國語言遊學獎助學金（P-01-509）》、《國際志工服務獎助學金（P-01-513）》、《特殊貢獻獎助學金（P-01-526）》及 14 所合作大學共 88 篇歷屆學長姐返國交換心得報告。",
+    support_level="full",
+    partner_count_hint=80,
+    academic_score_minimum=60,
+    student_card_signals=(
+        "真理大學",
+        "真理",
+        "ALETHEIAUNIVERSITY",
+        "ALETHEIA",
+        "AU",
+    ),
+    # https://www.au.edu.tw/ — checked 2026-11-03.
+    colleges=(
+        "人文學院",
+        "觀光休閒與運動學院",
+        "管理與資訊學院",
+        "財經學院",
+        "通識教育中心",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, AU)
 DEFAULT_UNIVERSITY = CGU
 
 
