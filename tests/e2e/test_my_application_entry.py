@@ -22,11 +22,12 @@ def test_returning_student_can_open_scheduling_independently(page, live_server):
     page.add_init_script(f"localStorage.setItem('exchange-guide-home-school', '{NTPU}')")
     page.goto(f'{live_server.base_url}/#partners')
     page.wait_for_load_state('networkidle')
-    open_navigation(page)
-    page.locator('.uniway-public-nav [data-public-route="overview"]').click()
+    # 準備與時程 is the 時程 tab of 我的申請; the old address still works and nothing needs a plan first.
+    page.evaluate('location.hash = "#overview"')
     expect(page.locator('#overview')).to_be_visible()
-    expect(page.locator('#tracker-title')).to_have_text('準備與時程')
-    expect(page.locator('.application-tools-heading nav')).to_be_visible()
+    expect(page.locator('#tracker-title')).to_have_text('待辦與期限')
+    assert page.evaluate('location.hash') == '#my-application?view=schedule'
+    expect(page.locator('.uniway-public-nav [data-public-route="overview"]')).to_have_count(0)
     open_navigation(page)
     page.locator(ENTRY).click()
     expect(page.locator('#application-path')).to_be_visible()
@@ -42,4 +43,4 @@ def test_the_application_entry_has_no_dropdown_and_tools_keep_their_pages(page, 
     expect(page.locator(ENTRY)).to_have_attribute('aria-current','page')
     page.goto(f'{live_server.base_url}/#calendar')
     expect(page.locator('#calendar')).to_be_visible()
-    expect(page.locator('.uniway-public-nav [data-public-route="overview"]')).to_have_attribute('aria-current','page')
+    expect(page.locator(ENTRY)).to_have_attribute('aria-current','page')
