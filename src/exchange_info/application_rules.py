@@ -59,6 +59,7 @@ from .fgu_eligibility import is_fgu, fgu_academic_check, fgu_degree_check, fgu_l
 from .nkuht_eligibility import is_nkuht, nkuht_academic_check, nkuht_degree_check, nkuht_language_check
 from .nuu_eligibility import is_nuu, nuu_academic_check, nuu_degree_check, nuu_language_check
 from .tnnua_eligibility import is_tnnua, tnnua_academic_check, tnnua_degree_check, tnnua_language_check
+from .tpcu_eligibility import is_tpcu, tpcu_academic_check, tpcu_degree_check, tpcu_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -817,6 +818,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_tpcu(request.home_school):
+        deg_status, deg_detail = tpcu_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -1180,6 +1186,12 @@ def _eligibility_checks(
             "academic_score", status, "南藝大選送學生出國研修與交流甄選辦法（兩階段初複審總成績80分以上、學海飛颺歷年平均80分／GPA 3.0以上）", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_tpcu(request.home_school):
+        status, detail = tpcu_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "城市科大前一學年學業平均 60 分、操行 75 分與雙聯／學海飛颺（前 50%）門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1379,6 +1391,9 @@ def _eligibility_checks(
     if is_tnnua(request.home_school):
         home_status, home_detail = tnnua_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "南藝大外國語文能力對照表（英語TOEFL iBT 79／IELTS 6.0、日語JLPT N2、韓語TOPIK 3級、法語DELF B1、德語B1／TDN3、西語DELE B1）與大陸免附語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_tpcu(request.home_school):
+        home_status, home_detail = tpcu_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "城市科大外語能力檢定基準（日本 JLPT N2–N4、韓國 TOPIK 2–6 級、英美紐 TOEFL iBT 61／IELTS 5.5／TOEFL ITP 500／TOEIC 550）", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

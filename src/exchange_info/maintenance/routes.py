@@ -814,6 +814,7 @@ def create_maintenance_router(
             <option value="nkuht">國立高雄餐旅大學（共 40 所姊妹校）</option>
             <option value="nuu">國立聯合大學（共 128 所姊妹校）</option>
             <option value="tnnua">國立臺南藝術大學（共 63 所姊妹校）</option>
+            <option value="tpcu">臺北城市科技大學（共 18 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -941,7 +942,8 @@ def create_maintenance_router(
     fgu: "佛光大學 (FGU)",
     nkuht: "國立高雄餐旅大學 (NKUHT)",
     nuu: "國立聯合大學 (NUU)",
-    tnnua: "國立臺南藝術大學 (TNNUA)"
+    tnnua: "國立臺南藝術大學 (TNNUA)",
+    tpcu: "臺北城市科技大學 (TPCU)"
   };
 
   const FIELD_LABELS = {

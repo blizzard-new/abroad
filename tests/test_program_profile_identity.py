@@ -49,7 +49,7 @@ def test_all_supported_bundles_keep_every_profile_and_raw_content():
     from exchange_info.university_registry import SUPPORTED_UNIVERSITIES
     profiles=storage.load_destination_profiles(include_bundled_baseline=True)
     assert len(profiles)==9219
-    added_homes = {u.school_name for u in SUPPORTED_UNIVERSITIES if u.id in {"ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub", "ncnu", "ndhu", "thu", "shu", "pu", "usc", "nuk", "ncyu", "nutc", "nfu", "utaipei", "ntcu", "tnua", "ntua", "ntue", "ncut", "npust", "cjcu", "nqu", "isu", "fgu", "nkuht", "nuu", "tnnua"}}
+    added_homes = {u.school_name for u in SUPPORTED_UNIVERSITIES if u.id in {"ncue", "nknu", "tmu", "csmu", "cmu", "kmu", "mcu", "ntub", "ncnu", "ndhu", "thu", "shu", "pu", "usc", "nuk", "ncyu", "nutc", "nfu", "utaipei", "ntcu", "tnua", "ntua", "ntue", "ncut", "npust", "cjcu", "nqu", "isu", "fgu", "nkuht", "nuu", "tnnua", "tpcu"}}
     assert sum(p.home_university not in added_homes for p in profiles)==4588
     for home in SUPPORTED_UNIVERSITIES:
         path=ROOT/f'src/exchange_info/official_data/{home.id}/destination_profiles.jsonl'
