@@ -87,6 +87,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     ],
     "ncut": ["oia.ncut.edu.tw", "www.ncut.edu.tw", "ncut.edu.tw"],
     "npust": ["oia2.npust.edu.tw", "oia.npust.edu.tw", "aa.npust.edu.tw", "www.npust.edu.tw", "npust.edu.tw", "docs.google.com"],
+    "tpcu": ["ieec.tpcu.edu.tw", "iac.tpcu.edu.tw", "www.tpcu.edu.tw", "tpcu.edu.tw"],
 }
 
 
@@ -1644,6 +1645,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["npust"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="npust", partner_rows=npust_rows, default_cycle_label="115"
+        )
+
+    # 38. TPCU partners.jsonl (18 partner schools)
+    tpcu_partners_path = official_data_root / "tpcu" / "partners.jsonl"
+    if tpcu_partners_path.exists():
+        tpcu_rows = []
+        for line in tpcu_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            tpcu_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "115",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://ieec.tpcu.edu.tw/files/15-1007-65684,c3974-1.php?Lang=zh-tw",
+            })
+        school_reports["tpcu"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="tpcu", partner_rows=tpcu_rows, default_cycle_label="115"
         )
 
     if store.current_release_id is None:

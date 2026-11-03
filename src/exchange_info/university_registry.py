@@ -1834,7 +1834,49 @@ NPUST = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST)
+TPCU = UniversityProfile(
+    id="tpcu",
+    school_name="臺北城市科技大學",
+    short_name="城市科大",
+    english_name="Taipei City University of Science and Technology",
+    aliases=(
+        "tpcu",
+        "臺北城市科技大學",
+        "台北城市科技大學",
+        "城市科大",
+        "北城科大",
+        "臺北城市科大",
+        "台北城市科大",
+        "城市大學",
+        "北台科大",
+        "北台科學技術學院",
+        "光武工專",
+        "TPCU",
+        "Taipei City University of Science and Technology",
+    ),
+    hero_image="/static/assets/tpcu-campus.svg",
+    official_url="https://ieec.tpcu.edu.tw/",
+    coverage_note="完整支援：已整合臺北城市科技大學國際事務處（國際交流中心）、商管學院、民生學院、工程學院與研究發展處《海外留學姊妹校總表》、《學生出國研修辦法（106.06.19修訂）》、《與境外大學辦理雙聯學制實施辦法（105.09.14教育部備查）》、《教育部獎助大專校院選送學生出國研修—學海飛颺、學海惜珠校內甄選辦法（108.01.21修訂）》、《教育部獎助大專校院國外專業實習計畫—學海築夢及新南向學海築夢校內甄選辦法（115.01.05修訂）》及《學生海外實習及研習輔導要點（106.10.30修訂）》官方資料：（1）校內甄選資格、錄取確認與修課抵免：申請出國交換研修者須為就讀本校滿一學年以上且非當學期畢業之在學學生（不含境外碩士專班；學海計畫須在學滿一學期以上且不含在職專班生），無小過以上處分紀錄，前一學年學業平均總成績達 60 分以上、操行平均總成績達 75 分以上；錄取生於公告隔天至國際事務處報到、1 週內繳交錄取確認書；海外研習一學期上課總學分不得少於 10 學分，返國後當學期開學 1 週內辦理學分抵免。（2）海外合作姊妹校與跨國雙聯學制：完整收錄 18 所日、韓、紐、英、美官方合作姊妹校（含日本城西國際大學、神戶國際大學、鹿兒島國際大學、國立琉球大學、日本經濟大學、北海道星槎道都大學、國立德島大學、十文字學園女子大學、國立宇都宮大學、昭和音樂大學；韓國信韓大學、富川大學；紐西蘭國際太平洋大學 IPU New Zealand；英國伯明翰大學學院 UCB；美國加州峽谷大學、曼徹普利敦州立大學、聖保羅學院、明州西南州立大學，其中 11 校提供 2+2／3+1／1 年雙聯學位）。（3）獎助學金與留學榜單：涵蓋教育部《學海飛颺／惜珠》（補助 NT$50,000–300,000）、《學海築夢／新南向學海築夢》海外實習獎助及 18 所合作大學共 38 篇歷屆交換雙聯榜單與研修紀錄。",
+    support_level="full",
+    partner_count_hint=18,
+    academic_score_minimum=60.0,
+    student_card_signals=(
+        "臺北城市科技大學",
+        "台北城市科技大學",
+        "城市科大",
+        "TAIPEICITYUNIVERSITYOFSCIENCEANDTECHNOLOGY",
+        "TPCU",
+    ),
+    # https://www.tpcu.edu.tw/p/412-1000-485.php?Lang=zh-tw — checked 2026-11-03.
+    colleges=(
+        "工程學院",
+        "商管學院",
+        "民生學院",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU, FJU, SCU, NTNU, CYCU, NTUST, YZU, FCU, NSYSU, NCHU, NTUT, NCCU, NCKU, NYCU, NTHU, PCCU, WZU, NKUST, YUNTECH, NTOU, NCUE, NKNU, TMU, CSMU, CMU, KMU, MCU, NTUB, NCNU, NDHU, THU, SHU, PU, USC, NUK, NCYU, NUTC, NFU, UTAIPEI, NTCU, TNUA, NTUA, NTUE, NCUT, NPUST, TPCU)
 DEFAULT_UNIVERSITY = CGU
 
 

@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CMU, CSMU, CYCU, FCU, FJU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, TPCU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -119,6 +119,9 @@ NCUT_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 NPUST_SOURCE_CHECKED_AT = datetime(2026, 10, 31, tzinfo=timezone.utc)
+
+
+TPCU_SOURCE_CHECKED_AT = datetime(2026, 11, 1, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -2968,6 +2971,51 @@ def _npust_template(template: ApplicationDocumentTemplate) -> ApplicationDocumen
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _tpcu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理臺北城市科技大學（國際交流中心／國際事務處）學生出國研修、跨國雙聯學制（2+2／3+1）暨教育部學海飛颺／惜珠與學海築夢海外實習應繳資料：1. 臺北城市科技大學學生出國研修申請表及家長同意書（須經導師、系所主任及院長簽章後送交國際交流中心）、2. 歷年中英文成績單正本（含前一學年學業平均與班級排名，依《學生出國研修辦法》第三條規定須就讀滿一學年以上、非應屆畢業學期、前一學年學業平均總成績達 60 分以上且操行平均總成績達 75 分以上、無小過以上處分紀錄；學海飛颺／惜珠申請者須就讀滿一學期以上且學業總平均達前 50%）、3. 有效外語能力檢定證明（日本姊妹校 JLPT N2–N4、韓國姊妹校 TOPIK 2–6 級、英美紐姊妹校 TOEFL iBT 61／IELTS 5.5／TOEFL ITP 500／TOEIC 550 以上）、4. 中外文讀書計畫與自傳及教師推薦信。",
+        "study-plan": "撰寫臺北城市科技大學學生出國研修、跨國雙聯學制及教育部學海飛颺／惜珠甄選必繳之《中、外文讀書計畫與自傳》（建議約 800–2,000 字）。請具體說明出國交換或雙聯動機、擬於志願姊妹校修讀之課程規劃（依《學生出國研修辦法》規定，海外研習一學期上課總學分不得少於 10 學分；雙聯學士班累計修業至少 32 個月、碩士班至少 12 個月且兩校修習學分各佔畢業總學分 1/3 以上），以及返國後開學一週內學分抵免與職涯規劃。",
+        "course-preapproval": "辦理赴境外姊妹校修讀交換課程或跨國雙聯學位（日本城西國際大學、神戶國際大學、鹿兒島國際大學、日本經濟大學、星槎道都大學、信韓大學、紐西蘭國際太平洋大學 IPU、英國伯明翰大學學院 UCB、美國加州峽谷大學 COC、曼徹普利敦州立大學、聖保羅學院、明州西南州立大學 SMSU）之選課預審與教務核備（依《學生出國研修辦法》規定，海外研習一學期上課總學分不得少於 10 學分，且出國期間須辦理本校註冊保留學籍）。",
+        "predeparture-notice": "依《臺北城市科技大學學生出國研修辦法》第七條規定，申請人應於錄取公告次日向國際交流中心報到，並於一週內繳交《錄取確認書》，逾期未繳交者視同放棄；取得姊妹校入學許可（COE／I-20／CAS／LOA）後完成簽證申辦、役男出境核准及海外醫療與意外保險投保。",
+        "return-report": "境外交換、雙聯研修或海外實習期滿返國後，須依《學生出國研修辦法》及教育部《學海飛颺／學海惜珠／學海築夢》補助要點於返國後 14 日至 1 個月內向國際交流中心繳交 1,000–2,500 字之《出國研修／海外實習心得報告書》（含研習照片）、姊妹校正式成績單、護照出入境紀錄及登機證正本，辦理獎補助經費核銷。",
+        "credit-transfer": "依《臺北城市科技大學學生出國研修辦法》第九條規定，選送生於海外研習一學期上課總學分不得少於 10 學分，並須於返國後當學期開學一週內持境外姊妹校核發之正式成績單正本與課程大綱（Syllabus），向所屬系（所）及教務處註冊組辦理學分抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "臺北城市科技大學").replace("長庚", "城市科大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "城市科大《學生出國研修辦法》第三條規定：須就讀滿一學年以上（不含境外碩士專班）、非應屆畢業學期、無小過以上處分紀錄，且前一學年學業平均總成績達 60 分以上、操行平均總成績達 75 分以上（申請教育部學海飛颺／惜珠者須就讀滿一學期以上且學業總平均達前 50%）。"
+        if field["id"] == "language_test":
+            field["options"] = ["JLPT 日語能力試驗（N1–N3 交換／雙聯；N4 神戶國際大學日本語集中課程與日本海外實習）", "TOPIK 韓國語文能力測驗（2–6 級，信韓大學／富川大學交換與雙聯）", "TOEFL iBT 托福網路測驗（61+，英美紐姊妹校交換與雙聯）", "IELTS 雅思學術組（5.5–6.0+，英國 UCB／紐西蘭 IPU／美國姊妹校）", "TOEFL ITP 托福紙筆測驗（500+）", "TOEIC 多益測驗（550+，英語授課學程及海外實習參考基準）"]
+            field["help_text"] = "依臺北城市科技大學《學生出國研修辦法》及各姊妹校申請簡章填報有效外語能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://ieec.tpcu.edu.tw/files/15-1007-23082,c3974-1.php?Lang=zh-tw",
+        source_checked_at=TPCU_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="學生出國研修申請表與家長同意書" if template.id == "exchange-application-data" else ("中外文讀書計畫與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://ieec.tpcu.edu.tw/files/archive/565_01451845.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師及系所主任簽章", "學院院長簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系所辦公室及學院核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "錄取公告次日報到並於一週內繳交錄取確認書；獲入學許可後辦理簽證與保險", "return-report": "返國後 14 日至 1 個月內繳交出國研修／實習心得報告書與核銷單據", "credit-transfer": "返國後當學期開學一週內持姊妹校正式成績單向系所及教務處辦理學分抵免（每學期至少 10 學分）"}.get(template.id, "備齊經系（所）初審核章之申請表、家長同意書、歷年成績單、外語檢定證明與讀書計畫送交國際交流中心"),
+        version="115準備工具-2026-11-01.1",
+        destinations=["臺北城市科技大學國際交流中心／國際事務處（112 臺北市北投區學園路 2 號）"],
+        conditional_note="此為個人準備工具；臺北城市科技大學學生出國研修與雙聯學制由各系（所）初審後送交國際交流中心複審，錄取學生須於錄取公告次日報到並於一週內繳交錄取確認書，海外研習每學期至少修習 10 學分，返國後當學期開學一週內辦理學分抵免。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3072,6 +3120,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncut_template(template)) is not None]
     if university.id == NPUST.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _npust_template(template)) is not None]
+    if university.id == TPCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _tpcu_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

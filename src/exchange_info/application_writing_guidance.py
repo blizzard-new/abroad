@@ -1260,6 +1260,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="屏科大規定返國後一個月內須繳交赴外交換研習心得報告書（含照片）並配合經驗分享會，始得辦理獎補助核銷；這裡只合計下方各欄。",
     ),
+    ("tpcu", "study-plan"): _rules(
+        (
+            "臺北城市科技大學學生出國研修、跨國雙聯學制（2+2／3+1）及教育部學海飛颺／惜珠甄選須繳交《中、外文讀書計畫與自傳》（建議約 800–2,000 字），供所屬系（所）初審及國際交流中心／學生出國研修甄選小組審查。",
+            "內容應具體說明申請動機、個人學業與語言準備（前一學年學業平均 60 分以上、操行 75 分以上及外語檢定證明）、擬於志願姊妹校修讀之課程規劃（依《學生出國研修辦法》規定，海外研習一學期上課總學分不得少於 10 學分）及返國後開學一週內學分抵免與職涯規劃。",
+        ),
+        evidence="臺北城市科技大學學生出國研修辦法、與境外大學辦理雙聯學制實施辦法及教育部學海飛颺／學海惜珠補助要點",
+        minimum=800,
+        maximum=2000,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="城市科大出國研修與雙聯甄選建議中、外文讀書計畫與自傳約 800–2,000 字，清楚呈現每學期至少 10 學分之修課規劃；這裡只合計下方各欄。",
+    ),
+    ("tpcu", "return-report"): _rules(
+        (
+            "依《臺北城市科技大學學生出國研修辦法》及教育部《學海飛颺／學海惜珠／學海築夢》補助要點規定，出國研修、雙聯及海外實習學生須於返國後一個月內向國際交流中心繳交《出國研修／海外實習心得報告書》（約 1,000–2,500 字並附研習照片），並於返國後當學期開學一週內辦理學分抵免。",
+            "獲教育部學海飛颺、學海惜珠、學海築夢／新南向學海築夢或校內出國研修獎助學金者，須於返國後 14 日內登入教育部學海計畫資訊網上傳成果報告與問卷，並檢附國外姊妹校正式成績單、護照出入境紀錄及登機證／電子機票收據辦理經費核銷。",
+        ),
+        evidence="臺北城市科技大學學生出國研修辦法、教育部學海飛颺／學海惜珠／學海築夢補助要點",
+        minimum=1000,
+        maximum=2500,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="城市科大規定返國後須繳交出國研修／海外實習心得報告書（含照片）並於開學一週內辦理學分抵免，始得完成學海與校內獎助核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1313,6 +1335,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "ntue": ("https://oia.ntue.edu.tw/p/406-1066-48777,r1703.php?Lang=zh-tw", "2026-10-31"),
     "ncut": ("https://oia.ncut.edu.tw/p/412-1030-6648.php?Lang=zh-tw", "2026-11-01"),
     "npust": ("https://oia2.npust.edu.tw/zh/cooperation/%e4%ba%a4%e6%8f%9b%e5%ad%b8%e7%94%9f-2/", "2026-10-31"),
+    "tpcu": ("https://ieec.tpcu.edu.tw/files/15-1007-23082,c3974-1.php?Lang=zh-tw", "2026-11-01"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):
