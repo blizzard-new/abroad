@@ -64,7 +64,7 @@ from .application_rules import select_application_workflow
 from .application_writing_guidance import apply_writing_guidance
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import CJCU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
+from .university_registry import CJCU, CMU, CSMU, CYCU, FCU, FGU, FJU, ISU, KMU, MCU, NCCU, NCHU, NCKU, NCNU, NCUE, NCUT, NCYU, NDHU, NFU, NKNU, NKUHT, NKUST, NPUST, NQU, NSYSU, NTHU, NTNU, NTOU, NTPU, NTU, NTUB, NTUE, NUTC, NTUST, NTUT, NCU, NUK, NYCU, PCCU, PU, SCU, SHU, THU, TMU, USC, UTAIPEI, NTCU, TNUA, NTUA, WZU, YUNTECH, YZU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 from .fju_student_view import FJU_PROCESS_URL
@@ -127,6 +127,9 @@ ISU_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
 
 
 FGU_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
+
+
+NKUHT_SOURCE_CHECKED_AT = datetime(2026, 11, 2, tzinfo=timezone.utc)
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -3170,6 +3173,51 @@ def _fgu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _nkuht_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理國立高雄餐旅大學（國際事務處國際教育合作組，行政大樓 5 樓）海外免學費交換生、自費交換生、1+1 雙聯碩士學位暨教育部學海飛颺／惜珠與遠航圓夢助學金應繳資料：1. 校內交換學生或雙聯學位申請表及家長同意書（須經導師、系所主任簽章）、2. 歷年中英文成績單正本（含歷年學業總平均與班級排名百分比，歷年學業平均達 75 分以上或班排名前 20%–30%）、3. 歷年獎懲紀錄證明正本（歷年操行成績無小過以上處分紀錄）、4. 有效外語能力檢定證明影本（TOEIC 500–850、TOEFL iBT 61–84、IELTS 5.0–6.5、GEPT 中級、JLPT N2–N3 或 TOPIK 2–3 級以上，依志願姊妹校規定）、5. 中英文自傳履歷表及中英文出國研修計畫書、6. 師長推薦信及有效護照影本。",
+        "study-plan": "撰寫國立高雄餐旅大學學生申請海外免學費交換、自費交換、1+1 雙聯碩士學位及《教育部學海飛颺／惜珠》、《遠航圓夢助學金》必繳之《中英文出國研修計畫書與自傳》（建議約 1,000–2,500 字）。請具體說明赴外研修動機、擬於志願海外餐旅觀光姊妹校修讀之專業課程或實習規劃（依《辦理學生海外實習及留學補充規定》維持高餐大在學學籍並免修或替代校外實習）、個人語言準備與專業優勢，以及返國後學分抵免與國際餐旅職涯發展規劃。",
+        "course-preapproval": "辦理赴海外姊妹校修讀交換課程或 1+1 雙聯碩士學位之選課預審與教務核備（依《國立高雄餐旅大學辦理學生海外實習及留學補充規定》規定，免學費交換生為三年級出國交換一學年、自費交換生及雙聯碩士為三年級或研究所出國一學年，出國期間須辦理高餐大註冊並繳交學雜費保留在學學籍，並可替代三年級校外實習課程）。",
+        "predeparture-notice": "經國際事務處初審與面試錄取並於隔年 2–3 月獲海外姊妹校提名（Nomination）及入學許可（Offer Letter）後，配合國際事務處完成出國研修切結書與行政契約書簽署、學生簽證申辦、役男出境緩徵核准、海外全期醫療及意外保險投保，並參加行前說明會。",
+        "return-report": "海外交換或雙聯學位研修期滿返國後開學一週內（獲教育部學海飛颺／惜珠或遠航圓夢助學金者為返國後兩週內），須依《辦理學生海外實習及留學補充規定》及獎助簡章規定向國際事務處繳交至少 2,000 字之《海外研修心得報告》（含海外學習與生活照片，檔案小於 10MB）、海外姊妹校正式成績單、護照出入境紀錄及登機證正本，並配合出席留學經驗分享會，始得辦理獎助學金核銷。",
+        "credit-transfer": "海外交換或雙聯學位研修期滿返國後持海外合作大學核發之正式成績單正本、修業證明與課程大綱（Syllabus），依《國立高雄餐旅大學辦理學生海外實習及留學補充規定》及學生抵免學分辦法向所屬系（所、學位學程）、學院及教務處申請境外修習科目學分採認抵免。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立高雄餐旅大學").replace("長庚", "高餐大")
+        if isinstance(value, list):
+            return [adapt(x) for x in value]
+        if isinstance(value, dict):
+            return {k: adapt(v) for k, v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "高餐大規定：歷年操行成績無小過以上處分紀錄，歷年學業總平均達 75 分以上（申請教育部學海飛颺須班排前 20% 或平均 75 分以上；遠航圓夢助學金須班排前 30% 或平均 75 分以上）。請檢附含班級排名之歷年中英文成績單正本與獎懲紀錄證明。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEIC 多益測驗（免學費及自費交換常見門檻 500–850+）", "IELTS 雅思學術組（瑞士 SHMS/César Ritz、英國 UCB、法國 Institut Lyfe、澳洲 ICHM 等要求 5.0–6.5+）", "TOEFL iBT 托福測驗（美國天普大學、南卡羅來納大學、休士頓大學等要求 61–84+；CEFR B2 為 72+）", "GEPT 全民英檢（中級至中高級合格以上）", "JLPT 日語能力試驗（日本名城大學、立教大學、創價大學、長崎外大要求 N2–N3 以上）", "TOPIK 韓語能力測驗（韓國世宗大學、慶熙大學等要求 TOPIK 2–3 級或英語檢定）"]
+            field["help_text"] = "依國立高雄餐旅大學《海外留學交換平台簡章》及《相當於 CEFR 語言參考架構 B2 級之各項英檢對照表》填報有效期限內之外語能力檢定證明。"
+    payload.update(
+        description=descriptions[template.id],
+        source_url="https://iao.nkuht.edu.tw/p/412-1005-857.php?Lang=zh-tw",
+        source_checked_at=NKUHT_SOURCE_CHECKED_AT,
+        official_layout=False,
+        official_form_number="海外留學交換生／雙聯學位申請表與家長同意書" if template.id == "exchange-application-data" else ("中英文出國研修計畫書與自傳" if template.id == "study-plan" else None),
+        official_file_name=None,
+        official_download_url="https://iao.nkuht.edu.tw/var/file/5/1005/img/153/837557577.pdf",
+        default_copies=1,
+        signatures=["申請學生親筆簽名", "家長或監護人親筆簽章", "導師及系所主任簽章"] if template.id == "exchange-application-data" else [],
+        stamps=["所屬系（所、學位學程）辦公室核章"] if template.id == "exchange-application-data" else [],
+        stage={"predeparture-notice": "隔年 2–3 月獲姊妹校提名與入學許可後辦理簽證、役男出境、保險及切結書簽署", "return-report": "返國後開學一週內（獎助生兩週內）繳交 2,000 字以上海外研修心得報告與成績單辦理核銷", "credit-transfer": "返國後持姊妹校正式成績單與課程大綱向系所及教務處辦理境外學分抵免"}.get(template.id, "每年 10–12 月備齊校內申請表、家長同意書、歷年含班排成績單、獎懲紀錄、外語檢定證明及中英自傳／研修計畫書送交行政大樓 5 樓國際事務處"),
+        version="116準備工具-2026-11-02.1",
+        destinations=["國立高雄餐旅大學國際事務處國際教育合作組（812301 高雄市小港區松和路 1 號 行政大樓 5 樓）"],
+        conditional_note="此為個人準備工具；國立高雄餐旅大學 2027-28 海外留學交換與雙聯學位甄選於 115-1 學期起跑（9 月留學說明會、10–12 月收件、隔年 2–3 月公告錄取名單與姊妹校提名），免學費交換限三年級出國一學年、自費交換與 1+1 雙聯碩士限三年級或研究所出國一學年。",
+    )
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university_id = require_university(school_name).id
     return [
@@ -3282,6 +3330,8 @@ def _school_templates(school_name: str) -> list[ApplicationDocumentTemplate]:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _isu_template(template)) is not None]
     if university.id == FGU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _fgu_template(template)) is not None]
+    if university.id == NKUHT.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _nkuht_template(template)) is not None]
     if university.id == "tku":
         from .tku_documents import tku_application_templates
         return tku_application_templates()

@@ -811,6 +811,7 @@ def create_maintenance_router(
             <option value="nqu">國立金門大學（共 64 所姊妹校）</option>
             <option value="isu">義守大學（共 181 所姊妹校）</option>
             <option value="fgu">佛光大學（共 52 所姊妹校）</option>
+            <option value="nkuht">國立高雄餐旅大學（共 40 所姊妹校）</option>
           </select>
           <label>查看歷史版本編號（留空代表目前最新上線版本）：</label>
           <input type="text" id="s4-release" placeholder="預設顯示目前最新版本" style="width:210px" />
@@ -935,7 +936,8 @@ def create_maintenance_router(
     cjcu: "長榮大學 (CJCU)",
     nqu: "國立金門大學 (NQU)",
     isu: "義守大學 (ISU)",
-    fgu: "佛光大學 (FGU)"
+    fgu: "佛光大學 (FGU)",
+    nkuht: "國立高雄餐旅大學 (NKUHT)"
   };
 
   const FIELD_LABELS = {

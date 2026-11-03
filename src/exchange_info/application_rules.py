@@ -56,6 +56,7 @@ from .cjcu_eligibility import cjcu_academic_check, cjcu_degree_check, cjcu_langu
 from .nqu_eligibility import is_nqu, nqu_academic_check, nqu_degree_check, nqu_language_check
 from .isu_eligibility import is_isu, isu_academic_check, isu_degree_check, isu_language_check
 from .fgu_eligibility import is_fgu, fgu_academic_check, fgu_degree_check, fgu_language_check
+from .nkuht_eligibility import is_nkuht, nkuht_academic_check, nkuht_degree_check, nkuht_language_check
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check, ntu_published_quota
@@ -799,6 +800,11 @@ def _eligibility_checks(
         checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
                              deg_detail,
                              source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
+    elif is_nkuht(request.home_school):
+        deg_status, deg_detail = nkuht_degree_check(request.degree_level, request.current_year)
+        checks.append(_check("degree_level", deg_status, "學制與在學年級資格",
+                             deg_detail,
+                             source_url=academic_source_url, contact_unit=None if deg_status == "pass" else contact_unit))
     elif not request.degree_level:
         checks.append(
             _check(
@@ -1144,6 +1150,12 @@ def _eligibility_checks(
             "academic_score", status, "佛光大學海外交換歷年學業總平均 75 分或班排前 25%（研究所以上平均 85 分或所排前 30%）及操行 80 分門檻", detail,
             source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
         ))
+    elif is_nkuht(request.home_school):
+        status, detail = nkuht_academic_check(request.degree_level, request.academic_score, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "高餐大海外留學交換與學海飛颺／遠航圓夢助學金成績門檻（歷年平均75分以上或班排前20%–30%、操行無小過以上處分）", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
     elif academic_score_minimum is None:
         checks.append(
             _check(
@@ -1334,6 +1346,9 @@ def _eligibility_checks(
     if is_fgu(request.home_school):
         home_status, home_detail = fgu_language_check(request.language_test, request.language_score, partner_country=partner.country)
         checks.append(_check("home_language_score", home_status, "佛光大學海外交換外語檢定門檻（英語組IELTS 5.5–6.5／TOEFL iBT 70–85／TOEIC 750、日語組JLPT N2–N1、韓語組TOPIK 2–3級）與大陸姊妹校免語檢規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
+    if is_nkuht(request.home_school):
+        home_status, home_detail = nkuht_language_check(request.language_test, request.language_score, partner_country=partner.country)
+        checks.append(_check("home_language_score", home_status, "高餐大海外留學交換外語能力檢定標準（TOEIC 500–850／TOEFL iBT 61–84／IELTS 5.0–6.5／GEPT 中級／JLPT N2–N3／TOPIK 2–3級）與 CEFR B2 對照規定", home_detail, source_url=academic_source_url, contact_unit=None if home_status == "pass" else contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

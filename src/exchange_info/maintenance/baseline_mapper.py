@@ -91,6 +91,7 @@ HOME_APPROVED_DOMAINS: dict[str, list[str]] = {
     "nqu": ["oica.nqu.edu.tw", "teach.nqu.edu.tw", "www.nqu.edu.tw", "nqu.edu.tw"],
     "isu": ["oica.isu.edu.tw", "www.isu.edu.tw", "www2.isu.edu.tw", "isu.edu.tw", "docs.google.com", "lookerstudio.google.com"],
     "fgu": ["oica.fgu.edu.tw", "website.fgu.edu.tw", "www.fgu.edu.tw", "fgu.edu.tw"],
+    "nkuht": ["iao.nkuht.edu.tw", "www.nkuht.edu.tw", "nkuht.edu.tw"],
 }
 
 
@@ -1740,6 +1741,29 @@ def load_six_school_shadow_summary(official_data_root: Path, store: MaintenanceS
             })
         school_reports["fgu"] = import_legacy_partner_rows_to_shadow_store(
             store, home_id="fgu", partner_rows=fgu_rows, default_cycle_label="115"
+        )
+
+    # 38. NKUHT partners.jsonl (40 partner schools)
+    nkuht_partners_path = official_data_root / "nkuht" / "partners.jsonl"
+    if nkuht_partners_path.exists():
+        nkuht_rows = []
+        for line in nkuht_partners_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            nkuht_rows.append({
+                "school_name": rec.get("school_name"),
+                "country": rec.get("country"),
+                "academic_year": "116",
+                "website": rec.get("official_website") or rec.get("website"),
+                "quota": rec.get("quota"),
+                "eligibility": rec.get("eligibility"),
+                "language_requirement": rec.get("language_requirement") or rec.get("language_requirements"),
+                "availability_status": rec.get("availability_status") or "open",
+                "source_url": rec.get("source_url") or "https://iao.nkuht.edu.tw/p/412-1005-857.php?Lang=zh-tw",
+            })
+        school_reports["nkuht"] = import_legacy_partner_rows_to_shadow_store(
+            store, home_id="nkuht", partner_rows=nkuht_rows, default_cycle_label="116"
         )
 
     if store.current_release_id is None:
