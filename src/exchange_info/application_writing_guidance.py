@@ -1436,6 +1436,28 @@ WRITING_RULES: dict[tuple[str, str], ApplicationWritingRules] = {
         count_fields=_RETURN_REPORT_FIELDS,
         count_note="城市科大規定返國後須繳交出國研修／海外實習心得報告書（含照片）並於開學一週內辦理學分抵免，始得完成學海與校內獎助核銷；這裡只合計下方各欄。",
     ),
+    ("au", "study-plan"): _rules(
+        (
+            "真理大學國外／日本姐妹校交換與雙聯學制甄選須繳交《讀書計畫與自傳》（日本交換組須以日文撰寫；歐美韓及其他地區依簡章以中／英／韓文撰寫），具體規劃擬於目標姐妹校每學期修習至少 9 學分之課程清單。",
+            "建議結合真理大學人文、觀光休閒與運動、管理與資訊或財經學院專業背景，清楚說明申請動機、外語檢定成績（日本交換組 JLPT N2、日本多摩大學 TOEIC 600、澳洲麥覺理 IELTS 6.5、英國雙聯 IELTS 6.0–6.5 或學海飛颺／惜珠門檻）與返國後學分採認規劃。",
+        ),
+        evidence="真理大學交換學生出國甄選辦法、國外／日本姐妹校交換學生實施計畫與學海飛颺及學海惜珠計畫校內甄選簡章",
+        minimum=1000,
+        maximum=2500,
+        count_fields=_STUDY_PLAN_FIELDS,
+        count_note="真理大學交換與雙聯學制甄選建議讀書計畫與自傳約 1,000–2,500 字（日本組須以日文撰寫），清楚呈現修課與語言準備；這裡只合計下方各欄。",
+    ),
+    ("au", "return-report"): _rules(
+        (
+            "所有真理大學赴國外／日本姐妹校交換及雙聯學制學生須於返國後依限向國際事務中心繳交《返國交換心得報告書》（含研修與生活照片），收錄於國際事務中心出國研修心得專區。",
+            "獲教育部學海飛颺、學海惜珠、學海築夢／新南向學海築夢或《真理大學交換學生出國獎學金（P-01-510）》、《外國語言遊學獎助學金（P-01-509）》者，須於返國後檢附心得報告、國外姐妹校正式成績單、護照出入境紀錄及機票登機證正本，並配合國際事務中心成果分享始得完成獎助學金核銷。",
+        ),
+        evidence="真理大學交換學生出國甄選辦法、交換學生出國獎學金辦法（P-01-510）與出國交換獎學金核銷注意事項",
+        minimum=1500,
+        maximum=3000,
+        count_fields=_RETURN_REPORT_FIELDS,
+        count_note="真理大學規定返國後須繳交返國交換心得報告（含照片）、正式成績單與出入境／登機證文件始得完成獎助學金核銷；這裡只合計下方各欄。",
+    ),
 }
 
 SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
@@ -1497,6 +1519,7 @@ SCHOOL_WRITING_RULE_SOURCES: dict[str, tuple[str, str]] = {
     "nuu": ("https://oia.nuu.edu.tw/p/412-1068-1242.php", "2026-11-02"),
     "tnnua": ("https://oia.tnnua.edu.tw/p/412-1007-1052.php?Lang=zh-tw", "2026-11-03"),
     "tpcu": ("https://ieec.tpcu.edu.tw/files/15-1007-23082,c3974-1.php?Lang=zh-tw", "2026-11-01"),
+    "au": ("https://cia.au.edu.tw/p/403-1022-109353.php?Lang=zh-tw", "2026-11-03"),
 }
 
 for (_uni_id, _tpl_id), _rule_entry in list(WRITING_RULES.items()):
